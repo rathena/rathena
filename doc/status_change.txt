@@ -1,0 +1,2489 @@
+//===== rAthena Documentation ================================
+//= Status Change Documentation
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20150331
+//===== Description: =========================================
+//= List of all Status Changes and theirs val1, val2, val3, and
+//= val4 usage in source. Providing easier guide to use
+//= sc_start, sc_start2, and sc_start4 in scripting.
+//= NOTE:
+//= - If sc_start/2/4 values based on val1~val4 information,
+//=   it's a wise decision to use flag SCSTART_LOADED(4). But,
+//=   some SCs with iteration check maybe will fail to give
+//=   iteration check if flag SCSTART_LOADED is given.
+//===== Format: =========================================
+//= <SC_Name>	(<Default_SI>)
+//= 	desc: <any description or info related this status>
+//= 	val1: <usage for>
+//= 	val2: <usage for>
+//= 	val3: <usage for>
+//= 	val4: <usage for>
+//============================================================
+
+SC_STONE	()
+	desc: DEF -50%; if HP>25% lose 1% HP/5 sec; MDEF +25%; change element to Earth Lv 1; ignore Steal & Lex Aeterna; can't move/attack/pick item/use item/use skill/sit/logout
+	val1:
+
+SC_FREEZE	()
+	desc: DEF -50%; FLEE = 0; MDEF +25%; ignore Steal, Lex Aeterna, Storm Gust, Falling Ice Pillar; change element to Water Lv 1; can't move/attack/pick item/use item/sit/logout
+	val1:
+
+SC_STUN	()
+	desc: FLEE = 0; can't move/attack/pick item/use item/use skill/sit/logout
+	val1:
+
+SC_SLEEP	()
+	desc: FLEE = 0; enemy CRIT x2; can't move/attack/pick item/use item/use skill/sit/logout
+	val1:
+
+SC_POISON	()
+	desc: DEF -25%; if HP>25% lose 1.5% + 2 HP/sec; SP Regeneration is disabled
+	val1:
+
+SC_CURSE	()
+	desc: ATK-25%; LUK = 0; Movement speed -300
+	val1:
+
+SC_SILENCE	()
+	desc: Can't use active skills
+	val1:
+
+SC_CONFUSION	()
+	desc: Move randomly; Set DEF to (STR+(INT*50))
+	val1:
+
+SC_BLIND	()
+	desc: HIT -25%; FLEE -25%; Black out the outter part of the screen
+	val1:
+
+SC_BLEEDING	(SI_BLEEDING)
+	desc: HP Regeneration is disabled; SP Regeneration is disabled; Lose HP overtime
+	val1:
+
+SC_DPOISON	()
+	desc: DEF -25%; if HP>25% lose 10/15% HP/sec
+	val1:
+
+SC_PROVOKE	(SI_PROVOKE)
+	desc: Decrease DEF by (5+(5*Skill Lv))%; Increase ATK by (2+(3*Skill lv))%
+	val1:
+
+SC_ENDURE	(SI_ENDURE)
+	desc: Increase MDEF by (Skill Lv); Doesn't get flinched when attacked
+	val1:
+
+SC_TWOHANDQUICKEN	(SI_TWOHANDQUICKEN)
+	desc: ASPD +30%
+	val1:
+
+SC_CONCENTRATE	(SI_CONCENTRATE)
+	desc: Increase AGI by (2+Skill Lv)%; Increase DEX by (2+Skill Lv)%; Reveal hidden enemies in 3x3 area around caster
+	val1:
+
+SC_HIDING	(SI_HIDING)
+	desc: Set OPTION_HIDE
+	val1:
+
+SC_CLOAKING	(SI_CLOAKING)
+	desc: Set OPTION_CLOAK
+	val1:
+
+SC_ENCPOISON	(SI_ENCPOISON)
+	desc: Change weapon element to ELE_POISON; Poisoning chance is (2.5+0.5%)
+	val1:
+
+SC_POISONREACT	(SI_POISONREACT)
+	desc: Increase ATK by (100+30*Skill Lv))%; Counter physical attack with Envenoms skill
+	val1:
+
+SC_QUAGMIRE	(SI_QUAGMIRE)
+	desc: Removes Increase AGI, Twhohand Quicken, Wind Walk, Adrenaline Rush, Attention Concentrate, Cart Boost, True Sight, Magnetic Field & Onehand Quicken skill effect; Movement Speed -50; Decrease AGI & DEX by (10*Skill Lv) but can't below 75% for players and 50% for mobs
+	val1:
+
+SC_ANGELUS	(SI_ANGELUS)
+	desc: Increase DEF by (5*Skill Lv)%
+	val1:
+
+SC_BLESSING	(SI_BLESSING)
+	desc: Increase STR, DEX & INT by (Skill Lv); Removes Stone and Curse status. If used on mobs will reduce their DEX and INT by 50%
+	val1:
+
+SC_SIGNUMCRUCIS	(SI_SIGNUMCRUCIS)
+	desc: Decrease DEF of Undead and Demon mobs by (10+(4*Skill Lv))% on screen
+	val1:
+
+SC_INCREASEAGI	(SI_INCREASEAGI)
+	desc: Increase AGI and walkspeed, AL_INCAGI effect
+	val1: (hardcoded)
+
+SC_DECREASEAGI	(SI_DECREASEAGI)
+	desc: Decrease AGI and walkspeed, AL_DECAGI effect
+	val1: (hardcoded)
+
+SC_SLOWPOISON	(SI_SLOWPOISON)
+	desc: Stop the HP reduction of SC_POISON
+	val1:
+
+SC_IMPOSITIO	(SI_IMPOSITIO)
+	desc: Increase ATK by (5*Skill Lv)
+	val1:
+
+SC_SUFFRAGIUM	(SI_SUFFRAGIUM)
+	desc: Cast time decreased by (15*Skill Lv)%
+	val1:
+
+SC_ASPERSIO	(SI_ASPERSIO)
+	desc: Change weapon element to ELE_HOLY
+	val1:
+
+SC_BENEDICTIO	(SI_BENEDICTIO)
+	desc: Change armor element to ELE_HOLY
+	val1:
+
+SC_KYRIE	(SI_KYRIE)
+	desc: Remove SC_ASSUMPTIO skill effect; Block damage with a total of (MaxHP*(Skill Lv*2+10)/100) or ((Skill Lv/2)+5) times
+	val1:
+
+SC_MAGNIFICAT	(SI_MAGNIFICAT)
+	desc: SP Regeneration speed x2
+	val1:
+
+SC_GLORIA	(SI_GLORIA)
+	desc: LUK +30
+	val1:
+
+SC_AETERNA	(SI_AETERNA)
+	desc: Damaged received x2
+	val1:
+
+SC_ADRENALINE	(SI_ADRENALINE)
+	desc: ASPD of Axe & Mace weapons x2
+	val1:
+
+SC_WEAPONPERFECTION	(SI_WEAPONPERFECTION)
+	desc: Ignore damage reduction to any monster size
+	val1:
+
+SC_OVERTHRUST	(SI_OVERTHRUST)
+	desc: Increase ATK by (5*Skill Lv)%; Add a 0.1% of breaking the equipped weapon [except Axes, Maces & Unbreakable weapons]
+	val1:
+
+SC_MAXIMIZEPOWER	(SI_MAXIMIZEPOWER)
+	desc: SP Regeneration is disabled; Damage dealt is always the max damage
+	val1:
+
+SC_TRICKDEAD	(SI_TRICKDEAD)
+	desc: HP & SP Regeneration is disabled; Remove SC_DANCING
+	val1:
+
+SC_LOUD	(SI_LOUD)
+	desc: STR +4
+	val1:
+
+SC_ENERGYCOAT	(SI_ENERGYCOAT)
+	desc: Reduce damage received according to current MaxSP %
+	val1:
+
+SC_BROKENARMOR	(SI_BROKENARMOR)
+	desc: Shows SI_BROKENARMOR status if the armor is broken
+	val1:
+
+SC_BROKENWEAPON	(SC_BROKENWEAPON)
+	desc: Shows SC_BROKENWEAPON status if the armor is broken
+	val1:
+
+SC_HALLUCINATION	(SI_HALLUCINATION)
+	desc: The screen goes wavy and you see crazy numbers for all damage that is processed around you, but they are all fake. Even other players see those numbers at you.
+	val1:
+
+SC_WEIGHT50	(SI_WEIGHT50)
+	desc: Shows SI_WEIGHT50 status icon if Weight >= 50%
+	val1:
+
+SC_WEIGHT90	(SI_WEIGHT90)
+	desc: Shows SI_WEIGHT90 status icon if Weight >= 90%
+	val1:
+
+SC_ASPDPOTION0	(SI_ASPDPOTION0)
+	desc: Increase ASPD, won't be stacked with SC_ASPDPOTION1, SC_ASPDPOTION2, SC_ASPDPOTION3
+	val1: +ASPD (Renewal)
+	val2: +% ASPD (Pre-Renewal)
+
+SC_ASPDPOTION1	(SI_ASPDPOTION1)
+	desc: Increase ASPD, won't be stacked with SC_ASPDPOTION0, SC_ASPDPOTION2, SC_ASPDPOTION3
+	val1: +ASPD (Renewal)
+	val2: +% ASPD (Pre-Renewal)
+
+SC_ASPDPOTION2	(SI_ASPDPOTION2)
+	desc: Increase ASPD, won't be stacked with SC_ASPDPOTION0, SC_ASPDPOTION1, SC_ASPDPOTION3
+	val1: +ASPD (Renewal)
+	val2: +% ASPD (Pre-Renewal)
+
+SC_ASPDPOTION3	(SI_ASPDPOTION3)
+	desc: Increase ASPD, won't be stacked with SC_ASPDPOTION0, SC_ASPDPOTION1, SC_ASPDPOTION2
+	val1: + ASPD (Renewal)
+	val2: +% ASPD (Pre-Renewal)
+
+SC_SPEEDUP0	(SI_MOVHASTE_HORSE)
+	desc: Increase/change walkspeed rate. This effect won't be stacked with bonus bSpeedRate
+	val1: +% Walkspeed
+
+SC_SPEEDUP1	(SI_SPEEDPOTION1)
+	desc: Increase/change walkspeed rate. This effect won't be stacked with bonus bSpeedRate
+	val1: +% Walkspeed
+
+SC_ATKPOTION	(SI_PLUSATTACKPOWER)
+	desc: Increase Atk
+	val1: +Atk
+
+SC_MATKPOTION	(SI_PLUSMAGICPOWER)
+	desc: Increase MAtk
+	val1: +MAtk
+
+SC_WEDDING	()
+	desc: Set Movement Speed to 100; Call clif_changelook; Set OPTION_WEDDING
+	val1:
+
+SC_SLOWDOWN	()
+	desc: Reduce walkspeed rate
+	val1: -% Walkspeed
+
+SC_ANKLE	(SI_ANKLESNARE)
+	desc: Set DEF to (AGI*50); Can't move
+	val1:
+
+SC_KEEPING	()
+	desc: Set DEF to 90
+	val1:
+
+SC_BARRIER	(SI_BARRIER)
+	desc: Set DEF to 100
+	val1:
+
+SC_STRIPWEAPON	(SI_STRIPWEAPON)
+	desc: Unequip weapon; On mob ATK -25%
+	val1:
+
+SC_STRIPSHIELD	(SI_STRIPSHIELD)
+	desc: Unequip shield; On mob DEF -15%
+	val1:
+
+SC_STRIPARMOR	(SI_STRIPARMOR)
+	desc: Unequip armor; On mob VIT -40%
+	val1:
+
+SC_STRIPHELM	(SI_STRIPHELM)
+	desc: Unequip helm; On mob INT -40%
+	val1:
+
+SC_CP_WEAPON	(SI_CP_WEAPON)
+	desc: Protects equipped weapon from damage and strip skill
+	val1:
+
+SC_CP_SHIELD	(SI_CP_SHIELD)
+	desc: Protects equipped shield from damage and strip skill
+	val1:
+
+SC_CP_ARMOR	(SI_CP_ARMOR)
+	desc: Protects equipped armor from damage and strip skill
+	val1:
+
+SC_CP_HELM	(SI_CP_HELM)
+	desc: Protects equipped helm from damage and strip skill
+	val1:
+
+SC_AUTOGUARD	(SI_AUTOGUARD)
+	desc: Blocks short and long range physical attacks at a certain chance, and stops the caster for 0.3 seconds if it's activated
+	val1:
+
+SC_REFLECTSHIELD	(SI_REFLECTSHIELD)
+	desc: Reflects (10+(3*Skill Lv))% of short ranged physical attack back to the attacker
+	val1:
+
+SC_SPLASHER	(SI_SPLASHER)
+	desc: This skill will only work once the target's HP is 1/3 or less of its Max HP. When struck by this skill, the target will explode and damage other enemies in it's vicinity
+	val1:
+
+SC_PROVIDENCE	(SI_PROVIDENCE)
+	desc: Increase party members' resistance to RC_Demon and Ele_Holy monsters
+	val1:
+
+SC_DEFENDER	(SI_DEFENDER)
+	desc: Decrease (5+(15*Skill Lv))% damage taken from long range attack; Decrease (25+(5*Skill Lv)) ASPD
+	val1:
+
+SC_MAGICROD	(SI_MAGICROD)
+	desc: Gain (Skill Lv*20)% of SP consumed by the skill used from enemy; Damage received becomes 0; Drain 20% of enemy's Max SP
+	val1:
+
+SC_SPELLBREAKER	()
+	desc: Gain SP used by enemy to cast the spell, and interrupt the magic cast. At lv 5, gain 1% from enemy max hp.
+	val1:
+
+SC_AUTOSPELL	(SI_AUTOSPELL)
+	desc: Auto cast several learned magic spells by using 2/3 of SP cost of the skill, but only when attacking with physical attacks.
+	val1:
+
+SC_SIGHTTRASHER	()
+	desc: (not exist)
+	val1:
+
+SC_AUTOBERSERK	(SI_AUTOBERSERK)
+	desc: If HP<25%, set SC_PROVOKE lv 10 on self
+	val1:
+
+SC_SPEARQUICKEN	(SI_SPEARQUICKEN)
+	desc: When using spear, +ASPD (20+(1*Skill Lv))%, +CRIT (3+(10*Skill Lv)), +FLEE (2*Skill Lv)
+	val1:
+
+SC_AUTOCOUNTER	(SI_AUTOCOUNTER)
+	desc: Hitrate +20%; If attacked by close range, automatically retaliate with crit*2
+	val1:
+
+SC_SIGHT	()
+	desc: Reveal hidden enemy on 3*3 range; Set OPTION_SIGHT
+	val1:
+
+SC_SAFETYWALL	()
+	desc: Block short ranged attack; Set OPTION_RUWACH
+	val1:
+
+SC_RUWACH	()
+	desc: Reveal hidden target and deal little damages if enemy is under SC_HIDING/SC_CLOAKING/SC_CAMOUFLAGE/SC_CLOAKINGEXCEED; Set OPTION_RUWACH
+	val1:
+
+SC_EXTREMITYFIST	(SI_EXTREMITYFIST)
+	desc: Stop SP Regeneration by setting RGN_SP
+	val1:
+
+SC_EXPLOSIONSPIRITS	(SI_EXPLOSIONSPIRITS)
+	desc: Stop SP Regeneration by setting RGN_SP; +Crit
+	val1:
+
+SC_COMBO	()
+	desc:
+	val1:
+
+SC_BLADESTOP_WAIT	()
+	desc:
+	val1:
+
+SC_BLADESTOP	(SI_BLADESTOP)
+	desc: Stops player and target; Set OPT3_BLADESTOP
+	val1:
+
+SC_FIREWEAPON	(SI_FIREWEAPON)
+	desc: Change weapon element to Fire element
+	val1:
+
+SC_WATERWEAPON	(SI_WATERWEAPON)
+	desc: Change weapon element to Water element
+	val1:
+
+SC_WINDWEAPON	(SI_WINDWEAPON)
+	desc: Change weapon element to Wind element
+	val1:
+
+SC_EARTHWEAPON	(SI_EARTHWEAPON)
+	desc: Change weapon element to Earth element
+	val1:
+
+SC_VOLCANO	(SI_LANDENDOW)
+	desc: +watk of ELE_FIRE user
+	val1:
+
+SC_DELUGE	(SI_LANDENDOW)
+	desc: +Max HP of ELE_WATER user
+	val1:
+
+SC_VIOLENTGALE	(SI_LANDENDOW)
+	desc: +FLEE of ELE_WIND user
+	val1:
+
+SC_WATK_ELEMENT	()
+	desc: Adds a percent of damage as an element
+	val1:
+
+SC_ARMOR	()
+	desc: Reduce damage received by 80 from long ranged weapon/misc attacks
+	val1:
+
+SC_ARMOR_ELEMENT	()
+	desc: Adjust element resistance by percentage
+	val1: Water resistance
+	val2: Earth resistance
+	val3: Fire resistance
+	val4: Wind resistance
+
+SC_NOCHAT	()
+	desc: Can't chat, pick item, drop item
+	val1:
+
+SC_BABY	(SI_BABY)
+	desc:
+	val1:
+
+SC_AURABLADE	(SI_AURABLADE)
+	desc: Set OPT3_AURABLADE; Add damage by (20*Skill Lv) which ignore caster's accuracy rate/target's DEF
+	val1:
+
+SC_PARRYING	(SI_PARRYING)
+	desc: Block using a 2H-Sword with chance (20+(3*Skill Lv))%
+	val1:
+
+SC_CONCENTRATION	(SI_CONCENTRATION)
+	desc: Lv 1 Endurace effect; +WATK; +HIT; -DEF
+	val1:
+	val2: 5*val1;		// Batk/Watk Increase
+	val3: 10*val1;	// Hit Increase
+	val4: 5*val1;		// Def reduction
+
+SC_TENSIONRELAX	(SI_TENSIONRELAX)
+	desc: Increase HP regeneration rate while sitting
+	val1:
+	val2: 12;		// SP cost
+	val3: tick/val4;
+	val4: 10000;	// Decrease at 10secs intervals.
+
+SC_BERSERK	(SI_BERSERK)
+	desc: Stop HP+SP Regen; Can't use skill; Can't chat; -FLEE; +Max HP; +Movement Speed; +ATK; Set OPT3_BERSERK; -5%HP per 10 second; Set DEF+MDEF to 0
+	val1:
+	val2: HP Penalty (5% of Max HP)
+	val3: Skill duration
+	val4: Interval of HP Penalty
+
+SC_FURY	()
+	desc:
+	val1:
+
+SC_GOSPEL	(SI_GOSPEL)
+	desc: Can't move; Gives a random status to party member and also enemy.
+	val1:
+
+SC_ASSUMPTIO	(RE: SI_ASSUMPTIO2. Pre-RE: SI_ASSUMPTIO)
+	desc: HP_ASSUMPTIO's effect
+	val1: Level (unused)
+
+SC_BASILICA	()
+	desc: Can't move; Can't use skill except the Basilica caster to cancel the basilica itself; Clear the skill area; Knockback enemy except Boss
+	val1:
+
+SC_GUILDAURA	()
+	desc:
+	val1:
+
+SC_MAGICPOWER	(SI_MAGICPOWER)
+	desc: +MATK by (Skill Lv*5)% for the next magic skill that is cast
+	val1:
+
+SC_EDP	(SI_EDP)
+	desc: +WATK by (100+(Skill Lv*80))
+	val1: Skill Lv
+	val2: Chance to Poison enemy (val1+2)%
+	val3: Damage increased by (50*(val1+1))
+
+SC_TRUESIGHT	(SI_TRUESIGHT)
+	desc: All stat +5; Damage +(2*Skill Lv)%; Crit +(Skill Lv); Hit +(3*Skill Lv)%
+	val1: Skill Lv
+	val2: Crit
+	val3: Hit
+
+SC_WINDWALK	(SI_WINDWALK)
+	desc: +Flee; +Movement speed
+	val1: Skill Lv
+	val2: Flee
+
+SC_MELTDOWN	(SI_MELTDOWN)
+	desc: Breaks target's weapon and armor at a certain chance
+	val1: Skill Lv
+	val2: Chance to break weapon (100*Skill Lv)
+	val3: Change to break armor (70*Skill Lv)
+
+SC_CARTBOOST	(SI_CARTBOOST)
+	desc:
+	val1:
+
+SC_CHASEWALK	(SI_CHASEWALK)
+	desc:
+	val1:
+
+SC_REJECTSWORD	(SI_REJECTSWORD)
+	desc:
+	val1:
+
+SC_MARIONETTE	(SI_MARIONETTE)
+	desc:
+	val1:
+
+SC_MARIONETTE2	(SI_MARIONETTE2)
+	desc:
+	val1:
+
+SC_CHANGEUNDEAD	()
+	desc:
+	val1:
+
+SC_JOINTBEAT	()
+	desc:
+	val1:
+
+SC_MINDBREAKER	(SI_MINDBREAKER)
+	desc:
+	val1:
+
+SC_MEMORIZE	(SI_MEMORIZE)
+	desc:
+	val1:
+
+SC_FOGWALL	(SI_FOGWALL)
+	desc:
+	val1:
+
+SC_SPIDERWEB	(SI_SPIDERWEB)
+	desc:
+	val1:
+
+SC_DEVOTION	(SI_DEVOTION)
+	desc:
+	val1:
+
+SC_SACRIFICE	()
+	desc:
+	val1:
+
+SC_STEELBODY	()
+	desc:
+	val1:
+
+SC_ORCISH	()
+	desc:
+	val1:
+
+SC_READYSTORM	()
+	desc:
+	val1:
+
+SC_READYDOWN	()
+	desc:
+	val1:
+
+SC_READYTURN	()
+	desc:
+	val1:
+
+SC_READYCOUNTER	()
+	desc:
+	val1:
+
+SC_DODGE	()
+	desc:
+	val1:
+
+SC_RUN	()
+	desc:
+	val1:
+
+SC_SHADOWWEAPON	()
+	desc:
+	val1:
+
+SC_ADRENALINE2	()
+	desc:
+	val1:
+
+SC_GHOSTWEAPON	()
+	desc:
+	val1:
+
+SC_KAIZEL	()
+	desc:
+	val1:
+
+SC_KAAHI	()
+	desc:
+	val1:
+
+SC_KAUPE	()
+	desc:
+	val1:
+
+SC_ONEHAND	()
+	desc:
+	val1:
+
+SC_PRESERVE	()
+	desc:
+	val1:
+
+SC_BATTLEORDERS	()
+	desc:
+	val1:
+
+SC_REGENERATION	()
+	desc:
+	val1:
+
+SC_DOUBLECAST	()
+	desc:
+	val1:
+
+SC_GRAVITATION	()
+	desc:
+	val1:
+
+SC_MAXOVERTHRUST	()
+	desc:
+	val1:
+
+SC_LONGING	()
+	desc:
+	val1:
+
+SC_HERMODE	()
+	desc:
+	val1:
+
+SC_SHRINK	()
+	desc:
+	val1:
+
+SC_SIGHTBLASTER	()
+	desc:
+	val1:
+
+SC_WINKCHARM	()
+	desc:
+	val1:
+
+SC_CLOSECONFINE	()
+	desc:
+	val1:
+
+SC_CLOSECONFINE2	()
+	desc:
+	val1:
+
+SC_DANCING	()
+	desc:
+	val1:
+
+SC_ELEMENTALCHANGE	(SI_ARMOR_PROPERTY)
+	desc: Change armor element
+	val1: Element level
+	val2: Element (see doc/item_bonus.txt)
+
+SC_RICHMANKIM	()
+	desc:
+	val1:
+
+SC_ETERNALCHAOS	()
+	desc:
+	val1:
+
+SC_DRUMBATTLE	()
+	desc:
+	val1:
+
+SC_NIBELUNGEN	()
+	desc:
+	val1:
+
+SC_ROKISWEIL	()
+	desc:
+	val1:
+
+SC_INTOABYSS	()
+	desc:
+	val1:
+
+SC_SIEGFRIED	()
+	desc:
+	val1:
+
+SC_WHISTLE	()
+	desc:
+	val1:
+
+SC_ASSNCROS	()
+	desc:
+	val1:
+
+SC_POEMBRAGI	()
+	desc:
+	val1:
+
+SC_APPLEIDUN	()
+	desc:
+	val1:
+
+SC_MODECHANGE	()
+	desc:
+	val1:
+
+SC_HUMMING	()
+	desc:
+	val1:
+
+SC_DONTFORGETME	()
+	desc:
+	val1:
+
+SC_FORTUNE	()
+	desc:
+	val1:
+
+SC_SERVICE4U	()
+	desc:
+	val1:
+
+SC_STOP	()
+	desc:
+	val1:
+
+SC_SPURT	()
+	desc:
+	val1:
+
+SC_SPIRIT	()
+	desc:
+	val1:
+
+SC_COMA	()
+	desc: Vanish HP to 1 and SP to 0
+	val1: (meaningless)
+	val2: If 1 means do not remove SP
+
+SC_INTRAVISION	()
+	desc:
+	val1:
+
+SC_INCALLSTATUS	()
+	desc: Increase all status
+	val1: +AllStats
+
+SC_INCSTR	()
+	desc: Increase STR
+	val1: + STR
+
+SC_INCAGI	()
+	desc: Increase AGI
+	val1: + AGI
+
+SC_INCVIT	()
+	desc: Incrase VIT
+	val1: + VIT
+
+SC_INCINT	()
+	desc: Increase INT
+	val1: + INT
+
+SC_INCDEX	()
+	desc: Increase DEX
+	val1: + DEX
+
+SC_INCLUK	()
+	desc: Increase LUK
+	val1: + Luk
+
+SC_INCHIT	()
+	desc: Increase Hit
+	val1: + Hit
+
+SC_INCHITRATE	()
+	desc: Incrase Hit
+	val1: +% Hit
+
+SC_INCFLEE	()
+	desc: Increase Flee
+	val1: + Flee
+
+SC_INCFLEERATE	()
+	desc: Incrase Flee
+	val1: +% Flee
+
+SC_INCMHPRATE	()
+	desc: Increase MaxHP
+	val1: +% MaxHP
+
+SC_INCMSPRATE	()
+	desc: Incrase Max SP
+	val1: +% MaxSP
+
+SC_INCATKRATE	()
+	desc: Increase Base Attack
+	val1: +% Atk
+
+SC_INCMATKRATE	()
+	desc: Increase MATK
+	val1: +% Matk
+
+SC_INCDEFRATE	()
+	desc: Increase Defense
+	val1: +% Def
+
+SC_STRFOOD	(SI_STRFOOD)
+	desc: Increase STR (cannot be stacked with SC_FOOD_STR_CASH, ignored if value is lower)
+	val1: +STR
+
+SC_AGIFOOD	(SI_AGIFOOD)
+	desc: Increase AGI (cannot be stacked with SC_FOOD_AGI_CASH, ignored if value is lower)
+	val1: +AGI
+
+SC_VITFOOD	(SI_VITFOOD)
+	desc: Increase VIT (cannot be stacked with SC_FOOD_VIT_CASH, ignored if value is lower)
+	val1: +VIT
+
+SC_INTFOOD	(SI_FOODINT)
+	desc: Increase INT (cannot be stacked with SC_FOOD_INT_CASH, ignored if value is lower)
+	val1: +INT
+
+SC_DEXFOOD	(SI_DEXFOOD)
+	desc: Increase DEX (cannot be stacked with SC_FOOD_DEX_CASH, ignored if value is lower)
+	val1: +DEX
+
+SC_LUKFOOD	(SI_LUKFOOD)
+	desc: Increase LUK (cannot be stacked with SC_FOOD_LUK_CASH, ignored if value is lower)
+	val1: +LUK
+
+SC_HITFOOD	(SI_HITFOOD)
+	desc: Increase HIT (food-type effect)
+	val1: +Hit
+
+SC_FLEEFOOD	(SI_FLEEFOOD)
+	desc: Increase FLEE (food-type effect)
+	val1: +Flee
+
+SC_BATKFOOD	(SI_BATKFOOD)
+	desc: Increase Base Attack (food-type effect)
+	val1: +BaseAttack
+
+SC_WATKFOOD	(SI_WATKFOOD)
+	desc: Increase Weapon Attack (food-type effect)
+	val1: +WeaponAttack
+
+SC_MATKFOOD	(SI_MATKFOOD)
+	desc: Increase Magic Attack (food-type effect)
+	val1: +MagicAttack
+
+SC_SCRESIST	()
+	desc:
+	val1:
+
+SC_XMAS	()
+	desc:
+	val1:
+
+SC_WARM	()
+	desc:
+	val1:
+
+SC_SUN_COMFORT	()
+	desc:
+	val1:
+
+SC_MOON_COMFORT	()
+	desc:
+	val1:
+
+SC_STAR_COMFORT	()
+	desc:
+	val1:
+
+SC_FUSION	()
+	desc:
+	val1:
+
+SC_SKILLRATE_UP	()
+	desc:
+	val1:
+
+SC_SKE	()
+	desc:
+	val1:
+
+SC_KAITE	()
+	desc:
+	val1:
+
+SC_SWOO	()
+	desc:
+	val1:
+
+SC_SKA	()
+	desc:
+	val1:
+
+SC_EARTHSCROLL	()
+	desc:
+	val1:
+
+SC_MIRACLE	()
+	desc:
+	val1:
+
+SC_MADNESSCANCEL	()
+	desc:
+	val1:
+
+SC_ADJUSTMENT	()
+	desc:
+	val1:
+
+SC_INCREASING	(SI_ACCURACY)
+	desc: Increase some statuses (hit, dex, agi), GS_INCREASING effect
+	val1: (hardocded)
+
+SC_GATLINGFEVER	()
+	desc:
+	val1:
+
+SC_TATAMIGAESHI	()
+	desc:
+	val1:
+
+SC_UTSUSEMI	()
+	desc:
+	val1:
+
+SC_BUNSINJYUTSU	()
+	desc:
+	val1:
+
+SC_KAENSIN	()
+	desc:
+	val1:
+
+SC_SUITON	()
+	desc:
+	val1:
+
+SC_NEN	()
+	desc:
+	val1:
+
+SC_KNOWLEDGE	()
+	desc:
+	val1:
+
+SC_SMA	()
+	desc:
+	val1:
+
+SC_FLING	()
+	desc:
+	val1:
+
+SC_AVOID	()
+	desc:
+	val1:
+
+SC_CHANGE	()
+	desc:
+	val1:
+
+SC_BLOODLUST	()
+	desc:
+	val1:
+
+SC_FLEET	()
+	desc:
+	val1:
+
+SC_SPEED	()
+	desc:
+	val1:
+
+SC_DEFENCE	()
+	desc: Increase Defense, HAMI_DEFENCE effect
+	val1: (none)
+	val2: + Def(Pre-renewal) or VIT (Renewal)
+
+SC_INCASPDRATE	()
+	desc: Increase ASPD
+	val1: +% ASPD
+
+SC_INCFLEE2	(SI_PLUSAVOIDVALUE)
+	desc: Increase perfect flee
+	val1: + Flee2
+
+SC_JAILED	()
+	desc:
+	val1:
+
+SC_ENCHANTARMS	()
+	desc:
+	val1:
+
+SC_MAGICALATTACK	()
+	desc:
+	val1:
+
+SC_ARMORCHANGE	()
+	desc:
+	val1:
+
+SC_CRITICALWOUND	()
+	desc:
+	val1:
+
+SC_MAGICMIRROR	()
+	desc:
+	val1:
+
+SC_SLOWCAST	()
+	desc:
+	val1:
+
+SC_SUMMER	()
+	desc:
+	val1:
+
+SC_EXPBOOST	(SI_EXPBOOST)
+	desc: Increase EXP rate
+	val1: +% EXP
+
+SC_ITEMBOOST	(SI_ITEMBOOST)
+	desc: Increase Drop rate
+	val1: +% Drop
+
+SC_BOSSMAPINFO	(SI_BOSSMAPINFO)
+	desc:
+	val1:
+
+SC_LIFEINSURANCE	(SI_LIFEINSURANCE)
+	desc: Remove death pleanlties
+	val1:
+
+SC_INCCRI	(SI_INCCRI)
+	desc: Increase critical value
+	val1: + Critical (100% = 1000)
+
+SC_INCDEF	()	/* NOT AVAILABLE YET */
+	desc:
+	val1:
+
+SC_INCBASEATK	()	/* NOT AVAILABLE YET */
+	desc:
+	val1:
+
+SC_FASTCAST	()	/* NOT AVAILABLE YET */
+	desc:
+	val1:
+
+SC_MDEF_RATE	(SI_MDEF_RATE)
+	desc: Increase MDef by %
+	val1: +% Mdef
+
+SC_HPREGEN	()	/* NOT AVAILABLE YET */
+	desc:
+	val1:
+
+SC_INCHEALRATE	(SI_INCHEALRATE)
+	desc: Increase Heal power
+	val1: +% Heal
+
+SC_PNEUMA	()
+	desc:
+	val1:
+
+SC_AUTOTRADE	()
+	desc:
+	val1:
+
+SC_KSPROTECTED	()
+	desc:
+	val1:
+
+SC_ARMOR_RESIST	()
+	desc: Adjust element resistance by percentage
+	val1: Water resistance
+	val2: Earth resistance
+	val3: Fire resistance
+	val4: Wind resistance
+
+SC_SPCOST_RATE	(SI_ATKER_BLOOD)
+	desc: Reduce SP cost
+	val1: +% Rate
+
+SC_COMMONSC_RESIST	(SI_TARGET_BLOOD)
+	desc: Increase resistance of status changes, only againts SC_STONE, SC_FREEZE, SC_STUN, SC_SLEEP, SC_POISON, SC_CURSE, SC_SILENCE, SC_CONFUSION, SC_BLIND, SC_BLEEDING, and SC_DPOISON
+	val1: +% Resistance
+
+SC_SEVENWIND	()
+	desc:
+	val1:
+
+SC_DEF_RATE	(SI_DEF_RATE)
+	desc: Increase Def by %
+	val1: +% Def
+
+SC_SPREGEN	()	/* NOT AVAILABLE YET */
+	desc:
+	val1:
+
+SC_WALKSPEED	()
+	desc:
+	val1:
+
+SC_MERC_FLEEUP	()
+	desc:
+	val1:
+
+SC_MERC_ATKUP	()
+	desc:
+	val1:
+
+SC_MERC_HPUP	()
+	desc:
+	val1:
+
+SC_MERC_SPUP	()
+	desc:
+	val1:
+
+SC_MERC_HITUP	()
+	desc:
+	val1:
+
+SC_MERC_QUICKEN	()
+	desc:
+	val1:
+
+SC_REBIRTH	()
+	desc:
+	val1:
+
+SC_SKILLCASTRATE	()	/* NOT AVAILABLE YET */
+	desc:
+	val1:
+
+SC_DEFRATIOATK	()	/* NOT AVAILABLE YET */
+	desc:
+	val1:
+
+SC_HPDRAIN	()	/* NOT AVAILABLE YET */
+	desc:
+	val1:
+
+SC_SKILLATKBONUS	()	/* NOT AVAILABLE YET */
+	desc:
+	val1:
+
+SC_ITEMSCRIPT	()
+	desc: Timer script from other item script
+	val1: Item ID
+	val2: Status Icon
+
+SC_S_LIFEPOTION	(SI_S_LIFEPOTION)
+	desc: Increase HP each interval
+	val1: if < 0 will be percentage. If > 0 is fixed HP heal value
+	val2: Interval per seconds
+
+SC_L_LIFEPOTION	(SI_L_LIFEPOTION)
+	desc: Increase HP each interval
+	val1: if < 0 will be percentage. If > 0 is fixed HP heal value
+	val2: Interval per seconds
+
+SC_JEXPBOOST	()
+	desc:
+	val1:
+
+SC_IGNOREDEF	()	/* NOT AVAILABLE YET */
+	desc:
+	val1:
+
+SC_HELLPOWER	()
+	desc:
+	val1:
+
+SC_INVINCIBLE	()
+	desc:
+	val1:
+
+SC_INVINCIBLEOFF	()
+	desc:
+	val1:
+
+SC_MANU_ATK	(SI_MANU_ATK)
+	desc: Increase Weapon Damage rate to Manuk monsters
+	val1: +% Damage
+	val2: (hardcoded to 1 mark as Manuk group bonus)
+
+SC_MANU_DEF	(SI_MANU_DEF)
+	desc: Increase Defense rate against Manuk monsters
+	val1: +% Defense
+	val2: (hardcoded to 1 mark as Manuk group bonus)
+
+SC_SPL_ATK	(SI_SPL_ATK)
+	desc: Increase Weapon Damage rate to Splendide Monster
+	val1: +% Damage
+	val2: (hardcoded to 1 mark as Splendide group bonus)
+
+SC_SPL_DEF	(SI_SPL_DEF)
+	desc: Increase Defense rate against Splendide Monster
+	val1: +% Defense
+	val2: (hardcoded to 1 mark as Splendide group bonus)
+
+SC_MANU_MATK	(SI_MANU_MATK)
+	desc: Increase Magic Damage rate to Manuk monsters
+	val1: +% Magic damage
+	val2: (hardcoded to 1 mark as Manuk group bonus)
+
+SC_SPL_MATK	(SI_SPL_MATK)
+	desc: Increase Magic Damage to Splendide Monster
+	val1: +% Damage
+	val2: (hardcoded to 1 mark as Splendide group bonus)
+
+SC_FOOD_STR_CASH	(SI_FOOD_STR_CASH)
+	desc: Increase STR (cannot be stacked with SC_STRFOOD, ignored if value is lower)
+	val1: +STR
+
+SC_FOOD_AGI_CASH	(SI_FOOD_AGI_CASH)
+	desc: Increase AGI (cannot be stacked with SC_AGIFOOD, ignored if value is lower)
+	val1: +AGI
+
+SC_FOOD_VIT_CASH	(SI_FOOD_VIT_CASH)
+	desc: Increase VIT (cannot be stacked with SC_VITFOOD, ignored if value is lower)
+	val1: +VIT
+
+SC_FOOD_DEX_CASH	(SI_FOOD_DEX_CASH)
+	desc: Increase DEX (cannot be stacked with SC_DEXFOOD, ignored if value is lower)
+	val1: +DEX
+
+SC_FOOD_INT_CASH	(SI_FOOD_INT_CASH)
+	desc: Increase INT (cannot be stacked with SC_INTFOOD, ignored if value is lower)
+	val1: +INT
+
+SC_FOOD_LUK_CASH	(SI_FOOD_LUK_CASH)
+	desc: Increase LUK (cannot be stacked with SC_LUKFOOD, ignored if value is lower)
+	val1: +LUK
+
+SC_FEAR	()
+	desc:
+	val1:
+
+SC_BURNING	()
+	desc:
+	val1:
+
+SC_FREEZING	()
+	desc:
+	val1:
+
+SC_ENCHANTBLADE	()
+	desc:
+	val1:
+
+SC_DEATHBOUND	()
+	desc:
+	val1:
+
+SC_MILLENNIUMSHIELD	()
+	desc:
+	val1:
+
+SC_CRUSHSTRIKE	()
+	desc:
+	val1:
+
+SC_REFRESH	()
+	desc:
+	val1:
+
+SC_REUSE_REFRESH	()
+	desc:
+	val1:
+
+SC_GIANTGROWTH	()
+	desc:
+	val1:
+
+SC_STONEHARDSKIN	()
+	desc:
+	val1:
+
+SC_VITALITYACTIVATION	()
+	desc:
+	val1:
+
+SC_STORMBLAST	()
+	desc:
+	val1:
+
+SC_FIGHTINGSPIRIT	()
+	desc:
+	val1:
+
+SC_ABUNDANCE	()
+	desc:
+	val1:
+
+SC_ADORAMUS	()
+	desc:
+	val1:
+
+SC_EPICLESIS	()
+	desc:
+	val1:
+
+SC_ORATIO	()
+	desc:
+	val1:
+
+SC_LAUDAAGNUS	()
+	desc:
+	val1:
+
+SC_LAUDARAMUS	()
+	desc:
+	val1:
+
+SC_RENOVATIO	()
+	desc:
+	val1:
+
+SC_EXPIATIO	()
+	desc:
+	val1:
+
+SC_DUPLELIGHT	()
+	desc:
+	val1:
+
+SC_SECRAMENT	()
+	desc:
+	val1:
+
+SC_WHITEIMPRISON	()
+	desc:
+	val1:
+
+SC_MARSHOFABYSS	()
+	desc:
+	val1:
+
+SC_RECOGNIZEDSPELL	()
+	desc:
+	val1:
+
+SC_STASIS	()
+	desc:
+	val1:
+
+SC_SPHERE_1	()
+	desc:
+	val1:
+
+SC_SPHERE_2	()
+	desc:
+	val1:
+
+SC_SPHERE_3	()
+	desc:
+	val1:
+
+SC_SPHERE_4	()
+	desc:
+	val1:
+
+SC_SPHERE_5	()
+	desc:
+	val1:
+
+SC_READING_SB	()
+	desc:
+	val1:
+
+SC_FREEZE_SP	()
+	desc:
+	val1:
+
+SC_FEARBREEZE	()
+	desc:
+	val1:
+
+SC_ELECTRICSHOCKER	()
+	desc:
+	val1:
+
+SC_WUGDASH	()
+	desc:
+	val1:
+
+SC_BITE	()
+	desc:
+	val1:
+
+SC_CAMOUFLAGE	()
+	desc:
+	val1:
+
+SC_ACCELERATION	()
+	desc:
+	val1:
+
+SC_HOVERING	()
+	desc:
+	val1:
+
+SC_SHAPESHIFT	()
+	desc:
+	val1:
+
+SC_INFRAREDSCAN	()
+	desc:
+	val1:
+
+SC_ANALYZE	()
+	desc:
+	val1:
+
+SC_MAGNETICFIELD	()
+	desc:
+	val1:
+
+SC_NEUTRALBARRIER	()
+	desc:
+	val1:
+
+SC_NEUTRALBARRIER_MASTER	()
+	desc:
+	val1:
+
+SC_STEALTHFIELD	()
+	desc:
+	val1:
+
+SC_STEALTHFIELD_MASTER	()
+	desc:
+	val1:
+
+SC_OVERHEAT	()
+	desc:
+	val1:
+
+SC_OVERHEAT_LIMITPOINT	()
+	desc:
+	val1:
+
+SC_VENOMIMPRESS	()
+	desc:
+	val1:
+
+SC_POISONINGWEAPON	()
+	desc:
+	val1:
+
+SC_WEAPONBLOCKING	()
+	desc:
+	val1:
+
+SC_CLOAKINGEXCEED	()
+	desc:
+	val1:
+
+SC_HALLUCINATIONWALK	()
+	desc:
+	val1:
+
+SC_HALLUCINATIONWALK_POSTDELAY	()
+	desc:
+	val1:
+
+SC_ROLLINGCUTTER	()
+	desc:
+	val1:
+
+SC_TOXIN	()
+	desc:
+	val1:
+
+SC_PARALYSE	()
+	desc:
+	val1:
+
+SC_VENOMBLEED	(SI_VENOMBLEED)
+	desc:
+	val1:
+
+SC_MAGICMUSHROOM	()
+	desc:
+	val1:
+
+SC_DEATHHURT	()
+	desc:
+	val1:
+
+SC_PYREXIA	()
+	desc:
+	val1:
+
+SC_OBLIVIONCURSE	()
+	desc:
+	val1:
+
+SC_LEECHESEND	()
+	desc:
+	val1:
+
+SC_REFLECTDAMAGE	()
+	desc:
+	val1:
+
+SC_FORCEOFVANGUARD	()
+	desc:
+	val1:
+
+SC_SHIELDSPELL_DEF	()
+	desc:
+	val1:
+
+SC_SHIELDSPELL_MDEF	()
+	desc:
+	val1:
+
+SC_SHIELDSPELL_REF	()
+	desc:
+	val1:
+
+SC_EXEEDBREAK	()
+	desc:
+	val1:
+
+SC_PRESTIGE	()
+	desc:
+	val1:
+
+SC_BANDING	()
+	desc:
+	val1:
+
+SC_BANDING_DEFENCE	()
+	desc:
+	val1:
+
+SC_EARTHDRIVE	()
+	desc:
+	val1:
+
+SC_INSPIRATION	()
+	desc:
+	val1:
+
+SC_SPELLFIST	()
+	desc:
+	val1:
+
+SC_CRYSTALIZE	()
+	desc:
+	val1:
+
+SC_STRIKING	()
+	desc:
+	val1:
+
+SC_WARMER	()
+	desc:
+	val1:
+
+SC_VACUUM_EXTREME	()
+	desc:
+	val1:
+
+SC_PROPERTYWALK	()
+	desc:
+	val1:
+
+SC_SWINGDANCE	()
+	desc:
+	val1:
+
+SC_SYMPHONYOFLOVER	()
+	desc:
+	val1:
+
+SC_MOONLITSERENADE	()
+	desc:
+	val1:
+
+SC_RUSHWINDMILL	()
+	desc:
+	val1:
+
+SC_ECHOSONG	()
+	desc:
+	val1:
+
+SC_HARMONIZE	()
+	desc:
+	val1:
+
+SC_VOICEOFSIREN	()
+	desc:
+	val1:
+
+SC_DEEPSLEEP	()
+	desc:
+	val1:
+
+SC_SIRCLEOFNATURE	()
+	desc:
+	val1:
+
+SC_GLOOMYDAY	()
+	desc:
+	val1:
+
+SC_GLOOMYDAY_SK	()
+	desc:
+	val1:
+
+SC_SONGOFMANA	()
+	desc:
+	val1:
+
+SC_DANCEWITHWUG	()
+	desc:
+	val1:
+
+SC_SATURDAYNIGHTFEVER	()
+	desc:
+	val1:
+
+SC_LERADSDEW	()
+	desc:
+	val1:
+
+SC_MELODYOFSINK	()
+	desc:
+	val1:
+
+SC_BEYONDOFWARCRY	()
+	desc:
+	val1:
+
+SC_UNLIMITEDHUMMINGVOICE	()
+	desc:
+	val1:
+
+SC_SITDOWN_FORCE	()
+	desc:
+	val1:
+
+SC_NETHERWORLD	()
+	desc:
+	val1:
+
+SC_CRESCENTELBOW	()
+	desc:
+	val1:
+
+SC_CURSEDCIRCLE_ATKER	()
+	desc:
+	val1:
+
+SC_CURSEDCIRCLE_TARGET	()
+	desc:
+	val1:
+
+SC_LIGHTNINGWALK	()
+	desc:
+	val1:
+
+SC_RAISINGDRAGON	()
+	desc:
+	val1:
+
+SC_GT_ENERGYGAIN	()
+	desc:
+	val1:
+
+SC_GT_CHANGE	()
+	desc:
+	val1:
+
+SC_GT_REVITALIZE	()
+	desc:
+	val1:
+
+SC_GN_CARTBOOST	()
+	desc:
+	val1:
+
+SC_THORNSTRAP	()
+	desc:
+	val1:
+
+SC_BLOODSUCKER	()
+	desc:
+	val1:
+
+SC_SMOKEPOWDER	()
+	desc:
+	val1:
+
+SC_TEARGAS	()
+	desc:
+	val1:
+
+SC_MANDRAGORA	()
+	desc:
+	val1:
+
+SC_STOMACHACHE	(SI_STOMACHACHE)
+	desc: Reduce all stats
+	val1: -AllStats
+
+SC_MYSTERIOUS_POWDER	(SI_MYSTERIOUS_POWDER)
+	desc: Reduce Max HP rate
+	val1: ReduceValue (don't use - sign to reduce)
+
+SC_MELON_BOMB	(SI_MELON_BOMB)
+	desc: Reduce ASPD and move speed
+	val1: ReduceValue (don't use - sign to reduce)
+
+SC_BANANA_BOMB	(SI_BANANA_BOMB)
+	desc: Reduce LUK rate
+	val1: ReduceValue (don't use - sign to reduce)
+
+SC_BANANA_BOMB_SITDOWN	(SI_BANANA_BOMB_SITDOWN_POSTDELAY)
+	desc: Force player to sit
+	val1:
+
+SC_SAVAGE_STEAK	(SI_SAVAGE_STEAK)
+	desc: Increase STR
+	val1: +STR
+
+SC_COCKTAIL_WARG_BLOOD	(SI_COCKTAIL_WARG_BLOOD)
+	desc: Increase INT
+	val1: +INT
+
+SC_MINOR_BBQ	(SI_MINOR_BBQ)
+	desc: Increase VIT
+	val1: +VIT
+
+SC_SIROMA_ICE_TEA	(SI_SIROMA_ICE_TEA)
+	desc: Increase DEX
+	val1: +DEX
+
+SC_DROCERA_HERB_STEAMED	(SI_DROCERA_HERB_STEAMED)
+	desc: Increase AGI
+	val1: +AGI
+
+SC_PUTTI_TAILS_NOODLES	(SI_PUTTI_TAILS_NOODLES)
+	desc: Increase LUK
+	val1: +LUK
+
+SC_BOOST500	(SI_BOOST500)
+	desc: Increase ASPD rate
+	val1: +% Aspd
+
+SC_FULL_SWING_K	(SI_FULL_SWING_K)
+	desc: Increase Base Atk
+	val1: +BaseAtk
+
+SC_MANA_PLUS	(SI_MANA_PLUS)
+	desc: Increase MAtk
+	val1: +Matk
+
+SC_MUSTLE_M	(SI_MUSTLE_M)
+	desc: Increase Max HP rate
+	val1: +% MaxHP
+
+SC_LIFE_FORCE_F	(SI_LIFE_FORCE_F)
+	desc: Increase Max SP rate
+	val1: +% MaxSP
+
+SC_EXTRACT_WHITE_POTION_Z	(SI_EXTRACT_WHITE_POTION_Z)
+	desc: Increase HP regen rate
+	val1: +% HP regen
+
+SC_VITATA_500	(SI_VITATA_500)
+	desc: Increase SP Regen rate & Max SP rate
+	val1: +% SP regen
+	val2: +% MaxSP
+
+SC_EXTRACT_SALAMINE_JUICE	(SI_EXTRACT_SALAMINE_JUICE)
+	desc: Increase ASP rate
+	val1: +% ASPD
+
+SC__REPRODUCE	()
+	desc:
+	val1:
+
+SC__AUTOSHADOWSPELL	()
+	desc:
+	val1:
+
+SC__SHADOWFORM	()
+	desc:
+	val1:
+
+SC__BODYPAINT	()
+	desc:
+	val1:
+
+SC__INVISIBILITY	()
+	desc:
+	val1:
+
+SC__DEADLYINFECT	()
+	desc:
+	val1:
+
+SC__ENERVATION	()
+	desc:
+	val1:
+
+SC__GROOMY	()
+	desc:
+	val1:
+
+SC__IGNORANCE	()
+	desc:
+	val1:
+
+SC__LAZINESS	()
+	desc:
+	val1:
+
+SC__UNLUCKY	()
+	desc:
+	val1:
+
+SC__WEAKNESS	()
+	desc:
+	val1:
+
+SC__STRIPACCESSORY	()
+	desc:
+	val1:
+
+SC__MANHOLE	()
+	desc:
+	val1:
+
+SC__BLOODYLUST	()
+	desc:
+	val1:
+
+SC_CIRCLE_OF_FIRE	()
+	desc:
+	val1:
+
+SC_CIRCLE_OF_FIRE_OPTION	()
+	desc:
+	val1:
+
+SC_FIRE_CLOAK	()
+	desc:
+	val1:
+
+SC_FIRE_CLOAK_OPTION	()
+	desc:
+	val1:
+
+SC_WATER_SCREEN	()
+	desc:
+	val1:
+
+SC_WATER_SCREEN_OPTION	()
+	desc:
+	val1:
+
+SC_WATER_DROP	()
+	desc:
+	val1:
+
+SC_WATER_DROP_OPTION	()
+	desc:
+	val1:
+
+SC_WATER_BARRIER	()
+	desc:
+	val1:
+
+SC_WIND_STEP	()
+	desc:
+	val1:
+
+SC_WIND_STEP_OPTION	()
+	desc:
+	val1:
+
+SC_WIND_CURTAIN	()
+	desc:
+	val1:
+
+SC_WIND_CURTAIN_OPTION	()
+	desc:
+	val1:
+
+SC_ZEPHYR	()
+	desc:
+	val1:
+
+SC_SOLID_SKIN	()
+	desc:
+	val1:
+
+SC_SOLID_SKIN_OPTION	()
+	desc:
+	val1:
+
+SC_STONE_SHIELD	()
+	desc:
+	val1:
+
+SC_STONE_SHIELD_OPTION	()
+	desc:
+	val1:
+
+SC_POWER_OF_GAIA	()
+	desc:
+	val1:
+
+SC_PYROTECHNIC	()
+	desc:
+	val1:
+
+SC_PYROTECHNIC_OPTION	()
+	desc:
+	val1:
+
+SC_HEATER	()
+	desc:
+	val1:
+
+SC_HEATER_OPTION	()
+	desc:
+	val1:
+
+SC_TROPIC	()
+	desc:
+	val1:
+
+SC_TROPIC_OPTION	()
+	desc:
+	val1:
+
+SC_AQUAPLAY	()
+	desc:
+	val1:
+
+SC_AQUAPLAY_OPTION	()
+	desc:
+	val1:
+
+SC_COOLER	()
+	desc:
+	val1:
+
+SC_COOLER_OPTION	()
+	desc:
+	val1:
+
+SC_CHILLY_AIR	()
+	desc:
+	val1:
+
+SC_CHILLY_AIR_OPTION	()
+	desc:
+	val1:
+
+SC_GUST	()
+	desc:
+	val1:
+
+SC_GUST_OPTION	()
+	desc:
+	val1:
+
+SC_BLAST	()
+	desc:
+	val1:
+
+SC_BLAST_OPTION	()
+	desc:
+	val1:
+
+SC_WILD_STORM	()
+	desc:
+	val1:
+
+SC_WILD_STORM_OPTION	()
+	desc:
+	val1:
+
+SC_PETROLOGY	()
+	desc:
+	val1:
+
+SC_PETROLOGY_OPTION	()
+	desc:
+	val1:
+
+SC_CURSED_SOIL	()
+	desc:
+	val1:
+
+SC_CURSED_SOIL_OPTION	()
+	desc:
+	val1:
+
+SC_UPHEAVAL	()
+	desc:
+	val1:
+
+SC_UPHEAVAL_OPTION	()
+	desc:
+	val1:
+
+SC_TIDAL_WEAPON	()
+	desc:
+	val1:
+
+SC_TIDAL_WEAPON_OPTION	()
+	desc:
+	val1:
+
+SC_ROCK_CRUSHER	()
+	desc:
+	val1:
+
+SC_ROCK_CRUSHER_ATK	()
+	desc:
+	val1:
+
+SC_LEADERSHIP	()
+	desc:
+	val1:
+
+SC_GLORYWOUNDS	()
+	desc:
+	val1:
+
+SC_SOULCOLD	()
+	desc:
+	val1:
+
+SC_HAWKEYES	()
+	desc:
+	val1:
+
+SC_ODINS_POWER	()
+	desc:
+	val1:
+
+SC_RAID	()
+	desc:
+	val1:
+
+SC_FIRE_INSIGNIA	()
+	desc:
+	val1:
+
+SC_WATER_INSIGNIA	()
+	desc:
+	val1:
+
+SC_WIND_INSIGNIA	()
+	desc:
+	val1:
+
+SC_EARTH_INSIGNIA	()
+	desc:
+	val1:
+
+SC_PUSH_CART	()
+	desc:
+	val1:
+
+SC_SPELLBOOK1	()
+	desc:
+	val1:
+
+SC_SPELLBOOK2	()
+	desc:
+	val1:
+
+SC_SPELLBOOK3	()
+	desc:
+	val1:
+
+SC_SPELLBOOK4	()
+	desc:
+	val1:
+
+SC_SPELLBOOK5	()
+	desc:
+	val1:
+
+SC_SPELLBOOK6	()
+	desc:
+	val1:
+
+SC_MAXSPELLBOOK	()
+	desc:
+	val1:
+
+SC_INCMHP	()
+	desc: Increase Max HP
+	val1: + Max HP
+
+SC_INCMSP	()
+	desc: Incrase Max SP
+	val1: + MaxSP
+
+SC_PARTYFLEE	()
+	desc:
+	val1:
+
+SC_MEIKYOUSISUI	()
+	desc:
+	val1:
+
+SC_JYUMONJIKIRI	()
+	desc:
+	val1:
+
+SC_KYOUGAKU	()
+	desc:
+	val1:
+
+SC_IZAYOI	()
+	desc:
+	val1:
+
+SC_ZENKAI	()
+	desc:
+	val1:
+
+SC_KAGEHUMI	()
+	desc:
+	val1:
+
+SC_KYOMU	()
+	desc:
+	val1:
+
+SC_KAGEMUSYA	()
+	desc:
+	val1:
+
+SC_ZANGETSU	()
+	desc:
+	val1:
+
+SC_GENSOU	()
+	desc:
+	val1:
+
+SC_AKAITSUKI	()
+	desc:
+	val1:
+
+SC_STYLE_CHANGE	()
+	desc: Eleanor's mode
+	val1:
+
+SC_TINDER_BREAKER	(SI_TINDER_BREAKER_POSTDELAY)
+	desc:
+	val1:
+
+SC_TINDER_BREAKER2	(SI_TINDER_BREAKER)
+	desc: Tinder Breaker after-effect, just like Close Confine
+	val1:
+
+SC_CBC	(SI_CBC)
+	desc: Drain HP & SP each iteration (default is each 1 sec)
+	val1:
+	val2:
+	val3: %SP drain
+
+SC_EQC	(SI_EQC)
+	desc:
+	val1:
+	val2: -% Def
+	val3: -% Atk
+	val4: -%MaxHP
+
+SC_GOLDENE_FERSE	(SI_GOLDENE_FERSE)
+	desc:
+	val1:
+	val2: +% Flee
+	val3: +% ASPD
+	val4: % Chance to convert attack as Holy element
+
+SC_ANGRIFFS_MODUS	(SI_ANGRIFFS_MODUS)
+	desc: Drain 100 HP & 20 SP each iteration (default is each 1 sec)
+	val1: Level. Usage for +MaxHP rate (5 * level)
+	val2: +ATK
+	val3: -Flee
+
+SC_OVERED_BOOST	(SI_OVERED_BOOST)
+	desc: When status ended, reduce 50% HP for player and increase 50 the Homunculus's hunger
+	val1:
+	val2: Fixed Flee value
+	val3: Fixed ASPD value
+	val4: -% Def
+
+SC_LIGHT_OF_REGENE	(SI_LIGHT_OF_REGENE)
+	desc:
+	val1:
+	val2: % of HP recovery on death
+
+SC_ASH	(SI_VOLCANIC_ASH)
+	desc: Increase damage to Fire element enemy (ratio +150%), reduce Hit, Def, Atk & Flee.
+	val1: -% Hit
+	val2: -% Def
+	val4: -Atk & Flee
+
+SC_GRANITIC_ARMOR	(SI_GRANITIC_ARMOR)
+	desc: Reduce the inflicted damage, when status ended deals another damage to self
+	val1:
+	val2: -%Damage
+	val3: Damage taken on status end
+
+SC_MAGMA_FLOW	(SI_MAGMA_FLOW)
+	desc:
+	val1:
+	val2: Rate to cast Magma Flow (deals damage) to target while attacking
+
+SC_PYROCLASTIC	(SI_PYROCLASTIC)
+	desc:
+	val1:
+	val2: +ATK
+	val3: % Rate to cast Hammer Fall
+
+SC_PARALYSIS	(SI_NEEDLE_OF_PARALYZE)
+	desc:
+	val1:
+	val2: -Def
+	val3: +% CastTime
+
+SC_PAIN_KILLER	(SI_PAIN_KILLER)
+	desc: Reduce damage for certain value, reduce ASPD rate, inflict Endure if has active SC_PARALYSIS
+	val1:
+	val2: -% ASPD
+	val3: -Damage
+
+SC_HANBOK	()
+	desc: Visual effect. Hanbok costume!
+	val1:
+
+SC_DEFSET	()
+	desc: Vellum Weapon bonus. Set Def value
+	val1: Def fixed value
+
+SC_MDEFSET	()
+	desc: Vellum Weapon bonus. Set MDef value
+	val1: MDef fixed value
+
+SC_DARKCROW	(SI_DARKCROW)
+	desc: Increase short/melee damage rate
+	val1:
+	val2: +% Damage
+
+SC_FULL_THROTTLE	(SI_FULL_THROTTLE)
+	desc: Increase walk speed, increase allstats, full HP once activated
+	val1: Level, also used as Rebound level when this sc ended
+	val2: -SP each iteration
+	val3: +% Allstats
+
+SC_REBOUND	(SI_REBOUND)
+	desc: Full Throttle  after-effect. Reduce walk speed
+	val1:
+
+SC_UNLIMIT	(SI_UNLIMIT)
+	desc: Increase attak rate & set Def/MDef to 1, 
+	val1:
+	val2: +% Attack
+
+SC_KINGS_GRACE	(SI_KINGS_GRACE)
+	desc: Add Max HP & heal each iteration (default 1 seconds)
+	val1:
+	val2: +HP heal
+
+SC_TELEKINESIS_INTENSE	()
+	desc: Increase SP cost & damage of Ghost skill, reduce casttime
+	val1:
+	val2: +% SP Cost
+	val3: +Damage ratio
+	val4: -CastTime
+
+SC_OFFERTORIUM	(SI_OFFERTORIUM)
+	desc:
+	val1:
+	val2: +Heal Power
+	val3: +SP Cost
+
+SC_FRIGG_SONG	(SI_FRIGG_SONG)
+	desc: Add Max HP & heal each iteration (default 1 seconds)
+	val1:
+	val2: +% MaxHP
+	val3: +HP heal
+
+SC_MONSTER_TRANSFORM	()
+	desc: Monster Transformation. (DO NOT USE THIS DIRECTLY, use script 'transform')
+	val1: Monster ID
+
+SC_ANGEL_PROTECT	()
+	desc:
+	val1:
+
+SC_ILLUSIONDOPING	(SI_ILLUSIONDOPING)
+	desc:
+	val1:
+	val2: -Hit
+
+SC_FLASHCOMBO	()
+	desc:
+	val1:
+	val2: +ATK (isn't shown in status window)
+
+SC_MOONSTAR	(SI_MOONSTAR)
+	desc: Visual effect
+	val1:
+
+SC_SUPER_STAR	(SI_SUPER_STAR)
+	desc: Visual effect
+	val1:
+
+SC_HEAT_BARREL	()
+	desc: (Rebellion) Reduce fixed cast time, add ASPD rate, & reduce flee
+	val1:
+	val2: -Fixed Casttime
+	val3: +% ASPD
+	val4: -Flee
+
+SC_HEAT_BARREL_AFTER	(SI_HEAT_BARREL_AFTER)
+	desc: (Rebellion) Heat Barrel after-effect, can't do anything in this effect (like Extremity Fist after-effect)
+	val1:
+
+SC_P_ALTER	(SI_P_ALTER)
+	desc: Increase attack ratio & def againts Undead monster
+	val1:
+	val2: +ATK ratio
+	val3: +Def
+
+SC_E_CHAIN	(SI_E_CHAIN)
+	desc: (Rebellion) Has chance to trigger Chain Action for any weapon
+	val1:
+	val2: Coins used for succes rate. (5*val)
+
+SC_C_MARKER	(SI_C_MARKER)
+	desc: (Rebellion) Crimson Marker effect, also sends the target location to the caster
+	val1:
+	val2:
+	val3: -Flee
+
+SC_ANTI_M_BLAST	(SI_ANTI_M_BLAST)
+	desc: (Rebellion) Anti-Material effect, reduce resistance of Neutral attack
+	val1: Level for duration look up
+	val2: Reduction ratio
+
+SC_B_TRAP	(SI_B_TRAP)
+	desc: (Rebellion) Bind Trap effect, waiting for Flicker being used
+	val1:
+	val2:
+	val3: -Walk Speed (Unstackable penalty)
+
+SC_H_MINE	(SI_H_MINE)
+	desc: (Rebellion) Howling Mine effect, waiting for Flicker being used
+	val1:
+
+SC_QD_SHOT_READY	(SI_E_QD_SHOT_READY)
+	desc: (Rebellion) Combo stance to cast Quick Draw Shot
+	val1:
+
+SC_MTF_ASPD	(SI_MTF_ASPD)
+	desc: Increase ASP and Hit
+	val1: +ASPD
+	val2: +Hit
+
+SC_MTF_ASPD2	(SI_MTF_ASPD2)
+	desc: Increase ASP and Hit
+	val1: +ASPD
+	val2: +Hit
+
+SC_MTF_RANGEATK	(SI_MTF_RANGEATK)
+	desc: Increase Long-ranged damage while attacking
+	val1: +% Damage (not be shown in status window)
+
+SC_MTF_RANGEATK2	(SI_MTF_RANGEATK2)
+	desc: Increase Long-ranged damage while attacking
+	val1: +% Damage (not be shown in status window)
+
+SC_MTF_MATK	(SI_MTF_MATK)
+	desc: Increase MATK damage while attacking
+	val1: +% MATK
+
+SC_MTF_MATK2	(SI_MTF_MATK2)
+	desc: Increase MATK damage while attacking
+	val1: + MATK
+
+SC_MTF_MLEATKED	(SI_MTF_MLEATKED)
+	desc: Has chance to cast Endure to self while attacked
+	val1: Endure Level
+	val2: Rate to cast
+	val3: Neutral element resistance
+
+SC_MTF_CRIDAMAGE	(SI_MTF_CRIDAMAGE)
+	desc: Bonus critical rate of monster transformation
+	val1: +% Critical
+
+SC_OKTOBERFEST	()
+	desc: Costume
+	val1:
+
+SC_STRANGELIGHTS	(SI_STRANGELIGHTS)
+	desc:
+	val1:
+
+SC_DECORATION_OF_MUSIC	(SI_DECORATION_OF_MUSIC)
+	desc:
+	val1:
+
+SC_QUEST_BUFF1	(SI_QUEST_BUFF1)
+	desc:
+	val1: +ATK & +MATK
+
+SC_QUEST_BUFF2	(SI_QUEST_BUFF2)
+	desc:
+	val1: +ATK & +MATK
+
+SC_QUEST_BUFF3	(SI_QUEST_BUFF3)
+	desc:
+	val1: +ATK & +MATK
+
+SC_ALL_RIDING	(SI_ALL_RIDING)
+	desc:
+	val1:
+
+SC_TEARGAS_SOB	()
+	desc: 2nd Teargas effect, do /sob expression each 3 seconds
+	val1:
+
+SC__FEINTBOMB	()
+	desc:
+	val1:
+	val2: -1 SP each second
+
+SC__CHAOS	()
+	desc:
+	val1:
+
+SC_ELEMENTAL_SHIELD	()
+	desc: Block magic attack
+	val1:
+
+SC_CHASEWALK2	(SI_CHASEWALK2)
+	desc: 2nd effect of Chasewalk
+	val1: +STR
+
+SC_EXTREMITYFIST2	()
+	desc:
+	val1:

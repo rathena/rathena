@@ -62,7 +62,7 @@
 //#define ADJUST_SKILL_DAMAGE
 
 /// Uncomment to enable the job base HP/SP table (job_basehpsp_db.txt)
-//#define HP_SP_TABLES
+#define HP_SP_TABLES
 
 /// Enable separated item by `guid`. [Cydh]
 /// See db/[pre-]re/item_flag.txt and doc/item_group.txt for the `guid` explanation.

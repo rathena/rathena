@@ -45,7 +45,7 @@ unsigned int party_share_level = 10;
 
 // recv. packet list
 int inter_recv_packet_length[] = {
-	-1,-1, 7,-1, -1,13,36, (2+4+4+4+1+NAME_LENGTH),  0, 0, 0, 0,  0, 0,  0, 0,	// 3000-
+	-1,-1, 7,-1, -1,13,36, (2+4+4+4+1+NAME_LENGTH),  0,-1, 0, 0,  0, 0,  0, 0,	// 3000-
 	 6,-1, 0, 0,  0, 0, 0, 0, 10,-1, 0, 0,  0, 0,  0, 0,	// 3010-
 	-1,10,-1,14, 14,19, 6,-1, 14,14, 6, 0,  0, 0,  0, 0,	// 3020- Party
 	-1, 6,-1,-1, 55,19, 6,-1, 14,-1,-1,-1, 18,19,186,-1,	// 3030-
@@ -908,6 +908,23 @@ int mapif_parse_broadcast(int fd)
 	return 0;
 }
 
+/**
+ * Parse received item broadcast and sends it to all connected map-serves
+ * ZI 3009 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <srcname>.24B
+ * IZ 3809 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <srcname>.24B
+ * @param fd
+ * @return
+ **/
+int mapif_parse_broadcast_item(int fd) {
+	unsigned char buf[9 + NAME_LENGTH*2];
+
+	memcpy(WBUFP(buf, 0), RFIFOP(fd, 0), RFIFOW(fd,2));
+	WBUFW(buf, 0) = 0x3809;
+	chmapif_sendallwos(fd, buf, RFIFOW(fd,2));
+
+	return 0;
+}
+
 
 // Wisp/page request to send
 int mapif_parse_WisRequest(int fd)
@@ -1154,6 +1171,7 @@ int inter_parse_frommap(int fd)
 	case 0x3006: mapif_parse_NameChangeRequest(fd); break;
 	case 0x3007: mapif_parse_accinfo(fd); break;
 	/* 0x3008 is used by the report stuff */
+	case 0x3009: mapif_parse_broadcast_item(fd); break;
 	default:
 		if(  inter_party_parse_frommap(fd)
 		  || inter_guild_parse_frommap(fd)

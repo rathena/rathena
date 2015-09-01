@@ -29,6 +29,12 @@
 #define DAMAGELOG_SIZE_PC 100	/// Damage log
 #define MAX_SPIRITBALL 15 /// Max spirit balls
 #define MAX_DEVOTION 5 /// Max Devotion slots
+#define MAX_SPIRITCHARM 10 /// Max spirit charms
+
+#define BANK_VAULT_VAR "#BANKVAULT"
+#define ROULETTE_BRONZE_VAR "RouletteBronze"
+#define ROULETTE_SILVER_VAR "RouletteSilver"
+#define ROULETTE_GOLD_VAR "RouletteGold"
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
 //Raised to 84 since Expanded Super Novice needs it.
@@ -81,13 +87,15 @@ struct weapon_data {
 	int addclass[CLASS_MAX];
 	int addrace2[RC2_MAX];
 	int addsize[SZ_MAX];
+	short hp_drain_race[RC_MAX];
+	short sp_drain_race[RC_MAX];
+	short hp_drain_class[CLASS_MAX];
+	short sp_drain_class[CLASS_MAX];
 
 	struct drain_data {
-		short rate;
-		short per;
-		short value;
-		unsigned type:1;
-	} hp_drain_race[RC_MAX], sp_drain_race[RC_MAX], hp_drain_class[CLASS_MAX], sp_drain_class[CLASS_MAX];
+		short rate; ///< Success rate 10000 = 100%
+		short per;  ///< Drain value/rate per attack
+	} hp_drain_rate, sp_drain_rate;
 
 	struct {
 		short class_, rate;
@@ -203,7 +211,6 @@ struct map_session_data {
 		unsigned int monster_ignore :1; // for monsters to ignore a character [Valaris] [zzo]
 		unsigned int size :2; // for tiny/large types
 		unsigned int night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
-		unsigned int blockedmove :1;
 		unsigned int using_fake_npc :1;
 		unsigned int rewarp :1; //Signals that a player should warp as soon as he is done loading a map. [Skotlex]
 		unsigned int killer : 1;
@@ -232,6 +239,7 @@ struct map_session_data {
 		unsigned int hpmeter_visible : 1;
 		unsigned disable_atcommand_on_npc : 1; //Prevent to use atcommand while talking with NPC [Kichi]
 		uint8 isBoundTrading; // Player is currently add bound item to trade list [Cydh]
+		bool ignoretimeout; // Prevent the SECURE_NPCTIMEOUT function from closing current script.
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -320,14 +328,17 @@ struct map_session_data {
 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
 	int param_bonus[6],param_equip[6]; //Stores card/equipment bonuses.
 	int subele[ELE_MAX];
+	int subdefele[ELE_MAX];
 	int subrace[RC_MAX];
 	int subclass[CLASS_MAX];
 	int subrace2[RC2_MAX];
 	int subsize[SZ_MAX];
 	short reseff[SC_COMMON_MAX-SC_COMMON_MIN+1]; //TODO: Make this for all SC?
-	int weapon_coma_ele[ELE_MAX];
-	int weapon_coma_race[RC_MAX];
-	int weapon_coma_class[CLASS_MAX];
+	short coma_class[CLASS_MAX];
+	short coma_race[RC_MAX];
+	short weapon_coma_ele[ELE_MAX];
+	short weapon_coma_race[RC_MAX];
+	short weapon_coma_class[CLASS_MAX];
 	int weapon_atk[16];
 	int weapon_atk_rate[16];
 	int arrow_addele[ELE_MAX];
@@ -346,8 +357,6 @@ struct map_session_data {
 	int ignore_mdef_by_class[CLASS_MAX];
 	int ignore_def_by_race[RC_MAX];
 	short sp_gain_race[RC_MAX];
-	short sp_gain_race_attack[RC_MAX];
-	short hp_gain_race_attack[RC_MAX];
 	// zeroed arrays end here.
 
 	// zeroed structures start here
@@ -358,7 +367,9 @@ struct map_session_data {
 	struct s_skill_bonus { //skillatk raises bonus dmg% of skills, skillheal increases heal%, skillblown increases bonus blewcount for some skills.
 		unsigned short id;
 		short val;
-	} skillatk[MAX_PC_BONUS], skillusesprate[MAX_PC_BONUS], skillusesp[MAX_PC_BONUS], skillheal[MAX_PC_BONUS], skillheal2[MAX_PC_BONUS], skillblown[MAX_PC_BONUS], skillcastrate[MAX_PC_BONUS], skillcooldown[MAX_PC_BONUS], skillfixcast[MAX_PC_BONUS], skillvarcast[MAX_PC_BONUS], skillfixcastrate[MAX_PC_BONUS];
+	} skillatk[MAX_PC_BONUS], skillusesprate[MAX_PC_BONUS], skillusesp[MAX_PC_BONUS], skillheal[MAX_PC_BONUS],
+		skillheal2[MAX_PC_BONUS], skillblown[MAX_PC_BONUS], skillcastrate[MAX_PC_BONUS], skillcooldown[MAX_PC_BONUS],
+		skillfixcast[MAX_PC_BONUS], skillvarcast[MAX_PC_BONUS], skillfixcastrate[MAX_PC_BONUS], subskill[MAX_PC_BONUS];
 	struct s_regen {
 		short value;
 		int rate;
@@ -380,12 +391,10 @@ struct map_session_data {
 		short value;
 		int rate, tick;
 	} def_set_race[RC_MAX], mdef_set_race[RC_MAX];
-	struct s_bonus_vanish_race {
-		short hp_rate, ///< Rate 0 - 10000 (100%)
-			hp_per,	   ///< % HP vanished
-			sp_rate,   ///< Rate 0 - 10000 (100%)
-			sp_per;	   ///< % SP vanished
-	} vanish_race[RC_MAX];
+	struct s_bonus_vanish_gain {
+		short rate,	///< Success rate 0 - 1000 (100%)
+			per;	///< % HP/SP vanished/gained
+	} hp_vanish_race[RC_MAX], sp_vanish_race[RC_MAX];
 	// zeroed structures end here
 
 	// manually zeroed structures start here.
@@ -432,6 +441,7 @@ struct map_session_data {
 		int add_fixcast, add_varcast; // in milliseconds
 		int ematk; // matk bonus from equipment
 		int eatk; // atk bonus from equipment
+		uint8 absorb_dmg_maxhp; // [Cydh]
 	} bonus;
 	// zeroed vars end here.
 
@@ -447,8 +457,9 @@ struct map_session_data {
 
 	int8 spiritball, spiritball_old;
 	int spirit_timer[MAX_SPIRITBALL];
-	short talisman[ELE_POISON+1]; // There are actually 5 talisman Fire, Ice, Wind, Earth & Poison maybe because its color violet.
-	int talisman_timer[ELE_POISON+1][10];
+	short spiritcharm; //No. of spirit
+	int spiritcharm_type; //Spirit type
+	int spiritcharm_timer[MAX_SPIRITCHARM];
 
 	unsigned char potion_success_counter; //Potion successes in row counter
 	unsigned char mission_count; //Stores the bounty kill count for TK_MISSION
@@ -630,9 +641,22 @@ struct map_session_data {
 	short last_addeditem_index; /// Index of latest item added
 	int autotrade_tid;
 
+	int bank_vault; ///< Bank Vault
+
 #ifdef PACKET_OBFUSCATION
 	unsigned int cryptKey; ///< Packet obfuscation key to be used for the next received packet
 #endif
+
+	struct {
+		int bronze, silver, gold; ///< Roulette Coin
+	} roulette_point;
+
+	struct {
+		short stage;
+		int8 prizeIdx;
+		short prizeStage;
+		bool claimPrize;
+	} roulette;
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -984,6 +1008,7 @@ void pc_check_available_item(struct map_session_data *sd);
 int pc_useitem(struct map_session_data*,int);
 
 int pc_skillatk_bonus(struct map_session_data *sd, uint16 skill_id);
+int pc_sub_skillatk_bonus(struct map_session_data *sd, uint16 skill_id);
 int pc_skillheal_bonus(struct map_session_data *sd, uint16 skill_id);
 int pc_skillheal2_bonus(struct map_session_data *sd, uint16 skill_id);
 
@@ -1025,6 +1050,9 @@ int pc_readregistry(struct map_session_data*,const char*,int);
 bool pc_setregistry(struct map_session_data*,const char*,int,int);
 char *pc_readregistry_str(struct map_session_data*,const char*,int);
 bool pc_setregistry_str(struct map_session_data*,const char*,const char*,int);
+
+bool pc_setreg2(struct map_session_data *sd, const char *reg, int val);
+int pc_readreg2(struct map_session_data *sd, const char *reg);
 
 bool pc_addeventtimer(struct map_session_data *sd,int tick,const char *name);
 bool pc_deleventtimer(struct map_session_data *sd,const char *name);
@@ -1127,11 +1155,13 @@ void pc_overheat(struct map_session_data *sd, int val);
 int pc_banding(struct map_session_data *sd, uint16 skill_lv);
 
 void pc_itemcd_do(struct map_session_data *sd, bool load);
+uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, unsigned int tick, unsigned short n);
+uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, unsigned int tick, unsigned short n);
 
 int pc_load_combo(struct map_session_data *sd);
 
-void pc_add_talisman(struct map_session_data *sd,int interval,int max,int type);
-void pc_del_talisman(struct map_session_data *sd,int count,int type);
+void pc_addspiritcharm(struct map_session_data *sd, int interval, int max, int type);
+void pc_delspiritcharm(struct map_session_data *sd, int count, int type);
 
 void pc_baselevelchanged(struct map_session_data *sd);
 

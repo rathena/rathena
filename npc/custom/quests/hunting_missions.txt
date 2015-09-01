@@ -285,15 +285,18 @@ OnNPCKillEvent:
 		getpartymember getcharid(1),2;
 		for (.@i = 0; .@i < $@partymembercount; .@i++) {
 			if (isloggedin($@partymemberaid[.@i], $@partymembercid[.@i])) {
-				attachrid $@partymemberaid[.@i];
-				if (#Mission_Count && Mission0 && HP > 0) {
+				set .@Mission_Count, getvar(#Mission_Count, $@partymembercid[.@i]);
+				set .@Mission0, getvar(Mission0, $@partymembercid[.@i]);
+				set .@HP, getvar(HP, $@partymembercid[.@i]);
+
+				if (.@Mission_Count && .@Mission0 && .@HP > 0) {
 					getmapxy(.@map2$,.@x2,.@y2,0);
 					if ((.@map1$ == .@map2$ || .Party == 1) && (distance(.@x1,.@y1,.@x2,.@y2) <= 30 || .Party < 3)) {
 						for (.@j = 0; .@j < .Quests; .@j++) {
-							if (strmobinfo(1,.@mob) == strmobinfo(1,getd("Mission"+.@j))) {
-								if (getd("Mission"+.@j+"_") < #Mission_Count) {
-									dispbottom "[Hunting Mission] Killed " + (set(getd("Mission" + .@j + "_"),getd("Mission" + .@j + "_") + 1)) +
-									           " of " + #Mission_Count + " " + strmobinfo(1,.@mob) + ".";
+							if (strmobinfo(1,.@mob) == strmobinfo(1,getvar(getd("Mission"+.@j), $@partymembercid[.@i]))) {
+								if (getvar(getd("Mission"+.@j+"_"), $@partymembercid[.@i]) < .@Mission_Count) {
+									dispbottom "[Hunting Mission] Killed " + (set(getvar(getd("Mission" + .@j + "_"), $@partymembercid[.@i]), getvar(getd("Mission" + .@j + "_") + 1, $@partymembercid[.@i]))) +
+									           " of " + .@Mission_Count + " " + strmobinfo(1,.@mob) + ".";
 									break;
 								}
 							}

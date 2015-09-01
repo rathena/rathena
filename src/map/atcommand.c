@@ -5673,7 +5673,7 @@ void getring (struct map_session_data* sd)
 
 	if((flag = pc_additem(sd,&item_tmp,1,LOG_TYPE_COMMAND))) {
 		clif_additem(sd,0,0,flag);
-		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4);
+		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
 	}
 }
 
@@ -6769,17 +6769,43 @@ ACMD_FUNC(uptime)
 
 /*==========================================
  * @changesex <sex>
- * => Changes one's sex. Argument sex can be 0 or 1, m or f, male or female.
+ * => Changes one's account sex. Argument sex can be 0 or 1, m or f, male or female.
  *------------------------------------------*/
 ACMD_FUNC(changesex)
 {
 	int i;
+
 	nullpo_retr(-1, sd);
+
 	pc_resetskill(sd,4);
 	// to avoid any problem with equipment and invalid sex, equipment is unequiped.
-	for( i=0; i<EQI_MAX; i++ )
-		if( sd->equip_index[i] >= 0 ) pc_unequipitem(sd, sd->equip_index[i], 3);
-	chrif_changesex(sd);
+	for (i = 0; i < EQI_MAX; i++) {
+		if (sd->equip_index[i] >= 0)
+			pc_unequipitem(sd, sd->equip_index[i], 3);
+	}
+
+	chrif_changesex(sd, true);
+	return 0;
+}
+
+/*==========================================
+ * @changecharsex <sex>
+ * => Changes one's character sex. Argument sex can be 0 or 1, m or f, male or female.
+ *------------------------------------------*/
+ACMD_FUNC(changecharsex)
+{
+	int i;
+
+	nullpo_retr(-1, sd);
+
+	pc_resetskill(sd,4);
+	// to avoid any problem with equipment and invalid sex, equipment is unequiped.
+	for (i = 0; i < EQI_MAX; i++) {
+		if (sd->equip_index[i] >= 0)
+			pc_unequipitem(sd, sd->equip_index[i], 3);
+	}
+
+	chrif_changesex(sd, false);
 	return 0;
 }
 
@@ -8369,7 +8395,7 @@ ACMD_FUNC(auction)
 	nullpo_ret(sd);
 
 	if (!battle_config.feature_auction) {
-		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 517));
+		clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd, 517));
 		return 0;
 	}
 
@@ -9886,6 +9912,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(clearweather),
 		ACMD_DEF(uptime),
 		ACMD_DEF(changesex),
+		ACMD_DEF(changecharsex),
 		ACMD_DEF(mute),
 		ACMD_DEF(refresh),
 		ACMD_DEF(refreshall),

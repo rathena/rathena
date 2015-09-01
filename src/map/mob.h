@@ -11,8 +11,6 @@
 #include "unit.h" // unit_stop_walking(), unit_stop_attack()
 #include "npc.h"
 
-#define MAX_RANDOMMONSTER 5
-
 // Change this to increase the table size in your mob_db to accomodate a larger mob database.
 // Be sure to note that IDs 4001 to 4048 are reserved for advanced/baby/expanded classes.
 // Notice that the last 1000 entries are used for player clones, so always set this to desired value +1000
@@ -73,6 +71,13 @@ enum size {
 	SZ_MAX
 };
 
+/// Used hardcoded Random Monster group in src
+enum e_Random_Monster {
+	MOBG_Branch_Of_Dead_Tree = 0,
+	MOBG_Bloody_Dead_Branch  = 2,
+	MOBG_ClassChange         = 4,
+};
+
 struct mob_skill {
 	enum MobSkillState state;
 	uint16 skill_id,skill_lv;
@@ -97,6 +102,12 @@ struct spawn_info {
 	unsigned short qty;
 };
 
+/// Loooitem struct
+struct s_mob_lootitem {
+	struct item item;	   ///< Item info
+	unsigned short mob_id; ///< ID of monster that dropped the item
+};
+
 struct mob_db {
 	char sprite[NAME_LENGTH],name[NAME_LENGTH],jname[NAME_LENGTH];
 	unsigned int base_exp,job_exp;
@@ -115,7 +126,6 @@ struct mob_db {
 	struct status_data status;
 	struct view_data vd;
 	unsigned int option;
-	int summonper[MAX_RANDOMMONSTER];
 	int maxskill;
 	struct mob_skill skill[MAX_MOBSKILL];
 	struct spawn_info spawn[10];
@@ -157,7 +167,7 @@ struct mob_data {
 	} dmglog[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int spawn_timer; //Required for Convex Mirror
-	struct item *lootitem;
+	struct s_mob_lootitem *lootitems;
 	short mob_id;
 	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
 	int level;
@@ -234,6 +244,8 @@ enum e_mob_skill_condition {
 // The data structures for storing delayed item drops
 struct item_drop {
 	struct item item_data;
+	unsigned short mob_id;
+	enum bl_type src_type;
 	struct item_drop* next;
 };
 struct item_drop_list {
@@ -281,7 +293,7 @@ void mob_heal(struct mob_data *md,unsigned int heal);
 #define mob_stop_walking(md, type) unit_stop_walking(&(md)->bl, type)
 #define mob_stop_attack(md) unit_stop_attack(&(md)->bl)
 #define mob_is_battleground(md) ( map[(md)->bl.m].flag.battleground && ((md)->mob_id == MOBID_BARRICADE2 || ((md)->mob_id >= MOBID_FOOD_STOR && (md)->mob_id <= MOBID_PINK_CRYST)) )
-#define mob_is_gvg(md) (map[(md)->bl.m].flag.gvg_castle && ( (md)->mob_id == MOBID_EMPERIUM || (md)->mob_id == MOBID_BARRICADE1 || (md)->mob_id == MOBID_GUARIDAN_STONE1 || (md)->mob_id == MOBID_GUARIDAN_STONE2) )
+#define mob_is_gvg(md) (map[(md)->bl.m].flag.gvg_castle && ( (md)->mob_id == MOBID_EMPERIUM || (md)->mob_id == MOBID_BARRICADE1 || (md)->mob_id == MOBID_GUARDIAN_STONE1 || (md)->mob_id == MOBID_GUARDIAN_STONE2) )
 #define mob_is_treasure(md) (((md)->mob_id >= MOBID_TREAS01 && (md)->mob_id <= MOBID_TREAS40) || ((md)->mob_id >= MOBID_TREAS41 && (md)->mob_id <= MOBID_TREAS49))
 #define mob_is_guardian(mob_id) ((mob_id >= MOBID_A_GUARDIAN && mob_id <= MOBID_S_GUARDIAN) || mob_id == MOBID_S_GUARDIAN_ || mob_id == MOBID_A_GUARDIAN_)
 #define mob_is_goblin(md, mid) (((md)->mob_id >= MOBID_GOBLIN_1 && (md)->mob_id <= MOBID_GOBLIN_5) && (mid >= MOBID_GOBLIN_1 && mid <= MOBID_GOBLIN_5))

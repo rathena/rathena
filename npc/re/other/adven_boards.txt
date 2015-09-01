@@ -5,6 +5,7 @@
 //= Informations Boards about monsters.
 //===== Changelogs: ==========================================
 //= 1.0 Initial release. [Capuche] [Cydh]
+//= 1.0.1 Typos clean up. [Aleos]
 //============================================================
 
 function	script	F_AvenBoard	{
@@ -89,18 +90,18 @@ cmd_fild08,326,357,0	script	Signpost#Ant Hell 1	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1005,"Familiar","Familiar is a agressive bat creature that can cause problems for the unaware adventurer.",
+			1005,"Familiar","Familiar is a aggressive bat creature that can cause problems for the unaware adventurer.",
 			1097,"Ant Egg","Not a threat by itself, but it will hatch a variety of giant ants.",
 			1105,"Deniro","This greedy worker ant will not attack on sight but will eat up items dropped nearby.",
 			1160,"Piere","This greedy worker ant will not attack on sight but will eat up items dropped nearby.",
-			1095,"Andre","This greedy worker ant will not attack on sight but will eat up items dropped nearby..",
+			1095,"Andre","This greedy worker ant will not attack on sight but will eat up items dropped nearby.",
 			1176,"Vitata","This larger variety of insect produces honey and royal jelly for the colony.",
 			1121,"Giearth","This small, demonic pixie can be found in limited numbers in this dungeon.",
 			1289,"Maya Purple","This ant Queen rare spawn monster will drop valuable minerals when killed, but should be approached with caution.",
 			1147,"Maya","Found in the second level of Ant Hell dungeon, this MVP is a more powerful version of Maya Purple." );
 		if (.@mo_board == 1) {
 			mes "[Ant Hell]";
-			mes "Ant Hell dungeon is infested with gigantic insects, when one is attacked others may join the fight. ";
+			mes "Ant Hell dungeon is infested with gigantic insects, when one is attacked others may join the fight.";
 			next;
 			while(1) {
 				switch( select( "Ant Hell B1","Ant Hell B2","Cancel" ) ) {
@@ -150,16 +151,16 @@ gef_tower,55,142,0	script	Signposts#Geffen Dungeon	2_BULLETIN_BOARD,{
 		mes "Recommended for players around level 60~70.";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1077,"Poison Spore","An agressive mushroom creature, it is recommended to carry green herbs to counteract it's toxic special attack.",
+			1077,"Poison Spore","An aggressive mushroom creature, it is recommended to carry green herbs to counteract it's toxic special attack.",
 			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
-			1035,"Hunter Fly","The bane of early acolytes, this deadly flying insect is found in dark, fetid places... ",
-			1015,"Zombie","The ubiquitous undead creature, the zombie is weak alone but can be a threat in large numbers. ",
-			1036,"Ghoul","A more ancient variant of the zombie, hundreds of years of undeath have made them a tougher enemy.",
-			1130,"Jakk","This terrifying gourd-headed monster can surprise with a fire or curse attack. ",
-			1111,"Drainliar","A big, ugly familar..this red menace is an unwelcome prescence in many dark dungeons .",
+			1035,"Hunter Fly","The bane of early acolytes, this deadly flying insect is found in dark, fetid places...",
+			1015,"Zombie","The ubiquitous Undead creature, the zombie is weak alone but can be a threat in large numbers.",
+			1036,"Ghoul","A more ancient variant of the zombie, hundreds of years of death have made them a tougher enemy.",
+			1130,"Jakk","This terrifying gourd-headed monster can surprise with a fire or curse attack.",
+			1111,"Drainliar","A big, ugly Familiar. This red menace is an unwelcome presence in many dark dungeons .",
 			1061,"Nightmare","Do not attempt to ride this ghostly horse.",
 			1204,"Ogretooth","An enchanted sword gone wrong.",
-			1179,"Whisper","Ghost Monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.",
+			1179,"Whisper","Ghost monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.",
 			1109,"Deviruchi","An apprentice demon, relatively inexperienced in demonosity.",
 			1143,"Marionette","A puppeteer's worst nightmare, the Marionette can unleash fire or freezing spells.",
 			1046,"Doppelganger","Demons that steal other people's appearance. If you see a swordsman coming up behind you, check to make sure it's not an evil monster first.",
@@ -222,40 +223,40 @@ glast_01,372,298,0	script	Signposts#Glastheim	2_BULLETIN_BOARD,{
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
 			1036,"Ghoul","Corpse that is revived by Unholy Necromancer's curse. It ambushes nearby living creatures and devours their corpses to satiate its hunger, but because it's a reanimated corpse, it is unable to feel satisfied.^000000",
-			1186,"GiantWhisper","Adventurer's Tips are needed.",
-			1111,"Drainliar","Colonial Bat that inhabits in a dark cave. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a familiar.^000000",
+			1186,"GiantWhisper","Adventurer's tips are needed.",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
 			1195,"Rideword","Magic Tome brought to life with demon's powers. It does not possess emotions or a mind of its own, programmed to rely on its instincts to attack living creatures.",
-			1143,"Marionette","Demon with the appearance of a marionette doll used in puppet theatre. Normal weapons is ineffective against its spiritual body.^000000",
-			1191,"Mimic","Adventurer's Tips are needed.",
+			1143,"Marionette","Demon with the appearance of a marionette doll used in puppet theatre. Normal weapons are ineffective against its spiritual body.^000000",
+			1191,"Mimic","Adventurer's tips are needed.",
 			1203,"Mysteltainn","It appears to be a sealed demon blade, but it's actually being sealed by a chain type monster. It manipulates the chained sword to attack.",
-			1208,"Wanderer","Stray Samurai that is revived as an Undead Monster. It attacks using previously mastered swordmanship techniques, precise enough to slice flying insects in half.",
-			1219,"Abysmal Knight","Demon Knight that serves the owner of legendary labyrinth. It is very poweful and brutal.",
+			1208,"Wanderer","Stray Samurai that is revived as an Undead monster. It attacks using previously mastered swordsmanship techniques, precise enough to slice flying insects in half.",
+			1219,"Abysmal Knight","Demon knight that serves the owner of legendary labyrinth. It is very powerful and brutal.",
 			1320,"Owl Duke","Owl Baron's sibling that wears a blue manteau. It enjoys rainy days.",
 			1295,"Owl Baron","Bird monster that wears red manteau. Getting fooled by its gentleman appearance will result in being ambushed by fierce magic attacks.",
 			1194,"Arclouze","Monster with hardened shell. It rolls its body to attack with its shell.",
 			1275,"Alice","Automatic doll tasked with various chores in the castle. Its main priority is to clean the vicinity, however it will attack intruders with a steel broom stick.",
-			1204,"Ogretooth","Adventurer's Tips are needed.",
-			1179,"Whisper","Ghost Monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.^000000",
+			1204,"Ogretooth","Adventurer's tips are needed.",
+			1179,"Whisper","Ghost monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.^000000",
 			1015,"Zombie","Dead soul trapped by unholy necromancer in a rotting corpse, cursed to live without being able to feel pain. Its impurity is capable of inflicting poison.^000000",
 			1209,"Cramp","Rodent found living deep within the dungeon. Its appearance is similar to Tarou, however it is much more vicious and its teeth poisonous.",
-			1268,"Bloody Knight","A soul of a valorous knight, cursed to be trapped within the bloody armor as a monster. It is powerful enough to leading the Castle's Chivalry.",
-			1035,"Hunter Fly","A bright crimson red chonchon. Its agility is 3 times higher than a chonchon and possess much more attack. Player captured Chonchon Pet cannot compare to hunterfly! 'Chonchon and ...' name will undoubtedly be popular amongst the pet keepers...^000000",
+			1268,"Bloody Knight","A soul of a valorous knight, cursed to be trapped within the bloody armor as a monster. It is powerful enough to lead the Castle's Chivalry.",
+			1035,"Hunter Fly","A bright crimson red Chonchon. Its agility is 3 times higher than a Chonchon and possess much more attack. Player captured Chonchon Pet cannot compare to Hunter Fly! 'Chonchon and ...' name will undoubtedly be popular amongst the pet keepers...^000000",
 			1253,"Gargoyle","Low ranking Demon with big wings. It utilizes its flying capabilities to attack in the air.",
 			1260,"Dark Frame","Mirror possessed by a demon. It hangs by the walls until someone walks nearby to look into the mirror, or it will wander around looking for its prey.",
 			1163,"Raydric","An infantry soul cursed to be trapped within the armor as a monster. Its sole purpose is to drive away intruders in the castle.",
 			1276,"Raydric Archer","An archer soul cursed to be trapped within the armor as a monster. Unlike Raydric, Raydric Archer uses bows to attack from afar.",
-			1192,"Wraith","Malevolent person cursed to become an undead monster after death. It believes that sacrificing living creatures will revive it, and quietly anext;s for unfortunate sacrifice in a dark corner. ",
+			1192,"Wraith","Malevolent person cursed to become an Undead monster after death. It believes that sacrificing living creatures will revive it, and quietly as for unfortunate sacrifice in a dark corner.",
 			1201,"Rybio","Monster that was in charge of torturing inmates in an old prison. It always used mask to conceal its face in fear of reprisal.",
-			1310,"Majoruros","Monster with an appearance of a cow. It swings its hammer much more fiercly than a minorous.",
-			1281,"Sageworm","These worms possess much more intellect, being worshipped as a god by other worms. It's a passive monster that will only attack with its encyclopedia when it feels danger.",
+			1310,"Majoruros","Monster with an appearance of a cow. It swings its hammer much more fiercely than a Minorous.",
+			1281,"Sageworm","These worms possess much more intellect, being worshipped as a god by other worms. It's a passive monster that will only attack with its encyclopedia when it senses danger.",
 			1196,"Skel Prisoner","Once an unjustly incarcerated prisoner, only its regret remained after its death as a monster.",
 			1207,"Sting","Monster covered in mud; its attacks are long and hard to dodge. Be cautious around this monster.",
 			1117,"Evil Druid","Once a proud high priest corrupted and turned into a monster by Demon's schemes. It maintains its strength as a former high priest.",
 			1257,"Injustice","Adventurer's tips are needed.",
-			1197,"Zombie Prisoner","Once a dead corpse of a prisoner in a castle revived as an undead monster. No longer satisfied with resenting those that incarcerated it, it now resents all living creatures.",
+			1197,"Zombie Prisoner","Once a dead corpse of a prisoner in a castle that has revived as an Undead monster. No longer satisfied with resenting those that incarcerated it, it now resents all living creatures.",
 			1200,"Zealotus","A lady from a demon tribe. Its dominant nature forces humans to serve her as slaves. Its whip rarely misses its target when swung.",
 			1132,"Khalitzburg","A knight's soul cursed to be trapped within the armor as a monster. Its formidable strength remains as a former knight.",
-			1267,"Carat","Demon with an appearance of a pierrot. It's seen walking on top of a circus ball like a pierrot but...",
+			1267,"Carat","Demon with an appearance of a Pierrot. It's seen walking on top of a circus ball like a Pierrot but...",
 			1202,"Phendark","Prison Advisor. It wore a mask to shape its face at birth, and it enjoys twisting people's minds.",
 			1283,"Chimera","Magical Beast made from various different monster parts. Its only purpose is to murder and destroy targets with powerful attacks.",
 			1198,"Dark Priest","Adventurer's tips are needed.",
@@ -264,7 +265,7 @@ glast_01,372,298,0	script	Signposts#Glastheim	2_BULLETIN_BOARD,{
 			1272,"Dark Lord","Powerful Demon King. It is unable to utilize its full power, but it's still powerful enough to destroy normal adventurers with a motion of its hand." );
 		if (.@mo_board == 1) {
 			mes "[Glastheim]";
-			mes "The dungeons consist of several underground levels connected by ancient tunnels. Be prepared for attacks from undead or demonic monsters within.";
+			mes "The dungeons consist of several underground levels connected by ancient tunnels. Be prepared for attacks from Undead or demonic monsters within.";
 			next;
 			while(1) {
 				switch( select( "Cancel","Glastheim Indoor","Glastheim Level B1","Glastheim Level B2","Glastheim Chivalry B1","Glastheim Chivalry B2","Glastheim St. Abbey","Glastheim Churchyard","Glastheim Cave B1","Glastheim Cave B2","Glast Heim Underprison B1","Glast Heim Underprison B2","Glastheim Culvert B1","Glastheim Culvert B2","Glastheim Culvert B3","Glastheim Culvert B4","Glastheim Staircase" ) ) {
@@ -491,16 +492,16 @@ yuno_fild03,37,143,0	script	Signposts#Nogg Road	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1381,"Grizzly","Bear that inhabits in magma flowing region. Its furs appear as if it's on fire. It will be popular amongst the fur lovers.",
+			1381,"Grizzly","Bear that inhabits magma flowing regions. Its furs appear as if it's on fire. It will be popular amongst the fur lovers.",
 			1072,"Kaho","Demon covered in flames. Its attacks are flashy, but it's actually a low ranking demon with fairly weak attack.",
-			1383,"Explosion","Bat that inhabits in magma flowing region. It no longer possesses supersonic scream in exchange for near perfect eyesight and the ability to emit bright light.",
-			1367,"Blazer","Fireball Monster. Skeletal frame maintains its shape.",
+			1383,"Explosion","Bat that inhabits magma flowing regions. It no longer possesses supersonic scream in exchange for near perfect eyesight and the ability to emit bright light.",
+			1367,"Blazer","Fireball monster. Skeletal frame maintains its shape.",
 			1366,"Lava Golem","Golem formed from hardened magma. It possesses powerful strength.",
 			1387,"Gig","Scorpion inhabitant of this humid place. It takes shelter from the heat by digging into the sand. Its sting is coated with paralyzing poison.",
 			1382,"Diabolic","Appears to be a cute little demon, however it's actually a horrible demon with a hobby of pushing people into the fire.",
-			1384,"Deleter (Sky)","One of Magma region inhabitant, Fire Dragon Petite. Its head is disproportionately large, preventing it from flying.",
-			1385,"Deleter (Ground)","One of Magma region inhabitant, Earth Dragon Petite.",
-			1379,"Nightmare terror","Its name follows its literal meaning. It feeds on other creatures' terror and becomes stronger." );
+			1384,"Deleter (Sky)","One of the magma region inhabitants, Fire Dragon Petite. Its head is disproportionately large, preventing it from flying.",
+			1385,"Deleter (Ground)","One of the magma region inhabitants, Earth Dragon Petite.",
+			1379,"Nightmare Terror","Its name follows its literal meaning. It feeds on other creatures' terror and becomes stronger." );
 		if (.@mo_board == 1) {
 			mes "[Magma Dungeon]";
 			mes "Nogg road is a B2 dungeon that houses fierce monsters. Inexperienced adventurer should not enter this place. Furthermore roads within the dungeon are very narrow, so be careful to not cause inconvenience to other players.";
@@ -546,12 +547,12 @@ mjolnir_02,76,362,0	script	Signposts#Mjolnir Dead	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1175,"Tarou","Rodent that inhabit in dark places. It possesses white and plushy furs.",
-			1005,"Familiar","Colonial Bat that inhabit in Dark Caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
-			1145,"Martin","Underground inhabitant, Mole. It usually lives in a small tunnel, sometimes coming out of the tunnel to look for food.",
+			1175,"Tarou","Rodent that inhabits dark places. It possesses white and plushy furs.",
+			1005,"Familiar","Colonial bat that inhabits dark caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
+			1145,"Martin","Underground inhabitant, mole. It usually lives in a small tunnel, sometimes coming out of the tunnel to look for food.",
 			1169,"Skel Worker","Miner that died in an unfortunate accident in a mine. Their unyielding will to dig the mines have been embedded into their skeletal bodies, turning them into monsters.",
-			1121,"Giearth","Underground Pixie inhabitant, It collects minerals and processes them for a living. It will remain passive as long as adventurers don't touch them. This monster appears in several dungeons such as Mjolnir Dead Pit and Ant Hell.",
-			1111,"Drainliar","Colonial Bat that inhabits in a dark cave. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a familiar.^000000",
+			1121,"Giearth","Underground Pixie inhabitant. It collects minerals and processes them for a living. It will remain passive as long as adventurers don't touch them. This monster appears in several dungeons such as Mjolnir Dead Pit and Ant Hell.",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
 			1151,"Myst","Monster with an appearance of Poisonous Gas. It's actual identity is unknown, however it is speculated to be a mass of microorganisms.",
 			1209,"Cramp","Rodent found living deep within the dungeon. Its appearance is similar to Tarou, however it is much more vicious and its teeth poisonous." );
 		if (.@mo_board == 1) {
@@ -609,31 +610,31 @@ prt_fild01,139,369,0	script	Signposts#Prontera_Laby	2_BULLETIN_BOARD,{
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
 			1002,"Poring","Jelly creature that can be found in just about anywhere. This monster is very passive and weak, perfect for beginners. It has a tendency to eat any items that come across.",
-			1145,"Martin","Underground inhabitant, Mole. It usually lives in a small tunnel, sometimes coming out of the tunnel to look for food.",
+			1145,"Martin","Underground inhabitant, mole. It usually lives in a small tunnel, sometimes coming out of the tunnel to look for food.",
 			1042,"Steel Chonchon","One of Chonchon type monster, possessing hard shells. It loves to quickly collect items on the ground.",
-			1035,"Hunter Fly","A bright crimson red chonchon. Its agility is 3 times higher than a chonchon and possess much more attack. Player captured Chonchon Pet cannot compare to hunterfly! 'Chonchon and ...' name will undoubtedly be popular amongst the pet keepers...^000000",
+			1035,"Hunter Fly","A bright crimson red Chonchon. Its agility is 3 times higher than a Chonchon and possess much more attack. Player captured Chonchon Pet cannot compare to Hunter Fly! 'Chonchon and ...' name will undoubtedly be popular amongst the pet keepers...^000000",
 			1037,"Side Winder","One headed snake. It uses its tail like its head to confuse the enemies.",
 			1090,"Mastering","A mutated giant poring. It wanders around with other Porings.",
 			1120,"Ghostring","A dead poring that turned into a Ghost monster due to powerful ghost's influence. Normal weapons are ineffective against this monster.",
 			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
-			1063,"Lunatic","A roden with soft furs commonly seen around the world. Its favorite food is a carrot.",
-			1008,"Pupa","Chrysalis of a soon to be Creamy. Its skin is elastic and sturdy, but its unable to move.",
+			1063,"Lunatic","A rodent with soft furs commonly seen around the world. Its favorite food is a carrot.",
+			1008,"Pupa","Chrysalis of a soon to be Creamy. Its skin is elastic and sturdy, but it's unable to move.",
 			1011,"Chonchon","Common insect type monster that can be seen in many places. Fly Wings dropped by this monster have the same effect as Acolyte skill: Teleport.",
-			1007,"Fabre","Creamy in Larvae stage. This monster is perfect for new adventurers to fight. It sometimes turns into a chrysalis.",
+			1007,"Fabre","Creamy in larvae stage. This monster is perfect for new adventurers to fight. It sometimes turns into a chrysalis.",
 			1052,"Rocker","This monster enjoys playing violin peacefully. It loves music just as much as humans.",
 			1025,"Boa","Adventurer's tips are needed.",
 			1174,"Stainer","Ladybug with rainbow colored shell. Its shell is highly sought after as an ingredient for decorations.",
-			1018,"Creamy","Creamy is the final form reached when Fabre successfully goes through evolution. ",
-			1103,"Caramel","Hedgehog Monster. It has docile personality, but it hates being touched. It uses sharp needles on its back to attack.",
+			1018,"Creamy","Creamy is the final form reached when Fabre successfully goes through evolution.",
+			1103,"Caramel","Hedgehog monster. It has docile personality, but it hates being touched. It uses sharp needles on its back to attack.",
+			1060,"Bigfoot","Bear monster living deep within the cave. Due to its gluttonous trait, it's fat. It is very lazy in nature, spending most of its time sleeping, however it becomes ferocious when provoked. Adventurers will not find this monster a threat as long as they avoid provoking it.",
 			1056,"Smokie","Raccoon monster living deep within the forest, unaware of the outside world. It occasionally transforms into a human being by using the leaf on its head.",
-			1056,"Smokie","Bear monster living deep within the cave. Due to its gluttonous trait, it's fat. It is very lazy in nature, spending most of its time sleeping, however it becomes ferocious when provoked. Adventurers will not find this monster a threat as long as they avoid provoking it.",
 			1128,"Horn","Giant Beetle monster. It concentrates solely on its business, disregarding what other creatures' are up to. When it feels danger, it uses scissor shaped horn on its head to repel the enemy.",
 			1104,"Coco","Mischievous animal that's regularly seen deep within the forest. This monster is known to have similar intelligence as a human, and at times it even pranks on them. Its favorite food is a Banana.",
 			1057,"Yoyo","Tiny squirrel monster. It's not strong, but its agility may prove to be too difficult for beginners.",
 			1013,"Wolf","Wolf monster commonly seen in most Midgard areas. It preys on small animals. It's fear for humans makes it passive around humans.",
 			1100,"Argos","This giant spider is able to prey on other creatures by using its webs to trap them, or by simply walking on the ground to chase them.",
 			1166,"Savage","Boar, an inhabitant of the forest. It's simple minded, however when it's unstoppable when it's attacking. It is generally docile.",
-			1114,"Dustiness","Moth type monster with fairly hard body. It's usually found within dark reaches of the cave, however it can also sometimes be found in Mt.Mjolnir.",
+			1114,"Dustiness","Moth type monster with fairly hard body. It's usually found within dark reaches of the cave, however it can also sometimes be found in Mt. Mjolnir.",
 			1099,"Argiope","Giant Larva monster. It attacks with poison tipped canines.",
 			1243,"Sasquatch","Bear found in Lutie area. It has very vicious personality and attacks all adventurers on sight. Due to the living environment, its furs are as white as snow.",
 			1306,"Leib Olmai","Bear with extremely vicious personality. Its body is covered with numerous scars from various fights with other creatures.",
@@ -645,7 +646,7 @@ prt_fild01,139,369,0	script	Signposts#Prontera_Laby	2_BULLETIN_BOARD,{
 			1214,"Choco","Adventurer's tips are needed.",
 			1093,"Eclipse","This monster is a Lunatic variant. It is bigger and stronger than a normal Lunatic. It is extremely vicious and commands other lunatics to attack nearby adventurers.",
 			1092,"Vagabond Wolf","A lone stray wolf separated from its pack. It commands other stray wolves to attack nearby creatures.",
-			1039,"Baphomet","Demon living deep within the forest. It considers humans as insignificant. It uses scythe as a weapon, which is sharp enough to cut numerous trees in one blow. It has yet to use its scythe to repel intruders." );
+			1039,"Baphomet","Demon living deep within the forest. It considers humans as insignificant. It uses a scythe as a weapon, which is sharp enough to cut numerous trees in one blow. It has yet to use its scythe to repel intruders." );
 		if (.@mo_board == 1) {
 			mes "[Forest of Labyrinth]";
 			mes "Forest of Labyrinth is comprised of B3 floors, where various monsters reside in 1, 2, B3. Be well prepared before venturing to this dungeon.";
@@ -733,29 +734,29 @@ mjolnir_12,40,18,0	script	Signposts#Alde_Laby	2_BULLETIN_BOARD,{
 			1002,"Poring","Jelly creature that can be found in just about anywhere. This monster is very passive and weak, perfect for beginners. It has a tendency to eat any items that come across.",
 			1145,"Martin","Underground inhabitant, Mole. It usually lives in a small tunnel, sometimes coming out of the tunnel to look for food.",
 			1042,"Steel Chonchon","One of Chonchon type monster, possessing hard shells. It loves to quickly collect items on the ground.",
-			1035,"Hunter Fly","A bright crimson red chonchon. Its agility is 3 times higher than a chonchon and possess much more attack. Player captured Chonchon Pet cannot compare to hunterfly! 'Chonchon and ...' name will undoubtedly be popular amongst the pet keepers...^000000",
+			1035,"Hunter Fly","A bright crimson red Chonchon. Its agility is 3 times higher than a Chonchon and possess much more attack. Player captured Chonchon Pet cannot compare to Hunter Fly! 'Chonchon and ...' name will undoubtedly be popular amongst the pet keepers...^000000",
 			1037,"Side Winder","One headed snake. It uses its tail like its head to confuse the enemies.",
 			1090,"Mastering","A mutated giant poring. It wanders around with other Porings.",
 			1120,"Ghostring","A dead poring that turned into a Ghost monster due to powerful ghost's influence. Normal weapons are ineffective against this monster.",
 			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
-			1063,"Lunatic","A roden with soft furs commonly seen around the world. Its favorite food is a carrot.",
+			1063,"Lunatic","A rodent with soft furs commonly seen around the world. Its favorite food is a carrot.",
 			1008,"Pupa","Chrysalis of a soon to be Creamy. Its skin is elastic and sturdy, but its unable to move.",
 			1011,"Chonchon","Common insect type monster that can be seen in many places. Fly Wings dropped by this monster have the same effect as Acolyte skill: Teleport.",
 			1007,"Fabre","Creamy in Larvae stage. This monster is perfect for new adventurers to fight. It sometimes turns into a chrysalis.",
 			1052,"Rocker","This monster enjoys playing violin peacefully. It loves music just as much as humans.",
 			1025,"Boa","Adventurer's tips are needed.",
 			1174,"Stainer","Ladybug with rainbow colored shell. Its shell is highly sought after as an ingredient for decorations.",
-			1018,"Creamy","Creamy is the final form reached when Fabre successfully goes through evolution. ",
-			1103,"Caramel","Hedgehog Monster. It has docile personality, but it hates being touched. It uses sharp needles on its back to attack.",
+			1018,"Creamy","Creamy is the final form reached when Fabre successfully goes through evolution.",
+			1103,"Caramel","Hedgehog monster. It has docile personality, but it hates being touched. It uses sharp needles on its back to attack.",
+			1060,"Bigfoot","Bear monster living deep within the cave. Due to its gluttonous trait, it's fat. It is very lazy in nature, spending most of its time sleeping, however it becomes ferocious when provoked. Adventurers will not find this monster a threat as long as they avoid provoking it.",
 			1056,"Smokie","Raccoon monster living deep within the forest, unaware of the outside world. It occasionally transforms into a human being by using the leaf on its head.",
-			1056,"Smokie","Bear monster living deep within the cave. Due to its gluttonous trait, it's fat. It is very lazy in nature, spending most of its time sleeping, however it becomes ferocious when provoked. Adventurers will not find this monster a threat as long as they avoid provoking it.",
 			1128,"Horn","Giant Beetle monster. It concentrates solely on its business, disregarding what other creatures' are up to. When it feels danger, it uses scissor shaped horn on its head to repel the enemy.",
 			1104,"Coco","Mischievous animal that's regularly seen deep within the forest. This monster is known to have similar intelligence as a human, and at times it even pranks on them. Its favorite food is a Banana.",
 			1057,"Yoyo","Tiny squirrel monster. It's not strong, but its agility may prove to be too difficult for beginners.",
 			1013,"Wolf","Wolf monster commonly seen in most Midgard areas. It preys on small animals. It's fear for humans makes it passive around humans.",
 			1100,"Argos","This giant spider is able to prey on other creatures by using its webs to trap them, or by simply walking on the ground to chase them.",
 			1166,"Savage","Boar, an inhabitant of the forest. It's simple minded, however when it's unstoppable when it's attacking. It is generally docile.",
-			1114,"Dustiness","Moth type monster with fairly hard body. It's usually found within dark reaches of the cave, however it can also sometimes be found in Mt.Mjolnir.",
+			1114,"Dustiness","Moth type monster with fairly hard body. It's usually found within dark reaches of the cave, however it can also sometimes be found in Mt. Mjolnir.",
 			1099,"Argiope","Giant Larva monster. It attacks with poison tipped canines.",
 			1243,"Sasquatch","Bear found in Lutie area. It has very vicious personality and attacks all adventurers on sight. Due to the living environment, its furs are as white as snow.",
 			1306,"Leib Olmai","Bear with extremely vicious personality. Its body is covered with numerous scars from various fights with other creatures.",
@@ -787,7 +788,7 @@ mjolnir_12,40,18,0	script	Signposts#Alde_Laby	2_BULLETIN_BOARD,{
 					mes "Stainer(21)";
 					mes "Creamy(23)";
 					mes "Caramel(25)";
-					mes "Smokie(29)";
+					mes "Bigfoot(29)";
 					mes "Smokie(29)";
 					mes "PoPoring(30)";
 					mes "Horn(32)";
@@ -852,12 +853,12 @@ moc_fild19,107,101,0	script	Signposts#Sphinx	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1111,"Drainliar","Colonial Bat that inhabits in a dark cave. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a familiar.^000000",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
 			1146,"Matyr","King's protector, gatekeeper. Dog is used as a medium to summon the gatekeeper using forbidden magic. Its body is covered in dark mist and it is very agile.",
-			1178,"Zerom","Morroc natives were drafted to help with the construction of Sphinx. They were cursed to become a monster and protect Sphinx for all eternity.",
-			1164,"Requiem","Morroc natives were drafted to help with the construction of Sphinx. They were cursed to become a monster and protect Sphinx for all eternity.",
+			1178,"Zerom","Morroc natives were drafted to help with the construction of the Sphinx. They were cursed to become a monster and protect the Sphinx for all eternity.",
+			1164,"Requiem","Morroc natives were drafted to help with the construction of the Sphinx. They were cursed to become a monster and protect the Sphinx for all eternity.",
 			1191,"Mimic","Adventurer's tips are needed.",
-			1140,"Marduk","Augur of Morroc Natives. It controls cursed morroc natives to protect King's Tomb.",
+			1140,"Marduk","Augur of Morroc Natives. It controls cursed Morroc natives to protect King's Tomb.",
 			1154,"Pasana","Protector of the Pyramid. In order to continue to protect the now deceased king, it has willingly received the curse of the Pyramid.",
 			1149,"Minorous","Unknown creature living deep within the labyrinth. It is not on friendly term with Orcs, but they rarely come across each other. When it encounters a creature, it will chase down the target and attack with its giant hammer.",
 			1098,"Anubis","Adventurer's tips are needed.",
@@ -939,17 +940,17 @@ aldebaran,136,133,0	script	Signposts#Clock Tower	2_BULLETIN_BOARD,{
 		.@mo_board = callfunc( "F_AvenBoard",
 			1195,"Rideword","Magic Tome brought to life with demon's powers. It does not possess emotions or a mind of its own, programmed to rely on its instincts to attack living creatures.",
 			1199,"Punk","Giant mold monster. It usually floats around and attacks any nearby creatures in hopes of multiplying itself.",
-			1102,"Bathory","Demon worshipping witch. It flies around in the air and attacks with crystall ball. Surprisingly, it loves cute things.",
+			1102,"Bathory","Demon worshipping witch. It flies around in the air and attacks with a crystal ball. Surprisingly, it loves cute things.",
 			1270,"Tower Keeper","Magical creature created to maintain Clock Tower. It is passive, however it will retaliate against any hostile actions against Clock Tower inhabitants.",
 			1191,"Mimic","Adventurer's tips are needed.",
 			1269,"Clock","Old Grandfather clock that turned into a monster. It is passive against humans since it spent countless years with them.",
 			1377,"Elder","Once an elder of magic association. It delved too deep into magic, turning into a magical monster that attack adventurers on sight.",
-			1193,"Alarm","Magically powered Alarm clock with the sole purpose of protecting Clock Tower. It will attack any intruders within Clock Tower.",
+			1193,"Alarm","Magically powered alarm clock with the sole purpose of protecting Clock Tower. It will attack any intruders within Clock Tower.",
 			1320,"Owl Duke","Owl Baron's sibling that wears a blue manteau. It enjoys rainy days.",
 			1179,"Whisper","Ghost Monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.^000000",
-			1111,"Drainliar","Colonial Bat that inhabits in a dark cave. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a familiar.^000000",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
 			1194,"Arclouze","Monster with hardened shell. It rolls its body to attack with its shell.",
-			1211,"Brilight","Ladybug mysteriously transformed into a vicious bug. It inhabits in dark areas and attacks nearby adventurers.",
+			1211,"Brilight","Ladybug mysteriously transformed into a vicious bug. It inhabits dark areas and attacks nearby adventurers.",
 			1189,"Orc Archer","Adventurer's tips are needed.",
 			1213,"High Orc","Elite orc warrior that possess enhanced physical and mental qualities compared to a normal orc. It periodically attacks nearby village due to its brutal nature.",
 			1209,"Cramp","Rodent found living deep within the dungeon. Its appearance is similar to Tarou, however it is much more vicious and its teeth poisonous.",
@@ -1061,16 +1062,16 @@ gef_fild10,69,340,0	script	Signposts#Orc Dungeon	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1005,"Familiar","Colonial Bat that inhabit in Dark Caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
-			1111,"Drainliar","Colonial Bat that inhabits in a dark cave. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a familiar.^000000",
+			1005,"Familiar","Colonial bat that inhabits dark caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
 			1042,"Steel Chonchon","One of Chonchon type monster, possessing hard shells. It loves to quickly collect items on the ground",
-			1153,"Orc Zombie","Orc Warrior corpse has been revived as an undead monster. It moves very slowly.",
-			1152,"Orc Skeleton","Skeletal Orc warrior corpse has been revived as an undead monster. It uses weapons that was once used when it was still alive. This monster is stronger than a normal orc warrior.",
+			1153,"Orc Zombie","Orc Warrior corpse has been revived as an Undead monster. It moves very slowly.",
+			1152,"Orc Skeleton","Skeletal Orc warrior corpse has been revived as an Undead monster. It uses weapons that was once used when it was still alive. This monster is stronger than a normal orc warrior.",
 			1177,"Zenorc","Orc variant, residing deep within underground cave. It will devour anything in sight to satisfy its appetite. It is passive against adventurers.",
 			1189,"Orc Archer","Adventurer's tips are needed." );
 		if (.@mo_board == 1) {
 			mes "[Orc Dungeon]";
-			mes "Orc Dungeon is comprised of 2 floors. Monsters that appear in this dungeon are not strong individually, but adventurers may be overwhelmed by the number. Holy element weapons will make adventurer's life easier in this dungeon. You can also utilize priest skill, aspersio.";
+			mes "Orc Dungeon is comprised of 2 floors. Monsters that appear in this dungeon are not strong individually, but adventurers may be overwhelmed by the number. Holy element weapons will make adventurer's life easier in this dungeon. You can also utilize Priest skill, Aspersio.";
 			next;
 			while(1) {
 				switch( select( "Orc Dungeon B1","Orc Dungeon B2","Cancel" ) ) {
@@ -1184,21 +1185,21 @@ izlu2dun,111,87,0	script	Signposts#Izlude	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1068,"Hydra","Anemone Monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
+			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
 			1161,"Plankton","Small organism monster seen floating in the water. This monster is usually preyed on by other sea creatures.",
 			1070,"Kukre","Worm monster. Its agility is surprisingly fast when scouring for objects on the ground.",
-			1141,"Marina","Jellyfish monster with surprisngly strong tentacles that allow it to swim or walk on land. Its tentacles are used in various ways.",
+			1141,"Marina","Jellyfish monster with surprisingly strong tentacles that allow it to swim or walk on land. Its tentacles are used in various ways.",
 			1066,"Vadon","Crayfish monster that's usually seen around beach. Its body is covered with hard shell, protecting it from attacks.",
-			1067,"Cornutus","Conch monster. It usually lives within its hard shell. This monster is usually seen around izlude beach areas.",
-			1144,"Marse","Marine inhabitant, Squid monster. It spins its body rapidly to use its two tentacles as whips to attack.",
+			1067,"Cornutus","Conch monster. It usually lives within its hard shell. This monster is usually seen around Izlude beach areas.",
+			1144,"Marse","Marine inhabitant, squid monster. It spins its body rapidly to use its two tentacles as whips to attack.",
 			1044,"Obeaune","Mermaid monster. Its hair is always pointed up, disturbing other creatures in the vicinity. It will attack adventurers on sight.",
-			1264,"Merman","Ambitious merman monster with ambition to rule over surface world. It's usually seen deep under the ocean or caves in beach areas.",
+			1264,"Merman","Ambitious Merman monster with ambition to rule over surface world. It's usually seen deep under the ocean or caves in beach areas.",
 			1142,"Marine Sphere","Spherical monster seen wandering around aimlessly within the ocean. When it feels threatened, it will self destruct.",
 			1158,"Phen","Fish monster that live deep within the ocean. This fish is highly sought after for dining purposes.",
 			1045,"Marc","Seahorse monster. It's covered in thick husks and may prove to be a formidable opponent for unsuspecting adventurers.",
 			1069,"Swordfish","Swordfish monster. It uses supersonic waves to attack.",
 			1108,"Deviace","Devilfish monster. It will remain passive as long as adventurers don't provoke it.",
-			1065,"Strouf","King of the merman monsters. Although it is able to order mermans around, it is not much stronger than a merman.",
+			1065,"Strouf","King of the Merman monsters. Although it is able to order Mermen around, it is not much stronger than a Merman.",
 			2201,"Lamp Ray","Adventurer's tips are needed.",
 			2204,"Squidgitte","Adventurer's tips are needed.",
 			2203,"Octo Pot","Adventurer's tips are needed.",
@@ -1267,7 +1268,7 @@ izlu2dun,111,87,0	script	Signposts#Izlude	2_BULLETIN_BOARD,{
 					mes "Strouf(61)";
 					mes "--------------------------------";
 					next;
-					mes "<Where is this? You don't know? Are you scared? This is definately underwater, but I can breathe. Did I just grow gills out of nowhere? - Silly Explorer Grape>";
+					mes "<Where is this? You don't know? Are you scared? This is definitely underwater, but I can breathe. Did I just grow gills out of nowhere? - Silly Explorer Grape>";
 					F_InfoBoard;
 					continue;
 				case 6:
@@ -1296,18 +1297,18 @@ xmas,147,311,0	script	Signposts#Toy Factory	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1002,"Poring","Jelly creature that can be found in just about anywhere. This monster is very passive and weak, perfect for beginners. It has a tendency to eat any items that come across.",
+			1002,"Poring","Jelly creature that can be found just about anywhere. This monster is very passive and weak, perfect for beginners. It has a tendency to eat any items that come across.",
 			1113,"Drops","Poring monster that's adapted to the desert environment. As usual, it will devour any items on sight.",
 			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
-			1265,"Cookie (Green)","Pixie monster that works at the toy factory in lutie. It loves pranks. It will assist other cookie monsters in the vicinity.",
-			1242,"Marin","Poring monster that's adapted to frigid environment in lutie. Unlike other poring monsters, it will not devour items on sight.",
-			1246,"Cookie (Red)","Pixie monster that works at the toy factory in lutie. It loves pranks.",
-			1249,"Myst Case","Present Box monster that can be seen inside the toy factory dungeon. Unlike mimic monster, this present box monster is actually alive. It will remain passive as long as it is not provoked.",
-			1090,"Mastering","A mutated giant poring. It wanders around with other Porings.",
+			1265,"Cookie (Green)","Pixie monster that works at the toy factory in Lutie. It loves pranks. It will assist other cookie monsters in the vicinity.",
+			1242,"Marin","Poring monster that's adapted to frigid environment in Lutie. Unlike other Poring monsters, it will not devour items on sight.",
+			1246,"Cookie (Red)","Pixie monster that works at the toy factory in Lutie. It loves pranks.",
+			1249,"Myst Case","Present Box monster that can be seen inside the Toy Factory dungeon. Unlike the Mimic, this present box monster is actually alive. It will remain passive as long as it is not provoked.",
+			1090,"Mastering","A mutated giant Poring. It wanders around with other Porings.",
 			1250,"Chepet","This monster appears to be a little girl holding a monstrous doll, however the doll is the main body. It attacks by using the matchstick to create fire.",
-			1096,"Angeling","Final form of poring monster at the end of the evolution! Despite its cute appearance, it's very strong. It strongly dislikes humans.",
-			1248,"Cruiser","Guard of the toy factory in lutie. It wields shotgun as a weapon.",
-			1251,"Stormy Knight","Boss monster from the legendary story that's passed down the generations in lutie. It's known to appear with blizzard and destroy everything on sight." );
+			1096,"Angeling","Final form of Poring monster at the end of the evolution! Despite its cute appearance, it's very strong. It strongly dislikes humans.",
+			1248,"Cruiser","Guard of the toy factory in Lutie. It wields shotgun as a weapon.",
+			1251,"Stormy Knight","Boss monster from the legendary story that's passed down the generations in Lutie. It's known to appear with blizzard and destroy everything on sight." );
 		if (.@mo_board == 1) {
 			mes "[Toy Factory]";
 			mes "Toy Factory is comprised of 2 floors. Strong monsters sometimes appear within the dungeon. This dungeon is appropriate for leisure adventure experience, however some caution should be exercised.";
@@ -1329,7 +1330,7 @@ xmas,147,311,0	script	Signposts#Toy Factory	2_BULLETIN_BOARD,{
 					mes "Angeling(77)";
 					mes "--------------------------------";
 					next;
-					mes "<Do you think porings are cute? Would you change your mind if you met Angeling? It loves harassing people. Be wary of Angeling beginners! Be wary! That's all~ - Orc masked explorer grape>";
+					mes "<Do you think Porings are cute? Would you change your mind if you met Angeling? It loves harassing people. Be wary of Angeling beginners! Be wary! That's all~ - Orc masked explorer grape>";
 					F_InfoBoard;
 					continue;
 				case 2:
@@ -1358,16 +1359,16 @@ alb2trea,75,101,0	script	Signposts#Sunken Ship	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1068,"Hydra","Anemone Monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
-			1179,"Whisper","Ghost Monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.^000000",
+			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
+			1179,"Whisper","Ghost monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.^000000",
 			1070,"Kukre","Worm monster. Its agility is surprisingly fast when scouring for objects on the ground.",
-			1071,"Pirate Skeleton","Dead sailors revived as an undead monster. It still wears previously worn pirate bandana on its skull.",
+			1071,"Pirate Skeleton","Dead sailors revived as an Undead monster. It still wears previously worn pirate bandana on its skull.",
 			1191,"Mimic","Adventurer's tips are needed.",
-			1216,"Penomena","It looks similar to a hydra, but it is capable of moving and its attacks are much stronger. Underestimating it will result in quick death. Be cautious around this monster.",
+			1216,"Penomena","It looks similar to a Hydra, but it is capable of moving and its attacks are much stronger. Underestimating it will result in quick death. Be cautious around this monster.",
 			1120,"Ghostring","A mutated giant poring. It wanders around with other Porings.",
 			1143,"Marionette","Demon with the appearance of a marionette doll used in puppet theatre. Normal weapons is ineffective against its spiritual body.^000000",
-			1208,"Wanderer","Stray Samurai that is revived as an Undead Monster. It attacks using previously mastered swordmanship techniques, precise enough to slice flying insects in half.",
-			1112,"Drake","Attempted to find phantom treasures but ended up dying in the process, Pirate King. Due to its strong regret, the pirates were cursed to walk the world of the living as an undead. It protects its treasures from adventurers." );
+			1208,"Wanderer","Stray Samurai that is revived as an Undead monster. It attacks using previously mastered swordsmanship techniques, precise enough to slice flying insects in half.",
+			1112,"Drake","Attempted to find phantom treasures but ended up dying in the process, Pirate King. Due to its strong regret, the pirates were cursed to walk the world of the living as an Undead. It protects its treasures from adventurers." );
 		if (.@mo_board == 1) {
 			mes "[Sunken Ship]";
 			mes "Sunken Ship is not completely submerged in water, allowing access to a total of 2 floors. Despite the size of the map, many monsters appear in this dungeon. Exercise caution inside the dungeon.";
@@ -1416,9 +1417,9 @@ comodo,327,177,0	script	Signposts#Comodo East	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1068,"Hydra","Anemone Monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
+			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
 			1034,"Thara Frog","Frog monster that loves dark and wet places. It may be too hard of an opponent for a beginner adventurer.",
-			1064,"Megalodon","Fish skeleton monster revived with magic. It still acts like a fish as an undead.",
+			1064,"Megalodon","Fish skeleton monster revived with magic. It still acts like a fish as an Undead.",
 			1255,"Nereid","Worm monster that lives inside the cave. Its eye sight is horrible, relying solely on sense of smell to detect nearby prey." );		
 		if (.@mo_board == 1) {
 			mes "[Comodo East Cave, Mao]";
@@ -1445,14 +1446,14 @@ comodo,31,217,0	script	Signposts#Comodo West	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1264,"Merman","Ambitious merman monster with ambition to rule over surface world. It's usually seen deep under the ocean or caves in beach areas.",
+			1264,"Merman","Ambitious Merman monster with ambition to rule over surface world. It's usually seen deep under the ocean or caves in beach areas.",
 			1256,"Pest","Monster with unknown origin. It attacks by spinning its sharp eyelids.",
 			1255,"Nereid","Worm monster that lives inside the cave. Its eye sight is horrible, relying solely on sense of smell to detect nearby prey.",
 			1148,"Medusa","Monster with snakes as its hair. Looking directly into its eyes may cause your body to petrify.",
 			1583,"Tao Gunka","MVP monster with large, round face and crude expression. Most adventurers run away from this monster in fear. Despite its appearance, it's fairly strong." );
 		if (.@mo_board == 1) {
 			mes "[Comodo West Cave, Karu]";
-			mes "This dungeon introduces medusa monster that will surely cause you to turn to stone if you look at it in the eyes. There are no other exits in this cave.";
+			mes "This dungeon introduces Medusa monster that will surely cause you to turn to stone if you look at it in the eyes. There are no other exits in this cave.";
 			next;
 			mes "[Comodo West Cave, Karu]";
 			mes "------------ Monster ------------";
@@ -1475,10 +1476,10 @@ comodo,178,354,0	script	Signposts#Comodo North	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1068,"Hydra","Anemone Monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
-			1274,"Megalith","Stone statue monster that can be seen in Comodo areas. It moves rocks in the vincinity to attack.",
-			1279,"Tri Joint","This creature has existed for millenia. It's usually found in dark caves.",
-			1278,"Stalactic Golem","Evolved golem monster. Its body is covered with stalactite and it's much stronger than a normal golem.",
+			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
+			1274,"Megalith","Stone statue monster that can be seen in Comodo areas. It moves rocks in the vicinity to attack.",
+			1279,"Tri Joint","This creature has existed for millennia. It's usually found in dark caves.",
+			1278,"Stalactic Golem","Evolved Golem monster. Its body is covered with stalactite and it's much stronger than a normal Golem.",
 			1255,"Nereid","Worm monster that lives inside the cave. Its eye sight is horrible, relying solely on sense of smell to detect nearby prey." );
 		if (.@mo_board == 1) {
 			mes "[Comodo North Cave, Ruande]";
@@ -1507,26 +1508,26 @@ pay_arche,39,134,0	script	Signposts#Payon Cave	2_BULLETIN_BOARD,{
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
 			1015,"Zombie","Dead soul trapped by unholy necromancer in a rotting corpse, cursed to live without being able to feel pain. Its impurity is capable of inflicting poison.",
-			1005,"Familiar","Colonial Bat that inhabit in Dark Caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
-			1076,"Skeleton","Skeleton filled with regret. This undead monster is aggressive.",
-			0,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
+			1005,"Familiar","Colonial bat that inhabits dark caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
+			1076,"Skeleton","Skeleton filled with regret. This Undead monster is aggressive.",
+			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
 			1028,"Soldier Skeleton","Skeleton soldier can only be seen deep inside the dungeon, where sunlight would never reach. Unlike Skeleton Archers, it attacks with dual swords.",
-			1111,"Drainliar","Colonial Bat that inhabits in a dark cave. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a familiar.",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.",
 			1016,"Archer Skeleton","Skeleton Archer can only be seen deep inside the dungeon, where sunlight would never reach. This monster's quivers does not run out of arrows.",
-			1116,"Eggyra","Egg monster. Its shell are harder than pecopeco egg's shell. It loiters around the dungeon aimlessly.",
+			1116,"Eggyra","Egg monster. Its shell are harder than Pecopeco Egg's shell. It loiters around the dungeon aimlessly.",
 			1020,"Mandragora","Adventurer's tips are needed.",
-			1068,"Hydra","Anemone Monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
+			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
 			1277,"Greatest General","Once a guardian of a town. It was since long forgotten by the people. This monster is aggressive and attacks passing by adventurers, but it's unable to move.",
 			1188,"Bongun","Male Kyonshi who have willingly become a monster in order to protect Munak.",
 			1026,"Munak","Dead girl's spirit resides within the dead body, turning it into a Kyonshi monster. It sucks blood from nearby creatures.",
 			1180,"Nine Tail","Nine tailed fox. It's much smarter than a normal fox, and it's unknown whether it is able to transform into a human or not.",
 			1129,"Horong","Fire monster with an appearance of Dokebi light. Origin of this monster is unknown.",
-			1110,"Dokebi","Demon monster that can only be seen near payon areas. It sometimes riddles passing by adventurers.",
+			1110,"Dokebi","Demon monster that can only be seen near Payon areas. It sometimes riddles passing by adventurers.",
 			1301,"Am Mut","Monster from Payon Legend. It looks like a small kid, however it is known to harrass passing by adventurers.",
 			1290,"Skeleton General","Once a general that protected Payon Castle. After its death, it's become a monster who wander around the Payon Cave.",
-			0,"GiantWhisper","Adventurer's tips are needed.",
+			1186,"GiantWhisper","Adventurer's tips are needed.",
 			1170,"Sohee","Virgin woman who've died a sad death. It can only be found near Payon area and it's passive.",
-			0,"Cat O'Nine Tails","9 tailed Demon. It uses the bell to lure and attack humans.",
+			1307,"Cat O'Nine Tails","9 tailed Demon. It uses the bell to lure and attack humans.",
 			1150,"Moonlight Flower","Medium rank Demon, queen of foxes. Underestimating its cute appearance will result in death." );		
 		if (.@mo_board == 1) {
 			mes "[Payon Cave]";
@@ -1611,10 +1612,10 @@ moc_ruins,61,164,0	script	Signposts#Pyramid	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1005,"Familiar","Colonial Bat that inhabit in Dark Caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
+			1005,"Familiar","Colonial bat that inhabits dark caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
 			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
 			1028,"Soldier Skeleton","Skeleton soldier can only be seen deep inside the dungeon, where sunlight would never reach. Unlike Skeleton Archers, it attacks with dual swords.",
-			1111,"Drainliar","Colonial Bat that inhabits in a dark cave. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a familiar.^000000",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
 			1016,"Archer Skeleton","Skeleton Archer can only be seen deep inside the dungeon, where sunlight would never reach. This monster's quivers does not run out of arrows.",
 			1041,"Mummy","Mummy monster found within the forgotten pyramid. It sometimes appears with Verit monster, surprising nearby adventurer. It's an aggressive monster.",
 			1029,"Isis","Mutated female servant who was buried alive with a king's deceased body. It transformed into a snake monster. It still remains loyal to the king.",
@@ -1791,12 +1792,12 @@ einbech,142,250,0	script	Signpost#Einbech Dungeon	2_BULLETIN_BOARD,{
 		.@mo_board = callfunc( "F_AvenBoard",
 			1619,"Porcellio","Tiny larva monster. Despite its size, it's surprisingly strong.",
 			1620,"Noxious","Crimson Smog monster. This monster cannot be truly defeated.",
-			1621,"Venomous","Green Dust monster. This monster can be truly defeated.",
-			1616,"Pitman","Hard working tiny pixie miners. It uses pickaxe to attack.",
+			1621,"Venomous","Green Dust monster. This monster cannot be truly defeated.",
+			1616,"Pitman","Hard working tiny pixie miners. It uses a pickaxe to attack.",
 			1622,"Teddy Bear","Cute stuffed teddy bear monster. It lures unsuspecting creatures with charm and attacks them with a walking stick.",
 			1617,"Waste Stove","It looks like an extremely old stove at first glance. When adventurers approach it carelessly, it will attack.",
 			1614,"Mineral","Mineral monster. It sometimes hides in the ground and ambushes passing by adventurer.",
-			1615,"Obsidian","Small black crystall monster that excel in close; combat. It sometimes hides in the ground and ambushes passing by adventurer.",
+			1615,"Obsidian","Small black crystal monster that excel in close; combat. It sometimes hides in the ground and ambushes passing by adventurer.",
 			1618,"Ungoliant","Giant earwig monster. It uses pincers to attack.",
 			1623,"RSX-0806","Adventurer's tips are needed." );
 		if (.@mo_board == 1) {
@@ -2092,7 +2093,7 @@ gefenia01,61,173,0	script	Signpost#Geffenia1	2_BULLETIN_BOARD,{
 			1390,"Violy","Its violin performance is melodic, but painful at times.",
 			1370,"Succubus","Female demon. Lures males and sucks their life energy.",
 			1374,"Incubus","Male demon. Lures females and sucks their life energy.",
-			1219,"Abysmal Knight","Demon Knight that serves the owner of legendary labyrinth. It is very poweful and brutal.",
+			1219,"Abysmal Knight","Demon Knight that serves the owner of legendary labyrinth. It is very powerful and brutal.",
 			1203,"Mysteltainn","It appears to be a sealed demon blade, but it's actually being sealed by a chain type monster. It manipulates the chained sword to attack." );
 		if (.@mo_board == 1) {
 			mes "[Geffenia Section "+ charat( strnpcinfo(2),8 ) +"]";
@@ -2187,14 +2188,14 @@ nameless_n,259,213,0	script	Signpost#Nameless Island	2_BULLETIN_BOARD,{
 			1866,"Hell Poodle","Adventurer's tips are needed.",
 			1867,"Banshee","Adventurer's tips are needed.",
 			1869,"Flame Skull","Adventurer's tips are needed.",
-			1865,"Ragged Zombie","Adventurer's tips are needed.Έν",
+			1865,"Ragged Zombie","Adventurer's tips are needed.",
 			1864,"Zombie Slaughter","Adventurer's tips are needed.",
 			1870,"Necromancer","Adventurer's tips are needed.",
 			2107,"Fallen Bishop Hibram","Adventurer's tips are needed.",
 			1873,"Beelzebub","Adventurer's tips are needed." );
 		if (.@mo_board == 1) {
 			mes "[Nameless Island St. Abbey]";
-			mes "Nameless Island St. Abbey is comprised of 3 floors, and most monsters that appear in this dungeon are undead or demon. Prepare before venturing into this dungeon.";
+			mes "Nameless Island St. Abbey is comprised of 3 floors, and most monsters that appear in this dungeon are Undead or demon. Prepare before venturing into this dungeon.";
 			next;
 			while(1) {
 				switch( select( "Nameless Island St. Abbey 1F","Nameless Island St. Abbey 2F","Nameless Island St. Abbey 3F","Cancel" ) ) {
@@ -2219,7 +2220,7 @@ nameless_n,259,213,0	script	Signpost#Nameless Island	2_BULLETIN_BOARD,{
 					mes "Necromancer(133)";
 					mes "--------------------------------";
 					next;
-					mes "<Do you know how scary a Bishop can be when it becomes fallen..? Hibram.. I saw it.. - All knowing Exporer Grape>";
+					mes "<Do you know how scary a Bishop can be when it becomes fallen..? Hibram.. I saw it.. - All knowing Explorer Grape>";
 					F_InfoBoard;
 					continue;
 				case 3:
@@ -2249,21 +2250,21 @@ lhz_cube,234,97,0	script	Signpost#Somatology	2_BULLETIN_BOARD,{
 		.@mo_board = callfunc( "F_AvenBoard",
 			1613,"Metaling","At first glance, it seems like a normal poring monster, but it's actually made of machinery parts.",
 			1627,"Anopheles","Almost invisible to the naked eye. Adventurers are often attacked by this monster without realizing it.",
-			1682,"Remover","Former member of Einbroch firefighters. After an unfortunate accident in a mine, it's become a vicious monster.",
-			1653,"Wickebine Tres","Unknown thief with unknown age and motive. It broke into the laboratory for unknown reason, but it was quickly apprehended and became a specimen. It's known to be a vicious monster with surprisngly femininity.",
-			1655,"Errende Ebecee","Boy who once treaded on the road as an acolyte. Unfortunately, it has fallen prey to the schemes of an unknown group and turned into a specimen.",
-			1657,"Laurell Weinder","Once a gifted magician who've had bright future ahead of him. Unfortunately it was involved in bio experiment and turned into a specimen.",
-			1654,"Armeyer Dinze","Merchant girl who believe in the methodology of time and money. She met a traveling swordman one day and started accompanying her.",
-			1656,"Kavach Icarus","A former hunter, but he was quickly subdued and became renkenber's specimen. He now walks amongst other specimen in Somatology Laboratory.",
+			1682,"Remover","Former member of Einbroch fire fighters. After an unfortunate accident in a mine, it's become a vicious monster.",
+			1653,"Wickebine Tres","Unknown Thief with unknown age and motive. Broke into the laboratory for unknown reason, but was quickly apprehended and became a specimen. It's known to be a vicious monster with surprisingly femininity.",
+			1655,"Errende Ebecee","Boy who once tread on the road as an Acolyte. Unfortunately, it has fallen prey to the schemes of an unknown group and turned into a specimen.",
+			1657,"Laurell Weinder","Once a gifted Magician who had a bright future ahead of him. Unfortunately it was involved in bio experiment and turned into a specimen.",
+			1654,"Armeyer Dinze","Merchant girl who believe in the methodology of time and money. She met a travelling Swordsman one day and started accompanying her.",
+			1656,"Kavach Icarus","A former Hunter, but he was quickly subdued and became Renkenber's specimen. He now walks amongst other specimen in the Somatology Laboratory.",
 			1681,"Gemini-S58","Unknown creature that have gone through mutation. It enjoys its male appearance.",
 			1652,"Egnigem Cenia","Once a carefree wandering knight. She met a merchant girl during one of her travels, but they were caught by Renkenber to be used as specimen.",
-			1635,"Eremes Guile","Former assassin cross who wanted to be faster than any other assassins. His ambitions lead him to become a specimen for bio experiment.",
-			1637,"Margaretha Sorin","Former high priestess who had travelled to Lighthalzen to train. Shortly after her departure, she was subdued by renkenber and she was turned into a specimen.",
-			1638,"Cecil Damon","Former sniper who co-existed with the environment. However, after becoming a specimen for bio experiment, her personality went under a shocking change.",
-			1639,"Kathryne Keyron","Former high wizard who had graduated from wizard school at an early age. Her talent caught rekenber's attention and ended up being captured as a specimen.",
-			1634,"Seyren Windsor","Former lord knight who was famously known for his valor. While he was protecting a nearby adventurer, he was subdued and became a specimen.",
-			1636,"Howard Alt-Eisen","Former mastersmith who had been tricked into becoming a specimen on his own accord. While he was alive, he had no interest in anything but weapon smithing.",
-			1658,"Boss Egnigem Cenia","Former knight who was famously known by the adventurers. In order to reveal Renkenber's schemes, she willingly let herself be taken into the laboratory, but she could not escape her fate.",
+			1635,"Eremes Guile","Former Assassin Cross who wanted to be faster than any other assassins. His ambitions lead him to become a specimen for bio experiment.",
+			1637,"Margaretha Sorin","Former High Priestess who had travelled to Lighthalzen to train. Shortly after her departure, she was subdued by Renkenber and she was turned into a specimen.",
+			1638,"Cecil Damon","Former Sniper who co-existed with the environment. However, after becoming a specimen for bio experiment, her personality went under a shocking change.",
+			1639,"Kathryne Keyron","Former High Wizard who had graduated from wizard school at an early age. Her talent caught Rekenber's attention and ended up being captured as a specimen.",
+			1634,"Seyren Windsor","Former Lord Knight who was famously known for his valor. While he was protecting a nearby adventurer, he was subdued and became a specimen.",
+			1636,"Howard Alt-Eisen","Former Mastersmith who had been tricked into becoming a specimen on his own accord. While he was alive, he had no interest in anything but weapon smithing.",
+			1658,"Boss Egnigem Cenia","Former Knight who was famously known by the adventurers. In order to reveal Renkenber's schemes, she willingly let herself be taken into the laboratory, but she could not escape her fate.",
 			1640,"Lord Knight Seyren","Adventurer's tips are needed.",
 			1641,"Assassin Cross Eremes","Adventurer's tips are needed.",
 			1643,"High Priest Margaretha","Adventurer's tips are needed.",
@@ -2730,12 +2731,12 @@ prt_fild05,278,220,0	script	Signpost#Culvert	2_BULLETIN_BOARD,{
 			}
 		}
 		.@mo_board = callfunc( "F_AvenBoard",
-			1111,"Drainliar","Colonial Bat that inhabits in a dark cave. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a familiar.^000000",
-			1077,"Poison Spore","An agressive mushroom creature, it is recommended to carry green herbs to counteract it's toxic special attack.",
-			1209,"Cramp","Rodent found living deep within the dungeon. Its appearance is similar to Tarou, however it is much more vicious and its teeth poisonous.",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
+			1077,"Poison Spore","An aggressive mushroom creature, it is recommended to carry green herbs to counteract it's toxic special attack.",
+			1209,"Cramp","Rodent found living deep within the dungeon. Its appearance is similar to Tarou, however it is much more vicious and has poisonous teeth.",
 			1161,"Plankton","Small organism monster seen floating in the water. This monster is usually preyed on by other sea creatures.",
-			1175,"Tarou","Rodent that inhabit in dark places. It possesses white and plushy furs.",
-			1005,"Familiar","Colonial Bat that inhabits in a dark cave. Its small fangs are sharp enough to suck blood from nearby creatures.",
+			1175,"Tarou","Rodent that inhabits dark places. It possesses white and plushy furs.",
+			1005,"Familiar","Colonial bat that inhabits dark caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
 			1014,"Spore","Mushroom monster. It leaps very rhythmically, attracting attention from passing adventurers.",
 			1048,"Thief Bug Egg","Thief Bug Egg. It turns into Thief Bug monster once it hatches.",
 			1051,"Thief Bug","This monster is usually seen in small, damp places. It's movement is rather fast, and it devours any items on sight.",
@@ -2813,7 +2814,7 @@ tur_dun01,158,241,0	script	Signpost#Turtle Island	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1256,"Pest","Monster with unknown origin. It attacks by spinning its sharp eyelids.",
+			1256,"Pest","Monster with an unknown origin. It attacks by spinning its sharp eyelids.",
 			1314,"Permeter","One of the most docile turtles on Turtle Island. Small trees grow on its shell.",
 			1316,"Solider","Turtle with small castle walls on its shell.",
 			1319,"Freezer","Turtle with ice spikes on its shell.",
@@ -2942,7 +2943,7 @@ gonryun,155,198,0	script	Signpost#Kunlun Dungeon	2_BULLETIN_BOARD,{
 			1413,"Hermit Plant","Plant that's very healthy for the body. It may be hard for people to eat this.",
 			1417,"Zipper Bear","It looks like a normal bear at first glance, but it has a zipper on its back. There's no way to know what's inside it.",
 			1410,"Enchanted Peach Tree","Living Peach Tree. Peaches grown on this tree is too hard to eat.",
-			1408,"Bloody Butterfly","Butterfly that lures with its mystical appearancehumans and sucks their blood. It emits sweet odor from its wings.",
+			1408,"Bloody Butterfly","Butterfly that lures with its mystical appearance and sucks their blood. It emits sweet odor from its wings.",
 			1412,"Taoist Hermit","Cloud riding hermit. It loves playing checkers.",
 			1416,"Evil Nymph","Fairy monster, otherwise known as angel in western kingdom. It enjoys making accessories with beads.",
 			1418,"Evil Snake Lord","Giant snake monster. Its white skin looks very mysterious. It's rumored that its caligraphy is legendary." );
@@ -2999,7 +3000,7 @@ louyang,37,276,0	script	Signpost#Louyang Dungeon	2_BULLETIN_BOARD,{
 			1191,"Mimic","Adventurer's tips are needed.",
 			1026,"Munak","Dead girl's spirit resides within the dead body, turning it into a Kyonshi monster. It sucks blood from nearby creatures.",
 			1129,"Horong","Fire monster with an appearance of Dokebi light. Origin of this monster is unknown.",
-			1381,"Grizzly","Bear that inhabits in magma flowing region. Its furs appear as if it's on fire. It will be popular amongst the fur lovers.",
+			1381,"Grizzly","Bear that inhabits magma flowing regions. Its furs appear as if it's on fire. It will be popular amongst the fur lovers.",
 			1037,"Side Winder","One headed snake. It uses its tail like its head to confuse the enemies.",
 			1306,"Leib Olmai","Bear with extremely vicious personality. Its body is covered with numerous scars from various fights with other creatures.",
 			1517,"Jing Guai","Monster that looks like it's a tiger costume. It barks like a dog.",
@@ -3063,11 +3064,11 @@ ayo_fild02,279,147,0	script	Signpost#Ayothaya	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1179,"Whisper","Ghost Monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.^000000",
+			1179,"Whisper","Ghost monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.^000000",
 			1036,"Ghoul","Corpse that is revived by Unholy Necromancer's curse. It ambushes nearby living creatures and devours their corpses to satiate its hunger, but because it's a reanimated corpse, it is unable to feel satisfied.^000000",
-			1586,"Leaf Cat","Cat monster wearing leaf cat leaves as clothing. Its cute appearance is popular amongst the adventurers.",
+			1586,"Leaf Cat","Cat monster wearing leaves as clothing. Its cute appearance is popular amongst the adventurers.",
 			1587,"Kraben","Obnoxious monster. It attacks with what appears to be 2 giant pots.",
-			1584,"Tamruan","Sword wielding status-like monster. It wears powerful armors to protect itself.",
+			1584,"Tamruan","Sword wielding status-like monster. It wears powerful armor to protect itself.",
 			1688,"Lady Tanee","Adventurer's tips are needed." );
 		if (.@mo_board == 1) {
 			mes "[Ayothaya Dungeon]";
@@ -3169,7 +3170,7 @@ bra_dun01,208,109,0	script	Signpost#Brasilis	2_BULLETIN_BOARD,{
 		mes "-- Adventurer Group --";
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
-			1068,"Hydra","Anemone Monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
+			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
 			1070,"Kukre","Worm monster. Its agility is surprisingly fast when scouring for objects on the ground.",
 			1141,"Marina","Jellyfish monster with surprisngly strong tentacles that allow it to swim or walk on land. Its tentacles are used in various ways.",
 			2070,"Piranha","Adventurer's tips are needed.",
@@ -3253,7 +3254,7 @@ dew_fild01,51,61,0	script	Signpost#Dewata_Istana	2_BULLETIN_BOARD,{
 		next;
 		.@mo_board = callfunc( "F_AvenBoard",
 			1301,"Am Mut","Monster from Payon Legend. It looks like a small kid, however it is known to harrass passing by adventurers.",
-			1309,"Gajomart","Popularly known as Dokebi flame in eastern countries. It's exact identitiy is unknown.",
+			1309,"Gajomart","Popularly known as Dokebi flame in eastern countries. It's exact identity is unknown.",
 			2154,"Banaspaty","Adventurer's tips are needed.",
 			2155,"Butoijo","Adventurer's tips are needed." );
 		if (.@mo_board == 1) {

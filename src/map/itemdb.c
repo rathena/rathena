@@ -109,61 +109,48 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 }
 
 /**
-* Return a random item id from group. (takes into account % chance giving/tot group)
-* NOTE: Sub group 0 will be set to default 1, since 0 isn't random group
+* Return a random group entry from Item Group
 * @param group_id
-* @param sub_group: Default is 1
-* @return nameid
+* @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
+* @return Item group entry or NULL on fail
 */
-unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group)
-{
+struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group) {
 	struct s_item_group_db *group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id);
-	if (sub_group)
-		sub_group -= 1;
-	if (!group) {
-		ShowError("itemdb_searchrandomid: Invalid group id %d\n", group_id);
-		return UNKNOWN_ITEM_ID;
-	}
-	if (sub_group > MAX_ITEMGROUP_RANDGROUP) {
-		ShowError("itemdb_searchrandomid: Invalid sub_group %d\n", sub_group+1);
-		return UNKNOWN_ITEM_ID;
-	}
-	if (&group->random[sub_group] && group->random[sub_group].data_qty)
-		return group->random[sub_group].data[rand()%group->random[sub_group].data_qty].nameid;
+	struct s_item_group_entry *list = NULL;
+	uint16 qty = 0;
 
-	ShowError("itemdb_searchrandomid: No item entries for group id %d and sub group %d\n", group_id, sub_group+1);
-	return UNKNOWN_ITEM_ID;
+	if (!group) {
+		ShowError("itemdb_get_randgroupitem: Invalid group id %d\n", group_id);
+		return NULL;
+	}
+	if (sub_group > MAX_ITEMGROUP_RANDGROUP+1) {
+		ShowError("itemdb_get_randgroupitem: Invalid sub_group %d\n", sub_group);
+		return NULL;
+	}
+	if (sub_group == 0) {
+		list = group->must;
+		qty = group->must_qty;
+	}
+	else {
+		list = group->random[sub_group-1].data;
+		qty = group->random[sub_group-1].data_qty;
+	}
+	if (!qty) {
+		ShowError("itemdb_get_randgroupitem: No item entries for group id %d and sub group %d\n", group_id, sub_group);
+		return NULL;
+	}
+	return &list[rnd()%qty];
 }
 
-/** [Cydh]
-* Return a number of item's amount that will be obtained for 'getrandgroupitem id,1;'
-* NOTE: Sub group 0 will be set to default 1, since 0 isn't random group
+/**
+* Return a random Item ID from from Item Group
 * @param group_id
-* @param sub_group
-* @param nameid: The target item will be found
-* @return amount
+* @param sub_group: 0 is 'must' item group, random groups start from 1 to MAX_ITEMGROUP_RANDGROUP+1
+* @return Item ID or UNKNOWN_ITEM_ID on fail
 */
-uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, unsigned short nameid) {
-	uint16 i, amt = 1;
-	struct s_item_group_db *group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id);
-	
-	if (sub_group)
-		sub_group -= 1;
-	if (!group) {
-		ShowError("itemdb_get_randgroupitem_count: Invalid group id %d\n", group_id);
-		return amt;
-	}
-	if (sub_group > MAX_ITEMGROUP_RANDGROUP) {
-		ShowError("itemdb_get_randgroupitem_count: Invalid sub_group id %d\n", group_id+1);
-		return amt;
-	}
-	if (!(&group->random[sub_group]) || !group->random[sub_group].data_qty)
-		return amt;
-	for (i = 0; i < group->random[sub_group].data_qty; i++) {
-		if (group->random[sub_group].data[i].nameid == nameid)
-			return group->random[sub_group].data[i].amount;
-	}
-	return amt;
+unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group) {
+	struct s_item_group_entry *entry = itemdb_get_randgroupitem(group_id, sub_group);
+	return entry ? entry->nameid : UNKNOWN_ITEM_ID;
 }
 
 /** [Cydh]
@@ -173,7 +160,7 @@ uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, unsigned
 * @param *group: struct s_item_group from itemgroup_db[group_id].random[idx] or itemgroup_db[group_id].must[sub_group][idx]
 */
 static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_item_group_entry *data) {
-	uint16 i;
+	uint16 i, get_amt = 0;
 	struct item tmp;
 
 	nullpo_retv(data);
@@ -181,7 +168,6 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_it
 	memset(&tmp, 0, sizeof(tmp));
 
 	tmp.nameid = data->nameid;
-	tmp.amount = (itemdb_isstackable(data->nameid)) ? data->amount : 1;
 	tmp.bound = data->bound;
 	tmp.identify = 1;
 	tmp.expire_time = (data->duration) ? (unsigned int)(time(NULL) + data->duration*60) : 0;
@@ -191,24 +177,23 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, struct s_it
 		tmp.card[2] = GetWord(sd->status.char_id, 0);
 		tmp.card[3] = GetWord(sd->status.char_id, 1);
 	}
-	// Do loop for non-stackable item
-	for (i = 0; i < data->amount; i++) {
-		char flag = 0;
-#ifdef ENABLE_ITEM_GUID
-		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate UID
-#endif
-		if ((flag = pc_additem(sd, &tmp, tmp.amount, LOG_TYPE_SCRIPT)))
-			clif_additem(sd, 0, 0, flag);
-		else if (!flag && data->isAnnounced) {
-			char output[CHAT_SIZE_MAX];
-			sprintf(output, msg_txt(NULL, 717), sd->status.name, itemdb_jname(data->nameid), itemdb_jname(sd->itemid));
 
-			//! TODO: Move this broadcast to proper packet
-			intif_broadcast(output, strlen(output) + 1, BC_DEFAULT);
-			//clif_broadcast_obtain_special_item();
+	if (!itemdb_isstackable(data->nameid))
+		get_amt = 1;
+	else
+		get_amt = data->amount;
+
+	// Do loop for non-stackable item
+	for (i = 0; i < data->amount; i += get_amt) {
+		char flag = 0;
+		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
+		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
+			clif_additem(sd, 0, 0, flag);
+			if (pc_candrop(sd, &tmp))
+				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0, 0);
 		}
-		if (itemdb_isstackable(data->nameid))
-			break;
+		else if (!flag && data->isAnnounced)
+			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
 	}
 }
 
@@ -370,7 +355,7 @@ static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 }
 
 /**
-* Create dummy item data
+* Create dummy item_data as dummy_item and dummy item group entry as dummy_itemgroup
 */
 static void itemdb_create_dummy(void) {
 	CREATE(dummy_item, struct item_data, 1);
@@ -667,9 +652,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 		if (str[3] != NULL) entry.amount = cap_value(atoi(str[3]),1,MAX_AMOUNT);
 		if (str[5] != NULL) entry.isAnnounced= atoi(str[5]);
 		if (str[6] != NULL) entry.duration = cap_value(atoi(str[6]),0,UINT16_MAX);
-#ifdef ENABLE_ITEM_GUID
 		if (str[7] != NULL) entry.GUID = atoi(str[7]);
-#endif
 		if (str[8] != NULL) entry.bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
 		if (str[9] != NULL) entry.isNamed = atoi(str[9]);
 
@@ -799,6 +782,11 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 
 	id->delay = delay;
 
+	if (columns == 2)
+		id->delay_sc = SC_NONE;
+	else
+		id->delay_sc = atoi(str[2]);
+
 	return true;
 }
 
@@ -912,10 +900,9 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 
 	if (flag&1) id->flag.dead_branch = set ? 1 : 0;
 	if (flag&2) id->flag.group = set ? 1 : 0;
-#ifdef ENABLE_ITEM_GUID
 	if (flag&4 && itemdb_isstackable2(id)) id->flag.guid = set ? 1 : 0;
-#endif
 	if (flag&8) id->flag.bindOnEquip = true;
+	if (flag&16) id->flag.broadcast = 1;
 
 	return true;
 }
@@ -942,6 +929,7 @@ static int itemdb_combo_split_atoi (char *str, int *val) {
 
 	return i;
 }
+
 /**
  * <combo{:combo{:combo:{..}}}>,<{ script }>
  **/
@@ -1069,7 +1057,119 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 	return;
 }
 
+/**
+ * Process Roulette items
+ */
+bool itemdb_parse_roulette_db(void)
+{
+	int i, j;
+	uint32 count = 0;
 
+	// retrieve all rows from the item database
+	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", db_roulette_table)) {
+		Sql_ShowDebug(mmysql_handle);
+		return false;
+	}
+
+	for (i = 0; i < MAX_ROULETTE_LEVEL; i++)
+		rd.items[i] = 0;
+
+	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
+		int k, limit = MAX_ROULETTE_COLUMNS - i;
+
+		for (k = 0; k < limit && SQL_SUCCESS == Sql_NextRow(mmysql_handle); k++) {
+			char* data;
+			unsigned short item_id, amount;
+			int level, flag;
+
+			Sql_GetData(mmysql_handle, 1, &data, NULL); level = atoi(data);
+			Sql_GetData(mmysql_handle, 2, &data, NULL); item_id = atoi(data);
+			Sql_GetData(mmysql_handle, 3, &data, NULL); amount = atoi(data);
+			Sql_GetData(mmysql_handle, 4, &data, NULL); flag = atoi(data);
+
+			if (!itemdb_exists(item_id)) {
+				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%hu' in level '%d'\n", item_id, level);
+				continue;
+			}
+			if (amount < 1) {
+				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item ID '%hu' in level '%d'\n", amount, item_id, level);
+				continue;
+			}
+			if (flag < 0 || flag > 1) {
+				ShowWarning("itemdb_parse_roulette_db: Unsupported flag '%d' for item ID '%hu' in level '%d'\n", flag, item_id, level);
+				continue;
+			}
+
+			j = rd.items[i];
+			RECREATE(rd.nameid[i], unsigned short, ++rd.items[i]);
+			RECREATE(rd.qty[i], unsigned short, rd.items[i]);
+			RECREATE(rd.flag[i], int, rd.items[i]);
+
+			rd.nameid[i][j] = item_id;
+			rd.qty[i][j] = amount;
+			rd.flag[i][j] = flag;
+
+			++count;
+		}
+	}
+
+	// free the query result
+	Sql_FreeResult(mmysql_handle);
+
+	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
+		int limit = MAX_ROULETTE_COLUMNS - i;
+
+		if (rd.items[i] == limit)
+			continue;
+
+		if (rd.items[i] > limit) {
+			ShowWarning("itemdb_parse_roulette_db: level %d has %d items, only %d supported, capping...\n", i + 1, rd.items[i], limit);
+			rd.items[i] = limit;
+			continue;
+		}
+
+		/** this scenario = rd.items[i] < limit **/
+		ShowWarning("itemdb_parse_roulette_db: Level %d has %d items, %d are required. Filling with Apples...\n", i + 1, rd.items[i], limit);
+
+		rd.items[i] = limit;
+		RECREATE(rd.nameid[i], unsigned short, rd.items[i]);
+		RECREATE(rd.qty[i], unsigned short, rd.items[i]);
+		RECREATE(rd.flag[i], int, rd.items[i]);
+
+		for (j = 0; j < MAX_ROULETTE_COLUMNS - i; j++) {
+			if (rd.qty[i][j])
+				continue;
+
+			rd.nameid[i][j] = ITEMID_APPLE;
+			rd.qty[i][j] = 1;
+			rd.flag[i][j] = 0;
+		}
+	}
+
+	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, db_roulette_table);
+
+	return true;
+}
+
+/**
+ * Free Roulette items
+ */
+static void itemdb_roulette_free(void) {
+	int i;
+
+	for (i = 0; i < MAX_ROULETTE_LEVEL; i++) {
+		if (rd.nameid[i])
+			aFree(rd.nameid[i]);
+		if (rd.qty[i])
+			aFree(rd.qty[i]);
+		if (rd.flag[i])
+			aFree(rd.flag[i]);
+		rd.nameid[i] = NULL;
+		rd.qty[i] = NULL;
+		rd.flag[i] = NULL;
+		rd.items[i] = 0;
+	}
+}
 
 /*======================================
  * Applies gender restrictions according to settings. [Skotlex]
@@ -1087,6 +1187,7 @@ static char itemdb_gendercheck(struct item_data *id)
 
 	return (battle_config.ignore_items_gender) ? 2 : id->sex;
 }
+
 /**
  * [RRInd]
  * For backwards compatibility, in Renewal mode, MATK from weapons comes from the atk slot
@@ -1501,7 +1602,7 @@ static void itemdb_read(void) {
 		itemdb_read_combos(dbsubpath2,i); //TODO change this to sv_read ? id#script ?
 		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i);
 		sv_readdb(dbsubpath2, "item_trade.txt",         ',', 3, 3, -1, &itemdb_read_itemtrade, i);
-		sv_readdb(dbsubpath2, "item_delay.txt",         ',', 2, 2, -1, &itemdb_read_itemdelay, i);
+		sv_readdb(dbsubpath2, "item_delay.txt",         ',', 2, 3, -1, &itemdb_read_itemdelay, i);
 		sv_readdb(dbsubpath2, "item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore, i);
 		sv_readdb(dbsubpath2, "item_flag.txt",          ',', 2, 2, -1, &itemdb_read_flag, i);
 		aFree(dbsubpath1);
@@ -1587,10 +1688,15 @@ void itemdb_reload(void) {
 	itemdb_group->clear(itemdb_group, itemdb_group_free);
 	itemdb->clear(itemdb, itemdb_final_sub);
 	db_clear(itemdb_combo);
+	if (battle_config.feature_roulette)
+		itemdb_roulette_free();
 
 	// read new data
 	itemdb_read();
 	cashshop_reloaddb();
+
+	if (battle_config.feature_roulette)
+		itemdb_parse_roulette_db();
 
 	//Epoque's awesome @reloaditemdb fix - thanks! [Ind]
 	//- Fixes the need of a @reloadmobdb after a @reloaditemdb to re-link monster drop data
@@ -1651,6 +1757,8 @@ void do_final_itemdb(void) {
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
 	itemdb->destroy(itemdb, itemdb_final_sub);
 	destroy_item_data(dummy_item);
+	if (battle_config.feature_roulette)
+		itemdb_roulette_free();
 }
 
 /**
@@ -1660,6 +1768,9 @@ void do_init_itemdb(void) {
 	itemdb = uidb_alloc(DB_OPT_BASE);
 	itemdb_combo = uidb_alloc(DB_OPT_BASE);
 	itemdb_group = uidb_alloc(DB_OPT_BASE);
-	itemdb_create_dummy(); //Dummy data item.	
+	itemdb_create_dummy();
 	itemdb_read();
+
+	if (battle_config.feature_roulette)
+		itemdb_parse_roulette_db();
 }

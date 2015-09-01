@@ -142,18 +142,12 @@
     <ClInclude Include="..\3rdparty\libconfig\scanner.h" />
     <ClInclude Include="..\3rdparty\libconfig\strbuf.h" />
     <ClInclude Include="..\3rdparty\libconfig\wincompat.h" />
+    <ClInclude Include="..\3rdparty\mt19937ar\mt19937ar.h" />
     <ClInclude Include="..\src\common\mempool.h" />
     <ClInclude Include="..\src\common\mutex.h" />
     <ClInclude Include="..\src\common\raconf.h" />
     <ClInclude Include="..\src\common\thread.h" />
     <ClInclude Include="..\src\common\winapi.h" />
-    <ClInclude Include="..\src\login\account.h" />
-    <ClInclude Include="..\src\login\ipban.h" />
-    <ClInclude Include="..\src\login\login.h" />
-    <ClInclude Include="..\src\login\loginlog.h" />
-    <ClInclude Include="..\src\login\loginchrif.h" />
-    <ClInclude Include="..\src\login\loginclif.h" />
-    <ClInclude Include="..\src\login\logincnslif.h" />
     <ClInclude Include="..\src\common\cbasetypes.h" />
     <ClInclude Include="..\src\common\core.h" />
     <ClInclude Include="..\src\common\conf.h" />
@@ -172,7 +166,14 @@
     <ClInclude Include="..\src\common\utils.h" />
     <ClInclude Include="..\src\common\cli.h" />
     <ClInclude Include="..\src\common\msg_conf.h" />
-    <ClInclude Include="..\3rdparty\mt19937ar\mt19937ar.h" />
+    <ClInclude Include="..\src\config\core.h" />
+    <ClInclude Include="..\src\login\account.h" />
+    <ClInclude Include="..\src\login\ipban.h" />
+    <ClInclude Include="..\src\login\login.h" />
+    <ClInclude Include="..\src\login\loginlog.h" />
+    <ClInclude Include="..\src\login\loginchrif.h" />
+    <ClInclude Include="..\src\login\loginclif.h" />
+    <ClInclude Include="..\src\login\logincnslif.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdparty\libconfig\grammar.c" />
@@ -180,17 +181,11 @@
     <ClCompile Include="..\3rdparty\libconfig\scanctx.c" />
     <ClCompile Include="..\3rdparty\libconfig\scanner.c" />
     <ClCompile Include="..\3rdparty\libconfig\strbuf.c" />
+    <ClCompile Include="..\3rdparty\mt19937ar\mt19937ar.c" />
     <ClCompile Include="..\src\common\mempool.c" />
     <ClCompile Include="..\src\common\mutex.c" />
     <ClCompile Include="..\src\common\raconf.c" />
     <ClCompile Include="..\src\common\thread.c" />
-    <ClCompile Include="..\src\login\account.c" />
-    <ClCompile Include="..\src\login\ipban.c" />
-    <ClCompile Include="..\src\login\login.c" />
-    <ClCompile Include="..\src\login\loginlog.c" />
-    <ClCompile Include="..\src\login\loginchrif.c" />
-    <ClCompile Include="..\src\login\loginclif.c" />
-    <ClCompile Include="..\src\login\logincnslif.c" />
     <ClCompile Include="..\src\common\core.c" />
     <ClCompile Include="..\src\common\conf.c" />
     <ClCompile Include="..\src\common\db.c" />
@@ -207,7 +202,13 @@
     <ClCompile Include="..\src\common\utils.c" />
     <ClCompile Include="..\src\common\cli.c" />
     <ClCompile Include="..\src\common\msg_conf.c" />
-    <ClCompile Include="..\3rdparty\mt19937ar\mt19937ar.c" />
+    <ClCompile Include="..\src\login\account.c" />
+    <ClCompile Include="..\src\login\ipban.c" />
+    <ClCompile Include="..\src\login\login.c" />
+    <ClCompile Include="..\src\login\loginlog.c" />
+    <ClCompile Include="..\src\login\loginchrif.c" />
+    <ClCompile Include="..\src\login\loginclif.c" />
+    <ClCompile Include="..\src\login\logincnslif.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -406,6 +406,12 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
 	ud->walktimer = INVALID_TIMER;
 
+	if (ud->state.walk_script && bl->x == ud->to_x && bl->y == ud->to_y) {
+		if (ud->walk_done_event[0])
+			npc_event_do_id(ud->walk_done_event,bl->id);
+		ud->state.walk_script = 0;
+	}
+
 	switch(bl->type) {
 		case BL_PC:
 			if( sd->touching_id )
@@ -1343,16 +1349,28 @@ bool unit_can_move(struct block_list *bl) {
 	if (DIFF_TICK(ud->canmove_tick, gettick()) > 0)
 		return false;
 
-	if (sd && (
-		pc_issit(sd) ||
-		sd->state.vending ||
-		sd->state.buyingstore ||
-		sd->state.blockedmove
-	))
+	if ((sd && (pc_issit(sd) || sd->state.vending || sd->state.buyingstore)) || ud->state.blockedmove)
 		return false; // Can't move
 
-	if (sc && sc->cant.move)
-		return false;
+	// Status changes that block movement
+	if (sc) {
+		if( sc->cant.move // status placed here are ones that cannot be cached by sc->cant.move for they depend on other conditions other than their availability
+			|| (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
+			|| (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
+			|| (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
+				!sc->data[SC_LONGING] ||
+				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
+				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
+				) )
+			)
+			return false;
+
+		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING && !(sc->opt1 == OPT1_CRYSTALIZE && bl->type == BL_MOB))
+			return false;
+
+		if ((sc->option & OPTION_HIDE) && (!sd || pc_checkskill(sd, RG_TUNNELDRIVE) <= 0))
+			return false;
+	}
 
 	// Icewall walk block special trapped monster mode
 	if(bl->type == BL_MOB) {
@@ -1360,7 +1378,7 @@ bool unit_can_move(struct block_list *bl) {
 		if(md && ((md->status.mode&MD_BOSS && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
 			|| (!(md->status.mode&MD_BOSS) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
 			md->walktoxy_fail_count = 1; //Make sure rudeattacked skills are invoked
-			return 0;
+			return false;
 		}
 	}
 
@@ -1381,7 +1399,7 @@ int unit_resume_running(int tid, unsigned int tick, int id, intptr_t data)
 
 	if (sd && pc_isridingwug(sd))
 		clif_skill_nodamage(ud->bl,ud->bl,RA_WUGDASH,ud->skill_lv,
-		sc_start4(ud->bl,ud->bl,skill_get_sc(RA_WUGDASH),100,ud->skill_lv,unit_getdir(ud->bl),0,0,1));
+		sc_start4(ud->bl,ud->bl,skill_get_sc(RA_WUGDASH),100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
 	else
 		clif_skill_nodamage(ud->bl,ud->bl,TK_RUN,ud->skill_lv,
 			sc_start4(ud->bl,ud->bl,skill_get_sc(TK_RUN),100,ud->skill_lv,unit_getdir(ud->bl),0,0,0));
@@ -2566,7 +2584,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 		ud->attacktarget_lv = battle_weapon_attack(src,target,tick,0);
 
 		if(sd && sd->status.pet_id > 0 && sd->pd && battle_config.pet_attack_support)
-			pet_target_check(sd,target,0);
+			pet_target_check(sd->pd,target,0);
 
 		map_freeblock_unlock();
 
@@ -2763,6 +2781,39 @@ int unit_changeviewsize(struct block_list *bl,short size)
 	if(size != 0)
 		clif_specialeffect(bl,421+size, AREA);
 
+	return 0;
+}
+
+/**
+ * Makes 'bl' that attacking 'src' switch to attack 'target'
+ * @param bl
+ * @param ap
+ * @param src Current target
+ * @param target New target
+ **/
+int unit_changetarget(struct block_list *bl, va_list ap) {
+	struct unit_data *ud = unit_bl2ud(bl);
+	struct block_list *src = va_arg(ap,struct block_list *);
+	struct block_list *target = va_arg(ap,struct block_list *);
+
+	if (!ud || !target || ud->target == target->id)
+		return 1;
+	if (!ud->target && !ud->target_to)
+		return 1;
+	if (ud->target != src->id && ud->target_to != src->id)
+		return 1;
+
+	if (bl->type == BL_MOB)
+		(BL_CAST(BL_MOB,bl))->target_id = target->id;
+	if (ud->target_to)
+		ud->target_to = target->id;
+	else
+		ud->target_to = 0;
+	if (ud->skilltarget)
+		ud->skilltarget = target->id;
+	unit_set_target(ud, target->id);
+
+	//unit_attack(bl, target->id, ud->state.attack_continue);
 	return 0;
 }
 
@@ -2996,7 +3047,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if( elemental_get_lifetime(ed) <= 0 && !(ed->master && !ed->master->state.active) ) {
 				clif_clearunit_area(bl,clrtype);
 				map_delblock(bl);
-				unit_free(bl,0);
+				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
 
 				return 0;
@@ -3113,10 +3164,8 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			guild_send_memberinfoshort(sd,0);
 			pc_cleareventtimer(sd);
 			pc_inventory_rental_clear(sd);
-			pc_delspiritball(sd,sd->spiritball,1);
-
-			for(i = 1; i < 5; i++)
-				pc_del_talisman(sd, sd->talisman[i], i);
+			pc_delspiritball(sd, sd->spiritball, 1);
+			pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
 
 			if( sd->reg ) {	// Double logout already freed pointer fix... [Skotlex]
 				aFree(sd->reg);
@@ -3234,6 +3283,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			if( sd )
 				sd->pd = NULL;
+			pd->master = NULL;
 			break;
 		}
 		case BL_MOB: {
@@ -3249,9 +3299,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				md->deletetimer = INVALID_TIMER;
 			}
 
-			if( md->lootitem ) {
-				aFree(md->lootitem);
-				md->lootitem = NULL;
+			if (md->lootitems) {
+				aFree(md->lootitems);
+				md->lootitems = NULL;
 			}
 
 			if( md->guardian_data ) {
@@ -3312,6 +3362,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			if( sd )
 				sd->hd = NULL;
+			hd->master = NULL;
 			break;
 		}
 		case BL_MER: {
@@ -3331,6 +3382,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->md = NULL;
 
 			mercenary_contract_stop(md);
+			md->master = NULL;
 			break;
 		}
 		case BL_ELEM: {
@@ -3350,6 +3402,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->ed = NULL;
 
 			elemental_summon_stop(ed);
+			ed->master = NULL;
 			break;
 		}
 	}

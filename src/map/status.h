@@ -700,9 +700,8 @@ typedef enum sc_type {
 	SC_TEARGAS_SOB,
 	SC__FEINTBOMB,
 	SC__CHAOS,
-	SC_ELEMENTAL_SHIELD,
 	SC_CHASEWALK2,
-	SC_WEAPONBLOCKING_POSTDELAY,
+	SC_VACUUM_EXTREME_POSTDELAY,
 
 	SC_MTF_ASPD2,
 	SC_MTF_RANGEATK2,
@@ -715,6 +714,25 @@ typedef enum sc_type {
 	SC_MTF_MSP,
 	SC_MTF_PUMPKIN,
 	SC_MTF_HITFLEE,
+
+	SC_CRIFOOD,
+	SC_ATTHASTE_CASH,
+
+	// Item Reuse Limits
+	SC_REUSE_LIMIT_A,
+	SC_REUSE_LIMIT_B,
+	SC_REUSE_LIMIT_C,
+	SC_REUSE_LIMIT_D,
+	SC_REUSE_LIMIT_E,
+	SC_REUSE_LIMIT_F,
+	SC_REUSE_LIMIT_G,
+	SC_REUSE_LIMIT_H,
+	SC_REUSE_LIMIT_MTF,
+	SC_REUSE_LIMIT_ASPD_POTION,
+	SC_REUSE_MILLENNIUMSHIELD,
+	SC_REUSE_CRUSHSTRIKE,
+	SC_REUSE_STORMBLAST,
+	SC_ALL_RIDING_REUSE_LIMIT,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -1028,14 +1046,14 @@ enum si_type {
 	SI_ATKER_BLOOD = 300,
 	SI_TARGET_BLOOD = 301,
 	SI_ARMOR_PROPERTY = 302,
-//	SI_REUSE_LIMIT_A = 303,
+	SI_REUSE_LIMIT_A = 303,
 	SI_HELLPOWER = 304,
 	SI_STEAMPACK = 305,
-//	SI_REUSE_LIMIT_B = 306,
-//	SI_REUSE_LIMIT_C = 307,
-//	SI_REUSE_LIMIT_D = 308,
-//	SI_REUSE_LIMIT_E = 309,
-//	SI_REUSE_LIMIT_F = 310,
+	SI_REUSE_LIMIT_B = 306,
+	SI_REUSE_LIMIT_C = 307,
+	SI_REUSE_LIMIT_D = 308,
+	SI_REUSE_LIMIT_E = 309,
+	SI_REUSE_LIMIT_F = 310,
 	SI_INVINCIBLE = 311,
 	SI_CASH_PLUSONLYJOBEXP = 312,
 	SI_PARTYFLEE = 313,
@@ -1358,8 +1376,8 @@ enum si_type {
 	SI_SET_NUM_MDEF = 639,
 	SI_SET_PER_DEF = 640,
 	SI_SET_PER_MDEF = 641,
-	SI_PARTYBOOKING_SEARCH_DEALY = 642,
-	SI_PARTYBOOKING_REGISTER_DEALY = 643,
+	SI_PARTYBOOKING_SEARCH_DELAY = 642,
+	SI_PARTYBOOKING_REGISTER_DELAY = 643,
 	SI_PERIOD_TIME_CHECK_DETECT_SKILL = 644,
 	SI_KO_JYUMONJIKIRI = 645,
 	SI_MEIKYOUSISUI = 646,
@@ -1575,10 +1593,58 @@ enum si_type {
 	SI_DRESS_UP = 856,
 	SI_MAPLE_FALLS = 857,
 	SI_ALL_NIFLHEIM_RECALL = 858,
+	SI_MTF_MARIONETTE = 860,
+	SI_MTF_LUDE = 861,
+	SI_MTF_CRUISER = 862,
 	SI_DRACULA_CARD = 865,
 	SI_LIMIT_POWER_BOOSTER = 867,
 	SI_TIME_ACCESSORY = 872,
 	SI_EP16_DEF = 873,
+	SI_BODYSTATE_STONECURSE = 875,
+	SI_BODYSTATE_FREEZING = 876,
+	SI_BODYSTATE_STUN = 877,
+	SI_BODYSTATE_SLEEP = 878,
+	SI_BODYSTATE_UNDEAD = 879,
+	SI_BODYSTATE_STONECURSE_ING = 880,
+	SI_BODYSTATE_BURNNING = 881,
+	SI_BODYSTATE_IMPRISON = 882,
+	SI_HEALTHSTATE_POISON = 883,
+	SI_HEALTHSTATE_CURSE = 884,
+	SI_HEALTHSTATE_SILENCE = 885,
+	SI_HEALTHSTATE_CONFUSION = 886,
+	SI_HEALTHSTATE_BLIND = 887,
+	SI_HEALTHSTATE_ANGELUS = 888,
+	SI_HEALTHSTATE_BLOODING = 889,
+	SI_HEALTHSTATE_HEAVYPOISON = 890,
+	SI_HEALTHSTATE_FEAR = 891,
+	SI_ATTACK_PROPERTY_NOTHING = 897,
+	SI_ATTACK_PROPERTY_WATER = 898,
+	SI_ATTACK_PROPERTY_GROUND = 899,
+	SI_ATTACK_PROPERTY_FIRE = 900,
+	SI_ATTACK_PROPERTY_WIND = 901,
+	SI_ATTACK_PROPERTY_POISON = 902,
+	SI_ATTACK_PROPERTY_SAINT = 903,
+	SI_ATTACK_PROPERTY_DARKNESS = 904,
+	SI_ATTACK_PROPERTY_TELEKINESIS = 905,
+	SI_ATTACK_PROPERTY_UNDEAD = 906,
+	SI_RESIST_PROPERTY_NOTHING = 907,
+	SI_RESIST_PROPERTY_WATER = 908,
+	SI_RESIST_PROPERTY_GROUND = 909,
+	SI_RESIST_PROPERTY_FIRE = 910,
+	SI_RESIST_PROPERTY_WIND = 911,
+	SI_RESIST_PROPERTY_POISON = 912,
+	SI_RESIST_PROPERTY_SAINT = 913,
+	SI_RESIST_PROPERTY_DARKNESS = 914,
+	SI_RESIST_PROPERTY_TELEKINESIS = 915,
+	SI_RESIST_PROPERTY_UNDEAD = 916,
+	SI_RUNEHELM = 925,
+	SI_HELM_VERKANA = 926,
+	SI_HELM_RHYDO = 927,
+	SI_HELM_TURISUS = 928,
+	SI_HELM_HAGALAS = 929,
+	SI_HELM_ISIA = 930,
+	SI_HELM_ASIR = 931,
+	SI_HELM_URJ = 932,
 	SI_MAX,
 };
 
@@ -1631,25 +1697,26 @@ enum e_mode {
 //Status change option definitions (options are what makes status changes visible to chars
 //who were not on your field of sight when it happened)
 
-///opt1: Non stackable status changes.
+///opt1: (BODYSTATE_*) Non stackable status changes.
 enum sc_opt1 {
 	OPT1_STONE = 1, //Petrified
 	OPT1_FREEZE,
 	OPT1_STUN,
 	OPT1_SLEEP,
 	//Aegis uses OPT1 = 5 to identify undead enemies (which also grants them immunity to the other opt1 changes)
-	OPT1_STONEWAIT=6, //Petrifying
+	OPT1_STONEWAIT = 6, //Petrifying
 	OPT1_BURNING,
+	OPT1_FREEZING,
 	OPT1_IMPRISON,
 	OPT1_CRYSTALIZE,
 };
 
-///opt2: Stackable status changes.
+///opt2: (HEALTHSTATE_*) Stackable status changes.
 enum sc_opt2 {
 	OPT2_POISON		= 0x0001,
 	OPT2_CURSE		= 0x0002,
 	OPT2_SILENCE		= 0x0004,
-	OPT2_SIGNUMCRUCIS	= 0x0008,
+	OPT2_SIGNUMCRUCIS	= 0x0008, //Confusion
 	OPT2_BLIND		= 0x0010,
 	OPT2_ANGELUS		= 0x0020,
 	OPT2_BLEEDING		= 0x0040,
@@ -1680,7 +1747,7 @@ enum sc_opt3 {
 	OPT3_CONTRACT		= 0x00020000,
 };
 
-///Option
+///Option (EFFECTSTATE_*)
 enum e_option {
 	OPTION_NOTHING		= 0x00000000,
 	OPTION_SIGHT		= 0x00000001,
@@ -1798,7 +1865,7 @@ enum scb_flag {
 
 enum e_status_calc_opt {
 	SCO_NONE  = 0x0,
-	SCO_FIRST = 0x1, ///< Trigger the calculations that should take place only onspawn/once
+	SCO_FIRST = 0x1, ///< Trigger the calculations that should take place only onspawn/once, process base status initialization code
 	SCO_FORCE = 0x2, ///< Only relevant to BL_PC types, ensures call bypasses the queue caused by delayed damage
 };
 
@@ -1889,6 +1956,14 @@ struct weapon_atk {
 	unsigned char wlv;
 #endif
 };
+
+sc_type SkillStatusChangeTable[MAX_SKILL];   /// skill  -> status
+int StatusIconChangeTable[SC_MAX];           /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
+unsigned int StatusChangeFlagTable[SC_MAX];  /// status -> flags
+int StatusSkillChangeTable[SC_MAX];          /// status -> skill
+int StatusRelevantBLTypes[SI_MAX];           /// "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
+unsigned int StatusChangeStateTable[SC_MAX]; /// status -> flags
+bool StatusDisplayType[SC_MAX];
 
 ///For holding basic status (which can be modified by status changes)
 struct status_data {
@@ -2024,6 +2099,7 @@ int64 status_charge(struct block_list* bl, int64 hp, int64 sp);
 int status_percent_change(struct block_list *src, struct block_list *target, int8 hp_rate, int8 sp_rate, uint8 flag);
 //Easier handling of status_percent_change
 #define status_percent_heal(bl, hp_rate, sp_rate) status_percent_change(NULL, bl, -(hp_rate), -(sp_rate), 0)
+/// Deals % damage from 'src' to 'target'. If rate is > 0 is % of current HP/SP, < 0 % of MaxHP/MaxSP
 #define status_percent_damage(src, target, hp_rate, sp_rate, kill) status_percent_change(src, target, hp_rate, sp_rate, (kill)?1:2)
 //Instant kill with no drops/exp/etc
 #define status_kill(bl) status_percent_damage(NULL, bl, 100, 0, true)
@@ -2143,7 +2219,7 @@ void status_calc_state(struct block_list *bl, struct status_change *sc, uint32 f
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag);
 int status_check_visibility(struct block_list *src, struct block_list *target);
 
-int status_change_spread( struct block_list *src, struct block_list *bl );
+int status_change_spread(struct block_list *src, struct block_list *bl, bool type);
 
 #ifndef RENEWAL
 	unsigned short status_base_matk_min(const struct status_data* status);

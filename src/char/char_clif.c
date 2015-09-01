@@ -711,7 +711,8 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 
 		//Have to switch over to the DB instance otherwise data won't propagate [Kevin]
 		cd = (struct mmo_charstatus *)idb_get(char_db_, char_id);
-		cd->sex = sd->sex;
+		if (cd->sex == 99)
+			cd->sex = sd->sex;
 
 		if (charserv_config.log_char) {
 			char esc_name[NAME_LENGTH*2+1];

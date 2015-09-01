@@ -119,7 +119,7 @@ bonus bFlee2,n;       			Perfect Dodge + n
 bonus bFlee2Rate,n;   			Perfect Dodge + n%
 bonus bPerfectHitRate,n;		On-target impact attack probability n% (only the highest among all is applied)
 bonus bPerfectHitAddRate,n;		On-target impact attack probability + n%
-bonus bSpeedRate,n;   			Movement speed + n% (only the highest among all is applied)
+bonus bSpeedRate,n;   			Movement speed + n% (only the highest among all is applied, won't be stacked with SC_SPEEDUP0, SC_SPEEDUP1)
 bonus bSpeedAddRate,n;			Movement speed + n%
 bonus bAspd,n;        			Attack speed + n
 bonus bAspdRate,n;    			Attack speed + n%
@@ -202,8 +202,9 @@ Damage modifiers
 bonus2 bAddEle,e,x;       		+x% physical damage against element e
 bonus3 bAddEle,e,x,bf;    		+x% physical damage against element e with trigger criteria bf
 bonus2 bMagicAddEle,e,x;  		+x% magical damage against element e
-bonus2 bSubEle,e,x;       		+x% damage reduction against element e
-bonus3 bSubEle,e,x,bf;    		+x% damage reduction against element e with trigger criteria bf
+bonus2 bSubEle,e,x;       		+x% damage reduction against attack element e
+bonus3 bSubEle,e,x,bf;    		+x% damage reduction against attack element e with trigger criteria bf
+bonus2 bSubDefEle,e,x;    		+x% damage reduction from enemy with defense element e
 
 bonus2 bAddRace,r,x;      		+x% physical damage against race r
 bonus2 bMagicAddRace,r,x; 		+x% magical damage against race r
@@ -229,6 +230,10 @@ bonus2 bAddMDefMonster,mid,x;     	+x% magical damage reduction against monster 
 
 bonus2 bAddRace2,mr,x;			+x% damage against monster race mr
 bonus2 bSubRace2,mr,x;			+x% damage reduction against monster race mr
+
+bonus2 bSubSkill,sk,n;  		Reduces n% damage received from skill sk
+
+bonus bAbsorbDmgMaxHP,n;		If the damage received is more than n% of Max HP, the damage received is [TotalDamage] - [n% of MaxHP] (Doesn't stack, will use the highest value)
 
 Atk/Def
 -------
@@ -283,6 +288,9 @@ bonus4 bAddEffOnSkill,sk,eff,n,y;	Adds a n/100% chance to cause status eff when 
                                  	  ATF_SELF   = trigger effect on self
                                  	  ATF_TARGET = trigger effect on target
 
+bonus2 bComaClass,c,n;      		Adds a n/100% chance to cause Coma when attacking a target of class c (regardless the type of attack)
+bonus2 bComaRace,r,n;       		Adds a n/100% chance to cause Coma when attacking a target of race r (regardless the type of attack)
+
 bonus2 bWeaponComaEle,e,n;  		Adds a n/100% chance to cause Coma when attacking a target of element e with a normal attack
 bonus2 bWeaponComaClass,c,n;		Adds a n/100% chance to cause Coma when attacking a target of class c with a normal attack
 bonus2 bWeaponComaRace,r,n; 		Adds a n/100% chance to cause Coma when attacking a target of race r with a normal attack
@@ -320,28 +328,26 @@ bonus5 bAutoSpellOnSkill,sk,x,y,n,i;	Adds a n/10% chance to autospell skill x at
 HP/SP drain
 -----------
 bonus bHPDrainValue,n;        		Heals +n HP with a normal attack
-bonus2 bHPDrainValue,n,x;     		Heals +n HP with a normal attack (x: 0=gain n SP, 1=drain n SP from target)
 bonus2 bHPDrainValueRace,r,n; 		Heals +n HP when attacking a monster of race r with normal attack
 bonus2 bHpDrainValueClass,c,n;		Heals +n HP when attacking a monster of class c with normal attack
+
 bonus bSPDrainValue,n;        		Heals +n SP with a normal attack
-bonus2 bSPDrainValue,n,x;     		Heals +n SP with a normal attack (x: 0=gain n SP, 1=drain n SP from target)
 bonus2 bSPDrainValueRace,r,n; 		Heals +n SP when attacking a monster of race r with normal attack
 bonus2 bSpDrainValueClass,c,n;		Heals +n SP when attacking a monster of class c with normal attack
 
-bonus2 bHPDrainRate,n,x;		Adds a n/10% chance to drain x% HP when attacking
-bonus2 bSPDrainRate,n,x;		Adds a n/10% chance to drain x% SP when attacking
-bonus3 bSPDrainRate,n,x,y;		Adds a n/10% chance to either gain SP equivalent to x% of damage dealt, OR drain the amount of SP from the enemy
-                          		(y: 0=gain SP, 1=drain SP from target)
+bonus2 bHPDrainRate,x,n;		Adds a x/10% chance to drain n% HP from inflicted damage when attacking
+bonus2 bSPDrainRate,x,n;		Adds a x/10% chance to drain n% SP from inflicted damage when attacking
 
-bonus2 bHPVanishRate,n,x;		Add a n/100% chance of decreasing enemy's HP amount by x% when attacking
-bonus2 bSPVanishRate,n,x;		Add a n/100% chance of decreasing enemy's SP amount by x% when attacking
+HP/SP vanish
+------------
+bonus2 bHPVanishRate,x,n;		Add a x/10% chance of decreasing enemy's HP amount by n% when attacking
+bonus2 bSPVanishRate,x,n;		Add a x/10% chance of decreasing enemy's SP amount by n% when attacking
 
-bonus3 bHPVanishRaceRate,r,n,x;		Add a n/100% chance of decreasing enemy's HP amount by x% when attacking, depends on enemy race r
-bonus3 bSPVanishRaceRate,r,n,x;		Add a n/100% chance of decreasing enemy's SP amount by x% when attacking, depends on enemy race r
+bonus3 bHPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's HP amount by n% when attacking, depends on enemy race r
+bonus3 bSPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's SP amount by n% when attacking, depends on enemy race r
 
-bonus2 bHPGainRaceAttack,r,n;		Heals +n HP on every hit when attacking an enemy of race r
-bonus2 bSPGainRaceAttack,r,n;		Heals +n SP on every hit when attacking an enemy of race r
-
+HP/SP gain
+------------
 bonus bHPGainValue,n;     		Heals +n HP when killing an enemy with a physical attack
 bonus bSPGainValue,n;     		Heals +n SP when killing an enemy with a physical attack
 bonus2 bSPGainRace,r,n;   		Heals +n SP when killing an enemy of race r with a physical attack

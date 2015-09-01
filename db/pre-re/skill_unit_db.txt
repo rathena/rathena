@@ -122,10 +122,10 @@
 2253,0xd6,    ,  0, 1,1000,enemy, 0x8002	//RA_FIRINGTRAP
 2254,0xd7,    ,  0, 1,1000,enemy, 0x8002	//RA_ICEBOUNDTRAP
 
-2273,0xe2,    ,  2, 0, 500,all,   0x000	//NC_NEUTRALBARRIER
-2274,0xe3,    ,  2, 0, 500,friend,0x000	//NC_STEALTHFIELD
+2273,0xe2,    ,  2, 0,  -1,all,   0x000	//NC_NEUTRALBARRIER
+2274,0xe3,    ,  2, 0,  -1,friend,0x000	//NC_STEALTHFIELD
 
-2299,0xcc,    ,  0, 1,1000,all,   0xC006 //SC_MANHOLE
+2299,0xcc,    ,  0, 1,1000,all,   0x8006 //SC_MANHOLE
 2300,0xcd,    ,  0, 0,1000,all,   0xC006 //SC_DIMENSIONDOOR
 2301,0xce,    ,  2, 0,1000,all,   0xE00E //SC_CHAOSPANIC
 2302,0xcf,    ,  2, 0,  -1,all,   0xE002 //SC_MAELSTROM
@@ -134,7 +134,7 @@
 
 2319,0xec,    ,  0, 3,5000,all,   0x000	//LG_BANDING
 
-2414,0xda,    ,  0, 0,  -1,enemy, 0x1000	//WM_REVERBERATION
+2414,0xda,    ,  0, 0,1000,enemy, 0x1000	//WM_REVERBERATION
 2418,0xdb,    ,  0, 5, 300,enemy, 0x800	//WM_SEVERE_RAINSTORM
 2419,0xde,    ,  0, 1,1000,enemy, 0x1014 //WM_POEMOFNETHERWORLD
 
@@ -168,9 +168,8 @@
 3010,0xfc,    ,  0, 1,5000,enemy, 0x018 //KO_MAKIBISHI
 3020,0xf8,    ,  0, 2, 500,all, 0x018   //KO_ZENKAI
 
-5006,0x101,   ,  0, 3,2000,enemy, 0x018	//NC_MAGMA_ERUPTION
-5008,0x85,    ,  0, 0,  -1,all,   0x003	//SO_ELEMENTAL_SHIELD
-5010,0xfe,    ,  0, 2,  -1,enemy, 0x000	//SC_ESCAPE
+5006,0x101,   ,  0, 3, 500,enemy, 0x018	//NC_MAGMA_ERUPTION
+5010,0x91,    ,  0, 1,1000,all,   0x002	//SC_ESCAPE
 5013,0x102,   ,  3, 0,  -1,all,   0x2002	//LG_KINGS_GRACE
 
 8020,0xf5,    ,  3, 0,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST
@@ -185,10 +184,10 @@
 8211,0x95,    ,  0, 1,1000,enemy, 0x006	//MA_SANDMAN
 8212,0x97,    ,  0, 1,1000,enemy, 0x006	//MA_FREEZINGTRAP
 
-8403,0xed,    , -1, 1,1000,enemy, 0x018 //EL_FIRE_MANTLE
-8406,0xee,    ,  0, 1,  -1,friend,0x018	//EL_WATER_BARRIER
-8409,0xef,    ,  0, 1,1000,friend,0x018	//EL_ZEPHYR
-8412,0xf0,    ,  0, 1,  -1,friend,0x018	//EL_POWER_OF_GAIA
+8403,0xed,    , -1, 1,1000,enemy, 0x018	//EL_FIRE_MANTLE
+8406,0xee,    ,  1, 0,  -1,friend,0x2018	//EL_WATER_BARRIER
+8409,0xef,    ,  1, 0,  -1,friend,0x2018	//EL_ZEPHYR
+8412,0xf0,    ,  1, 0,  -1,friend,0x2018	//EL_POWER_OF_GAIA
 
 10006,0xc1,   ,  2, 0,  -1,guild, 0x040	//GD_LEADERSHIP
 10007,0xc2,   ,  2, 0,  -1,guild, 0x040	//GD_GLORYWOUNDS

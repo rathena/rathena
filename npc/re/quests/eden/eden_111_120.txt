@@ -190,7 +190,7 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 		else
 			mes "Hello "+ strcharinfo(0) +".";
 			next;
-		switch( select( "Requet to research monsters", "Make small-talk" ) ) {
+		switch( select( "Request to research monsters", "Make small-talk" ) ) {
 			mes "[Mingmin]";
 		case 1:
 			if (BaseLevel < 111) {

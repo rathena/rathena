@@ -37,26 +37,27 @@ enum e_battle_flag {
 
 /// Battle check target [Skotlex]
 enum e_battle_check_target {
-	BCT_NOONE		= 0x000000, /// No one
-	BCT_SELF		= 0x010000, /// Self
-	BCT_ENEMY		= 0x020000, /// Enemy
-	BCT_PARTY		= 0x040000, /// Party members
-	BCT_GUILDALLY	= 0x080000, /// Only allies, NOT guildmates
-	BCT_NEUTRAL		= 0x100000, /// Neutral target
-	BCT_SAMEGUILD	= 0x200000, /// Guildmates, No Guild Allies
+	BCT_NOONE		= 0x000000, ///< No one
+	BCT_SELF		= 0x010000, ///< Self
+	BCT_ENEMY		= 0x020000, ///< Enemy
+	BCT_PARTY		= 0x040000, ///< Party members
+	BCT_GUILDALLY	= 0x080000, ///< Only allies, NOT guildmates
+	BCT_NEUTRAL		= 0x100000, ///< Neutral target
+	BCT_SAMEGUILD	= 0x200000, ///< Guildmates, No Guild Allies
 
-	BCT_ALL			= 0x3F0000, /// All targets
+	BCT_ALL			= 0x3F0000, ///< All targets
 
-	BCT_GUILD		= BCT_SAMEGUILD|BCT_GUILDALLY, /// Guild AND Allies (BCT_SAMEGUILD|BCT_GUILDALLY)
-	BCT_NOGUILD		= BCT_ALL&~BCT_GUILD, /// Except guildmates
-	BCT_NOPARTY		= BCT_ALL&~BCT_PARTY, /// Except party members
-	BCT_NOENEMY		= BCT_ALL&~BCT_ENEMY, /// Except enemy
+	BCT_WOS			= 0x400000, ///< Except self (currently used for skipping if src == bl in skill_area_sub)
+	BCT_GUILD		= BCT_SAMEGUILD|BCT_GUILDALLY,	///< Guild AND Allies (BCT_SAMEGUILD|BCT_GUILDALLY)
+	BCT_NOGUILD		= BCT_ALL&~BCT_GUILD,			///< Except guildmates
+	BCT_NOPARTY		= BCT_ALL&~BCT_PARTY,			///< Except party members
+	BCT_NOENEMY		= BCT_ALL&~BCT_ENEMY,			///< Except enemy
 };
 
 /// Damage structure
 struct Damage {
 #ifdef RENEWAL
-	int statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2;
+	int64 statusAtk, statusAtk2, weaponAtk, weaponAtk2, equipAtk, equipAtk2, masteryAtk, masteryAtk2;
 #endif
 	int64 damage, /// Right hand damage
 		damage2; /// Left hand damage
@@ -80,10 +81,11 @@ struct block_list;
 // Damage Calculation
 
 struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,uint16 skill_id,uint16 skill_lv,int flag);
+struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,struct block_list *target, uint16 skill_id, uint16 skill_lv);
 
 int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, int64 *, int flag, uint16 skill_id, bool status_reflect);
 
-void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int boss);
+void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_, bool infdef);
 
 int battle_attr_ratio(int atk_elem,int def_type, int def_lv);
 int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv);
@@ -587,6 +589,8 @@ extern struct Battle_Config
 	int pet_ignore_infinite_def; // Makes fixed damage of petskillattack2 ignores infinite defense
 	int homunculus_evo_intimacy_need;
 	int homunculus_evo_intimacy_reset;
+	int monster_loot_search_type;
+	int feature_roulette;
 } battle_config;
 
 void do_init_battle(void);

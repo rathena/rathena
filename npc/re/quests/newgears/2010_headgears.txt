@@ -471,7 +471,7 @@ alberta,151,78,0	script	Bebete#Baby_Angel	96,{
 		mes "for the angels like you.";
 		next;
 		mes "[Bebete]";
-		mes "I can make it with ^FF0000500 Feather Of Birds, 1 Holy Water, 10 Muscovite, 1 Heaven Ringand 1 Shining Stone^000000.";
+		mes "I can make it with ^FF0000500 Feather Of Birds, 1 Holy Water, 10 Muscovite, 1 Heaven Ring and 1 Shining Stone^000000.";
 		next;
 		mes "[Bebete]";
 		mes "Okay, hurry!";
@@ -511,7 +511,7 @@ gef_fild07,108,161,4	script	Roda Frog#Frog_Cap	1012,1,1,{
 	if (hat_2009 == 0) {
 		mes "[???]";
 		mes "Hmm..Hm..";
-		mes "It seems my transformation into the child's appearance is succeessful.";
+		mes "It seems my transformation into the child's appearance is successful.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "... ... ... ...";
@@ -652,7 +652,7 @@ gef_fild07,108,161,4	script	Roda Frog#Frog_Cap	1012,1,1,{
 		if (countitem(937) < 100) {
 			mes "[King Froggie VII]";
 			mes "How about ^FF0000100 Venom Canines^000000?";
-			mes "Hurry, it's a rare opportunity to be added in the frog histroy book!";
+			mes "Hurry, it's a rare opportunity to be added in the frog history book!";
 			close2;
 			donpcevent "Roda Frog#Frog_Cap::OnDisable";
 			end;
@@ -765,7 +765,7 @@ gef_fild07,108,161,4	script	Roda Frog#Frog_Cap	1012,1,1,{
 			mes "Hmm, there is no objection.";
 			next;
 			mes "[King Froggie VII]";
-			mes "I hearby give " + strcharinfo(0) + ", our hero, this Frog Hat.";
+			mes "I hereby give " + strcharinfo(0) + ", our hero, this Frog Hat.";
 			specialeffect2 EF_MAPPILLAR2;
 			specialeffect2 EF_BLESSING;
 			erasequest 5004;

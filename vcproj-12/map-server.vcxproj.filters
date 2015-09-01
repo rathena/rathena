@@ -369,11 +369,6 @@
     <ClInclude Include="..\src\common\utils.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\config\const.h" />
-    <ClInclude Include="..\src\config\core.h" />
-    <ClInclude Include="..\src\config\renewal.h" />
-    <ClInclude Include="..\src\config\secure.h" />
-    <ClInclude Include="..\src\config\classes\general.h" />
     <ClInclude Include="..\src\common\conf.h">
       <Filter>common</Filter>
     </ClInclude>
@@ -428,6 +423,21 @@
     <ClInclude Include="..\src\common\msg_conf.h">
 		<Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\config\secure.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\config\const.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\config\core.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\config\renewal.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\config\classes\general.h">
+      <Filter>config\classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -444,6 +454,12 @@
     </Filter>
     <Filter Include="3rdparty\libconfig">
       <UniqueIdentifier>{9caf40b7-c4d1-43b4-bd1f-0376b4f920e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{3308d722-72ef-4a4c-a7aa-892d173c8ea3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config\classes">
+      <UniqueIdentifier>{dc4ce819-c8e2-4c38-b929-5a57d01e6657}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

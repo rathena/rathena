@@ -4058,7 +4058,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 		set diamond_edq,6;
 		close;
 	}
-	if (diamond_edq) == 9 {
+	if (diamond_edq == 9) {
 		mes "[Dorian]";
 		mes "Ah, did you bring all";
 		mes "the materials I need to";
@@ -4152,7 +4152,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 			close;
 		}
 	}
-	if (diamond_edq) == 10 {
+	if (diamond_edq == 10) {
 		mes "[Dorian]";
 		mes "Did you already forget";
 		mes "my instructions for fixing my";
@@ -4216,7 +4216,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 			close;
 		}
 	}
-	if (diamond_edq) == 11 {
+	if (diamond_edq == 11) {
 		mes "[Dorian]";
 		mes "Ah, so you failed to";
 		mes "fix the Mystic Dryer de";
@@ -4227,7 +4227,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 		set diamond_edq,10;
 		close;
 	}
-	if (diamond_edq) == 12 {
+	if (diamond_edq == 12) {
 		mes "[Dorian]";
 		mes "Ah, I underestimated you.";
 		mes "You really repaired the";
@@ -4253,7 +4253,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 		mes "your kind of help. Farewell~";
 		close;
 	}
-	if (diamond_edq) > 12 {
+	if (diamond_edq > 12) {
 		mes "[Dorian]";
 		mes "Ah, hello! How have";
 		mes "you been? Are you in need";
@@ -4264,7 +4264,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 
 //OnTouch2:
 OnTouch:
-	if (diamond_edq) < 9 {
+	if (diamond_edq < 9) {
 		mes "[Dorian]";
 		mes "Wh-what are you doing?";
 		mes "D-don't sully my wonderful";
@@ -4272,7 +4272,7 @@ OnTouch:
 		mes "uncultured hands!";
 		close;
 	}
-	if (diamond_edq) == 9 {
+	if (diamond_edq == 9) {
 		mes "[Dorian]";
 		mes "Can't you see that the";
 		mes "machine won't work without";
@@ -4294,7 +4294,7 @@ OnTouch:
 		mes "goods to Kafra Storage, please.";
 		close;
 	}
-	if (diamond_edq) == 10 {
+	if (diamond_edq == 10) {
 		set .@bolt_rand,rand(2,5);
 		mes "^3355FFThis must be Dorian's";
 		mes "Mystic Dryer de Elegance.";
@@ -4321,7 +4321,7 @@ OnTouch:
 					next;
 					set .@engine,.@engine+1;
 				}
-				else if (engine > 0) {
+				else if (.@engine > 0) {
 					mes "^3355FFThe ruby in the";
 					mes "engine has already";
 					mes "been replaced.^000000";
@@ -8045,500 +8045,229 @@ payon,192,176,3	script	Gooho Ahn	903,{
 	close;
 }
 
-moc_ruins,90,67,3	script	Suspicious Man#1	99,2,2,{
-	if ((zdan_edq == 9) && ($@zdan == 0)) {
-		set $@zdan,1;
-		initnpctimer;
-		mes "[????]";
-		mes "I know you've";
-		mes "been pursuing us!";
-		mes "Grrrr... DIE NOW!";
-		specialeffect EF_STEAL;
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Wh-who are you?";
-		next;
-		mes "[????]";
-		mes "Y-you're stronger";
-		mes "than I thought!";
-		mes "Run awaaaaay!";
-		hideoffnpc "Suspicious Man#2";
-		hideonnpc "Suspicious Man#1";
-		set $@zdan,0;
-		stopnpctimer;
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Huh? That man must";
-		mes "have dropped this";
-		mes "note in his haste";
-		mes "to get away from here.";
-		mes "Let's see what it says...";
-		next;
-		mes "^FFFFFF ^000000";
-		mes "^FFFFFF ^000000";
-		mes "^666666Kill " + strcharinfo(0) + ", meow.";
-		mes "That arrogant do-gooder";
-		mes "is looking into us too much.";
-		mes "Fail to kill him, and death";
-		mes "will be too good for you, meow.^000000";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "That must have been";
-		mes "an informer for the Z Gang.";
-		mes "He can't have gotten too far:";
-		mes "I have a chance to catch him!";
-		changequest 3126,3127;
-		set zdan_edq,10;
-		close;
+moc_ruins,90,67,3	script	Suspicious Man#1	4W_M_03,4,4,{
+	if (zdan_edq == 9) {
+		if ($@zdan == 0)
+			callsub S_Quest;
+		else {
+			mes "[Suspicious Man]";
+			if (strnpcinfo(2) == "1") {
+				mes "...............................";
+				mes "...............................";
+				mes "............................... ";
+			}
+			else
+				mes "... ...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Something's not quite";
+			mes "right. I should come back";
+			mes "and investigate this area";
+			mes "later when there are fewer";
+			mes "people watching...";
+		}
 	}
-	if ((zdan_edq == 9) && ($@zdan > 0)) {
-		mes "[Suspicious Man]";
-		mes "...............................";
-		mes "...............................";
-		mes "............................... ";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Something's not quite";
-		mes "right. I should come back";
-		mes "and investigate this area";
-		mes "later when there are fewer";
-		mes "people watching...";
-		close;
+	else if (zdan_edq == 10) {
+		if ($@zdan > 0) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "Nuts! I was supposed";
+			mes "to try to do this secretly!";
+			mes "I better try to investigate";
+			mes "this area again when no";
+			mes "one is around here.";
+		}
+		else {
+			set $@zdan,1;
+			initnpctimer;
+			mes "[????]";
+			mes "Eeek...!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Haha! Got you!";
+			mes "You're an informer for";
+			mes "the Z Gang, aren't you?";
+			next;
+			mes "[????]";
+			mes "I... I... d-don't";
+			mes "know what you're";
+			mes "talking about!";
+			mes "I'm innocent!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Then you're telling";
+			mes "me this note didn't";
+			mes "just fall out of your";
+			mes "pocket? What's this";
+			mes "about trying to kill me?";
+			next;
+			mes "[????]";
+			mes "Th-that's...";
+			mes "I'm not--That...!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "You better confess, or";
+			mes "I'll drag you over to the";
+			mes "Prontera Knightage or the";
+			mes "Rogue Guild to take care";
+			mes "of you. In fact, let's just";
+			mes "head over to Prontera...";
+			next;
+			mes "[Z Gang Informer]";
+			mes "N-no! I'll tell you";
+			mes "everything! Please!";
+			mes "My mother's old! I've";
+			mes "got kids to feed!";
+			mes "I... I can't go to jail!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Alright.";
+			mes "Let's start by you";
+			mes "telling me where";
+			mes "I can find the Z Gang.";
+			next;
+			mes "[Z Gang Informer]";
+			mes "I... I really don't";
+			mes "know where to find them.";
+			mes "I'm at the bottom of the";
+			mes "food chain, I just follow";
+			mes "their written instructions.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "You know what?";
+			mes "Never mind. I'm won't";
+			mes "take you to be jailed by";
+			mes "the Prontera Knights.";
+			mes "I'll drop you off";
+			mes "at the Rogues.";
+			next;
+			mes "[Z Gang Informer]";
+			mes "...............................";
+			mes "Their secret hideout is in";
+			mes "South Morroc, and you can't";
+			mes "enter the place without the";
+			mes "secret password.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Nice. Now, you better";
+			mes "stop running with the";
+			mes "Z Gang. Otherwise, I'm";
+			mes "not going to be so merciful";
+			mes "the next time I see you.";
+			next;
+			mes "[Z Gang Informer]";
+			mes "Anything you want!";
+			mes "J-just let me liiive!";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I should head back to";
+			mes "Marybell, and see if she's";
+			mes "learned any new information.";
+			changequest 3127,3128;
+			set zdan_edq,11;
+			set $@zdan,0;
+			stopnpctimer;
+		}
 	}
-	if ((zdan_edq == 10) && ($@zdan > 0)) {
-		mes "[" + strcharinfo(0) + "]";
-		mes "Nuts! I was supposed";
-		mes "to try to do this secretly!";
-		mes "I better try to investigate";
-		mes "this area again when no";
-		mes "one is around here.";
-		close;
-	}
-	if ((zdan_edq == 10) && ($@zdan == 0 )) {
-		set $@zdan,1;
-		initnpctimer;
-		mes "[????]";
-		mes "Eeek...!";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Haha! Got you!";
-		mes "You're an informer for";
-		mes "the Z Gang, aren't you?";
-		next;
-		mes "[????]";
-		mes "I... I... d-don't";
-		mes "know what you're";
-		mes "talking about!";
-		mes "I'm innocent!";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Then you're telling";
-		mes "me this note didn't";
-		mes "just fall out of your";
-		mes "pocket? What's this";
-		mes "about trying to kill me?";
-		next;
-		mes "[????]";
-		mes "Th-that's...";
-		mes "I'm not--That...!";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "You better confess, or";
-		mes "I'll drag you over to the";
-		mes "Prontera Knightage or the";
-		mes "Rogue Guild to take care";
-		mes "of you. In fact, let's just";
-		mes "head over to Prontera...";
-		next;
-		mes "[Z Gang Informer]";
-		mes "N-no! I'll tell you";
-		mes "everything! Please!";
-		mes "My mother's old! I've";
-		mes "got kids to feed!";
-		mes "I... I can't go to jail!";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Alright.";
-		mes "Let's start by you";
-		mes "telling me where";
-		mes "I can find the Z Gang.";
-		next;
-		mes "[Z Gang Informer]";
-		mes "I... I really don't";
-		mes "know where to find them.";
-		mes "I'm at the bottom of the";
-		mes "food chain, I just follow";
-		mes "their written instructions.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "You know what?";
-		mes "Never mind. I'm won't";
-		mes "take you to be jailed by";
-		mes "the Prontera Knights.";
-		mes "I'll drop you off";
-		mes "at the Rogues.";
-		next;
-		mes "[Z Gang Informer]";
-		mes "...............................";
-		mes "Their secret hideout is in";
-		mes "South Morroc, and you can't";
-		mes "enter the place without the";
-		mes "secret password.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Nice. Now, you better";
-		mes "stop running with the";
-		mes "Z Gang. Otherwise, I'm";
-		mes "not going to be so merciful";
-		mes "the next time I see you.";
-		next;
-		mes "[Z Gang Informer]";
-		mes "Anything you want!";
-		mes "J-just let me liiive!";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I should head back to";
-		mes "Marybell, and see if she's";
-		mes "learned any new information.";
-		changequest 3127,3128;
-		set zdan_edq,11;
-		set $@zdan,0;
-		stopnpctimer;
-		close;
-	}
-	if (zdan_edq < 9) {
-		mes "[Suspicious Man]";
+	else if (zdan_edq < 9) {
+		if (strnpcinfo(2) == "1")
+			mes "[Suspicious Man]";
+		else
+			mes "[Thug]";
 		mes "What? Get lost!";
 		mes "Listen, you don't";
 		mes "want to mess with";
 		mes "me. Just. Don't.";
-		close;
 	}
-	if ((zdan_edq > 10) && (zdan_edq < 15)) {
+	else if (zdan_edq > 10 && zdan_edq < 15) {
 		mes "[Z Gang Informer]";
 		mes "Whoa, leave me alone!";
 		mes "I'm just standing here";
 		mes "on the road, I didn't";
 		mes "do anything wrong!";
-		close;
 	}
-	if (zdan_edq > 14) {
+	else if (zdan_edq > 14) {
 		mes "[Former Z Gang Informer]";
 		mes "You don't have to";
 		mes "worry about me anymore.";
 		mes "I've turned over a new";
 		mes "leaf, got a real job,";
 		mes "that sort of deal.";
-		close;
 	}
-	mes "[Suspicious Man]";
-	mes "What? Get lost!";
-	mes "Listen, you don't";
-	mes "want to mess with";
-	mes "me. Just. Don't.";
+	else {
+		if (strnpcinfo(2) == "1")
+			mes "[Suspicious Man]";
+		else
+			mes "[Thug]";
+		mes "What? Get lost!";
+		mes "Listen, you don't";
+		mes "want to mess with";
+		mes "me. Just. Don't.";
+	}
 	close;
 
 OnTimer30000:
 	set $@zdan,0;
 	end;
-
-OnTouch:
-	if ((zdan_edq == 9) && ($@zdan == 0)) {
-		set $@zdan,1;
-		initnpctimer;
-		mes "[????]";
-		mes "I know you've";
-		mes "been pursuing us!";
-		mes "Grrrr... DIE NOW!";
-		specialeffect EF_STEAL;
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Wh-who are you?";
-		next;
-		mes "[????]";
-		mes "Y-you're stronger";
-		mes "than I thought!";
-		mes "Run awaaaaay!";
-		hideoffnpc "Suspicious Man#2";
-		hideonnpc "Suspicious Man#1";
-		set $@zdan,0;
-		stopnpctimer;
-		next;
-		mes "[" + strcharinfo(0) + "] ";
-		mes "Huh? That man must";
-		mes "have dropped this";
-		mes "note in his haste";
-		mes "to get away from here.";
-		mes "Let's see what it says...";
-		next;
-		mes "^FFFFFF ^000000";
-		mes "^FFFFFF ^000000";
-		mes "^666666Kill " + strcharinfo(0) + ", meow.";
-		mes "That arrogant do-gooder";
-		mes "is looking into us too much.";
-		mes "Fail to kill him, and death";
-		mes "will be too good for you, meow.^000000";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "That must have been";
-		mes "an informer for the Z Gang.";
-		mes "He can't have gotten too far:";
-		mes "I have a chance to catch him!";
-		changequest 3126,3127;
-		set zdan_edq,10;
-		close;
-	}
-	end;
-}
-
-//Incorrect position.
-moc_ruins,78,167,3	script	Suspicious Man#2	99,2,2,{
-	if ((zdan_edq == 9) && ($@zdan == 0)) {
-		set $@zdan,1;
-		initnpctimer;
-		mes "[????]";
-		mes "I know you've";
-		mes "been pursuing us!";
-		mes "Grrrr... DIE NOW!";
-		specialeffect EF_STEAL;
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Wh-who are you?";
-		next;
-		mes "[????]";
-		mes "Y-you're stronger";
-		mes "than I thought!";
-		mes "Run awaaaaay!";
-		hideoffnpc "Suspicious Man#1";
-		hideonnpc "Suspicious Man#2";
-		set $@zdan,0;
-		stopnpctimer;
-		next;
-		mes "[" + strcharinfo(0) + "] ";
-		mes "Huh? That man must";
-		mes "have dropped this";
-		mes "note in his haste";
-		mes "to get away from here.";
-		mes "Let's see what it says...";
-		next;
-		mes "^FFFFFF ^000000";
-		mes "^FFFFFF ^000000";
-		mes "^666666Kill " + strcharinfo(0) + ", meow.";
-		mes "That arrogant do-gooder";
-		mes "is looking into us too much.";
-		mes "Fail to kill him, and death";
-		mes "will be too good for you, meow.^000000";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "That must have been";
-		mes "an informer for the Z Gang.";
-		mes "He can't have gotten too far:";
-		mes "I have a chance to catch him!";
-		changequest 3126,3127;
-		set zdan_edq,10;
-		close;
-	}
-	if ((zdan_edq == 10) && ($@zdan == 0)) {
-		set $@zdan,1;
-		initnpctimer;
-		mes "[????]";
-		mes "Eeek...!";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Haha! Got you!";
-		mes "You're an informer for";
-		mes "the Z Gang, aren't you?";
-		next;
-		mes "[????]";
-		mes "I... I... d-don't";
-		mes "know what you're";
-		mes "talking about!";
-		mes "I'm innocent!";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Then you're telling";
-		mes "me this note didn't";
-		mes "just fall out of your";
-		mes "pocket? What's this";
-		mes "about trying to kill me?";
-		next;
-		mes "[????]";
-		mes "Th-that's...";
-		mes "I'm not--That...!";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "You better confess, or";
-		mes "I'll drag you over to the";
-		mes "Prontera Knightage or the";
-		mes "Rogue Guild to take care";
-		mes "of you. In fact, let's just";
-		mes "head over to Prontera...";
-		next;
-		mes "[Z Gang Informer]";
-		mes "N-no! I'll tell you";
-		mes "everything! Please!";
-		mes "My mother's old! I've";
-		mes "got kids to feed!";
-		mes "I... I can't go to jail!";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Alright.";
-		mes "Let's start by you";
-		mes "telling me where";
-		mes "I can find the Z Gang.";
-		next;
-		mes "[Z Gang Informer]";
-		mes "I... I really don't";
-		mes "know where to find them.";
-		mes "I'm at the bottom of the";
-		mes "food chain, I just follow";
-		mes "their written instructions.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "You know what?";
-		mes "Never mind. I'm won't";
-		mes "take you to be jailed by";
-		mes "the Prontera Knights.";
-		mes "I'll drop you off";
-		mes "at the Rogues.";
-		next;
-		mes "[Z Gang Informer]";
-		mes "...............................";
-		mes "Their secret hideout is in";
-		mes "South Morroc, and you can't";
-		mes "enter the place without the";
-		mes "secret password.";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Nice. Now, you better";
-		mes "stop running with the";
-		mes "Z Gang. Otherwise, I'm";
-		mes "not going to be so merciful";
-		mes "the next time I see you.";
-		next;
-		mes "[Z Gang Informer]";
-		mes "Anything you want!";
-		mes "J-just let me liiive!";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "I should head back to";
-		mes "Marybell, and see if she's";
-		mes "learned any new information.";
-		changequest 3127,3128;
-		set zdan_edq,11;
-		set $@zdan,0;
-		stopnpctimer;
-		close;
-	}
-	if ((zdan_edq == 9) && ($@zdan > 0)) {
-		mes "[Suspicious Man]";
-		mes "... ...";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Something's not quite";
-		mes "right. I should come back";
-		mes "and investigate this area";
-		mes "later when there are fewer";
-		mes "people watching...";
-		close;
-	}
-	if ((zdan_edq == 10) && ($@zdan > 0)) {
-		mes "[" + strcharinfo(0) + "]";
-		mes "Nuts! I was supposed";
-		mes "to try to do this secretly!";
-		mes "I better try to investigate";
-		mes "this area again when no";
-		mes "one is around here.";
-		close;
-	}
-	if (zdan_edq < 9) {
-		mes "[Thug]";
-		mes "What? Get lost!";
-		mes "Listen, you don't";
-		mes "want to mess with";
-		mes "me. Just. Don't.";
-		close;
-	}
-	if ((zdan_edq > 10) && (zdan_edq < 15)) {
-		mes "[Z Gang Informer]";
-		mes "Whoa, leave me alone!";
-		mes "I'm just standing here";
-		mes "on the road, I didn't";
-		mes "do anything wrong!";
-		close;
-	}
-	if (zdan_edq > 14) {
-		mes "[Former Z Gang Informer]";
-		mes "You don't have to";
-		mes "worry about me anymore.";
-		mes "I've turned over a new";
-		mes "leaf, got a real job,";
-		mes "that sort of deal.";
-		close;
-	}
-	mes "[Thug]";
-	mes "What? Get lost!";
-	mes "Listen, you don't";
-	mes "want to mess with";
-	mes "me. Just. Don't.";
-	close;
 
 OnInit:
 	hideonnpc "Suspicious Man#2";
 	end;
 
-OnTimer30000:
-	set $@zdan,0;
+OnTouch:
+	if (zdan_edq == 9 && $@zdan == 0)
+		callsub S_Quest;
 	end;
 
-OnTouch:
-	if ((zdan_edq == 9) && ($@zdan == 0)) {
-		set $@zdan,1;
-		initnpctimer;
-		mes "[????]";
-		mes "I know you've";
-		mes "been pursuing us!";
-		mes "Grrrr... DIE NOW!";
-		specialeffect EF_STEAL;
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "Wh-who are you?";
-		next;
-		mes "[????]";
-		mes "Y-you're stronger";
-		mes "than I thought!";
-		mes "Run awaaaaay!";
-		hideoffnpc "Suspicious Man#1";
-		hideonnpc "Suspicious Man#2";
-		set $@zdan,0;
-		stopnpctimer;
-		next;
-		mes "[" + strcharinfo(0) + "] ";
-		mes "Huh? That man must";
-		mes "have dropped this";
-		mes "note in his haste";
-		mes "to get away from here.";
-		mes "Let's see what it says...";
-		next;
-		mes "^FFFFFF ^000000";
-		mes "^FFFFFF ^000000";
-		mes "^666666Kill " + strcharinfo(0) + ", meow.";
-		mes "That arrogant do-gooder";
-		mes "is looking into us too much.";
-		mes "Fail to kill him, and death";
-		mes "will be too good for you, meow.^000000";
-		next;
-		mes "[" + strcharinfo(0) + "]";
-		mes "That must have been";
-		mes "an informer for the Z Gang.";
-		mes "He can't have gotten too far:";
-		mes "I have a chance to catch him!";
-		changequest 3126,3127;
-		set zdan_edq,10;
-		close;
+S_Quest:
+	set $@zdan,1;
+	initnpctimer;
+	mes "[????]";
+	mes "I know you've";
+	mes "been pursuing us!";
+	mes "Grrrr... DIE NOW!";
+	specialeffect EF_STEAL;
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Wh-who are you?";
+	next;
+	mes "[????]";
+	mes "Y-you're stronger";
+	mes "than I thought!";
+	mes "Run awaaaaay!";
+	if (strnpcinfo(2) == "1") {
+		hideonnpc "Suspicious Man#1";
+		hideoffnpc "Suspicious Man#2";
 	}
-	end;
+	else {
+		hideonnpc "Suspicious Man#2";
+		hideoffnpc "Suspicious Man#1";
+	}
+	set $@zdan,0;
+	stopnpctimer;
+	next;
+	mes "[" + strcharinfo(0) + "] ";
+	mes "Huh? That man must";
+	mes "have dropped this";
+	mes "note in his haste";
+	mes "to get away from here.";
+	mes "Let's see what it says...";
+	next;
+	mes "^666666Kill " + strcharinfo(0) + ", meow.";
+	mes "That arrogant do-gooder";
+	mes "is looking into us too much.";
+	mes "Fail to kill him, and death";
+	mes "will be too good for you, meow.^000000";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "That must have been";
+	mes "an informer for the Z Gang.";
+	mes "He can't have gotten too far:";
+	mes "I have a chance to catch him!";
+	changequest 3126,3127;
+	set zdan_edq,10;
+	close;
 }
+moc_ruins,75,171,3	duplicate(Suspicious Man#1)	Suspicious Man#2	4W_M_03,4,4
 
 moc_fild17,209,235,0	script	Odd Slab	111,4,4,{
 	if (((zdan_edq == 15) || (zdan_edq == 16) || (zdan_edq == 17)) && ($@door2 == 0)) {

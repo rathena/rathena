@@ -57,6 +57,9 @@
     <ClInclude Include="..\src\common\winapi.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\config\renewal.h">
+      <Filter>config</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -64,6 +67,9 @@
     </Filter>
     <Filter Include="mapcache">
       <UniqueIdentifier>{5ea9d6f7-0a10-4bfb-ad39-478e4b1d8a0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{8ccd627c-fbb0-4bd1-bb96-a95bffa1dd8d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

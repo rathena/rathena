@@ -379,7 +379,6 @@ struct mmo_charstatus {
 
 	unsigned int base_exp,job_exp;
 	int zeny;
-	int bank_vault;
 
 	short class_;
 	unsigned int status_point,skill_point;
@@ -432,6 +431,8 @@ struct mmo_charstatus {
 	bool cashshop_sent; // Whether the player has received the CashShop list
 
 	uint32 uniqueitem_counter;
+
+	unsigned char hotkey_rowshift;
 };
 
 typedef enum mail_status {

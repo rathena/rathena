@@ -5682,7 +5682,7 @@ malaya,283,265,4	script	Village Chief#bako2	580,{
 		mes "[Village Chief]";
 		mes "^0000FFLost Belongings^000000";
 		mes "are said to be carried by";
-		mes "^FF0000Tiucknuc^000000 that roams Baryo Mahiwaga.";
+		mes "^FF0000Tiyanak^000000 that roams Baryo Mahiwaga.";
 		next;
 		switch(select("Do it yourself.:I'm on my way.")) {
 		case 1:
@@ -5693,7 +5693,7 @@ malaya,283,265,4	script	Village Chief#bako2	580,{
 		case 2:
 			mes "[Village Chief]";
 			mes "Let's start then. First,";
-			mes "retrieve two ^FF0000Lost Belongings^000000 from Tiucknuc";
+			mes "retrieve two ^FF0000Lost Belongings^000000 from Tiyanak";
 			mes "and take them to ^0000FFMissing Person's Father^000000";
 			mes "for me.";
 			set malaya_bakona2,1;
@@ -5702,26 +5702,26 @@ malaya,283,265,4	script	Village Chief#bako2	580,{
 		}
 	} else if (malaya_bakona2 == 1) {
 		mes "[Village Chief]";
-		mes "From Tiucknuc that roams Baryo Mahiwaga Field,";
+		mes "From Tiyanak that roams Baryo Mahiwaga Field,";
 		mes "retrieve two ^FF0000Lost Belongings^000000";
 		mes "and deliver them to ^0000FFMissing Person's Father^000000";
 		mes "for me.";
 		close;
 	} else if (malaya_bakona2 == 2) {
 		mes "[Village Chief]";
-		mes "Retrieve Seven ^FF0000Lost Belongings^000000 from Tiucknuc";
+		mes "Retrieve Seven ^FF0000Lost Belongings^000000 from Tiyanak";
 		mes "and deliver them to ^0000FFMissing Person's Friend^000000";
 		mes "for me.";
 		close;
 	} else if (malaya_bakona2 == 3) {
 		mes "[Village Chief]";
-		mes "Retrieve three ^FF0000Lost Belongings^000000 from Tiucknuc";
+		mes "Retrieve three ^FF0000Lost Belongings^000000 from Tiyanak";
 		mes "and deliver them to ^0000FFMissing Person's Son^000000";
 		mes "for me.";
 		close;
 	} else if (malaya_bakona2 == 4) {
 		mes "[Village Chief]";
-		mes "Retrieve five ^FF0000Lost Belongings^000000 from Tiucknuc";
+		mes "Retrieve five ^FF0000Lost Belongings^000000 from Tiyanak";
 		mes "and deliver them to ^0000FFMissing Person's Mother^000000";
 		mes "for me.";
 		close;
@@ -5899,7 +5899,7 @@ malaya,269,267,5	script	Missing Person's Father	582,{
 		next;
 		mes "The man is unable to continue as he tries to hold back his tears.";
 		mes "Let's continue to find the lost belongings of the missing people.";
-		mes "Let's retrieve them from Tiucknuc that roams Baryo Mahiwaga Field,";
+		mes "Let's retrieve them from Tiyanak that roams Baryo Mahiwaga Field,";
 		mes "seven ^FF0000Lost Belongings^000000";
 		mes "and deliver them to ^0000FFMissing Person's Friend^000000.";
 		delitem 6520,2; //Lost_Belongings
@@ -5913,7 +5913,7 @@ malaya,269,267,5	script	Missing Person's Father	582,{
 		next;
 		mes "The man is unable to continue as he tries to hold back his tears.";
 		mes "Let's continue to find the lost belongings of the missing people.";
-		mes "Retrieve seven ^FF0000Lost Belongings^000000 from Tiucknuc";
+		mes "Retrieve seven ^FF0000Lost Belongings^000000 from Tiyanak";
 		mes "and deliver them to ^0000FFMissing Person's Friend^000000.";
 		close;
 	} else {
@@ -5973,7 +5973,7 @@ L_Quest:
 	next;
 	mes "Leaving behind the crying boy,";
 	mes "let's continue to find the lost belongings of the missing people.";
-	mes "Retrieve three ^FF0000Lost Belongings^000000 from Tiucknuc";
+	mes "Retrieve three ^FF0000Lost Belongings^000000 from Tiyanak";
 	mes "and deliver them to ^0000FFMissing Person's Son^000000.";
 	return;
 }
@@ -6019,7 +6019,7 @@ L_Quest:
 	next;
 	mes "Man crying in agony.";
 	mes "Let's continue to find the lost belongings of the missing people.";
-	mes "Retrieve five ^FF0000Lost Belongings^000000 from Tiucknuc";
+	mes "Retrieve five ^FF0000Lost Belongings^000000 from Tiyanak";
 	mes "and deliver them to ^0000FFMissing Person's Mother^000000.";
 	return;
 }

@@ -6,31 +6,19 @@
 //
 // - To remove entry by importing, put 0 on 'Rate'
 
-// Mage Skills
-10,5000	// Sight
-11,5000	// Napalm Beat
-12,5000	// Safety Wall
-13,5000	// Soul Strike
-14,5000	// Cold Bolt
-15,5000	// Frost Diver
-16,5000	// Stone Curse
-17,5000	// Fire Ball
-18,5000	// Fire Wall
-19,5000	// Fire Bolt
-20,5000	// Lightning Bolt
-21,5000	// Thunderstorm
-
-// Wizard Skills
-80,2500	// Fire Pillar
-81,2500	// Sightrasher
-83,2500	// Meteor Storm
-84,2500	// Jupitel Thunder
-85,2500	// Lord of Vermilion
-86,2500	// Water Ball
-87,2500	// Ice Wall
-88,2500	// Frost Nova
-89,2500	// Storm Gust
-90,2500	// Earth Spike
-91,2500	// Heaven's Drive
-92,2500	// Quagmire
-93,2500	// Sense
+11,60000	// Napalm Beat
+12,40000	// Safety Wall
+13,60000	// Soul Strike
+14,60000	// Cold Bolt
+15,60000	// Frost Diver
+17,60000	// Fire Ball
+18,40000	// Fire Wall
+19,60000	// Fire Bolt
+20,60000	// Lightning Bolt
+21,40000	// Thunderstorm
+80,40000	// Fire Pillar
+83,40000	// Meteor Storm
+84,60000	// Jupitel Thunder
+85,40000	// Lord of Vermilion
+86,60000	// Water Ball
+89,40000	// Storm Gust

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <ClCompile Include="..\src\common\cli.c">
+      <Filter>common</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\common\core.c">
       <Filter>common</Filter>
     </ClCompile>
@@ -118,14 +121,18 @@
     <ClCompile Include="..\src\common\mempool.c">
       <Filter>common</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\common\msg_conf.c">
+      <Filter>common</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\common\raconf.c">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\common\cli.c" />
-    <ClCompile Include="..\src\common\msg_conf.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\common\cbasetypes.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\cli.h">
       <Filter>common</Filter>
     </ClInclude>
     <ClInclude Include="..\src\common\core.h">
@@ -257,11 +264,15 @@
     <ClInclude Include="..\src\common\mempool.h">
       <Filter>common</Filter>
     </ClInclude>
+    <ClInclude Include="..\src\common\msg_conf.h">
+      <Filter>common</Filter>
+    </ClInclude>
     <ClInclude Include="..\src\common\raconf.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\common\cli.h" />
-    <ClInclude Include="..\src\common\msg_conf.h" />
+    <ClInclude Include="..\src\config\core.h">
+      <Filter>config</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="common">
@@ -278,6 +289,9 @@
     </Filter>
     <Filter Include="3rdparty\libconfig">
       <UniqueIdentifier>{9e8badd7-548f-4eb4-9e87-613e87e772ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{6489e7a1-f724-450c-86b4-f98d40eebb3a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -8837,27 +8837,11 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		cutin "ep13_captin_edq",255;
 		close;
 	}
-	else if ((ep13_1_edq == 9) && (countitem(11012) < 3)) {
+	else if (ep13_1_edq == 9) {
 		mes "[Hibba Agip]";
 		mes "Is something wrong? Alright, we'll write another report for you.";
 		next;
-		delitem 11012,1; //Expedition_Report
-		delitem 11012,1; //Expedition_Report
-		delitem 11012,1; //Expedition_Report
-		getitem 11012,3; //Expedition_Report
-		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwaltzvalt Republic.";
-		next;
-		mes "[Hibba Agip]";
-		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";
-		cutin "ep13_captin_edq",255;
-		close;
-	}
-	else if ((ep13_1_edq == 9) && (countitem(11012) > 3)) {
-		mes "[Hibba Agip]";
-		mes "Is something wrong? Alright, we'll write another report for you.";
-		next;
-		delitem 11012,20; //Expedition_Report
+		delitem 11012,countitem(11012); //Expedition_Report
 		getitem 11012,3; //Expedition_Report
 		mes "[Hibba Agip]";
 		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwaltzvalt Republic.";

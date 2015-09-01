@@ -330,15 +330,11 @@
     <Copy SourceFiles="..\db\import-tmpl\mercenary_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mercenary_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mercenary_skill_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mercenary_skill_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_avail.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_avail.txt')" />
-    <Copy SourceFiles="..\db\import-tmpl\mob_boss.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_boss.txt')" />
-    <Copy SourceFiles="..\db\import-tmpl\mob_branch.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_branch.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_chat_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_chat_db.txt')" />
-    <Copy SourceFiles="..\db\import-tmpl\mob_classchange.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_classchange.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_item_ratio.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_item_ratio.txt')" />
-    <Copy SourceFiles="..\db\import-tmpl\mob_poring.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_poring.txt')" />
-    <Copy SourceFiles="..\db\import-tmpl\mob_pouch.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_pouch.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_race2_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_race2_db.txt')" />
+    <Copy SourceFiles="..\db\import-tmpl\mob_random_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_random_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_skill_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_skill_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\packet_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\packet_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\pet_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\pet_db.txt')" />

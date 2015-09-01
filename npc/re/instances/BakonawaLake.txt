@@ -77,7 +77,7 @@ ma_scene01,174,179,4	script	Taho	541,{
 			switch(instance_enter(.@md_name$)) {
 			case 3:
 				mes "[Taho]";
-				mes "An unknown error occured.";
+				mes "An unknown error occurred.";
 				close;
 			case 2:
 				mes "[Taho]";
@@ -88,7 +88,7 @@ ma_scene01,174,179,4	script	Taho	541,{
 				mes "Civilians cannot enter.";
 				close;
 			case 0:
-				mapannounce "ma_scene01","A party memeber, "+strcharinfo(0)+" of the party "+getpartyname(.@party_id)+" is entering the dungeon, "+.@md_name$+".",bc_map,"0x00ff99"; //FW_NORMAL 12 0 0
+				mapannounce "ma_scene01","A party member, "+strcharinfo(0)+" of the party "+getpartyname(.@party_id)+" is entering the dungeon, "+.@md_name$+".",bc_map,"0x00ff99"; //FW_NORMAL 12 0 0
 				setquest 12278;
 				//warp "1@ma_b",64,51;
 				close;
@@ -518,7 +518,7 @@ OnTimer10000:
 		mes "[Taho]";
 		mes "Are we going to try again?";
 		next;
-		switch(select("Hold on a sec!:Of couse! We cannot stand back now!")) {
+		switch(select("Hold on a sec!:Of course! We cannot stand back now!")) {
 		case 1:
 			mes "[Taho]";
 			mes "AWW... I almost brought him out.";

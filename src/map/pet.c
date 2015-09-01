@@ -64,7 +64,7 @@ void pet_set_intimate(struct pet_data *pd, int value)
 
 	pd->pet.intimate = value;
 
-	if( (intimate >= battle_config.pet_equip_min_friendly && pd->pet.intimate < battle_config.pet_equip_min_friendly) || (intimate < battle_config.pet_equip_min_friendly && pd->pet.intimate >= battle_config.pet_equip_min_friendly) )
+	if( sd && ((intimate >= battle_config.pet_equip_min_friendly && pd->pet.intimate < battle_config.pet_equip_min_friendly) || (intimate < battle_config.pet_equip_min_friendly && pd->pet.intimate >= battle_config.pet_equip_min_friendly)) )
 		status_calc_pc(sd,SCO_NONE);
 }
 
@@ -156,12 +156,11 @@ int pet_attackskill(struct pet_data *pd, int target_id)
  * @param type : pet's attack rate type
  * @return 0
  */
-int pet_target_check(struct map_session_data *sd,struct block_list *bl,int type)
+int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
 {
-	struct pet_data *pd;
 	int rate;
 
-	pd = sd->pd;
+	nullpo_ret(pd);
 
 	Assert((pd->master == 0) || (pd->master->pd == pd));
 
@@ -381,7 +380,7 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 
 	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
 		clif_additem(sd,0,0,flag);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	pd->pet.incubate = 1;
@@ -732,7 +731,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 
 	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
 		clif_additem(sd,0,0,ret);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	return true;
@@ -919,7 +918,7 @@ static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 
 	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
 		clif_additem(sd,0,0,flag);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0);
+		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	if( battle_config.pet_equip_required ) { // Skotlex: halt support timers if needed
@@ -1278,7 +1277,7 @@ static int pet_delay_item_drop(int tid, unsigned int tick, int id, intptr_t data
 
 		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
 			list->m,list->x,list->y,
-			list->first_charid,list->second_charid,list->third_charid,4);
+			list->first_charid,list->second_charid,list->third_charid,4,0);
 		ditem_prev = ditem;
 		ditem = ditem->next;
 		ers_free(item_drop_ers, ditem_prev);

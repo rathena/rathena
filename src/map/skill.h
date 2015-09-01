@@ -72,6 +72,7 @@ enum e_skill_inf2 {
 	INF2_NO_BG_DMG		 = 0x08000, // Skill that ignore bg reduction
 	INF2_NO_GVG_DMG		 = 0x10000, // Skill that ignore gvg reduction
 	INF2_NO_NEARNPC      = 0x20000, // disable to cast skill if near with NPC [Cydh]
+	INF2_HIT_TRAP        = 0x40000, // can hit trap-type skill (INF2_TRAP) [Cydh]
 };
 
 /// Skill info type 3
@@ -172,8 +173,8 @@ struct s_skill_db {
 	int16 cast_def_rate;						 ///< Def rate during cast a skill
 	uint16 skill_type;							 ///< Skill type
 	int blewcount[MAX_SKILL_LEVEL];				 ///< Blew count
-	uint32 inf2;								 ///<
-	uint32 inf3;								 ///<
+	uint32 inf2;								 ///< Skill flags @see enum e_skill_inf2
+	uint32 inf3;								 ///< Skill flags @see enum e_skill_inf3
 	int maxcount[MAX_SKILL_LEVEL];				 ///< Max number skill can be casted in same map
 
 	// skill_castnodex_db.txt
@@ -485,11 +486,9 @@ bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md);
 
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
 
-int skill_changetarget(struct block_list *bl,va_list ap);
-
 // Item creation
 short skill_can_produce_mix( struct map_session_data *sd, unsigned short nameid, int trigger, int qty);
-bool skill_produce_mix( struct map_session_data *sd, uint16 skill_id, unsigned short nameid, int slot1, int slot2, int slot3, int qty );
+bool skill_produce_mix( struct map_session_data *sd, uint16 skill_id, unsigned short nameid, int slot1, int slot2, int slot3, int qty, short produce_idx );
 
 bool skill_arrow_create( struct map_session_data *sd, unsigned short nameid);
 
@@ -532,6 +531,7 @@ enum e_require_state {
 	ST_RIDINGWUG,
 	ST_MADO,
 	ST_ELEMENTALSPIRIT,
+	ST_ELEMENTALSPIRIT2,
 	ST_PECO,
 };
 
@@ -1721,10 +1721,10 @@ enum e_skill {
 	WL_TELEKINESIS_INTENSE,
 	LG_KINGS_GRACE,
 	ALL_FULL_THROTTLE,
-	SR_FLASHCOMBO_ATK_STEP1,
-	SR_FLASHCOMBO_ATK_STEP2,
-	SR_FLASHCOMBO_ATK_STEP3,
-	SR_FLASHCOMBO_ATK_STEP4,
+	SR_FLASHCOMBO_ATK_STEP1, // SR_DRAGONCOMBO
+	SR_FLASHCOMBO_ATK_STEP2, // SR_FALLENEMPIRE
+	SR_FLASHCOMBO_ATK_STEP3, // SR_TIGERCANNON
+	SR_FLASHCOMBO_ATK_STEP4, // SR_SKYNETBLOW
 
 	HLIF_HEAL = 8001,
 	HLIF_AVOID,

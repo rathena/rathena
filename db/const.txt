@@ -175,7 +175,6 @@ EAJL_2	0x300
 EAJL_UPPER	0x1000
 EAJL_BABY	0x2000
 EAJL_THIRD	0x4000
-EAJL_SUPER_NOVICE	0x8000
 
 EAJ_BASEMASK	0x00ff
 EAJ_UPPERMASK	0x0fff
@@ -299,10 +298,10 @@ EAJ_BABY_SURA		0x6204
 EAJ_BABY_GENETIC	0x6205
 EAJ_BABY_CHASER		0x6206
 
-EAJ_SUPER_NOVICE	0x8100
-EAJ_SUPER_BABY	0xA100
-EAJ_SUPER_NOVICE_E	0xC100
-EAJ_SUPER_BABY_E	0xE100
+EAJ_SUPER_NOVICE	0x100
+EAJ_SUPER_BABY	0x2100
+EAJ_SUPER_NOVICE_E	0x4100
+EAJ_SUPER_BABY_E	0x6100
 
 bc_all	0
 bc_map	1
@@ -432,6 +431,10 @@ Sitting	123	1
 CharMoves	124	1
 CharRename	125	1
 Font		126	1
+BankVault	127	1
+RouletteBronze	128	1
+RouletteSilver	129	1
+RouletteGold	130	1
 
 bMaxHP	6
 bMaxSP	8
@@ -538,8 +541,8 @@ bSPDrainValue	1080
 bWeaponAtk	1081
 bWeaponAtkRate	1082
 bDelayrate	1083
-bHpDrainValueRace	1084
-bSpDrainValueRace	1085
+bHPDrainValueRace	1084
+bSPDrainValueRace	1085
 bIgnoreMdefRaceRate	1086
 bIgnoreDefRaceRate	1087
 bSkillHeal2	1088
@@ -595,8 +598,8 @@ bMagicSPGainValue	2043
 bMagicHPGainValue	2044
 bAddMonsterIdDropItem	2045
 bMatk	2046
-bSPGainRaceAttack	2047
-bHPGainRaceAttack	2048
+bComaClass	2047
+bComaRace	2048
 bSkillUseSPrate	2049
 bSkillCooldown	2050
 
@@ -628,6 +631,9 @@ bAddMaxWeight	2072
 bAddItemGroupHealRate	2073
 bHPVanishRaceRate	2074
 bSPVanishRaceRate	2075
+bAbsorbDmgMaxHP	2076
+bSubSkill	2077
+bSubDefEle	2078
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2
@@ -1162,8 +1168,36 @@ IG_Gift_Buff_Set        419
 IG_Lucky_Silvervine_Fruit_Box_III10        420
 IG_Lucky_Silvervine_Fruit_Box_III110        421
 IG_Old_Ore_Box	422
+IG_Blessing_Lucky_Egg	423
+IG_Sograt_Lucky_Egg	424
+IG_Garnet_Lucky_Egg	425
+IG_Amora_Lucky_Egg	426
+IG_Venus_Lucky_Egg	427
+IG_Erzulie_Lucky_Egg	428
+IG_Majestic_Lucky_Egg	429
+IG_Epic_Heroes_Lucky_Egg	430
+IG_Hero_Midgard_Egg	431
+IG_Midgard_Celebration_Lucky_Egg	432
+IG_Rune_Midgard_Imortal_Lucky_Egg	433
+IG_Rise_Midgard_Lucky_Egg	434
+IG_Time_Travel_Lucky_Egg	435
+IG_Solaris_Festival_Scroll	436
+IG_Midgard_Festival_Egg	437
+IG_Midgard_Egg	438
+IG_Sweet_Midgard_Egg	439
+IG_Winter_Midgard_Egg	440
+IG_Spring_Festival_Lucky_Egg	441
+IG_Birthday_IdRO10th_Scroll	442
+IG_Requiem_Egg	443
+IG_Holy_Spirit_Egg	444
+IG_Memorial_Garuda_Lucky_Egg	445
+IG_Miracle_Lucky_Egg	446
+IG_Legend_Hero_Lucky_Egg	447
+IG_Blessing_Midgard_Lucky_Egg	448
+IG_Chronosian_Lucky_Egg	449
 
 SC_ALL	-1
+SC_NONE	-1
 SC_STONE	0
 SC_FREEZE	1
 SC_STUN	2
@@ -1751,8 +1785,8 @@ SC_ALL_RIDING	592
 SC_TEARGAS_SOB	593
 SC__FEINTBOMB	594
 SC__CHAOS	595
-SC_ELEMENTAL_SHIELD	596
-SC_CHASEWALK2	597
+SC_CHASEWALK2	596
+SC_VACUUM_EXTREME_POSTDELAY	597
 SC_MTF_ASPD2	598
 SC_MTF_RANGEATK2	599
 SC_MTF_MATK2	600
@@ -1762,7 +1796,23 @@ SC_MTF_MHP	603
 SC_MTF_MSP	604
 SC_MTF_PUMPKIN	605
 SC_MTF_HITFLEE	606
-SC_EXTREMITYFIST2	607
+SC_CRIFOOD	607
+SC_HASTEATTACK_CASH	608
+SC_REUSE_LIMIT_A	609
+SC_REUSE_LIMIT_B	610
+SC_REUSE_LIMIT_C	611
+SC_REUSE_LIMIT_D	612
+SC_REUSE_LIMIT_E	613
+SC_REUSE_LIMIT_F	614
+SC_REUSE_LIMIT_G	615
+SC_REUSE_LIMIT_H	616
+SC_REUSE_LIMIT_MTF	617
+SC_REUSE_LIMIT_ASPD_POTION	618
+SC_REUSE_MILLENNIUMSHIELD	619
+SC_REUSE_CRUSHSTRIKE	620
+SC_REUSE_STORMBLAST	621
+SC_ALL_RIDING_REUSE_LIMIT	622
+SC_EXTREMITYFIST2	623
 
 //Status Icon
 SI_BLANK	-1
@@ -4827,6 +4877,12 @@ SKILL_PERM	0
 SKILL_TEMP	1
 SKILL_TEMPLEVEL	2
 SKILL_PERM_GRANT	3
+
+MOBG_Branch_Of_Dead_Tree	0
+MOBG_Poring_Box	1
+MOBG_Bloody_Dead_Branch	2
+MOBG_Red_Pouch_Of_Surprise	3
+MOBG_ClassChange	4
 
 false	0
 true	1

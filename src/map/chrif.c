@@ -27,7 +27,6 @@
 #include <stdlib.h>
 
 static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_t data);
-int chrif_save_bankdata(struct map_session_data *sd);
 
 static struct eri *auth_db_ers; //For reutilizing player login structures.
 static DBMap* auth_db; // int id -> struct auth_node*
@@ -39,7 +38,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 	11,10,10, 0,11, -1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, U->2b15, U->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
 	-1,10, 8, 2, 2,14,19,19,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, U->2b25, U->2b26, U->2b27
-	-1,10, 6,16, 0, 6,-1,-1,	// 2b28-2b2f: U->2b28, U->2b29, U->2b2a, U->2b2b, F->2b2c, U->2b2d, U->2b2e, U->2b2f
+	-1, 0, 6,16, 0, 6,-1,-1,	// 2b28-2b2f: U->2b28, F->2b29, U->2b2a, U->2b2b, F->2b2c, U->2b2d, U->2b2e, U->2b2f
  };
 
 //Used Packets:
@@ -64,7 +63,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b0a: Outgoing, chrif_skillcooldown_request -> requesting the list of skillcooldown for char
 //2b0b: Incoming, chrif_skillcooldown_load -> received the list of cooldown for char
 //2b0c: Outgoing, chrif_changeemail -> 'change mail address ...'
-//2b0d: Incoming, chrif_changedsex -> 'Change sex of acc XY'
+//2b0d: Incoming, chrif_changedsex -> 'Change sex of acc XY' (or char)
 //2b0e: Outgoing, chrif_req_login_operation -> 'Do some operations (change sex, ban / unban etc)'
 //2b0f: Incoming, chrif_ack_login_req -> 'answer of the 2b0e'
 //2b10: Outgoing, chrif_updatefamelist -> 'Update the fame ranking lists and send them'
@@ -92,7 +91,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b26: Outgoing, chrif_authreq -> 'client authentication request'
 //2b27: Incoming, chrif_authfail -> 'client authentication failed'
 //2b28: Outgoing, chrif_req_charban -> 'ban a specific char '
-//2b29: Incoming, chrif_load_bankdata -> 'received bank data for playeer to be loaded'
+//2b29: FREE
 //2b2a: Outgoing, chrif_req_charunban -> 'unban a specific char '
 //2b2b: Incoming, chrif_parse_ack_vipActive -> vip info result
 //2b2c: FREE
@@ -282,7 +281,6 @@ int chrif_save(struct map_session_data *sd, int flag) {
 		if (chrif_isconnected()) {
 			chrif_save_scdata(sd);
 			chrif_skillcooldown_save(sd);
-			chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_BANK, 0, 2, sd->status.bank_vault); //save Bank data
 		}
 		if ( flag != 3 && !chrif_auth_logout(sd,flag == 1 ? ST_LOGOUT : ST_MAPCHANGE) )
 			ShowError("chrif_save: Failed to set up player %d:%d for proper quitting!\n", sd->status.account_id, sd->status.char_id);
@@ -866,17 +864,19 @@ int chrif_req_login_operation(int aid, const char* character_name, unsigned shor
 
 /**
  * S 2b0e <accid>.l <name>.24B <operation_type>.w <timediff>L <val1>L <val2>L
- * Send an account modification (changesex) request to the login server (via char server).
+ * Send a sex change (for account or character) request to the login server (via char server).
  * @sd : Player requesting operation
  */
-int chrif_changesex(struct map_session_data *sd) {
+int chrif_changesex(struct map_session_data *sd, bool change_account) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,44);
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = sd->status.account_id;
 	safestrncpy((char*)WFIFOP(char_fd,6), sd->status.name, NAME_LENGTH);
-	WFIFOW(char_fd,30) = CHRIF_OP_LOGIN_CHANGESEX;
+	WFIFOW(char_fd,30) = (change_account ? CHRIF_OP_LOGIN_CHANGESEX : CHRIF_OP_LOGIN_CHANGECHARSEX);
+	if (!change_account)
+		WFIFOB(char_fd,32) = sd->status.sex == SEX_MALE ? SEX_FEMALE : SEX_MALE;
 	WFIFOSET(char_fd,44);
 
 	clif_displaymessage(sd->fd, msg_txt(sd,408)); //"Need disconnection to perform change-sex request..."
@@ -919,6 +919,9 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 		case CHRIF_OP_LOGIN_UNBLOCK:
 		case CHRIF_OP_LOGIN_UNBAN:
 		case CHRIF_OP_LOGIN_CHANGESEX:
+		case CHRIF_OP_LOGIN_CHANGECHARSEX:
+			if (type == CHRIF_OP_LOGIN_CHANGECHARSEX)
+				type--; // So we don't have to create a new msgstring.
 			snprintf(action,25,"%s",msg_txt(sd,427+type)); //block|ban|unblock|unban|change the sex of
 			break;
 		case CHRIF_OP_LOGIN_VIP:
@@ -926,17 +929,12 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 				return;
 			snprintf(action,25,"%s",msg_txt(sd,436)); //VIP
 			break;
-		case CHRIF_OP_LOGIN_BANK:
-			if (!battle_config.disp_serverbank_msg)
-				return;
-			snprintf(action,25,"%s","bank");
-			break;
 		default:
 			snprintf(action,25,"???");
 			break;
 	}
 
-	switch( answer ) {
+	switch (answer) {
 		case 0: sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break; //Login-serv has been asked to %s '%.*s'.
 		case 1: sprintf(output, msg_txt(sd,425), NAME_LENGTH, player_name); break;
 		case 2: sprintf(output, msg_txt(sd,426), action, NAME_LENGTH, player_name); break;
@@ -1279,23 +1277,6 @@ int chrif_updatefamelist_ack(int fd) {
 	list[index].fame = RFIFOL(fd,4);
 
 	return 1;
-}
-
-int chrif_load_bankdata(int fd){
-	struct map_session_data *sd;
-	int aid, bank_vault;
-
-	aid = RFIFOL(fd,2); //Player Account ID
-	bank_vault = RFIFOL(fd,6); //Player money in bank
-
-	sd = map_id2sd(aid);
-
-	if ( !sd ) {
-		ShowError("chrif_load_bankdata: Player of AID %d not found!\n", aid);
-		return -1;
-	}
-	sd->status.bank_vault = bank_vault;
- 	return 1;
 }
 
 int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the player and sends it to the char-server for saving. [Skotlex]
@@ -1819,7 +1800,6 @@ int chrif_parse(int fd) {
 			case 0x2b24: chrif_keepalive_ack(fd); break;
 			case 0x2b25: chrif_deadopt(RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10)); break;
 			case 0x2b27: chrif_authfail(fd); break;
-			case 0x2b29: chrif_load_bankdata(fd); break;
 			case 0x2b2b: chrif_parse_ack_vipActive(fd); break;
 			case 0x2b2f: chrif_bsdata_received(fd); break;
 			default:

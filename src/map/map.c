@@ -70,6 +70,7 @@ char mob_skill_db2_db[32] = "mob_skill_db2";
 char vendings_db[32] = "vendings";
 char vending_items_db[32] = "vending_items";
 char market_table[32] = "market";
+char db_roulette_table[32] = "db_roulette";
 
 // log database
 char log_db_ip[32] = "127.0.0.1";
@@ -1527,9 +1528,10 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
  * @param second_charid :  2nd player that could loot the item (2nd charid that could loot for second_get_charid duration)
  * @param third_charid : 3rd player that could loot the item (3rd charid that could loot for third_get_charid duration)
  * @param flag: &1 MVP item. &2 do stacking check. &4 bypass droppable check.
+ * @param mob_id: Monster ID if dropped by monster
  * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
-int map_addflooritem(struct item *item,int amount,int16 m,int16 x,int16 y,int first_charid,int second_charid,int third_charid,int flags)
+int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id)
 {
 	int r;
 	struct flooritem_data *fitem = NULL;
@@ -1561,6 +1563,7 @@ int map_addflooritem(struct item *item,int amount,int16 m,int16 x,int16 y,int fi
 	fitem->second_get_tick = fitem->first_get_tick + (flags&1 ? battle_config.mvp_item_second_get_time : battle_config.item_second_get_time);
 	fitem->third_get_charid = third_charid;
 	fitem->third_get_tick = fitem->second_get_tick + (flags&1 ? battle_config.mvp_item_third_get_time : battle_config.item_third_get_time);
+	fitem->mob_id = mob_id;
 
 	memcpy(&fitem->item,item,sizeof(*item));
 	fitem->item.amount = amount;
@@ -3358,12 +3361,10 @@ int map_readallmaps (void)
 
 			// Init mapcache data. [Shinryo]
 			map_cache_buffer[i] = map_init_mapcache(fp);
-
 			if( !map_cache_buffer[i] ) {
 				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath );
 				exit(EXIT_FAILURE);
 			}
-
 			fclose(fp);
 		}
 	}
@@ -3622,6 +3623,8 @@ int map_config_read(char *cfgName)
 			enable_grf = config_switch(w2);
 		else if (strcmpi(w1, "console_msg_log") == 0)
 			console_msg_log = atoi(w2);//[Ind]
+		else if (strcmpi(w1, "console_log_filepath") == 0)
+			safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
 		else if (strcmpi(w1, "import") == 0)
 			map_config_read(w2);
 		else
@@ -3732,7 +3735,9 @@ int inter_config_read(char *cfgName)
 		else if( strcmpi( w1, "vending_db" ) == 0 )
 			strcpy( vendings_db, w2 );
 		else if( strcmpi( w1, "vending_items_db" ) == 0 )
-			strcpy( vending_items_db, w2 );
+			strcpy(vending_items_db, w2);
+		else if( strcmpi(w1, "db_roulette_table") == 0)
+			strcpy(db_roulette_table, w2);
 		else if (strcmpi(w1, "market_table") == 0)
 			strcpy(market_table, w2);
 		else
@@ -4297,6 +4302,7 @@ int do_init(int argc, char *argv[])
 	ATCOMMAND_CONF_FILENAME = "conf/atcommand_athena.conf";
 	SCRIPT_CONF_NAME = "conf/script_athena.conf";
 	GRF_PATH_FILENAME = "conf/grf-files.txt";
+	safestrncpy(console_log_filepath, "./log/map-msg_log.log", sizeof(console_log_filepath));
 
 	/* Multilanguage */
 	MSG_CONF_NAME_EN = "conf/msg_conf/map_msg.conf"; // English (default)

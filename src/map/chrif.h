@@ -27,7 +27,7 @@ enum chrif_req_op {
 	CHRIF_OP_LOGIN_UNBAN,
 	CHRIF_OP_LOGIN_CHANGESEX,
 	CHRIF_OP_LOGIN_VIP,
-	CHRIF_OP_LOGIN_BANK,
+	CHRIF_OP_LOGIN_CHANGECHARSEX,
 
 	// Char-server operation
 	CHRIF_OP_BAN,
@@ -74,7 +74,7 @@ int chrif_char_offline_nsd(uint32 account_id, uint32 char_id);
 int chrif_char_reset_offline(void);
 int send_users_tochar(void);
 int chrif_char_online(struct map_session_data *sd);
-int chrif_changesex(struct map_session_data *sd);
+int chrif_changesex(struct map_session_data *sd, bool change_account);
 int chrif_chardisconnect(struct map_session_data *sd);
 int chrif_divorce(int partner_id1, int partner_id2);
 
@@ -85,8 +85,6 @@ void chrif_parse_ack_vipActive(int fd);
 
 int chrif_req_charban(int aid, const char* character_name, int timediff);
 int chrif_req_charunban(int aid, const char* character_name);
-
-int chrif_load_bankdata(int fd);
 
 int chrif_bsdata_request(uint32 char_id);
 int chrif_bsdata_save(struct map_session_data *sd, bool quit);
