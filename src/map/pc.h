@@ -24,7 +24,7 @@
 
 #define MAX_PC_BONUS 10 /// Max bonus, usually used by item bonus
 #define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
-#define MAX_PC_SC_SCRIPTS 20 ///< Max sc_scripts for player can be hold. //! TODO: Remove this fixed limit later
+#define MAX_PC_SC_SCRIPTS 5 ///< Max sc_scripts for player can be hold. //! TODO: Remove this fixed limit later
 #define MAX_PC_FEELHATE 3 /// Max feel hate info
 #define DAMAGELOG_SIZE_PC 100	/// Damage log
 #define MAX_SPIRITBALL 15 /// Max spirit balls

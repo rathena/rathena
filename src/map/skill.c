@@ -17623,9 +17623,6 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				}
 				break;
 			case UNT_REVERBERATION:
-				if (unit->val1 <= 0)
-					unit->limit = DIFF_TICK(tick, group->tick) + 700;
-				break;
 			case UNT_NETHERWORLD:
 				if (unit->val1 <= 0) {
 					clif_changetraplook(bl,UNT_USED_TRAPS);

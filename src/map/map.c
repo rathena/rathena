@@ -3361,10 +3361,12 @@ int map_readallmaps (void)
 
 			// Init mapcache data. [Shinryo]
 			map_cache_buffer[i] = map_init_mapcache(fp);
+
 			if( !map_cache_buffer[i] ) {
 				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath );
 				exit(EXIT_FAILURE);
 			}
+
 			fclose(fp);
 		}
 	}

@@ -9686,7 +9686,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			opt_flag = 0;
 	}
 	if (status_sc_get_opt1(type)) {
-		sc->opt1 = 0;
+		sc->opt1 = OPT1_NONE;
 		opt_flag |= 1;
 	}
 	if (status_sc_get_opt2(type)) {

@@ -1,7 +1,0 @@
-// List of SC that causing the SC cannot be activated
-//
-// SC,FailingSC
-//
-// SC        : Incoming SC
-// FailingSC : SC that causing failure. Some SC still needs hardcodes check. For multiple values, use ':' delimiter
-//

@@ -1699,6 +1699,7 @@ enum e_mode {
 
 ///opt1: (BODYSTATE_*) Non stackable status changes.
 enum sc_opt1 {
+	OPT1_NONE = 0,
 	OPT1_STONE = 1, //Petrified
 	OPT1_FREEZE,
 	OPT1_STUN,
@@ -1713,6 +1714,7 @@ enum sc_opt1 {
 
 ///opt2: (HEALTHSTATE_*) Stackable status changes.
 enum sc_opt2 {
+	OPT2_NONE = 0,
 	OPT2_POISON		= 0x0001,
 	OPT2_CURSE		= 0x0002,
 	OPT2_SILENCE		= 0x0004,

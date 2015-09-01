@@ -17647,12 +17647,6 @@ void clif_notify_bindOnEquip(struct map_session_data *sd, int n) {
 	cmd = packet_db_ack[sd->packet_ver][ZC_NOTIFY_BIND_ON_EQUIP];
 	info = &packet_db[sd->packet_ver][cmd];
 	if (!cmd || !info->len)
-
-	nullpo_retv(sd);
-
-	cmd = packet_db_ack[sd->packet_ver][ZC_NOTIFY_BIND_ON_EQUIP];
-	info = &packet_db[sd->packet_ver][cmd];
-	if (!cmd || !info->len)
 		return;
 
 	WFIFOHEAD(sd->fd, info->len);
