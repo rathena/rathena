@@ -4415,9 +4415,9 @@ void script_generic_ui_array_expand (unsigned int plus)
 	RECREATE(generic_ui_array, unsigned int, generic_ui_array_size);
 }
 
-#ifdef BETA_THREAD_TEST
-int buildin_query_sql_sub(struct script_state* st, Sql* handle);
+int buildin_query_sql_sub(struct script_state *st, Sql *handle);
 
+#ifdef BETA_THREAD_TEST
 /* used to receive items the queryThread has already processed */
 int queryThread_timer(int tid, unsigned int tick, int id, intptr_t data) {
 	int i, cursor = 0;
@@ -15948,7 +15948,7 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 	const char* query;
 	struct script_data* data;
 	const char* name;
-	int max_rows = SCRIPT_MAX_ARRAYSIZE; // maximum number of rows
+	unsigned int max_rows = SCRIPT_MAX_ARRAYSIZE; // maximum number of rows
 	int num_vars;
 	int num_cols;
 
