@@ -1376,9 +1376,10 @@ void pc_reg_received(struct map_session_data *sd)
 	}
 
 	if ((i = pc_checkskill(sd,RG_PLAGIARISM)) > 0) {
-		sd->cloneskill_idx = skill_get_index(pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM)));
+		unsigned short skid = pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM));
+		sd->cloneskill_idx = skill_get_index(skid);
 		if (sd->cloneskill_idx > 0) {
-			sd->status.skill[sd->cloneskill_idx].id = pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM));
+			sd->status.skill[sd->cloneskill_idx].id = skid;
 			sd->status.skill[sd->cloneskill_idx].lv = pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV));
 			if (sd->status.skill[sd->cloneskill_idx].lv > i)
 				sd->status.skill[sd->cloneskill_idx].lv = i;
@@ -1386,9 +1387,10 @@ void pc_reg_received(struct map_session_data *sd)
 		}
 	}
 	if ((i = pc_checkskill(sd,SC_REPRODUCE)) > 0) {
-		sd->reproduceskill_idx = skill_get_index(pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE)));
+		unsigned short skid = pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE));
+		sd->reproduceskill_idx = skill_get_index(skid);
 		if (sd->reproduceskill_idx > 0) {
-			sd->status.skill[sd->reproduceskill_idx].id = pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE));
+			sd->status.skill[sd->reproduceskill_idx].id = skid;
 			sd->status.skill[sd->reproduceskill_idx].lv = pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV));
 			if (i < sd->status.skill[sd->reproduceskill_idx].lv)
 				sd->status.skill[sd->reproduceskill_idx].lv = i;
@@ -7057,6 +7059,8 @@ int pc_skillatk_bonus(struct map_session_data *sd, uint16 skill_id)
 	int i, bonus = 0;
 	nullpo_ret(sd);
 
+	skill_id = skill_dummy2skill_id(skill_id);
+
 	ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id == skill_id);
 	if( i < ARRAYLENGTH(sd->skillatk) )
 		bonus = sd->skillatk[i].val;
@@ -7069,6 +7073,8 @@ int pc_sub_skillatk_bonus(struct map_session_data *sd, uint16 skill_id)
 	int i, bonus = 0;
 	nullpo_ret(sd);
 
+	skill_id = skill_dummy2skill_id(skill_id);
+
 	ARR_FIND(0, ARRAYLENGTH(sd->subskill), i, sd->subskill[i].id == skill_id);
 	if( i < ARRAYLENGTH(sd->subskill) )
 		bonus = sd->subskill[i].val;
@@ -7078,6 +7084,8 @@ int pc_sub_skillatk_bonus(struct map_session_data *sd, uint16 skill_id)
 
 int pc_skillheal_bonus(struct map_session_data *sd, uint16 skill_id) {
 	int i, bonus = sd->bonus.add_heal_rate;
+
+	skill_id = skill_dummy2skill_id(skill_id);
 
 	if( bonus ) {
 		switch( skill_id ) {
@@ -7099,6 +7107,8 @@ int pc_skillheal_bonus(struct map_session_data *sd, uint16 skill_id) {
 
 int pc_skillheal2_bonus(struct map_session_data *sd, uint16 skill_id) {
 	int i, bonus = sd->bonus.add_heal2_rate;
+
+	skill_id = skill_dummy2skill_id(skill_id);
 
 	ARR_FIND(0, ARRAYLENGTH(sd->skillheal2), i, sd->skillheal2[i].id == skill_id);
 

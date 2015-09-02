@@ -404,6 +404,7 @@ int skill_get_status_count( uint16 skill_id );
 int skill_get_spiritball( uint16 skill_id, uint16 skill_lv );
 int skill_get_itemid( uint16 skill_id, int idx );
 int skill_get_itemqty( uint16 skill_id, int idx );
+unsigned short skill_dummy2skill_id(unsigned short skill_id);
 
 int skill_name2id(const char* name);
 uint16 skill_idx2id(uint16 idx);

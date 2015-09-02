@@ -377,6 +377,58 @@ int skill_get_range2 (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 	return range;
 }
 
+/** Copy Referral: dummy skills should point to their source.
+ * @param skill_id Dummy skill ID
+ * @return Real skill id if found
+ **/
+unsigned short skill_dummy2skill_id(unsigned short skill_id) {
+	switch (skill_id) {
+		case AB_DUPLELIGHT_MELEE:
+		case AB_DUPLELIGHT_MAGIC:
+			return AB_DUPLELIGHT;
+		case WL_CHAINLIGHTNING_ATK:
+			return WL_CHAINLIGHTNING;
+		case WL_TETRAVORTEX_FIRE:
+		case WL_TETRAVORTEX_WATER:
+		case WL_TETRAVORTEX_WIND:
+		case WL_TETRAVORTEX_GROUND:
+			return WL_TETRAVORTEX;
+		case WL_SUMMON_ATK_FIRE:
+			return WL_SUMMONFB;
+		case WL_SUMMON_ATK_WIND:
+			return WL_SUMMONBL;
+		case WL_SUMMON_ATK_WATER:
+			return WL_SUMMONWB;
+		case WL_SUMMON_ATK_GROUND:
+			return WL_SUMMONSTONE;
+		case LG_OVERBRAND_BRANDISH:
+		case LG_OVERBRAND_PLUSATK:
+			return LG_OVERBRAND;
+		case WM_REVERBERATION_MELEE:
+		case WM_REVERBERATION_MAGIC:
+			return WM_REVERBERATION;
+		case WM_SEVERE_RAINSTORM_MELEE:
+			return WM_SEVERE_RAINSTORM;
+		case GN_CRAZYWEED_ATK:
+			return GN_CRAZYWEED;
+		case GN_HELLS_PLANT_ATK:
+			return GN_HELLS_PLANT;
+		case GN_SLINGITEM_RANGEMELEEATK:
+			return GN_SLINGITEM;
+		case SR_FLASHCOMBO_ATK_STEP1:
+			return SR_DRAGONCOMBO;
+		case SR_FLASHCOMBO_ATK_STEP2:
+			return SR_FALLENEMPIRE;
+		case SR_FLASHCOMBO_ATK_STEP3:
+			return SR_TIGERCANNON;
+		case SR_FLASHCOMBO_ATK_STEP4:
+			return SR_SKYNETBLOW;
+		case RL_R_TRIP_PLUSATK:
+			return RL_R_TRIP;
+	}
+	return skill_id;
+}
+
 /**
  * Calculates heal value of skill's effect
  * @param src
@@ -2709,54 +2761,7 @@ static void skill_do_copy(struct block_list* src,struct block_list *bl, uint16 s
 		uint16 idx;
 		unsigned char lv;
 
-		// Copy Referal: dummy skills should point to their source upon copying
-		switch (skill_id) {
-			case AB_DUPLELIGHT_MELEE:
-			case AB_DUPLELIGHT_MAGIC:
-				skill_id = AB_DUPLELIGHT;
-				break;
-			case WL_CHAINLIGHTNING_ATK:
-				skill_id = WL_CHAINLIGHTNING;
-				break;
-			case WL_TETRAVORTEX_FIRE:
-			case WL_TETRAVORTEX_WATER:
-			case WL_TETRAVORTEX_WIND:
-			case WL_TETRAVORTEX_GROUND:
-				skill_id = WL_TETRAVORTEX;
-				break;
-			case WL_SUMMON_ATK_FIRE:
-				skill_id = WL_SUMMONFB;
-				break;
-			case WL_SUMMON_ATK_WIND:
-				skill_id = WL_SUMMONBL;
-				break;
-			case WL_SUMMON_ATK_WATER:
-				skill_id = WL_SUMMONWB;
-				break;
-			case WL_SUMMON_ATK_GROUND:
-				skill_id = WL_SUMMONSTONE;
-				break;
-			case LG_OVERBRAND_BRANDISH:
-			case LG_OVERBRAND_PLUSATK:
-				skill_id = LG_OVERBRAND;
-				break;
-			case WM_REVERBERATION_MELEE:
-			case WM_REVERBERATION_MAGIC:
-				skill_id = WM_REVERBERATION;
-				break;
-			case WM_SEVERE_RAINSTORM_MELEE:
-				skill_id = WM_SEVERE_RAINSTORM;
-				break;
-			case GN_CRAZYWEED_ATK:
-				skill_id = GN_CRAZYWEED;
-				break;
-			case GN_HELLS_PLANT_ATK:
-				skill_id = GN_HELLS_PLANT;
-				break;
-			case GN_SLINGITEM_RANGEMELEEATK:
-				skill_id = GN_SLINGITEM;
-				break;
-		}
+		skill_id = skill_dummy2skill_id(skill_id);
 
 		//Use skill index, avoiding out-of-bound array [Cydh]
 		if (!(idx = skill_get_index(skill_id)))
@@ -6753,7 +6758,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SL_KAUPE:
 		if (sd) {
 			if (!dstsd || !(
-				(sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_SOULLINKER) ||
+				(&sd->sc && sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_SOULLINKER) ||
 				(dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER ||
 				dstsd->status.char_id == sd->status.char_id ||
 				dstsd->status.char_id == sd->status.partner_id ||
@@ -6901,10 +6906,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if(status_isimmune(bl) || !tsc)
 				break;
 
-			if (sd && sd->sc.data[SC_PETROLOGY_OPTION])
+			if (sd && &sd->sc && sd->sc.data[SC_PETROLOGY_OPTION])
 				brate = sd->sc.data[SC_PETROLOGY_OPTION]->val3;
 
-			if (tsc->data[SC_STONE]) {
+			if (tsc && tsc->data[SC_STONE]) {
 				status_change_end(bl, SC_STONE, INVALID_TIMER);
 				if (sd) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
