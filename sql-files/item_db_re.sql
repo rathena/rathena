@@ -2749,6 +2749,7 @@ REPLACE INTO `item_db_re` VALUES (4629,'Arc_Elder_Card','Arc Elder Card',6,10,NU
 REPLACE INTO `item_db_re` VALUES (4630,'Nightmare_Timer_Keeper_Card','Nightmare Timer Keeper Card',6,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus3 bAutoSpell,"NPC_WIDECURSE",2,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4631,'Owl_Viscount_Card','Owl Viscount Card',6,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus bAspdRate,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4632,'Owl_Marquees_Card','Owl Marquees Card',6,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus5 bAutoSpell,"SA_VIOLENTGALE",(getskilllv("SA_VIOLENTGALE")==5?5:1),1,BF_SHORT,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4633,'Enhanced_Archer_Skeleton_Card','Enhanced Archer Skeleton Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bLongAtkRate,(BaseLevel>=100?12:10);',NULL,NULL);
 #===================================================================
 # Armor Enchant System
 #===================================================================
