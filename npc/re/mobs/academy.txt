@@ -17,19 +17,19 @@ prt_fild08,0,0,0,0	monster	Poring	1002,110,5000,0,0
 prt_fild08,0,0,0,0	monster	Lunatic	1063,100,5000,0,0
 prt_fild08,0,0,0,0	monster	Fabre	1007,100,5000,0,0
 prt_fild08,0,0,0,0	monster	Little Poring	2398,30,50000,0,0
-prt_fild08a,0,0,0,0	monster	Poring	1002,110,5000,110,0,0
+prt_fild08a,0,0,0,0	monster	Poring	1002,110,5000,0,0
 prt_fild08a,0,0,0,0	monster	Lunatic	1063,100,5000,0,0
 prt_fild08a,0,0,0,0	monster	Fabre	1007,100,5000,0,0
 prt_fild08a,0,0,0,0	monster	Little Poring	2398,30,50000,0,0
-prt_fild08b,0,0,0,0	monster	Poring	1002,110,5000,110,0,0
+prt_fild08b,0,0,0,0	monster	Poring	1002,110,5000,0,0
 prt_fild08b,0,0,0,0	monster	Lunatic	1063,100,5000,0,0
 prt_fild08b,0,0,0,0	monster	Fabre	1007,100,5000,0,0
 prt_fild08b,0,0,0,0	monster	Little Poring	2398,30,50000,0,0
-prt_fild08c,0,0,0,0	monster	Poring	1002,110,5000,110,0,0
+prt_fild08c,0,0,0,0	monster	Poring	1002,110,5000,0,0
 prt_fild08c,0,0,0,0	monster	Lunatic	1063,100,5000,0,0
 prt_fild08c,0,0,0,0	monster	Fabre	1007,100,5000,0,0
 prt_fild08c,0,0,0,0	monster	Little Poring	2398,30,50000,0,0
-prt_fild08d,0,0,0,0	monster	Poring	1002,110,5000,110,0,0
+prt_fild08d,0,0,0,0	monster	Poring	1002,110,5000,0,0
 prt_fild08d,0,0,0,0	monster	Lunatic	1063,100,5000,0,0
 prt_fild08d,0,0,0,0	monster	Fabre	1007,100,5000,0,0
 prt_fild08d,0,0,0,0	monster	Little Poring	2398,30,50000,0,0
