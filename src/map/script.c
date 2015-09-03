@@ -7860,28 +7860,51 @@ BUILDIN_FUNC(getpartyname)
 BUILDIN_FUNC(getpartymember)
 {
 	struct party_data *p;
-	unsigned char j = 0;
+	uint8 j = 0;
 
 	p = party_search(script_getnum(st,2));
 
 	if (p != NULL) {
-		int type = 0;
-		unsigned char i;
+		uint8 i, type = 0;
+		struct script_data *data = NULL;
+		char *varname = NULL;
 
 		if (script_hasdata(st,3))
  			type = script_getnum(st,3);
+
+		if (script_hasdata(st,4)) {
+			data = script_getdata(st, 4);
+			if (!data_isreference(data)) {
+				ShowError("buildin_getpartymember: Error in argument! Please give a variable to store values in.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			varname = reference_getname(data);
+			if (type <= 0 && varname[strlen(varname)-1] != '$') {
+				ShowError("buildin_getpartymember: The array %s is not string type.\n", varname);
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
 
 		for (i = 0; i < MAX_PARTY; i++) {
 			if (p->party.member[i].account_id) {
 				switch (type) {
 					case 2:
-						mapreg_setreg(reference_uid(add_str("$@partymemberaid"), j),p->party.member[i].account_id);
+						if (data)
+							setd_sub(st, NULL, varname, j, (void *)__64BPRTSIZE(p->party.member[i].account_id), data->ref);
+						else
+							mapreg_setreg(reference_uid(add_str("$@partymemberaid"), j),p->party.member[i].account_id);
 						break;
 					case 1:
-						mapreg_setreg(reference_uid(add_str("$@partymembercid"), j),p->party.member[i].char_id);
+						if (data)
+							setd_sub(st, NULL, varname, j, (void *)__64BPRTSIZE(p->party.member[i].char_id), data->ref);
+						else
+							mapreg_setreg(reference_uid(add_str("$@partymembercid"), j),p->party.member[i].char_id);
 						break;
 					default:
-						mapreg_setregstr(reference_uid(add_str("$@partymembername$"), j),p->party.member[i].name);
+						if (data)
+							setd_sub(st, NULL, varname, j, (void *)__64BPRTSIZE(p->party.member[i].name), data->ref);
+						else
+							mapreg_setregstr(reference_uid(add_str("$@partymembername$"), j),p->party.member[i].name);
 						break;
 				}
 
@@ -7891,6 +7914,7 @@ BUILDIN_FUNC(getpartymember)
 	}
 
 	mapreg_setreg(add_str("$@partymembercount"),j);
+	script_pushint(st, j);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20246,35 +20270,60 @@ BUILDIN_FUNC(disable_command) {
  */
 BUILDIN_FUNC(getguildmember)
 {
-	unsigned char j = 0;
 	struct guild *g = NULL;
+	uint8 j = 0;
 
 	g = guild_search(script_getnum(st,2));
 
 	if (g) {
-		unsigned char i, type = 0;
+		uint8 i, type = 0;
+		struct script_data *data = NULL;
+		char *varname = NULL;
 
 		if (script_hasdata(st,3))
-			type = (unsigned char)script_getnum(st,3);
+ 			type = script_getnum(st,3);
+
+		if (script_hasdata(st,4)) {
+			data = script_getdata(st, 4);
+			if (!data_isreference(data)) {
+				ShowError("buildin_getguildmember: Error in argument! Please give a variable to store values in.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			varname = reference_getname(data);
+			if (type <= 0 && varname[strlen(varname)-1] != '$') {
+				ShowError("buildin_getguildmember: The array %s is not string type.\n", varname);
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
 
 		for (i = 0; i < MAX_GUILD; i++) {
 			if (g->member[i].account_id) {
 				switch (type) {
-				case 2:
-					mapreg_setreg(reference_uid(add_str("$@guildmemberaid"), j),g->member[i].account_id);
-					break;
-				case 1:
-					mapreg_setreg(reference_uid(add_str("$@guildmembercid"), j), g->member[i].char_id);
-					break;
-				default:
-					mapreg_setregstr(reference_uid(add_str("$@guildmembername$"), j), g->member[i].name);
-					break;
+					case 2:
+						if (data)
+							setd_sub(st, NULL, varname, j, (void *)__64BPRTSIZE(g->member[i].account_id), data->ref);
+						else
+							mapreg_setreg(reference_uid(add_str("$@guildmemberaid"), j),g->member[i].account_id);
+						break;
+					case 1:
+						if (data)
+							setd_sub(st, NULL, varname, j, (void *)__64BPRTSIZE(g->member[i].char_id), data->ref);
+						else
+							mapreg_setreg(reference_uid(add_str("$@guildmembercid"), j), g->member[i].char_id);
+						break;
+					default:
+						if (data)
+							setd_sub(st, NULL, varname, j, (void *)__64BPRTSIZE(g->member[i].name), data->ref);
+						else
+							mapreg_setregstr(reference_uid(add_str("$@guildmembername$"), j), g->member[i].name);
+						break;
 				}
 				j++;
 			}
 		}
 	}
 	mapreg_setreg(add_str("$@guildmembercount"), j);
+	script_pushint(st, j);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20725,7 +20774,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getcharid,"i?"),
 	BUILDIN_DEF(getnpcid,"i?"),
 	BUILDIN_DEF(getpartyname,"i"),
-	BUILDIN_DEF(getpartymember,"i?"),
+	BUILDIN_DEF(getpartymember,"i??"),
 	BUILDIN_DEF(getpartyleader,"i?"),
 	BUILDIN_DEF(getguildname,"i"),
 	BUILDIN_DEF(getguildmaster,"i"),
@@ -21159,7 +21208,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getgroupitem,"i"),
 	BUILDIN_DEF(enable_command,""),
 	BUILDIN_DEF(disable_command,""),
-	BUILDIN_DEF(getguildmember,"i?"),
+	BUILDIN_DEF(getguildmember,"i??"),
 	BUILDIN_DEF(addspiritball,"ii?"),
 	BUILDIN_DEF(delspiritball,"i?"),
 	BUILDIN_DEF(countspiritball,"?"),

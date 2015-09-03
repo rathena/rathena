@@ -3041,7 +3041,7 @@ Example:
 
 ---------------------------------------
 
-*getguildmember <guild id>{,<type>};
+*getguildmember <guild id>{,<type>{,<array_variable>}};
 
 This command will find all members of a specified guild and returns their names 
 (or character id or account id depending on the value of "type") into an array
@@ -3068,6 +3068,9 @@ Note that the names come in no particular order.
 
 Be sure to use $@guildmembercount to go through this array, and not 
 'getarraysize', because it is not cleared between runs of 'getguildmember'.
+
+If 'array_variable' is set, the result will be stored to that variable instead
+using global variable.
 
 For usage examples, see 'getpartymember'.
 
@@ -8515,7 +8518,7 @@ Lets say the ID of a party was saved as a global variable:
 
 ---------------------------------------
 
-*getpartymember <party id>{,<type>};
+*getpartymember <party id>{,<type>{,<array_variable>}};
 
 This command will find all members of a specified party and returns their names 
 (or character id or account id depending on the value of "type") into an array
@@ -8551,6 +8554,9 @@ addition to returning the 5 member names, the 6th and 7th elements from the last
 call remain, and you will get 5+2 members, of which the last 2 don't belong to 
 the new guy's party. $@partymembercount will always contain the correct number, 
 (5) unlike 'getarraysize()' which will return 7 in this case.
+
+If 'array_variable' is set, the result will be stored to that variable instead
+using global variable.
 
 Example 1: list party member names
 
