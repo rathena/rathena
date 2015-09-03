@@ -1443,8 +1443,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			skill_castend_damage_id(src, bl, RA_WUGBITE, ((sd) ? pc_checkskill(sd, RA_WUGBITE) : skill_get_max(RA_WUGBITE)), tick, SD_ANIMATION);
 		break;
 	case RA_FIRINGTRAP:
+		sc_start4(src, bl, SC_BURNING, 50 + skill_lv * 10, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
+		break;
 	case RA_ICEBOUNDTRAP:
-		sc_start(src,bl, (skill_id == RA_FIRINGTRAP) ? SC_BURNING:SC_FREEZING, 50 + 10 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, bl, SC_FREEZING, 50 + skill_lv * 10, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 	case NC_PILEBUNKER:
 		if( rnd()%100 < 25 + 15*skill_lv ) {
@@ -1465,8 +1467,11 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start4(src,bl, SC_BURNING, 20 + 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 	case NC_COLDSLOWER:
-		sc_start(src,bl, SC_FREEZE, 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		sc_start(src,bl, SC_FREEZING, 20 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
+		// Status chances are applied officially through a check
+		// The skill first trys to give the frozen status to targets that are hit
+		sc_start(src, bl, SC_FREEZE, 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
+		if (!tsc->data[SC_FREEZE]) // If it fails to give the frozen status, it will attempt to give the freezing status
+			sc_start(src, bl, SC_FREEZING, 20 + skill_lv * 10, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 	case NC_POWERSWING:
 		sc_start(src,bl, SC_STUN, 10, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -1551,6 +1556,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		tsc->data[SC_DANCEWITHWUG] || tsc->data[SC_SATURDAYNIGHTFEVER] || tsc->data[SC_LERADSDEW] || 
 		tsc->data[SC_MELODYOFSINK] || tsc->data[SC_BEYONDOFWARCRY] || tsc->data[SC_UNLIMITEDHUMMINGVOICE] ) && 
 		rnd()%100 < 4 * skill_lv + 2 * ((sd) ? pc_checkskill(sd, WM_LESSON) : skill_get_max(WM_LESSON)) + 10 * chorusbonus) {
+			status_change_start(src, bl, SC_STUN, 10000, skill_lv, 0, 0, 0, skill_get_time(skill_id,skill_lv), SCSTART_NOTICKDEF);
 			status_change_end(bl, SC_DANCING, INVALID_TIMER);
 			status_change_end(bl, SC_RICHMANKIM, INVALID_TIMER);
 			status_change_end(bl, SC_ETERNALCHAOS, INVALID_TIMER);
@@ -1591,7 +1597,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start(src,bl, SC_CRYSTALIZE, rate, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 	case SO_VARETYR_SPEAR:
-		sc_start(src,bl, SC_STUN, 5 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv));
+		sc_start(src,bl, SC_STUN, 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case GN_SLINGITEM_RANGEMELEEATK:
 		if( sd ) {
@@ -1639,7 +1645,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start(src,bl, SC_STUN, 10 * skill_lv, skill_lv, skill_get_time2(skill_id,skill_lv));
 		break;
 	case MH_LAVA_SLIDE:
-		if (tsc && !tsc->data[SC_BURNING]) sc_start4(src,bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time(skill_id, skill_lv));
+		sc_start4(src,bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 	case MH_STAHL_HORN:
 		sc_start(src,bl, SC_STUN, (20 + 4 * (skill_lv-1)), skill_lv, skill_get_time(skill_id, skill_lv));
@@ -1658,7 +1664,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		}
 		break;
 	case MH_XENO_SLASHER:
-		sc_start4(src,bl,SC_BLEEDING,10 * skill_lv,skill_lv,src->id,0,0,skill_get_time2(skill_id,skill_lv)); //@TODO need real duration
+		sc_start4(src, bl, SC_BLEEDING, skill_lv, skill_lv, src->id, 0, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 	case WL_HELLINFERNO:
 		sc_start4(src,bl,SC_BURNING,55+5*skill_lv,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
@@ -3243,7 +3249,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case RA_CLUSTERBOMB:
 		case RA_FIRINGTRAP:
 		case RA_ICEBOUNDTRAP:
-			dmg.dmotion = clif_skill_damage(src,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id,flag&SD_LEVEL?-1:skill_lv, 5);
+			dmg.dmotion = clif_skill_damage(src, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, (flag&SD_LEVEL) ? -1 : skill_lv, 5);
 			if( dsrc != src ) // avoid damage display redundancy
 				break;
 		case HT_LANDMINE:
@@ -3875,31 +3881,28 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				case WL_TETRAVORTEX_WATER:
 				case WL_TETRAVORTEX_WIND:
 				case WL_TETRAVORTEX_GROUND:
+					clif_skill_nodamage(src,target,skl->skill_id,skl->skill_lv,1);
 					skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag|SD_ANIMATION);
 					skill_toggle_magicpower(src, skl->skill_id); // only the first hit will be amplify
-					if( skl->type >= 3 )
-					{ // Final Hit
-						if( !status_isdead(target) )
-						{ // Final Status Effect
+					if (skl->type >= 3) { // Final Hit
+						if (!status_isdead(target)) { // Final Status Effect
 							int effects[4] = { SC_BURNING, SC_FREEZING, SC_BLEEDING, SC_STUN },
 								applyeffects[4] = { 0, 0, 0, 0 },
 								i, j = 0, k = 0;
-							for( i = 1; i <= 8; i = i + i )
-							{
-								if( skl->x&i )
-								{
+							for(i = 1; i <= 8; i = i + i) {
+								if (skl->x&i) {
 									applyeffects[j] = effects[k];
 									j++;
 								}
 								k++;
 							}
-							if( j )
-							{
+							if (j) {
 								i = applyeffects[rnd()%j];
-								status_change_start(src,target, i, 10000, skl->skill_lv,
+								status_change_start(src, target, i, 10000, skl->skill_lv,
 									(i == SC_BURNING ? 1000 : (i == SC_BLEEDING ? src->id : 0)),
-									(i == SC_BURNING ? src->id : 0),
-									0, skill_get_time(WL_TETRAVORTEX,skl->skill_lv)+1, SCSTART_NONE);
+									(i == SC_BURNING ? src->id : 0), 0,
+									(i == SC_BURNING ? 15000 : (i == SC_FREEZING ? 40000 :
+									(i == SC_BLEEDING ? 120000 : 5000))), SCSTART_NONE);
 							}
 						}
 					}
@@ -5085,7 +5088,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		{
 			int i;
 			// Priority is to release SpellBook
-			if( sc && sc->data[SC_READING_SB] )
+			if( sc && sc->data[SC_FREEZE_SP] )
 			{ // SpellBook
 				uint16 pres_skill_id, pres_skill_lv, point, s = 0;
 				int spell[SC_MAXSPELLBOOK-SC_SPELLBOOK1 + 1];
@@ -5106,10 +5109,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				}else //something went wrong :(
 					break;
 
-				if( sc->data[SC_READING_SB]->val2 > point )
-					sc->data[SC_READING_SB]->val2 -= point;
+				if( sc->data[SC_FREEZE_SP]->val2 > point )
+					sc->data[SC_FREEZE_SP]->val2 -= point;
 				else // Last spell to be released
-					status_change_end(src, SC_READING_SB, INVALID_TIMER);
+					status_change_end(src, SC_FREEZE_SP, INVALID_TIMER);
 
 				if( bl->type != BL_SKILL ) /* skill types will crash the client */
 					clif_skill_nodamage(src, bl, pres_skill_id, pres_skill_lv, 1);
@@ -9288,8 +9291,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				status_change_end(bl, SC_HIDING, INVALID_TIMER);
 				status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 				status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
-				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
-				sc_start(src,bl,SC_BLIND,53 + 2 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
+				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				sc_start(src, bl, SC_BLIND, 53 + 2 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv));
 			}
 		} else {
 			clif_skill_nodamage(src, bl, skill_id, 0, 1);
@@ -11742,8 +11745,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case SO_ELECTRICWALK:
 		if( sc && sc->data[type] )
 			status_change_end(src,type,INVALID_TIMER);
-		clif_skill_nodamage(src, src ,skill_id, skill_lv,
-			sc_start2(src,src, type, 100, skill_id, skill_lv, skill_get_time(skill_id, skill_lv)));
+		sc_start2(src, src, type, 100, skill_id, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 
 	case KO_MAKIBISHI:
@@ -12374,7 +12376,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 			return NULL;
 		val2 = sc->data[SC_POISONINGWEAPON]->val2; // Type of Poison
 		val3 = sc->data[SC_POISONINGWEAPON]->val1;
-		limit = 4000 + 2000 * skill_lv;
+		limit = skill_get_time(skill_id, skill_lv);
 		break;
 	case GD_LEADERSHIP:
 	case GD_GLORYWOUNDS:
@@ -12401,6 +12403,10 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		break;
 	case SO_WARMER:
 		skill_clear_group(src, 8);
+		break;
+	case SO_FIREWALK:
+	case SO_ELECTRICWALK:
+		limit = skill_get_time2(skill_id, skill_lv);
 		break;
 	case GN_WALLOFTHORN:
 		// Turns to Firewall
@@ -19004,7 +19010,7 @@ int skill_magicdecoy(struct map_session_data *sd, unsigned short nameid) {
 }
 
 // Warlock Spellbooks. [LimitLine/3CeAM]
-void skill_spellbook (struct map_session_data *sd, unsigned short nameid) {
+void skill_spellbook(struct map_session_data *sd, unsigned short nameid) {
 	int i, max_preserve, skill_id, point;
 	struct status_change *sc;
 
@@ -19039,20 +19045,20 @@ void skill_spellbook (struct map_session_data *sd, unsigned short nameid) {
 	max_preserve = 4 * pc_checkskill(sd, WL_FREEZE_SP) + status_get_int(&sd->bl) / 10 + sd->status.base_level / 10;
 	point = skill_spellbook_db[i].point;
 
-	if( sc && sc->data[SC_READING_SB] ) {
-		if( (sc->data[SC_READING_SB]->val2 + point) > max_preserve ) {
+	if( sc && sc->data[SC_FREEZE_SP] ) {
+		if( (sc->data[SC_FREEZE_SP]->val2 + point) > max_preserve ) {
 			clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_PRESERVATION_POINT, 0);
 			return;
 		}
 		for(i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--){ // This is how official saves spellbook. [malufett]
 			if( !sc->data[i] ){
-				sc->data[SC_READING_SB]->val2 += point; // increase points
+				sc->data[SC_FREEZE_SP]->val2 += point; // increase points
 				sc_start4(&sd->bl,&sd->bl, (sc_type)i, 100, skill_id, pc_checkskill(sd,skill_id), point, 0, INVALID_TIMER);
 				break;
 			}
 		}
 	} else {
-		sc_start2(&sd->bl,&sd->bl, SC_READING_SB, 100, 0, point, INVALID_TIMER);
+		sc_start2(&sd->bl,&sd->bl, SC_FREEZE_SP, 100, 0, point, INVALID_TIMER);
 		sc_start4(&sd->bl,&sd->bl, SC_MAXSPELLBOOK, 100, skill_id, pc_checkskill(sd,skill_id), point, 0, INVALID_TIMER);
 	}
 

@@ -438,12 +438,12 @@ int skill_clear_group(struct block_list *bl, int flag);
 void ext_skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, unsigned int tick);
 int64 skill_unit_ondamaged(struct skill_unit *unit,int64 damage);
 
-int skill_castfix( struct block_list *bl, uint16 skill_id, uint16 skill_lv);
-int skill_castfix_sc( struct block_list *bl, int time);
+int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv);
+int skill_castfix_sc(struct block_list *bl, int time);
 #ifdef RENEWAL_CAST
-int skill_vfcastfix( struct block_list *bl, double time, uint16 skill_id, uint16 skill_lv);
+int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 skill_lv);
 #endif
-int skill_delayfix( struct block_list *bl, uint16 skill_id, uint16 skill_lv);
+int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv);
 
 // Skill conditions check and remove [Inkfish]
 bool skill_check_condition_castbegin(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
@@ -2030,7 +2030,7 @@ struct s_skill_spellbook_db {
 };
 extern struct s_skill_spellbook_db skill_spellbook_db[MAX_SKILL_SPELLBOOK_DB];
 extern unsigned short skill_spellbook_count;
-void skill_spellbook (struct map_session_data *sd, unsigned short nameid);
+void skill_spellbook(struct map_session_data *sd, unsigned short nameid);
 int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id);
 
 /**
