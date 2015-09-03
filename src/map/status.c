@@ -8497,6 +8497,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_EQC:
 		status_change_end(bl,SC_TINDER_BREAKER2,INVALID_TIMER);
 		break;
+	case SC_IMPOSITIO:
+		if (sc && sc->data[SC_IMPOSITIO] && sc->data[SC_IMPOSITIO]->val1 > val1) //Replace higher level effect for lower.
+			status_change_end(bl,SC_IMPOSITIO,INVALID_TIMER);
+		break;
 	}
 
 	// Check for overlapping fails
