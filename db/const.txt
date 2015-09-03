@@ -684,6 +684,7 @@ Eff_Bleeding	9
 Eff_DPoison	10
 Eff_Fear	309
 Eff_Burning	310
+Eff_Crystalize	388
 
 Ele_Neutral	0
 Ele_Water	1

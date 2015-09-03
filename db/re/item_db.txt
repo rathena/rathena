@@ -2622,11 +2622,11 @@
 4515,Alnoldi_Card,Alnoldi Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Plant,30; },{},{}
 4516,Comodo_Card,Comodo Card,6,20,,10,,,,,,,,16,,,,,{ bonus bDef,50; bonus bFlee,-25; },{},{}
 4517,Cendrawasih_Card,Cendrawasih Card,6,20,,10,,,,,,,,769,,,,,{ bonus bInt,2; if(BaseClass==Job_Mage){ bonus bInt,getrefine()/3; } },{},{}
-4518,Banaspaty_Card,Banaspaty Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddEff,Eff_Burning,1500; },{},{}
+4518,Banaspaty_Card,Banaspaty Card,6,20,,10,,,,,,,,2,,,,,{ bonus3 bAddEff,Eff_Burning,500,ATF_TARGET; },{},{}
 4519,Butoijo_Card,Butoijo Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddRace,RC_Angel,20; },{},{}
 4520,Leak_Card,Leak Card,6,20,,10,,,,,,,,4,,,,,{ bonus bStr,3; bonus2 bAddEff,Eff_Confusion,5000; bonus3 bAddEff,Eff_Confusion,5000,ATF_SKILL; },{},{}
 4521,Sedora_Card,Sedora Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,15; },{},{}
-4522,Sropho_Card,Sropho Card,6,20,,10,,,,,,,,2,,,,,{ bonus3 bAddEffWhenHit,Eff_Freeze,50,ATF_SHORT; },{},{}
+4522,Sropho_Card,Sropho Card,6,20,,10,,,,,,,,2,,,,,{ bonus3 bAddEff,Eff_Crystalize,500,ATF_SHORT; },{},{}
 4523,Pot_Dofle_Card,Pot Dofle Card,6,20,,10,,,,,,,,16,,,,,{ bonus bDefEle,Ele_Water; bonus2 bSubRace,RC_Fish,10; },{},{}
 4524,King_Dramoh_Card,King Dramoh Card,6,20,,10,,,,,,,,769,,,,,{ bonus bStr,2; if(BaseClass==Job_Swordman){ bonus bStr,2+(getrefine()/3); } },{},{}
 4525,Kraken_Card,Kraken Card,6,20,,10,,,,,,,,4,,,,,{ bonus bFlee,10; skill "TF_HIDING",1; skill "RG_RAID",1; bonus5 bAutoSpellOnSkill,"RG_RAID","NPC_WIDEBLEEDING",1,250,1; },{},{ sc_end SC_HIDING; }
