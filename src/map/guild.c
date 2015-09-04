@@ -96,15 +96,14 @@ static TBL_PC* guild_sd_check(int guild_id, uint32 account_id, uint32 char_id) {
 	return sd;
 }
 
- // Modified [Komurka]
+// Modified [Komurka]
 int guild_skill_get_max (int id) {
 	if ((id = guild_skill_get_index(id)) < 0)
 		return 0;
 	return guild_skill_tree[id].max;
 }
 
-// Retrive skill_lv learned by guild
-
+// Retrieve skill_lv learned by guild
 int guild_checkskill(struct guild *g, int id) {
 	if ((id = guild_skill_get_index(id)) < 0)
 		return 0;
@@ -187,7 +186,7 @@ struct guild* guild_searchname(char* str) {
 	struct guild* g;
 	DBIterator *iter = db_iterator(guild_db);
 
-	for( g = dbi_first(iter); dbi_exists(iter); g = dbi_next(iter) ) 	{
+	for( g = dbi_first(iter); dbi_exists(iter); g = dbi_next(iter) ) {
 		if( strcmpi(g->name, str) == 0 )
 			break;
 	}
@@ -206,7 +205,7 @@ struct guild_castle* guild_mapindex2gc(short mapindex) {
 	struct guild_castle* gc;
 	DBIterator *iter = db_iterator(castle_db);
 
-	for( gc = dbi_first(iter); dbi_exists(iter); gc = dbi_next(iter) ) 	{
+	for( gc = dbi_first(iter); dbi_exists(iter); gc = dbi_next(iter) ) {
 		if( gc->mapindex == mapindex )
 			break;
 	}
@@ -256,17 +255,17 @@ void guild_makemember(struct guild_member *m,struct map_session_data *sd) {
 	nullpo_retv(sd);
 
 	memset(m,0,sizeof(struct guild_member));
-	m->account_id	=sd->status.account_id;
-	m->char_id		=sd->status.char_id;
-	m->hair			=sd->status.hair;
-	m->hair_color	=sd->status.hair_color;
-	m->gender		=sd->status.sex;
-	m->class_		=sd->status.class_;
-	m->lv			=sd->status.base_level;
-//	m->exp			=0;
-//	m->exp_payper	=0;
-	m->online		=1;
-	m->position		=MAX_GUILDPOSITION-1;
+	m->account_id	= sd->status.account_id;
+	m->char_id		= sd->status.char_id;
+	m->hair			= sd->status.hair;
+	m->hair_color	= sd->status.hair_color;
+	m->gender		= sd->status.sex;
+	m->class_		= sd->status.class_;
+	m->lv			= sd->status.base_level;
+//	m->exp			= 0;
+//	m->exp_payper	= 0;
+	m->online		= 1;
+	m->position		= MAX_GUILDPOSITION-1;
 	memcpy(m->name,sd->status.name,NAME_LENGTH);
 	return;
 }
@@ -1962,12 +1961,11 @@ int guild_castledatasave(int castle_id, int index, int value) {
 	return 0;
 }
 
-int guild_castle_reconnect_sub(void *key, void *data, va_list ap) {
+void guild_castle_reconnect_sub(void *key, void *data, va_list ap) {
 	int castle_id = GetWord((int)__64BPRTSIZE(key), 0);
 	int index = GetWord((int)__64BPRTSIZE(key), 1);
 	intif_guild_castle_datasave(castle_id, index, *(int *)data);
 	aFree(data);
-	return 1;
 }
 
 /**

@@ -2550,6 +2550,7 @@
 4443,Aqua_Elemental_Card,Aqua Elemental Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubDefEle,Ele_Water,20; bonus2 bAddEle,Ele_Water,5; },{},{}
 4444,Draco_Card,Draco Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubDefEle,Ele_Earth,20; bonus2 bAddEle,Ele_Earth,5; },{},{}
 4445,Luciola_Vespa_Card,Luciola Vespa Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubDefEle,Ele_Wind,20; bonus2 bAddEle,Ele_Wind,5; },{},{}
+4446,Enhanced_Skeleton_Card,Enhanced Skeleton Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,15; bonus2 bAddEff,Eff_Stun,(BaseLevel>=100?300:200); },{},{}
 4447,Centipede_Card,Centipede Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubDefEle,Ele_Poison,20; bonus2 bAddEle,Ele_Poison,5; },{},{}
 4448,Cornus_Card,Cornus Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubDefEle,Ele_Holy,20; bonus2 bAddEle,Ele_Holy,5; },{},{}
 4449,Dark_Shadow_Card,Dark Shadow Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubDefEle,Ele_Dark,20; bonus2 bAddEle,Ele_Dark,5; },{},{}
@@ -2621,11 +2622,11 @@
 4515,Alnoldi_Card,Alnoldi Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Plant,30; },{},{}
 4516,Comodo_Card,Comodo Card,6,20,,10,,,,,,,,16,,,,,{ bonus bDef,50; bonus bFlee,-25; },{},{}
 4517,Cendrawasih_Card,Cendrawasih Card,6,20,,10,,,,,,,,769,,,,,{ bonus bInt,2; if(BaseClass==Job_Mage){ bonus bInt,getrefine()/3; } },{},{}
-4518,Banaspaty_Card,Banaspaty Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddEff,Eff_Burning,1500; },{},{}
+4518,Banaspaty_Card,Banaspaty Card,6,20,,10,,,,,,,,2,,,,,{ bonus3 bAddEff,Eff_Burning,500,ATF_TARGET; },{},{}
 4519,Butoijo_Card,Butoijo Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddRace,RC_Angel,20; },{},{}
 4520,Leak_Card,Leak Card,6,20,,10,,,,,,,,4,,,,,{ bonus bStr,3; bonus2 bAddEff,Eff_Confusion,5000; bonus3 bAddEff,Eff_Confusion,5000,ATF_SKILL; },{},{}
 4521,Sedora_Card,Sedora Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,15; },{},{}
-4522,Sropho_Card,Sropho Card,6,20,,10,,,,,,,,2,,,,,{ bonus3 bAddEffWhenHit,Eff_Freeze,50,ATF_SHORT; },{},{}
+4522,Sropho_Card,Sropho Card,6,20,,10,,,,,,,,2,,,,,{ bonus3 bAddEff,Eff_Crystalize,500,ATF_SHORT; },{},{}
 4523,Pot_Dofle_Card,Pot Dofle Card,6,20,,10,,,,,,,,16,,,,,{ bonus bDefEle,Ele_Water; bonus2 bSubRace,RC_Fish,10; },{},{}
 4524,King_Dramoh_Card,King Dramoh Card,6,20,,10,,,,,,,,769,,,,,{ bonus bStr,2; if(BaseClass==Job_Swordman){ bonus bStr,2+(getrefine()/3); } },{},{}
 4525,Kraken_Card,Kraken Card,6,20,,10,,,,,,,,4,,,,,{ bonus bFlee,10; skill "TF_HIDING",1; skill "RG_RAID",1; bonus5 bAutoSpellOnSkill,"RG_RAID","NPC_WIDEBLEEDING",1,250,1; },{},{ sc_end SC_HIDING; }
@@ -2717,6 +2718,7 @@
 4630,Nightmare_Timer_Keeper_Card,Nightmare Timer Keeper Card,6,10,,10,,,,,,,,64,,,,,{ bonus3 bAutoSpell,"NPC_WIDECURSE",2,1; },{},{}
 4631,Owl_Viscount_Card,Owl Viscount Card,6,10,,10,,,,,,,,136,,,,,{ bonus bAspdRate,3; },{},{}
 4632,Owl_Marquees_Card,Owl Marquees Card,6,10,,10,,,,,,,,136,,,,,{ bonus5 bAutoSpell,"SA_VIOLENTGALE",(getskilllv("SA_VIOLENTGALE")==5?5:1),1,BF_SHORT,0; },{},{}
+4633,Enhanced_Archer_Skeleton_Card,Enhanced Archer Skeleton Card,6,20,,10,,,,,,,,2,,,,,{ bonus bLongAtkRate,(BaseLevel>=100?12:10); },{},{}
 //===================================================================
 // Armor Enchant System
 //===================================================================

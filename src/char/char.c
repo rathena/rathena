@@ -1637,7 +1637,9 @@ int char_delete_char_sql(uint32 char_id){
 		Sql_ShowDebug(sql_handle);
 
 	/* delete character registry */
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `type`=3 AND `char_id`='%d'", schema_config.reg_db, char_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d'", schema_config.char_reg_str_table, char_id) )
+		Sql_ShowDebug(sql_handle);
+	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d'", schema_config.char_reg_num_table, char_id) )
 		Sql_ShowDebug(sql_handle);
 
 	/* delete skills */
@@ -2201,7 +2203,8 @@ bool char_checkdb(void){
 	const char* sqltable[] = {
 		schema_config.char_db, schema_config.hotkey_db, schema_config.scdata_db, schema_config.cart_db, 
                 schema_config.inventory_db, schema_config.charlog_db, schema_config.storage_db, 
-                schema_config.reg_db, schema_config.skill_db, schema_config.interlog_db, schema_config.memo_db,
+                schema_config.char_reg_str_table, schema_config.char_reg_num_table, schema_config.acc_reg_str_table,
+                schema_config.acc_reg_num_table, schema_config.skill_db, schema_config.interlog_db, schema_config.memo_db,
 		schema_config.guild_db, schema_config.guild_alliance_db, schema_config.guild_castle_db, 
                 schema_config.guild_expulsion_db, schema_config.guild_member_db, 
                 schema_config.guild_skill_db, schema_config.guild_position_db, schema_config.guild_storage_db,
@@ -2237,8 +2240,23 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking reg_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`str`,`value`,`type`,`account_id` FROM `%s` LIMIT 1;", schema_config.reg_db) ){
+	//checking char_reg_str_table
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`key`,`index`,`value` from `%s` LIMIT 1;", schema_config.char_reg_str_table) ) {
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking char_reg_num_table
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`key`,`index`,`value` from `%s` LIMIT 1;", schema_config.char_reg_num_table) ) {
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking global_acc_reg_str_table
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`key`,`index`,`value` from `%s` LIMIT 1;", schema_config.acc_reg_str_table) ) {
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+	//checking global_acc_reg_num_table
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`key`,`index`,`value` from `%s` LIMIT 1;", schema_config.acc_reg_num_table) ) {
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
@@ -2396,7 +2414,6 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	
 	//checking cart_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`char_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
 		"`attribute`,`card0`,`card1`,`card2`,`card3`,`expire_time`,`bound`,`unique_id`"
@@ -2458,8 +2475,6 @@ void char_sql_config_read(const char* cfgName) {
 			safestrncpy(schema_config.charlog_db, w2, sizeof(schema_config.charlog_db));
 		else if(!strcmpi(w1,"storage_db"))
 			safestrncpy(schema_config.storage_db, w2, sizeof(schema_config.storage_db));
-		else if(!strcmpi(w1,"reg_db"))
-			safestrncpy(schema_config.reg_db, w2, sizeof(schema_config.reg_db));
 		else if(!strcmpi(w1,"skill_db"))
 			safestrncpy(schema_config.skill_db, w2, sizeof(schema_config.skill_db));
 		else if(!strcmpi(w1,"interlog_db"))
@@ -2510,6 +2525,14 @@ void char_sql_config_read(const char* cfgName) {
 			safestrncpy(schema_config.skillcooldown_db, w2, sizeof(schema_config.skillcooldown_db));
 		else if(!strcmpi(w1,"bonus_script_db"))
 			safestrncpy(schema_config.bonus_script_db, w2, sizeof(schema_config.bonus_script_db));
+		else if(!strcmpi(w1,"char_reg_num_table"))
+			safestrncpy(schema_config.char_reg_num_table, w2, sizeof(schema_config.char_reg_num_table));
+		else if(!strcmpi(w1,"char_reg_str_table"))
+			safestrncpy(schema_config.char_reg_str_table, w2, sizeof(schema_config.char_reg_str_table));
+		else if(!strcmpi(w1,"acc_reg_str_table"))
+			safestrncpy(schema_config.acc_reg_str_table, w2, sizeof(schema_config.acc_reg_str_table));
+		else if(!strcmpi(w1,"acc_reg_num_table"))
+			safestrncpy(schema_config.acc_reg_num_table, w2, sizeof(schema_config.acc_reg_num_table));
 		//support the import command, just like any other config
 		else if(!strcmpi(w1,"import"))
 			char_sql_config_read(w2);
@@ -2529,7 +2552,6 @@ void char_set_default_sql(){
 	safestrncpy(schema_config.charlog_db,"charlog",sizeof(schema_config.charlog_db));
 	safestrncpy(schema_config.storage_db,"storage",sizeof(schema_config.storage_db));
 	safestrncpy(schema_config.interlog_db,"interlog",sizeof(schema_config.interlog_db));
-	safestrncpy(schema_config.reg_db,"global_reg_value",sizeof(schema_config.reg_db));
 	safestrncpy(schema_config.skill_db,"skill",sizeof(schema_config.skill_db));
 	safestrncpy(schema_config.memo_db,"memo",sizeof(schema_config.memo_db));
 	safestrncpy(schema_config.guild_db,"guild",sizeof(schema_config.guild_db));
@@ -2554,6 +2576,10 @@ void char_set_default_sql(){
 	safestrncpy(schema_config.ragsrvinfo_db,"ragsrvinfo",sizeof(schema_config.ragsrvinfo_db));
 	safestrncpy(schema_config.skillcooldown_db,"skillcooldown",sizeof(schema_config.skillcooldown_db));
 	safestrncpy(schema_config.bonus_script_db,"bonus_script",sizeof(schema_config.bonus_script_db));
+	safestrncpy(schema_config.char_reg_num_table,"char_reg_num",sizeof(schema_config.char_reg_num_table));
+	safestrncpy(schema_config.char_reg_str_table,"char_reg_str",sizeof(schema_config.char_reg_str_table));
+	safestrncpy(schema_config.acc_reg_str_table,"acc_reg_str",sizeof(schema_config.acc_reg_str_table));
+	safestrncpy(schema_config.acc_reg_num_table,"acc_reg_num",sizeof(schema_config.acc_reg_num_table));
 }
 
 //set default config

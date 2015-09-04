@@ -1194,6 +1194,12 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->save_quest = false;
 	sd->count_rewarp = 0;
 
+	sd->regs.vars = i64db_alloc(DB_OPT_BASE);
+	sd->regs.arrays = NULL;
+	sd->vars_dirty = false;
+	sd->vars_ok = false;
+	sd->vars_received = 0x0;
+
 	//warp player
 	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != 0) {
 		ShowError ("Last_point_map %s - id %d not found (error code %d)\n", mapindex_id2name(sd->status.last_point.map), sd->status.last_point.map, i);
@@ -1314,7 +1320,7 @@ bool pc_set_hate_mob(struct map_session_data *sd, int pos, struct block_list *bl
 			return false; //Wrong size
 	}
 	sd->hate_mob[pos] = class_;
-	pc_setglobalreg(sd,sg_info[pos].hate_var,class_+1);
+	pc_setglobalreg(sd, add_str(sg_info[pos].hate_var), class_+1);
 	clif_hate_info(sd, pos, class_, 1);
 	return true;
 }
@@ -1326,24 +1332,27 @@ void pc_reg_received(struct map_session_data *sd)
 {
 	uint8 i;
 
-	sd->change_level_2nd = pc_readglobalreg(sd,"jobchange_level");
-	sd->change_level_3rd = pc_readglobalreg(sd,"jobchange_level_3rd");
-	sd->die_counter = pc_readglobalreg(sd,"PC_DIE_COUNTER");
+	sd->vars_ok = true;
 
-	sd->langtype = pc_readaccountreg(sd,"#langtype");
-	if(msg_checklangtype(sd->langtype,true)<0) sd->langtype=0; //invalid langtype reset to default
+	sd->change_level_2nd = pc_readglobalreg(sd, add_str("jobchange_level"));
+	sd->change_level_3rd = pc_readglobalreg(sd, add_str("jobchange_level_3rd"));
+	sd->die_counter = pc_readglobalreg(sd, add_str("PC_DIE_COUNTER"));
+
+	sd->langtype = pc_readaccountreg(sd, add_str("#langtype"));
+	if (msg_checklangtype(sd->langtype,true) < 0)
+		sd->langtype = 0; //invalid langtype reset to default
 
 	// Cash shop
-	sd->cashPoints = pc_readaccountreg(sd,"#CASHPOINTS");
-	sd->kafraPoints = pc_readaccountreg(sd,"#KAFRAPOINTS");
+	sd->cashPoints = pc_readaccountreg(sd, add_str("#CASHPOINTS"));
+	sd->kafraPoints = pc_readaccountreg(sd, add_str("#KAFRAPOINTS"));
 
 	// Cooking Exp
-	sd->cook_mastery = pc_readglobalreg(sd,"COOK_MASTERY");
+	sd->cook_mastery = pc_readglobalreg(sd, add_str("COOK_MASTERY"));
 
 	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
 	{ // Better check for class rather than skill to prevent "skill resets" from unsetting this
-		sd->mission_mobid = pc_readglobalreg(sd,"TK_MISSION_ID");
-		sd->mission_count = pc_readglobalreg(sd,"TK_MISSION_COUNT");
+		sd->mission_mobid = pc_readglobalreg(sd, add_str("TK_MISSION_ID"));
+		sd->mission_count = pc_readglobalreg(sd, add_str("TK_MISSION_COUNT"));
 	}
 
 	if (battle_config.feature_banking)
@@ -1360,31 +1369,33 @@ void pc_reg_received(struct map_session_data *sd)
 	for(i=0;i<MAX_PC_FEELHATE;i++) { //for now - someone need to make reading from txt/sql
 		uint16 j;
 
-		if ((j = pc_readglobalreg(sd,sg_info[i].feel_var))!=0) {
+		if ((j = pc_readglobalreg(sd, add_str(sg_info[i].feel_var))) != 0) {
 			sd->feel_map[i].index = j;
 			sd->feel_map[i].m = map_mapindex2mapid(j);
 		} else {
 			sd->feel_map[i].index = 0;
 			sd->feel_map[i].m = -1;
 		}
-		sd->hate_mob[i] = pc_readglobalreg(sd,sg_info[i].hate_var)-1;
+		sd->hate_mob[i] = pc_readglobalreg(sd, add_str(sg_info[i].hate_var))-1;
 	}
 
 	if ((i = pc_checkskill(sd,RG_PLAGIARISM)) > 0) {
-		sd->cloneskill_idx = skill_get_index(pc_readglobalreg(sd,SKILL_VAR_PLAGIARISM));
+		unsigned short skid = pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM));
+		sd->cloneskill_idx = skill_get_index(skid);
 		if (sd->cloneskill_idx > 0) {
-			sd->status.skill[sd->cloneskill_idx].id = pc_readglobalreg(sd,SKILL_VAR_PLAGIARISM);
-			sd->status.skill[sd->cloneskill_idx].lv = pc_readglobalreg(sd,SKILL_VAR_PLAGIARISM_LV);
+			sd->status.skill[sd->cloneskill_idx].id = skid;
+			sd->status.skill[sd->cloneskill_idx].lv = pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV));
 			if (sd->status.skill[sd->cloneskill_idx].lv > i)
 				sd->status.skill[sd->cloneskill_idx].lv = i;
 			sd->status.skill[sd->cloneskill_idx].flag = SKILL_FLAG_PLAGIARIZED;
 		}
 	}
 	if ((i = pc_checkskill(sd,SC_REPRODUCE)) > 0) {
-		sd->reproduceskill_idx = skill_get_index(pc_readglobalreg(sd,SKILL_VAR_REPRODUCE));
+		unsigned short skid = pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE));
+		sd->reproduceskill_idx = skill_get_index(skid);
 		if (sd->reproduceskill_idx > 0) {
-			sd->status.skill[sd->reproduceskill_idx].id = pc_readglobalreg(sd,SKILL_VAR_REPRODUCE);
-			sd->status.skill[sd->reproduceskill_idx].lv = pc_readglobalreg(sd,SKILL_VAR_REPRODUCE_LV);
+			sd->status.skill[sd->reproduceskill_idx].id = skid;
+			sd->status.skill[sd->reproduceskill_idx].lv = pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV));
 			if (i < sd->status.skill[sd->reproduceskill_idx].lv)
 				sd->status.skill[sd->reproduceskill_idx].lv = i;
 			sd->status.skill[sd->reproduceskill_idx].flag = SKILL_FLAG_PLAGIARIZED;
@@ -1854,7 +1865,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 
 			}
 
-			pc_setglobalreg (sd, "jobchange_level", sd->change_level_2nd);
+			pc_setglobalreg(sd, add_str("jobchange_level"), sd->change_level_2nd);
 		}
 
 		if (skill_point < novice_skills + (sd->change_level_2nd - 1))
@@ -1871,7 +1882,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 						- (sd->status.job_level - 1)
 						- (sd->change_level_2nd - 1)
 						- novice_skills;
-					pc_setglobalreg (sd, "jobchange_level_3rd", sd->change_level_3rd);
+					pc_setglobalreg(sd, add_str("jobchange_level_3rd"), sd->change_level_3rd);
 			}
 
 			if (skill_point < novice_skills + (sd->change_level_2nd - 1) + (sd->change_level_3rd - 1))
@@ -4157,11 +4168,11 @@ int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_ty
 		return -1;
 	}
 
-	pc_setaccountreg(sd, "#CASHPOINTS", sd->cashPoints-cash);
+	pc_setaccountreg(sd, add_str("#CASHPOINTS"), sd->cashPoints-cash);
 	if( cash ){
 		log_cash( sd, type, LOG_CASH_TYPE_CASH, -cash );
 	}
-	pc_setaccountreg(sd, "#KAFRAPOINTS", sd->kafraPoints-points);
+	pc_setaccountreg(sd, add_str("#KAFRAPOINTS"), sd->kafraPoints-points);
 	if( points ){
 		log_cash( sd, type, LOG_CASH_TYPE_KAFRA, -points );
 	}
@@ -4189,7 +4200,7 @@ int pc_getcash( struct map_session_data *sd, int cash, int points, e_log_pick_ty
 			cash = MAX_ZENY-sd->cashPoints;
 		}
 
-		pc_setaccountreg(sd, "#CASHPOINTS", sd->cashPoints+cash);
+		pc_setaccountreg(sd, add_str("#CASHPOINTS"), sd->cashPoints+cash);
 		if( cash ){
 			log_cash( sd, type, LOG_CASH_TYPE_CASH, cash );
 		}
@@ -4215,7 +4226,7 @@ int pc_getcash( struct map_session_data *sd, int cash, int points, e_log_pick_ty
 			points = MAX_ZENY-sd->kafraPoints;
 		}
 
-		pc_setaccountreg(sd, "#KAFRAPOINTS", sd->kafraPoints+points);
+		pc_setaccountreg(sd, add_str("#KAFRAPOINTS"), sd->kafraPoints+points);
 		if( points ){
 			log_cash( sd, type, LOG_CASH_TYPE_KAFRA, points );
 		}
@@ -6888,7 +6899,7 @@ int pc_resetstate(struct map_session_data* sd)
 	if( sd->mission_mobid ) { //bugreport:2200
 		sd->mission_mobid = 0;
 		sd->mission_count = 0;
-		pc_setglobalreg(sd,"TK_MISSION_ID", 0);
+		pc_setglobalreg(sd, add_str("TK_MISSION_ID"), 0);
 	}
 
 	status_calc_pc(sd, SCO_NONE);
@@ -7024,7 +7035,7 @@ int pc_resetfeel(struct map_session_data* sd)
 	{
 		sd->feel_map[i].m = -1;
 		sd->feel_map[i].index = 0;
-		pc_setglobalreg(sd,sg_info[i].feel_var,0);
+		pc_setglobalreg(sd, add_str(sg_info[i].feel_var), 0);
 	}
 
 	return 0;
@@ -7038,7 +7049,7 @@ int pc_resethate(struct map_session_data* sd)
 	for (i=0; i<3; i++)
 	{
 		sd->hate_mob[i] = -1;
-		pc_setglobalreg(sd,sg_info[i].hate_var,0);
+		pc_setglobalreg(sd, add_str(sg_info[i].hate_var), 0);
 	}
 	return 0;
 }
@@ -7047,6 +7058,8 @@ int pc_skillatk_bonus(struct map_session_data *sd, uint16 skill_id)
 {
 	int i, bonus = 0;
 	nullpo_ret(sd);
+
+	skill_id = skill_dummy2skill_id(skill_id);
 
 	ARR_FIND(0, ARRAYLENGTH(sd->skillatk), i, sd->skillatk[i].id == skill_id);
 	if( i < ARRAYLENGTH(sd->skillatk) )
@@ -7060,6 +7073,8 @@ int pc_sub_skillatk_bonus(struct map_session_data *sd, uint16 skill_id)
 	int i, bonus = 0;
 	nullpo_ret(sd);
 
+	skill_id = skill_dummy2skill_id(skill_id);
+
 	ARR_FIND(0, ARRAYLENGTH(sd->subskill), i, sd->subskill[i].id == skill_id);
 	if( i < ARRAYLENGTH(sd->subskill) )
 		bonus = sd->subskill[i].val;
@@ -7069,6 +7084,8 @@ int pc_sub_skillatk_bonus(struct map_session_data *sd, uint16 skill_id)
 
 int pc_skillheal_bonus(struct map_session_data *sd, uint16 skill_id) {
 	int i, bonus = sd->bonus.add_heal_rate;
+
+	skill_id = skill_dummy2skill_id(skill_id);
 
 	if( bonus ) {
 		switch( skill_id ) {
@@ -7090,6 +7107,8 @@ int pc_skillheal_bonus(struct map_session_data *sd, uint16 skill_id) {
 
 int pc_skillheal2_bonus(struct map_session_data *sd, uint16 skill_id) {
 	int i, bonus = sd->bonus.add_heal2_rate;
+
+	skill_id = skill_dummy2skill_id(skill_id);
 
 	ARR_FIND(0, ARRAYLENGTH(sd->skillheal2), i, sd->skillheal2[i].id == skill_id);
 
@@ -7279,7 +7298,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	pc_setdead(sd);
 
-	pc_setglobalreg(sd,"PC_DIE_COUNTER",sd->die_counter+1);
+	pc_setglobalreg(sd, add_str("PC_DIE_COUNTER"), sd->die_counter+1);
 	pc_setparam(sd, SP_KILLERRID, src?src->id:0);
 
 	//Reset menu skills/item skills
@@ -8053,12 +8072,12 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	// changing from 1st to 2nd job
 	if ((b_class&JOBL_2) && !(sd->class_&JOBL_2) && (sd->class_&MAPID_UPPERMASK) != MAPID_SUPER_NOVICE) {
 		sd->change_level_2nd = sd->status.job_level;
-		pc_setglobalreg (sd, "jobchange_level", sd->change_level_2nd);
+		pc_setglobalreg(sd, add_str("jobchange_level"), sd->change_level_2nd);
 	}
 	// changing from 2nd to 3rd job
 	else if((b_class&JOBL_THIRD) && !(sd->class_&JOBL_THIRD)) {
 		sd->change_level_3rd = sd->status.job_level;
-		pc_setglobalreg (sd, "jobchange_level_3rd", sd->change_level_3rd);
+		pc_setglobalreg(sd, add_str("jobchange_level_3rd"), sd->change_level_3rd);
 	}
 
 	if(sd->cloneskill_idx > 0) {
@@ -8066,11 +8085,11 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 			sd->status.skill[sd->cloneskill_idx].id = 0;
 			sd->status.skill[sd->cloneskill_idx].lv = 0;
 			sd->status.skill[sd->cloneskill_idx].flag = SKILL_FLAG_PERMANENT;
-			clif_deleteskill(sd,pc_readglobalreg(sd,SKILL_VAR_PLAGIARISM));
+			clif_deleteskill(sd,pc_readglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM)));
 		}
 		sd->cloneskill_idx = 0;
-		pc_setglobalreg(sd,SKILL_VAR_PLAGIARISM, 0);
-		pc_setglobalreg(sd,SKILL_VAR_PLAGIARISM_LV, 0);
+		pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM), 0);
+		pc_setglobalreg(sd, add_str(SKILL_VAR_PLAGIARISM_LV), 0);
 	}
 
 	if(sd->reproduceskill_idx > 0) {
@@ -8078,11 +8097,11 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 			sd->status.skill[sd->reproduceskill_idx].id = 0;
 			sd->status.skill[sd->reproduceskill_idx].lv = 0;
 			sd->status.skill[sd->reproduceskill_idx].flag = SKILL_FLAG_PERMANENT;
-			clif_deleteskill(sd,pc_readglobalreg(sd,SKILL_VAR_REPRODUCE));
+			clif_deleteskill(sd,pc_readglobalreg(sd, add_str(SKILL_VAR_REPRODUCE)));
 		}
 		sd->reproduceskill_idx = 0;
-		pc_setglobalreg(sd,SKILL_VAR_REPRODUCE,0);
-		pc_setglobalreg(sd,SKILL_VAR_REPRODUCE_LV,0);
+		pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE), 0);
+		pc_setglobalreg(sd, add_str(SKILL_VAR_REPRODUCE_LV), 0);
 	}
 
 	// Give or reduce transcendent status points
@@ -8478,332 +8497,266 @@ bool pc_candrop(struct map_session_data *sd, struct item *item)
 }
 
 /*==========================================
- * Read ram register for player sd
- * get val (int) from reg for player sd
+ * Read '@type' variables (temporary numeric char reg)
  *------------------------------------------*/
-int pc_readreg(struct map_session_data* sd, int reg)
+int pc_readreg(struct map_session_data* sd, int64 reg)
 {
-	int i;
-
-	nullpo_ret(sd);
-
-	ARR_FIND( 0, sd->reg_num, i,  sd->reg[i].index == reg );
-	return ( i < sd->reg_num ) ? sd->reg[i].data : 0;
+	return i64db_iget(sd->regs.vars, reg);
 }
+
 /*==========================================
- * Set ram register for player sd
- * memo val(int) at reg for player sd
+ * Set '@type' variables (temporary numeric char reg)
  *------------------------------------------*/
-bool pc_setreg(struct map_session_data* sd, int reg, int val)
+bool pc_setreg(struct map_session_data* sd, int64 reg, int val)
 {
-	int i;
+	unsigned int index = script_getvaridx(reg);
 
-	nullpo_retr(false,sd);
+	nullpo_retr(false, sd);
 
-	ARR_FIND( 0, sd->reg_num, i, sd->reg[i].index == reg );
-	if( i < sd->reg_num )
-	{// overwrite existing entry
-		sd->reg[i].data = val;
-		return true;
+	if( val ) {
+		i64db_iput(sd->regs.vars, reg, val);
+		if( index )
+			script_array_update(&sd->regs, reg, false);
+	} else {
+		i64db_remove(sd->regs.vars, reg);
+		if( index )
+			script_array_update(&sd->regs, reg, true);
 	}
-
-	ARR_FIND( 0, sd->reg_num, i, sd->reg[i].data == 0 );
-	if( i == sd->reg_num )
-	{// nothing free, increase size
-		sd->reg_num++;
-		RECREATE(sd->reg, struct script_reg, sd->reg_num);
-	}
-	sd->reg[i].index = reg;
-	sd->reg[i].data = val;
 
 	return true;
 }
 
 /*==========================================
- * Read ram register for player sd
- * get val (str) from reg for player sd
+ * Read '@type$' variables (temporary string char reg)
  *------------------------------------------*/
-char* pc_readregstr(struct map_session_data* sd, int reg)
+char* pc_readregstr(struct map_session_data* sd, int64 reg)
 {
-	int i;
+	struct script_reg_str *p = NULL;
 
-	nullpo_ret(sd);
+	p = i64db_get(sd->regs.vars, reg);
 
-	ARR_FIND( 0, sd->regstr_num, i,  sd->regstr[i].index == reg );
-	return ( i < sd->regstr_num ) ? sd->regstr[i].data : NULL;
+	return p ? p->value : NULL;
 }
+
 /*==========================================
- * Set ram register for player sd
- * memo val(str) at reg for player sd
+ * Set '@type$' variables (temporary string char reg)
  *------------------------------------------*/
-bool pc_setregstr(struct map_session_data* sd, int reg, const char* str)
+bool pc_setregstr(struct map_session_data* sd, int64 reg, const char* str)
 {
-	int i;
+	struct script_reg_str *p = NULL;
+	unsigned int index = script_getvaridx(reg);
+	DBData prev;
 
-	nullpo_retr(false,sd);
+	nullpo_retr(false, sd);
 
-	ARR_FIND( 0, sd->regstr_num, i, sd->regstr[i].index == reg );
-	if( i < sd->regstr_num )
-	{// found entry, update
-		if( str == NULL || *str == '\0' )
-		{// empty string
-			if( sd->regstr[i].data != NULL )
-				aFree(sd->regstr[i].data);
-			sd->regstr[i].data = NULL;
+	if( str[0] ) {
+		p = ers_alloc(str_reg_ers, struct script_reg_str);
+
+		p->value = aStrdup(str);
+		p->flag.type = 1;
+
+		if (sd->regs.vars->put(sd->regs.vars, db_i642key(reg), db_ptr2data(p), &prev)) {
+			p = db_data2ptr(&prev);
+			if( p->value )
+				aFree(p->value);
+			ers_free(str_reg_ers, p);
+		} else {
+			if( index )
+				script_array_update(&sd->regs, reg, false);
 		}
-		else if( sd->regstr[i].data )
-		{// recreate
-			size_t len = strlen(str)+1;
-			RECREATE(sd->regstr[i].data, char, len);
-			memcpy(sd->regstr[i].data, str, len*sizeof(char));
+	} else {
+		if (sd->regs.vars->remove(sd->regs.vars, db_i642key(reg), &prev)) {
+			p = db_data2ptr(&prev);
+			if( p->value )
+				aFree(p->value);
+			ers_free(str_reg_ers, p);
+			if( index )
+				script_array_update(&sd->regs, reg, true);
 		}
-		else
-		{// create
-			sd->regstr[i].data = aStrdup(str);
-		}
-		return true;
 	}
-
-	if( str == NULL || *str == '\0' )
-		return true;// nothing to add, empty string
-
-	ARR_FIND( 0, sd->regstr_num, i, sd->regstr[i].data == NULL );
-	if( i == sd->regstr_num )
-	{// nothing free, increase size
-		sd->regstr_num++;
-		RECREATE(sd->regstr, struct script_regstr, sd->regstr_num);
-	}
-	sd->regstr[i].index = reg;
-	sd->regstr[i].data = aStrdup(str);
 
 	return true;
 }
 
-int pc_readregistry(struct map_session_data *sd,const char *reg,int type)
+/**
+ * Serves the following variable types:
+ * - 'type' (permanent numeric char reg)
+ * - '#type' (permanent numeric account reg)
+ * - '##type' (permanent numeric account reg2)
+ **/
+int pc_readregistry(struct map_session_data *sd, int64 reg)
 {
-	struct global_reg *sd_reg;
-	int i,max;
+	struct script_reg_num *p = NULL;
 
-	nullpo_ret(sd);
-	switch (type) {
-	case 3: //Char reg
-		sd_reg = sd->save_reg.global;
-		max = sd->save_reg.global_num;
-	break;
-	case 2: //Account reg
-		sd_reg = sd->save_reg.account;
-		max = sd->save_reg.account_num;
-	break;
-	case 1: //Account2 reg
-		sd_reg = sd->save_reg.account2;
-		max = sd->save_reg.account2_num;
-	break;
-	default:
-		return 0;
-	}
-	if (max == -1) {
-		ShowError("pc_readregistry: Trying to read reg value %s (type %d) before it's been loaded!\n", reg, type);
+	if (!sd->vars_ok) {
+		ShowError("pc_readregistry: Trying to read reg %s before it's been loaded!\n", get_str(script_getvarid(reg)));
 		//This really shouldn't happen, so it's possible the data was lost somewhere, we should request it again.
-		intif_request_registry(sd,type==3?4:type);
+		//intif->request_registry(sd,type==3?4:type);
+		set_eof(sd->fd);
 		return 0;
 	}
 
-	ARR_FIND( 0, max, i, strcmp(sd_reg[i].str,reg) == 0 );
-	return ( i < max ) ? atoi(sd_reg[i].value) : 0;
+	p = i64db_get(sd->regs.vars, reg);
+
+	return p ? p->value : 0;
 }
 
-char* pc_readregistry_str(struct map_session_data *sd,const char *reg,int type)
+/**
+ * Serves the following variable types:
+ * - 'type$' (permanent str char reg)
+ * - '#type$' (permanent str account reg)
+ * - '##type$' (permanent str account reg2)
+ **/
+char* pc_readregistry_str(struct map_session_data *sd, int64 reg)
 {
-	struct global_reg *sd_reg;
-	int i,max;
+	struct script_reg_str *p = NULL;
 
-	nullpo_ret(sd);
-	switch (type) {
-	case 3: //Char reg
-		sd_reg = sd->save_reg.global;
-		max = sd->save_reg.global_num;
-	break;
-	case 2: //Account reg
-		sd_reg = sd->save_reg.account;
-		max = sd->save_reg.account_num;
-	break;
-	case 1: //Account2 reg
-		sd_reg = sd->save_reg.account2;
-		max = sd->save_reg.account2_num;
-	break;
-	default:
-		return NULL;
-	}
-	if (max == -1) {
-		ShowError("pc_readregistry: Trying to read reg value %s (type %d) before it's been loaded!\n", reg, type);
+	if (!sd->vars_ok) {
+		ShowError("pc_readregistry_str: Trying to read reg %s before it's been loaded!\n", get_str(script_getvarid(reg)));
 		//This really shouldn't happen, so it's possible the data was lost somewhere, we should request it again.
-		intif_request_registry(sd,type==3?4:type);
+		//intif->request_registry(sd,type==3?4:type);
+		set_eof(sd->fd);
 		return NULL;
 	}
 
-	ARR_FIND( 0, max, i, strcmp(sd_reg[i].str,reg) == 0 );
-	return ( i < max ) ? sd_reg[i].value : NULL;
+	p = i64db_get(sd->regs.vars, reg);
+
+	return p ? p->value : NULL;
 }
 
-bool pc_setregistry(struct map_session_data *sd,const char *reg,int val,int type)
+/**
+ * Serves the following variable types:
+ * - 'type' (permanent numeric char reg)
+ * - '#type' (permanent numeric account reg)
+ * - '##type' (permanent numeric account reg2)
+ **/
+int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
 {
-	struct global_reg *sd_reg;
-	int i,*max, regmax;
+	struct script_reg_num *p = NULL;
+	const char *regname = get_str(script_getvarid(reg));
+	unsigned int index = script_getvaridx(reg);
 
-	nullpo_retr(false,sd);
+	// These should be stored elsewhere e.g. char ones in char table, the cash ones in account_data table!
+	switch( regname[0] ) {
+		default: //Char reg
+			if( !strcmp(regname,"PC_DIE_COUNTER") && sd->die_counter != val ) {
+				int i = (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE);
+				sd->die_counter = val;
+				if( i )
+					status_calc_pc(sd,SCO_NONE); // Lost the bonus.
+			} else if( !strcmp(regname,"COOK_MASTERY") && sd->cook_mastery != val ) {
+				val = cap_value(val, 0, 1999);
+				sd->cook_mastery = val;
+			}
+			break;
+		case '#':
+			if( !strcmp(regname,"#CASHPOINTS") && sd->cashPoints != val ) {
+				val = cap_value(val, 0, MAX_ZENY);
+				sd->cashPoints = val;
+			} else if( !strcmp(regname,"#KAFRAPOINTS") && sd->kafraPoints != val ) {
+				val = cap_value(val, 0, MAX_ZENY);
+				sd->kafraPoints = val;
+			}
+			break;
+	}
+	
+	if ( !reg_load && !sd->vars_ok ) {
+		ShowError("pc_setregistry : refusing to set %s until vars are received.\n", regname);
+		return 0;
+	}
 
-	switch( type )
-	{
-	case 3: //Char reg
-		if( !strcmp(reg,"PC_DIE_COUNTER") && sd->die_counter != val ) {
-			i = (!sd->die_counter && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE);
-			sd->die_counter = val;
-			if( i )
-				status_calc_pc(sd,SCO_NONE); // Lost the bonus.
-		} else if( !strcmp(reg,"COOK_MASTERY") && sd->cook_mastery != val ) {
-			val = cap_value(val, 0, 1999);
-			sd->cook_mastery = val;
+	if ((p = i64db_get(sd->regs.vars, reg))) {
+		if( val ) {
+			if( !p->value && index ) /* its a entry that was deleted, so we reset array */
+				script_array_update(&sd->regs, reg, false);
+			p->value = val;
+		} else {
+			p->value = 0;
+			if( index )
+				script_array_update(&sd->regs, reg, true);
 		}
-		sd_reg = sd->save_reg.global;
-		max = &sd->save_reg.global_num;
-		regmax = GLOBAL_REG_NUM;
-	break;
-	case 2: //Account reg
-		if( !strcmp(reg,"#CASHPOINTS") && sd->cashPoints != val ) {
-			val = cap_value(val, 0, MAX_ZENY);
-			sd->cashPoints = val;
-		} else if( !strcmp(reg,"#KAFRAPOINTS") && sd->kafraPoints != val ) {
-			val = cap_value(val, 0, MAX_ZENY);
-			sd->kafraPoints = val;
+		if (!reg_load)
+			p->flag.update = 1;/* either way, it will require either delete or replace */
+	} else if( val ) {
+		DBData prev;
+
+		if( index )
+			script_array_update(&sd->regs, reg, false);
+
+		p = ers_alloc(num_reg_ers, struct script_reg_num);
+
+		p->value = val;
+		if (!reg_load)
+			p->flag.update = 1;
+
+		if (sd->regs.vars->put(sd->regs.vars, db_i642key(reg), db_ptr2data(p), &prev)) {
+			p = db_data2ptr(&prev);
+			ers_free(num_reg_ers, p);
 		}
-		sd_reg = sd->save_reg.account;
-		max = &sd->save_reg.account_num;
-		regmax = ACCOUNT_REG_NUM;
-	break;
-	case 1: //Account2 reg
-		sd_reg = sd->save_reg.account2;
-		max = &sd->save_reg.account2_num;
-		regmax = ACCOUNT_REG2_NUM;
-	break;
-	default:
-		return false;
-	}
-	if (*max == -1) {
-		ShowError("pc_setregistry : refusing to set %s (type %d) until vars are received.\n", reg, type);
-		return true;
 	}
 
-	// delete reg
-	if (val == 0) {
-		ARR_FIND( 0, *max, i, strcmp(sd_reg[i].str, reg) == 0 );
-		if( i < *max )
-		{
-			if (i != *max - 1)
-				memcpy(&sd_reg[i], &sd_reg[*max - 1], sizeof(struct global_reg));
-			memset(&sd_reg[*max - 1], 0, sizeof(struct global_reg));
-			(*max)--;
-			sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
-		}
-		return true;
-	}
-	// change value if found
-	ARR_FIND( 0, *max, i, strcmp(sd_reg[i].str, reg) == 0 );
-	if( i < *max )
-	{
-		safesnprintf(sd_reg[i].value, sizeof(sd_reg[i].value), "%d", val);
-		sd->state.reg_dirty |= 1<<(type-1);
-		return true;
-	}
+	if (!reg_load && p)
+		sd->vars_dirty = true;
 
-	// add value if not found
-	if (i < regmax) {
-		memset(&sd_reg[i], 0, sizeof(struct global_reg));
-		safestrncpy(sd_reg[i].str, reg, sizeof(sd_reg[i].str));
-		safesnprintf(sd_reg[i].value, sizeof(sd_reg[i].value), "%d", val);
-		(*max)++;
-		sd->state.reg_dirty |= 1<<(type-1);
-		return true;
-	}
-
-	ShowError("pc_setregistry : couldn't set %s, limit of registries reached (%d)\n", reg, regmax);
-
-	return false;
+	return 1;
 }
 
-bool pc_setregistry_str(struct map_session_data *sd,const char *reg,const char *val,int type)
+/**
+ * Serves the following variable types:
+ * - 'type$' (permanent str char reg)
+ * - '#type$' (permanent str account reg)
+ * - '##type$' (permanent str account reg2)
+ **/
+int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
 {
-	struct global_reg *sd_reg;
-	int i,*max, regmax;
+	struct script_reg_str *p = NULL;
+	const char *regname = get_str(script_getvarid(reg));
+	unsigned int index = script_getvaridx(reg);
 
-	nullpo_retr(false,sd);
-	if (reg[strlen(reg)-1] != '$') {
-		ShowError("pc_setregistry_str : reg %s must be string (end in '$') to use this!\n", reg);
-		return false;
+	if (!reg_load && !sd->vars_ok) {
+		ShowError("pc_setregistry_str : refusing to set %s until vars are received.\n", regname);
+		return 0;
 	}
 
-	switch (type) {
-	case 3: //Char reg
-		sd_reg = sd->save_reg.global;
-		max = &sd->save_reg.global_num;
-		regmax = GLOBAL_REG_NUM;
-	break;
-	case 2: //Account reg
-		sd_reg = sd->save_reg.account;
-		max = &sd->save_reg.account_num;
-		regmax = ACCOUNT_REG_NUM;
-	break;
-	case 1: //Account2 reg
-		sd_reg = sd->save_reg.account2;
-		max = &sd->save_reg.account2_num;
-		regmax = ACCOUNT_REG2_NUM;
-	break;
-	default:
-		return false;
-	}
-	if (*max == -1) {
-		ShowError("pc_setregistry_str : refusing to set %s (type %d) until vars are received.\n", reg, type);
-		return false;
-	}
-
-	// delete reg
-	if (!val || strcmp(val,"")==0)
-	{
-		ARR_FIND( 0, *max, i, strcmp(sd_reg[i].str, reg) == 0 );
-		if( i < *max )
-		{
-			if (i != *max - 1)
-				memcpy(&sd_reg[i], &sd_reg[*max - 1], sizeof(struct global_reg));
-			memset(&sd_reg[*max - 1], 0, sizeof(struct global_reg));
-			(*max)--;
-			sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
-			if (type!=3) intif_saveregistry(sd,type);
+	if( (p = i64db_get(sd->regs.vars, reg) ) ) {
+		if( val[0] ) {
+			if( p->value )
+				aFree(p->value);
+			else if ( index ) // an entry that was deleted, so we reset
+				script_array_update(&sd->regs, reg, false);
+			p->value = aStrdup(val);
+		} else {
+			p->value = NULL;
+			if( index )
+				script_array_update(&sd->regs, reg, true);
 		}
-		return true;
+		if( !reg_load )
+			p->flag.update = 1; // either way, it will require either delete or replace
+	} else if( val[0] ) {
+		DBData prev;
+
+		if( index )
+			script_array_update(&sd->regs, reg, false);
+
+		p = ers_alloc(str_reg_ers, struct script_reg_str);
+
+		p->value = aStrdup(val);
+		if( !reg_load )
+			p->flag.update = 1;
+		p->flag.type = 1;
+
+		if( sd->regs.vars->put(sd->regs.vars, db_i642key(reg), db_ptr2data(p), &prev) ) {
+			p = db_data2ptr(&prev);
+			if( p->value )
+				aFree(p->value);
+			ers_free(str_reg_ers, p);
+		}
 	}
 
-	// change value if found
-	ARR_FIND( 0, *max, i, strcmp(sd_reg[i].str, reg) == 0 );
-	if( i < *max )
-	{
-		safestrncpy(sd_reg[i].value, val, sizeof(sd_reg[i].value));
-		sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
-		if (type!=3) intif_saveregistry(sd,type);
-		return true;
-	}
+	if( !reg_load && p )
+		sd->vars_dirty = true;
 
-	// add value if not found
-	if (i < regmax) {
-		memset(&sd_reg[i], 0, sizeof(struct global_reg));
-		safestrncpy(sd_reg[i].str, reg, sizeof(sd_reg[i].str));
-		safestrncpy(sd_reg[i].value, val, sizeof(sd_reg[i].value));
-		(*max)++;
-		sd->state.reg_dirty |= 1<<(type-1); //Mark this registry as "need to be saved"
-		if (type!=3) intif_saveregistry(sd,type);
-		return true;
-	}
-
-	ShowError("pc_setregistry : couldn't set %s, limit of registries reached (%d)\n", reg, regmax);
-	return false;
+	return 1;
 }
 
 /**
@@ -8834,9 +8787,9 @@ bool pc_setreg2(struct map_session_data *sd, const char *reg, int val) {
 		case '@':
 			return pc_setreg(sd, add_str(reg), val);
 		case '#':
-			return (reg[1] == '#') ? pc_setaccountreg2(sd, reg, val) : pc_setaccountreg(sd, reg, val);
+			return (reg[1] == '#') ? pc_setaccountreg2(sd, add_str(reg), val) : pc_setaccountreg(sd, add_str(reg), val);
 		default:
-			return pc_setglobalreg(sd, reg, val);
+			return pc_setglobalreg(sd, add_str(reg), val);
 	}
 
 	return false;
@@ -8867,9 +8820,9 @@ int pc_readreg2(struct map_session_data *sd, const char *reg) {
 		case '@':
 			return pc_readreg(sd, add_str(reg));
 		case '#':
-			return (reg[1] == '#') ? pc_readaccountreg2(sd, reg) : pc_readaccountreg(sd, reg);
+			return (reg[1] == '#') ? pc_readaccountreg2(sd, add_str(reg)) : pc_readaccountreg(sd, add_str(reg));
 		default:
-			return pc_readglobalreg(sd, reg);
+			return pc_readglobalreg(sd, add_str(reg));
 	}
 
 	return 0;
@@ -11659,6 +11612,8 @@ void do_final_pc(void) {
 
 	ers_destroy(pc_sc_display_ers);
 	ers_destroy(pc_itemgrouphealrate_ers);
+	ers_destroy(num_reg_ers);
+	ers_destroy(str_reg_ers);
 }
 
 void do_init_pc(void) {
@@ -11699,6 +11654,12 @@ void do_init_pc(void) {
 
 	do_init_pc_groups();
 
-	pc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "pc.c:pc_sc_display_ers", ERS_OPT_NONE);
+	pc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "pc.c:pc_sc_display_ers", ERS_OPT_FLEX_CHUNK);
 	pc_itemgrouphealrate_ers = ers_new(sizeof(struct s_pc_itemgrouphealrate), "pc.c:pc_itemgrouphealrate_ers", ERS_OPT_NONE);
+	num_reg_ers = ers_new(sizeof(struct script_reg_num), "pc.c:num_reg_ers", ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+	str_reg_ers = ers_new(sizeof(struct script_reg_str), "pc.c:str_reg_ers", ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
+
+	ers_chunk_size(pc_sc_display_ers, 150);
+	ers_chunk_size(num_reg_ers, 300);
+	ers_chunk_size(str_reg_ers, 50);
 }

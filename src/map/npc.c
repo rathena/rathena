@@ -1280,11 +1280,14 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
  *------------------------------------------*/
 int npc_scriptcont(struct map_session_data* sd, int id, bool closing)
 {
+	struct block_list *target = map_id2bl(id);
+
 	nullpo_retr(1, sd);
 
 	if( id != sd->npc_id ){
-		TBL_NPC* nd_sd=(TBL_NPC*)map_id2bl(sd->npc_id);
-		TBL_NPC* nd=(TBL_NPC*)map_id2bl(id);
+		TBL_NPC* nd_sd = (TBL_NPC*)map_id2bl(sd->npc_id);
+		TBL_NPC* nd = BL_CAST(BL_NPC, target);
+
 		ShowDebug("npc_scriptcont: %s (sd->npc_id=%d) is not %s (id=%d).\n",
 			nd_sd?(char*)nd_sd->name:"'Unknown NPC'", (int)sd->npc_id,
 			nd?(char*)nd->name:"'Unknown NPC'", (int)id);
@@ -1292,7 +1295,7 @@ int npc_scriptcont(struct map_session_data* sd, int id, bool closing)
 	}
 
 	if(id != fake_nd->bl.id) { // Not item script
-		if ((npc_checknear(sd,map_id2bl(id))) == NULL){
+		if ((npc_checknear(sd, target)) == NULL) {
 			ShowWarning("npc_scriptcont: failed npc_checknear test.\n");
 			return 1;
 		}
@@ -1305,6 +1308,9 @@ int npc_scriptcont(struct map_session_data* sd, int id, bool closing)
 	 * WPE can get to this point with a progressbar; we deny it.
 	 **/
 	if( sd->progressbar.npc_id && DIFF_TICK(sd->progressbar.timeout,gettick()) > 0 )
+		return 1;
+
+	if (!sd->st)
 		return 1;
 
 	if( closing && sd->st && sd->st->state == CLOSE )
@@ -2064,8 +2070,6 @@ int npc_unload(struct npc_data* nd, bool single) {
 		if( nd->u.scr.guild_id )
 			guild_flag_remove(nd);
 	}
-
-	script_stop_sleeptimers(nd->bl.id);
 
 	aFree(nd);
 
@@ -3540,8 +3544,7 @@ static const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, co
 
 	script_start = strstr(start,"\t{");
 	end = strchr(start,'\n');
-	if( *w4 != '{' || script_start == NULL || (end != NULL && script_start > end) )
-	{
+	if (*w4 != '{' || script_start == NULL || (end != NULL && script_start > end)) {
 		ShowError("npc_parse_function: Missing left curly '%%TAB%%{' in file '%s', line '%d'. Skipping the rest of the file.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return NULL;// can't continue
 	}
@@ -3556,11 +3559,11 @@ static const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, co
 		return end;
 
 	func_db = script_get_userfunc_db();
-	if (func_db->put(func_db, db_str2key(w3), db_ptr2data(script), &old_data))
-	{
+	if (func_db->put(func_db, db_str2key(w3), db_ptr2data(script), &old_data)) {
 		struct script_code *oldscript = (struct script_code*)db_data2ptr(&old_data);
+
 		ShowInfo("npc_parse_function: Overwriting user function [%s] (%s:%d)\n", w3, filepath, strline(buffer,start-buffer));
-		script_free_vars(oldscript->script_vars);
+		script_free_vars(oldscript->local.vars);
 		aFree(oldscript->script_buf);
 		aFree(oldscript);
 	}

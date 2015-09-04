@@ -201,7 +201,6 @@ struct map_session_data {
 		unsigned int abra_flag : 2; // Abracadabra bugfix by Aru
 		unsigned int autocast : 1; // Autospell flag [Inkfish]
 		unsigned int autotrade : 3;	//By Fantik. &2 Requested by vending autotrade; &4 Requested by buyingstore autotrade
-		unsigned int reg_dirty : 4; //By Skotlex (marks whether registry variables have been saved or not yet)
 		unsigned int showdelay :1;
 		unsigned int showexp :1;
 		unsigned int showzeny :1;
@@ -262,7 +261,6 @@ struct map_session_data {
 	int langtype;
 	uint32 packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 ... 18
 	struct mmo_charstatus status;
-	struct registry save_reg;
 
 	struct item_data* inventory_data[MAX_INVENTORY]; // direct pointers to itemdb entries (faster than doing item_id lookups)
 	short equip_index[EQI_MAX];
@@ -466,11 +464,6 @@ struct map_session_data {
 	short mission_mobid; //Stores the target mob_id for TK_MISSION
 	int die_counter; //Total number of times you've died
 	int devotion[MAX_DEVOTION]; //Stores the account IDs of chars devoted to.
-	int reg_num; //Number of registries (type numeric)
-	int regstr_num; //Number of registries (type string)
-
-	struct script_reg *reg;
-	struct script_regstr *regstr;
 
 	int trade_partner;
 	struct s_deal {
@@ -608,6 +601,14 @@ struct map_session_data {
 
 	unsigned char delayed_damage; //[Ind]
 
+	/**
+	 * Account/Char variables & array control of those variables
+	 **/
+	struct reg_db regs;
+	unsigned char vars_received; // char loading is only complete when you get it all.
+	bool vars_ok;
+	bool vars_dirty;
+
 	// temporary debugging of bug #3504
 	const char* delunit_prevfile;
 	int delunit_prevline;
@@ -661,6 +662,14 @@ struct map_session_data {
 
 struct eri *pc_sc_display_ers; /// Player's SC display table
 struct eri *pc_itemgrouphealrate_ers; /// Player's Item Group Heal Rate table
+
+/**
+ * ERS for the bulk of pc vars
+ **/
+struct eri *num_reg_ers;
+struct eri *str_reg_ers;
+/* */
+bool reg_load;
 
 /* Global Expiration Timer ID */
 extern int pc_expiration_tid;
@@ -1027,29 +1036,29 @@ void pc_setmadogear(struct map_session_data* sd, int flag);
 void pc_changelook(struct map_session_data *,int,int);
 void pc_equiplookall(struct map_session_data *sd);
 
-int pc_readparam(struct map_session_data*,int);
-bool pc_setparam(struct map_session_data*,int,int);
-int pc_readreg(struct map_session_data*,int);
-bool pc_setreg(struct map_session_data*,int,int);
-char *pc_readregstr(struct map_session_data *sd,int reg);
-bool pc_setregstr(struct map_session_data *sd,int reg,const char *str);
+int pc_readparam(struct map_session_data *sd, int type);
+bool pc_setparam(struct map_session_data *sd, int type, int val);
+int pc_readreg(struct map_session_data *sd, int64 reg);
+bool pc_setreg(struct map_session_data *sd, int64 reg, int val);
+char *pc_readregstr(struct map_session_data *sd, int64 reg);
+bool pc_setregstr(struct map_session_data *sd, int64 reg, const char *str);
+int pc_readregistry(struct map_session_data *sd, int64 reg);
+int pc_setregistry(struct map_session_data *sd, int64 reg, int val);
+char *pc_readregistry_str(struct map_session_data *sd, int64 reg);
+int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val);
 
-#define pc_readglobalreg(sd,reg) pc_readregistry(sd,reg,3)
-#define pc_setglobalreg(sd,reg,val) pc_setregistry(sd,reg,val,3)
-#define pc_readglobalreg_str(sd,reg) pc_readregistry_str(sd,reg,3)
-#define pc_setglobalreg_str(sd,reg,val) pc_setregistry_str(sd,reg,val,3)
-#define pc_readaccountreg(sd,reg) pc_readregistry(sd,reg,2)
-#define pc_setaccountreg(sd,reg,val) pc_setregistry(sd,reg,val,2)
-#define pc_readaccountregstr(sd,reg) pc_readregistry_str(sd,reg,2)
-#define pc_setaccountregstr(sd,reg,val) pc_setregistry_str(sd,reg,val,2)
-#define pc_readaccountreg2(sd,reg) pc_readregistry(sd,reg,1)
-#define pc_setaccountreg2(sd,reg,val) pc_setregistry(sd,reg,val,1)
-#define pc_readaccountreg2str(sd,reg) pc_readregistry_str(sd,reg,1)
-#define pc_setaccountreg2str(sd,reg,val) pc_setregistry_str(sd,reg,val,1)
-int pc_readregistry(struct map_session_data*,const char*,int);
-bool pc_setregistry(struct map_session_data*,const char*,int,int);
-char *pc_readregistry_str(struct map_session_data*,const char*,int);
-bool pc_setregistry_str(struct map_session_data*,const char*,const char*,int);
+#define pc_readglobalreg(sd,reg) pc_readregistry(sd,reg)
+#define pc_setglobalreg(sd,reg,val) pc_setregistry(sd,reg,val)
+#define pc_readglobalreg_str(sd,reg) pc_readregistry_str(sd,reg)
+#define pc_setglobalreg_str(sd,reg,val) pc_setregistry_str(sd,reg,val)
+#define pc_readaccountreg(sd,reg) pc_readregistry(sd,reg)
+#define pc_setaccountreg(sd,reg,val) pc_setregistry(sd,reg,val)
+#define pc_readaccountregstr(sd,reg) pc_readregistry_str(sd,reg)
+#define pc_setaccountregstr(sd,reg,val) pc_setregistry_str(sd,reg,val)
+#define pc_readaccountreg2(sd,reg) pc_readregistry(sd,reg)
+#define pc_setaccountreg2(sd,reg,val) pc_setregistry(sd,reg,val)
+#define pc_readaccountreg2str(sd,reg) pc_readregistry_str(sd,reg)
+#define pc_setaccountreg2str(sd,reg,val) pc_setregistry_str(sd,reg,val)
 
 bool pc_setreg2(struct map_session_data *sd, const char *reg, int val);
 int pc_readreg2(struct map_session_data *sd, const char *reg);

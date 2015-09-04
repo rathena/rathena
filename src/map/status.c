@@ -6821,6 +6821,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	undead_flag = battle_check_undead(status->race,status->def_ele);
 	// Check for immunities / sc fails
 	switch (type) {
+		case SC_VACUUM_EXTREME:
+			if (sc->data[SC_VACUUM_EXTREME_POSTDELAY] && sc->data[SC_VACUUM_EXTREME_POSTDELAY]->val2 == val2) // Ignore post delay from other vacuum (this will make stack effect enabled)
+				return 0;
 		case SC_FREEZE:
 			// Undead are immune to Freeze/Stone
 			if (undead_flag && !(flag&SCSTART_NOAVOID))
@@ -6844,12 +6847,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ADRENALINE:
 			if(sd && !pc_check_weapontype(sd,skill_get_weapontype(BS_ADRENALINE)))
-				return 0;
-			if (sc->data[SC_QUAGMIRE] ||
-				sc->data[SC_DECREASEAGI] ||
-				sc->data[SC_ADORAMUS] ||
-				sc->option&OPTION_MADOGEAR // Adrenaline doesn't affect Mado Gear [Ind]
-			)
 				return 0;
 			break;
 		case SC_ADRENALINE2:
@@ -6887,7 +6884,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		// Strip skills, need to divest something or it fails.
 		case SC_STRIPWEAPON:
 			if (sd && !(flag&SCSTART_LOADED)) { // Apply sc anyway if loading saved sc_data
-				int i;
+				short i;
 				opt_flag = 0; // Reuse to check success condition.
 				if(sd->bonus.unstripable_equip&EQP_WEAPON)
 					return 0;
@@ -6910,7 +6907,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if( val2 == 1 ) val2 = 0; // GX effect. Do not take shield off..
 			else
 			if (sd && !(flag&SCSTART_LOADED)) {
-				int i;
+				short i;
 				if(sd->bonus.unstripable_equip&EQP_SHIELD)
 					return 0;
 				i = sd->equip_index[EQI_HAND_L];
@@ -6922,7 +6919,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_STRIPARMOR:
 			if (sd && !(flag&SCSTART_LOADED)) {
-				int i;
+				short i;
 				if(sd->bonus.unstripable_equip&EQP_ARMOR)
 					return 0;
 				i = sd->equip_index[EQI_ARMOR];
@@ -6934,7 +6931,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_STRIPHELM:
 			if (sd && !(flag&SCSTART_LOADED)) {
-				int i;
+				short i;
 				if(sd->bonus.unstripable_equip&EQP_HELM)
 					return 0;
 				i = sd->equip_index[EQI_HEAD_TOP];
@@ -7006,7 +7003,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC__STRIPACCESSORY:
 			if( sd ) {
-				int i = -1;
+				short i = -1;
 				if( !(sd->bonus.unstripable_equip&EQP_ACC_L) ) {
 					i = sd->equip_index[EQI_ACC_L];
 					if( i >= 0 && sd->inventory_data[i] && sd->inventory_data[i]->type == IT_ARMOR )
@@ -7049,6 +7046,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					status_change_end(bl, SC_STONE, INVALID_TIMER);
 			}
 			break;
+		case SC_INCREASEAGI:
+			if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
+				status_change_end(bl, SC_SPIRIT, INVALID_TIMER);
+			break;
 		case SC_DELUGE:
 			if (sc->data[SC_FOGWALL] && sc->data[SC_BLIND])
 				status_change_end(bl, SC_BLIND, INVALID_TIMER);
@@ -7056,6 +7057,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SILENCE:
 			if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
 				status_change_end(bl, SC_GOSPEL, INVALID_TIMER);
+			break;
+		case SC_IMPOSITIO:
+			if (sc->data[SC_IMPOSITIO] && sc->data[SC_IMPOSITIO]->val1 > val1) //Replace higher level effect for lower.
+				status_change_end(bl,SC_IMPOSITIO,INVALID_TIMER);
 			break;
 		default:
 			// If new SC has OPT1 while unit has OPT1, fail it!
@@ -10270,7 +10275,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
 			break;
 		}
-		sc_timer_next(5000 + tick, status_change_timer, bl->id, data);
+		sc_timer_next(10000 + tick, status_change_timer, bl->id, data);
 		return 0;
 
 	case SC_ELECTRICSHOCKER:

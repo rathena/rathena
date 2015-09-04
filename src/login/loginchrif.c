@@ -486,28 +486,8 @@ int logchrif_parse_updreg2(int fd, int id, char* ip){
 
 		if( !accounts->load_num(accounts, &acc, account_id) )
 			ShowStatus("Char-server '%s': receiving (from the char-server) of account_reg2 (account: %d not found, ip: %s).\n", ch_server[id].name, account_id, ip);
-		else{
-			int len;
-			int p;
-			uint8 j;
-			ShowNotice("char-server '%s': receiving (from the char-server) of account_reg2 (account: %d, ip: %s).\n", ch_server[id].name, account_id, ip);
-			for( j = 0, p = 13; j < ACCOUNT_REG2_NUM && p < RFIFOW(fd,2); ++j ){
-				sscanf((char*)RFIFOP(fd,p), "%31c%n", acc.account_reg2[j].str, &len);
-				acc.account_reg2[j].str[len]='\0';
-				p +=len+1; //+1 to skip the '\0' between strings.
-				sscanf((char*)RFIFOP(fd,p), "%255c%n", acc.account_reg2[j].value, &len);
-				acc.account_reg2[j].value[len]='\0';
-				p +=len+1;
-				remove_control_chars(acc.account_reg2[j].str);
-				remove_control_chars(acc.account_reg2[j].value);
-			}
-			acc.account_reg2_num = j;
-			// Save
-			accounts->save(accounts, &acc);
-			// Sending information towards the other char-servers.
-			RFIFOW(fd,0) = 0x2729;// reusing read buffer
-			logchrif_sendallwos(fd, RFIFOP(fd,0), RFIFOW(fd,2));
-		}
+		else
+			mmo_save_accreg2(accounts,fd,account_id,RFIFOL(fd, 8));
 		RFIFOSKIP(fd,RFIFOW(fd,2));
 	}
 	return 1;
@@ -609,33 +589,12 @@ int logchrif_parse_reqacc2reg(int fd){
 	if (RFIFOREST(fd) < 10)
 		return 0;
 	else{
-		struct mmo_account acc;
 		AccountDB* accounts = login_get_accounts_db();
-		size_t off;
-
 		uint32 account_id = RFIFOL(fd,2);
 		uint32 char_id = RFIFOL(fd,6);
 		RFIFOSKIP(fd,10);
 
-		WFIFOHEAD(fd,ACCOUNT_REG2_NUM*sizeof(struct global_reg));
-		WFIFOW(fd,0) = 0x2729;
-		WFIFOL(fd,4) = account_id;
-		WFIFOL(fd,8) = char_id;
-		WFIFOB(fd,12) = 1; //Type 1 for Account2 registry
-
-		off = 13;
-		if( accounts->load_num(accounts, &acc, account_id) ){
-			uint8 j;
-			for( j = 0; j < acc.account_reg2_num; j++ ){
-				if( acc.account_reg2[j].str[0] != '\0' ){
-					off += sprintf((char*)WFIFOP(fd,off), "%s", acc.account_reg2[j].str)+1; //We add 1 to consider the '\0' in place.
-					off += sprintf((char*)WFIFOP(fd,off), "%s", acc.account_reg2[j].value)+1;
-				}
-			}
-		}
-
-		WFIFOW(fd,2) = (uint16)off;
-		WFIFOSET(fd,WFIFOW(fd,2));
+		mmo_send_accreg2(accounts,fd,account_id,char_id);
 	}
 	return 1;
 }

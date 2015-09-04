@@ -157,8 +157,15 @@ bool chrif_auth_delete(uint32 account_id, uint32 char_id, enum sd_state state) {
 		if ( node->char_dat )
 			aFree(node->char_dat);
 
-		if ( node->sd )
+		if ( node->sd ) {
+			if (node->sd->regs.vars)
+				node->sd->regs.vars->destroy(node->sd->regs.vars, script_reg_destroy);
+
+			if (node->sd->regs.arrays)
+				node->sd->regs.arrays->destroy(node->sd->regs.arrays, script_free_array_db);
+
 			aFree(node->sd);
+		}
 
 		ers_free(auth_db_ers, node);
 		idb_remove(auth_db,account_id);
@@ -298,12 +305,8 @@ int chrif_save(struct map_session_data *sd, int flag) {
 		sd->state.storage_flag = 0; //Force close it.
 
 	//Saving of registry values.
-	if (sd->state.reg_dirty&4)
-		intif_saveregistry(sd, 3); //Save char regs
-	if (sd->state.reg_dirty&2)
-		intif_saveregistry(sd, 2); //Save account regs
-	if (sd->state.reg_dirty&1)
-		intif_saveregistry(sd, 1); //Save account2 regs
+	if (sd->vars_dirty)
+		intif_saveregistry(sd);
 
 	mmo_charstatus_len = sizeof(sd->status) + 13;
 	WFIFOHEAD(char_fd, mmo_charstatus_len);
@@ -1932,8 +1935,15 @@ int auth_db_final(DBKey key, DBData *data, va_list ap) {
 	if (node->char_dat)
 		aFree(node->char_dat);
 
-	if (node->sd)
+	if (node->sd) {
+		if (node->sd->regs.vars)
+			node->sd->regs.vars->destroy(node->sd->regs.vars, script_reg_destroy);
+
+		if (node->sd->regs.arrays)
+			node->sd->regs.arrays->destroy(node->sd->regs.arrays, script_free_array_db);
+
 		aFree(node->sd);
+	}
 
 	ers_free(auth_db_ers, node);
 
