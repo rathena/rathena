@@ -394,13 +394,13 @@ enum mob_ai {
 };
 
 enum auto_trigger_flag {
-	ATF_SELF=0x01,
-	ATF_TARGET=0x02,
-	ATF_SHORT=0x04,
-	ATF_LONG=0x08,
-	ATF_WEAPON=0x10,
-	ATF_MAGIC=0x20,
-	ATF_MISC=0x40,
+	ATF_SELF   = 0x01,
+	ATF_TARGET = 0x02,
+	ATF_SHORT  = 0x04,
+	ATF_LONG   = 0x08,
+	ATF_WEAPON = 0x10,
+	ATF_MAGIC  = 0x20,
+	ATF_MISC   = 0x40,
 };
 
 struct block_list {

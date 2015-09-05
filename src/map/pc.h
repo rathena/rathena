@@ -112,16 +112,22 @@ struct s_autospell {
 	bool lock;  // bAutoSpellOnSkill: blocks autospell from triggering again, while being executed
 };
 
+/// AddEff and AddEff2 bonus struct
 struct s_addeffect {
-	enum sc_type id;
-	short rate, arrow_rate;
-	unsigned char flag;
+	enum sc_type sc; /// SC type/effect
+	short rate, /// Rate
+		arrow_rate; /// Arrow rate
+	unsigned char flag; /// Flag
+	unsigned int duration; /// Duration the effect applied
 };
 
+/// AddEffOnSkill bonus struct
 struct s_addeffectonskill {
-	enum sc_type id;
-	short rate, skill;
-	unsigned char target;
+	enum sc_type sc; /// SC type/effect
+	short rate, /// Rate
+		skill_id; /// Skill ID
+	unsigned char target; /// Target
+	unsigned int duration; /// Duration the effect applied
 };
 
 ///Struct of add drop item/group rate
@@ -358,8 +364,8 @@ struct map_session_data {
 
 	// zeroed structures start here
 	struct s_autospell autospell[MAX_PC_BONUS], autospell2[MAX_PC_BONUS], autospell3[MAX_PC_BONUS];
-	struct s_addeffect addeff[MAX_PC_BONUS], addeff2[MAX_PC_BONUS];
-	struct s_addeffectonskill addeff3[MAX_PC_BONUS];
+	struct s_addeffect addeff[MAX_PC_BONUS], addeff_atked[MAX_PC_BONUS];
+	struct s_addeffectonskill addeff_onskill[MAX_PC_BONUS];
 
 	struct s_skill_bonus { //skillatk raises bonus dmg% of skills, skillheal increases heal%, skillblown increases bonus blewcount for some skills.
 		unsigned short id;

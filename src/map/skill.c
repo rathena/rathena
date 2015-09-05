@@ -949,18 +949,21 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		if( skill_id != WS_CARTTERMINATION && skill_id != AM_DEMONSTRATION && skill_id != CR_REFLECTSHIELD && skill_id != MS_REFLECTSHIELD && skill_id != ASC_BREAKER ) {
 			// Trigger status effects
 			enum sc_type type;
-			int i;
+			uint8 i;
+			unsigned int time = 0;
 			for( i = 0; i < ARRAYLENGTH(sd->addeff) && sd->addeff[i].flag; i++ ) {
 				rate = sd->addeff[i].rate;
 				if( attack_type&BF_LONG ) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
 					rate += sd->addeff[i].arrow_rate;
-				if( !rate ) continue;
+				if( !rate )
+					continue;
 
 				if( (sd->addeff[i].flag&(ATF_WEAPON|ATF_MAGIC|ATF_MISC)) != (ATF_WEAPON|ATF_MAGIC|ATF_MISC) ) {
 					// Trigger has attack type consideration.
 					if( (sd->addeff[i].flag&ATF_WEAPON && attack_type&BF_WEAPON) ||
 						(sd->addeff[i].flag&ATF_MAGIC && attack_type&BF_MAGIC) ||
-						(sd->addeff[i].flag&ATF_MISC && attack_type&BF_MISC) ) ;
+						(sd->addeff[i].flag&ATF_MISC && attack_type&BF_MISC) )
+						;
 					else
 						continue;
 				}
@@ -972,31 +975,32 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 						continue; //Range Failed.
 				}
 
-				type =  sd->addeff[i].id;
-				skill = skill_get_time2(status_sc2skill(type),7);
+				type = sd->addeff[i].sc;
+				time = sd->addeff[i].duration;
 
 				if (sd->addeff[i].flag&ATF_TARGET)
-					status_change_start(src,bl,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,skill,SCSTART_NONE);
+					status_change_start(src,bl,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
 
 				if (sd->addeff[i].flag&ATF_SELF)
-					status_change_start(src,src,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,skill,SCSTART_NONE);
+					status_change_start(src,src,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
 			}
 		}
 
 		if( skill_id ) {
 			// Trigger status effects on skills
 			enum sc_type type;
-			int i;
-			for( i = 0; i < ARRAYLENGTH(sd->addeff3) && sd->addeff3[i].skill; i++ ) {
-				if( skill_id != sd->addeff3[i].skill || !sd->addeff3[i].rate )
+			uint8 i;
+			unsigned int time = 0;
+			for( i = 0; i < ARRAYLENGTH(sd->addeff_onskill) && sd->addeff_onskill[i].skill_id; i++ ) {
+				if( skill_id != sd->addeff_onskill[i].skill_id || !sd->addeff_onskill[i].rate )
 					continue;
-				type = sd->addeff3[i].id;
-				skill = skill_get_time2(status_sc2skill(type),7);
+				type = sd->addeff_onskill[i].sc;
+				time = sd->addeff[i].duration;
 
-				if( sd->addeff3[i].target&ATF_TARGET )
-					status_change_start(src,bl,type,sd->addeff3[i].rate,7,0,0,0,skill,SCSTART_NONE);
-				if( sd->addeff3[i].target&ATF_SELF )
-					status_change_start(src,src,type,sd->addeff3[i].rate,7,0,0,0,skill,SCSTART_NONE);
+				if( sd->addeff_onskill[i].target&ATF_TARGET )
+					status_change_start(src,bl,type,sd->addeff_onskill[i].rate,7,0,0,0,time,SCSTART_NONE);
+				if( sd->addeff_onskill[i].target&ATF_SELF )
+					status_change_start(src,src,type,sd->addeff_onskill[i].rate,7,0,0,0,time,SCSTART_NONE);
 			}
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
@@ -2142,30 +2146,30 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	sd = BL_CAST(BL_PC, src);
 	dstsd = BL_CAST(BL_PC, bl);
 
-	if(dstsd && attack_type&BF_WEAPON)
-	{	//Counter effects.
+	if(dstsd && attack_type&BF_WEAPON) {	//Counter effects.
 		enum sc_type type;
-		int i, time;
-		for(i=0; i < ARRAYLENGTH(dstsd->addeff2) && dstsd->addeff2[i].flag; i++)
-		{
-			rate = dstsd->addeff2[i].rate;
-			if (attack_type&BF_LONG)
-				rate+=dstsd->addeff2[i].arrow_rate;
-			if (!rate) continue;
+		uint8 i;
+		unsigned int time = 0;
 
-			if ((dstsd->addeff2[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT))
-			{	//Trigger has range consideration.
-				if((dstsd->addeff2[i].flag&ATF_LONG && !(attack_type&BF_LONG)) ||
-					(dstsd->addeff2[i].flag&ATF_SHORT && !(attack_type&BF_SHORT)))
+		for (i = 0; i < ARRAYLENGTH(dstsd->addeff_atked) && dstsd->addeff_atked[i].flag; i++) {
+			rate = dstsd->addeff_atked[i].rate;
+			if (attack_type&BF_LONG)
+				rate += dstsd->addeff_atked[i].arrow_rate;
+			if (!rate)
+				continue;
+
+			if ((dstsd->addeff_atked[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT)) {	//Trigger has range consideration.
+				if((dstsd->addeff_atked[i].flag&ATF_LONG && !(attack_type&BF_LONG)) ||
+					(dstsd->addeff_atked[i].flag&ATF_SHORT && !(attack_type&BF_SHORT)))
 					continue; //Range Failed.
 			}
-			type = dstsd->addeff2[i].id;
-			time = skill_get_time2(status_sc2skill(type),7);
+			type = dstsd->addeff_atked[i].sc;
+			time = dstsd->addeff_atked[i].duration;
 
-			if (dstsd->addeff2[i].flag&ATF_TARGET)
+			if (dstsd->addeff_atked[i].flag&ATF_TARGET)
 				status_change_start(src,src,type,rate,7,0,0,0,time,SCSTART_NONE);
 
-			if (dstsd->addeff2[i].flag&ATF_SELF && !status_isdead(bl))
+			if (dstsd->addeff_atked[i].flag&ATF_SELF && !status_isdead(bl))
 				status_change_start(src,bl,type,rate,7,0,0,0,time,SCSTART_NONE);
 		}
 	}
