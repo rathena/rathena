@@ -2751,6 +2751,7 @@ REPLACE INTO `item_db_re` VALUES (4631,'Owl_Viscount_Card','Owl Viscount Card',6
 REPLACE INTO `item_db_re` VALUES (4632,'Owl_Marquees_Card','Owl Marquees Card',6,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus5 bAutoSpell,"SA_VIOLENTGALE",(getskilllv("SA_VIOLENTGALE")==5?5:1),1,BF_SHORT,0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4633,'Enhanced_Archer_Skeleton_Card','Enhanced Archer Skeleton Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bLongAtkRate,(BaseLevel>=100?12:10);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4634,'Enhanced_Soldier_Skeleton_Card','Enhanced Soldier Skeleton Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'if (BaseLevel<100) { bonus bCritical,9; } else { bonus bCritical,10; bonus bCritAtkRate,5; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4635,'Enhanced_Amdarais_Card','Enhanced Amdarais Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'.@r = getrefine(); bonus bDef,(.@r*10); bonus bFlee,(.@r*-2); if (BaseLevel>=100) bonus bMaxHP,500;',NULL,NULL);
 #===================================================================
 # Armor Enchant System
 #===================================================================

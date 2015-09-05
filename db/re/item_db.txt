@@ -2720,6 +2720,7 @@
 4632,Owl_Marquees_Card,Owl Marquees Card,6,10,,10,,,,,,,,136,,,,,{ bonus5 bAutoSpell,"SA_VIOLENTGALE",(getskilllv("SA_VIOLENTGALE")==5?5:1),1,BF_SHORT,0; },{},{}
 4633,Enhanced_Archer_Skeleton_Card,Enhanced Archer Skeleton Card,6,20,,10,,,,,,,,2,,,,,{ bonus bLongAtkRate,(BaseLevel>=100?12:10); },{},{}
 4634,Enhanced_Soldier_Skeleton_Card,Enhanced Soldier Skeleton Card,6,20,,10,,,,,,,,2,,,,,{ if (BaseLevel<100) { bonus bCritical,9; } else { bonus bCritical,10; bonus bCritAtkRate,5; } },{},{}
+4635,Enhanced_Amdarais_Card,Enhanced Amdarais Card,6,20,,10,,,,,,,,16,,,,,{ .@r = getrefine(); bonus bDef,(.@r*10); bonus bFlee,(.@r*-2); if (BaseLevel>=100) bonus bMaxHP,500; },{},{}
 //===================================================================
 // Armor Enchant System
 //===================================================================
