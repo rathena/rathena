@@ -303,6 +303,7 @@
 4627:4628,{ bonus2 bSubRace,RC_Formless,5; bonus2 bSubRace,RC_Demon,5; bonus2 bIgnoreDefRaceRate,RC_Formless,50; bonus2 bIgnoreDefRaceRate,RC_Demon,50;}
 4629:4630,{ bonus3 bAutoSpell,677,2,2; bonus2 bSubEle,Ele_Neutral,5; }
 4631:4632,{ bonus5 bAutoSpell,85,1,1,BF_SHORT,0; }
+4635:4636,{ bonus2 bResEff,Eff_Burning,10000; }
 5040:5442,{ bonus bAspdRate,3; bonus bVariableCastrate,3; }
 5040:18673,{ bonus bSPrecovRate,3; }
 5041:18538,{ bonus2 bSubRace,RC_Angel,9; }
