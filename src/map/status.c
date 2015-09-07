@@ -2135,18 +2135,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	npc_script_event(sd, NPCE_STATCALC);
 
-	// Runs script from SC [Cydh]
-	for (i = 0; i < MAX_PC_SC_SCRIPTS; i++) {
-		struct script_code *script;
-		if (sd->sc_scripts[i] == SC_NONE || !(script = status_sc_get_script(sd->sc_scripts[i]))) {
-			sd->sc_scripts[i] = SC_NONE;
-			continue;
-		}
-		run_script(script, 0, sd->bl.id, 0);
-		if (!calculating)
-			return 1;
-	}
-
 	// Parse equipment
 	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i]; // We pass INDEX to current_equip_item_index - for EQUIP_SCRIPT (new cards solution) [Lupus]
@@ -2344,6 +2332,17 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	}
 
 	pc_bonus_script(sd);
+
+	if (&sd->sc && sd->sc.count) { // Script bonus from SC [Cydh]
+		struct script_code *script = NULL;
+		for (i = 0; i < SC_MAX; i++) {
+			if (!sc->data[i] || !(script = status_sc_get_script((sc_type)i)))
+				continue;
+			run_script(script, 0, sd->bl.id, 0);
+			if (!calculating)
+				return 1;
+		}
+	}
 
 	if( sd->pd ) { // Pet Bonus
 		struct pet_data *pd = sd->pd;
@@ -6339,46 +6338,6 @@ void status_change_init(struct block_list *bl)
 	memset(sc, 0, sizeof (struct status_change));
 }
 
-/** Add SC id to player
-* @param sd
-* @param type SC_*
-* @author Cydh
-*/
-void status_sc_script_add(struct map_session_data *sd, sc_type type) {
-	uint8 i = 0;
-
-	nullpo_retv(sd);
-
-	if (!status_sc_get_script(type))
-		return;
-
-	// Don't add if the SC is already listed
-	ARR_FIND(0, MAX_PC_SC_SCRIPTS, i, sd->sc_scripts[i] == type);
-	if (i < MAX_PC_SC_SCRIPTS)
-		return;
-
-	ARR_FIND(0, MAX_PC_SC_SCRIPTS, i, sd->sc_scripts[i] == SC_NONE);
-	if (i == MAX_PC_SC_SCRIPTS)
-		return;
-
-	sd->sc_scripts[i] = type;
-}
-
-/** Removes SC id from player
-* @param sd
-* @param type SC_*
-* @author Cydh
-*/
-void status_sc_script_remove(struct map_session_data *sd, sc_type type) {
-	uint8 i;
-
-	nullpo_retv(sd);
-
-	ARR_FIND(0, MAX_PC_SC_SCRIPTS, i, sd->sc_scripts[i] == type);
-	if (i < MAX_PC_SC_SCRIPTS)
-		sd->sc_scripts[i] = SC_NONE;
-}
-
 /**
  * Applies SC defense to a given status change
  * This function also determines whether or not the status change will be applied
@@ -8993,9 +8952,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	else
 		sce->timer = INVALID_TIMER; // Infinite duration
 
-	if (sd)
-		status_sc_script_add(sd, type);
-
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
 
@@ -9743,9 +9699,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,cap_value(sd->status.clothes_color,0,battle_config.max_cloth_color));
 		}
 	}
-
-	if (sd)
-		status_sc_script_remove(sd,type);
 
 	if (calc_flag)
 		status_calc_bl(bl,calc_flag);
@@ -11526,28 +11479,18 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 	else if (!silent)
 		ShowError("status_sc_readconf_sub: Config table '%s' is not found in \"%s\"\n", configname, filename);
 
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' SC Configs in '"CL_WHITE"%s"CL_RESET"'.\n", i-failed, filename);
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", i-failed, filename);
 	config_destroy(&sc_config);
 }
 
 /**
  * Preparing to read sc_config.conf files
  **/
-static void status_sc_readconf(void) {
-	const char *filename[] = {
-		DBPATH"sc_config.conf",
-		DBIMPORT"/sc_config.conf",
-	};
-	StringBuf buf;
-	uint8 i = 0;
-
-	StringBuf_Init(&buf);
-	for (i = 0; i < ARRAYLENGTH(filename); i++) {
-		StringBuf_Clear(&buf);
-		StringBuf_Printf(&buf, "%s/%s", db_path, filename[i]);
-		status_sc_readconf_sub(StringBuf_Value(&buf), (i));
-	}
-	StringBuf_Destroy(&buf);
+static void status_sc_readconf(const char* basedir, bool silent) {
+	char filepath[256];
+	sprintf(filepath, "%s/%s", basedir, "sc_config.conf");
+	status_sc_readconf_sub(filepath, silent);
+	return;
 }
 
 /**
@@ -11608,15 +11551,14 @@ void status_readdb(void) {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
-		
+
+		status_sc_readconf(dbsubpath2,i);
 		status_readdb_attrfix(dbsubpath2,i); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i);
 		sv_readdb(dbsubpath2, "refine_db.txt", ',', 4+MAX_REFINE, 4+MAX_REFINE, ARRAYLENGTH(refine_info), &status_readdb_refine, i);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
-
-	status_sc_readconf();
 
 	if (!battle_config.display_hallucination) { // Disable Hallucination.
 		struct s_status_change_db *sc = status_sc_exists(SC_HALLUCINATION);
