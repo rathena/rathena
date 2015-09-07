@@ -1928,8 +1928,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			skill = (sd->autospell[i].id > 0) ? sd->autospell[i].id : -sd->autospell[i].id;
 
 			sd->state.autocast = 1;
-			if ( skill_isNotOk(skill, sd) )
+			if ( skill_isNotOk(skill, sd) ) {
+				sd->state.autocast = 0;
 				continue;
+			}
 			sd->state.autocast = 0;
 
 			autospl_skill_lv = sd->autospell[i].lv?sd->autospell[i].lv:1;
@@ -2052,8 +2054,10 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 		skill = sd->autospell3[i].id;
 		sd->state.autocast = 1; //set this to bypass sd->canskill_tick check
 
-		if( skill_isNotOk((skill > 0) ? skill : skill*-1, sd) )
+		if( skill_isNotOk((skill > 0) ? skill : skill*-1, sd) ) {
+			sd->state.autocast = 0;
 			continue;
+		}
 
 		sd->state.autocast = 0;
 
@@ -2269,8 +2273,10 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				 autospl_rate>>=1;
 
 			dstsd->state.autocast = 1;
-			if ( skill_isNotOk(autospl_skill_id, dstsd) )
+			if ( skill_isNotOk(autospl_skill_id, dstsd) ) {
+				dstsd->state.autocast = 0;
 				continue;
+			}
 			dstsd->state.autocast = 0;
 
 			if (rnd()%1000 >= autospl_rate)
@@ -4022,6 +4028,21 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 
 						map_foreachinarea(skill_cell_overlap,src->m,skl->x-i,skl->y-i,skl->x+i,skl->y+i,BL_SKILL,skl->skill_id,&dummy,src);
 						skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,0);
+					}
+					break;
+				case RL_FALLEN_ANGEL:
+					{
+						struct map_session_data *sd = (src->type == BL_PC) ? map_id2sd(src->id): NULL;
+						if (sd) {
+							if (!skill_check_condition_castend(sd,GS_DESPERADO,skl->skill_lv))
+								break;
+							sd->state.autocast = 1;
+						}
+						skill_castend_pos2(src,skl->x,skl->y,GS_DESPERADO,skl->skill_lv,tick,skl->flag);
+						if (sd) {
+							battle_consume_ammo(sd,GS_DESPERADO,skl->skill_lv);
+							sd->state.autocast = 0;
+						}
 					}
 					break;
 				case NC_MAGMA_ERUPTION:
@@ -11776,15 +11797,14 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 	case RL_FALLEN_ANGEL:
 		if (unit_movepos(src,x,y,1,1)) {
-			enum e_skill skill_use = GS_DESPERADO;
-			uint8 skill_use_lv = pc_checkskill(sd,skill_use);
-			clif_blown(src);
-			if (skill_use_lv && skill_check_condition_castend(sd,skill_use,skill_use_lv)) {
-				sd->skill_id_old = RL_FALLEN_ANGEL;
-				skill_castend_pos2(src,src->x,src->y,skill_use,skill_use_lv,tick,SD_LEVEL|SD_ANIMATION|SD_SPLASH);
-				battle_consume_ammo(sd,skill_use,skill_use_lv);
+			uint8 skill_use_lv = sd ? pc_checkskill(sd,GS_DESPERADO) : 5;
+			if (!skill_use_lv) {
+				clif_skill_nodamage(src, src, skill_id, skill_lv, 0);
+				break;
 			}
-			sd->skill_id_old = 0;
+			clif_fixpos(src);
+			clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+			skill_addtimerskill(src, tick+500, 0, x, y, RL_FALLEN_ANGEL, skill_use_lv, BF_WEAPON, flag|SD_LEVEL|SD_ANIMATION|SD_SPLASH);
 		}
 		else {
 			if (sd)
@@ -15277,10 +15297,6 @@ void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uin
 			case CG_TAROTCARD: // TarotCard will consume sp in skill_cast_nodamage_id [Inkfish]
 			case MC_IDENTIFY:
 				require.sp = 0;
-				break;
-			case GS_DESPERADO:
-				if (sd->skill_id_old == RL_FALLEN_ANGEL) //Don't consume SP if triggered by Fallen Angel
-					require.sp = 0;
 				break;
 			case MO_KITRANSLATION:
 				//Spiritual Bestowment only uses spirit sphere when giving it to someone
