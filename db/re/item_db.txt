@@ -2723,6 +2723,7 @@
 4635,Enhanced_Amdarais_Card,Enhanced Amdarais Card,6,20,,10,,,,,,,,16,,,,,{ .@r = getrefine(); bonus bDef,(.@r*10); bonus bFlee,(.@r*-2); if (BaseLevel>=100) bonus bMaxHP,500; },{},{}
 4636,Bijou_Card,Bijou Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bResEff,Eff_Freeze,10000; bonus bAtkRate,10; bonus bMatkRate,10; },{},{}
 4637,Immortal_Corps_Card,Immortal Corps Card,6,20,,10,,,,,,,,4,,,,,{ bonus bHPGainValue,50; bonus bSPGainValue,5; bonus bNoRegen,1; bonus bNoRegen,2; },{},{ heal -1000,-100; }
+4638,Watcher_Card,Watcher Card,6,20,,10,,,,,,,,16,,,,,{ bonus bBaseAtk,30; bonus bSPDrainValue,-5; },{},{}
 //===================================================================
 // Armor Enchant System
 //===================================================================
