@@ -6,6 +6,7 @@
 
 #include "cbasetypes.h"
 #include "../common/db.h"
+#include "../config/core.h"
 #include <time.h>
 
 // server->client protocol version
@@ -31,14 +32,14 @@
 #define HOTKEY_SAVING
 
 #if PACKETVER < 20090603
-        // (27 = 9 skills x 3 bars)               (0x02b9,191)
-        #define MAX_HOTKEYS 27
+	// (27 = 9 skills x 3 bars)               (0x02b9,191)
+	#define MAX_HOTKEYS 27
 #elif PACKETVER < 20090617
-        // (36 = 9 skills x 4 bars)               (0x07d9,254)
-        #define MAX_HOTKEYS 36
+	// (36 = 9 skills x 4 bars)               (0x07d9,254)
+	#define MAX_HOTKEYS 36
 #else
-        // (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
-        #define MAX_HOTKEYS 38
+	// (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
+	#define MAX_HOTKEYS 38
 #endif
 
 #define MAX_MAP_PER_SERVER 1500 /// Increased to allow creation of Instance Maps
@@ -812,9 +813,16 @@ enum e_pc_reg_loading {
 	PRL_ALL = 0xFF,
 };
 
-// sanity checks...
+// Sanity checks...
 #if MAX_ZENY > INT_MAX
 #error MAX_ZENY is too big
+#endif
+
+#ifndef VIP_ENABLE
+	#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
+	#define MIN_CHARS MAX_CHARS // Default number of characters per account.
+	#define MAX_CHAR_BILLING 0
+	#define MAX_CHAR_VIP 0
 #endif
 
 #if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS

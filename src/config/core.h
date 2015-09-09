@@ -78,11 +78,6 @@
 	#define MIN_CHARS 3 // Default number of characters per account.
 	#define MAX_CHAR_VIP 6 // This must be less than MAX_CHARS
 	#define MAX_CHAR_BILLING 0 // This must be less than MAX_CHARS
-#else
-	#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
-	#define MIN_CHARS MAX_CHARS // Default number of characters per account.
-	#define MAX_CHAR_BILLING 0
-	#define MAX_CHAR_VIP 0
 #endif
 
 /// Comment to disable the official packet obfuscation support.
