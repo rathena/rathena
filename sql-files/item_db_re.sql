@@ -9573,7 +9573,7 @@ REPLACE INTO `item_db_re` VALUES (19053,'Fighter_Moon_Cat','Fighter Moon Cat',4,
 # Costume System
 #===================================================================
 REPLACE INTO `item_db_re` VALUES (19500,'T_Mr_Smile','T Mr Smile',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,6144,NULL,'0',0,65,'bonus bStr,2;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (19501,'T_Spinx_Helm','T Spinx Helm',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,5120,NULL,'0',0,137,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19501,'T_Spinx_Helm','T Spinx Helm',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'0',0,137,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19502,'T_Goggle','T Goggle',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,3072,NULL,'0',0,1,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19503,'T_Munak_Hat','T Munak Hat',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,7168,NULL,'0',0,51,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19504,'T_Sunglasses','T Sunglasses',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'0',0,12,NULL,NULL,NULL);
