@@ -2756,6 +2756,7 @@ REPLACE INTO `item_db_re` VALUES (4636,'Bijou_Card','Bijou Card',6,20,NULL,10,NU
 REPLACE INTO `item_db_re` VALUES (4637,'Immortal_Corps_Card','Immortal Corps Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bHPGainValue,50; bonus bSPGainValue,5; bonus bNoRegen,1; bonus bNoRegen,2;',NULL,'heal -1000,-100;');
 REPLACE INTO `item_db_re` VALUES (4638,'Watcher_Card','Watcher Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bBaseAtk,30; bonus bSPDrainValue,-5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4639,'Taffy_Card','Taffy Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus bAtkRate,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4640,'Frozen_Wolf_Card','Frozen Wolf Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus bMatkRate,1;',NULL,NULL);
 #===================================================================
 # Armor Enchant System
 #===================================================================
