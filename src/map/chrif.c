@@ -848,7 +848,7 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email) {
  * @val1 : extra data value to transfer for operation
  * @val2 : extra data value to transfer for operation
  */
-int chrif_req_login_operation(int aid, const char* character_name, unsigned short operation_type, int32 timediff, int val1, int val2) {
+int chrif_req_login_operation(int aid, const char* character_name, enum chrif_req_op operation_type, int32 timediff, int val1, int val2) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,44);
@@ -877,7 +877,7 @@ int chrif_changesex(struct map_session_data *sd, bool change_account) {
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = sd->status.account_id;
 	safestrncpy((char*)WFIFOP(char_fd,6), sd->status.name, NAME_LENGTH);
-	WFIFOW(char_fd,30) = (change_account ? CHRIF_OP_LOGIN_CHANGESEX : CHRIF_OP_LOGIN_CHANGECHARSEX);
+	WFIFOW(char_fd,30) = (change_account ? CHRIF_OP_LOGIN_CHANGESEX : CHRIF_OP_CHANGECHARSEX);
 	if (!change_account)
 		WFIFOB(char_fd,32) = sd->status.sex == SEX_MALE ? SEX_FEMALE : SEX_MALE;
 	WFIFOSET(char_fd,44);
@@ -917,14 +917,13 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 	}
 
 	switch (type) {
+		case CHRIF_OP_LOGIN_CHANGESEX:
+		case CHRIF_OP_CHANGECHARSEX:
+			type = CHRIF_OP_LOGIN_CHANGESEX; // So we don't have to create a new msgstring.
 		case CHRIF_OP_LOGIN_BLOCK:
 		case CHRIF_OP_LOGIN_BAN:
 		case CHRIF_OP_LOGIN_UNBLOCK:
 		case CHRIF_OP_LOGIN_UNBAN:
-		case CHRIF_OP_LOGIN_CHANGESEX:
-		case CHRIF_OP_LOGIN_CHANGECHARSEX:
-			if (type == CHRIF_OP_LOGIN_CHANGECHARSEX)
-				type--; // So we don't have to create a new msgstring.
 			snprintf(action,25,"%s",msg_txt(sd,427+type)); //block|ban|unblock|unban|change the sex of
 			break;
 		case CHRIF_OP_LOGIN_VIP:

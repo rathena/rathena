@@ -727,17 +727,16 @@ int chmapif_parse_fwlog_changestatus(int fd){
 		int result = 0; // 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline, 4-current group level > VIP group level
 		char esc_name[NAME_LENGTH*2+1];
 		char answer = true;
-
 		int aid = RFIFOL(fd,2); // account_id of who ask (-1 if server itself made this request)
 		const char* name = (char*)RFIFOP(fd,6); // name of the target character
-		int operation = RFIFOW(fd,30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban, 5-changesex, 6-vip, 7-changecharsex
+		int operation = RFIFOW(fd,30); // type of operation @see enum chrif_req_op
 		int32 timediff = 0;
 		int val1 = 0, sex = SEX_MALE;
 
-		if (operation == 2 || operation == 6) {
+		if (operation == CHRIF_OP_LOGIN_BAN || operation == CHRIF_OP_LOGIN_VIP) {
 			timediff = RFIFOL(fd, 32);
 			val1 = RFIFOL(fd, 36);
-		} else if (operation == 7)
+		} else if (operation == CHRIF_OP_CHANGECHARSEX)
 			sex = RFIFOB(fd, 32);
 		RFIFOSKIP(fd,44);
 
@@ -767,45 +766,45 @@ int chmapif_parse_fwlog_changestatus(int fd){
 			else {
 				//! NOTE: See src/char/chrif.h::enum chrif_req_op for the number
 				switch( operation ) {
-					case 1: // block
+					case CHRIF_OP_LOGIN_BLOCK: // block
 						WFIFOHEAD(login_fd,10);
 						WFIFOW(login_fd,0) = 0x2724;
 						WFIFOL(login_fd,2) = t_aid;
 						WFIFOL(login_fd,6) = 5; // new account status
 						WFIFOSET(login_fd,10);
 						break;
-					case 2: // ban
+					case CHRIF_OP_LOGIN_BAN: // ban
 						WFIFOHEAD(login_fd,10);
 						WFIFOW(login_fd, 0) = 0x2725;
 						WFIFOL(login_fd, 2) = t_aid;
 						WFIFOL(login_fd, 6) = timediff;
 						WFIFOSET(login_fd,10);
 						break;
-					case 3: // unblock
+					case CHRIF_OP_LOGIN_UNBLOCK: // unblock
 						WFIFOHEAD(login_fd,10);
 						WFIFOW(login_fd,0) = 0x2724;
 						WFIFOL(login_fd,2) = t_aid;
 						WFIFOL(login_fd,6) = 0; // new account status
 						WFIFOSET(login_fd,10);
 						break;
-					case 4: // unban
+					case CHRIF_OP_LOGIN_UNBAN: // unban
 						WFIFOHEAD(login_fd,6);
 						WFIFOW(login_fd,0) = 0x272a;
 						WFIFOL(login_fd,2) = t_aid;
 						WFIFOSET(login_fd,6);
 						break;
-					case 5: // changesex
+					case CHRIF_OP_LOGIN_CHANGESEX: // changesex
 						answer = false;
 						WFIFOHEAD(login_fd,6);
 						WFIFOW(login_fd,0) = 0x2727;
 						WFIFOL(login_fd,2) = t_aid;
 						WFIFOSET(login_fd,6);
 						break;
-					case 6: // vip
+					case CHRIF_OP_LOGIN_VIP: // vip
 						answer = (val1&4); // vip_req val1=type, &1 login send return, &2 update timestamp, &4 map send answer
 						chlogif_reqvipdata(t_aid, val1, timediff, fd);
 						break;
-					case 7: // changecharsex
+					case CHRIF_OP_CHANGECHARSEX: // changecharsex
 						answer = false;
 						chlogif_parse_ackchangecharsex(t_cid, sex);
 						break;

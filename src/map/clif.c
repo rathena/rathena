@@ -1971,7 +1971,7 @@ void clif_parse_NPCMarketPurchase(int fd, struct map_session_data *sd) {
 #if PACKETVER >= 20131223
 	struct s_packet_db* info;
 	struct s_npc_buy_list *item_list;
-	uint16 cmd = RFIFOW(fd,0), len = 0, i = 0;
+	uint16 len = 0, i = 0;
 	uint8 res = 0, n = 0;
 
 	nullpo_retv(sd);
