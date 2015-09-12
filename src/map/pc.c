@@ -8444,7 +8444,7 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 	if( pc_checkskill(sd,MC_PUSHCART) <= 0 && type != 0 )
 		return false;// Push cart is required
 
-#ifdef NEW_CARTS
+#ifndef NEW_CARTS
 
 	switch( type ) {
 		case 0:
