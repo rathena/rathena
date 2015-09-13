@@ -8434,7 +8434,6 @@ void pc_setoption(struct map_session_data *sd,int type)
 bool pc_setcart(struct map_session_data *sd,int type) {
 #ifndef NEW_CARTS
 	int cart[6] = {0x0000,OPTION_CART1,OPTION_CART2,OPTION_CART3,OPTION_CART4,OPTION_CART5};
-#else
 	int option;
 #endif
 	nullpo_retr(false,sd);
@@ -8445,7 +8444,7 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 	if( pc_checkskill(sd,MC_PUSHCART) <= 0 && type != 0 )
 		return false;// Push cart is required
 
-#ifndef NEW_CARTS
+#ifdef NEW_CARTS
 
 	switch( type ) {
 		case 0:
