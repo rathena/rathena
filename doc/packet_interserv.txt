@@ -249,7 +249,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2728:
 	Type: HA
-	Structure: <cmd>.W <len>.W <aid>.L <cid>.L { <str>.?B <value>.?B }
+	Structure: <cmd>.W <len>.W <aid>.L <cid>.L { <keyLength>.B <key>.<keyLength> <index>.L <type>.B <value>.?B }
 	index: 0,2,4,8,13
 	len: variable (reg size+4)
 	parameter:
@@ -257,8 +257,11 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- len:  pakcet size
 		- aid: account identification
 		- cid : char identification
-		- str : name of variable in registry
-		- value : value of varaible in registry
+		- keyLength
+		- key
+		- index
+		- type
+		- value
 	desc:
 		- Receive an request to fetch account_reg2 from a char-server, see packet 0x3004 (mapif_parse_Registry)
 
@@ -1438,9 +1441,9 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- Parse whisper to GM
 
 0x3804
-	Type: IZ
-	Structure: <cmd>.W <?>.W <aid>.L <cid>.L <type>.B
-	index: 0,2,4,8,12
+	Type: AH
+	Structure: <cmd>.W <len>.W <aid>.L <cid>.L <?>.B <type>.B <count>.W { <keyLength>.B <key>.<keyLength> <index>.L <valLength>.B <val>.<valLength> }*
+	index: 0,2,4,8,12,13,14,16,...
 	len: variable: 13 or p (Max=5013)
 	parameter:
 		- cmd : packet identification (0x3804)
@@ -1448,6 +1451,12 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- aid
 		- cid
 		- type
+		- count
+		- keyLength
+		- key
+		- index
+		- val
+		- valLength
 	desc:
 		- Account registry transfer to map-server
 
