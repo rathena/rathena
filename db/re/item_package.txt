@@ -3960,3 +3960,53 @@ IG_Chronosian_Lucky_Egg,14616,1,20 // 20x STR Biscuit Stick
 IG_Chronosian_Lucky_Egg,14617,1,20 // 20x VIT Biscuit Stick
 IG_Chronosian_Lucky_Egg,14619,1,20 // 20x INT Biscuit Stick
 IG_Chronosian_Lucky_Egg,14618,1,20 // 20x AGI Biscuit Stick
+
+//! TODO: Confirm the rates
+IG_Sanctuary_Lucky_Egg,4399,1,1 // 1x Memory of Thanatos Card
+IG_Sanctuary_Lucky_Egg,4305,1,1 // 1x Turtle General Card
+IG_Sanctuary_Lucky_Egg,4499,1,1 // 1x Sealed Incantation Samurai Card
+IG_Sanctuary_Lucky_Egg,4054,1,1 // 1x Angeling_Card
+IG_Sanctuary_Lucky_Egg,6239,1,1 // 1x Guarantee_Armor_11Up
+IG_Sanctuary_Lucky_Egg,6238,1,1 // 1x Guarantee_Weapon_11Up
+IG_Sanctuary_Lucky_Egg,6232,1,1 // 1x Guarantee_Armor_9Up
+IG_Sanctuary_Lucky_Egg,6228,1,1 // 1x Guarantee_Weapon_9Up
+IG_Sanctuary_Lucky_Egg,6233,1,1 // 1x Guarantee_Armor_8Up
+IG_Sanctuary_Lucky_Egg,6229,1,1 // 1x Guarantee_Weapon_8Up
+IG_Sanctuary_Lucky_Egg,22072,1,1 // 1x Hikingboots
+IG_Sanctuary_Lucky_Egg,20218,1,1 // 1x C_Spell_Circuit
+IG_Sanctuary_Lucky_Egg,21019,1,1 // 1x Onimaru
+IG_Sanctuary_Lucky_Egg,16043,1,1 // 1x Meteor_Strike
+IG_Sanctuary_Lucky_Egg,6438,1,3 // 3x Blessed_Weapon_Ore
+IG_Sanctuary_Lucky_Egg,6439,1,3 // 3x Blessed_Armor_Ore
+IG_Sanctuary_Lucky_Egg,17126,1,1 // 1x ASPD Intensifying Potion Box
+IG_Sanctuary_Lucky_Egg,14620,1,20 // 20x DEX Biscuit Stick
+IG_Sanctuary_Lucky_Egg,14621,1,20 // 20x LUK Biscuit Stick
+IG_Sanctuary_Lucky_Egg,14616,1,20 // 20x STR Biscuit Stick
+IG_Sanctuary_Lucky_Egg,14617,1,20 // 20x VIT Biscuit Stick
+IG_Sanctuary_Lucky_Egg,14619,1,20 // 20x INT Biscuit Stick
+IG_Sanctuary_Lucky_Egg,14618,1,20 // 20x AGI Biscuit Stick
+
+//! TODO: Confirm the rates
+IG_Cyborg_Lucky_Egg,4263,1,1 // 1x Incantation Samurai Card
+IG_Cyborg_Lucky_Egg,4403,1,1 // 1x Kiel Card
+IG_Cyborg_Lucky_Egg,4486,1,1 // 1x Sealed Berzebub Card
+IG_Cyborg_Lucky_Egg,4488,1,1 // 1x Sealed Dark Lord Card
+IG_Cyborg_Lucky_Egg,6239,1,1 // 1x Guarantee_Armor_11Up
+IG_Cyborg_Lucky_Egg,6238,1,1 // 1x Guarantee_Weapon_11Up
+IG_Cyborg_Lucky_Egg,6232,1,1 // 1x Guarantee_Armor_9Up
+IG_Cyborg_Lucky_Egg,6228,1,1 // 1x Guarantee_Weapon_9Up
+IG_Cyborg_Lucky_Egg,6233,1,1 // 1x Guarantee_Armor_8Up
+IG_Cyborg_Lucky_Egg,6229,1,1 // 1x Guarantee_Weapon_8Up
+IG_Cyborg_Lucky_Egg,20315,1,1 // 1x C_Analyze_Eye
+IG_Cyborg_Lucky_Egg,20316,1,1 // 1x C_Seraph_Wing_Helm
+IG_Cyborg_Lucky_Egg,22082,1,1 // 1x Polyhedron_Shoes
+IG_Cyborg_Lucky_Egg,28372,1,1 // 1x Imperial_Ring
+IG_Cyborg_Lucky_Egg,6438,1,3 // 3x Blessed_Weapon_Ore
+IG_Cyborg_Lucky_Egg,6439,1,3 // 3x Blessed_Armor_Ore
+IG_Cyborg_Lucky_Egg,17126,1,1 // 1x ASPD Intensifying Potion Box
+IG_Cyborg_Lucky_Egg,14620,1,20 // 20x DEX Biscuit Stick
+IG_Cyborg_Lucky_Egg,14621,1,20 // 20x LUK Biscuit Stick
+IG_Cyborg_Lucky_Egg,14616,1,20 // 20x STR Biscuit Stick
+IG_Cyborg_Lucky_Egg,14617,1,20 // 20x VIT Biscuit Stick
+IG_Cyborg_Lucky_Egg,14619,1,20 // 20x INT Biscuit Stick
+IG_Cyborg_Lucky_Egg,14618,1,20 // 20x AGI Biscuit Stick
