@@ -1119,7 +1119,7 @@ int mapif_parse_Registry(int fd)
 		bool isLoginActive = session_isActive(login_fd);
 
 		if( isLoginActive )
-			chlogif_request_global_accreg(account_id,char_id);
+			chlogif_upd_global_accreg(account_id,char_id);
 
 		for(i = 0; i < count; i++) {
 			unsigned int index;

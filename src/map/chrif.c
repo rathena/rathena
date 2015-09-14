@@ -69,7 +69,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b10: Outgoing, chrif_updatefamelist -> 'Update the fame ranking lists and send them'
 //2b11: Outgoing, chrif_divorce -> 'tell the charserver to do divorce'
 //2b12: Incoming, chrif_divorceack -> 'divorce chars
-//2b13: FREE
+//2b13: Outgoing, chrif_update_ip -> 'tell the change of map-server IP'
 //2b14: Incoming, chrif_accountban -> 'not sure: kick the player with message XY'
 //2b15: Outgoing, chrif_skillcooldown_save -> request to save skillcooldown
 //2b16: Outgoing, chrif_ragsrvinfo -> 'sends base / job / drop rates ....'
@@ -1527,7 +1527,12 @@ void chrif_on_disconnect(void) {
 	add_timer(gettick() + 1000, check_connect_char_server, 0, 0);
 }
 
-
+/**
+ * !CHECKME: This is intended?
+ * On sync request received, map-server only send its own IP
+ * without change the char IP (if any)?
+ * Since no IP info sent by 0x2b1e (chlogif_parse_updip)
+ **/
 void chrif_update_ip(int fd) {
 	uint32 new_ip;
 
@@ -1543,7 +1548,7 @@ void chrif_update_ip(int fd) {
 	if (!new_ip)
 		return; //No change
 
-	WFIFOW(fd,0) = 0x2736;
+	WFIFOW(fd,0) = 0x2b13;
 	WFIFOL(fd,2) = htonl(new_ip);
 	WFIFOSET(fd,6);
 }
@@ -1554,6 +1559,7 @@ void chrif_keepalive(int fd) {
 	WFIFOW(fd,0) = 0x2b23;
 	WFIFOSET(fd,2);
 }
+
 void chrif_keepalive_ack(int fd) {
 	session[fd]->flag.ping = 0;/* reset ping state, we received a packet */
 }

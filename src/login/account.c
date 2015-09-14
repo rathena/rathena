@@ -650,7 +650,7 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 	return result;
 }
 
-void mmo_save_accreg2(AccountDB* self, int fd, int account_id, int char_id) {
+void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id) {
 	Sql* sql_handle = ((AccountDB_SQL*)self)->accounts;
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	int count = RFIFOW(fd, 12);
@@ -690,14 +690,14 @@ void mmo_save_accreg2(AccountDB* self, int fd, int account_id, int char_id) {
 						Sql_ShowDebug(sql_handle);
 					break;
 				default:
-					ShowError("mmo_save_accreg2: unknown type %d\n",RFIFOB(fd, cursor - 1));
+					ShowError("mmo_save_global_accreg: unknown type %d\n",RFIFOB(fd, cursor - 1));
 					return;
 			}
 		}
 	}
 }
 
-void mmo_send_accreg2(AccountDB* self, int fd, int account_id, int char_id) {
+void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id) {
 	Sql* sql_handle = ((AccountDB_SQL*)self)->accounts;
 	AccountDB_SQL* db = (AccountDB_SQL*)self;
 	char* data;
@@ -708,7 +708,7 @@ void mmo_send_accreg2(AccountDB* self, int fd, int account_id, int char_id) {
 		Sql_ShowDebug(sql_handle);
 
 	WFIFOHEAD(fd, 60000 + 300);
-	WFIFOW(fd, 0) = 0x3804;
+	WFIFOW(fd, 0) = 0x2726;
 	// 0x2 = length, set prior to being sent
 	WFIFOL(fd, 4) = account_id;
 	WFIFOL(fd, 8) = char_id;
@@ -755,7 +755,7 @@ void mmo_send_accreg2(AccountDB* self, int fd, int account_id, int char_id) {
 
 			// prepare follow up
 			WFIFOHEAD(fd, 60000 + 300);
-			WFIFOW(fd, 0) = 0x3804;
+			WFIFOW(fd, 0) = 0x2726;
 			// 0x2 = length, set prior to being sent
 			WFIFOL(fd, 4) = account_id;
 			WFIFOL(fd, 8) = char_id;
@@ -775,7 +775,7 @@ void mmo_send_accreg2(AccountDB* self, int fd, int account_id, int char_id) {
 		Sql_ShowDebug(sql_handle);
 
 	WFIFOHEAD(fd, 60000 + 300);
-	WFIFOW(fd, 0) = 0x3804;
+	WFIFOW(fd, 0) = 0x2726;
 	// 0x2 = length, set prior to being sent
 	WFIFOL(fd, 4) = account_id;
 	WFIFOL(fd, 8) = char_id;
@@ -818,7 +818,7 @@ void mmo_send_accreg2(AccountDB* self, int fd, int account_id, int char_id) {
 
 			// prepare follow up
 			WFIFOHEAD(fd, 60000 + 300);
-			WFIFOW(fd, 0) = 0x3804;
+			WFIFOW(fd, 0) = 0x2726;
 			// 0x2 = length, set prior to being sent
 			WFIFOL(fd, 4) = account_id;
 			WFIFOL(fd, 8) = char_id;

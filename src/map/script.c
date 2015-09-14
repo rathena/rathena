@@ -3122,7 +3122,7 @@ int set_reg(struct script_state* st, TBL_PC* sd, int64 num, const char* name, co
 
 int set_var(TBL_PC* sd, char* name, void* val)
 {
-    return set_reg(NULL, sd, reference_uid(add_str(name),0), name, val, NULL);
+	return set_reg(NULL, sd, reference_uid(add_str(name),0), name, val, NULL);
 }
 
 void setd_sub(struct script_state *st, TBL_PC *sd, const char *varname, int elem, void *value, struct reg_db *ref)
