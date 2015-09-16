@@ -839,4 +839,15 @@ enum e_pc_reg_loading {
 	#endif
 #endif
 
+/* Feb 1st 2012 */
+#if PACKETVER >= 20120201
+	#define NEW_CARTS
+	#ifndef ENABLE_SC_SAVING
+	#warning "Cart won't be able to be saved for relog"
+	#endif
+	#define MAX_CARTS 9
+#else
+	#define MAX_CARTS 5
+#endif
+
 #endif /* _MMO_H_ */
