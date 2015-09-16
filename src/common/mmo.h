@@ -6,7 +6,7 @@
 
 #include "cbasetypes.h"
 #include "../common/db.h"
-//#include "../config/core.h"
+#include "../config/core.h"
 #include <time.h>
 
 // server->client protocol version
