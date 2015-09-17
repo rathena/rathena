@@ -80,6 +80,14 @@ struct s_mob_skill {
 };
 static DBMap *mob_skill_db; /// Monster skill temporary db. s_mob_skill -> mobid
 
+struct mob_db *mobdb_exists(uint16 mob_id) {
+	struct mob_db *db = mob_db(mob_id);
+
+	if (db == mob_dummy)
+		return NULL;
+	return db;
+}
+
 static struct eri *item_drop_ers; //For loot drops delay structures.
 static struct eri *item_drop_list_ers;
 
