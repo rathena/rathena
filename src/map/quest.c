@@ -270,19 +270,15 @@ void quest_update_objective(TBL_PC *sd, int mob_id)
 			item.nameid = dropitem->nameid;
 			item.identify = itemdb_isidentified(dropitem->nameid);
 			item.amount = dropitem->count;
-#ifdef BOUND_ITEMS
-			item.bound = dropitem->bound;
-#endif
-			if (dropitem->isGUID)
-				item.unique_id = pc_generate_unique_id(sd);
+//#ifdef BOUND_ITEMS
+//			item.bound = dropitem->bound;
+//#endif
+//			if (dropitem->isGUID)
+//				item.unique_id = pc_generate_unique_id(sd);
 			if ((temp = pc_additem(sd, &item, 1, LOG_TYPE_QUEST)) != 0) // Failed to obtain the item
 				clif_additem(sd, 0, 0, temp);
-			else if (dropitem->isAnnounced) {
-				char output[CHAT_SIZE_MAX];
-
-				sprintf(output, msg_txt(sd, 717), sd->status.name, itemdb_jname(item.nameid), StringBuf_Value(&qi->name));
-				intif_broadcast(output, strlen(output) + 1, BC_DEFAULT);
-			}
+//			else if (dropitem->isAnnounced || itemdb_exists(dropitem->nameid)->flag.broadcast)
+//				intif_broadcast_obtain_special_item(sd, dropitem->nameid, dropitem->mob_id, ITEMOBTAIN_TYPE_MONSTER_ITEM);
 		}
 	}
 }
@@ -382,9 +378,8 @@ int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type)
  * Loads quests from the quest db.txt
  * @return Number of loaded quests, or -1 if the file couldn't be read.
  */
-int quest_read_txtdb(void)
+void quest_read_txtdb(void)
 {
-	uint32 count = 0;
 	const char* dbsubpath[] = {
 		"",
 		DBIMPORT"/",
@@ -394,15 +389,14 @@ int quest_read_txtdb(void)
 	for (f = 0; f < ARRAYLENGTH(dbsubpath); f++) {
 		FILE *fp;
 		char line[1024];
-		uint32 ln = 0;
+		uint32 ln = 0, count = 0;
 		char filename[256];
 
 		sprintf(filename, "%s/%s%s", db_path, dbsubpath[f], "quest_db.txt");
 		if ((fp = fopen(filename, "r")) == NULL) {
 			if (f == 0)
 				ShowError("Can't read %s\n", filename);
-
-			return -1;
+			return;
 		}
 
 		while(fgets(line, sizeof(line), fp)) {
@@ -430,14 +424,14 @@ int quest_read_txtdb(void)
 			if (str[0] == NULL)
 				continue;
 			if (i < 18) {
-				ShowError("quest_read_txtdb: Insufficient columns in line %d (%d of %d)\n", ln, i, 18);
+				ShowError("quest_read_txtdb: Insufficient columns in '%s' line %d (%d of %d)\n", filename, ln, i, 18);
 				continue;
 			}
 
 			quest_id = atoi(str[0]);
 
 			if (quest_id < 0 || quest_id >= INT_MAX) {
-				ShowError("quest_read_txtdb: Invalid quest ID '%d' in line '%s' (min: 0, max: %d.)\n", quest_id, ln, INT_MAX);
+				ShowError("quest_read_txtdb: Invalid quest ID '%d' in '%s' line '%s' (min: 0, max: %d.)\n", quest_id, filename,ln, INT_MAX);
 				continue;
 			}
 
@@ -467,7 +461,7 @@ int quest_read_txtdb(void)
 					ShowWarning("quest_read_txtdb: Invalid monster as objective '%d' in line %d.\n", mob_id, ln);
 					continue;
 				}
-				RECREATE(quest->objectives, struct quest_objective, quest->objectives_count++);
+				RECREATE(quest->objectives, struct quest_objective, quest->objectives_count+1);
 				quest->objectives[quest->objectives_count].mob = mob_id;
 				quest->objectives[quest->objectives_count].count = (uint16)atoi(str[2 * i + 3]);
 				quest->objectives_count++;
@@ -482,9 +476,10 @@ int quest_read_txtdb(void)
 					ShowWarning("quest_read_txtdb: Invalid item reward '%d' (mob %d, optional) in line %d.\n", nameid, mob_id, ln);
 					continue;
 				}
-				RECREATE(quest->dropitem, struct quest_dropitem, quest->dropitem_count++);
+				RECREATE(quest->dropitem, struct quest_dropitem, quest->dropitem_count+1);
 				quest->dropitem[quest->dropitem_count].mob_id = mob_id;
 				quest->dropitem[quest->dropitem_count].nameid = nameid;
+				quest->dropitem[quest->dropitem_count].count = 1;
 				quest->dropitem[quest->dropitem_count].rate = atoi(str[3 * i + (2 * MAX_QUEST_OBJECTIVES + 4)]);
 				quest->dropitem_count++;
  			}
@@ -502,8 +497,6 @@ int quest_read_txtdb(void)
 		fclose(fp);
 		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
 	}
-
-	return count;
 }
 
 /**

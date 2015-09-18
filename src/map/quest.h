@@ -11,9 +11,9 @@ struct quest_dropitem {
 	uint16 count;
 	uint16 rate;
 	uint16 mob_id;
-	uint8 bound;
-	bool isAnnounced;
-	bool isGUID;
+	//uint8 bound;
+	//bool isAnnounced;
+	//bool isGUID;
 };
 
 struct quest_objective {
