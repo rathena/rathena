@@ -4670,6 +4670,7 @@
 6926,Rune-Midgard_History_Book,Rune-Midgard History Book,3,10,,0,,,,,,,,,,,,,{},{},{}
 6927,Stone_That_Contained_Sea,Stone That Contained Sea,3,10,,0,,,,,,,,,,,,,{},{},{}
 6928,Poring_Scourer,Poring Scourer,3,10,,0,,,,,,,,,,,,,{},{},{}
+6931,Secret_Documents,Secret Documents,3,10,,0,,,,,,,,,,,,,{},{},{}
 6932,Rare_Book,Rare Book,3,10,,0,,,,,,,,,,,,,{},{},{}
 6933,Banquet_Invitation_Letter,Banquet Invitation Letter,3,10,,0,,,,,,,,,,,,,{},{},{}
 6936,Cold_Core,Cold Core,3,10,,10,,,,,,,,,,,,,{},{},{}
