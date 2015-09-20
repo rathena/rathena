@@ -949,18 +949,21 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		if( skill_id != WS_CARTTERMINATION && skill_id != AM_DEMONSTRATION && skill_id != CR_REFLECTSHIELD && skill_id != MS_REFLECTSHIELD && skill_id != ASC_BREAKER ) {
 			// Trigger status effects
 			enum sc_type type;
-			int i;
+			uint8 i;
+			unsigned int time = 0;
 			for( i = 0; i < ARRAYLENGTH(sd->addeff) && sd->addeff[i].flag; i++ ) {
 				rate = sd->addeff[i].rate;
 				if( attack_type&BF_LONG ) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
 					rate += sd->addeff[i].arrow_rate;
-				if( !rate ) continue;
+				if( !rate )
+					continue;
 
 				if( (sd->addeff[i].flag&(ATF_WEAPON|ATF_MAGIC|ATF_MISC)) != (ATF_WEAPON|ATF_MAGIC|ATF_MISC) ) {
 					// Trigger has attack type consideration.
 					if( (sd->addeff[i].flag&ATF_WEAPON && attack_type&BF_WEAPON) ||
 						(sd->addeff[i].flag&ATF_MAGIC && attack_type&BF_MAGIC) ||
-						(sd->addeff[i].flag&ATF_MISC && attack_type&BF_MISC) ) ;
+						(sd->addeff[i].flag&ATF_MISC && attack_type&BF_MISC) )
+						;
 					else
 						continue;
 				}
@@ -972,31 +975,32 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 						continue; //Range Failed.
 				}
 
-				type =  sd->addeff[i].id;
-				skill = skill_get_time2(status_sc_get_skill(type),7);
+				type = sd->addeff[i].sc;
+				time = sd->addeff[i].duration;
 
 				if (sd->addeff[i].flag&ATF_TARGET)
-					status_change_start(src,bl,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,skill,SCSTART_NONE);
+					status_change_start(src,bl,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
 
 				if (sd->addeff[i].flag&ATF_SELF)
-					status_change_start(src,src,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,skill,SCSTART_NONE);
+					status_change_start(src,src,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
 			}
 		}
 
 		if( skill_id ) {
 			// Trigger status effects on skills
 			enum sc_type type;
-			int i;
-			for( i = 0; i < ARRAYLENGTH(sd->addeff3) && sd->addeff3[i].skill; i++ ) {
-				if( skill_id != sd->addeff3[i].skill || !sd->addeff3[i].rate )
+			uint8 i;
+			unsigned int time = 0;
+			for( i = 0; i < ARRAYLENGTH(sd->addeff_onskill) && sd->addeff_onskill[i].skill_id; i++ ) {
+				if( skill_id != sd->addeff_onskill[i].skill_id || !sd->addeff_onskill[i].rate )
 					continue;
-				type = sd->addeff3[i].id;
-				skill = skill_get_time2(status_sc_get_skill(type),7);
+				type = sd->addeff_onskill[i].sc;
+				time = sd->addeff[i].duration;
 
-				if( sd->addeff3[i].target&ATF_TARGET )
-					status_change_start(src,bl,type,sd->addeff3[i].rate,7,0,0,0,skill,SCSTART_NONE);
-				if( sd->addeff3[i].target&ATF_SELF )
-					status_change_start(src,src,type,sd->addeff3[i].rate,7,0,0,0,skill,SCSTART_NONE);
+				if( sd->addeff_onskill[i].target&ATF_TARGET )
+					status_change_start(src,bl,type,sd->addeff_onskill[i].rate,7,0,0,0,time,SCSTART_NONE);
+				if( sd->addeff_onskill[i].target&ATF_SELF )
+					status_change_start(src,src,type,sd->addeff_onskill[i].rate,7,0,0,0,time,SCSTART_NONE);
 			}
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
@@ -1867,8 +1871,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			skill = (sd->autospell[i].id > 0) ? sd->autospell[i].id : -sd->autospell[i].id;
 
 			sd->state.autocast = 1;
-			if ( skill_isNotOk(skill, sd) )
+			if ( skill_isNotOk(skill, sd) ) {
+				sd->state.autocast = 0;
 				continue;
+			}
 			sd->state.autocast = 0;
 
 			autospl_skill_lv = sd->autospell[i].lv?sd->autospell[i].lv:1;
@@ -1991,8 +1997,10 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 		skill = sd->autospell3[i].id;
 		sd->state.autocast = 1; //set this to bypass sd->canskill_tick check
 
-		if( skill_isNotOk((skill > 0) ? skill : skill*-1, sd) )
+		if( skill_isNotOk((skill > 0) ? skill : skill*-1, sd) ) {
+			sd->state.autocast = 0;
 			continue;
+		}
 
 		sd->state.autocast = 0;
 
@@ -2085,30 +2093,30 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	sd = BL_CAST(BL_PC, src);
 	dstsd = BL_CAST(BL_PC, bl);
 
-	if(dstsd && attack_type&BF_WEAPON)
-	{	//Counter effects.
+	if(dstsd && attack_type&BF_WEAPON) {	//Counter effects.
 		enum sc_type type;
-		int i, time;
-		for(i=0; i < ARRAYLENGTH(dstsd->addeff2) && dstsd->addeff2[i].flag; i++)
-		{
-			rate = dstsd->addeff2[i].rate;
-			if (attack_type&BF_LONG)
-				rate+=dstsd->addeff2[i].arrow_rate;
-			if (!rate) continue;
+		uint8 i;
+		unsigned int time = 0;
 
-			if ((dstsd->addeff2[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT))
-			{	//Trigger has range consideration.
-				if((dstsd->addeff2[i].flag&ATF_LONG && !(attack_type&BF_LONG)) ||
-					(dstsd->addeff2[i].flag&ATF_SHORT && !(attack_type&BF_SHORT)))
+		for (i = 0; i < ARRAYLENGTH(dstsd->addeff_atked) && dstsd->addeff_atked[i].flag; i++) {
+			rate = dstsd->addeff_atked[i].rate;
+			if (attack_type&BF_LONG)
+				rate += dstsd->addeff_atked[i].arrow_rate;
+			if (!rate)
+				continue;
+
+			if ((dstsd->addeff_atked[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT)) {	//Trigger has range consideration.
+				if((dstsd->addeff_atked[i].flag&ATF_LONG && !(attack_type&BF_LONG)) ||
+					(dstsd->addeff_atked[i].flag&ATF_SHORT && !(attack_type&BF_SHORT)))
 					continue; //Range Failed.
 			}
-			type = dstsd->addeff2[i].id;
-			time = skill_get_time2(status_sc_get_skill(type),7);
+			type = dstsd->addeff_atked[i].sc;
+			time = dstsd->addeff_atked[i].duration;
 
-			if (dstsd->addeff2[i].flag&ATF_TARGET)
+			if (dstsd->addeff_atked[i].flag&ATF_TARGET)
 				status_change_start(src,src,type,rate,7,0,0,0,time,SCSTART_NONE);
 
-			if (dstsd->addeff2[i].flag&ATF_SELF && !status_isdead(bl))
+			if (dstsd->addeff_atked[i].flag&ATF_SELF && !status_isdead(bl))
 				status_change_start(src,bl,type,rate,7,0,0,0,time,SCSTART_NONE);
 		}
 	}
@@ -2208,8 +2216,10 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				 autospl_rate>>=1;
 
 			dstsd->state.autocast = 1;
-			if ( skill_isNotOk(autospl_skill_id, dstsd) )
+			if ( skill_isNotOk(autospl_skill_id, dstsd) ) {
+				dstsd->state.autocast = 0;
 				continue;
+			}
 			dstsd->state.autocast = 0;
 
 			if (rnd()%1000 >= autospl_rate)
@@ -3961,6 +3971,21 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 
 						map_foreachinarea(skill_cell_overlap,src->m,skl->x-i,skl->y-i,skl->x+i,skl->y+i,BL_SKILL,skl->skill_id,&dummy,src);
 						skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,0);
+					}
+					break;
+				case RL_FALLEN_ANGEL:
+					{
+						struct map_session_data *sd = (src->type == BL_PC) ? map_id2sd(src->id): NULL;
+						if (sd) {
+							if (!skill_check_condition_castend(sd,GS_DESPERADO,skl->skill_lv))
+								break;
+							sd->state.autocast = 1;
+						}
+						skill_castend_pos2(src,skl->x,skl->y,GS_DESPERADO,skl->skill_lv,tick,skl->flag);
+						if (sd) {
+							battle_consume_ammo(sd,GS_DESPERADO,skl->skill_lv);
+							sd->state.autocast = 0;
+						}
 					}
 					break;
 				case NC_MAGMA_ERUPTION:
@@ -11591,15 +11616,14 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 	case RL_FALLEN_ANGEL:
 		if (unit_movepos(src,x,y,1,1)) {
-			enum e_skill skill_use = GS_DESPERADO;
-			uint8 skill_use_lv = pc_checkskill(sd,skill_use);
-			clif_blown(src);
-			if (skill_use_lv && skill_check_condition_castend(sd,skill_use,skill_use_lv)) {
-				sd->skill_id_old = RL_FALLEN_ANGEL;
-				skill_castend_pos2(src,src->x,src->y,skill_use,skill_use_lv,tick,SD_LEVEL|SD_ANIMATION|SD_SPLASH);
-				battle_consume_ammo(sd,skill_use,skill_use_lv);
+			uint8 skill_use_lv = sd ? pc_checkskill(sd,GS_DESPERADO) : 5;
+			if (!skill_use_lv) {
+				clif_skill_nodamage(src, src, skill_id, skill_lv, 0);
+				break;
 			}
-			sd->skill_id_old = 0;
+			clif_fixpos(src);
+			clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+			skill_addtimerskill(src, tick+500, 0, x, y, RL_FALLEN_ANGEL, skill_use_lv, BF_WEAPON, flag|SD_LEVEL|SD_ANIMATION|SD_SPLASH);
 		}
 		else {
 			if (sd)
@@ -15092,10 +15116,6 @@ void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uin
 			case CG_TAROTCARD: // TarotCard will consume sp in skill_cast_nodamage_id [Inkfish]
 			case MC_IDENTIFY:
 				require.sp = 0;
-				break;
-			case GS_DESPERADO:
-				if (sd->skill_id_old == RL_FALLEN_ANGEL) //Don't consume SP if triggered by Fallen Angel
-					require.sp = 0;
 				break;
 			case MO_KITRANSLATION:
 				//Spiritual Bestowment only uses spirit sphere when giving it to someone

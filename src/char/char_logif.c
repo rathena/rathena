@@ -20,19 +20,17 @@
 void chlogif_on_ready(void);
 void chlogif_on_disconnect(void);
 
-int chlogif_pincode_notifyLoginPinError( uint32 account_id ){
-	if (login_fd > 0 && session[login_fd] && !session[login_fd]->flag.eof){
+void chlogif_pincode_notifyLoginPinError( uint32 account_id ){
+	if ( chlogif_isconnected() ){
 		WFIFOHEAD(login_fd,6);
 		WFIFOW(login_fd,0) = 0x2739;
 		WFIFOL(login_fd,2) = account_id;
 		WFIFOSET(login_fd,6);
-		return 1;
 	}
-	return 0;
 }
 
-int chlogif_pincode_notifyLoginPinUpdate( uint32 account_id, char* pin ){
-	if (login_fd > 0 && session[login_fd] && !session[login_fd]->flag.eof){
+void chlogif_pincode_notifyLoginPinUpdate( uint32 account_id, char* pin ){
+	if ( chlogif_isconnected() ){
 		int size = 8 + PINCODE_LENGTH+1;
 		WFIFOHEAD(login_fd,size);
 		WFIFOW(login_fd,0) = 0x2738;
@@ -40,9 +38,7 @@ int chlogif_pincode_notifyLoginPinUpdate( uint32 account_id, char* pin ){
 		WFIFOL(login_fd,4) = account_id;
 		strncpy( (char*)WFIFOP(login_fd,8), pin, PINCODE_LENGTH+1 );
 		WFIFOSET(login_fd,size);
-		return 1;
 	}
-	return 0;
 }
 
 void chlogif_pincode_start(int fd, struct char_session_data* sd){
@@ -122,17 +118,14 @@ int chlogif_send_acc_tologin(int tid, unsigned int tick, int id, intptr_t data) 
 	return 0;
 }
 
-int chlogif_send_usercount(int users){
-	if( login_fd > 0 && session[login_fd] )
-	{
-		// send number of user to login server
-		WFIFOHEAD(login_fd,6);
-		WFIFOW(login_fd,0) = 0x2714;
-		WFIFOL(login_fd,2) = users;
-		WFIFOSET(login_fd,6);
-		return 1;
-	}
-	return 0;
+void chlogif_send_usercount(int users){
+	if (!chlogif_isconnected())
+		return;
+	// send number of user to login server
+	WFIFOHEAD(login_fd,6);
+	WFIFOW(login_fd,0) = 0x2714;
+	WFIFOL(login_fd,2) = users;
+	WFIFOSET(login_fd,6);
 }
 
 
@@ -164,22 +157,29 @@ int chlogif_broadcast_user_count(int tid, unsigned int tick, int id, intptr_t da
 	return 0;
 }
 
-void chlogif_request_global_accreg(uint32 account_id, uint32 char_id) {
-	WFIFOHEAD(login_fd, 60000 + 300);
-	WFIFOW(login_fd, 0) = 0x2728;
-	WFIFOW(login_fd, 2) = 14;
-	WFIFOL(login_fd, 4) = account_id;
-	WFIFOL(login_fd, 8) = char_id;
-	WFIFOW(login_fd, 12) = 0; // count
+void chlogif_upd_global_accreg(uint32 account_id, uint32 char_id) {
+	if ( chlogif_isconnected() ){
+		WFIFOHEAD(login_fd, 60000 + 300);
+		WFIFOW(login_fd, 0) = 0x2728;
+		WFIFOW(login_fd, 2) = 14;
+		WFIFOL(login_fd, 4) = account_id;
+		WFIFOL(login_fd, 8) = char_id;
+		WFIFOW(login_fd, 12) = 0; // count
+	}
 }
 
 void chlogif_prepsend_global_accreg(void) {
-	WFIFOSET(login_fd, WFIFOW(login_fd,2));
+	if ( chlogif_isconnected() ){
+		WFIFOSET(login_fd, WFIFOW(login_fd,2));
+	}
 }
 
 void chlogif_send_global_accreg(const char *key, unsigned int index, intptr_t val, bool is_string) {
 	int nlen = WFIFOW(login_fd, 2);
 	size_t len;
+
+	if (!chlogif_isconnected())
+		return;
 
 	len = strlen(key)+1;
 
@@ -223,62 +223,53 @@ void chlogif_send_global_accreg(const char *key, unsigned int index, intptr_t va
 		int account_id = WFIFOL(login_fd,4), char_id = WFIFOL(login_fd,8);
 
 		chlogif_prepsend_global_accreg();
-		chlogif_request_global_accreg(account_id, char_id); // prepare next
+		chlogif_upd_global_accreg(account_id, char_id); // prepare next
 	}
 }
 
-int chlogif_request_accreg2(uint32 account_id, uint32 char_id){
-	if (login_fd > 0) {
-		WFIFOHEAD(login_fd,10);
-		WFIFOW(login_fd,0) = 0x272e;
-		WFIFOL(login_fd,2) = account_id;
-		WFIFOL(login_fd,6) = char_id;
-		WFIFOSET(login_fd,10);
-		return 1;
-	}
-	return 0;
+void chlogif_request_accreg2(uint32 account_id, uint32 char_id){
+	if (!chlogif_isconnected())
+		return;
+	WFIFOHEAD(login_fd,10);
+	WFIFOW(login_fd,0) = 0x272e;
+	WFIFOL(login_fd,2) = account_id;
+	WFIFOL(login_fd,6) = char_id;
+	WFIFOSET(login_fd,10);
 }
 
-int chlogif_send_reqaccdata(int fd, struct char_session_data *sd){
-        //loginif_isconnected
-	if (login_fd > 0) { // request account data
-		// request account data
-		WFIFOHEAD(fd,6);
-		WFIFOW(fd,0) = 0x2716;
-		WFIFOL(fd,2) = sd->account_id;
-		WFIFOSET(fd,6);
-		return 1;
-	}
-	return 0;
+void chlogif_send_reqaccdata(int fd, struct char_session_data *sd){
+	if (!chlogif_isconnected())
+		return;
+	WFIFOHEAD(fd,6);
+	WFIFOW(fd,0) = 0x2716;
+	WFIFOL(fd,2) = sd->account_id;
+	WFIFOSET(fd,6);
 }
 
-int chlogif_send_setacconline(int aid){
-        //loginif_isconnected
-	if (login_fd > 0 && !session[login_fd]->flag.eof){
-		WFIFOHEAD(login_fd,6);
-		WFIFOW(login_fd,0) = 0x272b;
-		WFIFOL(login_fd,2) = aid;
-		WFIFOSET(login_fd,6);
-		return 1;
-	}
-	return 0;
+void chlogif_send_setacconline(int aid){
+	if (!chlogif_isconnected())
+		return;
+	WFIFOHEAD(login_fd,6);
+	WFIFOW(login_fd,0) = 0x272b;
+	WFIFOL(login_fd,2) = aid;
+	WFIFOSET(login_fd,6);
 }
 
 void chlogif_send_setallaccoffline(int fd){
+	if (!chlogif_isconnected())
+		return;
 	WFIFOHEAD(fd,2);
 	WFIFOW(fd,0) = 0x2737;
 	WFIFOSET(fd,2);
 }
 
-int chlogif_send_setaccoffline(int fd, int aid){
-	if (chlogif_isconnected()){
-		WFIFOHEAD(fd,6);
-		WFIFOW(fd,0) = 0x272c;
-		WFIFOL(fd,2) = aid;
-		WFIFOSET(fd,6);
-		return 1;
-	}
-	return 0;
+void chlogif_send_setaccoffline(int fd, int aid){
+	if (!chlogif_isconnected())
+		return;
+	WFIFOHEAD(fd,6);
+	WFIFOW(fd,0) = 0x272c;
+	WFIFOL(fd,2) = aid;
+	WFIFOSET(fd,6);
 }
 
 int chlogif_parse_ackconnect(int fd, struct char_session_data* sd){
@@ -359,11 +350,11 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 		} else if ( !sd->char_slots )/* no value aka 0 in sql */
 			sd->char_slots = MIN_CHARS;/* cap to minimum */
 		safestrncpy(sd->birthdate, (const char*)RFIFOP(fd,52), sizeof(sd->birthdate));
-                safestrncpy(sd->pincode, (const char*)RFIFOP(fd,63), sizeof(sd->pincode));
-                sd->pincode_change = (time_t)RFIFOL(fd,68);
-                sd->isvip = RFIFOB(fd,72);
-                sd->chars_vip = RFIFOB(fd,73);
-                sd->chars_billing = RFIFOB(fd,74);
+		safestrncpy(sd->pincode, (const char*)RFIFOP(fd,63), sizeof(sd->pincode));
+		sd->pincode_change = (time_t)RFIFOL(fd,68);
+		sd->isvip = RFIFOB(fd,72);
+		sd->chars_vip = RFIFOB(fd,73);
+		sd->chars_billing = RFIFOB(fd,74);
 		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && map_server[server_id].map[0] );
 		// continued from char_auth_ok...
 		if( server_id == ARRAYLENGTH(map_server) || //server not online, bugreport:2359
@@ -432,7 +423,7 @@ int chlogif_parse_ackchangesex(int fd, struct char_session_data* sd)
 {
 	if (RFIFOREST(fd) < 7)
 		return 0;
-	{
+	else {
 		unsigned char buf[7];
 		int acc = RFIFOL(fd,2);
 		int sex = RFIFOB(fd,6);
@@ -522,11 +513,11 @@ int chlogif_parse_ackchangecharsex(int char_id, int sex)
 	return 0;
 }
 
-int chlogif_parse_ackacc2req(int fd, struct char_session_data* sd){
+int chlogif_parse_ack_global_accreg(int fd, struct char_session_data* sd){
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 		return 0;
-
-	{	//Receive account_reg2 registry, forward to map servers.
+	else { //Receive account_reg2 registry, forward to map servers.
+		RFIFOW(fd,0) = 0x3804;
 		chmapif_sendall(RFIFOP(fd,0), RFIFOW(fd,2));
 		RFIFOSKIP(fd, RFIFOW(fd,2));
 	}
@@ -536,8 +527,7 @@ int chlogif_parse_ackacc2req(int fd, struct char_session_data* sd){
 int chlogif_parse_accbannotification(int fd, struct char_session_data* sd){
 	if (RFIFOREST(fd) < 11)
 		return 0;
-
-	{	// send to all map-servers to disconnect the player
+	else { // send to all map-servers to disconnect the player
 		unsigned char buf[11];
 		WBUFW(buf,0) = 0x2b14;
 		WBUFL(buf,2) = RFIFOL(fd,2);
@@ -554,7 +544,7 @@ int chlogif_parse_accbannotification(int fd, struct char_session_data* sd){
 int chlogif_parse_askkick(int fd, struct char_session_data* sd){
 	if (RFIFOREST(fd) < 6)
 		return 0;
-	{
+	else {
 		DBMap*  online_char_db = char_get_onlinedb();
 		DBMap*  auth_db = char_get_authdb();
 		int aid = RFIFOL(fd,2);
@@ -591,6 +581,10 @@ int chlogif_parse_updip(int fd, struct char_session_data* sd){
 	unsigned char buf[2];
 	uint32 new_ip = 0;
 
+	/**
+	 * !CHECKME: This is intended? Just tell if there's IP sync request
+	 * without sending current char IP (if changed) to map-server?
+	 **/
 	WBUFW(buf,0) = 0x2b1e;
 	chmapif_sendall(buf, 2);
 
@@ -599,8 +593,7 @@ int chlogif_parse_updip(int fd, struct char_session_data* sd){
 		charserv_config.login_ip = new_ip; //Update login ip, too.
 
 	new_ip = host2ip(charserv_config.char_ip_str);
-	if (new_ip && new_ip != charserv_config.char_ip)
-	{	//Update ip.
+	if (new_ip && new_ip != charserv_config.char_ip) { // Char-server IP is updated.
 		charserv_config.char_ip = new_ip;
 		ShowInfo("Updating IP for [%s].\n", charserv_config.char_ip_str);
 		// notify login server about the change
@@ -733,37 +726,30 @@ int chlogif_parse(int fd) {
 	sd = (struct char_session_data*)session[fd]->session_data;
 
 	while(RFIFOREST(fd) >= 2) {
-		int next=1;
+		// -1: Login server is not connected
+		//  0: Avoid processing followup packets (prev was probably incomplete) packet
+		//  1: Continue parsing
+		int next = 1;
 		uint16 command = RFIFOW(fd,0);
-		switch( command )
-		{
-			case 0x2743: next = chlogif_parse_vipack(fd); break;
-			// acknowledgement of connect-to-loginserver request
+		switch( command ) {
 			case 0x2711: next = chlogif_parse_ackconnect(fd,sd); break;
-			// acknowledgement of account authentication request
 			case 0x2713: next = chlogif_parse_ackaccreq(fd, sd); break;
-			// account data
 			case 0x2717: next = chlogif_parse_reqaccdata(fd, sd); break;
-			// login-server alive packet
 			case 0x2718: next = chlogif_parse_keepalive(fd, sd); break;
-			// changesex reply
-			case 0x2723: next = chlogif_parse_ackchangesex(fd, sd); break;
-			// reply to an account_reg2 registry request
-			case 0x3804: next = chlogif_parse_ackacc2req(fd, sd); break;
-			// State change of account/ban notification (from login-server)
-			case 0x2731: next = chlogif_parse_accbannotification(fd, sd); break;
-			// Login server request to kick a character out. [Skotlex]
-			case 0x2734: next = chlogif_parse_askkick(fd,sd); break;
-			// ip address update signal from login server
-			case 0x2735: next = chlogif_parse_updip(fd,sd); break;
-			// @accinfo result
 			case 0x2721: next = chlogif_parse_AccInfoAck(fd); break;
+			case 0x2723: next = chlogif_parse_ackchangesex(fd, sd); break;
+			case 0x2726: next = chlogif_parse_ack_global_accreg(fd, sd); break;
+			case 0x2731: next = chlogif_parse_accbannotification(fd, sd); break;
+			case 0x2734: next = chlogif_parse_askkick(fd,sd); break;
+			case 0x2735: next = chlogif_parse_updip(fd,sd); break;
+			case 0x2743: next = chlogif_parse_vipack(fd); break;
 			default:
 				ShowError("Unknown packet 0x%04x received from login-server, disconnecting.\n", command);
 				set_eof(fd);
 				return 0;
 		}
-		if(next==0) return 0; //do not parse next data
+		if (next == 0)
+			return 0; //do not parse next data
 	}
 
 	RFIFOFLUSH(fd);

@@ -75,16 +75,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- Retrieve the number of user present on a char-serv
 
 0x2715:
-	Type: HA
-	Structure: <cmd>.W <aid>.L <email>40B
-	index: 0,2,6
-	len: 46
-	parameter:
-		- cmd : packet identification (0x2715)
-		- aid: account identification
-		- email: new email for account id
-	desc:
-		- Request to update the email linked to this aid
+	free
 
 0x2716:
 	Type: HA
@@ -234,7 +225,24 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- Receiving of map-server via char-server a ban request (alter the ban time)
 
 0x2726:
-    free
+	Type: AH
+	Structure: <cmd>.W <len>.W <aid>.L <cid>.L <?>.B <type>.B <count>.W { <keyLength>.B <key>.<keyLength> <index>.L <valLength>.B <val>.<valLength> }*
+	index: 0,2,4,8,12,13,14,16,...
+	len: variable
+	parameter:
+		- cmd : packet identification (0x2726)
+		- ?
+		- aid
+		- cid
+		- type
+		- count
+		- keyLength
+		- key
+		- index
+		- val
+		- valLength
+	desc:
+		- Send global account registry
 
 0x2727:
 	Type: HA
@@ -249,7 +257,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2728:
 	Type: HA
-	Structure: <cmd>.W <len>.W <aid>.L <cid>.L { <str>.?B <value>.?B }
+	Structure: <cmd>.W <len>.W <aid>.L <cid>.L { <keyLength>.B <key>.<keyLength> <index>.L <type>.B <value>.?B }
 	index: 0,2,4,8,13
 	len: variable (reg size+4)
 	parameter:
@@ -257,8 +265,11 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- len:  pakcet size
 		- aid: account identification
 		- cid : char identification
-		- str : name of variable in registry
-		- value : value of varaible in registry
+		- keyLength
+		- key
+		- index
+		- type
+		- value
 	desc:
 		- Receive an request to fetch account_reg2 from a char-server, see packet 0x3004 (mapif_parse_Registry)
 
@@ -382,7 +393,8 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x2735
 	desc:
-		- ip address update signal from login server
+		- IP address update signal from login server.
+		- Send back the IP of char server to login-server if IP was changed.
 
 0x2736:
 	Type: HA
@@ -1438,18 +1450,24 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- Parse whisper to GM
 
 0x3804
-	Type: IZ
-	Structure: <cmd>.W <?>.W <aid>.L <cid>.L <type>.B
-	index: 0,2,4,8,12
-	len: variable: 13 or p (Max=5013)
+	Type: HZ
+	Structure: <cmd>.W <len>.W <aid>.L <cid>.L <?>.B <type>.B <count>.W { <keyLength>.B <key>.<keyLength> <index>.L <valLength>.B <val>.<valLength> }*
+	index: 0,2,4,8,12,13,14,16,...
+	len: variable
 	parameter:
 		- cmd : packet identification (0x3804)
 		- ?
 		- aid
 		- cid
 		- type
+		- count
+		- keyLength
+		- key
+		- index
+		- val
+		- valLength
 	desc:
-		- Account registry transfer to map-server
+		- Send global account registry to map-server from login-server
 
 0x3806
 	Type: IZ

@@ -13,19 +13,19 @@ Constants
 This list contains all available constants referenced in the 'bonus' commands.
 
 * Status effect (eff)
-	Eff_Stone, Eff_Freeze, Eff_Stun, Eff_Sleep, Eff_Poison, Eff_Curse, Eff_Silence,
-	Eff_Confusion, Eff_Blind, Eff_Bleeding, Eff_DPoison, Eff_Fear, Eff_Burning
+	Eff_Bleeding, Eff_Blind, Eff_Burning, Eff_Confusion, Eff_Crystalize, Eff_Curse, Eff_DPoison,
+	Eff_Fear, Eff_Freeze, Eff_Poison, Eff_Silence, Eff_Sleep, Eff_Stone, Eff_Stun
 
 * Element (e)
-	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison, 
-	Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
+	Ele_Dark, Ele_Earth, Ele_Fire, Ele_Ghost, Ele_Holy, Ele_Neutral, Ele_Poison,
+	Ele_Undead, Ele_Water, Ele_Wind, Ele_All
 
 * Race (r)
-	RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish,
-	RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_Player, RC_All
+	RC_Angel, RC_Brute, RC_DemiHuman, RC_Demon, RC_Dragon, RC_Fish, RC_Formless,
+	RC_Insect, RC_Plant, RC_Player, RC_Undead, RC_All
 
 * Monster Race (mr)
-	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja.
+	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja
 	See 'db/(pre-)re/mob_race2_db.txt'
 
 * Class (c)
@@ -275,15 +275,24 @@ bonus2 bAddEffWhenHit,eff,n;		Adds a n/100% chance to cause status eff on the en
 bonus2 bResEff,eff,n;       		Adds a n/100% tolerance to status eff
 
 bonus3 bAddEff,eff,n,y;       		Adds a n/100% chance to cause status eff on the target when attacking
-bonus3 bAddEffWhenHit,eff,n,y;		Adds a n/100% chance to cause status eff on the enemy when being hit by physical damage
+bonus4 bAddEff,eff,n,y,t;     		Adds a n/100% chance to cause status eff for t milliseconds on the target when attacking
+bonus3 bAddEffWhenHit,eff,n,y;		Adds a n/100% chance to cause status eff on the target when being hit by physical damage
+bonus4 bAddEffWhenHit,eff,n,y,t;	Adds a n/100% chance to cause status eff for t milliseconds on the target when being hit by physical damage
                               		y is the trigger criteria:
+                              		 Effect target: (Default: Attacked target)
                               		  ATF_SELF   = trigger effect on self
-                              		  ATF_TARGET = trigger effect on target (default)
+                              		  ATF_TARGET = trigger effect on target
+                              		 Attack range criteria: (Default: All attacks)
                               		  ATF_SHORT  = trigger on melee attacks
-                              		  ATF_LONG   = trigger on ranged attacks (default: trigger on all attacks)
+                              		  ATF_LONG   = trigger on ranged attacks
+                              		 Skill/attack type criteria: (Default: Physical/weapon)
+                              		  ATF_WEAPON = trigger on weapon skill / physical attacks
+                              		  ATF_MAGIC  = trigger on magic skills
+                              		  ATF_MISC   = trigger on misc skills
 
 bonus3 bAddEffOnSkill,sk,eff,n;   	Adds a n/100% chance to cause status eff on enemy when using skill sk
-bonus4 bAddEffOnSkill,sk,eff,n,y;	Adds a n/100% chance to cause status eff when using skill sk
+bonus4 bAddEffOnSkill,sk,eff,n,y;	Adds a n/100% chance to cause status eff on the target when using skill sk
+bonus5 bAddEffOnSkill,sk,eff,n,y,t;	Adds a n/100% chance to cause status eff for t milliseconds on the target when using skill sk
                                  	y is the trigger criteria:
                                  	  ATF_SELF   = trigger effect on self
                                  	  ATF_TARGET = trigger effect on target

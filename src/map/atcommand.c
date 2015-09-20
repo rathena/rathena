@@ -9062,6 +9062,8 @@ ACMD_FUNC(set) {
 
 	clif_displaymessage(fd, atcmd_output);
 
+	if (is_str && data->u.str)
+		aFree(data->u.str);
 	aFree(data);
 
 	return 0;

@@ -150,39 +150,6 @@ int logchrif_parse_ackusercount(int fd, int id){
 }
 
 /**
- * Receive a request from char-server to change e-mail from default "a@a.com".
- * @param fd: fd to parse from (char-serv)
- * @param id: id of char-serv
- * @param ip: char-serv ip (used for info)
- * @return 0 not enough info transmitted, 1 success
- */
-int logchrif_parse_updmail(int fd, int id, char* ip){
-	if (RFIFOREST(fd) < 46)
-		return 0;
-	else{
-		AccountDB* accounts = login_get_accounts_db();
-		struct mmo_account acc;
-		char email[40];
-
-		uint32 account_id = RFIFOL(fd,2);
-		safestrncpy(email, (char*)RFIFOP(fd,6), 40); remove_control_chars(email);
-		RFIFOSKIP(fd,46);
-
-		if( e_mail_check(email) == 0 )
-			ShowNotice("Char-server '%s': Attempt to create an e-mail on an account with a default e-mail REFUSED - e-mail is invalid (account: %d, ip: %s)\n", ch_server[id].name, account_id, ip);
-		else if( !accounts->load_num(accounts, &acc, account_id) || strcmp(acc.email, "a@a.com") == 0 || acc.email[0] == '\0' )
-			ShowNotice("Char-server '%s': Attempt to create an e-mail on an account with a default e-mail REFUSED - account doesn't exist or e-mail of account isn't default e-mail (account: %d, ip: %s).\n", ch_server[id].name, account_id, ip);
-		else{
-			memcpy(acc.email, email, 40);
-			ShowNotice("Char-server '%s': Create an e-mail on an account with a default e-mail (account: %d, new e-mail: %s, ip: %s).\n", ch_server[id].name, account_id, email, ip);
-			// Save
-			accounts->save(accounts, &acc);
-		}
-	}
-	return 1;
-}
-
-/**
  * Transmit account data to char_server
  * S 2717 aid.W email.40B exp_time.L group_id.B char_slot.B birthdate.11B pincode.5B pincode_change.L
  *  isvip.1B char_vip.1B max_billing.1B (tot 75)  
@@ -476,7 +443,7 @@ int logchrif_parse_reqchgsex(int fd, int id, char* ip){
  * @param ip: char-serv ip (used for info)
  * @return 0 not enough info transmitted, 1 success
  */
-int logchrif_parse_updreg2(int fd, int id, char* ip){
+int logchrif_parse_upd_global_accreg(int fd, int id, char* ip){
 	if( RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2) )
 		return 0;
 	else{
@@ -487,7 +454,7 @@ int logchrif_parse_updreg2(int fd, int id, char* ip){
 		if( !accounts->load_num(accounts, &acc, account_id) )
 			ShowStatus("Char-server '%s': receiving (from the char-server) of account_reg2 (account: %d not found, ip: %s).\n", ch_server[id].name, account_id, ip);
 		else
-			mmo_save_accreg2(accounts,fd,account_id,RFIFOL(fd, 8));
+			mmo_save_global_accreg(accounts,fd,account_id,RFIFOL(fd, 8));
 		RFIFOSKIP(fd,RFIFOW(fd,2));
 	}
 	return 1;
@@ -585,7 +552,7 @@ int logchrif_parse_updonlinedb(int fd, int id){
  * @param fd: fd to parse from (char-serv)
  * @return 0 not enough info transmitted, 1 success
  */
-int logchrif_parse_reqacc2reg(int fd){
+int logchrif_parse_req_global_accreg(int fd){
 	if (RFIFOREST(fd) < 10)
 		return 0;
 	else{
@@ -594,7 +561,7 @@ int logchrif_parse_reqacc2reg(int fd){
 		uint32 char_id = RFIFOL(fd,6);
 		RFIFOSKIP(fd,10);
 
-		mmo_send_accreg2(accounts,fd,account_id,char_id);
+		mmo_send_global_accreg(accounts,fd,account_id,char_id);
 	}
 	return 1;
 }
@@ -822,36 +789,36 @@ int logchrif_parse(int fd){
 	ip2str(ipl, ip);
 
 	while( RFIFOREST(fd) >= 2 ){
-		int next = 1;
+		int next = 1; // 0: avoid processing followup packets (prev was probably incomplete) packet, 1: Continue parsing
 		uint16 command = RFIFOW(fd,0);
 		switch( command ){
-		case 0x2712: next = logchrif_parse_reqauth(fd, cid, ip); break;
-		case 0x2714: next = logchrif_parse_ackusercount(fd, cid); break;
-		case 0x2715: next = logchrif_parse_updmail(fd, cid, ip); break;
-		case 0x2716: next = logchrif_parse_reqaccdata(fd, cid, ip); break;
-		case 0x2719: next = logchrif_parse_keepalive(fd); break;
-		case 0x2720: next = logchrif_parse_accinfo(fd); break; //@accinfo from inter-server
-		case 0x2722: next = logchrif_parse_reqchangemail(fd,cid,ip); break;
-		case 0x2724: next = logchrif_parse_requpdaccstate(fd,cid,ip); break;
-		case 0x2725: next = logchrif_parse_reqbanacc(fd,cid,ip); break;
-		case 0x2727: next = logchrif_parse_reqchgsex(fd,cid,ip); break;
-		case 0x2728: next = logchrif_parse_updreg2(fd,cid,ip); break;
-		case 0x272a: next = logchrif_parse_requnbanacc(fd,cid,ip); break;
-		case 0x272b: next = logchrif_parse_setacconline(fd,cid); break;
-		case 0x272c: next = logchrif_parse_setaccoffline(fd); break;
-		case 0x272d: next = logchrif_parse_updonlinedb(fd,cid); break;
-		case 0x272e: next = logchrif_parse_reqacc2reg(fd); break;
-		case 0x2736: next = logchrif_parse_updcharip(fd,cid); break;
-		case 0x2737: next = logchrif_parse_setalloffline(fd,cid); break;
-		case 0x2738: next = logchrif_parse_updpincode(fd); break;
-		case 0x2739: next = logchrif_parse_pincode_authfail(fd); break;
-		case 0x2742: next = logchrif_parse_reqvipdata(fd); break; //Vip sys
-		default:
-			ShowError("logchrif_parse: Unknown packet 0x%x from a char-server! Disconnecting!\n", command);
-			set_eof(fd);
-			return 0;
+			case 0x2712: next = logchrif_parse_reqauth(fd, cid, ip); break;
+			case 0x2714: next = logchrif_parse_ackusercount(fd, cid); break;
+			case 0x2716: next = logchrif_parse_reqaccdata(fd, cid, ip); break;
+			case 0x2719: next = logchrif_parse_keepalive(fd); break;
+			case 0x2720: next = logchrif_parse_accinfo(fd); break; //@accinfo from inter-server
+			case 0x2722: next = logchrif_parse_reqchangemail(fd,cid,ip); break;
+			case 0x2724: next = logchrif_parse_requpdaccstate(fd,cid,ip); break;
+			case 0x2725: next = logchrif_parse_reqbanacc(fd,cid,ip); break;
+			case 0x2727: next = logchrif_parse_reqchgsex(fd,cid,ip); break;
+			case 0x2728: next = logchrif_parse_upd_global_accreg(fd,cid,ip); break;
+			case 0x272a: next = logchrif_parse_requnbanacc(fd,cid,ip); break;
+			case 0x272b: next = logchrif_parse_setacconline(fd,cid); break;
+			case 0x272c: next = logchrif_parse_setaccoffline(fd); break;
+			case 0x272d: next = logchrif_parse_updonlinedb(fd,cid); break;
+			case 0x272e: next = logchrif_parse_req_global_accreg(fd); break;
+			case 0x2736: next = logchrif_parse_updcharip(fd,cid); break;
+			case 0x2737: next = logchrif_parse_setalloffline(fd,cid); break;
+			case 0x2738: next = logchrif_parse_updpincode(fd); break;
+			case 0x2739: next = logchrif_parse_pincode_authfail(fd); break;
+			case 0x2742: next = logchrif_parse_reqvipdata(fd); break; //Vip sys
+			default:
+				ShowError("logchrif_parse: Unknown packet 0x%x from a char-server! Disconnecting!\n", command);
+				set_eof(fd);
+				return 0;
 		} // switch
-		if(next==0) return 0; // avoid processing of followup packets (prev was probably incomplete)
+		if (next == 0)
+			return 0;
 	} // while
 	return 1; //or 0
 }

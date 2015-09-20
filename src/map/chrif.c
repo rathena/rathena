@@ -69,7 +69,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b10: Outgoing, chrif_updatefamelist -> 'Update the fame ranking lists and send them'
 //2b11: Outgoing, chrif_divorce -> 'tell the charserver to do divorce'
 //2b12: Incoming, chrif_divorceack -> 'divorce chars
-//2b13: FREE
+//2b13: Outgoing, chrif_update_ip -> 'tell the change of map-server IP'
 //2b14: Incoming, chrif_accountban -> 'not sure: kick the player with message XY'
 //2b15: Outgoing, chrif_skillcooldown_save -> request to save skillcooldown
 //2b16: Outgoing, chrif_ragsrvinfo -> 'sends base / job / drop rates ....'
@@ -848,7 +848,7 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email) {
  * @val1 : extra data value to transfer for operation
  * @val2 : extra data value to transfer for operation
  */
-int chrif_req_login_operation(int aid, const char* character_name, unsigned short operation_type, int32 timediff, int val1, int val2) {
+int chrif_req_login_operation(int aid, const char* character_name, enum chrif_req_op operation_type, int32 timediff, int val1, int val2) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,44);
@@ -877,7 +877,7 @@ int chrif_changesex(struct map_session_data *sd, bool change_account) {
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = sd->status.account_id;
 	safestrncpy((char*)WFIFOP(char_fd,6), sd->status.name, NAME_LENGTH);
-	WFIFOW(char_fd,30) = (change_account ? CHRIF_OP_LOGIN_CHANGESEX : CHRIF_OP_LOGIN_CHANGECHARSEX);
+	WFIFOW(char_fd,30) = (change_account ? CHRIF_OP_LOGIN_CHANGESEX : CHRIF_OP_CHANGECHARSEX);
 	if (!change_account)
 		WFIFOB(char_fd,32) = sd->status.sex == SEX_MALE ? SEX_FEMALE : SEX_MALE;
 	WFIFOSET(char_fd,44);
@@ -917,14 +917,13 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 	}
 
 	switch (type) {
+		case CHRIF_OP_LOGIN_CHANGESEX:
+		case CHRIF_OP_CHANGECHARSEX:
+			type = CHRIF_OP_LOGIN_CHANGESEX; // So we don't have to create a new msgstring.
 		case CHRIF_OP_LOGIN_BLOCK:
 		case CHRIF_OP_LOGIN_BAN:
 		case CHRIF_OP_LOGIN_UNBLOCK:
 		case CHRIF_OP_LOGIN_UNBAN:
-		case CHRIF_OP_LOGIN_CHANGESEX:
-		case CHRIF_OP_LOGIN_CHANGECHARSEX:
-			if (type == CHRIF_OP_LOGIN_CHANGECHARSEX)
-				type--; // So we don't have to create a new msgstring.
 			snprintf(action,25,"%s",msg_txt(sd,427+type)); //block|ban|unblock|unban|change the sex of
 			break;
 		case CHRIF_OP_LOGIN_VIP:
@@ -1528,7 +1527,12 @@ void chrif_on_disconnect(void) {
 	add_timer(gettick() + 1000, check_connect_char_server, 0, 0);
 }
 
-
+/**
+ * !CHECKME: This is intended?
+ * On sync request received, map-server only send its own IP
+ * without change the char IP (if any)?
+ * Since no IP info sent by 0x2b1e (chlogif_parse_updip)
+ **/
 void chrif_update_ip(int fd) {
 	uint32 new_ip;
 
@@ -1544,7 +1548,7 @@ void chrif_update_ip(int fd) {
 	if (!new_ip)
 		return; //No change
 
-	WFIFOW(fd,0) = 0x2736;
+	WFIFOW(fd,0) = 0x2b13;
 	WFIFOL(fd,2) = htonl(new_ip);
 	WFIFOSET(fd,6);
 }
@@ -1555,6 +1559,7 @@ void chrif_keepalive(int fd) {
 	WFIFOW(fd,0) = 0x2b23;
 	WFIFOSET(fd,2);
 }
+
 void chrif_keepalive_ack(int fd) {
 	session[fd]->flag.ping = 0;/* reset ping state, we received a packet */
 }

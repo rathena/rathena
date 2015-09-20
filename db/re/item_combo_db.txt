@@ -303,6 +303,7 @@
 4627:4628,{ bonus2 bSubRace,RC_Formless,5; bonus2 bSubRace,RC_Demon,5; bonus2 bIgnoreDefRaceRate,RC_Formless,50; bonus2 bIgnoreDefRaceRate,RC_Demon,50;}
 4629:4630,{ bonus3 bAutoSpell,677,2,2; bonus2 bSubEle,Ele_Neutral,5; }
 4631:4632,{ bonus5 bAutoSpell,85,1,1,BF_SHORT,0; }
+4635:4636,{ bonus2 bResEff,Eff_Burning,10000; }
 5040:5442,{ bonus bAspdRate,3; bonus bVariableCastrate,3; }
 5040:18673,{ bonus bSPrecovRate,3; }
 5041:18538,{ bonus2 bSubRace,RC_Angel,9; }
@@ -472,4 +473,7 @@
 28315:28317,{ bonus2 bAddClass,Class_All,4; bonus bMatkRate,4; }
 28316:28318,{ bonus2 bAddClass,Class_All,4; bonus bMatkRate,4; }
 28326:28327,{ bonus bInt,8; bonus bStr,8; }
+28372:1433,{ .@r = getequiprefinerycnt(EQI_HAND_R)/2*7; bonus2 bSkillAtk,"LG_CANNONSPEAR",.@r; bonus2 bSkillAtk,"LG_BANISHINGPOINT",.@r; }
+28372:2153,{ .@r = getequiprefinerycnt(EQI_HAND_R)/6*8; bonus2 bSkillAtk,"LG_SHIELDPRESS",.@r; }
+28372:18823,{ bonus2 bSkillAtk,"CR_GRANDCROSS",BaseLevel; bonus2 bVariableCastrate,"CR_GRANDCROSS",-BaseLevel*2; bonus2 bSkillAtk,"CR_GRANDCROSS",BaseLevel/30; bonus2 bSkillUseSP,"CR_GRANDCROSS",-(BaseLevel/30)*10; }
 28602:2677,{ bonus2 bVariableCastrate,"PR_MAGNUS",-25; bonus bHealPower,10; bonus bAddItemHealRate,10; autobonus2 "{ bonus bIgnoreMDefRace,RC_All; }",getequiprefinerycnt(EQI_HAND_R)*20,2000,BF_SHORT|BF_NORMAL; /* Confirm: Success rate and duration */ }

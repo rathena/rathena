@@ -278,7 +278,7 @@ int chmapif_parse_getmapname(int fd, int id){
 int chmapif_parse_askscdata(int fd){
 	if (RFIFOREST(fd) < 10)
 		return 0;
-	{
+	else {
 #ifdef ENABLE_SC_SAVING
 		int aid, cid;
 		aid = RFIFOL(fd,2);
@@ -351,7 +351,7 @@ int chmapif_parse_getusercount(int fd, int id){
 int chmapif_parse_regmapuser(int fd, int id){
 	if (RFIFOREST(fd) < 6 || RFIFOREST(fd) < RFIFOW(fd,2))
 		return 0;
-	{
+	else {
 		//TODO: When data mismatches memory, update guild/party online/offline states.
 		DBMap* online_char_db = char_get_onlinedb();
 		int i;
@@ -387,7 +387,7 @@ int chmapif_parse_regmapuser(int fd, int id){
 int chmapif_parse_reqsavechar(int fd, int id){
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 		return 0;
-	{
+	else {
 		int aid = RFIFOL(fd,4), cid = RFIFOL(fd,8), size = RFIFOW(fd,2);
 		struct online_char_data* character;
 		DBMap* online_char_db = char_get_onlinedb();
@@ -592,7 +592,7 @@ void chmapif_changemapserv_ack(int fd, bool nok){
 int chmapif_parse_reqchangemapserv(int fd){
 	if (RFIFOREST(fd) < 39)
 		return 0;
-	{
+	else {
 		int map_id, map_fd = -1;
 		struct mmo_charstatus* char_data;
 		struct mmo_charstatus char_dat;
@@ -662,7 +662,7 @@ int chmapif_parse_reqchangemapserv(int fd){
 int chmapif_parse_askrmfriend(int fd){
 	if (RFIFOREST(fd) < 10)
 		return 0;
-	{
+	else {
 		uint32 char_id, friend_id;
 		char_id = RFIFOL(fd,2);
 		friend_id = RFIFOL(fd,6);
@@ -727,17 +727,16 @@ int chmapif_parse_fwlog_changestatus(int fd){
 		int result = 0; // 0-login-server request done, 1-player not found, 2-gm level too low, 3-login-server offline, 4-current group level > VIP group level
 		char esc_name[NAME_LENGTH*2+1];
 		char answer = true;
-
 		int aid = RFIFOL(fd,2); // account_id of who ask (-1 if server itself made this request)
 		const char* name = (char*)RFIFOP(fd,6); // name of the target character
-		int operation = RFIFOW(fd,30); // type of operation: 1-block, 2-ban, 3-unblock, 4-unban, 5-changesex, 6-vip, 7-changecharsex
+		int operation = RFIFOW(fd,30); // type of operation @see enum chrif_req_op
 		int32 timediff = 0;
 		int val1 = 0, sex = SEX_MALE;
 
-		if (operation == 2 || operation == 6) {
+		if (operation == CHRIF_OP_LOGIN_BAN || operation == CHRIF_OP_LOGIN_VIP) {
 			timediff = RFIFOL(fd, 32);
 			val1 = RFIFOL(fd, 36);
-		} else if (operation == 7)
+		} else if (operation == CHRIF_OP_CHANGECHARSEX)
 			sex = RFIFOB(fd, 32);
 		RFIFOSKIP(fd,44);
 
@@ -767,45 +766,45 @@ int chmapif_parse_fwlog_changestatus(int fd){
 			else {
 				//! NOTE: See src/char/chrif.h::enum chrif_req_op for the number
 				switch( operation ) {
-					case 1: // block
+					case CHRIF_OP_LOGIN_BLOCK: // block
 						WFIFOHEAD(login_fd,10);
 						WFIFOW(login_fd,0) = 0x2724;
 						WFIFOL(login_fd,2) = t_aid;
 						WFIFOL(login_fd,6) = 5; // new account status
 						WFIFOSET(login_fd,10);
 						break;
-					case 2: // ban
+					case CHRIF_OP_LOGIN_BAN: // ban
 						WFIFOHEAD(login_fd,10);
 						WFIFOW(login_fd, 0) = 0x2725;
 						WFIFOL(login_fd, 2) = t_aid;
 						WFIFOL(login_fd, 6) = timediff;
 						WFIFOSET(login_fd,10);
 						break;
-					case 3: // unblock
+					case CHRIF_OP_LOGIN_UNBLOCK: // unblock
 						WFIFOHEAD(login_fd,10);
 						WFIFOW(login_fd,0) = 0x2724;
 						WFIFOL(login_fd,2) = t_aid;
 						WFIFOL(login_fd,6) = 0; // new account status
 						WFIFOSET(login_fd,10);
 						break;
-					case 4: // unban
+					case CHRIF_OP_LOGIN_UNBAN: // unban
 						WFIFOHEAD(login_fd,6);
 						WFIFOW(login_fd,0) = 0x272a;
 						WFIFOL(login_fd,2) = t_aid;
 						WFIFOSET(login_fd,6);
 						break;
-					case 5: // changesex
+					case CHRIF_OP_LOGIN_CHANGESEX: // changesex
 						answer = false;
 						WFIFOHEAD(login_fd,6);
 						WFIFOW(login_fd,0) = 0x2727;
 						WFIFOL(login_fd,2) = t_aid;
 						WFIFOSET(login_fd,6);
 						break;
-					case 6: // vip
+					case CHRIF_OP_LOGIN_VIP: // vip
 						answer = (val1&4); // vip_req val1=type, &1 login send return, &2 update timestamp, &4 map send answer
 						chlogif_reqvipdata(t_aid, val1, timediff, fd);
 						break;
-					case 7: // changecharsex
+					case CHRIF_OP_CHANGECHARSEX: // changecharsex
 						answer = false;
 						chlogif_parse_ackchangecharsex(t_cid, sex);
 						break;
@@ -863,7 +862,7 @@ int chmapif_parse_reqdivorce(int fd){
 int chmapif_parse_updmapinfo(int fd){
 	if( RFIFOREST(fd) < 14 )
 		return 0;
-	{
+	else {
 		char esc_server_name[sizeof(charserv_config.server_name)*2+1];
 		Sql_EscapeString(sql_handle, esc_server_name, charserv_config.server_name);
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` SET `index`='%d',`name`='%s',`exp`='%d',`jexp`='%d',`drop`='%d'",
@@ -999,99 +998,98 @@ int chmapif_parse_keepalive(int fd){
  * @return : 0 not enough data received, 1 success
  */
 int chmapif_parse_reqauth(int fd, int id){
-    if (RFIFOREST(fd) < 20)
-            return 0;
+	if (RFIFOREST(fd) < 20)
+		return 0;
+	else {
+		uint32 account_id;
+		uint32 char_id;
+		uint32 login_id1;
+		unsigned char sex;
+		uint32 ip;
+		struct auth_node* node;
+		struct mmo_charstatus* cd;
+		struct mmo_charstatus char_dat;
+		bool autotrade;
 
-    {
-        uint32 account_id;
-        uint32 char_id;
-        uint32 login_id1;
-        unsigned char sex;
-        uint32 ip;
-        struct auth_node* node;
-        struct mmo_charstatus* cd;
-        struct mmo_charstatus char_dat;
-        bool autotrade;
+		DBMap*  auth_db = char_get_authdb();
+		DBMap* char_db_ = char_get_chardb();
 
-        DBMap*  auth_db = char_get_authdb();
-        DBMap* char_db_ = char_get_chardb();
+		account_id = RFIFOL(fd,2);
+		char_id    = RFIFOL(fd,6);
+		login_id1  = RFIFOL(fd,10);
+		sex        = RFIFOB(fd,14);
+		ip         = ntohl(RFIFOL(fd,15));
+		autotrade  = RFIFOB(fd,19);
+		RFIFOSKIP(fd,20);
 
-        account_id = RFIFOL(fd,2);
-        char_id    = RFIFOL(fd,6);
-        login_id1  = RFIFOL(fd,10);
-        sex        = RFIFOB(fd,14);
-        ip         = ntohl(RFIFOL(fd,15));
-        autotrade  = RFIFOB(fd,19);
-        RFIFOSKIP(fd,20);
-
-        node = (struct auth_node*)idb_get(auth_db, account_id);
-        cd = (struct mmo_charstatus*)uidb_get(char_db_,char_id);
-        if( cd == NULL )
-        {	//Really shouldn't happen. (or autotrade)
-                char_mmo_char_fromsql(char_id, &char_dat, true);
-                cd = (struct mmo_charstatus*)uidb_get(char_db_,char_id);
-        }
-        if( runflag == CHARSERVER_ST_RUNNING && autotrade && cd ){
-            uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
+		node = (struct auth_node*)idb_get(auth_db, account_id);
+		cd = (struct mmo_charstatus*)uidb_get(char_db_,char_id);
+		if( cd == NULL )
+		{	//Really shouldn't happen. (or autotrade)
+				char_mmo_char_fromsql(char_id, &char_dat, true);
+				cd = (struct mmo_charstatus*)uidb_get(char_db_,char_id);
+		}
+		if( runflag == CHARSERVER_ST_RUNNING && autotrade && cd ){
+			uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
 			if (cd->sex == 99)
 				cd->sex = sex;
 
-            WFIFOHEAD(fd,mmo_charstatus_len);
-            WFIFOW(fd,0) = 0x2afd;
-            WFIFOW(fd,2) = mmo_charstatus_len;
-            WFIFOL(fd,4) = account_id;
-            WFIFOL(fd,8) = 0;
-            WFIFOL(fd,12) = 0;
-            WFIFOL(fd,16) = 0;
-            WFIFOL(fd,20) = 0;
-            WFIFOB(fd,24) = 0;
-            memcpy(WFIFOP(fd,25), cd, sizeof(struct mmo_charstatus));
-            WFIFOSET(fd, WFIFOW(fd,2));
+			WFIFOHEAD(fd,mmo_charstatus_len);
+			WFIFOW(fd,0) = 0x2afd;
+			WFIFOW(fd,2) = mmo_charstatus_len;
+			WFIFOL(fd,4) = account_id;
+			WFIFOL(fd,8) = 0;
+			WFIFOL(fd,12) = 0;
+			WFIFOL(fd,16) = 0;
+			WFIFOL(fd,20) = 0;
+			WFIFOB(fd,24) = 0;
+			memcpy(WFIFOP(fd,25), cd, sizeof(struct mmo_charstatus));
+			WFIFOSET(fd, WFIFOW(fd,2));
 
-            char_set_char_online(id, char_id, account_id);
-        } else if( runflag == CHARSERVER_ST_RUNNING &&
-            cd != NULL &&
-            node != NULL &&
-            node->account_id == account_id &&
-            node->char_id == char_id &&
-            node->login_id1 == login_id1
-            //&& node->ip == ip
+			char_set_char_online(id, char_id, account_id);
+		} else if( runflag == CHARSERVER_ST_RUNNING &&
+			cd != NULL &&
+			node != NULL &&
+			node->account_id == account_id &&
+			node->char_id == char_id &&
+			node->login_id1 == login_id1
+			//&& node->ip == ip
 #if PACKETVER < 20141016
 			&& node->sex == sex
 #endif
 			)
-        {// auth ok
-            uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
+		{// auth ok
+			uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
 			if (cd->sex == 99)
 				cd->sex = sex;
 
-            WFIFOHEAD(fd,mmo_charstatus_len);
-            WFIFOW(fd,0) = 0x2afd;
-            WFIFOW(fd,2) = mmo_charstatus_len;
-            WFIFOL(fd,4) = account_id;
-            WFIFOL(fd,8) = node->login_id1;
-            WFIFOL(fd,12) = node->login_id2;
-            WFIFOL(fd,16) = (uint32)node->expiration_time; // FIXME: will wrap to negative after "19-Jan-2038, 03:14:07 AM GMT"
-            WFIFOL(fd,20) = node->group_id;
-            WFIFOB(fd,24) = node->changing_mapservers;
-            memcpy(WFIFOP(fd,25), cd, sizeof(struct mmo_charstatus));
-            WFIFOSET(fd, WFIFOW(fd,2));
+			WFIFOHEAD(fd,mmo_charstatus_len);
+			WFIFOW(fd,0) = 0x2afd;
+			WFIFOW(fd,2) = mmo_charstatus_len;
+			WFIFOL(fd,4) = account_id;
+			WFIFOL(fd,8) = node->login_id1;
+			WFIFOL(fd,12) = node->login_id2;
+			WFIFOL(fd,16) = (uint32)node->expiration_time; // FIXME: will wrap to negative after "19-Jan-2038, 03:14:07 AM GMT"
+			WFIFOL(fd,20) = node->group_id;
+			WFIFOB(fd,24) = node->changing_mapservers;
+			memcpy(WFIFOP(fd,25), cd, sizeof(struct mmo_charstatus));
+			WFIFOSET(fd, WFIFOW(fd,2));
 
-            // only use the auth once and mark user online
-            idb_remove(auth_db, account_id);
-            char_set_char_online(id, char_id, account_id);
-        } else {// auth failed
-                WFIFOHEAD(fd,19);
-                WFIFOW(fd,0) = 0x2b27;
-                WFIFOL(fd,2) = account_id;
-                WFIFOL(fd,6) = char_id;
-                WFIFOL(fd,10) = login_id1;
-                WFIFOB(fd,14) = sex;
-                WFIFOL(fd,15) = htonl(ip);
-                WFIFOSET(fd,19);
-        }
-    }
-    return 1;
+			// only use the auth once and mark user online
+			idb_remove(auth_db, account_id);
+			char_set_char_online(id, char_id, account_id);
+		} else {// auth failed
+			WFIFOHEAD(fd,19);
+			WFIFOW(fd,0) = 0x2b27;
+			WFIFOL(fd,2) = account_id;
+			WFIFOL(fd,6) = char_id;
+			WFIFOL(fd,10) = login_id1;
+			WFIFOB(fd,14) = sex;
+			WFIFOL(fd,15) = htonl(ip);
+			WFIFOSET(fd,19);
+		}
+	}
+	return 1;
 }
 
 /**
@@ -1101,7 +1099,7 @@ int chmapif_parse_reqauth(int fd, int id){
  */
 int chmapif_parse_updmapip(int fd, int id){
 	if (RFIFOREST(fd) < 6) 
-            return 0;
+		return 0;
 	map_server[id].ip = ntohl(RFIFOL(fd, 2));
 	ShowInfo("Updated IP address of map-server #%d to %d.%d.%d.%d.\n", id, CONVIP(map_server[id].ip));
 	RFIFOSKIP(fd,6);
@@ -1451,7 +1449,6 @@ int chmapif_parse(int fd){
 	while(RFIFOREST(fd) >= 2){
 		int next=1;
 		switch(RFIFOW(fd,0)){
-			case 0x2736: next=chmapif_parse_updmapip(fd,id); break;
 			case 0x2afa: next=chmapif_parse_getmapname(fd,id); break;
 			case 0x2afc: next=chmapif_parse_askscdata(fd); break;
 			case 0x2afe: next=chmapif_parse_getusercount(fd,id); break; //get nb user
@@ -1466,6 +1463,7 @@ int chmapif_parse(int fd){
 			case 0x2b0e: next=chmapif_parse_fwlog_changestatus(fd); break;
 			case 0x2b10: next=chmapif_parse_updfamelist(fd); break;
 			case 0x2b11: next=chmapif_parse_reqdivorce(fd); break;
+			case 0x2b13: next=chmapif_parse_updmapip(fd,id); break;
 			case 0x2b15: next=chmapif_parse_req_saveskillcooldown(fd); break;
 			case 0x2b16: next=chmapif_parse_updmapinfo(fd); break;
 			case 0x2b17: next=chmapif_parse_setcharoffline(fd); break;

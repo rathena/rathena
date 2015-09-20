@@ -400,7 +400,7 @@ static int logclif_parse_reqkey(int fd, struct login_session_data *sd){
 static int logclif_parse_reqcharconnec(int fd, struct login_session_data *sd, char* ip){
 	if (RFIFOREST(fd) < 86)
 		return 0;
-	{
+	else {
 		int result;
 		char server_name[20];
 		char message[256];

@@ -1196,6 +1196,8 @@ IG_Miracle_Lucky_Egg	446
 IG_Legend_Hero_Lucky_Egg	447
 IG_Blessing_Midgard_Lucky_Egg	448
 IG_Chronosian_Lucky_Egg	449
+IG_Sanctuary_Lucky_Egg	450
+IG_Cyborg_Lucky_Egg	451
 
 SC_ALL	-1
 SC_NONE	-1

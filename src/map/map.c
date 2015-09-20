@@ -1314,7 +1314,7 @@ int map_clearflooritem_timer(int tid, unsigned int tick, int id, intptr_t data)
 void map_clearflooritem(struct block_list *bl) {
 	struct flooritem_data* fitem = (struct flooritem_data*)bl;
 
-	if( fitem->cleartimer )
+	if( fitem->cleartimer != INVALID_TIMER )
 		delete_timer(fitem->cleartimer,map_clearflooritem_timer);
 
 	clif_clearflooritem(fitem, 0);

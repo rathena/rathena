@@ -6,6 +6,7 @@
 
 #include "cbasetypes.h"
 #include "../common/db.h"
+#include "../config/core.h"
 #include <time.h>
 
 // server->client protocol version
@@ -31,14 +32,14 @@
 #define HOTKEY_SAVING
 
 #if PACKETVER < 20090603
-        // (27 = 9 skills x 3 bars)               (0x02b9,191)
-        #define MAX_HOTKEYS 27
+	// (27 = 9 skills x 3 bars)               (0x02b9,191)
+	#define MAX_HOTKEYS 27
 #elif PACKETVER < 20090617
-        // (36 = 9 skills x 4 bars)               (0x07d9,254)
-        #define MAX_HOTKEYS 36
+	// (36 = 9 skills x 4 bars)               (0x07d9,254)
+	#define MAX_HOTKEYS 36
 #else
-        // (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
-        #define MAX_HOTKEYS 38
+	// (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
+	#define MAX_HOTKEYS 38
 #endif
 
 #define MAX_MAP_PER_SERVER 1500 /// Increased to allow creation of Instance Maps
@@ -69,6 +70,7 @@
 #define MAX_GUILDLEVEL 50 ///Max Guild level
 #define MAX_GUARDIANS 8	///Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
+#define MAX_QUEST_DROPS 3 ///Max quest drops for a quest
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 
 // for produce
@@ -812,9 +814,16 @@ enum e_pc_reg_loading {
 	PRL_ALL = 0xFF,
 };
 
-// sanity checks...
+// Sanity checks...
 #if MAX_ZENY > INT_MAX
 #error MAX_ZENY is too big
+#endif
+
+#ifndef VIP_ENABLE
+	#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
+	#define MIN_CHARS MAX_CHARS // Default number of characters per account.
+	#define MAX_CHAR_BILLING 0
+	#define MAX_CHAR_VIP 0
 #endif
 
 #if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
@@ -829,6 +838,17 @@ enum e_pc_reg_loading {
 	#if PACKETVER < 20110817
 		#undef PACKET_OBFUSCATION
 	#endif
+#endif
+
+/* Feb 1st 2012 */
+#if PACKETVER >= 20120201
+	#define NEW_CARTS
+	#ifndef ENABLE_SC_SAVING
+	#warning "Cart won't be able to be saved for relog"
+	#endif
+	#define MAX_CARTS 9
+#else
+	#define MAX_CARTS 5
 #endif
 
 #endif /* _MMO_H_ */
