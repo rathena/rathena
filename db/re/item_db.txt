@@ -4675,6 +4675,7 @@
 6931,Secret_Documents,Secret Documents,3,10,,0,,,,,,,,,,,,,{},{},{}
 6932,Rare_Book,Rare Book,3,10,,0,,,,,,,,,,,,,{},{},{}
 6933,Banquet_Invitation_Letter,Banquet Invitation Letter,3,10,,0,,,,,,,,,,,,,{},{},{}
+6934,Magnificent_Dish,Magnificent Dish,3,10,,1000,,,,,,,,,,,,,{},{},{}
 6936,Cold_Core,Cold Core,3,10,,10,,,,,,,,,,,,,{},{},{}
 6937,Silicone_Shell,Silicone Shell,3,10,,10,,,,,,,,,,,,,{},{},{}
 //

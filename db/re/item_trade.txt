@@ -924,7 +924,7 @@
 6931,499,100	// Secret_Documents
 6932,499,100	// Rare_Book
 6933,499,100	// Banquet_Invitation_Letter
-//6934,499,100	//
+6934,499,100	// Magnificent_Dish
 //6935,499,100	//
 6953,475,100	// Ramor_Refine_Ticket
 6954,499,100	// Piece_Of_Soul_Dog
