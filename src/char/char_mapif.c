@@ -1402,8 +1402,8 @@ int chmapif_bonus_script_save(int fd) {
 				Sql_ShowDebug(sql_handle);
 
 			StringBuf_Destroy(&buf);
+			ShowInfo("Bonus Script saved for CID=%d. Total: %d.\n", cid, count);
 		}
-		ShowInfo("Bonus Script saved for CID=%d. Total: %d.\n", cid, count);
 		RFIFOSKIP(fd,RFIFOW(fd,2));
 	}
 	return 1;
