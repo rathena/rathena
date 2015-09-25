@@ -381,7 +381,7 @@ int quest_check(TBL_PC *sd, int quest_id, enum quest_check_type type)
 void quest_read_txtdb(void)
 {
 	const char* dbsubpath[] = {
-		"",
+		DBPATH,
 		DBIMPORT"/",
 	};
 	uint8 f;

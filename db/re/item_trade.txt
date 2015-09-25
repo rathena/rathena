@@ -919,13 +919,13 @@
 6926,499,100	// Rune-Midgard_History_Book
 6927,499,100	// Stone_That_Contained_Sea
 6928,499,100	// Poring_Scourer
-//6929,499,100	//
-//6930,499,100	//
+6929,499,100	// Letter_With_Stamped_Seal
+6930,499,100	// Samples_New_Business_Items
 6931,499,100	// Secret_Documents
 6932,499,100	// Rare_Book
 6933,499,100	// Banquet_Invitation_Letter
-//6934,499,100	//
-//6935,499,100	//
+6934,499,100	// Magnificent_Dish
+6935,499,100	// Advanced_Dish
 6953,475,100	// Ramor_Refine_Ticket
 6954,499,100	// Piece_Of_Soul_Dog
 6955,499,100	// Piece_Of_Soul_Pig

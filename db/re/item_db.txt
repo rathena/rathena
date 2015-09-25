@@ -4670,11 +4670,17 @@
 6926,Rune-Midgard_History_Book,Rune-Midgard History Book,3,10,,0,,,,,,,,,,,,,{},{},{}
 6927,Stone_That_Contained_Sea,Stone That Contained Sea,3,10,,0,,,,,,,,,,,,,{},{},{}
 6928,Poring_Scourer,Poring Scourer,3,10,,0,,,,,,,,,,,,,{},{},{}
+6929,Letter_With_Stamped_Seal,Letter With Stamped Seal,3,10,,0,,,,,,,,,,,,,{},{},{}
+6930,Samples_New_Business_Items,Samples New Business Items,3,10,,0,,,,,,,,,,,,,{},{},{}
 6931,Secret_Documents,Secret Documents,3,10,,0,,,,,,,,,,,,,{},{},{}
 6932,Rare_Book,Rare Book,3,10,,0,,,,,,,,,,,,,{},{},{}
 6933,Banquet_Invitation_Letter,Banquet Invitation Letter,3,10,,0,,,,,,,,,,,,,{},{},{}
+6934,Magnificent_Dish,Magnificent Dish,3,10,,1000,,,,,,,,,,,,,{},{},{}
+6935,Advanced_Dish,Advanced Dish,3,10,,10,,,,,,,,,,,,,{},{},{}
 6936,Cold_Core,Cold Core,3,10,,10,,,,,,,,,,,,,{},{},{}
 6937,Silicone_Shell,Silicone Shell,3,10,,10,,,,,,,,,,,,,{},{},{}
+6938,Hedgehog_Picks,Hedgehog Picks,3,10,,10,,,,,,,,,,,,,{},{},{}
+6939,Old_Belt,Old Belt,3,10,,10,,,,,,,,,,,,,{},{},{}
 //
 6943,Attack_Stone(Upper),Attack Stone(Upper),6,10,,100,,,,,,,,,,,,,{ bonus bAtkRate,1; },{},{}
 6944,Magic_Stone(Upper),Magic Stone(Upper),6,10,,100,,,,,,,,,,,,,{ bonus bMatkRate,1; },{},{}
