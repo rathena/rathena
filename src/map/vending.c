@@ -55,7 +55,7 @@ void vending_closevending(struct map_session_data* sd)
 			Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS ) {
 				Sql_ShowDebug(mmysql_handle);
 		}
-		
+
 		sd->state.vending = false;
 		sd->vender_id = 0;
 		clif_closevendingboard(&sd->bl, 0);
@@ -529,7 +529,7 @@ void vending_reopen( struct map_session_data* sd )
 	}
 
 	if (fail != 0) {
-		ShowError("vending_reopen: (Error:%d) Load failed for autotrader '"CL_WHITE"%s"CL_RESET"' (CID=%/AID=%d)\n", fail, sd->status.name, sd->status.char_id, sd->status.account_id);
+		ShowError("vending_reopen: (Error:%d) Load failed for autotrader '"CL_WHITE"%s"CL_RESET"' (CID=%d/AID=%d)\n", fail, sd->status.name, sd->status.char_id, sd->status.account_id);
 		map_quit(sd);
 	}
 }
