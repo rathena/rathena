@@ -7748,13 +7748,21 @@ BUILDIN_FUNC(disableitemuse)
 BUILDIN_FUNC(readparam)
 {
 	int type;
+	struct script_data *data = script_getdata(st, 2);
 	TBL_PC *sd;
 
-	type = script_getnum(st,2);
 	if (!script_nick2sd(3,sd)) {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
+
+	if (data->type == C_NAME) { // If using constant name, just get the val
+		get_val_(st, data, sd);
+		script_pushint(st, (int)data->u.num);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	type = script_getnum(st, 2);
 	script_pushint(st,pc_readparam(sd,type));
 	return SCRIPT_CMD_SUCCESS;
 }

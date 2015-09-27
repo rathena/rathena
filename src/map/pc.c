@@ -7727,6 +7727,9 @@ int pc_readparam(struct map_session_data* sd,int type)
 #else
 			val = sd->castrate; break;
 #endif
+		default:
+			ShowError("pc_readparam: Attempt to read unknown parameter '%d'.\n", type);
+			return -1;
 	}
 
 	return val;
