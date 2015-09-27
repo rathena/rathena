@@ -205,7 +205,6 @@ alberta,214,77,6	script	Captain Janssen	709,{
 e_tower,81,105,0	script	Tower Protection Stone	406,{
 
 	set .@party_id,getcharid(1);
-	set .@p_name$,getpartyname(.@party_id);
 	set .@md_name$,"Endless Tower";
 
 	set .@etower_timer,checkquest(60200,PLAYTIME); // 1 week
@@ -222,7 +221,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 			switch(select("Generate dungeon "+.@md_name$+":Enter the dungeon:Return to Alberta:Cancel")) {
 			case 1:
 				if (instance_create(.@md_name$) < 0) {
-					mes "Party Name: "+.@p_name$;
+					mes "Party Name: "+ getpartyname(.@party_id);
 					mes "Party Leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
 					close;
@@ -304,7 +303,7 @@ L_Enter:
 		mes "You can enter the dungeon after making the party.";
 		close;
 	case 0:
-		mapannounce "e_tower", strcharinfo(0)+" of the party, "+.@p_name$+", is entering the dungeon, Endless Tower.",bc_map,"0x00ff99",FW_NORMAL,12;
+		mapannounce "e_tower", strcharinfo(0) +" of the party, "+ getpartyname( getcharid(1) ) +", is entering the dungeon, Endless Tower.",bc_map,"0x00ff99",FW_NORMAL,12;
 		if (getarg(1)) {
 			set etower_timer,gettimetick(2);
 			setquest 60200;
