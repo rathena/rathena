@@ -17656,7 +17656,7 @@ BUILDIN_FUNC(unitskillusepos)
 	if (bl != NULL) {
 		if (bl->type == BL_NPC) {
 			if (!((TBL_NPC*)bl)->status.hp)
-				status_calc_npc(((TBL_NPC*)bl), SCO_FORCE);
+				status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
 			else
 				status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
 		}
