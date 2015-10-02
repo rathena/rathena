@@ -191,12 +191,12 @@ int elemental_delete(struct elemental_data *ed, int reply) {
 	elemental_summon_stop(ed);
 
 	if( !sd )
-		return unit_free(&ed->bl, 0);
+		return unit_free(&ed->bl, CLR_OUTSIGHT);
 
 	sd->ed = NULL;
 	sd->status.ele_id = 0;
 
-	return unit_remove_map(&ed->bl, 0);
+	return unit_remove_map(&ed->bl, CLR_OUTSIGHT);
 }
 
 void elemental_summon_init(struct elemental_data *ed) {

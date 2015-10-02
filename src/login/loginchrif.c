@@ -535,7 +535,7 @@ int logchrif_parse_updonlinedb(int fd, int id){
 		users = RFIFOW(fd,4);
 		for (i = 0; i < users; i++) {
 			int aid = RFIFOL(fd,6+i*4);
-			struct online_login_data *p = idb_ensure(online_db, aid, login_create_online_user);
+			struct online_login_data *p = (struct online_login_data*)idb_ensure(online_db, aid, login_create_online_user);
 			p->char_server = id;
 			if (p->waiting_disconnect != INVALID_TIMER){
 				delete_timer(p->waiting_disconnect, login_waiting_disconnect_timer);

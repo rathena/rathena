@@ -750,7 +750,7 @@ int mapif_parse_PartyShareLevel(int fd,unsigned int share_lvl)
 
 	party_share_level = share_lvl;
 
-	for(p = dbi_first(iter); dbi_exists(iter); p = dbi_next(iter)) { //Update online parties
+	for(p = (struct party_data *)dbi_first(iter); dbi_exists(iter); p = (struct party_data *)dbi_next(iter)) { //Update online parties
 		if(p->party.count > 1)
 			int_party_calc_state(p);
 	}

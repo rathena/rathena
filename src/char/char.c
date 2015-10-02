@@ -282,7 +282,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 
 	if (char_id!=p->char_id) return 0;
 
-	cp = idb_ensure(char_db_, char_id, char_create_charstatus);
+	cp = (struct mmo_charstatus *)idb_ensure(char_db_, char_id, char_create_charstatus);
 
 	StringBuf_Init(&buf);
 	memset(save_status, 0, sizeof(save_status));
@@ -1283,7 +1283,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	SqlStmt_Free(stmt);
 	StringBuf_Destroy(&buf);
 
-	cp = idb_ensure(char_db_, char_id, char_create_charstatus);
+	cp = (struct mmo_charstatus *)idb_ensure(char_db_, char_id, char_create_charstatus);
 	memcpy(cp, p, sizeof(struct mmo_charstatus));
 	StringBuf_Destroy(&msg_buf);
 	return 1;
@@ -2121,7 +2121,7 @@ int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t 
  */
 static int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct online_char_data *character= db_data2ptr(data);
+	struct online_char_data *character= (struct online_char_data *)db_data2ptr(data);
 	if (character->fd != -1)
 		return 0; //Character still connected
 	if (character->server == -2) //Unknown server.. set them offline

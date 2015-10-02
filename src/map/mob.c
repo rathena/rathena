@@ -4643,7 +4643,7 @@ static bool mob_readdb_itemratio(char* str[], int columns, int current)
  * Free drop ratio data
  **/
 static int mob_item_drop_ratio_free(DBKey key, DBData *data, va_list ap) {
-	struct s_mob_item_drop_ratio *item_ratio = db_data2ptr(data);
+	struct s_mob_item_drop_ratio *item_ratio = (struct s_mob_item_drop_ratio *)db_data2ptr(data);
 	aFree(item_ratio);
 	return 0;
 }

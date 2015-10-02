@@ -141,7 +141,7 @@ static void read_config(void)
 		
 		// Check if all commands and permissions exist
 		iter = db_iterator(pc_group_db);
-		for (group_settings = dbi_first(iter); dbi_exists(iter); group_settings = dbi_next(iter)) {
+		for (group_settings = (GroupSettings *)dbi_first(iter); dbi_exists(iter); group_settings = (GroupSettings *)dbi_next(iter)) {
 			config_setting_t *commands = group_settings->commands, *permissions = group_settings->permissions;
 			int count = 0, j;
 
@@ -186,7 +186,7 @@ static void read_config(void)
 		i = 0; // counter for processed groups
 		while (i < group_count) {
 			iter = db_iterator(pc_group_db);
-			for (group_settings = dbi_first(iter); dbi_exists(iter); group_settings = dbi_next(iter)) {
+			for (group_settings = (GroupSettings *)dbi_first(iter); dbi_exists(iter); group_settings = (GroupSettings *)dbi_next(iter)) {
 				config_setting_t *inherit = NULL,
 				                 *commands = group_settings->commands,
 					             *permissions = group_settings->permissions;
@@ -251,7 +251,7 @@ static void read_config(void)
 
 		// Pack permissions into GroupSettings.e_permissions for faster checking
 		iter = db_iterator(pc_group_db);
-		for (group_settings = dbi_first(iter); dbi_exists(iter); group_settings = dbi_next(iter)) {
+		for (group_settings = (GroupSettings *)dbi_first(iter); dbi_exists(iter); group_settings = (GroupSettings *)dbi_next(iter)) {
 			config_setting_t *permissions = group_settings->permissions;
 			int c, count = config_setting_length(permissions);
 
@@ -276,9 +276,9 @@ static void read_config(void)
 	if( ( pc_group_max = group_count ) ) {
 		DBIterator *iter = db_iterator(pc_group_db);
 		GroupSettings *group_settings = NULL;
-		int* group_ids = aMalloc( pc_group_max * sizeof(int) );
+		int* group_ids = (int*)aMalloc( pc_group_max * sizeof(int) );
 		int i = 0;
-		for (group_settings = dbi_first(iter); dbi_exists(iter); group_settings = dbi_next(iter)) {
+		for (group_settings = (GroupSettings *)dbi_first(iter); dbi_exists(iter); group_settings = (GroupSettings *)dbi_next(iter)) {
 			group_ids[i++] = group_settings->id;
 		}
 		

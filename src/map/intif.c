@@ -388,7 +388,7 @@ int intif_saveregistry(struct map_session_data *sd)
 		if( varname[0] == '@' ) // @string$ can get here, so we skip
 			continue;
 
-		src = db_data2ptr(data);
+		src = (struct script_reg_state *)db_data2ptr(data);
 
 		if( !src->update )
 			continue;
@@ -2007,7 +2007,7 @@ void intif_parse_questlog(int fd)
 			// sd->avail_quests and k didn't meet in the middle: some entries were skipped
 			if(k < num_received) // Move the entries at the end to fill the gap
 				memmove(&sd->quest_log[k], &sd->quest_log[sd->avail_quests], sizeof(struct quest) * (num_received - k));
-			sd->quest_log = aRealloc(sd->quest_log, sizeof(struct quest) * sd->num_quests);
+			sd->quest_log = (struct quest *)aRealloc(sd->quest_log, sizeof(struct quest) * sd->num_quests);
 		}
 	}
 
@@ -2938,7 +2938,7 @@ void intif_parse_MessageToFD(int fd) {
 
 	if( session[u_fd] && session[u_fd]->session_data ) { //check if the player still online
 		int aid = RFIFOL(fd,8);
-		struct map_session_data * sd = session[u_fd]->session_data;
+		struct map_session_data * sd = (struct map_session_data *)session[u_fd]->session_data;
 		/* matching e.g. previous fd owner didn't dc during request or is still the same */
 		if( sd->bl.id == aid ) {
 			char msg[512];

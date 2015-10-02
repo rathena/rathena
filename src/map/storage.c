@@ -84,7 +84,7 @@ void do_final_storage(void)
  */
 static int storage_reconnect_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct guild_storage *stor = db_data2ptr(data);
+	struct guild_storage *stor = (struct guild_storage *)db_data2ptr(data);
 
 	if (stor->dirty && stor->opened == 0) //Save closed storages.
 		gstorage_storagesave(0, stor->guild_id,0);

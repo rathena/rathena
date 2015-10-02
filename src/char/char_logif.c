@@ -82,7 +82,7 @@ void chlogif_pincode_start(int fd, struct char_session_data* sd){
  * @see DBApply
  */
 static int chlogif_send_acc_tologin_sub(DBKey key, DBData *data, va_list ap) {
-	struct online_char_data* character = db_data2ptr(data);
+	struct online_char_data* character = (struct online_char_data*)db_data2ptr(data);
 	int* i = va_arg(ap, int*);
 	if(character->server > -1) {
 		WFIFOL(login_fd,8+(*i)*4) = character->account_id;

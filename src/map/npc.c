@@ -362,7 +362,7 @@ int npc_event_doall_sub(DBKey key, DBData *data, va_list ap)
 	const char* name;
 	int rid;
 
-	nullpo_ret(ev = db_data2ptr(data));
+	nullpo_ret(ev = (struct event_data*)db_data2ptr(data));
 	nullpo_ret(c = va_arg(ap, int *));
 	nullpo_ret(name = va_arg(ap, const char *));
 	rid = va_arg(ap, int);
@@ -390,7 +390,7 @@ static int npc_event_do_sub(DBKey key, DBData *data, va_list ap)
 	int* c, rid;
 	const char* name;
 
-	nullpo_ret(ev = db_data2ptr(data));
+	nullpo_ret(ev = (struct event_data*)db_data2ptr(data));
 	nullpo_ret(c = va_arg(ap, int *));
 	nullpo_ret(name = va_arg(ap, const char *));
 	rid = va_arg(ap, int);
@@ -1961,7 +1961,7 @@ int npc_remove_map(struct npc_data* nd)
  */
 static int npc_unload_ev(DBKey key, DBData *data, va_list ap)
 {
-	struct event_data* ev = db_data2ptr(data);
+	struct event_data* ev = (struct event_data*)db_data2ptr(data);
 	char* npcname = va_arg(ap, char *);
 
 	if(strcmp(ev->nd->exname,npcname)==0){
@@ -2009,7 +2009,7 @@ int npc_unload(struct npc_data* nd, bool single) {
 	if( single && nd->path ) {
 		struct npc_path_data* npd = NULL;
 		if( nd->path && nd->path != npc_last_ref ) {
-			npd = strdb_get(npc_path_db, nd->path);
+			npd = (struct npc_path_data*)strdb_get(npc_path_db, nd->path);
 		}
 
 		if( npd && --npd->references == 0 ) {
@@ -2219,7 +2219,7 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 	if( npc_last_path != filepath ) {
 		struct npc_path_data * npd = NULL;
 
-		if( !(npd = strdb_get(npc_path_db,filepath) ) ) {
+		if( !(npd = (struct npc_path_data *)strdb_get(npc_path_db,filepath) ) ) {
 			CREATE(npd, struct npc_path_data, 1);
 			strdb_put(npc_path_db, filepath, npd);
 
@@ -4289,7 +4289,7 @@ void npc_read_event_script(void)
 		for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) )
 		{
 			const char* p = key.str;
-			struct event_data* ed = db_data2ptr(data);
+			struct event_data* ed = (struct event_data*)db_data2ptr(data);
 			unsigned char count = script_event[i].event_count;
 
 			if( count >= ARRAYLENGTH(script_event[i].event) )
@@ -4320,7 +4320,7 @@ void npc_clear_pathlist(void) {
 	DBIterator *path_list = db_iterator(npc_path_db);
 
 	/* free all npc_path_data filepaths */
-	for( npd = dbi_first(path_list); dbi_exists(path_list); npd = dbi_next(path_list) ) {
+	for( npd = (struct npc_path_data *)dbi_first(path_list); dbi_exists(path_list); npd = (struct npc_path_data *)dbi_next(path_list) ) {
 		if( npd->path )
 			aFree(npd->path);
 	}
@@ -4438,7 +4438,7 @@ bool npc_unloadfile( const char* path ) {
 	struct npc_data* nd = NULL;
 	bool found = false;
 
-	for( nd = dbi_first(iter); dbi_exists(iter); nd = dbi_next(iter) ) {
+	for( nd = (struct npc_data*)dbi_first(iter); dbi_exists(iter); nd = (struct npc_data*)dbi_next(iter) ) {
 		if( nd->path && strcasecmp(nd->path,path) == 0 ) {
 			found = true;
 			npc_unload_duplicates(nd);/* unload any npcs which could duplicate this but be in a different file */

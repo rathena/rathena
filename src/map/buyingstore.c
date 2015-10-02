@@ -586,7 +586,7 @@ void buyingstore_reopen( struct map_session_data* sd ){
 	nullpo_retv(sd);
 
 	// Ready to open buyingstore for this char
-	if ((at = uidb_get(buyingstore_autotrader_db, sd->status.char_id)) && at->count && at->entries) {
+	if ((at = (struct s_autotrader *)uidb_get(buyingstore_autotrader_db, sd->status.char_id)) && at->count && at->entries) {
 		uint8 *data, *p;
 		uint16 j, count;
 
@@ -704,7 +704,7 @@ void do_init_buyingstore_autotrade( void ) {
 			
 			// Init items for each autotraders
 			iter = db_iterator(buyingstore_autotrader_db);
-			for (at = dbi_first(iter); dbi_exists(iter); at = dbi_next(iter)) {
+			for (at = (struct s_autotrader *)dbi_first(iter); dbi_exists(iter); at = (struct s_autotrader *)dbi_next(iter)) {
 				uint16 j = 0;
 
 				if (SQL_ERROR == Sql_Query(mmysql_handle,
@@ -779,7 +779,7 @@ static void buyingstore_autotrader_remove(struct s_autotrader *at, bool remove) 
 * @author [Cydh]
 */
 static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap) {
-	struct s_autotrader *at = db_data2ptr(data);
+	struct s_autotrader *at = (struct s_autotrader *)db_data2ptr(data);
 	if (at)
 		buyingstore_autotrader_remove(at, false);
 	return 0;

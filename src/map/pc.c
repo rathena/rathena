@@ -1257,7 +1257,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 
 #ifdef BOUND_ITEMS
 	// Party bound item check
-	if(sd->status.party_id == 0 && (j = pc_bound_chk(sd,3,idxlist))) { // Party was deleted while character offline
+	if(sd->status.party_id == 0 && (j = pc_bound_chk(sd,BOUND_PARTY,idxlist))) { // Party was deleted while character offline
 		for(i=0;i<j;i++)
 			pc_delitem(sd,idxlist[i],sd->status.inventory[idxlist[i]].amount,0,1,LOG_TYPE_OTHER);
 	}
@@ -8602,7 +8602,7 @@ char* pc_readregstr(struct map_session_data* sd, int64 reg)
 {
 	struct script_reg_str *p = NULL;
 
-	p = i64db_get(sd->regs.vars, reg);
+	p = (struct script_reg_str *)i64db_get(sd->regs.vars, reg);
 
 	return p ? p->value : NULL;
 }
@@ -8625,7 +8625,7 @@ bool pc_setregstr(struct map_session_data* sd, int64 reg, const char* str)
 		p->flag.type = 1;
 
 		if (sd->regs.vars->put(sd->regs.vars, db_i642key(reg), db_ptr2data(p), &prev)) {
-			p = db_data2ptr(&prev);
+			p = (struct script_reg_str *)db_data2ptr(&prev);
 			if( p->value )
 				aFree(p->value);
 			ers_free(str_reg_ers, p);
@@ -8635,7 +8635,7 @@ bool pc_setregstr(struct map_session_data* sd, int64 reg, const char* str)
 		}
 	} else {
 		if (sd->regs.vars->remove(sd->regs.vars, db_i642key(reg), &prev)) {
-			p = db_data2ptr(&prev);
+			p = (struct script_reg_str *)db_data2ptr(&prev);
 			if( p->value )
 				aFree(p->value);
 			ers_free(str_reg_ers, p);
@@ -8665,7 +8665,7 @@ int pc_readregistry(struct map_session_data *sd, int64 reg)
 		return 0;
 	}
 
-	p = i64db_get(sd->regs.vars, reg);
+	p = (struct script_reg_num *)i64db_get(sd->regs.vars, reg);
 
 	return p ? p->value : 0;
 }
@@ -8688,7 +8688,7 @@ char* pc_readregistry_str(struct map_session_data *sd, int64 reg)
 		return NULL;
 	}
 
-	p = i64db_get(sd->regs.vars, reg);
+	p = (struct script_reg_str *)i64db_get(sd->regs.vars, reg);
 
 	return p ? p->value : NULL;
 }
@@ -8734,7 +8734,7 @@ int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
 		return 0;
 	}
 
-	if ((p = i64db_get(sd->regs.vars, reg))) {
+	if ((p = (struct script_reg_num *)i64db_get(sd->regs.vars, reg))) {
 		if( val ) {
 			if( !p->value && index ) /* its a entry that was deleted, so we reset array */
 				script_array_update(&sd->regs, reg, false);
@@ -8759,7 +8759,7 @@ int pc_setregistry(struct map_session_data *sd, int64 reg, int val)
 			p->flag.update = 1;
 
 		if (sd->regs.vars->put(sd->regs.vars, db_i642key(reg), db_ptr2data(p), &prev)) {
-			p = db_data2ptr(&prev);
+			p = (struct script_reg_num *)db_data2ptr(&prev);
 			ers_free(num_reg_ers, p);
 		}
 	}
@@ -8787,7 +8787,7 @@ int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
 		return 0;
 	}
 
-	if( (p = i64db_get(sd->regs.vars, reg) ) ) {
+	if( (p = (struct script_reg_str *)i64db_get(sd->regs.vars, reg) ) ) {
 		if( val[0] ) {
 			if( p->value )
 				aFree(p->value);
@@ -8815,7 +8815,7 @@ int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
 		p->flag.type = 1;
 
 		if( sd->regs.vars->put(sd->regs.vars, db_i642key(reg), db_ptr2data(p), &prev) ) {
-			p = db_data2ptr(&prev);
+			p = (struct script_reg_str *)db_data2ptr(&prev);
 			if( p->value )
 				aFree(p->value);
 			ers_free(str_reg_ers, p);
@@ -10938,7 +10938,7 @@ void pc_itemcd_do(struct map_session_data *sd, bool load) {
 	struct item_cd* cd = NULL;
 
 	if( load ) {
-		if( !(cd = idb_get(itemcd_db, sd->status.char_id)) ) {
+		if( !(cd = (struct item_cd*)idb_get(itemcd_db, sd->status.char_id)) ) {
 			// no item cooldown is associated with this character
 			return;
 		}
@@ -10951,7 +10951,7 @@ void pc_itemcd_do(struct map_session_data *sd, bool load) {
 		}
 		idb_remove(itemcd_db,sd->status.char_id);
 	} else {
-		if( !(cd = idb_get(itemcd_db,sd->status.char_id)) ) {
+		if( !(cd = (struct item_cd*)idb_get(itemcd_db,sd->status.char_id)) ) {
 			// create a new skill cooldown object for map storage
 			CREATE( cd, struct item_cd, 1 );
 			idb_put( itemcd_db, sd->status.char_id, cd );

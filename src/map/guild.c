@@ -186,7 +186,7 @@ struct guild* guild_searchname(char* str) {
 	struct guild* g;
 	DBIterator *iter = db_iterator(guild_db);
 
-	for( g = dbi_first(iter); dbi_exists(iter); g = dbi_next(iter) ) {
+	for( g = (struct guild*)dbi_first(iter); dbi_exists(iter); g = (struct guild*)dbi_next(iter) ) {
 		if( strcmpi(g->name, str) == 0 )
 			break;
 	}
@@ -205,7 +205,7 @@ struct guild_castle* guild_mapindex2gc(short mapindex) {
 	struct guild_castle* gc;
 	DBIterator *iter = db_iterator(castle_db);
 
-	for( gc = dbi_first(iter); dbi_exists(iter); gc = dbi_next(iter) ) {
+	for( gc = (struct guild_castle*)dbi_first(iter); dbi_exists(iter); gc = (struct guild_castle*)dbi_next(iter) ) {
 		if( gc->mapindex == mapindex )
 			break;
 	}
@@ -279,7 +279,7 @@ int guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
 	struct guild_expcache *c;
 	struct guild *g;
 
-	c = db_data2ptr(data);
+	c = (struct guild_expcache *)db_data2ptr(data);
 
 	if (
 		(g = guild_search(c->guild_id)) == NULL ||
@@ -312,7 +312,7 @@ int guild_payexp_timer(int tid, unsigned int tick, int id, intptr_t data) {
  * @see DBApply
  */
 int guild_send_xy_timer_sub(DBKey key, DBData *data, va_list ap) {
-	struct guild *g = db_data2ptr(data);
+	struct guild *g = (struct guild *)db_data2ptr(data);
 	int i;
 
 	nullpo_ret(g);
@@ -413,7 +413,7 @@ int guild_npc_request_info(int guild_id,const char *event) {
 		memcpy(ev->name,event,strlen(event));
 		//The one in the db (if present) becomes the next event from this.
 		if (guild_infoevent_db->put(guild_infoevent_db, db_i2key(guild_id), db_ptr2data(ev), &prev))
-			ev->next = db_data2ptr(&prev);
+			ev->next = (struct eventlist *)db_data2ptr(&prev);
 	}
 
 	return guild_request_info(guild_id);
@@ -555,7 +555,7 @@ int guild_recv_info(struct guild *sg) {
 
 	//Occurrence of an event
 	if (guild_infoevent_db->remove(guild_infoevent_db, db_i2key(sg->guild_id), &data)) {
-		struct eventlist *ev = db_data2ptr(&data), *ev2;
+		struct eventlist *ev = (struct eventlist *)db_data2ptr(&data), *ev2;
 		while(ev) {
 			npc_event_do(ev->name);
 			ev2=ev->next;
@@ -1234,7 +1234,7 @@ unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp) {
 		exp = exp * per / 100;
 	//Otherwise tax everything.
 
-	c = db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
+	c = (struct guild_expcache *)db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
 
 	if (c->exp > UINT64_MAX - exp)
 		c->exp = UINT64_MAX;
@@ -1256,7 +1256,7 @@ int guild_getexp(struct map_session_data *sd,int exp) {
 	if (sd->status.guild_id == 0 || sd->guild == NULL)
 		return 0;
 
-	c = db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
+	c = (struct guild_expcache *)db_data2ptr(guild_expcache_db->ensure(guild_expcache_db, db_i2key(sd->status.char_id), create_expcache, sd));
 	if (c->exp > UINT64_MAX - exp)
 		c->exp = UINT64_MAX;
 	else
@@ -1646,7 +1646,7 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
  * @see DBApply
  */
 int guild_broken_sub(DBKey key, DBData *data, va_list ap) {
-	struct guild *g = db_data2ptr(data);
+	struct guild *g = (struct guild *)db_data2ptr(data);
 	int guild_id=va_arg(ap,int);
 	int i,j;
 	struct map_session_data *sd=NULL;
@@ -1671,7 +1671,7 @@ int guild_broken_sub(DBKey key, DBData *data, va_list ap) {
  */
 int castle_guild_broken_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct guild_castle *gc = db_data2ptr(data);
+	struct guild_castle *gc = (struct guild_castle *)db_data2ptr(data);
 	int guild_id = va_arg(ap, int);
 
 	nullpo_ret(gc);
@@ -1881,7 +1881,7 @@ void guild_castle_map_init(void) {
 		CREATE(castle_ids, int, num);
 		cursor = castle_ids;
 		iter = db_iterator(castle_db);
-		for (gc = dbi_first(iter); dbi_exists(iter); gc = dbi_next(iter)) {
+		for (gc = (struct guild_castle*)dbi_first(iter); dbi_exists(iter); gc = (struct guild_castle*)dbi_next(iter)) {
 			*(cursor++) = gc->castle_id;
 		}
 		dbi_destroy(iter);
@@ -2068,7 +2068,7 @@ int guild_checkcastles(struct guild *g) {
 	struct guild_castle* gc = NULL;
 	DBIterator *iter = db_iterator(castle_db);
 
-	for (gc = dbi_first(iter); dbi_exists(iter); gc = dbi_next(iter)) {
+	for (gc = (struct guild_castle*)dbi_first(iter); dbi_exists(iter); gc = (struct guild_castle*)dbi_next(iter)) {
 		if (gc->guild_id == g->guild_id) {
 			nb_cas++;
 		}
@@ -2134,7 +2134,7 @@ void guild_flag_remove(struct npc_data *nd) {
  */
 static int eventlist_db_final(DBKey key, DBData *data, va_list ap) {
 	struct eventlist *next = NULL;
-	struct eventlist *current = db_data2ptr(data);
+	struct eventlist *current = (struct eventlist *)db_data2ptr(data);
 	while (current != NULL) {
 		next = current->next;
 		aFree(current);
@@ -2155,7 +2155,7 @@ static int guild_expcache_db_final(DBKey key, DBData *data, va_list ap) {
  * @see DBApply
  */
 static int guild_castle_db_final(DBKey key, DBData *data, va_list ap) {
-	struct guild_castle* gc = db_data2ptr(data);
+	struct guild_castle* gc = (struct guild_castle *)db_data2ptr(data);
 	if( gc->temp_guardians )
 		aFree(gc->temp_guardians);
 	aFree(gc);
@@ -2211,7 +2211,7 @@ void do_final_guild(void) {
 	DBIterator *iter = db_iterator(guild_db);
 	struct guild *g;
 
-	for( g = dbi_first(iter); dbi_exists(iter); g = dbi_next(iter) ) {
+	for( g = (struct guild *)dbi_first(iter); dbi_exists(iter); g = (struct guild *)dbi_next(iter) ) {
 		channel_delete(g->channel);
 	}
 	dbi_destroy(iter);

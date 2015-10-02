@@ -54,7 +54,7 @@ static int guild_save_timer(int tid, unsigned int tick, int id, intptr_t data)
 	if( last_id == 0 ) //Save the first guild in the list.
 		state = 1;
 
-	for( g = db_data2ptr(iter->first(iter, &key)); dbi_exists(iter); g = db_data2ptr(iter->next(iter, &key)) )
+	for( g = (struct guild*)db_data2ptr(iter->first(iter, &key)); dbi_exists(iter); g = (struct guild*)db_data2ptr(iter->next(iter, &key)) )
 	{
 		if( state == 0 && g->guild_id == last_id )
 			state++; //Save next guild in the list.
@@ -547,7 +547,7 @@ static struct guild_castle* inter_guildcastle_fromsql(int castle_id)
 	char *data;
 	int i;
 	StringBuf buf;
-	struct guild_castle *gc = idb_get(castle_db, castle_id);
+	struct guild_castle *gc = (struct guild_castle *)idb_get(castle_db, castle_id);
 
 	if (gc != NULL)
 		return gc;
@@ -737,7 +737,7 @@ int inter_guild_sql_init(void)
  */
 static int guild_db_final(DBKey key, DBData *data, va_list ap)
 {
-	struct guild *g = db_data2ptr(data);
+	struct guild *g = (struct guild*)db_data2ptr(data);
 	if (g->save_flag&GS_MASK) {
 		inter_guild_tosql(g, g->save_flag&GS_MASK);
 		return 1;
@@ -1771,7 +1771,7 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 		case 1:
 			if (charserv_config.log_inter && gc->guild_id != value) {
 				int gid = (value) ? value : gc->guild_id;
-				struct guild *g = idb_get(guild_db_, gid);
+				struct guild *g = (struct guild*)idb_get(guild_db_, gid);
 				inter_log("guild %s (id=%d) %s castle id=%d\n",
 				          (g) ? g->name : "??", gid, (value) ? "occupy" : "abandon", castle_id);
 			}

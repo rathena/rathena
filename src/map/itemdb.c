@@ -45,7 +45,7 @@ struct s_item_group_db *itemdb_group_exists(unsigned short group_id) {
  */
 static int itemdb_searchname_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct item_data *item = db_data2ptr(data), **dst, **dst2;
+	struct item_data *item = (struct item_data *)db_data2ptr(data), **dst, **dst2;
 	char *str;
 	str = va_arg(ap,char *);
 	dst = va_arg(ap,struct item_data **);
@@ -79,7 +79,7 @@ struct item_data* itemdb_searchname(const char *str)
  */
 static int itemdb_searchname_array_sub(DBKey key, DBData data, va_list ap)
 {
-	struct item_data *item = db_data2ptr(&data);
+	struct item_data *item = (struct item_data *)db_data2ptr(&data);
 	char *str = va_arg(ap,char *);
 
 	if (stristr(item->jname,str))
@@ -103,7 +103,7 @@ int itemdb_searchname_array(struct item_data** data, int size, const char *str)
 
 	db_count = itemdb->getall(itemdb, (DBData**)&db_data, size, itemdb_searchname_array_sub, str);
 	for (i = 0; i < db_count && count < size; i++)
-		data[count++] = db_data2ptr(db_data[i]);
+		data[count++] = (struct item_data*)db_data2ptr(db_data[i]);
 
 	return count;
 }
@@ -1018,7 +1018,7 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 				RECREATE(id->combos, struct item_combo*, ++id->combos_count);
 			}
 			CREATE(id->combos[idx],struct item_combo,1);
-			id->combos[idx]->nameid = aMalloc( retcount * sizeof(unsigned short) );
+			id->combos[idx]->nameid = (unsigned short*)aMalloc( retcount * sizeof(unsigned short) );
 			id->combos[idx]->count = retcount;
 			id->combos[idx]->script = parse_script(str[1], path, lines, 0);
 			id->combos[idx]->id = count;
@@ -1652,14 +1652,14 @@ static void destroy_item_data(struct item_data* self) {
  */
 static int itemdb_final_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct item_data *id = db_data2ptr(data);
+	struct item_data *id = (struct item_data *)db_data2ptr(data);
 
 	destroy_item_data(id);
 	return 0;
 }
 
 static int itemdb_group_free(DBKey key, DBData *data, va_list ap) {
-	struct s_item_group_db *group = db_data2ptr(data);
+	struct s_item_group_db *group = (struct s_item_group_db *)db_data2ptr(data);
 	uint8 j;
 	if (!group)
 		return 0;

@@ -34,7 +34,7 @@ static bool mapreg_dirty = false; // Whether there are modified regs to be saved
  */
 int mapreg_readreg(int64 uid)
 {
-	struct mapreg_save *m = i64db_get(regs.vars, uid);
+	struct mapreg_save *m = (struct mapreg_save *)i64db_get(regs.vars, uid);
 	return m ? m->u.i : 0;
 }
 
@@ -46,7 +46,7 @@ int mapreg_readreg(int64 uid)
  */
 char* mapreg_readregstr(int64 uid)
 {
-	struct mapreg_save *m = i64db_get(regs.vars, uid);
+	struct mapreg_save *m = (struct mapreg_save *)i64db_get(regs.vars, uid);
 	return m ? m->u.str : NULL;
 }
 

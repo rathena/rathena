@@ -573,7 +573,7 @@ static void questdb_free_sub(struct quest_db *quest, bool free)
  */
 static int questdb_free(DBKey key, DBData *data, va_list ap)
 {
-	struct quest_db *quest = db_data2ptr(data);
+	struct quest_db *quest = (struct quest_db *)db_data2ptr(data);
 
 	if (!quest)
 		return 0;
