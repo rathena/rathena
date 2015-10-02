@@ -4722,9 +4722,9 @@ void do_init_script(void) {
 	scriptlabel_db = strdb_alloc(DB_OPT_DUP_KEY,50);
 	autobonus_db = strdb_alloc(DB_OPT_DUP_KEY,0);
 
-	st_ers = ers_new(sizeof(struct script_state), "script.c::st_ers", ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK);
-	stack_ers = ers_new(sizeof(struct script_stack), "script.c::script_stack", ERS_OPT_NONE|ERS_OPT_FLEX_CHUNK);
-	array_ers = ers_new(sizeof(struct script_array), "script.c:array_ers", ERS_OPT_CLEAN|ERS_OPT_CLEAR);
+	st_ers = ers_new(sizeof(struct script_state), "script.c::st_ers", ERS_CACHE_OPTIONS);
+	stack_ers = ers_new(sizeof(struct script_stack), "script.c::script_stack", ERS_OPT_FLEX_CHUNK);
+	array_ers = ers_new(sizeof(struct script_array), "script.c:array_ers", ERS_OPT_CLEAN|ERS_OPT_CLEAR); // TODO: This value is not yet in the enum
 
 	ers_chunk_size(st_ers, 10);
 	ers_chunk_size(stack_ers, 10);
@@ -17084,7 +17084,7 @@ BUILDIN_FUNC(setunitdata)
 			case 2: status_set_hp(bl, (unsigned int)value, 0); break;
 			case 3: status_set_maxhp(bl, (unsigned int)value, 0); break;
 			case 4: md->master_id = value; break;
-			case 5: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, 3); break;
+			case 5: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case 6: if (!unit_walktoxy(bl, (short)value, md->bl.y, 2)) unit_movepos(bl, (short)value, md->bl.y, 0, 0); break;
 			case 7: if (!unit_walktoxy(bl, md->bl.x, (short)value, 2)) unit_movepos(bl, md->bl.x, (short)value, 0, 0); break;
 			case 8: md->status.speed = (unsigned short)value; status_calc_bl(bl, SCB_ALL); break;
@@ -17129,7 +17129,7 @@ BUILDIN_FUNC(setunitdata)
 			case 4: status_set_sp(bl, (unsigned int)value, 0); break;
 			case 5: status_set_maxsp(bl, (unsigned int)value, 0); break;
 			case 6: hd->homunculus.char_id = (uint32)value; break;
-			case 7: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, 3); break;
+			case 7: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case 8: if (!unit_walktoxy(bl, (short)value, hd->bl.y, 2)) unit_movepos(bl, (short)value, hd->bl.y, 0, 0); break;
 			case 9: if (!unit_walktoxy(bl, hd->bl.x, (short)value, 2)) unit_movepos(bl, hd->bl.x, (short)value, 0, 0); break;
 			case 10: hd->homunculus.hunger = (short)value; clif_send_homdata(map_charid2sd(hd->homunculus.char_id), SP_HUNGRY, hd->homunculus.hunger); break;
@@ -17161,7 +17161,7 @@ BUILDIN_FUNC(setunitdata)
 			case 2: status_set_hp(bl, (unsigned int)value, 0); break;
 			case 3: status_set_maxhp(bl, (unsigned int)value, 0); break;
 			case 4: pd->pet.account_id = (unsigned int)value; break;
-			case 5: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, 3); break;
+			case 5: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case 6: if (!unit_walktoxy(bl, (short)value, pd->bl.y, 2)) unit_movepos(bl, (short)value, md->bl.y, 0, 0); break;
 			case 7: if (!unit_walktoxy(bl, pd->bl.x, (short)value, 2)) unit_movepos(bl, pd->bl.x, (short)value, 0, 0); break;
 			case 8: pd->pet.hungry = (short)value; clif_send_petdata(map_id2sd(pd->pet.account_id), pd, 2, pd->pet.hungry); break;
@@ -17192,7 +17192,7 @@ BUILDIN_FUNC(setunitdata)
 			case 1: status_set_hp(bl, (unsigned int)value, 0); break;
 			case 2: status_set_maxhp(bl, (unsigned int)value, 0); break;
 			case 3: mc->mercenary.char_id = (uint32)value; break;
-			case 4: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, 3); break;
+			case 4: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case 5: if (!unit_walktoxy(bl, (short)value, mc->bl.y, 2)) unit_movepos(bl, (short)value, mc->bl.y, 0, 0); break;
 			case 6: if (!unit_walktoxy(bl, mc->bl.x, (short)value, 2)) unit_movepos(bl, mc->bl.x, (short)value, 0, 0); break;
 			case 7: mc->mercenary.kill_count = (unsigned int)value; break;
@@ -17225,7 +17225,7 @@ BUILDIN_FUNC(setunitdata)
 			case 3: status_set_sp(bl, (unsigned int)value, 0); break;
 			case 4: status_set_maxsp(bl, (unsigned int)value, 0); break;
 			case 5: ed->elemental.char_id = (uint32)value; break;
-			case 6: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, 3); break;
+			case 6: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case 7: if (!unit_walktoxy(bl, (short)value, ed->bl.y, 2)) unit_movepos(bl, (short)value, ed->bl.y, 0, 0); break;
 			case 8: if (!unit_walktoxy(bl, ed->bl.x, (short)value, 2)) unit_movepos(bl, ed->bl.x, (short)value, 0, 0); break;
 			case 9: ed->elemental.life_time = (unsigned int)value; break;
@@ -17256,7 +17256,7 @@ BUILDIN_FUNC(setunitdata)
 			case 1: nd->level = (unsigned int)value; break;
 			case 2: status_set_hp(bl, (unsigned int)value, 0); break;
 			case 3: status_set_maxhp(bl, (unsigned int)value, 0); break;
-			case 4: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, 3); break;
+			case 4: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case 5: if (!unit_walktoxy(bl, (short)value, nd->bl.y, 2)) unit_movepos(bl, (short)value, nd->bl.x, 0, 0); break;
 			case 6: if (!unit_walktoxy(bl, nd->bl.x, (short)value, 2)) unit_movepos(bl, nd->bl.x, (short)value, 0, 0); break;
 			case 7: unit_setdir(bl, (uint8)value); break;
@@ -17656,9 +17656,9 @@ BUILDIN_FUNC(unitskillusepos)
 	if (bl != NULL) {
 		if (bl->type == BL_NPC) {
 			if (!((TBL_NPC*)bl)->status.hp)
-				status_calc_npc(((TBL_NPC*)bl), true);
+				status_calc_npc(((TBL_NPC*)bl), SCO_FORCE);
 			else
-				status_calc_npc(((TBL_NPC*)bl), false);
+				status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
 		}
 		unit_skilluse_pos2(bl, skill_x, skill_y, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
 	}
