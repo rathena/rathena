@@ -3952,7 +3952,7 @@ no teleportation is otherwise possible.
 
 ---------------------------------------
 
-*heal <hp>,<sp>;
+*heal <hp>,<sp>{,<char_id>};
 
 This command will heal a set amount of HP and/or SP on the invoking character.
 
@@ -3965,7 +3965,7 @@ character and produces no other output whatsoever.
 
 ---------------------------------------
 
-*itemheal <hp>,<sp>;
+*itemheal <hp>,<sp>{,<char_id>};
 
 This command heals relative amounts of HP and/or SP on the invoking character.
 Unlike heal, this command is intended for use in item scripts. It applies
@@ -3982,7 +3982,7 @@ Example:
 
 ---------------------------------------
 
-*percentheal <hp>,<sp>;
+*percentheal <hp>,<sp>{,<char_id>};
 
 This command will heal the invoking character. It heals the character, but not 
 by a set value - it adds percent of their maximum HP/SP.
@@ -4034,7 +4034,7 @@ Examples:
 
 ---------------------------------------
 
-*jobchange <job number>{,<upper flag>};
+*jobchange <job number>{,<upper flag>,<char_id>};
 
 This command will change the job class of the invoking character.
 
@@ -4074,7 +4074,7 @@ This command retrieves the name of the given job using the map_msg entries 550->
 
 ---------------------------------------
 
-*eaclass({<job number>})
+*eaclass({<job number>,<char_id>})
 
 This commands returns the "eA job-number" corresponding to the given class, and
 uses the invoking player's class if none is given. The eA job-number is also a
@@ -4202,8 +4202,8 @@ adjusts the gained value. If you want to bypass this, use the 'set' method.
 
 ---------------------------------------
 
-*setlook <look type>,<look value>;
-*changelook <look type>,<look value>;
+*setlook <look type>,<look value>{,<char_id>};
+*changelook <look type>,<look value>{,<char_id>};
 
 'setlook' will alter the look data for the invoking character. It is used 
 mainly for changing the palette used on hair and clothes: you specify which look 
@@ -4686,7 +4686,7 @@ More info, see doc/item_group.txt.
 
 ---------------------------------------
 
-*getgroupitem <group_id>;
+*getgroupitem <group_id>{,<char_id>};
 
 Gives item(s) to the attached player based on item group contents.
 This is not working like 'getrandgroupitem' which only give 1 item for specified
@@ -4899,7 +4899,7 @@ This command will return 1 if an item was broken and 0 otherwise.
 
 ---------------------------------------
 
-*clearitem {,<char_id>};
+*clearitem {<char_id>};
 
 This command will destroy all items the invoking character has in their 
 inventory (including equipped items). It will not affect anything else, like 
@@ -8148,7 +8148,7 @@ OnTimer1000:
 
 ---------------------------------------
 
-*bg_leave;
+*bg_leave {<char_id>};
 
 Removes attached player from their Battle Group.
 
