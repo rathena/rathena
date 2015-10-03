@@ -196,8 +196,8 @@ IG_Pet_Egg_Scroll3,12211,300,2,1,0,0,1	// 2x Kafra_Card
 IG_Pet_Egg_Scroll3,12220,300,2,1,0,0,1	// 2x Adrenaline_Scroll
 IG_Pet_Egg_Scroll3,12213,10,1,1,0,0,1	// 1x Neuralizer
 IG_Pet_Egg_Scroll3,5232,100,1,1,0,0,1	// 1x Pink_Drooping_Kitty
-IG_Pet_Egg_Scroll4,12208,90,2,1,0,0,1	// 2x Battle_Manual
 
+IG_Pet_Egg_Scroll4,12208,90,2,1,0,0,1	// 2x Battle_Manual
 IG_Pet_Egg_Scroll4,12219,150,2,1,0,0,1	// 2x Wind_Walk_10_Scroll
 IG_Pet_Egg_Scroll4,7621,200,2,1,0,0,1	// 2x Token_Of_Siegfried
 IG_Pet_Egg_Scroll4,12212,200,2,1,0,0,1	// 2x Giant_Fly_Wing
@@ -1012,6 +1012,7 @@ IG_Angel_Scroll,5207,110,1,1,0,0,1	// 1x Gold_Spirit_Chain
 IG_Angel_Scroll,4054,30,1,1,0,0,1	// 1x Angeling_Card
 IG_Angel_Scroll,12913,420,1,1,0,0,1	// 1x Blessing_10_Scroll_Box
 IG_Angel_Scroll,4241,20,1,1,0,0,1	// 1x Archangeling_Card
+
 IG_Devil_Scroll,2255,4,1,1,0,0,1	// 1x Satanic_Chain
 IG_Devil_Scroll,642,150,5,1,0,0,1	// 5x Book_Of_Devil
 IG_Devil_Scroll,5068,100,1,1,0,0,1	// 1x Ear_Of_Devil's_Wing
@@ -1957,8 +1958,9 @@ IG_Lucky_Egg_C2,5396,150,1,1,1,0,0	// 1x Jasper_Crest
 //IG_Lucky_Egg_C6,Passion_FB_Hat,50,1,1,1,0,0
 //IG_Lucky_Egg_C6,Cool_FB_Hat,50,1,1,1,0,0
 //IG_Lucky_Egg_C6,Victory_FB_Hat,20,1,1,1,0,0
-//IG_Lucky_Egg_C6,Glory_FB_Hat,50,1,1,1,0,0IG_Lucky_Egg_C9,12264,1500,3,1,0,0,0	// 3x Comp_Bubble_Gum
+//IG_Lucky_Egg_C6,Glory_FB_Hat,50,1,1,1,0,0
 
+IG_Lucky_Egg_C9,12264,1500,3,1,0,0,0	// 3x Comp_Bubble_Gum
 IG_Lucky_Egg_C9,12900,1459,1,1,0,0,0	// 1x Battle_Manual_Box
 IG_Lucky_Egg_C9,12265,1500,3,1,0,0,0	// 3x Comp_Insurance
 IG_Lucky_Egg_C9,12549,1500,1,1,0,0,0	// 1x White_Slim_Pot_Box2
@@ -2224,8 +2226,9 @@ IG_Earth_Type_Scroll,12787,1600,5,1,0,0,0	// 5x Diabolic_Scroll
 //IG_Earth_Type_Scroll,Sealed_Knight_WS_Card,1,1,1,1,0,0
 //IG_Earth_Type_Scroll,Sealed_Lady_Tanee_Card,1,1,1,1,0,0
 //IG_Earth_Type_Scroll,Fruit_Of_Mastela_Box2,1600,1,1,0,0,0 //The different only here
-//IG_Earth_Type_Scroll,Diabolic_Scroll,1600,5,1,0,0,0IG_Splash_Scroll,12822,1200,1,1,0,0,0	// 1x Songpyun_Box50
+//IG_Earth_Type_Scroll,Diabolic_Scroll,1600,5,1,0,0,0
 
+IG_Splash_Scroll,12822,1200,1,1,0,0,0	// 1x Songpyun_Box50
 IG_Splash_Scroll,5822,130,1,1,1,0,0	// 1x Love_Chick_Hat
 IG_Splash_Scroll,12912,800,1,1,0,0,0	// 1x Convex_Mirror_Box
 IG_Splash_Scroll,12919,700,1,1,0,0,0	// 1x Megaphone_Box
@@ -2707,8 +2710,9 @@ IG_Tw_April_Scroll,13902,180,1,1,1,0,0	// 1x Fish_Head_Hat_Box
 //IG_Tw_October_Scroll,Ant_Buyanne_Card,1,1,1,1,0,1
 //IG_Tw_October_Scroll,Guarantee_Armor_7Up,100,1,1,1,0,1
 //IG_Tw_October_Scroll,Guarantee_Weapon_7Up,100,1,1,1,0,1
-//IG_Tw_October_Scroll,Comin_Actor_Box,120,1,1,1,0,1IG_Summer_Scroll3,12405,1500,10,1,0,0,0	// 10x Underripe_Yggseed
+//IG_Tw_October_Scroll,Comin_Actor_Box,120,1,1,1,0,1
 
+IG_Summer_Scroll3,12405,1500,10,1,0,0,0	// 10x Underripe_Yggseed
 IG_Summer_Scroll3,12919,1500,1,1,0,0,0	// 1x Megaphone_Box
 IG_Summer_Scroll3,12908,1500,1,1,0,0,0	// 1x Vit_Dish_Box
 IG_Summer_Scroll3,13744,1500,1,1,0,0,0	// 1x Holy_Armor_S_Box10
@@ -2730,9 +2734,7 @@ IG_Summer_Scroll3,4359,1,1,1,1,0,0	// 1x B_Eremes_Card
 IG_C_Wing_Of_Fly_3Day_Box,12887,0,1,0,0,4320,1	// 1x C_Wing_Of_Fly
 
 IG_RWC_2012_Set_Box,2966,0,1,0,0,0,1	// 1x RWC_2012_Ring
-
 IG_RWC_2012_Set_Box,2968,0,1,0,0,0,1	// 1x RWC_2012_Pendant
-
 IG_RWC_2012_Set_Box,17251,0,1,0,0,0,1	// 1x C_Wing_Of_Fly_3Day_Box
 
 IG_Ex_Def_Potion_Box,14614,0,5,0,0,0,1	// 5x Ex_Def_Potion
@@ -2898,7 +2900,9 @@ IG_Ptotection_Seagod_Box2,6436,0,1,0,0,10080,0	// 1x Ptotection_Seagod
 IG_Ptotection_Seagod_Box3,6436,0,1,0,0,21600,0	// 1x Ptotection_Seagod
 
 IG_Octo_Hstick_Box,6442,0,1,0,0,1380,0	// 1x Octopus_Hunt_Stick
+
 IG_Octo_Hstick_Box2,6442,0,1,0,0,4320,0	// 1x Octopus_Hunt_Stick
+
 IG_Octo_Hstick_Box3,6442,0,1,0,0,10080,0	// 1x Octopus_Hunt_Stick
 
 IG_Silvervine_Fruit_Box10,6417,0,10,0,0,0,0	// 10x Silvervine
@@ -3159,7 +3163,6 @@ IG_Support_Package,12208,1,2,1	// 2x Battle_Manual
 IG_Support_Package,12210,1,2,1	// 2x Bubble_Gum
 IG_Support_Package,12883,1,2,1	// 2x Almighty
 IG_Support_Package,14600,1,2,1	// 2x Mental_Potion
-
 //IG_Support_Package,,1,6,1	//6x Mysterious Water of Life
 IG_Support_Package,14663,1,1,1	// 1x Scroll_Sealed_Dark_Lord
 
@@ -3178,6 +3181,7 @@ IG_Event_Almighty_Box,14689,1,1,1	// 1x Sealed_Kiel-D-01_Scroll
 //TODO: Confirm the items & rates
 IG_Event_Almighty_Box10,12883,1,100,1	// 100x Almighty
 IG_Event_Almighty_Box10,14689,1,11,1	// 11x Sealed_Kiel-D-01_Scroll
+
 IG_LottoBox1,7361,1,1,1	// 1x Lotto01
 IG_LottoBox1,7362,1,1,1	// 1x Lotto02
 IG_LottoBox1,7363,1,1,1	// 1x Lotto03
@@ -3354,6 +3358,7 @@ IG_Gift_Buff_Set,12100,0,2,0	// 2x Luk_Dish10
 
 IG_Lucky_Silvervine_Fruit_Box_III10,6417,0,10,0,0,0,0	// 10x Silvervine
 IG_Lucky_Silvervine_Fruit_Box_III10,14740,0,1,0,0,0,0	// 1x Sealed_Vesper_Scroll
+
 IG_Lucky_Silvervine_Fruit_Box_III110,6417,0,110,0,0,0,0	// 110x Silvervine
 IG_Lucky_Silvervine_Fruit_Box_III110,14740,0,11,0,0,0,0	// 11x Sealed_Vesper_Scroll
 
