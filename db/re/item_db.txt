@@ -9642,7 +9642,7 @@
 19621,C_Ear_Of_Devils_Wing,Costume Evil Wing Ear,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,,,152,{},{},{}
 19622,C_Crescent_Hairpin,Costume Crescent Hairpin,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,,,132,{},{},{}
 19623,C_Bijofnil_Wings,Costume Bijofnil Wings,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,,,477,{},{},{}
-19624,C_Round_Eyes,Costume Blank Eyes,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,,,185,{},{},{}
+19624,C_Round_Eyes,Costume Blank Eyes,4,0,,0,,,,,0xFFFFFFFF,63,2,2048,,,,185,{},{},{}
 19625,C_Bunny_Band,Costume Bunny Band,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,,,15,{},{},{}
 19629,C_Tiara,Costume Tiara,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,19,{},{},{}
 19630,C_Crown,Costume Crown,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,45,{},{},{}
