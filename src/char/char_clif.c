@@ -19,6 +19,7 @@
 
 #include <stdlib.h>
 
+bool pincode_allowed( char* pincode );
 
 //------------------------------------------------
 //Add On system
@@ -159,6 +160,76 @@ int chclif_parse_pincode_check( int fd, struct char_session_data* sd ){
 }
 
 /*
+ * Helper function to check if a new pincode contains illegal characters or combinations
+ */
+bool pincode_allowed( char* pincode ){
+	int i;
+	char c, n, compare[PINCODE_LENGTH+1];
+
+	memset( compare, 0, PINCODE_LENGTH+1);
+
+	// Sanity check for bots to prevent errors
+	for( i = 0; i < PINCODE_LENGTH; i++ ){
+		c = pincode[i];
+
+		if( c < '0' || c > '9' ){
+			return false;
+		}
+	}
+
+	// Is it forbidden to use only the same character?
+	if( !charserv_config.pincode_config.pincode_allow_repeated ){
+		c = pincode[0];
+
+		// Check if the first character equals the rest of the input
+		for( i = 0; i < PINCODE_LENGTH; i++ ){
+			compare[i] = c;
+		}
+
+		if( strncmp( pincode, compare, PINCODE_LENGTH + 1 ) == 0 ){
+			return false;
+		}
+	}
+
+	// Is it forbidden to use a sequential combination of numbers?
+	if( !charserv_config.pincode_config.pincode_allow_sequential ){
+		c = pincode[0];
+
+		// Check if it is an ascending sequence
+		for( i = 0; i < PINCODE_LENGTH; i++ ){
+			n = c + i;
+
+			if( n > '9' ){
+				compare[i] = '0' + ( n - '9' ) - 1;
+			}else{
+				compare[i] = n;
+			}
+		}
+
+		if( strncmp( pincode, compare, PINCODE_LENGTH + 1 ) == 0 ){
+			return false;
+		}
+
+		// Check if it is an descending sequence
+		for( i = 0; i < PINCODE_LENGTH; i++ ){
+			n = c - i;
+
+			if( n < '0' ){
+				compare[i] = '9' - ( '0' - n ) + 1;
+			}else{
+				compare[i] = n;
+			}
+		}
+
+		if( strncmp( pincode, compare, PINCODE_LENGTH + 1 ) == 0 ){
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/*
  * Client request to change pincode
  */
 int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
@@ -180,12 +251,16 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 		if( !char_pincode_compare( fd, sd, oldpin ) )
 			return 1;
 		char_pincode_decrypt(sd->pincode_seed,newpin);
+
+		if( pincode_allowed(newpin) ){
+			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
+			strncpy(sd->pincode, newpin, sizeof(newpin));
+			ShowInfo("Pincode changed for AID: %d\n", sd->account_id);
 		
-		chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
-		strncpy(sd->pincode, newpin, sizeof(newpin));
-		ShowInfo("Pincode changed for AID: %d\n", sd->account_id);
-		
-		chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+		}else{
+			chclif_pincode_sendstate( fd, sd, PINCODE_ILLEGAL );
+		}
 	}
 	return 1;
 }
@@ -207,10 +282,14 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 
 		char_pincode_decrypt( sd->pincode_seed, newpin );
 
-		chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
-		strncpy( sd->pincode, newpin, strlen( newpin ) );
+		if( pincode_allowed(newpin) ){
+			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
+			strncpy( sd->pincode, newpin, strlen( newpin ) );
 
-		chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );	
+		}else{
+			chclif_pincode_sendstate( fd, sd, PINCODE_ILLEGAL );
+		}
 	}
 	return 1;
 }

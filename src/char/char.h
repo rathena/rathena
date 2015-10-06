@@ -78,6 +78,7 @@ enum pincode_state {
 	PINCODE_NOTSET	= 2,
 	PINCODE_EXPIRED	= 3,
 	PINCODE_NEW		= 4,
+	PINCODE_ILLEGAL = 5,
 	PINCODE_PASSED	= 7,
 	PINCODE_WRONG	= 8,
 	PINCODE_MAXSTATE
@@ -87,6 +88,8 @@ struct Pincode_Config {
 	int pincode_changetime;
 	int pincode_maxtry;
 	bool pincode_force;
+	bool pincode_allow_repeated;
+	bool pincode_allow_sequential;
 };
 struct CharMove_Config {
 	bool char_move_enabled;

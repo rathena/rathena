@@ -2588,6 +2588,8 @@ void char_set_defaults(){
 	charserv_config.pincode_config.pincode_changetime = 0;
 	charserv_config.pincode_config.pincode_maxtry = 3;
 	charserv_config.pincode_config.pincode_force = true;
+	charserv_config.pincode_config.pincode_allow_repeated = false;
+	charserv_config.pincode_config.pincode_allow_sequential = false;
 
 	charserv_config.charmove_config.char_move_enabled = true;
 	charserv_config.charmove_config.char_movetoused = true;
@@ -2826,6 +2828,10 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.pincode_config.pincode_maxtry = atoi(w2);
 		} else if (strcmpi(w1, "pincode_force") == 0) {
 			charserv_config.pincode_config.pincode_force = config_switch(w2);
+		}  else if (strcmpi(w1, "pincode_allow_repeated") == 0) {
+			charserv_config.pincode_config.pincode_allow_repeated = config_switch(w2);
+		}  else if (strcmpi(w1, "pincode_allow_sequential") == 0) {
+			charserv_config.pincode_config.pincode_allow_sequential = config_switch(w2);
 		} else if (strcmpi(w1, "char_move_enabled") == 0) {
 			charserv_config.charmove_config.char_move_enabled = config_switch(w2);
 		} else if (strcmpi(w1, "char_movetoused") == 0) {
