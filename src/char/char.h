@@ -79,6 +79,9 @@ enum pincode_state {
 	PINCODE_EXPIRED	= 3,
 	PINCODE_NEW		= 4,
 	PINCODE_ILLEGAL = 5,
+#if 0
+	PINCODE_KSSN	= 6, // Not supported since we do not store KSSN
+#endif
 	PINCODE_PASSED	= 7,
 	PINCODE_WRONG	= 8,
 	PINCODE_MAXSTATE
