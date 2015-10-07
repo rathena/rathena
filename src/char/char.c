@@ -2055,6 +2055,7 @@ int parse_console(const char* buf){
 	return cnslif_parse(buf);
 }
 
+#if PACKETVER_SUPPORTS_PINCODE
 //------------------------------------------------
 //Pincode system
 //------------------------------------------------
@@ -2100,6 +2101,7 @@ void char_pincode_decrypt( uint32 userSeed, char* pin ){
 	strcpy( pin, buf );
 	aFree( buf );
 }
+#endif
 
 //------------------------------------------------
 //Invoked 15 seconds after mapif_disconnectplayer in case the map server doesn't
@@ -2584,12 +2586,14 @@ void char_set_default_sql(){
 
 //set default config
 void char_set_defaults(){
+#if PACKETVER_SUPPORTS_PINCODE
 	charserv_config.pincode_config.pincode_enabled = true;
 	charserv_config.pincode_config.pincode_changetime = 0;
 	charserv_config.pincode_config.pincode_maxtry = 3;
 	charserv_config.pincode_config.pincode_force = true;
 	charserv_config.pincode_config.pincode_allow_repeated = false;
 	charserv_config.pincode_config.pincode_allow_sequential = false;
+#endif
 
 	charserv_config.charmove_config.char_move_enabled = true;
 	charserv_config.charmove_config.char_movetoused = true;
@@ -2815,13 +2819,8 @@ bool char_config_read(const char* cfgName, bool normal){
 		} else if (strcmpi(w1, "guild_exp_rate") == 0) {
 			charserv_config.guild_exp_rate = atoi(w2);
 		} else if (strcmpi(w1, "pincode_enabled") == 0) {
+#if PACKETVER_SUPPORTS_PINCODE
 			charserv_config.pincode_config.pincode_enabled = config_switch(w2);
-#if PACKETVER < 20110309
-			if( charserv_config.pincode_config.pincode_enabled ) {
-				ShowWarning("pincode_enabled requires PACKETVER 20110309 or higher. Disabling...\n");
-				charserv_config.pincode_config.pincode_enabled = false;
-			}
-#endif
 		} else if (strcmpi(w1, "pincode_changetime") == 0) {
 			charserv_config.pincode_config.pincode_changetime = atoi(w2)*60*60*24;
 		} else if (strcmpi(w1, "pincode_maxtry") == 0) {
@@ -2832,6 +2831,11 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.pincode_config.pincode_allow_repeated = config_switch(w2);
 		}  else if (strcmpi(w1, "pincode_allow_sequential") == 0) {
 			charserv_config.pincode_config.pincode_allow_sequential = config_switch(w2);
+#else
+			if( config_switch(w2) ) {
+				ShowWarning("pincode_enabled requires PACKETVER 20110309 or higher.\n");
+			}
+#endif
 		} else if (strcmpi(w1, "char_move_enabled") == 0) {
 			charserv_config.charmove_config.char_move_enabled = config_switch(w2);
 		} else if (strcmpi(w1, "char_movetoused") == 0) {

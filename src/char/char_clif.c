@@ -19,7 +19,9 @@
 
 #include <stdlib.h>
 
+#if PACKETVER_SUPPORTS_PINCODE
 bool pincode_allowed( char* pincode );
+#endif
 
 //------------------------------------------------
 //Add On system
@@ -98,6 +100,7 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 	return 1;
 }
 
+#if PACKETVER_SUPPORTS_PINCODE
 /* pincode_sendstate transmist the pincode state to client
  * S 08b9 <seed>.L <aid>.L <state>.W (HC_SECOND_PASSWD_LOGIN)
  * state :
@@ -293,7 +296,7 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 	}
 	return 1;
 }
-
+#endif
 
 //----------------------------------------
 // Tell client how many pages, kRO sends 17 (Yommy)
@@ -1229,11 +1232,13 @@ int chclif_parse(int fd) {
 			case 0x82b: next=chclif_parse_char_delete2_cancel(fd, sd); break;
 			// login as map-server
 			case 0x2af8: chclif_parse_maplogin(fd); return 0; // avoid processing of followup packets here
+#if PACKETVER_SUPPORTS_PINCODE
 			//pincode
 			case 0x8b8: next=chclif_parse_pincode_check( fd, sd ); break; // checks the entered pin
 			case 0x8c5: next=chclif_parse_reqpincode_window(fd,sd); break; // request for PIN window
 			case 0x8be: next=chclif_parse_pincode_change( fd, sd ); break; // pincode change request
 			case 0x8ba: next=chclif_parse_pincode_setnew( fd, sd ); break; // activate PIN system and set first PIN
+#endif
 			// character movement request
 			case 0x8d4: next=chclif_parse_moveCharSlot(fd,sd); break;
 			case 0x9a1: next=chclif_parse_req_charlist(fd,sd); break;

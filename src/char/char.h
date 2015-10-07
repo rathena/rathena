@@ -71,6 +71,7 @@ struct Schema_Config {
 };
 extern struct Schema_Config schema_config;
 
+#if PACKETVER_SUPPORTS_PINCODE
 /// Pincode system
 enum pincode_state {
 	PINCODE_OK		= 0,
@@ -94,6 +95,8 @@ struct Pincode_Config {
 	bool pincode_allow_repeated;
 	bool pincode_allow_sequential;
 };
+#endif
+
 struct CharMove_Config {
 	bool char_move_enabled;
 	bool char_movetoused;
@@ -130,7 +133,9 @@ struct CharServ_Config {
 
 	struct CharMove_Config charmove_config;
 	struct Char_Config char_config;
+#if PACKETVER_SUPPORTS_PINCODE
 	struct Pincode_Config pincode_config;
+#endif
 
 	int save_log; // show loading/saving messages
 	int log_char;	// loggin char or not [devil]

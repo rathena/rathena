@@ -25,6 +25,9 @@
 	//#define PACKETVER 20120410
 #endif
 
+// Check if the specified packetversion supports the pincode system
+#define PACKETVER_SUPPORTS_PINCODE PACKETVER>=20110309
+
 ///Remove/Comment this line to disable sc_data saving. [Skotlex]
 #define ENABLE_SC_SAVING
 /** Remove/Comment this line to disable server-side hot-key saving support [Skotlex]
