@@ -15608,40 +15608,81 @@ void clif_parse_PartyTick(int fd, struct map_session_data* sd)
 
 /// Sends list of all quest states (ZC_ALL_QUEST_LIST).
 /// 02b1 <packet len>.W <num>.L { <quest id>.L <active>.B }*num
+/// 097a <packet len>.W <num>.L { <quest id>.L <active>.B <remaining time>.L <time>.L <count>.W { <mob_id>.L <killed>.W <total>.W <mob name>.24B }*count }*num
 void clif_quest_send_list(struct map_session_data *sd)
 {
+#if PACKETVER >= 20141022
+	#define INFOLEN 15
 	int fd = sd->fd;
 	int i;
-#if PACKETVER >= 20141022
-	int info_len = 15;
-	int len = sd->avail_quests*info_len+8;
-	WFIFOHEAD(fd,len);
+	int offset;
+
+	WFIFOHEAD(fd,sd->avail_quests*INFOLEN+8);
 	WFIFOW(fd, 0) = 0x97a;
-#else
-	int info_len = 5;
-	int len = sd->avail_quests*info_len+8;
-	WFIFOHEAD(fd,len);
-	WFIFOW(fd, 0) = 0x2b1;
-#endif
-	WFIFOW(fd, 2) = len;
 	WFIFOL(fd, 4) = sd->avail_quests;
 
+	offset = 8;
+
 	for (i = 0; i < sd->avail_quests; i++) {
-#if PACKETVER >= 20141022
 		struct quest_db *qi = quest_search(sd->quest_log[i].quest_id);
-#endif
-		WFIFOL(fd, i*info_len+8) = sd->quest_log[i].quest_id;
-		WFIFOB(fd, i*info_len+12) = sd->quest_log[i].state;
-#if PACKETVER >= 20141022
-		WFIFOL(fd, i*info_len+13) = sd->quest_log[i].time - qi->time;
-		WFIFOL(fd, i*info_len+17) = sd->quest_log[i].time;
-		WFIFOW(fd, i*info_len+21) = qi->objectives_count;
-#endif
+
+		WFIFOL(fd, offset) = sd->quest_log[i].quest_id;
+		offset += 4;
+		WFIFOB(fd, offset) = sd->quest_log[i].state;
+		offset++;
+		WFIFOL(fd, offset) = sd->quest_log[i].time - qi->time;
+		offset += 4;
+		WFIFOL(fd, offset) = sd->quest_log[i].time;
+		offset += 4;
+		WFIFOW(fd, offset) = qi->objectives_count;
+		offset += 2;
+		
+		if( qi->objectives_count > 0 ){
+			int j;
+			struct mob_db *mob;
+
+			for( j = 0; j < qi->objectives_count; j++ ){
+				mob = mob_db(qi->objectives[j].mob);
+
+				WFIFOL(fd, offset) = qi->objectives[j].mob;
+				offset += 4;
+				WFIFOW(fd, offset) = sd->quest_log[i].count[j];
+				offset += 2;
+				WFIFOW(fd, offset) = qi->objectives[j].count;
+				offset += 2;
+				memcpy(WFIFOP(fd, offset), mob->jname, NAME_LENGTH);
+				offset += NAME_LENGTH;
+			}
+		}
 	}
 
-	WFIFOSET(fd, len);
-}
+	WFIFOW(fd, 2) = offset;	
+	WFIFOSET(fd, offset);
+	#undef INFOLEN
+#else
+	#define INFOLEN 5
+	int i;
+	int offset;
+	int fd = sd->fd;
 
+	WFIFOHEAD(fd,sd->avail_quests*INFOLEN+8);
+	WFIFOW(fd, 0) = 0x2b1;
+	WFIFOL(fd, 4) = sd->avail_quests;
+
+	offset = 8;
+
+	for (i = 0; i < sd->avail_quests; i++) {
+		WFIFOL(fd, offset) = sd->quest_log[i].quest_id;
+		offset += 4;
+		WFIFOB(fd, offset) = sd->quest_log[i].state;
+		offset += 1;
+	}
+	
+	WFIFOW(fd, 2) = offset;
+	WFIFOSET(fd, offset);
+	#undef INFOLEN
+#endif
+}
 
 /// Sends list of all quest missions (ZC_ALL_QUEST_MISSION).
 /// 02b2 <packet len>.W <num>.L { <quest id>.L <start time>.L <expire time>.L <mobs>.W { <mob id>.L <mob count>.W <mob name>.24B }*3 }*num
