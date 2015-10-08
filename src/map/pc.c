@@ -3808,15 +3808,15 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 		break;
 
 	case SP_ADDEFF: // bonus4 bAddEff,eff,n,y,t;
-		PC_BONUS_CHK_SC(type3,SP_ADDEFF);
+		PC_BONUS_CHK_SC(type2,SP_ADDEFF);
 		pc_bonus_addeff(sd->addeff, ARRAYLENGTH(sd->addeff), (sc_type)type2,
 			sd->state.lr_flag != 2 ? type3 : 0, sd->state.lr_flag == 2 ? type3 : 0, type4, val);
 		break;
 
 	case SP_ADDEFF_WHENHIT: // bonus4 bAddEffWhenHit,eff,n,y,t;
-		PC_BONUS_CHK_SC(type3,SP_ADDEFF_WHENHIT);
+		PC_BONUS_CHK_SC(type2,SP_ADDEFF_WHENHIT);
 		if (sd->state.lr_flag != 2)
-			pc_bonus_addeff(sd->addeff_atked, ARRAYLENGTH(sd->addeff_atked), (sc_type)type2, type3, 0, 0, val);
+			pc_bonus_addeff(sd->addeff_atked, ARRAYLENGTH(sd->addeff_atked), (sc_type)type2, type3, 0, type4, val);
 		break;
 
 	case SP_ADDEFF_ONSKILL: // bonus4 bAddEffOnSkill,sk,eff,n,y;
