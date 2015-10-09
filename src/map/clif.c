@@ -15611,17 +15611,14 @@ void clif_parse_PartyTick(int fd, struct map_session_data* sd)
 /// 097a <packet len>.W <num>.L { <quest id>.L <active>.B <remaining time>.L <time>.L <count>.W { <mob_id>.L <killed>.W <total>.W <mob name>.24B }*count }*num
 void clif_quest_send_list(struct map_session_data *sd)
 {
-#if PACKETVER >= 20141022
-	#define INFOLEN 15
 	int fd = sd->fd;
 	int i;
-	int offset;
+	int offset = 8;
 
-	WFIFOHEAD(fd,sd->avail_quests*INFOLEN+8);
+#if PACKETVER >= 20141022
+	WFIFOHEAD(fd,sd->avail_quests*15+8);
 	WFIFOW(fd, 0) = 0x97a;
 	WFIFOL(fd, 4) = sd->avail_quests;
-
-	offset = 8;
 
 	for (i = 0; i < sd->avail_quests; i++) {
 		struct quest_db *qi = quest_search(sd->quest_log[i].quest_id);
@@ -15658,18 +15655,10 @@ void clif_quest_send_list(struct map_session_data *sd)
 
 	WFIFOW(fd, 2) = offset;	
 	WFIFOSET(fd, offset);
-	#undef INFOLEN
 #else
-	#define INFOLEN 5
-	int i;
-	int offset;
-	int fd = sd->fd;
-
-	WFIFOHEAD(fd,sd->avail_quests*INFOLEN+8);
+	WFIFOHEAD(fd,sd->avail_quests*5+8);
 	WFIFOW(fd, 0) = 0x2b1;
 	WFIFOL(fd, 4) = sd->avail_quests;
-
-	offset = 8;
 
 	for (i = 0; i < sd->avail_quests; i++) {
 		WFIFOL(fd, offset) = sd->quest_log[i].quest_id;
@@ -15680,7 +15669,6 @@ void clif_quest_send_list(struct map_session_data *sd)
 	
 	WFIFOW(fd, 2) = offset;
 	WFIFOSET(fd, offset);
-	#undef INFOLEN
 #endif
 }
 
