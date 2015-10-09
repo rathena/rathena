@@ -42,7 +42,9 @@ struct quest_db *quest_search(int quest_id)
  */
 int quest_pc_login(TBL_PC *sd)
 {
+#if PACKETVER < 20141022
 	int i;
+#endif
 
 	if( sd->avail_quests == 0 )
 		return 1;
