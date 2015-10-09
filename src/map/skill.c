@@ -8680,7 +8680,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case RK_LUXANIMA:
-		if( !sd->status.party_id || flag&1 ) {
+		if( !sd || !sd->status.party_id || flag&1 ) {
 			if( src == bl ) break;
 			while( skill_area_temp[5] >= 0x10 ) {
 				type = SC_NONE;

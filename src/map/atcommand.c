@@ -726,7 +726,7 @@ ACMD_FUNC(whogm)
 	memset(match_text, '\0', sizeof(match_text));
 	memset(player_name, '\0', sizeof(player_name));
 
-	if (sscanf(message, "%199[^\n]", match_text) < 1)
+	if (sscanf(message, "%255[^\n]", match_text) < 1)
 		strcpy(match_text, "");
 	for (j = 0; match_text[j]; j++)
 		match_text[j] = TOLOWER(match_text[j]);
@@ -1114,13 +1114,13 @@ ACMD_FUNC(kami)
 			return -1;
 		}
 
-		sscanf(message, "%199[^\n]", atcmd_output);
+		sscanf(message, "%255[^\n]", atcmd_output);
 		if (strstr(command, "l") != NULL)
 			clif_broadcast(&sd->bl, atcmd_output, strlen(atcmd_output) + 1, BC_DEFAULT, ALL_SAMEMAP);
 		else
 			intif_broadcast(atcmd_output, strlen(atcmd_output) + 1, (*(command + 5) == 'b' || *(command + 5) == 'B') ? BC_BLUE : BC_DEFAULT);
 	} else {
-		if(!message || !*message || (sscanf(message, "%lx %199[^\n]", &color, atcmd_output) < 2)) {
+		if(!message || !*message || (sscanf(message, "%lx %255[^\n]", &color, atcmd_output) < 2)) {
 			clif_displaymessage(fd, msg_txt(sd,981)); // Please enter color and message (usage: @kamic <color> <message>).
 			return -1;
 		}
@@ -7555,10 +7555,12 @@ ACMD_FUNC(iteminfo)
 
 		if (item_data->maxchance == -1)
 			strcpy(atcmd_output, msg_txt(sd,1281)); //  - Available in the shops only.
-		else if (!battle_config.atcommand_mobinfo_type && item_data->maxchance)
-			sprintf(atcmd_output, msg_txt(sd,1282), (float)item_data->maxchance / 100 ); //  - Maximal monsters drop chance: %02.02f%%
-		else
-			strcpy(atcmd_output, msg_txt(sd,1283)); //  - Monsters don't drop this item.
+		else if (!battle_config.atcommand_mobinfo_type) {
+			if (item_data->maxchance)
+				sprintf(atcmd_output, msg_txt(sd,1282), (float)item_data->maxchance / 100 ); //  - Maximal monsters drop chance: %02.02f%%
+			else
+				strcpy(atcmd_output, msg_txt(sd,1283)); //  - Monsters don't drop this item.
+		}
 		clif_displaymessage(fd, atcmd_output);
 
 	}
@@ -7768,7 +7770,7 @@ ACMD_FUNC(me)
 	if (sd->sc.cant.chat)
 		return -1; //no "chatting" while muted.
 
-	if (!message || !*message || sscanf(message, "%199[^\n]", tempmes) < 0) {
+	if (!message || !*message || sscanf(message, "%255[^\n]", tempmes) < 0) {
 		clif_displaymessage(fd, msg_txt(sd,1302)); // Please enter a message (usage: @me <message>).
 		return -1;
 	}
@@ -10149,9 +10151,8 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
  */
 bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type)
 {
-	char charname[NAME_LENGTH], params[100];
-	char charname2[NAME_LENGTH];
-	char command[100];
+	char charname[NAME_LENGTH], charname2[NAME_LENGTH];
+	char command[CHAT_SIZE_MAX], params[CHAT_SIZE_MAX];
 	char output[CHAT_SIZE_MAX];
 
 	//Reconstructed message
@@ -10194,11 +10195,11 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	if (*message == charcommand_symbol) {
 		do {
 			int x, y, z;
-			char params2[100];
+			char params2[CHAT_SIZE_MAX];
 
 			//Checks to see if #command has a name or a name + parameters.
-			x = sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", command, charname, params);
-			y = sscanf(message, "%99s %23s %99[^\n]", command, charname2, params2);
+			x = sscanf(message, "%255s \"%23[^\"]\" %255[^\n]", command, charname, params);
+			y = sscanf(message, "%255s %23s %255[^\n]", command, charname2, params2);
 
 			//z always has the value of the scan that was successful
 			z = ( x > 1 ) ? x : y;
@@ -10250,7 +10251,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	memset(params, '\0', sizeof(params));
 
 	//check to see if any params exist within this command
-	if( sscanf(atcmd_msg, "%99s %99[^\n]", command, params) < 2 )
+	if( sscanf(atcmd_msg, "%255s %255[^\n]", command, params) < 2 )
 		params[0] = '\0';
 
 	// @commands (script based)

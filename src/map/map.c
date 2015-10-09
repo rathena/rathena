@@ -1834,11 +1834,6 @@ int map_quit(struct map_session_data *sd) {
 	if( map[sd->bl.m].instance_id )
 		instance_delusers(map[sd->bl.m].instance_id);
 
-	if( sd->ed ) {
-		elemental_clean_effect(sd->ed);
-		unit_remove_map(&sd->ed->bl,CLR_RESPAWN);
-	}
-	
 	unit_remove_map_pc(sd,CLR_RESPAWN);
 
 	if( map[sd->bl.m].instance_id ) { // Avoid map conflicts and warnings on next login
@@ -2420,6 +2415,7 @@ static int map_instancemap_clean(struct block_list *bl, va_list ap)
 	nullpo_retr(0, bl);
 	switch(bl->type) {
 		case BL_PC:
+		// BL_PET, BL_HOM, BL_MER, and BL_ELEM are removed with BL_PC
 			map_quit((struct map_session_data *) bl);
 			break;
 		case BL_NPC:
@@ -2427,9 +2423,6 @@ static int map_instancemap_clean(struct block_list *bl, va_list ap)
 			break;
 		case BL_MOB:
 			unit_free(bl,CLR_OUTSIGHT);
-			break;
-		case BL_PET:
-			//There is no need for this, the pet is removed together with the player. [Skotlex]
 			break;
 		case BL_ITEM:
 			map_clearflooritem(bl);

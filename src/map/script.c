@@ -4878,7 +4878,8 @@ BUILDIN_FUNC(close)
 		st->mes_active = 0;
 	}
 
-	clif_scriptclose(sd, st->oid);
+	if (!sd->npc_shopid) // Don't close if a shop was opened.
+		clif_scriptclose(sd, st->oid);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -9132,7 +9133,7 @@ BUILDIN_FUNC(end)
 	if( st->mes_active )
 		st->mes_active = 0;
 
-	if( sd )
+	if (sd && !sd->npc_shopid) // Don't close if a shop was opened.
 		clif_scriptclose(sd, st->oid); // If a menu/select/prompt is active, close it.
 
 	return SCRIPT_CMD_SUCCESS;
