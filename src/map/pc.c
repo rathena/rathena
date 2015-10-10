@@ -5374,7 +5374,7 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 	
 	//check if we gonna be rewarped [lighta]
 	if(npc_check_areanpc(1,m,x,y,0)){
-		sd->count_rewarp++;	
+		sd->count_rewarp++;
 	}
 	else 
 		sd->count_rewarp = 0;
@@ -11053,9 +11053,9 @@ static void pc_clear_log_damage_sub(uint32 char_id, struct mob_data *md)
 	uint8 i;
 	ARR_FIND(0,DAMAGELOG_SIZE,i,md->dmglog[i].id == char_id);
 	if (i < DAMAGELOG_SIZE) {
-		md->dmglog[i].id=0;
-		md->dmglog[i].dmg=0;
-		md->dmglog[i].flag=0;
+		md->dmglog[i].id = 0;
+		md->dmglog[i].dmg = 0;
+		md->dmglog[i].flag = 0;
 	}
 }
 
@@ -11068,15 +11068,19 @@ void pc_damage_log_add(struct map_session_data *sd, int id)
 {
 	uint8 i = 0;
 
-	if (!sd)
+	if (!sd || !id)
 		return;
 
 	//Only store new data, don't need to renew the old one with same id
-	for (i = 0; i < DAMAGELOG_SIZE_PC; i++) {
-		if (sd->dmglog[i] == id)
-			return;
-		sd->dmglog[i] = id;
+	ARR_FIND(0, DAMAGELOG_SIZE_PC, i, sd->dmglog[i] == id);
+	if (i < DAMAGELOG_SIZE_PC)
 		return;
+
+	for (i = 0; i < DAMAGELOG_SIZE_PC; i++) {
+		if (sd->dmglog[i] == 0) {
+			sd->dmglog[i] = id;
+			return;
+		}
 	}
 }
 

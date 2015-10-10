@@ -7838,7 +7838,7 @@ the script will come to a halt.
 
 ---------------------------------------
 
-*instance_enter("<instance name>"{,<x>,<y>});
+*instance_enter("<instance name>"{,<x>,<y>,<char_id>});
 
 Warps player to the specified instance after the script terminates. The map and
 coordinates are located in 'db/(pre-)re/instance_db.txt'.
@@ -7847,6 +7847,8 @@ The command returns 0 upon success, and these values upon failure:
  1: Party not found.
  2: Party does not have an instance.
  3: Other errors (invalid instance name, instance doesn't match with party).
+
+Put -1 for x and y if want to warp player with default entrance coordinates.
 
 ---------------------------------------
 

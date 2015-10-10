@@ -18655,18 +18655,19 @@ BUILDIN_FUNC(instance_destroy)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_enter)
 {
-	struct map_session_data *sd;
+	struct map_session_data *sd = NULL;
+	int x = script_hasdata(st,3) ? script_getnum(st, 3) : -1;
+	int y = script_hasdata(st,4) ? script_getnum(st, 4) : -1;
 
-	if((sd = script_rid2sd(st)) != NULL){
-		if (script_hasdata(st,3) && script_hasdata(st,4))
-			script_pushint(st,instance_enter_position(sd,script_getstr(st, 2),script_getnum(st, 3),script_getnum(st, 4)));
-		else
-			script_pushint(st,instance_enter(sd,script_getstr(st, 2)));
-	}
-	else
+	if (!script_charid2sd(5,sd))
 		return SCRIPT_CMD_FAILURE;
-	return SCRIPT_CMD_SUCCESS;
 
+	if (x != -1 && y != -1)
+		script_pushint(st,instance_enter_position(sd,script_getstr(st, 2),x,y));
+	else
+		script_pushint(st,instance_enter(sd,script_getstr(st, 2)));
+
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /*==========================================
@@ -21149,7 +21150,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_create,"s"),
 	BUILDIN_DEF(instance_destroy,"?"),
 	BUILDIN_DEF(instance_id,""),
-	BUILDIN_DEF(instance_enter,"s??"),
+	BUILDIN_DEF(instance_enter,"s???"),
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(instance_mapname,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii?"),
