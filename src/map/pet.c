@@ -995,6 +995,8 @@ static int pet_food(struct map_session_data *sd, struct pet_data *pd)
 	if( pd->pet.hungry > 100 )
 		pd->pet.hungry = 100;
 
+	log_feeding(sd, LOG_FEED_PET, pd->petDB->FoodID, 1);
+
 	clif_send_petdata(sd,pd,2,pd->pet.hungry);
 	clif_send_petdata(sd,pd,1,pd->pet.intimate);
 	clif_pet_food(sd,pd->petDB->FoodID,1);

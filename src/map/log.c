@@ -12,6 +12,8 @@
 #include "log.h"
 #include "mob.h"
 #include "pc.h"
+#include "homunculus.h"
+#include "pet.h"
 
 #include <stdlib.h>
 
@@ -113,6 +115,18 @@ static char log_cashtype2char( e_log_cash_type type ){
 	}
 
 	ShowDebug("log_chattype2char: Unknown chat type %d.\n", type);
+	return 'O';
+}
+
+static char log_feedingtype2char(e_log_feeding_type type) {
+	switch(type) {
+		case LOG_FEED_HOMUNCULUS:
+			return 'H';
+		case LOG_FEED_PET:
+			return 'P';
+	}
+
+	ShowDebug("log_feedingtype2char: Unknown feeding type %d.\n", type);
 	return 'O';
 }
 
@@ -508,6 +522,66 @@ void log_cash( struct map_session_data* sd, e_log_pick_type type, e_log_cash_typ
 	}
 }
 
+/**
+ * Log feeding activity
+ * @param sd Player, feeder
+ * @param type Log type, @see e_log_feeding_type
+ * @param nameid Item used as food
+ * @param amount Amount of feed item
+ **/
+void log_feeding(struct map_session_data *sd, e_log_feeding_type type, unsigned short nameid, unsigned short amount) {
+	unsigned int target_id = 0;
+	unsigned short target_class = 0;
+
+	nullpo_retv( sd );
+
+	if (!log_config.feeding || !(log_config.feeding&type))
+		return;
+
+	switch (type) {
+		case LOG_FEED_HOMUNCULUS:
+			if (sd->hd) {
+				target_id = sd->hd->homunculus.hom_id;
+				target_class = sd->hd->homunculus.class_;
+			}
+			break;
+		case LOG_FEED_PET:
+			if (sd->pd) {
+				target_id = sd->pd->pet.pet_id;
+				target_class = sd->pd->pet.class_;
+			}
+			break;
+	}
+
+	if (log_config.sql_logs) {
+#ifdef BETA_THREAD_TEST
+		char entry[512];
+		int e_length = 0;
+		e_length = sprintf(entry,  LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `item_id`, `amount`, `map`) VALUES ( NOW(), '%"PRIu32"', '%"PRIu32"', '%hu', '%c', '%hu', '%hu', '%s' )",
+			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), nameid, amount, mapindex_id2name(sd->mapindex));
+		queryThread_log( entry, e_length );
+#else
+		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `item_id`, `amount`, `map`) VALUES ( NOW(), '%"PRIu32"', '%"PRIu32"', '%hu', '%c', '%hu', '%hu', '%s' )",
+			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), nameid, amount, mapindex_id2name(sd->mapindex)))
+		{
+			Sql_ShowDebug(logmysql_handle);
+			return;
+		}
+#endif
+	} else {
+		char timestring[255];
+		time_t curtime;
+		FILE* logfp;
+
+		if ((logfp = fopen(log_config.log_feeding, "a")) == NULL)
+			return;
+		time(&curtime);
+		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
+		fprintf(logfp, "%s - %s[%d]\t%d\t%d(%c)\t%hu\t%hu\t%s\n", timestring, sd->status.name, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), nameid, amount, mapindex_id2name(sd->mapindex));
+		fclose(logfp);
+	}
+}
+
 void log_set_defaults(void)
 {
 	memset(&log_config, 0, sizeof(log_config));
@@ -574,6 +648,8 @@ int log_config_read(const char* cfgName)
 				log_config.chat = config_switch(w2);
 			else if( strcmpi(w1, "log_mvpdrop") == 0 )
 				log_config.mvpdrop = config_switch(w2);
+			else if( strcmpi(w1, "log_feeding") == 0 )
+				log_config.feeding = config_switch(w2);
 			else if( strcmpi(w1, "log_chat_woe_disable") == 0 )
 				log_config.log_chat_woe_disable = (bool)config_switch(w2);
 			else if( strcmpi(w1, "log_branch_db") == 0 )
@@ -592,6 +668,8 @@ int log_config_read(const char* cfgName)
 				safestrncpy(log_config.log_chat, w2, sizeof(log_config.log_chat));
 			else if( strcmpi( w1, "log_cash_db" ) == 0 )
 				safestrncpy( log_config.log_cash, w2, sizeof( log_config.log_cash ) );
+			else if( strcmpi( w1, "log_feeding_db" ) == 0 )
+				safestrncpy( log_config.log_feeding, w2, sizeof( log_config.log_feeding ) );
 			// log file timestamp format
 			else if( strcmpi( w1, "log_timestamp_format" ) == 0 )
 				safestrncpy(log_timestamp_format, w2, sizeof(log_timestamp_format));
@@ -639,6 +717,9 @@ int log_config_read(const char* cfgName)
 		}
 		if( log_config.cash ){
 			ShowInfo( "Logging Cash transactions to %s '%s'.\n", target, log_config.log_cash );
+		}
+		if( log_config.feeding ){
+			ShowInfo( "Logging Feeding items to %s '%s'.\n", target, log_config.log_feeding );
 		}
 	}
 
