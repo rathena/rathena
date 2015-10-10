@@ -15,6 +15,7 @@
 
 #include <stdlib.h>
 
+static char log_timestamp_format[20];
 
 /// filters for item logging
 typedef enum e_log_filter
@@ -180,7 +181,7 @@ void log_branch(struct map_session_data* sd)
 		if( ( logfp = fopen(log_config.log_branch, "a") ) == NULL )
 			return;
 		time(&curtime);
-		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
 		fprintf(logfp,"%s - %s[%d:%d]\t%s\n", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(sd->mapindex));
 		fclose(logfp);
 	}
@@ -224,7 +225,7 @@ void log_pick(int id, int16 m, e_log_pick_type type, int amount, struct item* it
 		if( ( logfp = fopen(log_config.log_pick, "a") ) == NULL )
 			return;
 		time(&curtime);
-		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
 		fprintf(logfp,"%s - %d\t%c\t%hu,%d,%d,%hu,%hu,%hu,%hu,%s,'%"PRIu64"',%d\n", timestring, id, log_picktype2char(type), itm->nameid, amount, itm->refine, itm->card[0], itm->card[1], itm->card[2], itm->card[3], map[m].name?map[m].name:"", itm->unique_id, itm->bound);
 		fclose(logfp);
 	}
@@ -279,7 +280,7 @@ void log_zeny(struct map_session_data* sd, e_log_pick_type type, struct map_sess
 		if( ( logfp = fopen(log_config.log_zeny, "a") ) == NULL )
 			return;
 		time(&curtime);
-		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
 		fprintf(logfp, "%s - %s[%d]\t%s[%d]\t%d\t\n", timestring, src_sd->status.name, src_sd->status.account_id, sd->status.name, sd->status.account_id, amount);
 		fclose(logfp);
 	}
@@ -320,7 +321,7 @@ void log_mvpdrop(struct map_session_data* sd, int monster_id, unsigned int* log_
 		if( ( logfp = fopen(log_config.log_mvpdrop,"a") ) == NULL )
 			return;
 		time(&curtime);
-		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
 		fprintf(logfp,"%s - %s[%d:%d]\t%d\t%hu,%u\n", timestring, sd->status.name, sd->status.account_id, sd->status.char_id, monster_id, (unsigned short)log_mvp[0], log_mvp[1]);
 		fclose(logfp);
 	}
@@ -368,7 +369,7 @@ void log_atcommand(struct map_session_data* sd, const char* message)
 		if( ( logfp = fopen(log_config.log_gm, "a") ) == NULL )
 			return;
 		time(&curtime);
-		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
 		fprintf(logfp, "%s - %s[%d]: %s\n", timestring, sd->status.name, sd->status.account_id, message);
 		fclose(logfp);
 	}
@@ -414,7 +415,7 @@ void log_npc(struct map_session_data* sd, const char* message)
 		if( ( logfp = fopen(log_config.log_npc, "a") ) == NULL )
 			return;
 		time(&curtime);
-		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
 		fprintf(logfp, "%s - %s[%d]: %s\n", timestring, sd->status.name, sd->status.account_id, message);
 		fclose(logfp);
 	}
@@ -465,7 +466,7 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 		if( ( logfp = fopen(log_config.log_chat, "a") ) == NULL )
 			return;
 		time(&curtime);
-		strftime(timestring, sizeof(timestring), "%m/%d/%Y %H:%M:%S", localtime(&curtime));
+		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
 		fprintf(logfp, "%s - %c,%d,%d,%d,%s,%d,%d,%s,%s\n", timestring, log_chattype2char(type), type_id, src_charid, src_accid, mapname, x, y, dst_charname, message);
 		fclose(logfp);
 	}
@@ -501,7 +502,7 @@ void log_cash( struct map_session_data* sd, e_log_pick_type type, e_log_cash_typ
 		if( ( logfp = fopen( log_config.log_cash, "a" ) ) == NULL )
 			return;
 		time( &curtime );
-		strftime( timestring, sizeof( timestring ), "%m/%d/%Y %H:%M:%S", localtime( &curtime ) );
+		strftime( timestring, sizeof( timestring ), log_timestamp_format, localtime( &curtime ) );
 		fprintf( logfp, "%s - %s[%d]\t%d(%c)\t\n", timestring, sd->status.name, sd->status.account_id, amount, log_cashtype2char( cash_type ) );
 		fclose( logfp );
 	}
@@ -516,6 +517,8 @@ void log_set_defaults(void)
 	log_config.rare_items_log   = 100;  // log rare items. drop chance <= 1%
 	log_config.price_items_log  = 1000; // 1000z
 	log_config.amount_items_log = 100;
+
+	safestrncpy(log_timestamp_format, "%m/%d/%Y %H:%M:%S", sizeof(log_timestamp_format));
 }
 
 
@@ -589,6 +592,9 @@ int log_config_read(const char* cfgName)
 				safestrncpy(log_config.log_chat, w2, sizeof(log_config.log_chat));
 			else if( strcmpi( w1, "log_cash_db" ) == 0 )
 				safestrncpy( log_config.log_cash, w2, sizeof( log_config.log_cash ) );
+			// log file timestamp format
+			else if( strcmpi( w1, "log_timestamp_format" ) == 0 )
+				safestrncpy(log_timestamp_format, w2, sizeof(log_timestamp_format));
 			//support the import command, just like any other config
 			else if( strcmpi(w1,"import") == 0 )
 				log_config_read(w2);
