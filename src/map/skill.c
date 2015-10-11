@@ -13027,7 +13027,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 							sg->limit = DIFF_TICK(tick,sg->tick);
 							break;
 						}
-					} while( x == bl->x && y == bl->y &&
+					} while(sg->interval > 0 && x == bl->x && y == bl->y &&
 						++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl) );
 				}
 				break;
@@ -13065,7 +13065,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			//Take into account these hit more times than the timer interval can handle.
 			do
 				skill_attack(BF_MAGIC,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,0);
-			while(--unit->val2 && x == bl->x && y == bl->y &&
+			while(sg->interval > 0 && --unit->val2 && x == bl->x && y == bl->y &&
 				++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl));
 
 			if (unit->val2 <= 0)
