@@ -4319,8 +4319,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NC_BOOSTKNUCKLE:
 	case NC_PILEBUNKER:
 	case NC_COLDSLOWER:
-	case NC_ARMSCANNON:
-		if (sd) pc_overheat(sd, 1);
+		if (sd)
+			pc_overheat(sd, 1);
 	case MO_TRIPLEATTACK:
 	case RK_WINDCUTTER:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
@@ -4550,6 +4550,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RL_S_STORM:
 	case RL_R_TRIP:
 	case MH_XENO_SLASHER:
+	case NC_ARMSCANNON:
 		if( flag&1 ) {//Recursive invocation
 			int sflag = skill_area_temp[0] & 0xFFF;
 			int heal = 0;
@@ -4564,6 +4565,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				status_heal(src,heal,0,0);
 			}
 		} else {
+			int starget = splash_target(src);
+
+			skill_area_temp[0] = 0;
+			skill_area_temp[1] = bl->id;
+			skill_area_temp[2] = 0;
+
 			switch ( skill_id ) {
 				case NJ_BAKUENRYU:
 				case LG_EARTHDRIVE:
@@ -4580,20 +4587,18 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case WM_REVERBERATION_MELEE:
 				case WM_REVERBERATION_MAGIC:
 					skill_area_temp[1] = 0;
+					starget = BL_CHAR;
 					break;
-				default:
+				case WL_CRIMSONROCK:
+					skill_area_temp[4] = bl->x;
+					skill_area_temp[5] = bl->y;
+					break;
+				case NC_VULCANARM:
+				case NC_ARMSCANNON:
+					if (sd)
+						pc_overheat(sd, 1);
 					break;
 			}
-
-			skill_area_temp[0] = 0;
-			skill_area_temp[1] = bl->id;
-			skill_area_temp[2] = 0;
-			if( skill_id == WL_CRIMSONROCK ) {
-				skill_area_temp[4] = bl->x;
-				skill_area_temp[5] = bl->y;
-			}
-			if( skill_id == NC_VULCANARM )
-				if (sd) pc_overheat(sd,1);
 
 			// if skill damage should be split among targets, count them
 			//SD_LEVEL -> Forced splash damage for Auto Blitz-Beat -> count targets
@@ -4602,7 +4607,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				skill_area_temp[0] = map_foreachinrange(skill_area_sub, bl, (skill_id == AS_SPLASHER)?1:skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
 
 			// recursive invocation of skill_castend_damage_id() with flag|1
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), (skill_id == WM_REVERBERATION_MELEE || skill_id == WM_REVERBERATION_MAGIC) ? BL_CHAR : splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), starget, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 			if( skill_id == AS_SPLASHER ) {
 				map_freeblock_unlock(); // Don't consume a second gemstone.
 				return 0;
