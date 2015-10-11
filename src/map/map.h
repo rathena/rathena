@@ -711,7 +711,7 @@ struct map_data {
 	} drop_list[MAX_DROP_PER_MAP];
 
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
-	int mob_delete_timer;	// [Skotlex]
+	int mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
 	uint32 zone;	// zone number (for item/skill restrictions)
 	int nocommand; //Blocks @/# commands for non-gms. [Skotlex]
 	struct {

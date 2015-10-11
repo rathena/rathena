@@ -438,7 +438,7 @@ int instance_destroy(short instance_id)
 		else
 			type = 3;
 
-		for(i = 0; i < MAX_MAP_PER_INSTANCE; i++)
+		for(i = 0; i < im->cnt_map; i++)
 			map_delinstancemap(im->map[i].m);
 	}
 

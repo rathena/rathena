@@ -6592,7 +6592,7 @@ BUILDIN_FUNC(countitem)
 
 /*==========================================
  * Check if item with this amount can fit in inventory
- * Checking : weight, stack amount >32k, slots amount >(MAX_INVENTORY)
+ * Checking : weight, stack amount >(MAX_AMOUNT), slots amount >(MAX_INVENTORY)
  * Return
  *	0 : fail
  *	1 : success (npc side only)

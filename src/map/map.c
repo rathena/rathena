@@ -2386,6 +2386,7 @@ int map_addinstancemap(const char *name, int id)
 
 	map[dst_m].index = mapindex_addmap(-1, map[dst_m].name);
 	map[dst_m].channel = NULL;
+	map[dst_m].mob_delete_timer = INVALID_TIMER;
 
 	map_addmap2db(&map[dst_m]);
 
@@ -2414,10 +2415,10 @@ static int map_instancemap_clean(struct block_list *bl, va_list ap)
 {
 	nullpo_retr(0, bl);
 	switch(bl->type) {
-		case BL_PC:
-		// BL_PET, BL_HOM, BL_MER, and BL_ELEM are removed with BL_PC
+		/*case BL_PC:
+		// BL_PET, BL_HOM, BL_MER, and BL_ELEM are moved when BL_PC warped out in map_instancemap_leave
 			map_quit((struct map_session_data *) bl);
-			break;
+			break;*/
 		case BL_NPC:
 			npc_unload((struct npc_data *)bl,true);
 			break;
@@ -2452,22 +2453,17 @@ int map_delinstancemap(int m)
 	if( map[m].mob_delete_timer != INVALID_TIMER )
 		delete_timer(map[m].mob_delete_timer, map_removemobs_timer);
 
-	mapindex_removemap( map[m].index );
-
 	// Free memory
 	aFree(map[m].cell);
 	aFree(map[m].block);
 	aFree(map[m].block_mob);
-
-	map_removemapdb(&map[m]);
-	memset(&map[m], 0x00, sizeof(map[0]));
-
 	if( map[m].qi_data )
 		aFree(map[m].qi_data);
 
-	// Make delete timers invalid to avoid errors
+	mapindex_removemap( map[m].index );
+	map_removemapdb(&map[m]);
+	memset(&map[m], 0x00, sizeof(map[0]));
 	map[m].mob_delete_timer = INVALID_TIMER;
-
 	return 1;
 }
 
@@ -2568,6 +2564,10 @@ void map_removemobs(int16 m)
 {
 	if (map[m].mob_delete_timer != INVALID_TIMER) // should never happen
 		return; //Mobs are already scheduled for removal
+
+	// Don't remove mobs on instance map
+	if (map[m].instance_id)
+		return;
 
 	map[m].mob_delete_timer = add_timer(gettick()+battle_config.mob_remove_delay, map_removemobs_timer, m, 0);
 }

@@ -9902,7 +9902,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	}
 
 	if( sd->ed ) {
-		map_addblock(&sd->ed->bl);
+		if (map_addblock(&sd->ed->bl))
+			return;
 		clif_spawn(&sd->ed->bl);
 		clif_elemental_info(sd);
 		clif_elemental_updatestatus(sd,SP_HP);

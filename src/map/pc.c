@@ -5370,6 +5370,13 @@ char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int 
 		sd->md->ud.dir = sd->ud.dir;
 	}
 
+	if( sd->ed ) {
+		sd->ed->bl.m = m;
+		sd->ed->bl.x = sd->ed->ud.to_x = x;
+		sd->ed->bl.y = sd->ed->ud.to_y = y;
+		sd->ed->ud.dir = sd->ud.dir;
+	}
+
 	pc_cell_basilica(sd);
 	
 	//check if we gonna be rewarped [lighta]
@@ -8845,7 +8852,7 @@ bool pc_setreg2(struct map_session_data *sd, const char *reg, int val) {
 		return false;
 	}
 
-	val = cap_value(val, 0, INT_MAX);
+	val = cap_value(val, INT_MIN, INT_MAX);
 
 	switch (prefix) {
 		case '.':

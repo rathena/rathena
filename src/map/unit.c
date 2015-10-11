@@ -3074,7 +3074,8 @@ void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype)
 	unit_remove_map(&sd->bl,clrtype);
 
 	//CLR_RESPAWN is the warp from logging out, CLR_TELEPORT is the warp from teleporting, but pets/homunc need to just 'vanish' instead of showing the warping animation.
-	if (clrtype == CLR_RESPAWN || clrtype == CLR_TELEPORT) clrtype = CLR_OUTSIGHT;
+	if (clrtype == CLR_RESPAWN || clrtype == CLR_TELEPORT)
+		clrtype = CLR_OUTSIGHT;
 
 	if(sd->pd)
 		unit_remove_map(&sd->pd->bl, clrtype);
