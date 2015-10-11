@@ -42,17 +42,22 @@ struct quest_db *quest_search(int quest_id)
  */
 int quest_pc_login(TBL_PC *sd)
 {
+#if PACKETVER < 20141022
 	int i;
+#endif
 
 	if( sd->avail_quests == 0 )
 		return 1;
 
 	clif_quest_send_list(sd);
+
+#if PACKETVER < 20141022
 	clif_quest_send_mission(sd);
 
 	//@TODO[Haru]: Is this necessary? Does quest_send_mission not take care of this?
 	for( i = 0; i < sd->avail_quests; i++ )
 		clif_quest_update_objective(sd, &sd->quest_log[i]);
+#endif
 
 	return 0;
 }
