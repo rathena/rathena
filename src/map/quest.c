@@ -407,7 +407,7 @@ void quest_read_txtdb(void)
 		while(fgets(line, sizeof(line), fp)) {
 			struct quest_db *quest = NULL;
 			char *str[19], *p;
-			uint16 quest_id = 0;
+			int quest_id = 0;
 			uint8 i;
 
 			++ln;
