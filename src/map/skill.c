@@ -2979,7 +2979,8 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 	tstatus = status_get_status_data(bl);
 	sc= status_get_sc(src);
 	tsc= status_get_sc(bl);
-	if (tsc && !tsc->count) tsc = NULL; //Don't need it.
+	if (tsc && !tsc->count)
+		tsc = NULL; //Don't need it.
 
 	 //Trick Dead protects you from damage, but not from buffs and the like, hence it's placed here.
 	if (tsc && tsc->data[SC_TRICKDEAD])
@@ -3149,7 +3150,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			break;
 		case TK_COUNTER: {	//bonus from SG_FRIEND [Komurka]
 			int level;
-			if( sd->status.party_id>0 && (level = pc_checkskill(sd,SG_FRIEND)) )
+			if( sd && sd->status.party_id > 0 && (level = pc_checkskill(sd,SG_FRIEND)) )
 				party_skill_check(sd, sd->status.party_id, TK_COUNTER,level);
 			}
 			break;
@@ -14081,6 +14082,9 @@ int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 
 	int i;
 	bool is_chorus = ( skill_get_inf2(skill_id)&INF2_CHORUS_SKILL );
 
+	if (!sd)
+		return 0;
+
 	if (!battle_config.player_skill_partner_check || pc_has_permission(sd, PC_PERM_SKILL_UNCONDITIONAL))
 		return is_chorus ? MAX_PARTY : 99; //As if there were infinite partners.
 
@@ -14249,7 +14253,8 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 
 	nullpo_retr(false,sd);
 
-	if (sd->chatID) return false;
+	if (sd->chatID)
+		return false;
 
 	if( pc_has_permission(sd, PC_PERM_SKILL_UNCONDITIONAL) && sd->skillitem != skill_id )
 	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
