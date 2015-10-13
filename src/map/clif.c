@@ -1516,12 +1516,11 @@ int clif_homskillinfoblock(struct map_session_data *sd)
 
 	nullpo_ret(sd);
 
-	WFIFOHEAD(fd, 4+37*MAX_HOMUNSKILL);
-
 	hd = sd->hd;
 	if ( !hd )
 		return 0 ;
 
+	WFIFOHEAD(fd, 4+37*MAX_HOMUNSKILL);
 	WFIFOW(fd,0)=0x235;
 	for ( i = 0; i < MAX_HOMUNSKILL; i++){
 		int id = hd->homunculus.hskill[i].id;
@@ -15604,6 +15603,20 @@ void clif_parse_PartyTick(int fd, struct map_session_data* sd)
 /// Questlog System [Kevin] [Inkfish]
 ///
 
+/**
+ * Safe check to init packet len & quest num for player.
+ * @param def_len
+ * @param info_len Length of each quest info.
+ * @param avail_quests Avail quests that player has.
+ * @param limit_out Limit for quest num, to make sure the quest num is still in allowed value.
+ * @param len_out Packet length as initial set => def_len + limit_out * info_len.
+ **/
+static void clif_quest_len(int def_len, int info_len, int avail_quests, int *limit_out, int *len_out) {
+	(*limit_out) = (0xFFFF - def_len) / info_len;
+	(*limit_out) = (avail_quests > (*limit_out)) ? (*limit_out) : avail_quests;
+	(*len_out) = ((*limit_out) * info_len) + def_len;
+}
+
 /// Sends list of all quest states (ZC_ALL_QUEST_LIST).
 /// 02b1 <packet len>.W <num>.L { <quest id>.L <active>.B }*num
 /// 097a <packet len>.W <num>.L { <quest id>.L <active>.B <remaining time>.L <time>.L <count>.W { <mob_id>.L <killed>.W <total>.W <mob name>.24B }*count }*num
@@ -15612,13 +15625,15 @@ void clif_quest_send_list(struct map_session_data *sd)
 	int fd = sd->fd;
 	int i;
 	int offset = 8;
+	int limit = 0;
 
 #if PACKETVER >= 20141022
-	WFIFOHEAD(fd,sd->avail_quests*15+8);
+	clif_quest_len(offset, 15 + ((10 + NAME_LENGTH) * MAX_QUEST_OBJECTIVES), sd->avail_quests, &limit, &i);
+	WFIFOHEAD(fd,i);
 	WFIFOW(fd, 0) = 0x97a;
-	WFIFOL(fd, 4) = sd->avail_quests;
+	WFIFOL(fd, 4) = limit;
 
-	for (i = 0; i < sd->avail_quests; i++) {
+	for (i = 0; i < limit; i++) {
 		struct quest_db *qi = quest_search(sd->quest_log[i].quest_id);
 
 		WFIFOL(fd, offset) = sd->quest_log[i].quest_id;
@@ -15651,14 +15666,15 @@ void clif_quest_send_list(struct map_session_data *sd)
 		}
 	}
 
-	WFIFOW(fd, 2) = offset;	
+	WFIFOW(fd, 2) = offset;
 	WFIFOSET(fd, offset);
 #else
-	WFIFOHEAD(fd,sd->avail_quests*5+8);
+	clif_quest_len(offset, 5, sd->avail_quests, &limit, &i);
+	WFIFOHEAD(fd,i);
 	WFIFOW(fd, 0) = 0x2b1;
-	WFIFOL(fd, 4) = sd->avail_quests;
+	WFIFOL(fd, 4) = limit;
 
-	for (i = 0; i < sd->avail_quests; i++) {
+	for (i = 0; i < limit; i++) {
 		WFIFOL(fd, offset) = sd->quest_log[i].quest_id;
 		offset += 4;
 		WFIFOB(fd, offset) = sd->quest_log[i].state;
@@ -15675,16 +15691,17 @@ void clif_quest_send_list(struct map_session_data *sd)
 void clif_quest_send_mission(struct map_session_data *sd)
 {
 	int fd = sd->fd;
-	int i, j;
+	int i, j, limit = 0;
 	int len = sd->avail_quests*104+8;
 	struct mob_db *mob;
 
+	clif_quest_len(8, 14 + ((6 + NAME_LENGTH) * MAX_QUEST_OBJECTIVES), sd->avail_quests, &limit, &len);
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd, 0) = 0x2b2;
 	WFIFOW(fd, 2) = len;
-	WFIFOL(fd, 4) = sd->avail_quests;
+	WFIFOL(fd, 4) = limit;
 
-	for (i = 0; i < sd->avail_quests; i++) {
+	for (i = 0; i < limit; i++) {
 		struct quest_db *qi = quest_search(sd->quest_log[i].quest_id);
 
 		WFIFOL(fd, i*104+8) = sd->quest_log[i].quest_id;
