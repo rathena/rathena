@@ -14063,24 +14063,25 @@ BUILDIN_FUNC(recovery)
 }
 
 /*==========================================
- * Get your pet info: getpetinfo(n)
+ * Get your pet info: getpetinfo <type>{,<char_id>}
  * n -> 0:pet_id 1:pet_class 2:pet_name
- * 3:friendly 4:hungry, 5: rename flag.6:level
+ * 3:friendly 4:hungry, 5: rename flag.6:level,
+ * 7:game id
  *------------------------------------------*/
 BUILDIN_FUNC(getpetinfo)
 {
 	TBL_PC *sd=script_rid2sd(st);
 	TBL_PET *pd;
-	int type=script_getnum(st,2);
+	int type = script_getnum(st,2);
 
-	if(!sd || !sd->pd) {
+	if (!script_charid2sd(3, sd) || !(pd = sd->pd)) {
 		if (type == 2)
 			script_pushconststr(st,"null");
 		else
 			script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;
 	}
-	pd = sd->pd;
+
 	switch(type){
 		case 0: script_pushint(st,pd->pet.pet_id); break;
 		case 1: script_pushint(st,pd->pet.class_); break;
@@ -14089,6 +14090,7 @@ BUILDIN_FUNC(getpetinfo)
 		case 4: script_pushint(st,pd->pet.hungry); break;
 		case 5: script_pushint(st,pd->pet.rename_flag); break;
 		case 6: script_pushint(st,(int)pd->pet.level); break;
+		case 7: script_pushint(st,pd->bl.id); break;
 		default:
 			script_pushint(st,0);
 			break;
@@ -14097,10 +14099,10 @@ BUILDIN_FUNC(getpetinfo)
 }
 
 /*==========================================
- * Get your homunculus info: gethominfo(n)
- * n -> 0:hom_id 1:class 2:name
+ * Get your homunculus info: gethominfo <type>{,<char_id>};
+ * type -> 0:hom_id 1:class 2:name
  * 3:friendly 4:hungry, 5: rename flag.
- * 6: level
+ * 6: level, 7: game id
  *------------------------------------------*/
 BUILDIN_FUNC(gethominfo)
 {
@@ -14108,8 +14110,7 @@ BUILDIN_FUNC(gethominfo)
 	TBL_HOM *hd;
 	int type=script_getnum(st,2);
 
-	hd = sd?sd->hd:NULL;
-	if(!hd) {
+	if (!script_charid2sd(3, sd) || !(hd = sd->hd)) {
 		if (type == 2)
 			script_pushconststr(st,"null");
 		else
@@ -14125,6 +14126,7 @@ BUILDIN_FUNC(gethominfo)
 		case 4: script_pushint(st,hd->homunculus.hunger); break;
 		case 5: script_pushint(st,hd->homunculus.rename_flag); break;
 		case 6: script_pushint(st,hd->homunculus.level); break;
+		case 7: script_pushint(st,hd->bl.id); break;
 		default:
 			script_pushint(st,0);
 			break;
@@ -14179,6 +14181,7 @@ BUILDIN_FUNC(getmercinfo)
 		case 5: script_pushint(st,md ? md->mercenary.kill_count : 0); break;
 		case 6: script_pushint(st,md ? mercenary_get_lifetime(md) : 0); break;
 		case 7: script_pushint(st,md ? md->db->lv : 0); break;
+		case 8: script_pushint(st,md ? md->bl.id : 0); break;
 		default:
 			ShowError("buildin_getmercinfo: Invalid type %d (char_id=%d).\n", type, sd->status.char_id);
 			script_pushnil(st);
@@ -20670,6 +20673,37 @@ BUILDIN_FUNC(ignoretimeout)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * geteleminfo <type>{,<char_id>};
+ **/
+BUILDIN_FUNC(geteleminfo) {
+	TBL_ELEM *ed = NULL;
+	TBL_PC *sd = NULL;
+	int type = script_getnum(st,2);
+
+	if (!script_charid2sd(3, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (!(ed = sd->ed)) {
+		//ShowDebug("buildin_geteleminfo: Player doesn't have Elemental.\n");
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch (type) {
+		case 0: script_pushint(st, ed->elemental.elemental_id); break;
+		case 1: script_pushint(st, ed->bl.id); break;
+		default:
+			ShowError("buildin_geteleminfo: Invalid type '%d'.\n", type);
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -21005,8 +21039,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(preg_match,"ss?"),
 	BUILDIN_DEF(dispbottom,"s??"), //added from jA [Lupus]
 	BUILDIN_DEF(recovery,"i???"),
-	BUILDIN_DEF(getpetinfo,"i"),
-	BUILDIN_DEF(gethominfo,"i"),
+	BUILDIN_DEF(getpetinfo,"i?"),
+	BUILDIN_DEF(gethominfo,"i?"),
 	BUILDIN_DEF(getmercinfo,"i?"),
 	BUILDIN_DEF(checkequipedcard,"i"),
 	BUILDIN_DEF(jump_zero,"il"), //for future jA script compatibility
@@ -21231,6 +21265,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getvar,"vi"),
 	BUILDIN_DEF(showscript,"s?"),
 	BUILDIN_DEF(ignoretimeout,"i?"),
+	BUILDIN_DEF(geteleminfo,"i?"),
 
 #include "../custom/script_def.inc"
 

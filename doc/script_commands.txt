@@ -374,8 +374,10 @@ But what about GID?
 
 GID stands for the Game ID of something, this can either be the GID obtained
 through mobspawn (mob control commands) or the account ID of a character.
-Another way would be to right click on a mob, 
-NPC or char as GM sprited char to view the GID.
+Another way would be to right click on a mob, NPC or char as GM sprited char
+to view the GID.
+
+See also 'getpetinfo', 'getmercinfo', 'gethominfo', and 'geteleminfo'.
 
 This is mostly used for the new version of skill and the mob control commands
 implemented.
@@ -7229,6 +7231,17 @@ Example:
 	setunitdata .GID,3,1000;
 
 ---------------------------------------
+
+*geteleminfo <type>{,<char_id>};
+
+Get info of elemental of attached player or player by char_id.
+Other info can be obtained by 'getunitdata' command.
+
+Valid types are:
+   0: Elemental ID
+   1: Elemental Game ID
+
+---------------------------------------
 \\
 6,1.- End of unit-related commands
 \\
@@ -8240,12 +8253,12 @@ server and the egg will disappear when anyone tries to hatch it.
 
 ---------------------------------------
 
-*getpetinfo(<type>)
+*getpetinfo(<type>{,<char_id>})
 
 This function will return pet information for the pet the invoking character 
 currently has active. Valid types are:
 
- 0 - Pet Game ID
+ 0 - Pet ID
  1 - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
      is.
  2 - Pet name. Will return "null" if there's no pet. 
@@ -8253,6 +8266,7 @@ currently has active. Valid types are:
  4 - Pet hungry level. 100 is completely full.
  5 - Pet rename flag. 0 means this pet has not been named yet.
  6 - Pet level
+ 7 - Pet Game ID
 
 ---------------------------------------
 
@@ -8408,20 +8422,21 @@ and will return the following values:
 
 ---------------------------------------
 
-*gethominfo(<type>)
+*gethominfo(<type>{,<char_id>})
 
 This function will return Homunculus information for the Homunculus of the
 invoking character, regardless of its vaporize state. It returns zero or
 "null" if the player does not own a Homunculus.
 
 Valid types are:
- 0 - Homunculus Game ID
+ 0 - Homunculus ID
  1 - Homunculus Class
  2 - Homunculus Name
  3 - Homunculus friendly level (intimacy score). 100000 is full loyalty.
  4 - Homunculus hungry level. 100 is completely full.
  5 - Homunculus rename flag. 0 means this homunculus has not been named yet.
  6 - Homunculus level
+ 7 - Homunculus Game ID
 
 ---------------------------------------
 
@@ -8491,7 +8506,7 @@ character. If char id is given, the information of that character is
 retrieved instead. Type specifies what information to retrieve and
 can be one of the following:
 
-    0 - Mercenary Game ID
+    0 - Mercenary ID
     1 - Mercenary Class
     2 - Mercenary Name
     3 - Mercenary faith value for this mercenary's guild, if any
@@ -8499,6 +8514,7 @@ can be one of the following:
     5 - Mercenary kill count
     6 - Mercenary remaining life time in msec
     7 - Mercenary level
+    8 - Mercenary Game ID
 
 If the character does not have a mercenary, the command returns ""
 for name and 0 for all other types.
