@@ -527,10 +527,9 @@ void log_cash( struct map_session_data* sd, e_log_pick_type type, e_log_cash_typ
  * @param sd Player, feeder
  * @param type Log type, @see e_log_feeding_type
  * @param nameid Item used as food
- * @param amount Amount of feed item
  **/
-void log_feeding(struct map_session_data *sd, e_log_feeding_type type, unsigned short nameid, unsigned short amount) {
-	unsigned int target_id = 0;
+void log_feeding(struct map_session_data *sd, e_log_feeding_type type, unsigned short nameid) {
+	unsigned int target_id = 0, intimacy = 0;
 	unsigned short target_class = 0;
 
 	nullpo_retv( sd );
@@ -543,12 +542,14 @@ void log_feeding(struct map_session_data *sd, e_log_feeding_type type, unsigned 
 			if (sd->hd) {
 				target_id = sd->hd->homunculus.hom_id;
 				target_class = sd->hd->homunculus.class_;
+				intimacy = sd->hd->homunculus.intimacy;
 			}
 			break;
 		case LOG_FEED_PET:
 			if (sd->pd) {
 				target_id = sd->pd->pet.pet_id;
 				target_class = sd->pd->pet.class_;
+				intimacy = sd->pd->pet.intimate;
 			}
 			break;
 	}
@@ -557,12 +558,12 @@ void log_feeding(struct map_session_data *sd, e_log_feeding_type type, unsigned 
 #ifdef BETA_THREAD_TEST
 		char entry[512];
 		int e_length = 0;
-		e_length = sprintf(entry,  LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `item_id`, `amount`, `map`) VALUES ( NOW(), '%"PRIu32"', '%"PRIu32"', '%hu', '%c', '%hu', '%hu', '%s' )",
-			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), nameid, amount, mapindex_id2name(sd->mapindex));
-		queryThread_log( entry, e_length );
+		e_length = sprintf(entry, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `intimacy`, `item_id`, `map`, `x`, `y`) VALUES ( NOW(), '%"PRIu32"', '%"PRIu32"', '%hu', '%c', '%"PRIu32"', '%hu', '%s', '%hu', '%hu' )",
+			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
+		queryThread_log(entry, e_length);
 #else
-		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `item_id`, `amount`, `map`) VALUES ( NOW(), '%"PRIu32"', '%"PRIu32"', '%hu', '%c', '%hu', '%hu', '%s' )",
-			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), nameid, amount, mapindex_id2name(sd->mapindex)))
+		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `intimacy`, `map`, `x`, `y`) VALUES ( NOW(), '%"PRIu32"', '%"PRIu32"', '%hu', '%c', '%"PRIu32"', '%hu', '%s', '%hu', '%hu' )",
+			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y))
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -577,7 +578,7 @@ void log_feeding(struct map_session_data *sd, e_log_feeding_type type, unsigned 
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
-		fprintf(logfp, "%s - %s[%d]\t%d\t%d(%c)\t%hu\t%hu\t%s\n", timestring, sd->status.name, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), nameid, amount, mapindex_id2name(sd->mapindex));
+		fprintf(logfp, "%s - %s[%d]\t%d\t%d(%c)\t%d\t%hu\t%s\t%hu,%hu\n", timestring, sd->status.name, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
 		fclose(logfp);
 	}
 }

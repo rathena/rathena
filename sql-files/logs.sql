@@ -150,8 +150,10 @@ CREATE TABLE IF NOT EXISTS `feedinglog` (
   `target_id` INT(11) NOT NULL,
   `target_class` SMALLINT(11) NOT NULL,
   `type` ENUM('P','H','O') NOT NULL, -- P: Pet, H: Homunculus, O: Other
+  `intimacy` INT(11) UNSIGNED NOT NULL,
   `item_id` SMALLINT(5) UNSIGNED NOT NULL,
-  `amount` INT(11) NOT NULL,
   `map` VARCHAR(11) NOT NULL,
+  `x` SMALLINT(5) UNSIGNED NOT NULL,
+  `y` SMALLINT(5) UNSIGNED NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE = MyISAM AUTO_INCREMENT = 1;
