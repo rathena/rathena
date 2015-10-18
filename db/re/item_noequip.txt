@@ -106,3 +106,51 @@
 // Zone 7 - Towns
 //----------------------------------------------------------------------------
 14529,2048	//Greed_Scroll
+
+//----------------------------------------------------------------------------
+// WoE TE Items - Only can be used in WoE TE maps
+// Assumed WOE TE maps are restricted zone 8.
+// TODO: &1 (Normal) is currently removed since if the map is restricted, it'll fail.
+//----------------------------------------------------------------------------
+//1299,4094	// TE_Woe_Katar
+//1319,4094	// TE_Woe_Axe
+//1399,4094	// TE_Woe_Two_Handed_Axe
+//1437,4094	// TE_Woe_Pike
+//1495,4094	// TE_Woe_Lance
+//1591,4094	// TE_Woe_Book
+//1667,4094	// TE_Woe_Staff
+//1834,4094	// TE_Woe_Fist
+//1932,4094	// TE_Woe_Guitar
+//1987,4094	// TE_Woe_Rope
+//2019,4094	// TE_Woe_Two_Hand_Staff
+//2178,4094	// TE_Woe_Buckler
+//2179,4094	// TE_Woe_Shield
+//2180,4094	// TE_Woe_Magic_Guard
+//2496,4094	// TE_Woe_Shoes
+//2497,4094	// TE_Woe_Boots
+//2498,4094	// TE_Woe_Magic_Sandal
+//2944,4094	// TE_Ring_Of_Protection
+//2945,4094	// TE_Ring_Of_Rage
+//2946,4094	// TE_Ring_Of_Defiance
+//11557,4094	// TE_White_Potion
+//11558,4094	// TE_White_Slim_Potion
+//13083,4094	// TE_Woe_Knife
+//13117,4094	// TE_Woe_Pistol
+//13184,4094	// TE_Woe_Rifle
+//13185,4094	// TE_Woe_Gatling
+//13186,4094	// TE_Woe_Shotgun
+//13187,4094	// TE_Woe_Grenade
+//13317,4094	// TE_Woe_Huuma
+//13439,4094	// TE_Woe_Sword
+//15062,4094	// TE_Woe_Coat
+//15063,4094	// TE_Woe_Chain_Mail
+//15064,4094	// TE_Woe_Mage_Coat
+//16025,4094	// TE_Woe_Mace
+//18118,4094	// TE_Woe_Bow
+//18732,4094	// TE_Woe_Cap
+//18733,4094	// TE_Woe_Bone_Helm
+//18734,4094	// TE_Woe_Magic_Eyes
+//20702,4094	// TE_Woe_Muffler
+//20703,4094	// TE_Woe_Manteau
+//20704,4094	// TE_Woe_Magic_Manteau
+//21006,4094	// TE_Woe_Two_Hand_Sword

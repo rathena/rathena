@@ -330,10 +330,16 @@
 5548:5766,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bBaseAtk,(.@r>10?10:.@r); bonus bMatk,(.@r>10?10:.@r); }
 5920:1659,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillUseSP,"AL_HEAL",6*.@r; bonus2 bSkillUseSP,"AB_CHEAL",10*.@r; bonus2 bSkillUseSP,"AB_HIGHNESSHEAL",14*.@r; }
 5920:18542,{ bonus bHealPower,2*getequiprefinerycnt(EQI_HEAD_TOP); }
+5966:2198,{ .@r = getequiprefinerycnt(EQI_HEAD_MID); if (.@r > 7) bonus2 bSkillCooldown,"WL_COMET",-20000+(.@r > 9 ? -20000 : 0); }
+5967:4152,{ bonus2 bAddItemGroupHealRate,IG_Juice,1000; }
+5967:4163,{ bonus bAspdRate,3; bonus bAspd,1; bonus bNoWeaponDamage,5; /* If weapon is bow & refine > 10 => ASPD +1 */ }
+5967:4015,{ bonus2 bSubEle,Ele_All,10; }
+5968:1647,{ if (BaseClass == Job_Acolyte) { bonus bHealPower,getequiprefinerycnt(EQI_HAND_R)*4; } }
 //9024:18832,{ bonus3 bAutoSpell,"BS_ADRENALINE",2,(GetPetRelationship >= 3)?15:10; }
 13027:15044,{ .@r = getequiprefinerycnt(EQI_ARMOR)?getequiprefinerycnt(EQI_ARMOR):1; bonus3 bAddMonsterDropItem,929,RC_DemiHuman,70*.@r; bonus3 bAddMonsterDropItem,970,RC_DemiHuman,50*.@r; bonus3 bAddMonsterDropItem,929,RC_Player,70*.@r; bonus3 bAddMonsterDropItem,970,RC_Player,50*.@r; bonus3 bAddMonsterDropItem,929,RC_Brute,70*.@r; bonus3 bAddMonsterDropItem,970,RC_Brute,50*.@r; }
 13034:13035,{ bonus bMaxSP,20; bonus bMaxHPRate,5; bonus bHit,10; bonus2 bAddSize,Size_Large,30; autobonus "{ bonus bAspdRate,100; }",1,7000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; }
 15041:18659,{ bonus bInt,3; bonus bStr,3; bonus bMdef,10; bonus bDefEle,Ele_Fire; bonus2 bAddEle,Ele_Earth,10; }
+15067:2950:20709:22012,{ bonus2 bExpAddRace,RC_All,30; }
 15068:20710,{ bonus bAgi,5; bonus bFlee,10; }
 15088:18816:18818,{ bonus bMatk,BaseLevel/3; bonus2 bExpAddClass,Class_All,5; }
 15088:18817:18819,{ bonus bBaseAtk,BaseLevel/3; bonus2 bExpAddClass,Class_All,5; }

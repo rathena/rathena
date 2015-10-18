@@ -1198,6 +1198,7 @@ IG_Blessing_Midgard_Lucky_Egg	448
 IG_Chronosian_Lucky_Egg	449
 IG_Sanctuary_Lucky_Egg	450
 IG_Cyborg_Lucky_Egg	451
+IG_Undine_Lucky_Egg	452
 
 SC_ALL	-1
 SC_NONE	-1
