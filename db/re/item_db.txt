@@ -1339,7 +1339,7 @@
 2179,TE_Woe_Shield,TE Woe Shield,4,0,,0,,25,,0,0x000444A2,63,2,32,1,40,1,,{ bonus bMdef,5; bonus bMaxHP,200; bonus2 bSubRace,RC_Player,20; },{},{}
 2180,TE_Woe_Magic_Guard,TE Woe Magic Guard,4,0,,0,,5,,0,0x00818315,63,2,32,1,40,1,,{ bonus bMdef,25; bonus bMaxSP,200; bonus2 bSubRace,RC_Player,10; },{},{}
 2181,Hervor,Hervor,4,10,,1500,,100,,0,0xFFFFFFFF,63,2,32,,1,,2,{ bonus bMdef,5; bonus2 bSubRace,RC_All,30; bonus bUnbreakableArmor,1; },{},{}
-2182,Hervor_Alvitr,Hervor Alvitr,4,0,,3000,,150,,0,0x000FDF80,56,2,32,1,100,0,,{ bonus bMdef,10; bonus bVit,20; bonus2 bSubRace,RC_Player,30; bonus bUnbreakableShield,1; /* Protection Light effect? */ },{},{}
+2182,Hervor_Alvitr,Hervor Alvitr,4,0,,3000,,150,,0,0x000FDF80,56,2,32,1,100,0,,{ bonus bMdef,10; bonus bVit,20; bonus2 bSubRace,RC_Player,30; bonus bUnbreakableShield,1; autobonus2 "{ sc_end SC_STUN; sc_end SC_SLEEP; sc_end SC_CURSE; sc_end SC_STONE; sc_end SC_POISON; sc_end SC_BLIND; sc_end SC_SILENCE; sc_end SC_BLEEDING; sc_end SC_CONFUSION; sc_end SC_FREEZE; bonus2 bResEff,Eff_Stun,10000; bonus2 bResEff,Eff_Sleep,10000; bonus2 bResEff,Eff_Curse,10000; bonus2 bResEff,Eff_Stone,10000; bonus2 bResEff,Eff_Poison,10000; bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Silence,10000; bonus2 bResEff,Eff_Bleeding,10000; bonus2 bResEff,Eff_Confusion,10000; bonus2 bResEff,Eff_Freeze,10000; }",10,60000,BF_SHORT; },{},{}
 2183,Impr_Angel's_Safeguard,Advanced Angelic Guard,4,10000,,400,,30,,1,0x00000001,63,2,32,,99,1,1,{ bonus2 bSubRace,RC_Demon,5; bonus2 bSubEle,Ele_All,5; bonus2 bSubEle,Ele_Neutral,-5; },{},{}
 2185,Magic_Reflect,Magic Reflect,4,10,,1000,,50,,1,0xFFFFFFFF,63,2,32,,99,1,3,{ bonus bMdef,10; bonus bMagicDamageReturn,3+((getrefine()>=9) ? 3 : 0); },{},{}
 2186,Great_Encyclopedia_Revision,Great Encyclopedia Revision,4,10,,200,0:5,50,,1,0x00810100,63,2,32,,99,1,4,{ bonus bInt,3; bonus bDex,2; .@r = getrefine(); bonus bCritical,3+((.@r >= 7) ? 2 : 0); if(.@r >= 9) bonus bMatk,5; },{},{}
@@ -9632,7 +9632,7 @@
 19051,Warrior_Moon_Cat,Warrior Moon Cat,4,20,,100,,5,,1,0xFFFFFFFF,63,2,256,,1,1,1308,{ /*Enables use of Level 1 Monster's Cry*/ bonus bAllStats,3; bonus2 bHPDrainRate,40,5; bonus2 bSPDrainRate,10,2; },{},{}
 19052,Sigruns_Wing,Rental Sigrun's Wing,4,10,,0,,2,,0,0xFFFFFFFF,63,2,512,,1,0,568,{ if (Class == Job_Swordman || Class == Job_Thief || Class == Job_Merchant || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Star_Gladiator2) bonus bAspd,1; else if (Class == Job_Mage || Class == Job_Acolyte || Class == Job_Ninja || Class == Job_Soul_Linker) { bonus bMatk,5; bonus bHealPower,2; } else if (Class == Job_Archer || Class == Job_Gunslinger) bonus bLongAtkRate,2; else if (Class == Job_Novice || Class == Job_SuperNovice) { bonus bMaxHP,120; bonus bMaxSP,60; } },{},{}
 19053,Fighter_Moon_Cat,Fighter Moon Cat,4,20,,100,,5,,1,0xFFFFFFFF,63,2,256,,1,1,1308,{ /*Enables use of Level 1 Monster's Cry*/ .@r = getrefine(); bonus bAllStats,3; bonus2 bAddEff,Eff_Stun,500+(.@r*100); },{},{}
-19082,Bio_Protector,Bio Protector,4,0,,500,,3,,0,0xFFFFFFFF,63,2,512,1,50,1,1366,{},{},{}
+19082,Bio_Protector,Bio Protector,4,0,,500,,3,,0,0xFFFFFFFF,63,2,512,1,50,1,1366,{ bonus bHit,10; bonus bVariableCastrate,-5; bonus bPerfectHitRate,5; },{},{}
 //===================================================================
 // Costume System
 //===================================================================
@@ -10017,10 +10017,10 @@
 20247,C_Fate_Of_Black_Hand,Costume Fate Of Black Hand,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1310,{},{},{}
 20271,C_Sunflower,Costume Sunflower,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,37,{},{},{}
 20272,C_Unicorn_Horn,Costume Unicorn Horn,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,42,{},{},{}
-20315,C_Analyze_Eye,C Analyze Eye,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,1,1,1,1351,{},{},{}
-20316,C_Seraph_Wing_Helm,C Seraph Wing Helm,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,1,1,1,1352,{},{},{}
-20324,C_Pigeon_Hat,C Pigeon Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,1,1,1,1362,{},{},{}
-20325,C_Little_Aquarium,C Little Aquarium,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,1,1,1,1363,{},{},{}
+20315,C_Analyze_Eye,Costume Analyze Eye,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,1,1,1,1351,{},{},{}
+20316,C_Seraph_Wing_Helm,Costume Seraph Wing Helm,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,1,1,1,1352,{},{},{}
+20324,C_Pigeon_Hat,Costume Pigeon Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,1,1,1,1362,{},{},{}
+20325,C_Little_Aquarium,Costume Little Aquarium,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,1,1,1,1363,{},{},{}
 //
 20500,T_Archangel_Wing,Archangel Wing,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,1,{ bonus bUnbreakableHelm,1; },{},{}
 20600,Fantastic_Aura,Fantastic Aura,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,0,{ /*TODO: View ID*/ bonus bUnbreakableHelm,1; },{},{}
