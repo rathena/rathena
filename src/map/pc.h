@@ -371,8 +371,12 @@ struct map_session_data {
 		unsigned short id;
 		short val;
 	} skillatk[MAX_PC_BONUS], skillusesprate[MAX_PC_BONUS], skillusesp[MAX_PC_BONUS], skillheal[MAX_PC_BONUS],
-		skillheal2[MAX_PC_BONUS], skillblown[MAX_PC_BONUS], skillcastrate[MAX_PC_BONUS], skillcooldown[MAX_PC_BONUS],
-		skillfixcast[MAX_PC_BONUS], skillvarcast[MAX_PC_BONUS], skillfixcastrate[MAX_PC_BONUS], subskill[MAX_PC_BONUS];
+		skillheal2[MAX_PC_BONUS], skillblown[MAX_PC_BONUS], skillcastrate[MAX_PC_BONUS],
+		skillfixcastrate[MAX_PC_BONUS], subskill[MAX_PC_BONUS];
+	struct s_skill_bonus_i32 {
+		uint16 id;
+		int32 val;
+	} skillcooldown[MAX_PC_BONUS], skillfixcast[MAX_PC_BONUS], skillvarcast[MAX_PC_BONUS];
 	struct s_regen {
 		short value;
 		int rate;

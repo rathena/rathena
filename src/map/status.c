@@ -3096,11 +3096,11 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->skillheal2)
 		+ sizeof(sd->skillblown)
 		+ sizeof(sd->skillcastrate)
+		+ sizeof(sd->skillfixcastrate)
+		+ sizeof(sd->subskill)
 		+ sizeof(sd->skillcooldown)
 		+ sizeof(sd->skillfixcast)
 		+ sizeof(sd->skillvarcast)
-		+ sizeof(sd->skillfixcastrate)
-		+ sizeof(sd->subskill)
 		+ sizeof(sd->hp_loss)
 		+ sizeof(sd->sp_loss)
 		+ sizeof(sd->hp_regen)
@@ -5818,7 +5818,7 @@ static signed short status_calc_flee2(struct block_list *bl, struct status_chang
 		return cap_value(flee2,10,SHRT_MAX);
 
 	if(sc->data[SC_INCFLEE2])
-		flee2 += sc->data[SC_INCFLEE2]->val1;
+		flee2 += sc->data[SC_INCFLEE2]->val2;
 	if(sc->data[SC_WHISTLE])
 		flee2 += sc->data[SC_WHISTLE]->val3*10;
 	if(sc->data[SC__UNLUCKY])
