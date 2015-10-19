@@ -1933,7 +1933,7 @@ struct status_data {
 	unsigned int
 		hp, sp,  // see status_cpy before adding members before hp and sp
 		max_hp, max_sp;
-	unsigned short
+	short
 		str, agi, vit, int_, dex, luk,
 		batk,
 #ifdef RENEWAL
