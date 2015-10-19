@@ -2955,7 +2955,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 {
 	static int calculating = 0; ///< Check for recursive call preemption. [Skotlex]
 	struct status_data *base_status; ///< Pointer to the player's base status
-	short bStr, bAgi, bVit, bInt_, bDex, bLuk; ///< Stat addition to the player's base status
+	short bStr = 0, bAgi = 0, bVit = 0, bInt_ = 0, bDex = 0, bLuk = 0; ///< Stat addition to the player's base status
 	const struct status_change *sc = &sd->sc;
 	struct s_skill b_skill[MAX_SKILL]; ///< Previous skill tree
 	int b_weight, b_max_weight, b_cart_weight_max, ///< Previous weight
@@ -3378,7 +3378,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 			continue;
 		switch(job_info[index].job_bonus[i]) {
 			case 1: bStr++; break;
-			case 2: bagi++; break;
+			case 2: bAgi++; break;
 			case 3: bVit++; break;
 			case 4: bInt_++; break;
 			case 5: bDex++; break;
@@ -3773,12 +3773,12 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	status_cpy(&sd->battle_status, base_status);
 
 	// Add to Battle Stats after copy
-	sd->battle_status->str += bStr;
-	sd->battle_status->agi += bAgi;
-	sd->battle_status->vit += bVit;
-	sd->battle_status->int_ += bInt_;
-	sd->battle_status->dex += bDex;
-	sd->battle_status->luk += bLuk;
+	sd->battle_status.str += bStr;
+	sd->battle_status.agi += bAgi;
+	sd->battle_status.vit += bVit;
+	sd->battle_status.int_ += bInt_;
+	sd->battle_status.dex += bDex;
+	sd->battle_status.luk += bLuk;
 
 // ----- CLIENT-SIDE REFRESH -----
 	if(!sd->bl.prev) {

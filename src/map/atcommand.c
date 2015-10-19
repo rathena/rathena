@@ -2506,7 +2506,7 @@ ACMD_FUNC(param)
 	uint8 i;
 	int value = 0;
 	const char* param[] = { "str", "agi", "vit", "int", "dex", "luk" };
-	short new_value, *status[6], max_status[6];
+	unsigned short new_value, *status[6], max_status[6];
  	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
 
@@ -2573,7 +2573,7 @@ ACMD_FUNC(stat_all)
 {
 	int value = 0;
 	uint8 count, i;
-	short *status[PARAM_MAX], max_status[PARAM_MAX];
+	unsigned short *status[PARAM_MAX], max_status[PARAM_MAX];
  	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
 
