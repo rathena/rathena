@@ -335,7 +335,7 @@
 5920:18542,{ bonus bHealPower,2*getequiprefinerycnt(EQI_HEAD_TOP); }
 5966:2198,{ .@r = getequiprefinerycnt(EQI_HAND_L); if (.@r > 7) bonus2 bSkillCooldown,"WL_COMET",-20000+(.@r > 9 ? -20000 : 0); }
 5967:4152,{ bonus2 bAddItemGroupHealRate,IG_Juice,1000; }
-5967:4163,{ bonus bAspdRate,3; bonus bAspd,1; bonus bNoWeaponDamage,5; /* If weapon is bow & refine > 10 => ASPD +1 */ }
+5967:4163,{ bonus bAspdRate,3; bonus bAspd,1; bonus bNoWeaponDamage,5; if (getequiprefinerycnt(EQI_HAND_R) > 10 && getiteminfo(getequipid(EQI_HAND_R),11) == 11) bonus bAspd,1; }
 5967:4015,{ bonus2 bSubEle,Ele_All,10; }
 5968:1647,{ if (BaseClass == Job_Acolyte) { bonus bHealPower,getequiprefinerycnt(EQI_HAND_R)*4; } }
 //9024:18832,{ bonus3 bAutoSpell,"BS_ADRENALINE",2,(GetPetRelationship >= 3)?15:10; }
