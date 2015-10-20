@@ -7745,7 +7745,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	if( sc->data[SC_REFRESH] ) {
 		if( type >= SC_COMMON_MIN && type <= SC_COMMON_MAX) // Confirmed.
-			return 0; // Immune to status ailements
+			return 0; // Immune to status ailments
 		switch( type ) {
 			case SC_DEEPSLEEP:
 			case SC_BURNING:
@@ -7763,9 +7763,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				return 0;
 		}
 	}
-	else if( sc->data[SC_INSPIRATION] ) {
+	if( sc->data[SC_INSPIRATION] ) {
 		if( type >= SC_COMMON_MIN && type <= SC_COMMON_MAX )
-			return 0; // Immune to status ailements
+			return 0; // Immune to status ailments
 		switch( type ) {
 			case SC_BURNING:
 			case SC_FREEZING:
@@ -7791,9 +7791,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				return 0;
 		}
 	}
-	else if( sc->data[SC_KINGS_GRACE] ) {
+	if( sc->data[SC_KINGS_GRACE] ) {
 		if( type >= SC_COMMON_MIN && type <= SC_COMMON_MAX )
-			return 0; // Immune to status ailements
+			return 0; // Immune to status ailments
 		switch( type ) {
 			case SC_HALLUCINATION:
 			case SC_BURNING:
@@ -7806,8 +7806,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		}
 	}
 
-	sd = BL_CAST(BL_PC, bl);
-
 	// Adjust tick according to status resistances
 	if( !(flag&(SCSTART_NOAVOID|SCSTART_LOADED)) ) {
 		tick = status_get_sc_def(src, bl, type, rate, tick, flag);
@@ -7815,6 +7813,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0;
 	}
 
+	sd = BL_CAST(BL_PC, bl);
 	vd = status_get_viewdata(bl);
 
 	undead_flag = battle_check_undead(status->race,status->def_ele);
