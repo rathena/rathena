@@ -259,7 +259,7 @@ const char *get_git_hash (void) {
 
 	if( (fp = fopen(".git/"GIT_ORIGIN, "r")) != NULL ) {
 		char line[64];
-		char *rev = malloc(sizeof(char) * 50);
+		char *rev = (char*)malloc(sizeof(char) * 50);
 
 		if( fgets(line, sizeof(line), fp) && sscanf(line, "%40s", rev) )
 			snprintf(GitHash, sizeof(GitHash), "%s", rev);
@@ -325,10 +325,13 @@ int main (int argc, char **argv)
 			int n=0;
 			SERVER_NAME = ++p1;
 			n = p1-argv[0]; //calc dir name len
-			pwd = safestrncpy(malloc(n + 1), argv[0], n);
+			pwd = safestrncpy((char*)malloc(n + 1), argv[0], n);
 			if(chdir(pwd) != 0)
 				ShowError("Couldn't change working directory to %s for %s, runtime will probably fail",pwd,SERVER_NAME);
 			free(pwd);
+		}else{
+			// On Windows the .bat files have the executeable names as parameters without any path seperator [Lemongrass]
+			SERVER_NAME = argv[0];
 		}
 	}
 
