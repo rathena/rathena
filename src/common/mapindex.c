@@ -33,7 +33,7 @@ const char* mapindex_getmapname(const char* string, char* output) {
 	if (len >= 4 && stricmp(&string[len-4], ".gat") == 0)
 		len -= 4; // strip .gat extension
 
-	len = min(len, MAP_NAME_LENGTH-1);
+	len = zmin(len, MAP_NAME_LENGTH-1);
 	safestrncpy(dest, string, len+1);
 	memset(&dest[len], '\0', MAP_NAME_LENGTH-len);
 

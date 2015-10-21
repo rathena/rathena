@@ -1433,7 +1433,7 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 #else
 	WBUFW(buf,35)=cap_value(status->rhw.atk2+status->batk, 0, INT16_MAX);
 #endif
-	WBUFW(buf,37)=min(status->matk_max, INT16_MAX); //FIXME capping to INT16 here is too late
+	WBUFW(buf,37)=i16min(status->matk_max, INT16_MAX); //FIXME capping to INT16 here is too late
 	WBUFW(buf,39)=status->hit;
 	if (battle_config.hom_setting&HOMSET_DISPLAY_LUK)
 		WBUFW(buf,41)=status->luk/3 + 1;	//crit is a +1 decimal value! Just display purpose.[Vicious]
@@ -16869,14 +16869,14 @@ void clif_search_store_info_ack(struct map_session_data* sd)
 	unsigned int i, start, end;
 
 	start = sd->searchstore.pages*SEARCHSTORE_RESULTS_PER_PAGE;
-	end   = min(sd->searchstore.count, start+SEARCHSTORE_RESULTS_PER_PAGE);
+	end   = umin(sd->searchstore.count, start+SEARCHSTORE_RESULTS_PER_PAGE);
 
 	WFIFOHEAD(fd,7+(end-start)*blocksize);
 	WFIFOW(fd,0) = 0x836;
 	WFIFOW(fd,2) = 7+(end-start)*blocksize;
 	WFIFOB(fd,4) = !sd->searchstore.pages;
 	WFIFOB(fd,5) = searchstore_querynext(sd);
-	WFIFOB(fd,6) = (unsigned char)min(sd->searchstore.uses, UINT8_MAX);
+	WFIFOB(fd,6) = (unsigned char)umin(sd->searchstore.uses, UINT8_MAX);
 
 	for( i = start; i < end; i++ ) {
 		struct s_search_store_info_item* ssitem = &sd->searchstore.items[i];
@@ -16944,7 +16944,7 @@ void clif_open_search_store_info(struct map_session_data* sd)
 	WFIFOW(fd,0) = 0x83a;
 	WFIFOW(fd,2) = sd->searchstore.effect;
 #if PACKETVER > 20100701
-	WFIFOB(fd,4) = (unsigned char)min(sd->searchstore.uses, UINT8_MAX);
+	WFIFOB(fd,4) = (unsigned char)umin(sd->searchstore.uses, UINT8_MAX);
 #endif
 	WFIFOSET(fd,packet_len(0x83a));
 }

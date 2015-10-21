@@ -554,20 +554,20 @@ void pc_inventory_rentals(struct map_session_data *sd)
 		else {
 			expire_tick = (unsigned int)(sd->status.inventory[i].expire_time - time(NULL)) * 1000;
 			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, (int)(expire_tick / 1000));
-			next_tick = min(expire_tick, next_tick);
+			next_tick = umin(expire_tick, next_tick);
 			c++;
 		}
 	}
 
 	if( c > 0 ) // min(next_tick,3600000) 1 hour each timer to keep announcing to the owner, and to avoid a but with rental time > 15 days
-		sd->rental_timer = add_timer(gettick() + min(next_tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
+		sd->rental_timer = add_timer(gettick() + umin(next_tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
 	else
 		sd->rental_timer = INVALID_TIMER;
 }
 
-void pc_inventory_rental_add(struct map_session_data *sd, int seconds)
+void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
 {
-	int tick = seconds * 1000;
+	unsigned int tick = seconds * 1000;
 
 	if( sd == NULL )
 		return;
@@ -581,7 +581,7 @@ void pc_inventory_rental_add(struct map_session_data *sd, int seconds)
 			sd->rental_timer = add_timer(gettick() + tick, pc_inventory_rental_end, sd->bl.id, 0);
 		}
 	} else
-		sd->rental_timer = add_timer(gettick() + min(tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
+		sd->rental_timer = add_timer(gettick() + umin(tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
 }
 
 /**
@@ -2051,14 +2051,14 @@ static void pc_bonus_autospell_onskill(struct s_autospell *spell, int max, short
 /**
  * Add inflict effect bonus for player while attacking/atatcked
  * @param effect Effect array
- * @param max Max array
+ * @param pmax Max array
  * @param sc SC/Effect type
  * @param rate Success chance
  * @param arrow_rate success chance if bonus comes from arrow-type item
  * @param flag Target flag
  * @param duration Duration. If 0 use default duration lookup for associated skill with level 7
  **/
-static void pc_bonus_addeff(struct s_addeffect* effect, int max, enum sc_type sc, short rate, short arrow_rate, unsigned char flag, unsigned int duration)
+static void pc_bonus_addeff(struct s_addeffect* effect, int pmax, enum sc_type sc, short rate, short arrow_rate, unsigned char flag, unsigned int duration)
 {
 	uint16 i;
 
@@ -2070,18 +2070,18 @@ static void pc_bonus_addeff(struct s_addeffect* effect, int max, enum sc_type sc
 		flag |= ATF_WEAPON; //Default type: weapon.
 
 	if (!duration)
-		duration = skill_get_time2(status_sc2skill(sc),7);
+		duration =(unsigned int) skill_get_time2(status_sc2skill(sc),7);
 
-	for (i = 0; i < max && effect[i].flag; i++) {
+	for (i = 0; i < pmax && effect[i].flag; i++) {
 		if (effect[i].sc == sc && effect[i].flag == flag) {
 			effect[i].rate += rate;
 			effect[i].arrow_rate += arrow_rate;
-			effect[i].duration = max(effect[i].duration, duration);
+			effect[i].duration = umax(effect[i].duration, duration);
 			return;
 		}
 	}
-	if (i == max) {
-		ShowWarning("pc_bonus_addeff: Reached max (%d) number of add effects per character!\n", max);
+	if (i == pmax) {
+		ShowWarning("pc_bonus_addeff: Reached max (%d) number of add effects per character!\n", pmax);
 		return;
 	}
 	effect[i].sc = sc;
@@ -2094,28 +2094,28 @@ static void pc_bonus_addeff(struct s_addeffect* effect, int max, enum sc_type sc
 /**
  * Add inflict effect bonus for player while attacking using skill
  * @param effect Effect array
- * @param max Max array
+ * @param pmax Max array
  * @param sc SC/Effect type
  * @param rate Success chance
  * @param flag Target flag
  * @param duration Duration. If 0 use default duration lookup for associated skill with level 7
  **/
-static void pc_bonus_addeff_onskill(struct s_addeffectonskill* effect, int max, enum sc_type sc, short rate, short skill_id, unsigned char target, unsigned int duration)
+static void pc_bonus_addeff_onskill(struct s_addeffectonskill* effect, int pmax, enum sc_type sc, short rate, short skill_id, unsigned char target, unsigned int duration)
 {
 	uint8 i;
 
 	if (!duration)
-		duration = skill_get_time2(status_sc2skill(sc),7);
+		duration =(unsigned int) skill_get_time2(status_sc2skill(sc),7);
 
-	for( i = 0; i < max && effect[i].skill_id; i++ ) {
+	for( i = 0; i < pmax && effect[i].skill_id; i++ ) {
 		if( effect[i].sc == sc && effect[i].skill_id == skill_id && effect[i].target == target ) {
 			effect[i].rate += rate;
-			effect[i].duration = max(effect[i].duration, duration);
+			effect[i].duration = umax(effect[i].duration, duration);
 			return;
 		}
 	}
-	if( i == max ) {
-		ShowWarning("pc_bonus_addeff_onskill: Reached max (%d) number of add effects on skill per character!\n", max);
+	if( i == pmax ) {
+		ShowWarning("pc_bonus_addeff_onskill: Reached max (%d) number of add effects on skill per character!\n", pmax);
 		return;
 	}
 	effect[i].sc = sc;
@@ -4413,7 +4413,7 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
 			pc_delitem(sd, i, sd->status.inventory[i].amount, 1, 0, LOG_TYPE_OTHER);
 		} else {
-			int seconds = (int)( item->expire_time - time(NULL) );
+			unsigned int seconds = ( item->expire_time - time(NULL) );
 			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, seconds);
 			pc_inventory_rental_add(sd, seconds);
 		}
@@ -5455,7 +5455,7 @@ bool pc_memo(struct map_session_data* sd, int pos)
 		uint8 i;
 		// prevent memo-ing the same map multiple times
 		ARR_FIND( 0, MAX_MEMOPOINTS, i, sd->status.memo_point[i].map == map_id2index(sd->bl.m) );
-		memmove(&sd->status.memo_point[1], &sd->status.memo_point[0], (min(i,MAX_MEMOPOINTS-1))*sizeof(struct point));
+		memmove(&sd->status.memo_point[1], &sd->status.memo_point[0], (u8min(i,MAX_MEMOPOINTS-1))*sizeof(struct point));
 		pos = 0;
 	}
 
@@ -7461,7 +7461,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			if (base_penalty > 0){ //recheck after altering to speedup
 				if (battle_config.pk_mode && src && src->type==BL_PC)
 					base_penalty*=2;
-				sd->status.base_exp -= min(sd->status.base_exp, base_penalty);
+				sd->status.base_exp -= u32min(sd->status.base_exp, base_penalty);
 				clif_updatestatus(sd,SP_BASEEXP);
 			}
 		}
@@ -7474,7 +7474,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			if(job_penalty) {
 				if (battle_config.pk_mode && src && src->type==BL_PC)
 					job_penalty*=2;
-				sd->status.job_exp -= min(sd->status.job_exp, job_penalty);
+				sd->status.job_exp -= u32min(sd->status.job_exp, job_penalty);
 				clif_updatestatus(sd,SP_JOBEXP);
 			}
 		}

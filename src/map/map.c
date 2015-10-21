@@ -565,10 +565,10 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_lis
 	va_list ap;
 
 	m = center->m;
-	x0 = max(center->x - range, 0);
-	y0 = max(center->y - range, 0);
-	x1 = min(center->x + range, map[ m ].xs - 1);
-	y1 = min(center->y + range, map[ m ].ys - 1);
+	x0 = i16max(center->x - range, 0);
+	y0 = i16max(center->y - range, 0);
+	x1 = i16min(center->x + range, map[ m ].xs - 1);
+	y1 = i16min(center->y + range, map[ m ].ys - 1);
 
 	if ( type&~BL_MOB )
 		for ( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
@@ -633,10 +633,10 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
 	if ( m < 0 )
 		return 0;
 
-	x0 = max(center->x-range, 0);
-	y0 = max(center->y-range, 0);
-	x1 = min(center->x+range, map[m].xs-1);
-	y1 = min(center->y+range, map[m].ys-1);
+	x0 = i16max(center->x-range, 0);
+	y0 = i16max(center->y-range, 0);
+	x1 = i16min(center->x+range, map[m].xs-1);
+	y1 = i16min(center->y+range, map[m].ys-1);
 
 	if ( type&~BL_MOB )
 		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
@@ -707,10 +707,10 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0
 	if ( y1 < y0 )
 		swap(y0, y1);
 
-	x0 = max(x0, 0);
-	y0 = max(y0, 0);
-	x1 = min(x1, map[ m ].xs - 1);
-	y1 = min(y1, map[ m ].ys - 1);
+	x0 = i16max(x0, 0);
+	y0 = i16max(y0, 0);
+	x1 = i16min(x1, map[ m ].xs - 1);
+	y1 = i16min(y1, map[ m ].ys - 1);
 	if ( type&~BL_MOB )
 		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ )
 			for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ )
@@ -755,10 +755,10 @@ int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_li
 	va_list ap;
 
 	m = center->m;
-	x0 = max(center->x - range, 0);
-	y0 = max(center->y - range, 0);
-	x1 = min(center->x + range, map[ m ].xs - 1);
-	y1 = min(center->y + range, map[ m ].ys - 1);
+	x0 = i16max(center->x - range, 0);
+	y0 = i16max(center->y - range, 0);
+	x1 = i16min(center->x + range, map[ m ].xs - 1);
+	y1 = i16min(center->y + range, map[ m ].ys - 1);
 
 	if ( type&~BL_MOB )
 		for ( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
@@ -823,10 +823,10 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 	if ( y1 < y0 )
 		swap(y0, y1);
 
-	x0 = max(x0, 0);
-	y0 = max(y0, 0);
-	x1 = min(x1, map[ m ].xs - 1);
-	y1 = min(y1, map[ m ].ys - 1);
+	x0 = i16max(x0, 0);
+	y0 = i16max(y0, 0);
+	x1 = i16min(x1, map[ m ].xs - 1);
+	y1 = i16min(y1, map[ m ].ys - 1);
 
 	if ( type&~BL_MOB )
 		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ )
@@ -872,7 +872,7 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 	int returnCount = 0;  //total sum of returned values of func() [Skotlex]
 	struct block_list *bl;
 	int blockcount = bl_list_count, i;
-	int x0, x1, y0, y1;
+	int16 x0, x1, y0, y1;
 	va_list ap;
 
 	if ( !range ) return 0;
@@ -904,10 +904,10 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 				x1 = x0 + dx - 1;
 		}
 
-		x0 = max(x0, 0);
-		y0 = max(y0, 0);
-		x1 = min(x1, map[ m ].xs - 1);
-		y1 = min(y1, map[ m ].ys - 1);
+		x0 = i16max(x0, 0);
+		y0 = i16max(y0, 0);
+		x1 = i16min(x1, map[ m ].xs - 1);
+		y1 = i16min(y1, map[ m ].ys - 1);
 
 		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
 			for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {
@@ -931,11 +931,10 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 			}
 		}
 	} else { // Diagonal movement
-
-		x0 = max(x0, 0);
-		y0 = max(y0, 0);
-		x1 = min(x1, map[ m ].xs - 1);
-		y1 = min(y1, map[ m ].ys - 1);
+		x0 = i16max(x0, 0);
+		y0 = i16max(y0, 0);
+		x1 = i16min(x1, map[ m ].xs - 1);
+		y1 = i16min(y1, map[ m ].ys - 1);
 
 		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
 			for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {

@@ -1160,7 +1160,7 @@ int map_night_timer(int tid, unsigned int tick, int id, intptr_t data); // by [y
 // Rental System
 void pc_inventory_rentals(struct map_session_data *sd);
 void pc_inventory_rental_clear(struct map_session_data *sd);
-void pc_inventory_rental_add(struct map_session_data *sd, int seconds);
+void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds);
 void pc_rental_expire(struct map_session_data *sd, int i);
 
 int pc_read_motd(void); // [Valaris]

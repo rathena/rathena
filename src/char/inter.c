@@ -1040,7 +1040,7 @@ int mapif_parse_WisRequest(int fd)
 		// to be sure of the correct name, rewrite it
 		Sql_GetData(sql_handle, 0, &data, &len);
 		memset(name, 0, NAME_LENGTH);
-		memcpy(name, data, min(len, NAME_LENGTH));
+		memcpy(name, data, zmin(len, NAME_LENGTH));
 		// if source is destination, don't ask other servers.
 		if( strncmp((const char*)RFIFOP(fd,4), name, NAME_LENGTH) == 0 )
 		{

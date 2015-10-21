@@ -567,7 +567,7 @@ void do_init_vending_autotrade(void)
 				Sql_GetData(mmysql_handle, 1, &data, NULL); at->account_id = atoi(data);
 				Sql_GetData(mmysql_handle, 2, &data, NULL); at->char_id = atoi(data);
 				Sql_GetData(mmysql_handle, 3, &data, NULL); at->sex = (data[0] == 'F') ? SEX_FEMALE : SEX_MALE;
-				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(at->title, data, min(len + 1, MESSAGE_SIZE));
+				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(at->title, data, zmin(len + 1, MESSAGE_SIZE));
 				Sql_GetData(mmysql_handle, 5, &data, NULL); at->dir = atoi(data);
 				Sql_GetData(mmysql_handle, 6, &data, NULL); at->head_dir = atoi(data);
 				Sql_GetData(mmysql_handle, 7, &data, NULL); at->sit = atoi(data);

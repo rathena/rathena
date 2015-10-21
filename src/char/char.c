@@ -1550,7 +1550,7 @@ int char_delete_char_sql(uint32 char_id){
 	Sql_GetData(sql_handle, 8, &data, NULL); mother_id = atoi(data);
 	Sql_GetData(sql_handle, 9, &data, NULL); elemental_id = atoi(data);
 
-	Sql_EscapeStringLen(sql_handle, esc_name, name, min(len, NAME_LENGTH));
+	Sql_EscapeStringLen(sql_handle, esc_name, name, zmin(len, NAME_LENGTH));
 	Sql_FreeResult(sql_handle);
 
 	//check for config char del condition [Lupus]
@@ -1715,16 +1715,16 @@ int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 
 	buf = WBUFP(buffer,0);
 	WBUFL(buf,0) = p->char_id;
-	WBUFL(buf,4) = min(p->base_exp, INT32_MAX);
+	WBUFL(buf,4) = umin(p->base_exp, INT32_MAX);
 	WBUFL(buf,8) = p->zeny;
-	WBUFL(buf,12) = min(p->job_exp, INT32_MAX);
+	WBUFL(buf,12) = umin(p->job_exp, INT32_MAX);
 	WBUFL(buf,16) = p->job_level;
 	WBUFL(buf,20) = 0; // probably opt1
 	WBUFL(buf,24) = 0; // probably opt2
 	WBUFL(buf,28) = p->option;
 	WBUFL(buf,32) = p->karma;
 	WBUFL(buf,36) = p->manner;
-	WBUFW(buf,40) = min(p->status_point, INT16_MAX);
+	WBUFW(buf,40) = umin(p->status_point, INT16_MAX);
 	WBUFL(buf,42) = p->hp;
 	WBUFL(buf,46) = p->max_hp;
 	offset+=4;
@@ -1745,7 +1745,7 @@ int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	WBUFW(buf,56) = p->option&(0x20|0x80000|0x100000|0x200000|0x400000|0x800000|0x1000000|0x2000000|0x4000000|0x8000000) ? 0 : p->weapon;
 
 	WBUFW(buf,58) = p->base_level;
-	WBUFW(buf,60) = min(p->skill_point, INT16_MAX);
+	WBUFW(buf,60) = umin(p->skill_point, INT16_MAX);
 	WBUFW(buf,62) = p->head_bottom;
 	WBUFW(buf,64) = p->shield;
 	WBUFW(buf,66) = p->head_top;
@@ -1753,12 +1753,12 @@ int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	WBUFW(buf,70) = p->hair_color;
 	WBUFW(buf,72) = p->clothes_color;
 	memcpy(WBUFP(buf,74), p->name, NAME_LENGTH);
-	WBUFB(buf,98) = min(p->str, UINT8_MAX);
-	WBUFB(buf,99) = min(p->agi, UINT8_MAX);
-	WBUFB(buf,100) = min(p->vit, UINT8_MAX);
-	WBUFB(buf,101) = min(p->int_, UINT8_MAX);
-	WBUFB(buf,102) = min(p->dex, UINT8_MAX);
-	WBUFB(buf,103) = min(p->luk, UINT8_MAX);
+	WBUFB(buf,98) = u16min(p->str, UINT8_MAX);
+	WBUFB(buf,99) = u16min(p->agi, UINT8_MAX);
+	WBUFB(buf,100) = u16min(p->vit, UINT8_MAX);
+	WBUFB(buf,101) = u16min(p->int_, UINT8_MAX);
+	WBUFB(buf,102) = u16min(p->dex, UINT8_MAX);
+	WBUFB(buf,103) = u16min(p->luk, UINT8_MAX);
 	WBUFW(buf,104) = p->slot;
 	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
 	offset += 2;
@@ -1956,7 +1956,7 @@ void char_read_fame_list(void)
 		smith_fame_list[i].fame = atoi(data);
 		// name
 		Sql_GetData(sql_handle, 2, &data, &len);
-		memcpy(smith_fame_list[i].name, data, min(len, NAME_LENGTH));
+		memcpy(smith_fame_list[i].name, data, zmin(len, NAME_LENGTH));
 	}
 	// Build Alchemist ranking list
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_ALCHEMIST, JOB_CREATOR, JOB_BABY_ALCHEMIST, JOB_GENETIC, JOB_GENETIC_T, JOB_BABY_GENETIC, fame_list_size_chemist) )
@@ -1971,7 +1971,7 @@ void char_read_fame_list(void)
 		chemist_fame_list[i].fame = atoi(data);
 		// name
 		Sql_GetData(sql_handle, 2, &data, &len);
-		memcpy(chemist_fame_list[i].name, data, min(len, NAME_LENGTH));
+		memcpy(chemist_fame_list[i].name, data, zmin(len, NAME_LENGTH));
 	}
 	// Build Taekwon ranking list
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_TAEKWON, fame_list_size_taekwon) )
@@ -1986,7 +1986,7 @@ void char_read_fame_list(void)
 		taekwon_fame_list[i].fame = atoi(data);
 		// name
 		Sql_GetData(sql_handle, 2, &data, &len);
-		memcpy(taekwon_fame_list[i].name, data, min(len, NAME_LENGTH));
+		memcpy(taekwon_fame_list[i].name, data, zmin(len, NAME_LENGTH));
 	}
 	Sql_FreeResult(sql_handle);
 }

@@ -1097,10 +1097,10 @@ int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range)
 	int xs,ys;
 
 	if (range < 0) return 0;
-	x0 = max(x-range, 0);
-	y0 = max(y-range, 0);
-	x1 = min(x+range, map[m].xs-1);
-	y1 = min(y+range, map[m].ys-1);
+	x0 = i16max(x-range, 0);
+	y0 = i16max(y-range, 0);
+	x1 = i16min(x+range, map[m].xs-1);
+	y1 = i16min(y+range, map[m].ys-1);
 
 	//First check for npc_cells on the range given
 	i = 0;

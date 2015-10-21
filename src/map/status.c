@@ -2918,30 +2918,30 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
  * @return max The max value of HP or SP
  */
 static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP) {
-	double max = 0;
+	double dmax = 0;
 	uint16 idx, level, job_id;
 
 	nullpo_ret(sd);
 
 	job_id = pc_mapid2jobid(sd->class_,sd->status.sex);
 	idx = pc_class2idx(job_id);
-	level = max(sd->status.base_level,1);
+	level = umax(sd->status.base_level,1);
 
 	if (isHP) { //Calculates MaxHP
-		max = job_info[idx].base_hp[level-1] * (1 + (max(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:1);
-		max += status_get_hpbonus(&sd->bl,STATUS_BONUS_FIX);
-		max += (int64)(max * status_get_hpbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
+		dmax = job_info[idx].base_hp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:1);
+		dmax += status_get_hpbonus(&sd->bl,STATUS_BONUS_FIX);
+		dmax += (int64)(dmax * status_get_hpbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
 	else { //Calculates MaxSP
-		max = job_info[idx].base_sp[level-1] * (1 + (max(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:1);
-		max += status_get_spbonus(&sd->bl,STATUS_BONUS_FIX);
-		max += (int64)(max * status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
+		dmax = job_info[idx].base_sp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:1);
+		dmax += status_get_spbonus(&sd->bl,STATUS_BONUS_FIX);
+		dmax += (int64)(dmax * status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
 
 	//Make sure it's not negative before casting to unsigned int
-	if(max < 1) max = 1;
+	if(dmax < 1) dmax = 1;
 
-	return cap_value((unsigned int)max,1,UINT_MAX);
+	return cap_value((unsigned int)dmax,1,UINT_MAX);
 }
 
 /**
@@ -4238,7 +4238,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 	// Can't move
 	if( flag&SCS_NOMOVE ) {
 		if( !(flag&SCS_NOMOVECOND) )
-			sc->cant.move += ( start ? 1 : -1 );
+			sc->cant.move += ( start ? 1 : ((sc->cant.move)? -1:0) );
 		else if(
 				     (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
 				  || (sc->data[SC_BASILICA] && sc->data[SC_BASILICA]->val4 == bl->id) // Basilica caster cannot move
@@ -4247,8 +4247,7 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 				  || (sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 < 3)
 				  || (sc->data[SC_MAGNETICFIELD] && sc->data[SC_MAGNETICFIELD]->val2 != bl->id)
 				 )
-			sc->cant.move += ( start ? 1 : -1 );
-		sc->cant.move = max(sc->cant.move,0); // safecheck
+			sc->cant.move += ( start ? 1 : ((sc->cant.move)? -1:0) );
 	}
 
 	// Can't use skills
@@ -4564,7 +4563,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			if(battle_config.hp_rate != 100)
 				status->max_hp = (unsigned int)(battle_config.hp_rate * (status->max_hp/100.));
 
-			status->max_hp = min(status->max_hp,(unsigned int)battle_config.max_hp);
+			status->max_hp = umin(status->max_hp,(unsigned int)battle_config.max_hp);
 		}
 		else
 			status->max_hp = status_calc_maxhp(bl, b_status->max_hp);
@@ -4582,7 +4581,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			if(battle_config.sp_rate != 100)
 				status->max_sp = (unsigned int)(battle_config.sp_rate * (status->max_sp/100.));
 
-			status->max_sp = min(status->max_sp,(unsigned int)battle_config.max_sp);
+			status->max_sp = umin(status->max_sp,(unsigned int)battle_config.max_sp);
 		}
 		else
 			status->max_sp = status_calc_maxsp(bl, b_status->max_sp);

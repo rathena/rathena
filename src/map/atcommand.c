@@ -3322,11 +3322,11 @@ ACMD_FUNC(lostskill)
  *------------------------------------------*/
 ACMD_FUNC(spiritball)
 {
-	int max_spiritballs;
+	uint32 max_spiritballs;
 	int number;
 	nullpo_retr(-1, sd);
 
-	max_spiritballs = min(ARRAYLENGTH(sd->spirit_timer), 0x7FFF);
+	max_spiritballs = zmin(ARRAYLENGTH(sd->spirit_timer), 0x7FFF);
 
 	if( !message || !*message || (number = atoi(message)) < 0 || number > max_spiritballs )
 	{
@@ -3854,8 +3854,9 @@ ACMD_FUNC(partysharelvl) {
 	if(!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1322)); // Please enter an amount.
 		return -1;
-	} else
+	} else {
 		share_lvl = min(abs(atoi(message)),MAX_LEVEL);
+        }
 
 	if(intif_party_sharelvlupdate(share_lvl)) //Successfully updated
 		clif_displaymessage(fd, msg_txt(sd,1478)); // Party share level range has been changed successfully.

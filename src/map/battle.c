@@ -492,7 +492,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 	else
 		damage = damage + (damage * (ratio - 100) / 100);
 
-	return max(damage,0);
+	return i64max(damage,0);
 }
 
 /**
@@ -1470,7 +1470,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			if (flag & BF_LONG)
 				damage = damage * battle_config.pk_long_damage_rate / 100;
 		}
-		damage = max(damage,1);
+		damage = i64max(damage,1);
 	}
 
 	if(battle_config.skill_min_damage && damage > 0 && damage < div_) {
@@ -1550,7 +1550,7 @@ int64 battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int64
 			damage = damage * battle_config.bg_long_damage_rate / 100;
 	}
 
-	damage = max(damage,1); //min 1 damage
+	damage = i64max(damage,1); //min 1 damage
 	return damage;
 }
 
@@ -1619,7 +1619,7 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 		if (flag & BF_LONG)
 			damage = damage * battle_config.gvg_long_damage_rate / 100;
 	}
-	damage = max(damage,1);
+	damage = i64max(damage,1);
 	return damage;
 }
 
@@ -4478,7 +4478,6 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 
 	if (sd) {
 		int i = sd->ignore_def_by_race[tstatus->race] + sd->ignore_def_by_race[RC_ALL];
-
 		if (i) {
 			i = min(i,100); //cap it to 100 for 0 def min
 			def1 -= def1 * i / 100;
@@ -4487,9 +4486,8 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 
 		//Kagerou/Oboro Earth Charm effect +10% eDEF
 		if(sd->spiritcharm_type == CHARM_TYPE_LAND && sd->spiritcharm > 0) {
-			short i = 10 * sd->spiritcharm;
-
-			def1 = (def1 * (100 + i)) / 100;
+			short si = 10 * sd->spiritcharm;
+			def1 = (def1 * (100 + si)) / 100;
 		}
 	}
 
@@ -6665,7 +6663,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( !status_reflect && sd && sd->bonus.short_weapon_damage_return ) {
 			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
-			rdamage = max(rdamage,1);
+			rdamage = i64max(rdamage,1);
 		} else if( status_reflect && sc && sc->count ) {
 			if( sc->data[SC_REFLECTSHIELD] ) {
 				struct status_change_entry *sce_d;
@@ -6731,7 +6729,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 #ifdef RENEWAL
 		rdamage = cap_value(rdamage, 1, max_damage);
 #else
-		rdamage = max(rdamage,1);
+		rdamage = i64max(rdamage,1);
 #endif
 	}
 
