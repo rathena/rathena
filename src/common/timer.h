@@ -4,7 +4,7 @@
 #ifndef	_TIMER_H_
 #define	_TIMER_H_
 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 #include <time.h>
 
 #define DIFF_TICK(a,b) ((int)((a)-(b)))

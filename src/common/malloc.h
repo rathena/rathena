@@ -4,7 +4,7 @@
 #ifndef _MALLOC_H_
 #define _MALLOC_H_
 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 
 #define ALC_MARK __FILE__, __LINE__, __func__
 

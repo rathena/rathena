@@ -42,7 +42,7 @@
 #ifndef _DB_H_
 #define _DB_H_
 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 
 #include <stdarg.h>
 

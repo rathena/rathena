@@ -2,17 +2,17 @@
 // For more information, see LICENCE in the main folder
 
 #ifdef WIN32
-#include "../common/winapi.h"
+#include "winapi.h"
 #else
 #include <pthread.h>
 
 #endif
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/timer.h"
-#include "../common/mutex.h"
+#include "cbasetypes.h"
+#include "malloc.h"
+#include "showmsg.h"
+#include "timer.h"
+#include "mutex.h"
 
 struct ramutex{
 #ifdef WIN32

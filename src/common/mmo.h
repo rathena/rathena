@@ -5,8 +5,8 @@
 #define	_MMO_H_
 
 #include "cbasetypes.h"
-#include "../common/db.h"
 #include "../config/core.h"
+#include "db.h"
 #include <time.h>
 
 // server->client protocol version

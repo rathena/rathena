@@ -4,10 +4,10 @@
 #ifndef	_SOCKET_H_
 #define _SOCKET_H_
 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 
 #ifdef WIN32
-	#include "../common/winapi.h"
+	#include "winapi.h"
 	typedef long in_addr_t;
 #else
 	#include <sys/types.h>

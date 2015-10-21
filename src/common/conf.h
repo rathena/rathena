@@ -4,7 +4,7 @@
 #ifndef _CONF_H_
 #define _CONF_H_
 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 #include "../../3rdparty/libconfig/libconfig.h"
 
 int conf_read_file(config_t *config, const char *config_filename);

@@ -2,11 +2,11 @@
 // For more information, see LICENCE in the main folder
 
 #include "../config/core.h"
-#include "../common/core.h"
-#include "../common/mapindex.h"
-#include "../common/mmo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
+#include "core.h"
+#include "mapindex.h"
+#include "mmo.h"
+#include "showmsg.h"
+#include "strlib.h"
 
 #include <stdlib.h>
 

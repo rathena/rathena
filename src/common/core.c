@@ -19,7 +19,7 @@
 #ifndef _WIN32
 #include <unistd.h>
 #else
-#include "../common/winapi.h" // Console close event handling
+#include "winapi.h" // Console close event handling
 #include <direct.h> // _chdir
 #endif
 

@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/cbasetypes.h"
-#include "../common/showmsg.h"
+#include "cbasetypes.h"
+#include "showmsg.h"
 #include "socket.h"
 #include "utils.h"
 
@@ -11,7 +11,7 @@
 #include <math.h> // floor()
 
 #ifdef WIN32
-	#include "../common/winapi.h"
+	#include "winapi.h"
 	#ifndef F_OK
 		#define F_OK   0x0
 	#endif  /* F_OK */
