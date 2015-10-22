@@ -396,10 +396,13 @@ void SET_FUNCPOINTER(T1& var, T2 p)
 #define SET_FUNCPOINTER(var,p) (var) = (p)
 #endif
 
-//#ifndef max
-//#define max(a,b) (((a) > (b)) ? (a) : (b))
-//wish we could have template in C
+#ifdef max
+#undef max
+#endif
+
+#ifndef max
 static inline int max(int a, int b){ return (a > b) ? a : b; } //default is int
+#endif
 static inline int8 i8max(int8 a, int8 b){ return (a > b) ? a : b; }
 static inline int16 i16max(int16 a, int16 b){ return (a > b) ? a : b; }
 static inline int32 i32max(int32 a, int32 b){ return (a > b) ? a : b; }
@@ -410,12 +413,14 @@ static inline uint16 u16max(uint16 a, uint16 b){ return (a > b) ? a : b; }
 static inline uint32 u32max(uint32 a, uint32 b){ return (a > b) ? a : b; }
 static inline uint64 u64max(uint64 a, uint64 b){ return (a > b) ? a : b; }
 static inline size_t zmax(size_t a, size_t b){ return (a > b) ? a : b; } //cause those varie
-//#endif
 
-//#ifndef min
-//#define min(a,b) (((a) < (b)) ? (a) : (b))
-//#endif
+#ifdef min
+#undef min
+#endif
+
+#ifndef min
 static inline int min(int a, int b){ return (a < b) ? a : b; } //default is int
+#endif
 static inline int8 i8min(int8 a, int8 b){ return (a < b) ? a : b; }
 static inline int16 i16min(int16 a, int16 b){ return (a < b) ? a : b; }
 static inline int32 i32min(int32 a, int32 b){ return (a < b) ? a : b; }

@@ -4413,7 +4413,7 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
 			pc_delitem(sd, i, sd->status.inventory[i].amount, 1, 0, LOG_TYPE_OTHER);
 		} else {
-			unsigned int seconds = ( item->expire_time - time(NULL) );
+			unsigned int seconds = (unsigned int)( item->expire_time - time(NULL) );
 			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, seconds);
 			pc_inventory_rental_add(sd, seconds);
 		}
