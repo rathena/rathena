@@ -2955,7 +2955,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 {
 	static int calculating = 0; ///< Check for recursive call preemption. [Skotlex]
 	struct status_data *base_status; ///< Pointer to the player's base status
-	short bStr = 0, bAgi = 0, bVit = 0, bInt_ = 0, bDex = 0, bLuk = 0; ///< Stat addition to the player's base status
+	short bStr = 0, bAgi = 0, bVit = 0, bInt_ = 0, bDex = 0, bLuk = 0; ///< Stat addition to the player's battle status
 	const struct status_change *sc = &sd->sc;
 	struct s_skill b_skill[MAX_SKILL]; ///< Previous skill tree
 	int b_weight, b_max_weight, b_cart_weight_max, ///< Previous weight
@@ -4296,11 +4296,16 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
  */
 void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 {
-	const struct status_data *b_status = status_get_base_status(bl);
+	const struct status_data *b_status;
 	struct status_data *status = status_get_status_data(bl);
 	struct status_change *sc = status_get_sc(bl);
 	TBL_PC *sd = BL_CAST(BL_PC,bl);
 	int temp;
+
+	if (bl->type == BL_PC)
+		b_status = &sd->battle_status;
+	else
+		b_status = status_get_base_status(bl);
 
 	if (!b_status || !status)
 		return;
