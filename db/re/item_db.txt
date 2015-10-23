@@ -9856,8 +9856,7 @@
 19876,C_Bunny_Top_Hat,Costume Bunny Top Hat,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,1,,384,{},{},{}
 19878,C_Evolved_Drooping_Bunny,Costume Evolved Drooping Bunny,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,1,,249,{},{},{}
 19882,C_Flowerpot_Mask,Costume Flowerpot Mask,4,0,,0,,,,,0xFFFFFFFF,63,2,4096,,1,,1086,{},{},{}
-19883,C_Cyclops_Glasses,Costume Cyclops Glasses,4,0,,0,,,,,0xFFFFFFFF,63,2,2048,,1,,1087,{},{},{}
-//19883,C_Piamette_Hood, Costume Piamette Hood,,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,,{},{},{}
+19883,C_Piamette_Hood, Costume Piamette Hood,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,1,,1087,{},{},{}
 19884,C_Vanargand_Helm,Costume Vanargand Helm,4,10,,0,,,,,0xFFFFFFFF,63,2,1024,,1,,804,{},{},{}
 19885,C_Blinker,Costume Blinker,4,10,,0,,,,,0xFFFFFFFF,63,2,2048,,1,,82,{},{},{}
 19886,C_Purple_Glasses,Costume Purple Glasses,4,10,,0,,,,,0xFFFFFFFF,63,2,2048,,1,,26,{},{},{}
