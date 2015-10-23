@@ -2955,7 +2955,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 {
 	static int calculating = 0; ///< Check for recursive call preemption. [Skotlex]
 	struct status_data *base_status; ///< Pointer to the player's base status
-	short bStr = 0, bAgi = 0, bVit = 0, bInt_ = 0, bDex = 0, bLuk = 0; ///< Stat addition to the player's battle status
 	const struct status_change *sc = &sd->sc;
 	struct s_skill b_skill[MAX_SKILL]; ///< Previous skill tree
 	int b_weight, b_max_weight, b_cart_weight_max, ///< Previous weight
@@ -3363,62 +3362,54 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 // ----- STATS CALCULATION -----
 
-	// Untouched Base Stats
-	base_status->str = sd->status.str;
-	base_status->agi = sd->status.agi;
-	base_status->vit = sd->status.vit;
-	base_status->int_ = sd->status.int_;
-	base_status->dex = sd->status.dex;
-	base_status->luk = sd->status.luk;
-
 	// Job bonuses
 	index = pc_class2idx(sd->status.class_);
 	for(i=0;i<(int)sd->status.job_level && i<MAX_LEVEL;i++) {
 		if(!job_info[index].job_bonus[i])
 			continue;
 		switch(job_info[index].job_bonus[i]) {
-			case 1: bStr++; break;
-			case 2: bAgi++; break;
-			case 3: bVit++; break;
-			case 4: bInt_++; break;
-			case 5: bDex++; break;
-			case 6: bLuk++; break;
+			case 1: base_status->str++; break;
+			case 2: base_status->agi++; break;
+			case 3: base_status->vit++; break;
+			case 4: base_status->int_++; break;
+			case 5: base_status->dex++; break;
+			case 6: base_status->luk++; break;
 		}
 	}
 
 	// If a Super Novice has never died and is at least joblv 70, he gets all stats +10
 	if(((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && (sd->status.job_level >= 70  || sd->class_&JOBL_THIRD)) && sd->die_counter == 0) {
-		bStr += 10;
-		bAgi += 10;
-		bVit += 10;
-		bInt_+= 10;
-		bDex += 10;
-		bLuk += 10;
+		base_status->str += 10;
+		base_status->agi += 10;
+		base_status->vit += 10;
+		base_status->int_+= 10;
+		base_status->dex += 10;
+		base_status->luk += 10;
 	}
 
 	// Absolute modifiers from passive skills
 	if(pc_checkskill(sd,BS_HILTBINDING)>0)
-		bStr++;
+		base_status->str++;
 	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0)
-		bInt_ += (skill+1)/2; // +1 INT / 2 lv
+		base_status->int_ += (skill+1)/2; // +1 INT / 2 lv
 	if((skill=pc_checkskill(sd,AC_OWL))>0)
-		bDex += skill;
+		base_status->dex += skill;
 	if((skill = pc_checkskill(sd,RA_RESEARCHTRAP))>0)
-		bInt_ += skill;
+		base_status->int_ += skill;
 
-	// Bonuses from cards and equipment, remember to avoid overflows.
-	i = bStr + sd->param_bonus[0] + sd->param_equip[0];
-	bStr = cap_value(i,0,USHRT_MAX);
-	i = bAgi + sd->param_bonus[1] + sd->param_equip[1];
-	bAgi = cap_value(i,0,USHRT_MAX);
-	i = bVit + sd->param_bonus[2] + sd->param_equip[2];
-	bVit = cap_value(i,0,USHRT_MAX);
-	i = bInt_+ sd->param_bonus[3] + sd->param_equip[3];
-	bInt_ = cap_value(i,0,USHRT_MAX);
-	i = bDex + sd->param_bonus[4] + sd->param_equip[4];
-	bDex = cap_value(i,0,USHRT_MAX);
-	i = bLuk + sd->param_bonus[5] + sd->param_equip[5];
-	bLuk = cap_value(i,0,USHRT_MAX);
+	// Bonuses from cards and equipment as well as base stat, remember to avoid overflows.
+	i = base_status->str + sd->status.str + sd->param_bonus[0] + sd->param_equip[0];
+	base_status->str = cap_value(i,0,USHRT_MAX);
+	i = base_status->agi + sd->status.agi + sd->param_bonus[1] + sd->param_equip[1];
+	base_status->agi = cap_value(i,0,USHRT_MAX);
+	i = base_status->vit + sd->status.vit + sd->param_bonus[2] + sd->param_equip[2];
+	base_status->vit = cap_value(i,0,USHRT_MAX);
+	i = base_status->int_+ sd->status.int_+ sd->param_bonus[3] + sd->param_equip[3];
+	base_status->int_ = cap_value(i,0,USHRT_MAX);
+	i = base_status->dex + sd->status.dex + sd->param_bonus[4] + sd->param_equip[4];
+	base_status->dex = cap_value(i,0,USHRT_MAX);
+	i = base_status->luk + sd->status.luk + sd->param_bonus[5] + sd->param_equip[5];
+	base_status->luk = cap_value(i,0,USHRT_MAX);
 
 // ------ ATTACK CALCULATION ------
 
@@ -3771,14 +3762,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->magic_addele[ELE_EARTH] += 25;
 	}
 	status_cpy(&sd->battle_status, base_status);
-
-	// Add to Battle Stats after copy
-	sd->battle_status.str += bStr;
-	sd->battle_status.agi += bAgi;
-	sd->battle_status.vit += bVit;
-	sd->battle_status.int_ += bInt_;
-	sd->battle_status.dex += bDex;
-	sd->battle_status.luk += bLuk;
 
 // ----- CLIENT-SIDE REFRESH -----
 	if(!sd->bl.prev) {
@@ -4296,16 +4279,11 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
  */
 void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 {
-	const struct status_data *b_status;
-	struct status_data *status = status_get_status_data(bl);
+	const struct status_data *b_status = status_get_base_status(bl); // Base Status
+	struct status_data *status = status_get_status_data(bl); // Battle Status
 	struct status_change *sc = status_get_sc(bl);
 	TBL_PC *sd = BL_CAST(BL_PC,bl);
 	int temp;
-
-	if (bl->type == BL_PC)
-		b_status = &sd->battle_status;
-	else
-		b_status = status_get_base_status(bl);
 
 	if (!b_status || !status)
 		return;
@@ -7321,7 +7299,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 	///				2500ms -> tick_def2=2000 -> 500ms
 	int sc_def2 = 0, tick_def2 = 0;
 
-	struct status_data *status, *status_src, *b_status;
+	struct status_data *status, *status_src;
 	struct status_change *sc;
 	struct map_session_data *sd;
 
@@ -7368,7 +7346,6 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 	sd = BL_CAST(BL_PC,bl);
 	status = status_get_status_data(bl);
 	status_src = status_get_status_data(src);
-	b_status = status_get_base_status(bl);
 	sc = status_get_sc(bl);
 	if( sc && !sc->count )
 		sc = NULL;
@@ -7465,9 +7442,9 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			sc_def = status->agi*50;
 			break;
 		case SC_DEEPSLEEP:
-			sc_def = b_status->int_*50;
+			sc_def = (sd ? sd->status.int_ : status_get_base_status(bl)->int_) * 50;
 			tick_def = 0; // Linear reduction instead
-			tick_def2 = (b_status->int_ + status_get_lv(bl))*50; // kRO balance update lists this formula
+			tick_def2 = ((sd ? sd->status.int_ : status_get_base_status(bl)->int_) + status_get_lv(bl)) * 50; // kRO balance update lists this formula
 			break;
 		case SC_NETHERWORLD:
 			// Resistance: {(Target's Base Level / 50) + (Target's Job Level / 10)} seconds
@@ -7506,10 +7483,10 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def2 = (status->vit + status->agi) * 70;
 			break;
 		case SC_CRYSTALIZE:
-			tick_def2 = b_status->vit*100;
+			tick_def2 = (sd ? sd->status.vit : status_get_base_status(bl)->vit) * 100;
 			break;
 		case SC_VACUUM_EXTREME:
-			tick_def2 = b_status->str*50;
+			tick_def2 = (sd ? sd->status.str : status_get_base_status(bl)->str) * 50;
 			break;
 		case SC_KYOUGAKU:
 			tick_def2 = 30*status->int_;
@@ -7522,7 +7499,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def2 = status_get_lv(bl) * 100 + (sd ? sd->status.job_level : 1) * 200;
 			break;
 		case SC_B_TRAP:
-			tick_def = b_status->str * 50; // (custom)
+			tick_def = (sd ? sd->status.str : status_get_base_status(bl)->str) * 50; // (custom)
 			break;
 		default:
 			// Effect that cannot be reduced? Likely a buff.

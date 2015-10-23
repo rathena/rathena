@@ -9898,9 +9898,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		{
 			// Success chance: [(15 + 5 * Skill Level) + ( Caster's INT / 5 ) + ( Caster's Job Level / 5 ) - ( Target's INT / 6 ) - ( Target's LUK / 10 )] %
 			int rate = (15 + 5 * skill_lv) * 1000 + status_get_int(src) * 200 + (sd ? sd->status.job_level * 200 : 0) - status_get_int(bl) * 1000 / 6 - status_get_luk(bl) * 100;
-			struct status_data *bstatus = status_get_base_status(bl);
 			// Resistance: {(Target's Base Level / 20) + (Target's Base INT / 40)} seconds
-			int duration = skill_get_time(skill_id, skill_lv) - (status_get_lv(bl) * 50 + bstatus->int_ * 25);
+			int duration = skill_get_time(skill_id, skill_lv) - (status_get_lv(bl) * 50 + (sd ? sd->status.int_ : status_get_base_status(bl)->int_) * 25);
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			status_change_start(src,bl,type,rate,skill_lv,0,0,0,max(duration,5000),SCSTART_NORATEDEF|SCSTART_NOTICKDEF); // Avoid general resistance
 		}
@@ -9908,12 +9907,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case WM_LULLABY_DEEPSLEEP:
 		if (flag&1) {
-			struct status_data *bstatus = status_get_base_status(bl);
 			// Resistance: {(Target's Base Level / 20) + (Target's Base INT / 20)} seconds
-			int duration = skill_area_temp[6] - (status_get_lv(bl) * 50 + bstatus->int_ * 50);
+			int duration = skill_area_temp[6] - (status_get_lv(bl) * 50 + (sd ? sd->status.int_ : status_get_base_status(bl)->int_) * 50);
 			status_change_start(src,bl,type,skill_area_temp[5],skill_lv,0,0,0,max(duration,5000),SCSTART_NORATEDEF|SCSTART_NOTICKDEF); // Avoid general resistance
-		}
-		else {
+		} else {
 			// Success chance: [(Skill Level x 4) + (Voice Lessons Skill Level x 2) + (Caster's Base Level / 15) + (Caster's Job Level / 5)] %
 			skill_area_temp[5] = (4 * skill_lv * 1000) + ((sd) ? pc_checkskill(sd,WM_LESSON) : skill_get_max(WM_LESSON)) * 2000 + (status_get_lv(src) * 1000 / 15) + (sd ? sd->status.job_level * 200 : 0);
 			skill_area_temp[6] = skill_get_time(skill_id,skill_lv);
