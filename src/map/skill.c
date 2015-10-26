@@ -14775,6 +14775,29 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
+			if (pc_isridingwug(sd)){
+
+				int16 j = 0;
+				int16 k = 0;
+
+				uint8 dir = (unit_getdir(&sd->bl)) % 8;
+
+				switch (dir) {
+					case 0: j = sd->bl.x; k = sd->bl.y + 1; break;
+					case 1: j = sd->bl.x - 1; k = sd->bl.y - 1; break;
+					case 2: j = sd->bl.x - 1; k = sd->bl.y; break;
+					case 3: j = sd->bl.x - 1; k = sd->bl.y - 1; break;
+					case 4: j = sd->bl.x; k = sd->bl.y - 1; break;
+					case 5: j = sd->bl.x + 1; k = sd->bl.y - 1; break;
+					case 6: j = sd->bl.x + 1; k = sd->bl.y; break;
+					case 7: j = sd->bl.x + 1; k = sd->bl.y + 1; break;
+					case 8: j = sd->bl.x; k = sd->bl.y + 1; break;
+				}
+
+				if (map_count_oncell(sd->bl.m, j, k, BL_CHAR | BL_MOB, 1) > 0) {
+					return false;
+				}
+			}
 			break;
 		case LG_BANDING:
 			if( sc && sc->data[SC_INSPIRATION] ) {
