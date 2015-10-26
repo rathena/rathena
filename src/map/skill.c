@@ -14775,10 +14775,14 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			}
 			break;
 		case RA_WUGDASH:
+			if(!pc_isridingwug(sd)) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				return false;
+			}
 			if (pc_isridingwug(sd)){
 
-				int j = 0;
-				int k = 0;
+				int16 j = 0;
+				int16 k = 0;
 
 				uint8 dir = (unit_getdir(&sd->bl)) % 8;
 
@@ -14794,14 +14798,9 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 					case 8: j = sd->bl.x; k = sd->bl.y + 1; break;
 				}
 
-				if (map_count_oncell(sd->bl.m, j, k, BL_CHAR | BL_NPC | BL_MOB, 1) > 0) {
+				if (map_count_oncell(sd->bl.m, j, k, BL_CHAR | BL_MOB, 1) > 0) {
 					return false;
 				}
-			}
-			
-			if(!pc_isridingwug(sd)) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				return false;
 			}
 			break;
 		case LG_BANDING:
