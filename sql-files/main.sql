@@ -704,6 +704,7 @@ CREATE TABLE IF NOT EXISTS `ragsrvinfo` (
 --
 -- Table structure for `db_roulette`
 --
+
 CREATE TABLE `db_roulette` (
   `index` int(11) NOT NULL default '0',
   `level` smallint(5) unsigned NOT NULL,
