@@ -14775,23 +14775,24 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
-			
-			int16 sx = sd->bl.x;
-			int16 sy = sd->bl.y;
-			uint8 dir = (unit_getdir(&sd->bl)) % 8;
-			
-			switch (dir) {
-				case 0: case 8: sy++; break;
-				case 1: sx--; sy++; break;
-				case 2: sx--; break;
-				case 3: sx--; sy--; break;
-				case 4: sy--; break;
-				case 5: sx++; sy--; break;
-				case 6: sx++; break;
-				case 7: sx++; sy++; break;
-			}
-			if (map_count_oncell(sd->bl.m, sx, sy, BL_CHAR | BL_MOB, 1) > 0) {
-				return false;
+			else {
+				int16 sx = sd->bl.x;
+				int16 sy = sd->bl.y;
+				uint8 dir = (unit_getdir(&sd->bl)) % 8;
+				
+				switch (dir) {
+					case 0: case 8: sy++; break;
+					case 1: sx--; sy++; break;
+					case 2: sx--; break;
+					case 3: sx--; sy--; break;
+					case 4: sy--; break;
+					case 5: sx++; sy--; break;
+					case 6: sx++; break;
+					case 7: sx++; sy++; break;
+				}
+				if (map_count_oncell(sd->bl.m, sx, sy, BL_CHAR, 1) > 0) {
+					return false;
+				}
 			}
 			break;
 		case LG_BANDING:
