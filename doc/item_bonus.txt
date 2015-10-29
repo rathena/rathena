@@ -35,18 +35,32 @@ This list contains all available constants referenced in the 'bonus' commands.
 	Size_Small, Size_Medium, Size_Large, Size_All
 
 * Trigger criteria (bf)
-	BF_SHORT: Trigger on melee attacks
-	BF_LONG: Trigger on ranged attacks
+	BF_SHORT	= Trigger on melee attacks
+	BF_LONG		= Trigger on ranged attacks
 	(Default: BF_SHORT+BF_LONG)
    
-	BF_WEAPON: Trigger on weapon skills 
-	BF_MAGIC: Trigger on magic skills 
-	BF_MISC: Trigger on misc skills
+	BF_WEAPON	= Trigger on weapon skills 
+	BF_MAGIC	= Trigger on magic skills 
+	BF_MISC		= Trigger on misc skills
 	(Default: BF_WEAPON)
    
-	BF_NORMAL: Trigger on normal attacks
-	BF_SKILL: Trigger on skills
+	BF_NORMAL	= Trigger on normal attacks
+	BF_SKILL	= Trigger on skills
 	(Default: BF_SKILL if type is BF_MISC or BF_MAGIC, BF_NORMAL if type is BF_WEAPON)
+
+* Trigger criteria (atf)
+	Effect target: (Default: Attacked target)
+	ATF_SELF	= Trigger effect on self
+	ATF_TARGET	= Trigger effect on target
+	
+	Attack range criteria: (Default: All attacks)
+	ATF_SHORT	= Trigger on melee attacks
+	ATF_LONG	= Trigger on ranged attacks
+	
+	Skill/attack type criteria: (Default: Physical/weapon)
+	ATF_WEAPON	= Trigger on weapon skill / physical attacks
+	ATF_MAGIC	= Trigger on magic skills
+	ATF_MISC	= Trigger on misc skills
 
 * Other values:
 	Skill (sk): see 'db/(pre-)re/skill_db.txt' (NOTE: Both skill IDs and names, in quotes, are supported.)
@@ -277,8 +291,8 @@ bonus2 bResEff,eff,n;       		Adds a n/100% tolerance to status eff
 bonus3 bAddEff,eff,n,y;       		Adds a n/100% chance to cause status eff on the target when attacking
 bonus4 bAddEff,eff,n,y,t;     		Adds a n/100% chance to cause status eff for t milliseconds on the target when attacking
 bonus3 bAddEffWhenHit,eff,n,y;		Adds a n/100% chance to cause status eff on the target when being hit by physical damage
-bonus4 bAddEffWhenHit,eff,n,y,t;	Adds a n/100% chance to cause status eff for t milliseconds on the target when being hit by physical damage
-                              		y is the trigger criteria:
+bonus4 bAddEffWhenHit,eff,n,atf,t;	Adds a n/100% chance to cause status eff for t milliseconds on the target when being hit by physical damage
+                              		atf is the trigger criteria:
                               		 Effect target: (Default: Attacked target)
                               		  ATF_SELF   = trigger effect on self
                               		  ATF_TARGET = trigger effect on target
@@ -292,8 +306,8 @@ bonus4 bAddEffWhenHit,eff,n,y,t;	Adds a n/100% chance to cause status eff for t 
 
 bonus3 bAddEffOnSkill,sk,eff,n;   	Adds a n/100% chance to cause status eff on enemy when using skill sk
 bonus4 bAddEffOnSkill,sk,eff,n,y;	Adds a n/100% chance to cause status eff on the target when using skill sk
-bonus5 bAddEffOnSkill,sk,eff,n,y,t;	Adds a n/100% chance to cause status eff for t milliseconds on the target when using skill sk
-                                 	y is the trigger criteria:
+bonus5 bAddEffOnSkill,sk,eff,n,atf,t;	Adds a n/100% chance to cause status eff for t milliseconds on the target when using skill sk
+                                 	atf is the trigger criteria:
                                  	  ATF_SELF   = trigger effect on self
                                  	  ATF_TARGET = trigger effect on target
 
