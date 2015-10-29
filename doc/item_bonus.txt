@@ -288,9 +288,9 @@ bonus2 bAddEff2,eff,n;      		Adds a n/100% chance to cause status eff on self w
 bonus2 bAddEffWhenHit,eff,n;		Adds a n/100% chance to cause status eff on the enemy when being hit by physical damage
 bonus2 bResEff,eff,n;       		Adds a n/100% tolerance to status eff
 
-bonus3 bAddEff,eff,n,y;       		Adds a n/100% chance to cause status eff on the target when attacking
-bonus4 bAddEff,eff,n,y,t;     		Adds a n/100% chance to cause status eff for t milliseconds on the target when attacking
-bonus3 bAddEffWhenHit,eff,n,y;		Adds a n/100% chance to cause status eff on the target when being hit by physical damage
+bonus3 bAddEff,eff,n,atf;       		Adds a n/100% chance to cause status eff on the target when attacking
+bonus4 bAddEff,eff,n,atf,t;     		Adds a n/100% chance to cause status eff for t milliseconds on the target when attacking
+bonus3 bAddEffWhenHit,eff,n,atf;		Adds a n/100% chance to cause status eff on the target when being hit by physical damage
 bonus4 bAddEffWhenHit,eff,n,atf,t;	Adds a n/100% chance to cause status eff for t milliseconds on the target when being hit by physical damage
                               		atf is the trigger criteria:
                               		 Effect target: (Default: Attacked target)
@@ -305,7 +305,7 @@ bonus4 bAddEffWhenHit,eff,n,atf,t;	Adds a n/100% chance to cause status eff for 
                               		  ATF_MISC   = trigger on misc skills
 
 bonus3 bAddEffOnSkill,sk,eff,n;   	Adds a n/100% chance to cause status eff on enemy when using skill sk
-bonus4 bAddEffOnSkill,sk,eff,n,y;	Adds a n/100% chance to cause status eff on the target when using skill sk
+bonus4 bAddEffOnSkill,sk,eff,n,atf;	Adds a n/100% chance to cause status eff on the target when using skill sk
 bonus5 bAddEffOnSkill,sk,eff,n,atf,t;	Adds a n/100% chance to cause status eff for t milliseconds on the target when using skill sk
                                  	atf is the trigger criteria:
                                  	  ATF_SELF   = trigger effect on self
