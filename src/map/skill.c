@@ -1688,7 +1688,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case RL_MASS_SPIRAL:
-		sc_start(src,bl,SC_BLEEDING,10 * skill_lv + rnd()%50,skill_lv,skill_get_time2(skill_id,skill_lv)); //(custom)
+		sc_start2(src,bl,SC_BLEEDING,10 * skill_lv + rnd()%50,skill_lv,src->id,skill_get_time2(skill_id,skill_lv)); //(custom)
 		break;
 	case RL_SLUGSHOT:
 		if (bl->type != BL_PC)
@@ -6949,7 +6949,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 			if (sc_start4(src,bl,SC_STONE,(skill_lv*4+20)+brate,
-				skill_lv, 0, 0, skill_get_time(skill_id, skill_lv),
+				skill_lv, src->id, 0, skill_get_time(skill_id, skill_lv),
 				skill_get_time2(skill_id,skill_lv)))
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			else if(sd) {
@@ -8208,13 +8208,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				case 7:	// stop freeze or stoned
 					{
 						enum sc_type sc[] = { SC_STOP, SC_FREEZE, SC_STONE };
-						sc_start(src,bl,sc[rnd()%3],100,skill_lv,skill_get_time2(skill_id,skill_lv));
+						uint8 rand_eff = rnd()%3;
+
+						sc_start2(src,bl,sc[rand_eff],100,skill_lv,(rand_eff == 2 ? src->id : 0),skill_get_time2(skill_id,skill_lv));
 					}
 					break;
 				case 8:	// curse coma and poison
-					sc_start(src,bl,SC_COMA,100,skill_lv,skill_get_time2(skill_id,skill_lv));
+					status_change_start(src, bl, SC_COMA, 100, skill_lv, 0, src->id, 0, 0, SCSTART_NONE);
 					sc_start(src,bl,SC_CURSE,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-					sc_start(src,bl,SC_POISON,100,skill_lv,skill_get_time2(skill_id,skill_lv));
+					sc_start2(src,bl,SC_POISON,100,skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
 					break;
 				case 9:	// confusion
 					sc_start(src,bl,SC_CONFUSION,100,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -9103,13 +9105,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( tsc && tsc->data[SC_STONE] )
 				status_change_end(bl,SC_STONE,INVALID_TIMER);
 			else
-				status_change_start(src,bl,SC_STONE,10000,skill_lv,0,0,1000,skill_get_time(skill_id, skill_lv),SCSTART_NOTICKDEF);
+				status_change_start(src,bl,SC_STONE,10000,skill_lv,src->id,0,1000,skill_get_time(skill_id, skill_lv),SCSTART_NOTICKDEF);
 		} else {
 			int rate = 45 + 5 * skill_lv + ( sd? sd->status.job_level : 50 ) / 4;
 			// IroWiki says Rate should be reduced by target stats, but currently unknown
 			if( rnd()%100 < rate ) { // Success on First Target
 				if( !tsc->data[SC_STONE] )
-					rate = status_change_start(src,bl,SC_STONE,10000,skill_lv,0,0,1000,skill_get_time(skill_id, skill_lv),SCSTART_NOTICKDEF);
+					rate = status_change_start(src,bl,SC_STONE,10000,skill_lv,src->id,0,1000,skill_get_time(skill_id, skill_lv),SCSTART_NOTICKDEF);
 				else {
 					rate = 1;
 					status_change_end(bl,SC_STONE,INVALID_TIMER);
@@ -13365,7 +13367,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 						sc_start(ss, bl,SC_BLIND,100,1,time);
 						break;
 					case 3: // Poison
-						sc_start(ss, bl,SC_POISON,100,1,time);
+						sc_start2(ss, bl,SC_POISON,100,1,ss->id,time);
 						break;
 					case 4: // Level 10 Provoke
 						sc_start(ss, bl,SC_PROVOKE,100,10,time);
@@ -13509,7 +13511,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			switch( sg->val2 ) {
 				case 1:
 				default:
-					sc_start(ss, bl, SC_BURNING, 4 + 4 * sg->skill_lv, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
+					sc_start4(ss, bl, SC_BURNING, 4 + 4 * sg->skill_lv, sg->skill_lv, 1000, ss->id, 0, skill_get_time2(sg->skill_id, sg->skill_lv));
 					skill_attack(skill_get_type(skill_id), ss, &unit->bl, bl, sg->skill_id, sg->skill_lv + 10 * sg->val2, tick, 0);
 					break;
 			}
@@ -13615,15 +13617,15 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 					case UNT_ZENKAI_LAND:
 						switch (rnd()%2 + 1) {
 							case 1:
-								sc_start(ss, bl, SC_STONE, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
+								sc_start2(ss, bl, SC_STONE, sg->val1*5, sg->skill_lv, ss->id, skill_get_time2(sg->skill_id, sg->skill_lv));
 								break;
 							case 2:
-								sc_start(ss, bl, SC_POISON, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
+								sc_start2(ss, bl, SC_POISON, sg->val1*5, sg->skill_lv, ss->id, skill_get_time2(sg->skill_id, sg->skill_lv));
 								break;
 						}
 						break;
 					case UNT_ZENKAI_FIRE:
-						sc_start(ss, bl, SC_BURNING, sg->val1*5, sg->skill_lv, skill_get_time2(sg->skill_id, sg->skill_lv));
+						sc_start4(ss, bl, SC_BURNING, sg->val1*5, sg->skill_lv, 1000, ss->id, 0, skill_get_time2(sg->skill_id, sg->skill_lv));
 						break;
 					case UNT_ZENKAI_WIND:
 						switch (rnd()%3 + 1) {
@@ -16937,7 +16939,7 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 			break;
 		case UNT_GROUNDDRIFT_POISON:
 			if(skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
-				sc_start(ss,bl,SC_POISON,5,sg->skill_lv,skill_get_time2(sg->skill_id, sg->skill_lv));
+				sc_start2(ss,bl,SC_POISON,5,sg->skill_lv,ss->id,skill_get_time2(sg->skill_id, sg->skill_lv));
 			break;
 		case UNT_GROUNDDRIFT_WATER:
 			if(skill_attack(BF_MISC,ss,src,bl,sg->skill_id,sg->skill_lv,tick,sg->val1))
@@ -18943,7 +18945,7 @@ bool skill_arrow_create(struct map_session_data *sd, unsigned short nameid)
 int skill_poisoningweapon(struct map_session_data *sd, unsigned short nameid)
 {
 	sc_type type;
-	int chance, i;
+	int chance, i, val4 = 0;
 	//uint16 msg = 1443; //Official is using msgstringtable.txt
 	char output[CHAT_SIZE_MAX];
 	const char *msg;
@@ -18959,10 +18961,10 @@ int skill_poisoningweapon(struct map_session_data *sd, unsigned short nameid)
 		case ITEMID_PARALYSE:      type = SC_PARALYSE;      /*msg = 1444;*/ msg = "Paralyze"; break;
 		case ITEMID_PYREXIA:       type = SC_PYREXIA;		/*msg = 1448;*/ msg = "Pyrexia"; break;
 		case ITEMID_DEATHHURT:     type = SC_DEATHHURT;     /*msg = 1447;*/ msg = "Deathhurt"; break;
-		case ITEMID_LEECHESEND:    type = SC_LEECHESEND;    /*msg = 1450;*/ msg = "Leech End"; break;
+		case ITEMID_LEECHESEND:    type = SC_LEECHESEND;    /*msg = 1450;*/ msg = "Leech End"; val4 = sd->bl.id; break;
 		case ITEMID_VENOMBLEED:    type = SC_VENOMBLEED;    /*msg = 1445;*/ msg = "Venom Bleed"; break;
-		case ITEMID_TOXIN:         type = SC_TOXIN;         /*msg = 1443;*/ msg = "Toxin"; break;
-		case ITEMID_MAGICMUSHROOM: type = SC_MAGICMUSHROOM; /*msg = 1446;*/ msg = "Magic Mushroom"; break;
+		case ITEMID_TOXIN:         type = SC_TOXIN;         /*msg = 1443;*/ msg = "Toxin"; val4 = sd->bl.id; break;
+		case ITEMID_MAGICMUSHROOM: type = SC_MAGICMUSHROOM; /*msg = 1446;*/ msg = "Magic Mushroom"; val4 = sd->bl.id; break;
 		case ITEMID_OBLIVIONCURSE: type = SC_OBLIVIONCURSE; /*msg = 1449;*/ msg = "Oblivion Curse"; break;
 		default:
 			clif_skill_fail(sd,GC_POISONINGWEAPON,USESKILL_FAIL_LEVEL,0);
@@ -18971,7 +18973,7 @@ int skill_poisoningweapon(struct map_session_data *sd, unsigned short nameid)
 	
 	chance = 2 + 2 * sd->menuskill_val; // 2 + 2 * skill_lv
 	sc_start4(&sd->bl,&sd->bl, SC_POISONINGWEAPON, 100, pc_checkskill(sd, GC_RESEARCHNEWPOISON), //in Aegis it store the level of GC_RESEARCHNEWPOISON in val1
-		type, chance, 0, skill_get_time(GC_POISONINGWEAPON, sd->menuskill_val));
+		type, chance, val4, skill_get_time(GC_POISONINGWEAPON, sd->menuskill_val));
 
 	sprintf(output, msg_txt(sd,721), msg);
 	clif_colormes(sd->fd,color_table[COLOR_WHITE],output);

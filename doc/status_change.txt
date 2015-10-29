@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20150331
+//= 20151030
 //===== Description: =========================================
 //= List of all Status Changes and theirs val1, val2, val3, and
 //= val4 usage in source. Providing easier guide to use
@@ -25,6 +25,9 @@
 SC_STONE	()
 	desc: DEF -50%; if HP>25% lose 1% HP/5 sec; MDEF +25%; change element to Earth Lv 1; ignore Steal & Lex Aeterna; can't move/attack/pick item/use item/use skill/sit/logout
 	val1:
+	val2: Caster's object ID (for mob_log_damage)
+	val3: Tick
+	val4: Petrifying tick
 
 SC_FREEZE	()
 	desc: DEF -50%; FLEE = 0; MDEF +25%; ignore Steal, Lex Aeterna, Storm Gust, Falling Ice Pillar; change element to Water Lv 1; can't move/attack/pick item/use item/sit/logout
@@ -40,7 +43,10 @@ SC_SLEEP	()
 
 SC_POISON	()
 	desc: DEF -25%; if HP>25% lose 1.5% + 2 HP/sec; SP Regeneration is disabled
-	val1:
+	val1: Skill Level
+	val2: Caster's object ID (for mob_log_damage)
+	val3: Tick
+	val4: HP Damage
 
 SC_CURSE	()
 	desc: ATK-25%; LUK = 0; Movement speed -300
@@ -60,11 +66,17 @@ SC_BLIND	()
 
 SC_BLEEDING	(SI_BLEEDING)
 	desc: HP Regeneration is disabled; SP Regeneration is disabled; Lose HP overtime
-	val1:
+	val1: Skill Level
+	val2: Caster's object ID (for mob_log_damage)
+	val3:
+	val4: Tick
 
 SC_DPOISON	()
 	desc: DEF -25%; if HP>25% lose 10/15% HP/sec
-	val1:
+	val1: Skill Level
+	val2: Caster's object ID (for mob_log_damage)
+	val3: Tick
+	val4: HP Damage
 
 SC_PROVOKE	(SI_PROVOKE)
 	desc: Decrease DEF by (5+(5*Skill Lv))%; Increase ATK by (2+(3*Skill lv))%
@@ -752,8 +764,10 @@ SC_SPIRIT	()
 
 SC_COMA	()
 	desc: Vanish HP to 1 and SP to 0
-	val1: (meaningless)
+	val1: Skill Level
 	val2: If 1 means do not remove SP
+	val3: Caster's object ID (for mob_log_damage)
+	val4:
 
 SC_INTRAVISION	()
 	desc:
@@ -1264,9 +1278,12 @@ SC_FEAR	()
 	desc:
 	val1:
 
-SC_BURNING	()
-	desc:
-	val1:
+SC_BURNING	(SI_BURNT)
+	desc: MDEF -25%; Deals fixed (1000 + 3%*MaxHP) damage every 3 seconds; Damage can not be reduced
+	val1: Skill Level
+	val2: 1000
+	val3: Caster's object ID (for mob_log_damage)
+	val4: Tick
 
 SC_FREEZING	()
 	desc:
@@ -1472,9 +1489,12 @@ SC_VENOMIMPRESS	()
 	desc:
 	val1:
 
-SC_POISONINGWEAPON	()
-	desc:
-	val1:
+SC_POISONINGWEAPON	(SI_POISONINGWEAPON)
+	desc: Coat the user's equipped weapon with a new poison temporarily, which grants a chance of leaving the target infected with the current poison while physically attacking.
+	val1: GC_WEAPONRESEARCH Skill Level
+	val2: Poison Type
+	val3: Success Rate
+	val4: Caster's object ID (for mob_log_damage)
 
 SC_WEAPONBLOCKING	()
 	desc:
@@ -1496,37 +1516,61 @@ SC_ROLLINGCUTTER	()
 	desc:
 	val1:
 
-SC_TOXIN	()
-	desc:
-	val1:
+SC_TOXIN	(SI_TOXIN)
+	desc: Inflict damage, which causes the affected entity to flinch every 10 seconds; This will interrupt the skill casting, even if protected against it
+	val1: GC_WEAPONRESEARCH Skill Level
+	val2: Caster's object ID (for mob_log_damage)
+	val3:
+	val4: Tick
 
-SC_PARALYSE	()
-	desc:
-	val1:
+SC_PARALYSE	(SI_PARALYSE)
+	desc: Decrease both ASPD and Flee Rate by 10% and halve Movement Speed, which does not stack with Decrease AGI, Quagmire, Marsh Of Abyss or Freezing status
+	val1: GC_WEAPONRESEARCH Skill Level
+	val2:
+	val3:
+	val4: Tick
 
 SC_VENOMBLEED	(SI_VENOMBLEED)
-	desc:
-	val1:
+	desc: Decrease Max HP by 15%
+	val1: GC_WEAPONRESEARCH Skill Level
+	val2:
+	val3:
+	val4: Tick
 
-SC_MAGICMUSHROOM	()
-	desc:
-	val1:
+SC_MAGICMUSHROOM	(SI_MAGICMUSHROOM)
+	desc: Force the affected entity to use /heh emote, to randomly use skills and drain 3% of Max HP every 4 seconds
+	val1: GC_WEAPONRESEARCH Skill Level
+	val2: Caster's object ID (for mob_log_damage)
+	val3:
+	val4: Tick
 
-SC_DEATHHURT	()
-	desc:
-	val1:
+SC_DEATHHURT	(SI_DEATHHURT)
+	desc: Drop the healing effectiveness by 20%; This effect stacks with Critical Wounds
+	val1: GC_WEAPONRESEARCH Skill Level
+	val2:
+	val3:
+	val4: Tick
 
-SC_PYREXIA	()
-	desc:
-	val1:
+SC_PYREXIA	(SI_PYREXIA)
+	desc: Cause Blind and Hallucination statuses; If the affected entity takes damage while under the effects of this poison, it will remain in flinching motion, which will interrupt the skill casting
+	val1: GC_WEAPONRESEARCH Skill Level
+	val2:
+	val3:
+	val4: Tick
 
-SC_OBLIVIONCURSE	()
-	desc:
-	val1:
+SC_OBLIVIONCURSE	(SI_OBLIVIONCURSE)
+	desc: Force the affected entity to use /? emote, block SP Recovery and cause Oblivion status; There is a chance (100% - (Target INT * 0.8)%) of being inflicted, with a minimum of 5%
+	val1: GC_WEAPONRESEARCH Skill Level
+	val2:
+	val3:
+	val4: Tick
 
-SC_LEECHESEND	()
-	desc:
-	val1:
+SC_LEECHESEND	(SI_LEECHESEND)
+	desc: Drain (Target VIT * (SkillLv - 3)) + (Target HP / 100) HP each second
+	val1: GC_WEAPONRESEARCH Skill Level
+	val2: Caster's object ID (for mob_log_damage)
+	val3:
+	val4: Tick
 
 SC_REFLECTDAMAGE	()
 	desc:

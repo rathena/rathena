@@ -9688,7 +9688,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				default: rand_eff = SC_POISON; break;
 			}
 			val2 = 10 * val1; // Crit and Flee2 Reduction
-			status_change_start(src,bl,rand_eff,10000,val1,0,0,0,tick,SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
+			status_change_start(src,bl,rand_eff,10000,val1,0,(rand_eff == SC_POISON ? src->id : 0),0,tick,SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
 			break;
 		}
 		case SC__WEAKNESS:
@@ -11718,8 +11718,15 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			return 0;
 		}
 		if(--(sce->val3) > 0) {
-			if(++(sce->val4)%5 == 0 && status->hp > status->max_hp/4)
+			if(++(sce->val4)%5 == 0 && status->hp > status->max_hp/4) {
+				if (sce->val2 && bl->type == BL_MOB) {
+					struct block_list *src = map_id2bl(sce->val2);
+
+					if (src)
+						mob_log_damage((TBL_MOB*)bl, src, apply_rate(status->hp, 1));
+				}
 				status_percent_damage(NULL, bl, 1, 0, false);
+			}
 			sc_timer_next(1000+tick,status_change_timer, bl->id, data );
 			return 0;
 		}
@@ -11959,6 +11966,12 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		if( --(sce->val4) >= 0 ) {
 			int damage = status->vit * (sce->val1 - 3) + status->max_hp / 100; // {Target VIT x (New Poison Research Skill Level - 3)} + (Target HP/100)
 
+			if (sce->val2 && bl->type == BL_MOB) {
+				struct block_list *src2 = map_id2bl(sce->val2);
+
+				if (src2)
+					mob_log_damage((TBL_MOB*)bl, src2, damage);
+			}
 			map_freeblock_lock();
 			status_damage(bl, bl, damage, 0, clif_damage(bl,bl,tick,status_get_amotion(bl),status_get_dmotion(bl)+500,damage,1,DMG_NORMAL,0), 0);
 			unit_skillcastcancel(bl, 2);
@@ -11982,6 +11995,13 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				status_zap(bl,damage,0);
 				flag = !sc->data[type]; // Killed? Should not
 				map_freeblock_unlock();
+			}
+
+			if (sce->val2 && bl->type == BL_MOB) {
+				struct block_list *src2 = map_id2bl(sce->val2);
+
+				if (src2)
+					mob_log_damage((TBL_MOB*)bl, src2, damage);
 			}
 
 			if( !flag ) { // Random Skill Cast
@@ -12020,6 +12040,12 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_TOXIN:
 		if( --(sce->val4) >= 0 ) { // Damage is every 10 seconds including 3%sp drain.
+			if (sce->val2 && bl->type == BL_MOB) {
+				struct block_list *src2 = map_id2bl(sce->val2);
+
+				if (src2)
+					mob_log_damage((TBL_MOB*)bl, src2, 1);
+			}
 			map_freeblock_lock();
 			clif_damage(bl,bl,tick,status_get_amotion(bl),1,1,0,DMG_NORMAL,0);
 			status_damage(NULL, bl, 1, status->max_sp * 3 / 100, 0, 0); // Cancel dmg only if cancelable
@@ -12070,6 +12096,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			struct block_list *src = map_id2bl(sce->val3);
 			int damage = 1000 + 3 * status_get_max_hp(bl) / 100; // Deals fixed (1000 + 3%*MaxHP)
 
+			if (src && bl->type == BL_MOB)
+				mob_log_damage((TBL_MOB*)bl, src, damage);
 			map_freeblock_lock();
 			clif_damage(bl,bl,tick,0,0,damage,1,DMG_MULTI_HIT_ENDURE,0); // Damage is like endure effect with no walk delay
 			status_damage(src, bl, damage, 0, 0, 1);
