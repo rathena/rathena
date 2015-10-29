@@ -7313,7 +7313,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		mercenary_delete(sd->md, 3); // Your mercenary soldier has ran away.
 
 	if( sd->ed )
-		elemental_delete(sd->ed, 0);
+		elemental_delete(sd->ed);
 
 	// Leave duel if you die [LuzZza]
 	if(battle_config.duel_autoleave_when_die) {
@@ -8211,7 +8211,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	clif_skillinfoblock(sd);
 
 	if (sd->ed)
-		elemental_delete(sd->ed, 0);
+		elemental_delete(sd->ed);
 	if (sd->state.vending)
 		vending_closevending(sd);
 	if (sd->state.buyingstore)

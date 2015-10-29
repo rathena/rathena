@@ -86,7 +86,7 @@ int elemental_change_mode(struct elemental_data *ed, int mode);
 void elemental_heal(struct elemental_data *ed, int hp, int sp);
 int elemental_dead(struct elemental_data *ed);
 
-int elemental_delete(struct elemental_data *ed, int reply);
+int elemental_delete(struct elemental_data *ed);
 void elemental_summon_stop(struct elemental_data *ed);
 
 int elemental_get_lifetime(struct elemental_data *ed);

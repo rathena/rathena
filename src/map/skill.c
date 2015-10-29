@@ -9928,7 +9928,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 			// Remove previous elemental first.
 			if( sd->ed )
-				elemental_delete(sd->ed,0);
+				elemental_delete(sd->ed);
 
 			// Summoning the new one.
 			if( !elemental_create(sd,elemental_class,skill_get_time(skill_id,skill_lv)) ) {
@@ -9946,7 +9946,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( !sd->ed )	break;
 
 			if( skill_lv == 4 ) {// At level 4 delete elementals.
-				elemental_delete(sd->ed, 0);
+				elemental_delete(sd->ed);
 				break;
 			}
 			switch( skill_lv ) {// Select mode bassed on skill level used.
@@ -10475,7 +10475,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if (sd && sd->status.party_id == 0) {
 				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 				if (sd->ed && skill_get_state(skill_id) == ST_ELEMENTALSPIRIT2)
-					elemental_delete(sd->ed,0);
+					elemental_delete(sd->ed);
 			}
 			skill_unitsetting(bl, MG_SAFETYWALL, skill_lv + 5, bl->x, bl->y, 0);
 			skill_unitsetting(bl, AL_PNEUMA, 1, bl->x, bl->y, 0);
@@ -10483,7 +10483,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		else {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			if (sd->ed && skill_get_state(skill_id) == ST_ELEMENTALSPIRIT2)
-				elemental_delete(sd->ed,0);
+				elemental_delete(sd->ed);
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id,skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		}
 		break;
