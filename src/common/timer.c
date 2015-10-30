@@ -1,19 +1,19 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/cbasetypes.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/utils.h"
-#include "../common/nullpo.h"
+#include "cbasetypes.h"
+#include "db.h"
+#include "malloc.h"
+#include "showmsg.h"
+#include "utils.h"
+#include "nullpo.h"
 #include "timer.h"
 
 #include <stdlib.h>
 #include <string.h>
 
 #ifdef WIN32
-#include "../common/winapi.h" // GetTickCount()
+#include "winapi.h" // GetTickCount()
 #else
 #endif
 

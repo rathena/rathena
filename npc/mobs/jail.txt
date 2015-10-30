@@ -10,7 +10,7 @@
 //= Spawns monsters in Jail.
 //============================================================
 
-sec_in02,139,80,20	monster	Poring	1002,10,0,0,0
+sec_in02,139,80,20,10	monster	Poring	1002,5,0,0,0
 sec_in02,138,54,20,20	monster	Marin	1242,5,0,0,0
 sec_in02,161,46,15,15	monster	Poporing	1031,5,0,0,0
 sec_in02,114,47,10,10	monster	Drops	1113,5,0,0,0

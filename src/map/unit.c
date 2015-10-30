@@ -406,6 +406,12 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
 	ud->walktimer = INVALID_TIMER;
 
+	if (ud->state.walk_script && bl->x == ud->to_x && bl->y == ud->to_y) {
+		if (ud->walk_done_event[0])
+			npc_event_do_id(ud->walk_done_event,bl->id);
+		ud->state.walk_script = 0;
+	}
+
 	switch(bl->type) {
 		case BL_PC:
 			if( sd->touching_id )
@@ -1343,12 +1349,7 @@ int unit_can_move(struct block_list *bl) {
 	if (DIFF_TICK(ud->canmove_tick, gettick()) > 0)
 		return 0;
 
-	if (sd && (
-		pc_issit(sd) ||
-		sd->state.vending ||
-		sd->state.buyingstore ||
-		sd->state.blockedmove
-	))
+	if ((sd && (pc_issit(sd) || sd->state.vending || sd->state.buyingstore)) || ud->state.blockedmove)
 		return 0; // Can't move
 
 	// Status changes that block movement
@@ -2579,7 +2580,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 		ud->attacktarget_lv = battle_weapon_attack(src,target,tick,0);
 
 		if(sd && sd->status.pet_id > 0 && sd->pd && battle_config.pet_attack_support)
-			pet_target_check(sd,target,0);
+			pet_target_check(sd->pd,target,0);
 
 		map_freeblock_unlock();
 
@@ -2755,6 +2756,39 @@ int unit_changeviewsize(struct block_list *bl,short size)
 	if(size != 0)
 		clif_specialeffect(bl,421+size, AREA);
 
+	return 0;
+}
+
+/**
+ * Makes 'bl' that attacking 'src' switch to attack 'target'
+ * @param bl
+ * @param ap
+ * @param src Current target
+ * @param target New target
+ **/
+int unit_changetarget(struct block_list *bl, va_list ap) {
+	struct unit_data *ud = unit_bl2ud(bl);
+	struct block_list *src = va_arg(ap,struct block_list *);
+	struct block_list *target = va_arg(ap,struct block_list *);
+
+	if (!ud || !target || ud->target == target->id)
+		return 1;
+	if (!ud->target && !ud->target_to)
+		return 1;
+	if (ud->target != src->id && ud->target_to != src->id)
+		return 1;
+
+	if (bl->type == BL_MOB)
+		(BL_CAST(BL_MOB,bl))->target_id = target->id;
+	if (ud->target_to)
+		ud->target_to = target->id;
+	else
+		ud->target_to = 0;
+	if (ud->skilltarget)
+		ud->skilltarget = target->id;
+	unit_set_target(ud, target->id);
+
+	//unit_attack(bl, target->id, ud->state.attack_continue);
 	return 0;
 }
 
@@ -3007,7 +3041,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if( elemental_get_lifetime(ed) <= 0 && !(ed->master && !ed->master->state.active) ) {
 				clif_clearunit_area(bl,clrtype);
 				map_delblock(bl);
-				unit_free(bl,0);
+				unit_free(bl,CLR_OUTSIGHT);
 				map_freeblock_unlock();
 
 				return 0;
@@ -3040,7 +3074,8 @@ void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype)
 	unit_remove_map(&sd->bl,clrtype);
 
 	//CLR_RESPAWN is the warp from logging out, CLR_TELEPORT is the warp from teleporting, but pets/homunc need to just 'vanish' instead of showing the warping animation.
-	if (clrtype == CLR_RESPAWN || clrtype == CLR_TELEPORT) clrtype = CLR_OUTSIGHT;
+	if (clrtype == CLR_RESPAWN || clrtype == CLR_TELEPORT)
+		clrtype = CLR_OUTSIGHT;
 
 	if(sd->pd)
 		unit_remove_map(&sd->pd->bl, clrtype);
@@ -3051,8 +3086,10 @@ void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype)
 	if(sd->md)
 		unit_remove_map(&sd->md->bl, clrtype);
 
-	if(sd->ed)
+	if(sd->ed) {
+		elemental_clean_effect(sd->ed);
 		unit_remove_map(&sd->ed->bl, clrtype);
+	}
 }
 
 /**
@@ -3124,28 +3161,8 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			guild_send_memberinfoshort(sd,0);
 			pc_cleareventtimer(sd);
 			pc_inventory_rental_clear(sd);
-			pc_delspiritball(sd,sd->spiritball,1);
-
-			for(i = 1; i < 5; i++)
-				pc_del_talisman(sd, sd->talisman[i], i);
-
-			if( sd->reg ) {	// Double logout already freed pointer fix... [Skotlex]
-				aFree(sd->reg);
-				sd->reg = NULL;
-				sd->reg_num = 0;
-			}
-
-			if( sd->regstr ) {
-				int j;
-
-				for( j = 0; j < sd->regstr_num; ++j )
-					if( sd->regstr[j].data )
-						aFree(sd->regstr[j].data);
-
-				aFree(sd->regstr);
-				sd->regstr = NULL;
-				sd->regstr_num = 0;
-			}
+			pc_delspiritball(sd, sd->spiritball, 1);
+			pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
 
 			if( sd->st && sd->st->state != RUN ) {// free attached scripts that are waiting
 				script_free_state(sd->st);
@@ -3242,6 +3259,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			if( sd )
 				sd->pd = NULL;
+			pd->master = NULL;
 			break;
 		}
 		case BL_MOB: {
@@ -3257,9 +3275,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				md->deletetimer = INVALID_TIMER;
 			}
 
-			if( md->lootitem ) {
-				aFree(md->lootitem);
-				md->lootitem = NULL;
+			if (md->lootitems) {
+				aFree(md->lootitems);
+				md->lootitems = NULL;
 			}
 
 			if( md->guardian_data ) {
@@ -3320,6 +3338,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			if( sd )
 				sd->hd = NULL;
+			hd->master = NULL;
 			break;
 		}
 		case BL_MER: {
@@ -3339,6 +3358,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->md = NULL;
 
 			mercenary_contract_stop(md);
+			md->master = NULL;
 			break;
 		}
 		case BL_ELEM: {
@@ -3358,6 +3378,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->ed = NULL;
 
 			elemental_summon_stop(ed);
+			ed->master = NULL;
 			break;
 		}
 	}

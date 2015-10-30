@@ -2,9 +2,9 @@
 #define _rA_NETWORK_H_
 
 #include <netinet/in.h>
-#include "../common/cbasetypes.h"
-#include "../common/netbuffer.h" 
-#include "../common/evdp.h"
+#include "cbasetypes.h"
+#include "netbuffer.h" 
+#include "evdp.h"
 
 #ifndef MAXCONN
 #define MAXCONN 16384

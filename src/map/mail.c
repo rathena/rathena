@@ -56,13 +56,13 @@ int mail_removezeny(struct map_session_data *sd, short flag)
 }
 
 /**
-* Attempt to set item or zeny
-* @param sd
+* Attempt to set item or zeny to a mail
+* @param sd : player attaching the content
 * @param idx 0 - Zeny; >= 2 - Inventory item
-* @param amount
+* @param amount : amout of zeny or number of item
 * @return True if item/zeny can be set, False if failed
 */
-bool mail_setitem(struct map_session_data *sd, short idx, int amount) {
+bool mail_setitem(struct map_session_data *sd, short idx, uint32 amount) {
 
 	if( pc_istrading(sd) )
 		return false;

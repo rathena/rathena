@@ -13,19 +13,19 @@ Constants
 This list contains all available constants referenced in the 'bonus' commands.
 
 * Status effect (eff)
-	Eff_Stone, Eff_Freeze, Eff_Stun, Eff_Sleep, Eff_Poison, Eff_Curse, Eff_Silence,
-	Eff_Confusion, Eff_Blind, Eff_Bleeding, Eff_DPoison, Eff_Fear, Eff_Burning
+	Eff_Bleeding, Eff_Blind, Eff_Burning, Eff_Confusion, Eff_Crystalize, Eff_Curse, Eff_DPoison,
+	Eff_Fear, Eff_Freeze, Eff_Poison, Eff_Silence, Eff_Sleep, Eff_Stone, Eff_Stun
 
 * Element (e)
-	Ele_Neutral, Ele_Water, Ele_Earth, Ele_Fire, Ele_Wind, Ele_Poison, 
-	Ele_Holy, Ele_Dark, Ele_Ghost, Ele_Undead, Ele_All
+	Ele_Dark, Ele_Earth, Ele_Fire, Ele_Ghost, Ele_Holy, Ele_Neutral, Ele_Poison,
+	Ele_Undead, Ele_Water, Ele_Wind, Ele_All
 
 * Race (r)
-	RC_Formless, RC_Undead, RC_Brute, RC_Plant, RC_Insect, RC_Fish,
-	RC_Demon, RC_DemiHuman, RC_Angel, RC_Dragon, RC_Player, RC_All
+	RC_Angel, RC_Brute, RC_DemiHuman, RC_Demon, RC_Dragon, RC_Fish, RC_Formless,
+	RC_Insect, RC_Plant, RC_Player, RC_Undead, RC_All
 
 * Monster Race (mr)
-	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja.
+	RC2_Goblin, RC2_Kobold, RC2_Orc, RC2_Golem, RC2_Guardian, RC2_Ninja
 	See 'db/(pre-)re/mob_race2_db.txt'
 
 * Class (c)
@@ -35,18 +35,32 @@ This list contains all available constants referenced in the 'bonus' commands.
 	Size_Small, Size_Medium, Size_Large, Size_All
 
 * Trigger criteria (bf)
-	BF_SHORT: Trigger on melee attacks
-	BF_LONG: Trigger on ranged attacks
+	BF_SHORT	= Trigger on melee attacks
+	BF_LONG		= Trigger on ranged attacks
 	(Default: BF_SHORT+BF_LONG)
    
-	BF_WEAPON: Trigger on weapon skills 
-	BF_MAGIC: Trigger on magic skills 
-	BF_MISC: Trigger on misc skills
+	BF_WEAPON	= Trigger on weapon skills 
+	BF_MAGIC	= Trigger on magic skills 
+	BF_MISC		= Trigger on misc skills
 	(Default: BF_WEAPON)
    
-	BF_NORMAL: Trigger on normal attacks
-	BF_SKILL: Trigger on skills
+	BF_NORMAL	= Trigger on normal attacks
+	BF_SKILL	= Trigger on skills
 	(Default: BF_SKILL if type is BF_MISC or BF_MAGIC, BF_NORMAL if type is BF_WEAPON)
+
+* Trigger criteria (atf)
+	Effect target: (Default: Attacked target)
+	ATF_SELF	= Trigger effect on self
+	ATF_TARGET	= Trigger effect on target
+	
+	Attack range criteria: (Default: All attacks)
+	ATF_SHORT	= Trigger on melee attacks
+	ATF_LONG	= Trigger on ranged attacks
+	
+	Skill/attack type criteria: (Default: Physical/weapon)
+	ATF_WEAPON	= Trigger on weapon skill / physical attacks
+	ATF_MAGIC	= Trigger on magic skills
+	ATF_MISC	= Trigger on misc skills
 
 * Other values:
 	Skill (sk): see 'db/(pre-)re/skill_db.txt' (NOTE: Both skill IDs and names, in quotes, are supported.)
@@ -202,8 +216,9 @@ Damage modifiers
 bonus2 bAddEle,e,x;       		+x% physical damage against element e
 bonus3 bAddEle,e,x,bf;    		+x% physical damage against element e with trigger criteria bf
 bonus2 bMagicAddEle,e,x;  		+x% magical damage against element e
-bonus2 bSubEle,e,x;       		+x% damage reduction against element e
-bonus3 bSubEle,e,x,bf;    		+x% damage reduction against element e with trigger criteria bf
+bonus2 bSubEle,e,x;       		+x% damage reduction against attack element e
+bonus3 bSubEle,e,x,bf;    		+x% damage reduction against attack element e with trigger criteria bf
+bonus2 bSubDefEle,e,x;    		+x% damage reduction from enemy with defense element e
 
 bonus2 bAddRace,r,x;      		+x% physical damage against race r
 bonus2 bMagicAddRace,r,x; 		+x% magical damage against race r
@@ -229,6 +244,10 @@ bonus2 bAddMDefMonster,mid,x;     	+x% magical damage reduction against monster 
 
 bonus2 bAddRace2,mr,x;			+x% damage against monster race mr
 bonus2 bSubRace2,mr,x;			+x% damage reduction against monster race mr
+
+bonus2 bSubSkill,sk,n;  		Reduces n% damage received from skill sk
+
+bonus bAbsorbDmgMaxHP,n;		If the damage received is more than n% of Max HP, the damage received is [TotalDamage] - [n% of MaxHP] (Doesn't stack, will use the highest value)
 
 Atk/Def
 -------
@@ -269,19 +288,31 @@ bonus2 bAddEff2,eff,n;      		Adds a n/100% chance to cause status eff on self w
 bonus2 bAddEffWhenHit,eff,n;		Adds a n/100% chance to cause status eff on the enemy when being hit by physical damage
 bonus2 bResEff,eff,n;       		Adds a n/100% tolerance to status eff
 
-bonus3 bAddEff,eff,n,y;       		Adds a n/100% chance to cause status eff on the target when attacking
-bonus3 bAddEffWhenHit,eff,n,y;		Adds a n/100% chance to cause status eff on the enemy when being hit by physical damage
-                              		y is the trigger criteria:
+bonus3 bAddEff,eff,n,atf;       		Adds a n/100% chance to cause status eff on the target when attacking
+bonus4 bAddEff,eff,n,atf,t;     		Adds a n/100% chance to cause status eff for t milliseconds on the target when attacking
+bonus3 bAddEffWhenHit,eff,n,atf;		Adds a n/100% chance to cause status eff on the target when being hit by physical damage
+bonus4 bAddEffWhenHit,eff,n,atf,t;	Adds a n/100% chance to cause status eff for t milliseconds on the target when being hit by physical damage
+                              		atf is the trigger criteria:
+                              		 Effect target: (Default: Attacked target)
                               		  ATF_SELF   = trigger effect on self
-                              		  ATF_TARGET = trigger effect on target (default)
+                              		  ATF_TARGET = trigger effect on target
+                              		 Attack range criteria: (Default: All attacks)
                               		  ATF_SHORT  = trigger on melee attacks
-                              		  ATF_LONG   = trigger on ranged attacks (default: trigger on all attacks)
+                              		  ATF_LONG   = trigger on ranged attacks
+                              		 Skill/attack type criteria: (Default: Physical/weapon)
+                              		  ATF_WEAPON = trigger on weapon skill / physical attacks
+                              		  ATF_MAGIC  = trigger on magic skills
+                              		  ATF_MISC   = trigger on misc skills
 
 bonus3 bAddEffOnSkill,sk,eff,n;   	Adds a n/100% chance to cause status eff on enemy when using skill sk
-bonus4 bAddEffOnSkill,sk,eff,n,y;	Adds a n/100% chance to cause status eff when using skill sk
-                                 	y is the trigger criteria:
+bonus4 bAddEffOnSkill,sk,eff,n,atf;	Adds a n/100% chance to cause status eff on the target when using skill sk
+bonus5 bAddEffOnSkill,sk,eff,n,atf,t;	Adds a n/100% chance to cause status eff for t milliseconds on the target when using skill sk
+                                 	atf is the trigger criteria:
                                  	  ATF_SELF   = trigger effect on self
                                  	  ATF_TARGET = trigger effect on target
+
+bonus2 bComaClass,c,n;      		Adds a n/100% chance to cause Coma when attacking a target of class c (regardless the type of attack)
+bonus2 bComaRace,r,n;       		Adds a n/100% chance to cause Coma when attacking a target of race r (regardless the type of attack)
 
 bonus2 bWeaponComaEle,e,n;  		Adds a n/100% chance to cause Coma when attacking a target of element e with a normal attack
 bonus2 bWeaponComaClass,c,n;		Adds a n/100% chance to cause Coma when attacking a target of class c with a normal attack
@@ -320,28 +351,26 @@ bonus5 bAutoSpellOnSkill,sk,x,y,n,i;	Adds a n/10% chance to autospell skill x at
 HP/SP drain
 -----------
 bonus bHPDrainValue,n;        		Heals +n HP with a normal attack
-bonus2 bHPDrainValue,n,x;     		Heals +n HP with a normal attack (x: 0=gain n SP, 1=drain n SP from target)
 bonus2 bHPDrainValueRace,r,n; 		Heals +n HP when attacking a monster of race r with normal attack
 bonus2 bHpDrainValueClass,c,n;		Heals +n HP when attacking a monster of class c with normal attack
+
 bonus bSPDrainValue,n;        		Heals +n SP with a normal attack
-bonus2 bSPDrainValue,n,x;     		Heals +n SP with a normal attack (x: 0=gain n SP, 1=drain n SP from target)
 bonus2 bSPDrainValueRace,r,n; 		Heals +n SP when attacking a monster of race r with normal attack
 bonus2 bSpDrainValueClass,c,n;		Heals +n SP when attacking a monster of class c with normal attack
 
-bonus2 bHPDrainRate,n,x;		Adds a n/10% chance to drain x% HP when attacking
-bonus2 bSPDrainRate,n,x;		Adds a n/10% chance to drain x% SP when attacking
-bonus3 bSPDrainRate,n,x,y;		Adds a n/10% chance to either gain SP equivalent to x% of damage dealt, OR drain the amount of SP from the enemy
-                          		(y: 0=gain SP, 1=drain SP from target)
+bonus2 bHPDrainRate,x,n;		Adds a x/10% chance to drain n% HP from inflicted damage when attacking
+bonus2 bSPDrainRate,x,n;		Adds a x/10% chance to drain n% SP from inflicted damage when attacking
 
-bonus2 bHPVanishRate,n,x;		Add a n/100% chance of decreasing enemy's HP amount by x% when attacking
-bonus2 bSPVanishRate,n,x;		Add a n/100% chance of decreasing enemy's SP amount by x% when attacking
+HP/SP vanish
+------------
+bonus2 bHPVanishRate,x,n;		Add a x/10% chance of decreasing enemy's HP amount by n% when attacking
+bonus2 bSPVanishRate,x,n;		Add a x/10% chance of decreasing enemy's SP amount by n% when attacking
 
-bonus3 bHPVanishRaceRate,r,n,x;		Add a n/100% chance of decreasing enemy's HP amount by x% when attacking, depends on enemy race r
-bonus3 bSPVanishRaceRate,r,n,x;		Add a n/100% chance of decreasing enemy's SP amount by x% when attacking, depends on enemy race r
+bonus3 bHPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's HP amount by n% when attacking, depends on enemy race r
+bonus3 bSPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's SP amount by n% when attacking, depends on enemy race r
 
-bonus2 bHPGainRaceAttack,r,n;		Heals +n HP on every hit when attacking an enemy of race r
-bonus2 bSPGainRaceAttack,r,n;		Heals +n SP on every hit when attacking an enemy of race r
-
+HP/SP gain
+------------
 bonus bHPGainValue,n;     		Heals +n HP when killing an enemy with a physical attack
 bonus bSPGainValue,n;     		Heals +n SP when killing an enemy with a physical attack
 bonus2 bSPGainRace,r,n;   		Heals +n SP when killing an enemy of race r with a physical attack

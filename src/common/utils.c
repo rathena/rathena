@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/cbasetypes.h"
-#include "../common/showmsg.h"
+#include "cbasetypes.h"
+#include "showmsg.h"
 #include "socket.h"
 #include "utils.h"
 
@@ -11,7 +11,7 @@
 #include <math.h> // floor()
 
 #ifdef WIN32
-	#include "../common/winapi.h"
+	#include "winapi.h"
 	#ifndef F_OK
 		#define F_OK   0x0
 	#endif  /* F_OK */
@@ -378,7 +378,11 @@ uint32 date2version(int date) {
 	else if(date < 20130717) return 43;
 	else if(date < 20130807) return 44;
 	else if(date < 20131223) return 45;
-	else if(date >= 20131223) return 46;
+	else if(date < 20140212) return 46;
+	//else if(date < 20140613) return 47;
+	//else if(date < 20141016) return 48;
+	else if(date < 20141022) return 50;
+	else if(date >= 20141022) return 51;
 
 	else return 30; //default
 }

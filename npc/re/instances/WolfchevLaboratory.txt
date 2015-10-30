@@ -828,7 +828,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	mes "[Pudding]";
 	mes "OKAY! In which equipment you want to dwell the power?";
 	next;
-	setarray .@parts[0], EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_LOW;
+	setarray .@parts[0], EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_TOP;
 	for(.@i = 0; .@i < 7; .@i++) {
 		if (!getequipisequiped(.@parts[.@i])) {
 			switch(.@i) {
@@ -913,12 +913,12 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		.@part = EQI_ACC_R;
 		break;
 	case 8:
-		if (!getequipisequiped(EQI_HEAD_LOW)) {
+		if (!getequipisequiped(EQI_HEAD_TOP)) {
 			mes "[Pudding]";
 			mes "Hey.. Are you not wearing any Helm?";
 			close;
 		}
-		.@part = EQI_HEAD_LOW;
+		.@part = EQI_HEAD_TOP;
 		break;
 	}
 	.@refine_count = getequiprefinerycnt(.@part);

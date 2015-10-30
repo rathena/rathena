@@ -884,7 +884,7 @@ spl_in01,109,60,3	script	Commander Lebiordirr#edq	435,3,3,{
 			mes "His Highness, the World Tree Yggdrasil, said that?";
 			next;
 			mes "[Commander Lebiordirr]";
-			mes "The reason behind all of this... is not because of the Sapha tribe, but because of the sudden leave of the Guardian? And the Guaridan has given up on his identity?";
+			mes "The reason behind all of this... is not because of the Sapha tribe, but because of the sudden leave of the Guardian? And the Guardian has given up on his identity?";
 			next;
 			mes "[Commander Lebiordirr]";
 			mes "This must be reported... reported to the High Priest of Alfheim... Unbelievable.";

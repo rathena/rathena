@@ -1,31 +1,56 @@
 // Item Delay Database
 //
 // Structure of Database:
-// Item ID,Delay in Milliseconds
+// <ItemID>,<Delay>{,<SC_GroupID>}
 //
-// NOTE:
-// There is a max concurrent number of entries set in src/map/itemdb.h as MAX_ITEMDELAYS.
+// <ItemID>
+//     ID of item that will has reuse delay.
+// <Delay>
+//     Re-use delay in milliseconds.
+// <SC_GroupID>
+//     SC (status change) group for the item.
+//     Example for SC_REUSE_LIMIT_MTF
+//         12658,10000,620 // Transformation Scroll(Deviruchi)
+//         12659,10000,620 // Transformation Scroll(Raydric)
+//     -> 12658 has reuse delay for 10 seconds, and also,
+//        12659 cannot be used when this delay is active.
+//     Since this is optional, default is -1 will ignores the
+//     delay group and the delay will be stored in character's
+//     data that has limit set in src/map/itemdb.h as MAX_ITEMDELAYS.
 
+// SC_REUSE_LIMIT_A 609
+14538,300000,608	//Glass_Of_Illusion
+
+// SC_REUSE_LIMIT_B 610
+14586,180000,609	//Spark_Candy
+
+// SC_REUSE_LIMIT_C 611
+12208,60000,610	//Battle_Manual
+
+// SC_REUSE_LIMIT_D 612
+12210,60000,611	//Bubble_Gum
+
+// SC_REUSE_LIMIT_E 613
+11522,1000,612	//Red_Raffle_Sap
+11523,2000,612	//Yellow_Raffle_Sap
+11524,3000,612	//White_Raffle_Sap
+
+// SC_REUSE_LIMIT_F 614
+607,5000,613	//Yggdrasil_Berry
+
+// SC_REUSE_LIMIT_G 615
+608,3000,614	//Yggdrasil_Seed
+
+// SC_REUSE_LIMIT_H 616
+11525,5000,615	//Mora_Hip_Tea
+
+// Misc
 //12202,60000	//Str_Dish10_
 //12203,60000	//Agi_Dish10_
 //12204,60000	//Int_Dish10_
 //12205,60000	//Dex_Dish10_
 //12206,60000	//Luk_Dish10_
 //12207,60000	//Vit_Dish10_
-12208,60000	//Battle_Manual
-12210,60000	//Bubble_Gum
-14538,300000	//Glass_Of_Illusion
-14586,180000	//Spark_Candy
-607,5000	//Yggdrasil_Berry
-608,3000	//Yggdrasil_Seed
-
-// Bifrost Items
-11522,1000	//Red_Raffle_Sap
-11523,2000	//Yellow_Raffle_Sap
-11524,3000	//White_Raffle_Sap
-11525,5000	//Mora_Hip_Tea
-
-// FIX ME! Delays need confirmation.
-12968,300000	//Emergency_Scroll1
-12969,300000	//Emergency_Scroll2
-12970,300000	//Emergency_Scroll3
+12968,300000	//Emergency_Scroll1 //! CHECKME: Need confirmation!
+12969,300000	//Emergency_Scroll2 //! CHECKME: Need confirmation!
+12970,300000	//Emergency_Scroll3 //! CHECKME: Need confirmation!

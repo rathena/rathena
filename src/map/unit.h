@@ -52,7 +52,10 @@ struct unit_data {
 		unsigned walk_easy : 1 ;
 		unsigned running : 1;
 		unsigned speed_changed : 1;
+		unsigned walk_script : 1;
+		unsigned blockedmove : 1;
 	} state;
+	char walk_done_event[EVENT_NAME_LENGTH];
 };
 
 struct view_data {
@@ -140,6 +143,7 @@ void unit_free_pc(struct map_session_data *sd);
 int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, int line, const char* func);
 int unit_free(struct block_list *bl, clr_type clrtype);
 int unit_changeviewsize(struct block_list *bl,short size);
+int unit_changetarget(struct block_list *bl,va_list ap);
 
 void do_init_unit(void);
 void do_final_unit(void);

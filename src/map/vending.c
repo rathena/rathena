@@ -55,7 +55,7 @@ void vending_closevending(struct map_session_data* sd)
 			Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS ) {
 				Sql_ShowDebug(mmysql_handle);
 		}
-		
+
 		sd->state.vending = false;
 		sd->vender_id = 0;
 		clif_closevendingboard(&sd->bl, 0);
@@ -467,7 +467,7 @@ void vending_reopen( struct map_session_data* sd )
 	nullpo_retv(sd);
 
 	// Open vending for this autotrader
-	if ((at = uidb_get(vending_autotrader_db, sd->status.char_id)) && at->count && at->entries) {
+	if ((at = (struct s_autotrader *)uidb_get(vending_autotrader_db, sd->status.char_id)) && at->count && at->entries) {
 		uint8 *data, *p;
 		uint16 j, count;
 
@@ -529,7 +529,7 @@ void vending_reopen( struct map_session_data* sd )
 	}
 
 	if (fail != 0) {
-		ShowError("vending_reopen: (Error:%d) Load failed for autotrader '"CL_WHITE"%s"CL_RESET"' (CID=%/AID=%d)\n", fail, sd->status.name, sd->status.char_id, sd->status.account_id);
+		ShowError("vending_reopen: (Error:%d) Load failed for autotrader '"CL_WHITE"%s"CL_RESET"' (CID=%d/AID=%d)\n", fail, sd->status.name, sd->status.char_id, sd->status.account_id);
 		map_quit(sd);
 	}
 }
@@ -566,8 +566,8 @@ void do_init_vending_autotrade(void)
 				Sql_GetData(mmysql_handle, 0, &data, NULL); at->id = atoi(data);
 				Sql_GetData(mmysql_handle, 1, &data, NULL); at->account_id = atoi(data);
 				Sql_GetData(mmysql_handle, 2, &data, NULL); at->char_id = atoi(data);
-				Sql_GetData(mmysql_handle, 3, &data, NULL); at->sex = (data[0] == 'F') ? 0 : 1;
-				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(at->title, data, min(len + 1, MESSAGE_SIZE));
+				Sql_GetData(mmysql_handle, 3, &data, NULL); at->sex = (data[0] == 'F') ? SEX_FEMALE : SEX_MALE;
+				Sql_GetData(mmysql_handle, 4, &data, &len); safestrncpy(at->title, data, zmin(len + 1, MESSAGE_SIZE));
 				Sql_GetData(mmysql_handle, 5, &data, NULL); at->dir = atoi(data);
 				Sql_GetData(mmysql_handle, 6, &data, NULL); at->head_dir = atoi(data);
 				Sql_GetData(mmysql_handle, 7, &data, NULL); at->sit = atoi(data);
@@ -592,7 +592,7 @@ void do_init_vending_autotrade(void)
 
 			// Init items for each autotraders
 			iter = db_iterator(vending_autotrader_db);
-			for (at = dbi_first(iter); dbi_exists(iter); at = dbi_next(iter)) {
+			for (at = (struct s_autotrader *)dbi_first(iter); dbi_exists(iter); at = (struct s_autotrader *)dbi_next(iter)) {
 				uint16 j = 0;
 
 				if (SQL_ERROR == Sql_Query(mmysql_handle,
@@ -666,7 +666,7 @@ static void vending_autotrader_remove(struct s_autotrader *at, bool remove) {
 * @author [Cydh]
 */
 static int vending_autotrader_free(DBKey key, DBData *data, va_list ap) {
-	struct s_autotrader *at = db_data2ptr(data);
+	struct s_autotrader *at = (struct s_autotrader *)db_data2ptr(data);
 	if (at)
 		vending_autotrader_remove(at, false);
 	return 0;

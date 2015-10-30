@@ -1,9 +1,9 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
+#include "cbasetypes.h"
+#include "malloc.h"
+#include "showmsg.h"
 #include "strlib.h"
 
 #include <stdlib.h>

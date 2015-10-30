@@ -10699,16 +10699,16 @@ function	script	F_Cat_Hard_Biscuit	{	//11536
 		heal -100,0;
 		break;
 	case 2:
-		unittalk getcharid(3),"Huuph...! Yucky..! Wa, Water...!!";
+		showscript "Huuph...! Yucky..! Wa, Water...!!";
 		sc_start SC_Stun,3000,0,5000,0;
 		break;
 	case 3:
-		unittalk getcharid(3),"Yeeyuck...!! This is rotten!!";
+		showscript "Yeeyuck...!! This is rotten!!";
 		sc_start SC_POISON,50000,0;
 		break;
 	case 4:
 		specialeffect2 EF_HIT4;
-		unittalk getcharid(3),"Arrrrrgggg...!! Bu, Bu, Bugggggg!!!!!";
+		showscript "Arrrrrgggg...!! Bu, Bu, Bugggggg!!!!!";
 		getitem 11537,1; //Rice_Weevil_Bug
 		break;
 	}
@@ -10719,32 +10719,32 @@ function	script	F_Rice_Weevil_Bug	{	//11537
 	switch (rand(1,6)) {
 	case 1:
 		specialeffect2 EF_POISONHIT;
-		unittalk getcharid(3),"Errrgg!!! This is so... bitter....!!";
+		showscript "Errrgg!!! This is so... bitter....!!";
 		heal 0,-50;
 		break;
 	case 2:
 		specialeffect2 EF_HEAL;
-		unittalk getcharid(3),"....well, at least this is good for my health.";
+		showscript "....well, at least this is good for my health.";
 		percentheal 15,0;
 		break;
 	case 3:
 		specialeffect2 EF_POISONHIT;
-		unittalk getcharid(3),"Phewphew!! Argh.... Is this poisoned or what?!";
+		showscript "Phewphew!! Argh.... Is this poisoned or what?!";
 		heal 0,-100;
 		break;
 	case 4:
 		specialeffect2 EF_POISONHIT;
-		unittalk getcharid(3),"Whasdfhwkljhrtklwert....!!";
+		showscript "Whasdfhwkljhrtklwert....!!";
 		heal 0,-200;
 		break;
 	case 5:
 		specialeffect2 EF_HEAL;
-		unittalk getcharid(3),"It's ok, no one saw me yet...";
+		showscript "It's ok, no one saw me yet...";
 		percentheal 10,0;
 		break;
 	case 6:
 		specialeffect2 EF_HEAL;
-		unittalk getcharid(3),"I really need something to eat... ?? Sorry, little buggy.";
+		showscript "I really need something to eat... ?? Sorry, little buggy.";
 		percentheal 5,0;
 		break;
 	}

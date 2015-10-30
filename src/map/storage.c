@@ -84,7 +84,7 @@ void do_final_storage(void)
  */
 static int storage_reconnect_sub(DBKey key, DBData *data, va_list ap)
 {
-	struct guild_storage *stor = db_data2ptr(data);
+	struct guild_storage *stor = (struct guild_storage *)db_data2ptr(data);
 
 	if (stor->dirty && stor->opened == 0) //Save closed storages.
 		gstorage_storagesave(0, stor->guild_id,0);
@@ -139,10 +139,8 @@ int compare_item(struct item *a, struct item *b)
 		a->refine == b->refine &&
 		a->attribute == b->attribute &&
 		a->expire_time == b->expire_time &&
-		a->bound == b->bound
-#ifdef ENABLE_ITEM_GUID
-		&& a->unique_id == b->unique_id
-#endif
+		a->bound == b->bound &&
+		a->unique_id == b->unique_id
 		)
 	{
 		int i;
@@ -582,7 +580,8 @@ bool gstorage_additem2(struct guild_storage* stor, struct item* item, int amount
 		for (i = 0; i < MAX_GUILD_STORAGE; i++) {
 			if (compare_item(&stor->items[i], item)) {
 				// Set the amount, make it fit with max amount
-				amount = min(amount, ((id->stack.guildstorage) ? id->stack.amount : MAX_AMOUNT) - stor->items[i].amount);
+                                int da = ((id->stack.guildstorage) ? id->stack.amount : MAX_AMOUNT) - stor->items[i].amount;
+				amount = min(amount, da);
 				if (amount != item->amount)
 					ShowWarning("gstorage_additem2: Stack limit reached! Altered amount of item \""CL_WHITE"%s"CL_RESET"\" (%d). '"CL_WHITE"%d"CL_RESET"' -> '"CL_WHITE"%d"CL_RESET"'.\n", id->name, id->nameid, item->amount, amount);
 				stor->items[i].amount += amount;

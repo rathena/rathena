@@ -38,7 +38,6 @@
 gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 
 	set .@party_id,getcharid(1);
-	set .@p_name$,getpartyname(.@party_id);
 	set .@md_name$,"Orc's Memory";
 
 	if (!instance_check_party(.@party_id,2,30,80)) {
@@ -54,7 +53,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 			switch(select("Reserve the "+.@md_name$+":Enter the Dungeon:Cancel")) {
 			case 1:
 				if (instance_create(.@md_name$) < 0) {
-					mes "Party Name: "+.@p_name$;
+					mes "Party Name: "+ getpartyname(.@party_id);
 					mes "Party Leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed.";
 					close;
@@ -97,7 +96,7 @@ L_Enter:
 		mes "Only a member of the party can enter the Memorial Dungeon.";
 		close;
 	case 0:
-		mapannounce "gef_fild10",.@p_name$+" party's member "+strcharinfo(0)+" has entered the Orc's Memory.",bc_map,"0x00ff99";
+		mapannounce "gef_fild10", getpartyname( getcharid(1) ) +" party's member "+strcharinfo(0)+" has entered the Orc's Memory.",bc_map,"0x00ff99";
 		if (checkquest(12059) == -1) setquest 12059;
 		//warp "1@orcs",179,15;
 		if (getarg(0) == 0) close;

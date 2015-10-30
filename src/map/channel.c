@@ -79,7 +79,7 @@ int channel_delete(struct Channel *channel) {
 	if( db_size(channel->users)) {
 		struct map_session_data *sd;
 		DBIterator *iter = db_iterator(channel->users);
-		for( sd = dbi_first(iter); dbi_exists(iter); sd = dbi_next(iter) ) { //for all users
+		for( sd = (struct map_session_data *)dbi_first(iter); dbi_exists(iter); sd = (struct map_session_data *)dbi_next(iter) ) { //for all users
 			channel_clean(channel,sd,1); //make all quit
 		}
 		dbi_destroy(iter);
@@ -339,7 +339,7 @@ int channel_send(struct Channel *channel, struct map_session_data *sd, const cha
 		return -1;
 
 	if(!pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) && channel->msg_delay != 0 && DIFF_TICK(sd->channel_tick + ( channel->msg_delay * 1000 ), gettick()) > 0) {
-		clif_colormes(sd,color_table[COLOR_RED],msg_txt(sd,1455)); //You're talking too fast!
+		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1455)); //You're talking too fast!
 		return -2;
 	}
 	else {
@@ -483,7 +483,7 @@ int channel_display_list(struct map_session_data *sd, char *options){
 		for( k = 0; k < channel_config.colors_count; k++ ) {
 			if (channel_config.colors[k]) {
 				sprintf(msg, msg_txt(sd,1445),channel_config.colors_name[k]);// - '%s'
-				clif_colormes(sd,channel_config.colors[k],msg);
+				clif_colormes(sd->fd,channel_config.colors[k],msg);
 			}
 		}
 	}
@@ -525,7 +525,7 @@ int channel_display_list(struct map_session_data *sd, char *options){
 			}
 		}
 		iter = db_iterator(channel_db);
-		for(channel = dbi_first(iter); dbi_exists(iter); channel = dbi_next(iter)) {
+		for(channel = (struct Channel *)dbi_first(iter); dbi_exists(iter); channel = (struct Channel *)dbi_next(iter)) {
 			if( has_perm || channel->type == CHAN_TYPE_PUBLIC ) {
 				sprintf(output, msg_txt(sd,1409), channel->name, db_size(channel->users));// - #%s (%d users)
 				clif_displaymessage(sd->fd, output);
@@ -890,7 +890,7 @@ int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int fl
 		struct chan_banentry *cbe;
 		sprintf(output, msg_txt(sd,1443), channel->name);// ---- '#%s' Ban List:
 		clif_displaymessage(sd->fd, output);
-		for( cbe = dbi_first(iter); dbi_exists(iter); cbe = dbi_next(iter) ) { //for all users
+		for( cbe = (struct chan_banentry *)dbi_first(iter); dbi_exists(iter); cbe = (struct chan_banentry *)dbi_next(iter) ) { //for all users
 			sprintf(output, "%d: %s",cbe->char_id,cbe->char_name);
 			clif_displaymessage(sd->fd, output);
 		}
@@ -1159,7 +1159,7 @@ void do_final_channel(void) {
 	
 	//delete all in remaining chan db
 	iter = db_iterator(channel_db);
-	for( channel = dbi_first(iter); dbi_exists(iter); channel = dbi_next(iter) ) {
+	for( channel = (struct Channel *)dbi_first(iter); dbi_exists(iter); channel = (struct Channel *)dbi_next(iter) ) {
 		channel_delete(channel);
 	}
 	dbi_destroy(iter);

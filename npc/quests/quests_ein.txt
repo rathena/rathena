@@ -387,7 +387,7 @@ einbech,97,167,5	script	Cavitar	847,{
 								switch(select("Sure~!:No, thanks.")) {
 						 		case 1:
 									set Zeny,Zeny-1000;
-									set $einamanoama,$einamanoama + 1;
+									set $ein_amano,$ein_amano + 1;
 									set ein_gear1,1;
 									mes "[Cavitar]";
 									mes "Great...!";

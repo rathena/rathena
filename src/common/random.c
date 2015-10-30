@@ -1,11 +1,11 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/showmsg.h"
-#include "../common/timer.h" // gettick
+#include "showmsg.h"
+#include "timer.h" // gettick
 #include "random.h"
 #if defined(WIN32)
-	#include "../common/winapi.h"
+	#include "winapi.h"
 #elif defined(HAVE_GETPID) || defined(HAVE_GETTID)
 	#include <sys/types.h>
 	#include <unistd.h>

@@ -53,6 +53,9 @@ struct npc_data {
 
 	struct status_data status;
 	unsigned int level,stat_point;
+	struct s_npc_params {
+		unsigned short str, agi, vit, int_, dex, luk;
+	} params;
 
 	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
 	char* path;/* path dir */
@@ -168,6 +171,7 @@ void npc_event_do_oninit(void);
 int npc_do_ontimer(int npc_id, int option);
 
 int npc_event_do(const char* name);
+int npc_event_do_id(const char* name, int rid);
 int npc_event_doall(const char* name);
 int npc_event_doall_id(const char* name, int rid);
 

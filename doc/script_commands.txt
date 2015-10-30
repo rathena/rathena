@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140313
+//= 20150610
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -374,8 +374,10 @@ But what about GID?
 
 GID stands for the Game ID of something, this can either be the GID obtained
 through mobspawn (mob control commands) or the account ID of a character.
-Another way would be to right click on a mob, 
-NPC or char as GM sprited char to view the GID.
+Another way would be to right click on a mob, NPC or char as GM sprited char
+to view the GID.
+
+See also 'getpetinfo', 'getmercinfo', 'gethominfo', and 'geteleminfo'.
 
 This is mostly used for the new version of skill and the mob control commands
 implemented.
@@ -446,13 +448,14 @@ temporary - They cease to exist when the server resets.
 
 Prefix: scope and extent
 nothing  - A permanent variable attached to the character, the default variable
-           type. They are stored in the `global_reg_value` table using type 3.
+           type. They are stored by char-server in the `global_acc_reg_num` and
+           `global_acc_reg_str`.
 "@"      - A temporary variable attached to the character.
            SVN versions before 2094 revision and RC5 version will also treat
            'l' as a temporary variable prefix, so beware of having variable
            names starting with 'l' if you want full backward compatibility.
 "$"      - A global permanent variable.
-           They are stored in database table `mapreg`.
+           They are stored by map-server in database table `mapreg`.
 "$@"     - A global temporary variable.
            This is important for scripts which are called with no RID
            attached, that is, not triggered by a specific character object.
@@ -468,13 +471,14 @@ nothing  - A permanent variable attached to the character, the default variable
            callsub/callfunc starts a new scope, returning from the function 
            ends it. When a scope ends, its variables are converted to values 
            ('return .@var;' returns a value, not a reference).
-"'"      - An instance variable
+"'"      - An instance variable.
            These are used with the instancing system, and are unique to each 
            party's instance.
 "#"      - A permanent local account variable.
-           They are stored in the `global_reg_value` table using type 2.
+           They are stored by char-server in the `char_reg_num` table and
+           `char_reg_str`.
 "##"     - A permanent global account variable stored by the login server.
-           They are stored in the `global_reg_value` table using type 1.
+           They are stored in the `acc_reg_num` table and `acc_reg_str`.
            The only difference you will note from normal # variables is when
            you have multiple char-servers connected to the same login server.
            The # variables are unique to each char-server, while the ## variables
@@ -616,6 +620,8 @@ same name. You can tell between the specific variables of an array with an
 
 <variable name>[<array index>]
 
+All variable types can be used as arrays.
+
 Variables stored in this way, inside an array, are also called 'array elements'. 
 Arrays are specifically useful for storing a set of similar data (like several 
 item IDs for example) and then looping through it. You can address any array 
@@ -631,8 +637,9 @@ value from an another array) to get at an array value:
     
 This will make @arrayofnumbers[100] equal to 10.
 
-Notice that index numbering always starts with 0. Arrays cannot hold more than 
-128 variables. (So the last one can't have a number higher than 127)
+Index numbering always starts with 0 and arrays can hold over 2 billion
+variables. As such, the (guaranteed) allowed values for indices are in the
+range 0 ~ 2147483647.
 
 And array indexes probably can't be negative. Nobody tested what happens when 
 you try to get a negatively numbered variable from an array, but it's not going 
@@ -643,41 +650,6 @@ Arrays can naturally store strings:
 @menulines$[0] is the 0th element of the @menulines$ array of strings. Notice 
 the '$', normally denoting a string variable, before the square brackets that 
 denotes an array index.
-
-Resume of the allowed variable and array scopes
------------------------------------------------
-
-+==========+======+=======+
-|VarType   | Norm | Array |
-+==========+======+=======+
-|$Str$     | OK!  | OK!   |
-+----------+------+-------+
-|$@Str$    | OK!  | OK!   |
-+----------+------+-------+
-|@Str$     | OK!  | OK!   |
-+----------+------+-------+
-|#Str$     | OK!  | FAIL! |
-+----------+------+-------+
-|Str$      | OK!  | FAIL! |
-+----------+------+-------+
-|$Int      | OK!  | OK!   |
-+----------+------+-------+
-|$@Int     | OK!  | OK!   |
-+----------+------+-------+
-|@Int      | OK!  | OK!   |
-+----------+------+-------+
-|#Int      | OK!  | FAIL! |
-+----------+------+-------+
-|Int       | OK!  | FAIL! |
-+----------+------+-------+
-|.Str$     | OK!  | OK!   |
-+----------+------+-------+
-|.Int      | OK!  | OK!   |
-+----------+------+-------+
-|.@Str$    | OK!  | OK!   |
-+----------+------+-------+
-|.@Int     | OK!  | OK!   |
-+----------+------+-------+
 
 Variable References
 -------------------
@@ -991,6 +963,7 @@ On<label name>:
 These special labels are used with Mob scripts mostly, and script commands
 that requires you to point/link a command to a mob or another NPC, giving a label
 name to start from. The label name can be any of your liking, but must be
+started with "On".
 
 Example:
 
@@ -1284,6 +1257,14 @@ Examples:
 
 Note: even though function objects can have .variables, 
 getvariableofnpc will not work on them.
+
+---------------------------------------
+
+*getvar <variable>,<char_id>;
+
+Get variable value from the specified player. Only player/account variables
+are allowed to be used (temporary character variable "@", permanent
+character "", permanent local account "#", and permanent global account "##").
 
 ---------------------------------------
 
@@ -2159,7 +2140,7 @@ example:
 
     setarray @array[0],200,200,200;
     setarray @array[1],300,150;
-    
+
 will produce:
 
  @array[0]=200
@@ -2192,7 +2173,7 @@ some cases invaluable.
     setarray @array[0], 100, 200, 300, 400, 500, 600;
     // So we have made @array[]
     copyarray @array2[0],@array[2],2;
-    
+
     // Now, @array2[0] will be equal to @array[2] (300) and 
     // @array2[1] will be equal to @array[3].
 
@@ -2266,9 +2247,9 @@ Whatever it returns is determined by type.
 
 *getarraysize(<array name>)
 
-This function returns the number of values that are contained inside the 
-specified array. Notice that zeros and empty strings at the end of this array 
-are not counted towards this number.
+This function returns highest index of the array that is filled.
+Notice that zeros and empty strings at the end of this array are not
+counted towards this number.
 
 For example:
 
@@ -2279,8 +2260,8 @@ This will make @arraysize == 6. But if you try this:
 
     setarray @array[0], 100, 200, 300, 400, 500, 600, 0;
     set @arraysize,getarraysize(@array);
-    
-@arraysize will still equal 6, even though you've set 7 values.    
+
+@arraysize will still equal 6, even though you've set 7 values.
 
 ---------------------------------------
 
@@ -2481,6 +2462,19 @@ Deletes the spirit ball(s) from player.
 Counts the spirit ball that player has.
 
 ---------------------------------------
+
+*ignoretimeout <flag>{,<char_id>};
+
+Disables the SECURE_NPCTIMEOUT function on the character invoking the script,
+or by the given character ID/character name.
+
+Valid flag:
+ 0 - Enabled SECURE_NPCTIMEOUT.
+ 1 - Disable SECURE_NPCTIMEOUT.
+
+Note: SECURE_NPCTIMEOUT must be enabled for this to work.
+
+---------------------------------------
 \\
 2,2 Item-related commands
 \\
@@ -2492,7 +2486,7 @@ This function returns the item ID of the item equipped in the equipment slot
 specified on the invoking character. If nothing is equipped there, it returns -1. 
 Valid equipment slots are:
 
-EQI_HEAD_TOP (1)          - Upper Headear
+EQI_HEAD_TOP (1)          - Upper Headgear
 EQI_ARMOR (2)             - Armor (jackets, robes)
 EQI_HAND_L (3)            - Left hand (weapons, shields)
 EQI_HAND_R (4)            - Right hand (weapons)
@@ -2852,14 +2846,26 @@ It's useful for when you want to check whether an item contains cards or if it's
 
 ---------------------------------------
 
-*mergeitem({<item_id>{,<char_id>}});
-*mergeitem({"<item name>"{,<char_id>}});
+*mergeitem({,<char_id>});
+
+Open merge item window to merge available item can be merged.
+
+Examples
+1. See the NPC 'npc/re/other/merge_item.txt'.
+2. Simple usage:
+    mes "Let's check if any item can be merged.";
+    close2;
+    mergeitem;
+    end;
+
+---------------------------------------
+
+*mergeitem2({<item_id>{,<char_id>}});
+*mergeitem2({"<item name>"{,<char_id>}});
 
 Merge all stackable items that separated by GUID flags
 (either by flag 4 item_flag.txt or GUID  in item_group).
 If no item ID/name given, all possible items in player's inventory will be merged.
-
-Example, just see the NPC 'npc/re/other/merge_item.txt'.
 
 ---------------------------------------
 //
@@ -3039,7 +3045,7 @@ Example:
 
 ---------------------------------------
 
-*getguildmember <guild id>{,<type>};
+*getguildmember <guild id>{,<type>{,<array_variable>}};
 
 This command will find all members of a specified guild and returns their names 
 (or character id or account id depending on the value of "type") into an array
@@ -3066,6 +3072,9 @@ Note that the names come in no particular order.
 
 Be sure to use $@guildmembercount to go through this array, and not 
 'getarraysize', because it is not cleared between runs of 'getguildmember'.
+
+If 'array_variable' is set, the result will be stored to that variable instead
+using global variable.
 
 For usage examples, see 'getpartymember'.
 
@@ -3374,7 +3383,8 @@ account ID.
 
 *getattachedrid();
 
-Returns RID from running script. Script may does not have RID.
+Returns RID from running script. Script may not be attached to any RID like
+a floating script or function and will return 0.
 
 ---------------------------------------
 
@@ -3806,6 +3816,13 @@ by default green
 
 ---------------------------------------
 
+*showscript "<message>"{,<GID>};
+
+Makes attached player or GID says a message like shouting a skill name, the message
+will be seen to everyone around but not in chat window.
+
+---------------------------------------
+
 *warp "<map name>",<x>,<y>;
 
 This command will take the invoking character to the specified map, and if 
@@ -3939,7 +3956,7 @@ no teleportation is otherwise possible.
 
 ---------------------------------------
 
-*heal <hp>,<sp>;
+*heal <hp>,<sp>{,<char_id>};
 
 This command will heal a set amount of HP and/or SP on the invoking character.
 
@@ -3952,7 +3969,7 @@ character and produces no other output whatsoever.
 
 ---------------------------------------
 
-*itemheal <hp>,<sp>;
+*itemheal <hp>,<sp>{,<char_id>};
 
 This command heals relative amounts of HP and/or SP on the invoking character.
 Unlike heal, this command is intended for use in item scripts. It applies
@@ -3969,7 +3986,7 @@ Example:
 
 ---------------------------------------
 
-*percentheal <hp>,<sp>;
+*percentheal <hp>,<sp>{,<char_id>};
 
 This command will heal the invoking character. It heals the character, but not 
 by a set value - it adds percent of their maximum HP/SP.
@@ -4021,7 +4038,7 @@ Examples:
 
 ---------------------------------------
 
-*jobchange <job number>{,<upper flag>};
+*jobchange <job number>{,<upper flag>,<char_id>};
 
 This command will change the job class of the invoking character.
 
@@ -4061,7 +4078,7 @@ This command retrieves the name of the given job using the map_msg entries 550->
 
 ---------------------------------------
 
-*eaclass({<job number>})
+*eaclass({<job number>,<char_id>})
 
 This commands returns the "eA job-number" corresponding to the given class, and
 uses the invoking player's class if none is given. The eA job-number is also a
@@ -4153,6 +4170,20 @@ they will also have their skills reset upon 'changesex'.
 
 ---------------------------------------
 
+*changecharsex({<char_id>});
+
+This command will change the gender of the attached character. If it 
+was male, it will become female, if it was female, it will become male. The 
+change will be written to the character server, the player will receive the 
+message: "Need disconnection to perform change-sex request..." and the player 
+will be immediately kicked to the login screen. When they log back in, they will 
+be the opposite sex.
+
+If the character being changed is a Dancer/Gypsy or Bard/Clown class type, 
+the character will also have their skills reset upon 'changecharsex'.
+
+---------------------------------------
+
 *getexp <base xp>,<job xp>{,<char_id>};
 
 This command will give the invoking character a specified number of base and job 
@@ -4175,8 +4206,8 @@ adjusts the gained value. If you want to bypass this, use the 'set' method.
 
 ---------------------------------------
 
-*setlook <look type>,<look value>;
-*changelook <look type>,<look value>;
+*setlook <look type>,<look value>{,<char_id>};
+*changelook <look type>,<look value>{,<char_id>};
 
 'setlook' will alter the look data for the invoking character. It is used 
 mainly for changing the palette used on hair and clothes: you specify which look 
@@ -4659,7 +4690,7 @@ More info, see doc/item_group.txt.
 
 ---------------------------------------
 
-*getgroupitem <group_id>;
+*getgroupitem <group_id>{,<char_id>};
 
 Gives item(s) to the attached player based on item group contents.
 This is not working like 'getrandgroupitem' which only give 1 item for specified
@@ -4872,7 +4903,7 @@ This command will return 1 if an item was broken and 0 otherwise.
 
 ---------------------------------------
 
-*clearitem {,<char_id>};
+*clearitem {<char_id>};
 
 This command will destroy all items the invoking character has in their 
 inventory (including equipped items). It will not affect anything else, like 
@@ -5297,7 +5328,7 @@ expected, refer only to an invoking character.
 What these commands do is 'attach' a script to the player which will get
 executed on attack (or when attacked in the case of autobonus2).
 
-Rate is the trigger rate of the script (10000 = 100%). 
+Rate is the trigger rate of the script (1000 = 100%). 
 
 Duration is the time that the bonus will last for since the script has triggered.
 
@@ -5521,9 +5552,10 @@ Examples:
 ---------------------------------------
 
 *pcblockmove <id>,<option>;
+*unitblockmove <id>,<option>;
 
 Prevents the given GID from moving when the option is 1, and enables the ID to
-move again when the option is 0. This command will run for the attached player
+move again when the option is 0. This command will run for the attached unit
 if the given GID is zero.
 
 Examples:
@@ -6417,6 +6449,20 @@ example.
 
 ---------------------------------------
 
+*waitingroomkick "<NPC object name>" , "<character name>";
+
+This command kicks the given character from the waiting room attached to the given NPC.
+
+---------------------------------------
+
+*getwaitingroomusers "<NPC object name>";
+
+This command get all the characters in the waiting room of the given NPC and stores
+their gids in the array .@waitingroom_users[]. Also, stores the the number of characters
+in the variable .@waitingroom_usercount
+
+---------------------------------------
+
 *kickwaitingroomall {"<NPC object name>"};
 
 This command kicks everybody out of a specified waiting room chat.
@@ -6490,7 +6536,7 @@ The optional parameter 'type' is used in the 'skill_damage' mapflag:
 *getbattleflag("<battle flag>")
 
 Sets or gets the value of the given battle flag.
-Battle flags are the flags found in the battle/*.conf files and is also used in Lupus' variable rates script.
+Battle flags are the flags found in the battle / *.conf files and is also used in Lupus' variable rates script.
 
 Examples:
 
@@ -6958,8 +7004,8 @@ in this way.
 \\
 ---------------------------------------
 
-*unitwalk <GID>,<x>,<y>;
-*unitwalk <GID>,<Target ID>;
+*unitwalk <GID>,<x>,<y>{,"<event label>"};
+*unitwalkto <GID>,<Target GID>{,"<event label>"};
 
 This command will tell a <GID> to walk to a position, defined either as a set of
 coordinates or another object. The command returns a 1 for success and 0 upon failure.
@@ -6968,10 +7014,13 @@ If coordinates are passed, the <GID> will walk to the given x,y coordinates on t
 unit's current map. While there is no way to move across an entire map with 1 command
 use, this could be used in a loop to move long distances.
 
-If an object ID is passed, the initial <GID> will walk to the <Target ID> (similar to
+If an object ID is passed, the initial <GID> will walk to the <Target GID> (similar to
 walking to attack). This is based on the distance from <GID> to <Target ID>. This command
 uses a hard walk check, so it will calculate a walk path with obstacles. Sending a bad
 target ID will result in an error.
+
+An optional Event Label can be passed as well which will execute when the <GID> has reached
+the given coordinates or <Target GID>.
 
 Examples:
 
@@ -6985,7 +7034,7 @@ Examples:
 		dispbottom "That's too far away, man.";
 
 // Makes player walk to another character named "WalkToMe".
-	unitwalk getcharid(3),getcharid(3,"WalkToMe");
+	unitwalkto getcharid(3),getcharid(3,"WalkToMe");
 
 ---------------------------------------
 
@@ -7028,6 +7077,10 @@ This command will make a <GID> stop attacking.
 
 This command will make a <GID> stop moving.
 
+Note: If this is called from OnTouch, then the walktimer attached to the unit is
+removed from OnTouch which causes this command to not stop the unit from walking.
+Suggest to use 'unitblockmove' to forcefully stop the unit with OnTouch.
+
 ---------------------------------------
 
 *unittalk <GID>,"<text>";
@@ -7055,6 +7108,20 @@ Skill ID is the ID of the skill, skill level is the level of the skill.
 Cast time is the amount of seconds to add or remove from the skill. Use a positive value to
 add and negative value to subtract. Using 0 or no value will use the default skill cast time.
 For the position, the x and y are given in the UnitSkillUsePos.
+
+---------------------------------------
+
+*getunittype <GID>;
+
+Returns the type of object from the given Game ID. Returns -1 if the given <GID> does not
+exist.
+
+ 0 - Monster
+ 1 - Homunculus
+ 2 - Pet
+ 3 - Mercenary
+ 4 - Elemental
+ 5 - NPC
 
 ---------------------------------------
 
@@ -7162,6 +7229,17 @@ Example:
 
 	// Set the max HP of the Poring to 1000 (current HP will also get updated to 1000).
 	setunitdata .GID,3,1000;
+
+---------------------------------------
+
+*geteleminfo <type>{,<char_id>};
+
+Get info of elemental of attached player or player by char_id.
+Other info can be obtained by 'getunitdata' command.
+
+Valid types are:
+   0: Elemental ID
+   1: Elemental Game ID
 
 ---------------------------------------
 \\
@@ -7773,7 +7851,7 @@ the script will come to a halt.
 
 ---------------------------------------
 
-*instance_enter("<instance name>"{,<x>,<y>});
+*instance_enter("<instance name>"{,<x>,<y>,<char_id>});
 
 Warps player to the specified instance after the script terminates. The map and
 coordinates are located in 'db/(pre-)re/instance_db.txt'.
@@ -7782,6 +7860,8 @@ The command returns 0 upon success, and these values upon failure:
  1: Party not found.
  2: Party does not have an instance.
  3: Other errors (invalid instance name, instance doesn't match with party).
+
+Put -1 for x and y if want to warp player with default entrance coordinates.
 
 ---------------------------------------
 
@@ -8085,7 +8165,7 @@ OnTimer1000:
 
 ---------------------------------------
 
-*bg_leave;
+*bg_leave {<char_id>};
 
 Removes attached player from their Battle Group.
 
@@ -8173,12 +8253,12 @@ server and the egg will disappear when anyone tries to hatch it.
 
 ---------------------------------------
 
-*getpetinfo(<type>)
+*getpetinfo(<type>{,<char_id>})
 
 This function will return pet information for the pet the invoking character 
 currently has active. Valid types are:
 
- 0 - Pet Game ID
+ 0 - Pet ID
  1 - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
      is.
  2 - Pet name. Will return "null" if there's no pet. 
@@ -8186,6 +8266,7 @@ currently has active. Valid types are:
  4 - Pet hungry level. 100 is completely full.
  5 - Pet rename flag. 0 means this pet has not been named yet.
  6 - Pet level
+ 7 - Pet Game ID
 
 ---------------------------------------
 
@@ -8341,20 +8422,21 @@ and will return the following values:
 
 ---------------------------------------
 
-*gethominfo(<type>)
+*gethominfo(<type>{,<char_id>})
 
 This function will return Homunculus information for the Homunculus of the
 invoking character, regardless of its vaporize state. It returns zero or
 "null" if the player does not own a Homunculus.
 
 Valid types are:
- 0 - Homunculus Game ID
+ 0 - Homunculus ID
  1 - Homunculus Class
  2 - Homunculus Name
  3 - Homunculus friendly level (intimacy score). 100000 is full loyalty.
  4 - Homunculus hungry level. 100 is completely full.
  5 - Homunculus rename flag. 0 means this homunculus has not been named yet.
  6 - Homunculus level
+ 7 - Homunculus Game ID
 
 ---------------------------------------
 
@@ -8424,7 +8506,7 @@ character. If char id is given, the information of that character is
 retrieved instead. Type specifies what information to retrieve and
 can be one of the following:
 
-    0 - Mercenary Game ID
+    0 - Mercenary ID
     1 - Mercenary Class
     2 - Mercenary Name
     3 - Mercenary faith value for this mercenary's guild, if any
@@ -8432,6 +8514,7 @@ can be one of the following:
     5 - Mercenary kill count
     6 - Mercenary remaining life time in msec
     7 - Mercenary level
+    8 - Mercenary Game ID
 
 If the character does not have a mercenary, the command returns ""
 for name and 0 for all other types.
@@ -8455,7 +8538,7 @@ Lets say the ID of a party was saved as a global variable:
 
 ---------------------------------------
 
-*getpartymember <party id>{,<type>};
+*getpartymember <party id>{,<type>{,<array_variable>}};
 
 This command will find all members of a specified party and returns their names 
 (or character id or account id depending on the value of "type") into an array
@@ -8491,6 +8574,9 @@ addition to returning the 5 member names, the 6th and 7th elements from the last
 call remain, and you will get 5+2 members, of which the last 2 don't belong to 
 the new guy's party. $@partymembercount will always contain the correct number, 
 (5) unlike 'getarraysize()' which will return 7 in this case.
+
+If 'array_variable' is set, the result will be stored to that variable instead
+using global variable.
 
 Example 1: list party member names
 

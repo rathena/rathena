@@ -55,7 +55,7 @@ function Chk;
 			mes "You've started a mission";
 			mes "on another character.";
 			if (!@hm_char_del_check) {  // check for deleted character
-				query_sql("SELECT 1 FROM `global_reg_value` WHERE `str` = 'Mission0' AND `char_id` IN(SELECT `char_id` FROM `char` WHERE `account_id` = " + getcharid(3) + ")", .@i);
+				query_sql("SELECT 1 FROM `char_reg_num` WHERE `key` = 'Mission0' AND `char_id` IN(SELECT `char_id` FROM `char` WHERE `account_id` = " + getcharid(3) + ")", .@i);
 				if (!.@i) {
 					next;
 					mes "[Hunting Missions]";
@@ -146,7 +146,7 @@ function Chk;
 	case 6:
 		mes "[Hunting Missions]";
 		mes "The top hunters are:";
-		query_sql("SELECT char_id AS id, (SELECT `name` FROM `char` WHERE char_id = id),`value` FROM `global_reg_value` WHERE str = 'Mission_Total' ORDER BY CAST(`value` AS SIGNED) DESC LIMIT 5", .@id, .@name$, .@val);
+		query_sql("SELECT char_id AS id, (SELECT `name` FROM `char` WHERE char_id = id),`value` FROM `char_reg_num` WHERE `key` = 'Mission_Total' ORDER BY CAST(`value` AS SIGNED) DESC LIMIT 5", .@id, .@name$, .@val);
 		for (.@i = 0; .@i < 5; .@i++)
 			mes "  [Rank " + (.@i+1) + "]  " + ((.@name$[.@i] == "") ? "^777777none" : "^0055FF" + .@name$[.@i]+"^000000 : ^FF0000" + .@val[.@i] + " pt.") + "^000000";
 		close;
@@ -207,9 +207,9 @@ Mission_Status:
 		#Mission_Delay = gettimetick(2) + (.Delay * 3600);
 	Mission_Total++;
 	if (Mission_Total == 1)
-		query_sql("INSERT INTO `global_reg_value` (`char_id`,`str`,`value`,`type`,`account_id`) VALUES (" + getcharid(0) + ",'Mission_Total','1',3,0)");
+		query_sql("INSERT INTO `char_reg_num` (`char_id`,`key`,`index`,`value`) VALUES (" + getcharid(0) + ",'Mission_Total','0',1)");
 	else
-		query_sql("UPDATE `global_reg_value` SET `value` = " + Mission_Total + " WHERE char_id = " + getcharid(0) + " AND `str` = 'Mission_Total'");
+		query_sql("UPDATE `char_reg_num` SET `value` = " + Mission_Total + " WHERE `char_id` = " + getcharid(0) + " AND `key` = 'Mission_Total'");
 	close;
 
 Mission_Info:
@@ -285,15 +285,18 @@ OnNPCKillEvent:
 		getpartymember getcharid(1),2;
 		for (.@i = 0; .@i < $@partymembercount; .@i++) {
 			if (isloggedin($@partymemberaid[.@i], $@partymembercid[.@i])) {
-				attachrid $@partymemberaid[.@i];
-				if (#Mission_Count && Mission0 && HP > 0) {
+				set .@Mission_Count, getvar(#Mission_Count, $@partymembercid[.@i]);
+				set .@Mission0, getvar(Mission0, $@partymembercid[.@i]);
+				set .@HP, getvar(HP, $@partymembercid[.@i]);
+
+				if (.@Mission_Count && .@Mission0 && .@HP > 0) {
 					getmapxy(.@map2$,.@x2,.@y2,0);
 					if ((.@map1$ == .@map2$ || .Party == 1) && (distance(.@x1,.@y1,.@x2,.@y2) <= 30 || .Party < 3)) {
 						for (.@j = 0; .@j < .Quests; .@j++) {
-							if (strmobinfo(1,.@mob) == strmobinfo(1,getd("Mission"+.@j))) {
-								if (getd("Mission"+.@j+"_") < #Mission_Count) {
-									dispbottom "[Hunting Mission] Killed " + (set(getd("Mission" + .@j + "_"),getd("Mission" + .@j + "_") + 1)) +
-									           " of " + #Mission_Count + " " + strmobinfo(1,.@mob) + ".";
+							if (strmobinfo(1,.@mob) == strmobinfo(1,getvar(getd("Mission"+.@j), $@partymembercid[.@i]))) {
+								if (getvar(getd("Mission"+.@j+"_"), $@partymembercid[.@i]) < .@Mission_Count) {
+									dispbottom "[Hunting Mission] Killed " + (set(getvar(getd("Mission" + .@j + "_"), $@partymembercid[.@i]), getvar(getd("Mission" + .@j + "_") + 1, $@partymembercid[.@i]))) +
+									           " of " + .@Mission_Count + " " + strmobinfo(1,.@mob) + ".";
 									break;
 								}
 							}

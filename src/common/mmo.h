@@ -5,7 +5,8 @@
 #define	_MMO_H_
 
 #include "cbasetypes.h"
-#include "../common/db.h"
+#include "../config/core.h"
+#include "db.h"
 #include <time.h>
 
 // server->client protocol version
@@ -31,14 +32,14 @@
 #define HOTKEY_SAVING
 
 #if PACKETVER < 20090603
-        // (27 = 9 skills x 3 bars)               (0x02b9,191)
-        #define MAX_HOTKEYS 27
+	// (27 = 9 skills x 3 bars)               (0x02b9,191)
+	#define MAX_HOTKEYS 27
 #elif PACKETVER < 20090617
-        // (36 = 9 skills x 4 bars)               (0x07d9,254)
-        #define MAX_HOTKEYS 36
+	// (36 = 9 skills x 4 bars)               (0x07d9,254)
+	#define MAX_HOTKEYS 36
 #else
-        // (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
-        #define MAX_HOTKEYS 38
+	// (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
+	#define MAX_HOTKEYS 38
 #endif
 
 #define MAX_MAP_PER_SERVER 1500 /// Increased to allow creation of Instance Maps
@@ -55,10 +56,6 @@
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
 #define MAX_SKILL 1200 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
-#define GLOBAL_REG_NUM 256 ///Max permanent character variables per char
-#define ACCOUNT_REG_NUM 64 ///Max permanent local account variables per account
-#define ACCOUNT_REG2_NUM 16 ///Max permanent global account variables per account
-#define MAX_REG_NUM 256 ///Should hold the max of GLOBAL/ACCOUNT/ACCOUNT2 (needed for some arrays that hold all three)
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -73,6 +70,7 @@
 #define MAX_GUILDLEVEL 50 ///Max Guild level
 #define MAX_GUARDIANS 8	///Local max per castle. If this value is increased, need to add more fields on MySQL `guild_castle` table [Skotlex]
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
+#define MAX_QUEST_DROPS 3 ///Max quest drops for a quest
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 
 // for produce
@@ -242,16 +240,19 @@ struct s_skill {
 	uint8 flag; // see enum e_skill_flag
 };
 
-struct global_reg {
-	char str[32];
-	char value[256];
+struct script_reg_state {
+	unsigned int type : 1; // because I'm a memory hoarder and having them in the same struct would be a 8-byte/instance waste while ints outnumber str on a 10000-to-1 ratio.
+	unsigned int update : 1; // whether it needs to be sent to char server for insertion/update/delete
 };
 
-//Holds array of global registries, used by the char server and converter.
-struct accreg {
-	uint32 account_id, char_id;
-	int reg_num;
-	struct global_reg reg[MAX_REG_NUM];
+struct script_reg_num {
+	struct script_reg_state flag;
+	int value;
+};
+
+struct script_reg_str {
+	struct script_reg_state flag;
+	char *value;
 };
 
 //For saving status changes across sessions. [Skotlex]
@@ -373,9 +374,9 @@ struct mmo_charstatus {
 	uint32 char_id;
 	uint32 account_id;
 	uint32 partner_id;
-	int father;
-	int mother;
-	int child;
+	uint32 father;
+	uint32 mother;
+	uint32 child;
 
 	unsigned int base_exp,job_exp;
 	int zeny;
@@ -402,7 +403,7 @@ struct mmo_charstatus {
 
 	char name[NAME_LENGTH];
 	unsigned int base_level,job_level;
-	short str,agi,vit,int_,dex,luk;
+	unsigned short str,agi,vit,int_,dex,luk;
 	unsigned char slot,sex;
 
 	uint32 mapip;
@@ -431,6 +432,8 @@ struct mmo_charstatus {
 	bool cashshop_sent; // Whether the player has received the CashShop list
 
 	uint32 uniqueitem_counter;
+
+	unsigned char hotkey_rowshift;
 };
 
 typedef enum mail_status {
@@ -441,17 +444,17 @@ typedef enum mail_status {
 
 struct mail_message {
 	int id;
-	int send_id;
-	char send_name[NAME_LENGTH];
-	int dest_id;
-	char dest_name[NAME_LENGTH];
+	uint32 send_id;                 //hold char_id of sender
+	char send_name[NAME_LENGTH];    //sender nickname
+	uint32 dest_id;                 //hold char_id of receiver
+	char dest_name[NAME_LENGTH];    //receiver nickname
 	char title[MAIL_TITLE_LENGTH];
 	char body[MAIL_BODY_LENGTH];
 
 	mail_status status;
 	time_t timestamp; // marks when the message was sent
 
-	int zeny;
+	uint32 zeny;
 	struct item item;
 };
 
@@ -478,15 +481,6 @@ struct auction_data {
 	int price, buynow;
 	time_t timestamp; // auction's end time
 	int auction_end_timer;
-};
-
-struct registry {
-	int global_num;
-	struct global_reg global[GLOBAL_REG_NUM];
-	int account_num;
-	struct global_reg account[ACCOUNT_REG_NUM];
-	int account2_num;
-	struct global_reg account2[ACCOUNT_REG2_NUM];
 };
 
 struct party_member {
@@ -812,9 +806,24 @@ enum bound_type {
 	BOUND_DISPYELLOW = 2, /// Shows the item name in yellow color
 };
 
-// sanity checks...
+enum e_pc_reg_loading {
+	PRL_NONE = 0x0,
+	PRL_CHAR = 0x1,
+	PRL_ACCL = 0x2, // local
+	PRL_ACCG = 0x4, // global
+	PRL_ALL = 0xFF,
+};
+
+// Sanity checks...
 #if MAX_ZENY > INT_MAX
 #error MAX_ZENY is too big
+#endif
+
+#ifndef VIP_ENABLE
+	#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
+	#define MIN_CHARS MAX_CHARS // Default number of characters per account.
+	#define MAX_CHAR_BILLING 0
+	#define MAX_CHAR_VIP 0
 #endif
 
 #if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
@@ -829,6 +838,17 @@ enum bound_type {
 	#if PACKETVER < 20110817
 		#undef PACKET_OBFUSCATION
 	#endif
+#endif
+
+/* Feb 1st 2012 */
+#if PACKETVER >= 20120201
+	#define NEW_CARTS
+	#ifndef ENABLE_SC_SAVING
+	#warning "Cart won't be able to be saved for relog"
+	#endif
+	#define MAX_CARTS 9
+#else
+	#define MAX_CARTS 5
 #endif
 
 #endif /* _MMO_H_ */

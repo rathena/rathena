@@ -5,7 +5,7 @@
 #define _NULLPO_H_
 
 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 
 #define NLP_MARK __FILE__, __LINE__, __func__
 

@@ -4,10 +4,10 @@
 #ifndef	_SOCKET_H_
 #define _SOCKET_H_
 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 
 #ifdef WIN32
-	#include "../common/winapi.h"
+	#include "winapi.h"
 	typedef long in_addr_t;
 #else
 	#include <sys/types.h>
@@ -129,6 +129,24 @@ extern void flush_fifos(void);
 extern void set_nonblocking(int fd, unsigned long yes);
 
 void set_defaultparse(ParseFunc defaultparse);
+
+
+/// Server operation request
+enum chrif_req_op {
+	// Char-server <-> login-server oepration
+	CHRIF_OP_LOGIN_BLOCK = 1,
+	CHRIF_OP_LOGIN_BAN,
+	CHRIF_OP_LOGIN_UNBLOCK,
+	CHRIF_OP_LOGIN_UNBAN,
+	CHRIF_OP_LOGIN_CHANGESEX,
+	CHRIF_OP_LOGIN_VIP,
+
+	// Char-server operation
+	CHRIF_OP_BAN,
+	CHRIF_OP_UNBAN,
+	CHRIF_OP_CHANGECHARSEX,
+};
+
 
 // hostname/ip conversion functions
 uint32 host2ip(const char* hostname);

@@ -63,13 +63,13 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b0a: Outgoing, chrif_skillcooldown_request -> requesting the list of skillcooldown for char
 //2b0b: Incoming, chrif_skillcooldown_load -> received the list of cooldown for char
 //2b0c: Outgoing, chrif_changeemail -> 'change mail address ...'
-//2b0d: Incoming, chrif_changedsex -> 'Change sex of acc XY'
+//2b0d: Incoming, chrif_changedsex -> 'Change sex of acc XY' (or char)
 //2b0e: Outgoing, chrif_req_login_operation -> 'Do some operations (change sex, ban / unban etc)'
 //2b0f: Incoming, chrif_ack_login_req -> 'answer of the 2b0e'
 //2b10: Outgoing, chrif_updatefamelist -> 'Update the fame ranking lists and send them'
 //2b11: Outgoing, chrif_divorce -> 'tell the charserver to do divorce'
 //2b12: Incoming, chrif_divorceack -> 'divorce chars
-//2b13: FREE
+//2b13: Outgoing, chrif_update_ip -> 'tell the change of map-server IP'
 //2b14: Incoming, chrif_accountban -> 'not sure: kick the player with message XY'
 //2b15: Outgoing, chrif_skillcooldown_save -> request to save skillcooldown
 //2b16: Outgoing, chrif_ragsrvinfo -> 'sends base / job / drop rates ....'
@@ -157,8 +157,15 @@ bool chrif_auth_delete(uint32 account_id, uint32 char_id, enum sd_state state) {
 		if ( node->char_dat )
 			aFree(node->char_dat);
 
-		if ( node->sd )
+		if ( node->sd ) {
+			if (node->sd->regs.vars)
+				node->sd->regs.vars->destroy(node->sd->regs.vars, script_reg_destroy);
+
+			if (node->sd->regs.arrays)
+				node->sd->regs.arrays->destroy(node->sd->regs.arrays, script_free_array_db);
+
 			aFree(node->sd);
+		}
 
 		ers_free(auth_db_ers, node);
 		idb_remove(auth_db,account_id);
@@ -298,12 +305,8 @@ int chrif_save(struct map_session_data *sd, int flag) {
 		sd->state.storage_flag = 0; //Force close it.
 
 	//Saving of registry values.
-	if (sd->state.reg_dirty&4)
-		intif_saveregistry(sd, 3); //Save char regs
-	if (sd->state.reg_dirty&2)
-		intif_saveregistry(sd, 2); //Save account regs
-	if (sd->state.reg_dirty&1)
-		intif_saveregistry(sd, 1); //Save account2 regs
+	if (sd->vars_dirty)
+		intif_saveregistry(sd);
 
 	mmo_charstatus_len = sizeof(sd->status) + 13;
 	WFIFOHEAD(char_fd, mmo_charstatus_len);
@@ -508,7 +511,7 @@ int chrif_connectack(int fd) {
  * @see DBApply
  */
 static int chrif_reconnect(DBKey key, DBData *data, va_list ap) {
-	struct auth_node *node = db_data2ptr(data);
+	struct auth_node *node = (struct auth_node *)db_data2ptr(data);
 
 	switch (node->state) {
 		case ST_LOGIN:
@@ -746,7 +749,7 @@ void chrif_authfail(int fd) {/* HELLO WORLD. ip in RFIFOL 15 is not being used (
  * @see DBApply
  */
 int auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
-	struct auth_node *node = db_data2ptr(data);
+	struct auth_node *node = (struct auth_node *)db_data2ptr(data);
 	
 	if(DIFF_TICK(gettick(),node->node_created)>60000) {
 		const char* states[] = { "Login", "Logout", "Map change" };
@@ -845,7 +848,7 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email) {
  * @val1 : extra data value to transfer for operation
  * @val2 : extra data value to transfer for operation
  */
-int chrif_req_login_operation(int aid, const char* character_name, unsigned short operation_type, int32 timediff, int val1, int val2) {
+int chrif_req_login_operation(int aid, const char* character_name, enum chrif_req_op operation_type, int32 timediff, int val1, int val2) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,44);
@@ -864,17 +867,19 @@ int chrif_req_login_operation(int aid, const char* character_name, unsigned shor
 
 /**
  * S 2b0e <accid>.l <name>.24B <operation_type>.w <timediff>L <val1>L <val2>L
- * Send an account modification (changesex) request to the login server (via char server).
+ * Send a sex change (for account or character) request to the login server (via char server).
  * @sd : Player requesting operation
  */
-int chrif_changesex(struct map_session_data *sd) {
+int chrif_changesex(struct map_session_data *sd, bool change_account) {
 	chrif_check(-1);
 
 	WFIFOHEAD(char_fd,44);
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = sd->status.account_id;
 	safestrncpy((char*)WFIFOP(char_fd,6), sd->status.name, NAME_LENGTH);
-	WFIFOW(char_fd,30) = CHRIF_OP_LOGIN_CHANGESEX;
+	WFIFOW(char_fd,30) = (change_account ? CHRIF_OP_LOGIN_CHANGESEX : CHRIF_OP_CHANGECHARSEX);
+	if (!change_account)
+		WFIFOB(char_fd,32) = sd->status.sex == SEX_MALE ? SEX_FEMALE : SEX_MALE;
 	WFIFOSET(char_fd,44);
 
 	clif_displaymessage(sd->fd, msg_txt(sd,408)); //"Need disconnection to perform change-sex request..."
@@ -912,11 +917,13 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 	}
 
 	switch (type) {
+		case CHRIF_OP_LOGIN_CHANGESEX:
+		case CHRIF_OP_CHANGECHARSEX:
+			type = CHRIF_OP_LOGIN_CHANGESEX; // So we don't have to create a new msgstring.
 		case CHRIF_OP_LOGIN_BLOCK:
 		case CHRIF_OP_LOGIN_BAN:
 		case CHRIF_OP_LOGIN_UNBLOCK:
 		case CHRIF_OP_LOGIN_UNBAN:
-		case CHRIF_OP_LOGIN_CHANGESEX:
 			snprintf(action,25,"%s",msg_txt(sd,427+type)); //block|ban|unblock|unban|change the sex of
 			break;
 		case CHRIF_OP_LOGIN_VIP:
@@ -929,7 +936,7 @@ static void chrif_ack_login_req(int aid, const char* player_name, uint16 type, u
 			break;
 	}
 
-	switch( answer ) {
+	switch (answer) {
 		case 0: sprintf(output, msg_txt(sd,424), action, NAME_LENGTH, player_name); break; //Login-serv has been asked to %s '%.*s'.
 		case 1: sprintf(output, msg_txt(sd,425), NAME_LENGTH, player_name); break;
 		case 2: sprintf(output, msg_txt(sd,426), action, NAME_LENGTH, player_name); break;
@@ -1042,7 +1049,7 @@ int chrif_divorceack(uint32 char_id, int partner_id) {
 /*==========================================
  * Removes Baby from parents
  *------------------------------------------*/
-int chrif_deadopt(int father_id, int mother_id, int child_id) {
+int chrif_deadopt(uint32 father_id, uint32 mother_id, uint32 child_id) {
 	struct map_session_data* sd;
 	uint16 idx = skill_get_index(WE_CALLBABY);
 
@@ -1520,7 +1527,12 @@ void chrif_on_disconnect(void) {
 	add_timer(gettick() + 1000, check_connect_char_server, 0, 0);
 }
 
-
+/**
+ * !CHECKME: This is intended?
+ * On sync request received, map-server only send its own IP
+ * without change the char IP (if any)?
+ * Since no IP info sent by 0x2b1e (chlogif_parse_updip)
+ **/
 void chrif_update_ip(int fd) {
 	uint32 new_ip;
 
@@ -1536,7 +1548,7 @@ void chrif_update_ip(int fd) {
 	if (!new_ip)
 		return; //No change
 
-	WFIFOW(fd,0) = 0x2736;
+	WFIFOW(fd,0) = 0x2b13;
 	WFIFOL(fd,2) = htonl(new_ip);
 	WFIFOSET(fd,6);
 }
@@ -1547,6 +1559,7 @@ void chrif_keepalive(int fd) {
 	WFIFOW(fd,0) = 0x2b23;
 	WFIFOSET(fd,2);
 }
+
 void chrif_keepalive_ack(int fd) {
 	session[fd]->flag.ping = 0;/* reset ping state, we received a packet */
 }
@@ -1922,13 +1935,20 @@ int chrif_send_report(char* buf, int len) {
  * @see DBApply
  */
 int auth_db_final(DBKey key, DBData *data, va_list ap) {
-	struct auth_node *node = db_data2ptr(data);
+	struct auth_node *node = (struct auth_node *)db_data2ptr(data);
 
 	if (node->char_dat)
 		aFree(node->char_dat);
 
-	if (node->sd)
+	if (node->sd) {
+		if (node->sd->regs.vars)
+			node->sd->regs.vars->destroy(node->sd->regs.vars, script_reg_destroy);
+
+		if (node->sd->regs.arrays)
+			node->sd->regs.arrays->destroy(node->sd->regs.arrays, script_free_array_db);
+
 		aFree(node->sd);
+	}
 
 	ers_free(auth_db_ers, node);
 

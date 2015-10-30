@@ -19,12 +19,14 @@ int intif_parse(int fd);
 
 int intif_broadcast(const char* mes, int len, int type);
 int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY);
+int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned short nameid, unsigned int sourceid, unsigned char type);
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid, const char *srcname);
 int intif_main_message(struct map_session_data* sd, const char* message);
 
 int intif_wis_message(struct map_session_data *sd,char *nick,char *mes,int mes_len);
 int intif_wis_message_to_gm(char *Wisp_name, int permission, char *mes);
 
-int intif_saveregistry(struct map_session_data *sd, int type);
+int intif_saveregistry(struct map_session_data *sd);
 int intif_request_registry(struct map_session_data *sd, int flag);
 
 int intif_request_guild_storage(uint32 account_id, int guild_id);

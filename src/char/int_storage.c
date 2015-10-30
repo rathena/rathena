@@ -316,7 +316,7 @@ int mapif_parse_itembound_retrieve(int fd)
 	SqlStmt_BindColumn(stmt, 7, SQLDT_UINT,      &item.expire_time, 0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 8, SQLDT_UINT,      &item.bound,       0, NULL, NULL);
 	for( j = 0; j < MAX_SLOTS; ++j )
-		SqlStmt_BindColumn(stmt, 9+j, SQLDT_SHORT, &item.card[j], 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 9+j, SQLDT_USHORT, &item.card[j], 0, NULL, NULL);
 
 	memset(&items, 0, sizeof(items));
 	while( SQL_SUCCESS == SqlStmt_NextRow(stmt) )

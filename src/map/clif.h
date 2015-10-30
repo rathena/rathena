@@ -33,9 +33,9 @@ struct party_booking_ad_info;
 #include <stdarg.h>
 
 enum { // packet DB
-	MIN_PACKET_DB  = 0x0064,
-	MAX_PACKET_DB  = 0xf00,
-	MAX_PACKET_VER = 46,
+	MIN_PACKET_DB  = 0x064,
+	MAX_PACKET_DB  = 0xAFF,
+	MAX_PACKET_VER = 51,
 	MAX_PACKET_POS = 20,
 };
 
@@ -50,6 +50,9 @@ enum e_packet_ack {
 	ZC_C_MARKERINFO,
 	ZC_NOTIFY_BIND_ON_EQUIP,
 	ZC_WEAR_EQUIP_ACK,
+	ZC_MERGE_ITEM_OPEN,
+	ZC_ACK_MERGE_ITEM,
+	ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN,
 	//add other here
 	MAX_ACK_FUNC //auto upd len
 };
@@ -73,11 +76,52 @@ enum e_BANKING_DEPOSIT_ACK {
 	BDA_NO_MONEY = 0x2,
 	BDA_OVERFLOW = 0x3,
 };
- 
+
 enum e_BANKING_WITHDRAW_ACK {
 	BWA_SUCCESS       = 0x0,
 	BWA_NO_MONEY      = 0x1,
 	BWA_UNKNOWN_ERROR = 0x2,
+};
+
+enum RECV_ROULETTE_ITEM_REQ {
+	RECV_ITEM_SUCCESS    = 0x0,
+	RECV_ITEM_FAILED     = 0x1,
+	RECV_ITEM_OVERCOUNT  = 0x2,
+	RECV_ITEM_OVERWEIGHT = 0x3,
+};
+
+enum RECV_ROULETTE_ITEM_ACK {
+	RECV_ITEM_NORMAL =  0x0,
+	RECV_ITEM_LOSING =  0x1,
+};
+
+enum GENERATE_ROULETTE_ACK {
+	GENERATE_ROULETTE_SUCCESS         = 0x0,
+	GENERATE_ROULETTE_FAILED          = 0x1,
+	GENERATE_ROULETTE_NO_ENOUGH_POINT = 0x2,
+	GENERATE_ROULETTE_LOSING          = 0x3,
+};
+
+enum OPEN_ROULETTE_ACK {
+	OPEN_ROULETTE_SUCCESS = 0x0,
+	OPEN_ROULETTE_FAILED  = 0x1,
+};
+
+enum CLOSE_ROULETTE_ACK {
+	CLOSE_ROULETTE_SUCCESS = 0x0,
+	CLOSE_ROULETTE_FAILED  = 0x1,
+};
+
+enum MERGE_ITEM_ACK {
+	MERGE_ITEM_SUCCESS = 0x0,
+	MERGE_ITEM_FAILED_NOT_MERGE = 0x1,
+	MERGE_ITEM_FAILED_MAX_COUNT = 0x2,
+};
+
+enum BROADCASTING_SPECIAL_ITEM_OBTAIN {
+	ITEMOBTAIN_TYPE_BOXITEM =  0x0,
+	ITEMOBTAIN_TYPE_MONSTER_ITEM =  0x1,
+	ITEMOBTAIN_TYPE_NPC =  0x2,
 };
 
 // packet_db[SERVER] is reserved for server use
@@ -399,8 +443,10 @@ enum clif_messages {
 	ITEM_PRODUCE_SUCCESS = 0x627,
 	ITEM_PRODUCE_FAIL = 0x628,
 	ITEM_UNIDENTIFIED = 0x62d,
+	ITEM_REUSE_LIMIT = 0x746,
 	USAGE_FAIL = 0x783,
 	NEED_REINS_OF_MOUNT = 0x78c,
+	MERGE_ITEM_NOT_AVAILABLE = 0x887,
 };
 
 enum e_personalinfo {
@@ -861,11 +907,13 @@ void clif_cashshop_open( struct map_session_data* sd );
 
 void clif_display_pinfo(struct map_session_data *sd, int type);
 
-/**
- * 3CeAM
- **/
-void clif_msgtable(int fd, int line);
-void clif_msgtable_num(int fd, int line, int num);
+/// Roulette
+void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID);
+void clif_parse_RouletteOpen(int fd, struct map_session_data *sd);
+void clif_parse_RouletteInfo(int fd, struct map_session_data *sd);
+void clif_parse_RouletteClose(int fd, struct map_session_data *sd);
+void clif_parse_RouletteGenerate(int fd, struct map_session_data *sd);
+void clif_parse_RouletteRecvItem(int fd, struct map_session_data *sd);
 
 int clif_elementalconverter_list(struct map_session_data *sd);
 
@@ -883,7 +931,7 @@ int clif_skill_itemlistwindow( struct map_session_data *sd, uint16 skill_id, uin
 void clif_elemental_info(struct map_session_data *sd);
 void clif_elemental_updatestatus(struct map_session_data *sd, int type);
 
-void clif_talisman(struct map_session_data *sd, short type);
+void clif_spiritcharm(struct map_session_data *sd);
 
 void clif_snap( struct block_list *bl, short x, short y );
 void clif_monster_hp_bar( struct mob_data* md, int fd );
@@ -892,13 +940,14 @@ void clif_monster_hp_bar( struct mob_data* md, int fd );
  * Color Table
  **/
 enum clif_colors {
+	COLOR_DEFAULT,
 	COLOR_RED,
 	COLOR_WHITE,
 	COLOR_YELLOW,
 	COLOR_MAX
 };
 unsigned long color_table[COLOR_MAX];
-int clif_colormes(struct map_session_data * sd, unsigned long color, const char* msg);
+int clif_colormes(int fd, unsigned long color, const char* msg);
 
 void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char *msg, short color);
 
@@ -915,6 +964,8 @@ void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, 
 void clif_account_name(int fd, uint32 account_id, const char* accname);
 void clif_notify_bindOnEquip(struct map_session_data *sd, int n);
 
-//void clif_broadcast_obtain_special_item(); ///TODO!
+void clif_merge_item_open(struct map_session_data *sd);
+
+void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, const char *srcname);
 
 #endif /* _CLIF_H_ */

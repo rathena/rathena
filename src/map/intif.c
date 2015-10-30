@@ -25,7 +25,7 @@
 #include <stdlib.h>
 
 static const int packet_len_table[]={
-	-1,-1,27,-1, -1, 0,37,-1, 10+NAME_LENGTH, 0, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
+	-1,-1,27,-1, -1, 0,37,-1, 10+NAME_LENGTH,-1, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
 	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
@@ -351,72 +351,119 @@ int intif_wis_message_to_gm(char *wisp_name, int permission, char *mes)
 }
 
 /**
- * 
- * @param str
- * @param reg
- * @param qty
- * @return 
- */
-int intif_regtostr(char* str, struct global_reg *reg, int qty)
-{
-	int len =0, i;
-
-	for (i = 0; i < qty; i++) {
-		len+= sprintf(str+len, "%s", reg[i].str)+1; //We add 1 to consider the '\0' in place.
-		len+= sprintf(str+len, "%s", reg[i].value)+1;
-	}
-	return len;
-}
-
-/**
  * Request for saving registry values.
  * @param sd : Player to save registry
- * @param type : Type of registry to save, 1=login save, 2=acc on char, 3=char
  * @return 1=msg sent, -1=error
  */
-int intif_saveregistry(struct map_session_data *sd, int type)
+int intif_saveregistry(struct map_session_data *sd)
 {
-	struct global_reg *reg;
-	int count;
-	int i, p;
+	DBIterator *iter;
+	DBKey key;
+	DBData *data;
+	int plen = 0;
+	size_t len;
 
-	if (CheckForCharServer())
+	if (CheckForCharServer() || !sd->regs.vars)
 		return -1;
 
-	switch (type) {
-	case 3: //Character reg
-		reg = sd->save_reg.global;
-		count = sd->save_reg.global_num;
-		sd->state.reg_dirty &= ~0x4;
-	break;
-	case 2: //Account reg
-		reg = sd->save_reg.account;
-		count = sd->save_reg.account_num;
-		sd->state.reg_dirty &= ~0x2;
-	break;
-	case 1: //Account2 reg
-		reg = sd->save_reg.account2;
-		count = sd->save_reg.account2_num;
-		sd->state.reg_dirty &= ~0x1;
-	break;
-	default: //Broken code?
-		ShowError("intif_saveregistry: Invalid type %d\n", type);
-		return -1;
-	}
-	WFIFOHEAD(inter_fd, 288 * MAX_REG_NUM+13);
-	WFIFOW(inter_fd,0)=0x3004;
-	WFIFOL(inter_fd,4)=sd->status.account_id;
-	WFIFOL(inter_fd,8)=sd->status.char_id;
-	WFIFOB(inter_fd,12)=type;
-	for( p = 13, i = 0; i < count; i++ ) {
-		if (reg[i].str[0] != '\0' && reg[i].value[0] != '\0') {
-			p+= sprintf((char*)WFIFOP(inter_fd,p), "%s", reg[i].str)+1; //We add 1 to consider the '\0' in place.
-			p+= sprintf((char*)WFIFOP(inter_fd,p), "%s", reg[i].value)+1;
+	WFIFOHEAD(inter_fd, 60000 + 300);
+	WFIFOW(inter_fd,0)  = 0x3004;
+	// 0x2 = length (set later)
+	WFIFOL(inter_fd,4)  = sd->status.account_id;
+	WFIFOL(inter_fd,8)  = sd->status.char_id;
+	WFIFOW(inter_fd,12) = 0; // count
+
+	plen = 14;
+
+	iter = db_iterator(sd->regs.vars);
+	for( data = iter->first(iter,&key); iter->exists(iter); data = iter->next(iter,&key) ) {
+		const char *varname = NULL;
+		struct script_reg_state *src = NULL;
+
+		if( data->type != DB_DATA_PTR ) // it's a @number
+			continue;
+
+		varname = get_str(script_getvarid(key.i64));
+
+		if( varname[0] == '@' ) // @string$ can get here, so we skip
+			continue;
+
+		src = (struct script_reg_state *)db_data2ptr(data);
+
+		if( !src->update )
+			continue;
+
+		src->update = false;
+
+		len = strlen(varname)+1;
+
+		WFIFOB(inter_fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
+		plen += 1;
+
+		safestrncpy((char*)WFIFOP(inter_fd,plen), varname, len);
+		plen += len;
+
+		WFIFOL(inter_fd, plen) = script_getvaridx(key.i64);
+		plen += 4;
+
+		if( src->type ) {
+			struct script_reg_str *p = (struct script_reg_str *)src;
+
+			WFIFOB(inter_fd, plen) = p->value ? 2 : 3;
+			plen += 1;
+
+			if( p->value ) {
+				len = strlen(p->value)+1;
+
+				WFIFOB(inter_fd, plen) = (unsigned char)len; // won't be higher; the column size is 254
+				plen += 1;
+
+				safestrncpy((char*)WFIFOP(inter_fd,plen), p->value, len);
+				plen += len;
+			} else {
+				script_reg_destroy_single(sd,key.i64,&p->flag);
+			}
+
+		} else {
+			struct script_reg_num *p = (struct script_reg_num *)src;
+
+			WFIFOB(inter_fd, plen) =  p->value ? 0 : 1;
+			plen += 1;
+
+			if( p->value ) {
+				WFIFOL(inter_fd, plen) = p->value;
+				plen += 4;
+			} else {
+				script_reg_destroy_single(sd,key.i64,&p->flag);
+			}
+
+		}
+
+		WFIFOW(inter_fd,12) += 1;
+
+		if( plen > 60000 ) {
+			WFIFOW(inter_fd, 2) = plen;
+			WFIFOSET(inter_fd, plen);
+
+			// prepare follow up
+			WFIFOHEAD(inter_fd, 60000 + 300);
+			WFIFOW(inter_fd,0)  = 0x3004;
+			// 0x2 = length (set later)
+			WFIFOL(inter_fd,4)  = sd->status.account_id;
+			WFIFOL(inter_fd,8)  = sd->status.char_id;
+			WFIFOW(inter_fd,12) = 0; // count
+
+			plen = 14;
 		}
 	}
-	WFIFOW(inter_fd,2)=p;
-	WFIFOSET(inter_fd,WFIFOW(inter_fd,2));
-	return 1;
+	dbi_destroy(iter);
+
+	WFIFOW(inter_fd, 2) = plen;
+	WFIFOSET(inter_fd, plen);
+
+	sd->vars_dirty = false;
+
+	return 0;
 }
 
 /**
@@ -428,10 +475,6 @@ int intif_saveregistry(struct map_session_data *sd, int type)
 int intif_request_registry(struct map_session_data *sd, int flag)
 {
 	nullpo_ret(sd);
-
-	sd->save_reg.account2_num = -1;
-	sd->save_reg.account_num = -1;
-	sd->save_reg.global_num = -1;
 
 	if (CheckForCharServer())
 		return 0;
@@ -1266,58 +1309,98 @@ int mapif_parse_WisToGM(int fd)
  * @param fd : char-serv link
  * @return 0=error, 1=sucess
  */
-int intif_parse_Registers(int fd)
+void intif_parse_Registers(int fd)
 {
-	int j,p,len,max, flag;
+	int flag;
 	struct map_session_data *sd;
-	struct global_reg *reg;
-	int *qty;
 	uint32 account_id = RFIFOL(fd,4), char_id = RFIFOL(fd,8);
 	struct auth_node *node = chrif_auth_check(account_id, char_id, ST_LOGIN);
+	char type = RFIFOB(fd, 13);
+
 	if (node)
 		sd = node->sd;
 	else { //Normally registries should arrive for in log-in chars.
 		sd = map_id2sd(account_id);
-		if (sd && RFIFOB(fd,12) == 3 && sd->status.char_id != char_id)
-			sd = NULL; //Character registry from another character.
 	}
-	if (!sd) return 0;
 
-	flag = (sd->save_reg.global_num == -1 || sd->save_reg.account_num == -1 || sd->save_reg.account2_num == -1);
+	if (!sd || sd->status.char_id != char_id) {
+		return; //Character registry from another character.
+	}
+
+	flag = ( sd->vars_received&PRL_ACCG && sd->vars_received&PRL_ACCL && sd->vars_received&PRL_CHAR ) ? 0 : 1;
 
 	switch (RFIFOB(fd,12)) {
 		case 3: //Character Registry
-			reg = sd->save_reg.global;
-			qty = &sd->save_reg.global_num;
-			max = GLOBAL_REG_NUM;
-		break;
+			sd->vars_received |= PRL_CHAR;
+			break;
 		case 2: //Account Registry
-			reg = sd->save_reg.account;
-			qty = &sd->save_reg.account_num;
-			max = ACCOUNT_REG_NUM;
-		break;
+			sd->vars_received |= PRL_ACCL;
+			break;
 		case 1: //Account2 Registry
-			reg = sd->save_reg.account2;
-			qty = &sd->save_reg.account2_num;
-			max = ACCOUNT_REG2_NUM;
-		break;
+			sd->vars_received |= PRL_ACCG;
+			break;
+		case 0:
+			break;
 		default:
 			ShowError("intif_parse_Registers: Unrecognized type %d\n",RFIFOB(fd,12));
-			return 0;
+			return;
 	}
-	for(j=0,p=13;j<max && p<RFIFOW(fd,2);j++){
-		sscanf((char*)RFIFOP(fd,p), "%31c%n", reg[j].str,&len);
-		reg[j].str[len]='\0';
-		p += len+1; //+1 to skip the '\0' between strings.
-		sscanf((char*)RFIFOP(fd,p), "%255c%n", reg[j].value,&len);
-		reg[j].value[len]='\0';
-		p += len+1;
-	}
-	*qty = j;
 
-	if (flag && sd->save_reg.global_num > -1 && sd->save_reg.account_num > -1 && sd->save_reg.account2_num > -1)
+	// have it not complain about insertion of vars before loading, and not set those vars as new or modified
+	reg_load = true;
+	
+	if( RFIFOW(fd, 14) ) {
+		char key[32];
+		unsigned int index;
+		int max = RFIFOW(fd, 14), cursor = 16, i;
+
+		/**
+		 * Vessel!char_reg_num_db
+		 *
+		 * str type
+		 * { keyLength(B), key(<keyLength>), index(L), valLength(B), val(<valLength>) }
+		 **/
+		if (type) {
+			for(i = 0; i < max; i++) {
+				char sval[254];
+				safestrncpy(key, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
+				cursor += RFIFOB(fd, cursor) + 1;
+
+				index = RFIFOL(fd, cursor);
+				cursor += 4;
+
+				safestrncpy(sval, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
+				cursor += RFIFOB(fd, cursor) + 1;
+
+				set_reg(NULL,sd,reference_uid(add_str(key), index), key, (void*)sval, NULL);
+			}
+		/**
+		 * Vessel!
+		 *
+		 * int type
+		 * { keyLength(B), key(<keyLength>), index(L), value(L) }
+		 **/
+		} else {
+			for(i = 0; i < max; i++) {
+				int ival;
+				safestrncpy(key, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
+				cursor += RFIFOB(fd, cursor) + 1;
+
+				index = RFIFOL(fd, cursor);
+				cursor += 4;
+
+				ival = RFIFOL(fd, cursor);
+				cursor += 4;
+
+				set_reg(NULL,sd,reference_uid(add_str(key), index), key, (void*)__64BPRTSIZE(ival), NULL);
+			}
+		}
+	}
+
+	reg_load = false;
+
+	if (flag && sd->vars_received&PRL_ACCG && sd->vars_received&PRL_ACCL && sd->vars_received&PRL_CHAR)
 		pc_reg_received(sd); //Received all registry values, execute init scripts and what-not. [Skotlex]
-	return 1;
 }
 
 /**
@@ -1924,7 +2007,7 @@ void intif_parse_questlog(int fd)
 			// sd->avail_quests and k didn't meet in the middle: some entries were skipped
 			if(k < num_received) // Move the entries at the end to fill the gap
 				memmove(&sd->quest_log[k], &sd->quest_log[sd->avail_quests], sizeof(struct quest) * (num_received - k));
-			sd->quest_log = aRealloc(sd->quest_log, sizeof(struct quest) * sd->num_quests);
+			sd->quest_log = (struct quest *)aRealloc(sd->quest_log, sizeof(struct quest) * sd->num_quests);
 		}
 	}
 
@@ -2855,7 +2938,7 @@ void intif_parse_MessageToFD(int fd) {
 
 	if( session[u_fd] && session[u_fd]->session_data ) { //check if the player still online
 		int aid = RFIFOL(fd,8);
-		struct map_session_data * sd = session[u_fd]->session_data;
+		struct map_session_data * sd = (struct map_session_data *)session[u_fd]->session_data;
 		/* matching e.g. previous fd owner didn't dc during request or is still the same */
 		if( sd->bl.id == aid ) {
 			char msg[512];
@@ -2866,6 +2949,97 @@ void intif_parse_MessageToFD(int fd) {
 	}
 
 	return;
+}
+
+/// BROADCAST OBTAIN SPECIAL ITEM
+
+/**
+ * Request to send broadcast item to all servers
+ * ZI 3009 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.?B
+ * @param sd Player who obtain the item
+ * @param nameid Obtained item
+ * @param sourceid Source of item, another item ID or monster ID
+ * @param type Obtain type @see enum BROADCASTING_SPECIAL_ITEM_OBTAIN
+ * @return
+ **/
+int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned short nameid, unsigned int sourceid, unsigned char type) {
+	nullpo_retr(0, sd);
+
+	// Should not be here!
+	if (type == ITEMOBTAIN_TYPE_NPC) {
+		intif_broadcast_obtain_special_item_npc(sd, nameid, NULL /*wisp_server_name*/);
+		return 0;
+	}
+
+	// Send local
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, NULL);
+
+	if (CheckForCharServer())
+		return 0;
+
+	if (other_mapserver_count < 1)
+		return 0;
+
+	WFIFOHEAD(inter_fd, 9 + NAME_LENGTH);
+	WFIFOW(inter_fd, 0) = 0x3009;
+	WFIFOW(inter_fd, 2) = 9 + NAME_LENGTH;
+	WFIFOW(inter_fd, 4) = nameid;
+	WFIFOW(inter_fd, 6) = sourceid;
+	WFIFOB(inter_fd, 8) = type;
+	safestrncpy((char *)WFIFOP(inter_fd, 9), sd->status.name, NAME_LENGTH);
+	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
+
+	return 1;
+}
+
+/**
+ * Request to send broadcast item to all servers.
+ * TODO: Confirm the usage. Maybe on getitem-like command?
+ * ZI 3009 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <npcname>.24B
+ * @param sd Player who obtain the item
+ * @param nameid Obtained item
+ * @param srcname Source name
+ * @return
+ **/
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid, const char *srcname) {
+	nullpo_retr(0, sd);
+
+	// Send local
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC, srcname);
+
+	if (CheckForCharServer())
+		return 0;
+
+	if (other_mapserver_count < 1)
+		return 0;
+
+	WFIFOHEAD(inter_fd, 9 + NAME_LENGTH*2);
+	WFIFOW(inter_fd, 0) = 0x3009;
+	WFIFOW(inter_fd, 2) = 9 + NAME_LENGTH*2;
+	WFIFOW(inter_fd, 4) = nameid;
+	WFIFOW(inter_fd, 6) = 0;
+	WFIFOB(inter_fd, 8) = ITEMOBTAIN_TYPE_NPC;
+	safestrncpy((char *)WFIFOP(inter_fd, 9), sd->status.name, NAME_LENGTH);
+	safestrncpy((char *)WFIFOP(inter_fd, 9 + NAME_LENGTH), srcname, NAME_LENGTH);
+	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
+
+	return 1;
+}
+
+/**
+ * Received broadcast item and broadcast on local map.
+ * IZ 3809 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <srcname>.24B
+ * @param fd
+ **/
+void intif_parse_broadcast_obtain_special_item(int fd) {
+	int type = RFIFOB(fd, 8);
+	char name[NAME_LENGTH], srcname[NAME_LENGTH];
+
+	safestrncpy(name, (char *)RFIFOP(fd, 9), NAME_LENGTH);
+	if (type == ITEMOBTAIN_TYPE_NPC)
+		safestrncpy(name, (char *)RFIFOP(fd, 9 + NAME_LENGTH), NAME_LENGTH);
+
+	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, srcname);
 }
 
 /*==========================================
@@ -2985,6 +3159,7 @@ int intif_parse(int fd)
 	case 0x3806:	intif_parse_ChangeNameOk(fd); break;
 	case 0x3807:	intif_parse_MessageToFD(fd); break;
 	case 0x3808:	intif_parse_accinfo_ack(fd); break;
+	case 0x3809:	intif_parse_broadcast_obtain_special_item(fd); break;
 	case 0x3818:	intif_parse_LoadGuildStorage(fd); break;
 	case 0x3819:	intif_parse_SaveGuildStorage(fd); break;
 	case 0x3820:	intif_parse_PartyCreated(fd); break;

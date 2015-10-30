@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/cbasetypes.h"
-#include "../common/strlib.h" // StringBuf
+#include "cbasetypes.h"
+#include "strlib.h" // StringBuf
 #include "showmsg.h"
 #include "core.h" //[Ind] - For SERVER_TYPE
 
@@ -10,7 +10,7 @@
 #include <stdlib.h> // atexit
 
 #ifdef WIN32
-	#include "../common/winapi.h"
+	#include "winapi.h"
 
 	#ifdef DEBUGLOGMAP
 		#define DEBUGLOGPATH "log\\map-server.log"
@@ -48,6 +48,7 @@ int stdout_with_ansisequence = 0;
 
 int msg_silent = 0; //Specifies how silent the console is.
 int console_msg_log = 0;//[Ind] msg error logging
+char console_log_filepath[32] = "./log/unknown.log";
 
 ///////////////////////////////////////////////////////////////////////////////
 /// static/dynamic buffer for the messages
@@ -687,7 +688,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		( ( flag == MSG_ERROR || flag == MSG_SQL ) && console_msg_log&2 ) ||
 		( flag == MSG_DEBUG && console_msg_log&4 ) ) {//[Ind]
 		FILE *log = NULL;
-		if( (log = fopen(SERVER_TYPE == ATHENA_SERVER_MAP ? "./log/map-msg_log.log" : "./log/unknown.log","a+")) ) {
+		if( (log = fopen(console_log_filepath, "a+")) ) {
 			char timestring[255];
 			time_t curtime;
 			time(&curtime);

@@ -38,12 +38,10 @@ struct mmo_account {
 	char birthdate[10+1];   // assigned birth date (format: YYYY-MM-DD, default: 0000-00-00)
 	char pincode[PINCODE_LENGTH+1];		// pincode system
 	time_t pincode_change;	// (timestamp): last time of pincode change
-	int account_reg2_num;
 #ifdef VIP_ENABLE
 	int old_group;
 	time_t vip_time;
 #endif
-	struct global_reg account_reg2[ACCOUNT_REG2_NUM]; // account script variables (stored on login server)
 };
 
 
@@ -139,6 +137,9 @@ struct AccountDB {
 	/// @return Iterator
 	AccountDBIterator* (*iterator)(AccountDB* self);
 };
+
+void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
+void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
 
 
 #endif // __ACCOUNT_H_INCLUDED__

@@ -177,7 +177,7 @@ int impossible_trade_check(struct map_session_data *sd)
 	nullpo_retr(1, sd);
 
 	if(sd->deal.zeny > sd->status.zeny) {
-		pc_setglobalreg(sd,"ZENY_HACKER",1);
+		pc_setglobalreg(sd, add_str("ZENY_HACKER"), 1);
 		return -1;
 	}
 

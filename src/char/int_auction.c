@@ -30,7 +30,7 @@ static int auction_count(int char_id, bool buy)
 	struct auction_data *auction;
 	DBIterator *iter = db_iterator(auction_db_);
 
-	for( auction = dbi_first(iter); dbi_exists(iter); auction = dbi_next(iter) )
+	for( auction = (struct auction_data *)dbi_first(iter); dbi_exists(iter); auction = (struct auction_data *)dbi_next(iter) )
 	{
 		if( (buy && auction->buyer_id == char_id) || (!buy && auction->seller_id == char_id) )
 			i++;

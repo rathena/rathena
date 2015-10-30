@@ -1,7 +1,7 @@
 #ifndef _rA_EVDP_H_
 #define _rA_EVDP_H_
 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 
 typedef struct EVDP_DATA EVDP_DATA;
 

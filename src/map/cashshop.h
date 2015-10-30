@@ -55,5 +55,6 @@ struct cash_item_db{
 };
 
 extern struct cash_item_db cash_shop_items[CASHSHOP_TAB_SEARCH];
+extern bool cash_shop_defined;
 
 #endif /* _CASHSHOP_H_ */

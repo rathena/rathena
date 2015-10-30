@@ -28,6 +28,7 @@
 #include "mercenary.h"
 #include "elemental.h"
 #include "party.h"
+#include "script.h"
 #include "storage.h"
 #include "trade.h"
 #include "mapreg.h"
@@ -728,7 +729,7 @@ ACMD_FUNC(whogm)
 	memset(match_text, '\0', sizeof(match_text));
 	memset(player_name, '\0', sizeof(player_name));
 
-	if (sscanf(message, "%199[^\n]", match_text) < 1)
+	if (sscanf(message, "%255[^\n]", match_text) < 1)
 		strcpy(match_text, "");
 	for (j = 0; match_text[j]; j++)
 		match_text[j] = TOLOWER(match_text[j]);
@@ -1116,7 +1117,7 @@ ACMD_FUNC(kami)
 			return -1;
 		}
 
-		sscanf(message, "%199[^\n]", atcmd_output);
+		sscanf(message, "%255[^\n]", atcmd_output);
 		if (strstr(command, "l") != NULL)
 			clif_broadcast(&sd->bl, atcmd_output, strlen(atcmd_output) + 1, BC_DEFAULT, ALL_SAMEMAP);
 		else
@@ -1555,7 +1556,7 @@ ACMD_FUNC(help)
 		StringBuf_AppendStr(&buf, msg_txt(sd,990)); // Available aliases:
 		command_info = get_atcommandinfo_byname(command_name);
 		iter = db_iterator(atcommand_alias_db);
-		for (alias_info = dbi_first(iter); dbi_exists(iter); alias_info = dbi_next(iter)) {
+		for (alias_info = (AliasInfo *)dbi_first(iter); dbi_exists(iter); alias_info = (AliasInfo *)dbi_next(iter)) {
 			if (alias_info->command == command_info) {
 				StringBuf_Printf(&buf, " %s", alias_info->alias);
 				has_aliases = true;
@@ -2510,7 +2511,7 @@ ACMD_FUNC(param)
 	uint8 i;
 	int value = 0;
 	const char* param[] = { "str", "agi", "vit", "int", "dex", "luk" };
-	short new_value, *status[6], max_status[6];
+	unsigned short new_value, *status[6], max_status[6];
  	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
 
@@ -2577,7 +2578,7 @@ ACMD_FUNC(stat_all)
 {
 	int value = 0;
 	uint8 count, i;
-	short *status[PARAM_MAX], max_status[PARAM_MAX];
+	unsigned short *status[PARAM_MAX], max_status[PARAM_MAX];
  	//we don't use direct initialization because it isn't part of the c standard.
 	nullpo_retr(-1, sd);
 
@@ -3326,11 +3327,11 @@ ACMD_FUNC(lostskill)
  *------------------------------------------*/
 ACMD_FUNC(spiritball)
 {
-	int max_spiritballs;
+	uint32 max_spiritballs;
 	int number;
 	nullpo_retr(-1, sd);
 
-	max_spiritballs = min(ARRAYLENGTH(sd->spirit_timer), 0x7FFF);
+	max_spiritballs = zmin(ARRAYLENGTH(sd->spirit_timer), 0x7FFF);
 
 	if( !message || !*message || (number = atoi(message)) < 0 || number > max_spiritballs )
 	{
@@ -3858,8 +3859,9 @@ ACMD_FUNC(partysharelvl) {
 	if(!message || !*message) {
 		clif_displaymessage(fd, msg_txt(sd,1322)); // Please enter an amount.
 		return -1;
-	} else
+	} else {
 		share_lvl = min(abs(atoi(message)),MAX_LEVEL);
+        }
 
 	if(intif_party_sharelvlupdate(share_lvl)) //Successfully updated
 		clif_displaymessage(fd, msg_txt(sd,1478)); // Party share level range has been changed successfully.
@@ -5678,7 +5680,7 @@ void getring (struct map_session_data* sd)
 
 	if((flag = pc_additem(sd,&item_tmp,1,LOG_TYPE_COMMAND))) {
 		clif_additem(sd,0,0,flag);
-		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4);
+		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,4,0);
 	}
 }
 
@@ -6775,17 +6777,43 @@ ACMD_FUNC(uptime)
 
 /*==========================================
  * @changesex <sex>
- * => Changes one's sex. Argument sex can be 0 or 1, m or f, male or female.
+ * => Changes one's account sex. Argument sex can be 0 or 1, m or f, male or female.
  *------------------------------------------*/
 ACMD_FUNC(changesex)
 {
 	int i;
+
 	nullpo_retr(-1, sd);
+
 	pc_resetskill(sd,4);
 	// to avoid any problem with equipment and invalid sex, equipment is unequiped.
-	for( i=0; i<EQI_MAX; i++ )
-		if( sd->equip_index[i] >= 0 ) pc_unequipitem(sd, sd->equip_index[i], 3);
-	chrif_changesex(sd);
+	for (i = 0; i < EQI_MAX; i++) {
+		if (sd->equip_index[i] >= 0)
+			pc_unequipitem(sd, sd->equip_index[i], 3);
+	}
+
+	chrif_changesex(sd, true);
+	return 0;
+}
+
+/*==========================================
+ * @changecharsex <sex>
+ * => Changes one's character sex. Argument sex can be 0 or 1, m or f, male or female.
+ *------------------------------------------*/
+ACMD_FUNC(changecharsex)
+{
+	int i;
+
+	nullpo_retr(-1, sd);
+
+	pc_resetskill(sd,4);
+	// to avoid any problem with equipment and invalid sex, equipment is unequiped.
+	for (i = 0; i < EQI_MAX; i++) {
+		if (sd->equip_index[i] >= 0)
+			pc_unequipitem(sd, sd->equip_index[i], 3);
+	}
+
+	chrif_changesex(sd, false);
 	return 0;
 }
 
@@ -7534,10 +7562,12 @@ ACMD_FUNC(iteminfo)
 
 		if (item_data->maxchance == -1)
 			strcpy(atcmd_output, msg_txt(sd,1281)); //  - Available in the shops only.
-		else if (!battle_config.atcommand_mobinfo_type && item_data->maxchance)
-			sprintf(atcmd_output, msg_txt(sd,1282), (float)item_data->maxchance / 100 ); //  - Maximal monsters drop chance: %02.02f%%
-		else
-			strcpy(atcmd_output, msg_txt(sd,1283)); //  - Monsters don't drop this item.
+		else if (!battle_config.atcommand_mobinfo_type) {
+			if (item_data->maxchance)
+				sprintf(atcmd_output, msg_txt(sd,1282), (float)item_data->maxchance / 100 ); //  - Maximal monsters drop chance: %02.02f%%
+			else
+				strcpy(atcmd_output, msg_txt(sd,1283)); //  - Monsters don't drop this item.
+		}
 		clif_displaymessage(fd, atcmd_output);
 
 	}
@@ -7747,7 +7777,7 @@ ACMD_FUNC(me)
 	if (sd->sc.cant.chat)
 		return -1; //no "chatting" while muted.
 
-	if (!message || !*message || sscanf(message, "%199[^\n]", tempmes) < 0) {
+	if (!message || !*message || sscanf(message, "%255[^\n]", tempmes) < 0) {
 		clif_displaymessage(fd, msg_txt(sd,1302)); // Please enter a message (usage: @me <message>).
 		return -1;
 	}
@@ -8375,7 +8405,7 @@ ACMD_FUNC(auction)
 	nullpo_ret(sd);
 
 	if (!battle_config.feature_auction) {
-		clif_colormes(sd, color_table[COLOR_RED], msg_txt(sd, 517));
+		clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd, 517));
 		return 0;
 	}
 
@@ -8807,7 +8837,7 @@ static void atcommand_commands_sub(struct map_session_data* sd, const int fd, At
 
 	clif_displaymessage(fd, msg_txt(sd,273)); // "Commands available:"
 
-	for (cmd = dbi_first(iter); dbi_exists(iter); cmd = dbi_next(iter)) {
+	for (cmd = (AtCommandInfo*)dbi_first(iter); dbi_exists(iter); cmd = (AtCommandInfo*)dbi_next(iter)) {
 		unsigned int slen = 0;
 
 		switch( type ) {
@@ -8936,7 +8966,7 @@ ACMD_FUNC(set) {
 	int toset = 0, len;
 	bool is_str = false;
 
-	if( !message || !*message || (toset = sscanf(message, "%31s %128[^\n]s", reg, val)) < 1  ) {
+	if( !message || !*message || (toset = sscanf(message, "%31s %127[^\n]s", reg, val)) < 1  ) {
 		clif_displaymessage(fd, msg_txt(sd,1367)); // Usage: @set <variable name> <value>
 		clif_displaymessage(fd, msg_txt(sd,1368)); // Usage: ex. "@set PoringCharVar 50"
 		clif_displaymessage(fd, msg_txt(sd,1369)); // Usage: ex. "@set PoringCharVarSTR$ Super Duper String"
@@ -8984,12 +9014,12 @@ ACMD_FUNC(set) {
 				break;
 			case '#':
 				if( reg[1] == '#' )
-					data->u.str = pc_readaccountreg2str(sd, reg);// global
+					data->u.str = pc_readaccountreg2str(sd, add_str(reg));// global
 				else
-					data->u.str = pc_readaccountregstr(sd, reg);// local
+					data->u.str = pc_readaccountregstr(sd, add_str(reg));// local
 				break;
 			default:
-				data->u.str = pc_readglobalreg_str(sd, reg);
+				data->u.str = pc_readglobalreg_str(sd, add_str(reg));
 				break;
 		}
 
@@ -9013,17 +9043,16 @@ ACMD_FUNC(set) {
 				break;
 			case '#':
 				if( reg[1] == '#' )
-					data->u.num = pc_readaccountreg2(sd, reg);// global
+					data->u.num = pc_readaccountreg2(sd, add_str(reg));// global
 				else
-					data->u.num = pc_readaccountreg(sd, reg);// local
+					data->u.num = pc_readaccountreg(sd, add_str(reg));// local
 				break;
 			default:
-				data->u.num = pc_readglobalreg(sd, reg);
+				data->u.num = pc_readglobalreg(sd, add_str(reg));
 				break;
 		}
 
 	}
-
 
 	switch( data->type ) {
 		case C_INT:
@@ -9042,6 +9071,8 @@ ACMD_FUNC(set) {
 
 	clif_displaymessage(fd, atcmd_output);
 
+	if (is_str && data->u.str)
+		aFree(data->u.str);
 	aFree(data);
 
 	return 0;
@@ -9359,7 +9390,7 @@ ACMD_FUNC(langtype)
 		lang = msg_langstr2langtype(langstr); //Switch langstr to associated langtype
 		if( msg_checklangtype(lang,false) == 1 ){ //Verify it's enabled and set it
 			char output[100];
-			pc_setaccountreg(sd, "#langtype", lang); //For login/char
+			pc_setaccountreg(sd, add_str("#langtype"), lang); //For login/char
 			sd->langtype = lang;
 			sprintf(output,msg_txt(sd,461),msg_langtype2langstr(lang)); // Language is now set to %s.
 			clif_displaymessage(fd,output);
@@ -9892,6 +9923,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(clearweather),
 		ACMD_DEF(uptime),
 		ACMD_DEF(changesex),
+		ACMD_DEF(changecharsex),
 		ACMD_DEF(mute),
 		ACMD_DEF(refresh),
 		ACMD_DEF(refreshall),
@@ -10061,7 +10093,7 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
 	alias_iter = db_iterator(atcommand_alias_db);
 
 	// Build the matches
-	for (command_info = dbi_first(atcommand_iter); dbi_exists(atcommand_iter); command_info = dbi_next(atcommand_iter))     {
+	for (command_info = (AtCommandInfo*)dbi_first(atcommand_iter); dbi_exists(atcommand_iter); command_info = (AtCommandInfo*)dbi_next(atcommand_iter))     {
 		match = strstr(command_info->command, name);
 		can_use = pc_can_use_command(sd, command_info->command, type);
 		if ( prefix_count < MAX_SUGGESTIONS && match == command_info->command && can_use ) {
@@ -10074,7 +10106,7 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
 		}
 	}
 
-	for (alias_info = dbi_first(alias_iter); dbi_exists(alias_iter); alias_info = dbi_next(alias_iter)) {
+	for (alias_info = (AliasInfo *)dbi_first(alias_iter); dbi_exists(alias_iter); alias_info = (AliasInfo *)dbi_next(alias_iter)) {
 		match = strstr(alias_info->alias, name);
 		can_use = pc_can_use_command(sd, alias_info->command->command, type);
 		if ( prefix_count < MAX_SUGGESTIONS && match == alias_info->alias && can_use) {
@@ -10126,9 +10158,8 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
  */
 bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type)
 {
-	char charname[NAME_LENGTH], params[100];
-	char charname2[NAME_LENGTH];
-	char command[100];
+	char charname[NAME_LENGTH], charname2[NAME_LENGTH];
+	char command[CHAT_SIZE_MAX], params[CHAT_SIZE_MAX];
 	char output[CHAT_SIZE_MAX];
 
 	//Reconstructed message
@@ -10171,11 +10202,11 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	if (*message == charcommand_symbol) {
 		do {
 			int x, y, z;
-			char params2[100];
+			char params2[CHAT_SIZE_MAX];
 
 			//Checks to see if #command has a name or a name + parameters.
-			x = sscanf(message, "%99s \"%23[^\"]\" %99[^\n]", command, charname, params);
-			y = sscanf(message, "%99s %23s %99[^\n]", command, charname2, params2);
+			x = sscanf(message, "%255s \"%23[^\"]\" %255[^\n]", command, charname, params);
+			y = sscanf(message, "%255s %23s %255[^\n]", command, charname2, params2);
 
 			//z always has the value of the scan that was successful
 			z = ( x > 1 ) ? x : y;
@@ -10227,7 +10258,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	memset(params, '\0', sizeof(params));
 
 	//check to see if any params exist within this command
-	if( sscanf(atcmd_msg, "%99s %99[^\n]", command, params) < 2 )
+	if( sscanf(atcmd_msg, "%255s %255[^\n]", command, params) < 2 )
 		params[0] = '\0';
 
 	// @commands (script based)
@@ -10414,9 +10445,9 @@ void atcommand_db_load_groups(int* group_ids) {
 	AtCommandInfo* cmd;
 	int i;
 
-	for (cmd = dbi_first(iter); dbi_exists(iter); cmd = dbi_next(iter)) {
-		cmd->at_groups = aMalloc( pc_group_max * sizeof(char) );
-		cmd->char_groups = aMalloc( pc_group_max * sizeof(char) );
+	for (cmd = (AtCommandInfo*)dbi_first(iter); dbi_exists(iter); cmd = (AtCommandInfo*)dbi_next(iter)) {
+		cmd->at_groups = (char*)aMalloc( pc_group_max * sizeof(char) );
+		cmd->char_groups = (char*)aMalloc( pc_group_max * sizeof(char) );
 		for(i = 0; i < pc_group_max; i++) {
 			if( pc_group_can_use_command(group_ids[i], cmd->command, COMMAND_ATCOMMAND ) )
 			   cmd->at_groups[i] = 1;
@@ -10439,7 +10470,7 @@ void atcommand_db_clear(void) {
 		DBIterator *iter = db_iterator(atcommand_db);
 		AtCommandInfo* cmd;
 
-		for (cmd = dbi_first(iter); dbi_exists(iter); cmd = dbi_next(iter)) {
+		for (cmd = (AtCommandInfo*)dbi_first(iter); dbi_exists(iter); cmd = (AtCommandInfo*)dbi_next(iter)) {
 			aFree(cmd->at_groups);
 			aFree(cmd->char_groups);
 		}

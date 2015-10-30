@@ -40,7 +40,6 @@ struct Schema_Config {
 	char charlog_db[DB_NAME_LEN];
 	char storage_db[DB_NAME_LEN];
 	char interlog_db[DB_NAME_LEN];
-	char reg_db[DB_NAME_LEN];
 	char skill_db[DB_NAME_LEN];
 	char memo_db[DB_NAME_LEN];
 	char guild_db[DB_NAME_LEN];
@@ -65,6 +64,10 @@ struct Schema_Config {
 	char ragsrvinfo_db[DB_NAME_LEN];
 	char elemental_db[DB_NAME_LEN];
 	char bonus_script_db[DB_NAME_LEN];
+	char acc_reg_num_table[DB_NAME_LEN];
+	char acc_reg_str_table[DB_NAME_LEN];
+	char char_reg_str_table[DB_NAME_LEN];
+	char char_reg_num_table[DB_NAME_LEN];
 };
 extern struct Schema_Config schema_config;
 
@@ -219,7 +222,7 @@ extern struct fame_list chemist_fame_list[MAX_FAME_LIST];
 extern struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
 #define DEFAULT_AUTOSAVE_INTERVAL 300*1000
-#define MAX_CHAR_BUF 144 //Max size (for WFIFOHEAD calls)
+#define MAX_CHAR_BUF 150 //Max size (for WFIFOHEAD calls)
 
 int char_search_mapserver(unsigned short map, uint32 ip, uint16 port);
 int char_lan_subnetcheck(uint32 ip);
@@ -233,6 +236,7 @@ void char_set_all_offline(int id);
 void char_disconnect_player(uint32 account_id);
 int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
 
+int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charstatus *p, char sex);
 int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);
 int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p);
 int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything);
@@ -249,7 +253,6 @@ int char_child(int parent_id, int child_id);
 int char_family(int pl1,int pl2,int pl3);
 
 int char_request_accreg2(uint32 account_id, uint32 char_id);
-int char_save_accreg2(unsigned char* buf, int len);
 
 //extern bool char_gm_read;
 int char_loadName(uint32 char_id, char* name);
