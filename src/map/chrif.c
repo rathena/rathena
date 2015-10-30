@@ -1049,7 +1049,7 @@ int chrif_divorceack(uint32 char_id, int partner_id) {
 /*==========================================
  * Removes Baby from parents
  *------------------------------------------*/
-int chrif_deadopt(int father_id, int mother_id, int child_id) {
+int chrif_deadopt(uint32 father_id, uint32 mother_id, uint32 child_id) {
 	struct map_session_data* sd;
 	uint16 idx = skill_get_index(WE_CALLBABY);
 

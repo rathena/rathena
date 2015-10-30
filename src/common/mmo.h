@@ -374,9 +374,9 @@ struct mmo_charstatus {
 	uint32 char_id;
 	uint32 account_id;
 	uint32 partner_id;
-	int father;
-	int mother;
-	int child;
+	uint32 father;
+	uint32 mother;
+	uint32 child;
 
 	unsigned int base_exp,job_exp;
 	int zeny;
@@ -444,17 +444,17 @@ typedef enum mail_status {
 
 struct mail_message {
 	int id;
-	int send_id;
-	char send_name[NAME_LENGTH];
-	int dest_id;
-	char dest_name[NAME_LENGTH];
+	uint32 send_id;                 //hold char_id of sender
+	char send_name[NAME_LENGTH];    //sender nickname
+	uint32 dest_id;                 //hold char_id of receiver
+	char dest_name[NAME_LENGTH];    //receiver nickname
 	char title[MAIL_TITLE_LENGTH];
 	char body[MAIL_BODY_LENGTH];
 
 	mail_status status;
 	time_t timestamp; // marks when the message was sent
 
-	int zeny;
+	uint32 zeny;
 	struct item item;
 };
 

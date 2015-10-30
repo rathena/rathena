@@ -11573,7 +11573,7 @@ static void clif_parse_UseSkillToPos_mercenary(struct mercenary_data *md, struct
 void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 {
 	uint16 skill_id, skill_lv;
-	int tmp, target_id;
+	int inf,target_id;
 	unsigned int tick = gettick();
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 
@@ -11583,8 +11583,8 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if( skill_lv < 1 ) skill_lv = 1; //No clue, I have seen the client do this with guild skills :/ [Skotlex]
 
-	tmp = skill_get_inf(skill_id);
-	if (tmp&INF_GROUND_SKILL || !tmp)
+	inf = skill_get_inf(skill_id);
+	if (inf&INF_GROUND_SKILL || !inf)
 		return; //Using a ground/passive skill on a target? WRONG.
 
 	if( SKILL_CHK_HOMUN(skill_id) ) {
@@ -11606,14 +11606,14 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		clif_msg(sd, USAGE_FAIL); // TODO look for the client date that has this message.
 		return;
 #else
-		if( !sd->npc_item_flag || !(tmp&INF_SELF_SKILL) )
+		if( !sd->npc_item_flag || !(inf&INF_SELF_SKILL) )
 			return;
 #endif
 	}
 
 	if( (pc_cant_act2(sd) || sd->chatID) && skill_id != RK_REFRESH && !(skill_id == SR_GENTLETOUCH_CURE &&
 		(sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) &&
-		sd->state.storage_flag && !(tmp&INF_SELF_SKILL) ) //SELF skills can be used with the storage open, issue: 8027
+		sd->state.storage_flag && !(inf&INF_SELF_SKILL) ) //SELF skills can be used with the storage open, issue: 8027
 		return;
 
 	if( pc_issit(sd) )
@@ -11622,7 +11622,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if( skill_isNotOk(skill_id, sd) )
 		return;
 
-	if( sd->bl.id != target_id && tmp&INF_SELF_SKILL )
+	if( sd->bl.id != target_id && inf&INF_SELF_SKILL )
 		target_id = sd->bl.id; // never trust the client
 
 	if( target_id < 0 && -target_id == sd->bl.id ) // for disguises [Valaris]
@@ -11650,15 +11650,15 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		} else if( sd->menuskill_id != SA_AUTOSPELL )
 			return; //Can't use skills while a menu is open.
 	}
+        
 	if( sd->skillitem == skill_id ) {
 		if( skill_lv != sd->skillitemlv )
 			skill_lv = sd->skillitemlv;
-		if( !(tmp&INF_SELF_SKILL) )
+		if( !(inf&INF_SELF_SKILL) )
 			pc_delinvincibletimer(sd); // Target skills thru items cancel invincibility. [Inkfish]
 		unit_skilluse_id(&sd->bl, target_id, skill_id, skill_lv);
 		return;
 	}
-
 	sd->skillitem = sd->skillitemlv = 0;
 
 	if( SKILL_CHK_GUILD(skill_id) ) {
@@ -11667,9 +11667,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		else
 			skill_lv = 0;
 	} else {
-		tmp = pc_checkskill(sd, skill_id);
-		if( skill_lv > tmp )
-			skill_lv = tmp;
+		skill_lv = min(pc_checkskill(sd, skill_id),skill_lv); //never trust client
 	}
 
 	pc_delinvincibletimer(sd);
@@ -14511,11 +14509,11 @@ void clif_Mail_setattachment(int fd, int index, uint8 flag)
 ///     0 = success
 ///     1 = failure
 ///     2 = too many items
-void clif_Mail_getattachment(int fd, uint8 flag)
+void clif_Mail_getattachment(int fd, uint8 result)
 {
 	WFIFOHEAD(fd,packet_len(0x245));
 	WFIFOW(fd,0) = 0x245;
-	WFIFOB(fd,2) = flag;
+	WFIFOB(fd,2) = result;
 	WFIFOSET(fd,packet_len(0x245));
 }
 
@@ -14748,7 +14746,7 @@ void clif_parse_Mail_getattach(int fd, struct map_session_data *sd)
 		return;
 
 	if( sd->mail.inbox.msg[i].zeny + sd->status.zeny > MAX_ZENY ) {
-		clif_Mail_getattachment(fd, 1);
+		clif_Mail_getattachment(fd, 1); //too many zeny
 		return;
 	}
 
