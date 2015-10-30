@@ -7,7 +7,7 @@
 #include "../common/mmo.h" // struct party
 #include "guild.h"
 
-#define MAX_BG_MEMBERS 20
+#define MAX_BG_MEMBERS 30
 
 struct battleground_member_data {
 	unsigned short x, y;

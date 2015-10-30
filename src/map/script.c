@@ -18345,7 +18345,7 @@ BUILDIN_FUNC(waitingroom2bg)
 	struct chat_data *cd;
 	const char *map_name, *ev = "", *dev = "";
 	int x, y, mapindex = 0, bg_id;
-	unsigned char i;
+	unsigned char i,c=0;
 
 	if( script_hasdata(st,7) )
 		nd = npc_name2id(script_getstr(st,7));
@@ -18380,15 +18380,18 @@ BUILDIN_FUNC(waitingroom2bg)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
+        
 	for (i = 0; i < cd->users; i++) { // Only add those who are in the chat room
 		struct map_session_data *sd;
-		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd) )
+		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd) ){
 			mapreg_setreg(reference_uid(add_str("$@arenamembers"), i), sd->bl.id);
-		else
-			mapreg_setreg(reference_uid(add_str("$@arenamembers"), i), 0);
+                        ++c;
+                }
+		//else
+		//	mapreg_setreg(reference_uid(add_str("$@arenamembers"), i), 0);
 	}
 
-	mapreg_setreg(add_str("$@arenamembersnum"), i);
+	mapreg_setreg(add_str("$@arenamembersnum"), c);
 	script_pushint(st,bg_id);
 	return SCRIPT_CMD_SUCCESS;
 }

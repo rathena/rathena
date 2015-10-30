@@ -13212,6 +13212,7 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
 			for (j = 0, p = line; j < ELE_ALL && p; j++) {
 				while (*p == 32) //skipping space (32=' ')
 					p++;
+                                //TODO seem unsafe to continue without check
 				attr_fix_table[lv-1][i][j] = atoi(p);
 				if (battle_config.attr_recover == 0 && attr_fix_table[lv-1][i][j] < 0)
 					attr_fix_table[lv-1][i][j] = 0;

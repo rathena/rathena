@@ -3991,9 +3991,8 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				map[m].flag.restricted = 1;
 				map[m].zone |= 1<<(state+1);
 			} else { // Could not be read, no value defined
-				map[m].flag.restricted = 0;
-				map[m].zone = 0;
-				ShowWarning("npc_parse_mapflag: You did not set a zone value for the restricted mapflag! Removing flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
+                                //we don't remove has other restricted may be set on the map
+				ShowWarning("npc_parse_mapflag: You did not set a zone value for the restricted mapflag! Skipped flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
 			}
 		} else {
 			map[m].flag.restricted=0;
