@@ -141,8 +141,8 @@ ACMD_FUNC(send)
 	int len=0,type;
 	// read message type as hex number (without the 0x)
 	if(!message || !*message ||
-			!((sscanf(message, "len %x", &type)==1 && (len=1))
-			|| sscanf(message, "%x", &type)==1) )
+			!((sscanf(message, "len %8x", &type)==1 && (len=1))
+			|| sscanf(message, "%8x", &type)==1) )
 	{
 		int i;
 		for (i = 900; i <= 903; ++i)
@@ -174,7 +174,7 @@ ACMD_FUNC(send)
 
 #define GET_VALUE(p,num) \
 	{\
-		if(sscanf((p), "x%lx", &(num)) < 1 && sscanf((p), "%ld ", &(num)) < 1){\
+		if(sscanf((p), "x%16lx", &(num)) < 1 && sscanf((p), "%20ld ", &(num)) < 1){\
 			PARSE_ERROR("Invalid number in:",(p));\
 			return -1;\
 		}\
@@ -450,8 +450,8 @@ ACMD_FUNC(mapmove)
 	memset(map_name, '\0', sizeof(map_name));
 
 	if (!message || !*message ||
-		(sscanf(message, "%15s %hd %hd", map_name, &x, &y) < 3 &&
-		 sscanf(message, "%15[^,],%hd,%hd", map_name, &x, &y) < 1)) {
+		(sscanf(message, "%15s %6hd %6hd", map_name, &x, &y) < 3 &&
+		 sscanf(message, "%15[^,],%6hd,%6hd", map_name, &x, &y) < 1)) {
 			clif_displaymessage(fd, msg_txt(sd,909)); // Please enter a map (usage: @warp/@rura/@mapmove <mapname> <x> <y>).
 			return -1;
 	}
@@ -578,7 +578,10 @@ ACMD_FUNC(jump)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	sscanf(message, "%hd %hd", &x, &y);
+	if (sscanf(message, "%6hd %6hd", &x, &y) != 2) {
+		clif_displaymessage(fd, msg_txt(sd,407));
+		return -1;
+	}
 
 	if (map[sd->bl.m].flag.noteleport && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
 		clif_displaymessage(fd, msg_txt(sd,248));	// You are not authorized to warp from your current map.
@@ -845,13 +848,13 @@ ACMD_FUNC(load)
  *------------------------------------------*/
 ACMD_FUNC(speed)
 {
-	int speed;
+	short speed;
 
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!message || !*message || sscanf(message, "%d", &speed) < 1) {
+	if (!message || !*message || sscanf(message, "%6hd", &speed) < 1) {
 		sprintf(atcmd_output, msg_txt(sd,918), MIN_WALK_SPEED, MAX_WALK_SPEED); // Please enter a speed value (usage: @speed <%d-%d>).
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
@@ -935,7 +938,7 @@ ACMD_FUNC(option)
 	int param1 = 0, param2 = 0, param3 = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%d %d %d", &param1, &param2, &param3) < 1 || param1 < 0 || param2 < 0 || param3 < 0)
+	if (!message || !*message || sscanf(message, "%11d %11d %11d", &param1, &param2, &param3) < 1 || param1 < 0 || param2 < 0 || param3 < 0)
 	{// failed to match the parameters so inform the user of the options
 		const char* text;
 
@@ -1013,7 +1016,7 @@ ACMD_FUNC(jobchange)
 	const char* text;
 	nullpo_retr(-1, sd);
 
-    if (!message || !*message || sscanf(message, "%d %d", &job, &upper) < 1) {
+    if (!message || !*message || sscanf(message, "%11d %11d", &job, &upper) < 1) {
 		int i;
 		bool found = false;
 
@@ -1120,7 +1123,7 @@ ACMD_FUNC(kami)
 		else
 			intif_broadcast(atcmd_output, strlen(atcmd_output) + 1, (*(command + 5) == 'b' || *(command + 5) == 'B') ? BC_BLUE : BC_DEFAULT);
 	} else {
-		if(!message || !*message || (sscanf(message, "%lx %255[^\n]", &color, atcmd_output) < 2)) {
+		if(!message || !*message || (sscanf(message, "%20lx %199[^\n]", &color, atcmd_output) < 2)) {
 			clif_displaymessage(fd, msg_txt(sd,981)); // Please enter color and message (usage: @kamic <color> <message>).
 			return -1;
 		}
@@ -1142,7 +1145,10 @@ ACMD_FUNC(heal)
 	int hp = 0, sp = 0; // [Valaris] thanks to fov
 	nullpo_retr(-1, sd);
 
-	sscanf(message, "%d %d", &hp, &sp);
+	if (sscanf(message, "%11d %11d", &hp, &sp) != 2) {
+		clif_displaymessage(fd, msg_txt(sd,407));
+		return -1;
+	}
 
 	// some overflow checks
 	if( hp == INT_MIN ) hp++;
@@ -1213,8 +1219,8 @@ ACMD_FUNC(item)
 
 	if (!strcmpi(parent_cmd,"itembound")) {
 		if (!message || !*message || (
-			sscanf(message, "\"%99[^\"]\" %d %d", item_name, &number, &bound) < 3 &&
-			sscanf(message, "%99s %d %d", item_name, &number, &bound) < 3))
+			sscanf(message, "\"%99[^\"]\" %11d %11d", item_name, &number, &bound) < 3 &&
+			sscanf(message, "%99s %11d %11d", item_name, &number, &bound) < 3))
 		{
 			clif_displaymessage(fd, msg_txt(sd,295)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity> <bound_type>).
 			clif_displaymessage(fd, msg_txt(sd,298)); // Invalid bound type
@@ -1225,8 +1231,8 @@ ACMD_FUNC(item)
 			return -1;
 		}
 	} else if (!message || !*message || (
-		sscanf(message, "\"%99[^\"]\" %d", item_name, &number) < 1 &&
-		sscanf(message, "%99s %d", item_name, &number) < 1
+		sscanf(message, "\"%99[^\"]\" %11d", item_name, &number) < 1 &&
+		sscanf(message, "%99s %11d", item_name, &number) < 1
 	)) {
 		clif_displaymessage(fd, msg_txt(sd,983)); // Please enter an item name or ID (usage: @item <item name/ID> <quantity>).
 		return -1;
@@ -1290,8 +1296,8 @@ ACMD_FUNC(item2)
 
 	if (!strcmpi(parent_cmd+1,"itembound2")) {
 		if (!message || !*message || (
-			sscanf(message, "\"%99[^\"]\" %d %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 &&
-			sscanf(message, "%99s %d %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 ))
+			sscanf(message, "\"%99[^\"]\" %11d %11d %11d %11d %11d %11d %11d %11d %11d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 &&
+			sscanf(message, "%99s %11d %11d %11d %11d %11d %11d %11d %11d %11d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4, &bound) < 10 ))
 		{
 			clif_displaymessage(fd, msg_txt(sd,296)); // Please enter all parameters (usage: @item2 <item name/ID> <quantity>
 			clif_displaymessage(fd, msg_txt(sd,297)); //   <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4> <bound_type>).
@@ -1303,8 +1309,8 @@ ACMD_FUNC(item2)
 			return -1;
 		}
 	} else if ( !message || !*message || (
-		sscanf(message, "\"%99[^\"]\" %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9 &&
-		sscanf(message, "%99s %d %d %d %d %d %d %d %d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9
+		sscanf(message, "\"%99[^\"]\" %11d %11d %11d %11d %11d %11d %11d %11d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9 &&
+		sscanf(message, "%99s %11d %11d %11d %11d %11d %11d %11d %11d", item_name, &number, &identify, &refine, &attr, &c1, &c2, &c3, &c4) < 9
 		)) {
 		clif_displaymessage(fd, msg_txt(sd,984)); // Please enter all parameters (usage: @item2 <item name/ID> <quantity>
 		clif_displaymessage(fd, msg_txt(sd,985)); //   <identify_flag> <refine> <attribute> <card1> <card2> <card3> <card4>).
@@ -1705,7 +1711,7 @@ ACMD_FUNC(model)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!message || !*message || sscanf(message, "%d %d %d", &hair_style, &hair_color, &cloth_color) < 1) {
+	if (!message || !*message || sscanf(message, "%11d %11d %11d", &hair_style, &hair_color, &cloth_color) < 1) {
 		sprintf(atcmd_output, msg_txt(sd,991), // Please enter at least one value (usage: @model <hair ID: %d-%d> <hair color: %d-%d> <clothes color: %d-%d>).
 		        MIN_HAIR_STYLE, MAX_HAIR_STYLE, MIN_HAIR_COLOR, MAX_HAIR_COLOR, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
 		clif_displaymessage(fd, atcmd_output);
@@ -1737,7 +1743,7 @@ ACMD_FUNC(dye)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!message || !*message || sscanf(message, "%d", &cloth_color) < 1) {
+	if (!message || !*message || sscanf(message, "%11d", &cloth_color) < 1) {
 		sprintf(atcmd_output, msg_txt(sd,992), MIN_CLOTH_COLOR, MAX_CLOTH_COLOR); // Please enter a clothes color (usage: @dye/@ccolor <clothes color: %d-%d>).
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
@@ -1764,7 +1770,7 @@ ACMD_FUNC(hair_style)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!message || !*message || sscanf(message, "%d", &hair_style) < 1) {
+	if (!message || !*message || sscanf(message, "%11d", &hair_style) < 1) {
 		sprintf(atcmd_output, msg_txt(sd,993), MIN_HAIR_STYLE, MAX_HAIR_STYLE); // Please enter a hair style (usage: @hairstyle/@hstyle <hair ID: %d-%d>).
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
@@ -1791,7 +1797,7 @@ ACMD_FUNC(hair_color)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!message || !*message || sscanf(message, "%d", &hair_color) < 1) {
+	if (!message || !*message || sscanf(message, "%11d", &hair_color) < 1) {
 		sprintf(atcmd_output, msg_txt(sd,994), MIN_HAIR_COLOR, MAX_HAIR_COLOR); // Please enter a hair color (usage: @haircolor/@hcolor <hair color: %d-%d>).
 		clif_displaymessage(fd, atcmd_output);
 		return -1;
@@ -1816,7 +1822,6 @@ ACMD_FUNC(go)
 	int i;
 	int town;
 	char map_name[MAP_NAME_LENGTH];
-	int16 m;
 
 	const struct {
 		char map[MAP_NAME_LENGTH];
@@ -1985,7 +1990,7 @@ ACMD_FUNC(go)
 
 	if (town >= 0 && town < ARRAYLENGTH(data))
 	{
-		m = map_mapname2mapid(data[town].map);
+		int16 m = map_mapname2mapid(data[town].map);
 		if (m >= 0 && map[m].flag.nowarpto && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
 			clif_displaymessage(fd, msg_txt(sd,247));
 			return -1;
@@ -2032,14 +2037,14 @@ ACMD_FUNC(monster)
 			clif_displaymessage(fd, msg_txt(sd,80)); // Give the display name or monster name/id please.
 			return -1;
 	}
-	if (sscanf(message, "\"%23[^\"]\" %23s %d", name, monster, &number) > 1 ||
-		sscanf(message, "%23s \"%23[^\"]\" %d", monster, name, &number) > 1) {
+	if (sscanf(message, "\"%23[^\"]\" %23s %11d", name, monster, &number) > 1 ||
+		sscanf(message, "%23s \"%23[^\"]\" %11d", monster, name, &number) > 1) {
 		//All data can be left as it is.
-	} else if ((count=sscanf(message, "%23s %d %23s", monster, &number, name)) > 1) {
+	} else if ((count=sscanf(message, "%23s %11d %23s", monster, &number, name)) > 1) {
 		//Here, it is possible name was not given and we are using monster for it.
 		if (count < 3) //Blank mob's name.
 			name[0] = '\0';
-	} else if (sscanf(message, "%23s %23s %d", name, monster, &number) > 1) {
+	} else if (sscanf(message, "%23s %23s %11d", name, monster, &number) > 1) {
 		//All data can be left as it is.
 	} else if (sscanf(message, "%23s", monster) > 0) {
 		//As before, name may be already filled.
@@ -2169,7 +2174,7 @@ ACMD_FUNC(refine)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!message || !*message || sscanf(message, "%d %d", &position, &refine) < 2) {
+	if (!message || !*message || sscanf(message, "%11d %11d", &position, &refine) < 2) {
 		clif_displaymessage(fd, msg_txt(sd,996)); // Please enter a position and an amount (usage: @refine <equip position> <+/- amount>).
 		sprintf(atcmd_output, msg_txt(sd,997), EQP_HEAD_LOW); // %d: Lower Headgear
 		clif_displaymessage(fd, atcmd_output);
@@ -2251,8 +2256,8 @@ ACMD_FUNC(produce)
 	memset(item_name, '\0', sizeof(item_name));
 
 	if (!message || !*message || (
-		sscanf(message, "\"%99[^\"]\" %d %d", item_name, &attribute, &star) < 1 &&
-		sscanf(message, "%99s %d %d", item_name, &attribute, &star) < 1
+		sscanf(message, "\"%99[^\"]\" %11d %11d", item_name, &attribute, &star) < 1 &&
+		sscanf(message, "%99s %11d %11d", item_name, &attribute, &star) < 1
 	)) {
 		clif_displaymessage(fd, msg_txt(sd,1007)); // Please enter at least one item name/ID (usage: @produce <equip name/ID> <element> <# of very's>).
 		return -1;
@@ -2305,7 +2310,7 @@ ACMD_FUNC(memo)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if( !message || !*message || sscanf(message, "%d", &position) < 1 )
+	if( !message || !*message || sscanf(message, "%11d", &position) < 1 )
 	{
 		int i;
 		clif_displaymessage(sd->fd,  msg_txt(sd,668));
@@ -2363,7 +2368,7 @@ ACMD_FUNC(displaystatus)
 	int i, type, flag, tick, val1 = 0, val2 = 0, val3 = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || (i = sscanf(message, "%d %d %d %d %d %d", &type, &flag, &tick, &val1, &val2, &val3)) < 1) {
+	if (!message || !*message || (i = sscanf(message, "%11d %11d %11d %11d %11d %11d", &type, &flag, &tick, &val1, &val2, &val3)) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1009)); // Please enter a status type/flag (usage: @displaystatus <status type> <flag> <tick> {<val1> {<val2> {<val3>}}}).
 		return -1;
 	}
@@ -2512,7 +2517,7 @@ ACMD_FUNC(param)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (!message || !*message || sscanf(message, "%d", &value) < 1 || value == 0) {
+	if (!message || !*message || sscanf(message, "%11d", &value) < 1 || value == 0) {
 		clif_displaymessage(fd, msg_txt(sd,1013)); // Please enter a valid value (usage: @str/@agi/@vit/@int/@dex/@luk <+/-adjustment>).
 		return -1;
 	}
@@ -2584,7 +2589,7 @@ ACMD_FUNC(stat_all)
 	status[4] = &sd->status.dex;
 	status[5] = &sd->status.luk;
 
-	if (!message || !*message || sscanf(message, "%d", &value) < 1 || value == 0) {
+	if (!message || !*message || sscanf(message, "%11d", &value) < 1 || value == 0) {
 		max_status[0] = pc_maxparameter(sd,PARAM_STR);
 		max_status[1] = pc_maxparameter(sd,PARAM_AGI);
 		max_status[2] = pc_maxparameter(sd,PARAM_VIT);
@@ -2646,7 +2651,7 @@ ACMD_FUNC(guildlevelup) {
 	struct guild *guild_info;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%d", &level) < 1 || level == 0) {
+	if (!message || !*message || sscanf(message, "%11d", &level) < 1 || level == 0) {
 		clif_displaymessage(fd, msg_txt(sd,1014)); // Please enter a valid level (usage: @guildlvup/@guildlvlup <# of levels>).
 		return -1;
 	}
@@ -3889,7 +3894,7 @@ ACMD_FUNC(mapinfo) {
 	memset(mapname, '\0', sizeof(mapname));
 	memset(direction, '\0', sizeof(direction));
 
-	sscanf(message, "%d %23[^\n]", &list, mapname);
+	sscanf(message, "%11d %23[^\n]", &list, mapname);
 
 	if (list < 0 || list > 3) {
 		clif_displaymessage(fd, msg_txt(sd,1038)); // Please enter at least one valid list number (usage: @mapinfo <0-3> <map>).
@@ -5136,7 +5141,7 @@ ACMD_FUNC(effect)
 	int type = 0, flag = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%d", &type) < 1) {
+	if (!message || !*message || sscanf(message, "%11d", &type) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1152)); // Please enter an effect number (usage: @effect <effect number>).
 		return -1;
 	}
@@ -5212,12 +5217,12 @@ ACMD_FUNC(skilloff)
  *------------------------------------------*/
 ACMD_FUNC(npcmove)
 {
-	int x = 0, y = 0, m;
+	short x = 0, y = 0, m;
 	struct npc_data *nd = 0;
 	nullpo_retr(-1, sd);
 	memset(atcmd_player_name, '\0', sizeof atcmd_player_name);
 
-	if (!message || !*message || sscanf(message, "%d %d %23[^\n]", &x, &y, atcmd_player_name) < 3) {
+	if (!message || !*message || sscanf(message, "%6hd %6hd %23[^\n]", &x, &y, atcmd_player_name) < 3) {
 		clif_displaymessage(fd, msg_txt(sd,1153)); // Usage: @npcmove <X> <Y> <npc_name>
 		return -1;
 	}
@@ -5250,15 +5255,15 @@ ACMD_FUNC(npcmove)
  *------------------------------------------*/
 ACMD_FUNC(addwarp)
 {
-	char mapname[32], warpname[NAME_LENGTH+1];
-	int x,y;
+	char mapname[32], warpname[MAP_NAME_LENGTH_EXT];
+	short x,y;
 	unsigned short m;
 	struct npc_data* nd;
 
 	nullpo_retr(-1, sd);
 	memset(warpname, '\0', sizeof(warpname));
 
-	if (!message || !*message || sscanf(message, "%31s %d %d %23[^\n]", mapname, &x, &y, warpname) < 4) {
+	if (!message || !*message || sscanf(message, "%31s %6hd %6hd %23[^\n]", mapname, &x, &y, warpname) < 4) {
 		clif_displaymessage(fd, msg_txt(sd,1156)); // Usage: @addwarp <mapname> <X> <Y> <npc name>
 		return -1;
 	}
@@ -5545,7 +5550,7 @@ ACMD_FUNC(useskill)
 	char target[100];
 	nullpo_retr(-1, sd);
 
-	if(!message || !*message || sscanf(message, "%hu %hu %23[^\n]", &skill_id, &skill_lv, target) != 3) {
+	if(!message || !*message || sscanf(message, "%6hu %6hu %23[^\n]", &skill_id, &skill_lv, target) != 3) {
 		clif_displaymessage(fd, msg_txt(sd,1165)); // Usage: @useskill <skill ID> <skill level> <target>
 		return -1;
 	}
@@ -5589,7 +5594,7 @@ ACMD_FUNC(displayskill)
 	uint16 skill_lv = 1;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%hu %hu", &skill_id, &skill_lv) < 1)
+	if (!message || !*message || sscanf(message, "%6hu %6hu", &skill_id, &skill_lv) < 1)
 	{
 		clif_displaymessage(fd, msg_txt(sd,1166)); // Usage: @displayskill <skill ID> {<skill level>}
 		return -1;
@@ -5615,7 +5620,7 @@ ACMD_FUNC(skilltree)
 	struct skill_tree_entry *ent;
 	nullpo_retr(-1, sd);
 
-	if(!message || !*message || sscanf(message, "%hu %23[^\r\n]", &skill_id, target) != 2) {
+	if(!message || !*message || sscanf(message, "%6hu %23[^\r\n]", &skill_id, target) != 2) {
 		clif_displaymessage(fd, msg_txt(sd,1167)); // Usage: @skilltree <skill ID> <target>
 		return -1;
 	}
@@ -5739,7 +5744,7 @@ ACMD_FUNC(changelook)
 	int i, j = 0, k = 0;
 	int pos[7] = { LOOK_HEAD_TOP,LOOK_HEAD_MID,LOOK_HEAD_BOTTOM,LOOK_WEAPON,LOOK_SHIELD,LOOK_SHOES,LOOK_ROBE };
 
-	if((i = sscanf(message, "%d %d", &j, &k)) < 1) {
+	if((i = sscanf(message, "%11d %11d", &j, &k)) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1177)); // Usage: @changelook {<position>} <view id>
 		clif_displaymessage(fd, msg_txt(sd,1178)); // Position: 1-Top 2-Middle 3-Bottom 4-Weapon 5-Shield 6-Shoes 7-Robe
 		return -1;
@@ -6048,7 +6053,7 @@ ACMD_FUNC(autolootitem)
  *------------------------------------------*/
 ACMD_FUNC(autoloottype)
 {
-	uint8 i = 0, action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
+	uint8 action = 3; // 1=add, 2=remove, 3=help+list (default), 4=reset
 	enum item_types type = -1;
 	int ITEM_MAX = 1533;
 
@@ -6122,6 +6127,7 @@ ACMD_FUNC(autoloottype)
 			if (sd->state.autoloottype == 0)
 				clif_displaymessage(fd, msg_txt(sd,1489)); // Your autoloottype list is empty.
 			else {
+				uint8 i = 0;
 				clif_displaymessage(fd, msg_txt(sd,1490)); // Item types on your autoloottype list:
 				while (i < IT_MAX) {
 					if (sd->state.autoloottype&(1<<i)) {
@@ -6413,15 +6419,15 @@ ACMD_FUNC(cleanmap)
 
 ACMD_FUNC(cleanarea)
 {
-	int x0 = 0, y0 = 0, x1 = 0, y1 = 0;
+	short x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 
-	if (!message || !*message || sscanf(message, "%d %d %d %d", &x0, &y0, &x1, &y1) < 1) {
+	if (!message || !*message || sscanf(message, "%6hd %6hd %6hd %6hd", &x0, &y0, &x1, &y1) < 1) {
 		map_foreachinarea(atcommand_cleanfloor_sub, sd->bl.m, sd->bl.x - (AREA_SIZE * 2), sd->bl.y - (AREA_SIZE * 2), sd->bl.x + (AREA_SIZE * 2), sd->bl.y + (AREA_SIZE * 2), BL_ITEM);
 	}
-	else if (sscanf(message, "%d %d %d %d", &x0, &y0, &x1, &y1) == 1) {
+	else if (sscanf(message, "%6hd %6hd %6hd %6hd", &x0, &y0, &x1, &y1) == 1) {
 		map_foreachinarea(atcommand_cleanfloor_sub, sd->bl.m, sd->bl.x - x0, sd->bl.y - x0, sd->bl.x + x0, sd->bl.y + x0, BL_ITEM);
 	}
-	else if (sscanf(message, "%d %d %d %d", &x0, &y0, &x1, &y1) == 4) {
+	else if (sscanf(message, "%6hd %6hd %6hd %6hd", &x0, &y0, &x1, &y1) == 4) {
 		map_foreachinarea(atcommand_cleanfloor_sub, sd->bl.m, x0, y0, x1, y1, BL_ITEM);
 	}
 
@@ -6450,7 +6456,7 @@ ACMD_FUNC(npctalk)
 		}
 	}
 	else {
-		if (!message || !*message || sscanf(message, "%lx %23[^,], %99[^\n]", &color, name, mes) < 3) {
+		if (!message || !*message || sscanf(message, "%16lx %23[^,], %99[^\n]", &color, name, mes) < 3) {
 			clif_displaymessage(fd, msg_txt(sd,1223)); // Please enter the correct parameters (usage: @npctalkc <color> <npc name>, <message>).
 			return -1;
 		}
@@ -6603,7 +6609,7 @@ ACMD_FUNC(summon)
 
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%23s %d", name, &duration) < 1)
+	if (!message || !*message || sscanf(message, "%23s %11d", name, &duration) < 1)
 	{
 		clif_displaymessage(fd, msg_txt(sd,1225)); // Please enter a monster name (usage: @summon <monster name> {duration}).
 		return -1;
@@ -6649,7 +6655,7 @@ ACMD_FUNC(adjgroup)
 	int new_group = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%d", &new_group) != 1) {
+	if (!message || !*message || sscanf(message, "%11d", &new_group) != 1) {
 		clif_displaymessage(fd, msg_txt(sd,1226)); // Usage: @adjgroup <group_id>
 		return -1;
 	}
@@ -6820,7 +6826,7 @@ ACMD_FUNC(mute)
 	int manner;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%d %23[^\n]", &manner, atcmd_player_name) < 1) {
+	if (!message || !*message || sscanf(message, "%11d %23[^\n]", &manner, atcmd_player_name) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1237)); // Usage: @mute <time> <char name>
 		return -1;
 	}
@@ -6961,7 +6967,7 @@ ACMD_FUNC(misceffect)
 	nullpo_retr(-1, sd);
 	if (!message || !*message)
 		return -1;
-	if (sscanf(message, "%d", &effect) < 1)
+	if (sscanf(message, "%11d", &effect) < 1)
 		return -1;
 	clif_misceffect(&sd->bl,effect);
 
@@ -7849,7 +7855,7 @@ ACMD_FUNC(sizeguild)
 
 	memset(guild, '\0', sizeof(guild));
 
-	if( !message || !*message || sscanf(message, "%d %23[^\n]", &size, guild) < 2 ) {
+	if( !message || !*message || sscanf(message, "%11d %23[^\n]", &size, guild) < 2 ) {
 		clif_displaymessage(fd, msg_txt(sd,1304)); // Please enter guild name/ID (usage: @sizeguild <size> <guild name/ID>).
 		return -1;
 	}
@@ -7954,7 +7960,7 @@ ACMD_FUNC(mapflag) {
 	nullpo_retr(-1, sd);
 	memset(flag_name, '\0', sizeof(flag_name));
 
-	if (!message || !*message || (sscanf(message, "%99s %hd", flag_name, &flag) < 1)) {
+	if (!message || !*message || (sscanf(message, "%99s %6hd", flag_name, &flag) < 1)) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1311)); // Enabled Mapflags in this map:
 		clif_displaymessage(sd->fd,"----------------------------------");
 		checkflag(town);				checkflag(autotrade);			checkflag(allowks);				checkflag(nomemo);
@@ -8139,7 +8145,7 @@ ACMD_FUNC(duel)
 	}
 
 	if( message[0] ) {
-		if(sscanf(message, "%u", &maxpl) >= 1) {
+		if(sscanf(message, "%11u", &maxpl) >= 1) {
 			if(maxpl < 2 || maxpl > 65535) {
 				clif_displaymessage(fd, msg_txt(sd,357)); // "Duel: Invalid value."
 				return 0;
@@ -8730,7 +8736,7 @@ ACMD_FUNC(delitem)
 
 	nullpo_retr(-1, sd);
 
-	if( !message || !*message || ( sscanf(message, "\"%99[^\"]\" %d", item_name, &amount) < 2 && sscanf(message, "%99s %d", item_name, &amount) < 2 ) || amount < 1 )
+	if( !message || !*message || ( sscanf(message, "\"%99[^\"]\" %11d", item_name, &amount) < 2 && sscanf(message, "%99s %11d", item_name, &amount) < 2 ) || amount < 1 )
 	{
 		clif_displaymessage(fd, msg_txt(sd,1355)); // Please enter an item name/ID, a quantity, and a player name (usage: #delitem <player> <item_name_or_ID> <quantity>).
 		return -1;
@@ -8936,7 +8942,7 @@ ACMD_FUNC(accinfo) {
 	char type = 0; // type = 1, get only account name
 
 	if (!message || !*message || strlen(message) > NAME_LENGTH
-		|| ( sscanf(message, "%31s %c", query, &type) < 1))
+		|| ( sscanf(message, "%23s %c", query, &type) < 1))
 	{
 		clif_displaymessage(fd, msg_txt(sd,1365)); // Usage: @accinfo/@accountinfo <account_id/char name>
 		clif_displaymessage(fd, msg_txt(sd,1366)); // You may search partial name by making use of '%' in the search, ex. "@accinfo %Mario%" lists all characters whose name contains "Mario".
@@ -9582,7 +9588,7 @@ ACMD_FUNC(cloneequip) {
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	if( !message || !*message || (sscanf(message, "%u", &char_id) < 1 && sscanf(message, "\"%23[^\"]\"", atcmd_output) < 1) ) {
+	if( !message || !*message || (sscanf(message, "%11d", &char_id) < 1 && sscanf(message, "\"%23[^\"]\"", atcmd_output) < 1) ) {
 		clif_displaymessage(fd, msg_txt(sd, 735)); // Please enter char_id or \"char name\".
 		return -1;
 	}
@@ -9658,7 +9664,7 @@ ACMD_FUNC(clonestat) {
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
-	if( !message || !*message || (sscanf(message, "%u", &char_id) < 1 && sscanf(message, "\"%23[^\"]\"", atcmd_output) < 1) ) {
+	if( !message || !*message || (sscanf(message, "%11d", &char_id) < 1 && sscanf(message, "\"%23[^\"]\"", atcmd_output) < 1) ) {
 		clif_displaymessage(fd, msg_txt(sd, 735)); // Please enter char_id or \"char name\".
 		return -1;
 	}

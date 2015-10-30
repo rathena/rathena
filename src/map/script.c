@@ -2215,8 +2215,8 @@ static void read_constdb(void)
 			continue;
 		
 		type=0;
-		if(sscanf(line,"%1023[A-Za-z0-9/_],%1023[A-Za-z0-9/_-],%d",name,val,&type)>=2 ||
-		   sscanf(line,"%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %d",name,val,&type)>=2){
+		if(sscanf(line,"%1023[A-Za-z0-9/_],%1023[A-Za-z0-9/_-],%11d",name,val,&type)>=2 ||
+		   sscanf(line,"%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %11d",name,val,&type)>=2){
 			entries++;
 			script_set_constant(name, (int)strtol(val, NULL, 0), (bool)type);
 		}
@@ -15958,7 +15958,7 @@ BUILDIN_FUNC(setd)
 	int elem;
 	buffer = script_getstr(st, 2);
 
-	if(sscanf(buffer, "%99[^[][%d]", varname, &elem) < 2)
+	if(sscanf(buffer, "%99[^[][%11d]", varname, &elem) < 2)
 		elem = 0;
 
 	if( not_server_variable(*varname) ) {
@@ -16118,7 +16118,7 @@ BUILDIN_FUNC(getd)
 
 	buffer = script_getstr(st, 2);
 
-	if(sscanf(buffer, "%99[^[][%d]", varname, &elem) < 2)
+	if(sscanf(buffer, "%99[^[][%11d]", varname, &elem) < 2)
 		elem = 0;
 
 	// Push the 'pointer' so it's more flexible [Lance]
@@ -18344,7 +18344,7 @@ BUILDIN_FUNC(waitingroom2bg)
 	struct npc_data *nd;
 	struct chat_data *cd;
 	const char *map_name, *ev = "", *dev = "";
-	int x, y, mapindex = 0, bg_id, n;
+	int x, y, mapindex = 0, bg_id;
 	unsigned char i;
 
 	if( script_hasdata(st,7) )
@@ -18380,9 +18380,7 @@ BUILDIN_FUNC(waitingroom2bg)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	n = cd->users;
-	for( i = 0; i < n && i < MAX_BG_MEMBERS; i++ )
-	{
+	for (i = 0; i < cd->users; i++) { // Only add those who are in the chat room
 		struct map_session_data *sd;
 		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd) )
 			mapreg_setreg(reference_uid(add_str("$@arenamembers"), i), sd->bl.id);
@@ -19574,7 +19572,6 @@ BUILDIN_FUNC(cleanmap)
 {
 	const char *mapname;
 	int16 m;
-	int16 x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 
 	mapname = script_getstr(st, 2);
 	m = map_mapname2mapid(mapname);
@@ -19584,10 +19581,10 @@ BUILDIN_FUNC(cleanmap)
 	if ((script_lastdata(st) - 2) < 4) {
 		map_foreachinmap(atcommand_cleanfloor_sub, m, BL_ITEM);
 	} else {
-		x0 = script_getnum(st, 3);
-		y0 = script_getnum(st, 4);
-		x1 = script_getnum(st, 5);
-		y1 = script_getnum(st, 6);
+		int16 x0 = script_getnum(st, 3);
+		int16 y0 = script_getnum(st, 4);
+		int16 x1 = script_getnum(st, 5);
+		int16 y1 = script_getnum(st, 6);
 		if (x0 > 0 && y0 > 0 && x1 > 0 && y1 > 0) {
 			map_foreachinarea(atcommand_cleanfloor_sub, m, x0, y0, x1, y1, BL_ITEM);
 		} else {
@@ -20455,11 +20452,11 @@ BUILDIN_FUNC(mergeitem2) {
 
 	if (script_hasdata(st, 2)) {
 		struct script_data *data = script_getdata(st, 2);
-		struct item_data *id;
 		get_val(st, data);
 
 		if (data_isstring(data)) {// "<item name>"
 			const char *name = conv_str(st,data);
+			struct item_data *id;
 			if (!(id = itemdb_searchname(name))) {
 				ShowError("buildin_mergeitem2: Nonexistant item %s requested.\n", name);
 				script_pushint(st, count);
@@ -20469,8 +20466,8 @@ BUILDIN_FUNC(mergeitem2) {
 		}
 		else if (data_isint(data)) {// <item id>
 			nameid = conv_num(st,data);
-			if (!(id = itemdb_exists(nameid))) {
-				ShowError("buildin_mergeitem2: Nonexistant item %d requested.\n", nameid);
+			if (!itemdb_exists(nameid)) {
+				ShowError("buildin_mergeitem: Nonexistant item %d requested.\n", nameid);
 				script_pushint(st, count);
 				return SCRIPT_CMD_FAILURE;
 			}

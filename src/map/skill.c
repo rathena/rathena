@@ -20468,9 +20468,7 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
  */
 static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 {
-	unsigned short skill_id = atoi(split[0]),
-		points = atoi(split[1]),
-		nameid = atoi(split[2]);
+	unsigned short skill_id = atoi(split[0]), points = atoi(split[1]), nameid = atoi(split[2]);
 
 	if (!skill_get_index(skill_id) || !skill_get_max(skill_id))
 		ShowError("skill_parse_row_spellbookdb: Invalid skill ID %d\n", skill_id);

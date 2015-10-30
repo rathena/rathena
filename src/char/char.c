@@ -2736,9 +2736,11 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.save_log = config_switch(w2);
 		} else if (strcmpi(w1, "start_point") == 0) {
 			char map[MAP_NAME_LENGTH_EXT];
-			int x, y;
-			if (sscanf(w2, "%15[^,],%d,%d", map, &x, &y) < 3)
+			short x, y;
+			if (sscanf(w2, "%15[^,],%6hd,%6hd", map, &x, &y) < 3){
+				ShowWarning( "Specified start_point has an invalid format.\n" );
 				continue;
+			}
 			charserv_config.start_point.map = mapindex_name2id(map);
 			if (!charserv_config.start_point.map)
 				ShowError("Specified start_point %s not found in map-index cache.\n", map);
