@@ -27,16 +27,13 @@ Thumbs.db
 *.a
 *.yml
 /char-server
-/char-server
 /config.log
 /config.status
 /core
 /ipch
 /login-server
-/login-server
 /Makefile
 /Makefile.cache
-/map-server
 /map-server
 /mapcache
 /nbproject
