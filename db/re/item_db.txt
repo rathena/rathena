@@ -9802,7 +9802,7 @@
 19786,C_Crown_of_Mistress,Costume Crown of Mistress,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,165,{},{},{}
 19789,C_Sweet_Gent,Costume Sweet Gent,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,29,{},{},{}
 19790,C_Wedding_Veil,Costume Wedding Veil,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,44,{},{},{}
-19791,C_Alarm_Mask,Costume Alarm Mask,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,170,{},{},{}
+19791,C_Alarm_Mask,Costume Alarm Mask,4,10,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,1,170,{},{},{}
 19792,C_Goblin_Mask_01,Costume Poker Face,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,171,{},{},{}
 19793,C_Goblin_Mask_02,Costume Surprised Mask,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,172,{},{},{}
 19794,C_Goblin_Mask_03,Costume Annoyed Mask,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,173,{},{},{}
