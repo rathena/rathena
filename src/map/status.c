@@ -1166,6 +1166,7 @@ void initChangeTables(void)
 	StatusDisplayType[SC_SPHERE_4]		  = true;
 	StatusDisplayType[SC_SPHERE_5]		  = true;
 	StatusDisplayType[SC_CAMOUFLAGE]	  = true;
+	StatusDisplayType[SC_STEALTHFIELD]	  = true;
 	StatusDisplayType[SC_DUPLELIGHT]	  = true;
 	StatusDisplayType[SC_ORATIO]		  = true;
 	StatusDisplayType[SC_FREEZING]		  = true;
@@ -6168,7 +6169,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			if( sc->data[SC_CAMOUFLAGE] && (sc->data[SC_CAMOUFLAGE]->val3&1) == 0 )
 				val = max( val, sc->data[SC_CAMOUFLAGE]->val1 < 3 ? 0 : 25 * (5 - sc->data[SC_CAMOUFLAGE]->val1) );
 			if( sc->data[SC_STEALTHFIELD] )
-				val = max( val, sc->data[SC_STEALTHFIELD]->val2 );
+				val = max( val, 20 );
 			if( sc->data[SC__LAZINESS] )
 				val = max( val, 25 );
 			if( sc->data[SC_BANDING_DEFENCE] )
@@ -9823,14 +9824,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 10000; // [GodLesZ] tick time
 			break;
 		case SC_EXEEDBREAK:
-			val1 = 100 * val1;
+			val2 = 150 * val1;
 			if (sd) { // Players
 				short index = sd->equip_index[EQI_HAND_R];
 
 				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON)
-					val1 += 10 * sd->status.job_level + sd->inventory_data[index]->weight / 10 * sd->inventory_data[index]->wlv * status_get_lv(bl) / 100;
+					val2 += 15 * sd->status.job_level + sd->inventory_data[index]->weight / 10 * sd->inventory_data[index]->wlv * status_get_lv(bl) / 100;
 			} else // Monster
-				val1 += 500;
+				val2 += 750;
 			break;
 		case SC_PRESTIGE:
 			val2 = (status->int_ + status->luk) * val1 / 20 * status_get_lv(bl) / 200 + val1;	// Chance to evade magic damage.
@@ -10162,12 +10163,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		case SC_STEALTHFIELD:
-			val2 = 30; // Speed reduction
+			tick_time = tick;
+			tick = -1;
 			break;
 		case SC_STEALTHFIELD_MASTER:
-			val3 = 3; // Reduces SP 3%
-			tick_time = 3000;
-			val4 = tick/tick_time;
+			tick_time = val3 = 2000 + 1000 * val1;
+			val4 = tick / tick_time;
 			break;
 		case SC_VACUUM_EXTREME:
 			// Suck target at n second, only if the n second is lower than the duration
@@ -10392,6 +10393,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CHASEWALK:
 		case SC_WEIGHT90:
 		case SC_CAMOUFLAGE:
+		case SC_STEALTHFIELD:
 		case SC_VOICEOFSIREN:
 		case SC_HEAT_BARREL_AFTER:
 		case SC_WEDDING:
@@ -10531,6 +10533,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC__INVISIBILITY:
 			sc->option |= OPTION_CLOAK;
 		case SC_CAMOUFLAGE:
+		case SC_STEALTHFIELD:
 			opt_flag = 2;
 			break;
 		case SC_CHASEWALK:
@@ -11426,6 +11429,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC__INVISIBILITY:
 		sc->option &= ~OPTION_CLOAK;
 	case SC_CAMOUFLAGE:
+	case SC_STEALTHFIELD:
 		opt_flag |= 2;
 		break;
 	case SC_CHASEWALK:
@@ -12506,10 +12510,10 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 	case SC_STEALTHFIELD_MASTER:
 		if (--(sce->val4) >= 0) {
-			int sp = (status->max_sp * sce->val3) / 100;
-			if (!status_charge(bl,0,sp))
+			if (!status_charge(bl, 0, status->max_sp * 3 / 100))
 				break;
-			sc_timer_next(3000 + tick, status_change_timer, bl->id, data);
+			sc_timer_next(sce->val3 + tick, status_change_timer, bl->id, data);
+			return 0;
 		}
 		break;
 	case SC_VACUUM_EXTREME:

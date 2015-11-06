@@ -12910,10 +12910,14 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 
 		case UNT_STEALTHFIELD:
 			if( bl->id == sg->src_id )
-				break; // Dont work on Self (video shows that)
-		case UNT_NEUTRALBARRIER:
+				break; // Doesn't work on self (video shows that)
 			if (!sce)
 				sc_start(ss, bl,type,100,sg->skill_lv,sg->limit);
+			break;
+
+		case UNT_NEUTRALBARRIER:
+			if (!sce)
+				status_change_start(ss, bl, type, 10000, sg->skill_lv, 0, 0, 0, sg->limit, SCSTART_NOICON);
 			break;
 
 		case UNT_GD_LEADERSHIP:
@@ -17470,6 +17474,8 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 			case DC_DONTFORGETME:
 			case DC_FORTUNEKISS:
 			case DC_SERVICEFORYOU:
+			case NC_NEUTRALBARRIER:
+			case NC_STEALTHFIELD:
 				skill_usave_add(((TBL_PC*)src), group->skill_id, group->skill_lv);
 				break;
 		}
@@ -19441,33 +19447,42 @@ int skill_blockmerc_start(struct mercenary_data *md, uint16 skill_id, int tick)
 }
 /**
  * Adds a new skill unit entry for this player to recast after map load
+ * @param sd: Player
+ * @param skill_id: Skill ID to save
+ * @param skill_lv: Skill level to save
  */
-void skill_usave_add(struct map_session_data * sd, uint16 skill_id, uint16 skill_lv) {
-	struct skill_usave * sus = NULL;
+void skill_usave_add(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv)
+{
+	struct skill_usave *sus = NULL;
 
-	if( idb_exists(skillusave_db,sd->status.char_id) ) {
+	if (idb_exists(skillusave_db,sd->status.char_id))
 		idb_remove(skillusave_db,sd->status.char_id);
-	}
 
 	CREATE(sus, struct skill_usave, 1);
 	idb_put(skillusave_db, sd->status.char_id, sus);
 
 	sus->skill_id = skill_id;
 	sus->skill_lv = skill_lv;
-
-	return;
 }
-void skill_usave_trigger(struct map_session_data *sd) {
-	struct skill_usave * sus = NULL;
 
-	if( ! (sus = (struct skill_usave *)idb_get(skillusave_db,sd->status.char_id)) )
+/**
+ * Loads saved skill unit entries for this player after map load
+ * @param sd: Player
+ */
+void skill_usave_trigger(struct map_session_data *sd)
+{
+	struct skill_usave *sus = NULL;
+	struct skill_unit_group *group = NULL;
+
+	if (!(sus = idb_get(skillusave_db,sd->status.char_id)))
 		return;
 
-	skill_unitsetting(&sd->bl,sus->skill_id,sus->skill_lv,sd->bl.x,sd->bl.y,0);
-	idb_remove(skillusave_db,sd->status.char_id);
-
-	return;
+	if ((group = skill_unitsetting(&sd->bl, sus->skill_id, sus->skill_lv, sd->bl.x, sd->bl.y, 0)))
+		if (sus->skill_id == NC_NEUTRALBARRIER || sus->skill_id == NC_STEALTHFIELD )
+			sc_start2(&sd->bl, &sd->bl, (sus->skill_id == NC_NEUTRALBARRIER ? SC_NEUTRALBARRIER_MASTER : SC_STEALTHFIELD_MASTER), 100, sus->skill_lv, group->group_id, skill_get_time(sus->skill_id, sus->skill_lv));
+	idb_remove(skillusave_db, sd->status.char_id);
 }
+
 /*
  *
  */
@@ -20150,7 +20165,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 }
 
 /**
- * Split string to int by constanta value (const.txt) or atoi()
+ * Split string to int by constant value (const.txt) or atoi()
  * @param *str: String input
  * @param *val: Temporary storage
  * @param *delim: Delimiter (for multiple value support)
@@ -20164,6 +20179,7 @@ uint8 skill_split_atoi2(char *str, int *val, const char *delim, int min_value, u
 
 	while (p != NULL) {
 		int n = min_value;
+
 		trim(p);
 
 		if (ISDIGIT(p[0])) // If using numeric
@@ -20200,7 +20216,7 @@ static void skill_destroy_requirement(uint16 idx) {
 
 /**
  * Read skill requirement from skill_require_db.txt
- * Structure: skill_id,HPCost,MaxHPTrigger,SPCost,HPRateCost,SPRateCost,ZenyCost,RequiredWeapons,RequiredAmmoTypes,RequiredAmmoAmount,RequiredState,RequiredStatuss,SpiritSphereCost,RequiredItemID1,RequiredItemAmount1,RequiredItemID2,RequiredItemAmount2,RequiredItemID3,RequiredItemAmount3,RequiredItemID4,RequiredItemAmount4,RequiredItemID5,RequiredItemAmount5,RequiredItemID6,RequiredItemAmount6,RequiredItemID7,RequiredItemAmount7,RequiredItemID8,RequiredItemAmount8,RequiredItemID9,RequiredItemAmount9,RequiredItemID10,RequiredItemAmount10
+ * Structure: skill_id,HPCost,MaxHPTrigger,SPCost,HPRateCost,SPRateCost,ZenyCost,RequiredWeapons,RequiredAmmoTypes,RequiredAmmoAmount,RequiredState,RequiredStatuses,SpiritSphereCost,RequiredItemID1,RequiredItemAmount1,RequiredItemID2,RequiredItemAmount2,RequiredItemID3,RequiredItemAmount3,RequiredItemID4,RequiredItemAmount4,RequiredItemID5,RequiredItemAmount5,RequiredItemID6,RequiredItemAmount6,RequiredItemID7,RequiredItemAmount7,RequiredItemID8,RequiredItemAmount8,RequiredItemID9,RequiredItemAmount9,RequiredItemID10,RequiredItemAmount10,RequiredEquipment
  */
 static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 {
@@ -20269,6 +20285,7 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	trim(split[11]);
 	if (split[11][0] != '\0' || atoi(split[11])) {
 		int require[MAX_SKILL_STATUS_REQUIRE];
+
 		if ((skill_db[idx]->require.status_count = skill_split_atoi2(split[11], require, ":", SC_STONE, ARRAYLENGTH(require)))) {
 			CREATE(skill_db[idx]->require.status, enum sc_type, skill_db[idx]->require.status_count);
 			for (i = 0; i < skill_db[idx]->require.status_count; i++)
@@ -20279,16 +20296,25 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	skill_split_atoi(split[12],skill_db[idx]->require.spiritball);
 
 	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; i++ ) {
+		if (atoi(split[13 + 2 * i]) > 0 && !itemdb_exists(atoi(split[13 + 2 * i]))) {
+			ShowError("skill_parse_row_requiredb: Invalid item %d for skill %d.\n", atoi(split[13 + 2 * i]), atoi(split[0]));
+			return false;
+		}
 		skill_db[idx]->require.itemid[i] = atoi(split[13+ 2*i]);
 		skill_db[idx]->require.amount[i] = atoi(split[14+ 2*i]);
 	}
 
 	//Equipped Item requirements.
-	//NOTE: We don't check the item is exist or not here
 	trim(split[33]);
 	if (split[33][0] != '\0' || atoi(split[33])) {
 		int require[MAX_SKILL_EQUIP_REQUIRE];
+
 		if ((skill_db[idx]->require.eqItem_count = skill_split_atoi2(split[33], require, ":", 500, ARRAYLENGTH(require)))) {
+			if (require[i] > 0 && !itemdb_exists(require[i])) {
+				ShowError("skill_parse_row_requiredb: Invalid item %d for skill %d.\n", require[i], atoi(split[0]));
+				return false;
+			}
+
 			CREATE(skill_db[idx]->require.eqItem, uint16, skill_db[idx]->require.eqItem_count);
 			for (i = 0; i < skill_db[idx]->require.eqItem_count; i++)
 				skill_db[idx]->require.eqItem[i] = require[i];

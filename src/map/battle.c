@@ -6909,7 +6909,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		{
 			short index = sd->equip_index[EQI_AMMO];
 			if (index < 0) {
-				if (sd->weapontype1 > W_KATAR || sd->weapontype1 < W_HUUMA)
+				if (sd->weapontype1 > W_KATAR && sd->weapontype1 < W_HUUMA)
 					clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
 				else
 					clif_arrow_fail(sd,0);
@@ -7054,7 +7054,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	if( sc && sc->count ) {
 		if (sc->data[SC_EXEEDBREAK]) {
-			wd.damage *= sc->data[SC_EXEEDBREAK]->val1 / 100;
+			wd.damage *= sc->data[SC_EXEEDBREAK]->val2 / 100;
 			status_change_end(src, SC_EXEEDBREAK, INVALID_TIMER);
 		}
 		if( sc->data[SC_SPELLFIST] ) {
