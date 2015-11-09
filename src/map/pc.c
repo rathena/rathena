@@ -2994,7 +2994,7 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 #ifdef RENEWAL_CAST
 		case SP_FIXCASTRATE:
 			if(sd->state.lr_flag != 2)
-				FIXEDCASTRATE(sd->bonus.fixcastrate,val);
+				sd->bonus.fixcastrate = min(sd->bonus.fixcastrate,val);
 			break;
 		case SP_ADD_FIXEDCAST:
 			if(sd->state.lr_flag != 2)
@@ -3003,7 +3003,7 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_CASTRATE:
 		case SP_VARCASTRATE:
 			if(sd->state.lr_flag != 2)
-				sd->bonus.varcastrate += val;
+				sd->bonus.varcastrate -= val;
 			break;
 		case SP_ADD_VARIABLECAST:
 			if(sd->state.lr_flag != 2)
@@ -3576,10 +3576,10 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		if(sd->skillcastrate[i].id == type2)
-			sd->skillcastrate[i].val += val;
+			sd->skillcastrate[i].val -= val;
 		else {
 			sd->skillcastrate[i].id = type2;
-			sd->skillcastrate[i].val += val;
+			sd->skillcastrate[i].val -= val;
 		}
 		break;
 	case SP_FIXCASTRATE: // bonus2 bFixedCastrate,sk,n;
@@ -3592,10 +3592,10 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		if(sd->skillfixcastrate[i].id == type2)
-			FIXEDCASTRATE(sd->skillfixcastrate[i].val,val);
+			sd->skillfixcastrate[i].val -= val;
 		else {
 			sd->skillfixcastrate[i].id = type2;
-			sd->skillfixcastrate[i].val = val;
+			sd->skillfixcastrate[i].val -= val;
 		}
 		break;
 #else

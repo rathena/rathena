@@ -439,7 +439,7 @@ void ext_skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, unsi
 int64 skill_unit_ondamaged(struct skill_unit *unit,int64 damage);
 
 int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv);
-int skill_castfix_sc(struct block_list *bl, int time);
+int skill_castfix_sc(struct block_list *bl, double time);
 #ifdef RENEWAL_CAST
 int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 skill_lv);
 #endif

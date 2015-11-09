@@ -15708,50 +15708,65 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
  * Does cast-time reductions based on dex, item bonuses and config setting
  *------------------------------------------*/
 int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
-	int time = skill_get_cast(skill_id, skill_lv);
+	double time = skill_get_cast(skill_id, skill_lv);
 
 	nullpo_ret(bl);
+
 #ifndef RENEWAL_CAST
 	{
-		struct map_session_data *sd;
-
-		sd = BL_CAST(BL_PC, bl);
+		struct map_session_data *sd = BL_CAST(BL_PC, bl);
+		struct status_change *sc = status_get_sc(bl);
+		int reduce_cast_rate = 0;
+		uint8 flag = skill_get_castnodex(skill_id);
 
 		// calculate base cast time (reduced by dex)
-		if( !(skill_get_castnodex(skill_id)&1) ) {
+		if (!(flag&1)) {
 			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
-			if( scale > 0 )	// not instant cast
-				time = time * scale / battle_config.castrate_dex_scale;
+
+			if (scale > 0)	// not instant cast
+				time = time * (float)scale / battle_config.castrate_dex_scale;
 			else
-				return 0;	// instant cast
+				return 0; // instant cast
 		}
 
 		// calculate cast time reduced by item/card bonuses
-		if( !(skill_get_castnodex(skill_id)&4) && sd )
-		{
+		if (!(flag&4) && sd) {
 			int i;
-			if( sd->castrate != 100 )
-				time = time * sd->castrate / 100;
-			for( i = 0; i < ARRAYLENGTH(sd->skillcastrate) && sd->skillcastrate[i].id; i++ )
-			{
-				if( sd->skillcastrate[i].id == skill_id )
-				{
-					time += time * sd->skillcastrate[i].val / 100;
+
+			if (sd->castrate != 100)
+				reduce_cast_rate += 100 - sd->castrate;
+			for(i = 0; i < ARRAYLENGTH(sd->skillcastrate) && sd->skillcastrate[i].id; i++) {
+				if (sd->skillcastrate[i].id == skill_id) {
+					reduce_cast_rate -= sd->skillcastrate[i].val;
 					break;
 				}
 			}
 		}
 
+		// NOTE: Magic Strings and Foresight are treated as separate factors in the calculation
+		// They are not added to the other modifiers [iRO Wiki]
+		if (sc && sc->count && !(flag&2)) {
+			if (sc->data[SC_MEMORIZE]) {
+				reduce_cast_rate += 50;
+				if ((--sc->data[SC_MEMORIZE]->val2) <= 0)
+					status_change_end(bl, SC_MEMORIZE, INVALID_TIMER);
+			}
+			if (sc->data[SC_POEMBRAGI])
+				reduce_cast_rate += sc->data[SC_POEMBRAGI]->val2;
+		}
+
+		time = time * (1 - (float)reduce_cast_rate / 100);
 	}
 #endif
+
 	// config cast time multiplier
 	if (battle_config.cast_rate != 100)
 		time = time * battle_config.cast_rate / 100;
 	// return final cast time
 	time = max(time, 0);
-
 	//ShowInfo("Castime castfix = %d\n",time);
-	return time;
+
+	return (int)time;
 }
 
 #ifndef RENEWAL_CAST
@@ -15761,12 +15776,15 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
  * @param time: Cast time before Status Change addition or reduction
  * @return time: Modified castime after status change addition or reduction
  */
-int skill_castfix_sc(struct block_list *bl, int time)
+int skill_castfix_sc(struct block_list *bl, double time)
 {
 	struct status_change *sc = status_get_sc(bl);
 
-	if( time < 0 )
+	if (time < 0)
 		return 0;
+
+	if (bl->type == BL_MOB)
+		return (int)time;
 
 	if (sc && sc->count) {
 		if (sc->data[SC_SLOWCAST])
@@ -15777,20 +15795,14 @@ int skill_castfix_sc(struct block_list *bl, int time)
 			time -= time * sc->data[SC_SUFFRAGIUM]->val2 / 100;
 			status_change_end(bl, SC_SUFFRAGIUM, INVALID_TIMER);
 		}
-		if (sc->data[SC_MEMORIZE]) {
-			time>>=1;
-			if ((--sc->data[SC_MEMORIZE]->val2) <= 0)
-				status_change_end(bl, SC_MEMORIZE, INVALID_TIMER);
-		}
-		if (sc->data[SC_POEMBRAGI])
-			time -= time * sc->data[SC_POEMBRAGI]->val2 / 100;
 		if (sc->data[SC_IZAYOI])
 			time -= time * 50 / 100;
 	}
-	time = max(time, 0);
 
+	time = max(time, 0);
 	//ShowInfo("Castime castfix_sc = %d\n",time);
-	return time;
+
+	return (int)time;
 }
 #else
 /**
@@ -15812,139 +15824,120 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 {
 	struct status_change *sc = status_get_sc(bl);
 	struct map_session_data *sd = BL_CAST(BL_PC,bl);
-	int fixed = skill_get_fixed_cast(skill_id, skill_lv);
-	short fixcast_r = 0;
+	int fixed = skill_get_fixed_cast(skill_id, skill_lv), fixcast_r = 0, varcast_r = 0, reduce_cast_rate = 0;
 	uint8 i = 0, flag = skill_get_castnodex(skill_id);
-
-#define FIXEDCASTRATE2(val) ( FIXEDCASTRATE(fixcast_r,(val)) )
 
 	nullpo_ret(bl);
 
-	if( time < 0 )
+	if (time < 0)
 		return 0;
 
-	if( bl->type == BL_MOB )
+	if (bl->type == BL_MOB)
 		return (int)time;
 
-	if( fixed < 0 || battle_config.default_fixed_castrate == 0 ) // no fixed cast time
+	if (fixed < 0 || !battle_config.default_fixed_castrate) // no fixed cast time
 		fixed = 0;
-	else if( fixed == 0 ) {
+	else if (fixed == 0) {
 		fixed = (int)time * battle_config.default_fixed_castrate / 100; // fixed time
 		time = time * (100 - battle_config.default_fixed_castrate) / 100; // variable time
 	}
 
-	// Additive Variable Cast bonus first
-	if (sd && !(flag&4)) { // item bonus
-		time += sd->bonus.add_varcast; // bonus bVariableCast
-
-		for (i = 0; i < ARRAYLENGTH(sd->skillvarcast) && sd->skillvarcast[i].id; i++)
-			if( sd->skillvarcast[i].id == skill_id ){ // bonus2 bSkillVariableCast
-				time += sd->skillvarcast[i].val;
-				break;
-			}
-	}
-	/*if (sc && sc->count && !(flag&2)) { // status change
-		// -NONE YET-
-		//	if (sc->data[????])
-		//		bonus += sc->data[????]->val?;
-	}*/
-
-	// Adjusted by item bonuses
+	// Additive Variable Cast bonus adjustments by items
 	if (sd && !(flag&4)) {
-		// Additive values
-		fixed += sd->bonus.add_fixcast; // bonus bFixedCast
-
-		for (i = 0; i < ARRAYLENGTH(sd->skillfixcast) && sd->skillfixcast[i].id; i++)
-			if (sd->skillfixcast[i].id == skill_id){ // bonus2 bSkillFixedCast
+		if (sd->bonus.varcastrate != 0)
+			reduce_cast_rate += sd->bonus.varcastrate; // bonus bVariableCastrate
+		if (sd->bonus.fixcastrate != 0)
+			fixcast_r -= sd->bonus.fixcastrate; // bonus bFixedCastrate
+		if (sd->bonus.add_varcast != 0)
+			time += sd->bonus.add_varcast; // bonus bVariableCast
+		if (sd->bonus.add_fixcast != 0)
+			fixed += sd->bonus.add_fixcast; // bonus bFixedCast
+		for (i = 0; i < ARRAYLENGTH(sd->skillfixcast) && sd->skillfixcast[i].id; i++) {
+			if (sd->skillfixcast[i].id == skill_id) { // bonus2 bSkillFixedCast
 				fixed += sd->skillfixcast[i].val;
 				break;
 			}
-
-		// Multipicative values
-		if (sd->bonus.varcastrate != 0)
-			VARCAST_REDUCTION(sd->bonus.varcastrate); // bonus bVariableCastrate
-
-		if (sd->bonus.fixcastrate != 0)
-			FIXEDCASTRATE2(sd->bonus.fixcastrate); // bonus bFixedCastrate
-
-		for( i = 0; i < ARRAYLENGTH(sd->skillcastrate) && sd->skillcastrate[i].id; i++ )
-			if( sd->skillcastrate[i].id == skill_id ){ // bonus2 bVariableCastrate
-				VARCAST_REDUCTION(sd->skillcastrate[i].val);
+		}
+		for (i = 0; i < ARRAYLENGTH(sd->skillvarcast) && sd->skillvarcast[i].id; i++) {
+			if (sd->skillvarcast[i].id == skill_id) { // bonus2 bSkillVariableCast
+				time += sd->skillvarcast[i].val;
 				break;
 			}
-		for( i = 0; i < ARRAYLENGTH(sd->skillfixcastrate) && sd->skillfixcastrate[i].id; i++ )
-			if( sd->skillfixcastrate[i].id == skill_id ){ // bonus2 bFixedCastrate
-				FIXEDCASTRATE2(sd->skillfixcastrate[i].val);
+		}
+		for (i = 0; i < ARRAYLENGTH(sd->skillcastrate) && sd->skillcastrate[i].id; i++) {
+			if (sd->skillcastrate[i].id == skill_id) { // bonus2 bVariableCastrate
+				reduce_cast_rate += sd->skillcastrate[i].val;
 				break;
 			}
+		}
+		for (i = 0; i < ARRAYLENGTH(sd->skillfixcastrate) && sd->skillfixcastrate[i].id; i++) {
+			if (sd->skillfixcastrate[i].id == skill_id) { // bonus2 bFixedCastrate
+				fixcast_r = max(fixcast_r, sd->skillfixcastrate[i].val);
+				break;
+			}
+		}
 	}
 
 	// Adjusted by active statuses
-	if (sc && sc->count && !(flag&2) ) {
+	if (sc && sc->count && !(flag&2)) {
 		// Multiplicative Variable CastTime values
 		if (sc->data[SC_SLOWCAST])
-			VARCAST_REDUCTION(sc->data[SC_SLOWCAST]->val2);
+			VARCAST_REDUCTION(-sc->data[SC_SLOWCAST]->val2);
 		if (sc->data[SC__LAZINESS])
-			VARCAST_REDUCTION(sc->data[SC__LAZINESS]->val2);
-
+			VARCAST_REDUCTION(-sc->data[SC__LAZINESS]->val2);
 		if (sc->data[SC_SUFFRAGIUM]) {
-			VARCAST_REDUCTION(-sc->data[SC_SUFFRAGIUM]->val2);
+			VARCAST_REDUCTION(sc->data[SC_SUFFRAGIUM]->val2);
 			status_change_end(bl, SC_SUFFRAGIUM, INVALID_TIMER);
 		}
 		if (sc->data[SC_MEMORIZE]) {
-			VARCAST_REDUCTION(-50);
+			reduce_cast_rate += 50;
 			if ((--sc->data[SC_MEMORIZE]->val2) <= 0)
 				status_change_end(bl, SC_MEMORIZE, INVALID_TIMER);
 		}
 		if (sc->data[SC_POEMBRAGI])
-			VARCAST_REDUCTION(-sc->data[SC_POEMBRAGI]->val2);
+			reduce_cast_rate += sc->data[SC_POEMBRAGI]->val2;
 		if (sc->data[SC_IZAYOI])
 			VARCAST_REDUCTION(-50);
-		if (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 3 && (skill_get_ele(skill_id, skill_lv) == ELE_WATER))
-			VARCAST_REDUCTION(-30); //Reduces 30% Variable Cast Time of Water spells.
+		if (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 3 && skill_get_type(skill_id) == BF_MAGIC && skill_get_ele(skill_id, skill_lv) == ELE_WATER)
+			VARCAST_REDUCTION(30); //Reduces 30% Variable Cast Time of magic Water spells.
 		if (sc->data[SC_TELEKINESIS_INTENSE])
-			VARCAST_REDUCTION(-sc->data[SC_TELEKINESIS_INTENSE]->val4);
-
+			VARCAST_REDUCTION(sc->data[SC_TELEKINESIS_INTENSE]->val4);
 		// Multiplicative Fixed CastTime values
 		if (sc->data[SC_SECRAMENT])
-			FIXEDCASTRATE2(-sc->data[SC_SECRAMENT]->val2);
+			fixcast_r = max(fixcast_r, sc->data[SC_SECRAMENT]->val2);
 		if (sd && (skill_lv = pc_checkskill(sd, WL_RADIUS) ) && skill_id >= WL_WHITEIMPRISON && skill_id <= WL_FREEZE_SP)
-			FIXEDCASTRATE2(-(5 + skill_lv * 5));
+			fixcast_r = max(fixcast_r, ((status_get_int(bl) + status_get_lv(bl)) / 15 + skill_lv * 5));
 		if (sc->data[SC_DANCEWITHWUG])
-			FIXEDCASTRATE2(-sc->data[SC_DANCEWITHWUG]->val4);
+			fixcast_r = max(fixcast_r, sc->data[SC_DANCEWITHWUG]->val4);
 		if (sc->data[SC_HEAT_BARREL])
-			FIXEDCASTRATE2(-sc->data[SC_HEAT_BARREL]->val2);
-
+			fixcast_r = max(fixcast_r, sc->data[SC_HEAT_BARREL]->val2);
 		// Additive Fixed CastTime values
 		if (sc->data[SC_MANDRAGORA])
-			fixed += sc->data[SC_MANDRAGORA]->val1 * 1000 / 2;
-
+			fixed += sc->data[SC_MANDRAGORA]->val1 * 500;
 		if (sc->data[SC_GUST_OPTION] || sc->data[SC_BLAST_OPTION] || sc->data[SC_WILD_STORM_OPTION])
 			fixed -= 1000;
 		if (sc->data[SC_IZAYOI])
 			fixed = 0;
 	}
 
-#undef FIXEDCASTRATE2
+	if (varcast_r < 0)
+		time = time * (1 - (float)min(varcast_r, 100) / 100);
 
 	// Apply Variable CastTime calculation by INT & DEX
 	if (!(flag&1))
-		time = time * (1 - sqrt(((float)(status_get_dex(bl)*2 + status_get_int(bl)) / battle_config.vcast_stat_scale)));
+		time = time * (1 - sqrt(((float)(status_get_dex(bl) * 2 + status_get_int(bl)) / battle_config.vcast_stat_scale)));
 
-	// Apply Fixed CastTime rate
-	if (fixed != 0 && fixcast_r != 0) {
-		fixed = (int)(fixed * (1 + fixcast_r * 0.01));
-		fixed = max(fixed, 0);
-	}
+	time = time * (1 - (float)min(reduce_cast_rate, 100) / 100);
+	time = max(time, 0) + (1 - (float)min(fixcast_r, 100) / 100) * max(fixed, 0); //Underflow checking/capping
 
-	return (int)max(time + fixed, 0);
+	return (int)time;
 }
 #endif
 
 /*==========================================
  * Does delay reductions based on dex/agi, sc data, item bonuses, ...
  *------------------------------------------*/
-int skill_delayfix (struct block_list *bl, uint16 skill_id, uint16 skill_lv)
+int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 {
 	int delaynodex = skill_get_delaynodex(skill_id);
 	int time = skill_get_delay(skill_id, skill_lv);
@@ -15965,44 +15958,44 @@ int skill_delayfix (struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 
 	// Delay reductions
 	switch (skill_id) {	//Monk combo skills have their delay reduced by agi/dex.
-	case MO_TRIPLEATTACK:
-	case MO_CHAINCOMBO:
-	case MO_COMBOFINISH:
-	case CH_TIGERFIST:
-	case CH_CHAINCRUSH:
-	case SR_DRAGONCOMBO:
-	case SR_FALLENEMPIRE:
-	case SR_FLASHCOMBO_ATK_STEP1:
-	case SR_FLASHCOMBO_ATK_STEP2:
-		//If delay not specified, it will be 1000 - 4*agi - 2*dex
-		if (time == 0)
-			time = 1000;
-		time -= (4*status_get_agi(bl) + 2*status_get_dex(bl));
-		break;
-	case HP_BASILICA:
-		if( sc && !sc->data[SC_BASILICA] )
-			time = 0; // There is no Delay on Basilica creation, only on cancel
-		break;
-	default:
-		if (battle_config.delay_dependon_dex && !(delaynodex&1))
-		{	// if skill delay is allowed to be reduced by dex
-			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
-			if (scale > 0)
-				time = time * scale / battle_config.castrate_dex_scale;
-			else //To be capped later to minimum.
-				time = 0;
-		}
-		if (battle_config.delay_dependon_agi && !(delaynodex&1))
-		{	// if skill delay is allowed to be reduced by agi
-			int scale = battle_config.castrate_dex_scale - status_get_agi(bl);
-			if (scale > 0)
-				time = time * scale / battle_config.castrate_dex_scale;
-			else //To be capped later to minimum.
-				time = 0;
-		}
+		case MO_TRIPLEATTACK:
+		case MO_CHAINCOMBO:
+		case MO_COMBOFINISH:
+		case CH_TIGERFIST:
+		case CH_CHAINCRUSH:
+		case SR_DRAGONCOMBO:
+		case SR_FALLENEMPIRE:
+		case SR_FLASHCOMBO_ATK_STEP1:
+		case SR_FLASHCOMBO_ATK_STEP2:
+			//If delay not specified, it will be 1000 - 4*agi - 2*dex
+			if (time == 0)
+				time = 1000;
+			time -= (4 * status_get_agi(bl) + 2 * status_get_dex(bl));
+			break;
+		case HP_BASILICA:
+			if (sc && !sc->data[SC_BASILICA])
+				time = 0; // There is no Delay on Basilica creation, only on cancel
+			break;
+		default:
+			if (battle_config.delay_dependon_dex && !(delaynodex&1)) { // if skill delay is allowed to be reduced by dex
+				int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
+
+				if (scale > 0)
+					time = time * scale / battle_config.castrate_dex_scale;
+				else //To be capped later to minimum.
+					time = 0;
+			}
+			if (battle_config.delay_dependon_agi && !(delaynodex&1)) { // if skill delay is allowed to be reduced by agi
+				int scale = battle_config.castrate_dex_scale - status_get_agi(bl);
+
+				if (scale > 0)
+					time = time * scale / battle_config.castrate_dex_scale;
+				else //To be capped later to minimum.
+					time = 0;
+			}
 	}
 
-	if ( sc && sc->data[SC_SPIRIT] ) {
+	if (sc && sc->data[SC_SPIRIT]) {
 		switch (skill_id) {
 			case CR_SHIELDBOOMERANG:
 				if (sc->data[SC_SPIRIT]->val2 == SL_CRUSADER)
@@ -16015,18 +16008,16 @@ int skill_delayfix (struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		}
 	}
 
-	if (!(delaynodex&2))
-	{
+	if (!(delaynodex&2)) {
 		if (sc && sc->count) {
 			if (sc->data[SC_POEMBRAGI])
 				time -= time * sc->data[SC_POEMBRAGI]->val3 / 100;
-			if (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 3 && (skill_get_ele(skill_id, skill_lv) == ELE_WIND))
+			if (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 3 && skill_get_type(skill_id) == BF_MAGIC && skill_get_ele(skill_id, skill_lv) == ELE_WIND)
 				time /= 2; // After Delay of Wind element spells reduced by 50%.
 		}
-
 	}
 
-	if( !(delaynodex&4) && sd && sd->delayrate != 100 )
+	if (!(delaynodex&4) && sd && sd->delayrate != 100)
 		time = time * sd->delayrate / 100;
 
 	if (battle_config.delay_rate != 100)
@@ -16035,8 +16026,8 @@ int skill_delayfix (struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 	//min delay
 	time = max(time, status_get_amotion(bl)); // Delay can never be below amotion [Playtester]
 	time = max(time, battle_config.min_skill_delay_limit);
-
 	//ShowInfo("Delay delayfix = %d\n",time);
+
 	return time;
 }
 
