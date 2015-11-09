@@ -19,6 +19,9 @@
 
 #include <stdlib.h>
 
+#if PACKETVER_SUPPORTS_PINCODE
+bool pincode_allowed( char* pincode );
+#endif
 
 //------------------------------------------------
 //Add On system
@@ -97,6 +100,7 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 	return 1;
 }
 
+#if PACKETVER_SUPPORTS_PINCODE
 /* pincode_sendstate transmist the pincode state to client
  * S 08b9 <seed>.L <aid>.L <state>.W (HC_SECOND_PASSWD_LOGIN)
  * state :
@@ -159,6 +163,76 @@ int chclif_parse_pincode_check( int fd, struct char_session_data* sd ){
 }
 
 /*
+ * Helper function to check if a new pincode contains illegal characters or combinations
+ */
+bool pincode_allowed( char* pincode ){
+	int i;
+	char c, n, compare[PINCODE_LENGTH+1];
+
+	memset( compare, 0, PINCODE_LENGTH+1);
+
+	// Sanity check for bots to prevent errors
+	for( i = 0; i < PINCODE_LENGTH; i++ ){
+		c = pincode[i];
+
+		if( c < '0' || c > '9' ){
+			return false;
+		}
+	}
+
+	// Is it forbidden to use only the same character?
+	if( !charserv_config.pincode_config.pincode_allow_repeated ){
+		c = pincode[0];
+
+		// Check if the first character equals the rest of the input
+		for( i = 0; i < PINCODE_LENGTH; i++ ){
+			compare[i] = c;
+		}
+
+		if( strncmp( pincode, compare, PINCODE_LENGTH + 1 ) == 0 ){
+			return false;
+		}
+	}
+
+	// Is it forbidden to use a sequential combination of numbers?
+	if( !charserv_config.pincode_config.pincode_allow_sequential ){
+		c = pincode[0];
+
+		// Check if it is an ascending sequence
+		for( i = 0; i < PINCODE_LENGTH; i++ ){
+			n = c + i;
+
+			if( n > '9' ){
+				compare[i] = '0' + ( n - '9' ) - 1;
+			}else{
+				compare[i] = n;
+			}
+		}
+
+		if( strncmp( pincode, compare, PINCODE_LENGTH + 1 ) == 0 ){
+			return false;
+		}
+
+		// Check if it is an descending sequence
+		for( i = 0; i < PINCODE_LENGTH; i++ ){
+			n = c - i;
+
+			if( n < '0' ){
+				compare[i] = '9' - ( '0' - n ) + 1;
+			}else{
+				compare[i] = n;
+			}
+		}
+
+		if( strncmp( pincode, compare, PINCODE_LENGTH + 1 ) == 0 ){
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/*
  * Client request to change pincode
  */
 int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
@@ -180,12 +254,16 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 		if( !char_pincode_compare( fd, sd, oldpin ) )
 			return 1;
 		char_pincode_decrypt(sd->pincode_seed,newpin);
+
+		if( pincode_allowed(newpin) ){
+			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
+			strncpy(sd->pincode, newpin, sizeof(newpin));
+			ShowInfo("Pincode changed for AID: %d\n", sd->account_id);
 		
-		chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
-		strncpy(sd->pincode, newpin, sizeof(newpin));
-		ShowInfo("Pincode changed for AID: %d\n", sd->account_id);
-		
-		chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+		}else{
+			chclif_pincode_sendstate( fd, sd, PINCODE_ILLEGAL );
+		}
 	}
 	return 1;
 }
@@ -207,14 +285,18 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 
 		char_pincode_decrypt( sd->pincode_seed, newpin );
 
-		chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
-		strncpy( sd->pincode, newpin, strlen( newpin ) );
+		if( pincode_allowed(newpin) ){
+			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
+			strncpy( sd->pincode, newpin, strlen( newpin ) );
 
-		chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );	
+		}else{
+			chclif_pincode_sendstate( fd, sd, PINCODE_ILLEGAL );
+		}
 	}
 	return 1;
 }
-
+#endif
 
 //----------------------------------------
 // Tell client how many pages, kRO sends 17 (Yommy)
@@ -1150,11 +1232,13 @@ int chclif_parse(int fd) {
 			case 0x82b: next=chclif_parse_char_delete2_cancel(fd, sd); break;
 			// login as map-server
 			case 0x2af8: chclif_parse_maplogin(fd); return 0; // avoid processing of followup packets here
+#if PACKETVER_SUPPORTS_PINCODE
 			//pincode
 			case 0x8b8: next=chclif_parse_pincode_check( fd, sd ); break; // checks the entered pin
 			case 0x8c5: next=chclif_parse_reqpincode_window(fd,sd); break; // request for PIN window
 			case 0x8be: next=chclif_parse_pincode_change( fd, sd ); break; // pincode change request
 			case 0x8ba: next=chclif_parse_pincode_setnew( fd, sd ); break; // activate PIN system and set first PIN
+#endif
 			// character movement request
 			case 0x8d4: next=chclif_parse_moveCharSlot(fd,sd); break;
 			case 0x9a1: next=chclif_parse_req_charlist(fd,sd); break;

@@ -71,6 +71,7 @@ struct Schema_Config {
 };
 extern struct Schema_Config schema_config;
 
+#if PACKETVER_SUPPORTS_PINCODE
 /// Pincode system
 enum pincode_state {
 	PINCODE_OK		= 0,
@@ -78,6 +79,10 @@ enum pincode_state {
 	PINCODE_NOTSET	= 2,
 	PINCODE_EXPIRED	= 3,
 	PINCODE_NEW		= 4,
+	PINCODE_ILLEGAL = 5,
+#if 0
+	PINCODE_KSSN	= 6, // Not supported since we do not store KSSN
+#endif
 	PINCODE_PASSED	= 7,
 	PINCODE_WRONG	= 8,
 	PINCODE_MAXSTATE
@@ -87,7 +92,11 @@ struct Pincode_Config {
 	int pincode_changetime;
 	int pincode_maxtry;
 	bool pincode_force;
+	bool pincode_allow_repeated;
+	bool pincode_allow_sequential;
 };
+#endif
+
 struct CharMove_Config {
 	bool char_move_enabled;
 	bool char_movetoused;
@@ -124,7 +133,9 @@ struct CharServ_Config {
 
 	struct CharMove_Config charmove_config;
 	struct Char_Config char_config;
+#if PACKETVER_SUPPORTS_PINCODE
 	struct Pincode_Config pincode_config;
+#endif
 
 	int save_log; // show loading/saving messages
 	int log_char;	// loggin char or not [devil]
