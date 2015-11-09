@@ -354,6 +354,7 @@
 18559:18560,{ bonus bCritAtkRate,5; }
 18776:20710,{ bonus bBaseAtk,10; }
 18776:22015,{ bonus bMatk,20; }
+18827:5074,{ autobonus "{ transform 1765,5000; bonus2 bHPLossRate,30,1000; bonus bHit,-10; bonus bSplashRange,1; }",10+getequiprefinerycnt(EQI_HEAD_TOP),5000,BF_WEAPON,"{ specialeffect2 EF_NONE; }"; }
 18937:2659,{ bonus bInt,8; bonus bMaxSPrate,5;}
 18937:2660,{ bonus bInt,8; bonus bBaseAtk,20;}
 18937:2661,{ bonus bInt,8; bonus bFlee,15;}
