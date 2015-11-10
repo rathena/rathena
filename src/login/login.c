@@ -579,7 +579,7 @@ bool login_config_read(const char* cfgName, bool normal) {
 		}
 		else if (strcmpi(w1, "console_msg_log") == 0)
 			console_msg_log = atoi(w2);
-		else if  (strcmpi(w1, "console_log_filepath") == 0)
+		else if (strcmpi(w1, "console_log_filepath") == 0)
 			safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
 		else if(!strcmpi(w1, "log_login"))
 			login_config.log_login = (bool)config_switch(w2);

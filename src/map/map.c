@@ -3696,7 +3696,7 @@ static bool map_schema_read_conf(const char *w1, const char *w2) {
 	SCHEMA_CONF(buyingstore_items_table, "buyingstore_items_table")
 	SCHEMA_CONF(mapreg_table, "mapreg_table")
 	SCHEMA_CONF(market_table, "market_table")
-	SCHEMA_CONF(roulette_table, "db_roulette")
+	SCHEMA_CONF(roulette_table, "roulette_table")
 	SCHEMA_CONF(vendings_table, "vending_table")
 	SCHEMA_CONF(vending_items_table, "vending_items_table")
 
@@ -3810,6 +3810,8 @@ int map_config_read(char *cfgName)
 			map_config.enable_grf = config_switch(w2);
 		else if (strcmpi(w1, "console_msg_log") == 0)
 			console_msg_log = atoi(w2);//[Ind]
+		else if (strcmpi(w1, "console_log_filepath") == 0)
+			safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
 		else if (strcmpi(w1,"check_tables") == 0)
 			map_config.check_tables = config_switch(w2);
 		else if (map_schema_read_conf(w1, w2))

@@ -19,8 +19,6 @@
 static struct eri *mapreg_ers;
 
 bool skip_insert = false;
-
-static char mapreg_table[32];
 static bool mapreg_dirty = false;
 
 #define MAPREG_AUTOSAVE_INTERVAL (300*1000)
@@ -85,7 +83,7 @@ bool mapreg_setreg(int64 uid, int val)
 			if (name[1] != '@' && !skip_insert) {// write new variable to database
 				char tmp_str[32 * 2 + 1];
 				Sql_EscapeStringLen(mmysql_handle, tmp_str, name, strnlen(name, 32));
-				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%d','%d')", mapreg_table, tmp_str, i, val))
+				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%d','%d')", mapserv_table(mapreg_table), tmp_str, i, val))
 					Sql_ShowDebug(mmysql_handle);
 			}
 			i64db_put(regs.vars, uid, m);
@@ -99,7 +97,7 @@ bool mapreg_setreg(int64 uid, int val)
 		i64db_remove(regs.vars, uid);
 
 		if (name[1] != '@') {// Remove from database because it is unused.
-			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%d'", mapreg_table, name, i))
+			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%d'", mapserv_table(mapreg_table), name, i))
 				Sql_ShowDebug(mmysql_handle);
 		}
 	}
@@ -125,7 +123,7 @@ bool mapreg_setregstr(int64 uid, const char* str)
 		if (i)
 			script_array_update(&regs, uid, true);
 		if (name[1] != '@') {
-			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%d'", mapreg_table, name, i))
+			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%d'", mapserv_table(mapreg_table), name, i))
 				Sql_ShowDebug(mmysql_handle);
 		}
 		if ((m = i64db_get(regs.vars, uid))) {
@@ -159,7 +157,7 @@ bool mapreg_setregstr(int64 uid, const char* str)
 				char tmp_str2[255 * 2 + 1];
 				Sql_EscapeStringLen(mmysql_handle, tmp_str, name, strnlen(name, 32));
 				Sql_EscapeStringLen(mmysql_handle, tmp_str2, str, strnlen(str, 255));
-				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%d','%s')", mapreg_table, tmp_str, i, tmp_str2))
+				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%d','%s')", mapserv_table(mapreg_table), tmp_str, i, tmp_str2))
 					Sql_ShowDebug(mmysql_handle);
 			}
 			i64db_put(regs.vars, uid, m);
@@ -186,7 +184,7 @@ static void script_load_mapreg(void)
 	char value[255+1];
 	uint32 length;
 
-	if ( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `varname`, `index`, `value` FROM `%s`", mapreg_table)
+	if ( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `varname`, `index`, `value` FROM `%s`", mapserv_table(mapreg_table))
 	  || SQL_ERROR == SqlStmt_Execute(stmt)
 	  ) {
 		SqlStmt_ShowDebug(stmt);
@@ -235,12 +233,12 @@ static void script_save_mapreg(void)
 				int i = script_getvaridx(m->uid);
 				const char* name = get_str(num);
 				if (!m->is_string) {
-					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%d' WHERE `varname`='%s' AND `index`='%d' LIMIT 1", mapreg_table, m->u.i, name, i))
+					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%d' WHERE `varname`='%s' AND `index`='%d' LIMIT 1", mapserv_table(mapreg_table), m->u.i, name, i))
 						Sql_ShowDebug(mmysql_handle);
 				} else {
 					char tmp_str2[2 * 255 + 1];
 					Sql_EscapeStringLen(mmysql_handle, tmp_str2, m->u.str, safestrnlen(m->u.str, 255));
-					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%s' WHERE `varname`='%s' AND `index`='%d' LIMIT 1", mapreg_table, tmp_str2, name, i))
+					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%s' WHERE `varname`='%s' AND `index`='%d' LIMIT 1", mapserv_table(mapreg_table), tmp_str2, name, i))
 						Sql_ShowDebug(mmysql_handle);
 				}
 				m->save = false;

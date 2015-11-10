@@ -105,6 +105,7 @@ struct Log_Config {
 
 	StringBuf *log_path;          ///< Path to log file (Used if 'sql_logs' is no)
 	StringBuf *log_ext;	          ///< Log file extension (Used if 'sql_logs' is no)
+	StringBuf *log_timestamp;	  ///< Time Stamp format for logs
 
 	struct s_log_schema_config {
 		StringBuf *branch_table;  ///< Branch log table/file with path
