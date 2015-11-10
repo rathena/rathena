@@ -7674,7 +7674,7 @@ void clif_mvp_exp(struct map_session_data *sd, unsigned int exp)
 	fd=sd->fd;
 	WFIFOHEAD(fd,packet_len(0x10b));
 	WFIFOW(fd,0)=0x10b;
-	WFIFOL(fd,2)=min(exp,UINT32_MAX);
+	WFIFOL(fd,2)=min(exp,(unsigned int)INT32_MAX);
 	WFIFOSET(fd,packet_len(0x10b));
 }
 
