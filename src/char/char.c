@@ -880,7 +880,7 @@ int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charsta
 		} else {
 			ShowInfo("Resetting sex of character '%s' (CID: %d, AID: %d) to 'U' due to incompatible PACKETVER.\n", p->name, p->char_id, p->account_id);
 		}
-		if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `sex` = 'U' WHERE `char_id` = '%d'", schema_config.char_db, p->char_id)) {
+		if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `sex` = 'U' WHERE `char_id` = '%d'", charserv_table(char_table), p->char_id)) {
 			Sql_ShowDebug(sql_handle);
 		}
 	}
@@ -2438,7 +2438,7 @@ bool char_checkdb(void){
 	}
 	//checking ragsrvinfo_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `index`,`name`,`exp`,`jexp`,`drop`"
-		" FROM `%s` LIMIT 1;", schema_config.ragsrvinfo_db) ) {
+		" FROM `%s` LIMIT 1;", charserv_table(ragsrvinfo_table)) ) {
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}

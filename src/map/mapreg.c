@@ -323,9 +323,11 @@ void mapreg_final(void)
  */
 void mapreg_init(void)
 {
-	mapreg_db = idb_alloc(DB_OPT_BASE);
-	mapregstr_db = idb_alloc(DB_OPT_RELEASE_DATA);
-	safestrncpy(mapreg_table, StringBuf_Value(mapserv_schema_config.mapreg_table), sizeof(mapreg_table));
+	regs.vars = i64db_alloc(DB_OPT_BASE);
+	mapreg_ers = ers_new(sizeof(struct mapreg_save), "mapreg.c:mapreg_ers", ERS_OPT_CLEAN);
+
+	skip_insert = false;
+	regs.arrays = NULL;
 
 	script_load_mapreg();
 

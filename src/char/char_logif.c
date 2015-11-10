@@ -414,10 +414,10 @@ void chlogif_parse_change_sex_sub(int sex, int acc, int char_id, int class_, int
 	else if (class_ == JOB_KAGEROU || class_ == JOB_OBORO)
 		class_ = (sex == SEX_MALE ? JOB_KAGEROU : JOB_OBORO);
 
-	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'", schema_config.inventory_db, char_id))
+	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0' WHERE `char_id` = '%d'", charserv_table(inventory_table), char_id))
 		Sql_ShowDebug(sql_handle);
 
-	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class` = '%d', `weapon` = '0', `shield` = '0', `head_top` = '0', `head_mid` = '0', `head_bottom` = '0' WHERE `char_id` = '%d'", schema_config.char_db, class_, char_id))
+	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class` = '%d', `weapon` = '0', `shield` = '0', `head_top` = '0', `head_mid` = '0', `head_bottom` = '0' WHERE `char_id` = '%d'", charserv_table(char_table), class_, char_id))
 		Sql_ShowDebug(sql_handle);
 	if (guild_id) // If there is a guild, update the guild_member data [Skotlex]
 		inter_guild_sex_changed(guild_id, acc, char_id, sex);
@@ -486,7 +486,7 @@ int chlogif_parse_ackchangecharsex(int char_id, int sex)
 	char *data;
 
 	// get character data
-	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`class`,`guild_id` FROM `%s` WHERE `char_id` = '%d'", schema_config.char_db, char_id)) {
+	if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`class`,`guild_id` FROM `%s` WHERE `char_id` = '%d'", charserv_table(char_table), char_id)) {
 		Sql_ShowDebug(sql_handle);
 		return 1;
 	}
@@ -500,7 +500,7 @@ int chlogif_parse_ackchangecharsex(int char_id, int sex)
 	Sql_GetData(sql_handle, 2, &data, NULL); guild_id = atoi(data);
 	Sql_FreeResult(sql_handle);
 
-	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `sex` = '%c' WHERE `char_id` = '%d'", schema_config.char_db, sex == SEX_MALE ? 'M' : 'F', char_id)) {
+	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `sex` = '%c' WHERE `char_id` = '%d'", charserv_table(char_table), sex == SEX_MALE ? 'M' : 'F', char_id)) {
 		Sql_ShowDebug(sql_handle);
 		return 1;
 	}
