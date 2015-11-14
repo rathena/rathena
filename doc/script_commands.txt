@@ -7149,71 +7149,97 @@ Changing a homunculus or pet name will be permanent.
 
 This is used to get and set special data related to the unit.
 With getunitdata, the array given will be filled with the current data. In setunitdata
-the indexes in the array would be used to set that data on the unit. 
+the indexes in the array would be used to set that data on the unit.
+
+Note: When adjusting a unit's stat (STR, AGI, etc) the unit's respective statuses are
+      recalculated (HIT, FLEE, etc) automatically. Keep in mind that some stats don't
+	  affect a unit's status and will have to directly be modified.
 
 Parameters (indexes) for monsters are:
+	UMOB_SIZE		UMOB_Y			UMOB_HAIRSTYLE		UMOB_WEAPON		UMOB_LUK				UMOB_MDEF		UMOB_ELELEVEL
+	UMOB_LEVEL		UMOB_SPEED		UMOB_HAIRCOLOR		UMOB_LOOKDIR	UMOB_SLAVECPYMSTRMD		UMOB_HIT		UMOB_AMOTION
+	UMOB_HP			UMOB_MODE		UMOB_HEADBOTTOM		UMOB_STR		UMOB_DMGIMMUNE			UMOB_FLEE		UMOB_ADELAY
+	UMOB_MAXHP		UMOB_AI			UMOB_HEADMIDDLE		UMOB_AGI		UMOB_ATKRANGE			UMOB_PDODGE		UMOB_DMOTION
+	UMOB_MASTERAID	UMOB_SCOPTION	UMOB_HEADTOP		UMOB_VIT		UMOB_ATK				UMOB_CRIT
+	UMOB_MAPID		UMOB_SEX		UMOB_CLOTHCOLOR		UMOB_INT		UMOB_MATK				UMOB_RACE
+	UMOB_X			UMOB_CLASS		UMOB_SHIELD			UMOB_DEX		UMOB_DEF				UMOB_ELETYPE
 
-	0 - size (big, small, normal)	7  - y							14 - hair style			21 - weapon			28 - LUK
-	1 - level						8  - speed						15 - hair color			22 - looking dir	29 - for slave to copy master's mode
-	2 - HP							9  - mode 						16 - head gear bottom	23 - STR			30 - immune from attacks state
-	3 - max HP						10 - special AI state	 		17 - head gear middle	24 - AGI
-	4 - master AID					11 - SC option					18 - head gear top		25 - VIT
-	5 - map ID						12 - sex						19 - cloth color		26 - INT
-	6 - x							13 - class (Monster ID, Job ID)	20 - shield				27 - DEX
+-----
 
 Parameter (indexes) for homunculi are:
+	UHOM_SIZE		UHOM_MAPID		UHOM_CANMOVETICK		UHOM_DMGIMMUNE	UHOM_FLEE		UHOM_ADELAY
+	UHOM_LEVEL		UHOM_X			UHOM_STR				UHOM_ATKRANGE	UHOM_PDODGE		UHOM_DMOTION
+	UHOM_HP			UHOM_Y			UHOM_AGI				UHOM_ATK		UHOM_CRIT
+	UHOM_MAXHP		UHOM_HUNGER		UHOM_VIT				UHOM_MATK		UHOM_RACE
+	UHOM_SP			UHOM_INTIMACY	UHOM_INT				UHOM_DEF		UHOM_ELETYPE
+	UHOM_MAXSP		UHOM_SPEED		UHOM_DEX				UHOM_MDEF		UHOM_ELELEVEL
+	UHOM_MASTERCID	UHOM_LOOKDIR	UHOM_LUK				UHOM_HIT		UHOM_AMOTION
 
-	0 - size (big, small, normal)	7  - map ID			14 - canmove_tick	21 - immune from attacks state
-	1 - level						8  - x				15 - STR
-	2 - HP							9  - y				16 - AGI
-	3 - max HP						10 - hunger			17 - VIT
-	4 - SP							11 - intimacy		18 - INT
-	5 - max SP						12 - speed			19 - DEX
-	6 - master Character ID			13 - looking dir	20 - LUK
+-----
 
 Parameter (indexes) for pets are:
+	UPET_SIZE		UPET_Y				UPET_AGI		UPET_ATK		UPET_CRIT
+	UPET_LEVEL		UPET_HUNGER			UPET_VIT		UPET_MATK		UPET_RACE
+	UPET_HP			UPET_INTIMACY		UPET_INT		UPET_DEF		UPET_ELETYPE
+	UPET_MAXHP		UPET_SPEED			UPET_DEX		UPET_MDEF		UPET_ELELEVEL
+	UPET_MASTERAID	UPET_LOOKDIR		UPET_LUK		UPET_HIT		UPET_AMOTION
+	UPET_MAPID		UPET_CANMOVETICK	UPET_DMGIMMUNE	UPET_FLEE		UPET_ADELAY
+	UPET_X			UPET_STR			UPET_ATKRANGE	UPET_PDODGE		UPET_DMOTION
 
-	0 - size (big, small, normal)	7  - y				14 - AGI
-	1 - level						8  - hunger			15 - VIT
-	2 - HP							9  - intimacy		16 - INT
-	3 - max HP						10 - speed			17 - DEX
-	4 - master AID					11 - looking dir	18 - LUK
-	5 - map ID						12 - canmove_tick	19 - immune from attacks state
-	6 - x							13 - STR
+-----
 
 Parameter (indexes) for mercenaries are:
+	UMER_SIZE		UMER_KILLCOUNT		UMER_VIT		UMER_MATK		UMER_RACE
+	UMER_HP			UMER_LIFETIME		UMER_INT		UMER_DEF		UMER_ELETYPE
+	UMER_MAXHP		UMER_SPEED			UMER_DEX		UMER_MDEF		UMER_ELELEVEL
+	UMER_MASTERCID	UMER_LOOKDIR		UMER_LUK		UMER_HIT		UMER_AMOTION
+	UMER_MAPID		UMER_CANMOVETICK	UMER_DMGIMMUNE	UMER_FLEE		UMER_ADELAY
+	UMER_X			UMER_STR			UMER_ATKRANGE	UMER_PDODGE		UMER_DMOTION
+	UMER_Y			UMER_AGI			UMER_ATK		UMER_CRIT
 
-	0 - size (big, small, normal)	7  - kill count		14 - VIT
-	1 - HP							8  - life time		15 - INT
-	2 - max HP						9  - speed 			16 - DEX
-	3 - master Character ID			10 - looking dir	17 - LUK
-	4 - map ID						11 - canmove_tick	18 - immune from attacks state
-	5 - x							12 - STR
-	6 - y							13 - AGI
+-----
 
 Parameter (indexes) for elementals are:
+	UELE_SIZE		UELE_X				UELE_STR			UELE_ATKRANGE	UELE_PDODGE		UELE_DMOTION
+	UELE_HP			UELE_Y				UELE_AGI			UELE_ATK		UELE_CRIT
+	UELE_MAXHP		UELE_LIFETIME		UELE_VIT			UELE_MATK		UELE_RACE
+	UELE_SP			UELE_MODE			UELE_INT			UELE_DEF		UELE_ELETYPE
+	UELE_MAXSP		UELE_SPEED			UELE_DEX			UELE_MDEF		UELE_ELELEVEL
+	UELE_MASTERCID	UELE_LOOKDIR		UELE_LUK			UELE_HIT		UELE_AMOTION
+	UELE_MAPID		UELE_CANMOVETICK	UELE_DMGIMMUNE		UELE_FLEE		ELE_ADELAY
 
-	0 - size (big, small, normal)	7  - x				14 - STR
-	1 - HP							8  - y				15 - AGI
-	2 - max HP						9  - life time		16 - VIT
-	3 - SP							10 - mode			17 - INT
-	4 - max SP						11 - speed			18 - DEX
-	5 - master Character ID			12 - looking dir	19 - LUK
-	6 - map ID						13 - canmove_tick	20 - immune from attacks state
+-----
 
 Parameter (indexes) for NPCs are:
+	UNPC_DISPLAY	UNPC_LOOKDIR		UNPC_PLUSALLSTAT	UNPC_HIT		UNPC_AMOTION
+	UNPC_LEVEL		UNPC_STR			UNPC_DMGIMMUNE		UNPC_FLEE		UNPC_ADELAY
+	UNPC_HP			UNPC_AGI			UNPC_ATKRANGE		UNPC_PDODGE		UNPC_DMOTION
+	UNPC_MAXHP		UNPC_VIT			UNPC_ATK			UNPC_CRIT
+	UNPC_MAPID		UNPC_INT			UNPC_MATK			UNPC_RACE
+	UNPC_X			UNPC_DEX			UNPC_DEF			UNPC_ELETYPE
+	UNPC_Y			UNPC_LUK			UNPC_MDEF			UNPC_ELELEVEL
 
-	0 - display		7  - looking dir
-	1 - level		8  - STR
-	2 - HP			9  - AGI
-	3 - max HP		10 - VIT
-	4 - map ID		11 - INT
-	5 - x			12 - DEX
-	6 - y			13 - LUK
+*Notes:
+		- *_SIZE: small (0); medium (1); large (2)
+	    - *_MAPID: this refers to the map_data index (from src/map/map.c), not the mapindex_db index (from src/common/mapindex.c)
+			-- For 'setunitdata', map name can also be passed in as a valid value instead of map ID
+		- *_SPEED: 20 - 1000
+		- *_MODE: see doc/mob_db_mode_list.txt
+		- *_LOOKDIR: north (0), northwest (1), west (2), etc
+		- *_CANMOVETICK: seconds * 1000 the unit will be unable to move
+		- *_DMGIMMUNE: unit will be immune to damage (1), or will receive damage (0)
+		- *_HUNGER: 0 - 100
+		- *_INTIMACY: 0 - 1000
+		- *_LIFETIME: seconds * 1000 the unit will be 'alive' for
+		- *_AMOTION: see doc/mob_db.txt
+		- *_ADELAY: see doc/mob_db.txt
+		- *_DMOTION: see doc/mob_db.txt
 
-*Notes: For mode, see doc/mob_db_mode_list.txt
-	    For map ID, this refers to the map_data index (from src/map/map.c), not the mapindex_db index (from src/common/mapindex.c)
-	    For 'setunitdata', map name can also be passed in as a valid value instead of map ID
+		- UMOB_AI: none (0); attack (1); marine sphere (2); flora (3); zanzou (4); legion (5); faw (6)
+		- UMOB_SCOPTION: see the 'Variables' section at the top of this document
+		- UMOB_SLAVECPYMSTRMD: make the slave copy the master's mode (1), or not (0)
+
+		- UNPC_PLUSALLSTAT: same as 'bAllStats'; increases/decreses all stats by given amount
 
 Example:
 	// Spawn some Porings and save the Game ID.
@@ -7228,7 +7254,7 @@ Example:
 	getunitdata .GID,@por_arr;
 
 	// Set the max HP of the Poring to 1000 (current HP will also get updated to 1000).
-	setunitdata .GID,3,1000;
+	setunitdata .GID,UMOB_MAXHP,1000;
 
 ---------------------------------------
 
