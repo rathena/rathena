@@ -2634,9 +2634,16 @@ void char_set_defaults(){
 	charserv_config.log_inter = 1;	// loggin inter or not [devil]
 	charserv_config.char_check_db =1;
 
+#ifdef RENEWAL
+	charserv_config.start_point.map = mapindex_name2id("iz_int");
+	charserv_config.start_point.x = 97;
+	charserv_config.start_point.y = 90;
+#else
 	charserv_config.start_point.map = mapindex_name2id("new_zone01"); //mapindex_name2id(MAP_DEFAULT);
 	charserv_config.start_point.x = 53; //MAP_DEFAULT_X
 	charserv_config.start_point.y = 111; //MAP_DEFAULT_Y
+#endif
+
 	charserv_config.console = 0;
 	charserv_config.max_connect_user = -1;
 	charserv_config.gm_allow_group = -1;
@@ -2740,7 +2747,11 @@ bool char_config_read(const char* cfgName, bool normal){
 				charserv_config.autosave_interval = DEFAULT_AUTOSAVE_INTERVAL;
 		} else if (strcmpi(w1, "save_log") == 0) {
 			charserv_config.save_log = config_switch(w2);
+#ifdef RENEWAL
 		} else if (strcmpi(w1, "start_point") == 0) {
+#else
+		} else if (strcmpi(w1, "start_point_pre") == 0) {
+#endif
 			char map[MAP_NAME_LENGTH_EXT];
 			int x, y;
 			if (sscanf(w2, "%15[^,],%d,%d", map, &x, &y) < 3)
