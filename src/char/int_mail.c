@@ -45,14 +45,14 @@ static int mail_fromsql(uint32 char_id, struct mail_data* md)
 		msg = &md->msg[i];
 		Sql_GetData(sql_handle, 0, &data, NULL); msg->id = atoi(data);
 		Sql_GetData(sql_handle, 1, &data, NULL); safestrncpy(msg->send_name, data, NAME_LENGTH);
-		Sql_GetData(sql_handle, 2, &data, NULL); msg->send_id = atoi(data);
+		Sql_GetData(sql_handle, 2, &data, NULL); msg->send_id = strtoul(data, NULL, 10);
 		Sql_GetData(sql_handle, 3, &data, NULL); safestrncpy(msg->dest_name, data, NAME_LENGTH);
-		Sql_GetData(sql_handle, 4, &data, NULL); msg->dest_id = atoi(data);
+		Sql_GetData(sql_handle, 4, &data, NULL); msg->dest_id = strtoul(data, NULL, 10);
 		Sql_GetData(sql_handle, 5, &data, NULL); safestrncpy(msg->title, data, MAIL_TITLE_LENGTH);
 		Sql_GetData(sql_handle, 6, &data, NULL); safestrncpy(msg->body, data, MAIL_BODY_LENGTH);
-		Sql_GetData(sql_handle, 7, &data, NULL); msg->timestamp = atoi(data);
+		Sql_GetData(sql_handle, 7, &data, NULL); msg->timestamp = atoi(data); //strtoull ?
 		Sql_GetData(sql_handle, 8, &data, NULL); msg->status = (mail_status)atoi(data);
-		Sql_GetData(sql_handle, 9, &data, NULL); msg->zeny = atoi(data);
+		Sql_GetData(sql_handle, 9, &data, NULL); msg->zeny = strtoul(data, NULL, 10);
 		item = &msg->item;
 		Sql_GetData(sql_handle,10, &data, NULL); item->amount = (short)atoi(data);
 		Sql_GetData(sql_handle,11, &data, NULL); item->nameid = atoi(data);

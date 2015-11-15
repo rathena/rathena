@@ -1677,7 +1677,7 @@ void map_addiddb(struct block_list *bl)
 	{
 		TBL_PC* sd = (TBL_PC*)bl;
 		idb_put(pc_db,sd->bl.id,sd);
-		idb_put(charid_db,sd->status.char_id,sd);
+		uidb_put(charid_db,sd->status.char_id,sd);
 	}
 	else if( bl->type == BL_MOB )
 	{
@@ -1705,7 +1705,7 @@ void map_deliddb(struct block_list *bl)
 	{
 		TBL_PC* sd = (TBL_PC*)bl;
 		idb_remove(pc_db,sd->bl.id);
-		idb_remove(charid_db,sd->status.char_id);
+		uidb_remove(charid_db,sd->status.char_id);
 	}
 	else if( bl->type == BL_MOB )
 	{
@@ -1932,7 +1932,7 @@ const char* map_charid2nick(int charid)
 /// Returns the struct map_session_data of the charid or NULL if the char is not online.
 struct map_session_data* map_charid2sd(int charid)
 {
-	return (struct map_session_data*)idb_get(charid_db, charid);
+	return (struct map_session_data*)uidb_get(charid_db, charid);
 }
 
 /*==========================================
@@ -3485,14 +3485,13 @@ int parse_console(const char* buf){
 	char mapname[64];
 	int16 x = 0;
 	int16 y = 0;
-	int16 m;
 	int n;
 	struct map_session_data sd;
 
 	memset(&sd, 0, sizeof(struct map_session_data));
 	strcpy(sd.status.name, "console");
 
-	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%63s %hd %hd[^\n]", type, command, mapname, &x, &y) ) < 5 ){
+	if( ( n = sscanf(buf, "%63[^:]:%63[^:]:%63s %6hd %6hd[^\n]", type, command, mapname, &x, &y) ) < 5 ){
 		if( ( n = sscanf(buf, "%63[^:]:%63[^\n]", type, command) ) < 2 )		{
 			if((n = sscanf(buf, "%63[^\n]", type))<1) return -1; //nothing to do no arg
 		}
@@ -3514,7 +3513,7 @@ int parse_console(const char* buf){
 
 	if(strcmpi("admin",type) == 0 ) {
 		if(strcmpi("map",command) == 0){
-			m = map_mapname2mapid(mapname);
+			int16 m = map_mapname2mapid(mapname);
 			if( m < 0 ){
 				ShowWarning("Console: Unknown map.\n");
 				return 0;
@@ -4383,7 +4382,7 @@ int do_init(int argc, char *argv[])
 	bossid_db = idb_alloc(DB_OPT_BASE); // Used for Convex Mirror quick MVP search
 	map_db = uidb_alloc(DB_OPT_BASE);
 	nick_db = idb_alloc(DB_OPT_BASE);
-	charid_db = idb_alloc(DB_OPT_BASE);
+	charid_db = uidb_alloc(DB_OPT_BASE);
 	regen_db = idb_alloc(DB_OPT_BASE); // efficient status_natural_heal processing
 	iwall_db = strdb_alloc(DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1); // [Zephyrus] Invisible Walls
 
