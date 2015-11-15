@@ -7,6 +7,10 @@
 //#define DEBUG_HASH
 //#define DEBUG_DUMP_STACK
 
+#ifdef PCRE_SUPPORT
+#include "../../3rdparty/pcre/include/pcre.h" // preg_match
+#endif
+
 #include "../common/cbasetypes.h"
 #include "../common/malloc.h"
 #include "../common/md5calc.h"
@@ -17,6 +21,12 @@
 #include "../common/strlib.h"
 #include "../common/timer.h"
 #include "../common/utils.h"
+#ifdef BETA_THREAD_TEST
+	#include "../common/atomic.h"
+	#include "../common/spinlock.h"
+	#include "../common/thread.h"
+	#include "../common/mutex.h"
+#endif
 
 #include "map.h"
 #include "path.h"
@@ -39,10 +49,6 @@
 #include "quest.h"
 #include "elemental.h"
 
-#ifdef PCRE_SUPPORT
-#include "../../3rdparty/pcre/include/pcre.h" // preg_match
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -53,12 +59,7 @@
 #include <setjmp.h>
 #include <errno.h>
 
-#ifdef BETA_THREAD_TEST
-	#include "../common/atomic.h"
-	#include "../common/spinlock.h"
-	#include "../common/thread.h"
-	#include "../common/mutex.h"
-#endif
+
 
 TBL_PC *script_rid2sd(struct script_state *st);
 
@@ -18384,11 +18385,9 @@ BUILDIN_FUNC(waitingroom2bg)
 	for (i = 0; i < cd->users; i++) { // Only add those who are in the chat room
 		struct map_session_data *sd;
 		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd) ){
-			mapreg_setreg(reference_uid(add_str("$@arenamembers"), i), sd->bl.id);
-                        ++c;
-                }
-		//else
-		//	mapreg_setreg(reference_uid(add_str("$@arenamembers"), i), 0);
+			mapreg_setreg(reference_uid(add_str("$@arenamembers"), c), sd->bl.id);
+			++c;
+		}
 	}
 
 	mapreg_setreg(add_str("$@arenamembersnum"), c);
