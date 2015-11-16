@@ -2663,7 +2663,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		status_set_viewdata(&nd->bl, nd->class_);
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
-		nd->ud.dir = dir;
+		nd->ud.dir = (uint8)dir;
 		if( map[nd->bl.m].users )
 			clif_spawn(&nd->bl);
 	} else
@@ -2896,7 +2896,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		map_addnpc(m, nd);
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
-		nd->ud.dir = dir;
+		nd->ud.dir = (uint8)dir;
 		npc_setcells(nd);
 		if(map_addblock(&nd->bl))
 			return NULL;
@@ -3059,7 +3059,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		map_addnpc(m, nd);
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
-		nd->ud.dir = dir;
+		nd->ud.dir = (uint8)dir;
 		npc_setcells(nd);
 		if(map_addblock(&nd->bl))
 			return end;
