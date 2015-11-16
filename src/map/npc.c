@@ -4184,8 +4184,11 @@ int npc_parsesrcfile(const char* filepath, bool runOnInit)
 		if( strcmp(w1,"-") !=0 && strcasecmp(w1,"function") != 0 )
 		{// w1 = <map name>,<x>,<y>,<facing>
 			char mapname[MAP_NAME_LENGTH*2]; // TODO: Check why this does not use MAP_NAME_LENGTH_EXT
-			x = y = 0;
-			if (sscanf(w1,"%23[^,],%6hd,%6hd[^,]",mapname,&x,&y) != 3) {
+			int count2;
+
+			count2 = sscanf(w1,"%23[^,],%6hd,%6hd[^,]",mapname,&x,&y);
+			
+			if ( count2 < 1 ) {
 				ShowError("npc_parsesrcfile: Invalid script definition in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
 				if (strcasecmp(w2,"script") == 0 && count > 3) {
 					if ((p = npc_skip_script(p,buffer,filepath)) == NULL)
@@ -4193,7 +4196,11 @@ int npc_parsesrcfile(const char* filepath, bool runOnInit)
 				}
 				p = strchr(p,'\n');// next line
 				continue;
+			}else if( count2 < 3 ){
+				// If we were not able to parse any x and y coordinates(usually used by mapflags)
+				x = y = 0;
 			}
+
 			if( !mapindex_name2id(mapname) )
 			{// Incorrect map, we must skip the script info...
 				ShowError("npc_parsesrcfile: Unknown map '%s' in file '%s', line '%d'. Skipping line...\n", mapname, filepath, strline(buffer,p-buffer));
