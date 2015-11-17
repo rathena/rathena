@@ -2270,14 +2270,14 @@
 4134,Dracula_Card,Dracula Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSPDrainRate,100,5; },{},{}
 4135,Orc_Load_Card,Orc Lord Card,6,20,,10,,,,,,,,16,,,,,{ bonus bShortWeaponDamageReturn,30; },{},{}
 4136,Khalitzburg_Card,Khalitzburg Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Demon,30; },{},{}
-4137,Drake_Card,Drake Card,6,20,,10,,,,,,,,2,,,,,{ bonus bNoSizeFix,0; },{},{}
+4137,Drake_Card,Drake Card,6,20,,10,,,,,,,,2,,,,,{ bonus bNoSizeFix,1; },{},{}
 4138,Anubis_Card,Anubis Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Angel,30; },{},{}
 4139,Joker_Card,Joker Card,6,20,,10,,,,,,,,136,,,,,{ skill "TF_STEAL",1; },{},{}
 4140,Knight_Of_Abyss_Card,Abysmal Knight Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddClass,Class_Boss,25; },{},{}
 4141,Evil_Druid_Card,Evil Druid Card,6,20,,10,,,,,,,,16,,,,,{ bonus bDefEle,Ele_Undead; bonus bInt,1; bonus bDef,1; },{},{}
 4142,Doppelganger_Card,Doppelganger Card,6,20,,10,,,,,,,,2,,,,,{ bonus bAspdRate,10; },{},{}
 4143,Orc_Hero_Card,Orc Hero Card,6,20,,10,,,,,,,,769,,,,,{ bonus bVit,3; bonus2 bResEff,Eff_Stun,10000; },{},{}
-4144,Osiris_Card,Osiris Card,6,20,,10,,,,,,,,136,,,,,{ bonus bRestartFullRecover,0; },{},{}
+4144,Osiris_Card,Osiris Card,6,20,,10,,,,,,,,136,,,,,{ bonus bRestartFullRecover,1; },{},{}
 4145,Berzebub_Card,Berzebub Card,6,20,,10,,,,,,,,136,,,,,{ bonus bVariableCastrate,-30; },{},{}
 4146,Maya_Card,Maya Card,6,20,,10,,,,,,,,32,,,,,{ bonus bMagicDamageReturn,50; },{},{}
 4147,Baphomet_Card,Baphomet Card,6,20,,10,,,,,,,,2,,,,,{ bonus bHit,-10; bonus bSplashRange,1; },{},{}
@@ -2681,13 +2681,13 @@
 4545,Novice_Poring_Card,Novice Poring Card,6,20,,10,,,,,,,,769,,,,,{ bonus bLuk,1; },{},{}
 4549,Upd_Maya_Puple_Card,Upd Maya Puple Card,6,20,,10,,,,,,,,769,,,,,{ bonus bIntravision,1; bonus bAllStats,1; skill "AL_RUWACH",1; },{},{}
 4550,Upd_Bow_Guardian_Card,Upd Bow Guardian Card,6,20,,10,,,,,,,,2,,,,,{ if(getiteminfo(getequipid(EQI_HAND_R),11)==11) { bonus2 bSkillAtk,"RA_ARROWSTORM",50;  bonus bCritical,25+10*(getequiprefinerycnt(EQI_HAND_R)/4); bonus bHit,5; bonus3 bAutoSpell,"HT_PHANTASMIC",1,100; } },{},{}
-4552,Manny_Card,Manny Card,6,20,,10,,,,,,,,136,,,,,{},{},{}
-4553,Sid_Card,Sid Card,6,20,,10,,,,,,,,16,,,,,{},{},{}
-4554,Diego_Card,Diego Card,6,20,,10,,,,,,,,4,,,,,{},{},{}
-4555,Scrat_Card,Scrat Card,6,20,,10,,,,,,,,769,,,,,{},{},{}
+4552,Manny_Card,Manny Card,6,20,,10,,,,,,,,136,,,,,{ bonus bMaxHP,10; },{},{}
+4553,Sid_Card,Sid Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHP,100; },{},{}
+4554,Diego_Card,Diego Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMaxHP,100; },{},{}
+4555,Scrat_Card,Scrat Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMaxHP,100; },{},{}
 4556,Fenrir_Card,Fenrir Card,6,10,,10,,,,,,,,769,,,,,{ bonus bMatk,50+getrefine()*5; bonus bFixedCast,-70; },{},{}
 4557,Weakened_Fenrir_Card,Weakened Fenrir Card,6,10,,10,,,,,,,,769,,,,,{ bonus bMatk,25; },{},{}
-4559,Evil_Morocc_Card,Evil Morocc Card,6,20,,100,,,,,,,,64,,,,,{ bonus bASPD,1; bonus bMaxSPrate,-10; },{},{}
+4559,Evil_Morocc_Card,Evil Morocc Card,6,20,,100,,,,,,,,64,,,,,{ bonus bAspd,1; bonus bMaxSPrate,-10; },{},{}
 4560,Clown_Alphoccio_Card,Clown Alphoccio Card,6,20,,10,,,,,,,,16,,,,,{ skill "BA_POEMBRAGI",10; bonus bFlee,(readparam(bVit)>=110)?40:20; },{},{}
 4561,Professor_Celia_Card,Professor Celia Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMatkRate,(readparam(bDex)>=110)?14:7; bonus5 bAutoSpellWhenHit,"SA_LANDPROTECTOR",5,70,BF_MAGIC,0; },{},{}
 4562,Champion_Chen_Card,Champion Chen Card,6,20,,10,,,,,,,,16,,,,,{ bonus bAtkRate,(readparam(bAgi)>=110)?14:7; bonus5 bAutoSpellWhenHit,"MO_INVESTIGATE",5,70,BF_WEAPON,1; },{},{}
@@ -4483,10 +4483,10 @@
 6612,Gold_Coin_Basket,Gold Coin Basket,3,20,,200,,,,,,,,,,,,,{},{},{}
 6613,Flashy_Brooch,Flashy Brooch,3,20,,10,,,,,,,,,,,,,{},{},{}
 6615,Siege_Guild_Coin,Siege Guild Coin,3,0,,10,,,,,,,,,,,,,{},{},{}
-6616,Lmtd_Manny_Card,Lmtd Manny Card,3,20,,10,,,,,,,,,,,,,{},{},{}
-6617,Lmtd_Sid_Card,Lmtd Sid Card,3,20,,10,,,,,,,,,,,,,{},{},{}
-6618,Lmtd_Diego_Card,Lmtd Diego Card,3,20,,10,,,,,,,,,,,,,{},{},{}
-6619,Lmtd_Scrat_Card,Lmtd Scrat Card,3,20,,10,,,,,,,,,,,,,{},{},{}
+6616,Lmtd_Manny_Card,Limited Manny Card,3,20,,10,,,,,,,,,,,,,{},{},{}
+6617,Lmtd_Sid_Card,Limited Sid Card,3,20,,10,,,,,,,,,,,,,{},{},{}
+6618,Lmtd_Diego_Card,Limited Diego Card,3,20,,10,,,,,,,,,,,,,{},{},{}
+6619,Lmtd_Scrat_Card,Limited Scrat Card,3,20,,10,,,,,,,,,,,,,{},{},{}
 6623,Rough_Energy_Crystal,Rough Energy Crystal,3,0,,10,,,,,,,,,,,,,{},{},{}
 6624,Purified_Energy_Crystal,Purified Energy Crystal,3,0,,10,,,,,,,,,,,,,{},{},{}
 6625,High_Purity_Energy_Xtal,High Energy Crystal,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -8496,7 +8496,7 @@
 15117,Tarlock's_Armor,Tarlock's Armor,4,10,,750,,70,,0,0xFFFFFFFF,63,2,16,,125,1,,{ bonus bMaxHP,500; bonus bMaxSP,50; bonus bMdef,10; bonus bAllStats,1; .@r = getrefine(); if(.@r>=7) { bonus bMaxHP,500; bonus bMaxSP,50; } if(.@r>=9) { bonus bMaxHP,200; bonus bMaxSP,20; } if(.@r>=12) { bonus bMaxHP,300; bonus bMaxSP,30; } },{},{}
 15121,Sarah_Combat_Robe,Sarah Combat Robe,4,10,,800,,35,,1,0xFFFFFFFF,63,2,16,,145,1,,{ /*TODO: Confirm the real rate and additional MAtk*/ .@r = getrefine(); autobonus "{ bonus bMatk,20; }",100,(10+((.@r) ? .@r*8 : 0))*1000,BF_MAGIC;},{},{}
 15123,Whikebain_Suit,Whikebain Suit,4,0,,900,,56,,1,0x00001000,56,2,16,,105,1,,{ .@r = getrefine(); bonus bCritAtkRate,(.@r>=7)?(6):((.@r>=5)?(4):(0)); bonus3 bAutoSpell,"DC_WINKCHARM",1,10; /* Confirm: Success rate */ },{},{}
-15138,Aegir_Armor,Aegir Armor,4,10,,1600,,25,,1,0xFFFFFFFF,63,2,16,,40,1,,{ bonus bMaxHP,500; bonus bMaxSP,50; },{},{}
+15138,Aegir_Armor,Aegir Armor,4,10,,1600,,25,,1,0xFFFFFFFF,63,2,16,,40,1,,{ bonus bMaxHP,500; bonus bMaxSP,50; bonus bUnbreakableArmor,1; },{},{}
 15141,Ancient_Armor_Of_The_Goddess,Ancient Armor Of The Goddess,4,10,,2000,,55,,1,0xFFFFFFFF,63,2,16,,100,1,,{},{},{}
 15145,Evil_Dragon_Armor,Evil Dragon Armor,4,0,,4000,,60,,1,0xFFFFFFFF,63,2,16,,,1,,{ .@r = getrefine(); bonus2 bHPDrainRate,100,(.@r>=10)?(3):((.@r>=9)?(4):((.@r>=8)?(6):(0))); bonus2 bSPDrainRate,100,(.@r>=10)?(5):((.@r>=9)?(3):((.@r>=8)?(2):(0))); /* Confirm: Success rate and it says no effect if with Rideword, Vanargandr Helm, or Piece Of Angent Skin */ },{},{}
 15146,Flattery_Robe,Flattery Robe,4,20,,100,,0,,1,0xFFFFFFFF,63,2,16,,100,1,,{ skill "SM_ENDURE",1,1; .@i = BaseLevel; bonus bMatk,(.@i>=140)?(150):((.@i>=120)?(100):(50)); },{},{}
