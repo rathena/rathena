@@ -1963,8 +1963,7 @@ int pc_disguise(struct map_session_data *sd, int class_)
 		}
 		if (sd->chatID) {
 			struct chat_data* cd;
-
-			if (cd = (struct chat_data*)map_id2bl(sd->chatID))
+			if ((cd = (struct chat_data*)map_id2bl(sd->chatID)) != NULL)
 				clif_dispchat(cd,0);
 		}
 	}

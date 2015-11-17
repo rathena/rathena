@@ -20276,22 +20276,24 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	trim(split[11]);
 	if (split[11][0] != '\0' || atoi(split[11])) {
 		int require[MAX_SKILL_STATUS_REQUIRE];
-
 		if ((skill_db[idx]->require.status_count = skill_split_atoi2(split[11], require, ":", SC_STONE, ARRAYLENGTH(require)))) {
 			CREATE(skill_db[idx]->require.status, enum sc_type, skill_db[idx]->require.status_count);
-			for (i = 0; i < skill_db[idx]->require.status_count; i++)
+			for (i = 0; i < skill_db[idx]->require.status_count; i++){
+                                //todo add a check if possible here
 				skill_db[idx]->require.status[i] = (sc_type)require[i];
+                        }
 		}
 	}
 
 	skill_split_atoi(split[12],skill_db[idx]->require.spiritball);
 
 	for( i = 0; i < MAX_SKILL_ITEM_REQUIRE; i++ ) {
-		if (atoi(split[13 + 2 * i]) > 0 && !itemdb_exists(atoi(split[13 + 2 * i]))) {
-			ShowError("skill_parse_row_requiredb: Invalid item %d for skill %d.\n", atoi(split[13 + 2 * i]), atoi(split[0]));
+                int32 itemid = atoi(split[13 + 2 * i]);
+		if (itemid > 0 && !itemdb_exists(itemid) ) {
+			ShowError("skill_parse_row_requiredb: Invalid item (in ITEM_REQUIRE list) %d for skill %d.\n", itemid, atoi(split[0]));
 			return false;
 		}
-		skill_db[idx]->require.itemid[i] = atoi(split[13+ 2*i]);
+		skill_db[idx]->require.itemid[i] = itemid;
 		skill_db[idx]->require.amount[i] = atoi(split[14+ 2*i]);
 	}
 
@@ -20299,16 +20301,17 @@ static bool skill_parse_row_requiredb(char* split[], int columns, int current)
 	trim(split[33]);
 	if (split[33][0] != '\0' || atoi(split[33])) {
 		int require[MAX_SKILL_EQUIP_REQUIRE];
-
 		if ((skill_db[idx]->require.eqItem_count = skill_split_atoi2(split[33], require, ":", 500, ARRAYLENGTH(require)))) {
-			if (require[i] > 0 && !itemdb_exists(require[i])) {
-				ShowError("skill_parse_row_requiredb: Invalid item %d for skill %d.\n", require[i], atoi(split[0]));
-				return false;
-			}
-
 			CREATE(skill_db[idx]->require.eqItem, uint16, skill_db[idx]->require.eqItem_count);
-			for (i = 0; i < skill_db[idx]->require.eqItem_count; i++)
-				skill_db[idx]->require.eqItem[i] = require[i];
+			for (i = 0; i < skill_db[idx]->require.eqItem_count; i++){
+                            if (require[i] > 0 && !itemdb_exists(require[i])) {
+				ShowError("skill_parse_row_requiredb: Invalid item (in EQUIP_REQUIRE list)  %d for skill %d.\n", require[i], atoi(split[0]));
+                                aFree(skill_db[idx]->require.eqItem); //don't need to retain this
+                                skill_db[idx]->require.eqItem_count = 0;
+				return false;
+                            }
+                            skill_db[idx]->require.eqItem[i] = require[i];
+                        }
 		}
 	}
 	return true;
