@@ -2904,7 +2904,8 @@
 4842,Atk_Speed2,ASPD+2,6,20,,10,,,,,,,,,,,,,{ bonus bAspd,2; },{},{}
 4843,Sharp4,Sharp Lv4,6,20,,10,,,,,,,,,,,,,{ bonus bCritical,14; bonus bHit,5; },{},{}
 4844,Sharp5,Sharp Lv5,6,20,,10,,,,,,,,,,,,,{ bonus bCritical,15; bonus bHit,6; },{},{}
-4845,Cobble_Stone,Cobble Stone,6,20,,,,,,,,,,,,,,,{},{},{}
+4845,Sea_Energy,Strength Of Ocean,6,0,,0,,,,,,,,,,,,,{},{},{}
+//4845,Cobble_Stone,Cobble Stone,6,20,,,,,,,,,,,,,,,{},{},{}
 4846,2011val_Angel,Fully Loved Stone,6,20,,10,,,,,,,,,,,,,{ bonus bBaseAtk,10; bonus bMatk,10; },{},{}
 4847,2011val_Devil,Spelled Stone,6,20,,10,,,,,,,,,,,,,{ bonus bBaseAtk,10; bonus bMatk,10; },{},{}
 4848,Immuned1,Immune Lv1,6,20,,10,,,,,,,,,,,,,{ bonus2 bSubEle,Ele_Neutral,5; },{},{}
