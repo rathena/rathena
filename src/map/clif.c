@@ -3012,7 +3012,8 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOL(fd,4)=sd->battle_status.max_sp;
 		break;
 	case SP_HP:
-		WFIFOL(fd,4)=sd->battle_status.hp;
+		// On officials the HP never go below 1, even if you die [Lemongrass]
+		WFIFOL(fd,4)=max(1,sd->battle_status.hp);
 		// TODO: Won't these overwrite the current packet?
 		if( map[sd->bl.m].hpmeter_visible )
 			clif_hpmeter(sd);
