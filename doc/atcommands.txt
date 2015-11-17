@@ -1151,6 +1151,12 @@ Changes the gender attached to the player's account.
 
 ---------------------------------------
 
+@changecharsex
+
+Changes the gender attached to the player's character.
+
+---------------------------------------
+
 @marry <player 1> <player 2>
 @divorce <player>
 
