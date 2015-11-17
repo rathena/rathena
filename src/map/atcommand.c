@@ -578,10 +578,7 @@ ACMD_FUNC(jump)
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (sscanf(message, "%6hd %6hd", &x, &y) != 2) {
-		clif_displaymessage(fd, msg_txt(sd,407));
-		return -1;
-	}
+	sscanf(message, "%6hd %6hd", &x, &y);
 
 	if (map[sd->bl.m].flag.noteleport && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
 		clif_displaymessage(fd, msg_txt(sd,248));	// You are not authorized to warp from your current map.
@@ -1145,10 +1142,7 @@ ACMD_FUNC(heal)
 	int hp = 0, sp = 0; // [Valaris] thanks to fov
 	nullpo_retr(-1, sd);
 
-	if (sscanf(message, "%11d %11d", &hp, &sp) != 2) {
-		clif_displaymessage(fd, msg_txt(sd,407));
-		return -1;
-	}
+	sscanf(message, "%11d %11d", &hp, &sp);
 
 	// some overflow checks
 	if( hp == INT_MIN ) hp++;
