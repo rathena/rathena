@@ -2101,7 +2101,7 @@ void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...)
 
 /// Applies func to everything in the db.
 /// Stops iterating if func returns -1.
-void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...)
+void map_foreachregen(int (*func)(struct block_list* bl), ...)
 {
 	DBIterator* iter;
 	struct block_list* bl;
@@ -2109,14 +2109,12 @@ void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...)
 	iter = db_iterator(regen_db);
 	for( bl = (struct block_list*)dbi_first(iter); dbi_exists(iter); bl = (struct block_list*)dbi_next(iter) )
 	{
-		va_list args;
-		int ret;
-
-		va_start(args, func);
-		ret = func(bl, args);
-		va_end(args);
-		if( ret == -1 )
-			break;// stop iterating
+		// Dead BLs don't regenerate
+		// TODO: BLs other than PC should issue a warning/error since they might refer to bad code(not removed bls)
+		if( !status_isdead(bl) ){
+			if( func(bl) == -1 )
+				break;// stop iterating
+		}
 	}
 	dbi_destroy(iter);
 }

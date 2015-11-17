@@ -12930,13 +12930,11 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 
 /**
  * Applying natural heal bonuses (sit, skill, homun, etc...)
- * TODO: the va_list doesn't seem to be used, safe to remove?
  * @param bl: Object applying bonuses to [PC|HOM|MER|ELEM]
- * @param args: va_list arguments
  * @return which regeneration bonuses have been applied (flag)
  */
 static unsigned int natural_heal_prev_tick,natural_heal_diff_tick;
-static int status_natural_heal(struct block_list* bl, va_list args)
+static int status_natural_heal(struct block_list* bl)
 {
 	struct regen_data *regen;
 	struct status_data *status;
