@@ -11,16 +11,6 @@ struct homun_data;
 struct mercenary_data;
 struct status_change;
 
-/**
- * Max Refine available to your server
- * Changing this limit requires edits to refine_db.txt
- **/
-#ifdef RENEWAL
-#	define MAX_REFINE 20
-#else
-#	define MAX_REFINE 10
-#endif
-
 /// Refine type
 enum refine_type {
 	REFINE_TYPE_ARMOR	= 0,

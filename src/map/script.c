@@ -18685,9 +18685,8 @@ BUILDIN_FUNC(setquest)
 
 	quest_add(sd, quest_id);
 
-#if PACKETVER >= 20120410
-	pc_show_questinfo(sd);
-#endif
+        //20120410 or 20090218 ? no reason that shouldn't work for 2009
+        pc_show_questinfo(sd); 
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18716,9 +18715,8 @@ BUILDIN_FUNC(completequest)
 		return SCRIPT_CMD_FAILURE;
 
 	quest_update_status(sd, script_getnum(st, 2), Q_COMPLETE);
-#if PACKETVER >= 20120410
-	pc_show_questinfo(sd);
-#endif
+        //20120410 or 20090218
+        pc_show_questinfo(sd);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18733,9 +18731,8 @@ BUILDIN_FUNC(changequest)
 		return SCRIPT_CMD_FAILURE;
 
 	quest_change(sd, script_getnum(st, 2),script_getnum(st, 3));
-#if PACKETVER >= 20120410
-	pc_show_questinfo(sd);
-#endif
+        //20120410 or 20090218
+        pc_show_questinfo(sd);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -21226,7 +21223,7 @@ BUILDIN_FUNC(setquestinfo_req) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if ((num+1)%2 != 0) {
+	if (num%2) {
 		ShowError("buildin_setquestinfo_req: Odd number of parameters(%d) - pairs of requirements are expected.\n", num);
 		return SCRIPT_CMD_FAILURE;
 	}

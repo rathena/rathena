@@ -10100,10 +10100,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(!battle_config.pc_invincible_time)
 		skill_unit_move(&sd->bl,gettick(),1);
 
-#if PACKETVER >= 20090218
-	pc_show_questinfo_reinit(sd);
+        pc_show_questinfo_reinit(sd);
 	pc_show_questinfo(sd);
-#endif
 }
 
 
@@ -15800,17 +15798,17 @@ void clif_quest_update_status(struct map_session_data *sd, int quest_id, bool ac
 
 
 /// Notification about an NPC's quest state (ZC_QUEST_NOTIFY_EFFECT).
-/// 0446 <npc id>.L <x>.W <y>.W <effect>.W <type>.W
+/// 0446 <npc id>.L <x>.W <y>.W <effect>.W <color>.W
 /// effect:
 ///     0 = none
 ///     1 = exclamation mark icon
 ///     2 = question mark icon
-/// type:
+/// color:
 ///     0 = yellow
 ///     1 = orange
 ///     2 = green
 ///     3 = purple
-void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short state, short color)
+void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short effect, short color)
 {
 #if PACKETVER >= 20090218
 	int fd = sd->fd;
@@ -15820,7 +15818,7 @@ void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, s
 	WFIFOL(fd, 2) = bl->id;
 	WFIFOW(fd, 6) = bl->x;
 	WFIFOW(fd, 8) = bl->y;
-	WFIFOW(fd, 10) = state;
+	WFIFOW(fd, 10) = effect;
 	WFIFOW(fd, 12) = color;
 	WFIFOSET(fd, packet_len(0x446));
 #endif

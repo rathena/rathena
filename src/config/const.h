@@ -93,6 +93,32 @@
 			time = time * (1 - (float)min(val, 100) / 100); \
 	}
 #endif
+
+        
+/**
+ * Max Refine available to your server
+ * Changing this limit requires edits to refine_db.txt
+ **/
+#ifdef RENEWAL
+#	define MAX_REFINE 20
+#else
+#	define MAX_REFINE 10
+#endif
+
+/**
+ * Default coordinate for new char
+ * That map should be loaded by a mapserv
+ **/
+#ifdef RENEWAL
+    #define MAP_DEFAULT_NAME "iz_int"
+    #define MAP_DEFAULT_X 97
+    #define MAP_DEFAULT_Y 90 
+#else
+    #define MAP_DEFAULT_NAME "new_zone01"
+    #define MAP_DEFAULT_X 53
+    #define MAP_DEFAULT_Y 111
+#endif        
+        
 /**
  * End of File
  **/

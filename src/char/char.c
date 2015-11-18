@@ -2634,15 +2634,10 @@ void char_set_defaults(){
 	charserv_config.log_inter = 1;	// loggin inter or not [devil]
 	charserv_config.char_check_db =1;
 
-#ifdef RENEWAL
-	charserv_config.start_point.map = mapindex_name2id("iz_int");
-	charserv_config.start_point.x = 97;
-	charserv_config.start_point.y = 90;
-#else
-	charserv_config.start_point.map = mapindex_name2id("new_zone01"); //mapindex_name2id(MAP_DEFAULT);
-	charserv_config.start_point.x = 53; //MAP_DEFAULT_X
-	charserv_config.start_point.y = 111; //MAP_DEFAULT_Y
-#endif
+        //see const.h to change those default
+	charserv_config.start_point.map = mapindex_name2id(MAP_DEFAULT_NAME); 
+	charserv_config.start_point.x = MAP_DEFAULT_X;
+	charserv_config.start_point.y = MAP_DEFAULT_Y;
 
 	charserv_config.console = 0;
 	charserv_config.max_connect_user = -1;

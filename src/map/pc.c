@@ -6261,9 +6261,7 @@ void pc_baselevelchanged(struct map_session_data *sd) {
 				pc_unequipitem(sd, sd->equip_index[i], 3);
 		}
 	}
-#if PACKETVER >= 20090218
-	pc_show_questinfo(sd);
-#endif
+        pc_show_questinfo(sd);
 }
 
 int pc_checkjoblevelup(struct map_session_data *sd)
@@ -8258,9 +8256,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	pc_checkallowskill(sd);
 	pc_equiplookall(sd);
 
-#if PACKETVER >= 20090218
-	pc_show_questinfo(sd);
-#endif
+        pc_show_questinfo(sd);
 
 	//if you were previously famous, not anymore.
 	if (fame_flag) {
@@ -11707,7 +11703,7 @@ static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display,
 		}
 	}
 	else {
-		// Check if need to be hid
+		// Check if need to be hide
 		if ((*qi_display) != 0) {
 			(*qi_display) = 0;
 #if PACKETVER >= 20120410
@@ -11719,12 +11715,12 @@ static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display,
 	}
 }
 
-#if PACKETVER >= 20090218
 /**
  * Show available NPC Quest / Event Icon Check [Kisuka]
  * @param sd Player
  **/
 void pc_show_questinfo(struct map_session_data *sd) {
+#if PACKETVER >= 20090218
 	struct questinfo *qi = NULL;
 	unsigned short i;
 	uint8 j, state = 0, mystate = 0;
@@ -11792,6 +11788,7 @@ void pc_show_questinfo(struct map_session_data *sd) {
 			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, true);
 		}
 	}
+#endif
 }
 
 /**
@@ -11799,7 +11796,7 @@ void pc_show_questinfo(struct map_session_data *sd) {
  * @param sd Player
  **/
 void pc_show_questinfo_reinit(struct map_session_data *sd) {
-
+#if PACKETVER >= 20090218
 	nullpo_retv(sd);
 
 	if (sd->qi_display) {
@@ -11813,8 +11810,9 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 	if (!map[sd->bl.m].qi_count || !map[sd->bl.m].qi_data)
 		return;
 	CREATE(sd->qi_display, bool, (sd->qi_count = map[sd->bl.m].qi_count));
-}
 #endif
+}
+
 
 /*==========================================
  * pc Init/Terminate
