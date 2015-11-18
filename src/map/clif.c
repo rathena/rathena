@@ -9759,7 +9759,6 @@ void clif_parse_WantToConnection(int fd, struct map_session_data* sd)
 /// 007d
 void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 {
-	int i;
 	bool guild_notice = false;
 
 	if(sd->bl.prev != NULL)
@@ -10101,19 +10100,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(!battle_config.pc_invincible_time)
 		skill_unit_move(&sd->bl,gettick(),1);
 
-	// NPC Quest / Event Icon Check [Kisuka]
 #if PACKETVER >= 20090218
-	for(i = 0; i < map[sd->bl.m].qi_count; i++) {
-		struct questinfo *qi = &map[sd->bl.m].qi_data[i];
-		if( quest_check(sd, qi->quest_id, HAVEQUEST) == -1 ) {// Check if quest is not started
-			if( qi->hasJob ) { // Check if quest is job-specific, check is user is said job class.
-				if( sd->class_ == qi->job )
-					clif_quest_show_event(sd, &qi->nd->bl, qi->icon, qi->color);
-			} else {
-				clif_quest_show_event(sd, &qi->nd->bl, qi->icon, qi->color);
-			}
-		}
-	}
+	pc_show_questinfo_reinit(sd);
+	pc_show_questinfo(sd);
 #endif
 }
 

@@ -620,13 +620,22 @@ struct s_skill_damage {
 struct eri *map_skill_damage_ers;
 #endif
 
+struct questinfo_req {
+	unsigned int quest_id;
+	unsigned state : 2; // 0: Doesn't have, 1: Inactive, 2: Active, 3: Complete //! TODO: CONFIRM ME!!
+};
+
 struct questinfo {
 	struct npc_data *nd;
 	unsigned short icon;
 	unsigned char color;
 	int quest_id;
-	bool hasJob;
-	unsigned short job;/* perhaps a mapid mask would be most flexible? */
+	unsigned short min_level,
+		max_level;
+	uint8 req_count;
+	uint8 jobid_count;
+	struct questinfo_req *req;
+	unsigned short *jobid;
 };
 
 struct map_data {
@@ -880,8 +889,9 @@ struct mob_data * map_id2boss(int id);
 // reload config file looking only for npcs
 void map_reloadnpc(bool clear);
 
-void map_add_questinfo(int m, struct questinfo *qi);
+struct questinfo *map_add_questinfo(int m, struct questinfo *qi);
 bool map_remove_questinfo(int m, struct npc_data *nd);
+struct questinfo *map_has_questinfo(int m, struct npc_data *nd, int quest_id);
 
 /// Bitfield of flags for the iterator.
 enum e_mapitflags

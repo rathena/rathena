@@ -6856,8 +6856,8 @@
 12842,Platinum_Treasure_Box,Platinum Treasure Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,50,,,{},{},{}
 12843,Pearl_Treasure_Box,Pearl Treasure Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,60,,,{},{},{}
 12844,Diamond_Treasure_Box,Diamond Treasure Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,70,,,{},{},{}
-12845,WOB_Amatsu,WOB Amatsu,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12846,Unripe_Apple2,Unripe Apple2,2,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12845,Amatsu_Butterfly_Wing,Amatsu_Butterfly_Wing,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12846,Little_Unripe_Apple,Little_Unripe_Apple,2,10,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 2398; },{},{}
 12847,Old_Equipment_Box,Old Equipment Box,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12848,Falcon_Flute,Falcon Flute,11,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if(getskilllv("HT_FALCON")) { if(checkoption(Option_Wug)||checkoption(Option_Wugrider)) end; setfalcon (!checkfalcon()); } },{},{}
 12849,Combination_Kit,Combination Kit,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
