@@ -21157,7 +21157,7 @@ BUILDIN_FUNC(setquestinfo_level) {
 	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
 
 	if (!qi) {
-		ShowError("buildin_setquestinfo_level: Quest with '%d' is not defined yet.\n", quest_id);
+		ShowError("buildin_setquestinfo_level: Quest with ID '%d' is not defined yet.\n", quest_id);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -21182,17 +21182,17 @@ BUILDIN_FUNC(setquestinfo_req) {
 	uint8 num = script_lastdata(st)+1;
 
 	if (!qi) {
-		ShowError("buildin_setquestinfo_req: Quest with '%d' is not defined yet.\n", quest_id);
+		ShowError("buildin_setquestinfo_req: Quest with ID '%d' is not defined yet.\n", quest_id);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if (quest_search(quest_id) == &quest_dummy) {
-		ShowError("buildin_setquestinfo_req: Quest with '%d' is not found in Quest DB.\n", quest_id);
+		ShowError("buildin_setquestinfo_req: Quest with ID '%d' is not found in Quest DB.\n", quest_id);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if ((num+1)%2 != 0) {
-		ShowError("buildin_setquestinfo_req: Unmatched parameters. Num: '%d'\n", num);
+		ShowError("buildin_setquestinfo_req: Odd number of parameters(%d) - pairs of requirements are expected.\n", num);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -21220,14 +21220,14 @@ BUILDIN_FUNC(setquestinfo_job) {
 	uint8 num = script_lastdata(st)+1;
 
 	if (!qi) {
-		ShowError("buildin_setquestinfo_job: Quest with '%d' is not defined yet.\n", quest_id);
+		ShowError("buildin_setquestinfo_job: Quest with ID '%d' is not defined yet.\n", quest_id);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	for (i = 3; i < num; i++) {
 		job_id = script_getnum(st, i);
 		if (!pcdb_checkid(job_id)) {
-			ShowError("buildin_setquestinfo_job: Invalid job with id '%d'.\n", job_id);
+			ShowError("buildin_setquestinfo_job: Invalid job id '%d' in Quest with ID %d.\n", job_id, quest_id);
 			continue;
 		}
 		buildin_questinfo_setjob(qi, job_id);

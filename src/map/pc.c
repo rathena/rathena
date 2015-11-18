@@ -11745,19 +11745,14 @@ void pc_show_questinfo(struct map_session_data *sd) {
 		if (!qi)
 			continue;
 
-		// printf("Qid %d(%d) @%s(%d,%d) J:%d Q:%d",qi->quest_id,qi->icon,map[qi->nd->bl.m].name,qi->nd->bl.x,qi->nd->bl.y,
-			// qi->jobid_count,qi->req_count);
-
 		if (quest_check(sd, qi->quest_id, HAVEQUEST) != -1) { // Check if quest is not started
 			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, false);
-			// printf(" -> Hide, has quest %d\n",qi->quest_id);
 			continue;
 		}
 
 		// Level range checks
 		if (sd->status.base_level < qi->min_level || sd->status.base_level > qi->max_level) {
 			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, false);
-			// printf(" -> Hide, level is %d. Need %d - %d\n",sd->status.base_level,qi->min_level,qi->max_level);
 			continue;
 		}
 
@@ -11772,7 +11767,6 @@ void pc_show_questinfo(struct map_session_data *sd) {
 				mystate = (quest_check(sd, qi->req[j].quest_id, HAVEQUEST) == -1) ? 0 : 1;
 				if (mystate != state) {
 					failed = true;
-					// printf(" -> Hide, need %d state %d. curr %d\n",qi->req[j].quest_id,state,mystate);
 					break;
 				}
 			}
@@ -11789,18 +11783,15 @@ void pc_show_questinfo(struct map_session_data *sd) {
 				if (pc_mapid2jobid(sd->class_,sd->status.sex) == qi->jobid[j]) {
 					pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, true);
 					failed = false;
-					// printf(" -> Show, job match for %d.\n",sd->status.class_,qi->jobid[j]);
 					break;
 				}
 			}
 			if (!failed)
 				continue;
 			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, false);
-			// printf(" -> Hide, no job match for %d.\n",sd->status.class_);
 		}
 		else {
 			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, true);
-			// printf(" -> Show, normal\n");
 		}
 	}
 }
