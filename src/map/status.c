@@ -12934,7 +12934,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
  * @return which regeneration bonuses have been applied (flag)
  */
 static unsigned int natural_heal_prev_tick,natural_heal_diff_tick;
-static int status_natural_heal(struct block_list* bl)
+static void status_natural_heal(struct block_list* bl)
 {
 	struct regen_data *regen;
 	struct status_data *status;
@@ -12947,7 +12947,7 @@ static int status_natural_heal(struct block_list* bl)
 
 	regen = status_get_regen_data(bl);
 	if (!regen)
-		return 0;
+		return;
 	status = status_get_status_data(bl);
 	sc = status_get_sc(bl);
 	if (sc && !sc->count)
@@ -13017,7 +13017,7 @@ static int status_natural_heal(struct block_list* bl)
 	}
 
 	if (!flag)
-		return 0;
+		return;
 
 	if (flag&(RGN_HP|RGN_SP)) {
 		if(!vd)
@@ -13075,7 +13075,7 @@ static int status_natural_heal(struct block_list* bl)
 	}
 
 	if (!regen->sregen)
-		return flag;
+		return;
 
 	// Skill regen
 	sregen = regen->sregen;
@@ -13113,7 +13113,6 @@ static int status_natural_heal(struct block_list* bl)
 				break; // Full
 		}
 	}
-	return flag;
 }
 
 /**
