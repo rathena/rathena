@@ -535,6 +535,17 @@ void pc_rental_expire(struct map_session_data *sd, int i)
 			}
 			break;
 	}
+
+	// Remove visuals effect from headgear
+	if( &sd->sc && sd->sc.data[SC_MOONSTAR] )
+		status_change_end(&sd->bl, SC_MOONSTAR, INVALID_TIMER);
+	if( &sd->sc && sd->sc.data[SC_SUPER_STAR] )
+		status_change_end(&sd->bl, SC_SUPER_STAR, INVALID_TIMER);
+	if( &sd->sc && sd->sc.data[SC_DECORATION_OF_MUSIC] )
+		status_change_end(&sd->bl, SC_DECORATION_OF_MUSIC, INVALID_TIMER);
+	if( &sd->sc && sd->sc.data[SC_STRANGELIGHTS] )
+		status_change_end(&sd->bl, SC_STRANGELIGHTS, INVALID_TIMER);
+
 	clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
 	pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
 }

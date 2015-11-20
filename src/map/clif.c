@@ -4398,6 +4398,10 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 				clif_status_load(bl,SI_MOONSTAR,1);
 			if( tsd->sc.data[SC_SUPER_STAR] )
 				clif_status_load(bl,SI_SUPER_STAR,1);
+			if( tsd->sc.data[SC_DECORATION_OF_MUSIC] )
+				clif_status_load(bl,SI_DECORATION_OF_MUSIC,1);
+			if( tsd->sc.data[SC_STRANGELIGHTS] )
+				clif_status_load(bl,SI_STRANGELIGHTS,1);
 			if( tsd->sc.data[SC_ALL_RIDING] )
 				clif_status_load(bl,SI_ALL_RIDING,1);
 		}
