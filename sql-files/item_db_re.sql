@@ -9834,7 +9834,7 @@ REPLACE INTO `item_db_re` VALUES (19750,'C_Saint_Frill_Ribbon','Costume Saint Fr
 REPLACE INTO `item_db_re` VALUES (19751,'C_Light_Darkness_Crown','Costume Light Darkness Crown',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,988,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19752,'C_Shelter_Wing_Ears','Costume Shelter Wing Ears',4,10,NULL,300,NULL,3,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',NULL,990,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19764,'C_Monster_Card','Costume Monster Card',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,NULL,NULL,526,'bonus2 bExpAddRace,RC_All,10;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (19765,'C_Wing_Angels_Ears','Costume Wing Angels Ears',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,158,'bonus2 bExpAddRace,RC_All,10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19765,'C_Wing_Angels_Ears','Costume Wing Angels Ears',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',1,158,'bonus2 bExpAddRace,RC_All,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19767,'C_Home_Cherry_Blossom','Costume Home Cherry Blossom',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,602,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19768,'C_Sakura_Coronet','Costume Sakura Coronet',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,645,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19772,'C_Honeybee_Hat','Costume Honeybee Hat',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,709,NULL,NULL,NULL);
