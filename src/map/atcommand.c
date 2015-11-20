@@ -6770,8 +6770,8 @@ ACMD_FUNC(uptime)
 }
 
 /*==========================================
- * @changesex <sex>
- * => Changes one's account sex. Argument sex can be 0 or 1, m or f, male or female.
+ * @changesex 
+ * => Changes one's account sex. Switch from male to female or visversa
  *------------------------------------------*/
 ACMD_FUNC(changesex)
 {
@@ -6791,8 +6791,8 @@ ACMD_FUNC(changesex)
 }
 
 /*==========================================
- * @changecharsex <sex>
- * => Changes one's character sex. Argument sex can be 0 or 1, m or f, male or female.
+ * @changecharsex
+ * => Changes one's character sex. Switch from male to female or visversa.
  *------------------------------------------*/
 ACMD_FUNC(changecharsex)
 {
