@@ -5624,7 +5624,7 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		return cap_value(critical,10,SHRT_MAX);
 
 	if (sc->data[SC_INCCRI])
-		critical += sc->data[SC_INCCRI]->val1;
+		critical += sc->data[SC_INCCRI]->val2;
 	if (sc->data[SC_CRIFOOD])
 		critical += sc->data[SC_CRIFOOD]->val1;
 	if (sc->data[SC_EXPLOSIONSPIRITS])
@@ -10124,7 +10124,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = tick / tick_time;
 			break;
 		case SC_TELEKINESIS_INTENSE:
-			val2 = val4 = 10 * val1; // sp consum / casttime reduc %
+			val2 = 10 * val1; // sp consum / casttime reduc %
 			val3 = 40 * val1; // magic dmg bonus
 			break;
 		case SC_OFFERTORIUM:
