@@ -514,6 +514,11 @@ int hom_levelup(struct homun_data *hd)
 
 	APPLY_HOMUN_LEVEL_STATWEIGHT();
 
+	// Needed to update skill list for mutated homunculus so unlocked skills will appear when the needed level is reached.
+	status_calc_homunculus(hd,0);
+	clif_hominfo(hd->master,hd,0);
+	clif_homskillinfoblock(hd->master);
+
 	if ( hd->master && battle_config.homunculus_show_growth ) {
 		char output[256] ;
 		sprintf(output,
