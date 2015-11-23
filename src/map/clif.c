@@ -1530,7 +1530,7 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 		WBUFW(buf,51) = status->hp;
 		WBUFW(buf,53+offset) = status->max_hp;
 	}
-#if PACKETVER >= 20131223
+#if PACKETVER >= 20141016
 	offset += 2;
 #endif
 	if (status->max_sp > INT16_MAX) {
