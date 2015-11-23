@@ -1477,7 +1477,7 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 {
 	struct status_data *status;
 	unsigned char buf[128];
-#if PACKETVER < 20131223
+#if PACKETVER < 20141016
 	const int cmd = 0x22e;
 	int offset = 0;
 #else
