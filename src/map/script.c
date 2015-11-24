@@ -8408,7 +8408,7 @@ BUILDIN_FUNC(getequipid)
 	if( i < 0 )
 	{
 		script_pushint(st,-1);
-		return SCRIPT_CMD_FAILURE;
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	item = sd->inventory_data[i];
@@ -11168,6 +11168,8 @@ BUILDIN_FUNC(getstatus)
 				if( timer )
 				{// return the amount of time remaining
 					script_pushint(st, timer->tick - gettick());
+				} else {
+					script_pushint(st, -1);
 				}
 			}
 			break;

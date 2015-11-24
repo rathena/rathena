@@ -369,11 +369,13 @@ void chclif_mmo_char_send(int fd, struct char_session_data* sd){
 	ShowInfo("sd->version = %d\n",sd->version);
 	if(sd->version >= date2version(20130000) ){
 		chclif_mmo_send082d(fd,sd);
+		chclif_mmo_send006b(fd,sd);
 		chclif_charlist_notify(fd,sd);
-		chclif_block_character(fd,sd);
-	}
+	} else
+		chclif_mmo_send006b(fd,sd);
 	//@FIXME dump from kro doesn't show 6b transmission
-	chclif_mmo_send006b(fd,sd);
+	if(sd->version >= date2version(20060819) )
+ 		chclif_block_character(fd,sd);
 }
 
 /*

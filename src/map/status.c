@@ -823,6 +823,8 @@ void initChangeTables(void)
 	set_sc_with_vfx_noskill( SC_MOONSTAR	, SI_MOONSTAR	, SCB_NONE );
 	set_sc_with_vfx_noskill( SC_SUPER_STAR	, SI_SUPER_STAR	, SCB_NONE );
 	set_sc_with_vfx_noskill( SC_ALL_RIDING	, SI_ALL_RIDING	, SCB_SPEED );
+	set_sc_with_vfx_noskill( SC_STRANGELIGHTS	, SI_STRANGELIGHTS	, SCB_NONE );
+	set_sc_with_vfx_noskill( SC_DECORATION_OF_MUSIC		, SI_DECORATION_OF_MUSIC		, SCB_NONE );
 
 	/* Storing the target job rather than simply SC_SPIRIT simplifies code later on */
 	SkillStatusChangeTable[skill_get_index(SL_ALCHEMIST)]	= (sc_type)MAPID_ALCHEMIST,
@@ -5622,7 +5624,7 @@ static signed short status_calc_critical(struct block_list *bl, struct status_ch
 		return cap_value(critical,10,SHRT_MAX);
 
 	if (sc->data[SC_INCCRI])
-		critical += sc->data[SC_INCCRI]->val1;
+		critical += sc->data[SC_INCCRI]->val2;
 	if (sc->data[SC_CRIFOOD])
 		critical += sc->data[SC_CRIFOOD]->val1;
 	if (sc->data[SC_EXPLOSIONSPIRITS])
@@ -7714,7 +7716,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if( !sc )
 		return 0; // Unable to receive status changes
 
-	if( status_isdead(bl) && type != SC_NOCHAT ) // SC_NOCHAT should work even on dead characters
+	if( status_isdead(bl) && ( type != SC_NOCHAT && type != SC_JAILED ) ) // SC_NOCHAT and SC_JAILED should work even on dead characters
 		return 0;
 
 	if( bl->type == BL_MOB) {
@@ -10122,7 +10124,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = tick / tick_time;
 			break;
 		case SC_TELEKINESIS_INTENSE:
-			val2 = val4 = 10 * val1; // sp consum / casttime reduc %
+			val2 = 10 * val1; // sp consum / casttime reduc %
 			val3 = 40 * val1; // magic dmg bonus
 			break;
 		case SC_OFFERTORIUM:

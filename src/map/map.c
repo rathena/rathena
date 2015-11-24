@@ -1783,6 +1783,11 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_READYCOUNTER, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_CBC, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_EQC, INVALID_TIMER);
+		// Remove visuals effect from headgear
+		status_change_end(&sd->bl, SC_MOONSTAR, INVALID_TIMER); 
+		status_change_end(&sd->bl, SC_SUPER_STAR, INVALID_TIMER); 
+		status_change_end(&sd->bl, SC_STRANGELIGHTS, INVALID_TIMER); 
+		status_change_end(&sd->bl, SC_DECORATION_OF_MUSIC, INVALID_TIMER); 
 		if (battle_config.debuff_on_logout&1) { //Remove negative buffs
 			status_change_end(&sd->bl, SC_ORCISH, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_STRIPWEAPON, INVALID_TIMER);
