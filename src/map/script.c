@@ -21213,7 +21213,7 @@ BUILDIN_FUNC(setquestinfo_req) {
 	int quest_id = script_getnum(st, 2);
 	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
 	uint8 i = 0;
-	uint8 num = script_lastdata(st)+1;
+	uint8 num = script_lastdata(st);
 
 	if (!qi) {
 		ShowError("buildin_setquestinfo_req: Quest with ID '%d' is not defined yet.\n", quest_id);
@@ -21226,11 +21226,11 @@ BUILDIN_FUNC(setquestinfo_req) {
 	}
 
 	if (num%2) {
-		ShowError("buildin_setquestinfo_req: Odd number of parameters(%d) - pairs of requirements are expected.\n", num);
+		ShowError("buildin_setquestinfo_req: Odd number of parameters(%d) - pairs of requirements are expected.\n", num-2);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	for (i = 3; i < num; i += 2) {
+	for (i = 3; i <= num; i += 2) {
 		RECREATE(qi->req, struct questinfo_req, qi->req_count+1);
 		qi->req[qi->req_count].quest_id = script_getnum(st, i);
 		qi->req[qi->req_count].state = script_getnum(st, i+1);
