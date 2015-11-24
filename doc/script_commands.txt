@@ -8214,7 +8214,6 @@ Value os 'state' are:
     0: Player doesn't have 'req_quest_id'.
     1: Player has 'req_quest_id'.
     2: //! TODO
-    3: //! TODO
 
 This command must be used after 'questinfo'.
 
