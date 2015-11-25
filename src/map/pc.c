@@ -10493,7 +10493,11 @@ static unsigned int pc_calc_basehp(uint16 level, uint16 class_) {
 	double base_hp;
 	uint16 i, idx = pc_class2idx(class_);
 
-	base_hp = 35 + level * (job_info[idx].hp_multiplicator/100.);
+#ifdef HP_SP_TABLES
+	base_hp = job_info[idx].base_hp[level];
+#else
+	base_hp = 35 + level * (job_info[idx].hp_multiplicator / 100.);
+#endif
 #ifndef RENEWAL
 	if(level >= 10 && (class_ == JOB_NINJA || class_ == JOB_GUNSLINGER)) base_hp += 90;
 #endif
@@ -10511,8 +10515,11 @@ static unsigned int pc_calc_basehp(uint16 level, uint16 class_) {
 static unsigned int pc_calc_basesp(uint16 level, uint16 class_) {
 	double base_sp;
 	uint16 idx = pc_class2idx(class_);
-
+#ifdef HP_SP_TABLES
+	base_sp = job_info[idx].base_sp[level];
+#else
 	base_sp = 10 + floor(level * (job_info[idx].sp_factor / 100.));
+#endif
 
 	switch (class_) {
 		case JOB_NINJA:
