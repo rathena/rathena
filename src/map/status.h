@@ -2197,6 +2197,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 #endif
 
 unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status);
+void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
 
 void initChangeTables(void);
 int status_readdb(void);

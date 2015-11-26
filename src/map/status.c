@@ -41,6 +41,8 @@ static struct {
 
 static int atkmods[3][MAX_WEAPON_TYPE];	/// ATK weapon modification for size (size_fix.txt)
 
+unsigned int SCDisabled[SC_MAX]; ///< List of disabled SC on map zones. [Cydh]
+
 static struct eri *sc_data_ers; /// For sc_data entries
 static struct status_data dummy_status;
 
@@ -84,6 +86,9 @@ static unsigned short status_calc_ematk(struct block_list *,struct status_change
 static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP);
+
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone);
+#define status_change_isDisabledOnMap(type,m) ( status_change_isDisabledOnMap_((type),map_flag_vs((m)),map[(m)].flag.pvp,map_flag_gvg((m)),map[(m)].flag.battleground,8*map[(m)].zone) )
 
 /**
  * Returns the status change associated with a skill.
@@ -199,6 +204,7 @@ void initChangeTables(void)
 	memset(StatusChangeFlagTable, 0, sizeof(StatusChangeFlagTable));
 	memset(StatusChangeStateTable, 0, sizeof(StatusChangeStateTable));
 	memset(StatusDisplayType, 0, sizeof(StatusDisplayType));
+	memset(SCDisabled, 0, sizeof(SCDisabled));
 
 
 	/* First we define the skill for common ailments. These are used in skill_additional_effect through sc cards. [Skotlex] */
@@ -7719,6 +7725,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if( status_isdead(bl) && ( type != SC_NOCHAT && type != SC_JAILED ) ) // SC_NOCHAT and SC_JAILED should work even on dead characters
 		return 0;
 
+	if (status_change_isDisabledOnMap(type, bl->m))
+		return 0;
+
 	if( bl->type == BL_MOB) {
 		struct mob_data *md = BL_CAST(BL_MOB,bl);
 		if(md && (md->mob_id == MOBID_EMPERIUM || mob_is_battleground(md)) && type != SC_SAFETYWALL && type != SC_PNEUMA)
@@ -13265,6 +13274,76 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
 }
 
 /**
+ * Check if status is disabled on a map
+ * @param bl
+ * @param sc
+ **/
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone) {
+	if (type <= SC_NONE || type >= SC_MAX)
+		return true;
+
+	if ((!mapIsVS && SCDisabled[type]&1) ||
+		(mapIsPVP && SCDisabled[type]&2) ||
+		(mapIsGVG && SCDisabled[type]&4) ||
+		(mapIsBG && SCDisabled[type]&8) ||
+		(SCDisabled[type]&(mapZone))) 
+	{
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Check if status is disabled on a map
+ * @param bl
+ * @param sc
+ **/
+void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc) {
+	nullpo_retv(bl);
+
+	if (sc && sc->count) {
+		unsigned short i;
+		bool mapIsVS = map_flag_vs(bl->m);
+		bool mapIsPVP = map[bl->m].flag.pvp;
+		bool mapIsGVG = map_flag_gvg(bl->m);
+		bool mapIsBG = map[bl->m].flag.battleground;
+		unsigned int mapZone = map[bl->m].zone*8;
+
+		for (i = 0; i < SC_MAX; i++) {
+			if (!sc->data[i] || !SCDisabled[i])
+				continue;
+
+			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone))
+				status_change_end(bl, (sc_type)i, INVALID_TIMER);
+		}
+	}
+}
+
+/**
+ * Read status_disabled.txt file
+ **/
+static bool status_readdb_disabled(char **str, int columns, int current) {
+	int type = SC_NONE;
+
+	if (ISDIGIT(str[0][0])) {
+		type = atoi(str[0]);
+	}
+	else {
+		if (!script_get_constant(str[0],&type))
+			type = SC_NONE;
+	}
+
+	if (type <= SC_NONE || type >= SC_MAX) {
+		ShowError("status_readdb_disabled: Invalid SC with type %s.\n", str[0]);
+		return false;
+	}
+
+	SCDisabled[type] = (unsigned int)atol(str[1]);
+	return true;
+}
+
+/**
  * Sets defaults in tables and starts read db functions
  * sv_readdb reads the file, outputting the information line-by-line to
  * previous functions above, separating information by delimiter
@@ -13303,6 +13382,8 @@ int status_readdb(void)
 			for(k=0;k<ELE_ALL;k++)
 				attr_fix_table[i][j][k]=100;
 
+	memset(SCDisabled, 0, sizeof(SCDisabled));
+
 	// read databases
 	// path,filename,separator,mincol,maxcol,maxrow,func_parsor
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
@@ -13322,6 +13403,7 @@ int status_readdb(void)
 		
 		status_readdb_attrfix(dbsubpath2,i); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i);
+		sv_readdb(dbsubpath1, "status_disabled.txt",',',2,2,-1,&status_readdb_disabled, i);
 		sv_readdb(dbsubpath2, "refine_db.txt", ',', 4+MAX_REFINE, 4+MAX_REFINE, ARRAYLENGTH(refine_info), &status_readdb_refine, i);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
