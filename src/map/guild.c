@@ -2004,8 +2004,8 @@ int guild_castledataloadack(int len, struct guild_castle *gc) {
 	ev = i; // offset of castle or -1
 
 	if( ev < 0 ) { //No castles owned, invoke OnAgitInit as it is.
-		npc_event_doall("OnAgitInit");
-		npc_event_doall("OnAgitInit2");
+		npc_event_data_doall(NPCEV_OnAgitInit);
+		npc_event_data_doall(NPCEV_OnAgitInit2);
 	} else // load received castles into memory, one by one
 	for( i = 0; i < n; i++, gc++ ) {
 		struct guild_castle *c = guild_castle_search(gc->castle_id);
@@ -2034,7 +2034,7 @@ int guild_castledataloadack(int len, struct guild_castle *gc) {
  * Start normal woe and triggers all npc OnAgitStart
  *---------------------------------------------------*/
 void guild_agit_start(void) {	// Run All NPC_Event[OnAgitStart]
-	int c = npc_event_doall("OnAgitStart");
+	int c = npc_event_data_doall(NPCEV_OnAgitStart);
 	ShowStatus("NPC_Event:[OnAgitStart] Run (%d) Events by @AgitStart.\n",c);
 }
 
@@ -2042,7 +2042,7 @@ void guild_agit_start(void) {	// Run All NPC_Event[OnAgitStart]
  * End normal woe and triggers all npc OnAgitEnd
  *---------------------------------------------------*/
 void guild_agit_end(void) {	// Run All NPC_Event[OnAgitEnd]
-	int c = npc_event_doall("OnAgitEnd");
+	int c = npc_event_data_doall(NPCEV_OnAgitEnd);
 	ShowStatus("NPC_Event:[OnAgitEnd] Run (%d) Events by @AgitEnd.\n",c);
 }
 
@@ -2050,7 +2050,7 @@ void guild_agit_end(void) {	// Run All NPC_Event[OnAgitEnd]
  * Start woe2 and triggers all npc OnAgitStart2
  *---------------------------------------------------*/
 void guild_agit2_start(void) {	// Run All NPC_Event[OnAgitStart2]
-	int c = npc_event_doall("OnAgitStart2");
+	int c = npc_event_data_doall(NPCEV_OnAgitStart2);
 	ShowStatus("NPC_Event:[OnAgitStart2] Run (%d) Events by @AgitStart2.\n",c);
 }
 
@@ -2058,7 +2058,7 @@ void guild_agit2_start(void) {	// Run All NPC_Event[OnAgitStart2]
  * End woe2 and triggers all npc OnAgitEnd2
  *---------------------------------------------------*/
 void guild_agit2_end(void) {	// Run All NPC_Event[OnAgitEnd2]
-	int c = npc_event_doall("OnAgitEnd2");
+	int c = npc_event_data_doall(NPCEV_OnAgitEnd2);
 	ShowStatus("NPC_Event:[OnAgitEnd2] Run (%d) Events by @AgitEnd2.\n",c);
 }
 

@@ -81,9 +81,19 @@ struct event_data {
 	int pos;
 };
 
+/// Event list entry
+struct s_npc_event_data_entry {
+	struct event_data *ev; ///< Event pointer for single entry of ev_db
+	enum e_event_name_type type; ///< Event type
+};
+static struct linkdb_node *npc_event_data_head, *npc_event_data_last;
+static void npc_event_data_add(struct event_data *ev, enum e_event_name_type type);
+static void npc_event_data_remove(struct event_data *ev);
+static enum e_event_name_type npc_event_name2type(const char *evname);
+
 static struct eri *timer_event_ers; //For the npc timer data. [Skotlex]
 
-/* hello */
+// NPC Path data
 static char *npc_last_path;
 static char *npc_last_ref;
 
@@ -329,19 +339,23 @@ int npc_event_dequeue(struct map_session_data* sd)
  * exports a npc event label
  * called from npc_parse_script
  *------------------------------------------*/
-static int npc_event_export(struct npc_data *nd, int i)
+static bool npc_event_export(struct npc_data *nd, int i)
 {
 	char* lname = nd->u.scr.label_list[i].name;
 	int pos = nd->u.scr.label_list[i].pos;
+
 	if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n')) {
 		struct event_data *ev;
 		char buf[EVENT_NAME_LENGTH];
+
 		snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, lname);
-		// generate the data and insert it
+
 		CREATE(ev, struct event_data, 1);
 		ev->nd = nd;
 		ev->pos = pos;
-		if (strdb_put(ev_db, buf, ev)) // There was already another event of the same name?
+		npc_event_data_add(ev, npc_event_name2type(lname));
+
+		if (strdb_put(ev_db, buf, ev))
 			return 1;
 	}
 	return 0;
@@ -494,7 +508,7 @@ int npc_event_do_clock(int tid, unsigned int tick, int id, intptr_t data)
  *------------------------------------------*/
 void npc_event_do_oninit(void)
 {
-	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs."CL_CLL"\n", npc_event_doall("OnInit"));
+	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs."CL_CLL"\n", npc_event_data_doall(NPCEV_OnInit));
 
 	add_timer_interval(gettick()+100,npc_event_do_clock,0,0,1000);
 }
@@ -1965,6 +1979,7 @@ static int npc_unload_ev(DBKey key, DBData *data, va_list ap)
 	char* npcname = va_arg(ap, char *);
 
 	if(strcmp(ev->nd->exname,npcname)==0){
+		npc_event_data_remove(ev);
 		db_remove(ev_db, key);
 		return 1;
 	}
@@ -2094,8 +2109,8 @@ static void npc_clearsrcfile(void)
 }
 
 /**
- * Adds a npc source file (or removes all)
- * @param name : file to add
+ * Adds a npc source file into linked list (struct npc_src_list* npc_src_files)
+ * @param name : file to add or "clear" to remove all.
  * @return 0=error, 1=sucess
  */
 int npc_addsrcfile(const char* name)
@@ -2109,8 +2124,9 @@ int npc_addsrcfile(const char* name)
 		return 1;
 	}
 
-    if(check_filepath(name)!=2) return 0; //this is not a file 
-        
+	if(check_filepath(name)!=2)
+		return 0; //this is not a file 
+
 	// prevent multiple insert of source files
 	file = npc_src_files;
 	while( file != NULL )
@@ -2128,8 +2144,8 @@ int npc_addsrcfile(const char* name)
 		npc_src_files = file;
 	else
 		file_prev->next = file;
-        
-        return 1;
+
+	return 1;
 }
 
 /// Removes a npc source file (or all)
@@ -4352,6 +4368,103 @@ void npc_clear_pathlist(void) {
 	dbi_destroy(path_list);
 }
 
+/**
+ * Get event type by event name
+ * @param evname Event name (On<label>)
+ **/
+static enum e_event_name_type npc_event_name2type(const char *evname) {
+	if      (strcasecmp(evname, NPCEVNAME_OnInit) == 0)            return NPCEV_OnInit;
+	else if (strcasecmp(evname, NPCEVNAME_OnInterIfInit) == 0)     return NPCEV_OnInterIfInit;
+	else if (strcasecmp(evname, NPCEVNAME_OnInterIfInitOnce) == 0) return NPCEV_OnInterIfInitOnce;
+	else if (strcasecmp(evname, NPCEVNAME_OnAgitStart) == 0)       return NPCEV_OnAgitStart;
+	else if (strcasecmp(evname, NPCEVNAME_OnAgitEnd) == 0)         return NPCEV_OnAgitEnd;
+	else if (strcasecmp(evname, NPCEVNAME_OnAgitInit) == 0)        return NPCEV_OnAgitInit;
+	else if (strcasecmp(evname, NPCEVNAME_OnAgitStart2) == 0)      return NPCEV_OnAgitStart2;
+	else if (strcasecmp(evname, NPCEVNAME_OnAgitEnd2) == 0)        return NPCEV_OnAgitEnd2;
+	else if (strcasecmp(evname, NPCEVNAME_OnAgitInit2) == 0)       return NPCEV_OnAgitInit2;
+	else if (strcasecmp(evname, NPCEVNAME_OnInstanceInit) == 0)    return NPCEV_OnInstanceInit;
+	return NPCEV_UNKNOWN;
+}
+
+/**
+ * Execute event data based on type
+ * @param type event type, see enum e_event_name_type
+ * @return Number of executed events
+ **/
+uint16 npc_event_data_doall(enum e_event_name_type type) {
+	struct linkdb_node *node = NULL;
+	uint16 c = 0;
+
+	if (!npc_event_data_head || type <= NPCEV_UNKNOWN || type >= NPCEV_MAX)
+		return 0;
+
+	node = npc_event_data_head;
+	while (node) {
+		struct s_npc_event_data_entry *evdata = (struct s_npc_event_data_entry *)node->data;
+		if (evdata->type == type) {
+			run_script(evdata->ev->nd->u.scr.script, evdata->ev->pos, 0, evdata->ev->nd->bl.id);
+			c++;
+		}
+		node = node->prev;
+	}
+
+	return c;
+}
+
+/**
+ * Add new node on event data linked list
+ * @param ev Pointer of event data
+ * @param type Event type, see enum e_event_name_type
+ **/
+static void npc_event_data_add(struct event_data *ev, enum e_event_name_type type) {
+	struct s_npc_event_data_entry *evdata;
+
+	if (!ev || type <= NPCEV_UNKNOWN || type >= NPCEV_MAX)
+		return;
+
+	CREATE(evdata, struct s_npc_event_data_entry, 1);
+	evdata->ev = ev;
+	evdata->type = type;
+
+	linkdb_insert(&npc_event_data_last, (void *)__64BPRTSIZE(ev), (void *)evdata);
+
+	if (!npc_event_data_head)
+		npc_event_data_head = npc_event_data_last;
+}
+
+/**
+ * Remove event data from linked list
+ * @param ev Pointer of event_data
+ **/
+static void npc_event_data_remove(struct event_data *ev) {
+	struct s_npc_event_data_entry *evdata = NULL;
+
+	if (npc_event_data_last == NULL)
+		return;
+
+	evdata = (struct s_npc_event_data_entry *)linkdb_erase(&npc_event_data_last, (void *)__64BPRTSIZE(ev));
+	aFree(evdata);
+}
+
+/**
+ * Clear event data linked list
+ **/
+void npc_event_data_list_clear(void) {
+	if (npc_event_data_last != NULL) {
+		struct linkdb_node *node = npc_event_data_last;
+		struct s_npc_event_data_entry *evdata = NULL;
+		while (node) {
+			struct linkdb_node *next = node->next;
+			evdata = (struct s_npc_event_data_entry *)node->data;
+			aFree(evdata);
+			aFree(node);
+			node = next;
+		}
+	}
+
+	npc_event_data_head = npc_event_data_last = NULL;
+}
+
 //Clear then reload npcs files
 int npc_reload(void) {
 	struct npc_src_list *nsl;
@@ -4363,6 +4476,7 @@ int npc_reload(void) {
 	guild_flags_clear();
 
 	npc_clear_pathlist();
+	npc_event_data_list_clear();
 
 	db_clear(npc_path_db);
 
@@ -4438,17 +4552,17 @@ int npc_reload(void) {
 	npc_read_event_script();
 
 	/* refresh guild castle flags on both woe setups */
-	npc_event_doall("OnAgitInit");
-	npc_event_doall("OnAgitInit2");
+	npc_event_data_doall(NPCEV_OnAgitInit);
+	npc_event_data_doall(NPCEV_OnAgitInit2);
 
 	//Execute the OnInit event for freshly loaded npcs. [Skotlex]
-	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n",npc_event_doall("OnInit"));
+	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_data_doall(NPCEV_OnInit));
 
 	do_reload_instance();
 
 	// Execute rest of the startup events if connected to char-server. [Lance]
 	if(!CheckForCharServer()){
-		ShowStatus("Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInit"));
+		ShowStatus("Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_data_doall(NPCEV_OnInterIfInit));
 	}
 
 #if PACKETVER >= 20131223
@@ -4491,6 +4605,7 @@ void do_clear_npc(void) {
  *------------------------------------------*/
 void do_final_npc(void) {
 	npc_clear_pathlist();
+	npc_event_data_list_clear();
 	ev_db->destroy(ev_db, NULL);
 	npcname_db->destroy(npcname_db, NULL);
 	npc_path_db->destroy(npc_path_db, NULL);
@@ -4550,6 +4665,7 @@ void do_init_npc(void){
 	for( i = MAX_NPC_CLASS2_START; i < MAX_NPC_CLASS2_END; i++ )
 		npc_viewdb2[i - MAX_NPC_CLASS2_START].class_ = i;
 
+	npc_event_data_head = npc_event_data_last = NULL;
 	ev_db = strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA),2*NAME_LENGTH+2+1);
 	npcname_db = strdb_alloc(DB_OPT_BASE,NAME_LENGTH);
 	npc_path_db = strdb_alloc(DB_OPT_BASE|DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA,80);
