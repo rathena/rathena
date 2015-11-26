@@ -23,7 +23,7 @@ iz_int,100,91,3	script	Captain Carocc#iz_int	4_M_REINDEER,{
 		if (!isbegin_quest(7471)) {
 			mes "[Captain Carocc]";
 			mes "Had a good dream?";
-			mes "Soon, we will get to ^4d4fffIzlude^000000";
+			mes "Soon, we will get to ^4d4fffIzlude^000000.";
 			next;
 			mes "[Captain Carocc]";
 			mes "And you can talk to other people like you just talked to me.";
@@ -229,7 +229,7 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 					mes "Founded by the Rune Midgard lineage to help out new adventurers.";
 					next;
 					mes "[Carocc]";
-					mes "A friend of mine works there, so I 'll give you the introduction to him.";
+					mes "A friend of mine works there, so I'll give you the introduction to him.";
 					mes "He could make a lot of things easier for you.";
 					next;
 					mes "[Carocc]";
@@ -257,7 +257,7 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 						next;
 						cutin "", 255;
 						mes "[Carocc]";
-						mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI>here";
+						mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> here";
 						mes "Yes, the part that says 'Hun'.";
 						next;
 						mes "!- Information -!";
@@ -324,7 +324,7 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 					viewpoint 1,122,207,0,0x4d4dff;
 					next;
 					mes "[Carocc]";
-					mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI>here";
+					mes "If you need more help with the map, press <NAVI>[Hun]<INFO>izlude,122,207</INFO></NAVI> here";
 					mes "Yes, the part that says ''Hun''.";
 					next;
 					mes "!- Information -!";
@@ -2074,10 +2074,7 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 
 OnInit:
 	questinfo 7478, QTYPE_QUEST, 0;
-	setquestinfo_req 7478,4269,1;// TODO! need more infos
-
-	// AddQuestInfo 7478 0 0
-	// SetQuestQuest 7478 4269 2
+	setquestinfo_req 7478,4269,2;
 	end;
 }
 
@@ -2828,7 +2825,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 		mes "Please keep in mind that I really wanted to have it but since you look exhausted I offered it to you first!";
 		emotion e_no1;
 		next;
-		mes "- You open the lunchbox and there is some type of food inside Â¡Â©";
+		mes "- You open the lunchbox and there is some type of food inside -";
 		next;
 		mes "[Mainz]";
 		mes "Wahahahat! Don't hesitate and just take it!";
@@ -4069,11 +4066,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients- ^0000cd1 Clover, 1 Green Herb, 1 Red Herb^000000.";
 				next;
-				cutin "Ø§ÓªÆ½Ä«Ö¥.bmp", 3;
+				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Clover and the Red Herb are dropped by Lunatic or Fabre monsters wandering everywhere on the field outside Izlude.";
 				next;
-				cutin "?ÛªØ£Ä«Ö¥.bmp", 3;
+				cutin "ÆÄºê¸£Ä«µå.bmp", 3;
 				mes "[Eclaire]";
 				mes "Green Herbs are dropped by Fabres.";
 				next;
@@ -4095,11 +4092,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Apple & 2 Carrots^000000.";
 				next;
-				cutin "Ç·ØµÄ«Ö¥.bmp", 3;
+				cutin "Æ÷¸µÄ«µå.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Apples are dropped by Porings bouncing around the field outside of Izlude.";
 				next;
-				cutin "Ø§ÓªÆ½Ä«Ö¥.bmp", 3;
+				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
 				mes "[Eclaire]";
 				mes "Carrots are given by Lunatics.";
 				next;
@@ -4121,15 +4118,15 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Jellopy, 1 Fluff, 1 Feather^000000.";
 				next;
-				cutin "Ç·ØµÄ«Ö¥.bmp", 3;
+				cutin "Æ÷¸µÄ«µå.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Jellopy are dropped by Porings bouncing around the field of Izlude.";
 				next;
-				cutin "?ÛªØ£Ä«Ö¥.bmp", 3;
+				cutin "ÆÄºê¸£Ä«µå.bmp", 3;
 				mes "[Eclaire]";
 				mes "Fluff can be received from Fabre or Lunatic.";
 				next;
-				cutin "Ø§ÓªÆ½Ä«Ö¥.bmp", 3;
+				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
 				mes "[Mille Feuille]";
 				mes "Feathers are dropped by Lunatics or Fabres.";
 				next;
@@ -4151,11 +4148,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are-^0000cd 1 Apple & 1 Clover^000000.";
 				next;
-				cutin "Ç·ØµÄ«Ö¥.bmp", 3;
+				cutin "Æ÷¸µÄ«µå.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Apple can be found in Porings in the field outside of Izlude.";
 				next;
-				cutin "Ø§ÓªÆ½Ä«Ö¥.bmp", 3;
+				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
 				mes "[Eclaire]";
 				mes "Clovers are dropped by Lunatics or Fabre in the field outside Izlude.";
 				next;
@@ -4539,7 +4536,15 @@ L_Quest:
 
 OnInit:
 	questinfo 11339, QTYPE_QUEST ,0 ,Job_Novice;
-	setquestinfo_req 11339,4269,1;
+	questinfo 11340, QTYPE_QUEST ,0 ,Job_Novice;
+	questinfo 11341, QTYPE_QUEST ,0 ,Job_Novice;
+	questinfo 11342, QTYPE_QUEST ,0 ,Job_Novice;
+	questinfo 11344, QTYPE_QUEST ,0 ,Job_Novice;
+	setquestinfo_req 11339,4269,2;
+	setquestinfo_req 11340,4269,2;
+	setquestinfo_req 11341,4269,2;
+	setquestinfo_req 11342,4269,2;
+	setquestinfo_req 11344,4269,2;
 	end;
 }
 
@@ -10662,13 +10667,12 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 
 OnInit:
 	questinfo 7480, QTYPE_QUEST, 0, Job_Novice;
-	setquestinfo_req 7480,4269,1;
+	setquestinfo_req 7480,4269,2;
 	questinfo 7483, QTYPE_QUEST, 0;
-	setquestinfo_req 7483,7481,1;
-	setquestinfo_req 7483,7482,1;
+	setquestinfo_req 7483,7481,1,7482,1;
+
 	// questinfo 7495, QTYPE_QUEST, 0;// officially disabled
-	// setquestinfo_req 7495,7484,2;
-	// setquestinfo_req 7495,7485,3;
+	// setquestinfo_req 7495,7484,2,7485,3;
 	end;
 }
 
@@ -10903,7 +10907,7 @@ iz_ac02,49,134,5	script	Vicente#ac	4_M_HUMAN_02,{
 						case 2:
 							mes "[Vicente]";
 							mes "Correct!";
-							mes "You have a good memoryÂ£Â¡";
+							mes "You have a good memory.";
 							cutin "sc_vicente03.bmp", 2;
 							next;
 							break;
@@ -10969,7 +10973,7 @@ iz_ac02,49,134,5	script	Vicente#ac	4_M_HUMAN_02,{
 							case 2:
 								mes "[Vicente]";
 								mes "Correct!";
-								mes "You have a good memoryÂ£Â¡";
+								mes "You have a good memory.";
 								cutin "sc_vicente03.bmp", 2;
 								next;
 								break;
@@ -14123,7 +14127,7 @@ new_1-1,53,114,3	script	Training Instructor#1a	4_F_03,{
 	mes "I will send you to Izlude.";
 	close2;
 	for (.@i = 7117; .@i < 7128; .@i++)
-		erasequest 7117;
+		erasequest .@i;
 	if (strnpcinfo(4) == "new_1-1" || strnpcinfo(4) == "new_1-2" || strnpcinfo(4) == "new_1-3" || strnpcinfo(4) == "new_1-4") {
 		.@warp$ = "iz_int";
 	} else if (strnpcinfo(4) == "new_2-1" || strnpcinfo(4) == "new_2-2" || strnpcinfo(4) == "new_2-3" || strnpcinfo(4) == "new_2-4") {

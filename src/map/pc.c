@@ -11734,7 +11734,8 @@ void pc_show_questinfo(struct map_session_data *sd) {
 #if PACKETVER >= 20090218
 	struct questinfo *qi = NULL;
 	unsigned short i;
-	uint8 j, state = 0, mystate = 0;
+	uint8 j, state = 0;
+	int8 mystate = 0;
 	bool failed = false;
 
 	nullpo_retv(sd);
@@ -11765,12 +11766,9 @@ void pc_show_questinfo(struct map_session_data *sd) {
 		if (qi->req_count) {
 			failed = false;
 			for (j = 0; j < qi->req_count; j++) {
-				//!TODO: Confirm all states means
-				// Currently only confirmed, if required quest is '0: doesn't have', and '1: have'
-				// Maybe something like, if (quest_check(sd, qi->req[j].quest_id, HAVEQUEST) + 1 != qi->req[j].state) ?
-				state = (qi->req[j].state > 0) ? 1 : 0;
-				mystate = (quest_check(sd, qi->req[j].quest_id, HAVEQUEST) == -1) ? 0 : 1;
-				if (mystate != state) {
+				mystate = quest_check(sd, qi->req[j].quest_id, HAVEQUEST);
+				mystate = mystate + (mystate < 1);
+				if (mystate != qi->req[j].state) {
 					failed = true;
 					break;
 				}

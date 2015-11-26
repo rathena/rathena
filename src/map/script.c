@@ -21233,7 +21233,7 @@ BUILDIN_FUNC(setquestinfo_req) {
 	for (i = 3; i <= num; i += 2) {
 		RECREATE(qi->req, struct questinfo_req, qi->req_count+1);
 		qi->req[qi->req_count].quest_id = script_getnum(st, i);
-		qi->req[qi->req_count].state = script_getnum(st, i+1);
+		qi->req[qi->req_count].state = (script_getnum(st, i+1) >= 2) ? 2 : (script_getnum(st, i+1) <= 0) ? 0 : 1;
 		qi->req_count++;
 	}
 
