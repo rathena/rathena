@@ -945,7 +945,9 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	struct map_session_data* sd;
 	struct status_change* sc = status_get_sc(bl);
 	struct view_data* vd = status_get_viewdata(bl);
-	struct status_data *status = NULL;
+#if PACKETVER >= 20131223
+	struct status_data *status = status_get_status_data(bl);
+#endif
 	unsigned char *buf = WBUFP(buffer, 0);
 #if PACKETVER < 20091103
 	bool type = !pcdb_checkid(vd->class_);
@@ -981,8 +983,6 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 
 #if PACKETVER >= 20091103
 	name = status_get_name(bl);
-#if PACKETVER >= 20131223
-	status = status_get_status_data(bl);
 #if PACKETVER < 20110111
 	WBUFW(buf,2) = (spawn ? 62 : 63)+strlen(name);
 #elif PACKETVER < 20131223
@@ -991,7 +991,6 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,2) = (spawn ? 77 : 78)+strlen(name);
 #else
 	WBUFW(buf,2) = (spawn ? 79 : 80)+strlen(name);
-#endif
 #endif
 	WBUFB(buf,4) = clif_bl_type(bl);
 	offset+=3;
@@ -1129,7 +1128,11 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	buf = WBUFP(buffer,offset);
 #endif
 #if PACKETVER >= 20091103
+#if PACKETVER >= 20131223
 	memcpy((char*)WBUFP(buf,64), name, NAME_LENGTH);
+#else
+	memcpy((char*)WBUFP(buf,55), name, NAME_LENGTH);
+#endif
 	return WBUFW(buffer,2);
 #else
 	return packet_len(WBUFW(buffer,0));
@@ -1144,7 +1147,9 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	struct map_session_data* sd;
 	struct status_change* sc = status_get_sc(bl);
 	struct view_data* vd = status_get_viewdata(bl);
-	struct status_data *status = NULL;
+#if PACKETVER >= 20131223
+	struct status_data *status = status_get_status_data(bl);
+#endif
 	unsigned char* buf = WBUFP(buffer,0);
 #if PACKETVER >= 7
 	unsigned short offset = 0;
@@ -1175,8 +1180,6 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 
 #if PACKETVER >= 20091103
 	name = status_get_name(bl);
-#if PACKETVER >= 20131223
-	status = status_get_status_data(bl);
 #if PACKETVER < 20110111
 	WBUFW(buf, 2) = 69+strlen(name);
 #elif PACKETVER < 20131223
@@ -1185,7 +1188,6 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFW(buf, 2) = 84+strlen(name);
 #else
 	WBUFW(buf, 2) = 86+strlen(name);
-#endif
 #endif
 	offset+=2;
 	buf = WBUFP(buffer,offset);
@@ -1269,7 +1271,11 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	buf = WBUFP(buffer,offset);
 #endif
 #if PACKETVER >= 20091103
+#if PACKETVER >= 20131223
 	memcpy((char*)WBUFP(buf,71), name, NAME_LENGTH);
+#else
+	memcpy((char*)WBUFP(buf,62), name, NAME_LENGTH);
+#endif
 	return WBUFW(buffer,2);
 #else
 	return packet_len(WBUFW(buffer,0));
