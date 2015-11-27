@@ -2416,16 +2416,18 @@ static void clif_addcards(unsigned char* buf, struct item* item)
 }
 
 /// Fills in part of the item buffers that calls for variable bonuses data. [Rytech]
-static void clif_add_random_options(unsigned char* buf, struct item* item)
+/// Dummy data used since this feature isnt supported yet (ITEM_RDM_OPT).
+/// A max of 5 random options can be supported.
+void clif_add_random_options(unsigned char* buf, struct item* item)
 {
-	// Dummy data used since this feature isnt supported yet (ITEM_RDM_OPT).
-	// A max of 5 random options can be supported.
+#if PACKETVER >= 20150226
 	int i;
 	for (i = 0; i < 5; i++){
 		WBUFW(buf,i*5+0) = 0;	// OptIndex
 		WBUFW(buf,i*5+2) = 0;	// Value
 		WBUFB(buf,i*5+4) = 0;	// Param1
 	}
+#endif
 }
 
 /// Notifies the client, about a received inventory item or the result of a pick-up request.
