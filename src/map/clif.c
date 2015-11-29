@@ -986,7 +986,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 #if PACKETVER < 20110111
 	WBUFW(buf,2) = (spawn ? 62 : 63)+strlen(name);
 #elif PACKETVER < 20131223
-	WBUFW(buf,2) = (spawn ? 64 : 65)+strlen(name);
+	WBUFW(buf,2) = (uint16)((spawn ? 64 : 65)+strlen(name));
 #elif PACKETVER < 20150513
 	WBUFW(buf,2) = (spawn ? 77 : 78)+strlen(name);
 #else
@@ -1183,7 +1183,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 #if PACKETVER < 20110111
 	WBUFW(buf, 2) = 69+strlen(name);
 #elif PACKETVER < 20131223
-	WBUFW(buf, 2) = 71+strlen(name);
+	WBUFW(buf, 2) = (uint16)(71+strlen(name));
 #elif PACKETVER < 20150513
 	WBUFW(buf, 2) = 84+strlen(name);
 #else
@@ -3948,7 +3948,7 @@ void clif_dispchat(struct chat_data* cd, int fd)
 	     : 1;
 
 	WBUFW(buf, 0) = 0xd7;
-	WBUFW(buf, 2) = 17 + strlen(cd->title);
+	WBUFW(buf, 2) = (uint16)(17 + strlen(cd->title));
 	WBUFL(buf, 4) = cd->owner->id;
 	WBUFL(buf, 8) = cd->bl.id;
 	WBUFW(buf,12) = cd->limit;
@@ -3986,7 +3986,7 @@ void clif_changechatstatus(struct chat_data* cd)
 	     : 1;
 
 	WBUFW(buf, 0) = 0xdf;
-	WBUFW(buf, 2) = 17 + strlen(cd->title);
+	WBUFW(buf, 2) = (uint16)(17 + strlen(cd->title));
 	WBUFL(buf, 4) = cd->owner->id;
 	WBUFL(buf, 8) = cd->bl.id;
 	WBUFW(buf,12) = cd->limit;
@@ -6026,7 +6026,7 @@ void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned l
 void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char *msg, short color) {
 	DBIterator *iter;
 	struct map_session_data *user;
-	unsigned short msg_len = strlen(msg) + 1;
+	unsigned short msg_len = (unsigned short)(strlen(msg) + 1);
 
 	WFIFOHEAD(sd->fd,msg_len + 12);
 	WFIFOW(sd->fd,0) = 0x2C1;
@@ -9004,7 +9004,7 @@ void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, sen
 // Modification of clif_messagecolor to send colored messages to players to chat log only (doesn't display overhead)
 /// 02c1 <packet len>.W <id>.L <color>.L <message>.?B
 int clif_colormes(int fd, unsigned long color, const char* msg) {
-	unsigned short msg_len = strlen(msg) + 1;
+	unsigned short msg_len = (unsigned short)(strlen(msg) + 1);
 
 	WFIFOHEAD(fd,msg_len + 12);
 	WFIFOW(fd,0) = 0x2C1;
@@ -9020,7 +9020,7 @@ int clif_colormes(int fd, unsigned long color, const char* msg) {
 /// Monster/NPC color chat [SnakeDrak] (ZC_NPC_CHAT).
 /// 02c1 <packet len>.W <id>.L <color>.L <message>.?B
 void clif_messagecolor(struct block_list* bl, unsigned long color, const char* msg) {
-	unsigned short msg_len = strlen(msg) + 1;
+	unsigned short msg_len = (unsigned short)(strlen(msg) + 1);
 	uint8 buf[256];
 	color = (color & 0x0000FF) << 16 | (color & 0x00FF00) | (color & 0xFF0000) >> 16; // RGB to BGR
 
@@ -9042,7 +9042,7 @@ void clif_messagecolor(struct block_list* bl, unsigned long color, const char* m
 
 void clif_messagecolor2(struct map_session_data *sd, unsigned long color, const char* msg)
 {
-	unsigned short msg_len = strlen(msg) + 1;
+	unsigned short msg_len = (unsigned short)(strlen(msg) + 1);
 
 	nullpo_retv(sd);
 
@@ -17934,7 +17934,7 @@ void clif_showscript(struct block_list* bl, const char* message) {
 	}
 
 	WBUFW(buf,0) = 0x8b3;
-	WBUFW(buf,2) = (len+8);
+	WBUFW(buf,2) = (uint16)(len+8);
 	WBUFL(buf,4) = bl->id;
 	safestrncpy((char *) WBUFP(buf,8), message, len);
 	clif_send((unsigned char *) buf, WBUFW(buf,2), bl, ALL_CLIENT);
