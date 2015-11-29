@@ -10847,8 +10847,8 @@ void pc_readdb(void) {
 	 // reset then read statspoint
 	memset(statp,0,sizeof(statp));
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
-		uint8 n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
-		uint8 n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
+		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
+		uint8 n2 = (uint8)(strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1);
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		char* dbsubpath2 = (char*)aMalloc(n2+1);
 

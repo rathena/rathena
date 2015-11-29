@@ -613,8 +613,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 
 		// Remove from DB
 		if (strcmpi(str[1], "clear") == 0 && itemdb_group->remove(itemdb_group, db_ui2key(group_id), &data)) {
-                        va_list ap;
-			itemdb_group_free(db_ui2key(group_id), &data, ap);
+			itemdb_group_free(db_ui2key(group_id), &data, NULL);
 			ShowNotice("Item Group '%s' has been cleared.\n", str[0]);
 			continue;
 		}
@@ -1580,8 +1579,8 @@ static void itemdb_read(void) {
 		itemdb_readdb();
 	
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
-		uint8 n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
-		uint8 n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
+		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
+		uint8 n2 = (uint8)(strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1);
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		char* dbsubpath2 = (char*)aMalloc(n2+1);
 		

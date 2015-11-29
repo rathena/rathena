@@ -945,7 +945,9 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	struct map_session_data* sd;
 	struct status_change* sc = status_get_sc(bl);
 	struct view_data* vd = status_get_viewdata(bl);
-	struct status_data *status = NULL;
+#if PACKETVER >= 20131223
+	struct status_data *status = status_get_status_data(bl);
+#endif
 	unsigned char *buf = WBUFP(buffer, 0);
 #if PACKETVER < 20091103
 	bool type = !pcdb_checkid(vd->class_);
@@ -981,17 +983,14 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 
 #if PACKETVER >= 20091103
 	name = status_get_name(bl);
-#if PACKETVER >= 20131223
-	status = status_get_status_data(bl);
 #if PACKETVER < 20110111
 	WBUFW(buf,2) = (spawn ? 62 : 63)+strlen(name);
 #elif PACKETVER < 20131223
-	WBUFW(buf,2) = (spawn ? 64 : 65)+strlen(name);
+	WBUFW(buf,2) = (uint16)((spawn ? 64 : 65)+strlen(name));
 #elif PACKETVER < 20150513
 	WBUFW(buf,2) = (spawn ? 77 : 78)+strlen(name);
 #else
 	WBUFW(buf,2) = (spawn ? 79 : 80)+strlen(name);
-#endif
 #endif
 	WBUFB(buf,4) = clif_bl_type(bl);
 	offset+=3;
@@ -1129,7 +1128,11 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	buf = WBUFP(buffer,offset);
 #endif
 #if PACKETVER >= 20091103
+#if PACKETVER >= 20131223
 	memcpy((char*)WBUFP(buf,64), name, NAME_LENGTH);
+#else
+	memcpy((char*)WBUFP(buf,55), name, NAME_LENGTH);
+#endif
 	return WBUFW(buffer,2);
 #else
 	return packet_len(WBUFW(buffer,0));
@@ -1144,7 +1147,9 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	struct map_session_data* sd;
 	struct status_change* sc = status_get_sc(bl);
 	struct view_data* vd = status_get_viewdata(bl);
-	struct status_data *status = NULL;
+#if PACKETVER >= 20131223
+	struct status_data *status = status_get_status_data(bl);
+#endif
 	unsigned char* buf = WBUFP(buffer,0);
 #if PACKETVER >= 7
 	unsigned short offset = 0;
@@ -1175,17 +1180,14 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 
 #if PACKETVER >= 20091103
 	name = status_get_name(bl);
-#if PACKETVER >= 20131223
-	status = status_get_status_data(bl);
 #if PACKETVER < 20110111
 	WBUFW(buf, 2) = 69+strlen(name);
 #elif PACKETVER < 20131223
-	WBUFW(buf, 2) = 71+strlen(name);
+	WBUFW(buf, 2) = (uint16)(71+strlen(name));
 #elif PACKETVER < 20150513
 	WBUFW(buf, 2) = 84+strlen(name);
 #else
 	WBUFW(buf, 2) = 86+strlen(name);
-#endif
 #endif
 	offset+=2;
 	buf = WBUFP(buffer,offset);
@@ -1269,7 +1271,11 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	buf = WBUFP(buffer,offset);
 #endif
 #if PACKETVER >= 20091103
+#if PACKETVER >= 20131223
 	memcpy((char*)WBUFP(buf,71), name, NAME_LENGTH);
+#else
+	memcpy((char*)WBUFP(buf,62), name, NAME_LENGTH);
+#endif
 	return WBUFW(buffer,2);
 #else
 	return packet_len(WBUFW(buffer,0));
@@ -2410,16 +2416,18 @@ static void clif_addcards(unsigned char* buf, struct item* item)
 }
 
 /// Fills in part of the item buffers that calls for variable bonuses data. [Rytech]
-static void clif_add_random_options(unsigned char* buf, struct item* item)
+/// Dummy data used since this feature isnt supported yet (ITEM_RDM_OPT).
+/// A max of 5 random options can be supported.
+void clif_add_random_options(unsigned char* buf, struct item* item)
 {
-	// Dummy data used since this feature isnt supported yet (ITEM_RDM_OPT).
-	// A max of 5 random options can be supported.
+#if PACKETVER >= 20150226
 	int i;
 	for (i = 0; i < 5; i++){
 		WBUFW(buf,i*5+0) = 0;	// OptIndex
 		WBUFW(buf,i*5+2) = 0;	// Value
 		WBUFB(buf,i*5+4) = 0;	// Param1
 	}
+#endif
 }
 
 /// Notifies the client, about a received inventory item or the result of a pick-up request.
@@ -3135,7 +3143,9 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		break;
 	case SP_HP:
 		// On officials the HP never go below 1, even if you die [Lemongrass]
-		WFIFOL(fd,4)=max(1,sd->battle_status.hp);
+		// On officials the HP Novice class never go below 50%, even if you die [Napster]
+		WFIFOL(fd,4)= sd->battle_status.hp ? sd->battle_status.hp : (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE ? 1 : sd->battle_status.max_hp/2;
+
 		// TODO: Won't these overwrite the current packet?
 		if( map[sd->bl.m].hpmeter_visible )
 			clif_hpmeter(sd);
@@ -3938,7 +3948,7 @@ void clif_dispchat(struct chat_data* cd, int fd)
 	     : 1;
 
 	WBUFW(buf, 0) = 0xd7;
-	WBUFW(buf, 2) = 17 + strlen(cd->title);
+	WBUFW(buf, 2) = (uint16)(17 + strlen(cd->title));
 	WBUFL(buf, 4) = cd->owner->id;
 	WBUFL(buf, 8) = cd->bl.id;
 	WBUFW(buf,12) = cd->limit;
@@ -3976,7 +3986,7 @@ void clif_changechatstatus(struct chat_data* cd)
 	     : 1;
 
 	WBUFW(buf, 0) = 0xdf;
-	WBUFW(buf, 2) = 17 + strlen(cd->title);
+	WBUFW(buf, 2) = (uint16)(17 + strlen(cd->title));
 	WBUFL(buf, 4) = cd->owner->id;
 	WBUFL(buf, 8) = cd->bl.id;
 	WBUFW(buf,12) = cd->limit;
@@ -6016,7 +6026,7 @@ void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned l
 void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char *msg, short color) {
 	DBIterator *iter;
 	struct map_session_data *user;
-	unsigned short msg_len = strlen(msg) + 1;
+	unsigned short msg_len = (unsigned short)(strlen(msg) + 1);
 
 	WFIFOHEAD(sd->fd,msg_len + 12);
 	WFIFOW(sd->fd,0) = 0x2C1;
@@ -8994,7 +9004,7 @@ void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, sen
 // Modification of clif_messagecolor to send colored messages to players to chat log only (doesn't display overhead)
 /// 02c1 <packet len>.W <id>.L <color>.L <message>.?B
 int clif_colormes(int fd, unsigned long color, const char* msg) {
-	unsigned short msg_len = strlen(msg) + 1;
+	unsigned short msg_len = (unsigned short)(strlen(msg) + 1);
 
 	WFIFOHEAD(fd,msg_len + 12);
 	WFIFOW(fd,0) = 0x2C1;
@@ -9010,7 +9020,7 @@ int clif_colormes(int fd, unsigned long color, const char* msg) {
 /// Monster/NPC color chat [SnakeDrak] (ZC_NPC_CHAT).
 /// 02c1 <packet len>.W <id>.L <color>.L <message>.?B
 void clif_messagecolor(struct block_list* bl, unsigned long color, const char* msg) {
-	unsigned short msg_len = strlen(msg) + 1;
+	unsigned short msg_len = (unsigned short)(strlen(msg) + 1);
 	uint8 buf[256];
 	color = (color & 0x0000FF) << 16 | (color & 0x00FF00) | (color & 0xFF0000) >> 16; // RGB to BGR
 
@@ -9032,7 +9042,7 @@ void clif_messagecolor(struct block_list* bl, unsigned long color, const char* m
 
 void clif_messagecolor2(struct map_session_data *sd, unsigned long color, const char* msg)
 {
-	unsigned short msg_len = strlen(msg) + 1;
+	unsigned short msg_len = (unsigned short)(strlen(msg) + 1);
 
 	nullpo_retv(sd);
 
@@ -17727,7 +17737,7 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		//0:PCRoom
 		details_drop[0] = 0;
 		//1:Premium
-		details_drop[1] = battle_config.vip_drop_increase;
+		details_drop[1] = (battle_config.vip_drop_increase * battle_config.item_rate_common) / 100;
 		if (pc_isvip(sd)) {
 			if (details_drop[1] < 0)
 				details_drop[1] = 0 - details_drop[1];
@@ -17911,7 +17921,7 @@ void clif_showscript(struct block_list* bl, const char* message) {
 	}
 
 	WBUFW(buf,0) = 0x8b3;
-	WBUFW(buf,2) = (len+8);
+	WBUFW(buf,2) = (uint16)(len+8);
 	WBUFL(buf,4) = bl->id;
 	safestrncpy((char *) WBUFP(buf,8), message, len);
 	clif_send((unsigned char *) buf, WBUFW(buf,2), bl, ALL_CLIENT);

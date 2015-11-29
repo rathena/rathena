@@ -7076,7 +7076,7 @@ ACMD_FUNC(mobinfo)
 #ifdef VIP_ENABLE
 			// Display item rate increase for VIP.
 			if (pc_isvip(sd) && battle_config.vip_drop_increase)
-				droprate += battle_config.vip_drop_increase;
+				droprate += (droprate * battle_config.vip_drop_increase) / 100;
 #endif
 			if (item_data->slot)
 				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)droprate / 100);
@@ -7616,7 +7616,7 @@ ACMD_FUNC(whodrops)
 #ifdef VIP_ENABLE
 				// Display item rate increase for VIP.
 				if (pc_isvip(sd) && battle_config.vip_drop_increase)
-					dropchance += battle_config.vip_drop_increase;
+					dropchance += (dropchance * battle_config.vip_drop_increase) / 100;
 #endif
 				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob_db(item_data->mob[j].id)->jname, item_data->mob[j].id, dropchance/100.);
 				clif_displaymessage(fd, atcmd_output);
@@ -7727,7 +7727,7 @@ ACMD_FUNC(mutearea)
 ACMD_FUNC(rates)
 {
 	char buf[CHAT_SIZE_MAX];
-	int base_exp_rate = 0, job_exp_rate = 0, item_rate = 0;
+	int base_exp_rate = 0, job_exp_rate = 0;
 
 	nullpo_ret(sd);
 	memset(buf, '\0', sizeof(buf));
@@ -7737,20 +7737,30 @@ ACMD_FUNC(rates)
 	if (pc_isvip(sd) && (battle_config.vip_base_exp_increase || battle_config.vip_job_exp_increase || battle_config.vip_drop_increase)) {
 		base_exp_rate += battle_config.vip_base_exp_increase;
 		job_exp_rate += battle_config.vip_job_exp_increase;
-		item_rate += battle_config.vip_drop_increase;
 	}
 #endif
+
 	snprintf(buf, CHAT_SIZE_MAX, msg_txt(sd,1298), // Experience rates: Base %.2fx / Job %.2fx
 		(battle_config.base_exp_rate+base_exp_rate)/100., (battle_config.job_exp_rate+job_exp_rate)/100.);
 	clif_displaymessage(fd, buf);
 	snprintf(buf, CHAT_SIZE_MAX, msg_txt(sd,1299), // Normal Drop Rates: Common %.2fx / Healing %.2fx / Usable %.2fx / Equipment %.2fx / Card %.2fx
-		(battle_config.item_rate_common+item_rate)/100., (battle_config.item_rate_heal+item_rate)/100., (battle_config.item_rate_use+item_rate)/100., (battle_config.item_rate_equip+item_rate)/100., (battle_config.item_rate_card+item_rate)/100.);
+		(battle_config.item_rate_common + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_common) / 100 : 0)) / 100.,
+		(battle_config.item_rate_heal + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_heal) / 100 : 0)) / 100.,
+		(battle_config.item_rate_use + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_use) / 100 : 0)) / 100.,
+		(battle_config.item_rate_equip + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_equip) / 100 : 0)) / 100.,
+		(battle_config.item_rate_card + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_card) / 100 : 0)) / 100.);
 	clif_displaymessage(fd, buf);
 	snprintf(buf, CHAT_SIZE_MAX, msg_txt(sd,1300), // Boss Drop Rates: Common %.2fx / Healing %.2fx / Usable %.2fx / Equipment %.2fx / Card %.2fx
-		(battle_config.item_rate_common_boss+item_rate)/100., (battle_config.item_rate_heal_boss+item_rate)/100., (battle_config.item_rate_use_boss+item_rate)/100., (battle_config.item_rate_equip_boss+item_rate)/100., (battle_config.item_rate_card_boss+item_rate)/100.);
+		(battle_config.item_rate_common_boss + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_common_boss) / 100 : 0)) / 100.,
+		(battle_config.item_rate_heal_boss + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_heal_boss) / 100 : 0)) / 100.,
+		(battle_config.item_rate_use_boss + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_use_boss) / 100 : 0)) / 100.,
+		(battle_config.item_rate_equip_boss + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_equip_boss) / 100 : 0)) / 100.,
+		(battle_config.item_rate_card_boss + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_card_boss) / 100 : 0)) / 100.);
 	clif_displaymessage(fd, buf);
 	snprintf(buf, CHAT_SIZE_MAX, msg_txt(sd,1301), // Other Drop Rates: MvP %.2fx / Card-Based %.2fx / Treasure %.2fx
-		(battle_config.item_rate_mvp+item_rate)/100., (battle_config.item_rate_adddrop+item_rate)/100., (battle_config.item_rate_treasure+item_rate)/100.);
+		(battle_config.item_rate_mvp + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_mvp) / 100 : 0)) / 100.,
+		(battle_config.item_rate_adddrop + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_adddrop) / 100 : 0)) / 100.,
+		(battle_config.item_rate_treasure + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_treasure) / 100 : 0)) / 100.);
 	clif_displaymessage(fd, buf);
 
 	return 0;

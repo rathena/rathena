@@ -98,6 +98,14 @@ Thumbs.db
 /tools/*.ilk
 /tools/*.pdb
 
+# /vcproj-14/
+.vs
+/vcproj-14/char-server
+/vcproj-14/login-server
+/vcproj-14/mapcache
+/vcproj-14/map-server
+/vcproj-14/*.user
+
 # /vcproj-13/
 /vcproj-13/char-server
 /vcproj-13/login-server
