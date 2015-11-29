@@ -11734,7 +11734,7 @@ void pc_show_questinfo(struct map_session_data *sd) {
 #if PACKETVER >= 20090218
 	struct questinfo *qi = NULL;
 	unsigned short i;
-	uint8 j, state = 0;
+	uint8 j;
 	int8 mystate = 0;
 	bool failed = false;
 
