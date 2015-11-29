@@ -17750,7 +17750,7 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		//0:PCRoom
 		details_drop[0] = 0;
 		//1:Premium
-		details_drop[1] = battle_config.vip_drop_increase;
+		details_drop[1] = (battle_config.vip_drop_increase * battle_config.item_rate_common) / 100;
 		if (pc_isvip(sd)) {
 			if (details_drop[1] < 0)
 				details_drop[1] = 0 - details_drop[1];
