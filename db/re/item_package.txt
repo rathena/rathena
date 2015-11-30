@@ -874,22 +874,22 @@ IG_Xmas_Pet_Scroll,732,150,10,1,0,0,1	// 10x Crystal_Jewel__
 IG_Xmas_Pet_Scroll,14508,150,10,1,0,0,1	// 10x Zeny_Scroll
 IG_Xmas_Pet_Scroll,7776,50,5,1,0,0,1	// 5x Max_Weight_Up_Scroll
 
-IG_Lucky_Scroll08,12211,220,05,0,0,0,1	// 05x Kafra_Card
+IG_Lucky_Scroll08,12211,220,5,0,0,0,1	// 5x Kafra_Card
 IG_Lucky_Scroll08,12208,210,5,0,0,0,1	// 5x Battle_Manual
 IG_Lucky_Scroll08,12210,210,5,0,0,0,1	// 5x Bubble_Gum
-IG_Lucky_Scroll08,12922,100,05,0,0,0,1	// 05x Token_Of_Siegfried_Box
-IG_Lucky_Scroll08,12213,2,0,0,0,0,1	// 0x Neuralizer
-IG_Lucky_Scroll08,5226,1,0,0,0,0,1	// 0x Mini_Propeller_
-IG_Lucky_Scroll08,12999,5,0,0,0,0,1	// 0x Branch_Of_Dead_Tree_Box
-IG_Lucky_Scroll08,4168,1,0,0,0,0,1	// 0x Dark_Lord_Card
-IG_Lucky_Scroll08,4169,1,0,0,0,0,1	// 0x Dark_Illusion_Card
-IG_Lucky_Scroll08,5215,2,0,0,0,0,1	// 0x Angelic_Chain_
-IG_Lucky_Scroll08,5216,3,0,0,0,0,1	// 0x Satanic_Chain_
-IG_Lucky_Scroll08,5217,2,0,0,0,0,1	// 0x Magestic_Goat_TW
-IG_Lucky_Scroll08,5218,3,0,0,0,0,1	// 0x Bunny_Band_
-IG_Lucky_Scroll08,5219,5,0,0,0,0,1	// 0x Drooping_Kitty_
-IG_Lucky_Scroll08,5077,65,0,0,0,0,1	// 0x Tulip_Hairpin
-IG_Lucky_Scroll08,12901,60,0,0,0,0,1	// 0x Insurance_Package
+IG_Lucky_Scroll08,12922,100,5,0,0,0,1	// 5x Token_Of_Siegfried_Box
+IG_Lucky_Scroll08,12213,2,1,0,0,0,1	// 1x Neuralizer
+IG_Lucky_Scroll08,5226,1,1,0,0,0,1	// 1x Mini_Propeller_
+IG_Lucky_Scroll08,12999,5,1,0,0,0,1	// 1x Branch_Of_Dead_Tree_Box
+IG_Lucky_Scroll08,4168,1,1,0,0,0,1	// 1x Dark_Lord_Card
+IG_Lucky_Scroll08,4169,1,1,0,0,0,1	// 1x Dark_Illusion_Card
+IG_Lucky_Scroll08,5215,2,1,0,0,0,1	// 1x Angelic_Chain_
+IG_Lucky_Scroll08,5216,3,1,0,0,0,1	// 1x Satanic_Chain_
+IG_Lucky_Scroll08,5217,2,1,0,0,0,1	// 1x Magestic_Goat_TW
+IG_Lucky_Scroll08,5218,3,1,0,0,0,1	// 1x Bunny_Band_
+IG_Lucky_Scroll08,5219,5,1,0,0,0,1	// 1x Drooping_Kitty_
+IG_Lucky_Scroll08,5077,65,1,0,0,0,1	// 1x Tulip_Hairpin
+IG_Lucky_Scroll08,12901,60,1,0,0,0,1	// 1x Insurance_Package
 IG_Lucky_Scroll08,610,110,15,0,0,0,1	// 15x Leaf_Of_Yggdrasil
 
 IG_Br_SwordPackage,2317,0,1,0,0,0,1	// 1x Plate_Armor_
@@ -3149,14 +3149,14 @@ IG_Sg_Weapon_Supply_Box,12678,13,1,1	// 1x Siege_Arrow_Quiver_A
 IG_Sg_Weapon_Supply_Box,12677,13,1,1	// 1x Siege_Arrow_Quiver_S
 
 //TODO: Confirm the items & rates
-IG_Adventurer_Returns_Support_Box,16505,1	// 1x Steamed_Tongue_Box_10
-IG_Adventurer_Returns_Support_Box,16506,1	// 1x Steamed_Desert_Scorpions_Box_10
-IG_Adventurer_Returns_Support_Box,16507,1	// 1x Dragon_Breath_Cocktail_Box_10
-IG_Adventurer_Returns_Support_Box,16508,1	// 1x Hwergelmir's_Tonic_Box_10
-IG_Adventurer_Returns_Support_Box,16509,1	// 1x Cooked_Nine_Tail_Box_10
-IG_Adventurer_Returns_Support_Box,16510,1	// 1x Immortal_Stew_Box_10
-IG_Adventurer_Returns_Support_Box,16514,1	// 1x Blessing_Scroll_Box_10
-IG_Adventurer_Returns_Support_Box,16515,1	// 1x Increase_Agility_Scroll_Box_10
+IG_Adventurer_Returns_Support_Box,16505,1,1	// 1x Steamed_Tongue_Box_10
+IG_Adventurer_Returns_Support_Box,16506,1,1	// 1x Steamed_Desert_Scorpions_Box_10
+IG_Adventurer_Returns_Support_Box,16507,1,1	// 1x Dragon_Breath_Cocktail_Box_10
+IG_Adventurer_Returns_Support_Box,16508,1,1	// 1x Hwergelmir's_Tonic_Box_10
+IG_Adventurer_Returns_Support_Box,16509,1,1	// 1x Cooked_Nine_Tail_Box_10
+IG_Adventurer_Returns_Support_Box,16510,1,1	// 1x Immortal_Stew_Box_10
+IG_Adventurer_Returns_Support_Box,16514,1,1	// 1x Blessing_Scroll_Box_10
+IG_Adventurer_Returns_Support_Box,16515,1,1	// 1x Increase_Agility_Scroll_Box_10
 
 //TODO: Confirm the items & rates
 IG_Support_Package,12208,1,2,1	// 2x Battle_Manual
@@ -3250,22 +3250,22 @@ IG_Support_Package_III10,14725,1,11,1	// 11x Sealed_Bacsojin_Scroll
 
 //TODO: Confirm the items & rates
 //IG_Unlimited_Box,,0,5,0	//5 ASPD Enhanced Potion
-//IG_Unlimited_Box,,0,10,0	//10 Red Boost
+IG_Unlimited_Box,12796,0,10,0	// 10x Red_Booster
 IG_Unlimited_Box,12841,0,1,0	// 1x Golden_Treasure_Box
 
 //TODO: Confirm the items & rates
 //IG_Unlimited_Box_II,,0,5,0	//50 ASPD Enhanced Potion
-//IG_Unlimited_Box_II,,0,10,0	//100 Red Boost
+IG_Unlimited_Box_II,12796,0,10,0	// 100x Red_Booster
 IG_Unlimited_Box_II,12841,0,11,0	// 11x Golden_Treasure_Box
 
 //TODO: Confirm the items & rates
 //IG_Unlimited_Box_II,,0,5,0	//5 ASPD Enhanced Potion
-//IG_Unlimited_Box_II,,0,10,0	//10 Red Boost
+IG_Unlimited_Box_II,12796,0,10,0	// 10x Red_Booster
 IG_Unlimited_Box_II,14733,0,1,0	// 1x Sealed_Pharaoh_Scroll
 
 //TODO: Confirm the items & rates
-//IG_Unlimited_Box_II10,,0,5,0	//50 ASPD Enhanced Potion
-//IG_Unlimited_Box_II10,,0,10,0	//100 Red Boost
+//IG_Unlimited_Box_II10,,0,50,0	//50 ASPD Enhanced Potion
+IG_Unlimited_Box_II10,12796,0,100,0	// 100x Red_Booster
 IG_Unlimited_Box_II10,14733,0,11,0	// 11x Sealed_Pharaoh_Scroll
 
 //TODO: Confirm the items & rates
@@ -3299,7 +3299,7 @@ IG_Support_Package_II,12210,1,2,1	// 2x Bubble_Gum
 IG_Support_Package_II,12883,1,2,1	// 2x Almighty
 IG_Support_Package_II,14600,1,2,1	// 2x Mental_Potion
 //IG_Support_Package_II,,1,6,1	//6x Mysterious Water of Life
-IG_Support_Package_II,14725,1,1,1 //1x Sealed_Bacsojin_Scroll
+IG_Support_Package_II,14725,1,1,1 // 1x Sealed_Bacsojin_Scroll
 
 //TODO: Confirm the items & rates
 IG_Support_Package_II10,12208,1,20,1	// 20x Battle_Manual
@@ -3307,7 +3307,7 @@ IG_Support_Package_II10,12210,1,20,1	// 20x Bubble_Gum
 IG_Support_Package_II10,12883,1,20,1	// 20x Almighty
 IG_Support_Package_II10,14600,1,20,1	// 20x Mental_Potion
 //IG_Support_Package_II10,,1,60,1	//60x Mysterious Water of Life
-IG_Support_Package_II10,14725,1,1,1	//1x Sealed_Bacsojin_Scroll
+IG_Support_Package_II10,14725,1,1,1	// 1x Sealed_Bacsojin_Scroll
 
 IG_Level_Up_Box100,6231,0,1,0	// 1x Guarantee_Weapon_6Up
 IG_Level_Up_Box100,22523,0,1,0	// 1x Level_Up_Box120
@@ -3897,7 +3897,7 @@ IG_Miracle_Lucky_Egg,18742,1,1 // 1x MoonStar
 IG_Miracle_Lucky_Egg,6438,1,3 // 3x Blessed_Weapon_Ore
 IG_Miracle_Lucky_Egg,6439,1,3 // 3x Blessed_Armor_Ore
 IG_Miracle_Lucky_Egg,12902,1,1 // 1x Bubble Gum Box
-//IG_Miracle_Lucky_Egg,,1,1 // ?? Yggdrasil Berry
+//IG_Miracle_Lucky_Egg,607,1,1 // ?? Yggdrasil Berry
 
 //! TODO: Confirm the rates
 IG_Legend_Hero_Lucky_Egg,4145,1,1 // 1x Berzebub Card
