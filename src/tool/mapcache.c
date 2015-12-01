@@ -9,14 +9,14 @@
 #include <unistd.h>
 #endif
 
+#include "../config/core.h"
+
 #include "../common/cbasetypes.h"
 #include "../common/grfio.h"
 #include "../common/malloc.h"
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/utils.h"
-
-#include "../config/renewal.h"
 
 #define NO_WATER 1000000
 
@@ -175,24 +175,28 @@ char *remove_extension(char *mapname)
 }
 
 // Processes command-line arguments
-void process_args(int argc, char *argv[])
+int process_args(int argc, char *argv[])
 {
 	int i;
 
-	for(i = 0; i < argc; i++) {
+	for(i = 1; i < argc; i++) {
 		if(strcmp(argv[i], "-grf") == 0) {
-			if(++i < argc)
-				strcpy(grf_list_file, argv[i]);
+		   if(opt_has_next_value(argv[i],i,argc)) strcpy(grf_list_file, argv[++i]);
+		   else return 1;
 		} else if(strcmp(argv[i], "-list") == 0) {
-			if(++i < argc)
-				strcpy(map_list_file, argv[i]);
+		   if(opt_has_next_value(argv[i],i,argc)) strcpy(map_list_file, argv[++i]);
+		   else return 1;
 		} else if(strcmp(argv[i], "-cache") == 0) {
-			if(++i < argc)
-				strcpy(map_cache_file, argv[i]);
-		} else if(strcmp(argv[i], "-rebuild") == 0)
+		   if(opt_has_next_value(argv[i],i,argc)) strcpy(map_cache_file, argv[++i]);
+		   else return 1;
+		} else if(strcmp(argv[i], "-rebuild") == 0) {
 			rebuild = 1;
+		} else {
+			ShowWarning("Invalid argument given '%s'.\n", argv[i]);
+			return 1;
+		}
 	}
-
+	return 0;
 }
 
 int do_init(int argc, char** argv)
@@ -202,17 +206,12 @@ int do_init(int argc, char** argv)
 	struct map_data map;
 	char name[MAP_NAME_LENGTH_EXT];
 
-	/* setup pre-defined, #define-dependant */
-	sprintf(map_cache_file,"db/%s/map_cache.dat",
-#ifdef RENEWAL
-			"re"
-#else
-			"pre-re"
-#endif
-			);
+	/* setup pre-defined, #define-dependant, use -cache option to override this */
+	sprintf(map_cache_file,"db/%smap_cache.dat",DBPATH);
 
 	// Process the command-line arguments
-	process_args(argc, argv);
+	if(process_args(argc, argv))
+		return 0;
 
 	ShowStatus("Initializing grfio with %s\n", grf_list_file);
 	grfio_init(grf_list_file);

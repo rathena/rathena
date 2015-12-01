@@ -93,6 +93,17 @@
 			time = time * (1 - (float)min(val, 100) / 100); \
 	}
 #endif
+
+/**
+ * Max Refine available to your server
+ * Changing this limit requires edits to refine_db.txt
+ **/
+#ifdef RENEWAL
+#	define MAX_REFINE 20
+#else
+#	define MAX_REFINE 10
+#endif
+
 /**
  * End of File
  **/

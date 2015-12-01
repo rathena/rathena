@@ -270,6 +270,14 @@
 				RelativePath="..\src\common\winapi.h"
 				>
 			</File>
+			<File
+				RelativePath="..\src\common\cli.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\common\cli.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="mapcache"
@@ -279,7 +287,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\config\renewal.h"
+				RelativePath="..\src\config\core.h"
 				>
 			</File>
 		</Filter>
