@@ -22,9 +22,6 @@
     <ClCompile Include="..\src\common\utils.c">
       <Filter>common</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\common\cli.c">
-      <Filter>common</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\tool\mapcache.c">
       <Filter>mapcache</Filter>
     </ClCompile>
@@ -60,10 +57,7 @@
     <ClInclude Include="..\src\common\winapi.h">
       <Filter>common</Filter>
     </ClInclude>
-    <ClCompile Include="..\src\common\cli.h">
-      <Filter>common</Filter>
-    </ClCompile>
-    <ClInclude Include="..\src\config\core.h">
+	<ClInclude Include="..\src\config\renewal.h">
       <Filter>config</Filter>
     </ClInclude>
   </ItemGroup>
