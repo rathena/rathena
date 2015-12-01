@@ -1114,6 +1114,7 @@ int chmapif_parse_updmapip(int fd, int id){
 	return 1;
 }
 
+#ifndef STATS_OPT_OUT
 /**
  *  transmit emu usage for anom stats
  * @param fd: wich fd to parse from
@@ -1141,6 +1142,7 @@ int chmapif_parse_fw_configstats(int fd){
 	}
 	return 1;
 }
+#endif
 
 /**
  * Received an update of fame point  for char_id cid
@@ -1485,7 +1487,9 @@ int chmapif_parse(int fd){
 			//case 0x2b2c: /*free*/; break;
 			case 0x2b2d: next=chmapif_bonus_script_get(fd); break; //Load data
 			case 0x2b2e: next=chmapif_bonus_script_save(fd); break;//Save data
+#ifndef STATS_OPT_OUT
 			case 0x3008: next=chmapif_parse_fw_configstats(fd); break;
+#endif
 			default:
 			{
 					// inter server - packet
