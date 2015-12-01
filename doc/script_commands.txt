@@ -2774,8 +2774,8 @@ This function is intended for use in item scripts.
 
 ---------------------------------------
 
-*getnameditem(<item id>,"<name to inscribe>");
-*getnameditem("<item name>","<name to inscribe>");
+*getnameditem(<item id>,"<name to inscribe>"|<char id>);
+*getnameditem("<item name>","<name to inscribe>"|<char id>);
 
 This function is equivalent to using 'getitem', however, it will not just give 
 the character an item object, but will also inscribe it with a specified 
@@ -5158,7 +5158,8 @@ a rate and flag.
 
 'sc_start2' and 'sc_start4' allow extra parameters to be passed, and are used only
 for effects that require them. The meaning of the extra values vary depending on the
-effect type.
+effect type. For more infos, read status_change.txt containing a list of all Status Changes
+and theirs val1, val2, val3, and val4 usage in source.
 
 'sc_end' will remove a specified status effect. If SC_ALL (-1) is given, it will
 perform a complete removal of all statuses (although permanent ones will re-apply).
@@ -5168,12 +5169,14 @@ Examples:
 	sc_start SC_POISON,600000,0,5000;
 
 	// This will bestow the effect of Level 10 Blessing.
-	sc_start 10,240000,10;
+	sc_start SC_BLESSING,240000,10;
 
-	// Elemental armor defense takes the following four values:
-	// val1 is the first element, val2 is the resistance to the element val1.
-	// val3 is the second element, val4 is the resistance to the element val3.
-	sc_start4 SC_DefEle,60000,Ele_Fire,20,Ele_Water,-15;
+	// Adjust element resistance by percentage. Sample with Resist_Fire item script:
+	// val1: Water resistance
+	// val2: Earth resistance
+	// val3: Fire resistance
+	// val4: Wind resistance
+	sc_start4 SC_ARMOR_ELEMENT,1200000,-15,0,20,0;
 
 	// This will end the Freezing status for the invoking character.
 	sc_end SC_FREEZE;

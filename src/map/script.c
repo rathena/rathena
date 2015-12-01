@@ -9923,8 +9923,10 @@ BUILDIN_FUNC(getexp)
 
 	// bonus for npc-given exp
 	bonus = battle_config.quest_exp_rate / 100.;
-	base = (int) cap_value(base * bonus, 0, INT_MAX);
-	job = (int) cap_value(job * bonus, 0, INT_MAX);
+	if (base)
+		base = (int) cap_value(base * bonus, 0, INT_MAX);
+	if (job)
+		job = (int) cap_value(job * bonus, 0, INT_MAX);
 
 	pc_gainexp(sd, NULL, base, job, true);
 

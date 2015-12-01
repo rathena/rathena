@@ -279,7 +279,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 					break;
 				case 4:
 					mes "<<Ygnus Stale[1]>>";
-					mes "When doing short distance attack, cast ¹ßÈ­ to the player and to the enemy with a certain chance.";
+					mes "When doing short distance attack, cast Burn status to the player and to the enemy with a certain chance.";
 					mes "Two-Handed Axe / ATK 250 / Weight 190 / Fire Property / Weapon Lv 4 / Required Lv 95 / Socket 1 / for High Swordman/Merchant Classes";
 					callsub L_Reward, 1392, 50, 100, 35; //Ygnus_Stale
 					break;
