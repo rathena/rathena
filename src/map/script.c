@@ -18687,8 +18687,8 @@ BUILDIN_FUNC(setquest)
 
 	quest_add(sd, quest_id);
 
-        //20120410 or 20090218 ? no reason that shouldn't work for 2009
-        pc_show_questinfo(sd); 
+	//20120410 or 20090218 ? no reason that shouldn't work for 2009
+	pc_show_questinfo(sd); 
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18717,8 +18717,8 @@ BUILDIN_FUNC(completequest)
 		return SCRIPT_CMD_FAILURE;
 
 	quest_update_status(sd, script_getnum(st, 2), Q_COMPLETE);
-        //20120410 or 20090218
-        pc_show_questinfo(sd);
+	//20120410 or 20090218
+	pc_show_questinfo(sd);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18733,8 +18733,8 @@ BUILDIN_FUNC(changequest)
 		return SCRIPT_CMD_FAILURE;
 
 	quest_change(sd, script_getnum(st, 2),script_getnum(st, 3));
-        //20120410 or 20090218
-        pc_show_questinfo(sd);
+	//20120410 or 20090218
+	pc_show_questinfo(sd);
 	return SCRIPT_CMD_SUCCESS;
 }
 

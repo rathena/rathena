@@ -10294,7 +10294,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(!battle_config.pc_invincible_time)
 		skill_unit_move(&sd->bl,gettick(),1);
 
-        pc_show_questinfo_reinit(sd);
+	pc_show_questinfo_reinit(sd);
 	pc_show_questinfo(sd);
 }
 
