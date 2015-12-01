@@ -27,9 +27,9 @@
 /// your map-server using more resources while this is active, comment the line
 #define SCRIPT_CALLFUNC_CHECK
 
-/// Uncomment to disable rAthena's anonymous stat report
+/// Comment to enable rAthena's anonymous stat report
 /// We kindly ask you to consider keeping it enabled, it helps us improve rAthena.
-//#define STATS_OPT_OUT
+#define STATS_OPT_OUT
 
 /// uncomment to enable query_sql script command and mysql logs to function on it's own thread
 /// be aware this feature is under tests and you should use at your own risk, we however
