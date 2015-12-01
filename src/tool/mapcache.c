@@ -17,6 +17,7 @@
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/utils.h"
+#include "../common/cli.h"
 
 #define NO_WATER 1000000
 
