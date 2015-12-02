@@ -11784,7 +11784,7 @@ iz_ac02,62,139,3	script	Lumin#ac	4_M_NOV_RUMIN,{
 			mes "Lumin changing clothes piece by piece.";
 			specialeffect2 EF_SPHERE;
 			specialeffect2 EF_SPHERE;
-			classchange "Lumin#"+strnpcinfo(2), 4_M_THIEF_RUMIN;
+			classchange 4_M_THIEF_RUMIN,0;
 			next;
 			cutin "thf_lumin01.bmp", 2;
 			mes "[Lumin]";
@@ -11798,7 +11798,7 @@ iz_ac02,62,139,3	script	Lumin#ac	4_M_NOV_RUMIN,{
 			close2;
 			specialeffect2 EF_SPHERE;
 			specialeffect2 EF_SPHERE;
-			classchange "Lumin#"+strnpcinfo(2), 4_M_NOV_RUMIN;
+			classchange 4_M_NOV_RUMIN,0;
 			cutin "", 255;
 			end;
 		}
