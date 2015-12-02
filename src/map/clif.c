@@ -945,9 +945,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	struct map_session_data* sd;
 	struct status_change* sc = status_get_sc(bl);
 	struct view_data* vd = status_get_viewdata(bl);
-#if PACKETVER >= 20131223
-	struct status_data *status = status_get_status_data(bl);
-#endif
+
 	unsigned char *buf = WBUFP(buffer, 0);
 #if PACKETVER < 20091103
 	bool type = !pcdb_checkid(vd->class_);
@@ -973,8 +971,10 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 		WBUFW(buf,0) = spawn ? 0x2ed : 0x2ee;
 #elif PACKETVER < 20101124
 		WBUFW(buf,0) = spawn ? 0x7f8 : 0x7f9;
-#elif PACKETVER < 20131223
+#elif PACKETVER < 20120221
 		WBUFW(buf,0) = spawn ? 0x858 : 0x857;
+#elif PACKETVER < 20131223
+		WBUFW(buf,0) = spawn ? 0x90f : 0x915;
 #elif PACKETVER < 20150513
 		WBUFW(buf,0) = spawn ? 0x9dc : 0x9dd;
 #else
@@ -985,9 +985,9 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	name = status_get_name(bl);
 #if PACKETVER < 20110111
 	WBUFW(buf,2) = (spawn ? 62 : 63)+strlen(name);
-#elif PACKETVER < 20131223
+#elif PACKETVER < 20120221
 	WBUFW(buf,2) = (uint16)((spawn ? 64 : 65)+strlen(name));
-#elif PACKETVER < 20150513
+#elif PACKETVER < 20130807
 	WBUFW(buf,2) = (spawn ? 77 : 78)+strlen(name);
 #else
 	WBUFW(buf,2) = (spawn ? 79 : 80)+strlen(name);
@@ -1111,11 +1111,11 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 #if PACKETVER >= 20080102
 	WBUFW(buf,53) = (sd ? sd->status.font : 0);
 #endif
-#if PACKETVER >= 20131223
-	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && status_get_hp(bl) < status_get_max_hp(bl) ) {
+#if PACKETVER >= 20130807
+	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,55) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,59) = status_get_hp(bl);		// HP
-		WBUFB(buf,63) = (status->mode&MD_BOSS) ? 1 : 0;		// isBoss
+		WBUFB(buf,63) = ((((TBL_MOB*)bl)->db->mexp > 0) ) ? 1 : 0;		// isBoss
 	} else {
 		WBUFL(buf,55) = -1;		// maxHP
 		WBUFL(buf,59) = -1;		// HP
@@ -1128,7 +1128,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	buf = WBUFP(buffer,offset);
 #endif
 #if PACKETVER >= 20091103
-#if PACKETVER >= 20131223
+#if PACKETVER >= 20130807
 	memcpy((char*)WBUFP(buf,64), name, NAME_LENGTH);
 #else
 	memcpy((char*)WBUFP(buf,55), name, NAME_LENGTH);
@@ -1147,9 +1147,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	struct map_session_data* sd;
 	struct status_change* sc = status_get_sc(bl);
 	struct view_data* vd = status_get_viewdata(bl);
-#if PACKETVER >= 20131223
-	struct status_data *status = status_get_status_data(bl);
-#endif
+
 	unsigned char* buf = WBUFP(buffer,0);
 #if PACKETVER >= 7
 	unsigned short offset = 0;
@@ -1170,8 +1168,10 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFW(buf, 0) = 0x2ec;
 #elif PACKETVER < 20101124
 	WBUFW(buf, 0) = 0x7f7;
-#elif PACKETVER < 20131223
+#elif PACKETVER < 20120221
 	WBUFW(buf, 0) = 0x856;
+#elif PACKETVER < 20131223
+	WBUFW(buf, 0) = 0x914;
 #elif PACKETVER < 20150513
 	WBUFW(buf, 0) = 0x9db;
 #else
@@ -1182,9 +1182,9 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	name = status_get_name(bl);
 #if PACKETVER < 20110111
 	WBUFW(buf, 2) = 69+strlen(name);
-#elif PACKETVER < 20131223
+#elif PACKETVER < 20120221
 	WBUFW(buf, 2) = (uint16)(71+strlen(name));
-#elif PACKETVER < 20150513
+#elif PACKETVER < 20130807
 	WBUFW(buf, 2) = 84+strlen(name);
 #else
 	WBUFW(buf, 2) = 86+strlen(name);
@@ -1254,11 +1254,11 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 #if PACKETVER >= 20080102
 	WBUFW(buf,60) = (sd ? sd->status.font : 0);
 #endif
-#if PACKETVER >= 20131223
-	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && status_get_hp(bl) < status_get_max_hp(bl) ) {
+#if PACKETVER >= 20130807
+	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,62) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,66) = status_get_hp(bl);		// HP
-		WBUFB(buf,70) = (status->mode&MD_BOSS) ? 1 : 0;		// isBoss
+		WBUFB(buf,70) = ((((TBL_MOB*)bl)->db->mexp > 0) ) ? 1 : 0;		// isBoss
 	} else {
 		WBUFL(buf,62) = -1;		// maxHP
 		WBUFL(buf,66) = -1;		// HP
@@ -1271,7 +1271,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	buf = WBUFP(buffer,offset);
 #endif
 #if PACKETVER >= 20091103
-#if PACKETVER >= 20131223
+#if PACKETVER >= 20130807
 	memcpy((char*)WBUFP(buf,71), name, NAME_LENGTH);
 #else
 	memcpy((char*)WBUFP(buf,62), name, NAME_LENGTH);
@@ -18872,8 +18872,8 @@ void packetdb_readdb(bool reload)
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0900
-		0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  0,
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  -1,
+		0,  0,  0,  0,  -1,  -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	//#0x0940
