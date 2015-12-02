@@ -18601,7 +18601,16 @@ BUILDIN_FUNC(readbook)
 /******************
 Questlog script commands
 *******************/
-
+ /**
+ * Add job criteria to questinfo
+ * @param qi Quest Info
+ * @param job
+ * @author [Cydh]
+ **/
+static void buildin_questinfo_setjob(struct questinfo *qi, int job) {
+	RECREATE(qi->jobid, unsigned short, qi->jobid_count+1);
+	qi->jobid[qi->jobid_count++] = job;
+}
 /**
  * questinfo <Quest ID>,<Icon>{,<Map Mark Color>{,<Job Class>}};
  **/
@@ -18609,7 +18618,7 @@ BUILDIN_FUNC(questinfo)
 {
 	TBL_NPC* nd = map_id2nd(st->oid);
 	int quest_id, icon;
-	struct questinfo qi;
+	struct questinfo qi, *q2;
 
 	if( nd == NULL || nd->bl.m == -1 ) {
 		ShowError("buildin_questinfo: No NPC attached.\n");
@@ -18643,7 +18652,14 @@ BUILDIN_FUNC(questinfo)
 		qi.color = (unsigned char)color;
 	}
 
-	qi.hasJob = false;
+	qi.min_level = 1;
+	qi.max_level = MAX_LEVEL;
+
+	q2 = map_add_questinfo(nd->bl.m, &qi);
+	q2->req = NULL;
+	q2->req_count = 0;
+	q2->jobid = NULL;
+	q2->jobid_count = 0;
 
 	if(script_hasdata(st, 5)) {
 		int job = script_getnum(st, 5);
@@ -18651,12 +18667,9 @@ BUILDIN_FUNC(questinfo)
 		if (!pcdb_checkid(job))
 			ShowError("buildin_questinfo: Nonexistant Job Class.\n");
 		else {
-			qi.hasJob = true;
-			qi.job = (unsigned short)job;
+			buildin_questinfo_setjob(q2, job);
 		}
 	}
-
-	map_add_questinfo(nd->bl.m,&qi);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18667,7 +18680,6 @@ BUILDIN_FUNC(questinfo)
 BUILDIN_FUNC(setquest)
 {
 	struct map_session_data *sd;
-	unsigned short i;
 	int quest_id;
 
 	quest_id = script_getnum(st, 2);
@@ -18677,17 +18689,8 @@ BUILDIN_FUNC(setquest)
 
 	quest_add(sd, quest_id);
 
-	// If questinfo is set, remove quest bubble once quest is set.
-	for(i = 0; i < map[sd->bl.m].qi_count; i++) {
-		struct questinfo *qi = &map[sd->bl.m].qi_data[i];
-		if( qi->quest_id == quest_id ) {
-#if PACKETVER >= 20120410
-			clif_quest_show_event(sd, &qi->nd->bl, 9999, 0);
-#else
-			clif_quest_show_event(sd, &qi->nd->bl, 0, 0);
-#endif
-		}
-	}
+	//20120410 or 20090218 ? no reason that shouldn't work for 2009
+	pc_show_questinfo(sd); 
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18716,6 +18719,8 @@ BUILDIN_FUNC(completequest)
 		return SCRIPT_CMD_FAILURE;
 
 	quest_update_status(sd, script_getnum(st, 2), Q_COMPLETE);
+	//20120410 or 20090218
+	pc_show_questinfo(sd);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18730,6 +18735,8 @@ BUILDIN_FUNC(changequest)
 		return SCRIPT_CMD_FAILURE;
 
 	quest_change(sd, script_getnum(st, 2),script_getnum(st, 3));
+	//20120410 or 20090218
+	pc_show_questinfo(sd);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -21174,6 +21181,97 @@ BUILDIN_FUNC(geteleminfo) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+
+/**
+ * Set the quest info of quest_id only showed on player in level range.
+ * setquestinfo_level <quest_id>,<min_level>,<max_level>
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(setquestinfo_level) {
+	TBL_NPC* nd = map_id2nd(st->oid);
+	int quest_id = script_getnum(st, 2);
+	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
+
+	if (!qi) {
+		ShowError("buildin_setquestinfo_level: Quest with ID '%d' is not defined yet.\n", quest_id);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	qi->min_level = script_getnum(st, 3);
+	qi->max_level = script_getnum(st, 4);
+	if (!qi->max_level)
+		qi->max_level = MAX_LEVEL;
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Set the quest info of quest_id only showed for player that has quest criteria
+ * setquestinfo_req <quest_id>,<quest_req_id>,<state>{,<quest_req_id>,<state>,...};
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(setquestinfo_req) {
+	TBL_NPC* nd = map_id2nd(st->oid);
+	int quest_id = script_getnum(st, 2);
+	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
+	uint8 i = 0;
+	uint8 num = script_lastdata(st);
+
+	if (!qi) {
+		ShowError("buildin_setquestinfo_req: Quest with ID '%d' is not defined yet.\n", quest_id);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (quest_search(quest_id) == &quest_dummy) {
+		ShowError("buildin_setquestinfo_req: Quest with ID '%d' is not found in Quest DB.\n", quest_id);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (num%2) {
+		ShowError("buildin_setquestinfo_req: Odd number of parameters(%d) - pairs of requirements are expected.\n", num-2);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	for (i = 3; i <= num; i += 2) {
+		RECREATE(qi->req, struct questinfo_req, qi->req_count+1);
+		qi->req[qi->req_count].quest_id = script_getnum(st, i);
+		qi->req[qi->req_count].state = (script_getnum(st, i+1) >= 2) ? 2 : (script_getnum(st, i+1) <= 0) ? 0 : 1;
+		qi->req_count++;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Set the quest info of quest_id only showed for player that has specified Job
+ * setquestinfo_job <quest_id>,<job>{,<job>...};
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(setquestinfo_job) {
+	TBL_NPC* nd = map_id2nd(st->oid);
+	int quest_id = script_getnum(st, 2);
+	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
+	int job_id = 0;
+	uint8 i = 0;
+	uint8 num = script_lastdata(st)+1;
+
+	if (!qi) {
+		ShowError("buildin_setquestinfo_job: Quest with ID '%d' is not defined yet.\n", quest_id);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	for (i = 3; i < num; i++) {
+		job_id = script_getnum(st, i);
+		if (!pcdb_checkid(job_id)) {
+			ShowError("buildin_setquestinfo_job: Invalid job id '%d' in Quest with ID %d.\n", job_id, quest_id);
+			continue;
+		}
+		buildin_questinfo_setjob(qi, job_id);
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -21736,6 +21834,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(showscript,"s?"),
 	BUILDIN_DEF(ignoretimeout,"i?"),
 	BUILDIN_DEF(geteleminfo,"i?"),
+	BUILDIN_DEF(setquestinfo_level,"iii"),
+	BUILDIN_DEF(setquestinfo_req,"iii*"),
+	BUILDIN_DEF(setquestinfo_job,"ii*"),
 
 #include "../custom/script_def.inc"
 

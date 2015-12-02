@@ -93,6 +93,21 @@
 			time = time * (1 - (float)min(val, 100) / 100); \
 	}
 #endif
+
+/**
+ * Default coordinate for new char
+ * That map should be loaded by a mapserv
+ **/
+#ifdef RENEWAL
+    #define MAP_DEFAULT_NAME "iz_int"
+    #define MAP_DEFAULT_X 97
+    #define MAP_DEFAULT_Y 90
+#else
+    #define MAP_DEFAULT_NAME "new_zone01"
+    #define MAP_DEFAULT_X 53
+    #define MAP_DEFAULT_Y 111
+#endif
+
 /**
  * End of File
  **/

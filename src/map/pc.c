@@ -30,6 +30,7 @@
 #include "pet.h" // pet_unlocktarget()
 #include "party.h" // party_search()
 #include "storage.h"
+#include "quest.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -1210,6 +1211,9 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->vars_dirty = false;
 	sd->vars_ok = false;
 	sd->vars_received = 0x0;
+
+	sd->qi_display = NULL;
+	sd->qi_count = 0;
 
 	//warp player
 	if ((i=pc_setpos(sd,sd->status.last_point.map, sd->status.last_point.x, sd->status.last_point.y, CLR_OUTSIGHT)) != 0) {
@@ -6268,6 +6272,7 @@ void pc_baselevelchanged(struct map_session_data *sd) {
 				pc_unequipitem(sd, sd->equip_index[i], 3);
 		}
 	}
+        pc_show_questinfo(sd);
 }
 
 int pc_checkjoblevelup(struct map_session_data *sd)
@@ -8261,6 +8266,8 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	status_calc_pc(sd,SCO_FORCE);
 	pc_checkallowskill(sd);
 	pc_equiplookall(sd);
+
+        pc_show_questinfo(sd);
 
 	//if you were previously famous, not anymore.
 	if (fame_flag) {
@@ -11691,6 +11698,130 @@ void pc_validate_skill(struct map_session_data *sd) {
 		}
 	}
 }
+
+/**
+ * Toggle to remember if the questinfo is displayed yet or not.
+ * @param qi_display Display flag
+ * @param show If show is true and qi_display is 0, set qi_display to 1 and show the event bubble.
+ *             If show is false and qi_display is 1, set qi_display to 0 and hide the event bubble.
+ **/
+static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display, struct questinfo *qi, bool show) {
+	if (show) {
+		// Check if need to be displayed
+		if ((*qi_display) != 1) {
+			(*qi_display) = 1;
+			clif_quest_show_event(sd, &qi->nd->bl, qi->icon, qi->color);
+		}
+	}
+	else {
+		// Check if need to be hide
+		if ((*qi_display) != 0) {
+			(*qi_display) = 0;
+#if PACKETVER >= 20120410
+			clif_quest_show_event(sd, &qi->nd->bl, 9999, 0);
+#else
+			clif_quest_show_event(sd, &qi->nd->bl, 0, 0);
+#endif
+		}
+	}
+}
+
+/**
+ * Show available NPC Quest / Event Icon Check [Kisuka]
+ * @param sd Player
+ **/
+void pc_show_questinfo(struct map_session_data *sd) {
+#if PACKETVER >= 20090218
+	struct questinfo *qi = NULL;
+	unsigned short i;
+	uint8 j;
+	int8 mystate = 0;
+	bool failed = false;
+
+	nullpo_retv(sd);
+
+	if (sd->bl.m < 0 || sd->bl.m >= MAX_MAPINDEX)
+		return;
+	if (!map[sd->bl.m].qi_count || !map[sd->bl.m].qi_data)
+		return;
+
+	for(i = 0; i < map[sd->bl.m].qi_count; i++) {
+		qi = &map[sd->bl.m].qi_data[i];
+
+		if (!qi)
+			continue;
+
+		if (quest_check(sd, qi->quest_id, HAVEQUEST) != -1) { // Check if quest is not started
+			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, false);
+			continue;
+		}
+
+		// Level range checks
+		if (sd->status.base_level < qi->min_level || sd->status.base_level > qi->max_level) {
+			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, false);
+			continue;
+		}
+
+		// Quest requirements
+		if (qi->req_count) {
+			failed = false;
+			for (j = 0; j < qi->req_count; j++) {
+				mystate = quest_check(sd, qi->req[j].quest_id, HAVEQUEST);
+				mystate = mystate + (mystate < 1);
+				if (mystate != qi->req[j].state) {
+					failed = true;
+					break;
+				}
+			}
+			if (failed) {
+				pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, false);
+				continue;
+			}
+		}
+
+		// Job requirements
+		if (qi->jobid_count) {
+			failed = true;
+			for (j = 0; j < qi->jobid_count; j++) {
+				if (pc_mapid2jobid(sd->class_,sd->status.sex) == qi->jobid[j]) {
+					pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, true);
+					failed = false;
+					break;
+				}
+			}
+			if (!failed)
+				continue;
+			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, false);
+		}
+		else {
+			pc_show_questinfo_sub(sd, &sd->qi_display[i], qi, true);
+		}
+	}
+#endif
+}
+
+/**
+ * Reinit the questinfo for player when changing map
+ * @param sd Player
+ **/
+void pc_show_questinfo_reinit(struct map_session_data *sd) {
+#if PACKETVER >= 20090218
+	nullpo_retv(sd);
+
+	if (sd->qi_display) {
+		aFree(sd->qi_display);
+		sd->qi_display = NULL;
+	}
+	sd->qi_count = 0;
+
+	if (sd->bl.m < 0 || sd->bl.m >= MAX_MAPINDEX)
+		return;
+	if (!map[sd->bl.m].qi_count || !map[sd->bl.m].qi_data)
+		return;
+	CREATE(sd->qi_display, bool, (sd->qi_count = map[sd->bl.m].qi_count));
+#endif
+}
+
 
 /*==========================================
  * pc Init/Terminate

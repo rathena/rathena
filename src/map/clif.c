@@ -9953,7 +9953,6 @@ void clif_parse_WantToConnection(int fd, struct map_session_data* sd)
 /// 007d
 void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 {
-	int i;
 	bool guild_notice = false;
 
 	if(sd->bl.prev != NULL)
@@ -10295,20 +10294,8 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(!battle_config.pc_invincible_time)
 		skill_unit_move(&sd->bl,gettick(),1);
 
-	// NPC Quest / Event Icon Check [Kisuka]
-#if PACKETVER >= 20090218
-	for(i = 0; i < map[sd->bl.m].qi_count; i++) {
-		struct questinfo *qi = &map[sd->bl.m].qi_data[i];
-		if( quest_check(sd, qi->quest_id, HAVEQUEST) == -1 ) {// Check if quest is not started
-			if( qi->hasJob ) { // Check if quest is job-specific, check is user is said job class.
-				if( sd->class_ == qi->job )
-					clif_quest_show_event(sd, &qi->nd->bl, qi->icon, qi->color);
-			} else {
-				clif_quest_show_event(sd, &qi->nd->bl, qi->icon, qi->color);
-			}
-		}
-	}
-#endif
+	pc_show_questinfo_reinit(sd);
+	pc_show_questinfo(sd);
 }
 
 
@@ -16006,17 +15993,17 @@ void clif_quest_update_status(struct map_session_data *sd, int quest_id, bool ac
 
 
 /// Notification about an NPC's quest state (ZC_QUEST_NOTIFY_EFFECT).
-/// 0446 <npc id>.L <x>.W <y>.W <effect>.W <type>.W
+/// 0446 <npc id>.L <x>.W <y>.W <effect>.W <color>.W
 /// effect:
 ///     0 = none
 ///     1 = exclamation mark icon
 ///     2 = question mark icon
-/// type:
+/// color:
 ///     0 = yellow
 ///     1 = orange
 ///     2 = green
 ///     3 = purple
-void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short state, short color)
+void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short effect, short color)
 {
 #if PACKETVER >= 20090218
 	int fd = sd->fd;
@@ -16026,7 +16013,7 @@ void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, s
 	WFIFOL(fd, 2) = bl->id;
 	WFIFOW(fd, 6) = bl->x;
 	WFIFOW(fd, 8) = bl->y;
-	WFIFOW(fd, 10) = state;
+	WFIFOW(fd, 10) = effect;
 	WFIFOW(fd, 12) = color;
 	WFIFOSET(fd, packet_len(0x446));
 #endif

@@ -8201,6 +8201,36 @@ izlude,100,100,4	script	Test	844,{
 
 ---------------------------------------
 
+*setquestinfo_level <quest_id>,<min_level>,<max_level>;
+
+Add level range criteria for quest info with quest id 'quest_id'.
+
+This command must be used after 'questinfo'.
+
+---------------------------------------
+
+*setquestinfo_req <quest_id>,<req_quest_id>,<state>{,<req_quest_id>,<state>,...};
+
+Add 'req_quest_id' as requirement for quest info with quest id 'quest_id'.
+
+Value os 'state' are:
+    0: Player doesn't started 'req_quest_id'.
+    1: Player has 'req_quest_id' (state is either "inactive" or "active").
+    2: Player has 'req_quest_id' completed
+
+This command must be used after 'questinfo'.
+
+---------------------------------------
+
+*setquestinfo_job <quest_id>,<job_id>{,<job_id>...};
+
+Add job criteria for quest info with quest id 'quest_id'.
+The job criteria may more than one job_id.
+
+This command must be used after 'questinfo'.
+
+---------------------------------------
+
 *setquest <ID>{,<char_id>};
 
 Place quest of <ID> in the users quest log, the state of which is "active".
