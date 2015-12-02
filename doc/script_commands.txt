@@ -5223,10 +5223,10 @@ displaying the skill's effect.
     heal 2000,0;
     skilleffect 28,2000;
     // Blessing Level 10
-    sc_start 10,240000,10;
+    sc_start SC_BLESSING,240000,10;
     skilleffect 34,0;
     // Increase AGI Level 5
-    sc_start 12,140000,5;
+    sc_start SC_INCREASEAGI,140000,5;
     skilleffect 29,0;
 
 This will heal the character with 2000 HP, buff it with Blessing Lv 10 and

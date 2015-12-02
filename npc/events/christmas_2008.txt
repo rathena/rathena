@@ -135,7 +135,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 							next;
 							emotion e_heh;
 							delitem 6092,6;
-							getnameditem 12354,"+strcharinfo(0)+";
+							getnameditem 12354,strcharinfo(0);
 							mes "[Caroller]";
 							mes "Let's care about others around you on this Christmas season!";
 							close;
@@ -418,7 +418,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			next;
 			emotion e_ok;
 			getitem 2784,1;
-			getnameditem 12354,"+strcharinfo(0)+";
+			getnameditem 12354,strcharinfo(0);
 			delitem 1019,10;
 			delitem 1005,1;
 			delitem 7312,1;
