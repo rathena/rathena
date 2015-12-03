@@ -5589,9 +5589,9 @@ static void pc_checkallowskill(struct map_session_data *sd)
 }
 
 /*==========================================
- * Return equiped itemid? on player sd at pos
+ * Return equipped index of item on player sd at pos
  * Return
- * -1 : mean nothing equiped
+ * -1 : Nothing equipped
  * idx : (this index could be used in inventory to found item_data)
  *------------------------------------------*/
 short pc_checkequip(struct map_session_data *sd,int pos)
@@ -5609,7 +5609,7 @@ short pc_checkequip(struct map_session_data *sd,int pos)
 }
 
 /*==========================================
- * Check if sd as nameid equiped somewhere
+ * Check if sd has nameid equipped somewhere
  * @sd : the player session
  * @nameid : id of the item to check
  * @min : : see pc.h enum equip_index from ? to @max

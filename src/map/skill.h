@@ -136,23 +136,23 @@ struct skill_condition {
 
 /// Skill requirement structure. !TODO: Cleanup the variable types that use array [MAX_SKILL_LEVEL]
 struct s_skill_require {
-	int hp[MAX_SKILL_LEVEL];			 ///< HP cost
-	int mhp[MAX_SKILL_LEVEL];			 ///< Max HP to trigger
-	int sp[MAX_SKILL_LEVEL];			 /// SP cost
-	int hp_rate[MAX_SKILL_LEVEL];		 /// HP cost (%)
-	int sp_rate[MAX_SKILL_LEVEL];		 /// SP cost (%)
-	int zeny[MAX_SKILL_LEVEL];			 /// Zeny cost
-	uint32 weapon;						 /// Weapon type. Combined bitmask of enum weapon_type (1<<weapon)
-	uint16 ammo;						 /// Ammo type. Combine bitmask of enum ammo_type (1<<ammo)
-	int ammo_qty[MAX_SKILL_LEVEL];		 /// Amount of ammo
-	uint8 state;						 /// State/condition. @see enum e_require_state
-	int spiritball[MAX_SKILL_LEVEL];	 /// Spiritball cost
-	int itemid[MAX_SKILL_ITEM_REQUIRE];	 /// Required item
-	int amount[MAX_SKILL_ITEM_REQUIRE];	 /// Amount of item
-	uint16 *eqItem;						 /// List of equipped item
-	enum sc_type *status;				 /// List of Status required (SC)
-	uint8 status_count,					 /// Count of SC
-		eqItem_count;					 /// Count of equipped item
+	int hp[MAX_SKILL_LEVEL];				 ///< HP cost
+	int mhp[MAX_SKILL_LEVEL];				 ///< Max HP to trigger
+	int sp[MAX_SKILL_LEVEL];				 /// SP cost
+	int hp_rate[MAX_SKILL_LEVEL];			 /// HP cost (%)
+	int sp_rate[MAX_SKILL_LEVEL];			 /// SP cost (%)
+	int zeny[MAX_SKILL_LEVEL];				 /// Zeny cost
+	uint32 weapon;							 /// Weapon type. Combined bitmask of enum weapon_type (1<<weapon)
+	uint16 ammo;							 /// Ammo type. Combine bitmask of enum ammo_type (1<<ammo)
+	int ammo_qty[MAX_SKILL_LEVEL];			 /// Amount of ammo
+	uint8 state;							 /// State/condition. @see enum e_require_state
+	int spiritball[MAX_SKILL_LEVEL];		 /// Spiritball cost
+	uint16 itemid[MAX_SKILL_ITEM_REQUIRE];	 /// Required item
+	uint16 amount[MAX_SKILL_ITEM_REQUIRE];	 /// Amount of item
+	uint16 *eqItem;							 /// List of equipped item
+	enum sc_type *status;					 /// List of Status required (SC)
+	uint8 status_count,						 /// Count of SC
+		eqItem_count;						 /// Count of equipped item
 };
 
 /// Database skills. !TODO: Cleanup the variable types that use array [MAX_SKILL_LEVEL]
