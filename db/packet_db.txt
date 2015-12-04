@@ -1715,6 +1715,10 @@ packet_keys: 0x382A6DEF,0x5CBE7202,0x61F46637 // [Shakto]
 0x0439,8,useitem,2:4
 0x0365,41,bookingregreq,2:4:6
 
+0x090F,-1		// ZC_NOTIFY_NEWENTRY7
+0x0914,-1		// ZC_NOTIFY_MOVEENTRY7
+0x0915,-1		// ZC_NOTIFY_STANDENTRY7
+
 //2012-04-10aRagexeRE
 packet_ver: 30
 packet_keys: 0x01581359,0x452D6FFA,0x6AFB6E2E // [Shakto]
@@ -1863,9 +1867,6 @@ packet_keys: 0x3F094C49,0x55F86C1E,0x58AA359A // [Shakto]
 0x08d2,10
 0x0907,5,moveitem,2:4
 0x0908,5
-0x090f,-1 // notify_newentry7
-0x0914,-1 // notify_moveentry
-0x0915,-1 // notify_standentry
 0x0922,-1,reqtradebuyingstore,2:4:8:12
 //0x092e,2,searchstoreinfonextpage,0
 0x0933,6,takeitem,2

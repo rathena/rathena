@@ -1111,7 +1111,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 #if PACKETVER >= 20080102
 	WBUFW(buf,53) = (sd ? sd->status.font : 0);
 #endif
-#if PACKETVER >= 20130807
+#if PACKETVER >= 20120221
 	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,55) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,59) = status_get_hp(bl);		// HP
@@ -1128,7 +1128,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	buf = WBUFP(buffer,offset);
 #endif
 #if PACKETVER >= 20091103
-#if PACKETVER >= 20130807
+#if PACKETVER >= 20120221
 	memcpy((char*)WBUFP(buf,64), name, NAME_LENGTH);
 #else
 	memcpy((char*)WBUFP(buf,55), name, NAME_LENGTH);
@@ -1254,7 +1254,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 #if PACKETVER >= 20080102
 	WBUFW(buf,60) = (sd ? sd->status.font : 0);
 #endif
-#if PACKETVER >= 20130807
+#if PACKETVER >= 20120221
 	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,62) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,66) = status_get_hp(bl);		// HP
@@ -1271,7 +1271,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	buf = WBUFP(buffer,offset);
 #endif
 #if PACKETVER >= 20091103
-#if PACKETVER >= 20130807
+#if PACKETVER >= 20120221
 	memcpy((char*)WBUFP(buf,71), name, NAME_LENGTH);
 #else
 	memcpy((char*)WBUFP(buf,62), name, NAME_LENGTH);
