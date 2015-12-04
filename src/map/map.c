@@ -1831,6 +1831,9 @@ int map_quit(struct map_session_data *sd) {
 	// Return loot to owner
 	if( sd->pd ) pet_lootitem_drop(sd->pd, sd);
 
+	if (sd->ed) // Remove effects here rather than unit_remove_map_pc so we don't clear on Teleport/map change.
+		elemental_clean_effect(sd->ed);
+
 	if( sd->state.storage_flag == 1 ) sd->state.storage_flag = 0; // No need to Double Save Storage on Quit.
 
 	if (sd->state.permanent_speed == 1) sd->state.permanent_speed = 0; // Remove lock so speed is set back to normal at login.
