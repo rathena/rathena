@@ -10536,6 +10536,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			sc->option |= OPTION_CLOAK;
 		case SC_CAMOUFLAGE:
 		case SC_STEALTHFIELD:
+		case SC__SHADOWFORM:
 			opt_flag = 2;
 			break;
 		case SC_CHASEWALK:
@@ -11245,7 +11246,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC__SHADOWFORM:
 			{
 				struct map_session_data *s_sd = map_id2sd(sce->val2);
-				if(s_sd ) s_sd->shadowform_id = 0;
+
+				if (s_sd) s_sd->shadowform_id = 0;
 			}
 			break;
 		case SC__FEINTBOMB:
@@ -11432,6 +11434,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		sc->option &= ~OPTION_CLOAK;
 	case SC_CAMOUFLAGE:
 	case SC_STEALTHFIELD:
+	case SC__SHADOWFORM:
 		opt_flag |= 2;
 		break;
 	case SC_CHASEWALK:
@@ -11441,6 +11444,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC__FEINTBOMB:
 		sc->option &= ~OPTION_INVISIBLE;
 		opt_flag |= 2;
+		break;
 	case SC_SIGHT:
 		sc->option &= ~OPTION_SIGHT;
 		break;
@@ -12557,14 +12561,16 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 
 	switch( type ) {
 	case SC_SIGHT: // Reveal hidden ennemy on 3*3 range
-		if( tsc && tsc->data[SC__SHADOWFORM] && (sce && sce->val4 >0 && sce->val4%2000 == 0) && // For every 2 seconds do the checking
-			rnd()%100 < 100-tsc->data[SC__SHADOWFORM]->val1*10 ) // [100 - (Skill Level x 10)] %
+		if (tsc && tsc->data[SC__SHADOWFORM] && (sce && sce->val4 > 0 && sce->val4%2000 == 0) && // For every 2 seconds do the checking
+			rnd()%100 < 100 - tsc->data[SC__SHADOWFORM]->val1 * 10) // [100 - (Skill Level x 10)] %
 				status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 	case SC_CONCENTRATE:
 		status_change_end(bl, SC_HIDING, INVALID_TIMER);
 		status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 		status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 		status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
+		if (type == SC_CONCENTRATE)
+			status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 		break;
 	case SC_RUWACH: // Reveal hidden target and deal little dammages if enemy
 		if (tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] ||
@@ -12576,9 +12582,12 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 			if(battle_check_target( src, bl, BCT_ENEMY ) > 0)
 				skill_attack(BF_MAGIC,src,src,bl,AL_RUWACH,1,tick,0);
 		}
-		if( tsc && tsc->data[SC__SHADOWFORM] && (sce && sce->val4 >0 && sce->val4%2000 == 0) && // For every 2 seconds do the checking
-			rnd()%100 < 100-tsc->data[SC__SHADOWFORM]->val1*10 ) // [100 - (Skill Level x 10)] %
+		if (tsc && tsc->data[SC__SHADOWFORM] && (sce && sce->val4 > 0 && sce->val4%2000 == 0) && // For every 2 seconds do the checking
+			rnd()%100 < 100 - tsc->data[SC__SHADOWFORM]->val1 * 10 ) { // [100 - (Skill Level x 10)] %
 				status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
+				if (battle_check_target(src, bl, BCT_ENEMY) > 0)
+					skill_attack(BF_MAGIC, src, src, bl, status_sc2skill(type), 1, tick, 0);
+		}
 		break;
 	case SC_SIGHTBLASTER:
 		if (battle_check_target( src, bl, BCT_ENEMY ) > 0 &&

@@ -5051,8 +5051,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if( flag&1 )
 		{ // Only Hits Invisible Targets
 			struct status_change *tsc2 = status_get_sc(bl);
-			if(tsc2 && (tsc2->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc2->data[SC__INVISIBILITY]) )
+			if(tsc2 && (tsc2->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC__SHADOWFORM])) {
+				status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+				status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 				skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+			}
 		}
 		break;
 	case WL_CHAINLIGHTNING:
@@ -5255,13 +5258,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RA_SENSITIVEKEEN:
 		if( bl->type != BL_SKILL ) { // Only Hits Invisible Targets
 			struct status_change * tsc2 = status_get_sc(bl);
-			if( tsc2 && tsc2->option&(OPTION_HIDE|OPTION_CLOAK) ){
-				skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-				status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
-			}
-		}
-		else
-		{
+				if (tsc2 && ((tsc2->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc2->data[SC_CAMOUFLAGE] || tsc2->data[SC_STEALTHFIELD] || tsc2->data[SC__SHADOWFORM])) {
+					status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+					status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
+					skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+				}
+		} else {
 			struct skill_unit *su = NULL;
 			struct skill_unit_group* sg;
 
@@ -5280,15 +5282,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 	case NC_INFRAREDSCAN:
-		if( flag&1 )
-		{ //TODO: Need a confirmation if the other type of hidden status is included to be scanned. [Jobbie]
-			sc_start(src,bl, SC_INFRAREDSCAN, 10000, skill_lv, skill_get_time(skill_id, skill_lv));
+		if( flag&1 ) {
 			status_change_end(bl, SC_HIDING, INVALID_TIMER);
 			status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
-			status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER); // Need confirm it.
-		}
-		else
-		{
+			status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
+			status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
+			sc_start(src,bl, SC_INFRAREDSCAN, 10000, skill_lv, skill_get_time(skill_id, skill_lv));
+		} else {
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 			clif_skill_damage(src,src,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
 			if( sd ) pc_overheat(sd,1);
@@ -5370,8 +5371,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SR_EARTHSHAKER:
 		if( flag&1 ) { //by default cloaking skills are remove by aoe skills so no more checking/removing except hiding and cloaking exceed.
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-			status_change_end(bl, SC_HIDING, INVALID_TIMER);
 			status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 		} else {
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 			clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
@@ -5421,7 +5422,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if( flag&1 )
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		else {
-			clif_skill_nodamage(src, bl, skill_id, 0, 1);
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 			skill_addtimerskill(src, gettick() + skill_get_time(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, 0, 0);
 		}
 		break;
@@ -9324,10 +9325,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case SC_BODYPAINT:
 		if( flag&1 ) {
-			if( tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] || tsc->data[SC_CLOAKINGEXCEED]) ) {
-				status_change_end(bl, SC_HIDING, INVALID_TIMER);
-				status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
-				status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
+			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC__SHADOWFORM])) {
+				status_change_end(bl,SC_HIDING,INVALID_TIMER);
+				status_change_end(bl,SC_CLOAKING,INVALID_TIMER);
+				status_change_end(bl,SC_CLOAKINGEXCEED,INVALID_TIMER);
+				status_change_end(bl,SC_CAMOUFLAGE,INVALID_TIMER);
+				status_change_end(bl,SC__SHADOWFORM,INVALID_TIMER);
 				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 				sc_start(src, bl, SC_BLIND, 53 + 2 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv));
 			}
@@ -9712,8 +9715,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case WM_SATURDAY_NIGHT_FEVER:
 		if( flag&1 ) {	// Affect to all targets arround the caster and caster too.
-			if( !(tsc && tsc->data[type]) )
-				sc_start(src,bl, type, 100, skill_lv,skill_get_time(skill_id, skill_lv));
+			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC__SHADOWFORM]))
+				break;
+			sc_start(src,bl, type, 100, skill_lv,skill_get_time(skill_id, skill_lv));
 		} else if( flag&2 ) {
 			if( src->id != bl->id && battle_check_target(src,bl,BCT_ENEMY) > 0 )
 				status_fix_damage(src,bl,9999,clif_damage(src,bl,tick,0,0,9999,0,DMG_NORMAL,0));
@@ -13453,6 +13457,8 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 					status_change_end(bl,SC_HIDING,INVALID_TIMER);
 					status_change_end(bl,SC_CLOAKING,INVALID_TIMER);
 					status_change_end(bl,SC_CLOAKINGEXCEED,INVALID_TIMER);
+					status_change_end(bl,SC_CAMOUFLAGE,INVALID_TIMER);
+					status_change_end(bl,SC__SHADOWFORM,INVALID_TIMER);
 				}
 			}
 			/* Enable this if kRO fix the current skill. Currently no damage on undead and demon monster. [Jobbie]
