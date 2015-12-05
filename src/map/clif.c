@@ -1913,8 +1913,6 @@ void clif_buylist(struct map_session_data *sd, struct npc_data *nd)
 
 	WFIFOW(fd,2) = 4 + c*11;
 	WFIFOSET(fd,WFIFOW(fd,2));
-
-	sd->npc_shopid = 0; // Clear shop data here in case Cancel is clicked.
 }
 
 
@@ -1953,8 +1951,6 @@ void clif_selllist(struct map_session_data *sd)
 	}
 	WFIFOW(fd,2)=c*10+4;
 	WFIFOSET(fd,WFIFOW(fd,2));
-
-	sd->npc_shopid = 0; // Clear shop data here in case Cancel is clicked.
 }
 
 
@@ -11300,6 +11296,7 @@ void clif_parse_NpcBuyListSend(int fd, struct map_session_data* sd)
 	else
 		result = npc_buylist(sd, n, (struct s_npc_buy_list*)RFIFOP(fd,info->pos[1]));
 
+	sd->npc_shopid = 0; //Clear shop data.
 	clif_npc_buy_result(sd, result);
 }
 
@@ -11336,6 +11333,7 @@ void clif_parse_NpcSellListSend(int fd,struct map_session_data *sd)
 	else
 		fail = npc_selllist(sd,n,item_list);
 
+	sd->npc_shopid = 0; //Clear shop data.
 	clif_npc_sell_result(sd, fail);
 }
 
