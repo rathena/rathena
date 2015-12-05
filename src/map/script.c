@@ -16395,6 +16395,9 @@ BUILDIN_FUNC(callshop)
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	if( sd->st )
+		sd->st->state = END;	// Fixed can't move [Naspter]
+
 	if (nd->subtype == NPCTYPE_SHOP || nd->subtype == NPCTYPE_ITEMSHOP || nd->subtype == NPCTYPE_POINTSHOP) {
 		// flag the user as using a valid script call for opening the shop (for floating NPCs)
 		sd->state.callshop = 1;
