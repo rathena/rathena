@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Muad_Dib
 //===== Current Version: ===================================== 
-//= 1.0a
+//= 1.0.3
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -12,7 +12,9 @@
 //= for Malangdo coins.
 //===== Additional Comments: ================================= 
 //= 1.0 First Version. [Euphy]
-//= 1.0a Added 'delequip' command. [Euphy]
+//= 1.0.1 Added 'delequip' command. [Euphy]
+//= 1.0.2 Remove redundant usage of 'getarg' [Cydh]
+//= 1.0.3 Fixed typo in 1.0.2 [Dastgir]
 //============================================================ 
 
 // Enchanter NPC :: mal_yong
@@ -327,8 +329,8 @@ L_Socket:
 		mes "^0000ff"+.@equip_name$+"^000000! Do you want to enchant this equipment? How will you pay for this?";
 		next;
 
+		.@enccost = getarg(0);
 		.@enclimit = getarg(1);
-		.@enccost = getarg(1);
 		setarray .@coin[0],6422,6421,6420,6419,6418,6423; // Payment ID
 		setarray .@cost[0],  15,  10,   6,   3,   2,   1; // Payment multiplier
 
