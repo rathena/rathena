@@ -813,7 +813,7 @@ void clif_quest_send_mission(struct map_session_data * sd);
 void clif_quest_add(struct map_session_data * sd, struct quest * qd);
 void clif_quest_delete(struct map_session_data * sd, int quest_id);
 void clif_quest_update_status(struct map_session_data * sd, int quest_id, bool active);
-void clif_quest_update_objective(struct map_session_data * sd, struct quest * qd);
+void clif_quest_update_objective(struct map_session_data * sd, struct quest * qd, int mobid);
 void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short state, short color);
 void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool quest);
 

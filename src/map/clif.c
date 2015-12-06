@@ -15944,7 +15944,7 @@ void clif_quest_delete(struct map_session_data *sd, int quest_id)
 
 /// Notification of an update to the hunting mission counter (ZC_UPDATE_MISSION_HUNT).
 /// 02b5 <packet len>.W <mobs>.W { <quest id>.L <mob id>.L <total count>.W <current count>.W }*3
-void clif_quest_update_objective(struct map_session_data *sd, struct quest *qd)
+void clif_quest_update_objective(struct map_session_data *sd, struct quest *qd, int mobid)
 {
 	int fd = sd->fd;
 	int i;
@@ -15957,10 +15957,12 @@ void clif_quest_update_objective(struct map_session_data *sd, struct quest *qd)
 	WFIFOW(fd, 4) = qi->objectives_count;
 
 	for (i = 0; i < qi->objectives_count; i++) {
-		WFIFOL(fd, i*12+6) = qd->quest_id;
-		WFIFOL(fd, i*12+10) = qi->objectives[i].mob;
-		WFIFOW(fd, i*12+14) = qi->objectives[i].count;
-		WFIFOW(fd, i*12+16) = qd->count[i];
+		if (mobid == 0 || mobid == qi->objectives[i].mob) {
+			WFIFOL(fd, i * 12 + 6) = qd->quest_id;
+			WFIFOL(fd, i * 12 + 10) = qi->objectives[i].mob;
+			WFIFOW(fd, i * 12 + 14) = qi->objectives[i].count;
+			WFIFOW(fd, i * 12 + 16) = qd->count[i];
+		}
 	}
 
 	WFIFOSET(fd, len);
