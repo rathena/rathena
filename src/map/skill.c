@@ -902,7 +902,7 @@ struct s_skill_nounit_layout* skill_get_nounit_layout(uint16 skill_id, uint16 sk
 /*==========================================
  * Add effect to skill when hit succesfully target
  *------------------------------------------*/
-int skill_additional_effect(struct block_list* src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int attack_type, int dmg_lv, unsigned int tick)
+int skill_additional_effect(struct block_list* src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int attack_type, enum damage_lv dmg_lv, unsigned int tick)
 {
 	struct map_session_data *sd, *dstsd;
 	struct mob_data *md, *dstmd;
@@ -1425,11 +1425,13 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 	case WL_EARTHSTRAIN:
 		{
-			int i;
+			uint16 i;
 			const int pos[5] = { EQP_WEAPON, EQP_HELM, EQP_SHIELD, EQP_ARMOR, EQP_ACC };
 
-			for( i = 0; i < skill_lv; i++ )
-				skill_strip_equip(src,bl,pos[i],5 * skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
+			if (dmg_lv != ATK_DEF) // Only strip if we make a successful hit.
+				break;
+			for (i = 0; i < skill_lv; i++)
+					skill_strip_equip(src, bl, pos[i], 5 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv));
 		}
 		break;
 	case WL_JACKFROST:
