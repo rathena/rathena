@@ -3780,7 +3780,13 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			sd->hp_vanish_race[type2].per += val;
 		}
 		break;
-
+	case SP_STATE_NORECOVER_RACE:
+		PC_BONUS_CHK_RACE(type2, SP_STATE_NORECOVER_RACE);
+		if (sd->state.lr_flag == 2)
+			break;
+		sd->norecover_state_race[type2].rate = type3;
+		sd->norecover_state_race[type2].tick = val;
+		break;
 	default:
 		ShowWarning("pc_bonus3: unknown type %d %d %d %d!\n",type,type2,type3,val);
 		break;
@@ -7957,7 +7963,7 @@ void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int ty
  *------------------------------------------*/
 int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 {
-	int bonus, tmp;
+	int bonus, tmp, penalty = 0;
 
 	if(hp) {
 		int i;
@@ -8002,28 +8008,33 @@ int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp)
 		if(bonus != 100 && tmp > sp)
 			sp = tmp;
 	}
-	if( sd->sc.count ) {
-		if ( sd->sc.data[SC_CRITICALWOUND] ) {
-			hp -= hp * sd->sc.data[SC_CRITICALWOUND]->val2 / 100;
-			sp -= sp * sd->sc.data[SC_CRITICALWOUND]->val2 / 100;
+	if (sd->sc.count) {
+		// Critical Wound and Death Hurt stack
+		if (sd->sc.data[SC_CRITICALWOUND])
+			penalty += sd->sc.data[SC_CRITICALWOUND]->val2;
+
+		if (sd->sc.data[SC_DEATHHURT])
+			penalty += 20;
+
+		if (sd->sc.data[SC_NORECOVER_STATE])
+			penalty = 100;
+
+		if (penalty > 0) {
+			hp -= hp * penalty / 100;
+			sp -= sp * penalty / 100;
 		}
 
-		if ( sd->sc.data[SC_DEATHHURT] ) {
-			hp -= hp * 20 / 100;
-			sp -= sp * 20 / 100;
-		}
-
-		if( sd->sc.data[SC_VITALITYACTIVATION] ){
+		if (sd->sc.data[SC_VITALITYACTIVATION]) {
 			hp += hp / 2; // 1.5 times
 			sp -= sp / 2;
 		}
 
-		if( sd->sc.data[SC_WATER_INSIGNIA] && sd->sc.data[SC_WATER_INSIGNIA]->val1 == 2 ) {
+		if (sd->sc.data[SC_WATER_INSIGNIA] && sd->sc.data[SC_WATER_INSIGNIA]->val1 == 2) {
 			hp += hp / 10;
 			sp += sp / 10;
 		}
 #ifdef RENEWAL
-		if( sd->sc.data[SC_EXTREMITYFIST2] )
+		if (sd->sc.data[SC_EXTREMITYFIST2])
 			sp = 0;
 #endif
 	}

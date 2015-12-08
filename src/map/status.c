@@ -946,6 +946,8 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_MELON_BOMB] = SI_MELON_BOMB;
 	StatusIconChangeTable[SC_BANANA_BOMB] = SI_BANANA_BOMB;
 	StatusIconChangeTable[SC_BANANA_BOMB_SITDOWN] = SI_BANANA_BOMB_SITDOWN_POSTDELAY;
+	StatusIconChangeTable[SC_PROMOTE_HEALTH_RESERCH] = SI_PROMOTE_HEALTH_RESERCH;
+	StatusIconChangeTable[SC_ENERGY_DRINK_RESERCH] = SI_ENERGY_DRINK_RESERCH;
 
 	/* Genetics New Food Items Status Icons */
 	StatusIconChangeTable[SC_SAVAGE_STEAK] = SI_SAVAGE_STEAK;
@@ -1015,6 +1017,7 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_MTF_MHP] = SI_MTF_MHP;
 	StatusIconChangeTable[SC_MTF_MSP] = SI_MTF_MSP;
 	StatusIconChangeTable[SC_MTF_PUMPKIN] = SI_MTF_PUMPKIN;
+	StatusIconChangeTable[SC_NORECOVER_STATE] = SI_HANDICAPSTATE_NORECOVER;
 
 	// Item Reuse Limits
 	StatusIconChangeTable[SC_REUSE_REFRESH] = SI_REUSE_REFRESH;
@@ -1027,6 +1030,8 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_REUSE_LIMIT_G] = SI_REUSE_LIMIT_G;
 	StatusIconChangeTable[SC_REUSE_LIMIT_H] = SI_REUSE_LIMIT_H;
 	StatusIconChangeTable[SC_REUSE_LIMIT_MTF] = SI_REUSE_LIMIT_MTF;
+	StatusIconChangeTable[SC_REUSE_LIMIT_ECL] = SI_REUSE_LIMIT_ECL;
+	StatusIconChangeTable[SC_REUSE_LIMIT_RECALL] = SI_REUSE_LIMIT_RECALL;
 	StatusIconChangeTable[SC_REUSE_LIMIT_ASPD_POTION] = SI_REUSE_LIMIT_ASPD_POTION;
 	StatusIconChangeTable[SC_REUSE_MILLENNIUMSHIELD] = SI_REUSE_MILLENNIUMSHIELD;
 	StatusIconChangeTable[SC_REUSE_CRUSHSTRIKE] = SI_REUSE_CRUSHSTRIKE;
@@ -1114,6 +1119,8 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_MYSTERIOUS_POWDER] |= SCB_MAXHP;
 	StatusChangeFlagTable[SC_MELON_BOMB] |= SCB_SPEED|SCB_ASPD;
 	StatusChangeFlagTable[SC_BANANA_BOMB] |= SCB_LUK;
+	StatusChangeFlagTable[SC_PROMOTE_HEALTH_RESERCH] |= SCB_MAXHP;
+	StatusChangeFlagTable[SC_ENERGY_DRINK_RESERCH] |= SCB_MAXSP;
 	StatusChangeFlagTable[SC_SAVAGE_STEAK] |= SCB_STR;
 	StatusChangeFlagTable[SC_COCKTAIL_WARG_BLOOD] |= SCB_INT;
 	StatusChangeFlagTable[SC_MINOR_BBQ] |= SCB_VIT;
@@ -2751,6 +2758,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 500;
 			if(sc->data[SC_LERADSDEW])
 				bonus += sc->data[SC_LERADSDEW]->val3;
+			if (sc->data[SC_PROMOTE_HEALTH_RESERCH])
+				bonus += sc->data[SC_PROMOTE_HEALTH_RESERCH]->val4;
 			if(sc->data[SC_INSPIRATION])
 				bonus += (600 * sc->data[SC_INSPIRATION]->val1);
 			if(sc->data[SC_SOLID_SKIN_OPTION])
@@ -2904,6 +2913,8 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_LIFE_FORCE_F]->val1;
 			if(sc->data[SC_VITATA_500])
 				bonus += sc->data[SC_VITATA_500]->val2;
+			if (sc->data[SC_ENERGY_DRINK_RESERCH])
+				bonus += sc->data[SC_ENERGY_DRINK_RESERCH]->val4;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus,-100,INT_MAX);
@@ -3116,6 +3127,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->subele2)
 		+ sizeof(sd->def_set_race)
 		+ sizeof(sd->mdef_set_race)
+		+ sizeof(sd->norecover_state_race)
 		+ sizeof(sd->hp_vanish_race)
 		+ sizeof(sd->sp_vanish_race)
 	);
@@ -7504,6 +7516,9 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		case SC_B_TRAP:
 			tick_def = (sd ? sd->status.str : status_get_base_status(bl)->str) * 50; // (custom)
 			break;
+		case SC_NORECOVER_STATE:
+			tick_def2 = status->luk * 100;
+			break;
 		default:
 			// Effect that cannot be reduced? Likely a buff.
 			if (!(rnd()%10000 < rate))
@@ -8538,6 +8553,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_NOCHAT:
 			case SC_ABUNDANCE:
 			case SC_FEAR:
+			case SC_BURNING:
+			case SC_FREEZING:
+			case SC_WHITEIMPRISON:
 			case SC_TOXIN:
 			case SC_PARALYSE:
 			case SC_VENOMBLEED:
@@ -8546,15 +8564,18 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_PYREXIA:
 			case SC_OBLIVIONCURSE:
 			case SC_LEECHESEND:
-			case SC__INVISIBILITY:
 			case SC__ENERVATION:
 			case SC__GROOMY:
 			case SC__IGNORANCE:
 			case SC__LAZINESS:
-			case SC__WEAKNESS:
 			case SC__UNLUCKY:
-			//case SC__CHAOS:
-			case SC_REUSE_REFRESH:
+			case SC__WEAKNESS:
+			case SC_DEEPSLEEP:
+			case SC_NETHERWORLD:
+			case SC_CRYSTALIZE:
+			case SC_DEFSET:
+			case SC_MDEFSET:
+			case SC_NORECOVER_STATE:
 			case SC_REUSE_LIMIT_A:
 			case SC_REUSE_LIMIT_B:
 			case SC_REUSE_LIMIT_C:
@@ -8563,12 +8584,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_REUSE_LIMIT_F:
 			case SC_REUSE_LIMIT_G:
 			case SC_REUSE_LIMIT_H:
-			case SC_REUSE_LIMIT_MTF:
-			case SC_REUSE_LIMIT_ASPD_POTION:
 			case SC_REUSE_MILLENNIUMSHIELD:
 			case SC_REUSE_CRUSHSTRIKE:
+			case SC_REUSE_REFRESH:
 			case SC_REUSE_STORMBLAST:
 			case SC_ALL_RIDING_REUSE_LIMIT:
+			case SC_REUSE_LIMIT_MTF:
+			case SC_REUSE_LIMIT_ECL:
+			case SC_REUSE_LIMIT_RECALL:
+			case SC_REUSE_LIMIT_ASPD_POTION:
 				return 0;
 			case SC_COMBO:
 			case SC_DANCING:
@@ -10000,6 +10024,30 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = tick / 10000;
 			tick_time = 10000; // [GodLesZ] tick time
 			break;
+		case SC_PROMOTE_HEALTH_RESERCH:
+			//val1: 1 = Regular Potion, 2 = Thrown Potion
+			//val2: 1 = Small Potion, 2 = Medium Potion, 3 = Large Potion
+			//val3: BaseLV of Thrower For Thrown Potions
+			//val4: MaxHP Increase By Fixed Amount
+			if (val1 == 1) // If potion was normally used, take the user's BaseLv
+				val4 = 1000 * val2 - 500 + status_get_lv(bl) * 10 / 3;
+			else if (val1 == 2) // If potion was thrown at someone, take the thrower's BaseLv
+				val4 = 1000 * val2 - 500 + val3 * 10 / 3;
+			if (val4 <= 0) // Prevents a negeative value from happening
+				val4 = 0;
+			break;
+		case SC_ENERGY_DRINK_RESERCH:
+			//val1: 1 = Regular Potion, 2 = Thrown Potion
+			//val2: 1 = Small Potion, 2 = Medium Potion, 3 = Large Potion
+			//val3: BaseLV of Thrower For Thrown Potions
+			//val4: MaxSP Increase By Percentage Amount
+			if (val1 == 1) // If potion was normally used, take the user's BaseLv
+				val4 = status_get_lv(bl) / 10 + 5 * val2 - 10;
+			else if (val1 == 2) // If potion was thrown at someone, take the thrower's BaseLv
+				val4 = val3 / 10 + 5 * val2 - 10;
+			if (val4 <= 0) // Prevents a negeative value from happening
+				val4 = 0;
+			break;
 		case SC_KYOUGAKU:
 			val2 = 2*val1 + rnd()%val1;
 			clif_status_change(bl,SI_ACTIVE_MONSTER_TRANSFORM,1,0,1002,0,0);
@@ -10818,6 +10866,8 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_REUSE_LIMIT_G:
 			case SC_REUSE_LIMIT_H:
 			case SC_REUSE_LIMIT_MTF:
+			case SC_REUSE_LIMIT_ECL:
+			case SC_REUSE_LIMIT_RECALL:
 			case SC_REUSE_LIMIT_ASPD_POTION:
 			case SC_REUSE_MILLENNIUMSHIELD:
 			case SC_REUSE_CRUSHSTRIKE:
@@ -12746,6 +12796,8 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_REUSE_LIMIT_G:
 			case SC_REUSE_LIMIT_H:
 			case SC_REUSE_LIMIT_MTF:
+			case SC_REUSE_LIMIT_ECL:
+			case SC_REUSE_LIMIT_RECALL:
 			case SC_REUSE_LIMIT_ASPD_POTION:
 			case SC_REUSE_MILLENNIUMSHIELD:
 			case SC_REUSE_CRUSHSTRIKE:

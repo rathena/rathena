@@ -369,6 +369,8 @@ bonus2 bSPVanishRate,x,n;		Add a x/10% chance of decreasing enemy's SP amount by
 bonus3 bHPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's HP amount by n% when attacking, depends on enemy race r
 bonus3 bSPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's SP amount by n% when attacking, depends on enemy race r
 
+bonus3 bStateNoRecoverRace,n,x,r;	Set a no recovery state of an enemy of race n at x% for r milliseconds with normal attack.
+
 HP/SP gain
 ------------
 bonus bHPGainValue,n;     		Heals +n HP when killing an enemy with a physical attack

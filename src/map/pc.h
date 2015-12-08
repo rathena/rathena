@@ -397,7 +397,7 @@ struct map_session_data {
 	struct {
 		short value;
 		int rate, tick;
-	} def_set_race[RC_MAX], mdef_set_race[RC_MAX];
+	} def_set_race[RC_MAX], mdef_set_race[RC_MAX], norecover_state_race[RC_MAX];
 	struct s_bonus_vanish_gain {
 		short rate,	///< Success rate 0 - 1000 (100%)
 			per;	///< % HP/SP vanished/gained

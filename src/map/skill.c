@@ -500,15 +500,27 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	if( sc && sc->data[SC_OFFERTORIUM] && (skill_id == AB_HIGHNESSHEAL || skill_id == AB_CHEAL ||
 		skill_id == PR_SANCTUARY || skill_id == AL_HEAL) )
 		hp += hp * sc->data[SC_OFFERTORIUM]->val2 / 100;
-	if( tsc && tsc->count ) {
-		if( heal && tsc->data[SC_CRITICALWOUND] ) //Critical Wound has no effect on offensive heal. [Inkfish]
-			hp -= hp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
-		if( heal && tsc->data[SC_DEATHHURT] )
-			hp -= hp * 20/100;
-		if( tsc->data[SC_INCHEALRATE] && skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN )
-			hp += hp * tsc->data[SC_INCHEALRATE]->val1 / 100; //Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
-		if( tsc->data[SC_WATER_INSIGNIA] && tsc->data[SC_WATER_INSIGNIA]->val1 == 2)
-			hp += hp / 10;
+	if (tsc && tsc->count) {
+		if (skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN) {
+			if (tsc->data[SC_INCHEALRATE])
+				hp += hp * tsc->data[SC_INCHEALRATE]->val1 / 100; //Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
+			if (tsc->data[SC_EXTRACT_WHITE_POTION_Z])
+				hp += hp * tsc->data[SC_EXTRACT_WHITE_POTION_Z]->val1 / 100;
+			if (tsc->data[SC_WATER_INSIGNIA] && tsc->data[SC_WATER_INSIGNIA]->val1 == 2)
+				hp += hp / 10;
+		}
+		if (heal) {
+			uint8 penalty = 0;
+
+			if (tsc->data[SC_CRITICALWOUND])
+				penalty += tsc->data[SC_CRITICALWOUND]->val2;
+			if (tsc->data[SC_DEATHHURT])
+				penalty += 20;
+			if (tsc->data[SC_NORECOVER_STATE])
+				penalty = 100;
+			if (penalty > 0)
+				hp -= hp * penalty / 100;
+		}
 	}
 
 #ifdef RENEWAL
@@ -1877,11 +1889,14 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		}
 		if (sd && !skill_id && bl->type == BL_PC) { // This effect does not work with skills.
 			if (sd->def_set_race[tstatus->race].rate)
-					status_change_start(src,bl, SC_DEFSET, sd->def_set_race[tstatus->race].rate, sd->def_set_race[tstatus->race].value,
+				status_change_start(src,bl, SC_DEFSET, sd->def_set_race[tstatus->race].rate, sd->def_set_race[tstatus->race].value,
 					0, 0, 0, sd->def_set_race[tstatus->race].tick, SCSTART_NOTICKDEF);
 			if (sd->def_set_race[tstatus->race].rate)
-					status_change_start(src,bl, SC_MDEFSET, sd->mdef_set_race[tstatus->race].rate, sd->mdef_set_race[tstatus->race].value,
+				status_change_start(src,bl, SC_MDEFSET, sd->mdef_set_race[tstatus->race].rate, sd->mdef_set_race[tstatus->race].value,
 					0, 0, 0, sd->mdef_set_race[tstatus->race].tick, SCSTART_NOTICKDEF);
+			if (sd->norecover_state_race[tstatus->race].rate)
+				status_change_start(src, bl, SC_NORECOVER_STATE, sd->norecover_state_race[tstatus->race].rate,
+					0, 0, 0, 0, sd->norecover_state_race[tstatus->race].tick, SCSTART_NOTICKDEF);
 		}
 	}
 
@@ -7350,18 +7365,22 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				hp += hp * j / 100;
 				sp += sp * j / 100;
 			}
-			if( tsc && tsc->count ) {
-				if( tsc->data[SC_CRITICALWOUND] ) {
-					hp -= hp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
-					sp -= sp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
-				}
-				if( tsc->data[SC_DEATHHURT] ) {
-					hp -= hp * 20 / 100;
-					sp -= sp * 20 / 100;
-				}
-				if( tsc->data[SC_WATER_INSIGNIA] && tsc->data[SC_WATER_INSIGNIA]->val1 == 2 ) {
+			if (tsc && tsc->count) {
+				uint8 penalty = 0;
+
+				if (tsc->data[SC_WATER_INSIGNIA] && tsc->data[SC_WATER_INSIGNIA]->val1 == 2) {
 					hp += hp / 10;
 					sp += sp / 10;
+				}
+				if (tsc->data[SC_CRITICALWOUND])
+					penalty += tsc->data[SC_CRITICALWOUND]->val2;
+				if (tsc->data[SC_DEATHHURT])
+					penalty += 20;
+				if (tsc->data[SC_NORECOVER_STATE])
+					penalty = 100;
+				if (penalty > 0) {
+					hp -= hp * penalty / 100;
+					sp -= sp * penalty / 100;
 				}
 			}
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -7369,10 +7388,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_nodamage(NULL,bl,AL_HEAL,hp,1);
 			if( sp > 0 )
 				clif_skill_nodamage(NULL,bl,MG_SRECOVERY,sp,1);
+			if (tsc) {
 #ifdef RENEWAL
-			if( tsc && tsc->data[SC_EXTREMITYFIST2] )
-				sp = 0;
+				if (tsc->data[SC_EXTREMITYFIST2])
+					sp = 0;
 #endif
+				if (tsc->data[SC_NORECOVER_STATE]) {
+					hp = 0;
+					sp = 0;
+				}
+			}
 			status_heal(bl,hp,sp,0);
 		}
 		break;
@@ -8084,6 +8109,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if( tsc && tsc->data[SC_EXTREMITYFIST2] )
 					sp1 = tstatus->sp;
 #endif
+				if (tsc->data[SC_NORECOVER_STATE])
+					sp1 = tstatus->sp;
 			status_set_sp(src, sp2, 3);
 			status_set_sp(bl, sp1, 3);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -8105,18 +8132,22 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if (sp)
 					sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10 + pc_skillheal2_bonus(dstsd, skill_id))/100;
 			}
-			if( tsc && tsc->count ) {
-				if (tsc->data[SC_CRITICALWOUND]) {
-					hp -= hp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
-					sp -= sp * tsc->data[SC_CRITICALWOUND]->val2 / 100;
-				}
-				if (tsc->data[SC_DEATHHURT]) {
-					hp -= hp * 20 / 100;
-					sp -= sp * 20 / 100;
-				}
-				if( tsc->data[SC_WATER_INSIGNIA] && tsc->data[SC_WATER_INSIGNIA]->val1 == 2) {
+			if (tsc && tsc->count) {
+				uint8 penalty = 0;
+
+				if (tsc->data[SC_WATER_INSIGNIA] && tsc->data[SC_WATER_INSIGNIA]->val1 == 2) {
 					hp += hp / 10;
 					sp += sp / 10;
+				}
+				if (tsc->data[SC_CRITICALWOUND])
+					penalty += tsc->data[SC_CRITICALWOUND]->val2;
+				if (tsc->data[SC_DEATHHURT])
+					penalty += 20;
+				if (tsc->data[SC_NORECOVER_STATE])
+					penalty = 100;
+				if (penalty > 0) {
+					hp -= hp * penalty / 100;
+					sp -= sp * penalty / 100;
 				}
 			}
 			if(hp > 0)
@@ -10073,14 +10104,95 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 						skill_attack(BF_WEAPON,src,src,bl,GN_SLINGITEM_RANGEMELEEATK,skill_lv,tick,flag);
 				} else //Otherwise, it fails, shows animation and removes items.
 					clif_skill_fail(sd,GN_SLINGITEM_RANGEMELEEATK,USESKILL_FAIL,0);
-			} else if( itemdb_is_GNthrowable(ammo_id) ){
-				struct script_code *script = sd->inventory_data[i]->script;
-				if( !script )
+			} else if (itemdb_is_GNthrowable(ammo_id)) {
+				switch (ammo_id) {
+				case ITEMID_MYSTERIOUS_POWDER: //MaxHP -2%
+					sc_start(src, bl, SC_MYSTERIOUS_POWDER, 100, 2, 10000);
 					break;
-				if( dstsd )
-					run_script(script,0,dstsd->bl.id,fake_nd->bl.id);
-				else
-					run_script(script,0,src->id,0);
+				case ITEMID_BOOST500_TO_THROW: //ASPD +10%
+					sc_start(src, bl, SC_BOOST500, 100, 10, 500000);
+					break;
+				case ITEMID_FULL_SWINGK_TO_THROW: //WATK +50
+					sc_start(src, bl, SC_FULL_SWING_K, 100, 50, 500000);
+					break;
+				case ITEMID_MANA_PLUS_TO_THROW: //MATK +50
+					sc_start(src, bl, SC_MANA_PLUS, 100, 50, 500000);
+					break;
+				case ITEMID_CURE_FREE_TO_THROW: //Cures Silence, Bleeding, Poison, Curse, Orcish, Undead, Blind, Confusion, DPoison and heals 500 HP
+					status_change_end(bl, SC_SILENCE, INVALID_TIMER);
+					status_change_end(bl, SC_BLEEDING, INVALID_TIMER);
+					status_change_end(bl, SC_POISON, INVALID_TIMER);
+					status_change_end(bl, SC_CURSE, INVALID_TIMER);
+					status_change_end(bl, SC_ORCISH, INVALID_TIMER);
+					status_change_end(bl, SC_CHANGEUNDEAD, INVALID_TIMER);
+					status_change_end(bl, SC_BLIND, INVALID_TIMER);
+					status_change_end(bl, SC_CONFUSION, INVALID_TIMER);
+					status_change_end(bl, SC_DPOISON, INVALID_TIMER);
+					status_heal(bl, 500, 0, 0);
+					break;
+				case ITEMID_STAMINA_UP_M_TO_THROW: //MaxHP +5%
+					sc_start(src, bl, SC_MUSTLE_M, 100, 5, 500000);
+					break;
+				case ITEMID_DIGESTIVE_F_TO_THROW: //MaxSP +5%
+					sc_start(src, bl, SC_LIFE_FORCE_F, 100, 5, 500000);
+					break;
+				case ITEMID_HP_INC_POTS_TO_THROW: //MaxHP +(500 + Thrower BaseLv * 10 / 3) and heals 1% MaxHP
+					sc_start4(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 1, status_get_lv(src), 0, 500000);
+					status_percent_heal(bl, 1, 0);
+					break;
+				case ITEMID_HP_INC_POTM_TO_THROW: //MaxHP +(1500 + Thrower BaseLv * 10 / 3) and heals 2% MaxHP
+					sc_start4(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 2, status_get_lv(src), 0, 500000);
+					status_percent_heal(bl, 2, 0);
+					break;
+				case ITEMID_HP_INC_POTL_TO_THROW: //MaxHP +(2500 + Thrower BaseLv * 10 / 3) and heals 5% MaxHP
+					sc_start4(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 3, status_get_lv(src), 0, 500000);
+					status_percent_heal(bl, 5, 0);
+					break;
+				case ITEMID_SP_INC_POTS_TO_THROW: //MaxSP +(Thrower BaseLv / 10 - 5)% and recovers 2% MaxSP
+					sc_start4(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 1, status_get_lv(src), 0, 500000);
+					status_percent_heal(bl, 0, 2);
+					break;
+				case ITEMID_SP_INC_POTM_TO_THROW: //MaxSP +(Thrower BaseLv / 10)% and recovers 4% MaxSP
+					sc_start4(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 2, status_get_lv(src), 0, 500000);
+					status_percent_heal(bl, 0, 4);
+					break;
+				case ITEMID_SP_INC_POTL_TO_THROW: //MaxSP +(Thrower BaseLv / 10 + 5)% and recovers 8% MaxSP
+					sc_start4(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 3, status_get_lv(src), 0, 500000);
+					status_percent_heal(bl, 0, 8);
+					break;
+				case ITEMID_EN_WHITE_POTZ_TO_THROW: //Natural HP Recovery +20% and heals 1000 HP
+					sc_start(src, bl, SC_EXTRACT_WHITE_POTION_Z, 100, 20, 500000);
+					pc_itemheal((TBL_PC *)bl, ITEMID_EN_WHITE_POTZ_TO_THROW, 1000, 0);
+					break;
+				case ITEMID_VITATA500_TO_THROW: //Natural SP Recovery +20%, MaxSP +5%, and recovers 200 SP
+					sc_start2(src, bl, SC_VITATA_500, 100, 20, 5, 500000);
+					pc_itemheal((TBL_PC *)bl, ITEMID_VITATA500_TO_THROW, 0, 200);
+					break;
+				case ITEMID_EN_CEL_JUICE_TO_THROW: //ASPD +10%
+					sc_start(src, bl, SC_EXTRACT_SALAMINE_JUICE, 100, 10, 500000);
+					break;
+				case ITEMID_SAVAGE_BBQ_TO_THROW: //STR +20
+					sc_start(src, bl, SC_SAVAGE_STEAK, 100, 20, 300000);
+					break;
+				case ITEMID_WUG_COCKTAIL_TO_THROW: //INT +20
+					sc_start(src, bl, SC_COCKTAIL_WARG_BLOOD, 100, 20, 300000);
+					break;
+				case ITEMID_M_BRISKET_TO_THROW: //VIT +20
+					sc_start(src, bl, SC_MINOR_BBQ, 100, 20, 300000);
+					break;
+				case ITEMID_SIROMA_ICETEA_TO_THROW: //DEX +20
+					sc_start(src, bl, SC_SIROMA_ICE_TEA, 100, 20, 300000);
+					break;
+				case ITEMID_DROCERA_STEW_TO_THROW: //AGI +20
+					sc_start(src, bl, SC_DROCERA_HERB_STEAMED, 100, 20, 300000);
+					break;
+				case ITEMID_PETTI_NOODLE_TO_THROW: //LUK +20
+					sc_start(src, bl, SC_PUTTI_TAILS_NOODLES, 100, 20, 300000);
+					break;
+				case ITEMID_BLACK_THING_TO_THROW: //Reduces all stats by random 5 - 10
+					sc_start(src, bl, SC_STOMACHACHE, 100, rnd_value(5, 10), 60000);
+					break;
+				}
 			}
 		}
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);

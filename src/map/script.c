@@ -6111,6 +6111,12 @@ BUILDIN_FUNC(percentheal)
 	if( sd->sc.data[SC_EXTREMITYFIST2] )
 		sp = 0;
 #endif
+
+	if (sd->sc.data[SC_NORECOVER_STATE]) {
+		hp = 0;
+		sp = 0;
+	}
+
 	pc_percentheal(sd,hp,sp);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -11094,6 +11100,7 @@ BUILDIN_FUNC(sc_end)
 			case SC_REUSE_LIMIT_G:				case SC_REUSE_LIMIT_H:			case SC_REUSE_LIMIT_MTF:
 			case SC_REUSE_LIMIT_ASPD_POTION:	case SC_REUSE_MILLENNIUMSHIELD:	case SC_REUSE_CRUSHSTRIKE:
 			case SC_REUSE_STORMBLAST:			case SC_ALL_RIDING_REUSE_LIMIT:	case SC_REUSE_REFRESH:
+			case SC_REUSE_LIMIT_ECL:			case SC_REUSE_LIMIT_RECALL:
 				return SCRIPT_CMD_SUCCESS;
 			default:
 				break;
