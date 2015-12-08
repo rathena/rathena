@@ -3784,6 +3784,12 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		PC_BONUS_CHK_RACE(type2, SP_STATE_NORECOVER_RACE);
 		if (sd->state.lr_flag == 2)
 			break;
+		//! CONFIRM: Is it not stackable? Does not check max or min value?
+		//if (type3 > sd->norecover_state_race[type2].rate) {
+		//	sd->norecover_state_race[type2].rate = type3;
+		//	sd->norecover_state_race[type2].tick = val;
+		//	break;
+		//}
 		sd->norecover_state_race[type2].rate = type3;
 		sd->norecover_state_race[type2].tick = val;
 		break;

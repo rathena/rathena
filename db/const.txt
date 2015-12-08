@@ -634,6 +634,7 @@ bSPVanishRaceRate	2075
 bAbsorbDmgMaxHP	2076
 bSubSkill	2077
 bSubDefEle	2078
+bStateNoRecoverRace	2079
 
 EQI_HEAD_TOP	1
 EQI_ARMOR	2
