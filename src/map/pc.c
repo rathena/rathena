@@ -6284,7 +6284,7 @@ void pc_baselevelchanged(struct map_session_data *sd) {
 				pc_unequipitem(sd, sd->equip_index[i], 3);
 		}
 	}
-        pc_show_questinfo(sd);
+	pc_show_questinfo(sd);
 }
 
 int pc_checkjoblevelup(struct map_session_data *sd)
@@ -8283,8 +8283,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	status_calc_pc(sd,SCO_FORCE);
 	pc_checkallowskill(sd);
 	pc_equiplookall(sd);
-
-        pc_show_questinfo(sd);
+	pc_show_questinfo(sd);
 
 	//if you were previously famous, not anymore.
 	if (fame_flag) {
