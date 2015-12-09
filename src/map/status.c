@@ -3029,6 +3029,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	memset (sd->param_bonus, 0, sizeof(sd->param_bonus)
 		+ sizeof(sd->param_equip)
 		+ sizeof(sd->subele)
+		+ sizeof(sd->subele_script)
 		+ sizeof(sd->subdefele)
 		+ sizeof(sd->subrace)
 		+ sizeof(sd->subclass)
@@ -3047,6 +3048,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->arrow_addclass)
 		+ sizeof(sd->arrow_addsize)
 		+ sizeof(sd->magic_addele)
+		+ sizeof(sd->magic_addele_script)
 		+ sizeof(sd->magic_addrace)
 		+ sizeof(sd->magic_addclass)
 		+ sizeof(sd->magic_addsize)
@@ -3746,11 +3748,13 @@ void status_calc_atk_ele_pc(struct map_session_data *sd, struct status_change *s
 	int i = 0;
 
 	nullpo_retv(sd);
-	nullpo_retv(sc);
 	
 	memset(sd->magic_addele, 0, sizeof(sd->magic_addele));
 	memset(sd->right_weapon.addele, 0, sizeof(sd->right_weapon.addele));
 	memset(sd->left_weapon.addele, 0, sizeof(sd->left_weapon.addele));
+
+	if (!sc || !sc->count)
+		return;
 
 	if ((i = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
 		sd->right_weapon.addele[ELE_DARK] += i;
@@ -3778,9 +3782,11 @@ void status_calc_def_ele_pc(struct map_session_data *sd, struct status_change *s
 	int i = 0;
 
 	nullpo_retv(sd);
-	nullpo_retv(sc);
 
 	memset(sd->subele, 0, sizeof(sd->subele));
+
+	if (!sc || !sc->count)
+		return;
 
 	if ((i = pc_checkskill(sd,CR_TRUST))>0)
 		sd->subele[ELE_HOLY] += i * 5;
@@ -4581,16 +4587,16 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		if (sd)
 			sd->state.lr_flag = 1;
 		status->lhw.ele = status_calc_attack_element(bl, sc, b_status->lhw.ele);
-		if (sd)
+		if (sd) {
 			sd->state.lr_flag = 0;
-		if (sd && sc && sc->count)
 			status_calc_atk_ele_pc(sd, sc);
+		}
 	}
 
 	if(flag&SCB_DEF_ELE) {
 		status->def_ele = status_calc_element(bl, sc, b_status->def_ele);
 		status->ele_lv = status_calc_element_lv(bl, sc, b_status->ele_lv);
-		if (sd && sc && sc->count)
+		if (sd)
 			status_calc_def_ele_pc(sd, sc);
 	}
 
