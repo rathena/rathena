@@ -362,7 +362,7 @@ void initChangeTables(void)
 #endif
 	set_sc( BD_ROKISWEIL		, SC_ROKISWEIL	, SI_ROKISWEIL	, SCB_NONE );
 	set_sc( BD_INTOABYSS		, SC_INTOABYSS	, SI_INTOABYSS	, SCB_NONE );
-	set_sc( BD_SIEGFRIED		, SC_SIEGFRIED		, SI_SIEGFRIED	, SCB_ALL );
+	set_sc( BD_SIEGFRIED		, SC_SIEGFRIED		, SI_SIEGFRIED	, SCB_DEF_ELE );
 	add_sc( BA_FROSTJOKER		, SC_FREEZE		);
 	set_sc( BA_WHISTLE		, SC_WHISTLE		, SI_WHISTLE		, SCB_FLEE|SCB_FLEE2 );
 	set_sc( BA_ASSASSINCROSS	, SC_ASSNCROS		, SI_ASSASSINCROSS		, SCB_ASPD );
@@ -765,15 +765,15 @@ void initChangeTables(void)
 
 	/* Elemental spirits' status changes */
 	set_sc( EL_CIRCLE_OF_FIRE	, SC_CIRCLE_OF_FIRE_OPTION	, SI_CIRCLE_OF_FIRE_OPTION	, SCB_NONE );
-	set_sc( EL_FIRE_CLOAK		, SC_FIRE_CLOAK_OPTION		, SI_FIRE_CLOAK_OPTION		, SCB_ALL );
+	set_sc( EL_FIRE_CLOAK		, SC_FIRE_CLOAK_OPTION		, SI_FIRE_CLOAK_OPTION		, SCB_DEF_ELE );
 	set_sc( EL_WATER_SCREEN		, SC_WATER_SCREEN_OPTION	, SI_WATER_SCREEN_OPTION	, SCB_NONE );
-	set_sc( EL_WATER_DROP		, SC_WATER_DROP_OPTION		, SI_WATER_DROP_OPTION		, SCB_ALL );
+	set_sc( EL_WATER_DROP		, SC_WATER_DROP_OPTION		, SI_WATER_DROP_OPTION		, SCB_DEF_ELE );
 	set_sc( EL_WATER_BARRIER	, SC_WATER_BARRIER		, SI_WATER_BARRIER		, SCB_WATK|SCB_FLEE );
 	set_sc( EL_WIND_STEP		, SC_WIND_STEP_OPTION		, SI_WIND_STEP_OPTION		, SCB_SPEED|SCB_FLEE );
-	set_sc( EL_WIND_CURTAIN		, SC_WIND_CURTAIN_OPTION	, SI_WIND_CURTAIN_OPTION	, SCB_ALL );
+	set_sc( EL_WIND_CURTAIN		, SC_WIND_CURTAIN_OPTION	, SI_WIND_CURTAIN_OPTION	, SCB_DEF_ELE );
 	set_sc( EL_ZEPHYR		, SC_ZEPHYR			, SI_ZEPHYR			, SCB_FLEE );
 	set_sc( EL_SOLID_SKIN		, SC_SOLID_SKIN_OPTION		, SI_SOLID_SKIN_OPTION		, SCB_DEF|SCB_MAXHP );
-	set_sc( EL_STONE_SHIELD		, SC_STONE_SHIELD_OPTION	, SI_STONE_SHIELD_OPTION	, SCB_ALL );
+	set_sc( EL_STONE_SHIELD		, SC_STONE_SHIELD_OPTION	, SI_STONE_SHIELD_OPTION	, SCB_DEF_ELE );
 	set_sc( EL_POWER_OF_GAIA	, SC_POWER_OF_GAIA		, SI_POWER_OF_GAIA		, SCB_MAXHP|SCB_DEF|SCB_SPEED );
 	set_sc( EL_PYROTECHNIC		, SC_PYROTECHNIC_OPTION		, SI_PYROTECHNIC_OPTION		, SCB_WATK );
 	set_sc( EL_HEATER		, SC_HEATER_OPTION		, SI_HEATER_OPTION		, SCB_WATK );
@@ -3682,12 +3682,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->sprecov_rate = 0;
 
 	// Anti-element and anti-race
-	if((skill=pc_checkskill(sd,CR_TRUST))>0)
-		sd->subele[ELE_HOLY] += skill*5;
-	if((skill=pc_checkskill(sd,BS_SKINTEMPER))>0) {
-		sd->subele[ELE_NEUTRAL] += skill;
-		sd->subele[ELE_FIRE] += skill*4;
-	}
 	if((skill=pc_checkskill(sd,SA_DRAGONOLOGY))>0) {
 #ifdef RENEWAL
 		skill = skill * 2;
@@ -3701,13 +3695,9 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	}
 	if((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
 		sd->right_weapon.addrace[RC_DEMON] += skill;
-		sd->right_weapon.addele[ELE_DARK] += skill;
 		sd->left_weapon.addrace[RC_DEMON] += skill;
-		sd->left_weapon.addele[ELE_DARK] += skill;
 		sd->magic_addrace[RC_DEMON] += skill;
-		sd->magic_addele[ELE_DARK] += skill;
 		sd->subrace[RC_DEMON] += skill;
-		sd->subele[ELE_DARK] += skill;
 	}
 
 	if(sc->count) {
@@ -3715,66 +3705,11 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sc->data[SC_CONCENTRATE]->val3 = sd->param_bonus[1]; // Agi
 			sc->data[SC_CONCENTRATE]->val4 = sd->param_bonus[4]; // Dex
 		}
-		if(sc->data[SC_SIEGFRIED]) {
-			i = sc->data[SC_SIEGFRIED]->val2;
-			sd->subele[ELE_WATER] += i;
-			sd->subele[ELE_EARTH] += i;
-			sd->subele[ELE_FIRE] += i;
-			sd->subele[ELE_WIND] += i;
-			sd->subele[ELE_POISON] += i;
-			sd->subele[ELE_HOLY] += i;
-			sd->subele[ELE_DARK] += i;
-			sd->subele[ELE_GHOST] += i;
-			sd->subele[ELE_UNDEAD] += i;
-		}
 		if(sc->data[SC_PROVIDENCE]) {
-			sd->subele[ELE_HOLY] += sc->data[SC_PROVIDENCE]->val2;
 			sd->subrace[RC_DEMON] += sc->data[SC_PROVIDENCE]->val2;
 		}
-		if(sc->data[SC_ARMOR_ELEMENT]) {	// This status change should grant card-type elemental resist.
-			sd->subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT]->val1;
-			sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT]->val2;
-			sd->subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT]->val3;
-			sd->subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT]->val4;
-		}
-		if(sc->data[SC_ARMOR_RESIST]) { // Undead Scroll
-			sd->subele[ELE_WATER] += sc->data[SC_ARMOR_RESIST]->val1;
-			sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_RESIST]->val2;
-			sd->subele[ELE_FIRE] += sc->data[SC_ARMOR_RESIST]->val3;
-			sd->subele[ELE_WIND] += sc->data[SC_ARMOR_RESIST]->val4;
-		}
-		if( sc->data[SC_FIRE_CLOAK_OPTION] ) {
-			i = sc->data[SC_FIRE_CLOAK_OPTION]->val2;
-			sd->subele[ELE_FIRE] += i;
-			sd->subele[ELE_WATER] -= i;
-		}
-		if( sc->data[SC_WATER_DROP_OPTION] ) {
-			i = sc->data[SC_WATER_DROP_OPTION]->val2;
-			sd->subele[ELE_WATER] += i;
-			sd->subele[ELE_WIND] -= i;
-		}
-		if( sc->data[SC_WIND_CURTAIN_OPTION] ) {
-			i = sc->data[SC_WIND_CURTAIN_OPTION]->val2;
-			sd->subele[ELE_WIND] += i;
-			sd->subele[ELE_EARTH] -= i;
-		}
-		if( sc->data[SC_STONE_SHIELD_OPTION] ) {
-			i = sc->data[SC_STONE_SHIELD_OPTION]->val2;
-			sd->subele[ELE_EARTH] += i;
-			sd->subele[ELE_FIRE] -= i;
-		}
-		if (sc->data[SC_MTF_MLEATKED] )
-			sd->subele[ELE_NEUTRAL] += sc->data[SC_MTF_MLEATKED]->val3;
 		if (sc->data[SC_MTF_CRIDAMAGE])
 			sd->bonus.crit_atk_rate += sc->data[SC_MTF_CRIDAMAGE]->val1;
-		if( sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3 )
-			sd->magic_addele[ELE_FIRE] += 25;
-		if( sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 3 )
-			sd->magic_addele[ELE_WATER] += 25;
-		if( sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 3 )
-			sd->magic_addele[ELE_WIND] += 25;
-		if( sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3 )
-			sd->magic_addele[ELE_EARTH] += 25;
 	}
 	status_cpy(&sd->battle_status, base_status);
 
@@ -3799,6 +3734,121 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	calculating = 0;
 
 	return 0;
+}
+
+/**
+ * Calculate attack bonus of element attack for BL_PC.
+ * Any SC that listed here, has minimal SCB_ATK_ELE flag.
+ * @param sd
+ * @param sc
+ **/
+void status_calc_atk_ele_pc(struct map_session_data *sd, struct status_change *sc) {
+	int i = 0;
+
+	nullpo_retv(sd);
+	nullpo_retv(sc);
+	
+	memset(sd->magic_addele, 0, sizeof(sd->magic_addele));
+	memset(sd->right_weapon.addele, 0, sizeof(sd->right_weapon.addele));
+	memset(sd->left_weapon.addele, 0, sizeof(sd->left_weapon.addele));
+
+	if ((i = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
+		sd->right_weapon.addele[ELE_DARK] += i;
+		sd->left_weapon.addele[ELE_DARK] += i;
+		sd->magic_addele[ELE_DARK] += i;
+	}
+
+	if (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3)
+		sd->magic_addele[ELE_FIRE] += 25;
+	if (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 3)
+		sd->magic_addele[ELE_WATER] += 25;
+	if (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 3)
+		sd->magic_addele[ELE_WIND] += 25;
+	if (sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3)
+		sd->magic_addele[ELE_EARTH] += 25;
+}
+
+/**
+ * Calculate defense bonus againts element attack for BL_PC.
+ * Any SC that listed here, has minimal SCB_DEF_ELE flag.
+ * @param sd
+ * @param sc
+ **/
+void status_calc_def_ele_pc(struct map_session_data *sd, struct status_change *sc) {
+	int i = 0;
+
+	nullpo_retv(sd);
+	nullpo_retv(sc);
+
+	memset(sd->subele, 0, sizeof(sd->subele));
+
+	if ((i = pc_checkskill(sd,CR_TRUST))>0)
+		sd->subele[ELE_HOLY] += i * 5;
+
+	if ((i = pc_checkskill(sd,BS_SKINTEMPER))>0) {
+		sd->subele[ELE_NEUTRAL] += i;
+		sd->subele[ELE_FIRE] += i * 4;
+	}
+
+	if ((i = pc_checkskill(sd, AB_EUCHARISTICA)) > 0)
+		sd->subele[ELE_DARK] += i;
+
+	if (sc->data[SC_SIEGFRIED]) {
+		i = sc->data[SC_SIEGFRIED]->val2;
+		sd->subele[ELE_WATER] += i;
+		sd->subele[ELE_EARTH] += i;
+		sd->subele[ELE_FIRE] += i;
+		sd->subele[ELE_WIND] += i;
+		sd->subele[ELE_POISON] += i;
+		sd->subele[ELE_HOLY] += i;
+		sd->subele[ELE_DARK] += i;
+		sd->subele[ELE_GHOST] += i;
+		sd->subele[ELE_UNDEAD] += i;
+	}
+
+	if (sc->data[SC_PROVIDENCE])
+		sd->subele[ELE_HOLY] += sc->data[SC_PROVIDENCE]->val2;
+
+	if (sc->data[SC_ARMOR_ELEMENT]) {	// This status change should grant card-type elemental resist.
+		sd->subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT]->val1;
+		sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT]->val2;
+		sd->subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT]->val3;
+		sd->subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT]->val4;
+	}
+
+	if (sc->data[SC_ARMOR_RESIST]) { // Undead Scroll
+		sd->subele[ELE_WATER] += sc->data[SC_ARMOR_RESIST]->val1;
+		sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_RESIST]->val2;
+		sd->subele[ELE_FIRE] += sc->data[SC_ARMOR_RESIST]->val3;
+		sd->subele[ELE_WIND] += sc->data[SC_ARMOR_RESIST]->val4;
+	}
+
+	if (sc->data[SC_FIRE_CLOAK_OPTION]) {
+		i = sc->data[SC_FIRE_CLOAK_OPTION]->val2;
+		sd->subele[ELE_FIRE] += i;
+		sd->subele[ELE_WATER] -= i;
+	}
+
+	if (sc->data[SC_WATER_DROP_OPTION]) {
+		i = sc->data[SC_WATER_DROP_OPTION]->val2;
+		sd->subele[ELE_WATER] += i;
+		sd->subele[ELE_WIND] -= i;
+	}
+
+	if (sc->data[SC_WIND_CURTAIN_OPTION]) {
+		i = sc->data[SC_WIND_CURTAIN_OPTION]->val2;
+		sd->subele[ELE_WIND] += i;
+		sd->subele[ELE_EARTH] -= i;
+	}
+
+	if (sc->data[SC_STONE_SHIELD_OPTION]) {
+		i = sc->data[SC_STONE_SHIELD_OPTION]->val2;
+		sd->subele[ELE_EARTH] += i;
+		sd->subele[ELE_FIRE] -= i;
+	}
+
+	if (sc->data[SC_MTF_MLEATKED])
+		sd->subele[ELE_NEUTRAL] += sc->data[SC_MTF_MLEATKED]->val3;
 }
 
 /**
@@ -4528,14 +4578,20 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 	if(flag&SCB_ATK_ELE) {
 		status->rhw.ele = status_calc_attack_element(bl, sc, b_status->rhw.ele);
-		if (sd) sd->state.lr_flag = 1;
+		if (sd)
+			sd->state.lr_flag = 1;
 		status->lhw.ele = status_calc_attack_element(bl, sc, b_status->lhw.ele);
-		if (sd) sd->state.lr_flag = 0;
+		if (sd)
+			sd->state.lr_flag = 0;
+		if (sd && sc && sc->count)
+			status_calc_atk_ele_pc(sd, sc);
 	}
 
 	if(flag&SCB_DEF_ELE) {
 		status->def_ele = status_calc_element(bl, sc, b_status->def_ele);
 		status->ele_lv = status_calc_element_lv(bl, sc, b_status->ele_lv);
+		if (sd && sc && sc->count)
+			status_calc_def_ele_pc(sd, sc);
 	}
 
 	if(flag&SCB_MODE) {
