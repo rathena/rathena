@@ -396,3 +396,9 @@ in '/conf/channels.conf'.
 Disables MVP tombs from appearing on a map.
 
 ---------------------------------------
+
+*nocostume
+
+Disables costume's sprites on this map.
+
+---------------------------------------

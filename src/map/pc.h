@@ -1046,6 +1046,7 @@ void pc_setriding(struct map_session_data* sd, int flag);
 void pc_setmadogear(struct map_session_data* sd, int flag);
 void pc_changelook(struct map_session_data *,int,int);
 void pc_equiplookall(struct map_session_data *sd);
+void pc_set_costume_view(struct map_session_data *sd);
 
 int pc_readparam(struct map_session_data *sd, int type);
 bool pc_setparam(struct map_session_data *sd, int type, int val);

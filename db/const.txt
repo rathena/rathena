@@ -373,6 +373,7 @@ mf_nomineeffect	57
 mf_nolockon	58
 mf_notomb	59
 mf_skill_damage	60
+mf_nocostume	61
 
 //'setcell' types
 cell_walkable	0
