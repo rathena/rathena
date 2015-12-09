@@ -53,11 +53,15 @@ que_ng,72,29,3	script	Kunai Merchant Kashin	83,{
 }
 
 function	script	Kunai_Trade	{
+	setarray .@item_req[0], getarg(0), getarg(2);
+	setarray .@req_amount[0], getarg(1), getarg(3);
+	.@item_id = getarg(4);
+
 	mes "[Kashin]";
 	mes "You can exchange";
-	mes ""+getarg(1)+" "+getitemname(getarg(0))+" and";
-	mes ""+getarg(3)+" "+getitemname(getarg(2))+" for every";
-	mes "set of 10 "+getitemname(getarg(4))+".";
+	mes .@req_amount[0] +" "+ getitemname(.@item_req[0]) +" and";
+	mes .@req_amount[1] +" "+ getitemname(.@item_req[1]) +" for every";
+	mes "set of 10 "+ getitemname(.@item_id) +".";
 	next;
 	mes "[Kashin]";
 	mes "I can only give you a maximum of 500 sets of Kunais at a time.";
@@ -73,7 +77,7 @@ function	script	Kunai_Trade	{
 		mes "enter a value less than 500.";
 		close;
 	}
-	if(countitem(getarg(0)) < .@amount*getarg(1) || countitem(getarg(2)) < .@amount*getarg(3)) {
+	if (countitem(.@item_req[0]) < .@amount*.@req_amount[0] || countitem(.@item_req[1]) < .@amount*.@req_amount[1]) {
 		mes "[Kashin]";
 		mes "Hmm, you don't have";
 		mes "enough items for this";
@@ -81,7 +85,7 @@ function	script	Kunai_Trade	{
 		mes "check your items again.";
 		close;
  	}
-	if(checkweight(getarg(4), .@amount*10) == 0) {
+	if (checkweight(.@item_id, .@amount*10) == 0) {
 		mes "[Kashin]";
 		mes "Hmm, it seems like your";
 		mes "Inventory doesn't have";
@@ -97,8 +101,8 @@ function	script	Kunai_Trade	{
 	mes "I'm sure that you'll be";
 	mes "quite satisfied with";
 	mes "these Kunais.";
-	delitem getarg(0),getarg(1)*.@amount;
-	delitem getarg(2),getarg(3)*.@amount;
-	getitem getarg(4),10*.@amount;
+	delitem .@item_req[0],.@req_amount[0]*.@amount;
+	delitem .@item_req[1],.@req_amount[1]*.@amount;
+	getitem .@item_id,10*.@amount;
 	close;
 }

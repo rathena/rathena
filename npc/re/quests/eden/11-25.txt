@@ -129,12 +129,15 @@ moc_para01,32,30,6	script	Spike	914,{
 	mes "Why don't you look around and find some interesting tasks?";
 	close;
 L_Quest:
-	if (checkquest(getarg(0),HUNTING) == 2) {
-		if (getarg(3,0))
-			if (countitem(getarg(3)) < getarg(4)) {
+	.@quest_id = getarg(0);
+	if (checkquest(.@quest_id,HUNTING) == 2) {
+		.@item_req = getarg(3,0);
+		.@req_amount = getarg(4,0);
+		if (.@item_req)
+			if (countitem(.@item_req) < .@req_amount) {
 				mes "[Spike]";
-				mes "You don't have enough "+getitemname(getarg(3))+".";
-				mes "You need to bring "+getarg(4)+" "+getitemname(getarg(3))+".";
+				mes "You don't have enough "+ getitemname(.@item_req) +".";
+				mes "You need to bring "+ .@req_amount +" "+ getitemname(.@item_req) +".";
 				close;
 			}
 		mes "[Spike]";
@@ -145,9 +148,9 @@ L_Quest:
 		mes "Good work~!!";
 		mes "Our client is so happy with your work. He will appreciate what you have done.";
 		mes "Please help us again. Thanks!";
-		if (getarg(3,0)) delitem getarg(3),getarg(4);
-		erasequest getarg(0);
-		setquest getarg(0)+10;
+		if (.@item_req) delitem .@item_req,.@req_amount;
+		erasequest .@quest_id;
+		setquest .@quest_id+10;
 		getexp getarg(2),0;
 		close;
 	}

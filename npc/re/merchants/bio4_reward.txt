@@ -360,10 +360,11 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 	close;
 
 L_Reward:
+	setarray .@amount[0], getarg(1), getarg(2), getarg(3);
 	next;
-	mes ""+getarg(1)+" Will of Warrior, "+getarg(2)+" Thirst for Blood, "+getarg(3)+" Chill of the Dead are needed for the exchange.";
+	mes ""+ .@amount[0] +" Will of Warrior, "+ .@amount[1] +" Thirst for Blood, "+ .@amount[2] +" Chill of the Dead are needed for the exchange.";
 	next;
-	if (countitem(6469) >= getarg(1) && countitem(6470) >= getarg(2) && countitem(6471) >= getarg(3)) {
+	if (countitem(6469) >= .@amount[0] && countitem(6470) >= .@amount[1] && countitem(6471) >= .@amount[2]) {
 		if (select("Don't exchange", "Exchange") == 1) {
 			mes "[Weird old man]";
 			mes "Okay..";
@@ -371,9 +372,9 @@ L_Reward:
 		}
 		emotion e_swt2, "Weird old man#Bio4Reward";
 		progressbar "FF00FF", 2;
-		delitem 6469, getarg(1); //Will_Of_Warrior
-		delitem 6470, getarg(2); //Blood_Thirst
-		delitem 6471, getarg(3); //Goast_Chill
+		delitem 6469, .@amount[0]; //Will_Of_Warrior
+		delitem 6470, .@amount[1]; //Blood_Thirst
+		delitem 6471, .@amount[2]; //Goast_Chill
 		getitem getarg(0), 1;
 		mes "[Weird old man]";
 		mes "There you go. Visit me sometimes and we could talk.";

@@ -5435,37 +5435,38 @@ malangdo,212,204,0	script	Beginning Compass#nya_02	844,{
 
 // callsub L_Viewpoint,<order number>,<start index>;
 L_Viewpoint:
+	.@index = getarg(1);
 	switch(getarg(0)) {
 	case 1: // Order 1: Red, Blue, Yellow, Green, White
 		setarray .@Colors$[1],"^FF0000","^0000FF","^FFFF00","^00FF00","^cccccc";
 		setarray .@Text$[1],"Red","Blue","Yellow","Green","White";
-		if (getarg(1) <= 1)
+		if (.@index <= 1)
 			viewpoint 1,213,89,0,0xFF0000;
-		if (getarg(1) <= 2)
+		if (.@index <= 2)
 			viewpoint 1,128,103,1,0x0000FF;
-		if (getarg(1) <= 3)
+		if (.@index <= 3)
 			viewpoint 1,73,253,2,0xFFFF00;
-		if (getarg(1) <= 4)
+		if (.@index <= 4)
 			viewpoint 1,153,146,3,0x00FF00;
 		viewpoint 1,111,178,4,0xcccccc;
 		break;
 	case 2: // Order 2: Yellow, Blue, White, Green, Red
 		setarray .@Colors$[1],"^FFFF00","^0000FF","^cccccc","^00FF00","^FF0000";
 		setarray .@Text$[1],"Yellow","Blue","White","Green","Red";
-		if (getarg(1) <= 1)
+		if (.@index <= 1)
 			viewpoint 1,73,253,0,0xFFFF00;
-		if (getarg(1) <= 2)
+		if (.@index <= 2)
 			viewpoint 1,128,103,1,0x0000FF;
-		if (getarg(1) <= 3)
+		if (.@index <= 3)
 			viewpoint 1,111,178,2,0xcccccc;
-		if (getarg(1) <= 4)
+		if (.@index <= 4)
 			viewpoint 1,153,146,3,0x00FF00;
 		viewpoint 1,213,89,4,0xFF0000;
 		break;
 	}
 	for(set .@i,1; .@i<=5; set .@i,.@i+1)
-		set .@str$, .@str$+((.@i >= getarg(1))?.@Colors$[.@i]:"")+.@Text$[.@i]+" ";
-	if (getarg(1) > 1)
+		set .@str$, .@str$+((.@i >= .@index)?.@Colors$[.@i]:"")+.@Text$[.@i]+" ";
+	if (.@index > 1)
 		mes "After inserting the card and pressing the red button, the path to the destination lit up.";
 	mes "The order will be "+.@str$+"^000000.";
 	return;
@@ -6221,6 +6222,7 @@ malangdo,174,175,0	script	Noisy Machine#nya_13	844,{
 
 // callsub L_ShowLights,<number of lights>;
 L_ShowLights:
+	.@num = getarg(0);
 	mes "Luminous";
 	mes "The order of buttons are:";
 	mes "[Red] [Green] [Blue] [Yellow]";
@@ -6231,11 +6233,11 @@ L_ShowLights:
 	mes "Luminous";
 	setarray .@Color$[0],"Red","Blue","Yellow","Green";
 	setarray .@Cutin$[0],"nya_red","nya_blue","nya_yellow","nya_green";
-	for(set .@i,0; .@i<getarg(0); set .@i,.@i+1) {
+	for(set .@i,0; .@i < .@num; set .@i,.@i+1) {
 		set .@rand, rand(4);
 		set .@Lamp[.@i],.@rand;
 		mes .@Color$[.@rand];
-		if (.@i+1 == getarg(0))
+		if (.@i+1 == .@num)
 			mes "Shines according to this order.";
 		cutin .@Cutin$[.@rand],4;
 		progressbar "0xFFFF00",1;
@@ -6246,7 +6248,7 @@ L_ShowLights:
 	next;
 	set .@pass,0;
 	setarray .@Count$[0],"first","second","third","fourth","fifth","sixth","seventh","eighth";
-	for(set .@i,0; .@i<getarg(0); set .@i,.@i+1) {
+	for(set .@i,0; .@i < .@num; set .@i,.@i+1) {
 		mes "Which color button do you want to press "+.@Count$[.@i]+"?";
 		next;
 		// Red <-> Green, Blue <-> Yellow
@@ -6254,7 +6256,7 @@ L_ShowLights:
 		if (.@Lamp[.@i] == 4-.@j)
 			set .@pass,.@pass+1;
 	}
-	if (.@pass < getarg(0)) {
+	if (.@pass < .@num) {
 		mes "The speed of spinning is getting faster after pressing the buttons.";
 		mes "After all...";
 		specialeffect EF_BEGINSPELL6;
@@ -6282,7 +6284,7 @@ L_ShowLights:
 	mes "The luminous shines once and stops also.";
 	cutin "nya_off",4;
 	next;
-	if (getarg(0) < 8) {
+	if (.@num < 8) {
 		mes "[Homnya]";
 		mes "Don't reduce your tension!";
 		mes "It's not over yet!";

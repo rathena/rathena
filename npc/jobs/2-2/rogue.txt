@@ -946,11 +946,12 @@ S_Req:
 	mes "^FF0000"+getarg(1)+"^000000,";
 	mes "^FF0000"+getarg(2)+"^000000 and";
 	mes "^FF0000"+getarg(3)+"^000000.";
-	set ROGUE_Q,getarg(4);
-	if(getarg(4) == 3) {
+	.@var = getarg(4);
+	ROGUE_Q = .@var;
+	if (.@var == 3) {
 		changequest 2017,2018;
 	}
-	else if(getarg(4) == 4) {
+	else if (.@var == 4) {
 		changequest 2017,2019;
 	}
 	else {
@@ -973,14 +974,17 @@ S_Req:
 
 
 S_CheckItems:
-	if (Zeny > 9999 && countitem(getarg(0)) >= getarg(1) && countitem(getarg(2)) >= getarg(3) && countitem(getarg(4)) >= getarg(5) && countitem(getarg(6)) >= getarg(7)) {
+	setarray .@item_req[0], getarg(0), getarg(2), getarg(4), getarg(6);
+	setarray .@amount[0], getarg(1), getarg(3), getarg(5), getarg(7);
+
+	if (Zeny > 9999 && countitem(.@item_req[0]) >= .@amount[0] && countitem(.@item_req[1]) >= .@amount[1] && countitem(.@item_req[2]) >= .@amount[2] && countitem(.@item_req[3]) >= .@amount[3]) {
 		mes "[Mr. Smith]";
-		mes "Okay, we've got the application fee, ^FF000010,000 zeny^000000, "+getarg(1)+" "+getitemname(getarg(0))+", "+getarg(3)+" "+getitemname(getarg(2))+", "+getarg(5)+" "+getitemname(getarg(4))+" and "+getarg(7)+" "+getitemname(getarg(6))+"...";
+		mes "Okay, we've got the application fee, ^FF000010,000 zeny^000000, "+ .@amount[0] +" "+ getitemname(.@item_req[0]) +", "+ .@amount[1] +" "+ getitemname(.@item_req[1]) +", "+ .@amount[2] +" "+ getitemname(.@item_req[2]) +" and "+ .@amount[3] +" "+ getitemname(.@item_req[3]) +"...";
 		set Zeny, Zeny-10000;
-		delitem getarg(0),getarg(1);
-		delitem getarg(2),getarg(3);
-		delitem getarg(4),getarg(5);
-		delitem getarg(6),getarg(7);
+		delitem .@item_req[0],.@amount[0];
+		delitem .@item_req[1],.@amount[1];
+		delitem .@item_req[2],.@amount[2];
+		delitem .@item_req[3],.@amount[3];
 		set ROGUE_Q,7;
 		next;
 		mes "[Mr. Smith]";
@@ -1003,10 +1007,10 @@ S_CheckItems:
 	mes "and the following items...";
 	next;
 	mes "[Mr. Smith]";
-	mes "^FF0000 "+getarg(1)+" "+getitemname(getarg(0))+"^000000,";
-	mes "^FF0000 "+getarg(3)+" "+getitemname(getarg(2))+"^000000,";
-	mes "^FF0000 "+getarg(5)+" "+getitemname(getarg(4))+"^000000,";
-	mes "^FF0000 "+getarg(7)+" "+getitemname(getarg(6))+"^000000,";
+	mes "^FF0000 "+ .@amount[0] +" "+ getitemname(.@item_req[0]) +"^000000,";
+	mes "^FF0000 "+ .@amount[1] +" "+ getitemname(.@item_req[1]) +"^000000,";
+	mes "^FF0000 "+ .@amount[2] +" "+ getitemname(.@item_req[2]) +"^000000,";
+	mes "^FF0000 "+ .@amount[3] +" "+ getitemname(.@item_req[3]) +"^000000,";
 	mes "You got it this time?";
 	close;
 }
