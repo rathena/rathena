@@ -989,9 +989,13 @@ sec_in02,76,176,5	script	Live Broadcast#arena	802,{
 }
 
 function	script	Func_Are_Rew	{
+	.@item_id = getarg(0);
+	.@amount = getarg(1);
+	.@arena_point = getarg(2);
+
 	mes "[Givu]";
-	mes "Would you like to exchange your arena points with "+getitemname(getarg(0))+"?";
-	mes "You can exchange ^3131FF"+getarg(2)+" arena points with "+getarg(1)+" "+getitemname(getarg(0))+"^000000.";
+	mes "Would you like to exchange your arena points with "+ getitemname(.@item_id) +"?";
+	mes "You can exchange ^3131FF"+ .@arena_point +" arena points with "+ .@amount +" "+ getitemname(.@item_id) +"^000000.";
 	mes "If you wish to cancel, please enter 0. If you don't, please enter how many ^3131FFtimes^000000 of arena points you wish to spend.";
 	next;
 	input .@reward;
@@ -1004,14 +1008,14 @@ function	script	Func_Are_Rew	{
 		mes "You have exceeded the maximum capacity.";
 		close;
 	}
-	if (arena_point < .@reward * getarg(2)) {
+	if (arena_point < .@reward * .@arena_point) {
 		mes "[Givu]";
 		mes "You do not have enough arena points.";
 		mes "Please check the total amount of arena points you have.";
 		close;
 	}
-	set arena_point, arena_point - (.@reward * getarg(2));
-	getitem getarg(0),.@reward * getarg(1);
+	arena_point = arena_point - (.@reward * .@arena_point);
+	getitem .@item_id,.@reward * .@amount;
 	mes "[Givu]";
 	mes "Thank you, please come again.";
 	close;

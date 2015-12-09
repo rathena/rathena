@@ -113,12 +113,13 @@ function	script	F_Invest_Status	{
 
 //callfunc "F_Invest_Abyss","<variable>","<NPC name>"{,"<addon message>"};
 function	script	F_Invest_Abyss	{
+	.@npc_name$ = getarg(1);
 	mes "There are 2 ways to invest, by Zeny or the Investment Certificate given out by the Cat Paw Merchant Guild.";
 	mes "Which way would you like to make your investment?";
 	next;
 	switch(select("Invest with Zeny.:Invest with Investment Certificates.:Cancel")) {
 	case 1:
-		mes getarg(1);
+		mes .@npc_name$;
 		mes "So you've decided to invest in Zeny.";
 		mes "Minimum investment unit is ^4d4dff10,000 Zeny^000000.";
 		mes "You can invest a maximum of 50 units which is ^4d4dff500,000 Zeny^000000.";
@@ -134,35 +135,35 @@ function	script	F_Invest_Abyss	{
 			set .@units,50;
 			break;
 		case 4:
-			mes getarg(1);
+			mes .@npc_name$;
 			mes "Please enter the amount you want to invest.";
 			mes "Please choose between 1 to 200.";
 			mes "Please enter 0 to cancel.";
 			next;
 			input .@units;
 			if (.@units < 0 || .@units > 200) {
-				mes getarg(1);
+				mes .@npc_name$;
 				mes "You've exceeded the amount per investment.";
 				mes "Please try again.";
 				close;
 			} else if (.@units == 0) {
-				mes getarg(1);
+				mes .@npc_name$;
 				mes "Canceled.";
 				close;
 			} else
 				break;
 		case 5:
-			mes getarg(1);
+			mes .@npc_name$;
 			mes "Canceled.";
 			close;
 		}
 		set .@zeny, .@units * 10000;
 		if (Zeny < .@zeny) {
-			mes getarg(1);
+			mes .@npc_name$;
 			mes "You do not have enough money.";
 			close;
 		}
-		mes getarg(1);
+		mes .@npc_name$;
 		mes "You've invested "+callfunc("F_InsertPlural",.@units,"unit")+" "+callfunc("F_InsertComma",.@zeny)+" Zeny"+getarg(2,"")+".";
 		mes "Not much but this is a small gift. You can exchange it with items in Malangdo.";
 		set Zeny, Zeny-.@zeny;
@@ -170,7 +171,7 @@ function	script	F_Invest_Abyss	{
 		getitem 6488,.@units; //Thanks_Invest_Ticket
 		close;
 	case 2:
-		mes getarg(1);
+		mes .@npc_name$;
 		mes "Wow, you've brought Investment Certificates.";
 		mes "How many certificates will you submit?";
 		next;
@@ -182,35 +183,35 @@ function	script	F_Invest_Abyss	{
 			set .@tickets,5;
 			break;
 		case 3:
-			mes getarg(1);
+			mes .@npc_name$;
 			mes "Please enter the number of Investment Certificates you want to submit.";
 			mes "Please choose between 1 to 20.";
 			mes "Please enter 0 to cancel.";
 			next;
 			input .@tickets;
 			if (.@tickets < 0 || .@tickets > 20) {
-				mes getarg(1);
+				mes .@npc_name$;
 				mes "You've exceeded the amount per investment.";
 				mes "Please try again.";
 				close;
 			} else if (.@tickets == 0) {
-				mes getarg(1);
+				mes .@npc_name$;
 				mes "Canceled.";
 				close;
 			} else
 				break;
 		case 4:
-			mes getarg(1);
+			mes .@npc_name$;
 			mes "Canceled.";
 			close;
 		}
 		if (countitem(6489) < .@tickets) {
-			mes getarg(1);
+			mes .@npc_name$;
 			mes "Looks like you have fewer Investment Certificates than you want to submit.";
 			close;
 		}
 		set .@units, .@tickets * 10;
-		mes getarg(1);
+		mes .@npc_name$;
 		mes .@tickets+" Investment Certificate"+((.@tickets == 1)?" is":"s are")+" the same as an investment of "+.@units+" units ("+((.@units < 100)?.@units:insertchar(""+.@units,",",1))+"0,000z)"+getarg(2,"")+".";
 		mes "Not much but this is a small gift. You can exchange it with items in Malangdo.";
 		delitem 6489,.@tickets; //Cats_Invest_Certif
@@ -218,7 +219,7 @@ function	script	F_Invest_Abyss	{
 		getitem 6488,.@units; //Thanks_Invest_Ticket
 		close;
 	case 3:
-		mes getarg(1);
+		mes .@npc_name$;
 		mes "Canceled.";
 		close;
 	}

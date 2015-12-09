@@ -4470,16 +4470,18 @@ mid_camp,147,256,3	script	Rune Midgarts Magician#1	735,{
 }
 
 function	script	jewel_13_2	{
+	.@color$ = getarg(0);
 	if (ep13_2_rhea < 5) {
 		mes "- Under a round pile of earth, -";
-		mes "- there's a "+getarg(0)+" Gem -";
+		mes "- there's a "+ .@color$ +" Gem -";
 		mes "- half-buried. -";
 		close;
 	}
 	else if (ep13_2_rhea == 5) {
-		if (checkquest(8240+getarg(1)) == -1) {
+		.@num = getarg(1);
+		if (checkquest(8240+.@num) == -1) {
 			mes "- Under a round pile of earth, -";
-			mes "- there's a "+getarg(0)+" Gem -";
+			mes "- there's a "+ .@color$ +" Gem -";
 			mes "- half-buried. -";
 			next;
 			if(select("Dig out the Gem:Leave it alone")==2) {
@@ -4492,15 +4494,15 @@ function	script	jewel_13_2	{
 			}
 			if (rand(1,4) == 2) {
 				mes "- You dug up a pile of earth -";
-				mes "- and pulled out the "+getarg(0)+" Gem -";
-				setquest 8240+getarg(1);
-				getitem 7574+getarg(1),1;
+				mes "- and pulled out the "+ .@color$ +" Gem -";
+				setquest 8240+.@num;
+				getitem 7574+.@num,1;
 				close;
 			}
 			else {
 				mes "- As you dug up a pile of earth, -";
 				mes "- a Thief Bug attacks you! -";
-				donpcevent "Half-buried Gem#"+getarg(1)+"::OnDisable";
+				donpcevent "Half-buried Gem#"+ .@num +"::OnDisable";
 				next;
 				mes "["+ strcharinfo(0) +"]";
 				mes "What the heck is this?!?!?!";
@@ -4509,13 +4511,13 @@ function	script	jewel_13_2	{
 		}
 		else {
 			mes "- Small pile of earth -";
-			mes "- which you dug up the "+getarg(0)+" Gem -";
+			mes "- which you dug up the "+ .@color$ +" Gem -";
 			close;
 		}
 	}
 	else {
 		mes "- Small pile of earth -";
-		mes "- which you dug up the "+getarg(0)+" Gem -";
+		mes "- which you dug up the "+ .@color$ +" Gem -";
 		close;
 	}
 	end;

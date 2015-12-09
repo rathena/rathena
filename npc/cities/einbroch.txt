@@ -91,13 +91,15 @@ einbroch,176,172,5	script	Khemko#ein	855,{
 }
 
 function	script	EinTower	{
-	mes "[" + getarg(0) + "]";
+	.@npc_name$ = getarg(0);
+
+	mes "["+ .@npc_name$ +"]";
 	mes "Good day~";
-	mes "I'm " + getarg(0) + ", your";
+	mes "I'm "+ .@npc_name$ +", your";
 	mes "guide to exploring";
 	mes "the Einbroch Tower.";
 	next;
-	mes "[" + getarg(0) + "]";
+	mes "["+ .@npc_name$ +"]";
 	mes "Einbroch Tower offers";
 	mes "the best view of our city";
 	mes "and it's a great place to";
@@ -105,7 +107,7 @@ function	script	EinTower	{
 	mes "a date. The Einbroch Tower";
 	mes "admission fee is 10 zeny.";
 	next;
-	mes "[" + getarg(0) + "]";
+	mes "["+ .@npc_name$ +"]";
 	mes "Right now, we're offering";
 	mes "a special promotion called";
 	mes "the Apple Combo Set for only";
@@ -116,7 +118,7 @@ function	script	EinTower	{
 	switch(select("Tower Admission Only:Apple Combo Set:Cancel")) {
 	case 1:
 		if (Zeny < 10) {
-			mes "[" + getarg(0) + "]";
+			mes "["+ .@npc_name$ +"]";
 			mes "I'm sorry, but you";
 			mes "don't have enough";
 			mes "zeny. The Einbroch";
@@ -125,7 +127,7 @@ function	script	EinTower	{
 			close;
 		}
 		else {
-			mes "[" + getarg(0) + "]";
+			mes "["+ .@npc_name$ +"]";
 			mes "Thank you for";
 			mes "using our services.";
 			mes "Let me guide you to";
@@ -137,14 +139,14 @@ function	script	EinTower	{
 		}
 	case 2:
 		if (Zeny < 20) {
-			mes "[" + getarg(0) + "]";
+			mes "["+ .@npc_name$ +"]";
 			mes "I'm sorry, but you don't";
 			mes "have enough zeny. The";
 			mes "Apple Combo Set is 20 zeny.";
 			close;
 		}
 		else {
-			mes "[" + getarg(0) + "]";
+			mes "["+ .@npc_name$ +"]";
 			mes "Before I guide you to";
 			mes "the tower, let me check";
 			mes "your status to insure";
@@ -152,7 +154,7 @@ function	script	EinTower	{
 			mes "you the Apple Combo Set.";
 			next;
 			if (checkweight(512,1)) {
-				mes "[" + getarg(0) + "]";
+				mes "["+ .@npc_name$ +"]";
 				mes "Thank you for";
 				mes "using our services.";
 				mes "Let me guide you to";
@@ -164,7 +166,7 @@ function	script	EinTower	{
 				end;
 			}
 			else {
-				mes "[" + getarg(0) + "]";
+				mes "["+ .@npc_name$ +"]";
 				mes "I'm sorry, but you're carrying";
 				mes "too many items with you. Please store some of your things in your Kafra Storage before purchasing";
 				mes "the Apple Combo Set.";
@@ -172,7 +174,7 @@ function	script	EinTower	{
 			}
 		}
 	case 3:
-		mes "[" + getarg(0) + "]";
+		mes "["+ .@npc_name$ +"]";
 		mes "I see.";
 		mes "Feel free to";
 		mes "come back any";

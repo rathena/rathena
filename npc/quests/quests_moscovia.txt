@@ -1127,18 +1127,21 @@ mosk_ship,101,111,4	script	rudder#ship	HIDDEN_NPC,{
 	end;
 
 S_Rud1:
+	.@direction = getarg(0);
+	.@monster_setting = getarg(1);
+
 	mes "Which way?";
 	next;
 	setarray .@d$[1],"East","West","South","North";
 	.@j = select(implode(.@d$,":")) -1;
-	if (.@j == getarg(0)) {
+	if (.@j == .@direction) {
 		mes "[Mr. Ibanoff]";
 		mes "Good. Firstly, we should";
-		mes "keep heading "+strtolower(.@d$[getarg(0)])+" this way.";
+		mes "keep heading "+ strtolower(.@d$[.@direction]) +" this way.";
 		mes "When I give the order,";
 		mes "please adjust the rudder again.";
-		if (getarg(1) == 2) .@r = rand(1,4);
-		if (getarg(1) == 2 && .@r == 3) {
+		if (.@monster_setting == 2) .@r = rand(1,4);
+		if (.@monster_setting == 2 && .@r == 3) {
 			next;
 			mes "[Mr. Ibanoff]";
 			mes "Wait! Something has appeared in front of us...";
@@ -1156,15 +1159,15 @@ S_Rud1:
 			else
 				donpcevent "Baehideun3#ship::OnEnable";
 		}
-		mos_whale_edq = (getarg(1) == 2)?((mos_whale_edq >= 241)?((.@r != 3)?26:25):((.@r != 3)?10:11)):(mos_whale_edq + 1);
+		mos_whale_edq = (.@monster_setting == 2)?((mos_whale_edq >= 241)?((.@r != 3)?26:25):((.@r != 3)?10:11)):(mos_whale_edq + 1);
 		close;
 	}
 	mes "[Mr. Ibanoff]";
-	mes "I said that we should go "+.@d$[getarg(0)]+"!";
+	mes "I said that we should go "+ .@d$[.@direction] +"!";
 	mes "You should sail in the right";
-	mes "direction! To the "+strtolower(.@d$[getarg(0)])+"!";
-	if (getarg(1) >= 1) {
-		.@r = (getarg(1) == 1)?5:4;
+	mes "direction! To the "+ strtolower(.@d$[.@direction]) +"!";
+	if (.@monster_setting >= 1) {
+		.@r = (.@monster_setting == 1)?5:4;
 		if (rand(1,.@r) <= 2) {
 			next;
 			mes "[Mr. Ibanoff]";

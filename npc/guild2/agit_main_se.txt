@@ -1728,8 +1728,9 @@ function	script	LinkFlag	{
 // Return Flags (function)
 //============================================================
 function	script	ReturnFlag	{
+	.@map$ = getarg(0);
 	set .@str$, (compare(strnpcinfo(4),"aru"))?"Arunafeltz":"Schwaltzvalt";
-	set .@GID, getcastledata(getarg(0),1);
+	.@GID =  getcastledata(.@map$,1);
 	if (!.@GID) {
 		mes "[ "+.@str$+" Royal Edict ]";
 		mes "The Holy Kingdom of";
@@ -1746,18 +1747,18 @@ function	script	ReturnFlag	{
 		mes "do you wish to return";
 		mes "to your stronghold?";
 		next;
-		if(select("Return to the Stronghold:Cancel") == 1 && getcharid(2) == getcastledata(getarg(0),1)) {
-			if (compare(getarg(0),"arug")) {
-				if (getarg(0) == "arug_cas01") setarray .@i[0],67,193;
-				else if (getarg(0) == "arug_cas02") setarray .@i[0],43,256;
+		if(select("Return to the Stronghold:Cancel") == 1 && getcharid(2) == getcastledata(.@map$,1)) {
+			if (compare(.@map$,"arug")) {
+				if (.@map$ == "arug_cas01") setarray .@i[0],67,193;
+				else if (.@map$ == "arug_cas02") setarray .@i[0],43,256;
 				else setarray .@i[0],121,318;	// Castles 3,4,5 are identical.
 			}
 			else {
-				if (getarg(0) == "schg_cas02") setarray .@i[0],136,188;
-				else if (getarg(0) == "schg_cas03") setarray .@i[0],308,202;
+				if (.@map$ == "schg_cas02") setarray .@i[0],136,188;
+				else if (.@map$ == "schg_cas03") setarray .@i[0],308,202;
 				else setarray .@i[0],120,290;	// Castles 1,4,5 are identical.
 			}
-			warp getarg(0),.@i[0],.@i[1];
+			warp .@map$,.@i[0],.@i[1];
 		}
 		close;
 	}

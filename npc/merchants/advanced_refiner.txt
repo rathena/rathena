@@ -101,11 +101,13 @@ payon,157,146,6	script	Suhnbi#cash	85,{
 	close;
 
 S_RefineValidate:
+	.@weapon_lvl = getarg(0);
+	.@item_req = getarg(1);
 	set .@price, getarg(2);
 
 	// If the VIP system is enabled, the prices for non-VIP players are considerably higher.
 	if (VIP_SCRIPT && !vip_status(1)) {
-		switch(getarg(0)){
+		switch(.@weapon_lvl){
 			case 0: set .@price, .@price * 10; break;
 			case 1: set .@price, .@price * 40; break;
 			case 2: set .@price, .@price * 50; break;
@@ -115,14 +117,14 @@ S_RefineValidate:
 	}
 
 	mes "[Suhnbi]";
-	if (getarg(0))
-		mes "You want to refine a level " + getarg(0) + " weapon?";
-	mes "To refine that, you'll need to have one ^ff9999" + getitemname(getarg(1)) + "^000000 and " + .@price + " zeny.";
+	if (.@weapon_lvl)
+		mes "You want to refine a level "+ .@weapon_lvl +" weapon?";
+	mes "To refine that, you'll need to have one ^ff9999"+ getitemname(.@item_req) +"^000000 and "+ .@price +" zeny.";
 	mes "Would you like to continue?";
 	next;
 	if(select("Yes:No") == 1) {
 		if (getequippercentrefinery(getarg(3)) < 100) {
-			if (getarg(0)) {
+			if (.@weapon_lvl) {
 				mes "[Suhnbi]";
 				mes "Wow!!";
 				mes "This weapon probably";
@@ -161,8 +163,8 @@ S_RefineValidate:
 				}
 			}
 		}
-		if (countitem(getarg(1)) > 0 && Zeny > .@price) {
-			delitem getarg(1),1;
+		if (countitem(.@item_req) > 0 && Zeny > .@price) {
+			delitem .@item_req,1;
 			set Zeny, Zeny - .@price;
 			return;
 		}
