@@ -12368,6 +12368,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	case SA_VOLCANO:
 	case SA_DELUGE:
 	case SA_VIOLENTGALE:
+	case SC_CHAOSPANIC:
 	{
 		struct skill_unit_group *old_sg;
 		if ((old_sg = skill_locate_element_field(src)) != NULL)
@@ -16732,6 +16733,7 @@ int skill_clear_group(struct block_list *bl, int flag)
 			case SA_LANDPROTECTOR:
 			case NJ_SUITON:
 			case NJ_KAENSIN:
+			case SC_CHAOSPANIC:
 				if (flag&1)
 					group[count++] = ud->skillunit[i];
 				break;
@@ -16779,6 +16781,7 @@ struct skill_unit_group *skill_locate_element_field(struct block_list *bl)
 			case NJ_SUITON:
 			case SO_CLOUD_KILL:
 			case SO_WARMER:
+			case SC_CHAOSPANIC:
 				return ud->skillunit[i];
 		}
 	}
