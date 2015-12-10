@@ -6696,7 +6696,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 					}
 				}
 
-				if(sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && !(src->type == BL_MOB && is_boss(src)) ) {
+				if(sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && skill_id != GN_HELLS_PLANT_ATK && !(src->type == BL_MOB && is_boss(src)) ) {
 					uint8 dir = map_calc_dir(bl,src->x,src->y),
 					t_dir = unit_getdir(bl);
 
