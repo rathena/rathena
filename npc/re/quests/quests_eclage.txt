@@ -3037,7 +3037,7 @@ eclage,282,255,4	script	Wuhari#eclbig	4_M_FAIRYKID6,{
 		}
 	}
 	else if (ep14_2_big == 15) {
-		if (checkquest(14131,PLAYTIME) == 1) {
+		if (checkquest(14131,PLAYTIME) == 0) {
 			mes "I'm still in the process of looking through the report. It's very complex, so I'll need more time.";
 			close;
 		}
@@ -10959,7 +10959,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 				mes "I appreciate what you did last time. The earth seemed to be in a good mood, too. I could just feel it. Would you mind helping us again?";
 				erasequest 13059;
 			}
-			else if (checkquest(13059,PLAYTIME) == 1)
+			else if (checkquest(13059,PLAYTIME) == 0)
 				mes "It seems like the earth is feeling well right now. A little break would be nice.";
 			else if (isbegin_quest(13050) == 1) {
 				if (isbegin_quest(13051) == 1 || isbegin_quest(13052) == 1 || isbegin_quest(13053) == 1 || isbegin_quest(13054) == 1)
@@ -10998,7 +10998,7 @@ ecl_fild01,190,93,5	script	Fili#1	4_M_FAIRYANG,1,1,{
 				mes "We should go check if the adventurers are okay.";
 				erasequest 13060;
 			}
-			else if (checkquest(13060,PLAYTIME) == 1) {
+			else if (checkquest(13060,PLAYTIME) == 0) {
 				mes "Should I say it's a relief that they're all alive...? Well...at least it's good that they're still alive.";
 				emotion e_dots;
 			}
@@ -11191,7 +11191,7 @@ ecl_fild01,222,290,5	script	Singing Laphine#1	4_F_FAIRYKID,{
 		mes "Can you...hear the voice of the earth? It sounds very sad right now.";
 	else if (ep14_2_nines != 2) {
 		if (ep14_2_nines > 2) {
-			if (checkquest(13059,PLAYTIME) == 1) {
+			if (checkquest(13059,PLAYTIME) == 0) {
 				mes "Whew, did I sing too much? I'm so thirsty. A glass of rice wine sounds great, hah~";
 				emotion e_spin;
 				close;
@@ -11224,7 +11224,7 @@ ecl_fild01,83,263,5	script	Watering Laphine#1	4_M_FAIRYKID3,{
 	if (ep14_2_nines < 1)
 		mes "I think the earth is running dry.";
 	else if (ep14_2_nines > 2) {
-		if (checkquest(13059,PLAYTIME) == 1)
+		if (checkquest(13059,PLAYTIME) == 0)
 			mes "I think this is enough for the day. I have to take a break and draw water, too. Hehe~!";
 		else if (isbegin_quest(13050) == 1 && isbegin_quest(13052) == 1) {
 			mes "I'll water these dying flowers and grasses again. This brings them back to life! Hehe~!";
@@ -11255,7 +11255,7 @@ ecl_fild01,163,196,5	script	Dancing Laphine#1	4_F_FAIRYKID3,{
 	if (ep14_2_nines < 1)
 		mes "It's important to warm up like this before you start dancing. One, two, three, four....";
 	else if (ep14_2_nines > 2) {
-		if (checkquest(13059,PLAYTIME) == 1)
+		if (checkquest(13059,PLAYTIME) == 0)
 			mes "I would love to see the great Fili next time...";
 		else if (isbegin_quest(13050) == 1 && isbegin_quest(13053) == 1) {
 			mes "Ah, it's you again! You're so insensitive. Anyway, you're here to tell me to start working, right? I see, I see. You can go now.";
@@ -11301,7 +11301,7 @@ ecl_fild01,237,181,5	script	Cute Laphine#1	4_M_FAIRYKID5,{
 	if (ep14_2_nines < 1)
 		mes "Is this the first time that you're seeing a blooming field? It's so beautiful, just like me.";
 	else if (ep14_2_nines > 2) {
-		if (checkquest(13059,PLAYTIME) == 1)
+		if (checkquest(13059,PLAYTIME) == 0)
 			mes "It takes a cute person like me to bring joy to the earth...Too bad that you'll never be able to do so!";
 		else if (isbegin_quest(13050) == 1 && isbegin_quest(13054) == 1) {
 			mes "You're new, right? Tell him I'll start the work.";
@@ -11374,7 +11374,7 @@ OnTouch:
 		mes "I need to get a scoop. Something that will catch the eyes of adventurers!";
 	else {
 		if (ep14_2_nines > 2) {
-			if (checkquest(13060,PLAYTIME) == 1) {
+			if (checkquest(13060,PLAYTIME) == 0) {
 				mes "Anyway, this isn't an ordinary place. This place, it's filled with newsworthy stories!";
 				close;
 			}
@@ -11431,7 +11431,7 @@ OnTouch:
 		mes "I'm exploring every inch of the tower. I'll write about it in my memoirs later.";
 	else if (ep14_2_nines >= 2) {
 		if (ep14_2_nines > 2) {
-			if (checkquest(13060,PLAYTIME) == 1) {
+			if (checkquest(13060,PLAYTIME) == 0) {
 				mes "Don't take me lightly just because I'm young. I've already been to every part of Midgard continent. I'm a real adventurer, you know.";
 				close;
 			}
@@ -11499,7 +11499,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 		.@playtime_13062 = checkquest(13062,PLAYTIME);
 		.@playtime_13064 = checkquest(13064,PLAYTIME);
 		.@playtime_13066 = checkquest(13066,PLAYTIME);
-		if (.@playtime_13062 == 1 && .@playtime_13064 == 1 && .@playtime_13066 == 1) {
+		if (.@playtime_13062 == 0 && .@playtime_13064 == 0 && .@playtime_13066 == 0) {
 			cutin "nines02",2;
 			mes "No need to worry about me! ^FF0000I'll definitely go home this time!^000000 Thanks for everything! I'll take you out for a nice meal next time!";
 			emotion e_thx;
@@ -11542,8 +11542,8 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 				mes "It's from that muscular Laphine, right? He's a good guy. Tell him not to worry about me.";
 				next;
 				mes "[New Oz]";
-				if (.@playtime_13062 >= 1) {
-					if (.@playtime_13064 >= 1)
+				if (.@playtime_13062 >= 0) {
+					if (.@playtime_13064 >= 0)
 						mes "I guess I'll have no problem finding my way out of this tower now. I'm full...and I just need to get a few more souvenirs...";
 					else
 						mes "I'll be fine if only I could get rid of those in my way, haha...We're almost out, right?";
@@ -11557,7 +11557,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 					erasequest 13058;
 				break;
 			case 2:
-				if (.@playtime_13062 == 1) {
+				if (.@playtime_13062 == 0) {
 					cutin "nines02",2;
 					mes "I really liked the meat you brought. Except that it wasn't really well seasoned and the texture was a little crumbly...but...it was still eatable, haha...";
 				}
@@ -11629,7 +11629,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 				}
 				break;
 			case 3:
-				if (.@playtime_13064 == 1) {
+				if (.@playtime_13064 == 0) {
 					cutin "nines02",2;
 					mes "Ahaha, no need to worry about me! I can do this by myself!";
 				}
@@ -11680,7 +11680,7 @@ ecl_tdun03,68,80,3	script	New Oz#1	4_M_NEWOZ,1,1,{
 				}
 				break;
 			case 4:
-				if (.@playtime_13066 == 1) {
+				if (.@playtime_13066 == 0) {
 					cutin "nines03",2;
 					mes "I think I have enough souvenirs! They'll be surprised to see these souvenirs with lots of memories!";
 				}
@@ -13570,7 +13570,7 @@ ecl_in01,82,70,3	script	Eclage Guard#tl02	4_M_FAIRYSOLDIER,{
 			mes "I was notified in advance that the Chief of Staff requested for an audience.";
 			next;
 			mes "[Eclage Guard]";
-			if (checkquest(7416,PLAYTIME) == 1) {
+			if (checkquest(7416,PLAYTIME) == 0) {
 				mes "But I'm afraid it's too early.";
 				mes "I think you have to wait for a while.";
 				close2;
@@ -13658,7 +13658,7 @@ ecl_in01,82,70,3	script	Eclage Guard#tl02	4_M_FAIRYSOLDIER,{
 			}
 		}
 		else {
-			if (checkquest(7429,PLAYTIME) == 1) {
+			if (checkquest(7429,PLAYTIME) == 0) {
 				mes "I have to decorate Yai with the materials you brought me the other day, but I don't know when I could leave...";
 				mes "I hope time passes as quickly as possible. ";
 			}
@@ -13916,7 +13916,7 @@ ecl_in03,245,93,3	script	Chief of Staff#tl01	4_F_FAIRY,{
 	}
 	mes "[Shenime]";
 	if (ep14_2_mylord == 5) {
-		if (checkquest(7416,PLAYTIME) == 1) {
+		if (checkquest(7416,PLAYTIME) == 0) {
 			mes "You need to wait a little longer to see Mayor Jun.";
 			mes "He is pretty busy, so please bear with us.";
 			close;
@@ -14435,7 +14435,7 @@ ecl_in03,41,90,3	script	Mayor Jun Kardui#tl01	4_M_FARIYKING,{
 		mes "Do you think I, who inherited the will of Yggdrasil, don't know anything?";
 		mes "I don't blame you since it is ignorance.";
 		next;
-		mes "[";
+		mes "[Kardui]";
 		mes "The war of Jotunheim will soon be over.";
 		mes "And it will happen not by constraint, but as a result of mutual agreement.";
 		next;
@@ -14446,7 +14446,7 @@ ecl_in03,41,90,3	script	Mayor Jun Kardui#tl01	4_M_FARIYKING,{
 		next;
 		select("Then why do you make war and disregard the truth?");
 		cutin "kardui02",1;
-		mes "[";
+		mes "[Kardui]";
 		mes "Hmm...";
 		mes "I'll tell you when we get closer to each other.";
 		mes "I'm not obligated to talk about this important subject with a person I just met.";
@@ -15697,7 +15697,7 @@ eclage,112,40,3	script	Eclage Guard Leo#tl	4_M_FAIRYSOLDIER2,{
 		close;
 	}
 	.@daytime = checkquest(7433,PLAYTIME);
-	if (.@daytime == 1) {
+	if (.@daytime == 0) {
 		mes "They never get exhasted.";
 		mes "There has been a stream of complaints regarding safety from travellers. ";
 		mes "Seriously...they're so annoying.";
@@ -15949,7 +15949,7 @@ ecl_fild01,205,86,3	script	Eclage Messenger Roy#tl	4_M_FAIRYSOLDIER2,{
 	}
 	else {
 		.@checktime = checkquest(7431,PLAYTIME);
-		if (.@checktime == 1) {
+		if (.@checktime == 0) {
 			mes "There are just too many useless letters.";
 			mes "What's even worse is that long-distance couples send love letters and...";
 			mes "Why a messenger like me has to listen to other people's love stories?";
@@ -16342,7 +16342,7 @@ ecl_tdun04,32,35,3	script	Hisie#tlord	4_M_FARIY_HISIE,{
 		mes "It will only take a few minutes. ";
 	}
 	else if (ep14_2_mylord == 15) {
-		if (checkquest(7435,PLAYTIME) == 1) {
+		if (checkquest(7435,PLAYTIME) == 0) {
 			cutin "hisie01",0;
 			mes "Not yet, I'm still reading.";
 			mes "Just a minute.";
@@ -17005,7 +17005,7 @@ que_avan01,18,38,0	script	Desk#tl01	CLEAR_NPC,{
 			mes "Take this first.";
 			mes "I'll get Avant.";
 			ep14_2_mylord = 22;
-			delitem 6541,1; //Avant_Research_Data
+			getitem 6541,1; //Avant_Research_Data
 			changequest 7443,7444;
 			next;
 			switch( select("Let Hisie handle it.:I'm taking care of this place!") ) {

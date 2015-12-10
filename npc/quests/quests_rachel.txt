@@ -4233,7 +4233,7 @@ S_Donate:
 	else {
 		mes "[Priestess Nemma]";
 		mes "I'm sorry, but you have";
-		mes "less than "+@Donate$+" zeny...";
+		mes "less than "+ (.@num *50000) +" zeny...";
 		mes "I know it's asking a lot,";
 		mes "but those are the rules that";
 		mes "I've been told to follow, so...";
