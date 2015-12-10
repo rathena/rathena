@@ -1941,14 +1941,15 @@ static void mob_item_drop(struct mob_data *md, struct item_drop_list *dlist, str
 	sd = map_charid2sd(dlist->first_charid);
 	if( sd == NULL ) sd = map_charid2sd(dlist->second_charid);
 	if( sd == NULL ) sd = map_charid2sd(dlist->third_charid);
-	test_autoloot = (drop_rate <= sd->state.autoloot || pc_isautolooting(sd, ditem->item_data.nameid))
+	test_autoloot = sd 
+		&& (drop_rate <= sd->state.autoloot || pc_isautolooting(sd, ditem->item_data.nameid))
 		&& (battle_config.idle_no_autoloot == 0 || DIFF_TICK(last_tick, sd->idletime) < battle_config.idle_no_autoloot)
 		&& (battle_config.homunculus_autoloot?1:!flag);
 #ifdef AUTOLOOT_DISTANCE
 		test_autoloot = test_autoloot && sd->bl.m == md->bl.m
 		&& check_distance_blxy(&sd->bl, dlist->x, dlist->y, AUTOLOOT_DISTANCE);
 #endif
-	if( sd && test_autoloot) {	//Autoloot.
+	if( test_autoloot ) {	//Autoloot.
 		struct party_data *p = party_search(sd->status.party_id);
 
 		if (party_share_loot(party_search(sd->status.party_id),
