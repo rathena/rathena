@@ -3780,7 +3780,7 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			sd->hp_vanish_race[type2].per += val;
 		}
 		break;
-	case SP_STATE_NORECOVER_RACE:
+	case SP_STATE_NORECOVER_RACE: // bonus3 bStateNoRecoverRace,r,x,t;
 		PC_BONUS_CHK_RACE(type2, SP_STATE_NORECOVER_RACE);
 		if (sd->state.lr_flag == 2)
 			break;

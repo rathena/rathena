@@ -1896,7 +1896,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					0, 0, 0, sd->mdef_set_race[tstatus->race].tick, SCSTART_NOTICKDEF);
 			if (sd->norecover_state_race[tstatus->race].rate)
 				status_change_start(src, bl, SC_NORECOVER_STATE, sd->norecover_state_race[tstatus->race].rate,
-					0, 0, 0, 0, sd->norecover_state_race[tstatus->race].tick, SCSTART_NOTICKDEF);
+					0, 0, 0, 0, sd->norecover_state_race[tstatus->race].tick, SCSTART_NONE);
 		}
 	}
 
