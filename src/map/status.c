@@ -11,6 +11,7 @@
 #include "../common/ers.h"
 #include "../common/strlib.h"
 
+#include "battle.h"
 #include "map.h"
 #include "path.h"
 #include "pc.h"
@@ -12262,7 +12263,10 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			if( !src || (src && (status_isdead(src) || src->m != bl->m || distance_bl(src, bl) >= 12)) )
 				break;
 			map_freeblock_lock();
-			damage =  200 + 100 * sce->val1 + status_get_int(src);
+			if (is_infinite_defense(bl, BF_MISC)) // Only does 1 damage to infinte defense type.
+				damage = 1;
+			else
+				damage =  200 + 100 * sce->val1 + status_get_int(src);
 			status_damage(src, bl, damage, 0, clif_damage(bl,bl,tick,status->amotion,status->dmotion+200,damage,1,DMG_NORMAL,0), 0);
 			unit_skillcastcancel(bl,1);
 			if ( sc->data[type] ) {
