@@ -7,6 +7,7 @@
 #include "../common/mmo.h" // MAX_SKILL, struct square
 #include "../common/db.h"
 #include "map.h" // struct block_list
+#include "battle.h" // enum damage_lv
 struct map_session_data;
 struct homun_data;
 struct skill_unit;
