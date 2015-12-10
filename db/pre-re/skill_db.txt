@@ -1069,7 +1069,7 @@
 2301,7,6,2,0,0x1,0,3,1,yes,0,0x20000,0,magic,0,0x0,	SC_CHAOSPANIC,Chaos Panic
 2302,7,6,2,0,0x1,0,3,1,yes,0,0x20000,1,magic,0,0x0,	SC_MAELSTROM,Maelstrom
 2303,7,6,2,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SC_BLOODYLUST,Bloody Lust
-2304,0,6,4,-1,0,0,3,1,no,0,0,0,weapon,0,0x0,	SC_FEINTBOMB,Feint Bomb
+2304,0,6,4,-1,0,0,3,1,no,0,0,0,weapon,3:6:9,0x0,	SC_FEINTBOMB,Feint Bomb
 
 //****
 // LG Royal Guard
@@ -1317,7 +1317,7 @@
 5007,0,6,4,0,0x3,5:6:7:8:9,5,1,no,0,0,0,none,0,0x0, WM_FRIGG_SONG,Frigg's Song
 5008,0,6,4,0,0x3,11,5,1,no,0,0,0,none,0,0x0, SO_ELEMENTAL_SHIELD,Elemental Shield
 5009,1,6,1,0,0x1,0,5,1,no,0,0,0,none,0,0x0, SR_FLASHCOMBO,Flash Combo
-5010,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0, SC_ESCAPE,Emergency Escape
+5010,0,6,4,0,0x1,0,5,1,no,0,0,0,none,4:5:6:7:8:9,0x0, SC_ESCAPE,Emergency Escape
 5011,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0, AB_OFFERTORIUM,Offertorium
 5012,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0, WL_TELEKINESIS_INTENSE,Intense Telekinesis
 5013,0,6,4,0,0x3,0,5,1,no,0,0,0,none,0,0x0, LG_KINGS_GRACE,King's Grace

@@ -3994,13 +3994,6 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 						skill_castend_damage_id(src, target, skl->skill_id, pc_checkskill(((TBL_PC *)src), use_skill_lv[skl->skill_id-SR_FLASHCOMBO_ATK_STEP1]), tick, 0);
 					}
 					break;
-				case SC_ESCAPE:
-					if( skl->type < 4 + skl->skill_lv ) {
-						clif_skill_damage(src, src, tick, 0, 0, -30000, 1, skl->skill_id, skl->skill_lv, 5);
-						skill_blown(src, src, 1, unit_getdir(src), 0);
-						skill_addtimerskill(src, tick + 80, src->id, 0, 0, skl->skill_id, skl->skill_lv, skl->type + 1, 0);
-					}
-					break;
 				case RL_SLUGSHOT:
 					if (target->type == BL_PC)
 						sc_start(src, target, SC_SITDOWN_FORCE, 100, skl->skill_lv, skill_get_time(skl->skill_id, skl->skill_lv));
@@ -11780,14 +11773,14 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 	case SC_FEINTBOMB:
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0); // Set bomb on current Position
-		skill_blown(src,src,3*skill_lv,unit_getdir(src),0);
+		skill_blown(src,src,skill_get_blewcount(skill_id, skill_lv),unit_getdir(src),0);
 		clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time2(skill_id,skill_lv)));
 		break;
 
 	case SC_ESCAPE:
+		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
+		skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), 0);
 		clif_skill_nodamage(src,src,skill_id,skill_lv,1);
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-		skill_addtimerskill(src,tick,src->id,0,0,skill_id,skill_lv,0,0);
 		flag |= 1;
 		break;
 
