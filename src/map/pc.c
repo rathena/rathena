@@ -5628,11 +5628,14 @@ short pc_checkequip(struct map_session_data *sd,int pos)
  * @max : see pc.h enum equip_index for @min to ?
  * -return true,false
  *------------------------------------------*/
-bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min, int max){
+bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min, int max)
+{
 	int i;
-	for(i=min;i<max;i++){
-		if(equip_pos[i]){
+
+	for(i = min; i < max; i++) {
+		if(equip_pos[i]) {
 			int idx = sd->equip_index[i];
+
 			if (sd->status.inventory[idx].nameid == nameid)
 				return true;
 		}

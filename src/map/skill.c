@@ -15188,8 +15188,8 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
 					return false;
 				}
-				continue;
-			}
+			} else
+				break; // Wearing an applicable item.
 		}
 	}
 
