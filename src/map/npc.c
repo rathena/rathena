@@ -1360,8 +1360,6 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 		clif_broadcast(&sd->bl,output,strlen(output) + 1,BC_BLUE,SELF);
 	}
 
-	// reset the callshop state for future calls
-	sd->state.callshop = 0;
 	sd->npc_shopid = id;
 
 	if (type == 0) {
