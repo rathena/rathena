@@ -116,9 +116,9 @@ enum e_skill_display {
 
 /// Single skill requirement. !TODO: Cleanup the variable types
 struct skill_condition {
-	uint32 hp;								 ///< HP cost
-	uint32 mhp;								 ///< Max HP to trigger
-	uint32 sp;								 /// SP cost
+	int32 hp;								 ///< HP cost
+	int32 mhp;								 ///< Max HP to trigger
+	int32 sp;								 /// SP cost
 	int16 hp_rate;							 /// HP cost (%)
 	int16 sp_rate;							 /// SP cost (%)
 	uint32 zeny;							 /// Zeny cost
