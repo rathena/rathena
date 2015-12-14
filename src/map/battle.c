@@ -4439,8 +4439,8 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 				RE_ALLATK_ADDRATE(wd, sc->data[SC_MTF_RANGEATK]->val1);
 			}
 			if (sc->data[SC_MTF_RANGEATK2]) {
-				ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_MTF_RANGEATK]->val1);
-				RE_ALLATK_ADDRATE(wd, sc->data[SC_MTF_RANGEATK]->val1);
+				ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_MTF_RANGEATK2]->val1);
+				RE_ALLATK_ADDRATE(wd, sc->data[SC_MTF_RANGEATK2]->val1);
 			}
 		}
 	}
