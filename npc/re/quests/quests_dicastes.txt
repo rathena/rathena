@@ -356,7 +356,7 @@ OnEnable:
 		mes "- Cannot communicate with him. -";
 		close;	
 	}
-	if (ep13_3_invite < 4) {
+	if (ep13_3_invite < 5) {
 		mes "[Capital City Guard]";
 		mes "Access to the city is restricted from other races without permits.";
 		mes "Please go back.";
