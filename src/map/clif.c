@@ -1115,12 +1115,12 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,55) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,59) = status_get_hp(bl);		// HP
-		WBUFB(buf,63) = ((((TBL_MOB*)bl)->db->mexp > 0) ) ? 1 : 0;		// isBoss
 	} else {
 		WBUFL(buf,55) = -1;		// maxHP
 		WBUFL(buf,59) = -1;		// HP
-		WBUFB(buf,63) = 0;		// isBoss
 	}
+
+	WBUFB(buf,63) = ( bl->type == BL_MOB && (((TBL_MOB*)bl)->db->mexp > 0) ) ? 1 : 0;		// isBoss
 #endif
 #if PACKETVER >= 20150513
 	WBUFW(buf,64) = 0;		// body
@@ -1258,12 +1258,12 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,62) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,66) = status_get_hp(bl);		// HP
-		WBUFB(buf,70) = ((((TBL_MOB*)bl)->db->mexp > 0) ) ? 1 : 0;		// isBoss
 	} else {
 		WBUFL(buf,62) = -1;		// maxHP
 		WBUFL(buf,66) = -1;		// HP
-		WBUFB(buf,70) = 0;		// isBoss
 	}
+
+	WBUFB(buf,70) = ( bl->type == BL_MOB && (((TBL_MOB*)bl)->db->mexp > 0) ) ? 1 : 0;		// isBoss
 #endif
 #if PACKETVER >= 20150513
 	WBUFW(buf,71) = 0;		// body
@@ -4572,7 +4572,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect_single(bl,421,sd->fd);
 #if PACKETVER >= 20120404
-			if( !(md->status.mode&MD_BOSS) && battle_config.monster_hp_bars_info){
+			if( battle_config.monster_hp_bars_info){
 				int i;
 				for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
 					if( md->dmglog[i].id == sd->status.char_id )
