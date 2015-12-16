@@ -18486,8 +18486,7 @@ void clif_broadcast_obtain_special_item(const char *char_name, unsigned short na
 	clif_send(buf, WBUFW(buf, 2), NULL, ALL_CLIENT);
 }
 
-void clif_dressing_room(struct map_session_data *sd, int view)
-{
+void clif_dressing_room(struct map_session_data *sd, int view) {
 	int fd;
 
 	nullpo_retv(sd);
@@ -18497,6 +18496,32 @@ void clif_dressing_room(struct map_session_data *sd, int view)
 	WFIFOW(fd,0) = 0xa02;
 	WFIFOW(fd,2) = view;
 	WFIFOSET(fd, packet_len(0xa02));
+}
+
+/// Parsing a request from the client item identify oneclick (CZ_REQ_ONECLICK_ITEMIDENTIFY).
+/// 0A35 <result>.W
+void clif_parse_Oneclick_Itemidentify(int fd, struct map_session_data *sd) {
+#if PACKETVER >= 20150513
+	short idx = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]) - 2;
+	int i;
+
+    // Invalid index - ignore the request
+    if ( idx < 0 )
+        return;
+
+    // Item already identified - ignore the request
+    if ( sd->status.inventory[idx].identify )
+        return;
+
+    if ( ( i = pc_search_inventory(sd,ITEMID_MAGNIFIER) ) == -1 )
+        return;
+
+    if ( pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER) != 0 ) {
+        // TODO: deleting magnifier failed, for whatever reason...
+    }
+
+    skill_identify(sd, idx);
+#endif
 }
 
 /*==========================================
@@ -18900,7 +18925,7 @@ void packetdb_readdb(bool reload)
 #endif
 		-1,  0,  0, 26,  0,  0,  0,  0,  14,  2, 23,  2, -1,  2,  3,  2,
 	   21,  3,  5,  0, 66,  0,  0,  0,  3,  0,  0,  0,  0,  -1,  0,  0,
- 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+ 		0,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);
@@ -19137,6 +19162,8 @@ void packetdb_readdb(bool reload)
 		{ clif_parse_merge_item_cancel, "mergeitem_cancel"},
 		// HotkeyRowShift
 		{ clif_parse_HotkeyRowShift, "hotkeyrowshift"},
+		// OneClick Item Identify
+		{ clif_parse_Oneclick_Itemidentify, "oneclick_itemidentify" },
 		{NULL,NULL}
 	};
 	struct {
