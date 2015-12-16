@@ -18518,6 +18518,7 @@ void clif_parse_Oneclick_Itemidentify(int fd, struct map_session_data *sd) {
 
     if ( pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER) != 0 ) {
         // TODO: deleting magnifier failed, for whatever reason...
+		return;
     }
 
     skill_identify(sd, idx);
