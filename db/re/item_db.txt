@@ -9746,7 +9746,7 @@
 19633,C_Flower_Band,Costume Flower Band,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,5,{},{},{}
 19634,C_Flu_Mask,Costume Flu Mask,4,10,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,1,8,{},{},{}
 19635,C_Mini_Propeller,Costume Mini Propeller,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,46,{},{},{}
-19636,C_Clown_Nose,Costume Clown Nose,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,49,{},{},{}
+19636,C_Clown_Nose,Costume Clown Nose,4,10,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,1,49,{},{},{}
 19637,C_Nurse_Cap,Costume Nurse Cap,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,64,{},{},{}
 19638,C_Mr._Smile,Costume Mr. Smile,4,10,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,1,65,{},{},{}
 19639,C_Sakkat,Costume Sakkat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,67,{},{},{}
