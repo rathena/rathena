@@ -6048,19 +6048,29 @@ void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char
 	WFIFOSET(sd->fd, msg_len + 12);
 }
 
-/// Displays heal effect (ZC_RECOVERY).
-/// 013d <var id>.W <amount>.W
+/// Displays heal effect.
+/// 013d <var id>.W <amount>.W (ZC_RECOVERY)
+/// 0a27 <var id>.W <amount>.L (ZC_RECOVERY2)
 /// var id:
 ///     5 = HP (SP_HP)
 ///     7 = SP (SP_SP)
 ///     ? = ignored
-void clif_heal(int fd,int type,int val)
-{
-	WFIFOHEAD(fd,packet_len(0x13d));
-	WFIFOW(fd,0)=0x13d;
-	WFIFOW(fd,2)=type;
-	WFIFOW(fd,4)=cap_value(val,0,INT16_MAX);
-	WFIFOSET(fd,packet_len(0x13d));
+void clif_heal(int fd,int type,int val) {
+#if PACKETVER < 20150513
+	const int cmd = 0x13d;
+#else
+	const int cmd = 0xa27;
+#endif
+
+	WFIFOHEAD(fd, packet_len(cmd));
+	WFIFOW(fd,0) = cmd;
+	WFIFOW(fd,2) = type;
+#if PACKETVER < 20150513
+	WFIFOW(fd,4) = min(val, INT16_MAX);
+#else
+	WFIFOL(fd,4) = min(val, INT32_MAX);
+#endif
+	WFIFOSET(fd, packet_len(cmd));
 }
 
 
@@ -16237,29 +16247,39 @@ void clif_readbook(int fd, int book_id, int page)
 /// Battlegrounds
 ///
 
-/// Updates HP bar of a camp member (ZC_BATTLEFIELD_NOTIFY_HP).
-/// 02e0 <account id>.L <name>.24B <hp>.W <max hp>.W
-void clif_bg_hp(struct map_session_data *sd)
-{
+/// Updates HP bar of a camp member.
+/// 02e0 <account id>.L <name>.24B <hp>.W <max hp>.W (ZC_BATTLEFIELD_NOTIFY_HP)
+/// 0a0e <account id>.L <hp>.L <max hp>.L (ZC_BATTLEFIELD_NOTIFY_HP2)
+void clif_bg_hp(struct map_session_data *sd) {
+#if PACKETVER < 20140613
 	unsigned char buf[34];
 	const int cmd = 0x2e0;
+#else
+	unsigned char buf[14];
+	const int cmd = 0xa0e;
+#endif
 	nullpo_retv(sd);
 
 	WBUFW(buf,0) = cmd;
 	WBUFL(buf,2) = sd->status.account_id;
-	memcpy(WBUFP(buf,6), sd->status.name, NAME_LENGTH);
-
-	if( sd->battle_status.max_hp > INT16_MAX )
-	{ // To correctly display the %hp bar. [Skotlex]
+#if PACKETVER < 20140613
+    memcpy(WBUFP(buf,6), sd->status.name, NAME_LENGTH);
+    if( sd->battle_status.max_hp > INT16_MAX ) { // To correctly display the %hp bar. [Skotlex]
 		WBUFW(buf,30) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
-		WBUFW(buf,32) = 100;
-	}
-	else
-	{
+        WBUFW(buf,32) = 100;
+    } else {
 		WBUFW(buf,30) = sd->battle_status.hp;
 		WBUFW(buf,32) = sd->battle_status.max_hp;
-	}
-
+    }
+#else
+    if( sd->battle_status.max_hp > INT32_MAX ) {
+		WBUFL(buf,6) = sd->battle_status.hp/(sd->battle_status.max_hp/100);
+		WBUFL(buf,10) = 100;
+    } else {
+		WBUFL(buf,6) = sd->battle_status.hp;
+		WBUFL(buf,10) = sd->battle_status.max_hp;
+    }
+#endif
 	clif_send(buf, packet_len(cmd), &sd->bl, BG_AREA_WOS);
 }
 
@@ -18920,12 +18940,12 @@ void packetdb_readdb(bool reload)
 		0, 11, 12, 11,  0,  0,  0,  75,  -1,143,  0,  0,  0,  -1,  -1,  -1,
 	//#0x0A00
 #if PACKETVER >= 20141022
-	  269,  3,  4,  2,  6, 49,  6,  9, 26, 45, 47, 47, 56, -1,  0,  -1,
+	  269,  3,  4,  2,  6, 49,  6,  9, 26, 45, 47, 47, 56, -1,  14,  -1,
 #else
-	  269,  0,  0,  2,  6, 48,  6,  9, 26, 45, 47, 47, 56, -1,  0,  0,
+	  269,  0,  0,  2,  6, 48,  6,  9, 26, 45, 47, 47, 56, -1,  14,  0,
 #endif
 		-1,  0,  0, 26,  0,  0,  0,  0,  14,  2, 23,  2, -1,  2,  3,  2,
-	   21,  3,  5,  0, 66,  0,  0,  0,  3,  0,  0,  0,  0,  -1,  0,  0,
+	   21,  3,  5,  0, 66,  0,  0,  8,  3,  0,  0,  0,  0,  -1,  0,  0,
  		0,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
 	struct {
