@@ -448,8 +448,8 @@ temporary - They cease to exist when the server resets.
 
 Prefix: scope and extent
 nothing  - A permanent variable attached to the character, the default variable
-           type. They are stored by char-server in the `global_acc_reg_num` and
-           `global_acc_reg_str`.
+           type. They are stored by char-server in the `char_reg_num` and
+           `char_reg_str`.
 "@"      - A temporary variable attached to the character.
            SVN versions before 2094 revision and RC5 version will also treat
            'l' as a temporary variable prefix, so beware of having variable
@@ -475,10 +475,11 @@ nothing  - A permanent variable attached to the character, the default variable
            These are used with the instancing system, and are unique to each 
            party's instance.
 "#"      - A permanent local account variable.
-           They are stored by char-server in the `char_reg_num` table and
-           `char_reg_str`.
+           They are stored by char-server in the `acc_reg_num` table and
+           `acc_reg_str`.
 "##"     - A permanent global account variable stored by the login server.
-           They are stored in the `acc_reg_num` table and `acc_reg_str`.
+           They are stored in the `global_acc_reg_num` table and
+		   `global_acc_reg_str`.
            The only difference you will note from normal # variables is when
            you have multiple char-servers connected to the same login server.
            The # variables are unique to each char-server, while the ## variables
