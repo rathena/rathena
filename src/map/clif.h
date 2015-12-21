@@ -668,7 +668,7 @@ void clif_closevendingboard(struct block_list* bl, int fd);
 void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* vending);
 void clif_buyvending(struct map_session_data* sd, int index, int amount, int fail);
 void clif_openvending(struct map_session_data* sd, int id, struct s_vending* vending);
-void clif_vendingreport(struct map_session_data* sd, int index, int amount);
+void clif_vendingreport(struct map_session_data* sd, int index, int amount, uint32 char_id, int zeny);
 
 void clif_movetoattack(struct map_session_data *sd,struct block_list *bl);
 
@@ -891,7 +891,7 @@ void clif_buyingstore_disappear_entry(struct map_session_data* sd);
 void clif_buyingstore_disappear_entry_single(struct map_session_data* sd, struct map_session_data* pl_sd);
 void clif_buyingstore_itemlist(struct map_session_data* sd, struct map_session_data* pl_sd);
 void clif_buyingstore_trade_failed_buyer(struct map_session_data* sd, short result);
-void clif_buyingstore_update_item(struct map_session_data* sd, unsigned short nameid, unsigned short amount);
+void clif_buyingstore_update_item(struct map_session_data* sd, unsigned short nameid, unsigned short amount, uint32 char_id, int zeny);
 void clif_buyingstore_delete_item(struct map_session_data* sd, short index, unsigned short amount, int price);
 void clif_buyingstore_trade_failed_seller(struct map_session_data* sd, short result, unsigned short nameid);
 

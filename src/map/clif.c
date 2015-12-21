@@ -7065,20 +7065,29 @@ void clif_openvending(struct map_session_data* sd, int id, struct s_vending* ven
 }
 
 
-/// Inform merchant that someone has bought an item (ZC_DELETEITEM_FROM_MCSTORE).
-/// 0137 <index>.W <amount>.W
-void clif_vendingreport(struct map_session_data* sd, int index, int amount)
-{
-	int fd;
+/// Inform merchant that someone has bought an item.
+/// 0137 <index>.W <amount>.W (ZC_DELETEITEM_FROM_MCSTORE).
+/// 09e5 <index>.W <amount>.W <GID>.L <Date>.L <zeny>.L (ZC_DELETEITEM_FROM_MCSTORE2).
+void clif_vendingreport(struct map_session_data* sd, int index, int amount, uint32 char_id, int zeny) {
+#if PACKETVER < 20141016		// TODO : not sure for client date [Napster]
+	const int cmd = 0x137;
+#else
+	const int cmd = 0x9e5;
+#endif
+	int fd = sd->fd;
 
 	nullpo_retv(sd);
 
-	fd = sd->fd;
-	WFIFOHEAD(fd,packet_len(0x137));
-	WFIFOW(fd,0) = 0x137;
+	WFIFOHEAD(fd,packet_len(cmd));
+	WFIFOW(fd,0) = cmd;
 	WFIFOW(fd,2) = index+2;
 	WFIFOW(fd,4) = amount;
-	WFIFOSET(fd,packet_len(0x137));
+#if PACKETVER >= 20141016
+	WFIFOL(fd,6) = char_id;	// GID
+	WFIFOL(fd,10) = (int)time(NULL);	// Date
+	WFIFOL(fd,14) = zeny;		// zeny
+#endif
+	WFIFOSET(fd,packet_len(cmd));
 }
 
 
@@ -16946,18 +16955,33 @@ void clif_buyingstore_trade_failed_buyer(struct map_session_data* sd, short resu
 }
 
 
-/// Updates the zeny limit and an item in the buying store item list (ZC_UPDATE_ITEM_FROM_BUYING_STORE).
-/// 081b <name id>.W <amount>.W <limit zeny>.L
-void clif_buyingstore_update_item(struct map_session_data* sd, unsigned short nameid, unsigned short amount)
-{
+/// Updates the zeny limit and an item in the buying store item list.
+/// 081b <name id>.W <amount>.W <limit zeny>.L (ZC_UPDATE_ITEM_FROM_BUYING_STORE)
+/// 09e6 <name id>.W <amount>.W <zeny>.L <limit zeny>.L <GID>.L <Date>.L (ZC_UPDATE_ITEM_FROM_BUYING_STORE2)
+void clif_buyingstore_update_item(struct map_session_data* sd, unsigned short nameid, unsigned short amount, uint32 char_id, int zeny) {
+#if PACKETVER < 20141016		// TODO : not sure for client date [Napster]
+	const int cmd = 0x81b;
+#else
+	const int cmd = 0x9e6;
+#endif
+	int offset = 0;
 	int fd = sd->fd;
 
-	WFIFOHEAD(fd,packet_len(0x81b));
-	WFIFOW(fd,0) = 0x81b;
+	WFIFOHEAD(fd,packet_len(cmd));
+	WFIFOW(fd,0) = cmd;
 	WFIFOW(fd,2) = nameid;
 	WFIFOW(fd,4) = amount;  // amount of nameid received
-	WFIFOL(fd,6) = sd->buyingstore.zenylimit;
-	WFIFOSET(fd,packet_len(0x81b));
+#if PACKETVER >= 20141016
+	WFIFOL(fd,6) = zeny;		// zeny
+	offset += 4;
+#endif
+	WFIFOL(fd,6+offset) = sd->buyingstore.zenylimit;
+#if PACKETVER >= 20141016
+	WFIFOL(fd,10+offset) = char_id;		// GID
+	WFIFOL(fd,14+offset) = (int)time(NULL);		// date
+#endif
+
+	WFIFOSET(fd,packet_len(cmd));
 }
 
 
@@ -18936,7 +18960,7 @@ void packetdb_readdb(bool reload)
 	//#0x09C0
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 23,  0,  0,  0,102,  0,
 		0,  0,  0,  0,  2,  0, -1, -1,  2,  0,  0,  -1,  -1,  -1,  0,  7,
-		0,  0,  0,  0,  0,  0,  0,  3, 11,  0, 11, -1,  0,  3, 11,  0,
+		0,  0,  0,  0,  0,  18,  22,  3, 11,  0, 11, -1,  0,  3, 11,  0,
 		0, 11, 12, 11,  0,  0,  0,  75,  -1,143,  0,  0,  0,  -1,  -1,  -1,
 	//#0x0A00
 #if PACKETVER >= 20141022
