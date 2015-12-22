@@ -10735,8 +10735,9 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 	if (inf && battle_check_target(src, target, inf) <= 0)
 		return USESKILL_FAIL_LEVEL;
 
-	//Fogwall makes all offensive-type targetted skills fail at 75%
-	if (inf&BCT_ENEMY && tsc && tsc->data[SC_FOGWALL] && rnd() % 100 < 75)
+	// Fogwall makes all offensive-type targetted skills fail at 75%
+	// Jump Kick can still fail even though you can jump to friendly targets.
+	if ((inf&BCT_ENEMY || skill_id == TK_JUMPKICK) && tsc && tsc->data[SC_FOGWALL] && rnd() % 100 < 75)
 		return USESKILL_FAIL_LEVEL;
 
 	return -1;
