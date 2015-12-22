@@ -8573,6 +8573,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_DEEPSLEEP:
 			case SC_NETHERWORLD:
 			case SC_CRYSTALIZE:
+			case SC_MANDRAGORA:
 			case SC_DEFSET:
 			case SC_MDEFSET:
 			case SC_NORECOVER_STATE:
