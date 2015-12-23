@@ -1341,9 +1341,6 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 	}
 	if (nd->sc.option & OPTION_INVISIBLE) // can't buy if npc is not visible (hack?)
 		return 1;
-	if( nd->class_ < 0 && !sd->state.callshop ) {// not called through a script and is not a visible NPC so an invalid call
-		return 1;
-	}
 
 	if (nd->subtype == NPCTYPE_ITEMSHOP) {
 		char output[CHAT_SIZE_MAX];
