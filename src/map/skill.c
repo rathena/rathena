@@ -16927,7 +16927,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 				return 1;
 			}
 			//It deletes everything except traps and barriers
-			if( (!(skill_get_inf2(unit->group->skill_id)&(INF2_TRAP)) && !(skill_get_inf3(unit->group->skill_id)&(INF3_NOLP)) ) || unit->group->skill_id == WZ_FIREPILLAR ) {
+			if ((!(skill_get_inf2(unit->group->skill_id)&(INF2_TRAP)) && !(skill_get_inf3(unit->group->skill_id)&(INF3_NOLP))) || unit->group->skill_id == WZ_FIREPILLAR || unit->group->skill_id == GN_HELLS_PLANT) {
 				skill_delunit(unit);
 				return 1;
 			}
