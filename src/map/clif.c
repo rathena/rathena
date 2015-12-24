@@ -9699,8 +9699,7 @@ void clif_msg_skill(struct map_session_data* sd, uint16 skill_id, int msg_id)
 /// Returns true if the packet was parsed successfully.
 /// Formats: 0 - <packet id>.w <packet len>.w (<name> : <message>).?B 00
 ///          1 - <packet id>.w <packet len>.w <name>.24B <message>.?B 00
-static bool clif_process_message(struct map_session_data* sd, int format, char** name_, int* namelen_, char** message_, int* messagelen_)
-{
+static bool clif_process_message(struct map_session_data* sd, int format, char** name_, int* namelen_, char** message_, int* messagelen_) {
 	char *text, *name, *message;
 	unsigned int packetlen, textlen, namelen, messagelen;
 	int fd = sd->fd;
@@ -9713,8 +9712,7 @@ static bool clif_process_message(struct map_session_data* sd, int format, char**
 
 	packetlen = RFIFOW(fd,info->pos[0]);
 	// basic structure checks
-	if( packetlen < 4 + 1 )
-	{	// 4-byte header and at least an empty string is expected
+	if( packetlen < 4 + 1 ) {	// 4-byte header and at least an empty string is expected
 		ShowWarning("clif_process_message: Received malformed packet from player '%s' (no message data)!\n", sd->status.name);
 		return false;
 	}
@@ -9723,8 +9721,7 @@ static bool clif_process_message(struct map_session_data* sd, int format, char**
 	textlen = packetlen - 4;
 
 	// process <name> part of the packet
-	if( format == 0 )
-	{// name and message are separated by ' : '
+	if( format == 0 ) {	// name and message are separated by ' : '
 		// validate name
 		name = text;
 		namelen = strnlen(sd->status.name, NAME_LENGTH-1); // name length (w/o zero byte)
@@ -9740,16 +9737,9 @@ static bool clif_process_message(struct map_session_data* sd, int format, char**
 
 		message = name + namelen + 3;
 		messagelen = textlen - namelen - 3; // this should be the message length (w/ zero byte included)
-
-#if PACKETVER >= 20150900
-		message[messagelen] = '\0';
-		messagelen++;
-#endif	
-	}
-	else
-	{// name has fixed width
-		if( textlen < NAME_LENGTH + 1 )
-		{
+	} else {
+		// name has fixed width
+		if( textlen < NAME_LENGTH + 1 ) {
 			ShowWarning("clif_process_message: Received malformed packet from player '%s' (packet length is incorrect)!\n", sd->status.name);
 			return false;
 		}
@@ -9758,8 +9748,8 @@ static bool clif_process_message(struct map_session_data* sd, int format, char**
 		name = text;
 		namelen = strnlen(name, NAME_LENGTH-1); // name length (w/o zero byte)
 
-		if( name[namelen] != '\0' )
-		{	// only restriction is that the name must be zero-terminated
+		// only restriction is that the name must be zero-terminated
+		if( name[namelen] != '\0' ) {
 			ShowWarning("clif_process_message: Player '%s' sent an unterminated name!\n", sd->status.name);
 			return false;
 		}
@@ -9768,19 +9758,20 @@ static bool clif_process_message(struct map_session_data* sd, int format, char**
 		messagelen = textlen - NAME_LENGTH; // this should be the message length (w/ zero byte included)
 	}
 
-	if( messagelen != strnlen(message, messagelen)+1 )
-	{	// the declared length must match real length
+	// the declared length must match real length
+	if( messagelen != strnlen(message, messagelen)+1 ) {
 		ShowWarning("clif_process_message: Received malformed packet from player '%s' (length is incorrect)!\n", sd->status.name);
 		return false;
 	}
+
 	// verify <message> part of the packet
-	if( message[messagelen-1] != '\0' )
-	{	// message must be zero-terminated
+	if( message[messagelen-1] != '\0' ) {	// message must be zero-terminated
 		ShowWarning("clif_process_message: Player '%s' sent an unterminated message string!\n", sd->status.name);
 		return false;
 	}
-	if( messagelen > CHAT_SIZE_MAX-1 )
-	{	// messages mustn't be too long
+
+	// messages mustn't be too long
+	if( messagelen > CHAT_SIZE_MAX-1 ) {
 		// Normally you can only enter CHATBOX_SIZE-1 letters into the chat box, but Frost Joke / Dazzler's text can be longer.
 		// Also, the physical size of strings that use multibyte encoding can go multiple times over the chatbox capacity.
 		// Neither the official client nor server place any restriction on the length of the data in the packet,
@@ -11604,6 +11595,47 @@ void clif_parse_RemoveOption(int fd,struct map_session_data *sd)
 }
 
 
+/// Request to select cart's visual look for new cart design (ZC_SELECTCART).
+/// 097f <Length>.W <identity>.L <type>.B
+void clif_SelectCart(struct map_session_data *sd) {
+#if PACKETVER >= 20150826
+    int i = 0, carts = 3;
+
+	int fd = sd->fd;
+    WFIFOHEAD(fd,8 + carts);
+    WFIFOW(fd,0) = 0x97f;
+    WFIFOW(fd,2) = 8 + carts;
+    WFIFOL(fd,4) = sd->status.account_id;
+    // Right now we have 10-12, tested it you can also enable selection for all cart styles here(1-12)
+    for( i = 0; i < carts; i++ ) {
+        WFIFOB(fd,8 + i) = 10 + i;
+    }
+    WFIFOSET(fd,8 + carts);
+#endif
+}
+
+
+/// Request to select cart's visual look for new cart design (CZ_SELECTCART).
+/// 0980 <identity>.L <type>.B
+void clif_parse_SelectCart(int fd,struct map_session_data *sd) {
+#if PACKETVER >= 20150826
+    int type;
+
+	// Check identity
+    if( !sd || pc_checkskill(sd,MC_CARTDECORATE) < 1 || RFIFOL(fd,2) != sd->status.account_id )
+        return;
+
+    type = (int)RFIFOB(fd,6);
+
+	// Check type
+   if( type < 10 || type > MAX_CARTS ) 
+	   return;
+
+    pc_setcart(sd, type);
+#endif
+}
+
+
 /// Request to change cart's visual look (CZ_REQ_CHANGECART).
 /// 01af <num>.W
 void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
@@ -11631,7 +11663,7 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 	    (type == 2 && sd->status.base_level > 40) ||
 	    (type == 1))
 #endif
-		pc_setcart(sd,type);
+		pc_setcart(sd, type);
 }
 
 
@@ -18951,9 +18983,9 @@ void packetdb_readdb(bool reload)
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1,  7,
-		0,  0,  0,  0,  2,  0,  0, 14,  6, 50,  -1,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  2,  0,  0, 14,  6, 50,  -1,  0,  0,  0,  0,  -1,
 	//#0x0980
-		0,  0,  0, 29,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		7,  0,  0, 29,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		31, 0,  0,  0,  0,  0,  0, -1,  8, 11,  9,  8,  0,  0,  0, 22,
 		0,  0,  0,  0,  0,  0, 12, 10, 14, 10, 14,  6,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  6,  4,  6,  4,  0,  0,  0,  0,  0,  0,
@@ -19209,6 +19241,8 @@ void packetdb_readdb(bool reload)
 		{ clif_parse_HotkeyRowShift, "hotkeyrowshift"},
 		// OneClick Item Identify
 		{ clif_parse_Oneclick_Itemidentify, "oneclick_itemidentify" },
+		// NewChange Cart2
+		{ clif_parse_SelectCart, "selectcart" },
 		{NULL,NULL}
 	};
 	struct {

@@ -35,7 +35,7 @@ struct party_booking_ad_info;
 enum { // packet DB
 	MIN_PACKET_DB  = 0x064,
 	MAX_PACKET_DB  = 0xAFF,
-	MAX_PACKET_VER = 52,
+	MAX_PACKET_VER = 53,
 	MAX_PACKET_POS = 20,
 };
 
@@ -969,5 +969,6 @@ void clif_merge_item_open(struct map_session_data *sd);
 void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, const char *srcname);
 
 void clif_dressing_room(struct map_session_data *sd, int view);
+void clif_SelectCart(struct map_session_data *sd);
 
 #endif /* _CLIF_H_ */

@@ -383,7 +383,8 @@ uint32 date2version(int date) {
 	//else if(date < 20141016) return 48;
 	else if(date < 20141022) return 50;
 	else if(date < 20150513) return 51;
-	else if(date >= 20150513) return 52;
+	else if(date < 20150916) return 52;
+	else if(date >= 20150916) return 53;
 
 	else return 30; //default
 }

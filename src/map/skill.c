@@ -6437,6 +6437,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		break;
 
+	case MC_CARTDECORATE:
+		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+        if( sd ) {
+            clif_SelectCart(sd);
+        }
+		break;
+
 	case TK_MISSION:
 		if (sd) {
 			int id;

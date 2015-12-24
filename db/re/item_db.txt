@@ -4476,7 +4476,7 @@
 6603,Skin_Of_Hraesvelg,Skin Of Hraesvelg,3,0,,500,,,,,,,,,,,,,{},{},{}
 6604,Essence_Rune_Magic,Essence Rune Magic,3,0,,0,,,,,,,,,,,,,{},{},{}
 6605,Muspellium,Muspellium,3,0,,0,,,,,,,,,,,,,{},{},{}
-6606,P_Cart_C,P Cart C,3,0,,10,,,,,,,,,,,,,{},{},{}
+6606,Cute_Cart_Coupon,Cute Cart Remodel Coupon,3,0,,10,,,,,,,,,,,,,{},{},{}
 6607,Temporal_Crystal,Temporal Crystal,3,20,,10,,,,,,,,,,,,,{},{},{}
 6608,Coagulated_Spell,Coagulated Spell,3,0,,0,,,,,,,,,,,,,{},{},{}
 6609,Glast_Decayed_Nail,Glast Decayed Nail,3,82,,10,,,,,,,,,,,,,{},{},{}

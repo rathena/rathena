@@ -80,6 +80,8 @@
 5,154,1,0,0,0,0,0,0,0,0,0,0 //MC_CHANGECART#Change Cart#
 5,155,1,0,0,0,0,0,0,0,0,0,0 //MC_LOUD#Crazy Uproar#
 5,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
+5,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+5,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Thief
 6,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 6,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -229,6 +231,8 @@
 10,1013,1,0,0,0,0,0,0,0,0,0,0 //BS_GREED#Greed#
 10,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
 10,459,1,111,5,0,0,0,0,0,0,0,0	//BS_ADRENALINE2#Full Adrenaline Rush#
+10,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+10,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Hunter
 11,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 11,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -492,6 +496,8 @@
 18,496,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT1#Twilight Alchemy 1#
 18,497,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT2#Twilight Alchemy 2#
 18,498,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT3#Twilight Alchemy 3#
+18,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+18,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Bard
 19,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 19,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -644,6 +650,8 @@
 23,52,10,0,0,0,0,0,0,0,0,0,0 //TF_POISON#Envenom#
 23,53,1,52,3,0,0,0,0,0,0,0,0 //TF_DETOXIFY#Detoxify#
 23,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
+23,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+23,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Gunslinger
 24,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 24,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -778,6 +786,8 @@
 4006,154,1,0,0,0,0,0,0,0,0,0,0 //MC_CHANGECART#Change Cart#
 4006,155,1,0,0,0,0,0,0,0,0,0,0 //MC_LOUD#Crazy Uproar#
 4006,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
+4006,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4006,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //ThiefHigh
 4007,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4007,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -952,6 +962,8 @@
 4011,486,5,113,5,0,0,0,0,0,0,0,0 //WS_OVERTHRUSTMAX#Maximum Power Thrust#
 4011,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
 4011,459,1,111,5,0,0,0,0,0,0,0,0	//BS_ADRENALINE2#Full Adrenaline Rush#
+4011,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4011,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Sniper
 4012,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4012,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -1258,6 +1270,8 @@
 4019,496,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT1#Twilight Alchemy 1#
 4019,497,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT2#Twilight Alchemy 2#
 4019,498,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT3#Twilight Alchemy 3#
+4019,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4019,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Clown
 4020,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4020,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -1454,6 +1468,8 @@
 4028,155,1,0,0,0,0,0,0,0,0,0,0 //MC_LOUD#Crazy Uproar#
 4028,408,1,0,0,0,0,0,0,0,0,0,0 //WE_BABY#Baby#
 4028,409,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLPARENT#Call Parent#
+4028,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4028,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Baby Thief
 4029,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4029,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -1607,6 +1623,8 @@
 4033,1012,1,0,0,0,0,0,0,0,0,0,0 //BS_UNFAIRLYTRICK#Unfair Trick#
 4033,1013,1,0,0,0,0,0,0,0,0,0,0 //BS_GREED#Greed#
 4033,459,1,111,5,0,0,0,0,0,0,0,0	//BS_ADRENALINE2#Full Adrenaline Rush#
+4033,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4033,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Baby Hunter
 4034,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4034,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -1878,6 +1896,8 @@
 4041,496,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT1#Twilight Alchemy 1#
 4041,497,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT2#Twilight Alchemy 2#
 4041,498,1,228,10,0,0,0,0,0,0,0,0	//AM_TWILIGHT3#Twilight Alchemy 3#
+4041,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4041,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Baby Bard
 4042,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4042,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -2028,6 +2048,8 @@
 4045,53,1,52,3,0,0,0,0,0,0,0,0 //TF_DETOXIFY#Detoxify#
 4045,408,1,0,0,0,0,0,0,0,0,0,0 //WE_BABY#Baby#
 4045,409,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLPARENT#Call Parent#
+4045,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4045,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Taekwon
 4046,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4046,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -2634,6 +2656,8 @@
 4058,2283,1,2281,1,0,0,0,0,0,0,0,0 //NC_DISJOINT#FAW Removal#
 4058,5006,5,0,0,0,0,0,0,0,0,0,0 //NC_MAGMA_ERUPTION#Magma Eruption#
 4058,5014,5,0,0,0,0,0,0,0,0,0,0 //ALL_FULL_THROTTLE#Full Throttle#
+4058,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4058,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Guillotine Cross (Regular)
 4059,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4059,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -2984,6 +3008,8 @@
 4064,2283,1,2281,1,0,0,0,0,0,0,0,0 //NC_DISJOINT#FAW Removal#
 4064,5006,5,0,0,0,0,0,0,0,0,0,0 //NC_MAGMA_ERUPTION#Magma Eruption#
 4064,5014,5,0,0,0,0,0,0,0,0,0,0 //ALL_FULL_THROTTLE#Full Throttle#
+4064,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4064,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Guillotine Cross (Trans)
 4065,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4065,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -3386,6 +3412,8 @@
 4071,2497,10,0,0,0,0,0,0,0,0,0,0 //GN_S_PHARMACY#Special Pharmacy#
 4071,5003,5,2497,1,0,0,0,0,0,0,0,0 //GN_ILLUSIONDOOPING#Hallucination Drug#
 4071,5014,5,0,0,0,0,0,0,0,0,0,0 //ALL_FULL_THROTTLE#Full Throttle#
+4071,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4071,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Shadow Chaser (Regular)
 4072,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4072,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -3828,6 +3856,8 @@
 4078,2497,10,0,0,0,0,0,0,0,0,0,0 //GN_S_PHARMACY#Special Pharmacy#
 4078,5003,5,2497,1,0,0,0,0,0,0,0,0 //GN_ILLUSIONDOOPING#Hallucination Drug# 
 4078,5014,5,0,0,0,0,0,0,0,0,0,0 //ALL_FULL_THROTTLE#Full Throttle#
+4078,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4078,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Shadow Chaser (Trans)
 4079,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4079,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -4269,6 +4299,8 @@
 4086,2283,1,2281,1,0,0,0,0,0,0,0,0 //NC_DISJOINT#FAW Removal#
 4086,5006,5,0,0,0,0,0,0,0,0,0,0 //NC_MAGMA_ERUPTION#Magma Eruption#
 4086,5014,5,0,0,0,0,0,0,0,0,0,0 //ALL_FULL_THROTTLE#Full Throttle#
+4086,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4086,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Mechanic (Mado) (Trans)
 4087,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4087,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -4343,6 +4375,8 @@
 4087,2283,1,2281,1,0,0,0,0,0,0,0,0 //NC_DISJOINT#FAW Removal#
 4087,5006,5,0,0,0,0,0,0,0,0,0,0 //NC_MAGMA_ERUPTION#Magma Eruption#
 4087,5014,5,0,0,0,0,0,0,0,0,0,0 //ALL_FULL_THROTTLE#Full Throttle#
+4087,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4087,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Baby Rune Knight
 4096,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4096,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -4626,6 +4660,8 @@
 4100,2283,1,2281,1,0,0,0,0,0,0,0,0 //NC_DISJOINT#FAW Removal#
 4100,5006,5,0,0,0,0,0,0,0,0,0,0 //NC_MAGMA_ERUPTION#Magma Eruption#
 4100,5014,5,0,0,0,0,0,0,0,0,0,0 //ALL_FULL_THROTTLE#Full Throttle#
+4100,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4100,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Baby Guillotine Cross
 4101,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4101,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -5030,6 +5066,8 @@
 4107,2497,10,0,0,0,0,0,0,0,0,0,0 //GN_S_PHARMACY#Special Pharmacy#
 4107,5003,5,2497,1,0,0,0,0,0,0,0,0 //GN_ILLUSIONDOOPING#Hallucination Drug#
 4107,5014,5,0,0,0,0,0,0,0,0,0,0 //ALL_FULL_THROTTLE#Full Throttle#
+4107,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4107,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Baby Shadow Chaser
 4108,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4108,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -5309,6 +5347,8 @@
 4112,2283,1,2281,1,0,0,0,0,0,0,0,0 //NC_DISJOINT#FAW Removal#
 4112,5006,5,0,0,0,0,0,0,0,0,0,0 //NC_MAGMA_ERUPTION#Magma Eruption#
 4112,5014,5,0,0,0,0,0,0,0,0,0,0 //ALL_FULL_THROTTLE#Full Throttle#
+4112,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4112,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Super Novice (Expanded)
 4190,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4190,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -5391,6 +5431,8 @@
 4190,261,5,259,2,0,0,0,0,0,0,0,0 //MO_CALLSPIRITS#Summon Spirit Sphere#
 4190,262,1,261,5,0,0,0,0,0,0,0,0 //MO_ABSORBSPIRITS#Absorb Spirit Sphere#
 4190,365,1,9,1,0,0,0,0,0,0,0,0 //HW_MAGICCRASHER#Stave Crasher#
+4190,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4190,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Super Baby (Expanded)
 4191,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4191,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#
@@ -5474,6 +5516,8 @@
 4191,261,5,259,2,0,0,0,0,0,0,0,0 //MO_CALLSPIRITS#Summon Spirit Sphere#
 4191,262,1,261,5,0,0,0,0,0,0,0,0 //MO_ABSORBSPIRITS#Absorb Spirit Sphere#
 4191,365,1,9,1,0,0,0,0,0,0,0,0 //HW_MAGICCRASHER#Stave Crasher#
+4191,2535,2,41,1,0,0,0,0,0,0,0,0 //ALL_BUYING_STORE#Open Buying Store#
+4191,2544,1,0,0,0,0,0,0,0,0,0,0 //MC_CARTDECORATE#Cart Decorate#
 //Kagerou
 4211,1,9,0,0,0,0,0,0,0,0,0,0 //NV_BASIC#Basic Skill#
 4211,142,1,0,0,0,0,0,0,0,0,0,0 //NV_FIRSTAID#First Aid#

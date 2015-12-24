@@ -1232,7 +1232,7 @@
 //2541,0,6,4,0,0x1,0,5,1,no,0,0x2,0,none,0,0x0,		NPC_UGLYDANCE,Ugly Dance 2
 //2542,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,	ALL_TETANY,Tetany
 //2543,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	ALL_RAY_OF_PROTECTION,Ray of Protection
-//2544,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,	MC_CARTDECORATE,Decorate Cart
+2544,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,0x0,		MC_CARTDECORATE,Decorate Cart
 //2545,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	GM_ITEM_ATKMAX,Maximize Attack
 //2546,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	GM_ITEM_ATKMIN,Minimize Attack
 //2547,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	GM_ITEM_MATKMAX,Maximize Magic Attack
