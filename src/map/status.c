@@ -1933,7 +1933,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (sc->data[SC_ALL_RIDING])
 			return false; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
-		if ((sc->data[SC_ASH] && rnd()%2)) {
+		if (sc->data[SC_ASH] && rnd()%2 && !(status->mode&MD_BOSS)) {
 			if (src->type == BL_PC)
 				clif_skill_fail((TBL_PC*)src,skill_id,USESKILL_FAIL_LEVEL,0);
 			return false;
@@ -8573,6 +8573,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_DEEPSLEEP:
 			case SC_NETHERWORLD:
 			case SC_CRYSTALIZE:
+			case SC_MANDRAGORA:
 			case SC_DEFSET:
 			case SC_MDEFSET:
 			case SC_NORECOVER_STATE:
@@ -10146,13 +10147,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			sc_start2(src, bl,SC_STUN,100,val1,bl->id,(1000*status_get_lv(src))/50+500*val1);
 			break;
 		case SC_ASH:
-			val2 = 50; // hit % reduc
+			val2 = 0; // hit % reduc
 			val3 = 0; // def % reduc
 			val4 = 0; // atk flee & reduc
-			if(status_get_race(bl) == RC_PLANT) // plant type
-				val3 = 50;
-			if(status_get_element(bl) == ELE_WATER) // defense water type
-				val4 = 50;
+			if (!(status_get_mode(bl)&MD_BOSS)) {
+				val2 = 50;
+				if (status_get_race(bl) == RC_PLANT) // plant type
+					val3 = 50;
+				if (status_get_element(bl) == ELE_WATER) // defense water type
+					val4 = 50;
+			}
 			break;
 		case SC_FULL_THROTTLE:
 			val2 = ( val1 == 1 ? 6 : 6 - val1 );

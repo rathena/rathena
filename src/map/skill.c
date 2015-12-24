@@ -10076,19 +10076,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case GN_MANDRAGORA:
 		if( flag&1 ) {
 			int rate = 25 + (10 * skill_lv) - (tstatus->vit + tstatus->luk) / 5;
+
 			if (rate < 10)
 				rate = 10;
-			if (bl->type == BL_MOB)
-				break;
-				if (rnd()%100 < rate) {
-					sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
-					status_zap(bl,0,status_get_max_sp(bl) * (25 + 5 * skill_lv) / 100);
-				}
-			} else {
-				map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
-				clif_skill_nodamage(src,src,skill_id,skill_lv,1);
+			if (bl->type == BL_MOB || (tsc && tsc->data[type]))
+				break; // Don't activate if target is a monster or zap SP if target already has Mandragora active.
+			if (rnd()%100 < rate) {
+				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
+				status_zap(bl,0,status_get_max_sp(bl) * (25 + 5 * skill_lv) / 100);
 			}
-			break;
+		} else {
+			map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
+			clif_skill_nodamage(src,src,skill_id,skill_lv,1);
+		}
+		break;
 	case GN_SLINGITEM:
 		if( sd ) {
 			short ammo_id;
@@ -10742,8 +10743,9 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 	if (inf && battle_check_target(src, target, inf) <= 0)
 		return USESKILL_FAIL_LEVEL;
 
-	//Fogwall makes all offensive-type targetted skills fail at 75%
-	if (inf&BCT_ENEMY && tsc && tsc->data[SC_FOGWALL] && rnd() % 100 < 75)
+	// Fogwall makes all offensive-type targetted skills fail at 75%
+	// Jump Kick can still fail even though you can jump to friendly targets.
+	if ((inf&BCT_ENEMY || skill_id == TK_JUMPKICK) && tsc && tsc->data[SC_FOGWALL] && rnd() % 100 < 75)
 		return USESKILL_FAIL_LEVEL;
 
 	return -1;
@@ -16932,7 +16934,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 				return 1;
 			}
 			//It deletes everything except traps and barriers
-			if( (!(skill_get_inf2(unit->group->skill_id)&(INF2_TRAP)) && !(skill_get_inf3(unit->group->skill_id)&(INF3_NOLP)) ) || unit->group->skill_id == WZ_FIREPILLAR ) {
+			if ((!(skill_get_inf2(unit->group->skill_id)&(INF2_TRAP)) && !(skill_get_inf3(unit->group->skill_id)&(INF3_NOLP))) || unit->group->skill_id == WZ_FIREPILLAR || unit->group->skill_id == GN_HELLS_PLANT) {
 				skill_delunit(unit);
 				return 1;
 			}
