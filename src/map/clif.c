@@ -1953,6 +1953,12 @@ void clif_selllist(struct map_session_data *sd)
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
+/// Closes shop (CZ_NPC_TRADE_QUIT).
+/// 09d4
+void clif_parse_NPCShopClosed(int fd, struct map_session_data *sd) {
+	// TODO: State tracking?
+	sd->npc_shopid = 0;
+}
 
 /**
  * Presents list of items, that can be sold to a Market shop.
@@ -11599,18 +11605,18 @@ void clif_parse_RemoveOption(int fd,struct map_session_data *sd)
 /// 097f <Length>.W <identity>.L <type>.B
 void clif_SelectCart(struct map_session_data *sd) {
 #if PACKETVER >= 20150826
-    int i = 0, carts = 3;
+	int i = 0, carts = 3;
 
 	int fd = sd->fd;
-    WFIFOHEAD(fd,8 + carts);
-    WFIFOW(fd,0) = 0x97f;
-    WFIFOW(fd,2) = 8 + carts;
-    WFIFOL(fd,4) = sd->status.account_id;
-    // Right now we have 10-12, tested it you can also enable selection for all cart styles here(1-12)
-    for( i = 0; i < carts; i++ ) {
-        WFIFOB(fd,8 + i) = 10 + i;
-    }
-    WFIFOSET(fd,8 + carts);
+	WFIFOHEAD(fd,8 + carts);
+	WFIFOW(fd,0) = 0x97f;
+	WFIFOW(fd,2) = 8 + carts;
+	WFIFOL(fd,4) = sd->status.account_id;
+	// Right now we have 10-12, tested it you can also enable selection for all cart styles here(1-12)
+	for( i = 0; i < carts; i++ ) {
+	WFIFOB(fd,8 + i) = 10 + i;
+	}
+	WFIFOSET(fd,8 + carts);
 #endif
 }
 
@@ -11619,19 +11625,19 @@ void clif_SelectCart(struct map_session_data *sd) {
 /// 0980 <identity>.L <type>.B
 void clif_parse_SelectCart(int fd,struct map_session_data *sd) {
 #if PACKETVER >= 20150826
-    int type;
+	int type;
 
 	// Check identity
-    if( !sd || pc_checkskill(sd,MC_CARTDECORATE) < 1 || RFIFOL(fd,2) != sd->status.account_id )
-        return;
+	if( !sd || pc_checkskill(sd,MC_CARTDECORATE) < 1 || RFIFOL(fd,2) != sd->status.account_id )
+	return;
 
-    type = (int)RFIFOB(fd,6);
+	type = (int)RFIFOB(fd,6);
 
 	// Check type
-   if( type < 10 || type > MAX_CARTS ) 
-	   return;
+	if( type < 10 || type > MAX_CARTS ) 
+		return;
 
-    pc_setcart(sd, type);
+	pc_setcart(sd, type);
 #endif
 }
 
@@ -19226,6 +19232,7 @@ void packetdb_readdb(bool reload)
 		{ clif_parse_blocking_playcancel, "booking_playcancel"},
 		{ clif_parse_ranklist, "ranklist"},
 		// Market NPC
+		{ clif_parse_NPCShopClosed, "npcshopclosed" },
 		{ clif_parse_NPCMarketClosed, "npcmarketclosed" },
 		{ clif_parse_NPCMarketPurchase, "npcmarketpurchase" },
 		// Roulette
