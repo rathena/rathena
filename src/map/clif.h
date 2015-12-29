@@ -738,7 +738,7 @@ void clif_font(struct map_session_data *sd);
 void clif_displaymessage(const int fd, const char* mes);
 void clif_disp_onlyself(struct map_session_data *sd, const char *mes, int len);
 void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target);
-void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target);
+void clif_broadcast(struct block_list* bl, const char* mes, size_t len, int type, enum send_target target);
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
 void clif_heal(int fd,int type,int val);
 void clif_resurrection(struct block_list *bl,int type);

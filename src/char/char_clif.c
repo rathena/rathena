@@ -885,35 +885,17 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 	return 1;
 }
 
-// S 0970 <name>.24B <slot>.B <hair color>.W <hair style>.W
-// S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot>.B <hair color>.W <hair style>.W
-int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
-	int i = 0;
-
-	if (cmd == 0x970) FIFOSD_CHECK(31) //>=20120307
-	else if (cmd == 0x67) FIFOSD_CHECK(37)
-	else return 0;
-
-	if( (charserv_config.char_new)==0 ) //turn character creation on/off [Kevin]
-		i = -2;
-	else {
-#if PACKETVER < 20120307
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
-			RFIFOSKIP(fd,37);
-#else
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
-			RFIFOSKIP(fd,31);
-#endif
-	}
+//common for S 0970 and S 0067
+int chclif_createnewchar_ack(int fd, struct char_session_data* sd,int idx){
 
 	//'Charname already exists' (-1), 'Char creation denied' (-2) and 'You are underaged' (-3)
-	if (i < 0) {
+	if (idx < 0) {
 		WFIFOHEAD(fd,3);
 		WFIFOW(fd,0) = 0x6e;
 		/* Others I found [Ind] */
 		/* 0x02 = Symbols in Character Names are forbidden */
 		/* 0x03 = You are not elegible to open the Character Slot. */
-		switch (i) {
+		switch (idx) {
 			case -1: WFIFOB(fd,2) = 0x00; break;
 			case -2: WFIFOB(fd,2) = 0xFF; break;
 			case -3: WFIFOB(fd,2) = 0x01; break;
@@ -924,7 +906,7 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 		int len, ch;
 		// retrieve data
 		struct mmo_charstatus char_dat;
-		char_mmo_char_fromsql(i, &char_dat, false); //Only the short data is needed.
+		char_mmo_char_fromsql(idx, &char_dat, false); //Only the short data is needed.
 
 		// send to player
 		WFIFOHEAD(fd,2+MAX_CHAR_BUF);
@@ -935,10 +917,39 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 		// add new entry to the chars list
 		ARR_FIND( 0, MAX_CHARS, ch, sd->found_char[ch] == -1 );
 		if( ch < MAX_CHARS )
-			sd->found_char[ch] = i; // the char_id of the new char
+			sd->found_char[ch] = idx; // the char_id of the new char
 	}
 	return 1;
 }
+
+// S 0970 <name>.24B <slot>.B <hair color>.W <hair style>.W
+int chclif_parse_createnewchar_970(int fd, struct char_session_data* sd) {
+	int idx = 0;
+	FIFOSD_CHECK(31) //>=20120307
+
+		if ((charserv_config.char_new) == 0) //turn character creation on/off [Kevin]
+			idx = -2;
+		else {
+			idx = char_make_new_char_sql_970(sd, (char*)RFIFOP(fd, 2), RFIFOB(fd, 26), RFIFOW(fd, 27), RFIFOW(fd, 29));
+		}
+		RFIFOSKIP(fd, 31); //>=20120307
+		return chclif_createnewchar_ack(fd, sd, idx);
+}
+
+// S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot>.B <hair color>.W <hair style>.W
+int chclif_parse_createnewchar_67(int fd, struct char_session_data* sd) {
+	int idx = 0;
+	FIFOSD_CHECK(37) // < 20120307
+
+		if ((charserv_config.char_new) == 0) //turn character creation on/off [Kevin]
+			idx = -2;
+		else {
+			idx = char_make_new_char_sql_67(sd, (char*)RFIFOP(fd, 2), RFIFOB(fd, 26), RFIFOB(fd, 27), RFIFOB(fd, 28), RFIFOB(fd, 29), RFIFOB(fd, 30), RFIFOB(fd, 31), RFIFOB(fd, 32), RFIFOW(fd, 33), RFIFOW(fd, 35));
+		}
+		RFIFOSKIP(fd, 37);
+		return chclif_createnewchar_ack(fd, sd, idx);
+}
+
 
 /**
  * Inform client that his deletion request was refused
@@ -1212,8 +1223,8 @@ int chclif_parse(int fd) {
 			// char select
 			case 0x66: next=chclif_parse_charselect(fd,sd,ipl); break;
 			// createnewchar
-			case 0x970: next=chclif_parse_createnewchar(fd,sd,cmd); break;
-			case 0x67: next=chclif_parse_createnewchar(fd,sd,cmd); break;
+			case 0x970: next=chclif_parse_createnewchar_970(fd,sd); break;
+			case 0x67: next=chclif_parse_createnewchar_67(fd,sd); break;
 			// delete char
 			case 0x68: next=chclif_parse_delchar(fd,sd,cmd); break; //
 			case 0x1fb: next=chclif_parse_delchar(fd,sd,cmd); break; // 2004-04-19aSakexe+ langtype 12 char deletion packet

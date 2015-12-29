@@ -984,13 +984,13 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 #if PACKETVER >= 20091103
 	name = status_get_name(bl);
 #if PACKETVER < 20110111
-	WBUFW(buf,2) = (spawn ? 62 : 63)+strlen(name);
+	WBUFW(buf,2) = (spawn ? 62 : 63)+(uint16)strlen(name);
 #elif PACKETVER < 20120221
-	WBUFW(buf,2) = (uint16)((spawn ? 64 : 65)+strlen(name));
+	WBUFW(buf,2) = (uint16)((spawn ? 64 : 65)+(uint16)strlen(name));
 #elif PACKETVER < 20130807
-	WBUFW(buf,2) = (spawn ? 77 : 78)+strlen(name);
+	WBUFW(buf,2) = (spawn ? 77 : 78)+(uint16)strlen(name);
 #else
-	WBUFW(buf,2) = (spawn ? 79 : 80)+strlen(name);
+	WBUFW(buf,2) = (spawn ? 79 : 80)+(uint16)strlen(name);
 #endif
 	WBUFB(buf,4) = clif_bl_type(bl);
 	offset+=3;
@@ -1185,9 +1185,9 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 #elif PACKETVER < 20120221
 	WBUFW(buf, 2) = (uint16)(71+strlen(name));
 #elif PACKETVER < 20130807
-	WBUFW(buf, 2) = 84+strlen(name);
+	WBUFW(buf, 2) = 84+ (uint16)strlen(name);
 #else
-	WBUFW(buf, 2) = 86+strlen(name);
+	WBUFW(buf, 2) = 86+ (uint16)strlen(name);
 #endif
 	offset+=2;
 	buf = WBUFP(buffer,offset);
@@ -5960,13 +5960,13 @@ void clif_displaymessage(const int fd, const char* mes)
 
 /// Send broadcast message in yellow or blue without font formatting (ZC_BROADCAST).
 /// 009a <packet len>.W <message>.?B
-void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target)
+void clif_broadcast(struct block_list* bl, const char* mes, size_t len, int type, enum send_target target)
 {
 	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
 	unsigned char *buf = (unsigned char*)aMalloc((4 + lp + len)*sizeof(unsigned char));
 
 	WBUFW(buf,0) = 0x9a;
-	WBUFW(buf,2) = 4 + lp + len;
+	WBUFW(buf,2) = 4 + lp + (uint16) len;
 	if (type&BC_BLUE)
 		WBUFL(buf,4) = 0x65756c62; //If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
 	else if (type&BC_WOE)

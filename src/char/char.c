@@ -1412,12 +1412,7 @@ int char_check_char_name(char * name, char * esc_name)
 //-----------------------------------
 // Function to create a new character
 //-----------------------------------
-#if PACKETVER >= 20120307
-int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style) {
-	int str = 1, agi = 1, vit = 1, int_ = 1, dex = 1, luk = 1;
-#else
-int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style) {
-#endif
+int char_make_new_char_sql_67(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style) {
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
 	uint32 char_id;
@@ -1501,6 +1496,11 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 
 	ShowInfo("Created char: account: %d, char: %d, slot: %d, name: %s\n", sd->account_id, char_id, slot, name);
 	return char_id;
+}
+
+int char_make_new_char_sql_970(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style) {
+	int str = 1, agi = 1, vit = 1, int_ = 1, dex = 1, luk = 1;
+	return char_make_new_char_sql_67(sd, name_, str, agi, vit, int_, dex, luk, slot, hair_color, hair_style);
 }
 
 /*----------------------------------------------------------------------------------------------------------*/

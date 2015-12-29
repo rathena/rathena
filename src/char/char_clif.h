@@ -45,7 +45,6 @@ int chclif_parse_maplogin(int fd);
 int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl);
 int chclif_parse_req_charlist(int fd, struct char_session_data* sd);
 int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl);
-int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd);
 int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd);
 int chclif_parse_keepalive(int fd);
 int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd);
@@ -55,6 +54,7 @@ int chclif_parse_reqcaptcha(int fd);
 int chclif_parse_chkcaptcha(int fd);
 void chclif_block_character( int fd, struct char_session_data* sd);
 
+int chclif_createnewchar_ack(int fd, struct char_session_data* sd, int idx);
 int chclif_parse(int fd);
 
 #ifdef	__cplusplus
