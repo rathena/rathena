@@ -9810,7 +9810,7 @@ static int clif_guess_PacketVer(int fd, int get_previous, int *error)
 {
 	static int err = 1;
 	static int packet_ver = -1;
-	int packet_len, value; //Value is used to temporarily store account/char_id/sex
+	int packet_len, value, diskey=0; //Value is used to temporarily store account/char_id/sex
 	unsigned short cmd;
 
 	if (get_previous)
@@ -9851,21 +9851,37 @@ static int clif_guess_PacketVer(int fd, int get_previous, int *error)
 		err = 0;\
 		if( error )\
 			*error = 0;\
+		if( diskey ) ShowWarning("Client use no encryption while server do, please fix me\n"); \
 		return packet_ver;\
 	}\
 //define CHECK_PACKET_VER
 
-	CHECK_PACKET_VER();//Default packet version found.
+#define FOUND_PACKET_VER() \
+	CHECK_PACKET_VER(); /*Default packet version found.*/ \
+	/*Start guessing the version, giving priority to the newer ones. [Skotlex]*/ \
+	for (packet_ver = MAX_PACKET_VER; packet_ver > 0; packet_ver--) { \
+		CHECK_PACKET_VER(); \
+	} \
+//define FOUND_PACKET_VER
 
-	for (packet_ver = MAX_PACKET_VER; packet_ver > 0; packet_ver--) { //Start guessing the version, giving priority to the newer ones. [Skotlex]
-		CHECK_PACKET_VER();
+	FOUND_PACKET_VER()
+#ifdef PACKET_OBFUSCATION
+	if (err == 1) {
+		ShowDebug("Unable to resolve packet_ver trying without encryption\n");
+		diskey = 1;
+		cmd = RFIFOW(fd, 0);
+		FOUND_PACKET_VER()
 	}
+#endif
+
+
 	if( error )
 		*error = err;
 	packet_ver = -1;
 	return -1;
 #undef SET_ERROR
 #undef CHECK_PACKET_VER
+#undef FOUND_PACKET_VER
 }
 
 // ------------
