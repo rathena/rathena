@@ -1737,8 +1737,20 @@ void clif_move(struct unit_data *ud)
 	struct status_change *sc = NULL;
 
 	vd = status_get_viewdata(bl);
-	if (!vd || vd->class_ == INVISIBLE_CLASS)
-		return; //This performance check is needed to keep GM-hidden objects from being notified to bots.
+	if (!vd )
+		return;
+	//This performance check is needed to keep GM-hidden objects from being notified to bots.
+	else if( vd->class_ == INVISIBLE_CLASS ){
+		// If the player was disguised we still need to update the disguised unit, since the main unit will be updated through clif_walkok
+		if(disguised(bl)) {
+			WBUFW(buf,0)=0x86;
+			WBUFL(buf,2)=-bl->id;
+			WBUFPOS2(buf,6,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
+			WBUFL(buf,12)=gettick();
+			clif_send(buf, packet_len(0x86), bl, SELF);
+		}
+		return;
+	}
 
 	/**
 	* Hide NPC from maya purple card.
