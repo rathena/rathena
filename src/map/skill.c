@@ -14132,8 +14132,14 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	p_sd = va_arg(ap, int *);
 	skill_id = va_arg(ap,int);
 
-	if ( ((skill_id != PR_BENEDICTIO && *c >=1) || *c >=2) && !(skill_get_inf2(skill_id)&INF2_CHORUS_SKILL) )
-		return 0; //Partner found for ensembles, or the two companions for Benedictio. [Skotlex]
+	if (skill_id == PR_BENEDICTIO && *c >= 2)
+		return 0; // Two companions found for Benedictio. [Skotlex]
+
+	if (skill_get_inf2(skill_id)&INF2_ENSEMBLE_SKILL && *c >= 1)
+		return 0; // Partner found for ensembles.
+
+	if ((skill_get_inf2(skill_id)&INF2_CHORUS_SKILL || skill_id == WL_COMET) && *c == MAX_PARTY)
+		return 0; // Entire party accounted for.
 
 	if (bl == src)
 		return 0;
@@ -14207,7 +14213,7 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 *skill_lv, int range, int cast_flag)
 {
 	static int c=0;
-	static int p_sd[2] = { 0, 0 };
+	static int p_sd[MAX_PARTY];
 	int i;
 	bool is_chorus = ( skill_get_inf2(skill_id)&INF2_CHORUS_SKILL );
 

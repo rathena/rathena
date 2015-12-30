@@ -822,6 +822,11 @@ enum e_pc_reg_loading {
 #error MAX_ZENY is too big
 #endif
 
+// This sanity check is required, because some other places(like skill.c) rely on this
+#if MAX_PARTY < 2
+#error MAX_PARTY is too small, you need at least 2 players for a party
+#endif
+
 #ifndef VIP_ENABLE
 	#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
 	#define MIN_CHARS MAX_CHARS // Default number of characters per account.
