@@ -69,7 +69,7 @@ int packet_db_ack[MAX_PACKET_VER + 1][MAX_ACK_FUNC + 1];
 static struct s_packet_keys *packet_keys[MAX_PACKET_VER + 1];
 static unsigned int clif_cryptKey[3]; // Used keys
 #endif
-static unsigned short clif_parse_cmd(int fd, struct map_session_data *sd);
+static unsigned short clif_parse_decryptcmd(int fd, struct map_session_data *sd);
 static bool clif_session_isValid(struct map_session_data *sd);
 
 /** Converts item type to display it on client if necessary.
@@ -9823,7 +9823,7 @@ static int clif_guess_PacketVer(int fd, int get_previous, int *error)
 	//By default, start searching on the default one.
 	err = 1;
 	packet_ver = clif_config.packet_db_ver;
-	cmd = clif_parse_cmd(fd, NULL);
+	cmd = clif_parse_decryptcmd(fd, NULL);
 	packet_len = RFIFOREST(fd);
 
 #define SET_ERROR(n) \
@@ -18045,7 +18045,7 @@ void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, 
  * @param packet_ver
  * Orig author [Ind/Hercules]
  **/
-static unsigned short clif_parse_cmd(int fd, struct map_session_data *sd) {
+static unsigned short clif_parse_decryptcmd(int fd, struct map_session_data *sd) {
 #ifndef PACKET_OBFUSCATION
 	return RFIFOW(fd, 0);
 #else
@@ -18667,7 +18667,7 @@ static int clif_parse(int fd)
 	if (RFIFOREST(fd) < 2)
 		return 0;
 
-	cmd = clif_parse_cmd(fd, sd);
+	cmd = clif_parse_decryptcmd(fd, sd);
 
 	// identify client's packet version
 	if (sd) {

@@ -29,6 +29,19 @@ enum {
 	TABLE_GUILD_STORAGE,
 };
 
+typedef enum e_makechar_error {
+	ERROR_MK_SQL = -255,
+	ERROR_INVALID_SLOT,
+	ERROR_MAXLIMIT,
+	ERROR_NAME_RESERVED,
+	ERROR_NAME_LEN,
+	ERROR_NAME_INVALID_CHAR,
+	ERROR_NAME_DUPLICATE,
+	ERROR_CREATION_DISABLE,
+
+	ERROR_NO_ERROR = 0,
+} e_makechar_error;
+
 struct Schema_Config {
 	int db_use_sqldbs;
 	char db_path[1024];
@@ -267,7 +280,7 @@ int char_request_accreg2(uint32 account_id, uint32 char_id);
 
 //extern bool char_gm_read;
 int char_loadName(uint32 char_id, char* name);
-int char_check_char_name(char * name, char * esc_name);
+e_makechar_error char_check_char_name(char* name);
 
 void char_pincode_decrypt( uint32 userSeed, char* pin );
 int char_pincode_compare( int fd, struct char_session_data* sd, char* pin );
@@ -275,8 +288,7 @@ void char_auth_ok(int fd, struct char_session_data *sd);
 void char_set_charselect(uint32 account_id);
 void char_read_fame_list(void);
 
-int char_make_new_char_sql_970(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style);
-int char_make_new_char_sql_67(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style);
+e_makechar_error char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, uint32 *out_char_id);
 
 void char_set_session_flag_(int account_id, int val, bool set);
 #define char_set_session_flag(account_id, val)   ( char_set_session_flag_((account_id), (val), true)  )

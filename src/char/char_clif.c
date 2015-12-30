@@ -1,6 +1,9 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+//sys and 3rdp
+#include <stdlib.h>
+//ext
 #include "../common/mmo.h"
 #include "../common/socket.h"
 #include "../common/sql.h"
@@ -11,13 +14,13 @@
 #include "../common/strlib.h"
 #include "../common/utils.h"
 #include "../common/timer.h"
+//prj
 #include "inter.h"
 #include "char.h"
 #include "char_logif.h"
 #include "char_mapif.h"
-#include "char_clif.h"
 
-#include <stdlib.h>
+#include "char_clif.h" //@TODO should be in top
 
 #if PACKETVER_SUPPORTS_PINCODE
 bool pincode_allowed( char* pincode );
@@ -885,69 +888,140 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 	return 1;
 }
 
-//common for S 0970 and S 0067
-int chclif_createnewchar_ack(int fd, struct char_session_data* sd,int idx){
+enum e_charclif_error {							//tested with 0x6e in 20150914
+	ERROR_SAMENAME_EXIST = 0x0,					//Character name already exist
+	ERROR_LIMIT_AGE = 0x1,						//You are underaged
+	//ERROR_LIMIT_CHAR_DELETE = 0x2,			
+	ERROR_INVALID_SYMBOLS = 0x2,				//Symbols in Character Names are forbidden
+	ERROR_MAKECHAR_INVALID_SLOT = 0x3,			//You are not elegible to open the Character Slot
+	ERROR_NEED_PREMIUM_SERVICE = 0xb,			//This service is only available for premium users
+	ERROR_NONPERMISSION_NAME = 0xc,				//Failed to move char slot
+	//ERROR_DELETE_LIMIT_LEVEL = 0x64,			//
 
-	//'Charname already exists' (-1), 'Char creation denied' (-2) and 'You are underaged' (-3)
-	if (idx < 0) {
-		WFIFOHEAD(fd,3);
-		WFIFOW(fd,0) = 0x6e;
-		/* Others I found [Ind] */
-		/* 0x02 = Symbols in Character Names are forbidden */
-		/* 0x03 = You are not elegible to open the Character Slot. */
-		switch (idx) {
-			case -1: WFIFOB(fd,2) = 0x00; break;
-			case -2: WFIFOB(fd,2) = 0xFF; break;
-			case -3: WFIFOB(fd,2) = 0x01; break;
-			case -4: WFIFOB(fd,2) = 0x03; break;
-		}
-		WFIFOSET(fd,3);
-	} else {
-		int len, ch;
-		// retrieve data
-		struct mmo_charstatus char_dat;
-		char_mmo_char_fromsql(idx, &char_dat, false); //Only the short data is needed.
-
-		// send to player
-		WFIFOHEAD(fd,2+MAX_CHAR_BUF);
-		WFIFOW(fd,0) = 0x6d;
-		len = 2 + char_mmo_char_tobuf(WFIFOP(fd,2), &char_dat);
-		WFIFOSET(fd,len);
-
-		// add new entry to the chars list
-		ARR_FIND( 0, MAX_CHARS, ch, sd->found_char[ch] == -1 );
-		if( ch < MAX_CHARS )
-			sd->found_char[ch] = idx; // the char_id of the new char
+	ERROR_MAKECHAR_DENIED = 0xFF					//actually default message
+};
+/**
+* Acknoledge the client that the car creation failed
+* @param fd: client file descriptor
+* @param err: error that occur to inform client
+*/
+int chclif_createnewchar_ack_error(int fd, e_makechar_error err) {
+	WFIFOHEAD(fd, 3);
+	WFIFOW(fd, 0) = 0x6e;
+	switch (err) {    // lookup  makechar_error2cliff_err (map our internal error to those of the client)
+	case ERROR_INVALID_SLOT:
+	case ERROR_MAXLIMIT:
+		WFIFOB(fd, 2) = ERROR_MAKECHAR_INVALID_SLOT;
+		break; //tryme /* 0x03 = You are not elegible to open the Character Slot. */ [Ind]*/
+	case ERROR_NAME_DUPLICATE:
+	case ERROR_NAME_RESERVED:
+		WFIFOB(fd, 2) = ERROR_SAMENAME_EXIST;
+		break; 
+	case ERROR_NAME_LEN:
+	case ERROR_NAME_INVALID_CHAR:
+		WFIFOB(fd, 2) = ERROR_INVALID_SYMBOLS;
+		break;
+	case ERROR_MK_SQL:
+	case ERROR_CREATION_DISABLE:
+		WFIFOB(fd, 2) = ERROR_MAKECHAR_DENIED; break;		//255 Character creation is denied
+		break;
+	//case -3: WFIFOB(fd, 2) = 0x01; break; //wtf were -3 coming from
 	}
+	WFIFOSET(fd, 3);
+
+	return 1;
+}
+
+/**
+* Acknoledge the client that the car creation was a success
+* @param fd: client file descriptor
+* @param sd: client char_session_data
+* @param sd: new char_id created
+*/
+int chclif_createnewchar_ack_success(int fd, struct char_session_data* sd, uint32 char_id){
+	int len, ch;
+	// retrieve data
+	struct mmo_charstatus char_dat;
+	char_mmo_char_fromsql(char_id, &char_dat, false); //Only the short data is needed.										  
+	// add new entry to the chars list
+	ARR_FIND(0, MAX_CHARS, ch, sd->found_char[ch] == -1);
+	if (ch < MAX_CHARS)
+		sd->found_char[ch] = char_id; // the char_id of the new char
+
+	// send to player
+	WFIFOHEAD(fd, 2 + MAX_CHAR_BUF);
+	WFIFOW(fd, 0) = 0x6d;
+	len = 2 + char_mmo_char_tobuf(WFIFOP(fd, 2), &char_dat);
+	WFIFOSET(fd, len);
+ 
 	return 1;
 }
 
 // S 0970 <name>.24B <slot>.B <hair color>.W <hair style>.W
-int chclif_parse_createnewchar_970(int fd, struct char_session_data* sd) {
-	int idx = 0;
-	FIFOSD_CHECK(31) //>=20120307
-
-		if ((charserv_config.char_new) == 0) //turn character creation on/off [Kevin]
-			idx = -2;
-		else {
-			idx = char_make_new_char_sql_970(sd, (char*)RFIFOP(fd, 2), RFIFOB(fd, 26), RFIFOW(fd, 27), RFIFOW(fd, 29));
-		}
-		RFIFOSKIP(fd, 31); //>=20120307
-		return chclif_createnewchar_ack(fd, sd, idx);
-}
-
 // S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot>.B <hair color>.W <hair style>.W
-int chclif_parse_createnewchar_67(int fd, struct char_session_data* sd) {
-	int idx = 0;
-	FIFOSD_CHECK(37) // < 20120307
+int chclif_parse_createnewchar(int fd, struct char_session_data* sd) {
+	uint32 char_id = 0;
+	e_makechar_error err = ERROR_NO_ERROR;
+#if PACKETVER >= 20120307
+	static uint32 len = 31;
+#else
+	static uint32 len = 37;
+#endif
 
-		if ((charserv_config.char_new) == 0) //turn character creation on/off [Kevin]
-			idx = -2;
-		else {
-			idx = char_make_new_char_sql_67(sd, (char*)RFIFOP(fd, 2), RFIFOB(fd, 26), RFIFOB(fd, 27), RFIFOB(fd, 28), RFIFOB(fd, 29), RFIFOB(fd, 30), RFIFOB(fd, 31), RFIFOB(fd, 32), RFIFOW(fd, 33), RFIFOW(fd, 35));
-		}
-		RFIFOSKIP(fd, 37);
-		return chclif_createnewchar_ack(fd, sd, idx);
+	FIFOSD_CHECK(len)
+	if ((charserv_config.char_new) == 0) //turn character creation on/off [Kevin]
+		err = ERROR_CREATION_DISABLE;
+	else {
+		//grab inputs
+		int offset = 0;
+		char *name = (char*)RFIFOP(fd, 2);
+		int str = 1;
+		int agi = 1;
+		int vit = 1;
+		int int_ = 1;
+		int dex = 1;
+		int luk = 1;
+#if PACKETVER < 20120307
+		str = RFIFOB(fd, 26);
+		agi = RFIFOB(fd, 27);
+		vit = RFIFOB(fd, 28);
+		int_ = RFIFOB(fd, 29);
+		dex = RFIFOB(fd, 30);
+		luk = RFIFOB(fd, 31);
+		offset += 6;
+#endif
+		int slot = RFIFOB(fd, offset + 26);
+		int hair_color = RFIFOW(fd, offset + 27);
+		int hair_style = RFIFOW(fd, offset + 29);
+		
+
+		do {
+#if PACKETVER >= 20120307
+			//check inputs
+			if (slot < 0 || slot >= sd->char_slots){ err = ERROR_INVALID_SLOT; break;}	
+	#else
+			if ((slot < 0 || slot >= sd->char_slots) // slots
+				|| (str + agi + vit + int_ + dex + luk != 6 * 5) // stats
+				|| (str < 1 || str > 9 || agi < 1 || agi > 9 || vit < 1 || vit > 9 || int_ < 1 || int_ > 9 || dex < 1 || dex > 9 || luk < 1 || luk > 9) // individual stat values
+				|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10)){ // pairs
+				err = ERROR_INVALID_SLOT; break;
+			}
+#endif
+			//add extra check here
+
+			//finally execute the creation
+			err = char_make_new_char_sql(sd, name, str, agi, vit, int_, dex, luk, slot, hair_color, hair_style, &char_id);
+		} while (0); //to allow break
+
+	}
+	RFIFOSKIP(fd, len); //no matter what we should mark we have read the bytes from fifo
+
+	if(err == ERROR_NO_ERROR)
+		chclif_createnewchar_ack_success(fd, sd, char_id);
+	else
+		chclif_createnewchar_ack_error(fd, err);
+
+	return 1;
 }
 
 
@@ -1030,7 +1104,6 @@ int chclif_parse_keepalive(int fd){
 int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
 	int i, cid = 0;
 	char name[NAME_LENGTH];
-	char esc_name[NAME_LENGTH*2+1];
 
 	if(cmd == 0x8fc){
 		FIFOSD_CHECK(30)
@@ -1053,9 +1126,7 @@ int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
 	if( i == MAX_CHARS )
 		return 1;
 
-	normalize_name(name,TRIM_CHARS);
-	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
-	if( !char_check_char_name(name,esc_name) ) {
+	if( char_check_char_name(name) == ERROR_NO_ERROR ) {
 		i = 1;
 		safestrncpy(sd->new_name, name, NAME_LENGTH);
 	}
@@ -1223,8 +1294,9 @@ int chclif_parse(int fd) {
 			// char select
 			case 0x66: next=chclif_parse_charselect(fd,sd,ipl); break;
 			// createnewchar
-			case 0x970: next=chclif_parse_createnewchar_970(fd,sd); break;
-			case 0x67: next=chclif_parse_createnewchar_67(fd,sd); break;
+			case 0x970:
+			case 0x67: 
+				next=chclif_parse_createnewchar(fd,sd); break;
 			// delete char
 			case 0x68: next=chclif_parse_delchar(fd,sd,cmd); break; //
 			case 0x1fb: next=chclif_parse_delchar(fd,sd,cmd); break; // 2004-04-19aSakexe+ langtype 12 char deletion packet

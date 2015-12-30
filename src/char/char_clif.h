@@ -54,7 +54,9 @@ int chclif_parse_reqcaptcha(int fd);
 int chclif_parse_chkcaptcha(int fd);
 void chclif_block_character( int fd, struct char_session_data* sd);
 
-int chclif_createnewchar_ack(int fd, struct char_session_data* sd, int idx);
+int chclif_createnewchar_ack_error(int fd, e_makechar_error err);
+int chclif_createnewchar_ack_success(int fd, struct char_session_data* sd, uint32 char_id);
+
 int chclif_parse(int fd);
 
 #ifdef	__cplusplus

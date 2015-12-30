@@ -1358,101 +1358,116 @@ int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 	return 0;
 }
 
-int char_check_char_name(char * name, char * esc_name)
+/**
+* Function that check if a given name is valide within config
+* currently more oriented to for newchar creation
+* @param inout name : Char name to check
+return e_makechar_error
+*/
+e_makechar_error char_check_char_name(char * name)
 {
-	int i;
+	normalize_name(name, TRIM_CHARS);
 
 	// check length of character name
 	if( name[0] == '\0' )
-		return -2; // empty character name
+		return ERROR_NAME_LEN; // empty character name
+
+	 // remove special characthere before continuing check
+	if (remove_control_chars(name))
+		return ERROR_NAME_INVALID_CHAR; // control chars in name
+
 	/**
 	 * The client does not allow you to create names with less than 4 characters, however,
 	 * the use of WPE can bypass this, and this fixes the exploit.
 	 **/
 	if( strlen( name ) < 4 )
-		return -2;
-	// check content of character name
-	if( remove_control_chars(name) )
-		return -2; // control chars in name
+		return ERROR_NAME_LEN;
 
 	// check for reserved names
 	if( strcmpi(name, charserv_config.wisp_server_name) == 0 )
-		return -1; // nick reserved for internal server messages
+		return ERROR_NAME_RESERVED; // nick reserved for internal server messages
 
 	// Check Authorised letters/symbols in the name of the character
+
 	if( charserv_config.char_config.char_name_option == 1 )
 	{ // only letters/symbols in char_name_letters are authorised
+		int i;
 		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
 			if( strchr(charserv_config.char_config.char_name_letters, name[i]) == NULL )
-				return -2;
+				return ERROR_NAME_INVALID_CHAR;
 	}
 	else if( charserv_config.char_config.char_name_option == 2 )
 	{ // letters/symbols in char_name_letters are forbidden
+		int i;
 		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
 			if( strchr(charserv_config.char_config.char_name_letters, name[i]) != NULL )
-				return -2;
+				return ERROR_NAME_INVALID_CHAR;
 	}
-	if( charserv_config.char_config.name_ignoring_case ) {
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE BINARY `name` = '%s' LIMIT 1", schema_config.char_db, esc_name) ) {
-			Sql_ShowDebug(sql_handle);
-			return -2;
-		}
-	} else {
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` = '%s' LIMIT 1", schema_config.char_db, esc_name) ) {
-			Sql_ShowDebug(sql_handle);
-			return -2;
-		}
-	}
-	if( Sql_NumRows(sql_handle) > 0 )
-		return -1; // name already exists
 
-	return 0;
+	{ //check duplicate
+		char esc_name[NAME_LENGTH * 2 + 1];
+		Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
+		if (charserv_config.char_config.name_ignoring_case) {
+			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE BINARY `name` = '%s' LIMIT 1", schema_config.char_db, esc_name)) {
+				Sql_ShowDebug(sql_handle);
+				return ERROR_MK_SQL;
+			}
+		}
+		else {
+			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` = '%s' LIMIT 1", schema_config.char_db, esc_name)) {
+				Sql_ShowDebug(sql_handle);
+				return ERROR_MK_SQL;
+			}
+		}
+		if (Sql_NumRows(sql_handle) > 0)
+			return ERROR_NAME_DUPLICATE; // name already exists
+	}
+
+	return ERROR_NO_ERROR;
 }
 
-//-----------------------------------
-// Function to create a new character
-//-----------------------------------
-int char_make_new_char_sql_67(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style) {
+/**
+* Function to create a new character. (and store it into SQL)
+* @param sd: char_session_data of the client
+* @param name_: name requested
+* @param str: str requested
+* @param agi: agi requested
+* @param vit: vit requested
+* @param int_: int_ requested
+* @param dex: dex requested
+* @param luk: luk requested
+* @param slot: characthere slot requested
+* @param hair_color: hair color requested
+* @param hair_style: hair style requested
+* @return e_makechar_error   -4=bad_slot, -2=bad_input, ,-1=bad_name, char_id=success
+**/
+e_makechar_error char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, uint32 *out_char_id) {
 	char name[NAME_LENGTH];
-	char esc_name[NAME_LENGTH*2+1];
-	uint32 char_id;
-	int flag, k;
+	char esc_name[NAME_LENGTH * 2 + 1];
+	
+	uint32 status_point=0;
+	e_makechar_error flag;
+	int k;
 
 	safestrncpy(name, name_, NAME_LENGTH);
 	normalize_name(name,TRIM_CHARS);
-	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
 
-	flag = char_check_char_name(name,esc_name);
-	if( flag < 0 )
+	flag = char_check_char_name(name);
+	if (flag < ERROR_NO_ERROR)
 		return flag;
-
-	//check other inputs
-#if PACKETVER >= 20120307
-	if(slot < 0 || slot >= sd->char_slots)
-#else
-	if((slot < 0 || slot >= sd->char_slots) // slots
-	|| (str + agi + vit + int_ + dex + luk != 6*5 ) // stats
-	|| (str < 1 || str > 9 || agi < 1 || agi > 9 || vit < 1 || vit > 9 || int_ < 1 || int_ > 9 || dex < 1 || dex > 9 || luk < 1 || luk > 9) // individual stat values
-	|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10) ) // pairs
-#endif
-#if PACKETVER >= 20100413
-		return -4; // invalid slot
-#else
-		return -2; // invalid input
-#endif
-
+	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH)); //must be done after char_check_char_name, to escape the good name
 
 	// check the number of already existing chars in this account
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d'", schema_config.char_db, sd->account_id) )
 		Sql_ShowDebug(sql_handle);
 	if( Sql_NumRows(sql_handle) >= sd->char_slots )
-		return -2; // character account limit exceeded
+		return ERROR_MAXLIMIT; // character account limit exceeded //
 
 	// check char slot
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d' LIMIT 1", schema_config.char_db, sd->account_id, slot) )
 		Sql_ShowDebug(sql_handle);
 	if( Sql_NumRows(sql_handle) > 0 )
-		return -2; // slot already in use
+		return ERROR_INVALID_SLOT; // slot already in use
 
 	// validation success, log result
 	if (charserv_config.log_char) {
@@ -1461,46 +1476,31 @@ int char_make_new_char_sql_67(struct char_session_data* sd, char* name_, int str
 			schema_config.charlog_db, "make new char", sd->account_id, slot, esc_name, str, agi, vit, int_, dex, luk, hair_style, hair_color) )
 			Sql_ShowDebug(sql_handle);
 	}
-#if PACKETVER >= 20120307
+	//if we have spent no point, all stats are at 1
+	if (str+agi+vit+int_+dex+luk == 6 && str*agi*vit*int_*dex*luk == 1)
+		status_point = 48;
 	//Insert the new char entry to the database
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `status_point`,`str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
 		"'%d', '%d', '%s', '%d',  '%d','%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
-		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, 48, str, agi, vit, int_, dex, luk,
+		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, status_point, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
 		mapindex_id2name(charserv_config.start_point.map), charserv_config.start_point.x, charserv_config.start_point.y, mapindex_id2name(charserv_config.start_point.map), charserv_config.start_point.x, charserv_config.start_point.y) )
 	{
 		Sql_ShowDebug(sql_handle);
-		return -2; //No, stop the procedure!
+		return ERROR_MK_SQL; //No, stop the procedure!
 	}
-#else
-	//Insert the new char entry to the database
-	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
-		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
-		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
-		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, str, agi, vit, int_, dex, luk,
-		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-		mapindex_id2name(charserv_config.start_point.map), charserv_config.start_point.x, charserv_config.start_point.y, mapindex_id2name(charserv_config.start_point.map), charserv_config.start_point.x, charserv_config.start_point.y) )
-	{
-		Sql_ShowDebug(sql_handle);
-		return -2; //No, stop the procedure!
-	}
-#endif
+
 	//Retrieve the newly auto-generated char id
-	char_id = (int)Sql_LastInsertId(sql_handle);
+	*out_char_id = (int)Sql_LastInsertId(sql_handle);
 	//Give the char the default items
 	for (k = 0; k <= MAX_STARTITEM && start_items[k].nameid != 0; k ++) {
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%hu', '%d', '%d', '%d')", schema_config.inventory_db, char_id, start_items[k].nameid, start_items[k].amount, start_items[k].pos, 1) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%hu', '%d', '%d', '%d')", schema_config.inventory_db, *out_char_id, start_items[k].nameid, start_items[k].amount, start_items[k].pos, 1) )
 			Sql_ShowDebug(sql_handle);
 	}
 
-	ShowInfo("Created char: account: %d, char: %d, slot: %d, name: %s\n", sd->account_id, char_id, slot, name);
-	return char_id;
-}
-
-int char_make_new_char_sql_970(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style) {
-	int str = 1, agi = 1, vit = 1, int_ = 1, dex = 1, luk = 1;
-	return char_make_new_char_sql_67(sd, name_, str, agi, vit, int_, dex, luk, slot, hair_color, hair_style);
+	ShowInfo("Created char: account: %d, char: %d, slot: %d, name: %s\n", sd->account_id, *out_char_id, slot, name);
+	return ERROR_NO_ERROR;
 }
 
 /*----------------------------------------------------------------------------------------------------------*/
