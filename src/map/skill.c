@@ -14117,7 +14117,7 @@ int64 skill_unit_ondamaged(struct skill_unit *unit, int64 damage)
  */
 int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 {
-	int *c, skill_id;
+	int *c, skill_id, inf2;
 	struct block_list *src;
 	struct map_session_data *sd;
 	struct map_session_data *tsd;
@@ -14131,14 +14131,15 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	c=va_arg(ap,int *);
 	p_sd = va_arg(ap, int *);
 	skill_id = va_arg(ap,int);
+	inf2 = skill_get_inf2(skill_id);
 
 	if (skill_id == PR_BENEDICTIO && *c >= 2)
 		return 0; // Two companions found for Benedictio. [Skotlex]
 
-	if (skill_get_inf2(skill_id)&INF2_ENSEMBLE_SKILL && *c >= 1)
+	if (inf2&INF2_ENSEMBLE_SKILL && *c >= 1)
 		return 0; // Partner found for ensembles.
 
-	if ((skill_get_inf2(skill_id)&INF2_CHORUS_SKILL || skill_id == WL_COMET) && *c == MAX_PARTY)
+	if ((inf2&INF2_CHORUS_SKILL || skill_id == WL_COMET) && *c == MAX_PARTY)
 		return 0; // Entire party accounted for.
 
 	if (bl == src)
@@ -14150,7 +14151,7 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	if (tsd->sc.data[SC_SILENCE] || ( tsd->sc.opt1 && tsd->sc.opt1 != OPT1_BURNING ))
 		return 0;
 
-	if( skill_get_inf2(skill_id)&INF2_CHORUS_SKILL ) {
+	if( inf2&INF2_CHORUS_SKILL ) {
 		if( tsd->status.party_id == sd->status.party_id && (tsd->class_&MAPID_THIRDMASK) == MAPID_MINSTRELWANDERER )
 			p_sd[(*c)++] = tsd->bl.id;
 		return 1;
