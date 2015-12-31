@@ -3374,7 +3374,7 @@
 5360,Whikebain_Ears,Hyuke's Black Cat Ears,4,20,,200,,2,,0,0xFFFFFFFF,63,2,256,,45,1,368,{ bonus bFlee,10; bonus bCritical,3; bonus bCritAtkRate,10; bonus bDefRate,-50; bonus bDef2Rate,-50; },{},{}
 5361,Gang_Scarf,Gangster Scarf,4,20,,100,,0,,0,0xFFFFFFFF,63,2,1,,0,0,369,{ bonus bBaseAtk,5; if(BaseJob==Job_Rogue) skill "RG_GANGSTER",1; },{},{}
 5362,Ninja_Scroll,Ninja Scroll,4,20,,200,,0,,0,0xFFFFFFFF,63,2,1,,0,0,370,{ bonus bMatkRate,1; },{},{}
-5363,Helm_Of_Abyss,Helm Of Abyss,4,20,,1000,,2,,1,0x000654E2,63,2,256,,70,1,371,{ bonus2 bSubRace,RC_DemiHuman,-10; bonus2 bSubRace,RC_Player,-10; bonus2 bSubClass,Class_Boss,10; },{},{}
+5363,Helm_Of_Abyss,Helm Of Abyss,4,20,,1000,,9,,1,0x000654E2,63,2,256,,70,1,371,{ bonus2 bSubClass,Class_Normal,-5; bonus2 bSubClass,Class_Boss,10; },{},{}
 5364,Dark_Snake_Lord_Hat,Evil Snake Lord Hat,4,20,,500,,2,,1,0xFFFFFFFF,63,2,256,,60,1,372,{ bonus bStr,1; bonus bInt,1; bonus bAgi,2; bonus2 bAddMonsterDropItem,12582,30; },{},{}
 5365,Fried_Egg,Magnolia Hat,4,20,,100,,2,,1,0xFFFFFFFF,63,2,256,,1,0,373,{ bonus bBaseAtk,5; bonus3 bAutoSpellWhenHit,"BS_GREED",1,5; },{},{}
 5366,Hat_0f_King,Love Dad Bandana,4,20,,200,,3,,0,0xFFFFFFFF,63,2,256,,0,1,374,{ bonus bAllStats,5; },{},{}
