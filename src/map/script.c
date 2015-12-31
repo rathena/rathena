@@ -2243,7 +2243,7 @@ void script_hardcoded_constants(void) {
 	script_set_constant("MAX_LEVEL",MAX_LEVEL,false);
 	script_set_constant("MAX_STORAGE",MAX_STORAGE,false);
 	script_set_constant("MAX_INVENTORY",MAX_INVENTORY,false);
-	script_set_constant("MAX_CART",MAX_INVENTORY,false);
+	script_set_constant("MAX_CART",MAX_CART,false);
 	script_set_constant("MAX_ZENY",MAX_ZENY,false);
 	script_set_constant("MAX_PARTY",MAX_PARTY,false);
 	script_set_constant("MAX_GUILD",MAX_GUILD,false);
