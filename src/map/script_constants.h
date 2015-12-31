@@ -423,6 +423,35 @@
 	export_constant(CELL_CHKMAELSTROM);
 	export_constant(CELL_CHKICEWALL);
 
+	/* equip positions */
+	export_constant(EQI_HEAD_TOP);
+	export_constant(EQI_ARMOR);
+	export_constant(EQI_HAND_L);
+	export_constant(EQI_HAND_R);
+	export_constant(EQI_GARMENT);
+	export_constant(EQI_SHOES);
+	export_constant(EQI_ACC_L);
+	export_constant(EQI_ACC_R);
+	export_constant(EQI_HEAD_MID);
+	export_constant(EQI_HEAD_LOW);
+	export_constant(EQI_COSTUME_LOW);
+	// For backwards compatability
+	script_set_constant("EQI_COSTUME_HEAD_LOW",EQI_COSTUME_LOW,false); // TODO: Check if this is used anywhere and remove if possible
+	export_constant(EQI_COSTUME_MID);
+	// For backwards compatability
+	script_set_constant("EQI_COSTUME_HEAD_MID",EQI_COSTUME_MID,false); // TODO: Check if this is used anywhere and remove if possible
+	export_constant(EQI_COSTUME_TOP);
+	// For backwards compatability
+	script_set_constant("EQI_COSTUME_HEAD_TOP",EQI_COSTUME_TOP,false); // TODO: Check if this is used anywhere and remove if possible
+	export_constant(EQI_COSTUME_GARMENT);
+	export_constant(EQI_AMMO);
+	export_constant(EQI_SHADOW_ARMOR );
+	export_constant(EQI_SHADOW_WEAPON);
+	export_constant(EQI_SHADOW_SHIELD);
+	export_constant(EQI_SHADOW_SHOES);
+	export_constant(EQI_SHADOW_ACC_R);
+	export_constant(EQI_SHADOW_ACC_L);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
