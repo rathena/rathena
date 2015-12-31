@@ -393,6 +393,36 @@
 	export_constant(MF_NOTOMB);
 	export_constant(MF_SKILL_DAMAGE);
 
+	/* setcell types */
+	export_constant(CELL_WALKABLE);
+	export_constant(CELL_SHOOTABLE);
+	export_constant(CELL_WATER);
+	export_constant(CELL_NPC);
+	export_constant(CELL_BASILICA);
+	export_constant(CELL_LANDPROTECTOR);
+	export_constant(CELL_NOVENDING);
+	export_constant(CELL_NOCHAT);
+	export_constant(CELL_MAELSTROM);
+	export_constant(CELL_ICEWALL);
+
+	/* getcell types */
+	export_constant(CELL_CHKWALL);
+	export_constant(CELL_CHKWATER);
+	export_constant(CELL_CHKCLIFF);
+	export_constant(CELL_CHKPASS);
+	export_constant(CELL_CHKREACH);
+	export_constant(CELL_CHKNOPASS);
+	export_constant(CELL_CHKNOREACH);
+	// TODO: Check why this was commented until now
+	//export_constant(CELL_CHKSTACK);
+	export_constant(CELL_CHKNPC);
+	export_constant(CELL_CHKBASILICA);
+	export_constant(CELL_CHKLANDPROTECTOR);
+	export_constant(CELL_CHKNOVENDING);
+	export_constant(CELL_CHKNOCHAT);
+	export_constant(CELL_CHKMAELSTROM);
+	export_constant(CELL_CHKICEWALL);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
