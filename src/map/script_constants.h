@@ -317,6 +317,17 @@
 	script_set_constant("EAJ_SUPER_NOVICE_E",MAPID_SUPER_NOVICE_E,false);
 	script_set_constant("EAJ_SUPER_BABY_E",MAPID_SUPER_BABY_E,false);
 
+	/* broadcasts */
+	export_constant(BC_ALL);
+	export_constant(BC_MAP);
+	export_constant(BC_AREA);
+	export_constant(BC_SELF);
+	export_constant(BC_PC);
+	export_constant(BC_NPC);
+	export_constant(BC_YELLOW);
+	export_constant(BC_BLUE);
+	export_constant(BC_WOE);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
