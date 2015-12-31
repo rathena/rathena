@@ -4096,10 +4096,6 @@ int npc_parsesrcfile(const char* filepath, bool runOnInit)
 	char* buffer;
 	const char* p;
 
-	if( strstr(filepath,"does") != NULL ){
-		m = 0;
-	}
-
 	if(check_filepath(filepath)!=2) { //this is not a file 
 		ShowDebug("npc_parsesrcfile: Path doesn't seem to be a file skipping it : '%s'.\n", filepath);
 		return 0;
