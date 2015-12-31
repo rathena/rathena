@@ -328,6 +328,71 @@
 	export_constant(BC_BLUE);
 	export_constant(BC_WOE);
 
+	/* mapflags */
+	export_constant(MF_NOMEMO);
+	export_constant(MF_NOTELEPORT);
+	export_constant(MF_NOSAVE);
+	export_constant(MF_NOBRANCH);
+	export_constant(MF_NOPENALTY);
+	export_constant(MF_NOZENYPENALTY);
+	export_constant(MF_PVP);
+	export_constant(MF_PVP_NOPARTY);
+	export_constant(MF_PVP_NOGUILD);
+	export_constant(MF_GVG);
+	export_constant(MF_GVG_NOPARTY);
+	export_constant(MF_NOTRADE);
+	export_constant(MF_NOSKILL);
+	export_constant(MF_NOWARP);
+	export_constant(MF_PARTYLOCK);
+	export_constant(MF_NOICEWALL);
+	export_constant(MF_SNOW);
+	export_constant(MF_FOG);
+	export_constant(MF_SAKURA);
+	export_constant(MF_LEAVES);
+	// Intentionally disabled mf_rain because Ind removed it source side
+	//export_constant(MF_RAIN);
+	export_constant(MF_NOGO);
+	export_constant(MF_CLOUDS);
+	export_constant(MF_CLOUDS2);
+	export_constant(MF_FIREWORKS);
+	export_constant(MF_GVG_CASTLE);
+	export_constant(MF_GVG_DUNGEON);
+	export_constant(MF_NIGHTENABLED);
+	export_constant(MF_NOBASEEXP);
+	export_constant(MF_NOJOBEXP);
+	export_constant(MF_NOMOBLOOT);
+	export_constant(MF_NOMVPLOOT);
+	export_constant(MF_NORETURN);
+	export_constant(MF_NOWARPTO);
+	export_constant(MF_NIGHTMAREDROP);
+	export_constant(MF_RESTRICTED);
+	export_constant(MF_NOCOMMAND);
+	export_constant(MF_NODROP);
+	export_constant(MF_JEXP);
+	export_constant(MF_BEXP);
+	export_constant(MF_NOVENDING);
+	export_constant(MF_LOADEVENT);
+	export_constant(MF_NOCHAT);
+	export_constant(MF_NOEXPPENALTY);
+	export_constant(MF_GUILDLOCK);
+	export_constant(MF_TOWN);
+	export_constant(MF_AUTOTRADE);
+	export_constant(MF_ALLOWKS);
+	export_constant(MF_MONSTER_NOTELEPORT);
+	export_constant(MF_PVP_NOCALCRANK);
+	export_constant(MF_BATTLEGROUND);
+	export_constant(MF_RESET);
+	// TODO: Check why it is called differently on source and const
+	//export_constant(MF_CHANNELAUTOJOIN);
+	script_set_constant("mf_nomapchannelautojoin",MF_CHANNELAUTOJOIN,false);
+	export_constant(MF_NOUSECART);
+	export_constant(MF_NOITEMCONSUMPTION);
+	export_constant(MF_SUMSTARTMIRACLE);
+	export_constant(MF_NOMINEEFFECT);
+	export_constant(MF_NOLOCKON);
+	export_constant(MF_NOTOMB);
+	export_constant(MF_SKILL_DAMAGE);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
