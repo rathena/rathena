@@ -22,6 +22,166 @@
 	export_constant(VIP_SCRIPT);
 	export_constant(MIN_STORAGE);
 
+	/* jobs */
+	export_constant(JOB_NOVICE);
+	export_constant(JOB_SWORDMAN);
+	export_constant(JOB_MAGE);
+	export_constant(JOB_ARCHER);
+	export_constant(JOB_ACOLYTE);
+	export_constant(JOB_MERCHANT);
+	export_constant(JOB_THIEF);
+	export_constant(JOB_KNIGHT);
+	export_constant(JOB_PRIEST);
+	export_constant(JOB_WIZARD);
+	export_constant(JOB_BLACKSMITH);
+	export_constant(JOB_HUNTER);
+	export_constant(JOB_ASSASSIN);
+	export_constant(JOB_KNIGHT2);
+	export_constant(JOB_CRUSADER);
+	export_constant(JOB_MONK);
+	export_constant(JOB_SAGE);
+	export_constant(JOB_ROGUE);
+	export_constant(JOB_ALCHEMIST);
+	// For backwards compatability
+	script_set_constant("Job_Alchem",JOB_ALCHEMIST,false); // TODO: Check if this is used anywhere and remove if possible
+	export_constant(JOB_BARD);
+	export_constant(JOB_DANCER);
+	export_constant(JOB_CRUSADER2);
+	export_constant(JOB_WEDDING);
+	export_constant(JOB_SUPER_NOVICE);
+	// For backwards compatability
+	script_set_constant("Job_SuperNovice",JOB_SUPER_NOVICE,false); // TODO: Refactor NPCs to use the new constant
+	export_constant(JOB_GUNSLINGER);
+	export_constant(JOB_NINJA);
+	export_constant(JOB_XMAS);
+	export_constant(JOB_SUMMER);
+	export_constant(JOB_HANBOK);
+	export_constant(JOB_OKTOBERFEST);
+
+	export_constant(JOB_NOVICE_HIGH);
+	export_constant(JOB_SWORDMAN_HIGH);
+	export_constant(JOB_MAGE_HIGH);
+	export_constant(JOB_ARCHER_HIGH);
+	export_constant(JOB_ACOLYTE_HIGH);
+	export_constant(JOB_MERCHANT_HIGH);
+	export_constant(JOB_THIEF_HIGH);
+	export_constant(JOB_LORD_KNIGHT);
+	export_constant(JOB_HIGH_PRIEST);
+	export_constant(JOB_HIGH_WIZARD);
+	export_constant(JOB_WHITESMITH);
+	export_constant(JOB_SNIPER);
+	export_constant(JOB_ASSASSIN_CROSS);
+	export_constant(JOB_LORD_KNIGHT2);
+	export_constant(JOB_PALADIN);
+	export_constant(JOB_CHAMPION);
+	export_constant(JOB_PROFESSOR);
+	export_constant(JOB_STALKER);
+	export_constant(JOB_CREATOR);
+	export_constant(JOB_CLOWN);
+	export_constant(JOB_GYPSY);
+	export_constant(JOB_PALADIN2);
+
+	export_constant(JOB_BABY);
+	export_constant(JOB_BABY_SWORDMAN);
+	export_constant(JOB_BABY_MAGE);
+	export_constant(JOB_BABY_ARCHER);
+	export_constant(JOB_BABY_ACOLYTE);
+	export_constant(JOB_BABY_MERCHANT);
+	export_constant(JOB_BABY_THIEF);
+	export_constant(JOB_BABY_KNIGHT);
+	export_constant(JOB_BABY_PRIEST);
+	export_constant(JOB_BABY_WIZARD);
+	export_constant(JOB_BABY_BLACKSMITH);
+	export_constant(JOB_BABY_HUNTER);
+	export_constant(JOB_BABY_ASSASSIN);
+	export_constant(JOB_BABY_KNIGHT2);
+	export_constant(JOB_BABY_CRUSADER);
+	export_constant(JOB_BABY_MONK);
+	export_constant(JOB_BABY_SAGE);
+	export_constant(JOB_BABY_ROGUE);
+	export_constant(JOB_BABY_ALCHEMIST);
+	// For backwards compatability
+	script_set_constant("Job_Baby_Alchem",JOB_BABY_ALCHEMIST,false); // TODO: Check if this is used anywhere and remove if possible
+	export_constant(JOB_BABY_BARD);
+	export_constant(JOB_BABY_DANCER);
+	export_constant(JOB_BABY_CRUSADER2);
+	export_constant(JOB_SUPER_BABY);
+
+	export_constant(JOB_TAEKWON);
+	export_constant(JOB_STAR_GLADIATOR);
+	export_constant(JOB_STAR_GLADIATOR2);
+	export_constant(JOB_SOUL_LINKER);
+
+	export_constant(JOB_GANGSI);
+	export_constant(JOB_DEATH_KNIGHT);
+	export_constant(JOB_DARK_COLLECTOR);
+
+	export_constant(JOB_RUNE_KNIGHT);
+	export_constant(JOB_WARLOCK);
+	export_constant(JOB_RANGER);
+	export_constant(JOB_ARCH_BISHOP);
+	export_constant(JOB_MECHANIC);
+	export_constant(JOB_GUILLOTINE_CROSS);
+
+	export_constant(JOB_RUNE_KNIGHT_T);
+	export_constant(JOB_WARLOCK_T);
+	export_constant(JOB_RANGER_T);
+	export_constant(JOB_ARCH_BISHOP_T);
+	export_constant(JOB_MECHANIC_T);
+	export_constant(JOB_GUILLOTINE_CROSS_T);
+
+	export_constant(JOB_ROYAL_GUARD);
+	export_constant(JOB_SORCERER);
+	export_constant(JOB_MINSTREL);
+	export_constant(JOB_WANDERER);
+	export_constant(JOB_SURA);
+	export_constant(JOB_GENETIC);
+	export_constant(JOB_SHADOW_CHASER);
+
+	export_constant(JOB_ROYAL_GUARD_T);
+	export_constant(JOB_SORCERER_T);
+	export_constant(JOB_MINSTREL_T);
+	export_constant(JOB_WANDERER_T);
+	export_constant(JOB_SURA_T);
+	export_constant(JOB_GENETIC_T);
+	export_constant(JOB_SHADOW_CHASER_T);
+
+	export_constant(JOB_RUNE_KNIGHT2);
+	export_constant(JOB_RUNE_KNIGHT_T2);
+	export_constant(JOB_ROYAL_GUARD2);
+	export_constant(JOB_ROYAL_GUARD_T2);
+	export_constant(JOB_RANGER2);
+	export_constant(JOB_RANGER_T2);
+	export_constant(JOB_MECHANIC2);
+	export_constant(JOB_MECHANIC_T2);
+
+	export_constant(JOB_BABY_RUNE);
+	export_constant(JOB_BABY_WARLOCK);
+	export_constant(JOB_BABY_RANGER);
+	export_constant(JOB_BABY_BISHOP);
+	export_constant(JOB_BABY_MECHANIC);
+	export_constant(JOB_BABY_CROSS);
+	export_constant(JOB_BABY_GUARD);
+	export_constant(JOB_BABY_SORCERER);
+	export_constant(JOB_BABY_MINSTREL);
+	export_constant(JOB_BABY_WANDERER);
+	export_constant(JOB_BABY_SURA);
+	export_constant(JOB_BABY_GENETIC);
+	export_constant(JOB_BABY_CHASER);
+
+	export_constant(JOB_BABY_RUNE2);
+	export_constant(JOB_BABY_GUARD2);
+	export_constant(JOB_BABY_RANGER2);
+	export_constant(JOB_BABY_MECHANIC2);
+
+	export_constant(JOB_SUPER_NOVICE_E);
+	export_constant(JOB_SUPER_BABY_E);
+
+	export_constant(JOB_KAGEROU);
+	export_constant(JOB_OBORO);
+
+	export_constant(JOB_REBELLION);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
