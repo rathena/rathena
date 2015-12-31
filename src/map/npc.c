@@ -2109,7 +2109,11 @@ int npc_addsrcfile(const char* name)
 		return 1;
 	}
 
-    if(check_filepath(name)!=2) return 0; //this is not a file 
+	//Check if this is not a file
+    if(check_filepath(name)!=2){
+		ShowError("npc_addsrcfile: Can't find source file \"%s\"\n", name );
+		return 0;
+	}
         
 	// prevent multiple insert of source files
 	file = npc_src_files;
@@ -4091,6 +4095,10 @@ int npc_parsesrcfile(const char* filepath, bool runOnInit)
 	size_t len;
 	char* buffer;
 	const char* p;
+
+	if( strstr(filepath,"does") != NULL ){
+		m = 0;
+	}
 
 	if(check_filepath(filepath)!=2) { //this is not a file 
 		ShowDebug("npc_parsesrcfile: Path doesn't seem to be a file skipping it : '%s'.\n", filepath);
