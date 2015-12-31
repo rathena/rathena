@@ -452,6 +452,23 @@
 	export_constant(EQI_SHADOW_ACC_R);
 	export_constant(EQI_SHADOW_ACC_L);
 
+	/* looks */
+	export_constant(LOOK_BASE);
+	export_constant(LOOK_HAIR);
+	export_constant(LOOK_WEAPON);
+	export_constant(LOOK_HEAD_BOTTOM);
+	export_constant(LOOK_HEAD_TOP);
+	export_constant(LOOK_HEAD_MID);
+	export_constant(LOOK_HAIR_COLOR);
+	export_constant(LOOK_CLOTHES_COLOR);
+	export_constant(LOOK_SHIELD);
+	export_constant(LOOK_SHOES);
+	export_constant(LOOK_BODY);
+	export_constant(LOOK_RESET_COSTUMES);
+	export_constant(LOOK_ROBE);
+	// TODO: check why we didnt have floor and enable it
+	//export_constant(LOOK_FLOOR);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
