@@ -182,6 +182,141 @@
 
 	export_constant(JOB_REBELLION);
 
+	/* EA jobs */
+	script_set_constant("EAJL_2_1",JOBL_2_1,false);
+	script_set_constant("EAJL_2_2",JOBL_2_2,false);
+	script_set_constant("EAJL_2",JOBL_2,false);
+	script_set_constant("EAJL_UPPER",JOBL_UPPER,false);
+	script_set_constant("EAJL_BABY",JOBL_BABY,false);
+	script_set_constant("EAJL_THIRD",JOBL_THIRD,false);
+
+	script_set_constant("EAJ_BASEMASK",MAPID_BASEMASK,false);
+	script_set_constant("EAJ_UPPERMASK",MAPID_UPPERMASK,false);
+	script_set_constant("EAJ_THIRDMASK",MAPID_THIRDMASK,false);
+
+	script_set_constant("EAJ_NOVICE",MAPID_NOVICE,false);
+	script_set_constant("EAJ_SWORDMAN",MAPID_SWORDMAN,false);
+	script_set_constant("EAJ_MAGE",MAPID_MAGE,false);
+	script_set_constant("EAJ_ARCHER",MAPID_ARCHER,false);
+	script_set_constant("EAJ_ACOLYTE",MAPID_ACOLYTE,false);
+	script_set_constant("EAJ_MERCHANT",MAPID_MERCHANT,false);
+	script_set_constant("EAJ_THIEF",MAPID_THIEF,false);
+	script_set_constant("EAJ_TAEKWON",MAPID_TAEKWON,false);
+	script_set_constant("EAJ_GUNSLINGER",MAPID_GUNSLINGER,false);
+	script_set_constant("EAJ_NINJA",MAPID_NINJA,false);
+	script_set_constant("EAJ_GANGSI",MAPID_GANGSI,false);
+
+	script_set_constant("EAJ_KNIGHT",MAPID_KNIGHT,false);
+	script_set_constant("EAJ_WIZARD",MAPID_WIZARD,false);
+	script_set_constant("EAJ_HUNTER",MAPID_HUNTER,false);
+	script_set_constant("EAJ_PRIEST",MAPID_PRIEST,false);
+	script_set_constant("EAJ_BLACKSMITH",MAPID_BLACKSMITH,false);
+	script_set_constant("EAJ_ASSASSIN",MAPID_ASSASSIN,false);
+	script_set_constant("EAJ_STAR_GLADIATOR",MAPID_STAR_GLADIATOR,false);
+	script_set_constant("EAJ_REBELLION",MAPID_REBELLION,false);
+	script_set_constant("EAJ_KAGEROUOBORO",MAPID_KAGEROUOBORO,false);
+	script_set_constant("EAJ_DEATH_KNIGHT",MAPID_DEATH_KNIGHT,false);
+
+	script_set_constant("EAJ_CRUSADER",MAPID_CRUSADER,false);
+	script_set_constant("EAJ_SAGE",MAPID_SAGE,false);
+	script_set_constant("EAJ_BARDDANCER",MAPID_BARDDANCER,false);
+	script_set_constant("EAJ_MONK",MAPID_MONK,false);
+	script_set_constant("EAJ_ALCHEMIST",MAPID_ALCHEMIST,false);
+	script_set_constant("EAJ_ROGUE",MAPID_ROGUE,false);
+	script_set_constant("EAJ_SOUL_LINKER",MAPID_SOUL_LINKER,false);
+	script_set_constant("EAJ_DARK_COLLECTOR",MAPID_DARK_COLLECTOR,false);
+
+	script_set_constant("EAJ_NOVICE_HIGH",MAPID_NOVICE_HIGH,false);
+	script_set_constant("EAJ_SWORDMAN_HIGH",MAPID_SWORDMAN_HIGH,false);
+	script_set_constant("EAJ_MAGE_HIGH",MAPID_MAGE_HIGH,false);
+	script_set_constant("EAJ_ARCHER_HIGH",MAPID_ARCHER_HIGH,false);
+	script_set_constant("EAJ_ACOLYTE_HIGH",MAPID_ACOLYTE_HIGH,false);
+	script_set_constant("EAJ_MERCHANT_HIGH",MAPID_MERCHANT_HIGH,false);
+	script_set_constant("EAJ_THIEF_HIGH",MAPID_THIEF_HIGH,false);
+
+	script_set_constant("EAJ_LORD_KNIGHT",MAPID_LORD_KNIGHT,false);
+	script_set_constant("EAJ_HIGH_WIZARD",MAPID_HIGH_WIZARD,false);
+	script_set_constant("EAJ_SNIPER",MAPID_SNIPER,false);
+	script_set_constant("EAJ_HIGH_PRIEST",MAPID_HIGH_PRIEST,false);
+	script_set_constant("EAJ_WHITESMITH",MAPID_WHITESMITH,false);
+	script_set_constant("EAJ_ASSASSIN_CROSS",MAPID_ASSASSIN_CROSS,false);
+
+	script_set_constant("EAJ_PALADIN",MAPID_PALADIN,false);
+	script_set_constant("EAJ_PROFESSOR",MAPID_PROFESSOR,false);
+	script_set_constant("EAJ_CLOWNGYPSY",MAPID_CLOWNGYPSY,false);
+	script_set_constant("EAJ_CHAMPION",MAPID_CHAMPION,false);
+	script_set_constant("EAJ_CREATOR",MAPID_CREATOR,false);
+	script_set_constant("EAJ_STALKER",MAPID_STALKER,false);
+
+	script_set_constant("EAJ_BABY",MAPID_BABY,false);
+	script_set_constant("EAJ_BABY_SWORDMAN",MAPID_BABY_SWORDMAN,false);
+	script_set_constant("EAJ_BABY_MAGE",MAPID_BABY_MAGE,false);
+	script_set_constant("EAJ_BABY_ARCHER",MAPID_BABY_ARCHER,false);
+	script_set_constant("EAJ_BABY_ACOLYTE",MAPID_BABY_ACOLYTE,false);
+	script_set_constant("EAJ_BABY_MERCHANT",MAPID_BABY_MERCHANT,false);
+	script_set_constant("EAJ_BABY_THIEF",MAPID_BABY_THIEF,false);
+
+	script_set_constant("EAJ_BABY_KNIGHT",MAPID_BABY_KNIGHT,false);
+	script_set_constant("EAJ_BABY_WIZARD",MAPID_BABY_WIZARD,false);
+	script_set_constant("EAJ_BABY_HUNTER",MAPID_BABY_HUNTER,false);
+	script_set_constant("EAJ_BABY_PRIEST",MAPID_BABY_PRIEST,false);
+	script_set_constant("EAJ_BABY_BLACKSMITH",MAPID_BABY_BLACKSMITH,false);
+	script_set_constant("EAJ_BABY_ASSASSIN",MAPID_BABY_ASSASSIN,false);
+
+	script_set_constant("EAJ_BABY_CRUSADER",MAPID_BABY_CRUSADER,false);
+	script_set_constant("EAJ_BABY_SAGE",MAPID_BABY_SAGE,false);
+	script_set_constant("EAJ_BABY_BARDDANCER",MAPID_BABY_BARDDANCER,false);
+	script_set_constant("EAJ_BABY_MONK",MAPID_BABY_MONK,false);
+	script_set_constant("EAJ_BABY_ALCHEMIST",MAPID_BABY_ALCHEMIST,false);
+	script_set_constant("EAJ_BABY_ROGUE",MAPID_BABY_ROGUE,false);
+
+	script_set_constant("EAJ_RUNE_KNIGHT",MAPID_RUNE_KNIGHT,false);
+	script_set_constant("EAJ_WARLOCK",MAPID_WARLOCK,false);
+	script_set_constant("EAJ_RANGER",MAPID_RANGER,false);
+	script_set_constant("EAJ_ARCH_BISHOP",MAPID_ARCH_BISHOP,false);
+	script_set_constant("EAJ_MECHANIC",MAPID_MECHANIC,false);
+	script_set_constant("EAJ_GUILLOTINE_CROSS",MAPID_GUILLOTINE_CROSS,false);
+
+	script_set_constant("EAJ_ROYAL_GUARD",MAPID_ROYAL_GUARD,false);
+	script_set_constant("EAJ_SORCERER",MAPID_SORCERER,false);
+	script_set_constant("EAJ_MINSTRELWANDERER",MAPID_MINSTRELWANDERER,false);
+	script_set_constant("EAJ_SURA",MAPID_SURA,false);
+	script_set_constant("EAJ_GENETIC",MAPID_GENETIC,false);
+	script_set_constant("EAJ_SHADOW_CHASER",MAPID_SHADOW_CHASER,false);
+
+	script_set_constant("EAJ_RUNE_KNIGHT_T",MAPID_RUNE_KNIGHT_T,false);
+	script_set_constant("EAJ_WARLOCK_T",MAPID_WARLOCK_T,false);
+	script_set_constant("EAJ_RANGER_T",MAPID_RANGER_T,false);
+	script_set_constant("EAJ_ARCH_BISHOP_T",MAPID_ARCH_BISHOP_T,false);
+	script_set_constant("EAJ_MECHANIC_T",MAPID_MECHANIC_T,false);
+	script_set_constant("EAJ_GUILLOTINE_CROSS_T",MAPID_GUILLOTINE_CROSS_T,false);
+
+	script_set_constant("EAJ_ROYAL_GUARD_T",MAPID_ROYAL_GUARD_T,false);
+	script_set_constant("EAJ_SORCERER_T",MAPID_SORCERER_T,false);
+	script_set_constant("EAJ_MINSTRELWANDERER_T",MAPID_MINSTRELWANDERER_T,false);
+	script_set_constant("EAJ_SURA_T",MAPID_SURA_T,false);
+	script_set_constant("EAJ_GENETIC_T",MAPID_GENETIC_T,false);
+	script_set_constant("EAJ_SHADOW_CHASER_T",MAPID_SHADOW_CHASER_T,false);
+
+	script_set_constant("EAJ_BABY_RUNE",MAPID_BABY_RUNE,false);
+	script_set_constant("EAJ_BABY_WARLOCK",MAPID_BABY_WARLOCK,false);
+	script_set_constant("EAJ_BABY_RANGER",MAPID_BABY_RANGER,false);
+	script_set_constant("EAJ_BABY_BISHOP",MAPID_BABY_BISHOP,false);
+	script_set_constant("EAJ_BABY_MECHANIC",MAPID_BABY_MECHANIC,false);
+	script_set_constant("EAJ_BABY_CROSS",MAPID_BABY_CROSS,false);
+
+	script_set_constant("EAJ_BABY_GUARD",MAPID_BABY_GUARD,false);
+	script_set_constant("EAJ_BABY_SORCERER",MAPID_BABY_SORCERER,false);
+	script_set_constant("EAJ_BABY_MINSTRELWANDERER",MAPID_BABY_MINSTRELWANDERER,false);
+	script_set_constant("EAJ_BABY_SURA",MAPID_BABY_SURA,false);
+	script_set_constant("EAJ_BABY_GENETIC",MAPID_BABY_GENETIC,false);
+	script_set_constant("EAJ_BABY_CHASER",MAPID_BABY_CHASER,false);
+
+	script_set_constant("EAJ_SUPER_NOVICE",MAPID_SUPER_NOVICE,false);
+	script_set_constant("EAJ_SUPER_BABY",MAPID_SUPER_BABY,false);
+	script_set_constant("EAJ_SUPER_NOVICE_E",MAPID_SUPER_NOVICE_E,false);
+	script_set_constant("EAJ_SUPER_BABY_E",MAPID_SUPER_BABY_E,false);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
