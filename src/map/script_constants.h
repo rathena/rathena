@@ -2222,6 +2222,39 @@
 	export_constant(E_YUT6);
 	export_constant(E_YUT7);
 
+	/* send targets */
+	export_constant(ALL_CLIENT);
+	export_constant(ALL_SAMEMAP);
+	export_constant(AREA);
+	export_constant(AREA_WOS);
+	export_constant(AREA_WOC);
+	export_constant(AREA_WOSC);
+	export_constant(AREA_CHAT_WOC);
+	export_constant(CHAT);
+	export_constant(CHAT_WOS);
+	export_constant(PARTY);
+	export_constant(PARTY_WOS);
+	export_constant(PARTY_SAMEMAP);
+	export_constant(PARTY_SAMEMAP_WOS);
+	export_constant(PARTY_AREA);
+	export_constant(PARTY_AREA_WOS);
+	export_constant(GUILD);
+	export_constant(GUILD_WOS);
+	export_constant(GUILD_SAMEMAP);
+	export_constant(GUILD_SAMEMAP_WOS);
+	export_constant(GUILD_AREA);
+	export_constant(GUILD_AREA_WOS);
+	export_constant(GUILD_NOBG);
+	export_constant(DUEL);
+	export_constant(DUEL_WOS);
+	export_constant(SELF);
+	export_constant(BG);
+	export_constant(BG_WOS);
+	export_constant(BG_SAMEMAP);
+	export_constant(BG_SAMEMAP_WOS);
+	export_constant(BG_AREA);
+	export_constant(BG_AREA_WOS);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
