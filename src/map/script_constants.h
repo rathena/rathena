@@ -1110,6 +1110,961 @@
 	export_constant(SC_EXTREMITYFIST2);
 	// TODO: Add missing ones
 
+	/* status icons */
+	export_constant(SI_BLANK);
+	export_constant(SI_PROVOKE);
+	export_constant(SI_ENDURE);
+	export_constant(SI_TWOHANDQUICKEN);
+	export_constant(SI_CONCENTRATE);
+	export_constant(SI_HIDING);
+	export_constant(SI_CLOAKING);
+	export_constant(SI_ENCPOISON);
+	export_constant(SI_POISONREACT);
+	export_constant(SI_QUAGMIRE);
+	export_constant(SI_ANGELUS);
+	export_constant(SI_BLESSING);
+	export_constant(SI_SIGNUMCRUCIS);
+	export_constant(SI_INCREASEAGI);
+	export_constant(SI_DECREASEAGI);
+	export_constant(SI_SLOWPOISON);
+	export_constant(SI_IMPOSITIO);
+	export_constant(SI_SUFFRAGIUM);
+	export_constant(SI_ASPERSIO);
+	export_constant(SI_BENEDICTIO);
+	export_constant(SI_KYRIE);
+	export_constant(SI_MAGNIFICAT);
+	export_constant(SI_GLORIA);
+	export_constant(SI_AETERNA);
+	export_constant(SI_ADRENALINE);
+	export_constant(SI_WEAPONPERFECTION);
+	export_constant(SI_OVERTHRUST);
+	export_constant(SI_MAXIMIZEPOWER);
+	export_constant(SI_RIDING);
+	export_constant(SI_FALCON);
+	export_constant(SI_TRICKDEAD);
+	export_constant(SI_LOUD);
+	export_constant(SI_ENERGYCOAT);
+	export_constant(SI_BROKENARMOR);
+	export_constant(SI_BROKENWEAPON);
+	export_constant(SI_HALLUCINATION);
+	export_constant(SI_WEIGHT50);
+	export_constant(SI_WEIGHT90);
+	export_constant(SI_ASPDPOTION0);
+	export_constant(SI_ASPDPOTION1);
+	export_constant(SI_ASPDPOTION2);
+	export_constant(SI_ASPDPOTIONINFINITY);
+	export_constant(SI_SPEEDPOTION1);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_MOVHASTE_INFINITY);
+	export_constant(SI_AUTOCOUNTER);
+	export_constant(SI_SPLASHER);
+	export_constant(SI_ANKLESNARE);
+	export_constant(SI_ACTIONDELAY);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_NOACTION);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_IMPOSSIBLEPICKUP);
+	export_constant(SI_BARRIER);
+	export_constant(SI_STRIPWEAPON);
+	export_constant(SI_STRIPSHIELD);
+	export_constant(SI_STRIPARMOR);
+	export_constant(SI_STRIPHELM);
+	export_constant(SI_CP_WEAPON);
+	export_constant(SI_CP_SHIELD);
+	export_constant(SI_CP_ARMOR);
+	export_constant(SI_CP_HELM);
+	export_constant(SI_AUTOGUARD);
+	export_constant(SI_REFLECTSHIELD);
+	export_constant(SI_DEVOTION);
+	export_constant(SI_PROVIDENCE);
+	export_constant(SI_DEFENDER);
+	export_constant(SI_MAGICROD);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_WEAPONPROPERTY);
+	export_constant(SI_AUTOSPELL);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_SPECIALZONE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_MASK);
+	export_constant(SI_SPEARQUICKEN);
+	export_constant(SI_BDPLAYING);
+	export_constant(SI_WHISTLE);
+	export_constant(SI_ASSASSINCROSS);
+	export_constant(SI_POEMBRAGI);
+	export_constant(SI_APPLEIDUN);
+	export_constant(SI_HUMMING);
+	export_constant(SI_DONTFORGETME);
+	export_constant(SI_FORTUNEKISS);
+	export_constant(SI_SERVICEFORYOU);
+	export_constant(SI_RICHMANKIM);
+	export_constant(SI_ETERNALCHAOS);
+	export_constant(SI_DRUMBATTLEFIELD);
+	export_constant(SI_RINGNIBELUNGEN);
+	export_constant(SI_ROKISWEIL);
+	export_constant(SI_INTOABYSS);
+	export_constant(SI_SIEGFRIED);
+	export_constant(SI_BLADESTOP);
+	export_constant(SI_EXPLOSIONSPIRITS);
+	export_constant(SI_STEELBODY);
+	export_constant(SI_EXTREMITYFIST);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_COMBOATTACK);
+	export_constant(SI_FIREWEAPON);
+	export_constant(SI_WATERWEAPON);
+	export_constant(SI_WINDWEAPON);
+	export_constant(SI_EARTHWEAPON);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_MAGICATTACK);
+	export_constant(SI_STOP);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_WEAPONBRAKER);
+	export_constant(SI_UNDEAD);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_POWERUP);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_AGIUP);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_SIEGEMODE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_INVISIBLE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_STATUSONE);
+	export_constant(SI_AURABLADE);
+	export_constant(SI_PARRYING);
+	export_constant(SI_CONCENTRATION);
+	export_constant(SI_TENSIONRELAX);
+	export_constant(SI_BERSERK);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_SACRIFICE);
+	export_constant(SI_GOSPEL);
+	export_constant(SI_ASSUMPTIO);
+	export_constant(SI_BASILICA);
+	export_constant(SI_LANDENDOW);
+	export_constant(SI_MAGICPOWER);
+	export_constant(SI_EDP);
+	export_constant(SI_TRUESIGHT);
+	export_constant(SI_WINDWALK);
+	export_constant(SI_MELTDOWN);
+	export_constant(SI_CARTBOOST);
+	export_constant(SI_CHASEWALK);
+	export_constant(SI_REJECTSWORD);
+	export_constant(SI_MARIONETTE);
+	export_constant(SI_MARIONETTE2);
+	export_constant(SI_MOONLIT);
+	export_constant(SI_BLEEDING);
+	export_constant(SI_JOINTBEAT);
+	export_constant(SI_MINDBREAKER);
+	export_constant(SI_MEMORIZE);
+	export_constant(SI_FOGWALL);
+	export_constant(SI_SPIDERWEB);
+	export_constant(SI_BABY);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_SUB_WEAPONPROPERTY);
+	export_constant(SI_AUTOBERSERK);
+	export_constant(SI_RUN);
+	export_constant(SI_BUMP);
+	export_constant(SI_READYSTORM);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_STORMKICK_READY);
+	export_constant(SI_READYDOWN);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DOWNKICK_READY);
+	export_constant(SI_READYTURN);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_TURNKICK_READY);
+	export_constant(SI_READYCOUNTER);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_COUNTER_READY);
+	export_constant(SI_DODGE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DODGE_READY);
+	export_constant(SI_SPURT);
+	export_constant(SI_SHADOWWEAPON);
+	export_constant(SI_ADRENALINE2);
+	export_constant(SI_GHOSTWEAPON);
+	export_constant(SI_SPIRIT);
+	export_constant(SI_PLUSATTACKPOWER);
+	export_constant(SI_PLUSMAGICPOWER);
+	export_constant(SI_DEVIL);
+	export_constant(SI_KAITE);
+	export_constant(SI_SWOO);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_STAR2);
+	export_constant(SI_KAIZEL);
+	export_constant(SI_KAAHI);
+	export_constant(SI_KAUPE);
+	export_constant(SI_SMA);
+	export_constant(SI_NIGHT);
+	export_constant(SI_ONEHAND);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_FRIEND);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_FRIENDUP);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_SG_WARM);
+	export_constant(SI_WARM);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_EMOTION);
+	export_constant(SI_SUN_COMFORT);
+	export_constant(SI_MOON_COMFORT);
+	export_constant(SI_STAR_COMFORT);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_EXPUP);
+	export_constant(SI_GDSKILL_BATTLEORDER);
+	export_constant(SI_GDSKILL_REGENERATION);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_GDSKILL_POSTDELAY);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_RESISTHANDICAP);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_MAXHPPERCENT);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_MAXSPPERCENT);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DEFENCE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_SLOWDOWN);
+	export_constant(SI_PRESERVE);
+	export_constant(SI_CHASEWALK2);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_NOT_EXTREMITYFIST);
+	export_constant(SI_INTRAVISION);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_MOVESLOW_POTION);
+	export_constant(SI_DOUBLECAST);
+	export_constant(SI_GRAVITATION);
+	export_constant(SI_MAXOVERTHRUST);
+	export_constant(SI_LONGING);
+	export_constant(SI_HERMODE);
+	export_constant(SI_TAROT);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_HLIF_AVOID);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_HFLI_FLEET);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_HFLI_SPEED);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_HLIF_CHANGE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_HAMI_BLOODLUST);
+	export_constant(SI_SHRINK);
+	export_constant(SI_SIGHTBLASTER);
+	export_constant(SI_WINKCHARM);
+	export_constant(SI_CLOSECONFINE);
+	export_constant(SI_CLOSECONFINE2);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DISABLEMOVE);
+	export_constant(SI_MADNESSCANCEL);
+	export_constant(SI_GATLINGFEVER);
+	export_constant(SI_EARTHSCROLL);
+	export_constant(SI_UTSUSEMI);
+	export_constant(SI_BUNSINJYUTSU);
+	export_constant(SI_NEN);
+	export_constant(SI_ADJUSTMENT);
+	export_constant(SI_ACCURACY);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_NJ_SUITON);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_PET);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_MENTAL);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_EXPMEMORY);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_PERFORMANCE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_GAIN);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_GRIFFON);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DRIFT);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_WALLSHIFT);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_REINCARNATION);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_PATTACK);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_PSPEED);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_PDEFENSE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_PCRITICAL);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_RANKING);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_PTRIPLE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DENERGY);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_WAVE1);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_WAVE2);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_WAVE3);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_WAVE4);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DAURA);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DFREEZER);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DPUNISH);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DBARRIER);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DWARNING);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_MOUSEWHEEL);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DGAUGE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DACCEL);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DBLOCK);
+	export_constant(SI_FOODSTR);
+	export_constant(SI_FOODAGI);
+	export_constant(SI_FOODVIT);
+	export_constant(SI_FOODDEX);
+	export_constant(SI_FOODINT);
+	export_constant(SI_FOODLUK);
+	export_constant(SI_FOODFLEE);
+	export_constant(SI_FOODHIT);
+	export_constant(SI_FOODCRI);
+	export_constant(SI_EXPBOOST);
+	export_constant(SI_LIFEINSURANCE);
+	export_constant(SI_ITEMBOOST);
+	export_constant(SI_BOSSMAPINFO);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_ENERGY);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_FIRSTSLOT);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_HEADDEF);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_SPACE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_TRANSFORM);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_ITEMREBUILD);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_ILLUSION);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_DARKPOWER);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_EARPLUG);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_CONTRACT);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_BLACK);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_MAGICCART);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_CRYSTAL);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_REBUILD);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_EDARKNESS);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_EGUARDIAN);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_DA_TIMEOUT);
+	export_constant(SI_FOOD_STR_CASH);
+	export_constant(SI_FOOD_AGI_CASH);
+	export_constant(SI_FOOD_VIT_CASH);
+	export_constant(SI_FOOD_DEX_CASH);
+	export_constant(SI_FOOD_INT_CASH);
+	export_constant(SI_FOOD_LUK_CASH);
+	export_constant(SI_MERC_FLEEUP);
+	export_constant(SI_MERC_ATKUP);
+	export_constant(SI_MERC_HPUP);
+	export_constant(SI_MERC_SPUP);
+	export_constant(SI_MERC_HITUP);
+	export_constant(SI_SLOWCAST);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_MAGICMIRROR);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_STONESKIN);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_ANTIMAGIC);
+	export_constant(SI_CRITICALWOUND);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_NPC_DEFENDER);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_NOACTION_WAIT);
+	export_constant(SI_MOVHASTE_HORSE);
+	export_constant(SI_DEF_RATE);
+	export_constant(SI_MDEF_RATE);
+	export_constant(SI_INCHEALRATE);
+	export_constant(SI_S_LIFEPOTION);
+	export_constant(SI_L_LIFEPOTION);
+	export_constant(SI_INCCRI);
+	export_constant(SI_PLUSAVOIDVALUE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_ATKER_ASPD);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_TARGET_ASPD);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_ATKER_MOVESPEED);
+	export_constant(SI_ATKER_BLOOD);
+	export_constant(SI_TARGET_BLOOD);
+	export_constant(SI_ARMOR_PROPERTY);
+	export_constant(SI_REUSE_LIMIT_A);
+	export_constant(SI_HELLPOWER);
+	export_constant(SI_STEAMPACK);
+	export_constant(SI_REUSE_LIMIT_B);
+	export_constant(SI_REUSE_LIMIT_C);
+	export_constant(SI_REUSE_LIMIT_D);
+	export_constant(SI_REUSE_LIMIT_E);
+	export_constant(SI_REUSE_LIMIT_F);
+	export_constant(SI_INVINCIBLE);
+	export_constant(SI_CASH_PLUSONLYJOBEXP);
+	export_constant(SI_PARTYFLEE);
+	export_constant(SI_ANGEL_PROTECT);
+	export_constant(SI_ENDURE_MDEF);
+	export_constant(SI_ENCHANTBLADE);
+	export_constant(SI_DEATHBOUND);
+	export_constant(SI_REFRESH);
+	export_constant(SI_GIANTGROWTH);
+	export_constant(SI_STONEHARDSKIN);
+	export_constant(SI_VITALITYACTIVATION);
+	export_constant(SI_FIGHTINGSPIRIT);
+	export_constant(SI_ABUNDANCE);
+	export_constant(SI_REUSE_MILLENNIUMSHIELD);
+	export_constant(SI_REUSE_CRUSHSTRIKE);
+	export_constant(SI_REUSE_REFRESH);
+	export_constant(SI_REUSE_STORMBLAST);
+	export_constant(SI_VENOMIMPRESS);
+	export_constant(SI_EPICLESIS);
+	export_constant(SI_ORATIO);
+	export_constant(SI_LAUDAAGNUS);
+	export_constant(SI_LAUDARAMUS);
+	export_constant(SI_CLOAKINGEXCEED);
+	export_constant(SI_HALLUCINATIONWALK);
+	export_constant(SI_HALLUCINATIONWALK_POSTDELAY);
+	export_constant(SI_RENOVATIO);
+	export_constant(SI_WEAPONBLOCKING);
+	export_constant(SI_WEAPONBLOCKING_POSTDELAY);
+	export_constant(SI_ROLLINGCUTTER);
+	export_constant(SI_EXPIATIO);
+	export_constant(SI_POISONINGWEAPON);
+	export_constant(SI_TOXIN);
+	export_constant(SI_PARALYSE);
+	export_constant(SI_VENOMBLEED);
+	export_constant(SI_MAGICMUSHROOM);
+	export_constant(SI_DEATHHURT);
+	export_constant(SI_PYREXIA);
+	export_constant(SI_OBLIVIONCURSE);
+	export_constant(SI_LEECHESEND);
+	export_constant(SI_DUPLELIGHT);
+	export_constant(SI_FROSTMISTY);
+	export_constant(SI_FEARBREEZE);
+	export_constant(SI_ELECTRICSHOCKER);
+	export_constant(SI_MARSHOFABYSS);
+	export_constant(SI_RECOGNIZEDSPELL);
+	export_constant(SI_STASIS);
+	export_constant(SI_WUGRIDER);
+	export_constant(SI_WUGDASH);
+	export_constant(SI_WUGBITE);
+	export_constant(SI_CAMOUFLAGE);
+	export_constant(SI_ACCELERATION);
+	export_constant(SI_HOVERING);
+	export_constant(SI_SPHERE_1);
+	export_constant(SI_SPHERE_2);
+	export_constant(SI_SPHERE_3);
+	export_constant(SI_SPHERE_4);
+	export_constant(SI_SPHERE_5);
+	export_constant(SI_MVPCARD_TAOGUNKA);
+	export_constant(SI_MVPCARD_MISTRESS);
+	export_constant(SI_MVPCARD_ORCHERO);
+	export_constant(SI_MVPCARD_ORCLORD);
+	export_constant(SI_OVERHEAT_LIMITPOINT);
+	export_constant(SI_OVERHEAT);
+	export_constant(SI_SHAPESHIFT);
+	export_constant(SI_INFRAREDSCAN);
+	export_constant(SI_MAGNETICFIELD);
+	export_constant(SI_NEUTRALBARRIER);
+	export_constant(SI_NEUTRALBARRIER_MASTER);
+	export_constant(SI_STEALTHFIELD);
+	export_constant(SI_STEALTHFIELD_MASTER);
+	export_constant(SI_MANU_ATK);
+	export_constant(SI_MANU_DEF);
+	export_constant(SI_SPL_ATK);
+	export_constant(SI_SPL_DEF);
+	export_constant(SI_REPRODUCE);
+	export_constant(SI_MANU_MATK);
+	export_constant(SI_SPL_MATK);
+	export_constant(SI_STR_SCROLL);
+	export_constant(SI_INT_SCROLL);
+	export_constant(SI_LG_REFLECTDAMAGE);
+	export_constant(SI_FORCEOFVANGUARD);
+	export_constant(SI_BUCHEDENOEL);
+	export_constant(SI_AUTOSHADOWSPELL);
+	export_constant(SI_SHADOWFORM);
+	export_constant(SI_RAID);
+	export_constant(SI_SHIELDSPELL_DEF);
+	export_constant(SI_SHIELDSPELL_MDEF);
+	export_constant(SI_SHIELDSPELL_REF);
+	export_constant(SI_BODYPAINT);
+	export_constant(SI_EXEEDBREAK);
+	export_constant(SI_ADORAMUS);
+	export_constant(SI_PRESTIGE);
+	export_constant(SI_INVISIBILITY);
+	export_constant(SI_DEADLYINFECT);
+	export_constant(SI_BANDING);
+	export_constant(SI_EARTHDRIVE);
+	export_constant(SI_INSPIRATION);
+	export_constant(SI_ENERVATION);
+	export_constant(SI_GROOMY);
+	export_constant(SI_RAISINGDRAGON);
+	export_constant(SI_IGNORANCE);
+	export_constant(SI_LAZINESS);
+	export_constant(SI_LIGHTNINGWALK);
+	export_constant(SI_ACARAJE);
+	export_constant(SI_UNLUCKY);
+	export_constant(SI_CURSEDCIRCLE_ATKER);
+	export_constant(SI_CURSEDCIRCLE_TARGET);
+	export_constant(SI_WEAKNESS);
+	export_constant(SI_CRESCENTELBOW);
+	export_constant(SI_NOEQUIPACCESSARY);
+	export_constant(SI_STRIPACCESSARY);
+	export_constant(SI_MANHOLE);
+	export_constant(SI_POPECOOKIE);
+	export_constant(SI_FALLENEMPIRE);
+	export_constant(SI_GENTLETOUCH_ENERGYGAIN);
+	export_constant(SI_GENTLETOUCH_CHANGE);
+	export_constant(SI_GENTLETOUCH_REVITALIZE);
+	export_constant(SI_BLOODYLUST);
+	export_constant(SI_SWINGDANCE);
+	export_constant(SI_SYMPHONYOFLOVERS);
+	export_constant(SI_PROPERTYWALK);
+	export_constant(SI_SPELLFIST);
+	export_constant(SI_NETHERWORLD);
+	export_constant(SI_VOICEOFSIREN);
+	export_constant(SI_DEEPSLEEP);
+	export_constant(SI_SIRCLEOFNATURE);
+	export_constant(SI_COLD);
+	export_constant(SI_GLOOMYDAY);
+	export_constant(SI_SONGOFMANA);
+	export_constant(SI_CLOUDKILL);
+	export_constant(SI_DANCEWITHWUG);
+	export_constant(SI_RUSHWINDMILL);
+	export_constant(SI_ECHOSONG);
+	export_constant(SI_HARMONIZE);
+	export_constant(SI_STRIKING);
+	export_constant(SI_WARMER);
+	export_constant(SI_MOONLITSERENADE);
+	export_constant(SI_SATURDAYNIGHTFEVER);
+	export_constant(SI_SITDOWN_FORCE);
+	export_constant(SI_ANALYZE);
+	export_constant(SI_LERADSDEW);
+	export_constant(SI_MELODYOFSINK);
+	export_constant(SI_WARCRYOFBEYOND);
+	export_constant(SI_UNLIMITEDHUMMINGVOICE);
+	export_constant(SI_SPELLBOOK1);
+	export_constant(SI_SPELLBOOK2);
+	export_constant(SI_SPELLBOOK3);
+	export_constant(SI_FREEZE_SP);
+	export_constant(SI_GN_TRAINING_SWORD);
+	export_constant(SI_GN_REMODELING_CART);
+	export_constant(SI_GN_CARTBOOST);
+	export_constant(SI_FIXEDCASTINGTM_REDUCE);
+	export_constant(SI_THORNTRAP);
+	export_constant(SI_BLOODSUCKER);
+	export_constant(SI_SPORE_EXPLOSION);
+	export_constant(SI_DEMONIC_FIRE);
+	export_constant(SI_FIRE_EXPANSION_SMOKE_POWDER);
+	export_constant(SI_FIRE_EXPANSION_TEAR_GAS);
+	export_constant(SI_BLOCKING_PLAY);
+	export_constant(SI_MANDRAGORA);
+	export_constant(SI_ACTIVATE);
+	export_constant(SI_SECRAMENT);
+	export_constant(SI_ASSUMPTIO2);
+	export_constant(SI_TK_SEVENWIND);
+	export_constant(SI_LIMIT_ODINS_RECALL);
+	export_constant(SI_STOMACHACHE);
+	export_constant(SI_MYSTERIOUS_POWDER);
+	export_constant(SI_MELON_BOMB);
+	export_constant(SI_BANANA_BOMB_SITDOWN_POSTDELAY);
+	export_constant(SI_PROMOTE_HEALTH_RESERCH);
+	export_constant(SI_ENERGY_DRINK_RESERCH);
+	export_constant(SI_EXTRACT_WHITE_POTION_Z);
+	export_constant(SI_VITATA_500);
+	export_constant(SI_EXTRACT_SALAMINE_JUICE);
+	export_constant(SI_BOOST500);
+	export_constant(SI_FULL_SWING_K);
+	export_constant(SI_MANA_PLUS);
+	export_constant(SI_MUSTLE_M);
+	export_constant(SI_LIFE_FORCE_F);
+	export_constant(SI_VACUUM_EXTREME);
+	export_constant(SI_SAVAGE_STEAK);
+	export_constant(SI_COCKTAIL_WARG_BLOOD);
+	export_constant(SI_MINOR_BBQ);
+	export_constant(SI_SIROMA_ICE_TEA);
+	export_constant(SI_DROCERA_HERB_STEAMED);
+	export_constant(SI_PUTTI_TAILS_NOODLES);
+	export_constant(SI_BANANA_BOMB);
+	export_constant(SI_SUMMON_AGNI);
+	export_constant(SI_SPELLBOOK4);
+	export_constant(SI_SPELLBOOK5);
+	export_constant(SI_SPELLBOOK6);
+	export_constant(SI_SPELLBOOK7);
+	export_constant(SI_ELEMENTAL_AGGRESSIVE);
+	export_constant(SI_RETURN_TO_ELDICASTES);
+	export_constant(SI_BANDING_DEFENCE);
+	export_constant(SI_SKELSCROLL);
+	export_constant(SI_DISTRUCTIONSCROLL);
+	export_constant(SI_ROYALSCROLL);
+	export_constant(SI_IMMUNITYSCROLL);
+	export_constant(SI_MYSTICSCROLL);
+	export_constant(SI_BATTLESCROLL);
+	export_constant(SI_ARMORSCROLL);
+	export_constant(SI_FREYJASCROLL);
+	export_constant(SI_SOULSCROLL);
+	export_constant(SI_CIRCLE_OF_FIRE);
+	export_constant(SI_CIRCLE_OF_FIRE_OPTION);
+	export_constant(SI_FIRE_CLOAK);
+	export_constant(SI_FIRE_CLOAK_OPTION);
+	export_constant(SI_WATER_SCREEN);
+	export_constant(SI_WATER_SCREEN_OPTION);
+	export_constant(SI_WATER_DROP);
+	export_constant(SI_WATER_DROP_OPTION);
+	export_constant(SI_WIND_STEP);
+	export_constant(SI_WIND_STEP_OPTION);
+	export_constant(SI_WIND_CURTAIN);
+	export_constant(SI_WIND_CURTAIN_OPTION);
+	export_constant(SI_WATER_BARRIER);
+	export_constant(SI_ZEPHYR);
+	export_constant(SI_SOLID_SKIN);
+	export_constant(SI_SOLID_SKIN_OPTION);
+	export_constant(SI_STONE_SHIELD);
+	export_constant(SI_STONE_SHIELD_OPTION);
+	export_constant(SI_POWER_OF_GAIA);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_EL_WAIT);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_EL_PASSIVE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_EL_DEFENSIVE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_EL_OFFENSIVE);
+	// disabled source side, does not make sense to export it
+	//export_constant(SI_EL_COST);
+	export_constant(SI_PYROTECHNIC);
+	export_constant(SI_PYROTECHNIC_OPTION);
+	export_constant(SI_HEATER);
+	export_constant(SI_HEATER_OPTION);
+	export_constant(SI_TROPIC);
+	export_constant(SI_TROPIC_OPTION);
+	export_constant(SI_AQUAPLAY);
+	export_constant(SI_AQUAPLAY_OPTION);
+	export_constant(SI_COOLER);
+	export_constant(SI_COOLER_OPTION);
+	export_constant(SI_CHILLY_AIR);
+	export_constant(SI_CHILLY_AIR_OPTION);
+	export_constant(SI_GUST);
+	export_constant(SI_GUST_OPTION);
+	export_constant(SI_BLAST);
+	export_constant(SI_BLAST_OPTION);
+	export_constant(SI_WILD_STORM);
+	export_constant(SI_WILD_STORM_OPTION);
+	export_constant(SI_PETROLOGY);
+	export_constant(SI_PETROLOGY_OPTION);
+	export_constant(SI_CURSED_SOIL);
+	export_constant(SI_CURSED_SOIL_OPTION);
+	export_constant(SI_UPHEAVAL);
+	export_constant(SI_UPHEAVAL_OPTION);
+	export_constant(SI_TIDAL_WEAPON);
+	export_constant(SI_TIDAL_WEAPON_OPTION);
+	export_constant(SI_ROCK_CRUSHER);
+	export_constant(SI_ROCK_CRUSHER_ATK);
+	export_constant(SI_FIRE_INSIGNIA);
+	export_constant(SI_WATER_INSIGNIA);
+	export_constant(SI_WIND_INSIGNIA);
+	export_constant(SI_EARTH_INSIGNIA);
+	export_constant(SI_EQUIPED_FLOOR);
+	export_constant(SI_GUARDIAN_RECALL);
+	export_constant(SI_MORA_BUFF);
+	export_constant(SI_REUSE_LIMIT_G);
+	export_constant(SI_REUSE_LIMIT_H);
+	export_constant(SI_NEEDLE_OF_PARALYZE);
+	export_constant(SI_PAIN_KILLER);
+	export_constant(SI_G_LIFEPOTION);
+	export_constant(SI_VITALIZE_POTION);
+	export_constant(SI_LIGHT_OF_REGENE);
+	export_constant(SI_OVERED_BOOST);
+	export_constant(SI_SILENT_BREEZE);
+	export_constant(SI_ODINS_POWER);
+	export_constant(SI_STYLE_CHANGE);
+	export_constant(SI_SONIC_CLAW_POSTDELAY);
+	export_constant(SI_SILVERVEIN_RUSH_POSTDELAY);
+	export_constant(SI_MIDNIGHT_FRENZY_POSTDELAY);
+	export_constant(SI_GOLDENE_FERSE);
+	export_constant(SI_ANGRIFFS_MODUS);
+	export_constant(SI_TINDER_BREAKER);
+	export_constant(SI_TINDER_BREAKER_POSTDELAY);
+	export_constant(SI_CBC);
+	export_constant(SI_CBC_POSTDELAY);
+	export_constant(SI_EQC);
+	export_constant(SI_MAGMA_FLOW);
+	export_constant(SI_GRANITIC_ARMOR);
+	export_constant(SI_PYROCLASTIC);
+	export_constant(SI_VOLCANIC_ASH);
+	export_constant(SI_SPIRITS_SAVEINFO1);
+	export_constant(SI_SPIRITS_SAVEINFO2);
+	export_constant(SI_MAGIC_CANDY);
+	export_constant(SI_SEARCH_STORE_INFO);
+	export_constant(SI_ALL_RIDING);
+	export_constant(SI_ALL_RIDING_REUSE_LIMIT);
+	export_constant(SI_MACRO);
+	export_constant(SI_MACRO_POSTDELAY);
+	export_constant(SI_BEER_BOTTLE_CAP);
+	export_constant(SI_OVERLAPEXPUP);
+	export_constant(SI_PC_IZ_DUN05);
+	export_constant(SI_CRUSHSTRIKE);
+	export_constant(SI_MONSTER_TRANSFORM);
+	export_constant(SI_SIT);
+	export_constant(SI_ONAIR);
+	export_constant(SI_MTF_ASPD);
+	export_constant(SI_MTF_RANGEATK);
+	export_constant(SI_MTF_MATK);
+	export_constant(SI_MTF_MLEATKED);
+	export_constant(SI_MTF_CRIDAMAGE);
+	export_constant(SI_REUSE_LIMIT_MTF);
+	export_constant(SI_MACRO_PERMIT);
+	export_constant(SI_MACRO_PLAY);
+	export_constant(SI_SKF_CAST);
+	export_constant(SI_SKF_ASPD);
+	export_constant(SI_SKF_ATK);
+	export_constant(SI_SKF_MATK);
+	export_constant(SI_REWARD_PLUSONLYJOBEXP);
+	export_constant(SI_HANDICAPSTATE_NORECOVER);
+	export_constant(SI_SET_NUM_DEF);
+	export_constant(SI_SET_NUM_MDEF);
+	export_constant(SI_SET_PER_DEF);
+	export_constant(SI_SET_PER_MDEF);
+	export_constant(SI_PARTYBOOKING_SEARCH_DELAY);
+	export_constant(SI_PARTYBOOKING_REGISTER_DELAY);
+	export_constant(SI_PERIOD_TIME_CHECK_DETECT_SKILL);
+	export_constant(SI_KO_JYUMONJIKIRI);
+	export_constant(SI_MEIKYOUSISUI);
+	export_constant(SI_ATTHASTE_CASH);
+	export_constant(SI_EQUIPPED_DIVINE_ARMOR);
+	export_constant(SI_EQUIPPED_HOLY_ARMOR);
+	export_constant(SI_2011RWC);
+	export_constant(SI_KYOUGAKU);
+	export_constant(SI_IZAYOI);
+	export_constant(SI_ZENKAI);
+	export_constant(SI_KG_KAGEHUMI);
+	export_constant(SI_KYOMU);
+	export_constant(SI_KAGEMUSYA);
+	export_constant(SI_ZANGETSU);
+	export_constant(SI_PHI_DEMON);
+	export_constant(SI_GENSOU);
+	export_constant(SI_AKAITSUKI);
+	export_constant(SI_TETANY);
+	export_constant(SI_GM_BATTLE);
+	export_constant(SI_GM_BATTLE2);
+	export_constant(SI_2011RWC_SCROLL);
+	export_constant(SI_ACTIVE_MONSTER_TRANSFORM);
+	export_constant(SI_MYSTICPOWDER);
+	export_constant(SI_ECLAGE_RECALL);
+	export_constant(SI_ENTRY_QUEUE_APPLY_DELAY);
+	export_constant(SI_REUSE_LIMIT_ECL);
+	export_constant(SI_M_LIFEPOTION);
+	export_constant(SI_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT);
+	export_constant(SI_UNKNOWN_NAME);
+	export_constant(SI_ON_PUSH_CART);
+	export_constant(SI_HAT_EFFECT);
+	export_constant(SI_FLOWER_LEAF);
+	export_constant(SI_RAY_OF_PROTECTION);
+	export_constant(SI_GLASTHEIM_ATK);
+	export_constant(SI_GLASTHEIM_DEF);
+	export_constant(SI_GLASTHEIM_HEAL);
+	export_constant(SI_GLASTHEIM_HIDDEN);
+	export_constant(SI_GLASTHEIM_STATE);
+	export_constant(SI_GLASTHEIM_ITEMDEF);
+	export_constant(SI_GLASTHEIM_HPSP);
+	export_constant(SI_HOMUN_SKILL_POSTDELAY);
+	export_constant(SI_ALMIGHTY);
+	export_constant(SI_GVG_GIANT);
+	export_constant(SI_GVG_GOLEM);
+	export_constant(SI_GVG_STUN);
+	export_constant(SI_GVG_STONE);
+	export_constant(SI_GVG_FREEZ);
+	export_constant(SI_GVG_SLEEP);
+	export_constant(SI_GVG_CURSE);
+	export_constant(SI_GVG_SILENCE);
+	export_constant(SI_GVG_BLIND);
+	export_constant(SI_CLIENT_ONLY_EQUIP_ARROW);
+	export_constant(SI_CLAN_INFO);
+	export_constant(SI_JP_EVENT01);
+	export_constant(SI_JP_EVENT02);
+	export_constant(SI_JP_EVENT03);
+	export_constant(SI_JP_EVENT04);
+	export_constant(SI_TELEPORT_FIXEDCASTINGDELAY);
+	export_constant(SI_GEFFEN_MAGIC1);
+	export_constant(SI_GEFFEN_MAGIC2);
+	export_constant(SI_GEFFEN_MAGIC3);
+	export_constant(SI_QUEST_BUFF1);
+	export_constant(SI_QUEST_BUFF2);
+	export_constant(SI_QUEST_BUFF3);
+	export_constant(SI_REUSE_LIMIT_RECALL);
+	export_constant(SI_SAVEPOSITION);
+	export_constant(SI_HANDICAPSTATE_ICEEXPLO);
+	export_constant(SI_FENRIR_CARD);
+	export_constant(SI_REUSE_LIMIT_ASPD_POTION);
+	export_constant(SI_MAXPAIN);
+	export_constant(SI_PC_STOP);
+	export_constant(SI_FRIGG_SONG);
+	export_constant(SI_OFFERTORIUM);
+	export_constant(SI_TELEKINESIS_INTENSE);
+	export_constant(SI_MOONSTAR);
+	export_constant(SI_STRANGELIGHTS);
+	export_constant(SI_FULL_THROTTLE);
+	export_constant(SI_REBOUND);
+	export_constant(SI_UNLIMIT);
+	export_constant(SI_KINGS_GRACE);
+	export_constant(SI_ITEM_ATKMAX);
+	export_constant(SI_ITEM_ATKMIN);
+	export_constant(SI_ITEM_MATKMAX);
+	export_constant(SI_ITEM_MATKMIN);
+	export_constant(SI_SUPER_STAR);
+	export_constant(SI_HIGH_RANKER);
+	export_constant(SI_DARKCROW);
+	export_constant(SI_2013_VALENTINE1);
+	export_constant(SI_2013_VALENTINE2);
+	export_constant(SI_2013_VALENTINE3);
+	export_constant(SI_ILLUSIONDOPING);
+	export_constant(SI_WIDEWEB);
+	export_constant(SI_CHILL);
+	export_constant(SI_BURNT);
+	export_constant(SI_PCCAFE_PLAY_TIME);
+	export_constant(SI_TWISTED_TIME);
+	export_constant(SI_FLASHCOMBO);
+	export_constant(SI_JITTER_BUFF1);
+	export_constant(SI_JITTER_BUFF2);
+	export_constant(SI_JITTER_BUFF3);
+	export_constant(SI_JITTER_BUFF4);
+	export_constant(SI_JITTER_BUFF5);
+	export_constant(SI_JITTER_BUFF6);
+	export_constant(SI_JITTER_BUFF7);
+	export_constant(SI_JITTER_BUFF8);
+	export_constant(SI_JITTER_BUFF9);
+	export_constant(SI_JITTER_BUFF10);
+	export_constant(SI_CUP_OF_BOZA);
+	export_constant(SI_B_TRAP);
+	export_constant(SI_E_CHAIN);
+	export_constant(SI_E_QD_SHOT_READY);
+	export_constant(SI_C_MARKER);
+	export_constant(SI_H_MINE);
+	export_constant(SI_H_MINE_SPLASH);
+	export_constant(SI_P_ALTER);
+	export_constant(SI_HEAT_BARREL);
+	export_constant(SI_ANTI_M_BLAST);
+	export_constant(SI_SLUGSHOT);
+	export_constant(SI_SWORDCLAN);
+	export_constant(SI_ARCWANDCLAN);
+	export_constant(SI_GOLDENMACECLAN);
+	export_constant(SI_CROSSBOWCLAN);
+	export_constant(SI_PACKING_ENVELOPE1);
+	export_constant(SI_PACKING_ENVELOPE2);
+	export_constant(SI_PACKING_ENVELOPE3);
+	export_constant(SI_PACKING_ENVELOPE4);
+	export_constant(SI_PACKING_ENVELOPE5);
+	export_constant(SI_PACKING_ENVELOPE6);
+	export_constant(SI_PACKING_ENVELOPE7);
+	export_constant(SI_PACKING_ENVELOPE8);
+	export_constant(SI_PACKING_ENVELOPE9);
+	export_constant(SI_PACKING_ENVELOPE10);
+	export_constant(SI_GLASTHEIM_TRANS);
+	export_constant(SI_ZONGZI_POUCH_TRANS);
+	export_constant(SI_HEAT_BARREL_AFTER);
+	export_constant(SI_DECORATION_OF_MUSIC);
+	export_constant(SI_OVERSEAEXPUP);
+	export_constant(SI_CLOWN_N_GYPSY_CARD);
+	export_constant(SI_OPEN_NPC_MARKET);
+	export_constant(SI_BEEF_RIB_STEW);
+	export_constant(SI_PORK_RIB_STEW);
+	export_constant(SI_CHUSEOK_MONDAY);
+	export_constant(SI_CHUSEOK_TUESDAY);
+	export_constant(SI_CHUSEOK_WEDNESDAY);
+	export_constant(SI_CHUSEOK_THURSDAY);
+	export_constant(SI_CHUSEOK_FRIDAY);
+	export_constant(SI_CHUSEOK_WEEKEND);
+	export_constant(SI_ALL_LIGHTGUARD);
+	export_constant(SI_ALL_LIGHTGUARD_COOL_TIME);
+	export_constant(SI_MTF_MHP);
+	export_constant(SI_MTF_MSP);
+	export_constant(SI_MTF_PUMPKIN);
+	export_constant(SI_MTF_HITFLEE);
+	export_constant(SI_MTF_CRIDAMAGE2);
+	export_constant(SI_MTF_SPDRAIN);
+	export_constant(SI_ACUO_MINT_GUM);
+	export_constant(SI_S_HEALPOTION);
+	export_constant(SI_REUSE_LIMIT_S_HEAL_POTION);
+	export_constant(SI_PLAYTIME_STATISTICS);
+	export_constant(SI_GN_CHANGEMATERIAL_OPERATOR);
+	export_constant(SI_GN_MIX_COOKING_OPERATOR);
+	export_constant(SI_GN_MAKEBOMB_OPERATOR);
+	export_constant(SI_GN_S_PHARMACY_OPERATOR);
+	export_constant(SI_SO_EL_ANALYSIS_DISASSEMBLY_OPERATOR);
+	export_constant(SI_SO_EL_ANALYSIS_COMBINATION_OPERATOR);
+	export_constant(SI_NC_MAGICDECOY_OPERATOR);
+	export_constant(SI_GUILD_STORAGE);
+	export_constant(SI_GC_POISONINGWEAPON_OPERATOR);
+	export_constant(SI_WS_WEAPONREFINE_OPERATOR);
+	export_constant(SI_BS_REPAIRWEAPON_OPERATOR);
+	export_constant(SI_GET_MAILBOX);
+	export_constant(SI_JUMPINGCLAN);
+	export_constant(SI_JP_OTP);
+	export_constant(SI_HANDICAPTOLERANCE_LEVELGAP);
+	export_constant(SI_MTF_RANGEATK2);
+	export_constant(SI_MTF_ASPD2);
+	export_constant(SI_MTF_MATK2);
+	export_constant(SI_SHOW_NPCHPBAR);
+	export_constant(SI_FLOWERSMOKE);
+	export_constant(SI_FSTONE);
+	export_constant(SI_DAILYSENDMAILCNT);
+	export_constant(SI_QSCARABA);
+	export_constant(SI_LJOSALFAR);
+	export_constant(SI_PAD_READER_KNIGHT);
+	export_constant(SI_PAD_READER_CRUSADER);
+	export_constant(SI_PAD_READER_BLACKSMITH);
+	export_constant(SI_PAD_READER_ALCHEMIST);
+	export_constant(SI_PAD_READER_ASSASSIN);
+	export_constant(SI_PAD_READER_ROGUE);
+	export_constant(SI_PAD_READER_WIZARD);
+	export_constant(SI_PAD_READER_SAGE);
+	export_constant(SI_PAD_READER_PRIEST);
+	export_constant(SI_PAD_READER_MONK);
+	export_constant(SI_PAD_READER_HUNTER);
+	export_constant(SI_PAD_READER_BARD);
+	export_constant(SI_PAD_READER_DANCER);
+	export_constant(SI_PAD_READER_TAEKWON);
+	export_constant(SI_PAD_READER_NINJA);
+	export_constant(SI_PAD_READER_GUNSLINGER);
+	export_constant(SI_PAD_READER_SUPERNOVICE);
+	export_constant(SI_ESSENCE_OF_TIME);
+	export_constant(SI_MINIGAME_ROULETTE);
+	export_constant(SI_MINIGAME_GOLD_POINT);
+	export_constant(SI_MINIGAME_SILVER_POINT);
+	export_constant(SI_MINIGAME_BRONZE_POINT);
+	export_constant(SI_HAPPINESS_STAR);
+	export_constant(SI_SUMMEREVENT01);
+	export_constant(SI_SUMMEREVENT02);
+	export_constant(SI_SUMMEREVENT03);
+	export_constant(SI_SUMMEREVENT04);
+	export_constant(SI_SUMMEREVENT05);
+	export_constant(SI_MINIGAME_ROULETTE_BONUS_ITEM);
+	export_constant(SI_DRESS_UP);
+	export_constant(SI_MAPLE_FALLS);
+	export_constant(SI_ALL_NIFLHEIM_RECALL);
+	export_constant(SI_DRACULA_CARD);
+	export_constant(SI_LIMIT_POWER_BOOSTER);
+	export_constant(SI_TIME_ACCESSORY);
+	export_constant(SI_EP16_DEF);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
