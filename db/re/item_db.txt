@@ -9298,7 +9298,7 @@
 18533,Honeybee_Hat,Honey Bee Hat,4,20,,100,,3,,1,0xFFFFFFFF,63,2,256,,50,1,709,{ bonus bMdef,3; bonus2 bAddRace,RC_Insect,5; bonus2 bMagicAddRace,RC_Insect,5; bonus2 bSubRace,RC_Insect,5; bonus3 bAddMonsterDropItem,518,RC_Insect,2; },{},{}
 18534,Fancy_Phantom_Mask,Fancy Phantom Mask,4,20,,1000,,5,,1,0xFFFFFFFF,63,2,768,,20,1,710,{ bonus bStr,1; bonus2 bAddClass,Class_All,5; bonus bDelayRate,-1; bonus bMaxHP,getrefine()*100; bonus2 bSkillAtk,"MC_MAMMONITE",20; bonus2 bSkillAtk,"NJ_ZENYNAGE",20; },{},{}
 18535,Pumpkin_Hat_2010,Pumpkin Hat 2010,4,20,,200,,0,,0,0xFFFFFFFF,63,2,256,,0,1,206,{},{},{}
-18536,Foxtail,Foxtail,4,20,,100,,0,,0,0xFFFFFFFF,63,2,1,,0,0,711,{ bonus bMatk,10; },{},{}
+18536,Foxtail,Foxtail,4,20,,100,,0,,0,0xFFFFFFFF,63,2,1,,0,0,711,{ bonus bMatk,10; bonus bFixedCast,-100; },{},{}
 18537,Malangdo_Hat,Malangdo Hat,4,20,,100,,5,,1,0xFFFFFFFF,63,2,256,,0,1,726,{ bonus bFlee,6; },{},{}
 18538,Devil_Whisper,Spirit Whispers,4,20,,300,,3,,0,0xFFFFFFFF,63,2,512,,0,0,712,{ bonus bUnbreakableHelm,1; bonus bMdef,3; bonus2 bSubRace,RC_Angel,1; bonus2 bSubRace,RC_Demon,1; bonus3 bAddMonsterDropItem,12020,RC_Angel,400; bonus3 bAddMonsterDropItem,523,RC_Demon,400; },{},{}
 18539,Skull_Cap,Skull Cap,4,40,,200,,5,,1,0xFFFFFFFF,63,2,256,,10,1,713,{ bonus bMatkRate,2; .@r = getrefine(); if(.@r >= 5) { bonus bMatkRate,3; } if(.@r >= 7) { bonus bMatkRate,3; } },{},{}
