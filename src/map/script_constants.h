@@ -2078,6 +2078,28 @@
 	export_constant(ELE_UNDEAD);
 	export_constant(ELE_ALL);
 
+	/* races */
+	export_constant(RC_FORMLESS);
+	export_constant(RC_UNDEAD);
+	export_constant(RC_BRUTE);
+	export_constant(RC_PLANT);
+	export_constant(RC_INSECT);
+	export_constant(RC_FISH);
+	export_constant(RC_DEMON);
+	export_constant(RC_DEMIHUMAN);
+	export_constant(RC_ANGEL);
+	export_constant(RC_DRAGON);
+	export_constant(RC_PLAYER);
+	export_constant(RC_ALL);
+
+	export_constant(RC2_NONE);
+	export_constant(RC2_GOBLIN);
+	export_constant(RC2_KOBOLD);
+	export_constant(RC2_ORC);
+	export_constant(RC2_GOLEM);
+	export_constant(RC2_GUARDIAN);
+	export_constant(RC2_NINJA);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);

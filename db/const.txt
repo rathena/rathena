@@ -247,31 +247,10 @@ bSubSkill	2077
 bSubDefEle	2078
 bStateNoRecoverRace	2079
 
-RC_Formless	0
-RC_Undead	1
-RC_Brute	2
-RC_Plant	3
-RC_Insect	4
-RC_Fish	5
-RC_Demon	6
-RC_DemiHuman	7
-RC_Angel	8
-RC_Dragon	9
-RC_Player	10
-RC_All	11
-
 Class_Normal	0
 Class_Boss	1
 Class_Guardian	2
 Class_All	3
-
-RC2_None	0
-RC2_Goblin	1
-RC2_Kobold	2
-RC2_Orc	3
-RC2_Golem	4
-RC2_Guardian	5
-RC2_Ninja	6
 
 Size_Small	0
 Size_Medium	1
