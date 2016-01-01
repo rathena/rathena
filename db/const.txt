@@ -247,16 +247,6 @@ bSubSkill	2077
 bSubDefEle	2078
 bStateNoRecoverRace	2079
 
-Class_Normal	0
-Class_Boss	1
-Class_Guardian	2
-Class_All	3
-
-Size_Small	0
-Size_Medium	1
-Size_Large	2
-Size_All	3
-
 BF_WEAPON	0x0001
 BF_MAGIC	0x0002
 BF_MISC	0x0004

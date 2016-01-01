@@ -2100,6 +2100,18 @@
 	export_constant(RC2_GUARDIAN);
 	export_constant(RC2_NINJA);
 
+	/* classes */
+	export_constant(CLASS_NORMAL);
+	export_constant(CLASS_BOSS);
+	export_constant(CLASS_GUARDIAN);
+	export_constant(CLASS_ALL);
+
+	/* sizes */
+	script_set_constant("Size_Small",SZ_SMALL,false);
+	script_set_constant("Size_Medium",SZ_MEDIUM,false);
+	script_set_constant("Size_Large",SZ_BIG,false);
+	script_set_constant("Size_All",SZ_ALL,false);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
