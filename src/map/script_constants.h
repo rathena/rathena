@@ -2255,6 +2255,11 @@
 	export_constant(BG_AREA);
 	export_constant(BG_AREA_WOS);
 
+	/* mercenary guilds */
+	export_constant(ARCH_MERC_GUILD);
+	export_constant(SPEAR_MERC_GUILD);
+	export_constant(SWORD_MERC_GUILD);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
