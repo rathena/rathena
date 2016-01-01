@@ -2112,6 +2112,26 @@
 	script_set_constant("Size_Large",SZ_BIG,false);
 	script_set_constant("Size_All",SZ_ALL,false);
 
+	/* battle flags */
+	export_constant(BF_WEAPON);
+	export_constant(BF_MAGIC);
+	export_constant(BF_MISC);
+	export_constant(BF_SHORT);
+	export_constant(BF_LONG);
+	export_constant(BF_SKILL);
+	export_constant(BF_NORMAL);
+
+	/* auto trigger flags */
+	export_constant(ATF_SELF);
+	export_constant(ATF_TARGET);
+	export_constant(ATF_SHORT);
+	export_constant(ATF_LONG);
+	export_constant(ATF_WEAPON);
+	export_constant(ATF_MAGIC);
+	export_constant(ATF_MISC);
+	// TODO: Check why this was in const.txt, but not on source side
+	script_set_constant("ATF_SKILL",ATF_MAGIC|ATF_MISC,false);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
