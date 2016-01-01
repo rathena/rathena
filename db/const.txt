@@ -247,18 +247,6 @@ bSubSkill	2077
 bSubDefEle	2078
 bStateNoRecoverRace	2079
 
-Ele_Neutral	0
-Ele_Water	1
-Ele_Earth	2
-Ele_Fire	3
-Ele_Wind	4
-Ele_Poison	5
-Ele_Holy	6
-Ele_Dark	7
-Ele_Ghost	8
-Ele_Undead	9
-Ele_All	10
-
 RC_Formless	0
 RC_Undead	1
 RC_Brute	2

@@ -2065,6 +2065,19 @@
 	export_constant(SI_TIME_ACCESSORY);
 	export_constant(SI_EP16_DEF);
 
+	/* elements */
+	export_constant(ELE_NEUTRAL);
+	export_constant(ELE_WATER);
+	export_constant(ELE_EARTH);
+	export_constant(ELE_FIRE);
+	export_constant(ELE_WIND);
+	export_constant(ELE_POISON);
+	export_constant(ELE_HOLY);
+	export_constant(ELE_DARK);
+	export_constant(ELE_GHOST);
+	export_constant(ELE_UNDEAD);
+	export_constant(ELE_ALL);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
