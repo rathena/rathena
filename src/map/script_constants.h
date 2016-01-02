@@ -2260,6 +2260,20 @@
 	export_constant(SPEAR_MERC_GUILD);
 	export_constant(SWORD_MERC_GUILD);
 
+	/* item types */
+	export_constant(IT_HEALING);
+	export_constant(IT_USABLE);
+	export_constant(IT_ETC);
+	export_constant(IT_ARMOR);
+	export_constant(IT_WEAPON);
+	export_constant(IT_CARD);
+	export_constant(IT_PETEGG);
+	export_constant(IT_PETARMOR);
+	export_constant(IT_AMMO);
+	export_constant(IT_DELAYCONSUME);
+	export_constant(IT_SHADOWGEAR);
+	export_constant(IT_CASH);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
