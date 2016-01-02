@@ -2280,6 +2280,20 @@
 	script_set_constant("SKILL_TEMPLEVEL",ADDSKILL_TEMP_ADDLEVEL,false);
 	script_set_constant("SKILL_PERM_GRANT",ADDSKILL_PERMANENT_GRANTED,false);
 
+	/* bonus script flags */
+	export_constant(BSF_REM_ON_DEAD);
+	export_constant(BSF_REM_ON_DISPELL);
+	export_constant(BSF_REM_ON_CLEARANCE);
+	export_constant(BSF_REM_ON_LOGOUT);
+	export_constant(BSF_REM_ON_BANISHING_BUSTER);
+	export_constant(BSF_REM_ON_REFRESH);
+	export_constant(BSF_REM_ON_LUXANIMA);
+	export_constant(BSF_REM_ON_MADOGEAR);
+	export_constant(BSF_REM_ON_DAMAGED);
+	export_constant(BSF_PERMANENT);
+	export_constant(BSF_FORCE_REPLACE);
+	export_constant(BSF_FORCE_DUPLICATE);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
