@@ -2294,6 +2294,13 @@
 	export_constant(BSF_FORCE_REPLACE);
 	export_constant(BSF_FORCE_DUPLICATE);
 
+	/* bindings */
+	export_constant(BOUND_NONE);
+	export_constant(BOUND_ACCOUNT);
+	export_constant(BOUND_GUILD);
+	export_constant(BOUND_PARTY);
+	export_constant(BOUND_CHAR);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);

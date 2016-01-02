@@ -2690,12 +2690,6 @@ DIR_SOUTHEAST	5
 DIR_EAST	6
 DIR_NORTHEAST	7
 
-Bound_None	0
-Bound_Account	1
-Bound_Guild	2
-Bound_Party	3
-Bound_Char	4
-
 MOBG_Branch_Of_Dead_Tree	0
 MOBG_Poring_Box	1
 MOBG_Bloody_Dead_Branch	2
