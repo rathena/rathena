@@ -2301,6 +2301,11 @@
 	export_constant(BOUND_PARTY);
 	export_constant(BOUND_CHAR);
 
+	/* quest check types */
+	export_constant(HAVEQUEST);
+	export_constant(PLAYTIME);
+	export_constant(HUNTING);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
