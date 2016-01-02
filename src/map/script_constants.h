@@ -2274,6 +2274,12 @@
 	export_constant(IT_SHADOWGEAR);
 	export_constant(IT_CASH);
 
+	/* add skill types */
+	script_set_constant("SKILL_PERM",ADDSKILL_PERMANENT,false);
+	script_set_constant("SKILL_TEMP",ADDSKILL_TEMP,false);
+	script_set_constant("SKILL_TEMPLEVEL",ADDSKILL_TEMP_ADDLEVEL,false);
+	script_set_constant("SKILL_PERM_GRANT",ADDSKILL_PERMANENT_GRANTED,false);
+
 	/* status options */
 	export_constant(OPTION_NOTHING);
 	export_constant(OPTION_SIGHT);
