@@ -1336,7 +1336,9 @@
 	export_constant(SC_PROMOTE_HEALTH_RESERCH);
 	export_constant(SC_ENERGY_DRINK_RESERCH);
 	export_constant(SC_NORECOVER_STATE);
+#ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
+#endif
 	// TODO: Add missing ones
 
 	/* status icons */
