@@ -4,7 +4,7 @@
 #ifndef _SCRIPT_CONSTANTS_H_
 	#define _SCRIPT_CONSTANTS_H_
 
-	#define export_constant(a) script_set_constant(###a,a,false)
+	#define export_constant(a) script_set_constant(#a,a,false)
 
 	/* server defines */
 	export_constant(PACKETVER);
