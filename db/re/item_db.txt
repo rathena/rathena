@@ -4528,7 +4528,7 @@
 6684,Proof_of_The_Heroic,Proof of The Heroic,3,10,,0,,,,,,,,,,,,,{},{},{}
 6685,Morocc_Certification,Morocc Certification,3,10,,0,,,,,,,,,,,,,{},{},{}
 6686,Brick,Brick,3,10,,2000,,,,,,,,,,,,,{},{},{}
-6687,Rope_,Rope,3,10,,2000,,,,,,,,,,,,,{},{},{}
+6687,Rope__,Rope,3,10,,2000,,,,,,,,,,,,,{},{},{}
 6688,Wood_,Wood,3,10,,2000,,,,,,,,,,,,,{},{},{}
 6689,Fire_Beetle_Shell,Fire Beetle Shell,3,10,,0,,,,,,,,,,,,,{},{},{}
 6690,Delicious_Stem,Delicious Stem,3,10,,0,,,,,,,,,,,,,{},{},{}
@@ -5268,7 +5268,7 @@
 7510,Valhalla_Flower,Valhalla's Flower,3,200000,,10,,,,,,,,,,,,,{},{},{}
 7511,Rune_Of_Darkness,Rune of Darkness,3,2526,,10,,,,,,,,,,,,,{},{},{}
 7512,Burnt_Parts,Burnt Part,3,1600,,10,,,,,,,,,,,,,{},{},{}
-7513,Pocket_Watch_,Pocket Watch,3,3420,,10,,,,,,,,,,,,,{},{},{}
+7513,Pocket_Watch__,Pocket Watch,3,3420,,10,,,,,,,,,,,,,{},{},{}
 7514,Monster_Ticket,Monster Ticket,3,2,,0,,,,,,,,,,,,,{},{},{}
 7515,Marvelous_Medal,Prize Medal,3,2,,0,,,,,,,,,,,,,{},{},{}
 7516,Green_Key_Card,Green Keycard,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -5975,7 +5975,7 @@
 11578,Candy_Bar,Candy Bar,0,10,,40,,,,0,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(105,145),0; },{},{}
 11579,Lucky_Candy_,Lucky Candy,3,10,,30,,,,,,,,,,,,,{},{},{}
 11580,Candy_,Candy,0,10,,30,,,,0,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(45,65),0; },{},{}
-11581,Piece_of_Cake_,Piece of Cake,0,10,,100,,,,0,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(270,330),0; },{},{}
+11581,Piece_of_Cake__,Piece of Cake,0,10,,100,,,,0,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(270,330),0; },{},{}
 11582,Well-baked_Cookie,Well-baked Cookie,0,10,,30,,,,0,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(160,200),0; },{},{}
 11583,Chocolate_Drink_,Chocolate Drink,0,10,,150,,,,0,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(330,410),rand(45,65); sc_end SC_POISON; sc_end SC_SILENCE; sc_end SC_BLIND; sc_end SC_CONFUSION; sc_end SC_CURSE; sc_end SC_Hallucination; },{},{}
 11584,White_Chocolate_,White Chocolate,0,10,,80,,,,0,0xFFFFFFFF,63,2,,,,,,{ itemheal 50,50; },{},{}
@@ -7329,7 +7329,7 @@
 13444,Pala,Pala,5,20,,700,190,,0,1,0x000654E2,63,2,2,3,0,1,2,{ bonus bAspdRate,8; },{},{}
 13445,Half_BF_Sword1,Half BF Sword1,5,20,,0,115,,1,0,0x000654E3,63,2,2,3,80,1,2,{ bonus bStr,1; bonus bDex,1; bonus2 bAddRace,RC_DemiHuman,35; bonus2 bAddRace,RC_Player,35; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus bUnbreakableWeapon,1; },{},{}
 13449,Gladius_Daemonicus,Gladius Daemonicus,5,20,,1200,130,,,2,0x000654E2,63,2,2,4,80,1,2,{ bonus bAtkEle,Ele_Dark; },{},{}
-13450,Saber_,Saber,5,10,,1000,115,,,2,0x000654E2,63,2,2,3,27,1,0,{},{},{}
+13450,Saber__,Saber,5,10,,1000,115,,,2,0x000654E2,63,2,2,3,27,1,0,{},{},{}
 13451,Blue_Sword,Blue Sword,5,10,,1200,190,,1,1,0x00000080,56,2,2,3,100,1,2,{ bonus bStr,5; bonus bAgi,5; },{},{}
 13452,Ru_Gold_Sword,Ru Gold Sword,5,0,,1200,190,,1,2,0x00000080,56,2,2,3,120,1,2,{ bonus bStr,8; bonus bAgi,8; },{},{}
 13454,Crimson_Saber,Crimson Saber,5,20,,850,85,,1,2,0x00000063,56,2,2,3,70,1,2,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); },{},{}
@@ -8662,7 +8662,7 @@
 16396,HD_Elu_Box10,HD Elunium 10 Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6241,10; },{},{}
 16397,Virgo_Diadem_Box,Virgo Diadem Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5599,1; },{},{}
 16398,Virgo_Crown_Box_,Virgo Crown Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5598,1; },{},{}
-16399,Virgo_Diadem_Box,Virgo Diadem Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5599,1; },{},{}
+16399,Virgo_Diadem_Box_,Virgo Diadem Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5599,1; },{},{}
 16405,Midgard_Coin_Box_,Midgard Coin Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6242,1; },{},{}
 16406,FMidgard_Coin_Box,FMidgard Coin Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6242,1; },{},{}
 16409,Tw_Sep_Scroll,Tw Sep Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Tw_Sep_Scroll); },{},{}
@@ -10918,7 +10918,7 @@
 //
 28200,End_Of_The_Horizon,End Of The Horizon,5,2700000,,2400,410,,9,1,0x40000000,63,2,34,4,110,1,21,{},{},{}
 28201,Southern_Cross_,Southern Cross,5,2800000,,2000,480,,9,0,0x40000000,63,2,34,4,141,1,21,{ bonus3 bAutoSpell,"GC_CROSSIMPACT",1,50; },{},{}
-28202,Southern_Cross_,Southern Cross,5,2800000,,2000,480,,9,1,0x40000000,63,2,34,4,141,1,21,{ bonus3 bAutoSpell,"GC_CROSSIMPACT",1,50; },{},{}
+28202,Southern_Cross__,Southern Cross,5,2800000,,2000,480,,9,1,0x40000000,63,2,34,4,141,1,21,{ bonus3 bAutoSpell,"GC_CROSSIMPACT",1,50; },{},{}
 28203,Half_BF_Rifle1,Half BF Rifle1,5,0,,0,50,,9,0,0x41000000,63,2,34,3,80,1,18,{ bonus bDex,2; bonus bHit,8; bonus bCritical,8; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bVariableCastrate,"GS_TRACKING",-20; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus bUnbreakableWeapon,1; },{},{}
 28204,Half_BF_Shotgun1,Half BF Shotgun1,5,0,,0,100,,9,0,0x41000000,63,2,34,3,80,1,20,{ bonus bDex,2; bonus bSplashRange,1; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; autobonus "{ bonus bBaseAtk,80; bonus2 bHPLossRate,100,1000; }",30,6000,BF_WEAPON,"{ specialeffect2 EF_BASH3D; }"; bonus bUnbreakableWeapon,1; },{},{}
 //
