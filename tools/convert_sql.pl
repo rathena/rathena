@@ -116,7 +116,7 @@ sub ConvertFile { my($sFilein,$sFileout,$sType)=@_;
 				printf $sFHout ("%s\n", $ligne);
 			} else {
 				printf $sFHout ("REPLACE INTO `%s` VALUES (", $db);
-				if($sWasCom == 0){ #check if aegis name is duplicate, (only for not com)
+				if( $sType =~ /item/i and $sWasCom == 0){ #check if aegis name is duplicate, (only for not com)
 					$hAEgisName{$champ[1]}++;
 					if($hAEgisName{$champ[1]} > 1){
 						print "Warning, aegisName=$champ[1] multiple occurence found, val=$hAEgisName{$champ[1]}, line=$ligne\n" ;
