@@ -958,7 +958,7 @@ REPLACE INTO `item_db` VALUES (1730,'Burning_Bow','Burning Bow',5,20,NULL,1400,9
 REPLACE INTO `item_db` VALUES (1731,'Frozen_Bow','Frozen Bow',5,20,NULL,1400,100,NULL,5,1,0x000A0808,7,2,34,3,55,1,11,'bonus2 bAddEff,Eff_Freeze,1000;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1732,'Earth_Bow','Earth Bow',5,20,NULL,1400,105,NULL,5,1,0x000A0808,7,2,34,3,55,1,11,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (1733,'Gust_Bow','Gust Bow',5,20,NULL,1400,95,NULL,5,1,0x000A0808,7,2,34,3,55,1,11,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (1734,'Orc_Archer_Bow','Orc Archer Bow',5,20,NULL,1600,120,NULL,5,0,0x000A0808,7,2,34,4,65,1,11,'bonus2 bAddMonsterDropItem,1753,200;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (1734,'Orc_Archer_Bow','Orc Archer Bow',5,20,NULL,1600,120,NULL,5,0,0x000A0808,7,2,34,3,65,1,11,'bonus2 bAddMonsterDropItem,1753,200;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1735,'Kkakkung','Kkakkung',5,20,NULL,0,120,NULL,5,0,0x000A0848,7,2,34,1,1,0,11,'bonus2 bAddClass,Class_All,50;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1736,'Double_Bound','Double Bound',5,20,NULL,900,70,NULL,5,3,0x00000800,2,2,34,3,70,1,11,'bonus3 bAutoSpell,"AC_DOUBLE",GetSkillLv("AC_DOUBLE"),10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1737,'Ixion_Wing','Ixion Wings',5,20,NULL,300,135,NULL,5,1,0x00000800,2,2,34,4,70,1,11,'autobonus "{ bonus bAspdRate,7; }",10+(getrefine()*2),7000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }"; bonus2 bAddSkillBlow,"AC_CHARGEARROW",3;',NULL,NULL);
