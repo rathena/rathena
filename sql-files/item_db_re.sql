@@ -4559,7 +4559,7 @@ REPLACE INTO `item_db_re` VALUES (6683,'Dried_Flower','Dried Flower',3,10,NULL,1
 REPLACE INTO `item_db_re` VALUES (6684,'Proof_of_The_Heroic','Proof of The Heroic',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6685,'Morocc_Certification','Morocc Certification',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6686,'Brick','Brick',3,10,NULL,2000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (6687,'Rope_','Rope',3,10,NULL,2000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (6687,'Rope__','Rope',3,10,NULL,2000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6688,'Wood_','Wood',3,10,NULL,2000,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6689,'Fire_Beetle_Shell','Fire Beetle Shell',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6690,'Delicious_Stem','Delicious Stem',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -5299,7 +5299,7 @@ REPLACE INTO `item_db_re` VALUES (7509,'Fancy_Key_Card','Luxurious Keycard',3,0,
 REPLACE INTO `item_db_re` VALUES (7510,'Valhalla_Flower','Valhalla\'s Flower',3,200000,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (7511,'Rune_Of_Darkness','Rune of Darkness',3,2526,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (7512,'Burnt_Parts','Burnt Part',3,1600,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (7513,'Pocket_Watch_','Pocket Watch',3,3420,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (7513,'Pocket_Watch__','Pocket Watch',3,3420,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (7514,'Monster_Ticket','Monster Ticket',3,2,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (7515,'Marvelous_Medal','Prize Medal',3,2,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (7516,'Green_Key_Card','Green Keycard',3,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -7331,7 +7331,7 @@ REPLACE INTO `item_db_re` VALUES (13410,'BF_Sword1','Valorous Gladiator Blade',5
 REPLACE INTO `item_db_re` VALUES (13411,'BF_Sword2','Brave Gladiator Blade',5,20,NULL,0,'115',NULL,1,0,0x000654E3,63,2,2,3,'80',1,2,'bonus bStr,1; bonus bDex,1; bonus2 bAddRace,RC_DemiHuman,75; bonus2 bAddRace,RC_Player,75; bonus bMatkRate,10; bonus bUnbreakableWeapon,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13412,'Twin_Edge_B','Twin Edge of Naght Sieger',5,20,NULL,1500,'150',NULL,1,3,0x000654E2,18,2,2,4,'75',1,2,'bonus bAtkEle,Ele_Water; skill "MG_FROSTDIVER",5; autobonus "{ bonus bIgnoreDefClass,Class_Normal; }",50,5000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13413,'Twin_Edge_R','Twin Edge of Naght Sieger',5,20,NULL,1500,'160',NULL,1,3,0x000654E2,18,2,2,4,'75',1,2,'bonus bAtkEle,Ele_Fire; skill "WZ_METEOR",3; autobonus "{ bonus bIgnoreDefClass,Class_Normal; }",50,5000;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13414,'Elemental_Sword','Elemental Sword',5,20,NULL,1200,'105:95',NULL,1,3,0x000654E2,18,2,2,3,'70',1,2,'bonus bStr,2; bonus bInt,4; bonus bDex,1; bonus2 bAddEle,Ele_Neutral,10; bonus3 bAutoSpell,"MG_COLDBOLT",3,50; bonus4 bAutoSpellOnSkill,"MG_COLDBOLT","MG_FIREBOLT",3,1000; bonus4 bAutoSpellOnSkill,"MG_FIREBOLT","MG_LIGHTNINGBOLT",3,10000; bonus4 bAutoSpellOnSkill,"MG_LIGHTNINGBOLT","WZ_EARTHSPIKE",3,10000;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13414,'Elemental_Sword','Elemental Sword',5,20,NULL,1200,'105:95',NULL,1,3,0x000654E2,18,2,2,3,'70',1,2,'bonus bStr,2; bonus bInt,4; bonus bDex,1; bonus2 bAddEle,Ele_Neutral,10; bonus3 bAutoSpell,"MG_COLDBOLT",3,50; bonus4 bAutoSpellOnSkill,"MG_COLDBOLT","MG_FIREBOLT",3,1000; bonus4 bAutoSpellOnSkill,"MG_FIREBOLT","MG_LIGHTNINGBOLT",3,1000; bonus4 bAutoSpellOnSkill,"MG_LIGHTNINGBOLT","WZ_EARTHSPIKE",3,1000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13415,'N_Falchion','Novice Falchion',5,0,NULL,0,'59',NULL,1,3,0x000654E3,63,2,2,1,'2',0,2,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13416,'Krieger_Onehand_Sword1','Glorious Flamberge',5,20,NULL,0,'130',NULL,1,0,0x000654E3,63,2,2,4,'80',1,2,'bonus2 bAddRace,RC_DemiHuman,75; bonus2 bAddRace,RC_Player,75; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player,20; bonus bUnbreakableWeapon,1; .@r = getrefine(); if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(((.@r>14)?14:.@r)-4,2); bonus2 bAddRace,RC_Player,pow(((.@r>14)?14:.@r)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player,5; } if(.@r>6) bonus bAspdRate,5; if(.@r>8) { bonus bAspdRate,5; bonus4 bAutoSpellOnSkill,"SM_BASH","NPC_CRITICALWOUND",2,200; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13417,'Krieger_Onehand_Sword2','Glorious Rapier',5,20,NULL,0,'130:80',NULL,1,0,0x000654E3,63,2,2,4,'80',1,2,'.@r = getrefine(); bonus bInt,.@r-5; bonus bUnbreakableWeapon,1; if(.@r>5) bonus bUseSPrate,-10; if(.@r>8) bonus bInt,5;',NULL,NULL);
@@ -7360,7 +7360,7 @@ REPLACE INTO `item_db_re` VALUES (13442,'Old_Yangsan','Old Yangsan',5,10,NULL,50
 REPLACE INTO `item_db_re` VALUES (13444,'Pala','Pala',5,20,NULL,700,'190',NULL,0,1,0x000654E2,63,2,2,3,'0',1,2,'bonus bAspdRate,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13445,'Half_BF_Sword1','Half BF Sword1',5,20,NULL,0,'115',NULL,1,0,0x000654E3,63,2,2,3,'80',1,2,'bonus bStr,1; bonus bDex,1; bonus2 bAddRace,RC_DemiHuman,35; bonus2 bAddRace,RC_Player,35; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus bUnbreakableWeapon,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13449,'Gladius_Daemonicus','Gladius Daemonicus',5,20,NULL,1200,'130',NULL,NULL,2,0x000654E2,63,2,2,4,'80',1,2,'bonus bAtkEle,Ele_Dark;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13450,'Saber_','Saber',5,10,NULL,1000,'115',NULL,NULL,2,0x000654E2,63,2,2,3,'27',1,0,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13450,'Saber__','Saber',5,10,NULL,1000,'115',NULL,NULL,2,0x000654E2,63,2,2,3,'27',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13451,'Blue_Sword','Blue Sword',5,10,NULL,1200,'190',NULL,1,1,0x00000080,56,2,2,3,'100',1,2,'bonus bStr,5; bonus bAgi,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13452,'Ru_Gold_Sword','Ru Gold Sword',5,0,NULL,1200,'190',NULL,1,2,0x00000080,56,2,2,3,'120',1,2,'bonus bStr,8; bonus bAgi,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13454,'Crimson_Saber','Crimson Saber',5,20,NULL,850,'85',NULL,1,2,0x00000063,56,2,2,3,'70',1,2,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
@@ -8693,7 +8693,7 @@ REPLACE INTO `item_db_re` VALUES (16395,'HD_Elu_Box5','HD Elunium 5 Box',2,20,NU
 REPLACE INTO `item_db_re` VALUES (16396,'HD_Elu_Box10','HD Elunium 10 Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 6241,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16397,'Virgo_Diadem_Box','Virgo Diadem Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 5599,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16398,'Virgo_Crown_Box_','Virgo Crown Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 5598,1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (16399,'Virgo_Diadem_Box','Virgo Diadem Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 5599,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (16399,'Virgo_Diadem_Box_','Virgo Diadem Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 5599,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16405,'Midgard_Coin_Box_','Midgard Coin Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 6242,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16406,'FMidgard_Coin_Box','FMidgard Coin Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 6242,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16409,'Tw_Sep_Scroll','Tw Sep Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Tw_Sep_Scroll);',NULL,NULL);
@@ -10949,7 +10949,7 @@ REPLACE INTO `item_db_re` VALUES (28106,'Crimson_Two-Handed_Axe','Crimson Two-Ha
 #
 REPLACE INTO `item_db_re` VALUES (28200,'End_Of_The_Horizon','End Of The Horizon',5,2700000,NULL,2400,'410',NULL,9,1,0x40000000,63,2,34,4,'110',1,21,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28201,'Southern_Cross_','Southern Cross',5,2800000,NULL,2000,'480',NULL,9,0,0x40000000,63,2,34,4,'141',1,21,'bonus3 bAutoSpell,"GC_CROSSIMPACT",1,50;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (28202,'Southern_Cross_','Southern Cross',5,2800000,NULL,2000,'480',NULL,9,1,0x40000000,63,2,34,4,'141',1,21,'bonus3 bAutoSpell,"GC_CROSSIMPACT",1,50;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28202,'Southern_Cross__','Southern Cross',5,2800000,NULL,2000,'480',NULL,9,1,0x40000000,63,2,34,4,'141',1,21,'bonus3 bAutoSpell,"GC_CROSSIMPACT",1,50;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28203,'Half_BF_Rifle1','Half BF Rifle1',5,0,NULL,0,'50',NULL,9,0,0x41000000,63,2,34,3,'80',1,18,'bonus bDex,2; bonus bHit,8; bonus bCritical,8; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bVariableCastrate,"GS_TRACKING",-20; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus bUnbreakableWeapon,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28204,'Half_BF_Shotgun1','Half BF Shotgun1',5,0,NULL,0,'100',NULL,9,0,0x41000000,63,2,34,3,'80',1,20,'bonus bDex,2; bonus bSplashRange,1; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; autobonus "{ bonus bBaseAtk,80; bonus2 bHPLossRate,100,1000; }",30,6000,BF_WEAPON,"{ specialeffect2 EF_BASH3D; }"; bonus bUnbreakableWeapon,1;',NULL,NULL);
 #
