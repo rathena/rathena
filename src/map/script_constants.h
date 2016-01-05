@@ -42,8 +42,6 @@
 	export_constant(JOB_SAGE);
 	export_constant(JOB_ROGUE);
 	export_constant(JOB_ALCHEMIST);
-	// For backwards compatability
-	script_set_constant("Job_Alchem",JOB_ALCHEMIST,false); // TODO: Check if this is used anywhere and remove if possible
 	export_constant(JOB_BARD);
 	export_constant(JOB_DANCER);
 	export_constant(JOB_CRUSADER2);
@@ -100,8 +98,6 @@
 	export_constant(JOB_BABY_SAGE);
 	export_constant(JOB_BABY_ROGUE);
 	export_constant(JOB_BABY_ALCHEMIST);
-	// For backwards compatability
-	script_set_constant("Job_Baby_Alchem",JOB_BABY_ALCHEMIST,false); // TODO: Check if this is used anywhere and remove if possible
 	export_constant(JOB_BABY_BARD);
 	export_constant(JOB_BABY_DANCER);
 	export_constant(JOB_BABY_CRUSADER2);
