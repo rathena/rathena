@@ -659,15 +659,9 @@
 	export_constant(EQI_ACC_R);
 	export_constant(EQI_HEAD_MID);
 	export_constant(EQI_HEAD_LOW);
-	export_constant(EQI_COSTUME_LOW);
-	// For backwards compatability
-	script_set_constant("EQI_COSTUME_HEAD_LOW",EQI_COSTUME_LOW,false); // TODO: Check if this is used anywhere and remove if possible
-	export_constant(EQI_COSTUME_MID);
-	// For backwards compatability
-	script_set_constant("EQI_COSTUME_HEAD_MID",EQI_COSTUME_MID,false); // TODO: Check if this is used anywhere and remove if possible
-	export_constant(EQI_COSTUME_TOP);
-	// For backwards compatability
-	script_set_constant("EQI_COSTUME_HEAD_TOP",EQI_COSTUME_TOP,false); // TODO: Check if this is used anywhere and remove if possible
+	export_constant(EQI_COSTUME_HEAD_LOW);
+	export_constant(EQI_COSTUME_HEAD_MID);
+	export_constant(EQI_COSTUME_HEAD_TOP);
 	export_constant(EQI_COSTUME_GARMENT);
 	export_constant(EQI_AMMO);
 	export_constant(EQI_SHADOW_ARMOR );
