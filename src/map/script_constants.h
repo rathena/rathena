@@ -2583,6 +2583,17 @@
 	script_set_constant("PET_RENAMED",PETINFO_RENAMED,false);
 	script_set_constant("PET_LEVEL",PETINFO_LEVEL,false);
 
+	/* questinfo types */
+	export_constant(QTYPE_QUEST);
+	export_constant(QTYPE_QUEST2);
+	export_constant(QTYPE_JOB);
+	export_constant(QTYPE_JOB2);
+	export_constant(QTYPE_EVENT);
+	export_constant(QTYPE_EVENT2);
+	export_constant(QTYPE_WARG);
+	export_constant(QTYPE_WARG2);
+	export_constant(QTYPE_NONE);
+
 	/* add skill types */
 	script_set_constant("SKILL_PERM",ADDSKILL_PERMANENT,false);
 	script_set_constant("SKILL_TEMP",ADDSKILL_TEMP,false);

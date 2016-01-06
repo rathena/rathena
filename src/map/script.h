@@ -334,6 +334,20 @@ enum petinfo_types {
 	PETINFO_BLOCKID
 };
 
+enum questinfo_types {
+	QTYPE_QUEST = 0,
+	QTYPE_QUEST2,
+	QTYPE_JOB,
+	QTYPE_JOB2,
+	QTYPE_EVENT,
+	QTYPE_EVENT2,
+	QTYPE_WARG,
+	// 7 = free
+	QTYPE_WARG2 = 8,
+	// 9 - 9998 = free
+	QTYPE_NONE = 9999
+};
+
 enum unitdata_mobtypes {
 	UMOB_SIZE = 0,
 	UMOB_LEVEL,

@@ -18338,11 +18338,26 @@ BUILDIN_FUNC(questinfo)
 	icon = script_getnum(st, 3);
 
 #if PACKETVER >= 20120410
-	if(icon < 0 || (icon > 8 && icon != 9999) || icon == 7)
-		icon = 9999; // Default to nothing if icon id is invalid.
+	switch(icon){
+		case QTYPE_QUEST:
+		case QTYPE_QUEST2:
+		case QTYPE_JOB:
+		case QTYPE_JOB2:
+		case QTYPE_EVENT:
+		case QTYPE_EVENT2:
+		case QTYPE_WARG:
+		case QTYPE_WARG2:
+			// Leave everything as it is
+			break;
+		case QTYPE_NONE:
+		default:
+			// Default to nothing if icon id is invalid.
+			icon = QTYPE_NONE;
+			break;
+	}
 #else
-	if(icon < 0 || icon > 7)
-		icon = 0;
+	if(icon < QTYPE_QUEST || icon > 7) // TODO: check why 7 and not QTYPE_WARG, might be related to icon + 1 below
+		icon = QTYPE_QUEST;
 	else
 		icon = icon + 1;
 #endif
