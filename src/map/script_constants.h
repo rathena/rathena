@@ -2495,6 +2495,50 @@
 	export_constant(IT_SHADOWGEAR);
 	export_constant(IT_CASH);
 
+	/* weapon types */
+	export_constant(W_FIST);
+	export_constant(W_DAGGER);
+	export_constant(W_1HSWORD);
+	export_constant(W_2HSWORD);
+	export_constant(W_1HSPEAR);
+	export_constant(W_2HSPEAR);
+	export_constant(W_1HAXE);
+	export_constant(W_2HAXE);
+	export_constant(W_MACE);
+	export_constant(W_2HMACE);
+	export_constant(W_STAFF);
+	export_constant(W_BOW);
+	export_constant(W_KNUCKLE);
+	export_constant(W_MUSICAL);
+	export_constant(W_WHIP);
+	export_constant(W_BOOK);
+	export_constant(W_KATAR);
+	export_constant(W_REVOLVER);
+	export_constant(W_RIFLE);
+	export_constant(W_GATLING);
+	export_constant(W_SHOTGUN);
+	export_constant(W_GRENADE);
+	export_constant(W_HUUMA);
+	export_constant(W_2HSTAFF);
+	export_constant(MAX_WEAPON_TYPE);
+	export_constant(W_DOUBLE_DD);
+	export_constant(W_DOUBLE_SS);
+	export_constant(W_DOUBLE_AA);
+	export_constant(W_DOUBLE_DS);
+	export_constant(W_DOUBLE_DA);
+	export_constant(W_DOUBLE_SA);
+
+	/* ammunition types */
+	export_constant(A_ARROW);
+	export_constant(A_DAGGER);
+	export_constant(A_BULLET);
+	export_constant(A_SHELL);
+	export_constant(A_GRENADE);
+	export_constant(A_SHURIKEN);
+	export_constant(A_KUNAI);
+	export_constant(A_CANNONBALL);
+	export_constant(A_THROWWEAPON);
+
 	/* add skill types */
 	script_set_constant("SKILL_PERM",ADDSKILL_PERMANENT,false);
 	script_set_constant("SKILL_TEMP",ADDSKILL_TEMP,false);
