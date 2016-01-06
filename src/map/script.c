@@ -8454,10 +8454,11 @@ BUILDIN_FUNC(getequipuniqueid)
 
 	item = &sd->status.inventory[i];
 	if (item != 0) {
-		char buf[256];
+		int maxlen = 256;
+		char *buf = (char *)aMalloc(maxlen*sizeof(char));
 
-		memset(buf, 0, sizeof(buf));
-		snprintf(buf, sizeof(buf)-1, "%llu", (unsigned long long)item->unique_id);
+		memset(buf, 0, maxlen);
+		snprintf(buf, maxlen-1, "%llu", (unsigned long long)item->unique_id);
 
 		script_pushstr(st, buf);
 	} else
