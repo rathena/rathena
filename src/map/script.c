@@ -10380,7 +10380,7 @@ BUILDIN_FUNC(announce)
 	const char *mes       = script_getstr(st,2);
 	int         flag      = script_getnum(st,3);
 	const char *fontColor = script_hasdata(st,4) ? script_getstr(st,4) : NULL;
-	int         fontType  = script_hasdata(st,5) ? script_getnum(st,5) : 0x190; // default fontType (FW_NORMAL)
+	int         fontType  = script_hasdata(st,5) ? script_getnum(st,5) : FW_NORMAL; // default fontType
 	int         fontSize  = script_hasdata(st,6) ? script_getnum(st,6) : 12;    // default fontSize
 	int         fontAlign = script_hasdata(st,7) ? script_getnum(st,7) : 0;     // default fontAlign
 	int         fontY     = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontY
@@ -10439,7 +10439,7 @@ BUILDIN_FUNC(mapannounce)
 	const char *mes       = script_getstr(st,3);
 	int         flag      = script_getnum(st,4);
 	const char *fontColor = script_hasdata(st,5) ? script_getstr(st,5) : NULL;
-	int         fontType  = script_hasdata(st,6) ? script_getnum(st,6) : 0x190; // default fontType (FW_NORMAL)
+	int         fontType  = script_hasdata(st,6) ? script_getnum(st,6) : FW_NORMAL; // default fontType
 	int         fontSize  = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
 	int         fontAlign = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
 	int         fontY     = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
@@ -10465,7 +10465,7 @@ BUILDIN_FUNC(areaannounce)
 	const char *mes       = script_getstr(st,7);
 	int         flag      = script_getnum(st,8);
 	const char *fontColor = script_hasdata(st,9) ? script_getstr(st,9) : NULL;
-	int         fontType  = script_hasdata(st,10) ? script_getnum(st,10) : 0x190; // default fontType (FW_NORMAL)
+	int         fontType  = script_hasdata(st,10) ? script_getnum(st,10) : FW_NORMAL; // default fontType
 	int         fontSize  = script_hasdata(st,11) ? script_getnum(st,11) : 12;    // default fontSize
 	int         fontAlign = script_hasdata(st,12) ? script_getnum(st,12) : 0;     // default fontAlign
 	int         fontY     = script_hasdata(st,13) ? script_getnum(st,13) : 0;     // default fontY
@@ -18998,7 +18998,7 @@ BUILDIN_FUNC(instance_announce) {
 	const char *mes         = script_getstr(st,3);
 	int         flag        = script_getnum(st,4);
 	const char *fontColor   = script_hasdata(st,5) ? script_getstr(st,5) : NULL;
-	int         fontType    = script_hasdata(st,6) ? script_getnum(st,6) : 0x190; // default fontType (FW_NORMAL)
+	int         fontType    = script_hasdata(st,6) ? script_getnum(st,6) : FW_NORMAL; // default fontType
 	int         fontSize    = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
 	int         fontAlign   = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
 	int         fontY       = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY

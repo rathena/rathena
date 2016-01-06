@@ -2594,6 +2594,18 @@
 	export_constant(QTYPE_WARG2);
 	export_constant(QTYPE_NONE);
 
+	/* font weight types */
+	export_constant(FW_DONTCARE);
+	export_constant(FW_THIN);
+	export_constant(FW_EXTRALIGHT);
+	export_constant(FW_LIGHT);
+	export_constant(FW_NORMAL);
+	export_constant(FW_MEDIUM);
+	export_constant(FW_SEMIBOLD);
+	export_constant(FW_BOLD);
+	export_constant(FW_EXTRABOLD);
+	export_constant(FW_HEAVY);
+
 	/* add skill types */
 	script_set_constant("SKILL_PERM",ADDSKILL_PERMANENT,false);
 	script_set_constant("SKILL_TEMP",ADDSKILL_TEMP,false);
