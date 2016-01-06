@@ -2539,6 +2539,25 @@
 	export_constant(A_CANNONBALL);
 	export_constant(A_THROWWEAPON);
 
+	/* petinfo types */
+	export_constant(PETINFO_ID);
+	export_constant(PETINFO_CLASS);
+	export_constant(PETINFO_NAME);
+	export_constant(PETINFO_INTIMATE);
+	export_constant(PETINFO_HUNGRY);
+	export_constant(PETINFO_RENAMED);
+	export_constant(PETINFO_LEVEL);
+	export_constant(PETINFO_BLOCKID);
+
+	// For backwards compatability - might be removed in the near future
+	script_set_constant("PET_ID",PETINFO_ID,false);
+	script_set_constant("PET_CLASS",PETINFO_CLASS,false);
+	script_set_constant("PET_NAME",PETINFO_NAME,false);
+	script_set_constant("PET_INTIMATE",PETINFO_INTIMATE,false);
+	script_set_constant("PET_HUNGRY",PETINFO_HUNGRY,false);
+	script_set_constant("PET_RENAMED",PETINFO_RENAMED,false);
+	script_set_constant("PET_LEVEL",PETINFO_LEVEL,false);
+
 	/* add skill types */
 	script_set_constant("SKILL_PERM",ADDSKILL_PERMANENT,false);
 	script_set_constant("SKILL_TEMP",ADDSKILL_TEMP,false);

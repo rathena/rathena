@@ -14040,14 +14040,14 @@ BUILDIN_FUNC(getpetinfo)
 	}
 
 	switch(type){
-		case 0: script_pushint(st,pd->pet.pet_id); break;
-		case 1: script_pushint(st,pd->pet.class_); break;
-		case 2: script_pushstrcopy(st,pd->pet.name); break;
-		case 3: script_pushint(st,pd->pet.intimate); break;
-		case 4: script_pushint(st,pd->pet.hungry); break;
-		case 5: script_pushint(st,pd->pet.rename_flag); break;
-		case 6: script_pushint(st,(int)pd->pet.level); break;
-		case 7: script_pushint(st,pd->bl.id); break;
+		case PETINFO_ID:		script_pushint(st,pd->pet.pet_id); break;
+		case PETINFO_CLASS:		script_pushint(st,pd->pet.class_); break;
+		case PETINFO_NAME:		script_pushstrcopy(st,pd->pet.name); break;
+		case PETINFO_INTIMATE:	script_pushint(st,pd->pet.intimate); break;
+		case PETINFO_HUNGRY:	script_pushint(st,pd->pet.hungry); break;
+		case PETINFO_RENAMED:	script_pushint(st,pd->pet.rename_flag); break;
+		case PETINFO_LEVEL:		script_pushint(st,(int)pd->pet.level); break;
+		case PETINFO_BLOCKID:	script_pushint(st,pd->bl.id); break;
 		default:
 			script_pushint(st,0);
 			break;

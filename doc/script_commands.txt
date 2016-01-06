@@ -8507,15 +8507,15 @@ server and the egg will disappear when anyone tries to hatch it.
 This function will return pet information for the pet the invoking character 
 currently has active. Valid types are:
 
- 0 - Pet ID
- 1 - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
+ PETINFO_ID - Pet ID
+ PETINFO_CLASS - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
      is.
- 2 - Pet name. Will return "null" if there's no pet. 
- 3 - Pet friendly level (intimacy score). 1000 is full loyalty.
- 4 - Pet hungry level. 100 is completely full.
- 5 - Pet rename flag. 0 means this pet has not been named yet.
- 6 - Pet level
- 7 - Pet Game ID
+ PETINFO_NAME - Pet name. Will return "null" if there's no pet. 
+ PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.
+ PETINFO_HUNGRY - Pet hungry level. 100 is completely full.
+ PETINFO_RENAMED - Pet rename flag. 0 means this pet has not been named yet.
+ PETINFO_LEVEL - Pet level
+ PETINFO_BLOCKID - Pet Game ID
 
 ---------------------------------------
 

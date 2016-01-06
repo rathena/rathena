@@ -297,6 +297,17 @@ enum script_parse_options {
 	SCRIPT_RETURN_EMPTY_SCRIPT = 0x4// returns the script object instead of NULL for empty scripts
 };
 
+enum petinfo_types {
+	PETINFO_ID = 0,
+	PETINFO_CLASS,
+	PETINFO_NAME,
+	PETINFO_INTIMATE,
+	PETINFO_HUNGRY,
+	PETINFO_RENAMED,
+	PETINFO_LEVEL,
+	PETINFO_BLOCKID
+};
+
 enum unitdata_mobtypes {
 	UMOB_SIZE = 0,
 	UMOB_LEVEL,
