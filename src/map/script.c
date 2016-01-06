@@ -14323,6 +14323,7 @@ BUILDIN_FUNC(getlook)
 	type=script_getnum(st,2);
 	val=-1;
 	switch(type) {
+		// TODO: implement LOOK_BASE as stated in script doc
 		case LOOK_HAIR:     	val=sd->status.hair; break; //1
 		case LOOK_WEAPON:   	val=sd->status.weapon; break; //2
 		case LOOK_HEAD_BOTTOM:	val=sd->status.head_bottom; break; //3

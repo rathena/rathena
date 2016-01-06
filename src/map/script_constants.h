@@ -2606,6 +2606,29 @@
 	export_constant(FW_EXTRABOLD);
 	export_constant(FW_HEAVY);
 
+	/* look types */
+	export_constant(LOOK_BASE);
+	export_constant(LOOK_HAIR);
+	export_constant(LOOK_WEAPON);
+	export_constant(LOOK_HEAD_BOTTOM);
+	export_constant(LOOK_HEAD_TOP);
+	export_constant(LOOK_HEAD_MID);
+	export_constant(LOOK_HAIR_COLOR);
+	export_constant(LOOK_CLOTHES_COLOR);
+	export_constant(LOOK_SHIELD);
+	export_constant(LOOK_SHOES);
+
+	// For backwards compatability - might be removed in the near future
+	script_set_constant("VAR_HEAD",LOOK_HAIR,false);
+	script_set_constant("VAR_WEAPON",LOOK_WEAPON,false);
+	script_set_constant("VAR_HEAD_TOP",LOOK_HEAD_TOP,false); // This one was actually pointing to LOOK_HEAD_BOTTOM until now, so we might be safe to remove them anyway(since we got no bug report until today)
+	script_set_constant("VAR_HEAD_MID",LOOK_HEAD_MID,false); // This one was actually pointing to LOOK_HEAD_TOP until now, so we might be safe to remove them anyway(since we got no bug report until today)
+	script_set_constant("VAR_HEAD_BOTTOM",LOOK_HEAD_BOTTOM,false);  // This one was actually pointing to LOOK_HEAD_MID until now, so we might be safe to remove them anyway(since we got no bug report until today)
+	script_set_constant("VAR_HEADPALETTE",LOOK_HAIR_COLOR,false);
+	script_set_constant("VAR_BODYPALETTE",LOOK_CLOTHES_COLOR,false);
+	script_set_constant("VAR_SHIELD",LOOK_SHIELD,false);
+	script_set_constant("VAR_SHOES",LOOK_SHOES,false);
+
 	/* add skill types */
 	script_set_constant("SKILL_PERM",ADDSKILL_PERMANENT,false);
 	script_set_constant("SKILL_TEMP",ADDSKILL_TEMP,false);

@@ -4215,28 +4215,28 @@ type you want to change, then the palette you want to use. Make sure you specify
 a palette number that exists/is usable by the client you use.
 'changelook' works the same, but is only client side (it doesn't save the look value).
 
-    // This will change your hair(6), so that it uses palette 8, what ever your 
+    // This will change your hair color, so that it uses palette 8, what ever your 
     // palette 8 is, your hair will use that color
 
-    setlook 6,8;
+    setlook LOOK_HAIR_COLOR,8;
 
-    // This will change your clothes(7), so they are using palette 1, whatever 
+    // This will change your clothes color, so they are using palette 1, whatever 
     // your palette 1 is, your clothes will then use that set of colors.
     
-    setlook 7,1;
+    setlook LOOK_CLOTHES_COLOR,1;
 
 Here are the possible look types:
 
- 0 - Base sprite
- 1 - Hairstyle
- 2 - Weapon
- 3 - Head bottom
- 4 - Head top
- 5 - Head mid
- 6 - Hair color
- 7 - Clothes color
- 8 - Shield
- 9 - Shoes
+ LOOK_BASE - Base sprite
+ LOOK_HAIR - Hairstyle
+ LOOK_WEAPON - Weapon
+ LOOK_HEAD_BOTTOM - Head bottom
+ LOOK_HEAD_TOP - Head top
+ LOOK_HEAD_MID - Head mid
+ LOOK_HAIR_COLOR - Hair color
+ LOOK_CLOTHES_COLOR - Clothes color
+ LOOK_SHIELD - Shield
+ LOOK_SHOES - Shoes
 
 Whatever 'shoes' means is anyone's guess, ask Gravity - the client does nothing 
 with this value. It still wants it from the server though, so it is kept, but 
