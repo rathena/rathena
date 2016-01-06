@@ -22,6 +22,10 @@
 	export_constant(VIP_SCRIPT);
 	export_constant(MIN_STORAGE);
 
+	/* boolean values */
+	export_constant(true);
+	export_constant(false);
+
 	/* jobs */
 	export_constant(JOB_NOVICE);
 	export_constant(JOB_SWORDMAN);

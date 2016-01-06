@@ -2395,6 +2395,3 @@ MOBG_Poring_Box	1
 MOBG_Bloody_Dead_Branch	2
 MOBG_Red_Pouch_Of_Surprise	3
 MOBG_ClassChange	4
-
-false	0
-true	1
