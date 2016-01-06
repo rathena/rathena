@@ -18694,7 +18694,10 @@ BUILDIN_FUNC(setquest)
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	quest_add(sd, quest_id);
+	if( quest_add(sd, quest_id)  == -1 ){
+		script_reportsrc(st);
+		script_reportfunc(st);
+	}
 
 	//20120410 or 20090218 ? no reason that shouldn't work for 2009
 	pc_show_questinfo(sd); 
@@ -18711,7 +18714,11 @@ BUILDIN_FUNC(erasequest)
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	quest_delete(sd, script_getnum(st, 2));
+	if( quest_delete(sd, script_getnum(st, 2))  == -1 ){
+		script_reportsrc(st);
+		script_reportfunc(st);
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18741,7 +18748,11 @@ BUILDIN_FUNC(changequest)
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	quest_change(sd, script_getnum(st, 2),script_getnum(st, 3));
+	if( quest_change(sd, script_getnum(st, 2),script_getnum(st, 3)) == -1 ){
+		script_reportsrc(st);
+		script_reportfunc(st);
+	}
+
 	//20120410 or 20090218
 	pc_show_questinfo(sd);
 	return SCRIPT_CMD_SUCCESS;
