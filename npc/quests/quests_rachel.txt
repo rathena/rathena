@@ -1831,8 +1831,10 @@ ra_in01,235,194,5	script	Katinshuell	931,{
 			mes "What? I don't understand you...";
 			close;
 		}
-		set rach_vice,11;
-		changequest 8114,8115;
+		if (rach_vice == 10) {
+			set rach_vice,11;
+			changequest 8114,8115;
+		}
 		mes "[Katinshuell]";
 		mes "You happy, now?";
 		mes "Quit trying to pry into";
@@ -2126,8 +2128,10 @@ ra_in01,250,19,3	script	Mr. Shendar	929,{
 		mes "distinctively pleasant";
 		mes "scent about them. I guess";
 		mes "it must be pheremonal?";
-		set rach_vice,5;
-		changequest 8108,8109;
+		if (rach_vice == 4) {
+			set rach_vice,5;
+			changequest 8108,8109;
+		}
 		close;
 	}
 	else if (rach_vice == 2) {

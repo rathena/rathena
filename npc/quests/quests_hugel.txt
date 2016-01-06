@@ -27,6 +27,7 @@
 //=     - Juno Remedy Quest
 //= 2.2 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.3 Added questlog support. [Euphy]
+//= 2.4 Fixed quest log for Odin Temple Excavation Quest. [Capuche]
 //============================================================
 
 // Medicine Quest :: hg_herv
@@ -208,7 +209,7 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 			mes "from... Drawer... H-heeelp me!";
 			mes "Adventurer! H-Heeeeelp~!";
 			set hg_herb,4;
-			changequest 8055,8056;
+			// changequest 8055,8056;
 			close;
 		} else if (hg_herb == 4) {
 			mes "[Allen]";
@@ -7954,7 +7955,7 @@ hu_in01,19,161,0	script	Alex	803,{
 			if (countitem(7511) > 4) {
 				delitem 7511,5; //Rune_Of_Darkness
 				set hg_odin,6; //Old_Blue_Box
-				changequest 11000,11002;
+				changequest 11001,11002;
 				getitem 603,1;
 				mes "[Alex]";
 				mes "Oh! Thank you";
@@ -8332,6 +8333,8 @@ hu_in01,14,11,4	script	Laura	70,{
 		next;
 		select("Yeah, yeah, whatever.:Sure thing.:I s-s-s-suppose...!:Yes, Ma'am!");
 		set hg_odin,17;
+		completequest 11002;
+		setquest 11006;
 		cutin "hu_laura04.bmp",2;
 		mes "[Laura]";
 		mes "Good.";
