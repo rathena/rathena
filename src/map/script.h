@@ -348,6 +348,21 @@ enum questinfo_types {
 	QTYPE_NONE = 9999
 };
 
+#ifndef WIN32
+	// These are declared in wingdi.h
+	/* Font Weights */
+	#define FW_DONTCARE         0
+	#define FW_THIN             100
+	#define FW_EXTRALIGHT       200
+	#define FW_LIGHT            300
+	#define FW_NORMAL           400
+	#define FW_MEDIUM           500
+	#define FW_SEMIBOLD         600
+	#define FW_BOLD             700
+	#define FW_EXTRABOLD        800
+	#define FW_HEAVY            900
+#endif
+
 enum unitdata_mobtypes {
 	UMOB_SIZE = 0,
 	UMOB_LEVEL,
