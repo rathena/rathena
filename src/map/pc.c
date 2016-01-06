@@ -9306,7 +9306,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 		return false;
 	}
 
-	if ((sd->class_&MAPID_BASEMASK) == MAPID_GUNSLINGER && (id->type == IT_AMMO || (id->type == IT_WEAPON && id->look >= W_REVOLVER && id->look <= W_GRENADE))) {
+	if ((sd->class_&MAPID_BASEMASK) == MAPID_GUNSLINGER) {
 		/** Failing condition:
 		 * 1. Always failed to equip ammo if no weapon equipped yet
 		 * 2. Grenade only can be equipped if weapon is Grenade Launcher
@@ -9324,7 +9324,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 				return false;
 			}
 		}
-		else {
+		else if (id->type == IT_WEAPON && id->look >= W_REVOLVER && id->look <= W_GRENADE) {
 			int a_idx = sd->equip_index[EQI_AMMO];
 			if (a_idx != -1) {
 				enum ammo_type a_type = (enum ammo_type)sd->inventory_data[a_idx]->look;
