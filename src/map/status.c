@@ -3748,19 +3748,19 @@ void status_calc_atk_ele_pc(struct map_session_data *sd, struct status_change *s
 	int i = 0;
 
 	nullpo_retv(sd);
-	
+
 	memset(sd->magic_addele, 0, sizeof(sd->magic_addele));
 	memset(sd->right_weapon.addele, 0, sizeof(sd->right_weapon.addele));
 	memset(sd->left_weapon.addele, 0, sizeof(sd->left_weapon.addele));
-
-	if (!sc || !sc->count)
-		return;
 
 	if ((i = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
 		sd->right_weapon.addele[ELE_DARK] += i;
 		sd->left_weapon.addele[ELE_DARK] += i;
 		sd->magic_addele[ELE_DARK] += i;
 	}
+
+	if (!sc || !sc->count)
+		return;
 
 	if (sc->data[SC_FIRE_INSIGNIA] && sc->data[SC_FIRE_INSIGNIA]->val1 == 3)
 		sd->magic_addele[ELE_FIRE] += 25;
@@ -3785,9 +3785,6 @@ void status_calc_def_ele_pc(struct map_session_data *sd, struct status_change *s
 
 	memset(sd->subele, 0, sizeof(sd->subele));
 
-	if (!sc || !sc->count)
-		return;
-
 	if ((i = pc_checkskill(sd,CR_TRUST))>0)
 		sd->subele[ELE_HOLY] += i * 5;
 
@@ -3798,6 +3795,9 @@ void status_calc_def_ele_pc(struct map_session_data *sd, struct status_change *s
 
 	if ((i = pc_checkskill(sd, AB_EUCHARISTICA)) > 0)
 		sd->subele[ELE_DARK] += i;
+
+	if (!sc || !sc->count)
+		return;
 
 	if (sc->data[SC_SIEGFRIED]) {
 		i = sc->data[SC_SIEGFRIED]->val2;
