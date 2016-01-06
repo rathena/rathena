@@ -297,6 +297,32 @@ enum script_parse_options {
 	SCRIPT_RETURN_EMPTY_SCRIPT = 0x4// returns the script object instead of NULL for empty scripts
 };
 
+enum monsterinfo_types {
+	MOB_NAME = 0,
+	MOB_LV,
+	MOB_MAXHP,
+	MOB_BASEEXP,
+	MOB_JOBEXP,
+	MOB_ATK1,
+	MOB_ATK2,
+	MOB_DEF,
+	MOB_MDEF,
+	MOB_STR,
+	MOB_AGI,
+	MOB_VIT,
+	MOB_INT,
+	MOB_DEX,
+	MOB_LUK,
+	MOB_RANGE,
+	MOB_RANGE2,
+	MOB_RANGE3,
+	MOB_SIZE,
+	MOB_RACE,
+	MOB_ELEMENT,
+	MOB_MODE,
+	MOB_MVPEXP
+};
+
 enum petinfo_types {
 	PETINFO_ID = 0,
 	PETINFO_CLASS,

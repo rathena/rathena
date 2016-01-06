@@ -2539,6 +2539,31 @@
 	export_constant(A_CANNONBALL);
 	export_constant(A_THROWWEAPON);
 
+	/* monsterinfo types */
+	export_constant(MOB_NAME);
+	export_constant(MOB_LV);
+	export_constant(MOB_MAXHP);
+	export_constant(MOB_BASEEXP);
+	export_constant(MOB_JOBEXP);
+	export_constant(MOB_ATK1);
+	export_constant(MOB_ATK2);
+	export_constant(MOB_DEF);
+	export_constant(MOB_MDEF);
+	export_constant(MOB_STR);
+	export_constant(MOB_AGI);
+	export_constant(MOB_VIT);
+	export_constant(MOB_INT);
+	export_constant(MOB_DEX);
+	export_constant(MOB_LUK);
+	export_constant(MOB_RANGE);
+	export_constant(MOB_RANGE2);
+	export_constant(MOB_RANGE3);
+	export_constant(MOB_SIZE);
+	export_constant(MOB_RACE);
+	export_constant(MOB_ELEMENT);
+	export_constant(MOB_MODE);
+	export_constant(MOB_MVPEXP);
+
 	/* petinfo types */
 	export_constant(PETINFO_ID);
 	export_constant(PETINFO_CLASS);

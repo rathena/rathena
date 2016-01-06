@@ -16474,7 +16474,7 @@ BUILDIN_FUNC(getmonsterinfo)
 	mob_id	= script_getnum(st,2);
 	if (!mobdb_checkid(mob_id)) {
 		//ShowError("buildin_getmonsterinfo: Wrong Monster ID: %i\n", mob_id);
-		if ( !script_getnum(st,3) ) //requested a string
+		if ( script_getnum(st,3) == MOB_NAME ) // requested the name
 			script_pushconststr(st,"null");
 		else
 			script_pushint(st,-1);
@@ -16482,29 +16482,29 @@ BUILDIN_FUNC(getmonsterinfo)
 	}
 	mob = mob_db(mob_id);
 	switch ( script_getnum(st,3) ) {
-		case 0:  script_pushstrcopy(st,mob->jname); break;
-		case 1:  script_pushint(st,mob->lv); break;
-		case 2:  script_pushint(st,mob->status.max_hp); break;
-		case 3:  script_pushint(st,mob->base_exp); break;
-		case 4:  script_pushint(st,mob->job_exp); break;
-		case 5:  script_pushint(st,mob->status.rhw.atk); break;
-		case 6:  script_pushint(st,mob->status.rhw.atk2); break;
-		case 7:  script_pushint(st,mob->status.def); break;
-		case 8:  script_pushint(st,mob->status.mdef); break;
-		case 9:  script_pushint(st,mob->status.str); break;
-		case 10: script_pushint(st,mob->status.agi); break;
-		case 11: script_pushint(st,mob->status.vit); break;
-		case 12: script_pushint(st,mob->status.int_); break;
-		case 13: script_pushint(st,mob->status.dex); break;
-		case 14: script_pushint(st,mob->status.luk); break;
-		case 15: script_pushint(st,mob->status.rhw.range); break;
-		case 16: script_pushint(st,mob->range2); break;
-		case 17: script_pushint(st,mob->range3); break;
-		case 18: script_pushint(st,mob->status.size); break;
-		case 19: script_pushint(st,mob->status.race); break;
-		case 20: script_pushint(st,mob->status.def_ele); break;
-		case 21: script_pushint(st,mob->status.mode); break;
-		case 22: script_pushint(st,mob->mexp); break;
+		case MOB_NAME:		script_pushstrcopy(st,mob->jname); break;
+		case MOB_LV:		script_pushint(st,mob->lv); break;
+		case MOB_MAXHP:		script_pushint(st,mob->status.max_hp); break;
+		case MOB_BASEEXP:	script_pushint(st,mob->base_exp); break;
+		case MOB_JOBEXP:	script_pushint(st,mob->job_exp); break;
+		case MOB_ATK1:		script_pushint(st,mob->status.rhw.atk); break;
+		case MOB_ATK2:		script_pushint(st,mob->status.rhw.atk2); break;
+		case MOB_DEF:		script_pushint(st,mob->status.def); break;
+		case MOB_MDEF:		script_pushint(st,mob->status.mdef); break;
+		case MOB_STR:		script_pushint(st,mob->status.str); break;
+		case MOB_AGI:		script_pushint(st,mob->status.agi); break;
+		case MOB_VIT:		script_pushint(st,mob->status.vit); break;
+		case MOB_INT:		script_pushint(st,mob->status.int_); break;
+		case MOB_DEX:		script_pushint(st,mob->status.dex); break;
+		case MOB_LUK:		script_pushint(st,mob->status.luk); break;
+		case MOB_RANGE:		script_pushint(st,mob->status.rhw.range); break;
+		case MOB_RANGE2:	script_pushint(st,mob->range2); break;
+		case MOB_RANGE3:	script_pushint(st,mob->range3); break;
+		case MOB_SIZE:		script_pushint(st,mob->status.size); break;
+		case MOB_RACE:		script_pushint(st,mob->status.race); break;
+		case MOB_ELEMENT:	script_pushint(st,mob->status.def_ele); break;
+		case MOB_MODE:		script_pushint(st,mob->status.mode); break;
+		case MOB_MVPEXP:	script_pushint(st,mob->mexp); break;
 		default: script_pushint(st,-1); //wrong Index
 	}
 	return SCRIPT_CMD_SUCCESS;
