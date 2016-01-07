@@ -3255,32 +3255,31 @@ mob database and return the info set by TYPE argument.
 It will return -1 if there is no such monster (or the type value is invalid),
 or "null" if you requested the monster's name.
 
-Valid types are listed in 'db/const.txt':
-	MOB_NAME	0
-	MOB_LV	1
-	MOB_MAXHP	2
-	MOB_BASEEXP	3
-	MOB_JOBEXP	4
-	MOB_ATK1	5
-	MOB_ATK2	6
-	MOB_DEF	7
-	MOB_MDEF	8
-	MOB_STR	9
-	MOB_AGI	10
-	MOB_VIT	11
-	MOB_INT	12
-	MOB_DEX	13
-	MOB_LUK	14
-	MOB_RANGE	15
-	MOB_RANGE2	16
-	MOB_RANGE3	17
-	MOB_SIZE	18
-	MOB_RACE	19
-	MOB_ELEMENT	20
-	MOB_MODE	21
-	MOB_MVPEXP	22
+Valid types are:
+	MOB_NAME - monster's name, if there is no such monster "null" is returned
+	MOB_LV - monster's level
+	MOB_MAXHP - monster's maximum hp
+	MOB_BASEEXP - monster's base experience
+	MOB_JOBEXP - monster's job experience
+	MOB_ATK1 - monster's atk
+	MOB_ATK2 - monster's atk2
+	MOB_DEF - monster's def
+	MOB_MDEF - monster's mdef
+	MOB_STR - monster's str
+	MOB_AGI - monster's agi
+	MOB_VIT - monster's vit
+	MOB_INT - monster's int
+	MOB_DEX - monster's dex
+	MOB_LUK - monster's luk
+	MOB_RANGE - monster's range
+	MOB_RANGE2 - monster's range2
+	MOB_RANGE3 - monster's range3
+	MOB_SIZE - monster's size
+	MOB_RACE - monster's race
+	MOB_ELEMENT - monster's element(doesn't return the element level, only the element ID)
+	MOB_MODE - monster's mode
+	MOB_MVPEXP - monster's mvp experience
 
-Note: MOB_ELEMENT doesn't return the element level, only the element ID.
 For more details, see the sample in 'doc/sample/getmonsterinfo.txt'.
 
 ---------------------------------------
@@ -4216,28 +4215,28 @@ type you want to change, then the palette you want to use. Make sure you specify
 a palette number that exists/is usable by the client you use.
 'changelook' works the same, but is only client side (it doesn't save the look value).
 
-    // This will change your hair(6), so that it uses palette 8, what ever your 
+    // This will change your hair color, so that it uses palette 8, what ever your 
     // palette 8 is, your hair will use that color
 
-    setlook 6,8;
+    setlook LOOK_HAIR_COLOR,8;
 
-    // This will change your clothes(7), so they are using palette 1, whatever 
+    // This will change your clothes color, so they are using palette 1, whatever 
     // your palette 1 is, your clothes will then use that set of colors.
     
-    setlook 7,1;
+    setlook LOOK_CLOTHES_COLOR,1;
 
 Here are the possible look types:
 
- 0 - Base sprite
- 1 - Hairstyle
- 2 - Weapon
- 3 - Head bottom
- 4 - Head top
- 5 - Head mid
- 6 - Hair color
- 7 - Clothes color
- 8 - Shield
- 9 - Shoes
+ LOOK_BASE - Base sprite
+ LOOK_HAIR - Hairstyle
+ LOOK_WEAPON - Weapon
+ LOOK_HEAD_BOTTOM - Head bottom
+ LOOK_HEAD_TOP - Head top
+ LOOK_HEAD_MID - Head mid
+ LOOK_HAIR_COLOR - Hair color
+ LOOK_CLOTHES_COLOR - Clothes color
+ LOOK_SHIELD - Shield
+ LOOK_SHOES - Shoes
 
 Whatever 'shoes' means is anyone's guess, ask Gravity - the client does nothing 
 with this value. It still wants it from the server though, so it is kept, but 
@@ -8507,15 +8506,15 @@ server and the egg will disappear when anyone tries to hatch it.
 This function will return pet information for the pet the invoking character 
 currently has active. Valid types are:
 
- 0 - Pet ID
- 1 - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
+ PETINFO_ID - Pet ID
+ PETINFO_CLASS - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
      is.
- 2 - Pet name. Will return "null" if there's no pet. 
- 3 - Pet friendly level (intimacy score). 1000 is full loyalty.
- 4 - Pet hungry level. 100 is completely full.
- 5 - Pet rename flag. 0 means this pet has not been named yet.
- 6 - Pet level
- 7 - Pet Game ID
+ PETINFO_NAME - Pet name. Will return "null" if there's no pet. 
+ PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.
+ PETINFO_HUNGRY - Pet hungry level. 100 is completely full.
+ PETINFO_RENAMED - Pet rename flag. 0 means this pet has not been named yet.
+ PETINFO_LEVEL - Pet level
+ PETINFO_BLOCKID - Pet Game ID
 
 ---------------------------------------
 

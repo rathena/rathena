@@ -297,6 +297,72 @@ enum script_parse_options {
 	SCRIPT_RETURN_EMPTY_SCRIPT = 0x4// returns the script object instead of NULL for empty scripts
 };
 
+enum monsterinfo_types {
+	MOB_NAME = 0,
+	MOB_LV,
+	MOB_MAXHP,
+	MOB_BASEEXP,
+	MOB_JOBEXP,
+	MOB_ATK1,
+	MOB_ATK2,
+	MOB_DEF,
+	MOB_MDEF,
+	MOB_STR,
+	MOB_AGI,
+	MOB_VIT,
+	MOB_INT,
+	MOB_DEX,
+	MOB_LUK,
+	MOB_RANGE,
+	MOB_RANGE2,
+	MOB_RANGE3,
+	MOB_SIZE,
+	MOB_RACE,
+	MOB_ELEMENT,
+	MOB_MODE,
+	MOB_MVPEXP
+};
+
+enum petinfo_types {
+	PETINFO_ID = 0,
+	PETINFO_CLASS,
+	PETINFO_NAME,
+	PETINFO_INTIMATE,
+	PETINFO_HUNGRY,
+	PETINFO_RENAMED,
+	PETINFO_LEVEL,
+	PETINFO_BLOCKID
+};
+
+enum questinfo_types {
+	QTYPE_QUEST = 0,
+	QTYPE_QUEST2,
+	QTYPE_JOB,
+	QTYPE_JOB2,
+	QTYPE_EVENT,
+	QTYPE_EVENT2,
+	QTYPE_WARG,
+	// 7 = free
+	QTYPE_WARG2 = 8,
+	// 9 - 9998 = free
+	QTYPE_NONE = 9999
+};
+
+#ifndef WIN32
+	// These are declared in wingdi.h
+	/* Font Weights */
+	#define FW_DONTCARE         0
+	#define FW_THIN             100
+	#define FW_EXTRALIGHT       200
+	#define FW_LIGHT            300
+	#define FW_NORMAL           400
+	#define FW_MEDIUM           500
+	#define FW_SEMIBOLD         600
+	#define FW_BOLD             700
+	#define FW_EXTRABOLD        800
+	#define FW_HEAVY            900
+#endif
+
 enum unitdata_mobtypes {
 	UMOB_SIZE = 0,
 	UMOB_LEVEL,

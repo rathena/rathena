@@ -2237,304 +2237,7 @@ static void read_constdb(void)
  * Sets source-end constants for NPC scripts to access.
  **/
 void script_hardcoded_constants(void) {
-
-	/* server defines */
-	script_set_constant("PACKETVER",PACKETVER,false);
-	script_set_constant("MAX_LEVEL",MAX_LEVEL,false);
-	script_set_constant("MAX_STORAGE",MAX_STORAGE,false);
-	script_set_constant("MAX_INVENTORY",MAX_INVENTORY,false);
-	script_set_constant("MAX_CART",MAX_INVENTORY,false);
-	script_set_constant("MAX_ZENY",MAX_ZENY,false);
-	script_set_constant("MAX_PARTY",MAX_PARTY,false);
-	script_set_constant("MAX_GUILD",MAX_GUILD,false);
-	script_set_constant("MAX_GUILDLEVEL",MAX_GUILDLEVEL,false);
-	script_set_constant("MAX_GUILD_STORAGE",MAX_GUILD_STORAGE,false);
-	script_set_constant("MAX_BG_MEMBERS",MAX_BG_MEMBERS,false);
-	script_set_constant("MAX_CHAT_USERS",MAX_CHAT_USERS,false);
-	script_set_constant("VIP_SCRIPT",VIP_SCRIPT,false);
-	script_set_constant("MIN_STORAGE",MIN_STORAGE,false);
-
-	/* status options */
-	script_set_constant("Option_Nothing",OPTION_NOTHING,false);
-	script_set_constant("Option_Sight",OPTION_SIGHT,false);
-	script_set_constant("Option_Hide",OPTION_HIDE,false);
-	script_set_constant("Option_Cloak",OPTION_CLOAK,false);
-	script_set_constant("Option_Falcon",OPTION_FALCON,false);
-	script_set_constant("Option_Riding",OPTION_RIDING,false);
-	script_set_constant("Option_Invisible",OPTION_INVISIBLE,false);
-	script_set_constant("Option_Orcish",OPTION_ORCISH,false);
-	script_set_constant("Option_Wedding",OPTION_WEDDING,false);
-	script_set_constant("Option_Ruwach",OPTION_RUWACH,false);
-	script_set_constant("Option_Chasewalk",OPTION_CHASEWALK,false);
-	script_set_constant("Option_Flying",OPTION_FLYING,false);
-	script_set_constant("Option_Xmas",OPTION_XMAS,false);
-	script_set_constant("Option_Transform",OPTION_TRANSFORM,false);
-	script_set_constant("Option_Summer",OPTION_SUMMER,false);
-	script_set_constant("Option_Dragon1",OPTION_DRAGON1,false);
-	script_set_constant("Option_Wug",OPTION_WUG,false);
-	script_set_constant("Option_Wugrider",OPTION_WUGRIDER,false);
-	script_set_constant("Option_Madogear",OPTION_MADOGEAR,false);
-	script_set_constant("Option_Dragon2",OPTION_DRAGON2,false);
-	script_set_constant("Option_Dragon3",OPTION_DRAGON3,false);
-	script_set_constant("Option_Dragon4",OPTION_DRAGON4,false);
-	script_set_constant("Option_Dragon5",OPTION_DRAGON5,false);
-	script_set_constant("Option_Hanbok",OPTION_HANBOK,false);
-	script_set_constant("Option_Oktoberfest",OPTION_OKTOBERFEST,false);
-
-	/* status option compounds */
-	script_set_constant("Option_Dragon",OPTION_DRAGON,false);
-	script_set_constant("Option_Costume",OPTION_COSTUME,false);
-
-	/* sc_start flags */
-	script_set_constant("SCSTART_NONE",SCSTART_NONE,false);
-	script_set_constant("SCSTART_NOAVOID",SCSTART_NOAVOID,false);
-	script_set_constant("SCSTART_NOTICKDEF",SCSTART_NOTICKDEF,false);
-	script_set_constant("SCSTART_LOADED",SCSTART_LOADED,false);
-	script_set_constant("SCSTART_NORATEDEF",SCSTART_NORATEDEF,false);
-	script_set_constant("SCSTART_NOICON",SCSTART_NOICON,false);
-
-	/* unit control - mob */
-	script_set_constant("UMOB_SIZE",UMOB_SIZE,false);
-	script_set_constant("UMOB_LEVEL",UMOB_LEVEL,false);
-	script_set_constant("UMOB_HP",UMOB_HP,false);
-	script_set_constant("UMOB_MAXHP",UMOB_MAXHP,false);
-	script_set_constant("UMOB_MASTERAID",UMOB_MASTERAID,false);
-	script_set_constant("UMOB_MAPID",UMOB_MAPID,false);
-	script_set_constant("UMOB_X",UMOB_X,false);
-	script_set_constant("UMOB_Y",UMOB_Y,false);
-	script_set_constant("UMOB_SPEED",UMOB_SPEED,false);
-	script_set_constant("UMOB_MODE",UMOB_MODE,false);
-	script_set_constant("UMOB_AI",UMOB_AI,false);
-	script_set_constant("UMOB_SCOPTION",UMOB_SCOPTION,false);
-	script_set_constant("UMOB_SEX",UMOB_SEX,false);
-	script_set_constant("UMOB_CLASS",UMOB_CLASS,false);
-	script_set_constant("UMOB_HAIRSTYLE",UMOB_HAIRSTYLE,false);
-	script_set_constant("UMOB_HAIRCOLOR",UMOB_HAIRCOLOR,false);
-	script_set_constant("UMOB_HEADBOTTOM",UMOB_HEADBOTTOM,false);
-	script_set_constant("UMOB_HEADMIDDLE",UMOB_HEADMIDDLE,false);
-	script_set_constant("UMOB_HEADTOP",UMOB_HEADTOP,false);
-	script_set_constant("UMOB_CLOTHCOLOR",UMOB_CLOTHCOLOR,false);
-	script_set_constant("UMOB_SHIELD",UMOB_SHIELD,false);
-	script_set_constant("UMOB_WEAPON",UMOB_WEAPON,false);
-	script_set_constant("UMOB_LOOKDIR",UMOB_LOOKDIR,false);
-	script_set_constant("UMOB_STR",UMOB_STR,false);
-	script_set_constant("UMOB_AGI",UMOB_AGI,false);
-	script_set_constant("UMOB_VIT",UMOB_VIT,false);
-	script_set_constant("UMOB_INT",UMOB_INT,false);
-	script_set_constant("UMOB_DEX",UMOB_DEX,false);
-	script_set_constant("UMOB_LUK",UMOB_LUK,false);
-	script_set_constant("UMOB_SLAVECPYMSTRMD",UMOB_SLAVECPYMSTRMD,false);
-	script_set_constant("UMOB_DMGIMMUNE",UMOB_DMGIMMUNE,false);
-	script_set_constant("UMOB_ATKRANGE",UMOB_ATKRANGE,false);
-	script_set_constant("UMOB_ATKMIN",UMOB_ATKMIN,false);
-	script_set_constant("UMOB_ATKMAX",UMOB_ATKMAX,false);
-	script_set_constant("UMOB_MATKMIN",UMOB_MATKMIN,false);
-	script_set_constant("UMOB_MATKMAX",UMOB_MATKMAX,false);
-	script_set_constant("UMOB_DEF",UMOB_DEF,false);
-	script_set_constant("UMOB_MDEF",UMOB_MDEF,false);
-	script_set_constant("UMOB_HIT",UMOB_HIT,false);
-	script_set_constant("UMOB_FLEE",UMOB_FLEE,false);
-	script_set_constant("UMOB_PDODGE",UMOB_PDODGE,false);
-	script_set_constant("UMOB_CRIT",UMOB_CRIT,false);
-	script_set_constant("UMOB_RACE",UMOB_RACE,false);
-	script_set_constant("UMOB_ELETYPE",UMOB_ELETYPE,false);
-	script_set_constant("UMOB_ELELEVEL",UMOB_ELELEVEL,false);
-	script_set_constant("UMOB_AMOTION",UMOB_AMOTION,false);
-	script_set_constant("UMOB_ADELAY",UMOB_ADELAY,false);
-	script_set_constant("UMOB_DMOTION",UMOB_DMOTION,false);
-
-	/* unit control - homunculus */
-	script_set_constant("UHOM_SIZE",UHOM_SIZE,false);
-	script_set_constant("UHOM_LEVEL",UHOM_LEVEL,false);
-	script_set_constant("UHOM_HP",UHOM_HP,false);
-	script_set_constant("UHOM_MAXHP",UHOM_MAXHP,false);
-	script_set_constant("UHOM_SP",UHOM_SP,false);
-	script_set_constant("UHOM_MAXSP",UHOM_MAXSP,false);
-	script_set_constant("UHOM_MASTERCID",UHOM_MASTERCID,false);
-	script_set_constant("UHOM_MAPID",UHOM_MAPID,false);
-	script_set_constant("UHOM_X",UHOM_X,false);
-	script_set_constant("UHOM_Y",UHOM_Y,false);
-	script_set_constant("UHOM_HUNGER",UHOM_HUNGER,false);
-	script_set_constant("UHOM_INTIMACY",UHOM_INTIMACY,false);
-	script_set_constant("UHOM_SPEED",UHOM_SPEED,false);
-	script_set_constant("UHOM_LOOKDIR",UHOM_LOOKDIR,false);
-	script_set_constant("UHOM_CANMOVETICK",UHOM_CANMOVETICK,false);
-	script_set_constant("UHOM_STR",UHOM_STR,false);
-	script_set_constant("UHOM_AGI",UHOM_AGI,false);
-	script_set_constant("UHOM_VIT",UHOM_VIT,false);
-	script_set_constant("UHOM_INT",UHOM_INT,false);
-	script_set_constant("UHOM_DEX",UHOM_DEX,false);
-	script_set_constant("UHOM_LUK",UHOM_LUK,false);
-	script_set_constant("UHOM_DMGIMMUNE",UHOM_DMGIMMUNE,false);
-	script_set_constant("UHOM_ATKRANGE",UHOM_ATKRANGE,false);
-	script_set_constant("UHOM_ATKMIN",UHOM_ATKMIN,false);
-	script_set_constant("UHOM_ATKMAX",UHOM_ATKMAX,false);
-	script_set_constant("UHOM_MATKMIN",UHOM_MATKMIN,false);
-	script_set_constant("UHOM_MATKMAX",UHOM_MATKMAX,false);
-	script_set_constant("UHOM_DEF",UHOM_DEF,false);
-	script_set_constant("UHOM_MDEF",UHOM_MDEF,false);
-	script_set_constant("UHOM_HIT",UHOM_HIT,false);
-	script_set_constant("UHOM_FLEE",UHOM_FLEE,false);
-	script_set_constant("UHOM_PDODGE",UHOM_PDODGE,false);
-	script_set_constant("UHOM_CRIT",UHOM_CRIT,false);
-	script_set_constant("UHOM_RACE",UHOM_RACE,false);
-	script_set_constant("UHOM_ELETYPE",UHOM_ELETYPE,false);
-	script_set_constant("UHOM_ELELEVEL",UHOM_ELELEVEL,false);
-	script_set_constant("UHOM_AMOTION",UHOM_AMOTION,false);
-	script_set_constant("UHOM_ADELAY",UHOM_ADELAY,false);
-	script_set_constant("UHOM_DMOTION",UHOM_DMOTION,false);
-
-	/* unit control - pet */
-	script_set_constant("UPET_SIZE",UPET_SIZE,false);
-	script_set_constant("UPET_LEVEL",UPET_LEVEL,false);
-	script_set_constant("UPET_HP",UPET_HP,false);
-	script_set_constant("UPET_MAXHP",UPET_MAXHP,false);
-	script_set_constant("UPET_MASTERAID",UPET_MASTERAID,false);
-	script_set_constant("UPET_MAPID",UPET_MAPID,false);
-	script_set_constant("UPET_X",UPET_X,false);
-	script_set_constant("UPET_Y",UPET_Y,false);
-	script_set_constant("UPET_HUNGER",UPET_HUNGER,false);
-	script_set_constant("UPET_INTIMACY",UPET_INTIMACY,false);
-	script_set_constant("UPET_SPEED",UPET_SPEED,false);
-	script_set_constant("UPET_LOOKDIR",UPET_LOOKDIR,false);
-	script_set_constant("UPET_CANMOVETICK",UPET_CANMOVETICK,false);
-	script_set_constant("UPET_STR",UPET_STR,false);
-	script_set_constant("UPET_AGI",UPET_AGI,false);
-	script_set_constant("UPET_VIT",UPET_VIT,false);
-	script_set_constant("UPET_INT",UPET_INT,false);
-	script_set_constant("UPET_DEX",UPET_DEX,false);
-	script_set_constant("UPET_LUK",UPET_LUK,false);
-	script_set_constant("UPET_DMGIMMUNE",UPET_DMGIMMUNE,false);
-	script_set_constant("UPET_ATKRANGE",UPET_ATKRANGE,false);
-	script_set_constant("UPET_ATKMIN",UPET_ATKMIN,false);
-	script_set_constant("UPET_ATKMAX",UPET_ATKMAX,false);
-	script_set_constant("UPET_MATKMIN",UPET_MATKMIN,false);
-	script_set_constant("UPET_MATKMAX",UPET_MATKMAX,false);
-	script_set_constant("UPET_DEF",UPET_DEF,false);
-	script_set_constant("UPET_MDEF",UPET_MDEF,false);
-	script_set_constant("UPET_HIT",UPET_HIT,false);
-	script_set_constant("UPET_FLEE",UPET_FLEE,false);
-	script_set_constant("UPET_PDODGE",UPET_PDODGE,false);
-	script_set_constant("UPET_CRIT",UPET_CRIT,false);
-	script_set_constant("UPET_RACE",UPET_RACE,false);
-	script_set_constant("UPET_ELETYPE",UPET_ELETYPE,false);
-	script_set_constant("UPET_ELELEVEL",UPET_ELELEVEL,false);
-	script_set_constant("UPET_AMOTION",UPET_AMOTION,false);
-	script_set_constant("UPET_ADELAY",UPET_ADELAY,false);
-	script_set_constant("UPET_DMOTION",UPET_DMOTION,false);
-
-	/* unit control - mercenary */
-	script_set_constant("UMER_SIZE",UMER_SIZE,false);
-	script_set_constant("UMER_HP",UMER_HP,false);
-	script_set_constant("UMER_MAXHP",UMER_MAXHP,false);
-	script_set_constant("UMER_MASTERCID",UMER_MASTERCID,false);
-	script_set_constant("UMER_MAPID",UMER_MAPID,false);
-	script_set_constant("UMER_X",UMER_X,false);
-	script_set_constant("UMER_Y",UMER_Y,false);
-	script_set_constant("UMER_KILLCOUNT",UMER_KILLCOUNT,false);
-	script_set_constant("UMER_LIFETIME",UMER_LIFETIME,false);
-	script_set_constant("UMER_SPEED",UMER_SPEED,false);
-	script_set_constant("UMER_LOOKDIR",UMER_LOOKDIR,false);
-	script_set_constant("UMER_CANMOVETICK",UMER_CANMOVETICK,false);
-	script_set_constant("UMER_STR",UMER_STR,false);
-	script_set_constant("UMER_AGI",UMER_AGI,false);
-	script_set_constant("UMER_VIT",UMER_VIT,false);
-	script_set_constant("UMER_INT",UMER_INT,false);
-	script_set_constant("UMER_DEX",UMER_DEX,false);
-	script_set_constant("UMER_LUK",UMER_LUK,false);
-	script_set_constant("UMER_DMGIMMUNE",UMER_DMGIMMUNE,false);
-	script_set_constant("UMER_ATKRANGE",UMER_ATKRANGE,false);
-	script_set_constant("UMER_ATKMIN",UMER_ATKMIN,false);
-	script_set_constant("UMER_ATKMAX",UMER_ATKMAX,false);
-	script_set_constant("UMER_MATKMIN",UMER_MATKMIN,false);
-	script_set_constant("UMER_MATKMAX",UMER_MATKMAX,false);
-	script_set_constant("UMER_DEF",UMER_DEF,false);
-	script_set_constant("UMER_MDEF",UMER_MDEF,false);
-	script_set_constant("UMER_HIT",UMER_HIT,false);
-	script_set_constant("UMER_FLEE",UMER_FLEE,false);
-	script_set_constant("UMER_PDODGE",UMER_PDODGE,false);
-	script_set_constant("UMER_CRIT",UMER_CRIT,false);
-	script_set_constant("UMER_RACE",UMER_RACE,false);
-	script_set_constant("UMER_ELETYPE",UMER_ELETYPE,false);
-	script_set_constant("UMER_ELELEVEL",UMER_ELELEVEL,false);
-	script_set_constant("UMER_AMOTION",UMER_AMOTION,false);
-	script_set_constant("UMER_ADELAY",UMER_ADELAY,false);
-	script_set_constant("UMER_DMOTION",UMER_DMOTION,false);
-
-	/* unit control - elemental */
-	script_set_constant("UELE_SIZE",UELE_SIZE,false);
-	script_set_constant("UELE_HP",UELE_HP,false);
-	script_set_constant("UELE_MAXHP",UELE_MAXHP,false);
-	script_set_constant("UELE_SP",UELE_SP,false);
-	script_set_constant("UELE_MAXSP",UELE_MAXSP,false);
-	script_set_constant("UELE_MASTERCID",UELE_MASTERCID,false);
-	script_set_constant("UELE_MAPID",UELE_MAPID,false);
-	script_set_constant("UELE_X",UELE_X,false);
-	script_set_constant("UELE_Y",UELE_Y,false);
-	script_set_constant("UELE_LIFETIME",UELE_LIFETIME,false);
-	script_set_constant("UELE_MODE",UELE_MODE,false);
-	script_set_constant("UELE_SPEED",UELE_SPEED,false);
-	script_set_constant("UELE_LOOKDIR",UELE_LOOKDIR,false);
-	script_set_constant("UELE_CANMOVETICK",UELE_CANMOVETICK,false);
-	script_set_constant("UELE_STR",UELE_STR,false);
-	script_set_constant("UELE_AGI",UELE_AGI,false);
-	script_set_constant("UELE_VIT",UELE_VIT,false);
-	script_set_constant("UELE_INT",UELE_INT,false);
-	script_set_constant("UELE_DEX",UELE_DEX,false);
-	script_set_constant("UELE_LUK",UELE_LUK,false);
-	script_set_constant("UELE_DMGIMMUNE",UELE_DMGIMMUNE,false);
-	script_set_constant("UELE_ATKRANGE",UELE_ATKRANGE,false);
-	script_set_constant("UELE_ATKMIN",UELE_ATKMIN,false);
-	script_set_constant("UELE_ATKMAX",UELE_ATKMAX,false);
-	script_set_constant("UELE_MATKMIN",UELE_MATKMIN,false);
-	script_set_constant("UELE_MATKMAX",UELE_MATKMAX,false);
-	script_set_constant("UELE_DEF",UELE_DEF,false);
-	script_set_constant("UELE_MDEF",UELE_MDEF,false);
-	script_set_constant("UELE_HIT",UELE_HIT,false);
-	script_set_constant("UELE_FLEE",UELE_FLEE,false);
-	script_set_constant("UELE_PDODGE",UELE_PDODGE,false);
-	script_set_constant("UELE_CRIT",UELE_CRIT,false);
-	script_set_constant("UELE_RACE",UELE_RACE,false);
-	script_set_constant("UELE_ELETYPE",UELE_ELETYPE,false);
-	script_set_constant("UELE_ELELEVEL",UELE_ELELEVEL,false);
-	script_set_constant("UELE_AMOTION",UELE_AMOTION,false);
-	script_set_constant("UELE_ADELAY",UELE_ADELAY,false);
-	script_set_constant("UELE_DMOTION",UELE_DMOTION,false);
-
-	/* unit control - NPC */
-	script_set_constant("UNPC_DISPLAY",UNPC_DISPLAY,false);
-	script_set_constant("UNPC_LEVEL",UNPC_LEVEL,false);
-	script_set_constant("UNPC_HP",UNPC_HP,false);
-	script_set_constant("UNPC_MAXHP",UNPC_MAXHP,false);
-	script_set_constant("UNPC_MAPID",UNPC_MAPID,false);
-	script_set_constant("UNPC_X",UNPC_X,false);
-	script_set_constant("UNPC_Y",UNPC_Y,false);
-	script_set_constant("UNPC_LOOKDIR",UNPC_LOOKDIR,false);
-	script_set_constant("UNPC_STR",UNPC_STR,false);
-	script_set_constant("UNPC_AGI",UNPC_AGI,false);
-	script_set_constant("UNPC_VIT",UNPC_VIT,false);
-	script_set_constant("UNPC_INT",UNPC_INT,false);
-	script_set_constant("UNPC_DEX",UNPC_DEX,false);
-	script_set_constant("UNPC_LUK",UNPC_LUK,false);
-	script_set_constant("UNPC_PLUSALLSTAT",UNPC_PLUSALLSTAT,false);
-	script_set_constant("UNPC_DMGIMMUNE",UNPC_DMGIMMUNE,false);
-	script_set_constant("UNPC_ATKRANGE",UNPC_ATKRANGE,false);
-	script_set_constant("UNPC_ATKMIN",UNPC_ATKMIN,false);
-	script_set_constant("UNPC_ATKMAX",UNPC_ATKMAX,false);
-	script_set_constant("UNPC_MATKMIN",UNPC_MATKMIN,false);
-	script_set_constant("UNPC_MATKMAX",UNPC_MATKMAX,false);
-	script_set_constant("UNPC_DEF",UNPC_DEF,false);
-	script_set_constant("UNPC_MDEF",UNPC_MDEF,false);
-	script_set_constant("UNPC_HIT",UNPC_HIT,false);
-	script_set_constant("UNPC_FLEE",UNPC_FLEE,false);
-	script_set_constant("UNPC_PDODGE",UNPC_PDODGE,false);
-	script_set_constant("UNPC_CRIT",UNPC_CRIT,false);
-	script_set_constant("UNPC_RACE",UNPC_RACE,false);
-	script_set_constant("UNPC_ELETYPE",UNPC_ELETYPE,false);
-	script_set_constant("UNPC_ELELEVEL",UNPC_ELELEVEL,false);
-	script_set_constant("UNPC_AMOTION",UNPC_AMOTION,false);
-	script_set_constant("UNPC_ADELAY",UNPC_ADELAY,false);
-	script_set_constant("UNPC_DMOTION",UNPC_DMOTION,false);
+	#include "script_constants.h"
 }
 
 /*==========================================
@@ -10678,7 +10381,7 @@ BUILDIN_FUNC(announce)
 	const char *mes       = script_getstr(st,2);
 	int         flag      = script_getnum(st,3);
 	const char *fontColor = script_hasdata(st,4) ? script_getstr(st,4) : NULL;
-	int         fontType  = script_hasdata(st,5) ? script_getnum(st,5) : 0x190; // default fontType (FW_NORMAL)
+	int         fontType  = script_hasdata(st,5) ? script_getnum(st,5) : FW_NORMAL; // default fontType
 	int         fontSize  = script_hasdata(st,6) ? script_getnum(st,6) : 12;    // default fontSize
 	int         fontAlign = script_hasdata(st,7) ? script_getnum(st,7) : 0;     // default fontAlign
 	int         fontY     = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontY
@@ -10737,7 +10440,7 @@ BUILDIN_FUNC(mapannounce)
 	const char *mes       = script_getstr(st,3);
 	int         flag      = script_getnum(st,4);
 	const char *fontColor = script_hasdata(st,5) ? script_getstr(st,5) : NULL;
-	int         fontType  = script_hasdata(st,6) ? script_getnum(st,6) : 0x190; // default fontType (FW_NORMAL)
+	int         fontType  = script_hasdata(st,6) ? script_getnum(st,6) : FW_NORMAL; // default fontType
 	int         fontSize  = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
 	int         fontAlign = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
 	int         fontY     = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
@@ -10763,7 +10466,7 @@ BUILDIN_FUNC(areaannounce)
 	const char *mes       = script_getstr(st,7);
 	int         flag      = script_getnum(st,8);
 	const char *fontColor = script_hasdata(st,9) ? script_getstr(st,9) : NULL;
-	int         fontType  = script_hasdata(st,10) ? script_getnum(st,10) : 0x190; // default fontType (FW_NORMAL)
+	int         fontType  = script_hasdata(st,10) ? script_getnum(st,10) : FW_NORMAL; // default fontType
 	int         fontSize  = script_hasdata(st,11) ? script_getnum(st,11) : 12;    // default fontSize
 	int         fontAlign = script_hasdata(st,12) ? script_getnum(st,12) : 0;     // default fontAlign
 	int         fontY     = script_hasdata(st,13) ? script_getnum(st,13) : 0;     // default fontY
@@ -14338,14 +14041,14 @@ BUILDIN_FUNC(getpetinfo)
 	}
 
 	switch(type){
-		case 0: script_pushint(st,pd->pet.pet_id); break;
-		case 1: script_pushint(st,pd->pet.class_); break;
-		case 2: script_pushstrcopy(st,pd->pet.name); break;
-		case 3: script_pushint(st,pd->pet.intimate); break;
-		case 4: script_pushint(st,pd->pet.hungry); break;
-		case 5: script_pushint(st,pd->pet.rename_flag); break;
-		case 6: script_pushint(st,(int)pd->pet.level); break;
-		case 7: script_pushint(st,pd->bl.id); break;
+		case PETINFO_ID:		script_pushint(st,pd->pet.pet_id); break;
+		case PETINFO_CLASS:		script_pushint(st,pd->pet.class_); break;
+		case PETINFO_NAME:		script_pushstrcopy(st,pd->pet.name); break;
+		case PETINFO_INTIMATE:	script_pushint(st,pd->pet.intimate); break;
+		case PETINFO_HUNGRY:	script_pushint(st,pd->pet.hungry); break;
+		case PETINFO_RENAMED:	script_pushint(st,pd->pet.rename_flag); break;
+		case PETINFO_LEVEL:		script_pushint(st,(int)pd->pet.level); break;
+		case PETINFO_BLOCKID:	script_pushint(st,pd->bl.id); break;
 		default:
 			script_pushint(st,0);
 			break;
@@ -14621,6 +14324,7 @@ BUILDIN_FUNC(getlook)
 	type=script_getnum(st,2);
 	val=-1;
 	switch(type) {
+		// TODO: implement LOOK_BASE as stated in script doc
 		case LOOK_HAIR:     	val=sd->status.hair; break; //1
 		case LOOK_WEAPON:   	val=sd->status.weapon; break; //2
 		case LOOK_HEAD_BOTTOM:	val=sd->status.head_bottom; break; //3
@@ -16772,7 +16476,7 @@ BUILDIN_FUNC(getmonsterinfo)
 	mob_id	= script_getnum(st,2);
 	if (!mobdb_checkid(mob_id)) {
 		//ShowError("buildin_getmonsterinfo: Wrong Monster ID: %i\n", mob_id);
-		if ( !script_getnum(st,3) ) //requested a string
+		if ( script_getnum(st,3) == MOB_NAME ) // requested the name
 			script_pushconststr(st,"null");
 		else
 			script_pushint(st,-1);
@@ -16780,29 +16484,29 @@ BUILDIN_FUNC(getmonsterinfo)
 	}
 	mob = mob_db(mob_id);
 	switch ( script_getnum(st,3) ) {
-		case 0:  script_pushstrcopy(st,mob->jname); break;
-		case 1:  script_pushint(st,mob->lv); break;
-		case 2:  script_pushint(st,mob->status.max_hp); break;
-		case 3:  script_pushint(st,mob->base_exp); break;
-		case 4:  script_pushint(st,mob->job_exp); break;
-		case 5:  script_pushint(st,mob->status.rhw.atk); break;
-		case 6:  script_pushint(st,mob->status.rhw.atk2); break;
-		case 7:  script_pushint(st,mob->status.def); break;
-		case 8:  script_pushint(st,mob->status.mdef); break;
-		case 9:  script_pushint(st,mob->status.str); break;
-		case 10: script_pushint(st,mob->status.agi); break;
-		case 11: script_pushint(st,mob->status.vit); break;
-		case 12: script_pushint(st,mob->status.int_); break;
-		case 13: script_pushint(st,mob->status.dex); break;
-		case 14: script_pushint(st,mob->status.luk); break;
-		case 15: script_pushint(st,mob->status.rhw.range); break;
-		case 16: script_pushint(st,mob->range2); break;
-		case 17: script_pushint(st,mob->range3); break;
-		case 18: script_pushint(st,mob->status.size); break;
-		case 19: script_pushint(st,mob->status.race); break;
-		case 20: script_pushint(st,mob->status.def_ele); break;
-		case 21: script_pushint(st,mob->status.mode); break;
-		case 22: script_pushint(st,mob->mexp); break;
+		case MOB_NAME:		script_pushstrcopy(st,mob->jname); break;
+		case MOB_LV:		script_pushint(st,mob->lv); break;
+		case MOB_MAXHP:		script_pushint(st,mob->status.max_hp); break;
+		case MOB_BASEEXP:	script_pushint(st,mob->base_exp); break;
+		case MOB_JOBEXP:	script_pushint(st,mob->job_exp); break;
+		case MOB_ATK1:		script_pushint(st,mob->status.rhw.atk); break;
+		case MOB_ATK2:		script_pushint(st,mob->status.rhw.atk2); break;
+		case MOB_DEF:		script_pushint(st,mob->status.def); break;
+		case MOB_MDEF:		script_pushint(st,mob->status.mdef); break;
+		case MOB_STR:		script_pushint(st,mob->status.str); break;
+		case MOB_AGI:		script_pushint(st,mob->status.agi); break;
+		case MOB_VIT:		script_pushint(st,mob->status.vit); break;
+		case MOB_INT:		script_pushint(st,mob->status.int_); break;
+		case MOB_DEX:		script_pushint(st,mob->status.dex); break;
+		case MOB_LUK:		script_pushint(st,mob->status.luk); break;
+		case MOB_RANGE:		script_pushint(st,mob->status.rhw.range); break;
+		case MOB_RANGE2:	script_pushint(st,mob->range2); break;
+		case MOB_RANGE3:	script_pushint(st,mob->range3); break;
+		case MOB_SIZE:		script_pushint(st,mob->status.size); break;
+		case MOB_RACE:		script_pushint(st,mob->status.race); break;
+		case MOB_ELEMENT:	script_pushint(st,mob->status.def_ele); break;
+		case MOB_MODE:		script_pushint(st,mob->status.mode); break;
+		case MOB_MVPEXP:	script_pushint(st,mob->mexp); break;
 		default: script_pushint(st,-1); //wrong Index
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -18636,11 +18340,26 @@ BUILDIN_FUNC(questinfo)
 	icon = script_getnum(st, 3);
 
 #if PACKETVER >= 20120410
-	if(icon < 0 || (icon > 8 && icon != 9999) || icon == 7)
-		icon = 9999; // Default to nothing if icon id is invalid.
+	switch(icon){
+		case QTYPE_QUEST:
+		case QTYPE_QUEST2:
+		case QTYPE_JOB:
+		case QTYPE_JOB2:
+		case QTYPE_EVENT:
+		case QTYPE_EVENT2:
+		case QTYPE_WARG:
+		case QTYPE_WARG2:
+			// Leave everything as it is
+			break;
+		case QTYPE_NONE:
+		default:
+			// Default to nothing if icon id is invalid.
+			icon = QTYPE_NONE;
+			break;
+	}
 #else
-	if(icon < 0 || icon > 7)
-		icon = 0;
+	if(icon < QTYPE_QUEST || icon > 7) // TODO: check why 7 and not QTYPE_WARG, might be related to icon + 1 below
+		icon = QTYPE_QUEST;
 	else
 		icon = icon + 1;
 #endif
@@ -19292,7 +19011,7 @@ BUILDIN_FUNC(instance_announce) {
 	const char *mes         = script_getstr(st,3);
 	int         flag        = script_getnum(st,4);
 	const char *fontColor   = script_hasdata(st,5) ? script_getstr(st,5) : NULL;
-	int         fontType    = script_hasdata(st,6) ? script_getnum(st,6) : 0x190; // default fontType (FW_NORMAL)
+	int         fontType    = script_hasdata(st,6) ? script_getnum(st,6) : FW_NORMAL; // default fontType
 	int         fontSize    = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
 	int         fontAlign   = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
 	int         fontY       = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
