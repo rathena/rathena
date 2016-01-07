@@ -1,5 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+#include "char.h"
 
 #include <time.h>
 #include <stdarg.h>
@@ -55,9 +56,9 @@ unsigned int save_flag = 0;
 
 #define MAX_STARTITEM 32
 struct startitem {
-	int nameid; //Item ID
-	int amount; //Number of items
-	int pos; //Position (for auto-equip)
+	int nameid;         //Item ID
+	int amount;         //Number of items
+	int pos;            //Position (for auto-equip)
 } start_items[MAX_STARTITEM+1];
 
 // Advanced subnet check [LuzZza]
@@ -980,7 +981,7 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
 		sd->found_char[p.slot] = p.char_id;
 		sd->unban_time[p.slot] = p.unban_time;
 		p.sex = char_mmo_gender(sd, &p, sex[0]);
-		j += char_mmo_char_tobuf(WBUFP(buf, j), &p);
+		j += chclif_mmo_char_tobuf(WBUFP(buf, j), &p);
 
 		// Addon System
 		// store the required info into the session
@@ -1359,8 +1360,9 @@ int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 }
 
 /**
-* Function that check if a given name is valide within config
-* currently more oriented to for newchar creation
+* Function that check if a given name is valid within config
+* currently checking this : min name len, special character, reserved name and check duplicate
+ * @see char_name_option in char_athena.conf 
 * @param inout name : Char name to check
 return e_makechar_error
 */
@@ -1370,22 +1372,22 @@ e_makechar_error char_check_char_name(char * name)
 
 	// check length of character name
 	if( name[0] == '\0' )
-		return ERROR_NAME_LEN; // empty character name
+		return MAKECHAR_NAME_LEN; // empty character name
 
 	 // remove special characthere before continuing check
 	if (remove_control_chars(name))
-		return ERROR_NAME_INVALID_CHAR; // control chars in name
+		return MAKECHAR_NAME_INVALID_CHAR; // control chars in name
 
 	/**
 	 * The client does not allow you to create names with less than 4 characters, however,
 	 * the use of WPE can bypass this, and this fixes the exploit.
 	 **/
 	if( strlen( name ) < 4 )
-		return ERROR_NAME_LEN;
+		return MAKECHAR_NAME_LEN;
 
 	// check for reserved names
 	if( strcmpi(name, charserv_config.wisp_server_name) == 0 )
-		return ERROR_NAME_RESERVED; // nick reserved for internal server messages
+		return MAKECHAR_NAME_RESERVED; // nick reserved for internal server messages
 
 	// Check Authorised letters/symbols in the name of the character
 
@@ -1394,14 +1396,14 @@ e_makechar_error char_check_char_name(char * name)
 		int i;
 		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
 			if( strchr(charserv_config.char_config.char_name_letters, name[i]) == NULL )
-				return ERROR_NAME_INVALID_CHAR;
+				return MAKECHAR_NAME_INVALID_CHAR;
 	}
 	else if( charserv_config.char_config.char_name_option == 2 )
 	{ // letters/symbols in char_name_letters are forbidden
 		int i;
 		for( i = 0; i < NAME_LENGTH && name[i]; i++ )
 			if( strchr(charserv_config.char_config.char_name_letters, name[i]) != NULL )
-				return ERROR_NAME_INVALID_CHAR;
+				return MAKECHAR_NAME_INVALID_CHAR;
 	}
 
 	{ //check duplicate
@@ -1410,17 +1412,17 @@ e_makechar_error char_check_char_name(char * name)
 		if (charserv_config.char_config.name_ignoring_case) {
 			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE BINARY `name` = '%s' LIMIT 1", schema_config.char_db, esc_name)) {
 				Sql_ShowDebug(sql_handle);
-				return ERROR_MK_SQL;
+				return MAKECHAR_DO_SQL;
 			}
 		}
 		else {
 			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` = '%s' LIMIT 1", schema_config.char_db, esc_name)) {
 				Sql_ShowDebug(sql_handle);
-				return ERROR_MK_SQL;
+				return MAKECHAR_DO_SQL;
 			}
 		}
 		if (Sql_NumRows(sql_handle) > 0)
-			return ERROR_NAME_DUPLICATE; // name already exists
+			return MAKECHAR_NAME_DUPLICATE; // name already exists
 	}
 
 	return ERROR_NO_ERROR;
@@ -1461,13 +1463,13 @@ e_makechar_error char_make_new_char_sql(struct char_session_data* sd, char* name
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d'", schema_config.char_db, sd->account_id) )
 		Sql_ShowDebug(sql_handle);
 	if( Sql_NumRows(sql_handle) >= sd->char_slots )
-		return ERROR_MAXLIMIT; // character account limit exceeded //
+		return MAKECHAR_MAX_LIMIT; // character account limit exceeded //
 
 	// check char slot
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `account_id` = '%d' AND `char_num` = '%d' LIMIT 1", schema_config.char_db, sd->account_id, slot) )
 		Sql_ShowDebug(sql_handle);
 	if( Sql_NumRows(sql_handle) > 0 )
-		return ERROR_INVALID_SLOT; // slot already in use
+		return MAKECHAR_INVALID_SLOT; // slot already in use
 
 	// validation success, log result
 	if (charserv_config.log_char) {
@@ -1488,7 +1490,7 @@ e_makechar_error char_make_new_char_sql(struct char_session_data* sd, char* name
 		mapindex_id2name(charserv_config.start_point.map), charserv_config.start_point.x, charserv_config.start_point.y, mapindex_id2name(charserv_config.start_point.map), charserv_config.start_point.x, charserv_config.start_point.y) )
 	{
 		Sql_ShowDebug(sql_handle);
-		return ERROR_MK_SQL; //No, stop the procedure!
+		return MAKECHAR_DO_SQL; //No, stop the procedure!
 	}
 
 	//Retrieve the newly auto-generated char id
@@ -1702,107 +1704,6 @@ int char_count_users(void)
 	return users;
 }
 
-// Writes char data to the buffer in the format used by the client.
-// Used in packets 0x6b (chars info) and 0x6d (new char info)
-// Returns the size
-int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
-{
-	unsigned short offset = 0;
-	uint8* buf;
-
-	if( buffer == NULL || p == NULL )
-		return 0;
-
-	buf = WBUFP(buffer,0);
-	WBUFL(buf,0) = p->char_id;
-	WBUFL(buf,4) = umin(p->base_exp, INT32_MAX);
-	WBUFL(buf,8) = p->zeny;
-	WBUFL(buf,12) = umin(p->job_exp, INT32_MAX);
-	WBUFL(buf,16) = p->job_level;
-	WBUFL(buf,20) = 0; // probably opt1
-	WBUFL(buf,24) = 0; // probably opt2
-	WBUFL(buf,28) = p->option;
-	WBUFL(buf,32) = p->karma;
-	WBUFL(buf,36) = p->manner;
-	WBUFW(buf,40) = umin(p->status_point, INT16_MAX);
-	WBUFL(buf,42) = p->hp;
-	WBUFL(buf,46) = p->max_hp;
-	offset+=4;
-	buf = WBUFP(buffer,offset);
-	WBUFW(buf,46) = min(p->sp, INT16_MAX);
-	WBUFW(buf,48) = min(p->max_sp, INT16_MAX);
-	WBUFW(buf,50) = DEFAULT_WALK_SPEED; // p->speed;
-	WBUFW(buf,52) = p->class_;
-#if PACKETVER >= 20141022
-	WBUFL(buf,54) = p->hair;
-	offset+=2;
-	buf = WBUFP(buffer,offset);
-#else
-	WBUFW(buf,54) = p->hair;
-#endif
-
-	//When the weapon is sent and your option is riding, the client crashes on login!?
-	WBUFW(buf,56) = p->option&(0x20|0x80000|0x100000|0x200000|0x400000|0x800000|0x1000000|0x2000000|0x4000000|0x8000000) ? 0 : p->weapon;
-
-	WBUFW(buf,58) = p->base_level;
-	WBUFW(buf,60) = umin(p->skill_point, INT16_MAX);
-	WBUFW(buf,62) = p->head_bottom;
-	WBUFW(buf,64) = p->shield;
-	WBUFW(buf,66) = p->head_top;
-	WBUFW(buf,68) = p->head_mid;
-	WBUFW(buf,70) = p->hair_color;
-	WBUFW(buf,72) = p->clothes_color;
-	memcpy(WBUFP(buf,74), p->name, NAME_LENGTH);
-	WBUFB(buf,98) = (unsigned char)u16min(p->str, UINT8_MAX);
-	WBUFB(buf,99) = (unsigned char)u16min(p->agi, UINT8_MAX);
-	WBUFB(buf,100) = (unsigned char)u16min(p->vit, UINT8_MAX);
-	WBUFB(buf,101) = (unsigned char)u16min(p->int_, UINT8_MAX);
-	WBUFB(buf,102) = (unsigned char)u16min(p->dex, UINT8_MAX);
-	WBUFB(buf,103) = (unsigned char)u16min(p->luk, UINT8_MAX);
-	WBUFW(buf,104) = p->slot;
-	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
-	offset += 2;
-#if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
-	mapindex_getmapname_ext(mapindex_id2name(p->last_point.map), (char*)WBUFP(buf,108));
-	offset += MAP_NAME_LENGTH_EXT;
-#endif
-#if PACKETVER >= 20100803
-#if PACKETVER > 20130000 && PACKETVER < 20141016 || PACKETVER >= 20150826
-	WBUFL(buf,124) = (p->delete_date?TOL(p->delete_date-time(NULL)):0);
-#else
-	WBUFL(buf,124) = TOL(p->delete_date);
-#endif
-	offset += 4;
-#endif
-#if PACKETVER >= 20110111
-	WBUFL(buf,128) = p->robe;
-	offset += 4;
-#endif
-#if PACKETVER != 20111116 //2011-11-16 wants 136, ask gravity.
-	#if PACKETVER >= 20110928
-		// change slot feature (0 = disabled, otherwise enabled)
-		if( (charserv_config.charmove_config.char_move_enabled)==0 )
-			WBUFL(buf,132) = 0;
-		else if( charserv_config.charmove_config.char_moves_unlimited )
-			WBUFL(buf,132) = 1;
-		else
-			WBUFL(buf,132) = max( 0, (int)p->character_moves );
-		offset += 4;
-	#endif
-	#if PACKETVER >= 20111025
-		WBUFL(buf,136) = ( p->rename > 0 ) ? 1 : 0;  // (0 = disabled, otherwise displays "Add-Ons" sidebar)
-		offset += 4;
-	#endif
-	#if PACKETVER >= 20141016
-		WBUFB(buf,140) = p->sex;// sex - (0 = female, 1 = male, 99 = logindefined)
-		offset += 1;
-	#endif
-#endif
-
-	return 106+offset;
-}
-
-
 int char_married(int pl1, int pl2)
 {
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `partner_id` FROM `%s` WHERE `char_id` = '%d'", schema_config.char_db, pl1) )
@@ -1933,62 +1834,79 @@ void char_auth_ok(int fd, struct char_session_data *sd) {
 	// continues when account data is received...
 }
 
-void char_read_fame_list(void)
+/**
+ * 
+ * @post 
+ */
+/**
+ * Read SQL and fill the famelist by order
+ * @param fametype : which famelist to fetch (bitmask)
+ *            0x1 : Build Blacksmith ranking list
+ *            0x2 : Build Alchemist ranking list
+ *            0x4 : Build Taekwon ranking list
+ */
+void char_read_fame_list(int fametype)
 {
-	int i;
-	char* data;
-	size_t len;
+        int i;
+        char* data;
+        size_t len;
 
-	// Empty ranking lists
-	memset(smith_fame_list, 0, sizeof(smith_fame_list));
-	memset(chemist_fame_list, 0, sizeof(chemist_fame_list));
-	memset(taekwon_fame_list, 0, sizeof(taekwon_fame_list));
-	// Build Blacksmith ranking list
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_BLACKSMITH, JOB_WHITESMITH, JOB_BABY_BLACKSMITH, JOB_MECHANIC, JOB_MECHANIC_T, JOB_BABY_MECHANIC, fame_list_size_smith) )
-		Sql_ShowDebug(sql_handle);
-	for( i = 0; i < fame_list_size_smith && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
-	{
-		// char_id
-		Sql_GetData(sql_handle, 0, &data, NULL);
-		smith_fame_list[i].id = atoi(data);
-		// fame
-		Sql_GetData(sql_handle, 1, &data, &len);
-		smith_fame_list[i].fame = atoi(data);
-		// name
-		Sql_GetData(sql_handle, 2, &data, &len);
-		memcpy(smith_fame_list[i].name, data, zmin(len, NAME_LENGTH));
-	}
-	// Build Alchemist ranking list
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_ALCHEMIST, JOB_CREATOR, JOB_BABY_ALCHEMIST, JOB_GENETIC, JOB_GENETIC_T, JOB_BABY_GENETIC, fame_list_size_chemist) )
-		Sql_ShowDebug(sql_handle);
-	for( i = 0; i < fame_list_size_chemist && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
-	{
-		// char_id
-		Sql_GetData(sql_handle, 0, &data, NULL);
-		chemist_fame_list[i].id = atoi(data);
-		// fame
-		Sql_GetData(sql_handle, 1, &data, &len);
-		chemist_fame_list[i].fame = atoi(data);
-		// name
-		Sql_GetData(sql_handle, 2, &data, &len);
-		memcpy(chemist_fame_list[i].name, data, zmin(len, NAME_LENGTH));
-	}
-	// Build Taekwon ranking list
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_TAEKWON, fame_list_size_taekwon) )
-		Sql_ShowDebug(sql_handle);
-	for( i = 0; i < fame_list_size_taekwon && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
-	{
-		// char_id
-		Sql_GetData(sql_handle, 0, &data, NULL);
-		taekwon_fame_list[i].id = atoi(data);
-		// fame
-		Sql_GetData(sql_handle, 1, &data, &len);
-		taekwon_fame_list[i].fame = atoi(data);
-		// name
-		Sql_GetData(sql_handle, 2, &data, &len);
-		memcpy(taekwon_fame_list[i].name, data, zmin(len, NAME_LENGTH));
-	}
-	Sql_FreeResult(sql_handle);
+        if(fametype&0x1){
+            memset(smith_fame_list, 0, sizeof(smith_fame_list));
+            // Build Blacksmith ranking list
+            if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_BLACKSMITH, JOB_WHITESMITH, JOB_BABY_BLACKSMITH, JOB_MECHANIC, JOB_MECHANIC_T, JOB_BABY_MECHANIC, fame_list_size_smith) )
+                    Sql_ShowDebug(sql_handle);
+            for( i = 0; i < fame_list_size_smith && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
+            {
+                    // char_id
+                    Sql_GetData(sql_handle, 0, &data, NULL);
+                    smith_fame_list[i].id = atoi(data);
+                    // fame
+                    Sql_GetData(sql_handle, 1, &data, &len);
+                    smith_fame_list[i].fame = atoi(data);
+                    // name
+                    Sql_GetData(sql_handle, 2, &data, &len);
+                    memcpy(smith_fame_list[i].name, data, zmin(len, NAME_LENGTH));
+            }
+        }
+        if(fametype&0x2){
+            // Build Alchemist ranking list
+            memset(chemist_fame_list, 0, sizeof(chemist_fame_list));
+            if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_ALCHEMIST, JOB_CREATOR, JOB_BABY_ALCHEMIST, JOB_GENETIC, JOB_GENETIC_T, JOB_BABY_GENETIC, fame_list_size_chemist) )
+                    Sql_ShowDebug(sql_handle);
+            for( i = 0; i < fame_list_size_chemist && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
+            {
+                    // char_id
+                    Sql_GetData(sql_handle, 0, &data, NULL);
+                    chemist_fame_list[i].id = atoi(data);
+                    // fame
+                    Sql_GetData(sql_handle, 1, &data, &len);
+                    chemist_fame_list[i].fame = atoi(data);
+                    // name
+                    Sql_GetData(sql_handle, 2, &data, &len);
+                    memcpy(chemist_fame_list[i].name, data, zmin(len, NAME_LENGTH));
+            }
+        }
+        if(fametype&0x4){
+            // Build Taekwon ranking list
+            memset(taekwon_fame_list, 0, sizeof(taekwon_fame_list));
+            if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_TAEKWON, fame_list_size_taekwon) )
+                    Sql_ShowDebug(sql_handle);
+            for( i = 0; i < fame_list_size_taekwon && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
+            {
+                    // char_id
+                    Sql_GetData(sql_handle, 0, &data, NULL);
+                    taekwon_fame_list[i].id = atoi(data);
+                    // fame
+                    Sql_GetData(sql_handle, 1, &data, &len);
+                    taekwon_fame_list[i].fame = atoi(data);
+                    // name
+                    Sql_GetData(sql_handle, 2, &data, &len);
+                    memcpy(taekwon_fame_list[i].name, data, zmin(len, NAME_LENGTH));
+            }
+        }
+        
+        Sql_FreeResult(sql_handle);
 }
 
 //Loads a character's name and stores it in the buffer given (must be NAME_LENGTH in size)
@@ -2980,7 +2898,7 @@ int do_init(int argc, char **argv)
 	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	online_char_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	char_mmo_sql_init();
-	char_read_fame_list(); //Read fame lists.
+	char_read_fame_list(0x7); //Read fame lists.
 
 	if ((naddr_ != 0) && (!(charserv_config.login_ip) || !(charserv_config.char_ip) ))
 	{

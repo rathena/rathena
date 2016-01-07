@@ -14,7 +14,10 @@
 extern "C" {
 #endif
 
-void chclif_moveCharSlotReply( int fd, struct char_session_data* sd, unsigned short index, short reason );
+int chclif_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);
+
+typedef enum e_charslot_reason { MV_SLOT_SUCCESS=0, MV_SLOT_FAIL=1 } e_charslot_reason_t;
+void chclif_moveCharSlotReply( int fd, struct char_session_data* sd, unsigned int moveleft, e_charslot_reason_t reason );
 int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd);
 #if PACKETVER_SUPPORTS_PINCODE
 void chclif_pincode_sendstate( int fd, struct char_session_data* sd, enum pincode_state state );

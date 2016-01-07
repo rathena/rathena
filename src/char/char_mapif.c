@@ -922,11 +922,12 @@ int chmapif_parse_setcharonline(int fd, int id){
  * @param fd: wich fd to parse from
  * @param id: wich map_serv id
  * @return : 0 not enough data received, 1 success
+ * //@TODO extend with fametype=RFIFOB(fd,2)); (lighta)
  */
 int chmapif_parse_reqfamelist(int fd){
 	if (RFIFOREST(fd) < 2)
 		return 0;
-	char_read_fame_list();
+	char_read_fame_list(0x7);
 	chmapif_send_fame_list(-1);
 	RFIFOSKIP(fd,2);
 	return 1;

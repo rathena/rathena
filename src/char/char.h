@@ -30,15 +30,15 @@ enum {
 };
 
 typedef enum e_makechar_error {
-	ERROR_MK_SQL = -255,
-	ERROR_INVALID_SLOT,
-	ERROR_MAXLIMIT,
-	ERROR_NAME_RESERVED,
-	ERROR_NAME_LEN,
-	ERROR_NAME_INVALID_CHAR,
-	ERROR_NAME_DUPLICATE,
-	ERROR_CREATION_DISABLE,
-
+	MAKECHAR_DO_SQL = -255,
+	MAKECHAR_INVALID_SLOT,
+	MAKECHAR_MAX_LIMIT,
+	MAKECHAR_NAME_RESERVED,
+	MAKECHAR_NAME_LEN,
+	MAKECHAR_NAME_INVALID_CHAR,
+	MAKECHAR_NAME_DUPLICATE,
+	MAKECHAR_CREATION_DISABLE,
+        //add others errors here
 	ERROR_NO_ERROR = 0,
 } e_makechar_error;
 
@@ -116,14 +116,14 @@ struct CharMove_Config {
 	bool char_moves_unlimited;
 };
 struct Char_Config {
-	int char_per_account; //Maximum chars per account (default unlimited) [Sirius]
-	int char_del_level; //From which level u can delete character [Lupus]
-	int char_del_delay; //minimum delay before effectly do the deletion
-	bool name_ignoring_case; // Allow or not identical name for characters but with a different case by [Yor]
-	char unknown_char_name[NAME_LENGTH]; // Name to use when the requested name cannot be determined
-	char char_name_letters[1024]; // list of letters/symbols allowed (or not) in a character name. by [Yor]
-	int char_name_option; // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
-	int char_del_option;	// Character deletion type, email = 1, birthdate = 2 (default)
+	int char_per_account;                   //Maximum chars per account (default unlimited) [Sirius]
+	int char_del_level;                     //From which level u can delete character [Lupus]
+	int char_del_delay;                     //minimum delay before effectly do the deletion
+	bool name_ignoring_case;                // Allow or not identical name for characters but with a different case by [Yor]
+	char unknown_char_name[NAME_LENGTH];    // Name to use when the requested name cannot be determined
+	char char_name_letters[1024];           // list of letters/symbols allowed (or not) in a character name. by [Yor]
+	int char_name_option;                   // Option to know which letters/symbols are authorised in the name of a character (0: all, 1: only those in char_name_letters, 2: all EXCEPT those in char_name_letters) by [Yor]
+	int char_del_option;                    // Character deletion type, email = 1, birthdate = 2 (default)
 };
 
 #define TRIM_CHARS "\255\xA0\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
@@ -261,7 +261,7 @@ void char_disconnect_player(uint32 account_id);
 int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
 
 int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charstatus *p, char sex);
-int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);
+
 int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p);
 int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything);
 int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf);
@@ -286,7 +286,7 @@ void char_pincode_decrypt( uint32 userSeed, char* pin );
 int char_pincode_compare( int fd, struct char_session_data* sd, char* pin );
 void char_auth_ok(int fd, struct char_session_data *sd);
 void char_set_charselect(uint32 account_id);
-void char_read_fame_list(void);
+void char_read_fame_list(int fametype);
 
 e_makechar_error char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style, uint32 *out_char_id);
 
