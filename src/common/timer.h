@@ -4,8 +4,13 @@
 #ifndef	_TIMER_H_
 #define	_TIMER_H_
 
-#include "cbasetypes.h"
 #include <time.h>
+    
+#include "cbasetypes.h"
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
 
 #define DIFF_TICK(a,b) ((int)((a)-(b)))
 
@@ -60,4 +65,8 @@ int do_timer(unsigned int tick);
 void timer_init(void);
 void timer_final(void);
 
+#ifdef	__cplusplus
+}
+#endif
+    
 #endif /* _TIMER_H_ */

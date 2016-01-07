@@ -8,7 +8,14 @@
 #ifdef DEBUG
 	#include <signal.h>
 #endif
+#include "cbasetypes.h" //everyone should have this
 
+#define UNKNOWN_VERSION '\x02'
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
+    
 extern int arg_c;
 extern char **arg_v;
 
@@ -16,7 +23,6 @@ extern char **arg_v;
 	extern int buildbotflag;
 #endif
 
-#define UNKNOWN_VERSION '\x02'
 
 /// @see E_CORE_ST
 extern int runflag;
@@ -53,4 +59,8 @@ enum E_CORE_ST
 /// If NULL, runflag is set to CORE_ST_STOP instead.
 extern void (*shutdown_callback)(void);
 
+#ifdef	__cplusplus
+}
+#endif
+    
 #endif /* _CORE_H_ */

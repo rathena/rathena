@@ -4,6 +4,9 @@
 #ifndef _rA_MUTEX_H_
 #define _rA_MUTEX_H_
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
 
 typedef struct ramutex *ramutex; // Mutex
 typedef struct racond *racond; // Condition Var
@@ -88,5 +91,8 @@ void racond_signal( racond c );
  */ 
 void racond_broadcast( racond c );
 
-
+#ifdef	__cplusplus
+}
+#endif
+    
 #endif

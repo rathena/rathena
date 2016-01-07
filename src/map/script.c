@@ -271,7 +271,7 @@ extern script_function buildin_func[];
  * MySQL Query Slave
  **/
 static SPIN_LOCK queryThreadLock;
-static rAthread queryThread = NULL;
+static rAthreadprt_t queryThread = NULL;
 static ramutex	queryThreadMutex = NULL;
 static racond	queryThreadCond = NULL;
 static volatile int32 queryThreadTerminate = 0;

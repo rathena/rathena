@@ -51,7 +51,7 @@ struct ra_align(16) node{
 
 // The Pointer to this struct is the base address of the segment itself.
 struct pool_segment{
-	mempool	pool; // pool, this segment belongs to
+	mempoolprt_t	pool; // pool, this segment belongs to
 	struct 	pool_segment *next;
 	int64	num_nodes_total;	
 	int64	num_bytes;
@@ -89,24 +89,24 @@ struct mempool{
 	volatile int64	num_realloc_events; 	// Number of reallocations done. (allocate additional nodes)
 
 	// list (used for global management such as allocator..)
-	struct mempool *next;
+	mempoolprt_t next;
 } ra_align(8); // Dont touch the alignment, otherwise interlocked functions are broken ..
 
 
 /// 
 // Implementation:
 //
-static void segment_allocate_add(mempool p,  uint64 count);
+static void segment_allocate_add(mempoolprt_t p,  uint64 count);
 
 static SPIN_LOCK l_mempoolListLock;
-static mempool 	l_mempoolList = NULL;
-static rAthread l_async_thread = NULL;
+static mempoolprt_t 	l_mempoolList = NULL;
+static rAthreadprt_t l_async_thread = NULL;
 static ramutex	l_async_lock = NULL;
 static racond	l_async_cond = NULL;
 static volatile int32 l_async_terminate = 0;
 
-static void *mempool_async_allocator(void *x){
-	mempool p;
+static void* mempool_async_allocator(void *x){
+	mempoolprt_t p;
 	
 	
 	while(1){
@@ -167,7 +167,7 @@ void mempool_init(){
 
 
 void mempool_final(){
-	mempool p, pn;
+	mempoolprt_t p, pn;
 	
 	if( rand()%2 + 1 )
 		return;
@@ -205,7 +205,7 @@ void mempool_final(){
 }//end: mempool_final()
 
 
-static void segment_allocate_add(mempool p,  uint64 count){
+static void segment_allocate_add(mempoolprt_t p,  uint64 count){
 	
 	// Required Memory:
 	//	sz( segment ) 
@@ -303,7 +303,7 @@ static void segment_allocate_add(mempool p,  uint64 count){
 }//end: segment_allocate_add()
 
 
-mempool mempool_create(const char *name,
+mempoolprt_t mempool_create(const char *name,
 						uint64 elem_size,
 						uint64 initial_count,
 						uint64 realloc_count,
@@ -311,11 +311,11 @@ mempool mempool_create(const char *name,
 						memPoolOnNodeDeallocationProc onNodeDealloc){
 	//..
 	uint64 realloc_thresh;
-	mempool pool;
-	pool = (mempool)aCalloc( 1,  sizeof(struct mempool) );
+	mempoolprt_t pool;
+	pool = (mempoolprt_t)aCalloc( 1,  sizeof(mempool_t) );
 	
 	if(pool == NULL){
-		ShowFatalError("mempool_create: Failed to allocate %u bytes memory.\n", sizeof(struct mempool) );
+		ShowFatalError("mempool_create: Failed to allocate %u bytes memory.\n", sizeof(mempool_t) );
 		exit(EXIT_FAILURE);		
 	}
 	
@@ -369,10 +369,10 @@ mempool mempool_create(const char *name,
 }//end: mempool_create()
 
 
-void mempool_destroy(mempool p){
+void mempool_destroy(mempoolprt_t p){
 	struct  pool_segment *seg, *segnext;
 	struct	node *niter;
-	mempool piter, pprev;
+	mempoolprt_t piter, pprev;
 	char *ptr;
 	int64 i;
 
@@ -472,7 +472,7 @@ void mempool_destroy(mempool p){
 }//end: mempool_destroy()
 
 
-void *mempool_node_get(mempool p){
+void *mempool_node_get(mempoolprt_t p){
 	struct node *node;
 	int64 num_used;
 	
@@ -511,7 +511,7 @@ void *mempool_node_get(mempool p){
 }//end: mempool_node_get()
 
 
-void mempool_node_put(mempool p, void *data){
+void mempool_node_put(mempoolprt_t p, void *data){
 	struct node *node;
 	
 	node = DATA_TO_NODE(data);
@@ -544,7 +544,7 @@ void mempool_node_put(mempool p, void *data){
 }//end: mempool_node_put()
 
 
-mempool_stats mempool_get_stats(mempool pool){
+mempool_stats mempool_get_stats(mempoolprt_t pool){
 	mempool_stats stats;
 	
 	// initialize all with zeros

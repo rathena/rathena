@@ -1,14 +1,6 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "cbasetypes.h"
-#include "mmo.h"
-#include "timer.h"
-#include "malloc.h"
-#include "showmsg.h"
-#include "strlib.h"
-#include "socket.h"
-
 #include <stdlib.h>
 
 #ifdef WIN32
@@ -33,6 +25,14 @@
 	#include <sys/resource.h>
 	#endif
 #endif
+
+#include "cbasetypes.h"
+#include "mmo.h"
+#include "timer.h"
+#include "malloc.h"
+#include "showmsg.h"
+#include "strlib.h"
+#include "socket.h"
 
 /////////////////////////////////////////////////////////////////////
 #if defined(WIN32)
