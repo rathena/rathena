@@ -8105,13 +8105,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			sp1 = sstatus->sp;
 			sp2 = tstatus->sp;
 #ifdef	RENEWAL
-				sp1 = sp1 / 2;
-				sp2 = sp2 / 2;
-				if( tsc && tsc->data[SC_EXTREMITYFIST2] )
-					sp1 = tstatus->sp;
+			sp1 = sp1 / 2;
+			sp2 = sp2 / 2;
+			if (tsc && tsc->data[SC_EXTREMITYFIST2])
+				sp1 = tstatus->sp;
 #endif
-				if (tsc->data[SC_NORECOVER_STATE])
-					sp1 = tstatus->sp;
+			if (tsc && tsc->data[SC_NORECOVER_STATE])
+				sp1 = tstatus->sp;
 			status_set_sp(src, sp2, 3);
 			status_set_sp(bl, sp1, 3);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
