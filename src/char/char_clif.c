@@ -1,6 +1,9 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+//sys and 3rdp
+#include <stdlib.h>
+//ext
 #include "../common/mmo.h"
 #include "../common/socket.h"
 #include "../common/sql.h"
@@ -11,35 +14,144 @@
 #include "../common/strlib.h"
 #include "../common/utils.h"
 #include "../common/timer.h"
+//prj
 #include "inter.h"
 #include "char.h"
 #include "char_logif.h"
 #include "char_mapif.h"
-#include "char_clif.h"
 
-#include <stdlib.h>
+#include "char_clif.h" //@TODO should be in top
 
 #if PACKETVER_SUPPORTS_PINCODE
 bool pincode_allowed( char* pincode );
 #endif
 
-//------------------------------------------------
-//Add On system
-//------------------------------------------------
-// reason
-// 0: success
-// 1: failed
-void chclif_moveCharSlotReply( int fd, struct char_session_data* sd, unsigned short index, short reason ){
+/**
+ * Writes char data to the buffer in the format used by the client.
+ *  Used in packets 0x6b (chars info) and 0x6d (new char info)
+ * @param buffer : Buffer to fill, (must not be null)
+ * @param p : mmo_charstatus to extract info
+ * @return size of filled buffer
+ */
+int chclif_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
+{
+	unsigned short offset = 0;
+	uint8* buf;
+
+	if( buffer == NULL || p == NULL )
+		return 0;
+
+	buf = WBUFP(buffer,0);
+	WBUFL(buf,0) = p->char_id;
+	WBUFL(buf,4) = umin(p->base_exp, INT32_MAX);
+	WBUFL(buf,8) = p->zeny;
+	WBUFL(buf,12) = umin(p->job_exp, INT32_MAX);
+	WBUFL(buf,16) = p->job_level;
+	WBUFL(buf,20) = 0; // probably opt1
+	WBUFL(buf,24) = 0; // probably opt2
+	WBUFL(buf,28) = p->option;
+	WBUFL(buf,32) = p->karma;
+	WBUFL(buf,36) = p->manner;
+	WBUFW(buf,40) = umin(p->status_point, INT16_MAX);
+	WBUFL(buf,42) = p->hp;
+	WBUFL(buf,46) = p->max_hp;
+	offset+=4;
+	buf = WBUFP(buffer,offset);
+	WBUFW(buf,46) = min(p->sp, INT16_MAX);
+	WBUFW(buf,48) = min(p->max_sp, INT16_MAX);
+	WBUFW(buf,50) = DEFAULT_WALK_SPEED; // p->speed;
+	WBUFW(buf,52) = p->class_;
+#if PACKETVER >= 20141022
+	WBUFL(buf,54) = p->hair;
+	offset+=2;
+	buf = WBUFP(buffer,offset);
+#else
+	WBUFW(buf,54) = p->hair;
+#endif
+
+	//When the weapon is sent and your option is riding, the client crashes on login!?
+	WBUFW(buf,56) = p->option&(0x20|0x80000|0x100000|0x200000|0x400000|0x800000|0x1000000|0x2000000|0x4000000|0x8000000) ? 0 : p->weapon;
+
+	WBUFW(buf,58) = p->base_level;
+	WBUFW(buf,60) = umin(p->skill_point, INT16_MAX);
+	WBUFW(buf,62) = p->head_bottom;
+	WBUFW(buf,64) = p->shield;
+	WBUFW(buf,66) = p->head_top;
+	WBUFW(buf,68) = p->head_mid;
+	WBUFW(buf,70) = p->hair_color;
+	WBUFW(buf,72) = p->clothes_color;
+	memcpy(WBUFP(buf,74), p->name, NAME_LENGTH);
+	WBUFB(buf,98) = (unsigned char)u16min(p->str, UINT8_MAX);
+	WBUFB(buf,99) = (unsigned char)u16min(p->agi, UINT8_MAX);
+	WBUFB(buf,100) = (unsigned char)u16min(p->vit, UINT8_MAX);
+	WBUFB(buf,101) = (unsigned char)u16min(p->int_, UINT8_MAX);
+	WBUFB(buf,102) = (unsigned char)u16min(p->dex, UINT8_MAX);
+	WBUFB(buf,103) = (unsigned char)u16min(p->luk, UINT8_MAX);
+	WBUFW(buf,104) = p->slot;
+	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
+	offset += 2;
+#if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
+	mapindex_getmapname_ext(mapindex_id2name(p->last_point.map), (char*)WBUFP(buf,108));
+	offset += MAP_NAME_LENGTH_EXT;
+#endif
+#if PACKETVER >= 20100803
+#if PACKETVER > 20130000 && PACKETVER < 20141016 || PACKETVER >= 20150826
+	WBUFL(buf,124) = (p->delete_date?TOL(p->delete_date-time(NULL)):0);
+#else
+	WBUFL(buf,124) = TOL(p->delete_date);
+#endif
+	offset += 4;
+#endif
+#if PACKETVER >= 20110111
+	WBUFL(buf,128) = p->robe;
+	offset += 4;
+#endif
+#if PACKETVER != 20111116 //2011-11-16 wants 136, ask gravity.
+	#if PACKETVER >= 20110928
+		// change slot feature (0 = disabled, otherwise enabled)
+		if( (charserv_config.charmove_config.char_move_enabled)==0 )
+			WBUFL(buf,132) = 0;
+		else if( charserv_config.charmove_config.char_moves_unlimited )
+			WBUFL(buf,132) = 1;
+		else
+			WBUFL(buf,132) = max( 0, (int)p->character_moves );
+		offset += 4;
+	#endif
+	#if PACKETVER >= 20111025
+		WBUFL(buf,136) = ( p->rename > 0 ) ? 1 : 0;  // (0 = disabled, otherwise displays "Add-Ons" sidebar)
+		offset += 4;
+	#endif
+	#if PACKETVER >= 20141016
+		WBUFB(buf,140) = p->sex;// sex - (0 = female, 1 = male, 99 = logindefined)
+		offset += 1;
+	#endif
+#endif
+
+	return 106+offset;
+}
+
+
+/**
+ * 
+ * @param fd : Client file descriptor
+ * @param sd : char session of client
+ * @param moveleft : number of moves left for char
+ * @param reason : 0: success, 1: failed
+ */
+void chclif_moveCharSlotReply( int fd, struct char_session_data* sd, unsigned int moveleft, e_charslot_reason_t reason ){
 	WFIFOHEAD(fd,8);
 	WFIFOW(fd,0) = 0x8d5;
-	WFIFOW(fd,2) = 8;
+	WFIFOW(fd,2) = 8;           //len
 	WFIFOW(fd,4) = reason;
-	WFIFOW(fd,6) = sd->char_moves[index];
+	WFIFOW(fd,6) = moveleft;
 	WFIFOSET(fd,8);
 }
 
-/*
+/**
  * Client is requesting to move a charslot
+ * @param fd : Client file descriptor id
+ * @param sd : Client char_session_data
+ * @return 0=not enough data to parse, 1=all other even if failed..
  */
 int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 	uint16 from, to;
@@ -54,13 +166,13 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 	// Have we changed to often or is it disabled?
 	if( (charserv_config.charmove_config.char_move_enabled)==0
 	|| ( (charserv_config.charmove_config.char_moves_unlimited)==0 && sd->char_moves[from] <= 0 ) ){
-		chclif_moveCharSlotReply( fd, sd, from, 1 );
+		chclif_moveCharSlotReply( fd, sd, sd->char_moves[from], MV_SLOT_FAIL );
 		return 1;
 	}
 
 	// We don't even have a character on the chosen slot?
 	if( sd->found_char[from] <= 0 || to >= sd->char_slots ){
-		chclif_moveCharSlotReply( fd, sd, from, 1 );
+		chclif_moveCharSlotReply( fd, sd, sd->char_moves[from], MV_SLOT_FAIL );
 		return 1;
 	}
 
@@ -73,37 +185,41 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 				|| SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_num`='%d' WHERE `char_id` = '%d'", schema_config.char_db, from, sd->found_char[to] )
 				|| SQL_ERROR == Sql_QueryStr(sql_handle, "COMMIT")
 				){
-				chclif_moveCharSlotReply( fd, sd, from, 1 );
+				chclif_moveCharSlotReply( fd, sd, sd->char_moves[from], MV_SLOT_FAIL );
 				Sql_ShowDebug(sql_handle);
 				Sql_QueryStr(sql_handle,"ROLLBACK");
 				return 1;
 			}
 		}else{
 			// Admin doesn't allow us to
-			chclif_moveCharSlotReply( fd, sd, from, 1 );
+			chclif_moveCharSlotReply( fd, sd, sd->char_moves[from], MV_SLOT_FAIL );
 			return 1;
 		}
 	}else if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_num`='%d' WHERE `char_id`='%d'", schema_config.char_db, to, sd->found_char[from] ) ){
 		Sql_ShowDebug(sql_handle);
-		chclif_moveCharSlotReply( fd, sd, from, 1 );
+		chclif_moveCharSlotReply( fd, sd, sd->char_moves[from], MV_SLOT_FAIL );
 		return 1;
 	}
 
 	if( (charserv_config.charmove_config.char_moves_unlimited)==0 ){
-		sd->char_moves[from]--;
+		if(sd->char_moves[from] > 0)  //avoid loop
+			sd->char_moves[from]--;
 		Sql_Query(sql_handle, "UPDATE `%s` SET `moves`='%d' WHERE `char_id`='%d'", schema_config.char_db, sd->char_moves[from], sd->found_char[from] );
 	}
 
 	// We successfully moved the char - time to notify the client
-	chclif_moveCharSlotReply( fd, sd, from, 0 );
+	chclif_moveCharSlotReply( fd, sd, sd->char_moves[from], MV_SLOT_SUCCESS );
 	chclif_mmo_char_send(fd, sd);
 	return 1;
 }
 
 #if PACKETVER_SUPPORTS_PINCODE
-/* pincode_sendstate transmist the pincode state to client
+/**
+* pincode_sendstate transmist the pincode state to client
  * S 08b9 <seed>.L <aid>.L <state>.W (HC_SECOND_PASSWD_LOGIN)
- * state :
+ * @param fd : Client file descriptor id
+ * @param sd : Client session data
+ * @param state
  *   0 = disabled / pin is correct
  *   1 = ask for pin - client sends 0x8b8
  *   2 = create new pin - client sends 0x8ba
@@ -113,7 +229,7 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
  *   6 = client shows msgstr(1897) Unable to use your KSSN number
  *   7 = char select window shows a button - client sends 0x8c5
  *   8 = pincode was incorrect
-*/
+ */
 void chclif_pincode_sendstate( int fd, struct char_session_data* sd, enum pincode_state state ){
 	WFIFOHEAD(fd, 12);
 	WFIFOW(fd, 0) = 0x8b9;
@@ -123,8 +239,11 @@ void chclif_pincode_sendstate( int fd, struct char_session_data* sd, enum pincod
 	WFIFOSET(fd,12);
 }
 
-/*
+/**
  * Client just entering charserv from login, send him pincode confirmation
+ * @param fd : Client file descriptor id
+ * @param sd : Client session data
+ * @return 0=not enough data to parse, 1=ok
  */
 int chclif_parse_reqpincode_window(int fd, struct char_session_data* sd){
 	if( RFIFOREST(fd) < 6 )
@@ -140,8 +259,11 @@ int chclif_parse_reqpincode_window(int fd, struct char_session_data* sd){
 	return 1;
 }
 
-/*
+/**
  * Client as anwsered pincode questionning, checking if valid anwser
+ * @param fd : Client file descriptor id
+ * @param sd : Client session data
+ * @return 0=not enough data to parse, 1=ok
  */
 int chclif_parse_pincode_check( int fd, struct char_session_data* sd ){
 	char pin[PINCODE_LENGTH+1];
@@ -162,8 +284,10 @@ int chclif_parse_pincode_check( int fd, struct char_session_data* sd ){
 	return 1;
 }
 
-/*
+/**
  * Helper function to check if a new pincode contains illegal characters or combinations
+ * @param pincode : string of pincode to check, must not be null
+ * @return true[valid pincode, false=invalid pincode
  */
 bool pincode_allowed( char* pincode ){
 	int i;
@@ -174,7 +298,6 @@ bool pincode_allowed( char* pincode ){
 	// Sanity check for bots to prevent errors
 	for( i = 0; i < PINCODE_LENGTH; i++ ){
 		c = pincode[i];
-
 		if( c < '0' || c > '9' ){
 			return false;
 		}
@@ -188,7 +311,6 @@ bool pincode_allowed( char* pincode ){
 		for( i = 0; i < PINCODE_LENGTH; i++ ){
 			compare[i] = c;
 		}
-
 		if( strncmp( pincode, compare, PINCODE_LENGTH + 1 ) == 0 ){
 			return false;
 		}
@@ -232,15 +354,19 @@ bool pincode_allowed( char* pincode ){
 	return true;
 }
 
-/*
+/**
  * Client request to change pincode
+ * @param fd : Client file descriptor id
+ * @param sd : Client session data
+ * @return 0=not enough to parse, 1=ok
  */
 int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 	if( RFIFOREST(fd) < 14 )
 		return 0;
-	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
+	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ){
+		RFIFOSKIP(fd,14); //flush the rest
 		return 1;
-	else {
+	} else {
 		char oldpin[PINCODE_LENGTH+1];
 		char newpin[PINCODE_LENGTH+1];
 		
@@ -268,16 +394,20 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 	return 1;
 }
 
-/*
- * activate PIN system and set first PIN
+/**
+ * Activate PIN system and set first PIN
+ * @param fd : Client file descriptor id
+ * @param sd : Client session data
+ * @return 0=not enough to parse, 1=ok
  */
 int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 	if( RFIFOREST(fd) < 10 )
 		return 0;
 
-	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id )
+	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
+		RFIFOSKIP(fd,10); //flush the rest
 		return 1;
-	else {
+	} else {
 		char newpin[PINCODE_LENGTH+1];
 		memset(newpin,0,PINCODE_LENGTH+1);
 		strncpy( newpin, (char*)RFIFOP(fd,6), PINCODE_LENGTH );
@@ -298,9 +428,12 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 }
 #endif
 
-//----------------------------------------
-// Tell client how many pages, kRO sends 17 (Yommy)
-//----------------------------------------
+/**
+ * Tell client how many pages to load for charlist
+ *  kRO sends 17 atm (Yommy)
+ * @param fd
+ * @param sd
+ */
 void chclif_charlist_notify( int fd, struct char_session_data* sd ){
 	WFIFOHEAD(fd, 6);
 	WFIFOW(fd, 0) = 0x9a0;
@@ -309,9 +442,12 @@ void chclif_charlist_notify( int fd, struct char_session_data* sd ){
 	WFIFOSET(fd,6);
 }
 
-//----------------------------------------
-// Function to send characters to a player
-//----------------------------------------
+/**
+ * Function to send characters to a player
+ * @param fd
+ * @param sd
+ * @return 
+ */
 int chclif_mmo_send006b(int fd, struct char_session_data* sd){
 	int j, offset = 0;
 	bool newvers = (sd->version >= date2version(20100413) );
@@ -336,9 +472,11 @@ int chclif_mmo_send006b(int fd, struct char_session_data* sd){
 	return 0;
 }
 
-//----------------------------------------
-// Notify client about charselect window data [Ind]
-//----------------------------------------
+/**
+ * Notify client about charselect window data [Ind]
+ * @param fd
+ * @param sd
+ */
 void chclif_mmo_send082d(int fd, struct char_session_data* sd) {
 	if (charserv_config.save_log)
 		ShowInfo("Loading Char Data ("CL_BOLD"%d"CL_RESET")\n",sd->account_id);
@@ -354,6 +492,11 @@ void chclif_mmo_send082d(int fd, struct char_session_data* sd) {
 	WFIFOSET(fd,29);
 }
 
+/**
+ * 
+ * @param fd
+ * @param sd
+ */
 void chclif_mmo_send099d(int fd, struct char_session_data *sd) {
 	WFIFOHEAD(fd,4 + (MAX_CHARS*MAX_CHAR_BUF));
 	WFIFOW(fd,0) = 0x99d;
@@ -361,9 +504,10 @@ void chclif_mmo_send099d(int fd, struct char_session_data *sd) {
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
-
-/*
+/**
  * Function to choose wich kind of charlist to send to client depending on his version
+ * @param fd
+ * @param sd
  */
 void chclif_mmo_char_send(int fd, struct char_session_data* sd){
 	ShowInfo("sd->version = %d\n",sd->version);
@@ -378,13 +522,14 @@ void chclif_mmo_char_send(int fd, struct char_session_data* sd){
  		chclif_block_character(fd,sd);
 }
 
-/*
- * Transmit auth result to client
- * <result>.B ()
- * result :
- *  1 : Server closed
- *  2 : Someone has already logged in with this id
- *  8 : already online
+/**
+ * Transmit authentification result to client
+ *  <result>.B ()
+ * @param fd
+ * @param result
+ *    1 : Server closed
+ *    2 : Someone has already logged in with this id
+ *    8 : already online
  */
 void chclif_send_auth_result(int fd,char result){
 	WFIFOHEAD(fd,3);
@@ -393,32 +538,42 @@ void chclif_send_auth_result(int fd,char result){
 	WFIFOSET(fd,3);
 }
 
-/// @param result
-/// 0 (0x718): An unknown error has occurred.
-/// 1: none/success
-/// 3 (0x719): A database error occurred.
-/// 4 (0x71a): To delete a character you must withdraw from the guild.
-/// 5 (0x71b): To delete a character you must withdraw from the party.
-/// Any (0x718): An unknown error has occurred.
-/// HC: <0828>.W <char id>.L <Msg:0-5>.L <deleteDate>.L
+/**
+ * Inform client about the result of a deletion request
+ *   HC: <0828>.W <char id>.L <Msg:0-5>.L <deleteDate>.L
+ * @param fd : Client file descriptor id
+ * @param char_id : Client char_id
+ * @param result
+ *          0 (0x718): An unknown error has occurred.
+ *          1: none/success
+ *          3 (0x719): A database error occurred.
+ *          4 (0x71a): To delete a character you must withdraw from the guild.
+ *          5 (0x71b): To delete a character you must withdraw from the party.
+ *          Any (0x718): An unknown error has occurred.
+ * @param delete_date : Date scheduled for deletion
+ */
 void chclif_char_delete2_ack(int fd, uint32 char_id, uint32 result, time_t delete_date) {
 	WFIFOHEAD(fd,14);
 	WFIFOW(fd,0) = 0x828;
 	WFIFOL(fd,2) = char_id;
 	WFIFOL(fd,6) = result;
-	WFIFOL(fd,10) = TOL(delete_date-time(NULL));
+	WFIFOL(fd,10) = TOL(delete_date-time(NULL)); //time remaining
 	WFIFOSET(fd,14);
 }
 
-/// @param result
-/// 0 (0x718): An unknown error has occurred.
-/// 1: none/success
-/// 2 (0x71c): Due to system settings can not be deleted.
-/// 3 (0x719): A database error occurred.
-/// 4 (0x71d): Deleting not yet possible time.
-/// 5 (0x71e): Date of birth do not match.
-/// Any (0x718): An unknown error has occurred.
-/// HC: <082a>.W <char id>.L <Msg:0-5>.L
+/**
+ * HC: <082a>.W <char id>.L <Msg:0-5>.L
+ * @param fd
+ * @param char_id
+ * @param result
+ *           0 (0x718): An unknown error has occurred.
+ *           1: none/success
+ *           2 (0x71c): Due to system settings can not be deleted.
+ *           3 (0x719): A database error occurred.
+ *           4 (0x71d): Deleting not yet possible time.
+ *           5 (0x71e): Date of birth do not match.
+ *           Any (0x718): An unknown error has occurred.
+ */
 void chclif_char_delete2_accept_ack(int fd, uint32 char_id, uint32 result) {
 	if(result == 1 ){
 		struct char_session_data* sd;
@@ -436,11 +591,15 @@ void chclif_char_delete2_accept_ack(int fd, uint32 char_id, uint32 result) {
 	WFIFOSET(fd,10);
 }
 
-/// @param result
-/// 1 (0x718): none/success, (if char id not in deletion process): An unknown error has occurred.
-/// 2 (0x719): A database error occurred.
-/// Any (0x718): An unknown error has occurred.
-/// HC: <082c>.W <char id>.L <Msg:1-2>.L
+/**
+ * HC: <082c>.W <char id>.L <Msg:1-2>.L
+ * @param fd
+ * @param char_id
+ * @param result
+ *         1 (0x718): none/success, (if char id not in deletion process): An unknown error has occurred.
+ *         2 (0x719): A database error occurred.
+ *         Any (0x718): An unknown error has occurred.
+ */
 void chclif_char_delete2_cancel_ack(int fd, uint32 char_id, uint32 result) {
 	WFIFOHEAD(fd,10);
 	WFIFOW(fd,0) = 0x82c;
@@ -449,7 +608,13 @@ void chclif_char_delete2_cancel_ack(int fd, uint32 char_id, uint32 result) {
 	WFIFOSET(fd,10);
 }
 
-// CH: <0827>.W <char id>.L
+/**
+ * 
+ * CH: <0827>.W <char id>.L
+ * @param fd
+ * @param sd
+ * @return 
+ */
 int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(6)
 	{
@@ -512,7 +677,13 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 	return 1;
 }
 
-// CH: <0829>.W <char id>.L <birth date:YYMMDD>.6B
+/**
+ * 
+ * CH: <0829>.W <char id>.L <birth date:YYMMDD>.6B
+ * @param fd
+ * @param sd
+ * @return 
+ */
 int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(12)
 	{
@@ -591,7 +762,13 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 	return 1;
 }
 
-// CH: <082b>.W <char id>.L
+/**
+ * 
+ * CH: <082b>.W <char id>.L
+ * @param fd
+ * @param sd
+ * @return 
+ */
 int chclif_parse_char_delete2_cancel(int fd, struct char_session_data* sd) {
 	uint32 char_id;
 	int i;
@@ -622,9 +799,11 @@ int chclif_parse_char_delete2_cancel(int fd, struct char_session_data* sd) {
 	return 1;
 }
 
-/*
+/**
  * Register a new mapserver into that char-serv
  * charserv can handle a MAX_SERVERS mapservs
+ * @param fd : Map server file descriptor id
+ * @return =not enough data, 1=ok
  */
 int chclif_parse_maplogin(int fd){
 	if (RFIFOREST(fd) < 60)
@@ -660,7 +839,14 @@ int chclif_parse_maplogin(int fd){
 	return 0;
 }
 
-// 0065 <account id>.L <login id1>.L <login id2>.L <???>.W <sex>.B
+/**
+ * 
+ * 0065 <account id>.L <login id1>.L <login id2>.L <???>.W <sex>.B
+ * @param fd
+ * @param sd
+ * @param ipl
+ * @return 
+ */
 int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 	if( RFIFOREST(fd) < 17 ) // request to connect
 		return 0;
@@ -734,7 +920,13 @@ int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl){
 	return 1;
 }
 
-//struct PACKET_CH_CHARLIST_REQ { 0x0 short PacketType}
+/**
+ * Client request charlist to server
+ * 099d  
+ * @param fd
+ * @param sd
+ * @return 
+ */
 int chclif_parse_req_charlist(int fd, struct char_session_data* sd){
 	if( RFIFOREST(fd) < 2 )
 		return 0;
@@ -743,6 +935,13 @@ int chclif_parse_req_charlist(int fd, struct char_session_data* sd){
 	return 1;
 }
 
+/**
+ * 
+ * @param fd
+ * @param sd
+ * @param ipl
+ * @return 
+ */
 int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 	FIFOSD_CHECK(3);
 	{
@@ -885,64 +1084,153 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 	return 1;
 }
 
-// S 0970 <name>.24B <slot>.B <hair color>.W <hair style>.W
-// S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot>.B <hair color>.W <hair style>.W
-int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
-	int i = 0;
+enum e_charclif_error {							//tested with 0x6e in 20150914
+	ERROR_SAMENAME_EXIST = 0x0,					//Character name already exist
+	ERROR_LIMIT_AGE = 0x1,						//You are underaged
+	//ERROR_LIMIT_CHAR_DELETE = 0x2,			
+	ERROR_INVALID_SYMBOLS = 0x2,				//Symbols in Character Names are forbidden
+	ERROR_MAKECHAR_INVALID_SLOT = 0x3,			//You are not elegible to open the Character Slot
+	ERROR_NEED_PREMIUM_SERVICE = 0xb,			//This service is only available for premium users
+	ERROR_NONPERMISSION_NAME = 0xc,				//Failed to move char slot
+	//ERROR_DELETE_LIMIT_LEVEL = 0x64,			//
 
-	if (cmd == 0x970) FIFOSD_CHECK(31) //>=20120307
-	else if (cmd == 0x67) FIFOSD_CHECK(37)
-	else return 0;
-
-	if( (charserv_config.char_new)==0 ) //turn character creation on/off [Kevin]
-		i = -2;
-	else {
-#if PACKETVER < 20120307
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
-			RFIFOSKIP(fd,37);
-#else
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
-			RFIFOSKIP(fd,31);
-#endif
+	ERROR_MAKECHAR_DENIED = 0xFF					//actually default message
+};
+/**
+* Acknoledge the client that the car creation failed
+* @param fd: client file descriptor
+* @param err: error that occur to inform client
+*/
+int chclif_createnewchar_ack_error(int fd, e_makechar_error err) {
+	WFIFOHEAD(fd, 3);
+	WFIFOW(fd, 0) = 0x6e;
+	switch (err) {    // lookup  makechar_error2cliff_err (map our internal error to those of the client)
+	case MAKECHAR_INVALID_SLOT:
+	case MAKECHAR_MAX_LIMIT:
+		WFIFOB(fd, 2) = ERROR_MAKECHAR_INVALID_SLOT;
+		break; //tryme /* 0x03 = You are not elegible to open the Character Slot. */ [Ind]*/
+	case MAKECHAR_NAME_DUPLICATE:
+	case MAKECHAR_NAME_RESERVED:
+		WFIFOB(fd, 2) = ERROR_SAMENAME_EXIST;
+		break; 
+	case MAKECHAR_NAME_LEN:
+	case MAKECHAR_NAME_INVALID_CHAR:
+		WFIFOB(fd, 2) = ERROR_INVALID_SYMBOLS;
+		break;
+	case MAKECHAR_DO_SQL:
+	case MAKECHAR_CREATION_DISABLE:
+		WFIFOB(fd, 2) = ERROR_MAKECHAR_DENIED; break;		//255 Character creation is denied
+		break;
+	//case -3: WFIFOB(fd, 2) = 0x01; break; //wtf were -3 coming from
 	}
+	WFIFOSET(fd, 3);
 
-	//'Charname already exists' (-1), 'Char creation denied' (-2) and 'You are underaged' (-3)
-	if (i < 0) {
-		WFIFOHEAD(fd,3);
-		WFIFOW(fd,0) = 0x6e;
-		/* Others I found [Ind] */
-		/* 0x02 = Symbols in Character Names are forbidden */
-		/* 0x03 = You are not elegible to open the Character Slot. */
-		switch (i) {
-			case -1: WFIFOB(fd,2) = 0x00; break;
-			case -2: WFIFOB(fd,2) = 0xFF; break;
-			case -3: WFIFOB(fd,2) = 0x01; break;
-			case -4: WFIFOB(fd,2) = 0x03; break;
-		}
-		WFIFOSET(fd,3);
-	} else {
-		int len, ch;
-		// retrieve data
-		struct mmo_charstatus char_dat;
-		char_mmo_char_fromsql(i, &char_dat, false); //Only the short data is needed.
-
-		// send to player
-		WFIFOHEAD(fd,2+MAX_CHAR_BUF);
-		WFIFOW(fd,0) = 0x6d;
-		len = 2 + char_mmo_char_tobuf(WFIFOP(fd,2), &char_dat);
-		WFIFOSET(fd,len);
-
-		// add new entry to the chars list
-		ARR_FIND( 0, MAX_CHARS, ch, sd->found_char[ch] == -1 );
-		if( ch < MAX_CHARS )
-			sd->found_char[ch] = i; // the char_id of the new char
-	}
 	return 1;
 }
 
 /**
+* Acknoledge the client that the car creation was a success
+* @param fd: client file descriptor
+* @param sd: client char_session_data
+* @param sd: new char_id created
+*/
+int chclif_createnewchar_ack_success(int fd, struct char_session_data* sd, uint32 char_id){
+	int len, ch;
+	// retrieve data
+	struct mmo_charstatus char_dat;
+	char_mmo_char_fromsql(char_id, &char_dat, false); //Only the short data is needed.										  
+	// add new entry to the chars list
+	ARR_FIND(0, MAX_CHARS, ch, sd->found_char[ch] == -1);
+	if (ch < MAX_CHARS)
+		sd->found_char[ch] = char_id; // the char_id of the new char
+
+	// send to player
+	WFIFOHEAD(fd, 2 + MAX_CHAR_BUF);
+	WFIFOW(fd, 0) = 0x6d;
+	len = 2 + chclif_mmo_char_tobuf(WFIFOP(fd, 2), &char_dat);
+	WFIFOSET(fd, len);
+ 
+	return 1;
+}
+
+
+/**
+ * Client request a new char creation
+ * CH 0970 <name>.24B <slot>.B <hair color>.W <hair style>.W
+ * CH 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot>.B <hair color>.W <hair style>.W
+ * @param fd
+ * @param sd
+ * @return 
+ */
+int chclif_parse_createnewchar(int fd, struct char_session_data* sd) {
+	uint32 char_id = 0;
+	e_makechar_error err = ERROR_NO_ERROR;
+#if PACKETVER >= 20120307
+	static uint32 len = 31;
+#else
+	static uint32 len = 37;
+#endif
+
+	FIFOSD_CHECK(len)
+	if ((charserv_config.char_new) == 0) //turn character creation on/off [Kevin]
+		err = MAKECHAR_CREATION_DISABLE;
+	else {
+		//grab inputs
+		int offset = 0;
+		char *name = (char*)RFIFOP(fd, 2);
+		int str = 1;
+		int agi = 1;
+		int vit = 1;
+		int int_ = 1;
+		int dex = 1;
+		int luk = 1;
+#if PACKETVER < 20120307
+		str = RFIFOB(fd, 26);
+		agi = RFIFOB(fd, 27);
+		vit = RFIFOB(fd, 28);
+		int_ = RFIFOB(fd, 29);
+		dex = RFIFOB(fd, 30);
+		luk = RFIFOB(fd, 31);
+		offset += 6;
+#endif
+		int slot = RFIFOB(fd, offset + 26);
+		int hair_color = RFIFOW(fd, offset + 27);
+		int hair_style = RFIFOW(fd, offset + 29);
+		
+
+		do {
+#if PACKETVER >= 20120307
+			//check inputs
+			if (slot < 0 || slot >= sd->char_slots){ err = MAKECHAR_INVALID_SLOT; break;}	
+#else
+			if ((slot < 0 || slot >= sd->char_slots) // slots
+				|| (str + agi + vit + int_ + dex + luk != 6 * 5) // stats
+				|| (str < 1 || str > 9 || agi < 1 || agi > 9 || vit < 1 || vit > 9 || int_ < 1 || int_ > 9 || dex < 1 || dex > 9 || luk < 1 || luk > 9) // individual stat values
+				|| (str + int_ != 10 || agi + luk != 10 || vit + dex != 10)){ // pairs
+				err = ERROR_INVALID_SLOT; break;
+			}
+#endif
+			//add extra check here
+
+			//finally execute the creation
+			err = char_make_new_char_sql(sd, name, str, agi, vit, int_, dex, luk, slot, hair_color, hair_style, &char_id);
+		} while (0); //to allow break
+
+	}
+	RFIFOSKIP(fd, len); //no matter what we should mark we have read the bytes from fifo
+
+	if(err == ERROR_NO_ERROR)
+		chclif_createnewchar_ack_success(fd, sd, char_id);
+	else
+		chclif_createnewchar_ack_error(fd, err);
+
+	return 1;
+}
+
+
+/**
  * Inform client that his deletion request was refused
- * 0x70 <ErrorCode>B HC_REFUSE_DELETECHAR
+ * HC 0x70 <ErrorCode>B   (HC_REFUSE_DELETECHAR)
  * @param fd
  * @param ErrorCode
  *   00 = Incorrect Email address
@@ -954,6 +1242,15 @@ void chclif_refuse_delchar(int fd, uint8 errCode){
 	WFIFOSET(fd,3);
 }
 
+
+/**
+ * CH 0068 ??
+ * CH 01fb ??
+ * @param fd
+ * @param sd
+ * @param cmd
+ * @return 
+ */
 int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd){
 	if (cmd == 0x68) FIFOSD_CHECK(46)
 	else if (cmd == 0x1fb) FIFOSD_CHECK(56)
@@ -1005,12 +1302,19 @@ int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd){
 	return 1;
 }
 
-// R 0187 <account ID>.l
+
+/**
+ * Received client ping to keep alive his connection
+ * CH 0187 <account ID>.l
+ * @param fd
+ * @return 
+ */
 int chclif_parse_keepalive(int fd){
 	if (RFIFOREST(fd) < 6)
 		return 0;
 	//int aid = RFIFOL(fd,2);
 	RFIFOSKIP(fd,6);
+        set_eof(fd);
 	return 1;
 }
 
@@ -1019,7 +1323,6 @@ int chclif_parse_keepalive(int fd){
 int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
 	int i, cid = 0;
 	char name[NAME_LENGTH];
-	char esc_name[NAME_LENGTH*2+1];
 
 	if(cmd == 0x8fc){
 		FIFOSD_CHECK(30)
@@ -1042,9 +1345,7 @@ int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
 	if( i == MAX_CHARS )
 		return 1;
 
-	normalize_name(name,TRIM_CHARS);
-	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
-	if( !char_check_char_name(name,esc_name) ) {
+	if( char_check_char_name(name) == ERROR_NO_ERROR ) {
 		i = 1;
 		safestrncpy(sd->new_name, name, NAME_LENGTH);
 	}
@@ -1075,9 +1376,12 @@ int charblock_timer(int tid, unsigned int tick, int id, intptr_t data)
 	return 0;
 }
 
-/*
- * 0x20d <PacketLength>.W <TAG_CHARACTER_BLOCK_INFO>24B (HC_BLOCK_CHARACTER)
- * <GID>L <szExpireDate>20B (TAG_CHARACTER_BLOCK_INFO)
+/**
+ * Inform client about blocked character
+ * HC 0x20d <PacketLength>.W {TAG_CHARACTER_BLOCK_INFO>24B}*MAX_CHARS (HC_BLOCK_CHARACTER)
+ *   <GID>L <szExpireDate>20B (TAG_CHARACTER_BLOCK_INFO)
+ * @param fd
+ * @param sd
  */
 void chclif_block_character( int fd, struct char_session_data* sd){
 	int i=0, j=0, len=4;
@@ -1117,7 +1421,13 @@ void chclif_block_character( int fd, struct char_session_data* sd){
 	}
 }
 
-// 0x28f <char_id>.L
+/**
+ * 
+ * CH 0x28f <char_id>.L
+ * @param fd
+ * @param sd
+ * @return 
+ */
 int chclif_parse_ackrename(int fd, struct char_session_data* sd){
 	// 0: Successful
 	// 1: This character's name has already been changed. You cannot change a character's name more than once.
@@ -1143,6 +1453,11 @@ int chclif_parse_ackrename(int fd, struct char_session_data* sd){
 	return 1;
 }
 
+/**
+ * 
+ * @param fd
+ * @return 
+ */
 int chclif_ack_captcha(int fd){
 	WFIFOHEAD(fd,5);
 	WFIFOW(fd,0) = 0x7e9;
@@ -1152,7 +1467,11 @@ int chclif_ack_captcha(int fd){
 	return 1;
 }
 
-// R 06C <ErrorCode>B HEADER_HC_REFUSE_ENTER
+/**
+ * HC 06C <ErrorCode>B (HEADER_HC_REFUSE_ENTER)
+ * @param fd
+ * @param errCode
+ */
 void chclif_reject(int fd, uint8 errCode){
 	WFIFOHEAD(fd,3);
 	WFIFOW(fd,0) = 0x6c;
@@ -1160,7 +1479,12 @@ void chclif_reject(int fd, uint8 errCode){
 	WFIFOSET(fd,3);
 }
 
-// R 07e5 <?>.w <aid>.l
+/**
+ * 
+ * CH 07e5 <?>.w <aid>.l
+ * @param fd
+ * @return 
+ */
 int chclif_parse_reqcaptcha(int fd){
 	//FIFOSD_CHECK(8)
 	RFIFOSKIP(fd,8);
@@ -1168,7 +1492,13 @@ int chclif_parse_reqcaptcha(int fd){
 	return 1;
 }
 
-// R 07e7 <len>.w <aid>.l <code>.b10 <?>.b14
+// 
+/**
+ * 
+ * CH 07e7 <len>.w <aid>.l <code>.b10 <?>.b14
+ * @param fd
+ * @return 
+ */
 int chclif_parse_chkcaptcha(int fd){
 	//FIFOSD_CHECK(32)
 	RFIFOSKIP(fd,32);
@@ -1212,8 +1542,9 @@ int chclif_parse(int fd) {
 			// char select
 			case 0x66: next=chclif_parse_charselect(fd,sd,ipl); break;
 			// createnewchar
-			case 0x970: next=chclif_parse_createnewchar(fd,sd,cmd); break;
-			case 0x67: next=chclif_parse_createnewchar(fd,sd,cmd); break;
+			case 0x970:
+			case 0x67: 
+				next=chclif_parse_createnewchar(fd,sd); break;
 			// delete char
 			case 0x68: next=chclif_parse_delchar(fd,sd,cmd); break; //
 			case 0x1fb: next=chclif_parse_delchar(fd,sd,cmd); break; // 2004-04-19aSakexe+ langtype 12 char deletion packet

@@ -4,9 +4,14 @@
 #ifndef _UTILS_H_
 #define _UTILS_H_
 
-#include "cbasetypes.h"
 #include <stdio.h> // FILE*
 
+#include "cbasetypes.h"
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
+    
 // generate a hex dump of the first 'length' bytes of 'buffer'
 void WriteDump(FILE* fp, const void* buffer, size_t length);
 void ShowDump(const void* buffer, size_t length);
@@ -50,4 +55,8 @@ uint32 date2version(int date);
 
 int levenshtein(const char *s1, const char *s2);
 
+#ifdef	__cplusplus
+}
+#endif
+    
 #endif /* _UTILS_H_ */

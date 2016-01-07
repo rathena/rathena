@@ -1,13 +1,13 @@
 #ifndef _rA_EVDP_H_
 #define _rA_EVDP_H_
 
+#include <sys/epoll.h>
 #include "cbasetypes.h"
 
 typedef struct EVDP_DATA EVDP_DATA;
 
 
 //#idef EVDP_EPOLL
-#include <sys/epoll.h>
 struct EVDP_DATA{
 	struct epoll_event ev_data;
 	bool ev_added;
@@ -25,7 +25,6 @@ typedef struct EVDP_EVENT{
 	int32	events;	// due to performance reasons, this should be the first member.
 	int32	fd;	// Connection Identifier
 } EVDP_EVENT;
-
 
 
 /** 

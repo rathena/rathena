@@ -14,7 +14,10 @@
 extern "C" {
 #endif
 
-void chclif_moveCharSlotReply( int fd, struct char_session_data* sd, unsigned short index, short reason );
+int chclif_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);
+
+typedef enum e_charslot_reason { MV_SLOT_SUCCESS=0, MV_SLOT_FAIL=1 } e_charslot_reason_t;
+void chclif_moveCharSlotReply( int fd, struct char_session_data* sd, unsigned int moveleft, e_charslot_reason_t reason );
 int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd);
 #if PACKETVER_SUPPORTS_PINCODE
 void chclif_pincode_sendstate( int fd, struct char_session_data* sd, enum pincode_state state );
@@ -45,7 +48,6 @@ int chclif_parse_maplogin(int fd);
 int chclif_parse_reqtoconnect(int fd, struct char_session_data* sd,uint32 ipl);
 int chclif_parse_req_charlist(int fd, struct char_session_data* sd);
 int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl);
-int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd);
 int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd);
 int chclif_parse_keepalive(int fd);
 int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd);
@@ -54,6 +56,9 @@ int chclif_ack_captcha(int fd);
 int chclif_parse_reqcaptcha(int fd);
 int chclif_parse_chkcaptcha(int fd);
 void chclif_block_character( int fd, struct char_session_data* sd);
+
+int chclif_createnewchar_ack_error(int fd, e_makechar_error err);
+int chclif_createnewchar_ack_success(int fd, struct char_session_data* sd, uint32 char_id);
 
 int chclif_parse(int fd);
 

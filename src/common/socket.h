@@ -4,8 +4,6 @@
 #ifndef	_SOCKET_H_
 #define _SOCKET_H_
 
-#include "cbasetypes.h"
-
 #ifdef WIN32
 	#include "winapi.h"
 	typedef long in_addr_t;
@@ -14,8 +12,9 @@
 	#include <sys/socket.h>
 	#include <netinet/in.h>
 #endif
-
 #include <time.h>
+
+#include "cbasetypes.h"
 
 #define FIFOSIZE_SERVERLINK 256*1024
 

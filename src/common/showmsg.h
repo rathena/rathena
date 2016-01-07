@@ -4,7 +4,7 @@
 #ifndef _SHOWMSG_H_
 #define _SHOWMSG_H_
 
-#include "../../3rdparty/libconfig/libconfig.h"
+#include "../../3rdparty/libconfig/libconfig.h" //config_setting_t, @TODO replace with fwd declaration
 
 // for help with the console colors look here:
 // http://www.edoceo.com/liberum/?doc=printf-with-color
@@ -67,6 +67,10 @@
 
 #define CL_SPACE		"           "	// space aquivalent of the print messages
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+    
 extern int stdout_with_ansisequence; //If the color ansi sequences are to be used. [flaviojs]
 extern int msg_silent; //Specifies how silent the console is. [Skotlex]
 extern int console_msg_log; //Specifies what error messages to log. [Ind]
@@ -97,4 +101,8 @@ extern void ShowError(const char *, ...);
 extern void ShowFatalError(const char *, ...);
 extern void ShowConfigWarning(config_setting_t *config, const char *string, ...);
 
+#ifdef	__cplusplus
+}
+#endif
+    
 #endif /* _SHOWMSG_H_ */

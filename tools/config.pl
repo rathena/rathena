@@ -22,6 +22,7 @@ use constant {
     CHAR_PORT => "Char_port",
     LOGIN_PORT => "Login_port",
     MD5_ENABLE => "enable_MD5",
+    PINCODE_ENABLE => "enable_pincode",
     SQL_HOST => "SQL_host",
     SQL_PORT => "SQL_port",
     SQL_UID => "SQL_userid",
@@ -94,6 +95,7 @@ sub Main {
 			CHAR_PORT => "6121",
 			LOGIN_PORT => "6900",
 			MD5_ENABLE => "yes",
+			PINCODE_ENABLE => "no",
 			SQL_HOST => "localhost",
 			SQL_PORT => "3306",
 			SQL_UID => "ragnarok",
@@ -308,7 +310,9 @@ sub ApplyCharConf { my ($rhUserConf,$sCurfile) = @_;
 
     print FILE "char_ip: " . $$rhUserConf{SERV_WAN_IP}."\n";
     print FILE "char_port: " . $$rhUserConf{CHAR_PORT}."\n";
-    print FILE "login_port: " . $$rhUserConf{LOGIN_PORT}."\n";
+    print FILE "login_port: " . $$rhUserConf{LOGIN_PORT}."\n\n";
+    
+    print FILE "pincode_enabled: " . $$rhUserConf{PINCODE_ENABLE}."\n";
 }
 
 sub ApplyLoginConf { my ($rhUserConf,$sCurfile) = @_;

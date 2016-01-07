@@ -45,6 +45,10 @@
 #define MAP_ECLAGE "eclage"
 #define MAP_ECLAGE_IN "ecl_in01"
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+    
 const char* mapindex_getmapname(const char* string, char* output);
 const char* mapindex_getmapname_ext(const char* string, char* output);
 
@@ -61,5 +65,9 @@ void mapindex_check_mapdefault(const char *mapname);
 
 void mapindex_init(void);
 void mapindex_final(void);
+
+#ifdef	__cplusplus
+}
+#endif
 
 #endif /* _MAPINDEX_H_ */

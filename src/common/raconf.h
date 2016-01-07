@@ -6,6 +6,10 @@
 
 #include "cbasetypes.h"
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+    
 // rAthena generic configuration file parser
 // 
 //  Config file Syntax is athena style 
@@ -54,6 +58,8 @@ float       raconf_getfloatEx(raconf rc,const char *section, const char *fallbac
 int64       raconf_getintEx(raconf rc,  const char *section, const char *fallback_section, const char *key, int64 _default);
 const char* raconf_getstrEx(raconf rc,  const char *section, const char *fallback_section, const char *key, const char *_default);
 
-
+#ifdef	__cplusplus
+}
+#endif
 
 #endif

@@ -3,7 +3,12 @@
 
 #include "cbasetypes.h"
 
-typedef struct mempool *mempool;
+#ifdef	__cplusplus
+extern "C" {
+#endif
+
+typedef struct mempool mempool_t;
+typedef mempool_t* mempoolprt_t;
 
 typedef void (*memPoolOnNodeAllocationProc)(void *ptr);
 typedef void (*memPoolOnNodeDeallocationProc)(void *ptr);
@@ -45,15 +50,13 @@ void mempool_final();
  *
  * @return not NULL
  */
-mempool mempool_create(const char *name,
-						uint64 elem_size,
-						uint64 initial_count,
-						uint64 realloc_count,
-						
-						memPoolOnNodeAllocationProc	onNodeAlloc,
-						memPoolOnNodeDeallocationProc onNodeDealloc);
-						
-						
+mempoolprt_t mempool_create(const char *name,
+            uint64 elem_size,
+            uint64 initial_count,
+            uint64 realloc_count,
+            memPoolOnNodeAllocationProc	onNodeAlloc,
+            memPoolOnNodeDeallocationProc onNodeDealloc);
+
 /**
  * Destroys a Mempool
  * 
@@ -63,17 +66,16 @@ mempool mempool_create(const char *name,
  *	Everything gets deallocated, regardless if everything was freed properly!
  *	So you have to ensure that all references are cleared properly!
  */
-void mempool_destroy(mempool pool);
+void mempool_destroy(mempoolprt_t pool);
 
 
 /**
  * Gets a new / empty node from the given mempool.
  * 
  * @param pool - the pool to get an empty node from.
- *
  * @return Address of empty Node
  */
-void *mempool_node_get(mempool pool);
+void* mempool_node_get(mempoolprt_t pool);
 
 
 /**
@@ -82,19 +84,19 @@ void *mempool_node_get(mempool pool);
  * @param pool - the pool to put the node, to
  * @param node - the node to return 
  */
-void mempool_node_put(mempool pool, void *node);
+void mempool_node_put(mempoolprt_t pool, void *node);
 
 
 /** 
  * Returns Statistics for the given mempool
- *
  * @param pool - the pool to get thats for
- *
  * @note: i dont like pushing masses of values over the stack, too  - but its lazy and okay for stats. (blacksirius)
- *
  * @return stats struct
  */
-mempool_stats mempool_get_stats(mempool pool);
+mempool_stats mempool_get_stats(mempoolprt_t pool);
 
-
+#ifdef	__cplusplus
+}
+#endif
+    
 #endif

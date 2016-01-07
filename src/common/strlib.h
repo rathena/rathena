@@ -4,13 +4,20 @@
 #ifndef _STRLIB_H_
 #define _STRLIB_H_
 
-#include "cbasetypes.h"
 #include <stdarg.h>
 
-#define __USE_GNU  // required to enable strnlen on some platforms
-#include <string.h>
-#undef __USE_GNU
+#ifndef __USE_GNU
+    #define __USE_GNU  // required to enable strnlen on some platforms
+    #include <string.h>
+    #undef __USE_GNU
+#endif
 
+#include "cbasetypes.h"
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
+    
 char* jstrescape (char* pt);
 char* jstrescapecpy (char* pt, const char* spt);
 int jmemescapecpy (char* pt, const char* spt, int size);
@@ -152,4 +159,8 @@ void StringBuf_Clear(StringBuf* self);
 void StringBuf_Destroy(StringBuf* self);
 void StringBuf_Free(StringBuf* self);
 
+#ifdef	__cplusplus
+}
+#endif
+    
 #endif /* _STRLIB_H_ */

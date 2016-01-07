@@ -1,5 +1,5 @@
 #pragma once
-
+//look like a precompiled header
 
 #define STRICT
 #define NTDDI_VERSION 	NTDDI_WIN2K

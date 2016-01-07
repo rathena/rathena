@@ -55,11 +55,11 @@ __thread int g_rathread_ID = -1;
 ///
 /// Subystem Code
 ///
-static struct rAthread l_threads[RA_THREADS_MAX];
+static rAthread_t l_threads[RA_THREADS_MAX];
 
 void rathread_init(){
 	register unsigned int i;
-	memset(&l_threads, 0x00, RA_THREADS_MAX * sizeof(struct rAthread) );
+	memset(&l_threads, 0x00, RA_THREADS_MAX * sizeof(rAthread_t) );
 	
 	for(i = 0; i < RA_THREADS_MAX; i++){
 		l_threads[i].myID = i;
@@ -96,12 +96,12 @@ void rathread_final(){
 
 
 // gets called whenever a thread terminated ..
-static void rat_thread_terminated( rAthread handle ){
+static void rat_thread_terminated( rAthreadprt_t handle ){
 
 	int id_backup = handle->myID;
 
 	// Simply set all members to 0 (except the id)
-	memset(handle, 0x00, sizeof(struct rAthread));
+	memset(handle, 0x00, sizeof(rAthread_t));
 	
 	handle->myID = id_backup; // done ;)
 
@@ -117,7 +117,7 @@ static void *_raThreadMainRedirector( void *p ){
 	
 	// Update myID @ TLS to right id.
 #ifdef HAS_TLS
-	g_rathread_ID = ((rAthread)p)->myID; 
+	g_rathread_ID = ((rAthreadprt_t)p)->myID; 
 #endif
 
 #ifndef WIN32
@@ -135,13 +135,13 @@ static void *_raThreadMainRedirector( void *p ){
 #endif
 
 
-	ret = ((rAthread)p)->proc( ((rAthread)p)->param ) ;
+	ret = ((rAthreadprt_t)p)->proc( ((rAthreadprt_t)p)->param ) ;
 
 #ifdef WIN32	
-	CloseHandle( ((rAthread)p)->hThread );
+	CloseHandle( ((rAthreadprt_t)p)->hThread );
 #endif
 
-	rat_thread_terminated( (rAthread)p );
+	rat_thread_terminated( (rAthreadprt_t)p );
 #ifdef WIN32
 	return (DWORD)ret;
 #else
@@ -156,18 +156,18 @@ static void *_raThreadMainRedirector( void *p ){
 ///
 /// API Level
 /// 
-rAthread rathread_create( rAthreadProc entryPoint,  void *param ){
+rAthreadprt_t rathread_create( rAthreadProc entryPoint,  void *param ){
 	return rathread_createEx( entryPoint, param,  (1<<23) /*8MB*/,  RAT_PRIO_NORMAL );
 }//end: rathread_create()
 
 
-rAthread rathread_createEx( rAthreadProc entryPoint,  void *param,  size_t szStack,  RATHREAD_PRIO prio ){
+rAthreadprt_t rathread_createEx( rAthreadProc entryPoint,  void *param,  size_t szStack,  RATHREAD_PRIO prio ){
 #ifndef WIN32
 	pthread_attr_t attr;
 #endif
 	size_t tmp;
 	unsigned int i;
-	rAthread handle = NULL;
+	rAthreadprt_t handle = NULL;
 
 
 	// given stacksize aligned to systems pagesize?
@@ -214,7 +214,7 @@ rAthread rathread_createEx( rAthreadProc entryPoint,  void *param,  size_t szSta
 }//end: rathread_createEx
 
 
-void rathread_destroy ( rAthread handle ){
+void rathread_destroy ( rAthreadprt_t handle ){
 #ifdef WIN32
 	if( TerminateThread(handle->hThread, 0) != FALSE){
 		CloseHandle(handle->hThread);
@@ -233,9 +233,9 @@ void rathread_destroy ( rAthread handle ){
 #endif
 }//end: rathread_destroy()
 
-rAthread rathread_self( ){
+rAthreadprt_t rathread_self( ){
 #ifdef HAS_TLS
-	rAthread handle = &l_threads[g_rathread_ID];
+	rAthreadprt_t handle = &l_threads[g_rathread_ID];
 	
 	if(handle->proc != NULL) // entry point set, so its used!	
 		return handle;
@@ -279,7 +279,7 @@ int rathread_get_tid(){
 }//end: rathread_get_tid()
 
 
-bool rathread_wait( rAthread handle,  void* *out_exitCode ){
+bool rathread_wait( rAthreadprt_t handle,  void* *out_exitCode ){
 	
 	// Hint:
 	// no thread data cleanup routine call here!
@@ -297,13 +297,13 @@ bool rathread_wait( rAthread handle,  void* *out_exitCode ){
 }//end: rathread_wait()
 
 
-void rathread_prio_set( rAthread handle, RATHREAD_PRIO prio ){
+void rathread_prio_set( rAthreadprt_t handle, RATHREAD_PRIO prio ){
 	handle->prio = RAT_PRIO_NORMAL; 
 	//@TODO 
 }//end: rathread_prio_set()
 
 
-RATHREAD_PRIO rathread_prio_get( rAthread handle){
+RATHREAD_PRIO rathread_prio_get( rAthreadprt_t handle){
 	return handle->prio;
 }//end: rathread_prio_get()
 

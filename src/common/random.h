@@ -6,6 +6,10 @@
 
 #include "cbasetypes.h"
 
+#ifdef	__cplusplus
+extern "C" {
+#endif
+    
 void rnd_init(void);
 void rnd_seed(uint32);
 
@@ -15,4 +19,8 @@ int32 rnd_value(int32 min, int32 max);// [min, max]
 double rnd_uniform(void);// [0.0, 1.0)
 double rnd_uniform53(void);// [0.0, 1.0)
 
+#ifdef	__cplusplus
+}
+#endif
+    
 #endif /* _RANDOM_H_ */

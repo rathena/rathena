@@ -69,7 +69,7 @@ int packet_db_ack[MAX_PACKET_VER + 1][MAX_ACK_FUNC + 1];
 static struct s_packet_keys *packet_keys[MAX_PACKET_VER + 1];
 static unsigned int clif_cryptKey[3]; // Used keys
 #endif
-static unsigned short clif_parse_cmd(int fd, struct map_session_data *sd);
+static unsigned short clif_parse_decryptcmd(int fd, struct map_session_data *sd);
 static bool clif_session_isValid(struct map_session_data *sd);
 
 /** Converts item type to display it on client if necessary.
@@ -984,13 +984,13 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 #if PACKETVER >= 20091103
 	name = status_get_name(bl);
 #if PACKETVER < 20110111
-	WBUFW(buf,2) = (spawn ? 62 : 63)+strlen(name);
+	WBUFW(buf,2) = (spawn ? 62 : 63)+(uint16)strlen(name);
 #elif PACKETVER < 20120221
-	WBUFW(buf,2) = (uint16)((spawn ? 64 : 65)+strlen(name));
+	WBUFW(buf,2) = (uint16)((spawn ? 64 : 65)+(uint16)strlen(name));
 #elif PACKETVER < 20130807
-	WBUFW(buf,2) = (spawn ? 77 : 78)+strlen(name);
+	WBUFW(buf,2) = (spawn ? 77 : 78)+(uint16)strlen(name);
 #else
-	WBUFW(buf,2) = (spawn ? 79 : 80)+strlen(name);
+	WBUFW(buf,2) = (spawn ? 79 : 80)+(uint16)strlen(name);
 #endif
 	WBUFB(buf,4) = clif_bl_type(bl);
 	offset+=3;
@@ -1185,9 +1185,9 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 #elif PACKETVER < 20120221
 	WBUFW(buf, 2) = (uint16)(71+strlen(name));
 #elif PACKETVER < 20130807
-	WBUFW(buf, 2) = 84+strlen(name);
+	WBUFW(buf, 2) = 84+ (uint16)strlen(name);
 #else
-	WBUFW(buf, 2) = 86+strlen(name);
+	WBUFW(buf, 2) = 86+ (uint16)strlen(name);
 #endif
 	offset+=2;
 	buf = WBUFP(buffer,offset);
@@ -5972,13 +5972,13 @@ void clif_displaymessage(const int fd, const char* mes)
 
 /// Send broadcast message in yellow or blue without font formatting (ZC_BROADCAST).
 /// 009a <packet len>.W <message>.?B
-void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target)
+void clif_broadcast(struct block_list* bl, const char* mes, size_t len, int type, enum send_target target)
 {
 	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
 	unsigned char *buf = (unsigned char*)aMalloc((4 + lp + len)*sizeof(unsigned char));
 
 	WBUFW(buf,0) = 0x9a;
-	WBUFW(buf,2) = 4 + lp + len;
+	WBUFW(buf,2) = 4 + lp + (uint16) len;
 	if (type&BC_BLUE)
 		WBUFL(buf,4) = 0x65756c62; //If there's "blue" at the beginning of the message, game client will display it in blue instead of yellow.
 	else if (type&BC_WOE)
@@ -9822,7 +9822,7 @@ static int clif_guess_PacketVer(int fd, int get_previous, int *error)
 {
 	static int err = 1;
 	static int packet_ver = -1;
-	int packet_len, value; //Value is used to temporarily store account/char_id/sex
+	int packet_len, value, diskey=0; //Value is used to temporarily store account/char_id/sex
 	unsigned short cmd;
 
 	if (get_previous)
@@ -9835,7 +9835,7 @@ static int clif_guess_PacketVer(int fd, int get_previous, int *error)
 	//By default, start searching on the default one.
 	err = 1;
 	packet_ver = clif_config.packet_db_ver;
-	cmd = clif_parse_cmd(fd, NULL);
+	cmd = clif_parse_decryptcmd(fd, NULL);
 	packet_len = RFIFOREST(fd);
 
 #define SET_ERROR(n) \
@@ -9863,21 +9863,37 @@ static int clif_guess_PacketVer(int fd, int get_previous, int *error)
 		err = 0;\
 		if( error )\
 			*error = 0;\
+		if( diskey ) ShowWarning("Client use no encryption while server do, please fix me\n"); \
 		return packet_ver;\
 	}\
 //define CHECK_PACKET_VER
 
-	CHECK_PACKET_VER();//Default packet version found.
+#define FOUND_PACKET_VER() \
+	CHECK_PACKET_VER(); /*Default packet version found.*/ \
+	/*Start guessing the version, giving priority to the newer ones. [Skotlex]*/ \
+	for (packet_ver = MAX_PACKET_VER; packet_ver > 0; packet_ver--) { \
+		CHECK_PACKET_VER(); \
+	} \
+//define FOUND_PACKET_VER
 
-	for (packet_ver = MAX_PACKET_VER; packet_ver > 0; packet_ver--) { //Start guessing the version, giving priority to the newer ones. [Skotlex]
-		CHECK_PACKET_VER();
+	FOUND_PACKET_VER()
+#ifdef PACKET_OBFUSCATION
+	if (err == 1) {
+		ShowDebug("Unable to resolve packet_ver trying without encryption\n");
+		diskey = 1;
+		cmd = RFIFOW(fd, 0);
+		FOUND_PACKET_VER()
 	}
+#endif
+
+
 	if( error )
 		*error = err;
 	packet_ver = -1;
 	return -1;
 #undef SET_ERROR
 #undef CHECK_PACKET_VER
+#undef FOUND_PACKET_VER
 }
 
 // ------------
@@ -18041,7 +18057,7 @@ void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, 
  * @param packet_ver
  * Orig author [Ind/Hercules]
  **/
-static unsigned short clif_parse_cmd(int fd, struct map_session_data *sd) {
+static unsigned short clif_parse_decryptcmd(int fd, struct map_session_data *sd) {
 #ifndef PACKET_OBFUSCATION
 	return RFIFOW(fd, 0);
 #else
@@ -18663,7 +18679,7 @@ static int clif_parse(int fd)
 	if (RFIFOREST(fd) < 2)
 		return 0;
 
-	cmd = clif_parse_cmd(fd, sd);
+	cmd = clif_parse_decryptcmd(fd, sd);
 
 	// identify client's packet version
 	if (sd) {
