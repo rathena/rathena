@@ -1344,7 +1344,6 @@
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
-	// TODO: Add missing ones
 
 	/* status icons */
 	export_constant(SI_BLANK);
@@ -2296,10 +2295,58 @@
 	export_constant(SI_DRESS_UP);
 	export_constant(SI_MAPLE_FALLS);
 	export_constant(SI_ALL_NIFLHEIM_RECALL);
+	export_constant(SI_MTF_MARIONETTE);
+	export_constant(SI_MTF_LUDE);
+	export_constant(SI_MTF_CRUISER);
 	export_constant(SI_DRACULA_CARD);
 	export_constant(SI_LIMIT_POWER_BOOSTER);
 	export_constant(SI_TIME_ACCESSORY);
 	export_constant(SI_EP16_DEF);
+	export_constant(SI_BODYSTATE_STONECURSE);
+	export_constant(SI_BODYSTATE_FREEZING);
+	export_constant(SI_BODYSTATE_STUN);
+	export_constant(SI_BODYSTATE_SLEEP);
+	export_constant(SI_BODYSTATE_UNDEAD);
+	export_constant(SI_BODYSTATE_STONECURSE_ING);
+	export_constant(SI_BODYSTATE_BURNNING);
+	export_constant(SI_BODYSTATE_IMPRISON);
+	export_constant(SI_HEALTHSTATE_POISON);
+	export_constant(SI_HEALTHSTATE_CURSE);
+	export_constant(SI_HEALTHSTATE_SILENCE);
+	export_constant(SI_HEALTHSTATE_CONFUSION);
+	export_constant(SI_HEALTHSTATE_BLIND);
+	export_constant(SI_HEALTHSTATE_ANGELUS);
+	export_constant(SI_HEALTHSTATE_BLOODING);
+	export_constant(SI_HEALTHSTATE_HEAVYPOISON);
+	export_constant(SI_HEALTHSTATE_FEAR);
+	export_constant(SI_ATTACK_PROPERTY_NOTHING);
+	export_constant(SI_ATTACK_PROPERTY_WATER);
+	export_constant(SI_ATTACK_PROPERTY_GROUND);
+	export_constant(SI_ATTACK_PROPERTY_FIRE);
+	export_constant(SI_ATTACK_PROPERTY_WIND);
+	export_constant(SI_ATTACK_PROPERTY_POISON);
+	export_constant(SI_ATTACK_PROPERTY_SAINT);
+	export_constant(SI_ATTACK_PROPERTY_DARKNESS);
+	export_constant(SI_ATTACK_PROPERTY_TELEKINESIS);
+	export_constant(SI_ATTACK_PROPERTY_UNDEAD);
+	export_constant(SI_RESIST_PROPERTY_NOTHING);
+	export_constant(SI_RESIST_PROPERTY_WATER);
+	export_constant(SI_RESIST_PROPERTY_GROUND);
+	export_constant(SI_RESIST_PROPERTY_FIRE);
+	export_constant(SI_RESIST_PROPERTY_WIND);
+	export_constant(SI_RESIST_PROPERTY_POISON);
+	export_constant(SI_RESIST_PROPERTY_SAINT);
+	export_constant(SI_RESIST_PROPERTY_DARKNESS);
+	export_constant(SI_RESIST_PROPERTY_TELEKINESIS);
+	export_constant(SI_RESIST_PROPERTY_UNDEAD);
+	export_constant(SI_RUNEHELM);
+	export_constant(SI_HELM_VERKANA);
+	export_constant(SI_HELM_RHYDO);
+	export_constant(SI_HELM_TURISUS);
+	export_constant(SI_HELM_HAGALAS);
+	export_constant(SI_HELM_ISIA);
+	export_constant(SI_HELM_ASIR);
+	export_constant(SI_HELM_URJ);
 
 	/* elements */
 	export_constant(ELE_NEUTRAL);
