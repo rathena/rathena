@@ -17172,7 +17172,18 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_INT: md->status.int_ = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
 			case UMOB_DEX: md->status.dex = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
 			case UMOB_LUK: md->status.luk = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
-			case UMOB_SLAVECPYMSTRMD: md->state.copy_master_mode = value > 0 ? 1 : 0; if (value > 0) { TBL_MOB *md2 = map_id2md(md->master_id); md->status.mode = md2->status.mode; } break;
+			case UMOB_SLAVECPYMSTRMD:
+				if (value > 0) {
+					if (!md->master_id) {
+						ShowWarning("buildin_setunitdata: Trying to set UMOB_SLAVECPYMSTRMD on mob without master!\n");
+						break;
+					}
+					TBL_MOB *md2 = map_id2md(md->master_id);
+					md->status.mode = md2->status.mode;
+					md->state.copy_master_mode = 1;
+				} else
+					md->state.copy_master_mode = 0;
+				break;
 			case UMOB_DMGIMMUNE: md->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
 			case UMOB_ATKRANGE: md->status.rhw.range = (unsigned short)value; break;
 			case UMOB_ATKMIN: md->status.rhw.atk = (unsigned short)value; break;
