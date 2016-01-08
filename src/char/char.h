@@ -15,6 +15,8 @@
 extern int login_fd; //login file descriptor
 extern int char_fd; //char file descriptor
 
+#define MAX_STARTPOINT 5
+
 enum E_CHARSERVER_ST {
 	CHARSERVER_ST_RUNNING = CORE_ST_LAST,
 	CHARSERVER_ST_STARTING,
@@ -142,7 +144,8 @@ struct CharServ_Config {
 	int log_inter;	// loggin inter or not [devil]
 	int char_check_db;	///cheking sql-table at begining ?
 
-	struct point start_point; // Initial position the player will spawn on server
+	struct point start_point[MAX_STARTPOINT]; // Initial position the player will spawn on server
+	short start_point_count;
 	int console;
 	int max_connect_user;
 	int gm_allow_group;

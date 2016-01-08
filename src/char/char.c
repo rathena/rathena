@@ -1421,7 +1421,7 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
 	uint32 char_id;
-	int flag, k;
+	int flag, k, start_point_idx = rand() % charserv_config.start_point_count;
 
 	safestrncpy(name, name_, NAME_LENGTH);
 	normalize_name(name,TRIM_CHARS);
@@ -1473,7 +1473,7 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 		"'%d', '%d', '%s', '%d',  '%d','%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
 		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, 48, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-		mapindex_id2name(charserv_config.start_point.map), charserv_config.start_point.x, charserv_config.start_point.y, mapindex_id2name(charserv_config.start_point.map), charserv_config.start_point.x, charserv_config.start_point.y) )
+		mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y, mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return -2; //No, stop the procedure!
@@ -1485,7 +1485,7 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
 		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-		mapindex_id2name(charserv_config.start_point.map), charserv_config.start_point.x, charserv_config.start_point.y, mapindex_id2name(charserv_config.start_point.map), charserv_config.start_point.x, charserv_config.start_point.y) )
+		mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y, mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return -2; //No, stop the procedure!
@@ -2635,9 +2635,10 @@ void char_set_defaults(){
 	charserv_config.char_check_db =1;
 
         //see const.h to change those default
-	charserv_config.start_point.map = mapindex_name2id(MAP_DEFAULT_NAME); 
-	charserv_config.start_point.x = MAP_DEFAULT_X;
-	charserv_config.start_point.y = MAP_DEFAULT_Y;
+	charserv_config.start_point[0].map = mapindex_name2id(MAP_DEFAULT_NAME); 
+	charserv_config.start_point[0].x = MAP_DEFAULT_X;
+	charserv_config.start_point[0].y = MAP_DEFAULT_Y;
+	charserv_config.start_point_count = 0;
 
 	charserv_config.console = 0;
 	charserv_config.max_connect_user = -1;
@@ -2747,17 +2748,34 @@ bool char_config_read(const char* cfgName, bool normal){
 #else
 		} else if (strcmpi(w1, "start_point_pre") == 0) {
 #endif
-			char map[MAP_NAME_LENGTH_EXT];
-			short x, y;
-			if (sscanf(w2, "%15[^,],%6hd,%6hd", map, &x, &y) < 3){
-				ShowWarning( "Specified start_point has an invalid format.\n" );
-				continue;
+			int i = 0, fields_length = 3 + 1;
+			char *lineitem, **fields;
+
+			fields = (char**)aMalloc(fields_length * sizeof(char*));
+			lineitem = strtok(w2, ":");
+
+			while (lineitem != NULL) {
+				int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
+
+				if (n + 1 < fields_length) {
+					ShowDebug("start_point: not enough arguments for %s! Skipping...\n", lineitem);
+					lineitem = strtok(NULL, ":"); //next itemline
+					continue;
+				}
+				if (i > MAX_STARTPOINT) {
+					ShowDebug("start_point: too many start points, only %d are allowed! Ignoring parameter %s...\n", MAX_STARTPOINT, lineitem);
+				} else {
+					charserv_config.start_point[i].map = mapindex_name2id(fields[1]);
+					if (!charserv_config.start_point[i].map)
+						ShowError("Specified start_point %s not found in map-index cache.\n", charserv_config.start_point[i].map);
+					charserv_config.start_point[i].x = max(0, atoi(fields[2]));
+					charserv_config.start_point[i].y = max(0, atoi(fields[3]));
+					charserv_config.start_point_count++;
+				}
+				lineitem = strtok(NULL, ":"); //next itemline
+				i++;
 			}
-			charserv_config.start_point.map = mapindex_name2id(map);
-			if (!charserv_config.start_point.map)
-				ShowError("Specified start_point %s not found in map-index cache.\n", map);
-			charserv_config.start_point.x = x;
-			charserv_config.start_point.y = y;
+			aFree(fields);
 		} else if (strcmpi(w1, "start_zeny") == 0) {
 			charserv_config.start_zeny = atoi(w2);
 			if (charserv_config.start_zeny < 0)
