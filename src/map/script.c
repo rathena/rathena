@@ -17174,11 +17174,11 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_LUK: md->status.luk = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
 			case UMOB_SLAVECPYMSTRMD:
 				if (value > 0) {
-					if (!md->master_id) {
+					TBL_MOB *md2 = NULL;
+					if (!md->master_id || !(md2 = map_id2md(md->master_id))) {
 						ShowWarning("buildin_setunitdata: Trying to set UMOB_SLAVECPYMSTRMD on mob without master!\n");
 						break;
 					}
-					TBL_MOB *md2 = map_id2md(md->master_id);
 					md->status.mode = md2->status.mode;
 					md->state.copy_master_mode = 1;
 				} else
