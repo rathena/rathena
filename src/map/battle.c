@@ -8171,6 +8171,9 @@ static const struct _battle_data {
 	{ "monster_loot_search_type",           &battle_config.monster_loot_search_type,        1,      0,      1,              },
 	{ "feature.roulette",                   &battle_config.feature_roulette,                1,      0,      1,              },
 	{ "monster_hp_bars_info",                &battle_config.monster_hp_bars_info,             1,      0,      1,              },
+	{ "min_body_style",                     &battle_config.min_body_style,                  0,      0,      SHRT_MAX,       },
+	{ "max_body_style",                     &battle_config.max_body_style,                  4,      0,      SHRT_MAX,       },
+	{ "save_body_style",                    &battle_config.save_body_style,                 0,      0,      1,              },
 };
 
 #ifndef STATS_OPT_OUT

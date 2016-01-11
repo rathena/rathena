@@ -689,6 +689,7 @@
 	export_constant(LOOK_BODY);
 	export_constant(LOOK_RESET_COSTUMES);
 	export_constant(LOOK_ROBE);
+	export_constant(LOOK_BODY2);
 	// TODO: check why we didnt have floor and enable it
 	//export_constant(LOOK_FLOOR);
 

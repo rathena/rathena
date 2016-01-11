@@ -1728,6 +1728,39 @@ ACMD_FUNC(model)
 }
 
 /*==========================================
+ * @bodystyle [Rytech]
+ *------------------------------------------*/
+ACMD_FUNC(bodystyle)
+{
+	int body_style = 0;
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	// Limit body styles to certain jobs since not all of them are released yet.
+	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC)) {
+		clif_displaymessage(fd, msg_txt(sd,770));	// This job has no alternate body styles.
+		return -1;
+	}
+
+	if (!message || !*message || sscanf(message, "%d", &body_style) < 1) {
+		sprintf(atcmd_output, msg_txt(sd,739), MIN_BODY_STYLE, MAX_BODY_STYLE);		// Please enter a body style (usage: @bodystyle <body ID: %d-%d>).
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if (body_style >= MIN_BODY_STYLE && body_style <= MAX_BODY_STYLE) {
+			pc_changelook(sd, LOOK_BODY2, body_style);
+			clif_displaymessage(fd, msg_txt(sd,36)); // Appearence changed.
+	} else {
+		clif_displaymessage(fd, msg_txt(sd,37)); // An invalid number was specified.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
  * @dye && @ccolor
  *------------------------------------------*/
 ACMD_FUNC(dye)
@@ -5736,14 +5769,14 @@ ACMD_FUNC(divorce)
 ACMD_FUNC(changelook)
 {
 	int i, j = 0, k = 0;
-	int pos[7] = { LOOK_HEAD_TOP,LOOK_HEAD_MID,LOOK_HEAD_BOTTOM,LOOK_WEAPON,LOOK_SHIELD,LOOK_SHOES,LOOK_ROBE };
+	int pos[8] = { LOOK_HEAD_TOP,LOOK_HEAD_MID,LOOK_HEAD_BOTTOM,LOOK_WEAPON,LOOK_SHIELD,LOOK_SHOES,LOOK_ROBE, LOOK_BODY2 };
 
 	if((i = sscanf(message, "%11d %11d", &j, &k)) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1177)); // Usage: @changelook {<position>} <view id>
-		clif_displaymessage(fd, msg_txt(sd,1178)); // Position: 1-Top 2-Middle 3-Bottom 4-Weapon 5-Shield 6-Shoes 7-Robe
+		clif_displaymessage(fd, msg_txt(sd,1178)); // Position: 1-Top 2-Middle 3-Bottom 4-Weapon 5-Shield 6-Shoes 7-Robe 8-Body
 		return -1;
 	} else if ( i == 2 ) {
-		if (j < 1 || j > 7)
+		if (j < 1 || j > 8)
 			j = 1;
 		j = pos[j - 1];
 	} else if( i == 1 ) {	// position not defined, use HEAD_TOP as default
@@ -10036,6 +10069,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(costume),
 		ACMD_DEF(cloneequip),
 		ACMD_DEF(clonestat),
+		ACMD_DEF(bodystyle),
 	};
 	AtCommandInfo* atcommand;
 	int i;

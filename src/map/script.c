@@ -11207,6 +11207,8 @@ BUILDIN_FUNC(changebase)
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
 		if (sd->vd.cloth_color)
 			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
+		if (sd->vd.body_style)
+			clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.body_style);
 		clif_skillinfoblock(sd);
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -14335,6 +14337,7 @@ BUILDIN_FUNC(getlook)
 		case LOOK_SHIELD:   	val=sd->status.shield; break; //8
 		case LOOK_SHOES:    	break; //9
 		case LOOK_ROBE:     	val=sd->status.robe; break; //12
+		case LOOK_BODY2:		val=sd->status.body; break; //13
 	}
 
 	script_pushint(st,val);
@@ -21020,6 +21023,44 @@ BUILDIN_FUNC(setquestinfo_job) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * opendressroom({<char_id>});
+ */
+BUILDIN_FUNC(opendressroom)
+{
+#if PACKETVER >= 20150513
+    TBL_PC* sd;
+
+    if (!script_charid2sd(2, sd))
+        return SCRIPT_CMD_FAILURE;
+
+    clif_dressing_room(sd, 1);
+
+    return SCRIPT_CMD_SUCCESS;
+#else
+    return SCRIPT_CMD_FAILURE;
+#endif
+}
+
+/**
+ * closedressroom({<char_id>});
+ */
+BUILDIN_FUNC(closedressroom)
+{
+#if PACKETVER >= 20150513
+    TBL_PC* sd;
+
+    if (!script_charid2sd(2, sd))
+        return SCRIPT_CMD_FAILURE;
+
+    clif_dressing_room(sd, 0);
+
+    return SCRIPT_CMD_SUCCESS;
+#else
+    return SCRIPT_CMD_FAILURE;
+#endif
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -21585,6 +21626,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setquestinfo_level,"iii"),
 	BUILDIN_DEF(setquestinfo_req,"iii*"),
 	BUILDIN_DEF(setquestinfo_job,"ii*"),
+	BUILDIN_DEF(opendressroom,"?"),
+	BUILDIN_DEF(closedressroom,"?"),
 
 #include "../custom/script_def.inc"
 

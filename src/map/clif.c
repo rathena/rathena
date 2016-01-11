@@ -1123,7 +1123,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFB(buf,63) = ( bl->type == BL_MOB && (((TBL_MOB*)bl)->db->mexp > 0) ) ? 1 : 0;		// isBoss
 #endif
 #if PACKETVER >= 20150513
-	WBUFW(buf,64) = 0;		// body
+	WBUFW(buf,64) = vd->body_style;		// body
 	offset+= 2;
 	buf = WBUFP(buffer,offset);
 #endif
@@ -1266,7 +1266,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFB(buf,70) = ( bl->type == BL_MOB && (((TBL_MOB*)bl)->db->mexp > 0) ) ? 1 : 0;		// isBoss
 #endif
 #if PACKETVER >= 20150513
-	WBUFW(buf,71) = 0;		// body
+	WBUFW(buf,71) = vd->body_style;		// body
 	offset+= 2;
 	buf = WBUFP(buffer,offset);
 #endif
@@ -1423,6 +1423,8 @@ int clif_spawn(struct block_list *bl)
 
 	if (vd->cloth_color)
 		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
+	if (vd->body_style)
+		clif_refreshlook(bl,bl->id,LOOK_BODY2,vd->body_style,AREA_WOS);
 
 	switch (bl->type)
 	{
@@ -1696,6 +1698,8 @@ static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_
 
 	if(vd->cloth_color)
 		clif_refreshlook(bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,AREA_WOS);
+	if(vd->body_style)
+		clif_refreshlook(bl,bl->id,LOOK_BODY2,vd->body_style,AREA_WOS);
 
 	switch(bl->type) {
 	case BL_PC:
@@ -3400,6 +3404,11 @@ void clif_changelook(struct block_list *bl,int type,int val)
 					vd->cloth_color = 0;
 				if (sd->sc.option&OPTION_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
 					vd->cloth_color = 0;
+				if (vd->body_style && (
+ 					sd->sc.option&OPTION_WEDDING || sd->sc.option&OPTION_XMAS ||
+ 					sd->sc.option&OPTION_SUMMER || sd->sc.option&OPTION_HANBOK ||
+ 					sd->sc.option&OPTION_OKTOBERFEST))
+ 					vd->body_style = 0;
 			}
 		break;
 		case LOOK_HAIR:
@@ -3455,6 +3464,18 @@ void clif_changelook(struct block_list *bl,int type,int val)
 			return;
 #else
 			vd->robe = val;
+#endif
+		break;
+		case LOOK_BODY2:
+#if PACKETVER < 20150513
+			return;
+#else
+			if (val && (
+ 				sd->sc.option&OPTION_WEDDING || sd->sc.option&OPTION_XMAS ||
+ 				sd->sc.option&OPTION_SUMMER || sd->sc.option&OPTION_HANBOK ||
+ 				sd->sc.option&OPTION_OKTOBERFEST))
+ 				val = 0;
+ 			vd->body_style = val;
 #endif
 		break;
 	}
@@ -4534,6 +4555,9 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 
 	if (vd->cloth_color)
 		clif_refreshlook(&sd->bl,bl->id,LOOK_CLOTHES_COLOR,vd->cloth_color,SELF);
+	if (vd->body_style)
+		clif_refreshlook(&sd->bl,bl->id,LOOK_BODY2,vd->body_style,SELF);
+
 	switch (bl->type)
 	{
 	case BL_PC:
@@ -9165,6 +9189,8 @@ void clif_refresh(struct map_session_data *sd)
 		clif_spiritcharm_single(sd->fd, sd);
 	if (sd->vd.cloth_color)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
+	if (sd->vd.body_style)
+		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_BODY2,sd->vd.body_style,SELF);
 	if(hom_is_active(sd->hd))
 		clif_send_homdata(sd,SP_ACK,0);
 	if( sd->md ) {
@@ -10027,6 +10053,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if(sd->vd.cloth_color)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
+	if(sd->vd.body_style)
+		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_BODY2,sd->vd.body_style,SELF);
+
 	// item
 	clif_inventorylist(sd);  // inventory list first, otherwise deleted items in pc_checkitem show up as 'unknown item'
 	pc_checkitem(sd);
@@ -18597,16 +18626,22 @@ void clif_broadcast_obtain_special_item(const char *char_name, unsigned short na
 	clif_send(buf, WBUFW(buf, 2), NULL, ALL_CLIENT);
 }
 
-void clif_dressing_room(struct map_session_data *sd, int view) {
-	int fd;
+/// Show body view windows (ZC_DRESSROOM_OPEN).
+/// 0A02 <view>.W
+/// Value <flag> has the following effects:
+/// 0: Close an open Dress Room window.
+/// 1: Open a Dress Room window.
+void clif_dressing_room(struct map_session_data *sd, int flag) {
+#if PACKETVER >= 20150513
+	int fd = sd->fd;
 
 	nullpo_retv(sd);
 
-	fd = sd->fd;
 	WFIFOHEAD(fd, packet_len(0xa02));
 	WFIFOW(fd,0) = 0xa02;
-	WFIFOW(fd,2) = view;
+	WFIFOW(fd,2) = flag;
 	WFIFOSET(fd, packet_len(0xa02));
+#endif
 }
 
 /// Parsing a request from the client item identify oneclick (CZ_REQ_ONECLICK_ITEMIDENTIFY).

@@ -616,12 +616,16 @@ bool pc_can_give_bounded_items(struct map_session_data *sd)
  * Prepares character for saving.
  * @param sd
  *------------------------------------------*/
-void pc_makesavestatus(struct map_session_data *sd)
-{
+void pc_makesavestatus(struct map_session_data *sd) {
 	nullpo_retv(sd);
 
 	if(!battle_config.save_clothcolor)
-		sd->status.clothes_color=0;
+		sd->status.clothes_color = 0;
+
+	// Since this is currently not officially released,
+	// its best to have a forced option to not save body styles.
+	if(!battle_config.save_body_style)
+		sd->status.body = 0;
 
 	//Only copy the Cart/Peco/Falcon options, the rest are handled via
 	//status change load/saving. [Skotlex]
@@ -632,7 +636,7 @@ void pc_makesavestatus(struct map_session_data *sd)
 #endif
 	if (sd->sc.data[SC_JAILED]) { //When Jailed, do not move last point.
 		if(pc_isdead(sd)){
-			pc_setrestartvalue(sd,0);
+			pc_setrestartvalue(sd, 0);
 		} else {
 			sd->status.hp = sd->battle_status.hp;
 			sd->status.sp = sd->battle_status.sp;
@@ -643,8 +647,8 @@ void pc_makesavestatus(struct map_session_data *sd)
 		return;
 	}
 
-	if(pc_isdead(sd)){
-		pc_setrestartvalue(sd,0);
+	if(pc_isdead(sd)) {
+		pc_setrestartvalue(sd, 0);
 		memcpy(&sd->status.last_point,&sd->status.save_point,sizeof(sd->status.last_point));
 	} else {
 		sd->status.hp = sd->battle_status.hp;
@@ -654,7 +658,7 @@ void pc_makesavestatus(struct map_session_data *sd)
 		sd->status.last_point.y = sd->bl.y;
 	}
 
-	if(map[sd->bl.m].flag.nosave){
+	if(map[sd->bl.m].flag.nosave) {
 		struct map_data *m=&map[sd->bl.m];
 		if(m->save.map)
 			memcpy(&sd->status.last_point,&m->save,sizeof(sd->status.last_point));
@@ -666,20 +670,19 @@ void pc_makesavestatus(struct map_session_data *sd)
 /*==========================================
  * Off init ? Connection?
  *------------------------------------------*/
-void pc_setnewpc(struct map_session_data *sd, uint32 account_id, uint32 char_id, int login_id1, unsigned int client_tick, int sex, int fd)
-{
+void pc_setnewpc(struct map_session_data *sd, uint32 account_id, uint32 char_id, int login_id1, unsigned int client_tick, int sex, int fd) {
 	nullpo_retv(sd);
 
-	sd->bl.id        = account_id;
-	sd->status.account_id   = account_id;
-	sd->status.char_id      = char_id;
-	sd->status.sex   = sex;
-	sd->login_id1    = login_id1;
-	sd->login_id2    = 0; // at this point, we can not know the value :(
-	sd->client_tick  = client_tick;
+	sd->bl.id = account_id;
+	sd->status.account_id = account_id;
+	sd->status.char_id = char_id;
+	sd->status.sex = sex;
+	sd->login_id1 = login_id1;
+	sd->login_id2 = 0; // at this point, we can not know the value :(
+	sd->client_tick = client_tick;
 	sd->state.active = 0; //to be set to 1 after player is fully authed and loaded.
-	sd->bl.type      = BL_PC;
-	sd->canlog_tick  = gettick();
+	sd->bl.type = BL_PC;
+	sd->canlog_tick = gettick();
 	//Required to prevent homunculus copuing a base speed of 0.
 	sd->battle_status.speed = sd->base_status.speed = DEFAULT_WALK_SPEED;
 }
@@ -1120,6 +1123,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->status.hair = cap_value(sd->status.hair,MIN_HAIR_STYLE,MAX_HAIR_STYLE);
 	sd->status.hair_color = cap_value(sd->status.hair_color,MIN_HAIR_COLOR,MAX_HAIR_COLOR);
 	sd->status.clothes_color = cap_value(sd->status.clothes_color,MIN_CLOTH_COLOR,MAX_CLOTH_COLOR);
+	sd->status.body = cap_value(sd->status.body,MIN_BODY_STYLE,MAX_BODY_STYLE);
 
 	//Initializations to null/0 unneeded since map_session_data was filled with 0 upon allocation.
 	if(!sd->status.hp) pc_setdead(sd);
@@ -8204,6 +8208,11 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 		pc_resetfeel(sd);
 	}
 
+	// Reset body style to 0 before changing job to avoid
+	// errors since not every job has a alternate outfit.
+	sd->status.body = 0;
+	clif_changelook(&sd->bl,LOOK_BODY2,0);
+
 	sd->status.class_ = job;
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
 	sd->class_ = (unsigned short)b_class;
@@ -8239,7 +8248,10 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
 	if(sd->vd.cloth_color)
 		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
-
+	/*
+	if(sd->vd.body_style)
+		clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.body_style);
+	*/
 	//Update skill tree.
 	pc_calc_skilltree(sd);
 	clif_skillinfoblock(sd);
@@ -8325,59 +8337,62 @@ void pc_equiplookall(struct map_session_data *sd)
 /*==========================================
  * Tell client player sd has change look (hair,equip...)
  *------------------------------------------*/
-void pc_changelook(struct map_session_data *sd,int type,int val)
-{
+void pc_changelook(struct map_session_data *sd,int type,int val) {
 	nullpo_retv(sd);
 
-	switch(type){
+	switch(type) {
 	case LOOK_HAIR:	//Use the battle_config limits! [Skotlex]
 		val = cap_value(val, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
 
-		if (sd->status.hair != val)
-		{
-			sd->status.hair=val;
+		if (sd->status.hair != val) {
+			sd->status.hair = val;
 			if (sd->status.guild_id) //Update Guild Window. [Skotlex]
-				intif_guild_change_memberinfo(sd->status.guild_id,sd->status.account_id,sd->status.char_id,
-				GMI_HAIR,&sd->status.hair,sizeof(sd->status.hair));
+				intif_guild_change_memberinfo(sd->status.guild_id, sd->status.account_id, sd->status.char_id,
+				GMI_HAIR, &sd->status.hair, sizeof(sd->status.hair));
 		}
 		break;
 	case LOOK_WEAPON:
-		sd->status.weapon=val;
+		sd->status.weapon = val;
 		break;
 	case LOOK_HEAD_BOTTOM:
-		sd->status.head_bottom=val;
+		sd->status.head_bottom = val;
 		break;
 	case LOOK_HEAD_TOP:
-		sd->status.head_top=val;
+		sd->status.head_top = val;
 		break;
 	case LOOK_HEAD_MID:
-		sd->status.head_mid=val;
+		sd->status.head_mid = val;
 		break;
 	case LOOK_HAIR_COLOR:	//Use the battle_config limits! [Skotlex]
 		val = cap_value(val, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
 
 		if (sd->status.hair_color != val) {
-			sd->status.hair_color=val;
+			sd->status.hair_color = val;
 			if (sd->status.guild_id) //Update Guild Window. [Skotlex]
-				intif_guild_change_memberinfo(sd->status.guild_id,sd->status.account_id,sd->status.char_id,
-				GMI_HAIR_COLOR,&sd->status.hair_color,sizeof(sd->status.hair_color));
+				intif_guild_change_memberinfo(sd->status.guild_id, sd->status.account_id, sd->status.char_id,
+				GMI_HAIR_COLOR, &sd->status.hair_color, sizeof(sd->status.hair_color));
 		}
 		break;
 	case LOOK_CLOTHES_COLOR:	//Use the battle_config limits! [Skotlex]
 		val = cap_value(val, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
 
-		sd->status.clothes_color=val;
+		sd->status.clothes_color = val;
 		break;
 	case LOOK_SHIELD:
-		sd->status.shield=val;
+		sd->status.shield = val;
 		break;
 	case LOOK_SHOES:
 		break;
 	case LOOK_ROBE:
 		sd->status.robe = val;
 		break;
+	case LOOK_BODY2:
+		val = cap_value(val, MIN_BODY_STYLE, MAX_BODY_STYLE);
+
+		sd->status.body = val;
+		break;
 	}
-	clif_changelook(&sd->bl,type,val);
+	clif_changelook(&sd->bl, type, val);
 }
 
 /*==========================================
@@ -8470,6 +8485,8 @@ void pc_setoption(struct map_session_data *sd,int type)
 	clif_changelook(&sd->bl,LOOK_BASE,new_look);
 	if (sd->vd.cloth_color)
 		clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
+	if( sd->vd.body_style )
+		clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.body_style);
 	clif_skillinfoblock(sd); // Skill list needs to be updated after base change.
 }
 
