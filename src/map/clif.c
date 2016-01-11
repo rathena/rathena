@@ -5572,33 +5572,45 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned in
 */
 
 
-/// Non-damaging skill effect (ZC_USE_SKILL).
-/// 011a <skill id>.W <skill lv>.W <dst id>.L <src id>.L <result>.B
-int clif_skill_nodamage(struct block_list *src,struct block_list *dst,uint16 skill_id,int heal,int fail)
+/// Non-damaging skill effect
+/// 011a <skill id>.W <heal>.W <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL).
+/// 09cb <skill id>.W <heal>.L <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL2).
+int clif_skill_nodamage(struct block_list *src,struct block_list *dst, uint16 skill_id, int heal, int fail)
 {
-	unsigned char buf[32];
+	unsigned char buf[17];
+#if PACKETVER < 20130731
+	const int cmd = 0x11a;
+#else
+	const int cmd = 0x9cb;
+#endif
+	int offset = 0;
 
 	nullpo_ret(dst);
 
-	WBUFW(buf,0)=0x11a;
-	WBUFW(buf,2)=skill_id;
-	WBUFW(buf,4)=min(heal, INT16_MAX);
-	WBUFL(buf,6)=dst->id;
-	WBUFL(buf,10)=src?src->id:0;
-	WBUFB(buf,14)=fail;
+	WBUFW(buf,0) = cmd;
+	WBUFW(buf,2) = skill_id;
+#if PACKETVER < 20130731
+	WBUFW(buf,4) = min(heal, INT16_MAX);
+#else
+	WBUFL(buf,4) = min(heal, INT32_MAX);
+	offset += 2;
+#endif
+	WBUFL(buf,6+offset) = dst->id;
+	WBUFL(buf,10+offset) = src ? src->id : 0;
+	WBUFB(buf,14+offset) = fail;
 
 	if (disguised(dst)) {
-		clif_send(buf,packet_len(0x11a),dst,AREA_WOS);
-		WBUFL(buf,6)=-dst->id;
-		clif_send(buf,packet_len(0x11a),dst,SELF);
+		clif_send(buf, packet_len(cmd), dst, AREA_WOS);
+		WBUFL(buf,6+offset) = -dst->id;
+		clif_send(buf, packet_len(cmd), dst, SELF);
 	} else
-		clif_send(buf,packet_len(0x11a),dst,AREA);
+		clif_send(buf, packet_len(cmd), dst, AREA);
 
 	if(src && disguised(src)) {
-		WBUFL(buf,10)=-src->id;
+		WBUFL(buf,10+offset) = -src->id;
 		if (disguised(dst))
-			WBUFL(buf,6)=dst->id;
-		clif_send(buf,packet_len(0x11a),src,SELF);
+			WBUFL(buf,6+offset) = dst->id;
+		clif_send(buf, packet_len(cmd), src, SELF);
 	}
 
 	return fail;
@@ -6074,7 +6086,7 @@ void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char
 ///     7 = SP (SP_SP)
 ///     ? = ignored
 void clif_heal(int fd,int type,int val) {
-#if PACKETVER < 20150513
+#if PACKETVER < 20141022
 	const int cmd = 0x13d;
 #else
 	const int cmd = 0xa27;
@@ -6083,7 +6095,7 @@ void clif_heal(int fd,int type,int val) {
 	WFIFOHEAD(fd, packet_len(cmd));
 	WFIFOW(fd,0) = cmd;
 	WFIFOW(fd,2) = type;
-#if PACKETVER < 20150513
+#if PACKETVER < 20141022
 	WFIFOW(fd,4) = min(val, INT16_MAX);
 #else
 	WFIFOL(fd,4) = min(val, INT32_MAX);
@@ -6279,8 +6291,9 @@ void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len)
 }
 
 
-/// Inform the player about the result of his whisper action (ZC_ACK_WHISPER).
-/// 0098 <result>.B
+/// Inform the player about the result of his whisper action 
+/// 0098 <result>.B (ZC_ACK_WHISPER).
+/// 09df <result>.B <GID>.L (ZC_ACK_WHISPER02).
 /// result:
 ///     0 = success to send wisper
 ///     1 = target character is not loged in
@@ -6289,22 +6302,22 @@ void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len)
 void clif_wis_end(int fd, int result)
 {
 	struct map_session_data *sd = (session_isValid(fd) ? (struct map_session_data *)session[fd]->session_data : NULL);
+#if PACKETVER < 20131223
+	const int cmd = 0x98;
+#else
+	const int cmd = 0x9df;
+#endif
 
 	if (!sd)
 		return;
 
+	WFIFOHEAD(fd,packet_len(cmd));
+	WFIFOW(fd,0) = cmd;
+	WFIFOB(fd,2) = (char)result;
 #if PACKETVER >= 20131223
-	WFIFOHEAD(fd,packet_len(0x9df));
-	WFIFOW(fd,0) = 0x9df;
-	WFIFOB(fd,2) = (char)result;
-	WFIFOL(fd,3) = 0;
-	WFIFOSET(fd,packet_len(0x9df));
-#else
-	WFIFOHEAD(fd,packet_len(0x98));
-	WFIFOW(fd,0) = 0x98;
-	WFIFOB(fd,2) = (char)result;
-	WFIFOSET(fd,packet_len(0x98));
+	WFIFOL(fd,3) = sd->status.char_id;	// GID/CCODE
 #endif
+	WFIFOSET(fd,packet_len(cmd));
 }
 
 
@@ -9775,6 +9788,10 @@ static bool clif_process_message(struct map_session_data* sd, int format, char**
 		message = name + NAME_LENGTH;
 		messagelen = textlen - NAME_LENGTH; // this should be the message length (w/ zero byte included)
 	}
+
+#if PACKETVER >= 20151001
+	message[messagelen++] = '\0';
+#endif
 
 	// the declared length must match real length
 	if( messagelen != strnlen(message, messagelen)+1 ) {
@@ -19008,7 +19025,7 @@ void packetdb_readdb(bool reload)
 		0,  0,  0,  0,  0,  0, 12, 10, 14, 10, 14,  6,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  6,  4,  6,  4,  0,  0,  0,  0,  0,  0,
 	//#0x09C0
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 23,  0,  0,  0,102,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 23,  17,  0,  0,102,  0,
 		0,  0,  0,  0,  2,  0, -1, -1,  2,  0,  0,  -1,  -1,  -1,  0,  7,
 		0,  0,  0,  0,  0,  18,  22,  3, 11,  0, 11, -1,  0,  3, 11,  0,
 		0, 11, 12, 11,  0,  0,  0,  75,  -1,143,  0,  0,  0,  -1,  -1,  -1,
