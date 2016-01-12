@@ -18648,24 +18648,18 @@ void clif_dressing_room(struct map_session_data *sd, int flag) {
 /// 0A35 <result>.W
 void clif_parse_Oneclick_Itemidentify(int fd, struct map_session_data *sd) {
 #if PACKETVER >= 20150513
-	short idx = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]) - 2;
-	int i;
+	short idx = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]) - 2, magnifier_idx = pc_search_inventory(sd, ITEMID_MAGNIFIER);
 
-    // Invalid index - ignore the request
-    if ( idx < 0 )
-        return;
-
-    // Item already identified - ignore the request
-    if ( sd->status.inventory[idx].identify )
-        return;
-
-    if ( ( i = pc_search_inventory(sd,ITEMID_MAGNIFIER) ) == -1 )
-        return;
-
-    if ( pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER) != 0 ) {
-        // TODO: deleting magnifier failed, for whatever reason...
+	// Ignore the request
+	// - Invalid item index
+	// - Invalid item ID or item doesn't exist
+	// - Item is already identified
+	// - No magnifiers in inventory
+	if (idx < 0 || idx >= MAX_INVENTORY || sd->status.inventory[idx].nameid <= 0 || sd->inventory_data[idx] == NULL || sd->status.inventory[idx].identify || magnifier_idx == -1)
 		return;
-    }
+
+	if (pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER) != 0) // Deleting of magnifier failed, for whatever reason...
+		return;
 
     skill_identify(sd, idx);
 #endif
