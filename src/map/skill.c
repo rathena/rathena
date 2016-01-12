@@ -4569,6 +4569,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if( flag&1 ) {//Recursive invocation
 			int sflag = skill_area_temp[0] & 0xFFF;
 			int heal = 0;
+			struct status_change *tsc = status_get_sc(bl);
+
+			if (tsc && tsc->data[SC_HOVERING] && skill_get_inf3(skill_id)&INF3_NO_EFF_HOVERING)
+				break; // Under Hovering characters are immune to select trap and ground target skills.
+
 			if( flag&SD_LEVEL )
 				sflag |= SD_LEVEL; // -1 will be used in packets instead of the skill level
 			if( skill_area_temp[1] != bl->id && !(skill_get_inf2(skill_id)&INF2_NPC_SKILL) )
@@ -12813,7 +12818,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 		status_change_end(bl, SC_VACUUM_EXTREME, INVALID_TIMER);
 
 	if (sc && sc->data[SC_HOVERING] && skill_get_inf3(sg->skill_id)&INF3_NO_EFF_HOVERING)
-		return 0; // Under Hovering characters are immune to trap and ground target skills.
+		return 0; // Under Hovering characters are immune to select trap and ground target skills.
 
 	type = status_skill2sc(sg->skill_id);
 	sce = (sc && type != SC_NONE) ? sc->data[type] : NULL;
