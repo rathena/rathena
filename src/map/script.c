@@ -9086,8 +9086,12 @@ BUILDIN_FUNC(end)
 	if( st->mes_active )
 		st->mes_active = 0;
 
-	if (sd)
-		clif_scriptclose(sd, st->oid); // If a menu/select/prompt is active, close it.
+	if (sd){
+		if (sd->state.callshop == 0)
+			clif_scriptclose(sd, st->oid); // If a menu/select/prompt is active, close it.
+		else 
+			sd->state.callshop = 0;
+	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
