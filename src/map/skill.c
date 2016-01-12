@@ -14133,14 +14133,16 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	skill_id = va_arg(ap,int);
 	inf2 = skill_get_inf2(skill_id);
 
-	if (skill_id == PR_BENEDICTIO && *c >= 2)
-		return 0; // Two companions found for Benedictio. [Skotlex]
-
-	if (inf2&INF2_ENSEMBLE_SKILL && *c >= 1)
-		return 0; // Partner found for ensembles.
-
-	if ((inf2&INF2_CHORUS_SKILL || skill_id == WL_COMET) && *c == MAX_PARTY)
-		return 0; // Entire party accounted for.
+	if (skill_id == PR_BENEDICTIO && *c >= 2) // Check for two companions for Benedictio. [Skotlex]
+		return 0;
+	else if (skill_id == AB_ADORAMUS && *c >= 1) // Check for a partner for Adoramus.
+		return 0;
+	else if (inf2&INF2_ENSEMBLE_SKILL && *c >= 1) // Check for a partner for ensembles.
+		return 0;
+	else if ((inf2&INF2_CHORUS_SKILL || skill_id == WL_COMET) && *c == MAX_PARTY) // Check for partners for Chorus or Comet; Cap if the entire party is accounted for.
+		return 0;
+	else if (*c >= 1) // Check for all other cases.
+		return 0;
 
 	if (bl == src)
 		return 0;

@@ -5848,7 +5848,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 						if (sd && sd->status.party_id) {
 							struct map_session_data* psd;
-							int p_sd[5] = {0, 0, 0, 0, 0}, c; // just limit it to 5
+							int p_sd[MAX_PARTY], c;
 
 							c = 0;
 							memset(p_sd, 0, sizeof(p_sd));
