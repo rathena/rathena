@@ -308,15 +308,21 @@ int battle_delay_damage(unsigned int tick, int amotion, struct block_list *src, 
 	struct delay_damage *dat;
 	struct status_change *sc;
 	struct block_list *d_tbl = NULL;
+	struct block_list *e_tbl = NULL;
+
 	nullpo_ret(src);
 	nullpo_ret(target);
 
 	sc = status_get_sc(target);
 
-	if (sc && sc->data[SC_DEVOTION] && sc->data[SC_DEVOTION]->val1)
-		d_tbl = map_id2bl(sc->data[SC_DEVOTION]->val1);
+	if (sc) {
+		if (sc->data[SC_DEVOTION] && sc->data[SC_DEVOTION]->val1)
+			d_tbl = map_id2bl(sc->data[SC_DEVOTION]->val1);
+		if (sc->data[SC_WATER_SCREEN_OPTION] && sc->data[SC_WATER_SCREEN_OPTION]->val1)
+			e_tbl = map_id2bl(sc->data[SC_WATER_SCREEN_OPTION]->val1);
+	}
 
-	if( d_tbl && check_distance_bl(target, d_tbl, sc->data[SC_DEVOTION]->val3) &&
+	if( ((d_tbl && check_distance_bl(target, d_tbl, sc->data[SC_DEVOTION]->val3)) || e_tbl) &&
 		damage > 0 && skill_id != PA_PRESSURE && skill_id != CR_REFLECTSHIELD )
 		damage = 0;
 
@@ -7134,22 +7140,20 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			else
 				status_change_end(target, SC_DEVOTION, INVALID_TIMER);
 		}
-		if( target->type == BL_PC && (wd.flag&BF_SHORT) && tsc->data[SC_CIRCLE_OF_FIRE_OPTION] ) {
+		if (target->type == BL_PC && (wd.flag&BF_SHORT) && tsc->data[SC_CIRCLE_OF_FIRE_OPTION]) {
 			struct elemental_data *ed = ((TBL_PC*)target)->ed;
-			if( ed ) {
+
+			if (ed) {
 				clif_skill_damage(&ed->bl, target, tick, status_get_amotion(src), 0, -30000, 1, EL_CIRCLE_OF_FIRE, tsc->data[SC_CIRCLE_OF_FIRE_OPTION]->val1, 6);
 				skill_attack(BF_WEAPON,&ed->bl,&ed->bl,src,EL_CIRCLE_OF_FIRE,tsc->data[SC_CIRCLE_OF_FIRE_OPTION]->val1,tick,wd.flag);
 			}
 		}
-		if( tsc->data[SC_WATER_SCREEN_OPTION] && tsc->data[SC_WATER_SCREEN_OPTION]->val1 ) {
+		if (tsc->data[SC_WATER_SCREEN_OPTION]) {
 			struct block_list *e_bl = map_id2bl(tsc->data[SC_WATER_SCREEN_OPTION]->val1);
-			if( e_bl && !status_isdead(e_bl) ) {
-				clif_damage(e_bl,e_bl,tick,wd.amotion,wd.dmotion,damage,wd.div_,(enum e_damage_type)wd.type,wd.damage2);
-				status_damage(target,e_bl,damage,0,0,0);
-				// Just show damage in target.
-				clif_damage(src, target, tick, wd.amotion, wd.dmotion, damage, wd.div_, (enum e_damage_type)wd.type, wd.damage2 );
-				map_freeblock_unlock();
-				return ATK_BLOCK;
+
+			if (e_bl && !status_isdead(e_bl)) {
+				clif_damage(e_bl, e_bl, tick, 0, 0, damage, wd.div_, DMG_NORMAL, 0);
+				status_fix_damage(NULL, e_bl, damage, 0);
 			}
 		}
 	}

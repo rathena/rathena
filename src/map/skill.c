@@ -3325,7 +3325,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 
 	// Instant damage
 	if( !dmg.amotion ) {
-		if( (!tsc || (!tsc->data[SC_DEVOTION] && skill_id != CR_REFLECTSHIELD) || skill_id == HW_GRAVITATION) && !shadow_flag )
+		if( (!tsc || (!tsc->data[SC_DEVOTION] && skill_id != CR_REFLECTSHIELD && !tsc->data[SC_WATER_SCREEN_OPTION]) || skill_id == HW_GRAVITATION) && !shadow_flag )
 			status_fix_damage(src,bl,damage,dmg.dmotion); //Deal damage before knockback to allow stuff like firewall+storm gust combo.
 		if( !status_isdead(bl) && additional_effects )
 			skill_additional_effect(src,bl,skill_id,skill_lv,dmg.flag,dmg.dmg_lv,tick);
@@ -3348,33 +3348,49 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			battle_delay_damage(tick, dmg.amotion,src,bl,dmg.flag,skill_id,skill_lv,damage,dmg.dmg_lv,dmg.dmotion, additional_effects);
 	}
 
-	if( tsc && tsc->data[SC_DEVOTION] && skill_id != PA_PRESSURE && skill_id != HW_GRAVITATION ) {
-		struct status_change_entry *sce = tsc->data[SC_DEVOTION];
-		struct block_list *d_bl = map_id2bl(sce->val1);
+	if (tsc && skill_id != PA_PRESSURE && skill_id != HW_GRAVITATION) {
+		if (tsc->data[SC_DEVOTION]) {
+			struct status_change_entry *sce = tsc->data[SC_DEVOTION];
+			struct block_list *d_bl = map_id2bl(sce->val1);
 
-		if( d_bl && (
-			(d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == bl->id) ||
-			(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == bl->id)
-			) && check_distance_bl(bl, d_bl, sce->val3) )
-		{
-			if(!rmdamage){
-				clif_damage(d_bl,d_bl, gettick(), 0, 0, damage, 0, DMG_NORMAL, 0);
-				status_fix_damage(NULL,d_bl, damage, 0);
+			if (d_bl && (
+				(d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == bl->id) ||
+				(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == bl->id)
+				) && check_distance_bl(bl, d_bl, sce->val3) )
+			{
+				if (!rmdamage) {
+					clif_damage(d_bl, d_bl, gettick(), 0, 0, damage, 0, DMG_NORMAL, 0);
+					status_fix_damage(NULL, d_bl, damage, 0);
+				} else {
+					bool isDevotRdamage = false;
+
+					if (battle_config.devotion_rdamage && battle_config.devotion_rdamage > rnd()%100)
+						isDevotRdamage = true;
+					// If !isDevotRdamage, reflected magics are done directly on the target not on paladin
+					// This check is only for magical skill.
+					// For BF_WEAPON skills types track var rdamage and function battle_calc_return_damage
+					clif_damage(bl, (!isDevotRdamage) ? bl : d_bl, gettick(), 0, 0, damage, 0, DMG_NORMAL, 0);
+					status_fix_damage(bl, (!isDevotRdamage) ? bl : d_bl, damage, 0);
+				}
 			} else {
-				bool isDevotRdamage = false;
-				if (battle_config.devotion_rdamage && battle_config.devotion_rdamage > rnd()%100)
-					isDevotRdamage = true;
-				// If !isDevotRdamage, reflected magics are done directly on the target not on paladin
-				// This check is only for magical skill.
-				// For BF_WEAPON skills types track var rdamage and function battle_calc_return_damage
-				clif_damage(bl,(!isDevotRdamage) ? bl : d_bl, gettick(), 0, 0, damage, 0, DMG_NORMAL, 0);
-				status_fix_damage(bl,(!isDevotRdamage) ? bl : d_bl, damage, 0);
+				status_change_end(bl, SC_DEVOTION, INVALID_TIMER);
+				if (!dmg.amotion)
+					status_fix_damage(src, bl, damage, dmg.dmotion);
 			}
 		}
-		else {
-			status_change_end(bl, SC_DEVOTION, INVALID_TIMER);
-			if( !dmg.amotion )
-				status_fix_damage(src,bl,damage,dmg.dmotion);
+		if (tsc->data[SC_WATER_SCREEN_OPTION]) {
+			struct status_change_entry *sce = tsc->data[SC_WATER_SCREEN_OPTION];
+			struct block_list *e_bl = map_id2bl(sce->val1);
+
+			if (e_bl) {
+				if (!rmdamage) {
+					clif_skill_damage(e_bl, e_bl, gettick(), 0, 0, damage, dmg.div_, skill_id, -1, skill_get_hit(skill_id));
+					status_fix_damage(NULL, e_bl, damage, 0);
+				} else {
+					clif_skill_damage(bl, bl, gettick(), 0, 0, damage, dmg.div_, skill_id, -1, skill_get_hit(skill_id));
+					status_fix_damage(bl, bl, damage, 0);
+				}
+			}
 		}
 	}
 
