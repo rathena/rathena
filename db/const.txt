@@ -14,6 +14,30 @@
 //                  in field Value. Depending on the implementation values assigned by scripts to parameters will affect
 //                  runtime values, such as Zeny, as well (see pc_readparam/pc_setparam).
 
+// These EQI_ constants do not match with the source EQI_ constants
+// Do not migrate into script_constants.h right now [Lemongrass]
+EQI_HEAD_TOP	1
+EQI_ARMOR	2
+EQI_HAND_L	3
+EQI_HAND_R	4
+EQI_GARMENT	5
+EQI_SHOES	6
+EQI_ACC_L	7
+EQI_ACC_R	8
+EQI_HEAD_MID	9
+EQI_HEAD_LOW	10
+EQI_COSTUME_HEAD_LOW	11
+EQI_COSTUME_HEAD_MID	12
+EQI_COSTUME_HEAD_TOP	13
+EQI_COSTUME_GARMENT	14
+EQI_AMMO	15
+EQI_SHADOW_ARMOR  16
+EQI_SHADOW_WEAPON  17
+EQI_SHADOW_SHIELD  18
+EQI_SHADOW_SHOES  19
+EQI_SHADOW_ACC_R  20
+EQI_SHADOW_ACC_L  21
+
 //Item Group ID
 IG_BlueBox	1
 IG_VioletBox	2
