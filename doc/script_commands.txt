@@ -4237,6 +4237,7 @@ Here are the possible look types:
  LOOK_CLOTHES_COLOR - Clothes color
  LOOK_SHIELD - Shield
  LOOK_SHOES - Shoes
+ LOOK_BODY2 - bodystyle
 
 Whatever 'shoes' means is anyone's guess, ask Gravity - the client does nothing 
 with this value. It still wants it from the server though, so it is kept, but 
