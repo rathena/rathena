@@ -3349,135 +3349,155 @@ void clif_changestatus(struct map_session_data* sd,int type,int val)
 }
 
 
-/// Updates sprite/style properties of an object.
 /// 00c3 <id>.L <type>.B <value>.B (ZC_SPRITE_CHANGE)
 /// 01d7 <id>.L <type>.B <value>.L (ZC_SPRITE_CHANGE2)
-void clif_changelook(struct block_list *bl,int type,int val)
-{
-	unsigned char buf[16];
+void clif_sprite_change(struct block_list *bl, int id, int type, int val, int val2, enum send_target target) {
+	unsigned char buf[32];
+#if PACKETVER < 4
+	const int cmd = 0xc3;
+#else
+	const int cmd = 0x1d7;
+#endif
+	WBUFW(buf,0) = cmd;
+	WBUFL(buf,2) = id;
+	WBUFB(buf,6) = type;
+	WBUFW(buf,7) = val;
+#if PACKETVER >= 4
+	WBUFW(buf,9) = val2;
+#endif
+	clif_send(buf,packet_len(cmd), bl, target);
+}
+
+
+/// Updates sprite/style properties of an object.
+void clif_changelook(struct block_list *bl, int type, int val) {
 	struct map_session_data* sd;
 	struct status_change* sc;
 	struct view_data* vd;
 	enum send_target target = AREA;
+	int val2 = 0;
 	nullpo_retv(bl);
 
 	sd = BL_CAST(BL_PC, bl);
 	sc = status_get_sc(bl);
 	vd = status_get_viewdata(bl);
-	//nullpo_ret(vd);
+
 	if( vd ) //temp hack to let Warp Portal change appearance
-	switch(type)
-	{
-		case LOOK_WEAPON:
-			if (sd)
-			{
-				clif_get_weapon_view(sd, &vd->weapon, &vd->shield);
-				val = vd->weapon;
-			}
-			else vd->weapon = val;
-		break;
-		case LOOK_SHIELD:
-			if (sd)
-			{
-				clif_get_weapon_view(sd, &vd->weapon, &vd->shield);
-				val = vd->shield;
-			}
-			else vd->shield = val;
-		break;
-		case LOOK_BASE:
-			if (!sd) break;
-
-			if (sd->sc.option&OPTION_COSTUME)
-				vd->weapon = vd->shield = 0;
-
-			if (!vd->cloth_color)
+		switch(type) {
+			case LOOK_WEAPON:
+				if (sd) {
+					clif_get_weapon_view(sd, &vd->weapon, &vd->shield);
+					val = vd->weapon;
+				}
+				else 
+					vd->weapon = val;
 				break;
+			case LOOK_SHIELD:
+				if (sd) {
+					clif_get_weapon_view(sd, &vd->weapon, &vd->shield);
+					val = vd->shield;
+				}
+				else 
+					vd->shield = val;
+				break;
+			case LOOK_BASE:
+				if (!sd) 
+					break;
 
-			if (sd) {
-				if (sd->sc.option&OPTION_WEDDING && battle_config.wedding_ignorepalette)
-					vd->cloth_color = 0;
-				if (sd->sc.option&OPTION_XMAS && battle_config.xmas_ignorepalette)
-					vd->cloth_color = 0;
-				if (sd->sc.option&OPTION_SUMMER && battle_config.summer_ignorepalette)
-					vd->cloth_color = 0;
-				if (sd->sc.option&OPTION_HANBOK && battle_config.hanbok_ignorepalette)
-					vd->cloth_color = 0;
-				if (sd->sc.option&OPTION_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
-					vd->cloth_color = 0;
-				if (vd->body_style && (
+				if ( val == INVISIBLE_CLASS )
+					return;
+
+				if (sd->sc.option&OPTION_COSTUME)
+					vd->weapon = vd->shield = 0;
+
+				if (!vd->cloth_color)
+					break;
+
+				if (sd) {
+					if (sd->sc.option&OPTION_WEDDING && battle_config.wedding_ignorepalette)
+						vd->cloth_color = 0;
+					if (sd->sc.option&OPTION_XMAS && battle_config.xmas_ignorepalette)
+						vd->cloth_color = 0;
+					if (sd->sc.option&OPTION_SUMMER && battle_config.summer_ignorepalette)
+						vd->cloth_color = 0;
+					if (sd->sc.option&OPTION_HANBOK && battle_config.hanbok_ignorepalette)
+						vd->cloth_color = 0;
+					if (sd->sc.option&OPTION_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
+						vd->cloth_color = 0;
+					if (vd->body_style && (
+ 						sd->sc.option&OPTION_WEDDING || sd->sc.option&OPTION_XMAS ||
+ 						sd->sc.option&OPTION_SUMMER || sd->sc.option&OPTION_HANBOK ||
+ 						sd->sc.option&OPTION_OKTOBERFEST))
+ 						vd->body_style = 0;
+				}
+				break;
+			case LOOK_HAIR:
+				vd->hair_style = val;
+				break;
+			case LOOK_HEAD_BOTTOM:
+				vd->head_bottom = val;
+				break;
+			case LOOK_HEAD_TOP:
+				vd->head_top = val;
+				break;
+			case LOOK_HEAD_MID:
+				vd->head_mid = val;
+				break;
+			case LOOK_HAIR_COLOR:
+				vd->hair_color = val;
+				break;
+			case LOOK_CLOTHES_COLOR:
+				if (val && sd) {
+					if (sd->sc.option&OPTION_WEDDING && battle_config.wedding_ignorepalette)
+						val = 0;
+					if (sd->sc.option&OPTION_XMAS && battle_config.xmas_ignorepalette)
+						val = 0;
+					if (sd->sc.option&OPTION_SUMMER && battle_config.summer_ignorepalette)
+						val = 0;
+					if (sd->sc.option&OPTION_HANBOK && battle_config.hanbok_ignorepalette)
+						val = 0;
+					if (sd->sc.option&OPTION_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
+						val = 0;
+				}
+				vd->cloth_color = val;
+				break;
+			case LOOK_SHOES:
+#if PACKETVER > 3
+				if (sd) {
+					int n;
+					if((n = sd->equip_index[2]) >= 0 && sd->inventory_data[n]) {
+						if(sd->inventory_data[n]->view_id > 0)
+							val = sd->inventory_data[n]->view_id;
+						else
+							val = sd->status.inventory[n].nameid;
+					} else
+						val = 0;
+				}
+#endif
+				//Shoes? No packet uses this....
+				break;
+			case LOOK_BODY:
+				// unknown purpose
+				break;
+			case LOOK_ROBE:
+#if PACKETVER < 20110111
+				return;
+#else
+				vd->robe = val;
+#endif
+				break;
+			case LOOK_BODY2:
+#if PACKETVER < 20150513
+				return;
+#else
+				if (val && (
  					sd->sc.option&OPTION_WEDDING || sd->sc.option&OPTION_XMAS ||
  					sd->sc.option&OPTION_SUMMER || sd->sc.option&OPTION_HANBOK ||
  					sd->sc.option&OPTION_OKTOBERFEST))
- 					vd->body_style = 0;
-			}
-		break;
-		case LOOK_HAIR:
-			vd->hair_style = val;
-		break;
-		case LOOK_HEAD_BOTTOM:
-			vd->head_bottom = val;
-		break;
-		case LOOK_HEAD_TOP:
-			vd->head_top = val;
-		break;
-		case LOOK_HEAD_MID:
-			vd->head_mid = val;
-		break;
-		case LOOK_HAIR_COLOR:
-			vd->hair_color = val;
-		break;
-		case LOOK_CLOTHES_COLOR:
-			if (val && sd) {
-				if (sd->sc.option&OPTION_WEDDING && battle_config.wedding_ignorepalette)
-					val = 0;
-				if (sd->sc.option&OPTION_XMAS && battle_config.xmas_ignorepalette)
-					val = 0;
-				if (sd->sc.option&OPTION_SUMMER && battle_config.summer_ignorepalette)
-					val = 0;
-				if (sd->sc.option&OPTION_HANBOK && battle_config.hanbok_ignorepalette)
-					val = 0;
-				if (sd->sc.option&OPTION_OKTOBERFEST && battle_config.oktoberfest_ignorepalette)
-					val = 0;
-			}
-			vd->cloth_color = val;
-		break;
-		case LOOK_SHOES:
-#if PACKETVER > 3
-			if (sd) {
-				int n;
-				if((n = sd->equip_index[2]) >= 0 && sd->inventory_data[n]) {
-					if(sd->inventory_data[n]->view_id > 0)
-						val = sd->inventory_data[n]->view_id;
-					else
-						val = sd->status.inventory[n].nameid;
-				} else
-					val = 0;
-			}
+ 					val = 0;
+ 				vd->body_style = val;
 #endif
-			//Shoes? No packet uses this....
-		break;
-		case LOOK_BODY:
-			// unknown purpose
-		break;
-		case LOOK_ROBE:
-#if PACKETVER < 20110111
-			return;
-#else
-			vd->robe = val;
-#endif
-		break;
-		case LOOK_BODY2:
-#if PACKETVER < 20150513
-			return;
-#else
-			if (val && (
- 				sd->sc.option&OPTION_WEDDING || sd->sc.option&OPTION_XMAS ||
- 				sd->sc.option&OPTION_SUMMER || sd->sc.option&OPTION_HANBOK ||
- 				sd->sc.option&OPTION_OKTOBERFEST))
- 				val = 0;
- 			vd->body_style = val;
-#endif
-		break;
+				break;
 	}
 
 	// prevent leaking the presence of GM-hidden objects
@@ -3485,66 +3505,33 @@ void clif_changelook(struct block_list *bl,int type,int val)
 		target = SELF;
 
 #if PACKETVER < 4
-	WBUFW(buf,0)=0xc3;
-	WBUFL(buf,2)=bl->id;
-	WBUFB(buf,6)=type;
-	WBUFB(buf,7)=val;
-	clif_send(buf,packet_len(0xc3),bl,target);
+	clif_sprite_change(bl, bl->id, type, val, 0, target);
 #else
-	WBUFW(buf,0)=0x1d7;
-	WBUFL(buf,2)=bl->id;
 	if(type == LOOK_WEAPON || type == LOOK_SHIELD) {
-		WBUFB(buf,6)=LOOK_WEAPON;
-		WBUFW(buf,7)=vd->weapon;
-		WBUFW(buf,9)=vd->shield;
-	} else {
-		WBUFB(buf,6)=type;
-		WBUFL(buf,7)=val;
+		nullpo_retv(vd);
+		type = LOOK_WEAPON;
+		val = vd->weapon;
+		val2 = vd->shield;
 	}
-	clif_send(buf,packet_len(0x1d7),bl,target);
+	if( disguised(bl) ) {
+		clif_sprite_change(bl, bl->id, type, val, val2, AREA_WOS);
+		clif_sprite_change(bl, -bl->id, type, val, val2, SELF);
+	} else
+		clif_sprite_change(bl, bl->id, type, val, val2, target);
 #endif
 }
+
 
 //Sends a change-base-look packet required for traps as they are triggered.
-void clif_changetraplook(struct block_list *bl,int val)
-{
-	unsigned char buf[32];
-#if PACKETVER < 4
-	WBUFW(buf,0)=0xc3;
-	WBUFL(buf,2)=bl->id;
-	WBUFB(buf,6)=LOOK_BASE;
-	WBUFB(buf,7)=val;
-	clif_send(buf,packet_len(0xc3),bl,AREA);
-#else
-	WBUFW(buf,0)=0x1d7;
-	WBUFL(buf,2)=bl->id;
-	WBUFB(buf,6)=LOOK_BASE;
-	WBUFW(buf,7)=val;
-	WBUFW(buf,9)=0;
-	clif_send(buf,packet_len(0x1d7),bl,AREA);
-#endif
+void clif_changetraplook(struct block_list *bl,int val) {
+	clif_sprite_change(bl, bl->id, LOOK_BASE, val, 0, AREA);
 }
 
-//For the stupid cloth-dye bug. Resends the given view data to the area specified by bl.
-void clif_refreshlook(struct block_list *bl,int id,int type,int val,enum send_target target)
-{
-	unsigned char buf[32];
-#if PACKETVER < 4
-	WBUFW(buf,0)=0xc3;
-	WBUFL(buf,2)=id;
-	WBUFB(buf,6)=type;
-	WBUFB(buf,7)=val;
-	clif_send(buf,packet_len(0xc3),bl,target);
-#else
-	WBUFW(buf,0)=0x1d7;
-	WBUFL(buf,2)=id;
-	WBUFB(buf,6)=type;
-	WBUFW(buf,7)=val;
-	WBUFW(buf,9)=0;
-	clif_send(buf,packet_len(0x1d7),bl,target);
-#endif
-}
 
+/// For the stupid cloth-dye bug. Resends the given view data to the area specified by bl.
+void clif_refreshlook(struct block_list *bl, int id, int type, int val, enum send_target target) {
+	clif_sprite_change(bl, id, type, val, 0, target);
+}
 
 /// Character status (ZC_STATUS).
 /// 00bd <stpoint>.W <str>.B <need str>.B <agi>.B <need agi>.B <vit>.B <need vit>.B
@@ -3558,23 +3545,23 @@ void clif_initialstatus(struct map_session_data *sd) {
 	nullpo_retv(sd);
 
 	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0xbd));
-	buf=WFIFOP(fd,0);
+	WFIFOHEAD(fd, packet_len(0xbd));
+	buf = WFIFOP(fd,0);
 
-	WBUFW(buf,0)=0xbd;
-	WBUFW(buf,2)=min(sd->status.status_point, INT16_MAX);
-	WBUFB(buf,4)=min(sd->status.str, UINT8_MAX);
-	WBUFB(buf,5)=pc_need_status_point(sd,SP_STR,1);
-	WBUFB(buf,6)=min(sd->status.agi, UINT8_MAX);
-	WBUFB(buf,7)=pc_need_status_point(sd,SP_AGI,1);
-	WBUFB(buf,8)=min(sd->status.vit, UINT8_MAX);
-	WBUFB(buf,9)=pc_need_status_point(sd,SP_VIT,1);
-	WBUFB(buf,10)=min(sd->status.int_, UINT8_MAX);
-	WBUFB(buf,11)=pc_need_status_point(sd,SP_INT,1);
-	WBUFB(buf,12)=min(sd->status.dex, UINT8_MAX);
-	WBUFB(buf,13)=pc_need_status_point(sd,SP_DEX,1);
-	WBUFB(buf,14)=min(sd->status.luk, UINT8_MAX);
-	WBUFB(buf,15)=pc_need_status_point(sd,SP_LUK,1);
+	WBUFW(buf,0) = 0xbd;
+	WBUFW(buf,2) = min(sd->status.status_point, INT16_MAX);
+	WBUFB(buf,4) = min(sd->status.str, UINT8_MAX);
+	WBUFB(buf,5) = pc_need_status_point(sd,SP_STR,1);
+	WBUFB(buf,6) = min(sd->status.agi, UINT8_MAX);
+	WBUFB(buf,7) = pc_need_status_point(sd,SP_AGI,1);
+	WBUFB(buf,8) = min(sd->status.vit, UINT8_MAX);
+	WBUFB(buf,9) = pc_need_status_point(sd,SP_VIT,1);
+	WBUFB(buf,10) = min(sd->status.int_, UINT8_MAX);
+	WBUFB(buf,11) = pc_need_status_point(sd,SP_INT,1);
+	WBUFB(buf,12) = min(sd->status.dex, UINT8_MAX);
+	WBUFB(buf,13) = pc_need_status_point(sd,SP_DEX,1);
+	WBUFB(buf,14) = min(sd->status.luk, UINT8_MAX);
+	WBUFB(buf,15) = pc_need_status_point(sd,SP_LUK,1);
 
 	WBUFW(buf,16) = pc_leftside_atk(sd);
 	WBUFW(buf,18) = pc_rightside_atk(sd);
@@ -3596,24 +3583,23 @@ void clif_initialstatus(struct map_session_data *sd) {
 	WBUFW(buf,40) = sd->battle_status.amotion; // aspd
 	WBUFW(buf,42) = 0;  // always 0 (plusASPD)
 
-	WFIFOSET(fd,packet_len(0xbd));
+	WFIFOSET(fd, packet_len(0xbd));
 
-	clif_updatestatus(sd,SP_STR);
-	clif_updatestatus(sd,SP_AGI);
-	clif_updatestatus(sd,SP_VIT);
-	clif_updatestatus(sd,SP_INT);
-	clif_updatestatus(sd,SP_DEX);
-	clif_updatestatus(sd,SP_LUK);
+	clif_updatestatus(sd, SP_STR);
+	clif_updatestatus(sd, SP_AGI);
+	clif_updatestatus(sd, SP_VIT);
+	clif_updatestatus(sd, SP_INT);
+	clif_updatestatus(sd, SP_DEX);
+	clif_updatestatus(sd, SP_LUK);
 
-	clif_updatestatus(sd,SP_ATTACKRANGE);
-	clif_updatestatus(sd,SP_ASPD);
+	clif_updatestatus(sd, SP_ATTACKRANGE);
+	clif_updatestatus(sd, SP_ASPD);
 }
 
 
 /// Marks an ammunition item in inventory as equipped (ZC_EQUIP_ARROW).
 /// 013c <index>.W
-void clif_arrowequip(struct map_session_data *sd,int val)
-{
+void clif_arrowequip(struct map_session_data *sd,int val) {
 	int fd;
 
 	nullpo_retv(sd);
@@ -3623,9 +3609,9 @@ void clif_arrowequip(struct map_session_data *sd,int val)
 #endif
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len(0x013c));
-	WFIFOW(fd,0)=0x013c;
-	WFIFOW(fd,2)=val+2; //Item ID of the arrow
-	WFIFOSET(fd,packet_len(0x013c));
+	WFIFOW(fd,0) = 0x013c;
+	WFIFOW(fd,2) = val + 2; //Item ID of the arrow
+	WFIFOSET(fd, packet_len(0x013c));
 }
 
 
@@ -3638,17 +3624,16 @@ void clif_arrowequip(struct map_session_data *sd,int val)
 ///     3 = assassin, baby_assassin, assassin_cross => MsgStringTable[1040]="You have equipped throwing daggers."
 ///         gunslinger => MsgStringTable[1175]="Bullets have been equipped."
 ///         NOT ninja => MsgStringTable[245]="Ammunition has been equipped."
-void clif_arrow_fail(struct map_session_data *sd,int type)
-{
+void clif_arrow_fail(struct map_session_data *sd,int type) {
 	int fd;
 
 	nullpo_retv(sd);
 
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len(0x013b));
-	WFIFOW(fd,0)=0x013b;
-	WFIFOW(fd,2)=type;
-	WFIFOSET(fd,packet_len(0x013b));
+	WFIFOW(fd,0) = 0x013b;
+	WFIFOW(fd,2) = type;
+	WFIFOSET(fd, packet_len(0x013b));
 }
 
 
@@ -3694,19 +3679,18 @@ void clif_arrow_create_list(struct map_session_data *sd)
 /// result:
 ///     0 = failure
 ///     1 = success
-void clif_statusupack(struct map_session_data *sd,int type,int ok,int val)
-{
+void clif_statusupack(struct map_session_data *sd,int type,int ok,int val) {
 	int fd;
 
 	nullpo_retv(sd);
 
 	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0xbc));
-	WFIFOW(fd,0)=0xbc;
-	WFIFOW(fd,2)=type;
-	WFIFOB(fd,4)=ok;
-	WFIFOB(fd,5)=cap_value(val,0,UINT8_MAX);
-	WFIFOSET(fd,packet_len(0xbc));
+	WFIFOHEAD(fd, packet_len(0xbc));
+	WFIFOW(fd,0) = 0xbc;
+	WFIFOW(fd,2) = type;
+	WFIFOB(fd,4) = ok;
+	WFIFOB(fd,5) = cap_value(val, 0, UINT8_MAX);
+	WFIFOSET(fd, packet_len(0xbc));
 }
 
 
@@ -3773,30 +3757,30 @@ void clif_equipitemack(struct map_session_data *sd,int n,int pos,uint8 flag)
 ///     1 = success
 void clif_unequipitemack(struct map_session_data *sd,int n,int pos,int ok)
 {
-	int fd,header,offs=0;
+	int fd, header, offs = 0;
 #if PACKETVER >= 20130000
 	header = 0x99a;
-	ok = ok ? 0:1;
+	ok = ok ? 0 : 1;
 #elif PACKETVER >= 20110824
 	header = 0x8d1;
-	ok = ok ? 0:1;
+	ok = ok ? 0 : 1;
 #else
 	header = 0xac;
 #endif
 	nullpo_retv(sd);
 
 	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(header));
-	WFIFOW(fd,offs+0)=header;
-	WFIFOW(fd,offs+2)=n+2;
+	WFIFOHEAD(fd, packet_len(header));
+	WFIFOW(fd,offs+0) = header;
+	WFIFOW(fd,offs+2) = n+2;
 #if PACKETVER >= 20130000
-	WFIFOL(fd,offs+4)=pos;
-	offs +=2;
+	WFIFOL(fd,offs+4) = pos;
+	offs += 2;
 #else
-	WFIFOW(fd,offs+4)=pos;
+	WFIFOW(fd,offs+4) = pos;
 #endif
-	WFIFOB(fd,offs+6)=ok;
-	WFIFOSET(fd,packet_len(header));
+	WFIFOB(fd,offs+6) = ok;
+	WFIFOSET(fd, packet_len(header));
 }
 
 
@@ -12308,24 +12292,31 @@ void clif_parse_NpcCloseClicked(int fd,struct map_session_data *sd)
 /// 0178 <index>.W
 /// index:
 ///     -1 = cancel
-void clif_parse_ItemIdentify(int fd,struct map_session_data *sd)
-{
-	short idx = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
+void clif_parse_ItemIdentify(int fd,struct map_session_data *sd) {
+	short idx = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]) - 2;
 
 	if (sd->menuskill_id != MC_IDENTIFY)
 		return;
-	if( idx == -1 ) {// cancel pressed
-		clif_menuskill_clear(sd);
-		return;
+
+	// Ignore the request
+	// - Invalid item index
+	// - Invalid item ID or item doesn't exist
+	// - Item is already identified
+	if (idx < 0 || idx >= MAX_INVENTORY ||
+		sd->status.inventory[idx].nameid <= 0 || sd->inventory_data[idx] == NULL ||
+		sd->status.inventory[idx].identify) {// cancel pressed
+			clif_menuskill_clear(sd);
+			return;
 	}
-	skill_identify(sd,idx-2);
+
+	skill_identify(sd, idx);
 	clif_menuskill_clear(sd);
 }
 
 
 /// Answer to arrow crafting item selection dialog (CZ_REQ_MAKINGARROW).
 /// 01ae <name id>.W
-void clif_parse_SelectArrow(int fd,struct map_session_data *sd){
+void clif_parse_SelectArrow(int fd,struct map_session_data *sd) {
 	unsigned short nameid = RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	if (pc_istrading(sd)) {
 		//Make it fail to avoid shop exploits where you sell something different than you see.
@@ -17493,11 +17484,15 @@ int clif_poison_list(struct map_session_data *sd, uint16 skill_lv) {
 
 	return 1;
 }
+
+/// 0442 <Length>.W <count>.L <Skill_list>.W (ZC_SKILL_SELECT_REQUEST).
 int clif_autoshadowspell_list(struct map_session_data *sd) {
 	int fd, i, c;
 	nullpo_ret(sd);
 	fd = sd->fd;
-	if( !fd ) return 0;
+
+	if( !fd ) 
+		return 0;
 
 	if( sd->menuskill_id == SC_AUTOSHADOWSPELL )
 		return 0;
@@ -17531,11 +17526,11 @@ int clif_autoshadowspell_list(struct map_session_data *sd) {
 /*===========================================
  * Skill list for Four Elemental Analysis
  * and Change Material skills.
+ * 07e3 <type>.L (ZC_ITEMLISTWIN_OPEN).
  *------------------------------------------*/
-int clif_skill_itemlistwindow( struct map_session_data *sd, uint16 skill_id, uint16 skill_lv )
-{
+int clif_skill_itemlistwindow( struct map_session_data *sd, uint16 skill_id, uint16 skill_lv ) {
 #if PACKETVER >= 20090922
-	int fd;
+	int fd = sd->fd;
 
 	nullpo_ret(sd);
 
@@ -17545,15 +17540,12 @@ int clif_skill_itemlistwindow( struct map_session_data *sd, uint16 skill_id, uin
 	if( skill_id == GN_CHANGEMATERIAL )
 		skill_lv = 0; // Changematerial
 
-	fd = sd->fd;
-	WFIFOHEAD(fd,packet_len(0x7e3));
+	WFIFOHEAD(fd, packet_len(0x7e3));
 	WFIFOW(fd,0) = 0x7e3;
 	WFIFOL(fd,2) = skill_lv;
 	WFIFOL(fd,4) = 0;
-	WFIFOSET(fd,packet_len(0x7e3));
-
+	WFIFOSET(fd, packet_len(0x7e3));
 #endif
-
 	return 1;
 }
 
@@ -17578,21 +17570,23 @@ void clif_parse_SkillSelectMenu(int fd, struct map_session_data *sd) {
 
 	clif_menuskill_clear(sd);
 }
-/*==========================================
- * Kagerou/Oboro amulet spirit
- *------------------------------------------*/
-void clif_spiritcharm(struct map_session_data *sd)
-{
+
+
+/// Kagerou/Oboro amulet spirit (ZC_SPIRITS_ATTRIBUTE).
+/// 08cf <id>.L <type>.W <num>.W
+void clif_spiritcharm(struct map_session_data *sd) {
 	unsigned char buf[10];
 
 	nullpo_retv(sd);
 
-	WBUFW(buf,0)=0x08cf;
-	WBUFL(buf,2)=sd->bl.id;
-	WBUFW(buf,6)=sd->spiritcharm_type;
-	WBUFW(buf,8)=sd->spiritcharm;
-	clif_send(buf,packet_len(0x08cf),&sd->bl,AREA);
+	WBUFW(buf,0) = 0x08cf;
+	WBUFL(buf,2) = sd->bl.id;
+	WBUFW(buf,6) = sd->spiritcharm_type;
+	WBUFW(buf,8) = sd->spiritcharm;
+	clif_send(buf, packet_len(0x08cf), &sd->bl, AREA);
 }
+
+
 /// Move Item from or to Personal Tab (CZ_WHATSOEVER) [FE]
 /// 0907 <index>.W
 ///
@@ -17603,7 +17597,7 @@ void clif_spiritcharm(struct map_session_data *sd)
 void clif_parse_MoveItem(int fd, struct map_session_data *sd) {
 #if PACKETVER >= 20111122
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
-	int index = RFIFOW(fd,info->pos[0])-2;
+	int index = RFIFOW(fd,info->pos[0]) - 2;
 	int type = RFIFOB(fd, info->pos[1]);
 
 	/* can't move while dead. */
@@ -17638,6 +17632,8 @@ void clif_favorite_item(struct map_session_data* sd, unsigned short index) {
 	WFIFOSET(fd,packet_len(0x908));
 }
 
+
+/// 08d2 <id>.L <Pos X>.W <Pos Y>.W (ZC_FASTMOVE).
 void clif_snap( struct block_list *bl, short x, short y ) {
 	unsigned char buf[10];
 
@@ -17655,6 +17651,7 @@ void clif_snap( struct block_list *bl, short x, short y ) {
 		clif_send(buf,packet_len(0x8d2),bl, AREA);
 }
 
+/// 0977 <id>.L <HP>.L <maxHP>.L (ZC_HP_INFO).
 void clif_monster_hp_bar( struct mob_data* md, int fd ) {
 #if PACKETVER >= 20120404
 	WFIFOHEAD(fd,packet_len(0x977));
@@ -17698,14 +17695,15 @@ void clif_ackworldinfo(struct map_session_data* sd) {
 
 /// req world info (CZ_REQ_BEFORE_WORLD_INFO)
 /// 0978 <AID>.L
-void clif_parse_reqworldinfo(int fd,struct map_session_data *sd){
+void clif_parse_reqworldinfo(int fd,struct map_session_data *sd) {
 	//uint32 aid = RFIFOL(fd,2); //should we trust client ?
-	if(sd) clif_ackworldinfo(sd);
+	if(sd) 
+		clif_ackworldinfo(sd);
 }
 
 /// unknown usage (CZ_BLOCKING_PLAY_CANCEL)
 /// 0447
-void clif_parse_blocking_playcancel(int fd,struct map_session_data *sd){
+void clif_parse_blocking_playcancel(int fd,struct map_session_data *sd) {
 	//if(sd)
 	;
 }
@@ -18045,7 +18043,10 @@ void clif_notify_bindOnEquip(struct map_session_data *sd, int n) {
 	WFIFOSET(sd->fd, info->len);
 }
 
-/// [Ind/Hercules]
+/**
+* [Ind/Hercules]
+* 08b3 <Length>.W <id>.L <message>.?B (ZC_SHOWSCRIPT)
+**/
 void clif_showscript(struct block_list* bl, const char* message) {
 	char buf[256];
 	size_t len;
@@ -18068,7 +18069,10 @@ void clif_showscript(struct block_list* bl, const char* message) {
 	clif_send((unsigned char *) buf, WBUFW(buf,2), bl, ALL_CLIENT);
 }
 
-/// [Ind/Hercules]
+/**
+* [Ind/Hercules]
+* 07fc <OldMasterAID>.L <NewMasterAID>.L (ZC_CHANGE_GROUP_MASTER)
+**/
 void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, int new_leader_aid) {
 	unsigned char buf[10];
 
@@ -18077,7 +18081,7 @@ void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, 
 	WBUFW(buf,0) = 0x7fc;
 	WBUFL(buf,2) = prev_leader_aid;
 	WBUFL(buf,6) = new_leader_aid;
-	clif_send(buf,packet_len(0x7fc),&sd->bl,PARTY);
+	clif_send(buf, packet_len(0x7fc), &sd->bl, PARTY);
 }
 
 /**
@@ -18629,7 +18633,6 @@ void clif_broadcast_obtain_special_item(const char *char_name, unsigned short na
 /// Show body view windows (ZC_DRESSROOM_OPEN).
 /// 0A02 <view>.W
 /// Value <flag> has the following effects:
-/// 0: Close an open Dress Room window.
 /// 1: Open a Dress Room window.
 void clif_dressing_room(struct map_session_data *sd, int flag) {
 #if PACKETVER >= 20150513

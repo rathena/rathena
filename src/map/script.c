@@ -21028,17 +21028,21 @@ BUILDIN_FUNC(setquestinfo_job) {
 }
 
 /**
- * opendressroom({<char_id>});
+ * opendressroom(<flag>{,<char_id>});
  */
 BUILDIN_FUNC(opendressroom)
 {
 #if PACKETVER >= 20150513
+	int flag = 1;
     TBL_PC* sd;
 
-    if (!script_charid2sd(2, sd))
+	if( script_hasdata(st,2) )
+		flag = script_getnum(st,2);
+
+    if (!script_charid2sd(3, sd))
         return SCRIPT_CMD_FAILURE;
 
-    clif_dressing_room(sd, 1);
+    clif_dressing_room(sd, flag);
 
     return SCRIPT_CMD_SUCCESS;
 #else
@@ -21046,24 +21050,6 @@ BUILDIN_FUNC(opendressroom)
 #endif
 }
 
-/**
- * closedressroom({<char_id>});
- */
-BUILDIN_FUNC(closedressroom)
-{
-#if PACKETVER >= 20150513
-    TBL_PC* sd;
-
-    if (!script_charid2sd(2, sd))
-        return SCRIPT_CMD_FAILURE;
-
-    clif_dressing_room(sd, 0);
-
-    return SCRIPT_CMD_SUCCESS;
-#else
-    return SCRIPT_CMD_FAILURE;
-#endif
-}
 
 #include "../custom/script.inc"
 
@@ -21630,8 +21616,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setquestinfo_level,"iii"),
 	BUILDIN_DEF(setquestinfo_req,"iii*"),
 	BUILDIN_DEF(setquestinfo_job,"ii*"),
-	BUILDIN_DEF(opendressroom,"?"),
-	BUILDIN_DEF(closedressroom,"?"),
+	BUILDIN_DEF(opendressroom,"i?"),
 
 #include "../custom/script_def.inc"
 

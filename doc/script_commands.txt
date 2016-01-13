@@ -8998,27 +8998,20 @@ The command returns 1 upon success, and these values upon failure:
 
 ---------------------------------------
 
-*opendressroom({<char_id>});
+*opendressroom(<flag>{,<char_id>});
 
 This will open the Dress Room window on the client connected to the invoking character.
 
     mes "Close this window to open the Dress Room window.";
     close2;
-    opendressroom;
+    opendressroom(1);
     end;
+
+Valid flag are:
+ 1 - Open the Dress Room window
 
 ---------------------------------------
 
-*closedressroom({<char_id>});
-
-This will close an open Dress Room window on the client connected to the invoking character.
-
-    mes "Close this window to close the Dress Room window.";
-    close2;
-    closedressroom;
-    end;
-
----------------------------------------
 
 Whew.
 That's about all of them.
