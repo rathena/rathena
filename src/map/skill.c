@@ -15884,7 +15884,7 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 		int reduce_cast_rate = 0;
 		uint8 flag = skill_get_castnodex(skill_id);
 
-		// calculate base cast time (reduced by dex)
+		// Calculate base cast time (reduced by dex)
 		if (!(flag&1)) {
 			int scale = battle_config.castrate_dex_scale - status_get_dex(bl);
 
@@ -15894,12 +15894,13 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 				return 0; // instant cast
 		}
 
-		// calculate cast time reduced by item/card bonuses
-		if (!(flag&4) && sd) {
+		// Calculate cast time reduced by item/card bonuses
+		if (sd) {
 			int i;
 
-			if (sd->castrate != 100)
+			if (!(flag&4) && sd->castrate != 100)
 				reduce_cast_rate += 100 - sd->castrate;
+			// Skill-specific reductions work regardless of flag
 			for(i = 0; i < ARRAYLENGTH(sd->skillcastrate) && sd->skillcastrate[i].id; i++) {
 				if (sd->skillcastrate[i].id == skill_id) {
 					reduce_cast_rate -= sd->skillcastrate[i].val;
@@ -15908,16 +15909,19 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 			}
 		}
 
-		// NOTE: Magic Strings and Foresight are treated as separate factors in the calculation
-		// They are not added to the other modifiers [iRO Wiki]
-		if (sc && sc->count && !(flag&2)) {
+		// These cast time reductions are processed even if the skill fails
+		if (sc && sc->count) {
+			// Magic Strings stacks additively with item bonuses
+			if (!(flag&2) && sc->data[SC_POEMBRAGI])
+				reduce_cast_rate += sc->data[SC_POEMBRAGI]->val2;
+			// Foresight halves the cast time, it does not stack additively
 			if (sc->data[SC_MEMORIZE]) {
-				reduce_cast_rate += 50;
+				if(!(flag&2))
+					time -= time * 50 / 100;
+				// Foresight counter gets reduced even if the skill is not affected by it
 				if ((--sc->data[SC_MEMORIZE]->val2) <= 0)
 					status_change_end(bl, SC_MEMORIZE, INVALID_TIMER);
 			}
-			if (sc->data[SC_POEMBRAGI])
-				reduce_cast_rate += sc->data[SC_POEMBRAGI]->val2;
 		}
 
 		time = time * (1 - (float)reduce_cast_rate / 100);
@@ -15929,7 +15933,7 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 		time = time * battle_config.cast_rate / 100;
 	// return final cast time
 	time = max(time, 0);
-	//ShowInfo("Castime castfix = %d\n",time);
+	//ShowInfo("Castime castfix = %f\n",time);
 
 	return (int)time;
 }
@@ -15941,7 +15945,7 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
  * @param time: Cast time before Status Change addition or reduction
  * @return time: Modified castime after status change addition or reduction
  */
-int skill_castfix_sc(struct block_list *bl, double time)
+int skill_castfix_sc(struct block_list *bl, double time, uint8 flag)
 {
 	struct status_change *sc = status_get_sc(bl);
 
@@ -15952,20 +15956,24 @@ int skill_castfix_sc(struct block_list *bl, double time)
 		return (int)time;
 
 	if (sc && sc->count) {
-		if (sc->data[SC_SLOWCAST])
-			time += time * sc->data[SC_SLOWCAST]->val2 / 100;
-		if (sc->data[SC_PARALYSIS])
-			time += sc->data[SC_PARALYSIS]->val3;
+		if (!(flag&2)) {
+			if (sc->data[SC_SLOWCAST])
+				time += time * sc->data[SC_SLOWCAST]->val2 / 100;
+			if (sc->data[SC_PARALYSIS])
+				time += sc->data[SC_PARALYSIS]->val3;
+			if (sc->data[SC_IZAYOI])
+				time -= time * 50 / 100;
+		}
 		if (sc->data[SC_SUFFRAGIUM]) {
-			time -= time * sc->data[SC_SUFFRAGIUM]->val2 / 100;
+			if(!(flag&2))
+				time -= time * sc->data[SC_SUFFRAGIUM]->val2 / 100;
+			//Suffragium ends even if the skill is not affected by it
 			status_change_end(bl, SC_SUFFRAGIUM, INVALID_TIMER);
 		}
-		if (sc->data[SC_IZAYOI])
-			time -= time * 50 / 100;
 	}
 
 	time = max(time, 0);
-	//ShowInfo("Castime castfix_sc = %d\n",time);
+	//ShowInfo("Castime castfix_sc = %f\n",time);
 
 	return (int)time;
 }
