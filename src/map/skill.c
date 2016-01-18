@@ -3902,8 +3902,9 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				{
 					//Get the next waterball cell to consume
 					struct s_skill_unit_layout *layout;
+					int i;
 					layout = skill_get_unit_layout(skl->skill_id, skl->skill_lv, src, skl->x, skl->y);
-					for (int i = skl->type; i >= 0 && i < layout->count; i++) {
+					for (i = skl->type; i >= 0 && i < layout->count; i++) {
 						int ux = skl->x + layout->dx[i];
 						int uy = skl->y + layout->dy[i];
 						unit = map_find_skill_unit_oncell(src, ux, uy, WZ_WATERBALL, NULL, 0);
