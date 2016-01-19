@@ -3299,10 +3299,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case RL_SLUGSHOT:
 			dmg.dmotion = clif_skill_damage(dsrc,bl,tick,status_get_amotion(src),dmg.dmotion,damage,dmg.div_,skill_id,-1,5);
 			break;
-		case WZ_WATERBALL:
-			if (damage > 0)
-				dmg.dmotion = clif_skill_damage(dsrc, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, flag&SD_LEVEL ? -1 : skill_lv, type);
-			break;
 		case AB_DUPLELIGHT_MELEE:
 		case AB_DUPLELIGHT_MAGIC:
 			dmg.amotion = 300;/* makes the damage value not overlap with previous damage (when displayed by the client) */
@@ -3917,10 +3913,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					if (skl->type > 0 && !status_isdead(target) && path_search_long(NULL,src->m,src->x,src->y,target->x,target->y,CELL_CHKNOREACH)) {
 						// Apply canact delay here to prevent hacks (unlimited casting)
 						ud->canact_tick = tick + skill_delayfix(src, skl->skill_id, skl->skill_lv);
-						if (!skill_attack(BF_MAGIC, src, src, target, skl->skill_id, skl->skill_lv, tick, skl->flag) && skl->type > 1) {
-							// If skill doesn't deal damage, no new timer is created
-							unit = NULL;
-						}
+						skill_attack(BF_MAGIC, src, src, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
 					}
 					if (unit && !status_isdead(target) && !status_isdead(src)) {
 						if(skl->type > 0)
@@ -14169,12 +14162,14 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	skill_id = va_arg(ap,int);
 	inf2 = skill_get_inf2(skill_id);
 
-	if (skill_id == PR_BENEDICTIO)
-		if(*c >= 2) // Check for two companions for Benedictio. [Skotlex]
+	if (skill_id == PR_BENEDICTIO) {
+		if (*c >= 2) // Check for two companions for Benedictio. [Skotlex]
 			return 0;
-	else if ((inf2&INF2_CHORUS_SKILL || skill_id == WL_COMET))
-		if(*c == MAX_PARTY) // Check for partners for Chorus or Comet; Cap if the entire party is accounted for.
+	}
+	else if ((inf2&INF2_CHORUS_SKILL || skill_id == WL_COMET)) {
+		if (*c == MAX_PARTY) // Check for partners for Chorus or Comet; Cap if the entire party is accounted for.
 			return 0;
+	}
 	else if (*c >= 1) // Check for one companion for all other cases.
 		return 0;
 
@@ -17001,7 +16996,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 // The official implementation makes them fail to appear when casted on top of ANYTHING
 // but I wonder if they didn't actually meant to fail when casted on top of each other?
 // hence, I leave the alternate implementation here, commented. [Skotlex]
-			if (unit->range <= 0)
+			if (unit->range <= 0 && skill_get_unit_id(unit->group->skill_id, 0) != UNT_DUMMYSKILL)
 			{
 				(*alive) = 0;
 				return 1;
