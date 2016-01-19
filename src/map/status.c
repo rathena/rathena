@@ -1933,7 +1933,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (sc->data[SC_ALL_RIDING])
 			return false; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
-		if (sc->data[SC_ASH] && rnd()%2 && !(status->mode&MD_BOSS)) {
+		if (flag == 1 && sc->data[SC_ASH] && rnd()%2 && !(status->mode&MD_BOSS)) {
 			if (src->type == BL_PC)
 				clif_skill_fail((TBL_PC*)src,skill_id,USESKILL_FAIL_LEVEL,0);
 			return false;
