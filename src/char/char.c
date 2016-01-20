@@ -2670,6 +2670,8 @@ static void char_config_split_startpoint(char *w2_value)
 #endif
 
 	fields = (char **)aMalloc(fields_length * sizeof(char *));
+	if (fields == NULL)
+		return; // Failed to allocate memory.
 	lineitem = strtok(w2_value, ":");
 
 	while (lineitem != NULL) {
@@ -2715,6 +2717,8 @@ static void char_config_split_startitem(char *w2_value)
 	strcat(config_name, "start_items");
 
 	fields = (char **)aMalloc(fields_length * sizeof(char *));
+	if (fields == NULL)
+		return; // Failed to allocate memory.
 	lineitem = strtok(w2_value, ":");
 
 	while (lineitem != NULL) {
