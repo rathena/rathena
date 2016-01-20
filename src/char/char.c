@@ -53,13 +53,6 @@ static char* msg_table[CHAR_MAX_MSG]; // Login Server messages_conf
 // other is char_id
 unsigned int save_flag = 0;
 
-#define MAX_STARTITEM 32
-struct startitem {
-	int nameid; //Item ID
-	int amount; //Number of items
-	int pos; //Position (for auto-equip)
-} start_items[MAX_STARTITEM+1];
-
 // Advanced subnet check [LuzZza]
 struct s_subnet {
 	uint32 mask;
@@ -1494,8 +1487,8 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	//Retrieve the newly auto-generated char id
 	char_id = (int)Sql_LastInsertId(sql_handle);
 	//Give the char the default items
-	for (k = 0; k <= MAX_STARTITEM && start_items[k].nameid != 0; k ++) {
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%hu', '%d', '%d', '%d')", schema_config.inventory_db, char_id, start_items[k].nameid, start_items[k].amount, start_items[k].pos, 1) )
+	for (k = 0; k <= MAX_STARTITEM && charserv_config.start_items[k].nameid != 0; k ++) {
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%hu', '%hu', '%hu', '%d')", schema_config.inventory_db, char_id, charserv_config.start_items[k].nameid, charserv_config.start_items[k].amount, charserv_config.start_items[k].pos, 1) )
 			Sql_ShowDebug(sql_handle);
 	}
 
@@ -2634,11 +2627,18 @@ void char_set_defaults(){
 	charserv_config.log_inter = 1;	// loggin inter or not [devil]
 	charserv_config.char_check_db =1;
 
-        //see const.h to change those default
+	// See const.h to change the default values
 	charserv_config.start_point[0].map = mapindex_name2id(MAP_DEFAULT_NAME); 
 	charserv_config.start_point[0].x = MAP_DEFAULT_X;
 	charserv_config.start_point[0].y = MAP_DEFAULT_Y;
 	charserv_config.start_point_count = 0;
+
+	charserv_config.start_items[0].nameid = 1201;
+	charserv_config.start_items[0].amount = 1;
+	charserv_config.start_items[0].pos = 2;
+	charserv_config.start_items[1].nameid = 2301;
+	charserv_config.start_items[1].amount = 1;
+	charserv_config.start_items[1].pos = 16;
 
 	charserv_config.console = 0;
 	charserv_config.max_connect_user = -1;
@@ -2650,6 +2650,92 @@ void char_set_defaults(){
 	safestrncpy(charserv_config.default_map, "prontera", MAP_NAME_LENGTH);
 	charserv_config.default_map_x = 156;
 	charserv_config.default_map_y = 191;
+}
+
+/**
+ * Split start_point configuration values.
+ * @param w2_value: Value from w2
+ */
+static void char_config_split_startpoint(char *w2_value)
+{
+	char *lineitem, **fields, config_name[20];
+	int i = 0, fields_length = 3 + 1;
+
+	memset(config_name, 0, sizeof(config_name));
+
+#ifdef RENEWAL
+	strcat(config_name, "start_point");
+#else
+	strcat(config_name, "start_point_pre");
+#endif
+
+	fields = (char **)aMalloc(fields_length * sizeof(char *));
+	lineitem = strtok(w2_value, ":");
+
+	while (lineitem != NULL) {
+		int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
+
+		if (n + 1 < fields_length) {
+			ShowDebug("%s: not enough arguments for %s! Skipping...\n", config_name, lineitem);
+			lineitem = strtok(NULL, ":"); //next lineitem
+			continue;
+		}
+		if (i > MAX_STARTPOINT)
+			ShowDebug("%s: too many start points, only %d are allowed! Ignoring parameter %s...\n", config_name, MAX_STARTPOINT, lineitem);
+		else {
+			charserv_config.start_point[i].map = mapindex_name2id(fields[1]);
+			if (!charserv_config.start_point[i].map) {
+				ShowError("Start point %s not found in map-index cache. Setting to default location.\n", charserv_config.start_point[i].map);
+				charserv_config.start_point[i].map = mapindex_name2id(MAP_DEFAULT_NAME);
+				charserv_config.start_point[i].x = MAP_DEFAULT_X;
+				charserv_config.start_point[i].y = MAP_DEFAULT_Y;
+			} else {
+				charserv_config.start_point[i].x = max(0, atoi(fields[2]));
+				charserv_config.start_point[i].y = max(0, atoi(fields[3]));
+			}
+			charserv_config.start_point_count++;
+		}
+		lineitem = strtok(NULL, ":"); //next lineitem
+		i++;
+	}
+	aFree(fields);
+}
+
+/**
+ * Split start_items configuration values.
+ * @param w2_value: Value from w2
+ */
+static void char_config_split_startitem(char *w2_value)
+{
+	char *lineitem, **fields, config_name[20];
+	int i = 0, fields_length = 3 + 1;
+
+	memset(config_name, 0, sizeof(config_name));
+
+	strcat(config_name, "start_items");
+
+	fields = (char **)aMalloc(fields_length * sizeof(char *));
+	lineitem = strtok(w2_value, ":");
+
+	while (lineitem != NULL) {
+		int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
+
+		if (n + 1 < fields_length) {
+			ShowDebug("%s: not enough arguments for %s! Skipping...\n", config_name, lineitem);
+			lineitem = strtok(NULL, ":"); //next lineitem
+			continue;
+		}
+		if (i > MAX_STARTITEM)
+			ShowDebug("%s: too many start items, only %d are allowed! Ignoring parameter %s...\n", config_name, MAX_STARTITEM, lineitem);
+		else {
+			charserv_config.start_items[i].nameid = max(0, atoi(fields[1]));
+			charserv_config.start_items[i].amount = max(0, atoi(fields[2]));
+			charserv_config.start_items[i].pos = max(0, atoi(fields[3]));
+		}
+		lineitem = strtok(NULL, ":"); //next lineitem
+		i++;
+	}
+	aFree(fields);
 }
 
 bool char_config_read(const char* cfgName, bool normal){
@@ -2748,63 +2834,13 @@ bool char_config_read(const char* cfgName, bool normal){
 #else
 		} else if (strcmpi(w1, "start_point_pre") == 0) {
 #endif
-			int i = 0, fields_length = 3 + 1;
-			char *lineitem, **fields;
-
-			fields = (char**)aMalloc(fields_length * sizeof(char*));
-			lineitem = strtok(w2, ":");
-
-			while (lineitem != NULL) {
-				int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
-
-				if (n + 1 < fields_length) {
-					ShowDebug("start_point: not enough arguments for %s! Skipping...\n", lineitem);
-					lineitem = strtok(NULL, ":"); //next itemline
-					continue;
-				}
-				if (i > MAX_STARTPOINT) {
-					ShowDebug("start_point: too many start points, only %d are allowed! Ignoring parameter %s...\n", MAX_STARTPOINT, lineitem);
-				} else {
-					charserv_config.start_point[i].map = mapindex_name2id(fields[1]);
-					if (!charserv_config.start_point[i].map)
-						ShowError("Specified start_point %s not found in map-index cache.\n", charserv_config.start_point[i].map);
-					charserv_config.start_point[i].x = max(0, atoi(fields[2]));
-					charserv_config.start_point[i].y = max(0, atoi(fields[3]));
-					charserv_config.start_point_count++;
-				}
-				lineitem = strtok(NULL, ":"); //next itemline
-				i++;
-			}
-			aFree(fields);
+			char_config_split_startpoint(w2);
 		} else if (strcmpi(w1, "start_zeny") == 0) {
 			charserv_config.start_zeny = atoi(w2);
 			if (charserv_config.start_zeny < 0)
 				charserv_config.start_zeny = 0;
 		} else if (strcmpi(w1, "start_items") == 0) {
-			int i=0;
-			char *lineitem, **fields;
-			int fields_length = 3+1;
-			fields = (char**)aMalloc(fields_length*sizeof(char*));
-
-			lineitem = strtok(w2, ":");
-			while (lineitem != NULL) {
-				int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
-				if(n+1 < fields_length){
-					ShowDebug("start_items: not enough arguments for %s! Skipping...\n",lineitem);
-					lineitem = strtok(NULL, ":"); //next itemline
-					continue;
-				}
-				if(i > MAX_STARTITEM){
-					ShowDebug("start_items: too many items, only %d are allowed! Ignoring parameter %s...\n",MAX_STARTITEM,lineitem);
-				} else {
-					start_items[i].nameid = max(0,atoi(fields[1]));
-					start_items[i].amount = max(0,atoi(fields[2]));
-					start_items[i].pos = max(0,atoi(fields[3]));
-				}
-				lineitem = strtok(NULL, ":"); //next itemline
-				i++;
-			}
-			aFree(fields);
+			char_config_split_startitem(w2);
 		} else if(strcmpi(w1,"log_char")==0) {		//log char or not [devil]
 			charserv_config.log_char = atoi(w2);
 		} else if (strcmpi(w1, "unknown_char_name") == 0) {
@@ -2885,7 +2921,6 @@ bool char_config_read(const char* cfgName, bool normal){
 	ShowInfo("Done reading %s.\n", cfgName);
 	return true;
 }
-
 
 /*
  * Message conf function

@@ -219,6 +219,11 @@ struct point {
 	short x,y;
 };
 
+struct startitem {
+	unsigned short nameid, amount;
+	short pos;
+};
+
 enum e_skill_flag
 {
 	SKILL_FLAG_PERMANENT,
