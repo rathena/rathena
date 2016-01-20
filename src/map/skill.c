@@ -360,7 +360,7 @@ int skill_get_range2 (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 			// added to allow GS skills to be effected by the range of Snake Eyes [Reddozen]
 			if(inf3&INF3_EFF_SNAKEEYE) range += pc_checkskill((TBL_PC*)bl, GS_SNAKEEYE);
 		} else
-			range += 10; //Assume level 10?
+			range += battle_config.mob_eye_range_bonus;
 	}
 
 	if(inf3&(INF3_EFF_SHADOWJUMP|INF3_EFF_RADIUS|INF3_EFF_RESEARCHTRAP) ){

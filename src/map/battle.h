@@ -597,6 +597,7 @@ extern struct Battle_Config
 	int min_body_style;
 	int max_body_style;
 	int save_body_style;
+	int mob_eye_range_bonus; //Vulture's Eye and Snake's Eye range bonus
 } battle_config;
 
 void do_init_battle(void);
