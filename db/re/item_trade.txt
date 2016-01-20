@@ -929,7 +929,7 @@
 6955,499,100	// Piece_Of_Soul_Pig
 6956,499,100	// Captured_Sheep
 6957,499,100	// Lamb_Fleece
-//6960,467,100	//
+6960,467,100	// Key_Air_Fortress
 //6993,475,100	//
 //6994,475,100	//
 7025,475,100	// Lucifer's_Lament
@@ -3595,7 +3595,7 @@
 17550,475,100	// (Limited)High_Density_Kalunium_Box(30)
 17567,475,100	// Event_Almighty_Box
 17568,475,100	// Event_Almighty_Box(100)
-//17569,475,100	//
+17569,475,100	// Dungeon_1_hour_Ticket_Box
 //17570,475,100	//
 //17573,475,100	//
 //17574,475,100	//
@@ -3824,7 +3824,7 @@
 22894,507,100	// (Limited)2015_Neuralizer
 22895,507,100	// (Limited)2015_Status_Initialization_Volume
 22896,507,100	// (Limited)Old_Status_Initialization_Volume
-//22901,499,100	//
+22901,499,100	// Question_Old_Blue_Box
 22902,475,100	// Sealed_Card_Album_Scroll_II
 //22906,475,100	//
 //22946,475,100	//

@@ -4772,7 +4772,8 @@ REPLACE INTO `item_db_re` VALUES (6937,'Silicone_Shell','Silicone Shell',3,10,NU
 REPLACE INTO `item_db_re` VALUES (6938,'Hedgehog_Picks','Hedgehog Picks',3,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6939,'Old_Belt','Old Belt',3,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6940,'Moving_Dark_Matter','Moving Dark Matter',3,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
-#
+REPLACE INTO `item_db_re` VALUES (6941,'Fragments_Valkyrie_Power','Fragments Valkyrie Power',3,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (6942,'Will_Master','Will Master',3,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6943,'Attack_Stone(Upper)','Attack Stone(Upper)',6,10,NULL,100,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'bonus bAtkRate,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6944,'Magic_Stone(Upper)','Magic Stone(Upper)',6,10,NULL,100,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'bonus bMatkRate,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6945,'Strength_Stone(Middle)','Strength Stone(Middle)',6,10,NULL,100,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'bonus bStr,1;',NULL,NULL);
@@ -4788,6 +4789,7 @@ REPLACE INTO `item_db_re` VALUES (6955,'Piece_Of_Soul_Pig','Piece Of Soul Pig',3
 REPLACE INTO `item_db_re` VALUES (6956,'Captured_Sheep','Captured Sheep',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6957,'Lamb_Fleece','Lamb Fleece',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (6958,'Lamb_Horns','Lamb Horns',3,10,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (6960,'Key_Air_Fortress','Key Air Fortress',3,10,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (7001,'Mould_Powder','Mould Powder',3,466,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (7002,'Ogre_Tooth','Ogre Tooth',3,658,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -9243,6 +9245,7 @@ REPLACE INTO `item_db_re` VALUES (17550,'(Limited)High_Density_Kalunium_Box(30)'
 REPLACE INTO `item_db_re` VALUES (17552,'Garnet_Lucky_Egg','Garnet Lucky Egg',18,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Garnet_Lucky_Egg);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17567,'Event_Almighty_Box__','Event Almighty Box',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 22902,1; bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17568,'Event_Almighty_Box(100)_','Event Almighty Box(100)',18,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 22902,11; bonus_script "{ bonus bAllStats,10; bonus bBaseAtk,30; bonus bMatk,30; }",1800;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (17569,'Dungeon_1_hour_Ticket_Box','Dungeon 1 Hour Ticket Box',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 14505,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17572,'Erzulie_Lucky_Egg','Erzulie Lucky Egg',18,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Erzulie_Lucky_Egg);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17584,'Venus_Lucky_Egg','Venus Lucky Egg',18,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Venus_Lucky_Egg);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17588,'Amora_Lucky_Egg','Amora Lucky Egg',18,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Amora_Lucky_Egg);',NULL,NULL);
@@ -10684,6 +10687,8 @@ REPLACE INTO `item_db_re` VALUES (22893,'New_Year\'s_Shadow_Cube','New Year\'s S
 REPLACE INTO `item_db_re` VALUES (22894,'(Limited)2015_Neuralizer','(Limited)2015 Neuralizer',2,20,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'callfunc "F_CashReset";',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22895,'(Limited)2015_Status_Initialization_Volume','(Limited)2015 Status Initialization Volume',2,20,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*Works like item 6320, can reset up to 3x within 1 hour*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22896,'(Limited)Old_Status_Initialization_Volume','(Limited)Old Status Initialization Volume',2,20,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*Works like item 6320, can reset up to 3x within 1 hour*/',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22899,'Parchment_City','Parchment City',2,20,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "AL_INCAGI",1; heal -15,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22901,'Question_Old_Blue_Box','Question Old Blue Box',2,20,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*No info yet*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22902,'Sealed_Card_Album_Scroll_II','Sealed Card Album Scroll II',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem callfunc("F_Rand",6238,6239,17474,22829,24243,24244,24245),1;',NULL,NULL);
 #===================================================================
 # Shadow Equipments
