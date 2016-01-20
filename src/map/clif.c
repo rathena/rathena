@@ -988,9 +988,9 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 #elif PACKETVER < 20120221
 	WBUFW(buf,2) = (uint16)((spawn ? 64 : 65)+strlen(name));
 #elif PACKETVER < 20130807
-	WBUFW(buf,2) = (uint16)((spawn ? 77 : 78)+strlen(name));
+	WBUFW(buf,2) = (spawn ? 77 : 78)+strlen(name);
 #else
-	WBUFW(buf,2) = (uint16)((spawn ? 79 : 80)+strlen(name));
+	WBUFW(buf,2) = (spawn ? 79 : 80)+strlen(name);
 #endif
 	WBUFB(buf,4) = clif_bl_type(bl);
 	offset+=3;
@@ -1185,9 +1185,9 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 #elif PACKETVER < 20120221
 	WBUFW(buf, 2) = (uint16)(71+strlen(name));
 #elif PACKETVER < 20130807
-	WBUFW(buf, 2) = (uint16)(84+strlen(name));
+	WBUFW(buf, 2) = 84+strlen(name);
 #else
-	WBUFW(buf, 2) = (uint16)(86+strlen(name));
+	WBUFW(buf, 2) = 86+strlen(name);
 #endif
 	offset+=2;
 	buf = WBUFP(buffer,offset);

@@ -1738,8 +1738,7 @@ ACMD_FUNC(bodystyle)
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
 	// Limit body styles to certain jobs since not all of them are released yet.
-	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC)) {
+	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC)) {
 		clif_displaymessage(fd, msg_txt(sd,770));	// This job has no alternate body styles.
 		return -1;
 	}
