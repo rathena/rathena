@@ -8282,7 +8282,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					}
 					break;
 				case 8:	// curse coma and poison
-					status_change_start(src, bl, SC_COMA, 100, skill_lv, 0, src->id, 0, 0, SCSTART_NONE);
+					status_change_start(src, bl, SC_COMA, 10000, skill_lv, 0, src->id, 0, 0, SCSTART_NONE);
 					sc_start(src,bl,SC_CURSE,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 					sc_start2(src,bl,SC_POISON,100,skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
 					break;
