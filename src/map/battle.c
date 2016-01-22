@@ -2850,6 +2850,21 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 #endif
 		}
 
+		switch(skill_id) {
+			case RA_WUGDASH:
+			case RA_WUGSTRIKE:
+			case RA_WUGBITE:
+				if (sd) {
+					skill = pc_checkskill(sd, RA_TOOTHOFWUG);
+
+					ATK_ADD(wd.damage, wd.damage2, 30 * skill);
+#ifdef RENEWAL
+					ATK_ADD(wd.masteryAtk, wd.masteryAtk2, 30 * skill);
+#endif
+				}
+				break;
+		}
+
 		if (sc) { // Status change considered as masteries
 			uint8 i;
 
@@ -3749,13 +3764,9 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case RA_WUGDASH:// ATK 300%
 			skillratio += 200;
-			if (sc && sc->data[SC_DANCEWITHWUG])
-				skillratio += 10 * sc->data[SC_DANCEWITHWUG]->val1 * (2 + battle_calc_chorusbonus(sd));
 			break;
 		case RA_WUGSTRIKE:
 			skillratio += -100 + 200 * skill_lv;
-			if (sc && sc->data[SC_DANCEWITHWUG])
-				skillratio += 10 * sc->data[SC_DANCEWITHWUG]->val1 * (2 + battle_calc_chorusbonus(sd));
 			break;
 		case RA_WUGBITE:
 			skillratio += 300 + 200 * skill_lv;
@@ -4249,19 +4260,6 @@ static int64 battle_calc_skill_constant_addition(struct Damage wd, struct block_
 				atk = 40 * pc_checkskill(sd, RA_RESEARCHTRAP);
 			break;
 #endif
-		case RA_WUGDASH:
-			if (sd && sd->weight)
-				atk = (sd->weight / 8) + (30 * pc_checkskill(sd,RA_TOOTHOFWUG));
-			if (sc && sc->data[SC_DANCEWITHWUG])
-				atk += 10 * sc->data[SC_DANCEWITHWUG]->val1 * (2 + battle_calc_chorusbonus(sd));
-			break;
-		case RA_WUGSTRIKE:
-		case RA_WUGBITE:
-			if(sd)
-				atk = 30 * pc_checkskill(sd, RA_TOOTHOFWUG);
-			if (sc && sc->data[SC_DANCEWITHWUG])
-				atk += 10 * sc->data[SC_DANCEWITHWUG]->val1 * (2 + battle_calc_chorusbonus(sd));
-			break;
 		case GC_COUNTERSLASH:
 			atk = sstatus->agi * 2 + (sd ? sd->status.job_level * 4 : 0);
 			break;
@@ -4402,7 +4400,16 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_GLOOMYDAY_SK]->val2);
 			RE_ALLATK_ADDRATE(wd, sc->data[SC_GLOOMYDAY_SK]->val2);
 		}
-
+		if (sc->data[SC_DANCEWITHWUG]) {
+			if (inf3&INF3_SC_DANCEWITHWUG) {
+				ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_DANCEWITHWUG]->val1 * 10 * battle_calc_chorusbonus(sd));
+				RE_ALLATK_ADDRATE(wd, sc->data[SC_DANCEWITHWUG]->val1 * 10 * battle_calc_chorusbonus(sd));
+			}
+			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_DANCEWITHWUG]->val1 * 2 * battle_calc_chorusbonus(sd));
+#ifdef RENEWAL
+			ATK_ADDRATE(wd.equipAtk, wd.equipAtk2, sc->data[SC_DANCEWITHWUG]->val1 * 2 * battle_calc_chorusbonus(sd));
+#endif
+		}
 		if(sc->data[SC_ZENKAI] && sstatus->rhw.ele == sc->data[SC_ZENKAI]->val2) {
 			ATK_ADD(wd.damage, wd.damage2, 200);
 #ifdef RENEWAL
@@ -5228,7 +5235,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		if (sd) { //monsters, homuns and pets have their damage computed directly
 			wd.damage = wd.statusAtk + wd.weaponAtk + wd.equipAtk + wd.masteryAtk;
 			wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.masteryAtk2;
-			if(wd.flag&BF_LONG) //Long damage rate addition doesn't use weapon + equip attack
+			if(wd.flag&BF_LONG && (skill_id != RA_WUGBITE && skill_id != RA_WUGSTRIKE)) //Long damage rate addition doesn't use weapon + equip attack
 				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.long_attack_atk_rate);
 			//Custom fix for "a hole" in renewal attack calculation [exneval]
 			ATK_ADDRATE(wd.damage, wd.damage2, 6);
