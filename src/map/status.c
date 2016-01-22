@@ -1996,6 +1996,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				(sc->data[SC_MARIONETTE] && skill_id != CG_MARIONETTE) || // Only skill you can use is marionette again to cancel it
 				(sc->data[SC_MARIONETTE2] && skill_id == CG_MARIONETTE) || // Cannot use marionette if you are being buffed by another
 				(sc->data[SC_STASIS] && skill_block_check(src, SC_STASIS, skill_id)) ||
+				(sc->data[SC_BITE] && skill_block_check(src, SC_BITE, skill_id)) ||
 				(sc->data[SC_KAGEHUMI] && skill_block_check(src, SC_KAGEHUMI, skill_id))
 			))
 				return false;

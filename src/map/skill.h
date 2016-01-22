@@ -96,6 +96,8 @@ enum e_skill_inf3 {
 	INF3_USABLE_MANHOLE   = 0x08000, // Skill that can be used to target while under SC__MANHOLE effect
 	INF3_HIT_HIDING       = 0x10000, // Skill that affects hidden targets
 	INF3_SC_GLOOMYDAY_SK  = 0x20000, // Skill that affects SC_GLOOMYDAY_SK
+	INF3_SC_DANCEWITHWUG  = 0x40000, // Skill that is affected by SC_DANCEWITHWUG
+	INF3_BITE_BLOCK       = 0x80000, // Skill blocked by RA_WUGBITE
 };
 
 /// Walk intervals at which chase-skills are attempted to be triggered.

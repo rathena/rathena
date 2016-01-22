@@ -20216,6 +20216,9 @@ int skill_block_check(struct block_list *bl, sc_type type , uint16 skill_id) {
 		case SC_KAGEHUMI:
 			if( inf3&INF3_KAGEHUMI_BL)
 				return 1;
+		case SC_BITE:
+			if (inf3&INF3_BITE_BLOCK)
+				return 1;
 			break;
 	}
 
