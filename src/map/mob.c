@@ -981,6 +981,7 @@ int mob_spawn (struct mob_data *md)
 	memset(&md->state, 0, sizeof(md->state));
 	status_calc_mob(md, SCO_FIRST);
 	md->attacked_id = 0;
+	md->norm_attacked_id = 0;
 	md->target_id = 0;
 	md->move_fail_count = 0;
 	md->ud.state.attack_continue = 0;
@@ -1047,7 +1048,9 @@ static int mob_can_changetarget(struct mob_data* md, struct block_list* target, 
 		case MSS_BERSERK:
 			if (!(mode&MD_CHANGETARGET_MELEE))
 				return 0;
-			return (battle_config.mob_ai&0x4 || check_distance_bl(&md->bl, target, 3));
+			if (!(battle_config.mob_ai&0x80) && md->norm_attacked_id != target->id)
+				return 0;
+			return (battle_config.mob_ai&0x4 || check_distance_bl(&md->bl, target, md->status.rhw.range+1));
 		case MSS_RUSH:
 			return (mode&MD_CHANGETARGET_CHASE);
 		case MSS_FOLLOW:
@@ -1476,7 +1479,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	// Abnormalities
 	if(( md->sc.opt1 > 0 && md->sc.opt1 != OPT1_STONEWAIT && md->sc.opt1 != OPT1_BURNING && md->sc.opt1 != OPT1_CRYSTALIZE )
 	   || md->sc.data[SC_BLADESTOP] || md->sc.data[SC__MANHOLE] || md->sc.data[SC_CURSEDCIRCLE_TARGET]) {//Should reset targets.
-		md->target_id = md->attacked_id = 0;
+		md->target_id = md->attacked_id = md->norm_attacked_id = 0;
 		return false;
 	}
 
@@ -1527,7 +1530,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			&&  !mobskill_use(md, tick, MSC_RUDEATTACKED) // If can't rude Attack
 			&&  can_move && unit_escape(&md->bl, tbl, rnd()%10 +1)) // Attempt escape
 			{	//Escaped
-				md->attacked_id = 0;
+				md->attacked_id = md->norm_attacked_id = 0;
 				return true;
 			}
 		}
@@ -1555,7 +1558,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 				&& !tbl && unit_escape(&md->bl, abl, rnd()%10 +1))
 				{	//Escaped.
 					//TODO: Maybe it shouldn't attempt to run if it has another, valid target?
-					md->attacked_id = 0;
+					md->attacked_id = md->norm_attacked_id = 0;
 					return true;
 				}
 			}
@@ -1566,23 +1569,19 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 			}
 			else
 			{ //Attackable
-				if (!tbl || dist < md->status.rhw.range || !check_distance_bl(&md->bl, tbl, dist)
-					|| battle_gettarget(tbl) != md->bl.id)
-				{	//Change if the new target is closer than the actual one
-					//or if the previous target is not attacking the mob. [Skotlex]
-					md->target_id = md->attacked_id; // set target
-					if (md->state.attacked_count)
-					  md->state.attacked_count--; //Should we reset rude attack count?
-					md->min_chase = dist+md->db->range3;
-					if(md->min_chase>MAX_MINCHASE)
-						md->min_chase=MAX_MINCHASE;
-					tbl = abl; //Set the new target
-				}
+				//If a monster can change the target to the attacker, it will change the target
+				md->target_id = md->attacked_id; // set target
+				if (md->state.attacked_count)
+					md->state.attacked_count--; //Should we reset rude attack count?
+				md->min_chase = dist+md->db->range3;
+				if(md->min_chase>MAX_MINCHASE)
+					md->min_chase=MAX_MINCHASE;
+				tbl = abl; //Set the new target
 			}
 		}
 
 		//Clear it since it's been checked for already.
-		md->attacked_id = 0;
+		md->attacked_id = md->norm_attacked_id = 0;
 	}
 
 	// Processing of slave monster
@@ -2155,13 +2154,8 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 			damage = (int)(UINT_MAX - md->tdmg);
 			md->tdmg = UINT_MAX;
 		}
-		if (md->state.aggressive) { //No longer aggressive, change to retaliate AI.
+		if (md->state.aggressive) //No longer aggressive, change to retaliate AI.
 			md->state.aggressive = 0;
-			if(md->state.skillstate== MSS_ANGRY)
-				md->state.skillstate = MSS_BERSERK;
-			if(md->state.skillstate== MSS_FOLLOW)
-				md->state.skillstate = MSS_RUSH;
-		}
 		//Log damage
 		if (src)
 			mob_log_damage(md, src, damage);
@@ -2941,7 +2935,7 @@ int mob_class_change (struct mob_data *md, int mob_id)
 		md->lootitems = (struct s_mob_lootitem *)aCalloc(LOOTITEM_SIZE,sizeof(struct s_mob_lootitem));
 
 	//Targets should be cleared no morph
-	md->target_id = md->attacked_id = 0;
+	md->target_id = md->attacked_id = md->norm_attacked_id = 0;
 
 	//Need to update name display.
 	clif_charnameack(0, &md->bl);

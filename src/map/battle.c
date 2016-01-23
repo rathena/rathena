@@ -242,6 +242,36 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
 	return bl_list[rnd()%c];
 }
 
+/*========================================== [Playtester]
+* Deals damage without delay, applies additional effects and triggers monster events
+* This function is called from battle_delay_damage or battle_delay_damage_sub
+* @param src: Source of damage
+* @param target: Target of damage
+* @param damage: Damage to be dealt
+* @param delay: Damage delay
+* @param skill_lv: Level of skill used
+* @param skill_id: ID o skill used
+* @param dmg_lv: State of the attack (miss, etc.)
+* @param attack_type: Damage delay
+* @param additional_effects: Whether additional effect should be applied
+* @param tick: Current tick
+*------------------------------------------*/
+void battle_damage(struct block_list *src, struct block_list *target, int64 damage, int delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, unsigned int tick) {
+	map_freeblock_lock();
+	status_fix_damage(src, target, damage, delay); // We have to separate here between reflect damage and others [icescope]
+	if (attack_type && !status_isdead(target) && additional_effects)
+		skill_additional_effect(src, target, skill_id, skill_lv, attack_type, dmg_lv, tick);
+	if (dmg_lv > ATK_BLOCK && attack_type)
+		skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, tick);
+	// This is the last place where we have access to the actual damage type, so any monster events depending on type must be placed here
+	if (target->type == BL_MOB && damage && (attack_type&BF_NORMAL)) {
+		// Monsters differentiate whether they have been attacked by a skill or a normal attack
+		struct mob_data* md = BL_CAST(BL_MOB, target);
+		md->norm_attacked_id = md->attacked_id;
+	}
+	map_freeblock_unlock();
+}
+
 /// Damage Delayed Structure
 struct delay_damage {
 	int src_id;
@@ -281,13 +311,8 @@ int battle_delay_damage_sub(int tid, unsigned int tick, int id, intptr_t data)
 			(target->type != BL_PC || ((TBL_PC*)target)->invincible_timer == INVALID_TIMER) &&
 			check_distance_bl(src, target, dat->distance) ) //Check to see if you haven't teleported. [Skotlex]
 		{
-			map_freeblock_lock();
-			status_fix_damage(src, target, dat->damage, dat->delay);
-			if( dat->attack_type && !status_isdead(target) && dat->additional_effects )
-				skill_additional_effect(src,target,dat->skill_id,dat->skill_lv,dat->attack_type,dat->dmg_lv,tick);
-			if( dat->dmg_lv > ATK_BLOCK && dat->attack_type )
-				skill_counter_additional_effect(src,target,dat->skill_id,dat->skill_lv,dat->attack_type,tick);
-			map_freeblock_unlock();
+			//Deal damage
+			battle_damage(src, target, dat->damage, dat->delay, dat->skill_lv, dat->skill_id, dat->dmg_lv, dat->attack_type, dat->additional_effects, tick);
 		} else if( !src && dat->skill_id == CR_REFLECTSHIELD ) { // it was monster reflected damage, and the monster died, we pass the damage to the character as expected
 			map_freeblock_lock();
 			status_fix_damage(target, target, dat->damage, dat->delay);
@@ -327,13 +352,8 @@ int battle_delay_damage(unsigned int tick, int amotion, struct block_list *src, 
 		damage = 0;
 
 	if ( !battle_config.delay_battle_damage || amotion <= 1 ) {
-		map_freeblock_lock();
-		status_fix_damage(src, target, damage, ddelay); // We have to separate here between reflect damage and others [icescope]
-		if( attack_type && !status_isdead(target) && additional_effects )
-			skill_additional_effect(src, target, skill_id, skill_lv, attack_type, dmg_lv, gettick());
-		if( dmg_lv > ATK_BLOCK && attack_type )
-			skill_counter_additional_effect(src, target, skill_id, skill_lv, attack_type, gettick());
-		map_freeblock_unlock();
+		//Deal damage
+		battle_damage(src, target, damage, ddelay, skill_lv, skill_id, dmg_lv, attack_type, additional_effects, gettick());
 		return 0;
 	}
 	dat = ers_alloc(delay_damage_ers, struct delay_damage);
@@ -8010,7 +8030,7 @@ static const struct _battle_data {
 	{ "ignore_items_gender",                &battle_config.ignore_items_gender,             1,      0,      1,              },
 	{ "berserk_cancels_buffs",              &battle_config.berserk_cancels_buffs,           0,      0,      1,              },
 	{ "debuff_on_logout",                   &battle_config.debuff_on_logout,                1|2,    0,      1|2,            },
-	{ "monster_ai",                         &battle_config.mob_ai,                          0x000,  0x000,  0x77F,          },
+	{ "monster_ai",                         &battle_config.mob_ai,                          0x000,  0x000,  0x7FF,          },
 	{ "hom_setting",                        &battle_config.hom_setting,                     0xFFFF, 0x0000, 0xFFFF,         },
 	{ "dynamic_mobs",                       &battle_config.dynamic_mobs,                    1,      0,      1,              },
 	{ "mob_remove_damaged",                 &battle_config.mob_remove_damaged,              1,      0,      1,              },

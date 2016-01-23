@@ -2576,10 +2576,9 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 			if(md->state.skillstate == MSS_ANGRY || md->state.skillstate == MSS_BERSERK) {
 				if (mobskill_use(md,tick,-1))
 					return 1;
-			} else {
-				// Set mob's ANGRY/BERSERK states.
-				md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;
 			}
+			// Set mob's ANGRY/BERSERK states.
+			md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;
 
 			if (sstatus->mode&MD_ASSIST && DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME) { 
 				// Link monsters nearby [Skotlex]
