@@ -113,7 +113,7 @@ Aegis/eA (description)
 05: 0x2085 (aggressive, change-target chase)
 06: 0x0000 (passive, immobile, can't attack) [plants]
 07: 0x108B (passive, looter, assist, change-target melee)
-08: 0x6085 (aggressive, change-target chase, target weak enemies)
+08: 0x7085 (aggressive, change-target melee/chase, target weak enemies)
 09: 0x3095 (aggressive, change-target melee/chase, cast sensor idle) [Guardian]
 10: 0x0084 (aggressive, immobile)
 11: 0x0084 (aggressive, immobile) [Guardian]
