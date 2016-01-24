@@ -3910,7 +3910,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				}	// Fall through
 				case WZ_JUPITEL:
 					// Official behaviour is to hit as long as there is a line of sight, regardless of distance
-					if (skl->type > 0 && !status_isdead(target) && path_search_long(NULL,src->m,src->x,src->y,target->x,target->y,CELL_CHKNOREACH)) {
+					if (skl->type > 0 && !status_isdead(target) && path_search_long(NULL,src->m,src->x,src->y,target->x,target->y,CELL_CHKWALL)) {
 						// Apply canact delay here to prevent hacks (unlimited casting)
 						ud->canact_tick = tick + skill_delayfix(src, skl->skill_id, skl->skill_lv);
 						skill_attack(BF_MAGIC, src, src, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
@@ -4423,13 +4423,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 		// teleport to target (if not on WoE grounds)
 		if (!map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x, bl->y, 0, 1))
-			clif_blown(src);
+			skill_blown(src, src, 1, (dir+4)%8, 0); //Target position is actually one cell next to the target
 
 		// cause damage and knockback if the path to target was a straight one
 		if (path) {
-			dist = cap_value(dist, 0, 9);
-			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, dist);
-			skill_blown(src, bl, dist, dir, 0);
+			if(skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, dist))
+				skill_blown(src, bl, dist, dir, 0);
 			//HACK: since knockback officially defaults to the left, the client also turns to the left... therefore,
 			// make the caster look in the direction of the target
 			unit_setdir(src, (dir+4)%8);
@@ -17032,7 +17031,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 					skill_delunit(unit);
 					return 1;
 			}
-			//Fall through
+			break;
 		case WZ_ICEWALL:
 		case HP_BASILICA:
 		case HW_GRAVITATION:
