@@ -3279,7 +3279,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case WM_REVERBERATION_MAGIC:
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,WM_REVERBERATION,-2,6);
 			break;
-		case WZ_SIGHTBLASTER:
 		case HT_CLAYMORETRAP:
 		case HT_BLASTMINE:
 		case HT_FLASHER:
@@ -3290,8 +3289,13 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			dmg.dmotion = clif_skill_damage(src, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, (flag&SD_LEVEL) ? -1 : skill_lv, 5);
 			if( dsrc != src ) // avoid damage display redundancy
 				break;
+			//Fall through
 		case HT_LANDMINE:
 			dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, -1, type);
+			break;
+		case WZ_SIGHTBLASTER:
+			//Sightblaster should never call clif_skill_damage twice
+			dmg.dmotion = clif_skill_damage(src, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, (flag&SD_LEVEL) ? -1 : skill_lv, 5);
 			break;
 		case RL_R_TRIP_PLUSATK:
 		case RL_BANISHING_BUSTER:

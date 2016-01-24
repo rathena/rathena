@@ -12679,8 +12679,10 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 		if (battle_check_target( src, bl, BCT_ENEMY ) > 0 &&
 			status_check_skilluse(src, bl, WZ_SIGHTBLASTER, 2))
 		{
-			struct skill_unit *su = (struct skill_unit *)bl;
 			if (sce) {
+				struct skill_unit *su = NULL; 
+				if(bl->type == BL_SKILL)
+					su = (struct skill_unit *)bl;
 				if (skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,sce->val1,tick,0x1000000)
 					&& (!su || !su->group || !(skill_get_inf2(su->group->skill_id)&INF2_TRAP))) { // The hit is not counted if it's against a trap
 					sce->val2 = 0; // This signals it to end.
