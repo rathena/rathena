@@ -2922,7 +2922,7 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 				dir_ka = -1;
 
 				// Move attacker to the target position after knocked back
-				if ((target->x != x || target->y != y) && unit_movepos(src,target->x,target->y,1,1))
+				if ((target->x != x || target->y != y) && unit_movepos(src,target->x,target->y,1,1) && !map_flag_gvg2(src->m) && !map[src->m].flag.battleground)
 					clif_blown(src);
 			}
 			break;
@@ -5362,8 +5362,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SR_KNUCKLEARROW:
 		// Holds current direction of bl/target to src/attacker before the src is moved to bl location
 		dir_ka = map_calc_dir(bl, src->x, src->y);
-		// Has slide effect even in GVG
-		if( unit_movepos(src, bl->x, bl->y, 1, 1) )
+		// Has slide effect
+		if (unit_movepos(src, bl->x, bl->y, 1, 1) && !map_flag_gvg2(src->m) && !map[src->m].flag.battleground)
 			clif_blown(src);
 
 		if( flag&1 )
