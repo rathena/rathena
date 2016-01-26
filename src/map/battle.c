@@ -1744,7 +1744,7 @@ int64 battle_addmastery(struct map_session_data *sd,struct block_list *target,in
 		case W_1HSPEAR:
 		case W_2HSPEAR:
 			if((skill = pc_checkskill(sd,KN_SPEARMASTERY)) > 0) {
-				if(!pc_isriding(sd) || !pc_isridingdragon(sd))
+				if(!pc_isriding(sd) && !pc_isridingdragon(sd))
 					damage += (skill * 4);
 				else
 					damage += (skill * 5);
@@ -1994,15 +1994,8 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 		return BF_LONG;
 	}
 
-	if (skill_id == SR_GATEOFHELL) {
-		if (skill_lv < 5)
-			return BF_SHORT;
-		else
-			return BF_LONG;
-	}
-
 	//based on used skill's range
-	if (skill_get_range2(src, skill_id, skill_lv) < 5)
+	if (skill_get_range2(src, skill_id, skill_lv) < 4)
 		return BF_SHORT;
 	return BF_LONG;
 }
@@ -3403,7 +3396,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 10 * skill_lv;
 			break;
 		case KN_SPEARSTAB:
-			skillratio += 15 * skill_lv;
+			skillratio += 20 * skill_lv;
 			break;
 		case KN_SPEARBOOMERANG:
 			skillratio += 50 * skill_lv;
@@ -3429,7 +3422,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			}
 		case KN_BOWLINGBASH:
 		case MS_BOWLINGBASH:
-			skillratio+= 40 * skill_lv;
+			skillratio += 40 * skill_lv;
 			break;
 		case AS_GRIMTOOTH:
 			skillratio += 20 * skill_lv;
@@ -4601,9 +4594,8 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 		vit_def = (def2/20)*(def2/20);
 		vit_def = def2 + (vit_def>0?rnd()%vit_def:0);
 #else
-		//renewal monsters have their def swapped
-		vit_def = def1;
-		def1 = def2;
+		//SoftDEF of monsters is floor((BaseLevel+Vit)/2)
+		vit_def = def2;
 #endif
 	}
 
@@ -5253,8 +5245,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			wd.damage2 = wd.statusAtk2 + wd.weaponAtk2 + wd.equipAtk2 + wd.masteryAtk2;
 			if(wd.flag&BF_LONG && (skill_id != RA_WUGBITE && skill_id != RA_WUGSTRIKE)) //Long damage rate addition doesn't use weapon + equip attack
 				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.long_attack_atk_rate);
-			//Custom fix for "a hole" in renewal attack calculation [exneval]
-			ATK_ADDRATE(wd.damage, wd.damage2, 6);
 		}
 #else
 		// final attack bonuses that aren't affected by cards
