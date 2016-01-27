@@ -331,6 +331,7 @@ struct map_session_data {
 	// here start arrays to be globally zeroed at the beginning of status_calc_pc()
 	int param_bonus[6],param_equip[6]; //Stores card/equipment bonuses.
 	int subele[ELE_MAX];
+	int subele_script[ELE_MAX];
 	int subdefele[ELE_MAX];
 	int subrace[RC_MAX];
 	int subclass[CLASS_MAX];
@@ -349,6 +350,7 @@ struct map_session_data {
 	int arrow_addclass[CLASS_MAX];
 	int arrow_addsize[SZ_MAX];
 	int magic_addele[ELE_MAX];
+	int magic_addele_script[ELE_MAX];
 	int magic_addrace[RC_MAX];
 	int magic_addclass[CLASS_MAX];
 	int magic_addsize[SZ_MAX];
