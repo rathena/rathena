@@ -15680,7 +15680,7 @@ void clif_cashshop_result( struct map_session_data *sd, unsigned short item_id, 
 /// 0288 <name id>.W <amount>.W <kafra points>.L (PACKETVER >= 20070711)
 /// 0288 <packet len>.W <kafra points>.L <count>.W { <amount>.W <name id>.W }.4B*count (PACKETVER >= 20100803)
 /// 0848 <packet len>.W <count>.W <packet len>.W <kafra points>.L <count>.W { <amount>.W <name id>.W <tab>.W }.6B*count (PACKETVER >= 20130000)
-void clif_parse_cashshop_buy(int fd, struct map_session_data *sd) {
+void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
 	struct s_packet_db* info;
 	int cmd = RFIFOW(fd,0);
 
@@ -15688,12 +15688,13 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd) {
 
 	info = &packet_db[sd->packet_ver][cmd];
 
-	if( sd->state.trading || !sd->npc_shopid || !cash_shop_defined) {
+	if( sd->state.trading || !sd->npc_shopid ) {
 		clif_cashshop_ack(sd,1);
 		return;
-	} else {
+	}
+	else {
 #if PACKETVER < 20101116
-		unsigned short nameid = RFIFOW(fd,info->pos[0]);
+		short nameid = RFIFOW(fd,info->pos[0]);
 		short amount = RFIFOW(fd,info->pos[1]);
 		int points   = RFIFOL(fd,info->pos[2]);
 
@@ -15705,11 +15706,11 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd) {
 		int count  = RFIFOW(fd,info->pos[2]);
 		unsigned short* item_list = (unsigned short*)RFIFOP(fd,info->pos[3]);
 
-		if( len < 10 || len != 10 + count * s_itl) {
+		if( len < 10 || len != 10 + count * s_itl){
 			ShowWarning("Player %u sent incorrect cash shop buy packet (len %u:%u)!\n", sd->status.char_id, len, 10 + count * s_itl);
 			return;
 		}
-		if(cmd == 0x848) {
+		if(cmd==0x848){
 			if (cashshop_buylist( sd, points, count, item_list))
 				clif_cashshop_ack(sd,0);
 			return;
@@ -15720,7 +15721,6 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd) {
 #endif
 	}
 }
-
 /// Adoption System
 ///
 
