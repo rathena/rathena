@@ -900,28 +900,28 @@ int unit_escape(struct block_list *bl, struct block_list *target, short dist)
  * @param dst_y: Y coordinate to warp to
  * @param easy: Easy(1) or Hard(0) path check (hard attempts to go around obstacles)
  * @param checkpath: Whether or not to do a cell and path check for NOPASS and NOREACH
- * @return 1: Success 0: Fail
+ * @return True: Success False: Fail
  */
-int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath)
+bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath)
 {
 	short dx,dy;
 	uint8 dir;
 	struct unit_data        *ud = NULL;
 	struct map_session_data *sd = NULL;
 
-	nullpo_ret(bl);
+	nullpo_retr(false,bl);
 
 	sd = BL_CAST(BL_PC, bl);
 	ud = unit_bl2ud(bl);
 
 	if(ud == NULL)
-		return 0;
+		return false;
 
 	unit_stop_walking(bl, 1);
 	unit_stop_attack(bl);
 
 	if( checkpath && (map_getcell(bl->m,dst_x,dst_y,CELL_CHKNOPASS) || !path_search(NULL,bl->m,bl->x,bl->y,dst_x,dst_y,easy,CELL_CHKNOREACH)) )
-		return 0; // Unreachable
+		return false; // Unreachable
 
 	ud->to_x = dst_x;
 	ud->to_y = dst_y;
@@ -948,7 +948,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 			npc_touch_areanpc(sd, bl->m, bl->x, bl->y);
 
 			if (bl->prev == NULL) // Script could have warped char, abort remaining of the function.
-				return 0;
+				return false;
 		} else
 			sd->areanpc_id=0;
 
@@ -969,7 +969,7 @@ int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool
 		}
 	}
 
-	return 1;
+	return true;
 }
 
 /**

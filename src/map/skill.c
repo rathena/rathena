@@ -126,14 +126,16 @@ int overbrand_brandish_nounit_pos;
 
 static char dir_ka = -1; // Holds temporary direction to the target for SR_KNUCKLEARROW
 
-//early declaration
+//Early declaration
 int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id);
 static int skill_check_unit_range (struct block_list *bl, int x, int y, uint16 skill_id, uint16 skill_lv);
 static int skill_check_unit_range2 (struct block_list *bl, int x, int y, uint16 skill_id, uint16 skill_lv, bool isNearNPC);
 static int skill_destroy_trap( struct block_list *bl, va_list ap );
 static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list ap);
 static bool skill_check_condition_sc_required(struct map_session_data *sd, unsigned short skill_id, struct skill_condition *require);
-//Since only mob-casted splash skills can hit ice-walls
+static bool skill_check_unit_movepos(uint8 check_flag, struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath);
+
+// Since only mob-casted splash skills can hit ice-walls
 static inline int splash_target(struct block_list* bl) {
 #ifndef RENEWAL
 	return ( bl->type == BL_MOB ) ? BL_SKILL|BL_CHAR : BL_CHAR;
@@ -2922,7 +2924,7 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 				dir_ka = -1;
 
 				// Move attacker to the target position after knocked back
-				if ((target->x != x || target->y != y) && unit_movepos(src,target->x,target->y,1,1) && !map_flag_gvg2(src->m) && !map[src->m].flag.battleground)
+				if ((target->x != x || target->y != y) && skill_check_unit_movepos(5,src,target->x,target->y,1,1))
 					clif_blown(src);
 			}
 			break;
@@ -4426,7 +4428,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		uint8 dir = map_calc_dir(bl, src->x, src->y);
 
 		// teleport to target (if not on WoE grounds)
-		if (!map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x, bl->y, 0, 1))
+		if (skill_check_unit_movepos(3, src, bl->x, bl->y, 0, 1))
 			skill_blown(src, src, 1, (dir+4)%8, 0); //Target position is actually one cell next to the target
 
 		// cause damage and knockback if the path to target was a straight one
@@ -4933,7 +4935,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		else
 			y = 0;
 		// Doesn't have slide effect in GVG
-		if (!map_flag_gvg2(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x + x, bl->y + y, 1, 1)) {
+		if (skill_check_unit_movepos(5, src, bl->x + x, bl->y + y, 1, 1)) {
 			clif_blown(src);
 			clif_spiritball(src);
 		}
@@ -5342,7 +5344,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 	case LG_PINPOINTATTACK:
-		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, bl->x, bl->y, 1, 1) )
+		if (skill_check_unit_movepos(3, src, bl->x, bl->y, 1, 1))
 			clif_blown(src);
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
@@ -5363,7 +5365,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		// Holds current direction of bl/target to src/attacker before the src is moved to bl location
 		dir_ka = map_calc_dir(bl, src->x, src->y);
 		// Has slide effect
-		if (unit_movepos(src, bl->x, bl->y, 1, 1) && !map_flag_gvg2(src->m) && !map[src->m].flag.battleground)
+		if (skill_check_unit_movepos(5, src, bl->x, bl->y, 1, 1))
 			clif_blown(src);
 
 		if( flag&1 )
@@ -10375,7 +10377,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if (!is_boss(bl))
 				status_change_start(src, bl, SC_CONFUSION, 7500, skill_lv, 0, 0, 0, skill_get_time(skill_id, skill_lv), SCSTART_NORATEDEF);
 
-			if (unit_movepos(src,bl->x,bl->y,0,0) && !map_flag_gvg2(src->m) && !map[src->m].flag.battleground) {
+			if (skill_check_unit_movepos(5,src,bl->x,bl->y,0,0)) {
 				clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
 				clif_blown(src);
 				if (!is_boss(bl) && unit_movepos(bl,x,y,0,0)) {
@@ -11545,7 +11547,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		}
 		break;
 	case NJ_SHADOWJUMP:
-		if( !map_flag_gvg(src->m) && !map[src->m].flag.battleground && unit_movepos(src, x, y, 1, 0) ) //You don't move on GVG grounds.
+		if( skill_check_unit_movepos(3, src, x, y, 1, 0) ) //You don't move on GVG grounds.
 			clif_blown(src);
 		status_change_end(src, SC_HIDING, INVALID_TIMER);
 		break;
@@ -20291,6 +20293,24 @@ int skill_get_elemental_type( uint16 skill_id , uint16 skill_lv ) {
 	type += skill_lv - 1;
 
 	return type;
+}
+
+/**
+ * Check before do `unit_movepos` call
+ * @param check_flag Flags: 1:Check for BG map, 2:Check for GVG map on WOE, 4:Check for GVG map
+ * @return True:If unit can be moved, False:If check on flags are met or unit cannot be moved.
+ **/
+static bool skill_check_unit_movepos(uint8 check_flag, struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath) {
+	nullpo_retr(false, bl);
+
+	if (check_flag&1 && map[bl->m].flag.battleground)
+		return false;
+	if (check_flag&2 && map_flag_gvg(bl->m))
+		return false;
+	if (check_flag&4 && map_flag_gvg2(bl->m))
+		return false;
+
+	return unit_movepos(bl, dst_x, dst_y, easy, checkpath);
 }
 
 /*==========================================
