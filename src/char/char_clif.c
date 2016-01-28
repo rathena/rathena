@@ -887,22 +887,27 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 
 // S 0970 <name>.24B <slot>.B <hair color>.W <hair style>.W
 // S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot>.B <hair color>.W <hair style>.W
+// S 0a39 <name>.24B <slot>.B <hair color>.W <hair style>.W <starting job ID>.W <Unknown>.(W or 2 B's)??? <sex>.B
 int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 	int i = 0;
 
-	if (cmd == 0x970) FIFOSD_CHECK(31) //>=20120307
+	if (cmd == 0xa39) FIFOSD_CHECK(36) //>=20151001
+	else if (cmd == 0x970) FIFOSD_CHECK(31) //>=20120307
 	else if (cmd == 0x67) FIFOSD_CHECK(37)
 	else return 0;
 
 	if( (charserv_config.char_new)==0 ) //turn character creation on/off [Kevin]
 		i = -2;
 	else {
-#if PACKETVER < 20120307
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
-			RFIFOSKIP(fd,37);
-#else
+#if PACKETVER >= 20151001
+			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29),RFIFOW(fd,31),RFIFOW(fd,32),RFIFOB(fd,35));
+			RFIFOSKIP(fd,36);
+#elif PACKETVER >= 20120307
 			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
 			RFIFOSKIP(fd,31);
+#else
+			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
+			RFIFOSKIP(fd,37);
 #endif
 	}
 
@@ -1212,7 +1217,8 @@ int chclif_parse(int fd) {
 			// char select
 			case 0x66: next=chclif_parse_charselect(fd,sd,ipl); break;
 			// createnewchar
-			case 0x970: next=chclif_parse_createnewchar(fd,sd,cmd); break;
+			case 0xa39:
+			case 0x970:
 			case 0x67: next=chclif_parse_createnewchar(fd,sd,cmd); break;
 			// delete char
 			case 0x68: next=chclif_parse_delchar(fd,sd,cmd); break; //

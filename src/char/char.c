@@ -1408,7 +1408,11 @@ int char_check_char_name(char * name, char * esc_name)
 // Function to create a new character
 //-----------------------------------
 #if PACKETVER >= 20120307
+#if PACKETVER >= 20151001
+int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style, short start_job, short unknown, int sex) { // TODO: Unknown byte
+#else
 int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style) {
+#endif
 	int str = 1, agi = 1, vit = 1, int_ = 1, dex = 1, luk = 1;
 #else
 int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style) {
@@ -1428,6 +1432,19 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 
 	//check other inputs
 #if PACKETVER >= 20120307
+#if PACKETVER >= 20151001
+	switch(sex) {
+			case SEX_FEMALE:
+				sex = 'F';
+				break;
+			case SEX_MALE:
+				sex = 'M';
+				break;
+			default:
+				sex = 'U';
+				break;
+	}
+#endif
 	if(slot < 0 || slot >= sd->char_slots)
 #else
 	if((slot < 0 || slot >= sd->char_slots) // slots
@@ -1461,31 +1478,40 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 			schema_config.charlog_db, "make new char", sd->account_id, slot, esc_name, str, agi, vit, int_, dex, luk, hair_style, hair_color) )
 			Sql_ShowDebug(sql_handle);
 	}
-#if PACKETVER >= 20120307
+
+#if PACKETVER >= 20151001
+	if (start_job != JOB_NOVICE)
+		return -2; // Invalid job
+#endif
+
 	//Insert the new char entry to the database
-	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `status_point`,`str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
+#if PACKETVER >= 20151001
+	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `class`, `zeny`, `status_point`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
+		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`, `sex`) VALUES ("
+		"'%d', '%d', '%s', '%d', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d', '%c')",
+		schema_config.char_db, sd->account_id , slot, esc_name, start_job, charserv_config.start_zeny, 48, str, agi, vit, int_, dex, luk,
+		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
+		mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y, mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y, sex) )
+#elif PACKETVER >= 20120307
+	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `status_point`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
-		"'%d', '%d', '%s', '%d',  '%d','%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
+		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
 		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, 48, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
 		mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y, mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y) )
-	{
-		Sql_ShowDebug(sql_handle);
-		return -2; //No, stop the procedure!
-	}
 #else
-	//Insert the new char entry to the database
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
-		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d','%d', '%d','%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
+		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
 		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
 		mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y, mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y) )
+#endif
 	{
 		Sql_ShowDebug(sql_handle);
 		return -2; //No, stop the procedure!
 	}
-#endif
+
 	//Retrieve the newly auto-generated char id
 	char_id = (int)Sql_LastInsertId(sql_handle);
 	//Give the char the default items

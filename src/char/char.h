@@ -280,7 +280,9 @@ void char_auth_ok(int fd, struct char_session_data *sd);
 void char_set_charselect(uint32 account_id);
 void char_read_fame_list(void);
 
-#if PACKETVER >= 20120307
+#if PACKETVER >= 20151001
+int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style, short start_job, short unknown, int sex);
+#elif PACKETVER >= 20120307
 int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style);
 #else
 int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style);

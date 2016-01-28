@@ -12273,6 +12273,10 @@ void clif_parse_NpcStringInput(int fd, struct map_session_data* sd){
 	if( message_len <= 0 )
 		return; // invalid input
 
+#if PACKETVER >= 20151001
+	message_len++;
+#endif
+
 	safestrncpy(sd->npc_str, message, min(message_len,CHATBOX_SIZE));
 	npc_scriptcont(sd, npcid, false);
 }
