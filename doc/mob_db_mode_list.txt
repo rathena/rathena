@@ -102,10 +102,10 @@ Aegis Mob Types
 -------------------------------------------------------------------------------
 
 What Aegis has are mob-types, where each type represents an AI behavior that
-is mimicked by a group of eA mode bits. This is the table to convert from one
+is mimicked by a group of rA mode bits. This is the table to convert from one
 to another:
 
-Aegis/eA (description)
+Aegis/rA (description)
 01: 0x0081 (passive)
 02: 0x0083 (passive, looter)
 03: 0x1089 (passive, assist and change-target melee)
@@ -128,4 +128,38 @@ Aegis/eA (description)
 27: 0x8084 (aggressive, immobile, random target)
 
 - Note that the detector bit due to being Insect/Demon, plant and Boss mode
-  bits need to be added independently of this list.
+  bits need to be added independently of this list (also see below).
+
+Aegis Class Types
+-------------------------------------------------------------------------------
+
+Aegis has different class types that can't be combined but can be reflected by
+a combination of rA mode bits.
+Add the mode listed here to the mode above.
+
+Aegis/rA
+00: 0x0000000 (normal monster)
+01: 0x0000120 (boss class, immune to status changes, detector)
+02: 0x0000020 (guardian class, immune to status changes)
+04: 0x0000060 (battleground class, immune to status changes, plant mode in battlegrounds)
+05: 0x1000000 (event class, ignores all drop rate adjustments)
+
+Aegis Attr Types
+-------------------------------------------------------------------------------
+
+The Aegis attr types are a bitmask just like the rA mode bits and can be 
+directly converted. Plant mode is a combination of various of these modes.
+Add the mode listed here to the resulting mode above.
+
+Aegis/rA
+01: 0x010000 (takes 1 damage from melee attacks)
+02: 0x020000 (takes 1 damage from magic attacks)
+04: 0x040000 (takes 1 damage from ranged attacks)
+08: 0x080000 (MVP, gives MVP rewards, immune to instant death/coma effects)
+16: 0x100000 (takes 1 damage from misc attacks)
+23: 0x000040 (plant mode)
+32: 0x200000 (cannot be knocked back)
+64: ? (teleport block)
+
+- Note that if attr=23 (1+2+4+16), it's better to use 0x40 (plant mode) for
+  easier reading
