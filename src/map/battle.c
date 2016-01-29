@@ -513,12 +513,15 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 		}
 	}
 
-	if (ratio < 100)
-		damage = damage - (damage * (100 - ratio) / 100);
-	else
-		damage = damage + (damage * (ratio - 100) / 100);
+#ifdef RENEWAL
+	//In renewal, reductions are always rounded down so damage can never reach 0 unless ratio is 0
+	damage = damage - (int64)((damage * (100 - ratio)) / 100);
+#else
+	damage = (int64)((damage*ratio)/100);
+#endif
 
-	return i64max(damage,0);
+	//Damage can be negative, see battle_config.attr_recover
+	return damage;
 }
 
 /**
