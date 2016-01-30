@@ -10886,6 +10886,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_READYCOUNTER:
 			case SC_READYTURN:
 			case SC_DODGE:
+			case SC_MIRACLE:
 			case SC_JAILED:
 			case SC_EXPBOOST:
 			case SC_ITEMBOOST:
