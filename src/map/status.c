@@ -8436,10 +8436,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_FOOD_LUK_CASH:
 		status_change_end(bl, SC_LUKFOOD, INVALID_TIMER);
 		break;
-	case SC_FIGHTINGSPIRIT:
-	case SC_OVERED_BOOST:
-		status_change_end(bl, type, INVALID_TIMER); // Remove previous one.
-		break;
 	case SC_MARSHOFABYSS:
 		status_change_end(bl, SC_INCAGI, INVALID_TIMER);
 		status_change_end(bl, SC_WINDWALK, INVALID_TIMER);
@@ -8532,9 +8528,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_INVINCIBLEOFF:
 		status_change_end(bl, SC_INVINCIBLE, INVALID_TIMER);
 		break;
-	case SC_MAGICPOWER:
-		status_change_end(bl, type, INVALID_TIMER);
-		break;
 	case SC_WHITEIMPRISON:
 		status_change_end(bl, SC_BURNING, INVALID_TIMER);
 		status_change_end(bl, SC_FREEZING, INVALID_TIMER);
@@ -8574,9 +8567,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_EQC:
 		status_change_end(bl,SC_TINDER_BREAKER2,INVALID_TIMER);
 		break;
+	case SC_FIGHTINGSPIRIT:
+	case SC_OVERED_BOOST:
+	case SC_MAGICPOWER:
 	case SC_IMPOSITIO:
-		if (sc && sc->data[SC_IMPOSITIO] && sc->data[SC_IMPOSITIO]->val1 > val1) //Replace higher level effect for lower.
-			status_change_end(bl,SC_IMPOSITIO,INVALID_TIMER);
+	case SC_KAAHI:
+		//These status changes always overwrite themselves even when a lower level is cast
+		status_change_end(bl, type, INVALID_TIMER);
 		break;
 	}
 
