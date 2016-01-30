@@ -123,6 +123,7 @@ Aegis/rA (description)
 19: 0x3095 (aggressive, change-target melee/chase, cast sensor idle)
 20: 0x3295 (aggressive, change-target melee/chase, cast sensor idle/chase)
 21: 0x3695 (aggressive, change-target melee/chase, cast sensor idle/chase, chase-change target)
+24: 0x400081 (passive, does not walk randomly) [Slave]
 25: 0x0001 (passive, can't attack) [Pet]
 26: 0xB695 (aggressive, change-target melee/chase, cast sensor idle/chase, chase-change target, random target)
 27: 0x8084 (aggressive, immobile, random target)
