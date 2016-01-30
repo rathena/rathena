@@ -2401,7 +2401,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				if(base_exp || job_exp) {
 					if( md->dmglog[i].flag != MDLF_PET || battle_config.pet_attack_exp_to_master ) {
 #ifdef RENEWAL_EXP
-						int rate = pc_level_penalty_mod(tmpsd[i], md->level, md->status.class_, 1);
+						int rate = pc_level_penalty_mod(tmpsd[i], md->level, md->status.class_, md->status.mode, 1);
 						if (rate != 100) {
 							base_exp = (unsigned int)cap_value(apply_rate(base_exp, rate), 1, UINT_MAX);
 							job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
@@ -2434,9 +2434,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		struct item_data* it = NULL;
 		int drop_rate;
 #ifdef RENEWAL_DROP
-		int drop_modifier = mvp_sd    ? pc_level_penalty_mod(mvp_sd, md->level, md->status.class_, 2)   :
-							second_sd ? pc_level_penalty_mod(second_sd, md->level, md->status.class_, 2):
-							third_sd  ? pc_level_penalty_mod(third_sd, md->level, md->status.class_, 2) :
+		int drop_modifier = mvp_sd    ? pc_level_penalty_mod(mvp_sd, md->level, md->status.class_, md->status.mode, 2)   :
+							second_sd ? pc_level_penalty_mod(second_sd, md->level, md->status.class_, md->status.mode, 2):
+							third_sd  ? pc_level_penalty_mod(third_sd, md->level, md->status.class_, md->status.mode, 2) :
 							100;/* no player was attached, we dont use any modifier (100 = rates are not touched) */
 #endif
 		dlist->m = md->bl.m;
@@ -2459,33 +2459,35 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				drop_rate = 1;
 			}
 
-			// change drops depending on monsters size [Valaris]
-			if (battle_config.mob_size_influence) {
-				if (md->special_state.size == SZ_MEDIUM && drop_rate >= 2)
-					drop_rate /= 2;
-				else if( md->special_state.size == SZ_BIG)
-					drop_rate *= 2;
-			}
+			if (!md->status.mode&MD_FIXED_ITEMDROP) {
+				// change drops depending on monsters size [Valaris]
+				if (battle_config.mob_size_influence) {
+					if (md->special_state.size == SZ_MEDIUM && drop_rate >= 2)
+						drop_rate /= 2;
+					else if( md->special_state.size == SZ_BIG)
+						drop_rate *= 2;
+				}
 
-			if (src) {
-				//Drops affected by luk as a fixed increase [Valaris]
-				if (battle_config.drops_by_luk)
-					drop_rate += status_get_luk(src)*battle_config.drops_by_luk/100;
-				//Drops affected by luk as a % increase [Skotlex]
-				if (battle_config.drops_by_luk2)
-					drop_rate += (int)(0.5+drop_rate*status_get_luk(src)*battle_config.drops_by_luk2/10000.);
-			}
-			if (sd && battle_config.pk_mode &&
-				(int)(md->level - sd->status.base_level) >= 20)
-				drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
+				if (src) {
+					//Drops affected by luk as a fixed increase [Valaris]
+					if (battle_config.drops_by_luk)
+						drop_rate += status_get_luk(src)*battle_config.drops_by_luk/100;
+					//Drops affected by luk as a % increase [Skotlex]
+					if (battle_config.drops_by_luk2)
+						drop_rate += (int)(0.5+drop_rate*status_get_luk(src)*battle_config.drops_by_luk2/10000.);
+				}
+				if (sd && battle_config.pk_mode &&
+					(int)(md->level - sd->status.base_level) >= 20)
+					drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
 
-			// Increase drop rate if user has SC_ITEMBOOST
-			if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
-				drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
-			// Increase item drop rate for VIP.
-			if (battle_config.vip_drop_increase && (sd && pc_isvip(sd))) {
-				drop_rate += (int)(0.5 + (drop_rate * battle_config.vip_drop_increase) / 100);
-				drop_rate = min(drop_rate,10000); //cap it to 100%
+				// Increase drop rate if user has SC_ITEMBOOST
+				if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
+					drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
+				// Increase item drop rate for VIP.
+				if (battle_config.vip_drop_increase && (sd && pc_isvip(sd))) {
+					drop_rate += (int)(0.5 + (drop_rate * battle_config.vip_drop_increase) / 100);
+					drop_rate = min(drop_rate,10000); //cap it to 100%
+				}
 			}
 #ifdef RENEWAL_DROP
 			if( drop_modifier != 100 ) {

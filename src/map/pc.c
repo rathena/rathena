@@ -10393,12 +10393,15 @@ void pc_delspiritcharm(struct map_session_data *sd, int count, int type)
  * Renewal EXP/Itemdrop rate modifier base on level penalty
  * 1=exp 2=itemdrop
  *------------------------------------------*/
-int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, int type)
+int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, enum e_mode mode, int type)
 {
 	int diff, rate = 100, i;
 	int tmp;
 
 	nullpo_ret(sd);
+
+	if (type == 2 && mode&MD_FIXED_ITEMDROP)
+		return rate;
 
 	diff = mob_level - sd->status.base_level;
 

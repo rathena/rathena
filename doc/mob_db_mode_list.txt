@@ -11,31 +11,31 @@
 Bit Legend
 -------------------------------------------------------------------------------
 
-MD_CANMOVE            | 0x000001 |        1
-MD_LOOTER             | 0x000002 |        2
-MD_AGGRESSIVE         | 0x000004 |        4
-MD_ASSIST             | 0x000008 |        8
-MD_CASTSENSOR_IDLE    | 0x000010 |       16
-MD_BOSS               | 0x000020 |       32
-MD_PLANT              | 0x000040 |       64
-MD_CANATTACK          | 0x000080 |      128
-MD_DETECTOR           | 0x000100 |      256
-MD_CASTSENSOR_CHASE   | 0x000200 |      512
-MD_CHANGECHASE        | 0x000400 |     1024
-MD_ANGRY              | 0x000800 |     2048
-MD_CHANGETARGET_MELEE | 0x001000 |     4096
-MD_CHANGETARGET_CHASE | 0x002000 |     8192
-MD_TARGETWEAK         | 0x004000 |    16384
-MD_RANDOMTARGET       | 0x008000 |    32768
-MD_IGNOREMELEE        | 0x010000 |    65536
-MD_IGNOREMAGIC        | 0x020000 |   131072
-MD_IGNORERANGED       | 0x040000 |   262144
-MD_MVP                | 0x080000 |   524288
-MD_IGNOREMISC         | 0x100000 |  1048576
-MD_KNOCKBACK_IMMUNE   | 0x200000 |  2097152
-MD_NORANDOM_WALK      | 0x400000 |  4194304
-MD_NOCAST_SKILL       | 0x800000 |  8388608
-
+MD_CANMOVE            | 0x0000001 |        1
+MD_LOOTER             | 0x0000002 |        2
+MD_AGGRESSIVE         | 0x0000004 |        4
+MD_ASSIST             | 0x0000008 |        8
+MD_CASTSENSOR_IDLE    | 0x0000010 |       16
+MD_BOSS               | 0x0000020 |       32
+MD_PLANT              | 0x0000040 |       64
+MD_CANATTACK          | 0x0000080 |      128
+MD_DETECTOR           | 0x0000100 |      256
+MD_CASTSENSOR_CHASE   | 0x0000200 |      512
+MD_CHANGECHASE        | 0x0000400 |     1024
+MD_ANGRY              | 0x0000800 |     2048
+MD_CHANGETARGET_MELEE | 0x0001000 |     4096
+MD_CHANGETARGET_CHASE | 0x0002000 |     8192
+MD_TARGETWEAK         | 0x0004000 |    16384
+MD_RANDOMTARGET       | 0x0008000 |    32768
+MD_IGNOREMELEE        | 0x0010000 |    65536
+MD_IGNOREMAGIC        | 0x0020000 |   131072
+MD_IGNORERANGED       | 0x0040000 |   262144
+MD_MVP                | 0x0080000 |   524288
+MD_IGNOREMISC         | 0x0100000 |  1048576
+MD_KNOCKBACK_IMMUNE   | 0x0200000 |  2097152
+MD_NORANDOM_WALK      | 0x0400000 |  4194304
+MD_NOCAST_SKILL       | 0x0800000 |  8388608
+MD_FIXED_ITEMDROP     | 0x1000000 | 16777216
 
 Explanation for modes
 -------------------------------------------------------------------------------
@@ -97,6 +97,12 @@ Ignore Misc: The mob will take 1 HP damage from "none" attack type.
 
 Knockback Immune: The mob will be unable to be knocked back.
 
+No Random Walk: The mob will not randomly walk around while in the
+	idle state.
+
+No Cast Skill: The mob will be unable to cast skills.
+
+Fixed Item Drop: The mob's drops are not affected by item drop modifiers.
 
 Aegis Mob Types
 -------------------------------------------------------------------------------
