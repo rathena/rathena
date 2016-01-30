@@ -64,7 +64,7 @@ Plant: Always receives 1 damage from attacks.
 
 Detector: Enables mob to detect and attack characters who are in hiding/cloak.
 
-ChangeChase: Allows chasing mobs to switch targets if another player happens
+Change Chase: Allows chasing mobs to switch targets if another player happens
 	to be within attack range (handy on ranged attackers, for example)
 
 Angry: These mobs are "hyper-active". Apart from "chase"/"attack", they have
@@ -73,11 +73,11 @@ Angry: These mobs are "hyper-active". Apart from "chase"/"attack", they have
 	for their "before attacked" and "after attacked" states. Also, when
 	"following", they automatically switch to whoever character is closest.
 
-Change Target Melee: Enables a mob to switch targets when attacked while
-	attacking someone else.
+Change Target Melee: Enables a mob to switch targets when hit by a normal attack
+	while attacking someone else.
 
-Change Target Chase: Enables a mob to switch targets when attacked while
-	chasing another character.
+Change Target Chase: Enables a mob to switch targets when hit by any attack
+	while chasing another character.
 
 Target Weak: Allows aggressive monsters to only be aggressive against 
 	characters that are five levels below it's own level.
@@ -91,7 +91,7 @@ Ignore Magic: The mob will take 1 HP damage from magic attacks.
 
 Ignore Range: The mob will take 1 HP damage from ranged attacks.
 
-MVP: Flagged as MVP which makes mobs resistance to Coma.
+MVP: Flagged as MVP which makes mobs resistant to Coma.
 
 Ignore Misc: The mob will take 1 HP damage from "none" attack type.
 
@@ -146,10 +146,13 @@ Add the mode listed here to the mode above.
 
 Aegis/rA
 00: 0x0000000 (normal monster)
-01: 0x0000120 (boss class, immune to status changes, detector)
-02: 0x0000020 (guardian class, immune to status changes)
-04: 0x0000060 (battleground class, immune to status changes, plant mode in battlegrounds)
+01: 0x0000120 (boss class, immune to status changes, immune to knockback, detector)
+02: ? (guardian class, immune to status changes)
+04: ? (battleground class, immune to status changes, completely ignores all skills)
 05: 0x1000000 (event class, ignores all drop rate adjustments)
+
+- Guardian and battleground classes are currently not 100% possible with
+  rA mode bits, it is recommended to use MD_BOSS (0x0000020) for now
 
 Aegis Attr Types
 -------------------------------------------------------------------------------
