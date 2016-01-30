@@ -4239,7 +4239,6 @@ static int64 battle_calc_skill_constant_addition(struct Damage wd, struct block_
 {
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
-	struct status_change *sc = status_get_sc(src);
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 	int64 atk = 0;

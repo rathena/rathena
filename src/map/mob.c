@@ -2459,7 +2459,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				drop_rate = 1;
 			}
 
-			if (!md->status.mode&MD_FIXED_ITEMDROP) {
+			if (!(md->status.mode&MD_FIXED_ITEMDROP)) {
 				// change drops depending on monsters size [Valaris]
 				if (battle_config.mob_size_influence) {
 					if (md->special_state.size == SZ_MEDIUM && drop_rate >= 2)

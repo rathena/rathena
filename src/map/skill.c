@@ -2499,14 +2499,13 @@ int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned sho
 	return where?1:0;
 }
 
-/* Stores temporary values.
-* Common usages:
-* [0] holds number of targets in area
-* [1] holds the id of the original target
-* [2] counts how many targets have been processed. counter is added in skill_area_sub if the foreach function flag is: flag&(SD_SPLASH|SD_PREAMBLE)
-*/
+/** Stores temporary values.
+ * Common usages:
+ * [0] holds number of targets in area
+ * [1] holds the id of the original target
+ * [2] counts how many targets have been processed. counter is added in skill_area_sub if the foreach function flag is: flag&(SD_SPLASH|SD_PREAMBLE)
+ */
 static int skill_area_temp[8];
-static int64 skill_area_temp_i64[1];
 
 /**
  Used to knock back players, monsters, traps, etc
@@ -2949,7 +2948,6 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
  *        flag&2 - Disable re-triggered by double casting
  *        flag&4 - Skip to blow target (because already knocked back before skill_attack somewhere)
  *        flag&8 - Force assume the target is not as is_infinite_defense() on in battle_calc_attack() first.
- *                 Once it's done, store the damage to skill_area_temp_i64[0] then re-calcuate for real against 'plant'.
  *
  *        flag&0xFFF is passed to the underlying battle_calc_attack for processing.
  *             (usually holds number of targets, or just 1 for simple splash attacks)
@@ -10734,7 +10732,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 static int8 skill_castend_id_check(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv) {
 	int inf = skill_get_inf(skill_id);
 	int inf2 = skill_get_inf2(skill_id);
-	struct map_session_data *sd = BL_CAST(BL_PC,  src);
 	struct status_change *tsc = status_get_sc(target);
 
 	switch (skill_id) {
