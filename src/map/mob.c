@@ -1385,8 +1385,8 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
  *------------------------------------------*/
 int mob_randomwalk(struct mob_data *md,unsigned int tick)
 {
-	const int retrycount=20;
-	int i,c,d;
+	const int d=7;
+	int i,c,r,dx,dy;
 	int speed;
 
 	nullpo_ret(md);
@@ -1397,26 +1397,32 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 	   !(status_get_mode(&md->bl)&MD_CANMOVE))
 		return 0;
 
-	d =12-md->move_fail_count;
-	if(d<5) d=5;
-	if(d>7) d=7;
-	for(i=0;i<retrycount;i++){	// Search of a movable place
-		int r=rnd();
-		int x=r%(d*2+1)-d;
-		int y=r/(d*2+1)%(d*2+1)-d;
-		x+=md->bl.x;
-		y+=md->bl.y;
-
+	r=rnd();
+	dx=r%(d*2+1)-d;
+	dy=r/(d*2+1)%(d*2+1)-d;
+	for(i=0;i<d*d;i++){	// Search of a movable place
+		int x = dx + md->bl.x;
+		int y = dy + md->bl.y;
 		if(((x != md->bl.x) || (y != md->bl.y)) && map_getcell(md->bl.m,x,y,CELL_CHKPASS) && unit_walktoxy(&md->bl,x,y,8)){
 			break;
 		}
+		// Could not move to cell, try the next one
+		if (++dx>d) {
+			dx=-d;
+			if (++dy>d) {
+				dy=-d;
+			}
+		}
 	}
-	if(i==retrycount){
-		md->move_fail_count++;
-		if(md->move_fail_count>1000){
-			ShowWarning("MOB can't move. random spawn %d, class = %d, at %s (%d,%d)\n",md->bl.id,md->mob_id,map[md->bl.m].name, md->bl.x, md->bl.y);
-			md->move_fail_count=0;
-			mob_spawn(md);
+	if(i==d*d){
+		// None of the available cells worked, try again next interval
+		if(battle_config.mob_stuck_warning) {
+			md->move_fail_count++;
+			if(md->move_fail_count>1000){
+				ShowWarning("MOB can't move. random spawn %d, class = %d, at %s (%d,%d)\n",md->bl.id,md->mob_id,map[md->bl.m].name, md->bl.x, md->bl.y);
+				md->move_fail_count=0;
+				mob_spawn(md);
+			}
 		}
 		return 0;
 	}
