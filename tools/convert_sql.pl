@@ -229,7 +229,8 @@ CREATE TABLE `$db` (
   `script` text,
   `equip_script` text,
   `unequip_script` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `UniqueAegisName` (`name_english`)
 ) ENGINE=MyISAM;
 ";
 		#NOTE: These do not match the table struct defaults.
@@ -271,7 +272,8 @@ CREATE TABLE `$db` (
   `script` text,
   `equip_script` text,
   `unequip_script` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `UniqueAegisName` (`name_english`)
 ) ENGINE=MyISAM;
 ";
 		#NOTE: These do not match the table struct defaults.
