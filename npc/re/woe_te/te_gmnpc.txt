@@ -1,0 +1,60 @@
+// GM NPC
+sec_in02,27,25,3	script	Woe Status	4_M_KNIGHT_BLACK,{
+	// .@hour1 = OpenHour_SiegeMode 1 3600
+	// .@hour2 = OpenHour_SiegeMode 2 3600
+	// .@hour3 = OpenHour_SiegeMode 3 3600
+	mes "WOE FE: " + .@hour1;
+	mes "WOE SE: " + .@hour2;
+	mes "WOE TE: " + .@hour3;
+	close;
+}
+
+prt_gld,1,4,0	script	#Enterance Button prt	CLEAR_NPC,{
+	mes "password";
+	next;
+	if ( callfunc( "F_GM_NPC", 1854,0, 0,9000 ) < 1 ) {
+		mes "That's not right";
+		close;
+	}
+	mes "What do you want to do with the Gloria-bound warp?";
+	next;
+	switch( select( "Open it","Close it","Cancel","Rental item provided" ) ) {
+	case 1:
+		mes "Opening the warp.";
+		enablenpc "to_gloria";
+		close;
+	case 2:
+		mes "Closing the warp.";
+		disablenpc "to_gloria";
+		close;
+	case 3:
+		end;
+	case 4:
+		mes "You have 300 seconds.";
+		rentitem 13083,300;// TE_Woe_Knife
+		close;
+	}
+}
+
+alde_gld,1,4,0	script	#Enterance Button ald	CLEAR_NPC,{
+	mes "password";
+	next;
+	if ( callfunc( "F_GM_NPC", 1854,0, 0,9000 ) < 1 ) {
+		mes "That's not right";
+		close;
+	}
+	mes "What do you want to do with the Kafragarten-bound warp?";
+	next;
+	switch( select( "Open it","Close it","Cancel" ) ) {
+	case 1:
+		mes "Opening the warp.";
+		enablenpc "to_kafragarten";
+		close;
+	case 2:
+		mes "Closing the warp.";
+		disablenpc "to_kafragarten";
+		close;
+	case 3:
+		end;
+	}
+}
