@@ -5896,6 +5896,7 @@
 11056,Elemental_Spirit_Guide,Elemental Spirit Guide,3,1000,,10,,,,,,,,,,,,,{},{},{}
 11057,Feb_Sweets,February Sweets,3,20,,50,,,,,,,,,,,,,{},{},{}
 11058,Novice_Combi_Book,Novice Combi Book,3,0,,10,,,,,,,,,,,,,{},{},{}
+11059,WoE_TE_Rental_List,WoE TE Rental List,3,0,,10,,,,,,,,,,,,,{},{},{}
 11060,Energy_Xtal_Combi_Book,Energy Crystal Book,3,0,,10,,,,,,,,,,,,,{},{},{}
 11061,Honor_Proof_Exchange_List,Honor Proof Exchange List,3,20,,10,,,,,,,,,,,,,{},{},{}
 //===================================================================
