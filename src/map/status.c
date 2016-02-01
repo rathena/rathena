@@ -50,6 +50,8 @@ unsigned int current_equip_combo_pos; /// For combo items we need to save the po
 int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 
+unsigned int SCDisabled[SC_MAX]; ///< List of disabled SC on map zones. [Cydh]
+
 static unsigned short status_calc_str(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_agi(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_vit(struct block_list *,struct status_change *,int);
@@ -85,6 +87,9 @@ static unsigned short status_calc_ematk(struct block_list *,struct status_change
 static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type);
 static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP);
+
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone);
+#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs((m)), map[(m)].flag.pvp, map_flag_gvg((m)), map[(m)].flag.battleground, map[(m)].zone << 3) )
 
 /**
  * Returns the status change associated with a skill.
@@ -200,7 +205,7 @@ void initChangeTables(void)
 	memset(StatusChangeFlagTable, 0, sizeof(StatusChangeFlagTable));
 	memset(StatusChangeStateTable, 0, sizeof(StatusChangeStateTable));
 	memset(StatusDisplayType, 0, sizeof(StatusDisplayType));
-
+	memset(SCDisabled, 0, sizeof(SCDisabled));
 
 	/* First we define the skill for common ailments. These are used in skill_additional_effect through sc cards. [Skotlex] */
 	set_sc( NPC_PETRIFYATTACK	, SC_STONE		, SI_BLANK		, SCB_DEF_ELE|SCB_DEF|SCB_MDEF );
@@ -7802,6 +7807,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if( status_isdead(bl) && ( type != SC_NOCHAT && type != SC_JAILED ) ) // SC_NOCHAT and SC_JAILED should work even on dead characters
 		return 0;
 
+	if (status_change_isDisabledOnMap(type, bl->m))
+		return 0;
+
 	if( bl->type == BL_MOB) {
 		struct mob_data *md = BL_CAST(BL_MOB,bl);
 		if(md && (md->mob_id == MOBID_EMPERIUM || mob_is_battleground(md)) && type != SC_SAFETYWALL && type != SC_PNEUMA)
@@ -13310,6 +13318,87 @@ int status_get_refine_chance(enum refine_type wlv, int refine)
 }
 
 /**
+ * Check if status is disabled on a map
+ * @param type: Status Change data
+ * @param mapIsVS: If the map is a map_flag_vs type
+ * @param mapisPVP: If the map is a PvP type
+ * @param mapIsGVG: If the map is a map_flag_gvg type
+ * @param mapIsBG: If the map is a Battleground type
+ * @param mapZone: Map Zone type
+ * @return True - SC disabled on map; False - SC not disabled on map/Invalid SC
+ */
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone)
+{
+	if (type <= SC_NONE || type >= SC_MAX)
+		return false;
+
+	if ((!mapIsVS && SCDisabled[type]&1) ||
+		(mapIsPVP && SCDisabled[type]&2) ||
+		(mapIsGVG && SCDisabled[type]&4) ||
+		(mapIsBG && SCDisabled[type]&8) ||
+		(SCDisabled[type]&(mapZone)))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+/**
+ * Clear a status if it is disabled on a map
+ * @param bl: Block list data
+ * @param sc: Status Change data
+ */
+void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc)
+{
+	nullpo_retv(bl);
+
+	if (sc && sc->count) {
+		unsigned short i;
+		bool mapIsVS = map_flag_vs(bl->m);
+		bool mapIsPVP = map[bl->m].flag.pvp;
+		bool mapIsGVG = map_flag_gvg(bl->m);
+		bool mapIsBG = map[bl->m].flag.battleground;
+		unsigned int mapZone = map[bl->m].zone << 3;
+
+		for (i = 0; i < SC_MAX; i++) {
+			if (!sc->data[i] || !SCDisabled[i])
+				continue;
+
+			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone))
+				status_change_end(bl, (sc_type)i, INVALID_TIMER);
+		}
+	}
+}
+
+/**
+ * Read status_disabled.txt file
+ * @param str: Fields passed from sv_readdb
+ * @param columns: Columns passed from sv_readdb function call
+ * @param current: Current row being read into SCDisabled array
+ * @return True - Successfully stored, False - Invalid SC
+ */
+static bool status_readdb_status_disabled(char **str, int columns, int current)
+{
+	int type = SC_NONE;
+
+	if (ISDIGIT(str[0][0]))
+		type = atoi(str[0]);
+	else {
+		if (!script_get_constant(str[0],&type))
+			type = SC_NONE;
+	}
+
+	if (type <= SC_NONE || type >= SC_MAX) {
+		ShowError("status_readdb_status_disabled: Invalid SC with type %s.\n", str[0]);
+		return false;
+	}
+
+	SCDisabled[type] = (unsigned int)atol(str[1]);
+	return true;
+}
+
+/**
  * Read sizefix database for attack calculations
  * @param fields: Fields passed from sv_readdb
  * @param columns: Columns passed from sv_readdb function call
@@ -13441,6 +13530,8 @@ int status_readdb(void)
 		//add other path here
 	};
 	// Initialize databases to default
+
+	memset(SCDisabled, 0, sizeof(SCDisabled));
 	// size_fix.txt
 	for(i=0;i<ARRAYLENGTH(atkmods);i++)
 		for(j=0;j<MAX_WEAPON_TYPE;j++)
@@ -13479,6 +13570,7 @@ int status_readdb(void)
 		}
 		
 		status_readdb_attrfix(dbsubpath2,i); // !TODO use sv_readdb ?
+		sv_readdb(dbsubpath1, "status_disabled.txt", ',', 2, 2, -1, &status_readdb_status_disabled, i);
 		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i);
 		sv_readdb(dbsubpath2, "refine_db.txt", ',', 4+MAX_REFINE, 4+MAX_REFINE, ARRAYLENGTH(refine_info), &status_readdb_refine, i);
 		aFree(dbsubpath1);
