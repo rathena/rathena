@@ -828,6 +828,7 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int16 dx, int16 dy, int type, ...);
 int map_foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x, int16 y, int type, ...);
 int map_foreachinpath(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int length, int type, ...);
+int map_foreachindir(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int length, int offset, int type, ...);
 int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type, ...);
 //blocklist nb in one cell
 int map_count_oncell(int16 m,int16 x,int16 y,int type,int flag);

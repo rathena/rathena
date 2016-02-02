@@ -3410,17 +3410,17 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 				int ratio = 100 + 20 * skill_lv;
 
 				skillratio += -100 + ratio;
-				if(skill_lv > 3 && wd.miscflag == 1)
+				if(skill_lv > 3 && wd.miscflag == 0)
 					skillratio += ratio / 2;
-				if(skill_lv > 6 && wd.miscflag == 1)
+				if(skill_lv > 6 && wd.miscflag == 0)
 					skillratio += ratio / 4;
-				if(skill_lv > 9 && wd.miscflag == 1)
+				if(skill_lv > 9 && wd.miscflag == 0)
 					skillratio += ratio / 8;
-				if(skill_lv > 6 && wd.miscflag == 2)
+				if(skill_lv > 6 && wd.miscflag == 1)
 					skillratio += ratio / 2;
-				if(skill_lv > 9 && wd.miscflag == 2)
+				if(skill_lv > 9 && wd.miscflag == 1)
 					skillratio += ratio / 4;
-				if(skill_lv > 9 && wd.miscflag == 3)
+				if(skill_lv > 9 && wd.miscflag == 2)
 					skillratio += ratio / 2;
 				break;
 			}
@@ -8197,6 +8197,7 @@ static const struct _battle_data {
 	{ "save_body_style",                    &battle_config.save_body_style,                 0,      0,      1,              },
 	{ "monster_eye_range_bonus",            &battle_config.mob_eye_range_bonus,             0,      0,      10,             },
 	{ "monster_stuck_warning",              &battle_config.mob_stuck_warning,               0,      0,      1,              },
+	{ "skill_eightpath_algorithm",          &battle_config.skill_eightpath_algorithm,       1,      0,      1,              },
 };
 
 #ifndef STATS_OPT_OUT

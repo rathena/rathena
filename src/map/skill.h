@@ -471,7 +471,6 @@ struct skill_unit_group *skill_check_dancing( struct block_list *src );
 int skill_castcancel(struct block_list *bl,int type);
 
 int skill_sit (struct map_session_data *sd, int type);
-void skill_brandishspear(struct block_list* src, struct block_list* bl, uint16 skill_id, uint16 skill_lv, unsigned int tick, int flag);
 void skill_overbrand(struct block_list* src, uint16 skill_id, uint16 skill_lv, uint16 x, uint16 y, unsigned int tick, int flag);
 void skill_repairweapon(struct map_session_data *sd, int idx);
 void skill_identify(struct map_session_data *sd,int idx);

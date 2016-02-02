@@ -4445,27 +4445,42 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case NC_FLAMELAUNCHER:
 		if (sd) pc_overheat(sd,1);
+	case LG_CANNONSPEAR:
+		skill_area_temp[1] = bl->id;
+		if (battle_config.skill_eightpath_algorithm) {
+			//Use official AoE algorithm
+			map_foreachindir(skill_attack_area, src->m, src->x, src->y, bl->x, bl->y,
+				skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), 0, splash_target(src),
+				skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
+		} else {
+			map_foreachinpath(skill_attack_area, src->m, src->x, src->y, bl->x, bl->y,
+				skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), splash_target(src),
+				skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
+		}
+		break;
+
 	case SN_SHARPSHOOTING:
 	case MA_SHARPSHOOTING:
 	case NJ_KAMAITACHI:
-	case LG_CANNONSPEAR:
-		//It won't shoot through walls since on castend there has to be a direct
-		//line of sight between caster and target.
-		skill_area_temp[1] = bl->id;
-		map_foreachinpath (skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
-			skill_get_splash(skill_id, skill_lv),skill_get_maxcount(skill_id,skill_lv), splash_target(src),
-			skill_get_type(skill_id),src,src,skill_id,skill_lv,tick,flag,BCT_ENEMY);
-		break;
-
 	case NPC_ACIDBREATH:
 	case NPC_DARKNESSBREATH:
 	case NPC_FIREBREATH:
 	case NPC_ICEBREATH:
 	case NPC_THUNDERBREATH:
 		skill_area_temp[1] = bl->id;
-		map_foreachinpath(skill_attack_area,src->m,src->x,src->y,bl->x,bl->y,
-			skill_get_splash(skill_id, skill_lv),skill_get_maxcount(skill_id,skill_lv), splash_target(src),
-			skill_get_type(skill_id),src,src,skill_id,skill_lv,tick,flag,BCT_ENEMY);
+		if (battle_config.skill_eightpath_algorithm) {
+			//Use official AoE algorithm
+			if (!(map_foreachindir(skill_attack_area, src->m, src->x, src->y, bl->x, bl->y,
+			   skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), 0, splash_target(src),
+			   skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY))) {
+				//These skills hit at least the target if the AoE doesn't hit
+				skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+			}
+		} else {
+			map_foreachinpath(skill_attack_area, src->m, src->x, src->y, bl->x, bl->y,
+				skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), splash_target(src),
+				skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
+		}
 		break;
 
 	case MO_INVESTIGATE:
@@ -6742,7 +6757,29 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case KN_BRANDISHSPEAR:
 	case ML_BRANDISH:
-		skill_brandishspear(src, bl, skill_id, skill_lv, tick, flag);
+		{
+			skill_area_temp[1] = bl->id;
+
+			if(skill_lv >= 10)
+				map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
+					skill_get_splash(skill_id, skill_lv), 1, skill_get_maxcount(skill_id, skill_lv)-1, splash_target(src),
+					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 3,
+					skill_castend_damage_id);
+			if(skill_lv >= 7)
+				map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
+					skill_get_splash(skill_id, skill_lv), 1, skill_get_maxcount(skill_id, skill_lv)-2, splash_target(src),
+					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 2,
+					skill_castend_damage_id);
+			if(skill_lv >= 4)
+				map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
+					skill_get_splash(skill_id, skill_lv), 1, skill_get_maxcount(skill_id, skill_lv)-3, splash_target(src),
+					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,
+					skill_castend_damage_id);
+			map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
+				skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv)-3, 0, splash_target(src),
+				src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 0,
+				skill_castend_damage_id);
+		}
 		break;
 
 	case WZ_SIGHTRASHER:
@@ -16199,182 +16236,6 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 	return time;
 }
 
-/*=========================================
- *
- *-----------------------------------------*/
-struct square {
-	int val1[5];
-	int val2[5];
-};
-
-static void skill_brandishspear_first (struct square *tc, uint8 dir, int16 x, int16 y)
-{
-	nullpo_retv(tc);
-
-	if(dir == 0){
-		tc->val1[0]=x-2;
-		tc->val1[1]=x-1;
-		tc->val1[2]=x;
-		tc->val1[3]=x+1;
-		tc->val1[4]=x+2;
-		tc->val2[0]=
-		tc->val2[1]=
-		tc->val2[2]=
-		tc->val2[3]=
-		tc->val2[4]=y-1;
-	}
-	else if(dir==2){
-		tc->val1[0]=
-		tc->val1[1]=
-		tc->val1[2]=
-		tc->val1[3]=
-		tc->val1[4]=x+1;
-		tc->val2[0]=y+2;
-		tc->val2[1]=y+1;
-		tc->val2[2]=y;
-		tc->val2[3]=y-1;
-		tc->val2[4]=y-2;
-	}
-	else if(dir==4){
-		tc->val1[0]=x-2;
-		tc->val1[1]=x-1;
-		tc->val1[2]=x;
-		tc->val1[3]=x+1;
-		tc->val1[4]=x+2;
-		tc->val2[0]=
-		tc->val2[1]=
-		tc->val2[2]=
-		tc->val2[3]=
-		tc->val2[4]=y+1;
-	}
-	else if(dir==6){
-		tc->val1[0]=
-		tc->val1[1]=
-		tc->val1[2]=
-		tc->val1[3]=
-		tc->val1[4]=x-1;
-		tc->val2[0]=y+2;
-		tc->val2[1]=y+1;
-		tc->val2[2]=y;
-		tc->val2[3]=y-1;
-		tc->val2[4]=y-2;
-	}
-	else if(dir==1){
-		tc->val1[0]=x-1;
-		tc->val1[1]=x;
-		tc->val1[2]=x+1;
-		tc->val1[3]=x+2;
-		tc->val1[4]=x+3;
-		tc->val2[0]=y-4;
-		tc->val2[1]=y-3;
-		tc->val2[2]=y-1;
-		tc->val2[3]=y;
-		tc->val2[4]=y+1;
-	}
-	else if(dir==3){
-		tc->val1[0]=x+3;
-		tc->val1[1]=x+2;
-		tc->val1[2]=x+1;
-		tc->val1[3]=x;
-		tc->val1[4]=x-1;
-		tc->val2[0]=y-1;
-		tc->val2[1]=y;
-		tc->val2[2]=y+1;
-		tc->val2[3]=y+2;
-		tc->val2[4]=y+3;
-	}
-	else if(dir==5){
-		tc->val1[0]=x+1;
-		tc->val1[1]=x;
-		tc->val1[2]=x-1;
-		tc->val1[3]=x-2;
-		tc->val1[4]=x-3;
-		tc->val2[0]=y+3;
-		tc->val2[1]=y+2;
-		tc->val2[2]=y+1;
-		tc->val2[3]=y;
-		tc->val2[4]=y-1;
-	}
-	else if(dir==7){
-		tc->val1[0]=x-3;
-		tc->val1[1]=x-2;
-		tc->val1[2]=x-1;
-		tc->val1[3]=x;
-		tc->val1[4]=x+1;
-		tc->val2[1]=y;
-		tc->val2[0]=y+1;
-		tc->val2[2]=y-1;
-		tc->val2[3]=y-2;
-		tc->val2[4]=y-3;
-	}
-
-}
-
-static void skill_brandishspear_dir (struct square* tc, uint8 dir, int are)
-{
-	int c;
-	nullpo_retv(tc);
-
-	for( c = 0; c < 5; c++ ) {
-		switch( dir ) {
-			case 0:                   tc->val2[c]+=are; break;
-			case 1: tc->val1[c]-=are; tc->val2[c]+=are; break;
-			case 2: tc->val1[c]-=are;                   break;
-			case 3: tc->val1[c]-=are; tc->val2[c]-=are; break;
-			case 4:                   tc->val2[c]-=are; break;
-			case 5: tc->val1[c]+=are; tc->val2[c]-=are; break;
-			case 6: tc->val1[c]+=are;                   break;
-			case 7: tc->val1[c]+=are; tc->val2[c]+=are; break;
-		}
-	}
-}
-
-void skill_brandishspear(struct block_list* src, struct block_list* bl, uint16 skill_id, uint16 skill_lv, unsigned int tick, int flag)
-{
-	int c,n=4;
-	uint8 dir = map_calc_dir(src,bl->x,bl->y);
-	struct square tc;
-	int x=bl->x,y=bl->y;
-	skill_brandishspear_first(&tc,dir,x,y);
-	skill_brandishspear_dir(&tc,dir,4);
-	skill_area_temp[1] = bl->id;
-
-	if(skill_lv > 9){
-		for(c=1;c<4;c++){
-			map_foreachincell(skill_area_sub,
-				bl->m,tc.val1[c],tc.val2[c],BL_CHAR,
-				src,skill_id,skill_lv,tick, flag|BCT_ENEMY|n,
-				skill_castend_damage_id);
-		}
-	}
-	if(skill_lv > 6){
-		skill_brandishspear_dir(&tc,dir,-1);
-		n--;
-	}else{
-		skill_brandishspear_dir(&tc,dir,-2);
-		n-=2;
-	}
-
-	if(skill_lv > 3){
-		for(c=0;c<5;c++){
-			map_foreachincell(skill_area_sub,
-				bl->m,tc.val1[c],tc.val2[c],BL_CHAR,
-				src,skill_id,skill_lv,tick, flag|BCT_ENEMY|n,
-				skill_castend_damage_id);
-			if(skill_lv > 6 && n==3 && c==4){
-				skill_brandishspear_dir(&tc,dir,-1);
-				n--;c=-1;
-			}
-		}
-	}
-	for(c=0;c<10;c++){
-		if(c==0||c==5) skill_brandishspear_dir(&tc,dir,-1);
-		map_foreachincell(skill_area_sub,
-			bl->m,tc.val1[c%5],tc.val2[c%5],BL_CHAR,
-			src,skill_id,skill_lv,tick, flag|BCT_ENEMY|1,
-			skill_castend_damage_id);
-	}
-}
 
 /*==========================================
  * Weapon Repair [Celest/DracoRPG]
