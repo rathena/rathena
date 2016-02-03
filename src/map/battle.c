@@ -568,6 +568,9 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 	s_race2 = (enum e_race2)status_get_race2(src);
 	s_defele = (tsd) ? (enum e_element)status_get_element(src) : ELE_NONE;
 
+//Official servers apply the cardfix value on a base of 1000 and round down the reduction/increase
+#define APPLY_CARDFIX(damage, fix) { (damage) = (damage) - (int64)(((damage) * (1000 - (fix))) / 1000); }
+
 	switch( attack_type ) {
 		case BF_MAGIC:
 			// Affected by attacker ATK bonuses
@@ -586,8 +589,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 						break;
 					}
 				}
-				if( cardfix != 1000 )
-					damage = damage * cardfix / 1000;
+				APPLY_CARDFIX(damage, cardfix);
 			}
 
 			// Affected by target DEF bonuses
@@ -632,8 +634,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 
 				if( tsd->sc.data[SC_MDEF_RATE] )
 					cardfix = cardfix * (100 - tsd->sc.data[SC_MDEF_RATE]->val1) / 100;
-				if( cardfix != 1000 )
-					damage = damage * cardfix / 1000;
+				APPLY_CARDFIX(damage, cardfix);
 			}
 			break;
 
@@ -770,10 +771,11 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				if( flag&BF_LONG )
 					cardfix = cardfix * (100 + sd->bonus.long_attack_atk_rate) / 100;
 #endif
-				if( (left&1) && cardfix_ != 1000 )
-					damage = damage * cardfix_ / 1000;
-				else if( cardfix != 1000 )
-					damage = damage * cardfix / 1000;
+				if (left&1) {
+					APPLY_CARDFIX(damage, cardfix_);
+				} else {
+					APPLY_CARDFIX(damage, cardfix);
+				}
 			}
 			// Affected by target DEF bonuses
 			else if( tsd && !(nk&NK_NO_CARDFIX_DEF) && !(left&2) ) {
@@ -824,8 +826,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					cardfix = cardfix * (100 - tsd->bonus.long_attack_def_rate) / 100;
 				if( tsd->sc.data[SC_DEF_RATE] )
 					cardfix = cardfix * (100 - tsd->sc.data[SC_DEF_RATE]->val1) / 100;
-				if( cardfix != 1000 )
-					damage = damage * cardfix / 1000;
+				APPLY_CARDFIX(damage, cardfix);
 			}
 			break;
 
@@ -857,11 +858,12 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					cardfix = cardfix * (100 - tsd->bonus.near_attack_def_rate) / 100;
 				else	// BF_LONG (there's no other choice)
 					cardfix = cardfix * (100 - tsd->bonus.long_attack_def_rate) / 100;
-				if( cardfix != 1000 )
-					damage = damage * cardfix / 1000;
+				APPLY_CARDFIX(damage, cardfix);
 			}
 			break;
 	}
+
+#undef APPLY_CARDFIX
 
 	return (int)cap_value(damage - original_damage, INT_MIN, INT_MAX);
 }
