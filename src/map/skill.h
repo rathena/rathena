@@ -83,7 +83,7 @@ enum e_skill_inf3 {
 	INF3_USABLE_HIDING    = 0x00004, // Skill that can be use in hiding
 	INF3_USABLE_DANCE     = 0x00008, // Skill that can be use while in dancing state
 	INF3_HIT_EMP          = 0x00010, // Skill that could hit emperium
-	INF3_STATIS_BL        = 0x00020, // Skill blocked by statis
+	INF3_STASIS_BL        = 0x00020, // Skill that can ignore SC_STASIS
 	INF3_KAGEHUMI_BL      = 0x00040, // Skill blocked by kagehumi
 	INF3_EFF_VULTURE      = 0x00080, // Skill range affected by AC_VULTURE
 	INF3_EFF_SNAKEEYE     = 0x00100, // Skill range affected by GS_SNAKEEYE
