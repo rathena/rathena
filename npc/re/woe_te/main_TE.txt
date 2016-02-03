@@ -735,17 +735,23 @@ OnSpawnGuardians:
 OnClock0001:// Spawn Treasure Chests based on castle economy.
 	.@map$ = strnpcinfo(4);
 	if (.@map$ == "") end;
-	if (getcastledata(.@map$,1) == 0) end;
+	.@guild_id = getcastledata(.@map$,1);
+	if (.@guild_id == 0) end;
+
+	.@economy = getcastledata(.@map$,2);
+	.@defense = getcastledata(.@map$,3);
+	.@economy_today = getcastledata(.@map$,4);
+	.@defense_today = getcastledata(.@map$,5);
 
 	killmonster .@map$, strnpcinfo(0)+"::OnTreasureDied";
-	if (getcastledata(.@map$,4)) {// num invest in economy today
-		.@economy = getcastledata(.@map$,2) + getcastledata(.@map$,4) + (rand(2) && getgdskilllv(getcastledata(.@map$,1),10014));
+	if (.@economy_today) {
+		.@economy = .@economy + .@economy_today + (rand(2) && getgdskilllv(.@guild_id,10014));
 		.@economy = ( .@economy > 100 ) ? 100 : .@economy;
 		setcastledata .@map$,2,.@economy;
 		setcastledata .@map$,4,0;
 	}
-	if (getcastledata(.@map$,5)) {// num invest in defense today
-		.@defense = getcastledata(.@map$,3) + getcastledata(.@map$,5);
+	if (.@defense_today) {
+		.@defense = .@defense + .@defense_today;
 		.@defense = ( .@defense > 100 ) ? 100 : .@defense;
 		setcastledata .@map$,3,.@defense;
 		setcastledata .@map$,5,0;
@@ -1020,7 +1026,7 @@ OnClock0001:// Spawn Treasure Chests based on castle economy.
 			2452, 273,178,
 			2457, 273,179;
 	}
-	.@treasure_num = ( 4 + ( getcastledata(.@map$,2) /5 ) ) *3;// x3 <-> data[] size
+	.@treasure_num = ( 4 + ( .@economy /5 ) ) *3;// x3 <-> data[] size
 	for ( .@i = 0; .@i < 72 && .@treasure_num > .@i; .@i += 3 )// nb. [4;24] chests
 		monster .@map$, .@data[.@i+1], .@data[.@i+2],"Treasure Chest", .@data[.@i],1, strnpcinfo(0)+"::OnTreasureDied";
 
