@@ -14,7 +14,7 @@
 //============================================================
 
 function	script	CanParticipatewoeTE	{
-	return ( (eaclass()&EAJL_THIRD || Class == JOB_KAGEROU || Class == JOB_OBORO) ? 0 : 1 );
+	return ( (eaclass()&EAJL_THIRD || Class == JOB_KAGEROU || Class == JOB_OBORO || Class == JOB_REBELLION) ? 0 : 1 );
 }
 
 -	script	Manager_TE	-1,{
@@ -193,10 +193,15 @@ S_Message:
 		.@string$ = "prt0"+ charat( .@map$,getstrlen(.@map$)-1 );
 	donpcevent "#popswitch_"+ .@string$ +"::"+ getarg(0);// monsters for mission TE
 
-	if (.@map$ == "te_alde_cas01") {
+	if (.@map$ == "te_alde_cas1") {
 		donpcevent "Blacksmith Cano#tegod01::"+ getarg(0);// god item TE
 		$@2012_tegod_kafra = 0;
 		$@2012_tegirls_alde01 = 0;
+	}
+	else if (.@map$ == "te_prtcas01") {
+    	$@2012_tegod_gloria = 0;
+    	$@2012_tegirls_prt01 = 0;
+    	donpcevent "Blacksmith Kai#tegod01#tegod01::"+ getarg(0);
 	}
 	return;
 }
@@ -1034,7 +1039,7 @@ OnTreasureDied:
 	end;
 }
 
-// Flag Template
+// Flag warp Template
 //============================================================
 function	script	F_flag_woe_TE	{
 	.@guild_id = getcastledata( getarg(1),1 );

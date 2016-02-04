@@ -58,3 +58,37 @@ alde_gld,1,4,0	script	#Enterance Button ald	CLEAR_NPC,{
 		end;
 	}
 }
+
+// God Item Hervor & Jormungand
+sec_in02,20,20,0	script	Test Guide	CLEAR_NPC,{
+	mes "Password?";
+	next;
+	if (callfunc( "F_GM_NPC", 18543792,0, 0,99999999 ) < 1) {
+		mes "Aww...";
+		close;
+	}
+	mes "We provide material items needed for testing TE.";
+	next;
+	switch( select( "Materials for Hervor","Materials for Jormungand" ) ) {
+	case 1:
+		getitem 6595,2;// Hammer_Of_Velund
+		getitem 6596,1;// Anvil_Of_Velund
+		getitem 6594,4;// Magic_Bronze_Bullion
+		getitem 6597,3;// Bracelet_Of_Velund
+		getitem 6602,1;// Secret_Of_Rune
+		getitem 6605,1;// Muspellium
+		getitem 6604,1;// Essence_Of_Rune
+		getitem 2115,1;// Valkyrja's_Shield
+		end;
+	case 2:
+		getitem 6603,4;// Skin_Of_Hraesvelg
+		getitem 6599,1;// Spirit_Of_Hugin
+		getitem 6598,1;// Rib_Of_Jormungand
+		getitem 6601,4;// Chisel_Of_Giant
+		getitem 6600,1;// Spirit_Of_Munin
+		getitem 6605,1;// Muspellium
+		getitem 6604,1;// Essence_Of_Rune
+		getitem 1473,1;// Wizardy_Staff
+		end;
+	}
+}
