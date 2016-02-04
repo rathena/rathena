@@ -2743,6 +2743,14 @@
 	export_constant(SCSTART_NORATEDEF);
 	export_constant(SCSTART_NOICON);
 
+	export_constant(UNITTYPE_PC);
+	export_constant(UNITTYPE_NPC);
+	export_constant(UNITTYPE_PET);
+	export_constant(UNITTYPE_MOB);
+	export_constant(UNITTYPE_HOM);
+	export_constant(UNITTYPE_MER);
+	export_constant(UNITTYPE_ELEM);
+
 	/* unit control - mob */
 	export_constant(UMOB_SIZE);
 	export_constant(UMOB_LEVEL);
@@ -2767,6 +2775,7 @@
 	export_constant(UMOB_SHIELD);
 	export_constant(UMOB_WEAPON);
 	export_constant(UMOB_LOOKDIR);
+	export_constant(UMOB_CANMOVETICK);
 	export_constant(UMOB_STR);
 	export_constant(UMOB_AGI);
 	export_constant(UMOB_VIT);

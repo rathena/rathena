@@ -970,7 +970,7 @@ OnTouch:
 	else if (.@i == 3) set .@mobs,5;
 	else if (.@i < 7) set .@mobs,6;
 	else set .@mobs,7;
-	getmapxy(.@map$,.@x,.@y,1);
+	getmapxy(.@map$,.@x,.@y,UNITTYPE_NPC);
 	specialeffect EF_VENOMDUST;
 	monster .@map$,.@x,.@y,"Muck Worm",2467,.@mobs,instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
 	disablenpc instance_npcname(strnpcinfo(0));
@@ -1946,7 +1946,7 @@ OnTimer80000:
 		mes "Now, I may erase your memory again. Perhaps you will have a different fate next time.";
 		specialeffect2 EF_FREEZE;
 		close2;
-		getmapxy(.@map$,.@x,.@y,0);
+		getmapxy(.@map$,.@x,.@y,UNITTYPE_PC);
 		warp .@map$,.@x,.@y;
 		end;
 	} else {

@@ -16752,12 +16752,14 @@ BUILDIN_FUNC(getunittype)
 	}
 
 	switch (bl->type) {
-		case BL_MOB:  value = 0; break;
-		case BL_HOM:  value = 1; break;
+		case BL_PC:   value = 0; break;
+		case BL_NPC:  value = 1; break;
 		case BL_PET:  value = 2; break;
-		case BL_MER:  value = 3; break;
-		case BL_ELEM: value = 4; break;
-		case BL_NPC:  value = 5; break;
+		case BL_MOB:  value = 3; break;
+		case BL_HOM:  value = 4; break;
+		case BL_MER:  value = 5; break;
+		case BL_ELEM: value = 6; break;
+		default:      value = -1; break;
 	}
 
 	script_pushint(st, value);
@@ -16834,6 +16836,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_SHIELD, md->vd->shield);
 			getunitdata_sub(UMOB_WEAPON, md->vd->weapon);
 			getunitdata_sub(UMOB_LOOKDIR, md->ud.dir);
+			getunitdata_sub(UMOB_CANMOVETICK, md->ud.canmove_tick);
 			getunitdata_sub(UMOB_STR, md->status.str);
 			getunitdata_sub(UMOB_AGI, md->status.agi);
 			getunitdata_sub(UMOB_VIT, md->status.vit);
@@ -17126,7 +17129,7 @@ BUILDIN_FUNC(setunitdata)
 				status_calc_npc(nd, SCO_NONE);
 			break;
 		default:
-			ShowError("buildin_setunitdata: Invalid object!");
+			ShowError("buildin_setunitdata: Invalid object!\n");
 			return SCRIPT_CMD_FAILURE;
 	}
 
@@ -17139,7 +17142,7 @@ BUILDIN_FUNC(setunitdata)
 	else if (data_isint(data))
 		value = conv_num(st, data);
 	else {
-		ShowError("buildin_setunitdata: Invalid data type for argument #3 (%d).", data->type);
+		ShowError("buildin_setunitdata: Invalid data type for argument #3 (%d).\n", data->type);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -17173,6 +17176,7 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_SHIELD: clif_changelook(bl, LOOK_SHIELD, (unsigned short)value); break;
 			case UMOB_WEAPON: clif_changelook(bl, LOOK_WEAPON, (unsigned short)value); break;
 			case UMOB_LOOKDIR: unit_setdir(bl, (uint8)value); break;
+			case UMOB_CANMOVETICK: md->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
 			case UMOB_STR: md->status.str = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
 			case UMOB_AGI: md->status.agi = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
 			case UMOB_VIT: md->status.vit = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;

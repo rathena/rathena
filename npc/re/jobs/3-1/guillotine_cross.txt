@@ -3442,7 +3442,7 @@ OnTouch:
 OnTimer:
 	//FIXME: This is a workaround for...
 	//var pccount_tt = GetNeighborPcNumber 2
-	getmapxy(.@map$,.@x,.@y,1);
+	getmapxy(.@map$,.@x,.@y,UNITTYPE_NPC);
 	setarray .@x[1],.@x-2,.@x+2;
 	setarray .@y[1],.@y-2,.@y+2;
 	sleep 1000;

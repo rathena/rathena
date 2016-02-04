@@ -363,6 +363,16 @@ enum questinfo_types {
 	#define FW_HEAVY            900
 #endif
 
+enum getmapxy_types {
+	UNITTYPE_PC = 0,
+	UNITTYPE_NPC,
+	UNITTYPE_PET,
+	UNITTYPE_MOB,
+	UNITTYPE_HOM,
+	UNITTYPE_MER,
+	UNITTYPE_ELEM,
+};
+
 enum unitdata_mobtypes {
 	UMOB_SIZE = 0,
 	UMOB_LEVEL,
@@ -387,6 +397,7 @@ enum unitdata_mobtypes {
 	UMOB_SHIELD,
 	UMOB_WEAPON,
 	UMOB_LOOKDIR,
+	UMOB_CANMOVETICK,
 	UMOB_STR,
 	UMOB_AGI,
 	UMOB_VIT,
