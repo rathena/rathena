@@ -12,7 +12,7 @@
 
 OnClock2100://start time for Tues(2), Thurs(4)
 OnClock2300://end time for Tues(2), Thurs(4)
-OnClock1600://start time for Sat(6)
+OnClock1600://start time for Sat(4)
 OnClock1800://end time for Sat(6)
 
 OnAgitInit:
@@ -28,7 +28,7 @@ OnAgitInit:
 	// end time checks
 	if ((gettime(4)==2) && (gettime(3)==23) ||
 	    (gettime(4)==4) && (gettime(3)==23) ||
-	    (gettime(4)==6) && (gettime(3)==18)) { 
+	    (gettime(4)==6) && (gettime(3)==18)) {
 		if (agitcheck())
 			agitend;
 		end;

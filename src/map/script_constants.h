@@ -16,6 +16,7 @@
 	export_constant(MAX_PARTY);
 	export_constant(MAX_GUILD);
 	export_constant(MAX_GUILDLEVEL);
+	export_constant(MAX_GUARDIANS);
 	export_constant(MAX_GUILD_STORAGE);
 	export_constant(MAX_BG_MEMBERS);
 	export_constant(MAX_CHAT_USERS);

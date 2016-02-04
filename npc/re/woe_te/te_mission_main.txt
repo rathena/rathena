@@ -11,8 +11,7 @@
 -	script	#popswitch	-1,{
 OnInit:
 	if (strnpcinfo(4) == "") end;
-	// var sig = CheckSiegeTime 3
-	if (agitcheck() == 1)
+	if (agitcheck3() == 1)
 		donpcevent strnpcinfo(0) + "::OnCommandOn";
 	else
 		donpcevent strnpcinfo(0) + "::OnReset";
@@ -58,7 +57,7 @@ OnTimer12000:
 	stopnpctimer;
 OnCommandOn:
 	callsub S_Coord, .@item_id, .@mob_id, .@mob_name$, .@coord;
-	monster strnpcinfo(4), rand( .@coord[0],.@coord[1] ), rand( .@coord[2],.@coord[3] ),.@mob_name$,.@mob_id,1,strnpcinfo(0) + "::OnMyMobDead";// THIEF_PORING -> todo: not implemented
+	monster strnpcinfo(4), rand( .@coord[0],.@coord[1] ), rand( .@coord[2],.@coord[3] ),.@mob_name$,.@mob_id,1,strnpcinfo(0) + "::OnMyMobDead";// THIEF_PORING, BABY_STRANGE -> !TODO: not implemented
 	end;
 
 OnReset:
@@ -183,8 +182,7 @@ S_Coord:
 			close;
 		}
 		// .@time_check = OpenHour_SiegeMode 3 3600
-		// .@siege_check = agitcheck();
-		.@siege_check = 1;
+		.@siege_check = agitcheck3();
 		mes "You already know that you have to accept a mission in a certain period of time, right?";
 		if (.@time_check == 1 || .@siege_check == 1)
 			mes "Moreover, you have to keep in mind that you can't accept both high-level and low-level missions simultaneously if they are of the same content.";
@@ -493,9 +491,8 @@ S_Coord:
 
 S_Cancelquest:
 	.@npc_name$ = getarg(1);
-	// .@playtime_check = OpenHour_SiegeMode 3 3600
-	// .@siege_check = agitcheck();
-	.@siege_check = 1;// test
+	// .@time_check = = OpenHour_SiegeMode 3 3600
+	.@siege_check = agitcheck3();
 	if ((.@time_check == 1) || (.@siege_check == 1)) {
 		mes "It seems like you haven't accomplished the mission yet?";
 		mes getarg(2);

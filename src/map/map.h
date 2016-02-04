@@ -273,9 +273,9 @@ enum e_mapid {
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
 //Specifies maps where players may hit each other
-#define map_flag_vs(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.battleground)
+#define map_flag_vs(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || ((agit_flag || agit2_flag || agit3_flag) && map[m].flag.gvg_castle) || map[m].flag.battleground)
 //Specifies maps that have special GvG/WoE restrictions
-#define map_flag_gvg(m) (map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle))
+#define map_flag_gvg(m) (map[m].flag.gvg || ((agit_flag || agit2_flag || agit3_flag) && map[m].flag.gvg_castle))
 //Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
 #define map_flag_gvg2(m) (map[m].flag.gvg || map[m].flag.gvg_castle)
 // No Kill Steal Protection
@@ -775,10 +775,14 @@ extern int map_num;
 extern int autosave_interval;
 extern int minsave_interval;
 extern unsigned char save_settings;
-extern int agit_flag;
-extern int agit2_flag;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
+
+// Agit Flags
+extern bool agit_flag;
+extern bool agit2_flag;
+extern bool agit3_flag;
+#define is_agit_start() (agit_flag || agit2_flag || agit3_flag)
 
 extern char motd_txt[];
 extern char help_txt[];

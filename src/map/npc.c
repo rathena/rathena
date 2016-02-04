@@ -4439,6 +4439,7 @@ int npc_reload(void) {
 	/* refresh guild castle flags on both woe setups */
 	npc_event_doall("OnAgitInit");
 	npc_event_doall("OnAgitInit2");
+	npc_event_doall("OnAgitInit3");
 
 	//Execute the OnInit event for freshly loaded npcs. [Skotlex]
 	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n",npc_event_doall("OnInit"));

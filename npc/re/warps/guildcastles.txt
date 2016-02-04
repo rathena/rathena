@@ -78,25 +78,38 @@ OnTouch:
 	end;
 
 S_Warp:
-	.@guild_id = getcastledata( getarg(0),1 );
 	if (CanParticipatewoeTE() == 0) {
 		mes "3rd and expansion job level can't enter in WoE TE.";
 		close;
 	}
-	// .@hour = OpenHour_SiegeMode 3 3600
-	if (.@hour != 0 && .@guild_id != getcharid(2)) {
-		// .@alliance = IsAllianceGuild( .@guild_id );
-		if (.@alliance == 0) {
+
+	.@guild_id = getcastledata(getarg(0),1);
+	.@my_guild_id = getcharid(2);
+
+	if (.@guild_id && .@guild_id == .@my_guild_id) {
+		// ResetBuffLowLevelSiege;
+		warp getarg(0),getarg(1),getarg(2);
+		end;
+	}
+
+	// .@hour = OpenHour_SiegeMode 3 3600 //!TODO
+	if (.@hour == 1) {
+		if (!.@guild_id || !.@my_guild_id) {
 			mes "It's time for preparing to WoE. Only Alliance guild is able to enter.";
 			close;
 		}
-		mes "Welcome alliance guild";
+		if (getguildalliance(.@my_guild_id,.@guild_id) != 1) {
+			mes "It's time for preparing to WoE. Only Alliance guild is able to enter.";
+			close;
+		}
+		mes "Welcome alliance guild.";
 		close2;
 	}
 	// ResetBuffLowLevelSiege;
 	warp getarg(0),getarg(1),getarg(2);
 	end;
 }
+
 te_prt_gld,129,65,0	duplicate(warp_TE_castle)	prtg-1_prtg-1-01#1_te	WARPNPC,1,1
 te_prt_gld,240,124,0	duplicate(warp_TE_castle)	prtg-2_prtg-2#2_te	WARPNPC,1,1
 te_prt_gld,153,141,0	duplicate(warp_TE_castle)	prtg-3_prtg-3#3_te	WARPNPC,1,1

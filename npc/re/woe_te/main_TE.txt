@@ -18,10 +18,11 @@ function	script	CanParticipatewoeTE	{
 }
 
 -	script	Manager_TE	-1,{
-OnAgitInit:
+OnAgitInit3:
 	.@map$ = strnpcinfo(4);
 	if (.@map$ == "") end;
-	if (getcastledata(.@map$,1) == 0) {
+	.@guild_id = getcastledata(.@map$,1);
+	if (.@guild_id == 0) {
 		killmonsterall .@map$;
 		donpcevent strnpcinfo(0)+"::OnEmpSpawn";
 		if (compare(.@map$,"te_aldecas")) {
@@ -74,6 +75,7 @@ OnAgitInit:
 		disablenpc "Kafra Staff#"+ .@map$;
 	}
 	else {
+		requestguildinfo .@guild_id;
 		donpcevent "::OnFlagTE" + strnpcinfo(2);// Guild emblem on flags.
 		if (getcastledata(.@map$,9)  == 0)
 			disablenpc "Kafra Staff#"+ .@map$;
@@ -109,10 +111,10 @@ OnEmpSpawn:
 	}
 	end;
 
-OnAgitStart:
+OnAgitStart3:
 	.@map$ = strnpcinfo(4);
 	if (.@map$ == "") end;
-	if (agitcheck()) {
+	if (agitcheck3()) {
 		maprespawnguildid .@map$, getcastledata(.@map$,1),6;// warp all non-guild members and remove monsters (like woe fe)
 		gvgon .@map$;
 		donpcevent strnpcinfo(0)+"::OnEmpSpawn";
@@ -120,7 +122,7 @@ OnAgitStart:
 	}
 	end;
 
-OnAgitEnd:
+OnAgitEnd3:
 	.@map$ = strnpcinfo(4);
 	if (.@map$ == "") end;
 	gvgoff .@map$;
@@ -148,7 +150,7 @@ OnAgitBreak:
 	// Reset Invest information and refresh castle data
 	for ( .@i = 4; .@i <= 9; .@i++ )
 		setcastledata .@map$,.@i,0;
-	donpcevent strnpcinfo(0) +"::OnAgitInit";
+	donpcevent strnpcinfo(0) +"::OnAgitInit3";
 
 	// Erase Guardian Database information if the new owners do not have Guardian Research.
 	if (getgdskilllv(.@guild_id,10002) == 0) {
@@ -162,7 +164,7 @@ OnAgitBreak:
 
 	// Respawn the Emperium, and display new owners.
 	sleep 500;
-	if (agitcheck())
+	if (agitcheck3())
 		donpcevent strnpcinfo(0) +"::OnEmpSpawn";
 	sleep 7000;
 	announce strnpcinfo(2) +" in the fortress of [" + getcastlename(.@map$) + "] is occupied by [" + getguildname(.@guild_id) + "] guild.", bc_all,"0xFF0000",FW_NORMAL,10;
@@ -176,7 +178,7 @@ OnGuildBreak:
 	setcastledata .@map$,1,0;
 	sleep 7000;
 	announce "Guild Base [" + getcastlename(.@map$) + "] has been abandoned.",bc_all;
-	donpcevent strnpcinfo(0) +"::OnAgitInit";
+	donpcevent strnpcinfo(0) +"::OnAgitInit3";
 	end;
 
 S_Message:
@@ -193,15 +195,15 @@ S_Message:
 		.@string$ = "prt0"+ charat( .@map$,getstrlen(.@map$)-1 );
 	donpcevent "#popswitch_"+ .@string$ +"::"+ getarg(0);// monsters for mission TE
 
-	if (.@map$ == "te_alde_cas1") {
-		donpcevent "Blacksmith Cano#tegod01::"+ getarg(0);// god item TE
+	if (.@map$ == "te_aldecas1") {
+		donpcevent "Blacksmith Cano#tegod01::OnInit";// god item TE
 		$@2012_tegod_kafra = 0;
 		$@2012_tegirls_alde01 = 0;
 	}
 	else if (.@map$ == "te_prtcas01") {
     	$@2012_tegod_gloria = 0;
     	$@2012_tegirls_prt01 = 0;
-    	donpcevent "Blacksmith Kai#tegod01#tegod01::"+ getarg(0);
+    	donpcevent "Blacksmith Kai#tegod01::OnInit";
 	}
 	return;
 }
@@ -327,15 +329,17 @@ function GuardianData;
 	next;
 	switch( select( "Check current status of the fortress", "Invest in commercial development level", "Invest in defense level", "Deploy guardians", "Employ / Dismiss a warehouseman", "Enter master's room" ) ) {
 	case 1:
+		.@economy_today = getcastledata(.@map$,4);
+		.@defense_today = getcastledata(.@map$,5);
 		mes .@npc_name$;
 		mes "Let me give you a report on the current status of the fortress.";
 		mes "";
 		mes "^0000ffThe current commercial level is " + getcastledata(.@map$,2) + "~.";
-		if (getcastledata(.@map$,4) > 0)
-			mes "You have invested ~ " + getcastledata(.@map$,4) + " times within the past 1 day.";
+		if (.@economy_today > 0)
+			mes "You have invested ~ " + .@economy_today + " times within the past 1 day.";
 		mes "The current defense level is " + getcastledata(.@map$,3) +  "~.^000000";
-		if (getcastledata(.@map$,5) > 0)
-			mes "^0000ff- Within the past 1 day, you have invested ~ " + getcastledata(.@map$,5) + " times.^000000";
+		if (.@defense_today > 0)
+			mes "^0000ff- Within the past 1 day, you have invested ~ " + .@defense_today + " times.^000000";
 		mes "";
 		mes "That's about it.";
 		close;
@@ -344,7 +348,7 @@ function GuardianData;
 		.@economy = getcastledata(.@map$,2);
 		setarray .@eco_invest[0], 5,5000, 10,10000, 15,20000, 20,35000, 25,55000, 30,80000, 35,110000, 40,145000, 45,185000, 50,230000,
 			55,280000, 60,335000, 65,395000, 70,460000, 75,530000, 80,605000, 85,685000, 90,770000, 95,860000, 100,955000;
-		for ( .@i = 0; .@i < 40; .@i += 2 )
+		for ( .@i = 0; .@i < getarraysize(.@eco_invest); .@i += 2 )
 			if (.@economy <= .@eco_invest[.@i]) break;
 		callsub( S_Invest, 4, .@eco_invest[.@i+1], getcastledata(.@map$,4), "commercial development", "number of items produced within the guild increases" );
 
@@ -352,7 +356,7 @@ function GuardianData;
 		.@defense = getcastledata(.@map$,3);
 		setarray .@def_invest[0], 5,10000, 10,20000, 15,40000, 20,70000, 25,110000, 30,160000, 35,220000, 40,290000, 45,370000, 50,460000,
 			55,560000, 60,670000, 65,790000, 70,920000, 75,1060000, 80,1210000, 85,1370000, 90,1540000, 95,1720000, 100,1910000;
-		for ( .@i = 0; .@i < 40; .@i += 2 )
+		for ( .@i = 0; .@i < getarraysize(.@def_invest); .@i += 2 )
 			if (.@defense <= .@def_invest[.@i]) break;
 		callsub( S_Invest, 5, .@def_invest[.@i+1], getcastledata(.@map$,5), "defense", "durability of guardian and Emperiums increase" );
 
@@ -362,7 +366,7 @@ function GuardianData;
 		mes "Select a guardian that you wish to install.";
 		next;
 		GuardianData( .@mob_id, .@x, .@y, .@name$ );
-		for ( .@i = 0; .@i < 8 ; .@i++ ) {
+		for ( .@i = 0; .@i < MAX_GUARDIANS ; .@i++ ) {
 			if (guardianinfo(.@map$,.@i,0))
 				.@menu$ = .@menu$ + getmonsterinfo(.@mob_id[.@i],MOB_NAME) + " - Implemented (" + guardianinfo(.@map$,.@i,2) + "/" + guardianinfo(.@map$,.@i,1) + "):";// hp/hpmax
 			else
@@ -647,11 +651,11 @@ function GuardianData {
 			1285, 32, 253, "Outer Castle Archer Guardian",// ARCHER_GUARDIAN
 			1285, 44, 248, "Outer Castle Archer Guardian";// ARCHER_GUARDIAN
 	}
-	for ( .@i = 0; .@i < 32; .@i += 4 ) {
+	for ( .@i = 0; .@i < getarraysize(.@data$); .@i += 4 ) {
 		set getelementofarray( getarg(0),.@index ), .@data$[.@i];
 		set getelementofarray( getarg(1),.@index ), .@data$[.@i+1];
 		set getelementofarray( getarg(2),.@index ), .@data$[.@i+2];
-		set getelementofarray( getarg(2),.@index ), .@data$[.@i+3];
+		set getelementofarray( getarg(3),.@index ), .@data$[.@i+3];
 		.@index++;
 	}
 }
@@ -660,7 +664,7 @@ OnSpawnGuardians:
 	GuardianData( .@mob_id, .@x, .@y, .@name$ );
 	.@map$ = strnpcinfo(4);
 	killmonster .@map$, "Kafra Staff#"+ strnpcinfo(4) +"::OnGuardianDied";
-	for ( .@i = 0; .@i < 8; .@i++ ) {
+	for ( .@i = 0; .@i < MAX_GUARDIANS; .@i++ ) {
 		if (getcastledata( .@map$,(.@i+10) ))
 			guardian .@map$, .@x[.@i], .@y[.@i], .@name$[.@i], .@mob_id[.@i], "Kafra Staff#"+ strnpcinfo(4) +"::OnGuardianDied",.@i;
 	}
@@ -1032,7 +1036,7 @@ OnClock0001:// Spawn Treasure Chests based on castle economy.
 			2457, 273,179;
 	}
 	.@treasure_num = ( 4 + ( .@economy /5 ) ) *3;// x3 <-> data[] size
-	for ( .@i = 0; .@i < 72 && .@treasure_num > .@i; .@i += 3 )// nb. [4;24] chests
+	for ( .@i = 0; .@i < getarraysize(.@data) && .@treasure_num > .@i; .@i += 3 )// nb. [4;24] chests
 		monster .@map$, .@data[.@i+1], .@data[.@i+2],"Treasure Chest", .@data[.@i],1, strnpcinfo(0)+"::OnTreasureDied";
 
 OnTreasureDied:

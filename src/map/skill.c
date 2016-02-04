@@ -720,7 +720,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		case GD_EMERGENCYCALL:
 		case GD_ITEMEMERGENCYCALL:
 			if (
-				!(battle_config.emergency_call&((agit_flag || agit2_flag)?2:1)) ||
+				!(battle_config.emergency_call&((is_agit_start())?2:1)) ||
 				!(battle_config.emergency_call&(map[m].flag.gvg || map[m].flag.gvg_castle?8:4)) ||
 				(battle_config.emergency_call&16 && map[m].flag.nowarpto && !map[m].flag.gvg_castle)
 			)	{

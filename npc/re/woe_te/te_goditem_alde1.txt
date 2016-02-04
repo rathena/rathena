@@ -16,7 +16,6 @@ te_aldecas1,226,34,3	script	Blacksmith Cano#tegod01	4_M_RACHMAN1,{
 	// .@siege_check = CheckSiegeTime 3
 
 	// .@time_check = OpenHour_SiegeMode 3 14400
-	.@siege_check = agitcheck();
 
 	.@guild_id = getcastledata( "te_aldecas1",1 );
 	.@economy = getcastledata("te_aldecas1",2);
@@ -34,7 +33,7 @@ te_aldecas1,226,34,3	script	Blacksmith Cano#tegod01	4_M_RACHMAN1,{
 		mes "Please, pretend not to see me.";
 		close;
 	}
-	if (.@time_check == 1 || .@siege_check == 1) {
+	if (.@time_check == 1 || agitcheck3() == 1) {
 		mes "From now on, I'll stay here quietly and not interrupt anyone until the siege ends.";
 		mes "Don't worry about me.";
 		close;
@@ -375,7 +374,7 @@ S_Fuse:
 	}
 
 OnInit:
-	if ($@2012_tegod_kafra == 3)
+	if ($@2012_tegod_kafra == 3 || agitcheck3())
 		disablenpc strnpcinfo(0);
 	else
 		enablenpc strnpcinfo(0);

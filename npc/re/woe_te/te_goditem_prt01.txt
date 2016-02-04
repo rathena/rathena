@@ -30,7 +30,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 		mes "Please, pretend not to see me.";
 		close;
 	}
-	if (.@time_check == 1 || .@siege_check == 1) {
+	if (.@time_check == 1 || agitcheck3() == 1) {
 		mes "From now on, I'll stay here quietly and not interrupt anyone until the siege ends.";
 		mes "Don't worry about me.";
 		close;
@@ -371,7 +371,7 @@ S_Fuse:
 	}
 
 OnInit:
-	if ($@2012_tegod_gloria == 3)
+	if ($@2012_tegod_gloria == 3 || agitcheck3())
 		disablenpc strnpcinfo(0);
 	else
 		enablenpc strnpcinfo(0);
