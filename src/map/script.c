@@ -14375,28 +14375,22 @@ BUILDIN_FUNC(getsavepoint)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
-  * Get position for  char/NPC/pet/hom/merc/elem objects. Added by Lorky
-  *
-  *     int getMapXY(MapName$,MapX,MapY,type,[CharName$]);
-  *             where type:
-  *                     MapName$ - String variable for output map name
-  *                     MapX     - Integer variable for output coord X
-  *                     MapY     - Integer variable for output coord Y
-  *                     type     - type of object
-  *                                0 - Character coord
-  *                                1 - NPC coord
-  *                                2 - Pet coord
-  *                                3 - Mob coord (see 'getunitdata')
-  *                                4 - Homun coord
-  *                                5 - Mercenary coord
-  *                                6 - Elemental coord
-  *                     CharName$ - Name object. If miss or "this" the current object
-  *
-  *             Return:
-  *                     0        - success
-  *                     -1       - some error, MapName$,MapX,MapY contains unknown value.
-  *------------------------------------------*/
+/**
+ * Get position for BL objects.
+ * getmapxy(<map name>,<x>,<y>,<type>{,<char name>});
+ * @param mapname: String variable for output map name
+ * @param x: Integer variable for output coord X
+ * @param y: Integer variable for output coord Y
+ * @param type: Type of object
+ *   UNITTYPE_PC - Character coord
+ *   UNITTYPE_NPC - NPC coord
+ *   UNITTYPE_PET - Pet coord
+ *   UNITTYPE_HOM - Homun coord
+ *   UNITTYPE_MER - Mercenary coord
+ *   UNITTYPE_ELEM - Elemental coord
+ * @param charname: Name object. If empty or "this" use the current object
+ * @return 0 - success; -1 - some error, MapName$,MapX,MapY contains unknown value.
+ */
 BUILDIN_FUNC(getmapxy)
 {
 	struct block_list *bl = NULL;
@@ -14410,35 +14404,35 @@ BUILDIN_FUNC(getmapxy)
 	char mapname[MAP_NAME_LENGTH];
 
 	if( !data_isreference(script_getdata(st,2)) ) {
-		ShowWarning("script: buildin_getmapxy: not mapname variable\n");
+		ShowWarning("script: buildin_getmapxy: mapname value is not a variable.\n");
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 	if( !data_isreference(script_getdata(st,3)) ) {
-		ShowWarning("script: buildin_getmapxy: not mapx variable\n");
+		ShowWarning("script: buildin_getmapxy: mapx value is not a variable.\n");
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 	if( !data_isreference(script_getdata(st,4)) ) {
-		ShowWarning("script: buildin_getmapxy: not mapy variable\n");
+		ShowWarning("script: buildin_getmapxy: mapy value is not a variable.\n");
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if( !is_string_variable(reference_getname(script_getdata(st, 2))) ) {
-		ShowWarning("script: buildin_getmapxy: %s is not a string variable\n",reference_getname(script_getdata(st, 2)));
+		ShowWarning("script: buildin_getmapxy: %s is not a string variable.\n",reference_getname(script_getdata(st, 2)));
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if( is_string_variable(reference_getname(script_getdata(st, 3))) ) {
-		ShowWarning("script: buildin_getmapxy: %s is a string variable, should be int\n",reference_getname(script_getdata(st, 3)));
+		ShowWarning("script: buildin_getmapxy: %s is a string variable, should be an INT.\n",reference_getname(script_getdata(st, 3)));
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if( is_string_variable(reference_getname(script_getdata(st, 4))) ) {
-		ShowWarning("script: buildin_getmapxy: %s is a string variable, should be int\n",reference_getname(script_getdata(st, 4)));
+		ShowWarning("script: buildin_getmapxy: %s is a string variable, should be an INT.\n",reference_getname(script_getdata(st, 4)));
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -14447,7 +14441,7 @@ BUILDIN_FUNC(getmapxy)
 	type=script_getnum(st,5);
 
 	switch (type) {
-		case 0:	//Get Character Position
+		case UNITTYPE_PC:	//Get Character Position
 			if( script_hasdata(st,6) )
 				sd=map_nick2sd(script_getstr(st,6));
 			else
@@ -14456,7 +14450,7 @@ BUILDIN_FUNC(getmapxy)
 			if (sd)
 				bl = &sd->bl;
 			break;
-		case 1:	//Get NPC Position
+		case UNITTYPE_NPC:	//Get NPC Position
 			if( script_hasdata(st,6) )
 			{
 				struct npc_data *nd;
@@ -14466,7 +14460,7 @@ BUILDIN_FUNC(getmapxy)
 			} else //In case the origin is not an npc?
 				bl=map_id2bl(st->oid);
 			break;
-		case 2:	//Get Pet Position
+		case UNITTYPE_PET:	//Get Pet Position
 			if(script_hasdata(st,6))
 				sd=map_nick2sd(script_getstr(st,6));
 			else
@@ -14475,9 +14469,7 @@ BUILDIN_FUNC(getmapxy)
 			if (sd && sd->pd)
 				bl = &sd->pd->bl;
 			break;
-		case 3:	//Get Mob Position
-			break; //see 'getunitdata'
-		case 4:	//Get Homun Position
+		case UNITTYPE_HOM:	//Get Homun Position
 			if(script_hasdata(st,6))
 				sd=map_nick2sd(script_getstr(st,6));
 			else
@@ -14486,7 +14478,7 @@ BUILDIN_FUNC(getmapxy)
 			if (sd && sd->hd)
 				bl = &sd->hd->bl;
 			break;
-		case 5: //Get Mercenary Position
+		case UNITTYPE_MER: //Get Mercenary Position
 			if(script_hasdata(st,6))
 				sd=map_nick2sd(script_getstr(st,6));
 			else
@@ -14495,7 +14487,7 @@ BUILDIN_FUNC(getmapxy)
 			if (sd && sd->md)
 				bl = &sd->md->bl;
 			break;
-		case 6: //Get Elemental Position
+		case UNITTYPE_ELEM: //Get Elemental Position
 			if(script_hasdata(st,6))
 				sd=map_nick2sd(script_getstr(st,6));
 			else
@@ -14505,7 +14497,7 @@ BUILDIN_FUNC(getmapxy)
 				bl = &sd->ed->bl;
 			break;
 		default:
-			ShowWarning("script: buildin_getmapxy: Invalid type %d\n", type);
+			ShowWarning("script: buildin_getmapxy: Invalid type %d.\n", type);
 			script_pushint(st,-1);
 			return SCRIPT_CMD_FAILURE;
 	}
@@ -16752,13 +16744,13 @@ BUILDIN_FUNC(getunittype)
 	}
 
 	switch (bl->type) {
-		case BL_PC:   value = 0; break;
-		case BL_NPC:  value = 1; break;
-		case BL_PET:  value = 2; break;
-		case BL_MOB:  value = 3; break;
-		case BL_HOM:  value = 4; break;
-		case BL_MER:  value = 5; break;
-		case BL_ELEM: value = 6; break;
+		case BL_PC:   value = UNITTYPE_PC; break;
+		case BL_NPC:  value = UNITTYPE_NPC; break;
+		case BL_PET:  value = UNITTYPE_PET; break;
+		case BL_MOB:  value = UNITTYPE_MOB; break;
+		case BL_HOM:  value = UNITTYPE_HOM; break;
+		case BL_MER:  value = UNITTYPE_MER; break;
+		case BL_ELEM: value = UNITTYPE_ELEM; break;
 		default:      value = -1; break;
 	}
 

@@ -2886,13 +2886,9 @@ Type is the type of object to search for:
 	UNITTYPE_PC   - Character object
 	UNITTYPE_NPC  - NPC object
 	UNITTYPE_PET  - Pet object
-	UNITTYPE_MOB  - Monster object -- See 'getunitdata' for monster.
 	UNITTYPE_HOM  - Homunculus object
 	UNITTYPE_MER  - Mercenary object
 	UNITTYPE_ELEM - Elemental object
-
-While UNITTYPE_MOB is meant to look for a monster object, no searching will
-be done and the function will always return -1.
 
 The search string is optional. If it is not specified, the location of the 
 invoking character will always be returned for types UNITTYPE_PC and UNITTYPE_PET,
