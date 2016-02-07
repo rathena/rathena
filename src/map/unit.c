@@ -1436,8 +1436,10 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 			return 0;
 	} else {
 		// Don't set walk delays when already trapped.
-		if (!unit_can_move(bl))
+		if (!unit_can_move(bl)) {
+			unit_stop_walking(bl,4); //Unit might still be moving even though it can't move
 			return 0;
+		}
 		//Immune to being stopped for double the flinch time
 		if (DIFF_TICK(ud->canmove_tick, tick-delay) > 0)
 			return 0;

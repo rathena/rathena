@@ -252,7 +252,7 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
 * @param skill_lv: Level of skill used
 * @param skill_id: ID o skill used
 * @param dmg_lv: State of the attack (miss, etc.)
-* @param attack_type: Damage delay
+* @param attack_type: Type of the attack (BF_NORMAL|BF_SKILL|BF_SHORT|BF_LONG|BF_WEAPON|BF_MAGIC|BF_MISC)
 * @param additional_effects: Whether additional effect should be applied
 * @param tick: Current tick
 *------------------------------------------*/

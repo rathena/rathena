@@ -255,6 +255,7 @@ void initChangeTables(void)
 	set_sc( PR_KYRIE		, SC_KYRIE		, SI_KYRIE		, SCB_NONE );
 	set_sc( PR_MAGNIFICAT		, SC_MAGNIFICAT		, SI_MAGNIFICAT		, SCB_REGEN );
 	set_sc( PR_GLORIA		, SC_GLORIA		, SI_GLORIA		, SCB_LUK );
+	add_sc( PR_STRECOVERY		, SC_BLIND		);
 	add_sc( PR_LEXDIVINA		, SC_SILENCE		);
 	set_sc( PR_LEXAETERNA		, SC_AETERNA		, SI_AETERNA		, SCB_NONE );
 	add_sc( WZ_METEOR		, SC_STUN		);
@@ -262,6 +263,7 @@ void initChangeTables(void)
 	add_sc( WZ_FROSTNOVA		, SC_FREEZE		);
 	add_sc( WZ_STORMGUST		, SC_FREEZE		);
 	set_sc( WZ_QUAGMIRE		, SC_QUAGMIRE		, SI_QUAGMIRE		, SCB_AGI|SCB_DEX|SCB_ASPD|SCB_SPEED );
+	add_sc( BS_HAMMERFALL		, SC_STUN		);
 	set_sc( BS_ADRENALINE		, SC_ADRENALINE		, SI_ADRENALINE		, SCB_ASPD );
 	set_sc( BS_WEAPONPERFECT	, SC_WEAPONPERFECTION	, SI_WEAPONPERFECTION	, SCB_NONE );
 	set_sc( BS_OVERTHRUST		, SC_OVERTHRUST		, SI_OVERTHRUST		, SCB_NONE );
@@ -8355,6 +8357,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
 			status_change_end(bl, SC_GOSPEL, INVALID_TIMER);
 		break;
+	case SC_FREEZE:
+		status_change_end(bl, SC_AETERNA, INVALID_TIMER);
+		break;
 	case SC_HIDING:
 		status_change_end(bl, SC_CLOSECONFINE, INVALID_TIMER);
 		status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
@@ -10465,6 +10470,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	switch (type) {
 		case SC_FREEZE:
 		case SC_STUN:
+			if(sc->data[SC_DANCING])
+				unit_stop_walking(bl, 1);
 		case SC_SLEEP:
 		case SC_STONE:
 		case SC_WHITEIMPRISON:
@@ -10480,6 +10487,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		// Fall through
 		case SC_CURSEDCIRCLE_ATKER:
 			unit_stop_attack(bl);
+			if (type == SC_FREEZE || type == SC_STUN)
+				break; //Handled above
 		// Fall through
 		case SC_STOP:
 		case SC_CONFUSION:
@@ -11880,6 +11889,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			sce->val4 = 0;
 			unit_stop_walking(bl,1);
 			unit_stop_attack(bl);
+			status_change_end(bl, SC_AETERNA, INVALID_TIMER);
 			sc->opt1 = OPT1_STONE;
 			clif_changeoption(bl);
 			sc_timer_next(1000+tick,status_change_timer, bl->id, data );
