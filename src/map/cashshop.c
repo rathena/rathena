@@ -31,15 +31,15 @@ static bool cashshop_parse_dbrow(char* fields[], int columns, int current) {
 	struct cash_item_data* cid;
 
 	if( !itemdb_exists( nameid ) ){
-		ShowWarning( "cashshop_parse_dbrow: Invalid ID %hu in line %d, skipping...\n", nameid, current );
+		ShowWarning( "cashshop_parse_dbrow: Invalid ID %hu in line '%d', skipping...\n", nameid, current );
 		return 0;
 	}
 
 	if( tab > CASHSHOP_TAB_SEARCH ){
-		ShowWarning( "cashshop_parse_dbrow: Invalid tab %d in line %d, skipping...\n", tab, current );
+		ShowWarning( "cashshop_parse_dbrow: Invalid tab %d in line '%d', skipping...\n", tab, current );
 		return 0;
 	}else if( price < 1 ){
-		ShowWarning( "cashshop_parse_dbrow: Invalid price %d in line %d, skipping...\n", price, current );
+		ShowWarning( "cashshop_parse_dbrow: Invalid price %d in line '%d', skipping...\n", price, current );
 		return 0;
 	}
 
@@ -121,8 +121,10 @@ static int cashshop_read_db_sql( void ){
 				}
 			}
 
-			if( !cashshop_parse_dbrow( str, 3, lines ) )
+			if( !cashshop_parse_dbrow( str, 3, lines ) ) {
+				ShowError("cashshop_read_db_sql: Cannot process table '%s' at line '%d', skipping...\n", cash_db_name[fi], lines);
 				continue;
+			}
 
 			++count;
 		}
