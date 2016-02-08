@@ -5875,10 +5875,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		{
 			int heal = skill_calc_heal(src, bl, skill_id, skill_lv, true);
 			int heal_get_jobexp;
-			if( status_isimmune(bl) ||
-					(dstmd && (dstmd->mob_id == MOBID_EMPERIUM || mob_is_battleground(dstmd))) ||
-					(dstsd && pc_ismadogear(dstsd)) )//Mado is immune to heal
-				heal=0;
+			if (status_isimmune(bl) || (dstmd && (dstmd->mob_id == MOBID_EMPERIUM || mob_is_battleground(dstmd))))
+				heal = 0;
 
 			if( tsc && tsc->count ) {
 				if( tsc->data[SC_KAITE] && !(sstatus->mode&MD_BOSS) ) { //Bounce back heal
@@ -7536,8 +7534,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			if((dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER)
 				|| (tsc && tsc->data[SC_SPIRIT] && tsc->data[SC_SPIRIT]->val2 == SL_ROGUE) //Rogue's spirit defends againt dispel.
-				|| rnd()%100 >= 50+10*skill_lv
-				|| ( tsc && tsc->option&OPTION_MADOGEAR ) )//Mado Gear is immune to dispell according to bug report 49 [Ind]
+				|| rnd()%100 >= 50+10*skill_lv)
 			{
 				if (sd)
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -10742,6 +10739,15 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 	struct status_change *tsc = status_get_sc(target);
 
 	switch (skill_id) {
+		case AL_HEAL:
+		case AL_INCAGI:
+		case AL_DECAGI:
+		case SA_DISPELL: // Mado Gear is immune to Dispell according to bugreport:49 [Ind]
+		case AB_RENOVATIO:
+		case AB_HIGHNESSHEAL:
+			if (tsc && tsc->option&OPTION_MADOGEAR)
+				return USESKILL_FAIL_TOTARGET;
+			break;
 		case RG_BACKSTAP:
 			{
 				uint8 dir = map_calc_dir(src,target->x,target->y),t_dir = unit_getdir(target);
