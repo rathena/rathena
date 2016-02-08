@@ -10468,27 +10468,27 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Those that make you stop attacking/walking....
 	switch (type) {
-		case SC_FREEZE:
-		case SC_STUN:
-			if(sc->data[SC_DANCING])
-				unit_stop_walking(bl, 1);
-		case SC_SLEEP:
-		case SC_STONE:
 		case SC_WHITEIMPRISON:
 		case SC_DEEPSLEEP:
 		case SC_CRYSTALIZE:
 			if (sd && pc_issit(sd)) // Avoid sprite sync problems.
 				pc_setstand(sd, true);
+		case SC_FREEZE:
+		case SC_STUN:
+			if (sc->data[SC_DANCING])
+				unit_stop_walking(bl, 1);
 		case SC_TRICKDEAD:
 			status_change_end(bl, SC_DANCING, INVALID_TIMER);
+		case SC_SLEEP:
+		case SC_STONE:
 			// Cancel cast when get status [LuzZza]
 			if (battle_config.sc_castcancel&bl->type)
 				unit_skillcastcancel(bl, 0);
 		// Fall through
 		case SC_CURSEDCIRCLE_ATKER:
 			unit_stop_attack(bl);
-			if (type == SC_FREEZE || type == SC_STUN)
-				break; //Handled above
+			if (type == SC_FREEZE || type == SC_STUN || type == SC_SLEEP || type == SC_STONE)
+				break;
 		// Fall through
 		case SC_STOP:
 		case SC_CONFUSION:
@@ -11887,8 +11887,11 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_STONE:
 		if(sc->opt1 == OPT1_STONEWAIT && sce->val3) {
 			sce->val4 = 0;
-			unit_stop_walking(bl,1);
 			unit_stop_attack(bl);
+			if (sc->data[SC_DANCING]) {
+				unit_stop_walking(bl, 1);
+				status_change_end(bl, SC_DANCING, INVALID_TIMER);
+			}
 			status_change_end(bl, SC_AETERNA, INVALID_TIMER);
 			sc->opt1 = OPT1_STONE;
 			clif_changeoption(bl);

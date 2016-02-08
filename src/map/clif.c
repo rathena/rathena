@@ -10845,7 +10845,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		if (battle_config.idletime_option&IDLE_ATTACK)
 			sd->idletime = last_tick;
 		unit_attack(&sd->bl, target_id, action_type != 0);
-	break;
+		break;
 	case 0x02: // sitdown
 		if (battle_config.basic_skill_check && pc_checkskill(sd, NV_BASIC) < 3) {
 			clif_skill_fail(sd, 1, USESKILL_FAIL_LEVEL, 2);
@@ -10858,7 +10858,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			return;
 		}
 
-		if (sd->ud.skilltimer != INVALID_TIMER || (sd->sc.opt1 && sd->sc.opt1 != OPT1_BURNING ))
+		if (sd->ud.skilltimer != INVALID_TIMER || (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING))
 			break;
 
 		if (sd->sc.count && (
@@ -10873,7 +10873,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		pc_setsit(sd);
 		skill_sit(sd, 1);
 		clif_sitting(&sd->bl);
-	break;
+		break;
 	case 0x03: // standup
 		if (!pc_issit(sd)) {
 			//Bugged client? Just refresh them.
@@ -10881,13 +10881,16 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			return;
 		}
 
+		if (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
+			break;
+
 		if (pc_setstand(sd, false)) {
 			if (battle_config.idletime_option&IDLE_SIT)
 				sd->idletime = last_tick;
 			skill_sit(sd, 0);
 			clif_standing(&sd->bl);
 		}
-	break;
+		break;
 	}
 }
 
