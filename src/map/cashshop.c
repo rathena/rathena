@@ -77,7 +77,6 @@ static void cashshop_read_db_txt( void ){
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		char* dbsubpath2 = (char*)aMalloc(n2+1);
 
-
 		if(fi==0) {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[fi]);
 			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[fi]);
@@ -88,6 +87,9 @@ static void cashshop_read_db_txt( void ){
 		}
 
 		sv_readdb(dbsubpath2, "item_cash_db.txt",          ',', 3, 3, -1, &cashshop_parse_dbrow, fi);
+
+		aFree(dbsubpath1);
+		aFree(dbsubpath2);
 	}
 }
 
