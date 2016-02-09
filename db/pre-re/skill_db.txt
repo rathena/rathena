@@ -218,7 +218,7 @@
 //****
 // Hunter
 115,3,6,2,0,0x1,0,5,1,no,0,0x80,0,misc,6:7:8:9:10,0x3000,	HT_SKIDTRAP,Skid Trap
-116,3,6,2,2,0xC2,0,5,1,no,0,0x80,0,misc,0,0x3800,	HT_LANDMINE,Land Mine
+116,3,6,2,2,0xC0,0,5,1,no,0,0x80,0,misc,0,0x3800,	HT_LANDMINE,Land Mine
 117,3,6,2,0,0x1,0,5,1,no,0,0x80,0,misc,0,0x3000,	HT_ANKLESNARE,Ankle Snare
 118,3,6,2,0,0x3,1,5,1,no,0,0x80,0,misc,0,0x3000,	HT_SHOCKWAVE,Shockwave Trap
 119,3,6,2,0,0x3,2,5,1,no,0,0x80,0,misc,0,0x3000,	HT_SANDMAN,Sandman
@@ -549,7 +549,7 @@
 //****
 // Sniper
 380,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	SN_SIGHT,Falcon Eyes
-381,5,8,1,-3,0x40,0,5,1,yes,0,0,0,misc,0,0x80,		SN_FALCONASSAULT,Falcon Assault
+381,9,8,1,-3,0x40,0,5,1,yes,0,0,0,misc,0,0x0,		SN_FALCONASSAULT,Falcon Assault
 382,9,8,1,-1,0,1,5,1,yes,0,0,14,weapon,0,0x0,	SN_SHARPSHOOTING,Focused Arrow Strike
 383,0,6,4,0,0x3,-1,10,1,yes,0,0,0,weapon,0,0x0,	SN_WINDWALK,Wind Walker
 
@@ -1380,20 +1380,20 @@
 8202,0,6,4,3,0x2,2,10,1,no,0,0x40000,0,weapon,2,0x0,	MS_MAGNUM,Magnum_Break
 8203,-2,6,1,-1,0x2,1,10,1,no,0,0,0,weapon,1,0x0,	MS_BOWLINGBASH,Bowling_Bash
 8204,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	MS_PARRYING,Parry
-8205,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0,0x0,	MS_REFLECTSHIELD,Shield_Reflect
+8205,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	MS_REFLECTSHIELD,Shield_Reflect
 8206,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,	MS_BERSERK,Frenzy
 8207,-9,8,1,-1,0,0,10,2,no,0,0,0,weapon,0,0x80,	MA_DOUBLE,Double_Strafe
 8208,-9,6,2,-1,0x2,2,10,1,no,0,0x40000,0,weapon,2,0x81,	MA_SHOWER,Arrow_Shower
-8209,3,6,2,0,0x1,0,5,1,no,0,0x80,0,misc,6:7:8:9:10,0x0,	MA_SKIDTRAP,Skid_Trap
-8210,3,6,2,2,0x40,0,5,1,no,0,0x80,0,misc,0,0x0,	MA_LANDMINE,Land_Mine
-8211,3,6,2,0,0x3,2,5,1,no,0,0x80,0,misc,0,0x0,	MA_SANDMAN,Sandman
-8212,3,6,2,1,0x42,1,5,1,no,0,0x80,0,weapon,0,0x0,	MA_FREEZINGTRAP,Freezing_Trap
+8209,3,6,2,0,0x1,0,5,1,no,0,0x80,0,misc,6:7:8:9:10,0x3000,	MA_SKIDTRAP,Skid_Trap
+8210,3,6,2,2,0xC0,0,5,1,no,0,0x80,0,misc,0,0x3800,	MA_LANDMINE,Land_Mine
+8211,3,6,2,0,0x3,2,5,1,no,0,0x80,0,misc,0,0x3000,	MA_SANDMAN,Sandman
+8212,3,6,2,1,0x42,1,5,1,no,0,0x80,0,weapon,0,0x3800,	MA_FREEZINGTRAP,Freezing_Trap
 8213,2,6,32,0,0x1,0,1,1,no,0,0x40000,0,misc,0,0x0,	MA_REMOVETRAP,Remove_Trap
 8214,-9,6,1,-1,0x2,0,1,1,no,0,0x1,0,weapon,6,0x80,	MA_CHARGEARROW,Arrow_Repel
-8215,9,8,1,-1,0,2,5,1,yes,0,0,13,weapon,0,0x0,	MA_SHARPSHOOTING,Focused_Arrow_Strike
+8215,9,8,1,-1,0,1,5,1,yes,0,0,14,weapon,0,0x0,	MA_SHARPSHOOTING,Focused_Arrow_Strike
 8216,-2,8,1,-1,0,0,10,3,no,0,0,0,weapon,0,0x0,	ML_PIERCE,Pierce
-8217,-2,6,1,-1,0x1,0,10,1,no,0,0,0,weapon,3,0x0,	ML_BRANDISH,Brandish_Spear
-8218,5,8,1,-1,0x20,0,5,5,no,0,0,0,weapon,0,0x0,	ML_SPIRALPIERCE,Spiral_Pierce
+8217,-2,6,1,-1,0x1,2,10,1,no,0,0,5,weapon,2,0x20000,	ML_BRANDISH,Brandish_Spear
+8218,5,8,1,-1,0x20,0,5,5,no,0,0,0,weapon,0,0x20000,	ML_SPIRALPIERCE,Spiral_Pierce
 8219,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,	ML_DEFENDER,Defending_Aura
 8220,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	ML_AUTOGUARD,Guard
 8221,7:8:9:10:11,6,16,0,0x1,0,5,1,yes,0,0x600,0,none,0,0x0,	ML_DEVOTION,Sacrifice
