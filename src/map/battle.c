@@ -474,7 +474,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					if (tsc->data[SC_SPIDERWEB]->val2 == 0)
 						status_change_end(target, SC_SPIDERWEB, INVALID_TIMER);
 				}
-				if (tsc->data[SC_THORNSTRAP])
+				if (tsc->data[SC_THORNSTRAP] && battle_getcurrentskill(src) != GN_CARTCANNON)
 					status_change_end(target, SC_THORNSTRAP, INVALID_TIMER);
 				if (tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB)
 					status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
@@ -7464,7 +7464,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					return 0;
 				state |= BCT_ENEMY;
 				strip_enemy = 0;
-			} else if (su->group->skill_id == WZ_ICEWALL || su->group->skill_id == GN_WALLOFTHORN) {
+			} else if (su->group->skill_id == WZ_ICEWALL || (su->group->skill_id == GN_WALLOFTHORN && battle_getcurrentskill(src) != GN_CARTCANNON)) {
 				state |= BCT_ENEMY;
 				strip_enemy = 0;
 			} else	//Excepting traps, Icewall, and Wall of Thorns, you should not be able to target skills.
