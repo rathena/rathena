@@ -474,7 +474,7 @@
 333,0,6,4,0,0x1,0,1,0,no,0,0x2,0,none,0,0x0,		NPC_REVENGE,Revenge
 
 //****
-// Mariage Skills
+// Marriage Skills
 334,9,6,4,0,0x1,0,1,1,yes,0,0x4,0,none,0,0x0,	WE_MALE,I Will Protect You
 335,9,6,4,0,0x1,0,1,1,yes,0,0x4,0,none,0,0x0,	WE_FEMALE,I Look up to You
 336,9,6,4,0,0x1,3,1,1,yes,0,0x4,1,none,0,0x0,	WE_CALLPARTNER,I miss You
@@ -605,7 +605,7 @@
 407,0,6,4,0,0x1,0,1,0,no,0,0,0,none,0,0x0,		ASC_CDP,Create Deadly Poison
 
 //****
-// Mariage Skills for Baby
+// Marriage Skills for Baby
 408,9,6,4,0,0x1,0,1,1,yes,0,0x4,0,none,0,0x0,	WE_BABY,Baby
 409,9,6,4,0,0x1,3,1,1,yes,0,0x4,1,none,0,0x0,	WE_CALLPARENT,Call Parent
 410,9,6,4,0,0x1,3,1,1,yes,0,0x4,1,none,0,0x0,	WE_CALLBABY,Call Baby
