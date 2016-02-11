@@ -7962,7 +7962,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case WE_MALE: {
-			uint8 hp_rate = abs(skill_get_hp_rate(skill_id, skill_lv);
+			uint8 hp_rate = abs(skill_get_hp_rate(skill_id, skill_lv));
 
 			if (hp_rate && status_get_hp(src) > status_get_max_hp(src) / hp_rate) {
 				int gain_hp = tstatus->max_hp * hp_rate / 100; // The earned is the same % of the target HP than it costed the caster. [Skotlex]
@@ -7972,7 +7972,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case WE_FEMALE: {
-			uint8 sp_rate = abs(skill_get_sp_rate(skill_id, skill_lv);
+			uint8 sp_rate = abs(skill_get_sp_rate(skill_id, skill_lv));
 
 			if (sp_rate && status_get_sp(src) > status_get_max_sp(src) / sp_rate) {
 				int gain_sp = tstatus->max_sp * sp_rate / 100; // The earned is the same % of the target SP than it costed the caster. [Skotlex]
