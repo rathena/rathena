@@ -79,7 +79,7 @@ geffen_in,164,109,0	script	Wizard Stanza	64,{
 	}
 	else if (Class == Job_Novice)
 		mes "Although you may not be able to use magic or any other kind of powerful skills for now, this knowledge may be helpful in the future, young Novice...";
-	else 
+	else
 		mes "Although you are not formally trained in the use of magic, you use skills which draw upon otherworldly energies, whether you know it or not...";
 	next;
 	mes "[Stanza]";
@@ -183,7 +183,7 @@ geffen,111,48,0	script	Stacey	101,{
 		close;
 	}
 }
-	
+
 geffen_in,34,170,0	script	Theodore	47,{
 	mes "[Theodore]";
 	mes "Hello!";
@@ -874,7 +874,7 @@ geffen_in,79,76,2	script	Merchant Daven	120,{
 	}
 	close;
 }
-	
+
 geffen_in,114,73,5	script	Hadenheim	709,{
 	mes "[Hans Hadenheim]";
 	mes "Man, the Rune-Midgard continent sure is big! How's it going, youngster?";
@@ -1337,7 +1337,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 		close;
 	}
 }
-	
+
 geffen_in,109,72,2	script	Monster Scholar	90,{
 	mes "[Estheres]";
 	mes "Hello, I'm the resident expert of Monsterology here in Geffen. Is there anything in particular that you're curious about?";
@@ -1353,7 +1353,7 @@ geffen_in,109,72,2	script	Monster Scholar	90,{
 		mes "[Estheres]";
 		if (BaseLevel > 40)
 			mes "You look strong enough for that kind of challenge. But if you see anyone more reckless cross the Western bridge, you might want to give them a warning.";
-		else 
+		else
 			mes "Um, but if you're planning to go there, you better not go alone. I really recommend that you be well prepared if you're gonna fight those kinds of monsters.";
 		break;
 	case 2:

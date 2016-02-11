@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Payon City
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Muad Dib (1.0) Darkchild (1.1) Muad Dib (1.2)
 //= Darkchild (1.3) DracoRPG (1.5) L0ne_W0lf (2.1)
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.1c
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Payon City Npcs
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Most Credits To Muad Dib, Some Stuff By Me
 //= 1.4 Corrected a few typos
 //= 1.5 Rescripted old NPCs + scripted new ones (from iRO Sak) [DracoRPG]
@@ -26,10 +26,10 @@
 //=     Moved Fortune Teller to /other/fortune.txt
 //= 2.1b Added a missing close in the Monster Scholar. [L0ne_W0lf]
 //= 2.1c Minor bug fixes. [Euphy]
-//============================================================ 
+//============================================================
 
 // Payon
-//============================================================ 
+//============================================================
 payon,246,154,0	script	Lady#payon	90,{
 	mes "[Lady]";
 	mes "A long time ago,";
@@ -372,7 +372,7 @@ payon,132,235,3	script	Monster Scholar#02	98,{
 }
 
 // Inside Payon
-//============================================================ 
+//============================================================
 payon_in01,180,7,2	script	Waitress#payon	90,{
 	mes "[Pub Lady]";
 	mes "This place is always bustling with busy people. Little Novices come and go to become Archers, and everyone else is buying arrows while I have to stay here in this small shop.";
@@ -991,7 +991,7 @@ payon_in03,102,185,5	script	Guard#payon	708,{
 }
 
 // Payon Archer Village
-//============================================================ 
+//============================================================
 pay_arche,77,131,2	script	Archer Joe#payon	88,{
 	mes "[Archer Joe]";
 	mes "Payon!";

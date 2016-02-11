@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Kunlun Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= x[tsk], KarLaeda
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.6
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Kunlun Town Script
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=     Moved Lost Knife mini-quest to quest file.
 //= 1.6 Moved Alberta NPC to pre-re/re paths. [Euphy]
@@ -291,7 +291,7 @@ gon_in,73,82,5	script	Ji Chung Zhe#gon	778,{
 		close;
 	}
 	if (nakha == 3) {
-		set cha,1;
+		// set cha,1;// unused
 		mes "[Ji Chung Zhe]";
 		mes "I am Ji Chung Zhe, a renown brewer";
 		mes "of teas. Everyday, I put all my";
@@ -412,9 +412,9 @@ gonryun,169,71,3	script	Guidev#gon	770,{
 	close;
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 // May be missing npc's and dialogue.
 //= 1.1 Fixed Typos [Nexon]
 //= 1.2 Removed Duplicates [Silent]

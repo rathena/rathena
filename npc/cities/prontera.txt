@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Prontera Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= NPCs in Prontera
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Fully working
 //= +AntiNovice exploit fix [Lupus] 1.2 added baby novice check
 //= Spellchecked [massdriller]
@@ -306,9 +306,8 @@ prt_in,180,20,2	script	Bartender#pront	61,{
 	next;
 	mes "[Bartender]";
 	mes "I can't keep my business busy without my special menu 'Crunch Crunch Sour' and 'Savory Yum Yum'...*Sigh*";
-	next;
-	set .@drink,1;
-	while(.@drink) {
+	while(1) {
+		next;
 		switch(select("'Cunch Crunch Sour'?:'Savory Yum Yum'?:Cancel.")) {
 		case 1:
 			mes "[Bartender]";
@@ -317,8 +316,7 @@ prt_in,180,20,2	script	Bartender#pront	61,{
 			next;
 			mes "[Bartender]";
 			mes "*Sigh*...I am afraid that my business days are numbered now.";
-			next;
-			break;
+			continue;
 		case 2:
 			mes "[Bartender]";
 			mes "Savory Yum Yum's basic ingredients are the grasshoppers romping in a place over the west forest. Yeah, it is the best selling menu ever.";
@@ -326,16 +324,12 @@ prt_in,180,20,2	script	Bartender#pront	61,{
 			next;
 			mes "[Bartender]";
 			mes "*Sigh*...I am afraid that my business days are numbered now.";
-			next;
-			break;
+			continue;
 		case 3:
 			mes "[Bartender]";
 			mes "Take care of yourself~.";
-			close2;
-			set .@drink,0;
-			break;
+			close;
 		}
-
 	}
 	end;
 
@@ -552,9 +546,8 @@ prt_church,103,76,0	script	Garnet#pront	67,{
 	next;
 	mes "[Garnet]";
 	mes "Go and ahead and ask if you have any questions about skills for Acolytes and Priests.";
-	next;
-	set .@SkillChat,1;
-	while(.@SkillChat) {
+	while(1) {
+		next;
 		switch(select("About Heal:About Cure:About Increase AGI:About Angelus:About Blessing:About Warp Portal:End Conversation")) {
 		case 1:
 			mes "[Garnet]";
@@ -571,24 +564,21 @@ prt_church,103,76,0	script	Garnet#pront	67,{
 			next;
 			mes "[Garnet]";
 			mes "Priests use ^6666CCSantuary^000000 to create an area which will restore the HP of you and your friends if you rest within the Sanctuary's area.";
-			next;
-			break;
+			continue;
 		case 2:
 			mes "[Garnet]";
 			mes "Once you reach ^6666CCLevel 2 Heal^000000 as an Acolyte, you can learn ^6666CCCure^000000, which can be used to treat abnormal statuses.";
 			next;
 			mes "[Garnet]";
 			mes "This skill can be such a life saver, since almost every abnormal status can be cured with the Cure skill. Just remember that you need ^6666CCLevel 2 Heal^000000 before you can learn Cure.";
-			next;
-			break;
+			continue;
 		case 3:
 			mes "[Garnet]";
 			mes "Now, the ^6666CCIncrease AGI^000000 skill can be used on you or your friends. For a while your AGI stat is increased, making you attack faster and dodge monster attacks more easily.";
 			next;
 			mes "[Garnet]";
 			mes "If you're an Acolyte that wants to learn ^6666CCIncrease AGI^000000, you need to learn ^6666CCLevel 3 Heal^000000 first.";
-			next;
-			break;
+			continue;
 		case 4:
 			mes "[Garnet]";
 			mes "You can use ^6666CCAngelus^000000 to increase your Defense, as well as the Defense of other party members. Remember though, you can only use ^6666CCAngelus^000000 on other people if they are in your party.";
@@ -598,16 +588,14 @@ prt_church,103,76,0	script	Garnet#pront	67,{
 			next;
 			mes "[Garnet]";
 			mes "Also, if you keep learning Angelus, you'll eventually be able to learn ^6666CCKyrie Eleison^000000. That skill helps you evade initial attacks automatically.";
-			next;
-			break;
+			continue;
 		case 5:
 			mes "[Garnet]";
 			mes "^6666CCBlessing^000000 temporarily increases STR, DEX and INT. This skill will give you and your friends a great advantage in battle!";
 			next;
 			mes "[Garnet]";
 			mes "Before you can learn Blessing, you must first learn ^6666CCLevel 5 Divine Protection^000000.";
-			next;
-			break;
+			continue;
 		case 6:
 			mes "[Garnet]";
 			mes "^6666CCWarp Portal^000000 is a pretty complex skill, and you need to know some other skills before you can learn it.";
@@ -626,15 +614,12 @@ prt_church,103,76,0	script	Garnet#pront	67,{
 			next;
 			mes "[Garnet]";
 			mes "Just so you know, you can't save a Warp Point inside of a dungeon. Oh, and don't forget, each time you make a Warp Portal, you must use 1 ^6666CCBlue Gemstone^000000 as a Catalyst.";
-			next;
-			break;
+			continue;
 		case 7:
 			mes "["+ strcharinfo(0) +"]";
 			mes "Alright, I've";
 			mes "heard enough.";
-			close2;
-			set .@SkilLChat,0;
-			break;
+			close;
 		}
 	}
 	end;
@@ -649,9 +634,8 @@ prt_church,103,71,0	script	Henson#pront	120,{
 	next;
 	mes "[Henson]";
 	mes "Did you have any questions about Acolyte and Priest skills?";
-	next;
-	set .@SkillChat,1;
-	while(.@Skillchat) {
+	while(1) {
+		next;
 		switch(select("About Divine Protection:About Demon Bane:About Decrease AGI:About Signum Crusis :About Pneuma:About Ruwach:About Teleport:End conversation.")) {
 		case 1:
 			mes "[Henson]";
@@ -665,8 +649,7 @@ prt_church,103,71,0	script	Henson#pront	120,{
 			next;
 			mes "[Henson]";
 			mes "With ^6666CCDemon Bane^000000, the damage of your attacks against the Undead will be increased. Permanently.";
-			next;
-			break;
+			continue;
 		case 2:
 			mes "[Henson]";
 			mes "^6666CCDemon Bane^000000 increases the damage you will inflict upon the Undead. Permanently.";
@@ -676,16 +659,14 @@ prt_church,103,71,0	script	Henson#pront	120,{
 			next;
 			mes "[Henson]";
 			mes "When you learn ^6666CCLevel 3 Demon Bane^000000, you will be able to learn ^6666CCSignum Crusis^000000, which lowers the Defense of Undead monsters, as well as monsters with the Dark property.";
-			next;
-			break;
+			continue;
 		case 3:
 			mes "[Henson]";
 			mes "Using ^6666CCDecrease AGI^000000 on monsters will slow their movement, attack speed, and the rate at which they can evade your own attacks. That way, you can maim them properly.";
 			next;
 			mes "[Henson]";
 			mes "Remember, you must first learn ^6666CCLevel 2 Increase AGI^000000 if you want to be able to learn the Decrease AGI skill.";
-			next;
-			break;
+			continue;
 		case 4:
 			mes "[Henson]";
 			mes "The ^6666CCSignum Crusis^000000 skill lowers the Defense of monsters with the Undead or Dark properties. It has a wide range and can be quite powerful.";
@@ -695,24 +676,21 @@ prt_church,103,71,0	script	Henson#pront	120,{
 			next;
 			mes "[Henson]";
 			mes "When it does work, it will give you a great battle advantage. Remember, you will ^6666CCLevel 3 Demon Bane^000000 to acquire this skill.";
-			next;
-			break;
+			continue;
 		case 5:
 			mes "[Henson]";
 			mes "The ^6666CCPneuma^000000 allows you to generate a barrier that will block all long-range attacks in a certain range, creating a zone that will protect you from monsters that attack from a distance.";
 			next;
 			mes "[Henson]";
 			mes "In order to become ready to learn Pneuma, you must first completely master the ^6666CCWarp Portal^000000 skill.";
-			next;
-			break;
+			continue;
 		case 6:
 			mes "[Henson]";
 			mes "Nothing can escape the eyes of the Holy! ^6666CCRuwach^000000 allows you to see monsters, as well as other adventurers, that are hidden or invisible.";
 			next;
 			mes "[Henson]";
 			mes "Once you learn Ruwach, you will be able to learn the ^6666CCTeleport^000000 skill.";
-			next;
-			break;
+			continue;
 		case 7:
 			mes "[Henson]";
 			mes "First, you must learn the ^6666CCRuwach^000000 skill in order to learn how to Teleport.";
@@ -725,14 +703,11 @@ prt_church,103,71,0	script	Henson#pront	120,{
 			next;
 			mes "[Henson]";
 			mes "When Teleport is mastered, you can also learn the ^6666CCWarp Portal^000000 skill. Ask Garnet if you wish to know more about Warp Portal.";
-			next;
-			break;
+			continue;
 		case 8:
 			mes "[Henson]";
 			mes "If you wish to understand more about an Acolyte or Priest skill, you are welcome to visit me at any time.";
-			close2;
-			set .@SkilLChat,0;
-			break;
+			close;
 		}
 	}
 	end;
