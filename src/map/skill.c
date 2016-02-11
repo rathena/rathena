@@ -232,10 +232,11 @@ static void skill_chk2(int *idx) {
 	if (!(id))\
 		return 0;\
 	idx = min((lv), MAX_SKILL_LEVEL) - 1;\
-	if ((lv) > MAX_SKILL_LEVEL && (arrvar)[idx] > 1) {\
-		int lv__ = (lv);\
-		(lv) = skill_db[(id)]->max-1;\
-		return ((arrvar)[(lv)] + ((lv__-(lv))/2));\
+	if ((lv) > MAX_SKILL_LEVEL && (arrvar)[idx] > 1 && idx > 1) {\
+		int a__ = (arrvar)[idx-2];\
+		int b__ = (arrvar)[idx-1];\
+		int c__ = (arrvar)[idx];\
+		return (c__ + (((lv)-MAX_SKILL_LEVEL+1)*(b__-a__)/2) + (((lv)-MAX_SKILL_LEVEL)*(c__-b__)/2));\
 	}\
 	return ((arrvar)[idx]);\
 } while(0)

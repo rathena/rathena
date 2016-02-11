@@ -20,7 +20,7 @@ struct status_change_entry;
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
 #define MAX_SKILL_ABRA_DB		160 /// Max Skill list of Abracadabra DB
 #define MAX_SKILL_IMPROVISE_DB 30 /// Max Skill for Improvise
-#define MAX_SKILL_LEVEL 10 /// Max Skill Level (for skill_db storage)
+#define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
 #define SKILL_NAME_LENGTH 31 /// Max Skill Name length
@@ -226,10 +226,10 @@ struct s_skill_db {
 };
 extern struct s_skill_db **skill_db;
 
-#define MAX_SKILL_UNIT_LAYOUT	52
+#define MAX_SQUARE_LAYOUT		7	// 15*15 unit placement maximum
+#define MAX_SKILL_UNIT_LAYOUT	(47+MAX_SQUARE_LAYOUT)	// 47 special ones + the square ones
 #define MAX_SKILL_UNIT_LAYOUT2	17
-#define MAX_SQUARE_LAYOUT		5	// 11*11 Placement of a maximum unit
-#define MAX_SKILL_UNIT_COUNT ((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))
+#define MAX_SKILL_UNIT_COUNT	((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))
 struct s_skill_unit_layout {
 	int count;
 	int dx[MAX_SKILL_UNIT_COUNT];
@@ -242,7 +242,7 @@ struct s_skill_nounit_layout {
 	int dy[MAX_SKILL_UNIT_COUNT];
 };
 
-#define MAX_SKILLTIMERSKILL 40
+#define MAX_SKILLTIMERSKILL 50
 struct skill_timerskill {
 	int timer;
 	int src_id;
