@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Morroc Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88; L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Morroc Town NPCs
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Fully working
 //= Fixed Lapidary sprite, Implemented ANTHELL trigger
 //= (in both NPC/Warps) [Lupus]. Removed it from NPC and put in Warp

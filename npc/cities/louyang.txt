@@ -1,20 +1,20 @@
-//===== rAthena Script ======================================= 
-//= Louyang City NPCs 
-//===== By: ================================================== 
+//===== rAthena Script =======================================
+//= Louyang City NPCs
+//===== By: ==================================================
 //= Vidar (1.0)
 //= Mass Zero (1.1)
 //= Dino9021, roughly translated by Celest (1.2)
 //= Mass Zero (1.3)
 //= MasterOfMuppets (2.0)
 //= rAthena Dev Team
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.0
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Louyang Town Script
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 2.9 Rescripted to Aegis 10.3 Standards. [L0ne_W0lf]
 //= 3.0 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //============================================================
@@ -325,9 +325,9 @@ louyang,84,254,0	script	Exit#lou	111,{
 	close;
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= Originally made for Vidar
 //= 1.2 Added official warp NPC's
 //= 1.3 Fixed gramatical errors. (Like wtf's with the weird

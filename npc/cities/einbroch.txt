@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Einbroch Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Everybody mentioned in the comments
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Einbroch Town Script
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 0.2 Added some NPCs [MasterOfMuppets]
 //= 0.3 Added a few npcs by reddozen [MasterOfMuppets]
 //= 0.4 Added a crappy quest, have fun guys... [MasterOfMuppets]
@@ -33,66 +33,7 @@
 //============================================================
 
 einbroch,218,198,5	script	Mark#ein	855,{
-	callfunc "EinTower","Mark";
-	end;
-}
-
-einbroch,175,196,5	script	Morei#ein	854,{
-	mes "[Morei]";
-	mes "Greetings,";
-	mes "I am Morei,";
-	mes "Assistant Guide";
-	mes "of Einbroch Tower.";
-	next;
-	mes "[Morei]";
-	mes "If you wish to return";
-	mes "to the ground floor,";
-	mes "please let me know.";
-	mes "Would you like to go";
-	mes "back to ground level?";
-	next;
-	switch(select("Yes.:No.")) {
-	case 1:
-		mes "[Morei]";
-		mes "I see.";
-		mes "Let me lead you";
-		mes "to the ground floor.";
-		mes "Thank you for using";
-		mes "our services.";
-		close2;
-		switch(rand(1,3)) {
-		case 1:
-			warp "einbroch",170,229;
-			end;
-		case 2:
-			warp "einbroch",216,188;
-			end;
-		case 3:
-			warp "einbroch",178,167;
-			end;
-		}
-	case 2:
-		mes "[Morei]";
-		mes "I see.";
-		mes "I hope you";
-		mes "enjoy your time";
-		mes "in Einbroch Tower.";
-		close;
-	}
-}
-
-einbroch,173,229,5	script	Oberu#ein	855,{
-	callfunc "EinTower","Oberu";
-	end;
-}
-einbroch,176,172,5	script	Khemko#ein	855,{
-	callfunc "EinTower","Khemko";
-	end;
-}
-
-function	script	EinTower	{
-	.@npc_name$ = getarg(0);
-
+	.@npc_name$ = strnpcinfo(1);
 	mes "["+ .@npc_name$ +"]";
 	mes "Good day~";
 	mes "I'm "+ .@npc_name$ +", your";
@@ -183,6 +124,53 @@ function	script	EinTower	{
 	}
 }
 
+einbroch,175,196,5	script	Morei#ein	854,{
+	mes "[Morei]";
+	mes "Greetings,";
+	mes "I am Morei,";
+	mes "Assistant Guide";
+	mes "of Einbroch Tower.";
+	next;
+	mes "[Morei]";
+	mes "If you wish to return";
+	mes "to the ground floor,";
+	mes "please let me know.";
+	mes "Would you like to go";
+	mes "back to ground level?";
+	next;
+	switch(select("Yes.:No.")) {
+	case 1:
+		mes "[Morei]";
+		mes "I see.";
+		mes "Let me lead you";
+		mes "to the ground floor.";
+		mes "Thank you for using";
+		mes "our services.";
+		close2;
+		switch(rand(1,3)) {
+		case 1:
+			warp "einbroch",170,229;
+			end;
+		case 2:
+			warp "einbroch",216,188;
+			end;
+		case 3:
+			warp "einbroch",178,167;
+			end;
+		}
+	case 2:
+		mes "[Morei]";
+		mes "I see.";
+		mes "I hope you";
+		mes "enjoy your time";
+		mes "in Einbroch Tower.";
+		close;
+	}
+}
+
+einbroch,173,229,5	duplicate(Mark#ein)	Oberu#ein	855
+einbroch,176,172,5	duplicate(Mark#ein)	Khemko#ein	855
+
 einbroch,232,272,3	script	Train Station Staff#ein1::EinbrochTrain	852,{
 	mes "[Staff]";
 	mes "Welcome to";
@@ -241,7 +229,7 @@ einbroch,232,272,3	script	Train Station Staff#ein1::EinbrochTrain	852,{
 		close;
 	}
 }
-	
+
 einbroch,252,301,3	duplicate(EinbrochTrain)	Train Station Staff#ein2	852
 
 einbroch,259,326,3	script	Leslie#ein_1	846,{
@@ -289,7 +277,7 @@ einbroch,236,191,3	script	Tan#ein	855,{
 	mes "you should carry one with you.";
 	close;
 }
-	
+
 einbroch,228,121,5	script	Little Toby#ein-1	855,{
 	mes "[Little Toby]";
 	mes "Excuse me...";
