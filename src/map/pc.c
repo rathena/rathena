@@ -10400,7 +10400,7 @@ int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_
 
 	nullpo_ret(sd);
 
-	if (type == 2 && mode&MD_FIXED_ITEMDROP)
+	if (type == 2 && (mode&MD_FIXED_ITEMDROP))
 		return rate;
 
 	diff = mob_level - sd->status.base_level;
