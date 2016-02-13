@@ -1,0 +1,23 @@
+//===== rAthena Documentation ================================
+//= rAthena Monster Powerskill Reference
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20160213
+//===== Description: =========================================
+//= Reference for monster level 10 skills.
+//============================================================
+
+When a monster uses a level 10 skill on Aegis, it will be much stronger than the 
+normal player version. On rAthena we reflect this by giving the monster a skill
+level above the maximum player level.
+The following lists explains the skill specialities and the corresponding level
+you need to put for these skills in the mob_skill_db.
+-------------------------------------------------------------------------------
+Skill | rAthena Lv | Explanation
+-------------------------------------------------------------------------------
+21,MG_THUNDERSTORM    |20| 7x7 AoE. 3 splash into LP. 20 hits à 100% damage.
+30,AL_DECAGI          |48| Reduces Agi by 50. Duration 130 seconds.
+60,KN_TWOHANDQUICKEN  |30| Increases ASPD by 70%. Duration 300 seconds.
+85,WZ_VERMILION       |22| 15x15 unit placement. 1 splash into LP. 520% damage.
+110,BS_HAMMERFALL     |10| 25x25 AoE. 100% base chance.

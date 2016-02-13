@@ -33,7 +33,7 @@
 
  12,0x7e,    ,  0, 0,  -1,all,   0x4003	//MG_SAFETYWALL
  18,0x7f,    , -1, 0,  20,enemy, 0x8010	//MG_FIREWALL
- 21,0x86,    ,  0, 2,1000,enemy, 0x018	//MG_THUNDERSTORM
+ 21,0x86,    ,  0, 2:2:2:2:2:2:2:2:2:2:3,1000,enemy, 0x018	//MG_THUNDERSTORM
  25,0x85,    ,  1, 0,  -1,all,   0x6003	//AL_PNEUMA
  27,0x81,0x80,  0, 0,  -1,all,   0x00E	//AL_WARP
  47,0x86,    ,  0, 1:1:1:1:1:2:2:2:2:2,1000,enemy, 0x080	//AC_SHOWER
@@ -41,7 +41,7 @@
  79,0x84,    , -1, 1,3000,enemy, 0x8018	//PR_MAGNUS
  80,0x87,0x88,  0, 1,2000,enemy, 0x4006	//WZ_FIREPILLAR
  83,0x86,    ,  0, 3,1000,enemy, 0x010	//WZ_METEOR
- 85,0x86,    ,  5, 1:1:1:1:1:1:1:1:1:1:3,1250,enemy,0x018	//WZ_VERMILION
+ 85,0x86,    ,  5:5:5:5:5:5:5:5:5:5:7, 1,1250,enemy,0x018	//WZ_VERMILION
  86,0x86,    ,  0:1:1:2:2:2:2:2:2:2, 0,-1,noone, 0x010	//WZ_WATERBALL
  87,0x8d,    , -1, 0,  -1,all,   0x9010	//WZ_ICEWALL
  89,0x86,    ,  4, 1, 450,enemy, 0x018	//WZ_STORMGUST
