@@ -2552,11 +2552,9 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
 	if (sd) {
 		int skill = 0;
 
-#ifdef RENEWAL
 		// Weaponry Research hidden bonus
 		if ((skill = pc_checkskill(sd,BS_WEAPONRESEARCH)) > 0)
 			hitrate += hitrate * ( 2 * skill ) / 100;
-#endif
 
 		if( (sd->status.weapon == W_1HSWORD || sd->status.weapon == W_DAGGER) &&
 			(skill = pc_checkskill(sd, GN_TRAINING_SWORD))>0 )
