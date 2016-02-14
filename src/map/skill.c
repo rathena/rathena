@@ -10739,7 +10739,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 static int8 skill_castend_id_check(struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv) {
 	int inf = skill_get_inf(skill_id);
 	int inf2 = skill_get_inf2(skill_id);
-	struct map_session_data *sd = BL_CAST(BL_PC,  src);
 	struct status_change *tsc = status_get_sc(target);
 
 	switch (skill_id) {

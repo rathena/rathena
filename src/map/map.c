@@ -1233,7 +1233,6 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 	struct block_list *bl;
 	int bx, by;
 	int mx0, mx1, my0, my1, rx, ry;
-	int8 half = 0;
 	uint8 dir = map_calc_dir_xy(x0, y0, x1, y1, 6);
 	short dx = dirx[dir];
 	short dy = diry[dir];
