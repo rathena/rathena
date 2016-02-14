@@ -4709,9 +4709,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SM_MAGNUM:
 	case MS_MAGNUM:
 		if( flag&1 ) {
-			//Damage depends on distance, so add it to flag if it is > 1
+			// For players, damage depends on distance, so add it to flag if it is > 1
 			// Cannot hit hidden targets
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION|distance_bl(src, bl));
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION|(sd?distance_bl(src, bl):0));
 		}
 		break;
 
@@ -6767,17 +6767,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if(skill_lv >= 10)
 				map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
 					skill_get_splash(skill_id, skill_lv), 1, skill_get_maxcount(skill_id, skill_lv)-1, splash_target(src),
-					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 3,
+					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | (sd?3:0),
 					skill_castend_damage_id);
 			if(skill_lv >= 7)
 				map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
 					skill_get_splash(skill_id, skill_lv), 1, skill_get_maxcount(skill_id, skill_lv)-2, splash_target(src),
-					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 2,
+					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | (sd?2:0),
 					skill_castend_damage_id);
 			if(skill_lv >= 4)
 				map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
 					skill_get_splash(skill_id, skill_lv), 1, skill_get_maxcount(skill_id, skill_lv)-3, splash_target(src),
-					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1,
+					src, skill_id, skill_lv, tick, flag | BCT_ENEMY | (sd?1:0),
 					skill_castend_damage_id);
 			map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
 				skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv)-3, 0, splash_target(src),

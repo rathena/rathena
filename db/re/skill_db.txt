@@ -79,7 +79,7 @@
 4,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		SM_RECOVERY,Increase HP Recovery
 5,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0x0,		SM_BASH,Bash
 6,9,6,1,0,1,0,10,1,no,0,0,0,none,0,0x0,		SM_PROVOKE,Provoke
-7,0,6,4,3,0x2,2,10,1,no,0,0x40000,0,weapon,2,0x0,		SM_MAGNUM,Magnum Break
+7,0,6,4,3,0x2,2:2:2:2:2:2:2:2:2:2:4,10,1,no,0,0x40000,0,weapon,2,0x0,	SM_MAGNUM,Magnum Break
 8,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,		SM_ENDURE,Endure
 
 //****
