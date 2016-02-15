@@ -2768,6 +2768,7 @@ static struct Damage battle_calc_element_damage(struct Damage wd, struct block_l
 			switch( skill_id ) {
 				case MC_CARTREVOLUTION:
 				case SR_GATEOFHELL:
+				case SR_TIGERCANNON:
 				case KO_BAKURETSU:
 					//Forced to neutral element
 					wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
@@ -3944,38 +3945,34 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 
 		case SR_DRAGONCOMBO:
-		case SR_FLASHCOMBO_ATK_STEP1:
 			skillratio += 40 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case SR_FALLENEMPIRE:
-		case SR_FLASHCOMBO_ATK_STEP2:
 			// ATK [(Skill Level x 150 + 100) x Caster Base Level / 150] %
 			skillratio += 150 * skill_lv;
 			RE_LVL_DMOD(150);
  			break;
 		case SR_TIGERCANNON:
-		case SR_FLASHCOMBO_ATK_STEP3:
 			{
 				int hp = sstatus->max_hp * (10 + 2 * skill_lv) / 100, // skill_get_hp_rate(SR_TIGERCANNON, skill_lv)
 					sp = sstatus->max_sp * (5 + 1 * skill_lv) / 100; // skill_get_sp_rate(SR_TIGERCANNON, skill_lv)
 				if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE )
 					// Base_Damage = [((Caster consumed HP + SP) / 2) x Caster Base Level / 100] %
-					skillratio += ((hp+sp) / 2);
+					skillratio += -100 + (hp + sp) / 2;
 				else
 					// Base_Damage = [((Caster consumed HP + SP) / 4) x Caster Base Level / 100] %
-					skillratio += ((hp+sp) / 4);
+					skillratio += -100 + (hp + sp) / 4;
 				RE_LVL_DMOD(100);
 			}
 			break;
 		case SR_SKYNETBLOW:
-		case SR_FLASHCOMBO_ATK_STEP4:
 			if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_DRAGONCOMBO )
 				//ATK [{(Skill Level x 100) + (Caster AGI) + 150} x Caster Base Level / 100] %
-				skillratio += (100 * skill_lv + sstatus->agi + 150);
+				skillratio += -100 + 100 * skill_lv + sstatus->agi + 150;
 			else
 				//ATK [{(Skill Level x 80) + (Caster AGI)} x Caster Base Level / 100] %
-				skillratio += (80 * skill_lv + sstatus->agi);
+				skillratio += -100 + 80 * skill_lv + sstatus->agi;
 			RE_LVL_DMOD(100);
 			break;
 
@@ -4286,16 +4283,7 @@ static int64 battle_calc_skill_constant_addition(struct Damage wd, struct block_
 				atk = damagevalue;
 			}
 			break;
-		case SR_TIGERCANNON:
-		case SR_FLASHCOMBO_ATK_STEP3:
-			// (Tiger Cannon skill level x 240) + (Target Base Level x 40)
-			if( skill_id == SR_FLASHCOMBO_ATK_STEP3 || (sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE) )
-				atk = ( skill_lv * 500 + status_get_lv(target) * 40 );
-			else
-				atk = ( skill_lv * 240 + status_get_lv(target) * 40 );
-			break;
 		case SR_FALLENEMPIRE:
-		case SR_FLASHCOMBO_ATK_STEP2:
 			// [(Target Size value + Skill Level - 1) x Caster STR] + [(Target current weight x Caster DEX / 120)]
 			atk = ( ((tstatus->size+1)*2 + skill_lv - 1) * sstatus->str);
 			if( tsd && tsd->weight )
@@ -5309,6 +5297,13 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				if(sd->weapontype1 == W_FIST && sd->weapontype2 == W_FIST)
 					ATK_ADD(wd.damage, wd.damage2, 10 * skill - i);
 			}
+			break;
+		case SR_TIGERCANNON:
+			// (Tiger Cannon skill level x 240) + (Target Base Level x 40)
+			if (sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE) {
+				ATK_ADD(wd.damage, wd.damage2, skill_lv * 500 + status_get_lv(target) * 40);
+			} else
+				ATK_ADD(wd.damage, wd.damage2, skill_lv * 240 + status_get_lv(target) * 40);
 			break;
 		case SR_GATEOFHELL: {
 			struct status_data *sstatus = status_get_status_data(src);

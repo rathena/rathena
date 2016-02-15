@@ -417,14 +417,6 @@ unsigned short skill_dummy2skill_id(unsigned short skill_id) {
 			return GN_HELLS_PLANT;
 		case GN_SLINGITEM_RANGEMELEEATK:
 			return GN_SLINGITEM;
-		case SR_FLASHCOMBO_ATK_STEP1:
-			return SR_DRAGONCOMBO;
-		case SR_FLASHCOMBO_ATK_STEP2:
-			return SR_FALLENEMPIRE;
-		case SR_FLASHCOMBO_ATK_STEP3:
-			return SR_TIGERCANNON;
-		case SR_FLASHCOMBO_ATK_STEP4:
-			return SR_SKYNETBLOW;
 		case RL_R_TRIP_PLUSATK:
 			return RL_R_TRIP;
 	}
@@ -1554,12 +1546,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			skill_castend_damage_id(src,bl,LG_PINPOINTATTACK,rnd_value(1, pc_checkskill(sd,LG_PINPOINTATTACK)),tick,0);
 		break;
 	case SR_DRAGONCOMBO:
-	case SR_FLASHCOMBO_ATK_STEP1:
-		sc_start(src,bl, SC_STUN, 1 + skill_lv, skill_lv, skill_get_time(SR_DRAGONCOMBO, skill_lv));
+		sc_start(src,bl, SC_STUN, 1 + skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case SR_FALLENEMPIRE:
-	case SR_FLASHCOMBO_ATK_STEP2:
-		sc_start(src,bl, SC_STOP, 100, skill_lv, skill_get_time(SR_FALLENEMPIRE, skill_lv));
+		sc_start(src,bl, SC_STOP, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case SR_WINDMILL:
 		if( dstsd )
@@ -3444,6 +3434,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			case WM_METALICSOUND:
 				status_zap(bl, 0, damage*100/(100*(110-((sd) ? pc_checkskill(sd,WM_LESSON) : skill_get_max(WM_LESSON))*10)));
 				break;
+			case SR_TIGERCANNON:
+				status_zap(bl, 0, damage * 10 / 100);
+				break;
 		}
 		if( sd )
 			skill_onskillusage(sd, bl, skill_id, tick);
@@ -3855,6 +3848,15 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				break; // Target not on Map
 			if(src->m != target->m)
 				break; // Different Maps
+
+			if (skl->skill_id == SR_SKYNETBLOW) {
+				clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skl->skill_id,skl->skill_lv,DMG_SKILL);
+				skill_area_temp[1] = 0;
+				map_foreachinrange(skill_area_sub,src,skill_get_splash(skl->skill_id,skl->skill_lv),splash_target(src),src,
+					skl->skill_id,skl->skill_lv,tick,skl->flag|BCT_ENEMY|SD_SPLASH|1,skill_castend_damage_id);
+				break;
+			}
+
 			if(status_isdead(src)) {
 				switch(skl->skill_id) {
 					case WL_CHAINLIGHTNING_ATK:
@@ -3863,10 +3865,10 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					case WL_TETRAVORTEX_WIND:
 					case WL_TETRAVORTEX_GROUND:
 					// For SR_FLASHCOMBO
-					case SR_FLASHCOMBO_ATK_STEP1:
-					case SR_FLASHCOMBO_ATK_STEP2:
-					case SR_FLASHCOMBO_ATK_STEP3:
-					case SR_FLASHCOMBO_ATK_STEP4:
+					case SR_DRAGONCOMBO:
+					case SR_FALLENEMPIRE:
+					case SR_TIGERCANNON:
+					case SR_SKYNETBLOW:
 						break; // Exceptions
 					default:
 						continue; // Caster is Dead
@@ -4035,15 +4037,14 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 						break;
 					}
 				// For SR_FLASHCOMBO
-				case SR_FLASHCOMBO_ATK_STEP1:
-				case SR_FLASHCOMBO_ATK_STEP2:
-				case SR_FLASHCOMBO_ATK_STEP3:
-				case SR_FLASHCOMBO_ATK_STEP4:
+				case SR_DRAGONCOMBO:
+				case SR_FALLENEMPIRE:
+				case SR_TIGERCANNON:
+				case SR_SKYNETBLOW:
 					if( src->type == BL_PC ) {
-						const int use_skill_lv[] = { SR_DRAGONCOMBO, SR_FALLENEMPIRE, SR_TIGERCANNON, SR_SKYNETBLOW };
 						if( distance_xy(src->x, src->y, target->x, target->y) >= 3 )
 							break;
-						skill_castend_damage_id(src, target, skl->skill_id, pc_checkskill(((TBL_PC *)src), use_skill_lv[skl->skill_id-SR_FLASHCOMBO_ATK_STEP1]), tick, 0);
+						skill_castend_damage_id(src, target, skl->skill_id, pc_checkskill(((TBL_PC *)src), skl->skill_id), tick, 0);
 					}
 					break;
 				case RL_SLUGSHOT:
@@ -4172,10 +4173,10 @@ int skill_cleartimerskill (struct block_list *src)
 				case WL_TETRAVORTEX_WIND:
 				case WL_TETRAVORTEX_GROUND:
 				// For SR_FLASHCOMBO
-				case SR_FLASHCOMBO_ATK_STEP1:
-				case SR_FLASHCOMBO_ATK_STEP2:
-				case SR_FLASHCOMBO_ATK_STEP3:
-				case SR_FLASHCOMBO_ATK_STEP4:
+				case SR_DRAGONCOMBO:
+				case SR_FALLENEMPIRE:
+				case SR_TIGERCANNON:
+				case SR_SKYNETBLOW:
 					continue;
 			}
 			delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
@@ -4368,7 +4369,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case LG_OVERBRAND:
 	case LG_OVERBRAND_BRANDISH:
 	case SR_FALLENEMPIRE:
-	case SR_FLASHCOMBO_ATK_STEP2:
 	case SR_CRESCENTELBOW_AUTOSPELL:
 	case SR_GATEOFHELL:
 	case SR_GENTLETOUCH_QUIET:
@@ -4613,7 +4613,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case LG_EARTHDRIVE:
 	case SR_RAMPAGEBLASTER:
 	case SR_SKYNETBLOW:
-	case SR_FLASHCOMBO_ATK_STEP4:
 	case SR_WINDMILL:
 	case SR_RIDEINLIGHTNING:
 	case WM_REVERBERATION_MELEE:
@@ -5378,7 +5377,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case SR_DRAGONCOMBO:
-	case SR_FLASHCOMBO_ATK_STEP1:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
@@ -5431,29 +5429,27 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case SR_TIGERCANNON:
-	case SR_FLASHCOMBO_ATK_STEP3:
 		if (flag&1) {
 			if (skill_area_temp[3] == skill_id && skill_area_temp_i64[0]) { // Safe check
 				if (skill_area_temp[1] != bl->id) {
 					int64 dmg = skill_area_temp_i64[0];
 					bool infdef = is_infinite_defense(bl, skill_get_type(skill_id));
+
 					if (infdef)
 						dmg = 1;
 					status_damage(src, bl, dmg, 0, 0, 0);
-					status_zap(bl, 0, status_get_max_sp(bl) * 10 / 100);
+					status_zap(bl, 0, dmg * 10 / 100);
 					clif_skill_damage(src, bl, tick, status_get_amotion(bl), 0, dmg, 1, skill_id, skill_lv, 6);
 				}
 			}
 			else { // Somehow, we failed
 				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-				status_zap(bl, 0, status_get_max_sp(bl) * 10 / 100);
 			}
 		}
 		else if (sd) {
 			skill_area_temp[1] = bl->id;
 			skill_area_temp[3] = skill_id;
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag|8); // Only do attack calculation once
-			status_zap(bl, 0, status_get_max_sp(bl) * 10 / 100);
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
 		break;
@@ -6723,7 +6719,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NC_AXETORNADO:
 	case GC_COUNTERSLASH:
 	case SR_SKYNETBLOW:
-	case SR_FLASHCOMBO_ATK_STEP4:
 	case SR_RAMPAGEBLASTER:
 	case SR_HOWLINGOFLION:
 	case KO_HAPPOKUNAI:
@@ -9737,7 +9732,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 	case SR_FLASHCOMBO: {
-		const int combo[] = { SR_FLASHCOMBO_ATK_STEP1, SR_FLASHCOMBO_ATK_STEP2, SR_FLASHCOMBO_ATK_STEP3, SR_FLASHCOMBO_ATK_STEP4 };
+		const int combo[] = { SR_DRAGONCOMBO, SR_FALLENEMPIRE, SR_TIGERCANNON, SR_SKYNETBLOW };
 		const int delay[] = { 0, 250, 500, 2000 };
 
 		if (sd)
@@ -16176,8 +16171,6 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 		case CH_CHAINCRUSH:
 		case SR_DRAGONCOMBO:
 		case SR_FALLENEMPIRE:
-		case SR_FLASHCOMBO_ATK_STEP1:
-		case SR_FLASHCOMBO_ATK_STEP2:
 			//If delay not specified, it will be 1000 - 4*agi - 2*dex
 			if (time == 0)
 				time = 1000;
