@@ -8452,7 +8452,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		status_change_end(bl, SC_LUKFOOD, INVALID_TIMER);
 		break;
 	case SC_MARSHOFABYSS:
-		status_change_end(bl, SC_INCAGI, INVALID_TIMER);
+		status_change_end(bl, SC_INCREASEAGI, INVALID_TIMER);
 		status_change_end(bl, SC_WINDWALK, INVALID_TIMER);
 		status_change_end(bl, SC_ASPDPOTION0, INVALID_TIMER);
 		status_change_end(bl, SC_ASPDPOTION1, INVALID_TIMER);

@@ -6366,6 +6366,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NC_ACCELERATION:
 	case NC_HOVERING:
 	case NC_SHAPESHIFT:
+	case WL_MARSHOFABYSS:
 	case WL_RECOGNIZEDSPELL:
 	case GC_VENOMIMPRESS:
 	case SC_DEADLYINFECT:
@@ -9192,12 +9193,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			map_foreachinshootrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		else
 			map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
-		break;
-
-	case WL_MARSHOFABYSS:
-		clif_skill_nodamage(src, bl, skill_id, skill_lv,
-			sc_start4(src,bl, type, 100, skill_lv, status_get_int(src), sd ? sd->status.job_level : 50, 0,
-			skill_get_time(skill_id, skill_lv)));
 		break;
 
 	case WL_SIENNAEXECRATE:
