@@ -1175,7 +1175,7 @@
 2448,9,6,1,5,0x2,1:1:1:1:2,5,1,yes,0,0,0,magic,0,0x0,	SO_POISON_BUSTER,Poison Buster
 2449,9,6,2,0,0,0,5,1,yes,0,0,0,magic,0,0x0,		SO_PSYCHIC_WAVE,Psychic Wave
 2450,9,6,2,5,0,0,5,1,yes,0,0,0,magic,0,0x0,		SO_CLOUD_KILL,Cloud Kill
-2451,9,6,16,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	SO_STRIKING,Striking //CHECK Data shows a % for increased successful refine rate. Is this true?
+2451,9,6,16,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	SO_STRIKING,Striking
 2452,9,6,2,3,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	SO_WARMER,Warmer
 2453,9,6,2,0,0x1,0,5,1,yes,0,0,0,magic,0,0x1000,	SO_VACUUM_EXTREME,Vacuum Extreme
 2454,9,6,1,4,0x2,1:1:2:2:3,5,1,yes,0,0,0,magic,0,0x0,	SO_VARETYR_SPEAR,Varetyr Spear
