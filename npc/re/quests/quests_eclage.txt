@@ -2735,6 +2735,7 @@ function	script	WeightBigQuest	{
 		mes "- try again. -";
 		close;
 	}
+	return;
 }
 
 eclage,282,255,4	script	Wuhari#eclbig	4_M_FAIRYKID6,{
@@ -4622,6 +4623,7 @@ function	script	CheckBurglary	{
 			return;
 		}
 	}
+	return;
 }
 
 ecl_in04,78,108,5	script	Daughter Luen#eclage	4_F_FAIRYKID2,{
@@ -7864,6 +7866,7 @@ function	script	PranksterDiag	{
 		mes "Stay away from my bookshelves!";
 		close;
 	}
+	return;
 }
 
 ecl_in01,80,86,4	script	Midgard Exploration#bok1	HIDDEN_NPC,{
@@ -12495,6 +12498,7 @@ function	script	Wallnotes	{
 		mes "Monsters, I have to create more monsters to protect me. As many as I could possibly create!";
 		return;
 	}
+	return;
 }
 
 ecl_tdun04,39,27,0	script	#prf1	HIDDEN_WARP_NPC,2,2,{
@@ -12953,6 +12957,7 @@ function	script	EclageinEntrance	{
 		hideonnpc "Eclage Guard#tl01";
 		end;
 	}
+	return;
 }
 
 ecl_in01,32,52,5	script	Traveler Fome#tl01	4_F_DOGTRAVELER,3,3,{
