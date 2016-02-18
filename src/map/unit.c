@@ -1449,7 +1449,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 
 	if (ud->walktimer != INVALID_TIMER) { // Stop walking, if chasing, readjust timers.
 		if (delay == 1) // Minimal delay (walk-delay) disabled. Just stop walking.
-			unit_stop_walking(bl,4);
+			unit_stop_walking(bl,0);
 		else {
 			// Resume running after can move again [Kevin]
 			if(ud->state.running)
