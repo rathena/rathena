@@ -7180,6 +7180,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		sp = skill_get_sp(skill_id,skill_lv) * 2 / 3;
 
 		if (status_charge(src, 0, sp)) {
+			struct unit_data *ud = unit_bl2ud(src);
+
 			switch (skill_get_casttype(skill_id)) {
 				case CAST_GROUND:
 					skill_castend_pos2(src, target->x, target->y, skill_id, skill_lv, tick, flag);
@@ -7190,6 +7192,15 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				case CAST_DAMAGE:
 					skill_castend_damage_id(src, target, skill_id, skill_lv, tick, flag);
 					break;
+			}
+			if (ud) {
+				int  = skill_delayfix(src, skill_id, skill_lv);
+
+				if (DIFF_TICK(ud->canact_tick, tick + autospell_tick) < 0) {
+					ud->canact_tick = tick + autospell_tick;
+					if (battle_config.display_status_timers && sd)
+						clif_status_change(src, SI_ACTIONDELAY, 1, autospell_tick, 0, 0, 0);
+				}
 			}
 		}
 	}
