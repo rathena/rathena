@@ -7194,7 +7194,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 					break;
 			}
 			if (ud) {
-				int  = skill_delayfix(src, skill_id, skill_lv);
+				int autospell_tick = skill_delayfix(src, skill_id, skill_lv);
 
 				if (DIFF_TICK(ud->canact_tick, tick + autospell_tick) < 0) {
 					ud->canact_tick = tick + autospell_tick;
