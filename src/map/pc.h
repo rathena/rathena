@@ -1220,6 +1220,8 @@ void pc_validate_skill(struct map_session_data *sd);
 void pc_show_questinfo(struct map_session_data *sd);
 void pc_show_questinfo_reinit(struct map_session_data *sd);
 
+bool pc_canParticipateSiegeTE(uint32 mapid);
+
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, enum e_mode mode, int type);
 #endif

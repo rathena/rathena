@@ -12,21 +12,10 @@
 //= gvg: Turns on GvG mode.
 //= gvg_castle: Describes castle maps for WoE.
 //= gvg_dungeon: Describes dungeon maps for WoE.
+//= gvg_te_castle: Describes castle maps for WoE:TE.
 //===== Additional Comments: ================================= 
 //= 1.0 Renewal split. [Euphy]
 //============================================================
-
-// Guild Castles ==========
-te_aldecas1	mapflag	gvg_castle
-te_aldecas2	mapflag	gvg_castle
-te_aldecas3	mapflag	gvg_castle
-te_aldecas4	mapflag	gvg_castle
-te_aldecas5	mapflag	gvg_castle
-te_prtcas01	mapflag	gvg_castle
-te_prtcas02	mapflag	gvg_castle
-te_prtcas03	mapflag	gvg_castle
-te_prtcas04	mapflag	gvg_castle
-te_prtcas05	mapflag	gvg_castle
 
 // Guild Dungeons =========
 gld2_ald	mapflag	gvg_dungeon
@@ -35,3 +24,15 @@ gld2_pay	mapflag	gvg_dungeon
 gld2_prt	mapflag	gvg_dungeon
 teg_dun01	mapflag	gvg_dungeon
 teg_dun02	mapflag	gvg_dungeon
+
+// WOE:Training Edition Castles =====
+te_prtcas01	mapflag	gvg_te_castle
+te_prtcas02	mapflag	gvg_te_castle
+te_prtcas03	mapflag	gvg_te_castle
+te_prtcas04	mapflag	gvg_te_castle
+te_prtcas05	mapflag	gvg_te_castle
+te_aldecas1	mapflag	gvg_te_castle
+te_aldecas2	mapflag	gvg_te_castle
+te_aldecas3	mapflag	gvg_te_castle
+te_aldecas4	mapflag	gvg_te_castle
+te_aldecas5	mapflag	gvg_te_castle

@@ -13,13 +13,9 @@ te_aldecas1,226,34,3	script	Blacksmith Cano#tegod01	4_M_RACHMAN1,{
 		mes "Please lighten your load and try again.";
 		close;	}
 	// .@time_check = OpenHour_SiegeMode 3 14400
-	// .@siege_check = CheckSiegeTime 3
-
-	// .@time_check = OpenHour_SiegeMode 3 14400
 
 	.@guild_id = getcastledata( "te_aldecas1",1 );
 	.@economy = getcastledata("te_aldecas1",2);
-
 	.@npc_name$ = "Cano";
 
 	mes "["+ .@npc_name$ +"]";

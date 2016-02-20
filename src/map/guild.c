@@ -1511,7 +1511,7 @@ int guild_reply_reqalliance(struct map_session_data *sd,uint32 account_id,int fl
 int guild_delalliance(struct map_session_data *sd,int guild_id,int flag) {
 	nullpo_ret(sd);
 
-	if(is_agit_start())	{	// Disable alliance breaking during woe [Valaris]
+	if(is_agit_start()) {	// Disable alliance breaking during woe [Valaris]
 		clif_displaymessage(sd->fd,msg_txt(sd,677)); //"Alliances cannot be broken during Guild Wars!"
 		return 0;
 	}	// end addition [Valaris]

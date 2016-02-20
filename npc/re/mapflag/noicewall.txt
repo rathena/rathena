@@ -36,3 +36,15 @@
 
 // Inside Eclage ===========
 1@ecl	mapflag	noicewall
+
+// WOE:TE Maps ===================
+te_prtcas01	mapflag	noicewall
+te_prtcas02	mapflag	noicewall
+te_prtcas03	mapflag	noicewall
+te_prtcas04	mapflag	noicewall
+te_prtcas05	mapflag	noicewall
+te_aldecas1	mapflag	noicewall
+te_aldecas2	mapflag	noicewall
+te_aldecas3	mapflag	noicewall
+te_aldecas4	mapflag	noicewall
+te_aldecas5	mapflag	noicewall

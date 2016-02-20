@@ -1549,11 +1549,11 @@ static int itemdb_read_sqldb(void) {
 bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	if (!id->flag.no_equip)
 		return false;
-	/* on restricted maps the item is consumed but the effect is not used */
-	if ((!map_flag_vs(m) && id->flag.no_equip&1) || // Normal
+	if ((!map_flag_vs2(m) && id->flag.no_equip&1) || // Normal
 		(map[m].flag.pvp && id->flag.no_equip&2) || // PVP
-		(map_flag_gvg(m) && id->flag.no_equip&4) || // GVG
+		(map_flag_gvg2_no_te(m) && id->flag.no_equip&4) || // GVG
 		(map[m].flag.battleground && id->flag.no_equip&8) || // Battleground
+		(map_flag_gvg2_te(m) && id->flag.no_equip&16) || // WOE:TE
 		(map[m].flag.restricted && id->flag.no_equip&(8*map[m].zone)) // Zone restriction
 		)
 		return true;

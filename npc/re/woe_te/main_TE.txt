@@ -14,7 +14,7 @@
 //============================================================
 
 function	script	CanParticipatewoeTE	{
-	return ( (eaclass()&EAJL_THIRD || Class == JOB_KAGEROU || Class == JOB_OBORO || Class == JOB_REBELLION) ? 0 : 1 );
+	return canParticipateSiegeTE();
 }
 
 -	script	Manager_TE	-1,{
@@ -116,7 +116,7 @@ OnAgitStart3:
 	if (.@map$ == "") end;
 	if (agitcheck3()) {
 		maprespawnguildid .@map$, getcastledata(.@map$,1),6;// warp all non-guild members and remove monsters (like woe fe)
-		gvgon .@map$;
+		gvgon3 .@map$;
 		donpcevent strnpcinfo(0)+"::OnEmpSpawn";
 		callsub S_Message,"OnCommandOn";
 	}
@@ -125,7 +125,7 @@ OnAgitStart3:
 OnAgitEnd3:
 	.@map$ = strnpcinfo(4);
 	if (.@map$ == "") end;
-	gvgoff .@map$;
+	gvgoff3 .@map$;
 	if (getcastledata(.@map$,1))
 		killmonster .@map$, strnpcinfo(0) +"::OnAgitBreak";
 	callsub S_Message,"OnReset";

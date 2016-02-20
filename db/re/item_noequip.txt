@@ -9,6 +9,7 @@
 // 2    - restricted in PVP
 // 4    - restricted in GVG
 // 8    - restricted in Battlegrounds
+// 16   - restricted in WOE:TE castles
 // Restricted zones - configured by 'restricted <number>' mapflag
 // 32   - restricted in zone 1
 // 64   - restricted in zone 2
@@ -17,6 +18,7 @@
 // 512  - restricted in zone 5
 // 1024 - restricted in zone 6
 // 2048 - restricted in zone 7
+// 4096 - restricted in zone 8
 //
 // Examples:
 // 1201,1   // Knife can't be worn on normal maps
@@ -79,6 +81,32 @@
 14590,8	//Pty_Assumptio_Scroll
 
 //----------------------------------------------------------------------------
+// CANNOT be consumed/equipped in WoE:TE Castles (16)
+// !TODO: [iRO] Vellums, Siege Equipment & Items, Battlegrounds, God Items 1 & 2
+// !CONFIRM: [idRO] Siege Equipment, God Items 1 & 2: are still usable
+//----------------------------------------------------------------------------
+2365,16   // Orleans_Gown
+4077,16   // Phen_Card
+4327,16   // Blood_Butterfly_Card
+12033,16  // Box_Of_Sunlight
+12388,16  // Runstone_Crush
+12389,16  // Runstone_Storm
+12390,16  // Runstone_Millennium
+12213,16  // Neuralizer
+12429,16  // Savage_Full_Roast
+12430,16  // Cocktail_Warg_Blood
+12431,16  // Minor_Stew
+12432,16  // Siroma_Iced_Tea
+12433,16  // Drosera_Herb_Salad
+12434,16  // Petite_Tail_Noodles
+12435,16  // Black_Mass
+12436,16  // Vitata_500
+12437,16  // Concentrated_Ceromain_Soup
+12580,16  // Vending_Search_Scroll
+12581,16  // Vending_Search_Scroll2
+12591,16  // Uni_Catalog_Bz
+
+//----------------------------------------------------------------------------
 // Zone 1 - Aldebaran Turbo Track
 //----------------------------------------------------------------------------
 601,32	//Wing_Of_Fly
@@ -108,49 +136,47 @@
 14529,2048	//Greed_Scroll
 
 //----------------------------------------------------------------------------
-// WoE TE Items - Only can be used in WoE TE maps
-// Assumed WOE TE maps are restricted zone 8.
-// TODO: &1 (Normal) is currently removed since if the map is restricted, it'll fail.
+// WoE:TE Items - Only can be used in WoE:TE Castles (All except &16)
 //----------------------------------------------------------------------------
-//1299,4094	// TE_Woe_Katar
-//1319,4094	// TE_Woe_Axe
-//1399,4094	// TE_Woe_Two_Handed_Axe
-//1437,4094	// TE_Woe_Pike
-//1495,4094	// TE_Woe_Lance
-//1591,4094	// TE_Woe_Book
-//1667,4094	// TE_Woe_Staff
-//1834,4094	// TE_Woe_Fist
-//1932,4094	// TE_Woe_Guitar
-//1987,4094	// TE_Woe_Rope
-//2019,4094	// TE_Woe_Two_Hand_Staff
-//2178,4094	// TE_Woe_Buckler
-//2179,4094	// TE_Woe_Shield
-//2180,4094	// TE_Woe_Magic_Guard
-//2496,4094	// TE_Woe_Shoes
-//2497,4094	// TE_Woe_Boots
-//2498,4094	// TE_Woe_Magic_Sandal
-//2944,4094	// TE_Ring_Of_Protection
-//2945,4094	// TE_Ring_Of_Rage
-//2946,4094	// TE_Ring_Of_Defiance
-//11557,4094	// TE_White_Potion
-//11558,4094	// TE_White_Slim_Potion
-//13083,4094	// TE_Woe_Knife
-//13117,4094	// TE_Woe_Pistol
-//13184,4094	// TE_Woe_Rifle
-//13185,4094	// TE_Woe_Gatling
-//13186,4094	// TE_Woe_Shotgun
-//13187,4094	// TE_Woe_Grenade
-//13317,4094	// TE_Woe_Huuma
-//13439,4094	// TE_Woe_Sword
-//15062,4094	// TE_Woe_Coat
-//15063,4094	// TE_Woe_Chain_Mail
-//15064,4094	// TE_Woe_Mage_Coat
-//16025,4094	// TE_Woe_Mace
-//18118,4094	// TE_Woe_Bow
-//18732,4094	// TE_Woe_Cap
-//18733,4094	// TE_Woe_Bone_Helm
-//18734,4094	// TE_Woe_Magic_Eyes
-//20702,4094	// TE_Woe_Muffler
-//20703,4094	// TE_Woe_Manteau
-//20704,4094	// TE_Woe_Magic_Manteau
-//21006,4094	// TE_Woe_Two_Hand_Sword
+1299,8175	// TE_Woe_Katar
+1319,8175	// TE_Woe_Axe
+1399,8175	// TE_Woe_Two_Handed_Axe
+1437,8175	// TE_Woe_Pike
+1495,8175	// TE_Woe_Lance
+1591,8175	// TE_Woe_Book
+1667,8175	// TE_Woe_Staff
+1834,8175	// TE_Woe_Fist
+1932,8175	// TE_Woe_Guitar
+1987,8175	// TE_Woe_Rope
+2019,8175	// TE_Woe_Two_Hand_Staff
+2178,8175	// TE_Woe_Buckler
+2179,8175	// TE_Woe_Shield
+2180,8175	// TE_Woe_Magic_Guard
+2496,8175	// TE_Woe_Shoes
+2497,8175	// TE_Woe_Boots
+2498,8175	// TE_Woe_Magic_Sandal
+2944,8175	// TE_Ring_Of_Protection
+2945,8175	// TE_Ring_Of_Rage
+2946,8175	// TE_Ring_Of_Defiance
+11557,8175	// TE_White_Potion
+11558,8175	// TE_White_Slim_Potion
+13083,8175	// TE_Woe_Knife
+13117,8175	// TE_Woe_Pistol
+13184,8175	// TE_Woe_Rifle
+13185,8175	// TE_Woe_Gatling
+13186,8175	// TE_Woe_Shotgun
+13187,8175	// TE_Woe_Grenade
+13317,8175	// TE_Woe_Huuma
+13439,8175	// TE_Woe_Sword
+15062,8175	// TE_Woe_Coat
+15063,8175	// TE_Woe_Chain_Mail
+15064,8175	// TE_Woe_Mage_Coat
+16025,8175	// TE_Woe_Mace
+18118,8175	// TE_Woe_Bow
+18732,8175	// TE_Woe_Cap
+18733,8175	// TE_Woe_Bone_Helm
+18734,8175	// TE_Woe_Magic_Eyes
+20702,8175	// TE_Woe_Muffler
+20703,8175	// TE_Woe_Manteau
+20704,8175	// TE_Woe_Magic_Manteau
+21006,8175	// TE_Woe_Two_Hand_Sword

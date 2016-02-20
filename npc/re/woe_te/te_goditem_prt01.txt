@@ -13,7 +13,6 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 		mes "Please lighten your load and try again.";
 		close;	}
 	// .@time_check = OpenHour_SiegeMode 3 14400
-	// var .@siege_check = CheckSiegeTime 3
 
 	.@guild_id = getcastledata( "te_prtcas01",1 );
 	.@economy = getcastledata( "te_prtcas01",2 );

@@ -3907,6 +3907,24 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.gvg_castle=state;
 		if (state) map[m].flag.pvp=0;
 	}
+	else if (!strcmpi(w3,"gvg_te")) {
+		map[m].flag.gvg_te = state;
+		if( state && map[m].flag.pvp ) {
+			map[m].flag.pvp = 0;
+			ShowWarning("npc_parse_mapflag: You can't set PvP and GvG flags for the same map! Removing PvP flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
+		}
+		if( state && map[m].flag.battleground ) {
+			map[m].flag.battleground = 0;
+			ShowWarning("npc_parse_mapflag: You can't set GvG and BattleGround flags for the same map! Removing BattleGround flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
+		}
+	}
+	else if (!strcmpi(w3,"gvg_te_castle")) {
+		map[m].flag.gvg_te_castle = state;
+		if (state) {
+			map[m].flag.gvg_castle = 0;
+			map[m].flag.pvp = 0;
+		}
+	}
 	else if (!strcmpi(w3,"battleground")) {
 		if( state ) {
 			if( sscanf(w4, "%11d", &state) == 1 )

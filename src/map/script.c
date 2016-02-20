@@ -361,7 +361,9 @@ enum {
 	MF_NOMINEEFFECT,
 	MF_NOLOCKON,
 	MF_NOTOMB,
-	MF_SKILL_DAMAGE	//60
+	MF_SKILL_DAMAGE,	//60
+	MF_GVG_TE_CASTLE,
+	MF_GVG_TE_DUNGEON,
 };
 
 const char* script_op2name(int op)
@@ -11797,6 +11799,7 @@ BUILDIN_FUNC(getmapflag)
 			case MF_NOMINEEFFECT:		script_pushint(st,map[m].flag.nomineeffect); break;
 			case MF_NOLOCKON:			script_pushint(st,map[m].flag.nolockon); break;
 			case MF_NOTOMB:				script_pushint(st,map[m].flag.notomb); break;
+			case MF_GVG_TE_CASTLE:		script_pushint(st,map[m].flag.gvg_te_castle); break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -11920,6 +11923,7 @@ BUILDIN_FUNC(setmapflag)
 			case MF_NOMINEEFFECT:		map[m].flag.nomineeffect = 1 ; break;
 			case MF_NOLOCKON:			map[m].flag.nolockon = 1 ; break;
 			case MF_NOTOMB:				map[m].flag.notomb = 1; break;
+			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 1; break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -12031,6 +12035,7 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOMINEEFFECT:		map[m].flag.nomineeffect = 0 ; break;
 			case MF_NOLOCKON:			map[m].flag.nolockon = 0 ; break;
 			case MF_NOTOMB:				map[m].flag.notomb = 0; break;
+			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 0; break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -12154,6 +12159,43 @@ BUILDIN_FUNC(gvgoff)
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
+
+BUILDIN_FUNC(gvgon3)
+{
+	int16 m;
+	const char *str;
+	struct block_list bl;
+
+	str = script_getstr(st,2);
+	m = map_mapname2mapid(str);
+	if (m >= 0 && !map[m].flag.gvg_te) {
+		map[m].flag.gvg_te = 1;
+		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
+		bl.type = BL_NUL;
+		bl.m = m;
+		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(gvgoff3)
+{
+	int16 m;
+	const char *str;
+
+	str = script_getstr(st,2);
+	m = map_mapname2mapid(str);
+	if (m >= 0 && map[m].flag.gvg_te) {
+		struct block_list bl;
+		map[m].flag.gvg_te = 0;
+		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+		bl.type = BL_NUL;
+		bl.m = m;
+		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  *	Shows an emoticon on top of the player/npc
  *	emotion emotion#, <target: 0 - NPC, 1 - PC>, <NPC/PC name>
@@ -12309,12 +12351,12 @@ BUILDIN_FUNC(agitend2)
  */
 BUILDIN_FUNC(agitstart3)
 {
-    if (agit3_flag)
+	if (agit3_flag)
 		return SCRIPT_CMD_SUCCESS;// AgitTE already Started.
-    agit3_flag = true;
-    guild_agit3_start();
+	agit3_flag = true;
+	guild_agit3_start();
 
-    return SCRIPT_CMD_SUCCESS;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /**
@@ -12323,12 +12365,12 @@ BUILDIN_FUNC(agitstart3)
  */
 BUILDIN_FUNC(agitend3)
 {
-    if (!agit3_flag)
+	if (!agit3_flag)
 		return SCRIPT_CMD_SUCCESS;// AgitTE already Ended.
-    agit3_flag = false;
-    guild_agit3_end();
+	agit3_flag = false;
+	guild_agit3_end();
 
-    return SCRIPT_CMD_SUCCESS;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /**
@@ -12357,8 +12399,8 @@ BUILDIN_FUNC(agitcheck2)
  */
 BUILDIN_FUNC(agitcheck3)
 {
-    script_pushint(st, agit3_flag);
-    return SCRIPT_CMD_SUCCESS;
+	script_pushint(st, agit3_flag);
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// Sets the guild_id of this npc.
@@ -21172,6 +21214,23 @@ BUILDIN_FUNC(getguildalliance)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * canParticipateSiegeTE([<char_id>]);
+ * Check if player can participate in WOE:TE
+ * @param char_id Player's CharID (optional)
+ **/
+BUILDIN_FUNC(canParticipateSiegeTE) {
+	TBL_PC *sd = NULL;
+
+	if (!script_charid2sd(2, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, pc_canParticipateSiegeTE(sd->class_) ? 1 : 0);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -21744,6 +21803,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(agitstart3,""),
 	BUILDIN_DEF(agitend3,""),
 	BUILDIN_DEF(agitcheck3,""),
+	BUILDIN_DEF(gvgon3,"s"),
+	BUILDIN_DEF(gvgoff3,"s"),
+	BUILDIN_DEF(canParticipateSiegeTE,"?"),
 
 #include "../custom/script_def.inc"
 

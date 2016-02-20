@@ -11893,6 +11893,24 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 #endif
 }
 
+/**
+ * Check if player can participate in WOE:TE
+ * @param sd
+ * @return True:If allowed, False:Doesn't
+ **/
+bool pc_canParticipateSiegeTE(uint32 mapid) {
+
+	if (mapid&JOBL_THIRD)
+		return false;
+
+	switch (mapid) {
+		case MAPID_REBELLION:
+		case MAPID_KAGEROUOBORO:
+			return false;
+	}
+
+	return true;
+}
 
 /*==========================================
  * pc Init/Terminate
