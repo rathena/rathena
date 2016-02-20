@@ -8876,6 +8876,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = 50;
 			val2 = 3*((val1+1)/3);
 			if (val1 > 4) val2--;
+			//Suiton is a special case, stop effect is forced and only happens when target enters it
+			if (!unit_blown_immune(bl, 0x1))
+				unit_stop_walking(bl, 9);
 			break;
 		case SC_ONEHAND:
 		case SC_TWOHANDQUICKEN:

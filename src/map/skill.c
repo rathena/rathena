@@ -4592,7 +4592,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RG_RAID:
 	case HW_NAPALMVULCAN:
 	case NJ_HUUMA:
-	case NJ_BAKUENRYU:
 	case ASC_METEORASSAULT:
 	case GS_DESPERADO:
 	case GS_SPREADATTACK:
@@ -4660,7 +4659,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_area_temp[2] = 0;
 
 			switch ( skill_id ) {
-				case NJ_BAKUENRYU:
 				case LG_EARTHDRIVE:
 				case GN_CARTCANNON:
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -4701,6 +4699,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				return 0;
 			}
 		}
+		break;
+
+	//Place units around target
+	case NJ_BAKUENRYU:
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+		skill_unitsetting(src, skill_id, skill_lv, bl->x, bl->y, 0);
 		break;
 
 	case WL_COMET:
@@ -6800,8 +6804,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			skill_castend_damage_id);
 		break;
 
-	case NJ_HYOUSYOURAKU:
-	case NJ_RAIGEKISAI:
 	case WZ_FROSTNOVA:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		skill_area_temp[1] = 0;

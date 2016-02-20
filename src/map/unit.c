@@ -1236,6 +1236,7 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
  *	&0x2: Force the unit to move one cell if it hasn't yet
  *	&0x4: Enable moving to the next cell when unit was already half-way there
  *		(may cause on-touch/place side-effects, such as a scripted map change)
+ *	&0x8: Force stop moving, even if walktimer is currently INVALID_TIMER
  * @return Success(1); Failed(0);
  */
 int unit_stop_walking(struct block_list *bl,int type)
@@ -1248,15 +1249,17 @@ int unit_stop_walking(struct block_list *bl,int type)
 
 	ud = unit_bl2ud(bl);
 
-	if(!ud || ud->walktimer == INVALID_TIMER)
+	if(!ud || (!(type&0x08) && ud->walktimer == INVALID_TIMER))
 		return 0;
 
 	// NOTE: We are using timer data after deleting it because we know the
 	// delete_timer function does not mess with it. If the function's
 	// behaviour changes in the future, this code could break!
-	td = get_timer(ud->walktimer);
-	delete_timer(ud->walktimer, unit_walktoxy_timer);
-	ud->walktimer = INVALID_TIMER;
+	if (ud->walktimer != INVALID_TIMER) {
+		td = get_timer(ud->walktimer);
+		delete_timer(ud->walktimer, unit_walktoxy_timer);
+		ud->walktimer = INVALID_TIMER;
+	}
 	ud->state.change_walk_target = 0;
 	tick = gettick();
 
