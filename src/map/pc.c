@@ -38,6 +38,8 @@
 int pc_split_atoui(char* str, unsigned int* val, char sep, int max);
 
 #define PVP_CALCRANK_INTERVAL 1000	// PVP calculation interval
+#define MAX_LEVEL_BASE_EXP 99999999 ///< Max Base EXP for player on Max Base Level
+#define MAX_LEVEL_JOB_EXP 999999999 ///< Max Job EXP for player on Max Job Level
 
 static unsigned int statp[MAX_LEVEL+1];
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
@@ -6236,7 +6238,7 @@ int pc_follow(struct map_session_data *sd,int target_id)
 int pc_checkbaselevelup(struct map_session_data *sd) {
 	unsigned int next = pc_nextbaseexp(sd);
 
-	if (!next || sd->status.base_exp < next)
+	if (!next || sd->status.base_exp < next || pc_is_maxbaselv(sd))
 		return 0;
 
 	do {
@@ -6299,7 +6301,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	unsigned int next = pc_nextjobexp(sd);
 
 	nullpo_ret(sd);
-	if(!next || sd->status.job_exp < next)
+	if(!next || sd->status.job_exp < next || pc_is_maxjoblv(sd))
 		return 0;
 
 	do {
@@ -6361,6 +6363,7 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 #endif
 	}
 
+	// Give EXPBOOST for quests even if src is NULL.
 	if (&sd->sc && sd->sc.data[SC_EXPBOOST]) {
 		bonus += sd->sc.data[SC_EXPBOOST]->val1;
 		if( battle_config.vip_bm_increase && pc_isvip(sd) ) // Increase Battle Manual EXP rate for VIP.
@@ -6369,6 +6372,7 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 
 	*base_exp = (unsigned int) cap_value(*base_exp + (double)*base_exp * (bonus + vip_bonus_base)/100., 1, UINT_MAX);
 
+	// Give JEXPBOOST for quests even if src is NULL.
 	if (&sd->sc && sd->sc.data[SC_JEXPBOOST])
 		bonus += sd->sc.data[SC_JEXPBOOST]->val1;
 
@@ -6376,13 +6380,21 @@ static void pc_calcexp(struct map_session_data *sd, unsigned int *base_exp, unsi
 
 	return;
 }
-/*==========================================
- * Give x exp at sd player and calculate remaining exp for next lvl
- *------------------------------------------*/
+
+/**
+ * Give Base or Job EXP to player, then calculate remaining exp for next lvl
+ * @param sd Player
+ * @param src EXP source
+ * @param base_exp Base EXP gained
+ * @param base_exp Job EXP gained
+ * @param quest True if EXP from quest, false otherwise.
+ * @return
+ **/
 int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int base_exp, unsigned int job_exp, bool quest)
 {
 	float nextbp = 0, nextjp = 0;
 	unsigned int nextb = 0, nextj = 0;
+	bool is_max_base = false, is_max_job = false; // True for player with max base/job level
 
 	nullpo_ret(sd);
 
@@ -6395,10 +6407,19 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 	if(sd->status.guild_id>0)
 		base_exp-=guild_payexp(sd,base_exp);
 
-	pc_calcexp(sd, &base_exp, &job_exp, src); // Give (J)EXPBOOST for quests even if src is NULL.
+	pc_calcexp(sd, &base_exp, &job_exp, src);
 
 	nextb = pc_nextbaseexp(sd);
 	nextj = pc_nextjobexp(sd);
+
+	is_max_base = pc_is_maxbaselv(sd);
+	is_max_job = pc_is_maxjoblv(sd);
+
+	// On Max Level and Max EXP, just set EXP 0 avoid unnecessary process. [Cydh]
+	if (is_max_base && sd->status.base_exp >= MAX_LEVEL_BASE_EXP)
+		base_exp = 0;
+	if (is_max_job && sd->status.job_exp >= MAX_LEVEL_JOB_EXP)
+		job_exp = 0;
 
 	if(sd->state.showexp || battle_config.max_exp_gain_rate){
 		if (nextb > 0)
@@ -6422,9 +6443,8 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 		}
 	}
 
-	//Cap exp to the level up requirement of the previous level when you are at max level, otherwise cap at UINT_MAX (this is required for some S. Novice bonuses). [Skotlex]
+	// Give EXP for Base Level
 	if (base_exp) {
-		nextb = nextb?UINT_MAX:pc_thisbaseexp(sd);
 		if(sd->status.base_exp > nextb - base_exp)
 			sd->status.base_exp = nextb;
 		else
@@ -6433,8 +6453,8 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 		clif_updatestatus(sd,SP_BASEEXP);
 	}
 
+	// Give EXP for Job Level
 	if (job_exp) {
-		nextj = nextj?UINT_MAX:pc_thisjobexp(sd);
 		if(sd->status.job_exp > nextj - job_exp)
 			sd->status.job_exp = nextj;
 		else
@@ -6443,12 +6463,14 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 		clif_updatestatus(sd,SP_JOBEXP);
 	}
 
+	// On Max Level, always send EXP as 0. [Cydh]
 	if(base_exp)
-		clif_displayexp(sd, base_exp, SP_BASEEXP, quest);
+		clif_displayexp(sd, (is_max_base) ? 0 : base_exp, SP_BASEEXP, quest);
 	if(job_exp)
-		clif_displayexp(sd, job_exp,  SP_JOBEXP, quest);
+		clif_displayexp(sd, (is_max_job) ? 0 : job_exp,  SP_JOBEXP, quest);
+
 	if(sd->state.showexp) {
-		char output[256];
+		char output[CHAT_SIZE_MAX];
 		sprintf(output,
 			"Experience Gained Base:%u (%.2f%%) Job:%u (%.2f%%)",base_exp,nextbp*(float)100,job_exp,nextjp*(float)100);
 		clif_disp_onlyself(sd,output,strlen(output));
@@ -6457,57 +6479,70 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 	return 1;
 }
 
-/*==========================================
- * Returns max level for this character.
- *------------------------------------------*/
+/**
+ * Returns max base level for this character.
+ * @param sd Player
+ * @return Max Base Level
+ **/
 unsigned int pc_maxbaselv(struct map_session_data *sd){
 	return job_info[pc_class2idx(sd->status.class_)].max_level[0];
 }
 
+/**
+ * Returns max job level for this character.
+ * @param sd Player
+ * @return Max Job Level
+ **/
 unsigned int pc_maxjoblv(struct map_session_data *sd){
 	return job_info[pc_class2idx(sd->status.class_)].max_level[1];
 }
 
-/*==========================================
- * base level exp lookup.
- *------------------------------------------*/
+/**
+ * Check if player is reached max base level
+ * @param sd
+ * @return True if reached max level
+ **/
+bool pc_is_maxbaselv(struct map_session_data *sd) {
+	nullpo_retr(false, sd);
+	return (sd->status.base_level >= pc_maxbaselv(sd));
+}
 
-//Base exp needed for next level.
+/**
+ * Check if player is reached max base level
+ * @param sd
+ * @return True if reached max level
+ **/
+bool pc_is_maxjoblv(struct map_session_data *sd) {
+	nullpo_retr(false, sd);
+	return (sd->status.job_level >= pc_maxjoblv(sd));
+}
+
+/**
+ * Base exp needed for player to level up.
+ * @param sd
+ * @return Base EXP needed for next base level
+ **/
 unsigned int pc_nextbaseexp(struct map_session_data *sd){
 	nullpo_ret(sd);
-	if(sd->status.base_level>=pc_maxbaselv(sd) || sd->status.base_level==0)
+	if (sd->status.base_level == 0) // Is this something that possible?
 		return 0;
+	if (pc_is_maxbaselv(sd))
+		return MAX_LEVEL_BASE_EXP; // On max level, player's base EXP limit is 99,999,999
 	return job_info[pc_class2idx(sd->status.class_)].exp_table[0][sd->status.base_level-1];
 }
 
-//Base exp needed for this level.
-unsigned int pc_thisbaseexp(struct map_session_data *sd){
-	if(sd->status.base_level>pc_maxbaselv(sd) || sd->status.base_level<=1)
-		return 0;
-	return job_info[pc_class2idx(sd->status.class_)].exp_table[0][sd->status.base_level-2];
-}
-
-
-/*==========================================
- * job level exp lookup
- * Return:
- *	0 = not found
- *	x = exp for level
- *------------------------------------------*/
-
-//Job exp needed for next level.
+/**
+ * Job exp needed for player to level up.
+ * @param sd
+ * @return Job EXP needed for next job level
+ **/
 unsigned int pc_nextjobexp(struct map_session_data *sd){
 	nullpo_ret(sd);
-	if(sd->status.job_level>=pc_maxjoblv(sd) || sd->status.job_level==0)
+	if (sd->status.job_level == 0) // Is this something that possible?
 		return 0;
+	if (pc_is_maxjoblv(sd))
+		return MAX_LEVEL_JOB_EXP; // On max level, player's job EXP limit is 999,999,999
 	return job_info[pc_class2idx(sd->status.class_)].exp_table[1][sd->status.job_level-1];
-}
-
-//Job exp needed for this level.
-unsigned int pc_thisjobexp(struct map_session_data *sd){
-	if(sd->status.job_level>pc_maxjoblv(sd) || sd->status.job_level<=1)
-		return 0;
-	return job_info[pc_class2idx(sd->status.class_)].exp_table[1][sd->status.job_level-2];
 }
 
 /// Returns the value of the specified stat.
@@ -7295,10 +7330,9 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	// Activate Steel body if a super novice dies at 99+% exp [celest]
 	// Super Novices have no kill or die functions attached when saved by their angel
 	if (!sd->state.snovice_dead_flag && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
-		unsigned int next = pc_nextbaseexp(sd);
+		unsigned int exp = pc_nextbaseexp(sd);
 
-		if( next == 0 ) next = pc_thisbaseexp(sd);
-		if( get_percentage(sd->status.base_exp,next) >= 99 ) {
+		if( exp && get_percentage(sd->status.base_exp,exp) >= 99 ) {
 			sd->state.snovice_dead_flag = 1;
 			pc_setrestartvalue(sd,1);
 			status_percent_heal(&sd->bl, 100, 100);
@@ -7474,6 +7508,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		uint32 base_penalty = battle_config.death_penalty_base;
 		uint32 job_penalty = battle_config.death_penalty_job;
 		uint32 zeny_penalty = battle_config.zeny_penalty;
+		bool is_max_level = pc_is_maxbaselv(sd);
 
 #ifdef VIP_ENABLE
 		if(pc_isvip(sd)){
@@ -7486,7 +7521,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		}
 #endif
 
-		if (base_penalty > 0) {
+		if ((!is_max_level || battle_config.death_penalty_maxlv&1) && base_penalty > 0) {
 			switch (battle_config.death_penalty_type) {
 				case 1: base_penalty = (uint32) ( pc_nextbaseexp(sd) * ( base_penalty / 10000. ) ); break;
 				case 2: base_penalty = (uint32) ( sd->status.base_exp * ( base_penalty / 10000. ) ); break;
@@ -7499,7 +7534,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			}
 		}
 
-		if(job_penalty > 0) {
+		if ((!is_max_level || battle_config.death_penalty_maxlv&2) && job_penalty > 0) {
 			switch (battle_config.death_penalty_type) {
 				case 1: job_penalty = (uint32) ( pc_nextjobexp(sd) * ( job_penalty / 10000. ) ); break;
 				case 2: job_penalty = (uint32) ( sd->status.job_exp * ( job_penalty /10000. ) ); break;
