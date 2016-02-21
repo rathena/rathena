@@ -16220,7 +16220,7 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
 
 	//ShowInfo("Delay delayfix = %d\n",time);
 
-	return time;
+	return max(time,0);
 }
 
 
