@@ -3845,12 +3845,6 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 			target = map_id2bl(skl->target_id);
 			if( ( skl->skill_id == RG_INTIMIDATE || skl->skill_id == SC_FATALMENACE ) && (!target || target->prev == NULL || !check_distance_bl(src,target,AREA_SIZE)) )
 				target = src; //Required since it has to warp.
-			if(target == NULL)
-				break; // Target offline?
-			if(target->prev == NULL)
-				break; // Target not on Map
-			if(src->m != target->m)
-				break; // Different Maps
 
 			if (skl->skill_id == SR_SKYNETBLOW) {
 				clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skl->skill_id,skl->skill_lv,DMG_SKILL);
@@ -3859,6 +3853,13 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 					skl->skill_id,skl->skill_lv,tick,skl->flag|BCT_ENEMY|SD_SPLASH|1,skill_castend_damage_id);
 				break;
 			}
+
+			if(target == NULL)
+				break; // Target offline?
+			if(target->prev == NULL)
+				break; // Target not on Map
+			if(src->m != target->m)
+				break; // Different Maps
 
 			if(status_isdead(src)) {
 				switch(skl->skill_id) {
@@ -9743,7 +9744,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (sd)
 			sd->ud.attackabletime = sd->canuseitem_tick = sd->ud.canact_tick;
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,100,skill_lv,bl->id,skill_get_time(skill_id,skill_lv)));
+			sc_start(src,src,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		for (i = 0; i < ARRAYLENGTH(combo); i++)
 			skill_addtimerskill(src,tick + delay[i],bl->id,0,0,combo[i],skill_lv,BF_WEAPON,flag|SD_LEVEL);
 	}
