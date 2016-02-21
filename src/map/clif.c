@@ -5868,6 +5868,9 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 	if (type == SI_BLANK)  //It shows nothing on the client...
 		return;
 
+	if (type == SI_ACTIONDELAY && tick == 0)
+		return;
+
 	nullpo_retv(bl);
 
 	sd = BL_CAST(BL_PC, bl);

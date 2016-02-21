@@ -104,6 +104,10 @@ enum e_skill_inf3 {
 /// If you change this, make sure it's an odd value (for icewall block behavior).
 #define WALK_SKILL_INTERVAL 5
 
+/// Time that's added to canact delay on castbegin and substracted on castend
+/// This is to prevent hackers from sending a skill packet after cast but before a timer triggers castend
+#define SECURITY_CASTTIME 100
+
 /// Flags passed to skill_attack/skill_area_sub
 enum e_skill_display {
 	SD_LEVEL     = 0x1000, // skill_attack will send -1 instead of skill level (affects display of some skills)
