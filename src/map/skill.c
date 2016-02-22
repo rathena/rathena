@@ -4205,12 +4205,14 @@ static int skill_active_reverberation(struct block_list *bl, va_list ap) {
 	return 1;
 }
 
+/**
+ * Reveal hidden trap
+ **/
 static int skill_reveal_trap(struct block_list *bl, va_list ap)
 {
 	TBL_SKILL *su = (TBL_SKILL*)bl;
 
-	if (su->alive && su->group && skill_get_inf2(su->group->skill_id)&INF2_TRAP)
-	{	//Reveal trap.
+	if (su->alive && su->group && su->hidden && skill_get_inf2(su->group->skill_id)&INF2_TRAP) {
 		//Change look is not good enough, the client ignores it as an actual trap still. [Skotlex]
 		//clif_changetraplook(bl, su->group->unit_id);
 
@@ -4219,6 +4221,19 @@ static int skill_reveal_trap(struct block_list *bl, va_list ap)
 		return 1;
 	}
 	return 0;
+}
+
+/**
+ * Attempt to reaveal trap in area
+ * @param src Skill caster
+ * @param range Affected range
+ * @param x
+ * @param y
+ * TODO: Remove this hardcodes
+ **/
+void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y) {
+	nullpo_retv(src);
+	map_foreachinarea(skill_reveal_trap, src->m, x-range, y-range, x+range, y+range, BL_SKILL);
 }
 
 /*==========================================
@@ -6531,11 +6546,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case AC_CONCENTRATION:
 		{
+			int splash = skill_get_splash(skill_id, skill_lv);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,
 				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
+			skill_reveal_trap_inarea(src, splash, src->x, src->y);
 			map_foreachinrange( status_change_timer_sub, src,
-				skill_get_splash(skill_id, skill_lv), BL_CHAR,
-				src,NULL,type,tick);
+				splash, BL_CHAR, src, NULL, type, tick);
 		}
 		break;
 
@@ -11356,9 +11372,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		map_foreachinarea( status_change_timer_sub,
 			src->m, x-i, y-i, x+i,y+i,BL_CHAR,
 			src,NULL,SC_SIGHT,tick);
-		if(battle_config.traps_setting&1)
-			map_foreachinarea(skill_reveal_trap, src->m, x-i, y-i, x+i, y+i, BL_SKILL);
-			break;
+		skill_reveal_trap_inarea(src, i, x, y);
 		break;
 
 	case SR_RIDEINLIGHTNING:
