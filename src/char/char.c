@@ -2893,9 +2893,6 @@ bool char_config_read(const char* cfgName, bool normal){
 	return true;
 }
 
-<<<<<<< HEAD
-=======
-
 static void char_schema_config_init(void) {
 	// Character related tables
 	schema_config.char_table			 = StringBuf_FromStr("char");
@@ -2987,7 +2984,6 @@ static void char_schema_config_final(void) {
 	StringBuf_Free(schema_config.interlog_table);
 }
 
->>>>>>> * Various server config cleanups
 /*
  * Message conf function
  */

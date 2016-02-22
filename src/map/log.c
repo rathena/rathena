@@ -555,11 +555,11 @@ void log_feeding(struct map_session_data *sd, e_log_feeding_type type, unsigned 
 		char entry[512];
 		int e_length = 0;
 		e_length = sprintf(entry, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `intimacy`, `item_id`, `map`, `x`, `y`) VALUES ( NOW(), '%"PRIu32"', '%"PRIu32"', '%hu', '%c', '%"PRIu32"', '%hu', '%s', '%hu', '%hu' )",
-			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
+			StringBuf_Value(log_config.schema.feeding_table), sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
 		queryThread_log(entry, e_length);
 #else
 		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `intimacy`, `item_id`, `map`, `x`, `y`) VALUES ( NOW(), '%"PRIu32"', '%"PRIu32"', '%hu', '%c', '%"PRIu32"', '%hu', '%s', '%hu', '%hu' )",
-			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y))
+			StringBuf_Value(log_config.schema.feeding_table), sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y))
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -570,10 +570,10 @@ void log_feeding(struct map_session_data *sd, e_log_feeding_type type, unsigned 
 		time_t curtime;
 		FILE* logfp;
 
-		if ((logfp = fopen(log_config.log_feeding, "a")) == NULL)
+		if ((logfp = fopen(StringBuf_Value(log_config.schema.feeding_table), "a")) == NULL)
 			return;
 		time(&curtime);
-		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
+		strftime(timestring, sizeof(timestring), StringBuf_Value(log_config.log_timestamp), localtime(&curtime));
 		fprintf(logfp, "%s - %s[%d]\t%d\t%d(%c)\t%d\t%hu\t%s\t%hu,%hu\n", timestring, sd->status.name, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
 		fclose(logfp);
 	}
