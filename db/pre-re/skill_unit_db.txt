@@ -23,6 +23,7 @@
 //      0x04000(UF_REM_CRAZYWEED)		Removed if be overlapped by GN_CRAZYWEED
 //      0x08000(UF_REM_FIRERAIN)		Removed if be overlapped by RL_FIRE_RAIN
 //      0x10000(UF_KNOCKBACK_GROUP) 	Knock back a whole skill group (by default, skill unit is knocked back each unit)
+//      0x20000(UF_HIDDEN_TRAP) 		Hidden trap, see 'traps_setting' skill config to enable this flag
 // 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near targets
 //
 // Notes:
