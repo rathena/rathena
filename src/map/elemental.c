@@ -461,7 +461,7 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned 
  * Action that elemental perform after changing mode.
  * Activates one of the skills of the new mode.
  *-------------------------------------------------------------*/
-int elemental_change_mode_ack(struct elemental_data *ed, int mode) {
+int elemental_change_mode_ack(struct elemental_data *ed, enum elemental_skillmode skill_mode) {
 	struct block_list *bl = &ed->master->bl;
 	uint16 skill_id, skill_lv;
 	int i;
@@ -472,7 +472,7 @@ int elemental_change_mode_ack(struct elemental_data *ed, int mode) {
 		return 0;
 
 	// Select a skill.
-	ARR_FIND(0, MAX_ELESKILLTREE, i, ed->db->skill[i].id && (ed->db->skill[i].mode&mode));
+	ARR_FIND(0, MAX_ELESKILLTREE, i, ed->db->skill[i].id && (ed->db->skill[i].mode&skill_mode));
 	if( i == MAX_ELESKILLTREE )
 		return 0;
 
@@ -503,7 +503,9 @@ int elemental_change_mode_ack(struct elemental_data *ed, int mode) {
 /*===============================================================
  * Change elemental mode.
  *-------------------------------------------------------------*/
-int elemental_change_mode(struct elemental_data *ed, int mode) {
+int elemental_change_mode(struct elemental_data *ed, enum e_mode mode) {
+	enum elemental_skillmode skill_mode;
+
 	nullpo_ret(ed);
 
 	// Remove target
@@ -515,13 +517,14 @@ int elemental_change_mode(struct elemental_data *ed, int mode) {
 	ed->battle_status.mode = ed->elemental.mode = mode;
 
 	// Normalize elemental mode to elemental skill mode.
-	if( mode == EL_MODE_AGGRESSIVE ) mode = EL_SKILLMODE_AGGRESSIVE;	// Aggressive spirit mode -> Aggressive spirit skill.
-	else if( mode == EL_MODE_ASSIST ) mode = EL_SKILLMODE_ASSIST;		// Assist spirit mode -> Assist spirit skill.
-	else mode = EL_SKILLMODE_PASIVE;									// Passive spirit mode -> Passive spirit skill.
+	if( mode == EL_MODE_AGGRESSIVE ) skill_mode = EL_SKILLMODE_AGGRESSIVE;	// Aggressive spirit mode -> Aggressive spirit skill.
+	else if( mode == EL_MODE_ASSIST ) skill_mode = EL_SKILLMODE_ASSIST;		// Assist spirit mode -> Assist spirit skill.
+	else skill_mode = EL_SKILLMODE_PASSIVE;									// Passive spirit mode -> Passive spirit skill.
 
 	// Use a skill inmediately after every change mode.
-	if( mode != EL_SKILLMODE_AGGRESSIVE )
-		elemental_change_mode_ack(ed,mode);
+	if( skill_mode != EL_SKILLMODE_AGGRESSIVE )
+		return elemental_change_mode_ack(ed, skill_mode);
+
 	return 1;
 }
 
@@ -627,7 +630,8 @@ static int elemental_ai_sub_timer_activesearch(struct block_list *bl, va_list ap
 
 static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_data *sd, unsigned int tick) {
 	struct block_list *target = NULL;
-	int master_dist, view_range, mode;
+	int master_dist, view_range;
+	enum e_mode mode;
 
 	nullpo_ret(ed);
 	nullpo_ret(sd);
@@ -848,7 +852,7 @@ static bool read_elemental_skilldb_sub(char* str[], int columns, int current) {
 	skill_lv = atoi(str[2]);
 
 	skillmode = atoi(str[3]);
-	if( skillmode < EL_SKILLMODE_PASIVE || skillmode > EL_SKILLMODE_AGGRESSIVE ) {
+	if( skillmode < EL_SKILLMODE_PASSIVE || skillmode > EL_SKILLMODE_AGGRESSIVE ) {
 		ShowError("read_elemental_skilldb_sub: Skillmode out of range, line %d.\n",current);
 		return false;
 	}

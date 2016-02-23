@@ -80,7 +80,7 @@ static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp);
 static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp);
 static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element);
 static unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv);
-static unsigned short status_calc_mode(struct block_list *bl, struct status_change *sc, int mode);
+static enum e_mode status_calc_mode(struct block_list *bl, struct status_change *sc, enum e_mode mode);
 #ifdef RENEWAL
 static unsigned short status_calc_ematk(struct block_list *,struct status_change *,int);
 #endif
@@ -6759,10 +6759,10 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
  * @param mode: Original mode
  * @return mode with cap_value(mode,0,USHRT_MAX)
  */
-static unsigned short status_calc_mode(struct block_list *bl, struct status_change *sc, int mode)
+static enum e_mode status_calc_mode(struct block_list *bl, struct status_change *sc, enum e_mode mode)
 {
 	if(!sc || !sc->count)
-		return cap_value(mode, 0, USHRT_MAX);
+		return cap_value(mode, 0, INT_MAX);
 	if(sc->data[SC_MODECHANGE]) {
 		if (sc->data[SC_MODECHANGE]->val2)
 			mode = sc->data[SC_MODECHANGE]->val2; // Set mode
@@ -6771,7 +6771,7 @@ static unsigned short status_calc_mode(struct block_list *bl, struct status_chan
 		if (sc->data[SC_MODECHANGE]->val4)
 			mode&=~sc->data[SC_MODECHANGE]->val4; // Del mode
 	}
-	return cap_value(mode,0,USHRT_MAX);
+	return cap_value(mode, 0, INT_MAX);
 }
 
 /**
@@ -7964,7 +7964,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	break;
 	case SC_MODECHANGE:
 	{
-		int mode;
+		enum e_mode mode;
 		struct status_data *bstatus = status_get_base_status(bl);
 		if (!bstatus) return 0;
 		if (sc->data[type]) { // Pile up with previous values.

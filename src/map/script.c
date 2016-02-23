@@ -9956,7 +9956,8 @@ BUILDIN_FUNC(clone)
 {
 	TBL_PC *sd, *msd=NULL;
 	uint32 char_id;
-	int master_id=0,x,y, mode = 0, flag = 0, m;
+	int master_id=0,x,y, flag = 0, m;
+	enum e_mode mode;
 	unsigned int duration = 0;
 	const char *mapname,*event;
 
