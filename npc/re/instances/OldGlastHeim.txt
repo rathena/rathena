@@ -94,41 +94,41 @@ glast_01,204,273,6	script	Hugin#ghinstance	755,{
 1@gl_k,149,41,6	script	Varmunt#ghinstance1	654,{
 	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
 		mes "Hey ^0000ffguys^000000, were you sent here to help me?";
-		npctalk "Hey guys, were you sent here to help me?";
+		npctalk strnpcinfo(1) +" : Hey guys, were you sent here to help me?";
 		cutin "gl_barmund1",2;
 		next;
 		select("Oh. Well, about that...");
 		mes "["+strcharinfo(0)+"]";
 		mes "Oh yeah, hahaha, we were told to meet someone called Varmunt.";
-		unittalk getcharid(3),"Oh yeah, hahaha, we were told to meet someone called Varmunt.";
+		unittalk getcharid(3), strcharinfo(0) +" : Oh yeah, hahaha, we were told to meet someone called Varmunt.";
 		next;
 		mes "[Varmunt]";
 		mes "We don't have time. We must tell Sir Heinrich about Himmelmez's invasion.";
-		npctalk "We don't have time. We must tell Sir Heinrich about Himmelmez's invasion.";
+		npctalk strnpcinfo(1) +" : We don't have time. We must tell Sir Heinrich about Himmelmez's invasion.";
 		cutin "gl_barmund2",2;
 		next;
 		select("What Himmelmez...");
 		mes "["+strcharinfo(0)+"]";
 		mes "Himmelmez? Who the hell is she?";
-		unittalk getcharid(3),"Himmelmez? Who the hell is she?";
+		unittalk getcharid(3), strcharinfo(0) +" : Himmelmez? Who the hell is she?";
 		next;
 		mes "[Varmunt]";
 		mes "Didn't anybody give you the basic informations?";
-		npctalk "Didn't anybody give you the basic informations?";
+		npctalk strnpcinfo(1) +" : Didn't anybody give you the basic informations?";
 		cutin "gl_barmund3",2;
 		next;
 		mes "[Varmunt]";
 		mes "The Valkyrie of the dead. She's after the Ymir's Heart pieces hidden here.";
-		npctalk "The Valkyrie of the dead. She's after the Ymir's Heart pieces hidden here";
+		npctalk strnpcinfo(1) +" : The Valkyrie of the dead. She's after the Ymir's Heart pieces hidden here";
 		cutin "gl_barmund2",2;
 		next;
 		mes "[Varmunt]";
 		mes "She's capable of destroying the whole castle for this purpose.";
-		npctalk "She's capable of destroying the whole castle for this purpose.";
+		npctalk strnpcinfo(1) +" : She's capable of destroying the whole castle for this purpose.";
 		next;
 		mes "[Varmunt]";
 		mes "Hurry up! Inform Sir Heinrich that Himmelmez is coming. I will briefly explore the enchantments she made to this place!";
-		npctalk "Hurry up! Inform Sir Heinrich that Himmelmez is coming. I will briefly explore the enchantments she made to this place!";
+		npctalk strnpcinfo(1) +" : Hurry up! Inform Sir Heinrich that Himmelmez is coming. I will briefly explore the enchantments she made to this place!";
 		close2;
 		cutin "gl_barmund2",255;
 		donpcevent instance_npcname("Varmunt#ghinstance1")+"::OnDisable2";
@@ -220,24 +220,24 @@ OnEnable:
 		select("Heinrich, about the castle...");
 		mes "["+strcharinfo(0)+"]";
 		mes "Do you know what is happening now in the castle, Heinrich?";
-		unittalk getcharid(3),"Do you know what is happening now in the castle, Heinrich?";
+		unittalk getcharid(3), strcharinfo(0) +" : Do you know what is happening now in the castle, Heinrich?";
 		next;
 		mes "[Heinrich]";
 		mes "You are the adventurers who have come with Varmunt, right?";
-		npctalk "You are the adventurers who have come with Varmunt, right?";
+		npctalk strnpcinfo(1) +" : You are the adventurers who have come with Varmunt, right?";
 		next;
 		mes "[Heinrich]";
 		mes "What can I do for you? Is there something wrong?";
-		npctalk "What can I do for you? Is there something wrong?";
+		npctalk strnpcinfo(1) +" : What can I do for you? Is there something wrong?";
 		next;
 		select("The Ymir's Heart. Himmelmez...");
 		mes "["+strcharinfo(0)+"]";
 		mes "Himmelmez, the Valkyrie of the dead is looking to get a piece of the Ymir's heart hidden in the castle!";
-		unittalk getcharid(3),"Himmelmez, the Valkyrie of the dead is looking to get a piece of the Ymir's heart hidden in the castle!";
+		unittalk getcharid(3), strcharinfo(0) +" : Himmelmez, the Valkyrie of the dead is looking to get a piece of the Ymir's heart hidden in the castle!";
 		next;
 		mes "[Heinrich]";
 		mes "Haha. That's a nice joke. Now tell me what brings you here.";
-		npctalk "Haha. That's a nice joke. Now tell me what brings you here.";
+		npctalk strnpcinfo(1) +" : Haha. That's a nice joke. Now tell me what brings you here.";
 		cutin "gl_heinrich1",2;
 		next;
 		mes "[Varmunt]";
@@ -252,17 +252,17 @@ OnEnable:
 		select("Even if you do not believe...");
 		mes "["+strcharinfo(0)+"]";
 		mes "Even if you don't believe it, do something. We do not have much time!";
-		unittalk getcharid(3),"Even if you don't believe it, do something. We do not have much time!";
+		unittalk getcharid(3), strcharinfo(0) +" : Even if you don't believe it, do something. We do not have much time!";
 		cutin "gl_barmund2",255;
 		next;
 		mes "[Heinrich]";
 		mes "I will be glad if you give me two minutes, please. But now the king isn't in his room.";
-		npctalk "I will be glad if you give me two minutes, please. But now the king isn't in his room.";
+		npctalk strnpcinfo(1) +" : I will be glad if you give me two minutes, please. But now the king isn't in his room.";
 		cutin "gl_heinrich1",2;
 		next;
 		mes "[Heinrich]";
 		mes "But I think that with such a busy agenda, he won't be able to take care of this.";
-		npctalk "But I think that with such a busy agenda, he won't be able to take care of this.";
+		npctalk strnpcinfo(1) +" : But I think that with such a busy agenda, he won't be able to take care of this.";
 		donpcevent instance_npcname("Heinrich#ghinstance1")+"::OnDisable";
 		donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnEnable";
 		donpcevent instance_npcname("Himmelmez#ghinstance1")+"::OnEnable";
@@ -299,25 +299,25 @@ OnEnable:
 	hideoffnpc instance_npcname("Varmunt#ghinstance2");
 	end;
 OnTalk1:
-	npctalk "I am not joking Heinrich, Sir. Now, if my judgement is correct, she will be here soon.";
+	npctalk strnpcinfo(1) +" : I am not joking Heinrich, Sir. Now, if my judgement is correct, she will be here soon.";
 	end;
 OnTalk2:
-	npctalk "I trust this guy following me. The Ymir's Heart pieces must be hidden in a safe place before Himmelmez takes them!";
+	npctalk strnpcinfo(1) +" : I trust this guy following me. The Ymir's Heart pieces must be hidden in a safe place before Himmelmez takes them!";
 	end;
 OnTalk3:
-	npctalk "Himmelmez!! Through the cracks!";
+	npctalk strnpcinfo(1) +" : Himmelmez!! Through the cracks!";
 	end;
 OnTalk4:
-	npctalk "Unbelievable. My men are...This kind of thing is not possible!";
+	npctalk strnpcinfo(1) +" : Unbelievable. My men are...This kind of thing is not possible!";
 	end;
 OnTalk5:
-	npctalk "Heinrich, Sir! I need a quick decision.";
+	npctalk strnpcinfo(1) +" : Heinrich, Sir! I need a quick decision.";
 	end;
 OnTalk6:
-	npctalk "To prevent other attacks, go chase her!";
+	npctalk strnpcinfo(1) +" : To prevent other attacks, go chase her!";
 	end;
 OnTalk7:
-	npctalk "Now, your help is desperately needed. I hopefully ask you.";
+	npctalk strnpcinfo(1) +" : Now, your help is desperately needed. I hopefully ask you.";
 	end;
 }
 
@@ -331,34 +331,34 @@ OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance2");
 	end;
 OnTalk1:
-	npctalk "Who?!";
+	npctalk strnpcinfo(1) +" : Who?!";
 	end;
 OnTalk2:
-	npctalk "That who rules the dead? No doubt, a pretty story. Here, some tea will be served to entertain the ladies. Unfortunately, I do not...";
+	npctalk strnpcinfo(1) +" : That who rules the dead? No doubt, a pretty story. Here, some tea will be served to entertain the ladies. Unfortunately, I do not...";
 	end;
 OnTalk3:
-	npctalk "What did you say?";
+	npctalk strnpcinfo(1) +" : What did you say?";
 	end;
 OnTalk4:
-	npctalk "The King responded to the invitation of the Rune Midgard's Royal Family and hasn't come back yet.";
+	npctalk strnpcinfo(1) +" : The King responded to the invitation of the Rune Midgard's Royal Family and hasn't come back yet.";
 	end;
 OnTalk5:
-	npctalk "Just leave before you get in trouble. This is the King's will!";
+	npctalk strnpcinfo(1) +" : Just leave before you get in trouble. This is the King's will!";
 	end;
 OnTalk6:
-	npctalk "Damn! She has detected the position of the Ymir's Heart pieces.";
+	npctalk strnpcinfo(1) +" : Damn! She has detected the position of the Ymir's Heart pieces.";
 	end;
 OnTalk7:
-	npctalk "Now, Khalitzburg Crusaders and White Knights, follow me...";
+	npctalk strnpcinfo(1) +" : Now, Khalitzburg Crusaders and White Knights, follow me...";
 	end;
 OnTalk8:
-	npctalk "Unbelievable. My men are...This kind of thing is not possible!";
+	npctalk strnpcinfo(1) +" : Unbelievable. My men are...This kind of thing is not possible!";
 	end;
 OnTalk9:
-	npctalk "I'm sorry...";
+	npctalk strnpcinfo(1) +" : I'm sorry...";
 	end;
 OnTalk10:
-	npctalk "I'm sorry, my lord! Do not forgive me!";
+	npctalk strnpcinfo(1) +" : I'm sorry, my lord! Do not forgive me!";
 	end;
 }
 
@@ -372,28 +372,28 @@ OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance3");
 	end;
 OnTalk1:
-	npctalk "I cannot believe I killed my men with my own hands!";
+	npctalk strnpcinfo(1) +" : I cannot believe I killed my men with my own hands!";
 	end;
 OnTalk2:
-	npctalk "Varmunt is right about that. Now is not the time to regret.";
+	npctalk strnpcinfo(1) +" : Varmunt is right about that. Now is not the time to regret.";
 	end;
 OnTalk3:
-	npctalk "People, gather around and follow my orders.";
+	npctalk strnpcinfo(1) +" : People, gather around and follow my orders.";
 	end;
 OnTalk4:
-	npctalk "Himmelmez is turning into monsters all the people she put to sleep.";
+	npctalk strnpcinfo(1) +" : Himmelmez is turning into monsters all the people she put to sleep.";
 	end;
 OnTalk5:
-	npctalk "I don't know if there are survivors around here yet.";
+	npctalk strnpcinfo(1) +" : I don't know if there are survivors around here yet.";
 	end;
 OnTalk6:
-	npctalk "If there are survivors from this evil thing, please rescue them.";
+	npctalk strnpcinfo(1) +" : If there are survivors from this evil thing, please rescue them.";
 	end;
 OnTalk7:
-	npctalk "With Varmunt by my side, I'm going to chase Himmelmez down.";
+	npctalk strnpcinfo(1) +" : With Varmunt by my side, I'm going to chase Himmelmez down.";
 	end;
 OnTalk8:
-	npctalk "Hurry up Varmunt, let's chase her down.";
+	npctalk strnpcinfo(1) +" : Hurry up Varmunt, let's chase her down.";
 	end;
 }
 
@@ -407,28 +407,28 @@ OnEnable:
 	hideoffnpc instance_npcname("Himmelmez#ghinstance1");
 	end;
 OnTalk1:
-	npctalk "This~ Did I interrupt your conversation? The thing is, it's been too long since the last guests saw some sadness spread...";
+	npctalk strnpcinfo(1) +" : This~ Did I interrupt your conversation? The thing is, it's been too long since the last guests saw some sadness spread...";
 	end;
 OnTalk2:
-	npctalk "My name is Lisa Kahn Himmelmez. I am called the Valkyrie of the dead, master of the Dullahan.";
+	npctalk strnpcinfo(1) +" : My name is Lisa Kahn Himmelmez. I am called the Valkyrie of the dead, master of the Dullahan.";
 	end;
 OnTalk3:
-	npctalk "There's no need to pretend to be so laid back. Don't bluff about the whereabouts of you Majesty and things will be alright.";
+	npctalk strnpcinfo(1) +" : There's no need to pretend to be so laid back. Don't bluff about the whereabouts of you Majesty and things will be alright.";
 	end;
 OnTalk4:
-	npctalk "Hohoho, do you have any questions? You're a really mysterious man.";
+	npctalk strnpcinfo(1) +" : Hohoho, do you have any questions? You're a really mysterious man.";
 	end;
 OnTalk5:
-	npctalk "Not coveting the king's throne, you're such a stupid man, only waiting for his return. Your innocence is true, I love it.";
+	npctalk strnpcinfo(1) +" : Not coveting the king's throne, you're such a stupid man, only waiting for his return. Your innocence is true, I love it.";
 	end;
 Ontalk6:
-	npctalk "You make me wish we hadn't met in this situation. Too bad we did.";
+	npctalk strnpcinfo(1) +" : You make me wish we hadn't met in this situation. Too bad we did.";
 	end;
 Ontalk7:
-	npctalk "Well~ Today, with such a busy commandant, I won't be able to talk as much as I'd love for you to contemplate my explanation~";
+	npctalk strnpcinfo(1) +" : Well~ Today, with such a busy commandant, I won't be able to talk as much as I'd love for you to contemplate my explanation~";
 	end;
 OnTalk8:
-	npctalk "I gotta get my job done. Meanwhile why don't you meet my men? Hohoho.";
+	npctalk strnpcinfo(1) +" : I gotta get my job done. Meanwhile why don't you meet my men? Hohoho.";
 	end;
 }
 
@@ -703,18 +703,18 @@ OnEffect1:
 	end;
 OnTalkK:
 	switch(atoi(replacestr(strnpcinfo(2),"ghinstance",""))) {
-		case 1: npctalk "I do not want to die."; break;
-		case 2: npctalk "Mom..."; break;
-		case 5: npctalk "Help."; break;
-		case 6: npctalk "My stomach hurts..."; break;
-		case 9: npctalk "Heinrich Sir, help!"; break;
-		case 10: npctalk "Ack... Ugh."; break;
-		case 13: npctalk "I'm thirsty."; break;
-		case 14: npctalk "Oh... No... I cannot die..."; break;
-		case 17: npctalk "This is so uncomfortable. Eww!"; break;
-		case 18: npctalk "Who am I..."; break;
-		case 21: npctalk "Uhh... My body."; break;
-		case 22: npctalk "I'm so thirsty!"; break;
+		case 1: npctalk strnpcinfo(1) +" : I do not want to die."; break;
+		case 2: npctalk strnpcinfo(1) +" : Mom..."; break;
+		case 5: npctalk strnpcinfo(1) +" : Help."; break;
+		case 6: npctalk strnpcinfo(1) +" : My stomach hurts..."; break;
+		case 9: npctalk strnpcinfo(1) +" : Heinrich Sir, help!"; break;
+		case 10: npctalk strnpcinfo(1) +" : Ack... Ugh."; break;
+		case 13: npctalk strnpcinfo(1) +" : I'm thirsty."; break;
+		case 14: npctalk strnpcinfo(1) +" : Oh... No... I cannot die..."; break;
+		case 17: npctalk strnpcinfo(1) +" : This is so uncomfortable. Eww!"; break;
+		case 18: npctalk strnpcinfo(1) +" : Who am I..."; break;
+		case 21: npctalk strnpcinfo(1) +" : Uhh... My body."; break;
+		case 22: npctalk strnpcinfo(1) +" : I'm so thirsty!"; break;
 	}
 	end;
 }
@@ -833,33 +833,33 @@ OnMyMobDead:
 		select("Hey, wake up! Are there any other survivors?");
 		mes "["+strcharinfo(0)+"]";
 		mes "Hey, wake up! Are you alone?";
-		unittalk getcharid(3),"Hey, wake up! Are you alone?";
+		unittalk getcharid(3), strcharinfo(0) +" : Hey, wake up! Are you alone?";
 		next;
 		mes "[Aspiring Butcher]";
 		mes "The Chamberlain... the Monk... They've become monsters. I couldn't do anything.";
-		npctalk "The Chamberlain... the Monk... They've become monsters. I couldn't do anything.";
+		npctalk strnpcinfo(1) +" : The Chamberlain... the Monk... They've become monsters. I couldn't do anything.";
 		next;
 		mes "[Aspiring Butcher]";
 		mes "I just stood still... Nothing, I couldn't do anything...";
-		npctalk "I just stood still... Nothing, I couldn't do anything...";
+		npctalk strnpcinfo(1) +" : I just stood still... Nothing, I couldn't do anything...";
 		next;
 		select("Wake up!");
 		mes "["+strcharinfo(0)+"]";
 		mes "Wake up kid! Go east along the central passage to the outside! The path is safe!";
-		unittalk getcharid(3),"Wake up kid! Go east along the central passage to the outside! The path is safe!";
+		unittalk getcharid(3), strcharinfo(0) +" : Wake up kid! Go east along the central passage to the outside! The path is safe!";
 		next;
 		mes "[Aspiring Butcher]";
 		mes "East passage? Alone? How?";
-		npctalk "East passage? Alone? How?";
+		npctalk strnpcinfo(1) +" : East passage? Alone? How?";
 		next;
 		select("I can guide you through the path.");
 		mes "["+strcharinfo(0)+"]";
 		mes "I will guide you, perhaps that will help. If you want to close your eyes try not to hit anything.";
-		unittalk getcharid(3),"I will guide you, perhaps that will help. If you want to close your eyes try not to hit anything.";
+		unittalk getcharid(3), strcharinfo(0) +" : I will guide you, perhaps that will help. If you want to close your eyes try not to hit anything.";
 		next;
 		mes "[Aspiring Butcher]";
 		mes "Aspiring Butcher: I know, I... I'm trying to.";
-		npctalk "Aspiring Butcher: I know, I... I'm trying to.";
+		npctalk strnpcinfo(1) +" : Aspiring Butcher: I know, I... I'm trying to.";
 		donpcevent instance_npcname("Aspiring Butcher#clearGH")+"::OnDisable";
 		donpcevent instance_npcname("#ghmemorialmob02")+"::OnEnable";
 		close;
@@ -883,35 +883,35 @@ OnEnable:
 	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
 		mes "[Hollgrehenn Destroyer]";
 		mes "Yaaa!! Die!!!";
-		npctalk "Yaaa!! Die!!!";
+		npctalk strnpcinfo(1) +" : Yaaa!! Die!!!";
 		specialeffect EF_CRASHEARTH;
 		next;
 		select("Don't worry!");
 		mes "["+strcharinfo(0)+"]";
 		mes "Don't worry! Mam. Are you alone? No other survivors?";
-		unittalk getcharid(3),"Don't worry! Mam. Are you alone? No other survivors?";
+		unittalk getcharid(3), strcharinfo(0) +" : Don't worry! Mam. Are you alone? No other survivors?";
 		next;
 		mes "[Hollgrehenn Destroyer]";
 		mes "I'm the only survivor left";
-		npctalk "I'm the only survivor left";
+		npctalk strnpcinfo(1) +" : I'm the only survivor left";
 		next;
 		select("This is a very dangerous place.");
 		mes "["+strcharinfo(0)+"]";
 		mes "This is a very dangerous place. You know the central passage? Do you think you can move... and get to a safer place?";
-		unittalk getcharid(3),"This is a very dangerous place. You know the central passage? Do you think you can move... and get to a safer place?";
+		unittalk getcharid(3), strcharinfo(0) +" : This is a very dangerous place. You know the central passage? Do you think you can move... and get to a safer place?";
 		next;
 		mes "[Hollgrehenn Destroyer]";
 		mes "Yes, I am able to move. I'll move for my baby's sake.";
-		npctalk "Yes, I am able to move. I'll move for my baby's sake.";
+		npctalk strnpcinfo(1) +" : Yes, I am able to move. I'll move for my baby's sake.";
 		next;
 		select("Survive the road...");
 		mes "["+strcharinfo(0)+"]";
 		mes "You and your baby will get out of here safely. But I'm sorry I can't help you more.";
-		unittalk getcharid(3),"You and your baby will get out of here safely. But I'm sorry I can't help you more.";
+		unittalk getcharid(3), strcharinfo(0) +" : You and your baby will get out of here safely. But I'm sorry I can't help you more.";
 		next;
 		mes "[Hollgrehenn Destroyer]";
 		mes "That's ok. Thank you for helping us. I'm good to go alone. Ah and good luck also.";
-		npctalk "That's ok. Thank you for helping us. I'm good to go alone. Ah and good luck also.";
+		npctalk strnpcinfo(1) +" : That's ok. Thank you for helping us. I'm good to go alone. Ah and good luck also.";
 		donpcevent instance_npcname("Hollgrehenn Destroyer")+"::OnDisable";
 		donpcevent instance_npcname("#ghmemorialmob03")+"::OnEnable";
 		close;
@@ -1172,13 +1172,13 @@ OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance4");
 	end;
 OnTalk1:
-	npctalk "Himmelmez! I won't let you take even a single more step here.";
+	npctalk strnpcinfo(1) +" : Himmelmez! I won't let you take even a single more step here.";
 	end;
 OnTalk2:
-	npctalk "What... is this?!";
+	npctalk strnpcinfo(1) +" : What... is this?!";
 	end;
 OnTalk3:
-	npctalk "Varmunt Sir! Help the adventurers and I'll chase Himmelmez!";
+	npctalk strnpcinfo(1) +" : Varmunt Sir! Help the adventurers and I'll chase Himmelmez!";
 	end;
 }
 
@@ -1197,22 +1197,22 @@ OnEnable:
 	hideoffnpc instance_npcname("Himmelmez#ghinstance2");
 	end;
 OnTalk1:
-	npctalk "What an awfully lucky, I flew all the way over here and just one of them is really powerful.";
+	npctalk strnpcinfo(1) +" : What an awfully lucky, I flew all the way over here and just one of them is really powerful.";
 	end;
 OnTalk2:
-	npctalk "But it doesn't matter to me.";
+	npctalk strnpcinfo(1) +" : But it doesn't matter to me.";
 	end;
 OnTalk3:
-	npctalk "Now, all of you will die.";
+	npctalk strnpcinfo(1) +" : Now, all of you will die.";
 	end;
 OnTalk4:
-	npctalk "Hahaha, so you guys thought I would come alone?";
+	npctalk strnpcinfo(1) +" : Hahaha, so you guys thought I would come alone?";
 	end;
 OnTalk5:
-	npctalk "This is my new toy to keep you at my feet. Why don't you guys play while I entertain?";
+	npctalk strnpcinfo(1) +" : This is my new toy to keep you at my feet. Why don't you guys play while I entertain?";
 	end;
 OnTalk6:
-	npctalk "Sincerely~, If I am given the opportunity I'd like to meet you again, Heinrich.";
+	npctalk strnpcinfo(1) +" : Sincerely~, If I am given the opportunity I'd like to meet you again, Heinrich.";
 	end;
 }
 
@@ -1243,10 +1243,10 @@ OnEnable:
 	hideoffnpc instance_npcname("Varmunt#ghinstance3");
 	end;
 OnTalk1:
-	npctalk "Heinrich Sir! Something unknown holds an inexplicably powerful force!";
+	npctalk strnpcinfo(1) +" : Heinrich Sir! Something unknown holds an inexplicably powerful force!";
 	end;
 OnTalk2:
-	npctalk "From the monster I picked up some great stuff. People who are interested, talk to me.";
+	npctalk strnpcinfo(1) +" : From the monster I picked up some great stuff. People who are interested, talk to me.";
 	end;
 }
 
@@ -1268,19 +1268,19 @@ OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance5");
 	end;
 OnTalk1:
-	npctalk "These things have never been in the castle!";
+	npctalk strnpcinfo(1) +" : These things have never been in the castle!";
 	end;
 OnTalk2:
-	npctalk "Trying to break this power with common weapons doesn't work. I tried it.";
+	npctalk strnpcinfo(1) +" : Trying to break this power with common weapons doesn't work. I tried it.";
 	end;
 OnTalk3:
-	npctalk "It is really unforgivable.";
+	npctalk strnpcinfo(1) +" : It is really unforgivable.";
 	end;
 OnTalk4:
-	npctalk "I, who already was a subordinate of genocide. How much more in the future...";
+	npctalk strnpcinfo(1) +" : I, who already was a subordinate of genocide. How much more in the future...";
 	end;
 OnTalk5:
-	npctalk "...";
+	npctalk strnpcinfo(1) +" : ...";
 	end;
 }
 
@@ -1299,52 +1299,52 @@ OnEnable:
 	hideoffnpc instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTalk2:
-	npctalk "Himmelmez's enchantment has completely blocked the passage to each section.";
+	npctalk strnpcinfo(1) +" : Himmelmez's enchantment has completely blocked the passage to each section.";
 	end;
 OnTalk3:
-	npctalk "Get out of the way for a moment. I'll try to somehow break the spell with magical powers.";
+	npctalk strnpcinfo(1) +" : Get out of the way for a moment. I'll try to somehow break the spell with magical powers.";
 	end;
 OnTalk4:
-	npctalk "The enchantment seems to be broken.";
+	npctalk strnpcinfo(1) +" : The enchantment seems to be broken.";
 	end;
 OnTalk5:
-	npctalk "I've never seen this spell before.";
+	npctalk strnpcinfo(1) +" : I've never seen this spell before.";
 	end;
 OnTalk6:
-	npctalk "Himmelmez doesn't use a seal on a person's body to turn it into an undead.";
+	npctalk strnpcinfo(1) +" : Himmelmez doesn't use a seal on a person's body to turn it into an undead.";
 	end;
 OnTalk7:
-	npctalk "She uses enchantment stones.This way, the spell is probably maintained.";
+	npctalk strnpcinfo(1) +" : She uses enchantment stones.This way, the spell is probably maintained.";
 	end;
 OnTalk8:
-	npctalk "We should kill the people who have the enchantment stones to break the spell.";
+	npctalk strnpcinfo(1) +" : We should kill the people who have the enchantment stones to break the spell.";
 	end;
 OnTalk9:
-	npctalk "However, we can't identify them. The purification can only be done randomly.";
+	npctalk strnpcinfo(1) +" : However, we can't identify them. The purification can only be done randomly.";
 	end;
 OnTalk10:
-	npctalk "Commandant...";
+	npctalk strnpcinfo(1) +" : Commandant...";
 	end;
 OnTalk11:
-	npctalk "Commandant, it seems too loose.";
+	npctalk strnpcinfo(1) +" : Commandant, it seems too loose.";
 	end;
 OnTalk12:
-	npctalk "We are related to all these people, not just a few.";
+	npctalk strnpcinfo(1) +" : We are related to all these people, not just a few.";
 	end;
 OnTalk13:
-	npctalk "We can't deny that it's not their fault for what is going on.";
+	npctalk strnpcinfo(1) +" : We can't deny that it's not their fault for what is going on.";
 	end;
 OnTalk14:
-	npctalk "Well, let's do it then.";
+	npctalk strnpcinfo(1) +" : Well, let's do it then.";
 	end;
 OnTalk15:
-	npctalk "You guys are of a great help. Try to follow us.";
+	npctalk strnpcinfo(1) +" : You guys are of a great help. Try to follow us.";
 	end;
 OnTalk16:
-	npctalk "There can be a tough fight. Hold on, and it would be nice to eat something.";
+	npctalk strnpcinfo(1) +" : There can be a tough fight. Hold on, and it would be nice to eat something.";
 	end;
 OnTalk17:
-	npctalk "Guys. It is time to depart, Heinrich Sir.";
+	npctalk strnpcinfo(1) +" : Guys. It is time to depart, Heinrich Sir.";
 	end;
 }
 
@@ -1665,22 +1665,22 @@ OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance6");
 	end;
 OnTalk1:
-	npctalk "Gerhard!";
+	npctalk strnpcinfo(1) +" : Gerhard!";
 	end;
 OnTalk2:
-	npctalk "What are you doing to my men, Himmelmez?!";
+	npctalk strnpcinfo(1) +" : What are you doing to my men, Himmelmez?!";
 	end;
 OnTalk3:
-	npctalk "Himmelmez! You don't need to make any more sacrifices!";
+	npctalk strnpcinfo(1) +" : Himmelmez! You don't need to make any more sacrifices!";
 	end;
 OnTalk4:
-	npctalk "Let him go! I don't want one more sacrifice!";
+	npctalk strnpcinfo(1) +" : Let him go! I don't want one more sacrifice!";
 	end;
 OnTalk5:
-	npctalk "I will not forgive you.";
+	npctalk strnpcinfo(1) +" : I will not forgive you.";
 	end;
 OnTalk6:
-	npctalk "Just leave us alone, Himmelmez!!";
+	npctalk strnpcinfo(1) +" : Just leave us alone, Himmelmez!!";
 	end;
 }
 
@@ -1700,7 +1700,7 @@ OnEnable:
 	hideoffnpc instance_npcname("Varmunt#ghinstance5");
 	end;
 OnTalk1:
-	npctalk "What? This cannot be. We must prevent Amdarias's attacks!";
+	npctalk strnpcinfo(1) +" : What? This cannot be. We must prevent Amdarias's attacks!";
 	end;
 }
 
@@ -1714,37 +1714,37 @@ OnEnable:
 	hideoffnpc instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTalk1:
-	npctalk "Great~ I thought you wouldn't come near the end...";
+	npctalk strnpcinfo(1) +" : Great~ I thought you wouldn't come near the end...";
 	end;
 OnTalk2:
-	npctalk "Huhu, I have already found a piece of Ymir's Heart, Heinrich.";
+	npctalk strnpcinfo(1) +" : Huhu, I have already found a piece of Ymir's Heart, Heinrich.";
 	end;
 OnTalk3:
-	npctalk "It would've been faster if there were no distractions.";
+	npctalk strnpcinfo(1) +" : It would've been faster if there were no distractions.";
 	end;
 OnTalk4:
-	npctalk "What do you think? Making it look like an accidental disease infected the king and the people around...";
+	npctalk strnpcinfo(1) +" : What do you think? Making it look like an accidental disease infected the king and the people around...";
 	end;
 OnTalk5:
-	npctalk "You want that?";
+	npctalk strnpcinfo(1) +" : You want that?";
 	end;
 OnTalk6:
-	npctalk "This one is your final blow, Heinrich.";
+	npctalk strnpcinfo(1) +" : This one is your final blow, Heinrich.";
 	end;
 OnTalk7:
-	npctalk "It is said that stopping me requires a skillfull person.";
+	npctalk strnpcinfo(1) +" : It is said that stopping me requires a skillfull person.";
 	end;
 OnTalk8:
-	npctalk "Seems like a perfect scenario to make my new monster, Amdarias.";
+	npctalk strnpcinfo(1) +" : Seems like a perfect scenario to make my new monster, Amdarias.";
 	end;
 OnTalk9:
-	npctalk "Booh~ I'm scared.";
+	npctalk strnpcinfo(1) +" : Booh~ I'm scared.";
 	end;
 OnTalk10:
-	npctalk "Anyway, it was nice talking to you. Maybe we'll have the chance to meet again in the next story.";
+	npctalk strnpcinfo(1) +" : Anyway, it was nice talking to you. Maybe we'll have the chance to meet again in the next story.";
 	end;
 OnTalk11:
-	npctalk "Well, make sure you will come back again.";
+	npctalk strnpcinfo(1) +" : Well, make sure you will come back again.";
 	end;
 }
 
@@ -1795,13 +1795,13 @@ OnEnable:
 	hideoffnpc instance_npcname("Gerhard#ghinstance1");
 	end;
 OnTalk1:
-	npctalk "Damn it! Run away! I can't withstand anymore!";
+	npctalk strnpcinfo(1) +" : Damn it! Run away! I can't withstand anymore!";
 	end;
 OnTalk2:
-	npctalk "Commandant... Come on, you need to run away from here... Ugh.";
+	npctalk strnpcinfo(1) +" : Commandant... Come on, you need to run away from here... Ugh.";
 	end;
 OnTalk3:
-	npctalk "Even if you defile my body, I won't let you take my soul, Himmelmez!";
+	npctalk strnpcinfo(1) +" : Even if you defile my body, I won't let you take my soul, Himmelmez!";
 	end;
 OnEffect1:
 	specialeffect EF_BARRIER;

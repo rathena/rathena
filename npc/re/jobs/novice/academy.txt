@@ -4722,16 +4722,16 @@ iz_ac01,43,80,7	script	Adventurer's Pet#ac	4_DEVIRUCHI,{
 OnTimer60000:
 	switch(rand(1,4)) {
 	case 1:
-		npctalk "Yawn~ I am so bored!";
+		npctalk strnpcinfo(1) +" : Yawn~ I am so bored!";
 		break;
 	case 2:
-		npctalk "Red Potion.. Is it delicious? Herb does not look delicious.. I bet that is bitter.";
+		npctalk strnpcinfo(1) +" : Red Potion.. Is it delicious? Herb does not look delicious.. I bet that is bitter.";
 		break;
 	case 3:
-		npctalk "Ha. You are lucky to have this Devi.";
+		npctalk strnpcinfo(1) +" : Ha. You are lucky to have this Devi.";
 		break;
 	case 4:
-		npctalk "Isn't the floor cold? Well.. For me, Undead is more familiar.";
+		npctalk strnpcinfo(1) +" : Isn't the floor cold? Well.. For me, Undead is more familiar.";
 		break;
 	}
 
