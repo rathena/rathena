@@ -4694,7 +4694,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				skill_area_temp[0] = map_foreachinrange(skill_area_sub, bl, (skill_id == AS_SPLASHER)?1:skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
 
 			// recursive invocation of skill_castend_damage_id() with flag|1
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), starget, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+			if (battle_config.skill_wall_check && skill_id == RA_ARROWSTORM)
+				map_foreachinshootrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), starget, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+			else
+				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), starget, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 			if( skill_id == AS_SPLASHER ) {
 				map_freeblock_unlock(); // Don't consume a second gemstone.
 				return 0;
@@ -11744,8 +11747,12 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case RK_DRAGONBREATH:
 	case RK_DRAGONBREATH_WATER:
 		i = skill_get_splash(skill_id,skill_lv);
-		map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,splash_target(src),
-			src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
+		if (battle_config.skill_wall_check)
+			map_foreachinshootrange(skill_area_sub,src->m,x-i,y-i,x+i,y+i,splash_target(src),
+				src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
+		else
+			map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,splash_target(src),
+				src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		break;
 
 	case SO_ARRULLO:
