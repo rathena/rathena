@@ -602,6 +602,9 @@ extern struct Battle_Config
 	int mob_stuck_warning; //Show warning if a monster is stuck too long
 	int skill_eightpath_algorithm; //Official path algorithm
 	int death_penalty_maxlv;
+	int exp_cost_redemptio;
+	int exp_cost_redemptio_limit;
+	int exp_cost_inspiration;
 } battle_config;
 
 void do_init_battle(void);
