@@ -12,8 +12,6 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 		mes "You have too many items to proceed with the quest.";
 		mes "Please lighten your load and try again.";
 		close;	}
-	// .@time_check = OpenHour_SiegeMode 3 14400
-	// var .@siege_check = CheckSiegeTime 3
 
 	.@guild_id = getcastledata( "te_prtcas01",1 );
 	.@economy = getcastledata( "te_prtcas01",2 );
@@ -30,7 +28,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 		mes "Please, pretend not to see me.";
 		close;
 	}
-	if (.@time_check == 1 || agitcheck3() == 1) {
+	if (WoeTETimeStart(14400) == 1 || agitcheck3() == 1) {
 		mes "From now on, I'll stay here quietly and not interrupt anyone until the siege ends.";
 		mes "Don't worry about me.";
 		close;
@@ -689,7 +687,7 @@ OnCommandOn:
 OnMyMobDead:
 	if (mobcount( "te_prtcas01","Aira#fake01_prt01::OnMyMobDead" )) end;
 	donpcevent "#aira_real_prt01::OnCommandOn";
-	npctalk "My summon water balls! I'll get you! With my own hands!!";
+	npctalk "Aira: My summon water balls! I'll get you! With my own hands!!";
 OnReset:
 	stopnpctimer;
 	killmonster "te_prtcas01", "Aira#fake01_prt01::OnMyMobDead";
@@ -725,7 +723,7 @@ OnCommandOn:
 OnMyMobDead:
 	if (mobcount( "te_prtcas01","Kuluna#fake01_prt01::OnMyMobDead" )) end;
 	donpcevent "#kuluna_real_prt01::OnCommandOn";
-	npctalk "Hmm? So you're going to be that way? You'd better be ready!";
+	npctalk "Kuluna: Hmm? So you're going to be that way? You'd better be ready!";
 OnReset:
 	stopnpctimer;
 	killmonster "te_prtcas01", "Kuluna#fake01_prt01::OnMyMobDead";
@@ -761,7 +759,7 @@ OnCommandOn:
 OnMyMobDead:
 	if (mobcount( "te_prtcas01","Mallina#fake01_prt01::OnMyMobDead" )) end;
 	donpcevent "#mallina_real_prt01::OnCommandOn";
-	npctalk "Stop it!! Stop bothering me!!";
+	npctalk "Mallina: Stop it!! Stop bothering me!!";
 OnReset:
 	stopnpctimer;
 	killmonster "te_prtcas01", "Mallina#fake01_prt01::OnMyMobDead";
@@ -795,7 +793,7 @@ OnCommandOn:
 OnMyMobDead:
 	if (mobcount( "te_prtcas01","Ezella#fake01_prt01::OnMyMobDead" )) end;
 	donpcevent "#ezella_real_prt01::OnCommandOn";
-	npctalk "Ahh... This only makes both of us more tired...";
+	npctalk "Ezella: Ahh... This only makes both of us more tired...";
 OnReset:
 	stopnpctimer;
 	killmonster "te_prtcas01", "Ezella#fake01_prt01::OnMyMobDead";
@@ -833,7 +831,7 @@ OnCommandOn:
 OnMyMobDead:
 	if (mobcount( "te_prtcas01","Lune#fake01_prt01::OnMyMobDead" )) end;
 	donpcevent "#lune_real_prt01::OnCommandOn";
-	npctalk "..you want to be drowned in the deep sea? Huh?";
+	npctalk "Lune: ..you want to be drowned in the deep sea? Huh?";
 OnReset:
 	stopnpctimer;
 	killmonster "te_prtcas01", "Lune#fake01_prt01::OnMyMobDead";
@@ -888,7 +886,7 @@ OnCommandOn:
 OnMyMobDead:
 	if (mobcount( "te_prtcas01","Morin#fake01_prt01::OnMyMobDead" )) end;
 	donpcevent "#morin_real_prt01::OnCommandOn";
-	npctalk "... . ...";
+	npctalk "Morin: ... . ...";
 OnReset:
 	stopnpctimer;
 	killmonster "te_prtcas01", "Morin#fake01_prt01::OnMyMobDead";
@@ -925,7 +923,7 @@ OnCommandOn:
 OnMyMobDead:
 	if (mobcount( "te_prtcas01","Nasarin#fake01_prt01::OnMyMobDead" )) end;
 	donpcevent "#nasarin_real_prt01::OnCommandOn";
-	npctalk "..Ahh.. It's so hard to become a Valkyrie!";
+	npctalk "Nasarin: ..Ahh.. It's so hard to become a Valkyrie!";
 OnReset:
 	stopnpctimer;
 	killmonster "te_prtcas01", "Nasarin#fake01_prt01::OnMyMobDead";

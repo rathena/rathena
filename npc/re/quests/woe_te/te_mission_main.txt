@@ -46,7 +46,7 @@ S_Event:
 OnMyMobDead:
 	.@map$ = strnpcinfo(4);
 	if (mobcount( .@map$,strnpcinfo(0) +"::OnMyMobDead" ) < 1 && playerattached()) {// playerattached stop the script if killmonster / maprespawnguildid
-		callsub S_Coord, .@item_id, .@mob_id, .@mob_name$, .@coord;
+		callsub S_Coord, .@item_id, .@mob_id, .@coord;
 		for ( .@mtem = 0; .@mtem < 20; .@mtem++ )
 			makeitem .@item_id,1, .@map$, rand( .@coord[0],.@coord[1] ), rand( .@coord[2],.@coord[3] );
 		initnpctimer;
@@ -56,8 +56,8 @@ OnMyMobDead:
 OnTimer12000:
 	stopnpctimer;
 OnCommandOn:
-	callsub S_Coord, .@item_id, .@mob_id, .@mob_name$, .@coord;
-	monster strnpcinfo(4), rand( .@coord[0],.@coord[1] ), rand( .@coord[2],.@coord[3] ),.@mob_name$,.@mob_id,1,strnpcinfo(0) + "::OnMyMobDead";// THIEF_PORING, BABY_STRANGE -> !TODO: not implemented
+	callsub S_Coord, .@item_id, .@mob_id, .@coord;
+	monster strnpcinfo(4), rand( .@coord[0],.@coord[1] ), rand( .@coord[2],.@coord[3] ),"--ja--",.@mob_id,1,strnpcinfo(0) + "::OnMyMobDead";
 	end;
 
 OnReset:
@@ -69,10 +69,9 @@ S_Coord:
 	if (compare( strnpcinfo(4),"te_alde" )) {
 		set getarg(0), 7056;// Payroll_Of_Kafra
 		set getarg(1), 2450;// THIEF_PORING
-		set getarg(2), "Poring the Thief";
 		.@hidden_name$ = strnpcinfo(2);
 
-		if (.@hidden_name$ == "popa_alde01") setarray .@coord[0],178,234, 128,175;// x1,x2, y1,y2
+		if (.@hidden_name$ == "popa_alde01") setarray .@coord[0],178,234, 128,175;// area x1,x2, y1,y2
 		else if (.@hidden_name$ == "popb_alde01") setarray .@coord[0],14,65, 186,222;
 		else if (.@hidden_name$ == "popc_alde01") setarray .@coord[0],46,114, 37,105;
 		else if (.@hidden_name$ == "popd_alde01") setarray .@coord[0],198,233, 5,41;
@@ -96,7 +95,6 @@ S_Coord:
 	else {
 		set getarg(0), 6592;// Small_Wooden_Chest
 		set getarg(1), 2451;// BABY_STRANGE
-		set getarg(2), "Suspicious Babee";
 		.@hidden_name$ = strnpcinfo(2);
 
 		if (.@hidden_name$ == "popa_prt01") setarray .@coord[0],10,90, 10,80;
@@ -121,7 +119,7 @@ S_Coord:
 		else if (.@hidden_name$ == "popd_prt05") setarray .@coord[0],205,282, 12,93;
 	}
 	for ( .@i = 0; .@i < 4; .@i++ )
-		set getelementofarray( getarg(3),.@i ), .@coord[.@i];
+		set getelementofarray( getarg(2),.@i ), .@coord[.@i];
 	return;
 }
 
@@ -162,7 +160,7 @@ S_Coord:
 			7509,"30 Small Wooden Boxes" );
 	}
 	mes "["+ .@npc_name$ +"]";
-	if (CanParticipatewoeTE() == 0) {
+	if (canParticipateSiegeTE() == 0) {
 		mes "Ah... you...";
 		mes "based on TE rules, I won't be ordering you or asking you favors unfortunately.";
 		next;
@@ -181,7 +179,7 @@ S_Coord:
 			mes "Honestly, it's hard to complete a mission if your level is too low.";
 			close;
 		}
-		// .@time_check = OpenHour_SiegeMode 3 3600
+		.@time_check = WoeTETimeStart(3600);
 		.@siege_check = agitcheck3();
 		mes "You already know that you have to accept a mission in a certain period of time, right?";
 		if (.@time_check == 1 || .@siege_check == 1)
@@ -491,9 +489,7 @@ S_Coord:
 
 S_Cancelquest:
 	.@npc_name$ = getarg(1);
-	// .@time_check = = OpenHour_SiegeMode 3 3600
-	.@siege_check = agitcheck3();
-	if ((.@time_check == 1) || (.@siege_check == 1)) {
+	if (WoeTETimeStart(3600) == 1 || agitcheck3()) {
 		mes "It seems like you haven't accomplished the mission yet?";
 		mes getarg(2);
 		next;
@@ -569,4 +565,3 @@ S_Menu:
 	}
 	return .@menu$;
 }
-

@@ -12,14 +12,9 @@ te_aldecas1,226,34,3	script	Blacksmith Cano#tegod01	4_M_RACHMAN1,{
 		mes "You have too many items to proceed with the quest.";
 		mes "Please lighten your load and try again.";
 		close;	}
-	// .@time_check = OpenHour_SiegeMode 3 14400
-	// .@siege_check = CheckSiegeTime 3
-
-	// .@time_check = OpenHour_SiegeMode 3 14400
 
 	.@guild_id = getcastledata( "te_aldecas1",1 );
 	.@economy = getcastledata("te_aldecas1",2);
-
 	.@npc_name$ = "Cano";
 
 	mes "["+ .@npc_name$ +"]";
@@ -33,7 +28,7 @@ te_aldecas1,226,34,3	script	Blacksmith Cano#tegod01	4_M_RACHMAN1,{
 		mes "Please, pretend not to see me.";
 		close;
 	}
-	if (.@time_check == 1 || agitcheck3() == 1) {
+	if (WoeTETimeStart(14400) == 1 || agitcheck3() == 1) {
 		mes "From now on, I'll stay here quietly and not interrupt anyone until the siege ends.";
 		mes "Don't worry about me.";
 		close;

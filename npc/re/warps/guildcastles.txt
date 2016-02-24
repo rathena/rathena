@@ -78,7 +78,7 @@ OnTouch:
 	end;
 
 S_Warp:
-	if (CanParticipatewoeTE() == 0) {
+	if (canParticipateSiegeTE() == 0) {
 		mes "3rd and expansion job level can't enter in WoE TE.";
 		close;
 	}
@@ -87,13 +87,11 @@ S_Warp:
 	.@my_guild_id = getcharid(2);
 
 	if (.@guild_id && .@guild_id == .@my_guild_id) {
-		// ResetBuffLowLevelSiege;
 		warp getarg(0),getarg(1),getarg(2);
 		end;
 	}
 
-	// .@hour = OpenHour_SiegeMode 3 3600 //!TODO
-	if (.@hour == 1) {
+	if (WoeTETimeStart(3600) == 1) {
 		if (!.@guild_id || !.@my_guild_id) {
 			mes "It's time for preparing to WoE. Only Alliance guild is able to enter.";
 			close;
@@ -105,7 +103,6 @@ S_Warp:
 		mes "Welcome alliance guild.";
 		close2;
 	}
-	// ResetBuffLowLevelSiege;
 	warp getarg(0),getarg(1),getarg(2);
 	end;
 }
