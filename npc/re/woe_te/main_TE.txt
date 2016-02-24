@@ -9,13 +9,10 @@
 //= - Enables Kafra Services inside Guild.
 //= - Treasure Chest spawning.
 //= - Flag Template.
+//= - GM NPC.
 //===== Changelogs: ==========================================
 //= 1.0 First Version. [Capuche]
 //============================================================
-
-function	script	CanParticipatewoeTE	{
-	return canParticipateSiegeTE();
-}
 
 -	script	Manager_TE	-1,{
 OnAgitInit3:
@@ -96,7 +93,7 @@ OnAgitInit3:
 
 OnEmpSpawn:
 	.@map$ = strnpcinfo(4);
-	if (!mobcount( .@map$, strnpcinfo(0) +"::OnAgitBreak" )) {// voir si utile
+	if (!mobcount( .@map$, strnpcinfo(0) +"::OnAgitBreak" )) {
 		if (.@map$ == "te_aldecas1") { setarray .@emproom[0],216,23; }
 		else if (.@map$ == "te_aldecas2") { setarray .@emproom[0],213,23; }
 		else if (.@map$ == "te_aldecas3") { setarray .@emproom[0],205,31; }
@@ -158,11 +155,9 @@ OnAgitBreak:
 			setcastledata .@map$,.@i,0;
 	}
 
-	// announce that the Emperium is destroyed, and respawn all but new castle-occupants.
 	mapannounce .@map$,"Emperium has been destroyed.",bc_map,"0x00FF00",FW_BOLD,20,0,40;
-	maprespawnguildid .@map$,.@guild_id,6;
+	maprespawnguildid .@map$,.@guild_id,6;// Respawn all but new castle-occupants.
 
-	// Respawn the Emperium, and display new owners.
 	sleep 500;
 	if (agitcheck3())
 		donpcevent strnpcinfo(0) +"::OnEmpSpawn";
@@ -1068,14 +1063,12 @@ function	script	F_flag_woe_TE	{
 		mes "Do you wish to return with honor?";
 		next;
 		if (select( "Return to the fortress.","Forget it." ) == 1) {
-			if (CanParticipatewoeTE() == 0) {
+			if (canParticipateSiegeTE() == 0) {
 				mes "Tertiary job class and users with expanded levels are not allowed to participate in Siege Battles TE.";
 				close;
 			}
-			if (getcastledata( getarg(1),1 ) == getcharid(2)) {
-				// ResetBuffLowLevelSiege;
+			if (getcastledata( getarg(1),1 ) == getcharid(2))
 				warp getarg(1),getarg(2),getarg(3);
-			}
 			end;
 		}
 	}
@@ -1109,4 +1102,91 @@ OnInit:
 	if (strnpcinfo(2) != "")
 		flagemblem getcastledata( strnpcinfo(2),1 );
 	end;
+}
+
+
+// GM NPC
+//============================================================
+prt_gld,1,4,0	script	#Enterance Button prt	CLEAR_NPC,{
+	mes "password";
+	next;
+	if ( callfunc( "F_GM_NPC", 1854,0, 0,9000 ) < 1 ) {
+		mes "That's not right";
+		close;
+	}
+	mes "What do you want to do with the Gloria-bound warp?";
+	next;
+	switch( select( "Open it","Close it","Cancel","Rental item provided" ) ) {
+	case 1:
+		mes "Opening the warp.";
+		enablenpc "to_gloria";
+		close;
+	case 2:
+		mes "Closing the warp.";
+		disablenpc "to_gloria";
+		close;
+	case 3:
+		end;
+	case 4:
+		mes "You have 300 seconds.";
+		rentitem 13083,300;// TE_Woe_Knife
+		close;
+	}
+}
+
+alde_gld,1,4,0	script	#Enterance Button ald	CLEAR_NPC,{
+	mes "password";
+	next;
+	if ( callfunc( "F_GM_NPC", 1854,0, 0,9000 ) < 1 ) {
+		mes "That's not right";
+		close;
+	}
+	mes "What do you want to do with the Kafragarten-bound warp?";
+	next;
+	switch( select( "Open it","Close it","Cancel" ) ) {
+	case 1:
+		mes "Opening the warp.";
+		enablenpc "to_kafragarten";
+		close;
+	case 2:
+		mes "Closing the warp.";
+		disablenpc "to_kafragarten";
+		close;
+	case 3:
+		end;
+	}
+}
+
+// God Item Hervor & Jormungand
+sec_in02,20,20,0	script	Test Guide	CLEAR_NPC,{
+	mes "Password?";
+	next;
+	if (callfunc( "F_GM_NPC", 18543792,0, 0,99999999 ) < 1) {
+		mes "Aww...";
+		close;
+	}
+	mes "We provide material items needed for testing TE.";
+	next;
+	switch( select( "Materials for Hervor","Materials for Jormungand" ) ) {
+	case 1:
+		getitem 6595,2;// Hammer_Of_Velund
+		getitem 6596,1;// Anvil_Of_Velund
+		getitem 6594,4;// Magic_Bronze_Bullion
+		getitem 6597,3;// Bracelet_Of_Velund
+		getitem 6602,1;// Secret_Of_Rune
+		getitem 6605,1;// Muspellium
+		getitem 6604,1;// Essence_Of_Rune
+		getitem 2115,1;// Valkyrja's_Shield
+		end;
+	case 2:
+		getitem 6603,4;// Skin_Of_Hraesvelg
+		getitem 6599,1;// Spirit_Of_Hugin
+		getitem 6598,1;// Rib_Of_Jormungand
+		getitem 6601,4;// Chisel_Of_Giant
+		getitem 6600,1;// Spirit_Of_Munin
+		getitem 6605,1;// Muspellium
+		getitem 6604,1;// Essence_Of_Rune
+		getitem 1473,1;// Wizardy_Staff
+		end;
+	}
 }

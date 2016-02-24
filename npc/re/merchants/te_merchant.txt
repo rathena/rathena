@@ -14,7 +14,7 @@ te_alde_gld,215,184,4	duplicate(TE Potion Merchant#prt)	TE Potion Merchant#alde	
 //=======================================
 -	script	rental_woe_TE	-1,{
 	mes "[Rental Items Manager]";
-	if (CanParticipatewoeTE() == 1) {
+	if (canParticipateSiegeTE() == 1) {
 		.@list01$ = "[Shield] [Armor] [Garment]";
 		.@list02$ = "[Helmet] [Accessory] [Shoes]";
 		.@list03$ = "[Sword] [Spear] [Axe] [Katar]";
@@ -41,58 +41,58 @@ te_alde_gld,215,184,4	duplicate(TE Potion Merchant#prt)	TE Potion Merchant#alde	
 				end;
 			case 2:
 				callsub( S_Rent, "shields, armors, and garments",
-					 2178,"TE Siege Buckler",// TE_Woe_Buckler
-					 2179,"TE Siege Shield",// TE_Woe_Shield
-					 2180,"TE Siege Magic Guard",// TE_Woe_Magic_Guard
-					15062,"TE Siege Long Coat",// TE_Woe_Coat
-					15063,"TE Siege Mail",// TE_Woe_Chain_Mail
-					15064,"TE Siege Magic Coat",// TE_Woe_Mage_Coat
-					20702,"TE Siege Muffler",// TE_Woe_Muffler
-					20703,"TE Siege Cape",// TE_Woe_Manteau
-					20704,"TE Siege Magic Cape" );// TE_Woe_Magic_Manteau
+					 2178,"TE Siege Buckler",		// TE_Woe_Buckler
+					 2179,"TE Siege Shield",		// TE_Woe_Shield
+					 2180,"TE Siege Magic Guard",	// TE_Woe_Magic_Guard
+					15062,"TE Siege Long Coat",		// TE_Woe_Coat
+					15063,"TE Siege Mail",			// TE_Woe_Chain_Mail
+					15064,"TE Siege Magic Coat",	// TE_Woe_Mage_Coat
+					20702,"TE Siege Muffler",		// TE_Woe_Muffler
+					20703,"TE Siege Cape",			// TE_Woe_Manteau
+					20704,"TE Siege Magic Cape" );	// TE_Woe_Magic_Manteau
 				break;
 			case 3:
 				callsub( S_Rent, "helmets, accessories, and shoes",
-					2496,"TE Siege Shoes",// TE_Woe_Shoes
-					2497,"TE Siege Boots",// TE_Woe_Boots
-					2498,"TE Siege Magic Sandals",// TE_Woe_Magic_Sandal
-					2944,"TE Guardian Ring",// TE_Ring_Of_Protection
-					2945,"TE Ring of Wrath",// TE_Ring_Of_Rage
-					2946,"TE Ring of Rebellion",// TE_Ring_Of_Defiance
-					18732,"TE Siege Cap",// TE_Woe_Cap
-					18733,"TE Siege Bone Helm",// TE_Woe_Bone_Helm
-					18734,"TE Siege Magic Eyes" );// TE_Woe_Magic_Eyes
+					2496,"TE Siege Shoes",			// TE_Woe_Shoes
+					2497,"TE Siege Boots",			// TE_Woe_Boots
+					2498,"TE Siege Magic Sandals",	// TE_Woe_Magic_Sandal
+					2944,"TE Guardian Ring",		// TE_Ring_Of_Protection
+					2945,"TE Ring of Wrath",		// TE_Ring_Of_Rage
+					2946,"TE Ring of Rebellion",	// TE_Ring_Of_Defiance
+					18732,"TE Siege Cap",			// TE_Woe_Cap
+					18733,"TE Siege Bone Helm",		// TE_Woe_Bone_Helm
+					18734,"TE Siege Magic Eyes" );	// TE_Woe_Magic_Eyes
 				break;
 			case 4:
 				callsub( S_Rent, "swords, spears, axes, and katars",
-					1299,"TE Siege Katar",// TE_Woe_Katar
-					1399,"TE Siege Two-Handed Axe",// TE_Woe_Two_Handed_Axe
-					1495,"TE Siege Lance",// TE_Woe_Lance
-					13317,"TE Siege Magic Shuriken",// TE_Woe_Huuma
-					21006,"TE Siege Two-Handed Sword",// TE_Woe_Two_Hand_Sword
-					1319,"TE Siege Axe",// TE_Woe_Axe
-					1437,"TE Siege Pike",// TE_Woe_Pike
-					13083,"TE Siege Knife",// TE_Woe_Knife
-					13439,"TE Siege Sword" );// TE_Woe_Sword
+					1299,"TE Siege Katar",				// TE_Woe_Katar
+					1399,"TE Siege Two-Handed Axe",		// TE_Woe_Two_Handed_Axe
+					1495,"TE Siege Lance",				// TE_Woe_Lance
+					13317,"TE Siege Magic Shuriken",	// TE_Woe_Huuma
+					21006,"TE Siege Two-Handed Sword",	// TE_Woe_Two_Hand_Sword
+					1319,"TE Siege Axe",				// TE_Woe_Axe
+					1437,"TE Siege Pike",				// TE_Woe_Pike
+					13083,"TE Siege Knife",				// TE_Woe_Knife
+					13439,"TE Siege Sword" );			// TE_Woe_Sword
 				break;
 			case 5:
 				callsub( S_Rent, "staves, maces, books, and fists",
 					2019,"TE Siege Two-Handed Staff",// TE_Woe_Two_Hand_Staff
-					1591,"TE Siege Book",// TE_Woe_Book
-					1667,"TE Siege Staff",// TE_Woe_Staff
-					1834,"TE Siege Fist",// TE_Woe_Fist
-					16025,"TE Siege Mace" );// TE_Woe_Mace
+					1591,"TE Siege Book",			// TE_Woe_Book
+					1667,"TE Siege Staff",			// TE_Woe_Staff
+					1834,"TE Siege Fist",			// TE_Woe_Fist
+					16025,"TE Siege Mace" );		// TE_Woe_Mace
 				break;
 			case 6:
 				callsub( S_Rent, "bows, guns, musical instruments, and whips",
-					18118,"TE Siege Bow",// TE_Woe_Bow
-					13117,"TE Siege Pistol",// TE_Woe_Pistol
-					13184,"TE Siege Rifle",// TE_Woe_Rifle
-					13185,"TE Siege Gatling Gun",// TE_Woe_Gatling
-					13186,"TE Siege Shotgun",// TE_Woe_Shotgun
-					13187,"TE Siege Grenade Gun",// TE_Woe_Grenade
-					1932,"TE Siege Guitar",// TE_Woe_Guitar
-					1987,"TE Siege Rope" );// TE_Woe_Rope
+					18118,"TE Siege Bow",			// TE_Woe_Bow
+					13117,"TE Siege Pistol",		// TE_Woe_Pistol
+					13184,"TE Siege Rifle",			// TE_Woe_Rifle
+					13185,"TE Siege Gatling Gun",	// TE_Woe_Gatling
+					13186,"TE Siege Shotgun",		// TE_Woe_Shotgun
+					13187,"TE Siege Grenade Gun",	// TE_Woe_Grenade
+					1932,"TE Siege Guitar",			// TE_Woe_Guitar
+					1987,"TE Siege Rope" );			// TE_Woe_Rope
 				break;
 			case 7:
 				mes "[Rental Items Manager]";
