@@ -12502,10 +12502,9 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		}
 		break;
 	case BA_ASSASSINCROSS:
-#ifdef RENEWAL
 		val1 = skill_lv + (status->agi/20); // ASPD increase
-#else
-		val1 = 10 + skill_lv + (status->agi/10); // ASPD increase
+#ifndef RENEWAL
+		val1 += 5; // Pre-renewal has a 5% base ASPD increase
 #endif
 		if(sd)
 			val1 += pc_checkskill(sd,BA_MUSICALLESSON)/2;
