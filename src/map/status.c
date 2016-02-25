@@ -80,7 +80,7 @@ static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp);
 static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp);
 static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element);
 static unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv);
-static unsigned short status_calc_mode(struct block_list *bl, struct status_change *sc, int mode);
+static enum e_mode status_calc_mode(struct block_list *bl, struct status_change *sc, enum e_mode mode);
 #ifdef RENEWAL
 static unsigned short status_calc_ematk(struct block_list *,struct status_change *,int);
 #endif
@@ -2785,10 +2785,6 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			struct map_session_data *sd = map_id2sd(bl->id);
 			bonus += sd->hprate;
 			bonus -= 100; //Default hprate is 100, so it should be add 0%
-
-			//+200% for top ranking Taekwons over level 90.
-			if (pc_is_taekwon_ranker(sd))
-				bonus += 200;
 		}
 
 		//Bonus by SC
@@ -2901,10 +2897,6 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += i;
 			if((i = pc_checkskill(sd,HW_SOULDRAIN)) > 0)
 				bonus += 2 * i;
-
-			//+200% for top ranking Taekwons over level 90.
-			if (pc_is_taekwon_ranker(sd))
-				bonus += 200;
 		}
 
 		//Bonus by SC
@@ -2950,12 +2942,12 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 	level = umax(sd->status.base_level,1);
 
 	if (isHP) { //Calculates MaxHP
-		dmax = job_info[idx].base_hp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:1);
+		dmax = job_info[idx].base_hp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
 		dmax += status_get_hpbonus(&sd->bl,STATUS_BONUS_FIX);
 		dmax += (int64)(dmax * status_get_hpbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
 	else { //Calculates MaxSP
-		dmax = job_info[idx].base_sp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:1);
+		dmax = job_info[idx].base_sp[level-1] * (1 + (umax(stat,1) * 0.01)) * ((sd->class_&JOBL_UPPER)?1.25:(pc_is_taekwon_ranker(sd))?3:1);
 		dmax += status_get_spbonus(&sd->bl,STATUS_BONUS_FIX);
 		dmax += (int64)(dmax * status_get_spbonus(&sd->bl,STATUS_BONUS_RATE) / 100); //Aegis accuracy
 	}
@@ -6759,10 +6751,10 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
  * @param mode: Original mode
  * @return mode with cap_value(mode,0,USHRT_MAX)
  */
-static unsigned short status_calc_mode(struct block_list *bl, struct status_change *sc, int mode)
+static enum e_mode status_calc_mode(struct block_list *bl, struct status_change *sc, enum e_mode mode)
 {
 	if(!sc || !sc->count)
-		return cap_value(mode, 0, USHRT_MAX);
+		return cap_value(mode, 0, INT_MAX);
 	if(sc->data[SC_MODECHANGE]) {
 		if (sc->data[SC_MODECHANGE]->val2)
 			mode = sc->data[SC_MODECHANGE]->val2; // Set mode
@@ -6771,7 +6763,7 @@ static unsigned short status_calc_mode(struct block_list *bl, struct status_chan
 		if (sc->data[SC_MODECHANGE]->val4)
 			mode&=~sc->data[SC_MODECHANGE]->val4; // Del mode
 	}
-	return cap_value(mode,0,USHRT_MAX);
+	return cap_value(mode, 0, INT_MAX);
 }
 
 /**
@@ -7964,7 +7956,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	break;
 	case SC_MODECHANGE:
 	{
-		int mode;
+		enum e_mode mode;
 		struct status_data *bstatus = status_get_base_status(bl);
 		if (!bstatus) return 0;
 		if (sc->data[type]) { // Pile up with previous values.
@@ -8585,6 +8577,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_PYREXIA:
 			case SC_OBLIVIONCURSE:
 			case SC_LEECHESEND:
+			case SC_CURSEDCIRCLE_TARGET:
 			case SC__ENERVATION:
 			case SC__GROOMY:
 			case SC__IGNORANCE:

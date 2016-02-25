@@ -884,7 +884,8 @@ int mob_delayspawn(int tid, unsigned int tick, int id, intptr_t data)
  *------------------------------------------*/
 int mob_setdelayspawn(struct mob_data *md)
 {
-	unsigned int spawntime, mode;
+	unsigned int spawntime;
+	enum e_mode mode;
 	struct mob_db *db;
 
 	if (!md->spawn) //Doesn't has respawn data!
@@ -1033,7 +1034,7 @@ int mob_spawn (struct mob_data *md)
 /*==========================================
  * Determines if the mob can change target. [Skotlex]
  *------------------------------------------*/
-static int mob_can_changetarget(struct mob_data* md, struct block_list* target, int mode)
+static int mob_can_changetarget(struct mob_data* md, struct block_list* target, enum e_mode mode)
 {
 	// if the monster was provoked ignore the above rule [celest]
 	if(md->state.provoke_flag)
@@ -1095,13 +1096,13 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 {
 	struct mob_data *md;
 	struct block_list **target;
-	int mode;
+	enum e_mode mode;
 	int dist;
 
 	nullpo_ret(bl);
 	md=va_arg(ap,struct mob_data *);
 	target= va_arg(ap,struct block_list**);
-	mode= va_arg(ap,int);
+	mode= va_arg(ap,enum e_mode);
 
 	//If can't seek yet, not an enemy, or you can't attack it, skip.
 	if ((*target) == bl || !status_check_skilluse(&md->bl, bl, 0, 0))
@@ -1468,7 +1469,7 @@ int mob_warpchase(struct mob_data *md, struct block_list *target)
 static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 {
 	struct block_list *tbl = NULL, *abl = NULL;
-	int mode;
+	enum e_mode mode;
 	int view_range, can_move;
 
 	if(md->bl.prev == NULL || md->status.hp == 0)
@@ -3508,7 +3509,7 @@ int mob_is_clone(int mob_id)
 //If mode is not passed, a default aggressive mode is used.
 //If master_id is passed, clone is attached to him.
 //Returns: ID of newly crafted copy.
-int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, int mode, int flag, unsigned int duration)
+int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration)
 {
 	int mob_id;
 	int i,j,inf, fd;

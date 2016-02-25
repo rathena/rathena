@@ -1064,7 +1064,7 @@ mora,132,184,5	script	Mora Villager#sleep6	522,{
 mora,133,184,1	script	Mora Villager#sleep4	1790,{
 	mes "[Mora Villager]";
 	mes "Moan...";
-	end;
+	close;
 }
 
 mora,134,184,1	script	Mora Villager#sleep3	516,{
@@ -1082,7 +1082,7 @@ mora,132,183,7	script	Mora Villager#sleep7	524,{
 mora,133,183,7	script	Mora Villager#sleep8	518,{
 	mes "[Mora Villager]";
 	mes "z Z";
-	end;
+	close;
 }
 
 mora,134,183,1	script	Mora Villager#sleep9	522,{
