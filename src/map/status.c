@@ -1939,7 +1939,10 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (sc->data[SC_ALL_RIDING])
 			return false; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
-		if (flag == 1 && sc->data[SC_ASH] && rnd()%2 && !(status->mode&MD_BOSS)) {
+		if (flag == 1 && !(status->mode&MD_BOSS) && ( // Applies to after cast completion only and doesn't apply to Boss monsters.
+			(sc->data[SC_ASH] && rnd()%2) || // Volcanic Ash has a 50% chance of causing skills to fail.
+			(sc->data[SC_KYOMU] && rnd()%100 < 25) // Kyomu has a 25% chance of causing skills fail.
+		)) {
 			if (src->type == BL_PC)
 				clif_skill_fail((TBL_PC*)src,skill_id,USESKILL_FAIL_LEVEL,0);
 			return false;
