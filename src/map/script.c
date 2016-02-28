@@ -363,7 +363,7 @@ enum {
 	MF_NOTOMB,
 	MF_SKILL_DAMAGE,	//60
 	MF_GVG_TE_CASTLE,
-	MF_GVG_TE_DUNGEON,
+	MF_GVG_TE,
 };
 
 const char* script_op2name(int op)
@@ -11800,6 +11800,7 @@ BUILDIN_FUNC(getmapflag)
 			case MF_NOLOCKON:			script_pushint(st,map[m].flag.nolockon); break;
 			case MF_NOTOMB:				script_pushint(st,map[m].flag.notomb); break;
 			case MF_GVG_TE_CASTLE:		script_pushint(st,map[m].flag.gvg_te_castle); break;
+			case MF_GVG_TE:				script_pushint(st,map[m].flag.gvg_te); break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -11924,6 +11925,16 @@ BUILDIN_FUNC(setmapflag)
 			case MF_NOLOCKON:			map[m].flag.nolockon = 1 ; break;
 			case MF_NOTOMB:				map[m].flag.notomb = 1; break;
 			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 1; break;
+			case MF_GVG_TE:
+				{
+					struct block_list bl;
+					map[m].flag.gvg_te = 1;
+					clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
+					bl.type = BL_NUL;
+					bl.m = m;
+					clif_maptypeproperty2(&bl,ALL_SAMEMAP);
+				}
+				break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -12036,6 +12047,16 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOLOCKON:			map[m].flag.nolockon = 0 ; break;
 			case MF_NOTOMB:				map[m].flag.notomb = 0; break;
 			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 0; break;
+			case MF_GVG_TE:
+				{
+					struct block_list bl;
+					bl.type = BL_NUL;
+					bl.m = m;
+					map[m].flag.gvg_te = 0;
+					clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+					clif_maptypeproperty2(&bl,ALL_SAMEMAP);
+				}
+				break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{

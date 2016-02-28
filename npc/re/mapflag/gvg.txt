@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: ========================================= 
@@ -12,9 +12,11 @@
 //= gvg: Turns on GvG mode.
 //= gvg_castle: Describes castle maps for WoE.
 //= gvg_dungeon: Describes dungeon maps for WoE.
+//= gvg_te: Turns on GvG mode for WoE:TE.
 //= gvg_te_castle: Describes castle maps for WoE:TE.
 //===== Additional Comments: ================================= 
 //= 1.0 Renewal split. [Euphy]
+//= 1.1 Added GVG TE Castles. [Cydh]
 //============================================================
 
 // Guild Dungeons =========

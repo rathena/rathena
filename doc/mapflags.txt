@@ -274,9 +274,10 @@ Enables Guild vs. Guild mode on a map and applies the corresponding damage adjus
 
 ---------------------------------------
 
+*gvg_te
 *gvg_te_castle
 
-Used to determines map is WOE:TE area. Special restrcitions are apllied.
+Used to determines map is WOE:TE area. Special restrictions are apllied.
 
 ---------------------------------------
 

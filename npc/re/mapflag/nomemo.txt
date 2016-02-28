@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Also disables marriage warp skills.
 //===== Additional Comments: ================================= 
 //= 1.0 Renewal split. [Euphy]
+//= 1.1 Added GVG TE Maps. [Cydh]
 //============================================================
 
 // Episode 13 ====================
@@ -137,3 +138,5 @@ te_aldecas2	mapflag	nomemo
 te_aldecas3	mapflag	nomemo
 te_aldecas4	mapflag	nomemo
 te_aldecas5	mapflag	nomemo
+teg_dun01	mapflag	nomemo
+teg_dun02	mapflag	nomemo

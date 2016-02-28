@@ -101,26 +101,6 @@
 3013,3	//KO_KYOUGAKU
 
 //----------------------------------------------------------------------------
-// Restircted in WOE:TE maps
-//----------------------------------------------------------------------------
-26,16	//AL_TELEPORT
-27,16	//AL_WARP
-87,16	//WZ_ICEWALL
-150,16	//TF_BACKSLIDING
-219,16	//RG_INTIMIDATE
-336,16	//WE_CALLPARTNER
-361,16	//HP_ASSUMPTIO
-362,16	//HP_BASILICA
-395,16	//CG_MOONLIT
-409,16	//WE_CALLPARENT
-410,16	//WE_CALLBABY
-491,16	//CR_CULTIVATION
-530,16	//NJ_KIRIKAGE
-691,16	//CASH_ASSUMPTIO
-2284,16	//SC_FATALMENACE
-2300,16	//SC_DIMENSIONDOOR
-
-//----------------------------------------------------------------------------
 // Zone 1 - Aldebaran Turbo Track
 //----------------------------------------------------------------------------
 8,32	//SM_ENDURE
