@@ -2659,7 +2659,7 @@ void char_set_defaults(){
 	charserv_config.start_point[0].map = mapindex_name2id(MAP_DEFAULT_NAME); 
 	charserv_config.start_point[0].x = MAP_DEFAULT_X;
 	charserv_config.start_point[0].y = MAP_DEFAULT_Y;
-	charserv_config.start_point_count = 0;
+	charserv_config.start_point_count = 1;
 
 	charserv_config.start_items[0].nameid = 1201;
 	charserv_config.start_items[0].amount = 1;
@@ -2697,12 +2697,14 @@ static void char_config_split_startpoint(char *w2_value)
 	strcat(config_name, "start_point_pre");
 #endif
 
+	charserv_config.start_point_count = 0; // Reset to begin reading
+
 	fields = (char **)aMalloc(fields_length * sizeof(char *));
 	if (fields == NULL)
 		return; // Failed to allocate memory.
 	lineitem = strtok(w2_value, ":");
 
-	while (lineitem != NULL) {
+	while (lineitem != NULL && charserv_config.start_point_count < MAX_STARTPOINT) {
 		int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
 
 		if (n + 1 < fields_length) {
@@ -2710,21 +2712,19 @@ static void char_config_split_startpoint(char *w2_value)
 			lineitem = strtok(NULL, ":"); //next lineitem
 			continue;
 		}
-		if (i > MAX_STARTPOINT)
-			ShowDebug("%s: too many start points, only %d are allowed! Ignoring parameter %s...\n", config_name, MAX_STARTPOINT, lineitem);
-		else {
-			charserv_config.start_point[i].map = mapindex_name2id(fields[1]);
-			if (!charserv_config.start_point[i].map) {
-				ShowError("Start point %s not found in map-index cache. Setting to default location.\n", charserv_config.start_point[i].map);
-				charserv_config.start_point[i].map = mapindex_name2id(MAP_DEFAULT_NAME);
-				charserv_config.start_point[i].x = MAP_DEFAULT_X;
-				charserv_config.start_point[i].y = MAP_DEFAULT_Y;
-			} else {
-				charserv_config.start_point[i].x = max(0, atoi(fields[2]));
-				charserv_config.start_point[i].y = max(0, atoi(fields[3]));
-			}
-			charserv_config.start_point_count++;
+
+		charserv_config.start_point[i].map = mapindex_name2id(fields[1]);
+		if (!charserv_config.start_point[i].map) {
+			ShowError("Start point %s not found in map-index cache. Setting to default location.\n", charserv_config.start_point[i].map);
+			charserv_config.start_point[i].map = mapindex_name2id(MAP_DEFAULT_NAME);
+			charserv_config.start_point[i].x = MAP_DEFAULT_X;
+			charserv_config.start_point[i].y = MAP_DEFAULT_Y;
+		} else {
+			charserv_config.start_point[i].x = max(0, atoi(fields[2]));
+			charserv_config.start_point[i].y = max(0, atoi(fields[3]));
 		}
+		charserv_config.start_point_count++;
+
 		lineitem = strtok(NULL, ":"); //next lineitem
 		i++;
 	}
@@ -2749,7 +2749,7 @@ static void char_config_split_startitem(char *w2_value)
 		return; // Failed to allocate memory.
 	lineitem = strtok(w2_value, ":");
 
-	while (lineitem != NULL) {
+	while (lineitem != NULL && i < MAX_STARTITEM) {
 		int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
 
 		if (n + 1 < fields_length) {
@@ -2757,13 +2757,12 @@ static void char_config_split_startitem(char *w2_value)
 			lineitem = strtok(NULL, ":"); //next lineitem
 			continue;
 		}
-		if (i > MAX_STARTITEM)
-			ShowDebug("%s: too many start items, only %d are allowed! Ignoring parameter %s...\n", config_name, MAX_STARTITEM, lineitem);
-		else {
-			charserv_config.start_items[i].nameid = max(0, atoi(fields[1]));
-			charserv_config.start_items[i].amount = max(0, atoi(fields[2]));
-			charserv_config.start_items[i].pos = max(0, atoi(fields[3]));
-		}
+
+		// TODO: Item ID verification
+		charserv_config.start_items[i].nameid = max(0, atoi(fields[1]));
+		charserv_config.start_items[i].amount = max(0, atoi(fields[2]));
+		charserv_config.start_items[i].pos = max(0, atoi(fields[3]));
+
 		lineitem = strtok(NULL, ":"); //next lineitem
 		i++;
 	}
