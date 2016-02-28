@@ -8935,10 +8935,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		case SC_STONE:
-			val3 = tick/1000; // Petrified HP-damage iterations.
+			val4 = max(val4, 100); // Incubation time
+			val3 = (tick-val4)/100; // Petrified timer iterations
 			if(val3 < 1) val3 = 1;
-			tick = val4; // Petrifying time.
-			tick = max(tick, 1000); // Min time
+			tick = val4;
 			calc_flag = 0; // Actual status changes take effect on petrified state.
 			break;
 
@@ -11838,21 +11838,21 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			status_change_end(bl, SC_AETERNA, INVALID_TIMER);
 			sc->opt1 = OPT1_STONE;
 			clif_changeoption(bl);
-			sc_timer_next(1000+tick,status_change_timer, bl->id, data );
+			sc_timer_next(100+tick,status_change_timer, bl->id, data );
 			status_calc_bl(bl, StatusChangeFlagTable[type]);
 			return 0;
 		}
-		if(--(sce->val3) > 0) {
-			if(++(sce->val4)%5 == 0 && status->hp > status->max_hp/4) {
-				if (sce->val2 && bl->type == BL_MOB) {
-					struct block_list *src = map_id2bl(sce->val2);
+		if (++(sce->val4)%50 == 0 && status->hp > status->max_hp/4) {
+			if (sce->val2 && bl->type == BL_MOB) {
+				struct block_list *src = map_id2bl(sce->val2);
 
-					if (src)
-						mob_log_damage((TBL_MOB*)bl, src, apply_rate(status->hp, 1));
-				}
-				status_percent_damage(NULL, bl, 1, 0, false);
+				if (src)
+					mob_log_damage((TBL_MOB*)bl, src, apply_rate(status->hp, 1));
 			}
-			sc_timer_next(1000+tick,status_change_timer, bl->id, data );
+			status_percent_damage(NULL, bl, 1, 0, false);
+		}
+		if(--(sce->val3) > 0) {
+			sc_timer_next(100+tick,status_change_timer, bl->id, data );
 			return 0;
 		}
 		break;

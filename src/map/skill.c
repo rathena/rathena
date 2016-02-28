@@ -3906,6 +3906,12 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 						skl->x+range,skl->y+range,BL_CHAR,src,skl->skill_id,skl->skill_lv,tick);
 					break;
 				case PR_LEXDIVINA:
+					if (src->type == BL_MOB) {
+						// Monsters use the default duration when casting Lex Divina
+						sc_start(src, target, status_skill2sc(skl->skill_id), skl->type, skl->skill_lv, skill_get_time2(status_sc2skill(status_skill2sc(skl->skill_id)), 1));
+						break;
+					}
+					// Fall through
 				case PR_STRECOVERY:
 				case BS_HAMMERFALL:
 					sc_start(src, target, status_skill2sc(skl->skill_id), skl->type, skl->skill_lv, skill_get_time2(skl->skill_id, skl->skill_lv));
@@ -7045,12 +7051,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if (sd && &sd->sc && sd->sc.data[SC_PETROLOGY_OPTION])
 				brate = sd->sc.data[SC_PETROLOGY_OPTION]->val3;
 
-			if (tsc && tsc->data[SC_STONE]) {
-				status_change_end(bl, SC_STONE, INVALID_TIMER);
+			if (tsc && tsc->data[type]) {
+				status_change_end(bl, type, INVALID_TIMER);
 				if (sd) clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
-			if (sc_start4(src,bl,SC_STONE,(skill_lv*4+20)+brate,
+			if (sc_start4(src,bl,type,(skill_lv*4+20)+brate,
 				skill_lv, src->id, 0, skill_get_time(skill_id, skill_lv),
 				skill_get_time2(skill_id,skill_lv)))
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -9208,22 +9214,23 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( bl->id == skill_area_temp[1] )
 				break; // Already work on this target
 
-			if( tsc && tsc->data[SC_STONE] )
-				status_change_end(bl,SC_STONE,INVALID_TIMER);
+			if( tsc && tsc->data[type] )
+				status_change_end(bl,type,INVALID_TIMER);
 			else
-				status_change_start(src,bl,SC_STONE,10000,skill_lv,src->id,0,1000,skill_get_time(skill_id, skill_lv),SCSTART_NOTICKDEF);
+				status_change_start(src,bl,type,10000,skill_lv,src->id,0,0,skill_get_time(skill_id, skill_lv),SCSTART_NOTICKDEF);
 		} else {
 			int rate = 45 + 5 * skill_lv + ( sd? sd->status.job_level : 50 ) / 4;
 			// IroWiki says Rate should be reduced by target stats, but currently unknown
 			if( rnd()%100 < rate ) { // Success on First Target
-				if( !tsc->data[SC_STONE] )
-					rate = status_change_start(src,bl,SC_STONE,10000,skill_lv,src->id,0,1000,skill_get_time(skill_id, skill_lv),SCSTART_NOTICKDEF);
+				if( !tsc->data[type] )
+					rate = status_change_start(src,bl,type,10000,skill_lv,src->id,0,0,skill_get_time(skill_id, skill_lv),SCSTART_NOTICKDEF);
 				else {
 					rate = 1;
-					status_change_end(bl,SC_STONE,INVALID_TIMER);
+					status_change_end(bl,type,INVALID_TIMER);
 				}
 
 				if( rate ) {
+					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 					skill_area_temp[1] = bl->id;
 					map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
 				}
