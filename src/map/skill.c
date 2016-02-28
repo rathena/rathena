@@ -1199,8 +1199,12 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start(src,bl,SC_BLIND,3*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
+		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		attack_type |= BF_WEAPON;
+		break;
+
+	case CR_GRANDCROSS:
 		//Chance to cause blind status vs demon and undead element, but not against players
 		if(!dstsd && (battle_check_undead(tstatus->race,tstatus->def_ele) || tstatus->race == RC_DEMON))
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
