@@ -43,14 +43,14 @@ te_aldecas1,226,34,3	script	Blacksmith Cano#tegod01	4_M_RACHMAN1,{
 		mes "I hope I can find that way here.";
 		close;
 	}
-	if ($@2012_tegod_kafra == 0) {
+	if ($@2012_tegod_kafra == 0) {// quest status
 		mes "Ah... Master.";
 		mes "I feel so thankful all the time.";
 		mes "Since I owe you big time, I'll help you with anything anytime.";
 		next;
 		switch( select( "Make Jormungand.","Fuse materials.","Relax." ) ) {
 		case 1:
-			if (.@economy > 29) {// economy
+			if (.@economy > 29) {
 				if (countitem(6603) > 3 && countitem(6599) > 0 && countitem(6598) > 0 && countitem(6601) > 3 && countitem(6600) > 0 && countitem(6605) > 0 && countitem(6604) > 0 && countitem(1473) > 0) {
 					mes "^ff0000Wizardry staff is needed in the process of making Jormungand.";
 					mes "You should not possess any other items except for Wizardry Staffs in order to proceed with the quest.^ff0000";
@@ -369,7 +369,7 @@ S_Fuse:
 	}
 
 OnInit:
-	if ($@2012_tegod_kafra == 3 || agitcheck3())
+	if ($@2012_tegod_kafra == 3 || agitcheck3())// 3 -> quest failed
 		disablenpc strnpcinfo(0);
 	else
 		enablenpc strnpcinfo(0);
@@ -498,7 +498,7 @@ OnTimer4210000:
 OnTimer4220000:
 	mapannounce "te_aldecas1","Aira: Ah! I can't take it anymore! Girls, come here!",bc_map,"0x00ff00",FW_NORMAL,12;
 
-	$@2012_tegod_kafra = 3;// event off until someone break the emp
+	$@2012_tegod_kafra = 3;// quest off until someone break the emp
 	callsub S_EventReset;
 	enablenpc "aldeg-1-11_aldeg-1-15#te";
 	end;
@@ -599,7 +599,7 @@ S_MobRedondant:
 	end;
 
 OnInit:
-	$@2012_tegirls_alde01 = 0;
+	$@2012_tegirls_alde01 = 0;// mob killed count
 	if ($@2012_tegod_kafra < 3)
 		$@2012_tegod_kafra = 0;
 OnMyMobDead:

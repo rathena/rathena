@@ -4,8 +4,8 @@
 //===== Description: =========================================
 //= General script functions.
 //===== Changelogs: ==========================================
-//= 1.0 Added WoeTECheckHour(X) function to check if the woe
-//	will start in X hour. [Capuche]
+//= 1.0 WoeTECheckHour(X) function check if the woe
+//	will start in X seconds. [Capuche]
 //============================================================
 
 // WoeTETimeStart(<seconds>) : return 1 if the woe te will start in less than X seconds, 0 otherwise

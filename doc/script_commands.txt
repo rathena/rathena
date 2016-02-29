@@ -6640,6 +6640,20 @@ even though WoE itself may or may not actually be in effect.
 
 ---------------------------------------
 
+*gvgon3 "<map name>";
+*gvgoff3 "<map name>";
+
+Theses commands behave identically to gvgon/gvgoff, but apply GVG_TE mapflag. 
+
+---------------------------------------
+
+*canParticipateSiegeTE {<char id>};
+
+Return 1 if player can participate in WOE:TE, 0 otherwise.
+Currently third class, Kagerou/Oboro and Rebellion class can't participate in WOE:TE.
+
+---------------------------------------
+
 *flagemblem <guild id>;
 
 This command only works when run by the NPC objects which have sprite id 722, 
@@ -6690,7 +6704,7 @@ Type indicates what information to return:
 
 This command will return the relation between 2 guilds.
 
-NOTE: This should be use in collaboration with 'requestguildinfo' as the
+NOTE: This should be used in collaboration with 'requestguildinfo' as the
 map-server needs to request for information from the char-server.
 
 Return values:

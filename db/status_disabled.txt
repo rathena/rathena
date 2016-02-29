@@ -20,6 +20,7 @@
 // 512  - restricted in zone 5
 // 1024 - restricted in zone 6
 // 2048 - restricted in zone 7
+// 4096 - restricted in zone 8
 //
 // Example:
 // SC_ENDURE,4   // Endure status will be removed when the player enters GvG and WoE Castle maps; Also cannot be inflicted again.
