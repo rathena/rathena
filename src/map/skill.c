@@ -4229,9 +4229,11 @@ static int skill_reveal_trap(struct block_list *bl, va_list ap)
  * @param range Affected range
  * @param x
  * @param y
- * TODO: Remove this hardcodes
+ * TODO: Remove hardcode usages for this function
  **/
 void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y) {
+	if (!battle_config.traps_setting)
+		return;
 	nullpo_retv(src);
 	map_foreachinarea(skill_reveal_trap, src->m, x-range, y-range, x+range, y+range, BL_SKILL);
 }
