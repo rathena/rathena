@@ -10727,7 +10727,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if(sd) {
 		if (sd->pd)
 			pet_sc_check(sd, type); // Skotlex: Pet Status Effect Healing
-		status_calc_pc(sd, SCO_NONE);
+		switch (type) {
+			case SC_BERSERK:
+			case SC_MERC_HPUP:
+			case SC_MERC_SPUP:
+				status_calc_pc(sd, SCO_FORCE);
+				break;
+			default:
+				status_calc_pc(sd, SCO_NONE);
+				break;
+		}
 	}
 
 	// 1st thing to execute when loading status
