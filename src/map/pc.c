@@ -7893,13 +7893,15 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 	case SP_BASEEXP:
 		if(pc_nextbaseexp(sd) > 0) {
 			sd->status.base_exp = val;
-			pc_checkbaselevelup(sd);
+			if (!pc_checkbaselevelup(sd))
+				clif_updatestatus(sd, SP_BASEEXP);
 		}
 		break;
 	case SP_JOBEXP:
 		if(pc_nextjobexp(sd) > 0) {
 			sd->status.job_exp = val;
-			pc_checkjoblevelup(sd);
+			if (!pc_checkjoblevelup(sd))
+				clif_updatestatus(sd, SP_JOBEXP);
 		}
 		break;
 	case SP_SEX:
