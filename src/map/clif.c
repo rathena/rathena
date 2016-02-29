@@ -14041,7 +14041,6 @@ void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 	if( (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE ) {
 		unsigned int next = pc_nextbaseexp(sd);
 
-		if( next == 0 ) next = pc_thisbaseexp(sd);
 		if( next ) {
 			int percent = (int)( ( (float)sd->status.base_exp/(float)next )*1000. );
 
@@ -16653,14 +16652,21 @@ void clif_party_show_picker(struct map_session_data * sd, struct item * item_dat
 }
 
 
-/// Display gained exp (ZC_NOTIFY_EXP).
-/// 07f6 <account id>.L <amount>.L <var id>.W <exp type>.W
-/// var id:
-///     SP_BASEEXP, SP_JOBEXP
-/// exp type:
-///     0 = normal exp gain/loss
-///     1 = quest exp gain/loss
-void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool quest)
+/** Display gained exp (ZC_NOTIFY_EXP).
+ * 07f6 <account id>.L <amount>.L <var id>.W <exp type>.W
+ * amount: INT32_MIN ~ INT32_MAX
+ * var id:
+ *     SP_BASEEXP, SP_JOBEXP
+ * exp type:
+ *     0 = normal exp gained/lost
+ *     1 = quest exp gained/lost
+ * @param sd Player
+ * @param exp EXP value gained/loss
+ * @param type SP_BASEEXP, SP_JOBEXP
+ * @param quest False:Normal EXP; True:Quest EXP (displayed in purple color)
+ * @param lost True:if lossing EXP
+ */
+void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool quest, bool lost)
 {
 	int fd;
 
@@ -16671,7 +16677,7 @@ void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, b
 	WFIFOHEAD(fd, packet_len(0x7f6));
 	WFIFOW(fd,0) = 0x7f6;
 	WFIFOL(fd,2) = sd->bl.id;
-	WFIFOL(fd,6) = exp;
+	WFIFOL(fd,6) = (int)umin(exp, INT_MAX) * (lost ? -1 : 1);
 	WFIFOW(fd,10) = type;
 	WFIFOW(fd,12) = quest?1:0;// Normal exp is shown in yellow, quest exp is shown in purple.
 	WFIFOSET(fd,packet_len(0x7f6));
