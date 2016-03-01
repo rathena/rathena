@@ -15615,7 +15615,7 @@ void clif_parse_cashshop_list_request( int fd, struct map_session_data* sd ){
 /// 0287 <packet len>.W <cash point>.L <kafra point>.L { <sell price>.L <discount price>.L <item type>.B <name id>.W }* (PACKETVER >= 20070711)
 void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd)
 {
-	int fd,i;
+	int fd, i, cost[2] = { 0, 0 };
 #if PACKETVER < 20070711
 	const int offset = 8;
 #else
@@ -15625,14 +15625,16 @@ void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd)
 	nullpo_retv(sd);
 	nullpo_retv(nd);
 
+	npc_shop_currency_type(sd, nd, cost, true);
+
 	fd = sd->fd;
 	sd->npc_shopid = nd->bl.id;
 	WFIFOHEAD(fd,offset+nd->u.shop.count*11);
 	WFIFOW(fd,0) = 0x287;
 	WFIFOW(fd,2) = offset+nd->u.shop.count*11;
-	WFIFOL(fd,4) = sd->cashPoints; // Cash Points
+	WFIFOL(fd,4) = cost[0];
 #if PACKETVER >= 20070711
-	WFIFOL(fd,8) = sd->kafraPoints; // Kafra Points
+	WFIFOL(fd,8) = cost[1];
 #endif
 
 	for( i = 0; i < nd->u.shop.count; i++ ) {
@@ -15661,15 +15663,25 @@ void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd)
 ///     8 = Some items could not be purchased.
 void clif_cashshop_ack(struct map_session_data* sd, int error)
 {
-	int fd = sd->fd;
+	int fd, cost[2] = { 0, 0 };
+	struct npc_data *nd;
+
+	nullpo_retv(sd);
+
+	fd = sd->fd;
+	nd = map_id2nd(sd->npc_shopid);
+
+	nullpo_retv(nd);
+
+	npc_shop_currency_type(sd, nd, cost, false);
 
 	WFIFOHEAD(fd, packet_len(0x289));
 	WFIFOW(fd,0) = 0x289;
-	WFIFOL(fd,2) = sd->cashPoints;
+	WFIFOL(fd,2) = cost[0];
 #if PACKETVER < 20070711
 	WFIFOW(fd,6) = TOW(error);
 #else
-	WFIFOL(fd,6) = sd->kafraPoints;
+	WFIFOL(fd,6) = cost[1];
 	WFIFOW(fd,10) = TOW(error);
 #endif
 	WFIFOSET(fd, packet_len(0x289));

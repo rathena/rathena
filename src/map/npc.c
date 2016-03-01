@@ -1237,11 +1237,11 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 	
 	switch(nd->subtype) {
 		case NPCTYPE_SHOP:
-		case NPCTYPE_ITEMSHOP:
-		case NPCTYPE_POINTSHOP:
 			clif_npcbuysell(sd,nd->bl.id);
 			break;
 		case NPCTYPE_CASHSHOP:
+		case NPCTYPE_ITEMSHOP:
+		case NPCTYPE_POINTSHOP:
 			clif_cashshop_show(sd,nd);
 			break;
 		case NPCTYPE_MARKETSHOP:
@@ -1333,7 +1333,7 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 	if ((nd = npc_checknear(sd,map_id2bl(id))) == NULL)
 		return 1;
 
-	if (nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP) {
+	if (nd->subtype != NPCTYPE_SHOP) {
 		ShowError("no such shop npc : %d\n",id);
 		if (sd->npc_id == id)
 			sd->npc_id=0;
@@ -1341,21 +1341,6 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 	}
 	if (nd->sc.option & OPTION_INVISIBLE) // can't buy if npc is not visible (hack?)
 		return 1;
-
-	if (nd->subtype == NPCTYPE_ITEMSHOP) {
-		char output[CHAT_SIZE_MAX];
-		struct item_data *itd = itemdb_exists(nd->u.shop.itemshop_nameid);
-		memset(output,'\0',sizeof(output));
-		if (itd) {
-			sprintf(output,msg_txt(sd,714),itd->jname,itd->nameid); // Item Shop List: %s (%hu)
-			clif_broadcast(&sd->bl,output,strlen(output) + 1,BC_BLUE,SELF);
-		}
-	} else if (nd->subtype == NPCTYPE_POINTSHOP) {
-		char output[CHAT_SIZE_MAX];
-		memset(output,'\0',sizeof(output));
-		sprintf(output,msg_txt(sd,715),nd->u.shop.pointshop_str); // Point Shop List: '%s'
-		clif_broadcast(&sd->bl,output,strlen(output) + 1,BC_BLUE,SELF);
-	}
 
 	sd->npc_shopid = id;
 
@@ -1371,13 +1356,12 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 *------------------------------------------*/
 int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, unsigned short* item_list)
 {
-	int i, j, amount, new_, w, vt;
+	int i, j, amount, new_, w, vt, cost[2] = { 0, 0 };
 	unsigned short nameid;
 	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
 
-	if( !nd || nd->subtype != NPCTYPE_CASHSHOP )
+	if( !nd || ( nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP ) )
 		return 1;
-
 	if( sd->state.trading )
 		return 4;
 
@@ -1426,9 +1410,50 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 	if( points > vt ) points = vt;
 
 	// Payment Process ----------------------------------------------------
-	if( sd->kafraPoints < points || sd->cashPoints < (vt - points) )
-		return 6;
-	pc_paycash(sd,vt,points, LOG_TYPE_NPC);
+	npc_shop_currency_type(sd, nd, cost, false);
+
+	switch(nd->subtype) {
+		case NPCTYPE_CASHSHOP:
+			if (cost[1] < points || cost[0] < (vt - points))
+				return 6;
+			pc_paycash(sd, vt, points, LOG_TYPE_NPC);
+			break;
+		case NPCTYPE_ITEMSHOP:
+		{
+			struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
+
+			if (cost[0] < (vt - points)) {
+				char output[CHAT_SIZE_MAX];
+
+				memset(output, '\0', sizeof(output));
+
+				sprintf(output, msg_txt(sd, 712), (id) ? id->jname : "NULL", (id) ? id->nameid : 0); // You do not have enough %s (%hu).
+				clif_colormes(sd->fd, color_table[COLOR_RED], output);
+				return 8;
+			}
+			if (id)
+				pc_delitem(sd, pc_search_inventory(sd, nd->u.shop.itemshop_nameid), vt - points, 0, 0, LOG_TYPE_NPC);
+			else
+				ShowWarning("Failed to delete item %hu from itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map[nd->bl.m].name, nd->bl.x, nd->bl.y);
+		}
+			break;
+		case NPCTYPE_POINTSHOP:
+		{
+			char output[CHAT_SIZE_MAX];
+
+			memset(output, '\0', sizeof(output));
+
+			if (cost[0] < (vt - points)) {
+				sprintf(output, msg_txt(sd, 713), nd->u.shop.pointshop_str); // You do not have enough '%s'.
+				clif_colormes(sd->fd, color_table[COLOR_RED], output);
+				return 8;
+			}
+			pc_setreg2(sd, nd->u.shop.pointshop_str, cost[0] - (vt - points));
+			sprintf(output, msg_txt(sd, 716), nd->u.shop.pointshop_str, cost[0] - (vt - points)); // Your '%s' is now: %d
+			clif_disp_onlyself(sd, output, strlen(output) + 1);
+		}
+			break;
+	}
 
 	// Delivery Process ----------------------------------------------------
 	for( i = 0; i < count; i++ ) {
@@ -1452,6 +1477,59 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 	}
 
 	return 0;
+}
+
+/**
+ * Returns the shop currency type
+ * @param sd: Player data
+ * @param nd: NPC data
+ * @param cost: Reference to cost variable
+ * @param display: Display cost type to player?
+ */
+void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, int cost[2], bool display)
+{
+	switch(nd->subtype) {
+		case NPCTYPE_CASHSHOP:
+			cost[0] = sd->cashPoints;
+			cost[1] = sd->kafraPoints;
+			break;
+		case NPCTYPE_ITEMSHOP:
+		{
+			int total = 0, i;
+			struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
+
+			if (id) { // Item Data is checked at script parsing but in case of item_db reload, check again.
+				if (display) {
+					char output[CHAT_SIZE_MAX];
+
+					memset(output, '\0', sizeof(output));
+
+					sprintf(output, msg_txt(sd, 714), id->jname, id->nameid); // Item Shop List: %s (%hu)
+					clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
+				}
+
+				for (i = 0; i < MAX_INVENTORY; i++) {
+					if (sd->status.inventory[i].nameid == id->nameid)
+						total += sd->status.inventory[i].amount;
+				}
+			}
+
+			cost[0] = total;
+		}
+			break;
+		case NPCTYPE_POINTSHOP:
+			if (display) {
+				char output[CHAT_SIZE_MAX];
+
+				memset(output, '\0', sizeof(output));
+
+				sprintf(output, msg_txt(sd, 715), nd->u.shop.pointshop_str); // Point Shop List: '%s'
+				clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
+			}
+			
+			cost[0] = pc_readreg2(sd, nd->u.shop.pointshop_str);
+			break;
+	}
 }
 
 /**
@@ -1583,8 +1661,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 	struct npc_data* nd;
 	struct npc_item_list *shop = NULL;
 	double z;
-	int i,j,k,w,skill,new_,count = 0;
-	char output[CHAT_SIZE_MAX];
+	int i,j,k,w,skill,new_;
 	uint8 market_index[MAX_INVENTORY];
 
 	nullpo_retr(3, sd);
@@ -1593,7 +1670,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 	nd = npc_checknear(sd,map_id2bl(sd->npc_shopid));
 	if( nd == NULL )
 		return 3;
-	if( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP && nd->subtype != NPCTYPE_MARKETSHOP )
+	if( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_MARKETSHOP )
 		return 3;
 	if (!item_list || !n)
 		return 3;
@@ -1666,52 +1743,15 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 	if (nd->master_nd) //Script-based shops.
 		return npc_buylist_sub(sd,n,item_list,nd->master_nd);
 
-	switch(nd->subtype) {
-		case NPCTYPE_SHOP:
-		case NPCTYPE_MARKETSHOP:
-			if (z > (double)sd->status.zeny)
-				return 1;	// Not enough Zeny
-			break;
-		case NPCTYPE_ITEMSHOP:
-			for (k = 0; k < MAX_INVENTORY; k++) {
-				if (sd->status.inventory[k].nameid == nd->u.shop.itemshop_nameid)
-					count += sd->status.inventory[k].amount;
-			}
-			if (z > (double)count) {
-				struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
-
-				sprintf(output,msg_txt(sd,712),id->jname,id->nameid); // You do not have enough %s %d.
-				clif_colormes(sd->fd,color_table[COLOR_RED],output);
-				return 1;
-			}
-			break;
-		case NPCTYPE_POINTSHOP:
-			count = pc_readreg2(sd, nd->u.shop.pointshop_str);
-			if (z > (double)count) {
-				sprintf(output,msg_txt(sd,713),nd->u.shop.pointshop_str); // You do not have enough '%s'.
-				clif_colormes(sd->fd,color_table[COLOR_RED],output);
-				return 1;
-			}
-			break;
-	}
+	if (z > (double)sd->status.zeny)
+		return 1;	// Not enough Zeny
 
 	if( w + sd->weight > sd->max_weight )
 		return 2;	// Too heavy
 	if( pc_inventoryblank(sd) < new_ )
 		return 3;	// Not enough space to store items
 
-	switch(nd->subtype) {
-		case NPCTYPE_SHOP:
-		case NPCTYPE_MARKETSHOP:
-			pc_payzeny(sd, (int)z, LOG_TYPE_NPC, NULL);
-			break;
-		case NPCTYPE_ITEMSHOP:
-			pc_delitem(sd, pc_search_inventory(sd, nd->u.shop.itemshop_nameid), (int)z, 0, 0, LOG_TYPE_NPC);
-			break;
-		case NPCTYPE_POINTSHOP:
-			pc_setreg2(sd, nd->u.shop.pointshop_str, count - (int)z);
-			break;
-	}
+	pc_payzeny(sd, (int)z, LOG_TYPE_NPC, NULL);
 
 	for( i = 0; i < n; ++i ) {
 		unsigned short nameid = item_list[i].nameid;
@@ -1758,11 +1798,6 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 				z = 1;
 			pc_gainexp(sd,NULL,0,(int)z, false);
 		}
-	}
-
-	if (nd->subtype == NPCTYPE_POINTSHOP) {
-		sprintf(output,msg_txt(sd,716),nd->u.shop.pointshop_str,count - (int)z); // Your '%s' now: %d
-		clif_disp_onlyself(sd,output,strlen(output)+1);
 	}
 
 	return 0;
@@ -1839,8 +1874,7 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_list);
 
-	if( ( nd = npc_checknear(sd, map_id2bl(sd->npc_shopid)) ) == NULL 
-			|| ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP ) )
+	if( ( nd = npc_checknear(sd, map_id2bl(sd->npc_shopid)) ) == NULL || nd->subtype != NPCTYPE_SHOP )
 	{
 		return 1;
 	}
@@ -2579,7 +2613,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			if (type == NPCTYPE_SHOP || type == NPCTYPE_MARKETSHOP) value = id->value_buy;
 			else value = 0; // Cashshop doesn't have a "buy price" in the item_db
 		}
-		if (value == 0 && (type == NPCTYPE_SHOP || type == NPCTYPE_ITEMSHOP || type == NPCTYPE_POINTSHOP || type == NPCTYPE_MARKETSHOP)) { // NPC selling items for free!
+		if (value == 0 && (type == NPCTYPE_SHOP || type == NPCTYPE_MARKETSHOP)) { // NPC selling items for free!
 			ShowWarning("npc_parse_shop: Item %s [%hu] is being sold for FREE in file '%s', line '%d'.\n",
 				id->name, nameid2, filepath, strline(buffer,start-buffer));
 		}
