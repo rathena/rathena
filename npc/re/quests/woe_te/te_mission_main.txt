@@ -7,7 +7,7 @@
 //= 1.0 First Version. [Capuche]
 //============================================================
 
-// call duplicate of pop_mission_TE npc to spawn the mobs mission
+// This npc call the duplicate of pop_mission_TE npc in order to spawn the mobs mission.
 -	script	#popswitch	-1,{
 OnInit:
 	if (strnpcinfo(4) == "") end;

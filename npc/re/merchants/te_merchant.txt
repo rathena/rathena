@@ -3,6 +3,7 @@
 //===== Description: =========================================
 //= [Official Conversion]
 //= Merchants and Rental merchant template for WoE TE
+//	(duplicates in re/woe_te/<castle file>).
 //===== Changelogs: ==========================================
 //= 1.0 First Version. [Capuche]
 //============================================================
@@ -129,16 +130,14 @@ S_Rent:
 	if (.@s <= .@total_item) {
 		.@index = .@s *2 +1;
 		mes "[Rental Items Manager]";
-		if (countitem(getarg(.@index)) > 0) {
+		if (countitem(getarg(.@index)) > 0)
 			mes "You already have "+ getarg(.@index+1) +".";
-			mes "Do you need anything else?";
-		}
 		else {
 			mes "Here is "+ getarg(.@index+1) +".";
 			mes "^4d4dffThis item is effective for the next 24 hours^000000 and after that it expires.";
-			mes "Do you need anything else?";
 			rentitem getarg(.@index),86400;
 		}
+		mes "Do you need anything else?";
 		next;
 	}
 	return;
