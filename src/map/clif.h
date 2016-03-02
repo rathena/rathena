@@ -70,6 +70,18 @@ struct s_packet_keys {
 };
 #endif
 
+enum e_CASHSHOP_ACK {
+	ERROR_TYPE_NONE             = 0, ///< The deal has successfully completed.
+	ERROR_TYPE_NPC              = 1, ///< The Purchase has failed because the NPC does not exist.
+	ERROR_TYPE_SYSTEM           = 2, ///< The Purchase has failed because the Kafra Shop System is not working correctly.
+	ERROR_TYPE_INVENTORY_WEIGHT = 3, ///< You are over your Weight Limit.
+	ERROR_TYPE_EXCHANGE         = 4, ///< You cannot purchase items while you are in a trade.
+	ERROR_TYPE_ITEM_ID          = 5, ///< The Purchase has failed because the Item Information was incorrect.
+	ERROR_TYPE_MONEY            = 6, ///< You do not have enough Kafra Credit Points.
+	ERROR_TYPE_AMOUNT           = 7, ///< You can purchase up to 10 items.
+	ERROR_TYPE_PURCHASE_FAIL    = 8, ///< Some items could not be purchased.
+};
+
 enum e_BANKING_DEPOSIT_ACK {
 	BDA_SUCCESS  = 0x0,
 	BDA_ERROR    = 0x1,

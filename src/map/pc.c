@@ -4153,15 +4153,15 @@ uint8 pc_inventoryblank(struct map_session_data *sd)
 	return b;
 }
 
-/*==========================================
- * attempts to remove zeny from player (sd)
- * @param sd
- * @param zeny Zeny removed
- * @param type e_log_pick_type
- * @param tsd (just for log?)
- * @return 0 - Success, 1 - Failed
- *------------------------------------------*/
-char pc_payzeny(struct map_session_data *sd,int zeny, enum e_log_pick_type type, struct map_session_data *tsd)
+/**
+ * Attempts to remove zeny from player
+ * @param sd: Player
+ * @param zeny: Zeny removed
+ * @param type: Log type
+ * @param tsd: (optional) From who to log (if null take sd)
+ * @return 0: Success, 1: Failed (Removing negative Zeny or not enough Zeny), 2: Player not found
+ */
+char pc_payzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type, struct map_session_data *tsd)
 {
 	nullpo_retr(2,sd);
 
@@ -4189,14 +4189,51 @@ char pc_payzeny(struct map_session_data *sd,int zeny, enum e_log_pick_type type,
 	return 0;
 }
 
-/** Makes player pays by using cash points
- * @param sd Player who pays
- * @param price How many point player has to pay
- * @param points
- * @param type e_log_pick_type
- * @return -2: Paying negative points, -1: Not enough points, otherwise is succes (cash+points)
+/**
+ * Attempts to give zeny to player
+ * @param sd: Player
+ * @param type: Log type
+ * @param tsd: (optional) From who to log (if null take sd)
+ * @return -1: Player not found, 0: Success, 1: Giving negative Zeny
  */
-int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_type type ){
+char pc_getzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type, struct map_session_data *tsd)
+{
+	nullpo_retr(-1,sd);
+
+	zeny = cap_value(zeny,-MAX_ZENY,MAX_ZENY); //prevent command UB
+	if( zeny < 0 )
+	{
+		ShowError("pc_getzeny: Obtaining negative Zeny (zeny=%d, account_id=%d, char_id=%d).\n", zeny, sd->status.account_id, sd->status.char_id);
+		return 1;
+	}
+
+	if( zeny > MAX_ZENY - sd->status.zeny )
+		zeny = MAX_ZENY - sd->status.zeny;
+
+	sd->status.zeny += zeny;
+	clif_updatestatus(sd,SP_ZENY);
+
+	if(!tsd) tsd = sd;
+	log_zeny(sd, type, tsd, zeny);
+	if( zeny > 0 && sd->state.showzeny ) {
+		char output[255];
+		sprintf(output, "Gained %dz.", zeny);
+		clif_disp_onlyself(sd,output,strlen(output));
+	}
+
+	return 0;
+}
+
+/**
+ * Attempts to remove Cash Points from player
+ * @param sd: Player
+ * @param price: Points player has to pay
+ * @param points: Points player has
+ * @param type: Log type
+ * @return -2: Paying negative points, -1: Not enough points, otherwise success (cash+points)
+ */
+int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_type type)
+{
 	int cash;
 	nullpo_retr(-1,sd);
 
@@ -4232,15 +4269,26 @@ int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_ty
 
 	if( battle_config.cashshop_show_points )
 	{
-		char output[128];
+		char output[CHAT_SIZE_MAX];
+
 		sprintf(output, msg_txt(sd,504), points, cash, sd->kafraPoints, sd->cashPoints);
 		clif_disp_onlyself(sd, output, strlen(output));
 	}
 	return cash+points;
 }
 
-int pc_getcash( struct map_session_data *sd, int cash, int points, e_log_pick_type type ){
-	char output[128];
+/**
+ * Attempts to give Cash Points to player
+ * @param sd: Player
+ * @param cash: Cash player gets
+ * @param points: Points player has
+ * @param type: Log type
+ * @return -2: Error, -1: Giving negative cash/points, otherwise success (cash or points)
+ */
+int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_type type)
+{
+	char output[CHAT_SIZE_MAX];
+
 	nullpo_retr(-1,sd);
 
 	cash = cap_value(cash,-MAX_ZENY,MAX_ZENY); //prevent command UB
@@ -4296,39 +4344,7 @@ int pc_getcash( struct map_session_data *sd, int cash, int points, e_log_pick_ty
 		ShowError("pc_getcash: Obtaining negative kafra points (points=%d, account_id=%d, char_id=%d).\n", points, sd->status.account_id, sd->status.char_id);
 		return -1;
 	}
-	return -2; //shouldn't happen but jsut in case
-}
-
-/*==========================================
- * Attempts to give zeny to player (sd)
- * tsd (optional) from who for log (if null take sd)
- *------------------------------------------*/
-char pc_getzeny(struct map_session_data *sd,int zeny, enum e_log_pick_type type, struct map_session_data *tsd)
-{
-	nullpo_retr(-1,sd);
-
-	zeny = cap_value(zeny,-MAX_ZENY,MAX_ZENY); //prevent command UB
-	if( zeny < 0 )
-	{
-		ShowError("pc_getzeny: Obtaining negative Zeny (zeny=%d, account_id=%d, char_id=%d).\n", zeny, sd->status.account_id, sd->status.char_id);
-		return 1;
-	}
-
-	if( zeny > MAX_ZENY - sd->status.zeny )
-		zeny = MAX_ZENY - sd->status.zeny;
-
-	sd->status.zeny += zeny;
-	clif_updatestatus(sd,SP_ZENY);
-
-	if(!tsd) tsd = sd;
-	log_zeny(sd, type, tsd, zeny);
-	if( zeny > 0 && sd->state.showzeny ) {
-		char output[255];
-		sprintf(output, "Gained %dz.", zeny);
-		clif_disp_onlyself(sd,output,strlen(output));
-	}
-
-	return 0;
+	return -2; //shouldn't happen but just in case
 }
 
 /**

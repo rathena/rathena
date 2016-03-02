@@ -15610,6 +15610,7 @@ void clif_parse_cashshop_list_request( int fd, struct map_session_data* sd ){
 		sd->status.cashshop_sent = true;
 	}
 }
+
 /// List of items offered in a cash shop (ZC_PC_CASH_POINT_ITEMLIST).
 /// 0287 <packet len>.W <cash point>.L { <sell price>.L <discount price>.L <item type>.B <name id>.W }*
 /// 0287 <packet len>.W <cash point>.L <kafra point>.L { <sell price>.L <discount price>.L <item type>.B <name id>.W }* (PACKETVER >= 20070711)
@@ -15647,7 +15648,6 @@ void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd)
 	WFIFOSET(fd,WFIFOW(fd,2));
 }
 
-
 /// Cashshop Buy Ack (ZC_PC_CASH_POINT_UPDATE).
 /// 0289 <cash point>.L <error>.W
 /// 0289 <cash point>.L <kafra point>.L <error>.W (PACKETVER >= 20070711)
@@ -15659,8 +15659,8 @@ void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd)
 ///     4 = You cannot purchase items while you are in a trade. (ERROR_TYPE_EXCHANGE)
 ///     5 = The Purchase has failed because the Item Information was incorrect. (ERROR_TYPE_ITEM_ID)
 ///     6 = You do not have enough Kafra Credit Points. (ERROR_TYPE_MONEY)
-///     7 = You can purchase up to 10 items.
-///     8 = Some items could not be purchased.
+///     7 = You can purchase up to 10 items. (ERROR_TYPE_AMOUNT)
+///     8 = Some items could not be purchased. (ERROR_TYPE_PURCHASE_FAIL)
 void clif_cashshop_ack(struct map_session_data* sd, int error)
 {
 	int fd, cost[2] = { 0, 0 };
@@ -15743,6 +15743,7 @@ void clif_parse_cashshop_buy(int fd, struct map_session_data *sd){
 #endif
 	}
 }
+
 /// Adoption System
 ///
 
