@@ -15671,8 +15671,6 @@ void clif_cashshop_ack(struct map_session_data* sd, int error)
 	fd = sd->fd;
 	nd = map_id2nd(sd->npc_shopid);
 
-	nullpo_retv(nd);
-
 	npc_shop_currency_type(sd, nd, cost, false);
 
 	WFIFOHEAD(fd, packet_len(0x289));

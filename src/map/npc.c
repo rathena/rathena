@@ -1498,6 +1498,14 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
  */
 void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, int cost[2], bool display)
 {
+	nullpo_retv(sd);
+
+	if (!nd) { // Assume it's Cash Shop through the button
+		cost[0] = sd->cashPoints;
+		cost[1] = sd->kafraPoints;
+		return;
+	}
+
 	switch(nd->subtype) {
 		case NPCTYPE_CASHSHOP:
 			cost[0] = sd->cashPoints;
