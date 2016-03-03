@@ -1164,16 +1164,16 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 	case HT_FREEZINGTRAP:
 	case MA_FREEZINGTRAP:
-		sc_start(src,bl,SC_FREEZE,(3*skill_lv+35),skill_lv,skill_get_time2(skill_id,skill_lv));
+		sc_start(src,bl,SC_FREEZE,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
 	case HT_FLASHER:
-		sc_start(src,bl,SC_BLIND,(10*skill_lv+30),skill_lv,skill_get_time2(skill_id,skill_lv));
+		sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
 	case HT_LANDMINE:
 	case MA_LANDMINE:
-		sc_start(src,bl,SC_STUN,(5*skill_lv+30),skill_lv,skill_get_time2(skill_id,skill_lv));
+		sc_start(src,bl,SC_STUN,10,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
 	case HT_SHOCKWAVE:
@@ -1453,7 +1453,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		}
 		break;
 	case WL_JACKFROST:
-		sc_start(src,bl,SC_FREEZE,100,skill_lv,skill_get_time(skill_id,skill_lv));
+		sc_start(src,bl,SC_FREEZE,200,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
 	case RA_WUGBITE: {
 			int wug_rate = (50 + 10 * skill_lv) + 2 * ((sd) ? pc_checkskill(sd,RA_TOOTHOFWUG)*2 : skill_get_max(RA_TOOTHOFWUG)) - (status_get_agi(bl) / 4);
@@ -4468,6 +4468,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NC_FLAMELAUNCHER:
 		if (sd) pc_overheat(sd,1);
 	case LG_CANNONSPEAR:
+		if(skill_id == LG_CANNONSPEAR)
+			clif_skill_damage(src, bl, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
 		skill_area_temp[1] = bl->id;
 		if (battle_config.skill_eightpath_algorithm) {
 			//Use official AoE algorithm
@@ -7675,6 +7677,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			) {
 				x = src->x;
 				y = src->y;
+			} else if(dir%2) {
+				//Diagonal
+				x = src->x + dirx[dir]*(skill_lv*4)/3;
+				y = src->y + diry[dir]*(skill_lv*4)/3;
 			} else {
 				x = src->x + dirx[dir]*skill_lv*2;
 				y = src->y + diry[dir]*skill_lv*2;
@@ -16612,8 +16618,14 @@ int skill_attack_area(struct block_list *bl, va_list ap)
 	flag = va_arg(ap,int);
 	type = va_arg(ap,int);
 
-	if (skill_area_temp[1] == bl->id) //This is the target of the skill, do a full attack and skip target checks.
-		return (int)skill_attack(atk_type,src,dsrc,bl,skill_id,skill_lv,tick,flag);
+	if (skill_area_temp[1] == bl->id) { //This is the target of the skill, do a full attack and skip target checks.
+		switch (skill_id) {
+			case LG_CANNONSPEAR:
+				return (int)skill_attack(atk_type,src,dsrc,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
+			default:
+				return (int)skill_attack(atk_type,src,dsrc,bl,skill_id,skill_lv,tick,flag);
+		}
+	}
 
 	if(battle_check_target(dsrc,bl,type) <= 0 ||
 		!status_check_skilluse(NULL, bl, skill_id, 2))
