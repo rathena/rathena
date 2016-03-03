@@ -12763,6 +12763,10 @@ void clif_parse_PartyMessage(int fd, struct map_session_data* sd){
 	char *name, *message;
 	int namelen, messagelen;
 
+#if PACKETVER >= 20151001
+	textlen++;
+#endif
+
 	// validate packet and retrieve name and message
 	if( !clif_process_message(sd, 0, &name, &namelen, &message, &messagelen) )
 		return;
