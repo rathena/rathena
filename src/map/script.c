@@ -16107,7 +16107,7 @@ BUILDIN_FUNC(callshop)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (nd->subtype == NPCTYPE_SHOP || nd->subtype == NPCTYPE_ITEMSHOP || nd->subtype == NPCTYPE_POINTSHOP) {
+	if (nd->subtype == NPCTYPE_SHOP) {
 		// flag the user as using a valid script call for opening the shop (for floating NPCs)
 		sd->state.callshop = 1;
 
