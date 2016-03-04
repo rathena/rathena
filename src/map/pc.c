@@ -6454,10 +6454,18 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 			(pc_is_maxbaselv(sd) ? 4 : 0) |
 			(pc_is_maxjoblv(sd) ? 8 : 0);
 
-	if (flag&4 && sd->status.base_exp >= MAX_LEVEL_BASE_EXP)
-		base_exp = 0;
-	if (flag&8 && sd->status.job_exp >= MAX_LEVEL_JOB_EXP)
-		job_exp = 0;
+	if (flag&4){
+		if( sd->status.base_exp >= MAX_LEVEL_BASE_EXP )
+			base_exp = 0;
+		else if( sd->status.base_exp + base_exp >= MAX_LEVEL_BASE_EXP )
+			base_exp = MAX_LEVEL_BASE_EXP - sd->status.base_exp;			
+	}
+	if (flag&8){
+		if( sd->status.job_exp >= MAX_LEVEL_JOB_EXP )
+			job_exp = 0;
+		else if( sd->status.job_exp + job_exp >= MAX_LEVEL_JOB_EXP )
+			job_exp = MAX_LEVEL_JOB_EXP - sd->status.job_exp;
+	}
 
 	if ((base_exp || job_exp) && (sd->state.showexp || battle_config.max_exp_gain_rate)){
 		if (nextb > 0)
