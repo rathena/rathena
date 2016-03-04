@@ -3801,6 +3801,14 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		clif_updatestatus(sd,SP_CARTINFO);
 	}
 
+        //FIX FOR {SCRIPT} giving haywired stats on weapons/armors when using sc_start[Ninja]
+        clif_updatestatus(sd,SP_STR);
+        clif_updatestatus(sd,SP_AGI);
+        clif_updatestatus(sd,SP_VIT);
+        clif_updatestatus(sd,SP_INT);
+        clif_updatestatus(sd,SP_DEX);
+        clif_updatestatus(sd,SP_LUK);
+
 	calculating = 0;
 
 	return 0;
