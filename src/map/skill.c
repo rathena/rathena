@@ -7952,6 +7952,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					md->db->skill[md->skill_idx].val[2],
 					md->db->skill[md->skill_idx].val[3],
 					skill_get_time(skill_id, skill_lv));
+
+			//Reset aggressive state depending on resulting mode
+			md->state.aggressive = md->status.mode&MD_ANGRY?1:0;
 		}
 		break;
 
