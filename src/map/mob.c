@@ -1036,8 +1036,8 @@ int mob_spawn (struct mob_data *md)
  *------------------------------------------*/
 static int mob_can_changetarget(struct mob_data* md, struct block_list* target, enum e_mode mode)
 {
-	// if the monster was provoked ignore the above rule [celest]
-	if(md->state.provoke_flag)
+	// Special feature that makes monsters always attack the person that provoked them
+	if(battle_config.mob_ai&0x800 && md->state.provoke_flag)
 	{
 		if (md->state.provoke_flag == target->id)
 			return 1;
@@ -1083,6 +1083,9 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist)
 	md->target_id = bl->id;	// Since there was no disturbance, it locks on to target.
 	if (md->state.provoke_flag && bl->id != md->state.provoke_flag)
 		md->state.provoke_flag = 0;
+	// When an angry monster is provoked, it will switch to retaliate AI
+	if (md->state.provoke_flag && md->state.aggressive)
+		md->state.aggressive = 0;
 	md->min_chase=dist+md->db->range3;
 	if(md->min_chase>MAX_MINCHASE)
 		md->min_chase=MAX_MINCHASE;
@@ -1362,6 +1365,8 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 	default:
 		mob_stop_attack(md);
 		mob_stop_walking(md,1); //Stop chasing.
+		if (md->status.mode&MD_ANGRY && !md->state.aggressive)
+			md->state.aggressive = 1; //Restore angry state when switching to idle
 		md->state.skillstate = MSS_IDLE;
 		if(battle_config.mob_ai&0x8) //Walk instantly after dropping target
 			md->next_walktime = tick+rnd()%1000;
@@ -1615,9 +1620,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	}
 
 	if (!tbl) { //No targets available.
-		if (mode&MD_ANGRY && !md->state.aggressive)
-			md->state.aggressive = 1; //Restore angry state when no targets are available.
-
 		/* bg guardians follow allies when no targets nearby */
 		if( md->bg_id && mode&MD_CANATTACK ) {
 			if( md->ud.walktimer != INVALID_TIMER )
