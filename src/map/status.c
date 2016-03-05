@@ -3611,7 +3611,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 #ifndef RENEWAL_ASPD
 	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
 		base_status->aspd_rate -= 5*skill;
-	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && !pc_nextjobexp(sd))
+	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && pc_is_maxjoblv(sd))
 		base_status->aspd_rate -= 30*skill;
 	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 &&
 		(sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
@@ -3623,7 +3623,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 #else // Needs more info
 	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
 		base_status->aspd_rate += 5*skill;
-	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && !pc_nextjobexp(sd))
+	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && pc_is_maxjoblv(sd))
 		base_status->aspd_rate += 30*skill;
 	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 &&
 		(sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))

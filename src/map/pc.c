@@ -6345,7 +6345,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	clif_updatestatus(sd,SP_SKILLPOINT);
 	status_calc_pc(sd,SCO_FORCE);
 	clif_misceffect(&sd->bl,1);
-	if (pc_checkskill(sd, SG_DEVIL) && !pc_nextjobexp(sd))
+	if (pc_checkskill(sd, SG_DEVIL) && pc_is_maxbaselv(sd))
 		clif_status_change(&sd->bl,SI_DEVIL, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 
 	npc_script_event(sd, NPCE_JOBLVUP);
@@ -7079,7 +7079,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		if( pc_is_taekwon_ranker(sd) )
 			return 0;
 
-		if( pc_checkskill(sd, SG_DEVIL) &&  !pc_nextjobexp(sd) )
+		if( pc_checkskill(sd, SG_DEVIL) && pc_is_maxjoblv(sd) )
 			clif_status_load(&sd->bl, SI_DEVIL, 0); //Remove perma blindness due to skill-reset. [Skotlex]
 		i = sd->sc.option;
 		if( i&OPTION_RIDING && pc_checkskill(sd, KN_RIDING) )
@@ -7924,14 +7924,20 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_BASEEXP:
 		if(pc_nextbaseexp(sd) > 0) {
-			sd->status.base_exp = val;
+			if( pc_is_maxbaselv(sd) )
+				sd->status.base_exp = u32min(val,MAX_LEVEL_BASE_EXP);
+			else
+				sd->status.base_exp = val;
 			if (!pc_checkbaselevelup(sd))
 				clif_updatestatus(sd, SP_BASEEXP);
 		}
 		break;
 	case SP_JOBEXP:
 		if(pc_nextjobexp(sd) > 0) {
-			sd->status.job_exp = val;
+			if( pc_is_maxjoblv(sd) )
+				sd->status.job_exp = u32min(val,MAX_LEVEL_JOB_EXP);
+			else
+				sd->status.job_exp = val;
 			if (!pc_checkjoblevelup(sd))
 				clif_updatestatus(sd, SP_JOBEXP);
 		}
