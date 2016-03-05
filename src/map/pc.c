@@ -6497,24 +6497,29 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 		}
 	}
 
-	// Give EXP for Base Level
 	if (base_exp) {
-		if(sd->status.base_exp > nextb - base_exp)
+		// Handle calcs greater than uint32 - Fix for issue #1014 - [Ninja(Jezznar)]
+		while ((sd->status.base_exp > nextb - base_exp) && (sd->status.base_exp > INT_MAX - base_exp)){
 			sd->status.base_exp = nextb;
-		else
-			sd->status.base_exp += base_exp;
+			base_exp -= nextb;	
+			nextb = pc_nextbaseexp(sd);
+		}
+		sd->status.base_exp += base_exp;	
 		if (!pc_checkbaselevelup(sd))
-			clif_updatestatus(sd,SP_BASEEXP);
+			clif_updatestatus(sd,SP_BASEEXP);	
 	}
 
 	// Give EXP for Job Level
 	if (job_exp) {
-		if(sd->status.job_exp > nextj - job_exp)
+		// Handle calcs greater than uint32 - Fix for issue #1014 - [Ninja(Jezznar)]
+		while ((sd->status.job_exp > nextb - job_exp) && (sd->status.job_exp > INT_MAX - job_exp)){
 			sd->status.job_exp = nextj;
-		else
-			sd->status.job_exp += job_exp;
-		if (!pc_checkjoblevelup(sd))
-			clif_updatestatus(sd,SP_JOBEXP);
+			job_exp -= nextj;	
+			nextj = pc_nextjobexp(sd);			
+		}
+		sd->status.job_exp += job_exp;	
+		if (!pc_checkbaselevelup(sd))
+			clif_updatestatus(sd,SP_BASEEXP);			
 	}
 
 	if (flag&1)
