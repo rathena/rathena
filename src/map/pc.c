@@ -6267,6 +6267,10 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 		sd->status.base_level ++;
 		sd->status.status_point += next;
 
+		if( pc_is_maxbaselv(sd) ){
+			sd->status.base_exp = u32min(sd->status.base_exp,MAX_LEVEL_BASE_EXP);
+			break;
+		}
 	} while ((next=pc_nextbaseexp(sd)) > 0 && sd->status.base_exp >= next);
 
 	if (battle_config.pet_lv_rate && sd->pd)	//<Skotlex> update pet's level
@@ -6329,6 +6333,10 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 		sd->status.job_level ++;
 		sd->status.skill_point ++;
 
+		if( pc_is_maxjoblv(sd) ){
+			sd->status.job_exp = u32min(sd->status.job_exp,MAX_LEVEL_JOB_EXP);
+			break;
+		}
 	} while ((next=pc_nextjobexp(sd)) > 0 && sd->status.job_exp >= next);
 
 	clif_updatestatus(sd,SP_JOBLEVEL);
