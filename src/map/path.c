@@ -172,7 +172,7 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 			spd->y[spd->len] = y0;
 			spd->len++;
 		}
-		if (map_getcellp(md,x0,y0,cell))
+		if ((x0 != x1 || y0 != y1) && map_getcellp(md,x0,y0,cell))
 			return false;
 	}
 

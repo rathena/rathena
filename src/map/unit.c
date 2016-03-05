@@ -1986,13 +1986,6 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 		return 0;
 	}
 
-	if( map_getcell(src->m, skill_x, skill_y, CELL_CHKWALL) ) { // Can't cast ground targeted spells on wall cells
-		if (sd)
-			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-
-		return 0;
-	}
-
 	// Check range and obstacle
 	bl.type = BL_NUL;
 	bl.m = src->m;

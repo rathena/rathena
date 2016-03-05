@@ -742,6 +742,76 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
 }
+
+/*========================================== [Playtester]
+* Same as foreachinarea, but there must be a shoot-able range between area center and target.
+* @param m: ID of map
+* @param x0: West end of area
+* @param y0: South end of area
+* @param x1: East end of area
+* @param y1: North end of area
+* @param type: Type of bl to search for
+*------------------------------------------*/
+int map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...)
+{
+	int bx, by, cx, cy;
+	int returnCount = 0;	//total sum of returned values of func()
+	struct block_list *bl;
+	int blockcount = bl_list_count, i;
+	va_list ap;
+
+	if (m < 0 || m >= map_num)
+		return 0;
+
+	if (x1 < x0)
+		swap(x0, x1);
+	if (y1 < y0)
+		swap(y0, y1);
+
+	x0 = i16max(x0, 0);
+	y0 = i16max(y0, 0);
+	x1 = i16min(x1, map[m].xs - 1);
+	y1 = i16min(y1, map[m].ys - 1);
+
+	cx = x0 + (x1 - x0) / 2;
+	cy = y0 + (y1 - y0) / 2;
+
+	if (type&~BL_MOB)
+		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++)
+			for (bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++)
+				for (bl = map[m].block[bx + by * map[m].bxs]; bl != NULL; bl = bl->next)
+					if (bl->type&type && bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
+						&& path_search_long(NULL, m, cx, cy, bl->x, bl->y, CELL_CHKWALL)
+						&& bl_list_count < BL_LIST_MAX)
+						bl_list[bl_list_count++] = bl;
+
+	if (type&BL_MOB)
+		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++)
+			for (bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++)
+				for (bl = map[m].block_mob[bx + by * map[m].bxs]; bl != NULL; bl = bl->next)
+					if (bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
+						&& path_search_long(NULL, m, cx, cy, bl->x, bl->y, CELL_CHKWALL)
+						&& bl_list_count < BL_LIST_MAX)
+						bl_list[bl_list_count++] = bl;
+
+	if (bl_list_count >= BL_LIST_MAX)
+		ShowWarning("map_foreachinarea: block count too many!\n");
+
+	map_freeblock_lock();
+
+	for (i = blockcount; i < bl_list_count; i++)
+		if (bl_list[i]->prev) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
+			va_start(ap, type);
+			returnCount += func(bl_list[i], ap);
+			va_end(ap);
+		}
+
+	map_freeblock_unlock();
+
+	bl_list_count = blockcount;
+	return returnCount;
+}
+
 /*==========================================
  * Adapted from forcountinarea for an easier invocation. [pakpil]
  *------------------------------------------*/

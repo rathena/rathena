@@ -36,7 +36,6 @@
  21,0x86,    ,  0, 2:2:2:2:2:2:2:2:2:2:3,1000,enemy, 0x010	//MG_THUNDERSTORM
  25,0x85,    ,  1, 0,  -1,all,   0x6003	//AL_PNEUMA
  27,0x81,0x80,  0, 0,  -1,all,   0x00E	//AL_WARP
- 47,0x86,    ,  0, 1:1:1:1:1:2:2:2:2:2,1000,enemy, 0x080	//AC_SHOWER
  70,0x83,    , -1, 1,1000,all,   0x018	//PR_SANCTUARY
  79,0x84,    , -1, 1,3000,enemy, 0x8018	//PR_MAGNUS
  80,0x87,0x88,  0, 1,2000,enemy, 0x4006	//WZ_FIREPILLAR
@@ -84,7 +83,7 @@
 329,0xae,    ,  3, 0,  -1,all,   0x140	//DC_FORTUNEKISS
 330,0xaf,    ,  3, 0,  -1,all,   0x140	//DC_SERVICEFORYOU
 336,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARTNER
-339,0x86,    , -1, 0, 300,enemy, 0x000	//NPC_DARKGRANDCROSS
+339,0x86,    , -1, 0, 300,enemy, 0x000	//NPC_GRANDDARKNESS
 362,0xb4,    ,  2, 0, 300,all,   0x2000	//HP_BASILICA
 369,0xb3,    , -1, 0,10000,all,  0x008	//PA_GOSPEL
 395,0xb5,    ,  4, 0,  -1,all,   0x200	//CG_MOONLIT
@@ -95,7 +94,7 @@
 428,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_SUN_WARM
 429,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_MOON_WARM
 430,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_STAR_WARM
-484,0xb8,    ,  2, 0, 500,enemy, 0x8808	//HW_GRAVITATION
+484,0xb8,    ,  2, 0, 500,enemy, 0x8818	//HW_GRAVITATION
 488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
 516,0x86,    ,  3, 0, 100,enemy, 0x000	//GS_DESPERADO
 521,0xbe,    ,  0, 1,1000,enemy, 0x000	//GS_GROUNDDRIFT
@@ -183,7 +182,6 @@
 8041,0xf6,    ,  1:1:2:2:3, 0,2000,enemy,   0x01A	//MH_LAVA_SLIDE
 8043,0xf7,    ,  1, 0,-1,all,   0x2018	//MH_VOLCANIC_ASH
 
-8208,0x86,    ,  0, 2,1000,enemy, 0x080	//MA_SHOWER
 8209,0x90,    ,  0, 1,1000,enemy, 0x8006	//MA_SKIDTRAP
 8210,0x93,    ,  0, 0,1000,enemy, 0x8006	//MA_LANDMINE
 8211,0x95,    ,  0, 1,1000,enemy, 0x8006	//MA_SANDMAN
