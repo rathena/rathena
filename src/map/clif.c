@@ -18708,6 +18708,43 @@ void clif_parse_Oneclick_Itemidentify(int fd, struct map_session_data *sd) {
 #endif
 }
 
+/// Starts navigation to the given target on client side
+void clif_navigateTo(struct map_session_data *sd, const char* map, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id ){
+#if PACKETVER >= 20111010
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,27);
+	WFIFOW(fd,0) = 0x08e2;
+
+	// How detailed will our navigation be?
+	if( mob_id > 0 ){
+		x = 0;
+		y = 0;
+		WFIFOB(fd,2) = 3; // monster with destination field
+	}else if( x > 0 && y > 0 ){
+		WFIFOB(fd,2) = 0; // with coordinates
+	}else{
+		x = 0;
+		y = 0;
+		WFIFOB(fd,2) = 1; // without coordinates(will fail if you are already on the map)
+	}
+
+	// Which services can be used for transportation?
+	WFIFOB(fd,3) = flag;
+	// If this flag is set, the navigation window will not be opened up
+	WFIFOB(fd,4) = hideWindow;
+	// Target map
+	safestrncpy( (char*)WFIFOP(fd,5),map,MAP_NAME_LENGTH_EXT);
+	// Target x
+	WFIFOW(fd,21) = x;
+	// Target y
+	WFIFOW(fd,23) = y;
+	// Target monster ID
+	WFIFOW(fd,25) = mob_id;
+	WFIFOSET(fd,27);
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/

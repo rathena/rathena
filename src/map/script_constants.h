@@ -2995,6 +2995,15 @@
 	export_constant(UNPC_ADELAY);
 	export_constant(UNPC_DMOTION);
 
+	export_constant(NAV_NONE);
+	export_constant(NAV_AIRSHIP_ONLY);
+	export_constant(NAV_SCROLL_ONLY);
+	export_constant(NAV_AIRSHIP_AND_SCROLL);
+	export_constant(NAV_KAFRA_ONLY);
+	export_constant(NAV_KAFRA_AND_PLANE);
+	export_constant(NAV_KAFRA_AND_SCROLL);
+	export_constant(NAV_ALL);
+
 	#undef export_constant
 
 #endif /* _SCRIPT_CONSTANTS_H_ */
