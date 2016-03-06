@@ -2231,7 +2231,7 @@ static bool is_skill_using_arrow(struct block_list *src, int skill_id)
 		struct status_data *sstatus = status_get_status_data(src);
 		struct map_session_data *sd = BL_CAST(BL_PC, src);
 
-		return ((sd && sd->state.arrow_atk) || (!sd && ((skill_id && skill_get_ammotype(skill_id)) || sstatus->rhw.range>3)) || (skill_id == HT_PHANTASMIC));
+		return ((sd && sd->state.arrow_atk) || (!sd && ((skill_id && skill_get_ammotype(skill_id)) || sstatus->rhw.range>3)) || (skill_id == HT_PHANTASMIC) || (skill_id == GS_GROUNDDRIFT));
 	} else
 		return false;
 }
@@ -3648,6 +3648,11 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 20 * (skill_lv - 1);
 #endif
 			break;
+#ifdef RENEWAL
+		case GS_GROUNDDRIFT:
+			skillratio += 100 + 20 * skill_lv;
+			break;
+#endif
 		case NJ_HUUMA:
 			skillratio += 50 + 150 * skill_lv;
 			break;
@@ -5048,6 +5053,8 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				break;
 
 			case GS_GROUNDDRIFT:
+				wd.amotion = sstatus->amotion;
+				//Fall through
 			case KN_SPEARSTAB:
 			case KN_BOWLINGBASH:
 			case MS_BOWLINGBASH:
@@ -5318,6 +5325,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			ATK_ADD(wd.damage, wd.damage2, skill * 2);
 		if (skill_id == TF_POISON)
 			ATK_ADD(wd.damage, wd.damage2, 15 * skill_lv);
+		if (skill_id == GS_GROUNDDRIFT)
+			ATK_ADD(wd.damage, wd.damage2, 50 * skill_lv);
 		if (skill_id != CR_SHIELDBOOMERANG) //Only Shield boomerang doesn't takes the Star Crumbs bonus.
 			ATK_ADD2(wd.damage, wd.damage2, ((wd.div_ < 1) ? 1 : wd.div_) * sd->right_weapon.star, ((wd.div_ < 1) ? 1 : wd.div_) * sd->left_weapon.star);
 		if (skill_id != MC_CARTREVOLUTION && pc_checkskill(sd, BS_HILTBINDING) > 0)
@@ -6432,12 +6441,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case GS_FLING:
 			md.damage = (sd ? sd->status.job_level : status_get_lv(src));
 			break;
-		case GS_GROUNDDRIFT:
-			// Official formula [helvetica]
-			// bonus damage = 50 * skill level (fixed damage)
-			s_ele = ELE_NEUTRAL;
-			md.damage = battle_attr_fix(src, target, 50 * skill_lv, s_ele, tstatus->def_ele, tstatus->ele_lv);
-			break;
 		case HVAN_EXPLOSION: //[orn]
 			md.damage = (int64)sstatus->max_hp * (50 + 50 * skill_lv) / 100;
 			break;
@@ -6570,17 +6573,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				if (md.damage > sd->status.zeny)
 					md.damage = sd->status.zeny;
 				pc_payzeny(sd,(int)cap_value(md.damage, INT_MIN, INT_MAX),LOG_TYPE_STEAL,NULL);
-			}
-			break;
-		case GS_GROUNDDRIFT:
-			{
-				struct Damage wd = battle_calc_weapon_attack(src,target,skill_id,skill_lv,mflag);
-				int blewcount = skill_get_blewcount(skill_id, skill_lv);
-
-				md.damage += wd.damage;
-				// Knockback only from Fire Element (except from bonuses?)
-				if (mflag != ELE_FIRE && md.blewcount >= blewcount)
-					md.blewcount -= blewcount;
 			}
 			break;
 	}
