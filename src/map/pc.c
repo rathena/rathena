@@ -6264,7 +6264,7 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 			sd->status.base_exp = next-1;
 
 		next = pc_gets_status_point(sd->status.base_level);
-		sd->status.base_level ++;
+		sd->status.base_level++;
 		sd->status.status_point += next;
 
 		if( pc_is_maxbaselv(sd) ){
@@ -6499,20 +6499,14 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 
 	// Give EXP for Base Level
 	if (base_exp) {
-		if(sd->status.base_exp > nextb - base_exp)
-			sd->status.base_exp = nextb;
-		else
-			sd->status.base_exp += base_exp;
+		sd->status.base_exp += base_exp;
 		if (!pc_checkbaselevelup(sd))
 			clif_updatestatus(sd,SP_BASEEXP);
 	}
 
 	// Give EXP for Job Level
 	if (job_exp) {
-		if(sd->status.job_exp > nextj - job_exp)
-			sd->status.job_exp = nextj;
-		else
-			sd->status.job_exp += job_exp;
+		sd->status.job_exp += job_exp;
 		if (!pc_checkjoblevelup(sd))
 			clif_updatestatus(sd,SP_JOBEXP);
 	}
