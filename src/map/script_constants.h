@@ -3000,7 +3000,7 @@
 	export_constant(NAV_SCROLL_ONLY);
 	export_constant(NAV_AIRSHIP_AND_SCROLL);
 	export_constant(NAV_KAFRA_ONLY);
-	export_constant(NAV_KAFRA_AND_PLANE);
+	export_constant(NAV_KAFRA_AND_AIRSHIP);
 	export_constant(NAV_KAFRA_AND_SCROLL);
 	export_constant(NAV_ALL);
 

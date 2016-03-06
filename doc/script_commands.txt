@@ -1087,6 +1087,8 @@ to alberta (98,154) when clicked.
 
     mes "Have you checked out the <NAVI>[Tool Shop]<INFO>alberta,98,154,0,000,0</INFO></NAVI>?";
 
+See also 'navigateto', which can be used for certain NPC events.
+
 URLs
 ----
 Similarly, you can create links to websites that launch in a new window:
@@ -9014,6 +9016,30 @@ Valid flag are:
 
 ---------------------------------------
 
+*navigateto("<map>"{,<x>,<y>,<flag>,<hide_window>,<monster_id>,<char_id>});
+
+Generates a navigation for attached or specified character. Requires client
+2011-10-10aRagEXE or newer. The flag specifies how the client will display
+a specific route. The hide_window specifies whether to display (1) or not
+display (0) the navigation window. Specify the monster_id to navigate to
+known locations of the specified monster.
+
+Note: The client requires custom monster spawns be in the navigation file
+for using the embedded client Navigation feature to work properly. In this
+instance sending the player to the map where the monster spawns is a simpler
+solution rather than sending the map and the monster_id.
+
+Valid flags are:
+ NAV_NONE - No services
+ NAV_AIRSHIP_ONLY - Airship only
+ NAV_SCROLL_ONLY - Scroll only
+ NAV_AIRSHIP_AND_SCROLL - Airship and Scroll
+ NAV_KAFRA_ONLY - Kafra only
+ NAV_KAFRA_AND_AIRSHIP - Kafra and Airship
+ NAV_KAFRA_AND_SCROLL - Kafra and Scroll
+ NAV_ALL - All services
+
+---------------------------------------
 
 Whew.
 That's about all of them.
