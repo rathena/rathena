@@ -21055,7 +21055,7 @@ BUILDIN_FUNC(navigateto){
 	TBL_PC* sd;
 	const char *map;
 	uint16 x = 0, y = 0, monster_id = 0;
-	uint8 flag = NAV_KAFRA_AND_PLANE;
+	uint8 flag = NAV_KAFRA_AND_AIRSHIP;
 	bool hideWindow = true;
 
 	map = script_getstr(st,2);

@@ -9024,6 +9024,8 @@ a specific route. The hide_window specifies whether to display (1) or not
 display (0) the navigation window. Specify the monster_id to navigate to
 known locations of the specified monster.
 
+When flag is not specified, the default value is NAV_KAFRA_AND_AIRSHIP.
+
 Note: The client requires custom monster spawns be in the navigation file
 for using the embedded client Navigation feature to work properly. In this
 instance sending the player to the map where the monster spawns is a simpler
