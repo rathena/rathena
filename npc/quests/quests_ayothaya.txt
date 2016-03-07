@@ -1337,7 +1337,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 	if (checkre(0))
 		setarray .@items[0],7213,7217; //Needle_Pouch, Spool
 	else
-		setarray .@items[0],1059,1022; //Transparent_Cloth, Fox_Tail
+		setarray .@items[0],1059,1022; //Fabric, Fox_Tail
 
 	if (ayodunquest == 1) {
 		mes "[Boonthom]";
@@ -1612,7 +1612,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 		mes "^3366992 Holy Water^000000,";
 		mes "^3366991 Yggdrasil Leaf^000000,";
 		mes "^3366992 "+getitemname(.@items[0])+"^000000 and";
-		mes "^3366992 "+getitemname(.@items[0])+"^000000.";
+		mes "^3366992 "+getitemname(.@items[1])+"^000000.";
 		set ayodunquest,10;
 		changequest 12037,12038;
 		next;
