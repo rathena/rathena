@@ -17468,8 +17468,8 @@ BUILDIN_FUNC(setunitdata)
 			clif_send_petstatus(pd->master);
 			break;
 		case BL_MER:
-			clif_mercenary_info(map_charid2sd(md->master_id));
-			clif_mercenary_skillblock(map_charid2sd(md->master_id));
+			clif_mercenary_info(map_charid2sd(mc->master_id));
+			clif_mercenary_skillblock(map_charid2sd(mc->master_id));
 			break;
 		case BL_ELEM:
 			clif_elemental_info(ed->master);
