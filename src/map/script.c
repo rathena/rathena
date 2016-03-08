@@ -11574,6 +11574,8 @@ static void script_detach_rid(struct script_state* st)
  *	    [ Parameters: <guild id> ]
  *	4 : All players in a specified area of the map of the invoking player (or NPC).
  *	    [ Parameters: <x0>,<y0>,<x1>,<y1> ]
+ *	5 : All players in the map.
+ *	    [ Parameters: "<map name>" ]
  *	Account ID: The specified account ID.
  * <flag>:
  *	0 : Players are always attached. (default)
@@ -11648,6 +11650,17 @@ BUILDIN_FUNC(addrid)
 			map_foreachinarea(buildin_addrid_sub,
 			bl->m,script_getnum(st,4),script_getnum(st,5),script_getnum(st,6),script_getnum(st,7),BL_PC,
 			st,script_getnum(st,3));//4-x0 , 5-y0 , 6-x1, 7-y1
+			break;
+		case 5:
+			if (script_getstr(st, 4) == NULL) {
+				script_pushint(st, 0);
+				return SCRIPT_CMD_FAILURE;
+			}
+			if (map_mapname2mapid(script_getstr(st, 4)) < 0) {
+				script_pushint(st, 0);
+				return SCRIPT_CMD_FAILURE;
+			}
+			map_foreachinmap(buildin_addrid_sub, map_mapname2mapid(script_getstr(st, 4)), BL_PC, st, script_getnum(st, 3));
 			break;
 		default:
 			if((map_id2sd(script_getnum(st,2))) == NULL) { // Player not found.

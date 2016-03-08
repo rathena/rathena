@@ -3783,6 +3783,8 @@ invoking RID. It returns 1 if successful and 0 upon failure.
     [ Parameters: <guild id> ]
  4: All players in a specified area of the map of the invoking player (or NPC).
     [ Parameters: <x0>,<y0>,<x1>,<y1> ]
+ 5: All players in the map.
+    [ Parameters: "<map name>" ]
  Account ID: If type is Account ID, attach the specified account ID.
 
 <flag> can prevent certain players from being attached:
