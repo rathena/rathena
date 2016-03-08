@@ -6466,7 +6466,7 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 		if( sd->status.base_exp >= MAX_LEVEL_BASE_EXP )
 			base_exp = 0;
 		else if( sd->status.base_exp + base_exp >= MAX_LEVEL_BASE_EXP )
-			base_exp = MAX_LEVEL_BASE_EXP - sd->status.base_exp;			
+			base_exp = MAX_LEVEL_BASE_EXP - sd->status.base_exp;
 	}
 	if (flag&8){
 		if( sd->status.job_exp >= MAX_LEVEL_JOB_EXP )
@@ -6499,14 +6499,20 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 
 	// Give EXP for Base Level
 	if (base_exp) {
-		sd->status.base_exp = u32min((uint32)((uint64)sd->status.base_exp+(uint64)base_exp),UINT32_MAX);
+		if ((uint64)sd->status.base_exp + base_exp > UINT32_MAX)
+			sd->status.base_exp = UINT32_MAX;
+		else
+			sd->status.base_exp += base_exp;
 		if (!pc_checkbaselevelup(sd))
 			clif_updatestatus(sd,SP_BASEEXP);
 	}
 
 	// Give EXP for Job Level
 	if (job_exp) {
-		sd->status.job_exp = u32min((uint32)((uint64)sd->status.job_exp+(uint64)job_exp),UINT32_MAX);
+		if ((uint64)sd->status.job_exp + job_exp > UINT32_MAX)
+			sd->status.job_exp = UINT32_MAX;
+		else
+			sd->status.job_exp += job_exp;
 		if (!pc_checkjoblevelup(sd))
 			clif_updatestatus(sd,SP_JOBEXP);
 	}
