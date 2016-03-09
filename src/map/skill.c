@@ -3281,6 +3281,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case WM_REVERBERATION_MAGIC:
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,WM_REVERBERATION,-2,6);
 			break;
+		case SR_TIGERCANNON:
+			dmg.dmotion = clif_skill_damage(src, bl, tick, status_get_amotion(bl), dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, 6);
+			break;
 		case HT_CLAYMORETRAP:
 		case HT_BLASTMINE:
 		case HT_FLASHER:
@@ -5456,22 +5459,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SR_TIGERCANNON:
 		if (flag&1) {
 			if (skill_area_temp[3] == skill_id && skill_area_temp_i64[0]) { // Safe check
-				if (skill_area_temp[1] != bl->id) {
-					int64 dmg = skill_area_temp_i64[0];
-					bool infdef = is_infinite_defense(bl, skill_get_type(skill_id));
-
-					if (infdef)
-						dmg = 1;
-					status_damage(src, bl, dmg, 0, 0, 0);
-					status_zap(bl, 0, dmg * 10 / 100);
-					clif_skill_damage(src, bl, tick, status_get_amotion(bl), 0, dmg, 1, skill_id, skill_lv, 6);
-				}
+				if (skill_area_temp[1] != bl->id)
+					skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 			}
-			else { // Somehow, we failed
-				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-			}
-		}
-		else if (sd) {
+		} else if (sd) {
 			skill_area_temp[1] = bl->id;
 			skill_area_temp[3] = skill_id;
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag|8); // Only do attack calculation once
