@@ -136,6 +136,12 @@ enum BROADCASTING_SPECIAL_ITEM_OBTAIN {
 	ITEMOBTAIN_TYPE_NPC =  0x2,
 };
 
+enum e_adopt_reply {
+	ADOPT_REPLY_MORE_CHILDREN = 0,
+	ADOPT_REPLY_LEVEL_70,
+	ADOPT_REPLY_MARRIED,
+};
+
 // packet_db[SERVER] is reserved for server use
 #define SERVER 0
 #define packet_len(cmd) packet_db[SERVER][cmd].len
@@ -855,6 +861,7 @@ void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd);
 
 // ADOPTION
 void clif_Adopt_reply(struct map_session_data *sd, int type);
+void clif_Adopt_request(struct map_session_data *sd, struct map_session_data *src, int p_id);
 
 // MERCENARIES
 void clif_mercenary_info(struct map_session_data *sd);

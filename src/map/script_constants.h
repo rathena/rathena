@@ -3004,6 +3004,16 @@
 	export_constant(NAV_KAFRA_AND_SCROLL);
 	export_constant(NAV_ALL);
 
+	export_constant(ADOPT_ALLOWED);
+	export_constant(ADOPT_ALREADY_ADOPTED);
+	export_constant(ADOPT_MARRIED_AND_PARTY);
+	export_constant(ADOPT_EQUIP_RINGS);
+	export_constant(ADOPT_NOT_NOVICE);
+	export_constant(ADOPT_CHARACTER_NOT_FOUND);
+	export_constant(ADOPT_MORE_CHILDREN);
+	export_constant(ADOPT_LEVEL_70);
+	export_constant(ADOPT_MARRIED);
+
 	#undef export_constant
 
 #endif /* _SCRIPT_CONSTANTS_H_ */

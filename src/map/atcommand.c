@@ -9783,6 +9783,49 @@ ACMD_FUNC(clonestat) {
 	return 0;
 }
 
+/**
+ * Adopt a character.
+ * Usage: @adopt <char name>
+ * https://rathena.org/board/topic/104014-suggestion-add-adopt-or-etc/
+ */
+ACMD_FUNC(adopt)
+{
+	TBL_PC *b_sd;
+	enum adopt_responses response;
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
+		sprintf(atcmd_output, msg_txt(sd, 435), command); // Please enter a player name (usage: %s <char name>).
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if ((b_sd = map_nick2sd((char *)atcmd_player_name)) == NULL) {
+		clif_displaymessage(fd, msg_txt(sd, 3)); // Character not found.
+		return -1;
+	}
+
+	response = pc_try_adopt(sd, map_charid2sd(sd->status.partner_id), b_sd);
+
+	if (response == ADOPT_ALLOWED) {
+		TBL_PC *p_sd = map_charid2sd(sd->status.partner_id);
+
+		b_sd->adopt_invite = sd->status.account_id;
+		clif_Adopt_request(b_sd, sd, p_sd->status.account_id);
+		return 0;
+	}
+
+	if (response < ADOPT_MORE_CHILDREN) { // No displaymessage for client-type responses
+		sprintf(atcmd_output, msg_txt(sd, 744 + response - 1));
+		clif_displaymessage(fd, atcmd_output);
+	}
+	return -1;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10075,6 +10118,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(cloneequip),
 		ACMD_DEF(clonestat),
 		ACMD_DEF(bodystyle),
+		ACMD_DEF(adopt),
 	};
 	AtCommandInfo* atcommand;
 	int i;

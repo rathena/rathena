@@ -749,6 +749,18 @@ enum idletime_option {
 	IDLE_ATCOMMAND     = 0x200,
 };
 
+enum adopt_responses {
+	ADOPT_ALLOWED = 0,
+	ADOPT_ALREADY_ADOPTED,
+	ADOPT_MARRIED_AND_PARTY,
+	ADOPT_EQUIP_RINGS,
+	ADOPT_NOT_NOVICE,
+	ADOPT_CHARACTER_NOT_FOUND,
+	ADOPT_MORE_CHILDREN,
+	ADOPT_LEVEL_70,
+	ADOPT_MARRIED,
+};
+
 struct {
 	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
 	int hp_factor, hp_multiplicator, sp_factor;
@@ -966,7 +978,7 @@ bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem);
 bool pc_dropitem(struct map_session_data *sd,int n,int amount);
 
 bool pc_isequipped(struct map_session_data *sd, unsigned short nameid);
-bool pc_can_Adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd );
+enum adopt_responses pc_try_adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd);
 bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd);
 
 void pc_updateweightstatus(struct map_session_data *sd);
