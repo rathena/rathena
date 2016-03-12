@@ -11895,7 +11895,7 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 
 /**
  * Check if player can participate in WOE:TE
- * @param sd
+ * @param mapid Player's class @see enum e_mapid
  * @return True:If allowed, False:Doesn't
  **/
 bool pc_canParticipateSiegeTE(uint32 mapid) {

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= to the map specified in the last field, or "SavePoint".
 //===== Additional Comments: ================================= 
 //= 1.0 Renewal split. [Euphy]
+//= 1.1 Added GVG TE Guild Dungeons. [Cydh]
 //============================================================
 
 // Job Quests ====================
@@ -43,6 +44,8 @@ gld2_ald	mapflag	nosave	SavePoint
 gld2_gef	mapflag	nosave	SavePoint
 gld2_pay	mapflag	nosave	SavePoint
 gld2_prt	mapflag	nosave	SavePoint
+teg_dun01	mapflag	nosave	SavePoint
+teg_dun02	mapflag	nosave	SavePoint
 
 // Misty Forest Labyrinth =========
 1@mist	mapflag	nosave	SavePoint
