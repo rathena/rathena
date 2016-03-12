@@ -14258,7 +14258,7 @@ BUILDIN_FUNC(npctalk)
 	if (nd) {
 		char message[256];
 		safesnprintf(message, sizeof(message), "%s", str);
-		clif_disp_overhead(&nd->bl, str);
+		clif_disp_overhead(&nd->bl, message);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
