@@ -77,7 +77,7 @@ te_aldecas1,226,34,3	script	Blacksmith Cano#tegod01	4_M_RACHMAN1,{
 					mes "... yeah, there were some girls..";
 					mes "I had to run away because of them...";
 					donpcevent "#tequest_master_alde01::OnCommandOn";
-					mapannounce "te_aldecas1","A girl's voice: Hey, were you talking about us? It's Cano, right? I can't believe you ran away to a place like this.",bc_map,"0x00FF00",FW_BOLD,20,0,40;
+					mapannounce "te_aldecas1","A girl's voice: Hey, were you talking about us? It's "+ .@npc_name$ +", right? I can't believe you ran away to a place like this.",bc_map,"0x00FF00",FW_BOLD,20,0,40;
 					next;
 					mes "["+ .@npc_name$ +"]";
 					mes "Oh, no... !";
@@ -87,8 +87,8 @@ te_aldecas1,226,34,3	script	Blacksmith Cano#tegod01	4_M_RACHMAN1,{
 					mes "Leave it to me.";
 					next;
 					mes "^4d4dff!- Instruction -!";
-					mes "Soon, 7 girls that are after Cano will try to invade the fortress.";
-					mes "You have to protect Cano for 1 hour.^000000";
+					mes "Soon, 7 girls that are after "+ .@npc_name$ +" will try to invade the fortress.";
+					mes "You have to protect "+ .@npc_name$ +" for 1 hour.^000000";
 					next;
 					mes "^4d4dff!- Instruction -!";
 					mes "When the actual attack starts, the doorway of Emperium region will be blocked up for protection.^000000";
@@ -227,7 +227,7 @@ te_aldecas1,226,34,3	script	Blacksmith Cano#tegod01	4_M_RACHMAN1,{
 				mes "I was so overwhelmed that it felt as short as a moment.";
 				next;
 				mes "Jormungand, a powerful weapon and collection of all traces in myths, is finally made";
-				mes "at the hands of Cano.";
+				mes "at the hands of "+ .@npc_name$ +".";
 				delitem 6603,4;// Skin_Of_Hraesvelg
 				delitem 6599,1;// Spirit_Of_Hugin
 				delitem 6598,1;// Rib_Of_Jormungand

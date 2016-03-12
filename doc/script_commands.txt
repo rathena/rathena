@@ -4126,14 +4126,6 @@ job (for example, if you try to get the baby version of a Taekwon class).
 
 ---------------------------------------
 
-*canParticipateSiegeTE([<char_id>]);
-
-Returns 1 if player is allowed to participate in Siege/WOE TE.
-Player with 3rd classes, Kagerou/Oboro, and Rebellion cannot participate,
-the return value is 0.
-
----------------------------------------
-
 *changebase <job ID number>{,<account ID>};
 
 This command will change a character's appearance to that of the specified job

@@ -93,6 +93,8 @@ izlude_c	mapflag	nobranch
 izlude_d	mapflag	nobranch
 
 // WOE:TE Maps ===================
+te_alde_gld	mapflag	nobranch
+te_alde_prt	mapflag	nobranch
 te_prtcas01	mapflag	nobranch
 te_prtcas02	mapflag	nobranch
 te_prtcas03	mapflag	nobranch

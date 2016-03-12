@@ -15,7 +15,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 
 	.@guild_id = getcastledata( "te_prtcas01",1 );
 	.@economy = getcastledata( "te_prtcas01",2 );
-	.@npc_name$ = "Cano";
+	.@npc_name$ = "Kai";
 
 	mes "["+ .@npc_name$ +"]";
 	if (.@guild_id != getcharid(2)) {
@@ -77,7 +77,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 					mes "... yeah, there were some girls..";
 					mes "I had to run away because of them...";
 					donpcevent "#tequest_master_prt01::OnCommandOn";
-					mapannounce "te_prtcas01","A girl's voice: Hey, were you talking about us? It's Cano, right? I can't believe you ran away to a place like this.",bc_map,"0x00FF00",FW_BOLD,20,0,40;
+					mapannounce "te_prtcas01","A girl's voice: Hey, were you talking about us? It's "+ .@npc_name$ +", right? I can't believe you ran away to a place like this.",bc_map,"0x00FF00",FW_BOLD,20,0,40;
 					next;
 					mes "["+ .@npc_name$ +"]";
 					mes "Oh, no... !";
@@ -87,8 +87,8 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 					mes "Leave it to me.";
 					next;
 					mes "^4d4dff!- Instruction -!";
-					mes "Soon, 7 girls that are after Kai will try to invade the fortress.";
-					mes "You have to protect Kai for 1 hour.^000000";
+					mes "Soon, 7 girls that are after "+ .@npc_name$ +" will try to invade the fortress.";
+					mes "You have to protect "+ .@npc_name$ +" for 1 hour.^000000";
 					next;
 					mes "^4d4dff!- Instruction -!";
 					mes "When the actual attack starts, the doorway of Emperium region will be blocked up for protection.^000000";
@@ -227,7 +227,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 				mes "I was so overwhelmed that it felt as short as a moment.";
 				next;
 				mes "Hervor, a shield that Blacksmith Velund made for his wife Hervor, is finally made";
-				mes "at the hands of Kai.";
+				mes "at the hands of "+ .@npc_name$ +".";
 				delitem 6595,2;// Hammer_Of_Velund
 				delitem 6596,1;// Anvil_Of_Velund
 				delitem 6594,4;// Magic_Bronze_Bullion
@@ -238,7 +238,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 				delitem 2115,1;// Valkyrja's_Shield
 				$@2012_tegod_gloria = 5;
 				getitem 2181,1;// Hervor
-				mapannounce "te_prtcas01","Velund's gift [ Hervor ] is introduced to this world by ["+ getguildname(.@guild_id) +"] of ["+ strcharinfo(0) +"] Guild.",bc_map,"0x70dbdb",FW_NORMAL,12;
+				mapannounce "te_prtcas01","Velund's gift [ Hervor ] is introduced to this world by ["+ strcharinfo(0) +"] of ["+ getguildname(.@guild_id) +"] Guild.",bc_map,"0x70dbdb",FW_NORMAL,12;
 				if (.@economy > 20)
 					setcastledata "te_prtcas01",2,(.@economy-20);
 				else
