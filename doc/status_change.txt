@@ -1275,7 +1275,7 @@ SC_FOOD_LUK_CASH	(SI_FOOD_LUK_CASH)
 	val1: +LUK
 
 SC_FEAR	()
-	desc:
+	desc: Cause SC_ANKLE for 2 seconds, Hit/Flee -20%, remove blind, immune to blind
 	val1:
 
 SC_BURNING	(SI_BURNT)
