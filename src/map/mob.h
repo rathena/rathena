@@ -61,6 +61,7 @@ enum MobDamageLogFlag
 	MDLF_NORMAL = 0,
 	MDLF_HOMUN,
 	MDLF_PET,
+	MDLF_SELF
 };
 
 enum size {

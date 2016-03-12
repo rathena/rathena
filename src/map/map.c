@@ -795,7 +795,7 @@ int map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int
 						bl_list[bl_list_count++] = bl;
 
 	if (bl_list_count >= BL_LIST_MAX)
-		ShowWarning("map_foreachinarea: block count too many!\n");
+		ShowWarning("map_foreachinshootarea: block count too many!\n");
 
 	map_freeblock_lock();
 
@@ -1423,7 +1423,7 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 	}
 
 	if( bl_list_count >= BL_LIST_MAX )
-		ShowWarning("map_foreachinpath: block count too many!\n");
+		ShowWarning("map_foreachindir: block count too many!\n");
 
 	map_freeblock_lock();
 

@@ -7312,7 +7312,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 	if (hp) clif_updatestatus(sd,SP_HP);
 	else return;
 
-	if( !src || src == &sd->bl )
+	if (!src)
 		return;
 
 	if( pc_issit(sd) ) {
