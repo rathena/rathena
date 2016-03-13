@@ -898,7 +898,10 @@ int unit_escape(struct block_list *bl, struct block_list *target, short dist)
  * @param bl: Object to instant warp
  * @param dst_x: X coordinate to warp to
  * @param dst_y: Y coordinate to warp to
- * @param easy: Easy(1) or Hard(0) path check (hard attempts to go around obstacles)
+ * @param easy: 
+ *		0: Hard path check (attempt to go around obstacle)
+ *		1: Easy path check (no obstacle on movement path)
+ *		2: Long path check (no obstacle on line from start to destination)
  * @param checkpath: Whether or not to do a cell and path check for NOPASS and NOREACH
  * @return True: Success False: Fail
  */
@@ -1691,7 +1694,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if (src->type == BL_NPC) // NPC-objects can override cast distance
 		range = AREA_SIZE; // Maximum visible distance before NPC goes out of sight
 	else
-		range = skill_get_range2(src, skill_id, skill_lv); // Skill cast distance from database
+		range = skill_get_range2(src, skill_id, skill_lv, true); // Skill cast distance from database
 
 	// New action request received, delete previous action request if not executed yet
 	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
@@ -1994,7 +1997,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if (src->type == BL_NPC) // NPC-objects can override cast distance
 		range = AREA_SIZE; // Maximum visible distance before NPC goes out of sight
 	else
-		range = skill_get_range2(src, skill_id, skill_lv); // Skill cast distance from database
+		range = skill_get_range2(src, skill_id, skill_lv, true); // Skill cast distance from database
 
 	// New action request received, delete previous action request if not executed yet
 	if(ud->stepaction || ud->steptimer != INVALID_TIMER)

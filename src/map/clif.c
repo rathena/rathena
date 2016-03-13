@@ -1620,7 +1620,7 @@ int clif_homskillinfoblock(struct map_session_data *sd)
 			WFIFOW(fd,len+4) = 0;
 			WFIFOW(fd,len+6) = hd->homunculus.hskill[idx].lv;
 			WFIFOW(fd,len+8) = skill_get_sp(id,hd->homunculus.hskill[idx].lv);
-			WFIFOW(fd,len+10)= skill_get_range2(&sd->hd->bl, id,hd->homunculus.hskill[idx].lv);
+			WFIFOW(fd,len+10)= skill_get_range2(&sd->hd->bl,id,hd->homunculus.hskill[idx].lv,false);
 			safestrncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
 			WFIFOB(fd,len+36) = (hd->homunculus.level < hom_skill_get_min_level(hd->homunculus.class_, id) || hd->homunculus.hskill[idx].lv >= hom_skill_tree_get_max(id, hd->homunculus.class_)) ? 0 : 1;
 			len+=37;
@@ -1650,7 +1650,7 @@ void clif_homskillup(struct map_session_data *sd, uint16 skill_id)
 	WFIFOW(fd,2) = skill_id;
 	WFIFOW(fd,4) = hd->homunculus.hskill[idx].lv;
 	WFIFOW(fd,6) = skill_get_sp(skill_id,hd->homunculus.hskill[idx].lv);
-	WFIFOW(fd,8) = skill_get_range2(&hd->bl, skill_id,hd->homunculus.hskill[idx].lv);
+	WFIFOW(fd,8) = skill_get_range2(&hd->bl,skill_id,hd->homunculus.hskill[idx].lv,false);
 	WFIFOB(fd,10) = (hd->homunculus.level < hom_skill_get_min_level(hd->homunculus.class_, skill_id) || hd->homunculus.hskill[idx].lv >= hom_skill_tree_get_max(hd->homunculus.hskill[idx].id, hd->homunculus.class_)) ? 0 : 1;
 	WFIFOSET(fd,packet_len(0x239));
 }
@@ -5168,7 +5168,7 @@ void clif_skillinfoblock(struct map_session_data *sd)
 			WFIFOL(fd,len+2) = skill_get_inf(id);
 			WFIFOW(fd,len+6) = sd->status.skill[i].lv;
 			WFIFOW(fd,len+8) = skill_get_sp(id,sd->status.skill[i].lv);
-			WFIFOW(fd,len+10)= skill_get_range2(&sd->bl, id,sd->status.skill[i].lv);
+			WFIFOW(fd,len+10)= skill_get_range2(&sd->bl,id,sd->status.skill[i].lv,false);
 			safestrncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
 			if(sd->status.skill[i].flag == SKILL_FLAG_PERMANENT)
 				WFIFOB(fd,len+36) = (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
@@ -5216,7 +5216,7 @@ void clif_addskill(struct map_session_data *sd, int skill_id)
 	WFIFOL(fd,4) = skill_get_inf(skill_id);
 	WFIFOW(fd,8) = sd->status.skill[idx].lv;
 	WFIFOW(fd,10) = skill_get_sp(skill_id,sd->status.skill[idx].lv);
-	WFIFOW(fd,12)= skill_get_range2(&sd->bl, skill_id,sd->status.skill[idx].lv);
+	WFIFOW(fd,12)= skill_get_range2(&sd->bl,skill_id,sd->status.skill[idx].lv,false);
 	safestrncpy((char*)WFIFOP(fd,14), skill_get_name(skill_id), NAME_LENGTH);
 	if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT )
 		WFIFOB(fd,38) = (sd->status.skill[idx].lv < skill_tree_get_max(skill_id, sd->status.class_))? 1:0;
@@ -5282,7 +5282,7 @@ void clif_skillinfo(struct map_session_data *sd,int skill_id, int inf)
 	WFIFOL(fd,4) = inf?inf:skill_get_inf(skill_id);
 	WFIFOW(fd,8) = sd->status.skill[idx].lv;
 	WFIFOW(fd,10) = skill_get_sp(skill_id,sd->status.skill[idx].lv);
-	WFIFOW(fd,12) = skill_get_range2(&sd->bl,skill_id,sd->status.skill[idx].lv);
+	WFIFOW(fd,12) = skill_get_range2(&sd->bl,skill_id,sd->status.skill[idx].lv,false);
 	if( sd->status.skill[idx].flag == SKILL_FLAG_PERMANENT )
 		WFIFOB(fd,14) = (sd->status.skill[idx].lv < skill_tree_get_max(skill_id, sd->status.class_))? 1:0;
 	else
@@ -6597,7 +6597,7 @@ void clif_item_skill(struct map_session_data *sd,uint16 skill_id,uint16 skill_lv
 	WFIFOW(fd, 6)=0;
 	WFIFOW(fd, 8)=skill_lv;
 	WFIFOW(fd,10)=skill_get_sp(skill_id,skill_lv);
-	WFIFOW(fd,12)=skill_get_range2(&sd->bl, skill_id,skill_lv);
+	WFIFOW(fd,12)=skill_get_range2(&sd->bl,skill_id,skill_lv,false);
 	safestrncpy((char*)WFIFOP(fd,14),skill_get_name(skill_id),NAME_LENGTH);
 	WFIFOB(fd,38)=0;
 	WFIFOSET(fd,packet_len(0x147));
@@ -7796,7 +7796,7 @@ void clif_devotion(struct block_list *src, struct map_session_data *tsd)
 		if( md && md->master && md->devotion_flag )
 			WBUFL(buf,6) = md->master->bl.id;
 
-		WBUFW(buf,26) = skill_get_range2(src, ML_DEVOTION, mercenary_checkskill(md, ML_DEVOTION));
+		WBUFW(buf,26) = skill_get_range2(src, ML_DEVOTION, mercenary_checkskill(md, ML_DEVOTION), false);
 	}
 	else
 	{
@@ -7807,7 +7807,7 @@ void clif_devotion(struct block_list *src, struct map_session_data *tsd)
 
 		for( i = 0; i < 5 /*MAX_DEVOTION*/; i++ ) // Client only able show to 5 links
 			WBUFL(buf,6+4*i) = sd->devotion[i];
-		WBUFW(buf,26) = skill_get_range2(src, CR_DEVOTION, pc_checkskill(sd, CR_DEVOTION));
+		WBUFW(buf,26) = skill_get_range2(src, CR_DEVOTION, pc_checkskill(sd, CR_DEVOTION), false);
 	}
 
 	if( tsd )
@@ -16296,7 +16296,7 @@ void clif_mercenary_skillblock(struct map_session_data *sd)
 		WFIFOL(fd,len+2) = skill_get_inf(id);
 		WFIFOW(fd,len+6) = md->db->skill[idx].lv;
 		WFIFOW(fd,len+8) = skill_get_sp(id, md->db->skill[idx].lv);
-		WFIFOW(fd,len+10) = skill_get_range2(&md->bl, id, md->db->skill[idx].lv);
+		WFIFOW(fd,len+10) = skill_get_range2(&md->bl, id, md->db->skill[idx].lv, false);
 		safestrncpy((char*)WFIFOP(fd,len+12), skill_get_name(id), NAME_LENGTH);
 		WFIFOB(fd,len+36) = 0; // Skillable for Mercenary?
 		len += 37;

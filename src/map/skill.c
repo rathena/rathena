@@ -343,7 +343,7 @@ int skill_get_casttype (uint16 skill_id) {
 }
 
 //Returns actual skill range taking into account attack range and AC_OWL [Skotlex]
-int skill_get_range2 (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
+int skill_get_range2(struct block_list *bl, uint16 skill_id, uint16 skill_lv, bool isServer) {
 	int range, inf3=0;
 	if( bl->type == BL_MOB && battle_config.mob_ai&0x400 )
 		return 9; //Mobs have a range of 9 regardless of skill used.
@@ -355,8 +355,12 @@ int skill_get_range2 (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 			return status_get_range(bl);
 		range *=-1;
 	}
-	inf3 = skill_get_inf3(skill_id);
 
+	if (isServer && range > 14) {
+		range = 14; // Server-sided base range can't be above 14
+	}
+
+	inf3 = skill_get_inf3(skill_id);
 	if(inf3&(INF3_EFF_VULTURE|INF3_EFF_SNAKEEYE) ){
 		if( bl->type == BL_PC ) {
 			if(inf3&INF3_EFF_VULTURE) range += pc_checkskill((TBL_PC*)bl, AC_VULTURE);
@@ -365,7 +369,6 @@ int skill_get_range2 (struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 		} else
 			range += battle_config.mob_eye_range_bonus;
 	}
-
 	if(inf3&(INF3_EFF_SHADOWJUMP|INF3_EFF_RADIUS|INF3_EFF_RESEARCHTRAP) ){
 		if( bl->type == BL_PC ) {
 			if(inf3&INF3_EFF_SHADOWJUMP) range = skill_get_range(NJ_SHADOWJUMP,pc_checkskill((TBL_PC*)bl,NJ_SHADOWJUMP));
@@ -1989,8 +1992,8 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 						continue;
 				}
 			}
-			if( battle_config.autospell_check_range &&
-				!battle_check_range(src, tbl, skill_get_range2(src, skill,autospl_skill_lv) + (skill == RG_CLOSECONFINE?0:1)) )
+			if (battle_config.autospell_check_range &&
+				!battle_check_range(src, tbl, skill_get_range2(src, skill, autospl_skill_lv, true)))
 				continue;
 
 			if (skill == AS_SONICBLOW)
@@ -2118,8 +2121,8 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 					continue;
 			}
 		}
-		if( battle_config.autospell_check_range &&
-			!battle_check_range(&sd->bl, tbl, skill_get_range2(&sd->bl, skill,skill_lv) + (skill == RG_CLOSECONFINE?0:1)) )
+		if (battle_config.autospell_check_range &&
+			!battle_check_range(&sd->bl, tbl, skill_get_range2(&sd->bl, skill, skill_lv, true)))
 			continue;
 
 		sd->state.autocast = 1;
@@ -2330,7 +2333,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				}
 			}
 
-			if( !battle_check_range(src, tbl, skill_get_range2(src, autospl_skill_id,autospl_skill_lv) + (autospl_skill_id == RG_CLOSECONFINE?0:1)) && battle_config.autospell_check_range )
+			if (!battle_check_range(src, tbl, skill_get_range2(src, autospl_skill_id, autospl_skill_lv, true)) && battle_config.autospell_check_range)
 				continue;
 
 			dstsd->state.autocast = 1;
@@ -6298,7 +6301,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case TK_JUMPKICK:
 		/* Check if the target is an enemy; if not, skill should fail so the character doesn't unit_movepos (exploitable) */
 		if( battle_check_target(src, bl, BCT_ENEMY) > 0 ) {
-			if( unit_movepos(src, bl->x, bl->y, 1, 1) ) {
+			if( unit_movepos(src, bl->x, bl->y, 2, 1) ) {
 				skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 				clif_blown(src);
 			}
@@ -6566,7 +6569,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if( dstmd )
 		{
 			dstmd->state.provoke_flag = src->id;
-			mob_target(dstmd, src, skill_get_range2(src,skill_id,skill_lv));
+			mob_target(dstmd, src, skill_get_range2(src, skill_id, skill_lv, true));
 		}
 		break;
 
@@ -6617,7 +6620,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				mer->devotion_flag = 1; // Mercenary Devoting Owner
 
 			clif_skill_nodamage(src, bl, skill_id, skill_lv,
-				sc_start4(src, bl, type, 10000, src->id, i, skill_get_range2(src,skill_id,skill_lv), 0, skill_get_time2(skill_id, skill_lv)));
+				sc_start4(src, bl, type, 10000, src->id, i, skill_get_range2(src, skill_id, skill_lv, true), 0, skill_get_time2(skill_id, skill_lv)));
 			clif_devotion(src, NULL);
 		}
 		break;
@@ -7025,7 +7028,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if(pc_steal_coin(sd,bl))
 			{
 				dstmd->state.provoke_flag = src->id;
-				mob_target(dstmd, src, skill_get_range2(src,skill_id,skill_lv));
+				mob_target(dstmd, src, skill_get_range2(src, skill_id, skill_lv, true));
 				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 
 			}
@@ -8169,8 +8172,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				status_change_end(bl, SC_SLEEP, INVALID_TIMER);
 			}
 
-			if(dstmd)
-				mob_target(dstmd,src,skill_get_range2(src,skill_id,skill_lv));
+			if (dstmd)
+				mob_target(dstmd, src, skill_get_range2(src, skill_id, skill_lv, true));
 		}
 		break;
 
@@ -10964,13 +10967,13 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 				clif_emotion(src, md->db->skill[md->skill_idx].emotion);
 		}
 
-		if(src != target && battle_config.skill_add_range &&
-			!check_distance_bl(src, target, skill_get_range2(src,ud->skill_id,ud->skill_lv)+battle_config.skill_add_range))
+		if (src != target && battle_config.skill_add_range &&
+			!check_distance_bl(src, target, skill_get_range2(src, ud->skill_id, ud->skill_lv, true) + battle_config.skill_add_range))
 		{
 			if (sd) {
-				clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_LEVEL,0);
-				if(battle_config.skill_out_range_consume) //Consume items anyway. [Skotlex]
-					skill_consume_requirement(sd,ud->skill_id,ud->skill_lv,3);
+				clif_skill_fail(sd, ud->skill_id, USESKILL_FAIL_LEVEL, 0);
+				if (battle_config.skill_out_range_consume) //Consume items anyway. [Skotlex]
+					skill_consume_requirement(sd, ud->skill_id, ud->skill_lv, 3);
 			}
 			break;
 		}
@@ -11201,10 +11204,10 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 		{	//Avoid double checks on instant cast skills. [Skotlex]
 			if (!status_check_skilluse(src, NULL, ud->skill_id, 1))
 				break;
-			if(battle_config.skill_add_range &&
-				!check_distance_blxy(src, ud->skillx, ud->skilly, skill_get_range2(src,ud->skill_id,ud->skill_lv)+battle_config.skill_add_range)) {
+			if (battle_config.skill_add_range &&
+				!check_distance_blxy(src, ud->skillx, ud->skilly, skill_get_range2(src, ud->skill_id, ud->skill_lv, true) + battle_config.skill_add_range)) {
 				if (sd && battle_config.skill_out_range_consume) //Consume items anyway.
-					skill_consume_requirement(sd,ud->skill_id,ud->skill_lv,3);
+					skill_consume_requirement(sd, ud->skill_id, ud->skill_lv, 3);
 				break;
 			}
 		}
@@ -11577,7 +11580,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		return 0; // not to consume item.
 
 	case MO_BODYRELOCATION:
-		if (unit_movepos(src, x, y, 1, 1)) {
+		if (unit_movepos(src, x, y, 2, 1)) {
 #if PACKETVER >= 20111005
 			clif_snap(src, src->x, src->y);
 #else
@@ -16277,8 +16280,8 @@ void skill_repairweapon(struct map_session_data *sd, int idx) {
 	if( !item->nameid || !item->attribute )
 		return; //Again invalid item....
 
-	if( sd != target_sd && !battle_check_range(&sd->bl,&target_sd->bl, skill_get_range2(&sd->bl, sd->menuskill_id,sd->menuskill_val2) ) ){
-		clif_item_repaireffect(sd,idx,1);
+	if (sd != target_sd && !battle_check_range(&sd->bl, &target_sd->bl, skill_get_range2(&sd->bl, sd->menuskill_id, sd->menuskill_val2, true))) {
+		clif_item_repaireffect(sd, idx, 1);
 		return;
 	}
 

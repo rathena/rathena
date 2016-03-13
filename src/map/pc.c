@@ -6856,7 +6856,7 @@ void pc_skillup(struct map_session_data *sd,uint16 skill_id)
 				pc_check_skilltree(sd); // Check if a new skill can Lvlup
 
 			lv = sd->status.skill[idx].lv;
-			range = skill_get_range2(&sd->bl, skill_id, lv);
+			range = skill_get_range2(&sd->bl, skill_id, lv, false);
 			upgradable = (lv < skill_tree_get_max(sd->status.skill[idx].id, sd->status.class_)) ? 1 : 0;
 			clif_skillup(sd,skill_id,lv,range,upgradable);
 			clif_updatestatus(sd,SP_SKILLPOINT);
