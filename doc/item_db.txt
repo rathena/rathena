@@ -223,7 +223,8 @@ OnEquip_Script: Script to execute when the item is equipped.
 
 ---------------------------------------
 
-OnUnequip_Script: Script to execute when the item is unequipped.
+OnUnequip_Script: Script to execute when the item is unequipped
+                  or when a rental item expires.
                   Warning, not all item bonuses will work here as expected.
 
 ---------------------------------------
