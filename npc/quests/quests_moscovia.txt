@@ -7296,7 +7296,7 @@ moscovia,178,127,0	script	The Blacksmith#rus06	1_M_SMITH,{
 			delitem 999,25;// Steel
 			rhea_rus_main = 8;
 			// changequest 8138,8139;
-			if (BaseClass == Job_Merchant || BaseClass == Job_Swordman || BaseClass == Job_Thief || BaseClass == Job_Archer || BaseClass == Job_Ninja || BaseClass == Job_Gunslinger)
+			if (BaseClass == Job_Merchant || BaseClass == Job_Swordman || BaseClass == Job_Thief || BaseClass == Job_Archer)
 				getitem 2429,1;// Iron_Boots01
 			else
 				getitem 2430,1;// Iron_Boots02
