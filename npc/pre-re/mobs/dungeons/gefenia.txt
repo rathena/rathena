@@ -77,7 +77,7 @@ gefenia04,0,0,0,0	monster	Ogretooth	1204,1,18000000,14400000,0
 //==================================================
 //gefenia01,0,0,0,0	monster	Fake Angel	1371,10,0,0,0
 //gefenia01,0,0,0,0	monster	Mini Demon	1292,6,300000,0,0
-//gefenia01,0,0,0,0	monster	Apolcalips	1365,4,300000,0,0
+//gefenia01,0,0,0,0	monster	Apocalypse	1365,4,300000,0,0
 //gefenia01,0,0,0,0	monster	Elder	1377,10,300000,0,1
 //gefenia01,0,0,0,0	monster	Abyssmal Knight	1219,3,1800000,900000,1
 //gefenia01,0,0,0,0	monster	Bloody Knight	1268,2,300000,0,0
@@ -92,7 +92,7 @@ gefenia04,0,0,0,0	monster	Ogretooth	1204,1,18000000,14400000,0
 //gefenia02,0,0,0,0	monster	Succubus	1370,6,0,0,0
 //gefenia02,0,0,0,0	monster	Incubus	1374,6,0,0,0
 //gefenia02,0,0,0,0	monster	Mini Demon	1292,10,300000,0,0
-//gefenia02,0,0,0,0	monster	Apolcalips	1365,8,300000,0,0
+//gefenia02,0,0,0,0	monster	Apocalypse	1365,8,300000,0,0
 //gefenia02,0,0,0,0	monster	Abyssmal Knight	1219,2,1800000,900000,1
 //gefenia02,0,0,0,0	monster	Bloody Knight	1268,5,300000,0,0
 //gefenia02,0,0,0,0	monster	Poring	1502,1,0,0,0
@@ -106,7 +106,7 @@ gefenia04,0,0,0,0	monster	Ogretooth	1204,1,18000000,14400000,0
 //gefenia03,0,0,0,0	monster	Succubus	1370,5,0,0,0
 //gefenia03,0,0,0,0	monster	Incubus	1374,5,0,0,0
 //gefenia03,0,0,0,0	monster	Mini Demon	1292,10,300000,0,0
-//gefenia03,0,0,0,0	monster	Apolcalips	1365,6,300000,0,0
+//gefenia03,0,0,0,0	monster	Apocalypse	1365,6,300000,0,0
 //gefenia03,0,0,0,0	monster	Elder	1377,10,300000,0,1
 //gefenia03,0,0,0,0	monster	Abyssmal Knight	1219,3,1800000,900000,1
 //gefenia03,0,0,0,0	monster	Bloody Knight	1268,2,300000,0,0
@@ -120,7 +120,7 @@ gefenia04,0,0,0,0	monster	Ogretooth	1204,1,18000000,14400000,0
 //gefenia04,0,0,0,0	monster	Fake Angel	1371,10,0,0,0
 //gefenia04,0,0,0,0	monster	Succubus	1370,5,0,0,0
 //gefenia04,0,0,0,0	monster	Incubus	1374,3,0,0,0
-//gefenia04,0,0,0,0	monster	Apolcalips	1365,4,300000,0,0
+//gefenia04,0,0,0,0	monster	Apocalypse	1365,4,300000,0,0
 //gefenia04,0,0,0,0	monster	Abyssmal Knight	1219,5,1800000,900000,1
 //gefenia04,0,0,0,0	monster	Bloody Knight	1268,2,300000,0,0
 //gefenia04,0,0,0,0	monster	Poring	1502,1,0,0,0
