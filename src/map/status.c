@@ -10909,7 +10909,6 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_S_LIFEPOTION:
 			case SC_L_LIFEPOTION:
 			case SC_PUSH_CART:
-			case SC_ALL_RIDING:
 			case SC_LIGHT_OF_REGENE:
 			case SC_STYLE_CHANGE:
 			case SC_MOONSTAR:

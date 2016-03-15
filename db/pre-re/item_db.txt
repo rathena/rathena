@@ -4848,9 +4848,9 @@
 12284,Internet_Cafe3,Internet Cafe3,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCINT,5400000,8; sc_start SC_INCVIT,5400000,4; sc_start SC_INCDEX,5400000,6; sc_start SC_MATKPOTION,5400000,40; },{},{}
 12285,Internet_Cafe4,Internet Cafe4,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCDEX,5400000,8; sc_start SC_INCLUK,5400000,4; sc_start SC_INCAGI,5400000,6; sc_start SC_ATKPOTION,5400000,24; sc_start SC_MATKPOTION,5400000,24; },{},{}
 12286,Masquerade_Ball_Box2,Masquerade Ball Box2,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getrandgroupitem(IG_Masquerade_2),1; },{},{}
-12287,Love_Angel,Love Angel Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 1; },{},{}
-12288,Squirrel,Squirrel Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 2; },{},{}
-12289,Gogo,Gogo Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 3; },{},{}
+12287,Love_Angel,Love Angel Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 1; },{},{ setfont 0; }
+12288,Squirrel,Squirrel Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 2; },{},{ setfont 0; }
+12289,Gogo,Gogo Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 3; },{},{ setfont 0; }
 12290,Mysterious_Can,Mysterious Can Magic Powder,2,10,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,0; skilleffect "AL_BLESSING",0; sc_start SC_BLESSING,120000,5; },{},{}
 12291,Mysterious_PET_Bottle,Mysterious PET Bottle,2,10,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,0; skilleffect "AL_INCAGI",0; sc_start SC_INCREASEAGI,120000,5; },{},{}
 12292,Unripe_Fruit,Unripe Fruit,0,500,,200,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 20,0; },{},{}
@@ -4865,12 +4865,12 @@
 12301,Doppelganger_Scroll,Doppelganger Contract,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_create 1966,1800000; },{},{}
 12302,Ygnizem_Scroll,Egnigem Cenia Contract,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_create 1967,1800000; },{},{}
 12303,Water_Of_Blessing,Blessing Of Water,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12304,Picture_Diary,Diary Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 4; },{},{}
-12305,Mini_Heart,Mini Heart Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 5; },{},{}
-12306,Newcomer,Freshman Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 6; },{},{}
-12307,Kid,Kid Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 7; },{},{}
-12308,Magic_Castle,Magic Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 8; },{},{}
-12309,Bulging_Head,JJangu Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 9; },{},{}
+12304,Picture_Diary,Diary Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 4; },{},{ setfont 0; }
+12305,Mini_Heart,Mini Heart Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 5; },{},{ setfont 0; }
+12306,Newcomer,Freshman Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 6; },{},{ setfont 0; }
+12307,Kid,Kid Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 7; },{},{ setfont 0; }
+12308,Magic_Castle,Magic Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 8; },{},{ setfont 0; }
+12309,Bulging_Head,JJangu Magic Powder,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ setfont 9; },{},{ setfont 0; }
 12310,Spray_Of_Flowers,Spray Of Flowers,2,0,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE,600000,10; },{},{}
 12311,Large_Spray_Of_Flowers,Huge Spray Of Flowers,11,0,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "ALL_PARTYFLEE",1; },{},{}
 12312,Thick_Manual50,Thick Battle Manual,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,3600000,50; },{},{}
