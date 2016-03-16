@@ -302,11 +302,20 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 // Tell client how many pages, kRO sends 17 (Yommy)
 //----------------------------------------
 void chclif_charlist_notify( int fd, struct char_session_data* sd ){
+#if PACKETVER >= 20151001
+	WFIFOHEAD(fd, 10);
+	WFIFOW(fd, 0) = 0x9a0;
+	// pages to req / send them all in 1 until mmo_chars_fromsql can split them up
+	WFIFOL(fd, 2) = (sd->char_slots>3)?sd->char_slots/3:1; //int TotalCnt (nb page to load)
+	WFIFOL(fd, 6) = sd->char_slots;
+	WFIFOSET(fd,10);
+#else
 	WFIFOHEAD(fd, 6);
 	WFIFOW(fd, 0) = 0x9a0;
 	// pages to req / send them all in 1 until mmo_chars_fromsql can split them up
 	WFIFOL(fd, 2) = (sd->char_slots>3)?sd->char_slots/3:1; //int TotalCnt (nb page to load)
 	WFIFOSET(fd,6);
+#endif
 }
 
 //----------------------------------------
