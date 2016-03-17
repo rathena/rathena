@@ -204,7 +204,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else {
 							cutin "이렌드에베시카드",3;  //erend_card
-							mes "Errende Ebecee  is the one who started a journey to look for someone.";
+							mes "Errende Ebecee is the one who started a journey to look for someone.";
 							next;
 							mes "[Ragi]";
 							mes "But I guess... His journey also might have stopped somewhere in Lighthalzen. Please listen to his story.";
@@ -472,7 +472,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 				}
 			}
 			else {
-				mes "Music continues to be composed, and stories collected. Yet being an adventurer, and finding new adventures, is not bad either.";  //custom translation
+				mes "I will continue to make a story or songs. But adventurers should step into a new adventure.";
 				next;
 				callsub S_Erasequest,
 					13143,1,"Egnigem Cenia",
@@ -481,15 +481,15 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 					13149,1,"Kavach Icarus",
 					13151,1,"Errende Ebecee",
 					13153,1,"Laurell Weinder",
-					13155,2,"",
-					13157,2,"",
-					13159,2,"",
-					13161,3,"",
-					13163,3,"",
-					13165,3,"",
-					13167,3,"";
+					13155,2,"the Angel-looking Incarnation of Morocc",
+					13157,2,"Dark Incarnation of Morocc",
+					13159,2,"Ghost Incarnation of Morocc",
+					13161,3,"Uni-Horn Scaraba",
+					13163,3,"Horn Scaraba",
+					13165,3,"Antler Scaraba",
+					13167,3,"Rake Horn Scaraba";
 				mes "[Ragi]";
-				mes "Say your goodbyes with a smile... I hope we can meet again someday in another place.";  //custom translation
+				mes "I hope to see you again as we farewell with smile.";
 			}
 		}
 		else {
@@ -553,29 +553,29 @@ S_Erasequest:
 			mes "[Ragi]";
 			switch( getarg(.@i+1) ) {
 			case 1:
-				mes "Okay, I'll ask another person to help me finish the portion with "+ getarg(.@i+2) +".";  //custom translation
+				mes "The rest of the story of "+ getarg(.@i+2) +" is Okay, I will ask to someone else.";
 				break;
 			case 2:
-				mes "I'll ask someone else to take care of the rest of the Satan Morroc Incarnations, then!";  //custom translation
-				break;
 			case 3:
-				mes "I'll need to ask another adventurer to help with the Scaraba!";  //custom translation
+				mes "I will ask to other adventurers about the story of "+ getarg(.@i+2) +".";
+				break;
 			}
 			break;
 		case 2:
 			mes "[Ragi]";
 			switch( getarg(.@i+1) ) {
 			case 1:
-				mes "So you've heard the story of "+ getarg(.@i+2) +", then? Thanks so much. I'll write a good song for sure.";  //custom translation
+				mes "Did you hear the story of "+ getarg(.@i+2) +"? Thanks you. I promise to make a good song.";
 				getexp 1100000,300000;
 				break;
 			case 2:
-				mes "Was the story of Satan Morroc worth putting to song? Great work!";  //custom translation
+				mes "Is Morocc's story good enough for songs? You did a good job.";
 				getexp 1100000,200000;
 				break;
 			case 3:
-				mes "Did you enjoy your long adventure? Tell me about it someday.";  //custom translation
+				mes "How was your adventure? Was it fun? Please let me hear your adventure story someday.";
 				getexp 1100000,200000;
+				break;
 			}
 		}
 		erasequest .@quest_id;
