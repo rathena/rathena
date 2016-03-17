@@ -1392,7 +1392,7 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 int mob_randomwalk(struct mob_data *md,unsigned int tick)
 {
 	const int d=7;
-	int i,c,r,dx,dy;
+	int i,c,r,rd,dx,dy,max;
 	int speed;
 
 	nullpo_ret(md);
@@ -1404,23 +1404,62 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 		return 0;
 
 	r=rnd();
+	rd=rnd()%4; // Randomize direction in which we iterate to prevent monster cluttering up in one corner
 	dx=r%(d*2+1)-d;
 	dy=r/(d*2+1)%(d*2+1)-d;
-	for(i=0;i<d*d;i++){	// Search of a movable place
+	max=(d*2+1)*(d*2+1);
+	for(i=0;i<max;i++){	// Search of a movable place
 		int x = dx + md->bl.x;
 		int y = dy + md->bl.y;
-		if(((x != md->bl.x) || (y != md->bl.y)) && map_getcell(md->bl.m,x,y,CELL_CHKPASS) && unit_walktoxy(&md->bl,x,y,8)){
+		if(((x != md->bl.x) || (y != md->bl.y)) && map_getcell(md->bl.m,x,y,CELL_CHKPASS) && unit_walktoxy(&md->bl,x,y,0)){
 			break;
 		}
-		// Could not move to cell, try the next one
-		if (++dx>d) {
-			dx=-d;
-			if (++dy>d) {
-				dy=-d;
+		// Could not move to cell, try the 7th cell in direction randomly decided by rd
+		// We don't move step-by-step because this will make monster stick to the walls
+		switch(rd) {
+		case 0:
+			dx += d;
+			if (dx > d) {
+				dx -= d*2+1;
+				dy += d;
+				if (dy > d) {
+					dy -= d*2+1;
+				}
 			}
+			break;
+		case 1:
+			dx -= d;
+			if (dx < -d) {
+				dx += d*2+1;
+				dy -= d;
+				if (dy < -d) {
+					dy += d*2+1;
+				}
+			}
+			break;
+		case 2:
+			dy += d;
+			if (dy > d) {
+				dy -= d * 2 + 1;
+				dx += d;
+				if (dx > d) {
+					dx -= d * 2 + 1;
+				}
+			}
+			break;
+		case 3:
+			dy -= d;
+			if (dy < -d) {
+				dy += d * 2 + 1;
+				dx -= d;
+				if (dx < -d) {
+					dx += d * 2 + 1;
+				}
+			}
+			break;
 		}
 	}
-	if(i==d*d){
+	if(i==max){
 		// None of the available cells worked, try again next interval
 		if(battle_config.mob_stuck_warning) {
 			md->move_fail_count++;
