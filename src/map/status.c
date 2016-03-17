@@ -11834,8 +11834,10 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			if(sce->val4%2)
 				sce->val4--;
 			map_foreachinrange( status_change_timer_sub, bl, sce->val3, BL_CHAR|BL_SKILL, bl, sce, type, tick);
-		} else
+		} else {
 			map_foreachinrange( status_change_timer_sub, bl, sce->val3, BL_CHAR, bl, sce, type, tick);
+			skill_reveal_trap_inarea(bl, sce->val3, bl->x, bl->y);
+		}
 
 		if( --(sce->val2)>0 ) {
 			sce->val4 += 20; // Use for Shadow Form 2 seconds checking.
