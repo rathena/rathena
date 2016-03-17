@@ -1710,6 +1710,8 @@ static void clif_move2(struct block_list *bl, struct view_data *vd, struct unit_
 				clif_specialeffect(&sd->bl,423,AREA);
 			else if(sd->state.size==SZ_MEDIUM)
 				clif_specialeffect(&sd->bl,421,AREA);
+			if (sd->status.robe)
+				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
 		}
 		break;
 	case BL_MOB:
