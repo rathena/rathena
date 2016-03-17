@@ -4719,8 +4719,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					skill_area_temp[4] = bl->x;
 					skill_area_temp[5] = bl->y;
 					break;
-				case NC_VULCANARM:
 				case NC_ARMSCANNON:
+					starget = BL_CHAR;
+				case NC_VULCANARM:
 					if (sd)
 						pc_overheat(sd, 1);
 					break;
@@ -11781,7 +11782,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case AC_SHOWER:
 	case MA_SHOWER:
 	case NC_COLDSLOWER:
-	case NC_ARMSCANNON:
 	case RK_DRAGONBREATH:
 	case RK_DRAGONBREATH_WATER:
 		// Cast center might be relevant later (e.g. for knockback direction)
@@ -11789,9 +11789,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		skill_area_temp[5] = y;
 		i = skill_get_splash(skill_id,skill_lv);
 		if (battle_config.skill_wall_check)
-			map_foreachinshootarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,splash_target(src),src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
+			map_foreachinshootarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		else
-			map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,splash_target(src),src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
+			map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		break;
 
 	case SO_ARRULLO:
