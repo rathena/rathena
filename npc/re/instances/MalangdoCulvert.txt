@@ -444,7 +444,7 @@ L_Enter:
 		mes "Only party members can participate.";
 		close;
 	case 0:
-		mapannounce "mal_in01", strcharinfo(0)+" of the party "+getpartyname(.@party_id)+" is entering the Culvert.",bc_map,"0x00ff99";
+		mapannounce "mal_in01", strcharinfo(0)+" of the party "+getpartyname(getcharid(1))+" is entering the Culvert.",bc_map,"0x00ff99";
 		if (checkquest(12254) == -1) setquest 12254;
 		//warp "1@pump",63,98;
 		if (getarg(0) == 0) close;
