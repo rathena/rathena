@@ -1440,20 +1440,20 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 		case 2:
 			dy += d;
 			if (dy > d) {
-				dy -= d * 2 + 1;
+				dy -= d*2+1;
 				dx += d;
 				if (dx > d) {
-					dx -= d * 2 + 1;
+					dx -= d*2+1;
 				}
 			}
 			break;
 		case 3:
 			dy -= d;
 			if (dy < -d) {
-				dy += d * 2 + 1;
+				dy += d*2+1;
 				dx -= d;
 				if (dx < -d) {
-					dx += d * 2 + 1;
+					dx += d*2+1;
 				}
 			}
 			break;
