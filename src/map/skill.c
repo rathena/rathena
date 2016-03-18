@@ -13664,27 +13664,27 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			break;
 
 		case UNT_EPICLESIS:
+			++sg->val1; // Increment outside of the check to get the exact interval of the skill unit
 			if( bl->type == BL_PC && !battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON ) {
-				int hp, sp;
-				switch( sg->skill_lv ) {
-					case 1: case 2: hp = 3; sp = 2; break;
-					case 3: case 4: hp = 4; sp = 3; break;
-					case 5: default: hp = 5; sp = 4; break;
+				if (sg->val1 % 3 == 0) { // Recover players every 3 seconds
+					int hp, sp;
+
+					switch( sg->skill_lv ) {
+						case 1: case 2: hp = 3; sp = 2; break;
+						case 3: case 4: hp = 4; sp = 3; break;
+						case 5: default: hp = 5; sp = 4; break;
+					}
+					hp = tstatus->max_hp * hp / 100;
+					sp = tstatus->max_sp * sp / 100;
+					if (tstatus->hp < tstatus->max_hp)
+						clif_skill_nodamage(&unit->bl, bl, AL_HEAL, hp, 1);
+					if (tstatus->sp < tstatus->max_sp)
+						clif_skill_nodamage(&unit->bl, bl, MG_SRECOVERY, sp, 1);
+					if (tsc && tsc->data[SC_AKAITSUKI] && hp)
+						hp = ~hp + 1;
+					status_heal(bl, hp, sp, 3);
 				}
-				hp = tstatus->max_hp * hp / 100;
-				sp = tstatus->max_sp * sp / 100;
-				if (tstatus->hp < tstatus->max_hp)
-					clif_skill_nodamage(&unit->bl, bl, AL_HEAL, hp, 1);
-				if (tstatus->sp < tstatus->max_sp)
-					clif_skill_nodamage(&unit->bl, bl, MG_SRECOVERY, sp, 1);
-				if (tsc && tsc->data[SC_AKAITSUKI] && hp)
-					hp = ~hp + 1;
-				status_heal(bl, hp, sp, 3);
-				sc_start(ss, bl, type, 100, sg->skill_lv, sg->interval + 100);
-				sg->val2++;
-				// Reveal hidden players every 5 seconds.
-				if( sg->val2 >= 5 ) {
-					sg->val2 = 0;
+				if (sg->val1 % 5 == 0) { // Reveal hidden players every 5 seconds
 					// Doesn't remove Invisibility or Chase Walk.
 					status_change_end(bl,SC_HIDING,INVALID_TIMER);
 					status_change_end(bl,SC_CLOAKING,INVALID_TIMER);
@@ -13693,6 +13693,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 					if (tsc && tsc->data[SC__SHADOWFORM] && rnd() % 100 < 100 - tsc->data[SC__SHADOWFORM]->val1 * 10) // [100 - (Skill Level x 10)] %
 						status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 				}
+				sc_start(ss, bl, type, 100, sg->skill_lv, sg->interval + 100);
 			}
 			/* Enable this if kRO fix the current skill. Currently no damage on undead and demon monster. [Jobbie]
 			else if( battle_check_target(ss, bl, BCT_ENEMY) > 0 && battle_check_undead(tstatus->race, tstatus->def_ele) )
