@@ -6156,7 +6156,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			if( sd && sc->data[SC_DANCING] )
 				val = max( val, 500 - (40 + 10 * (sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_BARDDANCER)) * pc_checkskill(sd,(sd->status.sex?BA_MUSICALLESSON:DC_DANCINGLESSON)) );
 
-			if( sc->data[SC_DECREASEAGI] || sc->data[SC_ADORAMUS] )
+			if( sc->data[SC_DECREASEAGI] )
 				val = max( val, 25 );
 			if( sc->data[SC_QUAGMIRE] || sc->data[SC_HALLUCINATIONWALK_POSTDELAY] || (sc->data[SC_GLOOMYDAY] && sc->data[SC_GLOOMYDAY]->val4) )
 				val = max( val, 50 );
@@ -7487,11 +7487,11 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def2 = status->luk*10;
 			break;
 		case SC_DECREASEAGI:
-		case SC_ADORAMUS: // Arch Bishop
 			if (sd)
 				tick >>= 1; // Half duration for players.
-			sc_def = status->mdef*100;
-			tick_def = 0; // No duration reduction
+			// Fall through
+		case SC_ADORAMUS: // Arch Bishop
+			sc_def2 = status->mdef*100;
 			break;
 		case SC_ANKLE:
 			if(status->mode&MD_BOSS) // Lasts 5 times less on bosses
@@ -7864,7 +7864,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_DECREASEAGI:
 	case SC_QUAGMIRE:
 	case SC_DONTFORGETME:
-	case SC_ADORAMUS:
 		if(sc->data[SC_SPEEDUP1])
 			return 0;
 		break;
@@ -7941,15 +7940,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_ADRENALINE:
 		if (sc->data[SC_QUAGMIRE] ||
 			sc->data[SC_DECREASEAGI] ||
-			sc->data[SC_ADORAMUS] ||
 			sc->option&OPTION_MADOGEAR // Adrenaline doesn't affect Mado Gear [Ind]
 		)
 			return 0;
 	break;
 	case SC_ADRENALINE2:
 		if (sc->data[SC_QUAGMIRE] ||
-			sc->data[SC_DECREASEAGI] ||
-			sc->data[SC_ADORAMUS]
+			sc->data[SC_DECREASEAGI]
 		)
 			return 0;
 	break;
@@ -7960,7 +7957,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_ONEHAND:
 	case SC_MERC_QUICKEN:
 	case SC_TWOHANDQUICKEN:
-		if(sc->data[SC_DECREASEAGI] || sc->data[SC_ADORAMUS])
+		if(sc->data[SC_DECREASEAGI])
 			return 0;
 	case SC_INCREASEAGI:
 	case SC_CONCENTRATE:
@@ -8264,7 +8261,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		break;
 	case SC_INCREASEAGI:
 		status_change_end(bl, SC_DECREASEAGI, INVALID_TIMER);
-		status_change_end(bl, SC_ADORAMUS, INVALID_TIMER);
 		if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
 			status_change_end(bl, SC_SPIRIT, INVALID_TIMER);
 		break;
@@ -8275,7 +8271,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		status_change_end(bl, SC_MAGNETICFIELD, INVALID_TIMER);
 		// Also blocks the ones below...
 	case SC_DECREASEAGI:
-	case SC_ADORAMUS:
+		if (type == SC_DECREASEAGI) {
+			status_change_end(bl, SC_DECREASEAGI, INVALID_TIMER);
+			status_change_end(bl, SC_ADORAMUS, INVALID_TIMER);
+		}
 		status_change_end(bl, SC_CARTBOOST, INVALID_TIMER);
 		status_change_end(bl, SC_GN_CARTBOOST, INVALID_TIMER);
 		// Also blocks the ones below...
@@ -8288,6 +8287,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		status_change_end(bl, SC_ONEHAND, INVALID_TIMER);
 		status_change_end(bl, SC_MERC_QUICKEN, INVALID_TIMER);
 		status_change_end(bl, SC_ACCELERATION, INVALID_TIMER);
+		break;
+	case SC_ADORAMUS:
+		status_change_end(bl, SC_DECREASEAGI, INVALID_TIMER);
 		break;
 	case SC_ONEHAND:
 	  	// Removes the Aspd potion effect, as reported by Vicious. [Skotlex]
@@ -8351,9 +8353,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		break;
 	case SC_GN_CARTBOOST:
 	case SC_CARTBOOST:
-		if(sc->data[SC_DECREASEAGI] || sc->data[SC_ADORAMUS]) { // Cancel Decrease Agi, but take no further effect [Skotlex]
+		if(sc->data[SC_DECREASEAGI]) { // Cancel Decrease Agi, but take no further effect [Skotlex]
 			status_change_end(bl, SC_DECREASEAGI, INVALID_TIMER);
-			status_change_end(bl, SC_ADORAMUS, INVALID_TIMER);
 			return 0;
 		}
 		//Cart Boost cannot be affected by Slow grace. Assumed if player got Slow Grace first, Cart Boost is failed
@@ -8717,9 +8718,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_DECREASEAGI:
 		case SC_INCREASEAGI:
 		case SC_ADORAMUS:
+			if (type == SC_ADORAMUS) {
+				// 1000% base chance to blind, but still can be resisted
+				sc_start(src, bl, SC_BLIND, 1000, val1, skill_get_time(status_sc2skill(type), val1));
+				if (sc->data[SC_ADORAMUS])
+					return 0; //Adoramus can't refresh itself, but it can cause blind again
+			}
 			val2 = 2 + val1; // Agi change
-			if( type == SC_ADORAMUS )
-				sc_start(src,bl,SC_BLIND,val1 * 4 + (sd ? sd->status.job_level : 50) / 2,val1,skill_get_time(status_sc2skill(type),val1));
 			break;
 		case SC_ENDURE:
 			val2 = 7; // Hit-count [Celest]
@@ -11355,9 +11360,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 						unit_stop_walking(bl,1);
 				}
 			}
-			break;
-		case SC_ADORAMUS:
-			status_change_end(bl, SC_BLIND, INVALID_TIMER);
 			break;
 		case SC__SHADOWFORM:
 			{
