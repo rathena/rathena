@@ -5820,6 +5820,9 @@ BUILDIN_FUNC(percentheal)
 		sp = 0;
 	}
 
+	if (sd->sc.data[SC_BITESCAR])
+		hp = 0;
+
 	pc_percentheal(sd,hp,sp);
 	return SCRIPT_CMD_SUCCESS;
 }

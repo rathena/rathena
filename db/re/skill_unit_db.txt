@@ -177,6 +177,10 @@
 5010,0x91,    ,  0, 1,1000,all,   0x002	//SC_ESCAPE
 5013,0x102,   ,  3, 0,  -1,all,   0x2002	//LG_KINGS_GRACE
 
+5027,0x106,   ,  1:1:2:2:3, 0,  -1,enemy, 0x2010 // SU_CN_POWDERING
+5028,0x86,    ,  1, 0,1000,enemy, 0x10 // SU_CN_METEOR
+5029,0x107,   ,  0, 0,1000,enemy, 0x10 // SU_SV_ROOTTWIST
+
 8020,0xf5,    ,  3, 0,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST
 8033,0x7e,    ,  0, 0,  -1,all,   0x003	//MH_STEINWAND
 8025,0x86,    ,  0, 2:2:3:3:4,1000,enemy, 0x018	//MH_XENO_SLASHER

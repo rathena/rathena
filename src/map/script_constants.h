@@ -1345,6 +1345,16 @@
 	export_constant(SC_PROMOTE_HEALTH_RESERCH);
 	export_constant(SC_ENERGY_DRINK_RESERCH);
 	export_constant(SC_NORECOVER_STATE);
+	export_constant(SC_SUHIDE);
+	export_constant(SC_SU_STOOP);
+	export_constant(SC_SPRITEMABLE);
+	export_constant(SC_CATNIPPOWDER);
+	export_constant(SC_SV_ROOTTWIST);
+	export_constant(SC_BITESCAR);
+	export_constant(SC_ARCLOUSEDASH);
+	export_constant(SC_TUNAPARTY);
+	export_constant(SC_SHRIMP);
+	export_constant(SC_FRESHSHRIMP);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -2306,6 +2316,7 @@
 	export_constant(SI_LIMIT_POWER_BOOSTER);
 	export_constant(SI_TIME_ACCESSORY);
 	export_constant(SI_EP16_DEF);
+	export_constant(SI_NORMAL_ATKED_SP);
 	export_constant(SI_BODYSTATE_STONECURSE);
 	export_constant(SI_BODYSTATE_FREEZING);
 	export_constant(SI_BODYSTATE_STUN);
@@ -2323,6 +2334,10 @@
 	export_constant(SI_HEALTHSTATE_BLOODING);
 	export_constant(SI_HEALTHSTATE_HEAVYPOISON);
 	export_constant(SI_HEALTHSTATE_FEAR);
+	export_constant(SI_CHERRY_BLOSSOM_CAKE);
+	export_constant(SI_SU_STOOP);
+	export_constant(SI_CATNIPPOWDER);
+	export_constant(SI_SV_ROOTTWIST);
 	export_constant(SI_ATTACK_PROPERTY_NOTHING);
 	export_constant(SI_ATTACK_PROPERTY_WATER);
 	export_constant(SI_ATTACK_PROPERTY_GROUND);
@@ -2343,6 +2358,14 @@
 	export_constant(SI_RESIST_PROPERTY_DARKNESS);
 	export_constant(SI_RESIST_PROPERTY_TELEKINESIS);
 	export_constant(SI_RESIST_PROPERTY_UNDEAD);
+	export_constant(SI_BITESCAR);
+	export_constant(SI_ARCLOUSEDASH);
+	export_constant(SI_TUNAPARTY);
+	export_constant(SI_SHRIMP);
+	export_constant(SI_FRESHSHRIMP);
+	export_constant(SI_PERIOD_RECEIVEITEM);
+	export_constant(SI_PERIOD_PLUSEXP);
+	export_constant(SI_PERIOD_PLUSJOBEXP);
 	export_constant(SI_RUNEHELM);
 	export_constant(SI_HELM_VERKANA);
 	export_constant(SI_HELM_RHYDO);
@@ -2351,6 +2374,10 @@
 	export_constant(SI_HELM_ISIA);
 	export_constant(SI_HELM_ASIR);
 	export_constant(SI_HELM_URJ);
+	export_constant(SI_SUHIDE);
+	export_constant(SI_DORAM_BUF_01);
+	export_constant(SI_DORAM_BUF_02);
+	export_constant(SI_SPRITEMABLE);
 
 	/* elements */
 	export_constant(ELE_NEUTRAL);

@@ -1419,12 +1419,19 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 #endif
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
+	struct point tmp_start_point[MAX_STARTPOINT];
+	struct startitem tmp_start_items[MAX_STARTITEM];
 	uint32 char_id;
 	int flag, k, start_point_idx = rand() % charserv_config.start_point_count;
 
 	safestrncpy(name, name_, NAME_LENGTH);
 	normalize_name(name,TRIM_CHARS);
 	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
+
+	memset(tmp_start_point, 0, MAX_STARTPOINT * sizeof(struct point));
+	memset(tmp_start_items, 0, MAX_STARTITEM * sizeof(struct startitem));
+	memcpy(tmp_start_point, charserv_config.start_point, MAX_STARTPOINT * sizeof(struct point));
+	memcpy(tmp_start_items, charserv_config.start_items, MAX_STARTITEM * sizeof(struct startitem));
 
 	flag = char_check_char_name(name,esc_name);
 	if( flag < 0 )
@@ -1480,8 +1487,17 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	}
 
 #if PACKETVER >= 20151001
-	if (start_job != JOB_NOVICE)
+	if (start_job != JOB_NOVICE && start_job != JOB_SUMMONER)
 		return -2; // Invalid job
+
+	// Check for Doram based information.
+	if (start_job == JOB_SUMMONER) { // Check for just this job for now.
+		memset(tmp_start_point, 0, MAX_STARTPOINT * sizeof(struct point));
+		memset(tmp_start_items, 0, MAX_STARTITEM * sizeof(struct startitem));
+		memcpy(tmp_start_point, charserv_config.start_point_doram, MAX_STARTPOINT * sizeof(struct point));
+		memcpy(tmp_start_items, charserv_config.start_items_doram, MAX_STARTITEM * sizeof(struct startitem));
+		start_point_idx = rand() % charserv_config.start_point_count_doram;
+	}
 #endif
 
 	//Insert the new char entry to the database
@@ -1491,21 +1507,21 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 		"'%d', '%d', '%s', '%d', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d', '%c')",
 		schema_config.char_db, sd->account_id , slot, esc_name, start_job, charserv_config.start_zeny, 48, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-		mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y, mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y, sex) )
+		mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, sex) )
 #elif PACKETVER >= 20120307
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `status_point`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
 		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
 		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, 48, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-		mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y, mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y) )
+		mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y) )
 #else
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `zeny`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
 		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`) VALUES ("
 		"'%d', '%d', '%s', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d')",
 		schema_config.char_db, sd->account_id , slot, esc_name, charserv_config.start_zeny, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-		mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y, mapindex_id2name(charserv_config.start_point[start_point_idx].map), charserv_config.start_point[start_point_idx].x, charserv_config.start_point[start_point_idx].y) )
+		mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, mapindex_id2name(tmp_start_point[start_point_idx].map), tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y) )
 #endif
 	{
 		Sql_ShowDebug(sql_handle);
@@ -1515,8 +1531,8 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	//Retrieve the newly auto-generated char id
 	char_id = (int)Sql_LastInsertId(sql_handle);
 	//Give the char the default items
-	for (k = 0; k <= MAX_STARTITEM && charserv_config.start_items[k].nameid != 0; k ++) {
-		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%hu', '%hu', '%hu', '%d')", schema_config.inventory_db, char_id, charserv_config.start_items[k].nameid, charserv_config.start_items[k].amount, charserv_config.start_items[k].pos, 1) )
+	for (k = 0; k <= MAX_STARTITEM && tmp_start_items[k].nameid != 0; k ++) {
+		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`char_id`,`nameid`, `amount`, `equip`, `identify`) VALUES ('%d', '%hu', '%hu', '%hu', '%d')", schema_config.inventory_db, char_id, tmp_start_items[k].nameid, tmp_start_items[k].amount, tmp_start_items[k].pos, 1) )
 			Sql_ShowDebug(sql_handle);
 	}
 
@@ -2661,12 +2677,28 @@ void char_set_defaults(){
 	charserv_config.start_point[0].y = MAP_DEFAULT_Y;
 	charserv_config.start_point_count = 1;
 
+#if PACKETVER >= 20151001
+	charserv_config.start_point_doram[0].map = mapindex_name2id(MAP_DEFAULT_NAME);
+	charserv_config.start_point_doram[0].x = MAP_DEFAULT_X;
+	charserv_config.start_point_doram[0].y = MAP_DEFAULT_Y;
+	charserv_config.start_point_count_doram = 1;
+#endif
+
 	charserv_config.start_items[0].nameid = 1201;
 	charserv_config.start_items[0].amount = 1;
 	charserv_config.start_items[0].pos = 2;
 	charserv_config.start_items[1].nameid = 2301;
 	charserv_config.start_items[1].amount = 1;
 	charserv_config.start_items[1].pos = 16;
+
+#if PACKETVER >= 20150101
+	charserv_config.start_items_doram[0].nameid = 1681;
+	charserv_config.start_items_doram[0].amount = 1;
+	charserv_config.start_items_doram[0].pos = 2;
+	charserv_config.start_items_doram[1].nameid = 2301;
+	charserv_config.start_items_doram[1].amount = 1;
+	charserv_config.start_items_doram[1].pos = 16;
+#endif
 
 	charserv_config.console = 0;
 	charserv_config.max_connect_user = -1;
@@ -2682,48 +2714,43 @@ void char_set_defaults(){
 
 /**
  * Split start_point configuration values.
+ * @param w1_value: Value from w1
  * @param w2_value: Value from w2
+ * @param start: Start point reference
+ * @param count: Start point count reference
  */
-static void char_config_split_startpoint(char *w2_value)
+static void char_config_split_startpoint(char *w1_value, char *w2_value, struct point start_point[MAX_STARTPOINT], short *count)
 {
-	char *lineitem, **fields, config_name[20];
+	char *lineitem, **fields;
 	int i = 0, fields_length = 3 + 1;
 
-	memset(config_name, 0, sizeof(config_name));
-
-#ifdef RENEWAL
-	strcat(config_name, "start_point");
-#else
-	strcat(config_name, "start_point_pre");
-#endif
-
-	charserv_config.start_point_count = 0; // Reset to begin reading
+	(*count) = 0; // Reset to begin reading
 
 	fields = (char **)aMalloc(fields_length * sizeof(char *));
 	if (fields == NULL)
 		return; // Failed to allocate memory.
 	lineitem = strtok(w2_value, ":");
 
-	while (lineitem != NULL && charserv_config.start_point_count < MAX_STARTPOINT) {
+	while (lineitem != NULL && (*count) < MAX_STARTPOINT) {
 		int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
 
 		if (n + 1 < fields_length) {
-			ShowDebug("%s: not enough arguments for %s! Skipping...\n", config_name, lineitem);
+			ShowDebug("%s: not enough arguments for %s! Skipping...\n", w1_value, lineitem);
 			lineitem = strtok(NULL, ":"); //next lineitem
 			continue;
 		}
 
-		charserv_config.start_point[i].map = mapindex_name2id(fields[1]);
-		if (!charserv_config.start_point[i].map) {
-			ShowError("Start point %s not found in map-index cache. Setting to default location.\n", charserv_config.start_point[i].map);
-			charserv_config.start_point[i].map = mapindex_name2id(MAP_DEFAULT_NAME);
-			charserv_config.start_point[i].x = MAP_DEFAULT_X;
-			charserv_config.start_point[i].y = MAP_DEFAULT_Y;
+		start_point[i].map = mapindex_name2id(fields[1]);
+		if (!start_point[i].map) {
+			ShowError("Start point %s not found in map-index cache. Setting to default location.\n", start_point[i].map);
+			start_point[i].map = mapindex_name2id(MAP_DEFAULT_NAME);
+			start_point[i].x = MAP_DEFAULT_X;
+			start_point[i].y = MAP_DEFAULT_Y;
 		} else {
-			charserv_config.start_point[i].x = max(0, atoi(fields[2]));
-			charserv_config.start_point[i].y = max(0, atoi(fields[3]));
+			start_point[i].x = max(0, atoi(fields[2]));
+			start_point[i].y = max(0, atoi(fields[3]));
 		}
-		charserv_config.start_point_count++;
+		(*count)++;
 
 		lineitem = strtok(NULL, ":"); //next lineitem
 		i++;
@@ -2733,16 +2760,14 @@ static void char_config_split_startpoint(char *w2_value)
 
 /**
  * Split start_items configuration values.
+ * @param w1_value: Value from w1
  * @param w2_value: Value from w2
+ * @param start: Start item reference
  */
-static void char_config_split_startitem(char *w2_value)
+static void char_config_split_startitem(char *w1_value, char *w2_value, struct startitem start_items[MAX_STARTITEM])
 {
-	char *lineitem, **fields, config_name[20];
+	char *lineitem, **fields;
 	int i = 0, fields_length = 3 + 1;
-
-	memset(config_name, 0, sizeof(config_name));
-
-	strcat(config_name, "start_items");
 
 	fields = (char **)aMalloc(fields_length * sizeof(char *));
 	if (fields == NULL)
@@ -2753,15 +2778,15 @@ static void char_config_split_startitem(char *w2_value)
 		int n = sv_split(lineitem, strlen(lineitem), 0, ',', fields, fields_length, SV_NOESCAPE_NOTERMINATE);
 
 		if (n + 1 < fields_length) {
-			ShowDebug("%s: not enough arguments for %s! Skipping...\n", config_name, lineitem);
+			ShowDebug("%s: not enough arguments for %s! Skipping...\n", w1_value, lineitem);
 			lineitem = strtok(NULL, ":"); //next lineitem
 			continue;
 		}
 
 		// TODO: Item ID verification
-		charserv_config.start_items[i].nameid = max(0, atoi(fields[1]));
-		charserv_config.start_items[i].amount = max(0, atoi(fields[2]));
-		charserv_config.start_items[i].pos = max(0, atoi(fields[3]));
+		start_items[i].nameid = max(0, atoi(fields[1]));
+		start_items[i].amount = max(0, atoi(fields[2]));
+		start_items[i].pos = max(0, atoi(fields[3]));
 
 		lineitem = strtok(NULL, ":"); //next lineitem
 		i++;
@@ -2865,13 +2890,21 @@ bool char_config_read(const char* cfgName, bool normal){
 #else
 		} else if (strcmpi(w1, "start_point_pre") == 0) {
 #endif
-			char_config_split_startpoint(w2);
+			char_config_split_startpoint(w1, w2, charserv_config.start_point, &charserv_config.start_point_count);
+#if PACKETVER >= 20151001
+		} else if (strcmpi(w1, "start_point_doram") == 0) {
+			char_config_split_startpoint(w1, w2, charserv_config.start_point_doram, &charserv_config.start_point_count_doram);
+#endif
 		} else if (strcmpi(w1, "start_zeny") == 0) {
 			charserv_config.start_zeny = atoi(w2);
 			if (charserv_config.start_zeny < 0)
 				charserv_config.start_zeny = 0;
 		} else if (strcmpi(w1, "start_items") == 0) {
-			char_config_split_startitem(w2);
+			char_config_split_startitem(w1, w2, charserv_config.start_items);
+#if PACKETVER >= 20151001
+		} else if (strcmpi(w1, "start_items_doram") == 0) {
+			char_config_split_startitem(w1, w2, charserv_config.start_items_doram);
+#endif
 		} else if(strcmpi(w1,"log_char")==0) {		//log char or not [devil]
 			charserv_config.log_char = atoi(w2);
 		} else if (strcmpi(w1, "unknown_char_name") == 0) {
