@@ -1503,8 +1503,11 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		sp = 0;
 	}
 
-	if (target->type == BL_SKILL)
-		return (int)skill_unit_ondamaged((struct skill_unit *)target, hp);
+	if (target->type == BL_SKILL) {
+		if (!src || src->type&battle_config.can_damage_skill)
+			return (int)skill_unit_ondamaged((struct skill_unit *)target, hp);
+		return 0;
+	}
 
 	status = status_get_status_data(target);
 	if(!status || status == &dummy_status )

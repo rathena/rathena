@@ -607,6 +607,7 @@ extern struct Battle_Config
 	int exp_cost_redemptio_limit;
 	int exp_cost_inspiration;
 	int mvp_exp_reward_message;
+	int can_damage_skill; //Which BL types can damage traps
 } battle_config;
 
 void do_init_battle(void);

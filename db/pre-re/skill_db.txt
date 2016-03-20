@@ -86,13 +86,13 @@
 // Mage
 9,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		MG_SRECOVERY,Increase SP Recovery
 10,0,6,4,3,0x3,3,1,1,yes,0,0,0,magic,0,0x4000,		MG_SIGHT,Sight
-11,9,6,1,8,0x6,1,10,1,yes,0,0x2000,0,magic,0,0x0,		MG_NAPALMBEAT,Napalm Beat
+11,9,6,1,8,0x6,1,10,1,yes,0,0x42000,0,magic,0,0x0,		MG_NAPALMBEAT,Napalm Beat
 12,9,8,2,8,0x1,0,10,1,yes,0,0,0,magic,0,0x0,		MG_SAFETYWALL,Safety Wall
 13,9,8,1,8,0,0,10,1:1:2:2:3:3:4:4:5:5,yes,0,0x2000,0,magic,0,0x0,		MG_SOULSTRIKE,Soul Strike
 14,9,8,1,1,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0x2000,0,magic,0,0x0,	MG_COLDBOLT,Cold Bolt
 15,9,6,1,1,0,0,10,1,yes,0,0x2000,0,magic,0,0x0,		MG_FROSTDIVER,Frost Diver
 16,2,6,1,2,0x1,0,10,1,yes,0,0,0,magic,0,0x0,		MG_STONECURSE,Stone Curse
-17,9,6,1,3,0x2,2,10,1,yes,0,0x2000,0,magic,0,0x0,		MG_FIREBALL,Fire Ball
+17,9,6,1,3,0x2,2,10,1,yes,0,0x42000,0,magic,0,0x0,		MG_FIREBALL,Fire Ball
 18,9,6,2,3,0,0,10,1,yes,0,0x2000,3,magic,2,0x0,		MG_FIREWALL,Fire Wall
 19,9,8,1,3,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0x2000,0,magic,0,0x0,	MG_FIREBOLT,Fire Bolt
 20,9,8,1,4,0,0,10,1:2:3:4:5:6:7:8:9:10,yes,0,0x2000,0,magic,0,0x0,	MG_LIGHTNINGBOLT,Lightning Bolt
@@ -149,11 +149,11 @@
 55,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		KN_SPEARMASTERY,Spear Mastery
 56,-2,8,1,-1,0,0,10,3,no,0,0,0,weapon,0,0x0,		KN_PIERCE,Pierce
 57,-2,6,1,-1,0x1,2,10,1,no,0,0,5,weapon,2,0x20000,	KN_BRANDISHSPEAR,Brandish Spear
-58,-4,6,1,-1,0x2,0,10,1,no,0,0,0,weapon,6,0x0,	KN_SPEARSTAB,Spear Stab
+58,-4,6,1,-1,0x2,0,10,1,no,0,0x40000,0,weapon,6,0x0,	KN_SPEARSTAB,Spear Stab
 59,3:5:7:9:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	KN_SPEARBOOMERANG,Spear Boomerang
 60,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,		KN_TWOHANDQUICKEN,Twohand Quicken
 61,0,6,4,-1,0x20,0,5,1,no,0,0,0,weapon,0,0x0,	KN_AUTOCOUNTER,Counter Attack
-62,-2,6,1,-1,0x2,1,10,1,no,0,0,0,weapon,1,0x0,	KN_BOWLINGBASH,Bowling Bash
+62,-2,6,1,-1,0x2,1,10,1,no,0,0x40000,0,weapon,1,0x0,	KN_BOWLINGBASH,Bowling Bash
 63,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0,0x0,		KN_RIDING,Peco Peco Riding
 64,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,0x0,		KN_CAVALIERMASTERY,Cavalier Mastery
 
@@ -225,13 +225,13 @@
 120,3,6,2,0,0x3,1,5,1,no,0,0x80,0,misc,0,0x3000,	HT_FLASHER,Flasher
 121,3,6,2,1,0x42,1,5,1,no,0,0x80,0,weapon,0,0x3800,	HT_FREEZINGTRAP,Freezing Trap
 122,3,6,2,4,0xC2,1,5,1,no,0,0x80,0,misc,0,0x3800,	HT_BLASTMINE,Blast Mine
-123,3,6,2,3,0xC2,2,5,1,no,0,0x80,0,misc,0,0x3800,	HT_CLAYMORETRAP,Claymore Trap
+123,3,6,2,3,0xC2,2,5,1,no,0,0x40080,0,misc,0,0x3800,	HT_CLAYMORETRAP,Claymore Trap
 124,2,6,32,0,0x1,0,1,1,no,0,0x40000,0,misc,0,0x0,		HT_REMOVETRAP,Remove Trap
 125,3,6,2,0,0x1,0,1,1,no,0,0x80,0,misc,0,0x2000,		HT_TALKIEBOX,Talkie Box
 126,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		HT_BEASTBANE,Beast Bane
 127,0,0,0,0,0,0,1,0,no,0,0,0,misc,0,0x0,		HT_FALCON,Falconry Mastery
 128,0,0,0,0,0,0,10,0,no,0,0,0,misc,0,0x0,		HT_STEELCROW,Steel Crow
-129,5,8,1,0,0x42,1,5,1:2:3:4:5,yes,0,0,0,misc,0,0x80,	HT_BLITZBEAT,Blitz Beat
+129,5,8,1,0,0x42,1,5,1:2:3:4:5,yes,0,0x40000,0,misc,0,0x80,	HT_BLITZBEAT,Blitz Beat
 130,3:5:7:9,6,2,0,0x3,3,4,1,no,0,0,0,misc,0,0x0,	HT_DETECTING,Detect
 131,4:5:6:7:8,6,32,0,0x1,0,5,1,no,0,0,0,misc,0,0x0,	HT_SPRINGTRAP,Spring Trap
 
@@ -242,7 +242,7 @@
 134,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		AS_KATAR,Katar Mastery
 135,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x80040,	AS_CLOAKING,Cloaking
 136,1,8,1,-1,0,0,10,-8,no,0,0,0,weapon,0,0x0,	AS_SONICBLOW,Sonic Blow
-137,3:4:5:6:7,6,1,-1,0x2,1,5,1,no,0,0,0,weapon,0,0x4,	AS_GRIMTOOTH,Grimtooth
+137,3:4:5:6:7,6,1,-1,0x2,1,5,1,no,0,0x40000,0,weapon,0,0x4,	AS_GRIMTOOTH,Grimtooth
 138,1,6,16,5,0x1,0,10,1,no,0,0x400,0,weapon,0,0x0,	AS_ENCHANTPOISON,Enchant Poison
 139,0,6,4,0,0,0,10,1,no,0,0,0,weapon,0,0x0,		AS_POISONREACT,Poison React
 140,2,6,2,5,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	AS_VENOMDUST,Venom Dust
@@ -261,7 +261,7 @@
 150,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,5,0x40,	TF_BACKSLIDING,Back Slide
 151,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,0x0,		TF_PICKSTONE,Find Stone
 152,7,6,1,0,0x40,0,1,1,no,0,0x1,0,misc,0,0x0,	TF_THROWSTONE,Stone Fling
-153,1,6,1,-1,0x2,1,1,1,no,0,0x1,0,weapon,2,0x0,	MC_CARTREVOLUTION,Cart Revolution
+153,1,6,1,-1,0x2,1,1,1,no,0,0x40001,0,weapon,2,0x0,	MC_CARTREVOLUTION,Cart Revolution
 154,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,0x0,		MC_CHANGECART,Change Cart
 155,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,0,0x0,	MC_LOUD,Crazy Uproar
 156,9,6,1,6,0,0,1,1,yes,0,0x1,0,magic,0,0x0,		AL_HOLYLIGHT,Holy Light
@@ -284,8 +284,8 @@
 170,-9,6,1,-1,0x20,0,10,1,no,0,0x2,0,weapon,0,0x0,	NPC_CRITICALSLASH,Defense disregard attack
 171,-9,8,1,-1,0,0,10,-2:-3:-4:-5:-6:-7:-8:-9:-10:-11,no,0,0x2,0,weapon,0,0x0,	NPC_COMBOATTACK,Multi-stage Attack
 172,-9,6,1,-1,0x40,0,10,1,no,0,0x2,0,weapon,0,0x0,	NPC_GUIDEDATTACK,Guided Attack
-173,5,6,4,3,0xE2,5,10,1,no,0,0x2,0,misc,3,0x0,	NPC_SELFDESTRUCTION,Suicide bombing
-174,-9,6,1,-1,0x2,3,1,1,no,0,0x2,0,weapon,0,0x0,	NPC_SPLASHATTACK,Splash attack
+173,5,6,4,3,0xE2,5,10,1,no,0,0x40002,0,misc,3,0x0,	NPC_SELFDESTRUCTION,Suicide bombing
+174,-9,6,1,-1,0x2,3,1,1,no,0,0x40002,0,weapon,0,0x0,	NPC_SPLASHATTACK,Splash attack
 175,0,0,4,0,0x41,0,10,1,no,0,0x2,0,misc,0,0x0,	NPC_SUICIDE,Suicide
 176,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0,0x0,	NPC_POISON,Poison Attack
 177,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0,0x0,	NPC_BLINDATTACK,Blind Attack
@@ -328,7 +328,7 @@
 211,1,6,1,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	RG_STEALCOIN,Mug
 212,-1,6,1,-1,0x40,0,10,1,no,0,0,0,weapon,0,0x4,	RG_BACKSTAP,Back Stab
 213,0,0,0,0,0,0,5,0,no,0,0,0,none,0,0x0,		RG_TUNNELDRIVE,Stalk
-214,0,6,4,-1,0x2,1,5,1,no,0,0,0,weapon,0,0x4,	RG_RAID,Sightless Mind
+214,0,6,4,-1,0x2,1,5,1,no,0,0x40000,0,weapon,0,0x4,	RG_RAID,Sightless Mind
 215,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		RG_STRIPWEAPON,Divest Weapon
 216,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		RG_STRIPSHIELD,Divest Shield
 217,1,6,1,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		RG_STRIPARMOR,Divest Armor
@@ -373,7 +373,7 @@
 250,3,6,1,0,0,0,5,1,no,0,0,0,weapon,5:6:7:8:9,0x0,	CR_SHIELDCHARGE,Smite
 251,3:5:7:9:11,6,1,0,0,0,5,1,no,0,0,0,weapon,0,0x20000,	CR_SHIELDBOOMERANG,Shield Boomerang
 252,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,		CR_REFLECTSHIELD,Shield Reflect
-253,-2,8,1,6,0,0,10,-2,no,0,0,0,weapon,0,0x0,	CR_HOLYCROSS,Holy Cross
+253,-2,8,1,6,0,0,10,-2,no,0,0x40000,0,weapon,0,0x0,	CR_HOLYCROSS,Holy Cross
 254,5,6,4,6,0x48,0,10,1,no,33,0x100,0,magic,0,0x0,	CR_GRANDCROSS,Grand Cross
 255,7:8:9:10:11,6,16,0,0x1,0,5,1,yes,0,0x600,0,none,0,0x0,	CR_DEVOTION,Sacrifice
 256,9,6,16,0,0x1,0,5,1,yes,0,0x200,0,none,0,0x0,	CR_PROVIDENCE,Resistant Souls
@@ -386,17 +386,17 @@
 260,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,0x0,		MO_SPIRITSRECOVERY,Spiritual Cadence
 261,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		MO_CALLSPIRITS,Summon Spirit Sphere
 262,9,6,16,0,0x1,0,1,1,yes,0,0,0,weapon,0,0x0,	MO_ABSORBSPIRITS,Absorb Spirit Sphere
-263,-1,8,0,-1,0,0,10,-3,no,0,0,0,weapon,0,0x10,	MO_TRIPLEATTACK,Raging Trifecta Blow
+263,-1,8,0,-1,0,0,10,-3,no,0,0x40000,0,weapon,0,0x10,	MO_TRIPLEATTACK,Raging Trifecta Blow
 264,18,6,2,0,0x1,0,1,1,no,0,0,0,none,0,0x0,		MO_BODYRELOCATION,Snap
 265,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		MO_DODGE,Dodge
-266,2,6,1,0,0x40,0,5,1,no,0,0,0,weapon,0,0x0,	MO_INVESTIGATE,Occult Impaction
-267,9,8,1,-1,0,0,5,1:2:3:4:5,no,0,0,0,weapon,0,0x0,	MO_FINGEROFFENSIVE,Throw Spirit Sphere
+266,2,6,1,0,0x40,0,5,1,no,0,0x40000,0,weapon,0,0x0,	MO_INVESTIGATE,Occult Impaction
+267,9,8,1,-1,0,0,5,1:2:3:4:5,no,0,0x40000,0,weapon,0,0x0,	MO_FINGEROFFENSIVE,Throw Spirit Sphere
 268,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		MO_STEELBODY,Mental Strength
 269,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		MO_BLADESTOP,Root
 270,0,6,4,0,0x1,0,5,0,no,0,0,0,weapon,0,0x0,		MO_EXPLOSIONSPIRITS,Fury
-271,-2,6,1,0,0x60,0,5,1,yes,0,0,0,weapon,0,0x0,	MO_EXTREMITYFIST,Asura Strike
+271,-2,6,1,0,0x60,0,5,1,yes,0,0x40000,0,weapon,0,0x0,	MO_EXTREMITYFIST,Asura Strike
 272,-2,8,4,-1,0,0,5,-4,no,0,0x200,0,weapon,0,0x0,	MO_CHAINCOMBO,Raging Quadruple Blow
-273,-2,6,4,-1,0x2,2,5,1,no,0,0x200,0,weapon,0,0x0,	MO_COMBOFINISH,Raging Thrust
+273,-2,6,4,-1,0x2,2,5,1,no,0,0x40200,0,weapon,0,0x0,	MO_COMBOFINISH,Raging Thrust
 
 //****
 // Sage
@@ -550,7 +550,7 @@
 // Sniper
 380,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	SN_SIGHT,Falcon Eyes
 381,9,8,1,-3,0x40,0,5,1,yes,0,0,0,misc,0,0x0,		SN_FALCONASSAULT,Falcon Assault
-382,9,8,1,-1,0,1,5,1,yes,0,0,14,weapon,0,0x0,	SN_SHARPSHOOTING,Focused Arrow Strike
+382,9,8,1,-1,0,1,5,1,yes,0,0x40000,14,weapon,0,0x0,	SN_SHARPSHOOTING,Focused Arrow Strike
 383,0,6,4,0,0x3,-1,10,1,yes,0,0,0,weapon,0,0x0,	SN_WINDWALK,Wind Walker
 
 //****
@@ -580,13 +580,13 @@
 
 //****
 // Lord Knight
-397,5,8,1,-1,0x20,0,5,5,no,0,0,0,weapon,0,0x20000,	LK_SPIRALPIERCE,Spiral Pierce
+397,5,8,1,-1,0x20,0,5,5,no,0,0x40000,0,weapon,0,0x20000,	LK_SPIRALPIERCE,Spiral Pierce
 398,4,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,		LK_HEADCRUSH,Traumatic Blow
 399,4,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0x0,		LK_JOINTBEAT,Vital Strike
 
 //****
 // High Wizard
-400,9,8,1,8,0x6,1,5,1:2:3:4:5,yes,0,0,0,magic,0,0x0,	HW_NAPALMVULCAN,Napalm Vulcan
+400,9,8,1,8,0x6,1,5,1:2:3:4:5,yes,0,0x40000,0,magic,0,0x0,	HW_NAPALMVULCAN,Napalm Vulcan
 
 //****
 // Champion
@@ -601,7 +601,7 @@
 
 //****
 // Assassin Cross
-406,0,6,4,-1,0xA,2,10,1,no,0,0,0,weapon,0,0x0,	ASC_METEORASSAULT,Meteor Assault
+406,0,6,4,-1,0xA,2,10,1,no,0,0x40000,0,weapon,0,0x0,	ASC_METEORASSAULT,Meteor Assault
 407,0,6,4,0,0x1,0,1,0,no,0,0,0,none,0,0x0,		ASC_CDP,Create Deadly Poison
 
 //****
@@ -614,7 +614,7 @@
 // Taekwon
 411,0,6,4,0,0x1,0,10,1,yes,0,0,0,misc,4,0x0,		TK_RUN,Running
 412,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,		TK_READYSTORM,Tornado Stance
-413,-2,8,4,-1,0x2,2,7,-3,no,0,0x200,0,weapon,0,0x0,	TK_STORMKICK,Tornado Kick
+413,-2,8,4,-1,0x2,2,7,-3,no,0,0x40200,0,weapon,0,0x0,	TK_STORMKICK,Tornado Kick
 414,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,		TK_READYDOWN,Heel Drop Stance
 415,-2,8,4,-1,0,0,7,-3,no,0,0x200,0,weapon,0,0x0,	TK_DOWNKICK,Heel Drop
 416,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,		TK_READYTURN,Roundhouse Stance
@@ -742,7 +742,7 @@
 517,0,6,4,-1,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	GS_GATLINGFEVER,Gatling Fever
 518,2,6,1,-1,0,0,10,1,no,0,0,0,weapon,5,0x0,		GS_DUST,Dust
 519,-9,6,1,-1,0,0,10,1,yes,0,0,0,weapon,0,0x100,	GS_FULLBUSTER,Full Buster
-520,-9,6,1,-1,0x2,1:1:1:2:2:2:3:3:3:4,10,1,no,0,0,0,weapon,0,0x100,	GS_SPREADATTACK,Spread Attack
+520,-9,6,1,-1,0x2,1:1:1:2:2:2:3:3:3:4,10,1,no,0,0x40000,0,weapon,0,0x100,	GS_SPREADATTACK,Spread Attack
 521,-9,6,2,-1,0x42,1,10,1,no,0,0,0,weapon,3,0x100,	GS_GROUNDDRIFT,Ground Drift
 
 //****
@@ -750,7 +750,7 @@
 522,0,0,0,0,0,0,10,1,no,0,0,0,weapon,0,0x0,		NJ_TOBIDOUGU,Shuriken Training
 523,9,6,1,-1,0x40,0,10,1,no,0,0,0,weapon,0,0x0,	NJ_SYURIKEN,Throw Shuriken
 524,9,8,1,-1,0x48,0,5,3,no,0,0,0,weapon,0,0x0,	NJ_KUNAI,Throw Kunai
-525,9,8,1,-1,0x6,1,5,-3:-3:-4:-4:-5,yes,0,0,0,weapon,0,0x0,	NJ_HUUMA,Throw Huuma Shuriken
+525,9,8,1,-1,0x6,1,5,-3:-3:-4:-4:-5,yes,0,0x40000,0,weapon,0,0x0,	NJ_HUUMA,Throw Huuma Shuriken
 526,9,6,1,0,0x50,0,10,1,no,0,0x18000,0,misc,0,0x0,		NJ_ZENYNAGE,Throw Zeny
 527,0,6,4,-1,0,0,5,1,no,0,0,0,weapon,3,0x0,		NJ_TATAMIGAESHI,Improvised Defense
 528,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0x0,	NJ_KASUMIKIRI,Vanishing Slash
@@ -767,7 +767,7 @@
 539,0,6,4,1,0,0,5,1,yes,0,0,0,magic,0,0x0,		NJ_HYOUSYOURAKU,Ice Meteor
 540,9,8,1,4,0,0,10,1:2:2:3:3:4:4:5:5:6,yes,0,0,0,magic,0,0x0,	NJ_HUUJIN,Wind Blade
 541,9,6,4,4,0,0,5,1,yes,0,0,0,magic,0,0x0,	NJ_RAIGEKISAI,Lightning Strike of Destruction
-542,5:6:7:8:9,8,1,4,0,1,5,1,yes,0,0,5:6:7:8:9,magic,0,0x0,	NJ_KAMAITACHI,Kamaitachi
+542,5:6:7:8:9,8,1,4,0,1,5,1,yes,0,0x40000,5:6:7:8:9,magic,0,0x0,	NJ_KAMAITACHI,Kamaitachi
 543,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,		NJ_NEN,Soul
 544,-5,6,1,0,0x40,0,10,1,no,0,0,0,weapon,0,0x0,	NJ_ISSEN,Final Strike
 
@@ -778,7 +778,7 @@
 
 //****
 // Additional NPC Skills (Episode 11.3)
-653,0,8,4,0,0x6,5:7:9:11:13:5:7:9:11:13,10,1,no,0,0x2,0,magic,0,0x0,	NPC_EARTHQUAKE,Earthquake
+653,0,8,4,0,0x6,5:7:9:11:13:5:7:9:11:13,10,1,no,0,0x40002,0,magic,0,0x0,	NPC_EARTHQUAKE,Earthquake
 654,6,6,1,3,0,3,10,1,no,0,0x2,14,weapon,0,0x0,	NPC_FIREBREATH,Fire Breath
 655,6,6,1,1,0,3,10,1,no,0,0x2,14,weapon,0,0x0,	NPC_ICEBREATH,Ice Breath
 656,6,6,1,4,0,3,10,1,no,0,0x2,14,weapon,0,0x0,	NPC_THUNDERBREATH,Thunder Breath
@@ -786,8 +786,8 @@
 658,6,6,1,7,0,3,10,1,no,0,0x2,14,weapon,0,0x0,	NPC_DARKNESSBREATH,Darkness Breath
 659,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,0x0,	NPC_DRAGONFEAR,Dragon Fear
 660,-9,6,1,-1,0,0,5,1,no,0,0x2,0,weapon,0,0x0,	NPC_BLEEDING,Bleeding
-661,0,6,4,0,0x2,7,5,1,no,0,0x2,0,weapon,7,0x0,	NPC_PULSESTRIKE,Pulse Strike
-662,0,6,4,0,0x2,14,10,1,no,0,0x2,0,weapon,0,0x0,	NPC_HELLJUDGEMENT,Hell's Judgement
+661,0,6,4,0,0x2,7,5,1,no,0,0x40002,0,weapon,7,0x0,	NPC_PULSESTRIKE,Pulse Strike
+662,0,6,4,0,0x2,14,10,1,no,0,0x40002,0,weapon,0,0x0,	NPC_HELLJUDGEMENT,Hell's Judgement
 663,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,0x0,	NPC_WIDESILENCE,Wide Silence
 664,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,0x0,	NPC_WIDEFREEZE,Wide Freeze
 665,0,6,4,0,0x3,2:5:8:11:14,5,1,no,0,0x2,0,none,0,0x0,	NPC_WIDEBLEEDING,Wide Bleeding
@@ -1014,15 +1014,15 @@
 2250,3,6,2,1,0x43,2,1,1,no,0,0x80,1,misc,0,0x2000,	RA_COBALTTRAP,Cobalt Trap
 2251,3,6,2,2,0x43,2,1,1,no,0,0x80,1,misc,0,0x2000,	RA_MAIZETRAP,Maize Trap
 2252,3,6,2,4,0x43,2,1,1,no,0,0x80,1,misc,0,0x2000,	RA_VERDURETRAP,Verdure Trap
-2253,3,6,2,3,0x42,2,5,1,no,0,0x80,2,misc,0,0x2800,	RA_FIRINGTRAP,Firing Trap
-2254,3,6,2,1,0x42,2,5,1,no,0,0x80,2,misc,0,0x2800,	RA_ICEBOUNDTRAP,Icebound Trap
+2253,3,6,2,3,0x42,2,5,1,no,0,0x40080,2,misc,0,0x2800,	RA_FIRINGTRAP,Firing Trap
+2254,3,6,2,1,0x42,2,5,1,no,0,0x40080,2,misc,0,0x2800,	RA_ICEBOUNDTRAP,Icebound Trap
 
 //****
 // NC Mechanic
 2255,0,0,0,0,0,0,5,0,no,0,0,0,none,0,0x0,		NC_MADOLICENCE,Mado License
 2256,11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	NC_BOOSTKNUCKLE,Boost Knuckle
 2257,3,6,1,-1,0,0,3,1,no,0,0,0,weapon,0,0x0,	NC_PILEBUNKER,Pile Bunker
-2258,13,6,1,-1,0x2,1,3,1,no,0,0,0,weapon,0,0x0,	NC_VULCANARM,Vulcan Arm
+2258,13,6,1,-1,0x2,1,3,1,no,0,0x40000,0,weapon,0,0x0,	NC_VULCANARM,Vulcan Arm
 2259,5,6,1,3,0,1,3,1,no,0,0,5,weapon,0,0x0,		NC_FLAMELAUNCHER,Flame Launcher
 2260,7,6,2,1,0x2,2:3:4,3,1,no,0,0x40000,0,weapon,0,0x0,	NC_COLDSLOWER,Cold Slower
 2261,9:11:13,6,1,-1,0x42,3:2:1,3,1,no,0,0,0,weapon,0,0x0,	NC_ARMSCANNON,Arm Cannon
@@ -1044,7 +1044,7 @@
 2277,0,0,0,0,0,0,5,0,no,0,0,0,none,0,0x0,		NC_RESEARCHFE,Research Fire/Earth
 2278,5:6:7:8:9,6,1,-1,0,0,5,1,no,0,0,0,weapon,2:3:4:5:6,0x0,	NC_AXEBOOMERANG,Axe Boomerang
 2279,1,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	NC_POWERSWING,Power Swing
-2280,0,8,4,-1,0x2,2:2:3:3:3,5,-6,no,0,0,0,weapon,0,0x0,	NC_AXETORNADO,Axe Tornado
+2280,0,8,4,-1,0x2,2:2:3:3:3,5,-6,no,0,0x40000,0,weapon,0,0x0,	NC_AXETORNADO,Axe Tornado
 2281,2,6,2,0,0x1,0,5,1,yes,0,0,2,none,0,0x0,	NC_SILVERSNIPER,FAW - Silver Sniper
 2282,2,6,2,0,0x1,0,5,1,yes,0,0,2,none,0,0x0,	NC_MAGICDECOY,FAW - Magic Decoy
 2283,5,6,1,0,0x1,0,1,1,no,0,0,0,none,0,0x0,		NC_DISJOINT,FAW Removal
@@ -1071,7 +1071,7 @@
 2301,7,6,2,0,0x1,0,3,1,yes,0,0x20000,0,magic,0,0x0,	SC_CHAOSPANIC,Chaos Panic
 2302,7,6,2,0,0x1,0,3,1,yes,0,0x20000,1,magic,0,0x0,	SC_MAELSTROM,Maelstrom
 2303,7,6,2,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SC_BLOODYLUST,Bloody Lust
-2304,0,6,4,-1,0,0,3,1,no,0,0,0,weapon,3:6:9,0x0,	SC_FEINTBOMB,Feint Bomb
+2304,0,6,4,-1,0,0,3,1,no,0,0x40000,0,weapon,3:6:9,0x0,	SC_FEINTBOMB,Feint Bomb
 
 //****
 // LG Royal Guard
@@ -1100,10 +1100,10 @@
 //****
 // SR Sura
 2326,1,8,1,-1,0,0,10,-2,no,0,0,0,weapon,0,0x0,	SR_DRAGONCOMBO,Dragon Combo
-2327,0,8,4,-1,0x2,2,5,-3,no,0,0,0,weapon,3,0x0,	SR_SKYNETBLOW,Sky Net Blow
-2328,0,6,4,-1,0x2,1:2:3:4:5,5,1,no,0,0,0,weapon,0,0x0,	SR_EARTHSHAKER,Earth Shaker
+2327,0,8,4,-1,0x2,2,5,-3,no,0,0x40000,0,weapon,3,0x0,	SR_SKYNETBLOW,Sky Net Blow
+2328,0,6,4,-1,0x2,1:2:3:4:5,5,1,no,0,0x40000,0,weapon,0,0x0,	SR_EARTHSHAKER,Earth Shaker
 2329,1,8,4,-1,0,0,5,-2,no,0,0x200,0,weapon,0,0x0,	SR_FALLENEMPIRE,Fallen Empire
-2330,1,6,1,-1,0x42,1:1:1:1:1:2:2:2:2:2,10,1,yes,0,0,0,weapon,0,0x0,	SR_TIGERCANNON,Tiger Cannon
+2330,1,6,1,-1,0x42,1:1:1:1:1:2:2:2:2:2,10,1,yes,0,0x40000,0,weapon,0,0x0,	SR_TIGERCANNON,Tiger Cannon
 2331,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		SR_HELLGATE,Hell Gate
 2332,0,6,4,-1,0x2,3,5,1,no,0,0x40000,0,weapon,0,0x0,	SR_RAMPAGEBLASTER,Rampage Blaster
 2333,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		SR_CRESCENTELBOW,Crescent Elbow
@@ -1374,7 +1374,7 @@
 // Mercenary Skill Place holders
 8201,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0x0,	MS_BASH,Bash
 8202,0,6,4,3,0x2,2,10,1,no,0,0x40000,0,weapon,2,0x0,	MS_MAGNUM,Magnum_Break
-8203,-2,6,1,-1,0x2,1,10,1,no,0,0,0,weapon,1,0x0,	MS_BOWLINGBASH,Bowling_Bash
+8203,-2,6,1,-1,0x2,1,10,1,no,0,0x40000,0,weapon,1,0x0,	MS_BOWLINGBASH,Bowling_Bash
 8204,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	MS_PARRYING,Parry
 8205,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	MS_REFLECTSHIELD,Shield_Reflect
 8206,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,	MS_BERSERK,Frenzy
@@ -1386,10 +1386,10 @@
 8212,3,6,2,1,0x42,1,5,1,no,0,0x80,0,weapon,0,0x3800,	MA_FREEZINGTRAP,Freezing_Trap
 8213,2,6,32,0,0x1,0,1,1,no,0,0x40000,0,misc,0,0x0,	MA_REMOVETRAP,Remove_Trap
 8214,-9,6,1,-1,0x2,0,1,1,no,0,0x1,0,weapon,6,0x80,	MA_CHARGEARROW,Arrow_Repel
-8215,9,8,1,-1,0,1,5,1,yes,0,0,14,weapon,0,0x0,	MA_SHARPSHOOTING,Focused_Arrow_Strike
+8215,9,8,1,-1,0,1,5,1,yes,0,0x40000,14,weapon,0,0x0,	MA_SHARPSHOOTING,Focused_Arrow_Strike
 8216,-2,8,1,-1,0,0,10,3,no,0,0,0,weapon,0,0x0,	ML_PIERCE,Pierce
 8217,-2,6,1,-1,0x1,2,10,1,no,0,0,5,weapon,2,0x20000,	ML_BRANDISH,Brandish_Spear
-8218,5,8,1,-1,0x20,0,5,5,no,0,0,0,weapon,0,0x20000,	ML_SPIRALPIERCE,Spiral_Pierce
+8218,5,8,1,-1,0x20,0,5,5,no,0,0x40000,0,weapon,0,0x20000,	ML_SPIRALPIERCE,Spiral_Pierce
 8219,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,	ML_DEFENDER,Defending_Aura
 8220,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	ML_AUTOGUARD,Guard
 8221,7:8:9:10:11,6,16,0,0x1,0,5,1,yes,0,0x600,0,none,0,0x0,	ML_DEVOTION,Sacrifice

@@ -56,7 +56,7 @@
 121,0x97,    ,  0, 1,1000,enemy, 0x8006	//HT_FREEZINGTRAP
 122,0x8f,    ,  0, 1,1000,enemy, 0x8006	//HT_BLASTMINE
 123,0x98,    ,  0, 1,1000,enemy, 0x8006	//HT_CLAYMORETRAP
-125,0x99,    ,  0, 1,1000,all,   0x8000	//HT_TALKIEBOX
+125,0x99,    ,  0, 1,1000,all,   0x8040	//HT_TALKIEBOX
 140,0x92,    , -1, 1,1000,enemy, 0x8000	//AS_VENOMDUST
 220,0xb0,    ,  0, 0,  -1,all,   0x8002	//RG_GRAFFITI
 229,0xb1,    ,  0, 1,1000,enemy, 0x006	//AM_DEMONSTRATION

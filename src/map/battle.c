@@ -7480,11 +7480,10 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 		case BL_SKILL:
 		{
 			TBL_SKILL *su = (TBL_SKILL*)target;
+			uint16 skill_id = battle_getcurrentskill(src);
 			if( !su || !su->group)
 				return 0;
 			if( skill_get_inf2(su->group->skill_id)&INF2_TRAP && su->group->unit_id != UNT_USED_TRAPS) {
-				uint16 skill_id = battle_getcurrentskill(src);
-
 				if (!skill_id || su->group->skill_id == WM_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD) {
 					;
 				}
@@ -7492,16 +7491,38 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 					switch (skill_id) {
 						case RK_DRAGONBREATH:
 						case RK_DRAGONBREATH_WATER:
+						case NC_SELFDESTRUCTION:
+						case NC_AXETORNADO:
+						case SR_SKYNETBLOW:
 							// Can only hit traps in PVP/GVG maps
-							if( !map[m].flag.pvp && !map[m].flag.gvg )
+							if (!map[m].flag.pvp && !map[m].flag.gvg)
 								return 0;
+							break;
 					}
 				}
 				else
 					return 0;
 				state |= BCT_ENEMY;
 				strip_enemy = 0;
-			} else if (su->group->skill_id == WZ_ICEWALL || (su->group->skill_id == GN_WALLOFTHORN && battle_getcurrentskill(src) != GN_CARTCANNON)) {
+			} else if (su->group->skill_id == WZ_ICEWALL || (su->group->skill_id == GN_WALLOFTHORN && skill_id != GN_CARTCANNON)) {
+				switch (skill_id) {
+					case RK_DRAGONBREATH:
+					case RK_DRAGONBREATH_WATER:
+					case NC_SELFDESTRUCTION:
+					case NC_AXETORNADO:
+					case SR_SKYNETBLOW:
+						// Can only hit icewall in PVP/GVG maps
+						if (!map[m].flag.pvp && !map[m].flag.gvg)
+							return 0;
+						break;
+					case HT_CLAYMORETRAP:
+						// Can't hit icewall
+						return 0;
+					default:
+						// Usually BCT_ALL stands for only hitting chars, but skills specifically set to hit traps also hit icewall
+						if ((flag&BCT_ALL) == BCT_ALL && !skill_get_inf2(skill_id)&INF2_HIT_TRAP)
+							return -1;
+				}
 				state |= BCT_ENEMY;
 				strip_enemy = 0;
 			} else	//Excepting traps, Icewall, and Wall of Thorns, you should not be able to target skills.
@@ -7640,8 +7661,8 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
     } //end switch on src master
 
 	if( (flag&BCT_ALL) == BCT_ALL )
-	{ //All actually stands for all attackable chars
-		if( target->type&BL_CHAR )
+	{ //All actually stands for all attackable chars, icewall and traps
+		if(target->type&(BL_CHAR|BL_SKILL))
 			return 1;
 		else
 			return -1;
@@ -8242,7 +8263,8 @@ static const struct _battle_data {
 	{ "exp_cost_redemptio",                 &battle_config.exp_cost_redemptio,              1,      0,      100,            },
 	{ "exp_cost_redemptio_limit",           &battle_config.exp_cost_redemptio_limit,        5,      0,      MAX_PARTY,      },
 	{ "exp_cost_inspiration",               &battle_config.exp_cost_inspiration,            1,      0,      100,            },
-	{ "mvp_exp_reward_message",               &battle_config.mvp_exp_reward_message,            0,      0,      1,            },
+	{ "mvp_exp_reward_message",             &battle_config.mvp_exp_reward_message,          0,      0,      1,              },
+	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
 };
 
 #ifndef STATS_OPT_OUT

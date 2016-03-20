@@ -135,13 +135,9 @@ static int skill_check_condition_mob_master_sub (struct block_list *bl, va_list 
 static bool skill_check_condition_sc_required(struct map_session_data *sd, unsigned short skill_id, struct skill_condition *require);
 static bool skill_check_unit_movepos(uint8 check_flag, struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath);
 
-// Since only mob-casted splash skills can hit ice-walls
+// Use this function for splash skills that can't hit icewall when cast by players
 static inline int splash_target(struct block_list* bl) {
-#ifndef RENEWAL
 	return ( bl->type == BL_MOB ) ? BL_SKILL|BL_CHAR : BL_CHAR;
-#else // Some skills can now hit ground skills(traps, ice wall & etc.)
-	return BL_SKILL|BL_CHAR;
-#endif
 }
 
 uint16 SKILL_MAX_DB(void) {
@@ -961,6 +957,40 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	tsc = status_get_sc(bl);
 	sstatus = status_get_status_data(src);
 	tstatus = status_get_status_data(bl);
+
+	// Taekwon combos activate on traps, so we need to check them even for targets that don't have status
+	if (sd && skill_id == 0 && !(attack_type&BF_SKILL)) {
+		// Chance to trigger Taekwon kicks [Dralnu]
+		if (sc && !sc->data[SC_COMBO]) {
+			if (sc->data[SC_READYSTORM] &&
+				sc_start4(src, src, SC_COMBO, 15, TK_STORMKICK,
+					bl->id, 2, 0,
+					(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
+				; //Stance triggered
+			else if (sc->data[SC_READYDOWN] &&
+				sc_start4(src, src, SC_COMBO, 15, TK_DOWNKICK,
+					bl->id, 2, 0,
+					(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
+				; //Stance triggered
+			else if (sc->data[SC_READYTURN] &&
+				sc_start4(src, src, SC_COMBO, 15, TK_TURNKICK,
+					bl->id, 2, 0,
+					(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
+				; //Stance triggered
+			else if (sc->data[SC_READYCOUNTER]) { //additional chance from SG_FRIEND [Komurka]
+				rate = 20;
+				if (sc->data[SC_SKILLRATE_UP] && sc->data[SC_SKILLRATE_UP]->val1 == TK_COUNTER) {
+					rate += rate*sc->data[SC_SKILLRATE_UP]->val2 / 100;
+					status_change_end(src, SC_SKILLRATE_UP, INVALID_TIMER);
+				}
+				sc_start4(src, src, SC_COMBO, rate, TK_COUNTER,
+					bl->id, 2, 0,
+					(2000 - 4 * sstatus->agi - 2 * sstatus->dex))
+					; //Stance triggered
+			}
+		}
+	}
+
 	if (!tsc) //skill additional effect is about adding effects to the target...
 		//So if the target can't be inflicted with statuses, this is pointless.
 		return 0;
@@ -1068,35 +1098,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 							clif_skill_nodamage(src,bl,TF_STEAL,skill,1);
 						else
 							clif_skill_fail(sd,RG_SNATCHER,USESKILL_FAIL_LEVEL,0);
-					}
-					// Chance to trigger Taekwon kicks [Dralnu]
-					if(sc && !sc->data[SC_COMBO]) {
-						if(sc->data[SC_READYSTORM] &&
-							sc_start4(src,src,SC_COMBO, 15, TK_STORMKICK,
-								bl->id, 2, 0,
-								(2000 - 4*sstatus->agi - 2*sstatus->dex)))
-							; //Stance triggered
-						else if(sc->data[SC_READYDOWN] &&
-							sc_start4(src,src,SC_COMBO, 15, TK_DOWNKICK,
-								bl->id, 2, 0,
-								(2000 - 4*sstatus->agi - 2*sstatus->dex)))
-							; //Stance triggered
-						else if(sc->data[SC_READYTURN] &&
-							sc_start4(src,src,SC_COMBO, 15, TK_TURNKICK,
-								bl->id, 2, 0,
-								(2000 - 4*sstatus->agi - 2*sstatus->dex)))
-							; //Stance triggered
-						else if (sc->data[SC_READYCOUNTER]) { //additional chance from SG_FRIEND [Komurka]
-							rate = 20;
-							if (sc->data[SC_SKILLRATE_UP] && sc->data[SC_SKILLRATE_UP]->val1 == TK_COUNTER) {
-								rate += rate*sc->data[SC_SKILLRATE_UP]->val2/100;
-								status_change_end(src, SC_SKILLRATE_UP, INVALID_TIMER);
-							}
-							sc_start4(src,src, SC_COMBO, rate, TK_COUNTER,
-								bl->id, 2, 0,
-								(2000 - 4*sstatus->agi - 2*sstatus->dex))
-							; //Stance triggered
-						}
 					}
 					if(sc && sc->data[SC_PYROCLASTIC] && ((rnd()%100)<=sc->data[SC_PYROCLASTIC]->val3) )
 						skill_castend_pos2(src, bl->x, bl->y, BS_HAMMERFALL,sc->data[SC_PYROCLASTIC]->val1, tick, 0);
@@ -3343,10 +3344,12 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		default:
 			if( flag&SD_ANIMATION && dmg.div_ < 2 ) //Disabling skill animation doesn't works on multi-hit.
 				type = 5;
-			if( bl->type == BL_SKILL ){
-				TBL_SKILL *su = (TBL_SKILL*)bl;
-				if( su->group && skill_get_inf2(su->group->skill_id)&INF2_TRAP )// show damage on trap targets
-					clif_skill_damage(src,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, flag&SD_LEVEL?-1:skill_lv, 5);
+			if (src->type == BL_SKILL) {
+				TBL_SKILL *su = (TBL_SKILL*)src;
+				if (su->group && skill_get_inf2(su->group->skill_id)&INF2_TRAP) { // show damage on trap targets
+					clif_skill_damage(src, bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, flag&SD_LEVEL ? -1 : skill_lv, 5);
+					break;
+				}
 			}
 			dmg.dmotion = clif_skill_damage(dsrc,bl,tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, flag&SD_LEVEL?-1:skill_lv, type);
 			break;
@@ -3887,7 +3890,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 			if (skl->skill_id == SR_SKYNETBLOW) {
 				clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skl->skill_id,skl->skill_lv,DMG_SKILL);
 				skill_area_temp[1] = 0;
-				map_foreachinrange(skill_area_sub,src,skill_get_splash(skl->skill_id,skl->skill_lv),splash_target(src),src,
+				map_foreachinrange(skill_area_sub,src,skill_get_splash(skl->skill_id,skl->skill_lv),BL_CHAR|BL_SKILL,src,
 					skl->skill_id,skl->skill_lv,tick,skl->flag|BCT_ENEMY|SD_SPLASH|1,skill_castend_damage_id);
 				break;
 			}
@@ -4480,7 +4483,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if (!(flag&1) && sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_MONK)
 		{	//Becomes a splash attack when Soul Linked.
 			map_foreachinshootrange(skill_area_sub, bl,
-				skill_get_splash(skill_id, skill_lv),splash_target(src),
+				skill_get_splash(skill_id, skill_lv),BL_CHAR|BL_SKILL,
 				src,skill_id,skill_lv,tick, flag|BCT_ENEMY|1,
 				skill_castend_damage_id);
 		} else
@@ -4491,7 +4494,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		skill_area_temp[1] = 0;
 		map_foreachinshootrange(skill_attack_area, src,
-			skill_get_splash(skill_id, skill_lv), splash_target(src),
+			skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL,
 			BF_WEAPON, src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
 		break;
 
@@ -4668,7 +4671,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case HW_NAPALMVULCAN:
 	case NJ_HUUMA:
 	case ASC_METEORASSAULT:
-	case GS_DESPERADO:
 	case GS_SPREADATTACK:
 	case NPC_EARTHQUAKE:
 	case NPC_PULSESTRIKE:
@@ -4731,7 +4733,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			if (skill_id == SU_SCRATCH && status_get_lv(src) >= 30 && (rnd() % 100 < (int)(status_get_lv(src) / 30) + 10)) // TODO: Need activation chance.
 				skill_addtimerskill(src, tick + skill_get_delay(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag);
 		} else {
-			int starget = splash_target(src);
+			int starget = BL_CHAR|BL_SKILL;
 
 			skill_area_temp[0] = 0;
 			skill_area_temp[1] = bl->id;
@@ -4755,14 +4757,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case WM_REVERBERATION_MELEE:
 				case WM_REVERBERATION_MAGIC:
 					skill_area_temp[1] = 0;
-					starget = BL_CHAR;
+					starget = splash_target(src);
 					break;
 				case WL_CRIMSONROCK:
 					skill_area_temp[4] = bl->x;
 					skill_area_temp[5] = bl->y;
 					break;
 				case NC_ARMSCANNON:
-					starget = BL_CHAR;
+					starget = splash_target(src);
 				case NC_VULCANARM:
 					if (sd)
 						pc_overheat(sd, 1);
@@ -5525,7 +5527,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			if (tsc && tsc->data[SC__SHADOWFORM] && rnd() % 100 < 100 - tsc->data[SC__SHADOWFORM]->val1 * 10) // [100 - (Skill Level x 10)] %
 				status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 		} else {
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 			clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
 		}
 		break;
@@ -5540,7 +5542,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_area_temp[1] = bl->id;
 			skill_area_temp[3] = skill_id;
 			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag|8); // Only do attack calculation once
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
 		break;
 
@@ -5675,7 +5677,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		}
 		else
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 		break;
 
 	case MH_STAHL_HORN:
@@ -5721,7 +5723,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			// Triggered by RL_FLICKER
 			if (sd && sd->flicker && tsc && tsc->data[SC_H_MINE] && tsc->data[SC_H_MINE]->val2 == src->id) {
 				// Splash damage around it!
-				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src),
+				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL,
 					src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
 				flag |= 1; // Don't consume requirement
 				tsc->data[SC_H_MINE]->val3 = 1; // Mark the SC end because not expired
@@ -5744,7 +5746,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 			// First attack. If target is marked by SC_C_MARKER, do another splash damage!
 			if (tsc && tsc->data[SC_C_MARKER] && tsc->data[SC_C_MARKER]->val2 == src->id) {
-				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src),
+				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL,
 					src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
 				status_change_end(bl, SC_C_MARKER, INVALID_TIMER);
 			}
@@ -6809,7 +6811,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		skill_area_temp[1] = 0;
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		map_foreachinrange(skill_area_sub, bl,
-			skill_get_splash(skill_id, skill_lv), splash_target(src),
+			skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL,
 			src,skill_id,skill_lv,tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
 		status_change_end(src, SC_HIDING, INVALID_TIMER);
@@ -6827,16 +6829,21 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case KO_HAPPOKUNAI:
 	case RL_FIREDANCE:
 	case RL_R_TRIP:
+	{
+		int starget = BL_CHAR|BL_SKILL;
+		if (skill_id == SR_HOWLINGOFLION)
+			starget = splash_target(src);
 		skill_area_temp[1] = 0;
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		if (battle_config.skill_wall_check)
-			i = map_foreachinshootrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src),
+			i = map_foreachinshootrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), starget,
 				src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		else
-			i = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src),
+			i = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), starget,
 				src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		if( !i && ( skill_id == NC_AXETORNADO || skill_id == SR_SKYNETBLOW || skill_id == KO_HAPPOKUNAI ) )
 			clif_skill_damage(src,src,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, 6);
+	}
 		break;
 
 	case NC_EMERGENCYCOOL:
@@ -6911,7 +6918,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage(src, src, skill_id, -1, 1);
 		map_delblock(src); //Required to prevent chain-self-destructions hitting back.
 		map_foreachinshootrange(skill_area_sub, bl,
-			skill_get_splash(skill_id, skill_lv), splash_target(src),
+			skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL,
 			src, skill_id, skill_lv, tick, flag|i,
 			skill_castend_damage_id);
 		if(map_addblock(src))
@@ -9456,7 +9463,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				pc_setmadogear(sd, 0);
 			skill_area_temp[1] = 0;
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 			status_set_sp(src, 0, 0);
 			skill_clear_unitgroup(src);
 		}
@@ -10564,9 +10571,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}else{
 			skill_area_temp[2] = 0;
 			if (battle_config.skill_wall_check)
-				map_foreachinshootrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_nodamage_id);
+				map_foreachinshootrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_nodamage_id);
 			else
-				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_nodamage_id);
+				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_nodamage_id);
 		}
 		break;
 
@@ -10909,11 +10916,26 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 				}
 			}
 			break;
-
-		// Check if path can be reached
 		case RA_WUGSTRIKE:
+			// Check if path can be reached
 			if (!path_search(NULL,src->m,src->x,src->y,target->x,target->y,1,CELL_CHKNOREACH))
 				return USESKILL_FAIL_MAX;
+			break;
+		case MG_NAPALMBEAT:
+		case MG_FIREBALL:
+		case HT_BLITZBEAT:
+		case AS_GRIMTOOTH:
+		case MO_COMBOFINISH:
+		case NC_VULCANARM:
+		case SR_TIGERCANNON:
+			// These can damage traps, but can't target traps directly
+			if (target->type == BL_SKILL) {
+				TBL_SKILL *su = (TBL_SKILL*)target;
+				if (!su || !su->group)
+					return USESKILL_FAIL_MAX;				
+				if (skill_get_inf2(su->group->skill_id)&INF2_TRAP)
+					return USESKILL_FAIL_MAX;
+			}
 			break;
 	}
 
@@ -12040,7 +12062,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case LG_RAYOFGENESIS:
 		if( status_charge(src,status_get_max_hp(src)*3*skill_lv / 100,0) ) {
 			i = skill_get_splash(skill_id,skill_lv);
-			map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,splash_target(src),
+			map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR|BL_SKILL,
 				src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		} else if( sd )
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
@@ -18116,7 +18138,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				struct block_list *src = map_id2bl(group->src_id);
 				struct status_change *sc;
 				if (src && (sc = status_get_sc(src)) != NULL && sc->data[SC__FEINTBOMB]) { // Copycat explodes if caster is still hidden.
-					map_foreachinrange(skill_area_sub, &unit->bl, unit->range, splash_target(src), src, SC_FEINTBOMB, group->skill_lv, tick, BCT_ENEMY|SD_ANIMATION|1, skill_castend_damage_id);
+					map_foreachinrange(skill_area_sub, &unit->bl, unit->range, BL_CHAR|BL_SKILL, src, SC_FEINTBOMB, group->skill_lv, tick, BCT_ENEMY|SD_ANIMATION|5, skill_castend_damage_id);
 					status_change_end(bl, SC__FEINTBOMB, INVALID_TIMER);
 				}
 				skill_delunit(unit);
