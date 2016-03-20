@@ -6448,31 +6448,35 @@ void pc_gainexp_disp(struct map_session_data *sd, unsigned int base_exp, unsigne
  * @param src EXP source
  * @param base_exp Base EXP gained
  * @param base_exp Job EXP gained
- * @param quest True if EXP from quest, false otherwise.
+ * @param exp_flag 1: Quest EXP; 2: Param Exp (Ignore Guild EXP tax, EXP adjustments)
  * @return
  **/
-int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int base_exp, unsigned int job_exp, bool quest)
+void pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int base_exp, unsigned int job_exp, uint8 exp_flag)
 {
 	unsigned int nextb = 0, nextj = 0;
 	uint8 flag = 0; ///< 1: Base EXP given, 2: Job EXP given, 4: Max Base level, 8: Max Job Level
 
-	nullpo_ret(sd);
+	nullpo_retv(sd);
 
 	if(sd->bl.prev == NULL || pc_isdead(sd))
-		return 0;
+		return;
 
-	if(!battle_config.pvp_exp && map[sd->bl.m].flag.pvp)  // [MouseJstr]
-		return 0; // no exp on pvp maps
+	if (!(exp_flag&2)) {
+
+		if (!battle_config.pvp_exp && map[sd->bl.m].flag.pvp)  // [MouseJstr]
+			return; // no exp on pvp maps
 	
-	if(sd->status.guild_id>0)
-		base_exp-=guild_payexp(sd,base_exp);
+		if (sd->status.guild_id>0)
+			base_exp -= guild_payexp(sd,base_exp);
+	}
 
 	flag = ((base_exp) ? 1 : 0) |
 		((job_exp) ? 2 : 0) |
 		((pc_is_maxbaselv(sd)) ? 4 : 0) |
 		((pc_is_maxjoblv(sd)) ? 8 : 0);
 
-	pc_calcexp(sd, &base_exp, &job_exp, src);
+	if (!(exp_flag&2))
+		pc_calcexp(sd, &base_exp, &job_exp, src);
 
 	nextb = pc_nextbaseexp(sd);
 	nextj = pc_nextjobexp(sd);
@@ -6490,7 +6494,7 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 			job_exp = MAX_LEVEL_JOB_EXP - sd->status.job_exp;
 	}
 
-	if (battle_config.max_exp_gain_rate && (base_exp || job_exp)) {
+	if (!(exp_flag&2) && battle_config.max_exp_gain_rate && (base_exp || job_exp)) {
 		//Note that this value should never be greater than the original
 		//therefore no overflow checks are needed. [Skotlex]
 		if (nextb > 0) {
@@ -6526,14 +6530,40 @@ int pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int
 	}
 
 	if (flag&1)
-		clif_displayexp(sd, (flag&4) ? 0 : base_exp, SP_BASEEXP, quest, false);
+		clif_displayexp(sd, (flag&4) ? 0 : base_exp, SP_BASEEXP, exp_flag&1, false);
 	if (flag&2)
-		clif_displayexp(sd, (flag&8) ? 0 : job_exp,  SP_JOBEXP, quest, false);
+		clif_displayexp(sd, (flag&8) ? 0 : job_exp,  SP_JOBEXP, exp_flag&1, false);
 
 	if (sd->state.showexp)
 		pc_gainexp_disp(sd, base_exp, nextb, job_exp, nextj, false);
+}
 
-	return 1;
+/**
+ * Lost Base/Job EXP from a player
+ * @param sd Player
+ * @param base_exp Base EXP lost
+ * @param job_exp Job EXP lost
+ **/
+void pc_lostexp(struct map_session_data *sd, unsigned int base_exp, unsigned int job_exp) {
+
+	nullpo_retv(sd);
+
+	if (base_exp) {
+		base_exp = u32min(sd->status.base_exp, base_exp);
+		sd->status.base_exp -= base_exp;
+		clif_displayexp(sd, base_exp, SP_BASEEXP, false, true);
+		clif_updatestatus(sd, SP_BASEEXP);
+	}
+
+	if (job_exp) {
+		job_exp = u32min(sd->status.job_exp, job_exp);
+		sd->status.job_exp -= job_exp;
+		clif_displayexp(sd, job_exp, SP_JOBEXP, false, true);
+		clif_updatestatus(sd, SP_JOBEXP);
+	}
+
+	if (sd->state.showexp)
+		pc_gainexp_disp(sd, base_exp, pc_nextbaseexp(sd), job_exp, pc_nextjobexp(sd), true);
 }
 
 /**
@@ -7586,9 +7616,6 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				if (battle_config.pk_mode && src && src->type==BL_PC)
 					base_penalty *= 2;
 				base_penalty = u32min(sd->status.base_exp, base_penalty);
-				sd->status.base_exp -= base_penalty;
-				clif_displayexp(sd, base_penalty, SP_BASEEXP, false, true);
-				clif_updatestatus(sd,SP_BASEEXP);
 			}
 		}
 		else 
@@ -7603,16 +7630,13 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 				if (battle_config.pk_mode && src && src->type==BL_PC)
 					job_penalty *= 2;
 				job_penalty = u32min(sd->status.job_exp, job_penalty);
-				sd->status.job_exp -= job_penalty;
-				clif_displayexp(sd, job_penalty, SP_JOBEXP, false, true);
-				clif_updatestatus(sd,SP_JOBEXP);
 			}
 		}
 		else
 			job_penalty = 0;
 
-		if (sd->state.showexp && (base_penalty || job_penalty))
-			pc_gainexp_disp(sd, base_penalty, pc_nextbaseexp(sd), job_penalty, pc_nextjobexp(sd), true);
+		if (base_penalty || job_penalty)
+			pc_lostexp(sd, base_penalty, job_penalty);
 
 		if( zeny_penalty > 0 && !map[sd->bl.m].flag.nozenypenalty) {
 			zeny_penalty = (uint32)( sd->status.zeny * ( zeny_penalty / 10000. ) );
@@ -7932,56 +7956,22 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		break;
 	case SP_BASEEXP:
 		{
-			unsigned int exp = sd->status.base_exp;
-			unsigned int next = pc_nextbaseexp(sd);
-			bool isLost = false;
-			bool isMax = false;
-
 			val = cap_value(val, 0, INT_MAX);
-			sd->status.base_exp = val;
-
-			if ((unsigned int)val < exp) { // Lost
-				exp -= val;
-				isLost = true;
-			}
-			else { // Gained
-				if ((isMax = pc_is_maxbaselv(sd)) && sd->status.base_exp >= MAX_LEVEL_BASE_EXP)
-					exp = 0;
-				else
-					exp = val-exp;
-				pc_checkbaselevelup(sd);
-			}
-			clif_displayexp(sd, isMax ? 0 : exp, SP_BASEEXP, false, isLost);
-			if (sd->state.showexp)
-				pc_gainexp_disp(sd, exp, next, 0, pc_nextjobexp(sd), isLost);
+			if ((unsigned int)val < sd->status.base_exp) // Lost
+				pc_lostexp(sd, sd->status.base_exp - val, 0);
+			else // Gained
+				pc_gainexp(sd, NULL, val - sd->status.base_exp, 0, 2);
 		}
-		break;
+		return true;
 	case SP_JOBEXP:
 		{
-			unsigned int exp = sd->status.job_exp;
-			unsigned int next = pc_nextjobexp(sd);
-			bool isLost = false;
-			bool isMax = false;
-
 			val = cap_value(val, 0, INT_MAX);
-			sd->status.job_exp = val;
-
-			if ((unsigned int)val < exp) { // Lost
-				exp -= val;
-				isLost = true;
-			}
-			else { // Gained
-				if ((isMax = pc_is_maxjoblv(sd)) && sd->status.job_exp >= MAX_LEVEL_JOB_EXP)
-					exp = 0;
-				else
-					exp = val-exp;
-				pc_checkjoblevelup(sd);
-			}
-			clif_displayexp(sd, isMax ? 0 : exp, SP_JOBEXP, false, isLost);
-			if (sd->state.showexp)
-				pc_gainexp_disp(sd, 0, pc_nextbaseexp(sd), exp, next, isLost);
+			if ((unsigned int)val < sd->status.job_exp) // Lost
+				pc_lostexp(sd, 0, sd->status.job_exp - val);
+			else // Gained
+				pc_gainexp(sd, NULL, 0, val - sd->status.job_exp, 2);
 		}
-		break;
+		return true;
 	case SP_SEX:
 		sd->status.sex = val ? SEX_MALE : SEX_FEMALE;
 		break;

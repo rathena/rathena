@@ -9641,7 +9641,7 @@ BUILDIN_FUNC(getexp)
 	if (job)
 		job = (int) cap_value(job * bonus, 0, INT_MAX);
 
-	pc_gainexp(sd, NULL, base, job, true);
+	pc_gainexp(sd, NULL, base, job, 1);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -21082,6 +21082,35 @@ BUILDIN_FUNC(navigateto){
 #endif
 }
 
+/**
+ * Safety Base/Job EXP addition than using `set BaseExp,n;` or `set JobExp,n;`
+ * Unlike `getexp` that affected by some adjustments.
+ * getexp2 <base_exp>,<job_exp>{,<char_id>};
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(getexp2) {
+	TBL_PC *sd = NULL;
+	int base_exp = script_getnum(st, 2);
+	int job_exp = script_getnum(st, 3);
+
+	if (!script_charid2sd(4, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	if (base_exp == 0 && job_exp == 0)
+		return SCRIPT_CMD_SUCCESS;
+
+	if (base_exp > 0)
+		pc_gainexp(sd, NULL, base_exp, 0, 2);
+	else if (base_exp < 0)
+		pc_lostexp(sd, base_exp * -1, 0);
+
+	if (job_exp > 0)
+		pc_gainexp(sd, NULL, 0, job_exp, 2);
+	else if (job_exp < 0)
+		pc_lostexp(sd, 0, job_exp * -1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -21649,6 +21678,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setquestinfo_job,"ii*"),
 	BUILDIN_DEF(opendressroom,"i?"),
 	BUILDIN_DEF(navigateto,"s???????"),
+	BUILDIN_DEF(getexp2,"ii?"),
 
 #include "../custom/script_def.inc"
 
