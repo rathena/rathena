@@ -2155,7 +2155,7 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 	}
 
 	//Self damage increases tap bonus
-	if (!char_id && src->id == md->bl.id) {
+	if (!char_id && src->id == md->bl.id && damage > 0) {
 		char_id = src->id;
 		flag = MDLF_SELF;
 	}
