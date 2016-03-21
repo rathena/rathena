@@ -1783,7 +1783,7 @@ int pc_calc_skilltree_normalize_job(struct map_session_data *sd)
 	novice_skills = job_info[pc_class2idx(JOB_NOVICE)].max_level[1] - 1;
 
 	// limit 1st class and above to novice job levels
-	if(skill_point < novice_skills)
+	if(skill_point < novice_skills && (sd->class_&MAPID_BASEMASK) != MAPID_SUMMONER)
 	{
 		c = MAPID_NOVICE;
 	}
@@ -7072,7 +7072,7 @@ int pc_resetskill(struct map_session_data* sd, int flag)
 		}
 
 		// do not reset basic skill
-		if (skill_id == NV_BASIC && ((sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE || (sd->class_&MAPID_BASEMASK) != MAPID_SUMMONER) )
+		if (skill_id == NV_BASIC && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
 			continue;
 
 		if( sd->status.skill[i].flag == SKILL_FLAG_PERM_GRANTED )
