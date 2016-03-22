@@ -10347,7 +10347,6 @@ OnTimer600000:
 	end;
 
 OnMyMobDead:
-	set .@spl_fild03_mob_dead,mobcount("spl_fild03","ep13_spl_fild03_mon_edq::OnMyMobDead");
 	if (mobcount("spl_fild03","ep13_spl_fild03_mon_edq::OnMyMobDead") < 14 && (ep13_1_edq == 71 || ep13_1_edq == 72))
 		getitem 6040,1; //Some_Of_Report
 	end;

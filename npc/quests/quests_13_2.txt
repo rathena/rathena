@@ -965,7 +965,7 @@ spl_fild02,45,214,0	script	????#ep13_mdplant01	844,{
 	}
 	else if (ep13_mdrama > 2) {
 		mes "This is a marking Terra left to remember the way back home.";
-		mes "A knotted leaf is pointing^4d4ff South^000000.";
+		mes "A knotted leaf is pointing^4d4dff South^000000.";
 		close2;
 	}
 	else {
