@@ -60,7 +60,7 @@ How to check:	if (MISC_QUEST & 256) {}
 
 Quest:		Cube Room
 Info:		Lighthalzen Cube Room quest (to enter Bio-Lab)
-How to set:	set MISC_QUEST, MISC_QUEST | 512;// revoir l'update de la quest (split)
+How to set:	set MISC_QUEST, MISC_QUEST | 512;
 How to check:	if (MISC_QUEST & 512) {}
 
 Quest:		Reset Skills Event
@@ -80,7 +80,7 @@ How to check:	if (MISC_QUEST & 4096) {}
 
 Quest:		Rachel Sanctuary Quest
 Info:		Determines if player can access Rachel Santuary.
-How to set:	set MISC_QUEST, MISC_QUEST | 8192;// revoir egalmenet celui là (update)
+How to set:	set MISC_QUEST, MISC_QUEST | 8192;
 How to check:	if (MISC_QUEST & 8192) {}
 
 Quest:		Message Delivery Quest
