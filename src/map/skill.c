@@ -15940,9 +15940,8 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 
 	switch( skill_id ) {
 		/* Skill level-dependent checks */
-		case NC_SHAPESHIFT:
-		case NC_REPAIR:
-			//NOTE: Please make sure Magic_Gear_Fuel in the last position in skill_require_db.txt
+		case NC_SHAPESHIFT: // NOTE: Please make sure Magic_Gear_Fuel in the last position in skill_require_db.txt
+		case NC_REPAIR: // NOTE: Please make sure Repair_Kit in the last position in skill_require_db.txt
 			req.itemid[1] = skill_db[idx]->require.itemid[MAX_SKILL_ITEM_REQUIRE-1];
 			req.amount[1] = skill_db[idx]->require.amount[MAX_SKILL_ITEM_REQUIRE-1];
 		case GN_FIRE_EXPANSION:
