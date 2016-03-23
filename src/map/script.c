@@ -15921,7 +15921,7 @@ BUILDIN_FUNC(min)
 	}
 	script_pushint(st, min);
 
-	return true;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(max)
@@ -15936,7 +15936,7 @@ BUILDIN_FUNC(max)
 	}
 	script_pushint(st, max);
 
-	return true;
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(md5)
