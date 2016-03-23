@@ -327,7 +327,7 @@ malangdo,184,139,4	script	Storekeeper#mal	560,{
 		set .@zeny,3000;
 		set .@i, select("Pay with Can ----- 2units:Pay with Zeny ------- 3,000z");
 	}
-	if (getskilllv("NV_BASIC") < 6) {
+	if(basicskillcheck() && (getskilllv("NV_BASIC") < 6 && getskilllv("SU_BASIC_SKILL") < 1)){
 		mes "[Storekeeper]";
 		mes "Ah, hold on!!";
 		mes "You need to have ^FF0000Basic Skill level 6^000000 to use the storage service!!";
