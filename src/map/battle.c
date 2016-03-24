@@ -2335,8 +2335,11 @@ static bool is_attack_critical(struct Damage wd, struct block_list *src, struct 
 
 		if (sd) {
 			cri += sd->critaddrace[tstatus->race] + sd->critaddrace[RC_ALL];
-			if(is_skill_using_arrow(src, skill_id))
+			if(is_skill_using_arrow(src, skill_id)) {
 				cri += sd->bonus.arrow_cri;
+				if (!skill_id)
+					cri += sd->bonus.critical_rangeatk;
+			}
 		}
 
 		if(sc && sc->data[SC_CAMOUFLAGE])
