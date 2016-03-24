@@ -21180,7 +21180,7 @@ BUILDIN_FUNC(adopt)
 BUILDIN_FUNC(getweaponlv)
 {
 	TBL_PC *sd;
-	if ((sd = script_rid2sd(st)) != NULL && sd->inventory_data[current_equip_item_index])
+	if ((sd = script_rid2sd(st)) != NULL && current_equip_item_index > -1 && current_equip_item_index < MAX_INVENTORY && sd->inventory_data[current_equip_item_index])
 		script_pushint(st, sd->inventory_data[current_equip_item_index]->wlv);
 	else
 		script_pushint(st, 0);
