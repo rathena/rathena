@@ -6802,7 +6802,8 @@ void battle_vanish(struct map_session_data *sd, struct block_list *target, struc
 {
 	struct status_data *tstatus;
 	int hp = 0, sp = 0, race = status_get_race(target);
-	short vrate_hp = 0, vrate_sp = 0, v_hp = 0, v_sp = 0;
+	short vrate_hp = 0, vrate_sp = 0, v_hp = 0, v_sp = 0,
+		  vellum_rate_hp = 0, vellum_rate_sp = 0, vellum_hp = 0, vellum_sp = 0;
 	uint8 i = 0;
 
 	nullpo_retv(sd);
@@ -6811,29 +6812,43 @@ void battle_vanish(struct map_session_data *sd, struct block_list *target, struc
 	tstatus = status_get_status_data(target);
 	wd->isspdamage = false;
 
-	hp = (sd->bonus.hp_vanish_rate * 10) + sd->hp_vanish_race[race].rate + sd->hp_vanish_race[RC_ALL].rate;
+	// bHPVanishRate
+	hp = (sd->bonus.hp_vanish_rate * 10);
 	vrate_hp = cap_value(hp, 0, SHRT_MAX);
-	hp = sd->bonus.hp_vanish_per + sd->hp_vanish_race[race].per + sd->hp_vanish_race[RC_ALL].per;
+	hp = sd->bonus.hp_vanish_per;
 	v_hp = cap_value(hp, SHRT_MIN, SHRT_MAX);
 
-	sp = (sd->bonus.sp_vanish_rate * 10) + sd->sp_vanish_race[race].rate + sd->sp_vanish_race[RC_ALL].rate;
+	// bHPVanishRaceRate
+	hp = sd->hp_vanish_race[race].rate + sd->hp_vanish_race[RC_ALL].rate;
+	vellum_rate_hp = cap_value(hp, 0, SHRT_MAX);
+	hp = sd->hp_vanish_race[race].per + sd->hp_vanish_race[RC_ALL].per;
+	vellum_hp = cap_value(hp, SHRT_MIN, SHRT_MAX);
+
+	// bSPVanishRate
+	sp = (sd->bonus.sp_vanish_rate * 10);
 	vrate_sp = cap_value(sp, 0, SHRT_MAX);
 	sp = sd->bonus.sp_vanish_per + sd->sp_vanish_race[race].per + sd->sp_vanish_race[RC_ALL].per;
 	v_sp = cap_value(sp, SHRT_MIN, SHRT_MAX);
 
+	// bSPVanishRaceRate
+	sp = sd->sp_vanish_race[race].rate + sd->sp_vanish_race[RC_ALL].rate;
+	vellum_rate_sp = cap_value(sp, 0, SHRT_MAX);
+	sp = sd->sp_vanish_race[race].per + sd->sp_vanish_race[RC_ALL].per;
+	vellum_sp = cap_value(sp, SHRT_MIN, SHRT_MAX);
+
 	if (wd->flag) {
 		// The HP and SP vanish bonus from these items can't stack because of the special damage display.
-		if (v_hp && vrate_hp && (vrate_hp >= 10000 || rnd()%10000 < vrate_hp))
+		if (vellum_hp && vellum_rate_hp && (vellum_rate_hp >= 10000 || rnd()%10000 < vellum_rate_hp))
 			i = 1;
-		if (v_sp && vrate_sp && (vrate_sp >= 10000 || rnd()%10000 < vrate_sp))
+		if (vellum_sp && vellum_rate_sp && (vellum_rate_sp >= 10000 || rnd()%10000 < vellum_rate_sp))
 			i = 2;
 
 		if (i == 1) {
-			wd->damage = apply_rate(tstatus->max_hp, v_hp);
+			wd->damage = apply_rate(tstatus->max_hp, vellum_hp);
 			wd->damage2 = 0;
 		}
 		if (i == 2) {
-			wd->damage = apply_rate(tstatus->max_sp, v_sp);
+			wd->damage = apply_rate(tstatus->max_sp, vellum_sp);
 			wd->damage2 = 0;
 			wd->isspdamage = true;
 		}
@@ -7145,6 +7160,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	}
 
 	wd = battle_calc_attack(BF_WEAPON, src, target, 0, 0, flag);
+	wd.isspdamage = false; // Default normal attacks to non-SP Damage attack until battle_vanish is determined
 
 	if (sd && wd.damage + wd.damage2 > 0)
 		battle_vanish(sd, target, &wd);
