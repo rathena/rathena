@@ -718,7 +718,7 @@ alde_alche,175,107,3	script	Fastidious Alchemist#am	749,{
 			mes "you make from this sale?";
 			next;
 			input .@input;
-			if (.@input != 7680) set w_point,w_point+1;
+			if (.@input != 7680) set .@w_point,.@w_point+1;
 		}
 		if (.@w_point == 0) {
 			mes "[Raspuchin Gregory]";
@@ -1124,7 +1124,6 @@ alde_alche,13,15,7	script	Studying Man#am	750,{
 			mes "Now, make some medicine";
 			mes "using the simple procedure";
 			mes "I just explained to you.";
-			set w_point,0;
 			next;
 			switch(select("Prepare the Medicine Bowl.:Put the Medicine Bowl on your head.:Kick the Medicine Bowl.")) {
 			case 1:
