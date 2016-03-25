@@ -42,7 +42,7 @@ char default_codepage[32] = ""; //Feature by irmin.
 
 unsigned int party_share_level = 10;
 
-// recv. packet list
+/// Received packet Lengths from map-server
 int inter_recv_packet_length[] = {
 	-1,-1, 7,-1, -1,13,36, (2+4+4+4+1+NAME_LENGTH),  0,-1, 0, 0,  0, 0,  0, 0,	// 3000-
 	 6,-1, 0, 0,  0, 0, 0, 0, 10,-1, 0, 0,  0, 0,  0, 0,	// 3010-
@@ -52,7 +52,7 @@ int inter_recv_packet_length[] = {
 	-1,-1,10,10,  0,-1,12, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3050-  Auction System [Zephyrus]
 	 6,-1, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3060-  Quest system [Kevin] [Inkfish]
 	-1,10, 6,-1,  0, 0, 0, 0,  0, 0, 0, 0, -1,10,  6,-1,	// 3070-  Mercenary packets [Zephyrus], Elemental packets [pakpil]
-	48,14,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3080-
+	48,14,-1, 6,  0, 0, 0, 0,  0, 0,11,-1,  0, 0,  0, 0,	// 3080-  Pet System, Storage
 	-1,10,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3090-  Homunculus packets [albator]
 };
 
@@ -399,7 +399,7 @@ void mapif_parse_accinfo(int fd) {
 	int u_fd = RFIFOL(fd,2), u_aid = RFIFOL(fd,6), u_group = RFIFOL(fd,10);
 	char type= RFIFOB(fd,14);
 	char query[NAME_LENGTH], query_esq[NAME_LENGTH*2+1];
-	int account_id = 0;
+	uint32 account_id = 0;
 	char *data;
 
 	safestrncpy(query, (char*) RFIFOP(fd,15), NAME_LENGTH);
@@ -492,7 +492,7 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 		}
 	} else {
 		while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
-			int char_id, class_;
+			uint32 char_id, class_;
 			short char_num, base_level, job_level, online;
 			char name[NAME_LENGTH];
 			char *data;
@@ -810,7 +810,7 @@ int inter_init_sql(const char *file)
 	ShowInfo("Connect Character DB server.... (Character Server)\n");
 	if( SQL_ERROR == Sql_Connect(sql_handle, char_server_id, char_server_pw, char_server_ip, (uint16)char_server_port, char_server_db) )
 	{
-		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+		ShowError("Couldn't connect with username = '%s', password = '%s', host = '%s', port = '%d', database = '%s'\n",
 			char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db);
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);

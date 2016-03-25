@@ -1327,6 +1327,33 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	desc:
 		- Delete pet data
 
+0x308a
+	Type: ZI
+	Structure: <cmd>.W <type>.B <account_id>.L <char_id>.L
+	index: 0,2,3,7
+	len: 11
+	parameter:
+		- cmd : packet identification (0x308a)
+		- type : 0 - TABLE_INVENTORY, 1 - TABLE_CART, 2 - TABLE_STORAGE
+		- account_id
+		- char_id
+	desc:
+		- Request inventory/cart/storage data for a player/guild if type = 3
+
+0x308b
+	Type: ZI
+	Structure: <size>.W <type>.B <account_id>.L <char_id>.L <entries>.?B
+	index: 0,2,4,5,9,13
+	len: 11
+	parameter:
+		- cmd : packet identification (0x308a)
+		- type : 0 - TABLE_INVENTORY, 1 - TABLE_CART, 2 - TABLE_STORAGE
+		- account_id
+		- char_id
+		- entries : Inventory/cart/storage entries that will be saved
+	desc:
+		- Request to save inventory/cart/storage entries
+
 0x3090:
 	Type: ZI
 	Structure: <cmd>.W <s_homunculus>.W <aid>.L <sh>.?B
@@ -2136,6 +2163,34 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- flag
 	desc:
 		- Send pet deletion status
+
+0x388a
+	Type: IZ
+	Structure: <cmd>.W <size>.W <type>.B <account_id>.L <result>.B <entries>.?B
+	index: 0,2,4,5,9
+	len: 9+variable
+	parameter:
+		- cmd : packet identification (0x388a)
+		- size
+		- type : Storage type, 0 - TABLE_INVENTORY, 1 - TABLE_CART, 2 - TABLE_STORAGE
+		- account_id
+		- result : True if data loaded, false if failed
+		- entries : Inventory/cart/storage entries
+	desc:
+		- Process inventory/cart/storage entries for player from inter-server
+
+0x388b
+	Type: IZ
+	Structure: <cmd>.W <account_id>.L <result>.B <type>.B
+	index: 0,2,6,7
+	len: 11
+	parameter:
+		- cmd : packet identification (0x388b)
+		- account_id
+		- result : 1 - success, 0 - failed
+		- type : Storage type, 0 - TABLE_INVENTORY, 1 - TABLE_CART, 2 - TABLE_STORAGE
+	desc:
+		- Info about inventory/cart/storage data is saved
 
 0x3890
 	Type: IZ
