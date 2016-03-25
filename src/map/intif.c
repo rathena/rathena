@@ -3256,7 +3256,7 @@ static void intif_parse_StorageSaved(int fd)
  * @param type: Storage type
  * @return false - error, true - message sent
  */
-bool intif_storage_request(struct map_session_data *sd, enum store_type type)
+bool intif_storage_request(struct map_session_data *sd, enum storage_type type)
 {
 	if (CheckForCharServer())
 		return false;
@@ -3277,7 +3277,7 @@ bool intif_storage_request(struct map_session_data *sd, enum store_type type)
  * @param type: Storage type
  * @ return false - error, true - message sent
  */
-bool intif_storage_save(struct map_session_data *sd, enum store_type type)
+bool intif_storage_save(struct map_session_data *sd, enum storage_type type)
 {
 	int stor_size = sizeof(struct s_storage);
 	struct s_storage *stor;

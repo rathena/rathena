@@ -111,8 +111,8 @@ int intif_elemental_save(struct s_elemental *ele);
 int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char type);
 
 // STORAGE
-bool intif_storage_request(struct map_session_data *sd, enum store_type type);
-bool intif_storage_save(struct map_session_data *sd, enum store_type type);
+bool intif_storage_request(struct map_session_data *sd, enum storage_type type);
+bool intif_storage_save(struct map_session_data *sd, enum storage_type type);
 
 int CheckForCharServer(void);
 
