@@ -1090,7 +1090,7 @@
 1761,Curse_Arrow,Cursed Arrow,10,10,,3,1,,,,0x000A1848,63,2,32768,,1,,1,{ bonus2 bAddEff,Eff_Curse,1000; },{},{}
 1762,Rusty_Arrow,Rusty Arrow,10,3,,2,30,,,,0x000A1848,63,2,32768,,1,,1,{ bonus bAtkEle,Ele_Poison; },{},{}
 1763,Poison_Arrow,Poison Arrow,10,10,,3,1,,,,0x000A1848,63,2,32768,,1,,1,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,2000; },{},{}
-1764,Incisive_Arrow,Sharp Arrow,10,20,,3,10,,,,0x000A1848,63,2,32768,,1,,1,{ bonus bCritical,20; },{},{}
+1764,Incisive_Arrow,Sharp Arrow,10,20,,3,10,,,,0x000A1848,63,2,32768,,1,,1,{ bonus bCriticalLong,20; },{},{}
 1765,Oridecon_Arrow,Oridecon Arrow,10,30,,3,50,,,,0x000A1848,63,2,32768,,1,,1,{},{},{}
 1766,Arrow_Of_Counter_Evil,Arrow of Counter Evil,10,40,,3,50,,,,0x000A1848,63,2,32768,,1,,1,{ bonus bAtkEle,Ele_Holy; },{},{}
 1767,Arrow_Of_Shadow,Arrow of Shadow,10,3,,2,30,,,,0x000A1848,63,2,32768,,1,,1,{ bonus bAtkEle,Ele_Dark; },{},{}
@@ -2563,7 +2563,7 @@
 4418,Gazeti_Card,Gazeti Card,6,20,,10,,,,,,,,136,,,,,{ bonus3 bAutoSpell,"MG_COLDBOLT",2,100; },{},{}
 4419,Ktullanux_Card,Ktullanux Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddEle,Ele_Fire,50; bonus5 bAutoSpellWhenHit,"WZ_FROSTNOVA",10,20,BF_WEAPON|BF_MAGIC,0; },{},{}
 4420,Muscipular_Card,Muscipular Card,6,20,,10,,,,,,,,32,,,,,{ bonus3 bAutoSpellWhenHit,"AL_HEAL",1,100; bonus3 bAutoSpellWhenHit,"AL_INCAGI",1,100; },{},{}
-4421,Drosera_Card,Drosera Card,6,20,,10,,,,,,,,2,,,,,{ if(getiteminfo(getequipid(EQI_HAND_R),9)>3) bonus bCritical,15; },{},{}
+4421,Drosera_Card,Drosera Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCriticalLong,15; },{},{}
 4422,Roween_Card,Roween Card,6,20,,10,,,,,,,,4,,,,,{ bonus bFlee,5; bonus bFlee2,3; bonus2 bAddEle,Ele_Water,10; bonus2 bCriticalAddRace,RC_Fish,15; },{},{}
 4423,Galion_Card,Galion Card,6,20,,10,,,,,,,,136,,,,,{ bonus bHit,5; bonus2 bAddEle,Ele_Water,5; },{},{}
 4424,Stapo_Card,Stapo Card,6,20,,10,,,,,,,,136,,,,,{ skill "TF_PICKSTONE",1; skill "TF_THROWSTONE",1; },{},{}
@@ -2689,7 +2689,7 @@
 4544,SLD_Dark_Snake_Card,Sealed Evil Snake Lord Card,6,20,,10,,,,,,,,769,,,,,{ bonus bInt,3; .@i = (getrefine()>14?7500:5000); bonus2 bResEff,Eff_Blind,.@i; bonus2 bResEff,Eff_Curse,.@i; },{},{}
 4545,Novice_Poring_Card,Novice Poring Card,6,20,,10,,,,,,,,769,,,,,{ bonus bLuk,1; },{},{}
 4549,Upd_Maya_Puple_Card,Upd Maya Puple Card,6,20,,10,,,,,,,,769,,,,,{ bonus bIntravision,1; bonus bAllStats,1; skill "AL_RUWACH",1; },{},{}
-4550,Upd_Bow_Guardian_Card,Upd Bow Guardian Card,6,20,,10,,,,,,,,2,,,,,{ if(getiteminfo(getequipid(EQI_HAND_R),11)==11) { bonus2 bSkillAtk,"RA_ARROWSTORM",50;  bonus bCritical,25+10*(getequiprefinerycnt(EQI_HAND_R)/4); bonus bHit,5; bonus3 bAutoSpell,"HT_PHANTASMIC",1,100; } },{},{}
+4550,Upd_Bow_Guardian_Card,Upd Bow Guardian Card,6,20,,10,,,,,,,,2,,,,,{ if(getiteminfo(getequipid(EQI_HAND_R),11)==11) { bonus2 bSkillAtk,"RA_ARROWSTORM",50;  bonus bCriticalLong,25+10*(getequiprefinerycnt(EQI_HAND_R)/4); bonus bHit,5; bonus3 bAutoSpell,"HT_PHANTASMIC",1,100; } },{},{}
 4552,Manny_Card,Manny Card,6,20,,10,,,,,,,,136,,,,,{ bonus bMaxHP,10; },{},{}
 4553,Sid_Card,Sid Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHP,100; },{},{}
 4554,Diego_Card,Diego Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMaxHP,100; },{},{}

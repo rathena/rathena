@@ -125,6 +125,7 @@ Additional stats
 bonus bHit,n;         			Hit + n
 bonus bHitRate,n;     			Hit + n%
 bonus bCritical,n;    			Critical + n
+bonus bCriticalLong,n;			Critical + n for normal long ranged attack (won't be shown in status window)
 bonus2 bCriticalAddRace,r,n;	Critical + n against enemies of race r
 bonus bCriticalRate,n;			Critical + n%
 bonus bFlee,n;        			Flee + n
