@@ -283,7 +283,7 @@ struct skill_cooldown_data {
 	long tick;
 };
 
-enum store_type {
+enum storage_type {
 	TABLE_INVENTORY,
 	TABLE_CART,
 	TABLE_STORAGE,
@@ -296,7 +296,7 @@ struct s_storage {
 	int amount; ///< Amount of items in storage
 	bool lock; ///< If locked, can't use storage when item bound retrieval
 	uint32 id; ///< aid / cid / guild_id, (owner id of storage)
-	enum stor_type type; ///< Type of storage (inventory, cart, storage, guild storage)
+	enum storage_type type; ///< Type of storage (inventory, cart, storage, guild storage)
 	union { // Max for inventory, storage, cart, and guild storage are 1637 each without changing this struct and struct item [2014/10/27]
 		struct item items_inventory[MAX_INVENTORY];
 		struct item items_storage[MAX_STORAGE];
