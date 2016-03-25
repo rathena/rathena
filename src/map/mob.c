@@ -2454,8 +2454,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 #ifdef RENEWAL_EXP
 						int rate = pc_level_penalty_mod(tmpsd[i], md->level, md->status.class_, md->status.mode, 1);
 						if (rate != 100) {
-							base_exp = (unsigned int)cap_value(apply_rate(base_exp, rate), 1, UINT_MAX);
-							job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
+							if (base_exp)
+								base_exp = (unsigned int)cap_value(apply_rate(base_exp, rate), 1, UINT_MAX);
+							if (job_exp)
+								job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
 						}
 #endif
 						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, false);
