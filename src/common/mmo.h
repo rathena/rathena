@@ -62,7 +62,7 @@
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
-#define MAX_STORAGE 600 ///Max number of storage slots a player can have, (up to ~850 tested)
+#define MAX_STORAGE 600 ///Max number of storage slots a player can have
 #define MAX_GUILD_STORAGE 600 ///Max number of storage slots a guild
 #define MAX_PARTY 12 ///Max party member
 #define MAX_GUILD 16+10*6	///Increased max guild members +6 per 1 extension levels [Lupus]
@@ -283,19 +283,26 @@ struct skill_cooldown_data {
 	long tick;
 };
 
-struct storage_data {
-	int storage_amount;
-	struct item items[MAX_STORAGE];
+enum store_type {
+	TABLE_INVENTORY,
+	TABLE_CART,
+	TABLE_STORAGE,
+	TABLE_GUILD_STORAGE,
 };
 
-/// Guild storgae struct
-struct guild_storage {
-	bool dirty; ///< Dirty status, need to be saved
-	int guild_id; ///< Guild ID
-	short storage_amount; ///< Amount of item on storage
-	struct item items[MAX_GUILD_STORAGE]; ///< Item entries
-	bool locked; ///< If locked, can't use storage when item bound retrieval
-	uint32 opened; ///< Holds the char_id that open the storage
+struct s_storage {
+	bool dirty; ///< Dirty status, data needs to be saved
+	bool status; ///< Current status of storage (opened or closed)
+	int amount; ///< Amount of items in storage
+	bool lock; ///< If locked, can't use storage when item bound retrieval
+	uint32 id; ///< aid / cid / guild_id, (owner id of storage)
+	enum stor_type type; ///< Type of storage (inventory, cart, storage, guild storage)
+	union { // Max for inventory, storage, cart, and guild storage are 1637 each without changing this struct and struct item [2014/10/27]
+		struct item items_inventory[MAX_INVENTORY];
+		struct item items_storage[MAX_STORAGE];
+		struct item items_cart[MAX_CART];
+		struct item items_guild[MAX_GUILD_STORAGE];
+	} u;
 };
 
 struct s_pet {
@@ -418,8 +425,6 @@ struct mmo_charstatus {
 	uint16 mapport;
 
 	struct point last_point,save_point,memo_point[MAX_MEMOPOINTS];
-	struct item inventory[MAX_INVENTORY],cart[MAX_CART];
-	struct storage_data storage;
 	struct s_skill skill[MAX_SKILL];
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
