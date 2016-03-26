@@ -959,35 +959,33 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	tstatus = status_get_status_data(bl);
 
 	// Taekwon combos activate on traps, so we need to check them even for targets that don't have status
-	if (sd && skill_id == 0 && !(attack_type&BF_SKILL)) {
-		// Chance to trigger Taekwon kicks [Dralnu]
-		if (sc && !sc->data[SC_COMBO]) {
-			if (sc->data[SC_READYSTORM] &&
-				sc_start4(src, src, SC_COMBO, 15, TK_STORMKICK,
-					bl->id, 2, 0,
-					(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
-				; //Stance triggered
-			else if (sc->data[SC_READYDOWN] &&
-				sc_start4(src, src, SC_COMBO, 15, TK_DOWNKICK,
-					bl->id, 2, 0,
-					(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
-				; //Stance triggered
-			else if (sc->data[SC_READYTURN] &&
-				sc_start4(src, src, SC_COMBO, 15, TK_TURNKICK,
-					bl->id, 2, 0,
-					(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
-				; //Stance triggered
-			else if (sc->data[SC_READYCOUNTER]) { //additional chance from SG_FRIEND [Komurka]
-				rate = 20;
-				if (sc->data[SC_SKILLRATE_UP] && sc->data[SC_SKILLRATE_UP]->val1 == TK_COUNTER) {
-					rate += rate*sc->data[SC_SKILLRATE_UP]->val2 / 100;
-					status_change_end(src, SC_SKILLRATE_UP, INVALID_TIMER);
-				}
-				sc_start4(src, src, SC_COMBO, rate, TK_COUNTER,
-					bl->id, 2, 0,
-					(2000 - 4 * sstatus->agi - 2 * sstatus->dex))
-					; //Stance triggered
+	if (sd && skill_id == 0 && !(attack_type&BF_SKILL) && sc) {
+		// Chance to trigger Taekwon kicks
+		if (sc->data[SC_READYSTORM] &&
+			sc_start4(src, src, SC_COMBO, 15, TK_STORMKICK,
+				0, 2, 0,
+				(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
+			; //Stance triggered
+		else if (sc->data[SC_READYDOWN] &&
+			sc_start4(src, src, SC_COMBO, 15, TK_DOWNKICK,
+				0, 2, 0,
+				(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
+			; //Stance triggered
+		else if (sc->data[SC_READYTURN] &&
+			sc_start4(src, src, SC_COMBO, 15, TK_TURNKICK,
+				0, 2, 0,
+				(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
+			; //Stance triggered
+		else if (sc->data[SC_READYCOUNTER]) { //additional chance from SG_FRIEND [Komurka]
+			rate = 20;
+			if (sc->data[SC_SKILLRATE_UP] && sc->data[SC_SKILLRATE_UP]->val1 == TK_COUNTER) {
+				rate += rate*sc->data[SC_SKILLRATE_UP]->val2 / 100;
+				status_change_end(src, SC_SKILLRATE_UP, INVALID_TIMER);
 			}
+			sc_start4(src, src, SC_COMBO, rate, TK_COUNTER,
+				0, 2, 0,
+				(2000 - 4 * sstatus->agi - 2 * sstatus->dex))
+				; //Stance triggered
 		}
 	}
 
@@ -2747,6 +2745,7 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 
 	//start new combo
 	if(sd){ //player only
+		target_id = 0; // Players can always switch targets on combo
 		switch(skill_id) {
 		case MO_TRIPLEATTACK:
 			if (pc_checkskill(sd, MO_CHAINCOMBO) > 0 || pc_checkskill(sd, SR_DRAGONCOMBO) > 0)
@@ -2772,7 +2771,6 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 			if( pc_checkskill(sd, HT_POWER)) {
 				duration = 2000;
 				nodelay = 1; //Neither gives walk nor attack delay
-				target_id = 0; //Does not need to be used on previous target
 			}
 			break;
 		case SR_DRAGONCOMBO:
