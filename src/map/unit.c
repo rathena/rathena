@@ -2103,11 +2103,11 @@ int unit_set_target(struct unit_data* ud, int target_id)
 		struct unit_data * ux;
 		struct block_list* target;
 	
-		if( ud->target && (target = map_id2bl(ud->target)) && (ux = unit_bl2ud(target)) && ux->target_count > 0 )
-			ux->target_count --;
+		if (ud->target && (target = map_id2bl(ud->target)) && (ux = unit_bl2ud(target)) && ux->target_count > 0)
+			ux->target_count--;
 
-		if( target_id && (target = map_id2bl(target_id)) && (ux = unit_bl2ud(target)) )
-			ux->target_count ++;
+		if (target_id && (target = map_id2bl(target_id)) && (ux = unit_bl2ud(target)) && ux->target_count < 255)
+			ux->target_count++;
 	}
 
 	ud->target = target_id;

@@ -4586,7 +4586,8 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 	if( battle_config.vit_penalty_type && battle_config.vit_penalty_target&target->type ) {
 		unsigned char target_count; //256 max targets should be a sane max
 
-		target_count = unit_counttargeted(target);
+		//Official servers limit the count to 22 targets
+		target_count = min(unit_counttargeted(target), (100 / battle_config.vit_penalty_num) + (battle_config.vit_penalty_count - 1));
 		if(target_count >= battle_config.vit_penalty_count) {
 			if(battle_config.vit_penalty_type == 1) {
 				if( !tsc || !tsc->data[SC_STEELBODY] )
@@ -4653,7 +4654,7 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 	 * Damage = Attack * (4000+eDEF)/(4000+eDEF*10) - sDEF
 	 * Pierce defence gains 1 atk per def/2
 	 */
-	if( def1 == -400 ) /* being hit by a gazillion units, -400 creates a division by 0 and subsequently crashes */
+	if( def1 == -400 ) /* -400 creates a division by 0 and subsequently crashes */
 		def1 = -399;
 	ATK_ADD2(wd.damage, wd.damage2,
 		is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (def1/2) : 0,
