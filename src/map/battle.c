@@ -486,8 +486,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
 				if (tsc->data[SC_EARTH_INSIGNIA])
 					ratio += 50;
-				if (tsc->data[SC_ASH])
-					ratio += 50;
 				break;
 			case ELE_HOLY:
 				if (tsc->data[SC_ORATIO])

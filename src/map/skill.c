@@ -12845,6 +12845,10 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		// Officially, duration (limit) is 5secs, interval 0.5secs damage interval.
 		limit = interval * 10;
 		break;
+	case MH_VOLCANIC_ASH:
+		if (!map_flag_vs(src->m))
+			target = BCT_ENEMY;
+		break;
 	}
 
 	// Init skill unit group
