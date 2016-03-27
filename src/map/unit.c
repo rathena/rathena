@@ -1245,7 +1245,7 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 int unit_stop_walking(struct block_list *bl,int type)
 {
 	struct unit_data *ud;
-	const struct TimerData* td;
+	const struct TimerData* td = NULL;
 	unsigned int tick;
 
 	nullpo_ret(bl);
