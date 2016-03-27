@@ -303,8 +303,6 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 	if (save_settings&CHARSAVE_VENDING) // Avoid invalid data from saving
 		chrif_save(sd, 0);
 
-	intif_storage_request(sd, TABLE_CART); // Update cart item ID information
-
 	// filter out invalid items
 	i = 0;
 	for( j = 0; j < count; j++ ) {

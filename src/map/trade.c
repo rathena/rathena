@@ -182,7 +182,7 @@ int impossible_trade_check(struct map_session_data *sd)
 	}
 
 	// get inventory of player
-	memcpy(&inventory, &sd->inventory, sizeof(struct item) * MAX_INVENTORY);
+	memcpy(&inventory, &sd->inventory.u.items_inventory, sizeof(struct item) * MAX_INVENTORY);
 
 	// remove this part: arrows can be trade and equipped
 	// re-added! [celest]
@@ -248,8 +248,8 @@ int trade_check(struct map_session_data *sd, struct map_session_data *tsd)
 		return 0;
 
 	// get inventory of player
-	memcpy(&inventory, &sd->inventory, sizeof(struct item) * MAX_INVENTORY);
-	memcpy(&inventory2, &tsd->inventory, sizeof(struct item) * MAX_INVENTORY);
+	memcpy(&inventory, &sd->inventory.u.items_inventory, sizeof(struct item) * MAX_INVENTORY);
+	memcpy(&inventory2, &tsd->inventory.u.items_inventory, sizeof(struct item) * MAX_INVENTORY);
 
 	// check free slot in both inventory
 	for(trade_i = 0; trade_i < 10; trade_i++) {

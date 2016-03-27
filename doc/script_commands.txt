@@ -4665,7 +4665,7 @@ This command behaves identically to 'countitem2', but counts items from the play
 cart, storage or guild storage.
 
 If no cart is mounted, 'cartcountitem2' will return -1.
-If player is not in a guild or storage is open, 'guildstoragecountitem' will return -1.
+If player is not in a guild or storage is open, 'guildstoragecountitem2' will return -1.
 
 ---------------------------------------
 

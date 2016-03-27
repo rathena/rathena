@@ -6895,6 +6895,9 @@ void clif_openvendingreq(struct map_session_data* sd, int num)
 
 	nullpo_retv(sd);
 
+	intif_storage_save(sd, TABLE_CART); // Save cart item data
+	intif_storage_request(sd, TABLE_CART); // Update cart item ID information
+
 	fd = sd->fd;
 	WFIFOHEAD(fd,packet_len(0x12d));
 	WFIFOW(fd,0) = 0x12d;

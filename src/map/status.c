@@ -3011,32 +3011,78 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 }
 
 /**
- * Calculates player weight from scratch
+ * Calculates player's weight
  * @param sd: Player object
+ * @param flag: Calculation type
+ *   1 - Item weight
+ *   2 - Skill/Status/Configuration max weight bonus
  * @return false - failed, true - success
  */
-bool status_calc_weight(struct map_session_data *sd)
+bool status_calc_weight(struct map_session_data *sd, uint8 flag)
 {
-	int b_weight, b_max_weight, b_cart_weight_max, skill, i;
+	int b_weight, b_max_weight, skill, i;
 	struct status_change *sc;
 
-	if (!sd)
-		return false;
+	nullpo_retr(false, sd);
 
 	sc = &sd->sc;
 	b_max_weight = sd->max_weight; // Store max weight for later comparison
 	b_weight = sd->weight; // Store current weight for later comparison
 	sd->max_weight = job_info[pc_class2idx(sd->status.class_)].max_weight_base + sd->status.str * 300; // Recalculate max weight
-	sd->weight = 0; // Reset current weight
 
-	for(i = 0; i < MAX_INVENTORY; i++) {
-		if (!sd->inventory.u.items_inventory[i].nameid || sd->inventory_data[i] == NULL)
-			continue;
-		sd->weight += sd->inventory_data[i]->weight * sd->inventory.u.items_inventory[i].amount;
+	if (flag&1) {
+		sd->weight = 0; // Reset current weight
+
+		for(i = 0; i < MAX_INVENTORY; i++) {
+			if (!sd->inventory.u.items_inventory[i].nameid || sd->inventory_data[i] == NULL)
+				continue;
+			sd->weight += sd->inventory_data[i]->weight * sd->inventory.u.items_inventory[i].amount;
+		}
 	}
 
-	if (pc_iscarton(sd)) {
-		b_cart_weight_max = sd->cart_weight_max; // Store cart max weight for later comparison
+	if (flag&2) {
+		// Skill/Status bonus weight increases
+		if ((skill = pc_checkskill(sd, MC_INCCARRY)) > 0)
+			sd->max_weight += 2000 * skill;
+		if (pc_isriding(sd) && pc_checkskill(sd, KN_RIDING) > 0)
+			sd->max_weight += 10000;
+		else if (pc_isridingdragon(sd))
+			sd->max_weight += 5000 + 2000 * pc_checkskill(sd, RK_DRAGONTRAINING);
+		if (sc->data[SC_KNOWLEDGE])
+			sd->max_weight += sd->max_weight * sc->data[SC_KNOWLEDGE]->val1 / 10;
+		if ((skill = pc_checkskill(sd, ALL_INCCARRY)) > 0)
+			sd->max_weight += 2000 * skill;
+	}
+
+	// Update the client if the new weight calculations don't match
+	if (b_weight != sd->weight)
+		clif_updatestatus(sd, SP_WEIGHT);
+	if (b_max_weight != sd->max_weight) {
+		clif_updatestatus(sd, SP_MAXWEIGHT);
+		pc_updateweightstatus(sd);
+	}
+
+	return true;
+}
+
+/**
+ * Calculates player's cart weight
+ * @param sd: Player object
+ * @return false - failed, true - success
+ */
+bool status_calc_cart_weight(struct map_session_data *sd, uint8 flag)
+{
+	int b_cart_weight_max, i;
+
+	nullpo_retr(false, sd);
+
+	if (!pc_iscarton(sd))
+		return false;
+
+	b_cart_weight_max = sd->cart_weight_max; // Store cart max weight for later comparison
+	sd->cart_weight_max = battle_config.max_cart_weight; // Recalculate max weight
+
+	if (flag&1) {
 		sd->cart_weight = 0; // Reset current cart weight
 		sd->cart_num = 0; // Reset current cart item count
 
@@ -3048,32 +3094,13 @@ bool status_calc_weight(struct map_session_data *sd)
 		}
 	}
 
-	// Skill/Status bonus weight increases
-	if ((skill = pc_checkskill(sd, MC_INCCARRY)) > 0)
-		sd->max_weight += 2000 * skill;
-	if (pc_isriding(sd) && pc_checkskill(sd, KN_RIDING) > 0)
-		sd->max_weight += 10000;
-	else if (pc_isridingdragon(sd))
-		sd->max_weight += 5000 + 2000 * pc_checkskill(sd, RK_DRAGONTRAINING);
-	if (sc->data[SC_KNOWLEDGE])
-		sd->max_weight += sd->max_weight * sc->data[SC_KNOWLEDGE]->val1 / 10;
-	if ((skill = pc_checkskill(sd, ALL_INCCARRY)) > 0)
-		sd->max_weight += 2000 * skill;
+	// Skill bonus max weight increases
+	if (flag&2)
+		sd->cart_weight_max += (pc_checkskill(sd, GN_REMODELING_CART) * 5000);
 
 	// Update the client if the new weight calculations don't match
-	if (b_weight != sd->weight)
-		clif_updatestatus(sd, SP_WEIGHT);
-	if (b_max_weight != sd->max_weight) {
-		clif_updatestatus(sd, SP_MAXWEIGHT);
-		pc_updateweightstatus(sd);
-	}
-
-	if (pc_iscarton(sd)) {
-		sd->cart_weight_max = battle_config.max_cart_weight + (pc_checkskill(sd, GN_REMODELING_CART) * 5000);
-
-		if (b_cart_weight_max != sd->cart_weight_max)
-			clif_updatestatus(sd, SP_CARTINFO);
-	}
+	if (b_cart_weight_max != sd->cart_weight_max)
+		clif_updatestatus(sd, SP_CARTINFO);
 
 	return true;
 }
@@ -3109,7 +3136,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->regen.sregen = &sd->sregen;
 		sd->regen.ssregen = &sd->ssregen;
 
-		status_calc_weight(sd);
+		status_calc_weight(sd, 1);
+		status_calc_cart_weight(sd, 1);
 	}
 
 	base_status = &sd->base_status;
@@ -3750,6 +3778,10 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		base_status->dmotion = base_status->dmotion*battle_config.pc_damage_delay_rate/100;
 
 // ----- MISC CALCULATIONS -----
+
+	// Weight
+	status_calc_weight(sd, 2);
+	status_calc_cart_weight(sd, 2);
 
 	if (pc_checkskill(sd,SM_MOVINGRECOVERY)>0)
 		sd->regen.state.walk = 1;
