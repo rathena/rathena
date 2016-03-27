@@ -528,8 +528,7 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(12)
 	{
 		char birthdate[8+1];
-		uint32 char_id;
-		int i, k;
+		uint32 char_id, i, k;
 		unsigned int base_level;
 		char* data;
 		time_t delete_date;
@@ -604,8 +603,7 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 
 // CH: <082b>.W <char id>.L
 int chclif_parse_char_delete2_cancel(int fd, struct char_session_data* sd) {
-	uint32 char_id;
-	int i;
+	uint32 char_id, i;
 
 	FIFOSD_CHECK(6)
 

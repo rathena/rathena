@@ -267,6 +267,11 @@ struct map_session_data {
 	uint32 packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 ... 18
 	struct mmo_charstatus status;
 
+	// Item Storages
+	struct s_storage storage;
+	struct s_storage inventory;
+	struct s_storage cart;
+
 	struct item_data* inventory_data[MAX_INVENTORY]; // direct pointers to itemdb entries (faster than doing item_id lookups)
 	short equip_index[EQI_MAX];
 	unsigned int weight,max_weight;
@@ -762,6 +767,14 @@ enum adopt_responses {
 	ADOPT_MARRIED,
 };
 
+enum item_check {
+	ITMCHK_NONE      = 0x0,
+	ITMCHK_INVENTORY = 0x1,
+	ITMCHK_CART      = 0x2,
+	ITMCHK_STORAGE   = 0x4,
+	ITMCHK_ALL       = ITMCHK_INVENTORY|ITMCHK_CART|ITMCHK_STORAGE,
+};
+
 struct {
 	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
 	int hp_factor, hp_multiplicator, sp_factor;
@@ -925,6 +938,7 @@ void pc_reg_received(struct map_session_data *sd);
 void pc_close_npc(struct map_session_data *sd,int flag);
 int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data);
 
+void pc_setequipindex(struct map_session_data *sd);
 uint8 pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
 void pc_setinventorydata(struct map_session_data *sd);
@@ -1041,7 +1055,7 @@ int pc_resethate(struct map_session_data*);
 bool pc_equipitem(struct map_session_data *sd, short n, int req_pos);
 bool pc_unequipitem(struct map_session_data*,int,int);
 void pc_checkitem(struct map_session_data*);
-void pc_check_available_item(struct map_session_data *sd);
+void pc_check_available_item(struct map_session_data *sd, uint8 type);
 int pc_useitem(struct map_session_data*,int);
 
 int pc_skillatk_bonus(struct map_session_data *sd, uint16 skill_id);
