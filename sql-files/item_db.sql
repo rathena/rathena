@@ -986,7 +986,7 @@ REPLACE INTO `item_db` VALUES (1760,'Flash_Arrow','Flash Arrow',10,10,NULL,3,1,N
 REPLACE INTO `item_db` VALUES (1761,'Curse_Arrow','Cursed Arrow',10,10,NULL,3,1,NULL,NULL,NULL,0x000A1848,7,2,32768,NULL,1,NULL,1,'bonus2 bAddEff,Eff_Curse,1000;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1762,'Rusty_Arrow','Rusty Arrow',10,3,NULL,2,30,NULL,NULL,NULL,0x000A1848,7,2,32768,NULL,1,NULL,1,'bonus bAtkEle,Ele_Poison;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1763,'Poison_Arrow','Poison Arrow',10,10,NULL,3,1,NULL,NULL,NULL,0x000A1848,7,2,32768,NULL,1,NULL,1,'bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,2000;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (1764,'Incisive_Arrow','Sharp Arrow',10,20,NULL,3,10,NULL,NULL,NULL,0x000A1848,7,2,32768,NULL,1,NULL,1,'bonus bCritical,20;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (1764,'Incisive_Arrow','Sharp Arrow',10,20,NULL,3,10,NULL,NULL,NULL,0x000A1848,7,2,32768,NULL,1,NULL,1,'bonus bCriticalLong,20;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1765,'Oridecon_Arrow','Oridecon Arrow',10,30,NULL,3,50,NULL,NULL,NULL,0x000A1848,7,2,32768,NULL,1,NULL,1,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (1766,'Arrow_Of_Counter_Evil','Arrow of Counter Evil',10,40,NULL,3,50,NULL,NULL,NULL,0x000A1848,7,2,32768,NULL,1,NULL,1,'bonus bAtkEle,Ele_Holy;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (1767,'Arrow_Of_Shadow','Arrow of Shadow',10,3,NULL,2,30,NULL,NULL,NULL,0x000A1848,7,2,32768,NULL,1,NULL,1,'bonus bAtkEle,Ele_Dark;',NULL,NULL);
@@ -2087,7 +2087,7 @@ REPLACE INTO `item_db` VALUES (4417,'Ice_Titan_Card','Ice Titan Card',6,20,NULL,
 REPLACE INTO `item_db` VALUES (4418,'Gazeti_Card','Gazeti Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus3 bAutoSpell,"MG_COLDBOLT",2,100;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4419,'Ktullanux_Card','Ktullanux Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus2 bAddEle,Ele_Fire,50; bonus5 bAutoSpellWhenHit,"WZ_FROSTNOVA",10,20,BF_WEAPON|BF_MAGIC,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4420,'Muscipular_Card','Muscipular Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus3 bAutoSpellWhenHit,"AL_HEAL",1,100; bonus3 bAutoSpellWhenHit,"AL_INCAGI",1,100;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (4421,'Drosera_Card','Drosera Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'if(getiteminfo(getequipid(EQI_HAND_R),9)>3) bonus bCritical,15;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (4421,'Drosera_Card','Drosera Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bCriticalLong,15;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4422,'Roween_Card','Roween Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,4,NULL,NULL,NULL,NULL,'bonus bFlee,5; bonus bFlee2,3; bonus2 bAddEle,Ele_Water,10; bonus2 bCriticalAddRace,RC_Fish,15;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4423,'Galion_Card','Galion Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'bonus bHit,5; bonus2 bAddEle,Ele_Water,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4424,'Stapo_Card','Stapo Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,136,NULL,NULL,NULL,NULL,'skill "TF_PICKSTONE",1; skill "TF_THROWSTONE",1;',NULL,NULL);
