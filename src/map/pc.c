@@ -284,9 +284,6 @@ static int pc_check_banding( struct block_list *bl, va_list ap ) {
 
 	sc = status_get_sc(bl);
 
-	if( bl == src )
-		return 0;
-
 	if( sc && sc->data[SC_BANDING] )
 	{
 		b_sd[(*c)++] = tsd->bl.id;
