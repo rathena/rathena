@@ -8400,7 +8400,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					sc_start(src,bl,SC_INCMATKRATE,100,-50,skill_get_time2(skill_id,skill_lv));
 					break;
 				case 2:	// all buffs removed
-					status_change_clear_buffs(bl,1);
+					status_change_clear_buffs(bl,9);
 					break;
 				case 3:	// 1000 damage, random armor destroyed
 					{

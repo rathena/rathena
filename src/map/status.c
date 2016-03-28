@@ -9230,7 +9230,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if(val4 == BCT_SELF) {	// Self effect
 				val2 = tick/10000;
 				tick_time = 10000; // [GodLesZ] tick time
-				status_change_clear_buffs(bl,3); // Remove buffs/debuffs
+				status_change_clear_buffs(bl,11); // Remove buffs/debuffs
 			}
 			break;
 
@@ -12832,8 +12832,9 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
  * @param bl: Object to clear [PC|MOB|HOM|MER|ELEM]
  * @param type: Type to remove
  *	&1: Clear Buffs
- *	$2: Clear Debuffs
+ *	&2: Clear Debuffs
  *	&4: Specific debuffs with a refresh
+ *	&8: Clear chemical protection
  */
 void status_change_clear_buffs (struct block_list* bl, int type)
 {
@@ -12868,10 +12869,6 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_JAILED:
 			case SC_ANKLE:
 			case SC_BLADESTOP:
-			case SC_CP_WEAPON:
-			case SC_CP_SHIELD:
-			case SC_CP_ARMOR:
-			case SC_CP_HELM:
 			case SC_STRFOOD:
 			case SC_AGIFOOD:
 			case SC_VITFOOD:
@@ -12957,7 +12954,14 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_SPRITEMABLE:
 			case SC_BITESCAR:
 				continue;
-
+			// Chemical Protection is only removed by some skills
+			case SC_CP_WEAPON:
+			case SC_CP_SHIELD:
+			case SC_CP_ARMOR:
+			case SC_CP_HELM:
+				if(!(type&8))
+					continue;
+				break;
 			// Debuffs that can be removed.
 			case SC_DEEPSLEEP:
 			case SC_BURNING:
