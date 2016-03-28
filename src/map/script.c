@@ -2690,6 +2690,7 @@ void* get_val2(struct script_state* st, int64 uid, struct reg_db *ref)
 	push_val2(st->stack, C_NAME, uid, ref);
 	data = script_getdatatop(st, -1);
 	get_val(st, data);
+	script_removetop(st, -1, 0); // [Jezznar(Ninja)] Pushed value was not cleared
 	//! TODO: Support data->u.num as int64 instead cast it to int? (in get_val, it was casted to int).
 	return (data->type == C_INT ? (void*)__64BPRTSIZE((int)data->u.num) : (void*)__64BPRTSIZE(data->u.str));
 }
@@ -15909,32 +15910,207 @@ BUILDIN_FUNC(distance)
 
 // <--- [zBuffer] List of mathematics commands
 
+/* min 
+* Returns the minimum value from a series of values
+* [Jezznar(Ninja)]
+* Usage: min (val1,val2,...,valn);
+*/
 BUILDIN_FUNC(min)
 {
-	int i, min;
-
-	min = script_getnum(st, 2);
+	int i, minval;
+	struct script_data* data = script_getdata(st, 2);
+	char* command = (char *)script_getfuncname(st);
+	if (!data_isint(data))
+	{
+		ShowError("script:min: not an integer\n");
+		script_reportdata(data);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+	
+	minval = script_getnum(st, 2);
 	for (i = 3; script_hasdata(st, i); i++) {
 		int next = script_getnum(st, i);
-		if (next < min)
-			min = next;
+		if (next < minval)
+			minval = next;
 	}
-	script_pushint(st, min);
+	script_pushint(st, minval);
+
+	return SCRIPT_CMD_SUCCESS;
+
+}
+
+/* minarray
+* Returns the minimum value from an array of values
+* [Jezznar(Ninja)]
+* Usage: 
+*	minarray <array>;
+*/
+BUILDIN_FUNC(minarray)
+{
+	struct script_data* data;
+	const char* name;
+	unsigned int start, end, i;
+	int id;
+	TBL_PC *sd = NULL;
+	struct script_array *sa = NULL;
+	struct reg_db *src = NULL;
+
+	data = script_getdata(st, 2);
+	if (!data_isreference(data)) {
+		ShowError("script:minarray: not a variable\n");
+		script_reportdata(data);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;// not a variable
+	}
+
+	id = reference_getid(data);
+	start = reference_getindex(data);
+	name = reference_getname(data);
+
+	sd = script_rid2sd(st);
+	
+	if (sd == NULL)
+		return SCRIPT_CMD_SUCCESS;// no player attached
+	
+	if (!(src = script_array_src(st, sd, name, reference_getref(data)))) 
+	{
+		ShowError("script:minarray: not a array\n");
+		script_reportdata(data);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;// not a variable
+	}
+	
+	script_array_ensure_zero(st, NULL, data->u.num, reference_getref(data));
+	
+	if (!(sa = ui64db_get(src->arrays, id))) { // non-existent array, nothing to empty
+		return SCRIPT_CMD_SUCCESS;// not a variable
+	}
+	end = script_array_highest_key(st, sd, name, reference_getref(data));
+	
+	if (start >= end)
+		return SCRIPT_CMD_SUCCESS;// nothing to free
+	
+	if (is_string_variable(name))
+	{
+		ShowError("buildin_minarray: illegal type, need int\n");
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;// not supported
+	}
+
+	int v, minval = (int)get_val2(st, reference_uid(id, start), reference_getref(data));
+	
+	for (i = 0; i < end; i++)
+	{
+		v = (int)get_val2(st, reference_uid(id, start + i), reference_getref(data));
+		if (minval > v){
+			minval = v;
+		}
+		
+	}
+	script_pushint(st, minval);
 
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/* max
+* Returns the maximum value from a series of values
+* [Jezznar(Ninja)]
+* Usage: max (val1,val2,...,valn);
+*/
 BUILDIN_FUNC(max)
 {
-	int i, max;
+	int i, maxval;
+	struct script_data* data = script_getdata(st, 2);
+	char* command = (char *)script_getfuncname(st);
+	if (!data_isint(data))
+	{
+		ShowError("script:min: not an integer\n");
+		script_reportdata(data);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
 
-	max = script_getnum(st, 2);
+	maxval = script_getnum(st, 2);
 	for (i = 3; script_hasdata(st, i); i++) {
 		int next = script_getnum(st, i);
-		if (next > max)
-			max = next;
+		if (next > maxval)
+			maxval = next;
 	}
-	script_pushint(st, max);
+	script_pushint(st, maxval);
+
+	return SCRIPT_CMD_SUCCESS;
+
+}
+/* maxarray
+* Returns the maximum value from an array of values
+* [Jezznar(Ninja)]
+* Usage:
+*	maxarray <array>;
+*/
+BUILDIN_FUNC(maxarray)
+{
+	struct script_data* data;
+	const char* name;
+	unsigned int start, end, i;
+	int id;
+	TBL_PC *sd = NULL;
+	struct script_array *sa = NULL;
+	struct reg_db *src = NULL;
+
+	data = script_getdata(st, 2);
+	if (!data_isreference(data)) {
+		ShowError("script:minarray: not a variable\n");
+		script_reportdata(data);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;// not a variable
+	}
+
+	id = reference_getid(data);
+	start = reference_getindex(data);
+	name = reference_getname(data);
+
+	sd = script_rid2sd(st);
+
+	if (sd == NULL)
+		return SCRIPT_CMD_SUCCESS;// no player attached
+
+	if (!(src = script_array_src(st, sd, name, reference_getref(data))))
+	{
+		ShowError("script:maxarray: not a array\n");
+		script_reportdata(data);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;// not a variable
+	}
+
+	script_array_ensure_zero(st, NULL, data->u.num, reference_getref(data));
+
+	if (!(sa = ui64db_get(src->arrays, id))) { // non-existent array, nothing to empty
+		return SCRIPT_CMD_SUCCESS;// not a variable
+	}
+	end = script_array_highest_key(st, sd, name, reference_getref(data));
+
+	if (start >= end)
+		return SCRIPT_CMD_SUCCESS;// nothing to free
+
+	if (is_string_variable(name))
+	{
+		ShowError("buildin_minarray: illegal type, need int\n");
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;// not supported
+	}
+
+	int v, maxval = (int)get_val2(st, reference_uid(id, start), reference_getref(data));
+
+	for (i = 0; i < end; i++)
+	{
+		v = (int)get_val2(st, reference_uid(id, start + i), reference_getref(data));
+		if (maxval < v){
+			maxval = v;
+		}
+
+	}
+	script_pushint(st, maxval);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -21574,7 +21750,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(distance,"iiii"),
 	// <--- [zBuffer] List of mathematics commands
 	BUILDIN_DEF(min, "i*"),
+	BUILDIN_DEF(minarray, "r"),
 	BUILDIN_DEF(max, "i*"),
+	BUILDIN_DEF(maxarray, "r"),
 	BUILDIN_DEF(md5,"s"),
 	// [zBuffer] List of dynamic var commands --->
 	BUILDIN_DEF(getd,"s"),
