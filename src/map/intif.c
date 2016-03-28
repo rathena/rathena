@@ -3201,7 +3201,7 @@ static bool intif_parse_StorageReceived(int fd)
 			//Set here because we need the inventory data for weapon sprite parsing.
 			status_set_viewdata(&sd->bl, sd->status.class_);
 			pc_load_combo(sd);
-			status_calc_weight(sd); // Refresh item weight data
+			status_calc_weight(sd, 1|2); // Refresh item weight data
 			break;
 		}
 
@@ -3211,6 +3211,7 @@ static bool intif_parse_StorageReceived(int fd)
 				clif_parse_LoadEndAck(sd->fd, sd);
 				sd->autotrade_tid = add_timer(gettick() + battle_config.feature_autotrade_open_delay, pc_autotrade_timer, sd->bl.id, 0);
 			}
+			status_calc_cart_weight(sd, 1|2);
 			break;
 
 		case TABLE_STORAGE:

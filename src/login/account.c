@@ -117,11 +117,11 @@ static bool account_db_sql_init(AccountDB* self) {
 	sql_handle = db->accounts;
 
 	username = db->db_username;
-    password = db->db_password;
-    hostname = db->db_hostname;
-    port     = db->db_port;
-    database = db->db_database;
-    codepage = db->codepage;
+	password = db->db_password;
+	hostname = db->db_hostname;
+	port     = db->db_port;
+	database = db->db_database;
+	codepage = db->codepage;
 
 	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
 	{
