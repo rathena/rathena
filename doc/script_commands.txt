@@ -7624,6 +7624,18 @@ Example:
 	.@level = min(BaseLevel, 70); // .@level will be the character's base level, capped to 70
 
 ---------------------------------------
+
+*minarray {array}
+*maxarray {array}
+
+Returns the smallest (or biggest) from an array.
+
+Example:
+	setarray .@testarray, 4,5,12,6,7,3,8,9,10;
+	.@minimum = minarray(.@testarray); // .@minimum will be equal to 3
+	.@maximum = maxarray(.@testarray); // .@maximum will be equal to 12
+
+---------------------------------------
 *md5("<string>")
 
 Returns the md5 checksum of a number or string.
