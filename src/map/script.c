@@ -2690,7 +2690,6 @@ void* get_val2(struct script_state* st, int64 uid, struct reg_db *ref)
 	push_val2(st->stack, C_NAME, uid, ref);
 	data = script_getdatatop(st, -1);
 	get_val(st, data);
-	script_removetop(st, -1, 0); // [Jezznar(Ninja)] Pushed value was not cleared
 	//! TODO: Support data->u.num as int64 instead cast it to int? (in get_val, it was casted to int).
 	return (data->type == C_INT ? (void*)__64BPRTSIZE((int)data->u.num) : (void*)__64BPRTSIZE(data->u.str));
 }
@@ -15999,10 +15998,11 @@ BUILDIN_FUNC(minarray)
 	}
 
 	int v, minval = (int)get_val2(st, reference_uid(id, start), reference_getref(data));
-	
+	script_removetop(st, -1, 0);
 	for (i = 0; i < end; i++)
 	{
 		v = (int)get_val2(st, reference_uid(id, start + i), reference_getref(data));
+		script_removetop(st, -1, 0);
 		if (minval > v){
 			minval = v;
 		}
@@ -16101,10 +16101,11 @@ BUILDIN_FUNC(maxarray)
 	}
 
 	int v, maxval = (int)get_val2(st, reference_uid(id, start), reference_getref(data));
-
+	script_removetop(st, -1, 0);
 	for (i = 0; i < end; i++)
 	{
 		v = (int)get_val2(st, reference_uid(id, start + i), reference_getref(data));
+		script_removetop(st, -1, 0);
 		if (maxval < v){
 			maxval = v;
 		}
