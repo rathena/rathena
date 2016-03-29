@@ -18835,8 +18835,7 @@ static int clif_parse(int fd)
 			ShowWarning("clif_parse: Received unsupported packet (packet 0x%04x, %d bytes received) from character %s(AID: %d, CID: %d), disconnecting session #%d.\n", cmd, RFIFOREST(fd), sd->status.name, sd->status.account_id, sd->status.char_id, fd);
 
 #if defined(DUMP_INVALID_PACKET) && defined(PACKET_OBFUSCATION)
-			if(sd)
-				ShowDebug("clif_parse: Encrypted packet id was 0x%04x with encryption key value(before: %u, after: %u).\n", cryptedCmd, cryptKey, sd->cryptKey );
+			ShowDebug("clif_parse: Encrypted packet id was 0x%04x with encryption key value(before: %u, after: %u).\n", cryptedCmd, cryptKey, sd->cryptKey );
 #endif
 		}else{
 			ShowWarning("clif_parse: Received unsupported packet (packet 0x%04x, %d bytes received), disconnecting session #%d.\n", cmd, RFIFOREST(fd), fd);
