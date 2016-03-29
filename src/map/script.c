@@ -14268,17 +14268,12 @@ BUILDIN_FUNC(message)
  *------------------------------------------*/
 BUILDIN_FUNC(npctalk)
 {
-	const char* str;
-
 	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
-	str = script_getstr(st,2);
+	const char* str = script_getstr(st,2);
 
-	if(nd)
-	{
-		char name[NAME_LENGTH], message[256];
-		safestrncpy(name, nd->name, sizeof(name));
-		strtok(name, "#"); // discard extra name identifier if present
-		safesnprintf(message, sizeof(message), "%s : %s", name, str);
+	if (nd) {
+		char message[256];
+		safesnprintf(message, sizeof(message), "%s", str);
 		clif_disp_overhead(&nd->bl, message);
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -17785,7 +17780,7 @@ BUILDIN_FUNC(unittalk)
 		struct StringBuf sbuf;
 
 		StringBuf_Init(&sbuf);
-		StringBuf_Printf(&sbuf, "%s : %s", status_get_name(bl), message);
+		StringBuf_Printf(&sbuf, "%s", message);
 		clif_disp_overhead(bl, StringBuf_Value(&sbuf));
 		StringBuf_Destroy(&sbuf);
 	}
