@@ -853,7 +853,7 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 	if(sd != NULL && sd->status.guild_id == guild_id) {
 		// do stuff that needs the guild_id first, BEFORE we wipe it
 		if (sd->state.storage_flag == 2) //Close the guild storage.
-			gstorage_storageclose(sd);
+			storage_guild_storageclose(sd);
 		guild_send_dot_remove(sd);
 		channel_pcquit(sd,3); //leave guild and ally chan
 		sd->status.guild_id = 0;
@@ -884,29 +884,35 @@ void guild_retrieveitembound(uint32 char_id, uint32 account_id, int guild_id) {
 		int j;
 		j = pc_bound_chk(sd,BOUND_GUILD,idxlist);
 		if (j) {
-			struct guild_storage* stor = gstorage_guild2storage(sd->status.guild_id);
+			struct s_storage* stor = guild2storage(sd->status.guild_id);
+			struct guild *g = guild_search(guild_id);
 			int i;
-			// Close the storage first if someone open it
-			if (stor && stor->opened) {
-				struct map_session_data *tsd = map_charid2sd(stor->opened);
-				if (tsd)
-					gstorage_storageclose(tsd);
+			if (stor && stor->status) { //Someone is in guild storage, close them
+				int i;
+				for (i = 0; i < g->max_member; i++) {
+					TBL_PC *pl_sd = g->member[i].sd;
+					if (pl_sd && pl_sd->state.storage_flag == 2)
+						storage_guild_storageclose(pl_sd);
+				}
 			}
 			for (i = 0; i < j; i++) { //Loop the matching items, gstorage_additem takes care of opening storage
 				if (stor)
-					gstorage_additem(sd,stor,&sd->status.inventory[idxlist[i]],sd->status.inventory[idxlist[i]].amount);
-				pc_delitem(sd,idxlist[i],sd->status.inventory[idxlist[i]].amount,0,4,LOG_TYPE_GSTORAGE);
+					storage_guild_additem(sd,stor,&sd->inventory.u.items_inventory[idxlist[i]],sd->inventory.u.items_inventory[idxlist[i]].amount);
+				pc_delitem(sd,idxlist[i],sd->inventory.u.items_inventory[idxlist[i]].amount,0,4,LOG_TYPE_GSTORAGE);
 			}
-			gstorage_storageclose(sd); //Close and save the storage
+			storage_guild_storageclose(sd); //Close and save the storage
 		}
 	} else { //Character is offline, ask char server to do the job
-		struct guild_storage* stor = gstorage_get_storage(guild_id);
+		struct s_storage* stor = guild2storage2(guild_id);
 		struct guild *g = guild_search(guild_id);
 		nullpo_retv(g);
-		if(stor && stor->opened) { //Someone is in guild storage, close them
-			struct map_session_data *tsd = map_charid2sd(stor->opened);
-			if (tsd)
-				gstorage_storageclose(tsd);
+		if (stor && stor->status) { //Someone is in guild storage, close them
+			int i;
+			for (i = 0; i < g->max_member; i++) {
+				TBL_PC *pl_sd = g->member[i].sd;
+				if (pl_sd && pl_sd->state.storage_flag == 2)
+					storage_guild_storageclose(pl_sd);
+			}
 		}
 		intif_itembound_guild_retrieve(char_id,account_id,guild_id);
 	}
@@ -1701,7 +1707,7 @@ int guild_broken(int guild_id,int flag) {
 		struct map_session_data *sd = g->member[i].sd;
 		if(sd != NULL){
 			if(sd->state.storage_flag == 2)
-				gstorage_storage_quit(sd,1);
+				storage_guild_storage_quit(sd,1);
 			sd->status.guild_id=0;
 			sd->guild = NULL;
 			sd->state.gmaster_flag = 0;
@@ -1716,7 +1722,7 @@ int guild_broken(int guild_id,int flag) {
 
 	guild_db->foreach(guild_db,guild_broken_sub,guild_id);
 	castle_db->foreach(castle_db,castle_guild_broken_sub,guild_id);
-	gstorage_delete(guild_id);
+	storage_guild_delete(guild_id);
 	if( channel_config.ally_enable ) {
 		channel_delete(g->channel);
 	}
@@ -1859,7 +1865,7 @@ int guild_break(struct map_session_data *sd,char *name) {
 	//Guild bound item check - Removes the bound flag
 	j = pc_bound_chk(sd,BOUND_GUILD,idxlist);
 	for(i = 0; i < j; i++)
-		pc_delitem(sd,idxlist[i],sd->status.inventory[idxlist[i]].amount,0,1,LOG_TYPE_BOUND_REMOVAL);
+		pc_delitem(sd,idxlist[i],sd->inventory.u.items_inventory[idxlist[i]].amount,0,1,LOG_TYPE_BOUND_REMOVAL);
 #endif
 
 	intif_guild_break(g->guild_id);

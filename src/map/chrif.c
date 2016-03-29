@@ -297,9 +297,14 @@ int chrif_save(struct map_session_data *sd, int flag) {
 
 	chrif_bsdata_save(sd, (flag && (flag != 3)));
 
+	if (sd->state.storage_flag == 1)
+        intif_storage_save(sd,TABLE_STORAGE);
+    intif_storage_save(sd,TABLE_INVENTORY);
+    intif_storage_save(sd,TABLE_CART);
+
 	//For data sync
 	if (sd->state.storage_flag == 2)
-		gstorage_storagesave(sd->status.account_id, sd->status.guild_id, flag);
+		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
 
 	if (flag)
 		sd->state.storage_flag = 0; //Force close it.
@@ -1033,14 +1038,14 @@ int chrif_divorceack(uint32 char_id, int partner_id) {
 	if( ( sd = map_charid2sd(char_id) ) != NULL && sd->status.partner_id == partner_id ) {
 		sd->status.partner_id = 0;
 		for(i = 0; i < MAX_INVENTORY; i++)
-			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
+			if (sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_M || sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_F)
 				pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
 	if( ( sd = map_charid2sd(partner_id) ) != NULL && sd->status.partner_id == char_id ) {
 		sd->status.partner_id = 0;
 		for(i = 0; i < MAX_INVENTORY; i++)
-			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
+			if (sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_M || sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_F)
 				pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
@@ -1975,7 +1980,7 @@ void do_final_chrif(void) {
  *------------------------------------------*/
 void do_init_chrif(void) {
 	if(sizeof(struct mmo_charstatus) > 0xFFFF){
-		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF) \n",
+		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF)\n",
 			sizeof(struct mmo_charstatus));
 		exit(EXIT_FAILURE);
 	}
@@ -1983,6 +1988,11 @@ void do_init_chrif(void) {
 	if((sizeof(struct bonus_script_data) * MAX_PC_BONUS_SCRIPT) > 0xFFFF){
 		ShowError("bonus_script_data size = %d is too big, please reduce MAX_PC_BONUS_SCRIPT (%d) size. (must be below 0xFFFF).\n",
 			(sizeof(struct bonus_script_data) * MAX_PC_BONUS_SCRIPT), MAX_PC_BONUS_SCRIPT);
+		exit(EXIT_FAILURE);
+	}
+
+	if(sizeof(struct s_storage) > 0xFFFF) {
+		ShowError("s_storage size = %d is too big to be transmitted. (must be below 0xFFFF)\n", sizeof(struct s_storage));
 		exit(EXIT_FAILURE);
 	}
 

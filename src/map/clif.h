@@ -10,8 +10,7 @@
 
 struct Channel;
 struct item;
-struct storage_data;
-struct guild_storage;
+struct s_storage;
 //#include "map.h"
 struct block_list;
 struct unit_data;
