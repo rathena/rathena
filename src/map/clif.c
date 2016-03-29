@@ -18820,7 +18820,11 @@ static int clif_parse(int fd)
 
 	// filter out invalid / unsupported packets
 	if (cmd > MAX_PACKET_DB || cmd < MIN_PACKET_DB || packet_db[packet_ver][cmd].len == 0) {
-		ShowWarning("clif_parse: Received unsupported packet (packet 0x%04x, %d bytes received), disconnecting session #%d.\n", cmd, RFIFOREST(fd), fd);
+		if( sd ){
+			ShowWarning("clif_parse: Received unsupported packet (packet 0x%04x, %d bytes received) from character %s(AID: %d, CID: %d), disconnecting session #%d.\n", cmd, RFIFOREST(fd), sd->status.name, sd->status.account_id, sd->status.char_id, fd);
+		}else{
+			ShowWarning("clif_parse: Received unsupported packet (packet 0x%04x, %d bytes received), disconnecting session #%d.\n", cmd, RFIFOREST(fd), fd);
+		}
 #ifdef DUMP_INVALID_PACKET
 		ShowDump(RFIFOP(fd,0), RFIFOREST(fd));
 #endif
