@@ -18748,7 +18748,7 @@ static int clif_parse(int fd)
 	int cmd, packet_ver, packet_len, err;
 	TBL_PC* sd;
 	int pnum;
-#ifdef DUMP_INVALID_PACKET && PACKET_OBFUSCATION
+#if defined(DUMP_INVALID_PACKET) && defined(PACKET_OBFUSCATION)
 	unsigned int cryptKey;
 	unsigned short cryptedCmd;
 #endif
@@ -18788,9 +18788,11 @@ static int clif_parse(int fd)
 	if (RFIFOREST(fd) < 2)
 		return 0;
 
-#ifdef DUMP_INVALID_PACKET && PACKET_OBFUSCATION
-	cryptKey = sd->cryptKey;
-	cryptedCmd = RFIFOW(fd,0);
+#if defined(DUMP_INVALID_PACKET) && defined(PACKET_OBFUSCATION)
+		if (sd) {
+			cryptKey = sd->cryptKey;
+			cryptedCmd = RFIFOW(fd, 0);
+		}
 #endif
 
 	cmd = clif_parse_cmd(fd, sd);
@@ -18832,7 +18834,7 @@ static int clif_parse(int fd)
 		if( sd ){
 			ShowWarning("clif_parse: Received unsupported packet (packet 0x%04x, %d bytes received) from character %s(AID: %d, CID: %d), disconnecting session #%d.\n", cmd, RFIFOREST(fd), sd->status.name, sd->status.account_id, sd->status.char_id, fd);
 
-#ifdef DUMP_INVALID_PACKET && PACKET_OBFUSCATION
+#if defined(DUMP_INVALID_PACKET) && defined(PACKET_OBFUSCATION)
 			ShowDebug("clif_parse: Encrypted packet id was 0x%04x with encryption key value(before: %u, after: %u).\n", cryptedCmd, cryptKey, sd->cryptKey );
 #endif
 		}else{
