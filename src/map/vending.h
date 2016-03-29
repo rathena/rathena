@@ -6,6 +6,7 @@
 
 #include "../common/cbasetypes.h"
 #include "buyingstore.h"
+#include "intif.h"
 //#include "map.h"
 
 struct map_session_data;

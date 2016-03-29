@@ -2913,7 +2913,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				if (sd->state.storage_flag == 1)
 					storage_storage_quit(sd,0);
 				else if (sd->state.storage_flag == 2)
-					gstorage_storage_quit(sd,0);
+					storage_guild_storage_quit(sd, 0);
 
 				sd->state.storage_flag = 0; //Force close it when being warped.
 			}

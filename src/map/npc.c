@@ -1527,8 +1527,8 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 				}
 
 				for (i = 0; i < MAX_INVENTORY; i++) {
-					if (sd->status.inventory[i].nameid == id->nameid)
-						total += sd->status.inventory[i].amount;
+					if (sd->inventory.u.items_inventory[i].nameid == id->nameid)
+						total += sd->inventory.u.items_inventory[i].amount;
 				}
 			}
 
@@ -1858,19 +1858,19 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 
 		idx = item_list[i*2]-2;
 
-		script_setarray_pc(sd, "@sold_nameid", i, (void*)(intptr_t)sd->status.inventory[idx].nameid, &key_nameid);
+		script_setarray_pc(sd, "@sold_nameid", i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].nameid, &key_nameid);
 		script_setarray_pc(sd, "@sold_quantity", i, (void*)(intptr_t)item_list[i*2+1], &key_amount);
 
-		if( itemdb_isequip(sd->status.inventory[idx].nameid) )
+		if( itemdb_isequip(sd->inventory.u.items_inventory[idx].nameid) )
 		{// process equipment based information into the arrays
-			script_setarray_pc(sd, "@sold_refine", i, (void*)(intptr_t)sd->status.inventory[idx].refine, &key_refine);
-			script_setarray_pc(sd, "@sold_attribute", i, (void*)(intptr_t)sd->status.inventory[idx].attribute, &key_attribute);
-			script_setarray_pc(sd, "@sold_identify", i, (void*)(intptr_t)sd->status.inventory[idx].identify, &key_identify);
+			script_setarray_pc(sd, "@sold_refine", i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].refine, &key_refine);
+			script_setarray_pc(sd, "@sold_attribute", i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].attribute, &key_attribute);
+			script_setarray_pc(sd, "@sold_identify", i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].identify, &key_identify);
 
 			for( j = 0; j < MAX_SLOTS; j++ )
 			{// store each of the cards from the equipment in the array
 				snprintf(card_slot, sizeof(card_slot), "@sold_card%d", j + 1);
-				script_setarray_pc(sd, card_slot, i, (void*)(intptr_t)sd->status.inventory[idx].card[j], &key_card[j]);
+				script_setarray_pc(sd, card_slot, i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].card[j], &key_card[j]);
 			}
 		}
 	}
@@ -1916,9 +1916,9 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 			return 1;
 		}
 
-		nameid = sd->status.inventory[idx].nameid;
+		nameid = sd->inventory.u.items_inventory[idx].nameid;
 
-		if( !nameid || !sd->inventory_data[idx] || sd->status.inventory[idx].amount < amount )
+		if( !nameid || !sd->inventory_data[idx] || sd->inventory.u.items_inventory[idx].amount < amount )
 		{
 			return 1;
 		}
@@ -1946,11 +1946,11 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 		idx    = item_list[i*2]-2;
 		amount = item_list[i*2+1];
 
-		if( sd->inventory_data[idx]->type == IT_PETEGG && sd->status.inventory[idx].card[0] == CARD0_PET )
+		if( sd->inventory_data[idx]->type == IT_PETEGG && sd->inventory.u.items_inventory[idx].card[0] == CARD0_PET )
 		{
-			if( search_petDB_index(sd->status.inventory[idx].nameid, PET_EGG) >= 0 )
+			if( search_petDB_index(sd->inventory.u.items_inventory[idx].nameid, PET_EGG) >= 0 )
 			{
-				intif_delete_petdata(MakeDWord(sd->status.inventory[idx].card[1], sd->status.inventory[idx].card[2]));
+				intif_delete_petdata(MakeDWord(sd->inventory.u.items_inventory[idx].card[1], sd->inventory.u.items_inventory[idx].card[2]));
 			}
 		}
 
