@@ -13933,7 +13933,8 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 				if( tsc && tsc->data[SC_AKAITSUKI] && hp )
 					hp = ~hp + 1;
 				status_heal(bl, hp, 0, 0);
-				sc_start(ss, bl, SC_WARMER, 100, sg->skill_lv, skill_get_time2(sg->skill_id,sg->skill_lv));
+				if (tsc && !tsc->data[type]) // Don't apply the status again if it's already active.
+					sc_start(ss, bl, type, 100, sg->skill_lv, skill_get_time2(sg->skill_id,sg->skill_lv));
 			}
 			break;
 
@@ -14117,6 +14118,7 @@ int skill_unit_onout(struct skill_unit *src, struct block_list *bl, unsigned int
 		case UNT_SAFETYWALL:
 		case UNT_PNEUMA:
 		case UNT_EPICLESIS://Arch Bishop
+		case UNT_WARMER:
 			if (sce)
 				status_change_end(bl, type, INVALID_TIMER);
 			break;
