@@ -21307,6 +21307,21 @@ BUILDIN_FUNC(getexp2) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*=======================================================
+* Returns weapon level of item calling this command.
+* Returns 0 when caller isn't weapon or error.
+* This command accepts no argument. [secretdataz]
+*-------------------------------------------------------*/
+BUILDIN_FUNC(getweaponlv)
+{
+	TBL_PC *sd;
+	if ((sd = script_rid2sd(st)) != NULL && current_equip_item_index > -1 && current_equip_item_index < MAX_INVENTORY && sd->inventory_data[current_equip_item_index])
+		script_pushint(st, sd->inventory_data[current_equip_item_index]->wlv);
+	else
+		script_pushint(st, 0);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -21880,6 +21895,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(navigateto,"s???????"),
 	BUILDIN_DEF(adopt,"vv"),
 	BUILDIN_DEF(getexp2,"ii?"),
+	BUILDIN_DEF(getweaponlv, ""),
 
 #include "../custom/script_def.inc"
 
