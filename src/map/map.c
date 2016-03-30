@@ -4663,7 +4663,10 @@ int do_init(int argc, char *argv[])
 		char ip_str[16];
 		ip2str(addr_[0], ip_str);
 
-		ShowWarning("Not all IP addresses in map_athena.conf configured, autodetecting...\n");
+		// Skip this warning if the server is run with run-once flag
+		if( runflag != CORE_ST_STOP ){
+			ShowWarning("Not all IP addresses in map_athena.conf configured, autodetecting...\n");
+		}
 
 		if (naddr_ == 0)
 			ShowError("Unable to determine your IP address...\n");
