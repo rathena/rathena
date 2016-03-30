@@ -7570,8 +7570,6 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		case SC_DECREASEAGI:
 			if (sd)
 				tick >>= 1; // Half duration for players.
-			// Fall through
-		case SC_ADORAMUS: // Arch Bishop
 			sc_def2 = status->mdef*100;
 			break;
 		case SC_ANKLE:
