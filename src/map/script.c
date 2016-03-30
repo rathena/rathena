@@ -21168,6 +21168,117 @@ BUILDIN_FUNC(adopt)
 }
 
 /**
+ * Returns the minimum or maximum of all the given parameters for integer variables.
+ *
+ * min( <value or array>{,value or array 2,...} );
+ * minimum( <value or array>{,value or array 2,...} );
+ * max( <value or array>{,value or array 2,...} );
+ * maximum( <value or array>{,value or array 2,...} );
+*/
+BUILDIN_FUNC(minmax){
+	char *functionname;
+	unsigned int i;
+	int value;
+	// Function pointer for our comparison function (either min or max at the moment)
+	int32 (*func)(int32, int32);
+	
+	// Get the real function name
+	functionname = script_getfuncname(st);
+	
+	// Our data should start at offset 2
+	i = 2;
+
+	if( !script_hasdata( st, i ) ){
+		ShowError( "buildin_%s: no arguments given!\n", functionname );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( strnicmp( functionname, "min", strlen( "min" ) ) == 0 ){
+		value = INT_MAX;
+		func = i32min;
+	}else if( strnicmp( functionname, "max", strlen( "max" ) ) == 0 ){
+		value = INT_MIN;
+		func = i32max;
+	}else{
+		ShowError( "buildin_%s: Unknown call case for min/max!\n", functionname );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	// As long as we have data on our script stack
+	while( script_hasdata(st,i) ){
+		struct script_data *data;
+		
+		// Get the next piece of data from the script stack
+		data = script_getdata( st, i );
+
+		// Is the current parameter a single integer?
+		if( data_isint( data ) ){
+			value = func( value, script_getnum( st, i ) );
+		// Is the current parameter an array variable?
+		}else if( data_isreference( data ) ){
+			const char *name;
+			struct map_session_data* sd;
+			unsigned int start, end;
+
+			// Get the name of the variable
+			name = reference_getname(data);
+
+			// Check if it's a string variable
+			if( is_string_variable( name ) ){
+				ShowError( "buildin_%s: illegal type, need integer!\n", functionname );
+				script_reportdata( data );
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			// Get the session data, if a player is attached
+			sd = st->rid ? map_id2sd(st->rid) : NULL;
+
+			// Try to find the array's source pointer
+			if( !script_array_src( st, sd, name, reference_getref( data ) ) ){
+				ShowError( "buildin_%s: not a array!\n", functionname );
+				script_reportdata( data );
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			// Get the start and end indices of the array
+			start = reference_getindex( data );
+			end = script_array_highest_key( st, sd, name, reference_getref( data ) );
+
+			// Skip empty arrays
+			if( start < end ){
+				int id;
+				
+				// For getting the values we need the id of the array
+				id = reference_getid( data );
+
+				// Loop through each value stored in the array
+				for( ; start < end; start++ ){
+					value = func( value, (int32)get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
+
+					script_removetop( st, -1, 0 );
+				}
+			}
+		}else{
+			ShowError( "buildin_%s: not a supported data type!\n", functionname );
+			script_reportdata( data );
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		// Continue with the next stack entry
+		i++;
+	}
+
+	script_pushint( st, value );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
  * Safety Base/Job EXP addition than using `set BaseExp,n;` or `set JobExp,n;`
  * Unlike `getexp` that affected by some adjustments.
  * getexp2 <base_exp>,<job_exp>{,<char_id>};
@@ -21566,6 +21677,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(sqrt,"i"),
 	BUILDIN_DEF(pow,"ii"),
 	BUILDIN_DEF(distance,"iiii"),
+	BUILDIN_DEF2(minmax,"min", "*"),
+	BUILDIN_DEF2(minmax,"minimum", "*"),
+	BUILDIN_DEF2(minmax,"max", "*"),
+	BUILDIN_DEF2(minmax,"maximum", "*"),
 	// <--- [zBuffer] List of mathematics commands
 	BUILDIN_DEF(md5,"s"),
 	// [zBuffer] List of dynamic var commands --->
