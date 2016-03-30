@@ -8392,37 +8392,28 @@ BUILDIN_FUNC(getequiprefinerycnt)
  * return (npc)
  *	x : weapon level
  *	0 : false
- * getequipweaponlv({<equipment slot>,<char_id>})
+ * getequipweaponlv(<equipment slot>{,<char_id>})
  *------------------------------------------*/
 BUILDIN_FUNC(getequipweaponlv)
 {
-	int i = -1,num;
+	int i = -1, num;
 	TBL_PC *sd;
-
-	if (!script_hasdata(st, 2)) {
-		if ((sd = script_rid2sd(st)) != NULL && current_equip_item_index < MAX_INVENTORY && sd->inventory_data[current_equip_item_index])
-		{
-			script_pushint(st, sd->inventory_data[current_equip_item_index]->wlv);
-		}
-		else {
-			script_pushint(st, 0);
-		}
-		return SCRIPT_CMD_SUCCESS;
-	}
 
 	num = script_getnum(st, 2);
 
 	if (!script_charid2sd(3, sd)) {
-		script_pushint(st,0);
+		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i=pc_checkequip(sd,equip[num-1]);
-	if(i >= 0 && sd->inventory_data[i])
-		script_pushint(st,sd->inventory_data[i]->wlv);
+	if (num == -1)
+		i = current_equip_item_index;
+	else if (num > 0 && num <= ARRAYLENGTH(equip))
+		i = pc_checkequip(sd, equip[num - 1]);
+	if (i >= 0 && sd->inventory_data[i])
+		script_pushint(st, sd->inventory_data[i]->wlv);
 	else
-		script_pushint(st,0);
+		script_pushint(st, 0);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -21450,7 +21441,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequipisequiped,"i?"),
 	BUILDIN_DEF(getequipisenableref,"i?"),
 	BUILDIN_DEF(getequiprefinerycnt,"i?"),
-	BUILDIN_DEF(getequipweaponlv,"??"),
+	BUILDIN_DEF(getequipweaponlv,"i?"),
 	BUILDIN_DEF(getequippercentrefinery,"i?"),
 	BUILDIN_DEF(successrefitem,"i??"),
 	BUILDIN_DEF(failedrefitem,"i?"),

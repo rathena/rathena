@@ -2642,14 +2642,14 @@ this is +10:
 
 ---------------------------------------
 
-*getequipweaponlv({<equipment slot>,<char_id>})
+*getequipweaponlv(<equipment slot>{,<char_id>})
 
 This function returns the weapon level for the weapon equipped in the specified 
 equipment slot on the invoking character. For a list of equipment slots see 
 'getequipid'.
 
-If no arguments are provided. Weapon level for the item calling this function
-assuming it is called by an item script will be returned. Otherwise, 0 will be returned.
+If -1 is passed as <equipment slot> argument. Weapon level for the item calling this function, 
+assuming it is called by an item script, will be returned. Otherwise, 0 will be returned.
 
 Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons have
 a weapon level. You can, however, probably, use this field for other equippable
