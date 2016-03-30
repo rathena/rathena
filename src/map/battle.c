@@ -486,8 +486,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
 				if (tsc->data[SC_EARTH_INSIGNIA])
 					ratio += 50;
-				if (tsc->data[SC_ASH])
-					ratio += 50;
 				break;
 			case ELE_HOLY:
 				if (tsc->data[SC_ORATIO])
@@ -2335,8 +2333,11 @@ static bool is_attack_critical(struct Damage wd, struct block_list *src, struct 
 
 		if (sd) {
 			cri += sd->critaddrace[tstatus->race] + sd->critaddrace[RC_ALL];
-			if(is_skill_using_arrow(src, skill_id))
+			if(is_skill_using_arrow(src, skill_id)) {
 				cri += sd->bonus.arrow_cri;
+				if (!skill_id)
+					cri += sd->bonus.critical_rangeatk;
+			}
 		}
 
 		if(sc && sc->data[SC_CAMOUFLAGE])
@@ -4285,7 +4286,6 @@ static int64 battle_calc_skill_constant_addition(struct Damage wd, struct block_
 {
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
-	struct status_change *sc = status_get_sc(src);
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 	int64 atk = 0;
@@ -4583,7 +4583,8 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 	if( battle_config.vit_penalty_type && battle_config.vit_penalty_target&target->type ) {
 		unsigned char target_count; //256 max targets should be a sane max
 
-		target_count = unit_counttargeted(target);
+		//Official servers limit the count to 22 targets
+		target_count = min(unit_counttargeted(target), (100 / battle_config.vit_penalty_num) + (battle_config.vit_penalty_count - 1));
 		if(target_count >= battle_config.vit_penalty_count) {
 			if(battle_config.vit_penalty_type == 1) {
 				if( !tsc || !tsc->data[SC_STEELBODY] )
@@ -4650,7 +4651,7 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 	 * Damage = Attack * (4000+eDEF)/(4000+eDEF*10) - sDEF
 	 * Pierce defence gains 1 atk per def/2
 	 */
-	if( def1 == -400 ) /* being hit by a gazillion units, -400 creates a division by 0 and subsequently crashes */
+	if( def1 == -400 ) /* -400 creates a division by 0 and subsequently crashes */
 		def1 = -399;
 	ATK_ADD2(wd.damage, wd.damage2,
 		is_attack_piercing(wd, src, target, skill_id, skill_lv, EQI_HAND_R) ? (def1/2) : 0,

@@ -959,35 +959,33 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	tstatus = status_get_status_data(bl);
 
 	// Taekwon combos activate on traps, so we need to check them even for targets that don't have status
-	if (sd && skill_id == 0 && !(attack_type&BF_SKILL)) {
-		// Chance to trigger Taekwon kicks [Dralnu]
-		if (sc && !sc->data[SC_COMBO]) {
-			if (sc->data[SC_READYSTORM] &&
-				sc_start4(src, src, SC_COMBO, 15, TK_STORMKICK,
-					bl->id, 2, 0,
-					(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
-				; //Stance triggered
-			else if (sc->data[SC_READYDOWN] &&
-				sc_start4(src, src, SC_COMBO, 15, TK_DOWNKICK,
-					bl->id, 2, 0,
-					(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
-				; //Stance triggered
-			else if (sc->data[SC_READYTURN] &&
-				sc_start4(src, src, SC_COMBO, 15, TK_TURNKICK,
-					bl->id, 2, 0,
-					(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
-				; //Stance triggered
-			else if (sc->data[SC_READYCOUNTER]) { //additional chance from SG_FRIEND [Komurka]
-				rate = 20;
-				if (sc->data[SC_SKILLRATE_UP] && sc->data[SC_SKILLRATE_UP]->val1 == TK_COUNTER) {
-					rate += rate*sc->data[SC_SKILLRATE_UP]->val2 / 100;
-					status_change_end(src, SC_SKILLRATE_UP, INVALID_TIMER);
-				}
-				sc_start4(src, src, SC_COMBO, rate, TK_COUNTER,
-					bl->id, 2, 0,
-					(2000 - 4 * sstatus->agi - 2 * sstatus->dex))
-					; //Stance triggered
+	if (sd && skill_id == 0 && !(attack_type&BF_SKILL) && sc) {
+		// Chance to trigger Taekwon kicks
+		if (sc->data[SC_READYSTORM] &&
+			sc_start4(src, src, SC_COMBO, 15, TK_STORMKICK,
+				0, 2, 0,
+				(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
+			; //Stance triggered
+		else if (sc->data[SC_READYDOWN] &&
+			sc_start4(src, src, SC_COMBO, 15, TK_DOWNKICK,
+				0, 2, 0,
+				(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
+			; //Stance triggered
+		else if (sc->data[SC_READYTURN] &&
+			sc_start4(src, src, SC_COMBO, 15, TK_TURNKICK,
+				0, 2, 0,
+				(2000 - 4 * sstatus->agi - 2 * sstatus->dex)))
+			; //Stance triggered
+		else if (sc->data[SC_READYCOUNTER]) { //additional chance from SG_FRIEND [Komurka]
+			rate = 20;
+			if (sc->data[SC_SKILLRATE_UP] && sc->data[SC_SKILLRATE_UP]->val1 == TK_COUNTER) {
+				rate += rate*sc->data[SC_SKILLRATE_UP]->val2 / 100;
+				status_change_end(src, SC_SKILLRATE_UP, INVALID_TIMER);
 			}
+			sc_start4(src, src, SC_COMBO, rate, TK_COUNTER,
+				0, 2, 0,
+				(2000 - 4 * sstatus->agi - 2 * sstatus->dex))
+				; //Stance triggered
 		}
 	}
 
@@ -2747,6 +2745,7 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 
 	//start new combo
 	if(sd){ //player only
+		target_id = 0; // Players can always switch targets on combo
 		switch(skill_id) {
 		case MO_TRIPLEATTACK:
 			if (pc_checkskill(sd, MO_CHAINCOMBO) > 0 || pc_checkskill(sd, SR_DRAGONCOMBO) > 0)
@@ -2772,7 +2771,6 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 			if( pc_checkskill(sd, HT_POWER)) {
 				duration = 2000;
 				nodelay = 1; //Neither gives walk nor attack delay
-				target_id = 0; //Does not need to be used on previous target
 			}
 			break;
 		case SR_DRAGONCOMBO:
@@ -4112,20 +4110,6 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				break;
 			switch( skl->skill_id )
 			{
-				case WZ_METEOR:
-				case SU_CN_METEOR:
-					if( skl->type >= 0 )
-					{
-						int x = skl->type>>16, y = skl->type&0xFFFF;
-						if( path_search_long(NULL, src->m, src->x, src->y, x, y, CELL_CHKWALL) )
-							skill_unitsetting(src,skl->skill_id,skl->skill_lv,x,y,skl->flag);
-						if( path_search_long(NULL, src->m, src->x, src->y, skl->x, skl->y, CELL_CHKWALL)
-							&& !map_getcell(src->m, skl->x, skl->y, CELL_CHKLANDPROTECTOR) )
-							clif_skill_poseffect(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,tick);
-					}
-					else if( path_search_long(NULL, src->m, src->x, src->y, skl->x, skl->y, CELL_CHKWALL) )
-						skill_unitsetting(src,skl->skill_id,skl->skill_lv,skl->x,skl->y,skl->flag);
-					break;
 				case GN_CRAZYWEED_ATK:
 					{
 						int dummy = 1, i = skill_get_unit_range(skl->skill_id,skl->skill_lv);
@@ -5985,7 +5969,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				heal_get_jobexp = heal_get_jobexp * battle_config.heal_exp / 100;
 				if (heal_get_jobexp <= 0)
 					heal_get_jobexp = 1;
-				pc_gainexp (sd, bl, 0, heal_get_jobexp, false);
+				pc_gainexp (sd, bl, 0, heal_get_jobexp, 0);
 			}
 		}
 		break;
@@ -6008,12 +5992,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			skill_area_temp[0] = battle_config.exp_cost_redemptio_limit - skill_area_temp[0]; // The actual penalty...
 			if (skill_area_temp[0] > 0 && !map[src->m].flag.noexppenalty && battle_config.exp_cost_redemptio) { //Apply penalty
 				//If total penalty is 1% => reduced 0.2% penalty per each revived player
-				unsigned int base_penalty = u32min(sd->status.base_exp, (pc_nextbaseexp(sd) * skill_area_temp[0] * battle_config.exp_cost_redemptio / battle_config.exp_cost_redemptio_limit) / 100);
-				sd->status.base_exp -= base_penalty;
-				clif_displayexp(sd, base_penalty, SP_BASEEXP, false, true);
-				clif_updatestatus(sd,SP_BASEEXP);
-				if (sd->state.showexp)
-					pc_gainexp_disp(sd, base_penalty, pc_nextbaseexp(sd), 0, pc_nextjobexp(sd), true);
+				pc_lostexp(sd, u32min(sd->status.base_exp, (pc_nextbaseexp(sd) * skill_area_temp[0] * battle_config.exp_cost_redemptio / battle_config.exp_cost_redemptio_limit) / 100), 0);
 			}
 			status_set_hp(src, 1, 0);
 			status_set_sp(src, 0, 0);
@@ -6064,7 +6043,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 						if (jexp < 1) jexp = 1;
 					}
 					if(exp > 0 || jexp > 0)
-						pc_gainexp (sd, bl, exp, jexp, false);
+						pc_gainexp (sd, bl, exp, jexp, 0);
 				}
 			}
 		}
@@ -6183,7 +6162,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SA_LEVELUP:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		if (sd && pc_nextbaseexp(sd)) pc_gainexp(sd, NULL, pc_nextbaseexp(sd) * 10 / 100, 0, false);
+		if (sd && pc_nextbaseexp(sd))
+			pc_gainexp(sd, NULL, pc_nextbaseexp(sd) * 10 / 100, 0, 0);
 		break;
 	case SA_INSTANTDEATH:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -8406,7 +8386,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					sc_start(src,bl,SC_INCMATKRATE,100,-50,skill_get_time2(skill_id,skill_lv));
 					break;
 				case 2:	// all buffs removed
-					status_change_clear_buffs(bl,1);
+					status_change_clear_buffs(bl,9);
 					break;
 				case 3:	// 1000 damage, random armor destroyed
 					{
@@ -9743,14 +9723,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case LG_INSPIRATION:
-		if( sd && !map[sd->bl.m].flag.noexppenalty && battle_config.exp_cost_inspiration ) {
-			unsigned int base_penalty = u32min(sd->status.base_exp, pc_nextbaseexp(sd) * battle_config.exp_cost_inspiration / 100); // 1% penalty.
-			sd->status.base_exp -= base_penalty;
-			clif_displayexp(sd, base_penalty, SP_BASEEXP, false, true);
-			clif_updatestatus(sd,SP_BASEEXP);
-			if (sd->state.showexp)
-				pc_gainexp_disp(sd, base_penalty, pc_nextbaseexp(sd), 0, pc_nextjobexp(sd), true);
-		}
+		if( sd && !map[sd->bl.m].flag.noexppenalty && battle_config.exp_cost_inspiration )
+			pc_lostexp(sd, u32min(sd->status.base_exp, pc_nextbaseexp(sd) * battle_config.exp_cost_inspiration / 100), 0); // 1% penalty.
 		clif_skill_nodamage(bl,src,skill_id,skill_lv, sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		break;
 	case SR_CURSEDCIRCLE:
@@ -11695,35 +11669,20 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case WZ_METEOR:
 	case SU_CN_METEOR: {
 			int area = skill_get_splash(skill_id, skill_lv);
-			short tmpx = 0, tmpy = 0, x1 = 0, y1 = 0;
-
+			short tmpx = 0, tmpy = 0;
 			if (sd && skill_id == SU_CN_METEOR) {
 				short item_idx = pc_search_inventory(sd, ITEMID_CATNIP_FRUIT);
-
 				if (item_idx >= 0) {
 					pc_delitem(sd, item_idx, 1, 0, 1, LOG_TYPE_CONSUME);
-					skill_area_temp[3] = 1;
-				} else
-					skill_area_temp[3] = 0;
+					flag |= 1;
+				}
 			}
-
-			for( i = 0; i < 2 + (skill_lv>>1); i++ ) {
+			for (i = 1; i <= skill_get_time(skill_id, skill_lv)/skill_get_unit_interval(skill_id); i++) {
 				// Creates a random Cell in the Splash Area
 				tmpx = x - area + rnd()%(area * 2 + 1);
 				tmpy = y - area + rnd()%(area * 2 + 1);
-
-				if( i == 0 && path_search_long(NULL, src->m, src->x, src->y, tmpx, tmpy, CELL_CHKWALL)
-					&& !map_getcell(src->m, tmpx, tmpy, CELL_CHKLANDPROTECTOR))
-					clif_skill_poseffect(src,skill_id,skill_lv,tmpx,tmpy,tick);
-
-				if( i > 0 )
-					skill_addtimerskill(src,tick+i*1000,0,tmpx,tmpy,skill_id,skill_lv,(x1<<16)|y1,0);
-
-				x1 = tmpx;
-				y1 = tmpy;
+				skill_unitsetting(src, skill_id, skill_lv, tmpx, tmpy, flag+i*skill_get_unit_interval(skill_id));
 			}
-
-			skill_addtimerskill(src,tick+i*1000,0,tmpx,tmpy,skill_id,skill_lv,-1,0);
 		}
 		break;
 
@@ -12508,6 +12467,7 @@ static bool skill_dance_switch(struct skill_unit* unit, int flag)
  * @param x Position x
  * @param y Position y
  * @param flag &1: Used to determine when the skill 'morphs' (Warp portal becomes active, or Fire Pillar becomes active)
+ *		xx_METEOR: flag &1 contains if the unit can cause curse, flag is also the duration of the unit in milliseconds
  * @return skill_unit_group
  */
 struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int flag)
@@ -12578,7 +12538,11 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	case NPC_EVILLAND:
 		val1=skill_lv+3;
 		break;
-
+	case WZ_METEOR:
+	case SU_CN_METEOR:
+		limit = flag - (flag&1);
+		val1 = (flag&1);
+		break;
 	case WZ_FIREPILLAR:
 		if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) )
 			return NULL;
@@ -12856,6 +12820,10 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		// Since we have no 'place' anymore. time1 for Stun duration, time2 for burning duration
 		// Officially, duration (limit) is 5secs, interval 0.5secs damage interval.
 		limit = interval * 10;
+		break;
+	case MH_VOLCANIC_ASH:
+		if (!map_flag_vs(src->m))
+			target = BCT_ENEMY;
 		break;
 	}
 
@@ -13438,28 +13406,36 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 					} while(sg->interval > 0 && x == bl->x && y == bl->y &&
 						++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl) );
 				}
-				break;
+					break;
 				case WZ_HEAVENDRIVE:
 					status_change_end(bl, SC_SV_ROOTTWIST, INVALID_TIMER);
-				break;
+					break;
 #ifndef RENEWAL // The storm gust counter was dropped in renewal
 				case WZ_STORMGUST: //SG counter does not reset per stormgust. IE: One hit from a SG and two hits from another will freeze you.
 					if (tsc)
 						tsc->sg_counter++; //SG hit counter.
 					if (skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0) <= 0 && tsc)
 						tsc->sg_counter=0; //Attack absorbed.
-				break;
+					break;
 #endif
 				case GS_DESPERADO:
 					if (rnd()%100 < unit->val1)
 						skill_attack(BF_WEAPON,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-				break;
+					break;
+				case SU_CN_METEOR:
+					if (sg->val1)
+						skill_area_temp[3] = 1;
+					else
+						skill_area_temp[3] = 0;
+					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
+					break;
 				case GN_CRAZYWEED_ATK:
 					if( bl->type == BL_SKILL ) {
 						struct skill_unit *su = (struct skill_unit *)bl;
 						if( su && !(skill_get_inf2(su->group->skill_id)&INF2_TRAP) )
 							break;
 					}
+					//Fall through
 				default:
 					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			}
@@ -13957,7 +13933,8 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 				if( tsc && tsc->data[SC_AKAITSUKI] && hp )
 					hp = ~hp + 1;
 				status_heal(bl, hp, 0, 0);
-				sc_start(ss, bl, SC_WARMER, 100, sg->skill_lv, skill_get_time2(sg->skill_id,sg->skill_lv));
+				if (tsc && !tsc->data[type]) // Don't apply the status again if it's already active.
+					sc_start(ss, bl, type, 100, sg->skill_lv, skill_get_time2(sg->skill_id,sg->skill_lv));
 			}
 			break;
 
@@ -14141,6 +14118,7 @@ int skill_unit_onout(struct skill_unit *src, struct block_list *bl, unsigned int
 		case UNT_SAFETYWALL:
 		case UNT_PNEUMA:
 		case UNT_EPICLESIS://Arch Bishop
+		case UNT_WARMER:
 			if (sce)
 				status_change_end(bl, type, INVALID_TIMER);
 			break;
@@ -18173,7 +18151,12 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				break;
 
 			default:
+				if (group->val2 == 1 && (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR)) {
+					// Deal damage before expiration
+					break;
+				}
 				skill_delunit(unit);
+				break;
 		}
 	} else {// skill unit is still active
 		switch( group->unit_id ) {
@@ -18228,6 +18211,20 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 					skill_delunitgroup(group);
 				}
 				break;
+			default:
+				if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR) {
+					if (group->val2 == 0 && (DIFF_TICK(tick, group->tick) >= group->limit - group->interval || DIFF_TICK(tick, group->tick) >= unit->limit - group->interval)) {
+						// Unit will expire the next interval, start dropping Meteor
+						struct block_list* src;
+						if ((src = map_id2bl(group->src_id)) != NULL) {
+							clif_skill_poseffect(src, group->skill_id, group->skill_lv, bl->x, bl->y, tick);
+							group->val2 = 1;
+						}
+					}
+					// No damage until expiration
+					return 0;
+				}
+				break;
 		}
 	}
 
@@ -18253,6 +18250,10 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				group->target_flag=BCT_NOONE;
 				group->bl_flag= BL_NUL;
 			}
+		}
+		else if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR) {
+			skill_delunit(unit);
+			return 0;
 		}
 	}
 

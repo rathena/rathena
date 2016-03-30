@@ -104,11 +104,11 @@ prt_church,100,123,4	script	Vomars	60,{
 	mes "I am going to wed "+$wed_groom$+" and "+$wed_bride$+", do you have an objection to it?";
 	if (select("Sorry, please go on.","Yes, I actually do.") == 2) {
 		//Abort
-		npctalk "Ladies and gentlemen, "+strcharinfo(0)+" has an objection to the wedding!";
+		npctalk @name$ +" : Ladies and gentlemen, "+strcharinfo(0)+" has an objection to the wedding!";
 		SF_wed_end();
 		mes "Why should they not be wed?";
 		input $@msg$;
-		npctalk strcharinfo(0)+"'s objection is: "+$@msg$;
+		npctalk @name$ +" : "+ strcharinfo(0) +"'s objection is: "+$@msg$;
 		emotion e_sob;
 		mes "I see...";
 	} else
@@ -203,7 +203,7 @@ function SF_AcceptGroom {
 		mes "Ah... err... ehm... okay. You two seem to have some differences to settle first.";
 		close2;
 		emotion e_omg;
-		npctalk "Ladies and gentlemen, "+$wed_bride$+" has rejected to marry "+$wed_groom$+"!";
+		npctalk @name$ +" : Ladies and gentlemen, "+$wed_bride$+" has rejected to marry "+$wed_groom$+"!";
 		SF_wed_end();
 		break;
 	case 3:
@@ -236,7 +236,7 @@ function SF_AcceptBride {
 		mes "Ah... err... ehm... okay. You two seem to have some differences to settle first.";
 		emotion e_omg;
 		close2;
-		npctalk "Ladies and gentlemen, "+$wed_groom$+" has rejected to marry "+$wed_bride$+"!";
+		npctalk @name$ +" : Ladies and gentlemen, "+$wed_groom$+" has rejected to marry "+$wed_bride$+"!";
 		SF_wed_end();
 		break;
 	case 3:
@@ -260,7 +260,7 @@ function SF_RingsAccepted {
 	announce $wed_groom$+" and "+$wed_bride$+"'s wedding ceremony will be held at the church!",8;
 	close2;
 	emotion e_lv;
-	npctalk "May the groom and bride please step forward and retrieve their rings?";
+	npctalk @name$ +" : May the groom and bride please step forward and retrieve their rings?";
 }
 
 function SF_RetrieveRingM {
@@ -336,51 +336,51 @@ function SF_StartCeremony {
 }
 
 OnTimer1000:
-	npctalk "Ladies and Gentlemen, We will now join in holy matrimony these two lovers.";
+	npctalk @name$ +" : Ladies and Gentlemen, We will now join in holy matrimony these two lovers.";
 	end;
 	
 OnTimer5000:
-	npctalk "Now more than ever, will both of your lives be entwined together as so will be your souls.";
+	npctalk @name$ +" : Now more than ever, will both of your lives be entwined together as so will be your souls.";
 	end;
 
 OnTimer10000:
-	npctalk "You will both honor and cherish each other through the best and worst of times.";
+	npctalk @name$ +" : You will both honor and cherish each other through the best and worst of times.";
 	end;
 	
 OnTimer15000:
-	npctalk "The safety and well being of your other will now also be your responsibility.";
+	npctalk @name$ +" : The safety and well being of your other will now also be your responsibility.";
 	end;
 	
 OnTimer20000:
-	npctalk "May in sickness or good health, your love burn bright like no force can extinguish it.";
+	npctalk @name$ +" : May in sickness or good health, your love burn bright like no force can extinguish it.";
 	end;
 	
 OnTimer25000:
-	npctalk "Those here stand witness to these vows bestowed upon you, you must act accordingly to them.";
+	npctalk @name$ +" : Those here stand witness to these vows bestowed upon you, you must act accordingly to them.";
 	end;
 	
 OnTimer30000:
-	npctalk "Understanding that, we are nothing more but mortals on this earth, but this is our triumph.";
+	npctalk @name$ +" : Understanding that, we are nothing more but mortals on this earth, but this is our triumph.";
 	end;
 	
 OnTimer35000:
-	npctalk "We here will now join these two mortal entities, and create an immortal love.";
+	npctalk @name$ +" : We here will now join these two mortal entities, and create an immortal love.";
 	end;
 	
 OnTimer40000:
-	npctalk $wed_groom$+", you have accepted to take "+$wed_bride$+" as your lawfully wedded wife,";
+	npctalk @name$ +" : "+ $wed_groom$ +", you have accepted to take "+$wed_bride$+" as your lawfully wedded wife,";
 	end;
 	
 OnTimer45000:
-	npctalk "and you, "+$wed_bride$+", have accepted take "+$wed_groom$+" as your lawfully wedded husband.";
+	npctalk @name$ +" : and you, "+$wed_bride$+", have accepted take "+$wed_groom$+" as your lawfully wedded husband.";
 	end;
 
 OnTimer50000:
-	npctalk "And as such, now, by the powers vested in me...";
+	npctalk @name$ +" : And as such, now, by the powers vested in me...";
 	end;
 
 OnTimer55000:
-	npctalk "I pronounce you Husband and Wife, you may kiss the bride and exchange rings.";
+	npctalk @name$ +" : I pronounce you Husband and Wife, you may kiss the bride and exchange rings.";
 	if ($wedding_effect_id && isloggedin($wedding_effect_id))
 	{
 		attachrid($wedding_effect_id);
@@ -561,7 +561,7 @@ function SF_WedProgress {
 			mes "Very well, now go to the Priest to reaffirm your vows and the ceremony will begin."; 
 			emotion e_no1;
 			close2;
-			npctalk "Registration finished. "+$wed_groom$+" and "+$wed_bride$+", please reaffirm your vows with the Priest.";
+			npctalk @name$ +" : Registration finished. "+$wed_groom$+" and "+$wed_bride$+", please reaffirm your vows with the Priest.";
 			emotion e_no1;
 			end;
 		} else {
@@ -582,7 +582,7 @@ function SF_WedProgress {
 			mes "Very well, now go to the Priest to reaffirm your vows and the ceremony will begin."; 
 			emotion e_no1;
 			close2;
-			npctalk "Registration finished. "+$wed_groom$+" and "+$wed_bride$+", please reaffirm your vows with the Priest.";
+			npctalk @name$ +" : Registration finished. "+$wed_groom$+" and "+$wed_bride$+", please reaffirm your vows with the Priest.";
 			emotion e_no1;
 			end;
 		} else {
@@ -658,7 +658,7 @@ OnTimer60000:
 	else
 		set $@msg$, $wed_groom$;
 
-	npctalk "Registration timed out. Is it that noone wants to marry "+$@msg$+"..?";
+	npctalk @name$ +" : Registration timed out. Is it that noone wants to marry "+$@msg$+"..?";
 	emotion e_hmm;
 	
 	set $wed_groom$,"";
@@ -930,7 +930,7 @@ function SF_DivorceEnd {
 }
 
 OnTimer60000:
-	npctalk "Divorce confirmation time's is up. Where did "+$@divorcer$+"'s spouse go...";
+	npctalk @name$ +" : Divorce confirmation time's is up. Where did "+$@divorcer$+"'s spouse go...";
 	emotion e_what;
 	SF_DivorceEnd();
 	end;

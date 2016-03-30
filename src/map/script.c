@@ -9644,7 +9644,7 @@ BUILDIN_FUNC(getexp)
 	if (job)
 		job = (int) cap_value(job * bonus, 0, INT_MAX);
 
-	pc_gainexp(sd, NULL, base, job, true);
+	pc_gainexp(sd, NULL, base, job, 1);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -9960,7 +9960,7 @@ BUILDIN_FUNC(clone)
 	TBL_PC *sd, *msd=NULL;
 	uint32 char_id;
 	int master_id=0,x,y, flag = 0, m;
-	enum e_mode mode;
+	enum e_mode mode = 0;
 	unsigned int duration = 0;
 	const char *mapname,*event;
 
@@ -14268,17 +14268,12 @@ BUILDIN_FUNC(message)
  *------------------------------------------*/
 BUILDIN_FUNC(npctalk)
 {
-	const char* str;
-
 	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
-	str = script_getstr(st,2);
+	const char* str = script_getstr(st,2);
 
-	if(nd)
-	{
-		char name[NAME_LENGTH], message[256];
-		safestrncpy(name, nd->name, sizeof(name));
-		strtok(name, "#"); // discard extra name identifier if present
-		safesnprintf(message, sizeof(message), "%s : %s", name, str);
+	if (nd) {
+		char message[256];
+		safesnprintf(message, sizeof(message), "%s", str);
 		clif_disp_overhead(&nd->bl, message);
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -17785,7 +17780,7 @@ BUILDIN_FUNC(unittalk)
 		struct StringBuf sbuf;
 
 		StringBuf_Init(&sbuf);
-		StringBuf_Printf(&sbuf, "%s : %s", status_get_name(bl), message);
+		StringBuf_Printf(&sbuf, "%s", message);
 		clif_disp_overhead(bl, StringBuf_Value(&sbuf));
 		StringBuf_Destroy(&sbuf);
 	}
@@ -21172,6 +21167,146 @@ BUILDIN_FUNC(adopt)
 	return SCRIPT_CMD_FAILURE;
 }
 
+/**
+ * Returns the minimum or maximum of all the given parameters for integer variables.
+ *
+ * min( <value or array>{,value or array 2,...} );
+ * minimum( <value or array>{,value or array 2,...} );
+ * max( <value or array>{,value or array 2,...} );
+ * maximum( <value or array>{,value or array 2,...} );
+*/
+BUILDIN_FUNC(minmax){
+	char *functionname;
+	unsigned int i;
+	int value;
+	// Function pointer for our comparison function (either min or max at the moment)
+	int32 (*func)(int32, int32);
+	
+	// Get the real function name
+	functionname = script_getfuncname(st);
+	
+	// Our data should start at offset 2
+	i = 2;
+
+	if( !script_hasdata( st, i ) ){
+		ShowError( "buildin_%s: no arguments given!\n", functionname );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( strnicmp( functionname, "min", strlen( "min" ) ) == 0 ){
+		value = INT_MAX;
+		func = i32min;
+	}else if( strnicmp( functionname, "max", strlen( "max" ) ) == 0 ){
+		value = INT_MIN;
+		func = i32max;
+	}else{
+		ShowError( "buildin_%s: Unknown call case for min/max!\n", functionname );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	// As long as we have data on our script stack
+	while( script_hasdata(st,i) ){
+		struct script_data *data;
+		
+		// Get the next piece of data from the script stack
+		data = script_getdata( st, i );
+
+		// Is the current parameter a single integer?
+		if( data_isint( data ) ){
+			value = func( value, script_getnum( st, i ) );
+		// Is the current parameter an array variable?
+		}else if( data_isreference( data ) ){
+			const char *name;
+			struct map_session_data* sd;
+			unsigned int start, end;
+
+			// Get the name of the variable
+			name = reference_getname(data);
+
+			// Check if it's a string variable
+			if( is_string_variable( name ) ){
+				ShowError( "buildin_%s: illegal type, need integer!\n", functionname );
+				script_reportdata( data );
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			// Get the session data, if a player is attached
+			sd = st->rid ? map_id2sd(st->rid) : NULL;
+
+			// Try to find the array's source pointer
+			if( !script_array_src( st, sd, name, reference_getref( data ) ) ){
+				ShowError( "buildin_%s: not a array!\n", functionname );
+				script_reportdata( data );
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			// Get the start and end indices of the array
+			start = reference_getindex( data );
+			end = script_array_highest_key( st, sd, name, reference_getref( data ) );
+
+			// Skip empty arrays
+			if( start < end ){
+				int id;
+				
+				// For getting the values we need the id of the array
+				id = reference_getid( data );
+
+				// Loop through each value stored in the array
+				for( ; start < end; start++ ){
+					value = func( value, (int32)get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
+
+					script_removetop( st, -1, 0 );
+				}
+			}
+		}else{
+			ShowError( "buildin_%s: not a supported data type!\n", functionname );
+			script_reportdata( data );
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		// Continue with the next stack entry
+		i++;
+	}
+
+	script_pushint( st, value );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Safety Base/Job EXP addition than using `set BaseExp,n;` or `set JobExp,n;`
+ * Unlike `getexp` that affected by some adjustments.
+ * getexp2 <base_exp>,<job_exp>{,<char_id>};
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(getexp2) {
+	TBL_PC *sd = NULL;
+	int base_exp = script_getnum(st, 2);
+	int job_exp = script_getnum(st, 3);
+
+	if (!script_charid2sd(4, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	if (base_exp == 0 && job_exp == 0)
+		return SCRIPT_CMD_SUCCESS;
+
+	if (base_exp > 0)
+		pc_gainexp(sd, NULL, base_exp, 0, 2);
+	else if (base_exp < 0)
+		pc_lostexp(sd, base_exp * -1, 0);
+
+	if (job_exp > 0)
+		pc_gainexp(sd, NULL, 0, job_exp, 2);
+	else if (job_exp < 0)
+		pc_lostexp(sd, 0, job_exp * -1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*=======================================================
 * Returns weapon level of item calling this command.
 * Returns 0 when caller isn't weapon or error.
@@ -21557,6 +21692,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(sqrt,"i"),
 	BUILDIN_DEF(pow,"ii"),
 	BUILDIN_DEF(distance,"iiii"),
+	BUILDIN_DEF2(minmax,"min", "*"),
+	BUILDIN_DEF2(minmax,"minimum", "*"),
+	BUILDIN_DEF2(minmax,"max", "*"),
+	BUILDIN_DEF2(minmax,"maximum", "*"),
 	// <--- [zBuffer] List of mathematics commands
 	BUILDIN_DEF(md5,"s"),
 	// [zBuffer] List of dynamic var commands --->
@@ -21755,6 +21894,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(opendressroom,"i?"),
 	BUILDIN_DEF(navigateto,"s???????"),
 	BUILDIN_DEF(adopt,"vv"),
+	BUILDIN_DEF(getexp2,"ii?"),
 	BUILDIN_DEF(getweaponlv, ""),
 
 #include "../custom/script_def.inc"

@@ -10245,7 +10245,6 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
  */
 bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type)
 {
-	char charname[NAME_LENGTH], charname2[NAME_LENGTH];
 	char command[CHAT_SIZE_MAX], params[CHAT_SIZE_MAX];
 	char output[CHAT_SIZE_MAX];
 
@@ -10254,6 +10253,8 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	TBL_PC * ssd = NULL; //sd for target
 	AtCommandInfo * info;
+
+	bool is_atcommand = true; // false if it's a charcommand
 
 	nullpo_retr(false, sd);
 
@@ -10286,55 +10287,45 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		}
 	}
 
-	if (*message == charcommand_symbol) {
-		do {
-			int x, y, z;
-			char params2[CHAT_SIZE_MAX];
+	if (*message == charcommand_symbol)
+		is_atcommand = false;
 
-			//Checks to see if #command has a name or a name + parameters.
-			x = sscanf(message, "%255s \"%23[^\"]\" %255[^\n]", command, charname, params);
-			y = sscanf(message, "%255s %23s %255[^\n]", command, charname2, params2);
+	if (is_atcommand) { // #command
+		sprintf(atcmd_msg, "%s", message);
+		ssd = sd;
+	} else { // @command
+		char charname[NAME_LENGTH];
+		int n;
 
-			//z always has the value of the scan that was successful
-			z = ( x > 1 ) ? x : y;
+		//Checks to see if #command has a name or a name + parameters.
+		if ((n = sscanf(message, "%255s \"%23[^\"]\" %255[^\n]", command, charname, params)) < 2
+		 && (n = sscanf(message, "%255s %23s %255[^\n]", command, charname, params)) < 2
+		) {
+			if (pc_get_group_level(sd) == 0) {
+				if (n < 1)
+					return false; // No command found. Display as normal message.
 
-			//#command + name means the sufficient target was used and anything else after
-			//can be looked at by the actual command function since most scan to see if the
-			//right parameters are used.
-			if ( x > 2 ) {
-				sprintf(atcmd_msg, "%s %s", command, params);
-				break;
-			}
-			else if ( y > 2 ) {
-				sprintf(atcmd_msg, "%s %s", command, params2);
-				break;
-			}
-			//Regardless of what style the #command is used, if it's correct, it will always have
-			//this value if there is no parameter. Send it as just the #command
-			else if ( z == 2 ) {
-				sprintf(atcmd_msg, "%s", command);
-				break;
-			}
-
-			if( !pc_get_group_level(sd) ) {
-				if( x >= 1 || y >= 1 ) { /* we have command */
-					info = get_atcommandinfo_byname(atcommand_checkalias(command + 1));
-					if( !info || info->char_groups[sd->group_pos] == 0 ) /* if we can't use or doesn't exist: don't even display the command failed message */
-						return false;
-				} else
-					return false;/* display as normal message */
+				info = get_atcommandinfo_byname(atcommand_checkalias(command + 1));
+				if (!info || info->char_groups[sd->group_pos] == 0)  // If we can't use or doesn't exist: don't even display the command failed message
+					return false;
 			}
 
 			sprintf(output, msg_txt(sd,1388), charcommand_symbol); // Charcommand failed (usage: %c<command> <char name> <parameters>).
 			clif_displaymessage(fd, output);
 			return true;
-		} while(0);
-	}
-	else if (*message == atcommand_symbol) {
-		//atcmd_msg is constructed above differently for charcommands
-		//it's copied from message if not a charcommand so it can
-		//pass through the rest of the code compatible with both symbols
-		sprintf(atcmd_msg, "%s", message);
+		}
+
+		ssd = map_nick2sd(charname);
+		if (ssd == NULL) {
+			sprintf(output, msg_txt(sd,1389), command); // %s failed. Player not found.
+			clif_displaymessage(fd, output);
+			return true;
+		}
+
+		if (n > 2)
+			sprintf(atcmd_msg, "%s %s", command, params);
+		else
+			sprintf(atcmd_msg, "%s", command);
 	}
 
 	if (battle_config.idletime_option&IDLE_ATCOMMAND)
@@ -10350,27 +10341,15 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	// @commands (script based)
 	if((type == 1 || type == 3) && atcmd_binding_count > 0) {
-		struct atcmd_binding_data * binding;
-
-		// Check if the command initiated is a character command
-		if (*message == charcommand_symbol &&
-				(ssd = map_nick2sd(charname)) == NULL && (ssd = map_nick2sd(charname2)) == NULL ) {
-			sprintf(output, msg_txt(sd,1389), command); // %s failed. Player not found.
-			clif_displaymessage(fd, output);
-			return true;
-		}
-
-		// Get atcommand binding
-		binding = get_atcommandbind_byname(command);
+		struct atcmd_binding_data *binding = get_atcommandbind_byname(command);
 
 		// Check if the binding isn't NULL and there is a NPC event, level of usage met, et cetera
 		if( binding != NULL && binding->npc_event[0] &&
-			((*atcmd_msg == atcommand_symbol && pc_get_group_level(sd) >= binding->level) ||
-			 (*atcmd_msg == charcommand_symbol && pc_get_group_level(sd) >= binding->level2)))
+			((is_atcommand && pc_get_group_level(sd) >= binding->level) ||
+			 (!is_atcommand && pc_get_group_level(sd) >= binding->level2)))
 		{
 			// Check if self or character invoking; if self == character invoked, then self invoke.
-			bool invokeFlag = ((*atcmd_msg == atcommand_symbol) ? 1 : 0);
-			npc_do_atcmd_event((invokeFlag ? sd : ssd), command, params, binding->npc_event);
+			npc_do_atcmd_event(ssd, command, params, binding->npc_event);
 			return true;
 		}
 	}
@@ -10378,13 +10357,13 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	//Grab the command information and check for the proper GM level required to use it or if the command exists
 	info = get_atcommandinfo_byname(atcommand_checkalias(command + 1));
 	if (info == NULL) {
-		if( pc_get_group_level(sd) ) { // TODO: remove or replace with proper permission
-			sprintf(output, msg_txt(sd,153), command); // "%s is Unknown Command."
-			clif_displaymessage(fd, output);
-			atcommand_get_suggestions(sd, command + 1, *message == atcommand_symbol);
-			return true;
-		} else
+		if (pc_get_group_level(sd) == 0) // TODO: remove or replace with proper permission
 			return false;
+
+		sprintf(output, msg_txt(sd,153), command); // "%s is Unknown Command."
+		clif_displaymessage(fd, output);
+		atcommand_get_suggestions(sd, command + 1, is_atcommand);
+		return true;
 	}
 
 	//check restriction
@@ -10394,32 +10373,24 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		if (info->restriction&ATCMD_NOSCRIPT && (type == 0 || type == 3)) //scripts prevent
 			return true;
 		if (info->restriction&ATCMD_NOAUTOTRADE && (type == 0 || type == 3)
-			&& ((*atcmd_msg == atcommand_symbol && sd && sd->state.autotrade) || (ssd && ssd->state.autotrade)))
+			&& ((is_atcommand && sd && sd->state.autotrade) || (ssd && ssd->state.autotrade)))
 			return true;
 	}
 
 	// type == 1 : player invoked
 	if (type == 1) {
-		if ((*command == atcommand_symbol && info->at_groups[sd->group_pos] == 0) ||
-			(*command == charcommand_symbol && info->char_groups[sd->group_pos] == 0) ) {
+		if ((is_atcommand && info->at_groups[sd->group_pos] == 0) ||
+			(!is_atcommand && info->char_groups[sd->group_pos] == 0) )
 			return false;
-		}
+
 		if( pc_isdead(sd) && pc_has_permission(sd,PC_PERM_DISABLE_CMD_DEAD) ) {
 			clif_displaymessage(fd, msg_txt(sd,1393)); // You can't use commands while dead
 			return true;
 		}
 	}
 
-	// Check if target is valid only if confirmed that player can use command.
-	if (*message == charcommand_symbol &&
-		(ssd = map_nick2sd(charname)) == NULL && (ssd = map_nick2sd(charname2)) == NULL ) {
-		sprintf(output, msg_txt(sd,1389), command); // %s failed. Player not found.
-		clif_displaymessage(fd, output);
-		return true;
-	}
-
 	//Attempt to use the command
-	if ( (info->func(fd, (*atcmd_msg == atcommand_symbol) ? sd : ssd, command, params) != 0) )
+	if ( (info->func(fd, ssd, command, params) != 0) )
 	{
 		sprintf(output,msg_txt(sd,154), command); // %s failed.
 		clif_displaymessage(fd, output);
@@ -10427,10 +10398,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	}
 
 	//Log only if successful.
-	if ( *atcmd_msg == atcommand_symbol )
-		log_atcommand(sd, atcmd_msg);
-	else if ( *atcmd_msg == charcommand_symbol )
-		log_atcommand(sd, message);
+	log_atcommand(sd, is_atcommand ? atcmd_msg : message);
 
 	return true;
 }

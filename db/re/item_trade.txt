@@ -130,6 +130,9 @@
 1653,507,100	// Staff_Of_Healing_C
 1658,499,100	// P_Staff3
 1667,499,100	// TE_Woe_Staff
+1681,403,100	// Short_Foxtail_Staff
+1687,403,100	// Beginner_Foxtail_Staff
+1699,435,100	// Paradise_Foxtail_Staff_I
 1703,507,100	// Bow__
 1728,507,100	// Balistar_C
 1729,507,100	// Bow_Of_Rudra_C
@@ -3834,6 +3837,8 @@
 //22950,475,100	//
 //22951,475,100	//
 //22952,475,100	//
+26100,435,100	// Paradise_Foxtail_Staff_II
+26101,435,100	// Paradise_Foxtail_Staff_III
 28105,467,100	// Infinity_Axe
 28310,467,100	// Sarah's_Left_Earring
 28311,467,100	// Sarah's_Right_Earring

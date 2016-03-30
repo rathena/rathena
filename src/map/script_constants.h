@@ -651,6 +651,7 @@
 	script_set_constant("bSubSkill",SP_SUB_SKILL,false);
 	script_set_constant("bSubDefEle",SP_SUBDEF_ELE,false);
 	script_set_constant("bStateNoRecoverRace",SP_STATE_NORECOVER_RACE,false);
+	script_set_constant("bCriticalLong",SP_CRITICAL_RANGEATK,false);
 
 	/* equip positions */
 	// Disabled as long as we did not clean the EQI_/EQP_ mess up [Lemongrass]
