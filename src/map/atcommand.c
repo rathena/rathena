@@ -9001,14 +9001,23 @@ ACMD_FUNC(accinfo) {
 	return 0;
 }
 
-/* [Ind] */
+/**
+ * @set <variable name{[index]}>{ <value>}
+ * 
+ * Gets or sets a value of a non server variable.
+ * If a value is specified it is used to set the variable's value,
+ * if not the variable's value is read.
+ * In any case it reads and displays the variable's value.
+ *
+ * Original implementation by Ind
+*/
 ACMD_FUNC(set) {
-	char reg[32], val[128];
-	struct script_data* data;
-	int toset = 0, len;
+	char reg[46], val[128], name[32];
+	int toset = 0, len, index;
 	bool is_str = false;
+	int64 uid;
 
-	if( !message || !*message || (toset = sscanf(message, "%31s %127[^\n]s", reg, val)) < 1  ) {
+	if( !message || !*message || (toset = sscanf(message, "%45s %127[^\n]s", reg, val)) < 1  ) {
 		clif_displaymessage(fd, msg_txt(sd,1367)); // Usage: @set <variable name> <value>
 		clif_displaymessage(fd, msg_txt(sd,1368)); // Usage: ex. "@set PoringCharVar 50"
 		clif_displaymessage(fd, msg_txt(sd,1369)); // Usage: ex. "@set PoringCharVarSTR$ Super Duper String"
@@ -9025,7 +9034,13 @@ ACMD_FUNC(set) {
 		return -1;
 	}
 
-	is_str = ( reg[strlen(reg) - 1] == '$' );
+	// Check if the user wanted to set an array
+	if( sscanf( reg, "%31[^[][%11d]", name, &index ) < 2 ){
+		// The user did not specify array brackets, so we set the index to zero
+		index = 0;
+	}
+
+	is_str = is_string_variable(name);
 
 	if( ( len = strlen(val) ) > 1 ) {
 		if( val[0] == '"' && val[len-1] == '"') {
@@ -9034,88 +9049,64 @@ ACMD_FUNC(set) {
 		}
 	}
 
-	if( toset >= 2 ) {/* we only set the var if there is an val, otherwise we only output the value */
-		if( is_str )
-			set_var(sd, reg, (void*) val);
-		else
-			set_var(sd, reg, (void*)__64BPRTSIZE((atoi(val))));
-
+	// Only set the variable if there is a value for it
+	if( toset >= 2 ){
+		setd_sub( NULL, sd, name, index, is_str ? (void*)val : (void*)__64BPRTSIZE((atoi(val))), NULL );
 	}
 
-	CREATE(data, struct script_data,1);
-
+	uid = reference_uid( add_str( name ), index );
 
 	if( is_str ) {// string variable
+		char* value;
 
 		switch( reg[0] ) {
 			case '@':
-				data->u.str = pc_readregstr(sd, add_str(reg));
+				value = pc_readregstr(sd, uid);
 				break;
 			case '$':
-				data->u.str = mapreg_readregstr(add_str(reg));
+				value = mapreg_readregstr(uid);
 				break;
 			case '#':
 				if( reg[1] == '#' )
-					data->u.str = pc_readaccountreg2str(sd, add_str(reg));// global
+					value = pc_readaccountreg2str(sd, uid);// global
 				else
-					data->u.str = pc_readaccountregstr(sd, add_str(reg));// local
+					value = pc_readaccountregstr(sd, uid);// local
 				break;
 			default:
-				data->u.str = pc_readglobalreg_str(sd, add_str(reg));
+				value = pc_readglobalreg_str(sd, uid);
 				break;
 		}
 
-		if( data->u.str == NULL || data->u.str[0] == '\0' ) {// empty string
-			data->type = C_CONSTSTR;
-			data->u.str = "";
-		} else {// duplicate string
-			data->type = C_STR;
-			data->u.str = aStrdup(data->u.str);
-		}
-
-	} else {// integer variable
-
-		data->type = C_INT;
-		switch( reg[0] ) {
-			case '@':
-				data->u.num = pc_readreg(sd, add_str(reg));
-				break;
-			case '$':
-				data->u.num = mapreg_readreg(add_str(reg));
-				break;
-			case '#':
-				if( reg[1] == '#' )
-					data->u.num = pc_readaccountreg2(sd, add_str(reg));// global
-				else
-					data->u.num = pc_readaccountreg(sd, add_str(reg));// local
-				break;
-			default:
-				data->u.num = pc_readglobalreg(sd, add_str(reg));
-				break;
-		}
-
-	}
-
-	switch( data->type ) {
-		case C_INT:
-			sprintf(atcmd_output,msg_txt(sd,1373),reg,data->u.num); // %s value is now :%d
-			break;
-		case C_STR:
-			sprintf(atcmd_output,msg_txt(sd,1374),reg,data->u.str); // %s value is now :%s
-			break;
-		case C_CONSTSTR:
+		if( value == NULL || value == '\0' ){// empty string
 			sprintf(atcmd_output,msg_txt(sd,1375),reg); // %s is empty
-			break;
-		default:
-			sprintf(atcmd_output,msg_txt(sd,1376),reg,data->type); // %s data type is not supported :%u
-			break;
+		}else{
+			sprintf(atcmd_output,msg_txt(sd,1374),reg,value); // %s value is now :%s
+		}
+	} else {// integer variable
+		int value;
+
+		switch( reg[0] ) {
+			case '@':
+				value = pc_readreg(sd, uid);
+				break;
+			case '$':
+				value = mapreg_readreg(uid);
+				break;
+			case '#':
+				if( reg[1] == '#' )
+					value = pc_readaccountreg2(sd, uid);// global
+				else
+					value = pc_readaccountreg(sd, uid);// local
+				break;
+			default:
+				value = pc_readglobalreg(sd, uid);
+				break;
+		}
+
+		sprintf(atcmd_output,msg_txt(sd,1373),reg,value); // %s value is now :%d
 	}
 
 	clif_displaymessage(fd, atcmd_output);
-
-	if (is_str && data->u.str)
-		aFree(data->u.str);
-	aFree(data);
 
 	return 0;
 }
