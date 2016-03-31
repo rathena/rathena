@@ -19,7 +19,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 				mes "[Thief Guide]";
 				mes "Huh? Do I know you? It's creepy that you seem so familiar. You don't have a twin, do you?";
 				next;
-				if (getskilllv("NV_BASIC") < 9) {
+				if (!callfunc("F_CanChangeJob")) {
 					mes "[Thief Guide]";
 					mes "What, do you want to be a Thief? I'm sorry, but you look like you need more training.";
 					next;
@@ -136,7 +136,7 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 	mes "Alright, tell me your name. Huh? What?";
 	mes ""+strcharinfo(0)+". So "+strcharinfo(0)+", right...?";
 	next;
-	if (getskilllv("NV_BASIC") < 9) {
+	if (!callfunc("F_CanChangeJob")) {
 		mes "[Thief Guildsman]";
 		mes "I can see your strong will to become a Thief......";
 		mes "But only with your will, you cannot make it in a real fight, can you?";

@@ -44,7 +44,7 @@ function	script	F_CoolEventCorp	{
 		break;
 	case 2:
 		mes "[Cool Event Corp. Staff]";
-		if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+		if(!callfunc("F_CanOpenStorage")){
 			mes "I'm sorry, but you";
 			mes "need the Novice's";
 			mes "Basic Skill Level 6 to";

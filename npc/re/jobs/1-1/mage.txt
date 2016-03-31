@@ -22,7 +22,7 @@ geffen_in,164,124,4	script	Mage Guildsman#mage	123,{
 				mes "[Mage Guildsman]";
 				mes "Ah, you must have been reborn. Well, I'm glad to have you back.";
 				next;
-				if (getskilllv("NV_BASIC") < 9) {
+				if (!callfunc("F_CanChangeJob")) {
 					mes "[Mage Guildsman]";
 					mes "I'm sorry, but I don't think you're ready to learn magic yet. Why don't you go finish learning the Basic Skills first?";
 					next;
@@ -84,7 +84,7 @@ geffen_in,164,124,4	script	Mage Guildsman#mage	123,{
 				close;
 			}
 			mes "[Mage Guildsman]";
-			if (getskilllv("NV_BASIC") < 9) {
+			if (!callfunc("F_CanChangeJob")) {
 				mes "Oh, man your Basic Skill Level doesn't reach enough to be a Mage.";
 				mes "Go back and level up your Basic Skill.";
 				close;
