@@ -2648,7 +2648,7 @@ This function returns the weapon level for the weapon equipped in the specified
 equipment slot on the invoking character. For a list of equipment slots see 
 'getequipid'.
 
-If -1 is passed as <equipment slot> argument. Weapon level for the item calling this function, 
+If -1 is passed as the equipment slot argument then the weapon level for the item calling this function, 
 assuming it is called by an item script, will be returned. Otherwise, 0 will be returned.
 
 Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons have
