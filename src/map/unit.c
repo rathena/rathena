@@ -1517,12 +1517,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		skill_is_combo(skill_id) &&
 		(sc->data[SC_COMBO]->val1 == skill_id ||
 		(sd?skill_check_condition_castbegin(sd,skill_id,skill_lv):0) )) {
-		if (sc->data[SC_COMBO]->val2)
+		if (skill_is_combo(skill_id) == 2 && target_id == src->id && ud->target > 0)
+			target_id = ud->target;
+		else if (sc->data[SC_COMBO]->val2)
 			target_id = sc->data[SC_COMBO]->val2;
 		else if (target_id == src->id || ud->target > 0)
 			target_id = ud->target;
 
-		if( inf&INF_SELF_SKILL && skill_get_nk(skill_id)&NK_NO_DAMAGE )// exploit fix
+		if (inf&INF_SELF_SKILL && skill_get_nk(skill_id)&NK_NO_DAMAGE)// exploit fix
 			target_id = src->id;
 
 		combo = 1;

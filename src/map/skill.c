@@ -2641,10 +2641,12 @@ static int skill_magic_reflect(struct block_list* src, struct block_list* bl, in
 /**
  * Checks whether a skill can be used in combos or not
  * @param skill_id: Target skill
- * @return true: Skill is a combo, false: otherwise
+ * @return	0: Skill is not a combo
+ *			1: Skill is a normal combo
+ *			2: Skill is combo that prioritizes auto-target even if val2 is set 
  * @author Panikon
  */
-bool skill_is_combo(uint16 skill_id) {
+int skill_is_combo(uint16 skill_id) {
 	switch(skill_id) {
 		case MO_CHAINCOMBO:
 		case MO_COMBOFINISH:
@@ -2659,13 +2661,14 @@ bool skill_is_combo(uint16 skill_id) {
 		case HT_POWER:
 		case GC_COUNTERSLASH:
 		case GC_WEAPONCRUSH:
-		case SR_FALLENEMPIRE:
 		case SR_DRAGONCOMBO:
+			return 1;
+		case SR_FALLENEMPIRE:
 		case SR_TIGERCANNON:
 		case SR_GATEOFHELL:
-			return true;
+			return 2;
 	}
-	return false;
+	return 0;
 }
 
 /*
@@ -2744,41 +2747,51 @@ void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_li
 	}
 
 	//start new combo
-	if(sd){ //player only
-		target_id = 0; // Players can always switch targets on combo
-		switch(skill_id) {
+	if (sd) { //player only
+		switch (skill_id) {
 		case MO_TRIPLEATTACK:
-			if (pc_checkskill(sd, MO_CHAINCOMBO) > 0 || pc_checkskill(sd, SR_DRAGONCOMBO) > 0)
+			if (pc_checkskill(sd, MO_CHAINCOMBO) > 0 || pc_checkskill(sd, SR_DRAGONCOMBO) > 0) {
 				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
 			break;
 		case MO_CHAINCOMBO:
-			if(pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball > 0)
+			if (pc_checkskill(sd, MO_COMBOFINISH) > 0 && sd->spiritball > 0) {
 				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
 			break;
 		case MO_COMBOFINISH:
-			if (sd->status.party_id>0) //bonus from SG_FRIEND [Komurka]
+			if (sd->status.party_id > 0) //bonus from SG_FRIEND [Komurka]
 				party_skill_check(sd, sd->status.party_id, MO_COMBOFINISH, skill_lv);
-			if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball > 0)
+			if (pc_checkskill(sd, CH_TIGERFIST) > 0 && sd->spiritball > 0) {
 				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
 		case CH_TIGERFIST:
-			if (!duration && pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1)
+			if (!duration && pc_checkskill(sd, CH_CHAINCRUSH) > 0 && sd->spiritball > 1) {
 				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
 		case CH_CHAINCRUSH:
-			if (!duration && pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball > 0 && sd->sc.data[SC_EXPLOSIONSPIRITS])
+			if (!duration && pc_checkskill(sd, MO_EXTREMITYFIST) > 0 && sd->spiritball > 0 && sd->sc.data[SC_EXPLOSIONSPIRITS]) {
 				duration = 1;
+				target_id = 0; // Will target current auto-target instead
+			}
 			break;
 		case AC_DOUBLE:
-			if( pc_checkskill(sd, HT_POWER)) {
+			if (pc_checkskill(sd, HT_POWER)) {
 				duration = 2000;
 				nodelay = 1; //Neither gives walk nor attack delay
+				target_id = 0; //Does not need to be used on previous target
 			}
 			break;
 		case SR_DRAGONCOMBO:
-			if( pc_checkskill(sd, SR_FALLENEMPIRE) > 0 )
+			if (pc_checkskill(sd, SR_FALLENEMPIRE) > 0)
 				duration = 1;
 			break;
 		case SR_FALLENEMPIRE:
-			if( pc_checkskill(sd, SR_TIGERCANNON) > 0 || pc_checkskill(sd, SR_GATEOFHELL) > 0 )
+			if (pc_checkskill(sd, SR_TIGERCANNON) > 0 || pc_checkskill(sd, SR_GATEOFHELL) > 0)
 				duration = 1;
 			break;
 		}
