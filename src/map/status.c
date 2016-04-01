@@ -8389,7 +8389,23 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		status_change_end(bl,SC_OFFERTORIUM,INVALID_TIMER);
 		break;
 	case SC_OFFERTORIUM:
-		status_change_end(bl,SC_MAGNIFICAT,INVALID_TIMER);
+		status_change_end(bl, SC_MAGNIFICAT, INVALID_TIMER);
+		status_change_end(bl, SC_BLIND, INVALID_TIMER);
+		status_change_end(bl, SC_CURSE, INVALID_TIMER);
+		status_change_end(bl, SC_POISON, INVALID_TIMER);
+		status_change_end(bl, SC_HALLUCINATION, INVALID_TIMER);
+		status_change_end(bl, SC_CONFUSION, INVALID_TIMER);
+		status_change_end(bl, SC_BLEEDING, INVALID_TIMER);
+		status_change_end(bl, SC_BURNING, INVALID_TIMER);
+		status_change_end(bl, SC_FREEZING, INVALID_TIMER);
+		status_change_end(bl, SC_MANDRAGORA, INVALID_TIMER);
+		status_change_end(bl, SC_PARALYSE, INVALID_TIMER);
+		status_change_end(bl, SC_PYREXIA, INVALID_TIMER);
+		status_change_end(bl, SC_DEATHHURT, INVALID_TIMER);
+		status_change_end(bl, SC_LEECHESEND, INVALID_TIMER);
+		status_change_end(bl, SC_VENOMBLEED, INVALID_TIMER);
+		status_change_end(bl, SC_TOXIN, INVALID_TIMER);
+		status_change_end(bl, SC_MAGICMUSHROOM, INVALID_TIMER);
 		break;
 	case SC_KYRIE:
 		// Cancels Assumptio
