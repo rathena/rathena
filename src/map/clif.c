@@ -11604,6 +11604,7 @@ void clif_parse_TradeCommit(int fd,struct map_session_data *sd)
 void clif_parse_StopAttack(int fd,struct map_session_data *sd)
 {
 	pc_stop_attack(sd);
+	if (sd) sd->ud.state.attack_continue = 0;
 }
 
 
