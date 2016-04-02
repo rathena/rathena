@@ -7578,9 +7578,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			sc_def = status->agi*50;
 			break;
 		case SC_DEEPSLEEP:
-			sc_def = (sd ? sd->status.int_ : status_get_base_status(bl)->int_) * 50;
-			tick_def = 0; // Linear reduction instead
-			tick_def2 = ((sd ? sd->status.int_ : status_get_base_status(bl)->int_) + status_get_lv(bl)) * 50; // kRO balance update lists this formula
+			tick_def2 = status_get_base_status(bl)->int_ * 25 + status_get_lv(bl) * 50;
 			break;
 		case SC_NETHERWORLD:
 			// Resistance: {(Target's Base Level / 50) + (Target's Job Level / 10)} seconds
@@ -7726,7 +7724,6 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 	switch (type) {
 		case SC_ANKLE:
 		case SC_MARSHOFABYSS:
-		case SC_DEEPSLEEP:
 			tick = max(tick, 5000); // Minimum duration 5s
 			break;
 		case SC_FREEZING:
