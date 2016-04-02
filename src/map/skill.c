@@ -7346,7 +7346,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case AL_HOLYWATER:
 		if(sd) {
 			if (skill_produce_mix(sd, skill_id, ITEMID_HOLY_WATER, 0, 0, 0, 1, -1))
+			{
 				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+				skill_unitsetting(src, skill_id, skill_lv, src->x, src->y, 0); 	//Fix for Issue #1119
+			}
 			else
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
@@ -12915,11 +12918,12 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 				unit_val1 = (skill_lv <= 1) ? 500 : 200 + 200*skill_lv;
 				unit_val2 = map_getcell(src->m, ux, uy, CELL_GETTYPE);
 				break;
+			case AL_HOLYWATER: //Fix for issue #1119
 			case WZ_WATERBALL:
-				//Check if there are cells that can be turned into waterball units
+				//Check if there are cells that can be turned into waterball/aqua benedicta unit(s)
 				if (!sd || map_getcell(src->m, ux, uy, CELL_CHKWATER) 
 					|| (map_find_skill_unit_oncell(src, ux, uy, SA_DELUGE, NULL, 1)) != NULL || (map_find_skill_unit_oncell(src, ux, uy, NJ_SUITON, NULL, 1)) != NULL)
-					break; //Turn water, deluge or suiton into waterball cell
+					break; //Turn water, deluge or suiton into waterball/aqua benedicta cell
 				continue;
 			case GS_DESPERADO:
 				unit_val1 = abs(layout->dx[i]);
@@ -17103,6 +17107,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 					break;
 			}
 			break;
+		case AL_HOLYWATER: //Fix for Issue #1119
 		case WZ_WATERBALL:
 			switch (unit->group->skill_id) {
 				case SA_DELUGE:
