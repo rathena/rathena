@@ -10109,7 +10109,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case WM_LULLABY_DEEPSLEEP:
 		if (flag&1) {
-			int rate = 4 * skill_lv + (sd ? pc_checkskill(sd, WM_LESSON) * 2) + status_get_lv(src) / 15 + (sd ? sd->status.job_level / 5 : 0);
+			int rate = 4 * skill_lv + (sd ? pc_checkskill(sd, WM_LESSON) * 2 : 0) + status_get_lv(src) / 15 + (sd ? sd->status.job_level / 5 : 0);
 			int duration = skill_get_time(skill_id, skill_lv) - (status_get_base_status(bl)->int_ * 50 + status_get_lv(bl) * 50); // Duration reduction for Deep Sleep Lullaby is doubled
 
 			sc_start(src, bl, type, rate, skill_lv, duration);
