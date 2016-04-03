@@ -10569,6 +10569,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				unit_skillcastcancel(bl, 0);
 		// Fall through
 		case SC_CURSEDCIRCLE_ATKER:
+		case SC_KINGS_GRACE:
 			unit_stop_attack(bl);
 			if (type == SC_FREEZE || type == SC_STUN || type == SC_SLEEP || type == SC_STONE)
 				break;
