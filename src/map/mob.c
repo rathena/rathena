@@ -1761,7 +1761,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	{
 		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(md->ud.canact_tick, tick) < -MIN_MOBTHINKTIME*IDLE_SKILL_INTERVAL) 
 		{ //Only use skill if able to walk on next tick and not used a skill the last second
-			mobskill_use(md, tick, -1);
+			if (mobskill_use(md, tick, -1))
+				return true;
 		}
 	}
 
