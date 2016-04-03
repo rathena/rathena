@@ -652,7 +652,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	i = search_petDB_index(md->mob_id,PET_CLASS);
 
 	//catch_target_class == 0 is used for universal lures (except bosses for now). [Skotlex]
-	if (sd->catch_target_class == 0 && !(md->status.mode&MD_BOSS))
+	if (sd->catch_target_class == 0 && !status_has_mode(&md->status,MD_BOSS))
 		sd->catch_target_class = md->mob_id;
 
 	if(i < 0 || sd->catch_target_class != md->mob_id) {

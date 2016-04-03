@@ -5096,7 +5096,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 	sd_status= status_get_status_data(&sd->bl);
 	md_status= status_get_status_data(bl);
 
-	if( md->master_id || md_status->mode&MD_BOSS || mob_is_treasure(md) ||
+	if( md->master_id || status_has_mode(md_status,MD_BOSS) || mob_is_treasure(md) ||
 		map[bl->m].flag.nomobloot || // check noloot map flag [Lorky]
 		(battle_config.skill_steal_max_tries && //Reached limit of steal attempts. [Lupus]
 			md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
@@ -5167,7 +5167,7 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 		return 0;
 
 	md = (TBL_MOB*)target;
-	if( md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || md->status.mode&MD_BOSS )
+	if( md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || status_has_mode(&md->status,MD_BOSS) )
 		return 0;
 
 	if( mob_is_treasure(md) )

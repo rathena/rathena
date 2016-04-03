@@ -2162,6 +2162,8 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 #define status_get_class_(bl) status_get_status_data(bl)->class_
 #define status_get_size(bl) status_get_status_data(bl)->size
 #define status_get_mode(bl) status_get_status_data(bl)->mode
+#define status_has_mode(status,md) ((status)->mode&(md))
+#define status_bl_has_mode(bl,md) status_has_mode(status_get_status_data((bl)),(md))
 
 #define status_get_homstr(bl) (status->str + ((TBL_HOM*)bl)->homunculus.str_value)
 #define status_get_homagi(bl) (status->agi + ((TBL_HOM*)bl)->homunculus.agi_value)
@@ -2173,7 +2175,7 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 int status_get_party_id(struct block_list *bl);
 int status_get_guild_id(struct block_list *bl);
 int status_get_emblem_id(struct block_list *bl);
-int status_get_race2(struct block_list *bl);
+enum e_race2 status_get_race2(struct block_list *bl);
 
 struct view_data *status_get_viewdata(struct block_list *bl);
 void status_set_viewdata(struct block_list *bl, int class_);

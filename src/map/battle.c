@@ -569,7 +569,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 	s_class = (enum e_classAE)status_get_class(src);
 	sstatus = status_get_status_data(src);
 	tstatus = status_get_status_data(target);
-	s_race2 = (enum e_race2)status_get_race2(src);
+	s_race2 = status_get_race2(src);
 	s_defele = (tsd) ? (enum e_element)status_get_element(src) : ELE_NONE;
 
 //Official servers apply the cardfix value on a base of 1000 and round down the reduction/increase
@@ -643,7 +643,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 			break;
 
 		case BF_WEAPON:
-			t_race2 = (enum e_race2)status_get_race2(target);
+			t_race2 = status_get_race2(target);
 			// Affected by attacker ATK bonuses
 			if( sd && !(nk&NK_NO_CARDFIX_ATK) && (left&2) ) {
 				short cardfix_ = 1000;
@@ -1035,7 +1035,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		return damage; //These skills bypass everything else.
 
 	if( sc && sc->count ) { // SC_* that reduce damage to 0.
-		if( sc->data[SC_BASILICA] && !(status_get_mode(src)&MD_BOSS) ) {
+		if( sc->data[SC_BASILICA] && !status_bl_has_mode(src,MD_BOSS) ) {
 			d->dmg_lv = ATK_BLOCK;
 			return 0;
 		}
@@ -2221,16 +2221,17 @@ bool is_infinite_defense(struct block_list *target, int flag)
 			return true;
 	}
 
-	if(tstatus->mode&MD_IGNOREMELEE && (flag&(BF_WEAPON|BF_SHORT)) == (BF_WEAPON|BF_SHORT) )
+	if(status_has_mode(tstatus,MD_IGNOREMELEE) && (flag&(BF_WEAPON|BF_SHORT)) == (BF_WEAPON|BF_SHORT) )
 		return true;
-	if(tstatus->mode&MD_IGNOREMAGIC && flag&(BF_MAGIC) )
+	if(status_has_mode(tstatus,MD_IGNOREMAGIC) && flag&(BF_MAGIC) )
 		return true;
-	if(tstatus->mode&MD_IGNORERANGED && (flag&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG) )
+	if(status_has_mode(tstatus,MD_IGNORERANGED) && (flag&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG) )
 		return true;
-	if(tstatus->mode&MD_IGNOREMISC && flag&(BF_MISC) )
+	if(status_has_mode(tstatus,MD_IGNOREMISC) && flag&(BF_MISC) )
 		return true;
-
-	return (tstatus->mode&MD_PLANT);
+	if(status_has_mode(tstatus,MD_PLANT) )
+		return true;
+	return false;
 }
 
 /*========================
@@ -3634,7 +3635,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case GS_BULLSEYE:
 			//Only works well against brute/demihumans non bosses.
-			if((tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER) && !(tstatus->mode&MD_BOSS))
+			if((tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER) && !status_has_mode(tstatus,MD_BOSS))
 				skillratio += 400;
 			break;
 		case GS_TRACKING:
@@ -5659,7 +5660,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #endif
 				if(i > 700)
 					i = 700;
-				if(rnd()%1000 < i && !(tstatus->mode&MD_BOSS))
+				if(rnd()%1000 < i && !status_has_mode(tstatus,MD_BOSS))
 					ad.damage = tstatus->hp;
 				else {
 #ifdef RENEWAL
