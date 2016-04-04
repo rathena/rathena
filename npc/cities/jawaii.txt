@@ -416,7 +416,7 @@ jawaii,214,168,5	script	Honeymoon Helper#Jawaii	71,{
 		mes "[Helper]";
 		if (Zeny > 49999) {
 			set Zeny, Zeny-50000;
-			getitem 681,1; //Memory_Of_Wedding 
+			getitem 681,1;// Memory_Of_Wedding
 			mes "Thank you very much~!";
 			mes "Please remember, you";
 			mes "should use this with your";
@@ -626,7 +626,7 @@ jawaii_in,30,96,4	script	Employee#jaw6	724,{
 	}
 	mes "I hope you will have a good time.";
 	close;
-	
+
 OnWelcome:
 	emotion e_kis;
 	end;
@@ -716,7 +716,7 @@ OnTouch:
 	donpcevent "Employee#jaw1::OnSolo";
 	end;
 }
-	
+
 jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FF * Wait a minute! *";
@@ -766,7 +766,7 @@ jawaii_in,15,104,0	script	Waitress#jawaii	80,{
 				mes "[Waitress]";
 				if (Zeny > 999) {
 					set Zeny, Zeny-1000;
-					getitem 503,1; //Yelow_Potion
+					getitem 503,1;// Yellow_Potion
 					mes "There you go~";
 					mes "Enjoy your meal~!";
 					close;
@@ -839,9 +839,8 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 	mes "like to drink?";
 	next;
 	if (Zeny < 99) {
-		set .@r_jaw,rand(1,100);
 		mes "[Bartender]";
-		if (.@r_jaw > 29) {
+		if (rand(1,100) > 29) {
 			mes "Hm, I'm sorry";
 			mes "but you do not";
 			mes "have enough";
@@ -866,7 +865,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 		percentheal -100,0;
 		end;
 	}
-	while (1) {
+	while(1) {
 		switch(select("Follow Bartender's Recommendation.:I want a Gunslinger.:I want a Cobo.:I want a Bomb.:I want a Boogieman.")) {
 		case 1:
 			set .@roof_jaw,.@roof_jaw+3;
@@ -1000,7 +999,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			}
 			break;
 		case 2:
-			callsub S_KillChar,2;
+			callsub S_KillChar,2,.@roof_jaw;
 			mes "When you want to look super cool, this will be the best drink for you. It's a strong drink with a particular scent, so people who drink Gunslingers are usually seen as having impressive of taste.";
 			next;
 			mes "^3355FFYou received a simple glass containing a gray liquid. Although it smells faintly sweet, it looks like industrial strength liquor. It's time to summon your courage and take a sip~";
@@ -1022,7 +1021,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			break;
 
 		case 3:
-			callsub S_KillChar,2;
+			callsub S_KillChar,2,.@roof_jaw;
 			mes "People say that the more you drink a mixed Cobo, the tastier it will be. It grows on you, kind of like the company of an old friend. This is a nice drink to have with anyone at anytime.";
 			next;
 			mes "^3355FFThe Bartender brought a beautifully engraved glass holding a cobalt blue liquid and placed it in front of you. It smells pleasantly sweet and sour.";
@@ -1046,7 +1045,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			break;
 
 		case 4:
-			callsub S_KillChar,2;
+			callsub S_KillChar,2,.@roof_jaw;
 			mes "This is for one who wants to relive wild, youthful days, honor those who have fought for justice and liberty, or just to drink alcohol until they vomit stomach acid.";
 			mes "for one who wants to remember people fighting for liberty...";
 			next;
@@ -1066,7 +1065,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 			break;
 
 		case 5:
-			callsub S_KillChar,1;
+			callsub S_KillChar,1,.@roof_jaw;
 			mes "There are not many people who like this drink. But the ones that do like this drink, love it.";
 			next;
 			mes "[Bartender]";
@@ -1096,6 +1095,7 @@ jawaii_in,28,124,0	script	Bartender#jaw	46,{
 	end;
 
 S_KillChar:
+	.@roof_jaw = getarg(1);
 	if (.@roof_jaw > 8) {
 		mes "[Bartender]";
 		mes "It's on me.";
@@ -1115,11 +1115,11 @@ S_KillChar:
 	mes "[Bartender]";
 	return;
 }
-	
+
 jawaii_in,43,115,0	script	Customer#jaw_1	97,{
+	mes "[Buchi]";
 	if (!getpartnerid()) {
 		if (Zeny > 99) {
-			mes "[Buchi]";
 			mes "Grrrr...";
 			mes "Damn! I don't";
 			mes "like this place!";
@@ -1133,8 +1133,8 @@ jawaii_in,43,115,0	script	Customer#jaw_1	97,{
 			mes "Grrrr...";
 			mes "Bartender!";
 			mes "Give me one more!";
+			close;
 		}
-		mes "[Buchi]";
 		mes "Hey, why aren't you drinking?";
 		mes "I guess you're all out of dough.";
 		mes "But I know how you feel. Disgusted with all the lovey dovey around this place, aren't you?";
@@ -1155,10 +1155,10 @@ jawaii_in,43,115,0	script	Customer#jaw_1	97,{
 		mes "the one who laughs last!";
 		next;
 		mes "^3355FFYou drank to your fill.^000000";
-		close;
+		close2;
 		percentheal -100,0;
+		end;
 	}
-	mes "[Buchi]";
 	mes "You look happy...";
 	mes "I hope you'll be";
 	mes "able to feel that";
@@ -1256,12 +1256,11 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 		mes "^3355FF* Gulp Gulp Gulp *^000000";
 		percentheal -10,0;
 		next;
-		set .@jaw_roof,1;
 		mes "[SoloHan]";
 		mes "So, what do you say?";
 		mes "Let's go somewhere";
 		mes "with some real liquor.";
-		while (1) {
+		while(1) {
 			next;
 			if (select("...One more drink.:...What kind of place is it?") == 1) {
 				mes "[SoloHan]";
@@ -1306,8 +1305,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 					mes "Man.";
 					mes "So, you spoil parties";
 					mes "like this all the time, eh?";
-					close2;
-					end;
+					close;
 				}
 			}
 			if (.@jaw_roof > 6) {
@@ -1329,8 +1327,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 				mes "Oh...";
 				mes "Man.";
 				mes "No wonder you're single. You can't even recognize a good time when it's right in front of you.";
-				close2;
-				end;
+				close;
 			}
 			set .@jaw_roof,.@jaw_roof+3;
 			mes "[SoloHan]";
@@ -1390,7 +1387,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 	mes "Is this the third time this week I've gotten plastered? Bachewcca, help me count!";
 	close;
 }
-	
+
 prt_in,170,14,0	script	Customer#Bachewcca	89,{
 	mes "[Bachewcca]";
 	mes "..............";

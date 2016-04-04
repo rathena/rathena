@@ -327,7 +327,7 @@ malangdo,184,139,4	script	Storekeeper#mal	560,{
 		set .@zeny,3000;
 		set .@i, select("Pay with Can ----- 2units:Pay with Zeny ------- 3,000z");
 	}
-	if (getskilllv("NV_BASIC") < 6) {
+	if(!callfunc("F_CanOpenStorage")){
 		mes "[Storekeeper]";
 		mes "Ah, hold on!!";
 		mes "You need to have ^FF0000Basic Skill level 6^000000 to use the storage service!!";
@@ -4184,7 +4184,7 @@ malangdo,133,134,0	script	Strange Pile of Sand#7	557,{
 				setquest .@quest;
 				if (!rand(3)) {
 					emotion e_omg;
-					getmapxy(.@map$,.@x,.@y,1);
+					getmapxy(.@map$,.@x,.@y,UNITTYPE_NPC);
 					monster .@map$,.@x,.@y,"Quick Dark Shadow",2209,1;
 				} else
 					getitem 11536,1; //Cat_Hard_Biscuit

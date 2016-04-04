@@ -394,6 +394,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 //		status_change_end(bl, SC_BLADESTOP, INVALID_TIMER); //Won't stop when you are knocked away, go figure...
 		status_change_end(bl, SC_TATAMIGAESHI, INVALID_TIMER);
 		status_change_end(bl, SC_MAGICROD, INVALID_TIMER);
+		status_change_end(bl, SC_SU_STOOP, INVALID_TIMER);
 		if (sc->data[SC_PROPERTYWALK] &&
 			sc->data[SC_PROPERTYWALK]->val3 >= skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2) )
 			status_change_end(bl,SC_PROPERTYWALK,INVALID_TIMER);
@@ -743,6 +744,76 @@ int map_foreachinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
 }
+
+/*========================================== [Playtester]
+* Same as foreachinarea, but there must be a shoot-able range between area center and target.
+* @param m: ID of map
+* @param x0: West end of area
+* @param y0: South end of area
+* @param x1: East end of area
+* @param y1: North end of area
+* @param type: Type of bl to search for
+*------------------------------------------*/
+int map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...)
+{
+	int bx, by, cx, cy;
+	int returnCount = 0;	//total sum of returned values of func()
+	struct block_list *bl;
+	int blockcount = bl_list_count, i;
+	va_list ap;
+
+	if (m < 0 || m >= map_num)
+		return 0;
+
+	if (x1 < x0)
+		swap(x0, x1);
+	if (y1 < y0)
+		swap(y0, y1);
+
+	x0 = i16max(x0, 0);
+	y0 = i16max(y0, 0);
+	x1 = i16min(x1, map[m].xs - 1);
+	y1 = i16min(y1, map[m].ys - 1);
+
+	cx = x0 + (x1 - x0) / 2;
+	cy = y0 + (y1 - y0) / 2;
+
+	if (type&~BL_MOB)
+		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++)
+			for (bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++)
+				for (bl = map[m].block[bx + by * map[m].bxs]; bl != NULL; bl = bl->next)
+					if (bl->type&type && bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
+						&& path_search_long(NULL, m, cx, cy, bl->x, bl->y, CELL_CHKWALL)
+						&& bl_list_count < BL_LIST_MAX)
+						bl_list[bl_list_count++] = bl;
+
+	if (type&BL_MOB)
+		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++)
+			for (bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++)
+				for (bl = map[m].block_mob[bx + by * map[m].bxs]; bl != NULL; bl = bl->next)
+					if (bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
+						&& path_search_long(NULL, m, cx, cy, bl->x, bl->y, CELL_CHKWALL)
+						&& bl_list_count < BL_LIST_MAX)
+						bl_list[bl_list_count++] = bl;
+
+	if (bl_list_count >= BL_LIST_MAX)
+		ShowWarning("map_foreachinshootarea: block count too many!\n");
+
+	map_freeblock_lock();
+
+	for (i = blockcount; i < bl_list_count; i++)
+		if (bl_list[i]->prev) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
+			va_start(ap, type);
+			returnCount += func(bl_list[i], ap);
+			va_end(ap);
+		}
+
+	map_freeblock_unlock();
+
+	bl_list_count = blockcount;
+	return returnCount;
+}
+
 /*==========================================
  * Adapted from forcountinarea for an easier invocation. [pakpil]
  *------------------------------------------*/
@@ -1209,6 +1280,166 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
 
+}
+
+/*========================================== [Playtester]
+* Calls the given function for every object of a type that is on a path.
+* The path goes into one of the eight directions and the direction is determined by the given coordinates.
+* The path has a length, a width and an offset.
+* The cost for diagonal movement is the same as for horizontal/vertical movement.
+* @param m: ID of map
+* @param x0: Start X
+* @param y0: Start Y
+* @param x1: X to calculate direction against
+* @param y1: Y to calculate direction against
+* @param range: Determines width of the path (width = range*2+1 cells)
+* @param length: Length of the path
+* @param offset: Moves the whole path, half-length for diagonal paths
+* @param type: Type of bl to search for
+*------------------------------------------*/
+int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int length, int offset, int type, ...)
+{
+	int returnCount = 0;  //Total sum of returned values of func()
+
+	int i, blockcount = bl_list_count;
+	struct block_list *bl;
+	int bx, by;
+	int mx0, mx1, my0, my1, rx, ry;
+	uint8 dir = map_calc_dir_xy(x0, y0, x1, y1, 6);
+	short dx = dirx[dir];
+	short dy = diry[dir];
+	va_list ap;
+
+	if (m < 0)
+		return 0;
+
+	if (range < 0)
+		return 0;
+	if (length < 1)
+		return 0;
+	if (offset < 0)
+		return 0;
+
+	//Special offset handling for diagonal paths
+	if (offset && (dir % 2)) {
+		//So that diagonal paths can attach to each other, we have to work with half-tile offsets
+		offset = (2 * offset) - 1;
+		//To get the half-tiles we need to increase length by one
+		length++;
+	}
+
+	//Get area that needs to be checked
+	mx0 = x0 + dx*(offset / ((dir % 2) + 1));
+	my0 = y0 + dy*(offset / ((dir % 2) + 1));
+	mx1 = x0 + dx*(offset / ((dir % 2) + 1) + length - 1);
+	my1 = y0 + dy*(offset / ((dir % 2) + 1) + length - 1);
+
+	//The following assumes mx0 < mx1 && my0 < my1
+	if (mx0 > mx1)
+		swap(mx0, mx1);
+	if (my0 > my1)
+		swap(my0, my1);
+
+	//Apply width to the path by turning 90 degrees
+	mx0 -= abs(range*dirx[(dir + 2) % 8]);
+	my0 -= abs(range*diry[(dir + 2) % 8]);
+	mx1 += abs(range*dirx[(dir + 2) % 8]);
+	my1 += abs(range*diry[(dir + 2) % 8]);
+
+	mx0 = max(mx0, 0);
+	my0 = max(my0, 0);
+	mx1 = min(mx1, map[m].xs - 1);
+	my1 = min(my1, map[m].ys - 1);
+
+	if (type&~BL_MOB) {
+		for (by = my0 / BLOCK_SIZE; by <= my1 / BLOCK_SIZE; by++) {
+			for (bx = mx0 / BLOCK_SIZE; bx <= mx1 / BLOCK_SIZE; bx++) {
+				for (bl = map[m].block[bx + by * map[m].bxs]; bl != NULL; bl = bl->next) {
+					if (bl->prev && bl->type&type && bl_list_count < BL_LIST_MAX) {
+						//Check if inside search area
+						if (bl->x < mx0 || bl->x > mx1 || bl->y < my0 || bl->y > my1)
+							continue;
+						//What matters now is the relative x and y from the start point
+						rx = (bl->x - x0);
+						ry = (bl->y - y0);
+						//Do not hit source cell
+						if (rx == 0 && ry == 0)
+							continue;
+						//This turns it so that the area that is hit is always with positive rx and ry
+						rx *= dx;
+						ry *= dy;
+						//These checks only need to be done for diagonal paths
+						if (dir % 2) {
+							//Check for length
+							if ((rx + ry < offset) || (rx + ry > 2 * (length + (offset/2) - 1)))
+								continue;
+							//Check for width
+							if (abs(rx - ry) > 2 * range)
+								continue;
+						}
+						//Everything else ok, check for line of sight from source
+						if (!path_search_long(NULL, m, x0, y0, bl->x, bl->y, CELL_CHKWALL))
+							continue;
+						//All checks passed, add to list
+						bl_list[bl_list_count++] = bl;
+					}
+				}
+			}
+		}
+	}
+	if (type&BL_MOB) {
+		for (by = my0 / BLOCK_SIZE; by <= my1 / BLOCK_SIZE; by++) {
+			for (bx = mx0 / BLOCK_SIZE; bx <= mx1 / BLOCK_SIZE; bx++) {
+				for (bl = map[m].block_mob[bx + by * map[m].bxs]; bl != NULL; bl = bl->next) {
+					if (bl->prev && bl_list_count < BL_LIST_MAX) {
+						//Check if inside search area
+						if (bl->x < mx0 || bl->x > mx1 || bl->y < my0 || bl->y > my1)
+							continue;
+						//What matters now is the relative x and y from the start point
+						rx = (bl->x - x0);
+						ry = (bl->y - y0);
+						//Do not hit source cell
+						if (rx == 0 && ry == 0)
+							continue;
+						//This turns it so that the area that is hit is always with positive rx and ry
+						rx *= dx;
+						ry *= dy;
+						//These checks only need to be done for diagonal paths
+						if (dir % 2) {
+							//Check for length
+							if ((rx + ry < offset) || (rx + ry > 2 * (length + (offset / 2) - 1)))
+								continue;
+							//Check for width
+							if (abs(rx - ry) > 2 * range)
+								continue;
+						}
+						//Everything else ok, check for line of sight from source
+						if (!path_search_long(NULL, m, x0, y0, bl->x, bl->y, CELL_CHKWALL))
+							continue;
+						//All checks passed, add to list
+						bl_list[bl_list_count++] = bl;
+					}
+				}
+			}
+		}
+	}
+
+	if( bl_list_count >= BL_LIST_MAX )
+		ShowWarning("map_foreachindir: block count too many!\n");
+
+	map_freeblock_lock();
+
+	for( i = blockcount; i < bl_list_count; i++ )
+		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
+			va_start(ap, type);
+			returnCount += func(bl_list[ i ], ap);
+			va_end(ap);
+		}
+
+	map_freeblock_unlock();
+
+	bl_list_count = blockcount;
+	return returnCount;
 }
 
 // Copy of map_foreachincell, but applied to the whole map. [Skotlex]
@@ -1784,6 +2015,7 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_READYCOUNTER, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_CBC, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_EQC, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
 		// Remove visuals effect from headgear
 		status_change_end(&sd->bl, SC_MOONSTAR, INVALID_TIMER); 
 		status_change_end(&sd->bl, SC_SUPER_STAR, INVALID_TIMER); 

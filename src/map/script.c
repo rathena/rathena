@@ -5822,6 +5822,9 @@ BUILDIN_FUNC(percentheal)
 		sp = 0;
 	}
 
+	if (sd->sc.data[SC_BITESCAR])
+		hp = 0;
+
 	pc_percentheal(sd,hp,sp);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -9643,7 +9646,7 @@ BUILDIN_FUNC(getexp)
 	if (job)
 		job = (int) cap_value(job * bonus, 0, INT_MAX);
 
-	pc_gainexp(sd, NULL, base, job, true);
+	pc_gainexp(sd, NULL, base, job, 1);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -9958,7 +9961,8 @@ BUILDIN_FUNC(clone)
 {
 	TBL_PC *sd, *msd=NULL;
 	uint32 char_id;
-	int master_id=0,x,y, mode = 0, flag = 0, m;
+	int master_id=0,x,y, flag = 0, m;
+	enum e_mode mode = 0;
 	unsigned int duration = 0;
 	const char *mapname,*event;
 
@@ -11575,6 +11579,8 @@ static void script_detach_rid(struct script_state* st)
  *	    [ Parameters: <guild id> ]
  *	4 : All players in a specified area of the map of the invoking player (or NPC).
  *	    [ Parameters: <x0>,<y0>,<x1>,<y1> ]
+ *	5 : All players in the map.
+ *	    [ Parameters: "<map name>" ]
  *	Account ID: The specified account ID.
  * <flag>:
  *	0 : Players are always attached. (default)
@@ -11649,6 +11655,17 @@ BUILDIN_FUNC(addrid)
 			map_foreachinarea(buildin_addrid_sub,
 			bl->m,script_getnum(st,4),script_getnum(st,5),script_getnum(st,6),script_getnum(st,7),BL_PC,
 			st,script_getnum(st,3));//4-x0 , 5-y0 , 6-x1, 7-y1
+			break;
+		case 5:
+			if (script_getstr(st, 4) == NULL) {
+				script_pushint(st, 0);
+				return SCRIPT_CMD_FAILURE;
+			}
+			if (map_mapname2mapid(script_getstr(st, 4)) < 0) {
+				script_pushint(st, 0);
+				return SCRIPT_CMD_FAILURE;
+			}
+			map_foreachinmap(buildin_addrid_sub, map_mapname2mapid(script_getstr(st, 4)), BL_PC, st, script_getnum(st, 3));
 			break;
 		default:
 			if((map_id2sd(script_getnum(st,2))) == NULL) { // Player not found.
@@ -14380,17 +14397,12 @@ BUILDIN_FUNC(message)
  *------------------------------------------*/
 BUILDIN_FUNC(npctalk)
 {
-	const char* str;
-
 	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
-	str = script_getstr(st,2);
+	const char* str = script_getstr(st,2);
 
-	if(nd)
-	{
-		char name[NAME_LENGTH], message[256];
-		safestrncpy(name, nd->name, sizeof(name));
-		strtok(name, "#"); // discard extra name identifier if present
-		safesnprintf(message, sizeof(message), "%s : %s", name, str);
+	if (nd) {
+		char message[256];
+		safesnprintf(message, sizeof(message), "%s", str);
 		clif_disp_overhead(&nd->bl, message);
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -14504,28 +14516,22 @@ BUILDIN_FUNC(getsavepoint)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
-  * Get position for  char/NPC/pet/hom/merc/elem objects. Added by Lorky
-  *
-  *     int getMapXY(MapName$,MapX,MapY,type,[CharName$]);
-  *             where type:
-  *                     MapName$ - String variable for output map name
-  *                     MapX     - Integer variable for output coord X
-  *                     MapY     - Integer variable for output coord Y
-  *                     type     - type of object
-  *                                0 - Character coord
-  *                                1 - NPC coord
-  *                                2 - Pet coord
-  *                                3 - Mob coord (see 'getunitdata')
-  *                                4 - Homun coord
-  *                                5 - Mercenary coord
-  *                                6 - Elemental coord
-  *                     CharName$ - Name object. If miss or "this" the current object
-  *
-  *             Return:
-  *                     0        - success
-  *                     -1       - some error, MapName$,MapX,MapY contains unknown value.
-  *------------------------------------------*/
+/**
+ * Get position for BL objects.
+ * getmapxy(<map name>,<x>,<y>,<type>{,<char name>});
+ * @param mapname: String variable for output map name
+ * @param x: Integer variable for output coord X
+ * @param y: Integer variable for output coord Y
+ * @param type: Type of object
+ *   UNITTYPE_PC - Character coord
+ *   UNITTYPE_NPC - NPC coord
+ *   UNITTYPE_PET - Pet coord
+ *   UNITTYPE_HOM - Homun coord
+ *   UNITTYPE_MER - Mercenary coord
+ *   UNITTYPE_ELEM - Elemental coord
+ * @param charname: Name object. If empty or "this" use the current object
+ * @return 0 - success; -1 - some error, MapName$,MapX,MapY contains unknown value.
+ */
 BUILDIN_FUNC(getmapxy)
 {
 	struct block_list *bl = NULL;
@@ -14539,35 +14545,35 @@ BUILDIN_FUNC(getmapxy)
 	char mapname[MAP_NAME_LENGTH];
 
 	if( !data_isreference(script_getdata(st,2)) ) {
-		ShowWarning("script: buildin_getmapxy: not mapname variable\n");
+		ShowWarning("script: buildin_getmapxy: mapname value is not a variable.\n");
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 	if( !data_isreference(script_getdata(st,3)) ) {
-		ShowWarning("script: buildin_getmapxy: not mapx variable\n");
+		ShowWarning("script: buildin_getmapxy: mapx value is not a variable.\n");
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 	if( !data_isreference(script_getdata(st,4)) ) {
-		ShowWarning("script: buildin_getmapxy: not mapy variable\n");
+		ShowWarning("script: buildin_getmapxy: mapy value is not a variable.\n");
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if( !is_string_variable(reference_getname(script_getdata(st, 2))) ) {
-		ShowWarning("script: buildin_getmapxy: %s is not a string variable\n",reference_getname(script_getdata(st, 2)));
+		ShowWarning("script: buildin_getmapxy: %s is not a string variable.\n",reference_getname(script_getdata(st, 2)));
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if( is_string_variable(reference_getname(script_getdata(st, 3))) ) {
-		ShowWarning("script: buildin_getmapxy: %s is a string variable, should be int\n",reference_getname(script_getdata(st, 3)));
+		ShowWarning("script: buildin_getmapxy: %s is a string variable, should be an INT.\n",reference_getname(script_getdata(st, 3)));
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if( is_string_variable(reference_getname(script_getdata(st, 4))) ) {
-		ShowWarning("script: buildin_getmapxy: %s is a string variable, should be int\n",reference_getname(script_getdata(st, 4)));
+		ShowWarning("script: buildin_getmapxy: %s is a string variable, should be an INT.\n",reference_getname(script_getdata(st, 4)));
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -14576,7 +14582,7 @@ BUILDIN_FUNC(getmapxy)
 	type=script_getnum(st,5);
 
 	switch (type) {
-		case 0:	//Get Character Position
+		case UNITTYPE_PC:	//Get Character Position
 			if( script_hasdata(st,6) )
 				sd=map_nick2sd(script_getstr(st,6));
 			else
@@ -14585,7 +14591,7 @@ BUILDIN_FUNC(getmapxy)
 			if (sd)
 				bl = &sd->bl;
 			break;
-		case 1:	//Get NPC Position
+		case UNITTYPE_NPC:	//Get NPC Position
 			if( script_hasdata(st,6) )
 			{
 				struct npc_data *nd;
@@ -14595,7 +14601,7 @@ BUILDIN_FUNC(getmapxy)
 			} else //In case the origin is not an npc?
 				bl=map_id2bl(st->oid);
 			break;
-		case 2:	//Get Pet Position
+		case UNITTYPE_PET:	//Get Pet Position
 			if(script_hasdata(st,6))
 				sd=map_nick2sd(script_getstr(st,6));
 			else
@@ -14604,9 +14610,7 @@ BUILDIN_FUNC(getmapxy)
 			if (sd && sd->pd)
 				bl = &sd->pd->bl;
 			break;
-		case 3:	//Get Mob Position
-			break; //see 'getunitdata'
-		case 4:	//Get Homun Position
+		case UNITTYPE_HOM:	//Get Homun Position
 			if(script_hasdata(st,6))
 				sd=map_nick2sd(script_getstr(st,6));
 			else
@@ -14615,7 +14619,7 @@ BUILDIN_FUNC(getmapxy)
 			if (sd && sd->hd)
 				bl = &sd->hd->bl;
 			break;
-		case 5: //Get Mercenary Position
+		case UNITTYPE_MER: //Get Mercenary Position
 			if(script_hasdata(st,6))
 				sd=map_nick2sd(script_getstr(st,6));
 			else
@@ -14624,7 +14628,7 @@ BUILDIN_FUNC(getmapxy)
 			if (sd && sd->md)
 				bl = &sd->md->bl;
 			break;
-		case 6: //Get Elemental Position
+		case UNITTYPE_ELEM: //Get Elemental Position
 			if(script_hasdata(st,6))
 				sd=map_nick2sd(script_getstr(st,6));
 			else
@@ -14634,7 +14638,7 @@ BUILDIN_FUNC(getmapxy)
 				bl = &sd->ed->bl;
 			break;
 		default:
-			ShowWarning("script: buildin_getmapxy: Invalid type %d\n", type);
+			ShowWarning("script: buildin_getmapxy: Invalid type %d.\n", type);
 			script_pushint(st,-1);
 			return SCRIPT_CMD_FAILURE;
 	}
@@ -16243,7 +16247,7 @@ BUILDIN_FUNC(callshop)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (nd->subtype == NPCTYPE_SHOP || nd->subtype == NPCTYPE_ITEMSHOP || nd->subtype == NPCTYPE_POINTSHOP) {
+	if (nd->subtype == NPCTYPE_SHOP) {
 		// flag the user as using a valid script call for opening the shop (for floating NPCs)
 		sd->state.callshop = 1;
 
@@ -16881,12 +16885,14 @@ BUILDIN_FUNC(getunittype)
 	}
 
 	switch (bl->type) {
-		case BL_MOB:  value = 0; break;
-		case BL_HOM:  value = 1; break;
-		case BL_PET:  value = 2; break;
-		case BL_MER:  value = 3; break;
-		case BL_ELEM: value = 4; break;
-		case BL_NPC:  value = 5; break;
+		case BL_PC:   value = UNITTYPE_PC; break;
+		case BL_NPC:  value = UNITTYPE_NPC; break;
+		case BL_PET:  value = UNITTYPE_PET; break;
+		case BL_MOB:  value = UNITTYPE_MOB; break;
+		case BL_HOM:  value = UNITTYPE_HOM; break;
+		case BL_MER:  value = UNITTYPE_MER; break;
+		case BL_ELEM: value = UNITTYPE_ELEM; break;
+		default:      value = -1; break;
 	}
 
 	script_pushint(st, value);
@@ -16963,6 +16969,7 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_SHIELD, md->vd->shield);
 			getunitdata_sub(UMOB_WEAPON, md->vd->weapon);
 			getunitdata_sub(UMOB_LOOKDIR, md->ud.dir);
+			getunitdata_sub(UMOB_CANMOVETICK, md->ud.canmove_tick);
 			getunitdata_sub(UMOB_STR, md->status.str);
 			getunitdata_sub(UMOB_AGI, md->status.agi);
 			getunitdata_sub(UMOB_VIT, md->status.vit);
@@ -17255,7 +17262,7 @@ BUILDIN_FUNC(setunitdata)
 				status_calc_npc(nd, SCO_NONE);
 			break;
 		default:
-			ShowError("buildin_setunitdata: Invalid object!");
+			ShowError("buildin_setunitdata: Invalid object!\n");
 			return SCRIPT_CMD_FAILURE;
 	}
 
@@ -17268,7 +17275,7 @@ BUILDIN_FUNC(setunitdata)
 	else if (data_isint(data))
 		value = conv_num(st, data);
 	else {
-		ShowError("buildin_setunitdata: Invalid data type for argument #3 (%d).", data->type);
+		ShowError("buildin_setunitdata: Invalid data type for argument #3 (%d).\n", data->type);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -17302,6 +17309,7 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_SHIELD: clif_changelook(bl, LOOK_SHIELD, (unsigned short)value); break;
 			case UMOB_WEAPON: clif_changelook(bl, LOOK_WEAPON, (unsigned short)value); break;
 			case UMOB_LOOKDIR: unit_setdir(bl, (uint8)value); break;
+			case UMOB_CANMOVETICK: md->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
 			case UMOB_STR: md->status.str = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
 			case UMOB_AGI: md->status.agi = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
 			case UMOB_VIT: md->status.vit = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
@@ -17600,8 +17608,8 @@ BUILDIN_FUNC(setunitdata)
 			clif_send_petstatus(pd->master);
 			break;
 		case BL_MER:
-			clif_mercenary_info(map_charid2sd(md->master_id));
-			clif_mercenary_skillblock(map_charid2sd(md->master_id));
+			clif_mercenary_info(map_charid2sd(mc->mercenary.char_id));
+			clif_mercenary_skillblock(map_charid2sd(mc->mercenary.char_id));
 			break;
 		case BL_ELEM:
 			clif_elemental_info(ed->master);
@@ -17901,7 +17909,7 @@ BUILDIN_FUNC(unittalk)
 		struct StringBuf sbuf;
 
 		StringBuf_Init(&sbuf);
-		StringBuf_Printf(&sbuf, "%s : %s", status_get_name(bl), message);
+		StringBuf_Printf(&sbuf, "%s", message);
 		clif_disp_overhead(bl, StringBuf_Value(&sbuf));
 		StringBuf_Destroy(&sbuf);
 	}
@@ -19280,7 +19288,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 		case 0: tbl = map_id2bl(md->bl.id); break;
 		case 1: tbl = map_id2bl(md->target_id); break;
 		case 2: tbl = map_id2bl(md->master_id); break;
-		default:tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),skill_get_range2(&md->bl, skill_id, skill_lv)); break;
+		default:tbl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md), skill_get_range2(&md->bl, skill_id, skill_lv, true)); break;
 	}
 
 	if( !tbl )
@@ -21180,6 +21188,257 @@ BUILDIN_FUNC(opendressroom)
 }
 
 /**
+ * navigateto("<map>"{,<x>,<y>,<flag>,<hide_window>,<monster_id>,<char_id>});
+ */
+BUILDIN_FUNC(navigateto){
+#if PACKETVER >= 20111010
+	TBL_PC* sd;
+	const char *mapname;
+	uint16 x = 0, y = 0, monster_id = 0;
+	uint8 flag = NAV_KAFRA_AND_AIRSHIP;
+	bool hideWindow = true;
+
+
+	mapname = script_getstr(st,2);
+
+	if( script_hasdata(st,3) )
+		x = script_getnum(st,3);
+	if( script_hasdata(st,4) )
+		y = script_getnum(st,4);
+	if( script_hasdata(st,5) )
+		flag = (uint8)script_getnum(st,5);
+	if( script_hasdata(st,6) )
+		hideWindow = script_getnum(st,6) ? true : false;
+	if( script_hasdata(st,7) )
+		monster_id = script_getnum(st,7);
+
+	if (!script_charid2sd(8, sd))
+        return SCRIPT_CMD_FAILURE;
+
+	clif_navigateTo(sd,mapname,x,y,flag,hideWindow,monster_id);
+
+	return SCRIPT_CMD_SUCCESS;
+#else
+	return SCRIPT_CMD_FAILURE;
+#endif
+}
+
+/**
+ * adopt("<parent_name>","<baby_name>");
+ * adopt(<parent_id>,<baby_id>);
+ * https://rathena.org/board/topic/104014-suggestion-add-adopt-or-etc/
+ */
+BUILDIN_FUNC(adopt)
+{
+	TBL_PC *sd, *b_sd;
+	struct script_data *data;
+	enum adopt_responses response;
+
+	data = script_getdata(st, 2);
+	get_val(st, data);
+
+	if (data_isstring(data)) {
+		const char *name = conv_str(st, data);
+
+		sd = map_nick2sd(name);
+		if (sd == NULL) {
+			ShowError("buildin_adopt: Non-existant parent character %s requested.\n", name);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else if (data_isint(data)) {
+		uint32 char_id = conv_num(st, data);
+
+		sd = map_charid2sd(char_id);
+		if (sd == NULL) {
+			ShowError("buildin_adopt: Non-existant parent character %d requested.\n", char_id);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		ShowError("buildin_adopt: Invalid data type for argument #1 (%d).", data->type);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	data = script_getdata(st, 3);
+	get_val(st, data);
+
+	if (data_isstring(data)) {
+		const char *name = conv_str(st, data);
+
+		b_sd = map_nick2sd(name);
+		if (b_sd == NULL) {
+			ShowError("buildin_adopt: Non-existant baby character %s requested.\n", name);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else if (data_isint(data)) {
+		uint32 char_id = conv_num(st, data);
+
+		b_sd = map_charid2sd(char_id);
+		if (b_sd == NULL) {
+			ShowError("buildin_adopt: Non-existant baby character %d requested.\n", char_id);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		ShowError("buildin_adopt: Invalid data type for argument #2 (%d).", data->type);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	response = pc_try_adopt(sd, map_charid2sd(sd->status.partner_id), b_sd);
+
+	if (response == ADOPT_ALLOWED) {
+		TBL_PC *p_sd = map_charid2sd(sd->status.partner_id);
+
+		b_sd->adopt_invite = sd->status.account_id;
+		clif_Adopt_request(b_sd, sd, p_sd->status.account_id);
+		script_pushint(st, ADOPT_ALLOWED);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	script_pushint(st, response);
+	return SCRIPT_CMD_FAILURE;
+}
+
+/**
+ * Returns the minimum or maximum of all the given parameters for integer variables.
+ *
+ * min( <value or array>{,value or array 2,...} );
+ * minimum( <value or array>{,value or array 2,...} );
+ * max( <value or array>{,value or array 2,...} );
+ * maximum( <value or array>{,value or array 2,...} );
+*/
+BUILDIN_FUNC(minmax){
+	char *functionname;
+	unsigned int i;
+	int value;
+	// Function pointer for our comparison function (either min or max at the moment)
+	int32 (*func)(int32, int32);
+	
+	// Get the real function name
+	functionname = script_getfuncname(st);
+	
+	// Our data should start at offset 2
+	i = 2;
+
+	if( !script_hasdata( st, i ) ){
+		ShowError( "buildin_%s: no arguments given!\n", functionname );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( strnicmp( functionname, "min", strlen( "min" ) ) == 0 ){
+		value = INT_MAX;
+		func = i32min;
+	}else if( strnicmp( functionname, "max", strlen( "max" ) ) == 0 ){
+		value = INT_MIN;
+		func = i32max;
+	}else{
+		ShowError( "buildin_%s: Unknown call case for min/max!\n", functionname );
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	// As long as we have data on our script stack
+	while( script_hasdata(st,i) ){
+		struct script_data *data;
+		
+		// Get the next piece of data from the script stack
+		data = script_getdata( st, i );
+
+		// Is the current parameter a single integer?
+		if( data_isint( data ) ){
+			value = func( value, script_getnum( st, i ) );
+		// Is the current parameter an array variable?
+		}else if( data_isreference( data ) ){
+			const char *name;
+			struct map_session_data* sd;
+			unsigned int start, end;
+
+			// Get the name of the variable
+			name = reference_getname(data);
+
+			// Check if it's a string variable
+			if( is_string_variable( name ) ){
+				ShowError( "buildin_%s: illegal type, need integer!\n", functionname );
+				script_reportdata( data );
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			// Get the session data, if a player is attached
+			sd = st->rid ? map_id2sd(st->rid) : NULL;
+
+			// Try to find the array's source pointer
+			if( !script_array_src( st, sd, name, reference_getref( data ) ) ){
+				ShowError( "buildin_%s: not a array!\n", functionname );
+				script_reportdata( data );
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			// Get the start and end indices of the array
+			start = reference_getindex( data );
+			end = script_array_highest_key( st, sd, name, reference_getref( data ) );
+
+			// Skip empty arrays
+			if( start < end ){
+				int id;
+				
+				// For getting the values we need the id of the array
+				id = reference_getid( data );
+
+				// Loop through each value stored in the array
+				for( ; start < end; start++ ){
+					value = func( value, (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) ) );
+
+					script_removetop( st, -1, 0 );
+				}
+			}
+		}else{
+			ShowError( "buildin_%s: not a supported data type!\n", functionname );
+			script_reportdata( data );
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		// Continue with the next stack entry
+		i++;
+	}
+
+	script_pushint( st, value );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Safety Base/Job EXP addition than using `set BaseExp,n;` or `set JobExp,n;`
+ * Unlike `getexp` that affected by some adjustments.
+ * getexp2 <base_exp>,<job_exp>{,<char_id>};
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(getexp2) {
+	TBL_PC *sd = NULL;
+	int base_exp = script_getnum(st, 2);
+	int job_exp = script_getnum(st, 3);
+
+	if (!script_charid2sd(4, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	if (base_exp == 0 && job_exp == 0)
+		return SCRIPT_CMD_SUCCESS;
+
+	if (base_exp > 0)
+		pc_gainexp(sd, NULL, base_exp, 0, 2);
+	else if (base_exp < 0)
+		pc_lostexp(sd, base_exp * -1, 0);
+
+	if (job_exp > 0)
+		pc_gainexp(sd, NULL, 0, job_exp, 2);
+	else if (job_exp < 0)
+		pc_lostexp(sd, 0, job_exp * -1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+
+/**
  * Return alliance information between the two guilds.
  * getguildalliance(<guild id1>,<guild id2>);
  * Return values:
@@ -21622,6 +21881,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(sqrt,"i"),
 	BUILDIN_DEF(pow,"ii"),
 	BUILDIN_DEF(distance,"iiii"),
+	BUILDIN_DEF2(minmax,"min", "*"),
+	BUILDIN_DEF2(minmax,"minimum", "*"),
+	BUILDIN_DEF2(minmax,"max", "*"),
+	BUILDIN_DEF2(minmax,"maximum", "*"),
 	// <--- [zBuffer] List of mathematics commands
 	BUILDIN_DEF(md5,"s"),
 	// [zBuffer] List of dynamic var commands --->
@@ -21818,7 +22081,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setquestinfo_req,"iii*"),
 	BUILDIN_DEF(setquestinfo_job,"ii*"),
 	BUILDIN_DEF(opendressroom,"i?"),
+	BUILDIN_DEF(navigateto,"s???????"),
 	BUILDIN_DEF(getguildalliance,"ii"),
+	BUILDIN_DEF(adopt,"vv"),
+	BUILDIN_DEF(getexp2,"ii?"),
 
 	// WoE TE
 	BUILDIN_DEF(agitstart3,""),

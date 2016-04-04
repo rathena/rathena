@@ -1090,6 +1090,8 @@ to alberta (98,154) when clicked.
 
     mes "Have you checked out the <NAVI>[Tool Shop]<INFO>alberta,98,154,0,000,0</INFO></NAVI>?";
 
+See also 'navigateto', which can be used for certain NPC events.
+
 URLs
 ----
 Similarly, you can create links to websites that launch in a new window:
@@ -2886,24 +2888,23 @@ not variables or the search was not successful.
 
 Type is the type of object to search for:
 
-  0 - Character object
-  1 - NPC object
-  2 - Pet object
-  3 - Monster object -- See 'getunitdata' for monster.
-  4 - Homunculus object
-  5 - Mercenary object
-  6 - Elemental object
-  
-While 3 is meant to look for a monster object, no searching will be done if you 
-specify type 3, and the function will always return -1.
+	UNITTYPE_PC   - Character object
+	UNITTYPE_NPC  - NPC object
+	UNITTYPE_PET  - Pet object
+	UNITTYPE_HOM  - Homunculus object
+	UNITTYPE_MER  - Mercenary object
+	UNITTYPE_ELEM - Elemental object
 
 The search string is optional. If it is not specified, the location of the 
-invoking character will always be returned for types 0 and 2, the location of 
-the NPC running this function for type 1.
-If a search string is specified, for types 0 and 1, the character or NPC with 
-the specified name will be located. If type is 3, the search will locate the 
-current pet of the character who's name is given in the search string, it will 
-NOT locate a pet by name.
+invoking character will always be returned for types UNITTYPE_PC and UNITTYPE_PET,
+the location of the NPC running this function for type 1.
+
+If a search string is specified, for types UNITTYPE_PC and UNITTYPE_NPC, the
+character or NPC with the specified name will be located.
+
+If type is UNITTYPE_PET/UNITTYPE_HOM/UNITTYPE_MER/UNITTYPE_ELEM, the search
+will locate the current object of the character who's name is given in the
+search string, it will NOT locate the object by name.
 
 Example:
 
@@ -2915,7 +2916,7 @@ Example:
     prontera,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
         mes "My name is Nyah.";
         mes "I will now search for Meh all across the world!";
-        if (getmapxy(@mapname$,@mapx,@mapy,1,"Meh")!=0) {
+        if (getmapxy(@mapname$, @mapx, @mapy, UNITTYPE_NPC, "Meh") !=0) {
                 mes "I can't seem to find Meh anywhere!";
                 close;
         }
@@ -3786,6 +3787,8 @@ invoking RID. It returns 1 if successful and 0 upon failure.
     [ Parameters: <guild id> ]
  4: All players in a specified area of the map of the invoking player (or NPC).
     [ Parameters: <x0>,<y0>,<x1>,<y1> ]
+ 5: All players in the map.
+    [ Parameters: "<map name>" ]
  Account ID: If type is Account ID, attach the specified account ID.
 
 <flag> can prevent certain players from being attached:
@@ -4188,25 +4191,26 @@ the character will also have their skills reset upon 'changecharsex'.
 
 ---------------------------------------
 
-*getexp <base xp>,<job xp>{,<char_id>};
+*getexp <base_exp>,<job_exp>{,<char_id>};
 
 This command will give the invoking character a specified number of base and job 
-experience points. Can be used as a quest reward. Negative values won't work.
+experience points. Used for a quest reward. Negative values won't work.
+
+The EXP values are adjustted by 'quest_exp_rate' config value, VIP bonus, Guild 
+Tax and EXP boost items such Battle Manual, Bubble Gum, or items that have 
+SC_EXPBOOST or SC_ITEMBOOST.
 
     getexp 10000,5000;
 
-You can also use the "set" command with the constants defined in 'db/const.txt':
+---------------------------------------
 
-    // These 2 combined has the same effect as the above command
-    set BaseExp,BaseExp+10000;
-    set JobExp,JobExp+5000;
+*getexp2 <base_exp>,<job_exp>{,<char_id>};
 
-You can also reduce the amount of experience points:
+This command is safety version of 'set' command for BaseExp and JobExp. If using 
+'set' while the BaseExp or JobExp value is more than 2,147,483,647 (INT_MAX) will 
+causing overflow error.
 
-    set BaseExp,BaseExp-10000;
-
-Note that 'getexp' is now subject to the 'quest_exp_rate' config option, which
-adjusts the gained value. If you want to bypass this, use the 'set' method.
+Unlike 'getexp', this command ignores the adjustment factors!
 
 ---------------------------------------
 
@@ -4480,6 +4484,10 @@ Creates a rental item in the attached character's inventory. The item will expir
 in <time> seconds and be automatically deleted. When receiving a rental item, 
 the character will receive a message in their chat window. The character will 
 also receive warning messages in their chat window before the item disappears.
+
+When rentals expire it will call the OnUnequip Script of the item. This can be used
+for special cases such as removing a status change or resetting a variable or state
+of the player.
 
 This command can not be used to rent stackable items. Rental items cannot be 
 dropped, traded, sold to NPCs, or placed in guild storage. (i.e. trade mask 75)
@@ -5538,6 +5546,26 @@ This function will also destroy both wedding rings and send a message to both
 players, telling them they are now divorced.
 
 ---------------------------------------
+
+*adopt("<parent_name>","<baby_name>");
+*adopt(<parent_id>,<baby_id>);
+
+This function will send the client adoption request to the specified baby 
+character. The parent value can be either parent. Both parents and the baby
+need to be online in order for adoption to work.
+
+Return values:
+ ADOPT_ALLOWED - Sent message to Baby to accept or deny.
+ ADOPT_ALREADY_ADOPTED - Character is already adopted.
+ ADOPT_MARRIED_AND_PARTY - Parents need to be married and in a party with the baby.
+ ADOPT_EQUIP_RINGS - Parents need wedding rings equipped.
+ ADOPT_NOT_NOVICE - Baby is not a Novice.
+ ADOPT_CHARACTER_NOT_FOUND - A parent or Baby was not found.
+ ADOPT_MORE_CHILDREN - You cannot adopt more than 1 child. (client message)
+ ADOPT_LEVEL_70 - Parents need to be at least level 70 in order to adopt someone. (client message)
+ ADOPT_MARRIED - You cannot adopt a married person. (client message)
+
+---------------------------------------
 //
 4,3.- End of marriage-related commands
 //
@@ -5935,8 +5963,7 @@ It is an approximation of official server script language's 'cmdothernpc'.
 
 This command will display a message to the surrounding area as if the NPC object 
 running it was a player talking - that is, above their head and in the chat 
-window. The display name of the NPC will get appended in front of the message to 
-complete the effect.
+window. The display name of the NPC won't get appended in front of the message.
 
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.
@@ -7127,7 +7154,7 @@ Suggest to use 'unitblockmove' to forcefully stop the unit with OnTouch.
 
 *unittalk <GID>,"<text>";
 
-This command will make a <GID> say a message.
+This command will make a <GID> say a message. The display name of the <GID> won't get appended in front of the message.
 
 ---------------------------------------
 
@@ -7158,12 +7185,13 @@ For the position, the x and y are given in the UnitSkillUsePos.
 Returns the type of object from the given Game ID. Returns -1 if the given <GID> does not
 exist.
 
- 0 - Monster
- 1 - Homunculus
- 2 - Pet
- 3 - Mercenary
- 4 - Elemental
- 5 - NPC
+	UNITTYPE_PC     0
+	UNITTYPE_NPC    1
+	UNITTYPE_PET    2
+	UNITTYPE_MOB    3
+	UNITTYPE_HOM    4
+	UNITTYPE_MER    5
+	UNITTYPE_ELEM   6
 
 ---------------------------------------
 
@@ -7221,6 +7249,7 @@ Parameters (indexes) for monsters are:
 	UMOB_SHIELD
 	UMOB_WEAPON
 	UMOB_LOOKDIR
+	UMOB_CANMOVETICK
 	UMOB_STR
 	UMOB_AGI
 	UMOB_VIT
@@ -7619,6 +7648,29 @@ Returns distance between 2 points.
 
 Example:
 	.@i = distance(100,200,101,202);
+
+---------------------------------------
+
+*min(<number or array>{,<number or array>,...})
+*minimum(<number or array>{,<number or array>,...})
+*max(<number or array>{,<number or array>,...})
+*maximum(<number or array>{,<number or array>,...})
+
+Returns the smallest (or biggest) from the set of given parameters.
+These parameters have to be either numbers or number arrays.
+
+Example:
+	.@minimum = min( 1, -6, -2, 8, 2 ); // .@minimum will be equal to -6
+	.@maximum = max( 0, 5, 10, 4 ); // .@maximum will be equal to 10
+	.@level = min( BaseLevel, 70 ); // .@level will be the character's base level, capped to 70
+	
+	setarray .@testarray, 4, 5, 12, 6, 7, 3, 8, 9, 10;
+	
+	.@minimum = min( .@testarray ); // .@minimum will be equal to 3
+	.@maximum = max( .@testarray ); // .@maximum will be equal to 12
+	
+	.@minimum = min( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to -6
+	.@maximum = max( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to 12
 
 ---------------------------------------
 
@@ -9051,6 +9103,38 @@ Valid flag are:
 
 ---------------------------------------
 
+*navigateto("<map>"{,<x>,<y>,<flag>,<hide_window>,<monster_id>,<char_id>});
+
+Generates a navigation for attached or specified character. Requires client
+2011-10-10aRagEXE or newer.
+
+The flag specifies how the client will calculate the specific route.
+
+Valid flags are:
+ NAV_NONE - No services
+ NAV_AIRSHIP_ONLY - Airship only
+ NAV_SCROLL_ONLY - Scroll only
+ NAV_AIRSHIP_AND_SCROLL - Airship and Scroll
+ NAV_KAFRA_ONLY - Kafra only
+ NAV_KAFRA_AND_AIRSHIP - Kafra and Airship
+ NAV_KAFRA_AND_SCROLL - Kafra and Scroll
+ NAV_ALL - All services
+
+When flag is not specified, the default value is NAV_KAFRA_AND_AIRSHIP.
+
+The hide_window specifies whether to display (0) or hide (1) the navigation window.
+By default the window is hidden.
+
+You can specify the monster_id in combination with a mapname to make the
+navigation system tell you, that you have reached the desired mob.
+
+Note:
+The client requires custom monster spawns be in the navigation file
+for using the embedded client Navigation feature to work properly. In this
+instance sending the player to the map where the monster spawns is a simpler
+solution rather than sending the map and the monster_id.
+
+---------------------------------------
 
 Whew.
 That's about all of them.

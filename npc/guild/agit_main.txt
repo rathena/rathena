@@ -349,7 +349,7 @@ OnRecvCastle:
 		next;
 		switch (select("Use Storage:Use Teleport Service:Rent a Pushcart:Cancel")) {
 		case 1:
-			if (getskilllv("NV_BASIC") < 6) {
+			if(!callfunc("F_CanOpenStorage")){
 				mes "[Kafra Employee]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
@@ -386,7 +386,7 @@ OnRecvCastle:
 					end;
 				}
 				set Zeny, Zeny - 200;
-				set RESRVPTS,RESRVPTS+2;
+				set RESRVPTS,RESRVPTS+20;
 				close2;
 				warp .@destination$[1],.@coordinates[0],.@coordinates[1];
 				end;
@@ -436,7 +436,7 @@ OnRecvCastle:
 					cutin "",255;
 					end;
 				}
-				set RESRVPTS,RESRVPTS+8;
+				set RESRVPTS,RESRVPTS+80;
 				set Zeny, Zeny - 800;
 				setcart;
 				close2;

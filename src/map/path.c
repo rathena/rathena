@@ -172,7 +172,7 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 			spd->y[spd->len] = y0;
 			spd->len++;
 		}
-		if (map_getcellp(md,x0,y0,cell))
+		if ((x0 != x1 || y0 != y1) && map_getcellp(md,x0,y0,cell))
 			return false;
 	}
 
@@ -247,6 +247,7 @@ static int add_path(struct node_heap *heap, struct path_node *tp, int16 x, int16
  * path search (x0,y0)->(x1,y1)
  * wpd: path info will be written here
  * flag: &1 = easy path search only
+ * flag: &2 = call path_search_long instead
  * cell: type of obstruction to check for
  *------------------------------------------*/
 bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int flag, cell_chk cell)
@@ -254,6 +255,9 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 	register int i, x, y, dx = 0, dy = 0;
 	struct map_data *md;
 	struct walkpath_data s_wpd;
+
+	if (flag&2)
+		return path_search_long(NULL, m, x0, y0, x1, y1, cell);
 
 	if (wpd == NULL)
 		wpd = &s_wpd; // use dummy output variable

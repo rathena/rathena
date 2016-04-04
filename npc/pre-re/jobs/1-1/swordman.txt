@@ -48,7 +48,7 @@ izlude_in,74,172,4	script	Swordman#swd_1	119,{
 			mes "[Swordman]";
 			mes "I see you're retreading the path of the Swordman! Once you've gotten used to brandishing a sword, you can never go back!!";
 			next;
-			if (getskilllv("NV_BASIC") < 9) {
+			if (!callfunc("F_CanChangeJob")) {
 				mes "[Swordman]";
 				mes "Hmm? Ah, you must first master the Basic Skills before you are ready to become a Swordman.";
 				next;
@@ -138,7 +138,7 @@ izlude_in,74,172,4	script	Swordman#swd_1	119,{
 			}
 		}
 		mes "[Swordman]";
-		if (getskilllv("NV_BASIC") < 9) {
+		if (!callfunc("F_CanChangeJob")) {
 			mes "Hm, you still haven't learned all of the Basic Skills. You need to do that before you can become a Swordman.";
 			next;
 			mes "[Swordman]";
@@ -213,7 +213,7 @@ izlude_in,62,170,6	script	Swordman#swd_2	85,{
 		mes "Who the hell are you?! Nobody, other than Novices, is permitted to come in here!";
 		close;
 	}
-	else if (getskilllv("NV_BASIC") < 9) {
+	else if (!callfunc("F_CanChangeJob")) {
 		mes "Stop! I can't let you in until you learn all of the Basic Skills. The Test Hall isn't for goofing off!";
 		close;
 	}

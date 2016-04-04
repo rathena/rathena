@@ -9,6 +9,8 @@ struct mob_data;
 struct pet_data;
 struct homun_data;
 struct mercenary_data;
+struct elemental_data;
+struct npc_data;
 struct status_change;
 
 /**
@@ -739,6 +741,20 @@ typedef enum sc_type {
 	SC_PROMOTE_HEALTH_RESERCH,
 	SC_ENERGY_DRINK_RESERCH,
 	SC_NORECOVER_STATE,
+
+	/**
+	 * Summoner
+	 */
+	SC_SUHIDE,
+	SC_SU_STOOP,
+	SC_SPRITEMABLE,
+	SC_CATNIPPOWDER,
+	SC_SV_ROOTTWIST,
+	SC_BITESCAR,
+	SC_ARCLOUSEDASH,
+	SC_TUNAPARTY,
+	SC_SHRIMP,
+	SC_FRESHSHRIMP,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -1606,6 +1622,7 @@ enum si_type {
 	SI_LIMIT_POWER_BOOSTER = 867,
 	SI_TIME_ACCESSORY = 872,
 	SI_EP16_DEF = 873,
+	SI_NORMAL_ATKED_SP = 874,
 	SI_BODYSTATE_STONECURSE = 875,
 	SI_BODYSTATE_FREEZING = 876,
 	SI_BODYSTATE_STUN = 877,
@@ -1623,6 +1640,10 @@ enum si_type {
 	SI_HEALTHSTATE_BLOODING = 889,
 	SI_HEALTHSTATE_HEAVYPOISON = 890,
 	SI_HEALTHSTATE_FEAR = 891,
+	SI_CHERRY_BLOSSOM_CAKE = 892,
+	SI_SU_STOOP = 893,
+	SI_CATNIPPOWDER = 894,
+	SI_SV_ROOTTWIST = 896,
 	SI_ATTACK_PROPERTY_NOTHING = 897,
 	SI_ATTACK_PROPERTY_WATER = 898,
 	SI_ATTACK_PROPERTY_GROUND = 899,
@@ -1643,6 +1664,14 @@ enum si_type {
 	SI_RESIST_PROPERTY_DARKNESS = 914,
 	SI_RESIST_PROPERTY_TELEKINESIS = 915,
 	SI_RESIST_PROPERTY_UNDEAD = 916,
+	SI_BITESCAR = 917,
+	SI_ARCLOUSEDASH = 918,
+	SI_TUNAPARTY = 919,
+	SI_SHRIMP = 920,
+	SI_FRESHSHRIMP = 921,
+	SI_PERIOD_RECEIVEITEM = 922,
+	SI_PERIOD_PLUSEXP = 923,
+	SI_PERIOD_PLUSJOBEXP = 924,
 	SI_RUNEHELM = 925,
 	SI_HELM_VERKANA = 926,
 	SI_HELM_RHYDO = 927,
@@ -1651,6 +1680,10 @@ enum si_type {
 	SI_HELM_ISIA = 930,
 	SI_HELM_ASIR = 931,
 	SI_HELM_URJ = 932,
+	SI_SUHIDE = 933,
+	SI_DORAM_BUF_01 = 935,
+	SI_DORAM_BUF_02 = 936,
+	SI_SPRITEMABLE = 937,
 	SI_MAX,
 };
 
@@ -2064,6 +2097,8 @@ int StatusIconChangeTable[SC_MAX];          /// status -> "icon" (icon is a bit 
 int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, int walkdelay, int flag);
 //Define for standard HP damage attacks.
 #define status_fix_damage(src, target, hp, walkdelay) status_damage(src, target, hp, 0, walkdelay, 0)
+//Define for standard SP damage attacks.
+#define status_fix_spdamage(src, target, sp, walkdelay) status_damage(src, target, 0, sp, walkdelay, 0)
 //Define for standard HP/SP damage triggers.
 #define status_zap(bl, hp, sp) status_damage(NULL, bl, hp, sp, 0, 1)
 //Define for standard HP/SP skill-related cost triggers (mobs require no HP/SP to use skills)

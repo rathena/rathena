@@ -107,7 +107,7 @@ enum actor_classes
 #define MAX_NPC_CLASS 1000
 // New NPC range
 #define MAX_NPC_CLASS2_START 10000
-#define MAX_NPC_CLASS2_END 10174
+#define MAX_NPC_CLASS2_END 10203
 
 //Checks if a given id is a valid npc id. [Skotlex]
 //Since new npcs are added all the time, the max valid value is the one before the first mob (Scorpion = 1001)
@@ -190,6 +190,8 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type);
 int npc_duplicate4instance(struct npc_data *snd, int16 m);
 int npc_instanceinit(struct npc_data* nd);
 int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amount, int points);
+
+void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, int cost[2], bool display);
 
 extern struct npc_data* fake_nd;
 

@@ -898,7 +898,10 @@ int unit_escape(struct block_list *bl, struct block_list *target, short dist)
  * @param bl: Object to instant warp
  * @param dst_x: X coordinate to warp to
  * @param dst_y: Y coordinate to warp to
- * @param easy: Easy(1) or Hard(0) path check (hard attempts to go around obstacles)
+ * @param easy: 
+ *		0: Hard path check (attempt to go around obstacle)
+ *		1: Easy path check (no obstacle on movement path)
+ *		2: Long path check (no obstacle on line from start to destination)
  * @param checkpath: Whether or not to do a cell and path check for NOPASS and NOREACH
  * @return True: Success False: Fail
  */
@@ -1236,27 +1239,30 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
  *	&0x2: Force the unit to move one cell if it hasn't yet
  *	&0x4: Enable moving to the next cell when unit was already half-way there
  *		(may cause on-touch/place side-effects, such as a scripted map change)
+ *	&0x8: Force stop moving, even if walktimer is currently INVALID_TIMER
  * @return Success(1); Failed(0);
  */
 int unit_stop_walking(struct block_list *bl,int type)
 {
 	struct unit_data *ud;
-	const struct TimerData* td;
+	const struct TimerData* td = NULL;
 	unsigned int tick;
 
 	nullpo_ret(bl);
 
 	ud = unit_bl2ud(bl);
 
-	if(!ud || ud->walktimer == INVALID_TIMER)
+	if(!ud || (!(type&0x08) && ud->walktimer == INVALID_TIMER))
 		return 0;
 
 	// NOTE: We are using timer data after deleting it because we know the
 	// delete_timer function does not mess with it. If the function's
 	// behaviour changes in the future, this code could break!
-	td = get_timer(ud->walktimer);
-	delete_timer(ud->walktimer, unit_walktoxy_timer);
-	ud->walktimer = INVALID_TIMER;
+	if (ud->walktimer != INVALID_TIMER) {
+		td = get_timer(ud->walktimer);
+		delete_timer(ud->walktimer, unit_walktoxy_timer);
+		ud->walktimer = INVALID_TIMER;
+	}
 	ud->state.change_walk_target = 0;
 	tick = gettick();
 
@@ -1355,7 +1361,6 @@ int unit_can_move(struct block_list *bl) {
 	// Status changes that block movement
 	if (sc) {
 		if( sc->cant.move // status placed here are ones that cannot be cached by sc->cant.move for they depend on other conditions other than their availability
-			|| (sc->data[SC_FEAR] && sc->data[SC_FEAR]->val2 > 0)
 			|| (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
 			|| (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
 				!sc->data[SC_LONGING] ||
@@ -1436,8 +1441,10 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 			return 0;
 	} else {
 		// Don't set walk delays when already trapped.
-		if (!unit_can_move(bl))
+		if (!unit_can_move(bl)) {
+			unit_stop_walking(bl,4); //Unit might still be moving even though it can't move
 			return 0;
+		}
 		//Immune to being stopped for double the flinch time
 		if (DIFF_TICK(ud->canmove_tick, tick-delay) > 0)
 			return 0;
@@ -1447,7 +1454,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 
 	if (ud->walktimer != INVALID_TIMER) { // Stop walking, if chasing, readjust timers.
 		if (delay == 1) // Minimal delay (walk-delay) disabled. Just stop walking.
-			unit_stop_walking(bl,4);
+			unit_stop_walking(bl,0);
 		else {
 			// Resume running after can move again [Kevin]
 			if(ud->state.running)
@@ -1510,12 +1517,14 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		skill_is_combo(skill_id) &&
 		(sc->data[SC_COMBO]->val1 == skill_id ||
 		(sd?skill_check_condition_castbegin(sd,skill_id,skill_lv):0) )) {
-		if (sc->data[SC_COMBO]->val2)
+		if (skill_is_combo(skill_id) == 2 && target_id == src->id && ud->target > 0)
+			target_id = ud->target;
+		else if (sc->data[SC_COMBO]->val2)
 			target_id = sc->data[SC_COMBO]->val2;
 		else if (target_id == src->id || ud->target > 0)
 			target_id = ud->target;
 
-		if( inf&INF_SELF_SKILL && skill_get_nk(skill_id)&NK_NO_DAMAGE )// exploit fix
+		if (inf&INF_SELF_SKILL && skill_get_nk(skill_id)&NK_NO_DAMAGE)// exploit fix
 			target_id = src->id;
 
 		combo = 1;
@@ -1687,7 +1696,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if (src->type == BL_NPC) // NPC-objects can override cast distance
 		range = AREA_SIZE; // Maximum visible distance before NPC goes out of sight
 	else
-		range = skill_get_range2(src, skill_id, skill_lv); // Skill cast distance from database
+		range = skill_get_range2(src, skill_id, skill_lv, true); // Skill cast distance from database
 
 	// New action request received, delete previous action request if not executed yet
 	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
@@ -1710,7 +1719,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		} else if( src->type == BL_MER && skill_id == MA_REMOVETRAP ) {
 			if( !battle_check_range(battle_get_master(src), target, range + 1) )
 				return 0; // Aegis calc remove trap based on Master position, ignoring mercenary O.O
-		} else if( !battle_check_range(src, target, range + (skill_id == RG_CLOSECONFINE?0:2)) )
+		} else if( !battle_check_range(src, target, range) )
 			return 0; // Arrow-path check failed.
 	}
 
@@ -1776,7 +1785,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		break;
 #endif
 		case GD_EMERGENCYCALL: // Emergency Call double cast when the user has learned Leap [Daegaladh]
-			if( sd && pc_checkskill(sd,TK_HIGHJUMP) )
+			if (sd && (pc_checkskill(sd,TK_HIGHJUMP) || pc_checkskill(sd,SU_LOPE) >= 3))
 				casttime *= 2;
 			break;
 		case RA_WUGDASH:
@@ -1853,8 +1862,8 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if( casttime <= 0 )
 		ud->state.skillcastcancel = 0;
 
-	if( !sd || sd->skillitem != skill_id || skill_get_cast(skill_id,skill_lv) )
-		ud->canact_tick = tick + casttime + 100;
+	if (!sd || sd->skillitem != skill_id || skill_get_cast(skill_id, skill_lv))
+		ud->canact_tick = tick + max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
 
 	if( sd ) {
 		switch( skill_id ) {
@@ -1981,13 +1990,6 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 		return 0;
 	}
 
-	if( map_getcell(src->m, skill_x, skill_y, CELL_CHKWALL) ) { // Can't cast ground targeted spells on wall cells
-		if (sd)
-			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-
-		return 0;
-	}
-
 	// Check range and obstacle
 	bl.type = BL_NUL;
 	bl.m = src->m;
@@ -1997,7 +1999,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if (src->type == BL_NPC) // NPC-objects can override cast distance
 		range = AREA_SIZE; // Maximum visible distance before NPC goes out of sight
 	else
-		range = skill_get_range2(src, skill_id, skill_lv); // Skill cast distance from database
+		range = skill_get_range2(src, skill_id, skill_lv, true); // Skill cast distance from database
 
 	// New action request received, delete previous action request if not executed yet
 	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
@@ -2032,8 +2034,8 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 		casttime = 0;
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
-	if( !sd || sd->skillitem != skill_id || skill_get_cast(skill_id,skill_lv) )
-		ud->canact_tick  = tick + casttime + 100;
+	if (!sd || sd->skillitem != skill_id || skill_get_cast(skill_id, skill_lv))
+		ud->canact_tick = tick + max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
 
 // 	if( sd )
 // 	{
@@ -2103,11 +2105,11 @@ int unit_set_target(struct unit_data* ud, int target_id)
 		struct unit_data * ux;
 		struct block_list* target;
 	
-		if( ud->target && (target = map_id2bl(ud->target)) && (ux = unit_bl2ud(target)) && ux->target_count > 0 )
-			ux->target_count --;
+		if (ud->target && (target = map_id2bl(ud->target)) && (ux = unit_bl2ud(target)) && ux->target_count > 0)
+			ux->target_count--;
 
-		if( target_id && (target = map_id2bl(target_id)) && (ux = unit_bl2ud(target)) )
-			ux->target_count ++;
+		if (target_id && (target = map_id2bl(target_id)) && (ux = unit_bl2ud(target)) && ux->target_count < 255)
+			ux->target_count++;
 	}
 
 	ud->target = target_id;
@@ -2881,6 +2883,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC__MANHOLE, INVALID_TIMER);
 		status_change_end(bl, SC_VACUUM_EXTREME, INVALID_TIMER);
 		status_change_end(bl, SC_CURSEDCIRCLE_ATKER, INVALID_TIMER); // callme before warp
+		status_change_end(bl, SC_SUHIDE, INVALID_TIMER);
 	}
 
 	if (bl->type&(BL_CHAR|BL_PET)) {

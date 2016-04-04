@@ -363,6 +363,16 @@ enum questinfo_types {
 	#define FW_HEAVY            900
 #endif
 
+enum getmapxy_types {
+	UNITTYPE_PC = 0,
+	UNITTYPE_NPC,
+	UNITTYPE_PET,
+	UNITTYPE_MOB,
+	UNITTYPE_HOM,
+	UNITTYPE_MER,
+	UNITTYPE_ELEM,
+};
+
 enum unitdata_mobtypes {
 	UMOB_SIZE = 0,
 	UMOB_LEVEL,
@@ -387,6 +397,7 @@ enum unitdata_mobtypes {
 	UMOB_SHIELD,
 	UMOB_WEAPON,
 	UMOB_LOOKDIR,
+	UMOB_CANMOVETICK,
 	UMOB_STR,
 	UMOB_AGI,
 	UMOB_VIT,
@@ -610,6 +621,17 @@ enum unitdata_npctypes {
 	UNPC_AMOTION,
 	UNPC_ADELAY,
 	UNPC_DMOTION,
+};
+
+enum navigation_service {
+	NAV_NONE = 0, ///< 0
+	NAV_AIRSHIP_ONLY = 1, ///< 1 (actually 1-9)
+	NAV_SCROLL_ONLY = 10, ///< 10
+	NAV_AIRSHIP_AND_SCROLL = NAV_AIRSHIP_ONLY + NAV_SCROLL_ONLY, ///< 11 (actually 11-99)
+	NAV_KAFRA_ONLY = 100, ///< 100
+	NAV_KAFRA_AND_AIRSHIP = NAV_KAFRA_ONLY + NAV_AIRSHIP_ONLY, ///< 101 (actually 101-109)
+	NAV_KAFRA_AND_SCROLL = NAV_KAFRA_ONLY + NAV_SCROLL_ONLY, ///< 110
+	NAV_ALL = NAV_AIRSHIP_ONLY + NAV_SCROLL_ONLY + NAV_KAFRA_ONLY ///< 111 (actually 111-255)
 };
 
 /**

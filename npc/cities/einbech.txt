@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Einbech Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Muad_Dib
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Einbech Town Script
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 0.1  Started writing Einbech npc's. [Muad_Dib]
 //= 0.1a Conversion to eA format [MasterOfMuppets]
 //= 0.1b Added missing tabs. [Mass Zero] 0.1c more missing tabs [Lupus]
@@ -431,7 +431,7 @@ ein_in01,279,92,3	script	Tavern Lady#ein	854,{
 	mes "freshly knit doilies?";
 	close;
 }
-	
+
 ein_in01,277,95,7	script	Ryan Danger#air#einbech	855,{
 	mes "[R.D. Kim]";
 	mes "Oooh...";
@@ -483,7 +483,7 @@ ein_in01,277,95,7	script	Ryan Danger#air#einbech	855,{
 	mes "of his freakin' mind!)";
 	close;
 }
-	
+
 ein_in01,281,85,3	script	Drunken Man#einbech	849,{
 	mes "[Drunken Man]";
 	mes "...^333333*Hiccup*^000000...";
@@ -742,7 +742,7 @@ einbech,46,107,6	script	Shena#ein::EinMonsters	846,{
 		close;
 	}
 }
-	
+
 einbech,48,107,4	duplicate(EinMonsters)	Luda#ein	850,{
 
 einbech,148,242,5	script	Jung#ein	855,{

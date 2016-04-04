@@ -40,7 +40,7 @@
 #define MOB_LAZYMOVEPERC(md) (md->state.spotted?1000:0)
 #define MOB_MAX_DELAY (24*3600*1000)
 #define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
-#define RUDE_ATTACKED_COUNT 2	//After how many rude-attacks should the skill be used?
+#define RUDE_ATTACKED_COUNT 1	//After how many rude-attacks should the skill be used?
 #define MAX_MOB_CHAT 50 //Max Skill's messages
 
 // On official servers, monsters will only seek targets that are closer to walk to than their
@@ -884,7 +884,8 @@ int mob_delayspawn(int tid, unsigned int tick, int id, intptr_t data)
  *------------------------------------------*/
 int mob_setdelayspawn(struct mob_data *md)
 {
-	unsigned int spawntime, mode;
+	unsigned int spawntime;
+	enum e_mode mode;
 	struct mob_db *db;
 
 	if (!md->spawn) //Doesn't has respawn data!
@@ -1033,10 +1034,10 @@ int mob_spawn (struct mob_data *md)
 /*==========================================
  * Determines if the mob can change target. [Skotlex]
  *------------------------------------------*/
-static int mob_can_changetarget(struct mob_data* md, struct block_list* target, int mode)
+static int mob_can_changetarget(struct mob_data* md, struct block_list* target, enum e_mode mode)
 {
-	// if the monster was provoked ignore the above rule [celest]
-	if(md->state.provoke_flag)
+	// Special feature that makes monsters always attack the person that provoked them
+	if(battle_config.mob_ai&0x800 && md->state.provoke_flag)
 	{
 		if (md->state.provoke_flag == target->id)
 			return 1;
@@ -1082,6 +1083,9 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist)
 	md->target_id = bl->id;	// Since there was no disturbance, it locks on to target.
 	if (md->state.provoke_flag && bl->id != md->state.provoke_flag)
 		md->state.provoke_flag = 0;
+	// When an angry monster is provoked, it will switch to retaliate AI
+	if (md->state.provoke_flag && md->state.aggressive)
+		md->state.aggressive = 0;
 	md->min_chase=dist+md->db->range3;
 	if(md->min_chase>MAX_MINCHASE)
 		md->min_chase=MAX_MINCHASE;
@@ -1095,13 +1099,13 @@ static int mob_ai_sub_hard_activesearch(struct block_list *bl,va_list ap)
 {
 	struct mob_data *md;
 	struct block_list **target;
-	int mode;
+	enum e_mode mode;
 	int dist;
 
 	nullpo_ret(bl);
 	md=va_arg(ap,struct mob_data *);
 	target= va_arg(ap,struct block_list**);
-	mode= va_arg(ap,int);
+	mode= va_arg(ap,enum e_mode);
 
 	//If can't seek yet, not an enemy, or you can't attack it, skip.
 	if ((*target) == bl || !status_check_skilluse(&md->bl, bl, 0, 0))
@@ -1361,6 +1365,8 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 	default:
 		mob_stop_attack(md);
 		mob_stop_walking(md,1); //Stop chasing.
+		if (md->status.mode&MD_ANGRY && !md->state.aggressive)
+			md->state.aggressive = 1; //Restore angry state when switching to idle
 		md->state.skillstate = MSS_IDLE;
 		if(battle_config.mob_ai&0x8) //Walk instantly after dropping target
 			md->next_walktime = tick+rnd()%1000;
@@ -1386,7 +1392,7 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 int mob_randomwalk(struct mob_data *md,unsigned int tick)
 {
 	const int d=7;
-	int i,c,r,dx,dy;
+	int i,c,r,dx,dy,max;
 	int speed;
 
 	nullpo_ret(md);
@@ -1400,21 +1406,59 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 	r=rnd();
 	dx=r%(d*2+1)-d;
 	dy=r/(d*2+1)%(d*2+1)-d;
-	for(i=0;i<d*d;i++){	// Search of a movable place
+	max=(d*2+1)*(d*2+1);
+	for(i=0;i<max;i++){	// Search of a movable place
 		int x = dx + md->bl.x;
 		int y = dy + md->bl.y;
-		if(((x != md->bl.x) || (y != md->bl.y)) && map_getcell(md->bl.m,x,y,CELL_CHKPASS) && unit_walktoxy(&md->bl,x,y,8)){
+		if(((x != md->bl.x) || (y != md->bl.y)) && map_getcell(md->bl.m,x,y,CELL_CHKPASS) && unit_walktoxy(&md->bl,x,y,0)){
 			break;
 		}
-		// Could not move to cell, try the next one
-		if (++dx>d) {
-			dx=-d;
-			if (++dy>d) {
-				dy=-d;
+		// Could not move to cell, try the 7th cell in direction randomly decided by rnd
+		// We don't move step-by-step because this will make monster stick to the walls
+		switch(rnd()%4) { // Randomize direction in which we iterate to prevent monster cluttering up in one corner
+		case 0:
+			dx += d;
+			if (dx > d) {
+				dx -= d*2+1;
+				dy += d;
+				if (dy > d) {
+					dy -= d*2+1;
+				}
 			}
+			break;
+		case 1:
+			dx -= d;
+			if (dx < -d) {
+				dx += d*2+1;
+				dy -= d;
+				if (dy < -d) {
+					dy += d*2+1;
+				}
+			}
+			break;
+		case 2:
+			dy += d;
+			if (dy > d) {
+				dy -= d*2+1;
+				dx += d;
+				if (dx > d) {
+					dx -= d*2+1;
+				}
+			}
+			break;
+		case 3:
+			dy -= d;
+			if (dy < -d) {
+				dy += d*2+1;
+				dx -= d;
+				if (dx < -d) {
+					dx += d*2+1;
+				}
+			}
+			break;
 		}
 	}
-	if(i==d*d){
+	if(i==max){
 		// None of the available cells worked, try again next interval
 		if(battle_config.mob_stuck_warning) {
 			md->move_fail_count++;
@@ -1468,7 +1512,7 @@ int mob_warpchase(struct mob_data *md, struct block_list *target)
 static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 {
 	struct block_list *tbl = NULL, *abl = NULL;
-	int mode;
+	enum e_mode mode;
 	int view_range, can_move;
 
 	if(md->bl.prev == NULL || md->status.hp == 0)
@@ -1559,7 +1603,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 				   )
 				) )
 			{ // Rude attacked
-				if (md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
+				if (abl->id != md->bl.id //Self damage does not cause rude attack
+				&& md->state.attacked_count++ >= RUDE_ATTACKED_COUNT				
 				&& !mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move
 				&& !tbl && unit_escape(&md->bl, abl, rnd()%10 +1))
 				{	//Escaped.
@@ -1614,9 +1659,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	}
 
 	if (!tbl) { //No targets available.
-		if (mode&MD_ANGRY && !md->state.aggressive)
-			md->state.aggressive = 1; //Restore angry state when no targets are available.
-
 		/* bg guardians follow allies when no targets nearby */
 		if( md->bg_id && mode&MD_CANATTACK ) {
 			if( md->ud.walktimer != INVALID_TIMER )
@@ -1718,7 +1760,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 	{
 		if (DIFF_TICK(md->ud.canmove_tick, tick) <= MIN_MOBTHINKTIME && DIFF_TICK(md->ud.canact_tick, tick) < -MIN_MOBTHINKTIME*IDLE_SKILL_INTERVAL) 
 		{ //Only use skill if able to walk on next tick and not used a skill the last second
-			mobskill_use(md, tick, -1);
+			if (mobskill_use(md, tick, -1))
+				return true;
 		}
 	}
 
@@ -2038,8 +2081,6 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 		return; //Do nothing for absorbed damage.
 	if( !damage && !(src->type&DEFAULT_ENEMY_TYPE(md)) )
 		return; //Do not log non-damaging effects from non-enemies.
-	if( src->id == md->bl.id )
-		return; //Do not log self-damage.
 
 	switch( src->type )
 	{
@@ -2113,6 +2154,12 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 			md->attacked_id = src->id;
 	}
 
+	//Self damage increases tap bonus
+	if (!char_id && src->id == md->bl.id && damage > 0) {
+		char_id = src->id;
+		flag = MDLF_SELF;
+	}
+
 	if( char_id )
 	{ //Log damage...
 		int i,minpos;
@@ -2151,28 +2198,24 @@ void mob_log_damage(struct mob_data *md, struct block_list *src, int damage)
 //Call when a mob has received damage.
 void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 {
-	if (damage > 0) { //Store total damage...
+	if (src && damage > 0) { //Store total damage...
 		if (UINT_MAX - (unsigned int)damage > md->tdmg)
-			md->tdmg+=damage;
+			md->tdmg += damage;
 		else if (md->tdmg == UINT_MAX)
 			damage = 0; //Stop recording damage once the cap has been reached.
 		else { //Cap damage log...
 			damage = (int)(UINT_MAX - md->tdmg);
 			md->tdmg = UINT_MAX;
 		}
-		if (md->state.aggressive) //No longer aggressive, change to retaliate AI.
+		if ((src != &md->bl) && md->state.aggressive) //No longer aggressive, change to retaliate AI.
 			md->state.aggressive = 0;
 		//Log damage
-		if (src)
-			mob_log_damage(md, src, damage);
+		mob_log_damage(md, src, damage);
 		md->dmgtick = gettick();
 	}
 
 	if (battle_config.show_mob_info&3)
-		clif_charnameack (0, &md->bl);
-
-	if (!src)
-		return;
+		clif_charnameack(0, &md->bl);
 
 #if PACKETVER >= 20120404
 	if( battle_config.monster_hp_bars_info){
@@ -2184,6 +2227,9 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		}
 	}
 #endif
+
+	if (!src)
+		return;
 
 	if( md->special_state.ai == AI_SPHERE ) {//LOne WOlf explained that ANYONE can trigger the marine countdown skill. [Skotlex]
 		md->state.alchemist = 1;
@@ -2238,18 +2284,23 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	// filter out entries not eligible for exp distribution
 	memset(tmpsd,0,sizeof(tmpsd));
 	for(i = 0, count = 0, mvp_damage = 0; i < DAMAGELOG_SIZE && md->dmglog[i].id; i++) {
-		struct map_session_data* tsd = map_charid2sd(md->dmglog[i].id);
-
-		if(tsd == NULL)
+		struct map_session_data* tsd = NULL;
+		if (md->dmglog[i].flag == MDLF_SELF) {
+			//Self damage counts as exp tap
+			count++;
+			continue;
+		}
+		tsd = map_charid2sd(md->dmglog[i].id);
+		if (tsd == NULL)
 			continue; // skip empty entries
-		if(tsd->bl.m != m)
+		if (tsd->bl.m != m)
 			continue; // skip players not on this map
 		count++; //Only logged into same map chars are counted for the total.
 		if (pc_isdead(tsd))
 			continue; // skip dead players
-		if(md->dmglog[i].flag == MDLF_HOMUN && !hom_is_active(tsd->hd))
+		if (md->dmglog[i].flag == MDLF_HOMUN && !hom_is_active(tsd->hd))
 			continue; // skip homunc's share if inactive
-		if( md->dmglog[i].flag == MDLF_PET && (!tsd->status.pet_id || !tsd->pd) )
+		if (md->dmglog[i].flag == MDLF_PET && (!tsd->status.pet_id || !tsd->pd))
 			continue; // skip pet's share if inactive
 
 		if(md->dmglog[i].dmg > mvp_damage) {
@@ -2403,11 +2454,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 #ifdef RENEWAL_EXP
 						int rate = pc_level_penalty_mod(tmpsd[i], md->level, md->status.class_, md->status.mode, 1);
 						if (rate != 100) {
-							base_exp = (unsigned int)cap_value(apply_rate(base_exp, rate), 1, UINT_MAX);
-							job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
+							if (base_exp)
+								base_exp = (unsigned int)cap_value(apply_rate(base_exp, rate), 1, UINT_MAX);
+							if (job_exp)
+								job_exp = (unsigned int)cap_value(apply_rate(job_exp, rate), 1, UINT_MAX);
 						}
 #endif
-						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, false);
+						pc_gainexp(tmpsd[i], &md->bl, base_exp, job_exp, 0);
 					}
 				}
 				if(zeny) // zeny from mobs [Valaris]
@@ -2459,35 +2512,33 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				drop_rate = 1;
 			}
 
-			if (!(md->status.mode&MD_FIXED_ITEMDROP)) {
-				// change drops depending on monsters size [Valaris]
-				if (battle_config.mob_size_influence) {
-					if (md->special_state.size == SZ_MEDIUM && drop_rate >= 2)
-						drop_rate /= 2;
-					else if( md->special_state.size == SZ_BIG)
-						drop_rate *= 2;
-				}
+			// change drops depending on monsters size [Valaris]
+			if (battle_config.mob_size_influence) {
+				if (md->special_state.size == SZ_MEDIUM && drop_rate >= 2)
+					drop_rate /= 2;
+				else if( md->special_state.size == SZ_BIG)
+					drop_rate *= 2;
+			}
 
-				if (src) {
-					//Drops affected by luk as a fixed increase [Valaris]
-					if (battle_config.drops_by_luk)
-						drop_rate += status_get_luk(src)*battle_config.drops_by_luk/100;
-					//Drops affected by luk as a % increase [Skotlex]
-					if (battle_config.drops_by_luk2)
-						drop_rate += (int)(0.5+drop_rate*status_get_luk(src)*battle_config.drops_by_luk2/10000.);
-				}
-				if (sd && battle_config.pk_mode &&
-					(int)(md->level - sd->status.base_level) >= 20)
-					drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
+			if (src) {
+				//Drops affected by luk as a fixed increase [Valaris]
+				if (battle_config.drops_by_luk)
+					drop_rate += status_get_luk(src)*battle_config.drops_by_luk/100;
+				//Drops affected by luk as a % increase [Skotlex]
+				if (battle_config.drops_by_luk2)
+					drop_rate += (int)(0.5+drop_rate*status_get_luk(src)*battle_config.drops_by_luk2/10000.);
+			}
+			if (sd && battle_config.pk_mode &&
+				(int)(md->level - sd->status.base_level) >= 20)
+				drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
 
-				// Increase drop rate if user has SC_ITEMBOOST
-				if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
-					drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
-				// Increase item drop rate for VIP.
-				if (battle_config.vip_drop_increase && (sd && pc_isvip(sd))) {
-					drop_rate += (int)(0.5 + (drop_rate * battle_config.vip_drop_increase) / 100);
-					drop_rate = min(drop_rate,10000); //cap it to 100%
-				}
+			// Increase drop rate if user has SC_ITEMBOOST
+			if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
+				drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
+			// Increase item drop rate for VIP.
+			if (battle_config.vip_drop_increase && (sd && pc_isvip(sd))) {
+				drop_rate += (int)(0.5 + (drop_rate * battle_config.vip_drop_increase) / 100);
+				drop_rate = min(drop_rate,10000); //cap it to 100%
 			}
 #ifdef RENEWAL_DROP
 			if( drop_modifier != 100 ) {
@@ -2605,7 +2656,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		clif_mvp_effect(mvp_sd);
 		clif_mvp_exp(mvp_sd,mexp);
-		pc_gainexp(mvp_sd, &md->bl, mexp,0, false);
+		pc_gainexp(mvp_sd, &md->bl, mexp,0, 0);
 		log_mvp[1] = mexp;
 
 		if( !(map[m].flag.nomvploot || type&1) ) {
@@ -3359,7 +3410,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			switch (skill_target) {
 				case MST_RANDOM: //Pick a random enemy within skill range.
 					bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
-						skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv));
+						skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv, true));
 					break;
 				case MST_TARGET:
 				case MST_AROUND5:
@@ -3394,8 +3445,8 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			}
 			md->skill_idx = i;
 			map_freeblock_lock();
-			if( !battle_check_range(&md->bl,bl,skill_get_range2(&md->bl, ms[i].skill_id,ms[i].skill_lv)) ||
-				!unit_skilluse_pos2(&md->bl, x, y,ms[i].skill_id, ms[i].skill_lv,ms[i].casttime, ms[i].cancel) )
+			if (!battle_check_range(&md->bl, bl, skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv, true)) ||
+				!unit_skilluse_pos2(&md->bl, x, y, ms[i].skill_id, ms[i].skill_lv, ms[i].casttime, ms[i].cancel))
 			{
 				map_freeblock_unlock();
 				continue;
@@ -3405,7 +3456,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			switch (skill_target) {
 				case MST_RANDOM: //Pick a random enemy within skill range.
 					bl = battle_getenemy(&md->bl, DEFAULT_ENEMY_TYPE(md),
-						skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv));
+						skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv, true));
 					break;
 				case MST_TARGET:
 					bl = map_id2bl(md->target_id);
@@ -3432,8 +3483,8 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 
 			md->skill_idx = i;
 			map_freeblock_lock();
-			if( !battle_check_range(&md->bl,bl,skill_get_range2(&md->bl, ms[i].skill_id,ms[i].skill_lv)) ||
-				!unit_skilluse_id2(&md->bl, bl->id,ms[i].skill_id, ms[i].skill_lv,ms[i].casttime, ms[i].cancel) )
+			if (!battle_check_range(&md->bl, bl, skill_get_range2(&md->bl, ms[i].skill_id, ms[i].skill_lv, true)) ||
+				!unit_skilluse_id2(&md->bl, bl->id, ms[i].skill_id, ms[i].skill_lv, ms[i].casttime, ms[i].cancel))
 			{
 				map_freeblock_unlock();
 				continue;
@@ -3525,7 +3576,7 @@ static bool mob_clone_disabled_skills(uint16 skill_id) {
 //If mode is not passed, a default aggressive mode is used.
 //If master_id is passed, clone is attached to him.
 //Returns: ID of newly crafted copy.
-int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, int mode, int flag, unsigned int duration)
+int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration)
 {
 	int mob_id;
 	int i,j,inf, fd;

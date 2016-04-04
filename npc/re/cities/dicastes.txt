@@ -36,7 +36,7 @@ dicastes01,194,159,5	script	Excited Galten#a	492,{
 	close;
 }
 
-dicastes01,202,86,3	script	Sentinel#a	492,{
+dicastes01,202,86,3	script	Sentinel#a	4_MAN_GALTUN,{
 	mes "[Sentinel]";
 	if (isequipped(2782)) {
 		mes "El Dicastes, the";
@@ -561,7 +561,7 @@ dicastes01,235,245,4	script	Excited Piom#a	490,{
 dicastes01,284,262,3	script	Favorable Knit#a	453,{
 	mes "[Favorable Knit]";
 	if (isequipped(2782)) {
-		mes "Unlike the Raphine, we Saphas";
+		mes "Unlike the Laphine, we Saphas";
 		mes "are a very close community.";
 		mes "We start by living together in common facilities after we are born.";
 		mes "That is why all Saphas are like family.";

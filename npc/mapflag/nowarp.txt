@@ -20,6 +20,7 @@
 // Special Quests Places =====
 ama_test	mapflag	nowarp
 gon_test	mapflag	nowarp
+que_ba	mapflag	nowarp
 
 // Guild Castles =============
 aldeg_cas01	mapflag	nowarp

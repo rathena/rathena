@@ -280,7 +280,7 @@ OnNPCKillEvent:
 		}
 	} else if (.Party) {
 		.@mob = killedrid;
-		getmapxy(.@map1$,.@x1,.@y1,0);
+		getmapxy(.@map1$,.@x1,.@y1,UNITTYPE_PC);
 		getpartymember getcharid(1),1;
 		getpartymember getcharid(1),2;
 		for (.@i = 0; .@i < $@partymembercount; .@i++) {
@@ -290,7 +290,7 @@ OnNPCKillEvent:
 				set .@HP, getvar(HP, $@partymembercid[.@i]);
 
 				if (.@Mission_Count && .@Mission0 && .@HP > 0) {
-					getmapxy(.@map2$,.@x2,.@y2,0);
+					getmapxy(.@map2$,.@x2,.@y2,UNITTYPE_PC);
 					if ((.@map1$ == .@map2$ || .Party == 1) && (distance(.@x1,.@y1,.@x2,.@y2) <= 30 || .Party < 3)) {
 						for (.@j = 0; .@j < .Quests; .@j++) {
 							if (strmobinfo(1,.@mob) == strmobinfo(1,getvar(getd("Mission"+.@j), $@partymembercid[.@i]))) {

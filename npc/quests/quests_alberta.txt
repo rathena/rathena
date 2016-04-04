@@ -2738,7 +2738,7 @@ alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 }
 
 alberta_in,120,93,3	script	Iromo's Mother#ep3_2	53,{
-	if (ep13_2_hiki == 8) {
+	if (ep13_2_hiki >= 8) {
 		mes "[Mother]";
 		mes "Thank you for helping my son.";
 		mes "But I think we can't do anything";

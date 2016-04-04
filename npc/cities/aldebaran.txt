@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Al De Baran Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= rAthena Dev Team; L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Al De Baran Town NPCs
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Added RS125 NPC.  Added another Kafra Reserve points agent.
 //=     The 2nd reserve points agent is not complete yet.
 //= 1.2 Lottery input number fix [Lupus], 1.2a - label typo fixed
-//= 1.3 Gatekeeper's bug fixed (wrong check and wrong item ID 
+//= 1.3 Gatekeeper's bug fixed (wrong check and wrong item ID
 //=     for underground), fixed some typos [Lupus]
 //= 1.4 Fixed Typos & Spellcheck [massdriller]
 //= 1.5 Finally added the Special Reserve 2 Lotto 8))
@@ -29,6 +29,7 @@
 //= 2.1 Rescripted most NPCs to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.2 Corrected NPC names to fall within proper resctrictions. [L0ne_W0lf]
 //= 2.3 Fixed exploit with kafra pass
+//= 2.4 Updated Kafra Reserve to official dialog. [Capuche]
 //============================================================
 
 // Al De Baran
@@ -1050,343 +1051,444 @@ aldeba_in,91,244,4	script	Kafra Service#4alde	112,{
 // Kafra Special Reserve Point NPCs
 //============================================================
 // Special Reserve ----------------------------------------------
-aldeba_in,79,161,6	script	Kafra#04	115,{
-	cutin "kafra_03",2;
-	mes "[Kafra]";
-	mes "Welcome, ^6666FF" + strcharinfo(0) + "^000000.  This is where you can trade in your special reserve points for useful items and cool prizes.";
+aldeba_in,79,161,7	script	Kafra Employee#reserve1	4_F_KAFRA3,{
+	if (checkweight(1201,1) == 0) {
+		mes "^3355FFWait a minute! Right now,";
+		mes "you're carrying too many items";
+		mes "in your inventory. Please come";
+		mes "back after storing some of";
+		mes "your things in Kafra Storage.";
+		close;
+	}
+	mes "[Kafra Employee]";
+	mes "Welcome, "+ strcharinfo(0) +"~";
+	mes "Here, you can exchange";
+	mes "the Special Reserve Points";
+	mes "you've earned by using the";
+	mes "Kafra Services for some";
+	mes "neat and useful prizes~";
 	next;
-	mes "[Kafra]";
-	mes "Each Kafra will allow you to trade in reserve points of varying amounts.  I can trade in reserve points starting from ^2222FF100 pts up to 3000 pts^000000.";
+	mes "[Kafra Employee]";
+	mes "Please remember that each window has a different amount of special reserve points you can Use";
+	mes "You can use ^7D0781from 100p to 3000p^000000 in here.";
 	next;
-	mes "[Kafra]";
-	mes "The amount of special reserve points that you have is: ^FF0000"+RESRVPTS+"^000000 pts.  Please make a choice based on your point total.";
-M_Menu:
-	next;
-	menu 	"100- Potato 7 ea",M_1a, "200- Potato 15 ea",M_1b, "300- Potato 25 ea",M_1c, "400- Potato 35 ea",M_1d,
-		"500- Potato 50 ea",M_1e, "600- Potato 60 ea",M_1f, "700- Potato 75 ea",M_1g, "800- Potato 85 ea",M_1h,
-		"900- Potato 100 ea",M_1i, "1000- 1st Lottery Chance!",M_1j, "Next items",M_2, "Cancel",M_End;
-
-	M_1a:
-		if(RESRVPTS < 100) goto sL_LowPts1;
-		mes "[Kafra]";
-		mes "Here you are.";
-		getitem 516, 7;
-		set RESRVPTS, RESRVPTS - 100;
-		close;
-	M_1b:
-		if(RESRVPTS < 200) goto sL_LowPts1;
-		mes "[Kafra]";
-		mes "Here you are.";
-		getitem 516, 15;
-		set RESRVPTS, RESRVPTS - 200;
-		close;
-	M_1c:
-		if(RESRVPTS < 300) goto sL_LowPts1;
-		mes "[Kafra]";
-		mes "Here you are.";
-		getitem 516, 25;
-		set RESRVPTS, RESRVPTS - 300;
-		close;
-	M_1d:
-		if(RESRVPTS < 400) goto sL_LowPts1;
-		mes "[Kafra]";
-		mes "Here you are.";
-		getitem 516, 35;
-		set RESRVPTS, RESRVPTS - 400;
-		close;
-	M_1e:
-		if(RESRVPTS < 500) goto sL_LowPts1;
-		mes "[Kafra]";
-		mes "Here you are.";
-		getitem 516, 50;
-		set RESRVPTS, RESRVPTS - 500;
-		close;
-	M_1f:
-		if(RESRVPTS < 600) goto sL_LowPts1;
-		mes "[Kafra]";
-		mes "Here you are.";
-		getitem 516, 60;
-		set RESRVPTS, RESRVPTS - 600;
-		close;
-	M_1g:
-		if(RESRVPTS < 700) goto sL_LowPts1;
-		mes "[Kafra]";
-		mes "Here you are.";
-		getitem 516, 75;
-		set RESRVPTS, RESRVPTS - 700;
-		close;
-	M_1h:
-		if(RESRVPTS < 800) goto sL_LowPts1;
-		mes "[Kafra]";
-		mes "Here you are.";
-		getitem 516, 85;
-		set RESRVPTS, RESRVPTS - 800;
-		close;
-	M_1i:
-		if(RESRVPTS < 900) goto sL_LowPts1;
-		mes "[Kafra]";
-		mes "Here you are.";
-		getitem 516, 100;
-		set RESRVPTS, RESRVPTS - 900;
-		close;
-	M_1j:
-		if(RESRVPTS < 1000) goto sL_LowPts1;
-		set RESRVPTS, RESRVPTS - 1000;
-		mes "[Kafra]";
-		mes "^0000FF1st Lottery Opportunity!!^000000";
-		set @Lotto, 1;
+	mes "[Kafra Employee]";
+	if ((MaxWeight - Weight) < 11000) {
+		mes "Um, but I don't think";
+		mes "you're able to carry";
+		mes "very much right now.";
+		mes "It looks like you have";
+		mes "too much stuff inside";
+		mes "your inventory.";
 		next;
-		callfunc "F_Lottery";
-		goto M_End;
-
-	sL_LowPts1:
-		mes "[Kafra]";
-		mes "I'm sorry but you do not have enough reserve points for that selection.";
-		goto M_Menu;
-
-	M_2:
-		menu 	"1100- Red Potion 7 ea",M_2a, "1300- Red Potion 15 ea",M_2b, "1500- Red Potion 25 ea",M_2c,
-			"1700- Red Potion 35 ea",M_2d, "1900- Red Potion 50 ea",M_2e, "2100- Red Potion 60 ea",M_2f,
-			"2300- Red Potion 75 ea",M_2g, "2500- Red Potion 85 ea",M_2h, "2800- Red Potion 100 ea",M_2i,
-			"3000- 2nd Lotery Chance!",M_2j, "Previous List",M_Menu, "Cancel",M_End;
-		
-		M_2a:
-			if(RESRVPTS < 1100) goto sL_LowPts2;
-			mes "[Kafra]";
-			mes "Here you are.";
-			getitem 501, 7;
-			set RESRVPTS, RESRVPTS - 1100;
-			close;
-		M_2b:
-			if(RESRVPTS < 1300) goto sL_LowPts2;
-			mes "[Kafra]";
-			mes "Here you are.";
-			getitem 501, 15;
-			set RESRVPTS, RESRVPTS - 1300;
-			close;
-		M_2c:
-			if(RESRVPTS < 1500) goto sL_LowPts2;
-			mes "[Kafra]";
-			mes "Here you are.";
-			getitem 501, 25;
-			set RESRVPTS, RESRVPTS - 1500;
-			close;
-		M_2d:
-			if(RESRVPTS < 1700) goto sL_LowPts2;
-			mes "[Kafra]";
-			mes "Here you are.";
-			getitem 501, 35;
-			set RESRVPTS, RESRVPTS - 1700;
-			close;
-		M_2e:
-			if(RESRVPTS < 1900) goto sL_LowPts2;
-			mes "[Kafra]";
-			mes "Here you are.";
-			getitem 501, 50;
-			set RESRVPTS, RESRVPTS - 1900;
-			close;
-		M_2f:
-			if(RESRVPTS < 2100) goto sL_LowPts2;
-			mes "[Kafra]";
-			mes "Here you are.";
-			getitem 501, 60;
-			set RESRVPTS, RESRVPTS - 2100;
-			close;
-		M_2g:
-			if(RESRVPTS < 2300) goto sL_LowPts2;
-			mes "[Kafra]";
-			mes "Here you are.";
-			getitem 501, 75;
-			set RESRVPTS, RESRVPTS - 2300;
-			close;
-		M_2h:
-			if(RESRVPTS < 2500) goto sL_LowPts2;
-			mes "[Kafra]";
-			mes "Here you are.";
-			getitem 501, 85;
-			set RESRVPTS, RESRVPTS - 2500;
-			close;
-		M_2i:
-			if(RESRVPTS < 2800) goto sL_LowPts2;
-			mes "[Kafra]";
-			mes "Here you are.";
-			getitem 501, 100;
-			set RESRVPTS, RESRVPTS - 2800;
-			close;
-		M_2j:
-			if(RESRVPTS < 3000) goto sL_LowPts2;
-			set RESRVPTS, RESRVPTS - 3000;
-			mes "[Kafra]";
-			mes "^0000FF2nd Lottery Opportunity!!^000000";
-			set @Lotto, 2;
-			next;
-			callfunc "F_Lottery";
-			goto M_End;
-
-		sL_LowPts2:
-			mes "[Kafra]";
-			mes "I'm sorry but you do not have enough reserve points for that selection.";
-			next;
-			goto M_2;
-
-	M_End:
-		mes "[Kafra]";
-		mes "Please come back anytime when you have more reserve points.";
-		cutin "",255;
+		mes "[Kafra Employee]";
+		mes "Please put some of";
+		mes "your things into Kafra";
+		mes "Storage. To use this";
+		mes "service, we ask that you";
+		mes "have about ^FF00001,100^000000 free units";
+		mes "of weight in your inventory.";
 		close;
+	}
+	.@total = RESRVPTS;
+	mes "Let's see...";
+	mes strcharinfo(0) +"...";
+	mes "Ah, you have a total of";
+	mes .@total +" Special Reserve Points.";
+	mes "Now what you would like";
+	mes "to exchange them for?";
+	next;
+	setarray .@select_price[0], 516, 100,7, 200,15, 300,25, 400,35, 500,50, 600,60, 700,75, 800,85, 900,100, 1000;// <item_id>,<points required>,<item quantity>
+	.@s = select( "100 = Potato 7 ea", "200 = Potato 15 ea", "300 = Potato 25 ea", "400 = Potato 35 ea", "500 = Potato 50 ea", "600 = Potato 60 ea", "700 = Potato 75 ea",
+		"800 = Potato 85 ea", "900 = Potato 100 ea", "1000 = 1st Lottery Chance!", "Next Articles", "Cancel" );
+	if (.@s == 11) {
+		setarray .@select_price[0], 501, 1100,7, 1300,15, 1500,25, 1700,35, 1900,50, 2100,60, 2300,75, 2500,85, 2800,100, 3000;
+		.@s = select( "1100 = Red Potion 7 ea:1300 = Red Potion 15 ea:1500 = Red Potion 25 ea:1700 = Red Potion 35 ea:1900 = Red Potion 50 ea:2100 = Red Potion 60 ea:" +
+			"2300 = Red Potion 75 ea:2500 = Red Potion 85 ea:2800 = Red Potion 100 ea:3000 = 2nd Lotery Chance!::Cancel" );
+		.@choose_sub_select = 1;
+	}
+	if (.@s != 12) {// cancel
+		mes "[Kafra Employee]";
+		.@index_points = .@s * 2 - 1;
+		.@index_quantity = .@s * 2;
+		if (.@total < .@select_price[.@index_points]) {
+			.@points = .@select_price[.@index_points] - .@total;
+			mes "I'm sorry, but you don't";
+			mes "enough Special Reserve";
+			mes "Points to exchange for this";
+			mes "reward. You need at least";
+			mes "^0000FF"+ .@points +"^000000 more points.";
+			close;
+		}
+		.@total = .@total - .@select_price[.@index_points];
+		mes "After receiving this";
+		mes "reward, you'll have";
+		mes "^AC0000"+ .@total +"^000000 Special Reserve";
+		mes "Points left. Would you";
+		mes "like to redeem your";
+		mes "points for this reward?";
+		next;
+		if (select( "Exchange.", "Cancel" ) == 1) {
+			RESRVPTS = .@total;
+			if (.@s < 10)
+				getitem .@select_price[0], .@select_price[.@index_quantity];
+			else {
+				mes "[Kafra Employee]";
+				if (.@choose_sub_select == 0) {
+					mes "^0000FF1st Lottery Chance!!^000000";
+					mes "It's time to test out";
+					mes "your luck. Get ready!";
+				}
+				else {
+					mes "Uh oh...";
+					mes "It's that time again~";
+					mes "It's Kafra Lottery Time!";
+					mes "Let's see how good your";
+					mes "luck is today. Ready?";
+				}
+				next;
+				mes "[Kafra Employee]";
+				mes "How many times";
+				mes "would you like to spin";
+				mes "the lottery machine?";
+				mes "You can spin it 1 to 5 times.";
+				next;
+				while( input(.@input,1,5) != 0 ) {
+					mes "[Kafra Employee]";
+					mes "Excuse me...?";
+					mes "Please choose";
+					mes "a number from 1 to 5.";
+					next;
+				}
+				.@choose_prize = rand(1,20);
+				while( .@input != .@random_while ) {
+					.@sound_word = rand(1,3);
+					if (.@sound_word == 1) {
+						mes "^3355FFDrrrrrrrrrrrrrrrrrr...";
+						mes "Tuum tuum tuum!^000000";
+					}
+					else if (.@sound_word == 2) {
+						mes "^3355FFChika chika chika";
+						mes "Shooooooooooom~^000000";
+					}
+					else if (.@sound_word == 3) {
+						mes "^3355FFTuk tuk tuk tuk";
+						mes "Flaaaaaavaaaaah~^000000";
+					}
+					next;
+					.@random_while++;
+				}
+				mes "[Kafra Employee]";
+				if (.@choose_sub_select == 0) {
+					mes "Ooh, something";
+					mes "came out! Let's see";
+					mes "what you've won~";
+					mes "Oh goodness, it's...!";
+					next;
+					mes "[Kafra Employee]";
+					if (.@choose_prize <= 10) {
+						getitem 516,100;// Sweet_Potato
+						mes "Hm? F-fourth prize?";
+						mes "You got the 4th prize!!";
+						mes "Well, that's not too bad.";
+						mes "That's 100 Potatoes!";
+						mes "When they're sliced, then fried, they make a great snack when";
+						mes "drinking with your friends~";
+					}
+					else if (.@choose_prize <= 15) {
+						getitem 602,4;// Wing_Of_Butterfly
+						mes "It's Third Prize!";
+						mes "4 Butterfly Wings~";
+						mes "When you're in trouble,";
+						mes "just wave one of these";
+						mes "to take you away...";
+						mes "To your safe place.";
+					}
+					else if (.@choose_prize <= 19) {
+						getitem 2403,1;// Shoes
+						mes "Second Prize!";
+						mes "A brand new shiny pair";
+						mes "of Shoes! Its elegant design";
+						mes "and durability comes with our";
+						mes "highest recommendation. We";
+						mes "hope you enjoy your new shoes~";
+					}
+					else if (.@choose_prize == 20) {
+						getitem 2328,1;// Wooden_Mail
+						mes "Whoa...!";
+						mes "First Prize!";
+						mes "Your very own";
+						next;
+						mes "set of Wooden Mail!";
+						mes "Today must be your";
+						mes "lucky day, adventurer!";
+					}
+				}
+				else {
+					mes "It looks like";
+					mes "something came";
+					mes "out! What could it be?";
+					mes "Ooh, you just won...";
+					next;
+					mes "[Kafra Employee]";
+					if (.@choose_prize <= 10) {
+						getitem 501,100;// Red_Potion
+						mes "F-fourth prize...?!";
+						mes "Boooo! 100 Red Potions.";
+						mes "Wait.. That's actually pretty";
+						mes "good! Yaaaaaay~ Now you";
+						mes "can look like a high roller by";
+						mes "sharing them with your friends!";
+					}
+					else if (.@choose_prize <= 16) {
+						getitem 2201,1;// Sunglasses
+						mes "Third Prize!";
+						mes "Your very own pair";
+						mes "of suave Sunglasses!";
+						mes "It'll give you an edge in";
+						mes "the war of looking cool,";
+						mes "or when playing poker~";
+					}
+					else if (.@choose_prize <= 19) {
+						getitem 2226,1;// Cap
+						mes "Second Prize!";
+						mes "A... Cap? Hmmm,";
+						mes "these have pretty good";
+						mes "Defense, but I'm not so";
+						mes "sure of how fashionable";
+						mes "this hat is. Oh well...";
+					}
+					else if (.@choose_prize == 20) {
+						getitem 505,3;// Blue_Potion
+						mes "Oh wow...!";
+						mes "First Prize!";
+						mes "3 Blue Potions~";
+						mes "With enough of these,";
+						mes "you can use your skills";
+						mes "with a bit more impunity~";
+					}
+				}
+			}
+			next;
+		}
+	}
+	mes "[Kafra Employee]";
+	mes "Alright then. Please";
+	mes "use our services to";
+	mes "collect more and more";
+	mes "Special Reserve Points";
+	mes "for even better rewards.";
+	mes "Thank you for your patronage.";
+	close;
 }
 
-// Special Reserve 2 ----------------------------------------------
-aldeba_in,88,161,3	script	Kafra#05	115,{
-	cutin "kafra_03",2;
-	mes "[Kafra]";
-	mes "Welcome ^5577FF"+strcharinfo(0)+"^000000.  We are currently having a special event for our customers.";
-	mes "You can get free gifts by using your ^FF5533special reserve points^000000 in the ^3355FFSpecial Kafra Gift Event^000000!!";
+aldeba_in,88,161,3	script	Kafra Employee#reserve2	4_F_KAFRA3,{
+	mes "[Kafra Employee]";
+	mes "Welcome~ "+ strcharinfo(0) +".";
+	mes "Currently, we, Kafra Center is having a special event for our customers.";
 	next;
-	mes "[Kafra]";
-	mes "Would you like to use your points?";
+	mes "[Kafra Employee]";
+	mes "You can get free gifts by using special reserve points with ^FF0000Special Kafra ^529DFFGift Event!^000000";
+	mes "Kafra Corporation added new gifts in this event.";
 	next;
-	menu "Yes I would.",-, "Maybe next time.",M_End;
-
-		mes "[Kafra]";
-		mes "You have the following amount of special reserve points: ^5544FF"+RESRVPTS+"^000000.";
-		mes "Make a choice and test your luck!";
+	mes "[Kafra Employee]";
+	mes "Do you want to use your points?";
+	next;
+	if (select( "Yes, I do","Maybe in next time" ) == 1) {
+		mes "[Kafra Employee]";
+		if ((MaxWeight - Weight) < 11000) {
+			mes "....Oh dear... What are you carrying so many things...?";
+			mes "I don't think you can keep the received items~";
+			next;
+			mes "[Kafra Employee]";
+			mes "I'm sorry~ but~";
+			mes "Please, visit Kafra warehouse and store your items until you have free space of ^0000FF1100^000000 and come back.";
+			mes "I appolize for inconvinence~";
+			close;
+		}
+		mes "Your special reserve points are ^FF0000"+ RESRVPTS +"^000000~";
+		mes "Choose a category to test your luck.";
 		next;
-		menu "5000pts = 1st Lottery Chance!",sM_1st, "7000pts = 2nd Lottery Chance!",sM_2nd, "10000pts = 3rd Lottery Chance!",sM_3rd, "Cancel",M_End; 
-
-		sM_1st:
-			if(RESRVPTS < 5000) goto sL_NotEnuf;
-			set RESRVPTS, RESRVPTS - 5000;
-			set @Lotto, 3;
-			callfunc "F_Lottery";
-			goto M_End;
-		sM_2nd:
-			if(RESRVPTS < 7000) goto sL_NotEnuf;
-			set RESRVPTS, RESRVPTS - 7000;
-			set @Lotto, 4;
-			callfunc "F_Lottery";
-			goto M_End;
-		sM_3rd:
-			if(RESRVPTS < 10000) goto sL_NotEnuf;
-			set RESRVPTS, RESRVPTS - 10000;
-			set @Lotto, 5;
-			callfunc "F_Lottery";
-			goto M_End;
-
-			sL_NotEnuf:
-				mes "[Kafra]";
-				mes "I'm sorry dear but you do not have enough points for this selection.";
-				cutin "",255;
+		setarray .@points[1],5000,7000,10000;
+		.@s = select( "5000p = 1st Lottery Chance!", "7000p = 2nd Lottery Chance!", "10000p = 3rd Lottery Chance!", "Cancel" );
+		if (.@s != 4) {
+			mes "[Kafra Employee]";
+			if (RESRVPTS < .@points[.@s]) {
+				mes "I'm sorry~ dear~";
+				mes "You can't choose the selected chance because you do not have enough special reserve points.";
+				mes "Please check your special reserve points and choose another one~";
 				close;
-	M_End:
-		mes "[Kafra]";
-		mes "No problem.  Collect more and more special reserve points by using the Kafra Services found throughout Rune Midgard.";
-		mes "Thank you for using Kafra Corp. services.";
-		cutin "",255;
-		close;
-}
-
-// Function F_Lottery ------------------------------------------------------------------------------------------
-function	script	F_Lottery	{
-	mes "[Kafra]";
-	mes "You have the unique opportunity to win a prize sent down from the heavens themselves!!";
-	next;
-	mes "[Kafra]";
-	mes "Don't miss this one and only chance! Now dear, are you ready?";
-	next;
-	mes "[Kafra]";
-	mes "How many times do you want the Lottery Machine to spin? You can choose up to 5 times.";
-	next;
-	input @input;
-	if(@input < 1 || @input > 5) set @input, rand(1,5); //Lupus's fix
-	callsub sF_Spin;
-	mes "[Kafra]";
-	mes "Ok~ Let me check the results~ guess what it is?";
-	next;
-	mes "[Kafra]";
-	mes "^FF0000Lets see.... This is...!!^000000";
-	next;
-	if(@temp <  1) goto sL_Prize1;
-	if(@temp <  2) goto sL_Prize2;
-	if(@temp <  3) goto sL_Prize3;
-	if(@temp <=  4) goto sL_Prize4;
-	goto sL_Prize5;
-
-	sL_Prize1:
-		mes "[Kafra]";
-		mes "WOW!!!!..... You win!!! 1st Prize~! Congratulations~~ You got the 1st prize~~";
-		if(@Lotto == 1) getitem 2328,1;//Items: Wooden_Mail,
-		if(@Lotto == 2) getitem 2307,1;//Items: Mantle,
-		if(@Lotto == 3) getitem 657,10;//Items: Berserk_Potion,
-		if(@Lotto == 4) {
-			getitem 607,2;//Items: Yggdrasilberry,
-			getitem 608,1;//Items: Yggdrasil_Seed,
+			}
+			RESRVPTS = RESRVPTS - .@points[.@s];
+			mes "^0000FF"+ F_GetNumSuffix(.@s) +" Lottery Chance!!^000000";
+			next;
+			mes "[Kafra Employee]";
+			mes "It's time to try your luck.";
+			next;
+			mes "[Kafra Employee]";
+			mes "Let's see how lucky you are. Now! Get ready!";
+			next;
+			.@sound_word = rand(1,3);
+			if (.@sound_word == 1)
+				mes "'Drrrrrr~ Drrrrrr~'";
+			else if (.@sound_word == 2)
+				mes "'Rrrrrrr...'";
+			else if (.@sound_word == 3)
+				mes "'Boing.. Boing.. Clink!'";
+			next;
+			mes "[Kafra Employee]";
+			mes "Something has come out~ Let's see what you got~";
+			mes "G~ U~ E~ S~ S~ W~ H~ A~ T~";
+			next;
+			mes "[Kafra Employee]";
+			mes "^FF0000Oh, my goodness! It's!!^000000";
+			next;
+			mes "[Kafra Employee]";
+			.@choose_prize = rand(1,20);
+			if (.@s == 1) {
+				if (.@choose_prize < 15) {
+					getitem 501,150;// Red_Potion
+					mes "What a pity!";
+					mes "You got the 4th prize!!";
+					mes "The prize is ^00FF00150 Red Potions~^000000";
+					next;
+					mes "[Kafra Employee]";
+					mes "Whoa~ 150 potions! It is enough to share with your friends~";
+				}
+				else if (.@choose_prize < 18) {
+					getitem 645,15;// Center_Potion
+					mes "The 3rd~~";
+					mes "The 3rd prize!";
+					mes "The prize is ^00FF0015 Concentration Potion~^000000";
+					next;
+					mes "[Kafra Employee]";
+					mes "We always use this when we need to concentrate on something.";
+					mes "However, overdose is not good for your body~";
+				}
+				else if (.@choose_prize < 20) {
+					getitem 505,3;// Blue_Potion
+					mes "The 2nd~~";
+					mes "The 3rd prize~~";
+					mes "The prize is ^00FF003 Blue Potions~^000000";
+					next;
+					mes "[Kafra Employee]";
+					mes "Try these when your spiritual power is low~";
+				}
+				else if (.@choose_prize == 20) {
+					getitem 608,1;// Seed_Of_Yggdrasil
+					mes "Whoa~!! The first... The First!!!";
+					mes "Congratulations~~ You got the 1st prize~";
+					mes "The prize is ^00FF001 Yggdrasil Seed~^000000";
+					next;
+					mes "[Kafra Employee]";
+					mes "I guess you spent entire luck for this lottery chance~";
+				}
+			}
+			else if (.@s == 2) {
+				if (.@choose_prize < 15) {
+					getitem 504,10;// White_Potion
+					mes "What a pity!";
+					mes "You got the 4th prize!!";
+					mes "The prize is ^00FF0010 White Potions~^000000";
+					next;
+					mes "[Kafra Employee]";
+					mes "The greatest among potions! Use it before you fall into faint~";
+				}
+				else if (.@choose_prize < 18) {
+					getitem 656,15;// Awakening_Potion
+					mes "The 3rd~~";
+					mes "The 3rd prize!";
+					mes "The prize is ^00FF0015 Awakening Potions~^000000";
+					next;
+					mes "[Kafra Employee]";
+					mes "An awakening potion is better than a concentration potion!";
+					mes "Overdose is not good for your body~";
+				}
+				else if (.@choose_prize < 20) {
+					getitem 657,10;// Berserk_Potion
+					mes "The 2nd~~";
+					mes "The 3rd prize~~";
+					mes "The prize is ^00FF0010 Berserk Potions~^000000";
+					next;
+					mes "[Kafra Employee]";
+					mes "Overdose may cause madness~";
+				}
+				else if (.@choose_prize == 20) {
+					getitem 608,1;// Seed_Of_Yggdrasil
+					getitem 607,1;// Yggdrasilberry
+					mes "Whoa~!! The first... The First!!!";
+					mes "Congratulations~~ You got the 1st prize~";
+					mes "The prize is ^00FF001 Yggdrasilberry~^000000";
+					mes "The prize is ^00FF001 Yggdrasil Seed~^000000";
+					next;
+					mes "[Kafra Employee]";
+					mes "I guess you spent entire luck for this lottery chance~";
+				}
+			}
+			else if (.@s == 3) {
+				if (.@choose_prize < 15) {
+					getitem 504,30;// White_Potion
+					mes "What a pity!";
+					mes "You got the 4th prize!!";
+					mes "The prize is ^00FF00White_Potion 30°³~^000000";
+					next;
+					mes "[Kafra Employee]";
+					mes "The greatest among potions! Use it before you fall into faint~";
+				}
+				else if (.@choose_prize < 18) {
+					getitem 505,10;// Blue_Potion
+					mes "The 3rd~~";
+					mes "The 3rd prize!";
+					mes "The prize is ^00FF0010 Blue Potions~^000000";
+					next;
+					mes "[Kafra Employee]";
+					mes "Try these when your spiritual power is low~";
+				}
+				else if (.@choose_prize < 20) {
+					getitem 608,1;// Seed_Of_Yggdrasil
+					getitem 526,10;// Royal_Jelly
+					mes "The 2nd~~";
+					mes "The 3rd prize~~";
+					mes "The prize is ^00FF001 Yggdrasil Seed~^000000";
+					mes "The prize is ^00FF0010 Royal Jellies~^000000";
+					next;
+					mes "[Kafra Employee]";
+					mes "What a gift set~";
+					mes "These are very healthy food so ~";
+				}
+				else if (.@choose_prize == 20) {
+					getitem 607,3;// Yggdrasilberry
+					getitem 608,2;// Seed_Of_Yggdrasil
+					mes "Whoa~!! The first... The First!!!";
+					mes "Congratulations~~ You got the 1st prize~";
+					mes "The prize is ^00FF003 Yggdrasilberries~^000000";
+					mes "The prize is ^00FF002 Yggdrasil Seeds~^000000";
+					next;
+					mes "[Kafra Employee]";
+					mes "I guess you spent entire luck for this lottery chance~";
+				}
+			}
+			mes "Congratulations~~";
+			close;
 		}
-		if(@Lotto == 5) getitem 607,3;//Items: Yggdrasilberry,
-		return;
-	sL_Prize2:
-		mes "[Kafra]";
-		mes "Oh! WOW! You've won the 2nd prize! Congratulations!!";
-		if(@Lotto == 1) getitem 2403,1;//Items: Shoes,
-		if(@Lotto == 2) getitem 2226,1;//Items: Cap,
-		if(@Lotto == 3) getitem 2201,1;//Items: Sunglasses,
-		if(@Lotto == 4) getitem 526,3;//Items: Royal_Jelly,
-		if(@Lotto == 5) {
-			getitem 608,1;//Items: Yggdrasil_Seed,
-			getitem 526,10;//Items: Royal_Jelly,
-		}
-		return;
-	sL_Prize3:
-		mes "[Kafra]";
-		mes "Congratulations! You've won the 3rd prize.";
-		if(@Lotto == 1) getitem 602,4;//Items: Butterfly_Wing,
-		if(@Lotto == 2) getitem 505,3;//Items: Blue_Potion,
-		if(@Lotto == 3) getitem 2203,1;//Items: Glasses,
-		if(@Lotto == 4) getitem 504,15;//Items: White_Potion,
-		if(@Lotto == 5) getitem 504,30;//Items: White_Potion,
-		return;
-	sL_Prize4:
-		mes "[Kafra]";
-		mes "You've won the 4th prize.";
-		if(@Lotto == 1) getitem 516,100;//Items: Sweet_Potato,
-		if(@Lotto == 2) getitem 501,150;//Items: Red_Potion,
-		if(@Lotto == 3) getitem 502,150;//Items: Orange_Potion,
-		if(@Lotto == 4) getitem 505,5;//Items: Blue_Potion,
-		if(@Lotto == 5) getitem 505,10;//Items: Blue_Potion,
-		return;
-	sL_Prize5:
-		mes "[Kafra]";
-		mes "You've won the 5th prize.";
-		if(@Lotto == 1) getitem 516,50;//Items: Sweet_Potato,
-		if(@Lotto == 2) getitem 501,100;//Items: Red_Potion,
-		if(@Lotto == 3) getitem 501,200;//Items: Red_Potion,
-		if(@Lotto == 4) getitem 501,250;//Items: Red_Potion,
-		if(@Lotto == 5) getitem 501,300;//Items: Red_Potion,
-		return;
-
-sF_Spin:
-	mes "[Lottery Machine]";
-	mes "Number of spins remaining: "+@input;
-	next;
-	mes "[Lottery Machine]";
-	mes "(rumble~rumble~rumble~)...";
-	next;
-	set @temp, rand(10);
-	set @input, @input -1;
-	if(@input <= 0) return;
-	goto sF_Spin;
+	}
+	mes "[Kafra Employee]";
+	mes "No Problem~";
+	mes "Collect more~ and more~ special reserve points~";
+	mes "Thank you for using Kafra Corporation's services~~";
+	close;
 }
 
 // Inside Clock Tower
 //============================================================
 c_tower3,10,249,4	script	Gatekeeper#ct	84,{
 	//Key_Of_Clock_Tower
-	callfunc "F_ClockTowerGate","4th",7026,"c_tower4",185,44; 
+	callfunc "F_ClockTowerGate","4th",7026,"c_tower4",185,44;
 }
 
 alde_dun03,264,16,4	script	Gatekeeper#ct1	101,{
 	//Underground_Key
-	callfunc "F_ClockTowerGate","B4th",7027,"alde_dun04",79,267; 
+	callfunc "F_ClockTowerGate","B4th",7027,"alde_dun04",79,267;
 }
 
 function	script	F_ClockTowerGate	{
@@ -1468,7 +1570,7 @@ function	script	F_ClockTowerGate	{
 			mes "Please,You may enter.";
 			mes "May God bless you ..";
 			close2;
-			delitem .@item_req,1; 
+			delitem .@item_req,1;
 			warp getarg(2),getarg(3),getarg(4);
 			end;
 		}

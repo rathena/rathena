@@ -654,6 +654,7 @@
 	script_set_constant("bSubSkill",SP_SUB_SKILL,false);
 	script_set_constant("bSubDefEle",SP_SUBDEF_ELE,false);
 	script_set_constant("bStateNoRecoverRace",SP_STATE_NORECOVER_RACE,false);
+	script_set_constant("bCriticalLong",SP_CRITICAL_RANGEATK,false);
 
 	/* equip positions */
 	// Disabled as long as we did not clean the EQI_/EQP_ mess up [Lemongrass]
@@ -1348,6 +1349,16 @@
 	export_constant(SC_PROMOTE_HEALTH_RESERCH);
 	export_constant(SC_ENERGY_DRINK_RESERCH);
 	export_constant(SC_NORECOVER_STATE);
+	export_constant(SC_SUHIDE);
+	export_constant(SC_SU_STOOP);
+	export_constant(SC_SPRITEMABLE);
+	export_constant(SC_CATNIPPOWDER);
+	export_constant(SC_SV_ROOTTWIST);
+	export_constant(SC_BITESCAR);
+	export_constant(SC_ARCLOUSEDASH);
+	export_constant(SC_TUNAPARTY);
+	export_constant(SC_SHRIMP);
+	export_constant(SC_FRESHSHRIMP);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -2309,6 +2320,7 @@
 	export_constant(SI_LIMIT_POWER_BOOSTER);
 	export_constant(SI_TIME_ACCESSORY);
 	export_constant(SI_EP16_DEF);
+	export_constant(SI_NORMAL_ATKED_SP);
 	export_constant(SI_BODYSTATE_STONECURSE);
 	export_constant(SI_BODYSTATE_FREEZING);
 	export_constant(SI_BODYSTATE_STUN);
@@ -2326,6 +2338,10 @@
 	export_constant(SI_HEALTHSTATE_BLOODING);
 	export_constant(SI_HEALTHSTATE_HEAVYPOISON);
 	export_constant(SI_HEALTHSTATE_FEAR);
+	export_constant(SI_CHERRY_BLOSSOM_CAKE);
+	export_constant(SI_SU_STOOP);
+	export_constant(SI_CATNIPPOWDER);
+	export_constant(SI_SV_ROOTTWIST);
 	export_constant(SI_ATTACK_PROPERTY_NOTHING);
 	export_constant(SI_ATTACK_PROPERTY_WATER);
 	export_constant(SI_ATTACK_PROPERTY_GROUND);
@@ -2346,6 +2362,14 @@
 	export_constant(SI_RESIST_PROPERTY_DARKNESS);
 	export_constant(SI_RESIST_PROPERTY_TELEKINESIS);
 	export_constant(SI_RESIST_PROPERTY_UNDEAD);
+	export_constant(SI_BITESCAR);
+	export_constant(SI_ARCLOUSEDASH);
+	export_constant(SI_TUNAPARTY);
+	export_constant(SI_SHRIMP);
+	export_constant(SI_FRESHSHRIMP);
+	export_constant(SI_PERIOD_RECEIVEITEM);
+	export_constant(SI_PERIOD_PLUSEXP);
+	export_constant(SI_PERIOD_PLUSJOBEXP);
 	export_constant(SI_RUNEHELM);
 	export_constant(SI_HELM_VERKANA);
 	export_constant(SI_HELM_RHYDO);
@@ -2354,6 +2378,10 @@
 	export_constant(SI_HELM_ISIA);
 	export_constant(SI_HELM_ASIR);
 	export_constant(SI_HELM_URJ);
+	export_constant(SI_SUHIDE);
+	export_constant(SI_DORAM_BUF_01);
+	export_constant(SI_DORAM_BUF_02);
+	export_constant(SI_SPRITEMABLE);
 
 	/* elements */
 	export_constant(ELE_NEUTRAL);
@@ -2746,6 +2774,14 @@
 	export_constant(SCSTART_NORATEDEF);
 	export_constant(SCSTART_NOICON);
 
+	export_constant(UNITTYPE_PC);
+	export_constant(UNITTYPE_NPC);
+	export_constant(UNITTYPE_PET);
+	export_constant(UNITTYPE_MOB);
+	export_constant(UNITTYPE_HOM);
+	export_constant(UNITTYPE_MER);
+	export_constant(UNITTYPE_ELEM);
+
 	/* unit control - mob */
 	export_constant(UMOB_SIZE);
 	export_constant(UMOB_LEVEL);
@@ -2770,6 +2806,7 @@
 	export_constant(UMOB_SHIELD);
 	export_constant(UMOB_WEAPON);
 	export_constant(UMOB_LOOKDIR);
+	export_constant(UMOB_CANMOVETICK);
 	export_constant(UMOB_STR);
 	export_constant(UMOB_AGI);
 	export_constant(UMOB_VIT);
@@ -2988,6 +3025,25 @@
 	export_constant(UNPC_AMOTION);
 	export_constant(UNPC_ADELAY);
 	export_constant(UNPC_DMOTION);
+
+	export_constant(NAV_NONE);
+	export_constant(NAV_AIRSHIP_ONLY);
+	export_constant(NAV_SCROLL_ONLY);
+	export_constant(NAV_AIRSHIP_AND_SCROLL);
+	export_constant(NAV_KAFRA_ONLY);
+	export_constant(NAV_KAFRA_AND_AIRSHIP);
+	export_constant(NAV_KAFRA_AND_SCROLL);
+	export_constant(NAV_ALL);
+
+	export_constant(ADOPT_ALLOWED);
+	export_constant(ADOPT_ALREADY_ADOPTED);
+	export_constant(ADOPT_MARRIED_AND_PARTY);
+	export_constant(ADOPT_EQUIP_RINGS);
+	export_constant(ADOPT_NOT_NOVICE);
+	export_constant(ADOPT_CHARACTER_NOT_FOUND);
+	export_constant(ADOPT_MORE_CHILDREN);
+	export_constant(ADOPT_LEVEL_70);
+	export_constant(ADOPT_MARRIED);
 
 	#undef export_constant
 

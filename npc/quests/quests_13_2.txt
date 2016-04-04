@@ -99,7 +99,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
-			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+			if(!callfunc("F_CanOpenStorage")){
 				mes "[Cat Hand Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
@@ -146,7 +146,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
-			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+			if(!callfunc("F_CanOpenStorage")){
 				mes "[Cat Hand Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
@@ -267,7 +267,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
-			if(basicskillcheck() && getskilllv("NV_BASIC") < 6){
+			if(!callfunc("F_CanOpenStorage")){
 				mes "[Cat Hand Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
@@ -965,7 +965,7 @@ spl_fild02,45,214,0	script	????#ep13_mdplant01	844,{
 	}
 	else if (ep13_mdrama > 2) {
 		mes "This is a marking Terra left to remember the way back home.";
-		mes "A knotted leaf is pointing^4d4ff South^000000.";
+		mes "A knotted leaf is pointing^4d4dff South^000000.";
 		close2;
 	}
 	else {

@@ -15,11 +15,14 @@
 #define EL_MODE_ASSIST (MD_CANMOVE|MD_ASSIST)
 #define EL_MODE_PASSIVE MD_CANMOVE
 
-#define EL_SKILLMODE_PASIVE 0x1
-#define EL_SKILLMODE_ASSIST 0x2
-#define EL_SKILLMODE_AGGRESSIVE 0x4
+///Enum of Elemental Skill Mode
+enum elemental_skillmode {
+	EL_SKILLMODE_PASSIVE    = 0x1,
+	EL_SKILLMODE_ASSIST     = 0x2,
+	EL_SKILLMODE_AGGRESSIVE = 0x4,
+};
 
-///Enum of ELemental ID
+///Enum of Elemental ID
 enum elemental_elementalid {
 	ELEMENTALID_AGNI_S = 2114,
 	ELEMENTALID_AGNI_M,
@@ -80,8 +83,8 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 int elemental_data_received(struct s_elemental *ele, bool flag);
 int elemental_save(struct elemental_data *ed);
 
-int elemental_change_mode_ack(struct elemental_data *ed, int mode);
-int elemental_change_mode(struct elemental_data *ed, int mode);
+int elemental_change_mode_ack(struct elemental_data *ed, enum elemental_skillmode skill_mode);
+int elemental_change_mode(struct elemental_data *ed, enum e_mode mode);
 
 void elemental_heal(struct elemental_data *ed, int hp, int sp);
 int elemental_dead(struct elemental_data *ed);

@@ -14,7 +14,7 @@
 //= 1.1 Navigation system update. [Euphy]
 //============================================================ 
 
-dewata,202,106,4	script	Dewata Guide#dewata01	535,{
+dewata,202,106,4	script	Dewata Guide#dewata01	4_M_DEWWOMAN,{
 	mes "[Dewata Guide]";
 	mes "Welcome to ^8B4513Dewata Island^000000,";
 	mes "a place with dazzling waves and charming views it's a great place to relax.";

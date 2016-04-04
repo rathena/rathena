@@ -70,6 +70,18 @@ struct s_packet_keys {
 };
 #endif
 
+enum e_CASHSHOP_ACK {
+	ERROR_TYPE_NONE             = 0, ///< The deal has successfully completed.
+	ERROR_TYPE_NPC              = 1, ///< The Purchase has failed because the NPC does not exist.
+	ERROR_TYPE_SYSTEM           = 2, ///< The Purchase has failed because the Kafra Shop System is not working correctly.
+	ERROR_TYPE_INVENTORY_WEIGHT = 3, ///< You are over your Weight Limit.
+	ERROR_TYPE_EXCHANGE         = 4, ///< You cannot purchase items while you are in a trade.
+	ERROR_TYPE_ITEM_ID          = 5, ///< The Purchase has failed because the Item Information was incorrect.
+	ERROR_TYPE_MONEY            = 6, ///< You do not have enough Kafra Credit Points.
+	ERROR_TYPE_AMOUNT           = 7, ///< You can purchase up to 10 items.
+	ERROR_TYPE_PURCHASE_FAIL    = 8, ///< Some items could not be purchased.
+};
+
 enum e_BANKING_DEPOSIT_ACK {
 	BDA_SUCCESS  = 0x0,
 	BDA_ERROR    = 0x1,
@@ -122,6 +134,12 @@ enum BROADCASTING_SPECIAL_ITEM_OBTAIN {
 	ITEMOBTAIN_TYPE_BOXITEM =  0x0,
 	ITEMOBTAIN_TYPE_MONSTER_ITEM =  0x1,
 	ITEMOBTAIN_TYPE_NPC =  0x2,
+};
+
+enum e_adopt_reply {
+	ADOPT_REPLY_MORE_CHILDREN = 0,
+	ADOPT_REPLY_LEVEL_70,
+	ADOPT_REPLY_MARRIED,
 };
 
 // packet_db[SERVER] is reserved for server use
@@ -520,7 +538,7 @@ void clif_dropitem(struct map_session_data *sd,int n,int amount);	//self
 void clif_delitem(struct map_session_data *sd,int n,int amount, short reason); //self
 void clif_updatestatus(struct map_session_data *sd,int type);	//self
 void clif_changestatus(struct map_session_data* sd,int type,int val);	//area
-int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2);	// area
+int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
 void clif_takeitem(struct block_list* src, struct block_list* dst);
 void clif_sitting(struct block_list* bl);
 void clif_standing(struct block_list* bl);
@@ -613,7 +631,7 @@ void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id
 
 void clif_produceeffect(struct map_session_data* sd,int flag, unsigned short nameid);
 
-void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, uint8 flag);
+void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, bool visible);
 void clif_skill_delunit(struct skill_unit *unit);
 void clif_skillunit_update(struct block_list* bl);
 
@@ -816,7 +834,7 @@ void clif_quest_delete(struct map_session_data * sd, int quest_id);
 void clif_quest_update_status(struct map_session_data * sd, int quest_id, bool active);
 void clif_quest_update_objective(struct map_session_data * sd, struct quest * qd, int mobid);
 void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short state, short color);
-void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool quest);
+void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool quest, bool lost);
 
 int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target type);
 void do_init_clif(void);
@@ -843,6 +861,7 @@ void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd);
 
 // ADOPTION
 void clif_Adopt_reply(struct map_session_data *sd, int type);
+void clif_Adopt_request(struct map_session_data *sd, struct map_session_data *src, int p_id);
 
 // MERCENARIES
 void clif_mercenary_info(struct map_session_data *sd);
@@ -945,6 +964,7 @@ enum clif_colors {
 	COLOR_RED,
 	COLOR_WHITE,
 	COLOR_YELLOW,
+	COLOR_CYAN,
 	COLOR_MAX
 };
 unsigned long color_table[COLOR_MAX];
@@ -970,6 +990,7 @@ void clif_merge_item_open(struct map_session_data *sd);
 void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, const char *srcname);
 
 void clif_dressing_room(struct map_session_data *sd, int flag);
+void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
 void clif_SelectCart(struct map_session_data *sd);
 
 #endif /* _CLIF_H_ */

@@ -25,9 +25,9 @@
 SC_STONE	()
 	desc: DEF -50%; if HP>25% lose 1% HP/5 sec; MDEF +25%; change element to Earth Lv 1; ignore Steal & Lex Aeterna; can't move/attack/pick item/use item/use skill/sit/logout
 	val1:
-	val2: Caster's object ID (for mob_log_damage)
-	val3: Tick
-	val4: Petrifying tick
+	val2: Caster's object ID
+	val3: Incubation time
+	val4: Remaining tick
 
 SC_FREEZE	()
 	desc: DEF -50%; FLEE = 0; MDEF +25%; ignore Steal, Lex Aeterna, Storm Gust, Falling Ice Pillar; change element to Water Lv 1; can't move/attack/pick item/use item/sit/logout
@@ -44,9 +44,9 @@ SC_SLEEP	()
 SC_POISON	()
 	desc: DEF -25%; if HP>25% lose 1.5% + 2 HP/sec; SP Regeneration is disabled
 	val1: Skill Level
-	val2: Caster's object ID (for mob_log_damage)
-	val3: Tick
-	val4: HP Damage
+	val2: Caster's object ID
+	val3: 
+	val4: Remaining tick
 
 SC_CURSE	()
 	desc: ATK-25%; LUK = 0; Movement speed -300
@@ -69,14 +69,14 @@ SC_BLEEDING	(SI_BLEEDING)
 	val1: Skill Level
 	val2: Caster's object ID (for mob_log_damage)
 	val3:
-	val4: Tick
+	val4: Remaining tick
 
 SC_DPOISON	()
 	desc: DEF -25%; if HP>25% lose 10/15% HP/sec
 	val1: Skill Level
 	val2: Caster's object ID (for mob_log_damage)
-	val3: Tick
-	val4: HP Damage
+	val3: 
+	val4: Remaining tick
 
 SC_PROVOKE	(SI_PROVOKE)
 	desc: Decrease DEF by (5+(5*Skill Lv))%; Increase ATK by (2+(3*Skill lv))%
@@ -1275,7 +1275,7 @@ SC_FOOD_LUK_CASH	(SI_FOOD_LUK_CASH)
 	val1: +LUK
 
 SC_FEAR	()
-	desc:
+	desc: Cause SC_ANKLE for 2 seconds, Hit/Flee -20%, remove blind, immune to blind
 	val1:
 
 SC_BURNING	(SI_BURNT)
@@ -1283,7 +1283,7 @@ SC_BURNING	(SI_BURNT)
 	val1: Skill Level
 	val2: 1000
 	val3: Caster's object ID (for mob_log_damage)
-	val4: Tick
+	val4: Remaining tick
 
 SC_FREEZING	()
 	desc:
@@ -1519,9 +1519,9 @@ SC_ROLLINGCUTTER	()
 SC_TOXIN	(SI_TOXIN)
 	desc: Inflict damage, which causes the affected entity to flinch every 10 seconds; This will interrupt the skill casting, even if protected against it
 	val1: GC_WEAPONRESEARCH Skill Level
-	val2: Caster's object ID (for mob_log_damage)
+	val2: Caster's object ID
 	val3:
-	val4: Tick
+	val4: Remaining tick
 
 SC_PARALYSE	(SI_PARALYSE)
 	desc: Decrease both ASPD and Flee Rate by 10% and halve Movement Speed, which does not stack with Decrease AGI, Quagmire, Marsh Of Abyss or Freezing status
@@ -1540,9 +1540,9 @@ SC_VENOMBLEED	(SI_VENOMBLEED)
 SC_MAGICMUSHROOM	(SI_MAGICMUSHROOM)
 	desc: Force the affected entity to use /heh emote, to randomly use skills and drain 3% of Max HP every 4 seconds
 	val1: GC_WEAPONRESEARCH Skill Level
-	val2: Caster's object ID (for mob_log_damage)
+	val2: Caster's object ID
 	val3:
-	val4: Tick
+	val4: Remaining tick
 
 SC_DEATHHURT	(SI_DEATHHURT)
 	desc: Drop the healing effectiveness by 20%; This effect stacks with Critical Wounds
@@ -1556,7 +1556,7 @@ SC_PYREXIA	(SI_PYREXIA)
 	val1: GC_WEAPONRESEARCH Skill Level
 	val2:
 	val3:
-	val4: Tick
+	val4: Remaining tick
 
 SC_OBLIVIONCURSE	(SI_OBLIVIONCURSE)
 	desc: Force the affected entity to use /? emote, block SP Recovery and cause Oblivion status; There is a chance (100% - (Target INT * 0.8)%) of being inflicted, with a minimum of 5%
@@ -1568,9 +1568,9 @@ SC_OBLIVIONCURSE	(SI_OBLIVIONCURSE)
 SC_LEECHESEND	(SI_LEECHESEND)
 	desc: Drain (Target VIT * (SkillLv - 3)) + (Target HP / 100) HP each second
 	val1: GC_WEAPONRESEARCH Skill Level
-	val2: Caster's object ID (for mob_log_damage)
+	val2: Caster's object ID
 	val3:
-	val4: Tick
+	val4: Remaining tick
 
 SC_REFLECTDAMAGE	()
 	desc:
