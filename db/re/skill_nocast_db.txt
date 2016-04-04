@@ -102,6 +102,7 @@
 //----------------------------------------------------------------------------
 // Restricted in WOE:TE Castles
 //----------------------------------------------------------------------------
+8,16	// SM_ENDURE
 26,16	// AL_TELEPORT
 27,16	// AL_WARP
 41,16	// MC_VENDING
@@ -111,21 +112,26 @@
 211,16	// RG_STEALCOIN
 219,16	// RG_INTIMIDATE
 336,16	// WE_CALLPARTNER
+359,16	// LK_BERSERK
 361,16	// HP_ASSUMPTIO
 362,16	// HP_BASILICA
+389,16	// ST_CHASEWALK
 395,16	// CG_MOONLIT
+396,16	// CG_MARIONETTE
 409,16	// WE_CALLPARENT
 410,16	// WE_CALLBABY
+426,16	// TK_HIGHJUMP
 491,16	// CR_CULTIVATION
-530,16	// NJ_KIRIKAGE
+529,16	// NJ_SHADOWJUMP
+// 530,16	// NJ_KIRIKAGE
 691,16	// CASH_ASSUMPTIO
 //!TODO: More 3rd Class skills
-2284,16	// SC_FATALMENACE
-2300,16	// SC_DIMENSIONDOOR
-2293,16	// SC_GROOMY
-2296,16	// SC_UNLUCKY
-2494,16	// GN_CHANGEMATERIAL
-2462,16	// SO_EL_ANALYSIS
+// 2284,16	// SC_FATALMENACE
+// 2300,16	// SC_DIMENSIONDOOR
+// 2293,16	// SC_GROOMY
+// 2296,16	// SC_UNLUCKY
+// 2494,16	// GN_CHANGEMATERIAL
+// 2462,16	// SO_EL_ANALYSIS
 
 //----------------------------------------------------------------------------
 // Zone 1 - Aldebaran Turbo Track
