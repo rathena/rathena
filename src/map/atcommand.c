@@ -9810,10 +9810,8 @@ ACMD_FUNC(adopt)
 		return 0;
 	}
 
-	if (response < ADOPT_MORE_CHILDREN) { // No displaymessage for client-type responses
-		sprintf(atcmd_output, msg_txt(sd, 744 + response - 1));
-		clif_displaymessage(fd, atcmd_output);
-	}
+	if (response < ADOPT_MORE_CHILDREN) // No displaymessage for client-type responses
+		clif_displaymessage(fd, msg_txt(sd, 744 + response - 1));
 	return -1;
 }
 

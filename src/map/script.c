@@ -21064,12 +21064,12 @@ BUILDIN_FUNC(opendressroom)
 BUILDIN_FUNC(navigateto){
 #if PACKETVER >= 20111010
 	TBL_PC* sd;
-	const char *map;
+	const char *mapname;
 	uint16 x = 0, y = 0, monster_id = 0;
 	uint8 flag = NAV_KAFRA_AND_AIRSHIP;
 	bool hideWindow = true;
 
-	map = script_getstr(st,2);
+	mapname = script_getstr(st,2);
 
 	if( script_hasdata(st,3) )
 		x = script_getnum(st,3);
@@ -21085,7 +21085,7 @@ BUILDIN_FUNC(navigateto){
 	if (!script_charid2sd(8, sd))
         return SCRIPT_CMD_FAILURE;
 
-	clif_navigateTo(sd,map,x,y,flag,hideWindow,monster_id);
+	clif_navigateTo(sd,mapname,x,y,flag,hideWindow,monster_id);
 
 	return SCRIPT_CMD_SUCCESS;
 #else
@@ -21257,7 +21257,7 @@ BUILDIN_FUNC(minmax){
 
 				// Loop through each value stored in the array
 				for( ; start < end; start++ ){
-					value = func( value, (int32)get_val2( st, reference_uid( id, start ), reference_getref( data ) ) );
+					value = func( value, (int32)__64BPRTSIZE( get_val2( st, reference_uid( id, start ), reference_getref( data ) ) ) );
 
 					script_removetop( st, -1, 0 );
 				}

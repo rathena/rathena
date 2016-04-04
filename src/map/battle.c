@@ -6951,7 +6951,7 @@ void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rda
 int battle_damage_area(struct block_list *bl, va_list ap) {
 	unsigned int tick;
 	int64 damage;
-	int amotion, dmotion, flag;
+	int amotion, dmotion;
 	struct block_list *src;
 
 	nullpo_ret(bl);
@@ -6961,7 +6961,6 @@ int battle_damage_area(struct block_list *bl, va_list ap) {
 	amotion = va_arg(ap,int);
 	dmotion = va_arg(ap,int);
 	damage = va_arg(ap,int);
-	flag = va_arg(ap,int);
 
 	if( bl->type == BL_MOB && ((TBL_MOB*)bl)->mob_id == MOBID_EMPERIUM )
 		return 0;
@@ -7584,7 +7583,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 						return 0;
 					default:
 						// Usually BCT_ALL stands for only hitting chars, but skills specifically set to hit traps also hit icewall
-						if ((flag&BCT_ALL) == BCT_ALL && !skill_get_inf2(skill_id)&INF2_HIT_TRAP)
+						if ((flag&BCT_ALL) == BCT_ALL && !(skill_get_inf2(skill_id)&INF2_HIT_TRAP))
 							return -1;
 				}
 				state |= BCT_ENEMY;
