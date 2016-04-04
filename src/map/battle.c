@@ -4632,6 +4632,8 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 #ifndef RENEWAL
 		//VIT + rnd(0,[VIT/20]^2-1)
 		vit_def = (def2/20)*(def2/20);
+		if (tsc && tsc->data[SC_SKA])
+			vit_def += 100; //Eska increases the random part of the formula by 100
 		vit_def = def2 + (vit_def>0?rnd()%vit_def:0);
 #else
 		//SoftDEF of monsters is floor((BaseLevel+Vit)/2)
