@@ -160,7 +160,7 @@ S_Coord:
 			7509,"30 Small Wooden Boxes" );
 	}
 	mes "["+ .@npc_name$ +"]";
-	if (canParticipateSiegeTE() == 0) {
+	if (getpermissionwoete() == 0) {
 		mes "Ah... you...";
 		mes "based on TE rules, I won't be ordering you or asking you favors unfortunately.";
 		next;

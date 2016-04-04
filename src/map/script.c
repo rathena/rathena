@@ -21495,11 +21495,11 @@ BUILDIN_FUNC(getguildalliance)
 }
 
 /**
- * canParticipateSiegeTE([<char_id>]);
+ * getpermissionwoete([<char_id>]);
  * Check if player can participate in WOE:TE
  * @param char_id Player's CharID (optional)
  **/
-BUILDIN_FUNC(canParticipateSiegeTE) {
+BUILDIN_FUNC(getpermissionwoete) {
 	TBL_PC *sd = NULL;
 
 	if (!script_charid2sd(2, sd)) {
@@ -22092,7 +22092,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(agitcheck3,""),
 	BUILDIN_DEF(gvgon3,"s"),
 	BUILDIN_DEF(gvgoff3,"s"),
-	BUILDIN_DEF(canParticipateSiegeTE,"?"),
+	BUILDIN_DEF(getpermissionwoete,"?"),
 
 #include "../custom/script_def.inc"
 

@@ -78,7 +78,7 @@ OnTouch:
 	end;
 
 S_Warp:
-	if (canParticipateSiegeTE() == 0) {
+	if (getpermissionwoete() == 0) {
 		mes "3rd and expansion job level can't enter in WoE TE.";
 		close;
 	}

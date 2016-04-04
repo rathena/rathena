@@ -15,7 +15,7 @@ te_alde_gld,215,184,4	duplicate(TE Potion Merchant#prt)	TE Potion Merchant#alde	
 //=======================================
 -	script	rental_woe_TE	-1,{
 	mes "[Rental Items Manager]";
-	if (canParticipateSiegeTE() == 1) {
+	if (getpermissionwoete() == 1) {
 		.@list01$ = "[Shield] [Armor] [Garment]";
 		.@list02$ = "[Helmet] [Accessory] [Shoes]";
 		.@list03$ = "[Sword] [Spear] [Axe] [Katar]";
