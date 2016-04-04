@@ -47,6 +47,18 @@ gld2_prt	mapflag	nosave	SavePoint
 teg_dun01	mapflag	nosave	SavePoint
 teg_dun02	mapflag	nosave	SavePoint
 
+// WOE:Training Edition Castles =====
+te_prtcas01	mapflag	nosave	SavePoint
+te_prtcas02	mapflag	nosave	SavePoint
+te_prtcas03	mapflag	nosave	SavePoint
+te_prtcas04	mapflag	nosave	SavePoint
+te_prtcas05	mapflag	nosave	SavePoint
+te_aldecas1	mapflag	nosave	SavePoint
+te_aldecas2	mapflag	nosave	SavePoint
+te_aldecas3	mapflag	nosave	SavePoint
+te_aldecas4	mapflag	nosave	SavePoint
+te_aldecas5	mapflag	nosave	SavePoint
+
 // Misty Forest Labyrinth =========
 1@mist	mapflag	nosave	SavePoint
 
