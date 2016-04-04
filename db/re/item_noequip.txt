@@ -124,11 +124,6 @@
 13416,16	// Krieger_Onehand_Sword1
 13417,16	// Krieger_Onehand_Sword2
 13418,16	// Krieger_Onehand_Sword3
-12269,16	// Tasty_Colonel
-12270,16	// Tasty_Major
-12271,16	// Mre_A
-12272,16	// Mre_B
-12273,16	// Mre_C
 
 // Vellum Gear
 1293,16		// Velum_Jamadhar
