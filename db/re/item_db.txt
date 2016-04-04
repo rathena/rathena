@@ -2768,7 +2768,7 @@
 4659,Eggring_Card,Eggring Card,6,20,,10,,,,,,,,16,,,,,{ bonus bLuk,2; bonus bMaxHP,50; },{},{}
 4660,Scout_Basilisk_Card,Scout Basilisk Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubSize,Size_Small,5; bonus2 bSubSize,Size_Medium,5; },{},{}
 4661,Charge_Basilisk_Card,Charge Basilisk Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubSize,Size_Medium,20; bonus2 bSubSize,Size_Large,20; bonus2 bSubSize,Size_Small,-15; },{},{}
-4662,Big_Eggring_Card,Big Eggring Card,6,20,,10,,,,,,,,4,,,,,{ bonus bAtk,25-5*max(readParam(bStr)/10,5); bonus bMatk,25-5*max(readParam(bInt)/10,5); bonus bAspdRate,10-2*max(readParam(bAgi)/10,5); bonus bMaxHP,1000-200*max(readParam(bVit)/10,5); bonus bLongAtkRate,5-1*max(readParam(bDex)/10,5); bonus bCritAtkRate,10-2*max(readParam(bLuk)/10,5); },{},{}
+4662,Big_Eggring_Card,Big Eggring Card,6,20,,10,,,,,,,,4,,,,,{ bonus bAtk,25-5*min(readParam(bStr)/10,5); bonus bMatk,25-5*min(readParam(bInt)/10,5); bonus bAspdRate,10-2*min(readParam(bAgi)/10,5); bonus bminHP,1000-200*min(readParam(bVit)/10,5); bonus bLongAtkRate,5-1*min(readParam(bDex)/10,5); bonus bCritAtkRate,10-2*min(readParam(bLuk)/10,5); },{},{}
 4663,Leaf_Lunatic_Card,Leaf Lunatic Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMaxSP,5; },{},{}
 4664,Grass_Fabre_Card,Grass Fabre Card,6,20,,10,,,,,,,,16,,,,,{ bonus bLuk,1; bonus bMaxHP,100; },{},{}
 4665,Wild_Hornet_Card,Wild Hornet Card,6,20,,10,,,,,,,,2,,,,,{ bonus bAtk,5; },{},{}
