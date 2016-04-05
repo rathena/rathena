@@ -1392,7 +1392,7 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 int mob_randomwalk(struct mob_data *md,unsigned int tick)
 {
 	const int d=7;
-	int i,c,r,dx,dy,max;
+	int i,c,r,rdir,dx,dy,max;
 	int speed;
 
 	nullpo_ret(md);
@@ -1404,6 +1404,7 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 		return 0;
 
 	r=rnd();
+	rdir=rnd()%4; // Randomize direction in which we iterate to prevent monster cluttering up in one corner
 	dx=r%(d*2+1)-d;
 	dy=r/(d*2+1)%(d*2+1)-d;
 	max=(d*2+1)*(d*2+1);
@@ -1413,9 +1414,9 @@ int mob_randomwalk(struct mob_data *md,unsigned int tick)
 		if(((x != md->bl.x) || (y != md->bl.y)) && map_getcell(md->bl.m,x,y,CELL_CHKPASS) && unit_walktoxy(&md->bl,x,y,0)){
 			break;
 		}
-		// Could not move to cell, try the 7th cell in direction randomly decided by rnd
+		// Could not move to cell, try the 7th cell in direction randomly decided by rdir
 		// We don't move step-by-step because this will make monster stick to the walls
-		switch(rnd()%4) { // Randomize direction in which we iterate to prevent monster cluttering up in one corner
+		switch(rdir) {
 		case 0:
 			dx += d;
 			if (dx > d) {
