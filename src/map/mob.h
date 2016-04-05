@@ -114,7 +114,7 @@ struct mob_db {
 	unsigned int base_exp,job_exp;
 	unsigned int mexp;
 	short range2,range3;
-	short race2;	// celest
+	enum e_race2 race2;	// celest
 	unsigned short lv;
 	struct {
 		unsigned short nameid;

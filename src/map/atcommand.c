@@ -7195,7 +7195,7 @@ ACMD_FUNC(showmobs)
 		return 0;
 	}
 
-	if(mob_db(mob_id)->status.mode&MD_BOSS && !pc_has_permission(sd, PC_PERM_SHOW_BOSS)){	// If player group does not have access to boss mobs.
+	if(status_has_mode(&mob_db(mob_id)->status,MD_BOSS) && !pc_has_permission(sd, PC_PERM_SHOW_BOSS)){	// If player group does not have access to boss mobs.
 		clif_displaymessage(fd, msg_txt(sd,1251)); // Can't show boss mobs!
 		return 0;
 	}

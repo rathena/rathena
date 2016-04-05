@@ -1925,7 +1925,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 
 	if (!skill_id) { // Normal attack checks.
 		// This mode is only needed for melee attacking.
-		if (!(status->mode&MD_CANATTACK))
+		if (!status_has_mode(status,MD_CANATTACK))
 			return false;
 		// Dead state is not checked for skills as some skills can be used
 		// on dead characters, said checks are left to skill.c [Skotlex]
@@ -1952,7 +1952,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		case ALL_ODINS_POWER:
 			// Should fail when used on top of Land Protector [Skotlex]
 			if (src && map_getcell(src->m, src->x, src->y, CELL_CHKLANDPROTECTOR)
-				&& !(status->mode&MD_BOSS)
+				&& !status_has_mode(status,MD_BOSS)
 				&& (src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_id))
 				return false;
 			break;
@@ -1967,7 +1967,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (sc->data[SC_ALL_RIDING])
 			return false; //You can't use skills while in the new mounts (The client doesn't let you, this is to make cheat-safe)
 
-		if (flag == 1 && !(status->mode&MD_BOSS) && ( // Applies to after cast completion only and doesn't apply to Boss monsters.
+		if (flag == 1 && !status_has_mode(status,MD_BOSS) && ( // Applies to after cast completion only and doesn't apply to Boss monsters.
 			(sc->data[SC_ASH] && rnd()%2) || // Volcanic Ash has a 50% chance of causing skills to fail.
 			(sc->data[SC_KYOMU] && rnd()%100 < 25) // Kyomu has a 25% chance of causing skills fail.
 		)) {
@@ -2093,15 +2093,15 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	switch( target->type ) {
 		case BL_PC: {
 				struct map_session_data *tsd = (TBL_PC*)target;
-				bool is_boss = (status->mode&MD_BOSS);
-				bool is_detect = ((status->mode&MD_DETECTOR)?true:false);// god-knows-why gcc doesn't shut up until this happens
+				bool is_boss = status_has_mode(status,MD_BOSS);
+				bool is_detect = status_has_mode(status,MD_DETECTOR);
 
 				if (pc_isinvisible(tsd))
 					return false;
 				if (tsc) {
-					if ((tsc->option&hide_flag) && !(status->mode&MD_BOSS) && (tsd->special_state.perfect_hiding || !is_detect))
+					if ((tsc->option&hide_flag) && !is_boss && (tsd->special_state.perfect_hiding || !is_detect))
 						return false;
-					if (tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) && (tsd->special_state.perfect_hiding || is_detect))
+					if (tsc->data[SC_CLOAKINGEXCEED] && !is_boss && (tsd->special_state.perfect_hiding || is_detect))
 						return false;
 					if (tsc->data[SC__FEINTBOMB] && (is_boss || is_detect))
 						return false;
@@ -2114,7 +2114,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			break;
 		case BL_ITEM: // Allow targetting of items to pick'em up (or in the case of mobs, to loot them).
 			// !TODO: Would be nice if this could be used to judge whether the player can or not pick up the item it targets. [Skotlex]
-			if (status->mode&MD_LOOTER)
+			if (status_has_mode(status,MD_LOOTER))
 				return true;
 			return false;
 		case BL_HOM:
@@ -2129,7 +2129,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		default:
 			// Check for chase-walk/hiding/cloaking opponents.
 			if( tsc ) {
-				if( tsc->option&hide_flag && !(status->mode&(MD_BOSS|MD_DETECTOR)))
+				if( tsc->option&hide_flag && !status_has_mode(status,MD_BOSS|MD_DETECTOR))
 					return false;
 			}
 	}
@@ -2166,20 +2166,23 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 		return 1;
 
 	if (tsc) {
+		bool is_boss = status_has_mode(status,MD_BOSS);
+		bool is_detector = status_has_mode(status,MD_DETECTOR);
+
 		switch (target->type) {	// Check for chase-walk/hiding/cloaking opponents.
 			case BL_PC: {
 					struct map_session_data *tsd = (TBL_PC*)target;
 
-					if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_SUHIDE]) && !(status->mode&MD_BOSS) && (tsd->special_state.perfect_hiding || !(status->mode&MD_DETECTOR)))
+					if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_SUHIDE]) && !is_boss && (tsd->special_state.perfect_hiding || !is_detector))
 						return 0;
-					if (tsc->data[SC_CLOAKINGEXCEED] && !(status->mode&MD_BOSS) && ((tsd && tsd->special_state.perfect_hiding) || (status->mode&MD_DETECTOR)))
+					if (tsc->data[SC_CLOAKINGEXCEED] && !is_boss && ((tsd && tsd->special_state.perfect_hiding) || is_detector))
 						return 0;
-					if (tsc->data[SC__FEINTBOMB] && !(status->mode&(MD_BOSS|MD_DETECTOR)))
+					if (tsc->data[SC__FEINTBOMB] && !is_boss && !is_detector)
 						return 0;
 				}
 				break;
 			default:
-				if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD]) && !(status->mode&(MD_BOSS|MD_DETECTOR)))
+				if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD]) && !is_boss && !is_detector)
 					return 0;
 		}
 	}
@@ -2548,7 +2551,7 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt)
 		struct status_data *mstatus = status_get_base_status(mbl);
 
 		if (mstatus &&
-			battle_config.slaves_inherit_speed&(mstatus->mode&MD_CANMOVE?1:2))
+			battle_config.slaves_inherit_speed&(status_has_mode(mstatus,MD_CANMOVE)?1:2))
 			status->speed = mstatus->speed;
 		if( status->speed < 2 ) // Minimum for the unit to function properly
 			status->speed = 2;
@@ -4609,9 +4612,9 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 	if(flag&SCB_MODE) {
 		status->mode = status_calc_mode(bl, sc, b_status->mode);
 		// Since mode changed, reset their state.
-		if (!(status->mode&MD_CANATTACK))
+		if (!status_has_mode(status,MD_CANATTACK))
 			unit_stop_attack(bl);
-		if (!(status->mode&MD_CANMOVE))
+		if (!status_has_mode(status,MD_CANMOVE))
 			unit_stop_walking(bl,1);
 	}
 
@@ -6687,7 +6690,7 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
 		return cap_value(dmotion,0,USHRT_MAX);
 
 	/// It has been confirmed on official servers that MvP mobs have no dmotion even without endure
-	if( sc->data[SC_ENDURE] || ( bl->type == BL_MOB && (((TBL_MOB*)bl)->status.mode&MD_BOSS) ) )
+	if( sc->data[SC_ENDURE] || ( bl->type == BL_MOB && status_has_mode(status_get_status_data(bl),MD_BOSS) ) )
 		return 0;
 	if( sc->data[SC_RUN] || sc->data[SC_WUGDASH] )
 		return 0;
@@ -7147,17 +7150,17 @@ int status_get_emblem_id(struct block_list *bl)
 
 /**
  * Gets the race of a mob or pet
- * @param bl: Object whose race to get [MOB|PET]
- * @return race
+ * @param bl: Object whose race2 to get [MOB|PET]
+ * @return race2
  */
-int status_get_race2(struct block_list *bl)
+enum e_race2 status_get_race2(struct block_list *bl)
 {
-	nullpo_ret(bl);
+	nullpo_retr(RC2_NONE,bl);
 	if(bl->type == BL_MOB)
 		return ((struct mob_data *)bl)->db->race2;
 	if(bl->type == BL_PET)
 		return ((struct pet_data *)bl)->db->race2;
-	return 0;
+	return RC2_NONE;
 }
 
 /**
@@ -7574,7 +7577,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			sc_def2 = status->mdef*100;
 			break;
 		case SC_ANKLE:
-			if(status->mode&MD_BOSS) // Lasts 5 times less on bosses
+			if(status_has_mode(status,MD_BOSS)) // Lasts 5 times less on bosses
 				tick /= 5;
 			sc_def = status->agi*50;
 			break;
@@ -8267,7 +8270,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	// Check for BOSS resistances
-	if(status->mode&MD_BOSS && !(flag&SCSTART_NOAVOID)) {
+	if(status_has_mode(status,MD_BOSS) && !(flag&SCSTART_NOAVOID)) {
 		if (type>=SC_COMMON_MIN && type <= SC_COMMON_MAX)
 			return 0;
 		switch (type) {
@@ -8315,7 +8318,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		}
 	}
 	// Check for mvp resistance // atm only those who OS
-	if(status->mode&MD_MVP && !(flag&SCSTART_NOAVOID)) {
+	if(status_has_mode(status,MD_MVP) && !(flag&SCSTART_NOAVOID)) {
 		 switch (type) {
 		 case SC_COMA:
 		// continue list...
@@ -9563,7 +9566,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3= 20*val1; // Int increase
 			break;
 		case SC_SWOO:
-			if(status->mode&MD_BOSS)
+			if(status_has_mode(status,MD_BOSS))
 				tick /= 5; // !TODO: Reduce skill's duration. But for how long?
 			break;
 		case SC_SPIDERWEB:
@@ -10267,7 +10270,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 0; // hit % reduc
 			val3 = 0; // def % reduc
 			val4 = 0; // atk flee & reduc
-			if (!(status_get_mode(bl)&MD_BOSS)) {
+			if (!status_bl_has_mode(bl,MD_BOSS)) {
 				val2 = 50;
 				if (status_get_race(bl) == RC_PLANT) // plant type
 					val3 = 50;
@@ -10344,7 +10347,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_VACUUM_EXTREME:
 			// Suck target at n second, only if the n second is lower than the duration
 			// Doesn't apply to BL_PC
-			if (bl->type != BL_PC && val4 < tick && !unit_blown_immune(bl,0x1) && status->mode&MD_CANMOVE) {
+			if (bl->type != BL_PC && val4 < tick && !unit_blown_immune(bl,0x1) && status_has_mode(status,MD_CANMOVE)) {
 				tick_time = val4;
 				val4 = tick - tick_time;
 			}
@@ -13062,7 +13065,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 	tick = gettick();
 
 	//Boss monsters resistance
-	if( (status_get_mode(src)&MD_BOSS) || (status_get_mode(bl)&MD_BOSS) )
+	if( status_bl_has_mode(src,MD_BOSS) || status_bl_has_mode(bl,MD_BOSS) )
 		return 0;
 
 	for( i = SC_COMMON_MIN; i < SC_MAX; i++ ) {
