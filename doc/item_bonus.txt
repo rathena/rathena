@@ -125,6 +125,7 @@ Additional stats
 bonus bHit,n;         			Hit + n
 bonus bHitRate,n;     			Hit + n%
 bonus bCritical,n;    			Critical + n
+bonus bCriticalLong,n;			Critical + n for normal long ranged attack (won't be shown in status window)
 bonus2 bCriticalAddRace,r,n;	Critical + n against enemies of race r
 bonus bCriticalRate,n;			Critical + n%
 bonus bFlee,n;        			Flee + n
@@ -369,7 +370,7 @@ bonus2 bSPVanishRate,x,n;		Add a x/10% chance of decreasing enemy's SP amount by
 bonus3 bHPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's HP amount by n% when attacking, depends on enemy race r
 bonus3 bSPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's SP amount by n% when attacking, depends on enemy race r
 
-bonus3 bStateNoRecoverRace,r,x,t;	Set a no recovery state of an enemy of race r at x% for t milliseconds with normal attack.
+bonus3 bStateNoRecoverRace,r,x,t;	Set a no recovery state of an enemy of race r at x/100% for t milliseconds with normal attack.
 
 HP/SP gain
 ------------

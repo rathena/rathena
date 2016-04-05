@@ -134,7 +134,7 @@ comodo,171,137,1	script	Haith#um	92,{
 	mes "[Haith]";
 	mes "Bah! Whatever~";
 	emotion e_hmm;
-	emotion e_hmm;
+	emotion e_hmm,0,"La Ed#um";
 	close;
 }
 
@@ -277,7 +277,7 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 			if (Zeny > 1000) {
 				set Zeny, Zeny-1000;
 				if (checkweight(517,1)) {
-					getitem 517,1; //Meat
+					getitem 517,1;// Meat
 				}
 				emotion e_swt2;
 			}
@@ -338,7 +338,7 @@ umbala,70,106,3	script	Utan Kid#um	781,{
 			if (Zeny > 1000) {
 				set Zeny, Zeny-1000;
 				if (checkweight(517,1)) {
-					getitem 517,1; //Meat
+					getitem 517,1;// Meat
 				}
 				emotion e_swt2;
 			}
@@ -378,10 +378,10 @@ umbala,59,243,5	script	Utan Kid#1	787,{
 				mes "Whoa, are you really giving me";
 				mes "Meat? Thanks! I will pay you";
 				mes "back with these.";
-				delitem 517,1; //Meat
-				getitem 909,2; //Jellopy
-				getitem 914,2; //Fluff
-				getitem 705,2; //Clover
+				delitem 517,1;// Meat
+				getitem 909,2;// Jellopy
+				getitem 914,2;// Fluff
+				getitem 705,2;// Clover
 				emotion e_scissors;
 				close;
 			}
@@ -415,10 +415,10 @@ umbala,59,243,5	script	Utan Kid#1	787,{
 				mes "[???]";
 				mes "Umbaumbaumbabababah.";
 				mes "Umbababahum.";
-				delitem 517,1; //Meat
-				getitem 909,2; //Jellopy
-				getitem 914,2; //Fluff
-				getitem 705,2; //Clover
+				delitem 517,1;// Meat
+				getitem 909,2;// Jellopy
+				getitem 914,2;// Fluff
+				getitem 705,2;// Clover
 				emotion e_scissors;
 				close;
 			}

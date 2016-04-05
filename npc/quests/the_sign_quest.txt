@@ -11967,42 +11967,43 @@ function	script	F_SignSeal	{
 		mes "more powerful to break the seal...^000000";
 		close;
 	}
+	.@r = getarg(0);
 	if (countitem(1558) || countitem(1963)) {
-		if (getarg(0) < 980) F_SealFail; }
+		if (.@r < 980) F_SealFail; }
 	else if (countitem(1227) || countitem(1228) || countitem(1240) || countitem(1241) || countitem(1962) || countitem(1813)) {
-		if (getarg(0) < 960) F_SealFail; }
+		if (.@r < 960) F_SealFail; }
 	else if (countitem(1719) || countitem(1130) || countitem(1133) || countitem(1223) || countitem(1229) || countitem(1231) || countitem(1413) || countitem(1814) || countitem(1242)) {
-		if (getarg(0) < 940) F_SealFail; }
+		if (.@r < 940) F_SealFail; }
 	else if (countitem(1131) || countitem(1230) || countitem(1232)) {
-		if (getarg(0) < 920) F_SealFail; }
+		if (.@r < 920) F_SealFail; }
 	else if (countitem(1132) || countitem(1134) || countitem(1233) || countitem(1234) || countitem(1235) || countitem(1414) || countitem(1523) || countitem(1236)) {
-		if (getarg(0) < 900) F_SealFail; }
+		if (.@r < 900) F_SealFail; }
 	else if (countitem(1237) || countitem(1524) || countitem(1525) || countitem(1557) || countitem(1415) || countitem(1964)) {
-		if (getarg(0) < 880) F_SealFail; }
+		if (.@r < 880) F_SealFail; }
 	else if (countitem(1135) || countitem(1140) || countitem(1141) || countitem(1527)) {
-		if (getarg(0) < 860) F_SealFail; }
+		if (.@r < 860) F_SealFail; }
 	else if (countitem(1164) || countitem(1165) || countitem(1467) || countitem(1138) || countitem(1139) || countitem(1224) || countitem(1225) || countitem(1416) || countitem(1526)) {
-		if (getarg(0) < 840) F_SealFail; }
+		if (.@r < 840) F_SealFail; }
 	else if (countitem(1305) || countitem(1720) || countitem(1136) || countitem(1137) || countitem(1166)) {
-		if (getarg(0) < 820) F_SealFail; }
+		if (.@r < 820) F_SealFail; }
 	else if (countitem(1261) || countitem(1528) || countitem(1167)) {
-		if (getarg(0) < 800) F_SealFail; }
+		if (.@r < 800) F_SealFail; }
 	else if (countitem(1364) || countitem(1913)) {
-		if (getarg(0) < 780) F_SealFail; }
+		if (.@r < 780) F_SealFail; }
 	else if (countitem(1170) || countitem(1468) || countitem(1168) || countitem(1169)) {
-		if (getarg(0) < 760) F_SealFail; }
+		if (.@r < 760) F_SealFail; }
 	else if (countitem(1365) || countitem(1366) || countitem(1473)) {
-		if (getarg(0) < 740) F_SealFail; }
+		if (.@r < 740) F_SealFail; }
 	else if (countitem(1367) || countitem(1368) || countitem(1466) || countitem(1469)) {
-		if (getarg(0) < 720) F_SealFail; }
+		if (.@r < 720) F_SealFail; }
 	else if (countitem(1369) || countitem(1470)) {
-		if (getarg(0) < 700) F_SealFail; }
+		if (.@r < 700) F_SealFail; }
 	else if (countitem(1722) || countitem(1471)) {
-		if (getarg(0) < 680) F_SealFail; }
+		if (.@r < 680) F_SealFail; }
 	else if (countitem(1363)) {
-		if (getarg(0) < 660) F_SealFail; }
+		if (.@r < 660) F_SealFail; }
 	else if (countitem(1530)) {
-		if (getarg(0) < 500) F_SealFail; }
+		if (.@r < 500) F_SealFail; }
 	else {
 		mes "^3355FFThe weapon you're holding";
 		mes "right now doesn't look like it has any chance of breaking this seal. You'll definitely need something";

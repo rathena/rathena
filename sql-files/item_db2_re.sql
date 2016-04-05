@@ -26,7 +26,8 @@ CREATE TABLE `item_db2_re` (
   `script` text,
   `equip_script` text,
   `unequip_script` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `UniqueAegisName` (`name_english`)
 ) ENGINE=MyISAM;
 
 # Items Additional Database

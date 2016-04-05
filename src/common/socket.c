@@ -213,7 +213,7 @@ int naddr_ = 0;   // # of ip addresses
 // Maximum packet size in bytes, which the client is able to handle.
 // Larger packets cause a buffer overflow and stack corruption.
 #if PACKETVER < 20131223
-static size_t socket_max_client_packet = 24576;
+static size_t socket_max_client_packet = 0x6000;
 #else
 static size_t socket_max_client_packet = USHRT_MAX;
 #endif
@@ -1175,22 +1175,6 @@ int socket_config_read(const char* cfgName)
 			ddos_autoreset = atoi(w2);
 		else if (!strcmpi(w1,"debug"))
 			access_debug = config_switch(w2);
-		else if (!strcmpi(w1,"socket_max_client_packet")){
-			socket_max_client_packet = strtoul(w2, NULL, 0);
-
-#if PACKETVER < 20131223
-			if( socket_max_client_packet > 24576 ){
-				ShowWarning( "socket_max_client_packet: Value %u is to high. Defaulting to %u.\n", socket_max_client_packet, 24576 );
-				ShowWarning( "socket_max_client_packet: If you want to use this value consider upgrading your client to 2013-12-23 or newer.\n" );
-				socket_max_client_packet = 24576;
-			}
-#else
-			if( socket_max_client_packet > USHRT_MAX ){
-				ShowWarning( "socket_max_client_packet: Value %u is to high. Defaulting to %u.\n", socket_max_client_packet, USHRT_MAX );
-				socket_max_client_packet = USHRT_MAX;
-			}
-#endif
-		}
 #endif
 		else if (!strcmpi(w1, "import"))
 			socket_config_read(w2);

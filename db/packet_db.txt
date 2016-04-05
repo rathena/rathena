@@ -1715,9 +1715,10 @@ packet_keys: 0x382A6DEF,0x5CBE7202,0x61F46637 // [Shakto]
 0x0439,8,useitem,2:4
 0x0365,41,bookingregreq,2:4:6
 
+// New Packet
 0x090F,-1		// ZC_NOTIFY_NEWENTRY7
-0x0914,-1		// ZC_NOTIFY_MOVEENTRY7
-0x0915,-1		// ZC_NOTIFY_STANDENTRY7
+0x0914,-1		// ZC_NOTIFY_MOVEENTRY8
+0x0915,-1		// ZC_NOTIFY_STANDENTRY9
 
 //2012-04-10aRagexeRE
 packet_ver: 30
@@ -2245,7 +2246,8 @@ packet_keys: 0x2BED4F91,0x5F9E00CF,0x5EE5520C
 0x09B9,4,ZC_ACK_CLOSE_BANKING,2
 
 //2013-07-31cRagexe
-0x09ca,23 //ZC_SKILL_ENTRY5
+0x09ca,23 // ZC_SKILL_ENTRY5
+0x09cb,17	// ZC_USE_SKILL2
 
 //2013-08-07Ragexe
 packet_ver: 45
@@ -2375,6 +2377,8 @@ packet_keys: 0x2DFF467C,0x444B37EE,0x2C1B634F // [YomRawr]
 0x0A01,3,hotkeyrowshift,2	// CZ_SHORTCUTKEYBAR_ROTATE
 0x0A02,4			// ZC_DRESSROOM_OPEN
 0x09F7,75		// ZC_PROPERTY_HOMUN_2
+0x09E5,18		// ZC_DELETEITEM_FROM_MCSTORE2
+0x09E6,22		// ZC_UPDATE_ITEM_FROM_BUYING_STORE2
 
 // Roulette System [Yommy]
 0x0A19,2,rouletteopen,0	// CZ_REQ_OPEN_ROULETTE
@@ -2425,8 +2429,6 @@ packet_keys: 0x290551EA,0x2B952C75,0x2D67669B // [YomRawr]
 
 // New Packet
 0x0A18,14		// ZC_ACCEPT_ENTER3
-0x0A23,-1		// ZC_ALL_ACH_LIST
-0x0A24,66	// ZC_ACH_UPDATE
 0x0A28,3		// ZC_ACK_OPENSTORE2
 0x09FD,-1		// ZC_NOTIFY_MOVEENTRY11
 0x09FE,-1		// ZC_NOTIFY_NEWENTRY11
@@ -2458,7 +2460,7 @@ packet_keys: 0x62C86D09,0x75944F17,0x112C133D // [YomRawr]
 0x0815,-1,reqopenbuyingstore,2:4:8:9:89
 0x0883,18,bookingregreq,2:4:6
 // 0x02C4,8 CZ_JOIN_BATTLE_FIELD
-0x0960,-1, itemlistwindowselected,2:4:8:12
+0x0960,-1,itemlistwindowselected,2:4:8:12
 0x0363,19,wanttoconnection,2:6:10:14:18
 0x094A,26,partyinvite2,2
 // 0x0927,4 CZ_GANGSI_RANK
@@ -2473,7 +2475,6 @@ packet_keys: 0x62C86D09,0x75944F17,0x112C133D // [YomRawr]
 0x09EA,11,dull,0	// CZ_REQ_READ_MAIL
 0x09EB,-1		// ZC_ACK_READ_MAIL
 0x09EC,-1,dull,0	// CZ_REQ_WRITE_MAIL
-0x0A2E,6,dull,0 	// CZ_REQ_CHANGE_TITLE
 0x09ED,3		// ZC_ACK_WRITE_MAIL
 0x09EE,11,dull,0	// CZ_REQ_NEXT_MAIL_LIST
 0x09EF,11,dull,0 	// CZ_REQ_REFRESH_MAIL_LIST
@@ -2492,7 +2493,6 @@ packet_keys: 0x62C86D09,0x75944F17,0x112C133D // [YomRawr]
 0x0A08,26,dull,0	// CZ_REQ_OPEN_WRITE_MAIL
 0x0A12,27	// ZC_ACK_OPEN_WRITE_MAIL
 0x0A32,2		// ZC_OPEN_RODEX_THROUGH_NPC_ONLY
-
 0x0A13,26,dull,0	// CZ_CHECK_RECEIVE_CHARACTER_NAME
 0x0A14,10		// ZC_CHECK_RECEIVE_CHARACTER_NAME
 
@@ -2506,6 +2506,15 @@ packet_keys: 0x62C86D09,0x75944F17,0x112C133D // [YomRawr]
 0x0A10,-1		// ZC_STORE_ITEMLIST_EQUIP_V6
 0x0A2D,-1	// ZC_EQUIPWIN_MICROSCOPE_V6
 
+// OneClick Itemidentify
+0x0A35,4,oneclick_itemidentify,2	// CZ_REQ_ONECLICK_ITEMIDENTIFY
+
+// Achievement System
+0x0A23,-1		// ZC_ALL_ACH_LIST
+0x0A24,66	// ZC_ACH_UPDATE
+0x0A25,6,dull,0	// CZ_REQ_ACH_REWARD
+0x0A26,7		// ZC_REQ_ACH_REWARD_ACK
+
 // Title System
 0x0A2E,6,dull,0	// CZ_REQ_CHANGE_TITLE
 0x0A2F,7		// ZC_ACK_CHANGE_TITLE
@@ -2515,5 +2524,75 @@ packet_keys: 0x62C86D09,0x75944F17,0x112C133D // [YomRawr]
 0x09FB,-1,dull,0	// CZ_PET_EVOLUTION
 0x09FC,6		// ZC_PET_EVOLUTION_RESULT
 
+//2015-09-16Ragexe
+packet_ver: 53
+packet_keys: 0x17F83A19,0x116944F4,0x1CC541E9 // [Napster]
+0x0869,7,actionrequest,2:6
+0x093E,10,useskilltoid,2:4:6
+0x0877,5,walktoxy,2
+0x08AC,6,ticksend,2
+0x0936,5,changedir,2:4
+0x089C,6,takeitem,2
+0x092F,6,dropitem,2:4
+0x0934,8,movetokafra,2:4
+0x085E,8,movefromkafra,2:4
+0x022D,10,useskilltopos,2:4:6:8
+0x0873,90,useskilltoposinfo,2:4:6:8:10
+0x095A,6,getcharnamerequest,2
+0x0942,6,solvecharname,2
+0x087F,12,searchstoreinfolistitemclick,2:6:10
+0x0817,2,searchstoreinfonextpage,0
+0x0920,-1,searchstoreinfo,2:4:5:9:13:14:15
+0x0881,-1,reqtradebuyingstore,2:4:8:12
+0x0835,6,reqclickbuyingstore,2
+0x092E,2,reqclosebuyingstore,0
+0x0948,-1,reqopenbuyingstore,2:4:8:9:89
+0x089B,18,bookingregreq,2:4:6
+// 0x094F,8 CZ_JOIN_BATTLE_FIELD
+0x0961,-1,itemlistwindowselected,2:4:8:12
+0x0969,19,wanttoconnection,2:6:10:14:18
+0x0924,26,partyinvite2,2
+// 0x0938,4 CZ_GANGSI_RANK
+0x089E,26,friendslistadd,2
+0x0960,5,hommenu,2:4
+0x0941,36,storagepassword,2:4:20
+
+// New Packet
+0x097F,-1		// ZC_SELECTCART
+0x0980,7,selectcart,2:6	// CZ_SELECTCART
+
+//2015-10-01bRagexeRE
+packet_ver: 54
+packet_keys: 0x45B945B9,0x45B945B9,0x45B945B9	// [Dastgir]
+0x0369,7,actionrequest,2:6
+0x083c,10,useskilltoid,2:4:6
+0x0437,5,walktoxy,2
+0x035f,6,ticksend,2
+0x0202,5,changedir,2:4
+0x07e4,6,takeitem,2
+0x0362,6,dropitem,2:4
+0x07ec,8,movetokafra,2:4
+0x0364,8,movefromkafra,2:4
+0x0438,10,useskilltopos,2:4:6:8
+0x0366,90,useskilltoposmoreinfo,2:4:6:8:10
+0x096a,6,getcharnamerequest,2
+0x0368,6,solvecharname,2
+0x0838,12,searchstoreinfolistitemclick,2:6:10
+0x0835,2,searchstoreinfonextpage,0
+0x0819,-1,searchstoreinfo,2:4:5:9:13:14:15
+0x0811,-1,reqtradebuyingstore,2:4:8:12
+0x0360,6,reqclickbuyingstore,2
+0x0817,2,reqclosebuyingstore,0
+0x0815,-1,reqopenbuyingstore,2:4:8:9:89
+0x0365,18,partybookingregisterreq,2:4:6
+//0x0363,8 // CZ_JOIN_BATTLE_FIELD
+0x0281,-1,itemlistwindowselected,2:4:8:12
+0x022d,19,wanttoconnection,2:6:10:14:18
+0x0802,26,partyinvite2,2
+//0x0436,4 // CZ_GANGSI_RANK
+0x023b,26,friendslistadd,2
+0x0361,5,hommenu,2:4
+0x0860,36,storagepassword,2:4:20
+
 //Add new packets here
-//packet_ver: 53
+//packet_ver: 55

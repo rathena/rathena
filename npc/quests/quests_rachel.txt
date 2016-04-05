@@ -1831,8 +1831,10 @@ ra_in01,235,194,5	script	Katinshuell	931,{
 			mes "What? I don't understand you...";
 			close;
 		}
-		set rach_vice,11;
-		changequest 8114,8115;
+		if (rach_vice == 10) {
+			set rach_vice,11;
+			changequest 8114,8115;
+		}
 		mes "[Katinshuell]";
 		mes "You happy, now?";
 		mes "Quit trying to pry into";
@@ -2126,8 +2128,10 @@ ra_in01,250,19,3	script	Mr. Shendar	929,{
 		mes "distinctively pleasant";
 		mes "scent about them. I guess";
 		mes "it must be pheremonal?";
-		set rach_vice,5;
-		changequest 8108,8109;
+		if (rach_vice == 4) {
+			set rach_vice,5;
+			changequest 8108,8109;
+		}
 		close;
 	}
 	else if (rach_vice == 2) {
@@ -4155,13 +4159,14 @@ L_End:
 	end;
 
 S_Donate:
+	.@num = getarg(0);
 	cutin "ra_nemma01",2;
 	mes "[Priestess Nemma]";
 	mes "So, " + strcharinfo(0) + "...";
 	mes "I just want to make sure:";
 	mes "You want to donate "+getarg(1);
-	mes "zeny, and receive "+getarg(0)+" Lottery";
-	if(getarg(0) == 1) mes "Ticket. Is that correct?";
+	mes "zeny, and receive "+ .@num +" Lottery";
+	if (.@num == 1) mes "Ticket. Is that correct?";
 	else mes "Tickets. Is that correct?";
 	next;
 	if (select("No:Yes") == 1) {
@@ -4174,8 +4179,8 @@ S_Donate:
 		mes "generous and rewards the patient!";
 		return;
 	}
-	if (Zeny >= getarg(0)*50000) {
-		if (!checkweight(7570,getarg(0))) {
+	if (Zeny >= .@num*50000) {
+		if (!checkweight(7570,.@num)) {
 			cutin "ra_nemma02",2;
 			mes "[Priestess Nemma]";
 			mes "I can scarcely believe it...";
@@ -4194,9 +4199,9 @@ S_Donate:
 			mes "donate if you can, okay?";
 			return;
 		}
-		set $rachel_donate,$rachel_donate+getarg(0);
-		getitem 7570,getarg(0); //Temple_Lottery_Ticket
-		set Zeny, Zeny-getarg(0)*50000;
+		$rachel_donate = $rachel_donate + .@num;
+		getitem 7570,.@num;// Temple_Lottery_Ticket
+		Zeny = Zeny - .@num *50000;
 		set ra_have_donated,1;
 		if ($rachel_donate > 9999) {
 			cutin "ra_nemma03",2;
@@ -4232,7 +4237,7 @@ S_Donate:
 	else {
 		mes "[Priestess Nemma]";
 		mes "I'm sorry, but you have";
-		mes "less than "+@Donate$+" zeny...";
+		mes "less than "+ (.@num *50000) +" zeny...";
 		mes "I know it's asking a lot,";
 		mes "but those are the rules that";
 		mes "I've been told to follow, so...";

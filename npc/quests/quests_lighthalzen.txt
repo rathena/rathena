@@ -22,6 +22,7 @@
 //= 4.9 Fixed incorrect use of 'close'. [Joseph]
 //= 5.0 Updated RE/Pre-RE EXP. [Euphy]
 //= 5.1 Added GM management NPCs. [Euphy]
+//= 5.2 Fixed some quest log issues. [Capuche]
 //============================================================
 
 // Gangster Alert [Official Conversion]
@@ -5375,7 +5376,8 @@ lhz_in01,27,247,5	script	Representative#li_02	71,{
 		mes "please refer to the Rekenber";
 		mes "Guidebook located to my side.";
 		mes "Thank you and have a nice day.";
-		changequest 2088,2089;
+		if (isbegin_quest(2088))
+			changequest 2088,2089;
 		close;
 	}
 	else {
@@ -8386,7 +8388,7 @@ L_Mission:
 		mes "^3355FFGhalstein^000000 again. It's time";
 		mes "we let you loose, adventurer.";
 		set lhz_boss,43;
-		completequest 12028;
+		// completequest 12028;
 		close2;
 		cutin "",255;
 		end;
@@ -8396,8 +8398,8 @@ L_Mission:
 		mes "[Karl]";
 		mes ".........";
 		mes "............";
-		for(set .@i,12015; .@i<=12028; set .@i,.@i+1) {
-			if (checkquest(.@i) > 0 && checkquest(.@i) < 2)
+		for(set .@i,12015; .@i < 12028; set .@i,.@i+1) {
+			if (checkquest(.@i) >= 0 && checkquest(.@i) < 2)
 				completequest .@i;
 		}
 		close;
@@ -10406,7 +10408,7 @@ lhz_in01,174,258,3	script	Young Man#reken	868,{
 		next;
 		set lhz_rekenber,22;
 		getexp (checkre(3))?55000:550000,0;
-		completequest 12013;
+		completequest 12014;
 		cutin "lhz_kaz01",2;
 		mes "[Kazien]";
 		mes "Look, I can't have";
@@ -10582,7 +10584,7 @@ lhz_in01,174,258,3	script	Young Man#reken	868,{
 		mes "for the Rune-Midgarts Kingdom.";
 		next;
 		set lhz_rekenber,12;
-		changequest 5005,5006;
+		// changequest 5005,5006;
 		getexp (checkre(3))?40000:400000,0;
 		cutin "lhz_kaz03",2;
 		mes "[Kazien]";
@@ -10637,7 +10639,7 @@ lhz_in01,174,258,3	script	Young Man#reken	868,{
 		mes "to me for another job, okay?";
 		next;
 		set lhz_rekenber,8;
-		changequest 12008,12010;
+		changequest 12010,12011;
 		cutin "lhz_kaz01",2;
 		mes "[Kazien]";
 		mes "Don't forget...";
@@ -11068,7 +11070,7 @@ einbroch,55,52,3	script	Laboratory Guard#reken	 852,{
 						mes "I still can't allow you to";
 						mes "enter the laboratory.";
 						set lhz_rekenber,4;
-						changequest 12008,12010;
+						// changequest 12008,12010;
 						close;
 
 					case 2:
@@ -11427,7 +11429,7 @@ airplane_01,96,48,3	script	Man#Lyozien	868,{
 		mes "know, embarassing orders...";
 		next;
 		set lhz_rekenber,11;
-		changequest 12011,12012;
+		changequest 12013,12014;
 		cutin "lhz_ryo01",2;
 		mes "[Lyozien]";
 		mes "No? Eh, just meet up with";
@@ -11510,7 +11512,7 @@ airplane_01,96,48,3	script	Man#Lyozien	868,{
 		mes "at the Airport, and tell him that his orders have safely arrived.";
 		next;
 		set lhz_rekenber,9;
-		changequest 12010,12011;
+		changequest 12011,12012;
 		cutin "lhz_ryo11",2;
 		mes "[Lyozien]";
 		mes "Once you tell Mr. Ahman";

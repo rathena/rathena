@@ -952,6 +952,37 @@ un_myst
 verus01
 verus02
 paramk
+1@infi
+1@ffp
+1@mir
+2@mir
+1@sthb
+1@sthc
+1@sthd
+prt_cas
+prt_cas_q
+prt_prison
+prt_lib
+prt_lib_q
+prt_q
+prt_pri00
+int_land
+int_land01
+int_land02
+int_land03
+int_land04
+lasagna
+lasa_fild01
+lasa_fild02
+lasa_dun01
+lasa_dun02
+lasa_dun03
+conch_in
+lasa_in01
+lasa_dun_q
+1@pop1
+1@pop2
+1@pop3
 
 // Only add maps under this line if they are not standard maps!
 

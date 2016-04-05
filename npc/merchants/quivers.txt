@@ -71,17 +71,21 @@ payon_in01,5,134,5	script	Inventor Jaax	89,{
 	//close;
 
 S_BuyQuiver:
-	if (countitem(getarg(0)) >= getarg(1)) {
+	.@item_id = getarg(0);
+	.@amount = getarg(1);
+	.@zeny_req = getarg(2);
+
+	if (countitem(.@item_id) >= .@amount) {
 		mes "[Inventor Jaax]";
 		mes "Excellent!";
-		mes "Are you carrying any Arrows with you? I'll provide you with a quiver that can carry "+getarg(1)+" of your "+getitemname(getarg(0))+"s for only ^FF3131"+getarg(2)+" Zeny^000000.";
+		mes "Are you carrying any Arrows with you? I'll provide you with a quiver that can carry "+ .@amount +" of your "+ getitemname(.@item_id) +"s for only ^FF3131"+ .@zeny_req +" Zeny^000000.";
 		next;
 		switch(select("Store as many Arrows in quivers as possible:Purchase 1 quiver:Cancel")) {
 		case 1:
-			set .@arrows,countitem(getarg(0));
-			set .@quiver,.@arrows / getarg(1);
-			set .@arrows_used,.@quiver * getarg(1);
-			set .@arrow_zeny01,.@quiver * getarg(2);
+			.@arrows = countitem(.@item_id);
+			set .@quiver,.@arrows / .@amount;
+			set .@arrows_used,.@quiver * .@amount;
+			.@arrow_zeny01 = .@quiver * .@zeny_req;
 			mes "Number of";
 			mes "Arrows: ^3131FF"+.@arrows+" ^000000";
 			mes "Maximum Number";
@@ -101,7 +105,7 @@ S_BuyQuiver:
 					mes "There you go!";
 					mes "Just remember, ^FF0000you won't be able to use the Quiver when your carried weight is 90% of your maximum weight limit^000000.";
 					set Zeny, Zeny-.@arrow_zeny01;
-					delitem getarg(0),.@arrows_used; //Arrow
+					delitem .@item_id,.@arrows_used;// Arrow
 					getitem getarg(3),.@quiver; //Quiver
 					next;
 					mes "[Inventor Jaax]";
@@ -126,12 +130,12 @@ S_BuyQuiver:
 			mes "a quiver is so close?";
 			close;
 		case 2:
-			if (Zeny > getarg(2)) {
+			if (Zeny > .@zeny_req) {
 				mes "[Inventor Jaax]";
 				mes "There you go!";
 				mes "Just remember, ^FF0000you won't be able to use the Quiver when your carried weight is 90% of your maximum weight limit^000000.";
-				set Zeny, Zeny-getarg(2);
-				delitem getarg(0),getarg(1); //Arrow
+				Zeny = Zeny -.@zeny_req;
+				delitem .@item_id,.@amount;// Arrow
 				getitem getarg(3),1; //Quiver
 				next;
 				mes "[Inventor Jaax]";
@@ -146,7 +150,7 @@ S_BuyQuiver:
 			else {
 				mes "[Inventor Jaax]";
 				mes "You don't even";
-				mes "have "+getarg(2)+" Zeny?";
+				mes "have "+ .@zeny_req +" Zeny?";
 				mes "I'm so sorry. I had no";
 				mes "idea that you were so...";
 				mes "^333333Destitute^000000.";
@@ -161,11 +165,11 @@ S_BuyQuiver:
 	}
 	else {
 		mes "[Inventor Jaax]";
-		mes "You can carry a maximum of "+getarg(1)+" Arrows within this quiver. It was made using my secret method,";
+		mes "You can carry a maximum of "+ .@amount +" Arrows within this quiver. It was made using my secret method,";
 		mes "so the total weight of the Arrows and Quiver is less than carrying the Arrows alone.";
 		next;
 		mes "[Inventor Jaax]";
-		mes "It's a miracle of science! One that you can experience for yourself if you bring me at least "+getarg(1)+" Arrows and "+getarg(2)+" Zeny for each Quiver.";
+		mes "It's a miracle of science! One that you can experience for yourself if you bring me at least "+ .@amount +" Arrows and "+ .@zeny_req +" Zeny for each Quiver.";
 		close;
 	}
 }

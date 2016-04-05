@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20130819
+//= 20160319
 //===== Description: =========================================
 //= Explanation of the item_db.txt file and structure.
 //============================================================
@@ -104,6 +104,7 @@ Job: Equippable jobs. Uses the following bitmask table:
 	Dark Collector (2^28): 0x10000000
 	Kagerou/Oboro  (2^29): 0x20000000
 	Rebellion      (2^30): 0x40000000
+	Summoner       (2^31): 0x80000000
 
 	Novice + Swordman + Magician + Archer = 0x0000000F, why?
 	Because: 10 = A, 11 = B, 12 = C, 13 = D, 14 = E, and 15 = F
@@ -223,7 +224,8 @@ OnEquip_Script: Script to execute when the item is equipped.
 
 ---------------------------------------
 
-OnUnequip_Script: Script to execute when the item is unequipped.
+OnUnequip_Script: Script to execute when the item is unequipped
+                  or when a rental item expires.
                   Warning, not all item bonuses will work here as expected.
 
 ---------------------------------------

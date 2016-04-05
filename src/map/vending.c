@@ -199,10 +199,12 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		short amount = *(uint16*)(data + 4*i + 0);
 		short idx    = *(uint16*)(data + 4*i + 2);
 		idx -= 2;
+		z = 0.; // zeny counter
 
 		// vending item
 		pc_additem(sd, &vsd->status.cart[idx], amount, LOG_TYPE_VENDING);
 		vsd->vending[vend_list[i]].amount -= amount;
+		z += ((double)vsd->vending[i].value * (double)amount);
 
 		if( vsd->vending[vend_list[i]].amount ) {
 			if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = %d WHERE `vending_id` = %d and `cartinventory_id` = %d", vending_items_db, vsd->vending[vend_list[i]].amount, vsd->vender_id, vsd->status.cart[idx].id ) != SQL_SUCCESS ) {
@@ -215,7 +217,9 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		}
 
 		pc_cart_delitem(vsd, idx, amount, 0, LOG_TYPE_VENDING);
-		clif_vendingreport(vsd, idx, amount);
+		if( battle_config.vending_tax )
+			z -= z * (battle_config.vending_tax/10000.);
+		clif_vendingreport(vsd, idx, amount, sd->status.char_id, (int)z);
 
 		//print buyer's name
 		if( battle_config.buyer_name ) {

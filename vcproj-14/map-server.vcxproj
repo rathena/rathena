@@ -113,7 +113,6 @@
       <AdditionalDependencies>libcmt.lib;oldnames.lib;ws2_32.lib;libmysql.lib;zdll.lib;pcre.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>..\3rdparty\mysql\lib;..\3rdparty\zlib\lib;..\3rdparty\pcre\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <IgnoreAllDefaultLibraries>true</IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)$(ProjectName).pdb</ProgramDatabaseFile>
@@ -199,6 +198,7 @@
     <ClInclude Include="..\src\config\secure.h" />
     <ClInclude Include="..\src\config\classes\general.h" />
     <ClInclude Include="..\src\map\script.h" />
+	<ClInclude Include="..\src\map\script_constants.h" />
     <ClInclude Include="..\src\map\searchstore.h" />
     <ClInclude Include="..\src\map\skill.h" />
     <ClInclude Include="..\src\map\status.h" />
@@ -359,5 +359,6 @@
     <Copy SourceFiles="..\db\import-tmpl\skill_unit_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\skill_unit_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\spellbook_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\spellbook_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\statpoint.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\statpoint.txt')" />
+    <Copy SourceFiles="..\db\import-tmpl\status_disabled.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\status_disabled.txt')" />
   </Target>
 </Project>

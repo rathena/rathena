@@ -352,6 +352,8 @@ static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
 		bclass[1] |= 1<<MAPID_NINJA;
 	if (jobmask & 1<<30) //Rebellion
 		bclass[1] |= 1<<MAPID_GUNSLINGER;
+	if (jobmask & 1<<31) //Summoner
+		bclass[0] |= 1<<MAPID_SUMMONER;
 }
 
 /**
@@ -757,7 +759,7 @@ static bool itemdb_read_itemtrade(char* str[], int columns, int current) {
 }
 
 /** Reads item delay amounts [Paradox924X]
-* Structure: <nameid>,<delay>
+* Structure: <nameid>,<delay>{,<delay sc group>}
 */
 static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 	unsigned short nameid;
@@ -784,8 +786,18 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 
 	if (columns == 2)
 		id->delay_sc = SC_NONE;
-	else
+	else if( ISDIGIT(str[2][0]) )
 		id->delay_sc = atoi(str[2]);
+	else{ // Try read sc group id from const db
+		int constant;
+
+		if( !script_get_constant(trim(str[2]), &constant) ){
+			ShowWarning("itemdb_read_itemdelay: Invalid sc group \"%s\" for item id %hu.\n", str[2], nameid);
+			return false;
+		}
+
+		id->delay_sc = (short)constant;
+	}
 
 	return true;
 }

@@ -1,16 +1,16 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Izlude Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.9a
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Izlude town NPCs
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Fully working
 //= 1.1 fixed 2 zeny bugs/checks [Lupus]
 //= 1.2 Fixed a lot of typos [Nexon]
@@ -104,7 +104,7 @@
 		mes "[Charfri]";
 		mes "You'll have to board on a ship at the port to get to Byalan Island. There are dangerous dungeons on that island, so don't go snooping around just anywhere.";
 		close;
-	Default:
+	default:
 		mes "Though it is very beautiful, Byalan Island has a mysterious dungeon that extends deep under the sea.";
 		next;
 		mes "[Charfri]";
@@ -135,7 +135,7 @@
 		mes "[Cuskoal]";
 		mes "So, whaddya say?";
 		close;
-	Default:
+	default:
 		mes "The pubs in Prontera are always full of people from local areas and from out-of-town. It can get pretty busy.";
 		next;
 		mes "[Cuskoal]";
@@ -169,7 +169,7 @@
 		mes "[Dega]";
 		mes "If you try to cast magic near it, it will notice and saunter over to smash you. So you better watch out for Golem.";
 		close;
-	Default:
+	default:
 		mes "There's a very delightful place where you can find every";
 		mes "type of Poring.";
 		next;
@@ -186,10 +186,10 @@
 		mes "Well, of course, they are all very cute, but Ghostring is an EXCEPTION. It is very very dangerous.";
 		next;
 		mes "[Dega]";
-		mes "If you are lucky enough, you might even bump into Angelring, the Poring with Angel wings.";
+		mes "If you are lucky enough, you might even bump into Angeling, the Poring with Angel wings.";
 		next;
 		while(1) {
-			switch(select("Ghostring?:Angelring?:End Conversation.")) {
+			switch(select("Ghostring?:Angeling?:End Conversation.")) {
 			case 1:
 				mes "[Dega]";
 				mes "Ghostring is a grayish Poring that floats around in the air like a ghost. Just like other ghosts, physical attacks can't do any damage to it.";
@@ -206,7 +206,7 @@
 				break;
 			case 2:
 				mes "[Dega]";
-				mes "Angelrings are immune to Magic attacks. If people who can only attack with Magic face an Angelring, then it's time for";
+				mes "Angelings are immune to Magic attacks. If people who can only attack with Magic face an Angeling, then it's time for";
 				mes "them to run.";
 				next;
 				mes "[Dega]";

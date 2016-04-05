@@ -219,6 +219,11 @@ struct point {
 	short x,y;
 };
 
+struct startitem {
+	unsigned short nameid, amount;
+	short pos;
+};
+
 enum e_skill_flag
 {
 	SKILL_FLAG_PERMANENT,
@@ -390,7 +395,7 @@ struct mmo_charstatus {
 	unsigned int option;
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
-	short hair,hair_color,clothes_color;
+	short hair,hair_color,clothes_color,body;
 	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id;
 	int fame;
 
@@ -787,6 +792,8 @@ enum e_job {
 
 	JOB_REBELLION = 4215,
 
+	JOB_SUMMONER = 4218,
+
 	JOB_MAX,
 };
 
@@ -822,6 +829,11 @@ enum e_pc_reg_loading {
 #error MAX_ZENY is too big
 #endif
 
+// This sanity check is required, because some other places(like skill.c) rely on this
+#if MAX_PARTY < 2
+#error MAX_PARTY is too small, you need at least 2 players for a party
+#endif
+
 #ifndef VIP_ENABLE
 	#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
 	#define MIN_CHARS MAX_CHARS // Default number of characters per account.
@@ -849,7 +861,11 @@ enum e_pc_reg_loading {
 	#ifndef ENABLE_SC_SAVING
 	#warning "Cart won't be able to be saved for relog"
 	#endif
+#if PACKETVER >= 20150826
+	#define MAX_CARTS 12		// used for 3 new cart design
+#else
 	#define MAX_CARTS 9
+#endif
 #else
 	#define MAX_CARTS 5
 #endif

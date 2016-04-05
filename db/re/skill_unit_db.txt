@@ -23,6 +23,7 @@
 //      0x04000(UF_REM_CRAZYWEED)		Removed if be overlapped by GN_CRAZYWEED
 //      0x08000(UF_REM_FIRERAIN)		Removed if be overlapped by RL_FIRE_RAIN
 //      0x10000(UF_KNOCKBACK_GROUP) 	Knock back a whole skill group (by default, skill unit is knocked back each unit)
+//      0x20000(UF_HIDDEN_TRAP) 		Hidden trap, see 'traps_setting' skill config to enable this flag
 // 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near targets
 //
 // Notes:
@@ -33,29 +34,29 @@
 
  12,0x7e,    ,  0, 0,  -1,all,   0x4003	//MG_SAFETYWALL
  18,0x7f,    , -1, 0,  20,enemy, 0x8010	//MG_FIREWALL
- 21,0x86,    ,  0, 2,1000,enemy, 0x018	//MG_THUNDERSTORM
+ 21,0x86,    ,  0, 2:2:2:2:2:2:2:2:2:2:3,1000,enemy, 0x010	//MG_THUNDERSTORM
  25,0x85,    ,  1, 0,  -1,all,   0x6003	//AL_PNEUMA
  27,0x81,0x80,  0, 0,  -1,all,   0x00E	//AL_WARP
- 47,0x86,    ,  0, 1:1:1:1:1:2:2:2:2:2,1000,enemy, 0x080	//AC_SHOWER
  70,0x83,    , -1, 1,1000,all,   0x018	//PR_SANCTUARY
  79,0x84,    , -1, 1,3000,enemy, 0x8018	//PR_MAGNUS
  80,0x87,0x88,  0, 1,2000,enemy, 0x4006	//WZ_FIREPILLAR
  83,0x86,    ,  0, 3,1000,enemy, 0x010	//WZ_METEOR
- 85,0x86,    ,  5, 1:1:1:1:1:1:1:1:1:1:3,1250,enemy,0x018	//WZ_VERMILION
+ 85,0x86,    ,  5:5:5:5:5:5:5:5:5:5:7, 1,1250,enemy,0x018	//WZ_VERMILION
+ 86,0x86,    ,  0:1:1:2:2:2:2:2:2:2, 0,-1,noone, 0x010	//WZ_WATERBALL
  87,0x8d,    , -1, 0,  -1,all,   0x9010	//WZ_ICEWALL
  89,0x86,    ,  4, 1, 450,enemy, 0x018	//WZ_STORMGUST
  91,0x86,    ,  2, 0,1000,enemy, 0x010	//WZ_HEAVENDRIVE
  92,0x8e,    ,  2, 0,  -1,enemy, 0x8010	//WZ_QUAGMIRE
-115,0x90,    ,  0, 1,1000,enemy, 0x8006	//HT_SKIDTRAP
-116,0x93,    ,  0, 1,1000,enemy, 0x8006	//HT_LANDMINE
-117,0x91,    ,  0, 1,1000,enemy, 0x9006	//HT_ANKLESNARE
-118,0x94,    ,  0, 1,1000,enemy, 0x8006	//HT_SHOCKWAVE
-119,0x95,    ,  0, 1,1000,enemy, 0x8006	//HT_SANDMAN
-120,0x96,    ,  0, 1,1000,enemy, 0x8006	//HT_FLASHER
-121,0x97,    ,  0, 1,1000,enemy, 0x8006	//HT_FREEZINGTRAP
+115,0x90,    ,  0, 1,1000,enemy, 0x28006	//HT_SKIDTRAP
+116,0x93,    ,  0, 1,1000,enemy, 0x28006	//HT_LANDMINE
+117,0x91,    ,  0, 1,1000,enemy, 0x29006	//HT_ANKLESNARE
+118,0x94,    ,  0, 1,1000,enemy, 0x28006	//HT_SHOCKWAVE
+119,0x95,    ,  0, 1,1000,enemy, 0x28006	//HT_SANDMAN
+120,0x96,    ,  0, 1,1000,enemy, 0x28006	//HT_FLASHER
+121,0x97,    ,  0, 1,1000,enemy, 0x28006	//HT_FREEZINGTRAP
 122,0x8f,    ,  0, 1,1000,enemy, 0x8006	//HT_BLASTMINE
 123,0x98,    ,  0, 1,1000,enemy, 0x8006	//HT_CLAYMORETRAP
-125,0x99,    ,  0, 1,1000,all,   0x8000	//HT_TALKIEBOX
+125,0x99,    ,  0, 1,1000,all,   0x28040	//HT_TALKIEBOX
 140,0x92,    , -1, 1,1000,enemy, 0x8000	//AS_VENOMDUST
 220,0xb0,    ,  0, 0,  -1,all,   0x8002	//RG_GRAFFITI
 229,0xb1,    ,  0, 1, 500,enemy, 0x006	//AM_DEMONSTRATION
@@ -83,7 +84,7 @@
 329,0xae,    ,  3, 0,  -1,all,   0x140	//DC_FORTUNEKISS
 330,0xaf,    ,  3, 0,  -1,all,   0x140	//DC_SERVICEFORYOU
 336,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARTNER
-339,0x86,    , -1, 0, 300,enemy, 0x000	//NPC_DARKGRANDCROSS
+339,0x86,    , -1, 0, 300,enemy, 0x000	//NPC_GRANDDARKNESS
 362,0xb4,    ,  2, 0, 300,all,   0x2000	//HP_BASILICA
 369,0xb3,    , -1, 0,10000,all,  0x008	//PA_GOSPEL
 395,0xb5,    ,  4, 0,  -1,all,   0x200	//CG_MOONLIT
@@ -94,20 +95,22 @@
 428,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_SUN_WARM
 429,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_MOON_WARM
 430,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_STAR_WARM
-484,0xb8,    ,  2, 0, 500,enemy, 0x8808	//HW_GRAVITATION
+484,0xb8,    ,  2, 0, 500,enemy, 0x8818	//HW_GRAVITATION
 488,0xb9,    ,  3, 0,  -1,all,   0x200	//CG_HERMODE
 516,0x86,    ,  3, 0, 100,enemy, 0x000	//GS_DESPERADO
 521,0xbe,    ,  0, 1,1000,enemy, 0x000	//GS_GROUNDDRIFT
 525,0x86,    ,  0, 2,1000,enemy, 0x018	//NJ_HUUMA
 527,0xbc,    , -1, 0,2000,enemy, 0x018	//NJ_TATAMIGAESHI
-535,0xbd,    , -1, 0,  20,enemy, 0x8010	//NJ_KAENSIN
+535,0xbd,    , -1, 0, 100,enemy, 0x8010	//NJ_KAENSIN
+536,0x86,    ,  2, 0,1000,enemy, 0x010	//NJ_BAKUENRYU
 538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x8010	//NJ_SUITON
-541,0x86,    ,  0, 3:3:4:4:5,1000,enemy, 0x018	//NJ_RAIGEKISAI
-670,0xc7,    ,  1, 4:7:10:13:16:19:22:25:28:31,1000,all,0x008	//NPC_EVILLAND
+539,0x86,    ,  3, 0,1000,enemy, 0x010	//NJ_HYOUSYOURAKU
+541,0x86,    ,  1:1:2:2:3, 0,1000,enemy, 0x010	//NJ_RAIGEKISAI
+670,0xc7,    ,  1, 5:5:5:5:5:5:5:5:5:13,1000,all,0x008	//NPC_EVILLAND
 
 //706,0xfd,    ,  0, 0,1000,all, 0x000	//NPC_VENOMFOG
 
-2044,0xca,    ,  0, 2,3000,all,   0x018	//AB_EPICLESIS
+2044,0xca,    ,  0, 2,1000,all,   0x018	//AB_EPICLESIS
 
 2032,0xe1,    ,  2, 0,1000,enemy, 0x8018	//GC_POISONSMOKE
 
@@ -157,9 +160,9 @@
 2482,0xe6,0x7f, -1, 1, 300,enemy, 0xC000	//GN_WALLOFTHORN
 2484,0x86,    ,  0, 1, 100,enemy, 0x080	//GN_CRAZYWEED_ATK
 2485,0xe7,    ,  0, 2,2000,enemy, 0x8098	//GN_DEMONIC_FIRE
-2487,0xe8,    ,  2, 0,  -1,enemy, 0x2000	//GN_FIRE_EXPANSION_SMOKE_POWDER
-2488,0xe9,    ,  2, 0,  -1,enemy, 0x2000	//GN_FIRE_EXPANSION_TEAR_GAS
-2490,0xea,    ,  0, 1,1000,enemy, 0x8002	//GN_HELLS_PLANT
+2487,0xe8,    ,  2, 0,  -1,all,   0x2000	//GN_FIRE_EXPANSION_SMOKE_POWDER
+2488,0xe9,    ,  2, 0,  -1,all,   0x2000	//GN_FIRE_EXPANSION_TEAR_GAS
+2490,0xea,    ,  0, 1,1000,enemy, 0xC002	//GN_HELLS_PLANT
 
 2555,0x104,   ,  0, 1:2:2:3:3,500,enemy,0x6	//RL_B_TRAP
 2567,0x105,   , -1, 0,1000,enemy, 0x98	//RL_FIRE_RAIN
@@ -167,12 +170,16 @@
 3006,0x86,    ,  0, 1,1000,enemy, 0x018	//KO_BAKURETSU
 3008,0x86,    ,  0, 1:1:1:1:1:1:1:1:1:2,1000,enemy, 0x018 //KO_MUCHANAGE
 3009,0x86,    ,  0, 3,1000,enemy, 0x018 //KO_HUUMARANKA
-3010,0xfc,    ,  0, 1,5000,enemy, 0x018 //KO_MAKIBISHI
+3010,0xfc,    ,  0, 0,5000,enemy, 0x018 //KO_MAKIBISHI
 3020,0xf8,    ,  0, 2, 500,all, 0x018   //KO_ZENKAI
 
 5006,0x101,   ,  0, 3, 500,enemy, 0x018	//NC_MAGMA_ERUPTION
 5010,0x91,    ,  0, 1,1000,all,   0x002	//SC_ESCAPE
 5013,0x102,   ,  3, 0,  -1,all,   0x2002	//LG_KINGS_GRACE
+
+5027,0x106,   ,  1:1:2:2:3, 0,  -1,enemy, 0x2010 // SU_CN_POWDERING
+5028,0x86,    ,  0, 1, 500,enemy, 0x10 // SU_CN_METEOR
+5029,0x107,   ,  0, 0,1000,enemy, 0x10 // SU_SV_ROOTTWIST
 
 8020,0xf5,    ,  3, 0,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST
 8033,0x7e,    ,  0, 0,  -1,all,   0x003	//MH_STEINWAND
@@ -180,7 +187,6 @@
 8041,0xf6,    ,  1:1:2:2:3, 0,2000,enemy,   0x01A	//MH_LAVA_SLIDE
 8043,0xf7,    ,  1, 0,-1,all,   0x2018	//MH_VOLCANIC_ASH
 
-8208,0x86,    ,  0, 2,1000,enemy, 0x080	//MA_SHOWER
 8209,0x90,    ,  0, 1,1000,enemy, 0x8006	//MA_SKIDTRAP
 8210,0x93,    ,  0, 0,1000,enemy, 0x8006	//MA_LANDMINE
 8211,0x95,    ,  0, 1,1000,enemy, 0x8006	//MA_SANDMAN

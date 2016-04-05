@@ -214,7 +214,7 @@ payon,175,226,4	script	Kafra Employee::kaf_payon2	116,{
 	callfunc "F_KafEnd",0,1,"in the city of Payon";
 }
 
-pay_arche,55,123,0	script	Kafra Employee::kaf_payon3	115,{
+pay_arche,55,123,0	script	Kafra Employee::kaf_payon3	4_F_KAFRA1,{
 	cutin "kafra_03",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -558,7 +558,7 @@ lhz_in02,237,284,4	script	Kafra Employee::kaf_lhz_in02	861,{
 
 // Louyang
 //============================================================
-louyang,210,104,5	script	Kafra Employee::kaf_louyang	117,{
+louyang,210,104,5	script	Kafra Employee::kaf_louyang	4_F_KAFRA2,{
 	cutin "kafra_01",2;
 	mes "[Kafra Employee]";
 	mes "Welcome to the";
@@ -598,7 +598,7 @@ niflheim,202,180,3	script	Kafra Employee::kaf_niflheim	791,{
 // Dungeons and Fields
 //============================================================
 // - Byalan Island
-izlu2dun,106,58,8	script	Kafra Employee::kaf_izlu2dun	115,{
+izlu2dun,106,58,8	script	Kafra Employee::kaf_izlu2dun	4_F_KAFRA2,{
 	cutin "kafra_03",2;
 	if (!checkre(0) && BaseJob == Job_Novice && job_merchant_q2 > 0) {
 		// Merchant Job Change Quest

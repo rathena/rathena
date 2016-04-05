@@ -155,13 +155,15 @@ S_ExchangePoints:
 		mes "Thank you for your patronage.";
 		close;
 	}
-	if (tt_point >= getarg(1)) {
+	.@track_point = getarg(1);
+	if (tt_point >= .@track_point) {
+		.@arena_point = getarg(2);
 		mes "[Arena Point Manager]";
 		mes "" + strcharinfo(0) + ",";
-		mes "you've converted "+getarg(1)+" Track";
-		mes "Points into "+getarg(2)+" Arena Point.";
-		set tt_point,tt_point-getarg(1);
-		set arena_point,arena_point+getarg(2);
+		mes "you've converted "+ .@track_point +" Track";
+		mes "Points into "+ .@arena_point +" Arena Point.";
+		tt_point = tt_point - .@track_point;
+		arena_point = arena_point + .@arena_point;
 		next;
 		mes "[Arena Point Manager]";
 		mes "" + strcharinfo(0) + ",";

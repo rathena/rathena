@@ -205,14 +205,16 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 
 //======================= Inn Function ==============================
 function	script	F_InnMaid	{
-	mes getarg(0);
+	.@npc_name$ = getarg(0);
+
+	mes .@npc_name$;
 	mes "Welcome to";
 	mes getarg(1) + ".";
 	mes "How may I help you?";
 	next;
 	switch(select("Save:Take a Rest -> 5000 zeny:Cancel")) {
 	case 1:
-		mes getarg(0);
+		mes .@npc_name$;
 		mes "Your respawn point";
 		mes "has been saved.";
 		mes "Thank you,";
@@ -220,7 +222,7 @@ function	script	F_InnMaid	{
 		savepoint getarg(2),getarg(3),getarg(4);
 		close;
 	case 2:
-		mes getarg(0);
+		mes .@npc_name$;
 		if(Zeny < 5000){
 			mes "I'm sorry, but the service charge is 5,000 zeny. Please make sure that you have enough money to check in next time, okay?";
 			close;

@@ -3182,7 +3182,7 @@ iz_ac01,36,52,3	script	Odd Novice#ac	4_M_SIT_NOVICE,{
 				mes "Get away from me kid you're botherin' me.";
 				close;
 			} else {
-				if (getskilllv("NV_BASIC") > 8) {
+				if (!callfunc("F_CanChangeJob")) {
 					mes "[Odd Novice]";
 					mes "You, talking like this, why don't you go and change your job already instead of hanging around here?";
 					mes "Hmm, did you want to be like me maybe?";
@@ -4475,7 +4475,8 @@ iz_ac01,59,83,3	script	Battle Instructor#08	4_M_NOV_HUNT,{
 	}
 
 L_Quest:
-	if (checkquest(getarg(0),HUNTING) == -1) {
+	.@quest_id = getarg(0);
+	if (checkquest(.@quest_id,HUNTING) == -1) {
 		if (select("Take quest.", "Stop.") == 2) {
 			mes "[Battle Instructor Subino]";
 			mes "You don't seem to be interested.";
@@ -4483,18 +4484,18 @@ L_Quest:
 			close;
 		}
 		mes "[Battle Instructor Subino]";
-		if (getarg(0) == 11342) {
+		if (.@quest_id == 11342) {
 			mes getarg(5)+"s "+getarg(6)+" in ^ff0000West field of Prontera^000000.";
 			mes getarg(5)+"s are difficult to catch for a Novice... But if you gather more Novices, you can do it.";
 			next;
 			mes "[Battle Instructor Subino]";
 		} else
 			mes getarg(5)+" "+getarg(6)+" at the ^ff0000West field of Izlude^000000.";
-		mes getarg(7)+" ^ff0000"+(getarg(0)==11344?"5":"10")+" "+getarg(5)+"s^000000 and bring ^ff0000"+getarg(4)+" "+getarg(8)+"^000000.";
+		mes getarg(7)+" ^ff0000"+(.@quest_id==11344?"5":"10")+" "+getarg(5)+"s^000000 and bring ^ff0000"+getarg(4)+" "+getarg(8)+"^000000.";
 		mes "You can check received quests by pressing ^ff0000Alt + U^000000.";
-		setquest getarg(0);
+		setquest .@quest_id;
 		close;
-	} else if (checkquest(getarg(0),HUNTING) == 1) {
+	} else if (checkquest(.@quest_id,HUNTING) == 1) {
 		if (select("End Conversation", "Give up on the quest.") == 2) {
 			mes "[Battle Instructor Subino]";
 			mes "Will you really give up on the quest?";
@@ -4502,7 +4503,7 @@ L_Quest:
 			if (select("End Conversation", "Give up for sure.") == 2) {
 				mes "[Battle Instructor Subino]";
 				mes "You can challenge the quest as long as you need my help so come to me anytime.";
-				erasequest getarg(0);
+				erasequest .@quest_id;
 			}
 		}
 		close;
@@ -4519,7 +4520,7 @@ L_Quest:
 				if (select("End Conversation", "Yes, give up.") == 2) {
 					mes "[Battle Instructor Subino]";
 					mes "You can challenge the quest as long as you need my help so come to me anytime.";
-					erasequest getarg(0);
+					erasequest .@quest_id;
 				}
 			}
 			close;
@@ -4527,7 +4528,7 @@ L_Quest:
 		mes "[Battle Instructor Subino]";
 		mes "Wow..!!";
 		mes "Well done!!";
-		erasequest getarg(0);
+		erasequest .@quest_id;
 		delitem getarg(3), getarg(4);
 		getexp getarg(1), getarg(2);
 		getitem 7059,1;// Cargo_Free_Ticket
@@ -4721,16 +4722,16 @@ iz_ac01,43,80,7	script	Adventurer's Pet#ac	4_DEVIRUCHI,{
 OnTimer60000:
 	switch(rand(1,4)) {
 	case 1:
-		npctalk "Yawn~ I am so bored!";
+		npctalk "Adventurer's Pet : Yawn~ I am so bored!";
 		break;
 	case 2:
-		npctalk "Red Potion.. Is it delicious? Herb does not look delicious.. I bet that is bitter.";
+		npctalk "Adventurer's Pet : Red Potion.. Is it delicious? Herb does not look delicious.. I bet that is bitter.";
 		break;
 	case 3:
-		npctalk "Ha. You are lucky to have this Devi.";
+		npctalk "Adventurer's Pet : Ha. You are lucky to have this Devi.";
 		break;
 	case 4:
-		npctalk "Isn't the floor cold? Well.. For me, Undead is more familiar.";
+		npctalk "Adventurer's Pet : Isn't the floor cold? Well.. For me, Undead is more familiar.";
 		break;
 	}
 
@@ -5182,7 +5183,7 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 					mes "[Kafra Guide Trainer]";
 					mes "Storage is necessary for you to survive so use it regularly.";
 				} else {
-					if (getskilllv("NV_BASIC") < 6) {
+					if (!callfunc("F_CanOpenStorage")) {
 						mes "[Kafra Guide Trainer]";
 						mes "To use the storage, you need to be raised the beginner level 6 and higher.";
 					} else if (countitem(7059) || Zeny >= 500) {
@@ -9302,7 +9303,7 @@ iz_ac02,148,110,3	script	Mage Chuck#ac	4_M_JOB_WIZARD,{
 							mes "[Mage Chuck]";
 							mes "You must first reach ^006400Job level 10^000000 and ^006400Basic Skill level 9^000000.";
 							next;
-							if (getskilllv("NV_BASIC") < 9) {
+							if (!callfunc("F_CanChangeJob")) {
 								mes "[Mage Chuck]";
 								mes "You don't seem ready!";
 								mes "If you want to change your job, you must first be ^006400Job level 10^000000 and ^006400Basic Skill level 9^000000.";
@@ -11784,7 +11785,7 @@ iz_ac02,62,139,3	script	Lumin#ac	4_M_NOV_RUMIN,{
 			mes "Lumin changing clothes piece by piece.";
 			specialeffect2 EF_SPHERE;
 			specialeffect2 EF_SPHERE;
-			classchange 4_M_THIEF_RUMIN,0;
+			setnpcdisplay( "Lumin#"+strnpcinfo(2), 4_M_THIEF_RUMIN );
 			next;
 			cutin "thf_lumin01.bmp", 2;
 			mes "[Lumin]";
@@ -11798,7 +11799,7 @@ iz_ac02,62,139,3	script	Lumin#ac	4_M_NOV_RUMIN,{
 			close2;
 			specialeffect2 EF_SPHERE;
 			specialeffect2 EF_SPHERE;
-			classchange 4_M_NOV_RUMIN,0;
+			setnpcdisplay( "Lumin#"+strnpcinfo(2), 4_M_NOV_RUMIN );
 			cutin "", 255;
 			end;
 		}
@@ -12333,7 +12334,7 @@ iz_ac02,140,139,5	script	Ninja Guide#ac	4_M_NINJA_BLUE,{
 			}
 			break;
 		case 2:
-			if (getskilllv("NV_BASIC") < 9) {
+			if (!callfunc("F_CanChangeJob")) {
 				mes "[Ninja Guide]";
 				mes "I appreciate your braveness but, first of all, you have to be familiar with the current profession.";
 				next;

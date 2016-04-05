@@ -468,7 +468,7 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 
 		// notify clients
 		clif_buyingstore_delete_item(sd, index, amount, pl_sd->buyingstore.items[listidx].price);
-		clif_buyingstore_update_item(pl_sd, nameid, amount);
+		clif_buyingstore_update_item(pl_sd, nameid, amount, sd->status.char_id, zeny);
 	}
 
 	if( save_settings&CHARSAVE_BANK ) {

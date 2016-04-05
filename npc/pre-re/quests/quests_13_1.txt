@@ -12,4 +12,4 @@
 //= 1.0 Moved Izlude NPC to pre-re/re paths. [Euphy]
 //============================================================ 
 
-izlude,101,173,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz	100
+izlude,99,136,5	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz	100

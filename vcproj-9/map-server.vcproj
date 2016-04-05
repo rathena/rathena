@@ -741,6 +741,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\script_constants.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\searchstore.c"
 				>
 			</File>

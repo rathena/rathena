@@ -448,8 +448,8 @@ temporary - They cease to exist when the server resets.
 
 Prefix: scope and extent
 nothing  - A permanent variable attached to the character, the default variable
-           type. They are stored by char-server in the `global_acc_reg_num` and
-           `global_acc_reg_str`.
+           type. They are stored by char-server in the `char_reg_num` and
+           `char_reg_str`.
 "@"      - A temporary variable attached to the character.
            SVN versions before 2094 revision and RC5 version will also treat
            'l' as a temporary variable prefix, so beware of having variable
@@ -475,10 +475,11 @@ nothing  - A permanent variable attached to the character, the default variable
            These are used with the instancing system, and are unique to each 
            party's instance.
 "#"      - A permanent local account variable.
-           They are stored by char-server in the `char_reg_num` table and
-           `char_reg_str`.
+           They are stored by char-server in the `acc_reg_num` table and
+           `acc_reg_str`.
 "##"     - A permanent global account variable stored by the login server.
-           They are stored in the `acc_reg_num` table and `acc_reg_str`.
+           They are stored in the `global_acc_reg_num` table and
+		   `global_acc_reg_str`.
            The only difference you will note from normal # variables is when
            you have multiple char-servers connected to the same login server.
            The # variables are unique to each char-server, while the ## variables
@@ -1085,6 +1086,8 @@ The example below will make the [Tool Shop] text clickable and begin navigation
 to alberta (98,154) when clicked.
 
     mes "Have you checked out the <NAVI>[Tool Shop]<INFO>alberta,98,154,0,000,0</INFO></NAVI>?";
+
+See also 'navigateto', which can be used for certain NPC events.
 
 URLs
 ----
@@ -2882,24 +2885,23 @@ not variables or the search was not successful.
 
 Type is the type of object to search for:
 
-  0 - Character object
-  1 - NPC object
-  2 - Pet object
-  3 - Monster object -- See 'getunitdata' for monster.
-  4 - Homunculus object
-  5 - Mercenary object
-  6 - Elemental object
-  
-While 3 is meant to look for a monster object, no searching will be done if you 
-specify type 3, and the function will always return -1.
+	UNITTYPE_PC   - Character object
+	UNITTYPE_NPC  - NPC object
+	UNITTYPE_PET  - Pet object
+	UNITTYPE_HOM  - Homunculus object
+	UNITTYPE_MER  - Mercenary object
+	UNITTYPE_ELEM - Elemental object
 
 The search string is optional. If it is not specified, the location of the 
-invoking character will always be returned for types 0 and 2, the location of 
-the NPC running this function for type 1.
-If a search string is specified, for types 0 and 1, the character or NPC with 
-the specified name will be located. If type is 3, the search will locate the 
-current pet of the character who's name is given in the search string, it will 
-NOT locate a pet by name.
+invoking character will always be returned for types UNITTYPE_PC and UNITTYPE_PET,
+the location of the NPC running this function for type 1.
+
+If a search string is specified, for types UNITTYPE_PC and UNITTYPE_NPC, the
+character or NPC with the specified name will be located.
+
+If type is UNITTYPE_PET/UNITTYPE_HOM/UNITTYPE_MER/UNITTYPE_ELEM, the search
+will locate the current object of the character who's name is given in the
+search string, it will NOT locate the object by name.
 
 Example:
 
@@ -2911,7 +2913,7 @@ Example:
     prontera,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
         mes "My name is Nyah.";
         mes "I will now search for Meh all across the world!";
-        if (getmapxy(@mapname$,@mapx,@mapy,1,"Meh")!=0) {
+        if (getmapxy(@mapname$, @mapx, @mapy, UNITTYPE_NPC, "Meh") !=0) {
                 mes "I can't seem to find Meh anywhere!";
                 close;
         }
@@ -3254,32 +3256,31 @@ mob database and return the info set by TYPE argument.
 It will return -1 if there is no such monster (or the type value is invalid),
 or "null" if you requested the monster's name.
 
-Valid types are listed in 'db/const.txt':
-	MOB_NAME	0
-	MOB_LV	1
-	MOB_MAXHP	2
-	MOB_BASEEXP	3
-	MOB_JOBEXP	4
-	MOB_ATK1	5
-	MOB_ATK2	6
-	MOB_DEF	7
-	MOB_MDEF	8
-	MOB_STR	9
-	MOB_AGI	10
-	MOB_VIT	11
-	MOB_INT	12
-	MOB_DEX	13
-	MOB_LUK	14
-	MOB_RANGE	15
-	MOB_RANGE2	16
-	MOB_RANGE3	17
-	MOB_SIZE	18
-	MOB_RACE	19
-	MOB_ELEMENT	20
-	MOB_MODE	21
-	MOB_MVPEXP	22
+Valid types are:
+	MOB_NAME - monster's name, if there is no such monster "null" is returned
+	MOB_LV - monster's level
+	MOB_MAXHP - monster's maximum hp
+	MOB_BASEEXP - monster's base experience
+	MOB_JOBEXP - monster's job experience
+	MOB_ATK1 - monster's atk
+	MOB_ATK2 - monster's atk2
+	MOB_DEF - monster's def
+	MOB_MDEF - monster's mdef
+	MOB_STR - monster's str
+	MOB_AGI - monster's agi
+	MOB_VIT - monster's vit
+	MOB_INT - monster's int
+	MOB_DEX - monster's dex
+	MOB_LUK - monster's luk
+	MOB_RANGE - monster's range
+	MOB_RANGE2 - monster's range2
+	MOB_RANGE3 - monster's range3
+	MOB_SIZE - monster's size
+	MOB_RACE - monster's race
+	MOB_ELEMENT - monster's element(doesn't return the element level, only the element ID)
+	MOB_MODE - monster's mode
+	MOB_MVPEXP - monster's mvp experience
 
-Note: MOB_ELEMENT doesn't return the element level, only the element ID.
 For more details, see the sample in 'doc/sample/getmonsterinfo.txt'.
 
 ---------------------------------------
@@ -3782,6 +3783,8 @@ invoking RID. It returns 1 if successful and 0 upon failure.
     [ Parameters: <guild id> ]
  4: All players in a specified area of the map of the invoking player (or NPC).
     [ Parameters: <x0>,<y0>,<x1>,<y1> ]
+ 5: All players in the map.
+    [ Parameters: "<map name>" ]
  Account ID: If type is Account ID, attach the specified account ID.
 
 <flag> can prevent certain players from being attached:
@@ -4184,25 +4187,26 @@ the character will also have their skills reset upon 'changecharsex'.
 
 ---------------------------------------
 
-*getexp <base xp>,<job xp>{,<char_id>};
+*getexp <base_exp>,<job_exp>{,<char_id>};
 
 This command will give the invoking character a specified number of base and job 
-experience points. Can be used as a quest reward. Negative values won't work.
+experience points. Used for a quest reward. Negative values won't work.
+
+The EXP values are adjustted by 'quest_exp_rate' config value, VIP bonus, Guild 
+Tax and EXP boost items such Battle Manual, Bubble Gum, or items that have 
+SC_EXPBOOST or SC_ITEMBOOST.
 
     getexp 10000,5000;
 
-You can also use the "set" command with the constants defined in 'db/const.txt':
+---------------------------------------
 
-    // These 2 combined has the same effect as the above command
-    set BaseExp,BaseExp+10000;
-    set JobExp,JobExp+5000;
+*getexp2 <base_exp>,<job_exp>{,<char_id>};
 
-You can also reduce the amount of experience points:
+This command is safety version of 'set' command for BaseExp and JobExp. If using 
+'set' while the BaseExp or JobExp value is more than 2,147,483,647 (INT_MAX) will 
+causing overflow error.
 
-    set BaseExp,BaseExp-10000;
-
-Note that 'getexp' is now subject to the 'quest_exp_rate' config option, which
-adjusts the gained value. If you want to bypass this, use the 'set' method.
+Unlike 'getexp', this command ignores the adjustment factors!
 
 ---------------------------------------
 
@@ -4215,28 +4219,29 @@ type you want to change, then the palette you want to use. Make sure you specify
 a palette number that exists/is usable by the client you use.
 'changelook' works the same, but is only client side (it doesn't save the look value).
 
-    // This will change your hair(6), so that it uses palette 8, what ever your 
+    // This will change your hair color, so that it uses palette 8, what ever your 
     // palette 8 is, your hair will use that color
 
-    setlook 6,8;
+    setlook LOOK_HAIR_COLOR,8;
 
-    // This will change your clothes(7), so they are using palette 1, whatever 
+    // This will change your clothes color, so they are using palette 1, whatever 
     // your palette 1 is, your clothes will then use that set of colors.
     
-    setlook 7,1;
+    setlook LOOK_CLOTHES_COLOR,1;
 
 Here are the possible look types:
 
- 0 - Base sprite
- 1 - Hairstyle
- 2 - Weapon
- 3 - Head bottom
- 4 - Head top
- 5 - Head mid
- 6 - Hair color
- 7 - Clothes color
- 8 - Shield
- 9 - Shoes
+ LOOK_BASE - Base sprite
+ LOOK_HAIR - Hairstyle
+ LOOK_WEAPON - Weapon
+ LOOK_HEAD_BOTTOM - Head bottom
+ LOOK_HEAD_TOP - Head top
+ LOOK_HEAD_MID - Head mid
+ LOOK_HAIR_COLOR - Hair color
+ LOOK_CLOTHES_COLOR - Clothes color
+ LOOK_SHIELD - Shield
+ LOOK_SHOES - Shoes
+ LOOK_BODY2 - bodystyle
 
 Whatever 'shoes' means is anyone's guess, ask Gravity - the client does nothing 
 with this value. It still wants it from the server though, so it is kept, but 
@@ -4475,6 +4480,10 @@ Creates a rental item in the attached character's inventory. The item will expir
 in <time> seconds and be automatically deleted. When receiving a rental item, 
 the character will receive a message in their chat window. The character will 
 also receive warning messages in their chat window before the item disappears.
+
+When rentals expire it will call the OnUnequip Script of the item. This can be used
+for special cases such as removing a status change or resetting a variable or state
+of the player.
 
 This command can not be used to rent stackable items. Rental items cannot be 
 dropped, traded, sold to NPCs, or placed in guild storage. (i.e. trade mask 75)
@@ -5533,6 +5542,26 @@ This function will also destroy both wedding rings and send a message to both
 players, telling them they are now divorced.
 
 ---------------------------------------
+
+*adopt("<parent_name>","<baby_name>");
+*adopt(<parent_id>,<baby_id>);
+
+This function will send the client adoption request to the specified baby 
+character. The parent value can be either parent. Both parents and the baby
+need to be online in order for adoption to work.
+
+Return values:
+ ADOPT_ALLOWED - Sent message to Baby to accept or deny.
+ ADOPT_ALREADY_ADOPTED - Character is already adopted.
+ ADOPT_MARRIED_AND_PARTY - Parents need to be married and in a party with the baby.
+ ADOPT_EQUIP_RINGS - Parents need wedding rings equipped.
+ ADOPT_NOT_NOVICE - Baby is not a Novice.
+ ADOPT_CHARACTER_NOT_FOUND - A parent or Baby was not found.
+ ADOPT_MORE_CHILDREN - You cannot adopt more than 1 child. (client message)
+ ADOPT_LEVEL_70 - Parents need to be at least level 70 in order to adopt someone. (client message)
+ ADOPT_MARRIED - You cannot adopt a married person. (client message)
+
+---------------------------------------
 //
 4,3.- End of marriage-related commands
 //
@@ -5930,8 +5959,7 @@ It is an approximation of official server script language's 'cmdothernpc'.
 
 This command will display a message to the surrounding area as if the NPC object 
 running it was a player talking - that is, above their head and in the chat 
-window. The display name of the NPC will get appended in front of the message to 
-complete the effect.
+window. The display name of the NPC won't get appended in front of the message.
 
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.
@@ -7088,7 +7116,7 @@ Suggest to use 'unitblockmove' to forcefully stop the unit with OnTouch.
 
 *unittalk <GID>,"<text>";
 
-This command will make a <GID> say a message.
+This command will make a <GID> say a message. The display name of the <GID> won't get appended in front of the message.
 
 ---------------------------------------
 
@@ -7119,12 +7147,13 @@ For the position, the x and y are given in the UnitSkillUsePos.
 Returns the type of object from the given Game ID. Returns -1 if the given <GID> does not
 exist.
 
- 0 - Monster
- 1 - Homunculus
- 2 - Pet
- 3 - Mercenary
- 4 - Elemental
- 5 - NPC
+	UNITTYPE_PC     0
+	UNITTYPE_NPC    1
+	UNITTYPE_PET    2
+	UNITTYPE_MOB    3
+	UNITTYPE_HOM    4
+	UNITTYPE_MER    5
+	UNITTYPE_ELEM   6
 
 ---------------------------------------
 
@@ -7182,6 +7211,7 @@ Parameters (indexes) for monsters are:
 	UMOB_SHIELD
 	UMOB_WEAPON
 	UMOB_LOOKDIR
+	UMOB_CANMOVETICK
 	UMOB_STR
 	UMOB_AGI
 	UMOB_VIT
@@ -7580,6 +7610,29 @@ Returns distance between 2 points.
 
 Example:
 	.@i = distance(100,200,101,202);
+
+---------------------------------------
+
+*min(<number or array>{,<number or array>,...})
+*minimum(<number or array>{,<number or array>,...})
+*max(<number or array>{,<number or array>,...})
+*maximum(<number or array>{,<number or array>,...})
+
+Returns the smallest (or biggest) from the set of given parameters.
+These parameters have to be either numbers or number arrays.
+
+Example:
+	.@minimum = min( 1, -6, -2, 8, 2 ); // .@minimum will be equal to -6
+	.@maximum = max( 0, 5, 10, 4 ); // .@maximum will be equal to 10
+	.@level = min( BaseLevel, 70 ); // .@level will be the character's base level, capped to 70
+	
+	setarray .@testarray, 4, 5, 12, 6, 7, 3, 8, 9, 10;
+	
+	.@minimum = min( .@testarray ); // .@minimum will be equal to 3
+	.@maximum = max( .@testarray ); // .@maximum will be equal to 12
+	
+	.@minimum = min( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to -6
+	.@maximum = max( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to 12
 
 ---------------------------------------
 
@@ -8506,15 +8559,15 @@ server and the egg will disappear when anyone tries to hatch it.
 This function will return pet information for the pet the invoking character 
 currently has active. Valid types are:
 
- 0 - Pet ID
- 1 - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
+ PETINFO_ID - Pet ID
+ PETINFO_CLASS - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
      is.
- 2 - Pet name. Will return "null" if there's no pet. 
- 3 - Pet friendly level (intimacy score). 1000 is full loyalty.
- 4 - Pet hungry level. 100 is completely full.
- 5 - Pet rename flag. 0 means this pet has not been named yet.
- 6 - Pet level
- 7 - Pet Game ID
+ PETINFO_NAME - Pet name. Will return "null" if there's no pet. 
+ PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.
+ PETINFO_HUNGRY - Pet hungry level. 100 is completely full.
+ PETINFO_RENAMED - Pet rename flag. 0 means this pet has not been named yet.
+ PETINFO_LEVEL - Pet level
+ PETINFO_BLOCKID - Pet Game ID
 
 ---------------------------------------
 
@@ -8995,6 +9048,53 @@ Valid options are:
 The command returns 1 upon success, and these values upon failure:
  0: Invalid option.
 -1: Party not found.
+
+---------------------------------------
+
+*opendressroom(<flag>{,<char_id>});
+
+This will open the Dress Room window on the client connected to the invoking character.
+
+    mes "Close this window to open the Dress Room window.";
+    close2;
+    opendressroom(1);
+    end;
+
+Valid flag are:
+ 1 - Open the Dress Room window
+
+---------------------------------------
+
+*navigateto("<map>"{,<x>,<y>,<flag>,<hide_window>,<monster_id>,<char_id>});
+
+Generates a navigation for attached or specified character. Requires client
+2011-10-10aRagEXE or newer.
+
+The flag specifies how the client will calculate the specific route.
+
+Valid flags are:
+ NAV_NONE - No services
+ NAV_AIRSHIP_ONLY - Airship only
+ NAV_SCROLL_ONLY - Scroll only
+ NAV_AIRSHIP_AND_SCROLL - Airship and Scroll
+ NAV_KAFRA_ONLY - Kafra only
+ NAV_KAFRA_AND_AIRSHIP - Kafra and Airship
+ NAV_KAFRA_AND_SCROLL - Kafra and Scroll
+ NAV_ALL - All services
+
+When flag is not specified, the default value is NAV_KAFRA_AND_AIRSHIP.
+
+The hide_window specifies whether to display (0) or hide (1) the navigation window.
+By default the window is hidden.
+
+You can specify the monster_id in combination with a mapname to make the
+navigation system tell you, that you have reached the desired mob.
+
+Note:
+The client requires custom monster spawns be in the navigation file
+for using the embedded client Navigation feature to work properly. In this
+instance sending the player to the map where the monster spawns is a simpler
+solution rather than sending the map and the monster_id.
 
 ---------------------------------------
 

@@ -74,7 +74,8 @@ struct view_data {
 		head_bottom,
 		hair_style,
 		hair_color,
-		cloth_color;
+		cloth_color,
+		body_style;
 	char sex;
 	unsigned dead_sit : 2;
 };
@@ -99,7 +100,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 int unit_escape(struct block_list *bl, struct block_list *target, short dist);
 
 // Instant unit changes
-int unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath);
+bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, bool checkpath);
 int unit_warp(struct block_list *bl, short map, short x, short y, clr_type type);
 int unit_setdir(struct block_list *bl, unsigned char dir);
 uint8 unit_getdir(struct block_list *bl);

@@ -845,6 +845,8 @@ int hom_food(struct map_session_data *sd, struct homun_data *hd)
 	if(hd->homunculus.hunger > 100)
 		hd->homunculus.hunger = 100;
 
+	log_feeding(sd, LOG_FEED_HOMUNCULUS, foodID);
+
 	clif_emotion(&hd->bl,emotion);
 	clif_send_homdata(sd,SP_HUNGRY,hd->homunculus.hunger);
 	clif_send_homdata(sd,SP_INTIMATE,hd->homunculus.intimacy / 100);

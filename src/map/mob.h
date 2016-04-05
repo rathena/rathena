@@ -61,6 +61,7 @@ enum MobDamageLogFlag
 	MDLF_NORMAL = 0,
 	MDLF_HOMUN,
 	MDLF_PET,
+	MDLF_SELF
 };
 
 enum size {
@@ -171,7 +172,7 @@ struct mob_data {
 	short mob_id;
 	unsigned int tdmg; //Stores total damage given to the mob, for exp calculations. [Skotlex]
 	int level;
-	int target_id,attacked_id;
+	int target_id,attacked_id,norm_attacked_id;
 	int areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	unsigned int bg_id; // BattleGround System
 
@@ -323,7 +324,7 @@ int mob_count_sub(struct block_list *bl, va_list ap);
 
 int mob_is_clone(int mob_id);
 
-int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, int mode, int flag, unsigned int duration);
+int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int master_id, enum e_mode mode, int flag, unsigned int duration);
 int mob_clone_delete(struct mob_data *md);
 
 void mob_reload(void);

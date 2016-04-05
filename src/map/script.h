@@ -297,6 +297,82 @@ enum script_parse_options {
 	SCRIPT_RETURN_EMPTY_SCRIPT = 0x4// returns the script object instead of NULL for empty scripts
 };
 
+enum monsterinfo_types {
+	MOB_NAME = 0,
+	MOB_LV,
+	MOB_MAXHP,
+	MOB_BASEEXP,
+	MOB_JOBEXP,
+	MOB_ATK1,
+	MOB_ATK2,
+	MOB_DEF,
+	MOB_MDEF,
+	MOB_STR,
+	MOB_AGI,
+	MOB_VIT,
+	MOB_INT,
+	MOB_DEX,
+	MOB_LUK,
+	MOB_RANGE,
+	MOB_RANGE2,
+	MOB_RANGE3,
+	MOB_SIZE,
+	MOB_RACE,
+	MOB_ELEMENT,
+	MOB_MODE,
+	MOB_MVPEXP
+};
+
+enum petinfo_types {
+	PETINFO_ID = 0,
+	PETINFO_CLASS,
+	PETINFO_NAME,
+	PETINFO_INTIMATE,
+	PETINFO_HUNGRY,
+	PETINFO_RENAMED,
+	PETINFO_LEVEL,
+	PETINFO_BLOCKID
+};
+
+enum questinfo_types {
+	QTYPE_QUEST = 0,
+	QTYPE_QUEST2,
+	QTYPE_JOB,
+	QTYPE_JOB2,
+	QTYPE_EVENT,
+	QTYPE_EVENT2,
+	QTYPE_WARG,
+	// 7 = free
+	QTYPE_WARG2 = 8,
+	// 9 - 9998 = free
+	QTYPE_NONE = 9999
+};
+
+#ifndef WIN32
+	// These are declared in wingdi.h
+	/* Font Weights */
+	#define FW_DONTCARE         0
+	#define FW_THIN             100
+	#define FW_EXTRALIGHT       200
+	#define FW_LIGHT            300
+	#define FW_NORMAL           400
+	#define FW_MEDIUM           500
+	#define FW_SEMIBOLD         600
+	#define FW_BOLD             700
+	#define FW_EXTRABOLD        800
+	#define FW_HEAVY            900
+#endif
+
+enum getmapxy_types {
+	UNITTYPE_PC = 0,
+	UNITTYPE_NPC,
+	UNITTYPE_PET,
+	UNITTYPE_MOB,
+	UNITTYPE_HOM,
+	UNITTYPE_MER,
+	UNITTYPE_ELEM,
+};
+
 enum unitdata_mobtypes {
 	UMOB_SIZE = 0,
 	UMOB_LEVEL,
@@ -321,6 +397,7 @@ enum unitdata_mobtypes {
 	UMOB_SHIELD,
 	UMOB_WEAPON,
 	UMOB_LOOKDIR,
+	UMOB_CANMOVETICK,
 	UMOB_STR,
 	UMOB_AGI,
 	UMOB_VIT,
@@ -544,6 +621,17 @@ enum unitdata_npctypes {
 	UNPC_AMOTION,
 	UNPC_ADELAY,
 	UNPC_DMOTION,
+};
+
+enum navigation_service {
+	NAV_NONE = 0, ///< 0
+	NAV_AIRSHIP_ONLY = 1, ///< 1 (actually 1-9)
+	NAV_SCROLL_ONLY = 10, ///< 10
+	NAV_AIRSHIP_AND_SCROLL = NAV_AIRSHIP_ONLY + NAV_SCROLL_ONLY, ///< 11 (actually 11-99)
+	NAV_KAFRA_ONLY = 100, ///< 100
+	NAV_KAFRA_AND_AIRSHIP = NAV_KAFRA_ONLY + NAV_AIRSHIP_ONLY, ///< 101 (actually 101-109)
+	NAV_KAFRA_AND_SCROLL = NAV_KAFRA_ONLY + NAV_SCROLL_ONLY, ///< 110
+	NAV_ALL = NAV_AIRSHIP_ONLY + NAV_SCROLL_ONLY + NAV_KAFRA_ONLY ///< 111 (actually 111-255)
 };
 
 /**

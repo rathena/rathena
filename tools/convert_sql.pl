@@ -85,12 +85,14 @@ sub Main {
 
 sub ConvertFile { my($sFilein,$sFileout,$sType)=@_;
 	my $sFHout;
+	my %hAEgisName = ();
 	print "Starting ConvertFile with: \n\t filein=$sFilein \n\t fileout=$sFileout \n";
 	open FHIN,"$sFilein" or die "ERROR: Can't read or locate $sFilein.\n";
 	open $sFHout,">$sFileout" or die "ERROR: Can't write $sFileout.\n";
 	
 	printf $sFHout ("%s\n",$create_table);
 	while(my $ligne=<FHIN>) {
+		my $sWasCom = 0;
 		if ($ligne =~ /^\s*$/ ) {
 				print $sFHout "\n";
 				next;
@@ -100,6 +102,7 @@ sub ConvertFile { my($sFilein,$sFileout,$sType)=@_;
 			if ($ligne =~ /^\/\//) {
 				printf $sFHout ("#");
 				$ligne = substr($ligne, 2);
+				$sWasCom = 1;
 			}
 			my @champ = ();
 			if ($sType =~ /mob_skill/i ) {
@@ -113,6 +116,14 @@ sub ConvertFile { my($sFilein,$sFileout,$sType)=@_;
 				printf $sFHout ("%s\n", $ligne);
 			} else {
 				printf $sFHout ("REPLACE INTO `%s` VALUES (", $db);
+				if( $sType =~ /item/i and $sWasCom == 0){ #check if aegis name is duplicate, (only for not com)
+					$hAEgisName{$champ[1]}++;
+					if($hAEgisName{$champ[1]} > 1){
+						print "Warning, aegisName=$champ[1] multiple occurence found, val=$hAEgisName{$champ[1]}, line=$ligne\n" ;
+						$champ[1] = $champ[1]."_"x($hAEgisName{$champ[1]}-1);
+						print "Converted into '$champ[1]'\n" ;
+					}
+				}				 
 				for (my $i=0; $i<$#champ; $i++) {
 					printField($sFHout,$champ[$i],",",$i);
 				}
@@ -218,7 +229,8 @@ CREATE TABLE `$db` (
   `script` text,
   `equip_script` text,
   `unequip_script` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `UniqueAegisName` (`name_english`)
 ) ENGINE=MyISAM;
 ";
 		#NOTE: These do not match the table struct defaults.
@@ -260,7 +272,8 @@ CREATE TABLE `$db` (
   `script` text,
   `equip_script` text,
   `unequip_script` text,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `UniqueAegisName` (`name_english`)
 ) ENGINE=MyISAM;
 ";
 		#NOTE: These do not match the table struct defaults.

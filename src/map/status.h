@@ -9,6 +9,8 @@ struct mob_data;
 struct pet_data;
 struct homun_data;
 struct mercenary_data;
+struct elemental_data;
+struct npc_data;
 struct status_change;
 
 /**
@@ -739,6 +741,20 @@ typedef enum sc_type {
 	SC_PROMOTE_HEALTH_RESERCH,
 	SC_ENERGY_DRINK_RESERCH,
 	SC_NORECOVER_STATE,
+
+	/**
+	 * Summoner
+	 */
+	SC_SUHIDE,
+	SC_SU_STOOP,
+	SC_SPRITEMABLE,
+	SC_CATNIPPOWDER,
+	SC_SV_ROOTTWIST,
+	SC_BITESCAR,
+	SC_ARCLOUSEDASH,
+	SC_TUNAPARTY,
+	SC_SHRIMP,
+	SC_FRESHSHRIMP,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
@@ -1606,6 +1622,7 @@ enum si_type {
 	SI_LIMIT_POWER_BOOSTER = 867,
 	SI_TIME_ACCESSORY = 872,
 	SI_EP16_DEF = 873,
+	SI_NORMAL_ATKED_SP = 874,
 	SI_BODYSTATE_STONECURSE = 875,
 	SI_BODYSTATE_FREEZING = 876,
 	SI_BODYSTATE_STUN = 877,
@@ -1623,6 +1640,10 @@ enum si_type {
 	SI_HEALTHSTATE_BLOODING = 889,
 	SI_HEALTHSTATE_HEAVYPOISON = 890,
 	SI_HEALTHSTATE_FEAR = 891,
+	SI_CHERRY_BLOSSOM_CAKE = 892,
+	SI_SU_STOOP = 893,
+	SI_CATNIPPOWDER = 894,
+	SI_SV_ROOTTWIST = 896,
 	SI_ATTACK_PROPERTY_NOTHING = 897,
 	SI_ATTACK_PROPERTY_WATER = 898,
 	SI_ATTACK_PROPERTY_GROUND = 899,
@@ -1643,6 +1664,14 @@ enum si_type {
 	SI_RESIST_PROPERTY_DARKNESS = 914,
 	SI_RESIST_PROPERTY_TELEKINESIS = 915,
 	SI_RESIST_PROPERTY_UNDEAD = 916,
+	SI_BITESCAR = 917,
+	SI_ARCLOUSEDASH = 918,
+	SI_TUNAPARTY = 919,
+	SI_SHRIMP = 920,
+	SI_FRESHSHRIMP = 921,
+	SI_PERIOD_RECEIVEITEM = 922,
+	SI_PERIOD_PLUSEXP = 923,
+	SI_PERIOD_PLUSJOBEXP = 924,
 	SI_RUNEHELM = 925,
 	SI_HELM_VERKANA = 926,
 	SI_HELM_RHYDO = 927,
@@ -1651,6 +1680,10 @@ enum si_type {
 	SI_HELM_ISIA = 930,
 	SI_HELM_ASIR = 931,
 	SI_HELM_URJ = 932,
+	SI_SUHIDE = 933,
+	SI_DORAM_BUF_01 = 935,
+	SI_DORAM_BUF_02 = 936,
+	SI_SPRITEMABLE = 937,
 	SI_MAX,
 };
 
@@ -1672,30 +1705,31 @@ extern int current_equip_card_id;
 
 /// Mode definitions to clear up code reading. [Skotlex]
 enum e_mode {
-	MD_CANMOVE				= 0x000001,
-	MD_LOOTER				= 0x000002,
-	MD_AGGRESSIVE			= 0x000004,
-	MD_ASSIST				= 0x000008,
-	MD_CASTSENSOR_IDLE		= 0x000010,
-	MD_BOSS					= 0x000020,
-	MD_PLANT				= 0x000040,
-	MD_CANATTACK			= 0x000080,
-	MD_DETECTOR				= 0x000100,
-	MD_CASTSENSOR_CHASE		= 0x000200,
-	MD_CHANGECHASE			= 0x000400,
-	MD_ANGRY				= 0x000800,
-	MD_CHANGETARGET_MELEE	= 0x001000,
-	MD_CHANGETARGET_CHASE	= 0x002000,
-	MD_TARGETWEAK			= 0x004000,
-	MD_RANDOMTARGET			= 0x008000,
-	MD_IGNOREMELEE			= 0x010000,
-	MD_IGNOREMAGIC			= 0x020000,
-	MD_IGNORERANGED			= 0x040000,
-	MD_MVP					= 0x080000,
-	MD_IGNOREMISC			= 0x100000,
-	MD_KNOCKBACK_IMMUNE		= 0x200000,
-	MD_NORANDOM_WALK		= 0x400000,
-	MD_NOCAST_SKILL			= 0x800000,
+	MD_CANMOVE				= 0x0000001,
+	MD_LOOTER				= 0x0000002,
+	MD_AGGRESSIVE			= 0x0000004,
+	MD_ASSIST				= 0x0000008,
+	MD_CASTSENSOR_IDLE		= 0x0000010,
+	MD_BOSS					= 0x0000020,
+	MD_PLANT				= 0x0000040,
+	MD_CANATTACK			= 0x0000080,
+	MD_DETECTOR				= 0x0000100,
+	MD_CASTSENSOR_CHASE		= 0x0000200,
+	MD_CHANGECHASE			= 0x0000400,
+	MD_ANGRY				= 0x0000800,
+	MD_CHANGETARGET_MELEE	= 0x0001000,
+	MD_CHANGETARGET_CHASE	= 0x0002000,
+	MD_TARGETWEAK			= 0x0004000,
+	MD_RANDOMTARGET			= 0x0008000,
+	MD_IGNOREMELEE			= 0x0010000,
+	MD_IGNOREMAGIC			= 0x0020000,
+	MD_IGNORERANGED			= 0x0040000,
+	MD_MVP					= 0x0080000,
+	MD_IGNOREMISC			= 0x0100000,
+	MD_KNOCKBACK_IMMUNE		= 0x0200000,
+	MD_NORANDOM_WALK		= 0x0400000,
+	MD_NOCAST_SKILL			= 0x0800000,
+	MD_FIXED_ITEMDROP		= 0x1000000,
 };
 #define MD_MASK 0x00FFFF
 #define ATR_MASK 0xFF0000
@@ -1759,9 +1793,14 @@ enum e_option {
 	OPTION_SIGHT		= 0x00000001,
 	OPTION_HIDE			= 0x00000002,
 	OPTION_CLOAK		= 0x00000004,
+	OPTION_CART1		= 0x00000008,
 	OPTION_FALCON		= 0x00000010,
 	OPTION_RIDING		= 0x00000020,
 	OPTION_INVISIBLE	= 0x00000040,
+	OPTION_CART2		= 0x00000080,
+	OPTION_CART3		= 0x00000100,
+	OPTION_CART4		= 0x00000200,
+	OPTION_CART5		= 0x00000400,
 	OPTION_ORCISH		= 0x00000800,
 	OPTION_WEDDING		= 0x00001000,
 	OPTION_RUWACH		= 0x00002000,
@@ -1781,16 +1820,8 @@ enum e_option {
 	OPTION_HANBOK		= 0x08000000,
 	OPTION_OKTOBERFEST	= 0x10000000,
 
-#ifndef NEW_CARTS
-	OPTION_CART1	= 0x00000008,
-	OPTION_CART2	= 0x00000080,
-	OPTION_CART3	= 0x00000100,
-	OPTION_CART4	= 0x00000200,
-	OPTION_CART5	= 0x00000400,
-
 	// compound constant for older carts
 	OPTION_CART	= OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5,
-#endif
 
 	// compound constants
 	OPTION_DRAGON	= OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5,
@@ -2066,6 +2097,8 @@ int StatusIconChangeTable[SC_MAX];          /// status -> "icon" (icon is a bit 
 int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, int walkdelay, int flag);
 //Define for standard HP damage attacks.
 #define status_fix_damage(src, target, hp, walkdelay) status_damage(src, target, hp, 0, walkdelay, 0)
+//Define for standard SP damage attacks.
+#define status_fix_spdamage(src, target, sp, walkdelay) status_damage(src, target, 0, sp, walkdelay, 0)
 //Define for standard HP/SP damage triggers.
 #define status_zap(bl, hp, sp) status_damage(NULL, bl, hp, sp, 0, 1)
 //Define for standard HP/SP skill-related cost triggers (mobs require no HP/SP to use skills)
@@ -2166,6 +2199,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data);
 int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, int type);
+void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
 
 #define status_calc_bl(bl, flag) status_calc_bl_(bl, (enum scb_flag)(flag), SCO_NONE)
 #define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, SCB_ALL, opt)

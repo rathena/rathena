@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140425
+//= 20160313
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -1019,6 +1019,7 @@ Additionally, @sizeall will change the size of all online players.
 
 ---------------------------------------
 
+@duel {<duel participant count>}
 @duel {<player name>}
 @invite <player name>
 @accept
@@ -1026,6 +1027,7 @@ Additionally, @sizeall will change the size of all online players.
 @leave
 
 Duel-organizing commands.
+When specifying the participant count accepted values are 2 ~ 65535.
 Some options can be found in '/conf/battle/misc.conf'.
 
 ---------------------------------------
@@ -1161,6 +1163,12 @@ Changes the gender attached to the player's character.
 @divorce <player>
 
 Marries or divorces two players.
+
+---------------------------------------
+
+@adopt <player>
+
+Adopts the specified player with the attached character as one of the parents.
 
 ---------------------------------------
 

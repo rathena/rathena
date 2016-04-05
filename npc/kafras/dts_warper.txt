@@ -448,7 +448,7 @@ function	script	F_VoteKafra	{
 					mes " ";
 					mes " ";
 					if ($DTS_KafraWins == 0) {
-						mes "FF0000Toy Factory, Level 2^000000";
+						mes "^FF0000Toy Factory, Level 2^000000";
 					}
 					else if ($DTS_KafraWins == 1) {
 						mes "^FF0000Toy Factory, Level 2^000000";
@@ -690,7 +690,7 @@ yuno,162,191,4	script	Kafra Voting Staff#yuno	861,{
 prontera,164,125,4	script	Kafra Voting Staff#prt	116,{
 	callfunc "F_VoteKafra",2;
 }
-moc_ruins,97,133,4	script	Kafra Voting Staff#moc	116,{
+moc_ruins,97,133,4	script	Kafra Voting Staff#moc	4_M_ZONDAMAN,{
 	callfunc "F_VoteKafra",2;
 }
 geffen,122,37,4	script	Kafra Voting Staff#gef	116,{

@@ -196,6 +196,7 @@
     <ClInclude Include="..\src\config\secure.h" />
     <ClInclude Include="..\src\config\classes\general.h" />
     <ClInclude Include="..\src\map\script.h" />
+	<ClInclude Include="..\src\map\script_constants.h" />
     <ClInclude Include="..\src\map\searchstore.h" />
     <ClInclude Include="..\src\map\skill.h" />
     <ClInclude Include="..\src\map\status.h" />
@@ -356,5 +357,6 @@
     <Copy SourceFiles="..\db\import-tmpl\skill_unit_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\skill_unit_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\spellbook_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\spellbook_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\statpoint.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\statpoint.txt')" />
+    <Copy SourceFiles="..\db\import-tmpl\status_disabled.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\status_disabled.txt')" />
   </Target>
 </Project>

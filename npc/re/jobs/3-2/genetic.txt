@@ -651,7 +651,7 @@ job3_gen01,12,56,3	script	Plant Guide#generic	111,{
 // QuestID,PlantName,Description{,Part?}
 function	script	Genetic_Job_Plant	{
 	if (job_gen == 7) {
-		if (checkquest(getarg(0)) == -1 || checkquest(getarg(0)) == 0) {
+		if (isbegin_quest(getarg(0)) == 0) {
 			mes "- "+getarg(2)+" -";
 			next;
 			switch(select("Use it as a material.:Do not use.")) {

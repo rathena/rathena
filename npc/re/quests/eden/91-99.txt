@@ -161,6 +161,7 @@ moc_para01,48,177,3	script	91-99 Mission Board	857,{
 L_Quest:
 	set .@quest1, getarg(0);
 	set .@quest2, .@quest1+31;
+	.@cutin$ = getarg(3);
 	set .@playtime, checkquest(.@quest2,PLAYTIME);
 	if (.@playtime == 0 || .@playtime == 1) {
 		mes "[91-99 Mission Board]";
@@ -199,11 +200,11 @@ L_Quest:
 		mes "[91-99 Mission Board]";
 		mes getarg(4);
 		next;
-		if (getarg(3) != "") cutin getarg(3),3;
+		if (.@cutin$ != "") cutin .@cutin$,3;
 		mes "[91-99 Mission Board]";
 		mes "Hunt 30 "+getarg(1)+" monsters there and post your success on this board.";
 		next;
-		if (getarg(3) != "") cutin getarg(3),255;
+		if (.@cutin$ != "") cutin .@cutin$,255;
 		if(select("I'll hunt them.:No thanks.") == 1) {
 			mes "[91-99 Mission Board]";
 			mes "When you have completed the mission, post it on this board and collect your reward.";

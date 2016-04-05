@@ -1166,7 +1166,7 @@ ACMD_FUNC(heal)
 
 	if ( hp < 0 && sp <= 0 ) {
 		status_damage(NULL, &sd->bl, -hp, -sp, 0, 0);
-		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0);
+		clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0, false);
 		clif_displaymessage(fd, msg_txt(sd,156)); // HP or/and SP modified.
 		return 0;
 	}
@@ -1177,7 +1177,7 @@ ACMD_FUNC(heal)
 			status_heal(&sd->bl, hp, 0, 0);
 		else {
 			status_damage(NULL, &sd->bl, -hp, 0, 0, 0);
-			clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0);
+			clif_damage(&sd->bl,&sd->bl, gettick(), 0, 0, -hp, 0, DMG_ENDURE, 0, false);
 		}
 	}
 
@@ -1728,6 +1728,40 @@ ACMD_FUNC(model)
 }
 
 /*==========================================
+ * @bodystyle [Rytech]
+ *------------------------------------------*/
+ACMD_FUNC(bodystyle)
+{
+	int body_style = 0;
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	// Limit body styles to certain jobs since not all of them are released yet.
+	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC
+		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD)) {
+		clif_displaymessage(fd, msg_txt(sd,770));	// This job has no alternate body styles.
+		return -1;
+	}
+
+	if (!message || !*message || sscanf(message, "%d", &body_style) < 1) {
+		sprintf(atcmd_output, msg_txt(sd,739), MIN_BODY_STYLE, MAX_BODY_STYLE);		// Please enter a body style (usage: @bodystyle <body ID: %d-%d>).
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if (body_style >= MIN_BODY_STYLE && body_style <= MAX_BODY_STYLE) {
+			pc_changelook(sd, LOOK_BODY2, body_style);
+			clif_displaymessage(fd, msg_txt(sd,36)); // Appearence changed.
+	} else {
+		clif_displaymessage(fd, msg_txt(sd,37)); // An invalid number was specified.
+		return -1;
+	}
+
+	return 0;
+}
+
+/*==========================================
  * @dye && @ccolor
  *------------------------------------------*/
 ACMD_FUNC(dye)
@@ -1840,7 +1874,11 @@ ACMD_FUNC(go)
 		{ MAP_UMBALA,       89, 157 }, // 12=Umbala
 		{ MAP_NIFLHEIM,     21, 153 }, // 13=Niflheim
 		{ MAP_LOUYANG,     217,  40 }, // 14=Louyang
+#ifdef RENEWAL
+		{ MAP_NOVICE,       97, 90  }, // 15=Training Grounds (Renewal)
+#else
 		{ MAP_NOVICE,       53, 111 }, // 15=Training Grounds
+#endif
 		{ MAP_JAIL,         23,  61 }, // 16=Prison
 		{ MAP_JAWAII,      249, 127 }, // 17=Jawaii
 		{ MAP_AYOTHAYA,    151, 117 }, // 18=Ayothaya
@@ -5738,14 +5776,14 @@ ACMD_FUNC(divorce)
 ACMD_FUNC(changelook)
 {
 	int i, j = 0, k = 0;
-	int pos[7] = { LOOK_HEAD_TOP,LOOK_HEAD_MID,LOOK_HEAD_BOTTOM,LOOK_WEAPON,LOOK_SHIELD,LOOK_SHOES,LOOK_ROBE };
+	int pos[8] = { LOOK_HEAD_TOP,LOOK_HEAD_MID,LOOK_HEAD_BOTTOM,LOOK_WEAPON,LOOK_SHIELD,LOOK_SHOES,LOOK_ROBE, LOOK_BODY2 };
 
 	if((i = sscanf(message, "%11d %11d", &j, &k)) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1177)); // Usage: @changelook {<position>} <view id>
-		clif_displaymessage(fd, msg_txt(sd,1178)); // Position: 1-Top 2-Middle 3-Bottom 4-Weapon 5-Shield 6-Shoes 7-Robe
+		clif_displaymessage(fd, msg_txt(sd,1178)); // Position: 1-Top 2-Middle 3-Bottom 4-Weapon 5-Shield 6-Shoes 7-Robe 8-Body
 		return -1;
 	} else if ( i == 2 ) {
-		if (j < 1 || j > 7)
+		if (j < 1 || j > 8)
 			j = 1;
 		j = pos[j - 1];
 	} else if( i == 1 ) {	// position not defined, use HEAD_TOP as default
@@ -7029,8 +7067,8 @@ ACMD_FUNC(mobinfo)
 
 #ifdef RENEWAL_EXP
 		if( battle_config.atcommand_mobinfo_type ) {
-			base_exp = base_exp * pc_level_penalty_mod(sd, mob->lv, mob->status.class_, 1) / 100;
-			job_exp = job_exp * pc_level_penalty_mod(sd, mob->lv, mob->status.class_, 1) / 100;
+			base_exp = base_exp * pc_level_penalty_mod(sd, mob->lv, mob->status.class_, mob->status.mode, 1) / 100;
+			job_exp = job_exp * pc_level_penalty_mod(sd, mob->lv, mob->status.class_, mob->status.mode, 1) / 100;
 		}
 #endif
 #ifdef VIP_ENABLE
@@ -7070,7 +7108,7 @@ ACMD_FUNC(mobinfo)
 
 #ifdef RENEWAL_DROP
 			if( battle_config.atcommand_mobinfo_type ) {
-				droprate = droprate * pc_level_penalty_mod(sd, mob->lv, mob->status.class_, 2) / 100;
+				droprate = droprate * pc_level_penalty_mod(sd, mob->lv, mob->status.class_, mob->status.mode, 2) / 100;
 				if (droprate <= 0 && !battle_config.drop_rate0item)
 						droprate = 1;
 			}
@@ -7613,7 +7651,7 @@ ACMD_FUNC(whodrops)
 
 #ifdef RENEWAL_DROP
 				if( battle_config.atcommand_mobinfo_type )
-					dropchance = dropchance * pc_level_penalty_mod(sd, mob_db(item_data->mob[j].id)->lv, mob_db(item_data->mob[j].id)->status.class_,  2) / 100;
+					dropchance = dropchance * pc_level_penalty_mod(sd, mob_db(item_data->mob[j].id)->lv, mob_db(item_data->mob[j].id)->status.class_, mob_db(item_data->mob[j].id)->status.mode, 2) / 100;
 #endif
 #ifdef VIP_ENABLE
 				// Display item rate increase for VIP.
@@ -8966,14 +9004,23 @@ ACMD_FUNC(accinfo) {
 	return 0;
 }
 
-/* [Ind] */
+/**
+ * @set <variable name{[index]}>{ <value>}
+ * 
+ * Gets or sets a value of a non server variable.
+ * If a value is specified it is used to set the variable's value,
+ * if not the variable's value is read.
+ * In any case it reads and displays the variable's value.
+ *
+ * Original implementation by Ind
+*/
 ACMD_FUNC(set) {
-	char reg[32], val[128];
-	struct script_data* data;
-	int toset = 0, len;
+	char reg[46], val[128], name[32];
+	int toset = 0, len, index;
 	bool is_str = false;
+	int64 uid;
 
-	if( !message || !*message || (toset = sscanf(message, "%31s %127[^\n]s", reg, val)) < 1  ) {
+	if( !message || !*message || (toset = sscanf(message, "%45s %127[^\n]s", reg, val)) < 1  ) {
 		clif_displaymessage(fd, msg_txt(sd,1367)); // Usage: @set <variable name> <value>
 		clif_displaymessage(fd, msg_txt(sd,1368)); // Usage: ex. "@set PoringCharVar 50"
 		clif_displaymessage(fd, msg_txt(sd,1369)); // Usage: ex. "@set PoringCharVarSTR$ Super Duper String"
@@ -8990,7 +9037,13 @@ ACMD_FUNC(set) {
 		return -1;
 	}
 
-	is_str = ( reg[strlen(reg) - 1] == '$' );
+	// Check if the user wanted to set an array
+	if( sscanf( reg, "%31[^[][%11d]", name, &index ) < 2 ){
+		// The user did not specify array brackets, so we set the index to zero
+		index = 0;
+	}
+
+	is_str = is_string_variable(name);
 
 	if( ( len = strlen(val) ) > 1 ) {
 		if( val[0] == '"' && val[len-1] == '"') {
@@ -8999,88 +9052,64 @@ ACMD_FUNC(set) {
 		}
 	}
 
-	if( toset >= 2 ) {/* we only set the var if there is an val, otherwise we only output the value */
-		if( is_str )
-			set_var(sd, reg, (void*) val);
-		else
-			set_var(sd, reg, (void*)__64BPRTSIZE((atoi(val))));
-
+	// Only set the variable if there is a value for it
+	if( toset >= 2 ){
+		setd_sub( NULL, sd, name, index, is_str ? (void*)val : (void*)__64BPRTSIZE((atoi(val))), NULL );
 	}
 
-	CREATE(data, struct script_data,1);
-
+	uid = reference_uid( add_str( name ), index );
 
 	if( is_str ) {// string variable
+		char* value;
 
 		switch( reg[0] ) {
 			case '@':
-				data->u.str = pc_readregstr(sd, add_str(reg));
+				value = pc_readregstr(sd, uid);
 				break;
 			case '$':
-				data->u.str = mapreg_readregstr(add_str(reg));
+				value = mapreg_readregstr(uid);
 				break;
 			case '#':
 				if( reg[1] == '#' )
-					data->u.str = pc_readaccountreg2str(sd, add_str(reg));// global
+					value = pc_readaccountreg2str(sd, uid);// global
 				else
-					data->u.str = pc_readaccountregstr(sd, add_str(reg));// local
+					value = pc_readaccountregstr(sd, uid);// local
 				break;
 			default:
-				data->u.str = pc_readglobalreg_str(sd, add_str(reg));
+				value = pc_readglobalreg_str(sd, uid);
 				break;
 		}
 
-		if( data->u.str == NULL || data->u.str[0] == '\0' ) {// empty string
-			data->type = C_CONSTSTR;
-			data->u.str = "";
-		} else {// duplicate string
-			data->type = C_STR;
-			data->u.str = aStrdup(data->u.str);
-		}
-
-	} else {// integer variable
-
-		data->type = C_INT;
-		switch( reg[0] ) {
-			case '@':
-				data->u.num = pc_readreg(sd, add_str(reg));
-				break;
-			case '$':
-				data->u.num = mapreg_readreg(add_str(reg));
-				break;
-			case '#':
-				if( reg[1] == '#' )
-					data->u.num = pc_readaccountreg2(sd, add_str(reg));// global
-				else
-					data->u.num = pc_readaccountreg(sd, add_str(reg));// local
-				break;
-			default:
-				data->u.num = pc_readglobalreg(sd, add_str(reg));
-				break;
-		}
-
-	}
-
-	switch( data->type ) {
-		case C_INT:
-			sprintf(atcmd_output,msg_txt(sd,1373),reg,data->u.num); // %s value is now :%d
-			break;
-		case C_STR:
-			sprintf(atcmd_output,msg_txt(sd,1374),reg,data->u.str); // %s value is now :%s
-			break;
-		case C_CONSTSTR:
+		if( value == NULL || value == '\0' ){// empty string
 			sprintf(atcmd_output,msg_txt(sd,1375),reg); // %s is empty
-			break;
-		default:
-			sprintf(atcmd_output,msg_txt(sd,1376),reg,data->type); // %s data type is not supported :%u
-			break;
+		}else{
+			sprintf(atcmd_output,msg_txt(sd,1374),reg,value); // %s value is now :%s
+		}
+	} else {// integer variable
+		int value;
+
+		switch( reg[0] ) {
+			case '@':
+				value = pc_readreg(sd, uid);
+				break;
+			case '$':
+				value = mapreg_readreg(uid);
+				break;
+			case '#':
+				if( reg[1] == '#' )
+					value = pc_readaccountreg2(sd, uid);// global
+				else
+					value = pc_readaccountreg(sd, uid);// local
+				break;
+			default:
+				value = pc_readglobalreg(sd, uid);
+				break;
+		}
+
+		sprintf(atcmd_output,msg_txt(sd,1373),reg,value); // %s value is now :%d
 	}
 
 	clif_displaymessage(fd, atcmd_output);
-
-	if (is_str && data->u.str)
-		aFree(data->u.str);
-	aFree(data);
 
 	return 0;
 }
@@ -9748,6 +9777,47 @@ ACMD_FUNC(clonestat) {
 	return 0;
 }
 
+/**
+ * Adopt a character.
+ * Usage: @adopt <char name>
+ * https://rathena.org/board/topic/104014-suggestion-add-adopt-or-etc/
+ */
+ACMD_FUNC(adopt)
+{
+	TBL_PC *b_sd;
+	enum adopt_responses response;
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!message || !*message || sscanf(message, "%23[^\n]", atcmd_player_name) < 1) {
+		sprintf(atcmd_output, msg_txt(sd, 435), command); // Please enter a player name (usage: %s <char name>).
+		clif_displaymessage(fd, atcmd_output);
+		return -1;
+	}
+
+	if ((b_sd = map_nick2sd((char *)atcmd_player_name)) == NULL) {
+		clif_displaymessage(fd, msg_txt(sd, 3)); // Character not found.
+		return -1;
+	}
+
+	response = pc_try_adopt(sd, map_charid2sd(sd->status.partner_id), b_sd);
+
+	if (response == ADOPT_ALLOWED) {
+		TBL_PC *p_sd = map_charid2sd(sd->status.partner_id);
+
+		b_sd->adopt_invite = sd->status.account_id;
+		clif_Adopt_request(b_sd, sd, p_sd->status.account_id);
+		return 0;
+	}
+
+	if (response < ADOPT_MORE_CHILDREN) // No displaymessage for client-type responses
+		clif_displaymessage(fd, msg_txt(sd, 744 + response - 1));
+	return -1;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10039,6 +10109,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(costume),
 		ACMD_DEF(cloneequip),
 		ACMD_DEF(clonestat),
+		ACMD_DEF(bodystyle),
+		ACMD_DEF(adopt),
 	};
 	AtCommandInfo* atcommand;
 	int i;
@@ -10165,7 +10237,6 @@ static void atcommand_get_suggestions(struct map_session_data* sd, const char *n
  */
 bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type)
 {
-	char charname[NAME_LENGTH], charname2[NAME_LENGTH];
 	char command[CHAT_SIZE_MAX], params[CHAT_SIZE_MAX];
 	char output[CHAT_SIZE_MAX];
 
@@ -10174,6 +10245,8 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	TBL_PC * ssd = NULL; //sd for target
 	AtCommandInfo * info;
+
+	bool is_atcommand = true; // false if it's a charcommand
 
 	nullpo_retr(false, sd);
 
@@ -10206,55 +10279,45 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		}
 	}
 
-	if (*message == charcommand_symbol) {
-		do {
-			int x, y, z;
-			char params2[CHAT_SIZE_MAX];
+	if (*message == charcommand_symbol)
+		is_atcommand = false;
 
-			//Checks to see if #command has a name or a name + parameters.
-			x = sscanf(message, "%255s \"%23[^\"]\" %255[^\n]", command, charname, params);
-			y = sscanf(message, "%255s %23s %255[^\n]", command, charname2, params2);
+	if (is_atcommand) { // #command
+		sprintf(atcmd_msg, "%s", message);
+		ssd = sd;
+	} else { // @command
+		char charname[NAME_LENGTH];
+		int n;
 
-			//z always has the value of the scan that was successful
-			z = ( x > 1 ) ? x : y;
+		//Checks to see if #command has a name or a name + parameters.
+		if ((n = sscanf(message, "%255s \"%23[^\"]\" %255[^\n]", command, charname, params)) < 2
+		 && (n = sscanf(message, "%255s %23s %255[^\n]", command, charname, params)) < 2
+		) {
+			if (pc_get_group_level(sd) == 0) {
+				if (n < 1)
+					return false; // No command found. Display as normal message.
 
-			//#command + name means the sufficient target was used and anything else after
-			//can be looked at by the actual command function since most scan to see if the
-			//right parameters are used.
-			if ( x > 2 ) {
-				sprintf(atcmd_msg, "%s %s", command, params);
-				break;
-			}
-			else if ( y > 2 ) {
-				sprintf(atcmd_msg, "%s %s", command, params2);
-				break;
-			}
-			//Regardless of what style the #command is used, if it's correct, it will always have
-			//this value if there is no parameter. Send it as just the #command
-			else if ( z == 2 ) {
-				sprintf(atcmd_msg, "%s", command);
-				break;
-			}
-
-			if( !pc_get_group_level(sd) ) {
-				if( x >= 1 || y >= 1 ) { /* we have command */
-					info = get_atcommandinfo_byname(atcommand_checkalias(command + 1));
-					if( !info || info->char_groups[sd->group_pos] == 0 ) /* if we can't use or doesn't exist: don't even display the command failed message */
-						return false;
-				} else
-					return false;/* display as normal message */
+				info = get_atcommandinfo_byname(atcommand_checkalias(command + 1));
+				if (!info || info->char_groups[sd->group_pos] == 0)  // If we can't use or doesn't exist: don't even display the command failed message
+					return false;
 			}
 
 			sprintf(output, msg_txt(sd,1388), charcommand_symbol); // Charcommand failed (usage: %c<command> <char name> <parameters>).
 			clif_displaymessage(fd, output);
 			return true;
-		} while(0);
-	}
-	else if (*message == atcommand_symbol) {
-		//atcmd_msg is constructed above differently for charcommands
-		//it's copied from message if not a charcommand so it can
-		//pass through the rest of the code compatible with both symbols
-		sprintf(atcmd_msg, "%s", message);
+		}
+
+		ssd = map_nick2sd(charname);
+		if (ssd == NULL) {
+			sprintf(output, msg_txt(sd,1389), command); // %s failed. Player not found.
+			clif_displaymessage(fd, output);
+			return true;
+		}
+
+		if (n > 2)
+			sprintf(atcmd_msg, "%s %s", command, params);
+		else
+			sprintf(atcmd_msg, "%s", command);
 	}
 
 	if (battle_config.idletime_option&IDLE_ATCOMMAND)
@@ -10270,27 +10333,15 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 
 	// @commands (script based)
 	if((type == 1 || type == 3) && atcmd_binding_count > 0) {
-		struct atcmd_binding_data * binding;
-
-		// Check if the command initiated is a character command
-		if (*message == charcommand_symbol &&
-				(ssd = map_nick2sd(charname)) == NULL && (ssd = map_nick2sd(charname2)) == NULL ) {
-			sprintf(output, msg_txt(sd,1389), command); // %s failed. Player not found.
-			clif_displaymessage(fd, output);
-			return true;
-		}
-
-		// Get atcommand binding
-		binding = get_atcommandbind_byname(command);
+		struct atcmd_binding_data *binding = get_atcommandbind_byname(command);
 
 		// Check if the binding isn't NULL and there is a NPC event, level of usage met, et cetera
 		if( binding != NULL && binding->npc_event[0] &&
-			((*atcmd_msg == atcommand_symbol && pc_get_group_level(sd) >= binding->level) ||
-			 (*atcmd_msg == charcommand_symbol && pc_get_group_level(sd) >= binding->level2)))
+			((is_atcommand && pc_get_group_level(sd) >= binding->level) ||
+			 (!is_atcommand && pc_get_group_level(sd) >= binding->level2)))
 		{
 			// Check if self or character invoking; if self == character invoked, then self invoke.
-			bool invokeFlag = ((*atcmd_msg == atcommand_symbol) ? 1 : 0);
-			npc_do_atcmd_event((invokeFlag ? sd : ssd), command, params, binding->npc_event);
+			npc_do_atcmd_event(ssd, command, params, binding->npc_event);
 			return true;
 		}
 	}
@@ -10298,13 +10349,13 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	//Grab the command information and check for the proper GM level required to use it or if the command exists
 	info = get_atcommandinfo_byname(atcommand_checkalias(command + 1));
 	if (info == NULL) {
-		if( pc_get_group_level(sd) ) { // TODO: remove or replace with proper permission
-			sprintf(output, msg_txt(sd,153), command); // "%s is Unknown Command."
-			clif_displaymessage(fd, output);
-			atcommand_get_suggestions(sd, command + 1, *message == atcommand_symbol);
-			return true;
-		} else
+		if (pc_get_group_level(sd) == 0) // TODO: remove or replace with proper permission
 			return false;
+
+		sprintf(output, msg_txt(sd,153), command); // "%s is Unknown Command."
+		clif_displaymessage(fd, output);
+		atcommand_get_suggestions(sd, command + 1, is_atcommand);
+		return true;
 	}
 
 	//check restriction
@@ -10314,32 +10365,24 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 		if (info->restriction&ATCMD_NOSCRIPT && (type == 0 || type == 3)) //scripts prevent
 			return true;
 		if (info->restriction&ATCMD_NOAUTOTRADE && (type == 0 || type == 3)
-			&& ((*atcmd_msg == atcommand_symbol && sd && sd->state.autotrade) || (ssd && ssd->state.autotrade)))
+			&& ((is_atcommand && sd && sd->state.autotrade) || (ssd && ssd->state.autotrade)))
 			return true;
 	}
 
 	// type == 1 : player invoked
 	if (type == 1) {
-		if ((*command == atcommand_symbol && info->at_groups[sd->group_pos] == 0) ||
-			(*command == charcommand_symbol && info->char_groups[sd->group_pos] == 0) ) {
+		if ((is_atcommand && info->at_groups[sd->group_pos] == 0) ||
+			(!is_atcommand && info->char_groups[sd->group_pos] == 0) )
 			return false;
-		}
+
 		if( pc_isdead(sd) && pc_has_permission(sd,PC_PERM_DISABLE_CMD_DEAD) ) {
 			clif_displaymessage(fd, msg_txt(sd,1393)); // You can't use commands while dead
 			return true;
 		}
 	}
 
-	// Check if target is valid only if confirmed that player can use command.
-	if (*message == charcommand_symbol &&
-		(ssd = map_nick2sd(charname)) == NULL && (ssd = map_nick2sd(charname2)) == NULL ) {
-		sprintf(output, msg_txt(sd,1389), command); // %s failed. Player not found.
-		clif_displaymessage(fd, output);
-		return true;
-	}
-
 	//Attempt to use the command
-	if ( (info->func(fd, (*atcmd_msg == atcommand_symbol) ? sd : ssd, command, params) != 0) )
+	if ( (info->func(fd, ssd, command, params) != 0) )
 	{
 		sprintf(output,msg_txt(sd,154), command); // %s failed.
 		clif_displaymessage(fd, output);
@@ -10347,10 +10390,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	}
 
 	//Log only if successful.
-	if ( *atcmd_msg == atcommand_symbol )
-		log_atcommand(sd, atcmd_msg);
-	else if ( *atcmd_msg == charcommand_symbol )
-		log_atcommand(sd, message);
+	log_atcommand(sd, is_atcommand ? atcmd_msg : message);
 
 	return true;
 }

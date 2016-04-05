@@ -196,13 +196,13 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 					mes "<<Salvage Cape[0]>>";
 					mes "Allow to use 'Cicada Skin Shed'(Lv 1). Cool time for this skill will be 30 seconds. When equiping it, SP consumption for using any skill will be doubled, When taking it off, SP - 1200.";
 					mes "Garment / Def 1 / Weight 40 / Required Lv 130 / Socket 0 / for Archbishop";
-					callsub L_Reward, 2582, 100, 50, 35; //Salvage_Cape
+					callsub L_Reward, 2582, 300, 300, 400; //Salvage_Cape
 					break;
 				case 6:
 					mes "<<Assassin's Handcuffs[1]>>";
 					mes "MSP + 20, CRI + 3. When equipping with Krishna, ATK + 50, ATK power from 'Sonic Blow' 50% increased, FLEE - 30. When equipping with Cakram CRI + 4, Critical ATK power 40% increased, MHP - 10%.";
 					mes "Accessory / Def 3 / Weight 40 / Required Lv 100 / Socket 1 / for Guillotine Cross";
-					callsub L_Reward, 2892, 300, 300, 400; //Assassin_Handcuffs
+					callsub L_Reward, 2892, 100, 50, 35; //Assassin_Handcuffs
 					break;
 				case 7:
 					mes "<<Green Operating Gown[1]>>";
@@ -360,10 +360,11 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 	close;
 
 L_Reward:
+	setarray .@amount[0], getarg(1), getarg(2), getarg(3);
 	next;
-	mes ""+getarg(1)+" Will of Warrior, "+getarg(2)+" Thirst for Blood, "+getarg(3)+" Chill of the Dead are needed for the exchange.";
+	mes ""+ .@amount[0] +" Will of Warrior, "+ .@amount[1] +" Thirst for Blood, "+ .@amount[2] +" Chill of the Dead are needed for the exchange.";
 	next;
-	if (countitem(6469) >= getarg(1) && countitem(6470) >= getarg(2) && countitem(6471) >= getarg(3)) {
+	if (countitem(6469) >= .@amount[0] && countitem(6470) >= .@amount[1] && countitem(6471) >= .@amount[2]) {
 		if (select("Don't exchange", "Exchange") == 1) {
 			mes "[Weird old man]";
 			mes "Okay..";
@@ -371,9 +372,9 @@ L_Reward:
 		}
 		emotion e_swt2, "Weird old man#Bio4Reward";
 		progressbar "FF00FF", 2;
-		delitem 6469, getarg(1); //Will_Of_Warrior
-		delitem 6470, getarg(2); //Blood_Thirst
-		delitem 6471, getarg(3); //Goast_Chill
+		delitem 6469, .@amount[0]; //Will_Of_Warrior
+		delitem 6470, .@amount[1]; //Blood_Thirst
+		delitem 6471, .@amount[2]; //Goast_Chill
 		getitem getarg(0), 1;
 		mes "[Weird old man]";
 		mes "There you go. Visit me sometimes and we could talk.";
