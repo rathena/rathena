@@ -9245,7 +9245,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if(val4 == BCT_SELF) {	// Self effect
 				val2 = tick/10000;
 				tick_time = 10000; // [GodLesZ] tick time
-				status_change_clear_buffs(bl,11); // Remove buffs/debuffs
+				status_change_clear_buffs(bl, SCCB_BUFFS|SCCB_DEBUFFS|SCCB_CHEM_PROTECT); // Remove buffs/debuffs
 			}
 			break;
 
@@ -9996,7 +9996,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = status_get_lv(bl) / 10 + val2 / 5; //All stat bonus
 			val4 = tick / 5000;
 			tick_time = 5000; // [GodLesZ] tick time
-			status_change_clear_buffs(bl,3); // Remove buffs/debuffs
+			status_change_clear_buffs(bl, SCCB_BUFFS|SCCB_DEBUFFS); // Remove buffs/debuffs
 			break;
 		case SC_CRESCENTELBOW:
 			val2 = (sd?sd->status.job_level:50) / 2 + (50 + 5 * val1);
@@ -12837,12 +12837,13 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
  * Clears buffs/debuffs on an object
  * @param bl: Object to clear [PC|MOB|HOM|MER|ELEM]
  * @param type: Type to remove
- *	&1: Clear Buffs
- *	&2: Clear Debuffs
- *	&4: Specific debuffs with a refresh
- *	&8: Clear chemical protection
+ *  SCCB_BUFFS: Clear Buffs
+ *  SCCB_DEBUFFS: Clear Debuffs
+ *  SCCB_REFRESH: Clear specific debuffs through RK_REFRESH
+ *  SCCB_CHEM_PROTECT: Clear AM_CP_ARMOR/HELM/SHIELD/WEAPON
+ *  SCCB_LUXANIMA: Bonus Script removed through RK_LUXANIMA
  */
-void status_change_clear_buffs (struct block_list* bl, int type)
+void status_change_clear_buffs(struct block_list* bl, uint8 type)
 {
 	int i;
 	struct status_change *sc= status_get_sc(bl);
@@ -12850,7 +12851,7 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 	if (!sc || !sc->count)
 		return;
 
-	if (type&6) // Debuffs
+	if (type&(SCCB_DEBUFFS|SCCB_REFRESH)) // Debuffs
 		for (i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++)
 			status_change_end(bl, (sc_type)i, INVALID_TIMER);
 
@@ -12965,7 +12966,7 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_CP_SHIELD:
 			case SC_CP_ARMOR:
 			case SC_CP_HELM:
-				if(!(type&8))
+				if(!(type&SCCB_CHEM_PROTECT))
 					continue;
 				break;
 			// Debuffs that can be removed.
@@ -12983,7 +12984,7 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_LEECHESEND:
 			case SC_MARSHOFABYSS:
 			case SC_MANDRAGORA:
-				if(!(type&4))
+				if(!(type&SCCB_REFRESH))
 					continue;
 				break;
 			case SC_HALLUCINATION:
@@ -13005,18 +13006,18 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 			case SC_FEAR:
 			case SC_MAGNETICFIELD:
 			case SC_NETHERWORLD:
-				if (!(type&2))
+				if (!(type&SCCB_DEBUFFS))
 					continue;
 				break;
 			// The rest are buffs that can be removed.
 			case SC_BERSERK:
 			case SC_SATURDAYNIGHTFEVER:
-				if (!(type&1))
+				if (!(type&SCCB_BUFFS))
 					continue;
 				sc->data[i]->val2 = 0;
 				break;
 			default:
-				if (!(type&1))
+				if (!(type&SCCB_BUFFS))
 					continue;
 				break;
 		}
@@ -13026,10 +13027,10 @@ void status_change_clear_buffs (struct block_list* bl, int type)
 	//Removes bonus_script
 	if (bl->type == BL_PC) {
 		i = 0;
-		if (type&1) i |= BSF_REM_BUFF;
-		if (type&2) i |= BSF_REM_DEBUFF;
-		if (type&4) i |= BSF_REM_ON_REFRESH;
-		if (type&8) i |= BSF_REM_ON_LUXANIMA;
+		if (type&SCCB_BUFFS)    i |= BSF_REM_BUFF;
+		if (type&SCCB_DEBUFFS)  i |= BSF_REM_DEBUFF;
+		if (type&SCCB_REFRESH)  i |= BSF_REM_ON_REFRESH;
+		if (type&SCCB_LUXANIMA) i |= BSF_REM_ON_LUXANIMA;
 		pc_bonus_script_clear(BL_CAST(BL_PC,bl),i);
 	}
 

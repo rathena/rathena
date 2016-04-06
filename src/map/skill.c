@@ -8398,7 +8398,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					sc_start(src,bl,SC_INCMATKRATE,100,-50,skill_get_time2(skill_id,skill_lv));
 					break;
 				case 2:	// all buffs removed
-					status_change_clear_buffs(bl,9);
+					status_change_clear_buffs(bl, SCCB_BUFFS|SCCB_CHEM_PROTECT);
 					break;
 				case 3:	// 1000 damage, random armor destroyed
 					{
@@ -8850,7 +8850,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,
 				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 			status_heal(bl,heal,0,1);
-			status_change_clear_buffs(bl,4);
+			status_change_clear_buffs(bl, SCCB_REFRESH);
 		}
 		break;
 
@@ -8921,7 +8921,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					}
 				} else if( skill_area_temp[5]&0x20 ) {
 					i = status_get_max_hp(bl) * 25 / 100;
-					status_change_clear_buffs(bl,4);
+					status_change_clear_buffs(bl, SCCB_REFRESH);
 					skill_area_temp[5] &= ~0x20;
 					status_heal(bl,i,0,1);
 					type = SC_REFRESH;
@@ -13151,7 +13151,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 
 		case UNT_HERMODE:
 			if (sg->src_id!=bl->id && battle_check_target(&unit->bl,bl,BCT_PARTY|BCT_GUILD) > 0)
-				status_change_clear_buffs(bl,1); //Should dispell only allies.
+				status_change_clear_buffs(bl, SCCB_BUFFS); //Should dispell only allies.
 		case UNT_RICHMANKIM:
 		case UNT_ETERNALCHAOS:
 		case UNT_DRUMBATTLEFIELD:
@@ -13682,7 +13682,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 						status_heal(bl,heal,0,0);
 						break;
 					case 1: // End all negative status
-						status_change_clear_buffs(bl,6);
+						status_change_clear_buffs(bl, SCCB_DEBUFFS|SCCB_REFRESH);
 						if (tsd) clif_gospel_info(tsd, 0x15);
 						break;
 					case 2: // Immunity to all status

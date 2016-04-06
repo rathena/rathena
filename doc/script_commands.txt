@@ -5396,7 +5396,7 @@ Flags (bitmask):
 	8   : Remove when player logs out.
 	16  : Removeable by Banishing Buster.
 	32  : Removable by Refresh.
-	64  : Removable by Luxanima.
+	64  : Removable by Lux Anima.
 	128 : Remove when Madogear is activated or deactivated.
 	256 : Remove when receive damage.
 	512 : Script is permanent, cannot be cleared by bonus_script_clear.

@@ -1908,6 +1908,15 @@ enum e_status_change_start_flags {
 	SCSTART_NOICON     = 0x10, /// Status icon won't be sent to client
 };
 
+/// Enum for status_change_clear_buffs
+enum e_status_change_clear_buffs_flags {
+	SCCB_BUFFS        = 0x01,
+	SCCB_DEBUFFS      = 0x02,
+	SCCB_REFRESH      = 0x04,
+	SCCB_CHEM_PROTECT = 0x08,
+	SCCB_LUXANIMA     = 0x10,
+};
+
 ///Enum for bonus_script's flag [Cydh]
 enum e_bonus_script_flags {
 	BSF_REM_ON_DEAD				= 0x001, ///< Removed when dead
@@ -2200,7 +2209,7 @@ int kaahi_heal_timer(int tid, unsigned int tick, int id, intptr_t data);
 int status_change_timer(int tid, unsigned int tick, int id, intptr_t data);
 int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
-void status_change_clear_buffs(struct block_list* bl, int type);
+void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
 
 #define status_calc_bl(bl, flag) status_calc_bl_(bl, (enum scb_flag)(flag), SCO_NONE)
