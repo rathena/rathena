@@ -7632,7 +7632,7 @@ Example:
 	.@maximum = max( .@testarray ); // .@maximum will be equal to 12
 	
 	.@minimum = min( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to -6
-	.@maximum = max( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to 12
+	.@maximum = max( -6, 1, 2, 3, .@testarray ); // .@maximum will be equal to 12
 
 ---------------------------------------
 
