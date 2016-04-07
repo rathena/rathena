@@ -3236,8 +3236,6 @@ static void intif_parse_StorageSaved(int fd)
 				//ShowInfo("Inventory has been saved (AID: %d).\n", RFIFOL(fd, 2));
 				break;
 			case TABLE_STORAGE: //storage
-				if (sd && sd->state.storage_flag == 1)
-					sd->state.storage_flag = 0;
 				//ShowInfo("Storage has been saved (AID: %d).\n", RFIFOL(fd, 2));
 				break;
 			case TABLE_CART: // cart
