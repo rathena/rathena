@@ -12538,6 +12538,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	case SU_CN_METEOR:
 		limit = flag - (flag&1);
 		val1 = (flag&1);
+		flag = 0; // Flag should not influence anything else for these skills
 		break;
 	case WZ_FIREPILLAR:
 		if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) )
