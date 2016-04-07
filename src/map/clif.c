@@ -2508,7 +2508,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 #if PACKETVER >= 20071002
 		WFIFOW(fd,offs+27) = 0;  //  HireExpireDate
 #if PACKETVER >= 20150226
-		clif_add_random_options(WFIFOP(fd,offs+31), &sd->status.inventory[n]);
+		clif_add_random_options(WFIFOP(fd,offs+31), &sd->inventory.u.items_inventory[n]);
 #endif
 #endif
 	}
@@ -2544,7 +2544,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 		WFIFOW(fd,offs+27)=(sd->inventory.u.items_inventory[n].bound && !itemdb_isstackable(sd->inventory.u.items_inventory[n].nameid)) ? BOUND_DISPYELLOW : sd->inventory_data[n]->flag.bindOnEquip ? BOUND_ONEQUIP : 0;
 #endif
 #if PACKETVER >= 20150226
-		clif_add_random_options(WFIFOP(fd,31), &sd->status.inventory[n]);
+		clif_add_random_options(WFIFOP(fd,31), &sd->inventory.u.items_inventory[n]);
 #endif
 	}
 
@@ -4266,7 +4266,7 @@ void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd
 		WBUFW(buf,15)= 0; //card (4w)
 		WBUFW(buf,17)= 0; //card (4w)
 #if PACKETVER >= 20150226
-		clif_add_random_options(WBUFP(buf, 19), &sd->status.inventory[index]);
+		clif_add_random_options(WBUFP(buf, 19), &sd->inventory.u.items_inventory[index]);
 #endif
 	}
 	else
@@ -4292,7 +4292,7 @@ void clif_tradeadditem(struct map_session_data* sd, struct map_session_data* tsd
 		WBUFB(buf,10)= sd->inventory.u.items_inventory[index].refine; //refine
 		clif_addcards(WBUFP(buf, 11), &sd->inventory.u.items_inventory[index]);
 #if PACKETVER >= 20150226
-		clif_add_random_options(WBUFP(buf, 19), &sd->status.inventory[index]);
+		clif_add_random_options(WBUFP(buf, 19), &sd->inventory.u.items_inventory[index]);
 #endif
 	}
 	WFIFOSET(fd,packet_len(cmd));
@@ -18690,8 +18690,8 @@ void clif_parse_Oneclick_Itemidentify(int fd, struct map_session_data *sd) {
 	// - Invalid item ID or item doesn't exist
 	// - Item is already identified
 	if (idx < 0 || idx >= MAX_INVENTORY ||
-		sd->status.inventory[idx].nameid <= 0 || sd->inventory_data[idx] == NULL ||
-		sd->status.inventory[idx].identify)
+		sd->inventory.u.items_inventory[idx].nameid <= 0 || sd->inventory_data[idx] == NULL ||
+		sd->inventory.u.items_inventory[idx].identify)
 			return;
 
 	// Ignore the request - No magnifiers in inventory
