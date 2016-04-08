@@ -15989,7 +15989,7 @@ int buildin_query_sql_sub(struct script_state* st, Sql* handle)
 
 	if( Sql_NumRows(handle) == 0 ) { // No data received
 		Sql_FreeResult(handle);
-		script_pushint(st, -1);
+		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
