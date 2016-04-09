@@ -8396,22 +8396,24 @@ BUILDIN_FUNC(getequiprefinerycnt)
  *------------------------------------------*/
 BUILDIN_FUNC(getequipweaponlv)
 {
-	int i = -1,num;
+	int i = -1, num;
 	TBL_PC *sd;
 
-	num = script_getnum(st,2);
+	num = script_getnum(st, 2);
 
 	if (!script_charid2sd(3, sd)) {
-		script_pushint(st,0);
+		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i=pc_checkequip(sd,equip[num-1]);
-	if(i >= 0 && sd->inventory_data[i])
-		script_pushint(st,sd->inventory_data[i]->wlv);
+	if (num == -1)
+		i = current_equip_item_index;
+	else if (num > 0 && num <= ARRAYLENGTH(equip))
+		i = pc_checkequip(sd, equip[num - 1]);
+	if (i >= 0 && sd->inventory_data[i])
+		script_pushint(st, sd->inventory_data[i]->wlv);
 	else
-		script_pushint(st,0);
+		script_pushint(st, 0);
 
 	return SCRIPT_CMD_SUCCESS;
 }
