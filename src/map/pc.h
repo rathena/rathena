@@ -68,6 +68,35 @@ enum equip_index {
 	EQI_MAX
 };
 
+/**
+ * Translation table from athena equip index to aegis bitmask
+*/
+static unsigned int equip_bitmask[EQI_MAX] = {
+	EQP_ACC_L,				// EQI_ACC_L
+	EQP_ACC_R,				// EQI_ACC_R
+	EQP_SHOES,				// EQI_SHOES
+	EQP_GARMENT,			// EQI_GARMENT
+	EQP_HEAD_LOW,			// EQI_HEAD_LOW
+	EQP_HEAD_MID,			// EQI_HEAD_MID
+	EQP_HEAD_TOP,			// EQI_HEAD_TOP
+	EQP_ARMOR,				// EQI_ARMOR
+	EQP_HAND_L,				// EQI_HAND_L
+	EQP_HAND_R,				// EQI_HAND_R
+	EQP_COSTUME_HEAD_TOP,	// EQI_COSTUME_HEAD_TOP
+	EQP_COSTUME_HEAD_MID,	// EQI_COSTUME_HEAD_MID
+	EQP_COSTUME_HEAD_LOW,	// EQI_COSTUME_HEAD_LOW
+	EQP_COSTUME_GARMENT,	// EQI_COSTUME_GARMENT
+	EQP_AMMO,				// EQI_AMMO
+	EQP_SHADOW_ARMOR,		// EQI_SHADOW_ARMOR
+	EQP_SHADOW_WEAPON,		// EQI_SHADOW_WEAPON
+	EQP_SHADOW_SHIELD,		// EQI_SHADOW_SHIELD
+	EQP_SHADOW_SHOES,		// EQI_SHADOW_SHOES
+	EQP_SHADOW_ACC_R,		// EQI_SHADOW_ACC_R
+	EQP_SHADOW_ACC_L		// EQI_SHADOW_ACC_L
+};
+
+#define equip_index_check(i) ( (i) >= EQI_ACC_L && (i) < EQI_MAX )
+
 struct weapon_data {
 	int atkmods[3];
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc

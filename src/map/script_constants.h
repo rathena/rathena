@@ -652,10 +652,8 @@
 	script_set_constant("bSubDefEle",SP_SUBDEF_ELE,false);
 	script_set_constant("bStateNoRecoverRace",SP_STATE_NORECOVER_RACE,false);
 	script_set_constant("bCriticalLong",SP_CRITICAL_RANGEATK,false);
-
+	
 	/* equip positions */
-	// Disabled as long as we did not clean the EQI_/EQP_ mess up [Lemongrass]
-	/*
 	export_constant(EQI_HEAD_TOP);
 	export_constant(EQI_ARMOR);
 	export_constant(EQI_HAND_L);
@@ -677,7 +675,6 @@
 	export_constant(EQI_SHADOW_SHOES);
 	export_constant(EQI_SHADOW_ACC_R);
 	export_constant(EQI_SHADOW_ACC_L);
-	*/
 
 	/* looks */
 	export_constant(LOOK_BASE);
