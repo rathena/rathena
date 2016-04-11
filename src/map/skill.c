@@ -1178,6 +1178,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start(src,bl,SC_BLIND,min(4*skill_lv,40),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
+	case WZ_HEAVENDRIVE:
+		status_change_end(bl, SC_SV_ROOTTWIST, INVALID_TIMER);
+		break;
+
 	case HT_FREEZINGTRAP:
 	case MA_FREEZINGTRAP:
 		sc_start(src,bl,SC_FREEZE,100,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -13403,9 +13407,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 					} while(sg->interval > 0 && x == bl->x && y == bl->y &&
 						++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl) );
 				}
-					break;
-				case WZ_HEAVENDRIVE:
-					status_change_end(bl, SC_SV_ROOTTWIST, INVALID_TIMER);
 					break;
 #ifndef RENEWAL // The storm gust counter was dropped in renewal
 				case WZ_STORMGUST: //SG counter does not reset per stormgust. IE: One hit from a SG and two hits from another will freeze you.
