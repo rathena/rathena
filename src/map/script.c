@@ -6449,12 +6449,12 @@ BUILDIN_FUNC(viewpoint)
 /// storagecountitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
 BUILDIN_FUNC(countitem)
 {
-	int i = 0, count = 0, aid = 3;
+	int i = 0, aid = 3;
 	struct item_data* id = NULL;
 	struct script_data* data;
 	char *command = (char *)script_getfuncname(st);
 	uint8 loc = 0;
-	uint16 size;
+	uint16 size, count = 0;
 	struct item *items;
 	TBL_PC *sd = NULL;
 
@@ -6554,7 +6554,8 @@ BUILDIN_FUNC(countitem)
  *------------------------------------------*/
 BUILDIN_FUNC(checkweight)
 {
-	int slots, amount2 = 0;
+	int slots = 0;
+	unsigned short amount2 = 0;
 	unsigned int weight = 0, i, nbargs;
 	struct item_data* id = NULL;
 	struct map_session_data* sd;
@@ -6633,8 +6634,9 @@ BUILDIN_FUNC(checkweight)
 BUILDIN_FUNC(checkweight2)
 {
 	//variable sub checkweight
-	int i = 0, amount2 = 0, slots = 0, weight = 0;
+	int i = 0, slots = 0, weight = 0;
 	short fail = 0;
+	unsigned short amount2 = 0;
 
 	//variable for array parsing
 	struct script_data* data_it;
@@ -6743,8 +6745,8 @@ BUILDIN_FUNC(checkweight2)
  *------------------------------------------*/
 BUILDIN_FUNC(getitem)
 {
-	int amount, get_count, i;
-	unsigned short nameid;
+	int get_count, i;
+	unsigned short nameid, amount;
 	struct item it;
 	TBL_PC *sd;
 	struct script_data *data;
@@ -6838,8 +6840,7 @@ BUILDIN_FUNC(getitem)
  *------------------------------------------*/
 BUILDIN_FUNC(getitem2)
 {
-	int amount;
-	unsigned short nameid;
+	unsigned short nameid, amount;
 	int iden, ref, attr;
 	unsigned short c1, c2, c3, c4;
 	char bound = BOUND_NONE;
@@ -7177,8 +7178,7 @@ BUILDIN_FUNC(grouprandomitem) {
 * makeitem "<item name>",<amount>,"<map name>",<X>,<Y>;
 */
 BUILDIN_FUNC(makeitem) {
-	int16 nameid;
-	uint16 amount, flag = 0, x, y;
+	uint16 nameid, amount, flag = 0, x, y;
 	const char *mapname;
 	int m;
 	struct item item_tmp;
@@ -10607,8 +10607,8 @@ BUILDIN_FUNC(getareausers)
  *------------------------------------------*/
 static int buildin_getareadropitem_sub(struct block_list *bl,va_list ap)
 {
-	int nameid=va_arg(ap,int);
-	int *amount=va_arg(ap,int *);
+	unsigned short nameid = va_arg(ap, unsigned short);
+	unsigned short *amount = va_arg(ap, unsigned short *);
 	struct flooritem_data *drop=(struct flooritem_data *)bl;
 
 	if(drop->item.nameid==nameid)
@@ -10620,7 +10620,7 @@ BUILDIN_FUNC(getareadropitem)
 {
 	const char *str;
 	int16 m,x0,y0,x1,y1;
-	int nameid,amount=0;
+	unsigned short nameid, amount = 0;
 	struct script_data *data;
 
 	str=script_getstr(st,2);
@@ -16205,8 +16205,7 @@ BUILDIN_FUNC(npcshopadditem)
 	const char* npcname = script_getstr(st,2);
 	struct npc_data* nd = npc_name2id(npcname);
 	int n, i;
-	int amount;
-	uint16 offs = 2;
+	uint16 offs = 2, amount;
 
 	if (!nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP && nd->subtype != NPCTYPE_MARKETSHOP)) { // Not found.
 		script_pushint(st,0);
@@ -16261,9 +16260,8 @@ BUILDIN_FUNC(npcshopdelitem)
 {
 	const char* npcname = script_getstr(st,2);
 	struct npc_data* nd = npc_name2id(npcname);
-	int n, i;
-	int amount;
-	int size;
+	int n, i, size;
+	unsigned short amount;
 
 	if (!nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP && nd->subtype != NPCTYPE_MARKETSHOP)) { // Not found.
 		script_pushint(st,0);
@@ -20689,8 +20687,7 @@ BUILDIN_FUNC(mergeitem) {
 BUILDIN_FUNC(mergeitem2) {
 	struct map_session_data *sd;
 	struct item *items = NULL;
-	uint16 i, count = 0;
-	int nameid = 0;
+	uint16 i, count = 0, nameid = 0;
 
 	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
