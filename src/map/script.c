@@ -16795,6 +16795,7 @@ BUILDIN_FUNC(getunitdata)
 
 	if (!bl) {
 		ShowWarning("buildin_getunitdata: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -17116,6 +17117,7 @@ BUILDIN_FUNC(setunitdata)
 
 	if (!bl) {
 		ShowWarning("buildin_setunitdata: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -17503,6 +17505,7 @@ BUILDIN_FUNC(getunitname)
 
 	if (!bl) {
 		ShowWarning("buildin_getunitname: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+		script_pushconststr(st, "Unknown");
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -17527,6 +17530,7 @@ BUILDIN_FUNC(setunitname)
 
 	if (!bl) {
 		ShowWarning("buildin_setunitname: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+		script_pushconststr(st, "Unknown");
 		return SCRIPT_CMD_FAILURE;
 	}
 

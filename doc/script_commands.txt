@@ -7147,7 +7147,7 @@ For the position, the x and y are given in the UnitSkillUsePos.
 
 *getunittype <GID>;
 
-Returns the type of object from the given Game ID. Returns -1 if the given <GID> does not
+Returns the type of object from the given Game ID. Returns -1 if the given GID does not
 exist.
 
 	UNITTYPE_PC     0
@@ -7177,6 +7177,8 @@ Elemental don't support custom names.
 
 Changing a homunculus or pet name will be permanent.
 
+Returns "Unknown" if unit is not found.
+
 ---------------------------------------
 
 *getunitdata <GID>,<arrayname>;
@@ -7185,6 +7187,8 @@ Changing a homunculus or pet name will be permanent.
 This is used to get and set special data related to the unit.
 With getunitdata, the array given will be filled with the current data. In setunitdata
 the indexes in the array would be used to set that data on the unit.
+
+Both getunitdata and setunitdata will return -1 if the given GID does not exist.
 
 Note: When adjusting a unit's stat (STR, AGI, etc) the unit's respective statuses are
       recalculated (HIT, FLEE, etc) automatically. Keep in mind that some stats don't
