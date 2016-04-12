@@ -770,6 +770,7 @@ REPLACE INTO `item_db_re` VALUES (1399,'TE_Woe_Two_Handed_Axe','TE Woe Two Hande
 #===================================================================
 # 1-Handed Spears
 #===================================================================
+REPLACE INTO `item_db_re` VALUES (1400,'Spear_of_Vicious_Mind','Spear of Vicious Mind',5,20,NULL,1400,'140',NULL,3,1,0x00004082,63,2,2,4,'160',1,4,'bonus bAtk,pow(min(getrefine(),15),2);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1401,'Javelin','Javelin',5,150,NULL,700,'28',NULL,3,3,0x00004082,63,2,2,1,'4',1,4,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1402,'Javelin_','Javelin',5,150,NULL,700,'28',NULL,3,4,0x00004082,63,2,2,1,'4',1,4,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1403,'Javelin__','Javelin',5,150,NULL,700,'28',NULL,3,0,0x00004082,63,2,2,1,'4',1,4,NULL,NULL,NULL);
@@ -815,6 +816,7 @@ REPLACE INTO `item_db_re` VALUES (1443,'Crimson_Spear','Crimson Spear',5,20,NULL
 #===================================================================
 # 2-Handed Spears
 #===================================================================
+REPLACE INTO `item_db_re` VALUES (1450,'Lance_of_Vicious_Mind','Lance of Vicious Mind',5,20,NULL,2250,'225',NULL,3,1,0x00004082,63,2,34,4,'160',1,5,'bonus bAtk,pow(min(getrefine(),15),2);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1451,'Guisarme','Guisarme',5,13000,NULL,1000,'84',NULL,3,2,0x00004082,63,2,34,2,'18',1,5,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1452,'Guisarme_','Guisarme',5,13000,NULL,1000,'84',NULL,3,3,0x00004082,63,2,34,2,'18',1,5,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1453,'Guisarme__','Guisarme',5,13000,NULL,1000,'84',NULL,3,0,0x00004082,63,2,34,2,'18',1,5,NULL,NULL,NULL);
@@ -971,6 +973,7 @@ REPLACE INTO `item_db_re` VALUES (1599,'Angra_Manyu','Angra Manyu',5,1,NULL,10,'
 #===================================================================
 # 1-Handed Staffs
 #===================================================================
+REPLACE INTO `item_db_re` VALUES (1600,'Rod_of_Vicious_Mind','Rod of Vicious Mind',5,20,NULL,600,'60:120',NULL,1,1,0x00818315,63,2,2,4,'160',1,10,'bonus bMatk,pow(min(getrefine(),15),2); bonus bInt,5; bonus bUnbreakableWeapon,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1601,'Rod','Rod',5,50,NULL,400,'15:30',NULL,1,3,0x00818315,63,2,2,1,'1',1,10,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1602,'Rod_','Rod',5,50,NULL,400,'15:30',NULL,1,4,0x00818315,63,2,2,1,'1',1,10,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1603,'Rod__','Rod',5,50,NULL,400,'15:30',NULL,1,0,0x00818315,63,2,2,1,'1',1,10,NULL,NULL,NULL);
@@ -1138,6 +1141,7 @@ REPLACE INTO `item_db_re` VALUES (1776,'Siege_Arrow_A','Siege Arrow A',10,10,NUL
 #===================================================================
 # Knuckles
 #===================================================================
+REPLACE INTO `item_db_re` VALUES (1800,'Fist_of_Vicious_Mind','Fist of Vicious Mind',5,20,NULL,1500,'150',NULL,1,1,0x00008100,63,2,2,4,'160',1,12,'bonus bAtk,pow(min(getrefine(),15),2);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1801,'Waghnakh','Waghnak',5,8000,NULL,400,'30',NULL,1,3,0x00008100,63,2,2,1,'1',1,12,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1802,'Waghnakh_','Waghnak',5,8000,NULL,400,'30',NULL,1,4,0x00008100,63,2,2,1,'1',1,12,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1803,'Knuckle_Duster','Knuckle Dusters',5,25000,NULL,450,'50',NULL,1,2,0x00008100,63,2,2,2,'12',1,12,NULL,NULL,NULL);
@@ -1179,6 +1183,7 @@ REPLACE INTO `item_db_re` VALUES (1839,'Crimson_Knuckles','Crimson Knuckles',5,2
 #===================================================================
 # Instruments
 #===================================================================
+REPLACE INTO `item_db_re` VALUES (1900,'Violin_of_Vicious_Mind','Violin of Vicious Mind',5,20,NULL,1300,'130:50',NULL,1,1,0x00080000,63,1,2,4,'160',1,13,'bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1901,'Violin','Violin',5,4000,NULL,700,'50',NULL,1,3,0x00080000,63,1,2,1,'2',1,13,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1902,'Violin_','Violin',5,4000,NULL,700,'50',NULL,1,4,0x00080000,63,1,2,1,'2',1,13,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1903,'Mandolin','Mandolin',5,18000,NULL,400,'90',NULL,1,2,0x00080000,63,1,2,2,'14',1,13,NULL,NULL,NULL);
@@ -1267,6 +1272,7 @@ REPLACE INTO `item_db_re` VALUES (1991,'Blue_Whip','Blue Whip',5,10,NULL,1500,'1
 REPLACE INTO `item_db_re` VALUES (1992,'Ru_Gold_Whip','Ru Gold Whip',5,0,NULL,1500,'180',NULL,2,2,0x00080000,56,2,2,3,'120',1,14,'bonus bDex,8; bonus bVit,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1994,'Infinity_Whip','Infinity Whip',5,10,NULL,500,'150',NULL,2,1,0x00080000,63,0,2,4,'100',1,14,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1995,'Crimson_Whip','Crimson Whip',5,20,NULL,800,'80',NULL,2,2,0x00080000,63,0,2,3,'70',1,14,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1996,'Wire_of_Vicious_Mind','Wire of Vicious Mind',5,20,NULL,1300,'130:50',NULL,2,1,0x00080000,63,NULL,2,4,'160',1,14,'bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2;',NULL,NULL);
 #===================================================================
 # Additional 2-Handed Staffs
 #===================================================================
@@ -1296,6 +1302,7 @@ REPLACE INTO `item_db_re` VALUES (2022,'Geffen_Staff','Staff of Geffen',5,20,NUL
 REPLACE INTO `item_db_re` VALUES (2023,'Tanos_Two-handed_Stick','Tanos Two-handed Stick',5,10,NULL,1400,'120:250',NULL,NULL,1,0x810200,63,2,34,4,'120',1,23,'bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bHealPower,18; bonus2 bHPLossRate,100,10000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2024,'Infinity_Two-handed_Stick','Infinity Two-handed Stick',5,10,NULL,500,'30',NULL,NULL,1,0x810200,63,2,34,4,'100',1,23,'bonus bMatk,170;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2025,'Crimson_Two-Handed_Staff','Crimson Two-Handed Staff',5,20,NULL,1000,'100',NULL,1,2,0x000014,63,2,34,3,'70',1,23,'.@r = getrefine(); bonus bInt,5; bonus bMatk,150+((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2026,'Staff_of_Vicious_Mind','Staff of Vicious Mind',5,20,NULL,1000,'100:200',NULL,1,1,0x00810204,63,2,34,4,'160',1,23,'bonus bMatk,pow(min(getrefine(),15),2); bonus bInt,6; bonus bUnbreakableWeapon,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2027,'Sunflower_Kid','Sunflower Kid',5,10,NULL,1500,'150',NULL,NULL,2,0x00000200,40,2,34,4,'170',1,23,'bonus bMatk,320; bonus bInt,5; .@r = getrefine(); bonus bMatkRate,(.@r/2); bonus bDelayrate,(.@r*-1); bonus bUnbreakableWeapon,1;',NULL,NULL);
 #===================================================================
 # Shields
@@ -7181,6 +7188,7 @@ REPLACE INTO `item_db_re` VALUES (13127,'Crimson_Revolver','Crimson Revolver',5,
 #===================================================================
 # Guns
 #===================================================================
+REPLACE INTO `item_db_re` VALUES (13128,'Revolver_of_Vicious_Mind','Revolver of Vicious Mind',5,20,NULL,1500,'150',NULL,7,1,0x41000000,63,2,34,4,'160',1,17,'bonus bAtk,pow(min(getrefine(),15),2);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13150,'Branch','Branch',5,3000,NULL,500,'50',NULL,9,3,0x41000000,63,2,34,1,'1',1,18,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13151,'The_Cyclone','Cyclone',5,17500,NULL,700,'120',NULL,9,1,0x41000000,63,2,34,2,'24',1,18,'bonus bHit,10; bonus bCritical,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13152,'The_Cyclone_','Cyclone',5,17500,NULL,700,'120',NULL,9,2,0x41000000,63,2,34,2,'24',1,18,'bonus bHit,10; bonus bCritical,10;',NULL,NULL);
@@ -7339,6 +7347,7 @@ REPLACE INTO `item_db_re` VALUES (13321,'Half_BF_Huuma_Shuriken2','Half BF Huuma
 REPLACE INTO `item_db_re` VALUES (13322,'Huuma_Metal_Shuriken','Huuma Metal Shuriken',5,20,NULL,0,'50',NULL,1,1,0x02000000,63,2,34,3,'1',1,22,'bonus bUnbreakableWeapon,1; .@r = getrefine(); bonus bBaseAtk,.@r*5; bonus bMatk,.@r*3; if(.@r>=2) bonus bNearAtkDef,1*.@r/2; if (BaseLevel >= 20 && BaseLevel <= 120) bonus bBaseAtk,3*.@r/10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13323,'Infinity_Shuriken','Infinity Shuriken',5,0,NULL,500,'150',NULL,1,1,0x02000000,63,2,34,4,'100',1,22,'bonus bMatk,40;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13327,'Crimson_Huuma_Shuriken','Crimson Huuma Shuriken',5,20,NULL,1000,'100',NULL,1,2,0x02000000,63,2,34,3,'70',1,22,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13328,'Huuma_Shuriken_of_Vicious_Mind','Huuma Shuriken of Vicious Mind',5,20,NULL,1500,'150:50',NULL,1,1,0x22000000,63,2,34,4,'160',1,22,'bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2; bonus bUnbreakableWeapon,1;',NULL,NULL);
 #===================================================================
 # More 1-Handed Swords
 #===================================================================
@@ -7389,6 +7398,7 @@ REPLACE INTO `item_db_re` VALUES (13450,'Saber__','Saber',5,10,NULL,1000,'115',N
 REPLACE INTO `item_db_re` VALUES (13451,'Blue_Sword','Blue Sword',5,10,NULL,1200,'190',NULL,1,1,0x00000080,56,2,2,3,'100',1,2,'bonus bStr,5; bonus bAgi,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13452,'Ru_Gold_Sword','Ru Gold Sword',5,0,NULL,1200,'190',NULL,1,2,0x00000080,56,2,2,3,'120',1,2,'bonus bStr,8; bonus bAgi,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13454,'Crimson_Saber','Crimson Saber',5,20,NULL,850,'85',NULL,1,2,0x00000063,56,2,2,3,'70',1,2,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13455,'Saber_of_Vicious_Mind','Saber of Vicious Mind',5,20,NULL,1350,'135',NULL,1,1,0x654E3,63,2,2,4,'160',1,2,'bonus bAtk,pow(min(getrefine(),15),2);',NULL,NULL);
 #===================================================================
 # More Cash Shop Items
 #===================================================================
@@ -8607,6 +8617,7 @@ REPLACE INTO `item_db_re` VALUES (16037,'Ru_Gold_Mace','Ru Gold Mace',5,0,NULL,1
 REPLACE INTO `item_db_re` VALUES (16038,'Infinity_Mace','Infinity Mace',5,10,NULL,500,'155',NULL,1,1,0x00000032,40,2,2,4,'100',1,8,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16039,'Spoon','Spoon',5,10,NULL,1000,'80',NULL,1,1,0x00000033,63,2,2,3,'40',1,8,'bonus bAspd,10; bonus2 bAddEff,Eff_Curse,1000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16040,'Crimson_Mace','Crimson Mace',5,20,NULL,800,'80',NULL,1,2,0x00000033,63,2,2,3,'70',1,8,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (16041,'Mace_of_Vicious_Mind','Mace of Vicious Mind',5,20,NULL,1300,'130',NULL,1,1,0x0004C5B3,63,2,2,4,'160',1,8,'bonus bAtk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (16043,'Meteor_Strike','Meteor Strike',5,0,NULL,20000,'1',NULL,1,2,0x00000001,63,2,2,4,'110',1,8,'bonus bBaseAtk,10*getskilllv("BS_WEAPONRESEARCH"); bonus bBaseAtk,30*getskilllv("MO_IRONHAND"); .@s = getskilllv("AM_AXEMASTERY"); bonus bBaseAtk,7*.@s; bonus bHit,5*.@s; bonus bBaseAtk,10*getrefine(); if (getskilllv("MC_PUSHCART") > 9) skill "MC_CARTREVOLUTION",1; if (getskilllv("SM_SWORD") > 0) skill "KN_BOWLINGBASH",1; .@str = readparam(bStr); if (.@str > 119) bonus bUseSPrate,-30; else if (.@str > 107) bonus bUseSPrate,-20;',NULL,NULL);
 #===================================================================
 # More Rental Boxes
@@ -9313,6 +9324,7 @@ REPLACE INTO `item_db_re` VALUES (18117,'Royal_Bow','Royal Bow',5,200000,NULL,15
 REPLACE INTO `item_db_re` VALUES (18118,'TE_Woe_Bow','TE Woe Bow',5,0,NULL,0,'120',NULL,5,0,0x000A0848,63,2,34,3,'40',1,11,'bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Curse,3000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18119,'Tanos_Bow','Tanos Bow',5,10,NULL,1300,'180:110',NULL,NULL,1,0x000A0808,63,2,34,4,'120',1,11,'bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bAtkRate,5; bonus2 bHPLossRate,100,10000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18120,'Bow_Of_Evil_Slayer','Bow Of Evil Slayer',5,10,NULL,1350,NULL,115,NULL,1,0x00020008,63,2,34,NULL,'100',1,11,'bonus2 bAddRace,RC_Demon,10; bonus2 bAddRace,RC_Undead,10; .@r = getrefine(); bonus bAtkRate,(.@r>=9)?(5):((.@r>=12)?(7):(0));',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18121,'Bow_of_Vicious_Mind','Bow of Vicious Mind',5,20,NULL,1700,'170',NULL,5,1,0x000A0808,63,2,34,4,'160',1,11,'bonus bAtk,pow(min(getrefine(),15),2);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18122,'Giant_Bow','Giant Bow',5,20,NULL,3000,'195',NULL,5,1,0x00000800,63,2,34,4,'130',1,11,'bonus bLongAtkRate,40; bonus bAspdRate,-15; bonus bHit,50;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18123,'Bow_of_Storms','Bow of Storms',5,20,NULL,1500,'160',NULL,5,1,0x00000800,63,2,34,4,'130',1,11,'bonus bLongAtkRate,30; bonus2 bSkillCooldown,"RA_ARROWSTORM",-20; bonus2 bSkillUseSP,"RA_ARROWSTORM",15;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18124,'Half_BF_Bow1','Half BF Bow1',5,20,NULL,0,'100',NULL,5,0,0x000A0848,63,2,34,3,'80',1,11,'bonus bDex,2; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus bUnbreakableWeapon,1;',NULL,NULL);
@@ -10469,6 +10481,7 @@ REPLACE INTO `item_db_re` VALUES (21012,'Some_Wizard_MagicSword','Some Wizard Ma
 REPLACE INTO `item_db_re` VALUES (21013,'Hetairoi_Sword','Hetairoi Sword',5,0,NULL,2200,'210',NULL,1,2,0x00000080,56,2,34,4,'110',1,3,'bonus2 bSkillUseSP,"KN_AUTOCOUNTER",2; bonus2 bSkillUseSP,"LK_PARRYING",25;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (21014,'Infinity_Two-Handed_Sword','Infinity Two-Handed Sword',5,20,NULL,500,'230',NULL,1,1,0x00000002,63,2,34,4,'100',1,3,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (21015,'Crimson_Two-Handed_Sword','Crimson Two-Handed Sword',5,20,NULL,1700,'170',NULL,1,2,0x00000002,63,2,34,3,'70',1,3,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (21016,'Two_Handed_Sword_of_Vicious_Mind','Two-Handed Sword of Vicious Mind',5,20,NULL,2200,'220',NULL,1,1,0x00004082,63,2,34,4,'160',1,3,'bonus bAtk,pow(min(getrefine(),15),2);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (21018,'Lindy_Hop','Lindy Hop',5,20,NULL,3400,'340',NULL,1,2,0x00000002,40,2,34,4,'170',1,3,'.@r = getrefine(); bonus bAtkRate,(.@r/2); bonus bAspdRate,.@r;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (21019,'Onimaru','Onimaru',5,0,NULL,4200,'75',NULL,1,2,0x00000080,56,2,34,4,'130',1,3,'.@bstr = readparam(bStr); .@r = getrefine(); bonus bBaseAtk,(min(120,.@bstr)); if (.@bstr > 119) bonus bBaseAtk,160; else if (.@bstr > 107) bonus bBaseAtk,80; else if (.@bstr > 94) bonus bBaseAtk,40; if (.@r > 6) bonus bUnbreakableWeapon,1; bonus4 bAutoSpell,"NPC_WIDECURSE",4,100,0; if (.@r > 8) bonus4 bAutoSpellOnSkill,"LK_BERSERK","BS_OVERTHRUST",5,100;',NULL,NULL);
 #===================================================================
@@ -10980,6 +10993,7 @@ REPLACE INTO `item_db_re` VALUES (28002,'Half_BF_Katar2','Half BF Katar2',5,20,N
 REPLACE INTO `item_db_re` VALUES (28005,'Blue_Katar','Blue Katar',5,10,NULL,1200,'190',NULL,1,1,0x00001000,56,2,34,3,'100',1,16,'bonus bAgi,5; bonus bStr,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28006,'Ru_Gold_Katar','Ru Gold Katar',5,0,NULL,1200,'190',NULL,1,2,0x00001000,56,2,34,3,'120',1,16,'bonus bAgi,8; bonus bStr,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28007,'Crimson_Katar','Crimson Katar',5,20,NULL,1300,'130',NULL,1,2,0x00001000,63,2,34,3,'70',1,16,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28008,'Katar_of_Vicious_Mind','Katar of Vicious Mind',5,20,NULL,1800,'180',NULL,1,1,0x00001000,63,2,34,4,'160',1,16,'bonus bAtk,pow(min(getrefine(),15),2);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28010,'Juliette_D._Rachel','Juliette D. Rachel',5,20,NULL,2500,'300',NULL,1,2,0x00001000,56,2,34,4,'170',1,16,'.@r = getrefine(); bonus bAtkRate,(.@r/2); bonus bAspdRate,.@r; bonus bUnbreakableWeapon,1;',NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (28100,'Tanos_Axe_','Tanos Axe',5,10,NULL,4000,'300:80',NULL,NULL,1,0x00000400,63,2,2,4,'120',1,6,'bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bAtkRate,5; bonus2 bHPLossRate,100,10000;',NULL,NULL);
@@ -10990,6 +11004,7 @@ REPLACE INTO `item_db_re` VALUES (28104,'Ru_Gold_Axe_M','Ru Gold Axe M',5,0,NULL
 REPLACE INTO `item_db_re` VALUES (28105,'Infinity_Axe','Infinity Axe',5,10,NULL,500,'265',NULL,1,1,0x00000022,7,2,34,4,'100',1,7,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28106,'Crimson_Two-Handed_Axe','Crimson Two-Handed Axe',5,20,NULL,2000,'200',NULL,1,2,0x00000022,63,2,34,3,'70',1,7,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bUnbreakableWeapon,1;',NULL,NULL);
 #
+REPLACE INTO `item_db_re` VALUES (28107,'Two_Handed_Axe_of_Vicious_Mind','Two Handed Axe of Vicious Mind',5,20,NULL,2500,'250',NULL,1,1,0x000444A2,63,2,34,4,'160',1,7,'bonus bAtk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28200,'End_Of_The_Horizon','End Of The Horizon',5,2700000,NULL,2400,'410',NULL,9,1,0x40000000,63,2,34,4,'110',1,21,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28201,'Southern_Cross_','Southern Cross',5,2800000,NULL,2000,'480',NULL,9,0,0x40000000,63,2,34,4,'141',1,21,'bonus3 bAutoSpell,"GC_CROSSIMPACT",1,50;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28202,'Southern_Cross__','Southern Cross',5,2800000,NULL,2000,'480',NULL,9,1,0x40000000,63,2,34,4,'141',1,21,'bonus3 bAutoSpell,"GC_CROSSIMPACT",1,50;',NULL,NULL);
@@ -11017,11 +11032,13 @@ REPLACE INTO `item_db_re` VALUES (28600,'Blue_Book','Blue Book',5,10,NULL,500,'1
 REPLACE INTO `item_db_re` VALUES (28601,'Ru_Gold_Book','Ru Gold Book',5,0,NULL,500,'160',NULL,1,2,0x00000008,63,2,2,3,'120',1,15,'bonus bVit,8; bonus bInt,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28602,'Demon_Hunting_Bible','Demon Hunting Bible',5,0,NULL,500,'30:170',NULL,1,2,0x00000008,63,2,2,3,'110',1,15,'bonus bInt,2; bonus bDex,2; .@b = readparam(bInt); bonus2 bSkillAtk,"PR_MAGNUS",30+min(.@b,120);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28604,'Crimson_Bible','Crimson Bible',5,20,NULL,450,'45',NULL,1,2,0x00410100,63,2,2,3,'70',1,15,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28605,'Book_of_Vicious_Mind','Book of Vicious Mind',5,20,NULL,950,'95',NULL,1,1,0x00010100,63,2,2,4,'160',1,15,'bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2); bonus bUnbreakableWeapon,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28700,'Ru_Gold_Dagger','Ru Gold Dagger',5,0,NULL,1000,'160',NULL,1,2,0x00020000,56,2,2,3,'120',1,1,'bonus bStr,8; bonus bInt,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28701,'Ru_Gold_Knife','Ru Gold Knife',5,0,NULL,500,'160',NULL,1,2,0x00010000,56,2,2,3,'120',1,1,'bonus bVit,8; bonus bInt,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28702,'Ru_Gold_Ashura','Ru Gold Ashura',5,0,NULL,1000,'150:150',NULL,1,2,0x2000000,63,2,2,3,'120',1,1,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28703,'Infinity_Dagger','Infinity Dagger',5,10,NULL,500,'125',NULL,1,1,0x0280026B,7,2,2,4,'100',1,1,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28705,'Crimson_Dagger','Crimson Dagger',5,20,NULL,550,'55',NULL,1,2,0x02800271,63,2,2,3,'70',1,1,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bMatk,(.@r<=15?(pow(.@r,2)/2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28706,'Dagger_of_Vicious_Mind','Dagger of Vicious Mind',5,20,NULL,1050,'105:50',NULL,1,1,0x028F5EEF,63,2,2,4,'160',1,1,'bonus bAtk,pow(min(getrefine(),15),2); bonus bMatk,pow(min(getrefine(),15),2)/2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28900,'Guardsmen\'s_Shield','Guardsmen\'s Shield',4,20,NULL,3000,NULL,30,NULL,1,0xFFFFFFFF,63,2,32,NULL,'100',1,1,'.@r = getrefine(); skill "LG_SHIELDSPELL",1,1; bonus3 bAutoSpellWhenHit,"HP_ASSUMPTIO",3,(10+(.@r*10)); bonus bDef,(.@r*10); bonus bMdef,.@r;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28903,'Scutum','Scutum',4,0,NULL,500,NULL,1,NULL,1,0xFFFFFFFF,63,2,32,1,'1',1,NULL,'.@r = getrefine(); bonus bFlee,5+(.@r*3); bonus bFlee2,1+(.@r*2); if (.@r > 10) { bonus bMaxHPrate,10; bonus bMaxSPrate,10; }',NULL,NULL);
 
