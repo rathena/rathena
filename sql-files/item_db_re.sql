@@ -1053,7 +1053,7 @@ REPLACE INTO `item_db_re` VALUES (1686,'Large_Foxtail_Staff','Large Foxtail Staf
 REPLACE INTO `item_db_re` VALUES (1687,'Beginner_Foxtail_Staff','Beginner Foxtail Staff',5,20,NULL,100,'40:15',NULL,1,1,0x80000000,7,2,2,1,'3',1,10,'bonus bMaxHP,100;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1690,'Mysterious_Foxtail_Staff','Mysterious Foxtail Staff',5,20,NULL,400,'80:180',NULL,1,3,0x80000000,7,2,2,2,'60',1,10,'.@r = getrefine(); bonus bMaxSP,10*(.@r/3)+50; bonus bMatk,10*(.@r/3);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1694,'Foxtail_Model','Foxtail Model',5,20,NULL,300,'150',NULL,1,3,0x80000000,7,2,2,2,'60',1,10,'bonus bLongAtkRate,8; bonus bMaxHP,100; .@r = getrefine(); bonus bDex,(.@r/3)*2; bonus bMaxSP,(.@r/3)*10;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (1699,'Paradise_Foxtail_Staff_I','Eden Group Foxtail I',5,20,NULL,0,'120:90',NULL,1,0,0x80000000,7,2,2,2,'26',0,10,'bonus bDex,3; bonus bInt,3; bonus bLongAtkRate,5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1699,'Paradise_Foxtail_Staff_I','Eden Group Foxtail I',5,20,NULL,0,'120:135',NULL,1,0,0x80000000,7,2,2,2,'26',0,10,'bonus bDex,3; bonus bInt,3; bonus bLongAtkRate,5;',NULL,NULL);
 #===================================================================
 # Bows
 #===================================================================
