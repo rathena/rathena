@@ -7145,6 +7145,13 @@ For the position, the x and y are given in the UnitSkillUsePos.
 
 ---------------------------------------
 
+*unitexists <GID>;
+
+Checks if the given Game ID exists. Returns false if the object doesn't exist, or true if
+it does.
+
+---------------------------------------
+
 *getunittype <GID>;
 
 Returns the type of object from the given Game ID. Returns -1 if the given GID does not
