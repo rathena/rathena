@@ -1739,7 +1739,8 @@ ACMD_FUNC(bodystyle)
 
 	// Limit body styles to certain jobs since not all of them are released yet.
 	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD)) {
+		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD
+		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP)) {
 		clif_displaymessage(fd, msg_txt(sd,770));	// This job has no alternate body styles.
 		return -1;
 	}
@@ -1751,8 +1752,8 @@ ACMD_FUNC(bodystyle)
 	}
 
 	if (body_style >= MIN_BODY_STYLE && body_style <= MAX_BODY_STYLE) {
-			pc_changelook(sd, LOOK_BODY2, body_style);
-			clif_displaymessage(fd, msg_txt(sd,36)); // Appearence changed.
+		pc_changelook(sd, LOOK_BODY2, body_style);
+		clif_displaymessage(fd, msg_txt(sd,36)); // Appearence changed.
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,37)); // An invalid number was specified.
 		return -1;
