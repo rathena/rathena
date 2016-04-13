@@ -1850,21 +1850,21 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		status_change_end(bl, SC_C_MARKER, INVALID_TIMER);
 		break;
 	case SU_SCRATCH:
-		sc_start2(src, bl, SC_BLEEDING, (skill_lv * 3), skill_lv, src->id, skill_get_time(skill_id, skill_lv)); // TODO: What's the chance/time?
+		sc_start2(src, bl, SC_BLEEDING, (skill_lv * 3), skill_lv, src->id, skill_get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
 		break;
 	case SU_SV_STEMSPEAR:
-		sc_start2(src, bl, SC_BLEEDING, 10, skill_lv, src->id, skill_get_time(skill_id, skill_lv));
+		sc_start2(src, bl, SC_BLEEDING, 10, skill_lv, src->id, skill_get_time2(skill_id, skill_lv));
 		break;
 	case SU_CN_METEOR:
 		if (skill_area_temp[3] == 1)
-				sc_start(src, bl, SC_CURSE, 10, skill_lv, skill_get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
+			sc_start(src, bl, SC_CURSE, 10, skill_lv, skill_get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
 		break;
 	//case SU_SCAROFTAROU:
 	//	sc_start(src, bl, SC_STUN, 10, skill_lv, skill_get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
 	//	break;
 	case SU_LUNATICCARROTBEAT:
 		if (skill_area_temp[3] == 1)
-			sc_start(src, bl, SC_STUN, 10, skill_lv, skill_get_time(skill_id, skill_lv)); // TODO: What's the chance/time?
+			sc_start(src, bl, SC_STUN, 10, skill_lv, skill_get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
 		break;
 	} //end switch skill_id
 
