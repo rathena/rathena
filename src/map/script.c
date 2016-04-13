@@ -8066,33 +8066,6 @@ BUILDIN_FUNC(strnpcinfo)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-
-/// aegis->athena slot position conversion table
-/// Index is used by EQI_ in db/const.txt
-static unsigned int equip[] = {
-	EQP_HEAD_TOP,
-	EQP_ARMOR,
-	EQP_HAND_L,
-	EQP_HAND_R,
-	EQP_GARMENT,
-	EQP_SHOES,
-	EQP_ACC_L,
-	EQP_ACC_R,
-	EQP_HEAD_MID,
-	EQP_HEAD_LOW,
-	EQP_COSTUME_HEAD_LOW,
-	EQP_COSTUME_HEAD_MID,
-	EQP_COSTUME_HEAD_TOP,
-	EQP_COSTUME_GARMENT,
-	EQP_AMMO,
-	EQP_SHADOW_ARMOR,
-	EQP_SHADOW_WEAPON,
-	EQP_SHADOW_SHIELD,
-	EQP_SHADOW_SHOES,
-	EQP_SHADOW_ACC_R,
-	EQP_SHADOW_ACC_L
-};
-
 /**
  * getequipid(<equipment slot>{,<char_id>})
  **/
@@ -8107,15 +8080,15 @@ BUILDIN_FUNC(getequipid)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	num = script_getnum(st,2) - 1;
-	if( num < 0 || num >= ARRAYLENGTH(equip) )
+	num = script_getnum(st,2);
+	if( !equip_index_check(num) )
 	{
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	// get inventory position of item
-	i = pc_checkequip(sd,equip[num]);
+	i = pc_checkequip(sd,equip_bitmask[num]);
 	if( i < 0 )
 	{
 		script_pushint(st,-1);
@@ -8145,14 +8118,14 @@ BUILDIN_FUNC(getequipuniqueid)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	num = script_getnum(st,2) - 1;
-	if (num < 0 || num >= ARRAYLENGTH(equip)) {
+	num = script_getnum(st,2);
+	if ( !equip_index_check(num) ) {
 		script_pushconststr(st, "");
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	// get inventory position of item
-	i = pc_checkequip(sd,equip[num]);
+	i = pc_checkequip(sd,equip_bitmask[num]);
 	if (i < 0) {
 		script_pushconststr(st, "");
 		return SCRIPT_CMD_FAILURE;
@@ -8189,15 +8162,15 @@ BUILDIN_FUNC(getequipname)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	num = script_getnum(st,2) - 1;
-	if( num < 0 || num >= ARRAYLENGTH(equip) )
+	num = script_getnum(st,2);
+	if( !equip_index_check(num) )
 	{
 		script_pushconststr(st,"");
 		return SCRIPT_CMD_SUCCESS;
 	}
 
 	// get inventory position of item
-	i = pc_checkequip(sd,equip[num]);
+	i = pc_checkequip(sd,equip_bitmask[num]);
 	if( i < 0 )
 	{
 		script_pushconststr(st,"");
@@ -8317,8 +8290,8 @@ BUILDIN_FUNC(getequipisequiped)
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i=pc_checkequip(sd,equip[num-1]);
+	if ( equip_index_check(num) )
+		i=pc_checkequip(sd,equip_bitmask[num]);
 
 	if(i >= 0)
 		script_pushint(st,1);
@@ -8347,8 +8320,8 @@ BUILDIN_FUNC(getequipisenableref)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( num > 0 && num <= ARRAYLENGTH(equip) )
-		i = pc_checkequip(sd,equip[num-1]);
+	if( equip_index_check(num) )
+		i = pc_checkequip(sd,equip_bitmask[num]);
 	if( i >= 0 && sd->inventory_data[i] && !sd->inventory_data[i]->flag.no_refine && !sd->status.inventory[i].expire_time )
 		script_pushint(st,1);
 	else
@@ -8376,8 +8349,8 @@ BUILDIN_FUNC(getequiprefinerycnt)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i=pc_checkequip(sd,equip[num-1]);
+	if (equip_index_check(num))
+		i=pc_checkequip(sd,equip_bitmask[num]);
 	if(i >= 0)
 		script_pushint(st,sd->status.inventory[i].refine);
 	else
@@ -8408,8 +8381,8 @@ BUILDIN_FUNC(getequipweaponlv)
 
 	if (num == -1)
 		i = current_equip_item_index;
-	else if (num > 0 && num <= ARRAYLENGTH(equip))
-		i = pc_checkequip(sd, equip[num - 1]);
+	else if (equip_index_check(num))
+		i = pc_checkequip(sd, equip_bitmask[num]);
 	if (i >= 0 && sd->inventory_data[i])
 		script_pushint(st, sd->inventory_data[i]->wlv);
 	else
@@ -8437,8 +8410,8 @@ BUILDIN_FUNC(getequippercentrefinery)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i = pc_checkequip(sd,equip[num-1]);
+	if (equip_index_check(num))
+		i = pc_checkequip(sd,equip_bitmask[num]);
 	if(i >= 0 && sd->status.inventory[i].nameid && sd->status.inventory[i].refine < MAX_REFINE)
 		script_pushint(st,status_get_refine_chance((enum refine_type)itemdb_wlv(sd->status.inventory[i].nameid), (int)sd->status.inventory[i].refine));
 	else
@@ -8466,8 +8439,8 @@ BUILDIN_FUNC(successrefitem) {
 	if (script_hasdata(st, 3))
 		up = script_getnum(st, 3);
 
-	if (pos > 0 && pos <= ARRAYLENGTH(equip))
-		i = pc_checkequip(sd,equip[pos-1]);
+	if (equip_index_check(pos))
+		i = pc_checkequip(sd,equip_bitmask[pos]);
 	if (i >= 0) {
 		unsigned int ep = sd->status.inventory[i].equip;
 
@@ -8533,8 +8506,8 @@ BUILDIN_FUNC(failedrefitem) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (pos > 0 && pos <= ARRAYLENGTH(equip))
-		i = pc_checkequip(sd,equip[pos-1]);
+	if (equip_index_check(pos))
+		i = pc_checkequip(sd,equip_bitmask[pos]);
 	if (i >= 0) {
 		sd->status.inventory[i].refine = 0;
 		pc_unequipitem(sd,i,3); //recalculate bonus
@@ -8568,8 +8541,8 @@ BUILDIN_FUNC(downrefitem) {
 	if (script_hasdata(st, 3))
 		down = script_getnum(st, 3);
 
-	if (pos > 0 && pos <= ARRAYLENGTH(equip))
-		i = pc_checkequip(sd,equip[pos-1]);
+	if (equip_index_check(pos))
+		i = pc_checkequip(sd,equip_bitmask[pos]);
 	if (i >= 0) {
 		unsigned int ep = sd->status.inventory[i].equip;
 
@@ -8614,8 +8587,8 @@ BUILDIN_FUNC(delequip) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (pos > 0 && pos <= ARRAYLENGTH(equip))
-		i = pc_checkequip(sd,equip[pos-1]);
+	if (equip_index_check(pos))
+		i = pc_checkequip(sd,equip_bitmask[pos]);
 	if (i >= 0) {
 		pc_unequipitem(sd,i,3); //recalculate bonus
 		ret = !(pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT));
@@ -8643,8 +8616,8 @@ BUILDIN_FUNC(breakequip) {
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	if (pos > 0 && pos <= ARRAYLENGTH(equip))
-		i = pc_checkequip(sd,equip[pos-1]);
+	if (equip_index_check(pos))
+		i = pc_checkequip(sd,equip_bitmask[pos]);
 	if (i >= 0) {
 		sd->status.inventory[i].attribute = 1;
 		pc_unequipitem(sd,i,3);
@@ -12443,8 +12416,8 @@ BUILDIN_FUNC(getequipcardcnt)
 
 	num=script_getnum(st,2);
 	sd=script_rid2sd(st);
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i=pc_checkequip(sd,equip[num-1]);
+	if (equip_index_check(num))
+		i=pc_checkequip(sd,equip_bitmask[num]);
 
 	if (i < 0 || !sd->inventory_data[i]) {
 		script_pushint(st,0);
@@ -12475,8 +12448,8 @@ BUILDIN_FUNC(successremovecards) {
 	TBL_PC* sd = script_rid2sd(st);
 	int num = script_getnum(st,2);
 
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i=pc_checkequip(sd,equip[num-1]);
+	if (equip_index_check(num))
+		i=pc_checkequip(sd,equip_bitmask[num]);
 
 	if (i < 0 || !sd->inventory_data[i]) {
 		return SCRIPT_CMD_SUCCESS;
@@ -12540,8 +12513,8 @@ BUILDIN_FUNC(failedremovecards) {
 	int num = script_getnum(st,2);
 	int typefail = script_getnum(st,3);
 
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i=pc_checkequip(sd,equip[num-1]);
+	if (equip_index_check(num))
+		i=pc_checkequip(sd,equip_bitmask[num]);
 
 	if (i < 0 || !sd->inventory_data[i])
 		return SCRIPT_CMD_SUCCESS;
@@ -13160,8 +13133,8 @@ BUILDIN_FUNC(getequipcardid)
 	num=script_getnum(st,2);
 	slot=script_getnum(st,3);
 	sd=script_rid2sd(st);
-	if (num > 0 && num <= ARRAYLENGTH(equip))
-		i=pc_checkequip(sd,equip[num-1]);
+	if (equip_index_check(num))
+		i=pc_checkequip(sd,equip_bitmask[num]);
 	if(i >= 0 && slot>=0 && slot<4)
 		script_pushint(st,sd->status.inventory[i].card[slot]);
 	else
@@ -14869,8 +14842,8 @@ BUILDIN_FUNC(unequip) {
 		return SCRIPT_CMD_FAILURE;
 
 	pos = script_getnum(st,2);
-	if (pos >= 1 && pos <= ARRAYLENGTH(equip)) {
-		short i = pc_checkequip(sd,equip[pos-1]);
+	if (equip_index_check(pos)) {
+		short i = pc_checkequip(sd,equip_bitmask[pos]);
 		if (i >= 0) {
 			pc_unequipitem(sd,i,1|2);
 			script_pushint(st, 1);
