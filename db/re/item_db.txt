@@ -2782,8 +2782,8 @@
 4666,Sweet_Roda_Frog_Card,Sweet Roda Frog Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxSP,10; bonus bMaxHP,300; },{},{}
 4667,Hunter_Wolf_Card,Hunter Wolf Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMaxSP,30; },{},{}
 4668,Trance_Spore_Card,Trance Spore Card,6,20,,10,,,,,,,,769,,,,,{ bonus bVit,1; bonus bInt,1; },{},{}
-4669,Jungle_Mandragora_Card,Jungle Mandragora Card,6,20,,10,,,,,,,,2,,,,,{ .@r = getrefine(); bonus2 bAddEle,Ele_Wind,((.@r>=9)?7:((.@r>=7)?5:3)); } },{},{}
-4670,Fruit_Pom_Spider_Card,Fruit Pom Spider Card,6,20,,10,,,,,,,,2,,,,,{ .@r = getrefine(); bonus2 bAddEle,Ele_Fire,((.@r>=9)?7:((.@r>=7)?5:3)); } },{},{}
+4669,Jungle_Mandragora_Card,Jungle Mandragora Card,6,20,,10,,,,,,,,2,,,,,{ .@r = getrefine(); bonus2 bAddEle,Ele_Wind,((.@r>=9)?7:((.@r>=7)?5:3)); },{},{}
+4670,Fruit_Pom_Spider_Card,Fruit Pom Spider Card,6,20,,10,,,,,,,,2,,,,,{ .@r = getrefine(); bonus2 bAddEle,Ele_Fire,((.@r>=9)?7:((.@r>=7)?5:3)); },{},{}
 //===================================================================
 // Armor Enchant System
 //===================================================================

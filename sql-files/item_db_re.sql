@@ -2814,8 +2814,8 @@ REPLACE INTO `item_db_re` VALUES (4665,'Wild_Hornet_Card','Wild Hornet Card',6,2
 REPLACE INTO `item_db_re` VALUES (4666,'Sweet_Roda_Frog_Card','Sweet Roda Frog Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16,NULL,NULL,NULL,NULL,'bonus bMaxSP,10; bonus bMaxHP,300;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4667,'Hunter_Wolf_Card','Hunter Wolf Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus bMaxSP,30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4668,'Trance_Spore_Card','Trance Spore Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bVit,1; bonus bInt,1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (4669,'Jungle_Mandragora_Card','Jungle Mandragora Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'.@r = getrefine(); bonus2 bAddEle,Ele_Wind,((.@r>=9)?7:((.@r>=7)?5:3)); }',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (4670,'Fruit_Pom_Spider_Card','Fruit Pom Spider Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'.@r = getrefine(); bonus2 bAddEle,Ele_Fire,((.@r>=9)?7:((.@r>=7)?5:3)); }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4669,'Jungle_Mandragora_Card','Jungle Mandragora Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'.@r = getrefine(); bonus2 bAddEle,Ele_Wind,((.@r>=9)?7:((.@r>=7)?5:3));',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4670,'Fruit_Pom_Spider_Card','Fruit Pom Spider Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'.@r = getrefine(); bonus2 bAddEle,Ele_Fire,((.@r>=9)?7:((.@r>=7)?5:3));',NULL,NULL);
 #===================================================================
 # Armor Enchant System
 #===================================================================
