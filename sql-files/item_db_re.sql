@@ -10985,6 +10985,8 @@ REPLACE INTO `item_db_re` VALUES (24243,'Reload_Shadow_Shoes','Reload Shadow Sho
 REPLACE INTO `item_db_re` VALUES (24244,'Reload_Shadow_Shield','Reload Shadow Shield',12,20,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,262144,NULL,'1',1,NULL,'.@r = getrefine(); bonus bDelayrate,(.@r<7)?-1:((.@r<9)?-2:-3);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (24245,'Reload_Shadow_Armor','Reload Shadow Armor',12,20,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,65536,NULL,'1',1,NULL,'.@r = getrefine(); bonus bDelayrate,(.@r<7)?-1:((.@r<9)?-2:-3);',NULL,NULL);
 #
+REPLACE INTO `item_db_re` VALUES (25142,'Doram_Token','Doram Token',3,NULL,0,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#
 REPLACE INTO `item_db_re` VALUES (26100,'Paradise_Foxtail_Staff_II','Eden Group Foxtail Staff II',5,20,NULL,0,'135:165',NULL,1,0,0x80000000,7,2,2,2,'40',0,10,'bonus bDex,4; bonus bInt,4; bonus bLongAtkRate,6;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (26101,'Paradise_Foxtail_Staff_III','Eden Group Foxtail Staff III',5,20,NULL,0,'150:195',NULL,1,0,0x80000000,7,2,2,3,'60',0,10,'bonus bDex,5; bonus bInt,5; bonus bLongAtkRate,7;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28000,'Tanos_Katar','Tanos Katar',5,10,NULL,1800,'220:80',NULL,NULL,1,0x00001000,63,2,34,4,'120',1,16,'bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bAtkRate,5; bonus2 bHPLossRate,100,10000;',NULL,NULL);
@@ -11028,6 +11030,18 @@ REPLACE INTO `item_db_re` VALUES (28374,'Foxtail_Ring','Foxtail Ring',4,20,NULL,
 REPLACE INTO `item_db_re` VALUES (28380,'Fresh_Grass_Necklace','Fresh Grass Necklace',4,20,NULL,100,NULL,0,NULL,1,0x80000000,7,2,136,NULL,'100',0,NULL,'bonus bFlee2,5; bonus2 bSkillCooldown,"SU_SCAROFTAROU",-5000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28381,'Cute_Grass_Necklace','Cute Grass Necklace',4,20,NULL,10,NULL,0,NULL,1,0x80000000,7,2,136,NULL,'100',0,NULL,'bonus bHealPower,5; bonus2 bSkillCooldown,"SU_TUNAPARTY",-7000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28382,'Charm_Grass_Necklace','Charm Grass Necklace',4,20,NULL,10,NULL,0,NULL,1,0x80000000,7,2,136,NULL,'100',0,NULL,'bonus bMdef,5; bonus2 bVariableCastrate,"SU_CN_METEOR",-1000;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28413,'Lesser_Mackerel_Talisman','Lesser Mackerel Talisman',4,0,NULL,100,NULL,1,NULL,1,0x80000000,63,2,136,NULL,'100',NULL,NULL,'bonus bVit,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28414,'Intermediate_Mackerel_Talisman','Intermediate Mackerel Talisman',4,0,NULL,100,NULL,1,NULL,1,0x80000000,63,2,136,NULL,'140',NULL,NULL,'bonus bVit,2;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28415,'Greater_Mackerel_Talisman','Greater Mackerel Talisman',4,0,NULL,100,NULL,1,NULL,1,0x80000000,63,2,136,NULL,'175',NULL,NULL,'bonus bVit,3;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28416,'Lesser_Leaf_Talisman','Lesser Leaf Talisman',4,0,NULL,100,NULL,1,NULL,1,0x80000000,63,2,136,NULL,'100',NULL,NULL,'bonus bInt,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28417,'Intermediate_Leaf_Talisman','Intermediate Leaf Talisman',4,0,NULL,100,NULL,1,NULL,1,0x80000000,63,2,136,NULL,'140',NULL,NULL,'bonus bInt,2;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28418,'Greater_Leaf_Talisman','Greater Leaf Talisman',4,0,NULL,100,NULL,1,NULL,1,0x80000000,63,2,136,NULL,'175',NULL,NULL,'bonus bInt,3;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28419,'Lesser_Rabbit_Talisman','Lesser Rabbit Talisman',4,0,NULL,100,NULL,1,NULL,1,0x80000000,63,2,136,NULL,'100',NULL,NULL,'bonus bDex,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28420,'Intermediate_Rabbit_Talisman','Intermediate Rabbit Talisman',4,0,NULL,100,NULL,1,NULL,1,0x80000000,63,2,136,NULL,'140',NULL,NULL,'bonus bDex,2;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28421,'Greater_Rabbit_Talisman','Greater Rabbit Talisman',4,0,NULL,100,NULL,1,NULL,1,0x80000000,63,2,136,NULL,'175',NULL,NULL,'bonus bDex,3;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28422,'Shiny_Branch_Talisman','Shiny Branch Talisman',4,0,NULL,100,NULL,1,NULL,1,0x80000000,63,2,136,NULL,'100',NULL,NULL,'bonus2 bVariableCastrate,"SU_SV_STEMSPEAR",-50; bonus2 bSkillAtk,"SU_SV_STEMSPEAR",(readparam(bInt)/2)+(20 * getskilllv("SU_SV_STEMSPEAR")); /* Need to confirm damage formula */',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28423,'Fresh_Tuna_Talisman','Fresh Tuna Talisman',4,0,NULL,100,NULL,1,NULL,1,0x80000000,63,2,136,NULL,'100',NULL,NULL,'bonus2 bSkillCooldown,"SU_TUNAPARTY",-5000; bonus3 bAutoSpellWhenHit,"SU_TUNAPARTY",max(1,getskilllv("SU_TUNAPARTY")),10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28424,'Chubby_Worm_Talisman','Chubby Worm Talisman',4,0,NULL,100,NULL,1,NULL,1,0x80000000,63,2,136,NULL,'100',NULL,NULL,'bonus2 bVariableCastrate,"SU_PICKYPECK",-50; bonus2 bSkillAtk,"SU_PICKYPECK",(readparam(bDex)/2)+(20 * getskilllv("SU_PICKYPECK")); /* Need to confirm damage formula */',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28600,'Blue_Book','Blue Book',5,10,NULL,500,'160',NULL,1,1,0x00000100,56,2,2,3,'100',1,15,'bonus bAgi,5; bonus bDex,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28601,'Ru_Gold_Book','Ru Gold Book',5,0,NULL,500,'160',NULL,1,2,0x00000008,63,2,2,3,'120',1,15,'bonus bVit,8; bonus bInt,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28602,'Demon_Hunting_Bible','Demon Hunting Bible',5,0,NULL,500,'30:170',NULL,1,2,0x00000008,63,2,2,3,'110',1,15,'bonus bInt,2; bonus bDex,2; .@b = readparam(bInt); bonus2 bSkillAtk,"PR_MAGNUS",30+min(.@b,120);',NULL,NULL);
