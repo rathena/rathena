@@ -10580,8 +10580,8 @@ BUILDIN_FUNC(getareausers)
  *------------------------------------------*/
 static int buildin_getareadropitem_sub(struct block_list *bl,va_list ap)
 {
-	unsigned short nameid = va_arg(ap, unsigned short);
-	unsigned short *amount = va_arg(ap, unsigned short *);
+	unsigned short nameid = (unsigned short)va_arg(ap, int);
+	unsigned short *amount = (unsigned short *)va_arg(ap, int *);
 	struct flooritem_data *drop=(struct flooritem_data *)bl;
 
 	if(drop->item.nameid==nameid)
