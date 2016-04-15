@@ -1266,8 +1266,8 @@ REPLACE INTO `item_db_re` VALUES (1985,'Rosebine','Rosebine',5,20,NULL,1000,'100
 REPLACE INTO `item_db_re` VALUES (1986,'P_Tail1','Eden Tail I',5,0,NULL,0,'125',NULL,2,0,0x00080000,63,0,2,3,'60',0,14,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1987,'TE_Woe_Rope','TE Woe Rope',5,0,NULL,0,'100',NULL,2,0,0x00080000,63,0,2,3,'40',1,14,'bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Blind,3000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1988,'Tanos_Whip_Sword','Tanos Whip Sword',5,10,NULL,2200,'200:130',NULL,NULL,1,0x00080000,63,0,2,4,'120',1,14,'bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bLongAtkRate,20; bonus2 bHPLossRate,100,10000;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (1989,'Rhythmic_Gymnastics_Ribbon','Rhythmic Gymnastics Ribbon',5,20,NULL,300,'150:120',NULL,2,2,0x00080000,63,0,2,3,'130',1,13,'bonus bAspdRate,20;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (1990,'Bloody_Floral_Decoration_Microphone','Bloody Floral Decoration Microphone',5,20,NULL,1000,'160',NULL,2,2,0x00080000,63,0,2,4,'130',1,13,'bonus2 bSkillUseSP,"CG_MOONLIT",-20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1989,'Rhythmic_Gymnastics_Ribbon','Rhythmic Gymnastics Ribbon',5,20,NULL,300,'150:120',NULL,2,2,0x00080000,63,0,2,3,'130',1,14,'bonus bAspdRate,20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1990,'Bloody_Floral_Decoration_Microphone','Bloody Floral Decoration Microphone',5,20,NULL,1000,'160',NULL,2,2,0x00080000,63,0,2,4,'130',1,14,'bonus2 bSkillUseSP,"CG_MOONLIT",-20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1991,'Blue_Whip','Blue Whip',5,10,NULL,1500,'180',NULL,2,1,0x00080000,63,0,2,3,'100',1,14,'bonus bDex,5; bonus bVit,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1992,'Ru_Gold_Whip','Ru Gold Whip',5,0,NULL,1500,'180',NULL,2,2,0x00080000,56,2,2,3,'120',1,14,'bonus bDex,8; bonus bVit,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1994,'Infinity_Whip','Infinity Whip',5,10,NULL,500,'150',NULL,2,1,0x00080000,63,0,2,4,'100',1,14,NULL,NULL,NULL);
