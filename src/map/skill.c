@@ -9798,9 +9798,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case SR_GENTLETOUCH_CURE:
 		{
-			int heal;
+			unsigned int heal;
 
-			if (!dstmd || dstmd->mob_id != MOBID_EMPERIUM || !mob_is_battleground(dstmd)) {
+			if (dstmd && (dstmd->mob_id == MOBID_EMPERIUM || mob_is_battleground(dstmd)))
+				heal = 0;
+			else {
 				heal = (120 * skill_lv) + (status_get_max_hp(bl) * skill_lv / 100);
 				status_heal(bl, heal, 0, 0);
 			}
@@ -10789,9 +10791,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case SU_TUNABELLY:
 	{
-		int heal;
+		unsigned int heal;
 
-		if (!dstmd || dstmd->mob_id != MOBID_EMPERIUM || !mob_is_battleground(dstmd)) {
+		if (dstmd && (dstmd->mob_id == MOBID_EMPERIUM || mob_is_battleground(dstmd)))
+			heal = 0;
+		else {
 			heal = ((2 * skill_lv - 1) * 10) * status_get_max_hp(bl) / 100;
 			status_heal(bl, heal, 0, 0);
 		}
