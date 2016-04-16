@@ -2788,8 +2788,13 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			bonus += sd->bonus.hp;
 			if ((i = pc_checkskill(sd,CR_TRUST)) > 0)
 				bonus += i * 200;
-			if ((i = pc_checkskill(sd,SU_SPRITEMABLE)) > 0)
+			if (pc_checkskill(sd,SU_SPRITEMABLE) > 0)
 				bonus += 1000;
+			if (pc_checkskill(sd, SU_POWEROFSEA) > 0) {
+				bonus += 1000;
+				if (pc_checkskill(sd, SU_TUNABELLY) == 5 && pc_checkskill(sd, SU_TUNAPARTY) == 5 && pc_checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc_checkskill(sd, SU_FRESHSHRIMP) == 5)
+					bonus += 2000;
+			}
 #ifndef HP_SP_TABLES
 			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
 				bonus += 2000; // Supernovice lvl99 hp bonus.
@@ -2918,8 +2923,13 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 200 + 20 * i;
 			if ((i = pc_checkskill(sd,WM_LESSON)) > 0)
 				bonus += 30 * i;
-			if ((i = pc_checkskill(sd,SU_SPRITEMABLE)) > 0)
+			if (pc_checkskill(sd,SU_SPRITEMABLE) > 0)
 				bonus += 100;
+			if (pc_checkskill(sd, SU_POWEROFSEA) > 0) {
+				bonus += 100;
+				if (pc_checkskill(sd, SU_TUNABELLY) == 5 && pc_checkskill(sd, SU_TUNAPARTY) == 5 && pc_checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc_checkskill(sd, SU_FRESHSHRIMP) == 5)
+					bonus += 200;
+			}
 
 			// Summoner starts at 8 SP and gain 2 SP per even base lv and 3 SP per odd base lv.
 			if ((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) {
