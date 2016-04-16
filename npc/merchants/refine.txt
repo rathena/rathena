@@ -570,10 +570,11 @@ function	script	refinemain	{
 	next;
 
 	setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
+	setarray .@indizes[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
 	set .@menu$,"";
-	for(set .@i,1; .@i<=10; set .@i,.@i+1) {
-		if(getequipisequiped(.@i)) {
-			set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
+	for(set .@i,1; .@i<getarraysize(.@indizes); set .@i,.@i+1) {
+		if(getequipisequiped(.@indizes[.@i])) {
+			set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@indizes[.@i]) + "]";
 			set .@equipped,1;
 		}
 		set .@menu$, .@menu$ + ":";
@@ -583,7 +584,7 @@ function	script	refinemain	{
 		mes "I don't think I can refine any items you have...";
 		close;
 	}
-	set .@part, select(.@menu$);
+	set .@part, .@indizes[select(.@menu$)];
 
 	if(!getequipisequiped(.@part)) { //custom check
 		mes "["+ .@npc_name$ +"]";
