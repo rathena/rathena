@@ -2798,15 +2798,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 #ifndef HP_SP_TABLES
 			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 99)
 				bonus += 2000; // Supernovice lvl99 hp bonus.
-
-			// Summoner starts with 60 HP and gains additional HP by base level calculations.
-			if ((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) {
-					bonus += 18;
-					if (sd->status.base_level > 2)
-						bonus += sd->status.base_level - 2;
-					if (sd->status.base_level > 14)
-						bonus += (sd->status.base_level - 13) / 2;
-			}
+			if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.base_level >= 150)
+				bonus += 2000; // Supernovice lvl150 hp bonus.
 #endif
 		}
 
@@ -2929,12 +2922,6 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 100;
 				if (pc_checkskill(sd, SU_TUNABELLY) == 5 && pc_checkskill(sd, SU_TUNAPARTY) == 5 && pc_checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc_checkskill(sd, SU_FRESHSHRIMP) == 5)
 					bonus += 200;
-			}
-
-			// Summoner starts at 8 SP and gain 2 SP per even base lv and 3 SP per odd base lv.
-			if ((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) {
-				bonus -= 4;
-				bonus += (sd->status.base_level - 1) / 2;
 			}
 		}
 

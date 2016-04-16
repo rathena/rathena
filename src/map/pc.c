@@ -10689,6 +10689,8 @@ static unsigned int pc_calc_basehp(uint16 level, uint16 class_) {
 #endif
 	for (i = 2; i <= level; i++)
 		base_hp += floor(((job_info[idx].hp_factor/100.) * i) + 0.5); //Don't have round()
+	if (class_ == JOB_SUMMONER)
+		base_hp += floor((base_hp / 2) + 0.5);
 	return (unsigned int)base_hp;
 }
 
@@ -10716,6 +10718,9 @@ static unsigned int pc_calc_basesp(uint16 level, uint16 class_) {
 				base_sp -= 18;
 			else
 				base_sp = 9 + 3*level;
+			break;
+		case JOB_SUMMONER:
+			base_sp -= floor(base_sp / 2);
 			break;
 	}
 
