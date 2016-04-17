@@ -15367,12 +15367,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				return false;
 			}
 			break;
-		case AL_HOLYWATER:
-			if (map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKLANDPROTECTOR)) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				return false; // Aqua Benedicta will not cast on LP [secretdataz]
-			}
-			break;
 	}
 
 	/* check state required */
@@ -15425,7 +15419,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		case ST_WATER:
 			if (sc && (sc->data[SC_DELUGE] || sc->data[SC_SUITON]))
 				break;
-			if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKWATER))
+			if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKWATER) && !map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKLANDPROTECTOR))
 				break;
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			return false;
