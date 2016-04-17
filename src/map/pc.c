@@ -10523,7 +10523,7 @@ int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_
 	if((tmp = level_penalty[type][mob_class][diff] ) > 0 ) //use mobclass directly
 		return tmp;
 	
-	//wtf is that for ? if penalty not found use the 1st one we found ?? ̂[lighta]
+	// TODO: Fix this [lighta]
 	for( i = 0; i < CLASS_ALL; i++ ) {
 		if( ( tmp = level_penalty[type][i][diff] ) > 0 ) {
 			rate = tmp;
