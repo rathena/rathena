@@ -9796,7 +9796,13 @@ static bool clif_process_message(struct map_session_data* sd, int format, char**
 		messagelen = textlen - NAME_LENGTH; // this should be the message length (w/ zero byte included)
 	}
 
-#if PACKETVER < 20151001
+#if PACKETVER >= 20151001
+	if (message[messagelen-1] != '\0')
+	{
+		message[messagelen++] = '\0';
+	}
+#endif
+
 	// the declared length must match real length
 	if( messagelen != strnlen(message, messagelen)+1 ) {
 		ShowWarning("clif_process_message: Received malformed packet from player '%s' (length is incorrect)!\n", sd->status.name);
@@ -9808,7 +9814,6 @@ static bool clif_process_message(struct map_session_data* sd, int format, char**
 		ShowWarning("clif_process_message: Player '%s' sent an unterminated message string!\n", sd->status.name);
 		return false;
 	}
-#endif
 
 	// messages mustn't be too long
 	if( messagelen > CHAT_SIZE_MAX-1 ) {
