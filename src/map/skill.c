@@ -924,7 +924,6 @@ struct s_skill_nounit_layout* skill_get_nounit_layout(uint16 skill_id, uint16 sk
  * [2] counts how many targets have been processed. counter is added in skill_area_sub if the foreach function flag is: flag&(SD_SPLASH|SD_PREAMBLE)
  */
 static int skill_area_temp[8];
-static int64 skill_area_temp_i64[1];
 
 /*==========================================
  * Add effect to skill when hit succesfully target
@@ -2999,8 +2998,7 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
  *        flag&1
  *        flag&2 - Disable re-triggered by double casting
  *        flag&4 - Skip to blow target (because already knocked back before skill_attack somewhere)
- *        flag&8 - Force assume the target is not as is_infinite_defense() on in battle_calc_attack() first.
- *                 Once it's done, store the damage to skill_area_temp_i64[0] then re-calcuate for real against 'plant'.
+ *        flag&8 - SC_COMBO state used to deal bonus damage
  *
  *        flag&0xFFF is passed to the underlying battle_calc_attack for processing.
  *             (usually holds number of targets, or just 1 for simple splash attacks)
@@ -3173,14 +3171,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		skill_id == CASH_BLESSING || skill_id == CASH_INCAGI ||
 		skill_id == MER_INCAGI || skill_id == MER_BLESSING) && tsd->sc.data[SC_CHANGEUNDEAD] )
 		damage = 1;
-
-	if (flag&8) {
-		skill_area_temp_i64[0] = damage;
-		if (is_infinite_defense(bl, dmg.flag)) {
-			dmg = battle_calc_attack_plant(dmg, src, bl, skill_id, skill_lv);
-			damage = dmg.damage + dmg.damage2;
-		}
-	}
 
 	if( damage && tsc && tsc->data[SC_GENSOU] && dmg.flag&BF_MAGIC ){
 		struct block_list *nbl;
@@ -3903,8 +3893,8 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				target = src; //Required since it has to warp.
 
 			if (skl->skill_id == SR_SKYNETBLOW) {
-				clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skl->skill_id,skl->skill_lv,DMG_SKILL);
 				skill_area_temp[1] = 0;
+				clif_skill_damage(src,src,tick,status_get_amotion(src),0,-30000,1,skl->skill_id,skl->skill_lv,DMG_SKILL);
 				map_foreachinrange(skill_area_sub,src,skill_get_splash(skl->skill_id,skl->skill_lv),BL_CHAR|BL_SKILL,src,
 					skl->skill_id,skl->skill_lv,tick,skl->flag|BCT_ENEMY|SD_SPLASH|1,skill_castend_damage_id);
 				break;
@@ -4725,6 +4715,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			if( skill_area_temp[1] != bl->id && !(skill_get_inf2(skill_id)&INF2_NPC_SKILL) )
 				sflag |= SD_ANIMATION; // original target gets no animation (as well as all NPC skills)
 
+			switch(skill_id) {
+				case SR_SKYNETBLOW:
+					if (flag&8)
+						sflag |= 8; // Give Combo state bonus damage (if active) to all targets in splash
+					break;
+			}
 			heal = (int)skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag);
 			if( skill_id == NPC_VAMPIRE_GIFT && heal > 0 ) {
 				clif_skill_nodamage(NULL, src, AL_HEAL, heal, 1);
@@ -5534,14 +5530,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case SR_TIGERCANNON:
 		if (flag&1) {
-			if (skill_area_temp[3] == skill_id && skill_area_temp_i64[0]) { // Safe check
-				if (skill_area_temp[1] != bl->id)
-					skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-			}
+			if (skill_area_temp[1] != bl->id && skill_area_temp[3] == skill_id)
+				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		} else if (sd) {
 			skill_area_temp[1] = bl->id;
 			skill_area_temp[3] = skill_id;
-			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag|8); // Only do attack calculation once
+			if (sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE)
+				flag |= 8;
+			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
 		break;
@@ -6826,7 +6822,11 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case RL_FIREDANCE:
 	case RL_R_TRIP:
 	{
+		struct status_change *sc = status_get_sc(src);
 		int starget = BL_CHAR|BL_SKILL;
+
+		if (skill_id == SR_SKYNETBLOW && sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_DRAGONCOMBO)
+			flag |= 8;
 		if (skill_id == SR_HOWLINGOFLION)
 			starget = splash_target(src);
 		skill_area_temp[1] = 0;
@@ -9830,8 +9830,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		const int combo[] = { SR_DRAGONCOMBO, SR_FALLENEMPIRE, SR_TIGERCANNON, SR_SKYNETBLOW };
 		const int delay[] = { 0, 250, 500, 2000 };
 
-		if (sd)
-			sd->ud.attackabletime = sd->canuseitem_tick = sd->ud.canact_tick;
+		if (sd) // Disable attacking/acting/moving for skill's duration.
+			sd->ud.attackabletime = sd->canuseitem_tick = sd->ud.canact_tick = tick + delay[3];
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,src,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		for (i = 0; i < ARRAYLENGTH(combo); i++)

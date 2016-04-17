@@ -3980,9 +3980,10 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
  			break;
 		case SR_TIGERCANNON:
 			{
-				int hp = sstatus->max_hp * (10 + 2 * skill_lv) / 100, // skill_get_hp_rate(SR_TIGERCANNON, skill_lv)
-					sp = sstatus->max_sp * (5 + 1 * skill_lv) / 100; // skill_get_sp_rate(SR_TIGERCANNON, skill_lv)
-				if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE )
+				unsigned int hp = sstatus->max_hp * abs(skill_get_hp_rate(skill_id, skill_lv)) / 100,
+							 sp = sstatus->max_sp * abs(skill_get_sp_rate(skill_id, skill_lv)) / 100;
+
+				if (wd.miscflag&8)
 					// Base_Damage = [((Caster consumed HP + SP) / 2) x Caster Base Level / 100] %
 					skillratio += -100 + (hp + sp) / 2;
 				else
@@ -3992,7 +3993,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			}
 			break;
 		case SR_SKYNETBLOW:
-			if( sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_DRAGONCOMBO )
+			if (wd.miscflag&8)
 				//ATK [{(Skill Level x 100) + (Caster AGI) + 150} x Caster Base Level / 100] %
 				skillratio += -100 + 100 * skill_lv + sstatus->agi + 150;
 			else
@@ -5237,7 +5238,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	// check if we're landing a hit
 	if(!is_attack_hitting(wd, src, target, skill_id, skill_lv, true))
 		wd.dmg_lv = ATK_FLEE;
-	else if(wd.miscflag&8 || !(infdef = is_infinite_defense(target, wd.flag))) { //no need for math against plants
+	else if(!(infdef = is_infinite_defense(target, wd.flag))) { //no need for math against plants
 		int64 ratio = 0;
 		int i = 0;
 
@@ -5353,7 +5354,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			break;
 		case SR_TIGERCANNON:
 			// (Tiger Cannon skill level x 240) + (Target Base Level x 40)
-			if (sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == SR_FALLENEMPIRE) {
+			if (wd.miscflag&8) {
 				ATK_ADD(wd.damage, wd.damage2, skill_lv * 500 + status_get_lv(target) * 40);
 			} else
 				ATK_ADD(wd.damage, wd.damage2, skill_lv * 240 + status_get_lv(target) * 40);
@@ -5488,7 +5489,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	DAMAGE_DIV_FIX_RENEWAL(wd, wd.div_);
 #endif
 	// only do 1 dmg to plant, no need to calculate rest
-	if(!(wd.miscflag&8) && infdef)
+	if(infdef)
 		return battle_calc_attack_plant(wd, src, target, skill_id, skill_lv);
 
 	//Apply DAMAGE_DIV_FIX and check for min damage
