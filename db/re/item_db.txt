@@ -9795,7 +9795,7 @@
 19643,C_Whikebain_Ears,Costume Wickebine Ears,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,368,{},{},{}
 19649,C_White_Baby_Cat_Ears,Costume White Baby Cat Ears,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,926,{},{},{}
 19650,C_Rainbow_Feather_Deco,Costume Rainbow Feather Deco,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,1,934,{},{},{}
-19651,C_RWC_Shouting_Mouth,Costume RWC Shouting Mouth,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,194,{},{},{}
+19651,C_RWC_Shouting_Mouth,Costume RWC Shouting Mouth,4,10,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,194,{},{},{}
 19654,C_Ship_Captain_Hat,Costume Ship Captain Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,367,{},{},{}
 19655,C_Tiraya_Bonnet,Costume Tiraya Bonnet,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,398,{},{},{}
 19656,C_Wandering_Minstrel_Hat,Wandering Minstrel Hat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,240,{},{},{}
