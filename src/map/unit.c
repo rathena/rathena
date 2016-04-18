@@ -362,8 +362,8 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	dx = dirx[(int)dir];
 	dy = diry[(int)dir];
 
-	//Get icewall walk block depending on boss mode (players can't be trapped)
-	if(md && status_has_mode(&md->status,MD_BOSS))
+	// Get icewall walk block depending on Status Immune mode (players can't be trapped)
+	if(md && status_has_mode(&md->status,MD_STATUS_IMMUNE))
 		icewall_walk_block = battle_config.boss_icewall_walk_block;
 	else if(md)
 		icewall_walk_block = battle_config.mob_icewall_walk_block;
@@ -1100,12 +1100,11 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
  *		0x4 - Boss attack
  * @return reason for immunity
  *		0 - can be knocked back / stopped
- *		1 - at WOE/BG map;
- *		2 - target is emperium
- *		3 - target is MD_KNOCKBACK_IMMUNE|MD_BOSS;
- *		4 - target is in Basilica area;
- *		5 - target has 'special_state.no_knockback';
- *		6 - target is trap that cannot be knocked back
+ *		1 - at WOE/BG map
+ *		2 - target is MD_KNOCKBACK_IMMUNE
+ *		3 - target is in Basilica area
+ *		4 - target has 'special_state.no_knockback'
+ *		5 - target is trap that cannot be knocked back
  */
 uint8 unit_blown_immune(struct block_list* bl, uint8 flag)
 {
@@ -1117,30 +1116,27 @@ uint8 unit_blown_immune(struct block_list* bl, uint8 flag)
 	switch (bl->type) {
 		case BL_MOB: {
 				struct mob_data* md = BL_CAST(BL_MOB, bl);
-				// Emperium can't be knocked back
-				if( md->mob_id == MOBID_EMPERIUM )
-					return 2;
-				// Bosses or immune can't be knocked back
-				if((flag&0x1) && status_bl_has_mode(bl,MD_KNOCKBACK_IMMUNE|MD_BOSS)
+				// Immune can't be knocked back
+				if (((flag&0x1) && status_bl_has_mode(bl,MD_KNOCKBACK_IMMUNE))
 					&& ((flag&0x2) || !(battle_config.skill_trap_type&0x2)))
-					return 3;
+					return 2;
 			}
 			break;
 		case BL_PC: {
 				struct map_session_data *sd = BL_CAST(BL_PC, bl);
 				// Basilica caster can't be knocked-back by normal monsters.
 				if( !(flag&0x4) && &sd->sc && sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id)
-					return 4;
+					return 3;
 				// Target has special_state.no_knockback (equip)
 				if( (flag&(0x1|0x2)) && sd->special_state.no_knockback )
-					return 5;
+					return 4;
 			}
 			break;
 		case BL_SKILL: {
 				struct skill_unit* su = (struct skill_unit *)bl;
 				// Trap cannot be knocked back
 				if (su && su->group && skill_get_unit_flag(su->group->skill_id)&UF_NOKNOCKBACK)
-					return 6;
+					return 5;
 			}
 			break;
 	}
@@ -1380,8 +1376,8 @@ int unit_can_move(struct block_list *bl) {
 	// Icewall walk block special trapped monster mode
 	if(bl->type == BL_MOB) {
 		struct mob_data *md = BL_CAST(BL_MOB, bl);
-		if(md && ((status_has_mode(&md->status,MD_BOSS) && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
-			|| (!status_has_mode(&md->status,MD_BOSS) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
+		if(md && ((status_has_mode(&md->status,MD_STATUS_IMMUNE) && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
+			|| (!status_has_mode(&md->status,MD_STATUS_IMMUNE) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
 			md->walktoxy_fail_count = 1; //Make sure rudeattacked skills are invoked
 			return 0;
 		}
@@ -1434,7 +1430,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 
 	if (type) {
 		//Bosses can ignore skill induced walkdelay (but not damage induced)
-		if(bl->type == BL_MOB && status_has_mode(status_get_status_data(bl),MD_BOSS))
+		if(bl->type == BL_MOB && status_has_mode(status_get_status_data(bl),MD_STATUS_IMMUNE))
 			return 0;
 		//Make sure walk delay is not decreased
 		if (DIFF_TICK(ud->canmove_tick, tick+delay) > 0)

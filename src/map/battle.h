@@ -111,8 +111,6 @@ struct block_list* battle_getenemy(struct block_list *target, int type, int rang
 int battle_gettarget(struct block_list *bl);
 int battle_getcurrentskill(struct block_list *bl);
 
-#define	is_boss(bl)	( status_get_class_(bl) == CLASS_BOSS )	// Can refine later [Aru]
-
 int battle_check_undead(int race,int element);
 int battle_check_target(struct block_list *src, struct block_list *target,int flag);
 bool battle_check_range(struct block_list *src,struct block_list *bl,int range);
@@ -318,6 +316,7 @@ extern struct Battle_Config
 	int item_rate_mvp, item_rate_common, item_rate_common_boss, item_rate_card, item_rate_card_boss,
 		item_rate_equip, item_rate_equip_boss, item_rate_heal, item_rate_heal_boss, item_rate_use,
 		item_rate_use_boss, item_rate_treasure, item_rate_adddrop;
+	int item_rate_common_mvp, item_rate_heal_mvp, item_rate_use_mvp, item_rate_equip_mvp, item_rate_card_mvp;
 
 	int logarithmic_drops;
 	int item_drop_common_min,item_drop_common_max;	// Added by TyrNemesis^

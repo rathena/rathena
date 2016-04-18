@@ -5122,7 +5122,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 	sd_status= status_get_status_data(&sd->bl);
 	md_status= status_get_status_data(bl);
 
-	if( md->master_id || status_has_mode(md_status,MD_BOSS) || mob_is_treasure(md) ||
+	if (md->master_id || status_has_mode(md_status, MD_STATUS_IMMUNE) || status_get_race2(&md->bl) == RC2_TREASURE ||
 		map[bl->m].flag.nomobloot || // check noloot map flag [Lorky]
 		(battle_config.skill_steal_max_tries && //Reached limit of steal attempts. [Lupus]
 			md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
@@ -5193,10 +5193,8 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
 		return 0;
 
 	md = (TBL_MOB*)target;
-	if( md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || status_has_mode(&md->status,MD_BOSS) )
-		return 0;
 
-	if( mob_is_treasure(md) )
+	if (md->state.steal_coin_flag || md->sc.data[SC_STONE] || md->sc.data[SC_FREEZE] || status_bl_has_mode(target,MD_STATUS_IMMUNE) || status_get_race2(&md->bl) == RC2_TREASURE)
 		return 0;
 
 	// FIXME: This formula is either custom or outdated.
@@ -10501,37 +10499,28 @@ void pc_delspiritcharm(struct map_session_data *sd, int count, int type)
 }
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-/*==========================================
- * Renewal EXP/Itemdrop rate modifier base on level penalty
- * 1=exp 2=itemdrop
- *------------------------------------------*/
-int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, enum e_mode mode, int type)
+/**
+ * Renewal EXP/Item Drop rate modifier based on level penalty
+ * @param level_diff: Monster and Player level difference
+ * @param mob_class: Monster class
+ * @param mode: Monster mode
+ * @param type: 1 - EXP, 2 - Item Drop
+ * @return Penalty rate
+ */
+int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type)
 {
-	int diff, rate = 100, i;
-	int tmp;
-
-	nullpo_ret(sd);
+	int rate = 100;
 
 	if (type == 2 && (mode&MD_FIXED_ITEMDROP))
 		return rate;
 
-	diff = mob_level - sd->status.base_level;
+	if (level_diff < 0)
+		level_diff = MAX_LEVEL + (~level_diff + 1);
 
-	if( diff < 0 )
-		diff = MAX_LEVEL + ( ~diff + 1 );
+	if ((rate = level_penalty[type][mob_class][level_diff]) > 0) // Monster class found, return rate
+		return rate;
 
-	if((tmp = level_penalty[type][mob_class][diff] ) > 0 ) //use mobclass directly
-		return tmp;
-	
-	// TODO: Fix this [lighta]
-	for( i = 0; i < CLASS_ALL; i++ ) {
-		if( ( tmp = level_penalty[type][i][diff] ) > 0 ) {
-			rate = tmp;
-			break;
-		}
-	}
-
-	return rate;
+	return 100; // Penalty not found, return default
 }
 #endif
 

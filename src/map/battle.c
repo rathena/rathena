@@ -1035,7 +1035,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		return damage; //These skills bypass everything else.
 
 	if( sc && sc->count ) { // SC_* that reduce damage to 0.
-		if( sc->data[SC_BASILICA] && !status_bl_has_mode(src,MD_BOSS) ) {
+		if( sc->data[SC_BASILICA] && !status_bl_has_mode(src,MD_STATUS_IMMUNE) ) {
 			d->dmg_lv = ATK_BLOCK;
 			return 0;
 		}
@@ -1574,12 +1574,6 @@ int64 battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int64
 	if( !damage )
 		return 0;
 
-	if( bl->type == BL_MOB ) {
-		struct mob_data* md = BL_CAST(BL_MOB, bl);
-		if( map[bl->m].flag.battleground && (md->mob_id == MOBID_BLUE_CRYST || md->mob_id == MOBID_PINK_CRYST) && flag&BF_SKILL )
-			return 0; // Crystal cannot receive skill damage on battlegrounds
-	}
-
 	if(skill_get_inf2(skill_id)&INF2_NO_BG_DMG)
 		return damage; //skill that ignore bg map reduction
 
@@ -1615,7 +1609,7 @@ bool battle_can_hit_gvg_target(struct block_list *src,struct block_list *bl,uint
 	int class_ = status_get_class(bl);
 
 	if(md && md->guardian_data) {
-		if(class_ == MOBID_EMPERIUM && flag&BF_SKILL && !(skill_get_inf3(skill_id)&INF3_HIT_EMP)) //Skill immunity.
+		if ((status_bl_has_mode(bl,MD_SKILL_IMMUNE) || (class_ == MOBID_EMPERIUM && !(skill_get_inf3(skill_id)&INF3_HIT_EMP))) && flag&BF_SKILL) //Skill immunity.
 			return false;
 		if(src->type != BL_MOB) {
 			struct guild *g = src->type == BL_PC ? ((TBL_PC *)src)->guild : guild_search(status_get_guild_id(src));
@@ -2088,7 +2082,7 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 			case BL_PC:
 				return damage->pc;
 			case BL_MOB:
-				if (is_boss(target))
+				if (status_get_class_(target) == CLASS_BOSS)
 					return damage->boss;
 				else
 					return damage->mob;
@@ -2124,7 +2118,7 @@ static int battle_skill_damage_map(struct block_list *src, struct block_list *ta
 				rate = mapd->adjust.damage.pc;
 				break;
 			case BL_MOB:
-				if (is_boss(target))
+				if (status_get_class_(target) == CLASS_BOSS)
 					rate = mapd->adjust.damage.boss;
 				else
 					rate = mapd->adjust.damage.mob;
@@ -2148,7 +2142,7 @@ static int battle_skill_damage_map(struct block_list *src, struct block_list *ta
 					rate += mapd->skill_damage.entries[i]->pc;
 					break;
 				case BL_MOB:
-					if (is_boss(target))
+					if (status_get_class_(target) == CLASS_BOSS)
 						rate += mapd->skill_damage.entries[i]->boss;
 					else
 						rate += mapd->skill_damage.entries[i]->mob;
@@ -2229,8 +2223,7 @@ bool is_infinite_defense(struct block_list *target, int flag)
 		return true;
 	if(status_has_mode(tstatus,MD_IGNOREMISC) && flag&(BF_MISC) )
 		return true;
-	if(status_has_mode(tstatus,MD_PLANT) )
-		return true;
+
 	return false;
 }
 
@@ -3635,7 +3628,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case GS_BULLSEYE:
 			//Only works well against brute/demihumans non bosses.
-			if((tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER) && !status_has_mode(tstatus,MD_BOSS))
+			if((tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER) && !status_has_mode(tstatus,MD_STATUS_IMMUNE))
 				skillratio += 400;
 			break;
 		case GS_TRACKING:
@@ -4769,11 +4762,8 @@ struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,
 
 	if (attack_hits && target->type == BL_MOB) {
 		struct status_change *sc = status_get_sc(target);
-		struct mob_data *md = BL_CAST(BL_MOB,target);
-		if (sc &&
-			class_ != MOBID_EMPERIUM && !mob_is_battleground(md) &&
-			!battle_check_sc(src, target, sc, &wd, 1, skill_id, skill_lv))
-		{
+
+		if (sc && !battle_check_sc(src, target, sc, &wd, 1, skill_id, skill_lv)) {
 			wd.damage = wd.damage2 = 0;
 			return wd;
 		}
@@ -4977,7 +4967,7 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 			status_change_end(target, SC_REJECTSWORD, INVALID_TIMER);
 	}
 
-	if( tsc && tsc->data[SC_CRESCENTELBOW] && !is_boss(src) && wd.flag&BF_SHORT && rnd()%100 < tsc->data[SC_CRESCENTELBOW]->val2 ) {
+	if( tsc && tsc->data[SC_CRESCENTELBOW] && wd.flag&BF_SHORT && rnd()%100 < tsc->data[SC_CRESCENTELBOW]->val2 ) {
 		//ATK [{(Target HP / 100) x Skill Level} x Caster Base Level / 125] % + [Received damage x {1 + (Skill Level x 0.2)}]
 		int64 rdamage = 0;
 		int ratio = (int64)(status_get_hp(src) / 100) * tsc->data[SC_CRESCENTELBOW]->val1 * status_get_lv(target) / 125;
@@ -5663,7 +5653,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 #endif
 				if(i > 700)
 					i = 700;
-				if(rnd()%1000 < i && !status_has_mode(tstatus,MD_BOSS))
+				if(rnd()%1000 < i && !status_has_mode(tstatus,MD_STATUS_IMMUNE))
 					ad.damage = tstatus->hp;
 				else {
 #ifdef RENEWAL
@@ -6472,7 +6462,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				md.damage = (skill_id == NJ_ZENYNAGE ? rnd()%md.damage + md.damage : md.damage * rnd_value(50,100)) / (skill_id == NJ_ZENYNAGE ? 1 : 100);
 				if (sd && skill_id == KO_MUCHANAGE && !pc_checkskill(sd, NJ_TOBIDOUGU))
 					md.damage = md.damage / 2;
-				if (is_boss(target))
+				if (status_get_class_(target) == CLASS_BOSS) // Specific to Boss Class
 					md.damage = md.damage / (skill_id == NJ_ZENYNAGE ? 3 : 2);
 				else if (tsd && skill_id == NJ_ZENYNAGE)
 					md.damage = md.damage / 2;
@@ -6755,7 +6745,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 					}
 				}
 
-				if (sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && skill_id != GN_HELLS_PLANT_ATK && !(src->type == BL_MOB && is_boss(src))) {
+				if (sc->data[SC_DEATHBOUND] && skill_id != WS_CARTTERMINATION && skill_id != GN_HELLS_PLANT_ATK && !status_bl_has_mode(src,MD_STATUS_IMMUNE)) {
 					if (distance_bl(src,bl) <= 0 || !map_check_dir(map_calc_dir(bl,src->x,src->y), unit_getdir(bl))) {
 						int64 rd1 = 0;
 
@@ -6768,7 +6758,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 					}
 				}
 
-				if( sc->data[SC_SHIELDSPELL_DEF] && sc->data[SC_SHIELDSPELL_DEF]->val1 == 2 && !(src->type == BL_MOB && is_boss(src)) ){
+				if( sc->data[SC_SHIELDSPELL_DEF] && sc->data[SC_SHIELDSPELL_DEF]->val1 == 2 && !status_bl_has_mode(src,MD_STATUS_IMMUNE) ){
 						rdamage += damage * sc->data[SC_SHIELDSPELL_DEF]->val2 / 100;
 						if (rdamage < 1) rdamage = 1;
 				}
@@ -6966,7 +6956,7 @@ int battle_damage_area(struct block_list *bl, va_list ap) {
 	dmotion = va_arg(ap,int);
 	damage = va_arg(ap,int);
 
-	if( bl->type == BL_MOB && ((TBL_MOB*)bl)->mob_id == MOBID_EMPERIUM )
+	if (status_bl_has_mode(bl,MD_SKILL_IMMUNE))
 		return 0;
 	if( bl != src && battle_check_target(src,bl,BCT_ENEMY) > 0 ) {
 		map_freeblock_lock();
@@ -7077,7 +7067,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
-	if( tsc && tsc->data[SC_BLADESTOP_WAIT] && !is_boss(src) && (src->type == BL_PC || tsd == NULL || distance_bl(src, target) <= (tsd->status.weapon == W_FIST ? 1 : 2)) )
+	if( tsc && tsc->data[SC_BLADESTOP_WAIT] && status_get_class_(src) != CLASS_BOSS && (src->type == BL_PC || tsd == NULL || distance_bl(src, target) <= (tsd->status.weapon == W_FIST ? 1 : 2)) )
 	{
 		uint16 skill_lv = tsc->data[SC_BLADESTOP_WAIT]->val1;
 		int duration = skill_get_time2(MO_BLADESTOP,skill_lv);
@@ -7929,7 +7919,7 @@ static const struct _battle_data {
 	{ "boss_spawn_delay",                   &battle_config.boss_spawn_delay,                100,    0,      INT_MAX,        },
 	{ "no_spawn_on_player",                 &battle_config.no_spawn_on_player,              0,      0,      100,            },
 	{ "force_random_spawn",                 &battle_config.force_random_spawn,              0,      0,      1,              },
-	{ "slaves_inherit_mode",                &battle_config.slaves_inherit_mode,             2,      0,      3,              },
+	{ "slaves_inherit_mode",                &battle_config.slaves_inherit_mode,             4,      0,      4,              },
 	{ "slaves_inherit_speed",               &battle_config.slaves_inherit_speed,            3,      0,      3,              },
 	{ "summons_trigger_autospells",         &battle_config.summons_trigger_autospells,      1,      0,      1,              },
 	{ "pc_damage_walk_delay_rate",          &battle_config.pc_walk_delay_rate,              20,     0,      INT_MAX,        },
@@ -8083,14 +8073,19 @@ static const struct _battle_data {
 	{ "item_rate_mvp",                      &battle_config.item_rate_mvp,                   100,    0,      1000000,        },
 	{ "item_rate_common",                   &battle_config.item_rate_common,                100,    0,      1000000,        },
 	{ "item_rate_common_boss",              &battle_config.item_rate_common_boss,           100,    0,      1000000,        },
+	{ "item_rate_common_mvp",               &battle_config.item_rate_common_mvp,            100,    0,      1000000,        },
 	{ "item_rate_equip",                    &battle_config.item_rate_equip,                 100,    0,      1000000,        },
 	{ "item_rate_equip_boss",               &battle_config.item_rate_equip_boss,            100,    0,      1000000,        },
+	{ "item_rate_equip_mvp",                &battle_config.item_rate_equip_mvp,             100,    0,      1000000,        },
 	{ "item_rate_card",                     &battle_config.item_rate_card,                  100,    0,      1000000,        },
 	{ "item_rate_card_boss",                &battle_config.item_rate_card_boss,             100,    0,      1000000,        },
+	{ "item_rate_card_mvp",                 &battle_config.item_rate_card_mvp,              100,    0,      1000000,        },
 	{ "item_rate_heal",                     &battle_config.item_rate_heal,                  100,    0,      1000000,        },
 	{ "item_rate_heal_boss",                &battle_config.item_rate_heal_boss,             100,    0,      1000000,        },
+	{ "item_rate_heal_mvp",                 &battle_config.item_rate_heal_mvp,              100,    0,      1000000,        },
 	{ "item_rate_use",                      &battle_config.item_rate_use,                   100,    0,      1000000,        },
 	{ "item_rate_use_boss",                 &battle_config.item_rate_use_boss,              100,    0,      1000000,        },
+	{ "item_rate_use_mvp",                  &battle_config.item_rate_use_mvp,               100,    0,      1000000,        },
 	{ "item_rate_adddrop",                  &battle_config.item_rate_adddrop,               100,    0,      1000000,        },
 	{ "item_rate_treasure",                 &battle_config.item_rate_treasure,              100,    0,      1000000,        },
 	{ "prevent_logout",                     &battle_config.prevent_logout,                  10000,  0,      60000,          },

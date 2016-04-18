@@ -1713,10 +1713,8 @@ void itemdb_reload(void) {
 	//Epoque's awesome @reloaditemdb fix - thanks! [Ind]
 	//- Fixes the need of a @reloadmobdb after a @reloaditemdb to re-link monster drop data
 	for( i = 0; i < MAX_MOB_DB; i++ ) {
-		struct mob_db *entry;
-		if( !((i < MOBID_TREAS01 || i > MOBID_TREAS40) && (i < MOBID_TREAS41 || i > MOBID_TREAS49)) )
-			continue;
-		entry = mob_db(i);
+		struct mob_db *entry = mob_db(i);
+
 		for(d = 0; d < MAX_MOB_DROP; d++) {
 			struct item_data *id;
 			if( !entry->dropitem[d].nameid )

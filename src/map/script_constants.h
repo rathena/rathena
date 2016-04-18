@@ -2411,11 +2411,15 @@
 	export_constant(RC2_GOLEM);
 	export_constant(RC2_GUARDIAN);
 	export_constant(RC2_NINJA);
+	export_constant(RC2_GVG);
+	export_constant(RC2_BATTLEFIELD);
+	export_constant(RC2_TREASURE);
 
 	/* classes */
 	export_constant(CLASS_NORMAL);
 	export_constant(CLASS_BOSS);
 	export_constant(CLASS_GUARDIAN);
+	export_constant(CLASS_BATTLEFIELD);
 	export_constant(CLASS_ALL);
 
 	/* sizes */
