@@ -1114,13 +1114,11 @@ uint8 unit_blown_immune(struct block_list* bl, uint8 flag)
 		return 1; // No knocking back in WoE / BG
 
 	switch (bl->type) {
-		case BL_MOB: {
-				struct mob_data* md = BL_CAST(BL_MOB, bl);
-				// Immune can't be knocked back
-				if (((flag&0x1) && status_bl_has_mode(bl,MD_KNOCKBACK_IMMUNE))
-					&& ((flag&0x2) || !(battle_config.skill_trap_type&0x2)))
-					return 2;
-			}
+		case BL_MOB:
+			// Immune can't be knocked back
+			if (((flag&0x1) && status_bl_has_mode(bl,MD_KNOCKBACK_IMMUNE))
+				&& ((flag&0x2) || !(battle_config.skill_trap_type&0x2)))
+				return 2;
 			break;
 		case BL_PC: {
 				struct map_session_data *sd = BL_CAST(BL_PC, bl);
