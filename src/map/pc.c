@@ -470,22 +470,33 @@ void pc_setrestartvalue(struct map_session_data *sd, char type) {
 	Rental System
  *------------------------------------------*/
 
-/** Ends rental */
-static int pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr_t data)
+/**
+ * Ends a rental and removes the item/effect
+ * @param tid: Tick ID
+ * @param tick: Timer
+ * @param id: Timer ID
+ * @param data: Data
+ * @return false - failure, true - success
+ */
+static bool pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd = map_id2sd(id);
 
 	if( sd == NULL )
-		return 0;
+		return false;
 	if( tid != sd->rental_timer ) {
 		ShowError("pc_inventory_rental_end: invalid timer id.\n");
-		return 0;
+		return false;
 	}
 
 	pc_inventory_rentals(sd);
-	return 1;
+	return true;
 }
 
+/**
+ * Removes the rental timer from the player
+ * @param sd: Player data
+ */
 void pc_inventory_rental_clear(struct map_session_data *sd)
 {
 	if( sd->rental_timer != INVALID_TIMER ) {
@@ -494,6 +505,10 @@ void pc_inventory_rental_clear(struct map_session_data *sd)
 	}
 }
 
+/**
+ * Check for items in the player's inventory that are rental type
+ * @param sd: Player data
+ */
 void pc_inventory_rentals(struct map_session_data *sd)
 {
 	int i, c = 0;
@@ -523,6 +538,11 @@ void pc_inventory_rentals(struct map_session_data *sd)
 		sd->rental_timer = INVALID_TIMER;
 }
 
+/**
+ * Add a rental item to the player and adjusts the rental timer appropriately
+ * @param sd: Player data
+ * @param seconds: Rental time
+ */
 void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
 {
 	unsigned int tick = seconds * 1000;
