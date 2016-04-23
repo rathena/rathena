@@ -19243,12 +19243,12 @@ BUILDIN_FUNC(pushpc)
 	dir = script_getnum(st,2);
 	cells     = script_getnum(st,3);
 
-	if(dir>7)
+	if(dir>DIR_NORTHEAST)
 	{
 		ShowWarning("buildin_pushpc: Invalid direction %d specified.\n", dir);
 		script_reportsrc(st);
 
-		dir%= 8;  // trim spin-over
+		dir%= DIR_MAX;  // trim spin-over
 	}
 
 	if(!cells)
@@ -19257,7 +19257,7 @@ BUILDIN_FUNC(pushpc)
 	}
 	else if(cells<0)
 	{// pushing backwards
-		dir = (dir+4)%8;  // turn around
+		dir = (dir+DIR_MAX/2)%DIR_MAX;  // turn around
 		cells     = -cells;
 	}
 

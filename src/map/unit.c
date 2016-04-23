@@ -33,8 +33,9 @@
 // 1 0 7
 // 2 . 6
 // 3 4 5
-const short dirx[8]={0,-1,-1,-1,0,1,1,1}; ///lookup to know where will move to x according dir
-const short diry[8]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y according dir
+// See also path.c walk_choices
+const short dirx[DIR_MAX]={0,-1,-1,-1,0,1,1,1}; ///lookup to know where will move to x according dir
+const short diry[DIR_MAX]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y according dir
 
 //early declaration
 static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data);

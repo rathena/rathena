@@ -3042,6 +3042,16 @@
 	export_constant(ADOPT_MORE_CHILDREN);
 	export_constant(ADOPT_LEVEL_70);
 	export_constant(ADOPT_MARRIED);
+	
+	/* directions */
+	export_constant(DIR_NORTH);
+	export_constant(DIR_NORTHWEST);
+	export_constant(DIR_WEST);
+	export_constant(DIR_SOUTHWEST);
+	export_constant(DIR_SOUTH);
+	export_constant(DIR_SOUTHEAST);
+	export_constant(DIR_EAST);
+	export_constant(DIR_NORTHEAST);
 
 	#undef export_constant
 

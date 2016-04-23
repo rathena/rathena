@@ -19,10 +19,10 @@
 #define SET_OPEN 0
 #define SET_CLOSED 1
 
-#define DIR_NORTH 1
-#define DIR_WEST 2
-#define DIR_SOUTH 4
-#define DIR_EAST 8
+#define PATH_DIR_NORTH 1
+#define PATH_DIR_WEST 2
+#define PATH_DIR_SOUTH 4
+#define PATH_DIR_EAST 8
 
 /// @name Structures and defines for A* pathfinding
 /// @{
@@ -53,9 +53,9 @@ BHEAP_STRUCT_DECL(node_heap, struct path_node*);
 // Translates dx,dy into walking direction
 static const unsigned char walk_choices [3][3] =
 {
-	{1,0,7},
-	{2,-1,6},
-	{3,4,5},
+	{DIR_NORTHWEST,DIR_NORTH,DIR_NORTHEAST},
+	{DIR_WEST,DIR_CENTER,DIR_EAST},
+	{DIR_SOUTHWEST,DIR_SOUTH,DIR_SOUTHEAST},
 };
 
 /*==========================================
@@ -371,28 +371,28 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 				break;
 			}
 
-			if (y < ys && !map_getcellp(md, x, y+1, cell)) allowed_dirs |= DIR_NORTH;
-			if (y >  0 && !map_getcellp(md, x, y-1, cell)) allowed_dirs |= DIR_SOUTH;
-			if (x < xs && !map_getcellp(md, x+1, y, cell)) allowed_dirs |= DIR_EAST;
-			if (x >  0 && !map_getcellp(md, x-1, y, cell)) allowed_dirs |= DIR_WEST;
+			if (y < ys && !map_getcellp(md, x, y+1, cell)) allowed_dirs |= PATH_DIR_NORTH;
+			if (y >  0 && !map_getcellp(md, x, y-1, cell)) allowed_dirs |= PATH_DIR_SOUTH;
+			if (x < xs && !map_getcellp(md, x+1, y, cell)) allowed_dirs |= PATH_DIR_EAST;
+			if (x >  0 && !map_getcellp(md, x-1, y, cell)) allowed_dirs |= PATH_DIR_WEST;
 
 #define chk_dir(d) ((allowed_dirs & (d)) == (d))
 			// Process neighbors of current node
-			if (chk_dir(DIR_SOUTH|DIR_EAST) && !map_getcellp(md, x+1, y-1, cell))
+			if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_EAST) && !map_getcellp(md, x+1, y-1, cell))
 				e += add_path(&open_set, tp, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y-1, x1, y1)); // (x+1, y-1) 5
-			if (chk_dir(DIR_EAST))
+			if (chk_dir(PATH_DIR_EAST))
 				e += add_path(&open_set, tp, x+1, y, g_cost + MOVE_COST, current, heuristic(x+1, y, x1, y1)); // (x+1, y) 6
-			if (chk_dir(DIR_NORTH|DIR_EAST) && !map_getcellp(md, x+1, y+1, cell))
+			if (chk_dir(PATH_DIR_NORTH|PATH_DIR_EAST) && !map_getcellp(md, x+1, y+1, cell))
 				e += add_path(&open_set, tp, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y+1, x1, y1)); // (x+1, y+1) 7
-			if (chk_dir(DIR_NORTH))
+			if (chk_dir(PATH_DIR_NORTH))
 				e += add_path(&open_set, tp, x, y+1, g_cost + MOVE_COST, current, heuristic(x, y+1, x1, y1)); // (x, y+1) 0
-			if (chk_dir(DIR_NORTH|DIR_WEST) && !map_getcellp(md, x-1, y+1, cell))
+			if (chk_dir(PATH_DIR_NORTH|PATH_DIR_WEST) && !map_getcellp(md, x-1, y+1, cell))
 				e += add_path(&open_set, tp, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y+1, x1, y1)); // (x-1, y+1) 1
-			if (chk_dir(DIR_WEST))
+			if (chk_dir(PATH_DIR_WEST))
 				e += add_path(&open_set, tp, x-1, y, g_cost + MOVE_COST, current, heuristic(x-1, y, x1, y1)); // (x-1, y) 2
-			if (chk_dir(DIR_SOUTH|DIR_WEST) && !map_getcellp(md, x-1, y-1, cell))
+			if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_WEST) && !map_getcellp(md, x-1, y-1, cell))
 				e += add_path(&open_set, tp, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y-1, x1, y1)); // (x-1, y-1) 3
-			if (chk_dir(DIR_SOUTH))
+			if (chk_dir(PATH_DIR_SOUTH))
 				e += add_path(&open_set, tp, x, y-1, g_cost + MOVE_COST, current, heuristic(x, y-1, x1, y1)); // (x, y-1) 4
 #undef chk_dir
 			if (e) {
