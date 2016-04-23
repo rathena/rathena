@@ -478,19 +478,19 @@ void pc_setrestartvalue(struct map_session_data *sd, char type) {
  * @param data: Data
  * @return false - failure, true - success
  */
-static bool pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr_t data)
+int pc_inventory_rental_end(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct map_session_data *sd = map_id2sd(id);
 
 	if( sd == NULL )
-		return false;
+		return 0;
 	if( tid != sd->rental_timer ) {
 		ShowError("pc_inventory_rental_end: invalid timer id.\n");
-		return false;
+		return 0;
 	}
 
 	pc_inventory_rentals(sd);
-	return true;
+	return 1;
 }
 
 /**
