@@ -57,7 +57,7 @@
 	#error GD_SKILLRANGEMAX is greater than 999
 #endif
 
-
+DBMap* skilldb_name2id = NULL;
 static DBMap *skilldb_id2idx;			 /// Skill ID to Index lookup: skill_index = skill_get_index(skill_id)
 struct s_skill_db **skill_db;			 /// Skill DB
 static uint16 skill_num;				 /// Skill count, also as last index
