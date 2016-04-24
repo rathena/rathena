@@ -3605,10 +3605,6 @@ ACMD_FUNC(recallall)
 			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE))
 				count++;
 			else {
-				if (pc_isdead(pl_sd)) { //Wake them up
-					pc_setstand(pl_sd, true);
-					pc_setrestartvalue(pl_sd,1);
-				}
 				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
 			}
 		}
