@@ -3673,6 +3673,7 @@ ACMD_FUNC(guildrecall)
 				if( pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN) == SETPOS_AUTOTRADE ){
 					count++;
 				}
+			}
 		}
 	}
 	mapit_free(iter);
