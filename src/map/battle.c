@@ -570,6 +570,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 	sstatus = status_get_status_data(src);
 	tstatus = status_get_status_data(target);
 	s_race2 = status_get_race2(src);
+	t_race2 = status_get_race2(target);
 	s_defele = (tsd) ? (enum e_element)status_get_element(src) : ELE_NONE;
 
 //Official servers apply the cardfix value on a base of 1000 and round down the reduction/increase
@@ -579,7 +580,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 		case BF_MAGIC:
 			// Affected by attacker ATK bonuses
 			if( sd && !(nk&NK_NO_CARDFIX_ATK) ) {
-				cardfix = cardfix * (100 + sd->magic_addrace[tstatus->race] + sd->magic_addrace[RC_ALL]) / 100;
+				cardfix = cardfix * (100 + sd->magic_addrace[tstatus->race] + sd->magic_addrace[RC_ALL] + sd->magic_addrace2[t_race2]) / 100;
 				if( !(nk&NK_NO_ELEFIX) ) { // Affected by Element modifier bonuses
 					cardfix = cardfix * (100 + sd->magic_addele[tstatus->def_ele] + sd->magic_addele[ELE_ALL] + 
 						sd->magic_addele_script[tstatus->def_ele] + sd->magic_addele_script[ELE_ALL]) / 100;
@@ -643,7 +644,6 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 			break;
 
 		case BF_WEAPON:
-			t_race2 = status_get_race2(target);
 			// Affected by attacker ATK bonuses
 			if( sd && !(nk&NK_NO_CARDFIX_ATK) && (left&2) ) {
 				short cardfix_ = 1000;
@@ -5525,6 +5525,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	int skill_damage = 0;
 #endif
 	short s_ele = 0;
+	enum e_race2 t_race2;
 
 	TBL_PC *sd;
 	TBL_PC *tsd;
@@ -5559,7 +5560,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	tsd = BL_CAST(BL_PC, target);
 	sc = status_get_sc(src);
 	tsc = status_get_sc(target);
-
+	t_race2 = status_get_race2(target);
 	//Initialize variables that will be used afterwards
 	s_ele = skill_get_ele(skill_id, skill_lv);
 
@@ -6123,7 +6124,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				mdef <<= 1; // only eMDEF is doubled
 #endif
 			if(sd) {
-				i = sd->ignore_mdef_by_race[tstatus->race] + sd->ignore_mdef_by_race[RC_ALL];
+				i = sd->ignore_mdef_by_race[tstatus->race] + sd->ignore_mdef_by_race2[t_race2] + sd->ignore_mdef_by_race[RC_ALL];
 				i += sd->ignore_mdef_by_class[tstatus->class_] + sd->ignore_mdef_by_class[CLASS_ALL];
 				if (i)
 				{

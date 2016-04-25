@@ -366,6 +366,8 @@ struct map_session_data {
 	int ignore_mdef_by_class[CLASS_MAX];
 	int ignore_def_by_race[RC_MAX];
 	short sp_gain_race[RC_MAX];
+	int magic_addrace2[RC2_MAX];
+	int ignore_mdef_by_race2[RC2_MAX];
 	// zeroed arrays end here.
 
 	// zeroed structures start here

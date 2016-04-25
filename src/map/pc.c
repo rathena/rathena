@@ -3673,6 +3673,16 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		sd->coma_race[type2] += val;
 		sd->special_state.bonus_coma = 1;
 		break;
+	case SP_MAGIC_ADDRACE2: // bonus2 bMagicAddRace2,r,n;
+		PC_BONUS_CHK_RACE2(type2, SP_MAGIC_ADDRACE2);
+		if(sd->state.lr_flag != 2)
+			sd->magic_addrace2[type2] += val;
+		break;
+	case SP_IGNORE_MDEF_RACE2_RATE: //bonus2 bIgnoreMdefRace2Rate,r,n;
+		PC_BONUS_CHK_RACE2(type2, SP_IGNORE_MDEF_RACE2);
+		if (sd->state.lr_flag != 2)
+			sd->ignore_mdef_by_race2[type2] += val;
+		break;
 	default:
 		ShowWarning("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);
 		break;
