@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="atcommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="battleground.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="buyingstore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cashshop.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="channel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="chat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="chrif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="date.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="duel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="elemental.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="guild.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="homunculus.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="instance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="intif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="itemdb.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="log.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mapreg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mercenary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mob.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="npc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="party.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="path.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pc_groups.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="pet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="quest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="script.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="script_constants.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="searchstore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="skill.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="status.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="trade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="unit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vending.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="atcommand.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battle.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battleground.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="buyingstore.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cashshop.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="channel.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="chat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="chrif.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="clif.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="date.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="duel.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="elemental.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="guild.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="homunculus.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="instance.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="intif.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="itemdb.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="log.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mail.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="map.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mapreg.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mercenary.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mob.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="npc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="npc_chat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="party.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="path.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pc.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pc_groups.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pet.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="quest.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="script.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="searchstore.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="skill.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="status.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="storage.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="trade.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="unit.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vending.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

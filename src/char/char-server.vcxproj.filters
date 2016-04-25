@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="char.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="char_clif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="char_cnslif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="char_logif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="char_mapif.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="int_auction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="int_elemental.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="int_guild.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="int_homun.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="int_mail.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="int_mercenary.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="int_party.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="int_pet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="int_quest.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="int_storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="char.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="char_clif.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="char_cnslif.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="char_logif.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="char_mapif.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="int_auction.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="int_elemental.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="int_guild.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="int_homun.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="int_mail.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="int_mercenary.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="int_party.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="int_pet.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="int_quest.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="int_storage.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="inter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
