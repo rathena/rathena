@@ -483,7 +483,7 @@ ACMD_FUNC(mapmove)
 		clif_displaymessage(fd, msg_txt(sd,248));
 		return -1;
 	}
-	if (pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) != 0) {
+	if (pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) != SETPOS_OK) {
 		clif_displaymessage(fd, msg_txt(sd,1)); // Map not found.
 		return -1;
 	}
@@ -2032,7 +2032,7 @@ ACMD_FUNC(go)
 			clif_displaymessage(fd, msg_txt(sd,248));
 			return -1;
 		}
-		if (pc_setpos(sd, mapindex_name2id(data[town].map), data[town].x, data[town].y, CLR_TELEPORT) == 0) {
+		if (pc_setpos(sd, mapindex_name2id(data[town].map), data[town].x, data[town].y, CLR_TELEPORT) == SETPOS_OK) {
 			clif_displaymessage(fd, msg_txt(sd,0)); // Warped.
 		} else {
 			clif_displaymessage(fd, msg_txt(sd,1)); // Map not found.
@@ -2901,7 +2901,11 @@ ACMD_FUNC(recall) {
 	if (pl_sd->bl.m == sd->bl.m && pl_sd->bl.x == sd->bl.x && pl_sd->bl.y == sd->bl.y) {
 		return -1;
 	}
-	pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
+	if( pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN) == SETPOS_AUTOTRADE ){
+		clif_displaymessage(fd, msg_txt(sd,1025)); // The player cannot be recalled, because he is in autotrading state.
+		return -1;
+	}
+
 	sprintf(atcmd_output, msg_txt(sd,46), pl_sd->status.name); // %s recalled!
 	clif_displaymessage(fd, atcmd_output);
 
@@ -3605,7 +3609,9 @@ ACMD_FUNC(recallall)
 			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE))
 				count++;
 			else {
-				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
+				if( pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN) == SETPOS_AUTOTRADE ){
+					count++;
+				}
 			}
 		}
 	}
@@ -3663,8 +3669,11 @@ ACMD_FUNC(guildrecall)
 				continue; // Skip GMs greater than you...             or chars already on the cell
 			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE))
 				count++;
-			else
-				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
+			else{
+				if( pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN) == SETPOS_AUTOTRADE ){
+					count++;
+				}
+			}
 		}
 	}
 	mapit_free(iter);
@@ -3722,8 +3731,11 @@ ACMD_FUNC(partyrecall)
 				continue; // Skip GMs greater than you...             or chars already on the cell
 			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE))
 				count++;
-			else
-				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
+			else{
+				if( pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN) == SETPOS_AUTOTRADE ){
+					count++;
+				}
+			}
 		}
 	}
 	mapit_free(iter);
@@ -4442,7 +4454,7 @@ ACMD_FUNC(tonpc)
 	}
 
 	if ((nd = npc_name2id(npcname)) != NULL) {
-		if (pc_setpos(sd, map_id2index(nd->bl.m), nd->bl.x, nd->bl.y, CLR_TELEPORT) == 0)
+		if (pc_setpos(sd, map_id2index(nd->bl.m), nd->bl.x, nd->bl.y, CLR_TELEPORT) == SETPOS_OK)
 			clif_displaymessage(fd, msg_txt(sd,0)); // Warped.
 		else
 			return -1;
