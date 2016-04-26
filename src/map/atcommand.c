@@ -2902,7 +2902,7 @@ ACMD_FUNC(recall) {
 		return -1;
 	}
 	if( pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN) == SETPOS_AUTOTRADE ){
-		clif_displaymessage(fd, msg_txt(sd,1025)); // The player cannot be recalled, because he is in autotrading state.
+		clif_displaymessage(fd, msg_txt(sd,1025)); // The player is currently autotrading and cannot be recalled.
 		return -1;
 	}
 
