@@ -12753,7 +12753,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 	case SC_FRESHSHRIMP:
 		if (--(sce->val4) >= 0) {
-			status_heal(bl, status->max_hp / 100, 0, 2);
+			status_heal(bl, status->max_hp * 4 / 100, 0, 2);
 			sc_timer_next((10000 - ((sce->val1 - 1) * 1000)) + tick, status_change_timer, bl->id, data);
 		}
 		break;
