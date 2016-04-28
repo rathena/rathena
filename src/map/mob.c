@@ -3148,8 +3148,8 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id)
 		if (hp_rate) //Scale HP
 			md->status.hp = md->status.max_hp*hp_rate/100;
 
-		//Inherit the aggressive mode of the master.
-		status_calc_slave_mode(md, md2);
+		if (skill_id == NPC_SUMMONSLAVE) // Only appies to NPC_SUMMONSLAVE
+			status_calc_slave_mode(md, md2); // Inherit the aggressive mode of the master.
 
 		if (md2->state.copy_master_mode)
 			md->status.mode = md2->status.mode;
