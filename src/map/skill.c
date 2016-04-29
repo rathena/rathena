@@ -995,7 +995,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	// Minstrel/Wanderer number check for chorus skills.
 	// Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
 	if( sd && sd->status.party_id ) {
-		chorusbonus = party_foreachsamemap(party_sub_count_class, sd, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
+		chorusbonus = party_foreachsamemap(party_sub_count_class, sd, AREA_SIZE, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
 		if( chorusbonus > 7 )
 			chorusbonus = 5; // Maximum effect possible from 7 or more Minstrels/Wanderers
 		else if( chorusbonus > 2 )
@@ -5887,7 +5887,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	// Minstrel/Wanderer number check for chorus skills.
 	// Bonus remains 0 unless 3 or more Minstrels/Wanderers are in the party.
 	if( sd && sd->status.party_id ) {
-		chorusbonus = party_foreachsamemap(party_sub_count_class, sd, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
+		chorusbonus = party_foreachsamemap(party_sub_count_class, sd, AREA_SIZE, MAPID_THIRDMASK, MAPID_MINSTRELWANDERER);
 		if( chorusbonus > 7 )
 			chorusbonus = 5; // Maximum effect possible from 7 or more Minstrels/Wanderers
 		else if( chorusbonus > 2 )
