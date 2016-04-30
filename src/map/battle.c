@@ -4344,9 +4344,7 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_change *sc = status_get_sc(src);
 	struct status_data *sstatus = status_get_status_data(src);
-#ifdef RENEWAL
 	struct status_data *tstatus = status_get_status_data(target);
-#endif
 	int inf3 = skill_get_inf3(skill_id);
 
 	// Kagerou/Oboro Earth Charm effect +15% wATK
