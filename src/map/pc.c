@@ -5277,7 +5277,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		sd->state.pmap = sd->bl.m;
 		if (sd->sc.count) { // Cancel some map related stuff.
 			if (sd->sc.data[SC_JAILED])
-				return 1; //You may not get out!
+				return SETPOS_MAPINDEX; //You may not get out!
 			status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_WARM, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_SUN_COMFORT, INVALID_TIMER);
@@ -5356,7 +5356,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 			
 			if(c > (map[m].xs * map[m].ys)*3){ //force out
 				ShowError("pc_setpos: couldn't found a valid coordinates for player '%s' (%d:%d) on (%s), preventing warp\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex));
-				return 0; //preventing warp
+				return SETPOS_OK; //preventing warp
 				//break; //allow warp anyway
 			}
 		} while(map_getcell(m,x,y,CELL_CHKNOPASS) || (!battle_config.teleport_on_portal && npc_check_areanpc(1,m,x,y,1)));
