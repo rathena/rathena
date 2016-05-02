@@ -1339,7 +1339,7 @@
 5025,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,		SU_POWEROFLAND,Power of Land
 5026,9,6,1,2:3:1:4:8,0x0,0,5,1,yes,0,0,0,magic,0,0x0,		SU_SV_STEMSPEAR,Silvervine Stem Spear
 5027,9,6,1,0,0x3,0,5,1,yes,0,0,1,none,0,0x0,		SU_CN_POWDERING,Catnip Powdering
-5028,9,8,2,0,0,1:1:2:2:3,5,5,yes,0,0,0,magic,0,0x0,		SU_CN_METEOR,Catnip Meteor
+5028,9,8,2,0,0,1:1:2:2:3,5,-5,yes,0,0,0,magic,0,0x0,		SU_CN_METEOR,Catnip Meteor
 5029,9,6,1,0,0x1,0,5,1,yes,0,0,1,none,0,0x0,		SU_SV_ROOTTWIST,Silvervine Root Twist
 5030,0,6,1,5,0x30,0,5,1,no,0,0,1,magic,0,0x0,	SU_SV_ROOTTWIST_ATK,Silver Vine Root Twist Attack
 5031,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,		SU_POWEROFLIFE,Power of Life
@@ -1347,7 +1347,7 @@
 5033,9,8,1,-1,0,0,5,-5,yes,0,0,0,weapon,0,0x0,	SU_PICKYPECK,Picky Peck
 5034,0,8,1,-1,0,0,5,-5,yes,0,0,0,weapon,0,0x0,	SU_PICKYPECK_DOUBLE_ATK,Picky Peck Double Attack
 5035,9,6,16,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,		SU_ARCLOUSEDASH,Arclouse Dash
-5036,9,8,1,-1,0x2,1:1:2:2:3,5,1:2:3:4:5,yes,0,0,0,weapon,0,0x0,	SU_LUNATICCARROTBEAT,Lunatic Carrot Beat
+5036,9,8,1,-1,0x2,1:1:2:2:3,5,-3,yes,0,0,0,weapon,0,0x0,	SU_LUNATICCARROTBEAT,Lunatic Carrot Beat
 5037,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,		SU_POWEROFSEA,Power of Sea
 5038,9,6,16,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,		SU_TUNABELLY,Tuna Belly
 5039,9,6,16,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,		SU_TUNAPARTY,Tuna Party

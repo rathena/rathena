@@ -1856,14 +1856,14 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 	case SU_CN_METEOR:
 		if (skill_area_temp[3] == 1)
-			sc_start(src, bl, SC_CURSE, 10, skill_lv, skill_get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
+			sc_start(src, bl, SC_CURSE, 20, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 	//case SU_SCAROFTAROU:
 	//	sc_start(src, bl, SC_STUN, 10, skill_lv, skill_get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
 	//	break;
 	case SU_LUNATICCARROTBEAT:
 		if (skill_area_temp[3] == 1)
-			sc_start(src, bl, SC_STUN, 10, skill_lv, skill_get_time2(skill_id, skill_lv)); // TODO: What's the chance/time?
+			sc_start(src, bl, SC_STUN, 20, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 	} //end switch skill_id
 

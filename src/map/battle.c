@@ -3228,14 +3228,15 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 /*================================================= [Playtester]
  * Applies DAMAGE_DIV_FIX and checks for min damage
  * @param d: Damage struct to apply DAMAGE_DIV_FIX to
+ * @param skill_id: ID of the skill that deals damage
  * @return Modified damage struct
  *------------------------------------------------*/
-static struct Damage battle_apply_div_fix(struct Damage d)
+static struct Damage battle_apply_div_fix(struct Damage d, uint16 skill_id)
 {
 	if(d.damage) {
 		DAMAGE_DIV_FIX(d.damage, d.div_);
 		//Min damage
-		if((battle_config.skill_min_damage&d.flag) && d.damage < d.div_)
+		if(d.damage < d.div_ && (skill_id == SU_LUNATICCARROTBEAT || skill_id == SU_CN_METEOR || (battle_config.skill_min_damage&d.flag)))
 			d.damage = d.div_;
 	} else if (d.div_ < 0) {
 		d.div_ *= -1;
@@ -4799,7 +4800,7 @@ struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,
 	}
 
 	//For plants we don't continue with the weapon attack code, so we have to apply DAMAGE_DIV_FIX here
-	wd = battle_apply_div_fix(wd);
+	wd = battle_apply_div_fix(wd, skill_id);
 
 	//If there is left hand damage, total damage can never exceed 2, even on multiple hits
 	if(wd.damage > 1 && wd.damage2 > 0) {
@@ -5490,7 +5491,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		return battle_calc_attack_plant(wd, src, target, skill_id, skill_lv);
 
 	//Apply DAMAGE_DIV_FIX and check for min damage
-	wd = battle_apply_div_fix(wd);
+	wd = battle_apply_div_fix(wd, skill_id);
 
 	wd = battle_calc_attack_left_right_hands(wd, src, target, skill_id, skill_lv);
 
@@ -6082,7 +6083,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 600;
 						break;
 					case SU_CN_METEOR:
-						skillratio += -60 + 20 * skill_lv;
+						skillratio += 100 + 100 * skill_lv;
 						break;
 				}
 
@@ -6224,7 +6225,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	} //Hint: Against plants damage will still be 1 at this point
 
 	//Apply DAMAGE_DIV_FIX and check for min damage
-	ad = battle_apply_div_fix(ad);
+	ad = battle_apply_div_fix(ad, skill_id);
 
 	switch(skill_id) { // These skills will do a GVG fix later
 #ifdef RENEWAL
@@ -6614,7 +6615,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	}
 
 	//Apply DAMAGE_DIV_FIX and check for min damage
-	md = battle_apply_div_fix(md);
+	md = battle_apply_div_fix(md, skill_id);
 
 	switch(skill_id) {
 		case RA_FIRINGTRAP:
