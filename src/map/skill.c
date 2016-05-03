@@ -9430,7 +9430,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NC_B_SIDESLIDE:
 		{
 			uint8 dir = (skill_id == NC_F_SIDESLIDE) ? (unit_getdir(src)+4)%8 : unit_getdir(src);
-			skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),dir,0);
+			skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),dir,2);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
