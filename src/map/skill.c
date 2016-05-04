@@ -58,7 +58,7 @@
 #endif
 
 DBMap* skilldb_name2id = NULL;
-static uint16 skilldb_id2idx[UINT16_MAX];/// Skill ID to Index lookup: skill_index = skill_get_index(skill_id) - [FWI] 20160423 the whole index thing should be removed.
+static uint16 skilldb_id2idx[(UINT16_MAX+1)];/// Skill ID to Index lookup: skill_index = skill_get_index(skill_id) - [FWI] 20160423 the whole index thing should be removed.
 struct s_skill_db **skill_db;			 /// Skill DB
 static uint16 skill_num;				 /// Skill count, also as last index
 #define skill_next_idx() ( skill_num++ ) /// Macro to get&increase last skill number/index
@@ -21227,7 +21227,7 @@ static void skill_readdb(void)
 	};
 	
 	db_clear(skilldb_name2id);
-	for(i = 0; i < UINT16_MAX; i++)
+	for(i = 0; i < (UINT16_MAX+1); i++)
 		skilldb_id2idx[i] = 0;
 
 	skill_db_destroy();
