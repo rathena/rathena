@@ -1338,7 +1338,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 	}while(0)
 
 
-/// Resets the Legnth / content, so the vector is empty
+/// Resets the length and clears content, so the vector is empty
 /// 
 /// @param __vec Vector
 #define VECTOR_RESET(__vec) \
@@ -1631,7 +1631,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 #define BHEAP_CLEAR(__heap) VECTOR_CLEAR(__heap)
 
 
-/// Resets the binary heap, so it can be used as an empty heap
+/// Resets the binary heap and clears content so it can be treated as empty
 ///
 /// @parm __heap Binary heap
 #define BHEAP_RESET(__heap) VECTOR_RESET(__heap)
