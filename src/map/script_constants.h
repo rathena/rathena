@@ -182,6 +182,8 @@
 
 	export_constant(JOB_REBELLION);
 
+	export_constant(JOB_SUMMONER);
+
 	/* EA jobs */
 	script_set_constant("EAJL_2_1",JOBL_2_1,false);
 	script_set_constant("EAJL_2_2",JOBL_2_2,false);
@@ -316,6 +318,8 @@
 	script_set_constant("EAJ_SUPER_BABY",MAPID_SUPER_BABY,false);
 	script_set_constant("EAJ_SUPER_NOVICE_E",MAPID_SUPER_NOVICE_E,false);
 	script_set_constant("EAJ_SUPER_BABY_E",MAPID_SUPER_BABY_E,false);
+
+	script_set_constant("EAJ_SUMMONER",MAPID_SUMMONER,false);
 
 	/* broadcasts */
 	export_constant(BC_ALL);
