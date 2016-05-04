@@ -4411,6 +4411,7 @@ void do_final(void)
 	do_final_channel(); //should be called after final guild
 	do_final_vending();
 	do_final_buyingstore();
+	do_final_path();
 
 	map_db->destroy(map_db, map_db_final);
 
@@ -4716,6 +4717,7 @@ int do_init(int argc, char *argv[])
 	add_timer_interval(gettick()+1000, map_freeblock_timer, 0, 0, 60*1000);
 	
 	map_do_init_msg();
+	do_init_path();
 	do_init_atcommand();
 	do_init_battle();
 	do_init_instance();
