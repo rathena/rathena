@@ -7695,7 +7695,7 @@ BUILDIN_FUNC(disableitemuse)
  *------------------------------------------*/
 BUILDIN_FUNC(readparam)
 {
-	int type;
+	int value;
 	struct script_data *data = script_getdata(st, 2);
 	TBL_PC *sd;
 
@@ -7704,14 +7704,15 @@ BUILDIN_FUNC(readparam)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (data->type == C_NAME) { // If using constant name, just get the val
+	// If you use a parameter, return the value behind it
+	if( reference_toparam(data) ){
 		get_val_(st, data, sd);
-		script_pushint(st, (int)data->u.num);
-		return SCRIPT_CMD_SUCCESS;
+		value = (int)data->u.num;
+	}else{
+		value = pc_readparam(sd,script_getnum(st, 2));
 	}
 
-	type = script_getnum(st, 2);
-	script_pushint(st,pc_readparam(sd,type));
+	script_pushint(st,value);
 	return SCRIPT_CMD_SUCCESS;
 }
 
