@@ -2093,7 +2093,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	switch( target->type ) {
 		case BL_PC: {
 				struct map_session_data *tsd = (TBL_PC*)target;
-				bool is_boss = (status_get_class_(src) == CLASS_BOSS);
+				bool is_boss = (src && status_get_class_(src) == CLASS_BOSS);
 				bool is_detect = status_has_mode(status,MD_DETECTOR);
 
 				if (pc_isinvisible(tsd))
