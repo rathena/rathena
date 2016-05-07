@@ -273,7 +273,7 @@ bonus2 bIgnoreDefRaceRate,r,n;  	Disregard n% of the target's DEF if the target 
 bonus bIgnoreDefClass,c;		Disregard DEF against enemies of class c
 bonus bIgnoreMDefRace,r;		Disregard MDEF against enemies of race r
 bonus2 bIgnoreMdefRaceRate,r,n; 	Disregard n% of the target's MDEF if the target belongs to race r
-bonus2 bIgnoreMdefRace2Rate,r,n; 	Disregard n% of the target's MDEF if the target belongs to race2 r
+bonus2 bIgnoreMdefRace2Rate,mr,n; 	Disregard n% of the target's MDEF if the target belongs to monster race mr
 bonus bIgnoreMDefEle,e; 		Disregard MDEF against enemies of element e
 bonus2 bIgnoreMdefClassRate,c,n;	Disregard n% of the target's MDEF if the target belongs to class c
 

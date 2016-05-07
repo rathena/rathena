@@ -5525,7 +5525,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	int skill_damage = 0;
 #endif
 	short s_ele = 0;
-	enum e_race2 t_race2;
 
 	TBL_PC *sd;
 	TBL_PC *tsd;
@@ -5560,7 +5559,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 	tsd = BL_CAST(BL_PC, target);
 	sc = status_get_sc(src);
 	tsc = status_get_sc(target);
-	t_race2 = status_get_race2(target);
+
 	//Initialize variables that will be used afterwards
 	s_ele = skill_get_ele(skill_id, skill_lv);
 
@@ -6124,8 +6123,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				mdef <<= 1; // only eMDEF is doubled
 #endif
 			if(sd) {
-				i = sd->ignore_mdef_by_race[tstatus->race] + sd->ignore_mdef_by_race2[t_race2] + sd->ignore_mdef_by_race[RC_ALL];
+				i = sd->ignore_mdef_by_race[tstatus->race] + sd->ignore_mdef_by_race[RC_ALL];
 				i += sd->ignore_mdef_by_class[tstatus->class_] + sd->ignore_mdef_by_class[CLASS_ALL];
+				i += sd->ignore_mdef_by_race2[status_get_race2(target)];
 				if (i)
 				{
 					if (i > 100) i = 100;
