@@ -10656,11 +10656,13 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 
 	// send back message to the speaker
 	if( is_fake ) {
+		WFIFOHEAD(fd, textlen + 4);
 		WFIFOW(fd,0) = 0x8e;
 		WFIFOW(fd,2) = textlen + 4;
 		safestrncpy((char*)WFIFOP(fd,4), fakename, textlen);
 		aFree(fakename);
 	} else {
+		WFIFOHEAD(fd, RFIFOW(fd, info->pos[0]));
 		memcpy(WFIFOP(fd,0), RFIFOP(fd,0), RFIFOW(fd,info->pos[0]));
 		WFIFOW(fd,0) = 0x8e;
 	}
