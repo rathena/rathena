@@ -9456,12 +9456,12 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 		return false;
 	}
 
-	// dont equip arrow if no bow is equipped
-	if ((sd->class_&MAPID_BASEMASK) == MAPID_ARCHER || (sd->class_&MAPID_BASEMASK) == MAPID_ARCHER_HIGH || (sd->class_&MAPID_BASEMASK) == MAPID_SNIPER || (sd->class_&MAPID_BASEMASK) == MAPID_HUNTER || (sd->class_&MAPID_BASEMASK) == MAPID_RANGER){
+	// dont equip arrow if weapon equipped is not bow / guitar / whip.
+	if (sd->status.weapon != W_BOW && sd->status.weapon != W_MUSICAL && sd->status.weapon != W_WHIP){
 		if (id->type == IT_AMMO){
 			int w_idx = sd->equip_index[EQI_HAND_R];
 			enum weapon_type w_type = (w_idx != -1) ? (enum weapon_type)sd->inventory_data[w_idx]->look : W_FIST;
-			if (w_idx == -1 || id->look == W_BOW){
+			if (w_idx == -1 || id->look != W_BOW && id->look != W_MUSICAL && id->look != W_WHIP){
 				clif_equipitemack(sd, 0, 0, ITEM_EQUIP_ACK_FAIL);
 				return false;
 			}

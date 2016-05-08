@@ -8521,9 +8521,6 @@ void battle_adjust_conf()
 	battle_config.max_walk_speed = 100 * DEFAULT_WALK_SPEED / battle_config.max_walk_speed;
 	battle_config.max_cart_weight *= 10;
 
-	if (battle_config.weapon_ammo_unequip < 0 || battle_config.weapon_ammo_unequip > 3)
-		battle_config.weapon_ammo_unequip = 3;
-
 	if (battle_config.max_def > 100 && !battle_config.weapon_defense_type) // added by [Skotlex]
 		battle_config.max_def = 100;
 
