@@ -9456,6 +9456,18 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 		return false;
 	}
 
+	// dont equip arrow if no bow is equipped
+	if ((sd->class_&MAPID_BASEMASK) == MAPID_ARCHER || (sd->class_&MAPID_BASEMASK) == MAPID_ARCHER_HIGH || (sd->class_&MAPID_BASEMASK) == MAPID_SNIPER || (sd->class_&MAPID_BASEMASK) == MAPID_HUNTER || (sd->class_&MAPID_BASEMASK) == MAPID_RANGER){
+		if (id->type == IT_AMMO){
+			int w_idx = sd->equip_index[EQI_HAND_R];
+			enum weapon_type w_type = (w_idx != -1) ? (enum weapon_type)sd->inventory_data[w_idx]->look : W_FIST;
+			if (w_idx == -1 || id->look == W_BOW){
+				clif_equipitemack(sd, 0, 0, ITEM_EQUIP_ACK_FAIL);
+				return false;
+			}
+		}
+	}
+
 	if ((sd->class_&MAPID_BASEMASK) == MAPID_GUNSLINGER) {
 		/** Failing condition:
 		 * 1. Always failed to equip ammo if no weapon equipped yet
@@ -9678,18 +9690,18 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	int i, iflag;
 	bool status_cacl = false;
 
-	nullpo_retr(false,sd);
+	nullpo_retr(false, sd);
 
 	if (n < 0 || n >= MAX_INVENTORY) {
-		clif_unequipitemack(sd,0,0,0);
+		clif_unequipitemack(sd, 0, 0, 0);
 		return false;
 	}
 	if (!sd->status.inventory[n].equip) {
-		clif_unequipitemack(sd,n,0,0);
+		clif_unequipitemack(sd, n, 0, 0);
 		return false; //Nothing to unequip
 	}
 	// status change that makes player cannot unequip equipment
-	if (!(flag&2) && sd->sc.count &&
+	if (!(flag & 2) && sd->sc.count &&
 		(sd->sc.data[SC_BERSERK] ||
 		sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
 		sd->sc.data[SC__BLOODYLUST] ||
@@ -9697,25 +9709,49 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		(sd->sc.data[SC_PYROCLASTIC] &&
 		sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
 	{
-		clif_unequipitemack(sd,n,0,0);
+		clif_unequipitemack(sd, n, 0, 0);
 		return false;
 	}
 
 	if (battle_config.battle_log)
-		ShowInfo("unequip %d %x:%x\n",n,pc_equippoint(sd,n),sd->status.inventory[n].equip);
+		ShowInfo("unequip %d %x:%x\n", n, pc_equippoint(sd, n), sd->status.inventory[n].equip);
 
-	for(i = 0; i < EQI_MAX; i++) {
+	for (i = 0; i < EQI_MAX; i++) {
 		if (sd->status.inventory[n].equip & equip_bitmask[i])
 			sd->equip_index[i] = -1;
 	}
 
-	if(sd->status.inventory[n].equip & EQP_HAND_R) {
+	if (sd->status.inventory[n].equip & EQP_HAND_R) {
 		sd->weapontype1 = 0;
 		sd->status.weapon = sd->weapontype2;
 		pc_calcweapontype(sd);
-		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
-		if( !battle_config.dancing_weaponswitch_fix )
+		clif_changelook(&sd->bl, LOOK_WEAPON, sd->status.weapon);
+		if (!battle_config.dancing_weaponswitch_fix)
 			status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER); // Unequipping => stop dancing.
+
+		// [benching] 
+		switch (battle_config.weapon_ammo_unequip){
+			case 1:	//unequip arrow
+				if (sd->status.weapon == W_BOW){
+					sd->equip_index[EQI_AMMO] = -1;
+					clif_unequipitemack(sd, n, EQI_AMMO, 1);
+				}
+				break;
+			case 2:	//unequip bullet
+				if (sd->status.weapon == W_GATLING || sd->status.weapon == W_GRENADE || sd->status.weapon == W_RIFLE || sd->status.weapon == W_SHOTGUN || sd->status.weapon == W_REVOLVER){
+					sd->equip_index[EQI_AMMO] = -1;
+					clif_unequipitemack(sd, n, EQI_AMMO, 1);
+				}
+				break;
+			case 3:	//unequip arrow and bullet
+				if (sd->status.weapon == W_GATLING || sd->status.weapon == W_GRENADE || sd->status.weapon == W_RIFLE || sd->status.weapon == W_SHOTGUN || sd->status.weapon == W_REVOLVER || sd->status.weapon == W_BOW){
+					sd->equip_index[EQI_AMMO] = -1;
+					clif_unequipitemack(sd, n, EQI_AMMO, 1);
+				}
+				break;
+			default:
+				break;
+		}
 	}
 	if(sd->status.inventory[n].equip & EQP_HAND_L) {
 		sd->status.shield = sd->weapontype2 = 0;

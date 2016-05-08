@@ -232,6 +232,7 @@ extern struct Battle_Config
 	int pet_no_gvg; //Disables pets in gvg. [Skotlex]
 	int pet_equip_required;
 
+	int weapon_ammo_unequip;//[benching]
 	int skill_min_damage;
 	int finger_offensive_type;
 	int heal_exp;
