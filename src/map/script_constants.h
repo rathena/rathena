@@ -656,6 +656,8 @@
 	script_set_constant("bSubDefEle",SP_SUBDEF_ELE,false);
 	script_set_constant("bStateNoRecoverRace",SP_STATE_NORECOVER_RACE,false);
 	script_set_constant("bCriticalLong",SP_CRITICAL_RANGEATK,false);
+	script_set_constant("bMagicAddRace2", SP_MAGIC_ADDRACE2, false);
+	script_set_constant("bIgnoreMdefRace2Rate", SP_IGNORE_MDEF_RACE2_RATE, false);
 
 	/* equip positions */
 	export_constant(EQI_HEAD_TOP);
@@ -2418,6 +2420,7 @@
 	export_constant(RC2_GVG);
 	export_constant(RC2_BATTLEFIELD);
 	export_constant(RC2_TREASURE);
+	export_constant(RC2_BIOLAB);
 
 	/* classes */
 	export_constant(CLASS_NORMAL);
