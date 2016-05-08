@@ -813,6 +813,7 @@ REPLACE INTO `item_db_re` VALUES (1439,'Half_BF_Spear1','Half BF Spear1',5,20,NU
 REPLACE INTO `item_db_re` VALUES (1441,'Blue_Spear','Blue Spear',5,10,NULL,1200,'180',NULL,3,1,0x00004000,56,2,2,3,'100',1,4,'bonus bDex,5; bonus bInt,5; bonus bMatk,170;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1442,'Ru_Gold_Spear','Ru Gold Spear',5,0,NULL,1200,'180',NULL,3,2,0x00004000,56,2,2,3,'120',1,4,'bonus bStr,8; bonus bAgi,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1443,'Crimson_Spear','Crimson Spear',5,20,NULL,900,'90',NULL,3,2,0x00000002,56,2,2,3,'70',1,4,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1446,'Requiem_Spear','Requiem Spear',5,20,NULL,1000,'130',NULL,3,NULL,0x00004080,63,2,2,4,'100',1,4,'.@r = getrefine(); .@b = 40; bonus bUnbreakableWeapon,1; if(.@r>=5){ .@b += (.@r-5)*15+20; } bonus2 bAddRace2,RC2_BioLab,.@b;',NULL,NULL);
 #===================================================================
 # 2-Handed Spears
 #===================================================================
@@ -870,6 +871,7 @@ REPLACE INTO `item_db_re` VALUES (1494,'Undine_Spear','Spear Of Odin',5,50000,NU
 REPLACE INTO `item_db_re` VALUES (1495,'TE_Woe_Lance','TE Woe Lance',5,0,NULL,0,'150',NULL,3,0,0x00004082,63,2,34,3,'40',1,5,'bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Blind,3000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1496,'Tanos_Two-Handed_Spear','Tanos Two-Handed Spear',5,10,NULL,3750,'250:50',NULL,NULL,1,0x00004082,63,2,34,4,'120',1,5,'bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bAtkRate,5; bonus2 bHPLossRate,100,10000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1498,'Crimson_Lance','Crimson Lance',5,20,NULL,1750,'175',NULL,1,2,0x00000002,63,2,34,3,'70',1,5,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1499,'Requiem_Lance','Requiem Lance',5,20,NULL,1500,'220',NULL,3,NULL,0x00004080,63,2,34,4,'100',1,5,'.@r = getrefine(); .@b = 40; .@c = 5; bonus bUnbreakableWeapon,1; if(.@r>=5){ .@b += (.@r-5)*15+30; .@c += (.@r-5); } bonus2 bAddRace2,RC2_BioLab,.@b; bonus2 bSubRace2,RC2_BioLab,.@c;',NULL,NULL);
 #===================================================================
 # Maces
 #===================================================================
@@ -1056,6 +1058,7 @@ REPLACE INTO `item_db_re` VALUES (1686,'Large_Foxtail_Staff','Large Foxtail Staf
 REPLACE INTO `item_db_re` VALUES (1687,'Beginner_Foxtail_Staff','Beginner Foxtail Staff',5,20,NULL,100,'40:15',NULL,1,1,0x80000000,7,2,2,1,'3',1,10,'bonus bMaxHP,100;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1690,'Mysterious_Foxtail_Staff','Mysterious Foxtail Staff',5,20,NULL,400,'80:180',NULL,1,3,0x80000000,7,2,2,2,'60',1,10,'.@r = getrefine(); bonus bMaxSP,10*(.@r/3)+50; bonus bMatk,10*(.@r/3);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1694,'Foxtail_Model','Foxtail Model',5,20,NULL,300,'150',NULL,1,3,0x80000000,7,2,2,2,'60',1,10,'bonus bLongAtkRate,8; bonus bMaxHP,100; .@r = getrefine(); bonus bDex,(.@r/3)*2; bonus bMaxSP,(.@r/3)*10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1698,'Requiem_Arc_Wand','Requiem Arc Wand',5,20,NULL,500,'80:145',NULL,1,NULL,0xFFFFFFFF,63,2,2,4,'100',1,10,'.@r = getrefine(); .@b = 40; if(.@r>=5){ .@b += (.@r-5)*15+20; } bonus2 bMagicAddRace2,RC2_BioLab,.@b;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1699,'Paradise_Foxtail_Staff_I','Eden Group Foxtail I',5,20,NULL,0,'120:135',NULL,1,0,0x80000000,7,2,2,2,'26',0,10,'bonus bDex,3; bonus bInt,3; bonus bLongAtkRate,5;',NULL,NULL);
 #===================================================================
 # Bows
@@ -1180,6 +1183,7 @@ REPLACE INTO `item_db_re` VALUES (1836,'Tanos_Knuckles','Tanos Knuckles',5,10,NU
 REPLACE INTO `item_db_re` VALUES (1837,'Iron_nail','Iron Nail',5,10,NULL,1500,'100',NULL,NULL,1,0x00008100,63,2,2,3,'50',1,12,'bonus bAspdRate,-5; bonus bAspdRate,((getrefine()+1)/2);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1838,'Half_BF_Knuckle1','Half BF Knuckle1',5,20,NULL,0,'30',NULL,1,0,0x00008100,63,2,2,3,'80',1,12,'bonus bStr,2; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus4 bAutoSpell,"CH_SOULCOLLECT",1,5,0; bonus bUnbreakableWeapon,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1839,'Crimson_Knuckles','Crimson Knuckles',5,20,NULL,1000,'100',NULL,1,2,0x00008100,63,2,2,3,'70',1,12,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bUnbreakableWeapon,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1840,'Requiem_Knuckle','Requiem Knuckle',5,20,NULL,500,'150:100',NULL,1,0,0x00008100,63,2,2,4,'100',1,12,'.@r = getrefine(); .@b = 40; if(.@r>=5){ .@b += (.@r-5)*15+20; } bonus2 bAddRace2,RC2_BioLab,.@b;',NULL,NULL);
 #===================================================================
 # Instruments
 #===================================================================
@@ -1224,6 +1228,7 @@ REPLACE INTO `item_db_re` VALUES (1937,'Ru_Gold_Violin','Ru Gold Violin',5,0,NUL
 REPLACE INTO `item_db_re` VALUES (1938,'Infinity_Violin','Infinity Violin',5,10,NULL,500,'150',NULL,2,1,0x00080000,63,1,2,4,'100',1,13,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1939,'Crimson_Violin','Crimson Violin',5,20,NULL,800,'80',NULL,2,2,0x00080000,63,1,2,3,'70',1,13,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1940,'Trumpet_Shell','Trumpet Shell',5,0,NULL,600,'125',NULL,1,1,0x00080000,56,1,2,4,'130',1,13,'.@r = getrefine(); bonus bDex,.@r; bonus bInt,.@r; .@per = ((.@r > 9) ? 40 : ((.@r > 7) ? 20 : ((.@r > 5) ? 10 : 0))); bonus2 bSkillAtk,"WM_REVERBERATION",.@per; bonus2 bVariableCastrate,"WM_REVERBERATION",-.@per;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1942,'Requiem_Violin','Requiem Violin',5,20,NULL,500,'160:120',NULL,1,NULL,0x00080000,63,1,2,4,'100',1,13,'.@r = getrefine(); .@b = 40; bonus bUnbreakableWeapon,1; if(.@r>=5){ .@b += (.@r-5)*15+20; } if(.@r>=7) bonus2 bSkillAtk,"CG_ARROWVULCAN",200; bonus2 bAddRace2,RC2_BioLab,.@b;',NULL,NULL);
 #===================================================================
 # Whips
 #===================================================================
@@ -1304,6 +1309,7 @@ REPLACE INTO `item_db_re` VALUES (2024,'Infinity_Two-handed_Stick','Infinity Two
 REPLACE INTO `item_db_re` VALUES (2025,'Crimson_Two-Handed_Staff','Crimson Two-Handed Staff',5,20,NULL,1000,'100',NULL,1,2,0x000014,63,2,34,3,'70',1,23,'.@r = getrefine(); bonus bInt,5; bonus bMatk,150+((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2026,'Staff_of_Vicious_Mind','Staff of Vicious Mind',5,20,NULL,1000,'100:200',NULL,1,1,0x00810204,63,2,34,4,'160',1,23,'bonus bMatk,pow(min(getrefine(),15),2); bonus bInt,6; bonus bUnbreakableWeapon,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2027,'Sunflower_Kid','Sunflower Kid',5,10,NULL,1500,'150',NULL,NULL,2,0x00000200,40,2,34,4,'170',1,23,'bonus bMatk,320; bonus bInt,5; .@r = getrefine(); bonus bMatkRate,(.@r/2); bonus bDelayrate,(.@r*-1); bonus bUnbreakableWeapon,1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2032,'Requiem_Wizardry_Staff','Requiem Wizardry Staff',5,20,NULL,500,'100:230',NULL,1,NULL,0xFFFFFFFF,63,2,2,4,'100',1,10,'.@r = getrefine(); .@b = 40; .@c = 5; if(.@r>=5){ .@b += (.@r-5)*15+20; .@c += .@r-5; } bonus2 bMagicAddRace2,RC2_BioLab,.@b; bonus2 bSubRace2,RC2_BioLab,.@c; bonus2 bIgnoreMdefRace2Rate,RC2_BioLab,(.@r-5)*10;',NULL,NULL);
 #===================================================================
 # Shields
 #===================================================================
