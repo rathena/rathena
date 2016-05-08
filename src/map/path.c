@@ -325,11 +325,6 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 		return false; // easy path unsuccessful
 	} else { // !(flag&1)
-		// A* (A-star) pathfinding
-		// We always use A* for finding walkpaths because it is what game client uses.
-		// Easy pathfinding cuts corners of non-walkable cells, but client always walks around it.
-		BHEAP_RESET(g_open_set);
-
 		// FIXME: This array is too small to ensure all paths shorter than MAX_WALKPATH
 		// can be found without node collision: calc_index(node1) = calc_index(node2).
 		// Figure out more proper size or another way to keep track of known nodes.
@@ -339,6 +334,11 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		int ys = md->ys - 1;
 		int len = 0;
 		int j;
+
+		// A* (A-star) pathfinding
+		// We always use A* for finding walkpaths because it is what game client uses.
+		// Easy pathfinding cuts corners of non-walkable cells, but client always walks around it.
+		BHEAP_RESET(g_open_set);
 
 		memset(tp, 0, sizeof(tp));
 
