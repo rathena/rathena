@@ -13183,7 +13183,13 @@ void clif_parse_GuildRequestEmblem(int fd,struct map_session_data *sd)
 
 
 /// Validates data of a guild emblem (compressed bitmap)
-static bool clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
+enum e_result_validate_emblem {	// Used as Result for clif_validate_emblem
+	EMBVALIDATE_SUCCESS = 0,
+	EMBVALIDATE_ERR_RAW_FILEFORMAT,	// Invalid File Format (Error in zlib/decompression or malformed BMP header)
+	EMBVALIDATE_ERR_TRANSPARENCY	// uploaded emblem does not met the requirements of battle_config.emblem_transparency_limit
+};
+
+static enum e_result_validate_emblem clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
 {
 	uint8 buf[1800];  // no well-formed emblem bitmap is larger than 1782 (24 bit) / 1654 (8 bit) bytes
 	unsigned long buf_len = sizeof(buf);
@@ -13194,7 +13200,7 @@ static bool clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
 		&& RBUFL(buf,2) == buf_len  // BITMAPFILEHEADER.bfSize (file size)
 		&& (offset = RBUFL(buf,10)) < buf_len  // BITMAPFILEHEADER.bfOffBits (offset to bitmap bits)
 		))
-		return -1;
+		return EMBVALIDATE_ERR_RAW_FILEFORMAT;
 
 	if(battle_config.emblem_transparency_limit != 100) {
 		int i, transcount = 1, tmp[3];
@@ -13205,10 +13211,10 @@ static bool clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
 				transcount++;
 		}
 		if(((transcount*300)/(buf_len-offset)) > battle_config.emblem_transparency_limit) //convert in % to chk
-			return -2;
+			return EMBVALIDATE_ERR_TRANSPARENCY;
 	}
 
-	return 0;
+	return EMBVALIDATE_SUCCESS;
 }
 
 
@@ -13228,11 +13234,11 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd){
 		return;
 	}
 	emb_val = clif_validate_emblem(emblem, emblem_len);
-	if(emb_val ==-1 ){
+	if(emb_val == EMBVALIDATE_ERR_RAW_FILEFORMAT){
 		ShowWarning("clif_parse_GuildChangeEmblem: Rejected malformed guild emblem (size=%lu, accound_id=%d, char_id=%d, guild_id=%d).\n", emblem_len, sd->status.account_id, sd->status.char_id, sd->status.guild_id);
 		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,386)); //"The chosen emblem was detected invalid\n"
 		return;
-	} else if(emb_val == -2){
+	} else if(emb_val == EMBVALIDATE_ERR_TRANSPARENCY){
 		char output[128];
 		safesnprintf(output,sizeof(output),msg_txt(sd,387),battle_config.emblem_transparency_limit);
 		clif_colormes(sd->fd,color_table[COLOR_RED],output); //"The chosen emblem was detected invalid as it contain too much transparency (limit=%d)\n"
