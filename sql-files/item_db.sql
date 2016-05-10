@@ -3022,8 +3022,8 @@ REPLACE INTO `item_db` VALUES (5811,'Santa_Beard','Santa\'s Beard',4,20,NULL,100
 REPLACE INTO `item_db` VALUES (5812,'Hat_Of_Expert','Hat Of Expert',4,0,NULL,0,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,16,NULL,NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5813,'Red_Ph.D_Hat','Red Ph.D Hat',4,1000,NULL,500,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,481,'bonus bInt,1;',NULL,NULL);
 #5814,Ati_Atihan_Hat3
-REPLACE INTO `item_db` VALUES (5815,'Cowboy_Hat_J','Purple Cowboy Hat',4,20,NULL,500,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,475,'bonus bStr,1; bonus2 bSubSize, 0, 5; bonus2 bSubSize, 1, 5; bonus2 bSubSize, 2, 5;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5816,'Classic_Hat_J','Classic Hat',4,20,NULL,500,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,411,NULL,NULL,NULL);
+REPLACE INTO `item_db` VALUES (5815,'Classic_Hat_J','Classic Hat',4,20,NULL,500,NULL,2,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,475,'bonus bStr,1; bonus2 bSubSize, 0, 5; bonus2 bSubSize, 1, 5; bonus2 bSubSize, 2, 5;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5816,'Cowboy_Hat_J','Purple Cowboy Hat',4,20,NULL,500,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,411,'bonus bBaseAtk,15; bonus bFlee,-5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5817,'Valentine_Pledge','Valentine Pledge',4,20,NULL,0,NULL,3,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,'bonus bAllStats,2; bonus bMdef,3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5818,'Carnival_Hat','Carnival Hat',4,0,NULL,0,NULL,6,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,505,'bonus bAllStats, 3;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5819,'Carnival_Circlet','Carnival Circlet',4,0,NULL,0,NULL,6,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,506,'bonus bAllStats, 3;',NULL,NULL);
