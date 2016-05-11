@@ -509,9 +509,11 @@
 	script_set_constant("bDoubleAddRate",SP_DOUBLE_ADD_RATE,false);
 	script_set_constant("bSkillHeal",SP_SKILL_HEAL,false);
 	script_set_constant("bMatkRate",SP_MATK_RATE,false);
+	script_set_constant("bWeaponMatkRate",SP_WEAPON_MATK_RATE,false);
 	script_set_constant("bIgnoreDefEle",SP_IGNORE_DEF_ELE,false);
 	script_set_constant("bIgnoreDefRace",SP_IGNORE_DEF_RACE,false);
 	script_set_constant("bAtkRate",SP_ATK_RATE,false);
+	script_set_constant("bWeaponAtkRate",SP_WEAPON_ATK_RATE,false);
 	script_set_constant("bSpeedAddRate",SP_SPEED_ADDRATE,false);
 	script_set_constant("bSPRegenRate",SP_SP_REGEN_RATE,false);
 	script_set_constant("bMagicAtkDef",SP_MAGIC_ATK_DEF,false);
@@ -564,7 +566,7 @@
 	script_set_constant("bHPDrainValue",SP_HP_DRAIN_VALUE,false);
 	script_set_constant("bSPDrainValue",SP_SP_DRAIN_VALUE,false);
 	script_set_constant("bWeaponAtk",SP_WEAPON_ATK,false);
-	script_set_constant("bWeaponAtkRate",SP_WEAPON_ATK_RATE,false);
+	script_set_constant("bWeaponDamageRate",SP_WEAPON_DAMAGE_RATE,false);
 	script_set_constant("bDelayrate",SP_DELAYRATE,false);
 	script_set_constant("bHPDrainValueRace",SP_HP_DRAIN_VALUE_RACE,false);
 	script_set_constant("bSPDrainValueRace",SP_SP_DRAIN_VALUE_RACE,false);

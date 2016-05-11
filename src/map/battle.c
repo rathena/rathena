@@ -1942,18 +1942,18 @@ static int64 battle_calc_base_damage(struct status_data *status, struct weapon_a
 		damage += status->batk;
 
 	//rodatazone says that Overrefine bonuses are part of baseatk
-	//Here we also apply the weapon_atk_rate bonus so it is correctly applied on left/right hands.
+	//Here we also apply the weapon_damage_rate bonus so it is correctly applied on left/right hands.
 	if(sd) {
 		if (type == EQI_HAND_L) {
 			if(sd->left_weapon.overrefine)
 				damage += rnd()%sd->left_weapon.overrefine+1;
-			if (sd->weapon_atk_rate[sd->weapontype2])
-				damage += damage * sd->weapon_atk_rate[sd->weapontype2] / 100;
+			if (sd->weapon_damage_rate[sd->weapontype2])
+				damage += damage * sd->weapon_damage_rate[sd->weapontype2] / 100;
 		} else { //Right hand
 			if(sd->right_weapon.overrefine)
 				damage += rnd()%sd->right_weapon.overrefine+1;
-			if (sd->weapon_atk_rate[sd->weapontype1])
-				damage += damage * sd->weapon_atk_rate[sd->weapontype1] / 100;
+			if (sd->weapon_damage_rate[sd->weapontype1])
+				damage += damage * sd->weapon_damage_rate[sd->weapontype1] / 100;
 		}
 	}
 

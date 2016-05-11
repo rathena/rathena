@@ -109,8 +109,10 @@ bonus bBaseAtk,n;  			Basic attack power + n
 bonus bAtk,n;      			ATK + n (unofficial)
 bonus bAtk2,n;     			ATK2 + n
 bonus bAtkRate,n;  			Attack power + n%
+bonus bWeaponAtkRate,n; 	Weapon ATK + n%
 bonus bMatk,n;     			Magical attack power + n
 bonus bMatkRate,n; 			Magical attack power + n%
+bonus bWeaponMatkRate,n;	Weapon Magical ATK + n% (renewal mode only)
 bonus bDef,n;      			Equipment DEF + n
 bonus bDefRate,n;  			Equipment DEF + n%
 bonus bDef2,n;     			VIT based DEF + n
@@ -166,7 +168,7 @@ bonus bLongAtkRate,n;     		Increases damage of ranged attacks by n%
 bonus bCritAtkRate,n;     		Increases critical damage by +n%
 bonus bCriticalDef,n;     		Decreases the chance of being hit by critical hits by n%
 bonus2 bWeaponAtk,w,n;    		Adds n ATK when weapon of type w is equipped
-bonus2 bWeaponAtkRate,w,n;		Adds n% damage to normal attacks when weapon of type w is equipped
+bonus2 bWeaponDamageRate,w,n;	Adds n% damage to normal attacks when weapon of type w is equipped
 
 bonus bNearAtkDef,n; 			Adds n% damage reduction against melee physical attacks
 bonus bLongAtkDef,n; 			Adds n% damage reduction against ranged physical attacks

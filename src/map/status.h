@@ -2250,7 +2250,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 	unsigned short status_base_matk_min(const struct status_data* status);
 	unsigned short status_base_matk_max(const struct status_data* status);
 #else
-	unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status);
+	unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd);
 	unsigned short status_base_matk(struct block_list *bl, const struct status_data* status, int level);
 #endif
 

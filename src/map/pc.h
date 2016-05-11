@@ -348,7 +348,7 @@ struct map_session_data {
 	short weapon_coma_race[RC_MAX];
 	short weapon_coma_class[CLASS_MAX];
 	int weapon_atk[16];
-	int weapon_atk_rate[16];
+	int weapon_damage_rate[16];
 	int arrow_addele[ELE_MAX];
 	int arrow_addrace[RC_MAX];
 	int arrow_addclass[CLASS_MAX];
@@ -458,6 +458,7 @@ struct map_session_data {
 		int eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
 		short critical_rangeatk;
+		short weapon_atk_rate, weapon_matk_rate;
 	} bonus;
 	// zeroed vars end here.
 
