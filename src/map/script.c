@@ -19244,7 +19244,7 @@ BUILDIN_FUNC(pushpc)
 	dir = script_getnum(st,2);
 	cells     = script_getnum(st,3);
 
-	if(dir>DIR_NORTHEAST)
+	if(dir >= DIR_MAX)
 	{
 		ShowWarning("buildin_pushpc: Invalid direction %d specified.\n", dir);
 		script_reportsrc(st);
