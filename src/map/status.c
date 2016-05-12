@@ -10210,11 +10210,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			clif_status_change(bl,SI_ACTIVE_MONSTER_TRANSFORM,1,0,1002,0,0);
 			break;
 		case SC_KAGEMUSYA:
-			val3 = val1 * 2;
-		case SC_IZAYOI:
 			val2 = tick/1000;
-			if( type == SC_IZAYOI )
-				tick = -1; // Duration sent to the client should be infinite
+			val3 = val1 * 2;
 			tick_time = 1000;
 			break;
 		case SC_ZANGETSU:
@@ -12674,7 +12671,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			return 0;
 		}
 		break;
-	case SC_IZAYOI:
 	case SC_KAGEMUSYA:
 		if( --(sce->val2) >= 0 ) {
 			if(!status_charge(bl, 0, 1)) break;
