@@ -10436,8 +10436,6 @@
 20497,C_Umbala_Spirit,Costume Umbala Spirit,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,675,{},{},{}
 20498,C_Elephant_Hat,Costume Elephant Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,215,{},{},{}
 20499,C_Cat_Ears_Hat,Costume Cat Ears Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1479,{},{},{}
-20508,C_Poster_Girl_Hat,Costume Poster Girl Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1446,{},{},{}
-20798,C_Grim_Reaper_Protection,Costume Grim Reaper Protection,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1450,{},{},{}
 
 //===================================================================
 // New Garments
@@ -10446,6 +10444,7 @@
 20504,C_Cupids_Pink_Wings,Costume Cupid's Pink Wings,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,14,{},{},{}
 20506,Invisible_Manteau,Invisible Manteau,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,0,{},{},{}
 20507,C_Poring_Bag,Costume Poring Bag,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,16,{},{},{}
+20508,C_Poster_Girl_Hat,Costume Poster Girl Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1446,{},{},{}
 20600,Fantastic_Aura,Fantastic Aura,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,0,{ /*TODO: View ID*/ bonus bUnbreakableHelm,1; },{},{}
 20700,Egir_Manteau,Egir Manteau,4,200000,,300,,10,,1,0xFFFFFFFF,63,2,4,,110,1,0,{ bonus bUnbreakableGarment,1; .@r = getrefine(); if (.@r > 10) .@r = 10; if (BaseClass == Job_Mage || BaseClass == Job_Archer || BaseClass == Job_Acolyte) { bonus bFlee2,5+(.@r*2); } else if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief) { bonus bShortWeaponDamageReturn,5+(.@r*2); } },{},{}
 20702,TE_Woe_Muffler,TE Woe Muffler,4,0,,0,,5,,0,0xFFFFFFFF,63,2,4,1,40,1,,{ bonus bMdef,5; bonus2 bAddRace,RC_Player,5; bonus2 bMagicAddRace,RC_Player,5; bonus2 bResEff,Eff_Freeze,25; },{},{}
@@ -10477,6 +10476,8 @@
 20788,Private_Doram_Manteau,Private Doram Manteau,4,20,,300,,20,,1,0x80000000,7,2,4,,100,1,,{ bonus bFlee,5; bonus2 bSubEle,Ele_Neutral,2; bonus bFlee2,getrefine()/3; },{},{}
 20789,Luxury_Doram_Manteau,Luxury Doram Manteau,4,20,,400,,25,,1,0x80000000,7,2,4,,140,1,,{ bonus bFlee,7; bonus2 bSubEle,Ele_Neutral,3; .@r = getrefine()/3; bonus bFlee2,.@r; bonus bLuk,.@r; },{},{}
 20790,Elegant_Doram_Manteau,Elegant Doram Manteau,4,20,,500,,30,,1,0x80000000,7,2,4,,175,1,,{ bonus bFlee,10; bonus2 bSubEle,Ele_Neutral,5; .@r = getrefine()/2; bonus bFlee2,.@r; bonus bInt,.@r; bonus bDex,.@r; bonus bLuk,.@r; },{},{}
+20798,C_Grim_Reaper_Protection,Costume Grim Reaper Protection,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1450,{},{},{}
+
 //===================================================================
 // More 2-Handed Swords
 //===================================================================
