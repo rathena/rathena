@@ -615,7 +615,7 @@ static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
 
 		// Remove from DB
 		if (strcmpi(str[1], "clear") == 0 && itemdb_group->remove(itemdb_group, db_ui2key(group_id), &data)) {
-			itemdb_group_free(db_ui2key(group_id), &data, NULL);
+			itemdb_group_free(db_ui2key(group_id), &data, 0);
 			ShowNotice("Item Group '%s' has been cleared.\n", str[0]);
 			continue;
 		}
