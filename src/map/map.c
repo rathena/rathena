@@ -2554,7 +2554,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 /*==========================================
  * Add an instance map
  *------------------------------------------*/
-int map_addinstancemap(const char *name, int id)
+int map_addinstancemap(const char *name, unsigned short instance_id)
 {
 	int src_m = map_mapname2mapid(name);
 	int dst_m = -1, i;
@@ -2594,9 +2594,9 @@ int map_addinstancemap(const char *name, int id)
 	// This also allows us to maintain complete independence with main map functions
 	if((strchr(iname,'@') == NULL) && strlen(iname) > 8) {
 		memmove(iname, iname+(strlen(iname)-9), strlen(iname));
-		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%d#%s", id, iname);
+		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%hu#%s", instance_id, iname);
 	} else
-		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%.3d%s", id, iname);
+		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%.3hu%s", instance_id, iname);
 	map[dst_m].name[MAP_NAME_LENGTH-1] = '\0';
 
 	// Mimic questinfo
@@ -2607,7 +2607,7 @@ int map_addinstancemap(const char *name, int id)
 	}
 
 	map[dst_m].m = dst_m;
-	map[dst_m].instance_id = id;
+	map[dst_m].instance_id = instance_id;
 	map[dst_m].instance_src_map = src_m;
 	map[dst_m].users = 0;
 

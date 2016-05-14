@@ -660,7 +660,7 @@ int party_broken(int party_id)
 		return 0;
 
 	if( p->instance_id ) {
-		instance_data[p->instance_id].party_id = 0;
+		instance_data[p->instance_id].owner_id = 0;
 		instance_destroy( p->instance_id );
 	}
 

@@ -16572,80 +16572,99 @@ void clif_font(struct map_session_data *sd)
 }
 
 
-/*==========================================
- * Notifies party members of instance change
- *------------------------------------------*/
-void clif_instance_create(struct map_session_data *sd, const char *name, int num, int flag)
+/// Required to start the instancing information window on Client
+/// This window re-appears each "refresh" of client automatically until the keep_limit reaches 0.
+/// S 0x2cb <Instance name>.61B <Standby Position>.W
+void clif_instance_create(unsigned short instance_id, int num)
 {
 #if PACKETVER >= 20071128
+	struct map_session_data *sd = NULL;
+	enum send_target target = PARTY;
 	unsigned char buf[65];
 
-	if(!sd) return;
+	instance_getsd(instance_id, &sd, &target);
+
+	if (!sd)
+		return;
 
 	WBUFW(buf,0) = 0x2cb;
-	memcpy( WBUFP(buf,2), name, 62 );
+	memcpy(WBUFP(buf,2), instance_data[instance_id].name, 62);
 	WBUFW(buf,63) = num;
-	if(flag) // A timer has changed or been added
-		clif_send(buf,packet_len(0x2cb),&sd->bl,PARTY);
-	else	// No notification
-		clif_send(buf,packet_len(0x2cb),&sd->bl,SELF);
+	clif_send(buf,packet_len(0x2cb),&sd->bl,target);
 #endif
 
 	return;
 }
 
-void clif_instance_changewait(struct map_session_data *sd, int num, int flag)
+/// To announce Instancing queue creation if no maps available
+/// S 0x2cc <Standby Position>.W
+void clif_instance_changewait(unsigned short instance_id, int num)
 {
 #if PACKETVER >= 20071128
+	struct map_session_data *sd = NULL;
+	enum send_target target = PARTY;
 	unsigned char buf[4];
 
-	if(!sd) return;
+	instance_getsd(instance_id, &sd, &target);
+
+	if (!sd)
+		return;
 
 	WBUFW(buf,0) = 0x2cc;
 	WBUFW(buf,2) = num;
-	if(flag) // A timer has changed or been added
-		clif_send(buf,packet_len(0x2cc),&sd->bl,PARTY);
-	else	// No notification
-		clif_send(buf,packet_len(0x2cc),&sd->bl,SELF);
+	clif_send(buf,packet_len(0x2cc),&sd->bl,target);
 #endif
 
 	return;
 }
 
-void clif_instance_status(struct map_session_data *sd, const char *name, unsigned int limit1, unsigned int limit2, int flag)
+/// Notify the current status to members
+/// S 0x2cd <Instance Name>.61B <Instance Remaining Time>.L <Instance Noplayers close time>.L
+void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsigned int limit2)
 {
 #if PACKETVER >= 20071128
+	struct map_session_data *sd = NULL;
+	enum send_target target = PARTY;
 	unsigned char buf[71];
 
-	if(!sd) return; //party_getavailablesd can return NULL
+	instance_getsd(instance_id, &sd, &target);
+
+	if (!sd)
+		return;
 
 	WBUFW(buf,0) = 0x2cd;
-	memcpy( WBUFP(buf,2), name, 62 );
+	memcpy(WBUFP(buf,2), instance_data[instance_id].name, 62);
 	WBUFL(buf,63) = limit1;
 	WBUFL(buf,67) = limit2;
-	if(flag) // A timer has changed or been added
-		clif_send(buf,packet_len(0x2cd),&sd->bl,PARTY);
-	else	// No notification
-		clif_send(buf,packet_len(0x2cd),&sd->bl,SELF);
+	clif_send(buf,packet_len(0x2cd),&sd->bl,target);
 #endif
 
 	return;
 }
 
-void clif_instance_changestatus(struct map_session_data *sd, int type, unsigned int limit, int flag)
+/// Notify a status change to members
+/// S 0x2ce <Message ID>.L
+/// 0 = Notification (EnterLimitDate update?)
+/// 1 = The Memorial Dungeon expired; it has been destroyed
+/// 2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
+/// 3 = The Memorial Dungeon has been removed.
+/// 4 = Create failure (removes the instance window)
+void clif_instance_changestatus(unsigned int instance_id, int type, unsigned int limit)
 {
 #if PACKETVER >= 20071128
+	struct map_session_data *sd = NULL;
+	enum send_target target = PARTY;
 	unsigned char buf[10];
 
-	if(!sd) return;
+	instance_getsd(instance_id, &sd, &target);
+
+	if (!sd)
+		return;
 
 	WBUFW(buf,0) = 0x2ce;
 	WBUFL(buf,2) = type;
 	WBUFL(buf,6) = limit;
-	if(flag) // A timer has changed or been added
-		clif_send(buf,packet_len(0x2ce),&sd->bl,PARTY);
-	else	// No notification
-		clif_send(buf,packet_len(0x2ce),&sd->bl,SELF);
+	clif_send(buf,packet_len(0x2ce),&sd->bl,target);
 #endif
 
 	return;

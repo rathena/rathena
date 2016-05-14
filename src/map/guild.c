@@ -17,6 +17,7 @@
 #include "battle.h"
 #include "npc.h"
 #include "pc.h"
+#include "instance.h"
 #include "intif.h"
 #include "channel.h"
 #include "log.h"
@@ -551,6 +552,8 @@ int guild_recv_info(struct guild *sg) {
 			clif_guild_notice(sd, g);
 			sd->guild_emblem_id = g->emblem_id;
 		}
+		if (g->instance_id != 0)
+			instance_reqinfo(sd, g->instance_id);
 	}
 
 	//Occurrence of an event
@@ -694,6 +697,8 @@ void guild_member_joined(struct map_session_data *sd) {
 		g->member[i].sd = sd;
 		sd->guild = g;
 
+		if (g->instance_id != 0)
+			instance_reqinfo(sd, g->instance_id);
 		if( channel_config.ally_enable && channel_config.ally_autojoin ) {
 			channel_gjoin(sd,3);
 		}
@@ -743,6 +748,9 @@ int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag) {
 
 	//Next line commented because it do nothing, look at guild_recv_info [LuzZza]
 	//clif_charnameupdate(sd); //Update display name [Skotlex]
+
+	if (g->instance_id != 0)
+		instance_reqinfo(sd, g->instance_id);
 
 	return 0;
 }
@@ -859,6 +867,17 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 		sd->status.guild_id = 0;
 		sd->guild = NULL;
 		sd->guild_emblem_id = 0;
+
+		if (g->instance_id) {
+			int16 m = sd->bl.m;
+
+			if (map[m].instance_id) { // User was on the instance map
+				if (map[m].save.map)
+					pc_setpos(sd, map[m].save.map, map[m].save.x, map[m].save.y, CLR_TELEPORT);
+				else
+					pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+			}
+		}
 
 		clif_charnameupdate(sd); //Update display name [Skotlex]
 		status_change_end(&sd->bl,SC_LEADERSHIP,INVALID_TIMER);
@@ -1831,6 +1850,11 @@ int guild_break(struct map_session_data *sd,char *name) {
 	if (i < g->max_member) {
 		clif_guild_broken(sd,2);
 		return 0;
+	}
+
+	if (g->instance_id) {
+		instance_data[g->instance_id].owner_id = 0;
+		instance_destroy(g->instance_id);
 	}
 
 	/* Regardless of char server allowing it, we clear the guild master's auras */

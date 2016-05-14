@@ -679,6 +679,8 @@ struct map_session_data {
 		short prizeStage;
 		bool claimPrize;
 	} roulette;
+
+	unsigned short instance_id;
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table
