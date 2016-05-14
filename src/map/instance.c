@@ -21,7 +21,6 @@
 #include <stdlib.h>
 
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
-#define INSTANCE_LIMIT		300000	// Idle timer before instance is destroyed (ms) : 5 Minute Default
 
 int instance_start = 0; // To keep the last index + 1 of normal map inserted in the map[ARRAY]
 
@@ -227,8 +226,8 @@ static int instance_startidletimer(struct instance_data *im, unsigned short inst
 		return 1;
 
 	// Add the timer
-	im->idle_limit = (unsigned int)time(NULL) + INSTANCE_LIMIT/1000;
-	im->idle_timer = add_timer(gettick()+INSTANCE_LIMIT, instance_delete_timer, instance_id, 0);
+	im->idle_limit = (unsigned int)time(NULL) + db->timeout;
+	im->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 
 	switch(im->mode) {
 		case IM_NONE:
@@ -446,8 +445,8 @@ int instance_addmap(unsigned short instance_id)
 
 	// Set to busy, update timers
 	im->state = INSTANCE_BUSY;
-	im->idle_limit = (unsigned int)time(NULL) + INSTANCE_LIMIT/1000;
-	im->idle_timer = add_timer(gettick()+INSTANCE_LIMIT, instance_delete_timer, instance_id, 0);
+	im->idle_limit = (unsigned int)time(NULL) + db->timeout;
+	im->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 
 	// Add the maps
 	for(i = 0; i < db->maplist_count; i++) {
