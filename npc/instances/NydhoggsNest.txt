@@ -114,7 +114,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 				next;
 				switch(select("Please allow me to enter.:I want to go in.:I want to leave.")) {
 				case 1:
-					if (instance_create(.@md_name$) < 0) {
+					if (instance_create(.@md_name$, .@party_id) < 0) {
 						mes "[Yggdrasil Gatekeeper]";
 						mes "The Guardian seems to wish to be alone. I will go in and check, please wait out here.";
 						close;

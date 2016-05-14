@@ -65,7 +65,7 @@ ma_scene01,174,179,4	script	Taho	541,{
 		}
 		switch(.@i) {
 		case 1:
-			if (instance_create(.@md_name$) < 0) {
+			if (instance_create(.@md_name$, .@party_id) < 0) {
 				mes "[Taho]";
 				mes "Oh, the rope got dropped. I have to make a new one.";
 				close;

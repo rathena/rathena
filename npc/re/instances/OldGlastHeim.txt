@@ -41,7 +41,7 @@ glast_01,204,273,6	script	Hugin#ghinstance	755,{
 			set .@menu$, ":Enter the Old Glast Heim.:Cancel.";
 		switch(select(.@menu$)) {
 		case 1:
-			if (instance_create(.@md_name$) < 0) {
+			if (instance_create(.@md_name$, .@party_id) < 0) {
 				mes "Party Name: "+.@p_name$;
 				mes "Party Leader: "+strcharinfo(0);
 				mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";

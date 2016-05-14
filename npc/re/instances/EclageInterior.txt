@@ -31,7 +31,7 @@ ecl_hub01,132,12,3	script	Chief of Staff#tl02	435,{
 		next;
 		switch (select("Enter it.:Forget it.")) {
 		case 1:
-			if (instance_create(.@md_name$) < 0) {
+			if (instance_create(.@md_name$, .@party_id) < 0) {
 				mes "[Shenime]";
 				mes "There are some soldiers dispatched by Mayor not too long ago.";
 				mes "I should sure hope that you aren't the disturbance they're looking for, right?";

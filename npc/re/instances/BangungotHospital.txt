@@ -258,7 +258,7 @@ L_Enter:
 	next;
 	switch(select(((getarg(0))?"Prepare to enter the second floor.":"")+":Enter the second floor.:Do not enter.")) {
 	case 1:
-		if (instance_create(.@md_name$) < 0) {
+		if (instance_create(.@md_name$, .@party_id) < 0) {
 			mes "[Nurse Maenne]";
 			mes "A critical situation has happened.";
 			mes "You can't go up to the 2nd floor.";

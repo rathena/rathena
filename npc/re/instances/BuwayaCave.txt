@@ -75,7 +75,7 @@ ma_fild02,312,317,5	script	Guard#buwaya_cave	570,{
 					erasequest 4229;
 					// fall through
 				}
-				if (instance_create(.@md_name$) < 0) {
+				if (instance_create(.@md_name$, .@party_id) < 0) {
 					mes "[Guard]";
 					mes "Party name is... "+getpartyname(.@party_id)+".";;
 					mes "Party leader is... "+strcharinfo(0);
