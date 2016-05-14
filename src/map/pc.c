@@ -9461,7 +9461,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 		if (id->type == IT_AMMO){
 			int w_idx = sd->equip_index[EQI_HAND_R];
 			enum weapon_type w_type = (w_idx != -1) ? (enum weapon_type)sd->inventory_data[w_idx]->look : W_FIST;
-			if (w_idx == -1 || id->look != W_BOW && id->look != W_MUSICAL && id->look != W_WHIP){
+			if (w_idx == -1 || (id->look != W_BOW && id->look != W_MUSICAL && id->look != W_WHIP)){
 				clif_equipitemack(sd, 0, 0, ITEM_EQUIP_ACK_FAIL);
 				return false;
 			}
