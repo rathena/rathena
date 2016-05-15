@@ -9457,7 +9457,10 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 	}
 
 	// dont equip arrow if weapon equipped is not bow / guitar / whip.
-	if (sd->status.weapon != W_BOW && sd->status.weapon != W_MUSICAL && sd->status.weapon != W_WHIP){
+	// allow assassin, baby and parent jobs to equip ammuntions without weapons (need official info)
+	if ((sd->status.weapon != W_BOW && sd->status.weapon != W_MUSICAL && sd->status.weapon != W_WHIP)
+		&& (sd->class_&MAPID_BASEMASK != MAPID_ASSASSIN || sd->class_&MAPID_BASEMASK != MAPID_ASSASSIN_CROSS || sd->class_&MAPID_BASEMASK != MAPID_BABY_ASSASSIN
+		|| sd->class_&MAPID_BASEMASK != MAPID_GUILLOTINE_CROSS || sd->class_&MAPID_BASEMASK != MAPID_GUILLOTINE_CROSS_T || sd->class_&MAPID_BASEMASK != MAPID_BABY_CROSS)){
 		if (id->type == IT_AMMO){
 			int w_idx = sd->equip_index[EQI_HAND_R];
 			enum weapon_type w_type = (w_idx != -1) ? (enum weapon_type)sd->inventory_data[w_idx]->look : W_FIST;
