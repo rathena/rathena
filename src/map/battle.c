@@ -7169,19 +7169,25 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	if( sc && sc->count ) {
 		if (sc->data[SC_EXEEDBREAK]) {
-			wd.damage *= sc->data[SC_EXEEDBREAK]->val2 / 100;
+			if (!is_infinite_defense(target, wd.flag))
+				wd.damage *= sc->data[SC_EXEEDBREAK]->val2 / 100;
 			status_change_end(src, SC_EXEEDBREAK, INVALID_TIMER);
 		}
 		if( sc->data[SC_SPELLFIST] ) {
 			if( --(sc->data[SC_SPELLFIST]->val1) >= 0 ){
-				struct Damage ad = battle_calc_attack(BF_MAGIC,src,target,sc->data[SC_SPELLFIST]->val3,sc->data[SC_SPELLFIST]->val4,flag|BF_SHORT);
-				wd.damage = ad.damage;
-				if (wd.div_ > 1)
-					wd.damage *= 2; // Double the damage for multiple hits.
+				if (!is_infinite_defense(target, wd.flag)) {
+					struct Damage ad = battle_calc_attack(BF_MAGIC, src, target, sc->data[SC_SPELLFIST]->val3, sc->data[SC_SPELLFIST]->val4, flag | BF_SHORT);
+
+					wd.damage = ad.damage;
+					DAMAGE_DIV_FIX(wd.damage, wd.div_); // Double the damage for multiple hits.
+				} else {
+					wd.damage = 1;
+					DAMAGE_DIV_FIX(wd.damage, wd.div_);
+				}
 			} else
 				status_change_end(src,SC_SPELLFIST,INVALID_TIMER);
 		}
-		if( sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 )
+		if( sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 && !is_infinite_defense(target, wd.flag) )
 			wd.damage *= 3; // Triple Damage
 
 		if( sd && battle_config.arrow_decrement && sc->data[SC_FEARBREEZE] && sc->data[SC_FEARBREEZE]->val4 > 0) {
