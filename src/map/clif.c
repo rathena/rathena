@@ -4563,7 +4563,9 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 				break;
 			if( tsd->sc.data[SC_CAMOUFLAGE] )
 				clif_status_load(bl,SI_CAMOUFLAGE,1);
-			if( tsd->sc.data[SC_MONSTER_TRANSFORM] )
+			if( tsd->sc.data[SC_ACTIVE_MONSTER_TRANSFORM] ) // Overrides SC_MONSTER_TRANSFORM
+				clif_status_change(bl,SI_MONSTER_TRANSFORM,1,0,tsd->sc.data[SC_ACTIVE_MONSTER_TRANSFORM]->val1,0,0);
+			else if( tsd->sc.data[SC_MONSTER_TRANSFORM] )
 				clif_status_change(bl,SI_MONSTER_TRANSFORM,1,0,tsd->sc.data[SC_MONSTER_TRANSFORM]->val1,0,0);
 			if( tsd->sc.data[SC_MOONSTAR] )
 				clif_status_load(bl,SI_MOONSTAR,1);
@@ -10323,8 +10325,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if (sd->sc.opt2) //Client loses these on warp.
 		clif_changeoption(&sd->bl);
 
-	if (sd->sc.data[SC_MONSTER_TRANSFORM] && battle_config.mon_trans_disable_in_gvg && map_flag_gvg2(sd->bl.m)) {
+	if ((sd->sc.data[SC_MONSTER_TRANSFORM] || sd->sc.data[SC_ACTIVE_MONSTER_TRANSFORM]) && battle_config.mon_trans_disable_in_gvg && map_flag_gvg2(sd->bl.m)) {
 		status_change_end(&sd->bl, SC_MONSTER_TRANSFORM, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_ACTIVE_MONSTER_TRANSFORM, INVALID_TIMER);
 		clif_displaymessage(sd->fd, msg_txt(sd,731)); // Transforming into monster is not allowed in Guild Wars.
 	}
 

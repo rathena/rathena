@@ -756,6 +756,8 @@ typedef enum sc_type {
 	SC_SHRIMP,
 	SC_FRESHSHRIMP,
 
+	SC_ACTIVE_MONSTER_TRANSFORM,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

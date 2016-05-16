@@ -1361,6 +1361,7 @@
 	export_constant(SC_TUNAPARTY);
 	export_constant(SC_SHRIMP);
 	export_constant(SC_FRESHSHRIMP);
+	export_constant(SC_ACTIVE_MONSTER_TRANSFORM);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
