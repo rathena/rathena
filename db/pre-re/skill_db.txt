@@ -415,7 +415,7 @@
 286,2,6,2,1,0x1,0,5,1,yes,0,0,0,magic,0,0x1000,		SA_DELUGE,Deluge
 287,2,6,2,4,0x1,0,5,1,yes,0,0,0,magic,0,0x1000,		SA_VIOLENTGALE,Whirlwind
 288,2,6,2,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,		SA_LANDPROTECTOR,Magnetic Earth
-289,9,6,1,0,0x1,0:0:0:0:0:-1,5,1,yes,0,0xE00,0,magic,0,0x20,	SA_DISPELL,Dispell
+289,9,6,1,0,0x1,0:0:0:0:0:-1,5,1,yes,0,0xE00,0,magic,0,0x10020,	SA_DISPELL,Dispell
 290,0,6,4,0,0x1,0,10,1,yes,0,0,0,magic,0,0x0,	SA_ABRACADABRA,Hocus-pocus
 291,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0,0x0,	SA_MONOCELL,Monocell
 292,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0,0x0,	SA_CLASSCHANGE,Class Change
@@ -983,7 +983,7 @@
 2049,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		AB_EUCHARISTICA,Eucharistica
 2050,11,6,16,6,0x1,0,1,1,yes,0,0,0,magic,0,0x0,	AB_RENOVATIO,Renovatio
 2051,11,6,16,6,0x21,0,5,1,yes,0,0,0,magic,0,0x0,	AB_HIGHNESSHEAL,Highness Heal //CHECK Info shows this has magic attack.
-2052,11,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x20,	AB_CLEARANCE,Clearance //CHECK Also shows this as a magic attack. Why?
+2052,11,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x10020,	AB_CLEARANCE,Clearance //CHECK Also shows this as a magic attack. Why?
 2053,11,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	AB_EXPIATIO,Expiatio //CHECK Does this also give the buff to party members?
 2054,0,6,4,6,0x1,0,10,1,yes,0,0,0,none,0,0x0,	AB_DUPLELIGHT,Duple Light //CHECK Had issues adding a skill level check to make the % go higher with the skills level. Will do later.
 2055,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0x0,	AB_DUPLELIGHT_MELEE,Duple Light Melee
@@ -1242,7 +1242,7 @@
 //2551,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0,	RL_GLITTERING_GREED,Flip The Coin Greed
 2552,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	RL_RICHS_COIN,Rich's Coin
 2553,15,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RL_MASS_SPIRAL,Mass Spiral
-2554,9,6,1,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x20,	RL_BANISHING_BUSTER,Banishing Buster
+2554,9,6,1,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x10020,	RL_BANISHING_BUSTER,Banishing Buster
 2555,3,6,2,0,0x1,1,5,1,no,0,0,3,misc,0,0x0,	RL_B_TRAP,Bind Trap
 2556,0,6,4,0,0x3,-1,1,1,no,0,0,0,none,0,0x0,	RL_FLICKER,Flicker
 2557,9,6,1,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_S_STORM,Shatter Storm
