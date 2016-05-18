@@ -1070,11 +1070,11 @@
 1738,BF_Bow1,Valorous Battle CrossBow,5,20,,0,100,,5,0,0x000A0848,63,2,34,3,80,1,11,{ bonus bDex,2; bonus2 bAddRace,RC_DemiHuman,55; bonus2 bAddRace,RC_Player,55; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player,20; bonus bUnbreakableWeapon,1; },{},{}
 1739,BF_Bow2,Brave Battle CrossBow,5,20,,0,100,,5,0,0x000A0848,63,2,34,3,80,1,11,{ bonus bDex,2; bonus bInt,10; bonus2 bAddRace,RC_DemiHuman,55; bonus2 bAddRace,RC_Player,55; bonus bUnbreakableWeapon,1; },{},{}
 1740,Nepenthes_Bow,Nepenthes Bow,5,20,,1000,105,,5,2,0x00000800,18,2,34,4,60,1,11,{ bonus4 bAutoSpellOnSkill,"AC_DOUBLE","AC_CHARGEARROW",1,20; },{},{}
-1741,Cursed_Lyre,Cursed Lyre,5,20,,1250,125,,5,1,0x00080808,18,2,34,4,80,1,11,{ bonus bLuk,-2; bonus2 bAddEff,Eff_Curse,400; },{},{}
+1741,Cursed_Lyre,Cursed Lyre,5,20,,1250,125,,5,1,0x00080800,18,2,34,4,80,1,11,{ bonus bLuk,-2; bonus2 bAddEff,Eff_Curse,400; },{},{}
 1742,N_Composite_Bow,Novice Composite Bow,5,1,,0,49,,5,3,0x000A0848,63,2,34,1,4,0,11,{},{},{}
 1743,Krieger_Bow1,Glorious Hunter Bow,5,0,,0,100,,5,0,0x001A0848,63,2,34,4,80,1,11,{ bonus2 bAddRace,RC_DemiHuman,55; bonus2 bAddRace,RC_Player,55; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player,20; .@r = getrefine(); bonus bCritAtkRate,.@r * 2; bonus bUnbreakableWeapon,1; if(.@r>5) { bonus2 bAddRace,RC_DemiHuman,pow(min(14,.@r)-4,2); bonus2 bAddRace,RC_Player,pow(min(14,.@r)-4,2); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,5; bonus2 bIgnoreDefRaceRate,RC_Player,5; } if(.@r>8) bonus2 bSkillAtk,"AC_DOUBLE",20; },{},{}
 1744,Bow_Of_Evil,Bow Of Evil,5,20,,0,170,,5,0,0x000A0848,63,2,34,4,1,0,11,{ bonus2 bSkillAtk,"AC_DOUBLE",25; bonus bDex,2; },{},{}
-1745,Falken_Blitz,Falken Blitz,5,20,,1000,100,,5,2,0x00080808,18,2,34,3,50,1,11,{ bonus2 bSkillAtk,"SN_SHARPSHOOTING",10; bonus2 bSkillAtk,"AC_DOUBLE",10; bonus2 bSkillAtk,"AC_CHARGEARROW",10; },{},{}
+1745,Falken_Blitz,Falken Blitz,5,20,,1000,100,,5,2,0x00000800,18,2,34,3,50,1,11,{ bonus2 bSkillAtk,"SN_SHARPSHOOTING",10; bonus2 bSkillAtk,"AC_DOUBLE",10; bonus2 bSkillAtk,"AC_CHARGEARROW",10; },{},{}
 1746,Elven_Bow,Elven Bow,5,20,,1500,160,,5,1,0x00080800,63,2,34,3,100,1,11,{ bonus bDex,2; },{},{}
 1747,P_Bow1,Eden Bow I,5,0,,0,82,,5,0,0x000A0848,63,2,34,2,26,0,11,{},{},{}
 1748,P_Bow2,Eden Bow II,5,0,,0,120,,5,0,0x000A0848,63,2,34,2,40,0,11,{},{},{}
@@ -9660,7 +9660,7 @@
 18930,Gorilla_Model_Hat,Gorilla Model Hat,4,10,,300,,10,,1,0xFFFFFFFF,63,2,256,,30,1,1066,{ bonus bStr,2+((getrefine()>=11) ? 3 : 0); bonus3 bAutoSpell,"KN_BOWLINGBASH",1,50; },{},{}
 18931,Lion_Model_Hat,Lion Model Hat,4,10,,300,,10,,1,0xFFFFFFFF,63,2,256,,30,1,1067,{ .@r = getrefine(); bonus bInt,2+((.@r >= 2 && .@r <= 8) ? 1 : ((.@r > 8) ? (.@r/8): 0)); bonus3 bAutoSpellWhenHit,"WZ_METEOR",5,50; },{},{}
 18932,Rhino_Model_Hat,Rhino Model Hat,4,10,,300,,10,,1,0xFFFFFFFF,63,2,256,,30,1,1068,{ .@r = getrefine(); bonus bVit,2+((.@r >= 11) ? (.@r/11) : 0); bonus3 bAutoSpellWhenHit,"WZ_VERMILION",1,50; },{},{}
-18934,Fox_Ears_Bell_Ribbon,Fox Ears Bell Ribbon,4,0,,400,,4,,0,0xFFFFFFFF,63,2,256,,,1,1070,{ bonus bAgi,2; .@r = getrefine(); autobonus "{ .@r = getrefine(); bonus bCritical,100; bonus bLongAtkRate,5+(.@r > 6 ? .@r : 0); }",50+(.@r*2),5000,BF_NORMAL,"{ active_transform 1150,5000; }"; },{},{}
+18934,Fox_Ears_Bell_Ribbon,Fox Ears Bell Ribbon,4,0,,400,,4,,1,0xFFFFFFFF,63,2,256,,50,1,1070,{ bonus bAgi,2; .@r = getrefine(); autobonus "{ .@r = getrefine(); bonus bCritical,100; bonus bLongAtkRate,5+(.@r > 6 ? .@r : 0); }",50+(.@r*2),5000,BF_NORMAL,"{ transform 1150,5000; }"; },{},{}
 18936,Golden_Fish,Golden Fish In Mouth,4,1,,10,,1,,0,0xFFFFFFFF,63,2,1,,1,0,1081,{ bonus bAllStats,2; bonus bBaseAtk,10; bonus bMatk,10; bonus2 bExpAddRace,RC_Fish,2; bonus2 bSubRace,RC_Fish,2; },{},{}
 18937,Memories_Of_Lovers,Memories Of Lovers,4,0,,100,,,,0,0xFFFFFFFF,63,2,512,,,1,1072,{ bonus bMdef,7; bonus bMaxHPrate,2; },{},{}
 18938,Astro_Circle,Astro Circle,4,0,,300,,1,,0,0xFFFFFFFF,63,2,256,,,1,1073,{ bonus bInt,1; .@r = getrefine(); .@t = (.@r > 6 ? (.@r*2) : -((.@r/3*5))); bonus2 bSubSkill,"WZ_METEOR",20+.@t; bonus2 bSubSkill,"WL_CRIMSONROCK",20+.@t; bonus2 bSubSkill,"WL_COMET",5; },{},{}
