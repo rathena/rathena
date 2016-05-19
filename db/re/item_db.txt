@@ -2136,7 +2136,7 @@
 2976,Red_Lantern,Red Lantern,4,10,,200,,0,,1,0xFFFFFFFF,63,2,136,,100,0,,{ bonus bMaxSP,-300; skill "MG_SIGHT",1; },{},{ sc_end SC_SIGHT; }
 2977,Broken_Heart,Broken Heart,4,10,,100,,0,,1,0xFFFFFFFF,63,2,136,,110,0,,{ bonus bMaxSP,200; skill "DC_SCREAM",3; },{},{}
 2978,Kindly_Heart,Kindly Heart,4,10,,100,,0,,1,0xFFFFFFFF,63,2,136,,110,0,,{ bonus bMaxSP,500; bonus2 bHPRegenRate,300,10000; },{},{}
-2979,Strawberry_Decoration,Strawberry Decoration,4,0,,500,,1,,1,0xFFFFFFFF,63,2,136,,,0,,{ bonus bAllStats,1; bonus2 bSubEle,Ele_Fire,10; bonus bLongAtkRate,30; bonus3 bAutoSpellWhenHit,"WZ_FROSTNOVA",3,10; /* Confirm: Frost Nova cast chance */ },{},{}
+2979,Strawberry_Decoration,Strawberry Decoration,4,0,,500,,1,,1,0xFFFFFFFF,63,2,136,,,0,,{ bonus bAllStats,1; bonus3 bAutoSpellWhenHit,"WZ_FROSTNOVA",3,10; /* Confirm: Frost Nova cast chance */ },{},{}
 2980,Evil_Spirits_Room_Gloves,Evil Spirits Room Gloves,4,10,,100,,,,1,0xFFFFFFFF,63,2,136,,110,1,,{ bonus bMaxHP,500; bonus bMaxSP,200; skill "PF_SPIDERWEB",1; },{},{}
 2981,Warrior's_Ring,Warrior's Ring,4,10,,200,,0,,0,0xFFFFFFFF,63,2,136,,160,,,{},{},{}
 2983,Greed_Brooch,Greed Brooch,4,10,,100,,,,1,0xFFFFFFFF,63,2,136,,50,1,,{ bonus2 bHPLossRate,10,5000; },{},{}
@@ -9615,6 +9615,7 @@
 18850,Polar_Bear_Cap,Polar Bear Cap,4,20,,300,,7,,0,0xFFFFFFFF,63,2,256,,1,0,966,{ bonus bUnbreakableHelm,1; bonus bDex,1; bonus bAgi,1; bonus bMdef,3; bonus bHPrecovRate,5; bonus bSPrecovRate,3; bonus2 bAddMonsterDropItem,12354,100; },{},{}
 //18851,C_Polar_Bear_Cap,Costume Polar Bear Cap,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,1,966,{ /*Is this correct item?*/ },{},{}
 18851,Valentine_Heart,Valentine Heart,4,20,,0,,,,0,0xFFFFFFFF,63,2,256,,1,1,397,{ bonus bMaxHPrate,5+(getrefine()/2); bonus bAllStats,7; },{},{}
+18852,Tasty_Strawberry_Hat,Tasty Strawberry Hat,4,20,,150,,4,,,0xFFFFFFFF,63,2,256,,30,1,968,{ bonus bAllStats,1; if(getrefine()>11) bonus bAspd,2; },{},{}
 18854,Yellow_Valentine_Heart,Yellow Valentine Heart,4,20,,0,,,,0,0xFFFFFFFF,63,2,256,,1,1,865,{ bonus bMaxSPrate,2+(getrefine()/2); bonus bAllStats,7; },{},{}
 18855,Aviator_Hat,Aviator Hat,4,10,,100,,10,,0,0xFFFFFFFF,63,2,256,,1,1,972,{ bonus bAgi,3; bonus bInt,3; autobonus "{ bonus bAtkEle,Ele_Wind; }",500,180,BF_NORMAL; },{},{}
 18856,W_King_Tiger_Doll_Hat,W King Tiger Doll Hat,4,10,,0,,10,,0,0xFFFFFFFF,63,2,256,,1,1,973,{ bonus bStr,2; bonus bDex,2; bonus2 bAddRace,RC_Brute,10; .@r = getrefine(); autobonus "{ bonus2 bSPLossRate,5,1000; bonus bBaseAtk,25*getrefine(); }",3*.@r,3000,BF_NORMAL,"{ active_transform 1115,3000; specialeffect2 EF_POTION_BERSERK; showscript \"Traaaansformation-!! Eddga form!!\"; }"; autobonus2 "{ bonus2 bSPLossRate,5,1000; bonus bBaseAtk,25*getrefine(); }",.@r,3000,BF_NORMAL,"{ active_transform 1115,3000; specialeffect2 EF_POTION_BERSERK; showscript \"Traaaansformation-!! Eddga form!!\"; }"; },{},{}
