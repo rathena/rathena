@@ -6021,10 +6021,10 @@
 11588,Fresh_Strawberries,Fresh Strawberries,0,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(32,56),rand(16,28); },{},{}
 11589,Iceflake,Cold Snow Cone,0,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 5,5; },{},{}
 11590,Meat_Skewer5,Skewer No.5,0,5000,,300,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(760,810),10; },{},{}
-11592,Trans_Candy_Red,Trans Candy Red,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; transform 1507,600000,SC_MTF_MHP,1000; },{},{}
-11593,Trans_Candy_Blue,Trans Candy Blue,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; transform 1102,600000,SC_MTF_MSP,100; },{},{}
-11594,Trans_Candy_Yellow,Trans Candy Yellow,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; transform 1130,600000,SC_MTF_PUMPKIN,2000; },{},{}
-11595,Trans_Candy_Green,Trans Candy Green,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; transform 1508,600000,SC_MTF_HITFLEE,10,20; },{},{}
+11592,Trans_Candy_Red,Trans Candy Red,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; active_transform 1507,600000,SC_MTF_MHP,1000; },{},{}
+11593,Trans_Candy_Blue,Trans Candy Blue,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; active_transform 1102,600000,SC_MTF_MSP,100; },{},{}
+11594,Trans_Candy_Yellow,Trans Candy Yellow,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; active_transform 1130,600000,SC_MTF_PUMPKIN,2000; },{},{}
+11595,Trans_Candy_Green,Trans Candy Green,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 45,0; active_transform 1508,600000,SC_MTF_HITFLEE,10,20; },{},{}
 11596,Blood_In_Skull,Blood In Skull,0,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(600,800),0; },{},{}
 11597,Iron_Worm,Iron Worm,0,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 11598,Bitter_Cacao_Bean,Bitter Cacao Bean,0,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -6699,13 +6699,13 @@
 12655,Brain_Powder,Brain Powder,2,2000,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12656,Magical_Powder,Magical Powder,2,3000,,200,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12657,Madness_Powder,Madness Powder,2,4000,,300,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12658,Trans_Scroll_Devi,Transformation Scroll(Deviruchi),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1109,1200000,SC_MTF_ASPD,10,5; showscript "Traaaansformation-!! Deviruchi form!!"; },{},{}
-12659,Trans_Scroll_Ray_Arch,Transformation Scroll(Raydric),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1276,1200000,SC_MTF_RANGEATK,25; showscript "Traaaansformation-!! Raydric form!!"; },{},{}
-12660,Trans_Scroll_Mavka,Transformation Scroll(Mavka),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1884,1200000,SC_MTF_RANGEATK,25; showscript "Traaaansformation-!! Mavka form!!"; },{},{}
-12661,Trans_Scroll_Marduk,Transformation Scroll(Marduk),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1140,1200000,SC_MTF_MATK,25; showscript "Traaaansformation-!! Marduk form!!"; },{},{}
-12662,Trans_Scroll_Banshee,Transformation Scroll(Banshee),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1867,1200000,SC_MTF_MATK,25; showscript "Traaaansformation-!! Banshee form!!"; },{},{}
-12663,Trans_Scroll_Poring,Transformation Scroll(Poring),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1002,1200000,SC_MTF_CRIDAMAGE,25; showscript "Traaaansformation-!! Poring form!!"; },{},{}
-12664,Trans_Scroll_Golem,Transformation Scroll(Golem),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ transform 1040,1200000,SC_MTF_MLEATKED,5,20,2; showscript "Traaaansformation-!! Golem form!!"; },{},{}
+12658,Trans_Scroll_Devi,Transformation Scroll(Deviruchi),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ active_transform 1109,1200000,SC_MTF_ASPD,10,5; showscript "Traaaansformation-!! Deviruchi form!!"; },{},{}
+12659,Trans_Scroll_Ray_Arch,Transformation Scroll(Raydric),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ active_transform 1276,1200000,SC_MTF_RANGEATK,25; showscript "Traaaansformation-!! Raydric form!!"; },{},{}
+12660,Trans_Scroll_Mavka,Transformation Scroll(Mavka),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ active_transform 1884,1200000,SC_MTF_RANGEATK,25; showscript "Traaaansformation-!! Mavka form!!"; },{},{}
+12661,Trans_Scroll_Marduk,Transformation Scroll(Marduk),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ active_transform 1140,1200000,SC_MTF_MATK,25; showscript "Traaaansformation-!! Marduk form!!"; },{},{}
+12662,Trans_Scroll_Banshee,Transformation Scroll(Banshee),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ active_transform 1867,1200000,SC_MTF_MATK,25; showscript "Traaaansformation-!! Banshee form!!"; },{},{}
+12663,Trans_Scroll_Poring,Transformation Scroll(Poring),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ active_transform 1002,1200000,SC_MTF_CRIDAMAGE,25; showscript "Traaaansformation-!! Poring form!!"; },{},{}
+12664,Trans_Scroll_Golem,Transformation Scroll(Golem),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ active_transform 1040,1200000,SC_MTF_MLEATKED,5,20,2; showscript "Traaaansformation-!! Golem form!!"; },{},{}
 12665,Grovel_Buff,Grovel Buff,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12666,Thai_Perfume_MATK,Thai Perfume MATK,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus bMatk,24; }",600,0,0,SI_SKF_MATK; },{},{}
 12667,Thai_Perfume_ATK,Thai Perfume ATK,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_MAGICALATTHIT; bonus_script "{ bonus bBaseAtk,24; }",600,0,0,SI_SKF_ATK; },{},{}
@@ -10737,12 +10737,12 @@
 22747,Dengeki_Shot_Cartridge,Dengeki Shot Cartridge,18,10,,250,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 13218,500; },{},{}
 22748,Hearthstone_Shot_Cartridge,Hearthstone Shot Cartridge,18,10,,250,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 13219,500; },{},{}
 22749,Purification_Shot_Cartridge,Purification Shot Cartridge,18,10,,250,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 13220,500; },{},{}
-22750,Trans_Scroll_Horn_Scaraba,Transformation Scroll(Horn Scaraba),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform 2161,1200000,SC_MTF_ASPD2,2,10; },{},{}
-22751,Trans_Scroll_Wanderer,Transformation Scroll(Wanderer),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform 1208,1200000,SC_MTF_ASPD2,2,10; },{},{}
-22752,Trans_Scroll_Gazeti,Transformation Scroll(Gazeti),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform 1778,1200000,SC_MTF_RANGEATK2,30; },{},{}
-22753,Trans_Scroll_Kobold_Archer,Transformation Scroll(Kobold Archer),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform 1282,1200000,SC_MTF_RANGEATK2,30; },{},{}
-22754,Trans_Scroll_Necromancer,Transformation Scroll(Necromancer),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform 1870,1200000,SC_MTF_RANGEATK2,30; },{},{}
-22755,Trans_Scroll_Wind_Ghost,Transformation Scroll(Wind Ghost),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ transform 1263,1200000,SC_MTF_MATK2,50; },{},{}
+22750,Trans_Scroll_Horn_Scaraba,Transformation Scroll(Horn Scaraba),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ active_transform 2161,1200000,SC_MTF_ASPD2,2,10; },{},{}
+22751,Trans_Scroll_Wanderer,Transformation Scroll(Wanderer),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ active_transform 1208,1200000,SC_MTF_ASPD2,2,10; },{},{}
+22752,Trans_Scroll_Gazeti,Transformation Scroll(Gazeti),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ active_transform 1778,1200000,SC_MTF_RANGEATK2,30; },{},{}
+22753,Trans_Scroll_Kobold_Archer,Transformation Scroll(Kobold Archer),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ active_transform 1282,1200000,SC_MTF_RANGEATK2,30; },{},{}
+22754,Trans_Scroll_Necromancer,Transformation Scroll(Necromancer),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ active_transform 1870,1200000,SC_MTF_RANGEATK2,30; },{},{}
+22755,Trans_Scroll_Wind_Ghost,Transformation Scroll(Wind Ghost),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ active_transform 1263,1200000,SC_MTF_MATK2,50; },{},{}
 22756,August_Gift_Box,August Gift Box,2,10,,100,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 12246,1; },{},{}
 22757,Collection_Of_Scrolls_Magical_Transformation,Collection Of Scrolls Magical Transformation,18,10,,200,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 22755,1; getitem 22754,1; },{},{}
 22758,Collection_Of_Scrolls_Shooting_Transformation,Collection Of Scrolls Shooting Transformation,18,10,,200,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 22753,1; getitem 22752,1; },{},{}
