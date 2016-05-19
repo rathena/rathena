@@ -6808,66 +6808,59 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 bool battle_vanish(struct map_session_data *sd, struct block_list *target, struct Damage *wd)
 {
 	struct status_data *tstatus;
-	int hp = 0, sp = 0, race = status_get_race(target);
-	short vrate_hp = 0, vrate_sp = 0, v_hp = 0, v_sp = 0,
-		  vellum_rate_hp = 0, vellum_rate_sp = 0, vellum_hp = 0, vellum_sp = 0;
-	uint8 i = 0;
+	int race;
 
 	nullpo_retr(false, sd);
 	nullpo_retr(false, target);
+	nullpo_retr(false, wd);
 
 	tstatus = status_get_status_data(target);
+	race = status_get_race(target);
 	wd->isspdamage = false;
 
 	if (wd->flag) {
 		// bHPVanishRaceRate
-		hp = sd->hp_vanish_race[race].rate + sd->hp_vanish_race[RC_ALL].rate;
-		vellum_rate_hp = cap_value(hp, 0, SHRT_MAX);
-		hp = sd->hp_vanish_race[race].per + sd->hp_vanish_race[RC_ALL].per;
-		vellum_hp = cap_value(hp, SHRT_MIN, SHRT_MAX);
+		short vellum_rate_hp = cap_value(sd->hp_vanish_race[race].rate + sd->hp_vanish_race[RC_ALL].rate, 0, SHRT_MAX);
+		short vellum_hp = cap_value(sd->hp_vanish_race[race].per + sd->hp_vanish_race[RC_ALL].per, SHRT_MIN, SHRT_MAX);
 
 		// bSPVanishRaceRate
-		sp = sd->sp_vanish_race[race].rate + sd->sp_vanish_race[RC_ALL].rate;
-		vellum_rate_sp = cap_value(sp, 0, SHRT_MAX);
-		sp = sd->sp_vanish_race[race].per + sd->sp_vanish_race[RC_ALL].per;
-		vellum_sp = cap_value(sp, SHRT_MIN, SHRT_MAX);
+		short vellum_rate_sp = cap_value(sd->sp_vanish_race[race].rate + sd->sp_vanish_race[RC_ALL].rate, 0, SHRT_MAX);
+		short vellum_sp = cap_value(sd->sp_vanish_race[race].per + sd->sp_vanish_race[RC_ALL].per, SHRT_MIN, SHRT_MAX);
 
 		// The HP and SP vanish bonus from these items can't stack because of the special damage display.
-		if (vellum_hp && vellum_rate_hp && (vellum_rate_hp >= 10000 || rnd()%10000 < vellum_rate_hp))
-			i = 1;
-		if (vellum_sp && vellum_rate_sp && (vellum_rate_sp >= 10000 || rnd()%10000 < vellum_rate_sp))
-			i = 2;
-
-		if (i == 1) {
+		if (vellum_hp && vellum_rate_hp && (vellum_rate_hp >= 10000 || rnd()%10000 < vellum_rate_hp)) {
 			wd->damage = apply_rate(tstatus->max_hp, vellum_hp);
 			wd->damage2 = 0;
-		}
-		if (i == 2) {
+		} else if (vellum_sp && vellum_rate_sp && (vellum_rate_sp >= 10000 || rnd()%10000 < vellum_rate_sp)) {
 			wd->damage = apply_rate(tstatus->max_sp, vellum_sp);
 			wd->damage2 = 0;
 			wd->isspdamage = true;
-		}
+		} else // No damage
+			return false;
+		
 		return true;
 	} else {
 		// bHPVanishRate
-		hp = (sd->bonus.hp_vanish_rate * 10);
-		vrate_hp = cap_value(hp, 0, SHRT_MAX);
-		hp = sd->bonus.hp_vanish_per;
-		v_hp = cap_value(hp, SHRT_MIN, SHRT_MAX);
+		short vrate_hp = cap_value(sd->bonus.hp_vanish_rate * 10, 0, SHRT_MAX);
+		short v_hp = cap_value(sd->bonus.hp_vanish_per, SHRT_MIN, SHRT_MAX);
 
 		// bSPVanishRate
-		sp = (sd->bonus.sp_vanish_rate * 10);
-		vrate_sp = cap_value(sp, 0, SHRT_MAX);
-		sp = sd->bonus.sp_vanish_per + sd->sp_vanish_race[race].per + sd->sp_vanish_race[RC_ALL].per;
-		v_sp = cap_value(sp, SHRT_MIN, SHRT_MAX);
+		short vrate_sp = cap_value(sd->bonus.sp_vanish_rate * 10, 0, SHRT_MAX);
+		short v_sp = cap_value(sd->bonus.sp_vanish_per + sd->sp_vanish_race[race].per + sd->sp_vanish_race[RC_ALL].per, SHRT_MIN, SHRT_MAX);
 
 		if (v_hp && vrate_hp && (vrate_hp >= 10000 || rnd()%10000 < vrate_hp))
-			i |= 1;
-		if (v_sp && vrate_sp && (vrate_sp >= 10000 || rnd()%10000 < vrate_sp))
-			i |= 2;
+			v_hp = -v_hp;
+		else
+			v_hp = 0;
 
-		if (i)
-			status_percent_damage(&sd->bl, target, (i&1) ? (int8)(-v_hp) : 0, (i&2) ? (int8)(-v_sp) : 0, false);
+		if (v_sp && vrate_sp && (vrate_sp >= 10000 || rnd()%10000 < vrate_sp))
+			v_sp = -v_sp;
+		else
+			v_sp = 0;
+
+		if ( v_hp < 0 || v_sp < 0 )
+			status_percent_damage(&sd->bl, target, (int8)v_hp, (int8)v_sp, false);
+
 		return false;
 	}
 }
