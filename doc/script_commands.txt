@@ -5628,7 +5628,8 @@ The only very special thing about this command is an event label, which is an
 optional parameter. This label is written like '<NPC object name>::<label name>' 
 and upon the monster being killed, it will execute the script inside of the 
 specified NPC object starting from the label given. The RID of the player 
-attached at this execution will be the RID of the killing character.
+attached at this execution will be the RID of the killing character. The variable
+'killedrid' is set to the Class (mob ID) of the monster killed.
 
 <size> can be:
 	0 = medium (default)
