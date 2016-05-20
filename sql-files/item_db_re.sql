@@ -7234,11 +7234,11 @@ REPLACE INTO `item_db_re` VALUES (13185,'TE_Woe_Gatling','TE Woe Gatling',5,0,NU
 REPLACE INTO `item_db_re` VALUES (13186,'TE_Woe_Shotgun','TE Woe Shotgun',5,0,NULL,0,'100',NULL,7,0,0x41000000,63,2,34,3,'40',1,20,'bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Poison,3000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13187,'TE_Woe_Grenade','TE Woe Grenade',5,0,NULL,0,'100',NULL,9,0,0x41000000,63,2,34,3,'40',1,21,'bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Blind,3000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13189,'Color_Scope','Color Scope',5,1350000,NULL,1200,'240',NULL,9,2,0x40000000,63,2,34,3,'105',1,18,'bonus bHit,20; bonus bCriticalRate,30;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13190,'RAG203','RAG203',5,1800000,NULL,1300,'260',NULL,9,1,0x40000000,63,2,34,3,'140',1,18,'bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,"AL_DECAGI",1,500,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13190,'RAG203','RAG203',5,1800000,NULL,1300,'260',NULL,9,1,0x40000000,63,2,34,3,'140',1,18,'bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,"AL_DECAGI",1,500,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13192,'Death_Fire','Death Fire',5,1250000,NULL,2000,'400',NULL,9,1,0x40000000,63,2,34,3,'108',1,20,'bonus bLongAtkRate,5; bonus bHit,-50; bonus bDelayrate,-10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13193,'Rolling_Thunder','Rolling Thunder',5,1350000,NULL,1800,'280',NULL,9,1,0x40000000,63,2,34,3,'120',1,20,'bonus bHit,-10; bonus bDelayrate,-10; bonus3 bAutoSpell,"MG_THUNDERSTORM",5,500;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13194,'Peace_Breaker','Peace Breaker',5,1950000,NULL,1400,'250',NULL,9,0,0x41000000,63,2,34,3,'140',1,20,'bonus bHit,-25; bonus bAspdRate,25;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13195,'RAG203_','RAG203',5,1800000,NULL,1300,'260',NULL,9,0,0x40000000,63,2,34,3,'140',1,18,'bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,"AL_DECAGI",1,10,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13195,'RAG203_','RAG203',5,1800000,NULL,1300,'260',NULL,9,0,0x40000000,63,2,34,3,'140',1,18,'bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,"AL_DECAGI",1,10,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13196,'Peace_Breaker_','Peace Breaker',5,1950000,NULL,1400,'250',NULL,9,1,0x41000000,63,2,34,3,'140',1,20,'bonus bHit,-25; bonus bAspdRate,25;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13197,'Mini_Mei','Mini Mei',5,1600000,NULL,2500,'220',NULL,9,2,0x41000000,63,2,34,2,'106',1,19,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13198,'Tempest_','Tempest',5,2200000,NULL,2500,'250',NULL,9,0,0x41000000,63,2,34,2,'140',1,19,'bonus bHit,-25; bonus bCritical,10; bonus bLongAtkRate,20;',NULL,NULL);
