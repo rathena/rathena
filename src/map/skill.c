@@ -2228,7 +2228,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			type = dstsd->addeff_atked[i].sc;
 			time = dstsd->addeff_atked[i].duration;
 
-			if (dstsd->addeff_atked[i].flag&ATF_TARGET)
+			if (dstsd->addeff_atked[i].flag&ATF_TARGET && src != bl)
 				status_change_start(src,src,type,rate,7,0,0,0,time,SCSTART_NONE);
 
 			if (dstsd->addeff_atked[i].flag&ATF_SELF && !status_isdead(bl))
