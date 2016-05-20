@@ -2526,6 +2526,12 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
 			case NPC_UNDEADATTACK:
 			case NPC_TELEKINESISATTACK:
 			case NPC_BLEEDING:
+			case NPC_EARTHQUAKE:
+			case NPC_FIREBREATH:
+			case NPC_ICEBREATH:
+			case NPC_THUNDERBREATH:
+			case NPC_ACIDBREATH:
+			case NPC_DARKNESSBREATH:
 				hitrate += hitrate * 20 / 100;
 				break;
 			case KN_PIERCE:
@@ -3491,6 +3497,9 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 		case NPC_HELLJUDGEMENT:
 		case NPC_PULSESTRIKE:
 			skillratio += 100 * (skill_lv - 1);
+			break;
+		case NPC_EARTHQUAKE:
+			skillratio += 100 + 100 * skill_lv + 100 * (skill_lv / 2);
 			break;
 		case RG_BACKSTAP:
 			if(sd && sd->status.weapon == W_BOW && battle_config.backstab_bow_penalty)
@@ -5683,6 +5692,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			case PF_SOULBURN:
 				ad.damage = tstatus->sp * 2;
 				break;
+			case NPC_EARTHQUAKE: {
+					struct Damage wd = battle_calc_weapon_attack(src, target, skill_id, skill_lv, ad.miscflag);
+
+					ad.damage = wd.damage;
+				}
+				break;
 			case AB_RENOVATIO:
 				ad.damage = status_get_lv(src) * 10 + sstatus->int_;
 				break;
@@ -5841,9 +5856,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case NPC_ENERGYDRAIN:
 						skillratio += 100 * skill_lv;
-						break;
-					case NPC_EARTHQUAKE:
-						skillratio += 100 + 100 * skill_lv + 100 * (skill_lv / 2);
 						break;
 #ifdef RENEWAL
 					case WZ_HEAVENDRIVE:
@@ -6160,15 +6172,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			else
 				ad.damage = ad.damage * (100-mdef)/100 - mdef2;
 #endif
-		}
-
-		if (skill_id == NPC_EARTHQUAKE) {
-			//Adds atk2 to the damage, should be influenced by number of hits and skill-ratio, but not mdef reductions. [Skotlex]
-			//Also divide the extra bonuses from atk2 based on the number in range [Kevin]
-			if(mflag>0)
-				ad.damage+= (sstatus->rhw.atk2*skillratio/100)/mflag;
-			else
-				ShowError("Zero range by %d:%s, divide per 0 avoided!\n", skill_id, skill_get_name(skill_id));
 		}
 
 		if(ad.damage<1)
