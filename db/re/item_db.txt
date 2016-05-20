@@ -6663,7 +6663,7 @@
 12619,Cgrade_Pocket,C Grade Coin Bag,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Cgrade_Pocket); },{},{}
 12620,Dgrade_Pocket,D Grade Coin Bag,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Dgrade_Pocket); },{},{}
 12621,Egrade_Pocket,E Grade Coin Bag,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Egrade_Pocket); },{},{}
-12622,Boarding_Halter,Reins Of Mount,11,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ setmounting(); },{},{ if (ismounting()) setmounting(); }
+12622,Boarding_Halter,Reins Of Mount,11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ setmounting(); },{},{ if (ismounting()) setmounting(); }
 12623,High_Weapon_Box,Advanced Weapons Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_Advanced_Weapons_Box,1); },{},{}
 12624,Delicious_Jelly,Delicious Jelly,0,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 3,3; },{},{}
 12625,Sapa_Feat_Cert_Pack,Sapa Feat Cert Pack,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
