@@ -2056,8 +2056,6 @@ OnTouch:
 			next;
 		}
 		if (ASSIN_Q3 == 1 && BaseJob == Job_Thief && ASSIN_Q > 6 && ASSIN_Q < 17) {
-			set ASSIN_Q,17;
-			set ASSIN_Q3,2;
 			mes "[Guildmaster]";
 			mes "Well, I've said too much. Please choose a weapon as a present.";
 			next;
@@ -2091,10 +2089,11 @@ OnTouch:
 				mes "It used to rule over the Assassin weapon market. Please take care of my gladius.";
 				getitem 1220,1; //Gladius_
 			}
+			set ASSIN_Q,17;
+			set ASSIN_Q3,2;
 			next;
 		}
 		else {
-			set ASSIN_Q,17;
 			mes "[Guildmaster]";
 			mes "Well, I talked too much.";
 			mes "Please take this first.";
@@ -2115,6 +2114,7 @@ OnTouch:
 			case 5:
 				getitem 1252,1; //Katar
 			}
+			set ASSIN_Q,17;
 		}
 		mes "[Guildmaster]";
 		mes "Well, I am giving you a token. Please return to the Assassin expert, the Ferocious-Looking Huey, at the entrance.";
