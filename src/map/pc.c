@@ -8670,7 +8670,7 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 				clif_cartlist(sd);
 			clif_updatestatus(sd, SP_CARTINFO);
 			sc_start(&sd->bl,&sd->bl, SC_PUSH_CART, 100, type, 0);
-			clif_status_change2(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, type, 0, 0);
+			clif_efst_status_change(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, 9999, type, 0, 0);
 			if( sd->sc.data[SC_PUSH_CART] )/* forcefully update */
 				sd->sc.data[SC_PUSH_CART]->val1 = type;
 			break;

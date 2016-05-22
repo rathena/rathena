@@ -1016,6 +1016,7 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_DEFSET] = SI_SET_NUM_DEF;
 	StatusIconChangeTable[SC_MDEFSET] = SI_SET_NUM_MDEF;
 	StatusIconChangeTable[SC_MONSTER_TRANSFORM] = SI_MONSTER_TRANSFORM;
+	StatusIconChangeTable[SC_ACTIVE_MONSTER_TRANSFORM] = SI_ACTIVE_MONSTER_TRANSFORM;
 	StatusIconChangeTable[SC_ALL_RIDING] = SI_ALL_RIDING;
 	StatusIconChangeTable[SC_PUSH_CART] = SI_ON_PUSH_CART;
 	StatusIconChangeTable[SC_MTF_ASPD] = SI_MTF_ASPD;
@@ -1221,6 +1222,8 @@ void initChangeTables(void)
 	StatusDisplayType[SC__MANHOLE]		  = true;
 	StatusDisplayType[SC_JYUMONJIKIRI]	  = true;
 	StatusDisplayType[SC_AKAITSUKI]		  = true;
+	StatusDisplayType[SC_MONSTER_TRANSFORM] = true;
+	StatusDisplayType[SC_ACTIVE_MONSTER_TRANSFORM] = true;
 	StatusDisplayType[SC_DARKCROW]		  = true;
 	StatusDisplayType[SC_OFFERTORIUM]	  = true;
 	StatusDisplayType[SC_TELEKINESIS_INTENSE] = true;
