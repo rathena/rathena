@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 3.6
+//= 3.7
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -49,6 +49,7 @@
 //= 3.4 Removed the need for use of 'goto.' [L0ne_W0lf]
 //= 3.5 Fixed the waitingroom where player can enter the Test Area without passing the written exam. Now player will not be warp inside the Test Area when did not passed the written exam instead the player will be warp back to the written exam entrance [JayPee]
 //= 3.6 Fixed broken event calls. [Euphy]
+//= 3.7 Fixed issue that the player can't progress in the quest if timed out at weapon reward step. This issue is fixed on iRO but not on kRO. [https://forums.warpportal.com/index.php?/topic/130060-didnt-receive-necklace-of-oblivion-when-changing-assassin/#entry1496042] [MrAntares]
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
