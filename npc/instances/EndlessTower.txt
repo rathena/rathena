@@ -220,7 +220,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 			next;
 			switch(select("Generate dungeon "+.@md_name$+":Enter the dungeon:Return to Alberta:Cancel")) {
 			case 1:
-				if (instance_create(.@md_name$, .@party_id) < 0) {
+				if (instance_create(.@md_name$) < 0) {
 					mes "Party Name: "+ getpartyname(.@party_id);
 					mes "Party Leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";

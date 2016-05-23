@@ -819,7 +819,7 @@ lhz_dun04,151,276,3	script	Researcher#memo	4_LGTSCIENCE,{
 					}
 				}
 				if (getpartyleader(getcharid(1),2) == getcharid(0)) {
-					if (instance_create("Wolfchev's Laboratory", getcharid(1)) < 0) {
+					if (instance_create("Wolfchev's Laboratory") < 0) {
 						mes "[Wolfchev]";
 						mes "Hmm.. Lab entering system is a bit weird. Would wait for me to check the system?";
 						close;

@@ -84,7 +84,7 @@ mal_dun01,151,235,5	script	Starfish	551,{
 			}
 			if (.@playtime == 2) erasequest 4197;
 			if (countitem(6442)) {
-				if (instance_create(.@md_name$, .@party_id) < 0) {
+				if (instance_create(.@md_name$) < 0) {
 					mes "[Starfish]";
 					mes "Party name is... "+getpartyname(.@party_id)+".";
 					mes "Party leader is... "+strcharinfo(0)+".";

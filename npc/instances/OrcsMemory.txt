@@ -52,7 +52,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 			next;
 			switch(select("Reserve the "+.@md_name$+":Enter the Dungeon:Cancel")) {
 			case 1:
-				if (instance_create(.@md_name$, .@party_id) < 0) {
+				if (instance_create(.@md_name$) < 0) {
 					mes "Party Name: "+ getpartyname(.@party_id);
 					mes "Party Leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+" ^000000 - Reservation Failed.";

@@ -113,7 +113,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 					mes "[Friar Patrick]";
 					mes "Party name is "+getpartyname(.@party_id)+"...";
 					mes "Name of the leader is "+strcharinfo(0)+"...";
-					if (instance_create("Sealed Catacomb", .@party_id) < 0) {
+					if (instance_create("Sealed Catacomb") < 0) {
 						mes "Umm... But it seems that there is a problem here... I'll check quickly. Please wait.";
 					}
 					else {

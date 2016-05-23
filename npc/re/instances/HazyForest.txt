@@ -83,7 +83,7 @@ bif_fild01,158,340,5	script	Laphine Soldier#mist	447,{
 			mes "[Laphine Soldier]";
 			mes "Party Name "+getpartyname(.@party_id)+"...";
 			mes "Party Leader "+strcharinfo(0)+"...";
-			if (instance_create(.@md_name$, .@party_id) < 0) {
+			if (instance_create(.@md_name$) < 0) {
 				mes "Hmm...";
 				next;
 				mes "[Laphine Soldier]";

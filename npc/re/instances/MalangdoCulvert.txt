@@ -402,7 +402,7 @@ mal_in01,160,34,4	script	Missing, the Cleaner	545,{
 				mes "What a rookie.";
 				close;
 			case 2:
-				if (instance_create(.@md_name$, .@party_id) < 0) {
+				if (instance_create(.@md_name$) < 0) {
 					mes "Party name: "+getpartyname(.@party_id);
 					mes "Party leader: "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+"^000000 - Reservation Failed!";
