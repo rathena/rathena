@@ -2823,11 +2823,11 @@ const char* map_mapid2mapname(int m)
 		if (!im) // This shouldn't happen but if it does give them the map we intended to give
 			return map[m].name;
 		else {
-			int i;
+			uint8 i;
 
-			for (i = 0; i < MAX_MAP_PER_INSTANCE; i++) { // Loop to find the src map we want
-				if (im->map[i].m == m)
-					return map[im->map[i].src_m].name;
+			for (i = 0; i < im->cnt_map; i++) { // Loop to find the src map we want
+				if (im->map[i]->m == m)
+					return map[im->map[i]->src_m].name;
 			}
 		}
 	}

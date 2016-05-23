@@ -18860,15 +18860,40 @@ unsigned short script_instancegetid(struct script_state* st)
 BUILDIN_FUNC(instance_create)
 {
 	enum instance_mode mode = IM_PARTY;
-	int owner_id;
+	int owner_id = 0;
 
-	owner_id = script_getnum(st, 3);
-	if (script_hasdata(st, 4)) {
-		mode = script_getnum(st, 4);
+	if (script_hasdata(st, 3)) {
+		mode = script_getnum(st, 3);
 
 		if (mode < IM_NONE || mode >= IM_MAX) {
 			ShowError("buildin_instance_create: Unknown instance owner type %d for '%s'\n", mode, script_getstr(st, 2));
 			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	if (script_hasdata(st, 4))
+		owner_id = script_getnum(st, 4);
+	else {
+		struct map_session_data *sd = NULL;
+
+		sd = script_rid2sd(st); // If sd is NULL, instance_create will return -2.
+		switch(mode) {
+			case IM_NONE:
+				owner_id = st->oid;
+				break;
+			case IM_CHAR:
+				if (sd)
+					owner_id = sd->status.char_id;
+				break;
+			case IM_PARTY:
+				if (sd)
+					owner_id = sd->status.party_id;
+				break;
+			case IM_GUILD:
+				if (sd)
+					owner_id = sd->status.guild_id;
+			default:
+				ShowError("buildin_instance_create: Invalid instance mode (instance name: %s)\n", script_getstr(st, 2));
+				return SCRIPT_CMD_FAILURE;
 		}
 	}
 
@@ -18893,7 +18918,7 @@ BUILDIN_FUNC(instance_destroy)
 
 	if( instance_id <= 0 || instance_id >= MAX_MAP_PER_SERVER ) {
 		ShowError("buildin_instance_destroy: Trying to destroy invalid instance %d.\n", instance_id);
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	instance_destroy(instance_id);
@@ -18911,16 +18936,16 @@ BUILDIN_FUNC(instance_destroy)
 BUILDIN_FUNC(instance_enter)
 {
 	struct map_session_data *sd = NULL;
-	int x = script_hasdata(st,3) ? script_getnum(st, 3) : -1;
-	int y = script_hasdata(st,4) ? script_getnum(st, 4) : -1;
+	int x = script_hasdata(st,2) ? script_getnum(st, 2) : -1;
+	int y = script_hasdata(st,3) ? script_getnum(st, 3) : -1;
 
-	if (!script_charid2sd(5,sd))
+	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if (x != -1 && y != -1)
-		script_pushint(st, instance_enter_position(sd, script_instancegetid(st), script_getstr(st, 2), x, y));
+		script_pushint(st, instance_enter_position(sd, script_instancegetid(st), x, y));
 	else
-		script_pushint(st, instance_enter(sd, script_instancegetid(st), script_getstr(st, 2)));
+		script_pushint(st, instance_enter(sd, script_instancegetid(st)));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18988,16 +19013,7 @@ BUILDIN_FUNC(instance_mapname)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_id)
 {
-	unsigned short instance_id;
-
-	instance_id = script_instancegetid(st);
-
-	if(!instance_id) {
-		//ShowError("buildin_instance_id: No instance attached to NPC or player");
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
-	}
-	script_pushint(st, instance_id);
+	script_pushint(st, script_instancegetid(st));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19011,22 +19027,40 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 	unsigned int m = va_arg(ap,unsigned int);
 	int x = va_arg(ap,int);
 	int y = va_arg(ap,int);
+	unsigned short instance_id = va_arg(ap,unsigned int);
+	struct map_session_data *sd = NULL;
+	int owner_id = 0;
 
 	nullpo_retr(0, bl);
 
 	if (bl->type != BL_PC)
 		return 0;
 
-	pc_setpos((TBL_PC *)bl, m, x, y, CLR_TELEPORT);
+	sd = (TBL_PC *)bl;
+	owner_id = instance_data[instance_id].owner_id;
+	switch(instance_data[instance_id].mode) {
+		case IM_NONE:
+			break;
+		case IM_CHAR:
+			if (sd->status.char_id != owner_id)
+				return 0;
+			break;
+		case IM_PARTY:
+			if (sd->status.party_id != owner_id)
+				return 0;
+			break;
+		case IM_GUILD:
+			if (sd->status.guild_id != owner_id)
+				return 0;
+	}
 
-	return 0;
+	pc_setpos(sd, m, x, y, CLR_TELEPORT);
+
+	return 1;
 }
 
 BUILDIN_FUNC(instance_warpall)
 {
-	struct map_session_data *sd = NULL;
-	struct party_data *p = NULL;
-	struct guild *g = NULL;
 	int16 m, i;
 	unsigned short instance_id;
 	const char *mapn;
@@ -19043,27 +19077,8 @@ BUILDIN_FUNC(instance_warpall)
 	if( !instance_id || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapname2mapid(map[m].name,instance_id)) < 0)
 		return SCRIPT_CMD_FAILURE;
 
-	switch(instance_data[instance_id].mode) {
-		case IM_NONE:
-			break;
-		case IM_CHAR:
-			if (!(sd = map_id2sd(instance_data[instance_id].owner_id)))
-				return SCRIPT_CMD_FAILURE;
-			break;
-		case IM_PARTY:
-			if (!(p = party_search(instance_data[instance_id].owner_id)))
-				return SCRIPT_CMD_FAILURE;
-			break;
-		case IM_GUILD:
-			if (!(g = guild_search(instance_data[instance_id].owner_id)))
-				return SCRIPT_CMD_FAILURE;
-		default:
-			ShowError("buildin_instance_warpall: Invalid instance owner type (instance_id: %d)\n", instance_id);
-			break;
-	}
-
 	for(i = 0; i < instance_data[instance_id].cnt_map; i++)
-		map_foreachinmap(buildin_instance_warpall_sub, instance_data[instance_id].map[i].m, BL_PC, map_id2index(m), x, y);
+		map_foreachinmap(buildin_instance_warpall_sub, instance_data[instance_id].map[i]->m, BL_PC, map_id2index(m), x, y, instance_id);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -19095,7 +19110,7 @@ BUILDIN_FUNC(instance_announce) {
 	}
 
 	for( i = 0; i < instance_data[instance_id].cnt_map; i++ )
-		map_foreachinmap(buildin_announce_sub, instance_data[instance_id].map[i].m, BL_PC,
+		map_foreachinmap(buildin_announce_sub, instance_data[instance_id].map[i]->m, BL_PC,
 						 mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 
 	return SCRIPT_CMD_SUCCESS;
@@ -19130,11 +19145,11 @@ BUILDIN_FUNC(instance_check_party)
 
 	if( script_hasdata(st,2) )
 		party_id = script_getnum(st,2);
-	else return SCRIPT_CMD_SUCCESS;
+	else return SCRIPT_CMD_FAILURE;
 
 	if( !(p = party_search(party_id)) ) {
 		script_pushint(st, 0); // Returns false if party does not exist.
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	for( i = 0; i < MAX_PARTY; i++ ) {
@@ -19172,7 +19187,7 @@ BUILDIN_FUNC(instance_check_party)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_check_guild)
 {
-	int amount, min, max, i, guild_id, c = 0;
+	int amount, min, max, i, guild_id = 0, c = 0;
 	struct guild *g = NULL;
 
 	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Guild members for the Instance.
@@ -19190,11 +19205,11 @@ BUILDIN_FUNC(instance_check_guild)
 	if (script_hasdata(st,2))
 		guild_id = script_getnum(st,2);
 	else
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 
 	if (!(g = guild_search(guild_id))) {
 		script_pushint(st, 0); // Returns false if guild does not exist.
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	for(i = 0; i < MAX_GUILD; i++) {
@@ -21891,10 +21906,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_updatescore,"sii"),
 
 	// Instancing
-	BUILDIN_DEF(instance_create,"si?"),
+	BUILDIN_DEF(instance_create,"s??"),
 	BUILDIN_DEF(instance_destroy,"?"),
 	BUILDIN_DEF(instance_id,""),
-	BUILDIN_DEF(instance_enter,"s???"),
+	BUILDIN_DEF(instance_enter,"???"),
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(instance_mapname,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii?"),

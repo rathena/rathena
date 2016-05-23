@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20150610
+//= 20160523
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -8113,9 +8113,9 @@ This command will open a book item at the specified page.
 ========================
 ---------------------------------------
 
-*instance_create("<instance name>",<owner_id>{,<mode>});
+*instance_create("<instance name>"{,<instance mode>{,<owner id>}});
 
-Creates an instance for the <owner_id> of <mode>. The instance name, along with
+Creates an instance for the <owner id> of <mode>. The instance name, along with
 all other instance data, is read from 'db/(pre-)re/instance_db.txt'. Upon success,
 the command generates a unique instance ID, duplicates all listed maps and NPCs,
 sets the alive time, and triggers the "OnInstanceInit" label in all NPCs inside
@@ -8129,7 +8129,7 @@ Instance Mode options:
 
 The command returns the instance ID upon success, and these values upon failure:
  -1: Invalid type.
- -2: Party not found.
+ -2: Character/Party/Guild not found.
  -3: Instance already exists.
  -4: No free instances (MAX_INSTANCE exceeded).
 
@@ -8139,13 +8139,13 @@ The command returns the instance ID upon success, and these values upon failure:
 
 Destroys instance with the ID <instance id>. If no ID is specified, the instance
 the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player is used (if it is a party or guild
-mode). If it is not owned by anyone, no player needs to be attached. If that
-fails, the script will come to a halt.
+the instance of the currently attached player is used (if it is a character, party,
+or guild mode). If it is not owned by anyone, no player needs to be attached. If
+that fails, the script will come to a halt.
 
 ---------------------------------------
 
-*instance_enter("<instance name>"{,<x>,<y>,<char_id>});
+*instance_enter({<x>,<y>,<char_id>});
 
 Warps player to the specified instance after the script terminates. The map and
 coordinates are located in 'db/(pre-)re/instance_db.txt'.
@@ -8163,8 +8163,8 @@ Put -1 for x and y if want to warp player with default entrance coordinates.
 
 Returns the unique name of the instanced script. If no ID is specified,
 the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached player's party is used. If
-that fails, the script will come to a halt.
+an instance, the instance of the currently attached NPC, player, party, or guild
+is used. If that fails, the script will come to a halt.
 
 ---------------------------------------
 
@@ -8173,8 +8173,8 @@ that fails, the script will come to a halt.
 Returns the unique name of the instanced map. If no instance ID is specified,
 the instance the script is attached to is used. If the script is not attached to
 an instance, the instance of the currently attached player is used (if it is a
-party or guild mode). If it is not owned by anyone, no player needs to be
-attached. If that fails, the command returns an empty string instead.
+character, party, or guild mode). If it is not owned by anyone, no player needs
+to be attached. If that fails, the command returns an empty string instead.
 
 ---------------------------------------
 
@@ -8182,7 +8182,7 @@ attached. If that fails, the command returns an empty string instead.
 
 Returns the unique instance id of the attached script. If the script is not
 attached to an instance, the instance of the currently attached player is
-used (if it is a party or guild mode). If it is not owned by anyone, no
+used (if it is a character, party, or guild mode). If it is not owned by anyone, no
 player needs to be attached. If that fails, the function will return 0.
 
 ---------------------------------------
@@ -8192,8 +8192,8 @@ player needs to be attached. If that fails, the function will return 0.
 Warps all players in the instance <instance id> to <map name> at given
 coordinates. If no ID is specified, the instance the script is attached to
 is used. If the script is not attached to an instance, the instance of the
-currently attached player is used (if it is a party or guild mode). If it
-is not owned by anyone, no player needs to be attached. If that
+currently attached player is used (if it is a character, party, or guild
+mode). If it is not owned by anyone, no player needs to be attached. If that
 fails, the script will come to a halt.
 
 ---------------------------------------
@@ -8203,8 +8203,8 @@ fails, the script will come to a halt.
 Broadcasts a message to all players in the instance <instance id> currently
 residing on an instance map. If -1 is specified for <instance id>, the instance
 the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player is used (if it is a party or guild
-mode). If it is not owned by anyone, no player needs to be attached.
+the instance of the currently attached player is used (if it is a character,
+party, or guild mode). If it is not owned by anyone, no player needs to be attached.
 
 For details on the other parameters, see 'announce'.
 

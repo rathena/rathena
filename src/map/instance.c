@@ -25,20 +25,7 @@
 int instance_start = 0; // To keep the last index + 1 of normal map inserted in the map[ARRAY]
 
 struct instance_data instance_data[MAX_INSTANCE_DATA];
-
-/// Instance DB entry struct
-struct instance_db {
-	unsigned short id; ///< Instance ID
-	StringBuf *name; ///< Instance name
-	unsigned int limit, ///< Duration limit
-				 timeout; ///< Timeout limit
-	struct {
-		StringBuf *mapname; ///< Mapname, the limit should be MAP_NAME_LENGTH_EXT
-		unsigned short x, y; ///< Map coordinates
-	} enter;
-	StringBuf **maplist; ///< Used maps in instance, the limit should be MAP_NAME_LENGTH_EXT
-	uint8 maplist_count; ///< Number of used maps
-};
+struct eri *instance_maps_ers = NULL; ///< Array of maps per instance
 
 static DBMap *InstanceDB; /// Instance DB: struct instance_db, key: id
 static DBMap *InstanceNameDB; /// instance id, key: name
@@ -52,12 +39,22 @@ static struct {
 /*==========================================
  * Searches for an instance ID in the database
  *------------------------------------------*/
-static struct instance_db *instance_searchtype_db(unsigned short instance_id) {
+struct instance_db *instance_searchtype_db(unsigned short instance_id) {
 	return (struct instance_db *)uidb_get(InstanceDB,instance_id);
 }
 
 static uint16 instance_name2id(const char *instance_name) {
 	return (uint16)strdb_uiget(InstanceNameDB,instance_name);
+}
+
+/*==========================================
+ * Searches for an instance name in the database
+ *------------------------------------------*/
+static struct instance_db *instance_searchname_db(const char *instance_name) {
+	uint16 id = instance_name2id(instance_name);
+	if (id == 0)
+		return NULL;
+	return (struct instance_db *)uidb_get(InstanceDB,id);
 }
 
 /**
@@ -86,16 +83,6 @@ void instance_getsd(unsigned short instance_id, struct map_session_data **sd, en
 			break;
 	}
 	return;
-}
-
-/*==========================================
- * Searches for an instance name in the database
- *------------------------------------------*/
-static struct instance_db *instance_searchname_db(const char *instance_name) {
-	uint16 id = instance_name2id(instance_name);
-	if (id == 0)
-		return NULL;
-	return (struct instance_db *)uidb_get(InstanceDB,id);
 }
 
 /*==========================================
@@ -324,11 +311,11 @@ void instance_addnpc(struct instance_data *im)
 
 	// First add the NPCs
 	for(i = 0; i < im->cnt_map; i++)
-		map_foreachinarea(instance_addnpc_sub, im->map[i].src_m, 0, 0, map[im->map[i].src_m].xs, map[im->map[i].src_m].ys, BL_NPC, im->map[i].m);
+		map_foreachinarea(instance_addnpc_sub, im->map[i]->src_m, 0, 0, map[im->map[i]->src_m].xs, map[im->map[i]->src_m].ys, BL_NPC, im->map[i]->m);
 
 	// Now run their OnInstanceInit
 	for(i = 0; i < im->cnt_map; i++)
-		map_foreachinarea(instance_npcinit, im->map[i].m, 0, 0, map[im->map[i].m].xs, map[im->map[i].m].ys, BL_NPC, im->map[i].m);
+		map_foreachinarea(instance_npcinit, im->map[i]->m, 0, 0, map[im->map[i]->m].xs, map[im->map[i]->m].ys, BL_NPC, im->map[i]->m);
 
 }
 
@@ -395,8 +382,7 @@ int instance_create(int owner_id, const char *name, enum instance_mode mode) {
 	instance_data[i].idle_timer = INVALID_TIMER;
 	instance_data[i].regs.vars = i64db_alloc(DB_OPT_RELEASE_DATA);
 	instance_data[i].regs.arrays = NULL;
-	safestrncpy(instance_data[i].name, name, sizeof(instance_data[i].name));
-	memset(instance_data[i].map, 0, sizeof(instance_data[i].map));
+	instance_data[i].cnt_map = 0;
 
 	switch(mode) {
 		case IM_CHAR:
@@ -416,7 +402,7 @@ int instance_create(int owner_id, const char *name, enum instance_mode mode) {
 
 	instance_subscription_timer(0,0,0,0);
 
-	ShowInfo("[Instance] Created: %s.\n", name);
+	ShowInfo("[Instance] Created: %s (%hu).\n", name, i);
 
 	return i;
 }
@@ -424,12 +410,11 @@ int instance_create(int owner_id, const char *name, enum instance_mode mode) {
 /*--------------------------------------
  * Adds maps to the instance
  *--------------------------------------*/
-int instance_addmap(unsigned short instance_id)
-{
+int instance_addmap(unsigned short instance_id) {
 	int i, m;
-	int cnt_map = 0;
 	struct instance_data *im;
 	struct instance_db *db;
+	struct s_instance_map *entry;
 
 	if (instance_id == 0)
 		return 0;
@@ -449,21 +434,38 @@ int instance_addmap(unsigned short instance_id)
 	im->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 
 	// Add the maps
+	if (db->maplist_count > MAX_MAP_PER_INSTANCE) {
+		ShowError("instance_addmap: Too many maps (%d) created for a single instance '%s' (%hu).\n", db->maplist_count, StringBuf_Value(db->name), instance_id);
+		return 0;
+	}
+
+	// Add initial map
+	if ((m = map_addinstancemap(StringBuf_Value(db->enter.mapname), instance_id)) < 0) {
+		ShowError("instance_addmap: Failed to create initial map for instance '%s' (%hu).\n", StringBuf_Value(db->name), instance_id);
+		return 0;
+	}
+	entry = ers_alloc(instance_maps_ers, struct s_instance_map);
+	entry->m = m;
+	entry->src_m = map_mapname2mapid(StringBuf_Value(db->enter.mapname));
+	RECREATE(im->map, struct s_instance_map *, im->cnt_map + 1);
+	im->map[im->cnt_map++] = entry;
+
+	// Add extra maps (if any)
 	for(i = 0; i < db->maplist_count; i++) {
 		if(strlen(StringBuf_Value(db->maplist[i])) < 1)
 			continue;
 		else if( (m = map_addinstancemap(StringBuf_Value(db->maplist[i]), instance_id)) < 0) {
 			// An error occured adding a map
-			ShowError("instance_addmap: No maps added to instance %d.\n",instance_id);
+			ShowError("instance_addmap: No maps added to instance '%s' (%hu).\n", StringBuf_Value(db->name), instance_id);
 			return 0;
 		} else {
-			im->map[cnt_map].m = m;
-			im->map[cnt_map].src_m = map_mapname2mapid(StringBuf_Value(db->maplist[i]));
-			cnt_map++;
+			entry = ers_alloc(instance_maps_ers, struct s_instance_map);
+			entry->m = m;
+			entry->src_m = map_mapname2mapid(StringBuf_Value(db->maplist[i]));
+			RECREATE(im->map, struct s_instance_map *, im->cnt_map + 1);
+			im->map[im->cnt_map++] = entry;
 		}
 	}
-
-	im->cnt_map = cnt_map;
 
 	// Create NPCs on all maps
 	instance_addnpc(im);
@@ -487,7 +489,7 @@ int instance_addmap(unsigned short instance_id)
 			return 0;
 	}
 
-	return cnt_map;
+	return im->cnt_map;
 }
 
 
@@ -518,14 +520,14 @@ int instance_mapname2mapid(const char *name, unsigned short instance_id)
 	if(im->state != INSTANCE_BUSY)
 		return m;
 
-	for(i = 0; i < MAX_MAP_PER_INSTANCE; i++)
-		if(im->map[i].src_m == m) {
+	for(i = 0; i < im->cnt_map; i++)
+		if(im->map[i]->src_m == m) {
 			char alt_name[MAP_NAME_LENGTH];
 			if((strchr(iname,'@') == NULL) && strlen(iname) > 8) {
 				memmove(iname, iname+(strlen(iname)-9), strlen(iname));
-				snprintf(alt_name, sizeof(alt_name),"%d#%s", instance_id, iname);
+				snprintf(alt_name, sizeof(alt_name),"%hu#%s", instance_id, iname);
 			} else
-				snprintf(alt_name, sizeof(alt_name),"%.3d%s", instance_id, iname);
+				snprintf(alt_name, sizeof(alt_name),"%.3hu%s", instance_id, iname);
 			return map_mapname2mapid(alt_name);
 		}
 
@@ -554,31 +556,6 @@ int instance_destroy(unsigned short instance_id)
 		return 1;
 
 	mode = im->mode;
-	switch(mode) {
-		case IM_NONE:
-			break;
-		case IM_CHAR:
-			if ((sd = map_id2sd(im->owner_id)) == NULL) {
-				ShowError("instance_destroy: character %d not found for instance '%s'.\n", im->owner_id, im->name);
-				return 1;
-			}
-			break;
-		case IM_PARTY:
-			if ((p = party_search(im->owner_id)) == NULL) {
-				ShowError("instance_destroy: party %d not found for instance '%s'.\n", im->owner_id, im->name);
-				return 1;
-			}
-			break;
-		case IM_GUILD:
-			if ((g = guild_search(im->owner_id)) == NULL) {
-				ShowError("instance_destroy: guild %d not found for instance '%s'.\n", im->owner_id, im->name);
-				return 1;
-			}
-			break;
-		default:
-			ShowError("instance_destroy: unknown owner type %u for owner_id %d and name %s.\n", mode, im->owner_id, im->name);
-			return 1;
-	}
 
 	if(im->state == INSTANCE_IDLE) {
 		for(i = 0; i < instance_wait.count; i++) {
@@ -608,8 +585,10 @@ int instance_destroy(unsigned short instance_id)
 		else
 			type = 3;
 
-		for(i = 0; i < im->cnt_map; i++)
-			map_delinstancemap(im->map[i].m);
+		for(i = 0; i < im->cnt_map; i++) {
+			map_delinstancemap(im->map[i]->m);
+			ers_free(instance_maps_ers, im->map[i]);
+		}
 	}
 
 	if(im->keep_timer != INVALID_TIMER) {
@@ -643,7 +622,7 @@ int instance_destroy(unsigned short instance_id)
 	if( im->regs.arrays )
 		instance_data[instance_id].regs.arrays->destroy(instance_data[instance_id].regs.arrays, script_free_array_db);
 
-	ShowInfo("[Instance] Destroyed %d.\n", instance_id);
+	ShowInfo("[Instance] Destroyed %hu.\n", instance_id);
 
 	memset(&instance_data[instance_id], 0, sizeof(instance_data[instance_id]));
 
@@ -653,29 +632,29 @@ int instance_destroy(unsigned short instance_id)
 /*==========================================
  * Allows a user to enter an instance
  *------------------------------------------*/
-int instance_enter(struct map_session_data *sd, unsigned short instance_id, const char *name)
+int instance_enter(struct map_session_data *sd, unsigned short instance_id)
 {
-	struct instance_db *db = instance_searchname_db(name);
+	struct instance_db *db = instance_searchtype_db(instance_data[instance_id].type);
 
 	nullpo_retr(-1, sd);
-	nullpo_retr(3, db);
 
-	return instance_enter_position(sd, instance_id, name, db->enter.x, db->enter.y);
+	if (db == NULL)
+		return 2;
+
+	return instance_enter_position(sd, instance_id, db->enter.x, db->enter.y);
 }
 
 /*==========================================
  * Warp a user into instance
  *------------------------------------------*/
-int instance_enter_position(struct map_session_data *sd, unsigned short instance_id, const char *name, short x, short y)
+int instance_enter_position(struct map_session_data *sd, unsigned short instance_id, short x, short y)
 {
 	struct instance_data *im = &instance_data[instance_id];
-	struct instance_db *db = instance_searchname_db(name);
 	struct party_data *p = NULL;
 	struct guild *g = NULL;
 	int16 m;
 
 	nullpo_retr(-1, sd);
-	nullpo_retr(3, db);
 
 	switch(instance_data[instance_id].mode) {
 		case IM_NONE:
@@ -710,11 +689,9 @@ int instance_enter_position(struct map_session_data *sd, unsigned short instance
 
 	if (im->state != INSTANCE_BUSY)
 		return 3;
-	if (im->type != db->id)
-		return 3;
 
 	// Does the instance match?
-	if ((m = instance_mapname2mapid(StringBuf_Value(db->enter.mapname), instance_id)) < 0)
+	if ((m = instance_mapname2mapid(map_mapid2mapname(im->map[0]->m), instance_id)) < 0)
 		return 3;
 
 	if (pc_setpos(sd, map_id2index(m), x, y, CLR_OUTSIGHT))
@@ -735,7 +712,6 @@ int instance_enter_position(struct map_session_data *sd, unsigned short instance
 int instance_reqinfo(struct map_session_data *sd, unsigned short instance_id)
 {
 	struct instance_data *im;
-	struct instance_db *db;
 
 	nullpo_retr(1, sd);
 
@@ -744,7 +720,7 @@ int instance_reqinfo(struct map_session_data *sd, unsigned short instance_id)
 
 	im = &instance_data[instance_id];
 
-	if((db = instance_searchtype_db(im->type)) == NULL)
+	if(instance_searchtype_db(im->type) == NULL)
 		return 1;
 
 	// Say it's created if instance is not busy
@@ -802,8 +778,8 @@ int instance_delusers(unsigned short instance_id)
 		return 1;
 
 	// If no one is in the instance, start the idle timer
-	for(i = 0; im->map[i].m && i < MAX_MAP_PER_INSTANCE; i++)
-		if(map[im->map[i].m].users > 1) // We check this before the actual map.users are updated, hence the 1
+	for(i = 0; im->map[i]->m && i > im->cnt_map; i++)
+		if(map[im->map[i]->m].users > 1) // We check this before the actual map.users are updated, hence the 1
 			idle++;
 
 	if(!idle) // If idle wasn't added to, we know no one was in the instance
@@ -822,7 +798,7 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 	uint8 i;
 	int id = atoi(str[0]);
 	struct instance_db *db;
-	bool isNew = false, defined = false;
+	bool isNew = false;
 
 	if (!id || id >  USHRT_MAX) {
 		ShowError("instance_readdb_sub: Cannot add instance with ID '%d'. Valid ID is 1 ~ %d.\n", id, USHRT_MAX);
@@ -868,19 +844,9 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 			}
 			RECREATE(db->maplist, StringBuf *, db->maplist_count+1);
 			db->maplist[db->maplist_count] = StringBuf_Malloc();
-			if (strcmpi(str[i], str[4]) == 0)
-				defined = true;
 			StringBuf_AppendStr(db->maplist[db->maplist_count], str[i]);
 			db->maplist_count++;
 		}
-	}
-
-	if (!defined) {
-		ShowError("instance_readdb_sub: The entrance map is not defined in instance map list.\n");
-		instance_db_free_sub(db);
-		if (!isNew)
-			uidb_remove(InstanceDB,id);
-		return false;
 	}
 
 	if (isNew) {
@@ -925,7 +891,7 @@ void instance_readdb(void) {
 	int f;
 
 	for (f = 0; f<ARRAYLENGTH(filename); f++) {
-		sv_readdb(db_path, filename[f], ',', 8, 8+MAX_MAP_PER_INSTANCE, -1, &instance_readdb_sub, f);
+		sv_readdb(db_path, filename[f], ',', 7, 7+MAX_MAP_PER_INSTANCE, -1, &instance_readdb_sub, f);
 	}
 }
 
@@ -975,11 +941,11 @@ void do_reload_instance(void)
 			if (instance_data[map[sd->bl.m].instance_id].mode == IM_GUILD && (!(g = guild_search(sd->status.guild_id)) || g->instance_id != map[sd->bl.m].instance_id)) // Someone not in guild is on instance map
 				continue;
 			im = &instance_data[p->instance_id];
-			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, i, StringBuf_Value(db->name))) { // All good
+			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, i)) { // All good
 				clif_displaymessage(sd->fd, msg_txt(sd,515)); // Instance has been reloaded
 				instance_reqinfo(sd,p->instance_id);
 			} else // Something went wrong
-				ShowError("do_reload_instance: Error setting character at instance start: character_id=%d instance=%s.\n",sd->status.char_id,db->name);
+				ShowError("do_reload_instance: Error setting character at instance start: character_id=%d instance=%s.\n",sd->status.char_id,StringBuf_Value(db->name));
 		}
 	mapit_free(iter);
 }
@@ -993,6 +959,8 @@ void do_init_instance(void) {
 	memset(&instance_wait, 0, sizeof(instance_wait));
 	instance_wait.timer = -1;
 
+	instance_maps_ers = ers_new(sizeof(struct s_instance_map),"instance.c::instance_maps_ers", ERS_OPT_NONE);
+
 	add_timer_func_list(instance_delete_timer,"instance_delete_timer");
 	add_timer_func_list(instance_subscription_timer,"instance_subscription_timer");
 }
@@ -1000,6 +968,7 @@ void do_init_instance(void) {
 void do_final_instance(void) {
 	int i;
 
+	ers_destroy(instance_maps_ers);
 	for( i = 1; i < MAX_INSTANCE_DATA; i++ )
 		instance_destroy(i);
 
