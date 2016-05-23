@@ -74,7 +74,7 @@ ma_scene01,174,179,4	script	Taho	541,{
 			mes "Now I'm weaving, so you can go down when I'm done.";
 			close;
 		case 2:
-			switch(instance_enter(.@md_name$)) {
+			switch(instance_enter()) {
 			case 3:
 				mes "[Taho]";
 				mes "An unknown error occurred.";

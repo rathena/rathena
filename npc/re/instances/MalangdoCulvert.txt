@@ -432,7 +432,7 @@ mal_in01,160,34,4	script	Missing, the Cleaner	545,{
 	}
 	end;
 L_Enter:
-	switch(instance_enter("Culvert")) {
+	switch(instance_enter()) {
 	case 3:
 		mes "An unknown error has occurred.";
 		close;

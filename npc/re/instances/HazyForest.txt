@@ -139,7 +139,7 @@ bif_fild01,161,355,0	script	Log Tunnel	844,{
 	next;
 	if(select("Enter the tunnel.:Give up.") == 2)
 		close;
-	switch(instance_enter("Mistwood Maze")) {
+	switch(instance_enter()) {
 	case 3:
 		mes "[Laphine Soldier]";
 		mes "Something doesn't feel right. Looks like something dangerous is going on, so you'd better turn back today.";
