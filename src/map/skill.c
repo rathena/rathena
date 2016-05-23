@@ -6905,8 +6905,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL,
 			src, skill_id, skill_lv, tick, flag|i,
 			skill_castend_damage_id);
-		if(map_addblock(src))
+		if(map_addblock(src)) {
+			map_freeblock_unlock();
 			return 1;
+		}
 		status_damage(src, src, sstatus->max_hp,0,0,1);
 		break;
 
@@ -10632,7 +10634,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 		int maxcount = qty[skill_lv-1];
 		i_slave = map_foreachinmap(skill_check_condition_mob_master_sub ,hd->bl.m, BL_MOB, hd->bl.id, summons[skill_lv-1], skill_id, &c);
-		if(c >= maxcount) return 0; //max qty already spawned
+		if(c >= maxcount) {
+			map_freeblock_unlock();
+			return 0; //max qty already spawned
+		}
 
 		for(i_slave=0; i_slave<qty[skill_lv - 1]; i_slave++){ //easy way
 			sum_md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(src), summons[skill_lv - 1], "", SZ_SMALL, AI_ATTACK);
