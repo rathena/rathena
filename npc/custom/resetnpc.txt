@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.7
+//= 1.4
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -13,10 +13,8 @@
 //= 1.1 Optimized for the greater good. [Kisuka]
 //= 1.2 Cleaning [Euphy]
 //= 1.3 All statuses removed upon skill reset. [Euphy]
-//= 1.4 Compressed Script [Stolao]
-//= 1.5 Added limit use option [Stolao]
-//= 1.6 Changed set -> setarray [Stolao]
-//= 1.7 Improved text with F_InsertPlural [Stolao]
+//= 1.4 Compressed Script, Added limit use option [Stolao]
+//=	Changed set -> setarray, Improved text with F_InsertPlural
 //============================================================
 prontera,150,193,4	script	Reset Girl	124,{
 	//	 		Skills,	Stats,	Both,	Limit
