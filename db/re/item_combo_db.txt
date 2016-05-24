@@ -347,6 +347,26 @@
 4629:4630,{ bonus3 bAutoSpell,677,2,2; bonus2 bSubEle,Ele_Neutral,5; }
 4631:4632,{ bonus5 bAutoSpell,85,1,1,BF_SHORT,0; }
 4635:4636,{ bonus2 bResEff,Eff_Burning,10000; }
+4642:4646,{ bonus bAtkRate,10; bonus bMatkRate,10; }
+4643:4646,{ bonus bAtkRate,10; bonus bMatkRate,10; }
+4644:4646,{ bonus bAtkRate,10; bonus bMatkRate,10; }
+4645:4646,{ bonus bAtkRate,10; bonus bMatkRate,10; }
+4653:4654,{ bonus2 bSubRace,RC_Brute,5; bonus2 bSubRace,RC_Undead,5; bonus2 bIgnoreMdefRaceRate,RC_Brute,50; bonus2 bIgnoreMdefRaceRate,RC_Undead,50; }
+4653:4655,{ bonus2 bSubRace,RC_Brute,5; bonus2 bSubRace,RC_Undead,5; bonus2 bIgnoreDefRaceRate,RC_Brute,50; bonus2 bIgnoreDefRaceRate,RC_Undead,50; }
+4656:4657,{ /* Unofficial chance */ bonus3 bAutoSpellWhenHit,"NPC_WIDESLEEP",2,10; bonus2 bSubEle,Ele_Neutral,5; }
+4671:4692,{ autobonus "{ active_transform 3242,6000; bonus bMatk,100; }",30,6000,BF_MAGIC; }
+4672:4693,{ autobonus "{ active_transform 3243,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
+4673:4696,{ autobonus "{ active_transform 3245,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
+4674:4684,{ autobonus "{ active_transform 3220,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
+4675:4685,{ autobonus "{ active_transform 3221,6000; bonus bMatk,100; }",30,6000,BF_MAGIC; }
+4676:4687,{ autobonus "{ active_transform 3222,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
+4677:4688,{ autobonus "{ active_transform 3223,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
+4678:4686,{ autobonus "{ active_transform 3224,6000; bonus bMatk,100; }",30,6000,BF_MAGIC; }
+4679:4689,{ autobonus "{ active_transform 3225,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
+4680:4690,{ autobonus "{ active_transform 3240,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
+4681:4691,{ autobonus "{ active_transform 3241,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
+4682:4694,{ autobonus "{ active_transform 3244,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
+4683:4695,{ autobonus "{ active_transform 3246,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
 5040:5442,{ bonus bAspdRate,3; bonus bVariableCastrate,3; }
 5040:18673,{ bonus bSPrecovRate,3; }
 5041:18538,{ bonus2 bSubRace,RC_Angel,9; }

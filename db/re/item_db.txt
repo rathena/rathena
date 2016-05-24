@@ -2778,6 +2778,23 @@
 4639,Taffy_Card,Taffy Card,6,20,,10,,,,,,,,136,,,,,{ bonus bAtkRate,1; },{},{}
 4640,Frozen_Wolf_Card,Frozen Wolf Card,6,20,,10,,,,,,,,136,,,,,{ bonus bMatkRate,1; },{},{}
 4641,Zombie_Guard_Card,Zombie Guard Card,6,20,,10,,,,,,,,32,,,,,{ bonus bNoRegen,2; bonus bSPDrainValue,1; },{},{}
+4642,Min_Toad_Card,Infinite Toad Card,6,20,,10,,,,,,,,64,,,,,{ .@r = getrefine(); if(.@r>6){ .@b+=2; if(.@r>8).@b+=3; } bonus bFlee2,2+.@b; },{},{}
+4643,Min_Vagabond_Wolf_Card,Infinite Vagabond Wolf Card,6,20,,10,,,,,,,,64,,,,,{ .@r = getrefine(); if(.@r>6){ .@b+=10; if(.@r>8).@b+=15; } bonus bAtk,10+.@b; },{},{}
+4644,Min_Vocal_Card,Infinite Vocal Card,6,20,,10,,,,,,,,64,,,,,{ .@r = getrefine(); if(.@r>6){ .@b+=10; if(.@r>8) .@b+=15; } bonus bMdef,5+.@b; },{},{}
+4645,Min_Eclipse_Card,Infinite Eclipse Card,6,20,,10,,,,,,,,64,,,,,{ .@r = getrefine(); if(.@r>6){ .@b+=300; if(.@r>8).@b+=400; } bonus bMaxHP,300+.@b; },{},{}
+4646,Min_Chimera_Card,Infinite Chimera Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMaxHPrate,8; bonus bMaxSPrate,4; },{},{}
+4647,Min_Osiris_Card,Infinite Osiris Card,6,20,,10,,,,,,,,136,,,,,{ bonus bHPGainValue,300; },{},{}
+4648,Min_Eddga_Card,Infinite Eddga Card,6,20,,10,,,,,,,,64,,,,,{ bonus4 bAutoSpellWhenHit,"SM_PROVOKE",10,500,1; },{},{}
+4649,Min_Phreeoni_Card,Infinite Phreeoni Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCritical,100; },{},{}
+4650,Min_Orc_Hero_Card,Infinite Orc Hero Card,6,20,,10,,,,,,,,769,,,,,{ bonus bVit,3; bonus3 bAddEffWhenHit,Eff_Stun,10000,ATF_MAGIC; },{},{}
+4651,Min_Tao_Gunka_Card,Infinite Tao Gunka Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHP,10000; bonus bAgi,-10; },{},{}
+4652,N_Amon_Ra_Card,Nightmare Amon Ra Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bMagicAddRace,RC_Demon,50; bonus2 bMagicAddRace,RC_Undead,50; bonus2 bMagicAddEle,Ele_Dark,50; bonus2 bMagicAddEle,Ele_Undead,50; },{},{}
+4653,N_Arclouse_Card,Nightmare Arclouse Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubRace,RC_Brute,20; bonus2 bSubRace,RC_Undead,20; },{},{}
+4654,N_Mimic_Card,Nightmare Mimic Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bMagicAddRace,RC_Brute,5; bonus2 bMagicAddRace,RC_Undead,5; },{},{}
+4655,N_Minorous_Card,Nightmare Minorous Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddRace,RC_Brute,10; bonus2 bAddRace,RC_Undead,10; },{},{}
+4656,N_Mummy_Card,Nightmare Mummy Card,6,20,,10,,,,,,,,64,,,,,{ /* Unofficial chance */ bonus3 bAutoSpellWhenHit,"NPC_WIDESLEEP",2,10; },{},{}
+4657,N_Ancient_Mummy_Card,Nightmare Ancient Mummy Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,15; bonus2 bMagicAtkEle,Ele_Fire,getrefine()*3; },{},{}
+4658,N_Verit_Card,Nightmare Verit Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bMagicAddClass,Class_All,5; if(getrefine()>6) { bonus2 bMagicAddClass,Class_All,3; } if(getrefine()>8) { bonus2 bMagicAddClass,Class_All,2; } },{},{}
 4659,Eggring_Card,Eggring Card,6,20,,10,,,,,,,,16,,,,,{ bonus bLuk,2; bonus bMaxHP,50; },{},{}
 4660,Scout_Basilisk_Card,Scout Basilisk Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubSize,Size_Small,5; bonus2 bSubSize,Size_Medium,5; },{},{}
 4661,Charge_Basilisk_Card,Charge Basilisk Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubSize,Size_Medium,20; bonus2 bSubSize,Size_Large,20; bonus2 bSubSize,Size_Small,-15; },{},{}
@@ -2790,6 +2807,32 @@
 4668,Trance_Spore_Card,Trance Spore Card,6,20,,10,,,,,,,,769,,,,,{ bonus bVit,1; bonus bInt,1; },{},{}
 4669,Jungle_Mandragora_Card,Jungle Mandragora Card,6,20,,10,,,,,,,,2,,,,,{ .@r = getrefine(); bonus2 bAddEle,Ele_Wind,((.@r>=9)?7:((.@r>=7)?5:3)); },{},{}
 4670,Fruit_Pom_Spider_Card,Fruit Pom Spider Card,6,20,,10,,,,,,,,2,,,,,{ .@r = getrefine(); bonus2 bAddEle,Ele_Fire,((.@r>=9)?7:((.@r>=7)?5:3)); },{},{}
+4671,V_B_Celia_Card,Sorcerer Celia Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Sage){ bonus bMaxHPrate,10; bonus bMatkRate,10; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4672,V_B_Chen_Card,Sura Chen Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Monk){ bonus bMaxHPrate,10; bonus bAtkRate,10; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4673,V_B_Alphoccio_Card,Minstel Alphoccio Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Bard){ bonus bMaxHPrate,15; bonus bMaxSPrate,10; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4674,V_B_Eremes_Card,Guillotine Cross Eremes Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Assassin){  bonus bFlee2,10; bonus bAtkRate,15; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4675,V_B_Magaleta_Card,Arch Bishop Magaleta Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Priest){  bonus bMaxHPrate,10; bonus bHealPower,10; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4676,V_B_Shecil_Card,Ranger Cecil Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Hunter){ bonus bCritical,20; bonus bLongAtkRate,15; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4677,V_B_Howard_Card,Mechanic Howard Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith){ bonus bHit,20; bonus bAtkRate,15; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4678,V_B_Katrinn_Card,Warlock Kathryne Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Wizard){ bonus bMdef,80; bonus bMatkRate,15; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4679,V_B_Seyren_Card,Rune Knight Seyren Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Knight){ bonus bAspd,2; bonus bAtkRate,15; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4680,V_B_Randel_Card,Royal Guard Randel Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Crusader){ bonus bDef,350; bonus bAtkRate,10; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4681,V_B_Flamel_Card,Genetic Flamel Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist){ bonus bFlee,20; bonus bAtkRate,15; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4682,V_B_Gertie_Card,Shadow Chaser Gertie Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Rogue){  bonus bAtkRate,5; bonus bMatkRate,15; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4683,V_B_Trentini_Card,Wanderer Trentini Card,6,20,,10,,,,,,,,4,,,,,{ if(eaclass()&EAJL_THIRD && BaseJob == Job_Dancer){ bonus bMaxHPrate,10; bonus bMaxSPrate,15; } if(BaseLevel>174) bonus bAllStats,10; if(getrefine()>9) bonus bAllStats,10; },{},{}
+4684,V_Eremes_Card,True Eremes Guile Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"GC_CROSSIMPACT",20+.@b; },{},{}
+4685,V_Magaleta_Card,True Margaretha Sorin Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"AB_ADORAMUS",20+.@b; },{},{}
+4686,V_Katrinn_Card,True Kathryne Keyron Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"WL_CRIMSONROCK",20+.@b; },{},{}
+4687,V_Shecil_Card,True Cecil Damon Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"RA_CLUSTERBOMB",20+.@b; },{},{}
+4688,V_Harword_Card,True Howard Alt-Eisen Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"NC_AXETORNADO",20+.@b; },{},{}
+4689,V_Seyren_Card,True Seyren Windsor Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"LK_IGNITIONBREAK",20+.@b; },{},{}
+4690,V_Randel_Card,True Randel Lawrence Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"LG_EARTHDRIVE",20+.@b; },{},{}
+4691,V_Flamel_Card,True Flamel Emure Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"GN_CART_TORNADO",20+.@b; },{},{}
+4692,V_Celia_Card,True Celia Alde Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"SO_VARETYR_SPEAR",20+.@b; },{},{}
+4693,V_Chen_Card,True Chen Liu Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",20+.@b; },{},{}
+4694,V_Gertie_Card,True Gertie Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"SC_FEINTBOMB",20+.@b; },{},{}
+4695,V_Trentini_Card,True Trentini Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20+.@b; },{},{}
+4696,V_Alphoccio_Card,True Alphoccio Card,6,20,,10,,,,,,,,2,,,,,{ if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"WM_REVERBERATION",20+.@b; },{},{}
 //===================================================================
 // Armor Enchant System
 //===================================================================
