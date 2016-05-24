@@ -10,7 +10,7 @@
 struct block_list;
 
 #define MAX_INSTANCE_DATA		300	// Essentially how many instances we can create, but instance creation is primarily decided by MAX_MAP_PER_SERVER
-#define MAX_MAP_PER_INSTANCE	9	// Max number of maps per instance (Enter map is counted as one) - Supports up to 255 maps
+#define MAX_MAP_PER_INSTANCE	UINT8_MAX	// Max number of maps per instance (Enter map is counted as one) - Supports up to 255 maps
 
 #define INSTANCE_NAME_LENGTH (60+1)
 
@@ -82,5 +82,9 @@ void instance_reload(void);
 void do_reload_instance(void);
 void do_init_instance(void);
 void do_final_instance(void);
+
+#if MAX_MAP_PER_INSTANCE > UINT8_MAX
+	#error Too many maps per instance defined! Please adjust MAX_MAP_PER_INSTANCE to a lower value.
+#endif
 
 #endif
