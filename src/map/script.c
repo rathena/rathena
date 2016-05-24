@@ -18866,7 +18866,7 @@ BUILDIN_FUNC(instance_create)
 		mode = script_getnum(st, 3);
 
 		if (mode < IM_NONE || mode >= IM_MAX) {
-			ShowError("buildin_instance_create: Unknown instance owner type %d for '%s'\n", mode, script_getstr(st, 2));
+			ShowError("buildin_instance_create: Unknown instance mode %d for '%s'\n", mode, script_getstr(st, 2));
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
@@ -18916,8 +18916,8 @@ BUILDIN_FUNC(instance_destroy)
 	else
 		instance_id = script_instancegetid(st);
 
-	if( instance_id <= 0 || instance_id >= MAX_MAP_PER_SERVER ) {
-		ShowError("buildin_instance_destroy: Trying to destroy invalid instance %d.\n", instance_id);
+	if( instance_id == 0 || instance_id >= MAX_MAP_PER_SERVER ) {
+		ShowError("buildin_instance_destroy: Trying to destroy invalid instance %hu.\n", instance_id);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -18970,10 +18970,10 @@ BUILDIN_FUNC(instance_npcname)
 
 	if( instance_id && (nd = npc_name2id(str)) != NULL ) {
 		static char npcname[NAME_LENGTH];
-		snprintf(npcname, sizeof(npcname), "dup_%d_%d", instance_id, nd->bl.id);
+		snprintf(npcname, sizeof(npcname), "dup_%hu_%d", instance_id, nd->bl.id);
 		script_pushconststr(st,npcname);
 	} else {
-		ShowError("buildin_instance_npcname: Invalid instance NPC (instance_id: %d, NPC name: \"%s\".)\n", instance_id, str);
+		ShowError("buildin_instance_npcname: Invalid instance NPC (instance_id: %hu, NPC name: \"%s\".)\n", instance_id, str);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -19087,7 +19087,7 @@ BUILDIN_FUNC(instance_warpall)
  * Broadcasts to all maps inside an instance
  *
  * instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
- * Using -1 for <instance id> will auto-detect the id.
+ * Using 0 for <instance id> will auto-detect the id.
  *------------------------------------------*/
 BUILDIN_FUNC(instance_announce) {
 	unsigned short instance_id = script_getnum(st,2);
@@ -19100,7 +19100,7 @@ BUILDIN_FUNC(instance_announce) {
 	int            fontY       = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
 	int i;
 
-	if( instance_id == -1 ) {
+	if( instance_id == 0 ) {
 		instance_id = script_instancegetid(st);
 	}
 

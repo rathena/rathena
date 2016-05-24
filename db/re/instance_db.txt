@@ -1,7 +1,7 @@
 // Instance Database
 //
 // Structure of Database:
-// ID,Name,LimitTime,IdleTimeOut,EnterMap,EnterX,EnterY,Map2,Map3,Map4,Map5,Map6,Map7,Map8,Map9,Map10
+// ID,Name,LimitTime,IdleTimeOut,EnterMap,EnterX,EnterY,Map2,...,Map255
 //
 // EnterMap is considered as Map1
 

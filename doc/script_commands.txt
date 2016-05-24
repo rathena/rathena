@@ -8201,7 +8201,7 @@ fails, the script will come to a halt.
 *instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
 
 Broadcasts a message to all players in the instance <instance id> currently
-residing on an instance map. If -1 is specified for <instance id>, the instance
+residing on an instance map. If 0 is specified for <instance id>, the instance
 the script is attached to is used. If the script is not attached to an instance,
 the instance of the currently attached player is used (if it is a character,
 party, or guild mode). If it is not owned by anyone, no player needs to be attached.

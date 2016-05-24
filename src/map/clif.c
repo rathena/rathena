@@ -16589,8 +16589,12 @@ void clif_instance_create(unsigned short instance_id, int num)
 		return;
 
 	db = instance_searchtype_db(instance_data[instance_id].type);
+
+	if (!db)
+		return;
+
 	WBUFW(buf,0) = 0x2cb;
-	safestrncpy(WBUFP(buf,2), StringBuf_Value(db->name), INSTANCE_NAME_LENGTH);
+	safestrncpy((char *)WBUFP(buf,2), StringBuf_Value(db->name), INSTANCE_NAME_LENGTH);
 	WBUFW(buf,63) = num;
 	clif_send(buf,packet_len(0x2cb),&sd->bl,target);
 #endif
@@ -16636,8 +16640,12 @@ void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsig
 		return;
 
 	db = instance_searchtype_db(instance_data[instance_id].type);
+
+	if (!db)
+		return;
+
 	WBUFW(buf,0) = 0x2cd;
-	safestrncpy(WBUFP(buf,2), StringBuf_Value(db->name), INSTANCE_NAME_LENGTH);
+	safestrncpy((char *)WBUFP(buf,2), StringBuf_Value(db->name), INSTANCE_NAME_LENGTH);
 	WBUFL(buf,63) = limit1;
 	WBUFL(buf,67) = limit2;
 	clif_send(buf,packet_len(0x2cd),&sd->bl,target);
