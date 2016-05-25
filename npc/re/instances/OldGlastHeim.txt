@@ -51,7 +51,7 @@ glast_01,204,273,6	script	Hugin#ghinstance	755,{
 			mes "The time gap was created. When you're ready, talk to me again.";
 			close;
 		case 2:
-			switch(instance_enter(.@md_name$)) {
+			switch(instance_enter()) {
 			case 3:
 				mes "An unknown error has occurred.";
 				close;

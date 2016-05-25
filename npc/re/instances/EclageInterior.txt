@@ -74,7 +74,7 @@ ecl_hub01,130,15,0	script	It is closed shut.	844,{
 				mes "It is pretty difficult to guide an outsider like you.";
 				close;
 			}
-			switch (instance_enter(.@md_name$)) {
+			switch (instance_enter()) {
 			case 3:
 				mes "An unknown error has occurred.";
 				close;

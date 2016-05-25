@@ -214,7 +214,7 @@ monk_test,306,151,3	script	Grave of Baphomet#edq	111,{
 	//set .@ins_bapho_check2,checkquest(3045,PLAYTIME);
 
 	if (.@ins_bapho_check == -1) {
-		switch(instance_enter("Sealed Catacomb")) {
+		switch(instance_enter()) {
 		case 3:
 		case 2:
 			mes "It's cold to the touch. It doesn't respond.";

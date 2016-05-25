@@ -3063,6 +3063,12 @@
 	export_constant(DIR_EAST);
 	export_constant(DIR_NORTHEAST);
 
+	/* instance modes */
+	export_constant(IM_NONE);
+	export_constant(IM_CHAR);
+	export_constant(IM_PARTY);
+	export_constant(IM_GUILD);
+
 	#undef export_constant
 
 #endif /* _SCRIPT_CONSTANTS_H_ */
