@@ -12948,6 +12948,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_VITALITYACTIVATION:
 			case SC_FIGHTINGSPIRIT:
 			case SC_ABUNDANCE:
+			case SC_CRUSHSTRIKE:
 			case SC_SAVAGE_STEAK:
 			case SC_COCKTAIL_WARG_BLOOD:
 			case SC_MINOR_BBQ:
