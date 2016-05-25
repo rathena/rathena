@@ -933,8 +933,8 @@ void do_reload_instance(void)
 	iter = mapit_getallusers();
 	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 		if(sd && map[sd->bl.m].instance_id) {
-			struct party_data *p;
-			struct guild *g;
+			struct party_data *p = NULL;
+			struct guild *g = NULL;
 
 			if (instance_data[map[sd->bl.m].instance_id].mode == IM_PARTY && (!(p = party_search(sd->status.party_id)) || p->instance_id != map[sd->bl.m].instance_id)) // Someone not in party is on instance map
 				continue;
