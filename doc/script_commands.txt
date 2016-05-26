@@ -4246,14 +4246,15 @@ Here are the possible look types:
  LOOK_CLOTHES_COLOR - Clothes color
  LOOK_SHIELD - Shield
  LOOK_SHOES - Shoes
- LOOK_BODY2 - bodystyle
+ LOOK_BODY2 - Body style
 
 Whatever 'shoes' means is anyone's guess, ask Gravity - the client does nothing 
 with this value. It still wants it from the server though, so it is kept, but 
 normally doesn't do a thing.
  
 Only the look data for hairstyle, hair color and clothes color are saved to the 
-char server's database and will persist. The rest freely change as the character 
+char server's database and will persist. Body style will also persist if 'save_body_style'
+configuration is enabled in '/conf/battle/client.conf'. The rest freely change as the character 
 puts on and removes equipment, changes maps, logs in and out and otherwise you 
 should not expect to set them. In fact, messing with them is generally 
 hazardous, do it at your own risk, it is not tested what will this actually do -
