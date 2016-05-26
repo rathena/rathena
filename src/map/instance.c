@@ -556,6 +556,19 @@ int instance_destroy(unsigned short instance_id)
 		return 1;
 
 	mode = im->mode;
+	switch(mode) {
+		case IM_NONE:
+			break;
+		case IM_CHAR:
+			sd = map_id2sd(im->owner_id);
+			break;
+		case IM_PARTY:
+			p = party_search(im->owner_id);
+			break;
+		case IM_GUILD:
+			g = guild_search(im->owner_id);
+			break;
+	}
 
 	if(im->state == INSTANCE_IDLE) {
 		for(i = 0; i < instance_wait.count; i++) {
