@@ -192,7 +192,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 	close;
 
 L_Enter:
-	switch(instance_enter()) {
+	switch(instance_enter("Nidhoggur's Nest")) {
 	case 3:
 		mes "[Yggdrasil Gatekeeper]";
 		mes "An unknown error has occurred.";

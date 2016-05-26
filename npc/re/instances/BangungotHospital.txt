@@ -282,7 +282,7 @@ L_Enter:
 		cutin "",255;
 		end;
 	case 2:
-		switch(instance_enter()) {
+		switch(instance_enter(.@md_name$)) {
 		case 3:
 			mes "[Nurse Maenne]";
 			mes "A critical situation has happened.";

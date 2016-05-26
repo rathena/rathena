@@ -499,10 +499,10 @@ int instance_addmap(unsigned short instance_id) {
  * instance_id : where to search
  * result : mapid of map "name" in this instance
  *------------------------------------------*/
-int instance_mapname2mapid(const char *name, unsigned short instance_id)
+int16 instance_mapname2mapid(const char *name, unsigned short instance_id)
 {
 	struct instance_data *im;
-	int m = map_mapname2mapid(name);
+	int16 m = map_mapname2mapid(name);
 	char iname[MAP_NAME_LENGTH];
 	int i;
 
@@ -632,29 +632,31 @@ int instance_destroy(unsigned short instance_id)
 /*==========================================
  * Allows a user to enter an instance
  *------------------------------------------*/
-int instance_enter(struct map_session_data *sd, unsigned short instance_id)
+int instance_enter(struct map_session_data *sd, unsigned short instance_id, const char *name)
 {
-	struct instance_db *db = instance_searchtype_db(instance_data[instance_id].type);
+	struct instance_db *db = instance_searchname_db(name);
 
 	nullpo_retr(-1, sd);
 
 	if (db == NULL)
 		return 2;
 
-	return instance_enter_position(sd, instance_id, db->enter.x, db->enter.y);
+	return instance_enter_position(sd, instance_id, name, db->enter.x, db->enter.y);
 }
 
 /*==========================================
  * Warp a user into instance
  *------------------------------------------*/
-int instance_enter_position(struct map_session_data *sd, unsigned short instance_id, short x, short y)
+int instance_enter_position(struct map_session_data *sd, unsigned short instance_id, const char *name, short x, short y)
 {
 	struct instance_data *im = &instance_data[instance_id];
+	struct instance_db *db = instance_searchname_db(name);
 	struct party_data *p = NULL;
 	struct guild *g = NULL;
 	int16 m;
 
 	nullpo_retr(-1, sd);
+	nullpo_retr(3, db);
 
 	switch(instance_data[instance_id].mode) {
 		case IM_NONE:
@@ -689,9 +691,11 @@ int instance_enter_position(struct map_session_data *sd, unsigned short instance
 
 	if (im->state != INSTANCE_BUSY)
 		return 3;
+	if (im->type != db->id)
+		return 3;
 
 	// Does the instance match?
-	if ((m = instance_mapname2mapid(map_mapid2mapname(im->map[0]->m), instance_id)) < 0)
+	if ((m = instance_mapname2mapid(StringBuf_Value(db->enter.mapname), instance_id)) < 0)
 		return 3;
 
 	if (pc_setpos(sd, map_id2index(m), x, y, CLR_OUTSIGHT))
@@ -941,7 +945,7 @@ void do_reload_instance(void)
 			if (instance_data[map[sd->bl.m].instance_id].mode == IM_GUILD && (!(g = guild_search(sd->status.guild_id)) || g->instance_id != map[sd->bl.m].instance_id)) // Someone not in guild is on instance map
 				continue;
 			im = &instance_data[p->instance_id];
-			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, i)) { // All good
+			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, i, StringBuf_Value(db->name))) { // All good
 				clif_displaymessage(sd->fd, msg_txt(sd,515)); // Instance has been reloaded
 				instance_reqinfo(sd,p->instance_id);
 			} else // Something went wrong

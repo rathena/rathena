@@ -291,7 +291,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	}
 
 L_Enter:
-	switch(instance_enter()) {
+	switch(instance_enter("Endless Tower")) {
 	case 3:
 		mes "An unknown error has occurred.";
 		close;

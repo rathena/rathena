@@ -84,7 +84,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 	mes "In order to generate a dungeon you must be the Party Leader and have at least 2 members in the party.";
 	close;
 L_Enter:
-	switch(instance_enter()) {
+	switch(instance_enter("Orc's Memory")) {
 	case 3:
 		mes "An unknown error has occurred.";
 		close;

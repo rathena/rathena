@@ -68,12 +68,12 @@ void instance_getsd(unsigned short instance_id, struct map_session_data **sd, en
 
 int instance_create(int owner_id, const char *name, enum instance_mode mode);
 int instance_destroy(unsigned short instance_id);
-int instance_enter(struct map_session_data *sd, unsigned short instance_id);
-int instance_enter_position(struct map_session_data *sd, unsigned short instance_id, short x, short y);
+int instance_enter(struct map_session_data *sd, unsigned short instance_id, const char *name);
+int instance_enter_position(struct map_session_data *sd, unsigned short instance_id, const char *name, short x, short y);
 int instance_reqinfo(struct map_session_data *sd, unsigned short instance_id);
 int instance_addusers(unsigned short instance_id);
 int instance_delusers(unsigned short instance_id);
-int instance_mapname2mapid(const char *name, unsigned short instance_id);
+int16 instance_mapname2mapid(const char *name, unsigned short instance_id);
 int instance_addmap(unsigned short instance_id);
 
 void instance_addnpc(struct instance_data *im);

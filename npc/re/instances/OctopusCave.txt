@@ -119,7 +119,7 @@ mal_dun01,153,237,5	script	Weird Entrance	844,{
 	switch(select("Go in.:Stop.")) {
 	case 1:
 		if (countitem(6442)) {
-			switch(instance_enter()) {
+			switch(instance_enter("Octopus Cave")) {
 			case 3:
 				mes "[Starfish]";
 				mes "Ah, now is not the time...";

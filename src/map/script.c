@@ -18892,6 +18892,7 @@ BUILDIN_FUNC(instance_create)
 			case IM_GUILD:
 				if (sd)
 					owner_id = sd->status.guild_id;
+				break;
 			default:
 				ShowError("buildin_instance_create: Invalid instance mode (instance name: %s)\n", script_getstr(st, 2));
 				return SCRIPT_CMD_FAILURE;
@@ -18937,16 +18938,16 @@ BUILDIN_FUNC(instance_destroy)
 BUILDIN_FUNC(instance_enter)
 {
 	struct map_session_data *sd = NULL;
-	int x = script_hasdata(st,2) ? script_getnum(st, 2) : -1;
-	int y = script_hasdata(st,3) ? script_getnum(st, 3) : -1;
+	int x = script_hasdata(st,3) ? script_getnum(st, 3) : -1;
+	int y = script_hasdata(st,4) ? script_getnum(st, 4) : -1;
 
-	if (!script_charid2sd(4,sd))
+	if (!script_charid2sd(5,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if (x != -1 && y != -1)
-		script_pushint(st, instance_enter_position(sd, script_instancegetid(st), x, y));
+		script_pushint(st, instance_enter_position(sd, script_instancegetid(st), script_getstr(st, 2), x, y));
 	else
-		script_pushint(st, instance_enter(sd, script_instancegetid(st)));
+		script_pushint(st, instance_enter(sd, script_instancegetid(st), script_getstr(st, 2)));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -21917,7 +21918,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_create,"s??"),
 	BUILDIN_DEF(instance_destroy,"?"),
 	BUILDIN_DEF(instance_id,""),
-	BUILDIN_DEF(instance_enter,"???"),
+	BUILDIN_DEF(instance_enter,"s???"),
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(instance_mapname,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii?"),

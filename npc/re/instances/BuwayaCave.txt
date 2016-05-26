@@ -126,7 +126,7 @@ OnTouch:
 	}
 	switch(select("Enter.:Turn back.")) {
 	case 1:
-		switch(instance_enter()) {
+		switch(instance_enter("Buwaya Cave")) {
 		case 3:
 			mes "[Guard]";
 			mes "Oh, now is not a good time.";
