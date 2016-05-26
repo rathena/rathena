@@ -3000,10 +3000,10 @@
 4860,Evasion3,Flee+3,6,20,,10,,,,,,,,,,,,,{ bonus bFlee,3; },{},{}
 4861,MHP1,MaxHP+1%,6,20,,10,,,,,,,,,,,,,{ bonus bMaxHPrate,1; },{},{}
 4862,MHP2,MaxHP+2%,6,20,,10,,,,,,,,,,,,,{ bonus bMaxHPrate,2; },{},{}
-4863,Fatal1Lv,Fatal Lv1,6,10,,,,,,,,,,,,,,,{ bonus bCriticalRate,4; bonus bCritical,1; },{},{}
-4864,Fatal2Lv,Fatal Lv2,6,10,,,,,,,,,,,,,,,{ bonus bCriticalRate,6; bonus bCritical,2; },{},{}
-4865,Fatal3Lv,Fatal Lv3,6,10,,,,,,,,,,,,,,,{ bonus bCriticalRate,8; bonus bCritical,3; },{},{}
-4866,Fatal4Lv,Fatal Lv4,6,10,,,,,,,,,,,,,,,{ bonus bCriticalRate,10; bonus bCritical,4; },{},{}
+4863,Fatal1Lv,Fatal Lv1,6,10,,,,,,,,,,,,,,,{ bonus bCritAtkRate,4; bonus bCritical,1; },{},{}
+4864,Fatal2Lv,Fatal Lv2,6,10,,,,,,,,,,,,,,,{ bonus bCritAtkRate,6; bonus bCritical,2; },{},{}
+4865,Fatal3Lv,Fatal Lv3,6,10,,,,,,,,,,,,,,,{ bonus bCritAtkRate,8; bonus bCritical,3; },{},{}
+4866,Fatal4Lv,Fatal Lv4,6,10,,,,,,,,,,,,,,,{ bonus bCritAtkRate,10; bonus bCritical,4; },{},{}
 4867,MHP3,MaxHP+3%,6,20,,10,,,,,,,,,,,,,{ bonus bMaxHPrate,3; },{},{}
 4868,MHP4,MaxHP+4%,6,20,,10,,,,,,,,,,,,,{ bonus bMaxHPrate,4; },{},{}
 4869,DelayafterAttack1Lv,DelayAfterAttack Lv1,6,10,,,,,,,,,,,,,,,{ bonus bAspdRate,4; bonus bDelayrate,-4; },{},{}
