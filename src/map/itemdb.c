@@ -546,75 +546,87 @@ static bool itemdb_read_itemavail(char* str[], int columns, int current) {
 static int itemdb_group_free(DBKey key, DBData *data, va_list ap);
 
 static bool itemdb_read_group(char* str[], int columns, int current) {
-	DBData data;
 	int group_id = -1;
 	unsigned int j, prob = 1;
 	uint8 rand_group = 1;
 	struct s_item_group_random *random = NULL;
 	struct s_item_group_db *group = NULL;
 	struct s_item_group_entry entry;
-	bool found = false;
 
 	memset(&entry, 0, sizeof(entry));
 	entry.amount = 1;
 	entry.bound = BOUND_NONE;
 	
-	// Checking group_id
-	trim(str[0]);
-	if (ISDIGIT(str[0][0]))
+	str[0] = trim(str[0]);
+	if( ISDIGIT(str[0][0]) ){
 		group_id = atoi(str[0]);
-	else // Try reads group id by const
-		script_get_constant(trim(str[0]), &group_id);
+	}else{
+		// Try to parse group id as constant
+		script_get_constant(str[0], &group_id);
+	}
 
-	if (group_id < 0) {
-		//ShowWarning("itemdb_read_itemgroup: Invalid Group ID '%s' (%s:%d)\n", str[0], filename, ln);
+	// Check the group id
+	if( group_id < 0 ){
+		ShowWarning( "itemdb_read_group: Invalid group ID '%s'\n", str[0] );
 		return false;
 	}
 
 	// Remove from DB
-	if (strcmpi(str[1], "clear") == 0 && itemdb_group->remove(itemdb_group, db_ui2key(group_id), &data)) {
-		itemdb_group_free(db_ui2key(group_id), &data, 0);
-		ShowNotice("Item Group '%s' has been cleared.\n", str[0]);
-		return false;
+	if( strcmpi( str[1], "clear" ) == 0 ){
+		DBData data;
+
+		if( itemdb_group->remove( itemdb_group, db_ui2key(group_id), &data ) ){
+			itemdb_group_free( db_ui2key(group_id), &data, 0 );
+			ShowNotice( "itemdb_read_group: Item Group '%s' has been cleared.\n", str[0] );
+			return true;
+		}else{
+			ShowWarning( "itemdb_read_group: Item Group '%s' has not been cleared, because it did not exist.\n", str[0] );
+			return false;
+		}
 	}
 
 	// Checking sub group
 	prob = atoi(str[2]);
-	if (str[4] != NULL)
+
+	if( columns > 4 ){
 		rand_group = atoi(str[4]);
-	if (rand_group < 0 || rand_group > MAX_ITEMGROUP_RANDGROUP) {
-		//ShowWarning("itemdb_read_itemgroup: Invalid sub group '%d' for group '%s' in %s:%d\n", rand_group, str[0], filename, ln);
+
+		if( rand_group < 0 || rand_group > MAX_ITEMGROUP_RANDGROUP ){
+			ShowWarning( "itemdb_read_group: Invalid sub group '%d' for group '%s'\n", rand_group, str[0] );
+			return false;
+		}
+	}else{
+		rand_group = 1;
+	}
+
+	if( rand_group != 0 && prob < 1 ){
+		ShowWarning( "itemdb_read_group: Random item must have a probability. Group '%s'\n", str[0] );
 		return false;
 	}
 
-	if (rand_group != 0 && prob < 1) {
-		//ShowWarning("itemdb_read_itemgroup: Random item must has probability. Group '%s' in %s:%d\n", str[0], filename, ln);
-		return false;
-	}
+	// Check item
+	str[1] = trim(str[1]);
 
-	// Checking item
-	trim(str[1]);
-	if (ISDIGIT(str[1][0]) && ISDIGIT(str[1][1]) && itemdb_exists((entry.nameid = atoi(str[1]))))
-		found = true;
-	else {
+	// Check if the item can be found by id
+	if( ( entry.nameid = atoi(str[1]) ) <= 0 || !itemdb_exists( entry.nameid ) ){
+		// Otherwise look it up by name
 		struct item_data *id = itemdb_searchname(str[1]);
-		if (id) {
+
+		if( id ){
+			// Found the item with a name lookup
 			entry.nameid = id->nameid;
-			found = true;
+		}else{
+			ShowWarning( "itemdb_read_group: Non-existant item '%s'\n", str[1] );
+			return false;
 		}
 	}
 
-	if (!found) {
-		//ShowWarning("itemdb_read_itemgroup: Non-existant item '%s' in %s:%d\n", str[1], filename, ln);
-		return false;
-	}
-
-	if (str[3] != NULL) entry.amount = cap_value(atoi(str[3]),1,MAX_AMOUNT);
-	if (str[5] != NULL) entry.isAnnounced= atoi(str[5]);
-	if (str[6] != NULL) entry.duration = cap_value(atoi(str[6]),0,UINT16_MAX);
-	if (str[7] != NULL) entry.GUID = atoi(str[7]);
-	if (str[8] != NULL) entry.bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
-	if (str[9] != NULL) entry.isNamed = atoi(str[9]);
+	if( columns > 3 ) entry.amount = cap_value(atoi(str[3]),1,MAX_AMOUNT);
+	if( columns > 5 ) entry.isAnnounced= atoi(str[5]);
+	if( columns > 6 ) entry.duration = cap_value(atoi(str[6]),0,UINT16_MAX);
+	if( columns > 7 ) entry.GUID = atoi(str[7]);
+	if( columns > 8 ) entry.bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
+	if( columns > 9 ) entry.isNamed = atoi(str[9]);
 	
 	if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
 		CREATE(group, struct s_item_group_db, 1);
