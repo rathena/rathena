@@ -4445,22 +4445,6 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 #endif
 			}
 		}
-		if (!skill_id) {
-			if (sc->data[SC_ENCHANTBLADE]) {
-				//[((Skill Lv x 20) + 100) x (casterBaseLevel / 150)] + casterInt
-				int64 enchant_dmg = (sc->data[SC_ENCHANTBLADE]->val1 * 20 + 100) * status_get_lv(src) / 150 + status_get_int(src);
-
-				enchant_dmg = enchant_dmg - (tstatus->mdef + tstatus->mdef2);
-				if (sstatus->matk_max > sstatus->matk_min)
-					enchant_dmg = enchant_dmg + sstatus->matk_min + rnd()%(sstatus->matk_max - sstatus->matk_min);
-				else
-					enchant_dmg = enchant_dmg + sstatus->matk_min;
-				if (enchant_dmg > 0) {
-					ATK_ADD(wd.damage, wd.damage2, enchant_dmg);
-					RE_ALLATK_ADD(wd, enchant_dmg);
-				}
-			}
-		}
 		if (sc->data[SC_GLOOMYDAY_SK] && (inf3&INF3_SC_GLOOMYDAY_SK)) {
 			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_GLOOMYDAY_SK]->val2);
 			RE_ALLATK_ADDRATE(wd, sc->data[SC_GLOOMYDAY_SK]->val2);
@@ -5022,6 +5006,20 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 			} else
 				hp = 2*hp/100; //2% hp loss per hit
 			status_zap(src, hp, 0);
+		}
+		// Only affecting non-skills
+		if (!skill_id) {
+			if (sc->data[SC_ENCHANTBLADE]) {
+				//[((Skill Lv x 20) + 100) x (casterBaseLevel / 150)] + casterInt + MATK - MDEF - MDEF2
+				int64 enchant_dmg = sc->data[SC_ENCHANTBLADE]->val2;
+				if (sstatus->matk_max > sstatus->matk_min)
+					enchant_dmg = enchant_dmg + sstatus->matk_min + rnd() % (sstatus->matk_max - sstatus->matk_min);
+				else
+					enchant_dmg = enchant_dmg + sstatus->matk_min;
+				enchant_dmg = enchant_dmg - (tstatus->mdef + tstatus->mdef2);
+				if (enchant_dmg > 0)
+					ATK_ADD(wd.damage, wd.damage2, enchant_dmg);
+			}
 		}
 		status_change_end(src,SC_CAMOUFLAGE, INVALID_TIMER);
 	}

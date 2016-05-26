@@ -8801,7 +8801,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case RK_ENCHANTBLADE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,100,skill_lv,(100+20*skill_lv)*(status_get_lv(src)/150)+sstatus->int_,skill_get_time(skill_id,skill_lv)));
+			sc_start2(src,bl,type,100,skill_lv,((100+20*skill_lv)*status_get_lv(src))/150+sstatus->int_,skill_get_time(skill_id,skill_lv)));
 		break;
 	case RK_DRAGONHOWLING:
 		if( flag&1)
