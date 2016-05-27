@@ -707,9 +707,11 @@ static void itemdb_read_itemgroup(const char* basedir, bool silent) {
 */
 static bool itemdb_read_noequip(char* str[], int columns, int current) {
 	unsigned short nameid;
+	int flag;
 	struct item_data *id;
 
 	nameid = atoi(str[0]);
+	flag = atoi(str[1]);
 
 	if( ( id = itemdb_exists(nameid) ) == NULL )
 	{
@@ -717,7 +719,10 @@ static bool itemdb_read_noequip(char* str[], int columns, int current) {
 		return false;
 	}
 
-	id->flag.no_equip |= atoi(str[1]);
+	if (flag >= 0)
+		id->flag.no_equip |= flag;
+	else
+		id->flag.no_equip &= ~abs(flag);
 
 	return true;
 }
