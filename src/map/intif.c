@@ -582,7 +582,7 @@ int intif_party_addmember(int party_id,struct party_member *member)
 {
 	if (CheckForCharServer())
 		return 0;
-	WFIFOHEAD(inter_fd,42);
+	WFIFOHEAD(inter_fd,8+sizeof(struct party_member));
 	WFIFOW(inter_fd,0)=0x3022;
 	WFIFOW(inter_fd,2)=8+sizeof(struct party_member);
 	WFIFOL(inter_fd,4)=party_id;
