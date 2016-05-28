@@ -5514,6 +5514,7 @@ Can only be removed when you die or the duration ends.
 
 'transform' and 'active_transform' can stack on each other but using 'transform' or
 'active_transform' twice will not stack (it will cancel the previous bonus for the new).
+'active_transform' will take priority over transform for its duration.
 
 ---------------------------------------
 \\
