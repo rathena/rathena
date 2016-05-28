@@ -4164,19 +4164,19 @@ static bool mob_readdb_group(char* str[], int columns, int current){
 	if (ISDIGIT(str[0][0]) && ISDIGIT(str[0][1]))
 		group = atoi(str[0]);
 	else if (!script_get_constant(str[0], &group)) {
-		//ShowError("mob_read_randommonster_sub: Invalid random monster group '%s' at line '%s'.\n", str[0], line);
+		ShowError("mob_readdb_group: Invalid random monster group '%s'\n", str[0]);
 		return false;
 	}
 
 	mob_id = atoi(str[1]);
 	if (mob_id != 0 && mob_db(mob_id) == mob_dummy) {
-		//ShowError("mob_read_randommonster_sub: Invalid random monster group '%s' at line '%s'.\n", str[0], line);
+		ShowError("mob_readdb_group: Invalid random monster group '%s'\n", str[0]);
 		return false;
 	}
 	else if (mob_id == 0){
 		mob_id = atoi(str[3]);
 		if (mob_db(mob_id) == mob_dummy) {
-			//ShowError("mob_read_randommonster_sub: Invalid random monster group '%s' at line '%s'.\n", str[0], line);
+			ShowError("mob_readdb_group: Invalid random monster group '%s'\n", str[0]);
 			return false;
 		}
 		set_default = true;
