@@ -128,12 +128,12 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		mes "...";
 		mes "......";
 		next;
-		changequest 8007,8008;
 		mes "[Assassin Expert 'Huey']";
 		mes "Alright!";
 		mes "You've been approved!";
 		next;
 		delitem 1008,1; //Frozen_Heart
+		changequest 8007,8008;
 		completequest 8008;
 		callfunc "Job_Change",Job_Assassin;
 		callfunc "F_ClearJobVar";		// clears all job variables for the current player
