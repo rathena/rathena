@@ -50,6 +50,7 @@
 //= 3.5 Fixed the waitingroom where player can enter the Test Area without passing the written exam. Now player will not be warp inside the Test Area when did not passed the written exam instead the player will be warp back to the written exam entrance [JayPee]
 //= 3.6 Fixed broken event calls. [Euphy]
 //= 3.7 Fixed issue that the player can't progress in the quest if timed out at weapon reward step. This issue is fixed on iRO but not on kRO. [https://forums.warpportal.com/index.php?/topic/130060-didnt-receive-necklace-of-oblivion-when-changing-assassin/#entry1496042] [MrAntares]
+//= 3.8 Another 'unofficial fix'. Player can't change job if time out after the necklace is deleted.
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -127,12 +128,12 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		mes "...";
 		mes "......";
 		next;
-		delitem 1008,1; //Frozen_Heart
 		changequest 8007,8008;
 		mes "[Assassin Expert 'Huey']";
 		mes "Alright!";
 		mes "You've been approved!";
 		next;
+		delitem 1008,1; //Frozen_Heart
 		completequest 8008;
 		callfunc "Job_Change",Job_Assassin;
 		callfunc "F_ClearJobVar";		// clears all job variables for the current player
