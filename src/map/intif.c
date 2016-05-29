@@ -1293,11 +1293,11 @@ int mapif_parse_WisToGM(int fd)
 	char *message;
 
 	mes_len =  RFIFOW(fd,2) - 8+NAME_LENGTH;
-	message = (char *) aMalloc(mes_len);
+	message = (char *) aMalloc(mes_len+1);
 
 	permission = RFIFOL(fd,4+NAME_LENGTH);
 	safestrncpy(Wisp_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
-	safestrncpy(message, (char*)RFIFOP(fd,8+NAME_LENGTH), mes_len);
+	safestrncpy(message, (char*)RFIFOP(fd,8+NAME_LENGTH), mes_len+1);
 	// information is sent to all online GM
 	map_foreachpc(mapif_parse_WisToGM_sub, permission, Wisp_name, message, mes_len);
 	aFree(message);
