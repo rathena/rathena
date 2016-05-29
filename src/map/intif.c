@@ -479,7 +479,7 @@ int intif_request_registry(struct map_session_data *sd, int flag)
 	if (CheckForCharServer())
 		return 0;
 
-	WFIFOHEAD(inter_fd,6);
+	WFIFOHEAD(inter_fd,13);
 	WFIFOW(inter_fd,0) = 0x3005;
 	WFIFOL(inter_fd,2) = sd->status.account_id;
 	WFIFOL(inter_fd,6) = sd->status.char_id;
@@ -582,7 +582,7 @@ int intif_party_addmember(int party_id,struct party_member *member)
 {
 	if (CheckForCharServer())
 		return 0;
-	WFIFOHEAD(inter_fd,42);
+	WFIFOHEAD(inter_fd,8+sizeof(struct party_member));
 	WFIFOW(inter_fd,0)=0x3022;
 	WFIFOW(inter_fd,2)=8+sizeof(struct party_member);
 	WFIFOL(inter_fd,4)=party_id;

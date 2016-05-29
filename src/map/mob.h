@@ -21,7 +21,7 @@
 #define MAX_MVP_DROP 3
 #define MAX_STEAL_DROP 7
 
-#define MAX_RACE2_MOBS 50
+#define MAX_RACE2_MOBS 100
 
 //Min time between AI executions
 #define MIN_MOBTHINKTIME 100

@@ -483,7 +483,7 @@ ACMD_FUNC(mapmove)
 		clif_displaymessage(fd, msg_txt(sd,248));
 		return -1;
 	}
-	if (pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) != 0) {
+	if (pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) != SETPOS_OK) {
 		clif_displaymessage(fd, msg_txt(sd,1)); // Map not found.
 		return -1;
 	}
@@ -1322,37 +1322,40 @@ ACMD_FUNC(item2)
 	if (item_id > 500) {
 		int loop, get_count, i;
 		char flag = 0;
-		loop = 1;
-		get_count = number;
-		if (item_data->type == IT_WEAPON || item_data->type == IT_ARMOR ||
-			item_data->type == IT_PETEGG || item_data->type == IT_PETARMOR) {
+
+		//Check if it's stackable.
+		if(!itemdb_isstackable2(item_data)){
 			loop = number;
 			get_count = 1;
-			if (item_data->type == IT_PETEGG) {
-				identify = 1;
-				refine = 0;
-			}
-			if (item_data->type == IT_PETARMOR)
-				refine = 0;
-			if (refine > MAX_REFINE)
-				refine = MAX_REFINE;
-		} else {
+		}else{
+			loop = 1;
+			get_count = number;
+		}
+
+		if( itemdb_isequip2(item_data ) ){
+			refine = cap_value( refine, 0, MAX_REFINE );
+		}else{
+			// All other items cannot be refined and are always identified
 			identify = 1;
 			refine = attr = 0;
 		}
+
 		for (i = 0; i < loop; i++) {
-			memset(&item_tmp, 0, sizeof(item_tmp));
-			item_tmp.nameid = item_id;
-			item_tmp.identify = identify;
-			item_tmp.refine = refine;
-			item_tmp.attribute = attr;
-			item_tmp.card[0] = c1;
-			item_tmp.card[1] = c2;
-			item_tmp.card[2] = c3;
-			item_tmp.card[3] = c4;
-			item_tmp.bound = bound;
-			if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
-				clif_additem(sd, 0, 0, flag);
+			// if not pet egg
+			if (!pet_create_egg(sd, item_id)) {
+				memset(&item_tmp, 0, sizeof(item_tmp));
+				item_tmp.nameid = item_id;
+				item_tmp.identify = identify;
+				item_tmp.refine = refine;
+				item_tmp.attribute = attr;
+				item_tmp.card[0] = c1;
+				item_tmp.card[1] = c2;
+				item_tmp.card[2] = c3;
+				item_tmp.card[3] = c4;
+				item_tmp.bound = bound;
+				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
+					clif_additem(sd, 0, 0, flag);
+			}
 		}
 
 		if (flag == 0)
@@ -2032,7 +2035,7 @@ ACMD_FUNC(go)
 			clif_displaymessage(fd, msg_txt(sd,248));
 			return -1;
 		}
-		if (pc_setpos(sd, mapindex_name2id(data[town].map), data[town].x, data[town].y, CLR_TELEPORT) == 0) {
+		if (pc_setpos(sd, mapindex_name2id(data[town].map), data[town].x, data[town].y, CLR_TELEPORT) == SETPOS_OK) {
 			clif_displaymessage(fd, msg_txt(sd,0)); // Warped.
 		} else {
 			clif_displaymessage(fd, msg_txt(sd,1)); // Map not found.
@@ -2901,7 +2904,11 @@ ACMD_FUNC(recall) {
 	if (pl_sd->bl.m == sd->bl.m && pl_sd->bl.x == sd->bl.x && pl_sd->bl.y == sd->bl.y) {
 		return -1;
 	}
-	pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
+	if( pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN) == SETPOS_AUTOTRADE ){
+		clif_displaymessage(fd, msg_txt(sd,1025)); // The player is currently autotrading and cannot be recalled.
+		return -1;
+	}
+
 	sprintf(atcmd_output, msg_txt(sd,46), pl_sd->status.name); // %s recalled!
 	clif_displaymessage(fd, atcmd_output);
 
@@ -3605,11 +3612,9 @@ ACMD_FUNC(recallall)
 			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE))
 				count++;
 			else {
-				if (pc_isdead(pl_sd)) { //Wake them up
-					pc_setstand(pl_sd, true);
-					pc_setrestartvalue(pl_sd,1);
+				if( pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN) == SETPOS_AUTOTRADE ){
+					count++;
 				}
-				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
 			}
 		}
 	}
@@ -3667,8 +3672,11 @@ ACMD_FUNC(guildrecall)
 				continue; // Skip GMs greater than you...             or chars already on the cell
 			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE))
 				count++;
-			else
-				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
+			else{
+				if( pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN) == SETPOS_AUTOTRADE ){
+					count++;
+				}
+			}
 		}
 	}
 	mapit_free(iter);
@@ -3726,8 +3734,11 @@ ACMD_FUNC(partyrecall)
 				continue; // Skip GMs greater than you...             or chars already on the cell
 			if (pl_sd->bl.m >= 0 && map[pl_sd->bl.m].flag.nowarp && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE))
 				count++;
-			else
-				pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN);
+			else{
+				if( pc_setpos(pl_sd, sd->mapindex, sd->bl.x, sd->bl.y, CLR_RESPAWN) == SETPOS_AUTOTRADE ){
+					count++;
+				}
+			}
 		}
 	}
 	mapit_free(iter);
@@ -4446,7 +4457,7 @@ ACMD_FUNC(tonpc)
 	}
 
 	if ((nd = npc_name2id(npcname)) != NULL) {
-		if (pc_setpos(sd, map_id2index(nd->bl.m), nd->bl.x, nd->bl.y, CLR_TELEPORT) == 0)
+		if (pc_setpos(sd, map_id2index(nd->bl.m), nd->bl.x, nd->bl.y, CLR_TELEPORT) == SETPOS_OK)
 			clif_displaymessage(fd, msg_txt(sd,0)); // Warped.
 		else
 			return -1;
@@ -4907,7 +4918,7 @@ ACMD_FUNC(disguise)
 		return -1;
 	}
 
-	if (sd->sc.data[SC_MONSTER_TRANSFORM]) {
+	if (sd->sc.data[SC_MONSTER_TRANSFORM] || sd->sc.data[SC_ACTIVE_MONSTER_TRANSFORM]) {
 		clif_displaymessage(fd, msg_txt(sd,730)); // Character cannot be disguised while in monster transform.
 		return -1;
 	}
@@ -5653,7 +5664,7 @@ ACMD_FUNC(skilltree)
 {
 	struct map_session_data *pl_sd = NULL;
 	uint16 skill_id;
-	int meets, j, c=0;
+	int meets, i, j, c=0;
 	char target[NAME_LENGTH];
 	struct skill_tree_entry *ent;
 	nullpo_retr(-1, sd);
@@ -5669,11 +5680,13 @@ ACMD_FUNC(skilltree)
 		return -1;
 	}
 
-	c = pc_calc_skilltree_normalize_job(pl_sd);
-	c = pc_mapid2jobid(c, pl_sd->status.sex);
+	i = pc_calc_skilltree_normalize_job(pl_sd);
+	c = pc_mapid2jobid(i, pl_sd->status.sex);
 
 	sprintf(atcmd_output, msg_txt(sd,1168), job_name(c), pc_checkskill(pl_sd, NV_BASIC)); // Player is using %s skill tree (%d basic points).
 	clif_displaymessage(fd, atcmd_output);
+
+	c = pc_class2idx(c);
 
 	ARR_FIND( 0, MAX_SKILL_TREE, j, skill_tree[c][j].id == 0 || skill_tree[c][j].id == skill_id );
 	if( j == MAX_SKILL_TREE || skill_tree[c][j].id == 0 )

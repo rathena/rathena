@@ -415,7 +415,7 @@
 286,2,6,2,1,0x1,0,5,1,yes,0,0,0,magic,0,0x1000,		SA_DELUGE,Deluge
 287,2,6,2,4,0x1,0,5,1,yes,0,0,0,magic,0,0x1000,		SA_VIOLENTGALE,Whirlwind
 288,2,6,2,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,		SA_LANDPROTECTOR,Magnetic Earth
-289,9,6,1,0,0x1,0:0:0:0:0:-1,5,1,yes,0,0xE00,0,magic,0,0x20,	SA_DISPELL,Dispell
+289,9,6,1,0,0x1,0:0:0:0:0:-1,5,1,yes,0,0xE00,0,magic,0,0x10020,	SA_DISPELL,Dispell
 290,0,6,4,0,0x1,0,10,1,yes,0,0,0,magic,0,0x0,	SA_ABRACADABRA,Hocus-pocus
 291,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0,0x0,	SA_MONOCELL,Monocell
 292,9,6,1,0,0x1,0,1,1,yes,0,0x2,0,magic,0,0x0,	SA_CLASSCHANGE,Class Change
@@ -576,7 +576,7 @@
 // Clown & Gypsy
 394,9,8,1,-1,0,0,10,-9,yes,0,0,0,weapon,0,0x0,	CG_ARROWVULCAN,Vulcan Arrow
 395,0,0,4,0,0x1,3,1,1,yes,0,0x40,0,misc,2,0x0,	CG_MOONLIT,Sheltering Bliss
-396,1,6,16,0,0x1,0,1,1,yes,0,0x600,0,none,0,0x40,	CG_MARIONETTE,Marionette Control
+396,7,6,16,0,0x1,0,1,1,yes,0,0x600,0,none,0,0x40,	CG_MARIONETTE,Marionette Control
 
 //****
 // Lord Knight
@@ -778,7 +778,7 @@
 
 //****
 // Additional NPC Skills (Episode 11.3)
-653,0,8,4,0,0x6,5:7:9:11:13:5:7:9:11:13,10,1,no,0,0x40002,0,magic,0,0x0,	NPC_EARTHQUAKE,Earthquake
+653,0,8,4,0,0x26,5:7:9:11:13:5:7:9:11:13,10,1,no,0,0x40002,0,magic,0,0x1,	NPC_EARTHQUAKE,Earthquake
 654,6,6,1,3,0,3,10,1,no,0,0x2,14,weapon,0,0x0,	NPC_FIREBREATH,Fire Breath
 655,6,6,1,1,0,3,10,1,no,0,0x2,14,weapon,0,0x0,	NPC_ICEBREATH,Ice Breath
 656,6,6,1,4,0,3,10,1,no,0,0x2,14,weapon,0,0x0,	NPC_THUNDERBREATH,Thunder Breath
@@ -983,7 +983,7 @@
 2049,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		AB_EUCHARISTICA,Eucharistica
 2050,11,6,16,6,0x1,0,1,1,yes,0,0,0,magic,0,0x0,	AB_RENOVATIO,Renovatio
 2051,11,6,16,6,0x21,0,5,1,yes,0,0,0,magic,0,0x0,	AB_HIGHNESSHEAL,Highness Heal //CHECK Info shows this has magic attack.
-2052,11,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x20,	AB_CLEARANCE,Clearance //CHECK Also shows this as a magic attack. Why?
+2052,11,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x10020,	AB_CLEARANCE,Clearance //CHECK Also shows this as a magic attack. Why?
 2053,11,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	AB_EXPIATIO,Expiatio //CHECK Does this also give the buff to party members?
 2054,0,6,4,6,0x1,0,10,1,yes,0,0,0,none,0,0x0,	AB_DUPLELIGHT,Duple Light //CHECK Had issues adding a skill level check to make the % go higher with the skills level. Will do later.
 2055,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0x0,	AB_DUPLELIGHT_MELEE,Duple Light Melee
@@ -1242,7 +1242,7 @@
 //2551,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0,	RL_GLITTERING_GREED,Flip The Coin Greed
 2552,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	RL_RICHS_COIN,Rich's Coin
 2553,15,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RL_MASS_SPIRAL,Mass Spiral
-2554,9,6,1,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x20,	RL_BANISHING_BUSTER,Banishing Buster
+2554,9,6,1,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x10020,	RL_BANISHING_BUSTER,Banishing Buster
 2555,3,6,2,0,0x1,1,5,1,no,0,0,3,misc,0,0x0,	RL_B_TRAP,Bind Trap
 2556,0,6,4,0,0x3,-1,1,1,no,0,0,0,none,0,0x0,	RL_FLICKER,Flicker
 2557,9,6,1,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_S_STORM,Shatter Storm
@@ -1274,7 +1274,7 @@
 3006,7:8:9:10:11,6,2,-1,0x42,2,5,1,no,0,0,0,weapon,0,0x0,	KO_BAKURETSU,Kunai Explosion
 3007,0,6,4,-1,0x42,4:4:4:4:5,5,1,no,0,0,0,weapon,0,0x0,	KO_HAPPOKUNAI,Kunai Splash
 3008,11,8,2,0,0x56,1:1:1:1:1:1:1:1:1:2,10,-10,no,0,0,0,misc,0,0x0,	KO_MUCHANAGE,Rapid Throw
-3009,9:10:11:12:13,8,2,-1,0x2,3,5,2,no,0,0,0,weapon,0,0x0,	KO_HUUMARANKA,Swirling Petal
+3009,9:10:11:12:13,8,2,-1,0x2,3,5,-5,no,0,0,0,weapon,0,0x0,	KO_HUUMARANKA,Swirling Petal
 3010,3,6,4,0,0x52,0,5,1,no,0,0x80,0,weapon,0,0x10,	KO_MAKIBISHI,Makibishi
 3011,0,6,4,0,0x1,0,5,0,yes,0,0,0,none,0,0x0,	KO_MEIKYOUSISUI,Pure Soul
 3012,0,6,4,0,0x1,0,5,0,no,0,0,1,none,3:4:5:6:7,0x0,	KO_ZANZOU,Illusion - Shadow

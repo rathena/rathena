@@ -1016,6 +1016,7 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_DEFSET] = SI_SET_NUM_DEF;
 	StatusIconChangeTable[SC_MDEFSET] = SI_SET_NUM_MDEF;
 	StatusIconChangeTable[SC_MONSTER_TRANSFORM] = SI_MONSTER_TRANSFORM;
+	StatusIconChangeTable[SC_ACTIVE_MONSTER_TRANSFORM] = SI_ACTIVE_MONSTER_TRANSFORM;
 	StatusIconChangeTable[SC_ALL_RIDING] = SI_ALL_RIDING;
 	StatusIconChangeTable[SC_PUSH_CART] = SI_ON_PUSH_CART;
 	StatusIconChangeTable[SC_MTF_ASPD] = SI_MTF_ASPD;
@@ -1221,7 +1222,8 @@ void initChangeTables(void)
 	StatusDisplayType[SC__MANHOLE]		  = true;
 	StatusDisplayType[SC_JYUMONJIKIRI]	  = true;
 	StatusDisplayType[SC_AKAITSUKI]		  = true;
-	StatusDisplayType[SC_MONSTER_TRANSFORM]	  = true;
+	StatusDisplayType[SC_MONSTER_TRANSFORM] = true;
+	StatusDisplayType[SC_ACTIVE_MONSTER_TRANSFORM] = true;
 	StatusDisplayType[SC_DARKCROW]		  = true;
 	StatusDisplayType[SC_OFFERTORIUM]	  = true;
 	StatusDisplayType[SC_TELEKINESIS_INTENSE] = true;
@@ -2093,7 +2095,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	switch( target->type ) {
 		case BL_PC: {
 				struct map_session_data *tsd = (TBL_PC*)target;
-				bool is_boss = (status_get_class_(src) == CLASS_BOSS);
+				bool is_boss = (src && status_get_class_(src) == CLASS_BOSS);
 				bool is_detect = status_has_mode(status,MD_DETECTOR);
 
 				if (pc_isinvisible(tsd))
@@ -2304,13 +2306,17 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
  * @param status: Player status
  * @return weapon attack
  */
-unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status)
+unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd)
 {
-	float str = status->str;
+	float str = sd->base_status.str;
+	int weapon_atk_bonus = 0;
+
 	if (wa.range > 3)
-		str = status->dex;
-	// wa.at2 = refinement, wa.atk = base equip atk, wa.atk*str/200 = bonus str
-	return wa.atk + wa.atk2 + (int)(wa.atk * (str/200));
+		str = sd->base_status.dex;
+	if (sd->bonus.weapon_atk_rate)
+		weapon_atk_bonus = wa.atk * sd->bonus.weapon_atk_rate / 100;
+	// wa.atk2 = refinement, wa.atk = base equip atk, wa.atk*str/200 = bonus str
+	return wa.atk + wa.atk2 + (int)(wa.atk * (str/200) + weapon_atk_bonus);
 }
 #endif
 
@@ -3098,7 +3104,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->weapon_coma_race)
 		+ sizeof(sd->weapon_coma_class)
 		+ sizeof(sd->weapon_atk)
-		+ sizeof(sd->weapon_atk_rate)
+		+ sizeof(sd->weapon_damage_rate)
 		+ sizeof(sd->arrow_addele)
 		+ sizeof(sd->arrow_addrace)
 		+ sizeof(sd->arrow_addclass)
@@ -3247,6 +3253,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 				wa->atk2 = refine_info[wlv].bonus[r-1] / 100;
 #ifdef RENEWAL
 			wa->matk += sd->inventory_data[index]->matk;
+			if (sd->bonus.weapon_matk_rate)
+				wa->matk += sd->inventory_data[index]->matk * sd->bonus.weapon_matk_rate / 100;
 			wa->wlv = wlv;
 			if(r && sd->weapontype1 != W_BOW) // Renewal magic attack refine bonus
 				wa->matk += refine_info[wlv].bonus[r-1] / 100;
@@ -3497,8 +3505,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	if((skill=pc_checkskill(sd,BS_HILTBINDING))>0)
 		base_status->batk += 4;
 #else
-	base_status->watk = status_weapon_atk(base_status->rhw, base_status);
-	base_status->watk2 = status_weapon_atk(base_status->lhw, base_status);
+	base_status->watk = status_weapon_atk(base_status->rhw, sd);
+	base_status->watk2 = status_weapon_atk(base_status->lhw, sd);
 	base_status->eatk = max(sd->bonus.eatk,0);
 #endif
 
@@ -4469,6 +4477,8 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		if (!sd) // Should not affect weapon refine bonus
 			status->rhw.atk2 = status_calc_watk(bl, sc, b_status->rhw.atk2);
 
+		if (sd && sd->bonus.weapon_atk_rate)
+			status->rhw.atk += status->rhw.atk * sd->bonus.weapon_atk_rate / 100;
 		if(b_status->lhw.atk) {
 			if (sd) {
 				sd->state.lr_flag = 1;
@@ -10203,11 +10213,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			clif_status_change(bl,SI_ACTIVE_MONSTER_TRANSFORM,1,0,1002,0,0);
 			break;
 		case SC_KAGEMUSYA:
-			val3 = val1 * 2;
-		case SC_IZAYOI:
 			val2 = tick/1000;
-			if( type == SC_IZAYOI )
-				tick = -1; // Duration sent to the client should be infinite
+			val3 = val1 * 2;
 			tick_time = 1000;
 			break;
 		case SC_ZANGETSU:
@@ -10350,6 +10357,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			status_change_start(bl, bl, SC_MDEFSET, 10000, 1, 0, 0, 0, tick, SCSTART_NOTICKDEF);
 			break;
 		case SC_MONSTER_TRANSFORM:
+		case SC_ACTIVE_MONSTER_TRANSFORM:
 			if( !mobdb_checkid(val1) )
 				val1 = MOBID_PORING; // Default poring
 			break;
@@ -10513,6 +10521,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SPHERE_5:
 		case SC_LIGHTNINGWALK:
 		case SC_MONSTER_TRANSFORM:
+		case SC_ACTIVE_MONSTER_TRANSFORM:
 		case SC_EXPBOOST:
 		case SC_JEXPBOOST:
 		case SC_ITEMBOOST:
@@ -11488,7 +11497,12 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					status_change_end(tbl, SC_STOP, INVALID_TIMER);
 			}
 			break;
+		case SC_TENSIONRELAX:
+			if (sc && (sc->data[SC_WEIGHT50] || sc->data[SC_WEIGHT90]))
+				status_get_regen_data(bl)->state.overweight = 1; // Add the overweight flag back
+			break;
 		case SC_MONSTER_TRANSFORM:
+		case SC_ACTIVE_MONSTER_TRANSFORM:
 			if (sce->val2)
 				status_change_end(bl, (sc_type)sce->val2, INVALID_TIMER);
 			break;
@@ -12663,7 +12677,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			return 0;
 		}
 		break;
-	case SC_IZAYOI:
 	case SC_KAGEMUSYA:
 		if( --(sce->val2) >= 0 ) {
 			if(!status_charge(bl, 0, 1)) break;
@@ -12753,7 +12766,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 	case SC_FRESHSHRIMP:
 		if (--(sce->val4) >= 0) {
-			status_heal(bl, status->max_hp / 100, 0, 2);
+			status_heal(bl, status->max_hp * 4 / 100, 0, 2);
 			sc_timer_next((10000 - ((sce->val1 - 1) * 1000)) + tick, status_change_timer, bl->id, data);
 		}
 		break;
@@ -12935,6 +12948,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_VITALITYACTIVATION:
 			case SC_FIGHTINGSPIRIT:
 			case SC_ABUNDANCE:
+			case SC_CRUSHSTRIKE:
 			case SC_SAVAGE_STEAK:
 			case SC_COCKTAIL_WARG_BLOOD:
 			case SC_MINOR_BBQ:
@@ -12947,6 +12961,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_ALL_RIDING:
 			case SC_STYLE_CHANGE:
 			case SC_MONSTER_TRANSFORM:
+			case SC_ACTIVE_MONSTER_TRANSFORM:
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
 			case SC_MTF_ASPD:

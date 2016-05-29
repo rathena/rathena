@@ -182,6 +182,8 @@
 
 	export_constant(JOB_REBELLION);
 
+	export_constant(JOB_SUMMONER);
+
 	/* EA jobs */
 	script_set_constant("EAJL_2_1",JOBL_2_1,false);
 	script_set_constant("EAJL_2_2",JOBL_2_2,false);
@@ -316,6 +318,8 @@
 	script_set_constant("EAJ_SUPER_BABY",MAPID_SUPER_BABY,false);
 	script_set_constant("EAJ_SUPER_NOVICE_E",MAPID_SUPER_NOVICE_E,false);
 	script_set_constant("EAJ_SUPER_BABY_E",MAPID_SUPER_BABY_E,false);
+
+	script_set_constant("EAJ_SUMMONER",MAPID_SUMMONER,false);
 
 	/* broadcasts */
 	export_constant(BC_ALL);
@@ -505,9 +509,11 @@
 	script_set_constant("bDoubleAddRate",SP_DOUBLE_ADD_RATE,false);
 	script_set_constant("bSkillHeal",SP_SKILL_HEAL,false);
 	script_set_constant("bMatkRate",SP_MATK_RATE,false);
+	script_set_constant("bWeaponMatkRate",SP_WEAPON_MATK_RATE,false);
 	script_set_constant("bIgnoreDefEle",SP_IGNORE_DEF_ELE,false);
 	script_set_constant("bIgnoreDefRace",SP_IGNORE_DEF_RACE,false);
 	script_set_constant("bAtkRate",SP_ATK_RATE,false);
+	script_set_constant("bWeaponAtkRate",SP_WEAPON_ATK_RATE,false);
 	script_set_constant("bSpeedAddRate",SP_SPEED_ADDRATE,false);
 	script_set_constant("bSPRegenRate",SP_SP_REGEN_RATE,false);
 	script_set_constant("bMagicAtkDef",SP_MAGIC_ATK_DEF,false);
@@ -560,7 +566,7 @@
 	script_set_constant("bHPDrainValue",SP_HP_DRAIN_VALUE,false);
 	script_set_constant("bSPDrainValue",SP_SP_DRAIN_VALUE,false);
 	script_set_constant("bWeaponAtk",SP_WEAPON_ATK,false);
-	script_set_constant("bWeaponAtkRate",SP_WEAPON_ATK_RATE,false);
+	script_set_constant("bWeaponDamageRate",SP_WEAPON_DAMAGE_RATE,false);
 	script_set_constant("bDelayrate",SP_DELAYRATE,false);
 	script_set_constant("bHPDrainValueRace",SP_HP_DRAIN_VALUE_RACE,false);
 	script_set_constant("bSPDrainValueRace",SP_SP_DRAIN_VALUE_RACE,false);
@@ -652,6 +658,8 @@
 	script_set_constant("bSubDefEle",SP_SUBDEF_ELE,false);
 	script_set_constant("bStateNoRecoverRace",SP_STATE_NORECOVER_RACE,false);
 	script_set_constant("bCriticalLong",SP_CRITICAL_RANGEATK,false);
+	script_set_constant("bMagicAddRace2", SP_MAGIC_ADDRACE2, false);
+	script_set_constant("bIgnoreMdefRace2Rate", SP_IGNORE_MDEF_RACE2_RATE, false);
 
 	/* equip positions */
 	export_constant(EQI_HEAD_TOP);
@@ -1353,6 +1361,7 @@
 	export_constant(SC_TUNAPARTY);
 	export_constant(SC_SHRIMP);
 	export_constant(SC_FRESHSHRIMP);
+	export_constant(SC_ACTIVE_MONSTER_TRANSFORM);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -2414,6 +2423,7 @@
 	export_constant(RC2_GVG);
 	export_constant(RC2_BATTLEFIELD);
 	export_constant(RC2_TREASURE);
+	export_constant(RC2_BIOLAB);
 
 	/* classes */
 	export_constant(CLASS_NORMAL);
@@ -3052,6 +3062,12 @@
 	export_constant(DIR_SOUTHEAST);
 	export_constant(DIR_EAST);
 	export_constant(DIR_NORTHEAST);
+
+	/* instance modes */
+	export_constant(IM_NONE);
+	export_constant(IM_CHAR);
+	export_constant(IM_PARTY);
+	export_constant(IM_GUILD);
 
 	#undef export_constant
 

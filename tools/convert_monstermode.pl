@@ -46,8 +46,9 @@ sub convertmode {
 		$bits |= 64;
 	}
 
-	if ($mexp > 0) # MD_MVP
+	if ($mexp > 0) { # MD_MVP
 		$bits |= 524288;
+	}
 
 	return $bits;
 }
@@ -124,9 +125,11 @@ sub Main {
 				}
 			}
 			if(scalar(@champ>0)){
-				$mode = $champ[25];
-				$mexp = $champ[30];
-				$champ[25] = sprintf("0x%X", convertmode($mode, $mexp));
+				if($champ[25] =~ /^0[xX]/) {
+					$champ[25] = sprintf("0x%X", convertmode($champ[25], $champ[30]));
+				} else {
+					$champ[25] = sprintf("0x%X", convertmode(sprintf("0x%X", $champ[25]), $champ[30]));
+				}
 				my $newline = join(",",@champ);
 				print FHOUT $newline;
 			}

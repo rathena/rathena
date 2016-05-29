@@ -1475,12 +1475,12 @@ OnEnable:
 	areamonster .@map$,124,20,31,162,"Fallen Abyss Knight",2470,8,.@label$;
 	areamonster .@map$,124,20,31,162,"Suffering Khalitzburg",2471,8,.@label$;
 	areamonster .@map$,124,20,31,162,"Swollen Knight",2472,8,.@label$;
-	set .MyMobs,80;
+	set 'MyMobs,80;
 	end;
 OnMyMobDead:
 	set .@map$, instance_mapname("2@gl_k");
-	set .MyMobs, .MyMobs-1;
-	if (.MyMobs == 0) {
+	set 'MyMobs, 'MyMobs-1;
+	if ('MyMobs == 0) {
 		mapannounce .@map$, "A being with an evil aura seems to be appearing in this region.",bc_map,"0xFFFF00";
 		donpcevent instance_npcname("#ghmemorialmob06")+"::OnDisable2";
 		donpcevent instance_npcname("#ghmemorialmob07")+"::OnEnable";
@@ -1584,12 +1584,12 @@ OnEnable:
 	areamonster .@map$,175,163,265,18,"Fallen Abyss Knight",2470,7,.@label$;
 	areamonster .@map$,175,163,265,18,"Suffering Khalitzburg",2471,7,.@label$;
 	areamonster .@map$,175,163,265,18,"Swollen Knight",2472,7,.@label$;
-	set .MyMobs,35;
+	set 'MyMobs,35;
 	end;
 OnMyMobDead:
 	set .@map$, instance_mapname("2@gl_k");
-	set .MyMobs, .MyMobs-1;
-	if (.MyMobs == 0) {
+	set 'MyMobs, 'MyMobs-1;
+	if ('MyMobs == 0) {
 		mapannounce .@map$, "A being with an evil aura seems to be appearing in this region.",bc_map,"0xFFFF00";
 		donpcevent instance_npcname("#ghmemorialmob09")+"::OnEnable";
 		donpcevent instance_npcname("#ghmemorialmob08")+"::OnDisable";

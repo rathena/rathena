@@ -1403,7 +1403,6 @@ int clif_spawn(struct block_list *bl)
 {
 	unsigned char buf[128];
 	struct view_data *vd;
-	struct status_change *sc = status_get_sc(bl);
 	int len;
 
 	vd = status_get_viewdata(bl);
@@ -1431,7 +1430,7 @@ int clif_spawn(struct block_list *bl)
 	case BL_PC:
 		{
 			TBL_PC *sd = ((TBL_PC*)bl);
-			int i;
+
 			if (sd->spiritball > 0)
 				clif_spiritball(&sd->bl);
 			if(sd->state.size==SZ_BIG) // tiny/big players [Valaris]
@@ -1442,14 +1441,9 @@ int clif_spawn(struct block_list *bl)
 				clif_sendbgemblem_area(sd);
 			if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 				clif_spiritcharm(sd);
-			for (i = 0; i < sd->sc_display_count; i++) {
-				if (sc && (sc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE|OPTION_CHASEWALK)))
-					clif_status_change2(&sd->bl,sd->bl.id,AREA,SI_BLANK,0,0,0);
-				else
-					clif_status_change2(&sd->bl,sd->bl.id,AREA,StatusIconChangeTable[sd->sc_display[i]->type],sd->sc_display[i]->val1,sd->sc_display[i]->val2,sd->sc_display[i]->val3);
-			}
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
+			clif_efst_status_change_sub(sd, bl, AREA);
 		}
 		break;
 	case BL_MOB:
@@ -4493,12 +4487,6 @@ static void clif_getareachar_pc(struct map_session_data* sd,struct map_session_d
 		clif_spiritball_single(sd->fd, dstsd);
 	if (dstsd->spiritcharm_type != CHARM_TYPE_NONE && dstsd->spiritcharm > 0)
 		clif_spiritcharm_single(sd->fd, dstsd);
-	for( i = 0; i < dstsd->sc_display_count; i++ ) {
-		if (dstsd->sc.option&(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE|OPTION_CHASEWALK))
-			clif_status_change2(&sd->bl, dstsd->bl.id, SELF, SI_BLANK, 0, 0, 0);
-		else
-			clif_status_change2(&sd->bl, dstsd->bl.id, SELF, StatusIconChangeTable[dstsd->sc_display[i]->type], dstsd->sc_display[i]->val1, dstsd->sc_display[i]->val2, dstsd->sc_display[i]->val3);
-	}
 	if( (sd->status.party_id && dstsd->status.party_id == sd->status.party_id) || //Party-mate, or hpdisp setting.
 		(sd->bg_id && sd->bg_id == dstsd->bg_id) || //BattleGround
 		pc_has_permission(sd, PC_PERM_VIEW_HPMETER)
@@ -4549,6 +4537,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 	case BL_PC:
 		{
 			TBL_PC* tsd = (TBL_PC*)bl;
+
 			clif_getareachar_pc(sd, tsd);
 			if(tsd->state.size==SZ_BIG) // tiny/big players [Valaris]
 				clif_specialeffect_single(bl,423,sd->fd);
@@ -4558,23 +4547,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 				clif_sendbgemblem_single(sd->fd,tsd);
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
-
-			if (!&tsd->sc)
-				break;
-			if( tsd->sc.data[SC_CAMOUFLAGE] )
-				clif_status_load(bl,SI_CAMOUFLAGE,1);
-			if( tsd->sc.data[SC_MONSTER_TRANSFORM] )
-				clif_status_change(bl,SI_MONSTER_TRANSFORM,1,0,tsd->sc.data[SC_MONSTER_TRANSFORM]->val1,0,0);
-			if( tsd->sc.data[SC_MOONSTAR] )
-				clif_status_load(bl,SI_MOONSTAR,1);
-			if( tsd->sc.data[SC_SUPER_STAR] )
-				clif_status_load(bl,SI_SUPER_STAR,1);
-			if( tsd->sc.data[SC_DECORATION_OF_MUSIC] )
-				clif_status_load(bl,SI_DECORATION_OF_MUSIC,1);
-			if( tsd->sc.data[SC_STRANGELIGHTS] )
-				clif_status_load(bl,SI_STRANGELIGHTS,1);
-			if( tsd->sc.data[SC_ALL_RIDING] )
-				clif_status_load(bl,SI_ALL_RIDING,1);
+			clif_efst_status_change_sub(sd, bl, SELF);
 		}
 		break;
 	case BL_MER: // Devotion Effects
@@ -5902,32 +5875,71 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 	clif_send(buf,packet_len(WBUFW(buf,0)),bl, (sd && sd->status.option&OPTION_INVISIBLE) ? SELF : AREA);
 }
 
+/**
+ * Send any active EFST to those around.
+ * @param sd: Player to send the packet to
+ * @param bl: Objects walking into view
+ * @param target: Client send type
+ */
+void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list *bl, enum send_target target) {
+	struct map_session_data *tsd = NULL;
+	unsigned char i;
 
-void clif_status_change2(struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3) {
+	nullpo_retv(sd);
+	nullpo_retv(bl);
+
+	if (target == SELF)
+		tsd = (TBL_PC *)bl;
+	else
+		tsd = sd;
+
+	for (i = 0; i < tsd->sc_display_count; i++) {
+		enum sc_type type = tsd->sc_display[i]->type;
+		struct status_change *sc = status_get_sc(bl);
+		const struct TimerData *td = (sc && sc->data[type] ? get_timer(sc->data[type]->timer) : NULL);
+		int tick = 0;
+
+		if (td)
+			tick = DIFF_TICK(td->tick, gettick());
+		clif_efst_status_change((target == SELF) ? &sd->bl : bl, bl->id, target, StatusIconChangeTable[type], tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3);
+	}
+}
+
+/// Notifies the client when a player enters the screen with an active EFST.
+/// 08ff <id>.L <index>.W <remain msec>.L { <val>.L }*3  (ZC_EFST_SET_ENTER) (PACKETVER >= 20111108)
+/// 0984 <id>.L <index>.W <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_EFST_SET_ENTER2) (PACKETVER >= 20120618)
+void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, int tick, int val1, int val2, int val3) {
 	unsigned char buf[32];
+#if PACKETVER >= 20120618
+	const int cmd = 0x984;
+#elif PACKETVER >= 20111108
+	const int cmd = 0x8ff;
+#endif
+	int offset = 0;
 
-	if (type == SI_BLANK) //It shows nothing on the client
+	if (type == SI_BLANK)
 		return;
 
 	nullpo_retv(bl);
 
-	WBUFW(buf,0) = 0x43f;
-	WBUFW(buf,2) = type;
-	WBUFL(buf,4) = tid;
-	WBUFB(buf,8) = 1;
-	WBUFL(buf,9) = 9999;
-	WBUFL(buf,13) = val1;
-	WBUFL(buf,17) = val2;
-	WBUFL(buf,21) = val3;
-	clif_send(buf,packet_len(0x43f),bl,target);
+	if (tick <= 0)
+		tick = 9999;
+
+	WBUFW(buf,offset + 0) = cmd;
+	WBUFL(buf,offset + 2) = tid;
+	WBUFW(buf,offset + 6) = type;
+#if PACKETVER >= 20111108
+	WBUFL(buf,offset + 8) = tick; // Set remaining status duration [exneval]
+#if PACKETVER >= 20120618
+	WBUFL(buf,offset + 12) = tick;
+	offset += 4;
+#endif
+	WBUFL(buf,offset + 12) = val1;
+	WBUFL(buf,offset + 16) = val2;
+	WBUFL(buf,offset + 20) = val3;
+#endif
+	clif_send(buf,packet_len(cmd),bl,target);
 }
-
-
-/// 08ff <id>.L <index>.W <remain msec>.L { <val>.L }*3 (ZC_EFST_SET_ENTER) (PACKETVER >= 20111108)
-/// 0984 <id>.L <index>.W <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_EFST_SET_ENTER2) (PACKETVER >= 20120618)
-//! TODO
-//void clif_efst_enter();
-
 
 /// Send message (modified by [Yor]) (ZC_NOTIFY_PLAYERCHAT).
 /// 008e <packet len>.W <message>.?B
@@ -10360,8 +10372,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if (sd->sc.opt2) //Client loses these on warp.
 		clif_changeoption(&sd->bl);
 
-	if (sd->sc.data[SC_MONSTER_TRANSFORM] && battle_config.mon_trans_disable_in_gvg && map_flag_gvg2(sd->bl.m)) {
+	if ((sd->sc.data[SC_MONSTER_TRANSFORM] || sd->sc.data[SC_ACTIVE_MONSTER_TRANSFORM]) && battle_config.mon_trans_disable_in_gvg && map_flag_gvg2(sd->bl.m)) {
 		status_change_end(&sd->bl, SC_MONSTER_TRANSFORM, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_ACTIVE_MONSTER_TRANSFORM, INVALID_TIMER);
 		clif_displaymessage(sd->fd, msg_txt(sd,731)); // Transforming into monster is not allowed in Guild Wars.
 	}
 
@@ -13140,7 +13153,13 @@ void clif_parse_GuildRequestEmblem(int fd,struct map_session_data *sd)
 
 
 /// Validates data of a guild emblem (compressed bitmap)
-static bool clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
+enum e_result_validate_emblem {	// Used as Result for clif_validate_emblem
+	EMBVALIDATE_SUCCESS = 0,
+	EMBVALIDATE_ERR_RAW_FILEFORMAT,	// Invalid File Format (Error in zlib/decompression or malformed BMP header)
+	EMBVALIDATE_ERR_TRANSPARENCY	// uploaded emblem does not met the requirements of battle_config.emblem_transparency_limit
+};
+
+static enum e_result_validate_emblem clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
 {
 	uint8 buf[1800];  // no well-formed emblem bitmap is larger than 1782 (24 bit) / 1654 (8 bit) bytes
 	unsigned long buf_len = sizeof(buf);
@@ -13151,7 +13170,7 @@ static bool clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
 		&& RBUFL(buf,2) == buf_len  // BITMAPFILEHEADER.bfSize (file size)
 		&& (offset = RBUFL(buf,10)) < buf_len  // BITMAPFILEHEADER.bfOffBits (offset to bitmap bits)
 		))
-		return -1;
+		return EMBVALIDATE_ERR_RAW_FILEFORMAT;
 
 	if(battle_config.emblem_transparency_limit != 100) {
 		int i, transcount = 1, tmp[3];
@@ -13162,10 +13181,10 @@ static bool clif_validate_emblem(const uint8* emblem, unsigned long emblem_len)
 				transcount++;
 		}
 		if(((transcount*300)/(buf_len-offset)) > battle_config.emblem_transparency_limit) //convert in % to chk
-			return -2;
+			return EMBVALIDATE_ERR_TRANSPARENCY;
 	}
 
-	return 0;
+	return EMBVALIDATE_SUCCESS;
 }
 
 
@@ -13185,11 +13204,11 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd){
 		return;
 	}
 	emb_val = clif_validate_emblem(emblem, emblem_len);
-	if(emb_val ==-1 ){
+	if(emb_val == EMBVALIDATE_ERR_RAW_FILEFORMAT){
 		ShowWarning("clif_parse_GuildChangeEmblem: Rejected malformed guild emblem (size=%lu, accound_id=%d, char_id=%d, guild_id=%d).\n", emblem_len, sd->status.account_id, sd->status.char_id, sd->status.guild_id);
 		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,386)); //"The chosen emblem was detected invalid\n"
 		return;
-	} else if(emb_val == -2){
+	} else if(emb_val == EMBVALIDATE_ERR_TRANSPARENCY){
 		char output[128];
 		safesnprintf(output,sizeof(output),msg_txt(sd,387),battle_config.emblem_transparency_limit);
 		clif_colormes(sd->fd,color_table[COLOR_RED],output); //"The chosen emblem was detected invalid as it contain too much transparency (limit=%d)\n"
@@ -16481,80 +16500,111 @@ void clif_font(struct map_session_data *sd)
 }
 
 
-/*==========================================
- * Notifies party members of instance change
- *------------------------------------------*/
-void clif_instance_create(struct map_session_data *sd, const char *name, int num, int flag)
+/// Required to start the instancing information window on Client
+/// This window re-appears each "refresh" of client automatically until the keep_limit reaches 0.
+/// S 0x2cb <Instance name>.61B <Standby Position>.W
+void clif_instance_create(unsigned short instance_id, int num)
 {
 #if PACKETVER >= 20071128
+	struct instance_db *db = NULL;
+	struct map_session_data *sd = NULL;
+	enum send_target target = PARTY;
 	unsigned char buf[65];
 
-	if(!sd) return;
+	instance_getsd(instance_id, &sd, &target);
+
+	if (!sd)
+		return;
+
+	db = instance_searchtype_db(instance_data[instance_id].type);
+
+	if (!db)
+		return;
 
 	WBUFW(buf,0) = 0x2cb;
-	memcpy( WBUFP(buf,2), name, 62 );
+	safestrncpy((char *)WBUFP(buf,2), StringBuf_Value(db->name), INSTANCE_NAME_LENGTH);
 	WBUFW(buf,63) = num;
-	if(flag) // A timer has changed or been added
-		clif_send(buf,packet_len(0x2cb),&sd->bl,PARTY);
-	else	// No notification
-		clif_send(buf,packet_len(0x2cb),&sd->bl,SELF);
+	clif_send(buf,packet_len(0x2cb),&sd->bl,target);
 #endif
 
 	return;
 }
 
-void clif_instance_changewait(struct map_session_data *sd, int num, int flag)
+/// To announce Instancing queue creation if no maps available
+/// S 0x2cc <Standby Position>.W
+void clif_instance_changewait(unsigned short instance_id, int num)
 {
 #if PACKETVER >= 20071128
+	struct map_session_data *sd = NULL;
+	enum send_target target = PARTY;
 	unsigned char buf[4];
 
-	if(!sd) return;
+	instance_getsd(instance_id, &sd, &target);
+
+	if (!sd)
+		return;
 
 	WBUFW(buf,0) = 0x2cc;
 	WBUFW(buf,2) = num;
-	if(flag) // A timer has changed or been added
-		clif_send(buf,packet_len(0x2cc),&sd->bl,PARTY);
-	else	// No notification
-		clif_send(buf,packet_len(0x2cc),&sd->bl,SELF);
+	clif_send(buf,packet_len(0x2cc),&sd->bl,target);
 #endif
 
 	return;
 }
 
-void clif_instance_status(struct map_session_data *sd, const char *name, unsigned int limit1, unsigned int limit2, int flag)
+/// Notify the current status to members
+/// S 0x2cd <Instance Name>.61B <Instance Remaining Time>.L <Instance Noplayers close time>.L
+void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsigned int limit2)
 {
 #if PACKETVER >= 20071128
+	struct instance_db *db = NULL;
+	struct map_session_data *sd = NULL;
+	enum send_target target = PARTY;
 	unsigned char buf[71];
 
-	if(!sd) return; //party_getavailablesd can return NULL
+	instance_getsd(instance_id, &sd, &target);
+
+	if (!sd)
+		return;
+
+	db = instance_searchtype_db(instance_data[instance_id].type);
+
+	if (!db)
+		return;
 
 	WBUFW(buf,0) = 0x2cd;
-	memcpy( WBUFP(buf,2), name, 62 );
+	safestrncpy((char *)WBUFP(buf,2), StringBuf_Value(db->name), INSTANCE_NAME_LENGTH);
 	WBUFL(buf,63) = limit1;
 	WBUFL(buf,67) = limit2;
-	if(flag) // A timer has changed or been added
-		clif_send(buf,packet_len(0x2cd),&sd->bl,PARTY);
-	else	// No notification
-		clif_send(buf,packet_len(0x2cd),&sd->bl,SELF);
+	clif_send(buf,packet_len(0x2cd),&sd->bl,target);
 #endif
 
 	return;
 }
 
-void clif_instance_changestatus(struct map_session_data *sd, int type, unsigned int limit, int flag)
+/// Notify a status change to members
+/// S 0x2ce <Message ID>.L
+/// 0 = Notification (EnterLimitDate update?)
+/// 1 = The Memorial Dungeon expired; it has been destroyed
+/// 2 = The Memorial Dungeon's entry time limit expired; it has been destroyed
+/// 3 = The Memorial Dungeon has been removed.
+/// 4 = Create failure (removes the instance window)
+void clif_instance_changestatus(unsigned int instance_id, int type, unsigned int limit)
 {
 #if PACKETVER >= 20071128
+	struct map_session_data *sd = NULL;
+	enum send_target target = PARTY;
 	unsigned char buf[10];
 
-	if(!sd) return;
+	instance_getsd(instance_id, &sd, &target);
+
+	if (!sd)
+		return;
 
 	WBUFW(buf,0) = 0x2ce;
 	WBUFL(buf,2) = type;
 	WBUFL(buf,6) = limit;
-	if(flag) // A timer has changed or been added
-		clif_send(buf,packet_len(0x2ce),&sd->bl,PARTY);
-	else	// No notification
-		clif_send(buf,packet_len(0x2ce),&sd->bl,SELF);
+	clif_send(buf,packet_len(0x2ce),&sd->bl,target);
 #endif
 
 	return;
@@ -19030,7 +19080,7 @@ void packetdb_readdb(bool reload)
 		0,  0,  0,  0,  0,  0,  0, 20,  34,  0,  0,  0,  0,  0,  0, 10,
 		9,  7, 10,  0,  0,  0,  6,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 24,
 	//#0x0900
 		0,  0,  0,  0,  0,  0,  0,  0,  5,  0,  0,  0,  0,  0,  0,  -1,
 		0,  0,  0,  0,  -1,  -1,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -19042,7 +19092,7 @@ void packetdb_readdb(bool reload)
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1,  7,
 		0,  0,  0,  0,  2,  0,  0, 14,  6, 50,  -1,  0,  0,  0,  0,  -1,
 	//#0x0980
-		7,  0,  0, 29,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		7,  0,  0, 29, 28,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 		31, 0,  0,  0,  0,  0,  0, -1,  8, 11,  9,  8,  0,  0,  0, 22,
 		0,  0,  0,  0,  0,  0, 12, 10, 14, 10, 14,  6,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  6,  4,  6,  4,  0,  0,  0,  0,  0,  0,
