@@ -543,7 +543,7 @@ int intif_create_party(struct party_member *member,char *name,int item,int item2
 		return 0;
 	nullpo_ret(member);
 
-	WFIFOHEAD(inter_fd,64);
+	WFIFOHEAD(inter_fd, 30+sizeof(struct party_member));
 	WFIFOW(inter_fd,0) = 0x3020;
 	WFIFOW(inter_fd,2) = 30+sizeof(struct party_member);
 	memcpy(WFIFOP(inter_fd,4),name, NAME_LENGTH);
