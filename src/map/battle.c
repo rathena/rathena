@@ -5008,7 +5008,7 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 			status_zap(src, hp, 0);
 		}
 		// Only affecting non-skills
-		if (!skill_id) {
+		if (!skill_id && wd.dmg_lv > ATK_BLOCK) {
 			if (sc->data[SC_ENCHANTBLADE]) {
 				//[((Skill Lv x 20) + 100) x (casterBaseLevel / 150)] + casterInt + MATK - MDEF - MDEF2
 				int64 enchant_dmg = sc->data[SC_ENCHANTBLADE]->val2;
