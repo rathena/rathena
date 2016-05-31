@@ -545,161 +545,119 @@ static bool itemdb_read_itemavail(char* str[], int columns, int current) {
 
 static int itemdb_group_free(DBKey key, DBData *data, va_list ap);
 
-/** Read item group data
-* Structure: GroupID,ItemID,Rate{,Amount,isMust,isAnnounced,Duration,GUID,isBound,isNamed}
-*/
-static void itemdb_read_itemgroup_sub(const char* filename, bool silent)
-{
-	FILE *fp;
-	int ln = 0, entries = 0;
-	char line[1024];
+static bool itemdb_read_group(char* str[], int columns, int current) {
+	int group_id = -1;
+	unsigned int j, prob = 1;
+	uint8 rand_group = 1;
+	struct s_item_group_random *random = NULL;
+	struct s_item_group_db *group = NULL;
+	struct s_item_group_entry entry;
 
-	if ((fp=fopen(filename,"r")) == NULL) {
-		if(silent == 0) ShowError("Can't read %s\n", filename);
-		return;
-	}
+	memset(&entry, 0, sizeof(entry));
+	entry.amount = 1;
+	entry.bound = BOUND_NONE;
 	
-	while (fgets(line,sizeof(line),fp)) {
-		DBData data;
-		int group_id = -1;
-		unsigned int j, prob = 1;
-		uint8 rand_group = 1;
-		char *str[10], *p;
-		struct s_item_group_random *random = NULL;
-		struct s_item_group_db *group = NULL;
-		struct s_item_group_entry entry;
-		bool found = false;
-
-		ln++;
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		if (strstr(line,"import")) {
-			char w1[16], w2[64];
-
-			if (sscanf(line,"%15[^:]: %63[^\r\n]",w1,w2) == 2 &&
-				strcmpi(w1,"import") == 0)
-			{
-				itemdb_read_itemgroup_sub(w2, 0);
-				continue;
-			}
-		}
-		memset(str,0,sizeof(str));
-		for (j = 0, p = line; j < 9 && p;j++) {
-			str[j] = p;
-			p = strchr(p,',');
-			if (p) *p++=0;
-		}
-		if (str[0] == NULL) //Empty Group ID
-			continue;
-		if (j < 3) {
-			if (j > 1) // Or else it barks on blank lines...
-				ShowWarning("itemdb_read_itemgroup: Insufficient fields for entry at %s:%d\n", filename, ln);
-			continue;
-		}
-
-		memset(&entry, 0, sizeof(entry));
-		entry.amount = 1;
-		entry.bound = BOUND_NONE;
-
-		// Checking group_id
-		trim(str[0]);
-		if (ISDIGIT(str[0][0]))
-			group_id = atoi(str[0]);
-		else // Try reads group id by const
-			script_get_constant(trim(str[0]), &group_id);
-
-		if (group_id < 0) {
-			ShowWarning("itemdb_read_itemgroup: Invalid Group ID '%s' (%s:%d)\n", str[0], filename, ln);
-			continue;
-		}
-
-		// Remove from DB
-		if (strcmpi(str[1], "clear") == 0 && itemdb_group->remove(itemdb_group, db_ui2key(group_id), &data)) {
-			itemdb_group_free(db_ui2key(group_id), &data, 0);
-			ShowNotice("Item Group '%s' has been cleared.\n", str[0]);
-			continue;
-		}
-
-		// Checking sub group
-		prob = atoi(str[2]);
-		if (str[4] != NULL)
-			rand_group = atoi(str[4]);
-		if (rand_group < 0 || rand_group > MAX_ITEMGROUP_RANDGROUP) {
-			ShowWarning("itemdb_read_itemgroup: Invalid sub group '%d' for group '%s' in %s:%d\n", rand_group, str[0], filename, ln);
-			continue;
-		}
-
-		if (rand_group != 0 && prob < 1) {
-			ShowWarning("itemdb_read_itemgroup: Random item must has probability. Group '%s' in %s:%d\n", str[0], filename, ln);
-			continue;
-		}
-
-		// Checking item
-		trim(str[1]);
-		if (ISDIGIT(str[1][0]) && ISDIGIT(str[1][1]) && itemdb_exists((entry.nameid = atoi(str[1]))))
-			found = true;
-		else {
-			struct item_data *id = itemdb_searchname(str[1]);
-			if (id) {
-				entry.nameid = id->nameid;
-				found = true;
-			}
-		}
-
-		if (!found) {
-			ShowWarning("itemdb_read_itemgroup: Non-existant item '%s' in %s:%d\n", str[1], filename, ln);
-			continue;
-		}
-
-		if (str[3] != NULL) entry.amount = cap_value(atoi(str[3]),1,MAX_AMOUNT);
-		if (str[5] != NULL) entry.isAnnounced= atoi(str[5]);
-		if (str[6] != NULL) entry.duration = cap_value(atoi(str[6]),0,UINT16_MAX);
-		if (str[7] != NULL) entry.GUID = atoi(str[7]);
-		if (str[8] != NULL) entry.bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
-		if (str[9] != NULL) entry.isNamed = atoi(str[9]);
-
-		if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
-			CREATE(group, struct s_item_group_db, 1);
-			group->id = group_id;
-			uidb_put(itemdb_group, group->id, group);
-		}
-
-		// Must item (rand_group == 0), place it here
-		if (!rand_group) {
-			RECREATE(group->must, struct s_item_group_entry, group->must_qty+1);
-			group->must[group->must_qty++] = entry;
-
-			// If 'must' item isn't set as random item, skip the next process
-			if (!prob) {
-				entries++;
-				continue;
-			}
-			rand_group = 0;
-		}
-		else
-			rand_group -= 1;
-
-		random = &group->random[rand_group];
-
-		RECREATE(random->data, struct s_item_group_entry, random->data_qty+prob);
-
-		// Put the entry to its rand_group
-		for (j = random->data_qty; j < random->data_qty+prob; j++)
-			random->data[j] = entry;
-
-		random->data_qty += prob;
-		entries++;
+	str[0] = trim(str[0]);
+	if( ISDIGIT(str[0][0]) ){
+		group_id = atoi(str[0]);
+	}else{
+		// Try to parse group id as constant
+		script_get_constant(str[0], &group_id);
 	}
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, filename);
-	return;
-}
 
-static void itemdb_read_itemgroup(const char* basedir, bool silent) {
-	char filepath[256];
-	sprintf(filepath, "%s/%s", basedir, "item_group_db.txt");
-	itemdb_read_itemgroup_sub(filepath, silent);
-	return;
+	// Check the group id
+	if( group_id < 0 ){
+		ShowWarning( "itemdb_read_group: Invalid group ID '%s'\n", str[0] );
+		return false;
+	}
+
+	// Remove from DB
+	if( strcmpi( str[1], "clear" ) == 0 ){
+		DBData data;
+
+		if( itemdb_group->remove( itemdb_group, db_ui2key(group_id), &data ) ){
+			itemdb_group_free( db_ui2key(group_id), &data, 0 );
+			ShowNotice( "itemdb_read_group: Item Group '%s' has been cleared.\n", str[0] );
+			return true;
+		}else{
+			ShowWarning( "itemdb_read_group: Item Group '%s' has not been cleared, because it did not exist.\n", str[0] );
+			return false;
+		}
+	}
+
+	// Checking sub group
+	prob = atoi(str[2]);
+
+	if( columns > 4 ){
+		rand_group = atoi(str[4]);
+
+		if( rand_group < 0 || rand_group > MAX_ITEMGROUP_RANDGROUP ){
+			ShowWarning( "itemdb_read_group: Invalid sub group '%d' for group '%s'\n", rand_group, str[0] );
+			return false;
+		}
+	}else{
+		rand_group = 1;
+	}
+
+	if( rand_group != 0 && prob < 1 ){
+		ShowWarning( "itemdb_read_group: Random item must have a probability. Group '%s'\n", str[0] );
+		return false;
+	}
+
+	// Check item
+	str[1] = trim(str[1]);
+
+	// Check if the item can be found by id
+	if( ( entry.nameid = atoi(str[1]) ) <= 0 || !itemdb_exists( entry.nameid ) ){
+		// Otherwise look it up by name
+		struct item_data *id = itemdb_searchname(str[1]);
+
+		if( id ){
+			// Found the item with a name lookup
+			entry.nameid = id->nameid;
+		}else{
+			ShowWarning( "itemdb_read_group: Non-existant item '%s'\n", str[1] );
+			return false;
+		}
+	}
+
+	if( columns > 3 ) entry.amount = cap_value(atoi(str[3]),1,MAX_AMOUNT);
+	if( columns > 5 ) entry.isAnnounced= atoi(str[5]);
+	if( columns > 6 ) entry.duration = cap_value(atoi(str[6]),0,UINT16_MAX);
+	if( columns > 7 ) entry.GUID = atoi(str[7]);
+	if( columns > 8 ) entry.bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
+	if( columns > 9 ) entry.isNamed = atoi(str[9]);
+	
+	if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
+		CREATE(group, struct s_item_group_db, 1);
+		group->id = group_id;
+		uidb_put(itemdb_group, group->id, group);
+	}
+
+	// Must item (rand_group == 0), place it here
+	if (!rand_group) {
+		RECREATE(group->must, struct s_item_group_entry, group->must_qty+1);
+		group->must[group->must_qty++] = entry;
+		
+		// If 'must' item isn't set as random item, skip the next process
+		if (!prob) {
+			return true;
+		}
+		rand_group = 0;
+	}
+	else
+		rand_group -= 1;
+
+	random = &group->random[rand_group];
+	
+	RECREATE(random->data, struct s_item_group_entry, random->data_qty+prob);
+
+	// Put the entry to its rand_group
+	for (j = random->data_qty; j < random->data_qty+prob; j++)
+		random->data[j] = entry;
+	
+	random->data_qty += prob;
+	return true;
 }
 
 /** Read item forbidden by mapflag (can't equip item)
@@ -1614,8 +1572,16 @@ static void itemdb_read(void) {
 		sv_readdb(dbsubpath1, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail, i);
 		sv_readdb(dbsubpath1, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i);
 		sv_readdb(dbsubpath1, "item_nouse.txt",         ',', 3, 3, -1, &itemdb_read_nouse, i);
-		
-		itemdb_read_itemgroup(dbsubpath2, i);
+		sv_readdb(dbsubpath2, "item_group_db.txt",		',', 2, 10, -1, &itemdb_read_group, i);
+		sv_readdb(dbsubpath2, "item_bluebox.txt",		',', 2, 10, -1, &itemdb_read_group, i);
+		sv_readdb(dbsubpath2, "item_violetbox.txt",		',', 2, 10, -1, &itemdb_read_group, i);
+		sv_readdb(dbsubpath2, "item_cardalbum.txt",		',', 2, 10, -1, &itemdb_read_group, i);
+		sv_readdb(dbsubpath1, "item_findingore.txt",	',', 2, 10, -1, &itemdb_read_group, i);
+		sv_readdb(dbsubpath2, "item_giftbox.txt",		',', 2, 10, -1, &itemdb_read_group, i);
+		sv_readdb(dbsubpath2, "item_misc.txt",			',', 2, 10, -1, &itemdb_read_group, i);
+#ifdef RENEWAL
+		sv_readdb(dbsubpath2, "item_package.txt",		',', 2, 10, -1, &itemdb_read_group, i);
+#endif
 		itemdb_read_combos(dbsubpath2,i); //TODO change this to sv_read ? id#script ?
 		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i);
 		sv_readdb(dbsubpath2, "item_trade.txt",         ',', 3, 3, -1, &itemdb_read_itemtrade, i);
