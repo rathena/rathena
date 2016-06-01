@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Lupus, kobra_k88
 //===== Current Version: ===================================== 
-//= 2.24
+//= 2.25
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -47,6 +47,8 @@
 //= 2.22 Further improvements to "F_GetPlural". [Euphy]
 //= 2.23 Completed article function and added "F_GetArticle". [Euphy]
 //= 2.24 Added functions to check for equipment swap hacks. [Euphy]
+//= 2.25 Added "F_CanOpenStorage" and "F_CanChangeJob". [secretdataz]
+//= 2.26 Added "F_getpositionname". [Capuche]
 //============================================================ 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -591,4 +593,50 @@ function	script	F_GetNumSuffix	{
 	else if (.@mod == 2 && .@n != 12) return .@n+"nd";
 	else if (.@mod == 3 && .@n != 13) return .@n+"rd";
 	else return .@n+"th";
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Indicate if attached player can open storage
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_CanOpenStorage	{
+	return (!basicskillcheck() || !(getskilllv("NV_BASIC") < 6 && getskilllv("SU_BASIC_SKILL") < 1));
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Indicate if attached player can advance to class 1 by checking
+// basic skill level 9.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_CanChangeJob	{
+	return (!basicskillcheck() || getskilllv("NV_BASIC") > 8);
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Return the position name of the EQI_* equipment slot.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_getpositionname	{
+	switch( getarg(0,999) ) {
+		case EQI_ACC_L:		return "Accessory 1";
+		case EQI_ACC_R:		return "Accessory 2";
+		case EQI_SHOES:		return "Shoes";
+		case EQI_GARMENT:	return "Robe";
+		case EQI_HEAD_LOW:	return "Head 3";
+		case EQI_HEAD_MID:	return "Head 2";
+		case EQI_HEAD_TOP:	return "Head";
+		case EQI_ARMOR:		return "Body";
+		case EQI_HAND_L:	return "Left hand";
+		case EQI_HAND_R:	return "Right hand";
+		case EQI_COSTUME_HEAD_TOP:	return "Upper Costume Headgear";
+		case EQI_COSTUME_HEAD_MID:	return "Middle Costume Headgear";
+		case EQI_COSTUME_HEAD_LOW:	return "Lower Costume Headgear";
+		case EQI_COSTUME_GARMENT:	return "Costume Garment";
+		case EQI_AMMO:			return "Arrow/Ammunition";
+		case EQI_SHADOW_ARMOR:	return "Shadow Armor";
+		case EQI_SHADOW_WEAPON:	return "Shadow Weapon";
+		case EQI_SHADOW_SHIELD:	return "Shadow Shield";
+		case EQI_SHADOW_SHOES:	return "Shadow Shoes";
+		case EQI_SHADOW_ACC_R:	return "Shadow Accessory 2";
+		case EQI_SHADOW_ACC_L:	return "Shadow Accessory 1";
+		default:
+			return "Unknown";
+	}
 }

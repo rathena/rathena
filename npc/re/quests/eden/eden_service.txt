@@ -40,7 +40,7 @@
 		switch(select("Use the Cabinet.:Cancel.")) {
 			case 1:
 				if (Zeny > 499) {
-					if (getskilllv("NV_BASIC") < 6) {
+					if(!callfunc("F_CanOpenStorage")){
 						mes "The cabinet is not working for me.";
 						mes "Maybe I am not yet qualified to use Cabinet.";
 						close;

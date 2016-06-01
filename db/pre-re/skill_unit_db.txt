@@ -105,6 +105,7 @@
 538,0xbb,    ,  1:1:1:2:2:2:3:3:3:4,0,-1,all,0x8010	//NJ_SUITON
 539,0x86,    ,  3, 0,1000,enemy, 0x010	//NJ_HYOUSYOURAKU
 541,0x86,    ,  2:2:3:3:4, 0,1000,enemy, 0x010	//NJ_RAIGEKISAI
+653,0xc6,    ,  0, 5:7:9:11:13:5:7:9:11:13, 300,enemy, 0x010	//NPC_EARTHQUAKE
 670,0xc7,    ,  1, 5:5:5:5:5:5:5:5:5:13,1000,all,0x008	//NPC_EVILLAND
 
 //706,0xfd,    ,  0, 0,1000,all, 0x000	//NPC_VENOMFOG

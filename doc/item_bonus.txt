@@ -109,8 +109,10 @@ bonus bBaseAtk,n;  			Basic attack power + n
 bonus bAtk,n;      			ATK + n (unofficial)
 bonus bAtk2,n;     			ATK2 + n
 bonus bAtkRate,n;  			Attack power + n%
+bonus bWeaponAtkRate,n; 	Weapon ATK + n%
 bonus bMatk,n;     			Magical attack power + n
 bonus bMatkRate,n; 			Magical attack power + n%
+bonus bWeaponMatkRate,n;	Weapon Magical ATK + n% (renewal mode only)
 bonus bDef,n;      			Equipment DEF + n
 bonus bDefRate,n;  			Equipment DEF + n%
 bonus bDef2,n;     			VIT based DEF + n
@@ -166,7 +168,7 @@ bonus bLongAtkRate,n;     		Increases damage of ranged attacks by n%
 bonus bCritAtkRate,n;     		Increases critical damage by +n%
 bonus bCriticalDef,n;     		Decreases the chance of being hit by critical hits by n%
 bonus2 bWeaponAtk,w,n;    		Adds n ATK when weapon of type w is equipped
-bonus2 bWeaponAtkRate,w,n;		Adds n% damage to normal attacks when weapon of type w is equipped
+bonus2 bWeaponDamageRate,w,n;	Adds n% damage to normal attacks when weapon of type w is equipped
 
 bonus bNearAtkDef,n; 			Adds n% damage reduction against melee physical attacks
 bonus bLongAtkDef,n; 			Adds n% damage reduction against ranged physical attacks
@@ -245,6 +247,7 @@ bonus2 bAddMDefMonster,mid,x;     	+x% magical damage reduction against monster 
 
 bonus2 bAddRace2,mr,x;			+x% damage against monster race mr
 bonus2 bSubRace2,mr,x;			+x% damage reduction against monster race mr
+bonus2 bMagicAddRace2,mr,x;		+x% magic damage against monster race mr
 
 bonus2 bSubSkill,sk,n;  		Reduces n% damage received from skill sk
 
@@ -272,6 +275,7 @@ bonus2 bIgnoreDefRaceRate,r,n;  	Disregard n% of the target's DEF if the target 
 bonus bIgnoreDefClass,c;		Disregard DEF against enemies of class c
 bonus bIgnoreMDefRace,r;		Disregard MDEF against enemies of race r
 bonus2 bIgnoreMdefRaceRate,r,n; 	Disregard n% of the target's MDEF if the target belongs to race r
+bonus2 bIgnoreMdefRace2Rate,mr,n; 	Disregard n% of the target's MDEF if the target belongs to monster race mr
 bonus bIgnoreMDefEle,e; 		Disregard MDEF against enemies of element e
 bonus2 bIgnoreMdefClassRate,c,n;	Disregard n% of the target's MDEF if the target belongs to class c
 

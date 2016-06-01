@@ -68,6 +68,10 @@ enum equip_index {
 	EQI_MAX
 };
 
+extern unsigned int equip_bitmask[EQI_MAX];
+
+#define equip_index_check(i) ( (i) >= EQI_ACC_L && (i) < EQI_MAX )
+
 struct weapon_data {
 	int atkmods[3];
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc
@@ -349,7 +353,7 @@ struct map_session_data {
 	short weapon_coma_race[RC_MAX];
 	short weapon_coma_class[CLASS_MAX];
 	int weapon_atk[16];
-	int weapon_atk_rate[16];
+	int weapon_damage_rate[16];
 	int arrow_addele[ELE_MAX];
 	int arrow_addrace[RC_MAX];
 	int arrow_addclass[CLASS_MAX];
@@ -367,6 +371,8 @@ struct map_session_data {
 	int ignore_mdef_by_class[CLASS_MAX];
 	int ignore_def_by_race[RC_MAX];
 	short sp_gain_race[RC_MAX];
+	int magic_addrace2[RC2_MAX];
+	int ignore_mdef_by_race2[RC2_MAX];
 	// zeroed arrays end here.
 
 	// zeroed structures start here
@@ -457,6 +463,7 @@ struct map_session_data {
 		int eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
 		short critical_rangeatk;
+		short weapon_atk_rate, weapon_matk_rate;
 	} bonus;
 	// zeroed vars end here.
 
@@ -677,6 +684,8 @@ struct map_session_data {
 		short prizeStage;
 		bool claimPrize;
 	} roulette;
+
+	unsigned short instance_id;
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -961,7 +970,14 @@ void pc_clean_skilltree(struct map_session_data *sd);
 #define pc_checkoverhp(sd) ((sd)->battle_status.hp == (sd)->battle_status.max_hp)
 #define pc_checkoversp(sd) ((sd)->battle_status.sp == (sd)->battle_status.max_sp)
 
-char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype);
+enum e_setpos{
+	SETPOS_OK = 0,
+	SETPOS_MAPINDEX = 1,
+	SETPOS_NO_MAPSERVER = 2,
+	SETPOS_AUTOTRADE = 3
+};
+
+enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype);
 void pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y);
 char pc_randomwarp(struct map_session_data *sd,clr_type type);
 bool pc_memo(struct map_session_data* sd, int pos);
@@ -1249,6 +1265,6 @@ void pc_show_questinfo(struct map_session_data *sd);
 void pc_show_questinfo_reinit(struct map_session_data *sd);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, enum e_mode mode, int type);
+int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type);
 #endif
 #endif /* _PC_H_ */

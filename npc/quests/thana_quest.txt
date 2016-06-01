@@ -914,8 +914,8 @@ tha_t03,67,70,0	script	Rune Device#tt1	111,4,4,{
 				next;
 				goto L_Key;
 			}
-			else if (getequipweaponlv(4) == 4) {
-				mes "^3355FFWith your "+getequipname(4)+" in";
+			else if (getequipweaponlv(EQI_HAND_R) == 4) {
+				mes "^3355FFWith your "+getequipname(EQI_HAND_R)+" in";
 				mes "hand, you smash the energy";
 				mes "field with all of your strength. After absorbing the impact, the";
 				mes "field fizzles out with a soft,";

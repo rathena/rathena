@@ -26,7 +26,7 @@ struct status_change_entry;
 #define SKILL_NAME_LENGTH 31 /// Max Skill Name length
 #define SKILL_DESC_LENGTH 31 /// Max Skill Desc length
 
-DBMap* skilldb_name2id;
+extern DBMap* skilldb_name2id;
 
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills
@@ -1965,7 +1965,7 @@ enum s_skill_unit_id {
 	UNT_DEATHWAVE, //TODO
 	UNT_WATERATTACK, //TODO
 	UNT_WINDATTACK, //TODO
-	UNT_EARTHQUAKE, //TODO
+	UNT_EARTHQUAKE,
 	UNT_EVILLAND,
 	UNT_DARK_RUNNER, //TODO
 	UNT_DARK_TRANSFER, //TODO
@@ -2108,7 +2108,7 @@ int skill_elementalanalysis(struct map_session_data *sd, int n, uint16 skill_lv,
 int skill_changematerial(struct map_session_data *sd, int n, unsigned short *item_list);	// Genetic Change Material.
 int skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
-bool skill_is_combo(uint16 skill_id);
+int skill_is_combo(uint16 skill_id);
 void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf);
 void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int tick);
 
