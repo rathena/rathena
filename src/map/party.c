@@ -659,10 +659,8 @@ int party_broken(int party_id)
 	if( p == NULL )
 		return 0;
 
-	if( p->instance_id ) {
-		instance_data[p->instance_id].owner_id = 0;
+	if( p->instance_id )
 		instance_destroy( p->instance_id );
-	}
 
 	for( i = 0; i < MAX_PARTY; i++ ) {
 		if( p->data[i].sd != NULL ) {

@@ -579,7 +579,7 @@ int instance_destroy(unsigned short instance_id)
 
 				for(i = 0; i < instance_wait.count; i++)
 					if(instance_data[instance_wait.id[i]].state == INSTANCE_IDLE)
-						if ((mode == IM_CHAR && sd != NULL) || (mode == IM_PARTY && p != NULL) || (mode == IM_GUILD && g != NULL))
+						if ((mode == IM_CHAR && sd) || (mode == IM_PARTY && p) || (mode == IM_GUILD && g))
 							clif_instance_changewait(instance_id, i + 1);
 
 				if(instance_wait.count)
@@ -613,11 +613,11 @@ int instance_destroy(unsigned short instance_id)
 		im->idle_timer = INVALID_TIMER;
 	}
 
-	if (mode == IM_CHAR)
+	if (mode == IM_CHAR && sd)
 		sd->instance_id = 0;
-	else if (mode == IM_PARTY)
+	else if (mode == IM_PARTY && p)
 		p->instance_id = 0;
-	else if (mode == IM_GUILD)
+	else if (mode == IM_GUILD && g)
 		g->instance_id = 0;
 
 	if (mode != IM_NONE) {

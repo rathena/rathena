@@ -1852,10 +1852,8 @@ int guild_break(struct map_session_data *sd,char *name) {
 		return 0;
 	}
 
-	if (g->instance_id) {
-		instance_data[g->instance_id].owner_id = 0;
+	if (g->instance_id)
 		instance_destroy(g->instance_id);
-	}
 
 	/* Regardless of char server allowing it, we clear the guild master's auras */
 	if ((ud = unit_bl2ud(&sd->bl))) {
