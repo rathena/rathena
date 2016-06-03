@@ -10677,7 +10677,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 	// send back message to the speaker
 	WFIFOHEAD(fd,4+length);
 	WFIFOW(fd,0) = 0x8e;
-	WFIFOW(fd,2) = 4+length;
+	WFIFOW(fd,2) = (uint16)(4+length);
 	safestrncpy((char*)WFIFOP(fd,4), output, length );
 	WFIFOSET(fd, WFIFOW(fd,2));
 
