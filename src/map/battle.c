@@ -2528,7 +2528,6 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
 			case NPC_BLEEDING:
 				hitrate += hitrate * 20 / 100;
 				break;
-			case NPC_EARTHQUAKE:
 			case NPC_FIREBREATH:
 			case NPC_ICEBREATH:
 			case NPC_THUNDERBREATH:
@@ -5849,7 +5848,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 100 * skill_lv;
 						break;
 					case NPC_EARTHQUAKE:
-						skillratio += 100 + 100 * skill_lv + 100 * (skill_lv / 2) + (skill_lv > 4) ? 100 : 0;
+						skillratio += 100 + 100 * skill_lv + 100 * (skill_lv / 2) + ((skill_lv > 4) ? 100 : 0);
 						break;
 #ifdef RENEWAL
 					case WZ_HEAVENDRIVE:
