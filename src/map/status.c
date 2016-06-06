@@ -9907,6 +9907,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = tick / 1000;
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
+		case SC_WARMER:
+			val4 = tick / 3000;
+			tick = -1; // Duration sent to the client should be infinite
+			tick_time = 3000;
+			break;
 		case SC_BLOODSUCKER:
 			val4 = tick / 1000;
 			tick_time = 1000; // [GodLesZ] tick time
@@ -12432,6 +12437,23 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			return 0;
 		}
 		break;
+
+	case SC_WARMER: {
+			int hp = 0;
+			struct status_change *ssc = status_get_sc(map_id2bl(sce->val2));
+
+			if (ssc && ssc->data[SC_HEATER_OPTION])
+				hp = status->max_hp * 3 * sce->val1 / 100;
+			else
+				hp = status->max_hp * sce->val1 / 100;
+			if (sc && sc->data[SC_AKAITSUKI] && hp)
+				hp = ~hp + 1;
+			if (status->hp != status->max_hp)
+				status_heal(bl, hp, 0, 0);
+			sc_timer_next(3000 + tick, status_change_timer, bl->id, data);
+			return 0;
+		}
+
 	case SC_BLOODSUCKER:
 		if( --(sce->val4) >= 0 ) {
 			struct block_list *src = map_id2bl(sce->val2);
