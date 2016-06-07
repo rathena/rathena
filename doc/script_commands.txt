@@ -4287,6 +4287,12 @@ wall), the character is pushed only up to the obstacle.
 
 ---------------------------------------
 
+*recalculatestat;
+
+This command will force the server to recalculate stat for attached player.
+
+---------------------------------------
+
 *get_revision()
 
 This command will return the SVN revision number that the server is currently
