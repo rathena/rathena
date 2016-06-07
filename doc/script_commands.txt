@@ -4289,7 +4289,7 @@ wall), the character is pushed only up to the obstacle.
 
 *recalculatestat;
 
-This command will force the server to recalculate stat for attached player.
+This command will force a stat recalculation for the attached player.
 
 ---------------------------------------
 
