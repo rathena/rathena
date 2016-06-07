@@ -5909,6 +5909,7 @@ void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list 
 /// 08ff <id>.L <index>.W <remain msec>.L { <val>.L }*3  (ZC_EFST_SET_ENTER) (PACKETVER >= 20111108)
 /// 0984 <id>.L <index>.W <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_EFST_SET_ENTER2) (PACKETVER >= 20120618)
 void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, int tick, int val1, int val2, int val3) {
+#if PACKETVER >= 20111108
 	unsigned char buf[32];
 #if PACKETVER >= 20120618
 	const int cmd = 0x984;
@@ -5939,6 +5940,7 @@ void clif_efst_status_change(struct block_list *bl, int tid, enum send_target ta
 	WBUFL(buf,offset + 20) = val3;
 #endif
 	clif_send(buf,packet_len(cmd),bl,target);
+#endif
 }
 
 /// Send message (modified by [Yor]) (ZC_NOTIFY_PLAYERCHAT).
