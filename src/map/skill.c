@@ -2952,21 +2952,12 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 				skill_addtimerskill(src, tick + status_get_amotion(src), target->id, 0, 0, LG_OVERBRAND_PLUSATK, skill_lv, BF_WEAPON, flag|SD_ANIMATION);
 			break;
 		case SR_KNUCKLEARROW:
-			{
-				short x = target->x, y = target->y;
-
-				// Ignore knockback damage bonus if in WOE (player cannot be knocked in WOE)
-				// Boss & Immune Knockback (mode or from bonus bNoKnockBack) target still remains the damage bonus
-				// (bugreport:9096)
-				if (skill_blown(dsrc, target, blewcount, dir_ka, 0x04) < blewcount)
-					skill_addtimerskill(src, tick + 300 * ((flag&2) ? 1 : 2), target->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag|4);
-
-				dir_ka = -1;
-
-				// Move attacker to the target position after knocked back
-				if ((target->x != x || target->y != y) && skill_check_unit_movepos(5,src,target->x,target->y,1,1))
-					clif_blown(src);
-			}
+			// Ignore knockback damage bonus if in WOE (player cannot be knocked in WOE)
+			// Boss & Immune Knockback stay in place and don't get bonus damage
+			// Give knockback damage bonus only hits the wall. (bugreport:9096)
+			if (skill_blown(dsrc, target, blewcount, dir_ka, 0x04|0x08|0x10|0x20) < blewcount)
+				skill_addtimerskill(src, tick + 300 * ((flag&2) ? 1 : 2), target->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag|4);
+			dir_ka = -1;
 			break;
 		case RL_R_TRIP:
 			if (skill_blown(dsrc,target,blewcount,dir,0) < blewcount)
@@ -5488,12 +5479,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		dir_ka = map_calc_dir(bl, src->x, src->y);
 		// Has slide effect
 		if (skill_check_unit_movepos(5, src, bl->x, bl->y, 1, 1))
-			clif_blown(src);
-
-		if( flag&1 )
-			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag|SD_LEVEL);
-		else
-			skill_addtimerskill(src, tick + 300, bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag|SD_LEVEL|2);
+			skill_blown(src, src, 1, (dir_ka + 4) % 8, 0); // Target position is actually one cell next to the target
+		skill_addtimerskill(src, tick + 300, bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag|SD_LEVEL|2);
 		break;
 
 	case SR_HOWLINGOFLION:
