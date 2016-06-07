@@ -21439,9 +21439,10 @@ BUILDIN_FUNC(getexp2) {
 * @author [secretdataz]
 **/
 BUILDIN_FUNC(recalculatestat) {
-	TBL_PC* sd;
+	TBL_PC* sd = script_rid2sd(st);
 
-	nullpo_retr(SCRIPT_CMD_FAILURE, sd);
+	if (sd == NULL)
+		return SCRIPT_CMD_FAILURE;
 
 	status_calc_pc(sd, SCO_FORCE);
 	return SCRIPT_CMD_SUCCESS;
