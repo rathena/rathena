@@ -1222,8 +1222,13 @@ OnTalk6:
 			mes "[Varmunt]";
 			mes "There's something unusual about this thing's aura. Maybe someday we will be able to understand what is behind all of this.";
 			cutin "gl_barmund1",2;
-			getitem 6608,1; //Coagulated Spell
-			setquest 12319;
+			erasequest 12318;
+			if (checkquest(12319,HUNTING) == -1)
+				setquest 12319;
+			setquest 12320;
+			erasequest 12320;
+			getitem 6607,1; //Temporal_Crystal
+			getitem 6608,1; //Coagulated_Spell
 			close2;
 			cutin "gl_barmund1",255;
 			end;
@@ -1925,9 +1930,18 @@ OnTimer80000:
 	if (checkquest(12319,HUNTING) == 2) {
 		mes "[Hugin]";
 		mes "Well, you are pretty ridiculous. Beginners shouldn't get the loot Amdarias drops.";
-		erasequest 12318;
 		erasequest 12319;
-		getitem 6608,1; //Coagulated Spell
+		setquest 12321;
+		setquest 12322;
+		erasequest 12321;
+		if (gh_instance) {
+			getitem 6607,1; //Temporal_Crystal
+			getitem 6608,1; //Coagulated_Spell
+		} else {
+			getitem 6607,5; //Temporal_Crystal
+			getitem 6608,5; //Coagulated_Spell
+			gh_instance = 1;
+		}
 		next;
 		mes "[Hugin]";
 		mes "Varmunt, I have arbitrarily stopped time. And soon, the time gap will be gone.";
