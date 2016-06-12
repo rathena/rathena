@@ -952,15 +952,34 @@ void do_reload_instance(void)
 		if(sd && map[sd->bl.m].instance_id) {
 			struct party_data *p = NULL;
 			struct guild *g = NULL;
+			unsigned short instance_id;
 
-			if (instance_data[map[sd->bl.m].instance_id].mode == IM_PARTY && (!(p = party_search(sd->status.party_id)) || p->instance_id != map[sd->bl.m].instance_id)) // Someone not in party is on instance map
-				continue;
-			if (instance_data[map[sd->bl.m].instance_id].mode == IM_GUILD && (!(g = guild_search(sd->status.guild_id)) || g->instance_id != map[sd->bl.m].instance_id)) // Someone not in guild is on instance map
-				continue;
-			im = &instance_data[p->instance_id];
-			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, i, StringBuf_Value(db->name))) { // All good
+			im = &instance_data[map[sd->bl.m].instance_id];
+			switch (im->mode) {
+				case IM_NONE:
+					continue;
+				case IM_CHAR:
+					if (sd->instance_id != map[sd->bl.m].instance_id) // Someone who is not instance owner is on instance map
+						continue;
+					instance_id = sd->instance_id;
+					break;
+				case IM_PARTY:
+					if ((!(p = party_search(sd->status.party_id)) || p->instance_id != map[sd->bl.m].instance_id)) // Someone not in party is on instance map
+						continue;
+					instance_id = p->instance_id;
+					break;
+				case IM_GUILD:
+					if (!(g = guild_search(sd->status.guild_id)) || g->instance_id != map[sd->bl.m].instance_id) // Someone not in guild is on instance map
+						continue;
+					instance_id = g->instance_id;
+					break;
+				default:
+					ShowError("do_reload_instance: Unexpected instance mode for instance %s(id=%u, mode=%u).\n", StringBuf_Value(db->name), map[sd->bl.m].instance_id, (unsigned short)im->mode);
+					continue;
+			}
+			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, instance_id, StringBuf_Value(db->name))) { // All good
 				clif_displaymessage(sd->fd, msg_txt(sd,515)); // Instance has been reloaded
-				instance_reqinfo(sd,p->instance_id);
+				instance_reqinfo(sd,instance_id);
 			} else // Something went wrong
 				ShowError("do_reload_instance: Error setting character at instance start: character_id=%d instance=%s.\n",sd->status.char_id,StringBuf_Value(db->name));
 		}
