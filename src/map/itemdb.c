@@ -281,79 +281,84 @@ const char* itemdb_typename(enum item_types type)
 	return "Unknown Type";
 }
 
-/*==========================================
- * Converts the jobid from the format in itemdb
- * to the format used by the map server. [Skotlex]
- *------------------------------------------*/
-static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
+/**
+ * Converts the jobmask from the format in itemdb to the format used by the map server.
+ * @param bclass: Pointer to store itemdb format
+ * @param jobmask: Job Mask to convert
+ * @author: Skotlex
+ */
+static void itemdb_jobid2mapid(uint64 *bclass, uint64 jobmask)
 {
 	int i;
-	bclass[0]= bclass[1]= bclass[2]= 0;
+
+	bclass[0] = bclass[1] = bclass[2] = 0;
+
 	//Base classes
-	if (jobmask & 1<<JOB_NOVICE)
-	{	//Both Novice/Super-Novice are counted with the same ID
-		bclass[0] |= 1<<MAPID_NOVICE;
-		bclass[1] |= 1<<MAPID_NOVICE;
+	if (jobmask & 1ULL<<JOB_NOVICE) {
+		//Both Novice/Super-Novice are counted with the same ID
+		bclass[0] |= 1ULL<<MAPID_NOVICE;
+		bclass[1] |= 1ULL<<MAPID_NOVICE;
 	}
-	for (i = JOB_NOVICE+1; i <= JOB_THIEF; i++)
-	{
-		if (jobmask & 1<<i)
-			bclass[0] |= 1<<(MAPID_NOVICE+i);
+	for (i = JOB_NOVICE + 1; i <= JOB_THIEF; i++) {
+		if (jobmask & 1ULL <<i)
+			bclass[0] |= 1ULL<<(MAPID_NOVICE + i);
 	}
 	//2-1 classes
-	if (jobmask & 1<<JOB_KNIGHT)
-		bclass[1] |= 1<<MAPID_SWORDMAN;
-	if (jobmask & 1<<JOB_PRIEST)
-		bclass[1] |= 1<<MAPID_ACOLYTE;
-	if (jobmask & 1<<JOB_WIZARD)
-		bclass[1] |= 1<<MAPID_MAGE;
-	if (jobmask & 1<<JOB_BLACKSMITH)
-		bclass[1] |= 1<<MAPID_MERCHANT;
-	if (jobmask & 1<<JOB_HUNTER)
-		bclass[1] |= 1<<MAPID_ARCHER;
-	if (jobmask & 1<<JOB_ASSASSIN)
-		bclass[1] |= 1<<MAPID_THIEF;
+	if (jobmask & 1ULL<<JOB_KNIGHT)
+		bclass[1] |= 1ULL<<MAPID_SWORDMAN;
+	if (jobmask & 1ULL<<JOB_PRIEST)
+		bclass[1] |= 1ULL<<MAPID_ACOLYTE;
+	if (jobmask & 1ULL<<JOB_WIZARD)
+		bclass[1] |= 1ULL<<MAPID_MAGE;
+	if (jobmask & 1ULL<<JOB_BLACKSMITH)
+		bclass[1] |= 1ULL<<MAPID_MERCHANT;
+	if (jobmask & 1ULL<<JOB_HUNTER)
+		bclass[1] |= 1ULL<<MAPID_ARCHER;
+	if (jobmask & 1ULL<<JOB_ASSASSIN)
+		bclass[1] |= 1ULL<<MAPID_THIEF;
 	//2-2 classes
-	if (jobmask & 1<<JOB_CRUSADER)
-		bclass[2] |= 1<<MAPID_SWORDMAN;
-	if (jobmask & 1<<JOB_MONK)
-		bclass[2] |= 1<<MAPID_ACOLYTE;
-	if (jobmask & 1<<JOB_SAGE)
-		bclass[2] |= 1<<MAPID_MAGE;
-	if (jobmask & 1<<JOB_ALCHEMIST)
-		bclass[2] |= 1<<MAPID_MERCHANT;
-	if (jobmask & 1<<JOB_BARD)
-		bclass[2] |= 1<<MAPID_ARCHER;
+	if (jobmask & 1ULL<<JOB_CRUSADER)
+		bclass[2] |= 1ULL<<MAPID_SWORDMAN;
+	if (jobmask & 1ULL<<JOB_MONK)
+		bclass[2] |= 1ULL<<MAPID_ACOLYTE;
+	if (jobmask & 1ULL<<JOB_SAGE)
+		bclass[2] |= 1ULL<<MAPID_MAGE;
+	if (jobmask & 1ULL<<JOB_ALCHEMIST)
+		bclass[2] |= 1ULL<<MAPID_MERCHANT;
+	if (jobmask & 1ULL<<JOB_BARD)
+		bclass[2] |= 1ULL<<MAPID_ARCHER;
 //	Bard/Dancer share the same slot now.
-//	if (jobmask & 1<<JOB_DANCER)
-//		bclass[2] |= 1<<MAPID_ARCHER;
-	if (jobmask & 1<<JOB_ROGUE)
-		bclass[2] |= 1<<MAPID_THIEF;
+//	if (jobmask & 1ULL<<JOB_DANCER)
+//		bclass[2] |= 1ULL<<MAPID_ARCHER;
+	if (jobmask & 1ULL<<JOB_ROGUE)
+		bclass[2] |= 1ULL<<MAPID_THIEF;
 	//Special classes that don't fit above.
-	if (jobmask & 1<<21) //Taekwon boy
-		bclass[0] |= 1<<MAPID_TAEKWON;
-	if (jobmask & 1<<22) //Star Gladiator
-		bclass[1] |= 1<<MAPID_TAEKWON;
-	if (jobmask & 1<<23) //Soul Linker
-		bclass[2] |= 1<<MAPID_TAEKWON;
-	if (jobmask & 1<<JOB_GUNSLINGER)
-		bclass[0] |= 1<<MAPID_GUNSLINGER;
-	if (jobmask & 1<<JOB_NINJA) { //Kagerou/Oboro jobs can equip Ninja equips. [Rytech]
-		bclass[0] |= 1<<MAPID_NINJA;
-		bclass[1] |= 1<<MAPID_NINJA;
+	if (jobmask & 1ULL<<21) //Taekwon
+		bclass[0] |= 1ULL<<MAPID_TAEKWON;
+	if (jobmask & 1ULL<<22) //Star Gladiator
+		bclass[1] |= 1ULL<<MAPID_TAEKWON;
+	if (jobmask & 1ULL<<23) //Soul Linker
+		bclass[2] |= 1ULL<<MAPID_TAEKWON;
+	if (jobmask & 1ULL<<JOB_GUNSLINGER) { // Rebellion job can equip Gunslinger equips.
+		bclass[0] |= 1ULL<<MAPID_GUNSLINGER;
+		bclass[1] |= 1ULL<<MAPID_GUNSLINGER;
 	}
-	if (jobmask & 1<<26) //Bongun/Munak
-		bclass[0] |= 1<<MAPID_GANGSI;
-	if (jobmask & 1<<27) //Death Knight
-		bclass[1] |= 1<<MAPID_GANGSI;
-	if (jobmask & 1<<28) //Dark Collector
-		bclass[2] |= 1<<MAPID_GANGSI;
-	if (jobmask & 1<<29) //Kagerou / Oboro
-		bclass[1] |= 1<<MAPID_NINJA;
-	if (jobmask & 1<<30) //Rebellion
-		bclass[1] |= 1<<MAPID_GUNSLINGER;
-	if (jobmask & 1<<31) //Summoner
-		bclass[0] |= 1<<MAPID_SUMMONER;
+	if (jobmask & 1ULL<<JOB_NINJA) { //Kagerou/Oboro jobs can equip Ninja equips. [Rytech]
+		bclass[0] |= 1ULL<<MAPID_NINJA;
+		bclass[1] |= 1ULL<<MAPID_NINJA;
+	}
+	if (jobmask & 1ULL<<26) //Bongun/Munak
+		bclass[0] |= 1ULL<<MAPID_GANGSI;
+	if (jobmask & 1ULL<<27) //Death Knight
+		bclass[1] |= 1ULL<<MAPID_GANGSI;
+	if (jobmask & 1ULL<<28) //Dark Collector
+		bclass[2] |= 1ULL<<MAPID_GANGSI;
+	if (jobmask & 1ULL<<29) //Kagerou / Oboro
+		bclass[1] |= 1ULL<<MAPID_NINJA;
+	if (jobmask & 1ULL<<30) //Rebellion
+		bclass[1] |= 1ULL<<MAPID_GUNSLINGER;
+	if (jobmask & 1ULL<<31) //Summoner
+		bclass[0] |= 1ULL<<MAPID_SUMMONER;
 }
 
 /**

@@ -1047,7 +1047,7 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 		return ITEM_EQUIP_ACK_FAIL;
 
 	//Not equipable by class. [Skotlex]
-	if (!(1<<(sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1)?1:((sd->class_&JOBL_2_2)?2:0)]))
+	if (!(1ULL<<(sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1)?1:((sd->class_&JOBL_2_2)?2:0)]))
 		return ITEM_EQUIP_ACK_FAIL;
 	
 	if (!pc_isItemClass(sd,item))
@@ -4783,7 +4783,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 
 	//Not equipable by class. [Skotlex]
 	if (!(
-		(1<<(sd->class_&MAPID_BASEMASK)) &
+		(1ULL<<(sd->class_&MAPID_BASEMASK)) &
 		(item->class_base[sd->class_&JOBL_2_1?1:(sd->class_&JOBL_2_2?2:0)])
 	))
 		return false;
