@@ -78,7 +78,7 @@ void instance_getsd(unsigned short instance_id, struct map_session_data **sd, en
 			(*target) = PARTY;
 			break;
 		case IM_CHAR:
-			(*sd) = map_id2sd(instance_data[instance_id].owner_id);
+			(*sd) = map_charid2sd(instance_data[instance_id].owner_id);
 			(*target) = SELF;
 			break;
 	}
@@ -118,7 +118,7 @@ static int instance_subscription_timer(int tid, unsigned int tick, int id, intpt
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (ret == 0 && (sd = map_id2sd(instance_data[instance_id].owner_id)) != NULL) // If no maps are created, tell player to wait
+			if (ret == 0 && (sd = map_charid2sd(instance_data[instance_id].owner_id)) != NULL) // If no maps are created, tell player to wait
 				clif_instance_changewait(instance_id, 0xffff);
 			break;
 		case IM_PARTY:
@@ -177,7 +177,7 @@ static int instance_startkeeptimer(struct instance_data *im, unsigned short inst
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_id2sd(im->owner_id) != NULL) // Notify player of the added instance timer
+			if (map_charid2sd(im->owner_id) != NULL) // Notify player of the added instance timer
 				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_PARTY:
@@ -220,7 +220,7 @@ static int instance_startidletimer(struct instance_data *im, unsigned short inst
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_id2sd(im->owner_id) != NULL && instance_searchtype_db(im->type) != NULL) // Notify player of added instance timer
+			if (map_charid2sd(im->owner_id) != NULL && instance_searchtype_db(im->type) != NULL) // Notify player of added instance timer
 				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_PARTY:
@@ -258,7 +258,7 @@ static int instance_stopidletimer(struct instance_data *im, unsigned short insta
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_id2sd(im->owner_id) != NULL) // Notify the player
+			if (map_charid2sd(im->owner_id) != NULL) // Notify the player
 				clif_instance_changestatus(instance_id, 0, im->idle_limit);
 			break;
 		case IM_PARTY:
@@ -338,7 +338,7 @@ int instance_create(int owner_id, const char *name, enum instance_mode mode) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if ((sd = map_id2sd(owner_id)) == NULL) {
+			if ((sd = map_charid2sd(owner_id)) == NULL) {
 				ShowError("instance_create: character %d not found for instance '%s'.\n", owner_id, name);
 				return -2;
 			}
@@ -474,7 +474,7 @@ int instance_addmap(unsigned short instance_id) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_id2sd(im->owner_id) != NULL) // Inform player of the created instance
+			if (map_charid2sd(im->owner_id) != NULL) // Inform player of the created instance
 				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_PARTY:
@@ -560,7 +560,7 @@ int instance_destroy(unsigned short instance_id)
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			sd = map_id2sd(im->owner_id);
+			sd = map_charid2sd(im->owner_id);
 			break;
 		case IM_PARTY:
 			p = party_search(im->owner_id);
@@ -677,7 +677,7 @@ int instance_enter_position(struct map_session_data *sd, unsigned short instance
 		case IM_CHAR:
 			if (sd->instance_id == 0) // Player must have an instance
 				return 2;
-			if (im->owner_id != sd->status.account_id)
+			if (im->owner_id != sd->status.char_id)
 				return 3;
 			break;
 		case IM_PARTY:
