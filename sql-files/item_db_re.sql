@@ -15,7 +15,7 @@ CREATE TABLE `item_db_re` (
   `defence` smallint(5) unsigned DEFAULT NULL,
   `range` tinyint(2) unsigned DEFAULT NULL,
   `slots` tinyint(2) unsigned DEFAULT NULL,
-  `equip_jobs` bigint(20) unsigned DEFAULT NULL,
+  `equip_jobs` int(10) unsigned DEFAULT NULL,
   `equip_upper` tinyint(2) unsigned DEFAULT NULL,
   `equip_genders` tinyint(1) unsigned DEFAULT NULL,
   `equip_locations` mediumint(7) unsigned DEFAULT NULL,
@@ -6946,7 +6946,7 @@ REPLACE INTO `item_db_re` VALUES (12814,'Slapping_Herb','Slapping Herb',11,0,NUL
 REPLACE INTO `item_db_re` VALUES (12815,'Yggdrasil_Dust','Yggdrasil Dust',11,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "ECL_SEQUOIADUST",1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12816,'Old_Ore_Box_','Old Ore Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'60',NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12817,'Old_Card_Album_','Old Card Album',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'80',NULL,NULL,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (12818,'High_Weapon_Box_','High Weapon Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'100',NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (12818,'High_Weapon_Box_','High Weapon Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'100',NULL,NULL,'getrandgroupitem(IG_Advanced_Weapons_Box,1);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12819,'Zherlthsh_Tck_Box_','Zherlthsh Tck Box',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,'150',NULL,NULL,'getitem 6184,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12820,'Mao_Guai_Scroll','Mao Guai Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'mercenary_create 2348,1800000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (12821,'Loli_Ruri_Scroll','Loli Ruri Scroll',2,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'mercenary_create 2349,1800000;',NULL,NULL);
