@@ -12012,19 +12012,19 @@ void pc_set_costume_view(struct map_session_data *sd) {
 
 	// Costumes check
 	if (!map[sd->bl.m].flag.nocostume) {
-		if ((i = sd->equip_index[EQI_COSTUME_LOW]) != -1 && (id = sd->inventory_data[i])) {
+		if ((i = sd->equip_index[EQI_COSTUME_HEAD_LOW]) != -1 && (id = sd->inventory_data[i])) {
 			if (!(id->equip&(EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_TOP)))
 				sd->status.head_bottom = id->look;
 			else
 				sd->status.head_bottom = 0;
 		}
-		if ((i = sd->equip_index[EQI_COSTUME_MID]) != -1 && (id = sd->inventory_data[i])) {
+		if ((i = sd->equip_index[EQI_COSTUME_HEAD_MID]) != -1 && (id = sd->inventory_data[i])) {
 			if (!(id->equip&EQP_COSTUME_HEAD_TOP))
 				sd->status.head_mid = id->look;
 			else
 				sd->status.head_mid = 0;
 		}
-		if ((i = sd->equip_index[EQI_COSTUME_TOP]) != -1 && (id = sd->inventory_data[i])) {
+		if ((i = sd->equip_index[EQI_COSTUME_HEAD_TOP]) != -1 && (id = sd->inventory_data[i])) {
 			sd->status.head_top = id->look;
 		}
 		if ((i = sd->equip_index[EQP_COSTUME_GARMENT]) != -1 && (id = sd->inventory_data[i]))
