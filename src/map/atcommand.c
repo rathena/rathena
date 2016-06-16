@@ -7070,9 +7070,10 @@ ACMD_FUNC(mobinfo)
 		return -1;
 	}
 
-	if (count == MAX_SEARCH) {
+	if (count >= MAX_SEARCH) {
 		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
+		count = MAX_SEARCH;
 	}
 	for (k = 0; k < count; k++) {
 		unsigned int j,base_exp,job_exp;
@@ -7704,9 +7705,10 @@ ACMD_FUNC(whereis)
 		return -1;
 	}
 
-	if (count == MAX_SEARCH) {
+	if (count >= MAX_SEARCH) {
 		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
+		count = MAX_SEARCH;
 	}
 	for (k = 0; k < count; k++) {
 		struct mob_db *mob = mob_array[k];
