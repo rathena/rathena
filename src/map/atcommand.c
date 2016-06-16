@@ -3569,10 +3569,9 @@ ACMD_FUNC(idsearch)
 	sprintf(atcmd_output, msg_txt(sd,77), item_name); // The reference result of '%s' (name: id):
 	clif_displaymessage(fd, atcmd_output);
 	match = itemdb_searchname_array(item_array, MAX_SEARCH, item_name);
-	if (match > MAX_SEARCH) {
-		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH, match);
+	if (match == MAX_SEARCH) {
+		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
-		match = MAX_SEARCH;
 	}
 	for(i = 0; i < match; i++) {
 		sprintf(atcmd_output, msg_txt(sd,78), item_array[i]->jname, item_array[i]->nameid); // %s: %d
@@ -7071,10 +7070,9 @@ ACMD_FUNC(mobinfo)
 		return -1;
 	}
 
-	if (count > MAX_SEARCH) {
-		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH, count);
+	if (count == MAX_SEARCH) {
+		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
-		count = MAX_SEARCH;
 	}
 	for (k = 0; k < count; k++) {
 		unsigned int j,base_exp,job_exp;
@@ -7594,10 +7592,9 @@ ACMD_FUNC(iteminfo)
 		return -1;
 	}
 
-	if (count > MAX_SEARCH) {
-		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH, count); // Displaying first %d out of %d matches
+	if (count == MAX_SEARCH) {
+		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
-		count = MAX_SEARCH;
 	}
 	for (i = 0; i < count; i++) {
 		struct item_data * item_data = item_array[i];
@@ -7646,10 +7643,9 @@ ACMD_FUNC(whodrops)
 		return -1;
 	}
 
-	if (count > MAX_SEARCH) {
-		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH, count); // Displaying first %d out of %d matches
+	if (count == MAX_SEARCH) {
+		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
-		count = MAX_SEARCH;
 	}
 	for (i = 0; i < count; i++) {
 		item_data = item_array[i];
@@ -7708,10 +7704,9 @@ ACMD_FUNC(whereis)
 		return -1;
 	}
 
-	if (count > MAX_SEARCH) {
-		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH, count);
+	if (count == MAX_SEARCH) {
+		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
-		count = MAX_SEARCH;
 	}
 	for (k = 0; k < count; k++) {
 		struct mob_db *mob = mob_array[k];

@@ -16581,10 +16581,8 @@ BUILDIN_FUNC(searchitem)
 
 	if ((items[0] = itemdb_exists(atoi(itemname))))
 		count = 1;
-	else {
+	else
 		count = itemdb_searchname_array(items, ARRAYLENGTH(items), itemname);
-		if (count > MAX_SEARCH) count = MAX_SEARCH;
-	}
 
 	if (!count) {
 		script_pushint(st, 0);
