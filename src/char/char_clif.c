@@ -532,29 +532,26 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
  * @param sd
  * @param delcode E-mail or birthdate
  * @param flag Delete flag
- * @return 1:Success, 0:Failure
+ * @return true:Success, false:Failure
  **/
-static int chclif_delchar_check(struct char_session_data *sd, char *delcode, uint8 flag) {
+static bool chclif_delchar_check(struct char_session_data *sd, char *delcode, uint8 flag) {
 	// E-Mail check
-	if (flag&1) {
-		if (strcmp(delcode, sd->email) && //email does not matches and
-			(strcmp("a@a.com", sd->email) || //it is not default email, or
-			(strcmp("a@a.com", delcode) && strcmp("", delcode)) //email sent does not matches default
-			))
-			;
-		else {
+	if (flag&CHAR_DEL_EMAIL && (
+			!strcmp(delcode, sd->email) || //email does not match or
+			(
+				!strcmp("a@a.com", sd->email) && //it is default email and
+				!strcmp("", delcode) //user sent an empty email
+			))) {
 			ShowInfo(""CL_RED"Char Deleted"CL_RESET" "CL_GREEN"(E-Mail)"CL_RESET".\n");
-			return 1;
+			return true;
 		}
 	}
 	// Birthdate (YYMMDD)
-	if (flag&2) {
-		if (!strcmp(sd->birthdate+2, delcode)) { // +2 to cut off the century
-			ShowInfo(""CL_RED"Char Deleted"CL_RESET" "CL_GREEN"(Birthdate)"CL_RESET".\n");
-			return 1;
-		}
+	if (flag&CHAR_DEL_BIRTHDATE && !strcmp(sd->birthdate+2, delcode)) { // +2 to cut off the century
+		ShowInfo(""CL_RED"Char Deleted"CL_RESET" "CL_GREEN"(Birthdate)"CL_RESET".\n");
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 // CH: <0829>.W <char id>.L <birth date:YYMMDD>.6B
@@ -606,7 +603,7 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 			return 1;
 		}
 
-		if (!chclif_delchar_check(sd, birthdate, 2)) { // Only check for birthdate
+		if (!chclif_delchar_check(sd, birthdate, CHAR_DEL_BIRTHDATE)) { // Only check for birthdate
 			chclif_char_delete2_accept_ack(fd, char_id, 5);
 			return 1;
 		}
