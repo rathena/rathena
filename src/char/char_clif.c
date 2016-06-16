@@ -544,7 +544,6 @@ static bool chclif_delchar_check(struct char_session_data *sd, char *delcode, ui
 			))) {
 			ShowInfo(""CL_RED"Char Deleted"CL_RESET" "CL_GREEN"(E-Mail)"CL_RESET".\n");
 			return true;
-		}
 	}
 	// Birthdate (YYMMDD)
 	if (flag&CHAR_DEL_BIRTHDATE && !strcmp(sd->birthdate+2, delcode)) { // +2 to cut off the century
