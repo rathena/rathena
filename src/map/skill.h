@@ -26,7 +26,7 @@ struct status_change_entry;
 #define SKILL_NAME_LENGTH 31 /// Max Skill Name length
 #define SKILL_DESC_LENGTH 31 /// Max Skill Desc length
 
-DBMap* skilldb_name2id;
+extern DBMap* skilldb_name2id;
 
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills

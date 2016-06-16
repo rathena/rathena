@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= kobra_k88
 //===== Current Version: ===================================== 
-//= 3.6
+//= 3.7
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
@@ -49,6 +49,8 @@
 //= 3.4 Removed the need for use of 'goto.' [L0ne_W0lf]
 //= 3.5 Fixed the waitingroom where player can enter the Test Area without passing the written exam. Now player will not be warp inside the Test Area when did not passed the written exam instead the player will be warp back to the written exam entrance [JayPee]
 //= 3.6 Fixed broken event calls. [Euphy]
+//= 3.7 Fixed issue that the player can't progress in the quest if timed out at weapon reward step. This issue is fixed on iRO but not on kRO. [https://forums.warpportal.com/index.php?/topic/130060-didnt-receive-necklace-of-oblivion-when-changing-assassin/#entry1496042] [MrAntares]
+//= 3.8 Another 'unofficial fix'. Player can't change job if time out after the necklace is deleted.
 //============================================================ 
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
@@ -126,12 +128,12 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		mes "...";
 		mes "......";
 		next;
-		delitem 1008,1; //Frozen_Heart
-		changequest 8007,8008;
 		mes "[Assassin Expert 'Huey']";
 		mes "Alright!";
 		mes "You've been approved!";
 		next;
+		delitem 1008,1; //Frozen_Heart
+		changequest 8007,8008;
 		completequest 8008;
 		callfunc "Job_Change",Job_Assassin;
 		callfunc "F_ClearJobVar";		// clears all job variables for the current player
@@ -2056,8 +2058,6 @@ OnTouch:
 			next;
 		}
 		if (ASSIN_Q3 == 1 && BaseJob == Job_Thief && ASSIN_Q > 6 && ASSIN_Q < 17) {
-			set ASSIN_Q,17;
-			set ASSIN_Q3,2;
 			mes "[Guildmaster]";
 			mes "Well, I've said too much. Please choose a weapon as a present.";
 			next;
@@ -2091,10 +2091,11 @@ OnTouch:
 				mes "It used to rule over the Assassin weapon market. Please take care of my gladius.";
 				getitem 1220,1; //Gladius_
 			}
+			set ASSIN_Q,17;
+			set ASSIN_Q3,2;
 			next;
 		}
 		else {
-			set ASSIN_Q,17;
 			mes "[Guildmaster]";
 			mes "Well, I talked too much.";
 			mes "Please take this first.";
@@ -2115,6 +2116,7 @@ OnTouch:
 			case 5:
 				getitem 1252,1; //Katar
 			}
+			set ASSIN_Q,17;
 		}
 		mes "[Guildmaster]";
 		mes "Well, I am giving you a token. Please return to the Assassin expert, the Ferocious-Looking Huey, at the entrance.";

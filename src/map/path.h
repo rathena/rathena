@@ -22,6 +22,19 @@ struct shootpath_data {
 	int y[MAX_WALKPATH];
 };
 
+enum directions{
+	DIR_CENTER = -1,
+	DIR_NORTH = 0,
+	DIR_NORTHWEST = 1,
+	DIR_WEST = 2,
+	DIR_SOUTHWEST = 3,
+	DIR_SOUTH = 4,
+	DIR_SOUTHEAST = 5,
+	DIR_EAST = 6,
+	DIR_NORTHEAST = 7,
+	DIR_MAX
+};
+
 #define check_distance_bl(bl1, bl2, distance) check_distance((bl1)->x - (bl2)->x, (bl1)->y - (bl2)->y, distance)
 #define check_distance_blxy(bl, x1, y1, distance) check_distance((bl)->x-(x1), (bl)->y-(y1), distance)
 #define check_distance_xy(x0, y0, x1, y1, distance) check_distance((x0)-(x1), (y0)-(y1), distance)
@@ -52,5 +65,10 @@ bool check_distance(int dx, int dy, int distance);
 unsigned int distance(int dx, int dy);
 bool check_distance_client(int dx, int dy, int distance);
 int distance_client(int dx, int dy);
+
+//
+void do_init_path();
+void do_final_path();
+
 
 #endif /* _PATH_H_ */

@@ -35,7 +35,7 @@ struct party_booking_ad_info;
 enum { // packet DB
 	MIN_PACKET_DB  = 0x064,
 	MAX_PACKET_DB  = 0xAFF,
-	MAX_PACKET_VER = 54,
+	MAX_PACKET_VER = 55,
 	MAX_PACKET_POS = 20,
 };
 
@@ -644,7 +644,8 @@ void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_targe
 
 #define clif_status_load(bl, type, flag) clif_status_change((bl), (type), (flag), 0, 0, 0, 0)
 void clif_status_change(struct block_list *bl, int type, int flag, int tick, int val1, int val2, int val3);
-void clif_status_change2(struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3);
+void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, int tick, int val1, int val2, int val3);
+void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list *bl, enum send_target target);
 
 void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len);
 void clif_wis_end(int fd, int result);
@@ -745,10 +746,10 @@ void clif_sendbgemblem_area(struct map_session_data *sd);
 void clif_sendbgemblem_single(int fd, struct map_session_data *sd);
 
 // Instancing
-void clif_instance_create(struct map_session_data *sd, const char *name, int num, int flag);
-void clif_instance_changewait(struct map_session_data *sd, int num, int flag);
-void clif_instance_status(struct map_session_data *sd, const char *name, unsigned int limit1, unsigned int limit2, int flag);
-void clif_instance_changestatus(struct map_session_data *sd, int type, unsigned int limit, int flag);
+void clif_instance_create(unsigned short instance_id, int num);
+void clif_instance_changewait(unsigned short instance_id, int num);
+void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsigned int limit2);
+void clif_instance_changestatus(unsigned int instance_id, int type, unsigned int limit);
 
 // Custom Fonts
 void clif_font(struct map_session_data *sd);
