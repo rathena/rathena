@@ -623,6 +623,17 @@ enum unitdata_npctypes {
 	UNPC_DMOTION,
 };
 
+enum navigation_service {
+	NAV_NONE = 0, ///< 0
+	NAV_AIRSHIP_ONLY = 1, ///< 1 (actually 1-9)
+	NAV_SCROLL_ONLY = 10, ///< 10
+	NAV_AIRSHIP_AND_SCROLL = NAV_AIRSHIP_ONLY + NAV_SCROLL_ONLY, ///< 11 (actually 11-99)
+	NAV_KAFRA_ONLY = 100, ///< 100
+	NAV_KAFRA_AND_AIRSHIP = NAV_KAFRA_ONLY + NAV_AIRSHIP_ONLY, ///< 101 (actually 101-109)
+	NAV_KAFRA_AND_SCROLL = NAV_KAFRA_ONLY + NAV_SCROLL_ONLY, ///< 110
+	NAV_ALL = NAV_AIRSHIP_ONLY + NAV_SCROLL_ONLY + NAV_KAFRA_ONLY ///< 111 (actually 111-255)
+};
+
 /**
  * used to generate quick script_array entries
  **/

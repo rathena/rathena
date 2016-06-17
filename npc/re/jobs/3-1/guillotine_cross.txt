@@ -19,6 +19,7 @@
 //= 1.4 Added missing labels. [Joseph]
 //= 1.5 Added GM management function. [Euphy]
 //= 1.6 Added VIP features. [Euphy]
+//= 1.7 Fixed PLAYTIME issue. [Capuche]
 //============================================================
 
 que_job01,75,96,3	script	Guild Member#3rdgc01	997,{
@@ -2090,7 +2091,7 @@ veins,337,284,0	script	#ghostestilla_3rdgc	139,3,3,{
 	end;
 OnTouch:
 	if (job_3rd_gc == 9) {
-		if ((checkquest(7104,PLAYTIME) == 1) || (checkquest(7105,PLAYTIME) == 1)) {
+		if ((checkquest(7104,PLAYTIME) == 0) || (checkquest(7105,PLAYTIME) == 0)) {
 			mes ".....?";
 			mes "There's a sign of somebody present.";
 			mes "You still have time.";
@@ -2354,7 +2355,7 @@ OnTouch:
 				mes "I back up to watch the situation unfold.";
 				close;
 			}
-		} else if (checkquest(7107,PLAYTIME) == 1) {
+		} else if (checkquest(7107,PLAYTIME) == 0) {
 			mes "This must be the place Estillda told me about.";
 			mes "I have enough time for meeting.";
 			close;
@@ -3560,7 +3561,7 @@ job3_guil03,146,70,3	script	Renzak#3rdgc16	466,{
 		mes "Go to Mayshell for the report.";
 		next;
 		mes "[Renzak]";
-		if (checkquest(7110,PLAYTIME) == 1) {
+		if (checkquest(7110,PLAYTIME) == 0) {
 			mes "You finished quickly.";
 			mes "Good job.";
 			set job_3rd_gc, 18;

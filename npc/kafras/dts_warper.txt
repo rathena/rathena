@@ -448,7 +448,7 @@ function	script	F_VoteKafra	{
 					mes " ";
 					mes " ";
 					if ($DTS_KafraWins == 0) {
-						mes "FF0000Toy Factory, Level 2^000000";
+						mes "^FF0000Toy Factory, Level 2^000000";
 					}
 					else if ($DTS_KafraWins == 1) {
 						mes "^FF0000Toy Factory, Level 2^000000";

@@ -4001,7 +4001,7 @@ mosk_in,211,259,5	script	Larissa#mos_01	4_F_RUSWOMAN2,{
 				}
 				setarray .@di[0],7031,1,519,2,504,2,548,1,1019,1,518,1;
 				for (.@i = 0; .@i < getarraysize(.@di); .@i += 2)
-					delitem .@n[.@i],.@n[.@i+1];
+					delitem .@di[.@i],.@di[.@i+1];
 				getitem .@n[0],.@n[1];
 				close;
 			}
@@ -7296,7 +7296,7 @@ moscovia,178,127,0	script	The Blacksmith#rus06	1_M_SMITH,{
 			delitem 999,25;// Steel
 			rhea_rus_main = 8;
 			// changequest 8138,8139;
-			if (BaseClass == Job_Merchant || BaseClass == Job_Swordman || BaseClass == Job_Thief || BaseClass == Job_Archer || BaseClass == Job_Ninja || BaseClass == Job_Gunslinger)
+			if (BaseClass == Job_Merchant || BaseClass == Job_Swordman || BaseClass == Job_Thief || BaseClass == Job_Archer)
 				getitem 2429,1;// Iron_Boots01
 			else
 				getitem 2430,1;// Iron_Boots02

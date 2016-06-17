@@ -112,59 +112,59 @@ izlude,143,205,7	script	Talkative Kid#iz	4_F_KID2,{
 	end;
 
 OnTimer64000:
-	npctalk "I used all my Novice Red Potions. What should I do?";
+	npctalk "Talkative Kid : I used all my Novice Red Potions. What should I do?";
 	end;
 
 OnTimer72000:
-	npctalk "Where is the shop?";
+	npctalk "Talkative Kid : Where is the shop?";
 	end;
 
 OnTimer136000:
-	npctalk "Idiot! You do not know about the 'shortcut window'?";
+	npctalk "Talkative Kid : Idiot! You do not know about the 'shortcut window'?";
 	end;
 
 OnTimer144000:
-	npctalk "The items in your inventory can be dragged and put in the shortcut window.";
+	npctalk "Talkative Kid : The items in your inventory can be dragged and put in the shortcut window.";
 	end;
 
 OnTimer212000:
-	npctalk "I got so many beginner's items in the Academy!";
+	npctalk "Talkative Kid : I got so many beginner's items in the Academy!";
 	end;
 
 OnTimer276000:
-	npctalk "They even gave me weapons and a shield!";
+	npctalk "Talkative Kid : They even gave me weapons and a shield!";
 	end;
 
 OnTimer284000:
-	npctalk "Just press  <Ctrl+~key> to open the map you have.";
+	npctalk "Talkative Kid : Just press  <Ctrl+~key> to open the map you have.";
 	end;
 
 OnTimer344000:
-	npctalk "Then do you want to go Criatura Academy with me? I'm learning how to battle from Instructor Subino!";
+	npctalk "Talkative Kid : Then do you want to go Criatura Academy with me? I'm learning how to battle from Instructor Subino!";
 	end;
 
 OnTimer348000:
-	npctalk "The Academy is in North side of Izlude. Let's go~!";
+	npctalk "Talkative Kid : The Academy is in North side of Izlude. Let's go~!";
 	end;
 
 OnTimer416000:
-	npctalk "It's a system to guide you to a destination.";
+	npctalk "Talkative Kid : It's a system to guide you to a destination.";
 	end;
 
 OnTimer424000:
-	npctalk "In the basic menu, please click the [Navigation] button.";
+	npctalk "Talkative Kid : In the basic menu, please click the [Navigation] button.";
 	end;
 
 OnTimer492000:
-	npctalk "Whee, Ain't gonna use your brain? Please type /where in the chat window now!";
+	npctalk "Talkative Kid : Whee, Ain't gonna use your brain? Please type /where in the chat window now!";
 	end;
 
 OnTimer552000:
-	npctalk "In this case, you can push the <Enter> key.";
+	npctalk "Talkative Kid : In this case, you can push the <Enter> key.";
 	end;
 
 OnTimer560000:
-	npctalk "We are just repeating the same dialog. HaHaha.";
+	npctalk "Talkative Kid : We are just repeating the same dialog. HaHaha.";
 	end;
 
 OnTimer565000:
@@ -182,67 +182,67 @@ izlude,146,205,7	script	Talkative Adventurer#iz	4_M_KID1,{
 	end;
 
 OnTimer69000:
-	npctalk "You can buy potion from Merchants.";
+	npctalk "Talkative Adventurer : You can buy potion from Merchants.";
 	end;
 
 OnTimer77000:
-	npctalk "It's the Potion image in the mini map.";
+	npctalk "Talkative Adventurer : It's the Potion image in the mini map.";
 	end;
 
 OnTimer131000:
-	npctalk "Is there any way to use items easily?";
+	npctalk "Talkative Adventurer : Is there any way to use items easily?";
 	end;
 
 OnTimer141000:
-	npctalk "Shortcut window? The slots at the top of the screen? How can I use it?";
+	npctalk "Talkative Adventurer : Shortcut window? The slots at the top of the screen? How can I use it?";
 	end;
 
 OnTimer149000:
-	npctalk "For inventory, do you mean 'item' menu? Oh, it is!";
+	npctalk "Talkative Adventurer : For inventory, do you mean 'item' menu? Oh, it is!";
 	end;
 
 OnTimer217000:
-	npctalk "I have a bunch of potions?";
+	npctalk "Talkative Adventurer : I have a bunch of potions?";
 	end;
 
 OnTimer281000:
-	npctalk "What?! I should go to the Academy now!";
+	npctalk "Talkative Adventurer : What?! I should go to the Academy now!";
 	end;
 
 OnTimer279000:
-	npctalk "Where is Izlude? In the center?";
+	npctalk "Talkative Adventurer : Where is Izlude? In the center?";
 	end;
 
 OnTimer339000:
-	npctalk "I do not know what to do.";
+	npctalk "Talkative Adventurer : I do not know what to do.";
 	end;
 
 OnTimer349000:
-	npctalk "Oh yea? I want to know so many things~ I will go with you!";
+	npctalk "Talkative Adventurer : Oh yea? I want to know so many things~ I will go with you!";
 	end;
 
 OnTimer411000:
-	npctalk "Navigation, What is that?";
+	npctalk "Talkative Adventurer : Navigation, What is that?";
 	end;
 
 OnTimer421000:
-	npctalk "Oh-! Should I search for a Kafra Employee?";
+	npctalk "Talkative Adventurer : Oh-! Should I search for a Kafra Employee?";
 	end;
 
 OnTimer487000:
-	npctalk "What is the town name?";
+	npctalk "Talkative Adventurer : What is the town name?";
 	end;
 
 OnTimer497000:
-	npctalk "I cannot see the part where I can write something in the chat window?";
+	npctalk "Talkative Adventurer : I cannot see the part where I can write something in the chat window?";
 	end;
 
 OnTimer557000:
-	npctalk "Oh you smarty...";
+	npctalk "Talkative Adventurer : Oh you smarty...";
 	end;
 
 OnTimer555000:
-	npctalk "A while ago, one Novice talked to me like hey 'Talkative Adventurer'?. HaHaha.";
+	npctalk "Talkative Adventurer : A while ago, one Novice talked to me like hey 'Talkative Adventurer'?. HaHaha.";
 	end;
 
 OnTimer565000:
@@ -260,11 +260,11 @@ prt_fild08,338,217,7	script	Resting Adventurer#iz	4_F_SITDOWN,{
 	end;
 
 OnTimer60000:
-	npctalk "You know what? If you are sitting, HP and SP recovery is faster.";
+	npctalk "Resting Adventurer : You know what? If you are sitting, HP and SP recovery is faster.";
 	end;
 
 OnTimer65000:
-	npctalk "Sitting is possible if your basic job skill level is more than 3. Shortcut is pressing the <INSERT> key.";
+	npctalk "Resting Adventurer : Sitting is possible if your basic job skill level is more than 3. Shortcut is pressing the <INSERT> key.";
 OnInit:
 	initnpctimer;
 	end;

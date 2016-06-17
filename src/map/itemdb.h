@@ -43,6 +43,7 @@ enum item_itemid
 	ITEMID_WHITE_POTION					= 504,
 	ITEMID_BLUE_POTION					= 505,
 	ITEMID_APPLE						= 512,
+	ITEMID_CARROT						= 515,
 	ITEMID_HOLY_WATER					= 523,
 	ITEMID_PUMPKIN						= 535,
 	ITEMID_RED_SLIM_POTION				= 545,
@@ -91,6 +92,7 @@ enum item_itemid
 	ITEMID_SKULL_						= 7420,
 	ITEMID_TOKEN_OF_SIEGFRIED			= 7621,
 	ITEMID_TRAP_ALLOY					= 7940,
+	ITEMID_CATNIP_FRUIT					= 11602,
 	ITEMID_MERCENARY_RED_POTION			= 12184,
 	ITEMID_MERCENARY_BLUE_POTION		= 12185,
 	ITEMID_BATTLE_MANUAL				= 12208,
@@ -101,15 +103,6 @@ enum item_itemid
 	ITEMID_M_AWAKENING_POTION			= 12242,
 	ITEMID_M_BERSERK_POTION				= 12243,
 	ITEMID_COMP_BATTLE_MANUAL			= 12263,
-	ITEMID_LOVE_ANGEL					= 12287,
-	ITEMID_SQUIRREL						= 12288,
-	ITEMID_GOGO							= 12289,
-	ITEMID_PICTURE_DIARY				= 12304,
-	ITEMID_MINI_HEART					= 12305,
-	ITEMID_NEWCOMER						= 12306,
-	ITEMID_KID							= 12307,
-	ITEMID_MAGIC_CASTLE					= 12308,
-	ITEMID_BULGING_HEAD					= 12309,
 	ITEMID_THICK_BATTLE_MANUAL			= 12312,
 	ITEMID_ANCILLA						= 12333,
 	ITEMID_DUN_TELE_SCROLL3				= 12352,
@@ -415,7 +408,7 @@ struct item_data
 	int delay;
 //Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
 //		some script commands should be revised as well...
-	unsigned int class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
+	uint64 class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
 	unsigned class_upper : 6; //Specifies if the class-type can equip it (0x01: normal, 0x02: trans, 0x04: baby, 0x08:third, 0x10:trans-third, 0x20-third-baby)
 	struct {
 		int chance;

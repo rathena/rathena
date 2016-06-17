@@ -829,7 +829,7 @@ OnTouch:
 			emotion e_omg,1;
 			mes "[" + strcharinfo(0) + "]";
 			mes "Oh my.. the frog transformed into a child...";
-			end;
+			close;
 		}
 	}
 	end;

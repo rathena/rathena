@@ -317,6 +317,14 @@ int chmapif_parse_askscdata(int fd){
 				WFIFOW(fd,12) = count;
 				WFIFOSET(fd,WFIFOW(fd,2));
 			}
+		} else { // No Status Changes to load but still send a response
+			WFIFOHEAD(fd,14);
+			WFIFOW(fd,0) = 0x2b1d;
+			WFIFOW(fd,2) = 14;
+			WFIFOL(fd,4) = aid;
+			WFIFOL(fd,8) = cid;
+			WFIFOW(fd,12) = 0;
+			WFIFOSET(fd,WFIFOW(fd,2));
 		}
 		Sql_FreeResult(sql_handle);
 #endif

@@ -68,6 +68,10 @@ enum equip_index {
 	EQI_MAX
 };
 
+extern unsigned int equip_bitmask[EQI_MAX];
+
+#define equip_index_check(i) ( (i) >= EQI_ACC_L && (i) < EQI_MAX )
+
 struct weapon_data {
 	int atkmods[3];
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc
@@ -344,7 +348,7 @@ struct map_session_data {
 	short weapon_coma_race[RC_MAX];
 	short weapon_coma_class[CLASS_MAX];
 	int weapon_atk[16];
-	int weapon_atk_rate[16];
+	int weapon_damage_rate[16];
 	int arrow_addele[ELE_MAX];
 	int arrow_addrace[RC_MAX];
 	int arrow_addclass[CLASS_MAX];
@@ -362,6 +366,8 @@ struct map_session_data {
 	int ignore_mdef_by_class[CLASS_MAX];
 	int ignore_def_by_race[RC_MAX];
 	short sp_gain_race[RC_MAX];
+	int magic_addrace2[RC2_MAX];
+	int ignore_mdef_by_race2[RC2_MAX];
 	// zeroed arrays end here.
 
 	// zeroed structures start here
@@ -451,6 +457,8 @@ struct map_session_data {
 		int ematk; // matk bonus from equipment
 		int eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
+		short critical_rangeatk;
+		short weapon_atk_rate, weapon_matk_rate;
 	} bonus;
 	// zeroed vars end here.
 
@@ -671,6 +679,8 @@ struct map_session_data {
 		short prizeStage;
 		bool claimPrize;
 	} roulette;
+
+	unsigned short instance_id;
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -747,6 +757,18 @@ enum idletime_option {
 	IDLE_EMOTION       = 0x080,
 	IDLE_DROPITEM      = 0x100,
 	IDLE_ATCOMMAND     = 0x200,
+};
+
+enum adopt_responses {
+	ADOPT_ALLOWED = 0,
+	ADOPT_ALREADY_ADOPTED,
+	ADOPT_MARRIED_AND_PARTY,
+	ADOPT_EQUIP_RINGS,
+	ADOPT_NOT_NOVICE,
+	ADOPT_CHARACTER_NOT_FOUND,
+	ADOPT_MORE_CHILDREN,
+	ADOPT_LEVEL_70,
+	ADOPT_MARRIED,
 };
 
 struct {
@@ -855,7 +877,7 @@ short pc_maxaspd(struct map_session_data *sd);
 	( (class_) >= JOB_BABY_RUNE      && (class_) <= JOB_BABY_MECHANIC2 ) || \
 	( (class_) >= JOB_SUPER_NOVICE_E && (class_) <= JOB_SUPER_BABY_E   ) || \
 	( (class_) >= JOB_KAGEROU        && (class_) <= JOB_OBORO          ) || \
-	( (class_) >= JOB_REBELLION      && (class_) <  JOB_MAX            ) \
+	  (class_) == JOB_REBELLION      || (class_) == JOB_SUMMONER            \
 )
 #define pcdb_checkid(class_) pcdb_checkid_sub((unsigned int)class_)
 
@@ -934,7 +956,14 @@ void pc_clean_skilltree(struct map_session_data *sd);
 #define pc_checkoverhp(sd) ((sd)->battle_status.hp == (sd)->battle_status.max_hp)
 #define pc_checkoversp(sd) ((sd)->battle_status.sp == (sd)->battle_status.max_sp)
 
-char pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype);
+enum e_setpos{
+	SETPOS_OK = 0,
+	SETPOS_MAPINDEX = 1,
+	SETPOS_NO_MAPSERVER = 2,
+	SETPOS_AUTOTRADE = 3
+};
+
+enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype);
 void pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y);
 char pc_randomwarp(struct map_session_data *sd,clr_type type);
 bool pc_memo(struct map_session_data* sd, int pos);
@@ -966,7 +995,7 @@ bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem);
 bool pc_dropitem(struct map_session_data *sd,int n,int amount);
 
 bool pc_isequipped(struct map_session_data *sd, unsigned short nameid);
-bool pc_can_Adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd );
+enum adopt_responses pc_try_adopt(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd);
 bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd, struct map_session_data *b_sd);
 
 void pc_updateweightstatus(struct map_session_data *sd);
@@ -1004,13 +1033,15 @@ int pc_stop_following(struct map_session_data*);
 
 unsigned int pc_maxbaselv(struct map_session_data *sd);
 unsigned int pc_maxjoblv(struct map_session_data *sd);
+bool pc_is_maxbaselv(struct map_session_data *sd);
+bool pc_is_maxjoblv(struct map_session_data *sd);
 int pc_checkbaselevelup(struct map_session_data *sd);
 int pc_checkjoblevelup(struct map_session_data *sd);
-int pc_gainexp(struct map_session_data*,struct block_list*,unsigned int,unsigned int, bool);
-unsigned int pc_nextbaseexp(struct map_session_data *);
-unsigned int pc_thisbaseexp(struct map_session_data *);
-unsigned int pc_nextjobexp(struct map_session_data *);
-unsigned int pc_thisjobexp(struct map_session_data *);
+void pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned int base_exp, unsigned int job_exp, uint8 exp_flag);
+void pc_gainexp_disp(struct map_session_data *sd, unsigned int base_exp, unsigned int next_base_exp, unsigned int job_exp, unsigned int next_job_exp, bool lost);
+void pc_lostexp(struct map_session_data *sd, unsigned int base_exp, unsigned int job_exp);
+unsigned int pc_nextbaseexp(struct map_session_data *sd);
+unsigned int pc_nextjobexp(struct map_session_data *sd);
 int pc_gets_status_point(int);
 int pc_need_status_point(struct map_session_data *,int,int);
 int pc_maxparameterincrease(struct map_session_data*,int);
@@ -1167,7 +1198,6 @@ int map_night_timer(int tid, unsigned int tick, int id, intptr_t data); // by [y
 void pc_inventory_rentals(struct map_session_data *sd);
 void pc_inventory_rental_clear(struct map_session_data *sd);
 void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds);
-void pc_rental_expire(struct map_session_data *sd, int i);
 
 int pc_read_motd(void); // [Valaris]
 int pc_disguise(struct map_session_data *sd, int class_);
@@ -1221,6 +1251,6 @@ void pc_show_questinfo(struct map_session_data *sd);
 void pc_show_questinfo_reinit(struct map_session_data *sd);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-int pc_level_penalty_mod(struct map_session_data *sd, int mob_level, uint32 mob_class, enum e_mode mode, int type);
+int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type);
 #endif
 #endif /* _PC_H_ */

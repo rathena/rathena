@@ -563,6 +563,7 @@ struct guild {
 	struct guild_expulsion expulsion[MAX_GUILDEXPULSION];
 	struct guild_skill skill[MAX_GUILDSKILL];
 	struct Channel *channel;
+	unsigned short instance_id;
 
 	/* Used by char-server to save events for guilds */
 	unsigned short save_flag;
@@ -791,6 +792,8 @@ enum e_job {
 	JOB_OBORO,
 
 	JOB_REBELLION = 4215,
+
+	JOB_SUMMONER = 4218,
 
 	JOB_MAX,
 };

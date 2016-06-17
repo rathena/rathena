@@ -21,7 +21,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 				mes "Ah, I sense you have endured";
 				mes "a past life experience. You must have learned many things before entering Valhalla.";
 				next;
-				if (getskilllv("NV_BASIC") < 9) {
+				if (!callfunc("F_CanChangeJob")) {
 					mes "[Father Mareusis]";
 					mes "Unfortunately, I don't think you're ready to become an Acolyte yet. Please finish learning all of the Basic Skills first.";
 					next;
@@ -75,7 +75,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 			mes "Do you truly wish to become a servant of God?";
 			mes "Let's see whether you are ready for it or not... Hmm...";
 			next;
-			if (getskilllv("NV_BASIC") < 9) {
+			if (!callfunc("F_CanChangeJob")) {
 				mes "[Father Mareusis]";
 				mes "Oh my?! You haven't accomplished the basic practice yet?! You have a long way to go! Come again after increasing your job level!";
 				close;

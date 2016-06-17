@@ -212,7 +212,7 @@ int channel_gjoin(struct map_session_data *sd, int flag){
 	struct Channel *channel;
 	struct guild *g;
 
-	if(!sd) return -1;
+	if(!sd || sd->state.autotrade) return -1;
 	g = sd->guild;
 	if(!g) return -2;
 
