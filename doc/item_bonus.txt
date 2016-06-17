@@ -158,8 +158,8 @@ bonus2 bSPLossRate,n,t; 		Lose n SP every t milliseconds
 bonus bNoRegen,x;       		Stops HP or SP regeneration (x: 1=HP, 2=SP)
 
 bonus bUseSPrate,n;         		SP consumption + n%
-bonus2 bSkillUseSP,sk,n;    		Reduces SP consumption of skill sk by n
-bonus2 bSkillUseSPrate,sk,n;		Reduces SP consumption of skill sk by n%
+bonus2 bSkillUseSP,sk,n;    		Increases SP consumption of skill sk by n
+bonus2 bSkillUseSPrate,sk,n;		Increases SP consumption of skill sk by n%
 
 Atk/Def
 -------
