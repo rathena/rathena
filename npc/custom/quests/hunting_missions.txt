@@ -296,7 +296,7 @@ OnNPCKillEvent:
 							.@my_mob_id = getvar( getd("Mission"+.@j),$@partymembercid[.@i] );
 							.@my_count = getvar( getd("Mission"+.@j+"_"), $@partymembercid[.@i] );
 							if (strmobinfo(1,.@mob) == strmobinfo(1,.@my_mob_id)) {
-								if (@my_count < .@Mission_Count) {
+								if (.@my_count < .@Mission_Count) {
 									setd "Mission"+.@j+"_", (.@my_count+1), $@partymembercid[.@i];
 									dispbottom "[Hunting Mission] Killed " + (.@my_count+1) + " of " + .@Mission_Count + " " + strmobinfo(1,.@mob) + ".";
 									break;
