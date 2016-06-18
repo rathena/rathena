@@ -6969,7 +6969,7 @@ int battle_damage_area(struct block_list *bl, va_list ap) {
 	dmotion = va_arg(ap,int);
 	damage = va_arg(ap,int);
 
-	if (status_bl_has_mode(bl,MD_SKILL_IMMUNE))
+	if (status_bl_has_mode(bl, MD_SKILL_IMMUNE) || status_get_class(bl) == MOBID_EMPERIUM)
 		return 0;
 	if( bl != src && battle_check_target(src,bl,BCT_ENEMY) > 0 ) {
 		map_freeblock_lock();
