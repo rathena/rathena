@@ -9569,6 +9569,7 @@
 18715,Helm_Of_Thoth,Helm Of Thoth,4,20,,2500,,2,,1,0xFFFFFFFE,63,2,768,,80,0,860,{ bonus bInt,2; bonus bMdef,5; bonus bMaxSP,100; },{},{}
 18716,Strawberry_In_Mouth,Strawberry In Mouth,4,20,,50,,2,,0,0xFFFFFFFF,63,2,1,,10,0,861,{},{},{}
 18718,Rose_Hairband,Rose Hairband,4,20,,200,,3,,0,0xFFFFFFFF,63,2,256,,30,0,864,{ bonus bInt,1; bonus bVit,1; bonus bAspdRate,3; bonus bVariableCastrate,-3; },{},{}
+18724,L_Magestic_Goat_,Gigantic Majestic Goat,4,20,,800,,5,,1,0xFFFFFFFF,63,2,256,,0,1,380,{ bonus2 bAddRace,RC_DemiHuman,12; bonus2 bAddRace,RC_Player,12; bonus bBaseAtk,(JobLevel*2)/7; },{},{}
 18727,Sedora_Hat,Sedora Hat,4,20,,300,,13,,1,0xFFFFFFFF,63,2,256,,10,1,869,{},{},{}
 18728,Egir_Helm,Egir Helm,4,200000,,800,,10,,1,0xFFFFFFFF,63,2,256,,110,1,870,{ bonus bMdef,5; bonus bUnbreakableHelm,1; },{},{}
 18729,MVP_Basketball,MVP Basketball,4,20,,150,,6,,1,0xFFFFFFFF,63,2,256,,1,1,871,{ bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player,10; bonus2 bAddItemHealRate,522,30; .@r = getrefine(); bonus bVariableCastrate,(.@r>=12)?(-5):((.@r>=10)?(-4):(-3)); },{},{}
@@ -9746,6 +9747,14 @@
 //===================================================================
 // Costume System
 //===================================================================
+19126,Shadow_Booster_,Magical Booster,4,10,,300,,,,1,0xFFFFFFFF,63,2,512,,1,1,873,{ bonus bAspd,1; bonus bDelayrate,-1; },{},{}
+19128,Ifrit's_Ear_,Ears Of Ifrit,4,20,,300,,0,,1,0xFFFFFFFE,63,2,512,,50,0,422,{ bonus bStr,1; bonus bMdef,3; bonus bInt,1; bonus2 bSkillAtk,"MG_FIREBOLT",3; bonus2 bSkillAtk,"WZ_FIREPILLAR",3; bonus2 bSkillAtk,"WZ_METEOR",3; bonus2 bSkillAtk,"SM_BASH",4; bonus2 bSkillAtk,"SM_MAGNUM",4; bonus2 bSkillAtk,"KN_PIERCE",3; bonus2 bSubEle,Ele_Fire,3; bonus2 bSubEle,Ele_Water,-3; },{},{}
+19129,Chick_Hat_,Chick Hat,4,20,,100,,1,,0,0xFFFFFFFF,63,2,256,,10,0,311,{ bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; skill "TF_DOUBLE",2; bonus bDoubleRate,10; bonus2 bSubRace,RC_DemiHuman,3; bonus2 bSubRace,RC_Player,3; },{},{}
+19130,Magic_Eyes_,Magic Eyes,4,20,,300,,1,,1,0x00810204,63,2,256,,30,1,209,{ bonus bMdef,5; bonus bVariableCastrate,-10; bonus bUseSPrate,20; },{},{}
+19131,Radio_Antenna_,Radio Antenna,4,0,,1500,,2,,1,0xFFFFFFFF,63,2,256,,50,1,347,{ bonus bMdef,5; bonus bCritical,5; bonus bFlee,5; skill "MG_LIGHTNINGBOLT",1; bonus4 bAutoSpellWhenHit,"MG_THUNDERSTORM",5,30,1; },{},{}
+19132,Masquerade_,Masquerade,4,20,,100,,0,,1,0xFFFFFFFE,63,2,512,,0,0,78,{ bonus2 bAddRace,RC_DemiHuman,3; bonus2 bAddRace,RC_Player,3; },{},{}
+19133,Odin_Mask,Odin's Mask,4,20,,100,,1,,1,0xFFFFFFFF,63,2,513,,1,0,480,{ bonus2 bSubClass,Class_Boss,2; },{},{}
+19134,Wickebines_Black_Cat_Ears,Wickebine's Black Cat Ears,4,20,,200,,4,,1,0xFFFFFFFF,63,2,256,,1,1,368,{},{},{}
 19500,T_Mr_Smile,T Mr Smile,4,0,,0,,0,,0,0xFFFFFFFF,63,2,6144,,0,0,65,{ bonus bStr,2; },{},{}
 19501,T_Spinx_Helm,T Spinx Helm,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,0,0,137,{},{},{}
 19502,T_Goggle,T Goggle,4,0,,0,,0,,0,0xFFFFFFFF,63,2,3072,,0,0,1,{},{},{}
