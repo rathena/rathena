@@ -11188,6 +11188,66 @@
 28900,Guardsmen's_Shield,Guardsmen's Shield,4,20,,3000,,30,,1,0xFFFFFFFF,63,2,32,,100,1,1,{ .@r = getrefine(); skill "LG_SHIELDSPELL",1,1; bonus3 bAutoSpellWhenHit,"HP_ASSUMPTIO",3,(10+(.@r*10)); bonus bDef,(.@r*10); bonus bMdef,.@r; },{},{}
 28903,Scutum,Scutum,4,0,,500,,1,,1,0xFFFFFFFF,63,2,32,1,1,1,,{ .@r = getrefine(); bonus bFlee,5+(.@r*3); bonus bFlee2,1+(.@r*2); if (.@r > 10) { bonus bMaxHPrate,10; bonus bMaxSPrate,10; } },{},{}
 //
+29061,Ambition1Lv,Ambition1Lv,6,10,,0,,,,,,,,,,,,,{ bonus bAtkRate,3; bonus bHit,3; },{},{}
+29062,Ambition2Lv,Ambition2Lv,6,10,,0,,,,,,,,,,,,,{ bonus bAtkRate,6; bonus bHit,6; },{},{}
+29063,Ambition3Lv,Ambition3Lv,6,10,,0,,,,,,,,,,,,,{ bonus bAtkRate,9; bonus bHit,9; },{},{}
+29064,Ambition4Lv,Ambition4Lv,6,10,,0,,,,,,,,,,,,,{ bonus bAtkRate,12; bonus bHit,12; },{},{}
+29065,Ambition5Lv,Ambition5Lv,6,10,,0,,,,,,,,,,,,,{ bonus bAtkRate,15; bonus bHit,15; },{},{}
+29066,Ambition6Lv,Ambition6Lv,6,10,,0,,,,,,,,,,,,,{ bonus bAtkRate,18; bonus bHit,18; },{},{}
+29067,Ambition7Lv,Ambition7Lv,6,10,,0,,,,,,,,,,,,,{ bonus bAtkRate,21; bonus bHit,21; },{},{}
+29068,Ambition8Lv,Ambition8Lv,6,10,,0,,,,,,,,,,,,,{ bonus bAtkRate,24; bonus bHit,24; },{},{}
+29069,Ambition9Lv,Ambition9Lv,6,10,,0,,,,,,,,,,,,,{ bonus bAtkRate,27; bonus bHit,27; },{},{}
+29070,Ambition10Lv,Ambition10Lv,6,10,,0,,,,,,,,,,,,,{ bonus bAtkRate,33; bonus bHit,30; },{},{}
+29071,Tab1Lv,Tab1Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,3; bonus bFixedCast,-100; },{},{}
+29072,Tab2Lv,Tab2Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,6; bonus bFixedCast,-200; },{},{}
+29073,Tab3Lv,Tab3Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,9; bonus bFixedCast,-300; },{},{}
+29074,Tab4Lv,Tab4Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,12; bonus bFixedCast,-400; },{},{}
+29075,Tab5Lv,Tab5Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,15; bonus bFixedCast,-500; },{},{}
+29076,Tab6Lv,Tab6Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,18; bonus bFixedCast,-600; },{},{}
+29077,Tab7Lv,Tab7Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,21; bonus bFixedCast,-700; },{},{}
+29078,Tab8Lv,Tab8Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,24; bonus bFixedCast,-800; },{},{}
+29079,Tab9Lv,Tab9Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,27; bonus bFixedCast,-900; },{},{}
+29080,Tab10Lv,Tab10Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMatkRate,33; bonus bFixedCast,-1000; },{},{}
+29081,Expect1Lv,Expect1Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,10; bonus bCritical,3; },{},{}
+29082,Expect2Lv,Expect2Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,20; bonus bCritical,6; },{},{}
+29083,Expect3Lv,Expect3Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,30; bonus bCritical,9; },{},{}
+29084,Expect4Lv,Expect4Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,40; bonus bCritical,12; },{},{}
+29085,Expect5Lv,Expect5Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,50; bonus bCritical,15; },{},{}
+29086,Expect6Lv,Expect6Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,60; bonus bCritical,18; },{},{}
+29087,Expect7Lv,Expect7Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,70; bonus bCritical,21; },{},{}
+29088,Expect8Lv,Expect8Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,80; bonus bCritical,24; },{},{}
+29089,Expect9Lv,Expect9Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,90; bonus bCritical,27; },{},{}
+29090,Expect10Lv,Expect10Lv,6,10,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,110; bonus bCritical,30; },{},{}
+29091,ArchLine1Lv,ArchLine1Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,4; bonus bAspdRate,1; },{},{}
+29092,ArchLine2Lv,ArchLine2Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,8; bonus bAspdRate,2; },{},{}
+29093,ArchLine3Lv,ArchLine3Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,12; bonus bAspdRate,3; },{},{}
+29094,ArchLine4Lv,ArchLine4Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,16; bonus bAspdRate,4; },{},{}
+29095,ArchLine5Lv,ArchLine5Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,20; bonus bAspdRate,5; },{},{}
+29096,ArchLine6Lv,ArchLine6Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,24; bonus bAspdRate,6; },{},{}
+29097,ArchLine7Lv,ArchLine7Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,28; bonus bAspdRate,7; },{},{}
+29098,ArchLine8Lv,ArchLine8Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,32; bonus bAspdRate,8; },{},{}
+29099,ArchLine9Lv,ArchLine9Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,36; bonus bAspdRate,9; },{},{}
+29100,ArchLine10Lv,ArchLine10Lv,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,44; bonus bAspdRate,10; },{},{}
+29101,Steel1Lv,Steel1Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,5; bonus bDef,15; },{},{}
+29102,Steel2Lv,Steel2Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,10; bonus bDef,30; },{},{}
+29103,Steel3Lv,Steel3Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,15; bonus bDef,45; },{},{}
+29104,Steel4Lv,Steel4Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,20; bonus bDef,60; },{},{}
+29105,Steel5Lv,Steel5Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,25; bonus bDef,75; },{},{}
+29106,Steel6Lv,Steel6Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,30; bonus bDef,90; },{},{}
+29107,Steel7Lv,Steel7Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,35; bonus bDef,105; },{},{}
+29108,Steel8Lv,Steel8Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,40; bonus bDef,120; },{},{}
+29109,Steel9Lv,Steel9Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,45; bonus bDef,135; },{},{}
+29110,Steel10Lv,Steel10Lv,6,10,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,55; bonus bDef,150; },{},{}
+29111,Mercy1Lv,Mercy1Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,5; bonus bMdef,3; },{},{}
+29112,Mercy2Lv,Mercy2Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,10; bonus bMdef,6; },{},{}
+29113,Mercy3Lv,Mercy3Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,15; bonus bMdef,9; },{},{}
+29114,Mercy4Lv,Mercy4Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,20; bonus bMdef,12; },{},{}
+29115,Mercy5Lv,Mercy5Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,25; bonus bMdef,15; },{},{}
+29116,Mercy6Lv,Mercy6Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,30; bonus bMdef,18; },{},{}
+29117,Mercy7Lv,Mercy7Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,35; bonus bMdef,21; },{},{}
+29118,Mercy8Lv,Mercy8Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,40; bonus bMdef,24; },{},{}
+29119,Mercy9Lv,Mercy9Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,45; bonus bMdef,27; },{},{}
+29120,Mercy10Lv,Mercy10Lv,6,10,,0,,,,,,,,,,,,,{ bonus bHealPower,55; bonus bMdef,30; },{},{}
 31027,C_Pretty_Bear,Costume Pretty Bear,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1480,{},{},{}
 31028,C_Black_Cat_Hood,Costume Black Cat Hood,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1481,{},{},{}
 31029,C_Pig_Nose,Costume Pig Nose,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1482,{},{},{}
