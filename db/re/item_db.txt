@@ -11256,8 +11256,8 @@
 29122,Goddess_of_Justice_S,Goddess of Justice S,6,10,,0,,,,,,,,,,,,,{ bonus bAtk,40; bonus bHit,4; bonus bMaxHP,600; },{},{}
 29123,Goddess_of_Mercy_A,Goddess of Mercy A,6,10,,0,,,,,,,,,,,,,{ bonus bMatk,20; bonus bHealPower,4; bonus bMaxSP,20; },{},{}
 29124,Goddess_of_Mercy_S,Goddess of Mercy S,6,10,,0,,,,,,,,,,,,,{ bonus bMatk,40; bonus bHealPower,8; bonus bMaxSP,40; },{},{}
-29125,Goddess_of_Insight_A,Goddess of Insight A,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,5; bCritical,5; },{},{}
-29126,Goddess_of_Insight_S,Goddess of Insight S,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,10; bCritical,10; },{},{}
+29125,Goddess_of_Insight_A,Goddess of Insight A,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,5; bonus bCritical,5; },{},{}
+29126,Goddess_of_Insight_S,Goddess of Insight S,6,10,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,10; bonus bCritical,10; },{},{}
 29146,Item_Appraisal,Item Appraisal,6,10,,0,,,,,,,,,,,,,{ skill "MC_IDENTIFY",1; },{},{}
 29147,Resurrection,Resurrection,6,10,,0,,,,,,,,,,,,,{ skill "ALL_RESURRECTION",1; },{},{}
 31016,Evil_Decorated_Tree_Card,Evil Decorated Tree Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHP,1000; bonus bMaxSP,150; bonus bFlee,-25; },{},{}
