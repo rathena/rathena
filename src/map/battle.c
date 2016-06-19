@@ -6203,7 +6203,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			}
 		}
 
-		if (!(nk&NK_NO_ELEFIX))
+		if (!(nk&NK_NO_ELEFIX) && skill_id != ASC_BREAKER) // Soul Breaker's magic portion is non-elemental. [Secret]
 			ad.damage = battle_attr_fix(src, target, ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
 		//Apply the physical part of the skill's damage. [Skotlex]
