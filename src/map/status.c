@@ -9330,8 +9330,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			//1st Transcendent Spirit works similar to Marionette Control
 			if(sd && val2 == SL_HIGH) {
 				int stat,max_stat;
-				// Fetch target's stats
-				struct status_data* status2 = status_get_status_data(bl); // Battle status
+
 				val3 = 0;
 				val4 = 0;
 				max_stat = (status_get_lv(bl)-10<50)?status_get_lv(bl)-10:50;
