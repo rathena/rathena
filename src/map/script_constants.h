@@ -1618,8 +1618,7 @@
 	export_constant(SI_NEN);
 	export_constant(SI_ADJUSTMENT);
 	export_constant(SI_ACCURACY);
-	// disabled source side, does not make sense to export it
-	//export_constant(SI_NJ_SUITON);
+	export_constant(SI_NJ_SUITON);
 	// disabled source side, does not make sense to export it
 	//export_constant(SI_PET);
 	// disabled source side, does not make sense to export it

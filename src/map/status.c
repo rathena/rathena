@@ -6745,6 +6745,9 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 	// Cap minimum rate
 	if ((min_rate = status_sc_get_min_rate(type)))
 		rate = max(rate, min_rate);
+	// Cap minimum duration
+	if ((min_dur = status_sc_get_min_duration(type)))
+		tick = max(tick, min_dur);
 
 	if (rate < 10000 && (rate <= 0 || !(rnd()%10000 < rate)))
 		return 0;
@@ -11573,7 +11576,7 @@ static void status_sc_freedb_sub(struct s_status_change_db *sc) {
  **/
 static int status_sc_freedb(DBKey key, DBData *data, va_list ap) {
 	struct s_status_change_db *sc = (struct s_status_change_db *)db_data2ptr(data);
-	bool free = va_arg(ap, bool);
+	//int free = va_arg(ap, int);
 
 	if (!sc)
 		return 0;
