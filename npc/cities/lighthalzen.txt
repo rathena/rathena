@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Lighthalzen City
-//===== By: ================================================== 
+//===== By: ==================================================
 //=  erKURITA, Au{R}oN (Translated by Alan), $ephiroth
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Lighthalzen NPCs (Temporal names for now) [erKURITA]
 //===== Additional Comments: ==================================
 //= 0.1 Placed temporal names, why there weren't on the SVN before? [erKURITA]
@@ -29,7 +29,7 @@
 //= 1.5 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.6 Massive NPC clean up, includes corrected dialogs and [L0ne_W0lf]
 //=     added missing dialogs, fixed indentation, corrected some NPC
-//=     facing positions, NPC names are more unique now. Removed 
+//=     facing positions, NPC names are more unique now. Removed
 //=     whitespace (empty lines after header and before end curly)
 //=     reduced usage of the command "goto", grammatical corrections.
 //=     Added additional missing NPCs.
@@ -42,6 +42,7 @@
 //= 2.0 Added missing Lab Staff#amano08 NPC. (bugreport:4319) [Gepard]
 //= 2.1 Commented out Duplicate NPCs. (bugreport:4555)
 //= 2.2 Added missing NPC found in AEGIS files. [L0ne_W0lf]
+//= 2.3 Updated the second entrance to Biolabs. [Capuche]
 //=============================================================
 
 lighthalzen,198,285,5	script	Jiwon#zen5	862,{
@@ -1236,7 +1237,7 @@ OnTouch:
 }
 
 lighthalzen,311,194,3	script	Reuben#lhz_02	870,{
-	if (rand(1,2)) {
+	if (rand(1,2) == 1) {
 		mes "[Reuben]";
 		mes "Someday...";
 		mes "Someday I just gotta";
@@ -1329,28 +1330,6 @@ lighthalzen,330,276,3	script	Nun#light	79,{
 	mes "reason. I'm starting to get";
 	mes "a little worried about this...";
 	close;
-}
-
-lighthalzen,337,296,3	script	Employee	867,{
-	if (hg_tre > 54) {
-		mes "[Rekenber Employee]";
-		mes "Greetings. As part of our";
-		mes "effort to relieve the poor,";
-		mes "Rekenber is providing job";
-		mes "opportunities targeted for";
-		mes "citizens of the slum areas.";
-		next;
-		mes "[Rekenber Employee]";
-		mes "You can choose to work";
-		mes "from home, or undergo a";
-		mes "little bit of training for more";
-		mes "professional positions. This";
-		mes "is a great chance to make a";
-		mes "difference... and some money~";
-		emotion e_no1;
-		close;
-	}
-	end;
 }
 
 lhz_in01,134,38,3	script	Bankri Kun#kagun	798,{
@@ -1968,40 +1947,31 @@ OnTouch:
 	end;
 }
 
-lhz_in01,25,141,4	script	Regenschirm Guard	868,{
-
+lhz_in01,24,140,3	script	Regenschirm Guard#40	4_M_LGTGUARD,{
 	mes "[Regenschirm Guard]";
-	if(isequipped(2241) && isequipped(2243)){
+	if (lhz_sincube > 10 && countitem(2657) > 0) {// Lab_Passport
 		mes "Do you wish to";
 		mes "go underground?";
 		next;
-		if(select("Yes:No")==1){
-			if(isequipped(2657)){
-				warp "lhz_dun01",150,288;
-				end;
-			}
+		if (select("Yes","No") == 1) {
 			mes "[Regenschirm Guard]";
-			mes "I'm sorry but I can't let";
-			mes "staff without proper autorization";
-			mes "pass. Only staff members with";
-			mes "Laboratory Passports are allowed";
-			mes "to enter the underground.";
-			close;
-
+			mes "Thank you and";
+			mes "have a nice day.";
+			close2;
+			warp "lhz_dun01",149,285;
+			end;
 		}
 		mes "[Regenschirm Guard]";
 		mes "Thank you and";
 		mes "have a nice day.";
 		close;
 	}
-	mes "This area is restricted";
-	mes "to the public! Who are you";
-	mes "and how did you get in here?!";
-	mes "Hey, I need backup right away!";
-	close2;
-	warp "lhz_in01",34,224;
-	end;
-
+	mes "May I help you?";
+	mes "If you would like to";
+	mes "enter, you must first";
+	mes "have a Laboratory Permit.";
+	mes "Thank you for your cooperation.";
+	close;
 }
 
 
@@ -2201,8 +2171,6 @@ lhz_in02,147,222,3	script	Officer Guo#06::off_guo	85,{
 }
 
 lhz_in02,142,222,6	duplicate(off_guo)	Suspect#6	870
-
-// New ----------------------------------------------------------------------- 
 
 lhz_in01,14,28,3	script	Banquet Staff	109,{
 	mes "[Banquet Staff]";
@@ -3209,7 +3177,3 @@ lhz_in01,221,131,7	script	Scientist#li_01	865,{
 		end;
 	}
 }
-
-// Lighthalzen Mushroom.
-// Don't really understand why it's there, but it's funny regardless.
-lhz_in01,157,54,0,0	monster	Red Mushroom	1085,1,120000,100000,0

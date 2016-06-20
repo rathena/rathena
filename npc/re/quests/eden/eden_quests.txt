@@ -2120,8 +2120,8 @@ S_Select:
 	if (para_suv02 == 0) {
 		mes "You don't have a record of receiving any supplies";
 		mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
-		getitem 18514,1;// Para_Team_Hat2
-		getitem 2571,1;	// Para_Team_Manteau2
+		getitem 5583,1;// Para_Team_Hat
+		getitem 2560,1;// Para_Team_Manteau
 		if (para_suv01 == 22)
 			para_suv02 = 2;
 		else

@@ -39,6 +39,7 @@ set( MAP_HEADERS
 	"${MAP_SOURCE_DIR}/pet.h"
 	"${MAP_SOURCE_DIR}/quest.h"
 	"${MAP_SOURCE_DIR}/script.h"
+	"${MAP_SOURCE_DIR}/script_constants.h"
 	"${MAP_SOURCE_DIR}/searchstore.h"
 	"${MAP_SOURCE_DIR}/skill.h"
 	"${MAP_SOURCE_DIR}/status.h"

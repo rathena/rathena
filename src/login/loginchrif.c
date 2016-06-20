@@ -535,7 +535,7 @@ int logchrif_parse_updonlinedb(int fd, int id){
 		users = RFIFOW(fd,4);
 		for (i = 0; i < users; i++) {
 			int aid = RFIFOL(fd,6+i*4);
-			struct online_login_data *p = idb_ensure(online_db, aid, login_create_online_user);
+			struct online_login_data *p = (struct online_login_data*)idb_ensure(online_db, aid, login_create_online_user);
 			p->char_server = id;
 			if (p->waiting_disconnect != INVALID_TIMER){
 				delete_timer(p->waiting_disconnect, login_waiting_disconnect_timer);
@@ -594,6 +594,7 @@ int logchrif_parse_setalloffline(int fd, int id){
 	return 1;
 }
 
+#if PACKETVER_SUPPORTS_PINCODE
 /**
  * Request to change PIN Code for an account.
  * @param fd: fd to parse from (char-serv)
@@ -642,6 +643,7 @@ int logchrif_parse_pincode_authfail(int fd){
 	}
 	return 1;
 }
+#endif
 
 /**
  * Received a vip data reqest from char
@@ -809,8 +811,10 @@ int logchrif_parse(int fd){
 			case 0x272e: next = logchrif_parse_req_global_accreg(fd); break;
 			case 0x2736: next = logchrif_parse_updcharip(fd,cid); break;
 			case 0x2737: next = logchrif_parse_setalloffline(fd,cid); break;
+#if PACKETVER_SUPPORTS_PINCODE
 			case 0x2738: next = logchrif_parse_updpincode(fd); break;
 			case 0x2739: next = logchrif_parse_pincode_authfail(fd); break;
+#endif
 			case 0x2742: next = logchrif_parse_reqvipdata(fd); break; //Vip sys
 			default:
 				ShowError("logchrif_parse: Unknown packet 0x%x from a char-server! Disconnecting!\n", command);

@@ -19,6 +19,9 @@
 
 #include <stdlib.h>
 
+#if PACKETVER_SUPPORTS_PINCODE
+bool pincode_allowed( char* pincode );
+#endif
 
 //------------------------------------------------
 //Add On system
@@ -97,6 +100,7 @@ int chclif_parse_moveCharSlot( int fd, struct char_session_data* sd){
 	return 1;
 }
 
+#if PACKETVER_SUPPORTS_PINCODE
 /* pincode_sendstate transmist the pincode state to client
  * S 08b9 <seed>.L <aid>.L <state>.W (HC_SECOND_PASSWD_LOGIN)
  * state :
@@ -159,6 +163,76 @@ int chclif_parse_pincode_check( int fd, struct char_session_data* sd ){
 }
 
 /*
+ * Helper function to check if a new pincode contains illegal characters or combinations
+ */
+bool pincode_allowed( char* pincode ){
+	int i;
+	char c, n, compare[PINCODE_LENGTH+1];
+
+	memset( compare, 0, PINCODE_LENGTH+1);
+
+	// Sanity check for bots to prevent errors
+	for( i = 0; i < PINCODE_LENGTH; i++ ){
+		c = pincode[i];
+
+		if( c < '0' || c > '9' ){
+			return false;
+		}
+	}
+
+	// Is it forbidden to use only the same character?
+	if( !charserv_config.pincode_config.pincode_allow_repeated ){
+		c = pincode[0];
+
+		// Check if the first character equals the rest of the input
+		for( i = 0; i < PINCODE_LENGTH; i++ ){
+			compare[i] = c;
+		}
+
+		if( strncmp( pincode, compare, PINCODE_LENGTH + 1 ) == 0 ){
+			return false;
+		}
+	}
+
+	// Is it forbidden to use a sequential combination of numbers?
+	if( !charserv_config.pincode_config.pincode_allow_sequential ){
+		c = pincode[0];
+
+		// Check if it is an ascending sequence
+		for( i = 0; i < PINCODE_LENGTH; i++ ){
+			n = c + i;
+
+			if( n > '9' ){
+				compare[i] = '0' + ( n - '9' ) - 1;
+			}else{
+				compare[i] = n;
+			}
+		}
+
+		if( strncmp( pincode, compare, PINCODE_LENGTH + 1 ) == 0 ){
+			return false;
+		}
+
+		// Check if it is an descending sequence
+		for( i = 0; i < PINCODE_LENGTH; i++ ){
+			n = c - i;
+
+			if( n < '0' ){
+				compare[i] = '9' - ( '0' - n ) + 1;
+			}else{
+				compare[i] = n;
+			}
+		}
+
+		if( strncmp( pincode, compare, PINCODE_LENGTH + 1 ) == 0 ){
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/*
  * Client request to change pincode
  */
 int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
@@ -180,12 +254,16 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 		if( !char_pincode_compare( fd, sd, oldpin ) )
 			return 1;
 		char_pincode_decrypt(sd->pincode_seed,newpin);
+
+		if( pincode_allowed(newpin) ){
+			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
+			strncpy(sd->pincode, newpin, sizeof(newpin));
+			ShowInfo("Pincode changed for AID: %d\n", sd->account_id);
 		
-		chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
-		strncpy(sd->pincode, newpin, sizeof(newpin));
-		ShowInfo("Pincode changed for AID: %d\n", sd->account_id);
-		
-		chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+		}else{
+			chclif_pincode_sendstate( fd, sd, PINCODE_ILLEGAL );
+		}
 	}
 	return 1;
 }
@@ -207,24 +285,39 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 
 		char_pincode_decrypt( sd->pincode_seed, newpin );
 
-		chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
-		strncpy( sd->pincode, newpin, strlen( newpin ) );
+		if( pincode_allowed(newpin) ){
+			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
+			strncpy( sd->pincode, newpin, strlen( newpin ) );
 
-		chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );	
+		}else{
+			chclif_pincode_sendstate( fd, sd, PINCODE_ILLEGAL );
+		}
 	}
 	return 1;
 }
-
+#endif
 
 //----------------------------------------
 // Tell client how many pages, kRO sends 17 (Yommy)
 //----------------------------------------
 void chclif_charlist_notify( int fd, struct char_session_data* sd ){
+// This is needed on RE clients from october 2015 onwards
+// If you want to use one replace false by true here
+#if false && PACKETVER >= 20151001
+	WFIFOHEAD(fd, 10);
+	WFIFOW(fd, 0) = 0x9a0;
+	// pages to req / send them all in 1 until mmo_chars_fromsql can split them up
+	WFIFOL(fd, 2) = (sd->char_slots>3)?sd->char_slots/3:1; //int TotalCnt (nb page to load)
+	WFIFOL(fd, 6) = sd->char_slots;
+	WFIFOSET(fd,10);
+#else
 	WFIFOHEAD(fd, 6);
 	WFIFOW(fd, 0) = 0x9a0;
 	// pages to req / send them all in 1 until mmo_chars_fromsql can split them up
 	WFIFOL(fd, 2) = (sd->char_slots>3)?sd->char_slots/3:1; //int TotalCnt (nb page to load)
 	WFIFOSET(fd,6);
+#endif
 }
 
 //----------------------------------------
@@ -287,11 +380,13 @@ void chclif_mmo_char_send(int fd, struct char_session_data* sd){
 	ShowInfo("sd->version = %d\n",sd->version);
 	if(sd->version >= date2version(20130000) ){
 		chclif_mmo_send082d(fd,sd);
+		chclif_mmo_send006b(fd,sd);
 		chclif_charlist_notify(fd,sd);
-		chclif_block_character(fd,sd);
-	}
+	} else
+		chclif_mmo_send006b(fd,sd);
 	//@FIXME dump from kro doesn't show 6b transmission
-	chclif_mmo_send006b(fd,sd);
+	if(sd->version >= date2version(20060819) )
+ 		chclif_block_character(fd,sd);
 }
 
 /*
@@ -803,22 +898,27 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 
 // S 0970 <name>.24B <slot>.B <hair color>.W <hair style>.W
 // S 0067 <name>.24B <str>.B <agi>.B <vit>.B <int>.B <dex>.B <luk>.B <slot>.B <hair color>.W <hair style>.W
+// S 0a39 <name>.24B <slot>.B <hair color>.W <hair style>.W <starting job ID>.W <Unknown>.(W or 2 B's)??? <sex>.B
 int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 	int i = 0;
 
-	if (cmd == 0x970) FIFOSD_CHECK(31) //>=20120307
+	if (cmd == 0xa39) FIFOSD_CHECK(36) //>=20151001
+	else if (cmd == 0x970) FIFOSD_CHECK(31) //>=20120307
 	else if (cmd == 0x67) FIFOSD_CHECK(37)
 	else return 0;
 
 	if( (charserv_config.char_new)==0 ) //turn character creation on/off [Kevin]
 		i = -2;
 	else {
-#if PACKETVER < 20120307
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
-			RFIFOSKIP(fd,37);
-#else
+#if PACKETVER >= 20151001
+			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29),RFIFOW(fd,31),RFIFOW(fd,32),RFIFOB(fd,35));
+			RFIFOSKIP(fd,36);
+#elif PACKETVER >= 20120307
 			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
 			RFIFOSKIP(fd,31);
+#else
+			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
+			RFIFOSKIP(fd,37);
 #endif
 	}
 
@@ -1128,7 +1228,8 @@ int chclif_parse(int fd) {
 			// char select
 			case 0x66: next=chclif_parse_charselect(fd,sd,ipl); break;
 			// createnewchar
-			case 0x970: next=chclif_parse_createnewchar(fd,sd,cmd); break;
+			case 0xa39:
+			case 0x970:
 			case 0x67: next=chclif_parse_createnewchar(fd,sd,cmd); break;
 			// delete char
 			case 0x68: next=chclif_parse_delchar(fd,sd,cmd); break; //
@@ -1150,11 +1251,13 @@ int chclif_parse(int fd) {
 			case 0x82b: next=chclif_parse_char_delete2_cancel(fd, sd); break;
 			// login as map-server
 			case 0x2af8: chclif_parse_maplogin(fd); return 0; // avoid processing of followup packets here
+#if PACKETVER_SUPPORTS_PINCODE
 			//pincode
 			case 0x8b8: next=chclif_parse_pincode_check( fd, sd ); break; // checks the entered pin
 			case 0x8c5: next=chclif_parse_reqpincode_window(fd,sd); break; // request for PIN window
 			case 0x8be: next=chclif_parse_pincode_change( fd, sd ); break; // pincode change request
 			case 0x8ba: next=chclif_parse_pincode_setnew( fd, sd ); break; // activate PIN system and set first PIN
+#endif
 			// character movement request
 			case 0x8d4: next=chclif_parse_moveCharSlot(fd,sd); break;
 			case 0x9a1: next=chclif_parse_req_charlist(fd,sd); break;

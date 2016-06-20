@@ -4,7 +4,7 @@
 #ifndef _rA_NETBUFFER_H_
 #define _rA_NETBUFFER_H_
 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 
 typedef struct netbuf{
 	sysint	pool;				// The pool ID this buffer belongs to,

@@ -4,6 +4,8 @@
 #ifndef _MAPINDEX_H_
 #define _MAPINDEX_H_
 
+#include "../config/renewal.h"
+
 #define MAX_MAPINDEX 2000
 
 //Some definitions for the mayor city maps.
@@ -31,7 +33,11 @@
 #define MAP_RACHEL "rachel"
 #define MAP_VEINS "veins"
 #define MAP_JAIL "sec_pri"
-#define MAP_NOVICE "new_1-1"
+#ifdef RENEWAL
+	#define MAP_NOVICE "iz_int"
+#else
+	#define MAP_NOVICE "new_1-1"
+#endif
 #define MAP_MOSCOVIA "moscovia"
 #define MAP_MIDCAMP "mid_camp"
 #define MAP_MANUK "manuk"

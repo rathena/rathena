@@ -15,18 +15,18 @@
 #include <string.h>
 
 #ifdef WIN32
-#include "../common/winapi.h"
+#include "winapi.h"
 #else
 #include <unistd.h>
 #endif
 
-#include "../common/cbasetypes.h"
-#include "../common/showmsg.h"
-#include "../common/mempool.h"
-#include "../common/atomic.h"
-#include "../common/spinlock.h"
-#include "../common/malloc.h"
-#include "../common/mutex.h"
+#include "cbasetypes.h"
+#include "showmsg.h"
+#include "mempool.h"
+#include "atomic.h"
+#include "spinlock.h"
+#include "malloc.h"
+#include "mutex.h"
 
 #define ALIGN16	ra_align(16)
 #define ALIGN_TO(x, a) (x + ( a - ( x % a) ) )

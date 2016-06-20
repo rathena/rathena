@@ -1,8 +1,8 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/cbasetypes.h"
-#include "../common/strlib.h" // StringBuf
+#include "cbasetypes.h"
+#include "strlib.h" // StringBuf
 #include "showmsg.h"
 #include "core.h" //[Ind] - For SERVER_TYPE
 
@@ -10,7 +10,7 @@
 #include <stdlib.h> // atexit
 
 #ifdef WIN32
-	#include "../common/winapi.h"
+	#include "winapi.h"
 
 	#ifdef DEBUGLOGMAP
 		#define DEBUGLOGPATH "log\\map-server.log"

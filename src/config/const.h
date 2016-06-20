@@ -88,13 +88,26 @@
 
 // Renewal variable cast time reduction
 #ifdef RENEWAL_CAST
-	// Multiply the Variable CastTime
-	#define VARCAST_REDUCTION(val) ( time = time * (1 + (val) * 0.01) )
-
-	// Get the highest rate TO REDUCE Fixed CastTime
-	// -100 is "the highest" rate than 100.
-	#define FIXEDCASTRATE(fcast,val) ( ((fcast) == 0) ? ((fcast) = (val)) : ((fcast) = min((fcast),(val))) )
+	#define VARCAST_REDUCTION(val){ \
+		if( (varcast_r += val) != 0 && varcast_r >= 0 ) \
+			time = time * (1 - (float)min(val, 100) / 100); \
+	}
 #endif
+
+/**
+ * Default coordinate for new char
+ * That map should be loaded by a mapserv
+ **/
+#ifdef RENEWAL
+    #define MAP_DEFAULT_NAME "iz_int"
+    #define MAP_DEFAULT_X 97
+    #define MAP_DEFAULT_Y 90
+#else
+    #define MAP_DEFAULT_NAME "new_1-1"
+    #define MAP_DEFAULT_X 53
+    #define MAP_DEFAULT_Y 111
+#endif
+
 /**
  * End of File
  **/

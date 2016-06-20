@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20150610
+//= 20160523
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -374,8 +374,10 @@ But what about GID?
 
 GID stands for the Game ID of something, this can either be the GID obtained
 through mobspawn (mob control commands) or the account ID of a character.
-Another way would be to right click on a mob, 
-NPC or char as GM sprited char to view the GID.
+Another way would be to right click on a mob, NPC or char as GM sprited char
+to view the GID.
+
+See also 'getpetinfo', 'getmercinfo', 'gethominfo', and 'geteleminfo'.
 
 This is mostly used for the new version of skill and the mob control commands
 implemented.
@@ -446,13 +448,14 @@ temporary - They cease to exist when the server resets.
 
 Prefix: scope and extent
 nothing  - A permanent variable attached to the character, the default variable
-           type. They are stored in the `global_reg_value` table using type 3.
+           type. They are stored by char-server in the `char_reg_num` and
+           `char_reg_str`.
 "@"      - A temporary variable attached to the character.
            SVN versions before 2094 revision and RC5 version will also treat
            'l' as a temporary variable prefix, so beware of having variable
            names starting with 'l' if you want full backward compatibility.
 "$"      - A global permanent variable.
-           They are stored in database table `mapreg`.
+           They are stored by map-server in database table `mapreg`.
 "$@"     - A global temporary variable.
            This is important for scripts which are called with no RID
            attached, that is, not triggered by a specific character object.
@@ -468,13 +471,15 @@ nothing  - A permanent variable attached to the character, the default variable
            callsub/callfunc starts a new scope, returning from the function 
            ends it. When a scope ends, its variables are converted to values 
            ('return .@var;' returns a value, not a reference).
-"'"      - An instance variable
-           These are used with the instancing system, and are unique to each 
-           party's instance.
+"'"      - An instance variable.
+           These are used with the instancing system and are unique to each 
+           instance type.
 "#"      - A permanent local account variable.
-           They are stored in the `global_reg_value` table using type 2.
+           They are stored by char-server in the `acc_reg_num` table and
+           `acc_reg_str`.
 "##"     - A permanent global account variable stored by the login server.
-           They are stored in the `global_reg_value` table using type 1.
+           They are stored in the `global_acc_reg_num` table and
+		   `global_acc_reg_str`.
            The only difference you will note from normal # variables is when
            you have multiple char-servers connected to the same login server.
            The # variables are unique to each char-server, while the ## variables
@@ -498,6 +503,8 @@ $@name$ - temporary global string variable
  .name$ - NPC string variable
 .@name  - scope integer variable
 .@name$ - scope string variable
+ 'name  - instance integer variable
+ 'name$ - instance string variable
  #name  - permanent local account integer variable
  #name$ - permanent local account string variable
 ##name  - permanent global account integer variable
@@ -1081,6 +1088,8 @@ The example below will make the [Tool Shop] text clickable and begin navigation
 to alberta (98,154) when clicked.
 
     mes "Have you checked out the <NAVI>[Tool Shop]<INFO>alberta,98,154,0,000,0</INFO></NAVI>?";
+
+See also 'navigateto', which can be used for certain NPC events.
 
 URLs
 ----
@@ -2482,27 +2491,27 @@ This function returns the item ID of the item equipped in the equipment slot
 specified on the invoking character. If nothing is equipped there, it returns -1. 
 Valid equipment slots are:
 
-EQI_HEAD_TOP (1)          - Upper Headgear
-EQI_ARMOR (2)             - Armor (jackets, robes)
-EQI_HAND_L (3)            - Left hand (weapons, shields)
-EQI_HAND_R (4)            - Right hand (weapons)
-EQI_GARMENT (5)           - Garment (mufflers, hoods, manteaus)
-EQI_SHOES (6)             - Footgear (shoes, boots)
-EQI_ACC_L (7)             - Accessory 1
-EQI_ACC_R (8)             - Accessory 2
-EQI_HEAD_MID (9)          - Middle Headgear (masks, glasses)
-EQI_HEAD_LOW (10)         - Lower Headgear (beards, some masks)
-EQI_COSTUME_HEAD_LOW (11) - Lower Costume Headgear
-EQI_COSTUME_HEAD_MID (12) - Middle Costume Headgear
-EQI_COSTUME_HEAD_TOP (13) - Upper Costume Headgear
-EQI_COSTUME_GARMENT (14)  - Costume Garment
-EQI_AMMO (15)    		  - Arrow/Ammunition
-EQI_SHADOW_ARMOR (16)     - Shadow Armor
-EQI_SHADOW_WEAPON (17)    - Shadow Weapon
-EQI_SHADOW_SHIELD (18)    - Shadow Shield
-EQI_SHADOW_SHOES (19)     - Shadow Shoes
-EQI_SHADOW_ACC_R (20)     - Shadow Accessory 2
-EQI_SHADOW_ACC_L (21)     - Shadow Accessory 1
+EQI_ACC_L (0)             - Accessory 1
+EQI_ACC_R (1)             - Accessory 2
+EQI_SHOES (2)             - Footgear (shoes, boots)
+EQI_GARMENT (3)           - Garment (mufflers, hoods, manteaux)
+EQI_HEAD_LOW (4)          - Lower Headgear (beards, some masks)
+EQI_HEAD_MID (5)          - Middle Headgear (masks, glasses)
+EQI_HEAD_TOP (6)          - Upper Headgear
+EQI_ARMOR (7)             - Armor (jackets, robes)
+EQI_HAND_L (8)            - Left hand (weapons, shields)
+EQI_HAND_R (9)            - Right hand (weapons)
+EQI_COSTUME_HEAD_TOP (10) - Upper Costume Headgear
+EQI_COSTUME_HEAD_MID (11) - Middle Costume Headgear
+EQI_COSTUME_HEAD_LOW (12) - Lower Costume Headgear
+EQI_COSTUME_GARMENT (13)  - Costume Garment
+EQI_AMMO (14)    		  - Arrow/Ammunition
+EQI_SHADOW_ARMOR (15)     - Shadow Armor
+EQI_SHADOW_WEAPON (16)    - Shadow Weapon
+EQI_SHADOW_SHIELD (17)    - Shadow Shield
+EQI_SHADOW_SHOES (18)     - Shadow Shoes
+EQI_SHADOW_ACC_R (19)     - Shadow Accessory 2
+EQI_SHADOW_ACC_L (20)     - Shadow Accessory 1
 
 Notice that a few items occupy several equipment slots, and if the character is 
 wearing such an item, 'getequipid' will return its ID number for either slot.
@@ -2641,6 +2650,9 @@ This function returns the weapon level for the weapon equipped in the specified
 equipment slot on the invoking character. For a list of equipment slots see 
 'getequipid'.
 
+If -1 is passed as the equipment slot argument then the weapon level for the item calling this function, 
+assuming it is called by an item script, will be returned. Otherwise, 0 will be returned.
+
 Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons have
 a weapon level. You can, however, probably, use this field for other equippable
 custom items as a flag or something.
@@ -2770,8 +2782,8 @@ This function is intended for use in item scripts.
 
 ---------------------------------------
 
-*getnameditem(<item id>,"<name to inscribe>");
-*getnameditem("<item name>","<name to inscribe>");
+*getnameditem(<item id>,"<name to inscribe>"|<char id>);
+*getnameditem("<item name>","<name to inscribe>"|<char id>);
 
 This function is equivalent to using 'getitem', however, it will not just give 
 the character an item object, but will also inscribe it with a specified 
@@ -2878,24 +2890,23 @@ not variables or the search was not successful.
 
 Type is the type of object to search for:
 
-  0 - Character object
-  1 - NPC object
-  2 - Pet object
-  3 - Monster object -- See 'getunitdata' for monster.
-  4 - Homunculus object
-  5 - Mercenary object
-  6 - Elemental object
-  
-While 3 is meant to look for a monster object, no searching will be done if you 
-specify type 3, and the function will always return -1.
+	UNITTYPE_PC   - Character object
+	UNITTYPE_NPC  - NPC object
+	UNITTYPE_PET  - Pet object
+	UNITTYPE_HOM  - Homunculus object
+	UNITTYPE_MER  - Mercenary object
+	UNITTYPE_ELEM - Elemental object
 
 The search string is optional. If it is not specified, the location of the 
-invoking character will always be returned for types 0 and 2, the location of 
-the NPC running this function for type 1.
-If a search string is specified, for types 0 and 1, the character or NPC with 
-the specified name will be located. If type is 3, the search will locate the 
-current pet of the character who's name is given in the search string, it will 
-NOT locate a pet by name.
+invoking character will always be returned for types UNITTYPE_PC and UNITTYPE_PET,
+the location of the NPC running this function for type 1.
+
+If a search string is specified, for types UNITTYPE_PC and UNITTYPE_NPC, the
+character or NPC with the specified name will be located.
+
+If type is UNITTYPE_PET/UNITTYPE_HOM/UNITTYPE_MER/UNITTYPE_ELEM, the search
+will locate the current object of the character who's name is given in the
+search string, it will NOT locate the object by name.
 
 Example:
 
@@ -2907,7 +2918,7 @@ Example:
     prontera,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
         mes "My name is Nyah.";
         mes "I will now search for Meh all across the world!";
-        if (getmapxy(@mapname$,@mapx,@mapy,1,"Meh")!=0) {
+        if (getmapxy(@mapname$, @mapx, @mapy, UNITTYPE_NPC, "Meh") !=0) {
                 mes "I can't seem to find Meh anywhere!";
                 close;
         }
@@ -3250,32 +3261,31 @@ mob database and return the info set by TYPE argument.
 It will return -1 if there is no such monster (or the type value is invalid),
 or "null" if you requested the monster's name.
 
-Valid types are listed in 'db/const.txt':
-	MOB_NAME	0
-	MOB_LV	1
-	MOB_MAXHP	2
-	MOB_BASEEXP	3
-	MOB_JOBEXP	4
-	MOB_ATK1	5
-	MOB_ATK2	6
-	MOB_DEF	7
-	MOB_MDEF	8
-	MOB_STR	9
-	MOB_AGI	10
-	MOB_VIT	11
-	MOB_INT	12
-	MOB_DEX	13
-	MOB_LUK	14
-	MOB_RANGE	15
-	MOB_RANGE2	16
-	MOB_RANGE3	17
-	MOB_SIZE	18
-	MOB_RACE	19
-	MOB_ELEMENT	20
-	MOB_MODE	21
-	MOB_MVPEXP	22
+Valid types are:
+	MOB_NAME - monster's name, if there is no such monster "null" is returned
+	MOB_LV - monster's level
+	MOB_MAXHP - monster's maximum hp
+	MOB_BASEEXP - monster's base experience
+	MOB_JOBEXP - monster's job experience
+	MOB_ATK1 - monster's atk
+	MOB_ATK2 - monster's atk2
+	MOB_DEF - monster's def
+	MOB_MDEF - monster's mdef
+	MOB_STR - monster's str
+	MOB_AGI - monster's agi
+	MOB_VIT - monster's vit
+	MOB_INT - monster's int
+	MOB_DEX - monster's dex
+	MOB_LUK - monster's luk
+	MOB_RANGE - monster's range
+	MOB_RANGE2 - monster's range2
+	MOB_RANGE3 - monster's range3
+	MOB_SIZE - monster's size
+	MOB_RACE - monster's race
+	MOB_ELEMENT - monster's element(doesn't return the element level, only the element ID)
+	MOB_MODE - monster's mode
+	MOB_MVPEXP - monster's mvp experience
 
-Note: MOB_ELEMENT doesn't return the element level, only the element ID.
 For more details, see the sample in 'doc/sample/getmonsterinfo.txt'.
 
 ---------------------------------------
@@ -3778,6 +3788,8 @@ invoking RID. It returns 1 if successful and 0 upon failure.
     [ Parameters: <guild id> ]
  4: All players in a specified area of the map of the invoking player (or NPC).
     [ Parameters: <x0>,<y0>,<x1>,<y1> ]
+ 5: All players in the map.
+    [ Parameters: "<map name>" ]
  Account ID: If type is Account ID, attach the specified account ID.
 
 <flag> can prevent certain players from being attached:
@@ -3952,7 +3964,7 @@ no teleportation is otherwise possible.
 
 ---------------------------------------
 
-*heal <hp>,<sp>;
+*heal <hp>,<sp>{,<char_id>};
 
 This command will heal a set amount of HP and/or SP on the invoking character.
 
@@ -3965,7 +3977,7 @@ character and produces no other output whatsoever.
 
 ---------------------------------------
 
-*itemheal <hp>,<sp>;
+*itemheal <hp>,<sp>{,<char_id>};
 
 This command heals relative amounts of HP and/or SP on the invoking character.
 Unlike heal, this command is intended for use in item scripts. It applies
@@ -3982,7 +3994,7 @@ Example:
 
 ---------------------------------------
 
-*percentheal <hp>,<sp>;
+*percentheal <hp>,<sp>{,<char_id>};
 
 This command will heal the invoking character. It heals the character, but not 
 by a set value - it adds percent of their maximum HP/SP.
@@ -4034,7 +4046,7 @@ Examples:
 
 ---------------------------------------
 
-*jobchange <job number>{,<upper flag>};
+*jobchange <job number>{,<upper flag>,<char_id>};
 
 This command will change the job class of the invoking character.
 
@@ -4074,7 +4086,7 @@ This command retrieves the name of the given job using the map_msg entries 550->
 
 ---------------------------------------
 
-*eaclass({<job number>})
+*eaclass({<job number>,<char_id>})
 
 This commands returns the "eA job-number" corresponding to the given class, and
 uses the invoking player's class if none is given. The eA job-number is also a
@@ -4180,30 +4192,31 @@ the character will also have their skills reset upon 'changecharsex'.
 
 ---------------------------------------
 
-*getexp <base xp>,<job xp>{,<char_id>};
+*getexp <base_exp>,<job_exp>{,<char_id>};
 
 This command will give the invoking character a specified number of base and job 
-experience points. Can be used as a quest reward. Negative values won't work.
+experience points. Used for a quest reward. Negative values won't work.
+
+The EXP values are adjustted by 'quest_exp_rate' config value, VIP bonus, Guild 
+Tax and EXP boost items such Battle Manual, Bubble Gum, or items that have 
+SC_EXPBOOST or SC_ITEMBOOST.
 
     getexp 10000,5000;
 
-You can also use the "set" command with the constants defined in 'db/const.txt':
+---------------------------------------
 
-    // These 2 combined has the same effect as the above command
-    set BaseExp,BaseExp+10000;
-    set JobExp,JobExp+5000;
+*getexp2 <base_exp>,<job_exp>{,<char_id>};
 
-You can also reduce the amount of experience points:
+This command is safety version of 'set' command for BaseExp and JobExp. If using 
+'set' while the BaseExp or JobExp value is more than 2,147,483,647 (INT_MAX) will 
+causing overflow error.
 
-    set BaseExp,BaseExp-10000;
-
-Note that 'getexp' is now subject to the 'quest_exp_rate' config option, which
-adjusts the gained value. If you want to bypass this, use the 'set' method.
+Unlike 'getexp', this command ignores the adjustment factors!
 
 ---------------------------------------
 
-*setlook <look type>,<look value>;
-*changelook <look type>,<look value>;
+*setlook <look type>,<look value>{,<char_id>};
+*changelook <look type>,<look value>{,<char_id>};
 
 'setlook' will alter the look data for the invoking character. It is used 
 mainly for changing the palette used on hair and clothes: you specify which look 
@@ -4211,35 +4224,37 @@ type you want to change, then the palette you want to use. Make sure you specify
 a palette number that exists/is usable by the client you use.
 'changelook' works the same, but is only client side (it doesn't save the look value).
 
-    // This will change your hair(6), so that it uses palette 8, what ever your 
+    // This will change your hair color, so that it uses palette 8, what ever your 
     // palette 8 is, your hair will use that color
 
-    setlook 6,8;
+    setlook LOOK_HAIR_COLOR,8;
 
-    // This will change your clothes(7), so they are using palette 1, whatever 
+    // This will change your clothes color, so they are using palette 1, whatever 
     // your palette 1 is, your clothes will then use that set of colors.
     
-    setlook 7,1;
+    setlook LOOK_CLOTHES_COLOR,1;
 
 Here are the possible look types:
 
- 0 - Base sprite
- 1 - Hairstyle
- 2 - Weapon
- 3 - Head bottom
- 4 - Head top
- 5 - Head mid
- 6 - Hair color
- 7 - Clothes color
- 8 - Shield
- 9 - Shoes
+ LOOK_BASE - Base sprite
+ LOOK_HAIR - Hairstyle
+ LOOK_WEAPON - Weapon
+ LOOK_HEAD_BOTTOM - Head bottom
+ LOOK_HEAD_TOP - Head top
+ LOOK_HEAD_MID - Head mid
+ LOOK_HAIR_COLOR - Hair color
+ LOOK_CLOTHES_COLOR - Clothes color
+ LOOK_SHIELD - Shield
+ LOOK_SHOES - Shoes
+ LOOK_BODY2 - Body style
 
 Whatever 'shoes' means is anyone's guess, ask Gravity - the client does nothing 
 with this value. It still wants it from the server though, so it is kept, but 
 normally doesn't do a thing.
  
 Only the look data for hairstyle, hair color and clothes color are saved to the 
-char server's database and will persist. The rest freely change as the character 
+char server's database and will persist. Body style will also persist if 'save_body_style'
+configuration is enabled in '/conf/battle/client.conf'. The rest freely change as the character 
 puts on and removes equipment, changes maps, logs in and out and otherwise you 
 should not expect to set them. In fact, messing with them is generally 
 hazardous, do it at your own risk, it is not tested what will this actually do -
@@ -4269,6 +4284,12 @@ wall), the character is pushed only up to the obstacle.
     // pushes the character 5 cells in 3 o'clock direction from its
     // current position.
     pushpc DIR_EAST, 5;
+
+---------------------------------------
+
+*recalculatestat;
+
+This command will force a stat recalculation for the attached player.
 
 ---------------------------------------
 
@@ -4471,6 +4492,10 @@ Creates a rental item in the attached character's inventory. The item will expir
 in <time> seconds and be automatically deleted. When receiving a rental item, 
 the character will receive a message in their chat window. The character will 
 also receive warning messages in their chat window before the item disappears.
+
+When rentals expire it will call the OnUnequip Script of the item. This can be used
+for special cases such as removing a status change or resetting a variable or state
+of the player.
 
 This command can not be used to rent stackable items. Rental items cannot be 
 dropped, traded, sold to NPCs, or placed in guild storage. (i.e. trade mask 75)
@@ -4686,7 +4711,7 @@ More info, see doc/item_group.txt.
 
 ---------------------------------------
 
-*getgroupitem <group_id>;
+*getgroupitem <group_id>{,<char_id>};
 
 Gives item(s) to the attached player based on item group contents.
 This is not working like 'getrandgroupitem' which only give 1 item for specified
@@ -4899,7 +4924,7 @@ This command will return 1 if an item was broken and 0 otherwise.
 
 ---------------------------------------
 
-*clearitem {,<char_id>};
+*clearitem {<char_id>};
 
 This command will destroy all items the invoking character has in their 
 inventory (including equipped items). It will not affect anything else, like 
@@ -5154,7 +5179,8 @@ a rate and flag.
 
 'sc_start2' and 'sc_start4' allow extra parameters to be passed, and are used only
 for effects that require them. The meaning of the extra values vary depending on the
-effect type.
+effect type. For more infos, read status_change.txt containing a list of all Status Changes
+and theirs val1, val2, val3, and val4 usage in source.
 
 'sc_end' will remove a specified status effect. If SC_ALL (-1) is given, it will
 perform a complete removal of all statuses (although permanent ones will re-apply).
@@ -5164,12 +5190,14 @@ Examples:
 	sc_start SC_POISON,600000,0,5000;
 
 	// This will bestow the effect of Level 10 Blessing.
-	sc_start 10,240000,10;
+	sc_start SC_BLESSING,240000,10;
 
-	// Elemental armor defense takes the following four values:
-	// val1 is the first element, val2 is the resistance to the element val1.
-	// val3 is the second element, val4 is the resistance to the element val3.
-	sc_start4 SC_DefEle,60000,Ele_Fire,20,Ele_Water,-15;
+	// Adjust element resistance by percentage. Sample with Resist_Fire item script:
+	// val1: Water resistance
+	// val2: Earth resistance
+	// val3: Fire resistance
+	// val4: Wind resistance
+	sc_start4 SC_ARMOR_ELEMENT,1200000,-15,0,20,0;
 
 	// This will end the Freezing status for the invoking character.
 	sc_end SC_FREEZE;
@@ -5216,10 +5244,10 @@ displaying the skill's effect.
     heal 2000,0;
     skilleffect 28,2000;
     // Blessing Level 10
-    sc_start 10,240000,10;
+    sc_start SC_BLESSING,240000,10;
     skilleffect 34,0;
     // Increase AGI Level 5
-    sc_start 12,140000,5;
+    sc_start SC_INCREASEAGI,140000,5;
     skilleffect 29,0;
 
 This will heal the character with 2000 HP, buff it with Blessing Lv 10 and
@@ -5380,7 +5408,7 @@ Flags (bitmask):
 	8   : Remove when player logs out.
 	16  : Removeable by Banishing Buster.
 	32  : Removable by Refresh.
-	64  : Removable by Luxanima.
+	64  : Removable by Lux Anima.
 	128 : Remove when Madogear is activated or deactivated.
 	256 : Remove when receive damage.
 	512 : Script is permanent, cannot be cleared by bonus_script_clear.
@@ -5480,13 +5508,19 @@ undisguise; // Return to normal character sprite.
 
 ---------------------------------------
 
-*transform <monster ID>,<duration>,<sc type>{,<val1>,<val2>,<val3>,<val4>};
-*transform "<monster name>",<duration>,<sc type>{,<val1>,<val2>,<val3>,<val4>};
+*transform <monster ID>,<duration>{,<sc type>,<val1>,<val2>,<val3>,<val4>};
+*transform "<monster name>",<duration>{,<sc type>,<val1>,<val2>,<val3>,<val4>};
+*active_transform <monster ID>,<duration>{,<sc type>,<val1>,<val2>,<val3>,<val4>};
+*active_transform "<monster name>",<duration>{,<sc type>,<val1>,<val2>,<val3>,<val4>};
 
-This command will turn a player into a monster for a given duration and grants an
-SC attribute effect while transformed. Note that players cannot be transformed
+This command will turn a player into a monster for a given duration and can grant
+a SC attribute effect while transformed. Note that players cannot be transformed
 during War of Emperium or if already disguised.
 Can only be removed when you die or the duration ends.
+
+'transform' and 'active_transform' can stack on each other but using 'transform' or
+'active_transform' twice will not stack (it will cancel the previous bonus for the new).
+'active_transform' will take priority over transform for its duration.
 
 ---------------------------------------
 \\
@@ -5524,6 +5558,26 @@ current SVN, which prevents the cases of multi-spouse problems). It will return
 
 This function will also destroy both wedding rings and send a message to both 
 players, telling them they are now divorced.
+
+---------------------------------------
+
+*adopt("<parent_name>","<baby_name>");
+*adopt(<parent_id>,<baby_id>);
+
+This function will send the client adoption request to the specified baby 
+character. The parent value can be either parent. Both parents and the baby
+need to be online in order for adoption to work.
+
+Return values:
+ ADOPT_ALLOWED - Sent message to Baby to accept or deny.
+ ADOPT_ALREADY_ADOPTED - Character is already adopted.
+ ADOPT_MARRIED_AND_PARTY - Parents need to be married and in a party with the baby.
+ ADOPT_EQUIP_RINGS - Parents need wedding rings equipped.
+ ADOPT_NOT_NOVICE - Baby is not a Novice.
+ ADOPT_CHARACTER_NOT_FOUND - A parent or Baby was not found.
+ ADOPT_MORE_CHILDREN - You cannot adopt more than 1 child. (client message)
+ ADOPT_LEVEL_70 - Parents need to be at least level 70 in order to adopt someone. (client message)
+ ADOPT_MARRIED - You cannot adopt a married person. (client message)
 
 ---------------------------------------
 //
@@ -5589,7 +5643,8 @@ The only very special thing about this command is an event label, which is an
 optional parameter. This label is written like '<NPC object name>::<label name>' 
 and upon the monster being killed, it will execute the script inside of the 
 specified NPC object starting from the label given. The RID of the player 
-attached at this execution will be the RID of the killing character.
+attached at this execution will be the RID of the killing character. The variable
+'killedrid' is set to the Class (mob ID) of the monster killed.
 
 <size> can be:
 	0 = medium (default)
@@ -5923,8 +5978,7 @@ It is an approximation of official server script language's 'cmdothernpc'.
 
 This command will display a message to the surrounding area as if the NPC object 
 running it was a player talking - that is, above their head and in the chat 
-window. The display name of the NPC will get appended in front of the message to 
-complete the effect.
+window. The display name of the NPC won't get appended in front of the message.
 
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.
@@ -6532,7 +6586,7 @@ The optional parameter 'type' is used in the 'skill_damage' mapflag:
 *getbattleflag("<battle flag>")
 
 Sets or gets the value of the given battle flag.
-Battle flags are the flags found in the battle/*.conf files and is also used in Lupus' variable rates script.
+Battle flags are the flags found in the battle / *.conf files and is also used in Lupus' variable rates script.
 
 Examples:
 
@@ -7081,7 +7135,7 @@ Suggest to use 'unitblockmove' to forcefully stop the unit with OnTouch.
 
 *unittalk <GID>,"<text>";
 
-This command will make a <GID> say a message.
+This command will make a <GID> say a message. The display name of the <GID> won't get appended in front of the message.
 
 ---------------------------------------
 
@@ -7107,17 +7161,25 @@ For the position, the x and y are given in the UnitSkillUsePos.
 
 ---------------------------------------
 
+*unitexists <GID>;
+
+Checks if the given Game ID exists. Returns false if the object doesn't exist, or true if
+it does.
+
+---------------------------------------
+
 *getunittype <GID>;
 
-Returns the type of object from the given Game ID. Returns -1 if the given <GID> does not
+Returns the type of object from the given Game ID. Returns -1 if the given GID does not
 exist.
 
- 0 - Monster
- 1 - Homunculus
- 2 - Pet
- 3 - Mercenary
- 4 - Elemental
- 5 - NPC
+	UNITTYPE_PC     0
+	UNITTYPE_NPC    1
+	UNITTYPE_PET    2
+	UNITTYPE_MOB    3
+	UNITTYPE_HOM    4
+	UNITTYPE_MER    5
+	UNITTYPE_ELEM   6
 
 ---------------------------------------
 
@@ -7138,6 +7200,8 @@ Elemental don't support custom names.
 
 Changing a homunculus or pet name will be permanent.
 
+Returns "Unknown" if unit is not found.
+
 ---------------------------------------
 
 *getunitdata <GID>,<arrayname>;
@@ -7145,71 +7209,289 @@ Changing a homunculus or pet name will be permanent.
 
 This is used to get and set special data related to the unit.
 With getunitdata, the array given will be filled with the current data. In setunitdata
-the indexes in the array would be used to set that data on the unit. 
+the indexes in the array would be used to set that data on the unit.
+
+Both getunitdata and setunitdata will return -1 if the given GID does not exist.
+
+Note: When adjusting a unit's stat (STR, AGI, etc) the unit's respective statuses are
+      recalculated (HIT, FLEE, etc) automatically. Keep in mind that some stats don't
+	  affect a unit's status and will have to directly be modified.
 
 Parameters (indexes) for monsters are:
+	UMOB_SIZE
+	UMOB_LEVEL
+	UMOB_HP
+	UMOB_MAXHP
+	UMOB_MASTERAID
+	UMOB_MAPID
+	UMOB_X
+	UMOB_Y
+	UMOB_SPEED
+	UMOB_MODE
+	UMOB_AI
+	UMOB_SCOPTION
+	UMOB_SEX
+	UMOB_CLASS
+	UMOB_HAIRSTYLE
+	UMOB_HAIRCOLOR
+	UMOB_HEADBOTTOM
+	UMOB_HEADMIDDLE
+	UMOB_HEADTOP
+	UMOB_CLOTHCOLOR
+	UMOB_SHIELD
+	UMOB_WEAPON
+	UMOB_LOOKDIR
+	UMOB_CANMOVETICK
+	UMOB_STR
+	UMOB_AGI
+	UMOB_VIT
+	UMOB_INT
+	UMOB_DEX
+	UMOB_LUK
+	UMOB_SLAVECPYMSTRMD
+	UMOB_DMGIMMUNE
+	UMOB_ATKRANGE
+	UMOB_ATKMIN
+	UMOB_ATKMAX
+	UMOB_MATKMIN
+	UMOB_MATKMAX
+	UMOB_DEF
+	UMOB_MDEF
+	UMOB_HIT
+	UMOB_FLEE
+	UMOB_PDODGE
+	UMOB_CRIT
+	UMOB_RACE
+	UMOB_ELETYPE
+	UMOB_ELELEVEL
+	UMOB_AMOTION
+	UMOB_ADELAY
+	UMOB_DMOTION
 
-	0 - size (big, small, normal)	7  - y							14 - hair style			21 - weapon			28 - LUK
-	1 - level						8  - speed						15 - hair color			22 - looking dir	29 - for slave to copy master's mode
-	2 - HP							9  - mode 						16 - head gear bottom	23 - STR			30 - immune from attacks state
-	3 - max HP						10 - special AI state	 		17 - head gear middle	24 - AGI
-	4 - master AID					11 - SC option					18 - head gear top		25 - VIT
-	5 - map ID						12 - sex						19 - cloth color		26 - INT
-	6 - x							13 - class (Monster ID, Job ID)	20 - shield				27 - DEX
+-----
 
 Parameter (indexes) for homunculi are:
+	UHOM_SIZE
+	UHOM_LEVEL
+	UHOM_HP
+	UHOM_MAXHP
+	UHOM_SP
+	UHOM_MAXSP
+	UHOM_MASTERCID
+	UHOM_MAPID
+	UHOM_X
+	UHOM_Y
+	UHOM_HUNGER
+	UHOM_INTIMACY
+	UHOM_SPEED
+	UHOM_LOOKDIR
+	UHOM_CANMOVETICK
+	UHOM_STR
+	UHOM_AGI
+	UHOM_VIT
+	UHOM_INT
+	UHOM_DEX
+	UHOM_LUK
+	UHOM_DMGIMMUNE
+	UHOM_ATKRANGE
+	UHOM_ATKMIN
+	UHOM_ATKMAX
+	UHOM_MATKMIN
+	UHOM_MATKMAX
+	UHOM_DEF
+	UHOM_MDEF
+	UHOM_HIT
+	UHOM_FLEE
+	UHOM_PDODGE
+	UHOM_CRIT
+	UHOM_RACE
+	UHOM_ELETYPE
+	UHOM_ELELEVEL
+	UHOM_AMOTION
+	UHOM_ADELAY
+	UHOM_DMOTION
 
-	0 - size (big, small, normal)	7  - map ID			14 - canmove_tick	21 - immune from attacks state
-	1 - level						8  - x				15 - STR
-	2 - HP							9  - y				16 - AGI
-	3 - max HP						10 - hunger			17 - VIT
-	4 - SP							11 - intimacy		18 - INT
-	5 - max SP						12 - speed			19 - DEX
-	6 - master Character ID			13 - looking dir	20 - LUK
+-----
 
 Parameter (indexes) for pets are:
+	UPET_SIZE
+	UPET_LEVEL
+	UPET_HP
+	UPET_MAXHP
+	UPET_MASTERAID
+	UPET_MAPID
+	UPET_X
+	UPET_Y
+	UPET_HUNGER
+	UPET_INTIMACY
+	UPET_SPEED
+	UPET_LOOKDIR
+	UPET_CANMOVETICK
+	UPET_STR
+	UPET_AGI
+	UPET_VIT
+	UPET_INT
+	UPET_DEX
+	UPET_LUK
+	UPET_DMGIMMUNE
+	UPET_ATKRANGE
+	UPET_ATKMIN
+	UPET_ATKMAX
+	UPET_MATKMIN
+	UPET_MATKMAX
+	UPET_DEF
+	UPET_MDEF
+	UPET_HIT
+	UPET_FLEE
+	UPET_PDODGE
+	UPET_CRIT
+	UPET_RACE
+	UPET_ELETYPE
+	UPET_ELELEVEL
+	UPET_AMOTION
+	UPET_ADELAY
+	UPET_DMOTION
 
-	0 - size (big, small, normal)	7  - y				14 - AGI
-	1 - level						8  - hunger			15 - VIT
-	2 - HP							9  - intimacy		16 - INT
-	3 - max HP						10 - speed			17 - DEX
-	4 - master AID					11 - looking dir	18 - LUK
-	5 - map ID						12 - canmove_tick	19 - immune from attacks state
-	6 - x							13 - STR
+-----
 
 Parameter (indexes) for mercenaries are:
+	UMER_SIZE
+	UMER_HP
+	UMER_MAXHP
+	UMER_MASTERCID
+	UMER_MAPID
+	UMER_X
+	UMER_Y
+	UMER_KILLCOUNT
+	UMER_LIFETIME
+	UMER_SPEED
+	UMER_LOOKDIR
+	UMER_CANMOVETICK
+	UMER_STR
+	UMER_AGI
+	UMER_VIT
+	UMER_INT
+	UMER_DEX
+	UMER_LUK
+	UMER_DMGIMMUNE
+	UMER_ATKRANGE
+	UMER_ATKMIN
+	UMER_ATKMAX
+	UMER_MATKMIN
+	UMER_MATKMAX
+	UMER_DEF
+	UMER_MDEF
+	UMER_HIT
+	UMER_FLEE
+	UMER_PDODGE
+	UMER_CRIT
+	UMER_RACE
+	UMER_ELETYPE
+	UMER_ELELEVEL
+	UMER_AMOTION
+	UMER_ADELAY
+	UMER_DMOTION
 
-	0 - size (big, small, normal)	7  - kill count		14 - VIT
-	1 - HP							8  - life time		15 - INT
-	2 - max HP						9  - speed 			16 - DEX
-	3 - master Character ID			10 - looking dir	17 - LUK
-	4 - map ID						11 - canmove_tick	18 - immune from attacks state
-	5 - x							12 - STR
-	6 - y							13 - AGI
+-----
 
 Parameter (indexes) for elementals are:
+	UELE_SIZE
+	UELE_HP
+	UELE_MAXHP
+	UELE_SP
+	UELE_MAXSP
+	UELE_MASTERCID
+	UELE_MAPID
+	UELE_X
+	UELE_Y
+	UELE_LIFETIME
+	UELE_MODE
+	UELE_SPEED
+	UELE_LOOKDIR
+	UELE_CANMOVETICK
+	UELE_STR
+	UELE_AGI
+	UELE_VIT
+	UELE_INT
+	UELE_DEX
+	UELE_LUK
+	UELE_DMGIMMUNE
+	UELE_ATKRANGE
+	UELE_ATKMIN
+	UELE_ATKMAX
+	UELE_MATKMIN
+	UELE_MATKMAX
+	UELE_DEF
+	UELE_MDEF
+	UELE_HIT
+	UELE_FLEE
+	UELE_PDODGE
+	UELE_CRIT
+	UELE_RACE
+	UELE_ELETYPE
+	UELE_ELELEVEL
+	UELE_AMOTION
+	UELE_ADELAY
+	UELE_DMOTION
 
-	0 - size (big, small, normal)	7  - x				14 - STR
-	1 - HP							8  - y				15 - AGI
-	2 - max HP						9  - life time		16 - VIT
-	3 - SP							10 - mode			17 - INT
-	4 - max SP						11 - speed			18 - DEX
-	5 - master Character ID			12 - looking dir	19 - LUK
-	6 - map ID						13 - canmove_tick	20 - immune from attacks state
+-----
 
 Parameter (indexes) for NPCs are:
+	UNPC_DISPLAY
+	UNPC_LEVEL
+	UNPC_HP
+	UNPC_MAXHP
+	UNPC_MAPID
+	UNPC_X
+	UNPC_Y
+	UNPC_LOOKDIR
+	UNPC_STR
+	UNPC_AGI
+	UNPC_VIT
+	UNPC_INT
+	UNPC_DEX
+	UNPC_LUK
+	UNPC_PLUSALLSTAT
+	UNPC_DMGIMMUNE
+	UNPC_ATKRANGE
+	UNPC_ATKMIN
+	UNPC_ATKMAX
+	UNPC_MATKMIN
+	UNPC_MATKMAX
+	UNPC_DEF
+	UNPC_MDEF
+	UNPC_HIT
+	UNPC_FLEE
+	UNPC_PDODGE
+	UNPC_CRIT
+	UNPC_RACE
+	UNPC_ELETYPE
+	UNPC_ELELEVEL
+	UNPC_AMOTION
+	UNPC_ADELAY
+	UNPC_DMOTION
 
-	0 - display		7  - looking dir
-	1 - level		8  - STR
-	2 - HP			9  - AGI
-	3 - max HP		10 - VIT
-	4 - map ID		11 - INT
-	5 - x			12 - DEX
-	6 - y			13 - LUK
+*Notes:
+		- *_SIZE: small (0); medium (1); large (2)
+	    - *_MAPID: this refers to the map_data index (from src/map/map.c), not the mapindex_db index (from src/common/mapindex.c)
+			-- For 'setunitdata', map name can also be passed in as a valid value instead of map ID
+		- *_SPEED: 20 - 1000
+		- *_MODE: see doc/mob_db_mode_list.txt
+		- *_LOOKDIR: north (0), northwest (1), west (2), etc
+		- *_CANMOVETICK: seconds * 1000 the unit will be unable to move
+		- *_DMGIMMUNE: unit will be immune to damage (1), or will receive damage (0)
+		- *_HUNGER: 0 - 100
+		- *_INTIMACY: 0 - 1000
+		- *_LIFETIME: seconds * 1000 the unit will be 'alive' for
+		- *_AMOTION: see doc/mob_db.txt
+		- *_ADELAY: see doc/mob_db.txt
+		- *_DMOTION: see doc/mob_db.txt
 
-*Notes: For mode, see doc/mob_db_mode_list.txt
-	    For map ID, this refers to the map_data index (from src/map/map.c), not the mapindex_db index (from src/common/mapindex.c)
-	    For 'setunitdata', map name can also be passed in as a valid value instead of map ID
+		- UMOB_AI: none (0); attack (1); marine sphere (2); flora (3); zanzou (4); legion (5); faw (6)
+		- UMOB_SCOPTION: see the 'Variables' section at the top of this document
+		- UMOB_SLAVECPYMSTRMD: make the slave copy the master's mode (1), or not (0)
+
+		- UNPC_PLUSALLSTAT: same as 'bAllStats'; increases/decreses all stats by given amount
 
 Example:
 	// Spawn some Porings and save the Game ID.
@@ -7224,7 +7506,18 @@ Example:
 	getunitdata .GID,@por_arr;
 
 	// Set the max HP of the Poring to 1000 (current HP will also get updated to 1000).
-	setunitdata .GID,3,1000;
+	setunitdata .GID,UMOB_MAXHP,1000;
+
+---------------------------------------
+
+*geteleminfo <type>{,<char_id>};
+
+Get info of elemental of attached player or player by char_id.
+Other info can be obtained by 'getunitdata' command.
+
+Valid types are:
+   0: Elemental ID
+   1: Elemental Game ID
 
 ---------------------------------------
 \\
@@ -7350,6 +7643,29 @@ Example:
 
 ---------------------------------------
 
+*min(<number or array>{,<number or array>,...})
+*minimum(<number or array>{,<number or array>,...})
+*max(<number or array>{,<number or array>,...})
+*maximum(<number or array>{,<number or array>,...})
+
+Returns the smallest (or biggest) from the set of given parameters.
+These parameters have to be either numbers or number arrays.
+
+Example:
+	.@minimum = min( 1, -6, -2, 8, 2 ); // .@minimum will be equal to -6
+	.@maximum = max( 0, 5, 10, 4 ); // .@maximum will be equal to 10
+	.@level = min( BaseLevel, 70 ); // .@level will be the character's base level, capped to 70
+	
+	setarray .@testarray, 4, 5, 12, 6, 7, 3, 8, 9, 10;
+	
+	.@minimum = min( .@testarray ); // .@minimum will be equal to 3
+	.@maximum = max( .@testarray ); // .@maximum will be equal to 12
+	
+	.@minimum = min( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to -6
+	.@maximum = max( -6, 1, 2, 3, .@testarray ); // .@maximum will be equal to 12
+
+---------------------------------------
+
 *md5("<string>")
 
 Returns the md5 checksum of a number or string.
@@ -7364,8 +7680,8 @@ Example:
 *query_sql("your MySQL query"{, <array variable>{, <array variable>{, ...}}});
 *query_logsql("your MySQL query"{, <array variable>{, <array variable>{, ...}}});
 
-Executes an SQL query. A 'select' query can fill array variables with up to 128 rows of values,
-and will return the number of rows (i.e. array size) or -1 on failure/empty array.
+Executes an SQL query. A 'select' query can fill array variables with up to 2 billion rows of
+values, and will return the number of rows (i.e. array size) or -1 on failure.
 
 Note that 'query_sql' runs on the main database while 'query_logsql' runs on the log database.
 
@@ -7811,17 +8127,23 @@ This command will open a book item at the specified page.
 ========================
 ---------------------------------------
 
-*instance_create("<instance name>");
+*instance_create("<instance name>"{,<instance mode>{,<owner id>}});
 
-Creates an instance for the party of the attached player. The instance name,
-along with all other instance data, is read from 'db/(pre-)re/instance_db.txt'.
-Upon success, the command generates a unique instance ID, duplicates all listed
-maps and NPCs, sets the alive time, and triggers the "OnInstanceInit" label in
-all NPCs inside the instance.
+Creates an instance for the <owner id> of <mode>. The instance name, along with
+all other instance data, is read from 'db/(pre-)re/instance_db.txt'. Upon success,
+the command generates a unique instance ID, duplicates all listed maps and NPCs,
+sets the alive time, and triggers the "OnInstanceInit" label in all NPCs inside
+the instance.
+
+Instance Mode options:
+ IM_NONE: Attached to no one.
+ IM_CHAR: Attached to a single character.
+ IM_PARTY: Attached to a party (default instance mode).
+ IM_GUILD: Attached to a guild.
 
 The command returns the instance ID upon success, and these values upon failure:
  -1: Invalid type.
- -2: Party not found.
+ -2: Character/Party/Guild not found.
  -3: Instance already exists.
  -4: No free instances (MAX_INSTANCE exceeded).
 
@@ -7831,20 +8153,23 @@ The command returns the instance ID upon success, and these values upon failure:
 
 Destroys instance with the ID <instance id>. If no ID is specified, the instance
 the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player's party is used. If that fails,
-the script will come to a halt.
+the instance of the currently attached player is used (if it is a character, party,
+or guild mode). If it is not owned by anyone, no player needs to be attached. If
+that fails, the script will come to a halt.
 
 ---------------------------------------
 
-*instance_enter("<instance name>"{,<x>,<y>});
+*instance_enter("<instance name>",{<x>,<y>,<char_id>});
 
 Warps player to the specified instance after the script terminates. The map and
 coordinates are located in 'db/(pre-)re/instance_db.txt'.
 
 The command returns 0 upon success, and these values upon failure:
- 1: Party not found.
- 2: Party does not have an instance.
- 3: Other errors (invalid instance name, instance doesn't match with party).
+ 1: Party/Guild not found (for party/guild modes).
+ 2: Character/Party/Guild does not have an instance.
+ 3: Other errors (invalid instance name, instance doesn't match with character/party/guild).
+
+Put -1 for x and y if want to warp player with default entrance coordinates.
 
 ---------------------------------------
 
@@ -7852,8 +8177,8 @@ The command returns 0 upon success, and these values upon failure:
 
 Returns the unique name of the instanced script. If no ID is specified,
 the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached player's party is used. If
-that fails, the script will come to a halt.
+an instance, the instance of the currently attached NPC, player, party, or guild
+is used. If that fails, the script will come to a halt.
 
 ---------------------------------------
 
@@ -7861,16 +8186,18 @@ that fails, the script will come to a halt.
 
 Returns the unique name of the instanced map. If no instance ID is specified,
 the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached player's party is used. If
-that fails, the command returns an empty string instead.
+an instance, the instance of the currently attached player is used (if it is a
+character, party, or guild mode). If it is not owned by anyone, no player needs
+to be attached. If that fails, the command returns an empty string instead.
 
 ---------------------------------------
 
 *instance_id()
 
 Returns the unique instance id of the attached script. If the script is not
-attached to an instance, the instance of the currently attached player's party is
-used. If that fails, the function will return 0.
+attached to an instance, the instance of the currently attached player is
+used (if it is a character, party, or guild mode). If it is not owned by anyone, no
+player needs to be attached. If that fails, the function will return 0.
 
 ---------------------------------------
 
@@ -7879,17 +8206,19 @@ used. If that fails, the function will return 0.
 Warps all players in the instance <instance id> to <map name> at given
 coordinates. If no ID is specified, the instance the script is attached to
 is used. If the script is not attached to an instance, the instance of the
-currently attached player's party is used. If that fails, the script will
-come to a halt.
+currently attached player is used (if it is a character, party, or guild
+mode). If it is not owned by anyone, no player needs to be attached. If that
+fails, the script will come to a halt.
 
 ---------------------------------------
 
 *instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
 
 Broadcasts a message to all players in the instance <instance id> currently
-residing on an instance map. If -1 is specified for <instance id>, the instance
+residing on an instance map. If 0 is specified for <instance id>, the instance
 the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player's party is used.
+the instance of the currently attached player is used (if it is a character,
+party, or guild mode). If it is not owned by anyone, no player needs to be attached.
 
 For details on the other parameters, see 'announce'.
 
@@ -7912,6 +8241,28 @@ if (instance_check_party(getcharid(1),2,2,149)) {
 	close;
 } else {
 	mes "Sorry, your party does not meet requirements.";
+	close;
+}
+
+---------------------------------------
+
+*instance_check_guild(<guild id>{,<amount>{,<min>{,<max>}}})
+
+This function checks if a guild meets certain requirements, returning 1 if all
+conditions are met and 0 otherwise. It will only check online characters.
+
+amount - number of online guild members (default is 1).
+min    - minimum level of all characters in the guild (default is 1).
+max    - maximum level of all characters in the guild (default is max level in conf).
+
+Example:
+
+if (instance_check_guild(getcharid(2),2,2,149)) {
+	mes "Your guild meets the Memorial Dungeon requirements.",
+	mes "All online members are between levels 1-150 and at least two are online.";
+	close;
+} else {
+	mes "Sorry, your guild does not meet requirements.";
 	close;
 }
 
@@ -7963,6 +8314,36 @@ izlude,100,100,4	script	Test	844,{
 		questinfo 1001, QTYPE_QUEST, 0, Job_Novice;
 		end;
 }
+
+---------------------------------------
+
+*setquestinfo_level <quest_id>,<min_level>,<max_level>;
+
+Add level range criteria for quest info with quest id 'quest_id'.
+
+This command must be used after 'questinfo'.
+
+---------------------------------------
+
+*setquestinfo_req <quest_id>,<req_quest_id>,<state>{,<req_quest_id>,<state>,...};
+
+Add 'req_quest_id' as requirement for quest info with quest id 'quest_id'.
+
+Value os 'state' are:
+    0: Player doesn't started 'req_quest_id'.
+    1: Player has 'req_quest_id' (state is either "inactive" or "active").
+    2: Player has 'req_quest_id' completed
+
+This command must be used after 'questinfo'.
+
+---------------------------------------
+
+*setquestinfo_job <quest_id>,<job_id>{,<job_id>...};
+
+Add job criteria for quest info with quest id 'quest_id'.
+The job criteria may more than one job_id.
+
+This command must be used after 'questinfo'.
 
 ---------------------------------------
 
@@ -8148,7 +8529,7 @@ OnTimer1000:
 
 ---------------------------------------
 
-*bg_leave;
+*bg_leave {<char_id>};
 
 Removes attached player from their Battle Group.
 
@@ -8236,19 +8617,20 @@ server and the egg will disappear when anyone tries to hatch it.
 
 ---------------------------------------
 
-*getpetinfo(<type>)
+*getpetinfo(<type>{,<char_id>})
 
 This function will return pet information for the pet the invoking character 
 currently has active. Valid types are:
 
- 0 - Pet Game ID
- 1 - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
+ PETINFO_ID - Pet ID
+ PETINFO_CLASS - Pet class number as per 'db/pet_db.txt' - will tell you what kind of a pet it 
      is.
- 2 - Pet name. Will return "null" if there's no pet. 
- 3 - Pet friendly level (intimacy score). 1000 is full loyalty.
- 4 - Pet hungry level. 100 is completely full.
- 5 - Pet rename flag. 0 means this pet has not been named yet.
- 6 - Pet level
+ PETINFO_NAME - Pet name. Will return "null" if there's no pet. 
+ PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.
+ PETINFO_HUNGRY - Pet hungry level. 100 is completely full.
+ PETINFO_RENAMED - Pet rename flag. 0 means this pet has not been named yet.
+ PETINFO_LEVEL - Pet level
+ PETINFO_BLOCKID - Pet Game ID
 
 ---------------------------------------
 
@@ -8404,20 +8786,21 @@ and will return the following values:
 
 ---------------------------------------
 
-*gethominfo(<type>)
+*gethominfo(<type>{,<char_id>})
 
 This function will return Homunculus information for the Homunculus of the
 invoking character, regardless of its vaporize state. It returns zero or
 "null" if the player does not own a Homunculus.
 
 Valid types are:
- 0 - Homunculus Game ID
+ 0 - Homunculus ID
  1 - Homunculus Class
  2 - Homunculus Name
  3 - Homunculus friendly level (intimacy score). 100000 is full loyalty.
  4 - Homunculus hungry level. 100 is completely full.
  5 - Homunculus rename flag. 0 means this homunculus has not been named yet.
  6 - Homunculus level
+ 7 - Homunculus Game ID
 
 ---------------------------------------
 
@@ -8487,7 +8870,7 @@ character. If char id is given, the information of that character is
 retrieved instead. Type specifies what information to retrieve and
 can be one of the following:
 
-    0 - Mercenary Game ID
+    0 - Mercenary ID
     1 - Mercenary Class
     2 - Mercenary Name
     3 - Mercenary faith value for this mercenary's guild, if any
@@ -8495,6 +8878,7 @@ can be one of the following:
     5 - Mercenary kill count
     6 - Mercenary remaining life time in msec
     7 - Mercenary level
+    8 - Mercenary Game ID
 
 If the character does not have a mercenary, the command returns ""
 for name and 0 for all other types.
@@ -8727,6 +9111,53 @@ Valid options are:
 The command returns 1 upon success, and these values upon failure:
  0: Invalid option.
 -1: Party not found.
+
+---------------------------------------
+
+*opendressroom(<flag>{,<char_id>});
+
+This will open the Dress Room window on the client connected to the invoking character.
+
+    mes "Close this window to open the Dress Room window.";
+    close2;
+    opendressroom(1);
+    end;
+
+Valid flag are:
+ 1 - Open the Dress Room window
+
+---------------------------------------
+
+*navigateto("<map>"{,<x>,<y>,<flag>,<hide_window>,<monster_id>,<char_id>});
+
+Generates a navigation for attached or specified character. Requires client
+2011-10-10aRagEXE or newer.
+
+The flag specifies how the client will calculate the specific route.
+
+Valid flags are:
+ NAV_NONE - No services
+ NAV_AIRSHIP_ONLY - Airship only
+ NAV_SCROLL_ONLY - Scroll only
+ NAV_AIRSHIP_AND_SCROLL - Airship and Scroll
+ NAV_KAFRA_ONLY - Kafra only
+ NAV_KAFRA_AND_AIRSHIP - Kafra and Airship
+ NAV_KAFRA_AND_SCROLL - Kafra and Scroll
+ NAV_ALL - All services
+
+When flag is not specified, the default value is NAV_KAFRA_AND_AIRSHIP.
+
+The hide_window specifies whether to display (0) or hide (1) the navigation window.
+By default the window is hidden.
+
+You can specify the monster_id in combination with a mapname to make the
+navigation system tell you, that you have reached the desired mob.
+
+Note:
+The client requires custom monster spawns be in the navigation file
+for using the embedded client Navigation feature to work properly. In this
+instance sending the player to the map where the monster spawns is a simpler
+solution rather than sending the map and the monster_id.
 
 ---------------------------------------
 

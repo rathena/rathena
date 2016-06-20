@@ -61,41 +61,41 @@
 12813	//Peony_Mommy
 12814	//Slapping_Herb
 12815	//Yggdrasil_Dust
-//6592
-//6594
-//6595
-//6596
-//6597
-//6598
-//6599
-//6600
-//6601
-//6602
-//6603
-//6604
-//6605
+6592	//Small_Wooden_Chest
+6594	//Magic_Bronze_Bullion
+6595	//Hammer_Of_Velund
+6596	//Anvil_Of_Velund
+6597	//Bracelet_Of_Velund
+6598	//Rib_Of_Jormungand
+6599	//Spirit_Of_Hugin
+6600	//Spirit_Of_Munin
+6601	//Chisel_Of_Giant
+6602	//Secret_Of_Rune
+6603	//Skin_Of_Hraesvelg
+6604	//Essence_Rune_Magic
+6605	//Muspellium
 //6668
 7056	//Payroll_Of_Kafra
-//11557
-//11558
-//6607
+11557	//TE_White_Potion
+11558	//TE_White_Slim_Potion
+6607	//Temporal_Crystal
 6608	//Coagulated_Spell
-//6609
-//6610
+6609	//Glast_Decayed_Nail
+6610	//Glast_Horrendous_Mouth
 //6611
-//6612
-//6613
+6612	//Gold_Coin_Basket
+6613	//Flashy_Brooch
 7228	//Gold_Bullion
 7229	//Silver_Bullion
 7230	//White_Gold_Bullion
-//6699
-//6700
-//6701
-//6702
-//6703
-//6704
-//6705
-//6706
+6699	//Faith_Silence
+6700	//White_Snake_Scale
+6701	//Treasure_Dwarf
+6702	//Sweat_Dwarf
+6703	//Warrior_Tears
+6704	//Warrior_Anger
+6705	//Warrior_Certificate
+6706	//Guardian_Flowers
 6683	//Dried_Flower
 7640	//Butterfly_Hair_Decoration
 7642	//Bloody_Coin

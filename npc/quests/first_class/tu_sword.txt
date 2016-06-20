@@ -706,6 +706,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			set tu_swordman, 5;
 			next;
 		}
+		setquest 8215;
 		mes "[Shurank]";
 		mes "By now, I believe that you know enough about the Increase HP Recovery skill. Next time, I shall teach you what I know about the Provoke skill.";
 		close;
@@ -727,6 +728,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
 			mes "all of the basics.";
 			set tu_swordman, 4;
+			changequest 8213,8214;
 			if (checkre(3))
 				getexp 97,0;
 			else
@@ -765,6 +767,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Here's a little reward for all of your hard work. I hope you realize the importance of using Bash as";
 			mes "you grow stronger.";
 			set tu_swordman, 3;
+			changequest 8212,8213;
 			if (checkre(3))
 				getexp 83,0;
 			else
@@ -779,6 +782,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
 			mes "all of the basics.";
 			set tu_swordman, 4;
+			changequest 8212,8214;
 			if (checkre(3))
 				getexp 97,0;
 			else
@@ -817,6 +821,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Still, for your training efforts, let me give you a humble reward. But remember, we still have more";
 			mes "of the fundamentals to cover!";
 			set tu_swordman, 2;
+			changequest 8211,8212;
 			if (checkre(3))
 				getexp 58,0;
 			else
@@ -849,7 +854,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "[Shurank]";
 			mes "For your efforts and patience, I offer you this small reward. Please take it and grow even stronger...";
 			set tu_swordman, 3;
-			setquest 8211;
+			changequest 8211,8213;
 			if (checkre(3))
 				getexp 83,0;
 			else
@@ -867,6 +872,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
 			mes "all of the basics.";
 			set tu_swordman, 4;
+			changequest 8211,8214;
 			if (checkre(3))
 				getexp 97,0;
 			else
@@ -930,7 +936,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Still, for your training efforts, let me give you a humble reward. But remember, we still have more";
 			mes "of the fundamentals to cover!";
 			set tu_swordman, 2;
-			changequest 8211,8212;
+			setquest 8212;
 			if (checkre(3))
 				getexp 58,0;
 			else
@@ -956,7 +962,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Still, for your training efforts, let me give you a humble reward. But remember, we still have more";
 			mes "of the fundamentals to cover!";
 			set tu_swordman, 3;
-			changequest 8212,8213;
+			setquest 8213;
 			if (checkre(3))
 				getexp 83,0;
 			else
@@ -974,9 +980,9 @@ izlude_in,82,163,3	script	Shurank	733,{
 			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
 			mes "all of the basics.";
 			set tu_swordman, 4;
-			completequest 8211;
-			completequest 8212;
-			completequest 8213;
+			// completequest 8211;
+			// completequest 8212;
+			// completequest 8213;
 			setquest 8214;
 			if (checkre(3))
 				getexp 97,0;

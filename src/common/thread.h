@@ -5,7 +5,7 @@
 #ifndef _rA_THREAD_H_
 #define _rA_THREAD_H_
 
-#include "../common/cbasetypes.h"
+#include "cbasetypes.h"
 
 typedef struct rAthread *rAthread;
 typedef void* (*rAthreadProc)(void*);

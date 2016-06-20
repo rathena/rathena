@@ -12,6 +12,7 @@ Thumbs.db
 # /
 /*_fifo
 /*.exe
+/*.exe.*
 /*.ilk
 /*.log
 /*.ncb
@@ -26,16 +27,13 @@ Thumbs.db
 *.a
 *.yml
 /char-server
-/char-server
 /config.log
 /config.status
 /core
 /ipch
 /login-server
-/login-server
 /Makefile
 /Makefile.cache
-/map-server
 /map-server
 /mapcache
 /nbproject
@@ -100,6 +98,15 @@ Thumbs.db
 /tools/*.ilk
 /tools/*.pdb
 
+# /vcproj-14/
+.vs
+*.VC.db
+/vcproj-14/char-server
+/vcproj-14/login-server
+/vcproj-14/mapcache
+/vcproj-14/map-server
+/vcproj-14/*.user
+
 # /vcproj-13/
 /vcproj-13/char-server
 /vcproj-13/login-server
@@ -134,3 +141,4 @@ Thumbs.db
 /.idea/vcs.xml
 /.idea/workspace.xml
 /build/
+

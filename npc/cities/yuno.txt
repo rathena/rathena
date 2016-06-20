@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Juno City
-//===== By: ================================================== 
+//===== By: ==================================================
 //= KitsuneStarwind, kobra_k88, L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= NPCs for the City of Juno
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Added additional npcs.  Added Metto quest. [kobra_k88]
 //= Moved item quest to quest folder. Re-edited a majority of the npcs. [kobra_k88]
 //=a Removed duplicate npcs already found in the sage quest.
@@ -22,10 +22,10 @@
 //= 1.4a Corrected a Typo error (bugreport:716) [Samuray22]
 //= 1.5 Added Renewal coordinates for Payon and Izlude. [Euphy]
 //=     Split Soldier NPCs into Pre-RE/RE (sprite change).
-//============================================================ 
+//============================================================
 
 // Juno
-//============================================================ 
+//============================================================
 yuno,184,173,4	script	Freidrich#juno	729,{
 	if (rand(1,5) == 1) {
 		mes "[Freidrich]";
@@ -58,7 +58,7 @@ yuno,184,173,4	script	Freidrich#juno	729,{
 		close;
 	}
 }
-	
+
 yuno,337,227,4	script	Juno Granny#juno	103,{
 	mes "[Granny]";
 	if (rand(1,50) == 1) {
@@ -197,7 +197,7 @@ yuno,165,111,4	script	Juno Sage#juno	123,,{
 		close;
 	}
 }
-	
+
 yuno,157,205,4	script	Juno Artisan#juno	54,{
 	mes "[Artisan]";
 	mes "*Mumble mumble...*";

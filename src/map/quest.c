@@ -42,17 +42,22 @@ struct quest_db *quest_search(int quest_id)
  */
 int quest_pc_login(TBL_PC *sd)
 {
+#if PACKETVER < 20141022
 	int i;
+#endif
 
 	if( sd->avail_quests == 0 )
 		return 1;
 
 	clif_quest_send_list(sd);
+
+#if PACKETVER < 20141022
 	clif_quest_send_mission(sd);
 
 	//@TODO[Haru]: Is this necessary? Does quest_send_mission not take care of this?
 	for( i = 0; i < sd->avail_quests; i++ )
-		clif_quest_update_objective(sd, &sd->quest_log[i]);
+		clif_quest_update_objective(sd, &sd->quest_log[i], 0);
+#endif
 
 	return 0;
 }
@@ -99,7 +104,7 @@ int quest_add(TBL_PC *sd, int quest_id)
 	sd->save_quest = true;
 
 	clif_quest_add(sd, &sd->quest_log[n]);
-	clif_quest_update_objective(sd, &sd->quest_log[n]);
+	clif_quest_update_objective(sd, &sd->quest_log[n], 0);
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd,0);
@@ -152,7 +157,7 @@ int quest_change(TBL_PC *sd, int qid1, int qid2)
 
 	clif_quest_delete(sd, qid1);
 	clif_quest_add(sd, &sd->quest_log[i]);
-	clif_quest_update_objective(sd, &sd->quest_log[i]);
+	clif_quest_update_objective(sd, &sd->quest_log[i], 0);
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd,0);
@@ -248,7 +253,7 @@ void quest_update_objective(TBL_PC *sd, int mob_id)
 			if( qi->objectives[j].mob == mob_id && sd->quest_log[i].count[j] < qi->objectives[j].count )  {
 				sd->quest_log[i].count[j]++;
 				sd->save_quest = true;
-				clif_quest_update_objective(sd, &sd->quest_log[i]);
+				clif_quest_update_objective(sd, &sd->quest_log[i], mob_id);
 			}
 		}
 
@@ -402,7 +407,7 @@ void quest_read_txtdb(void)
 		while(fgets(line, sizeof(line), fp)) {
 			struct quest_db *quest = NULL;
 			char *str[19], *p;
-			uint16 quest_id = 0;
+			int quest_id = 0;
 			uint8 i;
 
 			++ln;
@@ -573,7 +578,7 @@ static void questdb_free_sub(struct quest_db *quest, bool free)
  */
 static int questdb_free(DBKey key, DBData *data, va_list ap)
 {
-	struct quest_db *quest = db_data2ptr(data);
+	struct quest_db *quest = (struct quest_db *)db_data2ptr(data);
 
 	if (!quest)
 		return 0;

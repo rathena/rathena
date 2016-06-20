@@ -92,7 +92,7 @@ prontera,182,214,4	script	Lauds#Memorial	58,{
 			delitem 1059,30;
 			delitem 914,20;
 			getitem 6025,1;
-			getnameditem 6025," + strcharinfo(0) + ";
+			getnameditem 6025,strcharinfo(0);
 			set Memorial08,2;
 			close;
 		}

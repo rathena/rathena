@@ -217,7 +217,7 @@ struct party_data *inter_party_fromsql(int party_id)
 		return NULL;
 
 	p->party.party_id = party_id;
-	Sql_GetData(sql_handle, 1, &data, &len); memcpy(p->party.name, data, min(len, NAME_LENGTH));
+	Sql_GetData(sql_handle, 1, &data, &len); memcpy(p->party.name, data, zmin(len, NAME_LENGTH));
 	Sql_GetData(sql_handle, 2, &data, NULL); p->party.exp = (atoi(data) ? 1 : 0);
 	Sql_GetData(sql_handle, 3, &data, NULL); p->party.item = atoi(data);
 	Sql_GetData(sql_handle, 4, &data, NULL); leader_id = atoi(data);
@@ -235,7 +235,7 @@ struct party_data *inter_party_fromsql(int party_id)
 		m = &p->party.member[i];
 		Sql_GetData(sql_handle, 0, &data, NULL); m->account_id = atoi(data);
 		Sql_GetData(sql_handle, 1, &data, NULL); m->char_id = atoi(data);
-		Sql_GetData(sql_handle, 2, &data, &len); memcpy(m->name, data, min(len, NAME_LENGTH));
+		Sql_GetData(sql_handle, 2, &data, &len); memcpy(m->name, data, zmin(len, NAME_LENGTH));
 		Sql_GetData(sql_handle, 3, &data, NULL); m->lv = atoi(data);
 		Sql_GetData(sql_handle, 4, &data, NULL); m->map = mapindex_name2id(data);
 		Sql_GetData(sql_handle, 5, &data, NULL); m->online = (atoi(data) ? 1 : 0);
@@ -750,7 +750,7 @@ int mapif_parse_PartyShareLevel(int fd,unsigned int share_lvl)
 
 	party_share_level = share_lvl;
 
-	for(p = dbi_first(iter); dbi_exists(iter); p = dbi_next(iter)) { //Update online parties
+	for(p = (struct party_data *)dbi_first(iter); dbi_exists(iter); p = (struct party_data *)dbi_next(iter)) { //Update online parties
 		if(p->party.count > 1)
 			int_party_calc_state(p);
 	}

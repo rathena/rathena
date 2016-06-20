@@ -388,7 +388,7 @@ int intif_saveregistry(struct map_session_data *sd)
 		if( varname[0] == '@' ) // @string$ can get here, so we skip
 			continue;
 
-		src = db_data2ptr(data);
+		src = (struct script_reg_state *)db_data2ptr(data);
 
 		if( !src->update )
 			continue;
@@ -479,7 +479,7 @@ int intif_request_registry(struct map_session_data *sd, int flag)
 	if (CheckForCharServer())
 		return 0;
 
-	WFIFOHEAD(inter_fd,6);
+	WFIFOHEAD(inter_fd,13);
 	WFIFOW(inter_fd,0) = 0x3005;
 	WFIFOL(inter_fd,2) = sd->status.account_id;
 	WFIFOL(inter_fd,6) = sd->status.char_id;
@@ -543,9 +543,9 @@ int intif_create_party(struct party_member *member,char *name,int item,int item2
 		return 0;
 	nullpo_ret(member);
 
-	WFIFOHEAD(inter_fd,64);
+	WFIFOHEAD(inter_fd, 6+NAME_LENGTH+sizeof(struct party_member));
 	WFIFOW(inter_fd,0) = 0x3020;
-	WFIFOW(inter_fd,2) = 30+sizeof(struct party_member);
+	WFIFOW(inter_fd,2) = 6+NAME_LENGTH+sizeof(struct party_member);
 	memcpy(WFIFOP(inter_fd,4),name, NAME_LENGTH);
 	WFIFOB(inter_fd,28)= item;
 	WFIFOB(inter_fd,29)= item2;
@@ -582,7 +582,7 @@ int intif_party_addmember(int party_id,struct party_member *member)
 {
 	if (CheckForCharServer())
 		return 0;
-	WFIFOHEAD(inter_fd,42);
+	WFIFOHEAD(inter_fd,8+sizeof(struct party_member));
 	WFIFOW(inter_fd,0)=0x3022;
 	WFIFOW(inter_fd,2)=8+sizeof(struct party_member);
 	WFIFOL(inter_fd,4)=party_id;
@@ -1293,11 +1293,11 @@ int mapif_parse_WisToGM(int fd)
 	char *message;
 
 	mes_len =  RFIFOW(fd,2) - 8+NAME_LENGTH;
-	message = (char *) aMalloc(mes_len);
+	message = (char *) aMalloc(mes_len+1);
 
 	permission = RFIFOL(fd,4+NAME_LENGTH);
 	safestrncpy(Wisp_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
-	safestrncpy(message, (char*)RFIFOP(fd,8+NAME_LENGTH), mes_len);
+	safestrncpy(message, (char*)RFIFOP(fd,8+NAME_LENGTH), mes_len+1);
 	// information is sent to all online GM
 	map_foreachpc(mapif_parse_WisToGM_sub, permission, Wisp_name, message, mes_len);
 	aFree(message);
@@ -2007,7 +2007,7 @@ void intif_parse_questlog(int fd)
 			// sd->avail_quests and k didn't meet in the middle: some entries were skipped
 			if(k < num_received) // Move the entries at the end to fill the gap
 				memmove(&sd->quest_log[k], &sd->quest_log[sd->avail_quests], sizeof(struct quest) * (num_received - k));
-			sd->quest_log = aRealloc(sd->quest_log, sizeof(struct quest) * sd->num_quests);
+			sd->quest_log = (struct quest *)aRealloc(sd->quest_log, sizeof(struct quest) * sd->num_quests);
 		}
 	}
 
@@ -2938,7 +2938,7 @@ void intif_parse_MessageToFD(int fd) {
 
 	if( session[u_fd] && session[u_fd]->session_data ) { //check if the player still online
 		int aid = RFIFOL(fd,8);
-		struct map_session_data * sd = session[u_fd]->session_data;
+		struct map_session_data * sd = (struct map_session_data *)session[u_fd]->session_data;
 		/* matching e.g. previous fd owner didn't dc during request or is still the same */
 		if( sd->bl.id == aid ) {
 			char msg[512];

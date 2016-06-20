@@ -15,6 +15,9 @@
 extern int login_fd; //login file descriptor
 extern int char_fd; //char file descriptor
 
+#define MAX_STARTPOINT 5
+#define MAX_STARTITEM 32
+
 enum E_CHARSERVER_ST {
 	CHARSERVER_ST_RUNNING = CORE_ST_LAST,
 	CHARSERVER_ST_STARTING,
@@ -71,6 +74,7 @@ struct Schema_Config {
 };
 extern struct Schema_Config schema_config;
 
+#if PACKETVER_SUPPORTS_PINCODE
 /// Pincode system
 enum pincode_state {
 	PINCODE_OK		= 0,
@@ -78,6 +82,10 @@ enum pincode_state {
 	PINCODE_NOTSET	= 2,
 	PINCODE_EXPIRED	= 3,
 	PINCODE_NEW		= 4,
+	PINCODE_ILLEGAL = 5,
+#if 0
+	PINCODE_KSSN	= 6, // Not supported since we do not store KSSN
+#endif
 	PINCODE_PASSED	= 7,
 	PINCODE_WRONG	= 8,
 	PINCODE_MAXSTATE
@@ -87,7 +95,11 @@ struct Pincode_Config {
 	int pincode_changetime;
 	int pincode_maxtry;
 	bool pincode_force;
+	bool pincode_allow_repeated;
+	bool pincode_allow_sequential;
 };
+#endif
+
 struct CharMove_Config {
 	bool char_move_enabled;
 	bool char_movetoused;
@@ -124,14 +136,18 @@ struct CharServ_Config {
 
 	struct CharMove_Config charmove_config;
 	struct Char_Config char_config;
+#if PACKETVER_SUPPORTS_PINCODE
 	struct Pincode_Config pincode_config;
+#endif
 
 	int save_log; // show loading/saving messages
 	int log_char;	// loggin char or not [devil]
 	int log_inter;	// loggin inter or not [devil]
 	int char_check_db;	///cheking sql-table at begining ?
 
-	struct point start_point; // Initial position the player will spawn on server
+	struct point start_point[MAX_STARTPOINT], start_point_doram[MAX_STARTPOINT]; // Initial position the player will spawn on the server
+	short start_point_count, start_point_count_doram; // Number of positions read
+	struct startitem start_items[MAX_STARTITEM], start_items_doram[MAX_STARTITEM]; // Initial items the player with spawn with on the server
 	int console;
 	int max_connect_user;
 	int gm_allow_group;
@@ -264,7 +280,9 @@ void char_auth_ok(int fd, struct char_session_data *sd);
 void char_set_charselect(uint32 account_id);
 void char_read_fame_list(void);
 
-#if PACKETVER >= 20120307
+#if PACKETVER >= 20151001
+int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style, short start_job, short unknown, int sex);
+#elif PACKETVER >= 20120307
 int char_make_new_char_sql(struct char_session_data* sd, char* name_, int slot, int hair_color, int hair_style);
 #else
 int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, int agi, int vit, int int_, int dex, int luk, int slot, int hair_color, int hair_style);

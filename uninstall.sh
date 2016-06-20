@@ -17,6 +17,6 @@ case $1 in
 		rm -rf /usr/bin/$PKG
 		echo "Uninstallation has succeed"
 	;;
-	'*')
+	*)
 		echo "Usage: Please enter a target './uninstall { all | bin }'"
 esac

@@ -54,11 +54,11 @@
 1288,507,100	// Bloody_Fear_C
 1289,499,100	// P_Katar1
 1296,499,100	// Metal_Katar
-//1299,499,100	//
+1299,499,100	// TE_Woe_Katar
 1310,499,100	// Krieger_Onehand_Axe1
 1312,507,100	// Orcish_Axe_C
 1313,499,100	// Tourist_Axe
-//1319,499,100	//
+1319,499,100	// TE_Woe_Axe
 1372,507,100	// Right_Epsilon_C
 1373,507,100	// Brood_Axe_C
 1374,507,100	// Tomahawk_C
@@ -70,7 +70,7 @@
 1388,507,100	// Two_Handed_Axe_C
 1391,499,100	// P_Two_Handed_Axe1
 1398,499,100	// Metal_Two_Handed_Axe
-//1399,499,100	//
+1399,499,100	// TE_Woe_Two_Handed_Axe
 1419,507,100	// Pole_Axe_C
 1423,475,100	// Pole_XO
 1424,507,100	// Skewer_C
@@ -81,14 +81,14 @@
 1429,475,100	// Hunting_Spear_M
 1430,507,100	// Pike_C
 1434,499,100	// P_Spear1
-//1437,499,100	//
+1437,499,100	// TE_Woe_Pike
 1482,499,100	// BF_Lance1
 1486,499,100	// Krieger_Twohand_Spear1
 1487,507,100	// Lance_C
 1488,507,100	// Ahlspiess_C
 1489,507,100	// Spearfish_
 1493,499,100	// Metal_Lance
-//1495,499,100	//
+1495,499,100	// TE_Woe_Lance
 1533,507,100	// Warrior_Balmung
 1534,507,100	// Spanner_C
 1536,475,100	// Good_Morning_Star
@@ -109,7 +109,7 @@
 1580,507,100	// Encyclopedia_C
 1583,499,100	// P_Book1
 1588,499,100	// Metal_Book
-//1591,499,100	//
+1591,499,100	// TE_Woe_Book
 //1598,499,100	//
 1623,507,100	// Mighty_Staff_C
 1627,475,100	// Staffy
@@ -129,7 +129,10 @@
 1652,499,100	// Tourist_Staff
 1653,507,100	// Staff_Of_Healing_C
 1658,499,100	// P_Staff3
-//1667,499,100	//
+1667,499,100	// TE_Woe_Staff
+1681,403,100	// Short_Foxtail_Staff
+1687,403,100	// Beginner_Foxtail_Staff
+1699,435,100	// Paradise_Foxtail_Staff_I
 1703,507,100	// Bow__
 1728,507,100	// Balistar_C
 1729,507,100	// Bow_Of_Rudra_C
@@ -149,7 +152,7 @@
 1828,507,100	// Monk_Knuckle
 1829,507,100	// Fist_C
 1831,499,100	// P_Knuckle1
-//1834,499,100	//
+1834,499,100	// TE_Woe_Fist
 1921,475,100	// Guh_Moon_Gom
 1923,499,100	// BF_Instrument1
 1924,499,100	// BF_Instrument2
@@ -157,7 +160,7 @@
 1928,507,100	// Berserk_Guitar_I
 1929,507,100	// Guitar_C
 1931,499,100	// P_Guitar1
-//1932,499,100	//
+1932,499,100	// TE_Woe_Guitar
 1938,467,100	// Infinity_Violin
 1975,475,100	// Queen_Is_Whip
 1977,499,100	// BF_Whip1
@@ -166,12 +169,12 @@
 1982,507,100	// Phenomena_Whip
 1983,507,100	// Rante_C
 1986,499,100	// P_Tail1
-//1987,499,100	//
+1987,499,100	// TE_Woe_Rope
 1994,467,100	// Infinity_Whip
 2002,499,100	// Krieger_Twohand_Staff1
 2003,475,100	// Destruction_Rod_M
 2018,499,100	// Metal_Staff
-//2019,499,100	//
+2019,499,100	// TE_Woe_Two_Hand_Staff
 2024,467,100	// Infinity_Two-handed_Stick
 2112,499,100	// Novice_Guard
 2127,475,100	// Secular_Mission
@@ -181,9 +184,9 @@
 2140,507,100	// Energy_Rune_Guard
 2145,467,100	// Time_Keepr_Shield
 2152,507,100	// Anti_Demon_Shield_C
-//2178,499,100	//
-//2179,499,100	//
-//2180,499,100	//
+2178,499,100	// TE_Woe_Buckler
+2179,499,100	// TE_Woe_Shield
+2180,499,100	// TE_Woe_Magic_Guard
 2352,499,100	// Novice_Plate
 2358,475,100	// Dress_Of_Angel
 2368,467,100	// Golden_Armor
@@ -227,9 +230,9 @@
 2458,499,100	// Para_Team_Boots3
 2463,507,100	// Feral_Boots
 2473,499,100	// Para_Team_Boots4
-//2496,499,100	//
-//2497,499,100	//
-//2498,499,100	//
+2496,499,100	// TE_Woe_Shoes
+2497,499,100	// TE_Woe_Boots
+2498,499,100	// TE_Woe_Magic_Sandal
 2510,499,100	// Novice_Hood
 2533,507,100	// Freyja_Cape
 2534,475,100	// Ruffler
@@ -372,10 +375,10 @@
 2940,499,100	// Ninja_Manual
 2941,499,100	// Gunslinger_Manual
 2942,499,100	// Taekwon_Manual
-//2944,499,100	//
-//2945,499,100	//
-//2946,499,100	//
-//2950,507,100	//
+2944,499,100	// TE_Ring_Of_Protection
+2945,499,100	// TE_Ring_Of_Rage
+2946,499,100	// TE_Ring_Of_Defiance
+2950,507,100	// Rune_Ring
 2981,467,100	// Warrior's_Ring
 2997,475,100	// RWC_Gold_Brooch
 2999,475,100	// RWC_Brooch
@@ -774,8 +777,6 @@
 6566,499,100	// Cacao99_Recipe
 6567,499,100	// Choco_Drink_Recipe
 //6584,475,100	//
-//6584,475,100	//
-//6585,475,100	//
 //6585,475,100	//
 //6586,507,100	//
 6593,499,100	// Cryptura_Hair_Coupon
@@ -931,7 +932,7 @@
 6955,499,100	// Piece_Of_Soul_Pig
 6956,499,100	// Captured_Sheep
 6957,499,100	// Lamb_Fleece
-//6960,467,100	//
+6960,467,100	// Key_Air_Fortress
 //6993,475,100	//
 //6994,475,100	//
 7025,475,100	// Lucifer's_Lament
@@ -1510,13 +1511,13 @@
 //12855,475,100	//
 //12871,475,100	//
 //12872,475,100	//
-//12873,475,100	//
+12873,475,100	// TE_Potion_Box
 12883,475,100	// Almighty
 12884,507,100	// Infinite_Concentration_Potion
 12885,507,100	// Infinite_Awakening_Potion
 12886,507,100	// Infinite_Berserk_Potion
 12887,507,100	// C_Wing_Of_Fly
-//12888,507,100	//
+12888,507,100	// Siege_Kit_Box
 12900,475,100	// Battle_Manual_Box
 12901,475,100	// Insurance_Package
 12902,475,100	// Bubble_Gum_Box
@@ -1637,7 +1638,7 @@
 13068,507,100	// Saurel
 13074,507,100	// Ninja_Cutter
 13079,499,100	// Metal_Dagger
-//13083,499,100	//
+13083,499,100	// TE_Woe_Knife
 13108,499,100	// BF_Pistol1
 13109,507,100	// Wasteland_Outlaw_C
 13110,499,100	// Krieger_Pistol1
@@ -1645,7 +1646,7 @@
 13112,499,100	// P_Revolver1
 13113,499,100	// P_Revolver2
 13114,499,100	// P_Revolver3
-//13117,499,100	//
+13117,499,100	// TE_Woe_Pistol
 13118,499,100	// Spark_Light
 13119,467,100	// Spark_Of_Freedom
 13125,499,100	// Metal_Revolver
@@ -1659,10 +1660,10 @@
 13177,499,100	// Krieger_Gatling1
 13178,499,100	// Krieger_Shotgun1
 13179,499,100	// Krieger_Launcher1
-//13184,499,100	//
-//13185,499,100	//
-//13186,499,100	//
-//13187,499,100	//
+13184,499,100	// TE_Woe_Rifle
+13185,499,100	// TE_Woe_Gatling
+13186,499,100	// TE_Woe_Shotgun
+13187,499,100	// TE_Woe_Grenade
 13208,475,100	// Gong_Bug
 13291,475,100	// Starfish
 13292,475,100	// Dried_Squid
@@ -1675,7 +1676,7 @@
 13309,507,100	// Huuma_Giant_Wheel_C
 13310,499,100	// P_Huuma_Suriken1
 13312,507,100	// Huuma_Job_Test
-//13317,499,100	//
+13317,499,100	// TE_Woe_Huuma
 13322,499,100	// Huuma_Metal_Shuriken
 13323,467,100	// Infinity_Shuriken
 13401,507,100	// Excalibur_C
@@ -1696,7 +1697,7 @@
 13424,499,100	// P_Sabre2
 13425,499,100	// Tourist_Sword
 13434,499,100	// P_Saber3
-//13439,499,100	//
+13439,499,100	// TE_Woe_Sword
 13500,475,100	// Insurance60_Package
 13501,475,100	// Assorted_Scroll_Box
 13502,475,100	// Drooping_Kitty_Box
@@ -2822,10 +2823,10 @@
 15031,499,100	// Para_Team_Armor
 15033,507,100	// Tutorial_Mattle
 15034,507,100	// Tutorial_Mattle_
-//15062,499,100	//
-//15063,499,100	//
-//15064,499,100	//
-//15067,507,100	//
+15062,499,100	// TE_Woe_Coat
+15063,499,100	// TE_Woe_Chain_Mail
+15064,499,100	// TE_Woe_Mage_Coat
+15067,507,100	// Rune_Suit
 15116,467,100	// Armor_Of_Airship
 15141,467,100	// Ancient_Armor_Of_The_Goddess
 16002,507,100	// Stunner_C
@@ -2835,7 +2836,7 @@
 16014,499,100	// P_Mace3
 16016,507,100	// Tuna
 16023,499,100	// Metal_Mace
-//16025,499,100	//
+16025,499,100	// TE_Woe_Mace
 16038,467,100	// Infinity_Mace
 //16100,475,100	//
 //16101,475,100	//
@@ -3597,7 +3598,7 @@
 17550,475,100	// (Limited)High_Density_Kalunium_Box(30)
 17567,475,100	// Event_Almighty_Box
 17568,475,100	// Event_Almighty_Box(100)
-//17569,475,100	//
+17569,475,100	// Dungeon_1_hour_Ticket_Box
 //17570,475,100	//
 //17573,475,100	//
 //17574,475,100	//
@@ -3826,7 +3827,7 @@
 22894,507,100	// (Limited)2015_Neuralizer
 22895,507,100	// (Limited)2015_Status_Initialization_Volume
 22896,507,100	// (Limited)Old_Status_Initialization_Volume
-//22901,499,100	//
+22901,499,100	// Question_Old_Blue_Box
 22902,475,100	// Sealed_Card_Album_Scroll_II
 //22906,475,100	//
 //22946,475,100	//
@@ -3836,6 +3837,8 @@
 //22950,475,100	//
 //22951,475,100	//
 //22952,475,100	//
+26100,435,100	// Paradise_Foxtail_Staff_II
+26101,435,100	// Paradise_Foxtail_Staff_III
 28105,467,100	// Infinity_Axe
 28310,467,100	// Sarah's_Left_Earring
 28311,467,100	// Sarah's_Right_Earring

@@ -79,7 +79,7 @@ int channel_delete(struct Channel *channel) {
 	if( db_size(channel->users)) {
 		struct map_session_data *sd;
 		DBIterator *iter = db_iterator(channel->users);
-		for( sd = dbi_first(iter); dbi_exists(iter); sd = dbi_next(iter) ) { //for all users
+		for( sd = (struct map_session_data *)dbi_first(iter); dbi_exists(iter); sd = (struct map_session_data *)dbi_next(iter) ) { //for all users
 			channel_clean(channel,sd,1); //make all quit
 		}
 		dbi_destroy(iter);
@@ -212,7 +212,7 @@ int channel_gjoin(struct map_session_data *sd, int flag){
 	struct Channel *channel;
 	struct guild *g;
 
-	if(!sd) return -1;
+	if(!sd || sd->state.autotrade) return -1;
 	g = sd->guild;
 	if(!g) return -2;
 
@@ -382,7 +382,7 @@ int channel_chk(char *chname, char *chpass, int type){
 			return -4;
 		}
 	}
-	if (type&4 && (chpass != '\0' && strlen(chpass) > CHAN_NAME_LENGTH ) ) {
+	if (type&4 && (chpass[0] != '\0' && strlen(chpass) > CHAN_NAME_LENGTH ) ) {
 		return -3;
 	}
 
@@ -525,7 +525,7 @@ int channel_display_list(struct map_session_data *sd, char *options){
 			}
 		}
 		iter = db_iterator(channel_db);
-		for(channel = dbi_first(iter); dbi_exists(iter); channel = dbi_next(iter)) {
+		for(channel = (struct Channel *)dbi_first(iter); dbi_exists(iter); channel = (struct Channel *)dbi_next(iter)) {
 			if( has_perm || channel->type == CHAN_TYPE_PUBLIC ) {
 				sprintf(output, msg_txt(sd,1409), channel->name, db_size(channel->users));// - #%s (%d users)
 				clif_displaymessage(sd->fd, output);
@@ -890,7 +890,7 @@ int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int fl
 		struct chan_banentry *cbe;
 		sprintf(output, msg_txt(sd,1443), channel->name);// ---- '#%s' Ban List:
 		clif_displaymessage(sd->fd, output);
-		for( cbe = dbi_first(iter); dbi_exists(iter); cbe = dbi_next(iter) ) { //for all users
+		for( cbe = (struct chan_banentry *)dbi_first(iter); dbi_exists(iter); cbe = (struct chan_banentry *)dbi_next(iter) ) { //for all users
 			sprintf(output, "%d: %s",cbe->char_id,cbe->char_name);
 			clif_displaymessage(sd->fd, output);
 		}
@@ -1159,7 +1159,7 @@ void do_final_channel(void) {
 	
 	//delete all in remaining chan db
 	iter = db_iterator(channel_db);
-	for( channel = dbi_first(iter); dbi_exists(iter); channel = dbi_next(iter) ) {
+	for( channel = (struct Channel *)dbi_first(iter); dbi_exists(iter); channel = (struct Channel *)dbi_next(iter) ) {
 		channel_delete(channel);
 	}
 	dbi_destroy(iter);

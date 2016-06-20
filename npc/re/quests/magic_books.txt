@@ -805,20 +805,22 @@ function	script	Magic_Book_Essence	{
 		mes "Please lighten your bag.";
 		close;
 	}
-	if (checkquest(getarg(0)) == 1 && countitem(getarg(1)) >= getarg(2)) {
+	.@item_req = getarg(1);
+	.@req_amount = getarg(2);
+	if (checkquest(getarg(0)) == 1 && countitem(.@item_req) >= .@req_amount) {
 		specialeffect2 EF_BLIND;
 		specialeffect2 EF_BEGINSPELL;
 		progressbar "ffff00",4;
-		delitem getarg(1),getarg(2);
+		delitem .@item_req,.@req_amount;
 		if (rand(2)) {
-			mes "You have used "+callfunc("F_InsertPlural",getarg(2),getitemname(getarg(1)))+" to create ^999900"+getarg(3)+" Essence^000000.";
+			mes "You have used "+ callfunc("F_InsertPlural",.@req_amount,getitemname(.@item_req)) +" to create ^999900"+ getarg(3) +" Essence^000000.";
 			next;
 			mes "^008800The "+getarg(3)+" Essence will last permanently, unless there's a problem.^000000";
 			completequest getarg(0);
 			specialeffect2 EF_LORD;
 			close;
 		}
-		mes "^008888You have failed to refine the essence using "+callfunc("F_InsertPlural",getarg(2),getitemname(getarg(1)))+".^000000";
+		mes "^008888You have failed to refine the essence using "+ callfunc("F_InsertPlural",.@req_amount,getitemname(.@item_req)) +".^000000";
 		close;
 	}
 	if (checkquest(getarg(0)) == 2) {

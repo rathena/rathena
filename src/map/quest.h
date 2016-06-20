@@ -4,8 +4,6 @@
 #ifndef _QUEST_H_
 #define _QUEST_H_
 
-#define MAX_QUEST_DB (62238 + 1) // Highest quest ID + 1
-
 struct quest_dropitem {
 	uint16 nameid;
 	uint16 count;
@@ -22,7 +20,8 @@ struct quest_objective {
 };
 
 struct quest_db {
-	uint16 id;
+	// TODO: find out if signed or unsigned in client
+	int id;
 	unsigned int time;
 	uint8 objectives_count;
 	struct quest_objective *objectives;

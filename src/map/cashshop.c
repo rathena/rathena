@@ -23,112 +23,73 @@ extern char item_cash_db2_db[32];
  *  0 = failure
  *  1 = success
  */
-static int cashshop_parse_dbrow( char** str, const char* source, int line ){
-	unsigned short nameid = atoi( str[1] );
+static bool cashshop_parse_dbrow(char* fields[], int columns, int current) {
+	uint16 tab = atoi(fields[0]);
+	unsigned short nameid = atoi(fields[1]);
+	uint32 price = atoi(fields[2]);
+	int j;
+	struct cash_item_data* cid;
 
-	if( itemdb_exists( nameid ) ){
-		uint16 tab = atoi( str[0] );
-		uint32 price = atoi( str[2] );
-		struct cash_item_data* cid;
-		int j;
-
-		if( tab > CASHSHOP_TAB_SEARCH ){
-			ShowWarning( "cashshop_parse_dbrow: Invalid tab %d in line %d of \"%s\", skipping...\n", tab, line, source );
-			return 0;
-		}else if( price < 1 ){
-			ShowWarning( "cashshop_parse_dbrow: Invalid price %d in line %d of \"%s\", skipping...\n", price, line, source );
-			return 0;
-		}
-
-		ARR_FIND( 0, cash_shop_items[tab].count, j, nameid == cash_shop_items[tab].item[j]->nameid );
-
-		if( j == cash_shop_items[tab].count ){
-			RECREATE( cash_shop_items[tab].item, struct cash_item_data *, ++cash_shop_items[tab].count );
-			CREATE( cash_shop_items[tab].item[ cash_shop_items[tab].count - 1], struct cash_item_data, 1 );
-			cid = cash_shop_items[tab].item[ cash_shop_items[tab].count - 1];
-		}else{
-			cid = cash_shop_items[tab].item[j];
-		}
-
-		cid->nameid = nameid;
-		cid->price = price;
-		cash_shop_defined = true;
-		return 1;
-	}else{
-		ShowWarning( "cashshop_parse_dbrow: Invalid ID %hu in line %d of \"%s\", skipping...\n", nameid, line, source );
+	if( !itemdb_exists( nameid ) ){
+		ShowWarning( "cashshop_parse_dbrow: Invalid ID %hu in line '%d', skipping...\n", nameid, current );
+		return 0;
 	}
 
-	return 0;
+	if( tab > CASHSHOP_TAB_SEARCH ){
+		ShowWarning( "cashshop_parse_dbrow: Invalid tab %d in line '%d', skipping...\n", tab, current );
+		return 0;
+	}else if( price < 1 ){
+		ShowWarning( "cashshop_parse_dbrow: Invalid price %d in line '%d', skipping...\n", price, current );
+		return 0;
+	}
+
+	ARR_FIND( 0, cash_shop_items[tab].count, j, nameid == cash_shop_items[tab].item[j]->nameid );
+
+	if( j == cash_shop_items[tab].count ){
+		RECREATE( cash_shop_items[tab].item, struct cash_item_data *, ++cash_shop_items[tab].count );
+		CREATE( cash_shop_items[tab].item[ cash_shop_items[tab].count - 1], struct cash_item_data, 1 );
+		cid = cash_shop_items[tab].item[ cash_shop_items[tab].count - 1];
+	}else{
+		cid = cash_shop_items[tab].item[j];
+	}
+
+	cid->nameid = nameid;
+	cid->price = price;
+	cash_shop_defined = true;
+
+	return 1;
 }
 
 /*
  * Reads database from TXT format,
  * parses lines and sends them to parse_dbrow.
- * TODO: Change to sv_readdb
  */
 static void cashshop_read_db_txt( void ){
-	const char* filename[] = { DBPATH"item_cash_db.txt", DBIMPORT"/item_cash_db.txt" };
+	const char* dbsubpath[] = {
+		"",
+		"/"DBIMPORT,
+	};
 	int fi;
 
-	for( fi = 0; fi < ARRAYLENGTH( filename ); ++fi ){
-		uint32 lines = 0, count = 0;
-		char line[1024];
+	for( fi = 0; fi < ARRAYLENGTH( dbsubpath ); ++fi ){
+		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[fi])+1);
+		uint8 n2 = (uint8)(strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[fi])+1);
+		char* dbsubpath1 = (char*)aMalloc(n1+1);
+		char* dbsubpath2 = (char*)aMalloc(n2+1);
 
-		char path[256];
-		FILE* fp;
-
-		sprintf( path, "%s/%s", db_path, filename[fi] );
-		fp = fopen( path, "r" );
-		if( fp == NULL ) {
-			ShowWarning( "itemdb_readdb: File not found \"%s\", skipping.\n", path );
-			continue;
+		if(fi==0) {
+			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[fi]);
+			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[fi]);
+		}
+		else {
+			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[fi]);
+			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[fi]);
 		}
 
-		while( fgets( line, sizeof( line ), fp ) ){
-			char *str[3], *p;
-			int i;
-			lines++;
+		sv_readdb(dbsubpath2, "item_cash_db.txt",          ',', 3, 3, -1, &cashshop_parse_dbrow, fi);
 
-			if( line[0] == '/' && line[1] == '/' )
-				continue;
-
-			memset( str, 0, sizeof( str ) );
-
-			p = line;
-			while( ISSPACE( *p ) )
-				++p;
-			if( *p == '\0' )
-				continue;
-
-			for( i = 0; i < 2; ++i ){
-				str[i] = p;
-				p = strchr( p, ',' );
-
-				if( p == NULL )
-					break;
-
-				*p = '\0';
-				++p;
-			}
-
-			str[2] = p;
-			while( !ISSPACE( *p ) && *p != '\0' && *p != '/' )
-				++p;
-
-			if( p == NULL ){
-				ShowError("cashshop_read_db_txt: Insufficient columns in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi( str[0] ) );
-				continue;
-			}
-
-			if( !cashshop_parse_dbrow( str, path, lines ) )
-				continue;
-
-			count++;
-		}
-
-		fclose(fp);
-
-		ShowStatus( "Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, path );
+		aFree(dbsubpath1);
+		aFree(dbsubpath2);
 	}
 }
 
@@ -162,8 +123,10 @@ static int cashshop_read_db_sql( void ){
 				}
 			}
 
-			if( !cashshop_parse_dbrow( str, cash_db_name[fi], lines ) )
+			if( !cashshop_parse_dbrow( str, 3, lines ) ) {
+				ShowError("cashshop_read_db_sql: Cannot process table '%s' at line '%d', skipping...\n", cash_db_name[fi], lines);
 				continue;
+			}
 
 			++count;
 		}
@@ -225,9 +188,14 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 
 		ARR_FIND( 0, cash_shop_items[tab].count, j, nameid == cash_shop_items[tab].item[j]->nameid || nameid == itemdb_viewid(cash_shop_items[tab].item[j]->nameid) );
 
+		if( j == cash_shop_items[tab].count ){
+			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKONWN_ITEM );
+			return false;
+		}
+
 		nameid = *( item_list + i * 5 ) = cash_shop_items[tab].item[j]->nameid; //item_avail replacement
 
-		if( j == cash_shop_items[tab].count || !itemdb_exists( nameid ) ){
+		if( !itemdb_exists( nameid ) ){
 			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKONWN_ITEM );
 			return false;
 		}else if( !itemdb_isstackable( nameid ) && quantity > 1 ){

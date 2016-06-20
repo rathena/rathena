@@ -92,7 +92,7 @@ DBData login_create_online_user(DBKey key, va_list args) {
  */
 struct online_login_data* login_add_online_user(int char_server, uint32 account_id){
 	struct online_login_data* p;
-	p = idb_ensure(online_db, account_id, login_create_online_user);
+	p = (struct online_login_data*)idb_ensure(online_db, account_id, login_create_online_user);
 	p->char_server = char_server;
 	if( p->waiting_disconnect != INVALID_TIMER ) {
 		delete_timer(p->waiting_disconnect, login_waiting_disconnect_timer);
@@ -148,7 +148,7 @@ int login_waiting_disconnect_timer(int tid, unsigned int tick, int id, intptr_t 
  * @see DBApply
  */
 int login_online_db_setoffline(DBKey key, DBData *data, va_list ap) {
-	struct online_login_data* p = db_data2ptr(data);
+	struct online_login_data* p = (struct online_login_data*)db_data2ptr(data);
 	int server = va_arg(ap, int);
 	if( server == -1 ) {
 		p->char_server = -1;
@@ -171,7 +171,7 @@ int login_online_db_setoffline(DBKey key, DBData *data, va_list ap) {
  * @see DBApply
  */
 static int login_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap) {
-	struct online_login_data *character= db_data2ptr(data);
+	struct online_login_data *character= (struct online_login_data*)db_data2ptr(data);
 	if (character->char_server == -2) //Unknown server.. set them offline
 		login_remove_online_user(character->account_id);
 	return 0;

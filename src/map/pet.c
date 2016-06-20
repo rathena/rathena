@@ -652,7 +652,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	i = search_petDB_index(md->mob_id,PET_CLASS);
 
 	//catch_target_class == 0 is used for universal lures (except bosses for now). [Skotlex]
-	if (sd->catch_target_class == 0 && !(md->status.mode&MD_BOSS))
+	if (sd->catch_target_class == 0 && !status_has_mode(&md->status,MD_STATUS_IMMUNE))
 		sd->catch_target_class = md->mob_id;
 
 	if(i < 0 || sd->catch_target_class != md->mob_id) {
@@ -994,6 +994,8 @@ static int pet_food(struct map_session_data *sd, struct pet_data *pd)
 
 	if( pd->pet.hungry > 100 )
 		pd->pet.hungry = 100;
+
+	log_feeding(sd, LOG_FEED_PET, pd->petDB->FoodID);
 
 	clif_send_petdata(sd,pd,2,pd->pet.hungry);
 	clif_send_petdata(sd,pd,1,pd->pet.intimate);

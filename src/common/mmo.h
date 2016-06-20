@@ -5,8 +5,8 @@
 #define	_MMO_H_
 
 #include "cbasetypes.h"
-#include "../common/db.h"
 #include "../config/core.h"
+#include "db.h"
 #include <time.h>
 
 // server->client protocol version
@@ -24,6 +24,9 @@
 	#define PACKETVER 20130807
 	//#define PACKETVER 20120410
 #endif
+
+// Check if the specified packetversion supports the pincode system
+#define PACKETVER_SUPPORTS_PINCODE PACKETVER>=20110309
 
 ///Remove/Comment this line to disable sc_data saving. [Skotlex]
 #define ENABLE_SC_SAVING
@@ -216,6 +219,11 @@ struct point {
 	short x,y;
 };
 
+struct startitem {
+	unsigned short nameid, amount;
+	short pos;
+};
+
 enum e_skill_flag
 {
 	SKILL_FLAG_PERMANENT,
@@ -374,9 +382,9 @@ struct mmo_charstatus {
 	uint32 char_id;
 	uint32 account_id;
 	uint32 partner_id;
-	int father;
-	int mother;
-	int child;
+	uint32 father;
+	uint32 mother;
+	uint32 child;
 
 	unsigned int base_exp,job_exp;
 	int zeny;
@@ -387,7 +395,7 @@ struct mmo_charstatus {
 	unsigned int option;
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
-	short hair,hair_color,clothes_color;
+	short hair,hair_color,clothes_color,body;
 	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id;
 	int fame;
 
@@ -403,7 +411,7 @@ struct mmo_charstatus {
 
 	char name[NAME_LENGTH];
 	unsigned int base_level,job_level;
-	short str,agi,vit,int_,dex,luk;
+	unsigned short str,agi,vit,int_,dex,luk;
 	unsigned char slot,sex;
 
 	uint32 mapip;
@@ -444,17 +452,17 @@ typedef enum mail_status {
 
 struct mail_message {
 	int id;
-	int send_id;
-	char send_name[NAME_LENGTH];
-	int dest_id;
-	char dest_name[NAME_LENGTH];
+	uint32 send_id;                 //hold char_id of sender
+	char send_name[NAME_LENGTH];    //sender nickname
+	uint32 dest_id;                 //hold char_id of receiver
+	char dest_name[NAME_LENGTH];    //receiver nickname
 	char title[MAIL_TITLE_LENGTH];
 	char body[MAIL_BODY_LENGTH];
 
 	mail_status status;
 	time_t timestamp; // marks when the message was sent
 
-	int zeny;
+	uint32 zeny;
 	struct item item;
 };
 
@@ -555,6 +563,7 @@ struct guild {
 	struct guild_expulsion expulsion[MAX_GUILDEXPULSION];
 	struct guild_skill skill[MAX_GUILDSKILL];
 	struct Channel *channel;
+	unsigned short instance_id;
 
 	/* Used by char-server to save events for guilds */
 	unsigned short save_flag;
@@ -784,6 +793,8 @@ enum e_job {
 
 	JOB_REBELLION = 4215,
 
+	JOB_SUMMONER = 4218,
+
 	JOB_MAX,
 };
 
@@ -819,6 +830,11 @@ enum e_pc_reg_loading {
 #error MAX_ZENY is too big
 #endif
 
+// This sanity check is required, because some other places(like skill.c) rely on this
+#if MAX_PARTY < 2
+#error MAX_PARTY is too small, you need at least 2 players for a party
+#endif
+
 #ifndef VIP_ENABLE
 	#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
 	#define MIN_CHARS MAX_CHARS // Default number of characters per account.
@@ -846,7 +862,11 @@ enum e_pc_reg_loading {
 	#ifndef ENABLE_SC_SAVING
 	#warning "Cart won't be able to be saved for relog"
 	#endif
+#if PACKETVER >= 20150826
+	#define MAX_CARTS 12		// used for 3 new cart design
+#else
 	#define MAX_CARTS 9
+#endif
 #else
 	#define MAX_CARTS 5
 #endif

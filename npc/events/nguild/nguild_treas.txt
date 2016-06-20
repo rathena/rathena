@@ -20,21 +20,23 @@
 // Treasure Spawning Function
 //================================================
 function	script	F_GldTreas	{
-	if(getarg(10) !=  1) {
-		setcastledata getarg(0),4,0;
-		setcastledata getarg(0),5,0;
+	.@map$ = getarg(0);
+
+	if(getarg(10) != 1) {
+		setcastledata .@map$,4,0;
+		setcastledata .@map$,5,0;
 
 		// Why on earth are we killing old treasure chest spawns?
-		//killmonster getarg(0),"Treasure_"+getarg(1)+"::OnDied";
+		//killmonster .@map$,"Treasure_"+getarg(1)+"::OnDied";
 
 		// Don't spawn treasures if Castle is empty, or Eco is greater than 100
-		if(GetCastleData(getarg(0),2) > 100 || GetCastleData(getarg(0),1) == 0) return;
+		if(getcastledata(.@map$,2) > 100 || getcastledata(.@map$,1) == 0) return;
 
 		// Only spawn one treasure chest for novice castles.
-		if (compare(getarg(0),"nguild"))
+		if (compare(.@map$,"nguild"))
 			set getarg(2),1;
 		else
-			set getarg(2),GetCastleData(getarg(0),2)/5+4;
+			set getarg(2),getcastledata(.@map$,2)/5+4;
 
 		if (getarg(2) <= 0) return;
 
@@ -44,13 +46,13 @@ function	script	F_GldTreas	{
 	for (set .@i,1; .@i <= getarg(3) ; set .@i,.@i+1) {
 		// set treasure box ID
 		set getarg(4), getarg(5) + (.@i+1) % 2;
-		areamonster getarg(0),getarg(6),getarg(7),getarg(8),getarg(9),"Treasure Chest",getarg(4),1,"Treasure_"+getarg(1)+"::OnDied";
+		areamonster .@map$,getarg(6),getarg(7),getarg(8),getarg(9),"Treasure Chest",getarg(4),1,"Treasure_"+getarg(1)+"::OnDied";
 	}
 	return;
 }
 
 //==============================================================
-//  Treasure Room Switch 
+//  Treasure Room Switch
 //===============================================================
 function	script	F_GldTreasSw	{
 	mes " ";

@@ -23,7 +23,7 @@ izlude_in,74,172,4	script	Swordman#swd	119,{
 			mes "[Swordman]";
 			mes "I see you're retreading the path of the Swordman! Once you've gotten used to brandishing a sword, you can never go back!!";
 			next;
-			if (getskilllv("NV_BASIC") < 9) {
+			if (!callfunc("F_CanChangeJob")) {
 				mes "[Swordman]";
 				mes "Hmm? Ah, you must first master the Basic Skills before you are ready to become a Swordman.";
 				next;
@@ -92,7 +92,7 @@ izlude_in,74,172,4	script	Swordman#swd	119,{
 			}
 			close;
 		}else{
-			if (getskilllv("NV_BASIC") < 9) {
+			if (!callfunc("F_CanChangeJob")) {
 				mes "I'm sorry to tell you this but to be a Swordman, you must reach at least ^4A4AFFJob Level 10^000000.";
 				mes "and ^4A4AFFBasic Skill Level 9^000000.";
 				next;

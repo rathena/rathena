@@ -400,7 +400,8 @@ OnInit:
 	end;
 	
 	function	RName	{
-		set .@s,(getstrlen(getarg(0)) > 2)?(substr(getarg(0),1,2)):(charat(getarg(0),getstrlen(getarg(0))-1));
+		.@string$ = getarg(0);
+		.@s = ( getstrlen(.@string$) > 2 ? substr(.@string$,1,2) : charat(.@string$,getstrlen(.@string$)-1) );
 		set .@rn$,((compare(strnpcinfo(4),"_e_"+.@s))?"Expert mode":"Normal mode")+" - "+.@s+" person";
 		return .@rn$;
 	}
@@ -2529,7 +2530,8 @@ OnTimer71000:
 	end;
 	
 	function	RName	{
-		set .@s,(getstrlen(getarg(0)) > 2)?(substr(getarg(0),1,2)):(charat(getarg(0),getstrlen(getarg(0))-1));
+		.@string$ = getarg(0);
+		.@s = ( getstrlen(.@string$) > 2 ? substr(.@string$,1,2) : charat(.@string$,getstrlen(.@string$)-1) );
 		set .@rn$,((compare(strnpcinfo(4),"_e_"+.@s))?"Expert mode":"Normal mode")+" - "+.@s+" person";
 		return .@rn$;
 	}

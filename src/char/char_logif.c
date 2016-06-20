@@ -20,6 +20,7 @@
 void chlogif_on_ready(void);
 void chlogif_on_disconnect(void);
 
+#if PACKETVER_SUPPORTS_PINCODE
 void chlogif_pincode_notifyLoginPinError( uint32 account_id ){
 	if ( chlogif_isconnected() ){
 		WFIFOHEAD(login_fd,6);
@@ -76,13 +77,14 @@ void chlogif_pincode_start(int fd, struct char_session_data* sd){
 		chclif_pincode_sendstate( fd, sd, PINCODE_OK );
 	}
 }
+#endif
 
 /**
  * Load this character's account id into the 'online accounts' packet
  * @see DBApply
  */
 static int chlogif_send_acc_tologin_sub(DBKey key, DBData *data, va_list ap) {
-	struct online_char_data* character = db_data2ptr(data);
+	struct online_char_data* character = (struct online_char_data*)db_data2ptr(data);
 	int* i = va_arg(ap, int*);
 	if(character->server > -1) {
 		WFIFOL(login_fd,8+(*i)*4) = character->account_id;
@@ -365,8 +367,10 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 		} else {
 			// send characters to player
 			chclif_mmo_char_send(u_fd, sd);
+#if PACKETVER_SUPPORTS_PINCODE
 			if(sd->version >= date2version(20110309))
 				chlogif_pincode_start(u_fd,sd);
+#endif
 		}
 	}
 	RFIFOSKIP(fd,75);

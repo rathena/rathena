@@ -94,6 +94,9 @@
     <ClCompile Include="..\src\map\script.c">
       <Filter>map</Filter>
     </ClCompile>
+    <ClInclude Include="..\src\map\script_constants.h">
+      <Filter>map</Filter>
+    </ClInclude>
     <ClCompile Include="..\src\map\searchstore.c">
       <Filter>map</Filter>
     </ClCompile>

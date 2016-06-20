@@ -12,8 +12,8 @@ struct item;
 
 #include <stdarg.h>
 
-#define PARTY_BOOKING_JOBS 6
-#define PARTY_BOOKING_RESULTS 10
+#define MAX_PARTY_BOOKING_JOBS 6
+#define MAX_PARTY_BOOKING_RESULTS 10
 
 struct party_member_data {
 	struct map_session_data *sd;
@@ -25,7 +25,7 @@ struct party_data {
 	struct party party;
 	struct party_member_data data[MAX_PARTY];
 	uint8 itemc; //For item distribution, position of last picker in party
-	unsigned int instance_id;
+	unsigned short instance_id;
 	struct {
 		unsigned monk : 1; //There's at least one monk in party?
 		unsigned sg : 1;	//There's at least one Star Gladiator in party?
@@ -37,7 +37,7 @@ struct party_data {
 struct party_booking_detail {
 	short level;
     short mapid;
-    short job[PARTY_BOOKING_JOBS];
+    short job[MAX_PARTY_BOOKING_JOBS];
 };
 
 struct party_booking_ad_info {

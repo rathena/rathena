@@ -14,9 +14,11 @@
 extern "C" {
 #endif
 
+#if PACKETVER_SUPPORTS_PINCODE
 void chlogif_pincode_notifyLoginPinError( uint32 account_id );
 void chlogif_pincode_notifyLoginPinUpdate( uint32 account_id, char* pin );
 void chlogif_pincode_start(int fd, struct char_session_data* sd);
+#endif
 int chlogif_send_acc_tologin(int tid, unsigned int tick, int id, intptr_t data);
 int chlogif_broadcast_user_count(int tid, unsigned int tick, int id, intptr_t data);
 void chlogif_send_usercount(int users);

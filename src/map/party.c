@@ -126,7 +126,7 @@ struct party_data* party_searchname(const char* str)
 	struct party_data* p;
 
 	DBIterator *iter = db_iterator(party_db);
-	for( p = dbi_first(iter); dbi_exists(iter); p = dbi_next(iter) ) {
+	for( p = (struct party_data*)dbi_first(iter); dbi_exists(iter); p = (struct party_data*)dbi_next(iter) ) {
 		if( strncmpi(p->party.name,str,NAME_LENGTH) == 0 )
 			break;
 	}
@@ -659,10 +659,8 @@ int party_broken(int party_id)
 	if( p == NULL )
 		return 0;
 
-	if( p->instance_id ) {
-		instance_data[p->instance_id].party_id = 0;
+	if( p->instance_id )
 		instance_destroy( p->instance_id );
-	}
 
 	for( i = 0; i < MAX_PARTY; i++ ) {
 		if( p->data[i].sd != NULL ) {
@@ -774,7 +772,14 @@ int party_changeleader(struct map_session_data *sd, struct map_session_data *tsd
 			return 0; // Shouldn't happen
 	} else {
 		ARR_FIND(0,MAX_PARTY,mi,p->party.member[mi].leader);
+
+		if (mi == MAX_PARTY)
+			return 0; // Shouldn't happen
+
 		ARR_FIND(0,MAX_PARTY,tmi,p->data[tmi].sd ==  tsd);
+
+		if (tmi == MAX_PARTY)
+			return 0; // Shouldn't happen
 	}
 
 	// Change leadership.
@@ -968,7 +973,7 @@ int party_send_xy_timer(int tid, unsigned int tick, int id, intptr_t data)
 	DBIterator *iter = db_iterator(party_db);
 
 	// for each existing party
-	for( p = dbi_first(iter); dbi_exists(iter); p = dbi_next(iter) ) {
+	for( p = (struct party_data*)dbi_first(iter); dbi_exists(iter); p = (struct party_data*)dbi_next(iter) ) {
 		int i;
 
 		if( !p->party.count ) // no online party members so do not iterate
@@ -1064,13 +1069,13 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 			if (!md)
 				return 0;
 
-			rate = pc_level_penalty_mod(sd[i], md->db->lv, md->db->status.class_, 1);
+			rate = pc_level_penalty_mod(md->db->lv - sd[i]->status.base_level, md->db->status.class_, md->db->status.mode, 1);
 			base_exp = (unsigned int)cap_value(base_exp_bonus * rate / 100, 1, UINT_MAX);
 			job_exp = (unsigned int)cap_value(job_exp_bonus * rate / 100, 1, UINT_MAX);
 		}
 #endif
 
-		pc_gainexp(sd[i], src, base_exp, job_exp, false);
+		pc_gainexp(sd[i], src, base_exp, job_exp, 0);
 
 		if (zeny) // zeny from mobs [Valaris]
 			pc_getzeny(sd[i],zeny,LOG_TYPE_PICKDROP_MONSTER,NULL);
@@ -1271,7 +1276,7 @@ void party_booking_register(struct map_session_data *sd, short level, short mapi
 	pb_ad->p_detail.level = level;
 	pb_ad->p_detail.mapid = mapid;
 
-	for(i = 0; i < PARTY_BOOKING_JOBS; i++)
+	for(i = 0; i < MAX_PARTY_BOOKING_JOBS; i++)
 		if(job[i] != 0xFF)
 			pb_ad->p_detail.job[i] = job[i];
 		else pb_ad->p_detail.job[i] = -1;
@@ -1292,7 +1297,7 @@ void party_booking_update(struct map_session_data *sd, short* job)
 
 	pb_ad->starttime = (int)time(NULL);// Update time.
 
-	for(i = 0; i < PARTY_BOOKING_JOBS; i++)
+	for(i = 0; i < MAX_PARTY_BOOKING_JOBS; i++)
 		if(job[i] != 0xFF)
 			pb_ad->p_detail.job[i] = job[i];
 		else
@@ -1305,17 +1310,17 @@ void party_booking_search(struct map_session_data *sd, short level, short mapid,
 {
 	struct party_booking_ad_info *pb_ad;
 	int i, count=0;
-	struct party_booking_ad_info* result_list[PARTY_BOOKING_RESULTS];
+	struct party_booking_ad_info* result_list[MAX_PARTY_BOOKING_RESULTS];
 	bool more_result = false;
 	DBIterator* iter = db_iterator(party_booking_db);
 
 	memset(result_list, 0, sizeof(result_list));
 
-	for( pb_ad = dbi_first(iter); dbi_exists(iter); pb_ad = dbi_next(iter) ) {
+	for( pb_ad = (struct party_booking_ad_info*)dbi_first(iter); dbi_exists(iter); pb_ad = (struct party_booking_ad_info*)dbi_next(iter) ) {
 		if (pb_ad->index < lastindex || (level && (pb_ad->p_detail.level < level-15 || pb_ad->p_detail.level > level)))
 			continue;
 
-		if (count >= PARTY_BOOKING_RESULTS) {
+		if (count >= MAX_PARTY_BOOKING_RESULTS) {
 			more_result = true;
 			break;
 		}
@@ -1323,7 +1328,7 @@ void party_booking_search(struct map_session_data *sd, short level, short mapid,
 		if (mapid == 0 && job == -1)
 			result_list[count] = pb_ad;
 		else if (mapid == 0) {
-			for(i=0; i<PARTY_BOOKING_JOBS; i++)
+			for(i=0; i<MAX_PARTY_BOOKING_JOBS; i++)
 				if (pb_ad->p_detail.job[i] == job && job != -1)
 					result_list[count] = pb_ad;
 		} else if (job == -1) {

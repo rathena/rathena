@@ -508,16 +508,17 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 	}
 
 L_cutin:
+	.@num = getarg(0);
 	if(Sex == 1) {
-		if(getarg(0) < 10)
-			cutin "hair_m_0"+getarg(0),4;
+		if (.@num  < 10)
+			cutin "hair_m_0"+ .@num,4;
 		else
-			cutin "hair_m_"+getarg(0),4;
+			cutin "hair_m_"+ .@num,4;
 	} else {
-		if(getarg(0) < 10)
-			cutin "hair_f_0"+getarg(0),4;
+		if (.@num < 10)
+			cutin "hair_f_0"+ .@num,4;
 		else
-			cutin "hair_f_"+getarg(0),4;
+			cutin "hair_f_"+ .@num,4;
 	}
 	return;
 }

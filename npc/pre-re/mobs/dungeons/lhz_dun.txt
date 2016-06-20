@@ -281,7 +281,7 @@ OnSummon:
 	case 6: set .@x,175;	set .@y,137;	break;
 	}
 	set .@mob,rand(1646,1651);
-	monster "lhz_dun03",.@x,.@y,strmobinfo(1,.@mob),.@mob,1,"summon_boss_lt::OnMyMvPDead";
+	monster "lhz_dun03",.@x,.@y,strmobinfo(1,.@mob),.@mob,1,"summon_boss_lt::OnLhzMvPDead";
 
 	// Select Coordinates to summon a random 99 on
 	switch(rand(1,6)) {
@@ -293,15 +293,15 @@ OnSummon:
 	case 6: set .@x2,139;	set .@y2,259;	break;
 	}
 	set .@mob2,rand(1640,1645);
-	monster "lhz_dun03",.@x2,.@y2,strmobinfo(1,.@mob2),.@mob2,1,"summon_boss_lt::OnMVP";
+	monster "lhz_dun03",.@x2,.@y2,strmobinfo(1,.@mob2),.@mob2,1,"summon_boss_lt::OnMy99Dead";
 	end;
 
-OnMyMvPDead:
-	killmonster "lhz_dun03","summon_boss_lt::OnMVP";
+OnLhzMvPDead:
+	killmonster "lhz_dun03","summon_boss_lt::OnMy99Dead";
 	initnpctimer;
 	end;
 
 //Required to keep from erroring
-OnMVP:
+OnMy99Dead:
 	end;
 }

@@ -317,6 +317,14 @@ int chmapif_parse_askscdata(int fd){
 				WFIFOW(fd,12) = count;
 				WFIFOSET(fd,WFIFOW(fd,2));
 			}
+		} else { // No Status Changes to load but still send a response
+			WFIFOHEAD(fd,14);
+			WFIFOW(fd,0) = 0x2b1d;
+			WFIFOW(fd,2) = 14;
+			WFIFOL(fd,4) = aid;
+			WFIFOL(fd,8) = cid;
+			WFIFOW(fd,12) = 0;
+			WFIFOSET(fd,WFIFOW(fd,2));
 		}
 		Sql_FreeResult(sql_handle);
 #endif
@@ -361,7 +369,7 @@ int chmapif_parse_regmapuser(int fd, int id){
 		for(i = 0; i < map_server[id].users; i++) {
 			int aid = RFIFOL(fd,6+i*8);
 			int cid = RFIFOL(fd,6+i*8+4);
-			struct online_char_data* character = idb_ensure(online_char_db, aid, char_create_online_data);
+			struct online_char_data* character = (struct online_char_data*)idb_ensure(online_char_db, aid, char_create_online_data);
 			if( character->server > -1 && character->server != id )
 			{
 				ShowNotice("Set map user: Character (%d:%d) marked on map server %d, but map server %d claims to have (%d:%d) online!\n",
@@ -638,7 +646,7 @@ int chmapif_parse_reqchangemapserv(int fd){
 			node->changing_mapservers = 1;
 			idb_put(auth_db, aid, node);
 
-			data = idb_ensure(online_char_db, aid, char_create_online_data);
+			data = (struct online_char_data*)idb_ensure(online_char_db, aid, char_create_online_data);
 			data->char_id = char_data->char_id;
 			data->server = map_id; //Update server where char is.
 

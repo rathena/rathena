@@ -19,10 +19,10 @@
 #define SET_OPEN 0
 #define SET_CLOSED 1
 
-#define DIR_NORTH 1
-#define DIR_WEST 2
-#define DIR_SOUTH 4
-#define DIR_EAST 8
+#define PATH_DIR_NORTH 1
+#define PATH_DIR_WEST 2
+#define PATH_DIR_SOUTH 4
+#define PATH_DIR_EAST 8
 
 /// @name Structures and defines for A* pathfinding
 /// @{
@@ -39,6 +39,9 @@ struct path_node {
 
 /// Binary heap of path nodes
 BHEAP_STRUCT_DECL(node_heap, struct path_node*);
+static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path calculations
+												// it get's initialized in do_init_path, freed in do_final_path.
+
 
 /// Comparator for binary heap of path nodes (minimum cost at top)
 #define NODE_MINTOPCMP(i,j) ((i)->f_cost - (j)->f_cost)
@@ -53,10 +56,20 @@ BHEAP_STRUCT_DECL(node_heap, struct path_node*);
 // Translates dx,dy into walking direction
 static const unsigned char walk_choices [3][3] =
 {
-	{1,0,7},
-	{2,-1,6},
-	{3,4,5},
+	{DIR_NORTHWEST,DIR_NORTH,DIR_NORTHEAST},
+	{DIR_WEST,DIR_CENTER,DIR_EAST},
+	{DIR_SOUTHWEST,DIR_SOUTH,DIR_SOUTHEAST},
 };
+
+
+void do_init_path(){
+	BHEAP_INIT(g_open_set);	// [fwi]: BHEAP_STRUCT_VAR already initialized the heap, this is rudendant & just for code-conformance/readability
+}//
+
+void do_final_path(){
+	BHEAP_CLEAR(g_open_set);
+}//
+
 
 /*==========================================
  * Find the closest reachable cell, 'count' cells away from (x0,y0) in direction (dx,dy).
@@ -172,7 +185,7 @@ bool path_search_long(struct shootpath_data *spd,int16 m,int16 x0,int16 y0,int16
 			spd->y[spd->len] = y0;
 			spd->len++;
 		}
-		if (map_getcellp(md,x0,y0,cell))
+		if ((x0 != x1 || y0 != y1) && map_getcellp(md,x0,y0,cell))
 			return false;
 	}
 
@@ -247,13 +260,19 @@ static int add_path(struct node_heap *heap, struct path_node *tp, int16 x, int16
  * path search (x0,y0)->(x1,y1)
  * wpd: path info will be written here
  * flag: &1 = easy path search only
+ * flag: &2 = call path_search_long instead
  * cell: type of obstruction to check for
+ *
+ * Note: uses global g_open_set, therefore this method can't be called in parallel or recursivly.
  *------------------------------------------*/
 bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int flag, cell_chk cell)
 {
 	register int i, x, y, dx = 0, dy = 0;
 	struct map_data *md;
 	struct walkpath_data s_wpd;
+
+	if (flag&2)
+		return path_search_long(NULL, m, x0, y0, x1, y1, cell);
 
 	if (wpd == NULL)
 		wpd = &s_wpd; // use dummy output variable
@@ -306,12 +325,6 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 		return false; // easy path unsuccessful
 	} else { // !(flag&1)
-		// A* (A-star) pathfinding
-		// We always use A* for finding walkpaths because it is what game client uses.
-		// Easy pathfinding cuts corners of non-walkable cells, but client always walks around it.
-
-		BHEAP_STRUCT_VAR(node_heap, open_set); // 'Open' set
-
 		// FIXME: This array is too small to ensure all paths shorter than MAX_WALKPATH
 		// can be found without node collision: calc_index(node1) = calc_index(node2).
 		// Figure out more proper size or another way to keep track of known nodes.
@@ -321,6 +334,11 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		int ys = md->ys - 1;
 		int len = 0;
 		int j;
+
+		// A* (A-star) pathfinding
+		// We always use A* for finding walkpaths because it is what game client uses.
+		// Easy pathfinding cuts corners of non-walkable cells, but client always walks around it.
+		BHEAP_RESET(g_open_set);
 
 		memset(tp, 0, sizeof(tp));
 
@@ -333,7 +351,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 		tp[i].f_cost = heuristic(x0, y0, x1, y1);
 		tp[i].flag   = SET_OPEN;
 
-		heap_push_node(&open_set, &tp[i]); // Put start node to 'open' set
+		heap_push_node(&g_open_set, &tp[i]); // Put start node to 'open' set
 
 		for(;;) {
 			int e = 0; // error flag
@@ -348,13 +366,12 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 			int g_cost;
 
-			if (BHEAP_LENGTH(open_set) == 0) {
-				BHEAP_CLEAR(open_set);
+			if (BHEAP_LENGTH(g_open_set) == 0) {
 				return false;
 			}
 
-			current = BHEAP_PEEK(open_set); // Look for the lowest f_cost node in the 'open' set
-			BHEAP_POP2(open_set, NODE_MINTOPCMP, swap_ptr); // Remove it from 'open' set
+			current = BHEAP_PEEK(g_open_set); // Look for the lowest f_cost node in the 'open' set
+			BHEAP_POP2(g_open_set, NODE_MINTOPCMP, swap_ptr); // Remove it from 'open' set
 
 			x      = current->x;
 			y      = current->y;
@@ -363,36 +380,34 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 			current->flag = SET_CLOSED; // Add current node to 'closed' set
 
 			if (x == x1 && y == y1) {
-				BHEAP_CLEAR(open_set);
 				break;
 			}
 
-			if (y < ys && !map_getcellp(md, x, y+1, cell)) allowed_dirs |= DIR_NORTH;
-			if (y >  0 && !map_getcellp(md, x, y-1, cell)) allowed_dirs |= DIR_SOUTH;
-			if (x < xs && !map_getcellp(md, x+1, y, cell)) allowed_dirs |= DIR_EAST;
-			if (x >  0 && !map_getcellp(md, x-1, y, cell)) allowed_dirs |= DIR_WEST;
+			if (y < ys && !map_getcellp(md, x, y+1, cell)) allowed_dirs |= PATH_DIR_NORTH;
+			if (y >  0 && !map_getcellp(md, x, y-1, cell)) allowed_dirs |= PATH_DIR_SOUTH;
+			if (x < xs && !map_getcellp(md, x+1, y, cell)) allowed_dirs |= PATH_DIR_EAST;
+			if (x >  0 && !map_getcellp(md, x-1, y, cell)) allowed_dirs |= PATH_DIR_WEST;
 
 #define chk_dir(d) ((allowed_dirs & (d)) == (d))
 			// Process neighbors of current node
-			if (chk_dir(DIR_SOUTH|DIR_EAST) && !map_getcellp(md, x+1, y-1, cell))
-				e += add_path(&open_set, tp, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y-1, x1, y1)); // (x+1, y-1) 5
-			if (chk_dir(DIR_EAST))
-				e += add_path(&open_set, tp, x+1, y, g_cost + MOVE_COST, current, heuristic(x+1, y, x1, y1)); // (x+1, y) 6
-			if (chk_dir(DIR_NORTH|DIR_EAST) && !map_getcellp(md, x+1, y+1, cell))
-				e += add_path(&open_set, tp, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y+1, x1, y1)); // (x+1, y+1) 7
-			if (chk_dir(DIR_NORTH))
-				e += add_path(&open_set, tp, x, y+1, g_cost + MOVE_COST, current, heuristic(x, y+1, x1, y1)); // (x, y+1) 0
-			if (chk_dir(DIR_NORTH|DIR_WEST) && !map_getcellp(md, x-1, y+1, cell))
-				e += add_path(&open_set, tp, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y+1, x1, y1)); // (x-1, y+1) 1
-			if (chk_dir(DIR_WEST))
-				e += add_path(&open_set, tp, x-1, y, g_cost + MOVE_COST, current, heuristic(x-1, y, x1, y1)); // (x-1, y) 2
-			if (chk_dir(DIR_SOUTH|DIR_WEST) && !map_getcellp(md, x-1, y-1, cell))
-				e += add_path(&open_set, tp, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y-1, x1, y1)); // (x-1, y-1) 3
-			if (chk_dir(DIR_SOUTH))
-				e += add_path(&open_set, tp, x, y-1, g_cost + MOVE_COST, current, heuristic(x, y-1, x1, y1)); // (x, y-1) 4
+			if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_EAST) && !map_getcellp(md, x+1, y-1, cell))
+				e += add_path(&g_open_set, tp, x+1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y-1, x1, y1)); // (x+1, y-1) 5
+			if (chk_dir(PATH_DIR_EAST))
+				e += add_path(&g_open_set, tp, x+1, y, g_cost + MOVE_COST, current, heuristic(x+1, y, x1, y1)); // (x+1, y) 6
+			if (chk_dir(PATH_DIR_NORTH|PATH_DIR_EAST) && !map_getcellp(md, x+1, y+1, cell))
+				e += add_path(&g_open_set, tp, x+1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x+1, y+1, x1, y1)); // (x+1, y+1) 7
+			if (chk_dir(PATH_DIR_NORTH))
+				e += add_path(&g_open_set, tp, x, y+1, g_cost + MOVE_COST, current, heuristic(x, y+1, x1, y1)); // (x, y+1) 0
+			if (chk_dir(PATH_DIR_NORTH|PATH_DIR_WEST) && !map_getcellp(md, x-1, y+1, cell))
+				e += add_path(&g_open_set, tp, x-1, y+1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y+1, x1, y1)); // (x-1, y+1) 1
+			if (chk_dir(PATH_DIR_WEST))
+				e += add_path(&g_open_set, tp, x-1, y, g_cost + MOVE_COST, current, heuristic(x-1, y, x1, y1)); // (x-1, y) 2
+			if (chk_dir(PATH_DIR_SOUTH|PATH_DIR_WEST) && !map_getcellp(md, x-1, y-1, cell))
+				e += add_path(&g_open_set, tp, x-1, y-1, g_cost + MOVE_DIAGONAL_COST, current, heuristic(x-1, y-1, x1, y1)); // (x-1, y-1) 3
+			if (chk_dir(PATH_DIR_SOUTH))
+				e += add_path(&g_open_set, tp, x, y-1, g_cost + MOVE_COST, current, heuristic(x, y-1, x1, y1)); // (x, y-1) 4
 #undef chk_dir
 			if (e) {
-				BHEAP_CLEAR(open_set);
 				return false;
 			}
 		}

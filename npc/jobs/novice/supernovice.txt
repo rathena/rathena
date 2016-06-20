@@ -142,7 +142,7 @@ aldeba_in,223,167,3	script	Tzerero#sn	709,{
 		next;
 		switch(select("Accept his offer.:Reject his offer.:Listen more carefully.")) {
 		case 1:
-			if (getskilllv("NV_BASIC") < 9) {
+			if (!callfunc("F_CanChangeJob")) {
 				mes "[Tzerero]";
 				mes "Hmm...But do you truly";
 				mes "appreciate the value of";

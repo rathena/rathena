@@ -48,7 +48,7 @@ GOTO RESTART_NT
 
 :DIRECT
 ECHO Do not run this file directly. It is used by logserv.bat, charserv.bat,
-ECHO mapserv.bat and their '-sql' counterparts.
+ECHO mapserv.bat and their '-server' counterparts.
 GOTO END
 
 :NOTFOUND

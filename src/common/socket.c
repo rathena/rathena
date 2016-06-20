@@ -1,18 +1,18 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
-#include "../common/timer.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
+#include "cbasetypes.h"
+#include "mmo.h"
+#include "timer.h"
+#include "malloc.h"
+#include "showmsg.h"
+#include "strlib.h"
 #include "socket.h"
 
 #include <stdlib.h>
 
 #ifdef WIN32
-	#include "../common/winapi.h"
+	#include "winapi.h"
 #else
 	#include <errno.h>
 #include <netinet/tcp.h>
@@ -212,7 +212,11 @@ int naddr_ = 0;   // # of ip addresses
 
 // Maximum packet size in bytes, which the client is able to handle.
 // Larger packets cause a buffer overflow and stack corruption.
-static size_t socket_max_client_packet = 24576;
+#if PACKETVER < 20131223
+static size_t socket_max_client_packet = 0x6000;
+#else
+static size_t socket_max_client_packet = USHRT_MAX;
+#endif
 
 #ifdef SHOW_SERVER_STATS
 // Data I/O statistics
@@ -1171,8 +1175,6 @@ int socket_config_read(const char* cfgName)
 			ddos_autoreset = atoi(w2);
 		else if (!strcmpi(w1,"debug"))
 			access_debug = config_switch(w2);
-		else if (!strcmpi(w1,"socket_max_client_packet"))
-			socket_max_client_packet = strtoul(w2, NULL, 0);
 #endif
 		else if (!strcmpi(w1, "import"))
 			socket_config_read(w2);

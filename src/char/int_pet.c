@@ -76,7 +76,7 @@ int inter_pet_fromsql(int pet_id, struct s_pet* p)
 	{
 		p->pet_id = pet_id;
 		Sql_GetData(sql_handle,  1, &data, NULL); p->class_ = atoi(data);
-		Sql_GetData(sql_handle,  2, &data, &len); memcpy(p->name, data, min(len, NAME_LENGTH));
+		Sql_GetData(sql_handle,  2, &data, &len); memcpy(p->name, data, zmin(len, NAME_LENGTH));
 		Sql_GetData(sql_handle,  3, &data, NULL); p->account_id = atoi(data);
 		Sql_GetData(sql_handle,  4, &data, NULL); p->char_id = atoi(data);
 		Sql_GetData(sql_handle,  5, &data, NULL); p->level = atoi(data);
