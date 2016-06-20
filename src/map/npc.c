@@ -1817,7 +1817,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 			z = z * (double)skill * (double)battle_config.shop_exp/10000.;
 			if( z < 1 )
 				z = 1;
-			pc_gainexp(sd,NULL,0,(int)z, false);
+			pc_gainexp(sd,NULL,0,(int)z, 0);
 		}
 	}
 
@@ -1974,7 +1974,7 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 			z = z * (double)skill * (double)battle_config.shop_exp/10000.;
 			if( z < 1 )
 				z = 1;
-			pc_gainexp(sd, NULL, 0, (int)z, false);
+			pc_gainexp(sd, NULL, 0, (int)z, 0);
 		}
 	}
 
@@ -3167,8 +3167,8 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		int dm = map_mapindex2mapid(snd->u.warp.mapindex), imap = 0, i;
 		if( dm < 0 ) return 1;
 
-		for(i = 0; i < MAX_MAP_PER_INSTANCE; i++)
-			if(im->map[i].m && map_mapname2mapid(map[im->map[i].src_m].name) == dm) {
+		for(i = 0; i < im->cnt_map; i++)
+			if(im->map[i]->m && map_mapname2mapid(map[im->map[i]->src_m].name) == dm) {
 				imap = map_mapname2mapid(map[m].name);
 				break; // Instance map matches destination, update to instance map
 			}

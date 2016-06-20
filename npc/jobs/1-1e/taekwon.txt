@@ -80,7 +80,7 @@ payon,157,141,5	script	Phoenix#TKJobChange	753,{
 		mes "art. It won't be easy, but it will lead you to great strength...";
 		next;
 		if(select("Okay, I will join you.","No, thank you.") == 1) {
-			if(getskilllv("NV_BASIC") < 9) {
+			if(!callfunc("F_CanChangeJob")) {
 				mes "[Phoenix]";
 				mes "How unfortunate!";
 				mes "You're not yet ready to";

@@ -35,7 +35,7 @@ struct party_booking_ad_info;
 enum { // packet DB
 	MIN_PACKET_DB  = 0x064,
 	MAX_PACKET_DB  = 0xAFF,
-	MAX_PACKET_VER = 54,
+	MAX_PACKET_VER = 55,
 	MAX_PACKET_POS = 20,
 };
 
@@ -134,6 +134,12 @@ enum BROADCASTING_SPECIAL_ITEM_OBTAIN {
 	ITEMOBTAIN_TYPE_BOXITEM =  0x0,
 	ITEMOBTAIN_TYPE_MONSTER_ITEM =  0x1,
 	ITEMOBTAIN_TYPE_NPC =  0x2,
+};
+
+enum e_adopt_reply {
+	ADOPT_REPLY_MORE_CHILDREN = 0,
+	ADOPT_REPLY_LEVEL_70,
+	ADOPT_REPLY_MARRIED,
 };
 
 // packet_db[SERVER] is reserved for server use
@@ -532,7 +538,7 @@ void clif_dropitem(struct map_session_data *sd,int n,int amount);	//self
 void clif_delitem(struct map_session_data *sd,int n,int amount, short reason); //self
 void clif_updatestatus(struct map_session_data *sd,int type);	//self
 void clif_changestatus(struct map_session_data* sd,int type,int val);	//area
-int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2);	// area
+int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
 void clif_takeitem(struct block_list* src, struct block_list* dst);
 void clif_sitting(struct block_list* bl);
 void clif_standing(struct block_list* bl);
@@ -625,7 +631,7 @@ void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id
 
 void clif_produceeffect(struct map_session_data* sd,int flag, unsigned short nameid);
 
-void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, uint8 flag);
+void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, bool visible);
 void clif_skill_delunit(struct skill_unit *unit);
 void clif_skillunit_update(struct block_list* bl);
 
@@ -638,7 +644,8 @@ void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_targe
 
 #define clif_status_load(bl, type, flag) clif_status_change((bl), (type), (flag), 0, 0, 0, 0)
 void clif_status_change(struct block_list *bl, int type, int flag, int tick, int val1, int val2, int val3);
-void clif_status_change2(struct block_list *bl, int tid, enum send_target target, int type, int val1, int val2, int val3);
+void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, int tick, int val1, int val2, int val3);
+void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list *bl, enum send_target target);
 
 void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len);
 void clif_wis_end(int fd, int result);
@@ -739,10 +746,10 @@ void clif_sendbgemblem_area(struct map_session_data *sd);
 void clif_sendbgemblem_single(int fd, struct map_session_data *sd);
 
 // Instancing
-void clif_instance_create(struct map_session_data *sd, const char *name, int num, int flag);
-void clif_instance_changewait(struct map_session_data *sd, int num, int flag);
-void clif_instance_status(struct map_session_data *sd, const char *name, unsigned int limit1, unsigned int limit2, int flag);
-void clif_instance_changestatus(struct map_session_data *sd, int type, unsigned int limit, int flag);
+void clif_instance_create(unsigned short instance_id, int num);
+void clif_instance_changewait(unsigned short instance_id, int num);
+void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsigned int limit2);
+void clif_instance_changestatus(unsigned int instance_id, int type, unsigned int limit);
 
 // Custom Fonts
 void clif_font(struct map_session_data *sd);
@@ -855,6 +862,7 @@ void clif_cashshop_show(struct map_session_data *sd, struct npc_data *nd);
 
 // ADOPTION
 void clif_Adopt_reply(struct map_session_data *sd, int type);
+void clif_Adopt_request(struct map_session_data *sd, struct map_session_data *src, int p_id);
 
 // MERCENARIES
 void clif_mercenary_info(struct map_session_data *sd);
@@ -957,6 +965,7 @@ enum clif_colors {
 	COLOR_RED,
 	COLOR_WHITE,
 	COLOR_YELLOW,
+	COLOR_CYAN,
 	COLOR_MAX
 };
 unsigned long color_table[COLOR_MAX];
@@ -982,7 +991,7 @@ void clif_merge_item_open(struct map_session_data *sd);
 void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, const char *srcname);
 
 void clif_dressing_room(struct map_session_data *sd, int flag);
-void clif_navigateTo(struct map_session_data *sd, const char* map, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
+void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
 void clif_SelectCart(struct map_session_data *sd);
 
 #endif /* _CLIF_H_ */

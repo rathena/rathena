@@ -23,6 +23,7 @@
 //      0x04000(UF_REM_CRAZYWEED)		Removed if be overlapped by GN_CRAZYWEED
 //      0x08000(UF_REM_FIRERAIN)		Removed if be overlapped by RL_FIRE_RAIN
 //      0x10000(UF_KNOCKBACK_GROUP) 	Knock back a whole skill group (by default, skill unit is knocked back each unit)
+//      0x20000(UF_HIDDEN_TRAP) 		Hidden trap, see 'traps_setting' skill config to enable this flag
 // 	Example: 0x006 = 0x002+0x004 -> Cannot be stacked nor cast near targets
 //
 // Notes:
@@ -46,16 +47,16 @@
  89,0x86,    ,  4, 1, 450,enemy, 0x018	//WZ_STORMGUST
  91,0x86,    ,  2, 0,1000,enemy, 0x010	//WZ_HEAVENDRIVE
  92,0x8e,    ,  2, 0,  -1,enemy, 0x8010	//WZ_QUAGMIRE
-115,0x90,    ,  0, 1,1000,enemy, 0x8006	//HT_SKIDTRAP
-116,0x93,    ,  0, 1,1000,enemy, 0x8006	//HT_LANDMINE
-117,0x91,    ,  0, 1,1000,enemy, 0x9006	//HT_ANKLESNARE
-118,0x94,    ,  0, 1,1000,enemy, 0x8006	//HT_SHOCKWAVE
-119,0x95,    ,  0, 1,1000,enemy, 0x8006	//HT_SANDMAN
-120,0x96,    ,  0, 1,1000,enemy, 0x8006	//HT_FLASHER
-121,0x97,    ,  0, 1,1000,enemy, 0x8006	//HT_FREEZINGTRAP
+115,0x90,    ,  0, 1,1000,enemy, 0x28006	//HT_SKIDTRAP
+116,0x93,    ,  0, 1,1000,enemy, 0x28006	//HT_LANDMINE
+117,0x91,    ,  0, 1,1000,enemy, 0x29006	//HT_ANKLESNARE
+118,0x94,    ,  0, 1,1000,enemy, 0x28006	//HT_SHOCKWAVE
+119,0x95,    ,  0, 1,1000,enemy, 0x28006	//HT_SANDMAN
+120,0x96,    ,  0, 1,1000,enemy, 0x28006	//HT_FLASHER
+121,0x97,    ,  0, 1,1000,enemy, 0x28006	//HT_FREEZINGTRAP
 122,0x8f,    ,  0, 1,1000,enemy, 0x8006	//HT_BLASTMINE
 123,0x98,    ,  0, 1,1000,enemy, 0x8006	//HT_CLAYMORETRAP
-125,0x99,    ,  0, 1,1000,all,   0x8000	//HT_TALKIEBOX
+125,0x99,    ,  0, 1,1000,all,   0x28040	//HT_TALKIEBOX
 140,0x92,    , -1, 1,1000,enemy, 0x8000	//AS_VENOMDUST
 220,0xb0,    ,  0, 0,  -1,all,   0x8002	//RG_GRAFFITI
 229,0xb1,    ,  0, 1, 500,enemy, 0x006	//AM_DEMONSTRATION
@@ -109,7 +110,7 @@
 
 //706,0xfd,    ,  0, 0,1000,all, 0x000	//NPC_VENOMFOG
 
-2044,0xca,    ,  0, 2,3000,all,   0x018	//AB_EPICLESIS
+2044,0xca,    ,  0, 2,1000,all,   0x018	//AB_EPICLESIS
 
 2032,0xe1,    ,  2, 0,1000,enemy, 0x8018	//GC_POISONSMOKE
 
@@ -148,7 +149,7 @@
 2447,0x86,    ,  0, 3:3:3:4:4,1000,enemy, 0x018	//SO_DIAMONDDUST
 2449,0xdf,    ,  0, 3:3:4:4:5,500,enemy,  0x018	//SO_PSYCHIC_WAVE
 2450,0xe0,    ,  0, 3, 500,enemy, 0x8010	//SO_CLOUD_KILL
-2452,0xe4,    ,  0, 3,3000,all,   0x8010	//SO_WARMER
+2452,0xe4,    ,  3, 0,  -1,all,   0xA010	//SO_WARMER
 2453,0xeb,    ,  0, 1:1:2:2:3,500,enemy,0x8010	//SO_VACUUM_EXTREME
 2465,0xf1,    ,  0, 1,1000,all,   0x010	//SO_FIRE_INSIGNIA
 2466,0xf2,    ,  0, 1,1000,all,   0x010	//SO_WATER_INSIGNIA
@@ -159,8 +160,8 @@
 2482,0xe6,0x7f, -1, 1, 300,enemy, 0xC000	//GN_WALLOFTHORN
 2484,0x86,    ,  0, 1, 100,enemy, 0x080	//GN_CRAZYWEED_ATK
 2485,0xe7,    ,  0, 2,2000,enemy, 0x8098	//GN_DEMONIC_FIRE
-2487,0xe8,    ,  2, 0,  -1,enemy, 0x2000	//GN_FIRE_EXPANSION_SMOKE_POWDER
-2488,0xe9,    ,  2, 0,  -1,enemy, 0x2000	//GN_FIRE_EXPANSION_TEAR_GAS
+2487,0xe8,    ,  2, 0,  -1,all,   0x2000	//GN_FIRE_EXPANSION_SMOKE_POWDER
+2488,0xe9,    ,  2, 0,  -1,all,   0x2000	//GN_FIRE_EXPANSION_TEAR_GAS
 2490,0xea,    ,  0, 1,1000,enemy, 0xC002	//GN_HELLS_PLANT
 
 2555,0x104,   ,  0, 1:2:2:3:3,500,enemy,0x6	//RL_B_TRAP
@@ -175,6 +176,10 @@
 5006,0x101,   ,  0, 3, 500,enemy, 0x018	//NC_MAGMA_ERUPTION
 5010,0x91,    ,  0, 1,1000,all,   0x002	//SC_ESCAPE
 5013,0x102,   ,  3, 0,  -1,all,   0x2002	//LG_KINGS_GRACE
+
+5027,0x106,   ,  1:1:2:2:3, 0,  -1,enemy, 0x2010 // SU_CN_POWDERING
+5028,0x86,    ,  0, 3, 500,enemy, 0x10 // SU_CN_METEOR
+5029,0x107,   ,  0, 0,1000,enemy, 0x10 // SU_SV_ROOTTWIST
 
 8020,0xf5,    ,  3, 0,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST
 8033,0x7e,    ,  0, 0,  -1,all,   0x003	//MH_STEINWAND

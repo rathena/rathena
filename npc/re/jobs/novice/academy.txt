@@ -3182,7 +3182,7 @@ iz_ac01,36,52,3	script	Odd Novice#ac	4_M_SIT_NOVICE,{
 				mes "Get away from me kid you're botherin' me.";
 				close;
 			} else {
-				if (getskilllv("NV_BASIC") > 8) {
+				if (!callfunc("F_CanChangeJob")) {
 					mes "[Odd Novice]";
 					mes "You, talking like this, why don't you go and change your job already instead of hanging around here?";
 					mes "Hmm, did you want to be like me maybe?";
@@ -4722,16 +4722,16 @@ iz_ac01,43,80,7	script	Adventurer's Pet#ac	4_DEVIRUCHI,{
 OnTimer60000:
 	switch(rand(1,4)) {
 	case 1:
-		npctalk "Yawn~ I am so bored!";
+		npctalk "Adventurer's Pet : Yawn~ I am so bored!";
 		break;
 	case 2:
-		npctalk "Red Potion.. Is it delicious? Herb does not look delicious.. I bet that is bitter.";
+		npctalk "Adventurer's Pet : Red Potion.. Is it delicious? Herb does not look delicious.. I bet that is bitter.";
 		break;
 	case 3:
-		npctalk "Ha. You are lucky to have this Devi.";
+		npctalk "Adventurer's Pet : Ha. You are lucky to have this Devi.";
 		break;
 	case 4:
-		npctalk "Isn't the floor cold? Well.. For me, Undead is more familiar.";
+		npctalk "Adventurer's Pet : Isn't the floor cold? Well.. For me, Undead is more familiar.";
 		break;
 	}
 
@@ -5183,7 +5183,7 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 					mes "[Kafra Guide Trainer]";
 					mes "Storage is necessary for you to survive so use it regularly.";
 				} else {
-					if (getskilllv("NV_BASIC") < 6) {
+					if (!callfunc("F_CanOpenStorage")) {
 						mes "[Kafra Guide Trainer]";
 						mes "To use the storage, you need to be raised the beginner level 6 and higher.";
 					} else if (countitem(7059) || Zeny >= 500) {
@@ -9303,7 +9303,7 @@ iz_ac02,148,110,3	script	Mage Chuck#ac	4_M_JOB_WIZARD,{
 							mes "[Mage Chuck]";
 							mes "You must first reach ^006400Job level 10^000000 and ^006400Basic Skill level 9^000000.";
 							next;
-							if (getskilllv("NV_BASIC") < 9) {
+							if (!callfunc("F_CanChangeJob")) {
 								mes "[Mage Chuck]";
 								mes "You don't seem ready!";
 								mes "If you want to change your job, you must first be ^006400Job level 10^000000 and ^006400Basic Skill level 9^000000.";
@@ -12334,7 +12334,7 @@ iz_ac02,140,139,5	script	Ninja Guide#ac	4_M_NINJA_BLUE,{
 			}
 			break;
 		case 2:
-			if (getskilllv("NV_BASIC") < 9) {
+			if (!callfunc("F_CanChangeJob")) {
 				mes "[Ninja Guide]";
 				mes "I appreciate your braveness but, first of all, you have to be familiar with the current profession.";
 				next;
@@ -12677,10 +12677,10 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 	mes "Checking the user.. Completed.";
 	mes "Select the refining equipment.";
 	next;
-	setarray .@position$[1],"Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
+	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
 	for(set .@i,1; .@i<=10; set .@i,.@i+1)
-		.@menu$ = .@menu$+(getequipisequiped(.@i)?getequipname(.@i):.@position$[.@i]+" - [Unarmed]")+":";
-	.@part = select(.@menu$);
+		.@menu$ = .@menu$ + ( getequipisequiped(.@indices[.@i]) ? getequipname(.@indices[.@i]): F_getpositionname(.@indices[.@i]) +" - [Unarmed]" ) +":";
+	.@part = .@indices[ select(.@menu$) ];
 	if (!getequipisequiped(.@part)) {
 		mes "[Refining Machine Wagjak]";
 		mes "^ff0000- Error number 000"+.@part+" -^000000";

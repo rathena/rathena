@@ -1945,14 +1945,13 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				mes "Which one should I upgrade first, huh? My heart is pounding with anticipation...";
 				next;
 
-				setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
-				set .@menu$,"";
+				setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
 				for(set .@i,1; .@i <= 10; set .@i,.@i+1) {
-					if (getequipisequiped(.@i))
-						set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
+					if (getequipisequiped(.@indices[.@i]))
+						set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
 					set .@menu$, .@menu$ + ":";
 				}
-				set .@part,select(.@menu$);
+				set .@part, .@indices[ select(.@menu$) ];
 
 				if (getequipisequiped(.@part) == 0)
 					close;
@@ -2162,15 +2161,14 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 				mes "Great...!";
 				mes "Which one should I upgrade first, huh? My heart is pounding with anticipation...";
 				next;
-				
-				setarray .@position$[1], "Head","Body","Left hand","Right hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
-				set .@menu$,"";
+
+				setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
 				for(set .@i,1; .@i <= 10; set .@i,.@i+1) {
-					if (getequipisequiped(.@i))
-						set .@menu$, .@menu$ + .@position$[.@i] + "-" + "[" + getequipname(.@i) + "]";
+					if (getequipisequiped(.@indices[.@i]))
+						set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]";
 					set .@menu$, .@menu$ + ":";
 				}
-				set .@part,select(.@menu$);
+				set .@part, .@indices[ select(.@menu$) ];
 
 				if (getequipisequiped(.@part) == 0)
 					close;

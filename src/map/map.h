@@ -51,63 +51,6 @@ void map_msg_reload(void);
 #define MAX_VENDING 12
 #define MAX_MAP_SIZE 512*512 	// Wasn't there something like this already? Can't find it.. [Shinryo]
 
-/** Added definitions for WoESE objects and other [L0ne_W0lf], [aleos] */
-enum MOBID {
-	MOBID_PORING			= 1002,
-	MOBID_RED_PLANT			= 1078,
-	MOBID_BLACK_MUSHROOM	= 1084,
-	MOBID_GOBLIN_1			= 1122,
-	MOBID_GOBLIN_2,
-	MOBID_GOBLIN_3,
-	MOBID_GOBLIN_4,
-	MOBID_GOBLIN_5,
-	MOBID_MARINE_SPHERE		= 1142,
-	MOBID_A_GUARDIAN		= 1285,
-	MOBID_K_GUARDIAN,
-	MOBID_S_GUARDIAN,
-	MOBID_EMPERIUM,
-	MOBID_TREAS01			= 1324,
-	MOBID_TREAS40			= 1363,
-	MOBID_G_PARASITE		= 1555,
-	MOBID_G_FLORA			= 1575,
-	MOBID_G_HYDRA			= 1579,
-	MOBID_G_MANDRAGORA		= 1589,
-	MOBID_G_GEOGRAPHER		= 1590,
-	MOBID_S_GUARDIAN_		= 1899,
-	MOBID_A_GUARDIAN_,
-	MOBID_BARRICADE1		= 1905,
-	MOBID_BARRICADE2,
-	MOBID_GUARDIAN_STONE1,
-	MOBID_GUARDIAN_STONE2,
-	MOBID_FOOD_STOR,
-	MOBID_BLUE_CRYST		= 1914,
-	MOBID_PINK_CRYST,
-	MOBID_TREAS41			= 1938,
-	MOBID_TREAS49			= 1946,
-	MOBID_TATACHO			= 1986,
-	MOBID_CENTIPEDE,
-	MOBID_NEPENTHES,
-	MOBID_HILLSRION,
-	MOBID_HARDROCK_MOMMOTH,
-	MOBID_TENDRILRION,
-	MOBID_CORNUS,
-	MOBID_NAGA,
-	MOBID_LUCIOLA_VESPA,
-	MOBID_PINGUICULA,
-	MOBID_G_TATACHO			= 1997,
-	MOBID_G_HILLSRION,
-	MOBID_CENTIPEDE_LARVA,
-	MOBID_SILVERSNIPER		= 2042,
-	MOBID_MAGICDECOY_FIRE,
-	MOBID_MAGICDECOY_WATER,
-	MOBID_MAGICDECOY_EARTH,
-	MOBID_MAGICDECOY_WIND,
-	MOBID_ZANZOU			= 2308,
-	MOBID_S_HORNET			= 2158,
-	MOBID_S_GIANT_HORNET,
-	MOBID_S_LUCIOLA_VESPA,
-};
-
 //The following system marks a different job ID system used by the map server,
 //which makes a lot more sense than the normal one. [Skotlex]
 //
@@ -146,6 +89,7 @@ enum e_mapid {
 	MAPID_HANBOK,
 	MAPID_GANGSI,
 	MAPID_OKTOBERFEST,
+	MAPID_SUMMONER,
 //2-1 Jobs
 	MAPID_SUPER_NOVICE = JOBL_2_1|0x0,
 	MAPID_KNIGHT,
@@ -336,6 +280,7 @@ enum e_classAE {
 	CLASS_NORMAL = 0,
 	CLASS_BOSS,
 	CLASS_GUARDIAN,
+	CLASS_BATTLEFIELD,
 	CLASS_ALL,
 	CLASS_MAX //auto upd enum for array len
 };
@@ -348,6 +293,10 @@ enum e_race2 {
 	RC2_GOLEM,
 	RC2_GUARDIAN,
 	RC2_NINJA,
+	RC2_GVG,
+	RC2_BATTLEFIELD,
+	RC2_TREASURE,
+	RC2_BIOLAB,
 	RC2_MAX
 };
 
@@ -490,7 +439,7 @@ enum _sp {
 	SP_MAGIC_DAMAGE_RETURN,SP_ALL_STATS=1073,SP_AGI_VIT,SP_AGI_DEX_STR,SP_PERFECT_HIDE, // 1071-1076
 	SP_NO_KNOCKBACK,SP_CLASSCHANGE, // 1077-1078
 	SP_HP_DRAIN_VALUE,SP_SP_DRAIN_VALUE, // 1079-1080
-	SP_WEAPON_ATK,SP_WEAPON_ATK_RATE, // 1081-1082
+	SP_WEAPON_ATK,SP_WEAPON_DAMAGE_RATE, // 1081-1082
 	SP_DELAYRATE,SP_HP_DRAIN_VALUE_RACE, SP_SP_DRAIN_VALUE_RACE, // 1083-1085
 	SP_IGNORE_MDEF_RACE_RATE,SP_IGNORE_DEF_RACE_RATE,SP_SKILL_HEAL2,SP_ADDEFF_ONSKILL, //1086-1089
 	SP_ADD_HEAL_RATE,SP_ADD_HEAL2_RATE, SP_EQUIP_ATK, //1090-1092
@@ -516,7 +465,8 @@ enum _sp {
 	SP_WEAPON_COMA_CLASS, SP_IGNORE_MDEF_CLASS_RATE, SP_EXP_ADDCLASS, SP_ADD_CLASS_DROP_ITEM, //2067-2070
 	SP_ADD_CLASS_DROP_ITEMGROUP, SP_ADDMAXWEIGHT, SP_ADD_ITEMGROUP_HEAL_RATE,  // 2071-2073
 	SP_HP_VANISH_RACE_RATE, SP_SP_VANISH_RACE_RATE, SP_ABSORB_DMG_MAXHP, SP_SUB_SKILL, SP_SUBDEF_ELE, // 2074-2078
-	SP_STATE_NORECOVER_RACE, // 2079
+	SP_STATE_NORECOVER_RACE, SP_CRITICAL_RANGEATK, SP_MAGIC_ADDRACE2, SP_IGNORE_MDEF_RACE2_RATE, // 2079-2082
+	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, // 2083-2084
 };
 
 enum _look {
@@ -739,7 +689,7 @@ struct map_data {
 	} skill_damage;
 #endif
 	// Instance Variables
-	int instance_id;
+	unsigned short instance_id;
 	int instance_src_map;
 
 	/* rAthena Local Chat */
@@ -850,8 +800,8 @@ void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id);
 
 // instances
-int map_addinstancemap(const char*,int);
-int map_delinstancemap(int);
+int map_addinstancemap(const char *name, unsigned short instance_id);
+int map_delinstancemap(int m);
 
 // player to map session
 void map_addnickdb(int charid, const char* nick);

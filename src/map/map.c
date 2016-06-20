@@ -393,6 +393,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, unsigned int tick)
 //		status_change_end(bl, SC_BLADESTOP, INVALID_TIMER); //Won't stop when you are knocked away, go figure...
 		status_change_end(bl, SC_TATAMIGAESHI, INVALID_TIMER);
 		status_change_end(bl, SC_MAGICROD, INVALID_TIMER);
+		status_change_end(bl, SC_SU_STOOP, INVALID_TIMER);
 		if (sc->data[SC_PROPERTYWALK] &&
 			sc->data[SC_PROPERTYWALK]->val3 >= skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2) )
 			status_change_end(bl,SC_PROPERTYWALK,INVALID_TIMER);
@@ -795,7 +796,7 @@ int map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int
 						bl_list[bl_list_count++] = bl;
 
 	if (bl_list_count >= BL_LIST_MAX)
-		ShowWarning("map_foreachinarea: block count too many!\n");
+		ShowWarning("map_foreachinshootarea: block count too many!\n");
 
 	map_freeblock_lock();
 
@@ -1423,7 +1424,7 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 	}
 
 	if( bl_list_count >= BL_LIST_MAX )
-		ShowWarning("map_foreachinpath: block count too many!\n");
+		ShowWarning("map_foreachindir: block count too many!\n");
 
 	map_freeblock_lock();
 
@@ -2013,6 +2014,7 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_READYCOUNTER, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_CBC, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_EQC, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
 		// Remove visuals effect from headgear
 		status_change_end(&sd->bl, SC_MOONSTAR, INVALID_TIMER); 
 		status_change_end(&sd->bl, SC_SUPER_STAR, INVALID_TIMER); 
@@ -2552,7 +2554,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 /*==========================================
  * Add an instance map
  *------------------------------------------*/
-int map_addinstancemap(const char *name, int id)
+int map_addinstancemap(const char *name, unsigned short instance_id)
 {
 	int src_m = map_mapname2mapid(name);
 	int dst_m = -1, i;
@@ -2592,9 +2594,9 @@ int map_addinstancemap(const char *name, int id)
 	// This also allows us to maintain complete independence with main map functions
 	if((strchr(iname,'@') == NULL) && strlen(iname) > 8) {
 		memmove(iname, iname+(strlen(iname)-9), strlen(iname));
-		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%d#%s", id, iname);
+		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%hu#%s", instance_id, iname);
 	} else
-		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%.3d%s", id, iname);
+		snprintf(map[dst_m].name, sizeof(map[dst_m].name),"%.3hu%s", instance_id, iname);
 	map[dst_m].name[MAP_NAME_LENGTH-1] = '\0';
 
 	// Mimic questinfo
@@ -2605,7 +2607,7 @@ int map_addinstancemap(const char *name, int id)
 	}
 
 	map[dst_m].m = dst_m;
-	map[dst_m].instance_id = id;
+	map[dst_m].instance_id = instance_id;
 	map[dst_m].instance_src_map = src_m;
 	map[dst_m].users = 0;
 
@@ -2821,11 +2823,11 @@ const char* map_mapid2mapname(int m)
 		if (!im) // This shouldn't happen but if it does give them the map we intended to give
 			return map[m].name;
 		else {
-			int i;
+			uint8 i;
 
-			for (i = 0; i < MAX_MAP_PER_INSTANCE; i++) { // Loop to find the src map we want
-				if (im->map[i].m == m)
-					return map[im->map[i].src_m].name;
+			for (i = 0; i < im->cnt_map; i++) { // Loop to find the src map we want
+				if (im->map[i]->m == m)
+					return map[im->map[i]->src_m].name;
 			}
 		}
 	}
@@ -4409,6 +4411,7 @@ void do_final(void)
 	do_final_channel(); //should be called after final guild
 	do_final_vending();
 	do_final_buyingstore();
+	do_final_path();
 
 	map_db->destroy(map_db, map_db_final);
 
@@ -4661,7 +4664,10 @@ int do_init(int argc, char *argv[])
 		char ip_str[16];
 		ip2str(addr_[0], ip_str);
 
-		ShowWarning("Not all IP addresses in map_athena.conf configured, autodetecting...\n");
+		// Skip this warning if the server is run with run-once flag
+		if( runflag != CORE_ST_STOP ){
+			ShowWarning("Not all IP addresses in map_athena.conf configured, autodetecting...\n");
+		}
 
 		if (naddr_ == 0)
 			ShowError("Unable to determine your IP address...\n");
@@ -4711,6 +4717,7 @@ int do_init(int argc, char *argv[])
 	add_timer_interval(gettick()+1000, map_freeblock_timer, 0, 0, 60*1000);
 	
 	map_do_init_msg();
+	do_init_path();
 	do_init_atcommand();
 	do_init_battle();
 	do_init_instance();

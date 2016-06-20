@@ -59,7 +59,7 @@ int inter_recv_packet_length[] = {
 struct WisData {
 	int id, fd, count, len;
 	unsigned long tick;
-	unsigned char src[24], dst[24], msg[512];
+	unsigned char src[NAME_LENGTH], dst[NAME_LENGTH], msg[512];
 };
 static DBMap* wis_db = NULL; // int wis_id -> struct WisData*
 static int wis_dellist[WISDELLIST_MAX], wis_delnum;
@@ -110,7 +110,8 @@ const char* job_name(int class_) {
 			return msg_txt(71);
 
 		case JOB_HANBOK:
-			return msg_txt(105);
+		case JOB_OKTOBERFEST:
+			return msg_txt(105 - JOB_HANBOK+class_);
 
 		case JOB_NOVICE_HIGH:
 		case JOB_SWORDMAN_HIGH:
@@ -275,10 +276,12 @@ const char* job_name(int class_) {
 
 		case JOB_KAGEROU:
 		case JOB_OBORO:
+		case JOB_REBELLION:
+		case JOB_SUMMONER:
 			return msg_txt(103 - JOB_KAGEROU+class_);
 
 		default:
-			return msg_txt(106);
+			return msg_txt(109);
 	}
 }
 

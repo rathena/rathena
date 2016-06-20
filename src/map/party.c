@@ -659,10 +659,8 @@ int party_broken(int party_id)
 	if( p == NULL )
 		return 0;
 
-	if( p->instance_id ) {
-		instance_data[p->instance_id].party_id = 0;
+	if( p->instance_id )
 		instance_destroy( p->instance_id );
-	}
 
 	for( i = 0; i < MAX_PARTY; i++ ) {
 		if( p->data[i].sd != NULL ) {
@@ -1071,13 +1069,13 @@ int party_exp_share(struct party_data* p, struct block_list* src, unsigned int b
 			if (!md)
 				return 0;
 
-			rate = pc_level_penalty_mod(sd[i], md->db->lv, md->db->status.class_, md->db->status.mode, 1);
+			rate = pc_level_penalty_mod(md->db->lv - sd[i]->status.base_level, md->db->status.class_, md->db->status.mode, 1);
 			base_exp = (unsigned int)cap_value(base_exp_bonus * rate / 100, 1, UINT_MAX);
 			job_exp = (unsigned int)cap_value(job_exp_bonus * rate / 100, 1, UINT_MAX);
 		}
 #endif
 
-		pc_gainexp(sd[i], src, base_exp, job_exp, false);
+		pc_gainexp(sd[i], src, base_exp, job_exp, 0);
 
 		if (zeny) // zeny from mobs [Valaris]
 			pc_getzeny(sd[i],zeny,LOG_TYPE_PICKDROP_MONSTER,NULL);

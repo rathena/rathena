@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
-//= 1.2
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -23,6 +23,7 @@
 //= 1.0 Added "Nurse in Port Malaya" and "Pintados Festival" quests. [Euphy]
 //= 1.1 Added GM management function and NPC. [Euphy]
 //= 1.2 Added VIP features. [Euphy]
+//= 1.3 Fixed Pintados Festival never ends. [Capuche]
 //============================================================
 
 // Cautious Village & Daily Quests :: hi_malaya
@@ -8328,16 +8329,16 @@ ma_fild01,1,1,4	script	Pintados Manager#pin	894,{
 	end;
 
 // Moved to individual NPCs for smoother processing.
-//OnInit:
-//	if ($malaya_pintados_00 > 0)
-//		donpcevent "Pintados Manager#pin::OnEnableNPC";
-//	end;
+OnInit:
+	if ($malaya_pintados_00 > 0) {
+		// donpcevent "Pintados Manager#pin::OnEnableNPC";
+		initnpctimer;// unoffical fix
+	}
+	end;
 
 OnTimer1800000:
-	set $malaya_pintados_00, $malaya_pintados_00;
 	if ($malaya_pintados_00 > 0 && $malaya_pintados_00 < 344) {
 		set $malaya_pintados_00,$malaya_pintados_00+1;
-		stopnpctimer;
 		initnpctimer;
 	} else {
 		set $malaya_pintados_00,0;
@@ -8563,7 +8564,7 @@ ma_fild01,179,260,2	script	Festival Helper Boy#pin	577,{
 			close;
 		}
 		mes "[Isco]";
-		mes .@str$+"! How many Scarlet Dyestuffs can you give me from the "+countitem(.@item)+" you have?";
+		mes .@str$+"! How many "+ getitemname(.@item) +" can you give me from the "+countitem(.@item)+" you have?";
 		next;
 		switch(select("Enter Quantity:All")) {
 		case 1:
