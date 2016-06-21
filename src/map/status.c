@@ -9330,16 +9330,17 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			//1st Transcendent Spirit works similar to Marionette Control
 			if(sd && val2 == SL_HIGH) {
 				int stat,max_stat;
+				struct status_data *status2 = status_get_base_status(bl);
 
 				val3 = 0;
 				val4 = 0;
 				max_stat = (status_get_lv(bl)-10<50)?status_get_lv(bl)-10:50;
-				stat = max(0, max_stat - status_get_base_status(bl)->str); val3 |= cap_value(stat,0,0xFF)<<16;
-				stat = max(0, max_stat - status_get_base_status(bl)->agi ); val3 |= cap_value(stat,0,0xFF)<<8;
-				stat = max(0, max_stat - status_get_base_status(bl)->vit ); val3 |= cap_value(stat,0,0xFF);
-				stat = max(0, max_stat - status_get_base_status(bl)->int_); val4 |= cap_value(stat,0,0xFF)<<16;
-				stat = max(0, max_stat - status_get_base_status(bl)->dex ); val4 |= cap_value(stat,0,0xFF)<<8;
-				stat = max(0, max_stat - status_get_base_status(bl)->luk ); val4 |= cap_value(stat,0,0xFF);
+				stat = max(0, max_stat - status2->str); val3 |= cap_value(stat,0,0xFF)<<16;
+				stat = max(0, max_stat - status2->agi ); val3 |= cap_value(stat,0,0xFF)<<8;
+				stat = max(0, max_stat - status2->vit ); val3 |= cap_value(stat,0,0xFF);
+				stat = max(0, max_stat - status2->int_); val4 |= cap_value(stat,0,0xFF)<<16;
+				stat = max(0, max_stat - status2->dex ); val4 |= cap_value(stat,0,0xFF)<<8;
+				stat = max(0, max_stat - status2->luk ); val4 |= cap_value(stat,0,0xFF);
 			}
 			break;
 
