@@ -1493,7 +1493,6 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 						mes "I know it's the easiest";
 						mes "lame excuse for a person";
 						mes "who never try hard anything.";
-						mes "";
 						next;
 						mes "[Uwe]";
 						mes "It's very same for a smith job.";
