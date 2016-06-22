@@ -104,10 +104,6 @@ struct s_randomsummon_group {
 
 static DBMap *mob_summon_db; /// Random Summon DB. struct s_randomsummon_group -> group_id
 
-//Defines the Manuk/Splendide mob groups for the status reductions [Epoque]
-const int mob_manuk[8] = { MOBID_TATACHO, MOBID_CENTIPEDE, MOBID_NEPENTHES, MOBID_HILLSRION, MOBID_HARDROCK_MOMMOTH, MOBID_G_TATACHO, MOBID_G_HILLSRION, MOBID_CENTIPEDE_LARVA };
-const int mob_splendide[5] = { MOBID_TENDRILRION, MOBID_CORNUS, MOBID_NAGA, MOBID_LUCIOLA_VESPA, MOBID_PINGUICULA };
-
 /*==========================================
  * Local prototype declaration   (only required thing)
  *------------------------------------------*/

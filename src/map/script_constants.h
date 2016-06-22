@@ -2424,6 +2424,9 @@
 	export_constant(RC2_BATTLEFIELD);
 	export_constant(RC2_TREASURE);
 	export_constant(RC2_BIOLAB);
+	export_constant(RC2_MANUK);
+	export_constant(RC2_SPLENDIDE);
+	export_constant(RC2_MAX);
 
 	/* classes */
 	export_constant(CLASS_NORMAL);
