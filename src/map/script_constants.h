@@ -3069,6 +3069,13 @@
 	export_constant(IM_PARTY);
 	export_constant(IM_GUILD);
 
+	/* mob random groups */
+	export_constant(MOBG_Branch_Of_Dead_Tree);
+	export_constant(MOBG_Poring_Box);
+	export_constant(MOBG_Bloody_Dead_Branch);
+	export_constant(MOBG_Red_Pouch_Of_Surprise);
+	export_constant(MOBG_ClassChange);
+
 	#undef export_constant
 
 #endif /* _SCRIPT_CONSTANTS_H_ */

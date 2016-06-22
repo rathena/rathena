@@ -2455,9 +2455,3 @@ THANATOS_KEEP	10009
 4_F_REBELLION2	10201
 4_F_REBELLION3	10202
 4_M_ILYA	10203
-
-MOBG_Branch_Of_Dead_Tree	0
-MOBG_Poring_Box	1
-MOBG_Bloody_Dead_Branch	2
-MOBG_Red_Pouch_Of_Surprise	3
-MOBG_ClassChange	4
