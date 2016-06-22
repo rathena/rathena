@@ -4568,7 +4568,12 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
 {
 	int race, i;
 
-	race = atoi(fields[0]);
+	if( ISDIGIT(fields[0][0]) )
+		race = atoi(fields[0]);
+	else if( !script_get_constant( fields[0], &race ) ){
+		ShowWarning("mob_readdb_race2: Unknown race2 constant \"%s\".\n", fields[0]);
+		return false;
+	}
 
 	if (!CHK_RACE2(race)) {
 		ShowWarning("mob_readdb_race2: Unknown race2 %d.\n", race);
