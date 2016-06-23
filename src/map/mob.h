@@ -61,19 +61,6 @@ enum MOBID {
 	MOBID_G_GEOGRAPHER		= 1590,
 	MOBID_GUARDIAN_STONE1	= 1907,
 	MOBID_GUARDIAN_STONE2,
-	MOBID_TATACHO			= 1986,
-	MOBID_CENTIPEDE,
-	MOBID_NEPENTHES,
-	MOBID_HILLSRION,
-	MOBID_HARDROCK_MOMMOTH,
-	MOBID_TENDRILRION,
-	MOBID_CORNUS,
-	MOBID_NAGA,
-	MOBID_LUCIOLA_VESPA,
-	MOBID_PINGUICULA,
-	MOBID_G_TATACHO			= 1997,
-	MOBID_G_HILLSRION,
-	MOBID_CENTIPEDE_LARVA,
 	MOBID_SILVERSNIPER		= 2042,
 	MOBID_MAGICDECOY_FIRE,
 	MOBID_MAGICDECOY_WATER,
@@ -117,9 +104,11 @@ enum size {
 
 /// Used hardcoded Random Monster group in src
 enum e_Random_Monster {
-	MOBG_Branch_Of_Dead_Tree = 0,
-	MOBG_Bloody_Dead_Branch  = 2,
-	MOBG_ClassChange         = 4,
+	MOBG_Branch_Of_Dead_Tree	= 0,
+	MOBG_Poring_Box				= 1,
+	MOBG_Bloody_Dead_Branch		= 2,
+	MOBG_Red_Pouch_Of_Surprise	= 3,
+	MOBG_ClassChange			= 4,
 };
 
 struct mob_skill {

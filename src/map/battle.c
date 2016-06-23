@@ -1306,23 +1306,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		// Compressed code, fixed by map.h [Epoque]
 		if (src->type == BL_MOB) {
-			int i;
-
-			if (sc->data[SC_MANU_DEF]) {
-				for (i=0;ARRAYLENGTH(mob_manuk)>i;i++) {
-					if (mob_manuk[i]==((TBL_MOB*)src)->mob_id) {
-						damage -= damage * sc->data[SC_MANU_DEF]->val1 / 100;
-						break;
-					}
-				}
+			if( sc->data[SC_MANU_DEF] && status_get_race2(src) == RC2_MANUK ){
+				damage -= damage * sc->data[SC_MANU_DEF]->val1 / 100;
 			}
-			if (sc->data[SC_SPL_DEF]) {
-				for (i=0;ARRAYLENGTH(mob_splendide)>i;i++) {
-					if (mob_splendide[i]==((TBL_MOB*)src)->mob_id) {
-						damage -= damage * sc->data[SC_SPL_DEF]->val1 / 100;
-						break;
-					}
-				}
+			if( sc->data[SC_SPL_DEF] && status_get_race2(src) == RC2_SPLENDIDE ){
+				damage -= damage * sc->data[SC_SPL_DEF]->val1 / 100;
 			}
 		}
 
@@ -1462,27 +1450,17 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		// [Epoque]
 		if (bl->type == BL_MOB) {
-			uint8 i;
-
-			if ( ((sce=sc->data[SC_MANU_ATK]) && (flag&BF_WEAPON)) ||
-				 ((sce=sc->data[SC_MANU_MATK]) && (flag&BF_MAGIC))
+			if ( (((sce=sc->data[SC_MANU_ATK]) && (flag&BF_WEAPON)) ||
+				 ((sce=sc->data[SC_MANU_MATK]) && (flag&BF_MAGIC))) &&
+				 status_get_race2(bl) == RC2_MANUK
 				) {
-				for (i=0;ARRAYLENGTH(mob_manuk)>i;i++) {
-					if (((TBL_MOB*)bl)->mob_id==mob_manuk[i]) {
-						damage += damage * sce->val1 / 100;
-						break;
-					}
-				}
+				damage += damage * sce->val1 / 100;
 			}
-			if ( ((sce=sc->data[SC_SPL_ATK]) && (flag&BF_WEAPON)) ||
-				 ((sce=sc->data[SC_SPL_MATK]) && (flag&BF_MAGIC))
+			if ( (((sce=sc->data[SC_SPL_ATK]) && (flag&BF_WEAPON)) ||
+				 ((sce=sc->data[SC_SPL_MATK]) && (flag&BF_MAGIC))) &&
+				 status_get_race2(bl) == RC2_SPLENDIDE
 				) {
-				for (i=0;ARRAYLENGTH(mob_splendide)>i;i++) {
-					if (((TBL_MOB*)bl)->mob_id==mob_splendide[i]) {
-						damage += damage * sce->val1 / 100;
-						break;
-					}
-				}
+				damage += damage * sce->val1 / 100;
 			}
 		}
 		/* Self Buff that destroys the armor of any target hit with melee or ranged physical attacks */
@@ -6203,7 +6181,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			}
 		}
 
-		if (!(nk&NK_NO_ELEFIX))
+		if (!(nk&NK_NO_ELEFIX) && skill_id != ASC_BREAKER) // Soul Breaker's magic portion is non-elemental. [Secret]
 			ad.damage = battle_attr_fix(src, target, ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
 		//Apply the physical part of the skill's damage. [Skotlex]

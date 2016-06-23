@@ -2424,6 +2424,9 @@
 	export_constant(RC2_BATTLEFIELD);
 	export_constant(RC2_TREASURE);
 	export_constant(RC2_BIOLAB);
+	export_constant(RC2_MANUK);
+	export_constant(RC2_SPLENDIDE);
+	export_constant(RC2_MAX);
 
 	/* classes */
 	export_constant(CLASS_NORMAL);
@@ -3068,6 +3071,13 @@
 	export_constant(IM_CHAR);
 	export_constant(IM_PARTY);
 	export_constant(IM_GUILD);
+
+	/* mob random groups */
+	export_constant(MOBG_Branch_Of_Dead_Tree);
+	export_constant(MOBG_Poring_Box);
+	export_constant(MOBG_Bloody_Dead_Branch);
+	export_constant(MOBG_Red_Pouch_Of_Surprise);
+	export_constant(MOBG_ClassChange);
 
 	#undef export_constant
 

@@ -1890,16 +1890,12 @@ brasilis,185,246,5	script	Pedro#bra	1_M_SIZ,{
 		mes "[Pedro]";
 		mes "'^3131FFMother the door won't open!^000000'";
 		mes "'^FF0000Turn the key as many times as there are colors in the rainbow.^000000'";
-		mes "";
 		mes "'^3131FFMother the water is flooding!^000000'";
 		mes "'^FF0000If the moon disappears 3 times, don't worry.^000000'";
-		mes "";
 		mes "'^3131FFMother the drought has started!^000000'";
 		mes "'^FF0000Don't worry, the waterfall will help it.^000000'";
-		mes "";
 		mes "'^3131FFMother where are my friends?^000000'";
 		mes "'^FF0000Your 7 friends are sleeping. now it's time to wake them.^000000'";
-		mes "";
 		mes "'^3131FFWhere are you mom?^000000'";
 		next;
 		mes "[Mariana]";
@@ -1931,16 +1927,12 @@ brasilis,185,246,5	script	Pedro#bra	1_M_SIZ,{
 		mes "[Pedro]";
 		mes "'^3131FFMother the door won't open!^000000'";
 		mes "'^FF0000Turn the key as many times as there are colors in the rainbow.^000000'";
-		mes "";
 		mes "'^3131FFMother the water is flooding!^000000'";
 		mes "'^FF0000If the moon disappears 3 times, don't worry.^000000'";
-		mes "";
 		mes "'^3131FFMother the drought has started!^000000'";
 		mes "'^FF0000Don't worry, the waterfall will help it.^000000'";
-		mes "";
 		mes "'^3131FFMother where are my friends?^000000'";
 		mes "'^FF0000Your 7 friends are sleeping. now it's time to wake them.^000000'";
-		mes "";
 		mes "'^3131FFWhere are you mom?^000000'";
 		close;
 	}

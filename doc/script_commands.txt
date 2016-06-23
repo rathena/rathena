@@ -517,7 +517,7 @@ forever, and no trace remains of it even if it was stored with character or
 account data.
 
 Some variables are special, that is, they are already defined for you by the 
-scripting engine. You can see the full list somewhere in 'db/const.txt', which 
+scripting engine. You can see the full list in 'src/map/script_constants.h', which 
 is a file you should read, since it also allows you to replace lots of numbered 
 arguments for many commands with easier to read text. The special variables most 
 commonly used are all permanent character-based variables:
@@ -2290,7 +2290,7 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 
 This function will return the specified stat of the invoking character, or, if a
 character name is specified, of that player. The stat can either be a number or
-parameter name, defined in 'db/const.txt'.
+parameter name, defined in 'src/map/script_constants.h'.
 
 Some example parameters:
 
@@ -4055,7 +4055,7 @@ This command will change the job class of the invoking character.
 
 This command does work with numbers, but you can also use job names. The full 
 list of job names and the numbers they correspond to can be found in 
-'db/const.txt'.
+'src/map/script_constants.h'.
 
     // This would change your player into a Swordman
     jobchange Job_Swordman;
@@ -4275,7 +4275,7 @@ you can look at: 'npc/custom/stylist.txt'
 
 This command will push the currently attached player to given direction by given
 amount of square cells. Direction is the same as used when declaring NPCs, and
-can be specified by using one of the DIR_* constants (db/const.txt).
+can be specified by using one of the DIR_* constants (src/map/script_constants.h).
 
 The knock-back is not restricted by items or map flags, only obstacles are taken
 into account. If there is not enough space to perform the push (e.g. due to a
@@ -5153,7 +5153,7 @@ Used in reset NPC's (duh!)
 These commands will bestow a status effect on a character.
 
 The <effect type> determines which status is invoked. This can be either a number
-or constant, with the common statuses (mostly negative) found in 'db/const.txt'
+or constant, with the common statuses (mostly negative) found in 'src/map/script_constants.h'
 with the 'SC_' prefix. A full list is located in 'src/map/status.h', though
 they are not currently documented.
 
@@ -5422,7 +5422,7 @@ Types:
 	1: Buff
 	2: Debuff
 
-Status_icon: See "Status Icon" section in 'db/const.txt'. Default is SI_BLANK (-1).
+Status_icon: See "Status Icon" section in 'src/map/script_constants.h'. Default is SI_BLANK (-1).
 
 Example:
 	// Apple gives you +5 Str bonus for 1 minute when it's consumed.
@@ -6198,7 +6198,7 @@ This command will broadcast a message to all or most players, similar to
 The region the broadcast is heard in (target), source of the broadcast
 and the color the message will come up as is determined by the flags.
 
-The flag values are coded as constants in 'db/const.txt' to make them easier to use.
+The flag values are coded as constants in 'src/map/script_constants.h' to make them easier to use.
 
 Target flags:
 - bc_all: Broadcast message is sent server-wide (default).
@@ -6534,7 +6534,7 @@ specified.
 *setmapflag "<map name>",<flag>{,<zone>{,<type>}};
 
 This command marks a specified map with the given map flag, which will alter the 
-behavior of the map. A full list of mapflags is located in 'db/const.txt' with
+behavior of the map. A full list of mapflags is located in 'src/map/script_constants.h' with
 the 'mf_' prefix, and documentation can be found in 'doc/mapflags.txt'.
 
 The map flags alter the behavior of the map regarding teleporting (mf_nomemo, 
@@ -6900,8 +6900,8 @@ must be used.
 
 This command makes an object display an emotion sprite above their own as 
 if they were doing that emotion. For a full list of emotion numbers, 
-see 'db/const.txt' under 'e_'. The not so obvious ones are 'e_what' (a question mark) 
-and 'e_gasp' (the exclamation mark).
+see 'src/map/script_constants.h' under 'e_'. The not so obvious ones are 'e_what'
+(a question mark) and 'e_gasp' (the exclamation mark).
 
 The optional target parameter specifies who will get the emotion on top of
 their head. If 0 (the default if omitted), the NPC in current use will show
@@ -7142,7 +7142,7 @@ This command will make a <GID> say a message. The display name of the <GID> won'
 *unitemote <GID>,<emotion number>;
 
 This command will make a <GID> display an emotion sprite.
-For a full list of emotion numbers, see 'db/const.txt' under 'e_'.
+For a full list of emotion numbers, see 'src/map/script_constants.h' under 'e_'.
 
 ---------------------------------------
 
@@ -8044,7 +8044,7 @@ Each of these can be 'on' or 'off'. Together they define a cell's behavior.
 
 This command lets you alter these flags for all map cells in the specified
 (x1,y1)-(x2,y2) rectangle. The 'flag' can be 0 or 1 (0:clear flag, 1:set flag).
-The 'type' defines which flag to modify. Possible options see 'db/const.txt'.
+The 'type' defines which flag to modify. Possible options see 'src/map/script_constants.h'.
 
 Example:
 
@@ -8078,7 +8078,7 @@ remove a nonwalkable row of cells after the barricade mobs.
 
 This command will return 1 or 0, depending on whether the specified cell has
 the 'type' flag set or not. There are various types to check, all mimicking
-the server's cell_chk enumeration. The types can be found in 'db/const.txt'.
+the server's cell_chk enumeration. The types can be found in 'src/map/script_constants.h'.
 
 The meaning of the individual types can be confusing, so here's an overview:
   - cell_chkwall/water/cliff
@@ -8687,7 +8687,7 @@ NOTE: Currently ONLY supported for bonuses that used by 'bonus' script.
 This command will make the pet cure a specified status condition. The curing 
 actions will occur once every Delay seconds. For a full list of status 
 conditions that can be cured, see the list of 'SC_' status condition constants 
-in 'db/const.txt'.
+in 'src/map/script_constants.h'.
 
 ---------------------------------------
 

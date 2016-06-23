@@ -999,7 +999,6 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						mes "[Information Staff]";
 						mes "Byalan Island is the scary place with ^8B4513Izlude dungeon^000000 in it.";
-						mes "";
 						mes "Do you need additional directions?";
 						viewpoint 1, 197, 205, 1, 0xFFFF00;
 						next;
@@ -1266,7 +1265,6 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 						next;
 						mes "[Information Staff]";
 						mes "Byalan Island is the scary place with ^8B4513Izlude dungeon^000000 in it.";
-						mes "";
 						mes "Do you need additional directions?";
 						viewpoint 1, 197, 205, 1, 0xFFFF00;
 						next;
@@ -1444,9 +1442,7 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 	if (isbegin_quest(7474)) {
 		if (!isbegin_quest(7475)) {
 			mes "==== Airship Information====";
-			mes "";
 			mes "Izlude - Juno - Rachel";
-			mes "";
 			mes "Travellers bound for either the ^4d4dffSchwarzwalt Republic^000000 or ^4d4dffArunafeltz^000000 may board the airship here.";
 			next;
 			if (.@total == 1) {
@@ -1551,17 +1547,13 @@ izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 			}
 		} else {
 			mes "==== Airship Information ====";
-			mes "";
 			mes "Izlude - Juno - Rachel";
-			mes "";
 			mes "Travellers bound for either the ^4d4dffSchwarzwalt Republic^000000 or ^4d4dffArunafeltz^000000 may board the airship here.";
 			close;
 		}
 	} else {
 		mes "==== Airship Information ====";
-		mes "";
 		mes "Izlude - Juno - Rachel";
-		mes "";
 		mes "Travellers bound for either the ^4d4dffSchwarzwalt Republic^000000 or ^4d4dffArunafeltz^000000 may board the airship here.";
 		close;
 	}
@@ -1589,7 +1581,6 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 	if (isbegin_quest(7474) == 1) {
 		if (!isbegin_quest(7476)) {
 			mes "== Challenge! Arena! ==";
-			mes "";
 			mes "Breath taking battle with monsters!";
 			mes "Where is your limit?";
 			mes "PvE party with your comrad!";
@@ -1695,7 +1686,6 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 			}
 		} else {
 			mes "== Challenge! Arena! ==";
-			mes "";
 			mes "Breath taking battle with monsters!";
 			mes "Where is your limit?";
 			mes "PvE party with your comrad!";
@@ -1704,7 +1694,6 @@ izlude,207,167,3	script	Arena#iz	4_BULLETIN_BOARD2,3,3,{
 		}
 	} else {
 		mes "== Challenge! Arena! ==";
-		mes "";
 		mes "Breath taking battle with monsters!";
 		mes "Where is your limit?";
 		mes "PvE party with your comrad!";
@@ -1735,7 +1724,6 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 	if (isbegin_quest(7474) == 1) {
 		if (!isbegin_quest(7477)) {
 			mes "==== Information ====";
-			mes "";
 			mes "Prontera Field.";
 			mes "The city of Prontera is located to the north.";
 			next;
@@ -1845,14 +1833,12 @@ izlude,45,94,3	script	Bulletin Board#iz	4_BULLETIN_BOARD2,3,3,{
 			}
 		} else {
 			mes "==== Information ====";
-			mes "";
 			mes "Prontera Field.";
 			mes "The city of Prontera is located to the north.";
 			close;
 		}
 	} else {
 		mes "==== Information ====";
-		mes "";
 		mes "Prontera Field.";
 		mes "The city of Prontera is located to the north.";
 		close;

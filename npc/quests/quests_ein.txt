@@ -86,7 +86,7 @@ einbech,97,167,5	script	Cavitar	847,{
 				mes "that you brought before";
 				mes "I give you an Oridecon.";
 				next;
-				if (checkweight(618,1)) {
+				if ((MaxWeight - Weight) > 2399) {
 					mes "[Cavitar]";
 					mes "Good, you brought";
 					mes "everything! Now let me";
@@ -475,7 +475,6 @@ einbech,97,167,5	script	Cavitar	847,{
 // Uwe Kleine :: ein_anoz
 //============================================================
 einbroch,215,180,6	script	Uwe Kleine#ein	85,{
-	set EinUwe,0;
 	if (BaseClass == Job_Blacksmith) {
 		if (ein_cook > 999) {
 			set .@ccc,ein_cook-1000;
@@ -1493,7 +1492,6 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 						mes "I know it's the easiest";
 						mes "lame excuse for a person";
 						mes "who never try hard anything.";
-						mes "";
 						next;
 						mes "[Uwe]";
 						mes "It's very same for a smith job.";
@@ -3372,8 +3370,9 @@ OnTimer600000:
 }
 
 einbroch,132,84,3	script	Liotzburg#ein	853,2,2,{
-	if ((EinFactory == 13) || (EinFactory == 14)) {
-		changequest 8029,8030;
+	if (EinFactory == 13 || EinFactory == 14) {
+		if (isbegin_quest(8029) == 1)
+			changequest 8029,8030;
 		set EinFactory,14;
 		mes "[Liotzburg]";
 		mes "What...?";
@@ -4076,8 +4075,9 @@ ein_in01,67,242,3	script	Zelmeto	851,{
 }
 
 ein_in01,49,232,3	script	2nd Control Panel#ins	111,{
-	if ((EinFactory == 1) || (EinFactory == 2)) {
-		changequest 8017,8018;
+	if (EinFactory == 1 || EinFactory == 2) {
+		if (isbegin_quest(8017) == 1)
+			changequest 8017,8018;
 		set EinFactory,2;
 		mes "^3355FFIt's the 2nd control panel";
 		mes "Zelmeto asked you to inspect.";
@@ -4091,8 +4091,9 @@ ein_in01,49,232,3	script	2nd Control Panel#ins	111,{
 }
 
 ein_in01,108,217,3	script	3rd Pressure Governor#1	111,{
-	if ((EinFactory == 3) || (EinFactory == 4)) {
-		changequest 8019,8020;
+	if (EinFactory == 3 || EinFactory == 4) {
+		if (isbegin_quest(8019) == 1)
+			changequest 8019,8020;
 		set EinFactory,4;
 		mes "^3355FFAt first glance, this";
 		mes "pressure governor looks";
@@ -4107,8 +4108,9 @@ ein_in01,108,217,3	script	3rd Pressure Governor#1	111,{
 }
 
 ein_in01,62,258,3	script	Main Control Panel#ins	111,{
-	if ((EinFactory == 5) || (EinFactory == 6)) {
-		changequest 8021,8022;
+	if (EinFactory == 5 || EinFactory == 6) {
+		if (isbegin_quest(8021) == 1)
+			changequest 8021,8022;
 		set EinFactory,6;
 		mes "^3355FFThe main control panel";
 		mes "doesn't look like it has";
@@ -4123,8 +4125,9 @@ ein_in01,62,258,3	script	Main Control Panel#ins	111,{
 }
 
 ein_in01,46,197,3	script	Conveyor#ins	111,{
-	if ((EinFactory == 7) || (EinFactory == 8)) {
-		changequest 8023,8024;
+	if (EinFactory == 7 || EinFactory == 8) {
+		if (isbegin_quest(8023) == 1)
+			changequest 8023,8024;
 		set EinFactory,8;
 		mes "^3355FFThe conveyor's movements";
 		mes "look jittery and clumsy. The";
@@ -4138,8 +4141,9 @@ ein_in01,46,197,3	script	Conveyor#ins	111,{
 }
 
 ein_in01,100,266,3	script	Pipe#ins	111,{
-	if ((EinFactory == 9) || (EinFactory == 10)) {
-		changequest 8025,8026;
+	if (EinFactory == 9 || EinFactory == 10) {
+		if (isbegin_quest(8025) == 1)
+			changequest 8025,8026;
 		set EinFactory,10;
 		mes "^3355FFThe inspection of this";
 		mes "pipe didn't take very long.";
@@ -4154,8 +4158,9 @@ ein_in01,100,266,3	script	Pipe#ins	111,{
 }
 
 ein_in01,95,239,3	script	Conveyor#ins2	111,{
-	if ((EinFactory == 11) || (EinFactory == 12)) {
-		changequest 8027,8028;
+	if (EinFactory == 11 || EinFactory == 12) {
+		if (isbegin_quest(8027) == 1)
+			changequest 8027,8028;
 		set EinFactory,12;
 		mes "^3355FFThis conveyor seems";
 		mes "to have similar problems";
@@ -4744,7 +4749,6 @@ ein_in01,231,163,7	script	Sick Old Man#ein	849,{
 		close;
 	}
 	else if (Shinokas_Quest == 2) {
-		set einbech,0;
 		mes "[Sick Old Man]";
 		mes "...!";
 		next;
@@ -4790,7 +4794,7 @@ ein_in01,231,163,7	script	Sick Old Man#ein	849,{
 				mes "^3355FFIt doesn't seem";
 				mes "like this old man";
 				mes "is telling the truth...^000000";
-				set einbech,0;
+				set .@einbech,0;
 				next;
 			}
 			else {
@@ -6006,7 +6010,7 @@ ein_in01,31,138,3	script	Calla#ein	90,{
 			mes "^333333*Sob Sob...*^000000";
 			delitem 712,1; //Flower
 			set EIN_LOVERQ,6;
-			changequest 8079,808;
+			changequest 8079,8080;
 			close;
 		}
 		else {
@@ -7048,7 +7052,10 @@ ein_in01,31,151,3	script	Satra#ein	850,{
 		mes "this kind of task will require";
 		mes "some effort on your part.";
 		set EIN_LOVERQ,9;
-		changequest 8082,8083;
+		if (isbegin_quest(8081) == 1)
+			changequest 8081,8083;
+		else
+			changequest 8082,8083;
 		next;
 		mes "[Satra]";
 		mes "Tah tah,";
@@ -7138,7 +7145,8 @@ ein_in01,191,102,5	script	Kaijeta#ein	846,{
 		mes "petty hatred between our";
 		mes "two towns stop my son from";
 		mes "seeing the woman he loves...";
-		changequest 8081,8082;
+		if (isbegin_quest(8081) == 1)
+			changequest 8081,8082;
 		close;
 	}
 	if (EIN_LOVERQ == 7) {

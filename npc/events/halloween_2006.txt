@@ -293,7 +293,6 @@ geffen,145,132,3	script	Hoirin#06_hw	729,{
 			mes "^4d4dff 1 Pumpkin Mojo";
 			mes "2 Pumpkin";
 			mes "2 Egg^000000";
-			mes "";
 			next;
 			mes "[Hoirin]";
 			mes "Just Bring Pumpkin Mojo, Pumpkin, and a Egg.";

@@ -1537,7 +1537,6 @@ new_1-2,161,182,5	script	Instructor#nv	92,{
 	mes "Welcome to my class.";
 	mes "Choose the subject you";
 	mes "wish to learn more about.";
-	mes "";
 	next;
 	while(1) {
 		switch(select("Basic Info Window:Party Window:Item Window:Option Window:Equipment Window:Cancel")) {
@@ -3001,7 +3000,6 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 			mes "Fill in the blank:";
 			mes "You ^3355FF_____^000000";
 			mes "competing with other people...";
-			mes "";
 			next;
 			switch(select("don't mind...:don't like...:don't care about...")) {
 			case 1:
@@ -3406,7 +3404,6 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					next;
 					mes "[Hanson]";
 					mes "The town you will arrive is named 'Geffen'.";
-					mes "";
 					mes "The mage academy is located in the Northwest part in town. Please remember this.";
 					next;
 					mes "[Hanson]";
@@ -4071,7 +4068,6 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 					next;
 					mes "[Bruce]";
 					mes "When advancing to the Second Job Class, Acolytes can change their jobs to ^8E2323Priests^000000 or ^8E2323Monks^000000.";
-					mes "";
 					set nov_3_swordman,20;
 					next;
 					break;
@@ -4229,7 +4225,6 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 					next;
 					mes "[Bruce]";
 					mes "When advancing to the Second Job Class, Acolytes can change their jobs to ^8E2323Priests^000000 or ^8E2323Monks^000000.";
-					mes "";
 					set nov_3_swordman,20;
 					next;
 					break;
