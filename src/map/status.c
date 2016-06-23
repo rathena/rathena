@@ -10328,7 +10328,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = 20; //+% AllStats
 			tick_time = 1000;
 			val4 = tick / tick_time;
-			tick = -1;
 			break;
 		case SC_REBOUND:
 			tick_time = 2000;
