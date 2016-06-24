@@ -10078,6 +10078,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_change_end(bl, SC_CURSE, INVALID_TIMER);
 			status_change_end(bl, SC_BLIND, INVALID_TIMER);
 			status_change_end(bl, SC_ORCISH, INVALID_TIMER);
+			status_change_end(bl, SC_DECREASEAGI, INVALID_TIMER);
 			break;
 		}
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
