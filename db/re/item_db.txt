@@ -3373,7 +3373,7 @@
 5282,euRO_Baseball_Cap,Europe Baseball Cap,4,0,,200,,5,,1,0xFFFFFFFF,63,2,256,,0,1,216,{},{},{}
 5283,Chick_Hat,Chick Hat,4,20,,100,,2,,0,0xFFFFFFFF,63,2,256,,10,0,311,{ bonus bLuk,2; bonus bMaxHP,50; bonus bMaxSP,50; skill "TF_DOUBLE",2; bonus bDoubleRate,10; bonus2 bSubRace,RC_DemiHuman,3; bonus2 bSubRace,RC_Player,3; },{},{}
 5284,Water_Lily_Crown,Water Lily Crown,4,20,,200,,0,,1,0xFFFFFFFF,63,2,256,,30,0,312,{ bonus bDex,1; bonus bAgi,1; bonus bMdef,3; bonus bHPrecovRate,5; bonus bSPrecovRate,3; },{},{}
-5285,Vane_Hairpin,Vane Hairpin,4,20,,300,,5,,1,0xFFFFFFFF,63,2,256,,30,0,313,{ bonus bAgi,2; },{},{}
+5285,Vane_Hairpin,Vane Hairpin,4,20,,300,,4,,1,0xFFFFFFFF,63,2,256,,30,0,313,{ bonus bAgi,2; },{},{}
 5286,Pecopeco_Hairband,Pecopeco Hairband,4,20,,0,,6,,0,0xFFFFFFFF,63,2,256,,70,0,314,{ bonus bSpeedRate,25; bonus bAspdRate,-10; bonus bVariableCastrate,25; },{},{}
 5287,Vacation_Hat,Vacation Hat,4,20,,200,,2,,1,0xFFFFFFFF,63,2,256,,30,0,315,{ bonus bVit,1; },{},{}
 5288,Red_Glasses,Red Glasses,4,20,,0,,1,,0,0xFFFFFFFF,63,2,512,,0,0,316,{ bonus bInt,1; },{},{}
