@@ -6,6 +6,7 @@
 
 #include "../common/mmo.h"
 #include "../config/core.h"
+#include "clif.h" // e_damage_type
 #include "map.h" //ELE_MAX
 
 /// State of a single attack attempt; used in flee/def penalty calculations when mobbed
