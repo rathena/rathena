@@ -1214,3 +1214,4 @@ REPLACE INTO `mob_db` VALUES (2160,'S_LUCIOLA_VESPA','Luciola Vespa','Luciola Ve
 
 REPLACE INTO `mob_db` VALUES (2308,'KO_ZANZOU','Zanzou','Zanzou',1,50,0,0,0,1,1,1,0,0,1,1,1,1,1,1,1,1,1,7,20,0x0,400,1872,672,480,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 
+
