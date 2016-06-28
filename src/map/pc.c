@@ -6577,7 +6577,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned in
 	if (flag&2)
 		clif_displayexp(sd, (flag&8) ? 0 : job_exp,  SP_JOBEXP, exp_flag&1, false);
 
-	if (sd->state.showexp)
+	if (sd->state.showexp && (base_exp || job_exp))
 		pc_gainexp_disp(sd, base_exp, nextb, job_exp, nextj, false);
 }
 
@@ -6605,7 +6605,7 @@ void pc_lostexp(struct map_session_data *sd, unsigned int base_exp, unsigned int
 		clif_updatestatus(sd, SP_JOBEXP);
 	}
 
-	if (sd->state.showexp)
+	if (sd->state.showexp && (base_exp || job_exp))
 		pc_gainexp_disp(sd, base_exp, pc_nextbaseexp(sd), job_exp, pc_nextjobexp(sd), true);
 }
 
