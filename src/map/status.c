@@ -6466,7 +6466,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 	if( sc->data[SC__GROOMY] )
 		skills2 -= sc->data[SC__GROOMY]->val2;
 	if( sc->data[SC_SWINGDANCE] )
-		skills2 += sc->data[SC_SWINGDANCE]->val2;
+		skills2 += sc->data[SC_SWINGDANCE]->val3;
 	if( sc->data[SC_DANCEWITHWUG] )
 		skills2 += sc->data[SC_DANCEWITHWUG]->val3;
 	if( sc->data[SC_GLOOMYDAY] )
@@ -6664,7 +6664,7 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 	if( sc->data[SC__GROOMY] )
 		aspd_rate += sc->data[SC__GROOMY]->val2 * 10;
 	if( sc->data[SC_SWINGDANCE] )
-		aspd_rate -= sc->data[SC_SWINGDANCE]->val2 * 10;
+		aspd_rate -= sc->data[SC_SWINGDANCE]->val3 * 10;
 	if( sc->data[SC_DANCEWITHWUG] )
 		aspd_rate -= sc->data[SC_DANCEWITHWUG]->val3 * 10;
 	if( sc->data[SC_GLOOMYDAY] )
