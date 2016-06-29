@@ -6402,9 +6402,9 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 		if (!sc->data[SC_QUAGMIRE]) {
 			if (bonus < 7 && (sc->data[SC_TWOHANDQUICKEN] || sc->data[SC_ONEHAND] || sc->data[SC_MERC_QUICKEN] || sc->data[SC_ADRENALINE] || sc->data[SC_SPEARQUICKEN]))
 				bonus = 7;
-			if (bonus < 6 && sc->data[SC_ADRENALINE2])
+			else if (bonus < 6 && sc->data[SC_ADRENALINE2])
 				bonus = 6;
-			if (bonus < 5 && sc->data[SC_FLEET])
+			else if (bonus < 5 && sc->data[SC_FLEET])
 				bonus = 5;
 		}
 
