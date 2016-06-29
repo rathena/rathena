@@ -6496,7 +6496,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 
 	if(sc->data[SC_ASSNCROS] && !skills1) {
 		if (bl->type!=BL_PC)
-			skills2 += sc->data[SC_ASSNCROS]->val2/10;
+			skills2 += sc->data[SC_ASSNCROS]->val2;
 		else
 			switch(((TBL_PC*)bl)->status.weapon) {
 				case W_BOW:
@@ -6507,7 +6507,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, s
 				case W_GRENADE:
 					break;
 				default:
-					skills2 += sc->data[SC_ASSNCROS]->val2/10;
+					skills2 += sc->data[SC_ASSNCROS]->val2;
 					break;
 			}
 	}

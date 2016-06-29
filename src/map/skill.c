@@ -12673,13 +12673,14 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		}
 		break;
 	case BA_ASSASSINCROSS:
-		val1 = skill_lv + (status->agi/20); // ASPD increase
-#ifndef RENEWAL
-		val1 += 5; // Pre-renewal has a 5% base ASPD increase
+		if (sd)
+			val1 = pc_checkskill(sd,BA_MUSICALLESSON) / 2;
+#ifdef RENEWAL // ASPD increase
+		val1 += skill_lv + (status->agi / 20);
+#else
+		val1 += 10 + skill_lv + (status->agi / 10);
+		val1 *= 10; // ASPD works with 1000 as 100%
 #endif
-		if(sd)
-			val1 += pc_checkskill(sd,BA_MUSICALLESSON)/2;
-		val1*=10; // ASPD works with 1000 as 100%
 		break;
 	case DC_FORTUNEKISS:
 		val1 = 10+skill_lv+(status->luk/10); // Critical increase
