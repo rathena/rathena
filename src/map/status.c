@@ -74,7 +74,7 @@ static unsigned short status_calc_speed(struct block_list *,struct status_change
 static short status_calc_aspd_rate(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion);
 #ifdef RENEWAL_ASPD
-static short status_calc_aspd(struct block_list *bl, struct status_change *sc, short flag);
+static short status_calc_aspd(struct block_list *bl, struct status_change *sc, bool fixed);
 #endif
 static short status_calc_fix_aspd(struct block_list *bl, struct status_change *sc, int);
 static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp);
@@ -4769,7 +4769,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 #ifdef RENEWAL_ASPD
 			amotion = ((TBL_HOM*)bl)->homunculusDB->baseASPD;
 			amotion = amotion - amotion * status_get_homdex(bl) / 1000 - status_get_homagi(bl) * amotion / 250;
-			amotion = (amotion * status_calc_aspd(bl, sc, 1) + status_calc_aspd(bl, sc, 2)) / - 100 + amotion;
+			amotion = (amotion * status_calc_aspd(bl, sc, true) + status_calc_aspd(bl, sc, false)) / - 100 + amotion;
 #else
 			amotion = (1000 - 4 * status->agi - status->dex) * ((TBL_HOM*)bl)->homunculusDB->baseASPD / 1000;
 
@@ -4792,10 +4792,10 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 				amotion = amotion*status->aspd_rate/1000;
 #else
 			/// aspd = baseaspd + floor(sqrt((agi^2/2) + (dex^2/5))/4 + (potskillbonus*agi/200))
-			amotion -= (int)(sqrt( (pow(status->agi, 2) / 2) + (pow(status->dex, 2) / 5) ) / 4 + (status_calc_aspd(bl, sc, 1) * status->agi / 200)) * 10;
+			amotion -= (int)(sqrt( (pow(status->agi, 2) / 2) + (pow(status->dex, 2) / 5) ) / 4 + (status_calc_aspd(bl, sc, true) * status->agi / 200)) * 10;
 
-			if( (status_calc_aspd(bl, sc, 2) + status->aspd_rate2) != 0 ) // RE ASPD percertage modifier
-				amotion -= ( amotion - pc_maxaspd(sd) ) * (status_calc_aspd(bl, sc, 2) + status->aspd_rate2) / 100;
+			if( (status_calc_aspd(bl, sc, false) + status->aspd_rate2) != 0 ) // RE ASPD percertage modifier
+				amotion -= ( amotion - pc_maxaspd(sd) ) * (status_calc_aspd(bl, sc, false) + status->aspd_rate2) / 100;
 
 			if(status->aspd_rate != 1000) // Absolute percentage modifier
 				amotion = ( 200 - (200-amotion/10) * status->aspd_rate / 1000 ) * 10;
@@ -6385,134 +6385,121 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
  * This function only affects RENEWAL players and comes after base calculation
  * @param bl: Object to change aspd [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
- * @param flag:	flag&1 - fixed value [malufett]
- * 				flag&2 - percentage value
+ * @param fixed: True - fixed value [malufett]
+ *               False - percentage value
  * @return modified aspd
  */
-static short status_calc_aspd(struct block_list *bl, struct status_change *sc, short flag)
+static short status_calc_aspd(struct block_list *bl, struct status_change *sc, bool fixed)
 {
-	int i, pots = 0, skills1 = 0, skills2 = 0;
+	int bonus = 0;
 
-	if(!sc || !sc->count)
+	if (!sc || !sc->count)
 		return 0;
 
-	if(sc->data[i=SC_ASPDPOTION3] ||
-		sc->data[i=SC_ASPDPOTION2] ||
-		sc->data[i=SC_ASPDPOTION1] ||
-		sc->data[i=SC_ASPDPOTION0])
-		pots += sc->data[i]->val1;
+	if (fixed) {
+		enum sc_type sc_val;
 
-	if (sc->data[SC_ATTHASTE_CASH])
-		pots += sc->data[SC_ATTHASTE_CASH]->val1;
+		if (!sc->data[SC_QUAGMIRE]) {
+			if (bonus < 7 && (sc->data[SC_TWOHANDQUICKEN] || sc->data[SC_ONEHAND] || sc->data[SC_MERC_QUICKEN] || sc->data[SC_ADRENALINE] || sc->data[SC_SPEARQUICKEN]))
+				bonus = 7;
+			if (bonus < 6 && sc->data[SC_ADRENALINE2])
+				bonus = 6;
+			if (bonus < 5 && sc->data[SC_FLEET])
+				bonus = 5;
+		}
 
-	if( !sc->data[SC_QUAGMIRE] ) {
-		if(sc->data[SC_TWOHANDQUICKEN] && skills1 < 7)
-			skills1 = 7;
-
-		if(sc->data[SC_ONEHAND] && skills1 < 7)
-			skills1 = 7;
-
-		if(sc->data[SC_MERC_QUICKEN] && skills1 < 7) // Needs more info
-			skills1 = 7;
-
-		if(sc->data[SC_ADRENALINE2] && skills1 < 6)
-			skills1 = 6;
-
-		if(sc->data[SC_ADRENALINE] && skills1 < 7)
-			skills1 = 7;
-
-		if(sc->data[SC_SPEARQUICKEN] && skills1 < 7)
-			skills1 = 7;
-
-		if(sc->data[SC_FLEET] && skills1 < 5)
-			skills1 = 5;
-	}
-
-	if(sc->data[SC_BERSERK] && skills1 < 15)
-		skills1 = 15;
-	else if(sc->data[SC_MADNESSCANCEL] && skills1 < 20)
-		skills1 = 20;
-
-	if(sc->data[SC_DONTFORGETME])
-		skills2 -= sc->data[SC_DONTFORGETME]->val2 / 10;
-	if(sc->data[SC_LONGING])
-		skills2 -= sc->data[SC_LONGING]->val2 / 10;
-	if(sc->data[SC_STEELBODY])
-		skills2 -= 25;
-	if(sc->data[SC_SKA])
-		skills2 -= 25;
-	if(sc->data[SC_DEFENDER])
-		skills2 -= sc->data[SC_DEFENDER]->val4 / 10;
-	if(sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_ENEMY)
-		skills2 -= 75;
-	if(sc->data[SC_GRAVITATION])
-		skills2 -= sc->data[SC_GRAVITATION]->val2 / 10; // Needs more info
-	if(sc->data[SC_JOINTBEAT]) { // Needs more info
-		if( sc->data[SC_JOINTBEAT]->val2&BREAK_WRIST )
-			skills2 -= 25;
-		if( sc->data[SC_JOINTBEAT]->val2&BREAK_KNEE )
-			skills2 -= 10;
-	}
-	if( sc->data[SC_FREEZING] )
-		skills2 -= 15;
-	if( sc->data[SC_HALLUCINATIONWALK_POSTDELAY] )
-		skills2 -= 50;
-	if( sc->data[SC_PARALYSE] )
-		skills2 -= 10;
-	if( sc->data[SC__BODYPAINT] )
-		skills2 -= 5 * sc->data[SC__BODYPAINT]->val1;
-	if( sc->data[SC__INVISIBILITY] )
-		skills2 -= sc->data[SC__INVISIBILITY]->val2;
-	if( sc->data[SC__GROOMY] )
-		skills2 -= sc->data[SC__GROOMY]->val2;
-	if( sc->data[SC_SWINGDANCE] )
-		skills2 += sc->data[SC_SWINGDANCE]->val3;
-	if( sc->data[SC_DANCEWITHWUG] )
-		skills2 += sc->data[SC_DANCEWITHWUG]->val3;
-	if( sc->data[SC_GLOOMYDAY] )
-		skills2 -= sc->data[SC_GLOOMYDAY]->val3;
-	if( sc->data[SC_EARTHDRIVE] )
-		skills2 -= 25;
-	if( sc->data[SC_GT_CHANGE] )
-		skills2 += sc->data[SC_GT_CHANGE]->val3;
-	if( sc->data[SC_MELON_BOMB] )
-		skills2 -= sc->data[SC_MELON_BOMB]->val3;
-	if( sc->data[SC_PAIN_KILLER] )
-		skills2 -= sc->data[SC_PAIN_KILLER]->val2;
-	if( sc->data[SC_BOOST500] )
-		skills2 += sc->data[SC_BOOST500]->val1;
-	if( sc->data[SC_EXTRACT_SALAMINE_JUICE] )
-		skills2 += sc->data[SC_EXTRACT_SALAMINE_JUICE]->val1;
-	if( sc->data[SC_GOLDENE_FERSE] )
-		skills2 += sc->data[SC_GOLDENE_FERSE]->val3;
-	if( sc->data[SC_INCASPDRATE] )
-		skills2 += sc->data[SC_INCASPDRATE]->val1;
-	if( sc->data[SC_GATLINGFEVER] )
-		skills2 += sc->data[SC_GATLINGFEVER]->val1;
-	if( sc->data[SC_STAR_COMFORT] )
-		skills2 += sc->data[SC_STAR_COMFORT]->val1;
-	if( sc->data[SC_HEAT_BARREL] )
-		skills2 += sc->data[SC_HEAT_BARREL]->val3;
-
-	if(sc->data[SC_ASSNCROS] && !skills1) {
-		if (bl->type!=BL_PC)
-			skills2 += sc->data[SC_ASSNCROS]->val2;
-		else
-			switch(((TBL_PC*)bl)->status.weapon) {
-				case W_BOW:
-				case W_REVOLVER:
-				case W_RIFLE:
-				case W_GATLING:
-				case W_SHOTGUN:
-				case W_GRENADE:
-					break;
-				default:
-					skills2 += sc->data[SC_ASSNCROS]->val2;
-					break;
+		if (sc->data[SC_ASSNCROS] && bonus < sc->data[SC_ASSNCROS]->val2) {
+			if (bl->type != BL_PC)
+				bonus += sc->data[SC_ASSNCROS]->val2;
+			else {
+				switch(((TBL_PC*)bl)->status.weapon) {
+					case W_BOW:
+					case W_REVOLVER:
+					case W_RIFLE:
+					case W_GATLING:
+					case W_SHOTGUN:
+					case W_GRENADE:
+						break;
+					default:
+						bonus += sc->data[SC_ASSNCROS]->val2;
+						break;
+				}
 			}
+		}
+
+		if (bonus < 20 && sc->data[SC_MADNESSCANCEL])
+			bonus = 20;
+		else if (bonus < 15 && sc->data[SC_BERSERK])
+			bonus = 15;
+
+		if (sc->data[sc_val = SC_ASPDPOTION3] || sc->data[sc_val = SC_ASPDPOTION2] || sc->data[sc_val = SC_ASPDPOTION1] || sc->data[sc_val = SC_ASPDPOTION0])
+			bonus += sc->data[sc_val]->val1;
+		if (sc->data[SC_ATTHASTE_CASH])
+			bonus += sc->data[SC_ATTHASTE_CASH]->val1;
+	} else {
+		if (sc->data[SC_DONTFORGETME])
+			bonus -= sc->data[SC_DONTFORGETME]->val2 / 10;
+		if (sc->data[SC_LONGING])
+			bonus -= sc->data[SC_LONGING]->val2 / 10;
+		if (sc->data[SC_STEELBODY])
+			bonus -= 25;
+		if (sc->data[SC_SKA])
+			bonus -= 25;
+		if (sc->data[SC_DEFENDER])
+			bonus -= sc->data[SC_DEFENDER]->val4 / 10;
+		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_ENEMY)
+			bonus -= 75;
+		if (sc->data[SC_GRAVITATION])
+			bonus -= sc->data[SC_GRAVITATION]->val2 / 10; // Needs more info
+		if (sc->data[SC_JOINTBEAT]) { // Needs more info
+			if (sc->data[SC_JOINTBEAT]->val2&BREAK_WRIST)
+				bonus -= 25;
+			if (sc->data[SC_JOINTBEAT]->val2&BREAK_KNEE)
+				bonus -= 10;
+		}
+		if (sc->data[SC_FREEZING])
+			bonus -= 15;
+		if (sc->data[SC_HALLUCINATIONWALK_POSTDELAY])
+			bonus -= 50;
+		if (sc->data[SC_PARALYSE])
+			bonus -= 10;
+		if (sc->data[SC__BODYPAINT])
+			bonus -= 5 * sc->data[SC__BODYPAINT]->val1;
+		if (sc->data[SC__INVISIBILITY])
+			bonus -= sc->data[SC__INVISIBILITY]->val2;
+		if (sc->data[SC__GROOMY])
+			bonus -= sc->data[SC__GROOMY]->val2;
+		if (sc->data[SC_SWINGDANCE])
+			bonus += sc->data[SC_SWINGDANCE]->val3;
+		if (sc->data[SC_DANCEWITHWUG])
+			bonus += sc->data[SC_DANCEWITHWUG]->val3;
+		if (sc->data[SC_GLOOMYDAY])
+			bonus -= sc->data[SC_GLOOMYDAY]->val3;
+		if (sc->data[SC_EARTHDRIVE])
+			bonus -= 25;
+		if (sc->data[SC_GT_CHANGE])
+			bonus += sc->data[SC_GT_CHANGE]->val3;
+		if (sc->data[SC_MELON_BOMB])
+			bonus -= sc->data[SC_MELON_BOMB]->val3;
+		if (sc->data[SC_PAIN_KILLER])
+			bonus -= sc->data[SC_PAIN_KILLER]->val2;
+		if (sc->data[SC_BOOST500])
+			bonus += sc->data[SC_BOOST500]->val1;
+		if (sc->data[SC_EXTRACT_SALAMINE_JUICE])
+			bonus += sc->data[SC_EXTRACT_SALAMINE_JUICE]->val1;
+		if (sc->data[SC_GOLDENE_FERSE])
+			bonus += sc->data[SC_GOLDENE_FERSE]->val3;
+		if (sc->data[SC_INCASPDRATE])
+			bonus += sc->data[SC_INCASPDRATE]->val1;
+		if (sc->data[SC_GATLINGFEVER])
+			bonus += sc->data[SC_GATLINGFEVER]->val1;
+		if (sc->data[SC_STAR_COMFORT])
+			bonus += 3 * sc->data[SC_STAR_COMFORT]->val1;
+		if (sc->data[SC_HEAT_BARREL])
+			bonus += sc->data[SC_HEAT_BARREL]->val3;
 	}
 
-	return ( flag&1? (skills1 + pots) : skills2 );
+	return bonus;
 }
 #endif
 
@@ -6532,8 +6519,7 @@ static short status_calc_fix_aspd(struct block_list *bl, struct status_change *s
 	if (sc->data[SC_OVERED_BOOST])
 		return cap_value(2000 - sc->data[SC_OVERED_BOOST]->val3 * 10, 0, 2000);
 
-	if ((sc->data[SC_GUST_OPTION] || sc->data[SC_BLAST_OPTION]
-		|| sc->data[SC_WILD_STORM_OPTION]))
+	if ((sc->data[SC_GUST_OPTION] || sc->data[SC_BLAST_OPTION] || sc->data[SC_WILD_STORM_OPTION]))
 		aspd -= 50; // +5 ASPD
 	if (sc->data[SC_FIGHTINGSPIRIT] && sc->data[SC_FIGHTINGSPIRIT]->val2)
 		aspd -= sc->data[SC_FIGHTINGSPIRIT]->val2;
