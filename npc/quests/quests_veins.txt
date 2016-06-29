@@ -5230,7 +5230,7 @@ OnInit:
 
 OnTouch:
 	warp "ra_temin",85,137;
-	close;
+	end;
 }
 
 ra_temin,115,140,1	script	Flower Vase#vol	111,{
