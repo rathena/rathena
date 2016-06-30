@@ -3575,7 +3575,7 @@
 5478,Classic_Hat,Classic Hat,4,20,,500,,3,,0,0xFFFFFFFF,63,2,256,,0,1,475,{ bonus bStr,2; bonus bMaxHP,300; },{},{}
 5479,Shaman's_Hair_Ornament,Shaman's Hair Decoration,4,20,,300,,2,,0,0xFFFFFFFF,63,2,256,,1,1,476,{ bonus bMdef,3; bonus2 bSubEle,Ele_Neutral,5; },{},{}
 5480,Bizofnil_Wing_Deco,Bijofnil Wings,4,20,,1000,,6,,0,0xFFFFFFFF,63,2,256,,1,1,477,{ bonus bAllStats,2; bonus2 bSubEle,Ele_All,5; bonus2 bHPRegenRate,(MaxHp*2/100),10000; bonus2 bSPRegenRate,(MaxSp/100),10000; },{},{}
-5481,Hermose_Cap,Hermode Cap,4,20,,1000,,1,,1,0xFFFFFFFF,63,2,256,,1,1,478,{ bonus bAspdRate,10; bonus bBaseAtk,-20; bonus bMatkRate,-10; },{},{}
+5481,Hermose_Cap,Hermode Cap,4,20,,1000,,1,,1,0xFFFFFFFF,63,2,256,,1,1,478,{ bonus bAspdRate,5; .@r = getrefine(); bonus bAtkRate,(.@r >= 10 ? 8 : .@r >= 9 ? 7 : 3); },{},{}
 5482,Dark_Knight_Mask,Dark Knight Mask,4,20,,3000,,5,,0,0xFFFFFFFF,63,2,769,,1,1,479,{ bonus bStr,3; },{},{}
 5483,Odin_Mask,Odin Mask,4,20,,100,,1,,0,0xFFFFFFFF,63,2,513,,1,0,480,{ bonus2 bSubClass,Class_Boss,2; },{},{}
 5484,Taiwan_Flag_Hat,Holidays Hat,4,20,,500,,4,,0,0xFFFFFFFF,63,2,256,,0,0,482,{ bonus bAllStats,5; bonus2 bResEff,Eff_Stun,500; },{},{}
@@ -6765,7 +6765,7 @@
 12671,99lv_Battle_Manual,99lv Battle Manual,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12672,Start_New_Box,Start New Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 617,2; getitem 12263,2; getitem 12329,3; getitem 12330,2; },{},{}
 12673,Lucky_Egg_C10,Lucky Egg C10,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Lucky_Egg_C10); },{},{}
-12674,God_Material_Box,God Material Box,2,20,,500,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12674,God_Material_Box,God Material Box,2,20,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_God_Material_Box); },{},{}
 12675,Sg_Weapon_Supply_Box,WoE Weapon Supply Box,2,20,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Sg_Weapon_Supply_Box); },{},{}
 12676,Sg_Violet_Potion_Box,Siege Violet Potion Box,2,20,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 11547,50; },{},{}
 12677,Siege_Arrow_Quiver_S,Siege Arrow Quiver S,2,2,,100,,,,,0xFFFFFFFF,63,2,,,130,,,{ getitem 1776,200; },{},{}

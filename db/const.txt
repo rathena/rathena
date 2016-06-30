@@ -467,6 +467,7 @@ IG_Chronosian_Lucky_Egg	449
 IG_Sanctuary_Lucky_Egg	450
 IG_Cyborg_Lucky_Egg	451
 IG_Undine_Lucky_Egg	452
+IG_God_Material_Box	453
 
 EF_NONE	-1
 EF_HIT1	0
