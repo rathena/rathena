@@ -4706,10 +4706,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		case ITEMID_ANODYNE:
 			if( map_flag_gvg(sd->bl.m) )
 				return false;
-		case ITEMID_ALOEBERA:
-			if( pc_issit(sd) )
-				return false;
-			break;
 		case ITEMID_WING_OF_FLY:
 		case ITEMID_GIANT_FLY_WING:
 			if( map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m) ) {
@@ -4729,7 +4725,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 				clif_displaymessage(sd->fd, msg_txt(sd,663));
 				return false;
 			}
-			if( nameid != 601 && nameid != 12212 && map[sd->bl.m].flag.noreturn )
+			if( nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && map[sd->bl.m].flag.noreturn )
 				return false;
 			break;
 		case ITEMID_BUBBLE_GUM:
