@@ -5965,7 +5965,8 @@ BUILDIN_FUNC(setr)
 	struct script_data* data;
 	//struct script_data* datavalue;
 	int64 num;
-	const char* name;
+	uint8 pos = 4;
+	const char* name, *command = script_getfuncname(st);
 	char prefix;
 
 	data = script_getdata(st,2);
@@ -5982,7 +5983,10 @@ BUILDIN_FUNC(setr)
 	name = reference_getname(data);
 	prefix = *name;
 
-	if (not_server_variable(prefix) && !script_charid2sd(4,sd)) {
+	if (!strcmp(command, "setr"))
+		pos = 5;
+
+	if (not_server_variable(prefix) && !script_charid2sd(pos,sd)) {
 		ShowError("buildin_set: No player attached for player variable '%s'\n", name);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -6015,7 +6019,7 @@ BUILDIN_FUNC(setr)
 	}
 #endif
 
-	if( script_hasdata(st, 4) ) { // Optional argument used by post-increment/post-decrement constructs to return the previous value
+	if( !strcmp(command, "setr") && script_hasdata(st, 4) ) { // Optional argument used by post-increment/post-decrement constructs to return the previous value
 		if( is_string_variable(name) )
 			script_pushstrcopy(st,script_getstr(st, 4));
 		else
@@ -21551,8 +21555,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
 	BUILDIN_DEF(setlook,"ii?"),
 	BUILDIN_DEF(changelook,"ii?"), // Simulates but don't Store it
-	BUILDIN_DEF2(setr,"set","rv"),
-	BUILDIN_DEF(setr,"rv?"), // Not meant to be used directly, required for var++/var--
+	BUILDIN_DEF2(setr,"set","rv?"),
+	BUILDIN_DEF(setr,"rv??"), // Not meant to be used directly, required for var++/var--
 	BUILDIN_DEF(setarray,"rv*"),
 	BUILDIN_DEF(cleararray,"rvi"),
 	BUILDIN_DEF(copyarray,"rri"),
