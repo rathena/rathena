@@ -795,7 +795,7 @@ int instance_delusers(unsigned short instance_id)
 		return 1;
 
 	// If no one is in the instance, start the idle timer
-	for(i = 0; im->map[i]->m && i > im->cnt_map; i++)
+	for(i = 0; i < im->cnt_map && im->map[i]->m; i++)
 		if(map[im->map[i]->m].users > 1) // We check this before the actual map.users are updated, hence the 1
 			idle++;
 
