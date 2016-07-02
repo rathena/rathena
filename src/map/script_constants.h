@@ -1362,6 +1362,7 @@
 	export_constant(SC_SHRIMP);
 	export_constant(SC_FRESHSHRIMP);
 	export_constant(SC_ACTIVE_MONSTER_TRANSFORM);
+	export_constant(SC_CLOUD_KILL);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

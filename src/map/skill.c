@@ -13295,6 +13295,13 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 				status_change_start(ss, bl, type, 10000, sg->skill_lv, 0, 0, 0, sg->limit, SCSTART_NOICON);
 			break;
 
+		case UNT_CLOUD_KILL:
+			if(!sce) {
+				sc_start4(ss, bl, type, 100, sg->skill_lv, ss->id, unit->bl.id, 0, skill_get_time(sg->skill_id, sg->skill_lv));
+				status_change_start(ss, bl, SC_POISON, 10000, sg->skill_lv, ss->id, 0, 0, skill_get_time2(sg->skill_id, sg->skill_lv), SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
+			}
+			break;
+
 		case UNT_WARMER:
 			if (!sce && bl->type == BL_PC && !battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON)
 				sc_start2(ss, bl, type, 100, sg->skill_lv, ss->id, skill_get_time(sg->skill_id, sg->skill_lv));
@@ -13930,12 +13937,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 				sg->limit = DIFF_TICK(tick, sg->tick) + 100;
 			break;
 
-		case UNT_CLOUD_KILL:
-			if(tsc && !tsc->data[type])
-				status_change_start(ss, bl,type,10000,sg->skill_lv,sg->group_id,0,0,skill_get_time2(sg->skill_id,sg->skill_lv),SCSTART_NORATEDEF);
-			skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
-			break;
-
 		case UNT_ZEPHYR:
 			if (ss == bl)
 				break; // Doesn't affect the Elemental
@@ -14216,6 +14217,7 @@ int skill_unit_onleft(uint16 skill_id, struct block_list *bl, unsigned int tick)
 		case EL_WATER_BARRIER:
 		case EL_ZEPHYR:
 		case EL_POWER_OF_GAIA:
+		case SO_CLOUD_KILL:
 		case SO_WARMER:
 		case SO_FIRE_INSIGNIA:
 		case SO_WATER_INSIGNIA:

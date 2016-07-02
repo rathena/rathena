@@ -753,7 +753,7 @@ void initChangeTables(void)
 	set_sc( SO_ELECTRICWALK		, SC_PROPERTYWALK	, SI_PROPERTYWALK	, SCB_NONE );
 	set_sc( SO_SPELLFIST		, SC_SPELLFIST		, SI_SPELLFIST		, SCB_NONE );
 	set_sc_with_vfx( SO_DIAMONDDUST	, SC_CRYSTALIZE		, SI_COLD		, SCB_NONE );
-	set_sc( SO_CLOUD_KILL   , SC_POISON         , SI_CLOUDKILL      , SCB_NONE );
+	set_sc( SO_CLOUD_KILL   , SC_CLOUD_KILL         , SI_CLOUDKILL      , SCB_NONE );
 	set_sc( SO_STRIKING		, SC_STRIKING		, SI_STRIKING		, SCB_WATK|SCB_CRI );
 	set_sc( SO_WARMER		, SC_WARMER		, SI_WARMER		, SCB_NONE );
 	set_sc( SO_VACUUM_EXTREME	, SC_VACUUM_EXTREME	, SI_VACUUM_EXTREME	, SCB_NONE );
@@ -9891,6 +9891,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_PROPERTYWALK:
 			val3 = 0;
 			break;
+		case SC_CLOUD_KILL:
+			val4 = tick / 500;
+			tick = -1; // Duration sent to the client should be infinite
+			tick_time = 500;
+			break;
 		case SC_STRIKING:
 			// val2 = watk bonus already calc
 			val3 = 6 - val1;// spcost = 6 - level (lvl1:5 ... lvl 5: 1)
@@ -12424,6 +12429,15 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				break;
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
+		}
+		break;
+
+	case SC_CLOUD_KILL: {
+			struct block_list *src = map_id2bl(sce->val2), *unit_bl = map_id2bl(sce->val3);
+
+			if (src && unit_bl)
+				skill_attack(skill_get_type(status_sc2skill(type)), src, unit_bl, bl, SO_CLOUD_KILL, sce->val1, tick, 0);
+			sc_timer_next(500 + tick, status_change_timer, bl->id, data);
 		}
 		break;
 
