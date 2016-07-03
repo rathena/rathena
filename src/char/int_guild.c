@@ -141,8 +141,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 			schema_config.guild_db, esc_name, esc_master, g->guild_lv, g->max_member, g->average_lv, g->member[0].char_id) )
 		{
 			Sql_ShowDebug(sql_handle);
-			if (g->guild_id == -1)
-				return 0; //Failed to create guild!
+			return 0; //Failed to create guild!
 		}
 		else
 		{
