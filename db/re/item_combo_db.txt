@@ -457,14 +457,14 @@
 24078:24079:24080,{ bonus2 bSPDrainRate,10,1+(getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)/10); }
 24081:24082:24083,{ bonus2 bHPDrainRate,40,2+(getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)/5); }
 24084:24085:24086:24087:24088:24089,{ bonus bAllStats,1; .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_SHOES)+getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L); if (.@r >= 45) { bonus bNoGemStone,1; } bonus bUseSPrate,100-.@r; }
-24090:24091:24092,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES) >= 20) bonus2 bResEff,Eff_Stone,100; }
-24090:24093:24094,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES) >= 20) bonus2 bResEff,Eff_Sleep,100; }
-24090:24095:24096,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES) >= 20) bonus2 bResEff,Eff_Silence,100; }
-24090:24097:24098,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES) >= 20) bonus2 bResEff,Eff_Blind,100; }
-24090:24099:24100:24101,{ bonus bDef,4; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 30) bonus2 bResEff,Eff_Freeze,100; }
-24090:24102:24103,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 20) bonus2 bResEff,Eff_Bleeding,100; }
-24090:24104:24105:24106,{ bonus bDef,4; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 30) bonus2 bResEff,Eff_Stun,100; }
-24090:24107:24108,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 20) bonus2 bResEff,Eff_Curse,100; }
+24090:24091:24092,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES) >= 20) bonus2 bResEff,Eff_Stone,10000; }
+24090:24093:24094,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES) >= 20) bonus2 bResEff,Eff_Sleep,10000; }
+24090:24095:24096,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES) >= 20) bonus2 bResEff,Eff_Silence,10000; }
+24090:24097:24098,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES) >= 20) bonus2 bResEff,Eff_Blind,10000; }
+24090:24099:24100:24101,{ bonus bDef,4; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 30) bonus2 bResEff,Eff_Freeze,10000; }
+24090:24102:24103,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 20) bonus2 bResEff,Eff_Bleeding,10000; }
+24090:24104:24105:24106,{ bonus bDef,4; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 30) bonus2 bResEff,Eff_Stun,10000; }
+24090:24107:24108,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 20) bonus2 bResEff,Eff_Curse,10000; }
 24109:24110,{ bonus bNoCastCancel2,1; bonus bVariableCastrate,40-(getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)); }
 //The above should be 24109:24110/*:Caster Shadow Pendant*/,{ bonus bFixedCastrate,-(getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R)); }
 24111:24112:24113,{ bonus bNoCastCancel,1; bonus bUseSPrate,40-getequiprefinerycnt(EQI_SHADOW_SHIELD)-getequiprefinerycnt(EQI_SHADOW_ARMOR)-getequiprefinerycnt(EQI_SHADOW_SHOES); }
