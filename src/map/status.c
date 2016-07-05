@@ -75,6 +75,7 @@ struct s_status_change_db {
 	struct script_code *script; ///< Exceuted script when SC is active
 	uint32 min_duration; ///< Minimum duration effect (after all status reduction)
 	uint16 min_rate; ///< Minimum rate to be applied (after all status reduction)
+	uint32 disabledon; ///< SC disabled on map zones
 };
 /// Status Change DB
 //static struct s_status_change_db *StatusChange[SC_MAX];
@@ -248,8 +249,6 @@ uint16 status_sc_get_skill(enum sc_type sc_type) {
 
 	CHK_SC2(sc_type, skill_id, 0);
 }
-
-unsigned int SCDisabled[SC_MAX]; ///< List of disabled SC on map zones. [Cydh]
 
 static unsigned short status_calc_str(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_agi(struct block_list *,struct status_change *,int);
@@ -10545,7 +10544,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			if (src && unit_bl){
 				map_freeblock_lock();
 				dounlock = true;
-				skill_attack(skill_get_type(status_sc2skill(type)), src, unit_bl, bl, SO_CLOUD_KILL, sce->val1, tick, 0);
+				skill_attack(skill_get_type(status_sc_get_skill(type)), src, unit_bl, bl, SO_CLOUD_KILL, sce->val1, tick, 0);
 				if (!status_isdead(bl)) {
 					sc_timer_next(500 + tick, status_change_timer, bl->id, data);
 				}
@@ -11411,12 +11410,12 @@ static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapI
 	if (type <= SC_NONE || type >= SC_MAX)
 		return false;
 
-	if ((!mapIsVS && SCDisabled[type]&1) ||
-		(mapIsPVP && SCDisabled[type]&2) ||
-		(mapIsGVG && SCDisabled[type]&4) ||
-		(mapIsBG && SCDisabled[type]&8) ||
-		(mapIsTE && SCDisabled[type]&16) ||
-		(SCDisabled[type]&(mapZone)))
+	if ((!mapIsVS && status_sc_exists(type)->disabledon&1) ||
+		(mapIsPVP && status_sc_exists(type)->disabledon&2) ||
+		(mapIsGVG && status_sc_exists(type)->disabledon&4) ||
+		(mapIsBG && status_sc_exists(type)->disabledon&8) ||
+		(mapIsTE && status_sc_exists(type)->disabledon&16) ||
+		(status_sc_exists(type)->disabledon&(mapZone)))
 	{
 		return true;
 	}
@@ -11443,40 +11442,13 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 		unsigned int mapZone = map[bl->m].zone << 3;
 
 		for (i = 0; i < SC_MAX; i++) {
-			if (!sc->data[i] || !SCDisabled[i])
+			if (!sc->data[i] || !status_sc_exists(i)->disabledon)
 				continue;
 
 			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone, mapIsTE))
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
 		}
 	}
-}
-
-/**
- * Read status_disabled.txt file
- * @param str: Fields passed from sv_readdb
- * @param columns: Columns passed from sv_readdb function call
- * @param current: Current row being read into SCDisabled array
- * @return True - Successfully stored, False - Invalid SC
- */
-static bool status_readdb_status_disabled(char **str, int columns, int current)
-{
-	int type = SC_NONE;
-
-	if (ISDIGIT(str[0][0]))
-		type = atoi(str[0]);
-	else {
-		if (!script_get_constant(str[0],&type))
-			type = SC_NONE;
-	}
-
-	if (type <= SC_NONE || type >= SC_MAX) {
-		ShowError("status_readdb_status_disabled: Invalid SC with type %s.\n", str[0]);
-		return false;
-	}
-
-	SCDisabled[type] = (unsigned int)atol(str[1]);
-	return true;
 }
 
 /**
@@ -11592,12 +11564,13 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
 	return true;
 }
 
-/** Splits string to int by using bitmask
-* @param str
-* @param delim
-* @param useConst Will looks up const.txt values
-* @return value after bitmasking
-*/
+/**
+ * Splits string to integer by using bitmask
+ * @param str: String to convert to integer
+ * @param delim: Delimeter character
+ * @param file: Filename (used for error message)
+ * @return line: Line number (used for error message)
+ */
 uint32 status_split_bit(char *str, const char *delim, const char *file, int line) {
 	int ret = 0;
 	char *p = strtok(str, delim);
@@ -11689,7 +11662,7 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 				config_setting_t *list = NULL;
 				int sc_id = SC_NONE, min_dur = 0, min_rate = 0, end_return = 0;
 				uint8 count = 0;
-				const char *sc_name, *icon, *skill, *scs, *scb, *opt1, *opt2, *opt3, *option, *flag, *script_str;
+				const char *sc_name, *icon, *skill, *scs, *scb, *opt1, *opt2, *opt3, *option, *flag, *disabledon, *script_str;
 				struct s_status_change_db *scdb;
 
 				if (!sc)
@@ -11844,6 +11817,10 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 					scdb->end_return = (end_return);
 				}
 
+				// Disabled on Map Zone
+				if (config_setting_lookup_string(sc, "DisabledOn", &disabledon) && disabledon && disabledon[0] != '\0')
+					scdb->disabledon = status_split_bit((char *)disabledon, "|", filename, sc->line);
+
 				// Additional Script
 				if (config_setting_lookup_string(sc, "Script", &script_str) && script_str && script_str != '\0') {
 					struct script_code *script = parse_script(script_str, filename, 0, 0);
@@ -11897,7 +11874,6 @@ void status_readdb(void) {
 
 	// Initialize databases to default
 
-	memset(SCDisabled, 0, sizeof(SCDisabled));
 	// size_fix.txt
 	for(i=0;i<ARRAYLENGTH(atkmods);i++)
 		for(j=0;j<MAX_WEAPON_TYPE;j++)
@@ -11940,7 +11916,6 @@ void status_readdb(void) {
 
 		status_sc_readconf(dbsubpath2,i);
 		status_readdb_attrfix(dbsubpath2,i); // !TODO use sv_readdb ?
-		sv_readdb(dbsubpath1, "status_disabled.txt", ',', 2, 2, -1, &status_readdb_status_disabled, i);
 		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i);
 		sv_readdb(dbsubpath2, "refine_db.txt", ',', 4+MAX_REFINE, 4+MAX_REFINE, ARRAYLENGTH(refine_info), &status_readdb_refine, i);
 		aFree(dbsubpath1);

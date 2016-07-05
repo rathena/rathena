@@ -3,24 +3,24 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20140503
+//= 20160705
 //===== Description: =========================================
-//= Parameters usage on sc_config_db.txt file.
+//= Parameters usage on sc_config.conf file.
 //============================================================
 
 ---------------------------------------
 
-SC: Status Change name/constants or ID
-    See db/const.txt for SC_
+SC: Status Change name/constants or ID.
+    See src/map/script_constants.h for SC_
 
 ---------------------------------------
 
-SI: Status Icon or client effect that will be displayed on client.
-    See db/const.txt for SI_
+SI: Status Icon or client effect that will be displayed client-side.
+    See src/map/script_constants.h for SI_
 
 ---------------------------------------
 
-SCS: Specified states given when this SC is active. Use "|" as delimiter for multiple values.
+SCS: Specified states given when the SC is active. Use "|" as delimiter for multiple values.
      SCS_NONE               = (Default) Means nothing.
      SCS_NOMOVE             = Cannot move.
      SCS_NOMOVECOND         = Condition check for SCS_NOMOVE.
@@ -38,17 +38,17 @@ SCS: Specified states given when this SC is active. Use "|" as delimiter for mul
      SCS_NOUNEQUIPITEMCOND  = Condition check for SCS_NOUNEQUIPITEM.
      SCS_NOCONSUMEITEM      = Cannot consume item.
      SCS_NOCONSUMEITEMCOND  = Condition check for SCS_NOCONSUMEITEM.
-     SCS_NOATTACK           = Cannot attack
+     SCS_NOATTACK           = Cannot attack.
      SCS_NOATTACKCOND       = Condition check for SCS_NOATTACK.
 
-	 Example if want to makes player cannot move, cannot cast a skill when Berserk/Frenzy is active, the SCS value is
+	 Example, if we want to make the player unable to move and unable to cast skills when Berserk/Frenzy is active, the SCS value is:
 	 SCS_NOMOVE|SCS_NOCAST
 
-	 *COND means the SCS has hardoced condition check in status.c::status_calc_state
+	 SCS that have a suffix of "COND" means the SCS has hardcoded conditions in status.c::status_calc_state
 
 ---------------------------------------
 
-SCB: Flag to indicates which status calculation need to be performed. Use "|" as delimiter for multiple values.
+SCB: Flag that indicates which status calculation needs to be performed. Use "|" as delimiter for multiple values.
      SCB_NONE    = (Default) Calculates nothing.
      SCB_BASE    = Base status
      SCB_MAXHP   = Maximum HP
@@ -86,7 +86,7 @@ SCB: Flag to indicates which status calculation need to be performed. Use "|" as
 
 ---------------------------------------
 
-OPT1: Special effect when status is active. This option is not stackable. These effect also applied their special behaviors.
+OPT1: Special effect when status is active. This option is not stackable. These effects also apply their special behaviors.
       OPT1_STONE        = Stone curse effect
       OPT1_FREEZE       = Freeze effect
       OPT1_STUN         = Stun effect
@@ -161,59 +161,82 @@ Option: Special option/client effect when status is active. Use "|" as delimiter
 
 ---------------------------------------
 
-Flag: Various status flags for specifc usage
-      SCF_BLEFFECT            = Status should has BL_SCEFFECT as relevant effect, must has SI. (display on BL_PC|BL_HOM|BL_MER|BL_MOB|BL_ELEM) By defaut effect only for BL_PC.
-      SCF_DISPLAY             = Displays status effect when player logged in.
-      SCF_PERMANENT           = As permanent effect, avoid to be removed by 'sc_end SC_ALL', 'status_change_clear(block_list,3)'.
-      SCF_DEBUFF              = SC considered as debuff.
-      SCF_SET_STAND           = Sets player to stand.
+Flag: Various status flags for specifc usage.
+      SCF_BLEFFECT            = Status should have BL_SCEFFECT as relevant effect, must have SI (displays on BL_PC, BL_HOM, BL_MER, BL_MOB, BL_ELEM). BL_PC is the default value.
+      SCF_DISPLAY             = Displays status effect when player logs in.
+      SCF_PERMANENT           = Has a permanent effect. Unable to be removed by 'sc_end SC_ALL', 'status_change_clear(block_list,3)', etc.
+      SCF_DEBUFF              = SC is considered as a debuff.
+      SCF_SET_STAND           = Sets player to standing state.
       SCF_FAILED_MADO         = Cannot be applied if Madogear is active.
-      SCF_FAILED_IMMUNITY     = Failed to be applied if target has immunity by Golden Thief Bug Card's effect or Wand of Hermode.
+      SCF_FAILED_IMMUNITY     = Cannot be applied if target has immunity to Golden Thief Bug Card's effect or Wand of Hermode.
 
-      SCF_NO_CLEARBUFF        = Cannot be removed on status_change_clear_buffs().
-      SCF_NO_REM_ONDEAD       = Cannot be removed when dead. 'status_change_clear(block_list,0)'.
+      SCF_NO_CLEARBUFF        = Cannot be removed by status_change_clear_buffs().
+      SCF_NO_REM_ONDEAD       = Cannot be removed when dead. 'status_change_clear(block_list,0)'
       SCF_NO_REM_ONMADOGEAR   = Cannot be removed while activating/deactivating Madogear.
       SCF_NO_DISPELL          = Cannot be removed by Dispell (SA_DISPELL).
       SCF_NO_CLEARANCE        = Cannot be removed by Clearance (AB_CLEARANCE).
       SCF_NO_BANISHING_BUSTER = Cannot be removed by Banishing Buster (RL_BANISHING_BUSTER).
-      SCF_NO_SAVE             = Won't be saved when player logs out, map_quit().
+      SCF_NO_SAVE             = Won't be saved when player logs out. 'map_quit()'
 
-      SCF_REM_ON_DAMAGED      = Removed when receives damage.
-      SCF_REM_ON_REFRESH      = Removed by Refresh (RK_REFRESH) on status_change_clear_buffs().
-      SCF_REM_ON_LUXANIMA     = Removed by Luxanima (RK_LUXANIMA) on status_change_clear_buffs().
-      SCF_REM_ON_MAPWARP      = Removed when warp to another map.
-      SCF_REM_ON_CHANGEMAP    = Removed when change map-server.
+      SCF_REM_ON_DAMAGED      = Removed when receiving damage.
+      SCF_REM_ON_REFRESH      = Removed by Refresh (RK_REFRESH) in status_change_clear_buffs().
+      SCF_REM_ON_LUXANIMA     = Removed by Luxanima (RK_LUXANIMA) in status_change_clear_buffs().
+      SCF_REM_ON_MAPWARP      = Removed when warping to another map.
+      SCF_REM_ON_CHANGEMAP    = Removed when changing map-server.
+	  SCF_REM_ON_CHEM_PROTECT = Removed by Chemical Protection (AM_CP_ARMOR/HELM/SHIELD/WEAPON) in status_change_clear_buffs().
 
-      SCF_STOP_ATTACKING      = Makes unit stop attacking for a while.
-      SCF_STOP_CASTING        = Stops casting process.
-      SCF_STOP_WALKING        = Makes unit stop walking for a while.
+      SCF_STOP_ATTACKING      = Makes the unit stop attacking for a while.
+      SCF_STOP_CASTING        = Makes the uint stop skill casting process.
+      SCF_STOP_WALKING        = Makes the unit stop walking for a while.
 
       SCF_BOSS_RESIST         = Cannot be applied to Boss Monster.
       SCF_MVP_RESIST          = Cannot be applied to MvP.
 
 ---------------------------------------
 
-MinDuration: Minimum duration in miliseconds after all reduction calculation for SC resistance.
+MinDuration: Minimum duration, in miliseconds, after reduction calculation for SC resistance.
 
 ---------------------------------------
 
-MinRate: Minimum success rate in n/10000 after all reduction calculation for SC resistance.
+MinRate: Minimum success rate, in n/10000, after reduction calculation for SC resistance.
+
+---------------------------------------
+
+DisabledOn: Status Change will always be removed or fail to be inflicted on the specified map(s). Use "|" as delimiter for multiple values.
+      1    - restricted in normal maps
+      2    - restricted in PVP
+      4    - restricted in GVG
+      8    - restricted in Battlegrounds
+      Restricted zones - configured by 'restricted <number>' mapflag
+      32   - restricted in zone 1
+      64   - restricted in zone 2
+      128  - restricted in zone 3
+      256  - restricted in zone 4
+      512  - restricted in zone 5
+      1024 - restricted in zone 6
+      2048 - restricted in zone 7
+
+      The different zones are bitmask values and can be applied using the "|" delimeter or by combining the values.
+
+      Example:
+         DisabledOn: "4" // Status will be removed when the player enters GvG and WoE Castle maps; Also cannot be inflicted on those maps. (Single zone)
+	     DisabledOn: "1|4" // Status will be removed when the player enters Normal, GvG, WoE Castle maps; Also cannot be inflicted on those maps. (Multiple zones using "|")
+	     DisabledOn: "5" // Status will be removed when the player enters Normal, GvG, WoE Castle maps; Also cannot be inflicted on those maps. (Multiple zones combined values)
 
 ---------------------------------------
 
 Notes:
 
-By default, statuses are 'Buff' type, which removable by 'status_change_clear_buffs', function that being used by
+By default, statuses are 'Buff' type, which are removable by 'status_change_clear_buffs' function that is used by
 Tarot (CG_TAROTCARD), Refresh (RK_REFESH), Luxanima (RK_LUXANIMA), Wand of Hermode (CG_HERMODE), Gospel
 (PA_GOSPEL), and Inspiration (LG_INSPIRATION).
 
-SCF_NO_CLEARBUFF prevents some permanent statuses and some statuses that cannot be removed by those skills
-doesn't matter if the active statuses are buff or debuff or the skill that attempts to remove it.
+SCF_NO_CLEARBUFF prevents some permanent and non-permanent statuses that cannot be removed by the skills listed above
+(doesn't matter if the status is a buff or debuff or the skill that attempts to remove it).
 
-Tarot and Wand of Hermode are removing status as Buff, not removing Debuff or except status with SCF_DEBUFF.
-While, Gospel and Inspiration are removing Buffs and Debuffs.
+Tarot and Wand of Hermode only remove buffs and not debuffs (except statuses with SCF_DEBUFF).
+While Gospel and Inspiration remove buffs and debuffs.
 
-Refresh and Luxanima are only removing status that has flag SCF_REM_ON_REFRESH or SCF_REM_ON_LUXANIMA. Actually
-just like Dispell (SA_DISPELL), Clearance (AB_CLEARANCE), and Banishing Buster (RL_BANISHING_BUSTER) that have
-effect to remove buffs or debuffs. But, statuses that can be removed by Refresh and Luxanima are less than those
-3 skills.
+Refresh and Luxanima only remove statuses that have the flag SCF_REM_ON_REFRESH or SCF_REM_ON_LUXANIMA. Works
+just like Dispell (SA_DISPELL), Clearance (AB_CLEARANCE), and Banishing Buster (RL_BANISHING_BUSTER) that has
+effect to remove buffs or debuffs.
