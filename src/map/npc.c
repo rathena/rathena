@@ -44,7 +44,7 @@ static int npc_cache_mob=0;
 #if PACKETVER >= 20131223
 struct s_npc_market {
 	struct npc_item_list *list;
-	char exname[NAME_LENGTH+1];
+	char exname[NPC_NAME_LENGTH+1];
 	uint16 count;
 };
 static DBMap *NPCMarketDB; /// Stock persistency! Temporary market stocks from `market` table. struct s_npc_market, key: NPC exname
@@ -336,6 +336,14 @@ static int npc_event_export(struct npc_data *nd, int i)
 	if ((lname[0] == 'O' || lname[0] == 'o') && (lname[1] == 'N' || lname[1] == 'n')) {
 		struct event_data *ev;
 		char buf[EVENT_NAME_LENGTH];
+
+		// NPC:<name> the prefix uses 4 characters
+		if( !strncasecmp( lname, script_config.onwhisper_event_name, NAME_LENGTH ) && strlen(nd->exname) > ( NAME_LENGTH - 4 ) ){
+			// The client only allows that many character so that NPC could not be whispered by unmodified clients
+			ShowWarning( "Whisper event in npc '"CL_WHITE"%s"CL_RESET"' was ignored, because it's name is too long.\n", nd->exname );
+			return 0;
+		}
+
 		snprintf(buf, ARRAYLENGTH(buf), "%s::%s", nd->exname, lname);
 		// generate the data and insert it
 		CREATE(ev, struct event_data, 1);
@@ -430,7 +438,7 @@ int npc_event_doall(const char* name)
 int npc_event_doall_id(const char* name, int rid)
 {
 	int c = 0;
-	char buf[64];
+	char buf[EVENT_NAME_LENGTH];
 	safesnprintf(buf, sizeof(buf), "::%s", name);
 	ev_db->foreach(ev_db,npc_event_doall_sub,&c,buf,rid);
 	return c;
@@ -445,7 +453,7 @@ int npc_event_do_clock(int tid, unsigned int tick, int id, intptr_t data)
 	static struct tm ev_tm_b; // tracks previous execution time
 	time_t timer;
 	struct tm* t;
-	char buf[64];
+	char buf[EVENT_NAME_LENGTH];
 	int c = 0;
 
 	timer = time(NULL);
@@ -822,7 +830,7 @@ int npc_event_sub(struct map_session_data* sd, struct event_data* ev, const char
 		ARR_FIND( 0, MAX_EVENTQUEUE, i, sd->eventqueue[i][0] == '\0' );
 		if( i < MAX_EVENTQUEUE )
 		{
-			safestrncpy(sd->eventqueue[i],eventname,50); //Event enqueued.
+			safestrncpy(sd->eventqueue[i],eventname,EVENT_NAME_LENGTH); //Event enqueued.
 			return 0;
 		}
 
@@ -975,6 +983,8 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 		case NPCTYPE_WARP:
 			if (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]) || pc_isdead(sd))
 				break; // hidden or dead chars cannot use warps
+			if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(map[m].npc[i]->u.warp.mapindex), sd->group_level))
+				break;
 			if(sd->count_rewarp > 10){
 				ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, map[m].npc[i]->exname, map[m].npc[i]->path);
 				sd->count_rewarp=0;
@@ -2220,27 +2230,27 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
 {
 	const char* p;
 	struct npc_data* dnd;// duplicate npc
-	char newname[NAME_LENGTH];
+	char newname[NPC_NAME_LENGTH+1];
 
 	// parse name
 	p = strstr(name,"::");
 	if( p ) { // <Display name>::<Unique name>
 		size_t len = p-name;
-		if( len > NAME_LENGTH ) {
-			ShowWarning("npc_parsename: Display name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
+		if( len > NPC_NAME_LENGTH ) {
+			ShowWarning("npc_parsename: Display name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
 			safestrncpy(nd->name, name, sizeof(nd->name));
 		} else {
 			memcpy(nd->name, name, len);
 			memset(nd->name+len, 0, sizeof(nd->name)-len);
 		}
 		len = strlen(p+2);
-		if( len > NAME_LENGTH )
-			ShowWarning("npc_parsename: Unique name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
+		if( len > NPC_NAME_LENGTH )
+			ShowWarning("npc_parsename: Unique name of '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
 		safestrncpy(nd->exname, p+2, sizeof(nd->exname));
 	} else {// <Display name>
 		size_t len = strlen(name);
-		if( len > NAME_LENGTH )
-			ShowWarning("npc_parsename: Name '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NAME_LENGTH);
+		if( len > NPC_NAME_LENGTH )
+			ShowWarning("npc_parsename: Name '%s' is too long (len=%u) in file '%s', line'%d'. Truncating to %u characters.\n", name, (unsigned int)len, filepath, strline(buffer,start-buffer), NPC_NAME_LENGTH);
 		safestrncpy(nd->name, name, sizeof(nd->name));
 		safestrncpy(nd->exname, name, sizeof(nd->exname));
 	}
@@ -2771,9 +2781,9 @@ int npc_convertlabel_db(DBKey key, DBData *data, va_list ap)
 	len = p-lname;
 
 	// here we check if the label fit into the buffer
-	if( len > 23 )
+	if( len > NAME_LENGTH )
 	{
-		ShowError("npc_parse_script: label name longer than 23 chars! '%s'\n (%s)", lname, filepath);
+		ShowError("npc_parse_script: label name longer than %d chars! '%s'\n (%s)", NAME_LENGTH, lname, filepath);
 		return 0;
 	}
 
@@ -3150,7 +3160,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 }
 
 int npc_duplicate4instance(struct npc_data *snd, int16 m) {
-	char newname[NAME_LENGTH];
+	char newname[NPC_NAME_LENGTH+1];
 
 	if( map[m].instance_id == 0 )
 		return 1;
@@ -3391,7 +3401,7 @@ static void npc_market_fromsql(void) {
 		if (!(market = (struct s_npc_market *)strdb_get(NPCMarketDB,data))) {
 			CREATE(market, struct s_npc_market, 1);
 			market->count = 0;
-			safestrncpy(market->exname, data, strlen(data)+1);
+			safestrncpy(market->exname, data, NPC_NAME_LENGTH);
 			strdb_put(NPCMarketDB, market->exname, market);
 		}
 
@@ -3548,7 +3558,7 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 		int l;
 		ARR_FIND( 0, MAX_EVENTQUEUE, l, sd->eventqueue[l][0] == '\0' );
 		if( l < MAX_EVENTQUEUE ) {
-			safestrncpy(sd->eventqueue[l],eventname,50); //Event enqueued.
+			safestrncpy(sd->eventqueue[l],eventname,EVENT_NAME_LENGTH); //Event enqueued.
 			return 0;
 		}
 
@@ -3962,6 +3972,24 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.gvg_castle=state;
 		if (state) map[m].flag.pvp=0;
 	}
+	else if (!strcmpi(w3,"gvg_te")) {
+		map[m].flag.gvg_te = state;
+		if( state && map[m].flag.pvp ) {
+			map[m].flag.pvp = 0;
+			ShowWarning("npc_parse_mapflag: You can't set PvP and GvG flags for the same map! Removing PvP flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
+		}
+		if( state && map[m].flag.battleground ) {
+			map[m].flag.battleground = 0;
+			ShowWarning("npc_parse_mapflag: You can't set GvG and BattleGround flags for the same map! Removing BattleGround flag from %s (file '%s', line '%d').\n", map[m].name, filepath, strline(buffer,start-buffer));
+		}
+	}
+	else if (!strcmpi(w3,"gvg_te_castle")) {
+		map[m].flag.gvg_te_castle = state;
+		if (state) {
+			map[m].flag.gvg_castle = 0;
+			map[m].flag.pvp = 0;
+		}
+	}
 	else if (!strcmpi(w3,"battleground")) {
 		if( state ) {
 			if( sscanf(w4, "%11d", &state) == 1 )
@@ -4087,6 +4115,8 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.nolockon = state;
 	else if (!strcmpi(w3,"notomb"))
 		map[m].flag.notomb = state;
+	else if (!strcmpi(w3,"nocostume"))
+		map[m].flag.nocostume = state;
 	else if (!strcmpi(w3,"skill_damage")) {
 #ifdef ADJUST_SKILL_DAMAGE
 		char skill[SKILL_NAME_LENGTH];
@@ -4358,9 +4388,9 @@ void npc_read_event_script(void)
 		DBIterator* iter;
 		DBKey key;
 		DBData *data;
+		char name[EVENT_NAME_LENGTH];
 
-		char name[64]="::";
-		safestrncpy(name+2,config[i].event_name,62);
+		safesnprintf(name,EVENT_NAME_LENGTH,"::%s",config[i].event_name);
 
 		script_event[i].event_count = 0;
 		iter = db_iterator(ev_db);
@@ -4494,6 +4524,7 @@ int npc_reload(void) {
 	/* refresh guild castle flags on both woe setups */
 	npc_event_doall("OnAgitInit");
 	npc_event_doall("OnAgitInit2");
+	npc_event_doall("OnAgitInit3");
 
 	//Execute the OnInit event for freshly loaded npcs. [Skotlex]
 	ShowStatus("Event '"CL_WHITE"OnInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n",npc_event_doall("OnInit"));
@@ -4604,11 +4635,11 @@ void do_init_npc(void){
 	for( i = MAX_NPC_CLASS2_START; i < MAX_NPC_CLASS2_END; i++ )
 		npc_viewdb2[i - MAX_NPC_CLASS2_START].class_ = i;
 
-	ev_db = strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA),2*NAME_LENGTH+2+1);
-	npcname_db = strdb_alloc(DB_OPT_BASE,NAME_LENGTH);
+	ev_db = strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA), EVENT_NAME_LENGTH);
+	npcname_db = strdb_alloc(DB_OPT_BASE, NPC_NAME_LENGTH+1);
 	npc_path_db = strdb_alloc(DB_OPT_BASE|DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA,80);
 #if PACKETVER >= 20131223
-	NPCMarketDB = strdb_alloc(DB_OPT_BASE, NAME_LENGTH+1);
+	NPCMarketDB = strdb_alloc(DB_OPT_BASE, NPC_NAME_LENGTH+1);
 	npc_market_fromsql();
 #endif
 

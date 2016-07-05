@@ -30,6 +30,7 @@ struct guild;
 struct battleground_data;
 struct quest;
 struct party_booking_ad_info;
+enum e_party_member_withdraw;
 #include <stdarg.h>
 
 enum { // packet DB
@@ -140,6 +141,26 @@ enum e_adopt_reply {
 	ADOPT_REPLY_MORE_CHILDREN = 0,
 	ADOPT_REPLY_LEVEL_70,
 	ADOPT_REPLY_MARRIED,
+};
+
+enum e_wip_block {
+	WIP_DISABLE_NONE = 0x0,
+	WIP_DISABLE_SKILLITEM = 0x1,
+	WIP_DISABLE_NPC = 0x2,
+	WIP_DISABLE_ALL = 0x3,
+};
+
+enum e_party_invite_reply {
+	PARTY_REPLY_JOIN_OTHER_PARTY = 0,   ///< result=0 : "The Character already joined another party." -> MsgStringTable[80]
+	PARTY_REPLY_REJECTED,			    ///< result=1 : "Request for party rejected." -> MsgStringTable[81]
+	PARTY_REPLY_ACCEPTED,			    ///< result=2 : "Request for party accepted." -> MsgStringTable[82]
+	PARTY_REPLY_FULL,				    ///< result=3 : "Party Capacity exceeded." -> MsgStringTable[83]
+	PARTY_REPLY_DUAL,				    ///< result=4 : "Character in the same account already joined." -> MsgStringTable[608]
+	PARTY_REPLY_JOINMSG_REFUSE,		    ///< result=5 : !TODO "The character blocked the party invitation." -> MsgStringTable[1324] (since 20070904)
+	PARTY_REPLY_UNKNOWN_ERROR,		    ///< result=6 : ??
+	PARTY_REPLY_OFFLINE,			    ///< result=7 : "The Character is not currently online or does not exist." -> MsgStringTable[71] (since 20070904)
+	PARTY_REPLY_INVALID_MAPPROPERTY,    ///< result=8 : !TODO "Unable to organize a party in this map" -> MsgStringTable[1388] (since 20080527)
+	PARTY_REPLY_INVALID_MAPPROPERTY_ME, ///< return=9 : !TODO "Cannot join a party in this map" -> MsgStringTable[1871] (since 20110205)
 };
 
 // packet_db[SERVER] is reserved for server use
@@ -462,7 +483,7 @@ enum clif_messages {
 	ITEM_PRODUCE_FAIL = 0x628,
 	ITEM_UNIDENTIFIED = 0x62d,
 	ITEM_REUSE_LIMIT = 0x746,
-	USAGE_FAIL = 0x783,
+	WORK_IN_PROGRESS = 0x783,
 	NEED_REINS_OF_MOUNT = 0x78c,
 	MERGE_ITEM_NOT_AVAILABLE = 0x887,
 };
@@ -618,8 +639,8 @@ void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x,
 void clif_skillcastcancel(struct block_list* bl);
 void clif_skill_fail(struct map_session_data *sd,uint16 skill_id,enum useskill_fail_cause cause,int btype);
 void clif_skill_cooldown(struct map_session_data *sd, uint16 skill_id, unsigned int tick);
-int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int64 sdamage,int div,uint16 skill_id,uint16 skill_lv,int type);
-//int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,int type);
+int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int64 sdamage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
+//int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
 int clif_skill_nodamage(struct block_list *src,struct block_list *dst,uint16 skill_id,int heal,int fail);
 void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,int y,int tick);
 void clif_skill_estimation(struct map_session_data *sd,struct block_list *dst);
@@ -672,6 +693,8 @@ void clif_item_repair_list(struct map_session_data *sd, struct map_session_data 
 void clif_item_repaireffect(struct map_session_data *sd, int idx, int flag);
 void clif_item_damaged(struct map_session_data* sd, unsigned short position);
 void clif_item_refine_list(struct map_session_data *sd);
+void clif_hat_effects( struct map_session_data* sd, struct block_list* bl, enum send_target target );
+void clif_hat_effect_single( struct map_session_data* sd, uint16 effectId, bool enable );
 
 void clif_item_skill(struct map_session_data *sd,uint16 skill_id,uint16 skill_lv);
 
@@ -697,9 +720,9 @@ void clif_party_created(struct map_session_data *sd,int result);
 void clif_party_member_info(struct party_data *p, struct map_session_data *sd);
 void clif_party_info(struct party_data* p, struct map_session_data *sd);
 void clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd);
-void clif_party_inviteack(struct map_session_data* sd, const char* nick, int result);
+void clif_party_invite_reply(struct map_session_data* sd, const char* nick, enum e_party_invite_reply reply);
 void clif_party_option(struct party_data *p,struct map_session_data *sd,int flag);
-void clif_party_withdraw(struct party_data* p, struct map_session_data* sd, uint32 account_id, const char* name, int flag);
+void clif_party_withdraw(struct map_session_data *sd, uint32 account_id, const char* name, enum e_party_member_withdraw result, enum send_target target);
 void clif_party_message(struct party_data* p, uint32 account_id, const char* mes, int len);
 void clif_party_xy(struct map_session_data *sd);
 void clif_party_xy_single(int fd, struct map_session_data *sd);
@@ -762,8 +785,7 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
 void clif_heal(int fd,int type,int val);
 void clif_resurrection(struct block_list *bl,int type);
-void clif_map_property(struct map_session_data* sd, enum map_property property);
-void clif_maptypeproperty2(struct block_list *bl,enum send_target t);
+void clif_map_property(struct block_list *bl, enum map_property property, enum send_target t);
 void clif_pvpset(struct map_session_data *sd, int pvprank, int pvpnum,int type);
 void clif_map_property_mapall(int map, enum map_property property);
 void clif_refine(int fd, int fail, int index, int val);

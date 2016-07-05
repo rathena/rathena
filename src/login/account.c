@@ -661,7 +661,7 @@ void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 
 		for (i = 0; i < count; i++) {
 			unsigned int index;
-			safestrncpy(key, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
+			safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 			cursor += RFIFOB(fd, cursor) + 1;
 
 			index = RFIFOL(fd, cursor);
@@ -680,7 +680,7 @@ void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 					break;
 				// str
 				case 2:
-					safestrncpy(sval, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
+					safestrncpy(sval, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 					cursor += RFIFOB(fd, cursor) + 1;
 					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%s')", db->global_acc_reg_str_table, account_id, key, index, sval) )
 						Sql_ShowDebug(sql_handle);
@@ -730,7 +730,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
 		plen += 1;
 
-		safestrncpy((char*)WFIFOP(fd,plen), data, len);
+		safestrncpy(WFIFOCP(fd,plen), data, len);
 		plen += len;
 
 		Sql_GetData(sql_handle, 1, &data, NULL);
@@ -744,7 +744,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 254
 		plen += 1;
 
-		safestrncpy((char*)WFIFOP(fd,plen), data, len);
+		safestrncpy(WFIFOCP(fd,plen), data, len);
 		plen += len;
 
 		WFIFOW(fd, 14) += 1;
@@ -797,7 +797,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
 		plen += 1;
 
-		safestrncpy((char*)WFIFOP(fd,plen), data, len);
+		safestrncpy(WFIFOCP(fd,plen), data, len);
 		plen += len;
 
 		Sql_GetData(sql_handle, 1, &data, NULL);

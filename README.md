@@ -1,7 +1,7 @@
 rAthena
 =======
 
-Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=master)](https://travis-ci.org/rathena/rathena)
+Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=master)](https://travis-ci.org/rathena/rathena) [![Build status](https://ci.appveyor.com/api/projects/status/8574b8nlwd57loda/branch/master?svg=true)](https://ci.appveyor.com/project/rAthenaAPI/rathena/branch/master)
 
 Table of Contents
 ---------
@@ -159,6 +159,9 @@ Examples:
 * rAthena IRC Channel
 	* irc://irc.rizon.net/rathena
 	* Web Chat: https://rathena.org/board/page/chat.html
+
+* rAthena Discord Chat
+	https://discord.gg/0XP9qqhUV9GLSfCh
 
 * rAthena Wiki
 	https://rathena.org/board/index.php?app=ipbwiki

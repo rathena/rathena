@@ -517,7 +517,7 @@ forever, and no trace remains of it even if it was stored with character or
 account data.
 
 Some variables are special, that is, they are already defined for you by the 
-scripting engine. You can see the full list somewhere in 'db/const.txt', which 
+scripting engine. You can see the full list in 'src/map/script_constants.h', which 
 is a file you should read, since it also allows you to replace lots of numbered 
 arguments for many commands with easier to read text. The special variables most 
 commonly used are all permanent character-based variables:
@@ -876,6 +876,9 @@ OnAgitInit:
 OnAgitStart2:
 OnAgitEnd2:
 OnAgitInit2:
+OnAgitStart3:
+OnAgitEnd3:
+OnAgitInit3:
 
 OnAgitStart will run whenever the server shifts into WoE mode, whether it is 
 done with @agitstart GM command or with 'AgitStart' script command. OnAgitEnd 
@@ -1090,6 +1093,27 @@ to alberta (98,154) when clicked.
     mes "Have you checked out the <NAVI>[Tool Shop]<INFO>alberta,98,154,0,000,0</INFO></NAVI>?";
 
 See also 'navigateto', which can be used for certain NPC events.
+
+Items
+-----
+You can refer to items by using HTML-like links to certain items:
+
+	<ITEMLINK>Display Name<INFO>Item ID</INFO></ITEMLINK>
+
+Where <Display Name> is the name that will be displayed for your link and
+<Item ID> being the ID of the item you want to link to when clicked.
+
+In 2015 the tag name was changed to <ITEM> resulting in the following syntax:
+
+	<ITEM>Display Name<INFO>Item ID</INFO></ITEM>
+	
+The following sample will open a preview window for Red Potion:
+
+	mes "Did you ever consume a <ITEMLINK>Red Potion<INFO>501</INFO></ITEMLINK>?";
+	// Or in 2015:
+	mes "Did you ever consume a <ITEM>Red Potion<INFO>501</INFO></ITEM>?";
+	
+NOTE: Be aware that item links are rendered incorrectly in 2015+ clients at the moment.
 
 URLs
 ----
@@ -2290,7 +2314,7 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 
 This function will return the specified stat of the invoking character, or, if a
 character name is specified, of that player. The stat can either be a number or
-parameter name, defined in 'db/const.txt'.
+parameter name, defined in 'src/map/script_constants.h'.
 
 Some example parameters:
 
@@ -2736,7 +2760,8 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 
 @inventorylist_id[]        - array of item ids.
 @inventorylist_amount[]    - their corresponding item amounts.
-@inventorylist_equip[]     - whether the item is equipped or not.
+@inventorylist_equip[]     - on which position the item is equipped (see EQP_* constants)
+                             It will contain 0 if the item is not equipped.
 @inventorylist_refine[]    - for how much it is refined.
 @inventorylist_identify[]  - whether it is identified.
 @inventorylist_attribute[] - whether it is broken.
@@ -2746,7 +2771,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_card4[]       if the character owns an item made by a specific 
                              craftsman.
 @inventorylist_expire[]    - expire time (Unix time stamp). 0 means never expires.
-@inventorylist_bound[]     - whether it is bound to the character
+@inventorylist_bound[]     - the bound type of the items (see BOUND_* constants)
 @inventorylist_count       - the number of items in these lists.
 
 This could be handy to save/restore a character's inventory, since no other 
@@ -2849,7 +2874,7 @@ See the sample in 'doc/sample/getiteminfo.txt'.
 
 Returns value from equipped item slot in the indicated slot (0, 1, 2, or 3).
 
-This function returns CARD ID, 255,254,-255 (for card 0, if the item is produced).
+This function returns CARD ID, CARD0_FORGE, CARD0_CREATE, or CARD0_PET (for card 0, if the item is produced).
 It's useful for when you want to check whether an item contains cards or if it's signed.
 
 ---------------------------------------
@@ -3183,7 +3208,7 @@ This command requests the guild data from the char server and merrily continues
 with the execution. Whenever the guild information becomes available (which 
 happens instantly if the guild information is already in memory, or later, if it 
 isn't and the map server has to wait for the char server to reply) it will run 
-the specified event as in a 'doevent' call.
+the specified event as in a 'donpcevent' call.
 
 ---------------------------------------
 
@@ -3662,10 +3687,11 @@ Name is optional, and defaults to the attached player if omitted.
 
 *agitcheck()
 *agitcheck2()
+*agitcheck3()
 
-These function will let you check whether the server is currently in WoE mode
-(or WoE SE mode if the second function is called) and will return 1 if War of
-Emperium is on and 0 if it isn't. 
+These function will let you check whether the server is currently in WoE:FE mode
+(agitcheck()), WoE:SE mode (agitcheck2()), or WoE:TE mode (agitcheck3()) and will
+return true if War of Emperium is on and false if it isn't. 
 
 ---------------------------------------
 
@@ -3831,9 +3857,9 @@ will be seen to everyone around but not in chat window.
 
 ---------------------------------------
 
-*warp "<map name>",<x>,<y>;
+*warp "<map name>",<x>,<y>{,<char id>};
 
-This command will take the invoking character to the specified map, and if 
+This command will take the invoking character or <char id>, if specified, to the specified map, and if 
 wanted, specified coordinates too, but these can be random.
 
     warp "place",50,55;
@@ -3909,18 +3935,6 @@ Example:
 	.@party_id = getcharid(1);
 	warpparty "prontera",150,100,.@party_id;
 	close;
-
----------------------------------------
-
-*warpchar "<map name>",<x>,<y>,<char id>;
-
-Warps another player to specified map and coordinate given the char id, which you can get with
-getcharid(0,<player_name>). Obviously this is useless if you want to warp the same player that
-is executing this script, unless it's some kind of "chosen" script. 
- 
-Example:
- 
-warpchar "prontera",150,100,150001;
 
 ---------------------------------------
 
@@ -4055,7 +4069,7 @@ This command will change the job class of the invoking character.
 
 This command does work with numbers, but you can also use job names. The full 
 list of job names and the numbers they correspond to can be found in 
-'db/const.txt'.
+'src/map/script_constants.h'.
 
     // This would change your player into a Swordman
     jobchange Job_Swordman;
@@ -4275,7 +4289,7 @@ you can look at: 'npc/custom/stylist.txt'
 
 This command will push the currently attached player to given direction by given
 amount of square cells. Direction is the same as used when declaring NPCs, and
-can be specified by using one of the DIR_* constants (db/const.txt).
+can be specified by using one of the DIR_* constants (src/map/script_constants.h).
 
 The knock-back is not restricted by items or map flags, only obstacles are taken
 into account. If there is not enough space to perform the push (e.g. due to a
@@ -4290,6 +4304,25 @@ wall), the character is pushed only up to the obstacle.
 *recalculatestat;
 
 This command will force a stat recalculation for the attached player.
+
+---------------------------------------
+
+*needed_status_point(<type>,<val>{,<char id>});
+
+Returns the number of stat points needed to change the specified stat <type> by <val>.
+If <val> is negative, returns the number of stat points that would be needed to
+raise the specified stat from (current value - <val>) to current value.
+
+---------------------------------------
+
+*jobcanentermap("<mapname>"{,<JobID>});
+
+Return true if player (decided by job) can enter the map, false otherwise.
+
+For optional 'JobID', see constant of Job_*, or use player's Class, BaseJob,
+and BaseClass. If no player is attached, this param must have a value.
+
+See also db/[pre-]re/job_noenter_map.txt
 
 ---------------------------------------
 
@@ -4734,17 +4767,23 @@ The default setting, 'item_enabled_npc', is defined in 'conf/battle/items.conf'.
 
 ---------------------------------------
 
-*itemskill <skill id>,<skill level>;
-*itemskill "<skill name>",<skill level>;
+*itemskill <skill id>,<skill level>{,<keep requirement>};
+*itemskill "<skill name>",<skill level>{,<keep requirement>};
 
 This command is meant for item scripts to replicate single-use skills in usable
 items. It will not work properly if there is a visible dialog window or menu.
 If the skill is self or auto-targeting, it will be used immediately; otherwise a
 target cursor is shown.
 
+If <keep requirement> parameter is set to true, the skill's requirements will be checked.
+By default, the requirements for item skills are not checked, and therefore the default value is false.
+
 // When Anodyne is used, it will cast Endure (8), Level 1, as if the actual
 // skill has been used from skill tree.
 605,Anodyne,Anodyne,11,2000,0,100,,,,,10477567,2,,,,,{ itemskill 8,1; },{}
+
+// When Sienna_Execrate_Scroll_1_5 is used, it will cast Sienna Execrate Level 5 and consume 2 Red_Gemstones.
+23194,Sienna_Execrate_Scroll_1_5,Level 5 Sienna Execrate,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_SIENNAEXECRATE",5,true; },{},{}
 
 ---------------------------------------
 
@@ -5153,7 +5192,7 @@ Used in reset NPC's (duh!)
 These commands will bestow a status effect on a character.
 
 The <effect type> determines which status is invoked. This can be either a number
-or constant, with the common statuses (mostly negative) found in 'db/const.txt'
+or constant, with the common statuses (mostly negative) found in 'src/map/script_constants.h'
 with the 'SC_' prefix. A full list is located in 'src/map/status.h', though
 they are not currently documented.
 
@@ -5168,10 +5207,11 @@ This is used primarily in item scripts. When used in an NPC script, a flag MUST
 be defined for the rate to work.
 
 Optional value <flag> is how the status change start will be handled (a bitmask).
- 1: Status change cannot be avoided.
- 2: Tick cannot be reduced by stats (default).
- 4: sc_data loaded, so no value will be altered.
- 8: Rate cannot be reduced.
+ SCSTART_NOAVOID   : Status change cannot be avoided.
+ SCSTART_NOTICKDEF : Tick cannot be reduced by stats (default).
+ SCSTART_LOADED    : sc_data loaded, so no value will be altered.
+ SCSTART_NORATEDEF : Rate cannot be reduced.
+ SCSTART_NOICON    : Status icon won't be sent to client
 
 If a <GID> is given, the status change will be invoked on the specified character
 instead of the one attached to the script. This can only be defined after setting
@@ -5302,8 +5342,8 @@ behavior of the command.
 
 *statusup <stat>{,<char_id>};
 
-This command will bump a specified stat of the invoking character up by one 
-permanently. Stats are to be given as number, but you can use these constants to 
+This command will change a specified stat of the invoking character up by one
+permanently. Stats are to be given as number, but you can use these constants to
 replace them:
 
 bStr -  Strength
@@ -5317,11 +5357,11 @@ bLuk -  Luck
 
 *statusup2 <stat>,<amount>{,<char_id>};
 
-This command will bump a specified stat of the invoking character up by the 
+This command will change a specified stat of the invoking character by the
 specified amount permanently. The amount can be negative. See 'statusup'.
 
-// This will decrease a character's Vit forever.
-    statusup bVit,-1;
+	// This will decrease a character's Vit forever.
+	statusup2 bVit,-1;
 
 ---------------------------------------
 
@@ -5422,7 +5462,7 @@ Types:
 	1: Buff
 	2: Debuff
 
-Status_icon: See "Status Icon" section in 'db/const.txt'. Default is SI_BLANK (-1).
+Status_icon: See "Status Icon" section in 'src/map/script_constants.h'. Default is SI_BLANK (-1).
 
 Example:
 	// Apple gives you +5 Str bonus for 1 minute when it's consumed.
@@ -5974,11 +6014,13 @@ It is an approximation of official server script language's 'cmdothernpc'.
 
 ---------------------------------------
 
-*npctalk "<message>";
+*npctalk "<message>"{,"<NPC name>"};
 
 This command will display a message to the surrounding area as if the NPC object 
 running it was a player talking - that is, above their head and in the chat 
 window. The display name of the NPC won't get appended in front of the message.
+If the <NPC name> option is given, then that NPC will display the message, else
+the attached NPC will display the message.
 
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.
@@ -6198,7 +6240,7 @@ This command will broadcast a message to all or most players, similar to
 The region the broadcast is heard in (target), source of the broadcast
 and the color the message will come up as is determined by the flags.
 
-The flag values are coded as constants in 'db/const.txt' to make them easier to use.
+The flag values are coded as constants in 'src/map/script_constants.h' to make them easier to use.
 
 Target flags:
 - bc_all: Broadcast message is sent server-wide (default).
@@ -6534,7 +6576,7 @@ specified.
 *setmapflag "<map name>",<flag>{,<zone>{,<type>}};
 
 This command marks a specified map with the given map flag, which will alter the 
-behavior of the map. A full list of mapflags is located in 'db/const.txt' with
+behavior of the map. A full list of mapflags is located in 'src/map/script_constants.h' with
 the 'mf_' prefix, and documentation can be found in 'doc/mapflags.txt'.
 
 The map flags alter the behavior of the map regarding teleporting (mf_nomemo, 
@@ -6657,15 +6699,19 @@ For examples, check the WoE scripts in the distribution.
 *agitend;
 *agitstart2;
 *agitend2;
+*agitstart3;
+*agitend3;
 
-These four commands will start and end War of Emperium or War of Emperium SE.
+These commands will start and end War of Emperium FE, War of Emperium SE,
+or War of Emperium TE.
 
 This is a bit more complex than it sounds, since the commands themselves won't 
 actually do anything interesting, except causing all 'OnAgitStart:' and 
-'OnAgitEnd:', or 'OnAgitStart2:' and 'OnAgitEnd2:' in the case of latter two
-commands, events to run everywhere, respectively. They are used as  simple 
-triggers to run a lot of complex scripts all across the server, and they, 
-in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
+'OnAgitEnd:', 'OnAgitStart2:' and 'OnAgitEnd2:', or 'OnAgitStart3:' and
+'OnAgitEnd3:' in the case of latter two commands, events to run everywhere,
+respectively. They are used as  simple triggers to run a lot of complex scripts
+all across the server, and they, in turn, are triggered by clock with an
+'OnClock<time>:' time-triggering label.
 
 ---------------------------------------
 
@@ -6675,6 +6721,13 @@ in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
 These commands will turn GVG mode for the specified maps on and off, setting up 
 appropriate map flags. In GVG mode, maps behave as if during the time of WoE, 
 even though WoE itself may or may not actually be in effect. 
+
+---------------------------------------
+
+*gvgon3 "<map name>";
+*gvgoff3 "<map name>";
+
+Theses commands behave identically to gvgon/gvgoff, but apply GVG_TE mapflag. 
 
 ---------------------------------------
 
@@ -6721,6 +6774,22 @@ Type indicates what information to return:
  0 - visibility (whether the guardian is installed or not)
  1 - max. hp
  2 - current hp
+
+---------------------------------------
+
+*getguildalliance(<guild id1>, <guild id2>);
+
+This command will return the relation between 2 guilds.
+
+NOTE: This should be used in collaboration with 'requestguildinfo' as the
+map-server needs to request for information from the char-server.
+
+Return values:
+	-2 - Guild ID1 does not exist
+	-1 - Guild ID2 does not exist
+	 0 - Both guilds have no relation OR guild ID aren't given
+	 1 - Both guilds are allies
+	 2 - Both guilds are antagonists
 
 ---------------------------------------
 //
@@ -6900,8 +6969,8 @@ must be used.
 
 This command makes an object display an emotion sprite above their own as 
 if they were doing that emotion. For a full list of emotion numbers, 
-see 'db/const.txt' under 'e_'. The not so obvious ones are 'e_what' (a question mark) 
-and 'e_gasp' (the exclamation mark).
+see 'src/map/script_constants.h' under 'e_'. The not so obvious ones are 'e_what'
+(a question mark) and 'e_gasp' (the exclamation mark).
 
 The optional target parameter specifies who will get the emotion on top of
 their head. If 0 (the default if omitted), the NPC in current use will show
@@ -7142,7 +7211,7 @@ This command will make a <GID> say a message. The display name of the <GID> won'
 *unitemote <GID>,<emotion number>;
 
 This command will make a <GID> display an emotion sprite.
-For a full list of emotion numbers, see 'db/const.txt' under 'e_'.
+For a full list of emotion numbers, see 'src/map/script_constants.h' under 'e_'.
 
 ---------------------------------------
 
@@ -8044,7 +8113,7 @@ Each of these can be 'on' or 'off'. Together they define a cell's behavior.
 
 This command lets you alter these flags for all map cells in the specified
 (x1,y1)-(x2,y2) rectangle. The 'flag' can be 0 or 1 (0:clear flag, 1:set flag).
-The 'type' defines which flag to modify. Possible options see 'db/const.txt'.
+The 'type' defines which flag to modify. Possible options see 'src/map/script_constants.h'.
 
 Example:
 
@@ -8078,7 +8147,7 @@ remove a nonwalkable row of cells after the barricade mobs.
 
 This command will return 1 or 0, depending on whether the specified cell has
 the 'type' flag set or not. There are various types to check, all mimicking
-the server's cell_chk enumeration. The types can be found in 'db/const.txt'.
+the server's cell_chk enumeration. The types can be found in 'src/map/script_constants.h'.
 
 The meaning of the individual types can be confusing, so here's an overview:
   - cell_chkwall/water/cliff
@@ -8437,19 +8506,18 @@ Mark Color:
 ============================
 ---------------------------------------
 
-*waitingroom2bg_single(<battle group>,"<map name>",<x>,<y>,"<npc name>");
+*waitingroom2bg_single(<battle group>,{"<map name>",<x>,<y>{,"<npc name>"}});
 
-Adds the first waiting player from the chat room of the given NPC to an
-existing battleground group and warps it to the specified coordinates on
-the given map.
+Adds the first waiting player from the chat room of the given NPC to an existing battleground group.
+The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
 
 ---------------------------------------
 
-*waitingroom2bg("<map name>",<x>,<y>,"<On Quit Event>","<On Death Event>"{,"<NPC Name>"});
+*waitingroom2bg("<map name>",<x>,<y>,{"<On Quit Event>","<On Death Event>"{,"<NPC Name>"}});
 
 <map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
-<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog.
-<On Death Event> refers to an NPC label that attaches to the character and is run when they die. Can be "" for empty.
+<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
+<On Death Event> refers to an NPC label that attaches to the character and is run when they die. (Optional)
 
 Unlike the prior command, the latter will attach a GROUP in a waiting room to the battleground, and 
 sets the array $@arenamembers[0] where 0 holds the IDs of the first group, and 1 holds the IDs of the second.
@@ -8460,6 +8528,26 @@ Example:
 	// Battle Group will be referred to as $@KvM01BG_id1, and when they die, respawn at bat_c01,52,129.
 	set $@KvM01BG_id1, waitingroom2bg("bat_c01",52,129,"KvM01_BG::OnGuillaumeQuit","KvM01_BG::OnGuillaumeDie");
 	end;
+
+---------------------------------------
+
+*bg_create("<map name>",<x>,<y>{,"<On Quit Event>","<On Death Event>"});
+
+Creates an instance of battleground battle group that can be used with other battleground commands.
+
+<map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
+<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
+<On Death Event> refers to an NPC label that attaches to the character and is run when they die. (Optional)
+
+Returns battle group ID on success. Returns 0 on failure.
+
+---------------------------------------
+
+*bg_join(<battle group>,{"<map name>",{<x>,<y>{,<char id>}});
+
+Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+
+Returns true on success. Returns false on failure.
 
 ---------------------------------------
 
@@ -8644,9 +8732,7 @@ to be executed from pet scripts. They will modify the pet AI decision-making for
 the current pet of the invoking character, and will NOT have any independent 
 effect by themselves, which is why only one of them each may be in effect at any 
 time for a specific pet. A pet may have 'petloot', 'petskillbonus', 
-'petskillattack' OR 'petpetskillattack2' and 'petskillsupport' OR 'petheal' at 
-the same time. 'petheal' is deprecated and is no longer used in the default pet 
-scripts.
+'petskillattack' OR 'petpetskillattack2' and 'petskillsupport'.
 
 All commands with delays and durations will only make the behavior active for 
 the specified duration of seconds, with a delay of the specified number of 
@@ -8687,7 +8773,7 @@ NOTE: Currently ONLY supported for bonuses that used by 'bonus' script.
 This command will make the pet cure a specified status condition. The curing 
 actions will occur once every Delay seconds. For a full list of status 
 conditions that can be cured, see the list of 'SC_' status condition constants 
-in 'db/const.txt'.
+in 'src/map/script_constants.h'.
 
 ---------------------------------------
 
@@ -8701,13 +8787,11 @@ when pet performance is activated.
 
 *petskillsupport <skill id>,<skill level>,<delay>,<percent hp>,<percent sp>;
 *petskillsupport "<skill name>",<skill level>,<delay>,<percent hp>,<percent sp>;
-*petheal <level>,<delay>,<percent hp>,<percent sp>;
 
 This will make the pet use a specified support skill on the owner whenever the 
 HP and SP are below the given percent values, with a specified delay time 
 between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
-'petheal' works the same as 'petskillsupport' but has the skill ID hard-coded to 
-AL_HEAL (ID:28). This command is deprecated.
+
 It's not quite certain who's stats will be used for the skills cast, the 
 character's or the pets. Probably, Skotlex can answer that question.
 
@@ -9069,6 +9153,7 @@ The command returns 1 upon success, and these values upon failure:
 -2: Player already has a party.
 -3: Party not found.
 -4: Party is full.
+-5: Another character from the same account is already in the party.
 
 ---------------------------------------
 
@@ -9158,6 +9243,56 @@ The client requires custom monster spawns be in the navigation file
 for using the embedded client Navigation feature to work properly. In this
 instance sending the player to the map where the monster spawns is a simpler
 solution rather than sending the map and the monster_id.
+
+---------------------------------------
+
+*hateffect(<Hat Effect ID>,<State>);
+
+This will set a Hat Effect onto the player. The state field allows you to
+enable (true) or disable (false) the effect on the player.
+The Hat Effect constants can be found in db/const.txt starting with HAT_EF_*.
+
+Requires client 2015-05-13aRagEXE or newer. 
+
+---------------------------------------
+
+*getrandomoptinfo(<type>);
+
+Returns value of an attribute of current random option.
+
+Valid attributes are:
+ROA_ID - ID of current option
+ROA_VALUE - Value field of current option
+ROA_PARAM - Param field of current option
+
+This script command is intended for using in random option scripts.
+
+---------------------------------------
+
+*getequiprandomoption(<equipment index>,<index>,<type>{,<char id>});
+
+Returns value of an attribute of a random option on an equipped item.
+
+See 'getequipid' for a full list of valid equipment slots.
+
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
+
+For valid attribute types, see `getrandomoptinfo` command reference.
+
+---------------------------------------
+
+*setrandomoption(<equipment slot>,<index>,<id>,<value>,<param>{,<char id>});
+
+Sets <index+1>th random option for equipment equipped at <equipment slot>
+to <id>, <value> and <param>.
+
+See 'getequipid' for a full list of valid equipment slots.
+
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
+
+ID - ID of random option. See db/const.txt for constants.
+Value - Value of random option
+Param - Parameter of random option
 
 ---------------------------------------
 

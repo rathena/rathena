@@ -267,7 +267,7 @@ OnMyMobDead:
 	end;
 }
 
-1@ma_c,38,118,0	script	#box_out	45,2,2,{
+1@ma_c,33,118,0	script	#box_out	45,2,2,{
 OnInstanceInit:
 OnDisable:
 	disablenpc instance_npcname("#box_out");
@@ -308,7 +308,7 @@ OnTimer35000:
 	initnpctimer;
 	disablenpc instance_npcname("#box_call");
 	end;
-OnTouch:
+OnTouch_:
 	specialeffect2 EF_GUIDEDATTACK;
 	warp instance_mapname("1@ma_c"),33,112;
 	end;

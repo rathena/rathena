@@ -79,7 +79,7 @@ enum e_skill_inf2 {
 /// Skill info type 3
 enum e_skill_inf3 {
 	INF3_NOLP             = 0x00001, // Skill that can ignore Land Protector
-	INF3_NOENDCAMOUFLAGE  = 0x00002, // Skill that doesn't end camouflage
+	INF3_FREE             = 0x00002, // Free
 	INF3_USABLE_HIDING    = 0x00004, // Skill that can be use in hiding
 	INF3_USABLE_DANCE     = 0x00008, // Skill that can be use while in dancing state
 	INF3_HIT_EMP          = 0x00010, // Skill that could hit emperium
@@ -373,7 +373,7 @@ int skill_get_index_( uint16 skill_id, bool silent, const char *func, const char
 #define skill_get_index(skill_id)  skill_get_index_((skill_id), false, __FUNCTION__, __FILE__, __LINE__) /// Get skill index from skill_id (common usage on source)
 #define skill_get_index2(skill_id) skill_get_index_((skill_id), true, __FUNCTION__, __FILE__, __LINE__)  /// Get skill index from skill_id (used when reading skill_db files)
 int skill_get_type( uint16 skill_id );
-int skill_get_hit( uint16 skill_id );
+enum e_damage_type skill_get_hit( uint16 skill_id );
 int skill_get_inf( uint16 skill_id );
 int skill_get_ele( uint16 skill_id , uint16 skill_lv );
 int skill_get_nk( uint16 skill_id );
@@ -1319,6 +1319,28 @@ enum e_skill {
 	NPC_REVERBERATION,
 	NPC_REVERBERATION_ATK,
 	NPC_LEX_AETERNA,
+	NPC_ARROWSTORM,
+	NPC_CHEAL,
+	NPC_SR_CURSEDCIRCLE,
+	NPC_DRAGONBREATH,
+	NPC_FATALMENACE,
+	NPC_MAGMA_ERUPTION,
+	NPC_MAGMA_ERUPTION_DOTDAMAGE,
+	NPC_MANDRAGORA,
+	NPC_PSYCHIC_WAVE,
+	NPC_RAYOFGENESIS,
+	NPC_VENOMIMPRESS,
+	NPC_CLOUD_KILL,
+	NPC_IGNITIONBREAK,
+	NPC_PHANTOMTHRUST,
+	NPC_POISON_BUSTER,
+	NPC_HALLUCINATIONWALK,
+	NPC_ELECTRICWALK,
+	NPC_FIREWALK,
+	NPC_WIDEDISPEL,
+	NPC_LEASH,
+	NPC_WIDELEASH,
+	NPC_WIDECRITICALWOUND,
 
 	KN_CHARGEATK = 1001,
 	CR_SHRINK,

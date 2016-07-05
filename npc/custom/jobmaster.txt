@@ -89,7 +89,7 @@ function Job_Menu;
 		close;
 	}
 	if (.@eac&EAJL_2)
-		if (.@eac&(EAJL_UPPER|EAJL_BABY) || roclass(.@eac|EAJL_UPPER) == -1) {
+		if ((.@eac&(EAJL_UPPER|EAJL_BABY)) || roclass(.@eac|EAJL_UPPER) == -1) {
 			mes "No more jobs are available.";
 			close;
 		}
@@ -110,7 +110,7 @@ function Job_Menu;
 					Job_Acolyte,
 					Job_Merchant,
 					Job_Thief,
-					Job_SuperNovice,
+					Job_Super_Novice,
 					Job_Taekwon,
 					Job_Gunslinger,
 					Job_Ninja,
@@ -169,7 +169,7 @@ function Job_Menu {
 			.@i = getarg(select(.@menu$) - 1, 0);
 			if (!.@i)
 				close;
-			if ((.@i == Job_SuperNovice || .@i == Job_Super_Baby) && BaseLevel < .SNovice) {
+			if ((.@i == Job_Super_Novice || .@i == Job_Super_Baby) && BaseLevel < .SNovice) {
 				mes "[Job Master]";
 				mes "A base level of " + .SNovice + " is required to turn into a " + jobname(.@i) + ".";
 				close;
@@ -209,7 +209,7 @@ Get_Platinum:
 	skill "NV_FIRSTAID",1,SKILL_PERM;
 	switch (BaseClass) {
 	case Job_Novice:
-		if (Class != Job_SuperNovice)
+		if (Class != Job_Super_Novice)
 			skill "NV_TRICKDEAD",1,SKILL_PERM;
 		break;
 	case Job_Swordman:

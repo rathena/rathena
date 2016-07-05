@@ -696,6 +696,7 @@ enable_manager
 enable_packetver
 enable_debug
 enable_prere
+enable_vip
 enable_warn
 enable_buildbot
 enable_rdtsc
@@ -1334,6 +1335,8 @@ Optional Features:
   --enable-debug[=ARG]    Compiles extra debug code. (disabled by default)
                           (available options: yes, no, gdb)
   --enable-prere[=ARG]    Compiles serv in prere mode. (disabled by default)
+                          (available options: yes, no)
+  --enable-vip[=ARG]      Compiles serv with vip features. (disabled by default)
                           (available options: yes, no)
   --enable-warn[=ARG]     Compiles with warnings. (disabled by default)
                           (available options: yes, no, extra)
@@ -3501,6 +3504,26 @@ if test "${enable_prere+set}" = set; then :
 
 else
   enable_prere="no"
+
+fi
+
+
+
+#
+# VIP
+#
+# Check whether --enable-vip was given.
+if test "${enable_vip+set}" = set; then :
+  enableval=$enable_vip;
+		enable_vip="$enableval"
+		case $enableval in
+			"no");;
+			"yes");;
+			*) as_fn_error $? "invalid argument --enable-vip=$enableval... stopping" "$LINENO" 5;;
+		esac
+
+else
+  enable_vip="no"
 
 fi
 
@@ -6331,6 +6354,19 @@ case $enable_prere in
 		;;
 	"yes")
 		CPPFLAGS="$CPPFLAGS -DPRERE"
+		;;
+esac
+
+#
+# VIP
+#
+case $enable_vip in
+	"no")
+		# default value
+		CPPFLAGS="$CPPFLAGS"
+		;;
+	"yes")
+		CPPFLAGS="$CPPFLAGS -DVIP_ENABLE"
 		;;
 esac
 

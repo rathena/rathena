@@ -18,7 +18,7 @@
 //============================================================
 
 arena_room,114,102,0	script	onlyaco#arena	45,1,1,{
-OnTouch:
+OnTouch_:
 	if (BaseClass == Job_Acolyte) {
 		warp "arena_room",135,129;
 		end;
@@ -49,7 +49,7 @@ OnStart:
 }
 
 force_5-1,100,12,0	script	arena#aco	-1,5,5,{
-OnTouch:
+OnTouch_:
 	donpcevent "allkill#aco::OnEnable";
 	if (BaseJob == Job_Acolyte) {
 		donpcevent "arena_aco1::OnStart";
@@ -274,7 +274,7 @@ On09_End:
 }
 
 force_5-1,40,26,0	script	force_01start#aco	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_01mob#aco::OnEnable";
 	disablenpc "force_01start#aco";
 	end;
@@ -303,7 +303,7 @@ OnMyMobDead:
 }
 
 force_5-1,25,69,0	script	force_02start#aco	-1,1,1,{
-OnTouch:
+OnTouch_:
 	set $@drop_gate,0;
 	donpcevent "force_02mob#aco::OnEnable";
 	disablenpc "force_02start#aco";
@@ -330,7 +330,7 @@ OnMyMobDead:
 }
 
 force_5-1,25,159,0	script	force_03start#aco	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_03mob#aco::OnEnable";
 	disablenpc "force_03start#aco";
 }
@@ -354,7 +354,7 @@ OnMyMobDead:
 }
 
 force_5-1,69,174,0	script	force_04start#aco	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Trocco#aco1::On04_Start";
 	donpcevent "arena_aco1::OnReset_04";
 	percentheal 50,50;
@@ -363,7 +363,7 @@ OnTouch:
 }
 
 force_5-1,159,174,0	script	force_05start#aco	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_05mob#aco::OnEnable";
 	disablenpc "force_05start#aco";
 	end;
@@ -388,7 +388,7 @@ OnMyMobDead:
 }
 
 force_5-1,174,130,0	script	force_06start#aco	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_06mob#aco::OnEnable";
 	donpcevent "arena_aco1::OnReset_06";
 	disablenpc "force_06start#aco";
@@ -426,7 +426,7 @@ OnMyMobDead:
 }
 
 force_5-1,174,40,0	script	force_07start#aco	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_07mob#aco::OnEnable";
 	disablenpc "force_07start#aco";
 }
@@ -454,7 +454,7 @@ OnMyMobDead:
 }
 
 force_5-1,132,26,0	script	force_08start#aco	-1,1,1,{
-OnTouch:
+OnTouch_:
 	percentheal 50,50;
 	donpcevent "Trocco#aco1::On08_Start";
 	donpcevent "arena_aco1::OnReset_08";
@@ -463,7 +463,7 @@ OnTouch:
 }
 
 force_5-1,99,82,0	script	force_09start#aco	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Trocco#aco1::On09_Start";
 	donpcevent "force_09mob#aco::OnEnable";
 	disablenpc "force_09start#aco";
@@ -710,7 +710,7 @@ On09_End:
 }
 
 force_5-1,40,26,0	script	force_01start#pri	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_01mob#pri::OnEnable";
 	disablenpc "force_01start#pri";
 	end;
@@ -735,7 +735,7 @@ OnMyMobDead:
 }
 
 force_5-1,25,69,0	script	force_02start#pri	-1,1,1,{
-OnTouch:
+OnTouch_:
 	if (BaseLevel < 70) {
 		donpcevent "force_02mob#pri::OnOn1";
 	}
@@ -770,7 +770,7 @@ OnMyMobDead:
 }
 
 force_5-1,25,159,0	script	force_03start#pri	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_03mob#pri::OnEnable";
 	disablenpc "force_03start#pri";
 	end;
@@ -795,7 +795,7 @@ OnMyMobDead:
 }
 
 force_5-1,69,174,0	script	force_04start#pri	-1,1,1,{
-OnTouch:
+OnTouch_:
 	if (BaseLevel < 90) {
 		donpcevent "force_04mob#pri::OnOn1";
 	}
@@ -836,7 +836,7 @@ OnMyMobDead:
 }
 
 force_5-1,159,174,0	script	force_05start#pri	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_05mob#pri::OnEnable";
 	if (BaseLevel < 70) {
 		donpcevent "force_05ex#pri::OnOn1";
@@ -885,7 +885,7 @@ OnMyMobDead:
 }
 
 force_5-1,174,130,0	script	force_06start#pri	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_06ex#pri::OnEnable";
 	if (BaseLevel < 70) {
 		donpcevent "force_06mob#pri::OnOn1";
@@ -943,7 +943,7 @@ OnMyMobDead:
 }
 
 force_5-1,174,40,0	script	force_07start#pri	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "force_07mob#pri::OnEnable";
 	disablenpc "force_07start#pri";
 	end;
@@ -968,7 +968,7 @@ OnMyMobDead:
 }
 
 force_5-1,132,26,0	script	force_08start#pri	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Trocco#aco2::On08_Start";
 	donpcevent "arena_aco2::OnReset_08";
 	disablenpc "force_08start#pri";
@@ -976,7 +976,7 @@ OnTouch:
 }
 
 force_5-1,99,82,0	script	force_09start#pri	-1,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Trocco#aco2::On09_Start";
 	if (BaseLevel < 70) {
 		donpcevent "force_09mob#pri::OnOn4";
@@ -1027,7 +1027,7 @@ OnMyMobDead:
 }
 
 force_5-1,62,26,0	script	force_08_01#aco	45,1,1,{
-OnTouch:
+OnTouch_:
 	warp "force_5-1",40,26;
 	if (BaseJob == Job_Acolyte) {
 		enablenpc "force_01start#aco";
@@ -1039,7 +1039,7 @@ OnTouch:
 }
 
 force_5-1,99,124,0	script	force_exit#aco	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Trocco#aco1::OnTimerOff";
 	donpcevent "#arn_timer_aco::OnEnable";
 	mapwarp "force_5-1","prt_are_in",21,35;
@@ -1086,7 +1086,7 @@ prt_are_in,25,31,3	script	Staff#aco-2	67,{
 	set .@hour_endaco, .@end_timeaco / 10000;
 	set .@min_endaco, ((.@end_timeaco % 10000) / 100);
 	set .@sec_endaco, .@end_timeaco % 100;
-	if ((.@hour_startaco == 23) & (.@hour_endaco == 0)) {
+	if ((.@hour_startaco == 23) && (.@hour_endaco == 0)) {
 		set .@hour_endaco,24;
 	}
 	set .@st_to_secaco, ((.@hour_startaco * 3600) + (.@min_startaco * 60) + (.@sec_startaco));
@@ -1486,7 +1486,7 @@ OnHide:
 	disablenpc "arn_warp_aco";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "arena_room",100,75;
 	donpcevent "arn_warp_aco::OnHide";
 	end;

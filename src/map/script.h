@@ -160,6 +160,7 @@ extern struct Script_Config {
 
 	const char* ontouch_name;
 	const char* ontouch2_name;
+	const char* onwhisper_event_name;
 } script_config;
 
 typedef enum c_op {
@@ -201,8 +202,10 @@ typedef enum c_op {
 	C_NOT, // ~ a
 	C_R_SHIFT, // a >> b
 	C_L_SHIFT, // a << b
-	C_ADD_PP, // ++a
-	C_SUB_PP, // --a
+	C_ADD_POST, // a++
+	C_SUB_POST, // a--
+	C_ADD_PRE, // ++a
+	C_SUB_PRE, // --a
 } c_op;
 
 /**
@@ -634,6 +637,11 @@ enum navigation_service {
 	NAV_ALL = NAV_AIRSHIP_ONLY + NAV_SCROLL_ONLY + NAV_KAFRA_ONLY ///< 111 (actually 111-255)
 };
 
+enum random_option_attribute {
+	ROA_ID = 0,
+	ROA_VALUE,
+	ROA_PARAM,
+};
 /**
  * used to generate quick script_array entries
  **/

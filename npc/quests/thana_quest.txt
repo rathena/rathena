@@ -150,7 +150,7 @@ hu_fild01,140,163,5	script	Tower Keeper	852,3,3,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	mes "[Tower Keeper]";
 	mes "Excuse me, but you cannot";
 	mes "enter. This place is under";
@@ -876,7 +876,7 @@ tha_t02,227,163,0	script	3rdf_warp#tt	45,1,1,{
 OnInit:
 	disablenpc "3rdf_warp#tt";
 	end;
-OnTouch:
+OnTouch_:
 	if (thana_tower == 0) warp "tha_t02",227,158;
 	else warp "tha_t03",219,159;
 	end;
@@ -942,7 +942,7 @@ tha_t03,67,70,0	script	Rune Device#tt1	111,4,4,{
 	mes "You've acquired everything you need from this rune device.";
 	close;
 
-OnTouch:
+OnTouch_:
 	if ((countitem(7421) == 0) && (countitem(7426) == 0))
 		specialeffect EF_LEVEL99_4;
 	end;
@@ -1153,7 +1153,7 @@ tha_t04,195,195,0	script	Rune Device#tt2	111,3,3,{
 	mes "You've acquired everything you need from this rune device.";
 	close;
 
-OnTouch:
+OnTouch_:
 	if ((countitem(7422) == 0) && (countitem(7427) == 0))
 		specialeffect EF_LEVEL99_4;
 	end;
@@ -1238,7 +1238,7 @@ tha_t05,62,179,0	script	Brilliant Statue#tt3	111,3,3,{
 	mes "You've acquired everything you need from this statue.";
 	close;
 
-OnTouch:
+OnTouch_:
 	if ((countitem(7423) == 0) && (countitem(7428) == 0))
 		specialeffect EF_LEVEL99_4;
 	end;
@@ -1510,7 +1510,7 @@ tha_t06,226,230,0	script	Brilliant Statue#tt4	111,3,3,{
 	mes "The spell is already released. You've acquired everything you need from this statue.";
 	close;
 
-OnTouch:
+OnTouch_:
 	if ((countitem(7424) == 0) && (countitem(7429) == 0))
 		specialeffect EF_LEVEL99_4;
 	end;
@@ -1600,7 +1600,7 @@ tha_t06,204,181,0	script	Splendid Sword#tt5	111,3,3,{
 	mes "You've acquired everything you need from here.";
 	close;
 
-OnTouch:
+OnTouch_:
 	if ((countitem(7425) == 0) && (countitem(7430) == 0))
 		specialeffect EF_LEVEL99_4;
 	end;
@@ -2057,7 +2057,7 @@ OnEnable:
 OnOn2:
 	initnpctimer;
 	end;
-OnTouch:
+OnTouch_:
 	set .@touch,1;
 OnTimer6000:
 	if (($@thana_summon == 0) || ($@thana_summon == 6)) {
@@ -2091,7 +2091,7 @@ OnDisable:
 	hideonnpc strnpcinfo(0);
 	set .hide,0;
 	end;
-OnTouch:
+OnTouch_:
 	set .@seal, atoi(charat(strnpcinfo(2),2));
 	if (.hide & (1<<.@seal)) end;
 
@@ -2172,7 +2172,7 @@ OnEnable:
 OnDisable:
 	disablenpc "#thanatos_seal";
 	end;
-OnTouch:
+OnTouch_:
 	if ($@thana_summon2 == 4) {
 		initnpctimer;
 		donpcevent "Memory Seal#tt5::OnEnable";
@@ -2292,7 +2292,7 @@ tha_t04,81,36,0	warp	to 5th Floor	1,1,tha_t05,62,8
 tha_t06,119,120,0	script	to 7th Floor	45,1,1,{
 	end;
 OnTouch:
-	if (eaclass()&(EAJL_2|EAJL_UPPER) || eaclass()&EAJL_THIRD || ((Class == Job_SuperNovice || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Soul_Linker || BaseClass == Job_Ninja || Class == Job_Gunslinger) && BaseLevel > 94)) {
+	if ((eaclass()&(EAJL_2|EAJL_UPPER)) || (eaclass()&EAJL_THIRD) || ((Class == Job_Super_Novice || Class == Job_Taekwon || Class == Job_Star_Gladiator || Class == Job_Soul_Linker || BaseClass == Job_Ninja || Class == Job_Gunslinger) && BaseLevel > 94)) {
 		if (countitem(7425) > 0) {
 			mes "The shadow of a Black Key is gleaming in the center of the portal.";
 			mes "To pass this way, looks like I need something.";

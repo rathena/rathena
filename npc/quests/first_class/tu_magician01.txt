@@ -37,7 +37,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 		mes "a Mage first. Alright, dear?";
 		close;
 	}
-	if(BaseClass != Job_Mage || eaclass()&EAJL_BABY){
+	if(BaseClass != Job_Mage || (eaclass()&EAJL_BABY)){
 		mes "You know, sometimes";
 		mes "other jobs might look a";
 		mes "little better in some battle";

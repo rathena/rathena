@@ -219,7 +219,7 @@ geffen_in,34,170,0	script	Theodore	47,{
 geffen,146,148,4	script	Suspicious Guy	99,6,6,{
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[?]";
 	mes "^333333*Psssst!*";
 	mes "H-Hey you!";

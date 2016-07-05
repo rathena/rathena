@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Capuche
 //===== Current Version: =====================================
-//= 1.0
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -11,11 +11,13 @@
 //= Repeatable quests for players between BaseLevel 121 - 130.
 //===== Additional Comments: =================================
 //= 1.0 First version.
+//= 1.1 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.2 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 moc_para01,44,81,3	script	Melody-Jack#1	4_M_MELODY,8,8,{
 	mes "[Melody-Jack]";
-	if (countitem(6219) < 1) {// Para_Team_Mark
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "Who the hell are you? Get out of here!";
 		mes "I'm only talking to base level ^FF0000121-130^000000 adventurers.";
 	}
@@ -550,7 +552,7 @@ S_Erasequest:
 		next;
 	}
 	return;
-OnTouch:
+OnTouch_:
 	if (para_120lv01 == 1) {
 		emotion e_gasp;
 		mes "[Melody-Jack]";
@@ -562,7 +564,7 @@ OnTouch:
 
 moc_para01,17,77,5	script	Aigu#1	4_F_IU,{
 	mes "[Aigu]";
-	if (countitem(6219) < 1) {// Para_Team_Mark
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "Oh, why aren't you a part of Eden Group?";
 		mes "I'm only talking to base level ^FF0000121-130^000000 adventurers.";
 	}
