@@ -1237,7 +1237,7 @@ OnMyMobDead:
 	set .@map$, instance_mapname("2@cata");
 	if (mobcount(.@map$,instance_npcname("control_baphomet")+"::OnMyMobDead") < 1) {
 		set 'ins_baphomet,7;
-		if (isbeginquest(3041))
+		if (isbegin_quest(3041))
 			erasequest 3041;
 		mapannounce .@map$, "Baphomet : No! Nonono! How dare these weaklings defeat me!... No!!...",bc_map,"0xdb7093";
 		enablenpc instance_npcname("Ancient Hero's Soul#2F");
