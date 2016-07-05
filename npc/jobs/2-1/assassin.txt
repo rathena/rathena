@@ -1587,6 +1587,7 @@ OnDisable:
 }
 
 in_moc_16,87,48,2	script	Barcardi#ASN	725,2,2,{
+	end;
 OnTouch:
 	donpcevent "timestopper#1::OnDisable";
 	donpcevent "Thomas#ASNTEST::OnDisable";
@@ -1638,6 +1639,7 @@ OnCast:
 }
 
 in_moc_16,149,80,4	script	Guildmaster#ASN2	106,1,1,{
+	end;
 OnTouch:
 	savepoint "morocc",100,100;
 	if (ASSIN_Q == 7 && BaseJob == Job_Thief) {
