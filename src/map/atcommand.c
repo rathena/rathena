@@ -9364,6 +9364,11 @@ ACMD_FUNC(channel) {
 	char key[NAME_LENGTH], sub1[CHAN_NAME_LENGTH], sub2[64];
 	sub1[0] = sub2[0] = '\0';
 
+	if (sd->bl.type == BL_NPC) {
+		ShowError("Atcommand channel is not available in scripts.\n");
+		return 0;
+	}
+
 	if( !message || !*message || sscanf(message, "%23s %19s %63[^\n]", key, sub1, sub2) < 1 ) {
 		atcmd_channel_help(sd,command);
 		return 0;
