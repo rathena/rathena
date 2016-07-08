@@ -4779,7 +4779,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					close;
 				}
 			case 2:
-				if ((BaseJob == Job_Novice) || (BaseJob == Job_SuperNovice)) {
+				if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
 					mes "[Ibrahim]";
 					mes "So it's true...";
 					mes "People say you're";
