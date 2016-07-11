@@ -7172,9 +7172,9 @@
 13086,Goldsmithing_Dagger,Goldsmithing Dagger,5,20,,500,35:25,,1,0,0x02800066,63,2,2,1,1,1,1,{},{},{}
 13088,Greater_Lease,Greater Lease,5,10,,500,110:50,,,1,0x280006E,63,2,2,4,30,1,1,{ .@r = getrefine(); if (.@r >= 5) bonus bMatk,30; if (.@r >= 7) bonus bMatk,10; if (.@r >= 9) bonus bMatk,10; },{},{}
 13089,FaceWorm_Leg,FaceWorm Leg,5,10,,500,0:50,110,,1,0x3FFFFFFF,63,2,2,3,24,1,1,{ bonus bAtkEle,Ele_Poison; },{},{}
-13090,Faceworm_Queen's_Leg,Faceworm Queen's Leg,5,10,,500,180:120,,,2,0x280006F,63,2,2,4,100,1,1,{ bonus bInt,3; },{},{}
+13090,Faceworm_Queen's_Leg,Faceworm Queen's Leg,5,10,,500,180:120,,,2,0x028F5EEF,63,2,2,4,100,1,1,{ bonus bInt,3; },{},{}
 13092,RWC_Memory_Knife,RWC Memory Knife,5,1000,500,650,50,0,1,1,0x02800075,63,2,2,3,1,1,1,{ .@r = getrefine(); bonus bBaseAtk,20*(.@r/3); bonus bMatk,20*(.@r/3); if(.@r>=9){ .@i = 1; bonus4 bAutoSpell,"BS_WEAPONPERFECT",1,20,0; } if(.@r>=6){ .@rate = 5*(.@i+1); bonus2 bAddClass,Class_All,.@rate; bonus2 bMagicAddClass,Class_All,.@rate; } },{},{}
-13093,Tanos_Dagger,Tanos Dagger,5,10,,800,100:130,,,1,0x280006F,63,2,2,4,120,1,1,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bAtkRate,5; bonus2 bHPLossRate,100,10000; },{},{}
+13093,Tanos_Dagger,Tanos Dagger,5,10,,800,100:130,,,1,0x000E5CEB,63,2,2,4,120,1,1,{ bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bAtkRate,5; bonus2 bHPLossRate,100,10000; },{},{}
 13094,Devil_Pierced_Dagger,Devil Pierced Dagger,5,10,,900,120,,,1,0x3E9F7EEF,63,2,2,3,100,1,1,{ bonus2 bAddRace,RC_Undead,10; .@r = getrefine(); bonus bAtkRate,(.@r>=12)?(7):((.@r>=9)?(5):(0)); },{},{}
 13096,Half_BF_Dagger2,Half BF Dagger2,5,20,,0,120:90,,1,0,0x3E9F7EEF,63,2,2,3,80,1,1,{ bonus bStr,1; bonus bAgi,1; bonus2 bAddRace,RC_DemiHuman,35; bonus2 bAddRace,RC_Player,35; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus bUnbreakableWeapon,1; autobonus "{ bonus bDefRatioAtkClass,Class_All; }",10,3000,BF_WEAPON,"{ specialeffect2 EF_HASTEUP; }"; if(Class==Job_Ninja||Class==Job_Rogue||Class==Job_Stalker) bonus bMatkRate,45; },{},{}
 13097,Blue_Dagger,Blue Dagger,5,10,,1000,160,,1,1,0x00020000,56,2,2,3,100,1,1,{ bonus bStr,5; bonus bInt,5; },{},{}
@@ -8559,7 +8559,7 @@
 15062,TE_Woe_Coat,TE Woe Coat,4,0,,0,,15,,0,0xFFFFFFFF,63,2,16,1,40,1,,{ bonus bMdef,15; bonus bMaxHP,250; bonus bMaxSP,250; bonus2 bSubRace,RC_Player,10; bonus2 bResEff,Eff_Freeze,25; },{},{}
 15063,TE_Woe_Chain_Mail,TE Woe Chain Mail,4,0,,0,,25,,0,0x000444A2,63,2,16,1,40,1,,{ bonus bMdef,5; bonus bMaxHP,450; bonus bMaxSP,50; bonus2 bSubRace,RC_Player,15; bonus2 bResEff,Eff_Freeze,25; },{},{}
 15064,TE_Woe_Mage_Coat,TE Woe Mage Coat,4,0,,0,,5,,0,0x00818315,63,2,16,1,40,1,,{ bonus bMdef,25; bonus bMaxHP,200; bonus bMaxSP,200; bonus2 bSubRace,RC_Player,5; bonus2 bResEff,Eff_Freeze,25; },{},{}
-15066,Engraved_Plate_Armor,Engraved Plate Armor,5,100000,,3000,,120,,1,0x00000002,63,2,16,,150,1,,{ bonus bMdef,25; },{},{}
+15066,Engraved_Plate_Armor,Engraved Plate Armor,5,100000,,3000,,120,,1,0x00004082,63,2,16,,150,1,,{ bonus bMdef,25; },{},{}
 15067,Rune_Suit,Rune Suit,4,0,,0,,,,0,0xFFFFFFFF,63,2,16,1,1,1,,{ bonus2 bExpAddRace,RC_All,10; },{},{}
 15068,Im_Angel's_Protection,Advanced Angelic Protection,4,10000,,600,,40,,1,0x00000001,63,2,16,,99,1,0,{ bonus bMdef,30; },{},{}
 15069,Suit_Of_Sid,Suit Of Sid,4,20,,1000,,30,,0,0xFFFFFFFF,63,2,16,,0,1,0,{},{},{}
@@ -10881,6 +10881,7 @@
 22899,Parchment_City,Parchment City,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_INCAGI",1; heal -15,0; },{},{}
 22901,Question_Old_Blue_Box,Question Old Blue Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*No info yet*/ },{},{}
 22902,Sealed_Card_Album_Scroll_II,Sealed Card Album Scroll II,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,17474,22829,24243,24244,24245),1; },{},{}
+22985,Basil,Basil,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus2 bSPRegenRate,5,10000; }",180,1,0,SI_DORAM_BUF_02; },{},{}
 //===================================================================
 // Shadow Equipments
 //===================================================================
