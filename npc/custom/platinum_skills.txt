@@ -33,7 +33,7 @@ prontera,128,200,6	script	Platinum Skill NPC	94,{
 	skill "NV_FIRSTAID",1,SKILL_PERM;
 	switch (BaseClass) {
 	case Job_Novice:
-		if (Class != Job_SuperNovice)
+		if (Class != Job_Super_Novice)
 			skill "NV_TRICKDEAD",1,SKILL_PERM;
 		break;
 	case Job_Swordman:

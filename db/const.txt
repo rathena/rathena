@@ -14,30 +14,6 @@
 //                  in field Value. Depending on the implementation values assigned by scripts to parameters will affect
 //                  runtime values, such as Zeny, as well (see pc_readparam/pc_setparam).
 
-// These EQI_ constants do not match with the source EQI_ constants
-// Do not migrate into script_constants.h right now [Lemongrass]
-EQI_HEAD_TOP	1
-EQI_ARMOR	2
-EQI_HAND_L	3
-EQI_HAND_R	4
-EQI_GARMENT	5
-EQI_SHOES	6
-EQI_ACC_L	7
-EQI_ACC_R	8
-EQI_HEAD_MID	9
-EQI_HEAD_LOW	10
-EQI_COSTUME_HEAD_LOW	11
-EQI_COSTUME_HEAD_MID	12
-EQI_COSTUME_HEAD_TOP	13
-EQI_COSTUME_GARMENT	14
-EQI_AMMO	15
-EQI_SHADOW_ARMOR  16
-EQI_SHADOW_WEAPON  17
-EQI_SHADOW_SHIELD  18
-EQI_SHADOW_SHOES  19
-EQI_SHADOW_ACC_R  20
-EQI_SHADOW_ACC_L  21
-
 //Item Group ID
 IG_BlueBox	1
 IG_VioletBox	2
@@ -491,6 +467,7 @@ IG_Chronosian_Lucky_Egg	449
 IG_Sanctuary_Lucky_Egg	450
 IG_Cyborg_Lucky_Egg	451
 IG_Undine_Lucky_Egg	452
+IG_God_Material_Box	453
 
 EF_NONE	-1
 EF_HIT1	0
@@ -2479,18 +2456,3 @@ THANATOS_KEEP	10009
 4_F_REBELLION2	10201
 4_F_REBELLION3	10202
 4_M_ILYA	10203
-
-DIR_NORTH	0
-DIR_NORTHWEST	1
-DIR_WEST	2
-DIR_SOUTHWEST	3
-DIR_SOUTH	4
-DIR_SOUTHEAST	5
-DIR_EAST	6
-DIR_NORTHEAST	7
-
-MOBG_Branch_Of_Dead_Tree	0
-MOBG_Poring_Box	1
-MOBG_Bloody_Dead_Branch	2
-MOBG_Red_Pouch_Of_Surprise	3
-MOBG_ClassChange	4

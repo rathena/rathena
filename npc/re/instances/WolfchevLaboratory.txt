@@ -2051,12 +2051,20 @@ OnMyMobDead:
 		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
 		close;
 	}
-	.@all_quests_complete = true;
 	for(.@i = 5113; .@i <= 5125; .@i++) {
-		if (checkquest(.@i, HUNTING) != 2)
-			.@all_quests_complete = false;
+		switch( checkquest(.@i,HUNTING) ) {
+		case -1:
+			break;
+		case 0:
+		case 1:
+			.@all_quests_complete += 1;
+			break;
+		case 2:
+			.@all_quests_complete += 2;
+			break;
+		}
 	}
-	if (.@all_quests_complete) {
+	if (.@all_quests_complete == 26) {
 		// Quests Complete. Get Rewards.
 		if (lght_duk01 == 8) {
 			// First time beating the instance.
@@ -2134,7 +2142,7 @@ OnMyMobDead:
 			end;
 		}
 	} else {
-		if (!.@all_quests_complete) {
+		if (.@all_quests_complete == 0) {
 			mes "[Wolfchev]";
 			mes "I was looking at the system.... don't know who made this..... but it's so complicated to get..no idea...";
 			next;

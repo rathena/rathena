@@ -42,6 +42,7 @@
 //= 2.0 Added missing Lab Staff#amano08 NPC. (bugreport:4319) [Gepard]
 //= 2.1 Commented out Duplicate NPCs. (bugreport:4555)
 //= 2.2 Added missing NPC found in AEGIS files. [L0ne_W0lf]
+//= 2.3 Updated the second entrance to Biolabs. [Capuche]
 //=============================================================
 
 lighthalzen,198,285,5	script	Jiwon#zen5	862,{
@@ -1946,40 +1947,31 @@ OnTouch:
 	end;
 }
 
-lhz_in01,25,141,4	script	Regenschirm Guard	868,{
-
+lhz_in01,24,140,3	script	Regenschirm Guard#40	4_M_LGTGUARD,{
 	mes "[Regenschirm Guard]";
-	if(isequipped(2241) && isequipped(2243)){
+	if (lhz_sincube > 10 && countitem(2657) > 0) {// Lab_Passport
 		mes "Do you wish to";
 		mes "go underground?";
 		next;
-		if(select("Yes:No")==1){
-			if(isequipped(2657)){
-				warp "lhz_dun01",150,288;
-				end;
-			}
+		if (select("Yes","No") == 1) {
 			mes "[Regenschirm Guard]";
-			mes "I'm sorry but I can't let";
-			mes "staff without proper autorization";
-			mes "pass. Only staff members with";
-			mes "Laboratory Passports are allowed";
-			mes "to enter the underground.";
-			close;
-
+			mes "Thank you and";
+			mes "have a nice day.";
+			close2;
+			warp "lhz_dun01",149,285;
+			end;
 		}
 		mes "[Regenschirm Guard]";
 		mes "Thank you and";
 		mes "have a nice day.";
 		close;
 	}
-	mes "This area is restricted";
-	mes "to the public! Who are you";
-	mes "and how did you get in here?!";
-	mes "Hey, I need backup right away!";
-	close2;
-	warp "lhz_in01",34,224;
-	end;
-
+	mes "May I help you?";
+	mes "If you would like to";
+	mes "enter, you must first";
+	mes "have a Laboratory Permit.";
+	mes "Thank you for your cooperation.";
+	close;
 }
 
 

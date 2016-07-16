@@ -521,7 +521,7 @@ OnMyMobDead:
 	set .@map$, instance_mapname("1@mist");
 	if (mobcount(.@map$,instance_npcname("#Dragon Herder")+"::OnMyMobDead") == 0) {
 		donpcevent instance_npcname("Collapsed Girl#mist")+"::OnEnable";
-		donpcevent instance_npcname("Mysterious Young Man#mis")+"::OnEnable";
+		donpcevent instance_npcname("Mysterious Young Man#mis")+"::OnDisable";
 		donpcevent instance_npcname("Loki#mist")+"::OnEnable";
 		mapannounce .@map$,"The Dragon's Cry: Am I being punished... for abandoning the way... of the guardian...?",bc_map,"0xffff00"; //FW_NORMAL 12 0 0
 		disablenpc instance_npcname("#Dragon Herder");

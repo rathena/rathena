@@ -756,6 +756,10 @@ typedef enum sc_type {
 	SC_SHRIMP,
 	SC_FRESHSHRIMP,
 
+	SC_ACTIVE_MONSTER_TRANSFORM,
+
+	SC_CLOUD_KILL,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
@@ -1702,6 +1706,7 @@ enum e_joint_break
 extern short current_equip_item_index;
 extern unsigned int current_equip_combo_pos;
 extern int current_equip_card_id;
+extern bool running_npc_stat_calc_event;
 
 /// Mode definitions to clear up code reading. [Skotlex]
 enum e_mode {
@@ -1710,10 +1715,10 @@ enum e_mode {
 	MD_AGGRESSIVE			= 0x0000004,
 	MD_ASSIST				= 0x0000008,
 	MD_CASTSENSOR_IDLE		= 0x0000010,
-	MD_BOSS					= 0x0000020,
-	MD_PLANT				= 0x0000040,
+	MD_NORANDOM_WALK		= 0x0000020,
+	MD_NOCAST_SKILL			= 0x0000040,
 	MD_CANATTACK			= 0x0000080,
-	MD_DETECTOR				= 0x0000100,
+	//FREE					= 0x0000100,
 	MD_CASTSENSOR_CHASE		= 0x0000200,
 	MD_CHANGECHASE			= 0x0000400,
 	MD_ANGRY				= 0x0000800,
@@ -1727,12 +1732,17 @@ enum e_mode {
 	MD_MVP					= 0x0080000,
 	MD_IGNOREMISC			= 0x0100000,
 	MD_KNOCKBACK_IMMUNE		= 0x0200000,
-	MD_NORANDOM_WALK		= 0x0400000,
-	MD_NOCAST_SKILL			= 0x0800000,
+	MD_TELEPORT_BLOCK		= 0x0400000,
+	//FREE					= 0x0800000,
 	MD_FIXED_ITEMDROP		= 0x1000000,
+	MD_DETECTOR				= 0x2000000,
+	MD_STATUS_IMMUNE		= 0x4000000,
+	MD_SKILL_IMMUNE			= 0x8000000,
 };
-#define MD_MASK 0x00FFFF
-#define ATR_MASK 0xFF0000
+
+#define MD_MASK 0x000FFFF
+#define ATR_MASK 0x0FF0000
+#define CL_MASK 0xF000000
 
 //Status change option definitions (options are what makes status changes visible to chars
 //who were not on your field of sight when it happened)
@@ -2173,7 +2183,7 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 #define status_get_class_(bl) status_get_status_data(bl)->class_
 #define status_get_size(bl) status_get_status_data(bl)->size
 #define status_get_mode(bl) status_get_status_data(bl)->mode
-#define status_has_mode(status,md) ((status)->mode&(md))
+#define status_has_mode(status,md) (((status)->mode&(md)) == (md))
 #define status_bl_has_mode(bl,md) status_has_mode(status_get_status_data((bl)),(md))
 
 #define status_get_homstr(bl) (status->str + ((TBL_HOM*)bl)->homunculus.str_value)
@@ -2234,6 +2244,8 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc);
 
+void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
+
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag);
 int status_check_visibility(struct block_list *src, struct block_list *target);
 
@@ -2243,7 +2255,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 	unsigned short status_base_matk_min(const struct status_data* status);
 	unsigned short status_base_matk_max(const struct status_data* status);
 #else
-	unsigned int status_weapon_atk(struct weapon_atk wa, struct status_data *status);
+	unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd);
 	unsigned short status_base_matk(struct block_list *bl, const struct status_data* status, int level);
 #endif
 
