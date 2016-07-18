@@ -9908,7 +9908,7 @@ REPLACE INTO `item_db_re` VALUES (19609,'C_Red_Glasses','Costume Red Glasses',4,
 REPLACE INTO `item_db_re` VALUES (19610,'C_Whisper_Mask','Costume Whisper Mask',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,7168,NULL,'1',1,321,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19611,'C_Peco_Ears','Costume Peco Ears',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',1,366,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19612,'C_Note_Headphone','Costume Note Headphone',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,3072,NULL,'1',1,220,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (19613,'C_Valkyrie_Feather_Hat','Costume Valkyrie Feather Hat',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,300,'bonus bAllStats,1; skill "PR_MAGNUS",5; skill "SA_FLAMELAUNCHER",1; skill "SA_FROSTWEAPON",1; skill "SA_LIGHTNINGLOADER",1; skill "SA_SEISMICWEAPON",1;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19613,'C_Valkyrie_Feather_Hat','Costume Valkyrie Feather Hat',4,10,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,300,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19614,'C_Super_Novice_Hat','Costume Super Novice Hat',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,193,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19615,'C_Loki_Mask','Costume Loki Mask',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,6144,NULL,'1',1,346,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19616,'C_Wickebines_Black_Cat_Ears','Costume Wickebine\'s Black Cat Ears',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,368,NULL,NULL,NULL);
