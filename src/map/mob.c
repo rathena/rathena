@@ -2527,14 +2527,29 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				(int)(md->level - sd->status.base_level) >= 20)
 				drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
 
-			// Increase drop rate if user has SC_ITEMBOOST
-			if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
-				drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
+			if (sd) {
+				int drop_rate_ = 0;
+
+				if (src) {
+					drop_rate_ += sd->dropaddclass[md->status.class_] + sd->dropaddclass[CLASS_ALL];
+					drop_rate_ += sd->dropaddrace[md->status.race] + sd->dropaddrace[RC_ALL];
+				}
+
+				// Increase drop rate if user has SC_ITEMBOOST
+				if (&sd->sc && sd->sc.data[SC_ITEMBOOST])
+					drop_rate_ += sd->sc.data[SC_ITEMBOOST]->val1;
+
+				drop_rate_ = (int)(0.5 + drop_rate * drop_rate_ / 100.);
+				// Now rig the drop rate to never be over 90% unless it is originally >90%.
+				drop_rate = i32max(drop_rate, cap_value(drop_rate_, 0, 9000));
+			}
+#ifdef VIP_ENABLE
 			// Increase item drop rate for VIP.
 			if (battle_config.vip_drop_increase && (sd && pc_isvip(sd))) {
 				drop_rate += (int)(0.5 + (drop_rate * battle_config.vip_drop_increase) / 100);
 				drop_rate = min(drop_rate,10000); //cap it to 100%
 			}
+#endif
 #ifdef RENEWAL_DROP
 			if( drop_modifier != 100 ) {
 				drop_rate = apply_rate(drop_rate, drop_modifier);

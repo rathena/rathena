@@ -660,6 +660,8 @@
 	script_set_constant("bCriticalLong",SP_CRITICAL_RANGEATK,false);
 	script_set_constant("bMagicAddRace2", SP_MAGIC_ADDRACE2, false);
 	script_set_constant("bIgnoreMdefRace2Rate", SP_IGNORE_MDEF_RACE2_RATE, false);
+	script_set_constant("bDropAddRace", SP_DROP_ADDRACE, false);
+	script_set_constant("bDropAddClass", SP_DROP_ADDCLASS, false);
 
 	/* equip positions */
 	export_constant(EQI_HEAD_TOP);

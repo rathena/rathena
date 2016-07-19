@@ -3696,6 +3696,16 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if (sd->state.lr_flag != 2)
 			sd->ignore_mdef_by_race2[type2] += val;
 		break;
+	case SP_DROP_ADDRACE: // bonus2 bDropAddRace,r,x;
+		PC_BONUS_CHK_RACE(type2, SP_DROP_ADDRACE);
+		if (sd->state.lr_flag != 2)
+			sd->dropaddrace[type2] += val;
+		break;
+	case SP_DROP_ADDCLASS: // bonus2 bDropAddClass,c,x;
+		PC_BONUS_CHK_CLASS(type2, SP_DROP_ADDCLASS);
+		if (sd->state.lr_flag != 2)
+			sd->dropaddclass[type2] += val;
+		break;
 	default:
 		if (running_npc_stat_calc_event) {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in OnPCStatCalcEvent!\n", type, type2, val);
