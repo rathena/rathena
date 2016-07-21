@@ -10690,7 +10690,7 @@
 22531,Special_Christmas_Box,Special Christmas Box,18,10,,200,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO*/ },{},{}
 22532,Santa_Gift,Santa Gift,18,10,,200,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO*/ },{},{}
 22533,New_Year_Gift_Box,New Year Gift Box,18,10,,200,,,,0,0xFFFFFFFF,63,2,,,1,,,{ /*TODO*/ },{},{}
-22534,Closed_Mind_Box,Closed Mind Box,18,10,,1000,,,,,,,,,,,,,{ /*TODO*/ },{},{}
+22534,Closed_Mind_Box,Closed Mind Box,18,10,,1000,,,,,,,,,,,,,{ getgroupitem(IG_Sealed_Mind_Box); },{},{}
 22535,Scroll_Summoning_Workers(Male),Scroll Summoning Workers(Male),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 22536,Scroll_Summoning_Workers(Female),Scroll Summoning Workers(Female),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 22538,Hanbok_bag,Hanbok bag,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{},{},{}
