@@ -800,7 +800,6 @@ moc_ruins,105,62,4	script	Jacob#thai	50,{
 						next;
 						mes "[Jacob]";
 						mes "....You.";
-						mes "";
 						next;
 						mes "[Jacob]";
 						mes "I don't want to see your ugly face";

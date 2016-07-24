@@ -372,7 +372,7 @@ int skill_get_index_( uint16 skill_id, bool silent, const char *func, const char
 #define skill_get_index(skill_id)  skill_get_index_((skill_id), false, __FUNCTION__, __FILE__, __LINE__) /// Get skill index from skill_id (common usage on source)
 #define skill_get_index2(skill_id) skill_get_index_((skill_id), true, __FUNCTION__, __FILE__, __LINE__)  /// Get skill index from skill_id (used when reading skill_db files)
 int skill_get_type( uint16 skill_id );
-int skill_get_hit( uint16 skill_id );
+enum e_damage_type skill_get_hit( uint16 skill_id );
 int skill_get_inf( uint16 skill_id );
 int skill_get_ele( uint16 skill_id , uint16 skill_lv );
 int skill_get_nk( uint16 skill_id );

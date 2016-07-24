@@ -795,7 +795,7 @@ int instance_delusers(unsigned short instance_id)
 		return 1;
 
 	// If no one is in the instance, start the idle timer
-	for(i = 0; im->map[i]->m && i > im->cnt_map; i++)
+	for(i = 0; i < im->cnt_map && im->map[i]->m; i++)
 		if(map[im->map[i]->m].users > 1) // We check this before the actual map.users are updated, hence the 1
 			idle++;
 
@@ -927,7 +927,7 @@ void instance_reload(void) {
 void do_reload_instance(void)
 {
 	struct instance_data *im;
-	struct instance_db *db;
+	struct instance_db *db = NULL;
 	struct s_mapiterator* iter;
 	struct map_session_data *sd;
 	unsigned short i;
@@ -974,7 +974,7 @@ void do_reload_instance(void)
 					instance_id = g->instance_id;
 					break;
 				default:
-					ShowError("do_reload_instance: Unexpected instance mode for instance %s(id=%u, mode=%u).\n", StringBuf_Value(db->name), map[sd->bl.m].instance_id, (unsigned short)im->mode);
+					ShowError("do_reload_instance: Unexpected instance mode for instance %s (id=%u, mode=%u).\n", (db) ? StringBuf_Value(db->name) : "Unknown", map[sd->bl.m].instance_id, (unsigned short)im->mode);
 					continue;
 			}
 			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, instance_id, StringBuf_Value(db->name))) { // All good

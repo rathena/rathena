@@ -33,12 +33,22 @@ new_1-1,66,114,4	script	Bulletin Board#nv	111,{
 	close;
 }
 
+new_2-1,66,114,4	duplicate(Bulletin Board#nv)	Bulletin Board#nv2	111
+new_3-1,66,114,4	duplicate(Bulletin Board#nv)	Bulletin Board#nv3	111
+new_4-1,66,114,4	duplicate(Bulletin Board#nv)	Bulletin Board#nv4	111
+new_5-1,66,114,4	duplicate(Bulletin Board#nv)	Bulletin Board#nv5	111
+
 new_1-1,144,116,2	script	Guard#nv1	105,{
 	mes "[Training Grounds Guard]";
 	mes "Welcome to the Training Grounds.";
 	mes "You are now in the outer court yard. Please go inside the castle to begin your training.";
 	close;
 }
+
+new_2-1,144,116,2	duplicate(Guard#nv1)	Guard#nv2-1	105
+new_3-1,144,116,2	duplicate(Guard#nv1)	Guard#nv3-1	105
+new_4-1,144,116,2	duplicate(Guard#nv1)	Guard#nv4-1	105
+new_5-1,144,116,2	duplicate(Guard#nv1)	Guard#nv5-1	105
 
 new_1-1,144,107,2	script	Guard#nv2	105,{
 	mes "[Training Grounds Guard]";
@@ -60,6 +70,12 @@ new_1-1,144,107,2	script	Guard#nv2	105,{
 	}
 	close;
 }
+
+new_2-1,144,107,2	duplicate(Guard#nv2)	Guard#nv2-2	105
+new_3-1,144,107,2	duplicate(Guard#nv2)	Guard#nv3-2	105
+new_4-1,144,107,2	duplicate(Guard#nv2)	Guard#nv4-2	105
+new_5-1,144,107,2	duplicate(Guard#nv2)	Guard#nv5-2	105
+
 
 // Receptionist
 new_1-2,100,29,4	script	Receptionist#nv1	86,{
@@ -178,6 +194,10 @@ new_1-2,100,29,4	script	Receptionist#nv1	86,{
 		}
 	}
 }	
+new_2-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv2	86
+new_3-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv3	86
+new_4-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv4	86
+new_5-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv5	86
 
 new_1-1,53,114,4	script	Shion#nv1	727,{
 	if (nov_get_item04 > 9 || nov_get_item05 > 9) {
@@ -349,6 +369,12 @@ new_1-1,53,114,4	script	Shion#nv1	727,{
 		}
 	}
 }
+
+new_2-1,53,114,4	duplicate(Shion#nv1)	Shion#nv2	727
+new_3-1,53,114,4	duplicate(Shion#nv1)	Shion#nv3	727
+new_4-1,53,114,4	duplicate(Shion#nv1)	Shion#nv4	727
+new_5-1,53,114,4	duplicate(Shion#nv1)	Shion#nv5	727
+
 
 // Interfaces Tutor
 new_1-2,99,105,3	script	Interfaces Tutor#nv1	751,{
@@ -1537,7 +1563,6 @@ new_1-2,161,182,5	script	Instructor#nv	92,{
 	mes "Welcome to my class.";
 	mes "Choose the subject you";
 	mes "wish to learn more about.";
-	mes "";
 	next;
 	while(1) {
 		switch(select("Basic Info Window:Party Window:Item Window:Option Window:Equipment Window:Cancel")) {
@@ -3001,7 +3026,6 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 			mes "Fill in the blank:";
 			mes "You ^3355FF_____^000000";
 			mes "competing with other people...";
-			mes "";
 			next;
 			switch(select("don't mind...:don't like...:don't care about...")) {
 			case 1:
@@ -3406,7 +3430,6 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					next;
 					mes "[Hanson]";
 					mes "The town you will arrive is named 'Geffen'.";
-					mes "";
 					mes "The mage academy is located in the Northwest part in town. Please remember this.";
 					next;
 					mes "[Hanson]";
@@ -4071,7 +4094,6 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 					next;
 					mes "[Bruce]";
 					mes "When advancing to the Second Job Class, Acolytes can change their jobs to ^8E2323Priests^000000 or ^8E2323Monks^000000.";
-					mes "";
 					set nov_3_swordman,20;
 					next;
 					break;
@@ -4229,7 +4251,6 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 					next;
 					mes "[Bruce]";
 					mes "When advancing to the Second Job Class, Acolytes can change their jobs to ^8E2323Priests^000000 or ^8E2323Monks^000000.";
-					mes "";
 					set nov_3_swordman,20;
 					next;
 					break;

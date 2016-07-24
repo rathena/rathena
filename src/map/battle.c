@@ -1306,23 +1306,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		// Compressed code, fixed by map.h [Epoque]
 		if (src->type == BL_MOB) {
-			int i;
-
-			if (sc->data[SC_MANU_DEF]) {
-				for (i=0;ARRAYLENGTH(mob_manuk)>i;i++) {
-					if (mob_manuk[i]==((TBL_MOB*)src)->mob_id) {
-						damage -= damage * sc->data[SC_MANU_DEF]->val1 / 100;
-						break;
-					}
-				}
+			if( sc->data[SC_MANU_DEF] && status_get_race2(src) == RC2_MANUK ){
+				damage -= damage * sc->data[SC_MANU_DEF]->val1 / 100;
 			}
-			if (sc->data[SC_SPL_DEF]) {
-				for (i=0;ARRAYLENGTH(mob_splendide)>i;i++) {
-					if (mob_splendide[i]==((TBL_MOB*)src)->mob_id) {
-						damage -= damage * sc->data[SC_SPL_DEF]->val1 / 100;
-						break;
-					}
-				}
+			if( sc->data[SC_SPL_DEF] && status_get_race2(src) == RC2_SPLENDIDE ){
+				damage -= damage * sc->data[SC_SPL_DEF]->val1 / 100;
 			}
 		}
 
@@ -1462,27 +1450,17 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		// [Epoque]
 		if (bl->type == BL_MOB) {
-			uint8 i;
-
-			if ( ((sce=sc->data[SC_MANU_ATK]) && (flag&BF_WEAPON)) ||
-				 ((sce=sc->data[SC_MANU_MATK]) && (flag&BF_MAGIC))
+			if ( (((sce=sc->data[SC_MANU_ATK]) && (flag&BF_WEAPON)) ||
+				 ((sce=sc->data[SC_MANU_MATK]) && (flag&BF_MAGIC))) &&
+				 status_get_race2(bl) == RC2_MANUK
 				) {
-				for (i=0;ARRAYLENGTH(mob_manuk)>i;i++) {
-					if (((TBL_MOB*)bl)->mob_id==mob_manuk[i]) {
-						damage += damage * sce->val1 / 100;
-						break;
-					}
-				}
+				damage += damage * sce->val1 / 100;
 			}
-			if ( ((sce=sc->data[SC_SPL_ATK]) && (flag&BF_WEAPON)) ||
-				 ((sce=sc->data[SC_SPL_MATK]) && (flag&BF_MAGIC))
+			if ( (((sce=sc->data[SC_SPL_ATK]) && (flag&BF_WEAPON)) ||
+				 ((sce=sc->data[SC_SPL_MATK]) && (flag&BF_MAGIC))) &&
+				 status_get_race2(bl) == RC2_SPLENDIDE
 				) {
-				for (i=0;ARRAYLENGTH(mob_splendide)>i;i++) {
-					if (((TBL_MOB*)bl)->mob_id==mob_splendide[i]) {
-						damage += damage * sce->val1 / 100;
-						break;
-					}
-				}
+				damage += damage * sce->val1 / 100;
 			}
 		}
 		/* Self Buff that destroys the armor of any target hit with melee or ranged physical attacks */
@@ -4986,7 +4964,7 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 		rdamage = (int64)rdamage * ratio / 100 + wd.damage * (10 + tsc->data[SC_CRESCENTELBOW]->val1 * 20 / 10) / 10;
 		skill_blown(target, src, skill_get_blewcount(SR_CRESCENTELBOW_AUTOSPELL, tsc->data[SC_CRESCENTELBOW]->val1), unit_getdir(src), 0);
 		clif_skill_damage(target, src, gettick(), status_get_amotion(src), 0, rdamage,
-			1, SR_CRESCENTELBOW_AUTOSPELL, tsc->data[SC_CRESCENTELBOW]->val1, 6); // This is how official does
+			1, SR_CRESCENTELBOW_AUTOSPELL, tsc->data[SC_CRESCENTELBOW]->val1, DMG_SKILL); // This is how official does
 		clif_damage(src, target, gettick(), status_get_amotion(src)+1000, 0, rdamage/10, 1, DMG_NORMAL, 0, false);
 		status_damage(target, src, rdamage, 0, 0, 0);
 		status_damage(src, target, rdamage/10, 0, 0, 1);
@@ -6203,7 +6181,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			}
 		}
 
-		if (!(nk&NK_NO_ELEFIX))
+		if (!(nk&NK_NO_ELEFIX) && skill_id != ASC_BREAKER) // Soul Breaker's magic portion is non-elemental. [Secret]
 			ad.damage = battle_attr_fix(src, target, ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
 		//Apply the physical part of the skill's damage. [Skotlex]
@@ -6769,7 +6747,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 
 						rd1 = min(damage,status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
 						*dmg = rd1 * 30 / 100; // Received damage = 30% of amplified damage.
-						clif_skill_damage(src, bl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1, 6);
+						clif_skill_damage(src, bl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1, DMG_SKILL);
 						skill_blown(bl, src, skill_get_blewcount(RK_DEATHBOUND, 1), unit_getdir(src), 0);
 						status_change_end(bl, SC_DEATHBOUND, INVALID_TIMER);
 						rdamage += rd1 * 70 / 100; // Target receives 70% of the amplified damage. [Rytech]
@@ -6969,7 +6947,7 @@ int battle_damage_area(struct block_list *bl, va_list ap) {
 	dmotion = va_arg(ap,int);
 	damage = va_arg(ap,int);
 
-	if (status_bl_has_mode(bl,MD_SKILL_IMMUNE))
+	if (status_bl_has_mode(bl, MD_SKILL_IMMUNE) || status_get_class(bl) == MOBID_EMPERIUM)
 		return 0;
 	if( bl != src && battle_check_target(src,bl,BCT_ENEMY) > 0 ) {
 		map_freeblock_lock();
@@ -7220,7 +7198,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
-	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , (enum e_damage_type)wd.type, wd.damage2, wd.isspdamage);
+	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2, wd.isspdamage);
 
 	if (sd && sd->bonus.splash_range > 0 && damage > 0)
 		skill_castend_damage_id(src, target, 0, 1, tick, 0);
@@ -7266,7 +7244,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			struct elemental_data *ed = ((TBL_PC*)target)->ed;
 
 			if (ed) {
-				clif_skill_damage(&ed->bl, target, tick, status_get_amotion(src), 0, -30000, 1, EL_CIRCLE_OF_FIRE, tsc->data[SC_CIRCLE_OF_FIRE_OPTION]->val1, 6);
+				clif_skill_damage(&ed->bl, target, tick, status_get_amotion(src), 0, -30000, 1, EL_CIRCLE_OF_FIRE, tsc->data[SC_CIRCLE_OF_FIRE_OPTION]->val1, DMG_SKILL);
 				skill_attack(BF_WEAPON,&ed->bl,&ed->bl,src,EL_CIRCLE_OF_FIRE,tsc->data[SC_CIRCLE_OF_FIRE_OPTION]->val1,tick,wd.flag);
 			}
 		}

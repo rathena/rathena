@@ -6,6 +6,7 @@
 
 #include "../common/mmo.h"
 #include "../config/core.h"
+#include "clif.h" // e_damage_type
 #include "map.h" //ELE_MAX
 
 /// State of a single attack attempt; used in flee/def penalty calculations when mobbed
@@ -61,7 +62,7 @@ struct Damage {
 #endif
 	int64 damage, /// Right hand damage
 		damage2; /// Left hand damage
-	char type; /// chk clif_damage for type (clif.h enum e_damage_type)
+	enum e_damage_type type; /// Check clif_damage for type
 	short div_; /// Number of hit
 	int amotion,
 		dmotion;

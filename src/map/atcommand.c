@@ -1743,8 +1743,8 @@ ACMD_FUNC(bodystyle)
 	// Limit body styles to certain jobs since not all of them are released yet.
 	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC
 		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP)) {
-		clif_displaymessage(fd, msg_txt(sd,770));	// This job has no alternate body styles.
+		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP || (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER)) {
+		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}
 
@@ -5651,7 +5651,7 @@ ACMD_FUNC(displayskill)
 	}
 	status = status_get_status_data(&sd->bl);
 	tick = gettick();
-	clif_skill_damage(&sd->bl,&sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, 5);
+	clif_skill_damage(&sd->bl,&sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SPLASH);
 	clif_skill_nodamage(&sd->bl, &sd->bl, skill_id, skill_lv, 1);
 	clif_skill_poseffect(&sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y, tick);
 	return 0;
@@ -7072,9 +7072,10 @@ ACMD_FUNC(mobinfo)
 		return -1;
 	}
 
-	if (count == MAX_SEARCH) {
+	if (count >= MAX_SEARCH) {
 		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
+		count = MAX_SEARCH;
 	}
 	for (k = 0; k < count; k++) {
 		unsigned int j,base_exp,job_exp;
@@ -7706,9 +7707,10 @@ ACMD_FUNC(whereis)
 		return -1;
 	}
 
-	if (count == MAX_SEARCH) {
+	if (count >= MAX_SEARCH) {
 		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
+		count = MAX_SEARCH;
 	}
 	for (k = 0; k < count; k++) {
 		struct mob_db *mob = mob_array[k];
@@ -10120,7 +10122,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(cart),
 		ACMD_DEF(mount2),
 		ACMD_DEF(join),
-		ACMD_DEF(channel),
+		ACMD_DEFR(channel,ATCMD_NOSCRIPT),
 		ACMD_DEF(fontcolor),
 		ACMD_DEF(langtype),
 #ifdef VIP_ENABLE

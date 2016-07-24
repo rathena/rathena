@@ -101,6 +101,7 @@ Thumbs.db
 # /vcproj-14/
 .vs
 *.VC.db
+*.VC.opendb
 /vcproj-14/char-server
 /vcproj-14/login-server
 /vcproj-14/mapcache
