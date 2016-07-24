@@ -683,6 +683,7 @@ struct map_session_data {
 	} roulette;
 
 	unsigned short instance_id;
+	short setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table

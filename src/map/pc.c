@@ -8548,12 +8548,15 @@ void pc_changelook(struct map_session_data *sd,int type,int val) {
 		break;
 	case LOOK_HEAD_BOTTOM:
 		sd->status.head_bottom = val;
+		sd->setlook_head_bottom = val;
 		break;
 	case LOOK_HEAD_TOP:
 		sd->status.head_top = val;
+		sd->setlook_head_top = val;
 		break;
 	case LOOK_HEAD_MID:
 		sd->status.head_mid = val;
+		sd->setlook_head_mid = val;
 		break;
 	case LOOK_HAIR_COLOR:	//Use the battle_config limits! [Skotlex]
 		val = cap_value(val, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
@@ -8577,6 +8580,7 @@ void pc_changelook(struct map_session_data *sd,int type,int val) {
 		break;
 	case LOOK_ROBE:
 		sd->status.robe = val;
+		sd->setlook_robe = val;
 		break;
 	case LOOK_BODY2:
 		val = cap_value(val, MIN_BODY_STYLE, MAX_BODY_STYLE);
@@ -12004,7 +12008,6 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 
 /**
  * Tells client about player's costume view on mapchange for checking 'nocostume' mapflag.
- * FIXME: This is will break 'setlook' script command. Must store the script variable first.
  * @param sd
  **/
 void pc_set_costume_view(struct map_session_data *sd) {
@@ -12035,10 +12038,9 @@ void pc_set_costume_view(struct map_session_data *sd) {
 		else
 			sd->status.head_mid = 0;
 	}
-	if ((i = sd->equip_index[EQI_HEAD_TOP]) != -1 && (id = sd->inventory_data[i])) {
+	if ((i = sd->equip_index[EQI_HEAD_TOP]) != -1 && (id = sd->inventory_data[i]))
 		sd->status.head_top = id->look;
-	}
-	if ((i = sd->equip_index[EQP_GARMENT]) != -1 && (id = sd->inventory_data[i]))
+	if ((i = sd->equip_index[EQI_GARMENT]) != -1 && (id = sd->inventory_data[i]))
 		sd->status.robe = id->look;
 
 	// Costumes check
@@ -12055,21 +12057,20 @@ void pc_set_costume_view(struct map_session_data *sd) {
 			else
 				sd->status.head_mid = 0;
 		}
-		if ((i = sd->equip_index[EQI_COSTUME_HEAD_TOP]) != -1 && (id = sd->inventory_data[i])) {
+		if ((i = sd->equip_index[EQI_COSTUME_HEAD_TOP]) != -1 && (id = sd->inventory_data[i]))
 			sd->status.head_top = id->look;
-		}
-		if ((i = sd->equip_index[EQP_COSTUME_GARMENT]) != -1 && (id = sd->inventory_data[i]))
+		if ((i = sd->equip_index[EQI_COSTUME_GARMENT]) != -1 && (id = sd->inventory_data[i]))
 			sd->status.robe = id->look;
 	}
 
-	if (head_low != sd->status.head_bottom)
-		clif_changelook(&sd->bl, LOOK_HEAD_BOTTOM, sd->status.head_bottom);
-	if (head_mid != sd->status.head_mid)
-		clif_changelook(&sd->bl, LOOK_HEAD_MID, sd->status.head_mid);
-	if (head_top != sd->status.head_top)
-		clif_changelook(&sd->bl, LOOK_HEAD_TOP, sd->status.head_top);
-	if (robe != sd->status.robe)
-		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
+	if (head_low != sd->status.head_bottom || sd->setlook_head_bottom)
+		clif_changelook(&sd->bl, LOOK_HEAD_BOTTOM, sd->setlook_head_bottom ? sd->setlook_head_bottom : sd->status.head_bottom);
+	if (head_mid != sd->status.head_mid || sd->setlook_head_mid)
+		clif_changelook(&sd->bl, LOOK_HEAD_MID, sd->setlook_head_mid ? sd->setlook_head_mid : sd->status.head_mid);
+	if (head_top != sd->status.head_top || sd->setlook_head_top)
+		clif_changelook(&sd->bl, LOOK_HEAD_TOP, sd->setlook_head_top ? sd->setlook_head_top : sd->status.head_top);
+	if (robe != sd->status.robe || sd->setlook_robe)
+		clif_changelook(&sd->bl, LOOK_ROBE, sd->setlook_robe ? sd->setlook_robe : sd->status.robe);
 }
 
 
