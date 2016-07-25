@@ -3258,11 +3258,11 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 				wa->atk2 = refine_info[wlv].bonus[r-1] / 100;
 #ifdef RENEWAL
 			wa->matk += sd->inventory_data[index]->matk;
-			if (sd->bonus.weapon_matk_rate)
-				wa->matk += sd->inventory_data[index]->matk * sd->bonus.weapon_matk_rate / 100;
 			wa->wlv = wlv;
 			if(r && sd->weapontype1 != W_BOW) // Renewal magic attack refine bonus
 				wa->matk += refine_info[wlv].bonus[r-1] / 100;
+			if (sd->bonus.weapon_matk_rate)
+				wa->matk += wa->matk * sd->bonus.weapon_matk_rate / 100;
 #endif
 			if(r) // Overrefine bonus.
 				wd->overrefine = refine_info[wlv].randombonus_max[r-1] / 100;
