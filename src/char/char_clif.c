@@ -417,7 +417,11 @@ void chclif_char_delete2_ack(int fd, uint32 char_id, uint32 result, time_t delet
 	WFIFOW(fd,0) = 0x828;
 	WFIFOL(fd,2) = char_id;
 	WFIFOL(fd,6) = result;
+#if PACKETVER_CHAR_DELETEDATE
 	WFIFOL(fd,10) = TOL(delete_date-time(NULL));
+#else
+	WFIFOL(fd,10) = TOL(delete_date);
+#endif
 	WFIFOSET(fd,14);
 }
 
@@ -523,6 +527,37 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 	return 1;
 }
 
+/**
+ * Check char deletion code
+ * @param sd
+ * @param delcode E-mail or birthdate
+ * @param flag Delete flag
+ * @return true:Success, false:Failure
+ **/
+static bool chclif_delchar_check(struct char_session_data *sd, char *delcode, uint8 flag) {
+	// E-Mail check
+	if (flag&CHAR_DEL_EMAIL && (
+			!stricmp(delcode, sd->email) || //email does not match or
+			(
+				!stricmp("a@a.com", sd->email) && //it is default email and
+				!strcmp("", delcode) //user sent an empty email
+			))) {
+			ShowInfo(""CL_RED"Char Deleted"CL_RESET" "CL_GREEN"(E-Mail)"CL_RESET".\n");
+			return true;
+	}
+	// Birthdate (YYMMDD)
+	if (flag&CHAR_DEL_BIRTHDATE && (
+		!strcmp(sd->birthdate+2, delcode) || // +2 to cut off the century
+		(
+			!strcmp("0000-00-00", sd->birthdate) && // it is default birthdate and
+			!strcmp("",delcode) // user sent an empty birthdate
+		))) {
+		ShowInfo(""CL_RED"Char Deleted"CL_RESET" "CL_GREEN"(Birthdate)"CL_RESET".\n");
+		return true;
+	}
+	return false;
+}
+
 // CH: <0829>.W <char id>.L <birth date:YYMMDD>.6B
 int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(12)
@@ -572,8 +607,7 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 			return 1;
 		}
 
-		if( strcmp(sd->birthdate+2, birthdate) )  // +2 to cut off the century
-		{// birth date is wrong
+		if (!chclif_delchar_check(sd, birthdate, CHAR_DEL_BIRTHDATE)) { // Only check for birthdate
 			chclif_char_delete2_accept_ack(fd, char_id, 5);
 			return 1;
 		}
@@ -983,12 +1017,7 @@ int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd){
 		memcpy(email, RFIFOP(fd,6), 40);
 		RFIFOSKIP(fd,( cmd == 0x68) ? 46 : 56);
 
-		// Check if e-mail is correct
-		if(strcmpi(email, sd->email) && //email does not matches and
-			(strcmp("a@a.com", sd->email) || //it is not default email, or
-			(strcmp("a@a.com", email) && strcmp("", email)) //email sent does not matches default
-			))
-		{	//Fail
+		if (!chclif_delchar_check(sd, email, charserv_config.char_config.char_del_option)) {
 			chclif_refuse_delchar(fd,0); // 00 = Incorrect Email address
 			return 1;
 		}

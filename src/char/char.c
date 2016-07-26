@@ -1804,7 +1804,7 @@ int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	offset += MAP_NAME_LENGTH_EXT;
 #endif
 #if PACKETVER >= 20100803
-#if (PACKETVER > 20130000 && PACKETVER < 20141016) || (PACKETVER >= 20150826 && PACKETVER < 20151001) || PACKETVER >= 20151104
+#if PACKETVER_CHAR_DELETEDATE
 	WBUFL(buf,124) = (p->delete_date?TOL(p->delete_date-time(NULL)):0);
 #else
 	WBUFL(buf,124) = TOL(p->delete_date);
@@ -2640,9 +2640,9 @@ void char_set_defaults(){
 	charserv_config.char_config.char_del_level = 0; //From which level u can delete character [Lupus]
 	charserv_config.char_config.char_del_delay = 86400;
 #if PACKETVER >= 20100803
-	charserv_config.char_config.char_del_option = 2;
+	charserv_config.char_config.char_del_option = CHAR_DEL_BIRTHDATE;
 #else
-	charserv_config.char_config.char_del_option = 1;
+	charserv_config.char_config.char_del_option = CHAR_DEL_EMAIL;
 #endif
 
 //	charserv_config.userid[24];
@@ -2986,6 +2986,18 @@ bool char_config_read(const char* cfgName, bool normal){
 	return true;
 }
 
+/**
+ * Checks for values out of range.
+ */
+static void char_config_adjust() {
+#if PACKETVER < 20100803
+	if (charserv_config.char_config.char_del_option&CHAR_DEL_BIRTHDATE) {
+		ShowWarning("conf/char_athena.conf:char_del_option birthdate is enabled but it requires PACKETVER 2010-08-03 or newer, defaulting to email...\n");
+		charserv_config.char_config.char_del_option &= ~CHAR_DEL_BIRTHDATE;
+	}
+#endif
+}
+
 /*
  * Message conf function
  */
@@ -3081,6 +3093,7 @@ int do_init(int argc, char **argv)
 
 	char_set_defaults();
 	char_config_read(CHAR_CONF_NAME, true);
+	char_config_adjust();
 	char_lan_config_read(LAN_CONF_NAME);
 	char_set_default_sql();
 	char_sql_config_read(SQL_CONF_NAME);
