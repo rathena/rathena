@@ -49,7 +49,7 @@
 // 15 Blowcount (amount of tiles skill knockbacks)
 // 16 inf3 (skill information 3):
 //    0x00001 - skill ignores land protector
-//    0x00002 - skill that doesn't end camouflage
+//    0x00002 - free
 //    0x00004 - usable skills while hiding
 //    0x00008 - skill that can be use while in dancing state
 //    0x00010 - skill that could hit emperium

@@ -79,7 +79,7 @@ enum e_skill_inf2 {
 /// Skill info type 3
 enum e_skill_inf3 {
 	INF3_NOLP             = 0x00001, // Skill that can ignore Land Protector
-	INF3_NOENDCAMOUFLAGE  = 0x00002, // Skill that doesn't end camouflage
+	INF3_FREE             = 0x00002, // Free
 	INF3_USABLE_HIDING    = 0x00004, // Skill that can be use in hiding
 	INF3_USABLE_DANCE     = 0x00008, // Skill that can be use while in dancing state
 	INF3_HIT_EMP          = 0x00010, // Skill that could hit emperium

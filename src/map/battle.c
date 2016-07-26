@@ -4737,6 +4737,8 @@ struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,
 	int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
 	short class_ = status_get_class(target);
 
+	status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
+
 	//Plants receive 1 damage when hit
 	if( attack_hits || wd.damage > 0 )
 		wd.damage = 1; //In some cases, right hand no need to have a weapon to deal a damage
