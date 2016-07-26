@@ -537,9 +537,9 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 static bool chclif_delchar_check(struct char_session_data *sd, char *delcode, uint8 flag) {
 	// E-Mail check
 	if (flag&CHAR_DEL_EMAIL && (
-			!strcmp(delcode, sd->email) || //email does not match or
+			!stricmp(delcode, sd->email) || //email does not match or
 			(
-				!strcmp("a@a.com", sd->email) && //it is default email and
+				!stricmp("a@a.com", sd->email) && //it is default email and
 				!strcmp("", delcode) //user sent an empty email
 			))) {
 			ShowInfo(""CL_RED"Char Deleted"CL_RESET" "CL_GREEN"(E-Mail)"CL_RESET".\n");
