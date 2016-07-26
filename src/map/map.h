@@ -297,6 +297,8 @@ enum e_race2 {
 	RC2_BATTLEFIELD,
 	RC2_TREASURE,
 	RC2_BIOLAB,
+	RC2_MANUK,
+	RC2_SPLENDIDE,
 	RC2_MAX
 };
 
@@ -466,7 +468,7 @@ enum _sp {
 	SP_ADD_CLASS_DROP_ITEMGROUP, SP_ADDMAXWEIGHT, SP_ADD_ITEMGROUP_HEAL_RATE,  // 2071-2073
 	SP_HP_VANISH_RACE_RATE, SP_SP_VANISH_RACE_RATE, SP_ABSORB_DMG_MAXHP, SP_SUB_SKILL, SP_SUBDEF_ELE, // 2074-2078
 	SP_STATE_NORECOVER_RACE, SP_CRITICAL_RANGEATK, SP_MAGIC_ADDRACE2, SP_IGNORE_MDEF_RACE2_RATE, // 2079-2082
-	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, // 2083-2084
+	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, SP_DROP_ADDRACE, SP_DROP_ADDCLASS, // 2083-2086
 };
 
 enum _look {
@@ -689,7 +691,7 @@ struct map_data {
 	} skill_damage;
 #endif
 	// Instance Variables
-	int instance_id;
+	unsigned short instance_id;
 	int instance_src_map;
 
 	/* rAthena Local Chat */
@@ -800,8 +802,8 @@ void map_clearflooritem(struct block_list* bl);
 int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id);
 
 // instances
-int map_addinstancemap(const char*,int);
-int map_delinstancemap(int);
+int map_addinstancemap(const char *name, unsigned short instance_id);
+int map_delinstancemap(int m);
 
 // player to map session
 void map_addnickdb(int charid, const char* nick);

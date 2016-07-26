@@ -1731,7 +1731,8 @@ moc_fild22b,230,197,5	script	Munkenro#2	967,{
 			mes "Ok, just have a good adventure.";
 			next;
 			set ep13_ryu,22;
-			changequest 10077,10078; 
+			if (isbegin_quest(10077) == 1)
+				changequest 10077,10078; 
 			donpcevent "Head of the Alliance#moo::OnEnable"; 
 			mes "[Munkenro]";
 			mes "If you are too late,";
@@ -9651,8 +9652,10 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 				delitem 11016,1; //Expedition_Report_Vol4
 				getitem 11012,1; //Expedition_Report
 				set ep13_1_edq,8;
-				erasequest 3090;
-				erasequest 3091;
+				if (isbegin_quest(3090) > 0)
+					erasequest 3090;
+				if (isbegin_quest(3091) > 0)
+					erasequest 3091;
 				setquest 3092;
 				mes "[Staff Officer Abidal]";
 				mes "I'm glad that we were able to make this again. Please bring this report to the commander.";
@@ -10105,7 +10108,6 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 				}
 				if (.@playtime == -1) {
 					changequest 3090,3091;
-					erasequest 3090;
 				} else
 					erasequest 3091;
 				setquest 3091;

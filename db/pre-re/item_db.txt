@@ -4552,7 +4552,7 @@
 11530,Jujube,Jujube,0,10,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 30,0; },{},{}
 11531,Coffee,Coffee,0,10,,100,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,10; },{},{}
 11701,Girl_Bunch_Of_Flower_,Girl's Bouquet,0,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(105,145),0; },{},{}
-11702,Moon_Cookie,Moon Cookie,0,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ },{},{}
+11702,Moon_Cookie,Moon Cookie,0,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 11703,Mysterious_Blood,Mystery Blood,0,0,,30,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal 0,rand(25,35); },{},{}
 11704,KETUPAT_F,Ketupat,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(70,90),0; },{},{}
 11705,Special_White_Potion,Children's Potion,0,1,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemheal rand(425,425),0; },{},{}
@@ -4961,7 +4961,7 @@
 12397,Fools_Day_Box2,Gift Box?,11,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ .@rnd = rand(1,10); if(.@rnd==1) itemskill "TF_DETOXIFY",1; else if(.@rnd==2) itemskill "TF_PICKSTONE",1; else if(.@rnd==3) itemskill "BA_FROSTJOKER",1; else if(.@rnd==4) itemskill "DC_SCREAM",1; else if(.@rnd==5) end; else if(.@rnd==6) getitem 909,1; else if(.@rnd==7) itemskill "AL_RUWACH",1; else if(.@rnd==8) specialeffect2 328; else if(.@rnd==9) specialeffect2 68; else specialeffect2 196; },{},{}
 12398,PCBang_Gift_Box,PCBang Gift Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12399,Castle_Treasure_Box,Castle Treasure Box,2,20,,1000,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12400,Water_Of_Blessing_,Water Of Blessing ,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+12400,Water_Of_Blessing_,Water Of Blessing,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12401,Rune_Kn_Test_Int,Rune Kn Test Int,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCINT,300000,40; },{},{}
 12402,29Fruit,29Fruit,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,5; },{},{}
 12403,Lucky_Egg2,Lucky Egg2,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
@@ -5290,9 +5290,9 @@
 12965,Emergency_Box1,Emergency Level 1 Scroll Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12968,1; },{},{}
 12966,Emergency_Box2,Emergency Level 2 Scroll Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12969,1; },{},{}
 12967,Emergency_Box3,Emergency Level 3 Scroll Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12970,1; },{},{}
-12968,Emergency_Scroll1,Emergency Level 1 Scroll,11,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "GD_ITEMEMERGENCYCALL",1; },{},{}
-12969,Emergency_Scroll2,Emergency Level 2 Scroll,11,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "GD_ITEMEMERGENCYCALL",2; },{},{}
-12970,Emergency_Scroll3,Emergency Level 3 Scroll,11,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ itemskill "GD_ITEMEMERGENCYCALL",3; },{},{}
+12968,Emergency_Scroll1,Emergency Level 1 Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ unitskilluseid getcharid(3),"GD_ITEMEMERGENCYCALL",1; },{},{}
+12969,Emergency_Scroll2,Emergency Level 2 Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ unitskilluseid getcharid(3),"GD_ITEMEMERGENCYCALL",2; },{},{}
+12970,Emergency_Scroll3,Emergency Level 3 Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ unitskilluseid getcharid(3),"GD_ITEMEMERGENCYCALL",3; },{},{}
 12971,Teleport_Box1,Teleport Scroll Box 1,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12977,10; },{},{}
 12972,Teleport_Box2,Teleport Scroll Box 2,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12978,10; },{},{}
 12973,Teleport_Box3,Teleport Scroll Box 3,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12979,10; },{},{}

@@ -1743,8 +1743,8 @@ ACMD_FUNC(bodystyle)
 	// Limit body styles to certain jobs since not all of them are released yet.
 	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC
 		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP)) {
-		clif_displaymessage(fd, msg_txt(sd,770));	// This job has no alternate body styles.
+		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP || (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER)) {
+		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}
 
@@ -3569,10 +3569,9 @@ ACMD_FUNC(idsearch)
 	sprintf(atcmd_output, msg_txt(sd,77), item_name); // The reference result of '%s' (name: id):
 	clif_displaymessage(fd, atcmd_output);
 	match = itemdb_searchname_array(item_array, MAX_SEARCH, item_name);
-	if (match > MAX_SEARCH) {
-		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH, match);
+	if (match == MAX_SEARCH) {
+		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
-		match = MAX_SEARCH;
 	}
 	for(i = 0; i < match; i++) {
 		sprintf(atcmd_output, msg_txt(sd,78), item_array[i]->jname, item_array[i]->nameid); // %s: %d
@@ -5650,7 +5649,7 @@ ACMD_FUNC(displayskill)
 	}
 	status = status_get_status_data(&sd->bl);
 	tick = gettick();
-	clif_skill_damage(&sd->bl,&sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, 5);
+	clif_skill_damage(&sd->bl,&sd->bl, tick, status->amotion, status->dmotion, 1, 1, skill_id, skill_lv, DMG_SPLASH);
 	clif_skill_nodamage(&sd->bl, &sd->bl, skill_id, skill_lv, 1);
 	clif_skill_poseffect(&sd->bl, skill_id, skill_lv, sd->bl.x, sd->bl.y, tick);
 	return 0;
@@ -5664,7 +5663,7 @@ ACMD_FUNC(skilltree)
 {
 	struct map_session_data *pl_sd = NULL;
 	uint16 skill_id;
-	int meets, j, c=0;
+	int meets, i, j, c=0;
 	char target[NAME_LENGTH];
 	struct skill_tree_entry *ent;
 	nullpo_retr(-1, sd);
@@ -5680,11 +5679,13 @@ ACMD_FUNC(skilltree)
 		return -1;
 	}
 
-	c = pc_calc_skilltree_normalize_job(pl_sd);
-	c = pc_mapid2jobid(c, pl_sd->status.sex);
+	i = pc_calc_skilltree_normalize_job(pl_sd);
+	c = pc_mapid2jobid(i, pl_sd->status.sex);
 
 	sprintf(atcmd_output, msg_txt(sd,1168), job_name(c), pc_checkskill(pl_sd, NV_BASIC)); // Player is using %s skill tree (%d basic points).
 	clif_displaymessage(fd, atcmd_output);
+
+	c = pc_class2idx(c);
 
 	ARR_FIND( 0, MAX_SKILL_TREE, j, skill_tree[c][j].id == 0 || skill_tree[c][j].id == skill_id );
 	if( j == MAX_SKILL_TREE || skill_tree[c][j].id == 0 )
@@ -7069,8 +7070,8 @@ ACMD_FUNC(mobinfo)
 		return -1;
 	}
 
-	if (count > MAX_SEARCH) {
-		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH, count);
+	if (count >= MAX_SEARCH) {
+		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
 		count = MAX_SEARCH;
 	}
@@ -7592,10 +7593,9 @@ ACMD_FUNC(iteminfo)
 		return -1;
 	}
 
-	if (count > MAX_SEARCH) {
-		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH, count); // Displaying first %d out of %d matches
+	if (count == MAX_SEARCH) {
+		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
-		count = MAX_SEARCH;
 	}
 	for (i = 0; i < count; i++) {
 		struct item_data * item_data = item_array[i];
@@ -7609,16 +7609,17 @@ ACMD_FUNC(iteminfo)
 		sprintf(atcmd_output, msg_txt(sd,1280), item_data->value_buy, item_data->value_sell, item_data->weight/10. ); // NPC Buy:%dz, Sell:%dz | Weight: %.1f
 		clif_displaymessage(fd, atcmd_output);
 
-		if (item_data->maxchance == -1)
+		if (item_data->maxchance == -1) {
 			strcpy(atcmd_output, msg_txt(sd,1281)); //  - Available in the shops only.
+			clif_displaymessage(fd, atcmd_output);
+		}
 		else if (!battle_config.atcommand_mobinfo_type) {
 			if (item_data->maxchance)
 				sprintf(atcmd_output, msg_txt(sd,1282), (float)item_data->maxchance / 100 ); //  - Maximal monsters drop chance: %02.02f%%
 			else
 				strcpy(atcmd_output, msg_txt(sd,1283)); //  - Monsters don't drop this item.
+			clif_displaymessage(fd, atcmd_output);
 		}
-		clif_displaymessage(fd, atcmd_output);
-
 	}
 	return 0;
 }
@@ -7643,10 +7644,9 @@ ACMD_FUNC(whodrops)
 		return -1;
 	}
 
-	if (count > MAX_SEARCH) {
-		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH, count); // Displaying first %d out of %d matches
+	if (count == MAX_SEARCH) {
+		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
-		count = MAX_SEARCH;
 	}
 	for (i = 0; i < count; i++) {
 		item_data = item_array[i];
@@ -7705,8 +7705,8 @@ ACMD_FUNC(whereis)
 		return -1;
 	}
 
-	if (count > MAX_SEARCH) {
-		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH, count);
+	if (count >= MAX_SEARCH) {
+		sprintf(atcmd_output, msg_txt(sd,269), MAX_SEARCH); // Displaying first %d matches
 		clif_displaymessage(fd, atcmd_output);
 		count = MAX_SEARCH;
 	}
@@ -10119,7 +10119,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(cart),
 		ACMD_DEF(mount2),
 		ACMD_DEF(join),
-		ACMD_DEF(channel),
+		ACMD_DEFR(channel,ATCMD_NOSCRIPT),
 		ACMD_DEF(fontcolor),
 		ACMD_DEF(langtype),
 #ifdef VIP_ENABLE

@@ -368,6 +368,8 @@ struct map_session_data {
 	short sp_gain_race[RC_MAX];
 	int magic_addrace2[RC2_MAX];
 	int ignore_mdef_by_race2[RC2_MAX];
+	int dropaddrace[RC_MAX];
+	int dropaddclass[CLASS_MAX];
 	// zeroed arrays end here.
 
 	// zeroed structures start here
@@ -679,6 +681,8 @@ struct map_session_data {
 		short prizeStage;
 		bool claimPrize;
 	} roulette;
+
+	unsigned short instance_id;
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table

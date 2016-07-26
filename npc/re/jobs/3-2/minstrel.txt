@@ -733,7 +733,6 @@ OnTouch:
 		mes "Name : Maestro Song";
 		next;
 		mes "- Bring this receipt and exchange it";
-		mes "";
 		mes "- Juno's store manager : Mr. Click.";
 		next;
 		mes "- Directions : Around Juno's plaza.";

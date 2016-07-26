@@ -201,8 +201,10 @@ typedef enum c_op {
 	C_NOT, // ~ a
 	C_R_SHIFT, // a >> b
 	C_L_SHIFT, // a << b
-	C_ADD_PP, // ++a
-	C_SUB_PP, // --a
+	C_ADD_POST, // a++
+	C_SUB_POST, // a--
+	C_ADD_PRE, // ++a
+	C_SUB_PRE, // --a
 } c_op;
 
 /**

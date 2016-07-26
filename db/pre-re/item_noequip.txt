@@ -18,12 +18,15 @@
 // 1024 - restricted in zone 6
 // 2048 - restricted in zone 7
 //
+// Passing negative value as flag will unset the flag instead.
+//
 // Examples:
 // 1201,1   // Knife can't be worn on normal maps
 // 608,4    // Yggdrasil Seed can't be consumed in both GvG and WoE Castles
 // 4174,6   // Deviling Card has no effect in every PVP or GVG map, and during WoE
 // 501,32   // Red Potion can't be consumed on maps marked as 'restricted zone 1'
 // 519,322  // Milk can't be consumed in PVP and maps marked as 'restricted zone 2' or 'restricted zone 4' (256+64+2)
+// 519,-2   // Unset `restricted in PVP` flag from Milk. Making it usable in PVP again.
 
 //----------------------------------------------------------------------------
 // Normal maps

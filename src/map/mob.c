@@ -104,10 +104,6 @@ struct s_randomsummon_group {
 
 static DBMap *mob_summon_db; /// Random Summon DB. struct s_randomsummon_group -> group_id
 
-//Defines the Manuk/Splendide mob groups for the status reductions [Epoque]
-const int mob_manuk[8] = { MOBID_TATACHO, MOBID_CENTIPEDE, MOBID_NEPENTHES, MOBID_HILLSRION, MOBID_HARDROCK_MOMMOTH, MOBID_G_TATACHO, MOBID_G_HILLSRION, MOBID_CENTIPEDE_LARVA };
-const int mob_splendide[5] = { MOBID_TENDRILRION, MOBID_CORNUS, MOBID_NAGA, MOBID_LUCIOLA_VESPA, MOBID_PINGUICULA };
-
 /*==========================================
  * Local prototype declaration   (only required thing)
  *------------------------------------------*/
@@ -2527,18 +2523,36 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				if (battle_config.drops_by_luk2)
 					drop_rate += (int)(0.5+drop_rate*status_get_luk(src)*battle_config.drops_by_luk2/10000.);
 			}
-			if (sd && battle_config.pk_mode &&
-				(int)(md->level - sd->status.base_level) >= 20)
-				drop_rate = (int)(drop_rate*1.25); // pk_mode increase drops if 20 level difference [Valaris]
 
-			// Increase drop rate if user has SC_ITEMBOOST
-			if (sd && sd->sc.data[SC_ITEMBOOST]) // now rig the drop rate to never be over 90% unless it is originally >90%.
-				drop_rate = max(drop_rate,cap_value((int)(0.5+drop_rate*(sd->sc.data[SC_ITEMBOOST]->val1)/100.),0,9000));
-			// Increase item drop rate for VIP.
-			if (battle_config.vip_drop_increase && (sd && pc_isvip(sd))) {
-				drop_rate += (int)(0.5 + (drop_rate * battle_config.vip_drop_increase) / 100);
-				drop_rate = min(drop_rate,10000); //cap it to 100%
+			// Player specific drop rate adjustments
+			if( sd ){
+				int drop_rate_bonus = 0;
+
+				// pk_mode increase drops if 20 level difference [Valaris]
+				if( battle_config.pk_mode && (int)(md->level - sd->status.base_level) >= 20 )
+					drop_rate = (int)(drop_rate*1.25);
+
+				// Add class and race specific bonuses
+				drop_rate_bonus += sd->dropaddclass[md->status.class_] + sd->dropaddclass[CLASS_ALL];
+				drop_rate_bonus += sd->dropaddrace[md->status.race] + sd->dropaddrace[RC_ALL];
+
+				// Increase drop rate if user has SC_ITEMBOOST
+				if (&sd->sc && sd->sc.data[SC_ITEMBOOST])
+					drop_rate_bonus += sd->sc.data[SC_ITEMBOOST]->val1;
+
+				drop_rate_bonus = (int)(0.5 + drop_rate * drop_rate_bonus / 100.);
+				// Now rig the drop rate to never be over 90% unless it is originally >90%.
+				drop_rate = i32max(drop_rate, cap_value(drop_rate_bonus, 0, 9000));
+
+#ifdef VIP_ENABLE
+				// Increase item drop rate for VIP.
+				if (battle_config.vip_drop_increase && pc_isvip(sd)) {
+					drop_rate += (int)(0.5 + (drop_rate * battle_config.vip_drop_increase) / 100);
+					drop_rate = min(drop_rate,10000); //cap it to 100%
+				}
+#endif
 			}
+
 #ifdef RENEWAL_DROP
 			if( drop_modifier != 100 ) {
 				drop_rate = apply_rate(drop_rate, drop_modifier);
@@ -4155,100 +4169,50 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current)
  * Reading of random monster data
  * MobGroup,MobID,DummyName,Rate
  *------------------------------------------*/
-static int mob_read_randommonster_sub(const char* filename, bool silent) {
-	FILE *fp;
-	char line[1024];
-	unsigned int entries = 0;
+static bool mob_readdb_group(char* str[], int columns, int current){
+	struct s_randomsummon_group *msummon = NULL;
+	int mob_id, group = 0;
+	unsigned short i = 0;
+	bool set_default = false;
 
-	if ((fp = fopen(filename,"r")) == NULL) {
-		if (!silent)
-			ShowError("mob_read_randommonster: can't read %s\n",filename);
-		return -1;
+	if (ISDIGIT(str[0][0]) && ISDIGIT(str[0][1]))
+		group = atoi(str[0]);
+	else if (!script_get_constant(str[0], &group)) {
+		ShowError("mob_readdb_group: Invalid random monster group '%s'\n", str[0]);
+		return false;
 	}
 
-	while(fgets(line, sizeof(line), fp)) {
-		struct s_randomsummon_group *msummon = NULL;
-		int mob_id, group = 0;
-		unsigned short i = 0;
-		char *str[4], *p;
-		bool set_default = false;
-
-		if (line[0] == '/' && line[1] == '/')
-			continue;
-		if (strstr(line,"import")) {
-			char w1[16], w2[64];
-
-			if (sscanf(line,"%15[^:]: %63[^\r\n]",w1,w2) == 2 &&
-				strcmpi(w1,"import") == 0)
-			{
-				mob_read_randommonster_sub(w2, 0);
-				continue;
-			}
+	mob_id = atoi(str[1]);
+	if (mob_id != 0 && mob_db(mob_id) == mob_dummy) {
+		ShowError("mob_readdb_group: Invalid random monster group '%s'\n", str[0]);
+		return false;
+	}
+	else if (mob_id == 0){
+		mob_id = atoi(str[3]);
+		if (mob_db(mob_id) == mob_dummy) {
+			ShowError("mob_readdb_group: Invalid random monster group '%s'\n", str[0]);
+			return false;
 		}
-		p = line;
-		while(ISSPACE(*p))
-			++p;
-		memset(str,0,sizeof(str));
-		for (i = 0; i < 5 && p; i++) {
-			str[i] = p;
-			p = strchr(p,',');
-			if (p)
-				*p++=0;
-		}
-
-		if (str[0] == NULL || str[2] == NULL)
-			continue;
-
-		if (ISDIGIT(str[0][0]) && ISDIGIT(str[0][1]))
-			group = atoi(str[0]);
-		else if (!script_get_constant(str[0], &group)) {
-			ShowError("mob_read_randommonster_sub: Invalid random monster group '%s' at line '%s'.\n", str[0], line);
-			continue;
-		}
-
-		mob_id = atoi(str[1]);
-		if (mob_id != 0 && mob_db(mob_id) == mob_dummy) {
-			ShowError("mob_read_randommonster_sub: Invalid random monster group '%s' at line '%s'.\n", str[0], line);
-			continue;
-		}
-		else if (mob_id == 0){
-			mob_id = atoi(str[3]);
-			if (mob_db(mob_id) == mob_dummy) {
-				ShowError("mob_read_randommonster_sub: Invalid random monster group '%s' at line '%s'.\n", str[0], line);
-				continue;
-			}
-			set_default = true;
-		}
-
-		if (!(msummon = (struct s_randomsummon_group *)idb_get(mob_summon_db, group))) {
-			CREATE(msummon, struct s_randomsummon_group, 1);
-			CREATE(msummon->list, struct s_randomsummon_entry, (msummon->count = 1));
-			msummon->list[0].mob_id = mob_id;
-			msummon->list[0].rate = atoi(str[3]);
-			msummon->random_id = group;
-			idb_put(mob_summon_db, group, msummon);
-		}
-		else {
-			ARR_FIND(0, msummon->count, i, set_default || (i > 0 && msummon->list[i].mob_id == mob_id));
-			if (i >= msummon->count)
-				RECREATE(msummon->list, struct s_randomsummon_entry, ++msummon->count);
-			msummon->list[i].mob_id = mob_id;
-			msummon->list[i].rate = atoi(str[3]);
-		}
-
-		entries++;
+		set_default = true;
 	}
 
-	fclose(fp);
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, filename);
-	return 0;
-}
+	if (!(msummon = (struct s_randomsummon_group *)idb_get(mob_summon_db, group))) {
+		CREATE(msummon, struct s_randomsummon_group, 1);
+		CREATE(msummon->list, struct s_randomsummon_entry, (msummon->count = 1));
+		msummon->list[0].mob_id = mob_id;
+		msummon->list[0].rate = atoi(str[3]);
+		msummon->random_id = group;
+		idb_put(mob_summon_db, group, msummon);
+	}
+	else {
+		ARR_FIND(0, msummon->count, i, set_default || (i > 0 && msummon->list[i].mob_id == mob_id));
+		if (i >= msummon->count)
+			RECREATE(msummon->list, struct s_randomsummon_entry, ++msummon->count);
+		msummon->list[i].mob_id = mob_id;
+		msummon->list[i].rate = atoi(str[3]);
+	}
 
-static void mob_read_randommonster(const char* basedir, bool silent) {
-	char filepath[256];
-	sprintf(filepath, "%s/%s", basedir, "mob_random_db.txt");
-	mob_read_randommonster_sub(filepath, silent);
-	return;
+	return true;
 }
 
 //processes one mob_chat_db entry [SnakeDrak]
@@ -4622,7 +4586,12 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
 {
 	int race, i;
 
-	race = atoi(fields[0]);
+	if( ISDIGIT(fields[0][0]) )
+		race = atoi(fields[0]);
+	else if( !script_get_constant( fields[0], &race ) ){
+		ShowWarning("mob_readdb_race2: Unknown race2 constant \"%s\".\n", fields[0]);
+		return false;
+	}
 
 	if (!CHK_RACE2(race)) {
 		ShowWarning("mob_readdb_race2: Unknown race2 %d.\n", race);
@@ -4995,7 +4964,12 @@ static void mob_load(void)
 		sv_readdb(dbsubpath2, "mob_race2_db.txt", ',', 2, MAX_RACE2_MOBS, -1, &mob_readdb_race2, i);
 		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, i);
 		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, MAX_MOB_CHAT, &mob_parse_row_chatdb, i);
-		mob_read_randommonster(dbsubpath2, i);
+		sv_readdb(dbsubpath2, "mob_random_db.txt", ',', 4, 4, -1, &mob_readdb_group, i );
+		sv_readdb(dbsubpath2, "mob_branch.txt", ',', 4, 4, -1, &mob_readdb_group, i );
+		sv_readdb(dbsubpath2, "mob_poring.txt", ',', 4, 4, -1, &mob_readdb_group, i );
+		sv_readdb(dbsubpath2, "mob_boss.txt", ',', 4, 4, -1, &mob_readdb_group, i );
+		sv_readdb(dbsubpath1, "mob_pouch.txt", ',', 4, 4, -1, &mob_readdb_group, i );
+		sv_readdb(dbsubpath1, "mob_classchange.txt", ',', 4, 4, -1, &mob_readdb_group, i );
 		
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);

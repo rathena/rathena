@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Chilly
 //===== Current Version: =====================================
-//= 1.3
+//= 1.5
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -13,10 +13,12 @@
 //= 1.1 Some little improvements here and there. [Masao]
 //= 1.2 Optimized. [Euphy]
 //= 1.3 Updated to match the official script. [Euphy]
+//= 1.4 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.5 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 moc_para01,48,177,3	script	91-99 Mission Board	857,{
-	if (countitem(6219) < 1) {
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "Wait a minute!";
 		mes "-You need to have an-";
 		mes "-^4d4dff'Eden Group Mark'^000000-";

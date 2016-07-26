@@ -758,6 +758,8 @@ typedef enum sc_type {
 
 	SC_ACTIVE_MONSTER_TRANSFORM,
 
+	SC_CLOUD_KILL,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
@@ -1704,6 +1706,7 @@ enum e_joint_break
 extern short current_equip_item_index;
 extern unsigned int current_equip_combo_pos;
 extern int current_equip_card_id;
+extern bool running_npc_stat_calc_event;
 
 /// Mode definitions to clear up code reading. [Skotlex]
 enum e_mode {

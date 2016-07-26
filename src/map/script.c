@@ -295,7 +295,7 @@ struct {
  *------------------------------------------*/
 const char* parse_subexpr(const char* p,int limit);
 int run_func(struct script_state *st);
-int script_instancegetid(struct script_state *st);
+unsigned short script_instancegetid(struct script_state *st);
 
 enum {
 	MF_NOMEMO,	//0
@@ -383,6 +383,8 @@ const char* script_op2name(int op)
 	RETURN_OP_NAME(C_USERFUNC);
 	RETURN_OP_NAME(C_USERFUNC_POS);
 
+	RETURN_OP_NAME(C_REF);
+
 	// operators
 	RETURN_OP_NAME(C_OP3);
 	RETURN_OP_NAME(C_LOR);
@@ -406,6 +408,10 @@ const char* script_op2name(int op)
 	RETURN_OP_NAME(C_NOT);
 	RETURN_OP_NAME(C_R_SHIFT);
 	RETURN_OP_NAME(C_L_SHIFT);
+	RETURN_OP_NAME(C_ADD_POST);
+	RETURN_OP_NAME(C_SUB_POST);
+	RETURN_OP_NAME(C_ADD_PRE);
+	RETURN_OP_NAME(C_SUB_PRE);
 
 	default:
 		ShowDebug("script_op2name: unexpected op=%d\n", op);
@@ -1024,6 +1030,34 @@ static void parse_nextline(bool first, const char* p)
 	str_data[LABEL_NEXTLINE].label     = -1;
 }
 
+/**
+ * Pushes a variable into stack, processing its array index if needed.
+ * @see parse_variable
+ */
+void parse_variable_sub_push(int word, const char *p2)
+{
+	if( p2 ) { // Process the variable index
+		const char *p3 = NULL;
+
+		// Push the getelementofarray method into the stack
+		add_scriptl(buildin_getelementofarray_ref);
+		add_scriptc(C_ARG);
+		add_scriptl(word);
+
+		// Process the sub-expression for this assignment
+		p3 = parse_subexpr(p2 + 1, 1);
+		p3 = skip_space(p3);
+
+		if( *p3 != ']' ) // Closing parenthesis is required for this script
+			disp_error_message("Missing closing ']' parenthesis for the variable assignment.", p3);
+
+		// Push the closing function stack operator onto the stack
+		add_scriptc(C_FUNC);
+		p3++;
+	} else // No array index, simply push the variable or value onto the stack
+		add_scriptl(word);
+}
+
 /// Parse a variable assignment using the direct equals operator
 /// @param p script position where the function should run from
 /// @return NULL if not a variable assignment, the new position otherwise
@@ -1032,6 +1066,10 @@ const char* parse_variable(const char* p) {
 	c_op type = C_NOP;
 	const char *p2 = NULL;
 	const char *var = p;
+
+	if ((p[0] == '+' && p[1] == '+' && (type = C_ADD_PRE)) // pre ++
+	 || (p[0] == '-' && p[1] == '-' && (type = C_SUB_PRE))) // pre --
+		var = p = skip_space(&p[2]);
 
 	// skip the variable where applicable
 	p = skip_word(p);
@@ -1064,8 +1102,8 @@ const char* parse_variable(const char* p) {
 	|| ( p[0] == '/' && p[1] == '=' && (type = C_DIV) ) // /=
 	|| ( p[0] == '%' && p[1] == '=' && (type = C_MOD) ) // %=
 	|| ( p[0] == '~' && p[1] == '=' && (type = C_NOT) ) // ~=
-	|| ( p[0] == '+' && p[1] == '+' && (type = C_ADD_PP) ) // ++
-	|| ( p[0] == '-' && p[1] == '-' && (type = C_SUB_PP) ) // --
+	|| ( p[0] == '+' && p[1] == '+' && (type = C_ADD_POST) ) // post ++
+	|| ( p[0] == '-' && p[1] == '-' && (type = C_SUB_POST) ) // post --
 	|| ( p[0] == '<' && p[1] == '<' && p[2] == '=' && (type = C_L_SHIFT) ) // <<=
 	|| ( p[0] == '>' && p[1] == '>' && p[2] == '=' && (type = C_R_SHIFT) ) // >>=
 	) )
@@ -1074,6 +1112,11 @@ const char* parse_variable(const char* p) {
 	}
 
 	switch( type ) {
+		case C_ADD_PRE: // pre ++
+		case C_SUB_PRE: // pre --
+			// Nothing more to skip
+		break;
+
 		case C_EQ: {// incremental modifier
 			p = skip_space( &p[1] );
 		}
@@ -1109,41 +1152,22 @@ const char* parse_variable(const char* p) {
 	// parse the variable currently being modified
 	word = add_word(var);
 
-	if( str_data[word].type == C_FUNC || str_data[word].type == C_USERFUNC || str_data[word].type == C_USERFUNC_POS )
-	{// cannot assign a variable which exists as a function or label
+	if( str_data[word].type == C_FUNC || str_data[word].type == C_USERFUNC || str_data[word].type == C_USERFUNC_POS ) // cannot assign a variable which exists as a function or label
 		disp_error_message("Cannot modify a variable which has the same name as a function or label.", p);
-	}
 
-	if( p2 ) {// process the variable index
-		const char* p3 = NULL;
-
-		// push the getelementofarray method into the stack
-		add_scriptl(buildin_getelementofarray_ref);
-		add_scriptc(C_ARG);
-		add_scriptl(word);
-
-		// process the sub-expression for this assignment
-		p3 = parse_subexpr(p2 + 1, 1);
-		p3 = skip_space(p3);
-
-		if( *p3 != ']' ) {// closing parenthesis is required for this script
-			disp_error_message("Missing closing ']' parenthesis for the variable assignment.", p3);
-		}
-
-		// push the closing function stack operator onto the stack
-		add_scriptc(C_FUNC);
-		p3 ++;
-	} else {// simply push the variable or value onto the stack
-		add_scriptl(word);
-	}
+	parse_variable_sub_push(word, p2); // Push variable onto the stack
 
 	if( type != C_EQ )
-		add_scriptc(C_REF);
+		parse_variable_sub_push(word, p2); // Push variable onto the stack once again (first argument of setr)
 
-	if( type == C_ADD_PP || type == C_SUB_PP ) {// incremental operator for the method
+	if( type == C_ADD_POST || type == C_SUB_POST ) { // post ++ / --
 		add_scripti(1);
-		add_scriptc(type == C_ADD_PP ? C_ADD : C_SUB);
-	} else {// process the value as an expression
+		add_scriptc(type == C_ADD_POST ? C_ADD : C_SUB);
+		parse_variable_sub_push(word, p2); // Push variable onto the stack (third argument of setr)
+	} else if( type == C_ADD_PRE || type == C_SUB_PRE ) { // pre ++ / --
+		add_scripti(1);
+		add_scriptc(type == C_ADD_PRE ? C_ADD : C_SUB);
+	} else { // Process the value as an expression
 		p = parse_subexpr(p, -1);
 
 		if( type != C_EQ )
@@ -1326,32 +1350,34 @@ const char* parse_subexpr(const char* p,int limit)
 		}
 	}
 
-	if((op=C_NEG,*p=='-') || (op=C_LNOT,*p=='!') || (op=C_NOT,*p=='~')){
-		p=parse_subexpr(p+1,10);
+	if( (op = C_ADD_PRE, p[0] == '+' && p[1] == '+') || (op = C_SUB_PRE, p[0] == '-' && p[1] == '-') ) // Pre ++ -- operators
+		p = parse_variable(p);
+	else if( (op = C_NEG, *p == '-') || (op = C_LNOT, *p == '!') || (op = C_NOT, *p == '~') ) { // Unary - ! ~ operators
+		p = parse_subexpr(p + 1, 11);
 		add_scriptc(op);
 	} else
-		p=parse_simpleexpr(p);
-	p=skip_space(p);
+		p = parse_simpleexpr(p);
+	p = skip_space(p);
 	while((
 			(op=C_OP3,opl=0,len=1,*p=='?') ||
-			(op=C_ADD,opl=8,len=1,*p=='+') ||
-			(op=C_SUB,opl=8,len=1,*p=='-') ||
-			(op=C_MUL,opl=9,len=1,*p=='*') ||
-			(op=C_DIV,opl=9,len=1,*p=='/') ||
-			(op=C_MOD,opl=9,len=1,*p=='%') ||
+			(op=C_ADD,opl=9,len=1,*p=='+') ||
+			(op=C_SUB,opl=9,len=1,*p=='-') ||
+			(op=C_MUL,opl=10,len=1,*p=='*') ||
+			(op=C_DIV,opl=10,len=1,*p=='/') ||
+			(op=C_MOD,opl=10,len=1,*p=='%') ||
 			(op=C_LAND,opl=2,len=2,*p=='&' && p[1]=='&') ||
-			(op=C_AND,opl=6,len=1,*p=='&') ||
+			(op=C_AND,opl=5,len=1,*p=='&') ||
 			(op=C_LOR,opl=1,len=2,*p=='|' && p[1]=='|') ||
-			(op=C_OR,opl=5,len=1,*p=='|') ||
+			(op=C_OR,opl=3,len=1,*p=='|') ||
 			(op=C_XOR,opl=4,len=1,*p=='^') ||
-			(op=C_EQ,opl=3,len=2,*p=='=' && p[1]=='=') ||
-			(op=C_NE,opl=3,len=2,*p=='!' && p[1]=='=') ||
-			(op=C_R_SHIFT,opl=7,len=2,*p=='>' && p[1]=='>') ||
-			(op=C_GE,opl=3,len=2,*p=='>' && p[1]=='=') ||
-			(op=C_GT,opl=3,len=1,*p=='>') ||
-			(op=C_L_SHIFT,opl=7,len=2,*p=='<' && p[1]=='<') ||
-			(op=C_LE,opl=3,len=2,*p=='<' && p[1]=='=') ||
-			(op=C_LT,opl=3,len=1,*p=='<')) && opl>limit){
+			(op=C_EQ,opl=6,len=2,*p=='=' && p[1]=='=') ||
+			(op=C_NE,opl=6,len=2,*p=='!' && p[1]=='=') ||
+			(op=C_R_SHIFT,opl=8,len=2,*p=='>' && p[1]=='>') ||
+			(op=C_GE,opl=7,len=2,*p=='>' && p[1]=='=') ||
+			(op=C_GT,opl=7,len=1,*p=='>') ||
+			(op=C_L_SHIFT,opl=8,len=2,*p=='<' && p[1]=='<') ||
+			(op=C_LE,opl=7,len=2,*p=='<' && p[1]=='=') ||
+			(op=C_LT,opl=7,len=1,*p=='<')) && opl>limit){
 		p+=len;
 		if(op == C_OP3) {
 			p=parse_subexpr(p,-1);
@@ -2148,7 +2174,7 @@ static void add_buildin_func(void)
 			str_data[n].val = i;
 			str_data[n].func = buildin_func[i].func;
 
-			if (!strcmp(buildin_func[i].name, "set")) buildin_set_ref = n;
+			if (!strcmp(buildin_func[i].name, "setr")) buildin_set_ref = n;
 			else if (!strcmp(buildin_func[i].name, "callsub")) buildin_callsub_ref = n;
 			else if (!strcmp(buildin_func[i].name, "callfunc")) buildin_callfunc_ref = n;
 			else if( !strcmp(buildin_func[i].name, "getelementofarray") ) buildin_getelementofarray_ref = n;
@@ -2593,7 +2619,7 @@ void get_val_(struct script_state* st, struct script_data* data, struct map_sess
 				break;
 			case '\'':
 				{
-					int instance_id = script_instancegetid(st);
+					unsigned short instance_id = script_instancegetid(st);
 					if( instance_id )
 						data->u.str = (char*)i64db_get(instance_data[instance_id].regs.vars,reference_getuid(data));
 					else {
@@ -2651,7 +2677,7 @@ void get_val_(struct script_state* st, struct script_data* data, struct map_sess
 					break;
 				case '\'':
 					{
-						int instance_id = script_instancegetid(st);
+						unsigned short instance_id = script_instancegetid(st);
 						if( instance_id )
 							data->u.num = (int)i64db_iget(instance_data[instance_id].regs.vars,reference_getuid(data));
 						else {
@@ -2867,7 +2893,7 @@ struct reg_db *script_array_src(struct script_state *st, struct map_session_data
 			break;
 		case '\'': // instance
 			{
-				int instance_id = script_instancegetid(st);
+				unsigned short instance_id = script_instancegetid(st);
 
 				if( instance_id ) {
 					src = &instance_data[instance_id].regs;
@@ -2981,7 +3007,7 @@ int set_reg(struct script_state* st, TBL_PC* sd, int64 num, const char* name, co
 				return 1;
 			case '\'':
 				{
-					int instance_id = script_instancegetid(st);
+					unsigned short instance_id = script_instancegetid(st);
 					if( instance_id ) {
 						if( str[0] ) {
 							i64db_put(instance_data[instance_id].regs.vars, num, aStrdup(str));
@@ -3044,7 +3070,7 @@ int set_reg(struct script_state* st, TBL_PC* sd, int64 num, const char* name, co
 				return 1;
 			case '\'':
 				{
-					int instance_id = script_instancegetid(st);
+					unsigned short instance_id = script_instancegetid(st);
 					if( instance_id ) {
 						if( val != 0 ) {
 							i64db_iput(instance_data[instance_id].regs.vars, num, val);
@@ -5933,13 +5959,14 @@ BUILDIN_FUNC(copyarray);
 /// The value is converted to the type of the variable.
 ///
 /// set(<variable>,<value>{,<charid>})
-BUILDIN_FUNC(set)
+BUILDIN_FUNC(setr)
 {
 	TBL_PC* sd = NULL;
 	struct script_data* data;
 	//struct script_data* datavalue;
 	int64 num;
-	const char* name;
+	uint8 pos = 4;
+	const char* name, *command = script_getfuncname(st);
 	char prefix;
 
 	data = script_getdata(st,2);
@@ -5956,7 +5983,10 @@ BUILDIN_FUNC(set)
 	name = reference_getname(data);
 	prefix = *name;
 
-	if (not_server_variable(prefix) && !script_charid2sd(4,sd)) {
+	if (!strcmp(command, "setr"))
+		pos = 5;
+
+	if (not_server_variable(prefix) && !script_charid2sd(pos,sd)) {
 		ShowError("buildin_set: No player attached for player variable '%s'\n", name);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -5989,13 +6019,18 @@ BUILDIN_FUNC(set)
 	}
 #endif
 
+	if( !strcmp(command, "setr") && script_hasdata(st, 4) ) { // Optional argument used by post-increment/post-decrement constructs to return the previous value
+		if( is_string_variable(name) )
+			script_pushstrcopy(st,script_getstr(st, 4));
+		else
+			script_pushint(st,script_getnum(st, 4));
+	} else // Return a copy of the variable reference
+		script_pushcopy(st, 2);
+
 	if( is_string_variable(name) )
 		set_reg(st,sd,num,name,(void*)script_getstr(st,3),script_getref(st,2));
 	else
 		set_reg(st,sd,num,name,(void*)__64BPRTSIZE(script_getnum(st,3)),script_getref(st,2));
-
-	// return a copy of the variable reference
-	script_pushcopy(st,2);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16581,10 +16616,8 @@ BUILDIN_FUNC(searchitem)
 
 	if ((items[0] = itemdb_exists(atoi(itemname))))
 		count = 1;
-	else {
+	else
 		count = itemdb_searchname_array(items, ARRAYLENGTH(items), itemname);
-		if (count > MAX_SEARCH) count = MAX_SEARCH;
-	}
 
 	if (!count) {
 		script_pushint(st, 0);
@@ -18828,19 +18861,27 @@ BUILDIN_FUNC(bg_get_data)
  * Instancing System
  *------------------------------------------*/
 //Returns an Instance ID
-//Checks NPC first, then if player is attached we check party
-int script_instancegetid(struct script_state* st)
+//Checks NPC first, then if player is attached we check
+unsigned short script_instancegetid(struct script_state* st)
 {
-	short instance_id = 0;
-
+	unsigned short instance_id = 0;
 	struct npc_data *nd;
+
 	if( (nd = map_id2nd(st->oid)) && nd->instance_id > 0 )
 		instance_id = nd->instance_id;
 	else {
-		struct map_session_data *sd;
-		struct party_data *p;
-		if( (sd = script_rid2sd(st)) != NULL && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id )
-			instance_id = p->instance_id;
+		struct map_session_data *sd = NULL;
+		struct party_data *p = NULL;
+		struct guild *g = NULL;
+
+		if ((sd = script_rid2sd(st)) != NULL) {
+			if (sd->instance_id)
+				instance_id = sd->instance_id;
+			if (instance_id == 0 && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id)
+				instance_id = p->instance_id;
+			if (instance_id == 0 && sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
+				instance_id = g->instance_id;
+		}
 	}
 
 	return instance_id;
@@ -18852,12 +18893,46 @@ int script_instancegetid(struct script_state* st)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_create)
 {
-	struct map_session_data *sd;
+	enum instance_mode mode = IM_PARTY;
+	int owner_id = 0;
 
-	if((sd = script_rid2sd(st)) == NULL)
-		return -1;
+	if (script_hasdata(st, 3)) {
+		mode = script_getnum(st, 3);
 
-	script_pushint(st,instance_create(sd->status.party_id, script_getstr(st, 2)));
+		if (mode < IM_NONE || mode >= IM_MAX) {
+			ShowError("buildin_instance_create: Unknown instance mode %d for '%s'\n", mode, script_getstr(st, 2));
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	if (script_hasdata(st, 4))
+		owner_id = script_getnum(st, 4);
+	else {
+		struct map_session_data *sd = NULL;
+
+		sd = script_rid2sd(st); // If sd is NULL, instance_create will return -2.
+		switch(mode) {
+			case IM_NONE:
+				owner_id = st->oid;
+				break;
+			case IM_CHAR:
+				if (sd)
+					owner_id = sd->status.char_id;
+				break;
+			case IM_PARTY:
+				if (sd)
+					owner_id = sd->status.party_id;
+				break;
+			case IM_GUILD:
+				if (sd)
+					owner_id = sd->status.guild_id;
+				break;
+			default:
+				ShowError("buildin_instance_create: Invalid instance mode (instance name: %s)\n", script_getstr(st, 2));
+				return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	script_pushint(st, instance_create(owner_id, script_getstr(st, 2), mode));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18869,16 +18944,16 @@ BUILDIN_FUNC(instance_create)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_destroy)
 {
-	short instance_id;
+	unsigned short instance_id;
 
 	if( script_hasdata(st,2) )
 		instance_id = script_getnum(st,2);
 	else
 		instance_id = script_instancegetid(st);
 
-	if( instance_id <= 0 || instance_id >= MAX_MAP_PER_SERVER ) {
-		ShowError("script:instance_destroy: Trying to destroy invalid instance %d.\n", instance_id);
-		return SCRIPT_CMD_SUCCESS;
+	if( instance_id == 0 || instance_id >= MAX_MAP_PER_SERVER ) {
+		ShowError("buildin_instance_destroy: Trying to destroy invalid instance %hu.\n", instance_id);
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	instance_destroy(instance_id);
@@ -18889,9 +18964,9 @@ BUILDIN_FUNC(instance_destroy)
  * Warps player to instance
  * Results:
  *	0: Success
- *	1: Character not in party
- *	2: Party doesn't have instance
- *	3: Other errors (instance not in DB, instance doesn't match with party, etc.)
+ *	1: Character not in party/guild (for party/guild type instances)
+ *	2: Character/Party/Guild doesn't have instance
+ *	3: Other errors (instance not in DB, instance doesn't match with character/party/guild, etc.)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_enter)
 {
@@ -18903,9 +18978,9 @@ BUILDIN_FUNC(instance_enter)
 		return SCRIPT_CMD_FAILURE;
 
 	if (x != -1 && y != -1)
-		script_pushint(st,instance_enter_position(sd,script_getstr(st, 2),x,y));
+		script_pushint(st, instance_enter_position(sd, script_instancegetid(st), script_getstr(st, 2), x, y));
 	else
-		script_pushint(st,instance_enter(sd,script_getstr(st, 2)));
+		script_pushint(st, instance_enter(sd, script_instancegetid(st), script_getstr(st, 2)));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18919,8 +18994,7 @@ BUILDIN_FUNC(instance_enter)
 BUILDIN_FUNC(instance_npcname)
 {
 	const char *str;
-	short instance_id = 0;
-
+	unsigned short instance_id = 0;
 	struct npc_data *nd;
 
 	str = script_getstr(st,2);
@@ -18931,10 +19005,10 @@ BUILDIN_FUNC(instance_npcname)
 
 	if( instance_id && (nd = npc_name2id(str)) != NULL ) {
 		static char npcname[NAME_LENGTH];
-		snprintf(npcname, sizeof(npcname), "dup_%d_%d", instance_id, nd->bl.id);
+		snprintf(npcname, sizeof(npcname), "dup_%hu_%d", instance_id, nd->bl.id);
 		script_pushconststr(st,npcname);
 	} else {
-		ShowError("script:instance_npcname: invalid instance NPC (instance_id: %d, NPC name: \"%s\".)\n", instance_id, str);
+		ShowError("buildin_instance_npcname: Invalid instance NPC (instance_id: %hu, NPC name: \"%s\".)\n", instance_id, str);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -18951,7 +19025,7 @@ BUILDIN_FUNC(instance_mapname)
 {
  	const char *str;
 	int16 m;
-	short instance_id = 0;
+	unsigned short instance_id = 0;
 
 	str = script_getstr(st,2);
 
@@ -18974,16 +19048,7 @@ BUILDIN_FUNC(instance_mapname)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_id)
 {
-	short instance_id;
-
-	instance_id = script_instancegetid(st);
-
-	if(!instance_id) {
-		//ShowError("script:instance_id: No instance attached to NPC or player");
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
-	}
-	script_pushint(st, instance_id);
+	script_pushint(st, script_instancegetid(st));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18992,11 +19057,47 @@ BUILDIN_FUNC(instance_id)
  *
  * instance_warpall <map_name>,<x>,<y>{,<instance_id>};
  *------------------------------------------*/
+static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
+{
+	unsigned int m = va_arg(ap,unsigned int);
+	int x = va_arg(ap,int);
+	int y = va_arg(ap,int);
+	unsigned short instance_id = va_arg(ap,unsigned int);
+	struct map_session_data *sd = NULL;
+	int owner_id = 0;
+
+	nullpo_retr(0, bl);
+
+	if (bl->type != BL_PC)
+		return 0;
+
+	sd = (TBL_PC *)bl;
+	owner_id = instance_data[instance_id].owner_id;
+	switch(instance_data[instance_id].mode) {
+		case IM_NONE:
+			break;
+		case IM_CHAR:
+			if (sd->status.char_id != owner_id)
+				return 0;
+			break;
+		case IM_PARTY:
+			if (sd->status.party_id != owner_id)
+				return 0;
+			break;
+		case IM_GUILD:
+			if (sd->status.guild_id != owner_id)
+				return 0;
+	}
+
+	pc_setpos(sd, m, x, y, CLR_TELEPORT);
+
+	return 1;
+}
+
 BUILDIN_FUNC(instance_warpall)
 {
-	struct party_data *p;
 	int16 m, i;
-	short instance_id;
+	unsigned short instance_id;
 	const char *mapn;
 	int x, y;
 
@@ -19009,15 +19110,10 @@ BUILDIN_FUNC(instance_warpall)
 		instance_id = script_instancegetid(st);
 
 	if( !instance_id || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapname2mapid(map[m].name,instance_id)) < 0)
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 
-	if( !(p = party_search(instance_data[instance_id].party_id)) )
-		return SCRIPT_CMD_SUCCESS;
-
-	for( i = 0; i < MAX_PARTY; i++ ) {
-		struct map_session_data *pl_sd;
-		if( (pl_sd = p->data[i].sd) && map[pl_sd->bl.m].instance_id == instance_id ) pc_setpos(pl_sd,map_id2index(m),x,y,CLR_TELEPORT);
-	}
+	for(i = 0; i < instance_data[instance_id].cnt_map; i++)
+		map_foreachinmap(buildin_instance_warpall_sub, instance_data[instance_id].map[i]->m, BL_PC, map_id2index(m), x, y, instance_id);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -19026,21 +19122,20 @@ BUILDIN_FUNC(instance_warpall)
  * Broadcasts to all maps inside an instance
  *
  * instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
- * Using -1 for <instance id> will auto-detect the id.
+ * Using 0 for <instance id> will auto-detect the id.
  *------------------------------------------*/
 BUILDIN_FUNC(instance_announce) {
-	int         instance_id = script_getnum(st,2);
-	const char *mes         = script_getstr(st,3);
-	int         flag        = script_getnum(st,4);
-	const char *fontColor   = script_hasdata(st,5) ? script_getstr(st,5) : NULL;
-	int         fontType    = script_hasdata(st,6) ? script_getnum(st,6) : FW_NORMAL; // default fontType
-	int         fontSize    = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
-	int         fontAlign   = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
-	int         fontY       = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
-
+	unsigned short instance_id = script_getnum(st,2);
+	const char     *mes        = script_getstr(st,3);
+	int            flag        = script_getnum(st,4);
+	const char     *fontColor  = script_hasdata(st,5) ? script_getstr(st,5) : NULL;
+	int            fontType    = script_hasdata(st,6) ? script_getnum(st,6) : FW_NORMAL; // default fontType
+	int            fontSize    = script_hasdata(st,7) ? script_getnum(st,7) : 12;    // default fontSize
+	int            fontAlign   = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontAlign
+	int            fontY       = script_hasdata(st,9) ? script_getnum(st,9) : 0;     // default fontY
 	int i;
 
-	if( instance_id == -1 ) {
+	if( instance_id == 0 ) {
 		instance_id = script_instancegetid(st);
 	}
 
@@ -19050,7 +19145,7 @@ BUILDIN_FUNC(instance_announce) {
 	}
 
 	for( i = 0; i < instance_data[instance_id].cnt_map; i++ )
-		map_foreachinmap(buildin_announce_sub, instance_data[instance_id].map[i].m, BL_PC,
+		map_foreachinmap(buildin_announce_sub, instance_data[instance_id].map[i]->m, BL_PC,
 						 mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 
 	return SCRIPT_CMD_SUCCESS;
@@ -19085,11 +19180,11 @@ BUILDIN_FUNC(instance_check_party)
 
 	if( script_hasdata(st,2) )
 		party_id = script_getnum(st,2);
-	else return SCRIPT_CMD_SUCCESS;
+	else return SCRIPT_CMD_FAILURE;
 
 	if( !(p = party_search(party_id)) ) {
 		script_pushint(st, 0); // Returns false if party does not exist.
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	for( i = 0; i < MAX_PARTY; i++ ) {
@@ -19109,6 +19204,68 @@ BUILDIN_FUNC(instance_check_party)
 
 	if(c < amount)
 		script_pushint(st, 0); // Not enough Members in the Party to join Instance.
+	else
+		script_pushint(st, 1);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+ * instance_check_guild
+ * Values:
+ * guild_id : Guild ID of the invoking character. [Required Parameter]
+ * amount : Amount of needed Guild members for the Instance. [Optional Parameter]
+ * min : Minimum Level needed to join the Instance. [Optional Parameter]
+ * max : Maxium Level allowed to join the Instance. [Optional Parameter]
+ * Example: instance_check_guild (getcharid(2){,amount}{,min}{,max});
+ * Example 2: instance_check_guild (getcharid(2),1,1,99);
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_check_guild)
+{
+	int amount, min, max, i, guild_id = 0, c = 0;
+	struct guild *g = NULL;
+
+	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Guild members for the Instance.
+	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
+	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
+
+	if (min < 1 || min > MAX_LEVEL) {
+		ShowError("buildin_instance_check_guild: Invalid min level, %d\n", min);
+		return SCRIPT_CMD_FAILURE;
+	} else if (max < 1 || max > MAX_LEVEL) {
+		ShowError("buildin_instance_check_guild: Invalid max level, %d\n", max);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_hasdata(st,2))
+		guild_id = script_getnum(st,2);
+	else
+		return SCRIPT_CMD_FAILURE;
+
+	if (!(g = guild_search(guild_id))) {
+		script_pushint(st, 0); // Returns false if guild does not exist.
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	for(i = 0; i < MAX_GUILD; i++) {
+		struct map_session_data *pl_sd;
+
+		if ((pl_sd = g->member[i].sd)) {
+			if (map_id2bl(pl_sd->bl.id)) {
+				if (pl_sd->status.base_level < min) {
+					script_pushint(st, 0);
+					return SCRIPT_CMD_SUCCESS;
+				} else if (pl_sd->status.base_level > max) {
+					script_pushint(st, 0);
+					return SCRIPT_CMD_SUCCESS;
+				}
+				c++;
+			}
+		}
+	}
+
+	if (c < amount)
+		script_pushint(st, 0); // Not enough Members in the Guild to join Instance.
 	else
 		script_pushint(st, 1);
 
@@ -21309,6 +21466,20 @@ BUILDIN_FUNC(getexp2) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+* Force stat recalculation of sd
+* recalculatestat;
+* @author [secretdataz]
+**/
+BUILDIN_FUNC(recalculatestat) {
+	TBL_PC* sd = script_rid2sd(st);
+
+	if (sd == NULL)
+		return SCRIPT_CMD_FAILURE;
+
+	status_calc_pc(sd, SCO_FORCE);
+	return SCRIPT_CMD_SUCCESS;
+}
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -21384,7 +21555,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
 	BUILDIN_DEF(setlook,"ii?"),
 	BUILDIN_DEF(changelook,"ii?"), // Simulates but don't Store it
-	BUILDIN_DEF(set,"rv?"),
+	BUILDIN_DEF2(setr,"set","rv?"),
+	BUILDIN_DEF(setr,"rv??"), // Not meant to be used directly, required for var++/var--
 	BUILDIN_DEF(setarray,"rv*"),
 	BUILDIN_DEF(cleararray,"rvi"),
 	BUILDIN_DEF(copyarray,"rri"),
@@ -21791,7 +21963,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_updatescore,"sii"),
 
 	// Instancing
-	BUILDIN_DEF(instance_create,"s"),
+	BUILDIN_DEF(instance_create,"s??"),
 	BUILDIN_DEF(instance_destroy,"?"),
 	BUILDIN_DEF(instance_id,""),
 	BUILDIN_DEF(instance_enter,"s???"),
@@ -21800,6 +21972,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_warpall,"sii?"),
 	BUILDIN_DEF(instance_announce,"isi?????"),
 	BUILDIN_DEF(instance_check_party,"i???"),
+	BUILDIN_DEF(instance_check_guild,"i???"),
 	/**
 	 * 3rd-related
 	 **/
@@ -21884,6 +22057,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(navigateto,"s???????"),
 	BUILDIN_DEF(adopt,"vv"),
 	BUILDIN_DEF(getexp2,"ii?"),
+	BUILDIN_DEF(recalculatestat,""),
 
 #include "../custom/script_def.inc"
 

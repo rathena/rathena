@@ -1952,8 +1952,6 @@ job3_sha01,22,78,0	script	????#keybox01	844,{
 		mes " ";
 		mes " "+.@i;
 		next;
-		mes "";
-		mes "";
 		mes " "+.@Codes1$[.@i];
 		next;
 		mes "It shows some letters and numbers.";

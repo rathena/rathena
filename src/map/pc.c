@@ -1047,7 +1047,7 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 		return ITEM_EQUIP_ACK_FAIL;
 
 	//Not equipable by class. [Skotlex]
-	if (!(1<<(sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1)?1:((sd->class_&JOBL_2_2)?2:0)]))
+	if (!(1ULL<<(sd->class_&MAPID_BASEMASK)&item->class_base[(sd->class_&JOBL_2_1)?1:((sd->class_&JOBL_2_2)?2:0)]))
 		return ITEM_EQUIP_ACK_FAIL;
 	
 	if (!pc_isItemClass(sd,item))
@@ -3045,7 +3045,12 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->bonus.weapon_matk_rate += val;
 			break;
 		default:
-			ShowWarning("pc_bonus: unknown type %d %d !\n",type,val);
+			if (running_npc_stat_calc_event) {
+				ShowWarning("pc_bonus: unknown bonus type %d %d in OnPCStatCalcEvent!\n", type, val);
+			}
+			else {
+				ShowWarning("pc_bonus: unknown bonus type %d %d in item #%d\n", type, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+			}
 			break;
 	}
 }
@@ -3691,8 +3696,23 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if (sd->state.lr_flag != 2)
 			sd->ignore_mdef_by_race2[type2] += val;
 		break;
+	case SP_DROP_ADDRACE: // bonus2 bDropAddRace,r,x;
+		PC_BONUS_CHK_RACE(type2, SP_DROP_ADDRACE);
+		if (sd->state.lr_flag != 2)
+			sd->dropaddrace[type2] += val;
+		break;
+	case SP_DROP_ADDCLASS: // bonus2 bDropAddClass,c,x;
+		PC_BONUS_CHK_CLASS(type2, SP_DROP_ADDCLASS);
+		if (sd->state.lr_flag != 2)
+			sd->dropaddclass[type2] += val;
+		break;
 	default:
-		ShowWarning("pc_bonus2: unknown type %d %d %d!\n",type,type2,val);
+		if (running_npc_stat_calc_event) {
+			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in OnPCStatCalcEvent!\n", type, type2, val);
+		}
+		else {
+			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in item #%d\n", type, type2, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+		}
 		break;
 	}
 }
@@ -3807,7 +3827,12 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		sd->norecover_state_race[type2].tick = val;
 		break;
 	default:
-		ShowWarning("pc_bonus3: unknown type %d %d %d %d!\n",type,type2,type3,val);
+		if (running_npc_stat_calc_event) {
+			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in OnPCStatCalcEvent!\n", type, type2, type3, val);
+		}
+		else {
+			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in item #%d\n", type, type2, type3, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+		}
 		break;
 	}
 }
@@ -3882,7 +3907,12 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 		break;
 
 	default:
-		ShowWarning("pc_bonus4: unknown type %d %d %d %d %d!\n",type,type2,type3,type4,val);
+		if (running_npc_stat_calc_event) {
+			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in OnPCStatCalcEvent!\n", type, type2, type3, type4, val);
+		}
+		else {
+			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in item #%d\n", type, type2, type3, type4, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+		}
 		break;
 	}
 }
@@ -3923,7 +3953,12 @@ void pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type
 		break;
 
 	default:
-		ShowWarning("pc_bonus5: unknown type %d %d %d %d %d %d!\n",type,type2,type3,type4,type5,val);
+		if (running_npc_stat_calc_event) {
+			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in OnPCStatCalcEvent!\n", type, type2, type3, type4, type5, val);
+		}
+		else {
+			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in item #%d\n", type, type2, type3, type4, type5, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
+		}
 		break;
 	}
 }
@@ -4681,10 +4716,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		case ITEMID_ANODYNE:
 			if( map_flag_gvg(sd->bl.m) )
 				return false;
-		case ITEMID_ALOEBERA:
-			if( pc_issit(sd) )
-				return false;
-			break;
 		case ITEMID_WING_OF_FLY:
 		case ITEMID_GIANT_FLY_WING:
 			if( map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m) ) {
@@ -4704,7 +4735,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 				clif_displaymessage(sd->fd, msg_txt(sd,663));
 				return false;
 			}
-			if( nameid != 601 && nameid != 12212 && map[sd->bl.m].flag.noreturn )
+			if( nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && map[sd->bl.m].flag.noreturn )
 				return false;
 			break;
 		case ITEMID_BUBBLE_GUM:
@@ -4783,7 +4814,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 
 	//Not equipable by class. [Skotlex]
 	if (!(
-		(1<<(sd->class_&MAPID_BASEMASK)) &
+		(1ULL<<(sd->class_&MAPID_BASEMASK)) &
 		(item->class_base[sd->class_&JOBL_2_1?1:(sd->class_&JOBL_2_2?2:0)])
 	))
 		return false;
@@ -5285,10 +5316,21 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	sd->state.changemap = (sd->mapindex != mapindex);
 	sd->state.warping = 1;
 
-	if(sd->status.party_id && map[sd->bl.m].instance_id && sd->state.changemap && !map[m].instance_id) {
-		struct party_data *p;
-		if((p = party_search(sd->status.party_id)) != NULL && p->instance_id )
+	if(map[sd->bl.m].instance_id && sd->state.changemap && !map[m].instance_id) {
+		bool instance_found = false;
+		struct party_data *p = NULL;
+		struct guild *g = NULL;
+
+		if (sd->instance_id) {
+			instance_delusers(sd->instance_id);
+			instance_found = true;
+		}
+		if (!instance_found && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id) {
 			instance_delusers(p->instance_id);
+			instance_found = true;
+		}
+		if (!instance_found && sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
+			instance_delusers(g->instance_id);
 	}
 	if( sd->state.changemap ) { // Misc map-changing settings
 		int i;
@@ -6541,7 +6583,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned in
 	if (flag&2)
 		clif_displayexp(sd, (flag&8) ? 0 : job_exp,  SP_JOBEXP, exp_flag&1, false);
 
-	if (sd->state.showexp)
+	if (sd->state.showexp && (base_exp || job_exp))
 		pc_gainexp_disp(sd, base_exp, nextb, job_exp, nextj, false);
 }
 
@@ -6569,7 +6611,7 @@ void pc_lostexp(struct map_session_data *sd, unsigned int base_exp, unsigned int
 		clif_updatestatus(sd, SP_JOBEXP);
 	}
 
-	if (sd->state.showexp)
+	if (sd->state.showexp && (base_exp || job_exp))
 		pc_gainexp_disp(sd, base_exp, pc_nextbaseexp(sd), job_exp, pc_nextjobexp(sd), true);
 }
 

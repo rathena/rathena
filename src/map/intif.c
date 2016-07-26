@@ -543,9 +543,9 @@ int intif_create_party(struct party_member *member,char *name,int item,int item2
 		return 0;
 	nullpo_ret(member);
 
-	WFIFOHEAD(inter_fd,64);
+	WFIFOHEAD(inter_fd, 6+NAME_LENGTH+sizeof(struct party_member));
 	WFIFOW(inter_fd,0) = 0x3020;
-	WFIFOW(inter_fd,2) = 30+sizeof(struct party_member);
+	WFIFOW(inter_fd,2) = 6+NAME_LENGTH+sizeof(struct party_member);
 	memcpy(WFIFOP(inter_fd,4),name, NAME_LENGTH);
 	WFIFOB(inter_fd,28)= item;
 	WFIFOB(inter_fd,29)= item2;
@@ -582,7 +582,7 @@ int intif_party_addmember(int party_id,struct party_member *member)
 {
 	if (CheckForCharServer())
 		return 0;
-	WFIFOHEAD(inter_fd,42);
+	WFIFOHEAD(inter_fd,8+sizeof(struct party_member));
 	WFIFOW(inter_fd,0)=0x3022;
 	WFIFOW(inter_fd,2)=8+sizeof(struct party_member);
 	WFIFOL(inter_fd,4)=party_id;
@@ -1293,11 +1293,11 @@ int mapif_parse_WisToGM(int fd)
 	char *message;
 
 	mes_len =  RFIFOW(fd,2) - 8+NAME_LENGTH;
-	message = (char *) aMalloc(mes_len);
+	message = (char *) aMalloc(mes_len+1);
 
 	permission = RFIFOL(fd,4+NAME_LENGTH);
 	safestrncpy(Wisp_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
-	safestrncpy(message, (char*)RFIFOP(fd,8+NAME_LENGTH), mes_len);
+	safestrncpy(message, (char*)RFIFOP(fd,8+NAME_LENGTH), mes_len+1);
 	// information is sent to all online GM
 	map_foreachpc(mapif_parse_WisToGM_sub, permission, Wisp_name, message, mes_len);
 	aFree(message);
