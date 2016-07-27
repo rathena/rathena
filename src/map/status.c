@@ -7735,12 +7735,9 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		}
 
 		// Item resistance (only applies to rate%)
-		// TODO: Need to come up with a better way of flagging "common" SC rather than setting them at the start of sc_enum
-		if(sd && type > SC_NONE && type < SC_MAX) {
-			if( sd->reseff[type] > 0 )
-				rate -= ((rate*sd->reseff[type])/10000);
-		}
 		if(sd && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX) {
+			if( sd->reseff[type-SC_COMMON_MIN] > 0 )
+				rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
 			if( sd->sc.data[SC_COMMONSC_RESIST] )
 				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1/100;
 		}

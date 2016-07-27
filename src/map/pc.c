@@ -3132,7 +3132,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->state.lr_flag != 2 ? val : 0, sd->state.lr_flag == 2 ? val : 0, ATF_SELF, 0);
 		break;
 	case SP_RESEFF: // bonus2 bResEff,eff,n;
-		if (type2 <= SC_NONE || type2 >= SC_MAX) {
+		if (type2 < SC_COMMON_MIN || type2 > SC_COMMON_MAX) {
 			ShowError("pc_bonus2: SP_RESEFF: %d is invalid effect.\n", type2);
 			break;
 		}
