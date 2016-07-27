@@ -986,7 +986,7 @@
 	export_constant(SC_ITEMBOOST);
 	export_constant(SC_BOSSMAPINFO);
 	export_constant(SC_LIFEINSURANCE);
-	export_constant(SC_INCCRI);
+	export_constant(SC_CRITICALPERCENT);
 	//export_constant(SC_INCDEF);
 	//export_constant(SC_INCBASEATK);
 	//export_constant(SC_FASTCAST 264);
@@ -1757,7 +1757,7 @@
 	export_constant(SI_INCHEALRATE);
 	export_constant(SI_S_LIFEPOTION);
 	export_constant(SI_L_LIFEPOTION);
-	export_constant(SI_INCCRI);
+	export_constant(SI_CRITICALPERCENT);
 	export_constant(SI_PLUSAVOIDVALUE);
 	// disabled source side, does not make sense to export it
 	//export_constant(SI_ATKER_ASPD);
