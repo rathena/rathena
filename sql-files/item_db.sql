@@ -1372,7 +1372,7 @@ REPLACE INTO `item_db` VALUES (2424,'Tidal_Shoes','Tidal Shoes',4,20,NULL,300,NU
 REPLACE INTO `item_db` VALUES (2425,'Black_Leather_Boots','Black Leather Boots',4,20,NULL,500,NULL,4,NULL,0,0xFFFFFFFE,2,2,64,NULL,55,1,0,'bonus bAgi,1; if(getrefine()>=9) bonus bAgi,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2426,'Shadow_Walk','Shadow Walk',4,20,NULL,2000,NULL,0,NULL,0,0xFFFFFFFE,2,2,64,NULL,75,1,0,'bonus bMdef,10; if(getskilllv("AS_CLOAKING")<2){ bonus5 bAutoSpellWhenHit,"AS_CLOAKING",2,100,BF_MAGIC,0; } else bonus5 bAutoSpellWhenHit,"AS_CLOAKING",getskilllv("AS_CLOAKING"),100,BF_MAGIC,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2427,'Golden_Shoes','Golden Shoes',4,20,NULL,300,NULL,4,NULL,0,0xFFFFFFFF,7,2,64,NULL,0,0,0,'bonus bMdef,4;',NULL,NULL);
-#REPLACE INTO `item_db` VALUES (2428,'Freyja_Boots','Freyja Boots',4,0,NULL,300,NULL,10,NULL,0,0xFFFFFFFE,7,2,64,NULL,0,0,0,'bonus2 bSubRace,RC_DemiHuman,5; bonus2 bSubRace,RC_Player,5;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2428,'Freyja_Boots','Freyja Boots',4,0,NULL,300,NULL,10,NULL,0,0xFFFFFFFE,7,2,64,NULL,0,0,0,'bonus2 bSubRace,RC_DemiHuman,5; bonus2 bSubRace,RC_Player,5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2429,'Iron_Boots01','Iron Boots',4,0,NULL,1500,NULL,5,NULL,0,0x000E5CEA,7,2,64,NULL,0,1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (2430,'Iron_Boots02','Iron Boots',4,0,NULL,800,NULL,5,NULL,0,0xFFFFFFFF,7,2,64,NULL,0,1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (2431,'Valley_Shoes','Valley Shoes',4,20,NULL,0,NULL,10,NULL,0,0xFFFFFFFF,7,2,64,NULL,0,0,0,'bonus bMaxHPRate,7; bonus bMaxSPRate,7;',NULL,NULL);
@@ -1429,7 +1429,7 @@ REPLACE INTO `item_db` VALUES (2529,'Rider_Insignia','Rider Insignia',4,20,NULL,
 REPLACE INTO `item_db` VALUES (2530,'Rider_Insignia_','Rider Insignia',4,20,NULL,500,NULL,4,NULL,1,0xFFFFFFFE,2,2,4,NULL,55,1,0,'bonus bAgi,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2531,'Ulfhedinn','Ulfhedinn',4,20,NULL,700,NULL,3,NULL,1,0x000654E2,2,2,4,NULL,70,1,0,'bonus3 bAutoSpellWhenHit,"NPC_STONESKIN",6,20;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2532,'Mithril_Magic_Cape','Mithril Magic Cape',4,20,NULL,400,NULL,3,NULL,1,0x00098B1C,2,2,4,NULL,70,1,0,'bonus bMdef,3; bonus5 bAutoSpellWhenHit,"NPC_ANTIMAGIC",6,200,BF_MAGIC,0;',NULL,NULL);
-#REPLACE INTO `item_db` VALUES (2533,'Freyja_Cape','Freyja Cape',4,0,NULL,200,NULL,10,NULL,0,0xFFFFFFFE,7,2,4,NULL,0,0,0,'bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (2533,'Freyja_Cape','Freyja Cape',4,0,NULL,200,NULL,10,NULL,0,0xFFFFFFFE,7,2,4,NULL,0,0,0,'bonus2 bSubRace,RC_DemiHuman,15; bonus2 bSubRace,RC_Player,15;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2534,'Ruffler','Ruffler',4,20,NULL,0,NULL,10,NULL,0,0xFFFFFFFF,7,2,4,NULL,0,0,0,'bonus2 bSubEle,Ele_Neutral,17; bonus bFlee,17;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2535,'Cloak_Of_Survival_C','Cloak Of Survival',4,1,NULL,0,NULL,5,NULL,0,0x00810204,7,2,4,NULL,0,0,0,'bonus bVit,10; bonus bMdef,10;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2536,'Skin_Of_Ventus','Skin of Ventus',4,20,NULL,250,NULL,2,NULL,1,0xFFFFFFFE,7,2,4,NULL,60,1,0,'bonus bMdef,2; bonus bMaxHP,200; bonus bFlee,10;',NULL,NULL);
