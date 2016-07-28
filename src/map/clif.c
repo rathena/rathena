@@ -10289,7 +10289,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_equipcheckbox(sd);
 #endif
 #ifdef VIP_ENABLE
-		if (!sd->disableshowrate) {
+		if (!sd->vip.disableshowrate) {
 			clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
 			//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
 		}
@@ -17829,14 +17829,13 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		int details_bexp[PINFO_MAX];
 		int details_drop[PINFO_MAX];
 		int details_penalty[PINFO_MAX];
-		int penalty_const;
 
 		/**
 		 * Set for EXP
 		 */
 		//0:PCRoom
 		details_bexp[0] = map[sd->bl.m].adjust.bexp;
-		if (details_bexp[0] == 100 || details_bexp[0] == 0)
+		if (details_bexp[0] == 100 || !details_bexp[0])
 			details_bexp[0] = 0;
 		else {
 			if (details_bexp[0] < 100) {
@@ -17902,13 +17901,12 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		/**
 		 * Set for Penalty rate
 		 */
-		//! FIXME: Current penalty system, makes this announcement hardly to gives info + or - rate
-		penalty_const = battle_config.death_penalty_base * battle_config.vip_exp_penalty_base_normal;
+		//! FIXME: Current penalty system makes this announcement unable to give info on + or - rate
 		//0:PCRoom
 		details_penalty[0] = 0;
 		//1:Premium
 		if (pc_isvip(sd)) {
-			details_penalty[1] = battle_config.vip_exp_penalty_base * 10000 / penalty_const;
+			details_penalty[1] = battle_config.vip_exp_penalty_base;
 			if (details_penalty[1] == 100)
 				details_penalty[1] = 0;
 			else {
@@ -17923,7 +17921,7 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		else
 			details_penalty[1] = 0;
 		//2:Server
-		details_penalty[2] = battle_config.vip_exp_penalty_base_normal * 10000 / penalty_const;
+		details_penalty[2] = battle_config.death_penalty_base;
 		if (details_penalty[2] == 100)
 			details_penalty[2] = 0;
 		else {

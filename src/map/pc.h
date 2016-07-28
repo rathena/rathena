@@ -160,6 +160,7 @@ struct skill_cooldown_entry {
 struct vip_info {
 	unsigned int enabled : 1;
 	time_t time;
+	bool disableshowrate; //State to disable clif_display_pinfo(). [Cydh]
 };
 #endif
 
@@ -646,7 +647,6 @@ struct map_session_data {
 	int storage_size; /// Holds player storage size (VIP system).
 #ifdef VIP_ENABLE
 	struct vip_info vip;
-	bool disableshowrate; //State to disable clif_display_pinfo(). [Cydh]
 #endif
 
 	/// Bonus Script [Cydh]

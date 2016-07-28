@@ -7081,17 +7081,14 @@ ACMD_FUNC(mobinfo)
 		base_exp = mob->base_exp;
 		job_exp = mob->job_exp;
 
+		if (pc_isvip(sd)) { // Display EXP rate increase for VIP
+			base_exp = (base_exp * battle_config.vip_base_exp_increase) / 100;
+			job_exp = (job_exp * battle_config.vip_job_exp_increase) / 100;
+		}
 #ifdef RENEWAL_EXP
 		if( battle_config.atcommand_mobinfo_type ) {
 			base_exp = base_exp * pc_level_penalty_mod(mob->lv - sd->status.base_level, mob->status.class_, mob->status.mode, 1) / 100;
 			job_exp = job_exp * pc_level_penalty_mod(mob->lv - sd->status.base_level, mob->status.class_, mob->status.mode, 1) / 100;
-		}
-#endif
-#ifdef VIP_ENABLE
-		// Display EXP rate increase for VIP.
-		if (pc_isvip(sd) && (battle_config.vip_base_exp_increase || battle_config.vip_job_exp_increase)) {
-			base_exp += battle_config.vip_base_exp_increase;
-			job_exp += battle_config.vip_job_exp_increase;
 		}
 #endif
 		// stats
@@ -7129,11 +7126,8 @@ ACMD_FUNC(mobinfo)
 					droprate = 1;
 			}
 #endif
-#ifdef VIP_ENABLE
-			// Display item rate increase for VIP.
-			if (pc_isvip(sd) && battle_config.vip_drop_increase)
+			if (pc_isvip(sd)) // Display drop rate increase for VIP
 				droprate += (droprate * battle_config.vip_drop_increase) / 100;
-#endif
 			if (item_data->slot)
 				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)droprate / 100);
 			else
@@ -7668,11 +7662,8 @@ ACMD_FUNC(whodrops)
 				if( battle_config.atcommand_mobinfo_type )
 					dropchance = dropchance * pc_level_penalty_mod(mob_db(item_data->mob[j].id)->lv - sd->status.base_level, mob_db(item_data->mob[j].id)->status.class_, mob_db(item_data->mob[j].id)->status.mode, 2) / 100;
 #endif
-#ifdef VIP_ENABLE
-				// Display item rate increase for VIP.
-				if (pc_isvip(sd) && battle_config.vip_drop_increase)
+				if (pc_isvip(sd)) // Display item rate increase for VIP
 					dropchance += (dropchance * battle_config.vip_drop_increase) / 100;
-#endif
 				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob_db(item_data->mob[j].id)->jname, item_data->mob[j].id, dropchance/100.);
 				clif_displaymessage(fd, atcmd_output);
 			}
@@ -7787,16 +7778,9 @@ ACMD_FUNC(rates)
 	nullpo_ret(sd);
 	memset(buf, '\0', sizeof(buf));
 
-#ifdef VIP_ENABLE
-	// Display EXP and item rate increase for VIP.
-	if (pc_isvip(sd) && (battle_config.vip_base_exp_increase || battle_config.vip_job_exp_increase || battle_config.vip_drop_increase)) {
-		base_exp_rate += battle_config.vip_base_exp_increase;
-		job_exp_rate += battle_config.vip_job_exp_increase;
-	}
-#endif
-
 	snprintf(buf, CHAT_SIZE_MAX, msg_txt(sd,1298), // Experience rates: Base %.2fx / Job %.2fx
-		(battle_config.base_exp_rate+base_exp_rate)/100., (battle_config.job_exp_rate+job_exp_rate)/100.);
+		(battle_config.base_exp_rate + (pc_isvip(sd) ? (battle_config.vip_base_exp_increase * battle_config.base_exp_rate) / 100 : 0)) / 100.,
+		(battle_config.job_exp_rate + (pc_isvip(sd) ? (battle_config.vip_job_exp_increase * battle_config.job_exp_rate) / 100 : 0)) / 100.);
 	clif_displaymessage(fd, buf);
 	snprintf(buf, CHAT_SIZE_MAX, msg_txt(sd,1299), // Normal Drop Rates: Common %.2fx / Healing %.2fx / Usable %.2fx / Equipment %.2fx / Card %.2fx
 		(battle_config.item_rate_common + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_common) / 100 : 0)) / 100.,
@@ -9538,13 +9522,12 @@ ACMD_FUNC(vip) {
 /** Enable/disable rate info */
 ACMD_FUNC(showrate) {
 	nullpo_retr(-1,sd);
-	if (!sd->disableshowrate) {
+	if (!sd->vip.disableshowrate) {
 		sprintf(atcmd_output,msg_txt(sd,718)); //Personal rate information is not displayed now.
-		sd->disableshowrate = 1;
-	}
-	else {
+		sd->vip.disableshowrate = 1;
+	} else {
 		sprintf(atcmd_output,msg_txt(sd,719)); //Personal rate information will be shown.
-		sd->disableshowrate = 0;
+		sd->vip.disableshowrate = 0;
 	}
 	clif_displaymessage(fd,atcmd_output);
 	return 0;

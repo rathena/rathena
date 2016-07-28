@@ -2578,13 +2578,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				// Now rig the drop rate to never be over 90% unless it is originally >90%.
 				drop_rate = i32max(drop_rate, cap_value(drop_rate_bonus, 0, 9000));
 
-#ifdef VIP_ENABLE
-				// Increase item drop rate for VIP.
-				if (battle_config.vip_drop_increase && pc_isvip(sd)) {
+				if (pc_isvip(sd)) { // Increase item drop rate for VIP.
 					drop_rate += (int)(0.5 + (drop_rate * battle_config.vip_drop_increase) / 100);
 					drop_rate = min(drop_rate,10000); //cap it to 100%
 				}
-#endif
 			}
 
 #ifdef RENEWAL_DROP
