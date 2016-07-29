@@ -18658,7 +18658,7 @@ void clif_parse_Oneclick_Itemidentify(int fd, struct map_session_data *sd) {
 
 	// Ignore the request - No magnifiers in inventory
 	if ((magnifier_idx = pc_search_inventory(sd, ITEMID_MAGNIFIER)) == -1 &&
-		(magnifier_idx = pc_search_inventory(sd, ITEMID_NOVICE_MAGNIFIER)) == -1))
+		(magnifier_idx = pc_search_inventory(sd, ITEMID_NOVICE_MAGNIFIER)) == -1)
 		return;
 
 	if (pc_delitem(sd, magnifier_idx, 1, 0, 0, LOG_TYPE_OTHER) != 0) // Deleting of magnifier failed, for whatever reason...
