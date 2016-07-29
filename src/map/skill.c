@@ -4549,6 +4549,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), splash_target(src),
 				skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
 		}
+		if (skill_id == SN_SHARPSHOOTING)
+			status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
 		break;
 
 	case MO_INVESTIGATE:
@@ -4785,6 +4787,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					skill_area_temp[3] = 1;
 				}
 			}
+			if (skill_id == RA_ARROWSTORM)
+				status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
 			if( skill_id == AS_SPLASHER ) {
 				map_freeblock_unlock(); // Don't consume a second gemstone.
 				return 0;
@@ -11893,6 +11897,8 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case RK_WINDCUTTER:
 		clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
 	case AC_SHOWER:
+		if (skill_id == AC_SHOWER)
+			status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
 	case MA_SHOWER:
 	case NC_COLDSLOWER:
 	case RK_DRAGONBREATH:

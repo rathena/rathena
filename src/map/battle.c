@@ -4737,7 +4737,8 @@ struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,
 	int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
 	short class_ = status_get_class(target);
 
-	status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
+	if (skill_id != SN_SHARPSHOOTING && skill_id != RA_ARROWSTORM)
+		status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
 
 	//Plants receive 1 damage when hit
 	if( attack_hits || wd.damage > 0 )
@@ -4999,7 +5000,8 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 					ATK_ADD(wd.damage, wd.damage2, enchant_dmg);
 			}
 		}
-		status_change_end(src,SC_CAMOUFLAGE, INVALID_TIMER);
+		if (skill_id != SN_SHARPSHOOTING && skill_id != RA_ARROWSTORM)
+			status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
 	}
 	switch (skill_id) {
 		case LG_RAYOFGENESIS:
