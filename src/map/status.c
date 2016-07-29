@@ -63,7 +63,7 @@ static unsigned short status_calc_batk(struct block_list *,struct status_change 
 static unsigned short status_calc_watk(struct block_list *,struct status_change *,int);
 static unsigned short status_calc_matk(struct block_list *,struct status_change *,int);
 static signed short status_calc_hit(struct block_list *,struct status_change *,int);
-static signed short status_calc_critical(struct block_list *,struct status_change *,int);
+static signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical, bool viewable);
 static signed short status_calc_flee(struct block_list *,struct status_change *,int);
 static signed short status_calc_flee2(struct block_list *,struct status_change *,int);
 static defType status_calc_def(struct block_list *bl, struct status_change *sc, int);
@@ -924,7 +924,7 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_BOSSMAPINFO] = SI_BOSSMAPINFO;
 	StatusIconChangeTable[SC_DEF_RATE] = SI_DEF_RATE;
 	StatusIconChangeTable[SC_MDEF_RATE] = SI_MDEF_RATE;
-	StatusIconChangeTable[SC_INCCRI] = SI_INCCRI;
+	StatusIconChangeTable[SC_CRITICALPERCENT] = SI_CRITICALPERCENT;
 	StatusIconChangeTable[SC_INCFLEE2] = SI_PLUSAVOIDVALUE;
 	StatusIconChangeTable[SC_INCHEALRATE] = SI_INCHEALRATE;
 	StatusIconChangeTable[SC_S_LIFEPOTION] = SI_S_LIFEPOTION;
@@ -1110,7 +1110,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_INCHITRATE] |= SCB_HIT;
 	StatusChangeFlagTable[SC_INCFLEE] |= SCB_FLEE;
 	StatusChangeFlagTable[SC_INCFLEERATE] |= SCB_FLEE;
-	StatusChangeFlagTable[SC_INCCRI] |= SCB_CRI;
+	StatusChangeFlagTable[SC_CRITICALPERCENT] |= SCB_CRI;
 	StatusChangeFlagTable[SC_INCASPDRATE] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_INCFLEE2] |= SCB_FLEE2;
 	StatusChangeFlagTable[SC_INCMHPRATE] |= SCB_MAXHP;
@@ -4643,9 +4643,9 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 	if(flag&SCB_CRI && b_status->cri) {
 		if (status->luk == b_status->luk)
-			status->cri = status_calc_critical(bl, sc, b_status->cri);
+			status->cri = status_calc_critical(bl, sc, b_status->cri, true);
 		else
-			status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk));
+			status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk), true);
 
 		/// After status_calc_critical so the bonus is applied despite if you have or not a sc bugreport:5240
 		if( bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR )
@@ -5778,15 +5778,27 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
  * @param bl: Object to change critical [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param critical: Initial critical
+ * @param viewable: Is it displayed to the status window?
  * @return modified critical with cap_value(critical,10,USHRT_MAX)
  */
-static signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical)
+static signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical, bool viewable)
 {
-	if(!sc || !sc->count)
-		return cap_value(critical,10,SHRT_MAX);
+	if (!sc || !sc->count)
+		return cap_value(critical, 10, SHRT_MAX);
 
-	if (sc->data[SC_INCCRI])
-		critical += sc->data[SC_INCCRI]->val2;
+	if (!viewable) {
+		// Place here statuses that do not show critical on status window
+		if (sc->data[SC_CRITICALPERCENT]) {
+			if (bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR) { // Gives double critical rate when using Katar weapons [Limestone]
+				critical += sc->data[SC_CRITICALPERCENT]->val2 * 2;
+			}
+			else {
+				critical += sc->data[SC_CRITICALPERCENT]->val2;
+			}
+		}
+		return (short)cap_value(critical, 10, SHRT_MAX);
+	}
+
 	if (sc->data[SC_CRIFOOD])
 		critical += sc->data[SC_CRIFOOD]->val1;
 	if (sc->data[SC_EXPLOSIONSPIRITS])
@@ -9697,7 +9709,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val1 = 0;
 			break;
 		case SC_INCFLEE2:
-		case SC_INCCRI:
+		case SC_CRITICALPERCENT:
 			val2 = val1*10; // Actual boost (since 100% = 1000)
 			break;
 		case SC_SUFFRAGIUM:
