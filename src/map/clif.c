@@ -18708,6 +18708,39 @@ void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x,
 #endif
 }
 
+/// Send hat effects to the client (ZC_HAT_EFFECT).
+/// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W }
+void clif_item_effects( struct block_list* bl, bool enable, short effects[], int count ){
+#if PACKETVER >= 20150513
+	unsigned char* buf;
+	int len,i;
+
+	nullpo_retv(bl);
+
+	len = 9 + count * 2;
+
+	buf = (unsigned char*)aMalloc( len );
+
+	WBUFW(buf,0) = 0xa3b;
+	WBUFW(buf,2) = len;
+	WBUFL(buf,4) = bl->id;
+	WBUFB(buf,8) = enable;
+
+	for( i = 0; i < count; i++ ){
+		WBUFW(buf,9+i*2) = effects[i];
+	}
+
+	clif_send(buf, len,bl,SELF);
+
+	if( disguised(bl) ){
+		WBUFL(buf,4) = -bl->id;
+		clif_send(buf, len,bl,SELF);
+	}
+
+	aFree(buf);
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/

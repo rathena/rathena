@@ -21480,6 +21480,37 @@ BUILDIN_FUNC(recalculatestat) {
 	status_calc_pc(sd, SCO_FORCE);
 	return SCRIPT_CMD_SUCCESS;
 }
+
+BUILDIN_FUNC(itemeffect){
+#if PACKETVER >= 20150513
+	struct map_session_data* sd = script_rid2sd(st);
+	bool enable;
+	short *effects;
+	int i, count;
+
+	if( sd == NULL )
+		return SCRIPT_CMD_FAILURE;
+
+	enable = script_getnum(st,2) ? true : false;
+
+	if( !script_hasdata(st,3) ){
+		ShowError( "buildin_itemeffect: You need to specify a hat effect id.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	count = st->end - 3;
+	effects = (short*)aMalloc(count*sizeof(short));
+
+	for( i = 0; i < count; i++ ){
+		effects[i] = script_getnum(st,3+i);
+	}
+
+	clif_item_effects( &sd->bl, enable, effects, count );
+
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -22058,6 +22089,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(adopt,"vv"),
 	BUILDIN_DEF(getexp2,"ii?"),
 	BUILDIN_DEF(recalculatestat,""),
+	BUILDIN_DEF(itemeffect,"ii*"),
 
 #include "../custom/script_def.inc"
 

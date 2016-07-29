@@ -672,6 +672,7 @@ void clif_item_repair_list(struct map_session_data *sd, struct map_session_data 
 void clif_item_repaireffect(struct map_session_data *sd, int idx, int flag);
 void clif_item_damaged(struct map_session_data* sd, unsigned short position);
 void clif_item_refine_list(struct map_session_data *sd);
+void clif_item_effects( struct block_list* bl, bool enable, short effects[], int count );
 
 void clif_item_skill(struct map_session_data *sd,uint16 skill_id,uint16 skill_lv);
 
