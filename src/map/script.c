@@ -21511,6 +21511,64 @@ BUILDIN_FUNC(itemeffect){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * hateffect(<Hat Effect ID>,<State>{,<GID>});
+ * !TODO: Add possibility for non-player!
+ **/
+BUILDIN_FUNC(hateffect) {
+#if PACKETVER >= 20150513
+	TBL_PC *sd = NULL;
+	short efid = 0;
+	bool state;
+
+	if (!script_accid2sd(4, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	efid = script_getnum(st, 2);
+	state = script_getnum(st, 3) ? true : false;
+
+	if (state) {
+		uint8 i = 0;
+
+		for (i = 0; i < sd->hat_effect.count; i++) {
+			if (sd->hat_effect.HatEFIDs[i] == efid)
+				return SCRIPT_CMD_SUCCESS;
+		}
+
+		RECREATE(sd->hat_effect.HatEFIDs, uint16, sd->hat_effect.count+1);
+		sd->hat_effect.HatEFIDs[sd->hat_effect.count++] = efid;
+	} else {
+		uint8 i = 0, c = 0;
+
+		for (i = 0; i < sd->hat_effect.count; i++) {
+			if (sd->hat_effect.HatEFIDs[i] == efid) {
+				sd->hat_effect.HatEFIDs[i] = 0;
+				break;
+			}
+		}
+
+		for (i = 0, c = 0; i < sd->hat_effect.count; i++) {
+			if (sd->hat_effect.HatEFIDs[i] == 0)
+				continue;
+
+			if (i != c)
+				sd->hat_effect.HatEFIDs[c] = sd->hat_effect.HatEFIDs[i];
+			c++;
+		}
+
+		if (!(sd->hat_effect.count = c)) {
+			aFree(sd->hat_effect.HatEFIDs);
+			sd->hat_effect.HatEFIDs = NULL;
+		}
+	}
+
+	//! TODO: This is will be perfect if this action never be called for first sd init'd
+	// because will it'll be little ugly: pc calc -> clif_hateffect_single -> clif_spawn -> clif_hateffect
+	clif_hateffect_single(&sd->bl, AREA, efid, state);
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -22090,6 +22148,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getexp2,"ii?"),
 	BUILDIN_DEF(recalculatestat,""),
 	BUILDIN_DEF(itemeffect,"ii*"),
+	BUILDIN_DEF(hateffect,"ii?"),
 
 #include "../custom/script_def.inc"
 

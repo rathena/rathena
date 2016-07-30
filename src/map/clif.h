@@ -53,6 +53,7 @@ enum e_packet_ack {
 	ZC_MERGE_ITEM_OPEN,
 	ZC_ACK_MERGE_ITEM,
 	ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN,
+	ZC_HAT_EFFECT,
 	//add other here
 	MAX_ACK_FUNC //auto upd len
 };
@@ -994,5 +995,7 @@ void clif_broadcast_obtain_special_item(const char *char_name, unsigned short na
 void clif_dressing_room(struct map_session_data *sd, int flag);
 void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
 void clif_SelectCart(struct map_session_data *sd);
+void clif_hateffect(struct map_session_data *src, struct block_list *bl, enum send_target target);
+void clif_hateffect_single(struct block_list *bl, enum send_target target, unsigned short HatEFID, bool show);
 
 #endif /* _CLIF_H_ */

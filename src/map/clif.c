@@ -1444,6 +1444,7 @@ int clif_spawn(struct block_list *bl)
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
 			clif_efst_status_change_sub(sd, bl, AREA);
+			clif_hateffect(sd, bl, AREA);
 		}
 		break;
 	case BL_MOB:
@@ -4548,6 +4549,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
 			clif_efst_status_change_sub(sd, bl, SELF);
+			clif_hateffect(sd, bl, SELF);
 		}
 		break;
 	case BL_MER: // Devotion Effects
@@ -18738,6 +18740,86 @@ void clif_item_effects( struct block_list* bl, bool enable, short effects[], int
 #endif
 }
 
+/**
+ * Send Hat Effect ID to client (see also on client-side hateffectinfo.lub)
+ * ZC: <0A3B>.W <len>.W <id>.L <flag>.B { <HatEFID>.W }.* (ZC_HAT_EFFECT)
+ * @param sd Player to send the packet to
+ * @param bl Objects walking into view
+ * @param target: Client send type
+ **/
+void clif_hateffect(struct map_session_data *sd, struct block_list *bl, enum send_target target) {
+#if PACKETVER >= 20150513
+	uint8 i = 0;
+	struct map_session_data *tsd = NULL;
+	struct s_packet_db *info = NULL;
+	unsigned char *buf;
+	unsigned short cmd = 0, len;
+
+	nullpo_retv(sd);
+	nullpo_retv(bl);
+
+	if (!(cmd = packet_db_ack[clif_config.packet_db_ver][ZC_HAT_EFFECT]))
+		return;
+
+	if (!(info = &packet_db[clif_config.packet_db_ver][cmd]) || info->len == 0)
+		return;
+
+	if (target == SELF)
+		tsd = (TBL_PC *)bl;
+	else
+		tsd = sd;
+
+	if (!tsd->hat_effect.count)
+		return;
+
+	len = 9 + tsd->hat_effect.count * 2;
+
+	CREATE(buf, unsigned char, len);
+	WBUFW(buf, 0) = cmd;
+	WBUFW(buf, info->pos[0]) = len; // len
+	WBUFL(buf, info->pos[1]) = tsd->bl.id; // ID
+	WBUFB(buf, info->pos[2]) = 1; // flag
+	for (i = 0; i < tsd->hat_effect.count; i++) {
+		WBUFW(buf, info->pos[3]+i*2) = tsd->hat_effect.HatEFIDs[i]; // HatEFID
+	}
+	clif_send(buf, len, (target == SELF) ? &sd->bl : bl, target);
+	aFree(buf);
+#endif
+	return;
+}
+
+/**
+ * Send Hat Effect ID to client right after (un)equipping equip (see also on client-side hateffectinfo.lub)
+ * ZC: <0A3B>.W <len>.W <id>.L <flag>.B { <HatEFID>.W }.* (ZC_HAT_EFFECT)
+ * @param sd Player to send the packet to
+ * @param target Client send type
+ * @param HatEFID Hat effect ID
+ * @param show 1:Notify if player has the effect, 0:Player removes the effect (unquipped)
+ **/
+void clif_hateffect_single(struct block_list *bl, enum send_target target, unsigned short HatEFID, bool show) {
+#if PACKETVER >= 20150513
+	struct s_packet_db *info = NULL;
+	unsigned char buf[12];
+	unsigned short cmd = 0, len = 11;
+
+	nullpo_retv(bl);
+
+	if (!(cmd = packet_db_ack[clif_config.packet_db_ver][ZC_HAT_EFFECT]))
+		return;
+
+	if (!(info = &packet_db[clif_config.packet_db_ver][cmd]) || info->len == 0)
+		return;
+
+	WBUFW(buf, 0) = cmd;
+	WBUFW(buf, info->pos[0]) = len; // len
+	WBUFL(buf, info->pos[1]) = bl->id; // ID
+	WBUFB(buf, info->pos[2]) = show; //  flag
+	WBUFW(buf, info->pos[3]) = HatEFID; // HatEFID
+	clif_send(buf, len, bl, target);
+#endif
+	return;
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
@@ -19138,8 +19220,8 @@ void packetdb_readdb(bool reload)
 	  269,  0,  0,  2,  6, 48,  6,  9, 26, 45, 47, 47, 56, -1,  14,  0,
 #endif
 		-1,  0,  0, 26,  0,  0,  0,  0,  14,  2, 23,  2, -1,  2,  3,  2,
-	   21,  3,  5,  0, 66,  0,  0,  8,  3,  0,  0,  0,  0,  -1,  0,  0,
- 		0,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+	   21,  3,  5,  0, 66,  0,  0,  8,  3,  0,  0, -1,  0,  -1,  0,  0,
+		0,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);
@@ -19401,6 +19483,7 @@ void packetdb_readdb(bool reload)
 		{ "ZC_MERGE_ITEM_OPEN", ZC_MERGE_ITEM_OPEN },
 		{ "ZC_ACK_MERGE_ITEM", ZC_ACK_MERGE_ITEM },
 		{ "ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN", ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN },
+		{ "ZC_HAT_EFFECT", ZC_HAT_EFFECT },
 	};
 	const char *filename[] = { "packet_db.txt", DBIMPORT"/packet_db.txt"};
 	int f;
