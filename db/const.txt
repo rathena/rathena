@@ -469,6 +469,21 @@ IG_Cyborg_Lucky_Egg	451
 IG_Undine_Lucky_Egg	452
 IG_God_Material_Box	453
 IG_Sealed_Mind_Box	454
+IG_Frozen_Egg_Costume	455
+IG_Headgear_Costume_Scroll	456
+IG_Flower_Blossom_Scroll	457
+IG_Seaside_Costume_Scroll	458
+IG_Smithy_Lucky_Egg	459
+IG_Ganymede_Lucky_Egg	460
+IG_LastAngel_LuckyScroll	461
+IG_Valkyrie_Lucky_Egg	462
+IG_Splash_Rainbow_Lucky_Egg	463
+IG_Shapeshifter_Costume	464
+IG_Almighty_Lucky_Egg	465
+IG_Burning_Feather_Costume_Scroll	466
+IG_Animal_Costume_Scroll	467
+IG_Midgard_Lucky_Scroll	468
+IG_Blessing_Scarlet_Egg	469
 
 EF_NONE	-1
 EF_HIT1	0

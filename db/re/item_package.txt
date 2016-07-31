@@ -4052,3 +4052,283 @@ IG_Sealed_Mind_Box,11563,1,5 // 5x Hot_Tea
 IG_Sealed_Mind_Box,2977,1,1 // 1x Broken_Heart
 IG_Sealed_Mind_Box,2978,1,1 // 1x Kindly_Heart
 IG_Sealed_Mind_Box,18848,1,1 // 1x Fresh_Roses
+
+//! TODO: Confirm the rates
+IG_Frozen_Egg_Costume,19780,1,1 // 1x Costume_Rabbit_Ear_Knit_Hat
+IG_Frozen_Egg_Costume,19826,1,1 // 1x Costume_Ice_Wing_Ear
+IG_Frozen_Egg_Costume,19985,1,1 // 1x Costume_Aura_Quartz_Crown
+IG_Frozen_Egg_Costume,19986,1,1 // 1x Costume_Lunatic_Hat
+IG_Frozen_Egg_Costume,19987,1,1 // 1x Costume_Blue_Fur_Hat
+IG_Frozen_Egg_Costume,19988,1,1 // 1x Costume_Elder_Crown
+IG_Frozen_Egg_Costume,19989,1,1 // 1x Costume_Mouton_Life
+IG_Frozen_Egg_Costume,19990,1,1 // 1x Costume_Snow_Rabbit_Knit_Hat
+IG_Frozen_Egg_Costume,19991,1,1 // 1x Costume_Galanthus_Guard
+IG_Frozen_Egg_Costume,19992,1,1 // 1x Costume_Chilly_Breath
+
+//! TODO: Confirm the rates
+IG_Headgear_Costume_Scroll,19584,1,1 // 1x Costume_Pirate_Dagger
+IG_Headgear_Costume_Scroll,19884,1,1 // 1x Costume_Vanargandr_Helm
+IG_Headgear_Costume_Scroll,20005,1,1 // 1x Costume_Pegasus_Wing_Ears
+IG_Headgear_Costume_Scroll,20006,1,1 // 1x Costume_Dark_Knight_Mask
+IG_Headgear_Costume_Scroll,20007,1,1 // 1x Costume_Bullock_Helm_J
+IG_Headgear_Costume_Scroll,20008,1,1 // 1x Costume_General_Helmet
+IG_Headgear_Costume_Scroll,20009,1,1 // 1x Costume_Dragon_Skull
+IG_Headgear_Costume_Scroll,20010,1,1 // 1x Costume_Rainbow_Wing_Ears
+IG_Headgear_Costume_Scroll,20011,1,1 // 1x Costume_Lightning_Speed
+IG_Headgear_Costume_Scroll,20012,1,1 // 1x Costume_Double_Horn_Helm
+IG_Headgear_Costume_Scroll,20132,1,1 // 1x C_Aura_Of_Thought
+
+//! TODO: Confirm the rates
+IG_Flower_Blossom_Scroll,20039,1,1 // 1x C_Butterfly_Wing_Ear_J
+IG_Flower_Blossom_Scroll,20040,1,1 // 1x C_Rose_Crown
+IG_Flower_Blossom_Scroll,20041,1,1 // 1x C_Earth_Goddess_Flower
+IG_Flower_Blossom_Scroll,20042,1,1 // 1x C_Hermose_Cap
+IG_Flower_Blossom_Scroll,20043,1,1 // 1x C_Red_Cherry_Blossom
+IG_Flower_Blossom_Scroll,20044,1,1 // 1x C_Carmen_Miranda_Hat
+IG_Flower_Blossom_Scroll,20045,1,1 // 1x C_Samambaia
+IG_Flower_Blossom_Scroll,20046,1,1 // 1x C_Decoration_bluerose
+IG_Flower_Blossom_Scroll,20047,1,1 // 1x C_Pray_Cherry_Blossom
+IG_Flower_Blossom_Scroll,20048,1,1 // 1x C_Wind_Of_The_Prairie
+
+//! TODO: Confirm the rates
+IG_Seaside_Costume_Scroll,20105,1,1 // 1x Costume_Fish_Head_Hat
+IG_Seaside_Costume_Scroll,20106,1,1 // 1x Costume_Classic_Hat
+IG_Seaside_Costume_Scroll,20107,1,1 // 1x Costume_Fish_In_Mouth
+IG_Seaside_Costume_Scroll,20108,1,1 // 1x Costume_Blind_Glasses
+IG_Seaside_Costume_Scroll,20109,1,1 // 1x Costume_Jolly_Roger
+IG_Seaside_Costume_Scroll,20112,1,1 // 1x Aqua_Ten_Gallon_Hat
+IG_Seaside_Costume_Scroll,20113,1,1 // 1x Star_Reading_Hat
+IG_Seaside_Costume_Scroll,20115,1,1 // 1x Under_Rim_Glasses
+IG_Seaside_Costume_Scroll,20116,1,1 // 1x Mermaid_Headphone
+IG_Seaside_Costume_Scroll,20117,1,1 // 1x Raspberry_Mousse_Hat
+
+//! TODO: Confirm the rates
+IG_Smithy_Lucky_Egg,4407,1,1,1,1 // 1x Randgris_Card
+IG_Smithy_Lucky_Egg,4302,1,1,1,1 // 1x Tao_Gunka_Card
+IG_Smithy_Lucky_Egg,4386,1,1,1,1 // 1x Detale_Card
+IG_Smithy_Lucky_Egg,4198,1,1,1,1 // 1x Maya_Puple_Card
+IG_Smithy_Lucky_Egg,6239,1,1,1,1 // 1x Guarantee_Armor_11Up
+IG_Smithy_Lucky_Egg,6238,1,1,1,1 // 1x Guarantee_Weapon_11Up
+IG_Smithy_Lucky_Egg,6232,1,1,1,1 // 1x Guarantee_Armor_9Up
+IG_Smithy_Lucky_Egg,6228,1,1,1,1 // 1x Guarantee_Weapon_9Up
+IG_Smithy_Lucky_Egg,6233,1,1,1,1 // 1x Guarantee_Armor_8Up
+IG_Smithy_Lucky_Egg,6229,1,1,1,1 // 1x Guarantee_Weapon_8Up
+IG_Smithy_Lucky_Egg,6234,1,1,1,1 // 1x Guarantee_Armor_7Up
+IG_Smithy_Lucky_Egg,6230,1,1,1,1 // 1x Guarantee_Weapon_7Up
+IG_Smithy_Lucky_Egg,12246,1,1,1,1 // 1x Magic_Card_Album
+IG_Smithy_Lucky_Egg,6484,1,1,1,1 // 1x Enchant_Book
+IG_Smithy_Lucky_Egg,6438,1,3,1,0 // 3x Blessed_Weapon_Ore
+IG_Smithy_Lucky_Egg,6439,1,3,1,0 // 3x Blessed_Armor_Ore
+IG_Smithy_Lucky_Egg,17315,1,1,1,0 // 1x Lucky Silvervine Fruit Box(10)
+IG_Smithy_Lucky_Egg,14620,1,20,1,0 // 20x DEX Biscuit Stick
+IG_Smithy_Lucky_Egg,14621,1,20,1,0 // 20x LUK Biscuit Stick
+IG_Smithy_Lucky_Egg,14616,1,20,1,0 // 20x STR Biscuit Stick
+IG_Smithy_Lucky_Egg,14617,1,20,1,0 // 20x VIT Biscuit Stick
+IG_Smithy_Lucky_Egg,14619,1,20,1,0 // 20x INT Biscuit Stick
+IG_Smithy_Lucky_Egg,14618,1,20,1,0 // 20x AGI Biscuit Stick
+
+//! TODO: Confirm the rates
+IG_Ganymede_Lucky_Egg,4145,1,1,1,1 // 1x Berzebub_Card
+IG_Ganymede_Lucky_Egg,4359,1,1,1,1 // 1x B_Eremes_Card
+IG_Ganymede_Lucky_Egg,4357,1,1,1,1 // 1x B_Seyren_Card
+IG_Ganymede_Lucky_Egg,4121,1,1,1,1 // 1x Phreeoni_Card
+IG_Ganymede_Lucky_Egg,6239,1,1,1,1 // 1x Guarantee_Armor_11Up
+IG_Ganymede_Lucky_Egg,6238,1,1,1,1 // 1x Guarantee_Weapon_11Up
+IG_Ganymede_Lucky_Egg,6232,1,1,1,1 // 1x Guarantee_Armor_9Up
+IG_Ganymede_Lucky_Egg,6228,1,1,1,1 // 1x Guarantee_Weapon_9Up
+IG_Ganymede_Lucky_Egg,6233,1,1,1,1 // 1x Guarantee_Armor_8Up
+IG_Ganymede_Lucky_Egg,6229,1,1,1,1 // 1x Guarantee_Weapon_8Up
+IG_Ganymede_Lucky_Egg,28377,1,1,1,1 // 1x Magical_Ring
+IG_Ganymede_Lucky_Egg,20783,1,1,1,1 // 1x Hero_Cape
+IG_Ganymede_Lucky_Egg,5973,1,1,1,1 // 1x Ancient_Elven_Ear_J
+IG_Ganymede_Lucky_Egg,20033,1,1,1,1 // 1x C_Buddhist_Priest_Crown
+IG_Ganymede_Lucky_Egg,6438,1,3,1,0 // 3x Blessed_Weapon_Ore
+IG_Ganymede_Lucky_Egg,6439,1,3,1,0 // 3x Blessed_Armor_Ore
+IG_Ganymede_Lucky_Egg,17315,1,1,1,0 // 1x Lucky Silvervine Fruit Box(10)
+IG_Ganymede_Lucky_Egg,14620,1,20,1,0 // 20x DEX Biscuit Stick
+IG_Ganymede_Lucky_Egg,14621,1,20,1,0 // 20x LUK Biscuit Stick
+IG_Ganymede_Lucky_Egg,14616,1,20,1,0 // 20x STR Biscuit Stick
+IG_Ganymede_Lucky_Egg,14617,1,20,1,0 // 20x VIT Biscuit Stick
+IG_Ganymede_Lucky_Egg,14619,1,20,1,0 // 20x INT Biscuit Stick
+IG_Ganymede_Lucky_Egg,14618,1,20,1,0 // 20x AGI Biscuit Stick
+
+//! TODO: Confirm the rates
+IG_LastAngel_LuckyScroll,4499,1,1,1,1 // 1x Sealed_Samurai_Card
+IG_LastAngel_LuckyScroll,4485,1,1,1,1 // 1x Sealed_Gloom_Card
+IG_LastAngel_LuckyScroll,4430,1,1,1,1 // 1x Ifrit_Card
+IG_LastAngel_LuckyScroll,4403,1,1,1,1 // 1x Kiel_Card
+IG_LastAngel_LuckyScroll,6239,1,1,1,1 // 1x Guarantee_Armor_11Up
+IG_LastAngel_LuckyScroll,6238,1,1,1,1 // 1x Guarantee_Weapon_11Up
+IG_LastAngel_LuckyScroll,6232,1,1,1,1 // 1x Guarantee_Armor_9Up
+IG_LastAngel_LuckyScroll,6228,1,1,1,1 // 1x Guarantee_Weapon_9Up
+IG_LastAngel_LuckyScroll,6233,1,1,1,1 // 1x Guarantee_Armor_8Up
+IG_LastAngel_LuckyScroll,6229,1,1,1,1 // 1x Guarantee_Weapon_8Up
+IG_LastAngel_LuckyScroll,5972,1,1,1,1 // 1x Chatty_Parrot
+IG_LastAngel_LuckyScroll,5980,1,1,1,1 // 1x C_Classical_Fhat
+IG_LastAngel_LuckyScroll,5971,1,1,1,1 // 1x Moon_Eyepatch
+IG_LastAngel_LuckyScroll,18867,1,1,1,1 // 1x Vajra
+IG_LastAngel_LuckyScroll,6438,1,3,1,0 // 3x Blessed_Weapon_Ore
+IG_LastAngel_LuckyScroll,6439,1,3,1,0 // 3x Blessed_Armor_Ore
+IG_LastAngel_LuckyScroll,17126,1,1,1,0 // 1x ASPD Intensifying Potion Box
+IG_LastAngel_LuckyScroll,14620,1,20,1,0 // 20x DEX Biscuit Stick
+IG_LastAngel_LuckyScroll,14621,1,20,1,0 // 20x LUK Biscuit Stick
+IG_LastAngel_LuckyScroll,14616,1,20,1,0 // 20x STR Biscuit Stick
+IG_LastAngel_LuckyScroll,14617,1,20,1,0 // 20x VIT Biscuit Stick
+IG_LastAngel_LuckyScroll,14619,1,20,1,0 // 20x INT Biscuit Stick
+IG_LastAngel_LuckyScroll,14618,1,20,1,0 // 20x AGI Biscuit Stick
+
+//! TODO: Confirm the rates
+IG_Valkyrie_Lucky_Egg,4047,1,1,1,1 // 1x Ghostring_Card
+IG_Valkyrie_Lucky_Egg,4486,1,1,1,1 // 1x Sealed_Berz_Card
+IG_Valkyrie_Lucky_Egg,4263,1,1,1,1 // 1x Incant_Samurai_Card
+IG_Valkyrie_Lucky_Egg,4399,1,1,1,1 // 1x Thanatos_Card
+IG_Valkyrie_Lucky_Egg,6239,1,1,1,1 // 1x Guarantee_Armor_11Up
+IG_Valkyrie_Lucky_Egg,6238,1,1,1,1 // 1x Guarantee_Weapon_11Up
+IG_Valkyrie_Lucky_Egg,6232,1,1,1,1 // 1x Guarantee_Armor_9Up
+IG_Valkyrie_Lucky_Egg,6228,1,1,1,1 // 1x Guarantee_Weapon_9Up
+IG_Valkyrie_Lucky_Egg,6233,1,1,1,1 // 1x Guarantee_Armor_8Up
+IG_Valkyrie_Lucky_Egg,6229,1,1,1,1 // 1x Guarantee_Weapon_8Up
+IG_Valkyrie_Lucky_Egg,20797,1,1,1,1 // 1x Etran_Shirt
+IG_Valkyrie_Lucky_Egg,28386,1,1,1,1 // 1x Fallen_Monk_Rosary
+IG_Valkyrie_Lucky_Egg,5985,1,1,1,1 // 1x Noble_Mask
+IG_Valkyrie_Lucky_Egg,16051,1,1,1,1 // 1x Valkyrie_Hammer
+IG_Valkyrie_Lucky_Egg,6438,1,3,1,0 // 3x Blessed_Weapon_Ore
+IG_Valkyrie_Lucky_Egg,6439,1,3,1,0 // 3x Blessed_Armor_Ore
+IG_Valkyrie_Lucky_Egg,17315,1,1,1,0 // 1x Lucky Silvervine Fruit Box(10)
+IG_Valkyrie_Lucky_Egg,14620,1,20,1,0 // 20x DEX Biscuit Stick
+IG_Valkyrie_Lucky_Egg,14621,1,20,1,0 // 20x LUK Biscuit Stick
+IG_Valkyrie_Lucky_Egg,14616,1,20,1,0 // 20x STR Biscuit Stick
+IG_Valkyrie_Lucky_Egg,14617,1,20,1,0 // 20x VIT Biscuit Stick
+IG_Valkyrie_Lucky_Egg,14619,1,20,1,0 // 20x INT Biscuit Stick
+IG_Valkyrie_Lucky_Egg,14618,1,20,1,0 // 20x AGI Biscuit Stick
+
+//! TODO: Confirm the rates
+IG_Splash_Rainbow_Lucky_Egg,4318,1,1,1,1 // 1x Knight_Windstorm_Card
+IG_Splash_Rainbow_Lucky_Egg,4169,1,1,1,1 // 1x Dark_Illusion_Card
+IG_Splash_Rainbow_Lucky_Egg,4145,1,1,1,1 // 1x Berzebub_Card
+IG_Splash_Rainbow_Lucky_Egg,4168,1,1,1,1 // 1x Dark_Lord_Card
+IG_Splash_Rainbow_Lucky_Egg,6239,1,1,1,1 // 1x Guarantee_Armor_11Up
+IG_Splash_Rainbow_Lucky_Egg,6238,1,1,1,1 // 1x Guarantee_Weapon_11Up
+IG_Splash_Rainbow_Lucky_Egg,6232,1,1,1,1 // 1x Guarantee_Armor_9Up
+IG_Splash_Rainbow_Lucky_Egg,6228,1,1,1,1 // 1x Guarantee_Weapon_9Up
+IG_Splash_Rainbow_Lucky_Egg,5919,1,1,1,1 // 1x Camellia_Hair_Pin
+IG_Splash_Rainbow_Lucky_Egg,22069,1,1,1,1 // 1x Lian_Shoes
+IG_Splash_Rainbow_Lucky_Egg,2195,1,1,1,1 // 1x Lian_Shield
+IG_Splash_Rainbow_Lucky_Egg,20753,1,1,1,1 // 1x Lian_Robe
+IG_Splash_Rainbow_Lucky_Egg,6231,1,1,1,1 // 1x Guarantee_Weapon_6Up
+IG_Splash_Rainbow_Lucky_Egg,6235,1,1,1,1 // 1x Guarantee_Armor_6Up
+IG_Splash_Rainbow_Lucky_Egg,6438,1,3,1,0 // 3x Blessed_Weapon_Ore
+IG_Splash_Rainbow_Lucky_Egg,6439,1,3,1,0 // 3x Blessed_Armor_Ore
+IG_Splash_Rainbow_Lucky_Egg,17126,1,1,1,0 // 1x ASPD Intensifying Potion Box
+IG_Splash_Rainbow_Lucky_Egg,14620,1,20,1,0 // 20x DEX Biscuit Stick
+IG_Splash_Rainbow_Lucky_Egg,14621,1,20,1,0 // 20x LUK Biscuit Stick
+IG_Splash_Rainbow_Lucky_Egg,14616,1,20,1,0 // 20x STR Biscuit Stick
+IG_Splash_Rainbow_Lucky_Egg,14617,1,20,1,0 // 20x VIT Biscuit Stick
+IG_Splash_Rainbow_Lucky_Egg,14619,1,20,1,0 // 20x INT Biscuit Stick
+IG_Splash_Rainbow_Lucky_Egg,14618,1,20,1,0 // 20x AGI Biscuit Stick
+
+//! TODO: Confirm the rates
+IG_Shapeshifter_Costume,20070,1,1,1,0 // 1x C_Alpaca_Hood
+IG_Shapeshifter_Costume,19827,1,1,1,0 // 1x C_Amistr_Cap
+IG_Shapeshifter_Costume,19831,1,1,1,0 // 1x C_Filir_Hat
+IG_Shapeshifter_Costume,19853,1,1,1,0 // 1x C_Filir_Wing_Ears
+IG_Shapeshifter_Costume,20069,1,1,1,0 // 1x C_Gryphon_Hairband
+IG_Shapeshifter_Costume,20065,1,1,1,0 // 1x C_Hairband_Of_Grandpeco
+IG_Shapeshifter_Costume,19835,1,1,1,0 // 1x C_Lif_Doll_Hat
+IG_Shapeshifter_Costume,20066,1,1,1,0 // 1x C_Pecopeco_Hairband
+IG_Shapeshifter_Costume,19839,1,1,1,0 // 1x C_Vanilmirth_Hat
+IG_Shapeshifter_Costume,20071,1,1,1,0 // 1x C_Worg_In_Mouth
+
+//! TODO: Confirm the rates
+IG_Almighty_Lucky_Egg,4399,1,1,1,1 // 1x Thanatos_Card
+IG_Almighty_Lucky_Egg,4302,1,1,1,1 // 1x Tao_Gunka_Card
+IG_Almighty_Lucky_Egg,4376,1,1,1,1 // 1x Lady_Tanee_Card
+IG_Almighty_Lucky_Egg,4305,1,1,1,1 // 1x Turtle_General_Card
+IG_Almighty_Lucky_Egg,6239,1,1,1,1 // 1x Guarantee_Armor_11Up
+IG_Almighty_Lucky_Egg,6238,1,1,1,1 // 1x Guarantee_Weapon_11Up
+IG_Almighty_Lucky_Egg,6232,1,1,1,1 // 1x Guarantee_Armor_9Up
+IG_Almighty_Lucky_Egg,6228,1,1,1,1 // 1x Guarantee_Weapon_9Up
+IG_Almighty_Lucky_Egg,22103,1,1,1,1 // 1x Excelion_Leg
+IG_Almighty_Lucky_Egg,19116,1,1,1,1 // 1x Red_Baby_Dragon
+IG_Almighty_Lucky_Egg,6231,1,1,1,1 // 1x Guarantee_Weapon_6Up
+IG_Almighty_Lucky_Egg,6235,1,1,1,1 // 1x Guarantee_Armor_6Up
+IG_Almighty_Lucky_Egg,6438,1,3,1,0 // 3x Blessed_Weapon_Ore
+IG_Almighty_Lucky_Egg,6439,1,3,1,0 // 3x Blessed_Armor_Ore
+IG_Almighty_Lucky_Egg,14620,1,20,1,0 // 20x DEX Biscuit Stick
+IG_Almighty_Lucky_Egg,14621,1,20,1,0 // 20x LUK Biscuit Stick
+IG_Almighty_Lucky_Egg,14616,1,20,1,0 // 20x STR Biscuit Stick
+IG_Almighty_Lucky_Egg,14617,1,20,1,0 // 20x VIT Biscuit Stick
+IG_Almighty_Lucky_Egg,14619,1,20,1,0 // 20x INT Biscuit Stick
+IG_Almighty_Lucky_Egg,14618,1,20,1,0 // 20x AGI Biscuit Stick
+
+//! TODO: Confirm the rates
+IG_Burning_Feather_Costume_Scroll,20101,1,1,1,0 // 1x C_Bragi_Wing_Ears
+IG_Burning_Feather_Costume_Scroll,20076,1,1,1,0 // 1x C_Idun_Wing_Ears
+IG_Burning_Feather_Costume_Scroll,20075,1,1,1,0 // 1x C_Little_Fhat
+IG_Burning_Feather_Costume_Scroll,20099,1,1,1,0 // 1x C_Flying_Ljosalfar
+IG_Burning_Feather_Costume_Scroll,20079,1,1,1,0 // 1x C_Love_Daddy_2013
+IG_Burning_Feather_Costume_Scroll,20080,1,1,1,0 // 1x C_Shaman's_Hair_Ornament
+IG_Burning_Feather_Costume_Scroll,20098,1,1,1,0 // 1x C_Vampire_Hairband
+IG_Burning_Feather_Costume_Scroll,20100,1,1,1,0 // 1x C_Volume_Fhat
+IG_Burning_Feather_Costume_Scroll,20078,1,1,1,0 // 1x C_White_Feather
+IG_Burning_Feather_Costume_Scroll,20077,1,1,1,0 // 1x C_Wing_Form_Spectacle
+
+//! TODO: Confirm the rates
+IG_Animal_Costume_Scroll,20101,1,1,1,0 // 1x C_Bragi_Wing_Ears
+IG_Animal_Costume_Scroll,20076,1,1,1,0 // 1x C_Idun_Wing_Ears
+IG_Animal_Costume_Scroll,20075,1,1,1,0 // 1x C_Little_Fhat
+IG_Animal_Costume_Scroll,20099,1,1,1,0 // 1x C_Flying_Ljosalfar
+IG_Animal_Costume_Scroll,20079,1,1,1,0 // 1x C_Love_Daddy_2013
+IG_Animal_Costume_Scroll,20080,1,1,1,0 // 1x C_Shaman's_Hair_Ornament
+IG_Animal_Costume_Scroll,20098,1,1,1,0 // 1x C_Vampire_Hairband
+IG_Animal_Costume_Scroll,20100,1,1,1,0 // 1x C_Volume_Fhat
+IG_Animal_Costume_Scroll,20078,1,1,1,0 // 1x C_White_Feather
+IG_Animal_Costume_Scroll,20077,1,1,1,0 // 1x C_Wing_Form_Spectacle
+
+//! TODO: Confirm the rates
+IG_Midgard_Lucky_Scroll,4539,1,1,1,1 // 1x Sealed_F_Bishop_Card
+IG_Midgard_Lucky_Scroll,4534,1,1,1,1 // 1x Giant_Octopus_Card
+IG_Midgard_Lucky_Scroll,4549,1,1,1,1 // 1x Upd_Maya_Puple_Card
+IG_Midgard_Lucky_Scroll,4407,1,1,1,1 // 1x Randgris_Card
+IG_Midgard_Lucky_Scroll,6239,1,1,1,1 // 1x Guarantee_Armor_11Up
+IG_Midgard_Lucky_Scroll,6238,1,1,1,1 // 1x Guarantee_Weapon_11Up
+IG_Midgard_Lucky_Scroll,6232,1,1,1,1 // 1x Guarantee_Armor_9Up
+IG_Midgard_Lucky_Scroll,6228,1,1,1,1 // 1x Guarantee_Weapon_9Up
+IG_Midgard_Lucky_Scroll,20404,1,1,1,1 // 1x C_Blessing_of_Angel
+IG_Midgard_Lucky_Scroll,20407,1,1,1,1 // 1x C_Subject_Aura_Red
+IG_Midgard_Lucky_Scroll,6231,1,1,1,1 // 1x Guarantee_Weapon_6Up
+IG_Midgard_Lucky_Scroll,6235,1,1,1,1 // 1x Guarantee_Armor_6Up
+IG_Midgard_Lucky_Scroll,6438,1,3,1,0 // 3x Blessed_Weapon_Ore
+IG_Midgard_Lucky_Scroll,6439,1,3,1,0 // 3x Blessed_Armor_Ore
+IG_Midgard_Lucky_Scroll,17315,1,1,1,0 // 1x Lucky Silvervine Fruit Box(10)
+IG_Midgard_Lucky_Scroll,14620,1,20,1,0 // 20x DEX Biscuit Stick
+IG_Midgard_Lucky_Scroll,14621,1,20,1,0 // 20x LUK Biscuit Stick
+IG_Midgard_Lucky_Scroll,14616,1,20,1,0 // 20x STR Biscuit Stick
+IG_Midgard_Lucky_Scroll,14617,1,20,1,0 // 20x VIT Biscuit Stick
+IG_Midgard_Lucky_Scroll,14619,1,20,1,0 // 20x INT Biscuit Stick
+IG_Midgard_Lucky_Scroll,14618,1,20,1,0 // 20x AGI Biscuit Stick
+
+//! TODO: Confirm the rates
+IG_Blessing_Scarlet_Egg,4357,1,1,1,1 // 1x B_Seyren_Card
+IG_Blessing_Scarlet_Egg,4361,1,1,1,1 // 1x B_Harword_Card
+IG_Blessing_Scarlet_Egg,4363,1,1,1,1 // 1x B_Magaleta_Card
+IG_Blessing_Scarlet_Egg,4367,1,1,1,1 // 1x B_Shecil_Card
+IG_Blessing_Scarlet_Egg,6239,1,1,1,1 // 1x Guarantee_Armor_11Up
+IG_Blessing_Scarlet_Egg,6238,1,1,1,1 // 1x Guarantee_Weapon_11Up
+IG_Blessing_Scarlet_Egg,6232,1,1,1,1 // 1x Guarantee_Armor_9Up
+IG_Blessing_Scarlet_Egg,6228,1,1,1,1 // 1x Guarantee_Weapon_9Up
+IG_Blessing_Scarlet_Egg,20405,1,1,1,1 // 1x Eremes Scarf
+IG_Blessing_Scarlet_Egg,20406,1,1,1,1 // 1x Commandments Of Chain
+IG_Blessing_Scarlet_Egg,19109,1,1,1,1 // 1x Valhalla Idol
+IG_Blessing_Scarlet_Egg,19111,1,1,1,1 // 1x Laser of Eagle
+IG_Blessing_Scarlet_Egg,6231,1,1,1,1 // 1x Guarantee_Weapon_6Up
+IG_Blessing_Scarlet_Egg,6235,1,1,1,1 // 1x Guarantee_Armor_6Up
+IG_Blessing_Scarlet_Egg,6438,1,3,1,0 // 3x Blessed_Weapon_Ore
+IG_Blessing_Scarlet_Egg,6439,1,3,1,0 // 3x Blessed_Armor_Ore
+IG_Blessing_Scarlet_Egg,17315,1,1,1,0 // 1x Lucky Silvervine Fruit Box(10)
+IG_Blessing_Scarlet_Egg,14620,1,20,1,0 // 20x DEX Biscuit Stick
+IG_Blessing_Scarlet_Egg,14621,1,20,1,0 // 20x LUK Biscuit Stick
+IG_Blessing_Scarlet_Egg,14616,1,20,1,0 // 20x STR Biscuit Stick
+IG_Blessing_Scarlet_Egg,14617,1,20,1,0 // 20x VIT Biscuit Stick
+IG_Blessing_Scarlet_Egg,14619,1,20,1,0 // 20x INT Biscuit Stick
+IG_Blessing_Scarlet_Egg,14618,1,20,1,0 // 20x AGI Biscuit Stick
