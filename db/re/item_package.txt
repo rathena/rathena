@@ -3524,8 +3524,8 @@ IG_Erzulie_Lucky_Egg,2198,1,1,1,1 // 1x Lapine Shield
 IG_Erzulie_Lucky_Egg,20155,1,1,1,1 // 1x C Ladys Feather Hat
 IG_Erzulie_Lucky_Egg,6235,1,1,1,1 // 1x Guarantee_Armor_6Up
 IG_Erzulie_Lucky_Egg,6231,1,1,1,1 // 1x Guarantee_Weapon_6Up
-IG_Erzulie_Lucky_Egg,6438,1,3,10 // 3x Blessed_Weapon_Ore
-IG_Erzulie_Lucky_Egg,6439,1,3,10 // 3x Blessed_Armor_Ore
+IG_Erzulie_Lucky_Egg,6438,1,3,1,0 // 3x Blessed_Weapon_Ore
+IG_Erzulie_Lucky_Egg,6439,1,3,1,0 // 3x Blessed_Armor_Ore
 IG_Erzulie_Lucky_Egg,17126,1,1,1,0 // 1x ASPD Intensifying Potion Box
 IG_Erzulie_Lucky_Egg,14620,1,20,1,0 // 20x DEX Biscuit Stick
 IG_Erzulie_Lucky_Egg,14621,1,20,1,0 // 20x LUK Biscuit Stick
