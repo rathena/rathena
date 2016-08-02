@@ -2751,7 +2751,7 @@
 4592,Buwaya_Card,Buwaya Card,6,20,,10,,,,,,,,16,,,,,{ bonus bVit,4; bonus5 bAutoSpellWhenHit,"NPC_WIDESTONE",5,70,BF_MAGIC,0; },{},{}
 4593,Menblatt_Card,Menblatt Card,6,20,,10,,,,,,,,4,,,,,{ bonus bLongAtkRate,readparam(bDex)/10; },{},{}
 4594,Petal_Card,Petal Card,6,20,,10,,,,,,,,4,,,,,{ bonus bCritAtkRate,2*(readparam(bLuk)/10); },{},{}
-4595,Cenere_Card,Cenere Card,6,20,,10,,,,,,,,4,,,,,{ bonus bAspdRate,2*(readparam(bAgi)/10); bonus bDelayrate,-2*(readparam(bAgi)/10); },{},{}
+4595,Cenere_Card,Cenere Card,6,20,,10,,,,,,,,4,,,,,{ bonus bAspdRate,2*(readparam(bAgi)/10); },{},{}
 4596,Antique_Book_Card,Antique Book Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMatk,5*(readparam(bInt)/10); },{},{}
 4597,Lichtern_Blue_Card,Lichtern Blue Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Water,(getrefine()>=9)?10:5; },{},{}
 4598,Lichtern_Green_Card,Lichtern Green Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Ghost,(getrefine()>=9)?10:5; },{},{}
