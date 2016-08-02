@@ -10572,6 +10572,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_JEXPBOOST:
 		case SC_ITEMBOOST:
 		case SC_JP_EVENT04:
+		case SC_PUSH_CART:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting

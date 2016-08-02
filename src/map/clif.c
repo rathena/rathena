@@ -5820,7 +5820,7 @@ void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id
 /// 0196 <index>.W <id>.L <state>.B (ZC_MSG_STATE_CHANGE) [used for ending status changes and starting them on non-pc units (when needed)]
 /// 043f <index>.W <id>.L <state>.B <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE2) [used exclusively for starting statuses on pcs]
 /// 0983 <index>.W <id>.L <state>.B <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE3) (PACKETVER >= 20120618)
-void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val1, int val2, int val3)
+void clif_status_change_sub(struct block_list *bl,int type,int flag,int tick,int val1, int val2, int val3, enum send_target target_type)
 {
 	unsigned char buf[32];
 	struct map_session_data *sd;
@@ -5872,7 +5872,26 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 		WBUFL(buf,21) = val3;
 	}
 #endif
-	clif_send(buf,packet_len(WBUFW(buf,0)),bl, (sd && sd->status.option&OPTION_INVISIBLE) ? SELF : AREA);
+	clif_send(buf,packet_len(WBUFW(buf,0)),bl, target_type);
+}
+
+void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val1, int val2, int val3) {
+	struct map_session_data *sd;
+
+	if (type == SI_BLANK)  //It shows nothing on the client...
+		return;
+
+	if (type == SI_ACTIONDELAY && tick == 0)
+		return;
+
+	nullpo_retv(bl);
+
+	sd = BL_CAST(BL_PC, bl);
+
+	if (!(status_type2relevant_bl_types(type)&bl->type)) // only send status changes that actually matter to the client
+		return;
+
+	clif_status_change_sub(bl,type, flag, tick, val1, val2, val3, (sd && sd->status.option&OPTION_INVISIBLE) ? SELF : AREA);
 }
 
 /**
@@ -5901,7 +5920,14 @@ void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list 
 
 		if (td)
 			tick = DIFF_TICK(td->tick, gettick());
+#if PACKETVER > 20120418
 		clif_efst_status_change((target == SELF) ? &sd->bl : bl, bl->id, target, StatusIconChangeTable[type], tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3);
+#else
+		/** !CHECKME: Corrected packet for this client for clif_efst_status_change.
+		 * The packet sent by clif_status_change_sub only works only the char with the effect sends the effect detail.
+		 **/
+		clif_status_change_sub(&tsd->bl, StatusIconChangeTable[type], 1, tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3, (target == SELF) ? AREA_WOS : AREA);
+#endif
 	}
 }
 
