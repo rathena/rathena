@@ -249,6 +249,7 @@ struct map_session_data {
 		unsigned disable_atcommand_on_npc : 1; //Prevent to use atcommand while talking with NPC [Kichi]
 		uint8 isBoundTrading; // Player is currently add bound item to trade list [Cydh]
 		bool ignoretimeout; // Prevent the SECURE_NPCTIMEOUT function from closing current script.
+		unsigned int workinprogress : 2; // See clif.h::e_workinprogress
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -840,6 +841,10 @@ struct {
 #define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE )
 #define pc_is50overweight(sd) ( (sd)->weight*100 >= (sd)->max_weight*battle_config.natural_heal_weight_rate )
 #define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
+
+static inline bool pc_hasprogress(struct map_session_data *sd, enum e_wip_block progress) {
+	return sd == NULL || (sd->state.workinprogress&progress) == progress;
+}
 
 /// Enum of Player's Parameter
 enum e_params {

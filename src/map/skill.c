@@ -7296,6 +7296,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			else {
 				sd->state.prevend = 1;
+				sd->state.workinprogress = WIP_DISABLE_ALL;
 				clif_openvendingreq(sd,2+skill_lv);
 			}
 		}
@@ -7848,9 +7849,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SA_AUTOSPELL:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		if(sd)
+		if (sd) {
+			sd->state.workinprogress = WIP_DISABLE_ALL;
 			clif_autospell(sd,skill_lv);
-		else {
+		} else {
 			int maxlv=1,spellid=0;
 			static const int spellarray[3] = { MG_COLDBOLT,MG_FIREBOLT,MG_LIGHTNINGBOLT };
 			if(skill_lv >= 10) {
@@ -16514,6 +16516,8 @@ void skill_identify(struct map_session_data *sd, int idx)
 	int flag=1;
 
 	nullpo_retv(sd);
+
+	sd->state.workinprogress = WIP_DISABLE_NONE;
 
 	if(idx >= 0 && idx < MAX_INVENTORY) {
 		if(sd->status.inventory[idx].nameid > 0 && sd->status.inventory[idx].identify == 0 ){

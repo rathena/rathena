@@ -5629,9 +5629,10 @@ void clif_skill_warppoint(struct map_session_data* sd, uint16 skill_id, uint16 s
 	WFIFOSET(fd,packet_len(0x11c));
 
 	sd->menuskill_id = skill_id;
-	if (skill_id == AL_WARP)
+	if (skill_id == AL_WARP) {
 		sd->menuskill_val = (sd->ud.skillx<<16)|sd->ud.skilly; //Store warp position here.
-	else
+		sd->state.workinprogress = WIP_DISABLE_ALL;
+	} else
 		sd->menuskill_val = skill_lv;
 }
 
@@ -6445,6 +6446,7 @@ void clif_item_identify_list(struct map_session_data *sd)
 		WFIFOSET(fd,WFIFOW(fd,2));
 		sd->menuskill_id = MC_IDENTIFY;
 		sd->menuskill_val = c;
+		sd->state.workinprogress = WIP_DISABLE_ALL;
 	}
 }
 
@@ -10528,6 +10530,7 @@ void clif_parse_progressbar(int fd, struct map_session_data * sd)
 		sd->st->state = END;
 
 	sd->progressbar.npc_id = sd->progressbar.timeout = 0;
+	sd->state.workinprogress = WIP_DISABLE_NONE;
 	npc_scriptcont(sd, npc_id, false);
 }
 
@@ -10547,9 +10550,10 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 
 	if (sd->sc.opt1 && ( sd->sc.opt1 == OPT1_STONEWAIT || sd->sc.opt1 == OPT1_BURNING ))
 		; //You CAN walk on this OPT1 value.
-	else if( sd->progressbar.npc_id )
+	else if (sd->progressbar.npc_id) {
 		clif_progressbar_abort(sd);
-	else if (pc_cant_act(sd))
+		return; // First walk attempt cancels the progress bar
+	} else if (pc_cant_act(sd))
 		return;
 
 	if(sd->sc.data[SC_RUN] || sd->sc.data[SC_WUGDASH])
@@ -11293,7 +11297,12 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 		clif_clearunit_area(&sd->bl,CLR_DEAD);
 		return;
 	}
-
+#ifdef RENEWAL
+	if (sd->npc_id || pc_hasprogress(sd, WIP_DISABLE_NPC)) {
+		clif_msg(sd, WORK_IN_PROGRESS);
+		return;
+	}
+#endif
 	if (pc_cant_act2(sd) || sd->npc_id)
 		return;
 
@@ -11306,6 +11315,12 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 			clif_parse_ActionRequest_sub(sd, 0x07, bl->id, gettick());
 			break;
 		case BL_NPC:
+#ifdef RENEWAL
+			if (sd->ud.skill_id < RK_ENCHANTBLADE && sd->ud.skilltimer != INVALID_TIMER) { // Should only show an error message for non-3rd job skills with a running timer
+				clif_msg(sd, WORK_IN_PROGRESS);
+				break;
+			}
+#endif
 			if( bl->m != -1 )// the user can't click floating npcs directly (hack attempt)
 				npc_click(sd,(TBL_NPC*)bl);
 			break;
@@ -11698,6 +11713,13 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 	if( !sd || pc_checkskill(sd, MC_CHANGECART) < 1 )
 		return;
 
+#ifdef RENEWAL
+	if (sd->npc_id || pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
+		clif_msg(sd, WORK_IN_PROGRESS);
+		return;
+	}
+#endif
+
 	type = (int)RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 
 	if( 
@@ -11882,12 +11904,14 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if (battle_config.idletime_option&IDLE_USESKILLTOID)
 		sd->idletime = last_tick;
 
-	if( sd->npc_id ){
+	if (sd->npc_id) {
 #ifdef RENEWAL
-		clif_msg(sd, USAGE_FAIL); // TODO look for the client date that has this message.
-		return;
+		if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
+			clif_msg(sd, WORK_IN_PROGRESS);
+			return;
+		}
 #else
-		if( !sd->npc_item_flag || !(inf&INF_SELF_SKILL) )
+		if (!sd->npc_item_flag || !(inf&INF_SELF_SKILL))
 			return;
 #endif
 	}
@@ -11976,6 +12000,13 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uin
 		clif_parse_UseSkillToPos_mercenary(sd->md, sd, tick, skill_id, skill_lv, x, y, skillmoreinfo);
 		return;
 	}
+
+#ifdef RENEWAL
+	if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
+		clif_msg(sd, WORK_IN_PROGRESS);
+		return;
+	}
+#endif
 
 	//Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
 	if (battle_config.idletime_option&IDLE_USESKILLTOPOS)
@@ -12084,7 +12115,9 @@ void clif_parse_UseSkillMap(int fd, struct map_session_data* sd)
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 	uint16 skill_id = RFIFOW(fd,info->pos[0]);
 	char map_name[MAP_NAME_LENGTH];
+
 	mapindex_getmapname((char*)RFIFOP(fd,info->pos[1]), map_name);
+	sd->state.workinprogress = WIP_DISABLE_NONE;
 
 	if(skill_id != sd->menuskill_id)
 		return;
@@ -12310,6 +12343,7 @@ void clif_parse_ItemIdentify(int fd,struct map_session_data *sd) {
 	if (idx < 0 || idx >= MAX_INVENTORY ||
 		sd->status.inventory[idx].nameid <= 0 || sd->inventory_data[idx] == NULL ||
 		sd->status.inventory[idx].identify) {// cancel pressed
+			sd->state.workinprogress = WIP_DISABLE_NONE;
 			clif_menuskill_clear(sd);
 			return;
 	}
@@ -12357,6 +12391,7 @@ void clif_parse_AutoSpell(int fd,struct map_session_data *sd)
 {
 	if (sd->menuskill_id != SA_AUTOSPELL)
 		return;
+	sd->state.workinprogress = WIP_DISABLE_NONE;
 	skill_autospell(sd,RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]));
 	clif_menuskill_clear(sd);
 }
@@ -13012,8 +13047,10 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd){
 
 		len -= 85;
 		flag = (bool)RFIFOB(fd,info->pos[2]);
-		if( !flag )
+		if (!flag) {
 			sd->state.prevend = 0;
+			sd->state.workinprogress = WIP_DISABLE_NONE;
+		}
 	}
 
 	if( sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM )

@@ -4669,8 +4669,8 @@ bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 /*==========================================
  * Check if item is usable.
  * Return:
- *	0 = no
- *	1 = yes
+ *	false = no
+ *	true = yes
  *------------------------------------------*/
 bool pc_isUseitem(struct map_session_data *sd,int n)
 {
@@ -4862,11 +4862,17 @@ int pc_useitem(struct map_session_data *sd,int n)
 	nullpo_ret(sd);
 
 	if (sd->npc_id) {
+		if (sd->progressbar.npc_id) {
+			clif_progressbar_abort(sd);
+			return 0; // First item use attempt cancels the progress bar
+		}
 #ifdef RENEWAL
-		clif_msg(sd, USAGE_FAIL); // TODO look for the client date that has this message.
-		return 0;
+		if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
+			clif_msg(sd, WORK_IN_PROGRESS);
+			return 0;
+		}
 #else
-		if( !sd->npc_item_flag )
+		if (!sd->npc_item_flag)
 			return 0;
 #endif
 	}
@@ -5315,6 +5321,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 	sd->state.changemap = (sd->mapindex != mapindex);
 	sd->state.warping = 1;
+	sd->state.workinprogress = WIP_DISABLE_NONE;
 
 	if(map[sd->bl.m].instance_id && sd->state.changemap && !map[m].instance_id) {
 		bool instance_found = false;
@@ -7398,7 +7405,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 		skill_sit(sd,0);
 	}
 
-	if( sd->progressbar.npc_id )
+	if (sd->progressbar.npc_id)
 		clif_progressbar_abort(sd);
 
 	if( sd->status.pet_id > 0 && sd->pd && battle_config.pet_damage_support )

@@ -19383,6 +19383,7 @@ BUILDIN_FUNC(progressbar)
 
 	sd->progressbar.npc_id = st->oid;
 	sd->progressbar.timeout = gettick() + second*1000;
+	sd->state.workinprogress = WIP_DISABLE_ALL;
 
 	clif_progressbar(sd, strtol(color, (char **)NULL, 0), second);
 	return SCRIPT_CMD_SUCCESS;
