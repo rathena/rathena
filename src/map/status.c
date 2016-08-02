@@ -12502,9 +12502,12 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_CLOUD_KILL: {
 			struct block_list *src = map_id2bl(sce->val2), *unit_bl = map_id2bl(sce->val3);
 
-			if (src && unit_bl)
+			if (src && unit_bl){
 				skill_attack(skill_get_type(status_sc2skill(type)), src, unit_bl, bl, SO_CLOUD_KILL, sce->val1, tick, 0);
-			sc_timer_next(500 + tick, status_change_timer, bl->id, data);
+
+				if( !status_isdead(bl) )
+					sc_timer_next(500 + tick, status_change_timer, bl->id, data);
+			}
 		}
 		break;
 
