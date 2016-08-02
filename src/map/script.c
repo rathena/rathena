@@ -20238,6 +20238,15 @@ BUILDIN_FUNC(party_addmember)
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	if (battle_config.party_no_dual_account) {
+		int i;
+		ARR_FIND(0, MAX_PARTY, i, party->party.member[i].account_id == sd->status.account_id);
+		if (i < MAX_PARTY) {
+			script_pushint(st,-2);
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+
 	if( party->party.count >= MAX_PARTY ) {
 		script_pushint(st,-4);
 		return SCRIPT_CMD_FAILURE;
