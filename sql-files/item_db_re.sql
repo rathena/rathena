@@ -9742,7 +9742,7 @@ REPLACE INTO `item_db_re` VALUES (18870,'Very_Sweet_Candy_Bar','Very Sweet Candy
 REPLACE INTO `item_db_re` VALUES (18871,'Very_Sweet_Candy','Very Sweet Candy',4,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1,NULL,'1',1,446,'bonus bAllStats,1; bonus bBaseAtk,5; bonus bMatk,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18872,'Snake_Hat','Snake Hat',4,20,NULL,100,NULL,5,NULL,1,0xFFFFFFFF,63,2,256,NULL,'0',1,986,'bonus bStr,3; bonus bInt,3; bonus bMdef,5; bonus bUnbreakableHelm,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18873,'Sweet_Valentine_Out','Sweet Valentine Out',4,20,NULL,100,NULL,1,NULL,0,0xFFFFFFFF,63,2,256,NULL,'1',1,865,'bonus bMaxHPrate,7; bonus bMaxSPrate,7;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (18874,'Cyclops_Glasses','Cyclops Glasses',4,10,NULL,100,NULL,NULL,NULL,1,0xFFFFFFFF,63,2,1,NULL,'1',1,23,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18874,'Cyclops_Glasses','Cyclops Glasses',4,10,NULL,100,NULL,NULL,NULL,1,0xFFFFFFFF,63,2,512,NULL,'1',1,23,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18878,'Palace_Guard_Cap','Palace Guard Cap',4,10,NULL,1000,NULL,15,NULL,1,0xFFFFFFFF,63,2,256,NULL,'50',1,991,'.@r = getrefine(); bonus2 bAddEle,Ele_Neutral,4+.@r/6; bonus bLongAtkRate,4+.@r; bonus bUnbreakableHelm,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18879,'Angry_Scorpion_Hat','Angry Scorpion Hat',4,10,NULL,100,NULL,5,NULL,0,0xFFFFFFFF,63,2,256,NULL,'0',1,995,'bonus bMdef,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18880,'Advanced_Jao_King_Hat','Advanced Jao King Hat',4,10,NULL,1500,NULL,4,NULL,1,0xFFFFFFFF,63,2,256,NULL,'175',1,996,'bonus bAllStats,3; bonus bMaxHPrate,5; bonus bMaxSPrate,5;',NULL,NULL);
