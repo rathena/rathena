@@ -2926,11 +2926,12 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 				ATK_ADD(wd.masteryAtk, wd.masteryAtk2, 10 * sc->data[SC_GN_CARTBOOST]->val1);
 #endif
 			}
-			if (sc->data[SC_P_ALTER])
+			if (sc->data[SC_P_ALTER]) {
 				ATK_ADD(wd.damage, wd.damage2, sc->data[SC_P_ALTER]->val2);
 #ifdef RENEWAL
 				ATK_ADD(wd.masteryAtk, wd.masteryAtk2, sc->data[SC_P_ALTER]->val2);
 #endif
+			}
 		}
 	}
 
@@ -4214,20 +4215,20 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			}
 			break;
 		case RL_D_TAIL:
+			// iRO Wiki: [2500 + (500 * Skill_Level)]%
 			skillratio += -100 + (2500 + 500 * skill_lv);
 			break;
 		case RL_R_TRIP:
 		case RL_R_TRIP_PLUSATK:
 			// iRO Wiki: [(DEX ÷ 2) × (10 + (Skill_Lv × 3)]%
 			// Collision damage is half the initial damage
-			skillratio += -100 + ((sstatus->dex / 2) * (10 + (skill_lv * 3)) * (skill_id == RL_R_TRIP_PLUSATK) ? 0.5 : 1);
+			skillratio += -100 + ((sstatus->dex / 2) * (10 + (skill_lv * 3)) / ((skill_id == RL_R_TRIP_PLUSATK) ? 2 : 1));
 			break;
 		case RL_H_MINE:
-			// Explosion Damage by Flicker
-			if (sd && sd->flicker)
-				skillratio += -100 + (800 + (skill_lv - 1) * 300);
-			else 
-				skillratio += -100 + 200 * skill_lv;
+			if (sd && sd->flicker) // Explosion Damage by Flicker: [500 + (300 * Skill_Level)] %
+				skillratio += -100 + (500 + (300 * skill_lv));
+			else // Normal damage: [200 + (200 * Skill_Level)]
+				skillratio += -100 + (200 + (200 * skill_lv));
 			break;
 		case RL_HAMMER_OF_GOD:
 			// iRO Wiki: [Base_Damage + {Ceiling[(Coins + 1) ÷ 2] × 200}]%
@@ -4239,7 +4240,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case RL_FIRE_RAIN:
 			// iRO Wiki: [{2000 + (Skill_Lv × DEX)} × Base_Level ÷ 100]%
-			skillratio += -100 + (2000 * sstatus->dex);
+			skillratio += -100 + (2000 + skill_lv * sstatus->dex);
 			RE_LVL_DMOD(100);
 			break;
 		case RL_AM_BLAST:
