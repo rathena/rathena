@@ -8331,7 +8331,7 @@ static const struct _battle_data {
 	{ "exp_cost_inspiration",               &battle_config.exp_cost_inspiration,            1,      0,      100,            },
 	{ "mvp_exp_reward_message",             &battle_config.mvp_exp_reward_message,          0,      0,      1,              },
 	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
-	{ "show_status_katar_crit",                         &battle_config.show_status_katar_crit,                      0,      0,      1,              },
+	{ "show_status_katar_crit",             &battle_config.show_status_katar_crit,          0,      0,      1,              },
 };
 
 #ifndef STATS_OPT_OUT
