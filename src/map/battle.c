@@ -2307,6 +2307,8 @@ static bool is_attack_critical(struct Damage wd, struct block_list *src, struct 
 		short cri = sstatus->cri;
 
 		if (sd) {
+			if (sd->status.weapon == W_KATAR)
+				cri <<= 1; // Double critical bonus from Katars aren't shown in the status display
 			cri += sd->critaddrace[tstatus->race] + sd->critaddrace[RC_ALL];
 			if(is_skill_using_arrow(src, skill_id)) {
 				cri += sd->bonus.arrow_cri;
