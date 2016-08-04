@@ -369,7 +369,7 @@ void initChangeTables(void)
 #ifndef RENEWAL
 			SI_ASSUMPTIO		, SCB_NONE );
 #else
-			SI_ASSUMPTIO2		, SCB_NONE );
+			SI_ASSUMPTIO2		, SCB_DEF|SCB_MDEF );
 #endif
 	add_sc( HP_BASILICA		, SC_BASILICA		);
 	set_sc( HW_MAGICPOWER		, SC_MAGICPOWER		, SI_MAGICPOWER		, SCB_MATK );
@@ -493,7 +493,7 @@ void initChangeTables(void)
 #ifndef RENEWAL
 			SI_ASSUMPTIO		, SCB_NONE );
 #else
-			SI_ASSUMPTIO2		, SCB_NONE );
+			SI_ASSUMPTIO2		, SCB_DEF|SCB_MDEF );
 #endif
 
 	set_sc( ALL_PARTYFLEE		, SC_PARTYFLEE		, SI_PARTYFLEE		, SCB_NONE );
@@ -654,7 +654,7 @@ void initChangeTables(void)
 
 	/* Royal Guard */
 	set_sc( LG_REFLECTDAMAGE	, SC_REFLECTDAMAGE	, SI_LG_REFLECTDAMAGE	, SCB_NONE );
-	set_sc( LG_FORCEOFVANGUARD	, SC_FORCEOFVANGUARD	, SI_FORCEOFVANGUARD	, SCB_MAXHP );
+	set_sc( LG_FORCEOFVANGUARD	, SC_FORCEOFVANGUARD	, SI_FORCEOFVANGUARD	, SCB_DEF|SCB_MAXHP );
 	set_sc( LG_EXEEDBREAK		, SC_EXEEDBREAK		, SI_EXEEDBREAK		, SCB_NONE );
 	set_sc( LG_PRESTIGE		, SC_PRESTIGE		, SI_PRESTIGE		, SCB_DEF );
 	set_sc( LG_BANDING		, SC_BANDING		, SI_BANDING		, SCB_DEF2|SCB_WATK );
@@ -6011,8 +6011,14 @@ defType status_calc_def(struct block_list *bl, struct status_change *sc, int def
 		return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 
 	if(!display) { // Status Changes that are hidden in the status window.
+#ifdef RENEWAL
+		if(sc->data[SC_ASSUMPTIO])
+			def <<= 1; // only eDEF is doubled
+#endif
 		if(sc->data[SC_NEUTRALBARRIER])
 			def += def * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
+		if(sc->data[SC_FORCEOFVANGUARD])
+			def += def * 2 * sc->data[SC_FORCEOFVANGUARD]->val1 / 100;
 		if(sc->data[SC_CAMOUFLAGE])
 			def -= def * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
 		if(sc->data[SC_OVERED_BOOST] && bl->type == BL_PC)
@@ -6114,6 +6120,8 @@ signed short status_calc_def2(struct block_list *bl, struct status_change *sc, i
 	if(!display) { // Status Changes that are hidden in the status window.
 		if(sc->data[SC_CAMOUFLAGE])
 			def2 -= def2 * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
+		if(sc->data[SC_GT_REVITALIZE])
+			def2 += sc->data[SC_GT_REVITALIZE]->val4;
 #ifdef RENEWAL
 		return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
 #else
@@ -6189,6 +6197,10 @@ defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int md
 		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 
 	if(!display) { // Status Changes that are hidden in the status window.
+#ifdef RENEWAL
+		if(sc->data[SC_ASSUMPTIO])
+			mdef <<= 1; // only eMDEF is doubled
+#endif
 		if(sc->data[SC_NEUTRALBARRIER])
 			mdef += mdef * sc->data[SC_NEUTRALBARRIER]->val3 / 100;
 		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
