@@ -610,6 +610,7 @@ extern struct Battle_Config
 	int exp_cost_inspiration;
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
+	int show_status_show_status_katar_crit;
 } battle_config;
 
 void do_init_battle(void);

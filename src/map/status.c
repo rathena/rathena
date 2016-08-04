@@ -4614,6 +4614,10 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			status->cri = status_calc_critical(bl, sc, b_status->cri, true);
 		else
 			status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk), true);
+
+		/// After status_calc_critical so the bonus is applied despite if you have or not a sc bugreport:5240
+		if (battle_config.show_status_katar_crit && bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR)
+			status->cri <<= 1;
 	}
 
 	if(flag&SCB_FLEE2 && b_status->flee2) {

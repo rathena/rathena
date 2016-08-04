@@ -2307,7 +2307,7 @@ static bool is_attack_critical(struct Damage wd, struct block_list *src, struct 
 		short cri = sstatus->cri;
 
 		if (sd) {
-			if (sd->status.weapon == W_KATAR)
+			if (!battle_config.show_status_katar_crit && sd->status.weapon == W_KATAR)
 				cri <<= 1; // Double critical bonus from Katars aren't shown in the status display
 			cri += sd->critaddrace[tstatus->race] + sd->critaddrace[RC_ALL];
 			if(is_skill_using_arrow(src, skill_id)) {
@@ -8331,6 +8331,7 @@ static const struct _battle_data {
 	{ "exp_cost_inspiration",               &battle_config.exp_cost_inspiration,            1,      0,      100,            },
 	{ "mvp_exp_reward_message",             &battle_config.mvp_exp_reward_message,          0,      0,      1,              },
 	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
+	{ "show_status_katar_crit",                         &battle_config.show_status_katar_crit,                      0,      0,      1,              },
 };
 
 #ifndef STATS_OPT_OUT
