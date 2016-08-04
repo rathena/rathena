@@ -25,7 +25,7 @@
 
 prt_in,162,11,2	script	Ghatu#magum	86,{
 	if (event_magum == 0) {
-		if (dmdswrd_Q2 & 1 || dmdswrd_Q2 & 2 || dmdswrd_Q2 & 4 || dmdswrd_Q2 & 8 || dmdswrd_Q2 & 16 || dmdswrd_Q2 & 32) {
+		if ((dmdswrd_Q2 & 1) || (dmdswrd_Q2 & 2) || (dmdswrd_Q2 & 4) || (dmdswrd_Q2 & 8) || (dmdswrd_Q2 & 16) || (dmdswrd_Q2 & 32)) {
 			mes "[Ghatu]";
 			mes "I've heard of a strange";
 			mes "blacksmith who lives in";
@@ -266,7 +266,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 		close;
 	}
 	if (event_magum == 0) {
-		if (dmdswrd_Q2 & 1 || dmdswrd_Q2 & 2 || dmdswrd_Q2 & 4 || dmdswrd_Q2 & 8 || dmdswrd_Q2 & 16 || dmdswrd_Q2 & 32) {
+		if ((dmdswrd_Q2 & 1) || (dmdswrd_Q2 & 2) || (dmdswrd_Q2 & 4) || (dmdswrd_Q2 & 8) || (dmdswrd_Q2 & 16) || (dmdswrd_Q2 & 32)) {
 			mes "[Mysterious Man]";
 			mes "Well...?";
 			mes "What the hell";
@@ -619,7 +619,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 			next;
 			switch(select("Mysteltainn.:Grimtooth.:Executioner.:Wait! I just remembered!")) {
 			case 1:
-				if (dmdswrd_Q2 & 1 || dmdswrd_Q2 & 8) {
+				if ((dmdswrd_Q2 & 1) || (dmdswrd_Q2 & 8)) {
 					mes "[Mysterious Blacksmith]";
 					mes "^0099FF1 Young Twig^000000,";
 					mes "^0099FF1 Emperium^000000,";
@@ -637,7 +637,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 				mes "sword did you ask me to create?";
 				close;
 			case 2:
-				if (dmdswrd_Q2 & 2 || dmdswrd_Q2 & 16) {
+				if ((dmdswrd_Q2 & 2) || (dmdswrd_Q2 & 16)) {
 					mes "[Mysterious Blacksmith]";
 					mes "I will need...";
 					mes "^0099FF1 Emperium^000000,";
@@ -655,7 +655,7 @@ pay_fild08,218,283,2	script	Mysterious Man#magum	89,{
 				mes "really want to possess it...";
 				close;
 			case 3:
-				if (dmdswrd_Q2 & 4 || dmdswrd_Q2 & 32) {
+				if ((dmdswrd_Q2 & 4) || (dmdswrd_Q2 & 32)) {
 					mes "[Mysterious Blacksmith]";
 					mes "Just bring me...";
 					mes "^0099FF50 Amulets^000000,";

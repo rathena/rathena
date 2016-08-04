@@ -519,17 +519,17 @@ dewata,89,191,6	script	Small Shrine#dew1	844,{
 		next;
 		callsub L_Wish;
 		set Zeny, Zeny - .@input;
-		if (.@stat & 1 && .@bonus)
+		if ((.@stat & 1) && .@bonus)
 			consumeitem 12043; //Str_Dish03
-		else if (.@stat & 2 && .@bonus)
+		else if ((.@stat & 2) && .@bonus)
 			consumeitem 12058; //Agi_Dish03
-		else if (.@stat & 4 && .@bonus)
+		else if ((.@stat & 4) && .@bonus)
 			consumeitem 12063; //Dex_Dish03
-		else if (.@stat & 8 && .@bonus)
+		else if ((.@stat & 8) && .@bonus)
 			consumeitem 12053; //Vit_Dish03
-		else if (.@stat & 16 && .@bonus)
+		else if ((.@stat & 16) && .@bonus)
 			consumeitem 12048; //Int_Dish03
-		else if (.@stat & 32 && .@bonus)
+		else if ((.@stat & 32) && .@bonus)
 			consumeitem 12068; //Luk_Dish03
 		else if (.@stat & 64) {
 			specialeffect2 EF_ANGEL;

@@ -6312,7 +6312,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 
 ra_temin,170,46,3	script	Panno#rachel	920,{
 	cutin "ra_fano03",2;
-	if (ra_tem_q >= 12 || MISC_QUEST & 8192) {
+	if (ra_tem_q >= 12 || (MISC_QUEST & 8192)) {
 		cutin "ra_fano03",2;
 		mes "[Priestess Panno]";
 		mes "Good day.";

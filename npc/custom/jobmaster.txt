@@ -89,7 +89,7 @@ function Job_Menu;
 		close;
 	}
 	if (.@eac&EAJL_2)
-		if (.@eac&(EAJL_UPPER|EAJL_BABY) || roclass(.@eac|EAJL_UPPER) == -1) {
+		if ((.@eac&(EAJL_UPPER|EAJL_BABY)) || roclass(.@eac|EAJL_UPPER) == -1) {
 			mes "No more jobs are available.";
 			close;
 		}
