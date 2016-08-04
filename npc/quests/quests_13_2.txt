@@ -2772,7 +2772,7 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	450,{
 		else if (ep13_2_days01 == 1) {
 			set .@qst_cpl01,checkquest(7074,HUNTING);
 			set .@qst_cpl02,checkquest(7075,HUNTING);
-			if ((.@qst_cpl01 == 2) & (.@qst_cpl02 == 2)) {
+			if ((.@qst_cpl01 == 2) && (.@qst_cpl02 == 2)) {
 				mes "[Strom]";
 				mes "Sure enough... I, the Sapha Galtun, Strom, apologize to you. I should not have been so quick to despise you.";
 				mes "I admit that you are a brave soldier, please feel free to visit Manuk.";
