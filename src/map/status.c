@@ -7812,6 +7812,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			break;
 		case SC_BURNING:
 		case SC_STASIS:
+		case SC_VOICEOFSIREN:
 			tick = max(tick, 10000); // Minimum duration 10s
 			break;
 		default:
