@@ -3984,8 +3984,6 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 						skill_attack(BF_MAGIC, src, src, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
 					}
 					if (unit && !status_isdead(target) && !status_isdead(src)) {
-						if(skl->type > 0)
-							skill_toggle_magicpower(src, skl->skill_id); // Only the first hit will be amplified
 						skill_delunit(unit); // Consume unit for next waterball
 						//Timer will continue and walkdelay set until target is dead, even if there is currently no line of sight
 						unit_set_walkdelay(src, tick, TIMERSKILL_INTERVAL, 1);
@@ -4022,7 +4020,6 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				case WL_TETRAVORTEX_GROUND:
 					clif_skill_nodamage(src,target,skl->skill_id,skl->skill_lv,1);
 					skill_attack(BF_MAGIC,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag|SD_ANIMATION);
-					skill_toggle_magicpower(src, skl->skill_id); // Only the first hit will be amplified
 					if (skl->type >= 3) { // Final Hit
 						if (!status_isdead(target)) { // Final Status Effect
 							int effects[4] = { SC_BURNING, SC_FREEZING, SC_BLEEDING, SC_STUN },
@@ -5277,6 +5274,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if( sd )
 		{
 			int i;
+
+			skill_toggle_magicpower(src, skill_id); // No hit will be amplified
 			// Priority is to release SpellBook
 			if( sc && sc->data[SC_FREEZE_SP] )
 			{ // SpellBook
@@ -16350,6 +16349,8 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 		if (sc->data[SC_IZAYOI])
 			fixed = 0;
 	}
+	if (sc && sc->data[SC_SECRAMENT] && skill_id == HW_MAGICPOWER && (flag&2)) // Sacrament lowers Mystical Amplification cast time
+		fixcast_r = max(fixcast_r, sc->data[SC_SECRAMENT]->val2);
 
 	if (varcast_r < 0)
 		time = time * (1 - (float)min(varcast_r, 100) / 100);
