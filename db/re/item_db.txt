@@ -8604,7 +8604,7 @@
 15126,Private_Doram_Suits,Private Doram Suits,4,20,,700,,80,,1,0x80000000,7,2,16,,100,1,,{ bonus bMaxHP,500; bonus bMaxSP,100; .@r = getrefine()/3; bonus bDex,.@r; bonus bInt,.@r; },{},{}
 15129,Luxury_Doram_Suit,Luxury Doram Suit,4,20,,800,,100,,1,0x80000000,7,2,16,,140,1,,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; .@r = getrefine()/2; bonus bDex,.@r; bonus bInt,.@r; },{},{}
 15138,Aegir_Armor,Aegir Armor,4,10,,1600,,25,,1,0xFFFFFFFF,63,2,16,,40,1,,{ bonus bMaxHP,500; bonus bMaxSP,50; bonus bUnbreakableArmor,1; },{},{}
-15141,Ancient_Armor_Of_The_Goddess,Ancient Armor Of The Goddess,4,10,,2000,,55,,1,0xFFFFFFFF,63,2,16,,100,1,,{},{},{}
+15141,Rift_Ancient_Armor,Rift Ancient Armor,4,10,,500,,30,,1,0xFFFFFFFF,63,2,16,,100,1,,{ .@r = getrefine(); bonus bMaxHP,(.@r >= 9 ? 1500 : .@r >= 7 ? 900 : 500); bonus bMaxSP,-100; },{},{}
 15145,Evil_Dragon_Armor,Evil Dragon Armor,4,0,,4000,,60,,1,0xFFFFFFFF,63,2,16,,,1,,{ .@r = getrefine(); bonus2 bHPDrainRate,100,(.@r>=10)?(3):((.@r>=9)?(4):((.@r>=8)?(6):(0))); bonus2 bSPDrainRate,100,(.@r>=10)?(5):((.@r>=9)?(3):((.@r>=8)?(2):(0))); /* Confirm: Success rate and it says no effect if with Rideword, Vanargandr Helm, or Piece Of Angent Skin */ },{},{}
 15146,Flattery_Robe,Flattery Robe,4,20,,100,,0,,1,0xFFFFFFFF,63,2,16,,100,1,,{ skill "SM_ENDURE",1,1; .@i = BaseLevel; bonus bMatk,(.@i>=140)?(150):((.@i>=120)?(100):(50)); },{},{}
 15147,Invective_Robe,Invective Robe,4,20,,100,,0,,1,0xFFFFFFFF,63,2,16,,100,1,,{ skill "AC_CONCENTRATION",1,1; .@i = getrefine()*4; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,.@i; bonus2 bIgnoreDefRaceRate,RC_Demon,.@i; bonus2 bIgnoreDefRaceRate,RC_Undead,.@i; },{},{}
@@ -10638,6 +10638,7 @@
 20762,C_Great_Devil_Wings,Costume Great Devil Wings,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,10,{},{},{}
 20763,C_Amistr_Bag,Costume Amistr Bag,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,4,{},{},{}
 20764,C_Fallen_Angel_Wing,Costume Fallen Angel Wing,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,3,{},{},{}
+20779,Rift_Manteau,Rift Manteau,4,20,,500,,16,,1,0xFFFFFFFF,63,2,4,,100,1,,{ .@r = getrefine(); bonus bMaxHP,(.@r >= 9 ? 1300 : .@r >= 7 ? 700 : 300); bonus bMaxSP,-50; },{},{}
 20783,Hero_Cape,Hero Cape,4,0,,100,,,,1,0xFFFFFFFF,63,2,4,1,10,1,,{ .@r = getrefine(); bonus2 bSubEle,Ele_Neutral,1+(.@r/3); bonus bFlee,1+(.@r/3); if (.@r > 9) { bonus2 bSubEle,Ele_Neutral,20; bonus bFlee,20; } },{},{}
 20788,Private_Doram_Manteau,Private Doram Manteau,4,20,,300,,20,,1,0x80000000,7,2,4,,100,1,,{ bonus bFlee,5; bonus2 bSubEle,Ele_Neutral,2; bonus bFlee2,getrefine()/3; },{},{}
 20789,Luxury_Doram_Manteau,Luxury Doram Manteau,4,20,,400,,25,,1,0x80000000,7,2,4,,140,1,,{ bonus bFlee,7; bonus2 bSubEle,Ele_Neutral,3; .@r = getrefine()/3; bonus bFlee2,.@r; bonus bLuk,.@r; },{},{}
@@ -10700,6 +10701,7 @@
 22067,Shoe_of_Witch,Shoe of Witch,4,10,,400,,10,,0,0xFFFFFFFE,63,2,64,,1,1,,{ skill "ALL_CATCRY",1,1; },{},{}
 22069,Lian_Shoes,Lian Shoes,4,0,,250,,12,,1,0xFFFFFFFF,63,2,64,1,90,1,,{ bonus bMdef,3; bonus2 bSubEle,Ele_Neutral,5; .@r = getrefine(); bonus bMaxHPrate,.@r; bonus bMaxSPrate,.@r; },{},{}
 22072,Hikingboots,Hikingboots,4,0,,500,,10,,1,0xFFFFFFFF,63,2,64,1,100,1,,{ .@r = getrefine(); bonus bMaxHPRate,4+(.@r/3); bonus bMaxSPRate,4+(.@r/3); if (.@r > 9) bonus bSpeedRate,25; },{},{}
+22075,Rift_Shoes,Rift Shoes,4,20,,250,,12,,1,0xFFFFFFFF,63,2,64,,100,1,,{ .@r = getrefine(); bonus bMaxHP,(.@r >= 9 ? 1300 : .@r >= 7 ? 700 : 300); bonus bMaxSP,-50; },{},{}
 22076,Wooden_Slipper,Wooden Slipper,4,20,,50,,10,,1,0x80000000,7,2,64,,9,1,,{ bonus2 bHPRegenRate,2,10000; },{},{}
 22077,Red_Eco-Friendly_Shoes,Red Eco-Friendly Shoes,4,20,,100,,20,,1,0x80000000,7,2,64,,18,1,,{ bonus bCritical,5; bonus2 bHPRegenRate,4,10000; bonus2 bSPRegenRate,1,10000; },{},{}
 22082,Polyhedron_Shoes,Polyhedron Shoes,4,0,,500,,12,,1,0xFFFFFFFF,63,2,64,1,90,1,,{ .@r = getrefine(); bonus2 bSubEle,Ele_Neutral,5; bonus2 bSubEle,Ele_Fire,5; bonus2 bSubEle,Ele_Water,5; bonus2 bSubEle,Ele_Wind,5;  if (.@r > 4) { .@b = (.@r > 6) ? 10 : 5; bonus2 bAddEle,Ele_Neutral,.@b; bonus2 bAddEle,Ele_Fire,.@b; bonus2 bAddEle,Ele_Water,.@b; bonus2 bAddEle,Ele_Wind,.@b; } },{},{}
