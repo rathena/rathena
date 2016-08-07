@@ -2873,6 +2873,9 @@ REPLACE INTO `item_db_re` VALUES (4693,'V_Chen_Card','True Chen Liu Card',6,20,N
 REPLACE INTO `item_db_re` VALUES (4694,'V_Gertie_Card','True Gertie Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"SC_FEINTBOMB",20+.@b;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4695,'V_Trentini_Card','True Trentini Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20+.@b;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (4696,'V_Alphoccio_Card','True Alphoccio Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'if(getrefine() > 9) .@b+=20; if(getequipweaponlv(-1) == 4) .@b += 20; bonus2 bSkillAtk,"WM_REVERBERATION",20+.@b;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4697,'Charleston3_Card','Charleston3 Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,2,NULL,NULL,NULL,NULL,'bonus bMaxSP,-300; bonus bBreakArmorRate,1500; /* Custom rate [Secret] */',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4698,'Step_Card','Step Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,2,NULL,NULL,NULL,NULL,'bonus2 bSkillAtk,"NC_AXEBOOMERANG",30+((getrefine() >= 10)*30);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (4699,'Rock_Step_Card','Rock Step Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,2,NULL,NULL,NULL,NULL,'bonus2 bSkillAtk,"NC_ARMSCANNON",20+((getrefine()>=10)*20);',NULL,NULL);
 #===================================================================
 # Armor Enchant System
 #===================================================================
@@ -11217,6 +11220,19 @@ REPLACE INTO `item_db_re` VALUES (25150,'Hugging_Alice_Pilow','Hugging Alice Pil
 #
 REPLACE INTO `item_db_re` VALUES (26100,'Paradise_Foxtail_Staff_II','Eden Group Foxtail Staff II',5,20,NULL,0,'135:165',NULL,1,0,0x80000000,7,2,2,2,'40',0,10,'bonus bDex,4; bonus bInt,4; bonus bLongAtkRate,6;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (26101,'Paradise_Foxtail_Staff_III','Eden Group Foxtail Staff III',5,20,NULL,0,'150:195',NULL,1,0,0x80000000,7,2,2,3,'60',0,10,'bonus bDex,5; bonus bInt,5; bonus bLongAtkRate,7;',NULL,NULL);
+#===================================================================
+# More Cards
+#===================================================================
+REPLACE INTO `item_db_re` VALUES (27012,'Kick_Step_Card','Kick Step Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,16,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,8; if((eaclass()&EAJ_THIRDMASK) == EAJ_MECHANIC){ bonus bLongAtkDef,30; }',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27013,'Kick_&_Kick_Card','Kick & Kick Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,2,NULL,NULL,NULL,NULL,'bonus2 bSkillAtk,"NC_VULCANARM",10+((getrefine()>=10)*20);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27014,'Green_Cenere_Card','Green Cenere Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,64,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,2; autobonus2 "{ bonus2 bHPRegenRate,1000,1000; }",30,5000;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27015,'Repair_Robot_Turbo_Card','Repair Robot Turbo Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,769,NULL,NULL,NULL,NULL,'bonus bHPrecovRate,25; bonus bSPrecovRate,25; .@r = getrefine(); bonus bHPGainValue,30+((.@r>=7)*10); bonus bSPGainValue,3+((.@r>=7)*3);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27016,'Exploration_Rover_Turbo_Card','Exploration Rover Turbo Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,2,NULL,NULL,NULL,NULL,'bonus2 bCriticalAddRace,RC_Formless,30;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27017,'Scrap_Robots_Card','Scrap Robots Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,4,NULL,NULL,NULL,NULL,'bonus2 bSubRace,RC_Formless,10*((getrefine()>=7)*5); /* TODO: Has a chance to gain accessories when a monster  is killed. */',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27018,'GC109_Card','GC109 Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,136,NULL,NULL,NULL,NULL,'bonus bDelayrate,-(1+(BaseLevel>=90)+(BaseLevel>=120));',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27019,'DR815_Card','DR815 Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,136,NULL,NULL,NULL,NULL,'bonus bHit,1+(BaseLevel>=90)+(BaseLevel>=120);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (27020,'T_W_O_Card','T W O Card',6,20,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,2,NULL,NULL,NULL,NULL,'bonus bAtkRate,10; bonus3 bAutoSpell,"NPC_WIDESOULDRAIN",2,50+((getrefine()/3)*10);',NULL,NULL);
+#
 REPLACE INTO `item_db_re` VALUES (28000,'Tanos_Katar','Tanos Katar',5,10,NULL,1800,'220:80',NULL,NULL,1,0x00001000,63,2,34,4,'120',1,16,'bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus bAtkRate,5; bonus2 bHPLossRate,100,10000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28001,'Katar_Of_Evil_Slayer','Katar Of Evil Slayer',5,10,NULL,1200,'120',NULL,1,1,0x00001000,63,2,34,3,'100',1,16,'bonus2 bAddRace,RC_Demon,10; bonus2 bAddRace,RC_Undead,10; .@r = getrefine(); if(.@r>=9){ bonus bAtkRate,5; } if(.@r>=12){ bonus bAtkRate,7; }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28002,'Half_BF_Katar2','Half BF Katar2',5,20,NULL,0,'130',NULL,1,0,0x00001000,63,2,34,3,'80',1,16,'bonus bStr,1; bonus bDex,1; bonus bLuk,1; bonus2 bAddRace,RC_DemiHuman,35; bonus2 bAddRace,RC_Player,35; bonus bCritAtkRate,10; bonus bAspdRate,3; bonus bUnbreakableWeapon,1;',NULL,NULL);
