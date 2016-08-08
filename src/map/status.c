@@ -7690,6 +7690,16 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		case SC_OBLIVIONCURSE: // 100% - (100 - 0.8 x INT)
 			sc_def = status->int_*80;
 			sc_def = max(sc_def, 500); // minimum of 5% resist
+			tick_def = 0;
+			//Fall through
+		case SC_TOXIN:
+		case SC_PARALYSE:
+		case SC_VENOMBLEED:
+		case SC_MAGICMUSHROOM:
+		case SC_DEATHHURT:
+		case SC_PYREXIA:
+		case SC_LEECHESEND:
+			tick_def2 = (status->vit + status->luk) * 500;
 			break;
 		case SC_BITE: // {(Base Success chance) - (Target's AGI / 4)}
 			sc_def2 = status->agi*25;
