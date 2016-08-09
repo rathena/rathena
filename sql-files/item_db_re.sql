@@ -1828,7 +1828,7 @@ REPLACE INTO `item_db_re` VALUES (2591,'Bayani_Buwaya_Cloth','Bayani Buwaya Sack
 REPLACE INTO `item_db_re` VALUES (2592,'Boss_Brownie_Manteau','Boss Brownie Manteau',4,20,NULL,100,NULL,3,NULL,1,0xFFFFFFFF,63,2,4,NULL,'50',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2593,'Flow_Manteau','Flow Manteau',4,20,NULL,700,NULL,20,NULL,1,0xFFFFFFFF,63,2,4,NULL,'65',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2594,'Wrapping_Manteau','Wrapping Manteau',4,20,NULL,100,NULL,0,NULL,1,0xFFFFFFFF,63,2,4,NULL,'0',1,0,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2597,'Scarlet_Poncho','Scarlet Poncho',4,0,NULL,500,NULL,10,NULL,1,0xFFFFFFFF,63,2,1024,NULL,NULL,1,0,'bonus bCritAtkRate,3; /* Confirm: The location. If the location is changed, also change the combo script! */',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2597,'Scarlet_Poncho','Scarlet Poncho',4,0,NULL,500,NULL,10,NULL,1,0xFFFFFFFF,63,2,4,NULL,NULL,1,0,'bonus bCritAtkRate,3; /* Confirm: The location. If the location is changed, also change the combo script! */',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2598,'Ramor_Manteau','Ramor Manteau',4,20,NULL,700,NULL,20,NULL,1,0xFFFFFFFF,63,2,4,NULL,'65',1,0,'bonus2 bSubRace,RC_Undead,5; bonus2 bSubRace,RC_DemiHuman,-5; /*Gold PC Room: bonus bFlee,20;*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2599,'Goibne\'s_Shoulder_Arms_','Goibne\'s Spaulders',4,30000,NULL,700,NULL,11,NULL,1,0xFFFFFFFE,63,2,4,NULL,'54',1,0,'bonus bLongAtkDef,10; bonus bMdef,2; bonus bVit,1;',NULL,NULL);
 #===================================================================
