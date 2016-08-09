@@ -12514,6 +12514,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			struct block_list *src = map_id2bl(sce->val2), *unit_bl = map_id2bl(sce->val3);
 
 			if (src && unit_bl){
+				map_freeblock_lock();
+				dounlock = true;
 				skill_attack(skill_get_type(status_sc2skill(type)), src, unit_bl, bl, SO_CLOUD_KILL, sce->val1, tick, 0);
 
 				if( !status_isdead(bl) )
