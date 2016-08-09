@@ -1813,7 +1813,7 @@ REPLACE INTO `item_db_re` VALUES (2591,'Bayani_Buwaya_Cloth','Bayani Buwaya Sack
 REPLACE INTO `item_db_re` VALUES (2592,'Boss_Brownie_Manteau','Boss Brownie Manteau',4,20,NULL,100,NULL,3,NULL,1,0xFFFFFFFF,63,2,4,NULL,'50',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2593,'Flow_Manteau','Flow Manteau',4,20,NULL,700,NULL,20,NULL,1,0xFFFFFFFF,63,2,4,NULL,'65',1,0,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2594,'Wrapping_Manteau','Wrapping Manteau',4,20,NULL,100,NULL,0,NULL,1,0xFFFFFFFF,63,2,4,NULL,'0',1,0,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (2597,'Scarlet_Poncho','Scarlet Poncho',5,0,NULL,500,NULL,10,NULL,1,0xFFFFFFFF,63,2,1024,NULL,NULL,1,0,'bonus bCritAtkRate,3; /* Confirm: The location. If the location is changed, also change the combo script! */',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (2597,'Scarlet_Poncho','Scarlet Poncho',4,0,NULL,500,NULL,10,NULL,1,0xFFFFFFFF,63,2,1024,NULL,NULL,1,0,'bonus bCritAtkRate,3; /* Confirm: The location. If the location is changed, also change the combo script! */',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (2598,'Ramor_Manteau','Ramor Manteau',4,20,NULL,700,NULL,20,NULL,1,0xFFFFFFFF,63,2,4,NULL,'65',1,0,'bonus2 bSubRace,RC_Undead,5; bonus2 bSubRace,RC_DemiHuman,-5; /*Gold PC Room: bonus bFlee,20;*/',NULL,NULL);
 #===================================================================
 # Accessories
@@ -8608,7 +8608,7 @@ REPLACE INTO `item_db_re` VALUES (15061,'Egir_Armor','Egir Armor',4,200000,NULL,
 REPLACE INTO `item_db_re` VALUES (15062,'TE_Woe_Coat','TE Woe Coat',4,0,NULL,0,NULL,15,NULL,0,0xFFFFFFFF,63,2,16,1,'40',1,NULL,'bonus bMdef,15; bonus bMaxHP,250; bonus bMaxSP,250; bonus2 bSubRace,RC_Player,10; bonus2 bResEff,Eff_Freeze,25;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15063,'TE_Woe_Chain_Mail','TE Woe Chain Mail',4,0,NULL,0,NULL,25,NULL,0,0x000444A2,63,2,16,1,'40',1,NULL,'bonus bMdef,5; bonus bMaxHP,450; bonus bMaxSP,50; bonus2 bSubRace,RC_Player,15; bonus2 bResEff,Eff_Freeze,25;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15064,'TE_Woe_Mage_Coat','TE Woe Mage Coat',4,0,NULL,0,NULL,5,NULL,0,0x00818315,63,2,16,1,'40',1,NULL,'bonus bMdef,25; bonus bMaxHP,200; bonus bMaxSP,200; bonus2 bSubRace,RC_Player,5; bonus2 bResEff,Eff_Freeze,25;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (15066,'Engraved_Plate_Armor','Engraved Plate Armor',5,100000,NULL,3000,NULL,120,NULL,1,0x00004082,63,2,16,NULL,'150',1,NULL,'bonus bMdef,25;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (15066,'Engraved_Plate_Armor','Engraved Plate Armor',4,100000,NULL,3000,NULL,120,NULL,1,0x00004082,63,2,16,NULL,'150',1,NULL,'bonus bMdef,25;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15067,'Rune_Suit','Rune Suit',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,16,1,'1',1,NULL,'bonus2 bExpAddRace,RC_All,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15068,'Im_Angel\'s_Protection','Advanced Angelic Protection',4,10000,NULL,600,NULL,40,NULL,1,0x00000001,63,2,16,NULL,'99',1,0,'bonus bMdef,30;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (15069,'Suit_Of_Sid','Suit Of Sid',4,20,NULL,1000,NULL,30,NULL,0,0xFFFFFFFF,63,2,16,NULL,'0',1,0,NULL,NULL,NULL);
