@@ -1781,7 +1781,7 @@
 2592,Boss_Brownie_Manteau,Boss Brownie Manteau,4,20,,100,,3,,1,0xFFFFFFFF,63,2,4,,50,1,0,{},{},{}
 2593,Flow_Manteau,Flow Manteau,4,20,,700,,20,,1,0xFFFFFFFF,63,2,4,,65,1,0,{},{},{}
 2594,Wrapping_Manteau,Wrapping Manteau,4,20,,100,,0,,1,0xFFFFFFFF,63,2,4,,0,1,0,{},{},{}
-2597,Scarlet_Poncho,Scarlet Poncho,5,0,,500,,10,,1,0xFFFFFFFF,63,2,1024,,,1,0,{ bonus bCritAtkRate,3; /* Confirm: The location. If the location is changed, also change the combo script! */ },{},{}
+2597,Scarlet_Poncho,Scarlet Poncho,4,0,,500,,10,,1,0xFFFFFFFF,63,2,1024,,,1,0,{ bonus bCritAtkRate,3; /* Confirm: The location. If the location is changed, also change the combo script! */ },{},{}
 2598,Ramor_Manteau,Ramor Manteau,4,20,,700,,20,,1,0xFFFFFFFF,63,2,4,,65,1,0,{ bonus2 bSubRace,RC_Undead,5; bonus2 bSubRace,RC_DemiHuman,-5; /*Gold PC Room: bonus bFlee,20;*/ },{},{}
 //===================================================================
 // Accessories
@@ -8576,7 +8576,7 @@
 15062,TE_Woe_Coat,TE Woe Coat,4,0,,0,,15,,0,0xFFFFFFFF,63,2,16,1,40,1,,{ bonus bMdef,15; bonus bMaxHP,250; bonus bMaxSP,250; bonus2 bSubRace,RC_Player,10; bonus2 bResEff,Eff_Freeze,25; },{},{}
 15063,TE_Woe_Chain_Mail,TE Woe Chain Mail,4,0,,0,,25,,0,0x000444A2,63,2,16,1,40,1,,{ bonus bMdef,5; bonus bMaxHP,450; bonus bMaxSP,50; bonus2 bSubRace,RC_Player,15; bonus2 bResEff,Eff_Freeze,25; },{},{}
 15064,TE_Woe_Mage_Coat,TE Woe Mage Coat,4,0,,0,,5,,0,0x00818315,63,2,16,1,40,1,,{ bonus bMdef,25; bonus bMaxHP,200; bonus bMaxSP,200; bonus2 bSubRace,RC_Player,5; bonus2 bResEff,Eff_Freeze,25; },{},{}
-15066,Engraved_Plate_Armor,Engraved Plate Armor,5,100000,,3000,,120,,1,0x00004082,63,2,16,,150,1,,{ bonus bMdef,25; },{},{}
+15066,Engraved_Plate_Armor,Engraved Plate Armor,4,100000,,3000,,120,,1,0x00004082,63,2,16,,150,1,,{ bonus bMdef,25; },{},{}
 15067,Rune_Suit,Rune Suit,4,0,,0,,,,0,0xFFFFFFFF,63,2,16,1,1,1,,{ bonus2 bExpAddRace,RC_All,10; },{},{}
 15068,Im_Angel's_Protection,Advanced Angelic Protection,4,10000,,600,,40,,1,0x00000001,63,2,16,,99,1,0,{ bonus bMdef,30; },{},{}
 15069,Suit_Of_Sid,Suit Of Sid,4,20,,1000,,30,,0,0xFFFFFFFF,63,2,16,,0,1,0,{},{},{}
