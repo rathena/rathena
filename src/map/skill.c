@@ -10950,18 +10950,20 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 			if (target->type == BL_MOB && ((TBL_MOB*)target)->mob_id == MOBID_EMPERIUM)
 				return USESKILL_FAIL_MAX;
 			break;
-
-		// Still can be casted to party member in normal map
 		case RK_PHANTOMTHRUST:
-		case AB_CLEARANCE:
-			if (target->type != BL_MOB && !map_flag_vs(src->m) && battle_check_target(src,target,BCT_PARTY) <= 0)
+			if (!map_flag_vs(src->m))
 				return USESKILL_FAIL_MAX;
-			inf |= BCT_PARTY;
-			break;
 	}
 
-	if (inf && battle_check_target(src, target, inf) <= 0)
-		return USESKILL_FAIL_LEVEL;
+	if (inf && battle_check_target(src, target, inf) <= 0) {
+		switch(skill_id) {
+			case RK_PHANTOMTHRUST:
+			case AB_CLEARANCE:
+				return USESKILL_FAIL_TOTARGET;
+			default:
+				return USESKILL_FAIL_LEVEL;
+		}
+	}
 
 	// Fogwall makes all offensive-type targetted skills fail at 75%
 	// Jump Kick can still fail even though you can jump to friendly targets.
