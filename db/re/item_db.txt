@@ -6073,7 +6073,7 @@
 11552,Apple_Carrot_Salad,Apple Carrot Salad,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(20,30),0; sc_start SC_AGIFOOD,180000,1; },{},{}
 11553,Casual_Stew,Casual Stew,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(20,30),0; sc_start SC_VITFOOD,180000,1; },{},{}
 11554,Golden_Roasted_Apple,Golden Roasted Apple,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(20,30),0; sc_start SC_DEXFOOD,180000,1; },{},{}
-11555,Red_Potion_RG,Red Potion RG,3,0,,40,,,,0,0xFFFFFFFF,63,2,,,,,,{ itemheal 325,0; },{},{}
+11555,Red_Potion_RG,Red Potion RG,0,0,,40,,,,0,0xFFFFFFFF,63,2,,,,,,{ itemheal 325,0; },{},{}
 11557,TE_White_Potion,TE White Potion,0,200,,300,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 325,0; },{},{}
 11558,TE_White_Slim_Potion,TE White Slim Potion,0,275,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 325,0; },{},{}
 11563,Hot_Tea,Hot Tea,2,10,,20,,,,0,0xFFFFFFFF,63,2,,,,,,{ itemheal 0,100; },{},{}
@@ -6551,7 +6551,7 @@
 12418,Full_SwingK,Full SwingK,2,100,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_FULL_SWING_K,500000,50; },{},{}
 12419,Mana_Plus,Mana Plus,2,100,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_MANA_PLUS,500000,50; },{},{}
 12420,Stamina_Up_M,Stamina Up M,2,100,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_MUSTLE_M,500000,5; },{},{}
-12421,Falmons_F,Falmons F,3,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_LIFE_FORCE_F,500000,5; },{},{}
+12421,Falmons_F,Falmons F,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_LIFE_FORCE_F,500000,5; },{},{}
 12422,HP_Increase_Potion_(Small),HP Increase Potion (Small),2,100,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_PROMOTE_HEALTH_RESERCH,500000,1,1; percentheal 1,0; },{},{}
 12423,HP_Increase_Potion_(Medium),HP Increase Potion (Medium),2,100,,40,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_PROMOTE_HEALTH_RESERCH,500000,1,2; percentheal 2,0; },{},{}
 12424,HP_Increase_Potion_(Large),HP Increase Potion (Large),2,100,,80,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_PROMOTE_HEALTH_RESERCH,500000,1,3; percentheal 5,0; },{},{}
@@ -6987,7 +6987,7 @@
 12852,Wisdom_Scroll,Wisdom Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Wisdom_Scroll); },{},{}
 12853,Patron_Scroll,Patron Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Patron_Scroll); },{},{}
 12860,Mommy_Day_Cake,Mommy Day Cake,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 50,50; skilleffect "HP_ASSUMPTIO",0; sc_start SC_ASSUMPTIO,100000,5; },{},{}
-12863,Treasure_Chest_Summoned_II,Treasure Chest Summoned II,3,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ monster "this",-1,-1,"--ja--",rand(1324,1363),1,""; },{},{}
+12863,Treasure_Chest_Summoned_II,Treasure Chest Summoned II,2,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ monster "this",-1,-1,"--ja--",rand(1324,1363),1,""; },{},{}
 12873,TE_Potion_Box,TE Potion Box,18,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem(11558,10); },{},{}
 12874,Frost_Giant_Blood,Frost Giant Blood,2,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12875,Golem_Stone,Golem Stone,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -8506,7 +8506,7 @@
 14705,Sealed_Fallen_Bishop_Hibram_Scroll,Sealed Fallen Bishop Hibram Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: COnfirm the rates*/ getitem callfunc("F_Rand",6228,6232,14704,19884,14695,6697),1; },{},{}
 14713,Sealed_Ifrit_Scroll,Sealed Ifrit Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* getitem callfunc("F_Rand",Sealed ifrit card, 9 weapons smelting ticket, Armor 9 smelting ticket, costume Noah's hats, costumes Enchantment Stone Box); */ },{},{}
 14717,2013_RWC_Scroll,2013 RWC Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_2013_RWC_Scroll); },{},{}
-14718,Scroll_Turtle_General_Sealed,Scroll Turtle General Sealed,3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: Confirm the rates*/ getitem callfunc("F_Rand",6228,6232,19751,14695),1; },{},{}
+14718,Scroll_Turtle_General_Sealed,Scroll Turtle General Sealed,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: Confirm the rates*/ getitem callfunc("F_Rand",6228,6232,19751,14695),1; },{},{}
 14723,(Limited)Neuralizer_I,(Limited)Neuralizer I,11,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashReset"; },{},{}
 14724,(Limited)Neuralizer_II,(Limited)Neuralizer II,11,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashReset"; },{},{}
 14725,Sealed_Bacsojin_Scroll,Sealed Bacsojin Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: Confirm the rates*/ getitem callfunc("F_Rand",4372,6228,6232,19750,14730,17474),1; },{},{}
@@ -8843,7 +8843,7 @@
 16483,Abrasive_Box_10,Abrasive Box (10),2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12514,10; },{},{}
 //
 16503,E_Insurance_Package,E Insurance Package,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12209,10; },{},{}
-16504,Bubble_Gum_Box(10),Bubble Gum Box(10),3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 12210,10; },{},{}
+16504,Bubble_Gum_Box(10),Bubble Gum Box(10),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 12210,10; },{},{}
 16505,Steamed_Tongue_Box_10,Steamed Tongue Box (10),18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12501,10; },{},{}
 16506,Steamed_Desert_Scorpions_Box_10,Steamed Desert Scorpions Box (10),18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12502,10; },{},{}
 16507,Dragon_Breath_Cocktail_Box_10,Dragon Breath Cocktail Box (10),18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 12503,10; },{},{}
@@ -9296,8 +9296,8 @@
 17457,Support_Package_II(10),Support Package II(10),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Support_Package_II10); },{},{}
 17461,Frozen_Egg_Costume,Frozen Egg Costume,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Frozen_Egg_Costume); },{},{}
 17464,Winter_Midgard_Egg,Winter Midgard Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Winter_Midgard_Egg); },{},{}
-17465,Refinement_Ore_Box_VI,Refinement Ore Box VI,3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,5; getitem 7620,5; getitem 14718,1; },{},{}
-17466,Refinement_Ore_Box_VI(10),Refinement Ore Box VI(10),3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,50; getitem 7620,50; getitem 14718,11; },{},{}
+17465,Refinement_Ore_Box_VI,Refinement Ore Box VI,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,5; getitem 7620,5; getitem 14718,1; },{},{}
+17466,Refinement_Ore_Box_VI(10),Refinement Ore Box VI(10),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,50; getitem 7620,50; getitem 14718,11; },{},{}
 17467,(Limited)_Token_of_Ziegfried_Box(50),(Limited) Token of Ziegfried Box(50),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6833,50; },{},{}
 17468,Neuralizer_II_Box_3,Neuralizer II Box (3),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 14724,3;},{},{}
 17469,Neuralizer_I_Box,Neuralizer I Box,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 14723,1;},{},{}
@@ -9312,11 +9312,11 @@
 17479,Midgard_Festival_Egg,Midgard Festival Egg,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Midgard_Festival_Egg); },{},{}
 17481,Flower_Blossom_Scroll,Flower Blossom Scroll,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Flower_Blossom_Scroll); },{},{}
 17482,Solaris_Festival_Scroll,Solaris Festival Scroll,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Solaris_Festival_Scroll); },{},{}
-17483,Three_Master_Package_III,Three Master Package III,3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Three_Master_Package_III); },{},{}
-17484,Three_Master_Package_III(10),Three Master Package III(10),3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Three_Master_Package_III10); },{},{}
+17483,Three_Master_Package_III,Three Master Package III,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Three_Master_Package_III); },{},{}
+17484,Three_Master_Package_III(10),Three Master Package III(10),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Three_Master_Package_III10); },{},{}
 17490,Time_Travel_Lucky_Egg,Time Travel Lucky Egg,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Time_Travel_Lucky_Egg); },{},{}
-17491,Refinement_Ore_Box_VII,Refinement Ore Box VII,3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,5; getitem 7620,5; getitem 4482,1; },{},{}
-17492,Refinement_Ore_Box_VII(10),Refinement Ore Box VII(10),3,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,50; getitem 7620,50; getitem 4482,11; },{},{}
+17491,Refinement_Ore_Box_VII,Refinement Ore Box VII,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,5; getitem 7620,5; getitem 4482,1; },{},{}
+17492,Refinement_Ore_Box_VII(10),Refinement Ore Box VII(10),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,50; getitem 7620,50; getitem 4482,11; },{},{}
 17493,Burning_Feather_Costume_Scroll,Burning Feather Costume Scroll,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Burning_Feather_Costume_Scroll); },{},{}
 17494,Rise_Midgard_Lucky_Egg,Rise Midgard Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Rise_Midgard_Lucky_Egg); },{},{}
 17495,Lucky_Silvervine_Fruit_Box_III10,Lucky Silvervine Fruit Box III(10),18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Lucky_Silvervine_Fruit_Box_III10); },{},{}
@@ -11431,7 +11431,7 @@
 31017,Tyrannical_Cookie_Card,Tyrannical Cookie Card,6,20,,10,,,,,,,,64,,,,,{ .@r = getrefine(); bonus bAtkRate,1+.@r; bonus bMatkRate,1+.@r; bonus bMaxHPrate,-(2+(.@r*2)); },{},{}
 31018,Evil_Imbued_Box_Card,Evil Imbued Box Card,6,20,,10,,,,,,,,2,,,,,{ bonus bMaxHP,-1225; bonus3 bAddEff,Eff_Curse,300,ATF_MAGIC; /* unofficial chance [Secret] */ },{},{}
 31019,Spooky_Spirit_Card,Spooky Spirit Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHPrate,-13; bonus3 bAddEffWhenHit,Eff_Curse,300,ATF_MAGIC; /* unofficial chance [Secret] */ },{},{}
-31020,Evil_Cold_Ghost_Card,Evil Cold Ghost Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHPrate,-13; bonus3 bAddEffWhenHit,Eff_Curse,300,ATF_WEAPON;/* unofficial chance [Secret] */ },{},{}
+31020,Evil_Cold_Ghost_Card,Evil Cold Ghost Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHPrate,-13; bonus3 bAddEffWhenHit,Eff_Curse,300,ATF_WEAPON; /* unofficial chance [Secret] */ },{},{}
 31021,Dancing_Marionette_Card,Dancing Marionette Card,6,20,,10,,,,,,,,2,,,,,{ bonus bAspdRate,10; bonus bAtkRate,-3; },{},{}
 31022,Abandoned_Teddy_Bear_Card,Abandoned Teddy Bear Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMaxSPRate,20; bonus2 bAddEff2,Eff_Curse,100; /* unofficial chance [Secret] */ },{},{}
 31023,Celine_Kimi_Card,Celine Kimi Card,6,20,,10,,,,,,,,2,,,,,{ bonus bMatkRate,10; bonus5 bAutoSpell,"NPC_CRITICALWOUND",5,200+(50*getrefine()),BF_MAGIC,0; },{},{}
