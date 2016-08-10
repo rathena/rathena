@@ -909,7 +909,7 @@
 2017,0,6,4,-1,0x2,3,1,1,no,0,0x40000,0,weapon,7,0x0,	RK_STORMBLAST,Storm Blast
 2018,0,6,4,0,0x3,-1,1,1,yes,0,0,0,none,0,0x0,	RK_FIGHTINGSPIRIT,Fighting Spirit //CHECK Is this splash needed?
 2019,9,6,4,6,0x1,0,1,1,yes,0,0,0,none,0,0x0,	RK_ABUNDANCE,Abundance
-2020,5:6:7:8:9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RK_PHANTOMTHRUST,Phantom Thrust
+2020,5:6:7:8:9,6,1,-1,0,0,5,1,no,0,0x400,0,weapon,0,0x0,	RK_PHANTOMTHRUST,Phantom Thrust
 
 //****
 // WL Warlock
@@ -983,7 +983,7 @@
 2049,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		AB_EUCHARISTICA,Eucharistica
 2050,11,6,16,6,0x1,0,1,1,yes,0,0,0,magic,0,0x0,	AB_RENOVATIO,Renovatio
 2051,11,6,16,6,0x21,0,5,1,yes,0,0,0,magic,0,0x0,	AB_HIGHNESSHEAL,Highness Heal //CHECK Info shows this has magic attack.
-2052,11,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x10020,	AB_CLEARANCE,Clearance //CHECK Also shows this as a magic attack. Why?
+2052,11,6,1,0,0x1,0,5,1,yes,0,0x400,0,magic,0,0x10020,	AB_CLEARANCE,Clearance
 2053,11,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	AB_EXPIATIO,Expiatio //CHECK Does this also give the buff to party members?
 2054,0,6,4,6,0x1,0,10,1,yes,0,0,0,none,0,0x0,	AB_DUPLELIGHT,Duple Light //CHECK Had issues adding a skill level check to make the % go higher with the skills level. Will do later.
 2055,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0x0,	AB_DUPLELIGHT_MELEE,Duple Light Melee
