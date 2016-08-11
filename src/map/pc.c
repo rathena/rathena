@@ -1628,10 +1628,10 @@ void pc_calc_skilltree(struct map_session_data *sd)
 		uint16 c_ = pc_class2idx(JOB_TAEKWON);
 
 		for (i = 0; i < MAX_SKILL_TREE; i++) {
-			uint16 sk_id = skill_tree[c_][i].id;
+			uint16 sk_id = skill_tree[c_][i].skill_id;
 			uint16 sk_idx = 0;
 
-			if (!sk_id || !(sk_idx = skill_get_index(skill_tree[c_][i].id)))
+			if (!sk_id || !(sk_idx = skill_get_index(skill_tree[c_][i].skill_id)))
 				continue;
 
 			if (sd->status.skill[sk_idx].flag != SKILL_FLAG_PLAGIARIZED && sd->status.skill[sk_idx].flag != SKILL_FLAG_PERM_GRANTED) {
@@ -1649,7 +1649,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 		uint16 skid = 0;
 
 		flag = 0;
-		for (i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].id) > 0; i++) {
+		for (i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].skill_id) > 0; i++) {
 			bool fail = false;
 			uint16 sk_idx = skill_get_index(skid);
 
@@ -1661,7 +1661,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 
 				// Checking required skills
 				for(j = 0; j < MAX_PC_SKILL_REQUIRE; j++) {
-					uint16 sk_need_id = skill_tree[c][i].need[j].id;
+					uint16 sk_need_id = skill_tree[c][i].need[j].skill_id;
 					uint16 sk_need_idx = 0;
 
 					if (sk_need_id && (sk_need_idx = skill_get_index(sk_need_id))) {
@@ -1674,13 +1674,19 @@ void pc_calc_skilltree(struct map_session_data *sd)
 						else
 							sk_need = pc_checkskill(sd,sk_need_id);
 
-						if (sk_need < skill_tree[c][i].need[j].lv) {
+						if (sk_need < skill_tree[c][i].need[j].skill_lv) {
 							fail = true;
 							break;
 						}
 					}
 				}
 
+				if (sd->status.base_level < skill_tree[c][i].baselv) { //We need to get the actual class in this case
+					int class_ = pc_mapid2jobid(sd->class_, sd->status.sex);
+					class_ = pc_class2idx(class_);
+					if (class_ == c || (class_ != c && sd->status.base_level < skill_tree[class_][i].baselv))
+						fail = true; // base level requirement wasn't satisfied
+				}
 				if (sd->status.job_level < skill_tree[c][i].joblv) { //We need to get the actual class in this case
 					int class_ = pc_mapid2jobid(sd->class_, sd->status.sex);
 					class_ = pc_class2idx(class_);
@@ -1718,7 +1724,7 @@ void pc_calc_skilltree(struct map_session_data *sd)
 		- (c > 0) to avoid grant Novice Skill Tree in case of Skill Reset (need more logic)
 		- (sd->status.skill_point == 0) to wait until all skill points are assigned to avoid problems with Job Change quest. */
 
-		for( i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].id) > 0; i++ ) {
+		for( i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].skill_id) > 0; i++ ) {
 			uint16 sk_idx = 0;
 			if (!(sk_idx = skill_get_index(skid)))
 				continue;
@@ -1755,7 +1761,7 @@ static void pc_check_skilltree(struct map_session_data *sd)
 		uint16 skid = 0;
 
 		flag = 0;
-		for (i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].id) > 0; i++ ) {
+		for (i = 0; i < MAX_SKILL_TREE && (skid = skill_tree[c][i].skill_id) > 0; i++ ) {
 			uint16 sk_idx = skill_get_index(skid);
 			bool fail = false;
 			uint8 j = 0;
@@ -1765,7 +1771,7 @@ static void pc_check_skilltree(struct map_session_data *sd)
 
 			// Checking required skills
 			for (j = 0; j < MAX_PC_SKILL_REQUIRE; j++) {
-				uint16 sk_need_id = skill_tree[c][i].need[j].id;
+				uint16 sk_need_id = skill_tree[c][i].need[j].skill_id;
 				uint16 sk_need_idx = 0;
 
 				if (sk_need_id && (sk_need_idx = skill_get_index(sk_need_id))) {
@@ -1778,7 +1784,7 @@ static void pc_check_skilltree(struct map_session_data *sd)
 					else
 						sk_need = pc_checkskill(sd,sk_need_id);
 
-					if (sk_need < skill_tree[c][i].need[j].lv) {
+					if (sk_need < skill_tree[c][i].need[j].skill_lv) {
 						fail = true;
 						break;
 					}
@@ -1787,7 +1793,7 @@ static void pc_check_skilltree(struct map_session_data *sd)
 
 			if( fail )
 				continue;
-			if( sd->status.job_level < skill_tree[c][i].joblv )
+			if (sd->status.base_level < skill_tree[c][i].baselv || sd->status.job_level < skill_tree[c][i].joblv)
 				continue;
 
 			j = skill_get_inf2(skid);
@@ -6976,7 +6982,7 @@ int pc_allskillup(struct map_session_data *sd)
 
 	if (!pc_grant_allskills(sd, true)) {
 		uint16 sk_id;
-		for (i = 0; i < MAX_SKILL_TREE && (sk_id = skill_tree[pc_class2idx(sd->status.class_)][i].id) > 0;i++){
+		for (i = 0; i < MAX_SKILL_TREE && (sk_id = skill_tree[pc_class2idx(sd->status.class_)][i].skill_id) > 0;i++){
 			int inf2 = 0;
 			uint16 sk_idx = 0;
 			if (!sk_id || !(sk_idx = skill_get_index(sk_id)))
@@ -8387,10 +8393,10 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 
 	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
 		const int class_ = pc_class2idx(sd->status.class_);
-		short id;
-		for(i = 0; i < MAX_SKILL_TREE && (id = skill_tree[class_][i].id) > 0; i++) {
+		uint16 skill_id;
+		for(i = 0; i < MAX_SKILL_TREE && (skill_id = skill_tree[class_][i].skill_id) > 0; i++) {
 			//Remove status specific to your current tree skills.
-			enum sc_type sc = status_skill2sc(id);
+			enum sc_type sc = status_skill2sc(skill_id);
 			if (sc > SC_COMMON_MAX && sd->sc.data[sc])
 				status_change_end(&sd->bl, sc, INVALID_TIMER);
 		}
@@ -10675,18 +10681,18 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
  *------------------------------------------*/
 static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 {
-	unsigned char joblv = 0, skill_lv;
-	uint16 skill_id;
+	uint32 baselv = 0, joblv = 0;
+	uint16 skill_id, skill_lv;
 	int idx, class_;
 	unsigned int i, offset = 3, skill_idx;
 
 	class_  = atoi(fields[0]);
 	skill_id = (uint16)atoi(fields[1]);
-	skill_lv = (unsigned char)atoi(fields[2]);
+	skill_lv = (uint16)atoi(fields[2]);
 
-	if(columns==4+MAX_PC_SKILL_REQUIRE*2)
-	{// job level requirement extra column
-		joblv = (unsigned char)atoi(fields[3]);
+	if (columns == 5 + MAX_PC_SKILL_REQUIRE * 2) { // Base/Job level requirement extra columns
+		baselv = (uint32)atoi(fields[3]);
+		joblv = (uint32)atoi(fields[4]);
 		offset++;
 	}
 
@@ -10698,25 +10704,26 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 	idx = pc_class2idx(class_);
 
 	//This is to avoid adding two lines for the same skill. [Skotlex]
-	ARR_FIND( 0, MAX_SKILL_TREE, skill_idx, skill_tree[idx][skill_idx].id == 0 || skill_tree[idx][skill_idx].id == skill_id );
+	ARR_FIND( 0, MAX_SKILL_TREE, skill_idx, skill_tree[idx][skill_idx].skill_id == 0 || skill_tree[idx][skill_idx].skill_id == skill_id );
 	if( skill_idx == MAX_SKILL_TREE )
 	{
 		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree. Maximum number of skills per class has been reached.\n", skill_id, class_);
 		return false;
 	}
-	else if(skill_tree[idx][skill_idx].id)
+	else if(skill_tree[idx][skill_idx].skill_id)
 	{
 		ShowNotice("pc_readdb_skilltree: Overwriting skill %hu for job class %d.\n", skill_id, class_);
 	}
 
-	skill_tree[idx][skill_idx].id    = skill_id;
-	skill_tree[idx][skill_idx].max   = skill_lv;
-	skill_tree[idx][skill_idx].joblv = joblv;
+	skill_tree[idx][skill_idx].skill_id = skill_id;
+	skill_tree[idx][skill_idx].skill_lv = skill_lv;
+	skill_tree[idx][skill_idx].baselv	= baselv;
+	skill_tree[idx][skill_idx].joblv	= joblv;
 
 	for(i = 0; i < MAX_PC_SKILL_REQUIRE; i++)
 	{
-		skill_tree[idx][skill_idx].need[i].id = atoi(fields[i*2+offset]);
-		skill_tree[idx][skill_idx].need[i].lv = atoi(fields[i*2+offset+1]);
+		skill_tree[idx][skill_idx].need[i].skill_id = atoi(fields[i*2+offset]);
+		skill_tree[idx][skill_idx].need[i].skill_lv = atoi(fields[i*2+offset+1]);
 	}
 	return true;
 }
@@ -11087,8 +11094,8 @@ void pc_readdb(void) {
 
 	// Reset and read skilltree
 	memset(skill_tree,0,sizeof(skill_tree));
-	sv_readdb(db_path, DBPATH"skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree, 0);
-	sv_readdb(db_path, DBIMPORT"/skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 4+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree, 1);
+	sv_readdb(db_path, DBPATH"skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 5+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree, 0);
+	sv_readdb(db_path, DBIMPORT"/skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 5+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree, 1);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 	sv_readdb(db_path, "re/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 0);
