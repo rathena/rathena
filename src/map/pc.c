@@ -3052,6 +3052,9 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			if (running_npc_stat_calc_event) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in OnPCStatCalcEvent!\n", type, val);
 			}
+			else if (current_equip_combo_pos > 0) {
+				ShowWarning("pc_bonus: unknown bonus type %d %d in a combo with item #%d\n", type, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
+			}
 			else {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in item #%d\n", type, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 			}
@@ -3714,6 +3717,9 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if (running_npc_stat_calc_event) {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in OnPCStatCalcEvent!\n", type, type2, val);
 		}
+		else if (current_equip_combo_pos > 0) {
+			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in a combo with item #%d\n", type, type2, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
+		}
 		else {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in item #%d\n", type, type2, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 		}
@@ -3834,6 +3840,9 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		if (running_npc_stat_calc_event) {
 			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in OnPCStatCalcEvent!\n", type, type2, type3, val);
 		}
+		else if (current_equip_combo_pos > 0) {
+			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in a combo with item #%d\n", type, type2, type3, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
+		}
 		else {
 			ShowWarning("pc_bonus3: unknown bonus type %d %d %d %d in item #%d\n", type, type2, type3, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 		}
@@ -3914,6 +3923,9 @@ void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type
 		if (running_npc_stat_calc_event) {
 			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in OnPCStatCalcEvent!\n", type, type2, type3, type4, val);
 		}
+		else if (current_equip_combo_pos > 0) {
+			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in a combo with item #%d\n", type, type2, type3, type4, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
+		}
 		else {
 			ShowWarning("pc_bonus4: unknown bonus type %d %d %d %d %d in item #%d\n", type, type2, type3, type4, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 		}
@@ -3959,6 +3971,9 @@ void pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type
 	default:
 		if (running_npc_stat_calc_event) {
 			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in OnPCStatCalcEvent!\n", type, type2, type3, type4, type5, val);
+		}
+		else if (current_equip_combo_pos > 0) {
+			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in a combo with item #%d\n", type, type2, type3, type4, type5, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
 		}
 		else {
 			ShowWarning("pc_bonus5: unknown bonus type %d %d %d %d %d %d in item #%d\n", type, type2, type3, type4, type5, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
