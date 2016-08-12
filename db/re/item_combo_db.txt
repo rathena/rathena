@@ -30,6 +30,8 @@
 1480:2527,{ bonus2 bAddRace,RC_Dragon,5; }
 1480:2527:5467,{ bonus2 bAddRace,RC_Dragon,25; }
 1490:19021,{ bonus2 bSkillAtk,"LK_SPIRALPIERCE",getequiprefinerycnt(EQI_HAND_R)*5; bonus4 bAutoSpellOnSkill,"LK_JOINTBEAT","LK_SPIRALPIERCE",max(getskilllv("LK_SPIRALPIERCE"),1),50+(getskilllv("LK_JOINTBEAT")*10); /* Confirm: Success rate */ }
+15141:19033,{ bonus bMaxSP,100; bonus bNoCastCancel,1; }
+15141:20779:22075,{ .@r = getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES); bonus bMaxHP,1000; bonus bHealPower,min(5+.@r,30); bonus bHealPower2,min(5+.@r,30); }
 1535:4361,{ bonus bBreakArmorRate,900; bonus bBreakWeaponRate,900; }
 1559:5467,{ bonus bAspd,1; bonus bFlee2,3; }
 1572:2716:2717,{ bonus bInt,5; bonus bMaxHP,700; bonus bAspdRate,5; }
@@ -203,7 +205,7 @@
 2527:5467:13030,{ bonus2 bAddRace,RC_Dragon,25; }
 2527:13001,{ bonus2 bAddRace,RC_Dragon,5; }
 2527:13030,{ bonus2 bAddRace,RC_Dragon,5; }
-2597:28342,{ bonus bCritAtkRate,5; bonus bCritical,10; .@r = getequiprefinerycnt(EQI_COSTUME_HEAD_TOP); if (.@r > 7) bonus bCritAtkRate,4; else if (.@r > 5) bonus bCritAtkRate,3; }
+2597:28342,{ bonus bCritAtkRate,5; bonus bCritical,10; .@r = getequiprefinerycnt(EQI_GARMENT); if (.@r > 7) bonus bCritAtkRate,4; else if (.@r > 5) bonus bCritAtkRate,3; }
 //2598:Ramor Shield,{ .@r = getequiprefinerycnt(EQI_GARMENT); bonus2 bSubRace,RC_Undead,.@r; bonus2 bSubRace,RC_DemiHuman,.@r; }
 2607:2677,{ bonus2 bSkillAtk,"AL_HEAL",50; bonus2 bSkillAtk,"PR_MAGNUS",30; bonus bSPrecovRate,9; }
 2607:2711,{ bonus2 bSkillAtk,"AL_HEAL",50; bonus2 bSkillAtk,"PR_MAGNUS",30; bonus bSPrecovRate,9; }
@@ -226,6 +228,9 @@
 2701:2881,{ bonus bMatkRate,20; }
 2702:2874,{ bonus bAspd,1; }
 2702:22064,{ if (readparam(bAgi) > 120) bonus bAspd,2; /* Confirm: Bonus value */ }
+27013:27012,{ bonus bNoMadoFuel,1; }
+27015:27016,{ bonus bCritAtkRate,10; }
+27018:27019,{ autobonus "{ bonus bAspd,5; }",30,5000; }
 2720:2772,{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,3; bonus bHealPower,5; }
 2720:2773,{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,3; bonus bHealPower,5; }
 2720:2774,{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,3; bonus bHealPower,5; }
@@ -369,6 +374,8 @@
 4682:4694,{ autobonus "{ active_transform 3244,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
 4683:4695,{ autobonus "{ active_transform 3246,6000; bonus bAtk,100; }",30,6000,BF_WEAPON; }
 5040:5442,{ bonus bAspdRate,3; bonus bVariableCastrate,3; }
+4697:27012,{ bonus bNoMadoFuel,1; }
+4699:27012,{ bonus bNoMadoFuel,1; }
 5040:18673,{ bonus bSPrecovRate,3; }
 5041:18538,{ bonus2 bSubRace,RC_Angel,9; }
 5043:18656,{ bonus bFlee,10; bonus2 bAddEff,Eff_Stun,1000; }

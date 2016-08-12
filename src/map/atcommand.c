@@ -1435,6 +1435,7 @@ ACMD_FUNC(baselevelup)
 		sd->status.base_level -= (unsigned int)level;
 		clif_displaymessage(fd, msg_txt(sd,22)); // Base level lowered.
 		status_calc_pc(sd, SCO_FORCE);
+		level*=-1;
 	}
 	sd->status.base_exp = 0;
 	clif_updatestatus(sd, SP_STATUSPOINT);
@@ -1444,6 +1445,10 @@ ACMD_FUNC(baselevelup)
 	pc_baselevelchanged(sd);
 	if(sd->status.party_id)
 		party_send_levelup(sd);
+
+	if( level > 0 && battle_config.atcommand_levelup_events )
+		npc_script_event(sd,NPCE_BASELVUP);
+
 	return 0;
 }
 
@@ -1488,6 +1493,7 @@ ACMD_FUNC(joblevelup)
 		else
 			sd->status.skill_point -= level;
 		clif_displaymessage(fd, msg_txt(sd,25)); // Job level lowered.
+		level *=-1;
 	}
 	sd->status.job_exp = 0;
 	clif_updatestatus(sd, SP_JOBLEVEL);
@@ -1495,6 +1501,9 @@ ACMD_FUNC(joblevelup)
 	clif_updatestatus(sd, SP_NEXTJOBEXP);
 	clif_updatestatus(sd, SP_SKILLPOINT);
 	status_calc_pc(sd, SCO_FORCE);
+
+	if( level > 0 && battle_config.atcommand_levelup_events )
+		npc_script_event(sd,NPCE_JOBLVUP);
 
 	return 0;
 }

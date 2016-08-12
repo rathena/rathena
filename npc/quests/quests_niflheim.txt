@@ -253,7 +253,7 @@ nif_in,114,181,0	script	#Piano3	111,1,1,{
 	end;
 
 OnTouch:
-	if (nif_esc == 12 || nif_esc == 13 || MISC_QUEST & 32) {
+	if (nif_esc == 12 || nif_esc == 13 || (MISC_QUEST & 32)) {
 		mes "^3355FFAs you bend towards";
 		mes "the final empty key space";
 		mes "to take a better look at it...^000000";
@@ -508,7 +508,7 @@ prt_in,161,20,3	script	Erious#nif	92,{
 }
 
 umbala,215,181,3	script	Billik	733,{
-	if (nif_revive > 1 || MISC_QUEST & 16384) {
+	if (nif_revive > 1 || (MISC_QUEST & 16384)) {
 		mes "[Billik]";
 		mes "Well, long time no see.";
 		mes "If you have a chance in the";

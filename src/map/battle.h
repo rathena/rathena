@@ -611,6 +611,9 @@ extern struct Battle_Config
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
 	int show_status_katar_crit;
+	int atcommand_levelup_events;
+
+#include "../custom/battle_config_struct.inc"
 } battle_config;
 
 void do_init_battle(void);

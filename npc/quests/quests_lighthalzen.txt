@@ -6774,7 +6774,7 @@ lighthalzen,179,170,4	script	Ordinary Man	98,{
 	}
 	else if(lhz_boss == 7)
 	{
-		if(!MISC_QUEST&512)
+		if(!(MISC_QUEST&512))
 		{
 			mes "[Ghalstein]";
 			mes "An error occurred.";

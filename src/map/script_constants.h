@@ -662,6 +662,7 @@
 	script_set_constant("bIgnoreMdefRace2Rate", SP_IGNORE_MDEF_RACE2_RATE, false);
 	script_set_constant("bDropAddRace", SP_DROP_ADDRACE, false);
 	script_set_constant("bDropAddClass", SP_DROP_ADDCLASS, false);
+	script_set_constant("bNoMadoFuel", SP_NO_MADO_FUEL, false);
 
 	/* equip positions */
 	export_constant(EQI_HEAD_TOP);
