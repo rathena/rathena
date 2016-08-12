@@ -708,7 +708,7 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 		target = map_id2bl(ed->ud.target);
 
 		if( !target )
-			map_foreachinrange(elemental_ai_sub_timer_activesearch, &ed->bl, view_range, BL_CHAR, ed, &target, status_get_mode(&ed->bl));
+			map_foreachinallrange(elemental_ai_sub_timer_activesearch, &ed->bl, view_range, BL_CHAR, ed, &target, status_get_mode(&ed->bl));
 
 		if( !target ) { //No targets available.
 			elemental_unlocktarget(ed);

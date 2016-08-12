@@ -19362,7 +19362,7 @@ BUILDIN_FUNC(areamobuseskill)
 	emotion = script_getnum(st,11);
 	target = script_getnum(st,12);
 
-	map_foreachinrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skill_id, skill_lv, casttime, cancel, emotion, target);
+	map_foreachinallrange(buildin_mobuseskill_sub, &center, range, BL_MOB, mobid, skill_id, skill_lv, casttime, cancel, emotion, target);
 	return SCRIPT_CMD_SUCCESS;
 }
 

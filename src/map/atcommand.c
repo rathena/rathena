@@ -5230,7 +5230,7 @@ ACMD_FUNC(killable)
 		clif_displaymessage(fd, msg_txt(sd,242));
 	else {
 		clif_displaymessage(fd, msg_txt(sd,288));
-		map_foreachinrange(atcommand_stopattack,&sd->bl, AREA_SIZE, BL_CHAR, sd->bl.id);
+		map_foreachinallrange(atcommand_stopattack,&sd->bl, AREA_SIZE, BL_CHAR, sd->bl.id);
 	}
 	return 0;
 }
@@ -5289,9 +5289,9 @@ ACMD_FUNC(npcmove)
 
 	x = cap_value(x, 0, map[m].xs-1);
 	y = cap_value(y, 0, map[m].ys-1);
-	map_foreachinrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
+	map_foreachinallrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 	map_moveblock(&nd->bl, x, y, gettick());
-	map_foreachinrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
+	map_foreachinallrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 	clif_displaymessage(fd, msg_txt(sd,1155)); // NPC moved.
 
 	return 0;

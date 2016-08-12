@@ -9194,7 +9194,7 @@ void clif_refresh(struct map_session_data *sd)
 	}
 	if( sd->ed )
 		clif_elemental_info(sd);
-	map_foreachinrange(clif_getareachar,&sd->bl,AREA_SIZE,BL_ALL,sd);
+	map_foreachinallrange(clif_getareachar,&sd->bl,AREA_SIZE,BL_ALL,sd);
 	clif_weather_check(sd);
 	if( sd->chatID )
 		chat_leavechat(sd,0);
@@ -10685,7 +10685,7 @@ void clif_parse_GlobalMessage(int fd, struct map_session_data* sd)
 
 #ifdef PCRE_SUPPORT
 	// trigger listening npcs
-	map_foreachinrange(npc_chat_sub, &sd->bl, AREA_SIZE, BL_NPC, output, strlen(output), &sd->bl);
+	map_foreachinallrange(npc_chat_sub, &sd->bl, AREA_SIZE, BL_NPC, output, strlen(output), &sd->bl);
 #endif
 
 	// Chat logging type 'O' / Global Chat

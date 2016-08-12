@@ -556,66 +556,80 @@ struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int16 x,
 /*==========================================
  * Adapted from foreachinarea for an easier invocation. [Skotlex]
  *------------------------------------------*/
-int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...)
+int map_foreachinrangeV(int (*func)(struct block_list*,va_list),struct block_list* center, int16 range, int type, va_list ap, bool wall_check)
 {
 	int bx, by, m;
 	int returnCount = 0;	//total sum of returned values of func() [Skotlex]
 	struct block_list *bl;
 	int blockcount = bl_list_count, i;
 	int x0, x1, y0, y1;
-	va_list ap;
+	va_list ap_copy;
 
 	m = center->m;
+	if ( m < 0 )
+		return 0;
+
 	x0 = i16max(center->x - range, 0);
 	y0 = i16max(center->y - range, 0);
-	x1 = i16min(center->x + range, map[ m ].xs - 1);
-	y1 = i16min(center->y + range, map[ m ].ys - 1);
+	x1 = i16min(center->x + range, map[m].xs - 1);
+	y1 = i16min(center->y + range, map[m].ys - 1);
 
-	if ( type&~BL_MOB )
-		for ( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
-			for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {
-				for( bl = map[m].block[ bx + by * map[ m ].bxs ]; bl != NULL; bl = bl->next ) {
-					if( bl->type&type
-						&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
+	for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
+		for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {
+			if ( type&BL_MOB )
+				bl = map[m].block_mob[ bx + by * map[m].bxs ];
+			else
+				bl = map[m].block[ bx + by * map[m].bxs ];
+			for(; bl != NULL; bl = bl->next ) {
+				if( bl->type&type
+					&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
 #ifdef CIRCULAR_AREA
-						&& check_distance_bl(center, bl, range)
+					&& check_distance_bl(center, bl, range)
 #endif
-						&& bl_list_count < BL_LIST_MAX )
-						bl_list[ bl_list_count++ ] = bl;
-				}
+					&& ( !wall_check || path_search_long(NULL, center->m, center->x, center->y, bl->x, bl->y, CELL_CHKWALL) )
+				  	&& bl_list_count < BL_LIST_MAX )
+					bl_list[ bl_list_count++ ] = bl;
 			}
 		}
-
-	if( type&BL_MOB )
-		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
-			for(bx=x0/BLOCK_SIZE;bx<=x1/BLOCK_SIZE;bx++) {
-				for( bl = map[ m ].block_mob[ bx + by * map[ m ].bxs ]; bl != NULL; bl = bl->next ) {
-					if( bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
-#ifdef CIRCULAR_AREA
-						&& check_distance_bl(center, bl, range)
-#endif
-						&& bl_list_count < BL_LIST_MAX )
-						bl_list[ bl_list_count++ ] = bl;
-				}
-			}
-		}
+	}
 
 	if( bl_list_count >= BL_LIST_MAX )
 		ShowWarning("map_foreachinrange: block count too many!\n");
 
 	map_freeblock_lock();
 
-	for( i = blockcount; i < bl_list_count; i++ )
+	for( i = blockcount; i < bl_list_count; i++ ) {
 		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
-			va_start(ap, type);
-			returnCount += func(bl_list[ i ], ap);
-			va_end(ap);
+			__va_copy(ap_copy, ap);
+			returnCount += func(bl_list[i], ap_copy);
+			va_end(ap_copy);
 		}
+	}
 
 	map_freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
+}
+
+int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...)
+{
+	int returnCount = 0;
+	va_list ap;
+ 	va_start(ap,type);
+	returnCount = map_foreachinrangeV(func,center,range,type,ap,battle_config.skill_wall_check>0);
+ 	va_end(ap);
+	return returnCount;
+}
+
+int map_foreachinallrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...)
+{
+	int returnCount = 0;
+	va_list ap;
+ 	va_start(ap,type);
+	returnCount = map_foreachinrangeV(func,center,range,type,ap,false);
+ 	va_end(ap);
+	return returnCount;
 }
 
 /*==========================================
@@ -623,69 +637,14 @@ int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_lis
  *------------------------------------------*/
 int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block_list* center, int16 range, int type,...)
 {
-	int bx, by, m;
-	int returnCount = 0;	//total sum of returned values of func() [Skotlex]
-	struct block_list *bl;
-	int blockcount = bl_list_count, i;
-	int x0, x1, y0, y1;
+	int returnCount = 0;
 	va_list ap;
-
-	m = center->m;
-	if ( m < 0 )
-		return 0;
-
-	x0 = i16max(center->x-range, 0);
-	y0 = i16max(center->y-range, 0);
-	x1 = i16min(center->x+range, map[m].xs-1);
-	y1 = i16min(center->y+range, map[m].ys-1);
-
-	if ( type&~BL_MOB )
-		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
-			for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {
-				for( bl = map[ m ].block[ bx + by * map[ m ].bxs ]; bl != NULL; bl = bl->next ) {
-					if( bl->type&type
-						&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
-#ifdef CIRCULAR_AREA
-						&& check_distance_bl(center, bl, range)
-#endif
-						&& path_search_long(NULL, center->m, center->x, center->y, bl->x, bl->y, CELL_CHKWALL)
-					  	&& bl_list_count < BL_LIST_MAX )
-						bl_list[ bl_list_count++ ] = bl;
-				}
-			}
-		}
-	if( type&BL_MOB )
-		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
-			for( bx=x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {
-				for( bl = map[ m ].block_mob[ bx + by * map[ m ].bxs ]; bl != NULL; bl = bl->next ) {
-					if( bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
-#ifdef CIRCULAR_AREA
-						&& check_distance_bl(center, bl, range)
-#endif
-						&& path_search_long(NULL, center->m, center->x, center->y, bl->x, bl->y, CELL_CHKWALL)
-						&& bl_list_count < BL_LIST_MAX )
-						bl_list[ bl_list_count++ ] = bl;
-				}
-			}
-		}
-
-	if( bl_list_count >= BL_LIST_MAX )
-			ShowWarning("map_foreachinrange: block count too many!\n");
-
-	map_freeblock_lock();
-
-	for( i = blockcount; i < bl_list_count; i++ )
-		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
-			va_start(ap, type);
-			returnCount += func(bl_list[ i ], ap);
-			va_end(ap);
-		}
-
-	map_freeblock_unlock();
-
-	bl_list_count = blockcount;
-	return returnCount;	//[Skotlex]
+ 	va_start(ap,type);
+	returnCount = map_foreachinrangeV(func,center,range,type,ap,true);
+ 	va_end(ap);
+	return returnCount;
 }
+
 
 /*==========================================
  * range = map m (x0,y0)-(x1,y1)
