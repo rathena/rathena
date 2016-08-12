@@ -12517,9 +12517,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				map_freeblock_lock();
 				dounlock = true;
 				skill_attack(skill_get_type(status_sc2skill(type)), src, unit_bl, bl, SO_CLOUD_KILL, sce->val1, tick, 0);
-
-				if( !status_isdead(bl) )
-					sc_timer_next(500 + tick, status_change_timer, bl->id, data);
+				sc_timer_next(500 + tick, status_change_timer, bl->id, data);
 			}
 		}
 		break;

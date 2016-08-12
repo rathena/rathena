@@ -822,7 +822,7 @@ int npc_event_sub(struct map_session_data* sd, struct event_data* ev, const char
 		ARR_FIND( 0, MAX_EVENTQUEUE, i, sd->eventqueue[i][0] == '\0' );
 		if( i < MAX_EVENTQUEUE )
 		{
-			safestrncpy(sd->eventqueue[i],eventname,50); //Event enqueued.
+			safestrncpy(sd->eventqueue[i],eventname,EVENT_NAME_LENGTH); //Event enqueued.
 			return 0;
 		}
 

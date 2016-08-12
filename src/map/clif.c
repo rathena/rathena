@@ -10991,7 +10991,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 		if ((npc = npc_name2id(str))) {
 			char split_data[NUM_WHISPER_VAR][CHAT_SIZE_MAX];
 			char *split;
-			char output[256];
+			char event[EVENT_NAME_LENGTH];
 
 			str = message;
 			// skip codepage indicator, if detected
@@ -11011,12 +11011,13 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 			}
 
 			for( i = 0; i < NUM_WHISPER_VAR; ++i ) {
-				safesnprintf(output,sizeof(output),"@whispervar%d$", i);
-				set_var(sd,output,(char *) split_data[i]);
+				char variablename[CHAT_SIZE_MAX];
+				safesnprintf(variablename,sizeof(variablename),"@whispervar%d$", i);
+				set_var(sd,variablename,(char *) split_data[i]);
 			}
 
-			safesnprintf(output,sizeof(output),"%s::OnWhisperGlobal", npc->exname);
-			npc_event(sd,output,0); // Calls the NPC label
+			safesnprintf(event,sizeof(event),"%s::OnWhisperGlobal", npc->exname);
+			npc_event(sd,event,0); // Calls the NPC label
 
 			return;
 		}
