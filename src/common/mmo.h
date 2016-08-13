@@ -215,6 +215,10 @@ enum equip_pos {
 	EQP_SHADOW_SHOES     = 0x080000, // 524288
 	EQP_SHADOW_ACC_R     = 0x100000, // 1048576
 	EQP_SHADOW_ACC_L     = 0x200000, // 2097152
+
+	// Combined
+	EQP_ACC_RL			= EQP_ACC_R|EQP_ACC_L,
+	EQP_SHADOW_ACC_RL	= EQP_SHADOW_ACC_R|EQP_SHADOW_ACC_L,
 };
 
 struct point {

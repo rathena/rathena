@@ -664,7 +664,7 @@
 	script_set_constant("bDropAddClass", SP_DROP_ADDCLASS, false);
 	script_set_constant("bNoMadoFuel", SP_NO_MADO_FUEL, false);
 
-	/* equip positions */
+	/* equip indices */
 	export_constant(EQI_HEAD_TOP);
 	export_constant(EQI_ARMOR);
 	export_constant(EQI_HAND_L);
@@ -686,6 +686,31 @@
 	export_constant(EQI_SHADOW_SHOES);
 	export_constant(EQI_SHADOW_ACC_R);
 	export_constant(EQI_SHADOW_ACC_L);
+
+	/* equip positions */
+	export_constant(EQP_ACC_L);
+	export_constant(EQP_ACC_R);
+	export_constant(EQP_SHOES);
+	export_constant(EQP_GARMENT);
+	export_constant(EQP_HEAD_LOW);
+	export_constant(EQP_HEAD_MID);
+	export_constant(EQP_HEAD_TOP);
+	export_constant(EQP_ARMOR);
+	export_constant(EQP_HAND_L);
+	export_constant(EQP_HAND_R);
+	export_constant(EQP_COSTUME_HEAD_TOP);
+	export_constant(EQP_COSTUME_HEAD_MID);
+	export_constant(EQP_COSTUME_HEAD_LOW);
+	export_constant(EQP_COSTUME_GARMENT);
+	export_constant(EQP_AMMO);
+	export_constant(EQP_SHADOW_ARMOR);
+	export_constant(EQP_SHADOW_WEAPON);
+	export_constant(EQP_SHADOW_SHIELD);
+	export_constant(EQP_SHADOW_SHOES);
+	export_constant(EQP_SHADOW_ACC_R);
+	export_constant(EQP_SHADOW_ACC_L);
+	export_constant(EQP_ACC_RL);
+	export_constant(EQP_SHADOW_ACC_RL);
 
 	/* looks */
 	export_constant(LOOK_BASE);

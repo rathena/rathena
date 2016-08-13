@@ -2736,7 +2736,8 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 
 @inventorylist_id[]        - array of item ids.
 @inventorylist_amount[]    - their corresponding item amounts.
-@inventorylist_equip[]     - whether the item is equipped or not.
+@inventorylist_equip[]     - on which position the item is equipped (see EQP_* constants)
+                             It will contain 0 if the item is not equipped.
 @inventorylist_refine[]    - for how much it is refined.
 @inventorylist_identify[]  - whether it is identified.
 @inventorylist_attribute[] - whether it is broken.
@@ -2746,7 +2747,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_card4[]       if the character owns an item made by a specific 
                              craftsman.
 @inventorylist_expire[]    - expire time (Unix time stamp). 0 means never expires.
-@inventorylist_bound[]     - whether it is bound to the character
+@inventorylist_bound[]     - the bound type of the items (see BOUND_* constants)
 @inventorylist_count       - the number of items in these lists.
 
 This could be handy to save/restore a character's inventory, since no other 
