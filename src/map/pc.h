@@ -685,6 +685,11 @@ struct map_session_data {
 	} roulette;
 
 	unsigned short instance_id;
+
+#if PACKETVER >= 20150513
+	uint32* hatEffectIDs;
+	uint8 hatEffectCount;
+#endif
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table

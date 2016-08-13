@@ -9161,7 +9161,7 @@ solution rather than sending the map and the monster_id.
 
 ---------------------------------------
 
-*itemeffect(<State>,<Hat Effect ID>{, Hat Effect ID2, ... });
+*hateffect(<Hat Effect ID>,<State>);
 
 This will set a Hat Effect onto the player. The state field allows you to
 enable (true) or disable (false) the effect on the player.

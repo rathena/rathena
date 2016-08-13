@@ -21482,31 +21482,48 @@ BUILDIN_FUNC(recalculatestat) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-BUILDIN_FUNC(itemeffect){
+BUILDIN_FUNC(hateffect){
 #if PACKETVER >= 20150513
 	struct map_session_data* sd = script_rid2sd(st);
 	bool enable;
-	short *effects;
-	int i, count;
+	int i, effectID;
 
 	if( sd == NULL )
 		return SCRIPT_CMD_FAILURE;
 
-	enable = script_getnum(st,2) ? true : false;
+	effectID = script_getnum(st,2);
+	enable = script_getnum(st,3) ? true : false;
 
-	if( !script_hasdata(st,3) ){
-		ShowError( "buildin_itemeffect: You need to specify a hat effect id.\n" );
-		return SCRIPT_CMD_FAILURE;
+	ARR_FIND( 0, sd->hatEffectCount, i, sd->hatEffectIDs[i] == effectID );
+
+	if( enable ){
+		if( i < sd->hatEffectCount ){
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		RECREATE(sd->hatEffectIDs,uint32,sd->hatEffectCount+1);
+		sd->hatEffectIDs[sd->hatEffectCount] = effectID;
+		sd->hatEffectCount++;
+	}else{
+		if( i == sd->hatEffectCount ){
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		for( ; i < sd->hatEffectCount - 1; i++ ){
+			sd->hatEffectIDs[i] = sd->hatEffectIDs[i+1];
+		}
+
+		sd->hatEffectCount--;
+
+		if( !sd->hatEffectCount ){
+			aFree(sd->hatEffectIDs);
+			sd->hatEffectIDs = NULL;
+		}
 	}
 
-	count = st->end - 3;
-	effects = (short*)aMalloc(count*sizeof(short));
-
-	for( i = 0; i < count; i++ ){
-		effects[i] = script_getnum(st,3+i);
+	if( !sd->state.connect_new ){
+		clif_hat_effect_single( sd, effectID, enable );
 	}
-
-	clif_item_effects( &sd->bl, enable, effects, count );
 
 #endif
 	return SCRIPT_CMD_SUCCESS;
@@ -22090,7 +22107,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(adopt,"vv"),
 	BUILDIN_DEF(getexp2,"ii?"),
 	BUILDIN_DEF(recalculatestat,""),
-	BUILDIN_DEF(itemeffect,"ii*"),
+	BUILDIN_DEF(hateffect,"ii"),
 
 #include "../custom/script_def.inc"
 

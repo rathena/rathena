@@ -1444,6 +1444,7 @@ int clif_spawn(struct block_list *bl)
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
 			clif_efst_status_change_sub(sd, bl, AREA);
+			clif_hat_effects(sd,bl,AREA);
 		}
 		break;
 	case BL_MOB:
@@ -4548,6 +4549,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
 			clif_efst_status_change_sub(sd, bl, SELF);
+			clif_hat_effects(sd,bl,SELF);
 		}
 		break;
 	case BL_MER: // Devotion Effects
@@ -18745,34 +18747,54 @@ void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x,
 
 /// Send hat effects to the client (ZC_HAT_EFFECT).
 /// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W }
-void clif_item_effects( struct block_list* bl, bool enable, short effects[], int count ){
+void clif_hat_effects( struct map_session_data* sd, struct block_list* bl, enum send_target target ){
 #if PACKETVER >= 20150513
 	unsigned char* buf;
 	int len,i;
+	struct map_session_data *tsd;
+	struct block_list* tbl;
 
-	nullpo_retv(bl);
+	if( target == SELF ){
+		tsd = BL_CAST(BL_PC,bl);
+		tbl = &sd->bl;
+	}else{
+		tsd = sd;
+		tbl = bl;
+	}
 
-	len = 9 + count * 2;
+	if( !tsd->hatEffectCount )
+		return;
+
+	len = 9 + tsd->hatEffectCount * 2;
 
 	buf = (unsigned char*)aMalloc( len );
 
 	WBUFW(buf,0) = 0xa3b;
 	WBUFW(buf,2) = len;
-	WBUFL(buf,4) = bl->id;
-	WBUFB(buf,8) = enable;
+	WBUFL(buf,4) = tsd->bl.id;
+	WBUFB(buf,8) = 1;
 
-	for( i = 0; i < count; i++ ){
-		WBUFW(buf,9+i*2) = effects[i];
+	for( i = 0; i < tsd->hatEffectCount; i++ ){
+		WBUFW(buf,9+i*2) = tsd->hatEffectIDs[i];
 	}
 
-	clif_send(buf, len,bl,SELF);
-
-	if( disguised(bl) ){
-		WBUFL(buf,4) = -bl->id;
-		clif_send(buf, len,bl,SELF);
-	}
+	clif_send(buf, len,tbl,target);
 
 	aFree(buf);
+#endif
+}
+
+void clif_hat_effect_single( struct map_session_data* sd, uint16 effectId, bool enable ){
+#if PACKETVER >= 20150513
+	unsigned char buf[13];
+
+	WBUFW(buf,0) = 0xa3b;
+	WBUFW(buf,2) = 13;
+	WBUFL(buf,4) = sd->bl.id;
+	WBUFB(buf,8) = enable;
+	WBUFL(buf,9) = effectId;
+
+	clif_send(buf,13,&sd->bl,AREA);
 #endif
 }
 
@@ -19176,7 +19198,7 @@ void packetdb_readdb(bool reload)
 	  269,  0,  0,  2,  6, 48,  6,  9, 26, 45, 47, 47, 56, -1,  14,  0,
 #endif
 		-1,  0,  0, 26,  0,  0,  0,  0,  14,  2, 23,  2, -1,  2,  3,  2,
-	   21,  3,  5,  0, 66,  0,  0,  8,  3,  0,  0,  0,  0,  -1,  0,  0,
+	   21,  3,  5,  0, 66,  0,  0,  8,  3,  0,  0,  -1,  0,  -1,  0,  0,
  		0,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
 	struct {
