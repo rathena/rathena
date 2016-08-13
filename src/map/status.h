@@ -2117,6 +2117,11 @@ struct status_change {
 	struct status_change_entry *data[SC_MAX];
 };
 
+struct hat_effect {
+	uint16 *HatEFIDs;
+	uint8 count;
+};
+
 // for looking up associated data
 sc_type status_skill2sc(int skill);
 int status_sc2skill(sc_type sc);

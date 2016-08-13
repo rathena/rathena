@@ -3211,6 +3211,12 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			}
 			sd->qi_count = 0;
 
+			if (sd->hat_effect.count) {
+				aFree(sd->hat_effect.HatEFIDs);
+				sd->hat_effect.HatEFIDs = NULL;
+			}
+			sd->hat_effect.count = 0;
+
 			// Clearing...
 			if (sd->bonus_script.head)
 				pc_bonus_script_clear(sd, BSF_REM_ALL);

@@ -9171,5 +9171,15 @@ Requires client 2015-05-13aRagEXE or newer.
 
 ---------------------------------------
 
+*hateffect(<Hat Effect ID>,<State>{,<GID>});
+
+This will set a Hat Effect onto the player. The state field allows you to
+enable (true) or disable (false) the effect on the player.
+The Hat Effect constants can be found in db/const.txt starting with HAT_EF_*.
+
+Requires client 2015-05-13aRagEXE or newer. 
+
+---------------------------------------
+
 Whew.
 That's about all of them.

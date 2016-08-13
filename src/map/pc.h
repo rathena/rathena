@@ -193,6 +193,7 @@ struct map_session_data {
 	struct view_data vd;
 	struct status_data base_status, battle_status;
 	struct status_change sc;
+	struct hat_effect hat_effect;
 	struct regen_data regen;
 	struct regen_data_sub sregen, ssregen;
 	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
