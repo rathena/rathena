@@ -90,7 +90,7 @@ int guild_storage_tosql(int guild_id, struct guild_storage* p)
 int guild_storage_fromsql(int guild_id, struct guild_storage* p)
 {
 	StringBuf buf;
-	int i, j, k;
+	int i, j;
 
 	memset(p, 0, sizeof(struct guild_storage)); //clean up memory
 	p->storage_amount = 0;

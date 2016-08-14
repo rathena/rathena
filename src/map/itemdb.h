@@ -536,7 +536,6 @@ uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, unsigned
 bool itemdb_parse_roulette_db(void);
 
 struct s_random_opt_data* itemdb_randomopt_exists(short id);
-short itemdb_randomopt_name2id(const char *name);
 
 void itemdb_reload(void);
 
