@@ -21529,6 +21529,30 @@ BUILDIN_FUNC(hateffect){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+* Retrieves param of current random option. Intended for random option script only.
+* getrandomoptinfo(<type>);
+* @author [secretdataz]
+**/
+BUILDIN_FUNC(getrandomoptinfo) {
+	struct map_session_data *sd;
+	int param = script_getnum(st, 1);
+	if ((sd = script_rid2sd(st)) != NULL && current_equip_item_index && current_equip_item_index > -1 && sd->status.inventory[current_equip_item_index].option[current_equip_opt_index].id) {
+		if (param == ROA_VALUE)
+			script_pushint(st, sd->status.inventory[current_equip_item_index].option[current_equip_opt_index].value);
+		else if (param == ROA_PARAM)
+			script_pushint(st, sd->status.inventory[current_equip_item_index].option[current_equip_opt_index].param);
+		else {
+			ShowWarning("buildin_getrandomoptinfo: Unknown parameter %d.", param);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	else {
+		script_pushint(st, 0);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -22108,6 +22132,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getexp2,"ii?"),
 	BUILDIN_DEF(recalculatestat,""),
 	BUILDIN_DEF(hateffect,"ii"),
+	BUILDIN_DEF(getrandomoptinfo, "i"),
 
 #include "../custom/script_def.inc"
 

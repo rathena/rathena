@@ -17,6 +17,7 @@
 static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
 static DBMap *itemdb_group; /// Item Group DB
+static DBMap *itemdb_randomopt; /// Random option DB
 
 struct item_data *dummy_item; /// This is the default dummy item used for non-existant items. [Skotlex]
 
@@ -1544,6 +1545,102 @@ bool itemdb_is_spellbook2(unsigned short nameid) {
 }
 
 /**
+* Retrieves random option data
+*/
+struct s_random_opt_data* itemdb_randomopt_exists(short id) {
+	return ((struct s_random_opt_data*)uidb_get(itemdb_randomopt, id));
+}
+
+/** Random option
+* <ID>,<{Script}>
+*/
+static bool itemdb_read_randomopt(const char* basedir, bool silent) {
+	uint32 lines = 0, count = 0;
+	char line[1024];
+
+	char path[256];
+	FILE* fp;
+
+	sprintf(path, "%s/%s", basedir, "item_randomopt_db.txt");
+
+	if ((fp = fopen(path, "r")) == NULL) {
+		if (silent == 0) ShowError("itemdb_read_randomopt: File not found \"%s\".\n", path);
+		return false;
+	}
+
+	while (fgets(line, sizeof(line), fp)) {
+		char *str[2], *p;
+
+		lines++;
+
+		if (line[0] == '/' && line[1] == '/') // Ignore comments
+			continue;
+
+		memset(str, 0, sizeof(str));
+
+		p = line;
+
+		p = trim(p);
+
+		if (*p == '\0')
+			continue;// empty line
+
+		if (!strchr(p, ','))
+		{
+			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+
+		str[0] = p;
+		p = strchr(p, ',');
+		*p = '\0';
+		p++;
+
+		str[1] = p;
+
+		if (str[1][0] != '{') {
+			ShowError("itemdb_read_randomopt(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+		/* no ending key anywhere (missing \}\) */
+		if (str[1][strlen(str[1]) - 1] != '}') {
+			ShowError("itemdb_read_randomopt(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+		else {
+			int id;
+			str[0] = trim(str[0]);
+			if (ISDIGIT(str[0][0])) {
+				id = atoi(str[0]);
+			}
+			else {
+				script_get_constant(str[0], &id);
+			}
+			struct s_random_opt_data *data;
+			struct script_code *code;
+
+			if ((data = itemdb_randomopt_exists(id)) == NULL) {
+				data = malloc(sizeof(struct s_random_opt_data));
+				memset(data, 0, sizeof(struct s_random_opt_data));
+				uidb_put(itemdb_randomopt, id, data);
+			}
+			data->id = id;
+			if ((code = parse_script(str[1], "item_randomopt_db.txt", 0, 0)) == NULL) {
+				ShowWarning("itemdb_read_randomopt: Invalid script on option ID #%d.\n", id);
+				continue;
+			}
+			data->script = code;
+		}
+		count++;
+	}
+	fclose(fp);
+
+	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, path);
+
+	return true;
+}
+
+/**
 * Read all item-related databases
 */
 static void itemdb_read(void) {
@@ -1588,6 +1685,7 @@ static void itemdb_read(void) {
 		sv_readdb(dbsubpath2, "item_package.txt",		',', 2, 10, -1, &itemdb_read_group, i);
 #endif
 		itemdb_read_combos(dbsubpath2,i); //TODO change this to sv_read ? id#script ?
+		itemdb_read_randomopt(dbsubpath2, i);
 		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i);
 		sv_readdb(dbsubpath2, "item_trade.txt",         ',', 3, 3, -1, &itemdb_read_itemtrade, i);
 		sv_readdb(dbsubpath2, "item_delay.txt",         ',', 2, 3, -1, &itemdb_read_itemdelay, i);
@@ -1754,6 +1852,7 @@ void do_init_itemdb(void) {
 	itemdb = uidb_alloc(DB_OPT_BASE);
 	itemdb_combo = uidb_alloc(DB_OPT_BASE);
 	itemdb_group = uidb_alloc(DB_OPT_BASE);
+	itemdb_randomopt = uidb_alloc(DB_OPT_BASE);
 	itemdb_create_dummy();
 	itemdb_read();
 

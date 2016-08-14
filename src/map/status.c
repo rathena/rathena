@@ -50,6 +50,7 @@ unsigned int current_equip_combo_pos; /// For combo items we need to save the po
 int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
 bool running_npc_stat_calc_event; /// Indicate if OnPCStatCalcEvent is running.
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
+short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
 
 unsigned int SCDisabled[SC_MAX]; ///< List of disabled SC on map zones. [Cydh]
 
@@ -3450,10 +3451,51 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	}
 	current_equip_card_id = 0; // Clear stored card ID [Secret]
 
-	if( sc->count && sc->data[SC_ITEMSCRIPT] ) {
+	// Parse random options
+	for (i = 0; i < EQI_MAX; i++) {
+		current_equip_item_index = index = sd->equip_index[i];
+		current_equip_combo_pos = 0;
+		if (index < 0)
+			continue;
+		if (i == EQI_AMMO)
+			continue;
+		if (pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index))
+			continue;
+		
+		if (sd->inventory_data[index]) {
+			int j;
+			struct item_data *itemdata;
+			struct s_random_opt_data *data;
+			for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
+				short opt_id = sd->status.inventory[index].option[j].id;
+				unsigned short nameid = sd->status.inventory[index].nameid;
+				if (!opt_id)
+					continue;
+				current_equip_opt_index = j;
+				itemdata = itemdb_exists(nameid);
+				data = itemdb_randomopt_exists(opt_id);
+				if (!data || !data->script)
+					continue;
+				if (!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(itemdata, sd->bl.m))
+					continue;
+				if (i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L) { // Left hand status.
+					sd->state.lr_flag = 1;
+					run_script(data->script, 0, sd->bl.id, 0);
+					sd->state.lr_flag = 0;
+				}
+				else
+					run_script(data->script, 0, sd->bl.id, 0);
+				if (!calculating)
+					return 1;
+			}
+		}
+		current_equip_opt_index = 0;
+	}
+
+	if (sc->count && sc->data[SC_ITEMSCRIPT]) {
 		struct item_data *data = itemdb_exists(sc->data[SC_ITEMSCRIPT]->val1);
-		if( data && data->script )
-			run_script(data->script,0,sd->bl.id,0);
+		if (data && data->script)
+			run_script(data->script, 0, sd->bl.id, 0);
 	}
 
 	pc_bonus_script(sd);

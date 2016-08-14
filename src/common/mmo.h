@@ -78,6 +78,7 @@
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
 #define MAX_QUEST_DROPS 3 ///Max quest drops for a quest
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
+#define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -186,6 +187,11 @@ struct item {
 	char refine;
 	char attribute;
 	unsigned short card[MAX_SLOTS];
+	struct {
+		short id;
+		short value;
+		char param;
+	} option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;

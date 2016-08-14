@@ -663,6 +663,7 @@
 	script_set_constant("bDropAddRace", SP_DROP_ADDRACE, false);
 	script_set_constant("bDropAddClass", SP_DROP_ADDCLASS, false);
 	script_set_constant("bNoMadoFuel", SP_NO_MADO_FUEL, false);
+	script_set_constant("bIgnoreDefClassRate", SP_IGNORE_DEF_CLASS_RATE, false);
 
 	/* equip indices */
 	export_constant(EQI_HEAD_TOP);
@@ -3107,6 +3108,10 @@
 	export_constant(MOBG_Bloody_Dead_Branch);
 	export_constant(MOBG_Red_Pouch_Of_Surprise);
 	export_constant(MOBG_ClassChange);
+
+	/* random option attributes */
+	export_constant(ROA_VALUE);
+	export_constant(ROA_PARAM);
 
 	#undef export_constant
 
