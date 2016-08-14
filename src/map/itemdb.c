@@ -1609,6 +1609,9 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 		}
 		else {
 			int id;
+			struct s_random_opt_data *data;
+			struct script_code *code;
+
 			str[0] = trim(str[0]);
 			if (ISDIGIT(str[0][0])) {
 				id = atoi(str[0]);
@@ -1616,8 +1619,6 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 			else {
 				script_get_constant(str[0], &id);
 			}
-			struct s_random_opt_data *data;
-			struct script_code *code;
 
 			if ((data = itemdb_randomopt_exists(id)) == NULL) {
 				data = malloc(sizeof(struct s_random_opt_data));
