@@ -11398,7 +11398,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				int range = 1
 					+ skill_get_range2(bl, status_sc2skill(type), sce->val1, true)
 					+ skill_get_range2(bl, TF_BACKSLIDING, 1, true); // Since most people use this to escape the hold....
-				map_foreachinarea(status_change_timer_sub,
+				map_foreachinallarea(status_change_timer_sub,
 					bl->m, bl->x-range, bl->y-range, bl->x+range,bl->y+range,BL_CHAR,bl,sce,type,gettick());
 			}
 			break;
