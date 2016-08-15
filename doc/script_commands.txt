@@ -9172,5 +9172,45 @@ Requires client 2015-05-13aRagEXE or newer.
 
 ---------------------------------------
 
+*getrandomoptinfo(<type>);
+
+Returns value of an attribute of current random option.
+
+Valid attributes are:
+ROA_ID - ID of current option
+ROA_VALUE - Value field of current option
+ROA_PARAM - Param field of current option
+
+This script command is intended for using in random option scripts.
+
+---------------------------------------
+
+*getequiprandomoption(<equipment indice>,<index>,<type>{,<char id>});
+
+Returns value of an attribute of a random option on an equipped item.
+
+For valid equipment indices, see `getequipid` command reference.
+
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
+
+For valid attribute types, see `getrandomoptinfo` command reference.
+
+---------------------------------------
+
+*setrandomoption(<equipment indice>,<index>,<id>,<value>,<param>{,<char id>});
+
+Sets <index+1>th random option for equipment equipped at <equipment indice>
+to <id>, <value> and <param>.
+
+For valid equipment indices, see `getequipid` command reference.
+
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
+
+ID - ID of random option. See db/const.txt for constants.
+Value - Value of random option
+Param - Parameter of random option
+
+---------------------------------------
+
 Whew.
 That's about all of them.

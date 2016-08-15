@@ -3110,6 +3110,7 @@
 	export_constant(MOBG_ClassChange);
 
 	/* random option attributes */
+	export_constant(ROA_ID);
 	export_constant(ROA_VALUE);
 	export_constant(ROA_PARAM);
 

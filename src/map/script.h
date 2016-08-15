@@ -637,7 +637,8 @@ enum navigation_service {
 };
 
 enum random_option_attribute {
-	ROA_VALUE = 0,
+	ROA_ID = 0,
+	ROA_VALUE,
 	ROA_PARAM,
 };
 /**
