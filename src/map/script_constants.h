@@ -1392,6 +1392,15 @@
 	export_constant(SC_FRESHSHRIMP);
 	export_constant(SC_ACTIVE_MONSTER_TRANSFORM);
 	export_constant(SC_CLOUD_KILL);
+	export_constant(SC_LJOSALFAR);
+	export_constant(SC_MERMAID_LONGING);
+	export_constant(SC_HAT_EFFECT);
+	export_constant(SC_FLOWERSMOKE);
+	export_constant(SC_FSTONE);
+	export_constant(SC_HAPPINESS_STAR);
+	export_constant(SC_MAPLE_FALLS);
+	export_constant(SC_TIME_ACCESSORY);
+	export_constant(SC_MAGICAL_FEATHER);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

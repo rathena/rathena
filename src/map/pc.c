@@ -10323,7 +10323,7 @@ static int pc_autosave(int tid, unsigned int tick, int id, intptr_t data)
 		last_save_id = sd->bl.id;
 		save_flag = 2;
 		if (pc_isvip(sd)) // Check if we're still VIP
-			chrif_req_login_operation(1, sd->status.name, 6, 0, 1, 0);
+			chrif_req_login_operation(1, sd->status.name, CHRIF_OP_LOGIN_VIP, 0, 1, 0);
 		chrif_save(sd,0);
 		break;
 	}

@@ -2956,7 +2956,7 @@ ACMD_FUNC(char_ban)
 {
 	char *modif_p, output[CHAT_SIZE_MAX];
 	int32 timediff = 0; //don't set this as uint as we may want to decrease banned time
-	int bantype = 0;
+	enum chrif_req_op bantype;
 
 	nullpo_retr(-1, sd);
 
@@ -3038,7 +3038,7 @@ ACMD_FUNC(char_unblock)
  * char unban command (usage: charunban <player_name>)
  *------------------------------------------*/
 ACMD_FUNC(char_unban){
-	int unbantype = 0;
+	enum chrif_req_op unbantype;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
