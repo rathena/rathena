@@ -1763,6 +1763,15 @@ static int itemdb_group_free(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
+static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
+    struct s_random_opt_data *opt = (struct s_random_opt_data *)db_data2ptr(data);
+    if (!opt)
+        return 0;
+    if (opt->script)
+        script_free_code(opt->script);
+	return 1;
+}
+
 /**
 * Reload Item DB
 */
@@ -1773,6 +1782,7 @@ void itemdb_reload(void) {
 	int i,d,k;
 
 	itemdb_group->clear(itemdb_group, itemdb_group_free);
+	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
 	itemdb->clear(itemdb, itemdb_final_sub);
 	db_clear(itemdb_combo);
 	if (battle_config.feature_roulette)
@@ -1840,6 +1850,7 @@ void itemdb_reload(void) {
 void do_final_itemdb(void) {
 	db_destroy(itemdb_combo);
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
+	itemdb_randomopt->destroy(itemdb_randomopt, itemdb_randomopt_free);
 	itemdb->destroy(itemdb, itemdb_final_sub);
 	destroy_item_data(dummy_item);
 	if (battle_config.feature_roulette)
