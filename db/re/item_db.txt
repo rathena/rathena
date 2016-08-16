@@ -4004,6 +4004,7 @@
 5919,Camellia_Hair_Pin,Camellia Hair Pin,4,0,,1000,,,,1,0xFFFFFFFF,63,2,256,1,50,1,1203,{ bonus bMdef,20; bonus3 bAutoSpell,"AL_PNEUMA",1,30+getrefine()*5; /* CONFIRM The Rate*/ },{},{}
 5920,Medical_Boots,Medical Boots,4,0,,300,,10,,0,0xFFFFFFFF,63,2,64,,10,1,,{ .@r = getrefine(); bonus bHealPower,10+((.@r/2) * 2); bonus2 bSkillUseSP,"AB_CHEAL",(.@r * 5); },{},{}
 5943,Owl_viscount_Silk_Hat,Owl Viscount Silk Hat,4,0,,500,,15,,1,0xFFFFFFFF,63,2,256,1,70,1,1323,{ bonus bInt,1; bonus bAspdRate,10; .@r = getrefine(); bonus bMatk,7*.@r; autobonus "{ .@r = getrefine(); bonus bAspdRate,(.@r >= 9 ? 40 : ((.@r >= 7) ? 10 : ((.@r >= 5) ? 5 : 1))); }",.@r*20,30000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER }"; },{},{}
+5946,Drama_Clockwork,Drama Clockwork,4,0,,300,,5,,1,0xFFFFFFFF,63,2,256,1,20,1,1335,{},{},{}
 5966,KarduiEar,KarduiEar,4,0,,300,,,,0,0xFFFFFFFF,63,2,512,1,70,1,1357,{ .@dex = readparam(bDex); bonus bMatk,(.@dex > 10) ? .@dex/10*2 : 0; if (.@dex > 107) { bonus bVariableCastrate,-10; bonus bMatk,60; } if (.@dex > 119) { bonus bVariableCastrate,-5; bonus bMatk,100; } },{},{}
 5967,Flying Galapago,Flying Galapago,4,0,,500,,,,0,0xFFFFFFFF,63,2,1,1,110,1,1358,{ bonus bAgi,1; bonus2 bSkillAtk,"HT_BLITZBEAT",getskilllv("HT_STEELCROW")*40; },{},{}
 5968,DVAngelNurseCap,DVAngelNurseCap,4,0,,500,,10,,1,0xFFFFFFFF,63,2,256,1,50,1,1359,{ if (BaseClass == Job_Acolyte) bonus bHealPower,3; bonus bNoCastCancel,1; .@r = getrefine(); bonus bHealPower,(.@r > 8) ? 12 : ((.@r > 6) ? 9 : ((.@r > 4) ? 6 : 0)); },{},{}
@@ -8526,7 +8527,16 @@
 14758,Safe_To_Smelting_Scroll,Safe To Smelting Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,6228,6232,24216,17474,969),1; },{},{}
 14765,Limited_Edition_JOB_Battle_Manual,Limited Edition JOB Battle Manual,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_JEXPBOOST,3600000,35; },{},{}
 14766,Limited_Power_Booster,Limited Power Booster,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus bAtkRate,1; bonus bMatkRate,1; bonus bHit,30; bonus bFlee,30; bonus bAspd,1; bonus bUseSPrate,-5; bonus bFixedCastrate,-30; }",1800,1,1; },{},{}
+//14798,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 14805,Almighty_Lucky_Egg,Almighty Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Almighty_Lucky_Egg); },{},{}
+//14753,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+//14800,Old_Hat_Scroll,Old Hat Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+//14800,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+//14803,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+//14804,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+//14808,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+//14809,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+
 //===================================================================
 // More Armors
 //===================================================================
@@ -9846,6 +9856,8 @@
 19157,Drooping_Rebellion_,Drooping Rebellion,4,20,,200,,1,,1,0xFFFFFFFF,63,2,256,,1,1,1444,{ bonus bAllStats,1; bonus bUseSPrate,-10; .@r = getrefine(); if (.@r >= 9) { bonus bAspd,1; } if (.@r >= 12) { bonus bSpeedRate,25; } bonus2 bExpAddRace,RC_All,5; bonus2 bDropAddRace,RC_All,5; },{},{}
 19158,C_GeminiS58_Eyes_Blue,Costume GeminiS58 Eyes Blue,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,0,0,1456,{},{},{}
 19159,Barrel_Helm,Barrel Helm,4,20,,420,,59,,1,0xFFFFFFFF,63,2,769,,60,1,1498,{ bonus bVit,5; bonus bHPrecovRate,-10; .@r = getrefine(); if (.@r >= 7) { bonus bDef,100; skill "CR_AUTOGUARD",1; } if (.@r >= 8) { bonus2 bSubRace,RC_DemiHuman,10; bonus2 bSubRace,RC_Player,10; if(BaseJob==Job_SuperNovice) { skill "CR_AUTOGUARD",5; } } },{},{}
+19160,Male_Poring_Balloon,Male Poring Balloon,4,20,,50,,0,,1,0xFFFFFFFF,63,2,1,,1,1,1159,{},{},{}
+19161,Female_Poring_Balloon,Female Poring Balloon,4,20,,50,,0,,1,0xFFFFFFFF,63,2,1,,1,1,1161,{},{},{}
 19162,Scuba_Mask_,Scuba Mask,4,20,,100,,0,,1,0xFFFFFFFF,63,2,512,,40,1,400,{ bonus bBaseAtk,5; bonus bMatk,5; },{},{}
 19166,RO_Celebration_Hat,RO Celebration Hat,4,20,,140,,14,,1,0xFFFFFFFF,63,2,256,,14,1,1541,{ bonus bMaxSP,140; bonus2 bSPRegenRate,6,4000; },{},{}
 //===================================================================
@@ -10723,6 +10735,7 @@
 20762,C_Great_Devil_Wings,Costume Great Devil Wings,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,10,{},{},{}
 20763,C_Amistr_Bag,Costume Amistr Bag,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,4,{},{},{}
 20764,C_Fallen_Angel_Wing,Costume Fallen Angel Wing,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,3,{},{},{}
+//20774,,,4,20,,500,,8,,1,0xFFFFFFFF,63,2,4,,1,1,0,{},{},{}
 20779,Rift_Manteau,Rift Manteau,4,20,,500,,16,,1,0xFFFFFFFF,63,2,4,,100,1,,{ .@r = getrefine(); bonus bMaxHP,(.@r >= 9 ? 1300 : .@r >= 7 ? 700 : 300); bonus bMaxSP,-50; },{},{}
 20783,Hero_Cape,Hero Cape,4,0,,100,,,,1,0xFFFFFFFF,63,2,4,1,10,1,,{ .@r = getrefine(); bonus2 bSubEle,Ele_Neutral,1+(.@r/3); bonus bFlee,1+(.@r/3); if (.@r > 9) { bonus2 bSubEle,Ele_Neutral,20; bonus bFlee,20; } },{},{}
 20788,Private_Doram_Manteau,Private Doram Manteau,4,20,,300,,20,,1,0x80000000,7,2,4,,100,1,,{ bonus bFlee,5; bonus2 bSubEle,Ele_Neutral,2; bonus bFlee2,getrefine()/3; },{},{}
