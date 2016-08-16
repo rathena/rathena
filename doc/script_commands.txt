@@ -2850,7 +2850,7 @@ See the sample in 'doc/sample/getiteminfo.txt'.
 
 Returns value from equipped item slot in the indicated slot (0, 1, 2, or 3).
 
-This function returns CARD ID, 255,254,-255 (for card 0, if the item is produced).
+This function returns CARD ID, CARD0_FORGE, CARD0_CREATE, or CARD0_PET (for card 0, if the item is produced).
 It's useful for when you want to check whether an item contains cards or if it's signed.
 
 ---------------------------------------
@@ -5169,10 +5169,11 @@ This is used primarily in item scripts. When used in an NPC script, a flag MUST
 be defined for the rate to work.
 
 Optional value <flag> is how the status change start will be handled (a bitmask).
- 1: Status change cannot be avoided.
- 2: Tick cannot be reduced by stats (default).
- 4: sc_data loaded, so no value will be altered.
- 8: Rate cannot be reduced.
+ SCSTART_NOAVOID   : Status change cannot be avoided.
+ SCSTART_NOTICKDEF : Tick cannot be reduced by stats (default).
+ SCSTART_LOADED    : sc_data loaded, so no value will be altered.
+ SCSTART_NORATEDEF : Rate cannot be reduced.
+ SCSTART_NOICON    : Status icon won't be sent to client
 
 If a <GID> is given, the status change will be invoked on the specified character
 instead of the one attached to the script. This can only be defined after setting
@@ -9185,11 +9186,11 @@ This script command is intended for using in random option scripts.
 
 ---------------------------------------
 
-*getequiprandomoption(<equipment indice>,<index>,<type>{,<char id>});
+*getequiprandomoption(<equipment index>,<index>,<type>{,<char id>});
 
 Returns value of an attribute of a random option on an equipped item.
 
-For valid equipment indices, see `getequipid` command reference.
+See 'getequipid' for a full list of valid equipment slots.
 
 index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
 
@@ -9197,12 +9198,12 @@ For valid attribute types, see `getrandomoptinfo` command reference.
 
 ---------------------------------------
 
-*setrandomoption(<equipment indice>,<index>,<id>,<value>,<param>{,<char id>});
+*setrandomoption(<equipment slot>,<index>,<id>,<value>,<param>{,<char id>});
 
-Sets <index+1>th random option for equipment equipped at <equipment indice>
+Sets <index+1>th random option for equipment equipped at <equipment slot>
 to <id>, <value> and <param>.
 
-For valid equipment indices, see `getequipid` command reference.
+See 'getequipid' for a full list of valid equipment slots.
 
 index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
 

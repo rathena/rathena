@@ -21538,7 +21538,7 @@ BUILDIN_FUNC(getrandomoptinfo) {
 	struct map_session_data *sd;
 	int val;
 	int param = script_getnum(st, 2);
-	if ((sd = script_rid2sd(st)) != NULL && current_equip_item_index && current_equip_item_index > -1 && sd->status.inventory[current_equip_item_index].option[current_equip_opt_index].id) {
+	if ((sd = script_rid2sd(st)) != NULL && current_equip_item_index != -1 && current_equip_opt_index != -1 && sd->status.inventory[current_equip_item_index].option[current_equip_opt_index].id) {
 		switch (param) {
 			case ROA_ID:
 				val = sd->status.inventory[current_equip_item_index].option[current_equip_opt_index].id;
@@ -21564,7 +21564,7 @@ BUILDIN_FUNC(getrandomoptinfo) {
 
 /**
 * Retrieves a random option on an equipped item.
-* getequiprandomoption(<equipment indice>,<index>,<type>{,<char id>});
+* getequiprandomoption(<equipment slot>,<index>,<type>{,<char id>});
 * @author [secretdataz]
 */
 BUILDIN_FUNC(getequiprandomoption) {
@@ -21574,9 +21574,10 @@ BUILDIN_FUNC(getequiprandomoption) {
 	int pos = script_getnum(st, 2);
 	int index = script_getnum(st, 3);
 	int type = script_getnum(st, 4);
-	if (!script_charid2sd(5, sd))
+	if (!script_charid2sd(5, sd)) {
 		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
+	}
 	if (index < 0 || index >= MAX_ITEM_RDM_OPT) {
 		ShowError("buildin_getequiprandomoption: Invalid random option index %d.\n", index);
 		script_pushint(st, -1);
@@ -21595,10 +21596,10 @@ BUILDIN_FUNC(getequiprandomoption) {
 			val = sd->status.inventory[i].option[index].id;
 			break;
 		case ROA_VALUE:
-			val = sd->status.inventory[i].option->value;
+			val = sd->status.inventory[i].option[index].value;
 			break;
 		case ROA_PARAM:
-			val = sd->status.inventory[i].option->param;
+			val = sd->status.inventory[i].option[index].param;
 			break;
 		default:
 			ShowWarning("buildin_getequiprandomoption: Invalid attribute type %d (Max %d).\n", type, MAX_ITEM_RDM_OPT);
@@ -21612,7 +21613,7 @@ BUILDIN_FUNC(getequiprandomoption) {
 /**
 * Adds a random option on a random option slot on an equipped item and overwrites
 * existing random option in the process.
-* setrandomoption(<equipment indice>,<index>,<id>,<value>,<param>{,<char id>});
+* setrandomoption(<equipment slot>,<index>,<id>,<value>,<param>{,<char id>});
 * @author [secretdataz]
 */
 BUILDIN_FUNC(setrandomoption) {

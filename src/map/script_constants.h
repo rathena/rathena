@@ -3123,6 +3123,10 @@
 	export_constant(ROA_VALUE);
 	export_constant(ROA_PARAM);
 
+	export_constant(CARD0_FORGE);
+	export_constant(CARD0_CREATE);
+	export_constant(CARD0_PET);
+
 	#undef export_constant
 
 #endif /* _SCRIPT_CONSTANTS_H_ */

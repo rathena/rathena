@@ -3455,6 +3455,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i];
 		current_equip_combo_pos = 0;
+		current_equip_opt_index = -1;
+
 		if (index < 0)
 			continue;
 		if (i == EQI_AMMO)
@@ -3487,7 +3489,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 					return 1;
 			}
 		}
-		current_equip_opt_index = 0;
+		current_equip_opt_index = -1;
 	}
 
 	if (sc->count && sc->data[SC_ITEMSCRIPT]) {

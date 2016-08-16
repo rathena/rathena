@@ -1608,7 +1608,7 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 			continue;
 		}
 		else {
-			int id;
+			int id = -1;
 			struct s_random_opt_data *data;
 			struct script_code *code;
 
@@ -1620,15 +1620,23 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 				script_get_constant(str[0], &id);
 			}
 
+			if (id < 0) {
+				ShowError("itemdb_read_randomopt: Invalid Random Option ID '%s' in line %d of \"%s\", skipping.\n", str[0], lines, path);
+				continue;
+			}
+
 			if ((data = itemdb_randomopt_exists(id)) == NULL) {
-				data = malloc(sizeof(struct s_random_opt_data));
-				memset(data, 0, sizeof(struct s_random_opt_data));
+				CREATE(data, struct s_random_opt_data, 1);
 				uidb_put(itemdb_randomopt, id, data);
 			}
 			data->id = id;
-			if ((code = parse_script(str[1], "item_randomopt_db.txt", 0, 0)) == NULL) {
+			if ((code = parse_script(str[1], path, lines, 0)) == NULL) {
 				ShowWarning("itemdb_read_randomopt: Invalid script on option ID #%d.\n", id);
 				continue;
+			}
+			if (data->script) {
+				script_free_code(data->script);
+				data->script = NULL;
 			}
 			data->script = code;
 		}
@@ -1764,11 +1772,13 @@ static int itemdb_group_free(DBKey key, DBData *data, va_list ap) {
 }
 
 static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
-    struct s_random_opt_data *opt = (struct s_random_opt_data *)db_data2ptr(data);
-    if (!opt)
-        return 0;
-    if (opt->script)
-        script_free_code(opt->script);
+	struct s_random_opt_data *opt = (struct s_random_opt_data *)db_data2ptr(data);
+	if (!opt)
+		return 0;
+	if (opt->script)
+		script_free_code(opt->script);
+	opt->script = NULL;
+	aFree(opt);
 	return 1;
 }
 
