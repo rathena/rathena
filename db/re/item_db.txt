@@ -8527,18 +8527,7 @@
 14758,Safe_To_Smelting_Scroll,Safe To Smelting Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,6228,6232,24216,17474,969),1; },{},{}
 14765,Limited_Edition_JOB_Battle_Manual,Limited Edition JOB Battle Manual,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_JEXPBOOST,3600000,35; },{},{}
 14766,Limited_Power_Booster,Limited Power Booster,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus bBaseAtk,30; bonus bMatk,30; bonus bAtkRate,1; bonus bMatkRate,1; bonus bHit,30; bonus bFlee,30; bonus bAspd,1; bonus bUseSPrate,-5; bonus bFixedCastrate,-30; }",1800,1,1; },{},{}
-//14798,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 14805,Almighty_Lucky_Egg,Almighty Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Almighty_Lucky_Egg); },{},{}
-//14753,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
-//14800,Old_Hat_Scroll,Old Hat Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
-//14801,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
-//14802,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
-//14803,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
-//14804,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
-//14808,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
-//14809,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
-//14810,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
-//14811,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 
 //===================================================================
 // More Armors
