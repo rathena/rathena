@@ -8531,11 +8531,14 @@
 14805,Almighty_Lucky_Egg,Almighty Lucky Egg,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Almighty_Lucky_Egg); },{},{}
 //14753,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 //14800,Old_Hat_Scroll,Old Hat Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
-//14800,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+//14801,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+//14802,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 //14803,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 //14804,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 //14808,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 //14809,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+//14810,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
+//14811,Scroll,Scroll,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{},{},{}
 
 //===================================================================
 // More Armors
