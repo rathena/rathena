@@ -6630,12 +6630,30 @@ void pc_lostexp(struct map_session_data *sd, unsigned int base_exp, unsigned int
 }
 
 /**
+ * Returns max base level for this character's class.
+ * @param class_: Player's class
+ * @return Max Base Level
+ */
+static unsigned int pc_class_maxbaselv(unsigned short class_) {
+	return job_info[pc_class2idx(class_)].max_level[0];
+}
+
+/**
  * Returns max base level for this character.
  * @param sd Player
  * @return Max Base Level
  **/
 unsigned int pc_maxbaselv(struct map_session_data *sd){
-	return job_info[pc_class2idx(sd->status.class_)].max_level[0];
+	return pc_class_maxbaselv(sd->status.class_);
+}
+
+/**
+ * Returns max job level for this character's class.
+ * @param class_: Player's class
+ * @return Max Job Level
+ */
+static unsigned int pc_class_maxjoblv(unsigned short class_) {
+	return job_info[pc_class2idx(class_)].max_level[1];
 }
 
 /**
@@ -6644,7 +6662,7 @@ unsigned int pc_maxbaselv(struct map_session_data *sd){
  * @return Max Job Level
  **/
 unsigned int pc_maxjoblv(struct map_session_data *sd){
-	return job_info[pc_class2idx(sd->status.class_)].max_level[1];
+	return pc_class_maxjoblv(sd->status.class_);
 }
 
 /**
@@ -10681,10 +10699,10 @@ int pc_split_atoui(char* str, unsigned int* val, char sep, int max)
  *------------------------------------------*/
 static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 {
-	uint32 baselv = 0, joblv = 0;
-	uint16 skill_id, skill_lv;
+	uint32 baselv, joblv, baselv_max, joblv_max;
+	uint16 skill_id, skill_lv, skill_lv_max;
 	int idx, class_;
-	unsigned int i, offset = 3, skill_idx;
+	unsigned int i, offset, skill_idx;
 
 	class_  = atoi(fields[0]);
 	skill_id = (uint16)atoi(fields[1]);
@@ -10693,7 +10711,10 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 	if (columns == 5 + MAX_PC_SKILL_REQUIRE * 2) { // Base/Job level requirement extra columns
 		baselv = (uint32)atoi(fields[3]);
 		joblv = (uint32)atoi(fields[4]);
-		offset++;
+		offset = 5;
+	} else {
+		baselv = joblv = 0;
+		offset = 3;
 	}
 
 	if(!pcdb_checkid(class_))
@@ -10702,6 +10723,23 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 		return false;
 	}
 	idx = pc_class2idx(class_);
+
+	if (!skill_get_index(skill_id)) {
+		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree.", skill_id, class_);
+		return false;
+	}
+	if (skill_lv > (skill_lv_max = skill_get_max(skill_id))) {
+		ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu is higher than defined max level %hu. Capping skill level..\n", skill_id, skill_lv, skill_lv_max);
+		skill_lv = skill_lv_max;
+	}
+	if (baselv > (baselv_max = pc_class_maxbaselv(class_))) {
+		ShowWarning("pc_readdb_skilltree: Skill %hu's base level requirement %d exceeds job %d's max base level %d. Capping skill base level..\n", skill_id, baselv, class_, baselv_max);
+		baselv = baselv_max;
+	}
+	if (joblv > (joblv_max = pc_class_maxjoblv(class_))) {
+		ShowWarning("pc_readdb_skilltree: Skill %hu's job level requirement %d exceeds job %d's max job level %d. Capping skill job level..\n", skill_id, joblv, class_, joblv_max);
+		joblv = joblv_max;
+	}
 
 	//This is to avoid adding two lines for the same skill. [Skotlex]
 	ARR_FIND( 0, MAX_SKILL_TREE, skill_idx, skill_tree[idx][skill_idx].skill_id == 0 || skill_tree[idx][skill_idx].skill_id == skill_id );
@@ -10722,8 +10760,22 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 
 	for(i = 0; i < MAX_PC_SKILL_REQUIRE; i++)
 	{
-		skill_tree[idx][skill_idx].need[i].skill_id = atoi(fields[i*2+offset]);
-		skill_tree[idx][skill_idx].need[i].skill_lv = atoi(fields[i*2+offset+1]);
+		skill_id = (uint16)atoi(fields[i * 2 + offset]);
+		skill_lv = (uint16)atoi(fields[i * 2 + offset + 1]);
+
+		if (skill_id == 0)
+			continue;
+		if (skill_id > MAX_SKILL_ID || !skill_get_index(skill_id)) {
+			ShowWarning("pc_readdb_skilltree: Unable to load requirement skill %hu into job %d's tree.", skill_id, class_);
+			return false;
+		}
+		if (skill_lv > (skill_lv_max = skill_get_max(skill_id))) {
+			ShowWarning("pc_readdb_skilltree: Skill %hu's level (%hu) is higher than defined max level (%hu). Capping skill level..\n", skill_id, skill_lv, skill_lv_max);
+			skill_lv = skill_lv_max;
+		}
+
+		skill_tree[idx][skill_idx].need[i].skill_id = skill_id;
+		skill_tree[idx][skill_idx].need[i].skill_lv = skill_lv;
 	}
 	return true;
 }
@@ -11092,11 +11144,6 @@ void pc_readdb(void) {
 	//reset
 	memset(job_info,0,sizeof(job_info)); // job_info table
 
-	// Reset and read skilltree
-	memset(skill_tree,0,sizeof(skill_tree));
-	sv_readdb(db_path, DBPATH"skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 5+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree, 0);
-	sv_readdb(db_path, DBIMPORT"/skill_tree.txt", ',', 3+MAX_PC_SKILL_REQUIRE*2, 5+MAX_PC_SKILL_REQUIRE*2, -1, &pc_readdb_skilltree, 1);
-
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 	sv_readdb(db_path, "re/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 0);
 	sv_readdb(db_path, DBIMPORT"/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 1);
@@ -11151,7 +11198,12 @@ void pc_readdb(void) {
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
-	
+
+	// Reset and read skilltree - needs to be read after pc_readdb_job_exp to get max base and job levels
+	memset(skill_tree, 0, sizeof(skill_tree));
+	sv_readdb(db_path, DBPATH"skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, &pc_readdb_skilltree, 0);
+	sv_readdb(db_path, DBIMPORT"/skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, &pc_readdb_skilltree, 1);
+
 	// generate the remaining parts of the db if necessary
 	k = battle_config.use_statpoint_table; //save setting
 	battle_config.use_statpoint_table = 0; //temporarily disable to force pc_gets_status_point use default values
