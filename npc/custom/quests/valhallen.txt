@@ -12,7 +12,7 @@
 //===== Additional Comments: ================================= 
 //= 1.1 Optimized. [Euphy]
 //= 2.0 Adds SE and TE Godlikes. Fixed Mixing Itemlist. [Jey]
-//= Sources for the mixing lists 2015-08-15:
+//= Sources for the mixing lists 2016-08-15:
 //= http://irowiki.org/wiki/God_Items_Quest
 //= http://irowiki.org/wiki/God_Items_Quest_2
 //= http://irowiki.org/wiki/God_Items_Quest_3
@@ -33,7 +33,7 @@ prontera,147,171,5	script	Lenneth	811,{
 		case 2:
 			mes "[Lenneth]";
 			mes "^3355FFSleipnir^000000 are boots made after Odin's War Horse.";
-			setarray .@Items[0],2410,2406,2,984,20,969,20,985,10,7076,3,7079,5,7083,3,7086,4,7087,3;
+			setarray .@Items[0],2410,2406,2,969,20,985,10,7076,3,7079,5,7083,3,7086,4,7087,3;
 			break;
 		case 3:
 			mes "[Lenneth]";
