@@ -564,9 +564,9 @@ int map_foreachinrangeV(int (*func)(struct block_list*,va_list),struct block_lis
 	int blockcount = bl_list_count, i;
 	int x0, x1, y0, y1;
 	va_list ap_copy;
-
+	
 	m = center->m;
-	if ( m < 0 )
+	if( m < 0 )
 		return 0;
 
 	x0 = i16max(center->x - range, 0);
@@ -574,21 +574,35 @@ int map_foreachinrangeV(int (*func)(struct block_list*,va_list),struct block_lis
 	x1 = i16min(center->x + range, map[m].xs - 1);
 	y1 = i16min(center->y + range, map[m].ys - 1);
 
-	for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
-		for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {
-			if ( type&BL_MOB )
-				bl = map[m].block_mob[ bx + by * map[m].bxs ];
-			else
-				bl = map[m].block[ bx + by * map[m].bxs ];
-			for(; bl != NULL; bl = bl->next ) {
-				if( bl->type&type
-					&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
+	if ( type&~BL_MOB ) {
+		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
+			for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {
+				for(bl = map[m].block[ bx + by * map[m].bxs ]; bl != NULL; bl = bl->next ) {
+					if( bl->type&type
+						&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
 #ifdef CIRCULAR_AREA
-					&& check_distance_bl(center, bl, range)
+						&& check_distance_bl(center, bl, range)
 #endif
-					&& ( !wall_check || path_search_long(NULL, center->m, center->x, center->y, bl->x, bl->y, CELL_CHKWALL) )
-				  	&& bl_list_count < BL_LIST_MAX )
-					bl_list[ bl_list_count++ ] = bl;
+						&& ( !wall_check || path_search_long(NULL, center->m, center->x, center->y, bl->x, bl->y, CELL_CHKWALL) )
+					  	&& bl_list_count < BL_LIST_MAX )
+						bl_list[ bl_list_count++ ] = bl;
+				}
+			}
+		}
+	}
+
+	if ( type&BL_MOB ) {
+		for( by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++ ) {
+			for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {
+				for(bl = map[m].block_mob[ bx + by * map[m].bxs ]; bl != NULL; bl = bl->next ) {
+					if( bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
+#ifdef CIRCULAR_AREA
+						&& check_distance_bl(center, bl, range)
+#endif
+						&& ( !wall_check || path_search_long(NULL, center->m, center->x, center->y, bl->x, bl->y, CELL_CHKWALL) )
+					  	&& bl_list_count < BL_LIST_MAX )
+						bl_list[ bl_list_count++ ] = bl;
+				}
 			}
 		}
 	}
@@ -682,18 +696,29 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 		cy = y0 + (y1 - y0) / 2;
 	}
 
-	for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++) {
-		for (bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++) {
-			if( type&BL_MOB )
-				bl = map[m].block_mob[bx + by * map[m].bxs];
-			else
-				bl = map[m].block[bx + by * map[m].bxs];
-			for(; bl != NULL; bl = bl->next) {
-				if ( ( type&BL_MOB || bl->type&type )
-					&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
-					&& ( !wall_check || path_search_long(NULL, m, cx, cy, bl->x, bl->y, CELL_CHKWALL) )
-					&& bl_list_count < BL_LIST_MAX )
-					bl_list[bl_list_count++] = bl;
+	if( type&~BL_MOB ) {
+		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++) {
+			for (bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++) {
+				for(bl = map[m].block[bx + by * map[m].bxs]; bl != NULL; bl = bl->next) {
+					if ( bl->type&type
+						&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
+						&& ( !wall_check || path_search_long(NULL, m, cx, cy, bl->x, bl->y, CELL_CHKWALL) )
+						&& bl_list_count < BL_LIST_MAX )
+						bl_list[bl_list_count++] = bl;
+				}
+			}
+		}
+	}
+
+	if( type&BL_MOB ) {
+		for (by = y0 / BLOCK_SIZE; by <= y1 / BLOCK_SIZE; by++) {
+			for (bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++) {
+				for(bl = map[m].block_mob[bx + by * map[m].bxs]; bl != NULL; bl = bl->next) {
+					if ( bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
+						&& ( !wall_check || path_search_long(NULL, m, cx, cy, bl->x, bl->y, CELL_CHKWALL) )
+						&& bl_list_count < BL_LIST_MAX )
+						bl_list[bl_list_count++] = bl;
+				}
 			}
 		}
 	}
