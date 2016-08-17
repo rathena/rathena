@@ -10729,7 +10729,7 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 		return false;
 	}
 	if (skill_lv > (skill_lv_max = skill_get_max(skill_id))) {
-		ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu is higher than defined max level %hu. Capping skill level..\n", skill_id, skill_lv, skill_lv_max);
+		ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level..\n", skill_id, skill_lv, class_, skill_lv_max);
 		skill_lv = skill_lv_max;
 	}
 	if (baselv > (baselv_max = pc_class_maxbaselv(class_))) {
@@ -10745,12 +10745,12 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 	ARR_FIND( 0, MAX_SKILL_TREE, skill_idx, skill_tree[idx][skill_idx].skill_id == 0 || skill_tree[idx][skill_idx].skill_id == skill_id );
 	if( skill_idx == MAX_SKILL_TREE )
 	{
-		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree. Maximum number of skills per class has been reached.\n", skill_id, class_);
+		ShowWarning("pc_readdb_skilltree: Unable to load skill %hu into job %d's tree. Maximum number of skills per job has been reached.\n", skill_id, class_);
 		return false;
 	}
 	else if(skill_tree[idx][skill_idx].skill_id)
 	{
-		ShowNotice("pc_readdb_skilltree: Overwriting skill %hu for job class %d.\n", skill_id, class_);
+		ShowNotice("pc_readdb_skilltree: Overwriting skill %hu for job %d.\n", skill_id, class_);
 	}
 
 	skill_tree[idx][skill_idx].skill_id = skill_id;
@@ -10770,7 +10770,7 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 			return false;
 		}
 		if (skill_lv > (skill_lv_max = skill_get_max(skill_id))) {
-			ShowWarning("pc_readdb_skilltree: Skill %hu's level (%hu) is higher than defined max level (%hu). Capping skill level..\n", skill_id, skill_lv, skill_lv_max);
+			ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level..\n", skill_id, skill_lv, class_, skill_lv_max);
 			skill_lv = skill_lv_max;
 		}
 
