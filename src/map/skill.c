@@ -302,9 +302,9 @@ int skill_tree_get_max(uint16 skill_id, int b_class)
 	int i;
 	b_class = pc_class2idx(b_class);
 
-	ARR_FIND( 0, MAX_SKILL_TREE, i, skill_tree[b_class][i].id == 0 || skill_tree[b_class][i].id == skill_id );
-	if( i < MAX_SKILL_TREE && skill_tree[b_class][i].id == skill_id )
-		return skill_tree[b_class][i].max;
+	ARR_FIND( 0, MAX_SKILL_TREE, i, skill_tree[b_class][i].skill_id == 0 || skill_tree[b_class][i].skill_id == skill_id );
+	if( i < MAX_SKILL_TREE && skill_tree[b_class][i].skill_id == skill_id )
+		return skill_tree[b_class][i].skill_lv;
 	else
 		return skill_get_max(skill_id);
 }

@@ -1150,12 +1150,10 @@ int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex
 const char * job_name(int class_);
 
 struct skill_tree_entry {
-	uint16 id;
-	uint8 max;
-	uint8 joblv;
+	uint16 skill_id, skill_lv;
+	uint32 baselv, joblv;
 	struct {
-		uint16 id;
-		uint8 lv;
+		uint16 skill_id, skill_lv;
 	} need[MAX_PC_SKILL_REQUIRE];
 }; // Celest
 extern struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
