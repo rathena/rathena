@@ -9443,6 +9443,10 @@ REPLACE INTO `item_db_re` VALUES (18126,'Blue_Bow','Blue Bow',5,10,NULL,1200,'15
 REPLACE INTO `item_db_re` VALUES (18127,'Ru_Gold_Bow','Ru Gold Bow',5,0,NULL,1200,'150',NULL,5,2,0x00000800,56,2,34,3,'120',1,11,'bonus bAgi,8; bonus bDex,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18128,'Infinity_Bow','Infinity Bow',5,20,NULL,500,'160',NULL,5,1,0x00020048,63,2,34,4,'100',1,11,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18130,'Crimson_Bow','Crimson Bow',5,20,NULL,1200,'120',NULL,5,2,0x00080048,63,2,34,3,'70',1,11,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18137,'Burning_Bow_','Burning Bow',5,20,NULL,1400,'95',NULL,5,2,0x000A0808,63,2,34,3,'55',1,11,'bonus2 bSubEle,Ele_Fire,10;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18138,'Frozen_Bow_','Frozen Bow',5,20,NULL,1400,'100',NULL,5,2,0x000A0808,63,2,34,3,'55',1,11,'bonus2 bAddEff,Eff_Freeze,1000;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18139,'Earth_Bow_','Earth Bow',5,20,NULL,1400,'105',NULL,5,2,0x000A0808,63,2,34,3,'55',1,11,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18140,'Gust_Bow_','Gust Bow',5,20,NULL,1400,'95',NULL,5,2,0x000A0808,63,2,34,3,'55',1,11,NULL,NULL,NULL);
 #===================================================================
 # More Headgears
 #===================================================================
