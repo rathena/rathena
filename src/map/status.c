@@ -3469,7 +3469,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 			struct s_random_opt_data *data;
 			for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
 				short opt_id = sd->status.inventory[index].option[j].id;
-				unsigned short nameid = sd->status.inventory[index].nameid;
+
 				if (!opt_id)
 					continue;
 				current_equip_opt_index = j;
