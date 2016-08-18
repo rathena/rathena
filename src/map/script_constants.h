@@ -2424,6 +2424,24 @@
 	export_constant(SI_DORAM_BUF_01);
 	export_constant(SI_DORAM_BUF_02);
 	export_constant(SI_SPRITEMABLE);
+	export_constant(SI_AID_PERIOD_RECEIVEITEM);
+	export_constant(SI_AID_PERIOD_PLUSEXP);
+	export_constant(SI_AID_PERIOD_PLUSJOBEXP);
+	export_constant(SI_AID_PERIOD_DEADPENALTY);
+	export_constant(SI_AID_PERIOD_ADDSTOREITEMCOUNT);
+	export_constant(SI_HISS);
+	export_constant(SI_NYANGGRASS);
+	export_constant(SI_CHATTERING);
+	export_constant(SI_GROOMING);
+	export_constant(SI_PROTECTIONOFSHRIMP);
+	export_constant(SI_EP16_2_BUFF_SS);
+	export_constant(SI_EP16_2_BUFF_SC);
+	export_constant(SI_EP16_2_BUFF_AC);
+	export_constant(SI_GS_MAGICAL_BULLET);
+	export_constant(SI_FALLEN_ANGEL);
+	export_constant(SI_GLOOM_CARD);
+	export_constant(SI_PHARAOH_CARD);
+	export_constant(SI_KIEL_CARD);
 
 	/* elements */
 	export_constant(ELE_NEUTRAL);
