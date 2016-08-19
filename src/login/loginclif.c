@@ -197,7 +197,7 @@ static void logclif_auth_failed(struct login_session_data* sd, int result) {
 		    login_log(ip, sd->userid, result, msg_txt(22)); //unknow error
 	}
 
-	if( result == 1 && login_config.dynamic_pass_failure_ban )
+	if( (result == 0 || result == 1) && login_config.dynamic_pass_failure_ban )
 		ipban_log(ip); // log failed password attempt
 
 //#if PACKETVER >= 20120000 /* not sure when this started */
