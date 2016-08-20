@@ -9372,6 +9372,7 @@ REPLACE INTO `item_db_re` VALUES (17519,'Epic_Heroes_Scroll','Epic Heroes Scroll
 REPLACE INTO `item_db_re` VALUES (17520,'Limited_Edition_Manual_Box','Limited Edition Manual Box',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 14765,3; /*getitem (limited edition battle manual),2;*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17521,'Three_Master_Package_V','Three Master Package V',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 14534,20; getitem 14535,20; /*getitem Mysterious Water of Life,20;*/ getitem 22842,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17522,'Three_Master_Package_V(10)','Three Master Package V(10)',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 14534,200; getitem 14535,200; /*getitem Mysterious Water of Life,200;*/ getitem 22842,11;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (17523,'Mystical_Costume_Scroll','Mystical Costume Scroll',18,0,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Mystical_Costume_Scroll);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17524,'Limited_Power_Booster_Box','Limited Power Booster Box',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 14766,1; getitem 22873,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17525,'Limited_Power_Booster_Box(100)','Limited Power Booster Box(100)',2,10,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem 14766,100; getitem 22873,11;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (17526,'Majestic_Lucky_Egg','Majestic Lucky Egg',18,0,NULL,10,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getgroupitem(IG_Majestic_Lucky_Egg);',NULL,NULL);
@@ -10496,6 +10497,7 @@ REPLACE INTO `item_db_re` VALUES (20217,'C_Arabian_Veil','Costume Arabian Veil',
 REPLACE INTO `item_db_re` VALUES (20218,'C_Spell_Circuit','Costume Spell Circuit',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,1,'1',1,1301,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20219,'C_Angel_Marcher_Hat','Costume Angel Marcher Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1302,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20220,'C_Dark_Night_Veil','Costume Dark Night Veil',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,3072,1,'1',1,1303,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20221,'C_Eyes_Of_Ifrit','C Eyes Of Ifrit',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',1,886,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20222,'C_Blue_Pigtail_Santa_Hat','Costume Blue Pigtail Santa Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,NULL,1,395,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20223,'C_Romantic_Leaf','Costume Romantic Leaf',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',1,57,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20224,'C_Red_Tailed_Ribbon','Costume Red Tailed Ribbon',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,167,NULL,NULL,NULL);
