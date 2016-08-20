@@ -4332,3 +4332,15 @@ IG_Blessing_Scarlet_Egg,14616,1,20,1,0 // 20x STR Biscuit Stick
 IG_Blessing_Scarlet_Egg,14617,1,20,1,0 // 20x VIT Biscuit Stick
 IG_Blessing_Scarlet_Egg,14619,1,20,1,0 // 20x INT Biscuit Stick
 IG_Blessing_Scarlet_Egg,14618,1,20,1,0 // 20x AGI Biscuit Stick
+
+//! TODO: Confirm the rates
+IG_Mystical_Costume_Scroll,20219,1,1,1,0 // 1x C_Angel_Marcher_Hat
+IG_Mystical_Costume_Scroll,20217,1,1,1,0 // 1x C_Arabian_Veil
+IG_Mystical_Costume_Scroll,20215,1,1,1,0 // 1x C_Black_Devil_Mask
+IG_Mystical_Costume_Scroll,20220,1,1,1,0 // 1x C_Dark_Night_Veil
+IG_Mystical_Costume_Scroll,20214,1,1,1,0 // 1x C_Evil_Marcher_Hat
+IG_Mystical_Costume_Scroll,20221,1,1,1,0 // 1x C_Eyes_Of_Ifrit
+IG_Mystical_Costume_Scroll,19615,1,1,1,0 // 1x C_Loki_Mask
+IG_Mystical_Costume_Scroll,20216,1,1,1,0 // 1x C_Rideword_Hat
+IG_Mystical_Costume_Scroll,20213,1,1,1,0 // 1x C_Sirt_Evil_Eye
+IG_Mystical_Costume_Scroll,20218,1,1,1,0 // 1x C_Spell_Circuit

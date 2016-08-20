@@ -401,6 +401,7 @@
 17497,2 //Seaside_Costume_Scroll
 17517,2 //Animal_Costume_Scroll
 17519,2 //Epic_Heroes_Scroll
+17523,2 //Mystical_Costume_Scroll
 17526,2 //Majestic_Lucky_Egg
 17532,2 //Blessing_Lucky_Egg
 17552,2 //Garnet_Lucky_Egg
@@ -1735,6 +1736,7 @@
 17497,4 //Seaside_Costume_Scroll
 17517,4 //Animal_Costume_Scroll
 17519,4 //Epic_Heroes_Scroll
+17523,4 //Mystical_Costume_Scroll
 17526,4 //Majestic_Lucky_Egg
 17532,4 //Blessing_Lucky_Egg
 17552,4 //Garnet_Lucky_Egg

@@ -3595,6 +3595,7 @@
 17520,475,100	// Limited_Edition_Manual_Box
 17521,475,100	// Three_Master_Package_V
 17522,475,100	// Three_Master_Package_V(10)
+17523,475,100	// Mystical_Costume_Scroll
 17524,475,100	// Limited_Power_Booster_Box
 17525,475,100	// Limited_Power_Booster_Box(100)
 17527,475,100	// Actinidia_Cat_Fruit_Box(200)
