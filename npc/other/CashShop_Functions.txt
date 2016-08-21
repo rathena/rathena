@@ -307,20 +307,24 @@ function	script	F_Snowball	{
 
 // Status reduction potion
 //============================================================
-// - Permanently reduces base stat <type> by 1.
+// - Permanently reduces base stat <type> by <val>.
 // - Returns status points equals to points needed to raise
 //   that stat to original value.
-// - Doesn't work if base status <type> is already 1.
-// * callfunc("F_CashReduceStat",<type>{,<itemid>});
+// - Doesn't work if base status <type> would become lower than 1 after reduction.
+// * callfunc("F_CashReduceStat",<type>{,<val>,<itemid>});
 function	script	F_CashReduceStat	{
 	.@type = getarg(0);
-	.@itemid = getarg(1, 0);
+	.@amount = getarg(1, -1);
+	.@itemid = getarg(2, 0);
 	
-	if(readparam(.@type) < 2) return;
+	if((readparam(.@type) + .@amount) < 1) return;
 	
 	if(.@itemid)
-		delitem .@itemid,1;
-	StatusPoint += needed_status_point(.@type, -1);
-	statusup2 .@type,-1;
+		if(countitem(.@itemid))
+			delitem .@itemid,1;
+		else
+			return;
+	StatusPoint += needed_status_point(.@type, .@amount);
+	statusup2 .@type,.@amount;
 	return;
 }
