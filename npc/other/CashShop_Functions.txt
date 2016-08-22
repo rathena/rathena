@@ -319,11 +319,12 @@ function	script	F_CashReduceStat	{
 	
 	if((readparam(.@type) + .@amount) < 1) return;
 	
-	if(.@itemid)
+	if(.@itemid) {
 		if(countitem(.@itemid))
 			delitem .@itemid,1;
 		else
 			return;
+	}
 	StatusPoint += needed_status_point(.@type, .@amount);
 	statusup2 .@type,.@amount;
 	return;
