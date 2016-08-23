@@ -4,6 +4,7 @@
 //= Sara's Memories Instance in the Dimensional Gap.
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Chilly]
+//= 1.1 Clean-up and monster position fix. [RagnarokNova]
 //============================================================
 
 //= NPCs
