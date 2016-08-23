@@ -16,10 +16,8 @@
 
 static DBMap* clan_db; // int clan_id -> struct clan*
 
-void clan_init(){
+void do_init_clan(){
 	clan_db = idb_alloc(DB_OPT_RELEASE_DATA);
-
-	intif_clan_requestclans();
 }
 
 void do_final_clan(){

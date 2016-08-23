@@ -9,6 +9,7 @@
 //#include "../common/mmo.h"
 
 struct Channel;
+struct clan;
 struct item;
 struct storage_data;
 struct guild_storage;

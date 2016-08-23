@@ -4728,6 +4728,7 @@ int do_init(int argc, char *argv[])
 	do_init_instance();
 	do_init_channel();
 	do_init_chrif();
+	do_init_clan();
 	do_init_clif();
 	do_init_script();
 	do_init_itemdb();

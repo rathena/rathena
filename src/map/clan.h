@@ -7,7 +7,7 @@
 	#include "../common/mmo.h"
 	#include "status.h"
 
-	void clan_init();
+	void do_init_clan();
 	void do_final_clan();
 	struct clan* clan_search( int id );
 	void clan_load_clandata( int count, struct clan* clans );
