@@ -1,15 +1,9 @@
 //===== rAthena Script =======================================
-//= Sara's Memories
-//===== By: ==================================================
-//= Chilly
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
+//= Heroes' Trail Part 1 - Sara's Memories
 //===== Description: =========================================
 //= Sara's Memories Instance in the Dimensional Gap.
-//===== Additional Comments: =================================
-//= 1.0 First Release
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Chilly]
 //============================================================
 
 //= NPCs
