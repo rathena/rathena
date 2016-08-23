@@ -2332,6 +2332,7 @@ Type is the kind of associated ID number required:
  2 - Guild ID
  3 - Account ID
  4 - Battle Ground ID
+ 5 - Clan ID
 
 For most purposes other than printing it, a number is better to have than a name 
 (people do horrifying things to their character names).
@@ -9210,6 +9211,20 @@ index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
 ID - ID of random option. See db/const.txt for constants.
 Value - Value of random option
 Param - Parameter of random option
+
+---------------------------------------
+
+*clan_join(<clan_id>{,<char id>});
+
+The attached player joins the clan with the id <clan_id>.
+If <char id> is specified, the specified player is used rather than the attached one.
+
+---------------------------------------
+
+*clan_leave({<char id>});
+
+The attached player leaves his clan.
+If <char id> is specified, the specified player is used rather than the attached one.
 
 ---------------------------------------
 

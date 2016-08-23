@@ -537,6 +537,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\map\clan.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\clan.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\clif.c"
 				>
 			</File>

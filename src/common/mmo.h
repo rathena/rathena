@@ -21,7 +21,7 @@
 // see conf/battle/client.conf for other version
 
 #ifndef PACKETVER
-	#define PACKETVER 20130807
+	#define PACKETVER 20151104
 	//#define PACKETVER 20120410
 #endif
 
@@ -79,6 +79,7 @@
 #define MAX_QUEST_DROPS 3 ///Max quest drops for a quest
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
+#define MAX_CLAN 500
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -409,7 +410,7 @@ struct mmo_charstatus {
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
 	short hair,hair_color,clothes_color,body;
-	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id;
+	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id,clan_id;
 	int fame;
 
 	// Mercenary Guilds Rank
@@ -836,6 +837,15 @@ enum e_pc_reg_loading {
 	PRL_ACCL = 0x2, // local
 	PRL_ACCG = 0x4, // global
 	PRL_ALL = 0xFF,
+};
+
+struct clan{
+	int id;
+	char name[NAME_LENGTH];
+	char master[NAME_LENGTH];
+	char map[MAP_NAME_LENGTH_EXT];
+	short max_member, connect_member;
+	struct map_session_data *members[MAX_CLAN];
 };
 
 // Sanity checks...

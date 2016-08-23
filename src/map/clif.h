@@ -189,6 +189,8 @@ typedef enum send_target {
 	BG_SAMEMAP_WOS,
 	BG_AREA,
 	BG_AREA_WOS,
+
+	CLAN,				// Clan System
 } send_target;
 
 typedef enum broadcast_flags {
@@ -965,6 +967,12 @@ void clif_spiritcharm(struct map_session_data *sd);
 
 void clif_snap( struct block_list *bl, short x, short y );
 void clif_monster_hp_bar( struct mob_data* md, int fd );
+
+// Clan System
+void clif_clan_basicinfo( struct map_session_data *sd );
+void clif_clan_message(struct clan *clan,const char *mes,int len);
+void clif_clan_onlinecount( struct clan* clan );
+void clif_clan_leave( struct map_session_data* sd );
 
 /**
  * Color Table

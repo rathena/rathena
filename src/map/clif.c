@@ -632,6 +632,23 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 			}
 		}
 		break;
+	case CLAN:
+		if( sd && sd->clan ){
+			struct clan* clan = sd->clan;
+
+			for( i = 0; i < clan->max_member; i++ ){
+				if( ( sd = clan->members[i] ) == NULL || !(fd = sd->fd) ){
+					continue;
+				}
+
+				if( packet_db[sd->packet_ver][RBUFW(buf,0)].len ){ // packet must exist for the client version
+					WFIFOHEAD(fd,len);
+					memcpy(WFIFOP(fd,0), buf, len);
+					WFIFOSET(fd,len);
+				}
+			}
+		}
+		break;
 
 	default:
 		ShowError("clif_send: Unrecognized type %d\n",type);
@@ -13085,6 +13102,11 @@ void clif_parse_CreateGuild(int fd,struct map_session_data *sd){
 		return;
 	}
 
+	if(sd->clan){
+		// Should display a clientside message "You are currently joined in Clan !!" so we ignore it
+		return;
+	}
+
 	guild_create(sd, name);
 }
 
@@ -13288,6 +13310,11 @@ int clif_sub_guild_invite(int fd, struct map_session_data *sd, struct map_sessio
 
 	if(t_sd && t_sd->state.noask) {// @noask [LuzZza]
 		clif_noask_sub(sd, t_sd, 2);
+		return 1;
+	}
+
+	// Players in a clan can not join a guild
+	if(t_sd && t_sd->clan){
 		return 1;
 	}
 
@@ -18117,6 +18144,84 @@ void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, 
 	clif_send(buf, packet_len(0x7fc), &sd->bl, PARTY);
 }
 
+void clif_clan_message(struct clan *clan,const char *mes,int len){
+	struct map_session_data *sd;
+	uint8 buf[256];
+
+	if( len == 0 ){
+		return;
+	}else if( len > (sizeof(buf)-5-NAME_LENGTH) ){
+		ShowWarning("clif_clan_message: Truncated message '%s' (len=%d, max=%d, clan_id=%d).\n", mes, len, sizeof(buf)-5, clan->id);
+		len = sizeof(buf)-5-NAME_LENGTH;
+	}
+
+	WBUFW(buf, 0) = 0x98e;
+	WBUFW(buf, 2) = len + 5 + NAME_LENGTH;
+	
+	// Offially the sender name should also be filled here, but it is not required by the client and since it's in the message too we do not fill it
+	//safestrncpy((char*)WBUFP(buf,4), sendername, NAME_LENGTH);
+	safestrncpy((char*)WBUFP(buf,4+NAME_LENGTH), mes, len+1);
+
+	if((sd = clan_getavailablesd(clan)) != NULL)
+		clif_send(buf, WBUFW(buf,2), &sd->bl, CLAN);
+}
+
+void clif_parse_clan_chat( int fd, struct map_session_data* sd ){
+	char name[NAME_LENGTH], message[CHAT_SIZE_MAX], output[CHAT_SIZE_MAX+NAME_LENGTH*2];
+
+	// validate packet and retrieve name and message
+	if( !clif_process_message(sd, false, name, message, output ) )
+		return;
+
+	clan_send_message( sd, (char*)RFIFOP(fd,4), RFIFOW(fd,2) - 4 );
+}
+
+void clif_clan_basicinfo( struct map_session_data *sd ){
+	int fd = sd->fd, offset, length;
+	struct clan* clan = sd->clan;
+	char mapname[MAP_NAME_LENGTH_EXT];
+
+	length = 8 + 2 * NAME_LENGTH + MAP_NAME_LENGTH_EXT + 2;
+
+	WFIFOHEAD(fd,length);
+
+	memset( WFIFOP(fd, 0), 0, length );
+
+	WFIFOW( fd, 0 ) = 0x98a;
+	WFIFOW( fd, 2 ) = length;
+	WFIFOL( fd, 4 ) = clan->id;
+	offset = 8;
+	safestrncpy( (char*)WFIFOP( fd, offset ), clan->name, NAME_LENGTH );
+	offset += NAME_LENGTH;
+	safestrncpy( (char*)WFIFOP( fd, offset ), clan->master, NAME_LENGTH );
+	offset += NAME_LENGTH;
+	mapindex_getmapname_ext( clan->map, mapname );
+	safestrncpy( (char*)WFIFOP( fd, offset ), mapname, MAP_NAME_LENGTH_EXT );
+	offset += MAP_NAME_LENGTH_EXT;
+
+	WFIFOSET(fd,length);
+}
+
+void clif_clan_onlinecount( struct clan* clan ){
+	uint8 buf[6];
+	struct map_session_data *sd;
+
+	WBUFW(buf,0) = 0x988;
+	WBUFW(buf,2) = clan->connect_member;
+	WBUFW(buf,4) = clan->max_member;
+
+	if((sd = clan_getavailablesd(clan)) != NULL)
+		clif_send(buf, 6, &sd->bl, CLAN);
+}
+
+void clif_clan_leave( struct map_session_data* sd ){
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd,2);
+	WFIFOW(fd,0) = 0x989;
+	WFIFOSET(fd,2);
+}
+
 /**
  * Decrypt packet identifier for player
  * @param fd
@@ -19440,6 +19545,8 @@ void packetdb_readdb(bool reload)
 		{ clif_parse_Oneclick_Itemidentify, "oneclick_itemidentify" },
 		// NewChange Cart2
 		{ clif_parse_SelectCart, "selectcart" },
+		// Clan System
+		{ clif_parse_clan_chat, "clanchat" },
 		{NULL,NULL}
 	};
 	struct {

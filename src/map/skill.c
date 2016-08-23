@@ -7723,6 +7723,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_REUSE_STORMBLAST:	case SC_ALL_RIDING_REUSE_LIMIT:
 					case SC_SPRITEMABLE:		case SC_BITESCAR:	case SC_CRUSHSTRIKE:
 					case SC_QUEST_BUFF1:	case SC_QUEST_BUFF2:	case SC_QUEST_BUFF3:
+					// Clans
+					case SC_CLAN_INFO:
+					case SC_SWORDCLAN:
+					case SC_ARCWANDCLAN:
+					case SC_GOLDENMACECLAN:
+					case SC_CROSSBOWCLAN:
 						continue;
 					//bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
 					case SC_WHISTLE:

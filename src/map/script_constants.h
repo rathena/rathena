@@ -1401,6 +1401,11 @@
 	export_constant(SC_MAPLE_FALLS);
 	export_constant(SC_TIME_ACCESSORY);
 	export_constant(SC_MAGICAL_FEATHER);
+	export_constant(SC_CLAN_INFO);
+	export_constant(SC_SWORDCLAN);
+	export_constant(SC_ARCWANDCLAN);
+	export_constant(SC_GOLDENMACECLAN);
+	export_constant(SC_CROSSBOWCLAN);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

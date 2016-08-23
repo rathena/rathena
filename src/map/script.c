@@ -30,6 +30,7 @@
 
 #include "map.h"
 #include "path.h"
+#include "clan.h"
 #include "clif.h"
 #include "chrif.h"
 #include "itemdb.h"
@@ -7759,6 +7760,7 @@ BUILDIN_FUNC(readparam)
  *	2 : guild_id
  *	3 : account_id
  *	4 : bg_id
+ *	5 : clan_id
  *------------------------------------------*/
 BUILDIN_FUNC(getcharid)
 {
@@ -7782,6 +7784,7 @@ BUILDIN_FUNC(getcharid)
 	case 2: script_pushint(st,sd->status.guild_id); break;
 	case 3: script_pushint(st,sd->status.account_id); break;
 	case 4: script_pushint(st,sd->bg_id); break;
+	case 5: script_pushint(st,sd->status.clan_id); break;
 	default:
 		ShowError("buildin_getcharid: invalid parameter (%d).\n", num);
 		script_pushint(st,0);
@@ -20967,6 +20970,38 @@ BUILDIN_FUNC(npcshopupdate) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+// Clan System
+BUILDIN_FUNC(clan_join){
+	struct map_session_data *sd;
+	int clan_id;
+
+	clan_id = script_getnum(st,2);
+
+	if( !script_charid2sd( 3, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( clan_member_join( sd, clan_id, sd->status.account_id, sd->status.char_id ) ){
+		return SCRIPT_CMD_SUCCESS;
+	}else{
+		return SCRIPT_CMD_FAILURE;
+	}
+}
+
+BUILDIN_FUNC(clan_leave){
+	struct map_session_data *sd;
+
+	if( !script_charid2sd( 2, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( clan_member_leave( sd, sd->status.clan_id, sd->status.account_id, sd->status.char_id ) ){
+		return SCRIPT_CMD_SUCCESS;
+	}else{
+		return SCRIPT_CMD_FAILURE;
+	}
+}
+
 /**
  * Get rid from running script.
  * getattachedrid();
@@ -22208,6 +22243,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(party_changeleader,"ii"),
 	BUILDIN_DEF(party_changeoption,"iii"),
 	BUILDIN_DEF(party_destroy,"i"),
+
+	// Clan system
+	BUILDIN_DEF(clan_join,"i?"),
+	BUILDIN_DEF(clan_leave,"?"),
 
 	BUILDIN_DEF(is_clientver,"ii?"),
 	BUILDIN_DEF2(montransform, "transform", "vi?????"), // Monster Transform [malufett/Hercules]

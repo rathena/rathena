@@ -18,6 +18,7 @@
 #include "map.h"
 #include "path.h"
 #include "chrif.h"
+#include "clan.h"
 #include "clif.h"
 #include "duel.h"
 #include "intif.h"
@@ -1980,6 +1981,9 @@ int map_quit(struct map_session_data *sd) {
 
 	if( sd->bg_id )
 		bg_team_leave(sd,1);
+
+	if( sd->status.clan_id )
+		clan_member_left(sd);
 
 	pc_itemcd_do(sd,false);
 
@@ -4386,6 +4390,7 @@ void do_final(void)
 	do_final_atcommand();
 	do_final_battle();
 	do_final_chrif();
+	do_final_clan();
 	do_final_clif();
 	do_final_npc();
 	do_final_quest();
