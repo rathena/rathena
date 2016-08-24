@@ -2773,18 +2773,18 @@
 4593,Menblatt_Card,Menblatt Card,6,20,,10,,,,,,,,4,,,,,{ bonus bLongAtkRate,readparam(bDex)/10; },{},{}
 4594,Petal_Card,Petal Card,6,20,,10,,,,,,,,4,,,,,{ bonus bCritAtkRate,2*(readparam(bLuk)/10); },{},{}
 4595,Cenere_Card,Cenere Card,6,20,,10,,,,,,,,4,,,,,{ bonus bAspdRate,2*(readparam(bAgi)/10); },{},{}
-4596,Antique_Book_Card,Antique Book Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMatk,5*(readparam(bInt)/10); },{},{}
-4597,Lichtern_Blue_Card,Lichtern Blue Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Water,(getrefine()>=9)?10:5; },{},{}
-4598,Lichtern_Green_Card,Lichtern Green Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Ghost,(getrefine()>=9)?10:5; },{},{}
-4599,Lichtern_Red_Card,Lichtern Red Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Fire,(getrefine()>=9)?10:5; },{},{}
-4600,Lichtern_Yellow_Card,Lichtern Yellow Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Earth,(getrefine()>=9)?10:5; },{},{}
+4596,AntiqueBook_Card,Antique Book Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMatk,5*(readparam(bInt)/10); },{},{}
+4597,LichternB_Card,Lichtern Blue Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Water,(getrefine()>=9)?10:5; },{},{}
+4598,LichternG_Card,Lichtern Green Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Ghost,(getrefine()>=9)?10:5; },{},{}
+4599,LichternR_Card,Lichtern Red Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Fire,(getrefine()>=9)?10:5; },{},{}
+4600,LichternY_Card,Lichtern Yellow Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMatk,10; bonus2 bMagicAtkEle,Ele_Earth,(getrefine()>=9)?10:5; },{},{}
 4601,Amdarais_Card,Amdarais Card,6,20,,10,,,,,,,,16,,,,,{ bonus bAtkRate,15; bonus bMatkRate,15; bonus2 bHPLossRate,666,4000; bonus2 bSPLossRate,66,4000; },{},{ heal -6666,-666; }
 4602,Realized_Amdarais_Card,Realized Amdarais Card,6,20,,10,,,,,,,,16,,,,,{ bonus bAtkRate,20; bonus bMatkRate,20; bonus2 bHPLossRate,666,6000; bonus2 bSPLossRate,66,6000; },{},{ heal -6666,-666; }
 4603,Corruption_Root_Card,Corruption Root Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,20; bonus5 bAutoSpell,"NPC_WIDESTONE",1,70,BF_WEAPON,0; bonus5 bAutoSpell,"NPC_WIDESLEEP",1,70,BF_WEAPON,0; bonus5 bAutoSpell,"NPC_WIDECURSE",1,70,BF_WEAPON,0; },{},{}
 4604,Realized_Corruption_Root_Card,Realized Corruption Root Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,30; bonus5 bAutoSpell,"NPC_WIDESTONE",2,70,BF_WEAPON,0; bonus5 bAutoSpell,"NPC_WIDESLEEP",2,70,BF_WEAPON,0; bonus5 bAutoSpell,"NPC_WIDECURSE",2,70,BF_WEAPON,0; },{},{}
-4605,Agony_Of_Royal_Knight_Card,Agony Of Royal Knight Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHPrate,-44; bonus bHPGainValue,200+10*getrefine(); },{},{}
-4606,Grudge_of_Royal_Knight_Card,Grudge of Royal Knight Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMaxSPrate,-44; bonus bSPGainValue,20+(getrefine()/2); },{},{ heal 0,-444; }
-4607,Faithful_Manager_Card,Faithful Manager Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,5; bonus bMatk,5; if(getiteminfo(getequipid(EQI_HAND_R),11) == W_BOOK) { .@r = getrefine(); if(.@r>=10) { bonus bBaseAtk,20; bonus bMatk,20; } if(.@r>=14) { bonus bBaseAtk,20; bonus bMatk,20; } } },{},{}
+4605,UndeadKnightM_Card,Agony Of Royal Knight Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHPrate,-44; bonus bHPGainValue,200+10*getrefine(); },{},{}
+4606,UndeadKnightF_Card,Grudge of Royal Knight Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMaxSPrate,-44; bonus bSPGainValue,20+(getrefine()/2); },{},{ heal 0,-444; }
+4607,FaithfulManager_Card,Faithful Manager Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,5; bonus bMatk,5; if(getiteminfo(getequipid(EQI_HAND_R),11) == W_BOOK) { .@r = getrefine(); if(.@r>=10) { bonus bBaseAtk,20; bonus bMatk,20; } if(.@r>=14) { bonus bBaseAtk,20; bonus bMatk,20; } } },{},{}
 4608,White_Knight_Card,White Knight Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,15; bonus2 bAddSize,Size_Medium,20; bonus2 bAddSize,Size_Large,20; },{},{}
 4609,Khalitzburg_Knight_Card,Khalitzburg Knight Card,6,20,,10,,,,,,,,32,,,,,{ bonus bDef,20; bonus2 bSubSize,Size_Medium,25; bonus2 bSubSize,Size_Large,25; },{},{}
 4610,Sarah_Card,Sarah Card,6,10,,10,,,,,,,,16,,,,,{ bonus bAbsorbDmgMaxHP,100; },{},{}
