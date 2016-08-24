@@ -19,4 +19,4 @@ INSERT INTO `clan` VALUES ('3', 'Golden Mace Clan', 'Berman Aire', 'prontera', '
 INSERT INTO `clan` VALUES ('4', 'Crossbow Clan', 'Shaam Rumi', 'payon', '500');
 
 ALTER TABLE `char`
-	ADD COLUMN `clan_id` INT(5) UNSIGNED NOT NULL DEFAULT '0' AFTER `hotkey_rowshift`;
+	ADD COLUMN `clan_id` INT(11) UNSIGNED NOT NULL DEFAULT '0' AFTER `hotkey_rowshift`;
