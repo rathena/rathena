@@ -18144,6 +18144,10 @@ void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, 
 	clif_send(buf, packet_len(0x7fc), &sd->bl, PARTY);
 }
 
+/**
+* Sends a clan message to a player
+* 098e <length>.W <name>.24B <message>.?B (ZC_NOTIFY_CLAN_CHAT)
+**/
 void clif_clan_message(struct clan *clan,const char *mes,int len){
 #if PACKETVER >= 20131223
 	struct map_session_data *sd;
@@ -18168,6 +18172,10 @@ void clif_clan_message(struct clan *clan,const char *mes,int len){
 #endif
 }
 
+/**
+* Parses a clan message from a player.
+* 098d <length>.W <text>.?B (<name> : <message>) (CZ_CLAN_CHAT)
+**/
 void clif_parse_clan_chat( int fd, struct map_session_data* sd ){
 #if PACKETVER >= 20131223
 	char name[NAME_LENGTH], message[CHAT_SIZE_MAX], output[CHAT_SIZE_MAX+NAME_LENGTH*2];
@@ -18180,6 +18188,11 @@ void clif_parse_clan_chat( int fd, struct map_session_data* sd ){
 #endif
 }
 
+/**
+* Sends the basic clan informations to the client.
+* 098a <length>.W <clan id>.L <clan name>.24B <clan master>.24B <clan map>.16B <alliance count>.B
+*      <antagonist count>.B { <alliance>.24B } * alliance count { <antagonist>.24B } * antagonist count (ZC_CLANINFO)
+**/
 void clif_clan_basicinfo( struct map_session_data *sd ){
 #if PACKETVER >= 20131223
 	int fd = sd->fd, offset, length;
@@ -18208,6 +18221,10 @@ void clif_clan_basicinfo( struct map_session_data *sd ){
 #endif
 }
 
+/**
+* Updates the online and maximum player count of a clan.
+* 0988 <online count>.W <maximum member amount>.W (ZC_NOTIFY_CLAN_CONNECTINFO)
+**/
 void clif_clan_onlinecount( struct clan* clan ){
 #if PACKETVER >= 20131223
 	uint8 buf[6];
@@ -18222,6 +18239,10 @@ void clif_clan_onlinecount( struct clan* clan ){
 #endif
 }
 
+/**
+* Notifies the client that the player has left his clan.
+* 0989 (ZC_ACK_CLAN_LEAVE)
+**/
 void clif_clan_leave( struct map_session_data* sd ){
 #if PACKETVER >= 20131223
 	int fd = sd->fd;
