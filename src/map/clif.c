@@ -18195,9 +18195,17 @@ void clif_parse_clan_chat( int fd, struct map_session_data* sd ){
 **/
 void clif_clan_basicinfo( struct map_session_data *sd ){
 #if PACKETVER >= 20131223
-	int fd = sd->fd, offset, length;
-	struct clan* clan = sd->clan;
+	int fd, offset, length;
+	struct clan* clan;
 	char mapname[MAP_NAME_LENGTH_EXT];
+	
+	nullpo_retv( sd );
+	nullpo_retv( clan = sd->clan );
+	
+	// Check if the player has a valid session and is not autotrading
+	if( !clif_session_isValid( sd ) ){
+		return;
+	}
 
 	length = 8 + 2 * NAME_LENGTH + MAP_NAME_LENGTH_EXT + 2;
 
@@ -18245,7 +18253,15 @@ void clif_clan_onlinecount( struct clan* clan ){
 **/
 void clif_clan_leave( struct map_session_data* sd ){
 #if PACKETVER >= 20131223
-	int fd = sd->fd;
+	int fd;
+	
+	nullpo_retv( sd );
+	
+	if( !clif_session_isValid( sd ) ){
+		return;
+	}
+	
+	fd = sd->fd;
 
 	WFIFOHEAD(fd,2);
 	WFIFOW(fd,0) = 0x989;
@@ -19317,7 +19333,7 @@ void packetdb_readdb(bool reload)
 		0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0, -1, -1,  7,
 		0,  0,  0,  0,  2,  0,  0, 14,  6, 50,  -1,  0,  0,  0,  0,  -1,
 	//#0x0980
-		7,  0,  0, 29, 28,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+		7,  0,  0, 29, 28,  0,  0,  0,  6,  2, -1,  0,  0, -1, -1,  0,
 		31, 0,  0,  0,  0,  0,  0, -1,  8, 11,  9,  8,  0,  0,  0, 22,
 		0,  0,  0,  0,  0,  0, 12, 10, 14, 10, 14,  6,  0,  0,  0,  0,
 		0,  0,  0,  0,  0,  0,  6,  4,  6,  4,  0,  0,  0,  0,  0,  0,

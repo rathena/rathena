@@ -2645,6 +2645,7 @@
 	export_constant(BG_SAMEMAP_WOS);
 	export_constant(BG_AREA);
 	export_constant(BG_AREA_WOS);
+	export_constant(CLAN);
 
 	/* mercenary guilds */
 	export_constant(ARCH_MERC_GUILD);
