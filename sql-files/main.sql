@@ -229,6 +229,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `uniqueitem_counter` int(11) unsigned NOT NULL default '0',
   `sex` ENUM('M','F','U') NOT NULL default 'U',
   `hotkey_rowshift` tinyint(3) unsigned NOT NULL default '0',
+  `clan_id` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`char_id`),
   UNIQUE KEY `name_key` (`name`),
   KEY `account_id` (`account_id`),
@@ -293,7 +294,7 @@ CREATE TABLE `clan` (
   `mapname` varchar(24) NOT NULL DEFAULT '',
   `max_member` smallint(6) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`clan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5;
 
 -- ----------------------------
 -- Records of clan

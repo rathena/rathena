@@ -81,7 +81,7 @@ int mapif_clan_info( int fd ){
 	int length;
 
 	length = 4 + db_size(clan_db) * sizeof( struct clan );
-	
+
 	WFIFOHEAD( fd, length );
 	WFIFOW( fd, 0 ) = 0x38A0;
 	WFIFOW( fd, 2 ) = length;
@@ -204,7 +204,7 @@ int inter_clan_init(void){
 		i = 0;
 
 		while( SQL_SUCCESS == Sql_NextRow(sql_handle) ){
-			Sql_GetData(sql_handle,  0, &data, NULL); 
+			Sql_GetData(sql_handle,  0, &data, NULL);
 			clan_ids[i++] = atoi(data);
 		}
 

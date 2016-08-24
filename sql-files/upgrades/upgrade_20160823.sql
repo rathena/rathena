@@ -8,7 +8,7 @@ CREATE TABLE `clan` (
   `mapname` varchar(24) NOT NULL DEFAULT '',
   `max_member` smallint(6) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`clan_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5;
 
 -- ----------------------------
 -- Records of clan
@@ -17,3 +17,6 @@ INSERT INTO `clan` VALUES ('1', 'Swordman Clan', 'Raffam Oranpere', 'prontera', 
 INSERT INTO `clan` VALUES ('2', 'Arcwand Clan', 'Devon Aire', 'geffen', '500');
 INSERT INTO `clan` VALUES ('3', 'Golden Mace Clan', 'Berman Aire', 'prontera', '500');
 INSERT INTO `clan` VALUES ('4', 'Crossbow Clan', 'Shaam Rumi', 'payon', '500');
+
+ALTER TABLE `char`
+	ADD COLUMN `clan_id` INT(5) UNSIGNED NOT NULL DEFAULT '0' AFTER `hotkey_rowshift`;

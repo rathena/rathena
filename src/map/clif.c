@@ -18145,6 +18145,7 @@ void clif_party_leaderchanged(struct map_session_data *sd, int prev_leader_aid, 
 }
 
 void clif_clan_message(struct clan *clan,const char *mes,int len){
+#if PACKETVER >= 20131223
 	struct map_session_data *sd;
 	uint8 buf[256];
 
@@ -18164,9 +18165,11 @@ void clif_clan_message(struct clan *clan,const char *mes,int len){
 
 	if((sd = clan_getavailablesd(clan)) != NULL)
 		clif_send(buf, WBUFW(buf,2), &sd->bl, CLAN);
+#endif
 }
 
 void clif_parse_clan_chat( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20131223
 	char name[NAME_LENGTH], message[CHAT_SIZE_MAX], output[CHAT_SIZE_MAX+NAME_LENGTH*2];
 
 	// validate packet and retrieve name and message
@@ -18174,9 +18177,11 @@ void clif_parse_clan_chat( int fd, struct map_session_data* sd ){
 		return;
 
 	clan_send_message( sd, (char*)RFIFOP(fd,4), RFIFOW(fd,2) - 4 );
+#endif
 }
 
 void clif_clan_basicinfo( struct map_session_data *sd ){
+#if PACKETVER >= 20131223
 	int fd = sd->fd, offset, length;
 	struct clan* clan = sd->clan;
 	char mapname[MAP_NAME_LENGTH_EXT];
@@ -18200,9 +18205,11 @@ void clif_clan_basicinfo( struct map_session_data *sd ){
 	offset += MAP_NAME_LENGTH_EXT;
 
 	WFIFOSET(fd,length);
+#endif
 }
 
 void clif_clan_onlinecount( struct clan* clan ){
+#if PACKETVER >= 20131223
 	uint8 buf[6];
 	struct map_session_data *sd;
 
@@ -18212,14 +18219,17 @@ void clif_clan_onlinecount( struct clan* clan ){
 
 	if((sd = clan_getavailablesd(clan)) != NULL)
 		clif_send(buf, 6, &sd->bl, CLAN);
+#endif
 }
 
 void clif_clan_leave( struct map_session_data* sd ){
+#if PACKETVER >= 20131223
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd,2);
 	WFIFOW(fd,0) = 0x989;
 	WFIFOSET(fd,2);
+#endif
 }
 
 /**

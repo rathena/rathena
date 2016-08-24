@@ -10,7 +10,7 @@
 #include "clan.h"
 #include "clif.h"
 #include "intif.h"
-#include "pc.h" 
+#include "pc.h"
 #include "script.h"
 #include "status.h"
 
@@ -100,7 +100,7 @@ void clan_member_joined( struct map_session_data* sd ){
 	clan = clan_search(sd->status.clan_id);
 
 	nullpo_retv(clan);
-	
+
 	if( ( index = clan_getNextFreeMemberIndex(clan) ) >= 0 ){
 		sd->clan = clan;
 		clan->members[index] = sd;
@@ -133,7 +133,7 @@ int clan_member_join( struct map_session_data *sd, int clan_id, uint32 account_i
 	struct clan *clan;
 
 	nullpo_ret(sd);
-	
+
 	if( ( clan = clan_search( clan_id ) ) == NULL ){
 		return 0;
 	}
