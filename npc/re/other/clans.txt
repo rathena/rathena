@@ -6,6 +6,7 @@
 //===== Changelogs: ==========================================
 //= 1.0 Initial release. [Lemongrass]
 //= 1.1 iRO translation. [RagnarokNova]
+//= 1.2 Dialogue cleanup. [Aleos]
 //============================================================
 
 prt_in,33,114,5	script	Raffam Oranpere	10058,{
@@ -566,7 +567,7 @@ prt_in,39,114,5	script	Shaam Rumi	10027,{
 					mes "I can't let you leave--you're not even in my Clan!";
 				}else if( getcharid( 5 ) != CROSSBOWCLAN ){
 					mes "[Shaam Rumi]";
-					mes "Sorry, but I don't meddle with other Clan's business.";
+					mes "Sorry, but I don't meddle with other Clans' business.";
 				}else{
 					clan_leave();
 					sc_end SC_CROSSBOWCLAN;
