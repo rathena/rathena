@@ -19532,7 +19532,7 @@ void packetdb_readdb(bool reload)
 					continue;
 				} else if(strcmpi(w1,"packet_db_ver")==0) {
 					if (strcmpi(w2,"default") == 0) //This is the preferred version.
-						clif_config.packet_db_ver = MAX_PACKET_VER;
+						clif_config.packet_db_ver = date2version(PACKETVER);
 					else // to manually set the packet DB version
 						clif_config.packet_db_ver = cap_value(atoi(w2), 0, MAX_PACKET_VER);
 					continue;
@@ -19656,6 +19656,9 @@ void packetdb_readdb(bool reload)
 		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", entries, line);
 	}
 	ShowStatus("Using default packet version: "CL_WHITE"%d"CL_RESET".\n", clif_config.packet_db_ver);
+
+	if (clif_config.packet_db_ver != date2version(PACKETVER))
+		ShowWarning("Packet version used: '%d'. Server compiled with PACKETVER '%d': '%d'\n", clif_config.packet_db_ver, PACKETVER, date2version(PACKETVER));
 
 #ifdef PACKET_OBFUSCATION
 	if (!key_defined && !clif_cryptKey[0] && !clif_cryptKey[1] && !clif_cryptKey[2]) { // Not defined

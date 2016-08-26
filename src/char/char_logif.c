@@ -19,6 +19,7 @@
 //early declaration
 void chlogif_on_ready(void);
 void chlogif_on_disconnect(void);
+static uint32 packet_ver;
 
 #if PACKETVER_SUPPORTS_PINCODE
 void chlogif_pincode_notifyLoginPinError( uint32 account_id ){
@@ -314,9 +315,9 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 			int client_fd = request_id;
 			sd->version = version;
 			sd->clienttype = clienttype;
-			if(sd->version != date2version(PACKETVER))
-				ShowWarning("s aid=%d has an incorect version=%d in clientinfo. Server compiled for %d\n",
-					sd->account_id,sd->version,date2version(PACKETVER));
+			if(sd->version != packet_ver)
+				ShowWarning("AID=%"PRIu32" has an incorect version=%"PRIu32" in clientinfo. Server compiled for %"PRIu32"\n",
+					sd->account_id,sd->version,packet_ver);
 
 			switch( result )
 			{
@@ -805,6 +806,8 @@ void do_init_chlogif(void) {
 	// send a list of all online account IDs to login server
 	add_timer_func_list(chlogif_send_acc_tologin, "send_accounts_tologin");
 	add_timer_interval(gettick() + 1000, chlogif_send_acc_tologin, 0, 0, 3600 * 1000); //Sync online accounts every hour
+
+	packet_ver = date2version(PACKETVER);
 }
 
 /// Resets all the data.
