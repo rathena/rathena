@@ -167,8 +167,11 @@
 
 // Misc
 605,16		// Anodyne
+2365,16		// Orleans_Gown
+4077,16		// Phen_Card
 4128,16		// Golden_Bug_Card
 4198,16		// Maya_Puple_Card
+4327,16		// Blood_Butterfly_Card
 11503,16	// Siege_White_Potion
 11504,16	// Siege_Blue_Potion
 11547,16	// Woe_Violet_Potion
