@@ -110,7 +110,7 @@ struct block_list* battle_get_master(struct block_list *src);
 struct block_list* battle_gettargeted(struct block_list *target);
 struct block_list* battle_getenemy(struct block_list *target, int type, int range);
 int battle_gettarget(struct block_list *bl);
-int battle_getcurrentskill(struct block_list *bl);
+uint16 battle_getcurrentskill(struct block_list *bl);
 
 int battle_check_undead(int race,int element);
 int battle_check_target(struct block_list *src, struct block_list *target,int flag);
