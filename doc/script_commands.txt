@@ -4294,6 +4294,14 @@ This command will force a stat recalculation for the attached player.
 
 ---------------------------------------
 
+*needed_status_point(<type>,<val>{,<char id>});
+
+Returns the number of stat points needed to change the specified stat <type> by <val>.
+If <val> is negative, returns the number of stat points that would be needed to
+raise the specified stat from (current value - <val>) to current value.
+
+---------------------------------------
+
 *get_revision()
 
 This command will return the SVN revision number that the server is currently

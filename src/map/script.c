@@ -21661,6 +21661,22 @@ BUILDIN_FUNC(setrandomoption) {
 	return SCRIPT_CMD_FAILURE;
 }
 
+/// Returns the number of stat points needed to change the specified stat by val.
+/// If val is negative, returns the number of stat points that would be needed to
+/// raise the specified stat from (current value - val) to current value.
+/// *needed_status_point(<type>,<val>{,<char id>});
+/// @author [secretdataz]
+BUILDIN_FUNC(needed_status_point) {
+	struct map_session_data *sd;
+	int type, val;
+	if (!script_charid2sd(4, sd))
+		return SCRIPT_CMD_FAILURE;
+	type = script_getnum(st, 2);
+	val = script_getnum(st, 3);
+
+	script_pushint(st, pc_need_status_point(sd, type, val));
+	return SCRIPT_CMD_SUCCESS;
+}
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -22243,6 +22259,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getrandomoptinfo, "i"),
 	BUILDIN_DEF(getequiprandomoption, "iii?"),
 	BUILDIN_DEF(setrandomoption,"iiiii?"),
+	BUILDIN_DEF(needed_status_point,"ii?"),
 
 #include "../custom/script_def.inc"
 
