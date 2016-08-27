@@ -85,8 +85,6 @@
 
 //----------------------------------------------------------------------------
 // CANNOT be consumed/equipped in WoE:TE Castles (16)
-// !TODO: [iRO] Vellums, Siege Equipment & Items, Battlegrounds, God Items 1 & 2
-// !CONFIRM: [idRO] Siege Equipment, God Items 1 & 2: are still usable
 //----------------------------------------------------------------------------
 // Krieger Gear
 1187,16		// Krieger_Twohand_Sword1
