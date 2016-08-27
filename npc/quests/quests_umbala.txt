@@ -1019,7 +1019,7 @@ um_in,139,48,5	script	Phrenetan	783,{
 		emotion e_go;
 		close;
 	}
-	else if (um_wind == 6 || MISC_QUEST & 32768) {
+	else if (um_wind == 6 || (MISC_QUEST & 32768)) {
 		emotion e_an;
 		mes "[Phrenetan]";
 		mes "Umbabah! Umbaumbah.....";

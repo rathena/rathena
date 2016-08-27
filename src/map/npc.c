@@ -822,7 +822,7 @@ int npc_event_sub(struct map_session_data* sd, struct event_data* ev, const char
 		ARR_FIND( 0, MAX_EVENTQUEUE, i, sd->eventqueue[i][0] == '\0' );
 		if( i < MAX_EVENTQUEUE )
 		{
-			safestrncpy(sd->eventqueue[i],eventname,50); //Event enqueued.
+			safestrncpy(sd->eventqueue[i],eventname,EVENT_NAME_LENGTH); //Event enqueued.
 			return 0;
 		}
 
@@ -3167,8 +3167,8 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		int dm = map_mapindex2mapid(snd->u.warp.mapindex), imap = 0, i;
 		if( dm < 0 ) return 1;
 
-		for(i = 0; i < MAX_MAP_PER_INSTANCE; i++)
-			if(im->map[i].m && map_mapname2mapid(map[im->map[i].src_m].name) == dm) {
+		for(i = 0; i < im->cnt_map; i++)
+			if(im->map[i]->m && map_mapname2mapid(map[im->map[i]->src_m].name) == dm) {
 				imap = map_mapname2mapid(map[m].name);
 				break; // Instance map matches destination, update to instance map
 			}

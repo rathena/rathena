@@ -105,7 +105,7 @@ function Dyes;
 			case Job_Assassin:
 			case Job_Rogue:
 				if (Sex) Dyes(6,1); else Dyes(4,1,8,2,7,3);
-			case Job_SuperNovice:
+			case Job_Super_Novice:
 				if (Sex) Dyes(2,1,6,2,5,3,4,4); else Dyes(6,1,3,2,5,3,4,4);
 			default: 
 				mes "Wow, I've never seen clothes like that before! I'm sorry, but I don't think I can paint it.";

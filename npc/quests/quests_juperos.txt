@@ -3,7 +3,7 @@
 //===== By ===================================================
 //= MasterOfMuppets
 //===== Version ==============================================
-//= 1.9
+//= 2.0
 //===== Compatible With ======================================
 //= rAthena Project
 //===== Description ==========================================
@@ -24,9 +24,11 @@
 //= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.8 Updated RE/Pre-RE EXP. [Euphy]
 //= 1.9 Added GM management NPC. [Euphy]
+//= 2.0 Added Juperos Ruins History quest logs. [Capuche]
 //============================================================
 
 yuno_in04,190,125,4	script	Scholar	700,{
+function Func_JupHist;
 	switch(yuno_hist) {
 	case 0:
 		mes "[Scholar]";
@@ -146,6 +148,7 @@ yuno_in04,190,125,4	script	Scholar	700,{
 			mes "the wise and benevolent";
 			mes "King Tristram III.";
 			set yuno_hist,2;
+			setquest 11017;
 			next;
 			mes "[Fayruz]";
 			mes "Well, "+strcharinfo(0)+",";
@@ -165,7 +168,7 @@ yuno_in04,190,125,4	script	Scholar	700,{
 			close;
 		}
 	case 2:
-		if ((countitem(7352)) || (countitem(7353)) || (countitem(7354)) || (countitem(7355))) {
+		if (countitem(7352) || countitem(7353) || countitem(7354) || countitem(7355)) {
 			mes "[Fayruz]";
 			mes "Ah, it's you! Listen,";
 			mes "I just found a record of";
@@ -249,6 +252,7 @@ yuno_in04,190,125,4	script	Scholar	700,{
 			mes "who was vain and extravagant,";
 			mes "with your own eyes at the place where the light passes through.";
 			set yuno_hist,4;
+			changequest 11018,11019;
 			next;
 			mes "[Fayruz]";
 			mes "Ah, usually, descriptions";
@@ -293,7 +297,7 @@ yuno_in04,190,125,4	script	Scholar	700,{
 			mes "sometimes, you know?";
 			close;
 		case 2:
-			if ((countitem(7352)) || (countitem(7353)) || (countitem(7354)) || (countitem(7355))) {
+			if (countitem(7352) || countitem(7353) || countitem(7354) || countitem(7355)) {
 				mes "[Fayruz]";
 				mes "Oh, really?!";
 				mes "That's great news!";
@@ -315,10 +319,10 @@ yuno_in04,190,125,4	script	Scholar	700,{
 				next;
 				switch(select("Please, be my guest.:No way, you can't have it.")) {
 				case 1:
-					if (countitem(7352)) callfunc "Func_JupHist",7352,1;
-					else if (countitem(7353)) callfunc "Func_JupHist",7353,2;
-					else if (countitem(7354)) callfunc "Func_JupHist",7354,4;
-					else if (countitem(7355)) callfunc "Func_JupHist",7352,8;
+					if (countitem(7352)) Func_JupHist(7352,1);
+					else if (countitem(7353)) Func_JupHist(7353,2);
+					else if (countitem(7354)) Func_JupHist(7354,4);
+					else if (countitem(7355)) Func_JupHist(7352,8);
 				case 2:
 					mes "[Fayruz]";
 					mes "Mm? Are you serious?";
@@ -378,10 +382,10 @@ yuno_in04,190,125,4	script	Scholar	700,{
 		switch(select("Take a look at this.:Oh, I'm sorry...")) {
 		case 1:
 			switch(jupe_hist) {
-				case 1: callfunc "Func_JupHist",7353,7354,7355,7352;
-				case 2: callfunc "Func_JupHist",7352,7354,7355,7353;
-				case 4: callfunc "Func_JupHist",7352,7353,7355,7354;
-				case 8: callfunc "Func_JupHist",7352,7353,7354,7355;
+				case 1: Func_JupHist(7353,7354,7355,7352);
+				case 2: Func_JupHist(7352,7354,7355,7353);
+				case 4: Func_JupHist(7352,7353,7355,7354);
+				case 8: Func_JupHist(7352,7353,7354,7355);
 			}
 		case 2:
 			mes "[Fayruz]";
@@ -429,12 +433,12 @@ yuno_in04,190,125,4	script	Scholar	700,{
 		switch(select("Yeah, take a look at this.:No, I'm sorry...")) {
 		case 1:
 			switch(jupe_hist) {
-				case 3: callfunc "Func_JupHist",7354,7355,7352,7353;
-				case 5: callfunc "Func_JupHist",7353,7355,7352,7354;
-				case 6: callfunc "Func_JupHist",7352,7355,7353,7354;
-				case 9: callfunc "Func_JupHist",7353,7354,7352,7355;
-				case 10: callfunc "Func_JupHist",7352,7354,7353,7355;
-				case 12: callfunc "Func_JupHist",7352,7353,7354,7355;
+				case 3: Func_JupHist(7354,7355,7352,7353);
+				case 5: Func_JupHist(7353,7355,7352,7354);
+				case 6: Func_JupHist(7352,7355,7353,7354);
+				case 9: Func_JupHist(7353,7354,7352,7355);
+				case 10: Func_JupHist(7352,7354,7353,7355);
+				case 12: Func_JupHist(7352,7353,7354,7355);
 			}
 		case 2:
 			mes "[Fayruz]";
@@ -478,10 +482,10 @@ yuno_in04,190,125,4	script	Scholar	700,{
 		switch(select("Actually, I did find this...:I'm sorry, I haven't...")) {
 		case 1:
 			switch(jupe_hist) {
-				case 7: callfunc "Func_JupHist",7355,7352,7353,7354;
-				case 11: callfunc "Func_JupHist",7354,7352,7353,7355;
-				case 13: callfunc "Func_JupHist",7353,7352,7354,7355;
-				case 14: callfunc "Func_JupHist",7352,7353,7354,7355;
+				case 7: Func_JupHist(7355,7352,7353,7354);
+				case 11: Func_JupHist(7354,7352,7353,7355);
+				case 13: Func_JupHist(7353,7352,7354,7355);
+				case 14: Func_JupHist(7352,7353,7354,7355);
 			}
 		case 2:
 			mes "[Fayruz]";
@@ -509,7 +513,7 @@ yuno_in04,190,125,4	script	Scholar	700,{
 		next;
 		switch(select("I found another Transparent Plate.:Just visiting, really.")) {
 		case 1:
-			if ((countitem(7352)) || (countitem(7353)) || (countitem(7354)) || (countitem(7355))) {
+			if (countitem(7352) || countitem(7353) || countitem(7354) || countitem(7355)) {
 				mes "[Fayruz]";
 				mes "Hmm, well, we've made as";
 				mes "much headway as we can";
@@ -551,10 +555,9 @@ yuno_in04,190,125,4	script	Scholar	700,{
 			close;
 		}
 	}
-}
 
-function	script	Func_JupHist	{
-	setarray .@arg[0], getarg(0), getarg(1), getarg(2), getarg(3);
+function Func_JupHist {
+	setarray .@arg[0], getarg(0), getarg(1), getarg(2,0), getarg(3,0);
 	switch(yuno_hist) {
 	case 4:
 		mes "[Fayruz]";
@@ -582,6 +585,7 @@ function	script	Func_JupHist	{
 		set yuno_hist,5;
 		jupe_hist = .@arg[1];
 		getexp (checkre(3))?10000:100000,0;
+		changequest 11019,11020;
 		next;
 		mes "[Fayruz]";
 		mes "Everyone can relate";
@@ -657,6 +661,7 @@ function	script	Func_JupHist	{
 				else set jupe_hist,jupe_hist +8;
 			}
 			set yuno_hist,6;
+			changequest 11020,11021;
 			getexp (checkre(3))?10000:100000,0;
 			next;
 			mes "[Fayruz]";
@@ -781,6 +786,7 @@ function	script	Func_JupHist	{
 				else set jupe_hist,jupe_hist +8;
 			}
 			set yuno_hist,8;
+			changequest 11021,11022;
 			getexp (checkre(3))?10000:100000,0;
 			next;
 			mes "[Fayruz]";
@@ -877,6 +883,7 @@ function	script	Func_JupHist	{
 			else if (.@arg[0] == 7354) set jupe_hist,jupe_hist+4;
 			else set jupe_hist,jupe_hist+8;
 			set yuno_hist,10;
+			completequest 11022;
 			delitem .@arg[0],1;
 			getexp (checkre(3))?10000:100000,0;
 			next;
@@ -923,6 +930,7 @@ function	script	Func_JupHist	{
 			close;
 		}
 	}
+}
 }
 
 yuno_in04,186,125,4	script	Bundle of Files	111,{
@@ -1300,6 +1308,7 @@ juperos_01,99,112,4	script	Bronze Statue#1	844,{
 				mes "to the Juno Library and";
 				mes "tell her what I found.";
 				set yuno_hist,3;
+				changequest 11017,11018;
 				close;
 			}
 			mes "["+strcharinfo(0)+"]";
@@ -1308,7 +1317,7 @@ juperos_01,99,112,4	script	Bronze Statue#1	844,{
 			mes "Juno, could make sense";
 			mes "of what this stuff says.";
 			close;
-		case 2: 
+		case 2:
 			close;
 		}
 	}

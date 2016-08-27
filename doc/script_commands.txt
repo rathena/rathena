@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20150610
+//= 20160523
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -472,8 +472,8 @@ nothing  - A permanent variable attached to the character, the default variable
            ends it. When a scope ends, its variables are converted to values 
            ('return .@var;' returns a value, not a reference).
 "'"      - An instance variable.
-           These are used with the instancing system, and are unique to each 
-           party's instance.
+           These are used with the instancing system and are unique to each 
+           instance type.
 "#"      - A permanent local account variable.
            They are stored by char-server in the `acc_reg_num` table and
            `acc_reg_str`.
@@ -503,6 +503,8 @@ $@name$ - temporary global string variable
  .name$ - NPC string variable
 .@name  - scope integer variable
 .@name$ - scope string variable
+ 'name  - instance integer variable
+ 'name$ - instance string variable
  #name  - permanent local account integer variable
  #name$ - permanent local account string variable
 ##name  - permanent global account integer variable
@@ -515,7 +517,7 @@ forever, and no trace remains of it even if it was stored with character or
 account data.
 
 Some variables are special, that is, they are already defined for you by the 
-scripting engine. You can see the full list somewhere in 'db/const.txt', which 
+scripting engine. You can see the full list in 'src/map/script_constants.h', which 
 is a file you should read, since it also allows you to replace lots of numbered 
 arguments for many commands with easier to read text. The special variables most 
 commonly used are all permanent character-based variables:
@@ -2291,7 +2293,7 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 
 This function will return the specified stat of the invoking character, or, if a
 character name is specified, of that player. The stat can either be a number or
-parameter name, defined in 'db/const.txt'.
+parameter name, defined in 'src/map/script_constants.h'.
 
 Some example parameters:
 
@@ -2492,27 +2494,27 @@ This function returns the item ID of the item equipped in the equipment slot
 specified on the invoking character. If nothing is equipped there, it returns -1. 
 Valid equipment slots are:
 
-EQI_HEAD_TOP (1)          - Upper Headgear
-EQI_ARMOR (2)             - Armor (jackets, robes)
-EQI_HAND_L (3)            - Left hand (weapons, shields)
-EQI_HAND_R (4)            - Right hand (weapons)
-EQI_GARMENT (5)           - Garment (mufflers, hoods, manteaus)
-EQI_SHOES (6)             - Footgear (shoes, boots)
-EQI_ACC_L (7)             - Accessory 1
-EQI_ACC_R (8)             - Accessory 2
-EQI_HEAD_MID (9)          - Middle Headgear (masks, glasses)
-EQI_HEAD_LOW (10)         - Lower Headgear (beards, some masks)
-EQI_COSTUME_HEAD_LOW (11) - Lower Costume Headgear
-EQI_COSTUME_HEAD_MID (12) - Middle Costume Headgear
-EQI_COSTUME_HEAD_TOP (13) - Upper Costume Headgear
-EQI_COSTUME_GARMENT (14)  - Costume Garment
-EQI_AMMO (15)    		  - Arrow/Ammunition
-EQI_SHADOW_ARMOR (16)     - Shadow Armor
-EQI_SHADOW_WEAPON (17)    - Shadow Weapon
-EQI_SHADOW_SHIELD (18)    - Shadow Shield
-EQI_SHADOW_SHOES (19)     - Shadow Shoes
-EQI_SHADOW_ACC_R (20)     - Shadow Accessory 2
-EQI_SHADOW_ACC_L (21)     - Shadow Accessory 1
+EQI_ACC_L (0)             - Accessory 1
+EQI_ACC_R (1)             - Accessory 2
+EQI_SHOES (2)             - Footgear (shoes, boots)
+EQI_GARMENT (3)           - Garment (mufflers, hoods, manteaux)
+EQI_HEAD_LOW (4)          - Lower Headgear (beards, some masks)
+EQI_HEAD_MID (5)          - Middle Headgear (masks, glasses)
+EQI_HEAD_TOP (6)          - Upper Headgear
+EQI_ARMOR (7)             - Armor (jackets, robes)
+EQI_HAND_L (8)            - Left hand (weapons, shields)
+EQI_HAND_R (9)            - Right hand (weapons)
+EQI_COSTUME_HEAD_TOP (10) - Upper Costume Headgear
+EQI_COSTUME_HEAD_MID (11) - Middle Costume Headgear
+EQI_COSTUME_HEAD_LOW (12) - Lower Costume Headgear
+EQI_COSTUME_GARMENT (13)  - Costume Garment
+EQI_AMMO (14)    		  - Arrow/Ammunition
+EQI_SHADOW_ARMOR (15)     - Shadow Armor
+EQI_SHADOW_WEAPON (16)    - Shadow Weapon
+EQI_SHADOW_SHIELD (17)    - Shadow Shield
+EQI_SHADOW_SHOES (18)     - Shadow Shoes
+EQI_SHADOW_ACC_R (19)     - Shadow Accessory 2
+EQI_SHADOW_ACC_L (20)     - Shadow Accessory 1
 
 Notice that a few items occupy several equipment slots, and if the character is 
 wearing such an item, 'getequipid' will return its ID number for either slot.
@@ -2651,6 +2653,9 @@ This function returns the weapon level for the weapon equipped in the specified
 equipment slot on the invoking character. For a list of equipment slots see 
 'getequipid'.
 
+If -1 is passed as the equipment slot argument then the weapon level for the item calling this function, 
+assuming it is called by an item script, will be returned. Otherwise, 0 will be returned.
+
 Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons have
 a weapon level. You can, however, probably, use this field for other equippable
 custom items as a flag or something.
@@ -2734,7 +2739,8 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 
 @inventorylist_id[]        - array of item ids.
 @inventorylist_amount[]    - their corresponding item amounts.
-@inventorylist_equip[]     - whether the item is equipped or not.
+@inventorylist_equip[]     - on which position the item is equipped (see EQP_* constants)
+                             It will contain 0 if the item is not equipped.
 @inventorylist_refine[]    - for how much it is refined.
 @inventorylist_identify[]  - whether it is identified.
 @inventorylist_attribute[] - whether it is broken.
@@ -2744,7 +2750,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_card4[]       if the character owns an item made by a specific 
                              craftsman.
 @inventorylist_expire[]    - expire time (Unix time stamp). 0 means never expires.
-@inventorylist_bound[]     - whether it is bound to the character
+@inventorylist_bound[]     - the bound type of the items (see BOUND_* constants)
 @inventorylist_count       - the number of items in these lists.
 
 This could be handy to save/restore a character's inventory, since no other 
@@ -2847,7 +2853,7 @@ See the sample in 'doc/sample/getiteminfo.txt'.
 
 Returns value from equipped item slot in the indicated slot (0, 1, 2, or 3).
 
-This function returns CARD ID, 255,254,-255 (for card 0, if the item is produced).
+This function returns CARD ID, CARD0_FORGE, CARD0_CREATE, or CARD0_PET (for card 0, if the item is produced).
 It's useful for when you want to check whether an item contains cards or if it's signed.
 
 ---------------------------------------
@@ -4054,7 +4060,7 @@ This command will change the job class of the invoking character.
 
 This command does work with numbers, but you can also use job names. The full 
 list of job names and the numbers they correspond to can be found in 
-'db/const.txt'.
+'src/map/script_constants.h'.
 
     // This would change your player into a Swordman
     jobchange Job_Swordman;
@@ -4245,14 +4251,15 @@ Here are the possible look types:
  LOOK_CLOTHES_COLOR - Clothes color
  LOOK_SHIELD - Shield
  LOOK_SHOES - Shoes
- LOOK_BODY2 - bodystyle
+ LOOK_BODY2 - Body style
 
 Whatever 'shoes' means is anyone's guess, ask Gravity - the client does nothing 
 with this value. It still wants it from the server though, so it is kept, but 
 normally doesn't do a thing.
  
 Only the look data for hairstyle, hair color and clothes color are saved to the 
-char server's database and will persist. The rest freely change as the character 
+char server's database and will persist. Body style will also persist if 'save_body_style'
+configuration is enabled in '/conf/battle/client.conf'. The rest freely change as the character 
 puts on and removes equipment, changes maps, logs in and out and otherwise you 
 should not expect to set them. In fact, messing with them is generally 
 hazardous, do it at your own risk, it is not tested what will this actually do -
@@ -4273,7 +4280,7 @@ you can look at: 'npc/custom/stylist.txt'
 
 This command will push the currently attached player to given direction by given
 amount of square cells. Direction is the same as used when declaring NPCs, and
-can be specified by using one of the DIR_* constants (db/const.txt).
+can be specified by using one of the DIR_* constants (src/map/script_constants.h).
 
 The knock-back is not restricted by items or map flags, only obstacles are taken
 into account. If there is not enough space to perform the push (e.g. due to a
@@ -4282,6 +4289,12 @@ wall), the character is pushed only up to the obstacle.
     // pushes the character 5 cells in 3 o'clock direction from its
     // current position.
     pushpc DIR_EAST, 5;
+
+---------------------------------------
+
+*recalculatestat;
+
+This command will force a stat recalculation for the attached player.
 
 ---------------------------------------
 
@@ -5145,7 +5158,7 @@ Used in reset NPC's (duh!)
 These commands will bestow a status effect on a character.
 
 The <effect type> determines which status is invoked. This can be either a number
-or constant, with the common statuses (mostly negative) found in 'db/const.txt'
+or constant, with the common statuses (mostly negative) found in 'src/map/script_constants.h'
 with the 'SC_' prefix. A full list is located in 'src/map/status.h', though
 they are not currently documented.
 
@@ -5160,10 +5173,11 @@ This is used primarily in item scripts. When used in an NPC script, a flag MUST
 be defined for the rate to work.
 
 Optional value <flag> is how the status change start will be handled (a bitmask).
- 1: Status change cannot be avoided.
- 2: Tick cannot be reduced by stats (default).
- 4: sc_data loaded, so no value will be altered.
- 8: Rate cannot be reduced.
+ SCSTART_NOAVOID   : Status change cannot be avoided.
+ SCSTART_NOTICKDEF : Tick cannot be reduced by stats (default).
+ SCSTART_LOADED    : sc_data loaded, so no value will be altered.
+ SCSTART_NORATEDEF : Rate cannot be reduced.
+ SCSTART_NOICON    : Status icon won't be sent to client
 
 If a <GID> is given, the status change will be invoked on the specified character
 instead of the one attached to the script. This can only be defined after setting
@@ -5400,7 +5414,7 @@ Flags (bitmask):
 	8   : Remove when player logs out.
 	16  : Removeable by Banishing Buster.
 	32  : Removable by Refresh.
-	64  : Removable by Luxanima.
+	64  : Removable by Lux Anima.
 	128 : Remove when Madogear is activated or deactivated.
 	256 : Remove when receive damage.
 	512 : Script is permanent, cannot be cleared by bonus_script_clear.
@@ -5414,7 +5428,7 @@ Types:
 	1: Buff
 	2: Debuff
 
-Status_icon: See "Status Icon" section in 'db/const.txt'. Default is SI_BLANK (-1).
+Status_icon: See "Status Icon" section in 'src/map/script_constants.h'. Default is SI_BLANK (-1).
 
 Example:
 	// Apple gives you +5 Str bonus for 1 minute when it's consumed.
@@ -5500,13 +5514,19 @@ undisguise; // Return to normal character sprite.
 
 ---------------------------------------
 
-*transform <monster ID>,<duration>,<sc type>{,<val1>,<val2>,<val3>,<val4>};
-*transform "<monster name>",<duration>,<sc type>{,<val1>,<val2>,<val3>,<val4>};
+*transform <monster ID>,<duration>{,<sc type>,<val1>,<val2>,<val3>,<val4>};
+*transform "<monster name>",<duration>{,<sc type>,<val1>,<val2>,<val3>,<val4>};
+*active_transform <monster ID>,<duration>{,<sc type>,<val1>,<val2>,<val3>,<val4>};
+*active_transform "<monster name>",<duration>{,<sc type>,<val1>,<val2>,<val3>,<val4>};
 
-This command will turn a player into a monster for a given duration and grants an
-SC attribute effect while transformed. Note that players cannot be transformed
+This command will turn a player into a monster for a given duration and can grant
+a SC attribute effect while transformed. Note that players cannot be transformed
 during War of Emperium or if already disguised.
 Can only be removed when you die or the duration ends.
+
+'transform' and 'active_transform' can stack on each other but using 'transform' or
+'active_transform' twice will not stack (it will cancel the previous bonus for the new).
+'active_transform' will take priority over transform for its duration.
 
 ---------------------------------------
 \\
@@ -5629,7 +5649,8 @@ The only very special thing about this command is an event label, which is an
 optional parameter. This label is written like '<NPC object name>::<label name>' 
 and upon the monster being killed, it will execute the script inside of the 
 specified NPC object starting from the label given. The RID of the player 
-attached at this execution will be the RID of the killing character.
+attached at this execution will be the RID of the killing character. The variable
+'killedrid' is set to the Class (mob ID) of the monster killed.
 
 <size> can be:
 	0 = medium (default)
@@ -6183,7 +6204,7 @@ This command will broadcast a message to all or most players, similar to
 The region the broadcast is heard in (target), source of the broadcast
 and the color the message will come up as is determined by the flags.
 
-The flag values are coded as constants in 'db/const.txt' to make them easier to use.
+The flag values are coded as constants in 'src/map/script_constants.h' to make them easier to use.
 
 Target flags:
 - bc_all: Broadcast message is sent server-wide (default).
@@ -6519,7 +6540,7 @@ specified.
 *setmapflag "<map name>",<flag>{,<zone>{,<type>}};
 
 This command marks a specified map with the given map flag, which will alter the 
-behavior of the map. A full list of mapflags is located in 'db/const.txt' with
+behavior of the map. A full list of mapflags is located in 'src/map/script_constants.h' with
 the 'mf_' prefix, and documentation can be found in 'doc/mapflags.txt'.
 
 The map flags alter the behavior of the map regarding teleporting (mf_nomemo, 
@@ -6919,8 +6940,8 @@ must be used.
 
 This command makes an object display an emotion sprite above their own as 
 if they were doing that emotion. For a full list of emotion numbers, 
-see 'db/const.txt' under 'e_'. The not so obvious ones are 'e_what' (a question mark) 
-and 'e_gasp' (the exclamation mark).
+see 'src/map/script_constants.h' under 'e_'. The not so obvious ones are 'e_what'
+(a question mark) and 'e_gasp' (the exclamation mark).
 
 The optional target parameter specifies who will get the emotion on top of
 their head. If 0 (the default if omitted), the NPC in current use will show
@@ -7161,7 +7182,7 @@ This command will make a <GID> say a message. The display name of the <GID> won'
 *unitemote <GID>,<emotion number>;
 
 This command will make a <GID> display an emotion sprite.
-For a full list of emotion numbers, see 'db/const.txt' under 'e_'.
+For a full list of emotion numbers, see 'src/map/script_constants.h' under 'e_'.
 
 ---------------------------------------
 
@@ -7180,9 +7201,16 @@ For the position, the x and y are given in the UnitSkillUsePos.
 
 ---------------------------------------
 
+*unitexists <GID>;
+
+Checks if the given Game ID exists. Returns false if the object doesn't exist, or true if
+it does.
+
+---------------------------------------
+
 *getunittype <GID>;
 
-Returns the type of object from the given Game ID. Returns -1 if the given <GID> does not
+Returns the type of object from the given Game ID. Returns -1 if the given GID does not
 exist.
 
 	UNITTYPE_PC     0
@@ -7212,6 +7240,8 @@ Elemental don't support custom names.
 
 Changing a homunculus or pet name will be permanent.
 
+Returns "Unknown" if unit is not found.
+
 ---------------------------------------
 
 *getunitdata <GID>,<arrayname>;
@@ -7220,6 +7250,8 @@ Changing a homunculus or pet name will be permanent.
 This is used to get and set special data related to the unit.
 With getunitdata, the array given will be filled with the current data. In setunitdata
 the indexes in the array would be used to set that data on the unit.
+
+Both getunitdata and setunitdata will return -1 if the given GID does not exist.
 
 Note: When adjusting a unit's stat (STR, AGI, etc) the unit's respective statuses are
       recalculated (HIT, FLEE, etc) automatically. Keep in mind that some stats don't
@@ -7670,7 +7702,7 @@ Example:
 	.@maximum = max( .@testarray ); // .@maximum will be equal to 12
 	
 	.@minimum = min( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to -6
-	.@maximum = max( -6, 1, 2, 3, .@testarray ); // .@minimum will be equal to 12
+	.@maximum = max( -6, 1, 2, 3, .@testarray ); // .@maximum will be equal to 12
 
 ---------------------------------------
 
@@ -7688,8 +7720,8 @@ Example:
 *query_sql("your MySQL query"{, <array variable>{, <array variable>{, ...}}});
 *query_logsql("your MySQL query"{, <array variable>{, <array variable>{, ...}}});
 
-Executes an SQL query. A 'select' query can fill array variables with up to 128 rows of values,
-and will return the number of rows (i.e. array size) or -1 on failure/empty array.
+Executes an SQL query. A 'select' query can fill array variables with up to 2 billion rows of
+values, and will return the number of rows (i.e. array size) or -1 on failure.
 
 Note that 'query_sql' runs on the main database while 'query_logsql' runs on the log database.
 
@@ -8052,7 +8084,7 @@ Each of these can be 'on' or 'off'. Together they define a cell's behavior.
 
 This command lets you alter these flags for all map cells in the specified
 (x1,y1)-(x2,y2) rectangle. The 'flag' can be 0 or 1 (0:clear flag, 1:set flag).
-The 'type' defines which flag to modify. Possible options see 'db/const.txt'.
+The 'type' defines which flag to modify. Possible options see 'src/map/script_constants.h'.
 
 Example:
 
@@ -8086,7 +8118,7 @@ remove a nonwalkable row of cells after the barricade mobs.
 
 This command will return 1 or 0, depending on whether the specified cell has
 the 'type' flag set or not. There are various types to check, all mimicking
-the server's cell_chk enumeration. The types can be found in 'db/const.txt'.
+the server's cell_chk enumeration. The types can be found in 'src/map/script_constants.h'.
 
 The meaning of the individual types can be confusing, so here's an overview:
   - cell_chkwall/water/cliff
@@ -8135,17 +8167,23 @@ This command will open a book item at the specified page.
 ========================
 ---------------------------------------
 
-*instance_create("<instance name>");
+*instance_create("<instance name>"{,<instance mode>{,<owner id>}});
 
-Creates an instance for the party of the attached player. The instance name,
-along with all other instance data, is read from 'db/(pre-)re/instance_db.txt'.
-Upon success, the command generates a unique instance ID, duplicates all listed
-maps and NPCs, sets the alive time, and triggers the "OnInstanceInit" label in
-all NPCs inside the instance.
+Creates an instance for the <owner id> of <mode>. The instance name, along with
+all other instance data, is read from 'db/(pre-)re/instance_db.txt'. Upon success,
+the command generates a unique instance ID, duplicates all listed maps and NPCs,
+sets the alive time, and triggers the "OnInstanceInit" label in all NPCs inside
+the instance.
+
+Instance Mode options:
+ IM_NONE: Attached to no one.
+ IM_CHAR: Attached to a single character.
+ IM_PARTY: Attached to a party (default instance mode).
+ IM_GUILD: Attached to a guild.
 
 The command returns the instance ID upon success, and these values upon failure:
  -1: Invalid type.
- -2: Party not found.
+ -2: Character/Party/Guild not found.
  -3: Instance already exists.
  -4: No free instances (MAX_INSTANCE exceeded).
 
@@ -8155,20 +8193,21 @@ The command returns the instance ID upon success, and these values upon failure:
 
 Destroys instance with the ID <instance id>. If no ID is specified, the instance
 the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player's party is used. If that fails,
-the script will come to a halt.
+the instance of the currently attached player is used (if it is a character, party,
+or guild mode). If it is not owned by anyone, no player needs to be attached. If
+that fails, the script will come to a halt.
 
 ---------------------------------------
 
-*instance_enter("<instance name>"{,<x>,<y>,<char_id>});
+*instance_enter("<instance name>",{<x>,<y>,<char_id>});
 
 Warps player to the specified instance after the script terminates. The map and
 coordinates are located in 'db/(pre-)re/instance_db.txt'.
 
 The command returns 0 upon success, and these values upon failure:
- 1: Party not found.
- 2: Party does not have an instance.
- 3: Other errors (invalid instance name, instance doesn't match with party).
+ 1: Party/Guild not found (for party/guild modes).
+ 2: Character/Party/Guild does not have an instance.
+ 3: Other errors (invalid instance name, instance doesn't match with character/party/guild).
 
 Put -1 for x and y if want to warp player with default entrance coordinates.
 
@@ -8178,8 +8217,8 @@ Put -1 for x and y if want to warp player with default entrance coordinates.
 
 Returns the unique name of the instanced script. If no ID is specified,
 the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached player's party is used. If
-that fails, the script will come to a halt.
+an instance, the instance of the currently attached NPC, player, party, or guild
+is used. If that fails, the script will come to a halt.
 
 ---------------------------------------
 
@@ -8187,16 +8226,18 @@ that fails, the script will come to a halt.
 
 Returns the unique name of the instanced map. If no instance ID is specified,
 the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached player's party is used. If
-that fails, the command returns an empty string instead.
+an instance, the instance of the currently attached player is used (if it is a
+character, party, or guild mode). If it is not owned by anyone, no player needs
+to be attached. If that fails, the command returns an empty string instead.
 
 ---------------------------------------
 
 *instance_id()
 
 Returns the unique instance id of the attached script. If the script is not
-attached to an instance, the instance of the currently attached player's party is
-used. If that fails, the function will return 0.
+attached to an instance, the instance of the currently attached player is
+used (if it is a character, party, or guild mode). If it is not owned by anyone, no
+player needs to be attached. If that fails, the function will return 0.
 
 ---------------------------------------
 
@@ -8205,17 +8246,19 @@ used. If that fails, the function will return 0.
 Warps all players in the instance <instance id> to <map name> at given
 coordinates. If no ID is specified, the instance the script is attached to
 is used. If the script is not attached to an instance, the instance of the
-currently attached player's party is used. If that fails, the script will
-come to a halt.
+currently attached player is used (if it is a character, party, or guild
+mode). If it is not owned by anyone, no player needs to be attached. If that
+fails, the script will come to a halt.
 
 ---------------------------------------
 
 *instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
 
 Broadcasts a message to all players in the instance <instance id> currently
-residing on an instance map. If -1 is specified for <instance id>, the instance
+residing on an instance map. If 0 is specified for <instance id>, the instance
 the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player's party is used.
+the instance of the currently attached player is used (if it is a character,
+party, or guild mode). If it is not owned by anyone, no player needs to be attached.
 
 For details on the other parameters, see 'announce'.
 
@@ -8238,6 +8281,28 @@ if (instance_check_party(getcharid(1),2,2,149)) {
 	close;
 } else {
 	mes "Sorry, your party does not meet requirements.";
+	close;
+}
+
+---------------------------------------
+
+*instance_check_guild(<guild id>{,<amount>{,<min>{,<max>}}})
+
+This function checks if a guild meets certain requirements, returning 1 if all
+conditions are met and 0 otherwise. It will only check online characters.
+
+amount - number of online guild members (default is 1).
+min    - minimum level of all characters in the guild (default is 1).
+max    - maximum level of all characters in the guild (default is max level in conf).
+
+Example:
+
+if (instance_check_guild(getcharid(2),2,2,149)) {
+	mes "Your guild meets the Memorial Dungeon requirements.",
+	mes "All online members are between levels 1-150 and at least two are online.";
+	close;
+} else {
+	mes "Sorry, your guild does not meet requirements.";
 	close;
 }
 
@@ -8662,7 +8727,7 @@ NOTE: Currently ONLY supported for bonuses that used by 'bonus' script.
 This command will make the pet cure a specified status condition. The curing 
 actions will occur once every Delay seconds. For a full list of status 
 conditions that can be cured, see the list of 'SC_' status condition constants 
-in 'db/const.txt'.
+in 'src/map/script_constants.h'.
 
 ---------------------------------------
 
@@ -9133,6 +9198,56 @@ The client requires custom monster spawns be in the navigation file
 for using the embedded client Navigation feature to work properly. In this
 instance sending the player to the map where the monster spawns is a simpler
 solution rather than sending the map and the monster_id.
+
+---------------------------------------
+
+*hateffect(<Hat Effect ID>,<State>);
+
+This will set a Hat Effect onto the player. The state field allows you to
+enable (true) or disable (false) the effect on the player.
+The Hat Effect constants can be found in db/const.txt starting with HAT_EF_*.
+
+Requires client 2015-05-13aRagEXE or newer. 
+
+---------------------------------------
+
+*getrandomoptinfo(<type>);
+
+Returns value of an attribute of current random option.
+
+Valid attributes are:
+ROA_ID - ID of current option
+ROA_VALUE - Value field of current option
+ROA_PARAM - Param field of current option
+
+This script command is intended for using in random option scripts.
+
+---------------------------------------
+
+*getequiprandomoption(<equipment index>,<index>,<type>{,<char id>});
+
+Returns value of an attribute of a random option on an equipped item.
+
+See 'getequipid' for a full list of valid equipment slots.
+
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
+
+For valid attribute types, see `getrandomoptinfo` command reference.
+
+---------------------------------------
+
+*setrandomoption(<equipment slot>,<index>,<id>,<value>,<param>{,<char id>});
+
+Sets <index+1>th random option for equipment equipped at <equipment slot>
+to <id>, <value> and <param>.
+
+See 'getequipid' for a full list of valid equipment slots.
+
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
+
+ID - ID of random option. See db/const.txt for constants.
+Value - Value of random option
+Param - Parameter of random option
 
 ---------------------------------------
 

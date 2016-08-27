@@ -2571,7 +2571,6 @@ prontera,262,353,0	script	Gravestone	111,{
 			mes "Lowen Ellenen";
 			mes " ";
 			mes " XXXX. XX. XX.";
-			mes "";
 			mes "Her noble spirit";
 			mes "was sent to the holy";
 			mes "place by Valkyrie's will.";

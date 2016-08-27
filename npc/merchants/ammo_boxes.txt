@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 2.0
+//= 2.1
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -17,11 +17,12 @@
 //= 1.4 Updated to match AEGIS script again. [Masao]
 //= 1.5 Moved Izlude duplicate to pre-re/re paths. [Euphy]
 //= 2.0 Clean-up. [Capuche]
+//= 2.1 Fixes Issue #1482, where Rebellion jobs cannot use this npc. [Limestone]
 //============================================================
 
 alberta,118,157,3	script	Magazine Dealer Kenny::mdk	4_M_01,{
 	mes "[Kenny]";
-	if (BaseJob == Job_Gunslinger) {
+	if (BaseClass == Job_Gunslinger) {
 		mes "Welcome to my Magazine Shop.";
 		mes "As you may know, large numbers";
 		mes "of bullets can be carried more";

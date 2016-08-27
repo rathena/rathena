@@ -21,6 +21,8 @@
 #define MAX_MVP_DROP 3
 #define MAX_STEAL_DROP 7
 
+#define MAX_RACE2_MOBS 100
+
 //Min time between AI executions
 #define MIN_MOBTHINKTIME 100
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
@@ -38,9 +40,33 @@
 //Used to determine default enemy type of mobs (for use in eachinrange calls)
 #define DEFAULT_ENEMY_TYPE(md) (md->special_state.ai?BL_CHAR:BL_MOB|BL_PC|BL_HOM|BL_MER)
 
-//Externals for the status effects. [Epoque]
-extern const int mob_manuk[8];
-extern const int mob_splendide[5];
+/**
+ * Mob constants
+ * Added definitions for WoE:SE objects and other [L0ne_W0lf], [aleos]
+ */
+enum MOBID {
+	MOBID_PORING			= 1002,
+	MOBID_RED_PLANT			= 1078,
+	MOBID_BLACK_MUSHROOM	= 1084,
+	MOBID_MARINE_SPHERE		= 1142,
+	MOBID_EMPERIUM			= 1288,
+	MOBID_G_PARASITE		= 1555,
+	MOBID_G_FLORA			= 1575,
+	MOBID_G_HYDRA			= 1579,
+	MOBID_G_MANDRAGORA		= 1589,
+	MOBID_G_GEOGRAPHER		= 1590,
+	MOBID_GUARDIAN_STONE1	= 1907,
+	MOBID_GUARDIAN_STONE2,
+	MOBID_SILVERSNIPER		= 2042,
+	MOBID_MAGICDECOY_FIRE,
+	MOBID_MAGICDECOY_WATER,
+	MOBID_MAGICDECOY_EARTH,
+	MOBID_MAGICDECOY_WIND,
+	MOBID_ZANZOU			= 2308,
+	MOBID_S_HORNET			= 2158,
+	MOBID_S_GIANT_HORNET,
+	MOBID_S_LUCIOLA_VESPA,
+};
 
 ///Mob skill states.
 enum MobSkillState {
@@ -74,9 +100,11 @@ enum size {
 
 /// Used hardcoded Random Monster group in src
 enum e_Random_Monster {
-	MOBG_Branch_Of_Dead_Tree = 0,
-	MOBG_Bloody_Dead_Branch  = 2,
-	MOBG_ClassChange         = 4,
+	MOBG_Branch_Of_Dead_Tree	= 0,
+	MOBG_Poring_Box				= 1,
+	MOBG_Bloody_Dead_Branch		= 2,
+	MOBG_Red_Pouch_Of_Surprise	= 3,
+	MOBG_ClassChange			= 4,
 };
 
 struct mob_skill {
@@ -114,7 +142,7 @@ struct mob_db {
 	unsigned int base_exp,job_exp;
 	unsigned int mexp;
 	short range2,range3;
-	short race2;	// celest
+	enum e_race2 race2;	// celest
 	unsigned short lv;
 	struct {
 		unsigned short nameid;
@@ -294,11 +322,6 @@ void mob_heal(struct mob_data *md,unsigned int heal);
 
 #define mob_stop_walking(md, type) unit_stop_walking(&(md)->bl, type)
 #define mob_stop_attack(md) unit_stop_attack(&(md)->bl)
-#define mob_is_battleground(md) ( map[(md)->bl.m].flag.battleground && ((md)->mob_id == MOBID_BARRICADE2 || ((md)->mob_id >= MOBID_FOOD_STOR && (md)->mob_id <= MOBID_PINK_CRYST)) )
-#define mob_is_gvg(md) (map[(md)->bl.m].flag.gvg_castle && ( (md)->mob_id == MOBID_EMPERIUM || (md)->mob_id == MOBID_BARRICADE1 || (md)->mob_id == MOBID_GUARDIAN_STONE1 || (md)->mob_id == MOBID_GUARDIAN_STONE2) )
-#define mob_is_treasure(md) (((md)->mob_id >= MOBID_TREAS01 && (md)->mob_id <= MOBID_TREAS40) || ((md)->mob_id >= MOBID_TREAS41 && (md)->mob_id <= MOBID_TREAS49))
-#define mob_is_guardian(mob_id) ((mob_id >= MOBID_A_GUARDIAN && mob_id <= MOBID_S_GUARDIAN) || mob_id == MOBID_S_GUARDIAN_ || mob_id == MOBID_A_GUARDIAN_)
-#define mob_is_goblin(md, mid) (((md)->mob_id >= MOBID_GOBLIN_1 && (md)->mob_id <= MOBID_GOBLIN_5) && (mid >= MOBID_GOBLIN_1 && mid <= MOBID_GOBLIN_5))
 #define mob_is_samename(md, mid) (strcmp(mob_db((md)->mob_id)->jname, mob_db(mid)->jname) == 0)
 
 void mob_clear_spawninfo();
@@ -330,6 +353,8 @@ int mob_clone_delete(struct mob_data *md);
 void mob_reload(void);
 
 // MvP Tomb System
+int mvptomb_setdelayspawn(struct npc_data *nd);
+int mvptomb_delayspawn(int tid, unsigned int tick, int id, intptr_t data);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
 

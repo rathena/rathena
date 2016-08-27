@@ -77,10 +77,7 @@ Windows
 Linux
 	* Type:
 	(For CentOS)
-		yum install gcc make mysql mysql-devel mysql-server pcre-devel zlib-devel
-		rpm -Uvhhttp://repo.webtatic.com/yum/centos/5/latest.rpm
-		yum install --enablerepo=webtatic git-all
-		yum install --enablerepo=webtatic --disableexcludes=main git-all
+		yum install gcc make mysql mysql-devel mysql-server pcre-devel zlib-devel git
 	(For Debian)
 		apt-get install git make gcc libmysqlclient-dev zlib1g-dev libpcre3-dev
 	* Type:

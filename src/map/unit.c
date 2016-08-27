@@ -33,8 +33,9 @@
 // 1 0 7
 // 2 . 6
 // 3 4 5
-const short dirx[8]={0,-1,-1,-1,0,1,1,1}; ///lookup to know where will move to x according dir
-const short diry[8]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y according dir
+// See also path.c walk_choices
+const short dirx[DIR_MAX]={0,-1,-1,-1,0,1,1,1}; ///lookup to know where will move to x according dir
+const short diry[DIR_MAX]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y according dir
 
 //early declaration
 static int unit_attack_timer(int tid, unsigned int tick, int id, intptr_t data);
@@ -362,8 +363,8 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	dx = dirx[(int)dir];
 	dy = diry[(int)dir];
 
-	//Get icewall walk block depending on boss mode (players can't be trapped)
-	if(md && md->status.mode&MD_BOSS)
+	// Get icewall walk block depending on Status Immune mode (players can't be trapped)
+	if(md && status_has_mode(&md->status,MD_STATUS_IMMUNE))
 		icewall_walk_block = battle_config.boss_icewall_walk_block;
 	else if(md)
 		icewall_walk_block = battle_config.mob_icewall_walk_block;
@@ -640,7 +641,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 		}
 	}
 
-	if(!(flag&2) && (!(status_get_mode(bl)&MD_CANMOVE) || !unit_can_move(bl)))
+	if(!(flag&2) && (!status_bl_has_mode(bl,MD_CANMOVE) || !unit_can_move(bl)))
 		return 0;
 
 	ud->state.walk_easy = flag&1;
@@ -734,7 +735,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
 	if(ud == NULL)
 		return 0;
 
-	if (!(status_get_mode(bl)&MD_CANMOVE))
+	if (!status_bl_has_mode(bl,MD_CANMOVE))
 		return 0;
 
 	if (!unit_can_reach_bl(bl, tbl, distance_bl(bl, tbl)+1, flag&1, &ud->to_x, &ud->to_y)) {
@@ -1100,12 +1101,11 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
  *		0x4 - Boss attack
  * @return reason for immunity
  *		0 - can be knocked back / stopped
- *		1 - at WOE/BG map;
- *		2 - target is emperium
- *		3 - target is MD_KNOCKBACK_IMMUNE|MD_BOSS;
- *		4 - target is in Basilica area;
- *		5 - target has 'special_state.no_knockback';
- *		6 - target is trap that cannot be knocked back
+ *		1 - at WOE/BG map
+ *		2 - target is MD_KNOCKBACK_IMMUNE
+ *		3 - target is in Basilica area
+ *		4 - target has 'special_state.no_knockback'
+ *		5 - target is trap that cannot be knocked back
  */
 uint8 unit_blown_immune(struct block_list* bl, uint8 flag)
 {
@@ -1115,32 +1115,27 @@ uint8 unit_blown_immune(struct block_list* bl, uint8 flag)
 		return 1; // No knocking back in WoE / BG
 
 	switch (bl->type) {
-		case BL_MOB: {
-				struct mob_data* md = BL_CAST(BL_MOB, bl);
-				// Emperium can't be knocked back
-				if( md->mob_id == MOBID_EMPERIUM )
-					return 2;
-				// Bosses or immune can't be knocked back
-				if((flag&0x1) && status_get_mode(bl)&(MD_KNOCKBACK_IMMUNE|MD_BOSS)
-					&& ((flag&0x2) || !(battle_config.skill_trap_type&0x2)))
-					return 3;
-			}
+		case BL_MOB:
+			// Immune can't be knocked back
+			if (((flag&0x1) && status_bl_has_mode(bl,MD_KNOCKBACK_IMMUNE))
+				&& ((flag&0x2) || !(battle_config.skill_trap_type&0x2)))
+				return 2;
 			break;
 		case BL_PC: {
 				struct map_session_data *sd = BL_CAST(BL_PC, bl);
 				// Basilica caster can't be knocked-back by normal monsters.
 				if( !(flag&0x4) && &sd->sc && sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id)
-					return 4;
+					return 3;
 				// Target has special_state.no_knockback (equip)
 				if( (flag&(0x1|0x2)) && sd->special_state.no_knockback )
-					return 5;
+					return 4;
 			}
 			break;
 		case BL_SKILL: {
 				struct skill_unit* su = (struct skill_unit *)bl;
 				// Trap cannot be knocked back
 				if (su && su->group && skill_get_unit_flag(su->group->skill_id)&UF_NOKNOCKBACK)
-					return 6;
+					return 5;
 			}
 			break;
 	}
@@ -1380,8 +1375,8 @@ int unit_can_move(struct block_list *bl) {
 	// Icewall walk block special trapped monster mode
 	if(bl->type == BL_MOB) {
 		struct mob_data *md = BL_CAST(BL_MOB, bl);
-		if(md && ((md->status.mode&MD_BOSS && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
-			|| (!(md->status.mode&MD_BOSS) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
+		if(md && ((status_has_mode(&md->status,MD_STATUS_IMMUNE) && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
+			|| (!status_has_mode(&md->status,MD_STATUS_IMMUNE) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
 			md->walktoxy_fail_count = 1; //Make sure rudeattacked skills are invoked
 			return 0;
 		}
@@ -1434,7 +1429,7 @@ int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int 
 
 	if (type) {
 		//Bosses can ignore skill induced walkdelay (but not damage induced)
-		if(bl->type == BL_MOB && (((TBL_MOB*)bl)->status.mode&MD_BOSS))
+		if(bl->type == BL_MOB && status_has_mode(status_get_status_data(bl),MD_STATUS_IMMUNE))
 			return 0;
 		//Make sure walk delay is not decreased
 		if (DIFF_TICK(ud->canmove_tick, tick+delay) > 0)
@@ -1835,24 +1830,24 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 		mobskill_event(md, src, tick, -1); // Cast targetted skill event.
 
-		if (tstatus->mode&(MD_CASTSENSOR_IDLE|MD_CASTSENSOR_CHASE) && battle_check_target(target, src, BCT_ENEMY) > 0) {
+		if ((status_has_mode(tstatus,MD_CASTSENSOR_IDLE) || status_has_mode(tstatus,MD_CASTSENSOR_CHASE)) && battle_check_target(target, src, BCT_ENEMY) > 0) {
 			switch (md->state.skillstate) {
 				case MSS_RUSH:
 				case MSS_FOLLOW:
-					if (!(tstatus->mode&MD_CASTSENSOR_CHASE))
+					if (!status_has_mode(tstatus,MD_CASTSENSOR_CHASE))
 						break;
 
 					md->target_id = src->id;
-					md->state.aggressive = (tstatus->mode&MD_ANGRY)?1:0;
+					md->state.aggressive = status_has_mode(tstatus,MD_ANGRY)?1:0;
 					md->min_chase = md->db->range3;
 					break;
 				case MSS_IDLE:
 				case MSS_WALK:
-					if (!(tstatus->mode&MD_CASTSENSOR_IDLE))
+					if (!status_has_mode(tstatus,MD_CASTSENSOR_IDLE))
 						break;
 
 					md->target_id = src->id;
-					md->state.aggressive = (tstatus->mode&MD_ANGRY)?1:0;
+					md->state.aggressive = status_has_mode(tstatus,MD_ANGRY)?1:0;
 					md->min_chase = md->db->range3;
 					break;
 			}
@@ -2583,7 +2578,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 			// Set mob's ANGRY/BERSERK states.
 			md->state.skillstate = md->state.aggressive?MSS_ANGRY:MSS_BERSERK;
 
-			if (sstatus->mode&MD_ASSIST && DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME) { 
+			if (status_has_mode(sstatus,MD_ASSIST) && DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME) { 
 				// Link monsters nearby [Skotlex]
 				md->last_linktime = tick;
 				map_foreachinrange(mob_linksearch, src, md->db->range2, BL_MOB, md->mob_id, target, tick);
@@ -3215,6 +3210,14 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->qi_display = NULL;
 			}
 			sd->qi_count = 0;
+
+#if PACKETVER >= 20150513
+			if( sd->hatEffectCount > 0 ){
+				aFree(sd->hatEffectIDs);
+				sd->hatEffectIDs = NULL;
+				sd->hatEffectCount = 0;
+			}
+#endif
 
 			// Clearing...
 			if (sd->bonus_script.head)

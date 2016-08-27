@@ -17,6 +17,7 @@
 #include "battle.h"
 #include "npc.h"
 #include "pc.h"
+#include "instance.h"
 #include "intif.h"
 #include "channel.h"
 #include "log.h"
@@ -387,8 +388,12 @@ int guild_created(uint32 account_id,int guild_id) {
 
 	sd->status.guild_id = guild_id;
 	clif_guild_created(sd,0);
-	if(battle_config.guild_emperium_check)
-		pc_delitem(sd,pc_search_inventory(sd,ITEMID_EMPERIUM),1,0,0,LOG_TYPE_CONSUME);	//emperium consumption
+	if(battle_config.guild_emperium_check){
+		int index = pc_search_inventory(sd,ITEMID_EMPERIUM);
+
+		if( index > 0 )
+			pc_delitem(sd,index,1,0,0,LOG_TYPE_CONSUME);	//emperium consumption
+	}
 	return 0;
 }
 
@@ -551,6 +556,8 @@ int guild_recv_info(struct guild *sg) {
 			clif_guild_notice(sd, g);
 			sd->guild_emblem_id = g->emblem_id;
 		}
+		if (g->instance_id != 0)
+			instance_reqinfo(sd, g->instance_id);
 	}
 
 	//Occurrence of an event
@@ -694,6 +701,8 @@ void guild_member_joined(struct map_session_data *sd) {
 		g->member[i].sd = sd;
 		sd->guild = g;
 
+		if (g->instance_id != 0)
+			instance_reqinfo(sd, g->instance_id);
 		if( channel_config.ally_enable && channel_config.ally_autojoin ) {
 			channel_gjoin(sd,3);
 		}
@@ -743,6 +752,9 @@ int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag) {
 
 	//Next line commented because it do nothing, look at guild_recv_info [LuzZza]
 	//clif_charnameupdate(sd); //Update display name [Skotlex]
+
+	if (g->instance_id != 0)
+		instance_reqinfo(sd, g->instance_id);
 
 	return 0;
 }
@@ -859,6 +871,17 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 		sd->status.guild_id = 0;
 		sd->guild = NULL;
 		sd->guild_emblem_id = 0;
+
+		if (g->instance_id) {
+			int16 m = sd->bl.m;
+
+			if (map[m].instance_id) { // User was on the instance map
+				if (map[m].save.map)
+					pc_setpos(sd, map[m].save.map, map[m].save.x, map[m].save.y, CLR_TELEPORT);
+				else
+					pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
+			}
+		}
 
 		clif_charnameupdate(sd); //Update display name [Skotlex]
 		status_change_end(&sd->bl,SC_LEADERSHIP,INVALID_TIMER);
@@ -1326,7 +1349,7 @@ int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id) {
 
 void guild_guildaura_refresh(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv) {
 	struct skill_unit_group* group = NULL;
-	int type = status_skill2sc(skill_id);
+	sc_type type = status_skill2sc(skill_id);
 	if( !(battle_config.guild_aura&(is_agit_start()?2:1)) &&
 			!(battle_config.guild_aura&(map_flag_gvg2(sd->bl.m)?8:4)) )
 		return;
@@ -1832,6 +1855,9 @@ int guild_break(struct map_session_data *sd,char *name) {
 		clif_guild_broken(sd,2);
 		return 0;
 	}
+
+	if (g->instance_id)
+		instance_destroy(g->instance_id);
 
 	/* Regardless of char server allowing it, we clear the guild master's auras */
 	if ((ud = unit_bl2ud(&sd->bl))) {

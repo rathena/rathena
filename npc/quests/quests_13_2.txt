@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 2.8
+//= 2.9
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -49,6 +49,7 @@
 //= 2.7 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.7a Added Izlude RE coordinates. [Euphy]
 //= 2.8 Added GM management function. [Euphy]
+//= 2.9 Added custom weight check. Fixes issue #910. [Jeybla]
 //============================================================ 
 
 // Cat Hand Addition :: cat_enhance
@@ -2771,7 +2772,7 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	450,{
 		else if (ep13_2_days01 == 1) {
 			set .@qst_cpl01,checkquest(7074,HUNTING);
 			set .@qst_cpl02,checkquest(7075,HUNTING);
-			if ((.@qst_cpl01 == 2) & (.@qst_cpl02 == 2)) {
+			if ((.@qst_cpl01 == 2) && (.@qst_cpl02 == 2)) {
 				mes "[Strom]";
 				mes "Sure enough... I, the Sapha Galtun, Strom, apologize to you. I should not have been so quick to despise you.";
 				mes "I admit that you are a brave soldier, please feel free to visit Manuk.";
@@ -3519,6 +3520,12 @@ OnTimer300000:
 // Otherworld language :: ep13_2_rhea
 //============================================================ 
 mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	869,{
+	if( !checkweight(2782,1)) { // Custom weight check.
+		mes "[Mechanic Engineer Dorance]";
+		mes "It looks like you're carrying too many things.";
+		mes "Why not put some of your items in storage and come back?";
+		close;
+	}
 	if (ep13_1_edq > 2 || ep13_start == 100) {
 		if (ep13_2_rhea < 1) {
 			mes "[Mechanic Engineer Dorance]";

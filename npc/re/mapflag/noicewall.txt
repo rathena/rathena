@@ -37,6 +37,10 @@
 // Inside Eclage ===========
 1@ecl	mapflag	noicewall
 
+// Heroes' Trail Part 1 =======
+1@sara	mapflag	noicewall
+1@face	mapflag	noicewall
+
 // WOE:TE Maps ===================
 te_prtcas01	mapflag	noicewall
 te_prtcas02	mapflag	noicewall

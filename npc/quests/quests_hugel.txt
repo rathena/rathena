@@ -3357,7 +3357,6 @@ hu_in01,317,312,0	script	Book	111,{
 					mes "People say that his mansion is rather like a fortress.";
 					mes "I also don't know why someone would want to build his house";
 					mes "as strong as a fortress. Regardless, I am pretty sure that his support will be a great help for us.";
-					mes "";
 					mes "It was a really tiring day today. It was also a very chaotic day.";
 					mes "To be honest, I don't know what is going to happen now.";
 					mes "I am scared if I would die helplessly. I am scared and depressed.";
