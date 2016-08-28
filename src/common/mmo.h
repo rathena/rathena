@@ -187,11 +187,13 @@ struct item {
 	char refine;
 	char attribute;
 	unsigned short card[MAX_SLOTS];
+#if PACKETVER >= 20150226
 	struct {
 		short id;
 		short value;
 		char param;
 	} option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
+#endif
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;

@@ -3451,6 +3451,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	}
 	current_equip_card_id = 0; // Clear stored card ID [Secret]
 
+#if PACKETVER >= 20150226
 	// Parse random options
 	for (i = 0; i < EQI_MAX; i++) {
 		current_equip_item_index = index = sd->equip_index[i];
@@ -3491,6 +3492,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		}
 		current_equip_opt_index = -1;
 	}
+#endif
 
 	if (sc->count && sc->data[SC_ITEMSCRIPT]) {
 		struct item_data *data = itemdb_exists(sc->data[SC_ITEMSCRIPT]->val1);

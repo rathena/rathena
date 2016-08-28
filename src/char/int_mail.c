@@ -28,11 +28,13 @@ static int mail_fromsql(uint32 char_id, struct mail_data* md)
 		"`zeny`,`amount`,`nameid`,`refine`,`attribute`,`identify`,`unique_id`,`bound`");
 	for (i = 0; i < MAX_SLOTS; i++)
 		StringBuf_Printf(&buf, ",`card%d`", i);
+#if PACKETVER >= 20150226
 	for (i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
 		StringBuf_Printf(&buf, ", `option_id%d`", i);
 		StringBuf_Printf(&buf, ", `option_val%d`", i);
 		StringBuf_Printf(&buf, ", `option_parm%d`", i);
 	}
+#endif
 	// I keep the `status` < 3 just in case someone forget to apply the sqlfix
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `dest_id`='%d' AND `status` < 3 ORDER BY `id` LIMIT %d",
 		schema_config.mail_db, char_id, MAIL_MAX_INBOX + 1);
@@ -73,6 +75,7 @@ static int mail_fromsql(uint32 char_id, struct mail_data* md)
 			item->card[j] = atoi(data);
 		}
 
+#if PACKETVER >= 20150226
 		for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
 			Sql_GetData(sql_handle, 17 + MAX_SLOTS + j * 3, &data, NULL);
 			item->option[j].id = atoi(data);
@@ -81,6 +84,7 @@ static int mail_fromsql(uint32 char_id, struct mail_data* md)
 			Sql_GetData(sql_handle, 19 + MAX_SLOTS + j * 3, &data, NULL);
 			item->option[j].param = atoi(data);
 		}
+#endif
 	}
 
 	md->full = ( Sql_NumRows(sql_handle) > MAIL_MAX_INBOX );
@@ -122,20 +126,24 @@ int mail_savemessage(struct mail_message* msg)
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`send_name`, `send_id`, `dest_name`, `dest_id`, `title`, `message`, `time`, `status`, `zeny`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`, `bound`", schema_config.mail_db);
 	for (j = 0; j < MAX_SLOTS; j++)
 		StringBuf_Printf(&buf, ", `card%d`", j);
+#if PACKETVER >= 20150226
 	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
 		StringBuf_Printf(&buf, ", `option_id%d`", j);
 		StringBuf_Printf(&buf, ", `option_val%d`", j);
 		StringBuf_Printf(&buf, ", `option_parm%d`", j);
 	}
+#endif
 	StringBuf_Printf(&buf, ") VALUES (?, '%d', ?, '%d', ?, ?, '%lu', '%d', '%d', '%d', '%hu', '%d', '%d', '%d', '%"PRIu64"', '%d'",
 		msg->send_id, msg->dest_id, (unsigned long)msg->timestamp, msg->status, msg->zeny, msg->item.amount, msg->item.nameid, msg->item.refine, msg->item.attribute, msg->item.identify, msg->item.unique_id, msg->item.bound);
 	for (j = 0; j < MAX_SLOTS; j++)
 		StringBuf_Printf(&buf, ", '%hu'", msg->item.card[j]);
+#if PACKETVER >= 20150226
 	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
 		StringBuf_Printf(&buf, ", '%d'", msg->item.option[j].id);
 		StringBuf_Printf(&buf, ", '%d'", msg->item.option[j].value);
 		StringBuf_Printf(&buf, ", '%d'", msg->item.option[j].param);
 	}
+#endif
 	StringBuf_AppendStr(&buf, ")");
 
 	// prepare and execute query
@@ -170,11 +178,13 @@ static bool mail_loadmessage(int mail_id, struct mail_message* msg)
 		"`zeny`,`amount`,`nameid`,`refine`,`attribute`,`identify`,`unique_id`,`bound`");
 	for( j = 0; j < MAX_SLOTS; j++ )
 		StringBuf_Printf(&buf, ",`card%d`", j);
+#if PACKETVER >= 20150226
 	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
 		StringBuf_Printf(&buf, ", `option_id%d`", j);
 		StringBuf_Printf(&buf, ", `option_val%d`", j);
 		StringBuf_Printf(&buf, ", `option_parm%d`", j);
 	}
+#endif
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id);
 
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf))
@@ -213,6 +223,8 @@ static bool mail_loadmessage(int mail_id, struct mail_message* msg)
 			Sql_GetData(sql_handle,17 + j, &data, NULL);
 			msg->item.card[j] = atoi(data);
 		}
+
+#if PACKETVER >= 20150226
 		for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
 			Sql_GetData(sql_handle, 17 + MAX_SLOTS + j * 3, &data, NULL);
 			msg->item.option[j].id = atoi(data);
@@ -221,6 +233,7 @@ static bool mail_loadmessage(int mail_id, struct mail_message* msg)
 			Sql_GetData(sql_handle, 19 + MAX_SLOTS + j * 3, &data, NULL);
 			msg->item.option[j].param = atoi(data);
 		}
+#endif
 	}
 
 	StringBuf_Destroy(&buf);

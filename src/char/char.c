@@ -574,11 +574,13 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, int tabl
 
 	for( i = 0; i < MAX_SLOTS; ++i )
 		StringBuf_Printf(&buf, ", `card%d`", i);
+#if PACKETVER >= 20150226
 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
 		StringBuf_Printf(&buf, ", `option_id%d`", i);
 		StringBuf_Printf(&buf, ", `option_val%d`", i);
 		StringBuf_Printf(&buf, ", `option_parm%d`", i);
 	}
+#endif
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `%s`='%d'", tablename, selectoption, id);
 
 	stmt = SqlStmt_Malloc(sql_handle);
@@ -603,11 +605,13 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, int tabl
 	SqlStmt_BindColumn(stmt, 9, SQLDT_UINT64,    &item.unique_id,   0, NULL, NULL);
 	for( i = 0; i < MAX_SLOTS; ++i )
 		SqlStmt_BindColumn(stmt, 10+i, SQLDT_USHORT, &item.card[i], 0, NULL, NULL);
+#if PACKETVER >= 20150226
 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
 		SqlStmt_BindColumn(stmt, 10+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].id, 0, NULL, NULL);
 		SqlStmt_BindColumn(stmt, 11+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].value, 0, NULL, NULL);
 		SqlStmt_BindColumn(stmt, 12+MAX_SLOTS+i*3, SQLDT_CHAR, &item.option[i].param, 0, NULL, NULL);
 	}
+#endif
 	// bit array indicating which inventory items have already been matched
 	flag = (bool*) aCalloc(max, sizeof(bool));
 
@@ -645,11 +649,13 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, int tabl
 						tablename, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute, items[i].expire_time, items[i].bound, items[i].unique_id);
 					for( j = 0; j < MAX_SLOTS; ++j )
 						StringBuf_Printf(&buf, ", `card%d`=%hu", j, items[i].card[j]);
+#if PACKETVER >= 20150226
 					for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
 						StringBuf_Printf(&buf, ", `option_id%d`=%d", j, items[i].option[j].id);
 						StringBuf_Printf(&buf, ", `option_val%d`=%d", j, items[i].option[j].value);
 						StringBuf_Printf(&buf, ", `option_parm%d`=%d", j, items[i].option[j].param);
 					}
+#endif
 					StringBuf_Printf(&buf, " WHERE `id`='%d' LIMIT 1", item.id);
 
 					if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
@@ -678,11 +684,13 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, int tabl
 	StringBuf_Printf(&buf, "INSERT INTO `%s`(`%s`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `expire_time`, `bound`, `unique_id`", tablename, selectoption);
 	for( j = 0; j < MAX_SLOTS; ++j )
 		StringBuf_Printf(&buf, ", `card%d`", j);
+#if PACKETVER >= 20150226
 	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
 		StringBuf_Printf(&buf, ", `option_id%d`", j);
 		StringBuf_Printf(&buf, ", `option_val%d`", j);
 		StringBuf_Printf(&buf, ", `option_parm%d`", j);
 	}
+#endif
 	StringBuf_AppendStr(&buf, ") VALUES ");
 
 	found = false;
@@ -702,11 +710,13 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, int tabl
 			id, items[i].nameid, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute, items[i].expire_time, items[i].bound, items[i].unique_id);
 		for( j = 0; j < MAX_SLOTS; ++j )
 			StringBuf_Printf(&buf, ", '%hu'", items[i].card[j]);
+#if PACKETVER >= 20150226
 		for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
 			StringBuf_Printf(&buf, ", '%d'", items[i].option[j].id);
 			StringBuf_Printf(&buf, ", '%d'", items[i].option[j].value);
 			StringBuf_Printf(&buf, ", '%d'", items[i].option[j].param);
 		}
+#endif
 		StringBuf_AppendStr(&buf, ")");
 	}
 
@@ -742,11 +752,13 @@ int char_inventory_to_sql(const struct item items[], int max, int id) {
 	StringBuf_AppendStr(&buf, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `expire_time`, `favorite`, `bound`, `unique_id`");
 	for( i = 0; i < MAX_SLOTS; ++i )
 		StringBuf_Printf(&buf, ", `card%d`", i);
+#if PACKETVER >= 20150226
 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
 		StringBuf_Printf(&buf, ", `option_id%d`", i);
 		StringBuf_Printf(&buf, ", `option_val%d`", i);
 		StringBuf_Printf(&buf, ", `option_parm%d`", i);
 	}
+#endif
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`='%d'", schema_config.inventory_db, id);
 
 	stmt = SqlStmt_Malloc(sql_handle);
@@ -772,11 +784,13 @@ int char_inventory_to_sql(const struct item items[], int max, int id) {
 	SqlStmt_BindColumn(stmt, 10,SQLDT_UINT64,    &item.unique_id,   0, NULL, NULL);
 	for( i = 0; i < MAX_SLOTS; ++i )
 		SqlStmt_BindColumn(stmt, 11+i, SQLDT_USHORT, &item.card[i], 0, NULL, NULL);
+#if PACKETVER >= 20150226
 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
 		SqlStmt_BindColumn(stmt, 11+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].id, 0, NULL, NULL);
 		SqlStmt_BindColumn(stmt, 12+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].value, 0, NULL, NULL);
 		SqlStmt_BindColumn(stmt, 13+MAX_SLOTS+i*3, SQLDT_CHAR, &item.option[i].param, 0, NULL, NULL);
 	}
+#endif
 
 	// bit array indicating which inventory items have already been matched
 	flag = (bool*) aCalloc(max, sizeof(bool));
@@ -813,11 +827,13 @@ int char_inventory_to_sql(const struct item items[], int max, int id) {
 					    schema_config.inventory_db, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute, items[i].expire_time, items[i].favorite, items[i].bound, items[i].unique_id);
 					for( j = 0; j < MAX_SLOTS; ++j )
 						StringBuf_Printf(&buf, ", `card%d`=%hu", j, items[i].card[j]);
+#if PACKETVER >= 20150226
 					for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
 						StringBuf_Printf(&buf, ", `option_id%d`=%d", j, items[i].option[j].id);
 						StringBuf_Printf(&buf, ", `option_val%d`=%d", j, items[i].option[j].value);
 						StringBuf_Printf(&buf, ", `option_parm%d`=%d", j, items[i].option[j].param);
 					}
+#endif
 					StringBuf_Printf(&buf, " WHERE `id`='%d' LIMIT 1", item.id);
 
 					if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) ) {
@@ -843,11 +859,13 @@ int char_inventory_to_sql(const struct item items[], int max, int id) {
 	StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `expire_time`, `favorite`, `bound`, `unique_id`", schema_config.inventory_db);
 	for( i = 0; i < MAX_SLOTS; ++i )
 		StringBuf_Printf(&buf, ", `card%d`", i);
+#if PACKETVER >= 20150226
 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
 		StringBuf_Printf(&buf, ", `option_id%d`", i);
 		StringBuf_Printf(&buf, ", `option_val%d`", i);
 		StringBuf_Printf(&buf, ", `option_parm%d`", i);
 	}
+#endif
 	StringBuf_AppendStr(&buf, ") VALUES ");
 
 	found = false;
@@ -866,11 +884,13 @@ int char_inventory_to_sql(const struct item items[], int max, int id) {
 						 id, items[i].nameid, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute, items[i].expire_time, items[i].favorite, items[i].bound, items[i].unique_id);
 		for( j = 0; j < MAX_SLOTS; ++j )
 			StringBuf_Printf(&buf, ", '%hu'", items[i].card[j]);
+#if PACKETVER >= 20150226
 		for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
 			StringBuf_Printf(&buf, ", '%d'", items[i].option[j].id);
 			StringBuf_Printf(&buf, ", '%d'", items[i].option[j].value);
 			StringBuf_Printf(&buf, ", '%d'", items[i].option[j].param);
 		}
+#endif
 		StringBuf_AppendStr(&buf, ")");
 	}
 
@@ -1198,11 +1218,13 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	StringBuf_AppendStr(&buf, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `expire_time`, `favorite`, `bound`, `unique_id`");
 	for( i = 0; i < MAX_SLOTS; ++i )
 		StringBuf_Printf(&buf, ", `card%d`", i);
+#if PACKETVER >= 20150226
 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
 		StringBuf_Printf(&buf, ", `option_id%d`", i);
 		StringBuf_Printf(&buf, ", `option_val%d`", i);
 		StringBuf_Printf(&buf, ", `option_parm%d`", i);
 	}
+#endif
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`=? LIMIT %d", schema_config.inventory_db, MAX_INVENTORY);
 
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
@@ -1224,12 +1246,14 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 		if( SQL_ERROR == SqlStmt_BindColumn(stmt, 11+i, SQLDT_USHORT, &tmp_item.card[i], 0, NULL, NULL) ) {
 			SqlStmt_ShowDebug(stmt);
 	}
+#if PACKETVER >= 20150226
 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
 		if( SQL_ERROR == SqlStmt_BindColumn(stmt, 11+MAX_SLOTS+i*3, SQLDT_SHORT, &tmp_item.option[i].id, 0, NULL, NULL)
 		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 12+MAX_SLOTS+i*3, SQLDT_SHORT, &tmp_item.option[i].value, 0, NULL, NULL)
 		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 13+MAX_SLOTS+i*3, SQLDT_CHAR, &tmp_item.option[i].param, 0, NULL, NULL) )
 			SqlStmt_ShowDebug(stmt);
 	}
+#endif
 	for( i = 0; i < MAX_INVENTORY && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 		memcpy(&p->inventory[i], &tmp_item, sizeof(tmp_item));
 
@@ -1241,11 +1265,13 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	StringBuf_AppendStr(&buf, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `expire_time`, `bound`, `unique_id`");
 	for( j = 0; j < MAX_SLOTS; ++j )
 		StringBuf_Printf(&buf, ", `card%d`", j);
+#if PACKETVER >= 20150226
 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
 		StringBuf_Printf(&buf, ", `option_id%d`", i);
 		StringBuf_Printf(&buf, ", `option_val%d`", i);
 		StringBuf_Printf(&buf, ", `option_parm%d`", i);
 	}
+#endif
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`=? LIMIT %d", schema_config.cart_db, MAX_CART);
 
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
@@ -1265,12 +1291,14 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	for( i = 0; i < MAX_SLOTS; ++i )
 		if( SQL_ERROR == SqlStmt_BindColumn(stmt, 10+i, SQLDT_USHORT, &tmp_item.card[i], 0, NULL, NULL) )
 			SqlStmt_ShowDebug(stmt);
+#if PACKETVER >= 20150226
 	for( i = 0; i < MAX_ITEM_RDM_OPT; i++ ) {
 		if( SQL_ERROR == SqlStmt_BindColumn(stmt, 10+MAX_SLOTS+i*3, SQLDT_SHORT, &tmp_item.option[i].id, 0, NULL, NULL)
 		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 11+MAX_SLOTS+i*3, SQLDT_SHORT, &tmp_item.option[i].value, 0, NULL, NULL)
 		||	SQL_ERROR == SqlStmt_BindColumn(stmt, 12+MAX_SLOTS+i*3, SQLDT_CHAR, &tmp_item.option[i].param, 0, NULL, NULL) )
 			SqlStmt_ShowDebug(stmt);
 	}
+#endif
 	for( i = 0; i < MAX_CART && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
 		memcpy(&p->cart[i], &tmp_item, sizeof(tmp_item));
 	StringBuf_AppendStr(&msg_buf, " cart");

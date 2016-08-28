@@ -21535,6 +21535,7 @@ BUILDIN_FUNC(hateffect){
 * @author [secretdataz]
 **/
 BUILDIN_FUNC(getrandomoptinfo) {
+#if PACKETVER >= 20150226
 	struct map_session_data *sd;
 	int val;
 	int param = script_getnum(st, 2);
@@ -21559,6 +21560,7 @@ BUILDIN_FUNC(getrandomoptinfo) {
 	else {
 		script_pushint(st, 0);
 	}
+#endif
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -21568,6 +21570,7 @@ BUILDIN_FUNC(getrandomoptinfo) {
 * @author [secretdataz]
 */
 BUILDIN_FUNC(getequiprandomoption) {
+#if PACKETVER >= 20150226
 	struct map_session_data *sd;
 	int val;
 	short i = -1;
@@ -21608,6 +21611,10 @@ BUILDIN_FUNC(getequiprandomoption) {
 	}
 	script_pushint(st, val);
 	return SCRIPT_CMD_SUCCESS;
+#else
+	script_pushint(st,0);
+	return SCRIPT_CMD_SUCCESS;
+#endif
 }
 
 /**
@@ -21617,6 +21624,7 @@ BUILDIN_FUNC(getequiprandomoption) {
 * @author [secretdataz]
 */
 BUILDIN_FUNC(setrandomoption) {
+#if PACKETVER >= 20150226
 	struct map_session_data *sd;
 	struct s_random_opt_data *opt;
 	int pos, index, id, value, param, ep;
@@ -21657,6 +21665,7 @@ BUILDIN_FUNC(setrandomoption) {
 	}
 
 	ShowError("buildin_setrandomoption: No item equipped at pos %d (CID=%d/AID=%d).\n", pos, sd->status.char_id, sd->status.account_id);
+#endif
 	script_pushint(st, 0);
 	return SCRIPT_CMD_FAILURE;
 }
