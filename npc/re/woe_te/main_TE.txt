@@ -147,7 +147,7 @@ OnAgitBreak:
 	// Reset Invest information and refresh castle data
 	for ( .@i = 4; .@i <= 9; .@i++ )
 		setcastledata .@map$,.@i,0;
-	donpcevent strnpcinfo(0) +"::OnAgitInit3";
+	donpcevent strnpcinfo(0) +"::OnAgitInit3";// spawn guardians / monsters
 
 	// Erase Guardian Database information if the new owners do not have Guardian Research.
 	if (getgdskilllv(.@guild_id,10002) == 0) {
@@ -156,7 +156,7 @@ OnAgitBreak:
 	}
 
 	mapannounce .@map$,"Emperium has been destroyed.",bc_map,"0x00FF00",FW_BOLD,20,0,40;
-	maprespawnguildid .@map$,.@guild_id,6;// Respawn all but new castle-occupants.
+	maprespawnguildid .@map$,.@guild_id,2;// Respawn all but new castle-occupants, don't remove monsters.
 
 	sleep 500;
 	if (agitcheck3())
