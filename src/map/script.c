@@ -14280,10 +14280,14 @@ BUILDIN_FUNC(message)
  *------------------------------------------*/
 BUILDIN_FUNC(npctalk)
 {
-	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
+	struct npc_data* nd = NULL;
 	const char* str = script_getstr(st,2);
 
-	if (nd) {
+	if (script_hasdata(st, 3))
+		nd = npc_name2id(script_getstr(st, 3));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+	if (nd != NULL) {
 		char message[256];
 		safesnprintf(message, sizeof(message), "%s", str);
 		clif_disp_overhead(&nd->bl, message);
