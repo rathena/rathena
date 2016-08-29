@@ -9221,5 +9221,16 @@ Param - Parameter of random option
 
 ---------------------------------------
 
+*jobcanentermap("<mapname>"{,<JobID>});
+
+Return 1 if player (decided by job) can enter the map, 0 otherwise.
+
+For optional 'JobID', see constant of Job_*, or use player's Class, BaseJob,
+and BaseClass can be used. If no player attached, this param must has a value.
+
+See also db/[pre-]re/job_noenter_map.txt
+
+---------------------------------------
+
 Whew.
 That's about all of them.

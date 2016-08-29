@@ -796,6 +796,10 @@ struct {
 	struct s_params {
 		uint16 str, agi, vit, int_, dex, luk;
 	} max_param;
+	struct s_job_noenter_map {
+		uint32 zone;
+		uint8 group_lv;
+	} noenter_map;
 } job_info[CLASS_COUNT];
 
 #define EQP_WEAPON EQP_HAND_R
@@ -1261,6 +1265,8 @@ void pc_validate_skill(struct map_session_data *sd);
 
 void pc_show_questinfo(struct map_session_data *sd);
 void pc_show_questinfo_reinit(struct map_session_data *sd);
+
+bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type);

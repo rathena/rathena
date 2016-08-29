@@ -5633,7 +5633,7 @@ BUILDIN_FUNC(warpparty)
 	TBL_PC *pl_sd;
 	struct party_data* p;
 	int type;
-	int mapindex;
+	int mapindex = 0, m = -1;
 	int i;
 
 	const char* str = script_getstr(st,2);
@@ -5662,18 +5662,21 @@ BUILDIN_FUNC(warpparty)
 				return SCRIPT_CMD_FAILURE;
 			pl_sd = p->data[i].sd;
 			mapindex = pl_sd->mapindex;
+			m = map_mapindex2mapid(mapindex);
 			x = pl_sd->bl.x;
 			y = pl_sd->bl.y;
 			break;
 		case 4:
 			mapindex = mapindex_name2id(str);
+			if (!mapindex) {// Invalid map
+				return SCRIPT_CMD_FAILURE;
+			}
+			m = map_mapindex2mapid(mapindex);
 			break;
 		case 2:
 			//"SavePoint" uses save point of the currently attached player
 			if (( sd = script_rid2sd(st) ) == NULL )
 				return SCRIPT_CMD_SUCCESS;
-		default:
-			mapindex = 0;
 			break;
 	}
 
@@ -5704,7 +5707,7 @@ BUILDIN_FUNC(warpparty)
 		break;
 		case 3: // Leader
 		case 4: // m,x,y
-			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp)
+			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
 				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 		break;
 		}
@@ -5723,7 +5726,7 @@ BUILDIN_FUNC(warpguild)
 	TBL_PC *pl_sd;
 	struct guild* g;
 	struct s_mapiterator* iter;
-	int type;
+	int type, mapindex = 0, m = -1;
 
 	const char* str = script_getstr(st,2);
 	int x           = script_getnum(st,3);
@@ -5742,6 +5745,15 @@ BUILDIN_FUNC(warpguild)
 	if( type == 2 && ( sd = script_rid2sd(st) ) == NULL )
 	{// "SavePoint" uses save point of the currently attached player
 		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch (type) {
+		case 3:
+			mapindex = mapindex_name2id(str);
+			if (!mapindex)
+				return SCRIPT_CMD_FAILURE;
+			m = map_mapindex2mapid(mapindex);
+			break;
 	}
 
 	iter = mapit_getallusers();
@@ -5765,8 +5777,8 @@ BUILDIN_FUNC(warpguild)
 				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 3: // m,x,y
-			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp)
-				pc_setpos(pl_sd,mapindex_name2id(str),x,y,CLR_TELEPORT);
+			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
+				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 		break;
 		}
 	}
@@ -21677,6 +21689,44 @@ BUILDIN_FUNC(needed_status_point) {
 	script_pushint(st, pc_need_status_point(sd, type, val));
 	return SCRIPT_CMD_SUCCESS;
 }
+
+/**
+ * jobcanentermap("<mapname>"{,<JobID>});
+ * Check if (player with) JobID can enter the map.
+ * @param mapname Map name
+ * @param JobID Player's JobID (optional)
+ **/
+BUILDIN_FUNC(jobcanentermap) {
+	const char *mapname = script_getstr(st, 2);
+	int mapidx = mapindex_name2id(mapname), m = -1;
+	int jobid = 0;
+	TBL_PC *sd = NULL;
+
+	if (!mapidx) {// Invalid map
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+	m = map_mapindex2mapid(mapidx);
+	if (m == -1) { // Map is on different map server
+		ShowError("buildin_job_is_allowed: Map '%s' is not found in this server.\n", mapname);
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_hasdata(st, 3)) {
+		jobid = script_getnum(st, 3);
+	} else {
+		if (!(sd = script_rid2sd(st))) {
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+		jobid = sd->status.class_;
+	}
+
+	script_pushint(st, pc_job_can_entermap((enum e_job)jobid, m, sd ? sd->group_level : 0));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -22260,6 +22310,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequiprandomoption, "iii?"),
 	BUILDIN_DEF(setrandomoption,"iiiii?"),
 	BUILDIN_DEF(needed_status_point,"ii?"),
+	BUILDIN_DEF(jobcanentermap,"s?"),
 
 #include "../custom/script_def.inc"
 
