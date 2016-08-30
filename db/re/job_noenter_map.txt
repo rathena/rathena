@@ -1,4 +1,4 @@
-// Defines Job(s) that are resitriced to enter map (by flag/zones)
+// Defines Job(s) that are restricted to enter map (by flag/zones)
 //
 // Structure of Database:
 // JobID,FlagZone,GroupLevelBypass
