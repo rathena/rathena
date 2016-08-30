@@ -372,10 +372,10 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 		return 0;
 	}
 
-	if (battle_config.party_no_dual_account) {
+	if (battle_config.block_account_in_same_party) {
 		ARR_FIND(0, MAX_PARTY, i, p->party.member[i].account_id == tsd->status.account_id);
 		if (i < MAX_PARTY) {
-			clif_party_inviteack(sd, (tsd?tsd->status.name:""), PARTY_REPLY_DUAL);
+			clif_party_invite_reply(sd, (tsd?tsd->status.name:""), PARTY_REPLY_DUAL);
 			return 0;
 		}
 	}
@@ -384,7 +384,7 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	ARR_FIND(0, MAX_PARTY, i, p->party.member[i].account_id == 0);
 
 	if( i == MAX_PARTY ) {
-		clif_party_inviteack(sd, (tsd?tsd->status.name:""), PARTY_REPLY_FULL);
+		clif_party_invite_reply(sd, (tsd?tsd->status.name:""), PARTY_REPLY_FULL);
 		return 0;
 	}
 
@@ -395,25 +395,25 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 	}
 
 	if( tsd == NULL) {
-		clif_party_inviteack(sd, "", PARTY_REPLY_OFFLINE);
+		clif_party_invite_reply(sd, "", PARTY_REPLY_OFFLINE);
 		return 0;
 	}
 
 	if(!battle_config.invite_request_check) {
 		if (tsd->guild_invite>0 || tsd->trade_partner || tsd->adopt_invite) {
-			clif_party_inviteack(sd,tsd->status.name,PARTY_REPLY_JOIN_OTHER_PARTY);
+			clif_party_invite_reply(sd,tsd->status.name,PARTY_REPLY_JOIN_OTHER_PARTY);
 			return 0;
 		}
 	}
 
 	if (!tsd->fd) { //You can't invite someone who has already disconnected.
-		clif_party_inviteack(sd,tsd->status.name,PARTY_REPLY_REJECTED);
+		clif_party_invite_reply(sd,tsd->status.name,PARTY_REPLY_REJECTED);
 		return 0;
 	}
 
 	if( tsd->status.party_id > 0 || tsd->party_invite > 0 )
 	{// already associated with a party
-		clif_party_inviteack(sd,tsd->status.name,PARTY_REPLY_JOIN_OTHER_PARTY);
+		clif_party_invite_reply(sd,tsd->status.name,PARTY_REPLY_JOIN_OTHER_PARTY);
 		return 0;
 	}
 
@@ -447,7 +447,7 @@ int party_reply_invite(struct map_session_data *sd,int party_id,int flag)
 		sd->party_invite_account = 0;
 
 		if( tsd != NULL )
-			clif_party_inviteack(tsd,sd->status.name,PARTY_REPLY_REJECTED);
+			clif_party_invite_reply(tsd,sd->status.name,PARTY_REPLY_REJECTED);
 	}
 
 	return 0;
@@ -506,7 +506,7 @@ int party_member_added(int party_id,uint32 account_id,uint32 char_id, int flag)
 
 	if( flag ) { // failed
 		if( sd2 != NULL )
-			clif_party_inviteack(sd2,sd->status.name,PARTY_REPLY_FULL);
+			clif_party_invite_reply(sd2,sd->status.name,PARTY_REPLY_FULL);
 		return 0;
 	}
 
@@ -517,7 +517,7 @@ int party_member_added(int party_id,uint32 account_id,uint32 char_id, int flag)
 	clif_party_info(p,sd);
 
 	if( sd2 != NULL )
-		clif_party_inviteack(sd2,sd->status.name,PARTY_REPLY_ACCEPTED);
+		clif_party_invite_reply(sd2,sd->status.name,PARTY_REPLY_ACCEPTED);
 
 	for( i = 0; i < ARRAYLENGTH(p->data); ++i ) { // hp of the other party members
 		sd2 = p->data[i].sd;

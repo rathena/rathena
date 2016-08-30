@@ -7288,14 +7288,14 @@ void clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 /// Party invite result.
 /// 00fd <nick>.24S <result>.B (ZC_ACK_REQ_JOIN_GROUP)
 /// 02c5 <nick>.24S <result>.L (ZC_PARTY_JOIN_REQ_ACK)
-void clif_party_inviteack(struct map_session_data* sd, const char* nick, enum e_party_invite_ack result)
+void clif_party_invite_reply(struct map_session_data* sd, const char* nick, enum e_party_invite_reply reply)
 {
 	int fd;
 	nullpo_retv(sd);
 	fd=sd->fd;
 
 #if PACKETVER < 20070904
-	if( result == PARTY_REPLY_OFFLINE ) {
+	if( reply == PARTY_REPLY_OFFLINE ) {
 		clif_displaymessage(fd, msg_txt(sd,3));
 		return;
 	}
@@ -7305,13 +7305,13 @@ void clif_party_inviteack(struct map_session_data* sd, const char* nick, enum e_
 	WFIFOHEAD(fd,packet_len(0xfd));
 	WFIFOW(fd,0) = 0xfd;
 	safestrncpy((char*)WFIFOP(fd,2),nick,NAME_LENGTH);
-	WFIFOB(fd,26) = result;
+	WFIFOB(fd,26) = reply;
 	WFIFOSET(fd,packet_len(0xfd));
 #else
 	WFIFOHEAD(fd,packet_len(0x2c5));
 	WFIFOW(fd,0) = 0x2c5;
 	safestrncpy((char*)WFIFOP(fd,2),nick,NAME_LENGTH);
-	WFIFOL(fd,26) = result;
+	WFIFOL(fd,26) = reply;
 	WFIFOSET(fd,packet_len(0x2c5));
 #endif
 }
