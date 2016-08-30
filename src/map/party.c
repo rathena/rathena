@@ -372,10 +372,10 @@ int party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 		return 0;
 	}
 
-	if (battle_config.block_account_in_same_party) {
+	if (tsd && battle_config.block_account_in_same_party) {
 		ARR_FIND(0, MAX_PARTY, i, p->party.member[i].account_id == tsd->status.account_id);
 		if (i < MAX_PARTY) {
-			clif_party_invite_reply(sd, (tsd?tsd->status.name:""), PARTY_REPLY_DUAL);
+			clif_party_invite_reply(sd, tsd->status.name, PARTY_REPLY_DUAL);
 			return 0;
 		}
 	}
