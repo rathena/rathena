@@ -238,7 +238,7 @@ te_aldecas1,226,34,3	script	Blacksmith Cano#tegod01	4_M_RACHMAN1,{
 				delitem 1473,1;// Wizardy_Staff
 				$@2012_tegod_kafra = 5;
 				getitem 2020,1;// Jormungand
-				mapannounce "te_aldecas1","Twilight of trail [ Jormungand ] is introduced to this world by ["+ strcharinfo(0) +"] of ["+ getguildname(.@guild_id) +"] Guild.",bc_map,"0x70dbdb",FW_NORMAL,12;
+				announce "Twilight of trail [ Jormungand ] is introduced to this world by ["+ strcharinfo(0) +"] of ["+ getguildname(.@guild_id) +"] Guild.",bc_all,"0x70dbdb",FW_NORMAL,12;
 				if (.@economy <= 20)
 					setcastledata "te_aldecas1",2, 0;
 				else
@@ -598,11 +598,13 @@ S_MobRedondant:
 	monster "te_aldecas1",0,0,"Bloody Knight",1268,5, .npc_name$ +"::OnMyMobDead";
 	end;
 
+OnMyMobDead:
+	end;
+
 OnInit:
 	$@2012_tegirls_alde01 = 0;// mob killed count
 	if ($@2012_tegod_kafra < 3)
 		$@2012_tegod_kafra = 0;
-OnMyMobDead:
 	end;
 }
 

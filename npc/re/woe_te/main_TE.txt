@@ -133,13 +133,13 @@ OnAgitBreak:
 	.@map$ = strnpcinfo(4);
 
 	.@economy = getcastledata(.@map$,2) - 5;// Adjust economy Invest Level for Castle
-	if (.@economy < 0)
-		setcastledata .@map$, 2,0;
+	if (.@economy < 1)
+		setcastledata .@map$, 2,1;
 	else
 		setcastledata .@map$, 2,.@economy;
 	.@defense = getcastledata(.@map$,3) - 5;// Adjust Defense Invest Level for Castle
-	if (.@defense < 0)
-		setcastledata .@map$, 3,0;
+	if (.@defense < 1)
+		setcastledata .@map$, 3,1;
 	else
 		setcastledata .@map$, 3,.@defense;
 	setcastledata .@map$,1,.@guild_id;

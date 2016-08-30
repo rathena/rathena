@@ -238,7 +238,7 @@ te_prtcas01,204,204,3	script	Blacksmith Kai#tegod01	4_M_RACHMAN2,{
 				delitem 2115,1;// Valkyrja's_Shield
 				$@2012_tegod_gloria = 5;
 				getitem 2181,1;// Hervor
-				mapannounce "te_prtcas01","Velund's gift [ Hervor ] is introduced to this world by ["+ strcharinfo(0) +"] of ["+ getguildname(.@guild_id) +"] Guild.",bc_map,"0x70dbdb",FW_NORMAL,12;
+				announce "Velund's gift [ Hervor ] is introduced to this world by ["+ strcharinfo(0) +"] of ["+ getguildname(.@guild_id) +"] Guild.",bc_all,"0x70dbdb",FW_NORMAL,12;
 				if (.@economy > 20)
 					setcastledata "te_prtcas01",2,(.@economy-20);
 				else
@@ -424,7 +424,7 @@ te_prtcas01,190,2,0	script	#tequest_master_prt01	CLEAR_NPC,{
 	}
 
 OnCommandOn:
-	$@2012_tegod_kafra = 1;
+	$@2012_tegod_gloria = 1;
 	.npc_name$ = strnpcinfo(0);// for script readability
 	initnpctimer;
 	end;
@@ -457,7 +457,7 @@ OnTimer600000:
 	end;
 
 OnTimer602000:
-	announce "Glaris in Kafragarten region is being attacked by a group of unidentified beings.",bc_all,"0xFF0000",FW_NORMAL,10;
+	announce "Gaebolg in Gloria region is being attacked by a group of unidentified beings.",bc_all,"0xFF0000",FW_NORMAL,10;
 	monster "te_prtcas01",0,0,"Raydric",1163,15, .npc_name$ +"::OnMyMobDead";
 	monster "te_prtcas01",0,0,"Khalitzburg",1132,10, .npc_name$ +"::OnMyMobDead";
 	monster "te_prtcas01",0,0,"Abysmal Knight",1219,5, .npc_name$ +"::OnMyMobDead";
@@ -603,10 +603,13 @@ S_MobRedondant:
 	monster "te_prtcas01",0,0,"Bloody Knight",1268,5, .npc_name$ +"::OnMyMobDead";
 	return;
 
+OnMyMobDead:
+	end;
+
 OnInit:
 	$@2012_tegirls_prt01 = 0;
 	if ($@2012_tegod_gloria < 3)
-		$@2012_tegod_kafra = 0;
+		$@2012_tegod_gloria = 0;
 	end;
 }
 
