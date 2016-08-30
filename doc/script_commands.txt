@@ -4302,6 +4302,17 @@ raise the specified stat from (current value - <val>) to current value.
 
 ---------------------------------------
 
+*jobcanentermap("<mapname>"{,<JobID>});
+
+Return true if player (decided by job) can enter the map, false otherwise.
+
+For optional 'JobID', see constant of Job_*, or use player's Class, BaseJob,
+and BaseClass. If no player is attached, this param must have a value.
+
+See also db/[pre-]re/job_noenter_map.txt
+
+---------------------------------------
+
 *get_revision()
 
 This command will return the SVN revision number that the server is currently
@@ -9218,17 +9229,6 @@ index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
 ID - ID of random option. See db/const.txt for constants.
 Value - Value of random option
 Param - Parameter of random option
-
----------------------------------------
-
-*jobcanentermap("<mapname>"{,<JobID>});
-
-Return 1 if player (decided by job) can enter the map, 0 otherwise.
-
-For optional 'JobID', see constant of Job_*, or use player's Class, BaseJob,
-and BaseClass. If no player is attached, this param must have a value.
-
-See also db/[pre-]re/job_noenter_map.txt
 
 ---------------------------------------
 

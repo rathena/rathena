@@ -21703,13 +21703,13 @@ BUILDIN_FUNC(jobcanentermap) {
 	TBL_PC *sd = NULL;
 
 	if (!mapidx) {// Invalid map
-		script_pushint(st, 0);
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 	m = map_mapindex2mapid(mapidx);
 	if (m == -1) { // Map is on different map server
-		ShowError("buildin_job_is_allowed: Map '%s' is not found in this server.\n", mapname);
-		script_pushint(st, 0);
+		ShowError("buildin_jobcanentermap: Map '%s' is not found in this server.\n", mapname);
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -21717,7 +21717,7 @@ BUILDIN_FUNC(jobcanentermap) {
 		jobid = script_getnum(st, 3);
 	} else {
 		if (!(sd = script_rid2sd(st))) {
-			script_pushint(st, 0);
+			script_pushint(st, false);
 			return SCRIPT_CMD_FAILURE;
 		}
 		jobid = sd->status.class_;
