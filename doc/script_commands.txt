@@ -9092,6 +9092,7 @@ The command returns 1 upon success, and these values upon failure:
 -2: Player already has a party.
 -3: Party not found.
 -4: Party is full.
+-5: Another character from the same account is already in the party.
 
 ---------------------------------------
 

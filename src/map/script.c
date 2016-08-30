@@ -20227,6 +20227,7 @@ BUILDIN_FUNC(party_create)
  * @param party_id: The party that will be entered by player
  * @param char_id: Char id of player that will be joined to the party
  * @return val: Result value
+ *	-5	- another character of the same account is in the party
  *	-4	- party is full
  *	-3	- party is not found
  *	-2	- player is in party already
@@ -20253,6 +20254,15 @@ BUILDIN_FUNC(party_addmember)
 	if( !(party = party_search(party_id)) ) {
 		script_pushint(st,-3);
 		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (battle_config.block_account_in_same_party) {
+		int i;
+		ARR_FIND(0, MAX_PARTY, i, party->party.member[i].account_id == sd->status.account_id);
+		if (i < MAX_PARTY) {
+			script_pushint(st,-5);
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
 	if( party->party.count >= MAX_PARTY ) {

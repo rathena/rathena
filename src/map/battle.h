@@ -611,6 +611,7 @@ extern struct Battle_Config
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
 	int atcommand_levelup_events;
+	int block_account_in_same_party;
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;
