@@ -22,7 +22,7 @@
 moc_fild12,166,369,0	script	Trace of Battle#1	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThere are signs that show";
 		mes "that some violent scuffle";
 		mes "might have occurred here,";
@@ -84,7 +84,7 @@ moc_fild12,166,369,0	script	Trace of Battle#1	CLEAR_NPC,{
 moc_fild12,173,215,0	script	Trace of Battle#2	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThere are signs that show";
 		mes "that some violent scuffle";
 		mes "might have occurred here,";
@@ -116,7 +116,7 @@ moc_fild12,173,215,0	script	Trace of Battle#2	CLEAR_NPC,{
 moc_fild12,276,165,0	script	Trace of Battle#3	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThese look like";
 		mes "traces of some kind";
 		mes "of pursuit or battle, but";
@@ -149,7 +149,7 @@ moc_fild12,276,165,0	script	Trace of Battle#3	CLEAR_NPC,{
 moc_fild11,39,163,0	script	Trace of Battle#4	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThere are signs that show";
 		mes "that some violent scuffle";
 		mes "might have occurred here,";
@@ -186,7 +186,7 @@ moc_fild11,39,163,0	script	Trace of Battle#4	CLEAR_NPC,{
 moc_fild11,205,52,0	script	Trace of Battle#5	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThese look like";
 		mes "traces of some kind";
 		mes "of pursuit or battle, but";
@@ -267,7 +267,7 @@ moc_fild11,205,52,0	script	Trace of Battle#5	CLEAR_NPC,{
 moc_fild11,226,235,0	script	Trace of Battle#6	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThese look like";
 		mes "traces of some kind";
 		mes "of pursuit or battle, but";
@@ -293,7 +293,7 @@ moc_fild11,226,235,0	script	Trace of Battle#6	CLEAR_NPC,{
 moc_fild11,184,342,0	script	Trace of Battle#7	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThese look like";
 		mes "traces of some kind";
 		mes "of pursuit or battle, but";
@@ -318,7 +318,7 @@ moc_fild11,184,342,0	script	Trace of Battle#7	CLEAR_NPC,{
 moc_fild17,213,358,0	script	Trace of Battle#8	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThese look like";
 		mes "traces of some kind";
 		mes "of pursuit or battle, but";
@@ -355,7 +355,7 @@ moc_fild17,213,358,0	script	Trace of Battle#8	CLEAR_NPC,{
 moc_fild17,228,274,0	script	Trace of Battle#9	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThese look like";
 		mes "traces of some kind";
 		mes "of pursuit or battle, but";
@@ -409,7 +409,7 @@ moc_fild17,228,274,0	script	Trace of Battle#9	CLEAR_NPC,{
 moc_fild17,34,292,0	script	Trace of Battle#10	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThese look like";
 		mes "traces of some kind";
 		mes "of pursuit or battle, but";
@@ -477,7 +477,7 @@ moc_fild18,346,296,0	script	Trace of Battle#11	CLEAR_NPC,{
 moc_fild18,309,257,0	script	Trace of Battle#12	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThese look like";
 		mes "traces of some kind";
 		mes "of pursuit or battle, but";
@@ -510,7 +510,7 @@ moc_fild18,309,257,0	script	Trace of Battle#12	CLEAR_NPC,{
 moc_fild18,177,333,0	script	Trace of Battle#13	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThese look like";
 		mes "traces of some kind";
 		mes "of pursuit or battle, but";
@@ -547,7 +547,7 @@ moc_fild18,177,333,0	script	Trace of Battle#13	CLEAR_NPC,{
 moc_fild18,111,303,0	script	Trace of Battle#14	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThese look like";
 		mes "traces of some kind";
 		mes "of pursuit or battle, but";
@@ -580,7 +580,7 @@ moc_fild18,111,303,0	script	Trace of Battle#14	CLEAR_NPC,{
 moc_fild18,109,197,0	script	Trace of Battle#15	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThese look like";
 		mes "traces of some kind";
 		mes "of pursuit or battle, but";
@@ -752,7 +752,7 @@ moc_fild18,109,197,0	script	Trace of Battle#15	CLEAR_NPC,{
 moc_fild18,156,96,0	script	Trace of Battle#16	CLEAR_NPC,{
 	.@class_thief = ( BaseClass == Job_Thief );
 	.@class_mage = ( BaseClass == Job_Mage );
-	if (.@class_thief == 0 && .@class_mage == 0 || eaclass()&EAJL_BABY) {
+	if (.@class_thief == 0 && .@class_mage == 0 || (eaclass()&EAJL_BABY)) {
 		mes "^3355FFThese look like";
 		mes "traces of some kind";
 		mes "of pursuit or battle, but";

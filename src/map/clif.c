@@ -1444,6 +1444,7 @@ int clif_spawn(struct block_list *bl)
 			if (sd->status.robe)
 				clif_refreshlook(bl,bl->id,LOOK_ROBE,sd->status.robe,AREA);
 			clif_efst_status_change_sub(sd, bl, AREA);
+			clif_hat_effects(sd,bl,AREA);
 		}
 		break;
 	case BL_MOB:
@@ -2433,17 +2434,16 @@ static void clif_addcards(unsigned char* buf, struct item* item)
 		WBUFW(buf,6) = item->card[i];
 }
 
-/// Fills in part of the item buffers that calls for variable bonuses data. [Rytech]
-/// Dummy data used since this feature isnt supported yet (ITEM_RDM_OPT).
-/// A max of 5 random options can be supported.
-void clif_add_random_options(unsigned char* buf, struct item* item)
-{
+/// Fills in part of the item buffers that calls for variable bonuses data. [Napster]
+/// A maximum of 5 random options can be supported.
+void clif_add_random_options(unsigned char* buf, struct item *it) {
 #if PACKETVER >= 20150226
 	int i;
-	for (i = 0; i < 5; i++){
-		WBUFW(buf,i*5+0) = 0;	// OptIndex
-		WBUFW(buf,i*5+2) = 0;	// Value
-		WBUFB(buf,i*5+4) = 0;	// Param1
+
+	for (i = 0; i < MAX_ITEM_RDM_OPT; i++) {
+		WBUFW(buf, i*5 + 0) = it->option[i].id;		// OptIndex
+		WBUFW(buf, i*5 + 2) = it->option[i].value;	// Value
+		WBUFB(buf, i*5 + 4) = it->option[i].param;	// Param1
 	}
 #endif
 }
@@ -4548,6 +4548,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			if ( tsd->status.robe )
 				clif_refreshlook(&sd->bl,bl->id,LOOK_ROBE,tsd->status.robe,SELF);
 			clif_efst_status_change_sub(sd, bl, SELF);
+			clif_hat_effects(sd,bl,SELF);
 		}
 		break;
 	case BL_MER: // Devotion Effects
@@ -5629,9 +5630,10 @@ void clif_skill_warppoint(struct map_session_data* sd, uint16 skill_id, uint16 s
 	WFIFOSET(fd,packet_len(0x11c));
 
 	sd->menuskill_id = skill_id;
-	if (skill_id == AL_WARP)
+	if (skill_id == AL_WARP) {
 		sd->menuskill_val = (sd->ud.skillx<<16)|sd->ud.skilly; //Store warp position here.
-	else
+		sd->state.workinprogress = WIP_DISABLE_ALL;
+	} else
 		sd->menuskill_val = skill_lv;
 }
 
@@ -6445,6 +6447,7 @@ void clif_item_identify_list(struct map_session_data *sd)
 		WFIFOSET(fd,WFIFOW(fd,2));
 		sd->menuskill_id = MC_IDENTIFY;
 		sd->menuskill_val = c;
+		sd->state.workinprogress = WIP_DISABLE_ALL;
 	}
 }
 
@@ -10519,6 +10522,7 @@ void clif_parse_progressbar(int fd, struct map_session_data * sd)
 		sd->st->state = END;
 
 	sd->progressbar.npc_id = sd->progressbar.timeout = 0;
+	sd->state.workinprogress = WIP_DISABLE_NONE;
 	npc_scriptcont(sd, npc_id, false);
 }
 
@@ -10538,9 +10542,10 @@ void clif_parse_WalkToXY(int fd, struct map_session_data *sd)
 
 	if (sd->sc.opt1 && ( sd->sc.opt1 == OPT1_STONEWAIT || sd->sc.opt1 == OPT1_BURNING ))
 		; //You CAN walk on this OPT1 value.
-	else if( sd->progressbar.npc_id )
+	else if (sd->progressbar.npc_id) {
 		clif_progressbar_abort(sd);
-	else if (pc_cant_act(sd))
+		return; // First walk attempt cancels the progress bar
+	} else if (pc_cant_act(sd))
 		return;
 
 	if(sd->sc.data[SC_RUN] || sd->sc.data[SC_WUGDASH])
@@ -10978,7 +10983,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 		if ((npc = npc_name2id(str))) {
 			char split_data[NUM_WHISPER_VAR][CHAT_SIZE_MAX];
 			char *split;
-			char output[256];
+			char event[EVENT_NAME_LENGTH];
 
 			str = message;
 			// skip codepage indicator, if detected
@@ -10998,12 +11003,13 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 			}
 
 			for( i = 0; i < NUM_WHISPER_VAR; ++i ) {
-				safesnprintf(output,sizeof(output),"@whispervar%d$", i);
-				set_var(sd,output,(char *) split_data[i]);
+				char variablename[CHAT_SIZE_MAX];
+				safesnprintf(variablename,sizeof(variablename),"@whispervar%d$", i);
+				set_var(sd,variablename,(char *) split_data[i]);
 			}
 
-			safesnprintf(output,sizeof(output),"%s::OnWhisperGlobal", npc->exname);
-			npc_event(sd,output,0); // Calls the NPC label
+			safesnprintf(event,sizeof(event),"%s::OnWhisperGlobal", npc->exname);
+			npc_event(sd,event,0); // Calls the NPC label
 
 			return;
 		}
@@ -11284,7 +11290,12 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 		clif_clearunit_area(&sd->bl,CLR_DEAD);
 		return;
 	}
-
+#ifdef RENEWAL
+	if (sd->npc_id || pc_hasprogress(sd, WIP_DISABLE_NPC)) {
+		clif_msg(sd, WORK_IN_PROGRESS);
+		return;
+	}
+#endif
 	if (pc_cant_act2(sd) || sd->npc_id)
 		return;
 
@@ -11297,6 +11308,12 @@ void clif_parse_NpcClicked(int fd,struct map_session_data *sd)
 			clif_parse_ActionRequest_sub(sd, 0x07, bl->id, gettick());
 			break;
 		case BL_NPC:
+#ifdef RENEWAL
+			if (sd->ud.skill_id < RK_ENCHANTBLADE && sd->ud.skilltimer != INVALID_TIMER) { // Should only show an error message for non-3rd job skills with a running timer
+				clif_msg(sd, WORK_IN_PROGRESS);
+				break;
+			}
+#endif
 			if( bl->m != -1 )// the user can't click floating npcs directly (hack attempt)
 				npc_click(sd,(TBL_NPC*)bl);
 			break;
@@ -11689,6 +11706,13 @@ void clif_parse_ChangeCart(int fd,struct map_session_data *sd)
 	if( !sd || pc_checkskill(sd, MC_CHANGECART) < 1 )
 		return;
 
+#ifdef RENEWAL
+	if (sd->npc_id || pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
+		clif_msg(sd, WORK_IN_PROGRESS);
+		return;
+	}
+#endif
+
 	type = (int)RFIFOW(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 
 	if( 
@@ -11873,12 +11897,14 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 	if (battle_config.idletime_option&IDLE_USESKILLTOID)
 		sd->idletime = last_tick;
 
-	if( sd->npc_id ){
+	if (sd->npc_id) {
 #ifdef RENEWAL
-		clif_msg(sd, USAGE_FAIL); // TODO look for the client date that has this message.
-		return;
+		if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
+			clif_msg(sd, WORK_IN_PROGRESS);
+			return;
+		}
 #else
-		if( !sd->npc_item_flag || !(inf&INF_SELF_SKILL) )
+		if (!sd->npc_item_flag || !(inf&INF_SELF_SKILL))
 			return;
 #endif
 	}
@@ -11967,6 +11993,13 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uin
 		clif_parse_UseSkillToPos_mercenary(sd->md, sd, tick, skill_id, skill_lv, x, y, skillmoreinfo);
 		return;
 	}
+
+#ifdef RENEWAL
+	if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
+		clif_msg(sd, WORK_IN_PROGRESS);
+		return;
+	}
+#endif
 
 	//Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
 	if (battle_config.idletime_option&IDLE_USESKILLTOPOS)
@@ -12075,7 +12108,9 @@ void clif_parse_UseSkillMap(int fd, struct map_session_data* sd)
 	struct s_packet_db* info = &packet_db[sd->packet_ver][RFIFOW(fd,0)];
 	uint16 skill_id = RFIFOW(fd,info->pos[0]);
 	char map_name[MAP_NAME_LENGTH];
+
 	mapindex_getmapname((char*)RFIFOP(fd,info->pos[1]), map_name);
+	sd->state.workinprogress = WIP_DISABLE_NONE;
 
 	if(skill_id != sd->menuskill_id)
 		return;
@@ -12301,6 +12336,7 @@ void clif_parse_ItemIdentify(int fd,struct map_session_data *sd) {
 	if (idx < 0 || idx >= MAX_INVENTORY ||
 		sd->status.inventory[idx].nameid <= 0 || sd->inventory_data[idx] == NULL ||
 		sd->status.inventory[idx].identify) {// cancel pressed
+			sd->state.workinprogress = WIP_DISABLE_NONE;
 			clif_menuskill_clear(sd);
 			return;
 	}
@@ -12348,6 +12384,7 @@ void clif_parse_AutoSpell(int fd,struct map_session_data *sd)
 {
 	if (sd->menuskill_id != SA_AUTOSPELL)
 		return;
+	sd->state.workinprogress = WIP_DISABLE_NONE;
 	skill_autospell(sd,RFIFOL(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]));
 	clif_menuskill_clear(sd);
 }
@@ -13003,8 +13040,10 @@ void clif_parse_OpenVending(int fd, struct map_session_data* sd){
 
 		len -= 85;
 		flag = (bool)RFIFOB(fd,info->pos[2]);
-		if( !flag )
+		if (!flag) {
 			sd->state.prevend = 0;
+			sd->state.workinprogress = WIP_DISABLE_NONE;
+		}
 	}
 
 	if( sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOROOM )
@@ -18051,7 +18090,7 @@ void clif_showscript(struct block_list* bl, const char* message) {
 	WBUFW(buf,2) = (uint16)(len+8);
 	WBUFL(buf,4) = bl->id;
 	safestrncpy((char *) WBUFP(buf,8), message, len);
-	clif_send((unsigned char *) buf, WBUFW(buf,2), bl, ALL_CLIENT);
+	clif_send((unsigned char *) buf, WBUFW(buf,2), bl, AREA);
 }
 
 /**
@@ -18698,34 +18737,54 @@ void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x,
 
 /// Send hat effects to the client (ZC_HAT_EFFECT).
 /// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W }
-void clif_item_effects( struct block_list* bl, bool enable, short effects[], int count ){
+void clif_hat_effects( struct map_session_data* sd, struct block_list* bl, enum send_target target ){
 #if PACKETVER >= 20150513
 	unsigned char* buf;
 	int len,i;
+	struct map_session_data *tsd;
+	struct block_list* tbl;
 
-	nullpo_retv(bl);
+	if( target == SELF ){
+		tsd = BL_CAST(BL_PC,bl);
+		tbl = &sd->bl;
+	}else{
+		tsd = sd;
+		tbl = bl;
+	}
 
-	len = 9 + count * 2;
+	if( !tsd->hatEffectCount )
+		return;
+
+	len = 9 + tsd->hatEffectCount * 2;
 
 	buf = (unsigned char*)aMalloc( len );
 
 	WBUFW(buf,0) = 0xa3b;
 	WBUFW(buf,2) = len;
-	WBUFL(buf,4) = bl->id;
-	WBUFB(buf,8) = enable;
+	WBUFL(buf,4) = tsd->bl.id;
+	WBUFB(buf,8) = 1;
 
-	for( i = 0; i < count; i++ ){
-		WBUFW(buf,9+i*2) = effects[i];
+	for( i = 0; i < tsd->hatEffectCount; i++ ){
+		WBUFW(buf,9+i*2) = tsd->hatEffectIDs[i];
 	}
 
-	clif_send(buf, len,bl,SELF);
-
-	if( disguised(bl) ){
-		WBUFL(buf,4) = -bl->id;
-		clif_send(buf, len,bl,SELF);
-	}
+	clif_send(buf, len,tbl,target);
 
 	aFree(buf);
+#endif
+}
+
+void clif_hat_effect_single( struct map_session_data* sd, uint16 effectId, bool enable ){
+#if PACKETVER >= 20150513
+	unsigned char buf[13];
+
+	WBUFW(buf,0) = 0xa3b;
+	WBUFW(buf,2) = 13;
+	WBUFL(buf,4) = sd->bl.id;
+	WBUFB(buf,8) = enable;
+	WBUFL(buf,9) = effectId;
+
+	clif_send(buf,13,&sd->bl,AREA);
 #endif
 }
 
@@ -19129,7 +19188,7 @@ void packetdb_readdb(bool reload)
 	  269,  0,  0,  2,  6, 48,  6,  9, 26, 45, 47, 47, 56, -1,  14,  0,
 #endif
 		-1,  0,  0, 26,  0,  0,  0,  0,  14,  2, 23,  2, -1,  2,  3,  2,
-	   21,  3,  5,  0, 66,  0,  0,  8,  3,  0,  0,  0,  0,  -1,  0,  0,
+	   21,  3,  5,  0, 66,  0,  0,  8,  3,  0,  0,  -1,  0,  -1,  0,  0,
  		0,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
 	struct {

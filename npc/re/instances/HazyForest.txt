@@ -208,6 +208,8 @@ function	script	F_Mora_Mist	{
 		mapannounce .@map$,getarg(1),bc_map,"0xccffcc"; //FW_NORMAL 12 0 0
 		enablenpc instance_npcname(getarg(0));
 		disablenpc instance_npcname(strnpcinfo(0));
+		if (getarg(4,0))
+			initnpctimer;
 		close;
 	} else
 		mapannounce .@map$,((getarg(3,0))?getarg(2):getarg(2)+"'s Cry: Huh? Who's doing bad things to my tree?!"),bc_map,"0xccffcc"; //FW_NORMAL 12 0 0
@@ -261,7 +263,8 @@ OnMyMobDead:
 	callfunc "F_Mora_Mist",
 		"a4-2_a11",
 		"Rem's Desperate Cry: Argh... Rem will sleep. Rem will sleep now, and won't wake up forever!",
-		"Rem";
+		"Rem",
+		0,1;
 	end;
 OnInstanceInit:
 	monster instance_mapname("1@mist"),101,107,"Rem the Gardener",2136,1,instance_npcname("Tired Rem's Garden Tree")+"::OnMyMobDead";
@@ -355,7 +358,8 @@ OnMyMobDead:
 	callfunc "F_Mora_Mist",
 		"b5_b14",
 		"Depressed Whisper: Now it's all over with the second deepest forest. Gardeners are dying out-",
-		"Spyder";
+		"Spyder",
+		0,1;
 	end;
 OnInstanceInit:
 	monster instance_mapname("1@mist"),209,200,"Spyder the Eight-Legged",2132,1,instance_npcname("Spyder's Garden Tree")+"::OnMyMobDead";

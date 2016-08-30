@@ -50,6 +50,7 @@ unsigned int current_equip_combo_pos; /// For combo items we need to save the po
 int current_equip_card_id; /// To prevent card-stacking (from jA) [Skotlex]
 bool running_npc_stat_calc_event; /// Indicate if OnPCStatCalcEvent is running.
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
+short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
 
 unsigned int SCDisabled[SC_MAX]; ///< List of disabled SC on map zones. [Cydh]
 
@@ -3450,10 +3451,51 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	}
 	current_equip_card_id = 0; // Clear stored card ID [Secret]
 
-	if( sc->count && sc->data[SC_ITEMSCRIPT] ) {
+	// Parse random options
+	for (i = 0; i < EQI_MAX; i++) {
+		current_equip_item_index = index = sd->equip_index[i];
+		current_equip_combo_pos = 0;
+		current_equip_opt_index = -1;
+
+		if (index < 0)
+			continue;
+		if (i == EQI_AMMO)
+			continue;
+		if (pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index))
+			continue;
+		
+		if (sd->inventory_data[index]) {
+			int j;
+			struct s_random_opt_data *data;
+			for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
+				short opt_id = sd->status.inventory[index].option[j].id;
+
+				if (!opt_id)
+					continue;
+				current_equip_opt_index = j;
+				data = itemdb_randomopt_exists(opt_id);
+				if (!data || !data->script)
+					continue;
+				if (!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(sd->inventory_data[index], sd->bl.m))
+					continue;
+				if (i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L) { // Left hand status.
+					sd->state.lr_flag = 1;
+					run_script(data->script, 0, sd->bl.id, 0);
+					sd->state.lr_flag = 0;
+				}
+				else
+					run_script(data->script, 0, sd->bl.id, 0);
+				if (!calculating)
+					return 1;
+			}
+		}
+		current_equip_opt_index = -1;
+	}
+
+	if (sc->count && sc->data[SC_ITEMSCRIPT]) {
 		struct item_data *data = itemdb_exists(sc->data[SC_ITEMSCRIPT]->val1);
-		if( data && data->script )
-			run_script(data->script,0,sd->bl.id,0);
+		if (data && data->script)
+			run_script(data->script, 0, sd->bl.id, 0);
 	}
 
 	pc_bonus_script(sd);
@@ -7690,6 +7732,16 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		case SC_OBLIVIONCURSE: // 100% - (100 - 0.8 x INT)
 			sc_def = status->int_*80;
 			sc_def = max(sc_def, 500); // minimum of 5% resist
+			tick_def = 0;
+			//Fall through
+		case SC_TOXIN:
+		case SC_PARALYSE:
+		case SC_VENOMBLEED:
+		case SC_MAGICMUSHROOM:
+		case SC_DEATHHURT:
+		case SC_PYREXIA:
+		case SC_LEECHESEND:
+			tick_def2 = (status->vit + status->luk) * 500;
 			break;
 		case SC_BITE: // {(Base Success chance) - (Target's AGI / 4)}
 			sc_def2 = status->agi*25;
@@ -7812,6 +7864,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			break;
 		case SC_BURNING:
 		case SC_STASIS:
+		case SC_VOICEOFSIREN:
 			tick = max(tick, 10000); // Minimum duration 10s
 			break;
 		default:
@@ -12502,9 +12555,12 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 	case SC_CLOUD_KILL: {
 			struct block_list *src = map_id2bl(sce->val2), *unit_bl = map_id2bl(sce->val3);
 
-			if (src && unit_bl)
+			if (src && unit_bl){
+				map_freeblock_lock();
+				dounlock = true;
 				skill_attack(skill_get_type(status_sc2skill(type)), src, unit_bl, bl, SO_CLOUD_KILL, sce->val1, tick, 0);
-			sc_timer_next(500 + tick, status_change_timer, bl->id, data);
+				sc_timer_next(500 + tick, status_change_timer, bl->id, data);
+			}
 		}
 		break;
 

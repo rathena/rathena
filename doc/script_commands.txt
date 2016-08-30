@@ -2736,7 +2736,8 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 
 @inventorylist_id[]        - array of item ids.
 @inventorylist_amount[]    - their corresponding item amounts.
-@inventorylist_equip[]     - whether the item is equipped or not.
+@inventorylist_equip[]     - on which position the item is equipped (see EQP_* constants)
+                             It will contain 0 if the item is not equipped.
 @inventorylist_refine[]    - for how much it is refined.
 @inventorylist_identify[]  - whether it is identified.
 @inventorylist_attribute[] - whether it is broken.
@@ -2746,7 +2747,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_card4[]       if the character owns an item made by a specific 
                              craftsman.
 @inventorylist_expire[]    - expire time (Unix time stamp). 0 means never expires.
-@inventorylist_bound[]     - whether it is bound to the character
+@inventorylist_bound[]     - the bound type of the items (see BOUND_* constants)
 @inventorylist_count       - the number of items in these lists.
 
 This could be handy to save/restore a character's inventory, since no other 
@@ -2849,7 +2850,7 @@ See the sample in 'doc/sample/getiteminfo.txt'.
 
 Returns value from equipped item slot in the indicated slot (0, 1, 2, or 3).
 
-This function returns CARD ID, 255,254,-255 (for card 0, if the item is produced).
+This function returns CARD ID, CARD0_FORGE, CARD0_CREATE, or CARD0_PET (for card 0, if the item is produced).
 It's useful for when you want to check whether an item contains cards or if it's signed.
 
 ---------------------------------------
@@ -4293,6 +4294,25 @@ This command will force a stat recalculation for the attached player.
 
 ---------------------------------------
 
+*needed_status_point(<type>,<val>{,<char id>});
+
+Returns the number of stat points needed to change the specified stat <type> by <val>.
+If <val> is negative, returns the number of stat points that would be needed to
+raise the specified stat from (current value - <val>) to current value.
+
+---------------------------------------
+
+*jobcanentermap("<mapname>"{,<JobID>});
+
+Return true if player (decided by job) can enter the map, false otherwise.
+
+For optional 'JobID', see constant of Job_*, or use player's Class, BaseJob,
+and BaseClass. If no player is attached, this param must have a value.
+
+See also db/[pre-]re/job_noenter_map.txt
+
+---------------------------------------
+
 *get_revision()
 
 This command will return the SVN revision number that the server is currently
@@ -5168,10 +5188,11 @@ This is used primarily in item scripts. When used in an NPC script, a flag MUST
 be defined for the rate to work.
 
 Optional value <flag> is how the status change start will be handled (a bitmask).
- 1: Status change cannot be avoided.
- 2: Tick cannot be reduced by stats (default).
- 4: sc_data loaded, so no value will be altered.
- 8: Rate cannot be reduced.
+ SCSTART_NOAVOID   : Status change cannot be avoided.
+ SCSTART_NOTICKDEF : Tick cannot be reduced by stats (default).
+ SCSTART_LOADED    : sc_data loaded, so no value will be altered.
+ SCSTART_NORATEDEF : Rate cannot be reduced.
+ SCSTART_NOICON    : Status icon won't be sent to client
 
 If a <GID> is given, the status change will be invoked on the specified character
 instead of the one attached to the script. This can only be defined after setting
@@ -5974,11 +5995,13 @@ It is an approximation of official server script language's 'cmdothernpc'.
 
 ---------------------------------------
 
-*npctalk "<message>";
+*npctalk "<message>"{,"<NPC name>"};
 
 This command will display a message to the surrounding area as if the NPC object 
 running it was a player talking - that is, above their head and in the chat 
 window. The display name of the NPC won't get appended in front of the message.
+If the <NPC name> option is given, then that NPC will display the message, else
+the attached NPC will display the message.
 
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.
@@ -9161,13 +9184,53 @@ solution rather than sending the map and the monster_id.
 
 ---------------------------------------
 
-*itemeffect(<State>,<Hat Effect ID>{, Hat Effect ID2, ... });
+*hateffect(<Hat Effect ID>,<State>);
 
 This will set a Hat Effect onto the player. The state field allows you to
 enable (true) or disable (false) the effect on the player.
 The Hat Effect constants can be found in db/const.txt starting with HAT_EF_*.
 
 Requires client 2015-05-13aRagEXE or newer. 
+
+---------------------------------------
+
+*getrandomoptinfo(<type>);
+
+Returns value of an attribute of current random option.
+
+Valid attributes are:
+ROA_ID - ID of current option
+ROA_VALUE - Value field of current option
+ROA_PARAM - Param field of current option
+
+This script command is intended for using in random option scripts.
+
+---------------------------------------
+
+*getequiprandomoption(<equipment index>,<index>,<type>{,<char id>});
+
+Returns value of an attribute of a random option on an equipped item.
+
+See 'getequipid' for a full list of valid equipment slots.
+
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
+
+For valid attribute types, see `getrandomoptinfo` command reference.
+
+---------------------------------------
+
+*setrandomoption(<equipment slot>,<index>,<id>,<value>,<param>{,<char id>});
+
+Sets <index+1>th random option for equipment equipped at <equipment slot>
+to <id>, <value> and <param>.
+
+See 'getequipid' for a full list of valid equipment slots.
+
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
+
+ID - ID of random option. See db/const.txt for constants.
+Value - Value of random option
+Param - Parameter of random option
 
 ---------------------------------------
 

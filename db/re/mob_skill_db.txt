@@ -8388,6 +8388,12 @@
 //2485,Chimera (Nightmare)@WZ_HEAVENDRIVE,attack,91,5,500,1200,5000,yes,target,always,,,,,,,6,
 //2485,Chimera (Nightmare)@WZ_HEAVENDRIVE,chase,91,5,500,1200,5000,yes,target,always,,,,,,,6,
 
+// Heroes' Trail Part 1 - Sara's Memory
+// Not Yet Implemented skill
+//2542,Irene Elder@NPC_MILLENNIUMSHIELD,idle,707,1,5000,1000,30000,no,self,always,0,,,,,,,
+//2542,Irene Elder@NPC_MILLENNIUMSHIELD,attack,707,1,5000,1000,30000,no,self,always,0,,,,,,,
+//2542,Irene Elder@NPC_MILLENNIUMSHIELD,chase,707,1,5000,1000,30000,no,self,always,0,,,,,,,
+
 // Champion Monsters
 2603,Swift Zombie Slaughter@AL_TELEPORT,attack,26,1,500,0,5000,yes,self,myhpltmaxrate,50,,,,,,,
 2603,Swift Zombie Slaughter@AL_HEAL,attack,28,5,10000,500,5000,yes,self,myhpltmaxrate,50,,,,,,,
