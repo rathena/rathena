@@ -2468,6 +2468,9 @@ packet_keys: 0x62C86D09,0x75944F17,0x112C133D // [YomRawr]
 0x0817,5,hommenu,2:4
 0x0923,36,storagepassword,2:4:20
 
+// New Packets
+0xA3B,-1		// ZC_HAT_EFFECT
+
 // RODEX Mail system
 0x09E7,3		// ZC_NOTIFY_UNREADMAIL
 0x09E8,11,dull,0	// CZ_OPEN_MAILBOX

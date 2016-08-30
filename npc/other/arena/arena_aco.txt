@@ -1086,7 +1086,7 @@ prt_are_in,25,31,3	script	Staff#aco-2	67,{
 	set .@hour_endaco, .@end_timeaco / 10000;
 	set .@min_endaco, ((.@end_timeaco % 10000) / 100);
 	set .@sec_endaco, .@end_timeaco % 100;
-	if ((.@hour_startaco == 23) & (.@hour_endaco == 0)) {
+	if ((.@hour_startaco == 23) && (.@hour_endaco == 0)) {
 		set .@hour_endaco,24;
 	}
 	set .@st_to_secaco, ((.@hour_startaco * 3600) + (.@min_startaco * 60) + (.@sec_startaco));

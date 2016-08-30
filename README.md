@@ -1,7 +1,7 @@
 rAthena
 =======
 
-Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=master)](https://travis-ci.org/rathena/rathena)
+Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=master)](https://travis-ci.org/rathena/rathena) [![Build status](https://ci.appveyor.com/api/projects/status/8574b8nlwd57loda/branch/master?svg=true)](https://ci.appveyor.com/project/rAthenaAPI/rathena/branch/master)
 
 Table of Contents
 ---------
@@ -65,10 +65,7 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 	* Type:
 		* (For CentOS)
 
-				yum install gcc make mysql mysql-devel mysql-server pcre-devel zlib-devel
-				rpm -Uvhhttp://repo.webtatic.com/yum/centos/5/latest.rpm
-				yum install --enablerepo=webtatic git-all
-				yum install --enablerepo=webtatic --disableexcludes=main git-all
+				yum install gcc make mysql mysql-devel mysql-server pcre-devel zlib-devel git
 		* (For Debian)
 
 				apt-get install git make gcc libmysqlclient-dev zlib1g-dev libpcre3-dev

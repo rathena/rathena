@@ -17,6 +17,7 @@
 static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
 static DBMap *itemdb_group; /// Item Group DB
+static DBMap *itemdb_randomopt; /// Random option DB
 
 struct item_data *dummy_item; /// This is the default dummy item used for non-existant items. [Skotlex]
 
@@ -281,79 +282,84 @@ const char* itemdb_typename(enum item_types type)
 	return "Unknown Type";
 }
 
-/*==========================================
- * Converts the jobid from the format in itemdb
- * to the format used by the map server. [Skotlex]
- *------------------------------------------*/
-static void itemdb_jobid2mapid(unsigned int *bclass, unsigned int jobmask)
+/**
+ * Converts the jobmask from the format in itemdb to the format used by the map server.
+ * @param bclass: Pointer to store itemdb format
+ * @param jobmask: Job Mask to convert
+ * @author: Skotlex
+ */
+static void itemdb_jobid2mapid(uint64 *bclass, uint64 jobmask)
 {
 	int i;
-	bclass[0]= bclass[1]= bclass[2]= 0;
+
+	bclass[0] = bclass[1] = bclass[2] = 0;
+
 	//Base classes
-	if (jobmask & 1<<JOB_NOVICE)
-	{	//Both Novice/Super-Novice are counted with the same ID
-		bclass[0] |= 1<<MAPID_NOVICE;
-		bclass[1] |= 1<<MAPID_NOVICE;
+	if (jobmask & 1ULL<<JOB_NOVICE) {
+		//Both Novice/Super-Novice are counted with the same ID
+		bclass[0] |= 1ULL<<MAPID_NOVICE;
+		bclass[1] |= 1ULL<<MAPID_NOVICE;
 	}
-	for (i = JOB_NOVICE+1; i <= JOB_THIEF; i++)
-	{
-		if (jobmask & 1<<i)
-			bclass[0] |= 1<<(MAPID_NOVICE+i);
+	for (i = JOB_NOVICE + 1; i <= JOB_THIEF; i++) {
+		if (jobmask & 1ULL <<i)
+			bclass[0] |= 1ULL<<(MAPID_NOVICE + i);
 	}
 	//2-1 classes
-	if (jobmask & 1<<JOB_KNIGHT)
-		bclass[1] |= 1<<MAPID_SWORDMAN;
-	if (jobmask & 1<<JOB_PRIEST)
-		bclass[1] |= 1<<MAPID_ACOLYTE;
-	if (jobmask & 1<<JOB_WIZARD)
-		bclass[1] |= 1<<MAPID_MAGE;
-	if (jobmask & 1<<JOB_BLACKSMITH)
-		bclass[1] |= 1<<MAPID_MERCHANT;
-	if (jobmask & 1<<JOB_HUNTER)
-		bclass[1] |= 1<<MAPID_ARCHER;
-	if (jobmask & 1<<JOB_ASSASSIN)
-		bclass[1] |= 1<<MAPID_THIEF;
+	if (jobmask & 1ULL<<JOB_KNIGHT)
+		bclass[1] |= 1ULL<<MAPID_SWORDMAN;
+	if (jobmask & 1ULL<<JOB_PRIEST)
+		bclass[1] |= 1ULL<<MAPID_ACOLYTE;
+	if (jobmask & 1ULL<<JOB_WIZARD)
+		bclass[1] |= 1ULL<<MAPID_MAGE;
+	if (jobmask & 1ULL<<JOB_BLACKSMITH)
+		bclass[1] |= 1ULL<<MAPID_MERCHANT;
+	if (jobmask & 1ULL<<JOB_HUNTER)
+		bclass[1] |= 1ULL<<MAPID_ARCHER;
+	if (jobmask & 1ULL<<JOB_ASSASSIN)
+		bclass[1] |= 1ULL<<MAPID_THIEF;
 	//2-2 classes
-	if (jobmask & 1<<JOB_CRUSADER)
-		bclass[2] |= 1<<MAPID_SWORDMAN;
-	if (jobmask & 1<<JOB_MONK)
-		bclass[2] |= 1<<MAPID_ACOLYTE;
-	if (jobmask & 1<<JOB_SAGE)
-		bclass[2] |= 1<<MAPID_MAGE;
-	if (jobmask & 1<<JOB_ALCHEMIST)
-		bclass[2] |= 1<<MAPID_MERCHANT;
-	if (jobmask & 1<<JOB_BARD)
-		bclass[2] |= 1<<MAPID_ARCHER;
+	if (jobmask & 1ULL<<JOB_CRUSADER)
+		bclass[2] |= 1ULL<<MAPID_SWORDMAN;
+	if (jobmask & 1ULL<<JOB_MONK)
+		bclass[2] |= 1ULL<<MAPID_ACOLYTE;
+	if (jobmask & 1ULL<<JOB_SAGE)
+		bclass[2] |= 1ULL<<MAPID_MAGE;
+	if (jobmask & 1ULL<<JOB_ALCHEMIST)
+		bclass[2] |= 1ULL<<MAPID_MERCHANT;
+	if (jobmask & 1ULL<<JOB_BARD)
+		bclass[2] |= 1ULL<<MAPID_ARCHER;
 //	Bard/Dancer share the same slot now.
-//	if (jobmask & 1<<JOB_DANCER)
-//		bclass[2] |= 1<<MAPID_ARCHER;
-	if (jobmask & 1<<JOB_ROGUE)
-		bclass[2] |= 1<<MAPID_THIEF;
+//	if (jobmask & 1ULL<<JOB_DANCER)
+//		bclass[2] |= 1ULL<<MAPID_ARCHER;
+	if (jobmask & 1ULL<<JOB_ROGUE)
+		bclass[2] |= 1ULL<<MAPID_THIEF;
 	//Special classes that don't fit above.
-	if (jobmask & 1<<21) //Taekwon boy
-		bclass[0] |= 1<<MAPID_TAEKWON;
-	if (jobmask & 1<<22) //Star Gladiator
-		bclass[1] |= 1<<MAPID_TAEKWON;
-	if (jobmask & 1<<23) //Soul Linker
-		bclass[2] |= 1<<MAPID_TAEKWON;
-	if (jobmask & 1<<JOB_GUNSLINGER)
-		bclass[0] |= 1<<MAPID_GUNSLINGER;
-	if (jobmask & 1<<JOB_NINJA) { //Kagerou/Oboro jobs can equip Ninja equips. [Rytech]
-		bclass[0] |= 1<<MAPID_NINJA;
-		bclass[1] |= 1<<MAPID_NINJA;
+	if (jobmask & 1ULL<<21) //Taekwon
+		bclass[0] |= 1ULL<<MAPID_TAEKWON;
+	if (jobmask & 1ULL<<22) //Star Gladiator
+		bclass[1] |= 1ULL<<MAPID_TAEKWON;
+	if (jobmask & 1ULL<<23) //Soul Linker
+		bclass[2] |= 1ULL<<MAPID_TAEKWON;
+	if (jobmask & 1ULL<<JOB_GUNSLINGER) { // Rebellion job can equip Gunslinger equips.
+		bclass[0] |= 1ULL<<MAPID_GUNSLINGER;
+		bclass[1] |= 1ULL<<MAPID_GUNSLINGER;
 	}
-	if (jobmask & 1<<26) //Bongun/Munak
-		bclass[0] |= 1<<MAPID_GANGSI;
-	if (jobmask & 1<<27) //Death Knight
-		bclass[1] |= 1<<MAPID_GANGSI;
-	if (jobmask & 1<<28) //Dark Collector
-		bclass[2] |= 1<<MAPID_GANGSI;
-	if (jobmask & 1<<29) //Kagerou / Oboro
-		bclass[1] |= 1<<MAPID_NINJA;
-	if (jobmask & 1<<30) //Rebellion
-		bclass[1] |= 1<<MAPID_GUNSLINGER;
-	if (jobmask & 1<<31) //Summoner
-		bclass[0] |= 1<<MAPID_SUMMONER;
+	if (jobmask & 1ULL<<JOB_NINJA) { //Kagerou/Oboro jobs can equip Ninja equips. [Rytech]
+		bclass[0] |= 1ULL<<MAPID_NINJA;
+		bclass[1] |= 1ULL<<MAPID_NINJA;
+	}
+	if (jobmask & 1ULL<<26) //Bongun/Munak
+		bclass[0] |= 1ULL<<MAPID_GANGSI;
+	if (jobmask & 1ULL<<27) //Death Knight
+		bclass[1] |= 1ULL<<MAPID_GANGSI;
+	if (jobmask & 1ULL<<28) //Dark Collector
+		bclass[2] |= 1ULL<<MAPID_GANGSI;
+	if (jobmask & 1ULL<<29) //Kagerou / Oboro
+		bclass[1] |= 1ULL<<MAPID_NINJA;
+	if (jobmask & 1ULL<<30) //Rebellion
+		bclass[1] |= 1ULL<<MAPID_GUNSLINGER;
+	if (jobmask & 1ULL<<31) //Summoner
+		bclass[0] |= 1ULL<<MAPID_SUMMONER;
 }
 
 /**
@@ -1275,7 +1281,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 		id->slot = MAX_SLOTS;
 	}
 
-	itemdb_jobid2mapid(id->class_base, (unsigned int)strtoul(str[11],NULL,0));
+	itemdb_jobid2mapid(id->class_base, (uint64)strtoul(str[11],NULL,0));
 	id->class_upper = atoi(str[12]);
 	id->sex	= atoi(str[13]);
 	id->equip = atoi(str[14]);
@@ -1539,6 +1545,111 @@ bool itemdb_is_spellbook2(unsigned short nameid) {
 }
 
 /**
+* Retrieves random option data
+*/
+struct s_random_opt_data* itemdb_randomopt_exists(short id) {
+	return ((struct s_random_opt_data*)uidb_get(itemdb_randomopt, id));
+}
+
+/** Random option
+* <ID>,<{Script}>
+*/
+static bool itemdb_read_randomopt(const char* basedir, bool silent) {
+	uint32 lines = 0, count = 0;
+	char line[1024];
+
+	char path[256];
+	FILE* fp;
+
+	sprintf(path, "%s/%s", basedir, "item_randomopt_db.txt");
+
+	if ((fp = fopen(path, "r")) == NULL) {
+		if (silent == 0) ShowError("itemdb_read_randomopt: File not found \"%s\".\n", path);
+		return false;
+	}
+
+	while (fgets(line, sizeof(line), fp)) {
+		char *str[2], *p;
+
+		lines++;
+
+		if (line[0] == '/' && line[1] == '/') // Ignore comments
+			continue;
+
+		memset(str, 0, sizeof(str));
+
+		p = line;
+
+		p = trim(p);
+
+		if (*p == '\0')
+			continue;// empty line
+
+		if (!strchr(p, ','))
+		{
+			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+
+		str[0] = p;
+		p = strchr(p, ',');
+		*p = '\0';
+		p++;
+
+		str[1] = p;
+
+		if (str[1][0] != '{') {
+			ShowError("itemdb_read_randomopt(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+		/* no ending key anywhere (missing \}\) */
+		if (str[1][strlen(str[1]) - 1] != '}') {
+			ShowError("itemdb_read_randomopt(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+		else {
+			int id = -1;
+			struct s_random_opt_data *data;
+			struct script_code *code;
+
+			str[0] = trim(str[0]);
+			if (ISDIGIT(str[0][0])) {
+				id = atoi(str[0]);
+			}
+			else {
+				script_get_constant(str[0], &id);
+			}
+
+			if (id < 0) {
+				ShowError("itemdb_read_randomopt: Invalid Random Option ID '%s' in line %d of \"%s\", skipping.\n", str[0], lines, path);
+				continue;
+			}
+
+			if ((data = itemdb_randomopt_exists(id)) == NULL) {
+				CREATE(data, struct s_random_opt_data, 1);
+				uidb_put(itemdb_randomopt, id, data);
+			}
+			data->id = id;
+			if ((code = parse_script(str[1], path, lines, 0)) == NULL) {
+				ShowWarning("itemdb_read_randomopt: Invalid script on option ID #%d.\n", id);
+				continue;
+			}
+			if (data->script) {
+				script_free_code(data->script);
+				data->script = NULL;
+			}
+			data->script = code;
+		}
+		count++;
+	}
+	fclose(fp);
+
+	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, path);
+
+	return true;
+}
+
+/**
 * Read all item-related databases
 */
 static void itemdb_read(void) {
@@ -1583,6 +1694,7 @@ static void itemdb_read(void) {
 		sv_readdb(dbsubpath2, "item_package.txt",		',', 2, 10, -1, &itemdb_read_group, i);
 #endif
 		itemdb_read_combos(dbsubpath2,i); //TODO change this to sv_read ? id#script ?
+		itemdb_read_randomopt(dbsubpath2, i);
 		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i);
 		sv_readdb(dbsubpath2, "item_trade.txt",         ',', 3, 3, -1, &itemdb_read_itemtrade, i);
 		sv_readdb(dbsubpath2, "item_delay.txt",         ',', 2, 3, -1, &itemdb_read_itemdelay, i);
@@ -1659,6 +1771,17 @@ static int itemdb_group_free(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
+static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
+	struct s_random_opt_data *opt = (struct s_random_opt_data *)db_data2ptr(data);
+	if (!opt)
+		return 0;
+	if (opt->script)
+		script_free_code(opt->script);
+	opt->script = NULL;
+	aFree(opt);
+	return 1;
+}
+
 /**
 * Reload Item DB
 */
@@ -1669,6 +1792,7 @@ void itemdb_reload(void) {
 	int i,d,k;
 
 	itemdb_group->clear(itemdb_group, itemdb_group_free);
+	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
 	itemdb->clear(itemdb, itemdb_final_sub);
 	db_clear(itemdb_combo);
 	if (battle_config.feature_roulette)
@@ -1736,6 +1860,7 @@ void itemdb_reload(void) {
 void do_final_itemdb(void) {
 	db_destroy(itemdb_combo);
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
+	itemdb_randomopt->destroy(itemdb_randomopt, itemdb_randomopt_free);
 	itemdb->destroy(itemdb, itemdb_final_sub);
 	destroy_item_data(dummy_item);
 	if (battle_config.feature_roulette)
@@ -1749,6 +1874,7 @@ void do_init_itemdb(void) {
 	itemdb = uidb_alloc(DB_OPT_BASE);
 	itemdb_combo = uidb_alloc(DB_OPT_BASE);
 	itemdb_group = uidb_alloc(DB_OPT_BASE);
+	itemdb_randomopt = uidb_alloc(DB_OPT_BASE);
 	itemdb_create_dummy();
 	itemdb_read();
 

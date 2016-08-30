@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.5
+//= 1.7
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -15,10 +15,12 @@
 //= 1.3 Fixed Puppet Master's Agony Quest (12217 -> 3259). [Joseph]
 //= 1.4 Fixed invalid check (Magic Wand Quest). [Joseph]
 //= 1.5 Optimized, based on code by Zopokx. [Euphy]
+//= 1.6 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.7 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 moc_para01,42,38,3	script	Mission [56 - 70]	857,{
-	if (countitem(6219) < 1) {
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "To get these missions, I need to Join the Eden Group first. I must find Secretary Lime Evenor and become a member.";
 		close;
 	}

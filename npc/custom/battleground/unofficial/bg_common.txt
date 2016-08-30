@@ -144,7 +144,6 @@ bat_room,159,178,5	script	Guillaume Knight#1	417,{
 	next;
 	mes "[Guillaume Knight]";
 	mes "The battle starts at your army's ship, and the goal is to advance and destroy your enemy's rations depot faster than they can destroy yours.";
-	mes "";
 	mes "The army that captures the neutral flag in the center of the battlefield will be rewarded with extra regeneration points, meaning their soldiers will resurrect more than the other side, giving them an advantage.";
 	next;
 	mes "[Guillaume Knight]";
@@ -214,7 +213,6 @@ bat_room,159,121,1	script	Croix Knight#1	413,{
 	next;
 	mes "[Croix Knight]";
 	mes "The battle starts at your army's ship, and the goal is to advance and destroy your enemy's rations depot faster than they can destroy yours.";
-	mes "";
 	mes "The army that captures the neutral flag in the center of the battlefield will be rewarded with extra regeneration points, meaning their soldiers will resurrect more than the other side, giving them an advantage.";
 	next;
 	mes "[Croix Knight]";
@@ -284,7 +282,6 @@ bat_room,167,178,5	script	Guillaume Knight#2	417,{
 	next;
 	mes "[Guillaume Knight]";
 	mes "The battle starts at your army's ship, and the goal is to advance and destroy your enemy's rations depot faster than they can destroy yours.";
-	mes "";
 	mes "The army that captures the neutral flag in the center of the battlefield will be rewarded with extra regeneration points, meaning their soldiers will resurrect more than the other side, giving them an advantage.";
 	next;
 	mes "[Guillaume Knight]";
@@ -354,7 +351,6 @@ bat_room,167,121,1	script	Croix Knight#2	413,{
 	next;
 	mes "[Croix Knight]";
 	mes "The battle starts at your army's ship, and the goal is to advance and destroy your enemy's rations depot faster than they can destroy yours.";
-	mes "";
 	mes "The army that captures the neutral flag in the center of the battlefield will be rewarded with extra regeneration points, meaning their soldiers will resurrect more than the other side, giving them an advantage.";
 	next;
 	mes "[Croix Knight]";

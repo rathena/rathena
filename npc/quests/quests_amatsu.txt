@@ -1180,7 +1180,6 @@ ama_in01,162,17,1	script	Sushi Master#ama	765,{
 				mes "[Magumagu]";
 				mes "Oh man, you don't have enough money.";
 				mes "If you want to eat delicious fish slice, you better bring more money.";
-				mes "";
 				close;
 			}
 			set Zeny, Zeny-37;

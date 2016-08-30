@@ -91,3 +91,7 @@ izlude_a	mapflag	nobranch
 izlude_b	mapflag	nobranch
 izlude_c	mapflag	nobranch
 izlude_d	mapflag	nobranch
+
+// Heroes' Trail Part 1 ========
+1@sara	mapflag	nobranch
+1@face	mapflag	nobranch

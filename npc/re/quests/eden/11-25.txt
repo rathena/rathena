@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.3
+//= 1.5
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -13,10 +13,12 @@
 //= 1.1 Some little optimization here and there. [Masao]
 //= 1.2 Optimized. [Euphy]
 //= 1.3 Bug fixes. [Capuche]
+//= 1.4 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.5 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 moc_para01,36,38,3	script	Mission [11 - 25]#Tuto	4_BOARD3,{
-	if (countitem(6219) < 1) {// Para_Team_Mark
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "- You need to have an -";
 		mes "- ^4d4dff'Eden Group Mark'^000000 -";
 		mes "- to receive these missions. -";

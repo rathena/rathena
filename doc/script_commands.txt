@@ -517,7 +517,7 @@ forever, and no trace remains of it even if it was stored with character or
 account data.
 
 Some variables are special, that is, they are already defined for you by the 
-scripting engine. You can see the full list somewhere in 'db/const.txt', which 
+scripting engine. You can see the full list in 'src/map/script_constants.h', which 
 is a file you should read, since it also allows you to replace lots of numbered 
 arguments for many commands with easier to read text. The special variables most 
 commonly used are all permanent character-based variables:
@@ -2290,7 +2290,7 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 
 This function will return the specified stat of the invoking character, or, if a
 character name is specified, of that player. The stat can either be a number or
-parameter name, defined in 'db/const.txt'.
+parameter name, defined in 'src/map/script_constants.h'.
 
 Some example parameters:
 
@@ -2736,7 +2736,8 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 
 @inventorylist_id[]        - array of item ids.
 @inventorylist_amount[]    - their corresponding item amounts.
-@inventorylist_equip[]     - whether the item is equipped or not.
+@inventorylist_equip[]     - on which position the item is equipped (see EQP_* constants)
+                             It will contain 0 if the item is not equipped.
 @inventorylist_refine[]    - for how much it is refined.
 @inventorylist_identify[]  - whether it is identified.
 @inventorylist_attribute[] - whether it is broken.
@@ -2746,7 +2747,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_card4[]       if the character owns an item made by a specific 
                              craftsman.
 @inventorylist_expire[]    - expire time (Unix time stamp). 0 means never expires.
-@inventorylist_bound[]     - whether it is bound to the character
+@inventorylist_bound[]     - the bound type of the items (see BOUND_* constants)
 @inventorylist_count       - the number of items in these lists.
 
 This could be handy to save/restore a character's inventory, since no other 
@@ -2849,7 +2850,7 @@ See the sample in 'doc/sample/getiteminfo.txt'.
 
 Returns value from equipped item slot in the indicated slot (0, 1, 2, or 3).
 
-This function returns CARD ID, 255,254,-255 (for card 0, if the item is produced).
+This function returns CARD ID, CARD0_FORGE, CARD0_CREATE, or CARD0_PET (for card 0, if the item is produced).
 It's useful for when you want to check whether an item contains cards or if it's signed.
 
 ---------------------------------------
@@ -4055,7 +4056,7 @@ This command will change the job class of the invoking character.
 
 This command does work with numbers, but you can also use job names. The full 
 list of job names and the numbers they correspond to can be found in 
-'db/const.txt'.
+'src/map/script_constants.h'.
 
     // This would change your player into a Swordman
     jobchange Job_Swordman;
@@ -4275,7 +4276,7 @@ you can look at: 'npc/custom/stylist.txt'
 
 This command will push the currently attached player to given direction by given
 amount of square cells. Direction is the same as used when declaring NPCs, and
-can be specified by using one of the DIR_* constants (db/const.txt).
+can be specified by using one of the DIR_* constants (src/map/script_constants.h).
 
 The knock-back is not restricted by items or map flags, only obstacles are taken
 into account. If there is not enough space to perform the push (e.g. due to a
@@ -4284,6 +4285,31 @@ wall), the character is pushed only up to the obstacle.
     // pushes the character 5 cells in 3 o'clock direction from its
     // current position.
     pushpc DIR_EAST, 5;
+
+---------------------------------------
+
+*recalculatestat;
+
+This command will force a stat recalculation for the attached player.
+
+---------------------------------------
+
+*needed_status_point(<type>,<val>{,<char id>});
+
+Returns the number of stat points needed to change the specified stat <type> by <val>.
+If <val> is negative, returns the number of stat points that would be needed to
+raise the specified stat from (current value - <val>) to current value.
+
+---------------------------------------
+
+*jobcanentermap("<mapname>"{,<JobID>});
+
+Return true if player (decided by job) can enter the map, false otherwise.
+
+For optional 'JobID', see constant of Job_*, or use player's Class, BaseJob,
+and BaseClass. If no player is attached, this param must have a value.
+
+See also db/[pre-]re/job_noenter_map.txt
 
 ---------------------------------------
 
@@ -5167,7 +5193,7 @@ Used in reset NPC's (duh!)
 These commands will bestow a status effect on a character.
 
 The <effect type> determines which status is invoked. This can be either a number
-or constant, with the common statuses (mostly negative) found in 'db/const.txt'
+or constant, with the common statuses (mostly negative) found in 'src/map/script_constants.h'
 with the 'SC_' prefix. A full list is located in 'src/map/status.h', though
 they are not currently documented.
 
@@ -5182,10 +5208,11 @@ This is used primarily in item scripts. When used in an NPC script, a flag MUST
 be defined for the rate to work.
 
 Optional value <flag> is how the status change start will be handled (a bitmask).
- 1: Status change cannot be avoided.
- 2: Tick cannot be reduced by stats (default).
- 4: sc_data loaded, so no value will be altered.
- 8: Rate cannot be reduced.
+ SCSTART_NOAVOID   : Status change cannot be avoided.
+ SCSTART_NOTICKDEF : Tick cannot be reduced by stats (default).
+ SCSTART_LOADED    : sc_data loaded, so no value will be altered.
+ SCSTART_NORATEDEF : Rate cannot be reduced.
+ SCSTART_NOICON    : Status icon won't be sent to client
 
 If a <GID> is given, the status change will be invoked on the specified character
 instead of the one attached to the script. This can only be defined after setting
@@ -5436,7 +5463,7 @@ Types:
 	1: Buff
 	2: Debuff
 
-Status_icon: See "Status Icon" section in 'db/const.txt'. Default is SI_BLANK (-1).
+Status_icon: See "Status Icon" section in 'src/map/script_constants.h'. Default is SI_BLANK (-1).
 
 Example:
 	// Apple gives you +5 Str bonus for 1 minute when it's consumed.
@@ -5988,11 +6015,13 @@ It is an approximation of official server script language's 'cmdothernpc'.
 
 ---------------------------------------
 
-*npctalk "<message>";
+*npctalk "<message>"{,"<NPC name>"};
 
 This command will display a message to the surrounding area as if the NPC object 
 running it was a player talking - that is, above their head and in the chat 
 window. The display name of the NPC won't get appended in front of the message.
+If the <NPC name> option is given, then that NPC will display the message, else
+the attached NPC will display the message.
 
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.
@@ -6212,7 +6241,7 @@ This command will broadcast a message to all or most players, similar to
 The region the broadcast is heard in (target), source of the broadcast
 and the color the message will come up as is determined by the flags.
 
-The flag values are coded as constants in 'db/const.txt' to make them easier to use.
+The flag values are coded as constants in 'src/map/script_constants.h' to make them easier to use.
 
 Target flags:
 - bc_all: Broadcast message is sent server-wide (default).
@@ -6548,7 +6577,7 @@ specified.
 *setmapflag "<map name>",<flag>{,<zone>{,<type>}};
 
 This command marks a specified map with the given map flag, which will alter the 
-behavior of the map. A full list of mapflags is located in 'db/const.txt' with
+behavior of the map. A full list of mapflags is located in 'src/map/script_constants.h' with
 the 'mf_' prefix, and documentation can be found in 'doc/mapflags.txt'.
 
 The map flags alter the behavior of the map regarding teleporting (mf_nomemo, 
@@ -6914,8 +6943,8 @@ must be used.
 
 This command makes an object display an emotion sprite above their own as 
 if they were doing that emotion. For a full list of emotion numbers, 
-see 'db/const.txt' under 'e_'. The not so obvious ones are 'e_what' (a question mark) 
-and 'e_gasp' (the exclamation mark).
+see 'src/map/script_constants.h' under 'e_'. The not so obvious ones are 'e_what'
+(a question mark) and 'e_gasp' (the exclamation mark).
 
 The optional target parameter specifies who will get the emotion on top of
 their head. If 0 (the default if omitted), the NPC in current use will show
@@ -7156,7 +7185,7 @@ This command will make a <GID> say a message. The display name of the <GID> won'
 *unitemote <GID>,<emotion number>;
 
 This command will make a <GID> display an emotion sprite.
-For a full list of emotion numbers, see 'db/const.txt' under 'e_'.
+For a full list of emotion numbers, see 'src/map/script_constants.h' under 'e_'.
 
 ---------------------------------------
 
@@ -8058,7 +8087,7 @@ Each of these can be 'on' or 'off'. Together they define a cell's behavior.
 
 This command lets you alter these flags for all map cells in the specified
 (x1,y1)-(x2,y2) rectangle. The 'flag' can be 0 or 1 (0:clear flag, 1:set flag).
-The 'type' defines which flag to modify. Possible options see 'db/const.txt'.
+The 'type' defines which flag to modify. Possible options see 'src/map/script_constants.h'.
 
 Example:
 
@@ -8092,7 +8121,7 @@ remove a nonwalkable row of cells after the barricade mobs.
 
 This command will return 1 or 0, depending on whether the specified cell has
 the 'type' flag set or not. There are various types to check, all mimicking
-the server's cell_chk enumeration. The types can be found in 'db/const.txt'.
+the server's cell_chk enumeration. The types can be found in 'src/map/script_constants.h'.
 
 The meaning of the individual types can be confusing, so here's an overview:
   - cell_chkwall/water/cliff
@@ -8701,7 +8730,7 @@ NOTE: Currently ONLY supported for bonuses that used by 'bonus' script.
 This command will make the pet cure a specified status condition. The curing 
 actions will occur once every Delay seconds. For a full list of status 
 conditions that can be cured, see the list of 'SC_' status condition constants 
-in 'db/const.txt'.
+in 'src/map/script_constants.h'.
 
 ---------------------------------------
 
@@ -9172,6 +9201,56 @@ The client requires custom monster spawns be in the navigation file
 for using the embedded client Navigation feature to work properly. In this
 instance sending the player to the map where the monster spawns is a simpler
 solution rather than sending the map and the monster_id.
+
+---------------------------------------
+
+*hateffect(<Hat Effect ID>,<State>);
+
+This will set a Hat Effect onto the player. The state field allows you to
+enable (true) or disable (false) the effect on the player.
+The Hat Effect constants can be found in db/const.txt starting with HAT_EF_*.
+
+Requires client 2015-05-13aRagEXE or newer. 
+
+---------------------------------------
+
+*getrandomoptinfo(<type>);
+
+Returns value of an attribute of current random option.
+
+Valid attributes are:
+ROA_ID - ID of current option
+ROA_VALUE - Value field of current option
+ROA_PARAM - Param field of current option
+
+This script command is intended for using in random option scripts.
+
+---------------------------------------
+
+*getequiprandomoption(<equipment index>,<index>,<type>{,<char id>});
+
+Returns value of an attribute of a random option on an equipped item.
+
+See 'getequipid' for a full list of valid equipment slots.
+
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
+
+For valid attribute types, see `getrandomoptinfo` command reference.
+
+---------------------------------------
+
+*setrandomoption(<equipment slot>,<index>,<id>,<value>,<param>{,<char id>});
+
+Sets <index+1>th random option for equipment equipped at <equipment slot>
+to <id>, <value> and <param>.
+
+See 'getequipid' for a full list of valid equipment slots.
+
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
+
+ID - ID of random option. See db/const.txt for constants.
+Value - Value of random option
+Param - Parameter of random option
 
 ---------------------------------------
 

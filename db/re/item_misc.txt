@@ -1264,3 +1264,24 @@ IG_Holy_Egg_2,608,2	//Seed_Of_Yggdrasil
 IG_Holy_Egg_2,610,15	//Leaf_Of_Yggdrasil
 IG_Holy_Egg_2,616,5	//Old_Card_Album
 IG_Holy_Egg_2,5198,1	//Drooping_Bunny
+//God Material Box
+IG_God_Material_Box,7073,5 //Jewel_Of_Prayer
+IG_God_Material_Box,7074,5 //Iron_Glove
+IG_God_Material_Box,7075,5 //Iron_Maiden
+IG_God_Material_Box,7076,5 //Mystery_Wheel
+IG_God_Material_Box,7077,5 //Silver_Fancy
+IG_God_Material_Box,7078,5 //Anger_Of_Valkurye
+IG_God_Material_Box,7079,5 //Feather_Of_Angel
+IG_God_Material_Box,7080,5 //Foot_Step_Of_Cat
+IG_God_Material_Box,7081,5 ///Beard_Of_Women
+IG_God_Material_Box,7082,5 //Root_Of_Stone
+IG_God_Material_Box,7083,5 //Soul_Of_Fish
+IG_God_Material_Box,7084,5 //Saliva_Of_Bird
+IG_God_Material_Box,7085,5 //Tendon_Of_Bear
+IG_God_Material_Box,7086,5 //Symbol_Of_Sun
+IG_God_Material_Box,7087,5 //Breath_Of_Soul
+IG_God_Material_Box,7088,5 //Crystal_Of_Snow
+IG_God_Material_Box,7089,5 //Indication_Of_Tempest
+IG_God_Material_Box,7090,5 //Slilince_Wave
+IG_God_Material_Box,7091,5 //Rough_Billows
+IG_God_Material_Box,7092,5 //Air_Stream

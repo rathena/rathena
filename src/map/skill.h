@@ -79,7 +79,7 @@ enum e_skill_inf2 {
 /// Skill info type 3
 enum e_skill_inf3 {
 	INF3_NOLP             = 0x00001, // Skill that can ignore Land Protector
-	INF3_NOENDCAMOUFLAGE  = 0x00002, // Skill that doesn't end camouflage
+	INF3_FREE             = 0x00002, // Free
 	INF3_USABLE_HIDING    = 0x00004, // Skill that can be use in hiding
 	INF3_USABLE_DANCE     = 0x00008, // Skill that can be use while in dancing state
 	INF3_HIT_EMP          = 0x00010, // Skill that could hit emperium
@@ -372,7 +372,7 @@ int skill_get_index_( uint16 skill_id, bool silent, const char *func, const char
 #define skill_get_index(skill_id)  skill_get_index_((skill_id), false, __FUNCTION__, __FILE__, __LINE__) /// Get skill index from skill_id (common usage on source)
 #define skill_get_index2(skill_id) skill_get_index_((skill_id), true, __FUNCTION__, __FILE__, __LINE__)  /// Get skill index from skill_id (used when reading skill_db files)
 int skill_get_type( uint16 skill_id );
-int skill_get_hit( uint16 skill_id );
+enum e_damage_type skill_get_hit( uint16 skill_id );
 int skill_get_inf( uint16 skill_id );
 int skill_get_ele( uint16 skill_id , uint16 skill_lv );
 int skill_get_nk( uint16 skill_id );
@@ -1965,7 +1965,7 @@ enum s_skill_unit_id {
 	UNT_DEATHWAVE, //TODO
 	UNT_WATERATTACK, //TODO
 	UNT_WINDATTACK, //TODO
-	UNT_EARTHQUAKE,
+	UNT_EARTHQUAKE, //TODO
 	UNT_EVILLAND,
 	UNT_DARK_RUNNER, //TODO
 	UNT_DARK_TRANSFER, //TODO

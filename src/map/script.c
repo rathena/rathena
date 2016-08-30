@@ -379,6 +379,8 @@ const char* script_op2name(int op)
 	RETURN_OP_NAME(C_USERFUNC);
 	RETURN_OP_NAME(C_USERFUNC_POS);
 
+	RETURN_OP_NAME(C_REF);
+
 	// operators
 	RETURN_OP_NAME(C_OP3);
 	RETURN_OP_NAME(C_LOR);
@@ -402,6 +404,10 @@ const char* script_op2name(int op)
 	RETURN_OP_NAME(C_NOT);
 	RETURN_OP_NAME(C_R_SHIFT);
 	RETURN_OP_NAME(C_L_SHIFT);
+	RETURN_OP_NAME(C_ADD_POST);
+	RETURN_OP_NAME(C_SUB_POST);
+	RETURN_OP_NAME(C_ADD_PRE);
+	RETURN_OP_NAME(C_SUB_PRE);
 
 	default:
 		ShowDebug("script_op2name: unexpected op=%d\n", op);
@@ -1020,6 +1026,34 @@ static void parse_nextline(bool first, const char* p)
 	str_data[LABEL_NEXTLINE].label     = -1;
 }
 
+/**
+ * Pushes a variable into stack, processing its array index if needed.
+ * @see parse_variable
+ */
+void parse_variable_sub_push(int word, const char *p2)
+{
+	if( p2 ) { // Process the variable index
+		const char *p3 = NULL;
+
+		// Push the getelementofarray method into the stack
+		add_scriptl(buildin_getelementofarray_ref);
+		add_scriptc(C_ARG);
+		add_scriptl(word);
+
+		// Process the sub-expression for this assignment
+		p3 = parse_subexpr(p2 + 1, 1);
+		p3 = skip_space(p3);
+
+		if( *p3 != ']' ) // Closing parenthesis is required for this script
+			disp_error_message("Missing closing ']' parenthesis for the variable assignment.", p3);
+
+		// Push the closing function stack operator onto the stack
+		add_scriptc(C_FUNC);
+		p3++;
+	} else // No array index, simply push the variable or value onto the stack
+		add_scriptl(word);
+}
+
 /// Parse a variable assignment using the direct equals operator
 /// @param p script position where the function should run from
 /// @return NULL if not a variable assignment, the new position otherwise
@@ -1028,6 +1062,10 @@ const char* parse_variable(const char* p) {
 	c_op type = C_NOP;
 	const char *p2 = NULL;
 	const char *var = p;
+
+	if ((p[0] == '+' && p[1] == '+' && (type = C_ADD_PRE)) // pre ++
+	 || (p[0] == '-' && p[1] == '-' && (type = C_SUB_PRE))) // pre --
+		var = p = skip_space(&p[2]);
 
 	// skip the variable where applicable
 	p = skip_word(p);
@@ -1060,8 +1098,8 @@ const char* parse_variable(const char* p) {
 	|| ( p[0] == '/' && p[1] == '=' && (type = C_DIV) ) // /=
 	|| ( p[0] == '%' && p[1] == '=' && (type = C_MOD) ) // %=
 	|| ( p[0] == '~' && p[1] == '=' && (type = C_NOT) ) // ~=
-	|| ( p[0] == '+' && p[1] == '+' && (type = C_ADD_PP) ) // ++
-	|| ( p[0] == '-' && p[1] == '-' && (type = C_SUB_PP) ) // --
+	|| ( p[0] == '+' && p[1] == '+' && (type = C_ADD_POST) ) // post ++
+	|| ( p[0] == '-' && p[1] == '-' && (type = C_SUB_POST) ) // post --
 	|| ( p[0] == '<' && p[1] == '<' && p[2] == '=' && (type = C_L_SHIFT) ) // <<=
 	|| ( p[0] == '>' && p[1] == '>' && p[2] == '=' && (type = C_R_SHIFT) ) // >>=
 	) )
@@ -1070,6 +1108,11 @@ const char* parse_variable(const char* p) {
 	}
 
 	switch( type ) {
+		case C_ADD_PRE: // pre ++
+		case C_SUB_PRE: // pre --
+			// Nothing more to skip
+		break;
+
 		case C_EQ: {// incremental modifier
 			p = skip_space( &p[1] );
 		}
@@ -1105,41 +1148,22 @@ const char* parse_variable(const char* p) {
 	// parse the variable currently being modified
 	word = add_word(var);
 
-	if( str_data[word].type == C_FUNC || str_data[word].type == C_USERFUNC || str_data[word].type == C_USERFUNC_POS )
-	{// cannot assign a variable which exists as a function or label
+	if( str_data[word].type == C_FUNC || str_data[word].type == C_USERFUNC || str_data[word].type == C_USERFUNC_POS ) // cannot assign a variable which exists as a function or label
 		disp_error_message("Cannot modify a variable which has the same name as a function or label.", p);
-	}
 
-	if( p2 ) {// process the variable index
-		const char* p3 = NULL;
-
-		// push the getelementofarray method into the stack
-		add_scriptl(buildin_getelementofarray_ref);
-		add_scriptc(C_ARG);
-		add_scriptl(word);
-
-		// process the sub-expression for this assignment
-		p3 = parse_subexpr(p2 + 1, 1);
-		p3 = skip_space(p3);
-
-		if( *p3 != ']' ) {// closing parenthesis is required for this script
-			disp_error_message("Missing closing ']' parenthesis for the variable assignment.", p3);
-		}
-
-		// push the closing function stack operator onto the stack
-		add_scriptc(C_FUNC);
-		p3 ++;
-	} else {// simply push the variable or value onto the stack
-		add_scriptl(word);
-	}
+	parse_variable_sub_push(word, p2); // Push variable onto the stack
 
 	if( type != C_EQ )
-		add_scriptc(C_REF);
+		parse_variable_sub_push(word, p2); // Push variable onto the stack once again (first argument of setr)
 
-	if( type == C_ADD_PP || type == C_SUB_PP ) {// incremental operator for the method
+	if( type == C_ADD_POST || type == C_SUB_POST ) { // post ++ / --
 		add_scripti(1);
-		add_scriptc(type == C_ADD_PP ? C_ADD : C_SUB);
-	} else {// process the value as an expression
+		add_scriptc(type == C_ADD_POST ? C_ADD : C_SUB);
+		parse_variable_sub_push(word, p2); // Push variable onto the stack (third argument of setr)
+	} else if( type == C_ADD_PRE || type == C_SUB_PRE ) { // pre ++ / --
+		add_scripti(1);
+		add_scriptc(type == C_ADD_PRE ? C_ADD : C_SUB);
+	} else { // Process the value as an expression
 		p = parse_subexpr(p, -1);
 
 		if( type != C_EQ )
@@ -1322,32 +1346,34 @@ const char* parse_subexpr(const char* p,int limit)
 		}
 	}
 
-	if((op=C_NEG,*p=='-') || (op=C_LNOT,*p=='!') || (op=C_NOT,*p=='~')){
-		p=parse_subexpr(p+1,10);
+	if( (op = C_ADD_PRE, p[0] == '+' && p[1] == '+') || (op = C_SUB_PRE, p[0] == '-' && p[1] == '-') ) // Pre ++ -- operators
+		p = parse_variable(p);
+	else if( (op = C_NEG, *p == '-') || (op = C_LNOT, *p == '!') || (op = C_NOT, *p == '~') ) { // Unary - ! ~ operators
+		p = parse_subexpr(p + 1, 11);
 		add_scriptc(op);
 	} else
-		p=parse_simpleexpr(p);
-	p=skip_space(p);
+		p = parse_simpleexpr(p);
+	p = skip_space(p);
 	while((
 			(op=C_OP3,opl=0,len=1,*p=='?') ||
-			(op=C_ADD,opl=8,len=1,*p=='+') ||
-			(op=C_SUB,opl=8,len=1,*p=='-') ||
-			(op=C_MUL,opl=9,len=1,*p=='*') ||
-			(op=C_DIV,opl=9,len=1,*p=='/') ||
-			(op=C_MOD,opl=9,len=1,*p=='%') ||
+			(op=C_ADD,opl=9,len=1,*p=='+') ||
+			(op=C_SUB,opl=9,len=1,*p=='-') ||
+			(op=C_MUL,opl=10,len=1,*p=='*') ||
+			(op=C_DIV,opl=10,len=1,*p=='/') ||
+			(op=C_MOD,opl=10,len=1,*p=='%') ||
 			(op=C_LAND,opl=2,len=2,*p=='&' && p[1]=='&') ||
-			(op=C_AND,opl=6,len=1,*p=='&') ||
+			(op=C_AND,opl=5,len=1,*p=='&') ||
 			(op=C_LOR,opl=1,len=2,*p=='|' && p[1]=='|') ||
-			(op=C_OR,opl=5,len=1,*p=='|') ||
+			(op=C_OR,opl=3,len=1,*p=='|') ||
 			(op=C_XOR,opl=4,len=1,*p=='^') ||
-			(op=C_EQ,opl=3,len=2,*p=='=' && p[1]=='=') ||
-			(op=C_NE,opl=3,len=2,*p=='!' && p[1]=='=') ||
-			(op=C_R_SHIFT,opl=7,len=2,*p=='>' && p[1]=='>') ||
-			(op=C_GE,opl=3,len=2,*p=='>' && p[1]=='=') ||
-			(op=C_GT,opl=3,len=1,*p=='>') ||
-			(op=C_L_SHIFT,opl=7,len=2,*p=='<' && p[1]=='<') ||
-			(op=C_LE,opl=3,len=2,*p=='<' && p[1]=='=') ||
-			(op=C_LT,opl=3,len=1,*p=='<')) && opl>limit){
+			(op=C_EQ,opl=6,len=2,*p=='=' && p[1]=='=') ||
+			(op=C_NE,opl=6,len=2,*p=='!' && p[1]=='=') ||
+			(op=C_R_SHIFT,opl=8,len=2,*p=='>' && p[1]=='>') ||
+			(op=C_GE,opl=7,len=2,*p=='>' && p[1]=='=') ||
+			(op=C_GT,opl=7,len=1,*p=='>') ||
+			(op=C_L_SHIFT,opl=8,len=2,*p=='<' && p[1]=='<') ||
+			(op=C_LE,opl=7,len=2,*p=='<' && p[1]=='=') ||
+			(op=C_LT,opl=7,len=1,*p=='<')) && opl>limit){
 		p+=len;
 		if(op == C_OP3) {
 			p=parse_subexpr(p,-1);
@@ -2144,7 +2170,7 @@ static void add_buildin_func(void)
 			str_data[n].val = i;
 			str_data[n].func = buildin_func[i].func;
 
-			if (!strcmp(buildin_func[i].name, "set")) buildin_set_ref = n;
+			if (!strcmp(buildin_func[i].name, "setr")) buildin_set_ref = n;
 			else if (!strcmp(buildin_func[i].name, "callsub")) buildin_callsub_ref = n;
 			else if (!strcmp(buildin_func[i].name, "callfunc")) buildin_callfunc_ref = n;
 			else if( !strcmp(buildin_func[i].name, "getelementofarray") ) buildin_getelementofarray_ref = n;
@@ -5603,7 +5629,7 @@ BUILDIN_FUNC(warpparty)
 	TBL_PC *pl_sd;
 	struct party_data* p;
 	int type;
-	int mapindex;
+	int mapindex = 0, m = -1;
 	int i;
 
 	const char* str = script_getstr(st,2);
@@ -5632,18 +5658,21 @@ BUILDIN_FUNC(warpparty)
 				return SCRIPT_CMD_FAILURE;
 			pl_sd = p->data[i].sd;
 			mapindex = pl_sd->mapindex;
+			m = map_mapindex2mapid(mapindex);
 			x = pl_sd->bl.x;
 			y = pl_sd->bl.y;
 			break;
 		case 4:
 			mapindex = mapindex_name2id(str);
+			if (!mapindex) {// Invalid map
+				return SCRIPT_CMD_FAILURE;
+			}
+			m = map_mapindex2mapid(mapindex);
 			break;
 		case 2:
 			//"SavePoint" uses save point of the currently attached player
 			if (( sd = script_rid2sd(st) ) == NULL )
 				return SCRIPT_CMD_SUCCESS;
-		default:
-			mapindex = 0;
 			break;
 	}
 
@@ -5674,7 +5703,7 @@ BUILDIN_FUNC(warpparty)
 		break;
 		case 3: // Leader
 		case 4: // m,x,y
-			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp)
+			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
 				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 		break;
 		}
@@ -5693,7 +5722,7 @@ BUILDIN_FUNC(warpguild)
 	TBL_PC *pl_sd;
 	struct guild* g;
 	struct s_mapiterator* iter;
-	int type;
+	int type, mapindex = 0, m = -1;
 
 	const char* str = script_getstr(st,2);
 	int x           = script_getnum(st,3);
@@ -5712,6 +5741,15 @@ BUILDIN_FUNC(warpguild)
 	if( type == 2 && ( sd = script_rid2sd(st) ) == NULL )
 	{// "SavePoint" uses save point of the currently attached player
 		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch (type) {
+		case 3:
+			mapindex = mapindex_name2id(str);
+			if (!mapindex)
+				return SCRIPT_CMD_FAILURE;
+			m = map_mapindex2mapid(mapindex);
+			break;
 	}
 
 	iter = mapit_getallusers();
@@ -5735,8 +5773,8 @@ BUILDIN_FUNC(warpguild)
 				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 3: // m,x,y
-			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp)
-				pc_setpos(pl_sd,mapindex_name2id(str),x,y,CLR_TELEPORT);
+			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
+				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 		break;
 		}
 	}
@@ -5929,13 +5967,14 @@ BUILDIN_FUNC(copyarray);
 /// The value is converted to the type of the variable.
 ///
 /// set(<variable>,<value>{,<charid>})
-BUILDIN_FUNC(set)
+BUILDIN_FUNC(setr)
 {
 	TBL_PC* sd = NULL;
 	struct script_data* data;
 	//struct script_data* datavalue;
 	int64 num;
-	const char* name;
+	uint8 pos = 4;
+	const char* name, *command = script_getfuncname(st);
 	char prefix;
 
 	data = script_getdata(st,2);
@@ -5952,7 +5991,10 @@ BUILDIN_FUNC(set)
 	name = reference_getname(data);
 	prefix = *name;
 
-	if (not_server_variable(prefix) && !script_charid2sd(4,sd)) {
+	if (!strcmp(command, "setr"))
+		pos = 5;
+
+	if (not_server_variable(prefix) && !script_charid2sd(pos,sd)) {
 		ShowError("buildin_set: No player attached for player variable '%s'\n", name);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -5985,13 +6027,18 @@ BUILDIN_FUNC(set)
 	}
 #endif
 
+	if( !strcmp(command, "setr") && script_hasdata(st, 4) ) { // Optional argument used by post-increment/post-decrement constructs to return the previous value
+		if( is_string_variable(name) )
+			script_pushstrcopy(st,script_getstr(st, 4));
+		else
+			script_pushint(st,script_getnum(st, 4));
+	} else // Return a copy of the variable reference
+		script_pushcopy(st, 2);
+
 	if( is_string_variable(name) )
 		set_reg(st,sd,num,name,(void*)script_getstr(st,3),script_getref(st,2));
 	else
 		set_reg(st,sd,num,name,(void*)__64BPRTSIZE(script_getnum(st,3)),script_getref(st,2));
-
-	// return a copy of the variable reference
-	script_pushcopy(st,2);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14309,10 +14356,14 @@ BUILDIN_FUNC(message)
  *------------------------------------------*/
 BUILDIN_FUNC(npctalk)
 {
-	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
+	struct npc_data* nd = NULL;
 	const char* str = script_getstr(st,2);
 
-	if (nd) {
+	if (script_hasdata(st, 3))
+		nd = npc_name2id(script_getstr(st, 3));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+	if (nd != NULL) {
 		char message[256];
 		safesnprintf(message, sizeof(message), "%s", str);
 		clif_disp_overhead(&nd->bl, message);
@@ -16645,10 +16696,8 @@ BUILDIN_FUNC(searchitem)
 
 	if ((items[0] = itemdb_exists(atoi(itemname))))
 		count = 1;
-	else {
+	else
 		count = itemdb_searchname_array(items, ARRAYLENGTH(items), itemname);
-		if (count > MAX_SEARCH) count = MAX_SEARCH;
-	}
 
 	if (!count) {
 		script_pushint(st, 0);
@@ -19414,6 +19463,7 @@ BUILDIN_FUNC(progressbar)
 
 	sd->progressbar.npc_id = st->oid;
 	sd->progressbar.timeout = gettick() + second*1000;
+	sd->state.workinprogress = WIP_DISABLE_ALL;
 
 	clif_progressbar(sd, strtol(color, (char **)NULL, 0), second);
 	return SCRIPT_CMD_SUCCESS;
@@ -21498,6 +21548,254 @@ BUILDIN_FUNC(getexp2) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+* Force stat recalculation of sd
+* recalculatestat;
+* @author [secretdataz]
+**/
+BUILDIN_FUNC(recalculatestat) {
+	TBL_PC* sd = script_rid2sd(st);
+
+	if (sd == NULL)
+		return SCRIPT_CMD_FAILURE;
+
+	status_calc_pc(sd, SCO_FORCE);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(hateffect){
+#if PACKETVER >= 20150513
+	struct map_session_data* sd = script_rid2sd(st);
+	bool enable;
+	int i, effectID;
+
+	if( sd == NULL )
+		return SCRIPT_CMD_FAILURE;
+
+	effectID = script_getnum(st,2);
+	enable = script_getnum(st,3) ? true : false;
+
+	ARR_FIND( 0, sd->hatEffectCount, i, sd->hatEffectIDs[i] == effectID );
+
+	if( enable ){
+		if( i < sd->hatEffectCount ){
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		RECREATE(sd->hatEffectIDs,uint32,sd->hatEffectCount+1);
+		sd->hatEffectIDs[sd->hatEffectCount] = effectID;
+		sd->hatEffectCount++;
+	}else{
+		if( i == sd->hatEffectCount ){
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		for( ; i < sd->hatEffectCount - 1; i++ ){
+			sd->hatEffectIDs[i] = sd->hatEffectIDs[i+1];
+		}
+
+		sd->hatEffectCount--;
+
+		if( !sd->hatEffectCount ){
+			aFree(sd->hatEffectIDs);
+			sd->hatEffectIDs = NULL;
+		}
+	}
+
+	if( !sd->state.connect_new ){
+		clif_hat_effect_single( sd, effectID, enable );
+	}
+
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+* Retrieves param of current random option. Intended for random option script only.
+* getrandomoptinfo(<type>);
+* @author [secretdataz]
+**/
+BUILDIN_FUNC(getrandomoptinfo) {
+	struct map_session_data *sd;
+	int val;
+	int param = script_getnum(st, 2);
+	if ((sd = script_rid2sd(st)) != NULL && current_equip_item_index != -1 && current_equip_opt_index != -1 && sd->inventory.u.items_inventory[current_equip_item_index].option[current_equip_opt_index].id) {
+		switch (param) {
+			case ROA_ID:
+				val = sd->inventory.u.items_inventory[current_equip_item_index].option[current_equip_opt_index].id;
+				break;
+			case ROA_VALUE:
+				val = sd->inventory.u.items_inventory[current_equip_item_index].option[current_equip_opt_index].value;
+				break;
+			case ROA_PARAM:
+				val = sd->inventory.u.items_inventory[current_equip_item_index].option[current_equip_opt_index].param;
+				break;
+			default:
+				ShowWarning("buildin_getrandomoptinfo: Invalid attribute type %d (Max %d).\n", param, MAX_ITEM_RDM_OPT);
+				val = 0;
+				break;
+		}
+		script_pushint(st, val);
+	}
+	else {
+		script_pushint(st, 0);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+* Retrieves a random option on an equipped item.
+* getequiprandomoption(<equipment slot>,<index>,<type>{,<char id>});
+* @author [secretdataz]
+*/
+BUILDIN_FUNC(getequiprandomoption) {
+	struct map_session_data *sd;
+	int val;
+	short i = -1;
+	int pos = script_getnum(st, 2);
+	int index = script_getnum(st, 3);
+	int type = script_getnum(st, 4);
+	if (!script_charid2sd(5, sd)) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (index < 0 || index >= MAX_ITEM_RDM_OPT) {
+		ShowError("buildin_getequiprandomoption: Invalid random option index %d.\n", index);
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (equip_index_check(pos))
+		i = pc_checkequip(sd, equip_bitmask[pos]);
+	if (i < 0) {
+		ShowError("buildin_getequiprandomoption: No item equipped at pos %d (CID=%d/AID=%d).\n", pos, sd->status.char_id, sd->status.account_id);
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	switch (type) {
+		case ROA_ID:
+			val = sd->inventory.u.items_inventory[i].option[index].id;
+			break;
+		case ROA_VALUE:
+			val = sd->inventory.u.items_inventory[i].option[index].value;
+			break;
+		case ROA_PARAM:
+			val = sd->inventory.u.items_inventory[i].option[index].param;
+			break;
+		default:
+			ShowWarning("buildin_getequiprandomoption: Invalid attribute type %d (Max %d).\n", type, MAX_ITEM_RDM_OPT);
+			val = 0;
+			break;
+	}
+	script_pushint(st, val);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+* Adds a random option on a random option slot on an equipped item and overwrites
+* existing random option in the process.
+* setrandomoption(<equipment slot>,<index>,<id>,<value>,<param>{,<char id>});
+* @author [secretdataz]
+*/
+BUILDIN_FUNC(setrandomoption) {
+	struct map_session_data *sd;
+	struct s_random_opt_data *opt;
+	int pos, index, id, value, param, ep;
+	int i = -1;
+	if (!script_charid2sd(7, sd))
+		return SCRIPT_CMD_FAILURE;
+	pos = script_getnum(st, 2);
+	index = script_getnum(st, 3);
+	id = script_getnum(st, 4);
+	value = script_getnum(st, 5);
+	param = script_getnum(st, 6);
+
+	if ((opt = itemdb_randomopt_exists((short)id)) == NULL) {
+		ShowError("buildin_setrandomoption: Random option ID %d does not exists.\n", id);
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (index < 0 || index >= MAX_ITEM_RDM_OPT) {
+		ShowError("buildin_setrandomoption: Invalid random option index %d.\n", index);
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (equip_index_check(pos))
+		i = pc_checkequip(sd, equip_bitmask[pos]);
+	if (i >= 0) {
+		ep = sd->inventory.u.items_inventory[i].equip;
+		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->inventory.u.items_inventory[i]);
+		pc_unequipitem(sd, i, 2);
+		sd->inventory.u.items_inventory[i].option[index].id = id;
+		sd->inventory.u.items_inventory[i].option[index].value = value;
+		sd->inventory.u.items_inventory[i].option[index].param = param;
+		clif_delitem(sd, i, 1, 3);
+		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->inventory.u.items_inventory[i]);
+		clif_additem(sd, i, 1, 0);
+		pc_equipitem(sd, i, ep);
+		script_pushint(st, 1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	ShowError("buildin_setrandomoption: No item equipped at pos %d (CID=%d/AID=%d).\n", pos, sd->status.char_id, sd->status.account_id);
+	script_pushint(st, 0);
+	return SCRIPT_CMD_FAILURE;
+}
+
+/// Returns the number of stat points needed to change the specified stat by val.
+/// If val is negative, returns the number of stat points that would be needed to
+/// raise the specified stat from (current value - val) to current value.
+/// *needed_status_point(<type>,<val>{,<char id>});
+/// @author [secretdataz]
+BUILDIN_FUNC(needed_status_point) {
+	struct map_session_data *sd;
+	int type, val;
+	if (!script_charid2sd(4, sd))
+		return SCRIPT_CMD_FAILURE;
+	type = script_getnum(st, 2);
+	val = script_getnum(st, 3);
+
+	script_pushint(st, pc_need_status_point(sd, type, val));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * jobcanentermap("<mapname>"{,<JobID>});
+ * Check if (player with) JobID can enter the map.
+ * @param mapname Map name
+ * @param JobID Player's JobID (optional)
+ **/
+BUILDIN_FUNC(jobcanentermap) {
+	const char *mapname = script_getstr(st, 2);
+	int mapidx = mapindex_name2id(mapname), m = -1;
+	int jobid = 0;
+	TBL_PC *sd = NULL;
+
+	if (!mapidx) {// Invalid map
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+	m = map_mapindex2mapid(mapidx);
+	if (m == -1) { // Map is on different map server
+		ShowError("buildin_jobcanentermap: Map '%s' is not found in this server.\n", mapname);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_hasdata(st, 3)) {
+		jobid = script_getnum(st, 3);
+	} else {
+		if (!(sd = script_rid2sd(st))) {
+			script_pushint(st, false);
+			return SCRIPT_CMD_FAILURE;
+		}
+		jobid = sd->status.class_;
+	}
+
+	script_pushint(st, pc_job_can_entermap((enum e_job)jobid, m, sd ? sd->group_level : 0));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -21573,7 +21871,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
 	BUILDIN_DEF(setlook,"ii?"),
 	BUILDIN_DEF(changelook,"ii?"), // Simulates but don't Store it
-	BUILDIN_DEF(set,"rv?"),
+	BUILDIN_DEF2(setr,"set","rv?"),
+	BUILDIN_DEF(setr,"rv??"), // Not meant to be used directly, required for var++/var--
 	BUILDIN_DEF(setarray,"rv*"),
 	BUILDIN_DEF(cleararray,"rvi"),
 	BUILDIN_DEF(copyarray,"rri"),
@@ -21805,7 +22104,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(atcommand,"charcommand","s"), // [MouseJstr]
 	BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
 	BUILDIN_DEF(message,"ss"), // [MouseJstr]
-	BUILDIN_DEF(npctalk,"s"), // [Valaris]
+	BUILDIN_DEF(npctalk,"s?"), // [Valaris]
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),
 	BUILDIN_DEF(getsavepoint,"i?"),
@@ -22078,6 +22377,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(navigateto,"s???????"),
 	BUILDIN_DEF(adopt,"vv"),
 	BUILDIN_DEF(getexp2,"ii?"),
+	BUILDIN_DEF(recalculatestat,""),
+	BUILDIN_DEF(hateffect,"ii"),
+	BUILDIN_DEF(getrandomoptinfo, "i"),
+	BUILDIN_DEF(getequiprandomoption, "iii?"),
+	BUILDIN_DEF(setrandomoption,"iiiii?"),
+	BUILDIN_DEF(needed_status_point,"ii?"),
+	BUILDIN_DEF(jobcanentermap,"s?"),
 
 #include "../custom/script_def.inc"
 

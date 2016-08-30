@@ -25,6 +25,11 @@ enum E_CHARSERVER_ST {
 	CHARSERVER_ST_LAST
 };
 
+enum e_char_delete {
+	CHAR_DEL_EMAIL = 1,
+	CHAR_DEL_BIRTHDATE
+};
+
 struct Schema_Config {
 	int db_use_sqldbs;
 	char db_path[1024];

@@ -26,7 +26,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 		mes "to store some of your items.^000000";
 		close;
 	}
-	if(!(BaseLevel > 59) || !(BaseJob == Job_Novice || BaseJob == Job_SuperNovice || BaseClass == Job_Swordman))
+	if(!(BaseLevel > 59) || !(BaseJob == Job_Novice || BaseJob == Job_Super_Novice || BaseClass == Job_Swordman))
 	{
 		mes "[Guildsman]";
 		mes "There are rumors";
@@ -45,7 +45,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 	}
 	if(!mao_request)
 	{
-		if ((BaseJob == Job_Novice) || (BaseJob == Job_SuperNovice))
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice))
 		{
 			mes "[Guildsman]";
 			mes "Excuse me? "+strcharinfo(0)+"?";
@@ -195,7 +195,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 	}
 	else if(mao_request == 1)
 	{
-		if ((BaseJob == Job_Novice) || (BaseJob == Job_SuperNovice))
+		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice))
 		{
 			mes "[Guildsman]";
 			mes "Ah, I forgot to tell you";
@@ -293,7 +293,7 @@ OnTouch:
 	{
 		if(!mao_request)
 		{
-			if ((BaseJob == Job_Novice) || (BaseJob == Job_SuperNovice))
+			if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice))
 			{
 				mes "[Guildsman]";
 				mes "Excuse me? "+strcharinfo(0)+"?";

@@ -457,9 +457,9 @@
 	script_set_constant("CharRename",SP_CHARRENAME,true);
 	script_set_constant("Font",SP_CHARFONT,true);
 	script_set_constant("BankVault",SP_BANK_VAULT,true);
-	script_set_constant("RouletteBronze",SP_ROULETTE_BRONZE,true);
-	script_set_constant("RouletteSilver",SP_ROULETTE_SILVER,true);
-	script_set_constant("RouletteGold",SP_ROULETTE_GOLD,true);
+	script_set_constant(ROULETTE_BRONZE_VAR,SP_ROULETTE_BRONZE,true);
+	script_set_constant(ROULETTE_SILVER_VAR,SP_ROULETTE_SILVER,true);
+	script_set_constant(ROULETTE_GOLD_VAR,SP_ROULETTE_GOLD,true);
 
 	script_set_constant("bMaxHP",SP_MAXHP,false);
 	script_set_constant("bMaxSP",SP_MAXSP,false);
@@ -660,8 +660,12 @@
 	script_set_constant("bCriticalLong",SP_CRITICAL_RANGEATK,false);
 	script_set_constant("bMagicAddRace2", SP_MAGIC_ADDRACE2, false);
 	script_set_constant("bIgnoreMdefRace2Rate", SP_IGNORE_MDEF_RACE2_RATE, false);
+	script_set_constant("bDropAddRace", SP_DROP_ADDRACE, false);
+	script_set_constant("bDropAddClass", SP_DROP_ADDCLASS, false);
+	script_set_constant("bNoMadoFuel", SP_NO_MADO_FUEL, false);
+	script_set_constant("bIgnoreDefClassRate", SP_IGNORE_DEF_CLASS_RATE, false);
 
-	/* equip positions */
+	/* equip indices */
 	export_constant(EQI_HEAD_TOP);
 	export_constant(EQI_ARMOR);
 	export_constant(EQI_HAND_L);
@@ -683,6 +687,31 @@
 	export_constant(EQI_SHADOW_SHOES);
 	export_constant(EQI_SHADOW_ACC_R);
 	export_constant(EQI_SHADOW_ACC_L);
+
+	/* equip positions */
+	export_constant(EQP_ACC_L);
+	export_constant(EQP_ACC_R);
+	export_constant(EQP_SHOES);
+	export_constant(EQP_GARMENT);
+	export_constant(EQP_HEAD_LOW);
+	export_constant(EQP_HEAD_MID);
+	export_constant(EQP_HEAD_TOP);
+	export_constant(EQP_ARMOR);
+	export_constant(EQP_HAND_L);
+	export_constant(EQP_HAND_R);
+	export_constant(EQP_COSTUME_HEAD_TOP);
+	export_constant(EQP_COSTUME_HEAD_MID);
+	export_constant(EQP_COSTUME_HEAD_LOW);
+	export_constant(EQP_COSTUME_GARMENT);
+	export_constant(EQP_AMMO);
+	export_constant(EQP_SHADOW_ARMOR);
+	export_constant(EQP_SHADOW_WEAPON);
+	export_constant(EQP_SHADOW_SHIELD);
+	export_constant(EQP_SHADOW_SHOES);
+	export_constant(EQP_SHADOW_ACC_R);
+	export_constant(EQP_SHADOW_ACC_L);
+	export_constant(EQP_ACC_RL);
+	export_constant(EQP_SHADOW_ACC_RL);
 
 	/* looks */
 	export_constant(LOOK_BASE);
@@ -1362,6 +1391,16 @@
 	export_constant(SC_SHRIMP);
 	export_constant(SC_FRESHSHRIMP);
 	export_constant(SC_ACTIVE_MONSTER_TRANSFORM);
+	export_constant(SC_CLOUD_KILL);
+	export_constant(SC_LJOSALFAR);
+	export_constant(SC_MERMAID_LONGING);
+	export_constant(SC_HAT_EFFECT);
+	export_constant(SC_FLOWERSMOKE);
+	export_constant(SC_FSTONE);
+	export_constant(SC_HAPPINESS_STAR);
+	export_constant(SC_MAPLE_FALLS);
+	export_constant(SC_TIME_ACCESSORY);
+	export_constant(SC_MAGICAL_FEATHER);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -2385,6 +2424,24 @@
 	export_constant(SI_DORAM_BUF_01);
 	export_constant(SI_DORAM_BUF_02);
 	export_constant(SI_SPRITEMABLE);
+	export_constant(SI_AID_PERIOD_RECEIVEITEM);
+	export_constant(SI_AID_PERIOD_PLUSEXP);
+	export_constant(SI_AID_PERIOD_PLUSJOBEXP);
+	export_constant(SI_AID_PERIOD_DEADPENALTY);
+	export_constant(SI_AID_PERIOD_ADDSTOREITEMCOUNT);
+	export_constant(SI_HISS);
+	export_constant(SI_NYANGGRASS);
+	export_constant(SI_CHATTERING);
+	export_constant(SI_GROOMING);
+	export_constant(SI_PROTECTIONOFSHRIMP);
+	export_constant(SI_EP16_2_BUFF_SS);
+	export_constant(SI_EP16_2_BUFF_SC);
+	export_constant(SI_EP16_2_BUFF_AC);
+	export_constant(SI_GS_MAGICAL_BULLET);
+	export_constant(SI_FALLEN_ANGEL);
+	export_constant(SI_GLOOM_CARD);
+	export_constant(SI_PHARAOH_CARD);
+	export_constant(SI_KIEL_CARD);
 
 	/* elements */
 	export_constant(ELE_NEUTRAL);
@@ -2424,6 +2481,9 @@
 	export_constant(RC2_BATTLEFIELD);
 	export_constant(RC2_TREASURE);
 	export_constant(RC2_BIOLAB);
+	export_constant(RC2_MANUK);
+	export_constant(RC2_SPLENDIDE);
+	export_constant(RC2_MAX);
 
 	/* classes */
 	export_constant(CLASS_NORMAL);
@@ -3068,6 +3128,22 @@
 	export_constant(IM_CHAR);
 	export_constant(IM_PARTY);
 	export_constant(IM_GUILD);
+
+	/* mob random groups */
+	export_constant(MOBG_Branch_Of_Dead_Tree);
+	export_constant(MOBG_Poring_Box);
+	export_constant(MOBG_Bloody_Dead_Branch);
+	export_constant(MOBG_Red_Pouch_Of_Surprise);
+	export_constant(MOBG_ClassChange);
+
+	/* random option attributes */
+	export_constant(ROA_ID);
+	export_constant(ROA_VALUE);
+	export_constant(ROA_PARAM);
+
+	export_constant(CARD0_FORGE);
+	export_constant(CARD0_CREATE);
+	export_constant(CARD0_PET);
 
 	#undef export_constant
 

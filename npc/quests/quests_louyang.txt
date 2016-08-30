@@ -3840,7 +3840,6 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 				mes "[Song Zhi Du]";
 				mes "Muhahahahaha!";
 				mes "Hahahahahahahahahahah!";
-				mes "";
 				next;
 				mes "[Song Zhi Du]";
 				mes "I made it!";

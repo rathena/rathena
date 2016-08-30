@@ -388,8 +388,12 @@ int guild_created(uint32 account_id,int guild_id) {
 
 	sd->status.guild_id = guild_id;
 	clif_guild_created(sd,0);
-	if(battle_config.guild_emperium_check)
-		pc_delitem(sd,pc_search_inventory(sd,ITEMID_EMPERIUM),1,0,0,LOG_TYPE_CONSUME);	//emperium consumption
+	if(battle_config.guild_emperium_check){
+		int index = pc_search_inventory(sd,ITEMID_EMPERIUM);
+
+		if( index > 0 )
+			pc_delitem(sd,index,1,0,0,LOG_TYPE_CONSUME);	//emperium consumption
+	}
 	return 0;
 }
 
@@ -1351,7 +1355,7 @@ int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id) {
 
 void guild_guildaura_refresh(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv) {
 	struct skill_unit_group* group = NULL;
-	int type = status_skill2sc(skill_id);
+	sc_type type = status_skill2sc(skill_id);
 	if( !(battle_config.guild_aura&((agit_flag || agit2_flag)?2:1)) &&
 			!(battle_config.guild_aura&(map_flag_gvg2(sd->bl.m)?8:4)) )
 		return;
@@ -1858,10 +1862,8 @@ int guild_break(struct map_session_data *sd,char *name) {
 		return 0;
 	}
 
-	if (g->instance_id) {
-		instance_data[g->instance_id].owner_id = 0;
+	if (g->instance_id)
 		instance_destroy(g->instance_id);
-	}
 
 	/* Regardless of char server allowing it, we clear the guild master's auras */
 	if ((ud = unit_bl2ud(&sd->bl))) {

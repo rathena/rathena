@@ -28,6 +28,9 @@
 // Check if the specified packetversion supports the pincode system
 #define PACKETVER_SUPPORTS_PINCODE PACKETVER>=20110309
 
+/// Check if the client needs delete_date as remaining time and not the actual delete_date (actually it was tested for clients since 2013)
+#define PACKETVER_CHAR_DELETEDATE (PACKETVER > 20130000 && PACKETVER < 20141016) || PACKETVER >= 20150826
+
 ///Remove/Comment this line to disable sc_data saving. [Skotlex]
 #define ENABLE_SC_SAVING
 /** Remove/Comment this line to disable server-side hot-key saving support [Skotlex]
@@ -75,6 +78,7 @@
 #define MAX_QUEST_OBJECTIVES 3 ///Max quest objectives for a quest
 #define MAX_QUEST_DROPS 3 ///Max quest drops for a quest
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
+#define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -183,6 +187,11 @@ struct item {
 	char refine;
 	char attribute;
 	unsigned short card[MAX_SLOTS];
+	struct {
+		short id;
+		short value;
+		char param;
+	} option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;
@@ -212,6 +221,10 @@ enum equip_pos {
 	EQP_SHADOW_SHOES     = 0x080000, // 524288
 	EQP_SHADOW_ACC_R     = 0x100000, // 1048576
 	EQP_SHADOW_ACC_L     = 0x200000, // 2097152
+
+	// Combined
+	EQP_ACC_RL			= EQP_ACC_R|EQP_ACC_L,
+	EQP_SHADOW_ACC_RL	= EQP_SHADOW_ACC_R|EQP_SHADOW_ACC_L,
 };
 
 struct point {
@@ -396,7 +409,7 @@ struct mmo_charstatus {
 	unsigned int base_exp,job_exp;
 	int zeny;
 
-	short class_;
+	short class_; ///< Player's JobID
 	unsigned int status_point,skill_point;
 	int hp,max_hp,sp,max_sp;
 	unsigned int option;
