@@ -1,4 +1,4 @@
-// Defines Job(s) that resitriced to enter map (by flag/zones)
+// Defines Job(s) that are resitriced to enter map (by flag/zones)
 //
 // Structure of Database:
 // JobID,FlagZone,GroupLevelBypass
@@ -23,5 +23,5 @@
 // GroupLevelBypass: Group Level (groups.conf) to ignore the restriction
 //
 // NOTES:
-// - Restriction will be overwrite for multiple lines with same Job ID.
+// - Restriction will be overwritten for multiple defines with the same Job ID
 // - The flag is used by 'jobcanentermap' script.
