@@ -7377,7 +7377,7 @@ static void buildin_delitem_delete(struct map_session_data* sd, int idx, int* am
 {
 	int delamount;
 	struct item *itm = NULL;
-	struct s_storage *gstor;
+	struct s_storage *gstor = NULL;
 
 	switch(loc) {
 		case 1:	// cart

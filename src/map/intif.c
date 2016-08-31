@@ -3228,8 +3228,6 @@ static bool intif_parse_StorageReceived(int fd)
  */
 static void intif_parse_StorageSaved(int fd)
 {
-	TBL_PC *sd = map_id2sd(RFIFOL(fd,2));
-
 	if (RFIFOB(fd, 6)) {
 		switch (RFIFOB(fd, 7)) {
 			case TABLE_INVENTORY: //inventory
