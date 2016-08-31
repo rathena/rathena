@@ -4763,6 +4763,7 @@ If the skill is self or auto-targeting, it will be used immediately; otherwise a
 target cursor is shown.
 
 If <keep requirement> parameter is set to true, the skill's requirements will be checked.
+By default, the requirements for item skills are not checked and therefore the default value is false.
 
 // When Anodyne is used, it will cast Endure (8), Level 1, as if the actual
 // skill has been used from skill tree.
