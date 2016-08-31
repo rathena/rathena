@@ -13,6 +13,7 @@
 //===== Additional Comments: ================================= 
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added Izlude duplicates. [Euphy]
+//= 1.2 Added Nightmare Clock Tower [Lemongrass]
 //============================================================
 
 // 3rd Class Job Maps & Paradise
@@ -75,6 +76,8 @@ ma_zif09	mapflag	nobranch
 1@ma_h	mapflag	nobranch
 1@ma_c	mapflag	nobranch
 1@ma_b	mapflag	nobranch
+c_tower2_	mapflag	nobranch
+c_tower3_	mapflag	nobranch
 
 // Episode 14.2 ================
 eclage	mapflag	nobranch
