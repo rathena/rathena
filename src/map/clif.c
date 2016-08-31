@@ -6172,9 +6172,9 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 		((map[bl->m].flag.nosumstarmiracle?0:1)<<10); // SUNMOONSTAR_MIRACLE - Unknown - (Guessing it blocks Star Gladiator's Miracle from activating)
 		//(1<<11); // Unused bits. 1 - 10 is 0x1 length and 11 is 0x15 length. May be used for future settings.
 
-	WBUFW(buf,0) = 0x99b;
-	WBUFW(buf,2) = 0x28; // Type - What is it asking for? MAPPROPERTY? MAPTYPE? I don't know. Do we even need it? [Rytech]
-	WBUFL(buf,4) = NotifyProperty;
+	WBUFW(buf,0)=0x99b;
+	WBUFW(buf,2)=0x28; // Type - What is it asking for? MAPPROPERTY? MAPTYPE? I don't know. Do we even need it? [Rytech]
+	WBUFL(buf,4)=NotifyProperty;
 	WBUFW(buf,6) = 0; // sparebit [5-15], + extra[4]
 
 	clif_send(buf,packet_len(0x99b),bl,t);

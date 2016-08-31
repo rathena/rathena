@@ -4904,7 +4904,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 #ifdef RENEWAL
 		if (pc_hasprogress(sd, WIP_DISABLE_SKILLITEM)) {
 			clif_msg(sd, WORK_IN_PROGRESS);
-		return 0;
+			return 0;
 		}
 #else
 		if (!sd->npc_item_flag)
@@ -10699,7 +10699,7 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 	skill_tree[idx][skill_idx].skill_id = skill_id;
 	skill_tree[idx][skill_idx].skill_lv = skill_lv;
 	skill_tree[idx][skill_idx].baselv	= baselv;
-	skill_tree[idx][skill_idx].joblv = joblv;
+	skill_tree[idx][skill_idx].joblv	= joblv;
 
 	for(i = 0; i < MAX_PC_SKILL_REQUIRE; i++)
 	{
@@ -10711,7 +10711,7 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 		if (skill_id > MAX_SKILL_ID || !skill_get_index(skill_id)) {
 			ShowWarning("pc_readdb_skilltree: Unable to load requirement skill %hu into job %d's tree.", skill_id, class_);
 			return false;
-	}
+		}
 		if (skill_lv > (skill_lv_max = skill_get_max(skill_id))) {
 			ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level..\n", skill_id, skill_lv, class_, skill_lv_max);
 			skill_lv = skill_lv_max;
@@ -12221,7 +12221,9 @@ void pc_set_costume_view(struct map_session_data *sd) {
 		clif_changelook(&sd->bl, LOOK_HEAD_TOP, sd->setlook_head_top ? sd->setlook_head_top : sd->status.head_top);
 	if (robe != sd->status.robe || sd->setlook_robe)
 		clif_changelook(&sd->bl, LOOK_ROBE, sd->setlook_robe ? sd->setlook_robe : sd->status.robe);
-}/*==========================================
+}
+
+/*==========================================
  * pc Init/Terminate
  *------------------------------------------*/
 void do_final_pc(void) {
