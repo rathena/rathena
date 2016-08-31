@@ -475,7 +475,7 @@ ACMD_FUNC(mapmove)
 		if (!map_search_freecell(NULL, m, &x, &y, 10, 10, 1))
 			x = y = 0; //Invalid cell, use random spot.
 	}
-	if (map[m].flag.nowarpto && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) {
+	if ((map[m].flag.nowarpto && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE)) || !pc_job_can_entermap((enum e_job)sd->status.class_, m, sd->group_level)) {
 		clif_displaymessage(fd, msg_txt(sd,247));
 		return -1;
 	}
@@ -1435,6 +1435,7 @@ ACMD_FUNC(baselevelup)
 		sd->status.base_level -= (unsigned int)level;
 		clif_displaymessage(fd, msg_txt(sd,22)); // Base level lowered.
 		status_calc_pc(sd, SCO_FORCE);
+		level*=-1;
 	}
 	sd->status.base_exp = 0;
 	clif_updatestatus(sd, SP_STATUSPOINT);
@@ -1444,6 +1445,10 @@ ACMD_FUNC(baselevelup)
 	pc_baselevelchanged(sd);
 	if(sd->status.party_id)
 		party_send_levelup(sd);
+
+	if( level > 0 && battle_config.atcommand_levelup_events )
+		npc_script_event(sd,NPCE_BASELVUP);
+
 	return 0;
 }
 
@@ -1488,6 +1493,7 @@ ACMD_FUNC(joblevelup)
 		else
 			sd->status.skill_point -= level;
 		clif_displaymessage(fd, msg_txt(sd,25)); // Job level lowered.
+		level *=-1;
 	}
 	sd->status.job_exp = 0;
 	clif_updatestatus(sd, SP_JOBLEVEL);
@@ -1495,6 +1501,9 @@ ACMD_FUNC(joblevelup)
 	clif_updatestatus(sd, SP_NEXTJOBEXP);
 	clif_updatestatus(sd, SP_SKILLPOINT);
 	status_calc_pc(sd, SCO_FORCE);
+
+	if( level > 0 && battle_config.atcommand_levelup_events )
+		npc_script_event(sd,NPCE_JOBLVUP);
 
 	return 0;
 }
@@ -2947,7 +2956,7 @@ ACMD_FUNC(char_ban)
 {
 	char *modif_p, output[CHAT_SIZE_MAX];
 	int32 timediff = 0; //don't set this as uint as we may want to decrease banned time
-	int bantype = 0;
+	enum chrif_req_op bantype;
 
 	nullpo_retr(-1, sd);
 
@@ -3029,7 +3038,7 @@ ACMD_FUNC(char_unblock)
  * char unban command (usage: charunban <player_name>)
  *------------------------------------------*/
 ACMD_FUNC(char_unban){
-	int unbantype = 0;
+	enum chrif_req_op unbantype;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
@@ -5689,8 +5698,8 @@ ACMD_FUNC(skilltree)
 
 	c = pc_class2idx(c);
 
-	ARR_FIND( 0, MAX_SKILL_TREE, j, skill_tree[c][j].id == 0 || skill_tree[c][j].id == skill_id );
-	if( j == MAX_SKILL_TREE || skill_tree[c][j].id == 0 )
+	ARR_FIND( 0, MAX_SKILL_TREE, j, skill_tree[c][j].skill_id == 0 || skill_tree[c][j].skill_id == skill_id );
+	if( j == MAX_SKILL_TREE || skill_tree[c][j].skill_id == 0 )
 	{
 		clif_displaymessage(fd, msg_txt(sd,1169)); // The player cannot use that skill.
 		return 0;
@@ -5701,9 +5710,9 @@ ACMD_FUNC(skilltree)
 	meets = 1;
 	for(j=0;j<MAX_PC_SKILL_REQUIRE;j++)
 	{
-		if( ent->need[j].id && pc_checkskill(sd,ent->need[j].id) < ent->need[j].lv)
+		if( ent->need[j].skill_id && pc_checkskill(sd,ent->need[j].skill_id) < ent->need[j].skill_lv)
 		{
-			sprintf(atcmd_output, msg_txt(sd,1170), ent->need[j].lv, skill_db[skill_get_index(ent->need[j].id)]->desc); // Player requires level %d of skill %s.
+			sprintf(atcmd_output, msg_txt(sd,1170), ent->need[j].skill_lv, skill_db[skill_get_index(ent->need[j].skill_id)]->desc); // Player requires level %d of skill %s.
 			clif_displaymessage(fd, atcmd_output);
 			meets = 0;
 		}
@@ -7083,17 +7092,14 @@ ACMD_FUNC(mobinfo)
 		base_exp = mob->base_exp;
 		job_exp = mob->job_exp;
 
+		if (pc_isvip(sd)) { // Display EXP rate increase for VIP
+			base_exp = (base_exp * battle_config.vip_base_exp_increase) / 100;
+			job_exp = (job_exp * battle_config.vip_job_exp_increase) / 100;
+		}
 #ifdef RENEWAL_EXP
 		if( battle_config.atcommand_mobinfo_type ) {
 			base_exp = base_exp * pc_level_penalty_mod(mob->lv - sd->status.base_level, mob->status.class_, mob->status.mode, 1) / 100;
 			job_exp = job_exp * pc_level_penalty_mod(mob->lv - sd->status.base_level, mob->status.class_, mob->status.mode, 1) / 100;
-		}
-#endif
-#ifdef VIP_ENABLE
-		// Display EXP rate increase for VIP.
-		if (pc_isvip(sd) && (battle_config.vip_base_exp_increase || battle_config.vip_job_exp_increase)) {
-			base_exp += battle_config.vip_base_exp_increase;
-			job_exp += battle_config.vip_job_exp_increase;
 		}
 #endif
 		// stats
@@ -7131,11 +7137,8 @@ ACMD_FUNC(mobinfo)
 					droprate = 1;
 			}
 #endif
-#ifdef VIP_ENABLE
-			// Display item rate increase for VIP.
-			if (pc_isvip(sd) && battle_config.vip_drop_increase)
+			if (pc_isvip(sd)) // Display drop rate increase for VIP
 				droprate += (droprate * battle_config.vip_drop_increase) / 100;
-#endif
 			if (item_data->slot)
 				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)droprate / 100);
 			else
@@ -7670,11 +7673,8 @@ ACMD_FUNC(whodrops)
 				if( battle_config.atcommand_mobinfo_type )
 					dropchance = dropchance * pc_level_penalty_mod(mob_db(item_data->mob[j].id)->lv - sd->status.base_level, mob_db(item_data->mob[j].id)->status.class_, mob_db(item_data->mob[j].id)->status.mode, 2) / 100;
 #endif
-#ifdef VIP_ENABLE
-				// Display item rate increase for VIP.
-				if (pc_isvip(sd) && battle_config.vip_drop_increase)
+				if (pc_isvip(sd)) // Display item rate increase for VIP
 					dropchance += (dropchance * battle_config.vip_drop_increase) / 100;
-#endif
 				sprintf(atcmd_output, "- %s (%d): %02.02f%%", mob_db(item_data->mob[j].id)->jname, item_data->mob[j].id, dropchance/100.);
 				clif_displaymessage(fd, atcmd_output);
 			}
@@ -7784,21 +7784,13 @@ ACMD_FUNC(mutearea)
 ACMD_FUNC(rates)
 {
 	char buf[CHAT_SIZE_MAX];
-	int base_exp_rate = 0, job_exp_rate = 0;
 
 	nullpo_ret(sd);
 	memset(buf, '\0', sizeof(buf));
 
-#ifdef VIP_ENABLE
-	// Display EXP and item rate increase for VIP.
-	if (pc_isvip(sd) && (battle_config.vip_base_exp_increase || battle_config.vip_job_exp_increase || battle_config.vip_drop_increase)) {
-		base_exp_rate += battle_config.vip_base_exp_increase;
-		job_exp_rate += battle_config.vip_job_exp_increase;
-	}
-#endif
-
 	snprintf(buf, CHAT_SIZE_MAX, msg_txt(sd,1298), // Experience rates: Base %.2fx / Job %.2fx
-		(battle_config.base_exp_rate+base_exp_rate)/100., (battle_config.job_exp_rate+job_exp_rate)/100.);
+		(battle_config.base_exp_rate + (pc_isvip(sd) ? (battle_config.vip_base_exp_increase * battle_config.base_exp_rate) / 100 : 0)) / 100.,
+		(battle_config.job_exp_rate + (pc_isvip(sd) ? (battle_config.vip_job_exp_increase * battle_config.job_exp_rate) / 100 : 0)) / 100.);
 	clif_displaymessage(fd, buf);
 	snprintf(buf, CHAT_SIZE_MAX, msg_txt(sd,1299), // Normal Drop Rates: Common %.2fx / Healing %.2fx / Usable %.2fx / Equipment %.2fx / Card %.2fx
 		(battle_config.item_rate_common + (pc_isvip(sd) ? (battle_config.vip_drop_increase * battle_config.item_rate_common) / 100 : 0)) / 100.,
@@ -9541,13 +9533,12 @@ ACMD_FUNC(vip) {
 /** Enable/disable rate info */
 ACMD_FUNC(showrate) {
 	nullpo_retr(-1,sd);
-	if (!sd->disableshowrate) {
+	if (!sd->vip.disableshowrate) {
 		sprintf(atcmd_output,msg_txt(sd,718)); //Personal rate information is not displayed now.
-		sd->disableshowrate = 1;
-	}
-	else {
+		sd->vip.disableshowrate = 1;
+	} else {
 		sprintf(atcmd_output,msg_txt(sd,719)); //Personal rate information will be shown.
-		sd->disableshowrate = 0;
+		sd->vip.disableshowrate = 0;
 	}
 	clif_displaymessage(fd,atcmd_output);
 	return 0;

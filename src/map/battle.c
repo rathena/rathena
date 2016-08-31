@@ -36,7 +36,7 @@ static struct eri *delay_damage_ers; //For battle delay damage structures.
  * @param bl
  * @return skill_id
  */
-int battle_getcurrentskill(struct block_list *bl)
+uint16 battle_getcurrentskill(struct block_list *bl)
 {
 	struct unit_data *ud;
 
@@ -4519,6 +4519,7 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 
 	if (sd) {
 		int i = sd->ignore_def_by_race[tstatus->race] + sd->ignore_def_by_race[RC_ALL];
+		i += sd->ignore_def_by_class[tstatus->class_] + sd->ignore_def_by_class[CLASS_ALL];
 		if (i) {
 			i = min(i,100); //cap it to 100 for 0 def min
 			def1 -= def1 * i / 100;
@@ -4736,6 +4737,9 @@ struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,
 	int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
 	int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
 	short class_ = status_get_class(target);
+
+	if (skill_id != SN_SHARPSHOOTING && skill_id != RA_ARROWSTORM)
+		status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
 
 	//Plants receive 1 damage when hit
 	if( attack_hits || wd.damage > 0 )
@@ -4997,7 +5001,8 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 					ATK_ADD(wd.damage, wd.damage2, enchant_dmg);
 			}
 		}
-		status_change_end(src,SC_CAMOUFLAGE, INVALID_TIMER);
+		if (skill_id != SN_SHARPSHOOTING && skill_id != RA_ARROWSTORM)
+			status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
 	}
 	switch (skill_id) {
 		case LG_RAYOFGENESIS:
@@ -8227,6 +8232,7 @@ static const struct _battle_data {
 	{ "max_summoner_parameter",				&battle_config.max_summoner_parameter,			120,	10,		SHRT_MAX,		},
 	{ "skill_amotion_leniency",             &battle_config.skill_amotion_leniency,          0,      0,      300             },
 	{ "mvp_tomb_enabled",                   &battle_config.mvp_tomb_enabled,                1,      0,      1               },
+	{ "mvp_tomb_delay",                     &battle_config.mvp_tomb_delay,                  9000,   0,      INT_MAX,        },
 	{ "feature.atcommand_suggestions",      &battle_config.atcommand_suggestions_enabled,   0,      0,      1               },
 	{ "min_npc_vendchat_distance",          &battle_config.min_npc_vendchat_distance,       3,      0,      100             },
 	{ "atcommand_mobinfo_type",             &battle_config.atcommand_mobinfo_type,          0,      0,      1               },
@@ -8250,10 +8256,9 @@ static const struct _battle_data {
 #endif
 	{ "vip_base_exp_increase",              &battle_config.vip_base_exp_increase,           0,      0,      INT_MAX,        },
 	{ "vip_job_exp_increase",               &battle_config.vip_job_exp_increase,            0,      0,      INT_MAX,        },
-	{ "vip_exp_penalty_base_normal",        &battle_config.vip_exp_penalty_base_normal,     0,      0,      INT_MAX,        },
-	{ "vip_exp_penalty_job_normal",         &battle_config.vip_exp_penalty_job_normal,      0,      0,      INT_MAX,        },
 	{ "vip_exp_penalty_base",               &battle_config.vip_exp_penalty_base,            0,      0,      INT_MAX,        },
 	{ "vip_exp_penalty_job",                &battle_config.vip_exp_penalty_job,             0,      0,      INT_MAX,        },
+	{ "vip_zeny_penalty",                   &battle_config.vip_zeny_penalty,                0,      0,      INT_MAX,        },
 	{ "vip_bm_increase",                    &battle_config.vip_bm_increase,                 0,      0,      INT_MAX,        },
 	{ "vip_drop_increase",                  &battle_config.vip_drop_increase,               0,      0,      INT_MAX,        },
 	{ "vip_gemstone",                       &battle_config.vip_gemstone,                    0,      0,      1,              },
@@ -8325,6 +8330,10 @@ static const struct _battle_data {
 	{ "exp_cost_inspiration",               &battle_config.exp_cost_inspiration,            1,      0,      100,            },
 	{ "mvp_exp_reward_message",             &battle_config.mvp_exp_reward_message,          0,      0,      1,              },
 	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
+	{ "atcommand_levelup_events",			&battle_config.atcommand_levelup_events,		0,		0,		1,				},
+	{ "block_account_in_same_party",		&battle_config.block_account_in_same_party,		1,		0,		1,				},
+
+#include "../custom/battle_config_init.inc"
 };
 
 #ifndef STATS_OPT_OUT

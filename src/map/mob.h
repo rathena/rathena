@@ -353,6 +353,8 @@ int mob_clone_delete(struct mob_data *md);
 void mob_reload(void);
 
 // MvP Tomb System
+int mvptomb_setdelayspawn(struct npc_data *nd);
+int mvptomb_delayspawn(int tid, unsigned int tick, int id, intptr_t data);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
 

@@ -1482,7 +1482,7 @@ malangdo,215,119,4	script	Thanks Ticket Machine	564,{
 	case 2:
 		mes "The Vending Machine is selling items in the following list.";
 		next;
-		switch(select("Finish:1 Siege Arrow Quiver A (2 Tickets):1 Siege Arrow Quiver S (2 Tickets):30 White Potion (12 Tickets):30 White Slim Potion (14 Tickets):10 Dark Water (20 Tickets):20 Siege_Violet_Potion (30 Tickets):10 Coldproof Potion (30 Tickets):10 Thunderproof Potion (30 Tickets):10 Earthproof Potion (30 Tickets):10 Fireproof Potion (30 Tickets):10 Elemental Converter[Fire] (30 Tickets)")) {
+		switch(select("Finish:1 Siege Arrow Quiver A (2 Tickets):1 Siege Arrow Quiver S (2 Tickets):30 White Potion (12 Tickets):30 White Slim Potion (14 Tickets):10 Dark Water (20 Tickets):20 Siege_Violet_Potion (30 Tickets):10 Coldproof Potion (30 Tickets):10 Thunderproof Potion (30 Tickets):10 Earthproof Potion (30 Tickets):10 Fireproof Potion (30 Tickets):10 Elemental Converter[Fire] (30 Tickets):10 Elemental Converter[Water] (30 Tickets):10 Elemental Converter[Wind] (30 Tickets):10 Elemental Converter[Earth] (30 Tickets)")) {
 			case 1: close;
 			case 2: callsub L_Purchase,2,12678,1; //Siege_Arrow_Quiver_A
 			case 3: callsub L_Purchase,2,12677,1; //Siege_Arrow_Quiver_S

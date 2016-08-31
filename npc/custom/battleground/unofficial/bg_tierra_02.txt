@@ -385,7 +385,7 @@ bat_a02,53,377,3	script	Guillaume Vintenar#tv2	419,{
 bat_a02,60,216,3	script	Ghost#tv23	950,{
 	mes "[Ghost in valley]";
 	mes "Boo...Boo...";
-	specialeffect2 312;
+	specialeffect2 EF_HEAL;
 	close;
 }
 
@@ -393,7 +393,7 @@ bat_a02,53,377,3	script	Therapist in battle#tv22	95,{
 	mes "[Therapist in battle]";
 	mes "Just close your eyes, and take a deep breathe.";
 	mes "You can be free from pain.";
-	specialeffect2 312;
+	specialeffect2 EF_HEAL;
 	close;
 }
 
@@ -401,7 +401,7 @@ bat_a02,45,18,3	script	Therapist in battle#tv21	95,{
 	mes "[Therapist in battle]";
 	mes "Just close your eyes, and take a deep breathe.";
 	mes "You can be free from pain.";
-	specialeffect2 312;
+	specialeffect2 EF_HEAL;
 	close;
 }
 

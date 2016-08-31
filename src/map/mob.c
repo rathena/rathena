@@ -140,11 +140,43 @@ static int mobdb_searchname_array_sub(struct mob_db* mob, const char *str)
 }
 
 /**
+ * Tomb spawn time calculations
+ * @param nd: NPC data
+ */
+int mvptomb_setdelayspawn(struct npc_data *nd) {
+	if (nd->u.tomb.spawn_timer != INVALID_TIMER)
+		delete_timer(nd->u.tomb.spawn_timer, mvptomb_delayspawn);
+	nd->u.tomb.spawn_timer = add_timer(gettick() + battle_config.mvp_tomb_delay, mvptomb_delayspawn, nd->bl.id, 0);
+	return 0;
+}
+
+/**
+ * Tomb spawn with delay (timer function)
+ * @param tid: Timer ID
+ * @param tick: Time
+ * @param id: Block list ID
+ * @param data: Used for add_timer_func_list
+ */
+int mvptomb_delayspawn(int tid, unsigned int tick, int id, intptr_t data) {
+	struct npc_data *nd = BL_CAST(BL_NPC, map_id2bl(id));
+
+	if (nd) {
+		if (nd->u.tomb.spawn_timer != tid) {
+			ShowError("mvptomb_delayspawn: Timer mismatch: %d != %d\n", tid, nd->u.tomb.spawn_timer);
+			return 0;
+		}
+		nd->u.tomb.spawn_timer = INVALID_TIMER;
+		clif_spawn(&nd->bl);
+	}
+	return 0;
+}
+
+/**
  * Create and display a tombstone on the map
+ * @param md: the mob to create a tombstone for
+ * @param killer: name of player who killed the mob
+ * @param time: time of mob's death
  * @author [GreenBox]
- * @param md : the mob to create a tombstone for
- * @param killer : name of who has killed the mob
- * @param time : time at wich the killed happen
  */
 void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 {
@@ -171,6 +203,7 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 
 	nd->u.tomb.md = md;
 	nd->u.tomb.kill_time = time;
+	nd->u.tomb.spawn_timer = INVALID_TIMER;
 
 	if (killer)
 		safestrncpy(nd->u.tomb.killer_name, killer, NAME_LENGTH);
@@ -183,13 +216,14 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	status_set_viewdata(&nd->bl, nd->class_);
 	status_change_init(&nd->bl);
 	unit_dataset(&nd->bl);
-	clif_spawn(&nd->bl);
 
+	mvptomb_setdelayspawn(nd);
 }
 
-/** Destroys MVP Tomb
-* @param md
-*/
+/**
+ * Destroys MVP Tomb
+ * @param md: Mob data
+ */
 void mvptomb_destroy(struct mob_data *md) {
 	struct npc_data *nd;
 
@@ -2544,13 +2578,10 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				// Now rig the drop rate to never be over 90% unless it is originally >90%.
 				drop_rate = i32max(drop_rate, cap_value(drop_rate_bonus, 0, 9000));
 
-#ifdef VIP_ENABLE
-				// Increase item drop rate for VIP.
-				if (battle_config.vip_drop_increase && pc_isvip(sd)) {
+				if (pc_isvip(sd)) { // Increase item drop rate for VIP.
 					drop_rate += (int)(0.5 + (drop_rate * battle_config.vip_drop_increase) / 100);
 					drop_rate = min(drop_rate,10000); //cap it to 100%
 				}
-#endif
 			}
 
 #ifdef RENEWAL_DROP
@@ -3615,7 +3646,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 
 	//Go Backwards to give better priority to advanced skills.
 	for (i=0,j = MAX_SKILL_TREE-1;j>=0 && i< MAX_MOBSKILL ;j--) {
-		uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].id;
+		uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].skill_id;
 		uint16 sk_idx = 0;
 		if (!skill_id || !(sk_idx = skill_get_index(skill_id)) || sd->status.skill[sk_idx].lv < 1 ||
 			(skill_get_inf2(skill_id)&(INF2_WEDDING_SKILL|INF2_GUILD_SKILL)) ||
@@ -5026,6 +5057,7 @@ void do_init_mob(void){
 	add_timer_func_list(mob_timer_delete,"mob_timer_delete");
 	add_timer_func_list(mob_spawn_guardian_sub,"mob_spawn_guardian_sub");
 	add_timer_func_list(mob_respawn,"mob_respawn");
+	add_timer_func_list(mvptomb_delayspawn,"mvptomb_delayspawn");
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME,mob_ai_hard,0,0,MIN_MOBTHINKTIME);
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME*10,mob_ai_lazy,0,0,MIN_MOBTHINKTIME*10);
 }

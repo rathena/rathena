@@ -27,7 +27,7 @@ prontera,124,201,1	script	Universal Rental NPC	726,{
 	} else if (!checkcart() && getskilllv("MC_PUSHCART")) setcart;
 	else if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) setfalcon;
 	else if (!checkriding() && !checkdragon() && getskilllv("KN_RIDING")) {
-		if (eaclass()&EAJ_THIRDMASK==EAJ_RUNE_KNIGHT) setdragon;
+		if ((eaclass()&EAJ_THIRDMASK)==EAJ_RUNE_KNIGHT) setdragon;
 		else setriding;
 	} else if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) setmadogear;
 	else {

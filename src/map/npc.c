@@ -822,7 +822,7 @@ int npc_event_sub(struct map_session_data* sd, struct event_data* ev, const char
 		ARR_FIND( 0, MAX_EVENTQUEUE, i, sd->eventqueue[i][0] == '\0' );
 		if( i < MAX_EVENTQUEUE )
 		{
-			safestrncpy(sd->eventqueue[i],eventname,50); //Event enqueued.
+			safestrncpy(sd->eventqueue[i],eventname,EVENT_NAME_LENGTH); //Event enqueued.
 			return 0;
 		}
 
@@ -975,6 +975,8 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 		case NPCTYPE_WARP:
 			if (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]) || pc_isdead(sd))
 				break; // hidden or dead chars cannot use warps
+			if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(map[m].npc[i]->u.warp.mapindex), sd->group_level))
+				break;
 			if(sd->count_rewarp > 10){
 				ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, map[m].npc[i]->exname, map[m].npc[i]->path);
 				sd->count_rewarp=0;

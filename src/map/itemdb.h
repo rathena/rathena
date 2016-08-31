@@ -83,6 +83,7 @@ enum item_itemid
 	ITEMID_EMVERETARCON					= 1011,
 	ITEMID_TRAP							= 1065,
 	ITEMID_PAINT_BRUSH					= 6122,
+	ITEMID_MAGIC_GEAR_FUEL				= 6146,
 	ITEMID_STRANGE_EMBRYO				= 6415,
 	ITEMID_STONE						= 7049,
 	ITEMID_FIRE_BOTTLE					= 7135,
@@ -106,6 +107,7 @@ enum item_itemid
 	ITEMID_M_BERSERK_POTION				= 12243,
 	ITEMID_COMP_BATTLE_MANUAL			= 12263,
 	ITEMID_THICK_BATTLE_MANUAL			= 12312,
+	ITEMID_NOVICE_MAGNIFIER             = 12325,
 	ITEMID_ANCILLA						= 12333,
 	ITEMID_DUN_TELE_SCROLL3				= 12352,
 	ITEMID_REINS_OF_MOUNT				= 12622,
@@ -451,6 +453,13 @@ struct item_data
 	short delay_sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
 };
 
+// Struct for item random option [Secret]
+struct s_random_opt_data
+{
+	unsigned short id;
+	struct script_code *script;
+};
+
 struct item_data* itemdb_searchname(const char *name);
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_search(unsigned short nameid);
@@ -525,6 +534,8 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd);
 uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, unsigned short nameid);
 
 bool itemdb_parse_roulette_db(void);
+
+struct s_random_opt_data *itemdb_randomopt_exists(short id);
 
 void itemdb_reload(void);
 

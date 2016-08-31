@@ -350,6 +350,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 
 	sd->state.prevend = 0;
 	sd->state.vending = true;
+	sd->state.workinprogress = WIP_DISABLE_NONE;
 	sd->vender_id = vending_getuid();
 	sd->vend_num = i;
 	safestrncpy(sd->message, message, MESSAGE_SIZE);

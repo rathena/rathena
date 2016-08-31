@@ -292,32 +292,51 @@ function	script	F_GetWeaponType	{
 }
 function	script	F_GetArmorType	{
 	switch(getiteminfo(getarg(0),5)) {
-		case 001: return "Lower Headgear"; break;
-		case 2: return callfunc("F_GetWeaponType",getarg(0)); break;
-		case 4: return "Garment"; break;
-		case 8: return "Accessory"; break;
-		case 16: return "Armor"; break;
-		case 32: return "Shield"; break;
-		case 64: return "Shoes"; break;
-		case 128: return "Accessory"; break;
-		case 136: return "Accessory"; break; //8+128
-		case 256: return "Upper Headgear"; break;
-		case 512: return "Middle Headgear"; break;
-		case 1024: return "Costume Upper Headgear"; break;
-		case 2048: return "Costume Midle Headgear"; break;
-		case 4096: return "Costume Lower Headgear"; break;
-		case 8192: return "Costume Garment"; break;
-		case 32768: return "Ammo"; break;
-		case 65536: return "Shadow Armor"; break;
-		case 131072: return "Shadow Weapon"; break;
-		case 262144: return "Shadow Shield"; break;
-		case 524288: return "Shadow Shoes"; break;
-		case 1048576: return "Shadow Accessory"; break;
-		case 2097152: return "Shadow Accessory"; break;
-		case 3145728: return "Shadow Accessory"; break; //1048576+2097152
-		default: return "Unknown Equip"; break;
+		case EQP_HEAD_LOW:
+			return "Lower Headgear";
+		case EQP_HAND_R:
+			return callfunc("F_GetWeaponType",getarg(0));
+		case EQP_GARMENT:
+			return "Garment";
+		case EQP_ACC_L:
+		case EQP_ACC_R:
+		case EQP_ACC_RL:
+			return "Accessory";
+		case EQP_ARMOR:
+			return "Armor";
+		case EQP_HAND_L:
+			return "Shield";
+		case EQP_SHOES:
+			return "Shoes";
+		case EQP_HEAD_TOP:
+			return "Upper Headgear";
+		case EQP_HEAD_MID:
+			return "Middle Headgear";
+		case EQP_COSTUME_HEAD_TOP:
+			return "Costume Upper Headgear";
+		case EQP_COSTUME_HEAD_MID:
+			return "Costume Midle Headgear";
+		case EQP_COSTUME_HEAD_LOW:
+			return "Costume Lower Headgear";
+		case EQP_COSTUME_GARMENT:
+			return "Costume Garment";
+		case EQP_AMMO:
+			return "Ammo";
+		case EQP_SHADOW_ARMOR:
+			return "Shadow Armor";
+		case EQP_SHADOW_WEAPON:
+			return "Shadow Weapon";
+		case EQP_SHADOW_SHIELD:
+			return "Shadow Shield";
+		case EQP_SHADOW_SHOES:
+			return "Shadow Shoes";
+		case EQP_SHADOW_ACC_R:
+		case EQP_SHADOW_ACC_L:
+		case EQP_SHADOW_ACC_RL:
+			return "Shadow Accessory";
+		default:
+			return "Unknown Equip";
 	}
-	end;
 }
 
 
