@@ -516,23 +516,23 @@ OnTimer4225000:
 	end;
 
 OnTimer4227000:
-	unittalk getnpcid(0,"Blacksmith Kai#tegod01"), "Kai: Oh... no! What are you going to do to me?!";
+	npctalk "Kai: Oh... no! What are you going to do to me?!", "Blacksmith Kai#tegod01";
 	end;
 OnTimer4230000:
-	unittalk getnpcid(0,"#end_aira_prt01"), "Aira: Mm? Hey Kai. You're going home.";
+	npctalk "Aira: Mm? Hey Kai. You're going home.", "#end_aira_prt01";
 	end;
 OnTimer4233000:
-	unittalk getnpcid(0,"#end_kuluna_prt01"), "Kuluna: Yup~ You have to fix my broken wand and make powerful weapons for me once you get back!";
+	npctalk "Kuluna: Yup~ You have to fix my broken wand and make powerful weapons for me once you get back!", "#end_kuluna_prt01";
 	end;
 OnTimer4236000:
-	unittalk getnpcid(0,"#end_ezella_prt01"), "Ezella: Try to run away again. You'll be sorry, understand?";
+	npctalk "Ezella: Try to run away again. You'll be sorry, understand?", "#end_ezella_prt01";
 	end;
 OnTimer4237000:
-	unittalk getnpcid(0,"#end_nasarin_prt01"), "Nasarin: ... Just take him. Why are you guys talking to him so much?";
+	npctalk "Nasarin: ... Just take him. Why are you guys talking to him so much?", "#end_nasarin_prt01";
 	end;
 OnTimer4240000:
-	unittalk getnpcid(0,"#end_aira_prt01"), "Aira: You're right! Alright then!";
-	unittalk getnpcid(0,"Blacksmith Kai#tegod01"), "Kai: Oh... No... Noooo!!!!";
+	npctalk "Aira: You're right! Alright then!", "#end_aira_prt01";
+	npctalk "Kai: Oh... No... Noooo!!!!!", "Blacksmith Kai#tegod01";
 	end;
 
 OnTimer4243000:
