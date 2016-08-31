@@ -626,8 +626,13 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, int tabl
 			&&  items[i].card[2] == item.card[2]
 			&&  items[i].card[3] == item.card[3]
 			) {	//They are the same item.
+				int k;
+				
 				ARR_FIND( 0, MAX_SLOTS, j, items[i].card[j] != item.card[j] );
+				ARR_FIND( 0, MAX_ITEM_RDM_OPT, k, items[i].option[k].id != item.option[k].id || items[i].option[k].value != item.option[k].value || items[i].option[k].param != item.option[k].param );
+				
 				if( j == MAX_SLOTS &&
+					k == MAX_ITEM_RDM_OPT &&
 				    items[i].amount == item.amount &&
 				    items[i].equip == item.equip &&
 				    items[i].identify == item.identify &&
@@ -794,8 +799,13 @@ int char_inventory_to_sql(const struct item items[], int max, int id) {
 			   &&  items[i].card[2] == item.card[2]
 			   &&  items[i].card[3] == item.card[3]
 			   ) {	//They are the same item.
+				int k;
+				
 				ARR_FIND( 0, MAX_SLOTS, j, items[i].card[j] != item.card[j] );
+				ARR_FIND( 0, MAX_ITEM_RDM_OPT, k, items[i].option[k].id != item.option[k].id || items[i].option[k].value != item.option[k].value || items[i].option[k].param != item.option[k].param );
+				
 				if( j == MAX_SLOTS &&
+					k == MAX_ITEM_RDM_OPT &&
 					items[i].amount == item.amount &&
 					items[i].equip == item.equip &&
 					items[i].identify == item.identify &&
