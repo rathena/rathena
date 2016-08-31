@@ -395,7 +395,7 @@ struct map_session_data {
 		short value;
 		int rate;
 		int tick;
-	} hp_loss, sp_loss, hp_regen, sp_regen;
+	} hp_loss, sp_loss, hp_regen, sp_regen, percent_hp_regen, percent_sp_regen;
 	struct {
 		short class_, rate;
 	}	add_def[MAX_PC_BONUS], add_mdef[MAX_PC_BONUS], add_mdmg[MAX_PC_BONUS];

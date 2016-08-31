@@ -3413,6 +3413,18 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->hp_regen.rate = val;
 		}
 		break;
+	case SP_REGEN_PERCENT_HP: // bonus2 bRegenPercentHP,n,t;
+		if (sd->state.lr_flag != 2) {
+			sd->percent_hp_regen.value = type2;
+			sd->percent_hp_regen.rate = val;
+		}
+		break;
+	case SP_REGEN_PERCENT_SP: // bonus2 bRegenPercentSP,n,t;
+		if (sd->state.lr_flag != 2) {
+			sd->percent_sp_regen.value = type2;
+			sd->percent_sp_regen.rate = val;
+		}
+		break;
 	case SP_ADDRACE2: // bonus2 bAddRace2,mr,x;
 		PC_BONUS_CHK_RACE2(type2,SP_ADDRACE2);
 		if(sd->state.lr_flag != 2)
@@ -10298,6 +10310,22 @@ void pc_regen (struct map_session_data *sd, unsigned int diff_tick)
 		while (sd->sp_regen.tick >= sd->sp_regen.rate) {
 			sp += sd->sp_regen.value;
 			sd->sp_regen.tick -= sd->sp_regen.rate;
+		}
+	}
+
+	if (sd->percent_hp_regen.value) {
+		sd->percent_hp_regen.tick += diff_tick;
+		while (sd->percent_hp_regen.tick >= sd->percent_hp_regen.rate) {
+			hp += (sd->percent_hp_regen.value * sd->status.max_hp);
+			sd->percent_hp_regen.tick -= sd->percent_hp_regen.rate;
+		}
+	}
+
+	if (sd->percent_sp_regen.value) {
+		sd->percent_sp_regen.tick += diff_tick;
+		while (sd->percent_sp_regen.tick >= sd->percent_sp_regen.rate) {
+			sp += (sd->percent_sp_regen.value * sd->status.max_sp);
+			sd->percent_sp_regen.tick -= sd->percent_sp_regen.rate;
 		}
 	}
 
