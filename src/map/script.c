@@ -9563,6 +9563,7 @@ BUILDIN_FUNC(itemskill)
 {
 	int id;
 	int lv;
+	bool keep_requirement;
 	TBL_PC* sd;
 	struct script_data *data;
 
@@ -9574,9 +9575,15 @@ BUILDIN_FUNC(itemskill)
 	get_val(st, data); // Convert into value in case of a variable
 	id = ( data_isstring(data) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	lv = script_getnum(st,3);
+	if (script_hasdata(st, 4)) {
+		keep_requirement = (script_getnum(st, 4) != 0);
+	} else {
+		keep_requirement = false;
+	}
 
 	sd->skillitem=id;
 	sd->skillitemlv=lv;
+	sd->skillitem_keep_requirement = keep_requirement;
 	clif_item_skill(sd,id,lv);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -21916,7 +21923,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(gettimestr,"si"),
 	BUILDIN_DEF(openstorage,""),
 	BUILDIN_DEF(guildopenstorage,""),
-	BUILDIN_DEF(itemskill,"vi"),
+	BUILDIN_DEF(itemskill,"vi?"),
 	BUILDIN_DEF(produce,"i"),
 	BUILDIN_DEF(cooking,"i"),
 	BUILDIN_DEF(monster,"siisii???"),
