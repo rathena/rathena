@@ -1945,7 +1945,7 @@ OnTimer80000:
 		next;
 		mes "[Hugin]";
 		mes "Varmunt, I have arbitrarily stopped time. And soon, the time gap will be gone.";
-		specialeffect2 EF_BLIND,AREA;
+		specialeffect2 EF_BLIND;
 		soundeffect "_blind.wav",0;
 		next;
 		mes "[Hugin]";

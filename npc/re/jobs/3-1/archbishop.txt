@@ -1637,7 +1637,7 @@ OnEnable:
 
 job3_arch02,290,221,0	script	#arch_end_eff	139,5,5,{
 OnTouch:
-	specialeffect EF_MAPPILLAR2,"#arch_end";
+	specialeffect EF_MAPPILLAR2,AREA,"#arch_end";
 	end;
 }
 
