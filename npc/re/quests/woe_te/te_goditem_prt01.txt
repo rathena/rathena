@@ -430,13 +430,13 @@ OnCommandOn:
 	end;
 
 OnTimer10000:
-	announce "Girls' voices: Cano~ We already know where you are. It's over!",bc_all,"0xFF0000",FW_NORMAL,10;
+	announce "Girls' voices: Kai~ We already know where you are. It's over!",bc_all,"0xFF0000",FW_NORMAL,10;
 	end;
 OnTimer15000:
 	announce "Girls' Voices: We'll wait just 10 minutes. If you don't show up in the meantime, we'll storm the fortress!",bc_all,"0xFF0000",FW_NORMAL,10;
 	end;
 OnTimer595000:
-	mapannounce "te_prtcas01", "A girl's voice: Cano! How dare you ignore our warning! So, you have company there, huh? But how long do you think they'll stay with you?!",bc_map,"0x00ff00",FW_NORMAL,12;
+	mapannounce "te_prtcas01", "A girl's voice: Kai! How dare you ignore our warning! So, you have company there, huh? But how long do you think they'll stay with you?!",bc_map,"0x00ff00",FW_NORMAL,12;
 	end;
 OnTimer598000:
 	mapannounce "te_prtcas01", "You are forced out of the fortress by unknown power.",bc_map,"0x00ff00",FW_NORMAL,12;
