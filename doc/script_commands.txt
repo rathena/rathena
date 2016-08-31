@@ -4608,7 +4608,7 @@ database. If the name is not found, nothing will be deleted.
 *guildstoragedelitem "<item name>",<amount>{,<account ID>};
 
 This command behaves identically to 'delitem', but deletes items from the player's
-cart or storage.
+cart, storage, or guild storage.
 
 If no cart is mounted, 'cartdelitem' will return -1.
 If player is not in a guild or storage is open, 'guildstoragedelitem' will return -1.
@@ -4631,7 +4631,7 @@ See 'getitem2' for an explanation of the expanded parameters.
 *guildstoragedelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command behaves identically to 'delitem2', but deletes items from the player's
-cart or storage.
+cart, storage, or guild storage.
 
 If no cart is mounted, 'cartdelitem2' will return -1.
 If player is not in a guild or storage is open, 'guildstoragedelitem2' will return -1.
@@ -4668,7 +4668,7 @@ adding up strings:
 *guildstoragecountitem("<item name>"{,<accountID>})
 
 This command behaves identically to 'countitem', but counts items from the player's
-cart, storage or guild storage.
+cart, storage, or guild storage.
 
 If no cart is mounted, 'cartcountitem' will return -1.
 If player is not in a guild or storage is open, 'guildstoragecountitem' will return -1.
@@ -4694,7 +4694,7 @@ See 'getitem2' for an explanation of the expanded parameters.
 *guildstoragecountitem2("<item name>",<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
 
 This command behaves identically to 'countitem2', but counts items from the player's
-cart, storage or guild storage.
+cart, storage, or guild storage.
 
 If no cart is mounted, 'cartcountitem2' will return -1.
 If player is not in a guild or storage is open, 'guildstoragecountitem2' will return -1.

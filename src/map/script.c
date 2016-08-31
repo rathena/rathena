@@ -6522,12 +6522,12 @@ BUILDIN_FUNC(countitem)
 	}
 	
 	if( !strncmp(command, "cart", 4) ) {
-		loc = 1;
+		loc = TABLE_CART;
 		size = MAX_CART;
 		items = sd->cart.u.items_cart;
 	}
 	else if( !strncmp(command, "storage", 7) ) {
-		loc = 2;
+		loc = TABLE_STORAGE;
 		size = MAX_STORAGE;
 		items = sd->storage.u.items_storage;
 	}
@@ -6535,7 +6535,7 @@ BUILDIN_FUNC(countitem)
 		gstor = guild2storage2(sd->status.guild_id);
 
 		if (gstor && !sd->state.storage_flag) {
-			loc = 3;
+			loc = TABLE_GUILD_STORAGE;
 			size = MAX_GUILD_STORAGE;
 			items = gstor->u.items_guild;
 		} else {
@@ -6548,7 +6548,7 @@ BUILDIN_FUNC(countitem)
 		items = sd->inventory.u.items_inventory;
 	}
 
-	if( loc == 1 && !pc_iscarton(sd) ) {
+	if( loc == TABLE_CART && !pc_iscarton(sd) ) {
 		ShowError("buildin_%s: Player doesn't have cart (CID:%d).\n", command, sd->status.char_id);
 		script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
@@ -6568,7 +6568,7 @@ BUILDIN_FUNC(countitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (loc == 3)
+	if (loc == TABLE_GUILD_STORAGE)
 		gstor->lock = true;
 
 	if( !i ) { // For count/cart/storagecountitem function
@@ -6601,7 +6601,7 @@ BUILDIN_FUNC(countitem)
 			}
 	}
 
-	if (loc == 3) {
+	if (loc == TABLE_GUILD_STORAGE) {
 		storage_guild_storageclose(sd);
 		gstor->lock = false;
 	}
@@ -7380,20 +7380,20 @@ static void buildin_delitem_delete(struct map_session_data* sd, int idx, int* am
 	struct s_storage *gstor = NULL;
 
 	switch(loc) {
-		case 1:	// cart
+		case TABLE_CART:
 			itm = &sd->cart.u.items_cart[idx];
 			break;
-		case 2:	// storage
+		case TABLE_STORAGE:
 			itm = &sd->storage.u.items_storage[idx];
 			break;
-		case 3: // guild storage
+		case TABLE_GUILD_STORAGE:
 		{
 			gstor = guild2storage2(sd->status.guild_id);
 
 			itm = &gstor->u.items_guild[idx];
 		}
 			break;
-		default:	//inventory
+		default: // TABLE_INVENTORY
 			itm = &sd->inventory.u.items_inventory[idx];
 			break;
 	}
@@ -7407,21 +7407,21 @@ static void buildin_delitem_delete(struct map_session_data* sd, int idx, int* am
 			intif_delete_petdata(MakeDWord(itm->card[1], itm->card[2]));
 		}
 		switch(loc) {
-			case 1:
+			case TABLE_CART:
 				pc_cart_delitem(sd,idx,delamount,0,LOG_TYPE_SCRIPT);
 				break;
-			case 2:
+			case TABLE_STORAGE:
 				storage_delitem(sd,idx,delamount);
 				log_pick_pc(sd,LOG_TYPE_SCRIPT,-delamount,itm);
 				break;
-			case 3:
+			case TABLE_GUILD_STORAGE:
 				gstor->lock = true;
 				storage_guild_delitem(sd, gstor, idx, delamount);
 				log_pick_pc(sd, LOG_TYPE_SCRIPT, -delamount, itm);
 				storage_guild_storageclose(sd);
 				gstor->lock = false;
 				break;
-			default:
+			default: // TABLE_INVENTORY
 				pc_delitem(sd, idx, delamount, 0, 0, LOG_TYPE_SCRIPT);
 				break;
 		}
@@ -7455,15 +7455,15 @@ static bool buildin_delitem_search(struct map_session_data* sd, struct item* it,
 	}
 
 	switch(loc) {
-		case 1:	// cart
+		case TABLE_CART:
 			size = MAX_CART;
 			items = sd->cart.u.items_cart;
 			break;
-		case 2:	// storage
+		case TABLE_STORAGE:
 			size = MAX_STORAGE;
 			items = sd->storage.u.items_storage;
 			break;
-		case 3: // guild storage
+		case TABLE_GUILD_STORAGE:
 		{
 			struct s_storage *gstor = guild2storage2(sd->status.guild_id);
 
@@ -7471,7 +7471,7 @@ static bool buildin_delitem_search(struct map_session_data* sd, struct item* it,
 			items = gstor->u.items_guild;
 		}
 			break;
-		default:	//inventory
+		default: // TABLE_INVENTORY
 			size = MAX_INVENTORY;
 			items = sd->inventory.u.items_inventory;
 			break;
@@ -7592,11 +7592,11 @@ BUILDIN_FUNC(delitem)
 	char* command = (char*)script_getfuncname(st);
 
 	if(!strncmp(command, "cart", 4))
-		loc = 1;
+		loc = TABLE_CART;
 	else if(!strncmp(command, "storage", 7))
-		loc = 2;
+		loc = TABLE_STORAGE;
 	else if(!strncmp(command, "guildstorage", 12))
-		loc = 3;
+		loc = TABLE_GUILD_STORAGE;
 
 	if( script_hasdata(st,4) )
 	{
@@ -7616,12 +7616,12 @@ BUILDIN_FUNC(delitem)
 			return SCRIPT_CMD_SUCCESS;
 	}
 
-	if (loc == 1 && !pc_iscarton(sd)) {
+	if (loc == TABLE_CART && !pc_iscarton(sd)) {
 		ShowError("buildin_cartdelitem: player doesn't have cart (CID=%d).\n", sd->status.char_id);
 		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
-	if (loc == 3) {
+	if (loc == TABLE_GUILD_STORAGE) {
 		struct s_storage *gstor = guild2storage2(sd->status.guild_id);
 
 		if (gstor == NULL || sd->state.storage_flag) {
@@ -7691,11 +7691,11 @@ BUILDIN_FUNC(delitem2)
 	char* command = (char*)script_getfuncname(st);
 
 	if(!strncmp(command, "cart", 4))
-		loc = 1;
+		loc = TABLE_CART;
 	else if(!strncmp(command, "storage", 7))
-		loc = 2;
+		loc = TABLE_STORAGE;
 	else if(!strncmp(command, "guildstorage", 12))
-		loc = 3;
+		loc = TABLE_GUILD_STORAGE;
 
 	if( script_hasdata(st,11) )
 	{
@@ -7715,12 +7715,12 @@ BUILDIN_FUNC(delitem2)
 			return SCRIPT_CMD_SUCCESS;
 	}
 
-	if (loc == 1 && !pc_iscarton(sd)) {
+	if (loc == TABLE_CART && !pc_iscarton(sd)) {
 		ShowError("buildin_cartdelitem: player doesn't have cart (CID=%d).\n", sd->status.char_id);
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}
-	if (loc == 3) {
+	if (loc == TABLE_GUILD_STORAGE) {
 		struct s_storage *gstor = guild2storage2(sd->status.guild_id);
 
 		if (gstor == NULL || sd->state.storage_flag) {
