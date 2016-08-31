@@ -460,9 +460,9 @@
 	script_set_constant("CharRename",SP_CHARRENAME,true);
 	script_set_constant("Font",SP_CHARFONT,true);
 	script_set_constant("BankVault",SP_BANK_VAULT,true);
-	script_set_constant("RouletteBronze",SP_ROULETTE_BRONZE,true);
-	script_set_constant("RouletteSilver",SP_ROULETTE_SILVER,true);
-	script_set_constant("RouletteGold",SP_ROULETTE_GOLD,true);
+	script_set_constant(ROULETTE_BRONZE_VAR,SP_ROULETTE_BRONZE,true);
+	script_set_constant(ROULETTE_SILVER_VAR,SP_ROULETTE_SILVER,true);
+	script_set_constant(ROULETTE_GOLD_VAR,SP_ROULETTE_GOLD,true);
 
 	script_set_constant("bMaxHP",SP_MAXHP,false);
 	script_set_constant("bMaxSP",SP_MAXSP,false);

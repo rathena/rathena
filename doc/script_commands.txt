@@ -4298,6 +4298,25 @@ This command will force a stat recalculation for the attached player.
 
 ---------------------------------------
 
+*needed_status_point(<type>,<val>{,<char id>});
+
+Returns the number of stat points needed to change the specified stat <type> by <val>.
+If <val> is negative, returns the number of stat points that would be needed to
+raise the specified stat from (current value - <val>) to current value.
+
+---------------------------------------
+
+*jobcanentermap("<mapname>"{,<JobID>});
+
+Return true if player (decided by job) can enter the map, false otherwise.
+
+For optional 'JobID', see constant of Job_*, or use player's Class, BaseJob,
+and BaseClass. If no player is attached, this param must have a value.
+
+See also db/[pre-]re/job_noenter_map.txt
+
+---------------------------------------
+
 *get_revision()
 
 This command will return the SVN revision number that the server is currently
@@ -5980,11 +5999,13 @@ It is an approximation of official server script language's 'cmdothernpc'.
 
 ---------------------------------------
 
-*npctalk "<message>";
+*npctalk "<message>"{,"<NPC name>"};
 
 This command will display a message to the surrounding area as if the NPC object 
 running it was a player talking - that is, above their head and in the chat 
 window. The display name of the NPC won't get appended in front of the message.
+If the <NPC name> option is given, then that NPC will display the message, else
+the attached NPC will display the message.
 
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.

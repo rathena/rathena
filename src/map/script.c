@@ -5635,7 +5635,7 @@ BUILDIN_FUNC(warpparty)
 	TBL_PC *pl_sd;
 	struct party_data* p;
 	int type;
-	int mapindex;
+	int mapindex = 0, m = -1;
 	int i;
 
 	const char* str = script_getstr(st,2);
@@ -5664,18 +5664,21 @@ BUILDIN_FUNC(warpparty)
 				return SCRIPT_CMD_FAILURE;
 			pl_sd = p->data[i].sd;
 			mapindex = pl_sd->mapindex;
+			m = map_mapindex2mapid(mapindex);
 			x = pl_sd->bl.x;
 			y = pl_sd->bl.y;
 			break;
 		case 4:
 			mapindex = mapindex_name2id(str);
+			if (!mapindex) {// Invalid map
+				return SCRIPT_CMD_FAILURE;
+			}
+			m = map_mapindex2mapid(mapindex);
 			break;
 		case 2:
 			//"SavePoint" uses save point of the currently attached player
 			if (( sd = script_rid2sd(st) ) == NULL )
 				return SCRIPT_CMD_SUCCESS;
-		default:
-			mapindex = 0;
 			break;
 	}
 
@@ -5706,7 +5709,7 @@ BUILDIN_FUNC(warpparty)
 		break;
 		case 3: // Leader
 		case 4: // m,x,y
-			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp)
+			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
 				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 		break;
 		}
@@ -5725,7 +5728,7 @@ BUILDIN_FUNC(warpguild)
 	TBL_PC *pl_sd;
 	struct guild* g;
 	struct s_mapiterator* iter;
-	int type;
+	int type, mapindex = 0, m = -1;
 
 	const char* str = script_getstr(st,2);
 	int x           = script_getnum(st,3);
@@ -5744,6 +5747,15 @@ BUILDIN_FUNC(warpguild)
 	if( type == 2 && ( sd = script_rid2sd(st) ) == NULL )
 	{// "SavePoint" uses save point of the currently attached player
 		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch (type) {
+		case 3:
+			mapindex = mapindex_name2id(str);
+			if (!mapindex)
+				return SCRIPT_CMD_FAILURE;
+			m = map_mapindex2mapid(mapindex);
+			break;
 	}
 
 	iter = mapit_getallusers();
@@ -5767,8 +5779,8 @@ BUILDIN_FUNC(warpguild)
 				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 3: // m,x,y
-			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp)
-				pc_setpos(pl_sd,mapindex_name2id(str),x,y,CLR_TELEPORT);
+			if(!map[pl_sd->bl.m].flag.noreturn && !map[pl_sd->bl.m].flag.nowarp && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
+				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 		break;
 		}
 	}
@@ -14409,10 +14421,14 @@ BUILDIN_FUNC(message)
  *------------------------------------------*/
 BUILDIN_FUNC(npctalk)
 {
-	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
+	struct npc_data* nd = NULL;
 	const char* str = script_getstr(st,2);
 
-	if (nd) {
+	if (script_hasdata(st, 3))
+		nd = npc_name2id(script_getstr(st, 3));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+	if (nd != NULL) {
 		char message[256];
 		safesnprintf(message, sizeof(message), "%s", str);
 		clif_disp_overhead(&nd->bl, message);
@@ -21791,6 +21807,59 @@ BUILDIN_FUNC(setrandomoption) {
 	return SCRIPT_CMD_FAILURE;
 }
 
+/// Returns the number of stat points needed to change the specified stat by val.
+/// If val is negative, returns the number of stat points that would be needed to
+/// raise the specified stat from (current value - val) to current value.
+/// *needed_status_point(<type>,<val>{,<char id>});
+/// @author [secretdataz]
+BUILDIN_FUNC(needed_status_point) {
+	struct map_session_data *sd;
+	int type, val;
+	if (!script_charid2sd(4, sd))
+		return SCRIPT_CMD_FAILURE;
+	type = script_getnum(st, 2);
+	val = script_getnum(st, 3);
+
+	script_pushint(st, pc_need_status_point(sd, type, val));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * jobcanentermap("<mapname>"{,<JobID>});
+ * Check if (player with) JobID can enter the map.
+ * @param mapname Map name
+ * @param JobID Player's JobID (optional)
+ **/
+BUILDIN_FUNC(jobcanentermap) {
+	const char *mapname = script_getstr(st, 2);
+	int mapidx = mapindex_name2id(mapname), m = -1;
+	int jobid = 0;
+	TBL_PC *sd = NULL;
+
+	if (!mapidx) {// Invalid map
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+	m = map_mapindex2mapid(mapidx);
+	if (m == -1) { // Map is on different map server
+		ShowError("buildin_jobcanentermap: Map '%s' is not found in this server.\n", mapname);
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_hasdata(st, 3)) {
+		jobid = script_getnum(st, 3);
+	} else {
+		if (!(sd = script_rid2sd(st))) {
+			script_pushint(st, false);
+			return SCRIPT_CMD_FAILURE;
+		}
+		jobid = sd->status.class_;
+	}
+
+	script_pushint(st, pc_job_can_entermap((enum e_job)jobid, m, sd ? sd->group_level : 0));
+	return SCRIPT_CMD_SUCCESS;
+}
 
 /**
  * Return alliance information between the two guilds.
@@ -21845,23 +21914,6 @@ BUILDIN_FUNC(getguildalliance)
 	else
 		script_pushint(st, 1);
 
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/**
- * getpermissionwoete([<char_id>]);
- * Check if player can participate in WOE:TE
- * @param char_id Player's CharID (optional)
- **/
-BUILDIN_FUNC(getpermissionwoete) {
-	TBL_PC *sd = NULL;
-
-	if (!script_charid2sd(2, sd)) {
-		script_pushint(st, 0);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	script_pushint(st, pc_canParticipateSiegeTE(sd->class_) ? 1 : 0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -22169,7 +22221,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(atcommand,"charcommand","s"), // [MouseJstr]
 	BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
 	BUILDIN_DEF(message,"ss"), // [MouseJstr]
-	BUILDIN_DEF(npctalk,"s"), // [Valaris]
+	BUILDIN_DEF(npctalk,"s?"), // [Valaris]
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),
 	BUILDIN_DEF(getsavepoint,"i?"),
@@ -22448,6 +22500,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getrandomoptinfo, "i"),
 	BUILDIN_DEF(getequiprandomoption, "iii?"),
 	BUILDIN_DEF(setrandomoption,"iiiii?"),
+	BUILDIN_DEF(needed_status_point,"ii?"),
+	BUILDIN_DEF(jobcanentermap,"s?"),
 
 	// WoE TE
 	BUILDIN_DEF(agitstart3,""),
@@ -22455,7 +22509,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(agitcheck3,""),
 	BUILDIN_DEF(gvgon3,"s"),
 	BUILDIN_DEF(gvgoff3,"s"),
-	BUILDIN_DEF(getpermissionwoete,"?"),
 
 #include "../custom/script_def.inc"
 

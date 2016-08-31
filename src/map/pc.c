@@ -113,7 +113,7 @@ struct item_cd {
 * Converts a class to its array index for CLASS_COUNT defined arrays.
 * Note that it does not do a validity check for speed purposes, where parsing
 * player input make sure to use a pcdb_checkid first!
-* @param class_
+* @param class_ Job ID see enum e_job
 * @return Class Index
 */
 int pc_class2idx(int class_) {
@@ -11117,6 +11117,31 @@ static bool pc_readdb_job_param(char* fields[], int columns, int current)
 	return true;
 }
 
+/**
+ * Read job_noenter_map.txt
+ **/
+static bool pc_readdb_job_noenter_map(char *str[], int columns, int current) {
+	int idx, class_ = -1;
+
+	if (ISDIGIT(str[0][0])) {
+		class_ = atoi(str[0]);
+	} else {
+		if (!script_get_constant(str[0], &class_)) {
+			ShowError("pc_readdb_job_noenter_map: Invalid job %s specified.\n", str[0]);
+			return false;
+		}
+	}
+
+	if (!pcdb_checkid(class_) || (idx = pc_class2idx(class_)) < 0) {
+		ShowError("pc_readdb_job_noenter_map: Invalid job %d specified.\n", str[0]);
+		return false;
+	}
+
+	job_info[idx].noenter_map.zone = atoi(str[1]);
+	job_info[idx].noenter_map.group_lv = atoi(str[2]);
+	return true;
+}
+
 static int pc_read_statsdb(const char *basedir, int last_s, bool silent){
 	int i=1;
 	char line[24000]; //FIXME this seem too big
@@ -11220,6 +11245,7 @@ void pc_readdb(void) {
 		sv_readdb(dbsubpath2, "job_basehpsp_db.txt", ',', 4, 4+500, CLASS_COUNT*2, &pc_readdb_job_basehpsp, i); //Make it support until lvl 500!
 #endif
 		sv_readdb(dbsubpath2, "job_param_db.txt", ',', 2, PARAM_MAX+1, CLASS_COUNT, &pc_readdb_job_param, i);
+		sv_readdb(dbsubpath2, "job_noenter_map.txt", ',', 3, 3, CLASS_COUNT, &pc_readdb_job_noenter_map, i);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
@@ -12178,20 +12204,36 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 }
 
 /**
- * Check if player can participate in WOE:TE
- * @param mapid Player's class @see enum e_mapid
- * @return True:If allowed, False:Doesn't
+ * Check if a job is allowed to enter the map
+ * @param jobid Job ID see enum e_job or sd->status.class_
+ * @param m ID -an index- for direct indexing map[] array
+ * @return 1 if job is allowed, 0 otherwise
  **/
-bool pc_canParticipateSiegeTE(uint32 mapid) {
+bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
+	uint16 idx = 0;
 
-	if (mapid&JOBL_THIRD)
+	// Map is other map server.
+	// !FIXME: Currently, a map-server doesn't recognized map's attributes on other server, so we assume it's fine to warp.
+	if (m < 0)
+		return true;
+
+	if (m >= MAX_MAP_PER_SERVER || !map[m].cell)
 		return false;
 
-	switch (mapid) {
-		case MAPID_REBELLION:
-		case MAPID_KAGEROUOBORO:
-			return false;
-	}
+	if (!pcdb_checkid(jobid))
+		return false;
+
+	idx = pc_class2idx(jobid);
+	if (!job_info[idx].noenter_map.zone || group_lv > job_info[idx].noenter_map.group_lv)
+		return true;
+
+	if ((!map_flag_vs(m) && job_info[idx].noenter_map.zone&1) || // Normal
+		(map[m].flag.pvp && job_info[idx].noenter_map.zone&2) || // PVP
+		(map_flag_gvg2(m) && job_info[idx].noenter_map.zone&4) || // GVG
+		(map[m].flag.battleground && job_info[idx].noenter_map.zone&8) || // Battleground
+		(map[m].flag.restricted && job_info[idx].noenter_map.zone&(8*map[m].zone)) // Zone restriction
+		)
+		return false;
 
 	return true;
 }
