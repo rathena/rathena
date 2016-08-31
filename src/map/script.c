@@ -21374,7 +21374,6 @@ BUILDIN_FUNC(navigateto){
 	uint8 flag = NAV_KAFRA_AND_AIRSHIP;
 	bool hideWindow = true;
 
-
 	mapname = script_getstr(st,2);
 
 	if( script_hasdata(st,3) )

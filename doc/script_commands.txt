@@ -6716,13 +6716,6 @@ Theses commands behave identically to gvgon/gvgoff, but apply GVG_TE mapflag.
 
 ---------------------------------------
 
-*getpermissionwoete({<char id>});
-
-Return 1 if player can participate in WOE:TE, 0 otherwise.
-Currently third class, Kagerou/Oboro and Rebellion class can't participate in WOE:TE.
-
----------------------------------------
-
 *flagemblem <guild id>;
 
 This command only works when run by the NPC objects which have sprite id 722, 

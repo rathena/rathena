@@ -1041,7 +1041,8 @@ OnTreasureDied:
 // Flag warp Template
 //============================================================
 function	script	F_flag_woe_TE	{
-	.@guild_id = getcastledata( getarg(1),1 );
+	.@castle$ = getarg(1);
+	.@guild_id = getcastledata( .@castle$,1 );
 	if (.@guild_id == 0) {
 		mes "[ Decree of Sacred Kingdom of Rune-Midgarts ]";
 		mes "";
@@ -1063,7 +1064,7 @@ function	script	F_flag_woe_TE	{
 		mes "Do you wish to return with honor?";
 		next;
 		if (select( "Return to the fortress.","Forget it." ) == 1) {
-			if (getpermissionwoete() == 0) {
+			if (jobcanentermap(.@castle$) == 0) {
 				mes "Tertiary job class and users with expanded levels are not allowed to participate in Siege Battles TE.";
 				close;
 			}

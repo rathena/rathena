@@ -160,7 +160,7 @@ S_Coord:
 			7509,"30 Small Wooden Boxes" );
 	}
 	mes "["+ .@npc_name$ +"]";
-	if (getpermissionwoete() == 0) {
+	if (jobcanentermap("te_prtcas01") == 0) {
 		mes "Ah... you...";
 		mes "based on TE rules, I won't be ordering you or asking you favors unfortunately.";
 		next;
@@ -242,7 +242,7 @@ S_Coord:
 						mes "I don't understand why "+ .@mob_name$[0] +" appear at that time of the day.";
 						mes "Anyway, good job.";
 						if (.@num_tool_box == 0) {
-							erasequest 7510;
+							erasequest .@main_quest;
 							getitem 11558,5;// TE_White_Slim_Potion
 							getexp 5000,2500;
 							close;
@@ -514,6 +514,7 @@ S_Cancelquest:
 		mes "You should cancel this mission. I would say it's failed.";
 		next;
 		switch( select( "I would like to go on.","Yes, I'll cancel it." ) ) {
+		case 1:
 			mes "["+ .@npc_name$ +"]";
 			mes "I don't think it's worth it. Well, good luck!";
 			close;
