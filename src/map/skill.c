@@ -13139,7 +13139,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 					if( --count <= 0 )
 						skill_delunitgroup(sg);
 
-					if ( map_mapindex2mapid(sg->val3) == sd->bl.m && x == sd->bl.x && y == sd->bl.y )
+					if ( map_mapindex2mapid(m) == sd->bl.m && x == sd->bl.x && y == sd->bl.y )
 						working = 1;/* we break it because officials break it, lovely stuff. */
 
 					sg->val1 = (count<<16)|working;
