@@ -474,11 +474,11 @@
 22124:28447:28448,{ bonus bAspdRate,8; bonus bHit,8; bonus2 bExpAddClass,Class_All,2; }
 22125:28449:28450,{ bonus bAspdRate,10; bonus bHit,10; bonus2 bExpAddClass,Class_All,2; }
 22126:28451:28452,{ bonus bAspdRate,10; bonus bHit,10; bonus2 bExpAddClass,Class_All,2; bonus bSpeedAddRate,25; }
-22122,28453:28454,{ bonus bVariableCastrate,-3; bonus bDelayrate,-3; }
-22123,28455:28456,{ bonus bVariableCastrate,-6; bonus bDelayrate,-6; }
-22124,28457:28458,{ bonus bVariableCastrate,-6; bonus bDelayrate,-6; bonus2 bExpAddClass,Class_All,2; }
-22125,28459:28460,{ bonus bVariableCastrate,-6; bonus bDelayrate,-6; bonus2 bExpAddClass,Class_All,2; }
-22126,28461:28462,{ bonus bVariableCastrate,-8; bonus bDelayrate,-8; bonus2 bExpAddClass,Class_All,2; bonus bSpeedAddRate,25; }
+22122:28453:28454,{ bonus bVariableCastrate,-3; bonus bDelayrate,-3; }
+22123:28455:28456,{ bonus bVariableCastrate,-6; bonus bDelayrate,-6; }
+22124:28457:28458,{ bonus bVariableCastrate,-6; bonus bDelayrate,-6; bonus2 bExpAddClass,Class_All,2; }
+22125:28459:28460,{ bonus bVariableCastrate,-6; bonus bDelayrate,-6; bonus2 bExpAddClass,Class_All,2; }
+22126:28461:28462,{ bonus bVariableCastrate,-8; bonus bDelayrate,-8; bonus2 bExpAddClass,Class_All,2; bonus bSpeedAddRate,25; }
 22122:28463:28464,{ bonus bAspdRate,4; bonus bHit,4; }
 22123:28465:28466,{ bonus bAspdRate,8; bonus bHit,8; }
 22124:28467:28468,{ bonus bAspdRate,8; bonus bHit,8; bonus2 bExpAddClass,Class_All,2; }
