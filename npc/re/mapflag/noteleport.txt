@@ -108,3 +108,13 @@ te_aldecas2	mapflag	noteleport
 te_aldecas3	mapflag	noteleport
 te_aldecas4	mapflag	noteleport
 te_aldecas5	mapflag	noteleport
+te_prtcas01	mapflag	monster_noteleport
+te_prtcas02	mapflag	monster_noteleport
+te_prtcas03	mapflag	monster_noteleport
+te_prtcas04	mapflag	monster_noteleport
+te_prtcas05	mapflag	monster_noteleport
+te_aldecas1	mapflag	monster_noteleport
+te_aldecas2	mapflag	monster_noteleport
+te_aldecas3	mapflag	monster_noteleport
+te_aldecas4	mapflag	monster_noteleport
+te_aldecas5	mapflag	monster_noteleport

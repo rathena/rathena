@@ -18,56 +18,59 @@
 OnAgitInit3:
 	.@map$ = strnpcinfo(4);
 	if (.@map$ == "") end;
+	.@npc_name$ = strnpcinfo(0);
 	.@guild_id = getcastledata(.@map$,1);
 	if (.@guild_id == 0) {
-		killmonsterall .@map$;
+		killmonster .@map$, .@npc_name$ +"::OnMyMobDead";
 		donpcevent strnpcinfo(0)+"::OnEmpSpawn";
-		if (compare(.@map$,"te_aldecas")) {
-			monster .@map$,0,0,"Evil Druid",1117,10;
-			monster .@map$,0,0,"Khalitzburg",1132,4;
-			monster .@map$,0,0,"Abysmal Knight",1219,2;
-			monster .@map$,0,0,"Executioner",1205,1;
-			monster .@map$,0,0,"Penomena",1216,10;
-			monster .@map$,0,0,"Alarm",1193,18;
-			monster .@map$,0,0,"Clock",1269,9;
-			monster .@map$,0,0,"Raydric Archer",1276,7;
-			monster .@map$,0,0,"Wanderer",1208,3;
-			monster .@map$,0,0,"Alice",1275,1;
-			monster .@map$,0,0,"Bloody Knight",1268,1;
-			monster .@map$,0,0,"Dark Lord",1272,1;
-			if (.@map$ == "te_aldecas1") { setarray .@emproom[0],216,23; }
-			else if (.@map$ == "te_aldecas2") { setarray .@emproom[0],213,23; }
-			else if (.@map$ == "te_aldecas3") { setarray .@emproom[0],205,31; }
-			else if (.@map$ == "te_aldecas4") { setarray .@emproom[0],36,217; }
-			else if (.@map$ == "te_aldecas5") { setarray .@emproom[0],27,101; }
-			monster .@map$,.@emproom[0],.@emproom[1],"Dark Lord",1272,1;
-			monster .@map$,.@emproom[0],.@emproom[1],"Tower Keeper",1270,4;
-			monster .@map$,.@emproom[0],.@emproom[1],"Bloody Knight",1268,1;
-			monster .@map$,.@emproom[0],.@emproom[1],"Abysmal Knight",1219,1;
-			monster .@map$,.@emproom[0],.@emproom[1],"Raydric Archer",1276,5;
-		}
-		else if (compare(.@map$,"te_prtcas")) {
-			monster .@map$,0,0,"Raydric",1163,10;
-			monster .@map$,0,0,"Khalitzburg",1132,10;
-			monster .@map$,0,0,"Abysmal Knight",1219,5;
-			monster .@map$,0,0,"Bloody Knight",1268,5;
-			monster .@map$,0,0,"Stormy Knight",1251,1;
-			monster .@map$,0,0,"Hatii",1252,1;
-			monster .@map$,0,0,"Raydric Archer",1276,5;
-			monster .@map$,0,0,"Gryphon",1259,2;
-			monster .@map$,0,0,"Chimera",1283,2;
-			monster .@map$,0,0,"Alice",1275,1;
-			monster .@map$,0,0,"Zealotus",1200,1;
-			if (.@map$ == "te_prtcas01") { setarray .@emproom[0],197,197; }
-			else if (.@map$ == "te_prtcas02") { setarray .@emproom[0],157,174; }
-			else if (.@map$ == "te_prtcas03") { setarray .@emproom[0],16,220; }
-			else if (.@map$ == "te_prtcas04") { setarray .@emproom[0],291,14; }
-			else if (.@map$ == "te_prtcas05") { setarray .@emproom[0],266,266; }
-			monster .@map$,.@emproom[0],.@emproom[1],"Guardian Knight of Emperium",1268,1;
-			monster .@map$,.@emproom[0],.@emproom[1],"Chief Guardian Knight of Emperium",1251,1;
-			monster .@map$,.@emproom[0],.@emproom[1],"Hatii",1252,1;
-			monster .@map$,.@emproom[0],.@emproom[1],"Guardian Knight of Emperium",1219,2;
-			monster .@map$,.@emproom[0],.@emproom[1],"Raydric Archer",1276,5;
+		if (agitcheck3() == 0) {// we currently remove monsters OnAgitStart3
+			if (compare(.@map$,"te_aldecas")) {
+				monster .@map$,0,0,"Evil Druid",1117,10,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Khalitzburg",1132,4,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Abysmal Knight",1219,2,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Executioner",1205,1,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Penomena",1216,10,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Alarm",1193,18,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Clock",1269,9,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Raydric Archer",1276,7,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Wanderer",1208,3,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Alice",1275,1,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Bloody Knight",1268,1,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Dark Lord",1272,1,.@npc_name$ +"::OnMyMobDead";
+				if (.@map$ == "te_aldecas1") { setarray .@emproom[0],216,23; }
+				else if (.@map$ == "te_aldecas2") { setarray .@emproom[0],213,23; }
+				else if (.@map$ == "te_aldecas3") { setarray .@emproom[0],205,31; }
+				else if (.@map$ == "te_aldecas4") { setarray .@emproom[0],36,217; }
+				else if (.@map$ == "te_aldecas5") { setarray .@emproom[0],27,101; }
+				monster .@map$,.@emproom[0],.@emproom[1],"Dark Lord",1272,1,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,.@emproom[0],.@emproom[1],"Tower Keeper",1270,4,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,.@emproom[0],.@emproom[1],"Bloody Knight",1268,1,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,.@emproom[0],.@emproom[1],"Abysmal Knight",1219,1,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,.@emproom[0],.@emproom[1],"Raydric Archer",1276,5,.@npc_name$ +"::OnMyMobDead";
+			}
+			else if (compare(.@map$,"te_prtcas")) {
+				monster .@map$,0,0,"Raydric",1163,10,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Khalitzburg",1132,10,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Abysmal Knight",1219,5,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Bloody Knight",1268,5,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Stormy Knight",1251,1,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Hatii",1252,1,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Raydric Archer",1276,5,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Gryphon",1259,2,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Chimera",1283,2,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Alice",1275,1,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,0,0,"Zealotus",1200,1,.@npc_name$ +"::OnMyMobDead";
+				if (.@map$ == "te_prtcas01") { setarray .@emproom[0],197,197; }
+				else if (.@map$ == "te_prtcas02") { setarray .@emproom[0],157,174; }
+				else if (.@map$ == "te_prtcas03") { setarray .@emproom[0],16,220; }
+				else if (.@map$ == "te_prtcas04") { setarray .@emproom[0],291,14; }
+				else if (.@map$ == "te_prtcas05") { setarray .@emproom[0],266,266; }
+				monster .@map$,.@emproom[0],.@emproom[1],"Guardian Knight of Emperium",1268,1,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,.@emproom[0],.@emproom[1],"Chief Guardian Knight of Emperium",1251,1,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,.@emproom[0],.@emproom[1],"Hatii",1252,1,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,.@emproom[0],.@emproom[1],"Guardian Knight of Emperium",1219,2,.@npc_name$ +"::OnMyMobDead";
+				monster .@map$,.@emproom[0],.@emproom[1],"Raydric Archer",1276,5,.@npc_name$ +"::OnMyMobDead";
+			}
 		}
 		disablenpc "Kafra Staff#"+ .@map$;
 	}
@@ -192,15 +195,18 @@ S_Message:
 
 	if (.@map$ == "te_aldecas1") {
 		donpcevent "Blacksmith Cano#tegod01::OnInit";// god item TE
-		$@2012_tegod_kafra = 0;
+		$2012_tegod_kafra = 0;
 		$@2012_tegirls_alde01 = 0;
 	}
 	else if (.@map$ == "te_prtcas01") {
-    	$@2012_tegod_gloria = 0;
+    	$2012_tegod_gloria = 0;
     	$@2012_tegirls_prt01 = 0;
     	donpcevent "Blacksmith Kai#tegod01::OnInit";
 	}
 	return;
+
+OnMyMobDead:
+	end;
 }
 
 // Guild Kafras
