@@ -109,7 +109,7 @@ payon_in02,67,65,3	script	Bard Jet#tu	1_M_BARD,{
 		mes "You're...!";
 		next;
 		specialeffect2 EF_TALK_FROSTJOKE;
-		//specialeffect EF_TALK_FROSTJOKE,"Bard Jet#tu";
+		//specialeffect EF_TALK_FROSTJOKE,AREA,"Bard Jet#tu";
 		emotion e_no1;
 		mes "[Jet]";
 		mes "Let's see...";
@@ -1172,11 +1172,11 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 // Seisner
 //============================================================
 pay_arche,84,139,3	script	Seisner	4_F_JOB_HUNTER,{
-	specialeffect EF_HIT2,"#Target";
+	specialeffect EF_HIT2,AREA,"#Target";
 	mes "[Seisner]";
 	mes "Aaaah!";
 	mes "Double Strafe!";
-	specialeffect EF_HIT2,"#Target";
+	specialeffect EF_HIT2,AREA,"#Target";
 	next;
 	mes "[Seisner]";
 	mes "I did it!";
