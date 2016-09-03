@@ -11069,7 +11069,7 @@ REPLACE INTO `item_db_re` VALUES (23177,'Kafra_Card_','Kafra Card',2,2,NULL,10,N
 REPLACE INTO `item_db_re` VALUES (23191,'Varetyr_Spear_Scroll_1_5','Level 5 Varetyr Spear',11,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "SO_VARETYR_SPEAR",5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (23192,'Diamond_Dust_Scroll_1_5','Level 5 Diamond Dust',11,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "SO_DIAMONDDUST",5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (23193,'Crimson_Rock_Scroll_1_5','Level 5 Crimson Rock',11,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "WL_CRIMSONROCK",5;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (23194,'Sienna_Execrate_Scroll_1_5','Level 5 Sienna Execrate',11,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "WL_SIENNAEXECRATE",5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (23194,'Sienna_Execrate_Scroll_1_5','Level 5 Sienna Execrate',11,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemskill "WL_SIENNAEXECRATE",5,true;',NULL,NULL);
 #===================================================================
 # Shadow Equipments
 #===================================================================
