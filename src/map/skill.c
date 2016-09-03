@@ -2942,6 +2942,9 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 			else
 				dir = map_calc_dir(target, skill_area_temp[4], skill_area_temp[5]);
 			break;
+		case HT_PHANTASMIC: // issue #1378
+			if (status_get_hp(target) - damage <= 0) return;
+			break;
 	}
 
 	// Blown-specific handling
