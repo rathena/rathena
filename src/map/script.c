@@ -18668,12 +18668,17 @@ BUILDIN_FUNC(waitingroom2bg)
 	ev = script_getstr(st,5); // Logout Event
 	dev = script_getstr(st,6); // Die Event
 
+	if (ev[0] != '\0')
+		check_event(st, ev);
+	if (dev[0] != '\0')
+		check_event(st, dev);
+
 	if( (bg_id = bg_create(mapindex, x, y, ev, dev)) == 0 )
 	{ // Creation failed
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;
 	}
-
+	
         
 	for (i = 0; i < cd->users; i++) { // Only add those who are in the chat room
 		struct map_session_data *sd;
@@ -18745,6 +18750,11 @@ BUILDIN_FUNC(bg_create) {
 	y = script_getnum(st, 4);
 	ev = script_getstr(st, 5); // Logout Event
 	dev = script_getstr(st, 6); // Die Event
+
+	if (ev[0] != '\0')
+		check_event(st, ev);
+	if (dev[0] != '\0')
+		check_event(st, dev);
 
 	if ((bg_id = bg_create(mapindex, x, y, ev, dev)) == 0)
 	{ // Creation failed
