@@ -526,6 +526,11 @@ splendide,183,117,4	script	Tired-looking Fairy	438,{
 		close;
 	} else if (ep14_1_bs < 10) {
 		if (checkquest(11187) == -1) {
+			if(!isbegin_quest(11186)) { // TODO: Confirm official dialog (is there one?)
+				mes "[Tired-looking Fairy]";
+				mes "I'm tired, don't talk to me.";
+				close;
+			}
 			mes "[Tired-looking Fairy]";
 			mes "I'm tired, don't talk to me.";
 			next;
