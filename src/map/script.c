@@ -18722,6 +18722,70 @@ BUILDIN_FUNC(waitingroom2bg_single)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+
+/// Creates an instance of battleground battle group.
+/// *bg_create("<map name>",<x>,<y>,"<On Quit Event>","<On Death Event>");
+/// @author [secretdataz]
+BUILDIN_FUNC(bg_create) {
+	const char *map_name, *ev = "", *dev = "";
+	int x, y, mapindex = 0, bg_id;
+
+	map_name = script_getstr(st, 2);
+	if (strcmp(map_name, "-") != 0)
+	{
+		mapindex = mapindex_name2id(map_name);
+		if (mapindex == 0)
+		{ // Invalid Map
+			script_pushint(st, 0);
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+
+	x = script_getnum(st, 3);
+	y = script_getnum(st, 4);
+	ev = script_getstr(st, 5); // Logout Event
+	dev = script_getstr(st, 6); // Die Event
+
+	if ((bg_id = bg_create(mapindex, x, y, ev, dev)) == 0)
+	{ // Creation failed
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	script_pushint(st, bg_id);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// Adds attached player or <char id> (if specified) to an existing 
+/// battleground group and warps it to the specified coordinates on
+/// the given map.
+/// bg_join(<battle group>,"<map name>",<x>,<y>{,<char id>});
+/// @author [secretdataz]
+BUILDIN_FUNC(bg_join) {
+	const char* map_name;
+	struct map_session_data *sd;
+	int x, y, bg_id, mapindex;
+
+	bg_id = script_getnum(st, 2);
+	map_name = script_getstr(st, 3);
+	if ((mapindex = mapindex_name2id(map_name)) == 0)
+		return SCRIPT_CMD_SUCCESS; // Invalid Map
+
+	x = script_getnum(st, 4);
+	y = script_getnum(st, 5);
+	sd = script_charid2sd(6, sd);
+
+	if (bg_team_join(bg_id, sd))
+	{
+		pc_setpos(sd, mapindex, x, y, CLR_TELEPORT);
+		script_pushint(st, 1);
+	}
+	else
+		script_pushint(st, 0);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(bg_team_setxy)
 {
 	struct battleground_data *bg;
@@ -22229,6 +22293,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_get_data,"ii"),
 	BUILDIN_DEF(bg_getareausers,"isiiii"),
 	BUILDIN_DEF(bg_updatescore,"sii"),
+	BUILDIN_DEF(bg_join,"isii?"),
+	BUILDIN_DEF(bg_create,"siiss"),
 
 	// Instancing
 	BUILDIN_DEF(instance_create,"s??"),

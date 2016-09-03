@@ -8492,6 +8492,27 @@ Example:
 
 ---------------------------------------
 
+*bg_create("<map name>",<x>,<y>,"<On Quit Event>","<On Death Event>");
+
+Creates an instance of battleground battle group that can be used in other battleground commands.
+
+<map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
+<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog.
+<On Death Event> refers to an NPC label that attaches to the character and is run when they die. Can be "" for empty.
+
+Returns battle group ID on success. Returns 0 on failure.
+
+---------------------------------------
+
+*bg_join(<battle group>,"<map name>",<x>,<y>{,<char id>});
+
+Adds attached player or <char id> (if specified) to an existing battleground group and warps it to the specified coordinates
+<x> and <y> on the given map.
+
+Returns 1 on success. Returns 0 on failure.
+
+---------------------------------------
+
 *bg_team_setxy <Battle Group ID>,<x>,<y>;
 
 Updates the respawn point of the given Battle Group to x,y on the same map. <Battle Group ID> can be retrieved using getcharid(4).
