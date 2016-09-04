@@ -396,6 +396,7 @@
 	export_constant(MF_NOLOCKON);
 	export_constant(MF_NOTOMB);
 	export_constant(MF_SKILL_DAMAGE);
+	export_constant(MF_HIDE_HP_BAR);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);

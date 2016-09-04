@@ -361,7 +361,8 @@ enum {
 	MF_NOMINEEFFECT,
 	MF_NOLOCKON,
 	MF_NOTOMB,
-	MF_SKILL_DAMAGE	//60
+	MF_SKILL_DAMAGE,	//60
+	MF_HIDE_HP_BAR,
 };
 
 const char* script_op2name(int op)
