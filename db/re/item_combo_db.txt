@@ -349,10 +349,10 @@
 4545:18730,{ bonus bMatk,5; bonus bBaseAtk,5; }
 4605:4606,{ bonus2 bSubEle,Ele_Neutral,20; bonus bFlee,20; bonus2 bHPLossRate,100,6000; bonus2 bSPLossRate,6,6000; }
 4608:4609,{ bonus2 bAddSize,Size_Medium,15; bonus2 bAddSize,Size_Large,15; bonus2 bSubSize,Size_Medium,5; bonus2 bSubSize,Size_Large,5; }
-4626:4628,{ bonus2 bSubRace,RC_Formless,5; bonus2 bSubRace,RC_Demon,5; bonus2 bIgnoreMdefRaceRate,RC_Formless,50; bonus2 bIgnoreMdefRaceRate,RC_Demon,50; }
-4627:4628,{ bonus2 bSubRace,RC_Formless,5; bonus2 bSubRace,RC_Demon,5; bonus2 bIgnoreDefRaceRate,RC_Formless,50; bonus2 bIgnoreDefRaceRate,RC_Demon,50;}
-4629:4630,{ bonus3 bAutoSpell,677,2,2; bonus2 bSubEle,Ele_Neutral,5; }
-4631:4632,{ bonus5 bAutoSpell,85,1,1,BF_SHORT,0; }
+4626:4628,{ bonus2 bIgnoreMdefRaceRate,RC_Demon,50; }
+4627:4628,{ bonus2 bIgnoreDefRaceRate,RC_Formless,50; bonus2 bIgnoreDefRaceRate,RC_Demon,50;}
+4629:4630,{ bonus3 bAutoSpell,"NPC_WIDECURSE",2,2; bonus2 bSubEle,Ele_Neutral,5; }
+4631:4632,{ bonus5 bAutoSpell,"WZ_VERMILION",1,1,BF_WEAPON,0; }
 4635:4636,{ bonus2 bResEff,Eff_Burning,10000; }
 4642:4646,{ bonus bAtkRate,10; bonus bMatkRate,10; }
 4643:4646,{ bonus bAtkRate,10; bonus bMatkRate,10; }
