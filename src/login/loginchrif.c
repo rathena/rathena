@@ -152,7 +152,7 @@ int logchrif_parse_ackusercount(int fd, int id){
 /**
  * Transmit account data to char_server
  * S 2717 aid.W email.40B exp_time.L group_id.B char_slot.B birthdate.11B pincode.5B pincode_change.L
- *  isvip.1B char_vip.1B max_billing.1B (tot 75)  
+ *  isvip.1B char_vip.1B max_billing.1B (tot 75)
  * @return -1 : account not found, 1:sucess
  */
 int logchrif_send_accdata(int fd, uint32 aid) {
@@ -665,7 +665,7 @@ int logchrif_parse_reqvipdata(int fd) {
 		int32 timediff = RFIFOL(fd,7);
 		int mapfd = RFIFOL(fd,11);
 		RFIFOSKIP(fd,15);
-		
+
 		if( accounts->load_num(accounts, &acc, aid ) ) {
 			time_t now = time(NULL);
 			time_t vip_time = acc.vip_time;

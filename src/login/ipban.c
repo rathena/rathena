@@ -217,7 +217,7 @@ void ipban_init(void) {
 		exit(EXIT_FAILURE);
 	}
         ShowInfo("Ipban conection made\n");
-        
+
 	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
 		Sql_ShowDebug(sql_handle);
 
