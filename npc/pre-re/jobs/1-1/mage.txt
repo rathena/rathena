@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Mage Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88; L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.0
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job quest for Mage classes
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Fully working.
 //= 1.1 Fixed input ingridients bug [Lupus]
 //= 1.2 Added instant job change for High Novice [Lupus]
@@ -23,7 +23,7 @@
 //= 1.8 Added Quest Log commands. [L0ne_W0lf]
 //= 1.9 Fixed an issue with completequest by adding checkquest. [Kisuka]
 //= 2.0 Moved "Dollshoi" and "Ponka-Hontas" NPCs. [Euphy]
-//============================================================ 
+//============================================================
 
 geffen_in,164,124,4	script	Mage Guildsman	123,{
 	if (Upper == 1) {

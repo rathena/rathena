@@ -47,7 +47,7 @@ morocc,153,286,6	script	Guide#moc::MocGuide	707,{
 			while(.@loop2) {
 				if (.@wait_button_chk == 0) set .@wait_button_chk,1;
 				else next;
-				
+
 				switch(select("^FF0000Thief Guild^000000:Weapon Shop:Inn:Pub:Mercenary Guild:Forge:Cancel")) {
 				case 1:
 					mes "[Morroc Guide]";

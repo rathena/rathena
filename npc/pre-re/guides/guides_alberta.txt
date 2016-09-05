@@ -50,7 +50,7 @@ alberta,23,238,4	script	Guide#alb::AlbGuide	105,{
 			while (.@loop2) {
 				if (.@wait_button_chk == 0) set .@wait_button_chk,1;
 				else next;
-				
+
 				switch(select("^FF0000Merchant Guild^000000:Weapon Shop:Tool Shop:Inn:Forge:Cancel")) {
 				case 1:
 					mes "[Alberta Guide]";

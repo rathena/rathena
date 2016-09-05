@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Ep 10+ Novice Training Grounds
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Dr.Evil & MasterOfMuppets
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project; SVN 3422+
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Novice Training Grounds
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.7D Added confirm character name thing on receptionist. [Kisuka]
 //= 1.8 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=     NPCs are not backwards compatable, and will remove
@@ -23,7 +23,7 @@
 //= 2.3 Added fix to Hanson from GM-windsor- and Saithis. [L0ne_W0lf]
 //= 2.3a Correct a wrong variable name. (bugreport:2293) [Samuray22]
 //= 2.4 Corrected an error in Hanson. (bugreport:2374) [L0ne_W0lf]
-//============================================================ 
+//============================================================
 
 // Bulletin Board
 new_1-1,66,114,4	script	Bulletin Board#nv	111,{
@@ -193,7 +193,7 @@ new_1-2,100,29,4	script	Receptionist#nv1	86,{
 			close;
 		}
 	}
-}	
+}
 new_2-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv2	86
 new_3-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv3	86
 new_4-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv4	86
@@ -2681,7 +2681,7 @@ new_1-3,95,30,4	script	Trainer#nv1::NovHoffman	84,{
 		}
 		else {
 			warp "new_1-3",96,21;
-		}	
+		}
 		end;
 	case 2:
 		mes "[Hoffman]";
@@ -3884,7 +3884,7 @@ S_UserJobchoice:
 		mes "[Hanson]";
 		mes "The Mage Academy is located in the NorthWest in town. Please remember this.";
 	}
-	else if (@menu == 3) {					
+	else if (@menu == 3) {
 		mes "to become a Merchant.";
 		mes "You will be sent to";
 		mes "the town of Alberta.";
@@ -4301,9 +4301,9 @@ new_3-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
 new_4-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
 new_5-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.0 Added the New Novice Training Grounds, a big thanks [MasterOfMuppets]
 //=     to Dr.Evil who did 90% of the work =)
 //= 1.0b Temp measure to stop exploits. [Vicious]
@@ -4316,4 +4316,4 @@ new_5-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
 //= 1.7a a bit of optimization [Lupus]
 //= 1.7b Corrected a little Typo Error. (bugreport:728) [Samuray22]
 //= 1.7C Corrected another Typo Error. (bugreport:740) [Samuray22]
-//============================================================ 
+//============================================================

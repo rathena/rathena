@@ -16,7 +16,7 @@
 //=     to Muad_Dib
 //= 1.3a Fixed some problems with duplicated text, thanks to muad_dib [MasterOfMuppets]
 //= 1.4 Fitted the many lines into 1 or 2, and corrected some typos [erKURITA]
-//= 1.4a Tixed Archer Village Guide [Lupus] 
+//= 1.4a Tixed Archer Village Guide [Lupus]
 //= 1.5 Removed Duplicates [Silent]
 //= 1.6 Rescripted to official 10.3 standards. [L0ne_W0lf]
 //============================================================

@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Swordsman Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88; L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job quest for Swordman classes
 //= Uses Job_sword1 as opposed to sword_1-1 -> sword_3-1.
 //= EXPLOITABLE in a sense because while the sword_x-1 maps
 //= are marked as "inside" by the client, job_sword1 is not.
 //= giving players FREE camera rotation while doing the job quest.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Fully working.
 //= 1.1 Added instant job change for High Novice [Lupus]
 //= 1.3 Added Baby Class support [Lupus]
@@ -35,7 +35,7 @@
 //= 2.1 Fixed mistake in condition check. [L0ne_W0lf]
 //= 2.2 Warp portals dont end with ; [Yommy]
 //= 2.3 Added Quest Log commands. [L0ne_W0lf]
-//============================================================ 
+//============================================================
 
 izlude_in,74,172,4	script	Swordman#swd_1	119,{
 	if (Upper == 1) {
@@ -296,7 +296,7 @@ izlude_in,30,163,0	script	Test Hall Staff#swd_1	105,{
 }
 
 // Examination Courses NPCs
-//============================================================ 
+//============================================================
 // 1-1
 job_sword1,230,245,2	script	Medic#swd_1	105,{
 	callfunc "F_JobSwdMedic","1st";
@@ -322,7 +322,7 @@ job_sword1,223,167,2	script	Mae#swd_1_success	92,{
 }
 
 // Examination Course Functions
-//============================================================ 
+//============================================================
 function	script	F_JobSwdMedic	{
 	percentheal 100,0;
 	mes "[Medic]";
@@ -366,7 +366,7 @@ OnTouch:
 }
 
 // Examination Course 1
-//============================================================ 
+//============================================================
 job_sword1,223,243,0	warp	checkp1-2#swd_1	1,1,job_sword1,11,206
 job_sword1,223,205,0	warp	checkp2-3#swd_1	1,1,job_sword1,11,168
 
@@ -396,7 +396,7 @@ job_sword1,193,168,0	script	Test Hall Staff#swd_9	45,1,3,{
 }
 
 // Pitfalls (Set 1)
-//============================================================ 
+//============================================================
 job_sword1,65,117,0	warp	pitfall01-01	1,1,job_sword1,10,245
 job_sword1,98,27,0	warp	pitfall02-01	1,1,job_sword1,11,207
 job_sword1,161,27,0	warp	pitfall02-02	1,1,job_sword1,11,207
@@ -463,7 +463,7 @@ job_sword1,181,239,0	duplicate(SwdTrap1)	1_blank_14_c	-1,1,0
 job_sword1,193,245,0	warp	1_rest	1,3,job_sword1,215,244
 
 // Pitfalls (Set 2)
-//============================================================ 
+//============================================================
 job_sword1,56,212,0	script	2_blank_1_a::SwdTrap2	-1,40,0,{
 OnTouch:
 	switch(rand(1,5)) {
@@ -508,7 +508,7 @@ job_sword1,155,201,0	duplicate(SwdTrap2)	2_blank_9_a	-1,40,0
 job_sword1,181,201,0	duplicate(SwdTrap2)	2_blank_9_b	-1,2,0
 
 // Pitfalls (Set 3)
-//============================================================ 
+//============================================================
 job_sword1,17,174,0	script	3_blank_1_a::SwdTrap3	-1,2,0,{
 OnTouch:
 	switch(rand(1,5)) {
@@ -621,7 +621,7 @@ job_sword1,177,163,0	duplicate(SwdTrap3)	3_blank_30_b	-1,0,2
 job_sword1,181,163,0	duplicate(SwdTrap3)	3_blank_30_c	-1,2,0
 
 // Monsters (all three courses)
-//============================================================ 
+//============================================================
 job_sword1,0,0,0,0	monster	Chonchon	1183,20,0,0,0
 job_sword1,35,79,0,0	monster	Fabre	1184,3,60000,30000,0
 job_sword1,50,108,0,0	monster	Fabre	1184,3,60000,30000,0

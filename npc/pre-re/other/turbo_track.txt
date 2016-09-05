@@ -6,7 +6,7 @@
 //= 1.0
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Pre-Renewal duplicates.
 //===== Additional Comments: =================================

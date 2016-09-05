@@ -47,7 +47,7 @@ izlude,121,87,6	script	Guide#iz	105,{
 			while(.@loop2) {
 				if (.@wait_button_chk == 0) set .@wait_button_chk,1;
 				else next;
-				
+
 				switch(select("^FF0000Swordman Association^000000:Swordman Hall:Arena:Izlude Marina:Weapon Shop:Tool Shop:Cancel")) {
 				case 1:
 					mes "[Izlude Guide]";

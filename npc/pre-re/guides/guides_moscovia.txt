@@ -82,7 +82,7 @@ moscovia,161,76,4	script	Moscovia Guide#mosk	959,{
 			viewpoint 2,223,174,3,0x00FF00;
 			viewpoint 2,229,208,4,0x3355FF;
 			close;
-		
+
 		case 3:
 			mes "[Moscovia Guide]";
 			mes "It'd be great to walk about alone.";

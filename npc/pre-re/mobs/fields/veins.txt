@@ -72,7 +72,7 @@ ve_fild05,123,65,50,21	monster	Sleeper	1386,5,120000,0,0
 ve_fild05,152,139,15,17	monster	White Plant	1082,5,1800000,0,0
 ve_fild05,152,139,5,5	monster	Shining Plant	1083,1,2400000,0,0
 
-//======== [Veins Field-06] ===================================	
+//======== [Veins Field-06] ===================================
 ve_fild06,0,0,0,0	monster	Stapo	1784,2,300000,0,0
 ve_fild06,0,0,0,0	monster	Stapo	1784,1,1800000,0,0
 ve_fild06,0,0,0,0	monster	Shining Plant	1083,1,1020000,0,0

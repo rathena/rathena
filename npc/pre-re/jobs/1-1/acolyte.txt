@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Acolyte Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88; L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job quest for Acolyte classes
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Fully working.
 //= 1.1 Added function calls for Priest Quest.
 //= 1.2 Fixed Marthilda, Yosuke bugs. [Lupus]
@@ -28,7 +28,7 @@
 //= 2.0 Fixed High Acolytesnot being given holy light. [L0ne_W0lf]
 //= 2.1 Added Quest Log commands. [L0ne_W0lf]
 //= 2.2 Fixed an issue with completequest by adding checkquest. [Kisuka]
-//============================================================ 
+//============================================================
 
 prt_church,184,41,4	script	Cleric#aco	60,{
 	if (Upper == 1) {

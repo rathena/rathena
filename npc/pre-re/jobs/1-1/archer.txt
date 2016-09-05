@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Archer Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88; L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.9
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job quest for Archer classes
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Fully working.
 //= 1.1 Added instant job change for High Novice [Lupus]
 //= 1.3 Added Baby Class support [Lupus]
@@ -22,7 +22,7 @@
 //= 1.7a Fixed minor dialogue bug at Grade==25 [Lupus]
 //= 1.8 Fixed mistake in condition check. [L0ne_W0lf]
 //= 1.9 Added Quest Log commands. [L0ne_W0lf]
-//============================================================ 
+//============================================================
 
 payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
 	if (Upper == 1) {
