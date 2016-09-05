@@ -100,7 +100,7 @@ static int chlogif_send_acc_tologin_sub(DBKey key, DBData *data, va_list ap) {
  * @param tick : Scheduled tick
  * @param id : GID linked to that timered call
  * @param data : data transmited for delayed function
- * @return 
+ * @return
  */
 int chlogif_send_acc_tologin(int tid, unsigned int tick, int id, intptr_t data) {
 	if ( chlogif_isconnected() ){

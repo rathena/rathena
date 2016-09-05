@@ -627,10 +627,10 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, int tabl
 			&&  items[i].card[3] == item.card[3]
 			) {	//They are the same item.
 				int k;
-				
+
 				ARR_FIND( 0, MAX_SLOTS, j, items[i].card[j] != item.card[j] );
 				ARR_FIND( 0, MAX_ITEM_RDM_OPT, k, items[i].option[k].id != item.option[k].id || items[i].option[k].value != item.option[k].value || items[i].option[k].param != item.option[k].param );
-				
+
 				if( j == MAX_SLOTS &&
 					k == MAX_ITEM_RDM_OPT &&
 				    items[i].amount == item.amount &&
@@ -800,10 +800,10 @@ int char_inventory_to_sql(const struct item items[], int max, int id) {
 			   &&  items[i].card[3] == item.card[3]
 			   ) {	//They are the same item.
 				int k;
-				
+
 				ARR_FIND( 0, MAX_SLOTS, j, items[i].card[j] != item.card[j] );
 				ARR_FIND( 0, MAX_ITEM_RDM_OPT, k, items[i].option[k].id != item.option[k].id || items[i].option[k].value != item.option[k].value || items[i].option[k].param != item.option[k].param );
-				
+
 				if( j == MAX_SLOTS &&
 					k == MAX_ITEM_RDM_OPT &&
 					items[i].amount == item.amount &&
@@ -2195,11 +2195,11 @@ void char_pincode_decrypt( uint32 userSeed, char* pin ){
 	int i;
 	char tab[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	char *buf;
-	
+
 	for( i = 1; i < 10; i++ ){
 		int pos;
 		uint32 multiplier = 0x3498, baseSeed = 0x881234;
-		
+
 		userSeed = baseSeed + userSeed * multiplier;
 		pos = userSeed % ( i + 1 );
 		if( i != pos ){
@@ -2319,14 +2319,14 @@ int char_lan_config_read(const char *lancfgName) {
 bool char_checkdb(void){
 	int i;
 	const char* sqltable[] = {
-		schema_config.char_db, schema_config.hotkey_db, schema_config.scdata_db, schema_config.cart_db, 
-                schema_config.inventory_db, schema_config.charlog_db, schema_config.storage_db, 
+		schema_config.char_db, schema_config.hotkey_db, schema_config.scdata_db, schema_config.cart_db,
+                schema_config.inventory_db, schema_config.charlog_db, schema_config.storage_db,
                 schema_config.char_reg_str_table, schema_config.char_reg_num_table, schema_config.acc_reg_str_table,
                 schema_config.acc_reg_num_table, schema_config.skill_db, schema_config.interlog_db, schema_config.memo_db,
-		schema_config.guild_db, schema_config.guild_alliance_db, schema_config.guild_castle_db, 
-                schema_config.guild_expulsion_db, schema_config.guild_member_db, 
+		schema_config.guild_db, schema_config.guild_alliance_db, schema_config.guild_castle_db,
+                schema_config.guild_expulsion_db, schema_config.guild_member_db,
                 schema_config.guild_skill_db, schema_config.guild_position_db, schema_config.guild_storage_db,
-		schema_config.party_db, schema_config.pet_db, schema_config.friend_db, schema_config.mail_db, 
+		schema_config.party_db, schema_config.pet_db, schema_config.friend_db, schema_config.mail_db,
                 schema_config.auction_db, schema_config.quest_db, schema_config.homunculus_db, schema_config.skill_homunculus_db,
                 schema_config.mercenary_db, schema_config.mercenary_owner_db,
 		schema_config.elemental_db, schema_config.ragsrvinfo_db, schema_config.skillcooldown_db, schema_config.bonus_script_db
@@ -2748,7 +2748,7 @@ void char_set_defaults(){
 	charserv_config.char_check_db =1;
 
 	// See const.h to change the default values
-	charserv_config.start_point[0].map = mapindex_name2id(MAP_DEFAULT_NAME); 
+	charserv_config.start_point[0].map = mapindex_name2id(MAP_DEFAULT_NAME);
 	charserv_config.start_point[0].x = MAP_DEFAULT_X;
 	charserv_config.start_point[0].y = MAP_DEFAULT_Y;
 	charserv_config.start_point_count = 1;

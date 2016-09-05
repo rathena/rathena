@@ -462,7 +462,7 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 	int group_id, int logincount, int state, const char *email, const char *last_ip, const char *lastlogin,
 	const char *birthdate, const char *user_pass, const char *pincode, const char *userid)
 {
-	
+
 	if (map_fd <= 0 || !session_isActive(map_fd))
 		return; // check if we have a valid fd
 
@@ -856,7 +856,7 @@ void inter_final(void)
 	inter_auction_sql_final();
 
 	if(geoip_cache) aFree(geoip_cache);
-	
+
 	return;
 }
 

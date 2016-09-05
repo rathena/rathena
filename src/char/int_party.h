@@ -6,7 +6,7 @@
 
 //Party Flags on what to save/delete.
 enum {
-	PS_CREATE = 0x01, //Create a new party entry (index holds leader's info) 
+	PS_CREATE = 0x01, //Create a new party entry (index holds leader's info)
 	PS_BASIC = 0x02, //Update basic party info.
 	PS_LEADER = 0x04, //Update party's leader
 	PS_ADDMEMBER = 0x08, //Specify new party member (index specifies which party member)
