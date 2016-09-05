@@ -18772,10 +18772,10 @@ BUILDIN_FUNC(bg_join) {
 
 	if (bg_team_join(bg_id, sd) && pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) == SETPOS_OK)
 	{
-		script_pushint(st, 1);
+		script_pushint(st, true);
 	}
 	else
-		script_pushint(st, 0);
+		script_pushint(st, false);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -22275,7 +22275,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(agitend2,""),
 	BUILDIN_DEF(agitcheck2,""),
 	// BattleGround
-	BUILDIN_DEF(waitingroom2bg,"siiss?"),
+	BUILDIN_DEF(waitingroom2bg,"sii???"),
 	BUILDIN_DEF(waitingroom2bg_single,"isiis"),
 	BUILDIN_DEF(bg_team_setxy,"iii"),
 	BUILDIN_DEF(bg_warp,"isii"),
@@ -22288,7 +22288,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_getareausers,"isiiii"),
 	BUILDIN_DEF(bg_updatescore,"sii"),
 	BUILDIN_DEF(bg_join,"isii?"),
-	BUILDIN_DEF(bg_create,"siiss"),
+	BUILDIN_DEF(bg_create,"sii??"),
 
 	// Instancing
 	BUILDIN_DEF(instance_create,"s??"),
