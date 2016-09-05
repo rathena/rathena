@@ -7,7 +7,7 @@
 #define WINVER 0x0500
 #define _WIN32_IE 	0x0600
 #define WIN32_LEAN_AND_MEAN
-#define NOCOMM 
+#define NOCOMM
 #define NOKANJI
 #define NOHELP
 #define NOMCX

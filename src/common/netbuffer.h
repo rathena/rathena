@@ -8,11 +8,11 @@
 
 typedef struct netbuf{
 	sysint	pool;				// The pool ID this buffer belongs to,
-								// is set to -1 if its an emergency allocated buffer 
-	
+								// is set to -1 if its an emergency allocated buffer
+
 	struct netbuf *next;		// Used by Network system.
 
-	volatile int32 refcnt;		// Internal Refcount, it gets lowered every call to netbuffer_put, 
+	volatile int32 refcnt;		// Internal Refcount, it gets lowered every call to netbuffer_put,
 								// if its getting zero, the buffer will returned back to the pool
 								// and can be reused.
 
@@ -20,7 +20,7 @@ typedef struct netbuf{
 						// Used only for Reading (recv job)
 						// write cases are using the sessions local datapos member due to
 						// shared write buffer support.
-	
+
 	int32	dataLen;	// read buffer case:
 						//	The length expected to read to.
 						//	when this->dataPos == dateLen, read job has been completed.
@@ -56,16 +56,16 @@ void netbuffer_final();
 netbuf netbuffer_get( sysint sz );
 
 
-/** 
+/**
  * Returns the given netbuffer (decreases refcount, if its 0 - the buffer will get returned to the pool)
  *
- * @param buf - the buffer to return 
+ * @param buf - the buffer to return
  */
 void netbuffer_put( netbuf buf );
 
 
-/** 
- * Increases the Refcount on the given buffer 
+/**
+ * Increases the Refcount on the given buffer
  * (used for areasends .. etc)
  *
  */

@@ -210,10 +210,10 @@ void Sql_Free(Sql* self);
 ///////////////////////////////////////////////////////////////////////////////
 // Prepared Statements
 ///////////////////////////////////////////////////////////////////////////////
-// Parameters are placed in the statement by embedding question mark ('?') 
+// Parameters are placed in the statement by embedding question mark ('?')
 // characters into the query at the appropriate positions.
 // The markers are legal only in places where they represent data.
-// The markers cannot be inside quotes. Quotes will be added automatically 
+// The markers cannot be inside quotes. Quotes will be added automatically
 // when they are required.
 //
 // example queries with parameters:
@@ -298,7 +298,7 @@ size_t SqlStmt_NumColumns(SqlStmt* self);
 
 /// Binds the result of a column to a buffer.
 /// The buffer will be filled with data when the next row is fetched.
-/// For string/enum buffer types there has to be enough space for the data 
+/// For string/enum buffer types there has to be enough space for the data
 /// and the nul-terminator (an extra byte).
 ///
 /// @return SQL_SUCCESS or SQL_ERROR

@@ -867,7 +867,7 @@ int do_sockets(int next)
 	if (last_tick != socket_data_last_tick)
 	{
 		char buf[1024];
-		
+
 		sprintf(buf, "In: %.03f kB/s (%.03f kB/s, Q: %.03f kB) | Out: %.03f kB/s (%.03f kB/s, Q: %.03f kB) | RAM: %.03f MB", socket_data_i/1024., socket_data_ci/1024., socket_data_qi/1024., socket_data_o/1024., socket_data_co/1024., socket_data_qo/1024., malloc_usage()/1024.);
 #ifdef _WIN32
 		SetConsoleTitle(buf);
@@ -1244,7 +1244,7 @@ int socket_getips(uint32* ips, int max)
 
 #ifdef WIN32
 	{
-		char fullhost[255];	
+		char fullhost[255];
 
 		// XXX This should look up the local IP addresses in the registry
 		// instead of calling gethostbyname. However, the way IP addresses

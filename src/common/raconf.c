@@ -1,7 +1,7 @@
-// 
+//
 // Athena style config parser
-// (would be better to have "one" implementation instead of .. 4 :) 
-// 
+// (would be better to have "one" implementation instead of .. 4 :)
+//
 //
 // Author: Florian Wilkemeyer <fw@f-ws.de>
 //
@@ -33,7 +33,7 @@ struct conf_value{
 	int64 intval;
 	bool bval;
 	double floatval;
-	size_t strval_len; // not includung \0 
+	size_t strval_len; // not includung \0
 	char strval[16];
 };
 
@@ -42,22 +42,22 @@ struct conf_value{
 static struct conf_value *makeValue(const char *key, char *val, size_t val_len){
 	struct conf_value *v;
 /*	size_t sz;
-		
+
 	sz = sizeof(struct conf_value);
 	if(val_len >=  sizeof(v->strval))
 		sz += (val_len - sizeof(v->strval) +  1);*/
-	
+
 	v = (struct conf_value*)aCalloc(1, sizeof(struct conf_value));
 	if(v == NULL){
 		ShowFatalError("raconf: makeValue => Out of Memory while allocating new node.\n");
 		return NULL;
 	}
-	
+
 	memcpy(v->strval, val, val_len);
 	v->strval[val_len+1] = '\0';
 	v->strval_len = val_len;
-	
-	
+
+
 	// Parse boolean value:
 	if((val_len == 4)  &&  (strncmpi("true", val, 4) == 0))
 		v->bval = true;
@@ -80,13 +80,13 @@ static struct conf_value *makeValue(const char *key, char *val, size_t val_len){
 	else if((val_len == 4) && (strncmpi("nein", val, 4) == 0))
 		v->bval = false;
 	else if((val_len == 1) && (*val == '0'))
-		v->bval = false;		
+		v->bval = false;
 	else
 		v->bval = false; // assume false.
-		
+
 	// Parse number
 	// Supported formats:
-	// prefix: 0x hex . 
+	// prefix: 0x hex .
 	// postix: h for hex
 	//		   b for bin (dual)
 	if( (val_len >= 1 && (val[val_len] == 'h')) || (val_len >= 2 && (val[0] == '0' && val[1] == 'x')) ){//HEX!
@@ -104,7 +104,7 @@ static struct conf_value *makeValue(const char *key, char *val, size_t val_len){
 		// is it float?
 		bool is_float = false;
 		char *p;
-		
+
 		for(p = val; *p != '\0'; p++){
 			if(*p == '.'){
 				v->floatval = strtod(val, NULL);
@@ -113,7 +113,7 @@ static struct conf_value *makeValue(const char *key, char *val, size_t val_len){
 				break;
 			}
 		}
-		
+
 		if(is_float == false){
 			v->intval = strtoull(val, NULL, 10);
 			v->floatval = (double) v->intval;
@@ -125,8 +125,8 @@ static struct conf_value *makeValue(const char *key, char *val, size_t val_len){
 		else
 			v->intval = 0;
 	}
-	
-	return v;	
+
+	return v;
 }//end: makeValue()
 
 
@@ -139,38 +139,38 @@ static bool configParse(raconf inst,  const char *fileName){
 	int linecnt;
 	size_t linelen;
 	size_t currentSection_len;
-	
+
 	fp = fopen(fileName, "r");
 	if(fp == NULL){
 		ShowError("configParse: cannot open '%s' for reading.\n", fileName);
 		return false;
 	}
-	
+
 
 	// Start with empty section:
 	currentSection[0] = '\0';
 	currentSection_len = 0;
-	
-	// 	
+
+	//
 	linecnt = 0;
 	while(1){
 		linecnt++;
-		
+
 		if(fgets(line, sizeof(line), fp) != line)
 			break;
 
 		linelen = strlen(line);
 		p = line;
-		
+
 		// Skip whitespaces from beginning (space and tab)
 		_line_begin_skip_whities:
 		c = *p;
 		if(c == ' ' || c == '\t'){
-			p++; 
+			p++;
 			linelen--;
 			goto _line_begin_skip_whities;
 		}
-		
+
 		// Remove linebreaks as (cr or lf) and whitespaces from line end!
 		_line_end_skip_whities_and_breaks:
 		c = p[linelen-1];
@@ -178,29 +178,29 @@ static bool configParse(raconf inst,  const char *fileName){
 			p[--linelen] = '\0';
 			goto _line_end_skip_whities_and_breaks;
 		}
-		
-		// Empty line? 
+
+		// Empty line?
 		// or line starts with comment (commented out)?
 		if(linelen == 0 || (p[0] == '/' && p[1] == '/') || p[0] == ';')
 			continue;
-		
+
 		// Variable names can contain:
 		// A-Za-z-_.0-9
 		//
 		// Sections start with [ .. ] (INI Style)
 		//
 		c = *p;
-		
+
 		// check what we have.. :)
 		if(c == '['){ // got section!
 			// Got Section!
-			// Search for ] 
+			// Search for ]
 			char *start = (p+1);
-			
+
 			while(1){
 				++p;
 				c = *p;
-				
+
 				if(c == '\0'){
 					ShowError("Syntax Error: unterminated Section name in %s:%u (expected ']')\n", fileName, linecnt);
 					fclose(fp);
@@ -211,14 +211,14 @@ static bool configParse(raconf inst,  const char *fileName){
 						fclose(fp);
 						return false;
 					}
-					
+
 					// Set section!
 					*p = '\0'; // add termination here.
 					memcpy(currentSection, start, (p-start)+1 ); // we'll copy \0, too! (we replaced the ] backet with \0.)
 					currentSection_len = (p-start);
-					
+
 					break;
-					
+
 				}else if( (c >= '0' && c <= '9') || (c == '-') || (c == ' ') || (c == '_') || (c == '.') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ){
 					// skip .. (allowed char / specifier)
 					continue;
@@ -227,43 +227,43 @@ static bool configParse(raconf inst,  const char *fileName){
 					fclose(fp);
 					return false;
 				}
-				
-			}//endwhile: parse section name 
-			
-		
+
+			}//endwhile: parse section name
+
+
 		}else if( (c >= '0' && c <= '9') || (c == '-') || (c == '_') || (c == '.') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ){
-			// Got variable! 
-			// Search for '=' or ':' wich termiantes the name 
+			// Got variable!
+			// Search for '=' or ':' wich termiantes the name
 			char *start = p;
 			char *valuestart = NULL;
 			size_t start_len;
-						
+
 			while(1){
 				++p;
 				c = *p;
-				
+
 				if(c == '\0'){
 					ShowError("Syntax Error: unterminated Variable name in %s:%u\n", fileName, linecnt);
 					fclose(fp);
 					return false;
 				}else if( (c == '=') || (c == ':') ){
 					// got name termination
-					
+
 					*p = '\0'; // Terminate it so  (start) will hold the pointer to the name.
-					
+
 					break;
-					
+
 				}else if( (c >= '0' && c <= '9') || (c == '-') || (c == '_') || (c == '.') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ){
-					// skip .. allowed char 
+					// skip .. allowed char
 					continue;
 				}else{
 					ShowError("Syntax Error: Invalid Character '%c' in %s:%u (offset %u) for Variable name.\n", c, fileName, linecnt, (p-line));
 					fclose(fp);
 					return false;
 				}
-				
-			}//endwhile: parse var name			
-			
+
+			}//endwhile: parse var name
+
 			start_len = (p-start);
 			if(start_len >= VARNAME_LEN){
 				ShowError("%s:%u Variable length exceeds limit of %u Characters.\n", fileName, linecnt, VARNAME_LEN-1);
@@ -274,20 +274,20 @@ static bool configParse(raconf inst,  const char *fileName){
 				fclose(fp);
 				return false;
 			}
-			
-			
-			valuestart = (p+1); 
-			
-			
+
+
+			valuestart = (p+1);
+
+
 			// Skip whitespace from begin of value (tab and space)
 			_skip_value_begin_whities:
-			c = *valuestart; 
+			c = *valuestart;
 			if(c == ' ' || c == '\t'){
 				valuestart++;
 				goto _skip_value_begin_whities;
 			}
-			
-			// Scan for value termination, 
+
+			// Scan for value termination,
 			// wich can be \0  or  comment start (// or ; (INI) )
 			//
 			p = valuestart;
@@ -305,15 +305,15 @@ static bool configParse(raconf inst,  const char *fileName){
 					*p = '\0';
 					break;
 				}
-				
+
 				p++;
 			}//endwhile: search var value end.
-						
-			
+
+
 			// Strip whitespaces from end of value.
 			if(valuestart != p){ // not empty!
 				p--;
-				_strip_value_end_whities: 
+				_strip_value_end_whities:
 				c = *p;
 				if(c == ' ' || c == '\t'){
 					*p = '\0';
@@ -321,9 +321,9 @@ static bool configParse(raconf inst,  const char *fileName){
 					goto _strip_value_end_whities;
 				}
 				p++;
-			}					
-			
-			
+			}
+
+
 			// Buildin Hook:
 			if( stricmp(start, "import") == 0){
 				if( configParse(inst, valuestart) != true){
@@ -334,7 +334,7 @@ static bool configParse(raconf inst,  const char *fileName){
 				struct conf_value *v, *o;
 				char key[ (SECTION_LEN+VARNAME_LEN+1+1) ]; //+1 for delimiter, +1 for termination.
 				size_t section_len;
-				
+
 				if(*currentSection == '\0'){ // empty / none
 					strncpy(key, "<unnamed>",9);
 					section_len = 9;
@@ -342,39 +342,39 @@ static bool configParse(raconf inst,  const char *fileName){
 					strncpy(key, currentSection, currentSection_len);
 					section_len = currentSection_len;
 				}
-				
-				key[section_len] = '.'; // Delim
-				
-				strncpy(&key[section_len+1],  start, start_len);
-				
-				key[section_len + start_len + 1] = '\0'; 
 
-				
-				v = makeValue(key, valuestart, (p-valuestart) );				
-				
+				key[section_len] = '.'; // Delim
+
+				strncpy(&key[section_len+1],  start, start_len);
+
+				key[section_len + start_len + 1] = '\0';
+
+
+				v = makeValue(key, valuestart, (p-valuestart) );
+
 				// Try to get the old one before
 				o = strdb_get(inst->db, key);
 				if(o != NULL){
 					strdb_remove(inst->db, key);
-					aFree(o); //			
+					aFree(o); //
 				}
-				
+
 				strdb_put( inst->db, key,  v);
-			}								
-			
-			
+			}
+
+
 		}else{
 			ShowError("Syntax Error: unexpected Character '%c' in %s:%u (offset %u)\n", c, fileName, linecnt, (p-line) );
 			fclose(fp);
 			return false;
 		}
-		
-		
-		
+
+
+
 	}
-	
-	
-	
+
+
+
 	fclose(fp);
 	return true;
 }//end: configParse()
@@ -395,24 +395,24 @@ static bool configParse(raconf inst,  const char *fileName){
 										strncpy(&dest[section_len+1],  key,  key_len); \
 										dest[section_len + key_len + 1] = '\0'; \
 									}
-										
+
 
 raconf  raconf_parse(const char *file_name){
 	struct raconf *rc;
-	
+
 	rc = aCalloc(1, sizeof(struct raconf) );
 	if(rc == NULL){
 		ShowFatalError("raconf_parse: failed to allocate memory for new handle\n");
 		return NULL;
 	}
 
-	rc->db = strdb_alloc(DB_OPT_BASE | DB_OPT_DUP_KEY, 98);	
+	rc->db = strdb_alloc(DB_OPT_BASE | DB_OPT_DUP_KEY, 98);
 	//
-	
+
 	if(configParse(rc, file_name) != true){
 		ShowError("Failed to Parse Configuration file '%s'\n", file_name);
 	}
-	
+
 	return rc;
 }//end: raconf_parse()
 
@@ -420,7 +420,7 @@ raconf  raconf_parse(const char *file_name){
 void raconf_destroy(raconf rc){
 	DBIterator *iter;
 	struct conf_value *v;
-	
+
 	// Clear all entrys in db.
 	iter = db_iterator(rc->db);
 	for( v = (struct conf_value*)dbi_first(iter);  dbi_exists(iter);  v = (struct conf_value*)dbi_next(iter) ){
@@ -429,15 +429,15 @@ void raconf_destroy(raconf rc){
 	dbi_destroy(iter);
 
 	db_destroy(rc->db);
-	
-	aFree(rc);	
-	
+
+	aFree(rc);
+
 }//end: raconf_destroy()
 
 bool raconf_getbool(raconf rc, const char *section, const char *key,  bool _default){
 	char keystr[SECTION_LEN + VARNAME_LEN + 1 + 1];
 	struct conf_value *v;
-	
+
 	MAKEKEY(keystr, section, key);
 
 	v = strdb_get(rc->db, keystr);
@@ -451,7 +451,7 @@ bool raconf_getbool(raconf rc, const char *section, const char *key,  bool _defa
 float raconf_getfloat(raconf rc,const char *section, const char *key, float _default){
 	char keystr[SECTION_LEN + VARNAME_LEN + 1 + 1];
 	struct conf_value *v;
-	
+
 	MAKEKEY(keystr, section, key);
 
 	v = strdb_get(rc->db, keystr);
@@ -465,9 +465,9 @@ float raconf_getfloat(raconf rc,const char *section, const char *key, float _def
 int64 raconf_getint(raconf rc,  const char *section, const char *key, int64 _default){
 	char keystr[SECTION_LEN + VARNAME_LEN + 1 + 1];
 	struct conf_value *v;
-	
+
 	MAKEKEY(keystr, section, key);
-	
+
 	v = strdb_get(rc->db, keystr);
 	if(v == NULL)
 		return _default;
@@ -481,7 +481,7 @@ const char* raconf_getstr(raconf rc,  const char *section, const char *key, cons
 	char keystr[SECTION_LEN + VARNAME_LEN + 1 + 1];
 	struct conf_value *v;
 
-	MAKEKEY(keystr, section, key);	
+	MAKEKEY(keystr, section, key);
 
 	v = strdb_get(rc->db, keystr);
 	if(v == NULL)
@@ -494,11 +494,11 @@ const char* raconf_getstr(raconf rc,  const char *section, const char *key, cons
 bool raconf_getboolEx(raconf rc, const char *section, const char *fallback_section, const char *key, bool _default){
 	char keystr[SECTION_LEN + VARNAME_LEN + 1 + 1];
 	struct conf_value *v;
-	
+
 	MAKEKEY(keystr, section, key);
 	v = strdb_get(rc->db, keystr);
 	if(v == NULL){
-		
+
 		MAKEKEY(keystr, fallback_section, key);
 		v = strdb_get(rc->db, keystr);
 		if(v == NULL){
@@ -506,7 +506,7 @@ bool raconf_getboolEx(raconf rc, const char *section, const char *fallback_secti
 		}else{
 			return v->bval;
 		}
-		
+
 	}else{
 		return v->bval;
 	}
@@ -516,11 +516,11 @@ bool raconf_getboolEx(raconf rc, const char *section, const char *fallback_secti
 float raconf_getfloatEx(raconf rc,const char *section, const char *fallback_section, const char *key, float _default){
 	char keystr[SECTION_LEN + VARNAME_LEN + 1 + 1];
 	struct conf_value *v;
-	
+
 	MAKEKEY(keystr, section, key);
 	v = strdb_get(rc->db, keystr);
 	if(v == NULL){
-		
+
 		MAKEKEY(keystr, fallback_section, key);
 		v = strdb_get(rc->db, keystr);
 		if(v == NULL){
@@ -528,22 +528,22 @@ float raconf_getfloatEx(raconf rc,const char *section, const char *fallback_sect
 		}else{
 			return (float)v->floatval;
 		}
-		
+
 	}else{
 		return (float)v->floatval;
 	}
-	
+
 }//end: raconf_getfloatEx()
 
 
 int64 raconf_getintEx(raconf rc,  const char *section, const char *fallback_section, const char *key, int64 _default){
 	char keystr[SECTION_LEN + VARNAME_LEN + 1 + 1];
 	struct conf_value *v;
-	
+
 	MAKEKEY(keystr, section, key);
 	v = strdb_get(rc->db, keystr);
 	if(v == NULL){
-		
+
 		MAKEKEY(keystr, fallback_section, key);
 		v = strdb_get(rc->db, keystr);
 		if(v == NULL){
@@ -551,7 +551,7 @@ int64 raconf_getintEx(raconf rc,  const char *section, const char *fallback_sect
 		}else{
 			return v->intval;
 		}
-		
+
 	}else{
 		return v->intval;
 	}
@@ -562,11 +562,11 @@ int64 raconf_getintEx(raconf rc,  const char *section, const char *fallback_sect
 const char* raconf_getstrEx(raconf rc,  const char *section, const char *fallback_section, const char *key, const char *_default){
 	char keystr[SECTION_LEN + VARNAME_LEN + 1 + 1];
 	struct conf_value *v;
-	
+
 	MAKEKEY(keystr, section, key);
 	v = strdb_get(rc->db, keystr);
 	if(v == NULL){
-		
+
 		MAKEKEY(keystr, fallback_section, key);
 		v = strdb_get(rc->db, keystr);
 		if(v == NULL){
@@ -574,7 +574,7 @@ const char* raconf_getstrEx(raconf rc,  const char *section, const char *fallbac
 		}else{
 			return v->strval;
 		}
-		
+
 	}else{
 		return v->strval;
 	}

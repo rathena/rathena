@@ -4,16 +4,16 @@
 #ifndef _rA_ATOMIC_H_
 #define _rA_ATOMIC_H_
 
-// Atomic Operations 
+// Atomic Operations
 // (Interlocked CompareExchange, Add .. and so on ..)
-// 
+//
 // Implementation varies / depends on:
 //        - Architecture
 //        - Compiler
 //        - Operating System
 //
 // our Abstraction is fully API-Compatible to Microsofts implementation @ NT5.0+
-// 
+//
 #include "cbasetypes.h"
 
 #if defined(_MSC_VER)
@@ -29,14 +29,14 @@ forceinline int64 InterlockedCompareExchange64(volatile int64 *dest, int64 exch,
         _asm{
                 lea esi,_cmp;
                 lea edi,exch;
-        
+
                 mov eax,[esi];
                 mov edx,4[esi];
                 mov ebx,[edi];
                 mov ecx,4[edi];
                 mov esi,dest;
-                
-                lock CMPXCHG8B [esi];                                        
+
+                lock CMPXCHG8B [esi];
         }
 }
 
@@ -88,11 +88,11 @@ forceinline volatile int64 InterlockedExchange64(volatile int64 *target, int64 v
 #elif defined(__GNUC__)
 
 // The __sync functions are available on x86 or ARMv6+
-//need to proper dig into arm macro, 
+//need to proper dig into arm macro,
 //see http://sourceforge.net/p/predef/wiki/Architectures/
 #if !defined(__x86_64__) && !defined(__i386__) \
         && ( !defined(__ARM_ARCH_VERSION__) || __ARM_ARCH_VERSION__ < 6 ) \
-        && ( !defined(__ARM_ARCH) && __ARM_ARCH < 6 )   
+        && ( !defined(__ARM_ARCH) && __ARM_ARCH < 6 )
 #error Your Target Platfrom is not supported
 #endif
 

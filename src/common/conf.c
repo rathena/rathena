@@ -62,7 +62,7 @@ void config_setting_copy_elem(config_setting_t *parent, const config_setting_t *
 		config_setting_set_format(set, src->format);
 	} else if (CONFIG_TYPE_INT64 == config_setting_type(src)) {
 		set = config_setting_set_int64_elem(parent, -1, config_setting_get_int64(src));
-		config_setting_set_format(set, src->format);   
+		config_setting_set_format(set, src->format);
 	} else if (CONFIG_TYPE_FLOAT == config_setting_type(src)) {
 		config_setting_set_float_elem(parent, -1, config_setting_get_float(src));
 	} else if (CONFIG_TYPE_STRING == config_setting_type(src)) {
@@ -83,10 +83,10 @@ void config_setting_copy_aggregate(config_setting_t *parent, const config_settin
 		return;
 
 	n = config_setting_length(src);
-	
+
 	for (i = 0; i < n; i++) {
 		if (config_setting_is_group(src)) {
-			config_setting_copy_simple(newAgg, config_setting_get_elem(src, i));            
+			config_setting_copy_simple(newAgg, config_setting_get_elem(src, i));
 		} else {
 			config_setting_copy_elem(newAgg, config_setting_get_elem(src, i));
 		}

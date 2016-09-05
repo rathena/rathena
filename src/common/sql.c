@@ -94,7 +94,7 @@ static int Sql_P_Keepalive(Sql* self);
  * @param host : hostname
  * @param port : port
  * @param db : schema name
- * @return 
+ * @return
  */
 int Sql_Connect(Sql* self, const char* user, const char* passwd, const char* host, uint16 port, const char* db)
 {

@@ -217,7 +217,7 @@ void nullpo_info(const char *file, int line, const char *func);
  *    ”õl‚âŠÖŒW•Ï”‚Ì‘‚«o‚µ‚È‚Ç‚É
  *--------------------------------------
  */
-void nullpo_info_f(const char *file, int line, const char *func, 
+void nullpo_info_f(const char *file, int line, const char *func,
                    const char *fmt, ...)
                    __attribute__((format(printf,4,5)));
 

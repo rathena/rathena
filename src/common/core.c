@@ -363,7 +363,7 @@ int main (int argc, char **argv)
 	do_init(argc,argv);
 
 	// Main runtime cycle
-	while (runflag != CORE_ST_STOP) { 
+	while (runflag != CORE_ST_STOP) {
 		int next = do_timer(gettick_nocache());
 		do_sockets(next);
 	}

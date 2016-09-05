@@ -1339,7 +1339,7 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 
 
 /// Resets the length and clears content, so the vector is empty
-/// 
+///
 /// @param __vec Vector
 #define VECTOR_RESET(__vec) \
 	if( VECTOR_LENGTH(__vec) > 0 ) { \

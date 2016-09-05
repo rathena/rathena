@@ -14,7 +14,7 @@
 // For more information, see LICENCE in the main folder
 //
 //
- 
+
 #ifdef WIN32
 #include "winapi.h"
 #endif
@@ -34,7 +34,7 @@ typedef struct __declspec( align(64) ) SPIN_LOCK{
 typedef struct SPIN_LOCK{
 		volatile int32 lock;
 		volatile int32 nest; // nesting level.
-		
+
 		volatile int32 sync_lock;
 } __attribute__((aligned(64))) SPIN_LOCK, *PSPIN_LOCK;
 #endif
@@ -57,8 +57,8 @@ static forceinline void FinalizeSpinLock(PSPIN_LOCK lck){
 
 static forceinline void EnterSpinLock(PSPIN_LOCK lck){
 		int tid = rathread_get_tid();
-		
-		// Get Sync Lock && Check if the requester thread already owns the lock. 
+
+		// Get Sync Lock && Check if the requester thread already owns the lock.
 		// if it owns, increase nesting level
 		getsynclock(&lck->sync_lock);
 		if(InterlockedCompareExchange(&lck->lock, tid, tid) == tid){
@@ -68,17 +68,17 @@ static forceinline void EnterSpinLock(PSPIN_LOCK lck){
 		}
 		// drop sync lock
 		dropsynclock(&lck->sync_lock);
-		
-		
-		// Spin until we've got it ! 
+
+
+		// Spin until we've got it !
 		while(1){
-				
+
 				if(InterlockedCompareExchange(&lck->lock, tid, 0) == 0){
-						
+
 						InterlockedIncrement(&lck->nest);
 						return; // Got Lock
 				}
-				
+
 				rathread_yield(); // Force ctxswitch to another thread.
 		}
 
@@ -89,12 +89,12 @@ static forceinline void LeaveSpinLock(PSPIN_LOCK lck){
 		int tid = rathread_get_tid();
 
 		getsynclock(&lck->sync_lock);
-		
+
 		if(InterlockedCompareExchange(&lck->lock, tid, tid) == tid){ // this thread owns the lock.
 			if(InterlockedDecrement(&lck->nest) == 0)
 					InterlockedExchange(&lck->lock, 0); // Unlock!
 		}
-		
+
 		dropsynclock(&lck->sync_lock);
 }
 

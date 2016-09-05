@@ -427,7 +427,7 @@ void split_time(int timein, int* year, int* month, int* day, int* hour, int* min
 	const int factor_min = 60;
 	const int factor_hour = factor_min*60;
 	const int factor_day = factor_hour*24;
-	const int factor_month = 2629743; // Approx  (30.44 days) 
+	const int factor_month = 2629743; // Approx  (30.44 days)
 	const int factor_year = 31556926; // Approx (365.24 days)
 
 	*year = timein/factor_year;
@@ -459,7 +459,7 @@ double solve_time(char* modif_p) {
 	time_t now = time(NULL);
 	time_t then = now;
 	then_tm = *localtime(&then);
-	
+
 	nullpo_retr(0,modif_p);
 
 	while (modif_p[0] != '\0') {
