@@ -3840,7 +3840,7 @@ IG_Requiem_Egg,4480,1,1,1,1 // 1x Sealed Kiel Card
 IG_Requiem_Egg,18845,1,1,1,1 // 1x Banshee Master Kiss
 IG_Requiem_Egg,18743,1,1,1,1 // 1x Costume Spirit of Chung E
 IG_Requiem_Egg,2720,1,1,1,1 // 1x Medal of Honor Swordman
-IG_Requiem_Egg,2721,1,1,1,1 // 1x Medal of Honor Thief 
+IG_Requiem_Egg,2721,1,1,1,1 // 1x Medal of Honor Thief
 IG_Requiem_Egg,2722,1,1,1,1 // 1x Medal of Honor Acolyte
 IG_Requiem_Egg,18530,1,1,1,1 // 1x The Desperado Mask
 IG_Requiem_Egg,6239,1,1,1,1 // 1x Guarantee_Armor_11Up

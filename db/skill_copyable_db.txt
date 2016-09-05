@@ -23,7 +23,7 @@
 //	 8 = Trans. Shadow Chaser
 //	16 = Baby Rouge
 //	32 = Baby Shadow Chaser
-//	
+//
 // RequirementRemoved (bitmask) removes requirements when casting a copied skill.
 // See 'skill_require_db.txt' for specific skill requirements.
 //	   0 = uses original requirement(s)

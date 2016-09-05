@@ -310,7 +310,7 @@ IG_Jewel,725,10	// Red_Jewel
 IG_Jewel,726,10	// Blue_Jewel
 IG_Jewel,727,10	// White_Jewel
 IG_Jewel,728,10	// Golden_Jewel
-IG_Jewel,729,10	// Bluish_Green_Jewel 
+IG_Jewel,729,10	// Bluish_Green_Jewel
 IG_Jewel,730,5	// Crystal_Jewel
 IG_Jewel,731,4	// Crystal_Jewel_
 IG_Jewel,732,3	// Crystal_Jewel__

@@ -187,7 +187,7 @@
 67,12053,13,0,0,7474,0,966,20,961,10,518,1,7453,1
 //-- Tentacle and Cheese Gratin <-- 10 Tentacle, 10 Cheese, 5 Yam, 1 Sweet Sauce
 68,12058,13,0,0,7474,0,962,10,548,10,549,5,7453,1
-//-- Fried Sweet Potato with Syrup <-- 10 Potato, 10 Yam, 1 Sweet Potato, 1 Sweet Sauce 
+//-- Fried Sweet Potato with Syrup <-- 10 Potato, 10 Yam, 1 Sweet Potato, 1 Sweet Sauce
 69,12068,13,0,0,7474,0,516,10,549,10,633,1,7453,1
 
 //--------------------LEVEL 4-----------
@@ -198,7 +198,7 @@
 71,12054,14,0,0,7475,0,962,30,509,10,7194,10,7031,1,1024,20
 //-- Rib with Herbs and Spices <-- 5 Meat, 3 Red Herb, 2 Yellow Herb, 3 Green Herb, 1 Sweet Sauce, 1 Lemon
 72,12044,14,0,0,7475,0,517,5,507,3,508,2,511,3,7453,1,568,1
-//-- Cream Sandwich <-- 5 Bread, 15 Milk, 10 Cheese, 10 Yellow Herb, 1 Meat, 1 Sweet Sauce 
+//-- Cream Sandwich <-- 5 Bread, 15 Milk, 10 Cheese, 10 Yellow Herb, 1 Meat, 1 Sweet Sauce
 73,12064,14,0,0,7475,0,580,5,519,15,548,10,508,10,517,1,7453,1
 //-- Lutie Mixed Cold Noodles <-- 3 Grain, 1 Hot Sauce, 10 Ice Cubic, 10 Carrot, 10 Jack o' Pumpkin
 74,12059,14,0,0,7475,0,577,3,7455,1,7066,10,515,10,1062,10
@@ -472,7 +472,7 @@
 174,1046,26,2494,1,955,40,753,5
 //-- Petite DiablOfs Horn <-- GN_CHANGEMATERIAL Lv1, 5 Stone Heart, 10 Resin
 175,1038,26,2494,1,953,5,907,10
-//-- Root Of Maneater <-- GN_CHANGEMATERIAL Lv1, 25 Talon, 20 Tooth Of 
+//-- Root Of Maneater <-- GN_CHANGEMATERIAL Lv1, 25 Talon, 20 Tooth Of
 176,1033,26,2494,1,917,25,1044,20
 //-- Conch <-- GN_CHANGEMATERIAL Lv1, 5 Gill, 25 Immortal Heart
 177,961,26,2494,1,956,5,929,25

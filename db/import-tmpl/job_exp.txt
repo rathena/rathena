@@ -1,6 +1,6 @@
 // Experience Tables [Custom]
 // Supports up to base level 1000 and job level 255
-// Uncomment the rows below, enter the max level you want and replace "x" by the list of classes 
+// Uncomment the rows below, enter the max level you want and replace "x" by the list of classes
 // you want these to apply to. You can also write your own exp requirements.
 //
 // Structure of Database:

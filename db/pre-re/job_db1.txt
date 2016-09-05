@@ -152,12 +152,12 @@
 // Star Gladiator (Union)
 4048, 28000,90   ,650  ,470  ,400  ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,500  ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000
 // Soul Linker
-4049, 24000,75   ,500  ,900  ,500  ,575  ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,625  ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 , 625 
+4049, 24000,75   ,500  ,900  ,500  ,575  ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,625  ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 ,2000 , 625
 //================================
 // 3CeAM r664 Base
 //
 // Note: All settings below are based on what the previous job was. A Rune Knight will have the same values
-// as a Knight, a Ranger will have the same values as a Hunter, etc. 
+// as a Knight, a Ranger will have the same values as a Hunter, etc.
 //
 // Note 2: Gangsi is currently using Acolyte settings, Death Knight using Knight settings and Dark Collector
 // is using Sage settings. Its mainly like this for these 3 jobs because of the temp sprite that shows when

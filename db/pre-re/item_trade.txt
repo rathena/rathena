@@ -197,7 +197,7 @@
 7603,499,100	// RO Party Invitation Ticket
 5201,499,100	// Party Hat
 
-// 2006 Indonesia Honor Ring item 
+// 2006 Indonesia Honor Ring item
 2674,507,100	// Ring of Honor
 
 // 2006 Korean Harvest Moon Day Event item
