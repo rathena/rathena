@@ -140,8 +140,8 @@ hu_fild04,0,0,0,0	monster	Swift Novus	2729,2,300000,0
 hu_fild02,0,0,0,0	monster	Solid Novus	2730,2,300000,0
 hu_fild01,0,0,0,0	monster	Novus Ringleader	2731,2,300000,0
 mag_dun02,0,0,0,0	monster	Furious Nightmare Terror	2732,2,300000,0
-gl_chyard_,0,0,0,0	monster	Elusive Wraith Dead (Nightmare)	2733,2,300000,0
-gl_cas02_,0,0,0,0	monster	Furious Wanderer (Nightmare)	2734,2,300000,0
+gl_chyard_,0,0,0,0	monster	Elusive Wraith Dead (Nightmare)	2733,2,180000,0
+gl_cas02_,0,0,0,0	monster	Furious Wanderer (Nightmare)	2734,2,180000,0
 man_fild01,0,0,0,0	monster	Solid Nephentes	2735,2,300000,0
 abbey03,0,0,0,0	monster	Necromancer Ringleader	2736,2,300000,0
 xmas_dun02,0,0,0,0	monster	Furious Myst Case	2737,2,300000,0
