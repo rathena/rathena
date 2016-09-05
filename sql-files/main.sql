@@ -235,7 +235,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   KEY `party_id` (`party_id`),
   KEY `guild_id` (`guild_id`),
   KEY `online` (`online`)
-) ENGINE=MyISAM AUTO_INCREMENT=150000; 
+) ENGINE=MyISAM AUTO_INCREMENT=150000;
 
 --
 -- Table structure for table `char_reg_num`
@@ -281,7 +281,7 @@ CREATE TABLE IF NOT EXISTS `charlog` (
   `luk` int(11) unsigned NOT NULL default '0',
   `hair` tinyint(4) NOT NULL default '0',
   `hair_color` int(11) NOT NULL default '0'
-) ENGINE=MyISAM; 
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `elemental`
@@ -552,14 +552,14 @@ CREATE TABLE IF NOT EXISTS `hotkey` (
 	PRIMARY KEY (`char_id`,`hotkey`)
 ) ENGINE=MyISAM;
 
--- 
+--
 -- Table structure for table `interlog`
 --
 
 CREATE TABLE IF NOT EXISTS `interlog` (
   `time` datetime NOT NULL default '0000-00-00 00:00:00',
   `log` varchar(255) NOT NULL default ''
-) ENGINE=MyISAM; 
+) ENGINE=MyISAM;
 
 --
 -- Table structure for table `interreg`
@@ -648,7 +648,7 @@ CREATE TABLE IF NOT EXISTS `login` (
   `old_group` tinyint(3) NOT NULL default '0',
   PRIMARY KEY  (`account_id`),
   KEY `name` (`userid`)
-) ENGINE=MyISAM AUTO_INCREMENT=2000000; 
+) ENGINE=MyISAM AUTO_INCREMENT=2000000;
 
 -- added standard accounts for servers, VERY INSECURE!!!
 -- inserted into the table called login which is above
