@@ -4,7 +4,7 @@
 //= MouseJstr
 //===== Last Updated: ========================================
 //= 20100108
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Demonstrates PCRE commands.
 //============================================================
 
@@ -121,7 +121,7 @@ Lquote12:
 	}
         end;
 
-//    I am glad 
+//    I am glad
 Lquote13:
 	switch(rand(3)) {
 		case 0: npctalk "How have I helped you to be "+$@p2$+""; break;
@@ -130,7 +130,7 @@ Lquote13:
 	}
         end;
 
-//    I am sad 
+//    I am sad
 Lquote14:
 	switch(rand(2)) {
 		case 0: npctalk "I am sorry to hear you are depressed"; break;
@@ -161,7 +161,7 @@ Lquote17:
 	}
         end;
 
-//    same 
+//    same
 Lquote18:
         npctalk "What other connections do you see?";
         end;
@@ -219,7 +219,7 @@ Lquote24:
 	}
         end;
 
-//   you are 
+//   you are
 Lquote25:
         npctalk "What makes you think I am "+$@p2$+" ?";
         end;
@@ -233,7 +233,7 @@ Lquote26:
 	}
         end;
 
-//    were you 
+//    were you
 Lquote27:
 	switch(rand(3)) {
 		case 0: npctalk "Perhaps I was "+$@p2$+""; break;
@@ -242,7 +242,7 @@ Lquote27:
 	}
         end;
 
-//   I can't 
+//   I can't
 Lquote28:
 	switch(rand(2)) {
 		case 0: npctalk "Maybe you could "+$@p3$+" now"; break;
@@ -250,7 +250,7 @@ Lquote28:
 	}
         end;
 
-//    I feel 
+//    I feel
 Lquote29:
         npctalk "Do you often feel "+$@p2$+" ?";
         end;
@@ -265,7 +265,7 @@ Lquote31:
         npctalk "Perhaps in your fantasy we "+$@p3$+" each other?";
         end;
 
-//   why don't you 
+//   why don't you
 Lquote32:
 	switch(rand(3)) {
 		case 0: npctalk "Should you "+$@p3$+" yourself?"; break;
@@ -274,7 +274,7 @@ Lquote32:
 	}
         end;
 
-//   yes 
+//   yes
 Lquote33:
 	switch(rand(3)) {
 		case 0: npctalk "You seem quite positive"; break;
@@ -297,7 +297,7 @@ Lquote35:
         npctalk "Can you be more specific?";
         end;
 
-//    everyone 
+//    everyone
 Lquote36:
 	switch(rand(4)) {
 		case 0: npctalk "surely not everyone"; break;
@@ -307,7 +307,7 @@ Lquote36:
 	}
         end;
 
-//  always 
+//  always
 Lquote37:
 	switch(rand(4)) {
 		case 0: npctalk "Can you think of a specific example?"; break;
@@ -328,7 +328,7 @@ Lquote38:
 	}
         end;
 
-//   perhaps 
+//   perhaps
 Lquote39:
         npctalk "You do not seem quite certain";
         end;

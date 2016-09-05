@@ -23,7 +23,7 @@ Name: Name in English for displaying as output for @ and script commands.
 
 ---------------------------------------
 
-Type: 
+Type:
 	0	Healing item.
 	2	Usable item.
 	3	Etc item

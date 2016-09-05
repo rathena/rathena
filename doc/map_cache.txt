@@ -5,7 +5,7 @@
 //===== Last Updated: ========================================
 //= 20070724
 //===== Description: =========================================
-//= A complete manual for rAthena's map cache generator as 
+//= A complete manual for rAthena's map cache generator as
 //= well as a reference on the map cache format used.
 //============================================================
 

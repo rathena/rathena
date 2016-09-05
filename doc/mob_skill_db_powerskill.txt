@@ -8,7 +8,7 @@
 //= Reference for monster level 10 skills.
 //============================================================
 
-When a monster uses a level 10 skill on Aegis, it will be much stronger than the 
+When a monster uses a level 10 skill on Aegis, it will be much stronger than the
 normal player version. On rAthena we reflect this by giving the monster a skill
 level above the maximum player level.
 The following lists explains the skill specialities and the corresponding level

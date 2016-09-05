@@ -4,7 +4,7 @@
 //= rAthena Dev Team
 //===== Last Updated: ========================================
 //= 20140208
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Contains commands needed for a guild warehouse NPC.
 //============================================================
 
@@ -12,7 +12,7 @@ prontera,165,188,4	script	Guild Warehouse	112,{
 	cutin "kafra_06",2;
 
 	mes "[Guild Warehouse Coupler]";
-	mes "This is the guild warehouse coupler service."; 
+	mes "This is the guild warehouse coupler service.";
 	mes "You will not receive zeny for this is a test.";
 	next;
 	if (select("Access Guild Warehouse","Exit") != 1) {

@@ -4,7 +4,7 @@
 //= rAthena Dev Team
 //===== Last Updated: ========================================
 //= 20070915
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= An example of how duplicate NPCs are handled:
 //=  NPC variables are shared between all duplicates.
 //=  Each duplicate knows its own map coordinates.

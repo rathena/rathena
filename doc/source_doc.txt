@@ -27,7 +27,7 @@ The following terms will be frequently used throughout this file, so it is
 important to have a thorough understanding of what they are to avoid confusion.
 
   Term          Description
-  ----          -----------  
+  ----          -----------
   serv          a program/daemon that runs indefinitely offering a service
   host          a machine that has one or more servs running
   command       a request of an action on the server or client
@@ -64,7 +64,7 @@ We have 3 types of communication:
 
   2. serv <=> client  (AC,CA,HC,CH,ZC,CZ)
      This is what our servs send or receive to a player client.
-	
+
   3. serv <=> console/terminal
      This is the only kind of communication which doesn't use packets (currently).
      It's only done in localhost from console to servs (a way to input args in servs runtime).
@@ -110,7 +110,7 @@ For real table names, see 'conf/inter_athena.conf'.
   reg_db                permanent character variables (ex. ADVJOB)
   skill_db              character learned skill database
   interlog_db           inter-serv logs
-  memo_db               character Memo_point database 
+  memo_db               character Memo_point database
   guild_db              guild record (name, master, lv, exp, emblem, etc.)
   guild_alliance_db     guild relations database (allies, enemies)
   guild_castle_db       guild owned castle database
@@ -182,7 +182,7 @@ The following list describes each module and its purpose.
   ------         -----------
   atomic         adapter to atomic operations for Windows API
   cbasetypes     adapter to OS and arch specification (function name, bit representation)
-  cli            console Line Interface handling (get arguments from terminal at beginning and runtime) 
+  cli            console Line Interface handling (get arguments from terminal at beginning and runtime)
   conf           facade of libconfig api
   core           MAIN program entry (initialization of each serv starts here)
   db             database module (create, parse, and destroy databases)
@@ -290,7 +290,7 @@ The following list describes each module and its purpose.
   pc             functions for player processing (loot/drop/delete items, player bonus handling, player dead, etc.)
   pc_groups      functions for players groups system (manage player permissions and atcommand access)
   pet            functions for the pet system (similar to mercenary, homunculus, player, etc.)
-  quest          functions for the quest log system (add, complete, remove, etc.) 
+  quest          functions for the quest log system (add, complete, remove, etc.)
   script         handles script language logic (used in NPC scripts), script commands, and mapflags
   searchstore    functions for the Vendor Shop Search feature
   skill          functions for skills (skill_casttime calculation, skill behaviours, skill_chk_cast, requirement checks, 'db/skill_*.txt' processing)

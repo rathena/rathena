@@ -142,7 +142,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- u_group :
 		- account_id :
 	desc:
-		- 
+		-
 
 0x2721:
 	Type: AH

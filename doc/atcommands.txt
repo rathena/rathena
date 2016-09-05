@@ -55,7 +55,7 @@ Other Drop Rates: MvP 1.00x / Card-Based 1.00x / Treasure 1.00x
 @time
 
 Displays the local server time, along with day/night information.
- 
+
 ---------------------------------------
 
 @uptime
@@ -279,13 +279,13 @@ Map Name: prontera | Players In Map: 1 | NPCs In Map: 127 | Chats In Map: 0
 ------ Map Flags ------
 Town Map
 Autotrade Enabled
-PvP Flags: 
-GvG Flags: 
-Teleport Flags: 
+PvP Flags:
+GvG Flags:
+Teleport Flags:
 No Exp Penalty: On | No Zeny Penalty: On
-Weather Flags: Displays Night | 
-Other Flags: NoBranch | Reset | 
-Other Flags: 
+Weather Flags: Displays Night |
+Other Flags: NoBranch | Reset |
+Other Flags:
 
 ---------------------------------------
 
@@ -293,7 +293,7 @@ Other Flags:
 
 Gives information about terrain/area (debug function).
 
-Output Example: 
+Output Example:
 prontera (x= 165, y= 202) 00 00 00 00 00
 prontera (x= 165, y= 201) 01 00 00 00 00
 prontera (x= 165, y= 200) 01 00 00 00 00
@@ -327,7 +327,7 @@ DEF:2 MDEF:5 STR:6 AGI:1 VIT:1 INT:1 DEX:6 LUK:5
 ATK:8~9 Range:1~10~12 Size:Medium Race:Plant Element:Water (Lv:1)
 Drops:
  - Jellopy 70.00% - Knife[4] 1.00% etc...
- 
+
 ---------------------------------------
 
 @iteminfo <item name/ID>
@@ -347,7 +347,7 @@ NPC Buy:6z, Sell:3z | Weight: 1.0
 @whodrops <item name/ID>
 
 Displays a list of mobs which drop the specified item.
-Only the highest drop rates are shown. 
+Only the highest drop rates are shown.
 
 ---------------------------------------
 
@@ -582,7 +582,7 @@ Displays the text as a normal message with the format "*name <message>*" instead
 @storage
 
 Opens your Kafra storage.
- 
+
 ---------------------------------------
 
 @mail
@@ -1295,7 +1295,7 @@ Blocks or unblocks a player from logging in indefinitely.
 @charban <+/- time> <player name>
 @charunban <player name>
 
-Bans or unbans a player for a limited time. 
+Bans or unbans a player for a limited time.
 (Very similar to @ban and but for 1 character only)
 Time elements: y/a, m, d/j, h, mn, s
 
@@ -1442,7 +1442,7 @@ Example:
 @party <party_name>
 
 Organizes a new party, with the attached character as leader.
- 
+
 ---------------------------------------
 
 @partyoption <pickup share: yes/no> <item distribution: yes/no>
@@ -1519,7 +1519,7 @@ Changes guild level by the specified amount.
 @undisguiseguild
 
 Disguises or undisguises all online characters of a guild.
- 
+
 ---------------------------------------
 
 @sizeguild <size> <guild name>
@@ -1536,7 +1536,7 @@ Warps all online characters of a guild to your location.
 
 @guildspy <guild name>
 
-Allows you to spy on any guild's Guild Chat. 
+Allows you to spy on any guild's Guild Chat.
 At least one member of that guild must be online.
 NOTE: map server needs to be configured to enable spying to use this command (enable_spy: yes)
 

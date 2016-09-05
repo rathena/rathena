@@ -4,7 +4,7 @@
 //= rAthena Dev Team
 //===== Last Updated: ========================================
 //= 20160306
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Shows how to use the navigateto command.
 //=
 //= NOTE:

@@ -277,7 +277,7 @@ Number	Description
 258.	Elemental Endow (Earth)
 259.	Map Light Pillar Animation 3
 260.	Map Light Pillar Animation 4
-261.	Fury Cast Animation 
+261.	Fury Cast Animation
 262.	Raging Quadruple Blow
 263.	Raging Quadruple Blow 2
 264.	(Nothing)

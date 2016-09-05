@@ -76,7 +76,7 @@ RequiredWeapons: Weapon type needed to use the skill.
 	28: Dagger + Sword
 	29: Dagger + Axe
 	30: Sword + Axe
-	
+
 Up to 30 ':'-separated values can be used, e.g.
     type1:type2:type3
 

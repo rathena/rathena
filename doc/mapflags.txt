@@ -119,7 +119,7 @@ is disabled in '/conf/battle/items.conf'.
 
 Disables normal monsters and MVPs from dropping items on a map. Looted items will always drop.
 'noloot' is the same as 'nomobloot' and 'nomvploot' combined.
-		
+
 ---------------------------------------
 
 *noexp

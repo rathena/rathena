@@ -5,8 +5,8 @@
 //===== Last Updated: ========================================
 //= 20120826
 //===== Description: =========================================
-//= This file should help to understand and manage bit-wise 
-//= quest variables. You can store up to 31 boolean value into 
+//= This file should help to understand and manage bit-wise
+//= quest variables. You can store up to 31 boolean value into
 //= a single variable.
 //============================================================
 

@@ -1,23 +1,23 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Sample: Localized NPC
-//===== By: ================================================== 
+//===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
 //= 20140208
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Example of a localized NPC.
-//= 
+//=
 //= There are many ways to do it, this is just one option.
-//= The player has a global account variable ##_langid_ that 
+//= The player has a global account variable ##_langid_ that
 //= identifies the it's language.
-//= 
+//=
 //= The default language should always have langid 0.
-//= When a message isn't found for the player's langid 
+//= When a message isn't found for the player's langid
 //= (strlen = 0), the message from langid 0 is used instead.
-//= 
-//= Each message is identified by a string that must only 
+//=
+//= Each message is identified by a string that must only
 //= contain valid variable name characters.
-//= 
+//=
 //= void setlang(int langid)
 //= - sets the player's language
 //= int getlang(void)
@@ -28,10 +28,10 @@
 //= - returns the localized text of name
 //= void mes2(string name)
 //= - displays the localized text of name
-//= 
-//===== Additional Comments: ================================= 
+//=
+//===== Additional Comments: =================================
 //= To use this globally, just put the functions in Global_Functions.txt
-//============================================================ 
+//============================================================
 
 //////////////////////////////////////////////////////////////
 /// Sets the language of the player account.
@@ -85,7 +85,7 @@ function	script	getmes2	{
 
 //////////////////////////////////////////////////////////////
 /// mes for localized text.
-/// index should be a unique string, made up only of characters 
+/// index should be a unique string, made up only of characters
 /// that are valis as a variable name
 /// @param index	Message identifier
 function	script	mes2	{

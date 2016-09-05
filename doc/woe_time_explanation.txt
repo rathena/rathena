@@ -81,7 +81,7 @@ Now, the last part of the script, regarding the end of WoE time:
 	end;
 
 This is the same as before, but it's checking for the day in the first gettime() and
-the hour on the second. If both conditions are true, WoE will end. We're checking 
+the hour on the second. If both conditions are true, WoE will end. We're checking
 here for the end time, not the start.
 
 Another important thing is "OnAgitInit:". This special label will be run as soon as the

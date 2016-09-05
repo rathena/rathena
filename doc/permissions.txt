@@ -110,7 +110,7 @@ Allows player to do normal item actions with bounded items (drop, sell,
 trade, etc.).
 
 ---------------------------------------
- 
+
 *item_unconditional
 
 Allows player to consume any consumable item regardless the requirements
