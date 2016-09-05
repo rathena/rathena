@@ -8466,11 +8466,10 @@ Mark Color:
 ============================
 ---------------------------------------
 
-*waitingroom2bg_single(<battle group>,"<map name>",<x>,<y>,"<npc name>");
+*waitingroom2bg_single(<battle group>,{"<map name>",<x>,<y>{,"<npc name>"}});
 
-Adds the first waiting player from the chat room of the given NPC to an
-existing battleground group and warps it to the specified coordinates on
-the given map.
+Adds the first waiting player from the chat room of the given NPC to an existing battleground group.
+The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
 
 ---------------------------------------
 
@@ -8494,7 +8493,7 @@ Example:
 
 *bg_create("<map name>",<x>,<y>{,"<On Quit Event>","<On Death Event>"});
 
-Creates an instance of battleground battle group that can be used in other battleground commands.
+Creates an instance of battleground battle group that can be used with other battleground commands.
 
 <map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
 <On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
@@ -8504,10 +8503,9 @@ Returns battle group ID on success. Returns 0 on failure.
 
 ---------------------------------------
 
-*bg_join(<battle group>,"<map name>",<x>,<y>{,<char id>});
+*bg_join(<battle group>,{"<map name>",{<x>,<y>{,<char id>}});
 
-Adds attached player or <char id> (if specified) to an existing battleground group and warps it to the specified coordinates
-<x> and <y> on the given map.
+Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
 
 Returns true on success. Returns false on failure.
 
