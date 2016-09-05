@@ -18747,6 +18747,12 @@ BUILDIN_FUNC(bg_create) {
 	check_event(st, ev);
 	check_event(st, dev);
 
+	if ((bg_id = bg_create(mapindex, x, y, ev, dev)) == 0)
+	{ // Creation failed
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
 	script_pushint(st, bg_id);
 	return SCRIPT_CMD_SUCCESS;
 }
