@@ -12389,7 +12389,7 @@ BUILDIN_FUNC(getcastledata)
 
 	if (gc == NULL) {
 		script_pushint(st,0);
-		ShowWarning("buildin_setcastledata: guild castle for map '%s' not found\n", mapname);
+		ShowWarning("buildin_getcastledata: guild castle for map '%s' not found\n", mapname);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -12418,7 +12418,7 @@ BUILDIN_FUNC(getcastledata)
 				break;
 			}
 			script_pushint(st,0);
-			ShowWarning("buildin_setcastledata: index = '%d' is out of allowed range\n", index);
+			ShowWarning("buildin_getcastledata: index = '%d' is out of allowed range\n", index);
 			return SCRIPT_CMD_FAILURE;
 	}
 	return SCRIPT_CMD_SUCCESS;
