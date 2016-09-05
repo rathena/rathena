@@ -1,0 +1,32 @@
+//===== rAthena Script =======================================
+//= Mapflag: hidehpbar.
+//===== Description: =========================================
+//= Hide monster's HP bar (added in episode 14.2).
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Capuche]
+//============================================================
+
+// Izlude Academy
+iz_ac01	mapflag	hidehpbar
+iz_ac01_a	mapflag	hidehpbar
+iz_ac01_b	mapflag	hidehpbar
+iz_ac01_c	mapflag	hidehpbar
+iz_ac01_d	mapflag	hidehpbar
+
+// WoE TE castle
+te_prtcas01	mapflag	hidehpbar
+te_prtcas02	mapflag	hidehpbar
+te_prtcas03	mapflag	hidehpbar
+te_prtcas04	mapflag	hidehpbar
+te_prtcas05	mapflag	hidehpbar
+te_aldecas1	mapflag	hidehpbar
+te_aldecas2	mapflag	hidehpbar
+te_aldecas3	mapflag	hidehpbar
+te_aldecas4	mapflag	hidehpbar
+te_aldecas5	mapflag	hidehpbar
+
+// TODO : info on TE dungeon
+// teg_dun01	mapflag	hidehpbar
+// teg_dun02	mapflag	hidehpbar
+
+// TODO : info on WoE FE & SE castle / dungeon
