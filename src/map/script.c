@@ -18653,14 +18653,10 @@ BUILDIN_FUNC(waitingroom2bg)
 	}
 
 	map_name = script_getstr(st,2);
-	if( strcmp(map_name,"-") != 0 )
-	{
-		mapindex = mapindex_name2id(map_name);
-		if( mapindex == 0 )
-		{ // Invalid Map
-			script_pushint(st,0);
-			return SCRIPT_CMD_SUCCESS;
-		}
+	if (strcmp(map_name, "-") != 0 && (mapindex = mapindex_name2id(map_name)) == 0)
+	{ // Invalid Map
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	x = script_getnum(st,3);
@@ -18670,10 +18666,8 @@ BUILDIN_FUNC(waitingroom2bg)
 	if(script_hasdata(st,6))
 		dev = script_getstr(st,6); // Die Event
 
-	if (ev[0] != '\0')
-		check_event(st, ev);
-	if (dev[0] != '\0')
-		check_event(st, dev);
+	check_event(st, ev);
+	check_event(st, dev);
 
 	if( (bg_id = bg_create(mapindex, x, y, ev, dev)) == 0 )
 	{ // Creation failed
@@ -18737,14 +18731,10 @@ BUILDIN_FUNC(bg_create) {
 	int x, y, mapindex = 0, bg_id;
 
 	map_name = script_getstr(st, 2);
-	if (strcmp(map_name, "-") != 0)
-	{
-		mapindex = mapindex_name2id(map_name);
-		if (mapindex == 0)
-		{ // Invalid Map
+	if (strcmp(map_name, "-") != 0 && (mapindex = mapindex_name2id(map_name)) == 0)
+	{ // Invalid Map
 			script_pushint(st, 0);
 			return SCRIPT_CMD_SUCCESS;
-		}
 	}
 
 	x = script_getnum(st, 3);
@@ -18754,16 +18744,8 @@ BUILDIN_FUNC(bg_create) {
 	if(script_hasdata(st, 6))
 		dev = script_getstr(st, 6); // Die Event
 
-	if (ev[0] != '\0')
-		check_event(st, ev);
-	if (dev[0] != '\0')
-		check_event(st, dev);
-
-	if ((bg_id = bg_create(mapindex, x, y, ev, dev)) == 0)
-	{ // Creation failed
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
-	}
+	check_event(st, ev);
+	check_event(st, dev);
 
 	script_pushint(st, bg_id);
 	return SCRIPT_CMD_SUCCESS;
@@ -18788,9 +18770,8 @@ BUILDIN_FUNC(bg_join) {
 	y = script_getnum(st, 5);
 	sd = script_charid2sd(6, sd);
 
-	if (bg_team_join(bg_id, sd))
+	if (bg_team_join(bg_id, sd) && pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) == SETPOS_OK)
 	{
-		pc_setpos(sd, mapindex, x, y, CLR_TELEPORT);
 		script_pushint(st, 1);
 	}
 	else

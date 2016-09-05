@@ -8509,7 +8509,7 @@ Returns battle group ID on success. Returns 0 on failure.
 Adds attached player or <char id> (if specified) to an existing battleground group and warps it to the specified coordinates
 <x> and <y> on the given map.
 
-Returns 1 on success. Returns 0 on failure.
+Returns true on success. Returns false on failure.
 
 ---------------------------------------
 
