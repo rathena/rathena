@@ -1,17 +1,17 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Pile Bunker Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= JayPee Mateo
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= 1.0 A Pile Bunker quest based on iRO WiKi. [JayPee Mateo]
 //= 2.0 Rewrited the Script a little so it looks a bit better. [Masao]
 //= 2.1 Switched to official script, coded by Gennosuke Kouga. [Euphy]
 //= 2.2 Updated to match the official script. [Euphy]
-//============================================================ 
+//============================================================
 
 // Main NPC :: mech_book
 //============================================================

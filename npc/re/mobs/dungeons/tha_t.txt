@@ -87,7 +87,7 @@ tha_t06,0,0,0,0	monster	Plasma	1694,10,5000,0,0
 tha_t06,0,0,0,0	monster	Maero of Thanatos	1706,2,5000,0,0
 
 //==================================================
-// tha_t07 - Thanatos Tower - Upper Level 
+// tha_t07 - Thanatos Tower - Upper Level
 //==================================================
 tha_t07,0,0,0,0	monster	Baroness of Retribution	1702,15,5000,0,0
 tha_t07,0,0,0,0	monster	Death Word	1698,10,5000,0,0

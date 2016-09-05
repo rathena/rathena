@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Izlude Town Renewal
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Masao
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Izlude town NPCs.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version. Still missing many new NPCs and their dialogues. [Masao]
 //= 1.1 Updated to match the official script. [Euphy]
 //= 1.2 Added Channel Warper and Izlude duplicates. [Euphy]

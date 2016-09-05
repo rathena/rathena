@@ -3945,7 +3945,7 @@ ecl_fild01,70,285,4	script	Giranni#eclbig	4_F_FAIRY2,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Hmm? Where did it go? Did I drop it on the way?";
-			close;	
+			close;
 		}
 		mes "- You describe the corpse that you found in the field and show the piece of wing -";
 		next;
@@ -4347,7 +4347,7 @@ OnTouch:
 			mes "It's probably nothing.";
 			mes "I should just go on my way~";
 			close;
-		}	
+		}
 	}
 }
 
@@ -6618,7 +6618,7 @@ ecl_in04,208,194,3	script	Daughter Luen#eclage2	4_F_FAIRYKID2,{
 						mes "I didn't understand him better.";
 						next;
 						select("I... I see...");
-					}		
+					}
 				}
 				break;
 			case 5:
@@ -6926,7 +6926,7 @@ ecl_in04,208,194,3	script	Daughter Luen#eclage2	4_F_FAIRYKID2,{
 							completequest 9260;
 						changequest 9235,9236;
 						ep14_2_detect = 10;
-					}	
+					}
 				}
 				close;
 			case 6:
@@ -12588,7 +12588,7 @@ OnTouch:
 	else if (checkquest(1222) == 2 && (ep14_2_profe == 4 || ep14_2_profe == 5)) {
 		mes "Professor Worm's notes on this wall have already been read.";
 		Wallnotes(5,1);
-		close;	
+		close;
 	}
 }
 
@@ -12790,7 +12790,7 @@ ecl_fild01,173,95,7	script	Diary Frog No. 30#worm	4_FROG,{
 		mes "I'm so mad, I ought'a throw this out!";
 		next;
 		mes "It seems that a continued search for diary recordings would be meaningless. I should go back to Professor Worm.";
-		close;	
+		close;
 	}
 	mes "[Diary Frog No. 30]";
 	if (ep14_2_profe < 9) {
@@ -13134,7 +13134,7 @@ ecl_in01,32,52,5	script	Traveler Fome#tl01	4_F_DOGTRAVELER,3,3,{
 		mes "I'm debating whether I should just go back or go to Mora Village...";
 	}
 	close;
-	
+
 OnTouch:
 	if (ep14_2_mylord == 0 && BaseLevel > 98) {
 		mes "A group of travelers of Alpheim are having a conversation.";
@@ -17062,7 +17062,7 @@ OnEnable:
 	monster "que_avan01",29,36,"DARK_PRIEST",1198,1,"#avtmanager::OnMyMobDead";
 	monster "que_avan01",29,32,"DARK_PRIEST",1198,1,"#avtmanager::OnMyMobDead";
 	end;
-	
+
 OnReset:
 	mapwarp "que_avan01","eclage",265,275;
 	killmonster "que_avan01","#avtmanager::OnMyMobDead";
@@ -17078,7 +17078,7 @@ OnReset:
 	hideoffnpc "#tltimer";
 	$111204_avantlabo = 0;
 	end;
-	
+
 OnMyMobDead:
 	if (mobcount ("que_avan01","#avtmanager::OnMyMobDead") == 0) {
 		mapannounce "que_avan01","Hisie: This is it for you! Avant!!",bc_map,"0x7b68ee";
@@ -17099,7 +17099,7 @@ que_avan01,26,41,3	script	Avant Magic Scholar#tlac	4_M_FAIRYAVANT,{
 	initnpctimer;
 	monster "que_avan01",26,38,"HIDDEN_MOB",2337,1,"Avant Magic Scholar#tlac::OnMyMobDead";
 	end;
-	
+
 OnInit:
 	hideonnpc "Avant Magic Scholar#tlac";
 	end;

@@ -1,21 +1,21 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Malangdo Enchants
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Muad_Dib
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.0.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Adds enchantments to many high level weapons in exchange
 //= for Malangdo coins.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version. [Euphy]
 //= 1.0.1 Added 'delequip' command. [Euphy]
 //= 1.0.2 Remove redundant usage of 'getarg' [Cydh]
 //= 1.0.3 Fixed typo in 1.0.2 [Dastgir]
-//============================================================ 
+//============================================================
 
 // Enchanter NPC :: mal_yong
 //============================================================

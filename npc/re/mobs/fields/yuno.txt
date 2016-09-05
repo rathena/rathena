@@ -25,7 +25,7 @@
 //============================================================
 
 //==================================================
-// yuno_fild01 - Border Posts 
+// yuno_fild01 - Border Posts
 //==================================================
 yuno_fild01,0,0,0,0	monster	Geographer	1368,50,5000,0,0
 yuno_fild01,0,0,0,0	monster	Dustiness	1114,35,5000,0,0
@@ -109,7 +109,7 @@ yuno_fild08,0,0,0,0	monster	Green Plant	1080,10,180000,90000,1
 yuno_fild08,0,0,0,0	monster	Yellow Plant	1081,10,180000,90000,1
 
 //==================================================
-// yuno_fild09 - Schwaltzvalt Guards Camp 
+// yuno_fild09 - Schwaltzvalt Guards Camp
 //==================================================
 yuno_fild09,0,0,0,0	monster	Grand Peco	1369,130,5000,0,0
 yuno_fild09,0,0,0,0	monster	Sleeper	1386,30,5000,0,0

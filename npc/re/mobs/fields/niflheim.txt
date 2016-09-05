@@ -127,7 +127,7 @@ OnInit:
 		monster "niflheim",83,216,"Loli Ruri",1505,1,strnpcinfo(3)+"::OnInvasionMonsters";
 		break;
 	}
-	
+
 	monster "niflheim",154,95,"Disguise",1506,1,strnpcinfo(3)+"::OnInvasionMonsters";
 	monster "niflheim",115,65,"Disguise",1506,1,strnpcinfo(3)+"::OnInvasionMonsters";
 	monster "niflheim",330,195,"Disguise",1506,1,strnpcinfo(3)+"::OnInvasionMonsters";

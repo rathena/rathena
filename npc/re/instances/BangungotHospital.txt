@@ -1,20 +1,20 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Bangungot Hospital 2F
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Euphy
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Save the hospital in Port Malaya from Bangungot.
 //= Part of the "Nurse in Port Malaya" quest.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version. [Euphy]
 //= 1.1 Added GM management function. [Euphy]
 //= 1.2 Added VIP features. [Euphy]
-//============================================================ 
+//============================================================
 
 // Instance Creation :: ma_hos_enter
 //============================================================
@@ -406,7 +406,7 @@ OnInstanceInit:
 	disablenpc instance_npcname("#Memorial Start_time");
 	end;
 OnEnable:
-	specialeffect EF_BAT2,AREA,instance_npcname("#Memorial Start"); 
+	specialeffect EF_BAT2,AREA,instance_npcname("#Memorial Start");
 	initnpctimer;
 	end;
 OnDisable:

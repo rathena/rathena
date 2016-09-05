@@ -1,22 +1,22 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Kafras (Cities/Dungeons/Fields)
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Joseph
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
 //= Argument settings for callfunc "F_Kafra":
 //=  arg(0): 0 - Default Kafra message
 //=          1 - Niflhiem Kafra message
 //=          2 - Guild Kafra message
-//=  arg(1): 1 - Disable teleport menu 
+//=  arg(1): 1 - Disable teleport menu
 //=  arg(2): 1 - Disable info menu
 //=  arg(3): Cost of Storage service
 //=  arg(4): Cost of Rent a Pushcart service
-//===== Additional Comments: ================================= 
-//= 0.x Previous Authors: 
+//===== Additional Comments: =================================
+//= 0.x Previous Authors:
 //=     - L0ne_W0lf, Daegaladh
 //= 1.0 Merged and cleaned up Kafras. [Euphy]
 //= 1.1 Added Dewata Kafra. [Lemongrass]
@@ -24,7 +24,7 @@
 //= 1.3 Added Eden Group Kafra. [Euphy]
 //= 1.3a Moved Rune Knight Kafra from job file. [Euphy]
 //= 1.4 Added Izlude duplicates. [Euphy]
-//============================================================ 
+//============================================================
 
 // Brasilis
 //============================================================

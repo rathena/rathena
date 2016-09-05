@@ -9,14 +9,14 @@
 //===== Description: =========================================
 //= Warp Points for Rachel City, shops & other locations
 //===== Additional Comments: =================================
-//= 1.0 Added the official warps and commented out the 
+//= 1.0 Added the official warps and commented out the
 //= 	  "custom duplicates" for future checkout. Special thanks
 //= 	  to RockmanEXE who provided all the info. [erKURITA]
 //= 1.1 Added warp to Veins Field [Playtester]
 //= 1.2 Fully official rachel warps [Playtester]
 //= 1.2a Added missing warp (Pope's office entryway -> temple) [L0ne_W0lf]
 //= 1.3 Updated Rachel -> Veins Field warp. [L0ne_W0lf]
-//= 1.4 Disabled rachel33, moved to quest_rachel.txt [L0ne_W0lf] 
+//= 1.4 Disabled rachel33, moved to quest_rachel.txt [L0ne_W0lf]
 //= 1.5 Renewal warp adjustments.
 //============================================================
 

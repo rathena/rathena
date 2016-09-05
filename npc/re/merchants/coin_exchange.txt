@@ -4,7 +4,7 @@
 //= rAthena Dev Team
 //===== Current Version: =====================================
 //= 1.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
@@ -1026,7 +1026,7 @@ ecl_in01,33,98,5	script	Herb Merchant Plafina#a	443,{
 	delitem 6081,.cost[.@item]*.@buy; //Splendide_Coin
 	getitem .items[.@item],.@buy;
 	close;
-	
+
 OnInit:
 	setarray .items[0],12812,12813,12814,12815;
 	setarray .cost[0],5,5,1,1;	//Splendide Coins

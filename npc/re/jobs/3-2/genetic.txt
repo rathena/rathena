@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Genetic Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Muad_Dib, Aeomin
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job change Quest from Alchemist / Creator -> Genetic.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version. [Masao]
 //= 1.1 Fixed Scatter Stuff NPCs [JayPee].
 //= 1.2 Updated dialogue. Credits to Muad_Dib. [Joseph]

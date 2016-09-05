@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Al De Baran Guides
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Guides for the city of Al De Baran.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version, Renewal guide.
 //= 1.1 Navigation system update. [Euphy]
 //=     Optimized.
-//============================================================ 
+//============================================================
 
 aldebaran,139,63,4	script	Guide#01aldebaran::GuideAldearan	105,{
 	cutin "prt_soldier",2;

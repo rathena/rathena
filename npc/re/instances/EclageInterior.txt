@@ -1,18 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Eclage Instance Script
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Dastgir
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Eclage Interior Instance
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Converted from the official Aegis script. [Dastgir]
 //= 1.1 Converted from Hercules script to rAthena script & Small bug fix. [Skorm]
-//============================================================ 
+//============================================================
 
 ecl_hub01,132,12,3	script	Chief of Staff#tl02	435,{
 	.@party_id = getcharid(1);
@@ -344,20 +344,20 @@ OnMyMobDead:
 	warp "1@ecl",146,29;
 	end;
 }
-	
+
 1@ecl,148,29,3	script	Loki#ecl01	512,{
 	mes "[Loki]";
 	mes "It seems like this guy next to me has a lot more to say than I do.";
 	mes "Why don't you explain to him first?";
 	close;
-}	
-	
+}
+
 1@ecl,147,30,3	script	Nydhog#ecl01	510,{
 	mes "[Guardian Nydhog]";
 	mes "I think you should talk to Hisie first.";
 	close;
 }
-	
+
 1@ecl,144,27,5	script	Hisie#ecl01	623,{
 	cutin "hisie01",0;
 	mes "[Hisie]";

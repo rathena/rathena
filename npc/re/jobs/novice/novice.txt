@@ -2271,7 +2271,7 @@ S_Warp:
 	savepoint getarg(0),getarg(1),getarg(2);
 	warp getarg(0),getarg(3),getarg(4);
 	end;
-	
+
 OnTouch:
 	emotion e_gasp;
 	end;

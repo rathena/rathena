@@ -784,7 +784,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("Sara Irene#talk01");
 	end;
-}	
+}
 
 1@sara,128,296,6	script	Sara Irene#talk02	668,5,5,{
 	end;
@@ -808,7 +808,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("Sara Irene#talk02");
 	end;
-}	
+}
 
 1@sara,124,230,6	script	Sara Irene#talk03	668,5,5,{
 	end;
@@ -832,7 +832,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("Sara Irene#talk03");
 	end;
-}	
+}
 
 1@sara,174,227,6	script	Sara Irene#talk04	668,5,5,{
 	end;
@@ -856,7 +856,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("Sara Irene#talk04");
 	end;
-}	
+}
 
 1@sara,203,259,6	script	Sara Irene#talk05	668,5,5,{
 	end;
@@ -880,7 +880,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("Sara Irene#talk05");
 	end;
-}	
+}
 
 1@sara,256,279,4	script	Sara Irene#talk06	668,5,5,{
 	end;
@@ -904,7 +904,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname("Sara Irene#talk06");
 	end;
-}	
+}
 
 1@sara,228,282,6	script	Sara Irene#talk07	668,5,5,{
 	end;
@@ -1236,8 +1236,8 @@ OnEnable:
 	monster .@map$,254,93,"Guard Dog",2545,1,instance_npcname("#MobsSara03")+"::OnMyMobDead";
 	monster .@map$,254,94,"Guard Dog",2545,1,instance_npcname("#MobsSara03")+"::OnMyMobDead";
 
-	monster .@map$,228,65,"Payon Soldier",2543,1,instance_npcname("#MobsSara03")+"::OnMyMobDead";	
-	monster .@map$,228,64,"Payon Soldier",2543,1,instance_npcname("#MobsSara03")+"::OnMyMobDead";	
+	monster .@map$,228,65,"Payon Soldier",2543,1,instance_npcname("#MobsSara03")+"::OnMyMobDead";
+	monster .@map$,228,64,"Payon Soldier",2543,1,instance_npcname("#MobsSara03")+"::OnMyMobDead";
 	monster .@map$,228,63,"Payon Soldier",2543,1,instance_npcname("#MobsSara03")+"::OnMyMobDead";
 	monster .@map$,228,62,"Payon Soldier",2543,1,instance_npcname("#MobsSara03")+"::OnMyMobDead";
 

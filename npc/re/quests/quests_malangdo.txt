@@ -4613,7 +4613,7 @@ mal_in02,187,58,3	script	Chef Nyas	548,{
 			setquest 7276;
 			set mal_food,0;
 			erasequest 7280+.@i;
-			
+
 			// Quantities grouped in 10s repeating.
 			// [ 3, 3, 6, 6, 9, 9, 12, 12, 15, 18 ]
 			// Last group [ 61 - 66 ] receives 25 constant.

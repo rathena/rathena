@@ -6,11 +6,11 @@
 //= 1.1
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Disables the following items:
 //=   Dead Branch (604), Bloody Branch (12103),
 //=   Red Pouch (12024), Poring Box (12109)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added Izlude duplicates. [Euphy]
 //= 1.2 Added Nightmare Clock Tower [Lemongrass]

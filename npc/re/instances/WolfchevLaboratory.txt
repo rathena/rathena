@@ -1060,7 +1060,7 @@ OnInstanceInit:
 OnEnable:
 	specialeffect EF_LIGHTSPHERE;
 	enablenpc instance_npcname("Manual Sheet#1_1");
-	end; 
+	end;
 }
 
 // Left Valve
@@ -1666,7 +1666,7 @@ On01:
 	monster .@map$,85,58,"Starving Lab animal",2242,1,.@label$;
 	monster .@map$,82,60,"Starving Lab animal",2243,1,.@label$;
 	monster .@map$,83,58,"Starving Lab animal",2243,1,.@label$;
-	monster .@map$,85,56,"Starving Lab animal",2243,1,.@label$;		
+	monster .@map$,85,56,"Starving Lab animal",2243,1,.@label$;
 	monster .@map$,86,60,"Starving Lab animal",2243,1,.@label$;
 	monster .@map$,87,58,"Starving Lab animal",2243,1,.@label$;
 	end;
@@ -1936,7 +1936,7 @@ OnEnable:
 		end;
 	case 13:
 		donpcevent instance_npcname("Howard Alt-Eisen#boss13")+"::OnEnable";
-		end; 
+		end;
 	}
 
 OnDisable:

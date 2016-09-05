@@ -4076,7 +4076,7 @@ S_Enchant:
 			// erasequest 7240;// Equipment Enhancement
 			// setquest 7241;// Errands for Thorn timer
 			changequest 7240,7241;
-			getitem2 getarg(0),1,1,0,0,0,0,.@1st,.@2nd;						
+			getitem2 getarg(0),1,1,0,0,0,0,.@1st,.@2nd;
 			mes "[Thorn]";
 			mes "Ok, seems that the enhancement went well.";
 			mes "If you don't like the result then you can come back again tomorrow.";

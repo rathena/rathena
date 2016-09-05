@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= El Dicastes Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Gennosuke Kouga, Muad_Dib
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= El Dicastes Town Script
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Standardized. [Euphy]
 //= 1.2 Updated to match the official script. [Joseph]
@@ -26,7 +26,7 @@ dicastes01,194,159,5	script	Excited Galten#a	492,{
 		mes "As long as we have him,";
 		mes "it will only be a matter of time before Sapha";
 		mes "will rule this land.";
-		close; 
+		close;
 	}
 	mes "¡ø¢²¢£ ¡Ð ¡ò¡ð¡ð";
 	mes "¡÷¡ø¡ñ ¡ü ¡ü";
@@ -49,7 +49,7 @@ dicastes01,202,86,3	script	Sentinel#a	4_MAN_GALTUN,{
 		next;
 		mes "[Sentinel]";
 		mes "Hey, you are an outsider!";
-		close; 
+		close;
 	}
 	mes "¡ô¢±¢± ¡û ¡ó¡Ð¡ñ ¢£ ¢¤¡ú";
 	mes "¡ø¡ó¢² ¢¤ ";
@@ -60,7 +60,7 @@ dicastes01,202,86,3	script	Sentinel#a	4_MAN_GALTUN,{
 	next;
 	mes "[Sentinel]";
 	mes "¡ñ¡ö¡ï ¡ú ¡ó¢³¡ô";
-	close;	
+	close;
 }
 
 dicastes01,194,95,5	script	Sentinel#b	450,{
@@ -69,7 +69,7 @@ dicastes01,194,95,5	script	Sentinel#b	450,{
 		mes "I permit your entry.";
 		mes "But if you dare to cause trouble";
 		mes "you won't know what hit you. Beware!";
-		close; 
+		close;
 	}
 	mes "¡ø¡ô¡ü ¡ø ¡ó";
 	mes "¡ø¡ï¡û ¡ó ¡û¢¤¢² ¡÷ ¢£";
@@ -96,7 +96,7 @@ dicastes01,244,166,0	script	Training Galten#b	450,{
 	if (isequipped(2782)) {
 		mes "I wonder if Ahat knows how";
 		mes "hard I am training.";
-		close; 
+		close;
 	}
 	mes "¡ø¡ô¡ü ¡ø";
 	mes "¡ø¡ô¡ü ¡ø ¡ø¡ô¡ü ¡ø ¡ø¡ô¡ü ¡ø";
@@ -127,7 +127,7 @@ dicastes01,248,129,0	script	Training Galten#d	450,{
 		mes "I heard this isn't training";
 		mes "equipment but a massager";
 		mes "for trainees like me.";
-		close; 
+		close;
 	}
 	mes "¡ø¡ô¡ü ¡ø ¡ø¡ô¡ü";
 	mes "¡ø¡ô¡ü ¡ø¡ ø¡ô¡ü ¡ø";
@@ -155,7 +155,7 @@ dic_in01,349,282,4	script	Waiting Galten#in_1	492,{
 		mes "[Waiting Galten]";
 		mes "Here is the Battle Station.";
 		mes "We are all tensed up to be ready for action.";
-		close;	 
+		close;
 	}
 	mes "[¢²¡Ð¡û ¡ù ¡Ð]";
 	mes "¡ñ¡õ¡ü ¢£ ¡ó";
@@ -167,7 +167,7 @@ dic_in01,370,261,1	script	Waiting Galten#in_2	492,{
 	if (isequipped(2782)) {
 		mes "[Waiting Galten]";
 		mes "Boring.";
-		close; 
+		close;
 	}
 	mes "[¢²¡Ð¡û ¡ù ¡Ð]";
 	mes "¡ù¢¤¢±";
@@ -178,7 +178,7 @@ dic_in01,381,261,1	script	Waiting Galten#in_3	492,{
 	if (isequipped(2782)) {
 		mes "[Waiting Galten]";
 		mes "Zzzzz...";
-		close; 
+		close;
 	}
 	mes "[¢²¡Ð¡û ¡ù ¡Ð]";
 	mes "¡ú¡ô";
@@ -189,7 +189,7 @@ dic_in01,370,282,4	script	Waiting Galten#in_4	492,{
 	if (isequipped(2782)) {
 		mes "[Waiting Galten]";
 		mes "El Dicastes is the most peaceful place in this world as long as I am here.";
-		close; 
+		close;
 	}
 	mes "[¢²¡Ð¡û ¡ù ¡Ð]";
 	mes "¡ï¡ï¢³ ¡þ ¡ö¢³¢£ ¢± ¢³¡û¡õ ¡ø ¡þ¡ï¡ï ¡ø ¡û";
@@ -200,7 +200,7 @@ dic_in01,354,219,4	script	Resting Galten#in_5	492,{
 	if (isequipped(2782)) {
 		mes "[Resting Galten]";
 		mes "Resting is always so sweet.";
-		close; 
+		close;
 	}
 	mes "[¡õ¡ø¡ò ¡ü ¢¤]";
 	mes "¡ï¡õ¡ù ¡ö ¡ò¡ð¢² ¢³ ¡ö";
@@ -214,7 +214,7 @@ dic_in01,365,197,1	script	Resting Galten#in_6	492,{
 		next;
 		mes "[Resting Galten]";
 		mes "You say I don't look like I'm resting? But I'm already used to this.";
-		close; 
+		close;
 	}
 	mes "[¡õ¡ø¡ò ¡ü ¢¤]";
 	mes "¡ô¡ï¢¤ ¡ö ¡ù¡ð¡ñ ¡ü ¡ó¡û¡û";
@@ -230,7 +230,7 @@ dic_in01,29,119,4	script	Resting Piom#04	489,{
 	if (isequipped(2782)) {
 		mes "[Resting Piom]";
 		mes "Why is it so noisy when I'm trying to get rest?";
-		close; 
+		close;
 	}
 	mes "[¢£¡ù¡ò ¢¤ ¡ù]";
 	mes "¡ü¢²¡ð ¡Ð ¡ò¡ø¢² ¡ô ¢²¡õ";
@@ -246,7 +246,7 @@ dic_in01,91,113,5	script	Suspicious Piom#a	489,{
 		if(select("Nope!:You first.") == 1) {
 			mes "[Suspicious Piom]";
 			mes "Never mind.";
-			close; 
+			close;
 		}
 		mes "[Suspicious Piom]";
 		mes "Oh, you do seem to know?";
@@ -258,11 +258,11 @@ dic_in01,91,113,5	script	Suspicious Piom#a	489,{
 			mes "[Suspicious Piom]";
 			mes "I'm only a very curious";
 			mes "ordinary Piom.";
-			close; 
+			close;
 		}
 		mes "[Suspicious Piom]";
 		mes "I am not going to say anything, either!";
-		close; 
+		close;
 	}
 	mes "¡ó¢³¡ó ¡ó ¡ó¡þ¡ö";
 	mes "¡õ ¢³¢²¡÷ ¡ó¡ó";
@@ -270,7 +270,7 @@ dic_in01,91,113,5	script	Suspicious Piom#a	489,{
 	if(select("Can't tell what it means:Is it a curse??") == 2) {
 		mes "[Suspicious Piom]";
 		mes "Too bad.";
-		close; 
+		close;
 	}
 	mes "[Suspicious Piom]";
 	mes "Be on your";
@@ -285,7 +285,7 @@ dic_in01,168,116,5	script	Tired Piom#c	491,{
 		mes "information, you'd have better";
 		mes "luck with the Cat Merchant than wandering around here.";
 		mes "But of course you'll have to pay the price.";
-		close; 
+		close;
 	}
 	mes "¡þ¡õ¡ð ¢³ ¢³¡þ";
 	mes "¡þ¡ø¡ð ¡ö ¡ñ¡ú¡ð ¡ò";
@@ -302,7 +302,7 @@ dic_in01,149,104,5	script	Tired Piom#b	455,{
 		mes "I think the effects are weaker than before,";
 		mes "or is it just me?";
 		emotion e_what;
-		close; 
+		close;
 	}
 	mes "¡ð¡Ð¡ú ¡ø ¢²";
 	mes "¡ö¡õ¡ó ¢¤ ¡ò¡ò¢³ ¡ô ¡ô¡ó¡ñ";
@@ -327,7 +327,7 @@ dic_in01,341,113,3	script	Tired Piom#a	491,{
 		emotion e_swt;
 		mes "[Tired Piom]";
 		mes "I'll be rejected again, right?";
-		close; 
+		close;
 	}
 	mes "¡÷¡ò¡û ¡ó ¡ó¡Ð¢±";
 	mes "¡ó¡õ¡ù ¡þ ¡ò¢±¡ñ ¡õ ¢£";
@@ -364,7 +364,7 @@ dic_in01,32,54,5	script	Venknick#el_01	449,{
 		mes "[Venknick]";
 		mes "Oh feels so refreshed.";
 		mes "The refined Bradium was the best ever. Do you want to try some?";
-		close; 
+		close;
 	}
 	mes "[¡ó¡ò¡ð]";
 	mes "¡ù¡ó¢¤ ¢± ¢£";
@@ -408,7 +408,7 @@ dic_in01,360,125,5	script	Serious Venknicka	449,{
 		mes "A sudden increase in Bradium production.";
 		mes "Why?";
 		mes "I will have to get more factory lines running.";
-		close; 
+		close;
 	}
 	mes "¡û¡õ¡ñ ¢² ¢²¢¤¡Ð ¢² ¡ü¡ñ¡õ";
 	mes "¡þ¡ó¡ö ¢²";
@@ -418,7 +418,7 @@ dic_in01,360,125,5	script	Serious Venknicka	449,{
 
 dic_in01,42,250,5	script	Guide#diel_1	489,{
 	if (isequipped(2782)) {
-		if (ep13_3_invite > 5) {		
+		if (ep13_3_invite > 5) {
 			mes "[Guide]";
 			mes "I'm Dior, your kind guide for El Dicastes.";
 			mes "How can I help you?";
@@ -437,7 +437,7 @@ dic_in01,42,250,5	script	Guide#diel_1	489,{
 			mes "[Guide]";
 			mes "Oh, you didn't ask?";
 			mes "But since I'm Dior, the kind guide. He he.";
-			close; 
+			close;
 		}
 		mes "- The guide looks at you with an alert expression. -";
 		close;
@@ -465,14 +465,14 @@ dic_in01,42,250,5	script	Guide#diel_1	489,{
 
 dic_in01,335,34,5	script	Talkative Piom#a	490,{
 	mes "[Talkative Piom]";
-	if (isequipped(2782)) {	
+	if (isequipped(2782)) {
 		mes "At my factory";
 		mes "we not only refine Bradium,";
 		mes "but we also produce various";
 		mes "tools for daily use.";
 		mes "We manufacture war supplies";
 		mes "here too.";
-		close; 
+		close;
 	}
 	mes "¡ü¡ù¢± ¢³";
 	mes "¡÷¡ø¡ï ¡þ ¡ó¡ó";
@@ -488,7 +488,7 @@ dic_in01,387,30,1	script	Manuk Piom#a	454,{
 	if (isequipped(2782)) {
 		mes "You! We met in Manuk, didn't we?";
 		mes "I've come to pick up the weapon I ordered.";
-		close; 
+		close;
 	}
 	mes "¡ü¡ó¡þ ¡ó ¡ï¡ð¢¤ ¡ü ¡ð¢±";
 	mes "¡ù¡ô¡ï ¡ú ¡ñ¡ù¢³ ¡ó ¡ò¡ö¡ó ¡ô¡ô";
@@ -503,7 +503,7 @@ dicastes01,282,210,4	script	Free Knit#a	453,{
 		mes "Saphas can live forever.";
 		mes "Our childhood lasts 10 years,";
 		mes "which is short.";
-		close; 
+		close;
 	}
 	mes "¡ñ¡þ¡ð ¡ó ¡ü¡ò¡ö ¡÷";
 	mes "¢³¡ð¡ï ¢£ ¡ù¡ô¡ò ¡ô ¡ó¡þ¡ñ ¢² ¡ñ¡û¢£ ¢²";
@@ -527,7 +527,7 @@ dicastes01,246,210,3	script	Free Venknick#a	449,{
 		mes "[Free Venknick]";
 		mes "The thing rolling around is a gem,";
 		mes "but why are you interested in it?";
-		close; 
+		close;
 	}
 	mes "¡ô¡ï¢£ ¢¤ ¡÷¡õ¢± ¡ü ¡ñ¡õ";
 	mes "¡ü¢³";
@@ -549,7 +549,7 @@ dicastes01,235,245,4	script	Excited Piom#a	490,{
 		mes "Have you seen Ahat?";
 		emotion e_ho;
 		mes "His popularity here in El Discastes is phenomenal!";
-		close; 
+		close;
 	}
 	mes "[Excited Piom]";
 	mes "¡ú¡þ¡ó ¢³ ¡ü¢²¡ñ ¢±";
@@ -566,7 +566,7 @@ dicastes01,284,262,3	script	Favorable Knit#a	453,{
 		mes "We start by living together in common facilities after we are born.";
 		mes "That is why all Saphas are like family.";
 		mes "We never have any quarrels between classes.";
-		close; 
+		close;
 	}
 	mes "¡ô¢±¡ó ¡õ ¡ú¡÷¡Ð ¡õ";
 	mes "¡ü¡ï¡Ð ¡õ ¡ô¡ó¡ü ¡ó ¢³";
@@ -585,7 +585,7 @@ dicastes01,164,180,4	script	Limpy Piom#a	489,{
 		mes "I hope it doesn't come all";
 		mes "the way to the capital city here.";
 		emotion e_dots;
-		close; 
+		close;
 	}
 	mes "¢²¡ô¡þ ¡ù ¡õ¡Ð";
 	mes "¢³¡ô¡û ¡ú ¡ø";
@@ -610,7 +610,7 @@ dicastes01,191,202,4	script	Complaining Galten#fihs	450,{
 			mes "[Complaining Galten]";
 			mes "Then you don't know about the legend behind the statue?";
 			mes "Then, I don't know what to talk about with you.";
-			close; 
+			close;
 		}
 		emotion e_gg,0,"Crazy Venknick#fihsing1";
 		mes "[Complaining Galten]";
@@ -645,7 +645,7 @@ dicastes01,202,197,4	script	Crazy Venknick#fihsing1	449,{
 		if(select("Give 5000 Zeny.:Don't give 5000 Zeny.") == 2) {
 			mes "[Crazy Venknick]";
 			mes "Don't come back with regrets.";
-			close; 
+			close;
 		}
 		if (Zeny < 5000) {
 			mes "[Crazy Venknick]";
@@ -653,7 +653,7 @@ dicastes01,202,197,4	script	Crazy Venknick#fihsing1	449,{
 			mes "no legend to share with";
 			mes "the poor.";
 			close;
-			close; 
+			close;
 		}
 		set Zeny, Zeny-5000;
 		mes "[Crazy Venknick]";
@@ -676,7 +676,7 @@ dicastes01,202,197,4	script	Crazy Venknick#fihsing1	449,{
 		sc_start SC_Blind,20000,0;
 		next;
 		mes "You feel outraged at being tricked.";
-		close; 
+		close;
 	}
 	mes "[¡ö¡ú¡ù ¢³ ]";
 	mes "¢²¡û¡ó ¡ó ¡ù¢¤¡ø";

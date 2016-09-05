@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Expanded Super Novice Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Euphy
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1a
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Job Change quest for Expanded Super Novice class.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 All dialogue is custom, contains some incorrect behaviors.
 //= 1.1 Switched to a translated copy of the official script
 //=     by Gennosuke Kouga, but vastly edited its content. [Euphy]
 //= 1.1a Replaced effect numerics with constants. [Euphy]
-//============================================================ 
+//============================================================
 
 function	script	Esseray_Ex	{
 	if (BaseLevel > 98 && JobLevel > 98) {
@@ -479,7 +479,7 @@ beach_dun2,119,92,4	script	Fishing Novice#sp2	567,{
 		nude;
 		callfunc "F_ClearJobVar"; // -- Clears all job variables for the current player
 		jobchange roclass(eaclass()|EAJL_THIRD);
-		set EXSUPNOV_Q,5;	
+		set EXSUPNOV_Q,5;
 		emotion e_heh;
 		mes "[Nodor]";
 		mes "Puhahahahahahahahahahah!!";

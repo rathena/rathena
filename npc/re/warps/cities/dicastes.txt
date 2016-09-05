@@ -11,7 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Added Elevators.
-//= 1.2 Removed a warp. [Joseph] 
+//= 1.2 Removed a warp. [Joseph]
 //= 1.3 Updated to match official script. [Joseph]
 //============================================================
 

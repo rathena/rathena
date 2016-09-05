@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Wanderer Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Muad_Dib, Meyraw
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job change Quest from Dancer / Gypsy -> Wanderer.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Updated dialogue to be more official / accurate. Huge thanks to Muad_Dib! [Masao]
 //= 1.2 Fixed an endless loop in dialogue.

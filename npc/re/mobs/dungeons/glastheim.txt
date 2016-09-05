@@ -37,7 +37,7 @@ gl_cas01,0,0,0,0	monster	Owl Baron	1295,6,5000,0,0
 gl_cas01,0,0,0,0	monster	Alice	1275,1,5000,0,0
 
 //==================================================
-// gl_cas02 - Glast Heim 2f 
+// gl_cas02 - Glast Heim 2f
 //==================================================
 gl_cas02,0,0,0,0	monster	Wanderer	1208,41,5000,0,0
 gl_cas02,0,0,0,0	monster	Raydric	1163,36,5000,0,0

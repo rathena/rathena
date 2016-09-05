@@ -1,20 +1,20 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Mechanic Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Muad_Dib
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Jobchange Quest from Blacksmith / Whitesmith -> Mechanic.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version. [Masao]
 //= 1.1 Fixed the Door NPC [JayPee].
 //= 1.2 Updated script. [Euphy]
 //= 1.3 Added VIP features. [Euphy]
-//============================================================ 
+//============================================================
 
 yuno,129,156,3	script	Chainheart	923,{
 	mes "[Chainheart]";

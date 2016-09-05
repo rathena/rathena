@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Old Glast Heim
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Ziu, Heris (translation)
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Discover the history of events that took place in the
 //= Glast Heim castle and how it ended up in ruins.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version. [Euphy]
 //=     This is a custom version, and may contain bugs.
 //= 1.1 Bug fixes; removed redundant OnInstanceInit scripts.
-//============================================================ 
+//============================================================
 
 glast_01,204,273,6	script	Hugin#ghinstance	755,{
 	mes "^ff0000This isn't considered a normal progression dungeon. Please note this point.^000000";
@@ -367,7 +367,7 @@ OnTimer35000:
 	end;
 OnTimer45000:
 	npctalk "Himmelmez : Hohoho, do you have any questions? You're a really mysterious man.", instance_npcname("Himmelmez#ghinstance1");
-	end;	
+	end;
 OnTimer50000:
 	npctalk "Himmelmez : Not coveting the king's throne, you're such a stupid man, only waiting for his return. Your innocence is true, I love it.", instance_npcname("Himmelmez#ghinstance1");
 	end;
@@ -404,7 +404,7 @@ OnTimer85000:
 	hideonnpc instance_npcname("Khalitzburg Crusader#22");
 
 	set .@map$, instance_mapname("1@gl_k");
-	set .@label$, instance_npcname("#talkinstance1")+"::OnMyMobDead"; 
+	set .@label$, instance_npcname("#talkinstance1")+"::OnMyMobDead";
 	monster .@map$,145,59,"Abyss Knight",2470,1,.@label$;
 	monster .@map$,154,59,"Abyss Knight",2470,1,.@label$;
 	monster .@map$,145,69,"Abyss Knight",2470,1,.@label$;
@@ -445,7 +445,7 @@ OnTimer88000:
 	hideonnpc instance_npcname(".#ghinstance22");
 
 	set .@map$, instance_mapname("1@gl_k");
-	set .@label$, instance_npcname("#talkinstance1")+"::OnMyMobDead"; 
+	set .@label$, instance_npcname("#talkinstance1")+"::OnMyMobDead";
 	monster .@map$,145,54,"Khalitzburg",2471,1,.@label$;
 	monster .@map$,154,54,"Khalitzburg",2471,1,.@label$;
 	monster .@map$,145,64,"Khalitzburg",2471,1,.@label$;
@@ -1478,7 +1478,7 @@ OnEnable:
 }
 
 2@gl_k,158,252,3	script	Himmelmez#ghinstance4	650,4,4,{
-	end;	
+	end;
 OnInstanceInit:
 OnDisable:
 	hideonnpc instance_npcname("Himmelmez#ghinstance4");

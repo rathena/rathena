@@ -1,18 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Mr. Smile Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Daegaladh, Masao
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Trade Clover, Fluff and Jellopy for a Mr. Smile mask.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Updated to match the new Izlude Map. [Masao]
 //= 1.1 Added Izlude duplicates. [Euphy]
-//============================================================ 
+//============================================================
 
 izlude,125,175,4	duplicate(SmileHelper)	Smile Assistance#iz	92
 izlude_a,125,175,4	duplicate(SmileHelper)	Smile Assistance#iz_a	92

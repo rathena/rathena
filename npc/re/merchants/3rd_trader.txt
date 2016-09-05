@@ -1,16 +1,16 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= 3rd Item Seller
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Masao, Mercurial
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Sells some 3rd Job related items:
 //= - Poison Herbs, Rune Stones, Rare Herbs, Points
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Optimized Poison Herb Salesman NPC
 //= 1.2 Optimized and standardized. [Euphy]
@@ -18,7 +18,7 @@
 //= 1.4 Updated to match the official scripts. [Euphy]
 //= 1.5 Added Izlude duplicates. [Euphy]
 //= 1.5a Remove useless array & misc. [Capuche]
-//============================================================ 
+//============================================================
 
 // Poison Herb Merchants (Guillotine Cross) :: poison_herb_3rd_trader
 //============================================================

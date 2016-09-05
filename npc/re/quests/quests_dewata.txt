@@ -1287,7 +1287,7 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 			mes "Once you bring the oil palm nuts, Mr. Memo will exchange them with oil.";
 			close;
 		} else if ((.@j & 2) || (.@j & 8) || (.@j & 32)) {
-			
+
 			// .@i[]: <required amount>,<quest ID>,<reward amount>,<free weight>
 			if (.@j & 2)
 				setarray .@i[0],20,5046,10,5000;

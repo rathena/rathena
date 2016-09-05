@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Dewata Town
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Gennosuke Kouga, Muad_Dib
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Dewata Town Script
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Standardized. [Euphy]
 //= 1.2 Fixed Zeny check. [Joseph]
@@ -77,7 +77,7 @@ dewata,229,49,6	script	Alberta Sailor#dewata	536,{
 }
 
 // Generic Dewata NPCs :: dewata_npc
-//============================================================ 
+//============================================================
 dewata,221,237,5	script	Young Man#dew-1	536,{
 	mes "[Fruit Fancier]";
 	mes "What's wrong with your faaaaaace? You must really be clueless!";
@@ -505,7 +505,7 @@ dewata,89,191,6	script	Small Shrine#dew1	844,{
 			"Lover","Girl friend","Boy friend"; //128
 		setarray .@index[0],
 			1,1,2,2,2,2,4,4,8,8,8,16,16,16,16,16,32,32,32,32,32,32,64,64,64,128,128,128;
-			
+
 		if (.@good_luck == 7 || .@good_luck == 77 || .@good_luck == 777 || .@good_luck == 7777)
 			set .@bonus,1;
 		for(set .@i,0; .@i<getarraysize(.@wishes$); set .@i,.@i+1) {

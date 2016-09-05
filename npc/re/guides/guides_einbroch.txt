@@ -1,18 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Einbroch and Einbech Guides
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Guides for the cities of Einbroch and Einbech.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version, Renewal guides.
 //= 1.1 Navigation system update. [Euphy]
-//============================================================ 
+//============================================================
 
 einbroch,72,202,4	script	Einbroch Guide#ein01::GuideEinbroch	852,{
 	cutin "ein_soldier",2;

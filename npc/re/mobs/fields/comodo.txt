@@ -67,7 +67,7 @@ cmd_fild06,293,235,5,5	monster	Yellow Plant	1081,2,1800000,900000,1
 cmd_fild06,84,375,10,10	monster	Yellow Plant	1081,3,1800000,900000,1
 
 //==================================================
-// cmd_fild07 - Beacon Island, Pharos 
+// cmd_fild07 - Beacon Island, Pharos
 //==================================================
 cmd_fild07,0,0,0,0	monster	Raggler	1254,100,5000,0,0
 cmd_fild07,0,0,0,0	monster	Aster	1266,30,5000,0,0

@@ -168,7 +168,7 @@ moc_para01,26,15,3	script	Primo d'Buffer	790,{
 moc_para01,53,30,3	script	Clearchus	470,{
 	if (checkquest(62238,PLAYTIME) > -1 && checkquest(62238,PLAYTIME) < 2) {
 		mes "You must wait for the timer to finish before you can hire a new mercenary.";
-		close;	
+		close;
 	}
 	mes "[Clearchus]";
 	mes "Greetings young adventurer! I represent the Midgardian Mercenary Mission.";
@@ -478,7 +478,7 @@ moc_para01,50,39,4	script	Eve Natalia	882,{
 moc_para01,48,184,2	script	Gum & Manual Exchanger	562,{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
 		mes "You're carrying too many items right now.";
-		close;	
+		close;
 	}
 	mes "[Trader Machine]";
 	mes "Insert Bubble Gums and/or Battle Manuals to trade for higher efficiency Gums and Manuals.";

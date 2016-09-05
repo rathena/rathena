@@ -1,20 +1,20 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Falcon & Wolf Flute Trader
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Masao, Muad_Dib, Ziu
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.2a
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Sells Falcon Flute and Wolf Flute.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version. [Masao]
 //= 1.1 Added Baby Hunter and Baby Ranger check. bugreport:5728 [Masao]
 //= 1.2 Added Wolf Flute trader, optimized. [Euphy]
 //= 1.2a Fixed some conditions. [Euphy]
-//============================================================ 
+//============================================================
 
 // Falcon Flute :: falcon_flute
 //============================================================

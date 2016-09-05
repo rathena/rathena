@@ -31,21 +31,21 @@
 	mes "The ^FF82FF'17 Carat Diamond'^000000 is currently on sale for a cheap price!!";
 	mes "If valuable diamonds interest you then listen up!";
 	next;
-	
+
 	mes .@npc$;
 	mes "You can give the diamond as a gift to your lover.";
 	mes "The receiver of the ^FF82FF'17 Carat Diamond'^000000 will cherish it";
 	mes "and treasure you in their heart.";
 	emotion e_loud;
 	next;
-	
+
 	mes .@npc$;
 	mes "What? You don't have a lover?";
 	mes "You can still just hang on to it for yourself.";
 	mes "The enchanting aura of the ^FF82FF'17 Carat Diamond'^000000 is likely";
 	mes "to bring love into your life.";
 	next;
-	
+
 	mes .@npc$;
 	mes "Known as the captivating diamond of diamonds...";
 	mes "It is the ^FF82FF'17 Carat Diamond'^000000!";
@@ -65,33 +65,33 @@
 		mes "dug up from Morroc is unspeakable!";
 		emotion e_omg;
 		next;
-		
+
 		mes .@npc$;
 		mes "Some claim that this is the very same diamond";
 		mes "that was seen by Kachua in Comodo!";
 		next;
-		
+
 		if (select("End Conversation:How much is it?") == 1) {
 			mes .@npc$;
 			mes "It's rather inexpensive!";
 			mes "If you're interested, talk to me any time!";
 			close;
 		}
-		
+
 		mes .@npc$;
 		mes "Of course! The most important thing is price!";
 		mes "As I've said earlier, the ^FF82FF'17 Carat Diamond'^000000 has been";
 		mes "appraised as a 17 carat diamond.";
 		mes "There aren't many like it in the world.";
 		next;
-		
+
 		mes .@npc$;
 		mes "The price is a mere 500 million zeny!";
 		mes "There is also a 1,000,000z service fee.";
 		mes "Compared to the quality of the diamond";
 		mes "this is a small price to pay.";
 		next;
-		
+
 		if (select("^828282It's too expensive.^000000:I'll buy it.") == 1) {
 			mes .@npc$;
 			mes "To say that a diamond such as the";
@@ -99,7 +99,7 @@
 			mes "you leave me speechless.";
 			close;
 		}
-		
+
 		mes .@npc$;
 		mes "OOOH! I knew from the moment I saw you that you were the rightful";
 		mes "owner of this wonderful diamond.";
@@ -107,18 +107,18 @@
 		mes "I believe this diamond will suit you quite well.";
 		mes "All I need from you is to complete this contract.";
 		next;
-		
+
 		while(1) {
 			if (select("^B9062FI will sign the contract.^000000:^828282Nevermind, I changed my mind.^000000") == 2) {
 				mes .@npc$;
 				mes "I see, that's too bad..";
 				close;
 			}
-			
+
 			mes .@npc$;
 			mes "What is your name?";
 			next;
-			
+
 			mes "[" + strcharinfo(0) + "]";
 			mes "My name is " + strcharinfo(0) + ".";
 			next;
@@ -126,19 +126,19 @@
 			mes .@npc$;
 			mes "Alright then, please sign here.";
 			next;
-			
+
 			input .@charname$;
 			if (.@charname$ == strcharinfo(0)) {
 				mes .@npc$;
 				mes "Okay, good.";
 				mes "All that is left now is payment.";
 				next;
-				
+
 				if (Zeny >= 501000000) {
 					mes .@npc$;
 					mes ". . . . . .";
 					next;
-					
+
 					mes .@npc$;
 					mes "Calculating the price and service fee..";
 					mes "501,000,000 zeny.";
@@ -190,26 +190,26 @@
 		mes "You must offer your ^FF82FF'17 Carat Diamond'^000000.";
 		mes "Also don't forget there is a 1,000,000z service fee!";
 		next;
-		
+
 		mes .@npc$;
 		mes "What is your name?";
 		next;
-		
+
 		mes "[" + strcharinfo(0) + "]";
 		mes "My name is " + strcharinfo(0) + ".";
 		next;
-		
+
 		mes .@npc$;
 		mes "Alright then, please sign here.";
 		next;
-		
+
 		while (1) {
 			if (select("Sign:Don't Sign") == 2) {
 				mes .@npc$;
 				mes "The trade cannot be completed without your signature.";
 				close;
 			}
-			
+
 			input .@charname$;
 			if (.@charname$ == strcharinfo(0)) {
 				mes .@npc$;
@@ -217,7 +217,7 @@
 				mes "I will now take your ^FF82FF'17 Carat Diamond'^000000..";
 				mes "You will receive ^0000FF499,000,000z^000000 afterwards.";
 				next;
-				
+
 				mes .@npc$;
 				mes "Thank you for your business.";
 				mes "Whenever you need a ^FF82FF'17 Carat Diamond'^000000,";

@@ -4,7 +4,7 @@
 //= Chilly
 //===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
 //= Warp Points for Eclage

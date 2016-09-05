@@ -6,9 +6,9 @@
 //= 1.1
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Same as 'noexppenalty' and 'nozenypenalty' combined.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added Izlude duplicates. [Euphy]
 //============================================================

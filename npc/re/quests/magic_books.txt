@@ -1,21 +1,21 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Magic Book Seller
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Masao, Muad_Dib (translation)
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1a
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= An NPC which sells you different kinds of Magic Books.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version. [Masao]
 //= 1.1 Optimized. [Euphy]
 //= 1.1a Updated NPC name to "Master Velofos". [Euphy]
 //= 1.1b Fixed the rand part in "Mysterious Documents" to match
 //=	 Aegis & fixed a bracket issue. [Capuche]
-//============================================================ 
+//============================================================
 
 // Main Quest :: war_book
 //============================================================

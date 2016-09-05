@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Navigation Functions
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Euphy
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Controls the navigation system for Renewal guides.
 //= Clients before 2011-10-10 do not support navigation
 //= links, and will default to colored or plain text.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Added 'is_clientver' command. [Euphy]
-//============================================================ 
+//============================================================
 
 function	script	F_Navi	{
 

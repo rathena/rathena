@@ -52,13 +52,13 @@ manuk,321,182,5	script	Entrance Manager#ep133	450,{
 		if(select("Yes.:No.") == 2) {
 			mes "[Entrance Manager]";
 			mes "Then use the tunnel next time.";
-			close; 
+			close;
 		}
 		mes "[Entrance Manager]";
 		mes "Be careful.";
 		close2;
-		warp "dic_dun01",33,212; 
-		end; 
+		warp "dic_dun01",33,212;
+		end;
 	}
 	mes "[Entrance Manager]";
 	mes "Sorry.";
@@ -124,12 +124,12 @@ dic_dun01,266,113,5	script	Curious Sapha#ep13_3_	449,{
 		if (.@deal == 0) {
 			mes "[Curious Sapha]";
 			mes "You changed your mind?";
-			close; 
+			close;
 		}
 		if (Zeny < .@deal) {
 			mes "[Curious Sapha]";
 			mes "You don't have enough money.";
-			close; 
+			close;
 		}
 		mes "[Curious Sapha]";
 		mes "Will you buy "+.@input+"?";
@@ -354,7 +354,7 @@ OnEnable:
 		mes "¡ð¡ú¢± ¡ô ¡ò¡õ¡ú ¡õ..!";
 		next;
 		mes "- Cannot communicate with him. -";
-		close;	
+		close;
 	}
 	if (ep13_3_invite < 5) {
 		mes "[Capital City Guard]";
@@ -426,11 +426,11 @@ dic_in01,254,119,0	script	Item Storage#01	844,{
 	if(select("Use safe:No way.")==2) {
 		mes "["+strcharinfo(0)+"]";
 		mes "I will use it later.";
-		close; 
+		close;
 	}
 	if (Zeny < 500) {
 		mes "Not enough Zeny.";
-		close; 
+		close;
 	}
 	set Zeny, Zeny-500;
 	close2;
@@ -457,17 +457,17 @@ function	script	que_dic	{
 	.@type = getarg(0);
 	if (!.@type) {
 		if (checkquest(getarg(1),HUNTING) != 2) return;
-		mes getarg(3); 
+		mes getarg(3);
 	}
 	else if (.@type == 1) {
 		if (checkquest(getarg(1)) == -1) return;
 		if (countitem(getarg(3)) < getarg(4)) {
 			mes "It looks like you are short on the amount.";
-			close; 
+			close;
 		}
-		mes getarg(5); 
+		mes getarg(5);
 		mes getarg(6,"");
-		delitem getarg(3), getarg(4); 
+		delitem getarg(3), getarg(4);
 	}
 	else if (.@type == 2) {
 		for(set .@i,1; .@i<getargcount(); set .@i,.@i+1) {
@@ -1045,7 +1045,7 @@ dic_in01,40,193,1	script	Papyrus#0001	453,{
 	} else if (.@doc > 60 && .@doc <= 70) {
 		mes "You suddenly feel nauseated. You feel like this won't go away any time soon. Finding the documents will have to wait.";
 		setquest 12165;
-		close; 
+		close;
 	}
 	else if (.@doc == 1) eldicastes_dp(12209,"Horn","Hard wedge-like horn from some insects. Doesn't have much practical use.","");
 	else if (.@doc == 2) eldicastes_dp(12195,"Horrendous Mouth","Tooth from a dead body.","Important material for research on time of death and health conditions. Useful in discovering human ecology.");
@@ -1110,7 +1110,7 @@ dic_in01,40,193,1	script	Papyrus#0001	453,{
 		mes "You've found a document about ^990099"+getarg(1)+"^000000. Check for details in the ^800080Quest Window^000000.";
 		specialeffect2 EF_STEAL;
 		setquest getarg(0);
-		close; 
+		close;
 	}
 }
 dic_in01,31,192,0	duplicate(Document Package#main)	Document Package#0001	844
@@ -1807,7 +1807,7 @@ OnTouch:
 			mes "Just a moment.";
 		}
 		close2;
-		warp "dic_in01",155,188; 
+		warp "dic_in01",155,188;
 	}
 	end;
 }
@@ -3694,7 +3694,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 			mes "What will it be?";
 			mes "I have Tropical Sograt and Vermilion on the Beach flown in from Morroc.";
 			mes "A bit on the expensive side though.";
-			next;		
+			next;
 			if (select("Tropical Sorgrat - 2000z:Vermilion on the Beach - 2000z:Anything else?") == 3) {
 				mes "[Shay]";
 				mes "Here.. ";
@@ -3840,7 +3840,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "What is it now?";
 				mes "Any luck?";
 				next;
-				setarray .@ward$, 
+				setarray .@ward$,
 					"7188","The Knits at the square are interested in Ahat.",
 					"7189","I heard from Pioms that most of the Saphas are interested in the minister.",
 					"7190","Galtens are interested in the Cat Merchant for their cat ears.";
@@ -3984,7 +3984,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				setarray .@quest, 7194,7195,7196;
 				setarray .@item, 6306,6305,6307;
 				setarray .@str$, "bloodstain","frozen piece of skin","strange magical stone fragment";
-				
+
 				for (set .@size, getarraysize(.@item); .@i < .@size; set .@i, .@i + 1) {
 					if (countitem(.@item[.@i])) {
 						mes "- You show the " + .@str$[.@i] + " you collected from near the crack.-";
@@ -4797,7 +4797,7 @@ dic_fild01,231,174,5	script	BK#ep133_18	496,{
 	setarray .@item, 	6307,			6306,			6305;
 	for (set .@size, getarraysize(.@npc$); .@i < .@size; set .@i, .@i + 1)
 		if (.@n$ == .@npc$[.@i]) set .@type, .@i;
-	
+
 	if (ep13_3_secret == 10) {
 		if (.@npc$[.@type] == "Rock Pile") {
 			mes "There are many piles of rock around because of the unstable crustal movements.";
@@ -4842,7 +4842,7 @@ dic_fild01,231,174,5	script	BK#ep133_18	496,{
 		set ep13_3_secret, 11;
 		getitem .@item[.@type], 1;
 		erasequest 7193;
-		setquest 7194;		
+		setquest 7194;
 		donpcevent strnpcinfo(0)+"::OnDisable";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -4903,7 +4903,7 @@ dic_fild01,231,174,5	script	BK#ep133_18	496,{
 			}
 			if (.@npc$[.@type] == "Rock Pile") mes "You collect another stone fragment that emits a strange magical force.";
 			else if (.@npc$[.@type] == "Dirt Pile") mes "You collect another clotted bloodstain from a dirt pile.";
-			else if (.@npc$[.@type] == "Split Earth") mes "You collect another piece of skin frozen in the frost in the crack of the split earth.";	
+			else if (.@npc$[.@type] == "Split Earth") mes "You collect another piece of skin frozen in the frost in the crack of the split earth.";
 			getitem .@item[.@type], 1;
 			donpcevent strnpcinfo(0)+"::OnDisable";
 			close;
@@ -4980,7 +4980,7 @@ dic_fild02,207,94,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef6	844
 dic_fild02,230,71,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef7	844
 dic_fild02,188,50,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef8	844
 dic_fild02,248,36,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef9	844
-dic_fild02,206,115,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef10	844	
+dic_fild02,206,115,0	duplicate(ep133_crack#main)	Dirt Pile#ep133_ef10	844
 dic_fild02,194,86,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef1	844
 dic_fild02,240,51,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef2	844
 dic_fild02,176,65,0	duplicate(ep133_crack#main)	Split Earth#ep133_ef3	844
@@ -5040,7 +5040,7 @@ dicastes01,117,262,0	script	Frede#13_3	491,2,2,{
 		close;
 	}
 	mes "[Frede]";
-	mes "¢£¡ô¡ñ ¡û"; 
+	mes "¢£¡ô¡ñ ¡û";
 	mes "¡ú¡ö¡ø ¢£ ¡ô";
 	close;
 OnTouch:
@@ -6088,7 +6088,7 @@ dic_in01,349,129,5	script	Bouy#13_3	449,{
 		close;
 	}
 	mes "[Bouy]";
-	mes "¡ø¡ö¡þ ¡ù ¡ú¡ð¡ï ¡ø"; 
+	mes "¡ø¡ö¡þ ¡ù ¡ú¡ð¡ï ¡ø";
 	mes "¡ï¡ú¡ö ¡ù";
 	mes "¡õ¡ï¡õ ¡ò";
 	close;
@@ -6102,7 +6102,7 @@ dic_in01,349,129,5	script	Bouy#13_3	449,{
 			mes "[Maha]";
 			mes "But I do think the Sapha race is overly kind, almost unnaturally.";
 			mes "Guess it'll be fine.";
-			close; 
+			close;
 		}
 		mes "[Ben]";
 		mes "There is nothing strange!";
@@ -6110,7 +6110,7 @@ dic_in01,349,129,5	script	Bouy#13_3	449,{
 		next;
 		mes "[Ben]";
 		mes "I can also visit the Sapha if I work well here, can't I?";
-		close; 
+		close;
 	}
 	mes "[Ben]";
 	mes "Hmm. Hey, Maha,";
@@ -6399,7 +6399,7 @@ function	script	eldicastes_c	{
 				mes "[Vyhannus]";
 				mes "Amazing.";
 				mes "Like with Hound, that ring you humans made...";
-				mes "is like a ring of wisdom."; 
+				mes "is like a ring of wisdom.";
 			}
 			else {
 				mes "[Hound]";
@@ -6414,7 +6414,7 @@ function	script	eldicastes_c	{
 			}
 			mes "[Vyhannus]";
 			mes "Shall we skip to the point?";
-			mes "The reason why I am here..."; 
+			mes "The reason why I am here...";
 			next;
 			mes "[Someone's voice]";
 			mes "Excuse me, hold on a second.";
@@ -6513,7 +6513,7 @@ mid_campin,168,128,3	script	Sapha from Manuk	451,{
 			mes "You just stand there without";
 			mes "knowing what he says, so the";
 			mes "expedition guard next to you starts to talk. -";
-			next;	
+			next;
 			callfunc "eldicastes_c",3;
 		}
 		else if (ep13_3_invite == 2) {
@@ -6523,7 +6523,7 @@ mid_campin,168,128,3	script	Sapha from Manuk	451,{
 			mes "He's name is Galten. He is so quick, you won't notice the weight of his armor.";
 			next;
 			callfunc "eldicastes_c",1;
-		} 
+		}
 		else if (ep13_3_invite == 3) {
 			callfunc "eldicastes_c",2;
 		}
@@ -6534,7 +6534,7 @@ mid_campin,168,128,3	script	Sapha from Manuk	451,{
 			mes "The tunnel might be a little scary.";
 			mes "But I'm sure you will reach the end of it since you are strong.";
 			close;
-		} 
+		}
 		else if (ep13_3_invite == 5) {
 			mes "[Vyhannus]";
 			mes "Oh, the tunnel?";
@@ -6547,8 +6547,8 @@ mid_campin,168,128,3	script	Sapha from Manuk	451,{
 			next;
 			mes "[Vyhannus]";
 			mes "That is it.";
-			close; 
-		} 
+			close;
+		}
 		else if (ep13_3_invite == 6) {
 			mes "[Vyhannus]";
 			mes "You received the Light of El Dicastes.";
@@ -6614,10 +6614,10 @@ mid_campin,168,125,3	script	Hound#ep133_is06	997,{
 	}
 	else if (ep13_3_invite == 2) {
 		callfunc "eldicastes_c",1;
-	} 
+	}
 	else if (ep13_3_invite == 3) {
 		callfunc "eldicastes_c",2;
-	} 
+	}
 	else if (ep13_3_invite == 4) {
 		mes "[Hound]";
 		mes "First thing you need to do when you reach Manuk is to meet General Guard Avalanche.";
@@ -6630,7 +6630,7 @@ mid_campin,168,125,3	script	Hound#ep133_is06	997,{
 		mes "[Hound]";
 		mes "And don't forget what the captain said.";
 		mes "Inspector Doha is in the next room.";
-		close; 
+		close;
 	}
 	else if (ep13_3_invite > 4) {
 		mes "[Hound]";
@@ -6661,7 +6661,7 @@ mid_campin,165,127,5	script	Hibba Agip#ep133_is07	459,{
 	close2;
 OnInit:
 	disablenpc strnpcinfo(0);
-	end;	
+	end;
 }
 
 man_in01,315,52,3	script	Guard Captain Avalanche	450,{
@@ -6670,7 +6670,7 @@ man_in01,315,52,3	script	Guard Captain Avalanche	450,{
 		mes "¢¤¡ð¡ú? ¢£ ¡ù¡ð...";
 		mes "¡ï¡ò¡Ð ¢¤ ?";
 		mes "¡ñ¡ï..?";
-		close;	
+		close;
 	}
 	if (ep13_3_invite == 4) {
 		mes "[Avalanche]";
@@ -7156,12 +7156,12 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133	453,{
 					mes .@n$;
 					mes "When you are ready,";
 					mes "Please come back again";
-					close; 
+					close;
 				}
 				if (countitem(.@Items_) < 1) {
 					mes .@n$;
 					mes "Then, take the equipment off first.";
-					close; 
+					close;
 				}
 				specialeffect2 EF_OVERTHRUST;
 				mes .@n$;
@@ -7176,7 +7176,7 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133	453,{
 			mes .@n$;
 			mes "But...";
 			mes "you don't seem to be wearing or even carrying equipment to upgrade on you.";
-			close; 
+			close;
 		}
 	}
 	if (getd("ep13_3_"+.@v$) == 0) {
@@ -7202,7 +7202,7 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133	453,{
 		mes .@n$;
 		mes "Second upgrade step requires ^9900992 Exploit Certifications of Sapha^000000. Do you want to proceed?";
 		set .@req, 2;
-	} 
+	}
 	else if (getd("ep13_3_"+.@v$) < 69) {
 		mes .@n$;
 		mes "I'm preparing for the";
@@ -7264,7 +7264,7 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133	453,{
 		mes .@n$;
 		mes "When you are ready,";
 		mes "Please come back again.";
-		close; 
+		close;
 	}
 	if (countitem(6304) < .@req) {
 		mes .@n$;
@@ -7327,7 +7327,7 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133	453,{
 		mes "I'm done. Hehe";
 		close;
 	}
-	
+
 	// Enchant Constants
 	// Ex: .@dex[1]: DEX + 1 | .@cri[5]: CRI + 5 | .@eva[12]: FLEE + 12
 	set .@matk[1], 4760; set .@matk[2], 4761;
@@ -7335,15 +7335,15 @@ dic_in01,42,264,3	script	Adventurer Clerk#ep133	453,{
 	set .@cri[5], 4764;	set .@cri[7], 4765;
 	set .@atk[2], 4766;	set .@atk[3], 4767;
 	set .@dex[1], 4720;	set .@dex[2], 4721;	set .@dex[3], 4722;
-	set .@int[1], 4710;	set .@int[2], 4711;	set .@int[3], 4712;	
+	set .@int[1], 4710;	set .@int[2], 4711;	set .@int[3], 4712;
 	set .@agi[1], 4730;	set .@agi[2], 4731;	set .@agi[3], 4732;
-	
+
 	// Enchant attribute is determined by the digit position of variable value (ep13_3_<type>).
 	// For example, assume the variable value is 516:
 	// .@f_<slot>[<index>]
 	// slot:	2	3	4
 	// index:	5 	1 	6
-	
+
 	// Enchant Format
 	if (compare(.@v$,"ring")) setarray .@f_2[1],.@agi[1],.@agi[2],.@int[1],.@int[2],.@dex[1],.@dex[2];
 	else setarray .@f_2[1],.@agi[1],.@agi[2],.@agi[3],.@int[1],.@int[2],.@int[3],.@dex[1],.@dex[2],.@dex[3];
@@ -7381,7 +7381,7 @@ dic_fild01,228,159,4	script	Jahbong#pa0829	496,{
 		next;
 		mes "[Jahbong]";
 		mes "Come back to me once you have one. I'll give you something good in exchange.";
-		close; 
+		close;
 	}
 	set .@cattalkj,rand(1,9);
 	if (.@cattalkj == 1) mes "Don't touch my back! I might bite you unconsciously.";

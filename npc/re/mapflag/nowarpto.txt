@@ -6,12 +6,12 @@
 //= 1.0
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Disables warping to a map.
 //= Atcommands @warp, @go, @load, @jump, @partyrecall,
 //=   @guildrecall, and @recallall are disabled.
 //= Command /memo is disabled.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Renewal split. [Euphy]
 //============================================================
 

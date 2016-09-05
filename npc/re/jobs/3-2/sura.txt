@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Sura Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Muad_Dib, Gepard
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job change Quest from Monk / Champion -> Sura.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version. [Masao]
 //= 1.1 Removed disablenpc which causes players stucked in waitingroom. [Joseph]
 //= 1.2 Updated script, optimized. [Euphy]

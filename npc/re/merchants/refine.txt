@@ -1,4 +1,4 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Renewal Refining NPCs
 //===== By: ==================================================
 //= rAthena Dev Team
@@ -220,7 +220,7 @@ function	script	refinenew	{
 	} else
 		set .@menu2,2;
 	switch(.@menu2){
-	case 1: 
+	case 1:
 		set .@refinecnt,.@safe - getequiprefinerycnt(.@part);
 		break;
 	case 2:

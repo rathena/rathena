@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Ayothaya Guide
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Guide for the city of Ayothaya.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version, Renewal guide.
 //= 1.1 Added missing case. [Joseph]
 //= 1.2 Navigation system update. [Euphy]
-//============================================================ 
+//============================================================
 
 ayothaya,203,169,4	script	Ayothaya Guide Noi#01ay	839,{
 	if (strnpcinfo(0) == "Ayothaya Guide Noi#01ay")

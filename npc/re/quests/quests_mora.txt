@@ -4184,7 +4184,7 @@ OnTimer20000:
 OnTimer30000:
 OnTimer40000:
 OnTimer50000:
-	if (rand(2)) 
+	if (rand(2))
 		donpcevent strnpcinfo(0)+"::OnEnable";
 	end;
 OnTimer60000:

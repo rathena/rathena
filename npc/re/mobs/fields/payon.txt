@@ -38,7 +38,7 @@ pay_fild01,70,246,0,0	monster	Black Mushroom	1084,1,180000,90000,1
 pay_fild01,0,0,0,0	monster	Green Plant	1080,5,180000,90000,1
 
 //==================================================
-// pay_fild02 - Payon Forest 
+// pay_fild02 - Payon Forest
 //==================================================
 pay_fild02,0,0,0,0	monster	Boa	1025,140,5000,0,0
 pay_fild02,0,0,0,0	monster	Wormtail	1024,30,5000,0,0

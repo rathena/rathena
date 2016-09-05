@@ -147,7 +147,7 @@ lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
 			mes "These are the armors I have.";
 			next;
 			for(.@i = 1; .@i < 8; .@i++) {
-				if (((.@i == 1 || .@i == 5) && (countitem(6469) >= 100) && (countitem(6470) >= 50) && (countitem(6471) >= 35)) || 
+				if (((.@i == 1 || .@i == 5) && (countitem(6469) >= 100) && (countitem(6470) >= 50) && (countitem(6471) >= 35)) ||
 				    ((.@i == 2 || .@i == 3) && (countitem(6469) >= 100) && (countitem(6470) >= 50) && (countitem(6471) >= 22)) ||
 				    ((.@i == 4 || .@i == 7) && (countitem(6469) >= 300) && (countitem(6470) >= 300) && (countitem(6471) >= 400)) ||
 				    ((.@i == 6) && (countitem(6469) >= 100) && (countitem(6470) >= 50) && (countitem(6471) >= 30))) {
@@ -575,7 +575,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 			.@equipped$[.@i] = getequipname(.@parts[.@i]);
 		}
 	}
-	switch(select("I changed my mind.", .@equipped$[0], .@equipped$[1], .@equipped$[2], .@equipped$[3], .@equipped$[4], 
+	switch(select("I changed my mind.", .@equipped$[0], .@equipped$[1], .@equipped$[2], .@equipped$[3], .@equipped$[4],
 	.@equipped$[5], .@equipped$[6])) {
 	case 1:
 		mes "[Pudding]";
@@ -641,8 +641,8 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	.@refine_count = getequiprefinerycnt(.@part);
 	.@equip_item = getequipid(.@part);
 	.@lhz_max_num = 4000;
-	if (.@equip_item == 13069 || .@equip_item == 1291 || .@equip_item == 1392 || 
-	    .@equip_item == 1393 || .@equip_item == 1435 || .@equip_item == 1490 || 
+	if (.@equip_item == 13069 || .@equip_item == 1291 || .@equip_item == 1392 ||
+	    .@equip_item == 1393 || .@equip_item == 1435 || .@equip_item == 1490 ||
 	    .@equip_item == 13069 || .@equip_item == 13070 || .@equip_item == 16017) {
 		.@type = 1;
 		if (.@equip_item == 1490)
@@ -652,7 +652,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 	} else if (.@equip_item == 1584 || .@equip_item == 1659) {
 		.@type = 3;
 	} else if (.@equip_item == 2160 || .@equip_item == 2161 || .@equip_item == 2162 ||
-	           .@equip_item == 2582 || .@equip_item == 2892 || .@equip_item == 15044 || 
+	           .@equip_item == 2582 || .@equip_item == 2892 || .@equip_item == 15044 ||
 	           .@equip_item == 18570) {
 		.@type = 4;
 		if (.@equip_item == 2582 || .@equip_item == 18570)
@@ -966,7 +966,7 @@ lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
 		else
 			delitem 6469, 10; //Will_Of_Warrior
 		delequip .@part;
-		
+
 		if (.@enchant == 0){
 			specialeffect2 EF_SUI_EXPLOSION;
 			emotion e_otl;

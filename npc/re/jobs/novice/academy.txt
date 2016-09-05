@@ -12686,7 +12686,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		enable_items;
 		end;
 	}
-	// if (!getequipisidentify(.@part)) {// getequipisidentify command removed 
+	// if (!getequipisidentify(.@part)) {// getequipisidentify command removed
 		// mes "[Refining Machine Wagjak]";
 		// mes "^FF0000- error number 5555 -^000000";
 		// mes "This item has not yet been identified.";
