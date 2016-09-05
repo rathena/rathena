@@ -18728,7 +18728,7 @@ BUILDIN_FUNC(waitingroom2bg_single)
 /// @author [secretdataz]
 BUILDIN_FUNC(bg_create) {
 	const char *map_name, *ev = "", *dev = "";
-	int x, y, mapindex = 0, bg_id;
+	int x, y, mapindex = 0;
 
 	map_name = script_getstr(st, 2);
 	if (strcmp(map_name, "-") != 0 && (mapindex = mapindex_name2id(map_name)) == 0)
@@ -18747,13 +18747,7 @@ BUILDIN_FUNC(bg_create) {
 	check_event(st, ev);
 	check_event(st, dev);
 
-	if ((bg_id = bg_create(mapindex, x, y, ev, dev)) == 0)
-	{ // Creation failed
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
-	}
-
-	script_pushint(st, bg_id);
+	script_pushint(st, bg_create(mapindex, x, y, ev, dev));
 	return SCRIPT_CMD_SUCCESS;
 }
 
