@@ -6989,15 +6989,15 @@
 12860,Mommy_Day_Cake,Mommy Day Cake,2,0,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 50,50; skilleffect "HP_ASSUMPTIO",0; sc_start SC_ASSUMPTIO,100000,5; },{},{}
 12863,Treasure_Chest_Summoned_II,Treasure Chest Summoned II,2,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ monster "this",-1,-1,"--ja--",rand(1324,1363),1,""; },{},{}
 12873,TE_Potion_Box,TE Potion Box,18,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem(11558,10); },{},{}
-12874,Frost_Giant_Blood,Frost Giant Blood,2,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12875,Golem_Stone,Golem Stone,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12876,Elf_Tear_Stun,Elf Tear Stun,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12877,Elf_Tear_Stone_Curse,Elf Tear Stone Curse,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12878,Elf_Tear_Freezing,Elf Tear Freezing,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12879,Elf_Tear_Sleep,Elf Tear Sleep,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12880,Elf_Tear_Curse,Elf Tear Curse,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12881,Elf_Tear_Silence,Elf Tear Silence,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12882,Elf_Tear_Blind,Elf Tear Blind,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12874,Frost_Giant_Blood,Frost Giant Blood,2,0,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_POTION_CON; sc_start4 SC_GVG_GIANT,10000,3000,0,100,100; },{},{}
+12875,Golem_Stone,Golem Stone,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_POTION_CON; sc_start4 SC_GVG_GOLEM,10000,0,200,50,50; },{},{}
+12876,Elf_Tear_Stun,Elf Tear Stun,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_GVG_STUN,10000,3000,0; },{},{}
+12877,Elf_Tear_Stone_Curse,Elf Tear Stone Curse,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_GVG_STONE,10000,3000,0; },{},{}
+12878,Elf_Tear_Freezing,Elf Tear Freezing,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_GVG_FREEZ,10000,3000,0; },{},{}
+12879,Elf_Tear_Sleep,Elf Tear Sleep,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_GVG_SLEEP,10000,3000,0; },{},{}
+12880,Elf_Tear_Curse,Elf Tear Curse,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_GVG_CURSE,10000,3000,0; },{},{}
+12881,Elf_Tear_Silence,Elf Tear Silence,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_GVG_SILENCE,10000,3000,0; },{},{}
+12882,Elf_Tear_Blind,Elf Tear Blind,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start2 SC_GVG_BLIND,10000,3000,0; },{},{}
 12883,Almighty,Almighty,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ specialeffect2 EF_BASH3D; sc_start SC_2011RWC_SCROLL,1800000,10; },{},{}
 12884,Infinite_Concentration_Potion,Infinite Concentration Potion,11,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,4; },{},{}
 12885,Infinite_Awakening_Potion,Infinite Awakening Potion,11,10,,0,,,,0,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ASPDPOTION1,1800000,6; },{},{}
