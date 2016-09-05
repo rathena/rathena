@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs related to Comodo
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88; L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5b
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Headgear Quests 1 [Official Conversion]:
 //= - 'Cross Hat', 'Bulb Hairband'
 //= - 'Striped Hairband', 'Blue Hairband'
@@ -18,7 +18,7 @@
 //= - Part 2: Found in Quests_Yuno.txt
 //= - Part 3: Found in Doomed_Swords.txt
 //= - Variable in use: dmdswrd_Q (Max 45)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Fixed exploits [Lupus]
 //= 1.2 Added more quest from cities/comodo.txt [Evera]
 //= 1.2a missing label [Lupus]
@@ -28,11 +28,11 @@
 //= 1.5a Fixed a bad countitem. (bugreport:840) [Samuray22]
 //= 1.5b Fixed stripped hairband and blue hairband checking the wrong amount of items, bugreport:1674 [Brainstorm]
 //= 1.6 Updated headgear quest NPCs. [L0ne_W0lf]
-//============================================================ 
+//============================================================
 
 // Headgear Quests 1
 // Cross Hat, Bulb Hairband, Striped Hairband, Blue Hairband
-//============================================================ 
+//============================================================
 comodo,228,159,3	script	Hair Ornament Girl	700,{
 	mes "[Hair Ornament Girl]";
 	if (Sex == 1) {
@@ -229,7 +229,7 @@ comodo,228,159,3	script	Hair Ornament Girl	700,{
 
 // Headgear Quests 2
 // 'Mine Helmet', 'Parcel Hat', 'Money Loser's Grief', 'Phantom of the Opera Mask'
-//============================================================ 
+//============================================================
 comodo,273,137,4	script	Traveler#head	702,{
 	mes "[Isac Mari]";
 	mes "I travel around the world, and collect many interesting stories from people. Sometimes they teach me how to make special items.";
@@ -472,7 +472,7 @@ comodo,273,137,4	script	Traveler#head	702,{
 }
 
 // Doomed Swords - Comodo Portion. (Continued in Juno)
-//============================================================ 
+//============================================================
 comodo,206,310,4	script	Campground Boy#cmd	704,{
 	switch (dmdswrd_Q) {
 	case 0:

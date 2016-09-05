@@ -8,7 +8,7 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= Custom quest for some RO mobile game bonus items 
+//= Custom quest for some RO mobile game bonus items
 //===== Additional Comments: =================================
 //= 1 May, 2006
 //= 1.01 translated the rest of dialogues

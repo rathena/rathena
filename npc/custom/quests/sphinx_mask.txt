@@ -1,17 +1,17 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Sphinx Mask Quest (custom)
-//===== By: ================================================== 
+//===== By: ==================================================
 //= sabernet09
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= This quest is related to Umbalian Chief.
 //= 1.1 Removed it from official Umbala quests [Lupus]
 //= 1.2 Added a missing variable (sphmask_q) [erKURITA]
 //= 1.3 Optimized, and coordinates moved. [Euphy]
-//============================================================ 
+//============================================================
 
 morocc,208,90,6	script	Turban Thief	58,{
 	mes "[Turban Thief]";

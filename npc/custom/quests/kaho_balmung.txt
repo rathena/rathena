@@ -14,10 +14,10 @@
 //============================================================
 
 prontera,158,356,4	script	Royal Messenger	105,{
-	
+
 	setarray .@Req1[0],1161,999,120,984,10,996,10,994,10,995,10,997,10;
 	setarray .@Req2[0],5013,2298,1,1001,10,996,10,994,10,995,10,997,10;
-	
+
 	mes "[Royal Messenger]";
 	mes "Welcome to Prontera.";
 	mes "I am the messenger in charge of the Royal Quests.";

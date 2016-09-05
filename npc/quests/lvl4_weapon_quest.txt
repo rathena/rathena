@@ -1,17 +1,17 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Grade A and Grade S weapon quests
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Vicious_Pucca, Reddozen & MasterOfMuppets
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.6
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project; SVN 3422+
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Grade A and Grade S weapon quests
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version, Credits goes to Vicious_Pucca for converting [MasterOfMuppets]
-//=     the quest from aegis format to eA format. Also thanks to 
+//=     the quest from aegis format to eA format. Also thanks to
 //=     reddozen for fixing bugs.
 //= 1.1 Many fixes to spelling, grammar, and sentence order. [Silent]
 //= 1.2 A small fix, thanks to vicious_pucca [MasterOfMuppets]
@@ -20,7 +20,7 @@
 //= 1.4 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.6 Was using the wrong IDs for the ores needed. [L0ne_W0lf]
-//============================================================ 
+//============================================================
 
 umbala,117,285,3	script	Bazo#lv4	85,{
 	if (checkweight(908,300) == 0) {

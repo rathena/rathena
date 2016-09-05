@@ -834,7 +834,7 @@ OnInit:
 	disablenpc "Haggard Man";
 	end;
 }
-		
+
 ayothaya,253,99,3	script	Fisherman	843,{
 	if (thai_find == 1) {
 		mes "[Dannai]";

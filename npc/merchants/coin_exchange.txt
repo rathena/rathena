@@ -10,7 +10,7 @@
 //= [Official Conversion]
 //= Coin redemption NPCs.
 //===== Additional Comments: =================================
-//= 1.0 First version 
+//= 1.0 First version
 //= 1.1 Fixed checkweight. [Gepard]
 //= 1.2 Optimized and merged into one file. [Euphy]
 //============================================================
@@ -56,7 +56,7 @@
 				if (countitem(.@Coin)) {
 					mes .@n$;
 					mes "Thank you for coming.";
-					delitem .@Coin,1; 
+					delitem .@Coin,1;
 					getitem .@Items[.@i],3;
 					close;
 				}

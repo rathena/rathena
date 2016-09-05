@@ -4,11 +4,11 @@
 //= kobra_k88
 //===== Current Version: =====================================
 //= 1.8
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Quest for skills: Holy Light
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.6 Fixed a typo in job check. (Bugreport:1531) [L0ne_W0lf]
 //= 1.7 Updated to latest available official file. [Masao]
@@ -109,9 +109,9 @@ prt_church,173,23,4	script	Cleric	79,{
 	}
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.0a Now using functions found in "Global_Functions.txt"
 //=     for class checks.
 //= 1.2 Added Baby Class Support [Lupus]

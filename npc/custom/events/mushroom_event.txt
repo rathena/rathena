@@ -1,18 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Find the Mushroom
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Mysterious
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.6a
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Find the Mushroom - random amount of Mushrooms spawns in random maps.
 //= Players need to find these mushrooms and kill them to gain prizes!
 //===== Additional Comments: =================================
 //= 3.0 Fully Functional with Rewritten script. [Mysterious]
 //= 3.6a Slightly edited. [Euphy]
-//============================================================ 
+//============================================================
 
 prontera,142,228,6	script	Find the Mushroom	1084,{
 	mes "[ Find The Mushroom ]";

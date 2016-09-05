@@ -42,7 +42,7 @@ geffen,115,107,5	script	Lord Kaho's Servant	61,{
 	next;
 	mes .@n$;
 	mes "Finally, I've worked hard to make these horns for my master with all the items mentioned above...";
-	mes "Please include ^0055FF5 million Zeny^000000 for my efforts."; 
+	mes "Please include ^0055FF5 million Zeny^000000 for my efforts.";
 	next;
 	mes .@n$;
 	mes "Are you ready for me to make this special item?";

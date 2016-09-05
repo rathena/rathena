@@ -1,22 +1,22 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Guild Relay Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Guild Relay Quest.
 //= Quest designed for multiple users at once.
 //= Variable in use: guildrelay_q (Max: ??)
 //= Variable in use: guildtime (Max: ??)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Fixed errors reported by NoHealing (Bugreport:3934) [L0ne_W0lf]
 //= NPCs now duplicate from FLOATING npcs instead of Luina 1 npcs.
-//============================================================ 
+//============================================================
 
 // Floating NPCs to duplicate from.
 //============================================================

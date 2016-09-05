@@ -35,7 +35,7 @@ OnAgitInit2:
 	// end time checks
 	if ((gettime(4)==2) && (gettime(3)==21) ||
 	    (gettime(4)==4) && (gettime(3)==21) ||
-	    (gettime(4)==6) && (gettime(3)==23)) { 
+	    (gettime(4)==6) && (gettime(3)==23)) {
 		if (agitcheck2()) {
 			AgitEnd2;
 		}

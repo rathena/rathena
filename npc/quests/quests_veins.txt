@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Veins Quests
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
-//= Collection of Veins Quests 
+//= Collection of Veins Quests
 //= Stone Quest:
 //= - Help an Old Man with his job.
 //= - Dialog obtained from iRO.
@@ -25,7 +25,7 @@
 //= - Missing addition to High Priest Zhed to start quest.
 //= - Infiltrate Thor Volcano Base. What is Arunafeltz up to?
 //= - Variable in use: rachel_camel (max 27)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version, Added Veins Stone quest. [L0ne_W0lf]
 //= 1.1 Added Veins Spy Quest. [L0ne_W0lf]
 //= 1.2 Added Veins Siblings Quest. [L0ne_W0lf]
@@ -49,10 +49,10 @@
 //= 2.3 Fixed incorrect use of 'close'. [Joseph]
 //= 2.4 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.5 Added GM management NPC. [Euphy]
-//============================================================ 
+//============================================================
 
 // Stone Quest :: veins_stone
-//============================================================ 
+//============================================================
 -	script	::WincingOldMan_veins	-1,{
 	if ((MaxWeight - Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "- Wait a moment! -";
@@ -644,7 +644,7 @@ ve_in02,68,39,7	script	Factory Worker#ve2	943,{
 }
 
 // Spy Quest :: veins_secret
-//============================================================ 
+//============================================================
 prontera,202,122,0	script	Kid#sch	703,{
 	if (que_sch == 0) {
 		mes "[Rooney]";
@@ -2665,7 +2665,7 @@ sec_in02,10,43,4	script	Extra Story Patch	809,{
 }
 
 // Siblings Quest :: veins_camel
-//============================================================ 
+//============================================================
 veins,327,185,3	script	Kid#camelcamel	944,{
 	if (MISC_QUEST & 8192) {
 		if (rachel_camel == 0) {
@@ -5074,7 +5074,7 @@ veins,221,120,5	script	Young Town Native	943,{
 }
 
 // Thor Volcano Base Quest :: veins_camp
-//============================================================ 
+//============================================================
 ra_temin,87,133,1	script	Rachel Guard#vol1	934,5,2,{
 	if (aru_vol == 2) {
 		mes "[Guard Karlum]";

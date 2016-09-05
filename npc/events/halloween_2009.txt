@@ -195,17 +195,17 @@ OnInit:
 	hideonnpc "Trick or Treater#iRO7";
 	hideonnpc "Trick or Treater#iRO8";
 	end;
-	
+
 OnEnableTreat:
 	enablenpc strnpcinfo(3);
 	hideonnpc strnpcinfo(3);
 	end;
-	
+
 OnTimer15000:
 	hideonnpc strnpcinfo(3);
 	disablenpc strnpcinfo(3);
 	end;
-		
+
 OnTimer300000:
 	donpcevent strnpcinfo(3)+"::OnEnableTreat";
 	stopnpctimer;

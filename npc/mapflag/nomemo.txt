@@ -6,10 +6,10 @@
 //= 2.0
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Prevents players from using /memo on a map.
 //= Also disables marriage warp skills.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.6a Added up to Hugel maps. [Lupus]
 //= 1.6b Added job_knt map. [Samuray22]
 //= 1.7 Added all novice maps. [L0ne_W0lf]

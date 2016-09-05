@@ -43,9 +43,9 @@ ama_in02,59,160,0	warp	ama_castle4-2	1,1,ama_in02,215,152
 ama_in02,126,164,0	warp	ama_castle5-1	1,1,ama_in02,219,161
 ama_in02,222,161,0	warp	ama_castle5-2	1,1,ama_in02,129,164
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.3 Fixed a warp-back [erKURITA]
 //= 1.4 Added Ninja's Warps. Thanks to RockmanEXE for the info. [erKURITA]
 //= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]

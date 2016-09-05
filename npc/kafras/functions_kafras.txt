@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Kafra Functions
-//===== By: ================================================== 
+//===== By: ==================================================
 //= rAthena Dev Team
 //= Darlskies, Darkchild, Syrus22, Lupus, kobra_k88 (2.0)
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 6.8
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
 //= These functions handle save, storage, cart rental, teleport,
@@ -15,7 +15,7 @@
 //= Kafra's will need a lot of work. The Welcome Message argument
 //= may become obsolete, as most kafras have a slightly differing
 //= Welcome message.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Now using functions v2.1 Added Cart Rent for Classes: Whitesmith, Professor.
 //=     Replaced checkoption(x) into checkcart(0) [Lupus] v2.1b Added Fix Kafra Pass Func [Kobra_k88]
 //= 2.2 Final fix of the Kafra Pass Exploit! [Lupus] a -Izlude[4] fix
@@ -39,7 +39,7 @@
 //= 5.1a Temporary? Added F_ClearGarbage to clear unused/outdated variables [Lupus]
 //= 5.2 By default commented out custom Guilds Kafra's "Guild Storage". [Lupus]
 //= 5.3 uncommented Guild Storage. Confirmed kRO feature. [Lupus]
-//= 5.4 added -Guide option (Kafra shows you nearest Guide) Work in progress. 
+//= 5.4 added -Guide option (Kafra shows you nearest Guide) Work in progress.
 //=     Need all coords for all guides.. and somehow pass their coords to kafra.
 //=     Removed universal Kafra Pass, added 3 new Kafra Tickets [Lupus]
 //= 5.4b temporary moved "-Guide" from the 1st menu punct [Lupus]
@@ -47,7 +47,7 @@
 //=     Cleaned up the menus a bit. Got rid of the proceeding "-" prefix.
 //= 5.5b Missed a preceeding hyphen, which was screwing up teleporting. [L0ne_W0lf]
 //= 5.6 Further dialog updates, added  dynamic costs for cart and storage use. [L0ne_W0lf]
-//=     Updated some functions to handle Guild Kafras the way they should. 
+//=     Updated some functions to handle Guild Kafras the way they should.
 //= 5.6a Corrected a few wrong names in the teleport function. [L0ne_W0lf]
 //= 5.7 Correced end message no longer displaying, and the duplicate names [L0ne_W0lf]
 //=     Thanks to Barron-Monster for pointing out the issues.
@@ -63,7 +63,7 @@
 //= 6.6 Added Warp Points / View Points Function. [Joseph]
 //= 6.7 Added Rune Knight Kafra. [Euphy]
 //= 6.8 Updated some functions and added VIP features. [Euphy]
-//============================================================ 
+//============================================================
 
 //=== Main Function ========================================================
 //=   arg(0): Used to determine which welcome message to show.
@@ -110,14 +110,14 @@ function	script	F_Kafra	{
 			mes "In either case, why not stay awhile?";
 			mes "The air is eternally heavy with the";
 			mes "scent of pleasant wildflowers.";
-			break;		
+			break;
 		case 4:
 			// Louyang and Ayothaya specific message (obsolete)
 			mes "[Kafra Employee]";
 			mes "With our many Kafra";
 			mes "service locations, you're never";
 			mes "far from home.";
-			break;		
+			break;
 		case 5:
 			// NPC has it's own welcome message. (Display nothing)
 			break;
@@ -155,15 +155,15 @@ function	script	F_Kafra	{
 		}
 		set .@menu$,"";
 		for (set .@i, 0; .@i < getarraysize(@K_Menu0$); set .@i, .@i + 1)
-			set .@menu$, .@menu$ + @K_Menu0$[.@i] + ":";	
+			set .@menu$, .@menu$ + @K_Menu0$[.@i] + ":";
 		set .@j, select (.@menu$) - 1;
 		if (@K_Menu0$[.@j] == "Save") {
 			return;
 		} else if (@K_Menu0$[.@j] == "Use Storage") {
 			// Do not charge for Guild Storage
-			if(.@welcome == 2) 
+			if(.@welcome == 2)
 				callfunc "F_KafStor",2,0,0;
-			else 
+			else
 				callfunc "F_KafStor",0,getarg(3),.@welcome;
 			next;
 		} else if (@K_Menu0$[.@j] == "Use Teleport Service") {
@@ -185,7 +185,7 @@ function	script	F_Kafra	{
 			}
 			next;
 		} else if (@K_Menu0$[.@j] == "Rent a Pushcart") {
-			if(callfunc("F_KafCart",.@welcome,getarg(4)) == 1) 
+			if(callfunc("F_KafCart",.@welcome,getarg(4)) == 1)
 				next;
 		} else if (@K_Menu0$[.@j] == "Check Other Information") {
 			callfunc "F_KafInfo",getarg(2);
@@ -443,14 +443,14 @@ function	script	F_KafInfo	{
 //===================================================================
 function	script	F_KafEnd	{
 	mes "[Kafra Employee]";
-	if(getarg(1)==1) {	
+	if(getarg(1)==1) {
 		// Save
 		mes "Your Respawn Point";
 		mes "has been saved here";
 		mes getarg(2)+".";
 		mes "Thank you for using";
 		mes "the Kafra Services.";
-	} else if(getarg(0)==0 || getarg(0)==5) {	
+	} else if(getarg(0)==0 || getarg(0)==5) {
 		// Generic End
 		mes "We, here at Kafra Corporation,";
 		mes "are always endeavoring to provide you with the best services. We hope that we meet your adventuring needs and standards of excellence.";
@@ -547,7 +547,7 @@ function	script	F_SetKafCode	{
 		next;
 		switch (select("Set new password -> 5000z:Cancel")) {
 			case 1: callsub S_SET,.@npc_name$,.@comp_name$; break;
-			case 2: break;		
+			case 2: break;
 		}
 	}
 	close2;

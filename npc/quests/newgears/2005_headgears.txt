@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= 2005 Headgear Quests
-//===== By: ================================================== 
+//===== By: ==================================================
 //= MasterOfMuppets
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.3a
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= 2005 Headgears Official Quest.
 //===== Additional Comments: =================================
@@ -16,7 +16,7 @@
 //= 1.3 Fixed item check bugs, added missing airport NPC,
 //      and took out unneeded breaks [Xantara] [Muad_Dib]
 //= 1.3a Added 'disable_items' command. [Euphy]
-//============================================================ 
+//============================================================
 
 yuno,222,116,3	script	Kasis#LhzHat	851,{
 	if(countitem(519) > 49 && countitem(7031) > 49 && countitem(548) > 49 && countitem(539) > 49)
@@ -1626,13 +1626,13 @@ gl_prison1,97,104,1	script	Phendark#LhzHat	1202,{
 		emotion e_sob;
 
 		if(!(
-			countitem(1950) || countitem(1951) || countitem(1952) || 
-			countitem(1953) || countitem(1954) || countitem(1955) || 
-			countitem(1956) || countitem(1957) || countitem(1958) || 
-			countitem(1959) || countitem(1960) || countitem(1961) || 
-			countitem(1962) || countitem(1963) || countitem(1964) || 
-			countitem(1965) || countitem(1966) || countitem(1967) || 
-			countitem(1968) || countitem(1969) || countitem(1970) || 
+			countitem(1950) || countitem(1951) || countitem(1952) ||
+			countitem(1953) || countitem(1954) || countitem(1955) ||
+			countitem(1956) || countitem(1957) || countitem(1958) ||
+			countitem(1959) || countitem(1960) || countitem(1961) ||
+			countitem(1962) || countitem(1963) || countitem(1964) ||
+			countitem(1965) || countitem(1966) || countitem(1967) ||
+			countitem(1968) || countitem(1969) || countitem(1970) ||
 			countitem(1971)
 		))
 			close; // no whip equipped or in inventory

@@ -11,7 +11,7 @@ bat_room,225,227,4	script	Registration::KvM02R_Guillaume	418,{ // KvM Guillaume
 OnInit:
 	waitingroom "Battle Station 5 Players",5,"KvM02_BG::OnGuillaumeJoin",1;
 	end;
-	
+
 OnEnterBG:
 	set $@KvM02BG_id1, waitingroom2bg("bat_c02",53,128,"KvM02_BG::OnGuillaumeQuit","KvM02_BG::OnGuillaumeDie");
 	end;
@@ -150,7 +150,7 @@ OnTimer27000:
 OnTimer28000:
 	donpcevent "::OnKvM02LightB";
 	end;
-	
+
 OnTimer29000:
 	donpcevent "::OnKvM02LightC";
 	end;
@@ -205,7 +205,7 @@ OnTimer330000:
 OnGuillaumeWin:
 	set $@KvM02BG, 3;
 	set $@KvM02BG_Victory, 1;
-	
+
 	stopnpctimer;
 	sleep 2000;
 	mapannounce "bat_c02","The Guillaume Army has won the Battle of Kreiger Von Midgard",1,0x0000FF;
@@ -321,7 +321,7 @@ bat_c02,51,130,5	script	Guillaume Vintenar::VintenarKvM02a	419,{
 			close2;
 		}
 		else
-		{ // 
+		{ //
 			set .@Reward, 1;
 			mes "[Swandery]";
 			mes "You lost, but you're dedicated to this battle.";
@@ -359,7 +359,7 @@ bat_c02,148,53,1	script	Croix Vintenar::VintenarKvM02b	415,{
 			close2;
 		}
 		else
-		{ // 
+		{ //
 			set .@Reward, 1;
 			mes "[Swandery]";
 			mes "Oh, " + strcharinfo(0) + ". Don't be sad.";

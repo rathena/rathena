@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Bard Job Quest
 //===== By: ==================================================
 //= Muad_Dib(The Prometheus Project), Lupus, Samuray22
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.6
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job quest for Bard class
 //===== Additional Comments: =================================
@@ -487,7 +487,7 @@ comodo,226,123,5	script	Wandering Bard	741,{
 				mes "Turned into a dragon and ate him.";
 				next;
 				input .@Song$;
-				if (.@Song$ != "There was a man") 
+				if (.@Song$ != "There was a man")
 					set .@w_point,.@w_point+1;
 
 				mes "^3377FFThere was a man";
@@ -937,12 +937,12 @@ S_ChangeJob:
 	end;
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
 //= Converted to rAthena format by Dr.Evil
-//= Info about gifts and other info --> http://www.ragnainfo.net/forums/viewtopic.php?t=51467&start=0 
+//= Info about gifts and other info --> http://www.ragnainfo.net/forums/viewtopic.php?t=51467&start=0
 //= 1.1 Optimized, changed some stuff, fixed some bugs [Lupus]
 //= 1.1a minor song test fix [Lupus]
 //= 1.2 Fixed wrong item ID, added missing commands [Lupus]
@@ -950,4 +950,4 @@ S_ChangeJob:
 //= 1.4 Changed priority for the gifts. Now you can win the 1st
 //=     prize, too. Added Izidor flower [Lupus]
 //= 2.0 Changed numbers to constants. [Vicious]
-//============================================================ 
+//============================================================

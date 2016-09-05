@@ -1,18 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Dandelion's Request / Morocc Invasion quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= SinSloth
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= A Morroc quest that is no longer used.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Fixed a small bug in Dandelion's Request. [SinSloth]
 //= 1.2 Moved Dandelion's Request to its own file.
 //= 1.3 Added GM management function. [Euphy]
-//============================================================ 
+//============================================================
 
 izlude,103,106,3	script	Guildsman#1	48,3,3,{
 
@@ -2205,7 +2205,7 @@ OnTouch:
 					mes "one drink at this joint.";
 					mes "Just drink at home, willya?";
 					close;
-					
+
 				case 2:
 					mes "[Jack]";
 					mes "Hmm...";
@@ -2332,7 +2332,7 @@ OnTouch:
 					close2;
 					warp "que_job01",85,77;
 					end;
-					
+
 				case 2:
 					mes "[Litheron]";
 					mes "Not the saavy type,";
@@ -2442,7 +2442,7 @@ que_job01,82,95,3	script	Bar Master	46,{
 			{
 				case 1:
 					set .@maodrink,1;
-					
+
 				case 2:
 					if(checkweight(12112,1) != 1)
 					{
@@ -2501,7 +2501,7 @@ que_job01,82,95,3	script	Bar Master	46,{
 					if(.@maodrink) getitem 12112,1;
 					else getitem 12113,1;
 					close;
-				
+
 				case 3:
 					mes "[Master]";
 					mes "What are you...?";
@@ -2512,7 +2512,7 @@ que_job01,82,95,3	script	Bar Master	46,{
 					mes "go someplace else.";
 					close;
 			}
-		
+
 		case 2:
 			if(mao_request == 1)
 			{
@@ -2661,7 +2661,7 @@ que_job01,82,95,3	script	Bar Master	46,{
 				mes "order something to drink.";
 				close;
 			}
-		
+
 		case 3:
 			mes "[Master]";
 			mes "...";
@@ -2712,7 +2712,7 @@ que_job01,49,49,5	script	Tao	877,{
 			mes "safe from people that";
 			mes "don't belong here, meow.";
 			close;
-	
+
 		case 2:
 			mes "[Tao]";
 			mes "Meow, meow.";
@@ -2788,7 +2788,7 @@ OnEnter:
 	initnpctimer;
 	mapannounce "que_job01","You will now enter the Master Zone, Area 1.",1,0x70DBDB;
 	end;
-	
+
 OnStop:
 	mapannounce "que_job01","The security magic in the Master Zone, Area 1 is deactivated.",1,0x70DBDB;
 	donpcevent "#maobar6::OnInit";
@@ -2803,11 +2803,11 @@ OnStop:
 	donpcevent "#roombar1::OnInit";
 	stopnpctimer;
 	end;
-	
+
 OnTimer240000:
 	donpcevent "#maobar6::OnEnter";
 	end;
-	
+
 OnTimer245000:
 	donpcevent "#maobar6::OnInit";
 	donpcevent "Valdes#1::OnInit";
@@ -2819,7 +2819,7 @@ OnTimer245000:
 	donpcevent "Marjana#poison::OnInit";
 	donpcevent "#mao_table::OnInit";
 	end;
-	
+
 OnTimer250000:
 	mapannounce "que_job01","The security magic in the Master Zone, Area 1 is deactivated.",1,0x70DBDB;
 	donpcevent "#roombar1::OnInit";
@@ -2832,11 +2832,11 @@ que_job01,12,13,1	script	#maobar6	139,1,1,{
 OnInit:
 	disablenpc "#maobar7";
 	end;
-	
+
 OnEnter:
 	enablenpc "#maobar7";
 	end;
-	
+
 OnTouch:
 	warp "que_job01",52,50;
 	end;
@@ -2919,7 +2919,7 @@ OnEnter:
 	initnpctimer;
 	mapannounce "que_job01","Security Level in the Master Zone, Area 2 has activated.",1,0x70DBDB;
 	end;
-	
+
 OnStop:
 	mapannounce "que_job01","Security Level in the Master Zone, Area 2 deactivated.",1,0x70DBDB;
 	donpcevent "#maobar7::OnInit";
@@ -2932,12 +2932,12 @@ OnStop:
 	donpcevent "#roombar2::OnInit";
 	stopnpctimer;
 	end;
-	
+
 OnTimer240000:
 	donpcevent "#maobar7::OnEnter";
 	donpcevent "#maobar8::OnEnter";
 	end;
-	
+
 OnTimer245000:
 	donpcevent "#maobar7::OnInit";
 	donpcevent "#maobar8::OnInit";
@@ -2948,7 +2948,7 @@ OnTimer245000:
 	donpcevent "#mao_empty::OnInit";
 	donpcevent "#roombar2::OnInit";
 	end;
-	
+
 OnTimer250000:
 	mapannounce "que_job01","Security Level in the Master Zone, Area 2 deactivated.",1,0x70DBDB;
 	donpcevent "#roombar2::OnInit";
@@ -2961,11 +2961,11 @@ que_job01,80,17,1	script	#maobar7	45,1,1,{
 OnInit:
 	disablenpc "#maobar7";
 	end;
-	
+
 OnEnter:
 	enablenpc "#maobar7";
 	end;
-	
+
 OnTouch:
 	warp "que_job01",52,50;
 	end;
@@ -2976,11 +2976,11 @@ que_job01,144,51,1	script	#maobar8	45,1,1,{
 OnInit:
 	disablenpc "#maobar8";
 	end;
-	
+
 OnEnter:
 	enablenpc "#maobar8";
 	end;
-	
+
 OnTouch:
 	warp "que_job01",52,50;
 	end;
@@ -3122,7 +3122,7 @@ que_job01,16,21,5	script	Valdes#1	55,{
 				mes "That is all. Dismissed!";
 				close2;
 				break;
-				
+
 			case 2:
 				mes "[Valdes]";
 				mes "Alright. Lin will be";
@@ -3496,7 +3496,7 @@ que_job01,16,21,5	script	Valdes#1	55,{
 OnInit:
 	disablenpc "Valdes#1";
 	end;
-	
+
 OnEnter:
 	enablenpc "Valdes#1";
 	end;
@@ -3507,7 +3507,7 @@ que_job01,17,11,3	script	Valdes#2	55,{
 OnInit:
 	disablenpc "Valdes#2";
 	end;
-	
+
 OnEnter:
 	disablenpc "Valdes#2";
 	end;
@@ -3518,7 +3518,7 @@ que_job01,142,56,5	script	Valdes#3	55,{
 OnInit:
 	disablenpc "Valdes#3";
 	end;
-	
+
 OnEnter:
 	disablenpc "Valdes#3";
 	end;
@@ -3585,7 +3585,7 @@ que_job01,19,18,3	script	Lin#1	885,{
 	}
 	cutin "",255;
 	end;
-	
+
 OnInit:
 	disablenpc "Lin#1";
 	end;
@@ -3600,7 +3600,7 @@ que_job01,13,9,7	script	Lin#2	885,{
 OnInit:
 	disablenpc "Lin#2";
 	end;
-	
+
 OnEnter:
 	disablenpc "Lin#2";
 	end;
@@ -3712,7 +3712,7 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 				mes "will go to the Juno Library to";
 				mes "find his research documents.";
 				break;
-				
+
 			case 2:
 				mes "[" + strcharinfo(0) + "]";
 				mes "Won't they attack";
@@ -4595,7 +4595,7 @@ que_job01,147,54,3	script	Lin#3	885,{
 OnInit:
 	disablenpc "Lin#3";
 	end;
-	
+
 OnEnter:
 	disablenpc "Lin#3";
 	end;
@@ -4665,7 +4665,7 @@ que_job01,13,17,5	script	Kidd#1	884,{
 OnInit:
 	disablenpc "Kidd#1";
 	end;
-	
+
 OnEnter:
 	enablenpc "Kidd#1";
 	end;
@@ -4676,7 +4676,7 @@ que_job01,12,8,7	script	Kidd#2	884,{
 OnInit:
 	disablenpc "Kidd#2";
 	end;
-	
+
 OnEnter:
 	disablenpc "Kidd#2";
 	end;
@@ -4687,7 +4687,7 @@ que_job01,148,54,3	script	Kidd#3	884,{
 OnInit:
 	disablenpc "Kidd#3";
 	end;
-	
+
 OnEnter:
 	disablenpc "Kidd#3";
 	end;
@@ -4829,7 +4829,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 				mes "and where he might be now.";
 				mes "Pretty good idea, huh?";
 				break;
-				
+
 			case 2:
 				mes "[Kidd]";
 				mes "I know that Juno is pretty";
@@ -5343,7 +5343,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 					close2;
 				}
 				break;
-				
+
 			case 2:
 				cutin "mocseal_kid01.bmp",2;
 				mes "[Kidd]";
@@ -5432,7 +5432,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 				mes "commanding officer!";
 				set mao_request,24;
 				break;
-				
+
 			case 2:
 				mes "[Kidd]";
 				mes "That's right! She's";
@@ -5593,7 +5593,7 @@ que_job01,89,85,5	script	Dandelion Member	880,{
 				mes "can ever forgive ourselves.";
 				close2;
 				break;
-				
+
 			case 2:
 				mes "[Dandelion Member]";
 				mes "You really haven't?";
@@ -6096,7 +6096,7 @@ yuno_in04,180,106,3	script	Reading Girl	73,{
 						mes "all about history, so I couldn't really understand them at all...";
 						set mao_request,6;
 						close;
-						
+
 					case 2:
 						mes "[Yunia]";
 						mes "Mm... I really don't";
@@ -6108,7 +6108,7 @@ yuno_in04,180,106,3	script	Reading Girl	73,{
 						set mao_request,6;
 						close;
 				}
-		
+
 			case 2:
 				mes "[Yunia]";
 				mes "Oh... you know.";
@@ -6227,7 +6227,7 @@ yuno_in04,180,106,3	script	Reading Girl	73,{
 				mes "that he needs, am I right?";
 				set mao_request,106;
 				close;
-			
+
 			case 2:
 				mes "[Yunia]";
 				mes "Oh... You know. Just this";
@@ -6434,11 +6434,11 @@ yuno_in04,174,130,5	script	Kidd#book	884,{
 	mes "......";
 	mes ".........";
 	close;
-	
+
 OnInit:
 	disablenpc "Kidd#book";
 	end;
-	
+
 OnEnter:
 	enablenpc "Kidd#book";
 	end;
@@ -6449,11 +6449,11 @@ yuno_in04,1,1,1	script	#maobooktimer	-1,{
 OnEnter:
 	initnpctimer;
 	end;
-	
+
 OnStop:
 	donpcevent "Workbook#mao::OnInit";
 	stopnpctimer;
-	
+
 OnTimer180000:
 	donpcevent "Workbook#mao::OnInit";
 	stopnpctimer;
@@ -6464,7 +6464,7 @@ que_job01,6,79,5	script	Lin#stairs	885,{
 OnInit:
 	disablenpc "Lin#stairs";
 	end;
-	
+
 OnEnter:
 	enablenpc "Lin#stairs";
 	end;
@@ -7636,7 +7636,7 @@ OnTouch:
 OnInit:
 	disablenpc "#mao_table";
 	end;
-	
+
 OnEnter:
 	enablenpc "#mao_table";
 	end;
@@ -7662,7 +7662,7 @@ OnTouch:
 OnInit:
 	disablenpc "#mao_empty";
 	end;
-	
+
 OnEnter:
 	enablenpc "#mao_empty";
 	end;
@@ -7735,7 +7735,7 @@ OnTouch:
 OnInit:
 	disablenpc "#Rabsent";
 	end;
-	
+
 OnEnter:
 	enablenpc "#Rabsent";
 	end;
@@ -7803,11 +7803,11 @@ que_job02,14,182,1	script	#maogate1	139,1,1,{
 OnEnter:
 	enablenpc "#maogate1";
 	end;
-	
+
 OnStop:
 	disablenpc "#maogate1";
 	end;
-	
+
 OnTouch:
 	if (mao_request == 26 || mao_request == 27)
 	{
@@ -7879,7 +7879,7 @@ OnInit:
 OnEnter:
 	enablenpc "#maogate1_talk1";
 	end;
-	
+
 OnTouch:
 	mes "^333333Holy... ritual... of...";
 	mes "blood... I am proud...";
@@ -7920,7 +7920,7 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate1_talk2";
 	end;
-	
+
 OnTouch:
 	mes "...";
 	mes "......";
@@ -7966,7 +7966,7 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate1_talk3";
 	end;
-	
+
 OnTouch:
 	mes "......";
 	mes ".........";
@@ -8023,7 +8023,7 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate1_talk4";
 	end;
-	
+
 OnTouch:
 	mes "......";
 	mes ".........";
@@ -8075,7 +8075,7 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate1_talk5";
 	end;
-	
+
 OnTouch:
 	mes "......";
 	mes ".........";
@@ -8112,7 +8112,7 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate1_talk6";
 	end;
-	
+
 OnTouch:
 	mes "......";
 	mes ".........";
@@ -8185,7 +8185,7 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate1_talk7";
 	end;
-	
+
 OnTouch:
 	mes "......";
 	mes ".........";
@@ -8239,16 +8239,16 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate1_talk8";
 	end;
-	
+
 OnStop2:
 	stopnpctimer;
 	end;
-	
+
 OnTouch:
 	initnpctimer;
 	disablenpc "#maogate1_talk8";
 	end;
-	
+
 OnTimer1000:
 	mapannounce "que_job02","...Blood... is the currency... of the soul...",1,0x7B68EE;
 	end;
@@ -8597,7 +8597,7 @@ OnTimer10000:
 	donpcevent "Dandelion#maogate1_1::OnInit";
 	stopnpctimer;
 	end;
-	
+
 OnMyMobDead:
 	end;
 }
@@ -8786,11 +8786,11 @@ que_job03,14,182,1	script	#maogate2	139,1,1,{
 OnEnter:
 	enablenpc "#maogate2";
 	end;
-	
+
 OnStop:
 	disablenpc "#maogate2";
 	end;
-	
+
 OnTouch:
 	if (mao_request == 124 || mao_request == 125)
 	{
@@ -8862,7 +8862,7 @@ OnInit:
 OnEnter:
 	enablenpc "#maogate2_talk1";
 	end;
-	
+
 OnTouch:
 	mes "^333333Holy... ritual... of...";
 	mes "blood... I am proud...";
@@ -8903,7 +8903,7 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate2_talk2";
 	end;
-	
+
 OnTouch:
 	mes "...";
 	mes "......";
@@ -8949,7 +8949,7 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate2_talk3";
 	end;
-	
+
 OnTouch:
 	mes "......";
 	mes ".........";
@@ -9006,7 +9006,7 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate2_talk4";
 	end;
-	
+
 OnTouch:
 	mes "......";
 	mes ".........";
@@ -9058,7 +9058,7 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate2_talk5";
 	end;
-	
+
 OnTouch:
 	mes "......";
 	mes ".........";
@@ -9095,7 +9095,7 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate2_talk6";
 	end;
-	
+
 OnTouch:
 	mes "......";
 	mes ".........";
@@ -9168,7 +9168,7 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate2_talk7";
 	end;
-	
+
 OnTouch:
 	mes "......";
 	mes ".........";
@@ -9222,16 +9222,16 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate2_talk8";
 	end;
-	
+
 OnStop2:
 	stopnpctimer;
 	end;
-	
+
 OnTouch:
 	initnpctimer;
 	disablenpc "#maogate2_talk8";
 	end;
-	
+
 OnTimer1000:
 	mapannounce "que_job03","...Blood... is the currency... of the soul...",1,0x7B68EE;
 	end;
@@ -9270,39 +9270,39 @@ OnStop:
 OnEnter:
 	enablenpc "#maogate2_battle";
 	end;
-	
+
 OnStop2:
 	stopnpctimer;
 	killmonster "que_job03","#maogate2_battle::OnMyMobDead";
 	end;
-	
+
 OnTouch:
 	initnpctimer;
 	emotion e_wah,1;
 	disablenpc "#maogate2_battle";
 	end;
-	
+
 OnTimer500:
 	monster "que_job03",71,85,"Mummy",1041,1,"#maogate2_battle::OnMyMobDead";
 	monster "que_job03",79,85,"Mummy",1041,1,"#maogate2_battle::OnMyMobDead";
 	monster "que_job03",71,80,"Mummy",1041,1,"#maogate2_battle::OnMyMobDead";
 	monster "que_job03",79,80,"Mummy",1041,1,"#maogate2_battle::OnMyMobDead";
 	end;
-	
+
 OnTimer5000:
 	mapannounce "que_job03","Watch out!",1,0x90EE90;
 	donpcevent "Dandelion Member#2_bt::OnEnter";
 	end;
-	
+
 OnTimer6000:
 	specialeffect EF_LORD;
 	end;
-	
+
 OnTimer6500:
 	killmonster "que_job03","#maogate2_battle::OnMyMobDead";
 	stopnpctimer;
 	end;
-	
+
 OnMyMobDead:
 	end;
 }
@@ -9373,7 +9373,7 @@ que_job03,66,85,5	script	Dandelion Member#2_bt	880,{
 OnInit:
 	disablenpc "Dandelion Member#2_bt";
 	end;
-	
+
 OnEnter:
 	enablenpc "Dandelion Member#2_bt";
 	end;
@@ -9384,11 +9384,11 @@ que_job03,87,83,1	script	#maogate2_setting	139,2,2,{
 OnStop:
 	disablenpc "#maogate2_setting";
 	end;
-	
+
 OnEnter:
 	enablenpc "#maogate2_setting";
 	end;
-	
+
 OnTouch:
 	if (mao_request == 125)
 	{
@@ -9407,20 +9407,20 @@ que_job03,117,101,1	script	#maogate2_end	139,3,3,{
 OnInit:
 	disablenpc "#maogate2_end";
 	end;
-	
+
 OnReset:
 	killmonster "que_job03","#maogate2_end::OnMyMobDead";
 	end;
-	
+
 OnStop:
 	killmonster "que_job03","#maogate2_end::OnMyMobDead";
 	stopnpctimer;
 	end;
-	
+
 OnEnter:
 	enablenpc "#maogate2_end";
 	end;
-	
+
 OnTouch:
 	donpcevent "#maogate2_setting::OnStop";
 	mes "[" + strcharinfo(0) + "]";
@@ -9727,7 +9727,7 @@ que_job03,122,106,1	script	#maogate2_end2	139,15,15,{
 OnInit:
 	disablenpc "#maogate2_end2";
 	end;
-	
+
 OnEnter:
 	enablenpc "#maogate2_end2";
 	end;
@@ -9805,11 +9805,11 @@ morocc,30,29,5	script	Member#mao1	880,10,15,{
 OnStop:
 	disablenpc "Member#mao1";
 	end;
-	
+
 OnEnter:
 	enablenpc "Member#mao1";
 	end;
-	
+
 OnTouch:
 	if (mao_request == 30 || mao_request == 128)
 	{
@@ -9888,7 +9888,7 @@ morocc,29,26,0	script	Member#mao2	880,{
 OnStop:
 	disablenpc "Member#mao2";
 	end;
-	
+
 OnEnter:
 	enablenpc "Member#mao2";
 	end;
@@ -9925,7 +9925,7 @@ morocc,33,27,1	script	Member#mao3	880,{
 OnStop:
 	disablenpc "Member#mao3";
 	end;
-	
+
 OnEnter:
 	enablenpc "Member#mao3";
 	end;
@@ -9962,7 +9962,7 @@ morocc,34,30,3	script	Member#mao4	880,{
 OnStop:
 	disablenpc "Member#mao4";
 	end;
-	
+
 OnEnter:
 	enablenpc "Member#mao4";
 	end;
@@ -9973,7 +9973,7 @@ morocc,1,1,1	script	#mao_timer	-1,{
 OnStart:
 	initnpctimer;
 	end;
-	
+
 OnTimer300000:
 OnStop:
 	donpcevent "Member#mao1::OnEnter";
@@ -9989,7 +9989,7 @@ morocc,1,2,1	script	#mao_manager	-1,{
 OnStart:
 	initnpctimer;
 	end;
-	
+
 OnStop:
 	killmonster "morocc","#mao_manager::OnMyMobDead";
 	donpcevent "Member#mao1::OnEnter";
@@ -9998,27 +9998,27 @@ OnStop:
 	donpcevent "Member#mao4::OnEnter";
 	stopnpctimer;
 	end;
-	
+
 OnTimer300000:
 	mapannounce "morocc","How dare... you... interrupt... the holy ritual...",1,0x7B68EE;
 	end;
-	
+
 OnTimer305000:
 	mapannounce "morocc","...The seal... no... it won't... it's not...",1,0x7B68EE;
 	end;
-	
+
 OnTimer310000:
 	mapannounce "morocc","...Accursed humans... interfering with... my revival...",1,0x7B68EE;
 	end;
-	
+
 OnTimer315000:
 	mapannounce "morocc","...Take this... blessing... of blood... Accept your.... death...",1,0x7B68EE;
 	end;
-	
+
 OnTimer320000:
 	mapannounce "morocc","...Beg for... my forgiveness... in the afterlife...!",1,0x7B68EE;
 	end;
-	
+
 OnTimer325000:
 	mapannounce "morocc","???: Morroc Satan's angry! Oh Freya, please protect us from the evil being...",1,0x7B68EE;
 	monster "morocc",163,185,"Satan's Wrath",1041,1,"#mao_manager::OnMyMobDead";
@@ -10032,7 +10032,7 @@ OnTimer325000:
 	monster "morocc",157,191,"Satan's Wrath",1041,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",155,191,"Satan's Wrath",1041,1,"#mao_manager::OnMyMobDead";
 	end;
-	
+
 OnTimer327000:
 	monster "morocc",163,194,"Satan's Despair",1041,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",161,194,"Satan's Despair",1041,1,"#mao_manager::OnMyMobDead";
@@ -10050,7 +10050,7 @@ OnTimer327000:
 	monster "morocc",157,200,"Satan's Wrath",1041,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",155,200,"Satan's Wrath",1041,1,"#mao_manager::OnMyMobDead";
 	end;
-	
+
 OnTimer329000:
 	announce "Kafra Pavianne: This is the Morroc Kafra Branch! The m-monsters are... Aaaaahhh!",bc_all,0x70DBDB;
 	monster "morocc",163,203,"Satan's Wrath",1154,1,"#mao_manager::OnMyMobDead";
@@ -10069,7 +10069,7 @@ OnTimer329000:
 	monster "morocc",157,209,"Satan's Wrath",1154,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",155,209,"Satan's Wrath",1154,1,"#mao_manager::OnMyMobDead";
 	end;
-	
+
 OnTimer331000:
 	monster "morocc",163,212,"Satan's Wrath",1154,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",161,212,"Satan's Wrath",1154,1,"#mao_manager::OnMyMobDead";
@@ -10082,7 +10082,7 @@ OnTimer331000:
 	monster "morocc",157,212,"Satan's Wrath",1154,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",155,212,"Satan's Wrath",1154,1,"#mao_manager::OnMyMobDead";
 	end;
-	
+
 OnTimer333000:
 	monster "morocc",138,162,"Satan's Wrath",1041,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",140,162,"Satan's Wrath",1041,1,"#mao_manager::OnMyMobDead";
@@ -10128,7 +10128,7 @@ OnTimer333000:
 	monster "morocc",178,160,"Satan's Wrath",1154,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",180,160,"Satan's Wrath",1154,1,"#mao_manager::OnMyMobDead";
 	end;
-	
+
 OnTimer335000:
 	monster "morocc",138,158,"Satan's Despair",1041,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",140,158,"Satan's Despair",1041,1,"#mao_manager::OnMyMobDead";
@@ -10154,7 +10154,7 @@ OnTimer335000:
 	monster "morocc",0,0,"Satan's Despair",1041,20,"#mao_manager::OnMyMobDead";
 	monster "morocc",0,0,"Satan's Wrath",1041,20,"#mao_manager::OnMyMobDead";
 	end;
-	
+
 OnTimer1800000:
 	killmonster "morocc","#mao_manager::OnMyMobDead";
 	donpcevent "Member#mao1::OnEnter";
@@ -10163,7 +10163,7 @@ OnTimer1800000:
 	donpcevent "Member#mao4::OnEnter";
 	stopnpctimer;
 	end;
-	
+
 OnMyMobDead:
 	end;
 }
@@ -10263,7 +10263,7 @@ sec_in02,38,162,0	script	Morroc Invasion Manager	882,{
 					mes "invasion can now be triggered.";
 					set $maoattack,50;
 					close;
-				
+
 				case 3:
 					mes "The GlobalVar has been";
 					mes "set to 0. The Lin Quest";

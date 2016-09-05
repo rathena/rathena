@@ -958,7 +958,7 @@ OnTimer60000:
 
 OnStop:
 	stopnpctimer;
-	end; 
+	end;
 }
 
 -	script	arn_warp_60	-1,{

@@ -6,7 +6,7 @@
 //= 1.1
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Warpers to various towns.
 //===== Additional Comments: =================================

@@ -1087,7 +1087,7 @@ tha_t06,0,0,0,0	monster	Inorganic Pumpkin	3203,4,5000,0,0
 tha_t07,0,0,0,0	monster	Inorganic Pumpkin	3203,4,5000,0,0
 tha_t08,0,0,0,0	monster	Inorganic Pumpkin	3203,4,5000,0,0
 tha_t09,0,0,0,0	monster	Inorganic Pumpkin	3203,4,5000,0,0
-tha_t10,0,0,0,0	monster	Inorganic Pumpkin	3203,4,5000,0,0	
+tha_t10,0,0,0,0	monster	Inorganic Pumpkin	3203,4,5000,0,0
 tha_t11,0,0,0,0	monster	Inorganic Pumpkin	3203,4,5000,0,0
 tha_t12,0,0,0,0	monster	Inorganic Pumpkin	3203,4,5000,0,0
 thor_v01,0,0,0,0	monster	Inorganic Pumpkin	3203,4,5000,0,0

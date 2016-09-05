@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs related to Morroc
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= - Stop Post
 //= - Binoculars Quest
@@ -14,7 +14,7 @@
 //= - Resurrection of Satan Morroc
 //= - The Crow of the Fate
 //= - Succession of the Prince
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Fixed exploits [Lupus]
 //= 1.2 Added Dandelion's Request / Morroc Invasion quest. [SinSloth]
 //= 1.3 Updated dialogs from Binoculars Quest. [Samuray22]
@@ -36,7 +36,7 @@
 //=     Added support NPCs required to finish Gaebolg quest.
 //= 2.5 Fixed Group of Evil never re-enabling. [L0ne_W0lf]
 //= 2.6 Added quest log commands for Resurrection of Satan Morroc. [L0ne_W0lf]
-//=     Added the two remaining episode 12.1 quests. 
+//=     Added the two remaining episode 12.1 quests.
 //=     Updated Satan Morroc Quest to allow peopel who have
 //=     finished it to return to the previous map.
 //= 2.7 Corrected weight checks, they only check for inventory slots. [L0ne_W0lf]
@@ -46,7 +46,7 @@
 //= 3.0 Updated RE/Pre-RE EXP. [Euphy]
 //= 3.1 Updated to match the latest official scripts. [Euphy]
 //= 3.2 Added GM management NPC and variable $@re_moc_time$. [Euphy]
-//============================================================ 
+//============================================================
 
 // Stop Post Quest
 // ============================================================

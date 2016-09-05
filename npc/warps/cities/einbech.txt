@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Einbech Warps
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Muad Dib (1.0), SSUNNY@YOUNG(1.1)
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Einbech Town warps
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Made by Muad_Dib from Prometheus, all credit goes to him.
 //= 1.1 Updated Warps, work done by SSUNNY@YOUNG in Korean eA site [Vicious]
 //============================================================

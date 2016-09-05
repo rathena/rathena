@@ -1,25 +1,25 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Wandering Minstrel Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Riotblade and L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Help the bard remember how his song goes.
 //===== Comments: ============================================
 //= [Official Conversion]
 //= Needs optimizing.
 //= Reconverted with iRO Dialogs.
 //= Possible NPC conflict with "Representative"
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version, needs testing. [L0ne_W0lf]
 //= 1.1 Fixed bug, optimized. Not yet final version [Lupus]
 //=
 //= Variables:
-//=		.@random : temp var 
-//=		.@inputstr$ : temp var 
+//=		.@random : temp var
+//=		.@inputstr$ : temp var
 //=
 //= This Quest has relation with brisingamen_seal.txt (Seals)
 //= 1.2 Changed variable to "gef_bards_q" to avoid job quest conflict. [L0ne_W0lf]
@@ -27,7 +27,7 @@
 //= 1.3 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 1.4 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.5 Updated RE/Pre-RE EXP. [Euphy]
-//============================================================ 
+//============================================================
 
 geffen,132,38,3	script	Bard#2	51,{
 	if (bard_q > 5) set gef_bard_q,bard_q;
@@ -1503,7 +1503,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "Could that tree be Yggdrasil? Is it possible that I could meet her in the Niffheim, realm of the dead?";
 				close;
 			}
-		
+
 		case 2:
 			mes "[Kino Kitty]";
 			mes "Oh... Well, I have a chronic disease so I can't speak out loud. I, um, even cough up a little blood. But aside from that, I'm perfectly healthy.";
@@ -1511,7 +1511,7 @@ morocc,134,111,3	script	Bard#3	741,{
 			mes "^3355FFA look of bitterness momentarily flashed across Kino Kitty's face. He then adjusted his guitar strings and began to play, humming a low tune.^000000";
 			soundeffect "humming.wav",0;
 			close;
-		
+
 		case 3:
 			mes "[Kino Kitty]";
 			mes "Hmm...?";
@@ -1647,7 +1647,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "Could that tree be Yggdrasil? Is it possible that I could meet her in the Niffheim, realm of the dead?";
 				close;
 			}
-		
+
 		case 2:
 			mes "[Kino Kitty]";
 			mes "Oh... Well, I have a chronic disease so I can't speak out loud. I, um, even cough up a little blood. But aside from that, I'm perfectly healthy.";
@@ -1655,7 +1655,7 @@ morocc,134,111,3	script	Bard#3	741,{
 			mes "^3355FFA look of bitterness momentarily flashed across Kino Kitty's face. He then adjusted his guitar strings and began to play, humming a low tune.^000000";
 			soundeffect "humming.wav",0;
 			close;
-		
+
 		case 3:
 			mes "[Kino Kitty]";
 			mes "Hmm...?";
@@ -1691,7 +1691,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "You already have a seal marked by Errende. Oh well, if you don't want it, what can I do?";
 				set gef_bard_q,13;
 				close;
-			
+
 			case 2:
 				mes "[Kino Kitty]";
 				mes "Now, let's see...";
@@ -1734,7 +1734,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				set gef_bard_q,14;
 				close;
 			}
-		
+
 		} else {
 			mes "[Kino Kitty]";
 			mes "Hmmm...?";
@@ -1864,12 +1864,12 @@ morocc,134,111,3	script	Bard#3	741,{
 				mes "...Hah...";
 				mes "I'm sorry, but I don't think I can speak for much longer.";
 				close;
-			
+
 			case 2:
 				mes "[Kino Kitty]";
 				mes "Sorry, but I don't feel like singing at the moment. I hope you understand. I want to sing the last song of my life for Jorti...";
 				close;
-			
+
 			case 3:
 				mes "[Kino Kitty]";
 				mes "You have no";
@@ -1941,7 +1941,7 @@ morocc,134,111,3	script	Bard#3	741,{
 			mes "^333333(Wasn't the little girl";
 			mes "scared by your outburst...?)^000000";
 			close;
-		
+
 		} else {
 			if (gef_bard_q == 2) {
 				mes "[Mysterious Bard]";
@@ -2184,7 +2184,7 @@ yuno_in01,172,100,3	script	Old Man#bq1	712,{
 			mes "You're not looking for any medical or health related books, are you? I'm sorry, but we don't carry any of those.";
 			close;
 		}
-	
+
 	} else {
 		mes "[Sketzi Bundin]";
 		mes "Welcome.";
@@ -2300,7 +2300,7 @@ yuno_in01,173,96,0	script	Luke's Songs Vol.1	111,{
 			mes "[Luke's Note]";
 			mes "The lyrics, of course, are fictional, and are in no way anecdotal.";
 			close;
-		
+
 		case 2:
 			mes "[Life is a Water Mill]";
 			mes "I chased after fame.";
@@ -2327,7 +2327,7 @@ yuno_in01,173,96,0	script	Luke's Songs Vol.1	111,{
 			mes "made to give comfort";
 			mes "to people in despair.";
 			close;
-		
+
 		case 3:
 			mes "[We]";
 			mes "A good Bard sings";
@@ -2746,12 +2746,12 @@ payon,181,172,3	script	Bard#4	51,{
 					mes "But it's okay because he was rescued by some Alchemist and came back to life, but you should go to Lutie if you wanna know more about him, okay?";
 					close;
 				}
-			
+
 			case 3:
 				mes "[Gunther Doubleharmony]";
 				mes "You're gonna leave right now and not even listen to me a little bit? Okay, I'm cool, but promise you'll come back and listen to just one of my songs, okay?";
 				close;
-			
+
 			}
 
 		} else {

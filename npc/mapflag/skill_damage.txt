@@ -6,7 +6,7 @@
 //= 1.0
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Enables skill damage adjustment. All adjustments in
 //= skill_damage_db.txt for 'Map' type 16 will be applied.
 //= See the mapflag documentation for details about extra
@@ -14,7 +14,7 @@
 //=
 //= You MUST enable ADJUST_SKILL_DAMAGE in 'src/config/core.h'
 //= for this mapflag to take effect.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Initial script. [Cydh]
 //============================================================
 

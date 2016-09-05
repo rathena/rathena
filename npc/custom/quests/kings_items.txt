@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Event King Items
-//===== By: ================================================== 
+//===== By: ==================================================
 //= $ephiroth
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Grand Circlet Quest combined with Excalibur Quest.
 //===== Additional Comments: =================================
 //= 2006/09/27: 1.0 Release and fully working. [$ephiroth]
@@ -46,7 +46,7 @@ prt_castle,80,170,4	script	King of Prontera	108,{
 			for(set .@j,1; .@j<getarraysize(getd(".@Items"+.@i)); set .@j,.@j+2)
 				if (countitem(getd(".@Items"+.@i+"["+.@j+"]")) < getd(".@Items"+.@i+"["+(.@j+1)+"]")) set .@nr,1;
 			mes "[King of Prontera]";
-			if (.@nr) { 
+			if (.@nr) {
 				mes "You're missing something.";
 				mes "Come back after you get ALL the items.";
 				close; }

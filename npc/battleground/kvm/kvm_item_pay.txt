@@ -1,20 +1,20 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= BattleGround System - KvM Item Dealer
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.0
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Kreiger Von Midgard Battleground Point redemption NPC
-//= * NOTE * 
+//= * NOTE *
 //= KvM Does NOT use items, but a character variable to
 //= keep track of points. This NPC when talked to will
 //= convert already-given tokens and convert them to points.
 //= under the player variable kvm_point.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version.
 //============================================================
 
@@ -79,7 +79,7 @@ bat_room,151,144,3	script	KVM Logistic Officer#a	734,{
 				mes "Please select a sub-category.";
 				next;
 				switch(select("Dagger:One-handed Sword:Two-handed Sword:One-handed Spear:Two-handed Spear")) {
-				case 1: callsub PurchaseItem,13042,0,1; //Krieger_Dagger1 
+				case 1: callsub PurchaseItem,13042,0,1; //Krieger_Dagger1
 				case 2:
 					mes "[Logistics]";
 					mes "You have selected the 'One-handed Sword' category.";

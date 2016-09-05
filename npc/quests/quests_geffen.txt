@@ -1,21 +1,21 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs related to Geffen
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88 & Samuray22
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project; 7.15 +
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Welding Mask and Headset Quests.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Fixed exploits [Lupus]
 //= 1.2 Removed Duplicates [Silent]
 //= 1.3 Updated "Welding Mask" Quest to the Official one. [Samuray22]
 //= 1.3a replaced item "names" with item id. Added missing [Lupus]
 //= 1.4 Updated welding mask and headset quests. [L0ne_W0lf]
 //= 1.5 Added Number Match Game. [Euphy]
-//============================================================ 
+//============================================================
 
 // Blacksmith: 'Welding Mask' Quest
 //============================================================

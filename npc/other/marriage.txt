@@ -1,21 +1,21 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Player Marriage
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Official Marriage script.
 //= Added isloggedin() check, even though Aegis doesn't do it.
 //= Currently does not support same-Sex marriages.
 //= Old script located in: npc/custom/marriage.txt
 //= - Variable in use: wedding_sign (max 1)
-//= - Variable in use: $@wedding (max 1) 
+//= - Variable in use: $@wedding (max 1)
 //= - Variable in use: $@wed_groom$ $@wed_bride$
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Fixed a missing ")" [L0ne_W0lf]
 //= 1.2 Corrected duration of Wedding status. [L0ne_W0lf]
@@ -359,7 +359,7 @@ prt_church,97,100,4	script	Wedding Staff#w	71,{
 					mes "Anyway, let's try it again.";
 					next;
 				}
-				else 
+				else
 					break;
 			}
 			mes "[Marry Happy]";

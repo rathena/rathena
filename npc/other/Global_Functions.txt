@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Global Functions
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Lupus, kobra_k88
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.25
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= General script functions.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Added F_ClearJobVar - on getting a new job it clears all Job Quest variables
 //= Removed individual job check functions as they were redundant [kobra_k88]
 //= 1.3 Added Job Change Function for Baby/Normal Classes
@@ -49,7 +49,7 @@
 //= 2.24 Added functions to check for equipment swap hacks. [Euphy]
 //= 2.25 Added "F_CanOpenStorage" and "F_CanChangeJob". [secretdataz]
 //= 2.26 Added "F_getpositionname". [Capuche]
-//============================================================ 
+//============================================================
 
 //////////////////////////////////////////////////////////////////////////////////
 // Clears job quest variables.
@@ -112,10 +112,10 @@ function	script	F_ClearGarbage	{
 		set RES_SKILL,0;
 	//Here you put outdated variables from your outdated EVENTS
 	//e.g. Is XMAS done? Add the EVENT var clearing code here.
-	
+
 	//due to bugs in BS quest:
 	set wizard_m2,0;
-	
+
 	// Old Novice Ground Variables.
 	set NEW_MES_FLAG0,0;
 	set NEW_MES_FLAG1,0;
@@ -126,11 +126,11 @@ function	script	F_ClearGarbage	{
 	set NEW_LVUP0,0;
 	set NEW_LVUP1,0;
 	set NEW_JOBLVUP,0;
-	
+
 	// Old DTS variables that are no longer used.
 	set dtseligible,0;
 	set MISC_QUEST,MISC_QUEST & ~128;
-	
+
 	return;
 }
 
@@ -351,14 +351,14 @@ function	script	F_GetArmorType	{
 //////////////////////////////////////////////////////////////////////////////////
 function	script	Time2Str	{
 	set .@Time_Left, getarg(0) - gettimetick(2);
-	
+
 	set .@Days, .@Time_Left / 86400;
 	set .@Time_Left, .@Time_Left - (.@Days * 86400);
 	set .@Hours, .@Time_Left / 3600;
 	set .@Time_Left, .@Time_Left - (.@Hours * 3600);
 	set .@Minutes, .@Time_Left / 60;
 	set .@Time_Left, .@Time_Left - (.@Minutes * 60);
-	
+
 	set .@Time$, "";
 	if( .@Days > 1 )
 		set .@Time$, .@Time$ + .@Days + " days, ";
@@ -379,7 +379,7 @@ function	script	Time2Str	{
 		set .@Time$, .@Time$ + .@Time_Left + " seconds";
 	else if( .@Time_Left == 1 )
 		set .@Time$, .@Time$ + .@Time_Left + " second";
-	
+
 	return .@Time$;
 }
 
@@ -497,7 +497,7 @@ function	script	F_GetPlural	{
 		else
 			set .@result$, substr(.@str$,0,.@strlen - 2 - (.@suffix$[1] == "fe")) + "ves";
 	}
-	
+
 	// ends in consonant + -y --> remove -y --> add -ies
 	else if (.@suffix$[0] == "y" && !compare("aeiou",charat(.@suffix$[1],0))) {
 		set .@result$, delchar(.@str$,.@strlen - 1) + "ies";

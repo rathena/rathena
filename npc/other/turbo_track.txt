@@ -6,9 +6,9 @@
 //= 1.2
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
-//= Turbo Track Course: 
+//= Turbo Track Course:
 //= - Solo Mode/Time Attack
 //= - Normal (Non-PVP) - 4/8/16 Person
 //= - Expert (PVP) - 4/8/16 Person
@@ -47,7 +47,7 @@ OnStartArena:
 	donpcevent "Broadcast#"+.@in$+.@in+"::OnEnable";
 	disablewaitingroomevent strnpcinfo(0);
 	end;
-	
+
 OnInit:
 	if (compare(strnpcinfo(0),"main")) end;
 	if (compare(strnpcinfo(2),"n1")) {
@@ -68,7 +68,7 @@ turbo_room,77,135,3	duplicate(entrance#tt_main)	Normal mode - 4 person	124
 turbo_room,84,135,3	duplicate(entrance#tt_main)	Normal mode - 8 person	124
 turbo_room,91,135,3	duplicate(entrance#tt_main)	Normal mode - 16 person	124
 turbo_room,72,132,3	duplicate(entrance#tt_main)	Solo Mode#n1	124
-	
+
 turbo_e_4,298,167,3	script	Helper#tt_main	124,{
 	mes "[Helper]";
 	mes "You are now in the";
@@ -98,7 +98,7 @@ OnTouch:
 	else
 		warp strnpcinfo(4),59,364;
 	end;
-	
+
 OnInit:
 	set .@w$,callfunc("F_tt");
 	disablenpc "Point Give-Away Guy#"+.@w$;
@@ -393,12 +393,12 @@ OnTimer927000:
 	disablenpc "Flasher_Exit_1#"+.@w$;
 	disablenpc "Flasher_Exit_2#"+.@w$;
 	end;
-	
+
 OnInit:
 	set .@w$,callfunc("F_tt");
 	disablenpc "Master#"+.@w$;
 	end;
-	
+
 	function	RName	{
 		.@string$ = getarg(0);
 		.@s = ( getstrlen(.@string$) > 2 ? substr(.@string$,1,2) : charat(.@string$,getstrlen(.@string$)-1) );
@@ -1219,14 +1219,14 @@ OnTouch:
 			mes "I wouldn't be able to do business without the Kafra Services. Thank you, Kafra!";
 			mes " ";
 			mes "[Chief Mahnsoo]";
-			mes "I looove you Kafra!^000000";				
+			mes "I looove you Kafra!^000000";
 		} else {
 			mes "^4d4dff[Karkatan]";
 			mes "My land suffered from poor customer service...until Kafra came along!";
 			mes " ";
 			mes "[Curator Guiss]";
 			mes "Oh, Kafra is simply the best!^000000";
-		}			
+		}
 		next;
 		mes "^ff0000Turbo Track";
 		mes "^ff0000Traps in the Cursed Desert!";
@@ -1682,7 +1682,7 @@ turbo_n_1,332,270,0	duplicate(snake04#tt_main)	snake04#n1	45,1,1
 
 -	script	SnakeHunt#tt_main	-1,{
 	end;
-	
+
 OnReset:
 	killmonsterall strnpcinfo(4);
 	end;
@@ -1733,7 +1733,7 @@ OnTouch:
 		case 2:
 			mapannounce strnpcinfo(4),strcharinfo(0) +" has just passed the Cube Hills course!",bc_map,"0x70DBDB";
 			warp strnpcinfo(4),316,365;
-			end;		
+			end;
 		case 3:
 			mapannounce strnpcinfo(4),strcharinfo(0) +" has just passed the Cursed Desert!",bc_map,"0x70DBDB";
 			switch (rand(1,4)) {
@@ -1950,15 +1950,15 @@ OnTouch:
 	}
 	disablenpc "#cos_"+.@w$+"_end";
 	end;
-	
+
 	function	GetNumber	{
 		setarray .@w_n$[1], "n4","n8","n16","e4","e8","e16";
 		for (set .@i, 1; .@i <= getarraysize(.@w_n$); set .@i, .@i + 1) {
-			if (getarg(0) == .@w_n$[.@i]) 
+			if (getarg(0) == .@w_n$[.@i])
 				return .@i;
-		}		
+		}
 	}
-	
+
 OnInit:
 	set .@w$,callfunc("F_tt");
 	enablenpc "#cos_"+.@w$+"_end";
@@ -1983,7 +1983,7 @@ OnTouch:
 	disablenpc "#cos_"+.@w$+"_end2";
 	enablenpc "#cos_"+.@w$+"_end3";
 	end;
-	
+
 OnInit:
 	set .@w$,callfunc("F_tt");
 	disablenpc "#cos_"+.@w$+"_end2";
@@ -2041,7 +2041,7 @@ OnTouch:
 	mapannounce strnpcinfo(4),strcharinfo(0) +" has just passed the Flasher Maze!",bc_map,"0x70DBDB";
 	warp strnpcinfo(4),185,227;
 	end;
-	
+
 OnInit:
 	set .@w$,callfunc("F_tt");
 	disablenpc strnpcinfo(0);
@@ -2092,7 +2092,7 @@ turbo_n_1,114,190,0	duplicate(Flasher#tt_main)	Flasher_Exit_2#n1	45,1,1
 			mes "However, you cannot receive";
 			mes "any points if you exceed the";
 			mes "point limit. You now have a total of " + my_point + " Turbo Track points.";
-		} 
+		}
 		set tt_rank,tt_rank+1;
 		next;
 		if (tt_rank > $ttranks[1]) {
@@ -2303,7 +2303,7 @@ turbo_n_1,114,190,0	duplicate(Flasher#tt_main)	Flasher_Exit_2#n1	45,1,1
 					mes "you any Turbo Track Points";
 					mes "since you would exceed the";
 					mes "maximum limit. Sorry...";
-				} 
+				}
 			} else {
 				mes "Oh right, your current";
 				set my_point,tt_point;
@@ -2364,7 +2364,7 @@ turbo_n_1,114,190,0	duplicate(Flasher#tt_main)	Flasher_Exit_2#n1	45,1,1
 			end;
 		}
 	}
-	
+
 OnEnable:
 	set .@w$,callfunc("F_tt");
 	enablenpc "Winner Helper#TBT_"+.@w$;
@@ -2406,12 +2406,12 @@ OnTimer25000:
 	set .@w$,callfunc("F_tt");
 	if (!compare(.@w$,"4")) mapannounce strnpcinfo(4),"In the meantime, winners must procceed to receive their rewards as soon as possible.",bc_map,"0x33FF66";
 	end;
-	
+
 OnTimer28000:
 	set .@w$,callfunc("F_tt");
 	if (compare(.@w$,"4")) mapannounce strnpcinfo(4),"Al De Baran Turbo Track is brought to you by...",bc_map,"0x33FF66";
 	end;
-	
+
 OnTimer30000:
 	set .@w$,callfunc("F_tt");
 	if (!compare(.@w$,"4")) mapannounce strnpcinfo(4),"Thank you for visiting Al De Baran Turbo Track.",bc_map,"0x33FF66";
@@ -2425,7 +2425,7 @@ OnTimer35000:
 	set .@w$,callfunc("F_tt");
 	if (!compare(.@w$,"4")) mapannounce strnpcinfo(4),"Al De Baran Turbo Track is brought to you by...",bc_map,"0x33FF66";
 	end;
-	
+
 OnTimer36000:
 	set .@w$,callfunc("F_tt");
 	if (compare(.@w$,"4")) mapannounce strnpcinfo(4),"[Al De Baran Guild Castle Management Luina]",bc_map,"0x33FF66";
@@ -2433,7 +2433,7 @@ OnTimer36000:
 
 OnTimer40000:
 	set .@w$,callfunc("F_tt");
-	if (compare(.@w$,"4")) 
+	if (compare(.@w$,"4"))
 		mapannounce strnpcinfo(4),"[Blacksmith Union]",bc_map,"0x33FF66";
 	else
 		mapannounce strnpcinfo(4),"[Al De Baran Kafra Corporation Headquarters]",bc_map,"0x33FF66";
@@ -2453,7 +2453,7 @@ OnTimer48000:
 	set .@w$,callfunc("F_tt");
 	if (compare(.@w$,"4")) mapannounce strnpcinfo(4),"Once again, we'd like to thank our sponsors.",bc_map,"0x33FF66";
 	end;
-	
+
 OnTimer50000:
 	set .@w$,callfunc("F_tt");
 	if (!compare(.@w$,"4")) mapannounce strnpcinfo(4),"[Blacksmith Union]",bc_map,"0x33FF66";
@@ -2463,7 +2463,7 @@ OnTimer52000:
 	set .@w$,callfunc("F_tt");
 	if (compare(.@w$,"4")) mapannounce strnpcinfo(4),"Have a good day.",bc_map,"0x33FF66";
 	end;
-	
+
 OnTimer55000:
 	set .@w$,callfunc("F_tt");
 	if (!compare(.@w$,"4")) mapannounce strnpcinfo(4),"And [Comodo Casino].",bc_map,"0x33FF66";
@@ -2495,17 +2495,17 @@ OnTimer60000:
 		mapannounce strnpcinfo(4),"Once again, we'd like to thank our sponsors.",bc_map,"0x33FF66";
 	}
 	end;
-	
+
 OnTimer65000:
 	set .@w$,callfunc("F_tt");
 	if (!compare(.@w$,"4")) mapannounce strnpcinfo(4),"Have a good day.",bc_map,"0x33FF66";
 	end;
-	
+
 OnTimer70000:
 	set .@w$,callfunc("F_tt");
 	if (!compare(.@w$,"4")) mapwarp strnpcinfo(4),"turbo_room",72,89;
 	end;
-	
+
 OnTimer71000:
 	set .@w$,callfunc("F_tt");
 	if (!compare(.@w$,"4")) {
@@ -2528,14 +2528,14 @@ OnTimer71000:
 		stopnpctimer;
 	}
 	end;
-	
+
 	function	RName	{
 		.@string$ = getarg(0);
 		.@s = ( getstrlen(.@string$) > 2 ? substr(.@string$,1,2) : charat(.@string$,getstrlen(.@string$)-1) );
 		set .@rn$,((compare(strnpcinfo(4),"_e_"+.@s))?"Expert mode":"Normal mode")+" - "+.@s+" person";
 		return .@rn$;
 	}
-	
+
 OnInit:
 	set .@w$,callfunc("F_tt");
 	disablenpc "Winner Helper#TBT_"+.@w$;
@@ -2676,7 +2676,7 @@ turbo_n_1,384,167,1	script	Guide#TBT_n1	47,{
 			end;
 		}
 	}
-	
+
 OnEnable:
 	set .@w$,callfunc("F_tt");
 	enablenpc "Guide#TBT_"+.@w$;
@@ -2756,7 +2756,7 @@ OnTimer60000:
 	donpcevent "Solo Mode#"+.@w$+"::OnEnable";
 	stopnpctimer;
 	end;
-	
+
 OnInit:
 	set .@w$,callfunc("F_tt");
 	disablenpc "Guide#TBT_"+.@w$;
@@ -2770,7 +2770,7 @@ OnTouch:
 	donpcevent "Turbo Track Guide::OnEnd_"+.@w$;
 	disablenpc "Notice_Maker1#TBT_"+.@w$;
 	end;
-	
+
 OnInit:
 	set .@w$,callfunc("F_tt");
 	enablenpc "Notice_Maker1#TBT_"+.@w$;
@@ -2790,7 +2790,7 @@ OnTouch:
 	mapannounce strnpcinfo(4),strcharinfo(0) +" is now entering the Single Snail! " + strcharinfo(0) +" is now in the lead!",bc_map,"0xFFFF00";
 	disablenpc "Notice_Maker3#TBT_"+.@w$;
 	end;
-	
+
 OnInit:
 	set .@w$,callfunc("F_tt");
 	enablenpc "Notice_Maker3#TBT_"+.@w$;
@@ -3629,7 +3629,7 @@ OnTouch:
 		default: break;
 	}
 	end;
-	
+
 OnInit:
 	set .@w$,callfunc("F_tt");
 	disablenpc "bing2#"+.@w$;
@@ -4255,7 +4255,7 @@ turbo_room,93,117,5	script	Point Exchange Helper	125,{
 						mes "Points you have earned before";
 						mes "redeeming your points again.";
 						close;
-	
+
 					}
 					set tt_point,tt_point-40;
 					if (BaseLevel < 70) getexp 3000,0;

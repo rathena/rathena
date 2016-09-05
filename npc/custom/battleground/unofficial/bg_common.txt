@@ -166,7 +166,7 @@ bat_room,156,178,5	script	Tierra Valley Officer#1	418,{
 		mes "Please sign up for an army with Prince Croix or General Guillaume!";
 		close;
 	}
-	
+
 	mes "Hello " + strcharinfo(0) + ", let's show the power of the Guillaume Army to those stinky Croixs!";
 	next;
 	if( select("I want to join your army!:End Conversation") == 2 )
@@ -189,7 +189,7 @@ bat_room,156,178,5	script	Tierra Valley Officer#1	418,{
 		mes "Stand-by for Tierra Gorge Battle until the time limit passes.";
 		close;
 	}
-	
+
 	if( BaseLevel < 80 )
 	{
 		mes "I'm very please you want to join our army, but I'm sorry: I can't send a rookie like you to die on the cruel battlefield";
@@ -304,7 +304,7 @@ bat_room,164,178,5	script	Tierra Valley Officer#3	418,{
 		mes "Please sign up for an army with Prince Croix or General Guillaume!";
 		close;
 	}
-	
+
 	mes "Hello " + strcharinfo(0) + ", let's show the power of the Guillaume Army to those stinky Croixs!";
 	next;
 	if( select("I want to join your army!:End Conversation") == 2 )
@@ -1220,7 +1220,7 @@ bat_room,160,150,3	script	Erundek	109,{
 				case 4: setarray .@Item_DB[0],2376,2377,2378,2379,2380,2381,2382; set .@Value, 80; break;
 				case 5: setarray .@Item_DB[0],2720,2721,2722,2723,2724,2725,2733; set .@Value, 500; break;
 			}
-			
+
 			break;
 		case 3: // Valor Badges
 			mes "[Erundek]";
@@ -1238,7 +1238,7 @@ bat_room,160,150,3	script	Erundek	109,{
 				case 4: setarray .@Item_DB[0],2376,2377,2378,2379,2380,2381,2382; set .@Value, 80; break;
 				case 5: setarray .@Item_DB[0],2720,2721,2722,2723,2724,2725,2733; set .@Value, 500; break;
 			}
-			
+
 			break;
 		case 4: // Heroism Badge
 			mes "[Erundek]";
@@ -1246,7 +1246,7 @@ bat_room,160,150,3	script	Erundek	109,{
 			mes "This shop is not available at the moment.";
 			close;
 	}
-	
+
 	mes "[Erundek]";
 	mes "What item do you want to exchange?";
 	mes "If you are not sure, check the catalog.";
@@ -1265,21 +1265,21 @@ bat_room,160,150,3	script	Erundek	109,{
 	mes "Remember, Battleground Reward Items are ^FF0000Character Bound^000000.";
 	mes "Are you sure you want this item?";
 	next;
-	
+
 	if( select("Yes:No") == 2 )
 	{
 		mes "[Erundek]";
 		mes "Do you need more time to check the items?";
 		close;
 	}
-	
+
 	if( countitem(.@Badge) < .@Value )
 	{
 		mes "[Erundek]";
 		mes "I'm sorry, but you don't have enough badges to exchange.";
 		close;
 	}
-	
+
 	delitem .@Badge,.@Value;
 	getitem .@Item_ID,1;
 	mes "[Erundek]";

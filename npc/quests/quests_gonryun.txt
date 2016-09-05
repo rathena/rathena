@@ -1,26 +1,26 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs related to Gonryun
 //===== By: ==================================================
 //= KarLaeda
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Broken Sword Quest (Kept old mechanics)
 //= Lost Knife Quest
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //=     Added Lost Knife, updated dialog for Broken Sword
 //=     dungeon quest mechanics aportion is still the same.
 //= 1.2a Bugfixes (bugreport:2404) [Paradox924X]
 //= 1.2b More Bugfixes (bugreport:2407) [Paradox924X]
-//============================================================ 
+//============================================================
 
 // Broken Sword :: broken_sword
-//============================================================ 
+//============================================================
 gon_in,17,93,5	script	Chief#gon	775,{
 	if (BaseLevel > 50) {
 		if (b_sword == 0) {
@@ -3109,7 +3109,7 @@ geffen_in,106,106,7	script	Girl#gnbs2	716,{
 	mes "Heehehe...";
 	if (Sex == 0)
 		mes "Thank you my pretty sister.";
-	else 
+	else
 		mes "Thank you handsome brother~";
 	mes "I'll get my health back";
 	mes "and be a strong girl!";
@@ -3703,7 +3703,7 @@ OnTouch:
 }
 
 // Lost Knife :: gon_npc
-//============================================================ 
+//============================================================
 gonryun,237,226,3	script	Han Ran Jiao#gon	776,{
 	if (nakha == 0) {
 		mes "[Han Ran Jiao]";

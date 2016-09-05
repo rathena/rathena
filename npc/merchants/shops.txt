@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Shops
-//===== By: ================================================== 
+//===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Town shop NPCs.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= For earlier update notes see the bottom.
 //= 2.0 updated several shop npcs. [L0ne_W0lf]
 //=     Added proper Venom Knife dealer, and consiquently removed wenom Knives from weapon dealers.
@@ -39,7 +39,7 @@
 //= 3.3 Moved more shops to Renewal file. [Euphy]
 //= 3.4 Moved Izlude shops to pre-re/re paths. [Streusel]
 //= 3.5 Moved Ninja shops to Pre-RE/RE paths. [Euphy]
-//============================================================ 
+//============================================================
 
 //=======================================================
 // Alberta
@@ -322,7 +322,7 @@ ayothaya,203,178,3	shop	Chef Assistant#ayo	83,7455:-1,577:-1
 xmas,152,137,5	shop	Chef Assistant#xmas	83,7457:-1,577:-1
 niflheim,209,180,5	shop	Chef Assistant#nif	83,581:-1
 
-//===== Additional Comments(old): ================================= 
+//===== Additional Comments(old): =================================
 //= swapped shop titles in GONRYUN, thanks to Kashy
 //= 1.3a Fixed Louyang map name. Added additional shops in Yuno. [kobra_k88]
 //= 1.4 Added Niflheim Shops

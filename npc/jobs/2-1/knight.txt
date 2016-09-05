@@ -1,17 +1,17 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Knight Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= PGRO TEAM (Aegis).
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job Change quest for Knight class.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Fully working.  Please comment out any pre-existing warps for the
 //= test rooms in any other files so that the ones specified here can work.
 //= 1.1 Fixed a major bug.  Now using the initnpctimer command,
@@ -40,7 +40,7 @@
 //= 3.1 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
 //= 3.2 More Renewal updates and some optimization. [Euphy]
 //= 3.3 Fixed missing changequest. [Joseph]
-//============================================================ 
+//============================================================
 
 prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 	mes "[Captain Herman]";
@@ -1119,7 +1119,7 @@ prt_in,79,94,4	script	Sir Windsor#knt	733,{
 			mes "......";
 			next;
 			mes "[Sir Windsor]";
-			if (KNIGHT_Q == 6) 
+			if (KNIGHT_Q == 6)
 				mes "...Follow me.";
 			else {
 				mes "...Fine.";

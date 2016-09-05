@@ -1,16 +1,16 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Wizard Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= (Aegis) Translated by yoshiki, converted by kobra_k88
 //= Further bugfixed and tested by Lupus
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job Change quest for Wizard class.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 2.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.5 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
 //= 2.5a More bugfixes care of Barron-Monster. [L0ne_W0lf]
@@ -27,7 +27,7 @@
 //= 3.1 Removed the need for use of 'goto.' [L0ne_W0lf]
 //= 3.2 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
 //= 3.3 Fixed waitingroom bug. [Euphy]
-//============================================================ 
+//============================================================
 
 gef_tower,111,37,4	script	Wizard Guildsman	70,{
 	if (Upper == 1) {
@@ -1962,9 +1962,9 @@ gef_tower,107,36,4	script	White Dog#wiz	81,{
 	}
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.1 Now using the initnpctimer command, donpcevent,
 //= and new waitingroom event commands.  No more addtimer spamming.
 //= No longer have to talk to the npc to take the test.  Just enter the chat room.

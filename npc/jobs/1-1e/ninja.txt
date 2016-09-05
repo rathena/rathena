@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Ninja Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Legionaire, Kisuka
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Ninja Job Change Quest
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Optimized, updated, checked [Lupus]
 //= 1.2 Added Akagi [Playtester]
 //= 1.3 Updated dialogs to official ones and optimized [SinSloth]
@@ -16,7 +16,7 @@
 //= 1.5 Updated to match AEGIS script and Added Quest Log commands. [Kisuka]
 //= 1.6 Fixed AEGIS amatsu warp typo. [Kisuka]
 //= 1.7 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
-//============================================================ 
+//============================================================
 
 alberta,30,65,3	script	Akagi	730,{
 	if (Class == Job_Novice) {

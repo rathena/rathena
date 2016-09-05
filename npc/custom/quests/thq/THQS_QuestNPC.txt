@@ -68,7 +68,7 @@ N_NewQuest:
 	mes "Would you like me to asign you a Quest?";
 	next;
 	menu "Yes I would like a Quest Please.",-,"Sorry Guy no time today.",N_NoTime;
-	
+
 	mes "[Guy]";
 	mes "Ok lets see what quest we can give you today.";
 	mes "The quest names in ^FF0000This Colour^000000 mean that they are more challanging then the rest, but have better rewards.";

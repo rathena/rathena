@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Nidhoggr's Nest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf, various sources
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.6
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Nidhoggr's Nest Instance
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Minor dialog updates.
 //= 1.2 No longer glitches when anyone but party leader talks to the first NPC.
@@ -18,7 +18,7 @@
 //= 1.4 Cleaning. [Euphy]
 //= 1.5 Instance system rewrite. [Euphy]
 //= 1.6 Added GM management NPCs. [Euphy]
-//============================================================ 
+//============================================================
 
 nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 	if (ins_nyd == 0) {

@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Misc. Message Boards
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= [Official Conversion]
 //= rAthena Project; 7.15 +
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Misc. Message Boards for:
 //=  - Prontera
 //=  - Morroc
@@ -16,7 +16,7 @@
 //=  - Al De Baran
 //=  - Izlude
 //=  - Alberta
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Rearranged [Lupus]
 //= Fixed spelling mistakes. [Nexon]
 //= 1.3 Removed Duplicates [Silent]

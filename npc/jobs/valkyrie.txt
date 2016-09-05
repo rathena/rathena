@@ -1,17 +1,17 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Valkyrie Realm
 //===== By: ==================================================
 //= Nana, fixes by Poki
 //= finished, optimized and tested by Lupus
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Quest to become a Tranceded Class. (Advanced/Rebirthed)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Made all into functions,additional checks,quest skills,now Valhallana can return you back. She also makes reborn process only when you got no Zeny/items (as in kRO) [Lupus]
 //= 1.2 now alternative classes can use their 1-1 job NPC to become Advanced 1st Class [Lupus]
 //= 1.4 added Baby Class support [Lupus]
@@ -38,7 +38,7 @@
 //= 2.9b Fixed Verdandi typo, fixed resetting vars [Lupus]
 //= 3.0 Added quest log commands. [L0ne_W0lf]
 //= 3.1 Added Izlude Renewal coordinates.
-//============================================================ 
+//============================================================
 
 valkyrie,48,86,4	script	Valkyrie#	811,{
 	if (ADVJOB != 0 || Upper == 1) {
@@ -397,7 +397,7 @@ S_WarpChar:
 }
 
 // Warps
-//============================================================ 
+//============================================================
 valkyrie,48,73,0	warp	valk01#1	1,1,valkyrie,48,64
 valkyrie,48,66,0	warp	valk01#2	1,1,valkyrie,48,75
 

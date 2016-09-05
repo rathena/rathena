@@ -116,7 +116,7 @@ mosk_in,21,244,3	script	Baker Extraordinaire	410,{
 		mes .@n$;
 		mes "Bring 15 Love Flowers to Pinkamenia!";
 		close;
-	} else if(#V_QUE12==1) { 
+	} else if(#V_QUE12==1) {
 		mes .@n$;
 		if (getequipid(EQI_HEAD_TOP) == 5024 && getequiprefinerycnt(EQI_HEAD_TOP) >= 8) {
 			mes "Ah, so Pinkamenia told you";

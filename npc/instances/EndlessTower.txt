@@ -1,16 +1,16 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Endless Tower
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Endless Tower Memorial Dungeon.
 //= Consists of 101 floors.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Removed a disablenpc from #102FShadowDust1. (bugreport:4415)
 //= 1.2 Added ends to several NPCs which would allow you to restart timers.
@@ -27,7 +27,7 @@
 //=     warps between floors. (bugreport:4623)
 //=     Added missing end's to prevent infinite mobspawn (bugreport:4540)
 //=     Commented out remaining GM-only NPCs. [Gepard]
-//= 1.8 Adjusted Instance Attach Map to Validate ALL Maps, instead of 
+//= 1.8 Adjusted Instance Attach Map to Validate ALL Maps, instead of
 //=     only 1@tower -> 5@tower (bugreport:4983)
 //= 1.9 Added 'instance_check_party' command to the script for proper checking if
 //=     the invoking party meets the requirements to join the Memorial Dungeon.
@@ -36,7 +36,7 @@
 //= 2.2 Instance system rewrite. [Euphy]
 //= 2.3 Added some missing announcements. [Euphy]
 //= 2.4 Added GM management function. [Euphy]
-//============================================================ 
+//============================================================
 
 alberta,214,77,6	script	Captain Janssen	709,{
 	if (checkweight(1201,1) == 0) {
@@ -1012,65 +1012,65 @@ function	script	F_Tower_Monster	{
 	case 99:
 		for(set .@i,1; .@i<=7; set .@i,.@i+1) {
 			set .@mob_ran,rand(1,30);
-			if (.@mob_ran == 1) 
+			if (.@mob_ran == 1)
 				areamonster .@map$,267,9,277,45,"Kathryne Keyron",1639,2,.@label$;
-			else if (.@mob_ran == 2) 
+			else if (.@mob_ran == 2)
 				areamonster .@map$,267,9,277,45,"Seyren Windsor",1634,2,.@label$;
-			else if (.@mob_ran == 3) 
+			else if (.@mob_ran == 3)
 				areamonster .@map$,267,9,277,45,"Margaretha Sorin",1637,2,.@label$;
-			else if (.@mob_ran == 4) 
+			else if (.@mob_ran == 4)
 				areamonster .@map$,267,9,277,45,"Eremes Guile",1635,2,.@label$;
-			else if (.@mob_ran == 5) 
+			else if (.@mob_ran == 5)
 				areamonster .@map$,267,9,277,45,"Howard Alt-Eisen",1636,2,.@label$;
-			else if (.@mob_ran == 6) 
+			else if (.@mob_ran == 6)
 				areamonster .@map$,267,9,277,45,"Cecil Damon",1638,2,.@label$;
-			else if (.@mob_ran == 7) 
+			else if (.@mob_ran == 7)
 				areamonster .@map$,267,9,277,45,"Incarnation of Morroc",1918,5,.@label$;
-			else if (.@mob_ran == 8) 
+			else if (.@mob_ran == 8)
 				areamonster .@map$,267,9,277,45,"Incarnation of Morroc",1919,5,.@label$;
-			else if (.@mob_ran == 9) 
+			else if (.@mob_ran == 9)
 				areamonster .@map$,267,9,277,45,"Incarnation of Morroc",1920,5,.@label$;
-			else if (.@mob_ran == 10) 
+			else if (.@mob_ran == 10)
 				areamonster .@map$,267,9,277,45,"Incarnation of Morroc",1921,5,.@label$;
-			else if (.@mob_ran == 11) 
+			else if (.@mob_ran == 11)
 				areamonster .@map$,267,9,277,45,"Valkyrie",1765,5,.@label$;
-			else if (.@mob_ran == 12) 
+			else if (.@mob_ran == 12)
 				areamonster .@map$,267,9,277,45,"Skeggiold",1755,10,.@label$;
-			else if (.@mob_ran == 13) 
+			else if (.@mob_ran == 13)
 				areamonster .@map$,267,9,277,45,"Skeggiold",1754,10,.@label$;
-			else if (.@mob_ran == 14) 
+			else if (.@mob_ran == 14)
 				areamonster .@map$,267,9,277,45,"Seyren Windsor",1634,15,.@label$;
-			else if (.@mob_ran == 15) 
+			else if (.@mob_ran == 15)
 				areamonster .@map$,267,9,277,45,"Bloody Knight",1268,10,.@label$;
-			else if (.@mob_ran == 16) 
+			else if (.@mob_ran == 16)
 				areamonster .@map$,267,9,277,45,"Abysmal Knight",1219,10,.@label$;
-			else if (.@mob_ran == 17) 
+			else if (.@mob_ran == 17)
 				areamonster .@map$,267,9,277,45,"Wanderer",1208,10,.@label$;
-			else if (.@mob_ran == 18) 
+			else if (.@mob_ran == 18)
 				areamonster .@map$,267,9,277,45,"Sword Master",1829,15,.@label$;
-			else if (.@mob_ran == 19) 
+			else if (.@mob_ran == 19)
 				areamonster .@map$,267,9,277,45,"Bow Master",1830,15,.@label$;
-			else if (.@mob_ran == 20) 
+			else if (.@mob_ran == 20)
 				areamonster .@map$,267,9,277,45,"Kathryne Keyron",1639,15,.@label$;
-			else if (.@mob_ran == 21) 
+			else if (.@mob_ran == 21)
 				areamonster .@map$,267,9,277,45,"Elder",1377,10,.@label$;
-			else if (.@mob_ran == 22) 
+			else if (.@mob_ran == 22)
 				areamonster .@map$,267,9,277,45,"Laurell Weinder",1657,10,.@label$;
-			else if (.@mob_ran == 23) 
+			else if (.@mob_ran == 23)
 				areamonster .@map$,267,9,277,45,"Wind Ghost",1263,10,.@label$;
-			else if (.@mob_ran == 24) 
+			else if (.@mob_ran == 24)
 				areamonster .@map$,267,9,277,45,"Marduk",1140,10,.@label$;
-			else if (.@mob_ran == 25) 
+			else if (.@mob_ran == 25)
 				areamonster .@map$,267,9,277,45,"Cecil Damon",1638,10,.@label$;
-			else if (.@mob_ran == 26) 
+			else if (.@mob_ran == 26)
 				areamonster .@map$,267,9,277,45,"Bow Master",1830,10,.@label$;
-			else if (.@mob_ran == 27) 
+			else if (.@mob_ran == 27)
 				areamonster .@map$,267,9,277,45,"Kavach Icarus",1656,30,.@label$;
-			else if (.@mob_ran == 28) 
+			else if (.@mob_ran == 28)
 				areamonster .@map$,267,9,277,45,"Baroness of Retribution",1702,10,.@label$;
-			else if (.@mob_ran == 29) 
+			else if (.@mob_ran == 29)
 				areamonster .@map$,267,9,277,45,"Lady Solace",1703,10,.@label$;
-			else 
+			else
 				areamonster .@map$,267,9,277,45,"False Angel",1371,10,.@label$;
 		}
 		break;

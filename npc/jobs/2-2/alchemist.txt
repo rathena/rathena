@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Alchemist Job Quest
 //===== By: ==================================================
 //= nestor_zulueta (Fusion), converted by Darkchild
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job quest for Alchemist classes
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 2.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=     No longer uses function "F_BlockHigh"
 //= 2.6 Corrected a bug in advanced class checking. [L0ne_W0lf]
@@ -18,7 +18,7 @@
 //= 2.9 Added Quest Log commands. [Kisuka]
 //= 3.0 Removed the need for use of 'goto.' [L0ne_W0lf]
 //= 3.1 Added missing changequest commands. [Kisuka]
-//============================================================ 
+//============================================================
 
 alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
 	mes "[Parmy Gianino]";
@@ -1983,13 +1983,13 @@ alde_alche,145,19,1	script	Chief Researcher#am	57,{
 	}
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.0 Working.
 //=     npc/quests/counteragent_mixture.txt Also Needed
 //=     npc/quests/quests_yuno.txt Also Needed [Darkchild]
-//= 1.1 Fixed some minor bugs.  Optimized some lines. Re-organized the script a bit. 
+//= 1.1 Fixed some minor bugs.  Optimized some lines. Re-organized the script a bit.
 //=     Giving Parmry NPC, Hammer and Old Book now waves the 50000 fee. (based of mRO website)
 //=     Having a joblvl of 50 allows you to skip Rasputin's test. (based of mRO website) [kobra_k88]
 //= 1.2 fixed a few typos (have to hunt more) [Lupus]
@@ -2003,4 +2003,4 @@ alde_alche,145,19,1	script	Chief Researcher#am	57,{
 //= 2.3 Optimized, changed job numbers to constants. Fixed some spelling [Lupus]
 //= 2.4 Added alternative prizes according to JobLevel [Lupus]
 //= 2.4a Fixed 2 wrong answers in Rasputin's test [Lupus]
-//============================================================ 
+//============================================================

@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Kiel Hyre Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf (Script), DZeroX (Timer)
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 4.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Quest for opening Robot Factory first and second floors.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 4.0 A whole bunch-a-updates to various npcs. [L0ne_W0lf]
 //=     Corrected condition checks throughout the quest.
 //=     Npcs no longer make use of the goto command.
@@ -32,7 +32,7 @@
 //= 4.5 Removed a delitem that was no logner needed. [L0en_W0lf]
 //= 4.6 Fixed impossible condition for security guard. [L0ne_W0lf]
 //= 4.7 Updated RE/Pre-RE EXP. [Euphy]
-//============================================================ 
+//============================================================
 
 //============================================================================
 // Kiel Hyre Quest/Robotic Lab Dungeon
@@ -44,7 +44,7 @@
 //----------------------------------------------------------------------------
 // [Notes]
 //  - Let it be noted that ALL DIALOG IS OFFICIAL TO IRO UNLESS SPECIFIED.
-//  - I've fixed a few of iRO's mistakes, but I'm sure I made some of my own. 
+//  - I've fixed a few of iRO's mistakes, but I'm sure I made some of my own.
 //  - Will probably require a major optimizing.
 //  - Not going to list ALL of the more usless NPCs. (Doors + Empty "Beautiful Ladies")
 //  - Parties are *NOT REQUIRED* as per Doddler's Wiki information.
@@ -65,9 +65,9 @@
 // [Variables in Use]
 //  KielHyreQuest 	- Main quest tracking variable (Quest finished at 106)
 //
-//  KHToastGirlEnd	- Pick up delivery if set to 1, 
+//  KHToastGirlEnd	- Pick up delivery if set to 1,
 //			- picked up delivery if set to 2
-//			- finished if set to 3 
+//			- finished if set to 3
 //			- Deleted once no longer needed.
 //
 //  KHCottagePoem1	- Tracks Poem 1 quest in cottage. (finished = 5)
@@ -449,14 +449,14 @@ OnTouch:
 		mes "What am I suposed to do?";
 		set KielHyreQuest,1;
 		close;
-	} 
+	}
 }
 
 //----------------------------------------------------------------------------
 // Juno Toast Sales Girl.
 //----------------------------------------------------------------------------
 yuno,217,114,6	script	Little Kid#kh	96,{
-	mes "[Cezu]"; 
+	mes "[Cezu]";
 	if (KielHyreQuest < 6) {
 		mes "Fresh, crunchy toast!";
 		mes "If you want some, come";
@@ -473,7 +473,7 @@ yuno,217,114,6	script	Little Kid#kh	96,{
 			next;
 			switch(select("I'm here for Elly:No, thanks")) {
 			case 1:
-				mes "[Cezu]"; 
+				mes "[Cezu]";
 				mes "Oh, I see. Elly must have";
 				mes "wasted another batch of";
 				mes "ingredients again. Well,";
@@ -481,7 +481,7 @@ yuno,217,114,6	script	Little Kid#kh	96,{
 				mes "so I really want to help, but";
 				mes "I can't really do anything.";
 				next;
-				mes "[Cezu]"; 
+				mes "[Cezu]";
 				mes "You see, I just ran";
 				mes "out of ingredients too!";
 				mes "But I can't really leave";
@@ -489,7 +489,7 @@ yuno,217,114,6	script	Little Kid#kh	96,{
 				mes "people need to buy toast?";
 				mes "Listen, can you help me out?";
 				next;
-				mes "[Cezu]"; 
+				mes "[Cezu]";
 				mes "Would you please go get";
 				mes "some flour and eggs for me";
 				mes "from the ^3355FFLighthalzen Windmill^000000";
@@ -497,7 +497,7 @@ yuno,217,114,6	script	Little Kid#kh	96,{
 				mes "divide the ingredients, and you";
 				mes "can deliver some to Elly.";
 				next;
-				mes "[Cezu]"; 
+				mes "[Cezu]";
 				mes "I know that I'm basically";
 				mes "making you do everything";
 				mes "on your own, but please try";
@@ -686,7 +686,7 @@ yuno_fild08,196,196,5	script	Hanie#kh1	102,{
 // Academy Security Guards
 //----------------------------------------------------------------------------
 yuno_fild08,158,194,6	script	Security Guard#1::KHAGuard	852,{
-	if ((KielHyreQuest < 2) || (KielHyreQuest > 31)) { 
+	if ((KielHyreQuest < 2) || (KielHyreQuest > 31)) {
 		mes "[Security Guard]";
 		mes "I'm sorry, but if you aren't";
 		mes "associated with this institution,";
@@ -696,7 +696,7 @@ yuno_fild08,158,194,6	script	Security Guard#1::KHAGuard	852,{
 		mes "an appointment with the staff.";
 		close;
 	}
-	else if (KielHyreQuest == 2) { 
+	else if (KielHyreQuest == 2) {
 		mes "[Security Guard]";
 		mes "I'm sorry, but if you aren't";
 		mes "associated with this institution,";
@@ -781,7 +781,7 @@ yuno_fild08,158,194,6	script	Security Guard#1::KHAGuard	852,{
 			close;
 		}
 	}
-	else if (KielHyreQuest < 32) { 
+	else if (KielHyreQuest < 32) {
 		mes "[Security Guard]";
 		mes "Oh, did you have";
 		mes "other business inside";
@@ -857,7 +857,7 @@ kh_school,176,60,4	script	Lady#kh	101,{
 		mes "in here, please leave.";
 		close;
 	}
-	else if (KielHyreQuest == 2) { 
+	else if (KielHyreQuest == 2) {
 		mes "[Mrs. Lecollane]";
 		mes "Oh, hello. Ah!";
 		mes "have you come to";
@@ -942,7 +942,7 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 		close;
 	}
 	cutin "kh_elly01",2;
-	if (KielHyreQuest < 4) { 
+	if (KielHyreQuest < 4) {
 		cutin "kh_elly03",2;
 		mes "[Elly]";
 		mes "W-wah! Oh...!";
@@ -951,7 +951,7 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 		mes "again! Why do I have so much";
 		mes "trouble handling ingredients?";
 	}
-	else if (KielHyreQuest == 4) { 
+	else if (KielHyreQuest == 4) {
 		cutin "kh_elly03",2;
 		mes "[Elly]";
 		mes "Oh no, what should";
@@ -1475,7 +1475,7 @@ kh_school,179,39,0	script	Cute Student#kh	895,{
 }
 
 //----------------------------------------------------------------------------
-// Elly's Window 
+// Elly's Window
 //----------------------------------------------------------------------------
 yuno_fild08,69,185,0	script	Window#kh	111,{
 	if (KielHyreQuest < 29) {
@@ -2186,12 +2186,12 @@ OnTouch:
 		getitem 7490,1; //Kyll_Hire_Letter
 		set KielHyreQuest,20;
 		close;
-	} 
+	}
 	else{
 		mes "^3355FFYou entered the room.^000000";
 		close;
 	}
-	end; 
+	end;
 }
 
 //----------------------------------------------------------------------------
@@ -2260,7 +2260,7 @@ kh_vila,30,184,0	script	Apple Box#khp1	111,{
 		mes "prevented you from";
 		mes "taking the box.^000000";
 		close;
-	case 2: 
+	case 2:
 		mes "^3355FFSomething is wrong";
 		mes "with this box of apples.^000000";
 		close;
@@ -4249,7 +4249,7 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		mes "the Rekenber Corporation, I'd";
 		mes "say it was entirely possible!";
 		next;
-		cutin "kh_Kyel03",2; 
+		cutin "kh_Kyel03",2;
 		mes "[Kiel Hyre]";
 		mes "Well played, adventurer.";
 		mes "Well played. I don't regret";
@@ -5240,7 +5240,7 @@ yuno,257,140,4	script	Odd Grandma	846,{
 		mes "you go? You were";
 		mes "supposed to come";
 		mes "home a while ago!";
-		if (countitem(7500) < 1) { 
+		if (countitem(7500) < 1) {
 			close;
 		}
 		else {
@@ -5373,9 +5373,9 @@ yuno,250,132,0	script	Old Lady#kh	711,{
 	}
 
 	else if ((KielHyreQuest == 58) &&
-		(countitem(7499) < 1) || 
-		(countitem(7500) < 1) || 
-		(countitem(7501) < 1) || 
+		(countitem(7499) < 1) ||
+		(countitem(7500) < 1) ||
+		(countitem(7501) < 1) ||
 		(countitem(7502) < 1)) {
 		mes "[Old Lady]";
 		mes "Please hurry and find";
@@ -5388,9 +5388,9 @@ yuno,250,132,0	script	Old Lady#kh	711,{
 	}
 
 	else if ((KielHyreQuest == 58) &&
-		(countitem(7499) == 1) && 
-		(countitem(7500) == 1) && 
-		(countitem(7501) == 1) && 
+		(countitem(7499) == 1) &&
+		(countitem(7500) == 1) &&
+		(countitem(7501) == 1) &&
 		(countitem(7502) == 1)) {
 		mes "[Old Lady]";
 		mes "Oh, you're finished";
@@ -5428,7 +5428,7 @@ yuno,250,132,0	script	Old Lady#kh	711,{
 		mes "Allysia's body in the river,";
 		mes "so he might have a better";
 		mes "idea of what had happened.";
-		delitem 7498,1; //Rosimier_Key 
+		delitem 7498,1; //Rosimier_Key
 		set KielHyreQuest,60;
 		close;
 	}
@@ -5915,7 +5915,7 @@ kh_kiehl01,17,39,0	script	Receiver#kh	111,{
 	}
 
 OnMyMobDead:
-	if (mobcount("kh_kiehl01","Receiver#kh::OnMyMobDead") <1) { 
+	if (mobcount("kh_kiehl01","Receiver#kh::OnMyMobDead") <1) {
 		makeitem 7506,1,"this",19,36;
 	}
 	end;
@@ -6294,7 +6294,7 @@ kh_kiehl01,15,179,0	script	Robots#kh1	111,{
 	}
 
 OnMyMobDead:
-	if (mobcount("kh_kiehl01","Robots#kh1::OnMyMobDead") < 1) { 
+	if (mobcount("kh_kiehl01","Robots#kh1::OnMyMobDead") < 1) {
 		makeitem 7506,1,"this",18,180;
 		}
 	end;
@@ -6340,8 +6340,8 @@ kh_kiehl01,166,187,0	script	Big Door#BigDoorKHQ5	111,{
 			monster "kh_kiehl01",163,179,"Aliot",1740,1;
 			monster "kh_kiehl01",169,183,"Alicel",1739,1;
 			monster "kh_kiehl01",169,179,"Aliot",1740,1;
-			if (@KHDoorPushAttempt >= 3) { 
-				set KielHyreQuest,86; 
+			if (@KHDoorPushAttempt >= 3) {
+				set KielHyreQuest,86;
 			}
 			end;
 		}
@@ -7037,8 +7037,8 @@ kh_kiehl02,1,1,0	script	KiehlRoom	-1,{
 
 OnKiehlMobDead:
 	set .KHKilled,.KHKilled+1;
-	if (.KHKilled == 5) { 
-		hideoffnpc "Kiehl#Original"; 
+	if (.KHKilled == 5) {
+		hideoffnpc "Kiehl#Original";
 	}
 	end;
 
@@ -7046,7 +7046,7 @@ OnKiehlDead:
 	set .KHKilledBoss,1;
 	hideoffnpc "Kiehl#Original";
 	end;
-	
+
 OnReset:
 	donpcevent "Kiehl_Room_Trap::OnGlobalTimerOff";
 	if (getmapusers("kh_kiehl02") > 0)
@@ -7059,7 +7059,7 @@ OnReset:
 	hideonnpc "Agent#KHAgent3";
 	hideonnpc "Agent#KHAgent4";
 	hideonnpc "Kiehl#Copy";
-	hideoffnpc "Kiehl#Original"; 
+	hideoffnpc "Kiehl#Original";
 	set .KHKilledBoss,0;
 	set .KHKilled,0;
 	set getvariableofnpc(.KHTrapSprung,"Kiehl_Room_Trap"),0;
@@ -7111,12 +7111,12 @@ OnInit:
 	end;
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.0 First version, needs testing [Playtester]
 //= 1.1 Copied over some changes made by -Tsuyuki- [L0ne_W0lf]
-//=     Reworked variables slightly so that the permenents ones aside from the 
+//=     Reworked variables slightly so that the permenents ones aside from the
 //=     main tracking variable, are deleted when no longer needed. Renamed
 //=     several variables that handle strings to @KHInput$. [L0ne_W0lf]
 //= 1.2 Removed duplicate NPCs. [Toms]
@@ -7137,7 +7137,7 @@ OnInit:
 //=     Corrected not deleting Allysia's Ring from inventory.
 //= 1.9 Exit will now enable if you are just retrieving the Ring, keeps you from getting stuck. [L0ne_W0lf]
 //=     Corrected "KH_Kielh02", was setting off a debug, invalid map index. Should have been "kh_Kiehl02"
-//=     Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$. 
+//=     Made .KHQuestBusy$ into a temp global variable. $@KHQuestBusy$.
 //= 2.0 Changed the labels on the "Big Doors" to "Identifier Names" to prevent an error with using getvariableofnpc [L0ne_W0lf]
 //= 2.1 Fifth door now checks for a variable HIGHER or EQUAL to 74 not 84, as pointed out by Stollen. [L0ne_W0lf]
 //= 2.2 Another fix for Elly, no longer RESETS to 26 when you talk to her. [L0ne_W0lf]
@@ -7153,7 +7153,7 @@ OnInit:
 //=     Fixed typo in the second NPC that gives Black Keycards.
 //=     Added Monster Warps. (Keeps monsters from being in dungeon quest area.) [Non-functional]
 //= 2.6 Stupid mistake, accidentally had 4 copies of the same script in 1... [L0ne_W0lf the bonehead]
-//= 2.7 Fixed the wrong name being displayed for Kiel Hyre in one dialog. 
+//= 2.7 Fixed the wrong name being displayed for Kiel Hyre in one dialog.
 //=     Removed $@KH_DoorInvoker entirely. The quest is now working like it should according to iRO.
 //=     Fixed up a few more NPC headers. Facing direction fixes mostly this time.
 //=     More progression changes to Kiehl Hyre. He no longer stops dialog after the agents appear.

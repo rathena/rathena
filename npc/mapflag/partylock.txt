@@ -6,10 +6,10 @@
 //= 1.2
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Blocks all party modifications on a map:
 //=   /organize, /leave, /invite, @changeleader
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Initial script.
 //= 1.1 Updated. [L0ne_W0lf]
 //= 1.2 Renewal split. [Euphy]

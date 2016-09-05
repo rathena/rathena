@@ -26,7 +26,7 @@
 //= 1.4a Minor script updates. [Euphy]
 //= 1.4b Minor fix about Weight and miscs updates. [Capuche]
 //= 1.4c Another clean-up. [Capuche]
-//============================================================ 
+//============================================================
 
 comodo,219,158,6	script	Kachua	4_F_02,{
 	if (checkweight(1201,1) == 0) {

@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= 2004 Headgear Quests
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Dj-Yhn
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.6b
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= 2004 New Headgears. Official Quests
 //= 1) Black Cat Ears (payon 115 131)
@@ -21,7 +21,7 @@
 //= 10) Model Training Hat (payon_in03 8 193)
 //= 11) Tulip Haipin (geffen 83 189)
 //= 12) Party Hat, Straw Hat, Cowboy Hat, (xmas_in 35 30)
-//=     Sombrero, Beanie 
+//=     Sombrero, Beanie
 //= 13) Decorative Golden Bell, (yuno_in03 20 18)
 //=     Crown of Ancient Queen, Crown of Mistress
 //= 14) Alarm Mask (alde_alche 88 180)
@@ -1442,7 +1442,7 @@ geffen,83,189,5	script	Seth#1	716,{
 		close;
 	}
 }
-	
+
 // Party Hat, Straw Hat, Cowboy Hat, Sombrero, Beanie
 //============================================================
 xmas_in,35,30,3	script	Hat Merchant#zero	797,{
@@ -3633,9 +3633,9 @@ OnTouch:
 	close;
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.01 Fixed items names iRO->kRO, fixed some bugs [Qwadrat]
 //=     Fixed possible item exploits, fixed Straw Hat
 //=     Added missing checks [Lupus]

@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Penal Servitude 
+//= Penal Servitude
 //===== By: ==================================================
 //= Lupus
 //===== Current Version: =====================================
@@ -16,7 +16,7 @@
 // 1.2 Stricted the conditions a bit
 //============================================================
 
-sec_pri,36,58,1	script	Chief Warder	105,{ 
+sec_pri,36,58,1	script	Chief Warder	105,{
 	mes "[Saddeus]";
 	emotion e_what;
 	mes (Sex?"Mr.":"Ms.")+" Prisoner #"+BaseLevel+JobLevel+",";
@@ -118,21 +118,21 @@ L_W4:
 	close;
 
 M_NO_THANKS:
-	mes "[Saddeus]";  
+	mes "[Saddeus]";
 	if (rand(2)) mes "Is today X-Mas time, huh?";
 	mes "Now shut up and back off!";
 	if (rand(2)) emotion e_omg;
-	close;  
+	close;
 }
 
-sec_in02,137,57,1	script	Overseer	708,{ 
+sec_in02,137,57,1	script	Overseer	708,{
 	mes "[Oliver]";
 
 	delitem 4002,countitem(4002);//Items: Fabre_Card,
 	delitem 4009,countitem(4009);//Items: Chonchon_Card,
 	delitem 4022,countitem(4022);//Items: Spore_Card,
 	delitem 4048,countitem(4048);//Items: Poison_Spore_Card,
-	
+
 	if (PRISON_Q <= 0 ) goto L_GET_Q;
 
 	mes "I want you to gather ^FF0000"+PRISON_Q+" Orange Net Mushroom^000000.";

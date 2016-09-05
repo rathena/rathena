@@ -1,17 +1,17 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs related to Izlude
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Evera and The rAthena Dev Team
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Edgar's Offer:
 //= - [Official Conversion]
 //= - Variables in use: MISC_QUEST (Bit 16)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Initial release [Evera]
 //= 1.1 Updated to 10.3 standard. [L0ne_W0lf]
 //============================================================

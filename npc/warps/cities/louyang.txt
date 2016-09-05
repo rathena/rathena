@@ -44,9 +44,9 @@ lou_in01,28,19,0	warp	lou_tower1-2	1,1,louyang,136,245
 
 lou_in01,14,18,0	warp	lou_Towerexit	1,1,louyang,90,254
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.1 Added 2 escapes from 2 mountains 018,019 [Lupus]
 //=     Some players used to stuck there after warps
 //= 1.2 Added a few missing warps [MasterOfMuppets]

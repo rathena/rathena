@@ -11,7 +11,7 @@
 //===== Additional Comments: =================================
 //= 1.1 Added temp restriction by Azazel [Lupus]
 //= 1.2 Optimized [Lupus]
-//=     and fixed 005 and 005a warps coords, thanks to Justin84 
+//=     and fixed 005 and 005a warps coords, thanks to Justin84
 //= 1.3 Fixed entrance condition check, thanx2Daegaladh [Lupus]
 //= 1.4 Added coords of secret dungeon entrance, thanks to Justin84
 //=     proved with screenshots [Lupus]
@@ -203,7 +203,7 @@ lhz_cube,123,26,0	script	cubew09-4	45,1,1,{
 	callfunc "randomw";
 	end;
 }
- 
+
 //----- Function for Random Warps ----------------------------
 function	script	randomw	{
 	switch(rand(3)) {

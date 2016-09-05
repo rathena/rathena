@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= BattleGround System - Common NPCs
-//===== By: ================================================== 
+//===== By: ==================================================
 //= ????, L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Battleground NPCs:
 //= - Generals and Aides
@@ -14,7 +14,7 @@
 //= - Kafra and Repairman.
 //= - GM Management NPC
 //= - Badge Exchanger (Tierra and Flavius)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Updated several NPCs to Official.
 //= 1.2 Updated Repairman NPC

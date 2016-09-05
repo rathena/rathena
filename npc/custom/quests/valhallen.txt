@@ -1,22 +1,22 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Valhallen Items Quests NPC
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Avaji
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.0
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= All-in-one: Mjolnir,Sleipnir,Brisingamen,Gleipnir,Megingjard
 //= Custom quest, ingredients based on official RO FAQ
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Optimized. [Euphy]
 //= 2.0 Adds SE and TE Godlikes. Fixed Mixing Itemlist. [Jey]
 //= Sources for the mixing lists 2016-08-15:
 //= http://irowiki.org/wiki/God_Items_Quest
 //= http://irowiki.org/wiki/God_Items_Quest_2
 //= http://irowiki.org/wiki/God_Items_Quest_3
-//============================================================ 
+//============================================================
 
 prontera,147,171,5	script	Lenneth	811,{
 	mes "[Lenneth]";
@@ -83,14 +83,14 @@ prontera,147,171,5	script	Lenneth	811,{
 		default:
 			close;
 	}
-	
+
 	mes "^FF0000The items I need are as follows:^000000";
 	set .@itemmissing,0;
 	for(set .@i,1; .@i<getarraysize(.@Items); set .@i,.@i+2) {
 		set .@amount,.@Items[.@i+1];
 		set .@id,.@Items[.@i];
 		mes " ~ "+.@amount+"x "+((countitem(.@id)<.@amount)?("^dd3355"):("^33dd55"))+getitemname(.@id)+((getitemslots(.@id)>0)?" ["+getitemslots(.@id)+"]":"")+"^000000";
-		if (countitem(.@id) < .@amount) 
+		if (countitem(.@id) < .@amount)
 			set .@itemmissing,1;
 	}
 	if (.@itemmissing) {
@@ -116,7 +116,7 @@ prontera,147,171,5	script	Lenneth	811,{
 	for(set .@i,1; .@i<getarraysize(.@Items); set .@i,.@i+2) {
 		set .@amount,.@Items[.@i+1];
 		set .@id,.@Items[.@i];
-		if (countitem(.@id) < .@amount) 
+		if (countitem(.@id) < .@amount)
 			close;
 	}
 	// Delete the items _after_ the second check

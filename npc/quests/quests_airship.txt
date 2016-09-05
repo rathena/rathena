@@ -1801,7 +1801,7 @@ airplane_01,246,54,3	script	Airship Captain#02	4_M_REINDEER,{
 	close2;
 	cutin "",255;
 	end;
-	
+
 OnInit:
 	hideonnpc "Airship Captain#02";
 	end;

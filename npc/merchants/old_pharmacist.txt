@@ -183,7 +183,7 @@ alberta_in,16,28,4	script	Pharmacist	61,{
 		mes "What a boring person. If you have something to say, why don't you say it?!";
 		close;
 	}
-	
+
 L_Making:
 	.@item_req = getarg(0);
 	.@req_amount = getarg(1);
@@ -217,7 +217,7 @@ L_Making:
 		Zeny = Zeny - (.@max*.@req_amount);
 		delitem .@item_req,.@max*2;
 		delitem 713,.@max; //Empty_Bottle
-		getitem getarg(2),.@max; 
+		getitem getarg(2),.@max;
 		break;
 	case 2:
 		next;
@@ -243,7 +243,7 @@ L_Making:
 		Zeny = Zeny - (.@max*.@req_amount);
 		delitem .@item_req,.@amount*2;
 		delitem 713,.@amount; //Empty_Bottle
-		getitem getarg(2),.@amount; 
+		getitem getarg(2),.@amount;
 		break;
 	case 3:
 		next;

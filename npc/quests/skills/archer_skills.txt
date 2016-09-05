@@ -4,11 +4,11 @@
 //= rAthena Dev Team
 //===== Current Version: =====================================
 //= 1.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Quest for skills: Arrow Crafting, Arrow Repel
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.6 Updated to latest available official file.
 //=     also fixed Item issue [bugreport:5607]. [Masao]
@@ -266,9 +266,9 @@ OnTouch:
 	close;
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.0 Roberto message text is based off RO npc.  Jason message
 //=     text is custom from old version.
 //=     All items are from official quests though.[kobra_k88]

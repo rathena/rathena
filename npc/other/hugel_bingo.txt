@@ -408,7 +408,7 @@ OnInit:
 	disablenpc "24e#bingo";
 	disablenpc "25e#bingo";
 	end;
-	
+
 OnTouch:
 	if(@bingoplate[1] == $bingo[$@bingoresult -1]){ set @bingo_a1$,"^ff0000-  -^000000"; setarray @bingoplate[1],99; }
 	else if(@bingoplate[2] == $bingo[$@bingoresult -1]){ set @bingo_a2$,"^ff0000-  -^000000"; setarray @bingoplate[2],99; }
@@ -451,7 +451,7 @@ OnTouch:
 	if($@bingoresult == 1 || $@bingoresult == 21) mes "[ "+$@bingoresult+"st Number - "+$bingo[$@bingoresult -1]+" ]";
 	else if($@bingoresult == 2 || $@bingoresult == 22) mes "[ "+$@bingoresult+"nd Number - "+$bingo[$@bingoresult -1]+" ]";
 	else if($@bingoresult == 3 || $@bingoresult == 23) mes "[ "+$@bingoresult+"rd Number - "+$bingo[$@bingoresult -1]+" ]";
-	else mes "[ "+$@bingoresult+"th Number - "+$bingo[$@bingoresult -1]+" ]"; 
+	else mes "[ "+$@bingoresult+"th Number - "+$bingo[$@bingoresult -1]+" ]";
 	mes "["+@bingo_a1$+"] ["+@bingo_a2$+"] ["+@bingo_a3$+"] ["+@bingo_a4$+"] ["+@bingo_a5$+"]";
 	mes "["+@bingo_b1$+"] ["+@bingo_b2$+"] ["+@bingo_b3$+"] ["+@bingo_b4$+"] ["+@bingo_b5$+"]";
 	mes "["+@bingo_c1$+"] ["+@bingo_c2$+"] ["+@bingo_c3$+"] ["+@bingo_c4$+"] ["+@bingo_c5$+"]";

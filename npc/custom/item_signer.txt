@@ -14,7 +14,7 @@
 //============================================================
 
 prt_in,24,61,7	script	Perchik	47,{
-	
+
 	setarray .@Item[0],644,3;	// Item requirements: <ID>,<Count>{,...} (0 to disable)
 	setarray .@Cost[0],0,5000;	// Zeny requirements: <base price>,<price per refine>
 

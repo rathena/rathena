@@ -6,10 +6,10 @@
 //= 1.0a
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Defines a Battleground map.
 //= Additional parameter '2' shows scoreboard.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Initial script.
 //============================================================
 

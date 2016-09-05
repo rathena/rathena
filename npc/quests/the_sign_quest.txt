@@ -1,17 +1,17 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= The Sign Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= SinSloth, MasterOfMuppets, Kargha
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.9
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Quest for opening the doors to Geffenia.
 //= This script uses sign_01.bmp - sign_04.bmp, these will be
 //= found in the language of your client.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 3.0 Rewritten based on most recent Aegis script. [L0ne_W0lf]
 //=     Due to the incompatabity of the old script with this
 //=     version, variables will attmept to be translated to the
@@ -27,7 +27,7 @@
 //= 3.7 Massive cleaning/optimization (more can still be done). [Euphy]
 //= 3.8 Corrected an invalid map name. [Joseph]
 //= 3.9 Updated RE/Pre-RE EXP. [Euphy]
-//============================================================ 
+//============================================================
 
 // The Sign (Part 1)
 //============================================================
@@ -56,7 +56,7 @@ OnInit:
 	// Remove old depreciated settings.
 	set $signbmps,0;
 	set $signmazemonster,0;
-	
+
 	// Set the time zone of the server.
 	// - Not official but seemed like a nice way to handle it.
 	set $timezonestring$,"^FF0000GMT^000000";
@@ -5434,7 +5434,7 @@ OnDisable:
 	//specialeffect EF_SUMMONSLAVE;
 	disablenpc "s_dance#cen";
 	end;
-	
+
 OnUp:
 	set .s_center,.s_center + 1;
 	end;
@@ -12558,7 +12558,7 @@ function	script	F_UpdateSignVars	{
 		// Because of the horrible way this was scripted, it's incompatable
 		// With the new script, So I am resetting the quest to the start
 		// of this step.
-		if (signlaichin >= 1) { 
+		if (signlaichin >= 1) {
 			mes "^FF0000You stumble and drop the your^000000";
 			if (countitem(7306)) {
 				mes "^FF0000"+getitemname(7306)+"^000000";
@@ -12572,11 +12572,11 @@ function	script	F_UpdateSignVars	{
 			mes "^FF0000pieces on the ground and they vanish! Perhaps you should talk to Lachin.^000000";
 			delitem 7306,countitem(7306); //Fragment_Of_Soul
 			delitem 7307,countitem(7307); //Whisper_Of_Soul
-			set sign_q,rand(97,100); 
+			set sign_q,rand(97,100);
 		}
 
 		// Same BS as above, unable to save pickup time for 'The Sign' from Engel.
-		if (signengelhour) { 
+		if (signengelhour) {
 			mes "^FF0000You see that Engel has forgotten to look at 'The Sign', how you got it back is a mystery too you, but you should remind Engel that he needs to look at it.^000000";
 			getitem 7314,1; //The_Sign
 			set sign_q,139;
@@ -12601,7 +12601,7 @@ function	script	F_UpdateSignVars	{
 		}
 
 		// Unable to save when the Sign should be picked up from Metz
-		if (signmetzhour) { 
+		if (signmetzhour) {
 			mes "^FF0000You see that Metz has forgotten to look at 'The Sign', how you got it back is a mystery too you, but you should remind Metz that he needs to look at it.^000000";
 			getitem 7314,1; //The_Sign
 			set sign_q,138;
@@ -12639,9 +12639,9 @@ function	script	F_UpdateSignVars	{
 	return;
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.0 First version, beware of potential nasty bugs :x [MasterOfMuppets]
 //= 1.1 Finalized for stable, might still contain bugs though. [MasterOfMuppets]
 //= 1.1a moved #aldesignwarp to fix enless warp [Lupus]

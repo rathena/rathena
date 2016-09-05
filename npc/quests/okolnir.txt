@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Falicious Okolnir (Valfreja & Nidhoggr)
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Joseph
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= God Item SE Creation script (Asprika & Brynhild)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 0.x Previous author: L0ne_W0lf
 //= 1.0 Merged Okolnir. [Joseph]
 //= 1.1 Some bug fixes. [Toshiro90/Euphy]
-//============================================================ 
+//============================================================
 
 function	script	F_Okolnir	{
 	if (compare(strnpcinfo(0),"main")) end;
@@ -300,7 +300,7 @@ que_qsch05,345,23,0	warp	Gate02#gq_sch05	1,1,schg_cas05,369,306
 					next;
 					mes "[Wish Maiden]";
 					mes "You must bring those six things, 10 Gold, and 20 Elunium.";
-					mes "Many Valhala's Flowers are also required as an offering.";				
+					mes "Many Valhala's Flowers are also required as an offering.";
 				}
 				next;
 				mes "[Wish Maiden]";
@@ -369,7 +369,7 @@ que_qsch05,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch05	403
 -	script	Gate01#gq_main	-1,{
 	function	SMonster;
 	set .@sub$, callfunc("F_Okolnir");
-	
+
 OnTouch:
 	set .@sub$, callfunc("F_Okolnir");
 	set .@saram,getmapusers("que_q"+.@sub$);
@@ -384,7 +384,7 @@ OnTouch:
 				case 5: warp "que_q"+.@sub$,46,300; break;
 			}
 			end;
-	
+
 		}
 		switch (getd("$@gqse_"+.@sub$+"_miro")) {
 			case 0: setarray .@n, 77,271,72,271,1; break;
@@ -417,9 +417,9 @@ OnTouch:
 		mes "There are too many people, you can't enter.";
 		close;
 	}
-	
+
 	function	SMonster	{
-	
+
 		switch (BaseClass) {
 			case 1: set .@m, 1652; break;
 			case 2: set .@m, 1663; break;
@@ -432,7 +432,7 @@ OnTouch:
 		monster "que_q"+getarg(0),getarg(1),getarg(2),strcharinfo(0),.@m,1,"#Gate_manager_"+getarg(0)+"::OnMyMobDead";
 		return;
 	}
-	
+
 OnEnable:
 	set .@sub$,callfunc("F_Okolnir");
 	enablenpc "Gate01#gq_"+.@sub$;
@@ -445,7 +445,7 @@ OnDisable:
 	disablenpc "Gate01#gq_"+.@sub$;
 	killmonsterall "que_q"+.@sub$;
 	end;
-	
+
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
 	disablenpc "Gate01#gq_"+.@sub$;
@@ -465,7 +465,7 @@ que_qsch05,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch05	45,1,1
 
 -	script	#Gate_manager_main	-1,{
 	end;
-	
+
 OnMyMobDead:
 	set .@sub$, callfunc("F_Okolnir");
 	if (getd("$@gqse_"+.@sub$+"_miro") == getd("$@gqse_"+.@sub$+"_pcc")) {
@@ -488,7 +488,7 @@ que_qsch05,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch05	844
 
 -	script	#gq_miromob2_main	-1,{
 	end;
-	
+
 OnEnable:
 	set .@sub$,callfunc("F_Okolnir");
 	initnpctimer;
@@ -542,7 +542,7 @@ que_qsch05,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch05	844
 
 -	script	#okolnir_main	-1,{
 	end;
-	
+
 OnEnable:
 	set .@sub$,callfunc("F_Okolnir");
 	donpcevent "Gate01#gq_"+.@sub$+"::OnEnable";
@@ -739,7 +739,7 @@ que_qsch05,1,1,0	duplicate(#okolnir_main)	#okolnir_sch05	844
 
 -	script	#Maze_Manager_main	-1,{
 	end;
-	
+
 OnEnable:
 	set .@sub$,callfunc("F_Okolnir");
 	initnpctimer;
@@ -867,16 +867,16 @@ OnEnable:
 		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1]," ",1935,1,"#miro_rf_"+.@sub$+"::OnMyMobDead";
 	Cell(.@sub$,0);
 	end;
-	
+
 OnDisable:
 	set .@sub$,callfunc("F_Okolnir");
 	killmonster "que_q"+.@sub$,"#miro_rf_"+.@sub$+"::OnMyMobDead";
 	Cell(.@sub$,1);
 	end;
-	
+
 OnMyMobDead:
 	end;
-	
+
 	function	Cell	{
 		setarray .@cell, 57,298,57,301,48,288,48,291,68,290,71,290,72,292,72,295,90,296,93,296,56,282,59,282,66,280,66,283,80,284,83,284,44,273,47,273,50,273,53,273,54,266,54,269,66,270,66,271,81,272,81,273,88,276,91,276,94,276,97,276,64,258,67,258,76,260,76,263,87,262,87,265,50,252,53,252,76,252,79,252,99,252,99,255,53,242,53,245;
 		for (set .@i, 0; .@i < getarraysize(.@cell); set .@i, .@i + 4) {
@@ -914,7 +914,7 @@ OnDisable:
 
 OnMyMobDead:
 	end;
-	
+
 	function	Cell	{
 		setarray .@cell, 44,292,47,292,67,292,67,295,94,298,94,301,79,286,79,289,56,282,59,282,71,280,71,283,100,281,103,281,44,261,47,261,50,265,53,265,56,270,59,270,72,278,73,278,82,266,85,266,88,266,91,266,94,271,97,271,60,254,60,257,73,260,73,263,75,254,75,257,87,254,87,257,58,248,58,251,80,248,80,251,53,242,53,245,75,242,75,245,100,251,103,251,100,256,103,256;
 		for (set .@i, 0; .@i < getarraysize(.@cell); set .@i, .@i + 4) {
@@ -936,7 +936,7 @@ que_qsch05,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch05	844
 
 -	script	windpath01_main	-1,{
 	end;
-	
+
 OnTouch:
 	set .@sub$,callfunc("F_Okolnir");
 	if (countitem(7839)) {
@@ -973,7 +973,7 @@ que_qsch05,113,165,0	warp	windpath02_sch05	1,1,que_qsch05,139,172
 
 -	script	Piamette#main	-1,{
 	end;
-	
+
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
 	enablenpc "Piamette#"+.@sub$;
@@ -1032,7 +1032,7 @@ OnTimer14000:
 	donpcevent "#gdtimer01_"+.@sub$+"::OnEnable";
 	stopnpctimer;
 	end;
-	
+
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
 	disablenpc "#event_start01_"+.@sub$;
@@ -1051,7 +1051,7 @@ que_qsch05,114,158,0	duplicate(#event_start01_main)	#event_start01_sch05	-1,1,1
 
 -	script	#gdtimer01_main	-1,{
 	end;
-	
+
 OnEnable:
 	initnpctimer;
 	end;
@@ -1145,7 +1145,7 @@ que_qsch05,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch05	844
 
 -	script	#gdtimer02_main	-1,{
 	end;
-	
+
 OnEnable:
 	initnpctimer;
 	end;
@@ -1285,8 +1285,8 @@ OnTouch:
 		case 2: setarray .@n$, "113","111","3","Piamette : One bird has died trapped in it's cage."; break;
 		case 3: setarray .@n$, "161","105","4","Piamette : One bird was poisoned to death."; break;
 		case 4: setarray .@n$, "168","135","5","Piamette : One bird vomited blood while singing seven days and seven nights."; break;
-		case 5: 
-			setarray .@n$, "150","159","6","Piamette : The last one broke her neck wriggling to get out of from it's eggshell!"; 
+		case 5:
+			setarray .@n$, "150","159","6","Piamette : The last one broke her neck wriggling to get out of from it's eggshell!";
 			donpcevent "#gdtimer02_"+.@sub$+"::OnEnable";
 			donpcevent "#gdtimer01_"+.@sub$+"::OnStop";
 			break;
@@ -1299,7 +1299,7 @@ OnTouch:
 
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
-	for (set .@i, 1; .@i <= 8; set .@i, .@i + 1) 
+	for (set .@i, 1; .@i <= 8; set .@i, .@i + 1)
 		disablenpc "#getspell0"+.@i+"_"+.@sub$;
 	end;
 }
@@ -1386,7 +1386,7 @@ que_qsch05,146,121,0	duplicate(#getspells_main)	#getspell08_sch05	-1,1,1
 
 -	script	#main_cages	-1,{
 	end;
-	
+
 OnTouch:
 	set .@sub$,callfunc("F_Okolnir");
 	sc_end SC_Stone;
@@ -1396,7 +1396,7 @@ OnTouch:
 	for (set .@i, 1; .@i <= 6; set .@i, .@i + 1)
 		disablenpc "#"+.@sub$+"_cage0"+.@i;
 	end;
-	
+
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
 	for (set .@i, 1; .@i <= 6; set .@i, .@i + 1)
@@ -1466,7 +1466,7 @@ que_qsch05,150,159,0	duplicate(#main_cages)	#sch05_cage06	-1,1,1
 
 que_qaru01,1,8,0	script	#gd_main_mobctrl	844,{
 	end;
-	
+
 OnEnable:
 	setarray .@mob_1$, "Ball of Piamette","1738";
 	setarray .@mob_1, 107,152,109,135,113,116,157,107,163,133,149,156,131,139,135,136,131,132,128,136,110,145,129,114,148,114,155,128,152,145,131,151,110,130;
@@ -1512,7 +1512,7 @@ que_qsch05,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch05_mobctrl	844
 
 -	script	windpaths_main	-1,{
 	end;
-	
+
 OnTouch:
 	set .@sub$,callfunc("F_Okolnir");
 	if (compare(strnpcinfo(0),"windpath03")) {
@@ -1521,7 +1521,7 @@ OnTouch:
 		warp "que_q"+.@sub$,146,109;
 	}
 	end;
-	
+
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
 	disablenpc "windpath03_"+.@sub$;
@@ -1552,7 +1552,7 @@ que_qsch05,128,104,0	duplicate(windpaths_main)	windpath04_sch05	45,1,1
 
 -	script	#nm_switch_main	-1,{
 	end;
-	
+
 OnTouch:
 	set .@sub$,callfunc("F_Okolnir");
 	disablenpc "#nm_switch_"+.@sub$;
@@ -1603,7 +1603,7 @@ OnTimer370000:
 	donpcevent "#"+.@sub$+"_stone03::OnEnable";
 	stopnpctimer;
 	end;
-	
+
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
 	disablenpc "#nm_switch_"+.@sub$;
@@ -1648,7 +1648,7 @@ OnTimer120000:
 	set .@sub$,callfunc("F_Okolnir");
 	setarray .@xy2, 226,294,227,294,228,294,229,294,230,295,231,296,231,297,231,298,231,299,230,300,229,301,228,301,227,301,226,301,225,300,224,299,224,298,224,297,224,296,225,295;
 	for (set .@i, 0; .@i < getarraysize(.@xy2); set .@i, .@i + 2)
-		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Guard of Shadow",1752,1,"#nmsom"+.@sub$+"_jin01::OnMyMobDead";	
+		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Guard of Shadow",1752,1,"#nmsom"+.@sub$+"_jin01::OnMyMobDead";
 	end;
 
 OnTimer180000:
@@ -1671,7 +1671,7 @@ que_qsch05,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch05_jin01	-1
 
 -	script	#main_stone01	-1,{
 	end;
-	
+
 OnEnable:
 	set .@sub$,callfunc("F_Okolnir");
 	setarray .@xy, 227,294,229,294,231,296,231,298,230,300,228,301,226,301,224,299,224,297,225,295;
@@ -1732,7 +1732,7 @@ OnTimer120000:
 	set .@sub$,callfunc("F_Okolnir");
 	setarray .@xy2, 274,301,275,301,276,301,277,301,278,300,279,299,279,298,279,297,279,296,278,295,277,294,276,294,275,294,274,294,273,295,272,296,272,297,272,298,272,299,273,300;
 	for (set .@i, 0; .@i < getarraysize(.@xy2); set .@i, .@i + 2)
-		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Bloody Hunter",1753,1,"#nmsom"+.@sub$+"_jin02::OnMyMobDead";	
+		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Bloody Hunter",1753,1,"#nmsom"+.@sub$+"_jin02::OnMyMobDead";
 	end;
 
 OnTimer180000:
@@ -1755,7 +1755,7 @@ que_qsch05,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch05_jin02	-1
 
 -	script	#main_stone02	-1,{
 	end;
-	
+
 OnEnable:
 	set .@sub$,callfunc("F_Okolnir");
 	setarray .@xy, 275,301,277,301,279,299,279,297,278,295,276,294,274,294,272,296,272,298,273,300;
@@ -1847,7 +1847,7 @@ que_qsch05,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch05_jin03	-1
 
 -	script	#main_stone03	-1,{
 	end;
-	
+
 OnEnable:
 	set .@sub$,callfunc("F_Okolnir");
 	setarray .@xy, 251,343,252,343,255,341,255,340,254,337,253,336,250,336,249,337,248,340,248,341;
@@ -1885,7 +1885,7 @@ que_qsch05,2,10,0	duplicate(#main_stone03)	#sch05_stone03	844
 
 -	script	Guard of Shadow#main_all	-1,{
 	end;
-	
+
 OnTouch:
 	set .@sub$,callfunc("F_Okolnir");
 	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
@@ -1899,7 +1899,7 @@ OnTouch:
 	for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
 		monster "que_q"+.@sub$,.@n[.@i],.@n[.@i+1],"Guard of Shadow",1752,1,"Guard of Shadow#"+.@sub$+"_0"+.@in+"::OnMyMobDead";
 	end;
-	
+
 OnDisable:
 	set .@sub$,callfunc("F_Okolnir");
 	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
@@ -1909,10 +1909,10 @@ OnDisable:
 
 OnMyMobDead:
 	end;
-	
+
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
-	for (set .@i, 1; .@i <= 4; set .@i, .@i + 1) 
+	for (set .@i, 1; .@i <= 4; set .@i, .@i + 1)
 		disablenpc "Guard of Shadow#"+.@sub$+"_0"+.@i;
 	end;
 }
@@ -1959,7 +1959,7 @@ que_qsch05,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_0
 
 -	script	Bloody Hunter#main_all	-1,{
 	end;
-	
+
 OnTouch:
 	set .@sub$,callfunc("F_Okolnir");
 	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
@@ -1973,7 +1973,7 @@ OnTouch:
 	for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
 		monster "que_q"+.@sub$,.@n[.@i],.@n[.@i+1],"Bloody Hunter",1753,1,"Bloody Hunter#"+.@sub$+"_ac0"+.@in+"::OnMyMobDead";
 	end;
-	
+
 OnDisable:
 	set .@sub$,callfunc("F_Okolnir");
 	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
@@ -1983,10 +1983,10 @@ OnDisable:
 
 OnMyMobDead:
 	end;
-	
+
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
-	for (set .@i, 1; .@i <= 4; set .@i, .@i + 1) 
+	for (set .@i, 1; .@i <= 4; set .@i, .@i + 1)
 		disablenpc "Bloody Hunter#"+.@sub$+"_ac0"+.@i;
 	end;
 }
@@ -2033,7 +2033,7 @@ que_qsch05,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac04	
 
 -	script	Temple Keeper#main_all	-1,{
 	end;
-	
+
 OnTouch:
 	set .@sub$,callfunc("F_Okolnir");
 	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
@@ -2085,7 +2085,7 @@ que_qsch05,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch05_ac02	
 
 -	script	Wish Maiden#main_boss	-1,{
 	end;
-	
+
 OnDisable:
 	set .@sub$,callfunc("F_Okolnir");
 	killmonster "que_q"+.@sub$,"Wish Maiden#"+.@sub$+"_boss::OnMyMobDead";
@@ -2124,10 +2124,10 @@ OnMyMobDead:
 		mapannounce "que_q"+.@sub$,"Wish Maiden : ..Good, you deserve the Goddess' shine.",bc_map,"0x00ff00";
 	}
 	end;
-	
+
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
-		hideonnpc "Wish Maiden#"+.@sub$+"_boss";	
+		hideonnpc "Wish Maiden#"+.@sub$+"_boss";
 	end;
 }
 que_qaru01,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru01_boss	1931
@@ -2253,7 +2253,7 @@ OnTimer300000:
 	donpcevent "#okolnir_"+.@sub$+"_time01::OnEnable";
 	stopnpctimer;
 	end;
-	
+
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
 		disablenpc "Wish Maiden#"+.@sub$+"_gift";
@@ -2272,12 +2272,12 @@ que_qsch05,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch05_gift	403
 
 -	script	#to_agit_main_gate	-1,{
 	end;
-	
+
 OnTouch:
 	set .@t$, ((compare(strnpcinfo(4),"aru"))?"arug_cas0":"schg_cas0")+(charat(strnpcinfo(4),getstrlen(strnpcinfo(4))-1));
 	warp .@t$,157,369;
 	end;
-	
+
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
 		disablenpc "#to_agit_"+.@sub$+"_gate";
@@ -2325,7 +2325,7 @@ OnTimer3600000:
 		stopnpctimer;
 	}
 	end;
-	
+
 OnInit:
 	set .@sub$,callfunc("F_Okolnir");
 	if (getd("$siz_"+.@sub$+"_on") == 2) initnpctimer;

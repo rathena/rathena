@@ -21,7 +21,7 @@
 //= 1.6 Updated experience rewards. [L0ne_W0lf]
 //= 1.7 Optimization, -4000 lines (more can still be done). [Euphy]
 //= 1.8 Optimized.
-//=     Fixed Medal Distributor (Dual Race) disappears accordingly. [Joseph] 
+//=     Fixed Medal Distributor (Dual Race) disappears accordingly. [Joseph]
 //= 1.9 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.0 Added GM management NPC. [Euphy]
 //= 2.1 Fixed prize in dual race and optimization. [Capuche]
@@ -240,7 +240,7 @@ OnTouchNPC:
 	donpcevent strnpcinfo(0)+"::OnDisable";
 	killmonster "p_track01",strnpcinfo(0)+"::OnMyMobDead";
 	end;
-	
+
 OnInit:
 	if (strnpcinfo(2) != "" )
 		disablenpc strnpcinfo(0);
@@ -278,7 +278,7 @@ p_track01,67,45,5	script	Medal Distributor#single	845,{
 		mes "after the race finishes. Prize";
 		mes "Medals may be given to Wayne";
 		mes "in Hugel in exchange for items.";
-		next; 
+		next;
 		if ($@monster_race) {
 			if (monster_race_1 == $@monster_race) {
 				mes "[Medal Distributor]";
@@ -781,7 +781,7 @@ OnTouchNPC:
 	else .@speed = 150;
 	sc_start SC_WALKSPEED,5000,.@speed;
 	end;
-	
+
 OnInit:
 	disablenpc strnpcinfo(0);
 	end;
@@ -797,7 +797,7 @@ OnTouchNPC:
 	else .@speed = 150;
 	sc_start SC_WALKSPEED,10000,.@speed;
 	end;
-	
+
 OnInit:
 	disablenpc strnpcinfo(0);
 	end;
@@ -812,7 +812,7 @@ OnTouchNPC:
 	else if (.@start < 91) .@time = 4000;
 	if (.@time) sc_start SC_STUN,.@time,0;
 	end;
-	
+
 OnInit:
 	disablenpc strnpcinfo(0);
 	end;
@@ -827,7 +827,7 @@ OnTouchNPC:
 	else if (.@start < 91) .@time = 4000;
 	if (.@time) sc_start SC_SLEEP,.@time,0;
 	end;
-	
+
 OnInit:
 	disablenpc strnpcinfo(0);
 	end;
@@ -1333,7 +1333,7 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 					mes "I understand. Perhaps";
 					mes "you'd feel more comfortable";
 					mes "checking the monsters first?";
-					close;			
+					close;
 				}
 				if (.@m1 == 0) {
 					mes "[Ticket Helper]";
@@ -1428,7 +1428,7 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 			mes "^0000FFMonster " + monster_race_2_1 + "^000000 and ^0000FFMonster " + monster_race_2_2 + "^000000";
 			mes "for this Dual Monster Race.";
 			next;
-		} 
+		}
 		mes "[Ticket Helper]";
 		mes "The start of the race will be";
 		mes "announced through a broadcast.";
@@ -1437,7 +1437,7 @@ p_track02,73,22,1	script	Ticket Helper#2	899,{
 		mes "positions. Thank you, and";
 		mes "have a good time!";
 		viewpoint 1,43,35,0,0xFF0000;
-		close;	
+		close;
 	}
 
 OnInit:
@@ -1683,10 +1683,10 @@ p_track02,76,38,1	script	Exit Guide#double	798,{
 function	MN	{
 	setarray .@n$[1], "poring","lunatic","savagebebe","desertwolf","deviruchi","baphomet";
 	for ( .@i = 1; .@i <= 6; .@i++ ) {
-		if (compare(strnpcinfo(0),.@n$[.@i])) 
+		if (compare(strnpcinfo(0),.@n$[.@i]))
 			break;
 	}
-	return .@i;	
+	return .@i;
 }
 
 OnEnable:
@@ -1740,7 +1740,7 @@ p_track02,30,28,0	duplicate(mob1#main)	#baphomet1	139,0,0
 
 p_track02,19,48,0	script	TrapGlobal#race02	-1,{
 OnEnable:
-	enablenpc "TrapGlobal#race02";	
+	enablenpc "TrapGlobal#race02";
 	for ( .@c = 1; .@c <= 6; .@c++ ) {
 		.@line = rand(1,70);
 		enablenpc "starting#race02_"+.@c;
@@ -1790,7 +1790,7 @@ OnDisable:
 	for ( .@i = 1; .@i <= 6; .@i++ )
 		donpcevent "starting#race02_"+.@i+"::OnDisable";
 	end;
-	
+
 OnInit:
 	for ( .@i = 1; .@i <= 6; .@i++ ) {
 		setd "$@mon_r02_luk"+.@i,0;
@@ -1820,7 +1820,7 @@ OnDisable:
 		disablenpc "Luk#"+strnpcinfo(2)+"_"+.@i;
 		disablenpc "Tire#"+strnpcinfo(2)+"_"+.@i;
 	}
-	
+
 OnInit:
 	disablenpc strnpcinfo(0);
 	end;
@@ -2164,7 +2164,7 @@ ein_in01,85,208,5	script	Ei'felle#repay01	854,{
 				.@weapon$ = "Nagan:Immaterial Sword:Mysteltainn:Byeollungum:Star Dust Blade:Caesar's Sword:Ice Falchion:Excalibur:Edge:Cutlus:Solar Sword:Tirfing:Fireblend";
 				setarray .@weapon_id, 1130,1141,1138,1140,1148,1134,1131,1137,1132,1135,1136,1139,1133;
 				break;
-			case 2:	
+			case 2:
 				.@weapon$ = "Dragon Slayer:Masamune:Muramasa:Schweizersabel:Executioner:Zweihander:Katzbalger";
 				setarray .@weapon_id, 1166,1165,1164,1167,1169,1168,1170;
 				break;
@@ -2206,7 +2206,7 @@ ein_in01,85,208,5	script	Ei'felle#repay01	854,{
 			case 12:
 				.@weapon$ = "Oriental Lute:Electric Guitar";
 				setarray .@weapon_id, 1918,1913;
-				break;		
+				break;
 		}
 		.@j = select (.@weapon$+":Cancel") - 1;
 		explode(.@weapon$,.@weapon$,":");
@@ -2214,7 +2214,7 @@ ein_in01,85,208,5	script	Ei'felle#repay01	854,{
 		callsub S_BonusReward,1500,.@weapon_id[.@j];
 		end;
 	}
-	
+
 S_Reward:
 	if (select("Sure:No") == 2) {
 		mes "[Ei'felle]";
@@ -2601,7 +2601,7 @@ S_BonusReward:
 	getitem .@arg1,1;
 	close;
 }
-	
+
 hugel,71,83,4	script	Wayne	900,{
 	if (!checkweight("Knife",1)) {
 		mes "[Wayne]";
@@ -2667,7 +2667,7 @@ hugel,71,83,4	script	Wayne	900,{
 			.@menu$ = .@menu$ + .@pm[.@i] + " Prize medal:";
 		.@m = select(.@menu$) - 1;
 		switch (.@m) {
-			case 0: 
+			case 0:
 				.@items$ = "2 Hinale Leaflets:2 Aloe Leaflets:1 Mastela Fruit:5 Witch Starsands:4 Condensed Red Potions";
 				setarray .@item_array, 520,2,521,2,522,1,1061,5,545,4;
 				break;
@@ -2725,7 +2725,7 @@ hugel,71,83,4	script	Wayne	900,{
 		mes "races, fair adventurer~";
 		delitem 7515,.@pm[.@m];// Marvelous_Medal
 		getitem .@item_array[.@m2], .@item_array[(.@m2+1)];
-		close;		
+		close;
 	}
 }
 
@@ -2831,7 +2831,7 @@ p_track02,69,31,1	script	Blacksmith Guildsman#dou	726,{
 		mes "It's too hard for me to win~!";
 		emotion e_swt2;
 		close;
-	} 
+	}
 	mes "[Blacksmith Guildsman]";
 	mes "Run! Go go go!";
 	mes "I need to win some";

@@ -413,7 +413,7 @@ OnTouch:
 		donpcevent "#DrawerOpener::OnEnable";
 		close;
 	}
-	
+
 }
 
 hu_in01,385,247,5	script	Postell Schuwell#D	97,{
@@ -4121,7 +4121,7 @@ OnTimer60000:
 	killmonster "lhz_in01","HuMSpawner::OnMonsterDead";
 	stopnpctimer;
 	end;
-	
+
 OnMonsterDead:
 	end;
 }
@@ -4155,7 +4155,7 @@ lhz_dun02,244,227,0	script	HiddenExplosion	139,5,5,{
 OnInit:
 	disablenpc "HiddenExplosion";
 	end;
-	
+
 OnTouch:
 	percentheal -10,0;
 	specialeffect EF_HIT5;
@@ -5436,17 +5436,17 @@ hugel,100,174,3	script	Strange Man#Hugel	898,{
 		mes "have to eat again for days!";
 		close;
 	}
-	
+
 OnEnable:
 	enablenpc "Strange Man#Hugel";
 	disablenpc "Suspicious Barrel";
 	initnpctimer;
 	end;
-	
+
 OnInit:
 	disablenpc "Strange Man#Hugel";
 	end;
-	
+
 OnTimer60000:
 	stopnpctimer;
 	disablenpc "Strange Man#Hugel";
@@ -5526,7 +5526,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 				mes "since I helped him start his business. Nice of him, isn't it?";
 				set hg_odeng,2;
 				setquest 8065;
-				getitem 584,1; //Fish_Ball_Soup 
+				getitem 584,1; //Fish_Ball_Soup
 				close;
 			case 3:
 				mes "[Cellette]";
@@ -5538,7 +5538,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 				mes "Just try not to be late...";
 				set hg_odeng,3;
 				setquest 8066;
-				getitem 584,1; //Fish_Ball_Soup 
+				getitem 584,1; //Fish_Ball_Soup
 				close;
 			case 4:
 				mes "[Cellette]";
@@ -5550,7 +5550,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 				mes "and such and order...";
 				set hg_odeng,4;
 				setquest 8067;
-				getitem 584,1; //Fish_Ball_Soup 
+				getitem 584,1; //Fish_Ball_Soup
 				close;
 			}
 		case 2:
@@ -5570,7 +5570,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 					mes "I hope you come and ";
 					mes "visit me again, okay?";
 					set Zeny,Zeny-100;
-					getitem 584,1; //Fish_Ball_Soup 
+					getitem 584,1; //Fish_Ball_Soup
 					close;
 				} else {
 					mes "[Cellette]";
@@ -5628,7 +5628,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 				mes "from you. That's fair, so";
 				mes "please don't lose it this time.";
 				set Zeny,Zeny-100;
-				getitem 584,1; //Fish_Ball_Soup 
+				getitem 584,1; //Fish_Ball_Soup
 				close;
 			} else {
 				mes "[Cellette]";
@@ -5669,7 +5669,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 				mes "from you. That's fair, so";
 				mes "please don't lose it this time.";
 				set Zeny,Zeny-100;
-				getitem 584,1; //Fish_Ball_Soup 
+				getitem 584,1; //Fish_Ball_Soup
 				close;
 			} else {
 				mes "[Cellette]";
@@ -5711,7 +5711,7 @@ hu_in01,15,372,3	script	Cellette Lavit	74,{
 				mes "from you. That's fair, so";
 				mes "please don't lose it this time.";
 				set Zeny,Zeny-100;
-				getitem 584,1; //Fish_Ball_Soup 
+				getitem 584,1; //Fish_Ball_Soup
 				close;
 			} else {
 				mes "[Cellette]";
@@ -5981,7 +5981,7 @@ hugel,87,139,3	script	Maewan	86,{
 		mes "all sorts of new things~";
 		close;
 	}
-	
+
 }
 
 hugel,84,125,3	script	Layoma	700,{
@@ -6050,7 +6050,7 @@ hugel,84,125,3	script	Layoma	700,{
 		mes "that's a pretty exciting life!";
 		close;
 	}
-	
+
 }
 
 hugel,102,161,3	script	Erjan	100,{
@@ -6480,7 +6480,7 @@ yuno,111,156,3	script	Euslan	90,{
 		mes "relaxed than she used to be.^000000";
 		close;
 	}
-	
+
 }
 
 que_bingo,49,12,0	script	#Hg_Quest	139,4,4,{
@@ -6547,7 +6547,7 @@ que_bingo,53,190,7	script	Eukran	778,{
 		warp "que_bingo",37,24;
 		end;
 	}
-	
+
 }
 
 odin_tem01,129,127,0	script	HiddenActivator#Hugel	139,3,3,{
@@ -6611,7 +6611,7 @@ OnTimer180000:
 	disablenpc "Young Man#Hu_Quest";
 	stopnpctimer;
 	end;
-	
+
 OnInit:
 	disablenpc "Young Man#Hu_Quest";
 	end;
@@ -6853,7 +6853,7 @@ odin_tem01,130,134,4	script	Young Man#Hu_Quest	774,{
 		mes "I swear I'll come home to you!";
 		close;
 	}
-	
+
 }
 
 odin_tem01,111,144,0	script	HiddenHugel	139,2,2,{
@@ -8764,7 +8764,7 @@ hu_in01,14,11,4	script	Laura	70,{
 				mes "finish their guardian research?";
 				mes "What else did you learn?";
 				next;
-				
+
 			case 2:
 				mes "["+strcharinfo(0)+"]";
 				mes "Well, have you";
@@ -8788,7 +8788,7 @@ hu_in01,14,11,4	script	Laura	70,{
 						mes "Um, really...";
 						next;
 						break;
-						
+
 					case 2:
 						mes "["+strcharinfo(0)+"]";
 						mes "Er, you see...";
@@ -8796,7 +8796,7 @@ hu_in01,14,11,4	script	Laura	70,{
 						mes "about Ymir's Heart...";
 						next;
 						break;
-						
+
 					case 3:
 						mes "["+strcharinfo(0)+"]";
 						mes "You know the expression,";
@@ -8804,7 +8804,7 @@ hu_in01,14,11,4	script	Laura	70,{
 						mes "is?'' Er, well, Ymir's Heart...";
 						next;
 						break;
-						
+
 					case 4:
 						mes "["+strcharinfo(0)+"]";
 						mes "The truth is,";
@@ -8978,7 +8978,7 @@ hu_in01,16,20,4	script	Ashe	95,{
 			mes "this area. Have you come to";
 			mes "assist in the expedition?";
 			close;
-		
+
 		case 1:
 			mes "[Ashe]";
 			mes "Oh, you've here in response";
@@ -9048,7 +9048,7 @@ hu_in01,16,20,4	script	Ashe	95,{
 			mes "that one person's victory";
 			mes "in research is victory for all.";
 			close;
-		
+
 		case 6:
 			mes "[Ashe]";
 			mes "How's the work coming";
@@ -9058,13 +9058,13 @@ hu_in01,16,20,4	script	Ashe	95,{
 			mes "that one person's victory";
 			mes "in research is victory for all.";
 			close;
-			
+
 		case 14:
 			mes "[Ashe]";
 			mes "Please keep up";
 			mes "the good work~";
 			close;
-			
+
 		case 15:
 			if (countitem(7511) > 4)
 			{
@@ -9080,7 +9080,7 @@ hu_in01,16,20,4	script	Ashe	95,{
 			mes "look very well. Did";
 			mes "something happen?";
 			close;
-		
+
 		case 16:
 			mes "[Ashe]";
 			mes "I know that Ms. Laurence";
@@ -9090,7 +9090,7 @@ hu_in01,16,20,4	script	Ashe	95,{
 			mes "work. Thank you so much for";
 			mes "all of your efforts~";
 			close;
-		
+
 		case 17:
 			mes "[Ashe]";
 			mes "Why does Ms. Laurence";
@@ -9098,14 +9098,14 @@ hu_in01,16,20,4	script	Ashe	95,{
 			mes "I honestly think this";
 			mes "rivalry is awfully petty...";
 			close;
-		
+
 		case 19:
 			mes "[Ashe]";
 			mes "Ehm...";
 			mes "Don't worry";
 			mes "about it~";
 			close;
-		
+
 		case 20:
 			mes "[Ashe]";
 			mes "Please don't ask";
@@ -9443,7 +9443,7 @@ OnTouch:
 				mes "members of ''Secret Wing.''";
 				next;
 				break;
-				
+
 			case 2:
 				mes "[???]";
 				mes "She'll be fine. If you're that";
@@ -9511,7 +9511,7 @@ hugel,209,109,2	script	Boatman#hugel	709,{
 			mes "to return and just";
 			mes "let me know.";
 			close;
-		
+
 		case 2:
 			if (Zeny < 800)
 			{
@@ -9554,7 +9554,7 @@ odin_tem01,93,146,4	script	Boatman	709,{
 			mes "when you're ready to";
 			mes "leave this dangerous place.";
 			close;
-			
+
 		case 2:
 			mes "[Boatman]";
 			mes "Alright then,";

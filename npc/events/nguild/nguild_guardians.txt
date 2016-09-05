@@ -55,7 +55,7 @@ OnGuardianDied:
 nguild_pay,139,139,0	script	Guardian_N03	-1,{
 OnAgitInit:
 	if (GetCastleData("nguild_pay",10) == 1) guardian "nguild_pay",210,120,"Soldier Guardian",1287,"Guardian_N03::OnGuardianDied",0;
-	if (GetCastleData("nguild_pay",11) == 1) guardian "nguild_pay",69,26,"Soldier Guardian",1287,"Guardian_N03::OnGuardianDied",1; 
+	if (GetCastleData("nguild_pay",11) == 1) guardian "nguild_pay",69,26,"Soldier Guardian",1287,"Guardian_N03::OnGuardianDied",1;
 	if (GetCastleData("nguild_pay",12) == 1) guardian "nguild_pay",23,141,"Soldier Guardian",1287,"Guardian_N03::OnGuardianDied",2;
 	if (GetCastleData("nguild_pay",13) == 1) guardian "nguild_pay",224,87,"Archer Guardian",1285,"Guardian_N03::OnGuardianDied",3;
 	if (GetCastleData("nguild_pay",14) == 1) guardian "nguild_pay",81,45,"Archer Guardian",1285,"Guardian_N03::OnGuardianDied",4;

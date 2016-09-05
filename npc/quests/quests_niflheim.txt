@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs related to Niflheim
-//===== By: ================================================== 
+//===== By: ==================================================
 //= The rAthena Dev Team
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.6
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project; 7.15 +
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Piano Key Ouest
 //= - Escape from Niflheim
@@ -14,7 +14,7 @@
 //= Message Delivery Quest
 //= - Deliver a message to Erious' departed wife.
 //= - Variables in use: nif_revive, MISC_QUEST (Bit 16384)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Initial release, moved Book of Devil and Piano quest
 //=     from npc/cities/niflheim.txt [Evera]
 //= 1.1 Optimized Book of Devil quest. used bit-wise var,
@@ -25,9 +25,9 @@
 //=     Rescripted Piano Quest. Prior quest progress will be lost.
 //= 1.4 Fixed NPCs using ID 111 when it shoudl have been 139. [L0ne_W0lf]
 //= 1.5 Swapped NPC IDs back from last change (139 back to 111). [L0ne_W0lf]
-//=     Clicking will do nothing, you have to still "touch" the npc. 
+//=     Clicking will do nothing, you have to still "touch" the npc.
 //= 1.6 Added questlog support. [Euphy]
-//============================================================ 
+//============================================================
 
 // Piano Quest :: nif_ryu
 //============================================================

@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Swordman Class Tutorial and Job Specific Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Fix up by Jukka
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.6
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Swordman training quest.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Fully working
 //= 1.1 optimized [Lupus]
 //= 1.2 Fixed a typo on NPC name. [SinSloth]
@@ -17,7 +17,7 @@
 //= 1.4 Misc. updates. [L0ne_W0lf]
 //= 1.5 Added Renewal Izlude coordinates.
 //= 1.6 Added Pre-Renewal support. [Euphy]
-//============================================================ 
+//============================================================
 
 // Shurank
 //============================================================
@@ -1928,12 +1928,12 @@ geffen,154,143,3	script	Dequ'ee	734,{
 						close;
 					}
 				} else {
-	
+
 					mes "[Dequ'ee]";
 					mes "...Are you sure that you heard";
 					mes "him right? Why don't you go check it out again?";
 					close;
-	
+
 				}
 			} else {
 				mes "[Dequ'ee]";
@@ -1942,14 +1942,14 @@ geffen,154,143,3	script	Dequ'ee	734,{
 				close;
 			}
 		} else {
-	
+
 			mes "[Dequ'ee]";
 			mes "Are you sure that's right?";
 			mes "No, no, I don't think it is.";
 			mes "Would you check that code and interrogate the suspects again";
 			mes "if you need to?";
 			close;
-	
+
 		}
 	}
 	if(tu_swordman == 14){
@@ -2254,7 +2254,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 			break;
 		}
 	}
-	
+
 	mes "Hmm...?";
 	mes "Do you have any";
 	mes "business with me?";

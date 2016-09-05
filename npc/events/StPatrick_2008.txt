@@ -15,7 +15,7 @@
 //= you must use the mob edits provided for this quest.
 //= Enable in mob_db2.txt
 //=
-//= The item 12715 Black_Treasure_Chest contains a script 
+//= The item 12715 Black_Treasure_Chest contains a script
 //= that relies explicitly on this script being loaded.
 //= Remove the "end" from the item script to enable.
 //= In addition to that, you must enable the item_avail
@@ -172,7 +172,7 @@ prt_fild05,170,286,4	script	Anxious Leprechaun#8pday	954,{
 			mes "[O'Riley the Leprechaun]";
 			mes "Thank you. Here's your ale~";
 			if (countitem(7915) >= 10) {
-				getitem 12135,1; 
+				getitem 12135,1;
 				delitem 7915,10;
 			}
 			close;
@@ -180,7 +180,7 @@ prt_fild05,170,286,4	script	Anxious Leprechaun#8pday	954,{
 			mes "[O'Riley the Leprechaun]";
 			mes "Thank you. Here's your ale~";
 			if (countitem(7916) >= 5) {
-				getitem 12135,1; 
+				getitem 12135,1;
 				delitem 7916,5;
 			}
 			close;
@@ -188,7 +188,7 @@ prt_fild05,170,286,4	script	Anxious Leprechaun#8pday	954,{
 			mes "[O'Riley the Leprechaun]";
 			mes "Thank you. Here's your ale~";
 			if (countitem(7720) >= 1) {
-				getitem 12135,1; 
+				getitem 12135,1;
 				delitem 7720,1;
 			}
 			close;

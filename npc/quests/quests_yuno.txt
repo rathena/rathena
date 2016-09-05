@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs related to Juno
-//===== By: ================================================== 
+//===== By: ==================================================
 //= rAthena Dev Team; L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.0a
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Metto Quest:
 //= - Not really sure exaclty what it's for. :P
@@ -19,7 +19,7 @@
 //= - Part 1: Found in Quests_Comodo.txt
 //= - Part 3: Found in Doomed_Swords.txt
 //= - Variable in use dmdswrd_Q (Max 45)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Re-did the text and re-organized the script.  Corrected some items. [kobra_k88]
 //= 1.2 Added part to Bro's for alchemist quest [Darkchild]
 //= 1.3 fixed that part of Alch Job Quest. [Lupus]
@@ -33,7 +33,7 @@
 //= 1.9 Fixed Missing Variables in Metto quest. (bugreport:473) [Samuray22]
 //= 2.0 Added missing checkweights. [L0ne_W0lf]
 //= 2.0a Fixed several typos (bugreport:1786) [akrus]
-//============================================================ 
+//============================================================
 
 // Metto Quest :: yuno_ryusei
 //============================================================
@@ -538,7 +538,7 @@ S_DelItems:
 	mes "I don't know if we can do anything else,";
 	if (getarg(2) == 1)
 		mes "but this time we have created "+getarg(1);
-	else 
+	else
 		mes "but this time we have created";
 	mes "^FF0000"+getitemname(getarg(0))+"^000000 !";
 	next;
@@ -555,7 +555,7 @@ S_DelItems:
 	mes "I wish you luck in your journeys!";
 	close;
 }
-	
+
 yuno_in01,100,153,7	script	Bajin	47,0,0,{
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
@@ -666,7 +666,7 @@ S_DelItems:
 	mes "I don't know if we can do anything else,";
 	if (getarg(2) == 1)
 		mes "but this time we have created "+getarg(1);
-	else 
+	else
 		mes "but this time we have created";
 	mes "^FF0000"+getitemname(getarg(0))+"^000000 !";
 	next;
@@ -685,7 +685,7 @@ S_DelItems:
 }
 
 // Doomed Swords - Juno Portion :: matnani_yuno
-//============================================================ 
+//============================================================
 yuno,157,87,4	script	A Citizen of Juno#juno	102,{
 	mes "[Shalima]";
 	mes "When you go north from Al De Baran, you will arrive at 'Elmeth Plateau,' a place covered with molten rock.";
@@ -921,7 +921,7 @@ yuno,261,99,4	script	Sage Yklah#juno	735,{
 		close;
 	}
 }
-	
+
 yuno,305,207,4	script	Sage Syklah#juno	735,{
 	if (dmdswrd_Q == 25 || dmdswrd_Q == 26 || dmdswrd_Q == 27) {
 		switch(dmdswrd_Q) {
@@ -1044,7 +1044,7 @@ yuno,305,207,4	script	Sage Syklah#juno	735,{
 		close;
 	}
 }
-	
+
 yuno,213,298,4	script	Sage Esklah#juno	735,{
 	if (dmdswrd_Q == 27 || dmdswrd_Q == 28 || dmdswrd_Q == 29 || dmdswrd_Q == 30) {
 		switch(dmdswrd_Q) {
@@ -1201,7 +1201,7 @@ yuno,213,298,4	script	Sage Esklah#juno	735,{
 		close;
 	}
 }
-	
+
 mjolnir_02,170,193,4	script	Muriniel's Cottage#juno	111,{
 	if (dmdswrd_Q == 30 || dmdswrd_Q == 31) {
 		switch(dmdswrd_Q) {

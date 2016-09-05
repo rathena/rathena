@@ -30,7 +30,7 @@ prontera,164,203,6	script	Quest Shop#1	998,{ callfunc "qshop"; }
 
 // Script Core
 //============================================================
--	script	quest_shop	-1,{ 
+-	script	quest_shop	-1,{
 function Add; function Chk; function Slot;
 OnInit:
 	freeloop(1);
@@ -133,7 +133,7 @@ OnBuyItem:
 	while(1) {
 		switch(select(" ~ Purchase ^0055FF"+getitemname(.@q[0])+"^000000:"+((.@preview && !@qe[7])?" ~ Preview...":"")+": ~ ^777777Cancel^000000")) {
 		case 1:
-			if (@qe[0]) { 
+			if (@qe[0]) {
 				mes "[Quest Shop]";
 				mes "You're missing one or more quest requirements.";
 				close;

@@ -95,9 +95,9 @@ lhz_in03,93,21,0	warp	lhz_house3_1-2	1,1,lighthalzen,247,299
 lhz_in03,134,14,0	warp	lhz_house3_2-1	1,1,lhz_in03,125,90
 lhz_in03,120,90,0	warp	lhz_house3_2-2	1,1,lhz_in03,130,14
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.3 Removed fields and dungeons warps from here [DracoRPG]
 //= 1.3a A small fix for a warp [MasterOfMuppets]
 //= 1.4 Lighthalzen warp, taken from korean eA site [Vicious]

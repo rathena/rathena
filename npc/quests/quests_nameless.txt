@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Nameless Island Quests
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Collection of Nameless Island Quests
 //= Nameless Island:
@@ -27,14 +27,14 @@
 //- - Help to aprehend the infamous Z-Gang.
 //= - Variable in use: zdan_edq (Max: 19)
 //= Unlucky Emerald:
-//- - Help a treasure hunter from Prontera get home, and 
+//- - Help a treasure hunter from Prontera get home, and
 //=   learn the origins of the Unlucky Emerald.
 //= - Variable in use: treasure_nd (Max: 12)
 //= - Variable in use: jewel_nd (Max: 31)
 //= Rogue Guild Investigation Assistance:
 //- - Assist the Rogue Guild with their investigations.
 //= - Variable in use: rumour_nd (Max: 22)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Made quest accessable to "Failed" gaebolg quest. [L0ne_W0lf]
 //= 1.1a Touch up to other Gaebolg fail-points. [L0ne_W0lf]
@@ -63,7 +63,7 @@
 //= 2.3 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.4 Moved Dorian to pre-re/re paths. [Euphy]
 //= 2.5 Updated Nameless Island quests and added questlog support. [Euphy]
-//============================================================ 
+//============================================================
 
 // Nameless Island and Cursed Monestary Access Quest :: aru_monas
 //============================================================
@@ -975,7 +975,7 @@ OnTouch:
 }
 
 nameless_i,127,207,0	script	Dead Crow#Aru	111,{
-	if (aru_monas < 17) { 
+	if (aru_monas < 17) {
 		mes "^3355FFThere is a dead crow on the ground.";
 		close;
 	}
@@ -3214,7 +3214,7 @@ OnTimer53000:
 que_temsky,99,7,0	warp	quetemskyout	1,1,ra_temin,276,231
 
 // Muff's Loan :: zdan_total_edq
-//============================================================ 
+//============================================================
 comodo,224,187,3	script	Muff	86,{
 	if (checkweight(907,200) == 0) {
 		mes "[Muff]";
@@ -4660,7 +4660,7 @@ OnTouch:
 }
 
 // Broken Diamond
-//============================================================ 
+//============================================================
 moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 	if (checkweight(907,200) == 0) {
 		mes "[Ibrahim]";
@@ -6390,7 +6390,7 @@ OnInit:
 }
 
 // Z-Gang Quest
-//============================================================ 
+//============================================================
 prontera,150,326,0	script	Wanted Notice#edq	111,{
 	if (zdan_edq == 0) {
 		mes "====National Wanted Notice====";
@@ -9025,7 +9025,7 @@ OnInit:
 }
 
 // Unlucky Emerald
-//============================================================ 
+//============================================================
 morocc,143,63,3	script	Ragged Man#nd	929,{
 	if (treasure_nd == 0) {
 		mes "[Ragged Man]";
@@ -11416,7 +11416,7 @@ OnTouch:
 }
 
 // Rogue Guild Investigation
-//============================================================ 
+//============================================================
 prontera,163,204,3	script	Man from Morroc	99,{
 	if (rumour_nd == 0) {
 		mes "[Morroc Traveler]";
@@ -12797,10 +12797,10 @@ comodo,233,199,5	script	Rogue Guild Agent#nd3	810,{
 			mes "[Agent]";
 			mes "Okay, let me check.";
 			next;
-			if ((countitem(2278) > 0) || (countitem(2281) > 0) || (countitem(5043) > 0) || (countitem(2288) > 0) || 
-			(countitem(2292) > 0) || (countitem(2297) > 0) || (countitem(5005) > 0) || (countitem(5086) > 0) || 
-			(countitem(5087) > 0) || (countitem(5088) > 0) || (countitem(5089) > 0) || (countitem(5090) > 0) || 
-			(countitem(5176) > 0) || (countitem(5203) > 0) || (countitem(5098) > 0) || (countitem(5121) > 0) || 
+			if ((countitem(2278) > 0) || (countitem(2281) > 0) || (countitem(5043) > 0) || (countitem(2288) > 0) ||
+			(countitem(2292) > 0) || (countitem(2297) > 0) || (countitem(5005) > 0) || (countitem(5086) > 0) ||
+			(countitem(5087) > 0) || (countitem(5088) > 0) || (countitem(5089) > 0) || (countitem(5090) > 0) ||
+			(countitem(5176) > 0) || (countitem(5203) > 0) || (countitem(5098) > 0) || (countitem(5121) > 0) ||
 			(countitem(5130) > 0) || (countitem(5177) > 0) || (countitem(5169) > 0) || (countitem(5143) > 0)) {
 				mes "[Agent]";
 				mes "Excellent!";

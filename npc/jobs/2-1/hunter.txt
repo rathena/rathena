@@ -1,17 +1,17 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Hunter Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= EREMES THE CANIVALIZER (Aegis)Translated by yoshiki (Aegis)
 //= Converted by kobra_k88
 //= Further bugfixed and tested by Lupus
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job Change quest for Hunter class.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 0.5 Fully working.
 //= 0.6 Changed global variable names to unique ones.
 //= 0.7 - 0.8 Updates for rAthena +Knight2,Crusader2 fix
@@ -53,10 +53,10 @@
 //= 3.5 Added Quest Log commands. [Kisuka]
 //= 3.6 Removed the need for use of 'goto.' [L0ne_W0lf]
 //= 3.7 Modified the quest to renewal. [Vali] (Thanks to Muad_Dib for the necessary info).
-//============================================================ 
+//============================================================
 
 // Notices in the old Hunter Guild.
-//============================================================ 
+//============================================================
 in_hunter,99,99,4	script	Hunter Info#hnt::HntNotice	727,{
 	mes "============ Notice ============";
 	mes "We would like to inform that the Hunter Job Change Location";
@@ -77,7 +77,7 @@ in_hunter,99,99,4	script	Hunter Info#hnt::HntNotice	727,{
 pay_fild10,148,252,3	duplicate(HntNotice)	Job Change Location#hu	857
 
 // Actual Job quest start
-//============================================================ 
+//============================================================
 hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 	if (Upper == 1) {
 		mes "[Hunter Sherin]";
@@ -1267,7 +1267,7 @@ OnTouch:
 }
 
 // Hunter Job test traps.
-//============================================================ 
+//============================================================
 job_hunte,52,140,0	script	1-1::HntTrap	-1,0,1,{
 OnTouch:
 	switch(rand(200)) {

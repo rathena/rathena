@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Feast Day Of Ramadan Idul Fitri Event
-//===== By: ================================================== 
+//===== By: ==================================================
 //= $ephiroth
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Info : Official idRO
 //= 2006/10/16: 1.0 Release and fully working. [$ephiroth]
 //= 1.1 Replaced effect numerics with constants. [Samuray22]
@@ -41,7 +41,7 @@ prontera,146,92,3	script	Cellerb	58,{
 		mes "^000088~2 Green Herb, 5 Stem~.^000000";
 		next;
 		mes "[Staff Idul Fitri]";
-		if ( (countitem(552)<5 || countitem(515)<5 ||countitem(516)<5 || countitem(517)<10 || countitem(511)<2 || countitem(905)<5) ) { 
+		if ( (countitem(552)<5 || countitem(515)<5 ||countitem(516)<5 || countitem(517)<10 || countitem(511)<2 || countitem(905)<5) ) {
 			mes "You don't have enough items.";
 			mes "Come back when you have them all.";
 			close;

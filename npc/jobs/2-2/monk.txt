@@ -1,22 +1,22 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Monk Job Quest
 //===== By: ==================================================
 //= Dino9021, Edited / Translated by Celest
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job quest for Monk classes
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 2.2 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=     No longer uses function "F_BlockHigh"
 //= 2.3 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 2.3a Deleted unused variables. [Samuray22]
 //= 2.4 Added Quest Log commands. [Kisuka]
 //= 2.5 Removed the need for use of 'goto.' [L0ne_W0lf]
-//============================================================ 
+//============================================================
 
 prt_monk,59,247,1	script	Guarding Monk#mk	120,6,2,{
 	if (Upper == 1) {
@@ -397,13 +397,13 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 		next;
 		mes "[Sensei Moohae]";
 		switch (.@items[6]) {
-		case 3: mes "Why the face? This is a test of your abilities."; break; 
-		case 4: mes "What's wrong? This is a test of your abilities."; break; 
-		case 5: mes "You do understand don't you? This is a test of your abilities."; break; 
-		case 6: mes "Don't look at me like that. This is a test of your abilities."; break; 
-		case 7: mes "You don't seem concerned, this is a test of your abilities You should take this seriously."; break; 
-		case 8: mes "It is a test of your abilities so make sure you acquire these on your own."; break; 
-		case 9: mes "Don't be concerned, I believe you can do it. This is only to test your abilities."; break; 
+		case 3: mes "Why the face? This is a test of your abilities."; break;
+		case 4: mes "What's wrong? This is a test of your abilities."; break;
+		case 5: mes "You do understand don't you? This is a test of your abilities."; break;
+		case 6: mes "Don't look at me like that. This is a test of your abilities."; break;
+		case 7: mes "You don't seem concerned, this is a test of your abilities You should take this seriously."; break;
+		case 8: mes "It is a test of your abilities so make sure you acquire these on your own."; break;
+		case 9: mes "Don't be concerned, I believe you can do it. This is only to test your abilities."; break;
 		}
 		next;
 		mes "[Sensei Moohae]";
@@ -2600,15 +2600,15 @@ monk_test,137,338,1	script	switchreset#monkmonk	79,{
 	close;
 }
 
-//============================================================ 
+//============================================================
 // Monsters of Mushroom Collecting
-//============================================================ 
+//============================================================
 job_monk,0,0,0,0	monster	Thief Mushroom	1182,70,0,0,0
 job_monk,0,0,0,0	monster	Thief Bug Larva	1051,20,0,0,0
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.1 Fixed missing '";'. Now it's loading fine [Lupus]
 //= 1.1+ Edited/Translated 5% [Celest]
 //= 1.2 Made Poetry Quiz passable, Fixed Marathon Part [Lupus]
@@ -2623,4 +2623,4 @@ job_monk,0,0,0,0	monster	Thief Bug Larva	1051,20,0,0,0
 //= 1.9b Fixed another bug in Fuhai. [Zephiris]
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Removed Duplicates [Silent]
-//============================================================ 
+//============================================================

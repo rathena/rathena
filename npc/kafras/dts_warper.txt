@@ -1,10 +1,10 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Dungeon Teleport Service
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Evera
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.9
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
@@ -25,7 +25,7 @@
 // For Detailed information on what each varibale does, see
 // the "Vote Globalvar Girl#yuno" NPC at the end of the file.
 // Character Variable in use: lhz_vote (how many times player has voted, keeps htem from re-voting.)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Initial release [Evera]
 //= 1.1 SVN release, removed from major town (found true info after research),
 //=     put more arg(2) parameters, fixed a few bugs [Evera]
@@ -54,7 +54,7 @@
 //= 2.7 Fixed a typo, a - to a +. Not sure how that happened. [L0ne_w0lf]
 //= 2.8 Corrected another typo this time in a variable.
 //= 2.9 Added GM management function. [Euphy]
-//============================================================ 
+//============================================================
 
 einbroch,246,70,0	script	Vote Timer#ein	-1,{
 OnInit:

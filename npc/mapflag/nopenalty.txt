@@ -6,9 +6,9 @@
 //= 1.6
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Same as 'noexppenalty' and 'nozenypenalty' combined.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.2 Updated. [Lupus]
 //= 1.3 Added all novice maps. [L0ne_W0lf]
 //= 1.4 Removed Nightmare PVP maps. [L0ne_W0lf]

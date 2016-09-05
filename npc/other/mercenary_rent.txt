@@ -1,16 +1,16 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Mercenary related NPCs
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Sells Lancer, Sword, and Archer mercenaries,
 //= along with related mercenary items.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Optimization. [Zephyrus]
 //= 1.2 Removed redundent input. [L0ne_W0lf]
@@ -19,7 +19,7 @@
 //= 1.5 Added Mercenary Guild Switch & fixed a bug
 //=		in izlude duplicate. [Capuche]
 //= 1.5a Change to F_GM_NPC function in Mercenary Guild Switch
-//============================================================ 
+//============================================================
 
 -	script	Mercenary Manager#main	-1,{
 	setarray .@name$, 	"Spear", 			"Sword", 			"Bow";
@@ -275,7 +275,7 @@ pay_arche,99,167,4	duplicate(Mercenary Manager#main)	Mercenary Manager#Bow	4_M_J
 		close;
 	}
 	mes "[Mercenary Goods Merchant]";
-	if (.@input == 1) 
+	if (.@input == 1)
 		mes "Here's your " + getitemname(.@item[.@m]) + ".";
 	else {
 		mes "Here you are, this is exactly";

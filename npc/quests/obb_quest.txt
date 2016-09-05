@@ -4,23 +4,23 @@
 //= Celesta, Lupus
 //===== Version ==============================================
 //= 2.0
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 // [Official Conversion]
 //= Old Blue Box quest (?)
 //= Officially this quest gave an OBB in exhange for a the
 //= required items unlimitedly, however this was changed by
-//= Gravity, who claimed this behavior as a bug. 
+//= Gravity, who claimed this behavior as a bug.
 //= The exact purpose of this quest is undetermined, but
 //= Gravity claimed that another quest would eventually
 //= branch from this one.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 1.8 Added missing checkweights. [L0ne_W0lf]
 //= 1.9 Moved Morroc NPCs to Morroc Ruins. [L0ne_W0lf]
 //= 2.0 Removed unused "name" variable. [L0ne_W0lf]
-//============================================================ 
+//============================================================
 
 alberta,43,244,0	script	Tourist#thai	99,{
 	if (checkweight(1201,1) == 0) {
@@ -1937,10 +1937,10 @@ moc_ruins,107,62,0	script	Tommy#thai	716,{
 	}
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= Official OBB Quest. You can pass it any times you want.
 //= 1.6 Updated, fixed, optimized and translated into English [Lupus]
 //= 1.6a Halved the required items to make an obb, thanks to marquis007 [MasterOfMuppets]
-//============================================================ 
+//============================================================

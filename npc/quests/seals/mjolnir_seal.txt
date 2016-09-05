@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= God Item Quest - Mjolnir Seal
-//===== By: ================================================== 
+//===== By: ==================================================
 //= SinSloth
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.9
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Quest for breaking the seal of Mjolnir.
 //===== Additional Comments: =================================
 //= 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
@@ -494,7 +494,7 @@ mjolnir_11,149,247,5	script	Dwarf Blacksmith#east	826,{
 					mes "...";
 					close;
 				case 2:
-					if (countitem(1005) > 0) { //Hammer_Of_Blacksmith 
+					if (countitem(1005) > 0) { //Hammer_Of_Blacksmith
 						mes "[Austri]";
 						mes "Ah, I see that the entire human race is not worthy of scorn. Unlike many of your kind, I see that you respect your elders.";
 						next;
@@ -2144,7 +2144,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "[Vestri]";
 					mes "No matter what other people say, if you're confident and your will is unwavering, you'll always be satisfied with the results.";
 					close;
-				
+
 				case 2:
 					set god_mjo_2,3;
 					mes "[Vestri]";

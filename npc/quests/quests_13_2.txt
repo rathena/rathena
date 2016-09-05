@@ -33,7 +33,7 @@
 //= 1.7 Added daily quest 'Dragon Egg collection.'
 //= 1.7a Fixed a translation typo. Tabb -> Taab.
 //= 1.8 Added a missing " in the GM only NPC.
-//= 1.9 Added Monster Suppression, Bradium Collection, and 
+//= 1.9 Added Monster Suppression, Bradium Collection, and
 //=     Laphine Craftsman quests.
 //= 2.0 Added missing global var check in Yggdrasil Dungeon
 //=     floor 2 puzzle. Fixed a typo. Commented out untranslated
@@ -50,10 +50,10 @@
 //= 2.7a Added Izlude RE coordinates. [Euphy]
 //= 2.8 Added GM management function. [Euphy]
 //= 2.9 Added custom weight check. Fixes issue #910. [Jeybla]
-//============================================================ 
+//============================================================
 
 // Cat Hand Addition :: cat_enhance
-//============================================================ 
+//============================================================
 spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 	function Catwarp;
 	if (ep13_yong1 < 3) {
@@ -3518,7 +3518,7 @@ OnTimer300000:
 }
 
 // Otherworld language :: ep13_2_rhea
-//============================================================ 
+//============================================================
 mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	869,{
 	if( !checkweight(2782,1)) { // Custom weight check.
 		mes "[Mechanic Engineer Dorance]";
@@ -4656,7 +4656,7 @@ mid_camp,7,3,0	script	Translator Preparation#1	708,{
 // Daily Quests :: ep13_2_tre
 // - Midgard Ore
 // - Alfheim Perfume
-//============================================================ 
+//============================================================
 man_in01,372,221,5	script	Scientist#lifeguard	449,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		mes "[Dr. Lifeguard]";
@@ -5770,7 +5770,7 @@ spl_in02,139,65,3	script	Middle-Ranked Laphine#la	438,{
 			mes "Can you believe that right in front of us is a battle field? Though it's very silent and peaceful at the moment. So do I~";
 			close;
 		}
-		
+
 	}
 	else {
 		mes "[Middle-Ranked Laphine]";
@@ -6232,7 +6232,7 @@ OnTimer60000:
 }
 
 // Secret note of Bazett :: ep13_2_dailybs
-//============================================================ 
+//============================================================
 mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 	if (checkweight(1201,1) == 0) {
 		mes " - Hold on!! -";
@@ -6898,7 +6898,7 @@ manuk,193,135,0	script	Worker#ep13bs	454,{
 }
 
 // Yggdrasil Dungeon Floor 2 puzzle :: ny_dun02_puzzle
-//============================================================ 
+//============================================================
 nyd_dun02,178,255,0	script	Strange Device#ep13_out	844,3,3,{
 	mes "There's something strange here.";
 	mes "Maybe that device can be controlled from here.";

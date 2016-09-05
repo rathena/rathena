@@ -1,22 +1,22 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs related to Louyang
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Evera and The rAthena Dev Team
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Soup Quest
 //= - Variable in use: che_tre (max 5)
 //= Doctor Quest
 //= - Variable in use: che_par (max 18)
-//= Poison King Quest 
+//= Poison King Quest
 //= - Variable in use: ch_poison (max 20)
 //= Revolution Quest
 //= - Variable in use: QL_REVO (max 9)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Initial Release [Evera]
 //= 1.1 Fixed double levelup bug [Lupus]
 //= 1.2 Added Revolution Quest. [SinSloth]
@@ -35,7 +35,7 @@
 //= 2.2 Removed unused "name" variable. [L0ne_W0lf]
 //= 2.3 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.4 Added questlog support. [Euphy]
-//============================================================ 
+//============================================================
 
 // Soup Quest :: lou_tre
 //============================================================
@@ -444,7 +444,7 @@ lou_fild01,195,177,5	script	Jiu Lian Bu#1-1	819,{
 	if (QL_GOTFAKESOUP) set ch_tre,3;
 	if (QL_SOUPQUEST)  set ch_tre,4;
 	if (QL_SOUP2) set ch_tre,5;
-	set QL_ACCEPTSOUP,0; set QL_GOTDRAGONSOUP,0; set QL_GOTFAKESOUP,0; set QL_SOUPQUEST,0; set QL_SOUP2,0; 
+	set QL_ACCEPTSOUP,0; set QL_GOTDRAGONSOUP,0; set QL_GOTFAKESOUP,0; set QL_SOUPQUEST,0; set QL_SOUP2,0;
 
 	if (ch_tre == 0) {
 		mes "[Jiu Lian Bu]";
@@ -876,7 +876,7 @@ lou_in02,58,183,5	script	Chef Assistant#lou1	823,5,5,{
 	mes "[Jin Wei Ling]";
 	mes "Waaa-!!!!";
 	next;
-	specialeffect EF_ENDURE; 
+	specialeffect EF_ENDURE;
 	mes "[Jin Wei Ling]";
 	mes "Waaa Taaah-!!!!!";
 	next;
@@ -3825,7 +3825,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 				mes "Did I make it?";
 				next;
 				specialeffect EF_PATTACK;
-				specialeffect EF_POISONHIT; 
+				specialeffect EF_POISONHIT;
 				emotion e_omg;
 				mes "[Song Zhi Du]";
 				mes "Hahaha~!";

@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Izlude Party Arena 
+//= Izlude Party Arena
 //===== By: ==================================================
 //= SinSloth
 //===== Current Version: =====================================
@@ -1150,7 +1150,7 @@ OnTimer60000:
 
 OnStop:
 	stopnpctimer;
-	end; 
+	end;
 }
 
 -	script	arn_warp_pt	-1,{

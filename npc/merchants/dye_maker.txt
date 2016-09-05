@@ -1,23 +1,23 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Dye Maker
-//===== By: ================================================== 
+//===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Quests to create the eight colored Dyestuffs.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Fully working [kobra_k88]
-//= 1.1 Spell Checked [Nexon] 
+//= 1.1 Spell Checked [Nexon]
 //= 1.2 Rescripted to Aegis 10.3 standard. [L0ne_W0lf]
 //= 1.2b Fixed typos in variable names [ultramage]
 //= 1.3 Made the checks more dynamic [ultramage]
 //= 1.3b Fixed incorrect checking loop structure [ultramage]
 //= 1.4 Added a checkweight. [L0ne_W0lf]
-//============================================================ 
+//============================================================
 
 morocc_in,146,99,3	script	Java Dullihan	58,{
 	if ((MaxWeight-Weight) < 200 || checkweight(1201,1) == 0) {
@@ -148,7 +148,7 @@ S_MakeDye:
 	case 7:
 		mes "Mmm... I need 30 White Herbs, 1 Counteragent, and 1 Empty bottle to make White Dyestuffs. The fee will be 3000 zeny.";
 		setarray .@item[0], 509, 973, 713;
-		setarray .@count[0], 30,   1,   1; 
+		setarray .@count[0], 30,   1,   1;
 		set .@cost,3000;
 		set .@dyestuff,982;
 		break;
@@ -187,7 +187,7 @@ S_MakeDye:
 		set Zeny, Zeny-.@cost;
 		// get dyestuff
 		getitem .@dyestuff,1;
-		
+
 		mes "[Dye Maker Java Dullihan]";
 		mes "Hmm... It came out pretty well. A very rich color. Of course I'll be trying harder to make a more charming color...";
 		next;

@@ -1,16 +1,16 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Crusader Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Made by: Black Dragon
 //= Converted by: Shin
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job quest for Crusader classes
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 2.2 Updated All NPCs to the officials one [Samuray22]
 //=     -Based on the ASB 4.0 Package.
 //=-Maybe need be checked the monsters in the test 2 and 4.
@@ -45,7 +45,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		mes "You don't belong here, my friend.";
 		mes "Be advised to continue practicing yourself.";
 		close;
-	} 
+	}
 	else if(BaseJob != Job_Swordman) {
 		if(BaseJob == Job_Crusader) {
 			mes "Go and train yourself in preparation for the holy war that is coming. Victory will be in the hands of those who are most ready to receive it.";
@@ -70,7 +70,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		mes "[Michael Halig]";
 		mes "As it happened one thousand years ago, evil forces will one day attack in droves in an attempt to take over the world once again.";
 		close;
-	} 
+	}
 	else if(CRUS_Q <= 3 && countitem(1004) && countitem(1009)) {
 		mes "Ah...";
 		mes "I see that you have been called to become a Crusader. We are assured of your will, but now we must test your capabilities.";
@@ -126,7 +126,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 					mes "[Michael Halig]";
 					mes "Train yourself more as a Swordsman and wait for your calling. I understand your intent, but as of now, you cannot join us.";
 					close;
-				} 
+				}
 				if (SkillPoint) {
 					mes "[Michael Halig]";
 					mes "You haven't finished learning everything as a Swordsman. Use all of your remaining skill points, and then return to me.";
@@ -552,7 +552,7 @@ prt_church,95,127,3	script	Crusader	745,{
 			mes "4. Which Undead monster";
 			mes "has the highest HP?";
 			next;
-			if (select("Ghoul:Skeleton Prisoner:Wraith:Zombie Prisoner") == 4) 
+			if (select("Ghoul:Skeleton Prisoner:Wraith:Zombie Prisoner") == 4)
 				set .@cru_t,.@cru_t+10;
 
 			mes "[Gabriel Valentine]";
@@ -771,7 +771,7 @@ prt_church,95,127,3	script	Crusader	745,{
 		mes "[Gabriel Valentine]";
 		mes "Don't stress, you need to know a lot in order to pass this test. In any case, I'll be waiting right here. When you think you're ready, come back, alright?";
 		close;
-	} 
+	}
 	else if(CRUS_Q == 8 || CRUS_Q == 9) {
 		mes "Like I mentioned before, you should go to Prontera Castle and meet with Bliant Piyord to take your next test. Good luck, and become a Crusder soon, alright?";
 		close;
@@ -940,7 +940,7 @@ prt_castle,35,151,5	script	Patron Knight	751,{
 		mes "I shall be";
 		mes "waiting.";
 		close;
-	} 
+	}
 	else if(CRUS_Q == 10) {
 		mes "Congratulations.";
 		mes "You have completed";
@@ -1467,9 +1467,9 @@ OnStop:
 	end;
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= Need optimalization and fixing
 //= thanks to Komurka, KiLLaLeN, Lupus (fixing error)
 //= just a temp Job Quest
@@ -1488,4 +1488,4 @@ OnStop:
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Fixed endless loop, wrong condition check [Lupus]
 //=     also changed all job numbers to constants, fixed logic
-//============================================================ 
+//============================================================

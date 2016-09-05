@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Sealed Shrine
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Seal away the Great Demon Baphomet.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 Added setquest for instance cooldown. [L0ne_W0lf]
 //= 1.2 Fixed Torch#12 not being disabled. (bugreport:4044) [L0ne_w0lf]
@@ -27,7 +27,7 @@
 //= 2.1 Fixed quest being removed before the 12 hours cool down. [Joseph]
 //= 2.2 Removed extra setquest (quest id:3040).	[Joseph]
 //= 2.3 Instance system rewrite. [Euphy]
-//============================================================ 
+//============================================================
 
 // Sealed Catacomb Entrance
 //============================================================

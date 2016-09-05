@@ -1,16 +1,16 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Moscovia Quests
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Kisuka
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.0
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Quests for Moscovia.
 //= The Moving Island, Help Mikhail, Acorn Exchange,
 //= Banish Winter, Shafka Hat, Koshei the Immortal.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version. [Kisuka]
 //= 1.1 Small fixes on The Moving Island. [Kisuka]
 //= 1.2 Fixed a "player not attached" error. [brianluau]
@@ -28,7 +28,7 @@
 //= 2.2 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.3 Added GM management NPC. [Euphy]
 //= 3.0 Bug fixes. Added questlog support. [Capuche]
-//============================================================ 
+//============================================================
 
 // The Moving Island :: mos_whale_edq
 //============================================================
@@ -1557,7 +1557,7 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	4_M_GUSLIMAN,{
 				mes "[Aged Stranger]";
 				mes "Okay, it's time for your turn. Play it. Play the song that I played.";
 				next;
-				callsub S_AS_1,3;// chance success	
+				callsub S_AS_1,3;// chance success
 			}
 			else {
 				mes "[Aged Stranger]";
@@ -1694,7 +1694,7 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	4_M_GUSLIMAN,{
 	close2;
 	warp "moscovia",162,56;
 	end;
-	
+
 S_AS_1:
 	if (rand(1,getarg(0)) == 2) {
 		soundeffect "mos_gusli1.wav",0;
@@ -1737,7 +1737,7 @@ S_AS_1:
 	mes "at it in no time.";
 	mos_whale_edq = 37;
 	close;
-	
+
 S_AS_2:
 	mes "[Aged Stranger]";
 	mes "So, what will you do now?";
@@ -1790,7 +1790,7 @@ S_AS_2:
 			mes "Okay. If you are ready to play the";
 			mes "Gusli, let me know.";
 			mos_whale_edq = 36;
-			close;	
+			close;
 		case 3:
 			mes "[Aged Stranger]";
 			mes "I see. Okay, let's go.";
@@ -1822,7 +1822,7 @@ S_AS_2:
 			warp "moscovia",162,56;
 			end;
 	}
-	
+
 S_AS_3:
 	soundeffect "mos_gusli1.wav",0;
 	mes "-The old man starts to play";
@@ -4065,7 +4065,7 @@ moscovia,208,182,7	script	Acorn Dealer#mos	4_M_RUSMAN1,{
 			mes "You can't buy more than 500.";
 			next;
 		}
-		
+
 	}
 	if (!checkweight(1026, .@input)) {
 		mes "[Acorn Dealer]";
@@ -5248,7 +5248,7 @@ mosk_in,221,43,0	script	#bowl	HIDDEN_NPC,{
 		switch(select("Put the materials in it.:Pour water in it.:Stir it up.:It is over!")) {
 		case 1:
 			.@w = 0;
-			.@m = select( implode( .@menu$,":" ) ) -1; 
+			.@m = select( implode( .@menu$,":" ) ) -1;
 			if (.@m >= 3) {
 				if (.@nankai == 5 || .@nankai == 6) {
 					if ((.@m == 3 && .@star) || (.@m == 4 && .@sand))
@@ -5381,8 +5381,8 @@ mosk_in,221,43,0	script	#bowl	HIDDEN_NPC,{
 					if (.@m != 5)
 						specialeffect EF_POISONHIT;
 					else {
-						.@maho++; 
-						specialeffect EF_SMOKE; 
+						.@maho++;
+						specialeffect EF_SMOKE;
 					}
 					.@nankai++;
 					mes "-I put "+((.@m == 5)?"a":"the")+" "+ .@menu3$[.@m] +" in the pot.";
@@ -7838,7 +7838,7 @@ moscovia,213,216,3	script	Ryubaba#rus08	4_F_RUSWOMAN2,{
 			if (.@input$ == "Red Ring") {
 				mes "A Red Ring?!";
 				next;
-			} else { 
+			} else {
 				mes "Heh, what are you talking about? What is that?";
 				close;
 			}
@@ -9001,7 +9001,7 @@ moc_pryd04,126,120,0	script	Soldier#rus26	4_M_RUSMAN1,{
 			mes "[A gloomy looking soldier]";
 			mes "Before the full moon, I will be back to Moscovia and meet her. I will come back so strong and happy that when I go to see her she will not suffer anymore.";
 			close;
-		} 
+		}
 	}
 	mes "[A gloomy looking soldier]";
 	mes "... I feel like I lost something precious.";
@@ -9278,7 +9278,7 @@ mosk_fild02,243,270,0	script	Marozka#rus31	4_M_LGTGRAND,{
 			mes "[Marozka]";
 			mes "What is deaf, dumb, and blind and always tells the truth?";
 			next;
-			.@j = select("A Poring:A Picky:A Mirror:A Tree"); 
+			.@j = select("A Poring:A Picky:A Mirror:A Tree");
 			.@rus_quiz01 = (.@j==3) ? 1 : 0;
 			mes "[Marozka]";
 			mes "If 4 cats can catch 4 mice every 4 minutes, what is the minimum number of cats needed to get 10 mice in 10 minutes?";

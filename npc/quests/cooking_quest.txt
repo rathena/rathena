@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Cooking Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Reddozen; L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.8a
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Official Cooking Quest (10.3)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Fixed wrong item ID, added missing ";, optimized [Lupus]
 //= 1.1a minor bugfix, thx 2 Irmin [Lupus]
 //= 1.2 Fixed exploit, some typos [Lupus]
@@ -20,14 +20,14 @@
 //=     fixed bugs. Tested, fully working [Lupus]
 //= 1.5 More fixes [Lupus]
 //= 1.6 Quest is now up to iRO 10.3 standards. [L0ne_W0lf]
-//= - Not sure what the EnableItemMove is for, as there is no 
+//= - Not sure what the EnableItemMove is for, as there is no
 //=   command to disable being able to move items.
 //= 1.6a Corrected a bad cutin, a Typo error ";;" and a bad delitem (bugreport:911) [Samuray22]
 //= 1.6b Corrected a "donpcevent" missing a ":". (bugreport:962) [Samuray22]
 //= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.8 Renamed the variable cooking to cooking_q [ultramage]
 //= 1.8a Minor cleaning. [Euphy]
-//============================================================ 
+//============================================================
 
 prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 	if (MaxWeight - Weight < 2000) {

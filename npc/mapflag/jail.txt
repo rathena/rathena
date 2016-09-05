@@ -6,7 +6,7 @@
 //= 1.0
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= pvp: Turns on PvP mode
 //= pvp_noparty: Can't attack player in same party
 //= nobranch: No Dead Branching allowed.
@@ -15,7 +15,7 @@
 //= nosave: No saving respawn point allowed. Use SavePoint to use the
 //=                players previous savepoint, or choose one manually.
 //= noteleport: No Teleporting allowed.  No fly wings or butterfly wings.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Initial script.
 //============================================================
 

@@ -1,23 +1,23 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Uneasy Prontera Cemetery Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Lupus
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.2a (Tested and fully working!)
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= A periodical quest of the Uneasy Cemetery (Kill undead / Prevent their appearance)
 //= Every day, at the midnight Prontera receive a wave of Undeads.
 //= They come from Uneasy Cemetery of Prontera. To protect the players
 //= from the undeads terror you may either kill the enemy. Or supply Mother Mathana
-//= with needed amount of Holy Water. Every citizen can take his part in the 
+//= with needed amount of Holy Water. Every citizen can take his part in the
 //= saving of Prontera city. After some days of quiet life... the Cemetery strikes back.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 More advanced ver. Added some bonus the the one who'd kill the last walking undead
 //= 1.2 Added coords to the script to make label OmMobDead working
 //= 1.2a Changed item names to item IDs. [Samuray22]
-//============================================================ 
+//============================================================
 
 prontera,3,3,3	script	Uneasy_Check	-1,{
 	end;

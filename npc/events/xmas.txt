@@ -93,7 +93,7 @@ L_Start:
 		mes "If you get 3 more, I'll give you another.";
 		mes "Hope you get a good item.";
 		close;
-	
+
 		L_NotEnuf:
 			mes "You don't have enough socks as proof.";
 			mes "Go take down those evil Santas";

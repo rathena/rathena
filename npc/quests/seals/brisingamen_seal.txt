@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= God Item Quest - Brisingamen Seal
-//===== By: ================================================== 
+//===== By: ==================================================
 //= SinSloth
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Quest for breaking the seal of Brisingamen.
 //===== Additional Comments: =================================
 //= 1.0 First version. Thanks to SinSloth for scripting it. [MasterOfMuppets]
@@ -2069,7 +2069,7 @@ prt_church,113,103,1	script	Praying Man	798,{
 				close;
 			}
 		}
-	} 
+	}
 	else {
 		mes "[Sad-looking Man]";
 		mes "...";
@@ -2440,7 +2440,7 @@ prt_castle,84,51,5	script	Librarian#2	105,{
 }
 
 prontera,260,354,4	script	Woman#Rosa Ellenen	101,{
-	if ($God2 < $@god_check1){ 
+	if ($God2 < $@god_check1){
 		mes "[Woman]";
 		mes "Hm?";
 		mes "What brings";
@@ -2590,7 +2590,7 @@ prontera,262,353,0	script	Gravestone	111,{
 		close;
 	}
 }
- 
+
 gef_dun01,89,192,0	script	#lowentrace	111,3,3,{
 	if ($God2 < $@god_check1) {
 		mes "^3355FFIt's just an old,";
@@ -2650,7 +2650,7 @@ gef_dun01,89,192,0	script	#lowentrace	111,3,3,{
 					mes "This place is too dangerous.^000000";
 					close;
 				}
-			} 
+			}
 			else {
 				close;
 			}
@@ -3043,7 +3043,7 @@ OnTimer550500:
 	end;
 
 }
-	
+
 que_god02,1,1,1	script	#brisinsummon	-1,{
 
 OnInit:
@@ -3240,7 +3240,7 @@ OnTouch:
 }
 
 que_god02,124,59,7	script	#hermite	798,{ end; }
- 
+
 que_god02,120,52,0	script	#monologue	139,0,0,{
 
 OnTouch:

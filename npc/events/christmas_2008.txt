@@ -279,7 +279,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 				close;
 		}
 	}
-	
+
 	if (iROxmas08carol == 1) {
 		if (countitem(6092) < 6) {
 			mes "[Caroller]";
@@ -345,7 +345,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 			close;
 		}
 	}
-	
+
 	if (iROxmas08carol == 2) {
 		if (countitem(1019) < 10 || countitem(1005) < 1 || countitem(7312) < 1 || countitem(938) < 10 || countitem(732) < 1) {
 			mes "[Caroller]";
@@ -442,7 +442,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 	mes "All right, what comes to your mind when you think about Christmas?";
 	next;
 	switch(select("Carolling:Santa Claus:Gift Boxes:Santa Costume:Not much really...")) {
-	
+
 	case 1:
 		mes "[Santa Claus]";
 		mes "Carolling! That's good!";
@@ -471,7 +471,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 		mes "A bad Santa ruins us good Santa's reputations!";
 		mes "The World Santa Organization is considering this a grave situation.";
 		close;
-	
+
 	case 3:
 		mes "[Santa Claus]";
 		mes "A gift box! That sounds good!";
@@ -680,7 +680,7 @@ prontera,226,306,4	script	Caroller#iROxmas08	79,{
 		mes "There used to be designer who visited my house to make my Santa costumes.";
 		mes "Do you have any ideas?";
 		close;
-	
+
 	case 5:
 		mes "[Santa Claus]";
 		mes "........................";

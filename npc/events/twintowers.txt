@@ -34,7 +34,7 @@ prontera,146,92,4	script	Twin Towers#tt1::Twin-Towers	812,{
 	menu "I shall accept your offer.",YES,"I'll ask for your service next time.",NO;
 
 	NO:
-	mes "[Twin Towers]"; 
+	mes "[Twin Towers]";
 	mes "Er, what a pity. Traveling by yourself is still the best evidence of adventure.";
 	mes "Isn't this proving that you are still young?";
 	mes "We respect brave hearts like this";

@@ -1,20 +1,20 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Counteragent and Mixture Quest(Morgenstein)
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
 //= added some dialogs for Morgenstein by Komurka
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.2b
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Counteragent and Mixtures for making dyes & Alchemist Job Quest
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 2.2 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.2a A few minor fixes. (bugreport:1122) [L0ne_W0lf]
 //= 2.2b Follow up fixes to bugreport:1122 [L0ne_W0lf]
-//============================================================ 
+//============================================================
 
 alberta_in,133,55,3	script	Louitz#cm	84,{
 	if (molgenstain == 2) {
@@ -579,9 +579,9 @@ geffen_in,141,140,3	script	Molgenstein#cm	121,{
 	close;
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.0 Fully working
 //= 1.1 Update for Alchemist Quest.
 //= 1.2 added check for Empty Bottle [Lupus]
@@ -592,4 +592,4 @@ geffen_in,141,140,3	script	Molgenstein#cm	121,{
 //= 1,7 Fixed exploit
 //= 1.8 Got rid of 'al_morgen' var [Lupus]
 //= 2.1 now uses (MISC_QUEST & 4) bit instead of al_morgen [Lupus]
-//============================================================ 
+//============================================================

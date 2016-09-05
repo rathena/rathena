@@ -1,17 +1,17 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= BattleGround System - Tierra Gorge 2
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Second Tierra Gorge Battleground.
 //= - Winning Team: 3 badges (5 if VIP)
 //= - Losing Team: 1 badge (3 if VIP)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
 //= 1.2 Removed MaxLvl check in waitingrooms.
@@ -615,7 +615,7 @@ OnTouch:
 
 bat_a02,194,265,0	script	barri_warp_down#bat_a02a	-1,7,0,{
 OnTouch:
-	if (getcharid(4) == $@TierraBG2_id1) 
+	if (getcharid(4) == $@TierraBG2_id1)
 		warp "bat_a02",194,270;
 	end;
 }

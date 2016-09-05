@@ -4,11 +4,11 @@
 //= tr0n
 //===== Current Version: =====================================
 //= 1.4.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
 //= Easily add collection and hunting quests.
-//===== Additional Comments: =================================  
+//===== Additional Comments: =================================
 // 1.0.0 Release
 // 1.1.0 Added zeny reward
 // 1.2.0 Rewrote checkmob and killcounter
@@ -18,7 +18,7 @@
 //============================================================
 
 prontera,129,215,5	script	Questboard	857,{
-		
+
 	if(c_run==1){
 		mes "[^FF7700Questboard^000000]";
 		mes "^0000FF"+getd("." + currentquest$ + "_collectionname$")+"^000000";
@@ -42,7 +42,7 @@ prontera,129,215,5	script	Questboard	857,{
 		}
 		goto L_checkitems;
 	}
-	
+
 	if(h_run==1){
 		mes "[^FF7700Questboard^000000]";
 		mes "^0000FF"+getd("." + currentquest$ + "_huntingname$")+"^000000";
@@ -71,16 +71,16 @@ prontera,129,215,5	script	Questboard	857,{
 		}
 		goto L_checkmobs;
 	}
-		
+
 L_questmenu:
 	mes "[^FF7700Questboard^000000]";
 	mes "Select category:";
 	next;
-	
+
 	switch(select((.collection)?"Collection Quests":"",
 				  (.hunting)?"Hunting Quests":"",
 				  "Exit")) {
-	
+
 case 1:
 	set .@collectmenu$, "";
 	for( set .@i,0; .@i < .collectionquestcount; set .@i,.@i+1) {
@@ -127,7 +127,7 @@ case 1:
 		mes "level to do this quest.";
 		close;
 	}
-	
+
 case 2:
 	set .@huntmenu$, "";
 	for( set .@i,0; .@i < .huntingquestcount; set .@i,.@i+1) {
@@ -174,11 +174,11 @@ case 2:
 		mes "level to do this quest.";
 		close;
 	}
-	
+
 case 3:
 	close;
 	}
-	
+
 L_checkitems:
 	for( set .@k,0; .@k < getarraysize(getd("."+currentquest$+"_collectionitem")); set .@k,.@k+2) {
 		if(countitem(getd("."+currentquest$+"_collectionitem["+.@k+"]"))>=getd("."+currentquest$+"_collectionitem["+(.@k+1)+"]")){
@@ -202,7 +202,7 @@ L_checkitems:
 	set currentquest$, "";
 	set c_run, 0;
 	close;
-	
+
 L_checkmobs:
 	set .@goal, (getarraysize(getd("."+currentquest$+"_huntingmob"))/2);
 	for(set .@i, 1; .@i < getarraysize(getd("."+currentquest$+"_huntingmob")); set .@i,.@i+2){
@@ -216,7 +216,7 @@ L_checkmobs:
 		}
 		goto L_checkmobs2;
 	}
-	
+
 L_checkmobs2:
 	if(.@checkmonster<.@goal){
 		mes "[^FF7700Questboard^000000]";
@@ -250,7 +250,7 @@ OnNPCKillEvent:
 		continue;
 	}
 	end;
-	
+
 OnInit:
 
 	function AddCollection;
@@ -259,24 +259,24 @@ OnInit:
 	//Activate/Deactive quest categories here
 	set .collection, 1;
 	set .hunting, 1;
-	
+
 	//Quest Delay (seconds)
 	//24 hours = 86400 seconds
 	set .quest_delay, 0;
-	
+
 	//Checks if quests are loaded (prevents out of index)
 	if(.questsloaded==1) end;
 		set .questsloaded, 1;
-		
+
 		//Add Collection Quests here
 		//AddCollection("<Quest Name>",<Min Lvl>,<Max Lvl>,<Reward|Item ID>,<Reward|Item Amount>,<Zeny Reward>,<Base EXP>,<Job EXP>,<Item ID>,<Item Amount>,...);
-		
-		
+
+
 		//Add Hunting Quests here
 		//AddHunting("<Quest Name>",<Min Lvl>,<Max Lvl>,<Reward|Item ID>,<Reward|Item Amount>,<Zeny Reward>,<Base EXP>,<Job EXP>,<Monster ID>,<Monster Amount>,...);
-		
+
 		end;
-		
+
 
 function AddCollection {
 	set .collectionquestcount,.collectionquestcount+1;
@@ -288,12 +288,12 @@ function AddCollection {
 	setd ("." +.collectionquestcount+"_collectionzeny", getarg(5));
 	set .@argcount, 6;
 	set .@size, getarraysize(getd("."+ .collectionquestcount + "_collectionexp"));
-	setd ("." +.collectionquestcount+"_collectionexp["+.@size+"]",getarg(.@argcount)); 
-	setd ("." +.collectionquestcount+"_collectionexp["+(.@size+1)+"]",getarg(.@argcount+1)); 
+	setd ("." +.collectionquestcount+"_collectionexp["+.@size+"]",getarg(.@argcount));
+	setd ("." +.collectionquestcount+"_collectionexp["+(.@size+1)+"]",getarg(.@argcount+1));
 	set .@argcount, .@argcount+2;
 	while(getarg(.@argcount,-1)!=-1 && getarg(.@argcount+1,-1)!=-1) {
 		set .@size, getarraysize(getd("."+ .collectionquestcount + "_collectionitem"));
-		setd ("."+.collectionquestcount+"_collectionitem["+.@size+"]",getarg(.@argcount)); 
+		setd ("."+.collectionquestcount+"_collectionitem["+.@size+"]",getarg(.@argcount));
 		setd ("."+.collectionquestcount+"_collectionitem["+(.@size+1)+"]",getarg(.@argcount+1));
 		set .@argcount,.@argcount+2;
 	}
@@ -311,11 +311,11 @@ function AddHunting {
 	set .@size, getarraysize(getd("."+ .huntingquestcount + "_huntingexp"));
 	set .@argcount, 6;
 	setd ("." +.huntingquestcount+"_huntingexp["+.@size+"]",getarg(.@argcount));
-	setd ("." +.huntingquestcount+"_huntingexp["+(.@size+1)+"]",getarg(.@argcount+1)); 
+	setd ("." +.huntingquestcount+"_huntingexp["+(.@size+1)+"]",getarg(.@argcount+1));
 	set .@argcount, .@argcount+2;
 	while(getarg(.@argcount,-1)!=-1 && getarg(.@argcount+1,-1)!=-1) {
 		set .@size, getarraysize(getd("."+ .huntingquestcount + "_huntingmob"));
-		setd ("."+.huntingquestcount+"_huntingmob["+.@size+"]",getarg(.@argcount)); 
+		setd ("."+.huntingquestcount+"_huntingmob["+.@size+"]",getarg(.@argcount));
 		setd ("."+.huntingquestcount+"_huntingmob["+(.@size+1)+"]",getarg(.@argcount+1));
 		set .@argcount, .@argcount+2;
 	}

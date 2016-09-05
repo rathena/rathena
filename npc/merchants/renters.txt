@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Renters
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88, mod by Lupus
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Knight and Crusader Peco Peco Breeders, Falcon Breeder scripts
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Fully working
 //= Added another Falcon Master into the Hunters Guild [Lupus]
 //= 1.2: replaced checkoption(x) with checkriding,checkfalcon [Lupus]
@@ -24,7 +24,7 @@
 //= 2.0 Fixed problems with third classes and new mounts. [Euphy]
 //= 2.1 Moved some renters to a separate renewal file. [Daegaladh]
 //= 2.2 Added warg checks. [Euphy]
-//============================================================ 
+//============================================================
 
 // PecoPeco Breeder (for Knights) :: breeder
 //============================================================

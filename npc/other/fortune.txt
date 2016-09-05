@@ -98,7 +98,7 @@ payon_in03,117,128,5	script	Fortune Teller	4_M_BIBI,{
 		else if (.@card_1_love < 67) cutin "조커카드",4;		// Joker Card
 		else if (.@card_1_love < 71) cutin "호드카드",4;		// Hode Card
 		else cutin "황소카드",4;// Minorous Card
-		
+
 		mes "[Lhimetorra]";
 		switch(.@card_1_love) {
 		case 1:
@@ -601,7 +601,7 @@ payon_in03,117,128,5	script	Fortune Teller	4_M_BIBI,{
 		else if (.@card_1_money < 66) cutin "조커카드",4;		// Joker Card
 		else if (.@card_1_money < 70) cutin "호드카드",4;		// Hode Card
 		else cutin "황소카드",4; // Minorous Card
-		
+
 		mes "[Lhimetorra]";
 		switch(.@card_1_money) {
 		case 1:
@@ -2617,7 +2617,7 @@ L_displaycutin:
 	else cutin "포포링카드",4;// Poporing Card
 	return;
 }
-	
+
 payon_in03,118,119,1	script	Ascetic	4W_F_01,2,2,{
 	mes "[Kissy-Kissy]";
 	mes "NyangNyangNyang~";

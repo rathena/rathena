@@ -4,12 +4,12 @@
 //= Euphy
 //===== Current Version: =====================================
 //= 1.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
 //= Random hunting missions.
 //= Rewards are based on quest difficulty.
-//= 
+//=
 //= NOTE: Requires SQL mob database.
 //===== Additional Comments: =================================
 //= 1.0 Initial script.

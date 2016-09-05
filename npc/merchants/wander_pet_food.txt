@@ -11,7 +11,7 @@
 //= Trade Broken Liquor Jars and alcohol for wanderer
 //= pet food, 'Spirit Liquor'
 //===== Additional Comments: =================================
-//= 1.0 First version 
+//= 1.0 First version
 //============================================================
 
 prontera,218,218,3	script	Pet Enthusiast	96,{

@@ -1,15 +1,15 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Assassin Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job Change quest for Assassin class.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Used some dialogue from the aegis Assassin script translated By: Pgro Team (OwNaGe)
 //=     Also converted the booby traps from the aegis script.[kobra_k88]
 //= 1.1 Made adjustments to ontouch npcs to work with the new "ontouch" functionality.
@@ -28,7 +28,7 @@
 //= 2.0 Changed numbers to constants. [Vicious]
 //= 2.1 Removed Duplicates [Silent]
 //= 2.2 Merged back JFunc. Fixed missing dialogue [Lupus]
-//= 2.3 Fixed typo and change Nameless addtimer to 100 (with 700ms I 
+//= 2.3 Fixed typo and change Nameless addtimer to 100 (with 700ms I
 //=     was still able to bypass it) [Toms]
 //= 2.4 Fixed skipping of Nameless NPC [Lupus]
 //= 2.5 Fixed a Rogue exploit [Lupus]
@@ -51,7 +51,7 @@
 //= 3.6 Fixed broken event calls. [Euphy]
 //= 3.7 Fixed issue that the player can't progress in the quest if timed out at weapon reward step. This issue is fixed on iRO but not on kRO. [https://forums.warpportal.com/index.php?/topic/130060-didnt-receive-necklace-of-oblivion-when-changing-assassin/#entry1496042] [MrAntares]
 //= 3.8 Another 'unofficial fix'. Player can't change job if time out after the necklace is deleted.
-//============================================================ 
+//============================================================
 
 in_moc_16,19,33,1	script	Guildsman#asn	55,{
 	if (Upper == 1) {
@@ -985,12 +985,12 @@ OnTouch:
 			mes "[The Anonymous One]";
 			mes "7. Choose the maximum AGI bonus an Assassin can get at job level 50.";
 			next;
-			if (select("7:8:9:10") == 4) 
+			if (select("7:8:9:10") == 4)
 				set .@assassin_t,.@assassin_t+10;
 			mes "[The Anonymous One]";
 			mes "8. Choose the item that an Assassin cannot equip.";
 			next;
-			if (select("Dagger:Helm:Boots:Brooch") == 2) 
+			if (select("Dagger:Helm:Boots:Brooch") == 2)
 				set .@assassin_t,.@assassin_t+10;
 			mes "[The Anonymous One]";
 			mes "9. Choose the job change item for Thief.";
@@ -1486,7 +1486,7 @@ OnTimer187000:
 OnDisable:
 	stopnpctimer;
 	end;
-	
+
 OnMyMobDead:
 	mapannounce "in_moc_16","Hey, what the hell was that?! I told you: No killing monsters!",bc_map;
 	mapannounce "in_moc_16","I'm bringing you back... *Sigh...*",bc_map;

@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Cash Shop Functions
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.8
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Used for Cash shop items:
 //= - Kafra Card
 //= - Giant Fly Wing
 //= - Neuralizer
 //= - Dungeon Teleport Scroll
 //= Also included are functions related to the VIP system.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version. [L0ne_W0lf]
 //=     F_CashPartyCall Optimized by Trancid.
 //= 1.1 Updated Dungeon Teleport Scroll. [L0ne_W0lf]
@@ -28,10 +28,10 @@
 //= 1.8 Added VIP function. [Euphy]
 //= 1.9 Added checkdragon() in F_CashReset. [Capuche]
 //= 2.0 Moved VIP_Third_Class function into other/re/CashShop_Functions. [Capuche]
-//============================================================ 
+//============================================================
 
 // Kafra Card
-//============================================================ 
+//============================================================
 // - Open player's storage.
 // - No arguments.
 function	script	F_CashStore	{
@@ -46,7 +46,7 @@ function	script	F_CashStore	{
 }
 
 // Giant Fly Wing
-//============================================================ 
+//============================================================
 // - Warp party leader to random spot on the map.
 // - Summon Party members on party leader map to that location.
 // - No arguments.
@@ -60,7 +60,7 @@ function	script	F_CashPartyCall	{
 }
 
 // Neuralizer
-//============================================================ 
+//============================================================
 // - Reset players skills. Weight must be 0, options must be off.
 // - No arguments.
 function	script	F_CashReset	{
@@ -73,7 +73,7 @@ function	script	F_CashReset	{
 }
 
 // Dungeon Teleport Scroll
-//============================================================ 
+//============================================================
 // - Warp player to the selected dungeon.
 // - Arg(0) = type of scroll.
 function	script	F_CashDungeon	{
@@ -130,7 +130,7 @@ function	script	F_CashDungeon	{
 }
 
 // Coloured Butterly Wings
-//============================================================ 
+//============================================================
 // - Warp player to different cities acording to the scroll.
 // - Arg(0) = type of scroll.
 function	script	F_CashCity	{
@@ -180,7 +180,7 @@ function	script	F_CashCity	{
 }
 
 // Teleport Scrolls
-//============================================================ 
+//============================================================
 // - Warp player to save point or city acording to the scroll.
 // - Arg(0) = type of scroll.
 function	script	F_CashTele	{
@@ -235,7 +235,7 @@ function	script	F_CashTele	{
 }
 
 // Siege Teleport Scroll
-//============================================================ 
+//============================================================
 // - Warp player to selected guild castle.
 // - No arguments.
 function	script	F_CashSiegeTele	{
@@ -265,7 +265,7 @@ function	script	F_CashSiegeTele	{
 }
 
 // Curious Snowball
-//============================================================ 
+//============================================================
 // - You can get an effect of Restore, Endure, or Wing of Butterfly.
 // - No arguments.
 function	script	F_Snowball	{
@@ -316,9 +316,9 @@ function	script	F_CashReduceStat	{
 	.@type = getarg(0);
 	.@amount = getarg(1, -1);
 	.@itemid = getarg(2, 0);
-	
+
 	if((readparam(.@type) + .@amount) < 1) return;
-	
+
 	if(.@itemid) {
 		if(countitem(.@itemid))
 			delitem .@itemid,1;

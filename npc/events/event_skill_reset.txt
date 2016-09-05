@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Official Skill Resetter Event in Yuno (kRO & idRO)
-//===== By: ================================================== 
+//===== By: ==================================================
 //= $ephiroth
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.02
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= 2006 - Edition Skill Reset NPC
 //= 2006/11/16: 1.0 Release and fully working. [$ephiroth]
 //= 1.01 Checked, fixed typos, now uses MISC_QUEST var [Lupus]
@@ -60,7 +60,7 @@ yuno,138,187,4	script	Hypnotist Teacher	124,{
 
 	mes @npcname$;
 	mes "You know where to find me,";
-	mes "if you ever want a reset!!"; 
+	mes "if you ever want a reset!!";
 	close;
 
 L_Info:
@@ -78,14 +78,14 @@ L_Info:
 	mes "Just one time does again to shake the skill point";
 	mes "Careful with your skills from here on.";
 	close;
-	
+
 L_Reset:
 	mes @npcname$;
 	mes "Before skill reset in starting.";
-	mes "You shall have to first tell me your Base Level."; 
+	mes "You shall have to first tell me your Base Level.";
 	next;
 	mes "^D5A500[" + strcharinfo(0) + "]^000000";
-	mes "My Base level is ^AA00AALevel " + BaseLevel + "BaseLv.^000000"; 
+	mes "My Base level is ^AA00AALevel " + BaseLevel + "BaseLv.^000000";
 	next;
 	set @zeny,BaseLevel*20000;
 	mes @npcname$;

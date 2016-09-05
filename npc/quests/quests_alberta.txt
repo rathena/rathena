@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs related to Alberta
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.6
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Dolls Quest
 //= Boy's Cap Quest
@@ -15,17 +15,17 @@
 //= Hat of Sun God, Sunday Hat, Mage Hat, Magician Hat Quests
 //= Turtle Island Quests
 //= Alberta Boy
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Fixed Spore Doll exploit, Gramp's Tiger skin label bug
 //= 1.3 Fixed item ID 7031 -> 7013
 //= 1.4 Fixed a bug, Fixed Exploits, Optimized [Lupus]
-//= 1.6 TEMPESTRA quest uses common quests variable MISC_QUEST 
+//= 1.6 TEMPESTRA quest uses common quests variable MISC_QUEST
 //=     Condition if done: (MISC_QUEST & 2) [Lupus]
 //= 1.7 Moved quest from cities/albera.txt [Evera]
 //= 1.8 Re-made the Doll Quest, now with official dialogs. [DZeroX]
 //= 1.8a Removed .GATs [Lupus]
 //= 1.9 Updated Turtle Quest to official. [L0ne_W0lf]
-//= 2.0 Turtle Island quest now clears TURTLE var and set 
+//= 2.0 Turtle Island quest now clears TURTLE var and set
 //=     MISC_QUEST bit (MISC_QUEST & 65536) [Lupus]
 //= 2.1 Added missing close. [L0ne_W0lf]
 //= 2.2 Updated Gotan to be compliant with misc_quiest var. [L0ne_W0lf]
@@ -33,7 +33,7 @@
 //= 2.4 Updated 'Doll Quest' to match AEGIS script. [Kisuka]
 //= 2.5 Moved Alberta NPC to pre-re/re paths. [Euphy]
 //= 2.6 Updated RE/Pre-RE EXP. [Euphy]
-//============================================================ 
+//============================================================
 
 // Doll Quest
 //============================================================
@@ -432,7 +432,7 @@ alberta_in,28,145,4	script	Grampa	120,{
 			mes "He...Hey, kid !! W-Wait !";
 			close;
 		}
-	} 
+	}
 	else {
 		switch(select("Talk:Cancel")) {
 		case 1:
@@ -2307,7 +2307,7 @@ tur_dun03,67,130,4	script	Knight#tur4	105,{
 }
 
 // Alberta Boy
-//============================================================ 
+//============================================================
 alberta_in,131,95,5	script	Iromo#ep3_2	706,{
 	if (ep13_2_hiki == 13) {
 		mes "[Iromo]";

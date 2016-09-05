@@ -433,7 +433,7 @@ S_Buy:
 	mes $S10N$;
 	next;
 	menu "Continue",-,"Cancel",S_Start;
-	
+
 	mes "Enter the name of the share company";
 	mes "Transaction fee of ^FF0000" + $S_Trans + "z^000000 will apply.";
 	set @buyname$,"0";

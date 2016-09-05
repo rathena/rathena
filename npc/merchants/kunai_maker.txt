@@ -9,7 +9,7 @@
 //===== Description: =========================================
 //= Trades a few shurikens + ninja stones for elemental kunai.
 //===== Additional Comments: =================================
-//= 1.0 Added the npc. It uses a function that sends the item 
+//= 1.0 Added the npc. It uses a function that sends the item
 //=     id of the 2 required items plus the amount. Can trade
 //=     up to 500 units (5,000 kunais) at once. [erKURITA]
 //= 1.1 Officialized script [Playtester]

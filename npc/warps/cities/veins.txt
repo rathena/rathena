@@ -47,9 +47,9 @@ ve_in02,13,19,0	warp	ve_factory1-2	1,1,veins,269,225
 veins,143,25,0	warp	veins1-1	1,1,ve_fild07,147,366
 veins,218,361,0	warp	veins2-1	1,1,ve_fild06,148,225
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.0 Initial version [$ephiroth]
 //= 1.1 Removed Rachel City warp [Playtester]
 //= 1.2 Updated veins warp based on jA info [$ephiroth]

@@ -1,16 +1,16 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Bard Skill Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Lupus, Reddozen; L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.6
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Official quest for the Bard skill "Pang Voice"
 //= Prerequisite: Geffen Bard Quest
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 for fully working skills only [Lupus]
 //= 1.1 Added more new skill quests for more classes [Lupus]
 //=     Somehow eA engine doesn't let you keep learn't skill
@@ -903,7 +903,7 @@ OnTouch:
 }
 
 // Yhelle the Chicken
-//============================================================ 
+//============================================================
 niflheim,239,70,1	script	Yhelle#bard_chick1	800,3,3,{
 	emotion e_omg,1;
 	emotion e_omg;
@@ -1042,7 +1042,7 @@ OnTouch:
 }
 
 // Drunken Men
-//============================================================ 
+//============================================================
 morocc_in,178,73,3	script	Customer#bard_skill01	54,{
 	mes "[Little Bit Drunken Guy]";
 	mes "What do you think";
@@ -1164,7 +1164,7 @@ morocc_in,175,70,7	script	Customer#bard_skill02	50,{
 }
 
 // Bartender
-//============================================================ 
+//============================================================
 morocc_in,166,76,7	script	Bartender#bard_qskill	46,{
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FFHold it right there!";
@@ -1247,7 +1247,7 @@ morocc_in,166,76,7	script	Bartender#bard_qskill	46,{
 }
 
 // Function
-//============================================================ 
+//============================================================
 function	script	F_BardSkillYhelle	{
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
 		mes "^3355FFHold it right there!";

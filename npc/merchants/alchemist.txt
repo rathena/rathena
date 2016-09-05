@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Alchemist Shop
-//===== By: ================================================== 
+//===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.8
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Merchants for Alchemist Materials and Manuals.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 fixed Medicine Bowl issue, thanx 2 MasterOfMuppets
 //= 1.2 Reddozen's fixes of typos. added optional Elemental
 //=     Potion Guide. [Lupus]
@@ -18,7 +18,7 @@
 //= 1.6 Corrected canceling purchase. [L0ne_W0lf]
 //= 1.7 Updated to match AEGIS script. [Masao]
 //= 1.8 Moved Craft Book Merchant to Renewal path. [Euphy]
-//============================================================ 
+//============================================================
 
 alde_alche,24,188,3	script	Guild Dealer	740,{
 	if (checkweight(1201,1) == 0) {

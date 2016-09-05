@@ -1,18 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Orc's Memory
-//===== By: ================================================== 
+//===== By: ==================================================
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Relive the memory of an orc.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version. [L0ne_W0lf]
 //= 1.1 First round of bugfixes. (bugreport:3928) [L0ne_W0lf]
-//=     Fixed some npcs calling wrong events. 
+//=     Fixed some npcs calling wrong events.
 //=     Fixed Depraved Orc Spirit spawn point
 //=     Fixed an NPC that was never being enabled.
 //= 1.1a Second round from bugreport. (bugreport:3928) [L0ne_W0lf]
@@ -31,7 +31,7 @@
 //= 1.6 Added 'instance_check_party' command to the script for proper checking if
 //=     the invoking party meets the requirements to join the Memorial Dungeon.
 //= 1.7 Instance system rewrite. [Euphy]
-//============================================================ 
+//============================================================
 
 // Entrance
 //============================================================

@@ -61,7 +61,7 @@ L0_2:
 	goto L_INPUT;
 L0_3:
 	set @maplePrice,2000;
-	set @mapleItemID,538; 
+	set @mapleItemID,538;
 	mes "[Sugar]";
 	mes "It is a well baked cookie, and the price is";
 	mes "2000 Zeny each.";

@@ -714,7 +714,7 @@ que_ng,28,45,3	script	Basshu	86,{
 }
 
 que_ng,27,18,3	script	Toshu	709,{
-	
+
 	if(BaseClass != Job_Ninja){
 		mes "[Toshu]";
 		mes "How are you~";
@@ -1163,7 +1163,7 @@ M_BENEKI:
 	mes "Do you want me to create this item for you?";
 	next;
 	menu "Well .. erm .. it's kind of pricey.",M_NOPE,"Yes! Make it for me!",-;
-	
+
 	if(countitem(999)<50 || countitem(7115)<20 || countitem(984)<5){
 		mes "[Tetsu]";
 		mes "It looks like you haven't brought me enough materials to make you a Fuuma Shuriken Beneki.";

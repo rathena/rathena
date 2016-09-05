@@ -1,18 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Divorcing Deviruchi
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Perkka, Scriptor, LightFighter
 //= L0ne_W0lf
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.5
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Official Divorce script.
 //= Added isloggedin() check, even though Aegis doesn't do it;
 //= should be able to divorce even when the spouse is not online.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Both players should be online to get divorced
 //= Fixed menu [Lupus]
 //= 1.1 Added check if the patner's online, added effects [Lupus]
@@ -22,7 +22,7 @@
 //= 1.3 Wedding variable 'wedding_sign' is now unset on divorce. [L0ne_W0lf]
 //= 1.4 Removed ifpartneron check, fixed typo in percentheal. [L0ne_W0lf]
 //= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
-//============================================================ 
+//============================================================
 
 nif_in,190,112,5	script	Deviruchi#divorce	738,{
 	mes "[Deviruchi]";
@@ -40,7 +40,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 //		mes "popular nowadays, heh heh~";
 //		close;
 //	}
-//	else 
+//	else
   	if (!getpartnerid()) {
 		mes "Bwah hah hah~!";
 		mes "That look in your eyes~!";

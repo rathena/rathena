@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs related to Einbroch and Einbech
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Evera and The rAthena Dev Team
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Oridecon/Mineral Quest
 //= - Variable in use: ein_gear1 (max 2)
@@ -20,7 +20,7 @@
 //= - Variable in use: Shinokas_Quest (max 11)
 //= Lovers Quest
 //= - Variable in use: EIN_LOVERQ (max 17)
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Initial Release [Evera]
 //= 1.1 Added more quests [Evera]
 //= 1.2 Added quest bits from Einbech and renamed file to
@@ -51,10 +51,10 @@
 //=     - Murder Quest
 //= 2.6 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.7 Added GM management function. [Euphy]
-//============================================================ 
+//============================================================
 
 // Oridecon Stone OR Mineral Stone Quest :: ein_amano
-//============================================================ 
+//============================================================
 einbech,97,167,5	script	Cavitar	847,{
 	if (ein_gear1 == 2) {
 		mes "[Cavitar]";
@@ -4222,7 +4222,7 @@ sec_in02,127,86,3	script	Factory Quest Test	851,{
 }
 
 // Murder Quest :: ein_main_tre
-//============================================================ 
+//============================================================
 einbech,165,105,7	script	Buender Hikeman#ein	847,{
 	cutin "ein_hicman",2;
 	if (Shinokas_Quest == 0) {
@@ -5363,7 +5363,7 @@ ein_in01,266,27,3	script	Unknown Stuff#ein	111,{
 	mes "and folds of barbed wire.^000000";
 	close;
 }
-		
+
 einbroch,51,46,5	script	Laboratory Soldier#ein-1	852,{
 	mes "[Laboratory Soldier]";
 	mes "This area";
@@ -5372,7 +5372,7 @@ einbroch,51,46,5	script	Laboratory Soldier#ein-1	852,{
 	mes "immediately.";
 	close;
 }
-	
+
 einbroch,51,56,5	script	Laboratory Soldier#ein-2	852,{
 	mes "[Laboratory Soldier]";
 	mes "Yuck...!";
@@ -5678,7 +5678,7 @@ einbech,57,210,3	script	Young Man#Shinokas_Quest	855,{
 }
 
 // Typing Test :: ein_main_ma1
-//============================================================ 
+//============================================================
 einbroch,51,52,0	script	Security#ein	45,1,1,{
 	end;
 
@@ -5832,7 +5832,7 @@ OnTouch:
 }
 
 // Lovers Quest :: ein_ryu
-//============================================================ 
+//============================================================
 ein_in01,31,138,3	script	Calla#ein	90,{
 	if (checkweight(908,70) == 0) {
 		mes "^3355FFWait a second!";

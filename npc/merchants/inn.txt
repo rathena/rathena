@@ -19,7 +19,7 @@
 //===== Additional Comments: =================================
 //= 1.1 Blind Effect By Kobra_k88 (Taken from his old script)
 //= I added it to all of them though [Darkchild]
-//= 1.1a Minor bug fixes and optimizations. Switched from @variables 
+//= 1.1a Minor bug fixes and optimizations. Switched from @variables
 //= to arguments.[kobra_k88]
 //= 1.2 Rewrote inn script [Playtester]
 //= 1.3 Added (finally) Rachel Inn Maid. Official warp
@@ -30,8 +30,8 @@
 //=	- Removed the Cancel dialog.
 //= 1.6 More fixes, changed progression of "Rest"ing.
 //=	- Corrected Morroc NPCs. [L0ne_W0lf]
-//= 1.7 Corrected Payon NPC. [L0ne_W0lf] 
-//= 1.8 Corrected Geffen NPC. [L0ne_W0lf] 
+//= 1.7 Corrected Payon NPC. [L0ne_W0lf]
+//= 1.8 Corrected Geffen NPC. [L0ne_W0lf]
 //= 1.9 Added the Inn for Al De baran. [L0ne_W0lf]
 //= 2.0 Added Inn for the Town of Veins. [L0ne_W0lf]
 //= 2.1 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]

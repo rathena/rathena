@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Rogue Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.9
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job quest for Rogue classes
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 2.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //=     No longer uses function "F_BlockHigh"
 //= 2.4a Deleted unused variables. [Samuray22]
-//= 2.4b Changed a Problem with JobLevel what made 
+//= 2.4b Changed a Problem with JobLevel what made
 //=     impossible get a Gladius [3]. (bugreport:481) [Samuray22]
 //= 2.4c Corrected a Typo error ";;" and a typo error with "rouge". (bugreport:909) [Samuray22]
 //= 2.5 Added dummy "OnMyMobDead" labels. (bugreport:1100) [L0ne_W0lf]
@@ -21,7 +21,7 @@
 //= 2.7 Fixed a bug on Markie question 5, bugreport:1600 [Brainstorm]
 //= 2.8 Moved "Thug" to Morroc Ruins. [L0ne_W0lf]
 //= 2.9 Added Quest Log commands. [Kisuka]
-//============================================================ 
+//============================================================
 
 moc_ruins,86,103,1	script	Thug#rg	118,{
 	mes "[Thug]";
@@ -1178,7 +1178,7 @@ OnTouch:
 		break;
 	case 4:
 		mes "[" + strcharinfo(0) + "]";
-		mes "Hollgrehenn"; 
+		mes "Hollgrehenn";
 		break;
 	}
 	switch(select("enjoys:doesn't enjoy:likes:doesn't like")) {
@@ -1283,7 +1283,7 @@ OnTouch:
 	if (.@input < 1 || .@input > 10000) {
 		if (ROGUE_Q == 12)
 			mes "^3355FFIt didn't work. Please re-enter the four number combination.^000000";
-		else 
+		else
 			mes "^3355FFPlease enter a combination of four numbers.^000000";
 		close;
 	}
@@ -2016,9 +2016,9 @@ in_rogue,399,286,1	script	switch#rogreset	88,{
 	close;
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.1 fixed 3 wrong questions, added missing lines [Lupus]
 //= 1.3 Baby Class Support + 40/50 JobLevel Item fix [Lupus]
 //= 1.5 Fixed possible EXP abuse [Lupus]
@@ -2032,4 +2032,4 @@ in_rogue,399,286,1	script	switch#rogreset	88,{
 //=     to enter Rogue guild as there's a NPC inside [SinSloth]
 //= 2.3a fixed test4 person interaction, let BABY thieves pass
 //=     the test, too [Lupus]
-//============================================================ 
+//============================================================

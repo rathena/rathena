@@ -1,14 +1,14 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Quest NPCs related to Payon
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.7
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project; 7.15 +
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Pretend Murder, Ear Muffs, Oxygen, Derivuchi Cap, Helm of Angel Quests.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Helm of Angel bug fixed [Lupus]
 //= 1.2 Fixed skirt of virgin [Lupus]
 //= 1.3 Fixed exploits [Lupus]
@@ -17,7 +17,7 @@
 //= 1.5a replaced item "names" with item id. [Lupus]
 //= 1.6 Updated Dialogs from "Oxygen Mask Quest" [Samuray22]
 //= 1.7 Updated headgear quests. [L0ne_W0lf]
-//============================================================ 
+//============================================================
 
 // 'Pretend Murdered' Quest
 //============================================================

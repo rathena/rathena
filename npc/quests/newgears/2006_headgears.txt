@@ -51,7 +51,7 @@ rachel,91,273,8	script	?	930,{
 		next;
 		delitem 983,1; //Black_Dyestuffs
 		delitem 7111,100; //Smooth_Paper
-		delitem 938,99; //Sticky_Mucus 
+		delitem 938,99; //Sticky_Mucus
 		set Zeny,Zeny-100000;
 		getitem 5175,1; //Anonimity_Request
 		mes "[?]";
@@ -126,8 +126,8 @@ rachel,152,131,3	script	Sakjul	928,{
 		next;
 		set .@result,rand(1,10);
 		if (.@result == 4) {
-			delitem 5172,1; //Beret 
-			delitem 7063,100; //Soft_Feather 
+			delitem 5172,1; //Beret
+			delitem 7063,100; //Soft_Feather
 			delitem 982,1; //White_Dyestuffs
 			mes "[Sakjul]";
 			mes "I did succeed in making the hat,";
@@ -150,10 +150,10 @@ rachel,152,131,3	script	Sakjul	928,{
 			mes "If you understood, now, go, go gather the materials again!";
 			close;
 		}
-		delitem 5172,1; //Beret 
-		delitem 7063,100; //Soft_Feather 
+		delitem 5172,1; //Beret
+		delitem 7063,100; //Soft_Feather
 		delitem 982,1; //White_Dyestuffs
-		getitem 5170,1; //Feather_Beret 
+		getitem 5170,1; //Feather_Beret
 		mes "[Sakjul]";
 		mes "Great, I have made it! Look at this beautiful coordination";
 		mes "between the feather and the beret,";
@@ -787,7 +787,7 @@ S_MakeMask:
 		delitem getarg(1),getarg(2);
 		delitem getarg(3),getarg(4);
 		delitem getarg(5),getarg(6);
-		if (.@item_id == 5169) 
+		if (.@item_id == 5169)
 			delitem getarg(7),getarg(8);
 		getitem .@item_id,1;
 		set moza_tal,0;

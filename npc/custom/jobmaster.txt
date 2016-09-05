@@ -4,7 +4,7 @@
 //= Euphy
 //===== Current Version: =====================================
 //= 1.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
 //= A fully functional job changer.

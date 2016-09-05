@@ -1,12 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= God Item Quest - Variable Management
-//===== By: ================================================== 
+//===== By: ==================================================
 //= MasterOfMuppets
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Use this NPC if the seals quest variables get messed up.
 //===== Additional Comments: =================================
 //= 1.0 First version. [MasterOfMuppets]

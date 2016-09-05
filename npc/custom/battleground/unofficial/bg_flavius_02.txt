@@ -54,7 +54,7 @@ OnReadyCheck:
 		end;
 	set .@Guillaume, getwaitingroomstate(0,"Fl2R_Guillaume");
 	set .@Croix, getwaitingroomstate(0,"Fl2R_Croix");
-	
+
 	if( .@Guillaume < 10 || .@Croix < 10 )
 	{
 		mapannounce "bat_room","Battleground -- Flavius [80-99] G: " + .@Guillaume + "/10, C: " + .@Croix + "/10",1,0x808000;
@@ -281,7 +281,7 @@ bat_b02,390,13,5	script	Guillaume Vintenar#fl2	419,{
 			set .@Reward, 9;
 		}
 		else
-		{ // 
+		{ //
 			mes "[Swandery]";
 			mes "You lost, but you're dedicated to this battle.";
 			mes "This is a reward for your great dedication by Guillaume Marollo!";
@@ -312,7 +312,7 @@ bat_b02,10,293,5	script	Croix Vintenar#fl2	415,{
 			set .@Reward, 9;
 		}
 		else
-		{ // 
+		{ //
 			mes "[Swandery]";
 			mes "Oh, " + strcharinfo(0) + ". Don't be sad.";
 			mes "Even though we didn't win, we did our best.";

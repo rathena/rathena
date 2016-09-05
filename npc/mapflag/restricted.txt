@@ -6,10 +6,10 @@
 //= 1.4
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Disables items configured in item_noequip.txt
 //= and skills configured in skill_nocast_db.txt.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Initial script. [Komurka]
 //= 1.1 Added WoE:SE Map restrictions. [L0ne_W0lf]
 //= 1.2 Added Endless Tower Restrictions. (bugreport:4707) [L0ne_W0lf]

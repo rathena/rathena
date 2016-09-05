@@ -1,17 +1,17 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Priest Job Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Translated By: Pgro Team (OwNaGe)(Aegis)
 //= Converted by: kobra_k88.
 //= Further bugfixed and tested by Lupus
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.6
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Job Change quest for Priest class.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= Fully working.  Changed the way Priests enter the test room to help Acos.
 //= Must use this with the included Acolyte quest to work properely.
 //= 1.3 Added Baby Class support, fixed 3 wrong constants bugs [Lupus]
@@ -1708,7 +1708,7 @@ job_prist,98,105,4	script	prst3_1	45,3,3,{
 OnTouch:
 	if (BaseJob == Job_Priest) {
 		warp "prt_church",15,36;
-		end; 
+		end;
 	}
 	else if (BaseClass == Job_Acolyte) {
 		set PRIEST_Q,7;

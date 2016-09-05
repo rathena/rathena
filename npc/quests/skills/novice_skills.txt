@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Novice Skills Quests
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.8
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Quest for skills: First Aid, Trick Dead
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.6 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.7 Updated to latest available official file. [Masao]
 //= 1.8 Added Baby support. [Zopokx]
-//============================================================ 
+//============================================================
 
 prt_in,234,133,4	script	Nami	66,{
 	if ((Class == Job_Novice || Class == Job_Baby) && (JobLevel > 3 || BaseLevel > 11) && (skill_nov < 3)) {
@@ -469,13 +469,13 @@ prt_castle,175,146,4	script	Nursing Instructor	50,{
 	close;
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= Fully working
 //= 1.2 Added Baby Class Support [Lupus]
 //= 1.3 Fixed a Zeny exploit, made more variables clear
 //= on finishing quests. [Lupus]
 //= 1.4 Fixed exploits [Lupus]
 //= 1.4a Fixed some typos [IVBela]
-//============================================================ 
+//============================================================

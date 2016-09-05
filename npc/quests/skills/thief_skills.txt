@@ -1,20 +1,20 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Thief Skills Quests
-//===== By: ================================================== 
+//===== By: ==================================================
 //= kobra_k88
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.8
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
-//= Quests for skills: Sand Attack, Back Slide, Find Stone, 
+//===== Description: =========================================
+//= Quests for skills: Sand Attack, Back Slide, Find Stone,
 //= Stone Fling.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.5 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
 //= 1.6 Fixed a Exploit for Assassins and Rogues. (bugreport:2332) [Samuray22]
 //= 1.7 Updated to latest available official file. [Masao]
 //= 1.8 Fixed JobLevel requirement for Assassins and Rogues. [Joseph]
-//============================================================ 
+//============================================================
 
 moc_prydb1,154,128,4	script	Alcouskou	118,{
 	if (BaseClass == Job_Thief) {
@@ -500,9 +500,9 @@ payon,91,77,3	script	Bag Seller	99,{
 	}
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.0 Fully working
 //= 1.1 Changed Sand Attack requirements from 5 Grit to 5 Fine Grit and a
 //=     Leather Bag of Infinity.  These are the official RO requirements
@@ -514,4 +514,4 @@ payon,91,77,3	script	Bag Seller	99,{
 //= 1.4 Fixed exploit [Lupus]
 //= 1.4a Fixed some typos [IVBela]
 //= 1.4b changed perm. variables to temp ones [Lupus]
-//============================================================ 
+//============================================================
