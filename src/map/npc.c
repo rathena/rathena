@@ -1236,7 +1236,7 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 	//Hidden/Disabled npc.
 	if (nd->class_ < 0 || nd->sc.option&(OPTION_INVISIBLE|OPTION_HIDE))
 		return 1;
-	
+
 	switch(nd->subtype) {
 		case NPCTYPE_SHOP:
 			clif_npcbuysell(sd,nd->bl.id);
@@ -1546,7 +1546,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 				sprintf(output, msg_txt(sd, 715), nd->u.shop.pointshop_str); // Point Shop List: '%s'
 				clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
 			}
-			
+
 			cost[0] = pc_readreg2(sd, nd->u.shop.pointshop_str);
 			break;
 	}
@@ -2069,7 +2069,7 @@ int npc_unload(struct npc_data* nd, bool single) {
 			aFree(nd->path);/* remove now that no other instances exist */
 		}
 	}
-	
+
 	if( single && nd->bl.m != -1 )
 		map_remove_questinfo(nd->bl.m, nd);
 
@@ -2166,7 +2166,7 @@ int npc_addsrcfile(const char* name)
 		ShowError("npc_addsrcfile: Can't find source file \"%s\"\n", name );
 		return 0;
 	}
-        
+
 	// prevent multiple insert of source files
 	file = npc_src_files;
 	while( file != NULL )
@@ -2184,7 +2184,7 @@ int npc_addsrcfile(const char* name)
 		npc_src_files = file;
 	else
 		file_prev->next = file;
-        
+
         return 1;
 }
 
@@ -2595,7 +2595,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			is_discount = 1;
 			break;
 	}
-	
+
 	CREATE(nd, struct npc_data, 1);
 
 	nd->u.shop.count = 0;
@@ -2652,7 +2652,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		//for logs filters, atcommands and iteminfo script command
 		if( id->maxchance == 0 )
 			id->maxchance = -1; // -1 would show that the item's sold in NPC Shop
-		
+
 #if PACKETVER >= 20131223
 		if (nd->u.shop.count && type == NPCTYPE_MARKETSHOP) {
 			uint16 i;
@@ -4148,11 +4148,11 @@ int npc_parsesrcfile(const char* filepath, bool runOnInit)
 	char* buffer;
 	const char* p;
 
-	if(check_filepath(filepath)!=2) { //this is not a file 
+	if(check_filepath(filepath)!=2) { //this is not a file
 		ShowDebug("npc_parsesrcfile: Path doesn't seem to be a file skipping it : '%s'.\n", filepath);
 		return 0;
-	} 
-            
+	}
+
 	// read whole file to buffer
 	fp = fopen(filepath, "rb");
 	if( fp == NULL )
@@ -4243,7 +4243,7 @@ int npc_parsesrcfile(const char* filepath, bool runOnInit)
 			int count2;
 
 			count2 = sscanf(w1,"%23[^,],%6hd,%6hd[^,]",mapname,&x,&y);
-			
+
 			if ( count2 < 1 ) {
 				ShowError("npc_parsesrcfile: Invalid script definition in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,p-buffer), w1, w2, w3, w4);
 				if (strcasecmp(w2,"script") == 0 && count > 3) {

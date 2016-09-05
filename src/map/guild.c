@@ -2205,7 +2205,7 @@ void do_init_guild(void) {
 		"/"DBIMPORT,
 	};
 	int i;
-	
+
 	guild_db           = idb_alloc(DB_OPT_RELEASE_DATA);
 	castle_db          = idb_alloc(DB_OPT_BASE);
 	guild_expcache_db  = idb_alloc(DB_OPT_BASE);
@@ -2215,18 +2215,18 @@ void do_init_guild(void) {
 	guild_flags_count = 0;
 
 	memset(guild_skill_tree,0,sizeof(guild_skill_tree));
-	
+
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		safesnprintf(dbsubpath1,n1+1,"%s%s",db_path,dbsubpath[i]);
-		
+
 		sv_readdb(dbsubpath1, "castle_db.txt", ',', 4, 4, -1, &guild_read_castledb, i);
 		sv_readdb(dbsubpath1, "guild_skill_tree.txt", ',', 2+MAX_GUILD_SKILL_REQUIRE*2, 2+MAX_GUILD_SKILL_REQUIRE*2, -1, &guild_read_guildskill_tree_db, i); //guild skill tree [Komurka]
-		
+
 		aFree(dbsubpath1);
 	}
-	
+
 	add_timer_func_list(guild_payexp_timer,"guild_payexp_timer");
 	add_timer_func_list(guild_send_xy_timer, "guild_send_xy_timer");
 	add_timer_interval(gettick()+GUILD_PAYEXP_INTERVAL,guild_payexp_timer,0,0,GUILD_PAYEXP_INTERVAL);

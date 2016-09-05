@@ -1587,7 +1587,7 @@ void read_homunculus_expdb(void)
 		FILE *fp;
 		char line[1024];
 		int j=0;
-		
+
 		sprintf(line, "%s/%s", db_path, filename[i]);
 		fp = fopen(line,"r");
 		if (fp == NULL) {

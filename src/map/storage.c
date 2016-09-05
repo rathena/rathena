@@ -385,7 +385,7 @@ void storage_storageclose(struct map_session_data* sd)
  * @param sd : player to close storage
  * @param flag :
  *  1: Character is quitting
- *	2(x): Character is changing map-servers 
+ *	2(x): Character is changing map-servers
  */
 void storage_storage_quit(struct map_session_data* sd, int flag)
 {
@@ -402,7 +402,7 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
  * @see DBCreateData
  * @param key
  * @param args
- * @return 
+ * @return
  */
 static DBData create_guildstorage(DBKey key, va_list args)
 {
@@ -533,7 +533,7 @@ bool gstorage_additem(struct map_session_data* sd, struct guild_storage* stor, s
 			if(compare_item(&stor->items[i], item)) {
 				if( amount > MAX_AMOUNT - stor->items[i].amount || ( id->stack.guildstorage && amount > id->stack.amount - stor->items[i].amount ) )
 					return false;
-	
+
 				stor->items[i].amount+=amount;
 				clif_storageitemadded(sd,&stor->items[i],i,amount);
 				stor->dirty = true;

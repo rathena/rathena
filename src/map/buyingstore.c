@@ -258,7 +258,7 @@ void buyingstore_close(struct map_session_data* sd) {
 	nullpo_retv(sd);
 
 	if( sd->state.buyingstore ) {
-		if( 
+		if(
 			Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE buyingstore_id = %d;", buyingstore_items_db, sd->buyer_id ) != SQL_SUCCESS ||
 			Sql_Query( mmysql_handle, "DELETE FROM `%s` WHERE `id` = %d;", buyingstores_db, sd->buyer_id ) != SQL_SUCCESS
 		) {
@@ -475,7 +475,7 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 		chrif_save(sd, 0);
 		chrif_save(pl_sd, 0);
 	}
-	
+
 	// check whether or not there is still something to buy
 	ARR_FIND( 0, pl_sd->buyingstore.slots, i, pl_sd->buyingstore.items[i].amount != 0 );
 	if( i == pl_sd->buyingstore.slots )
@@ -701,7 +701,7 @@ void do_init_buyingstore_autotrade( void ) {
 				uidb_put(buyingstore_autotrader_db, at->char_id, at);
 			}
 			Sql_FreeResult(mmysql_handle);
-			
+
 			// Init items for each autotraders
 			iter = db_iterator(buyingstore_autotrader_db);
 			for (at = (struct s_autotrader *)dbi_first(iter); dbi_exists(iter); at = (struct s_autotrader *)dbi_next(iter)) {
@@ -723,7 +723,7 @@ void do_init_buyingstore_autotrade( void ) {
 					buyingstore_autotrader_remove(at, true);
 					continue;
 				}
-			
+
 				//Init the list
 				CREATE(at->entries, struct s_autotrade_entry *,at->count);
 

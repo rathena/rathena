@@ -209,12 +209,12 @@ char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd) {
 	struct s_item_group_db *group;
 
 	nullpo_retr(1,sd);
-	
+
 	if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
 		ShowError("itemdb_pc_get_itemgroup: Invalid group id '%d' specified.\n",group_id);
 		return 2;
 	}
-	
+
 	// Get the 'must' item(s)
 	if (group->must_qty) {
 		for (i = 0; i < group->must_qty; i++)
@@ -562,7 +562,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	memset(&entry, 0, sizeof(entry));
 	entry.amount = 1;
 	entry.bound = BOUND_NONE;
-	
+
 	str[0] = trim(str[0]);
 	if( ISDIGIT(str[0][0]) ){
 		group_id = atoi(str[0]);
@@ -633,7 +633,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	if( columns > 7 ) entry.GUID = atoi(str[7]);
 	if( columns > 8 ) entry.bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
 	if( columns > 9 ) entry.isNamed = atoi(str[9]);
-	
+
 	if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
 		CREATE(group, struct s_item_group_db, 1);
 		group->id = group_id;
@@ -644,7 +644,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	if (!rand_group) {
 		RECREATE(group->must, struct s_item_group_entry, group->must_qty+1);
 		group->must[group->must_qty++] = entry;
-		
+
 		// If 'must' item isn't set as random item, skip the next process
 		if (!prob) {
 			return true;
@@ -655,13 +655,13 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 		rand_group -= 1;
 
 	random = &group->random[rand_group];
-	
+
 	RECREATE(random->data, struct s_item_group_entry, random->data_qty+prob);
 
 	// Put the entry to its rand_group
 	for (j = random->data_qty; j < random->data_qty+prob; j++)
 		random->data[j] = entry;
-	
+
 	random->data_qty += prob;
 	return true;
 }
@@ -875,7 +875,7 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 		ShowError("itemdb_read_flag: Invalid item item with id %hu\n", nameid);
 		return true;
 	}
-	
+
 	flag = abs(atoi(fields[1]));
 	set = atoi(fields[1]) > 0;
 
@@ -1341,7 +1341,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 static int itemdb_readdb(void){
 	const char* filename[] = {
 		DBPATH"item_db.txt",
-		DBIMPORT"/item_db.txt" 
+		DBIMPORT"/item_db.txt"
 	};
 
 	int fi;
@@ -1658,18 +1658,18 @@ static void itemdb_read(void) {
 		"",
 		"/"DBIMPORT,
 	};
-	
+
 	if (db_use_sqldbs)
 		itemdb_read_sqldb();
 	else
 		itemdb_readdb();
-	
+
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
 		uint8 n2 = (uint8)(strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1);
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		char* dbsubpath2 = (char*)aMalloc(n2+1);
-		
+
 
 		if(i==0) {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
@@ -1679,7 +1679,7 @@ static void itemdb_read(void) {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
-		
+
 		sv_readdb(dbsubpath1, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail, i);
 		sv_readdb(dbsubpath1, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i);
 		sv_readdb(dbsubpath1, "item_nouse.txt",         ',', 3, 3, -1, &itemdb_read_nouse, i);

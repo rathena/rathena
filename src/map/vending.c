@@ -279,7 +279,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 	int vending_skill_lvl;
 	char message_sql[MESSAGE_SIZE*2];
 	StringBuf buf;
-	
+
 	nullpo_retr(false,sd);
 
 	if ( pc_isdead(sd) || !sd->state.prevend || pc_istrading(sd)) {
@@ -287,7 +287,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 	}
 
 	vending_skill_lvl = pc_checkskill(sd, MC_VENDING);
-	
+
 	// skill level and cart check
 	if( !vending_skill_lvl || !pc_iscarton(sd) ) {
 		clif_skill_fail(sd, MC_VENDING, USESKILL_FAIL_LEVEL, 0);
@@ -354,7 +354,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 	sd->vender_id = vending_getuid();
 	sd->vend_num = i;
 	safestrncpy(sd->message, message, MESSAGE_SIZE);
-	
+
 	Sql_EscapeString( mmysql_handle, message_sql, sd->message );
 
 	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`, `account_id`, `char_id`, `sex`, `map`, `x`, `y`, `title`, `autotrade`, `body_direction`, `head_direction`, `sit`) "

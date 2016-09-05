@@ -227,7 +227,7 @@ int bg_send_message(struct map_session_data *sd, const char *mes, int len)
 
 	if( sd->bg_id == 0 || (bg = bg_team_search(sd->bg_id)) == NULL )
 		return 0;
-	
+
 	clif_bg_message(bg, sd->bl.id, sd->status.name, mes, len);
 
 	return 0;

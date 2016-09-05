@@ -531,7 +531,7 @@ static bool mercenary_readdb_sub(char* str[], int columns, int current)
 	status->adelay = atoi(str[23]);
 	status->amotion = atoi(str[24]);
 	status->dmotion = atoi(str[25]);
-	
+
 	if (i >= mercenary_count)
 		mercenary_count++;
 	return true;

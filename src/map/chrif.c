@@ -478,10 +478,10 @@ int chrif_changemapserverack(uint32 account_id, int login_id1, int login_id2, ui
 
 /**
  * Does the char_serv have validate our connection to him ?
- * If yes then 
+ * If yes then
  *  - Send all our mapname to charserv
  *  - Retrieve guild castle
- *  - Do OnInterIfInit and OnInterIfInitOnce on all npc 
+ *  - Do OnInterIfInit and OnInterIfInitOnce on all npc
  * 0x2af9 <errCode>B
  */
 int chrif_connectack(int fd) {
@@ -563,7 +563,7 @@ void chrif_on_ready(void) {
 
 	//Re-save any guild castles that were modified in the disconnection time.
 	guild_castle_reconnect(-1, 0, 0);
-	
+
 	// Charserver is ready for loading autotrader
 	do_init_buyingstore_autotrade();
 	do_init_vending_autotrade();
@@ -751,7 +751,7 @@ void chrif_authfail(int fd) {/* HELLO WORLD. ip in RFIFOL 15 is not being used (
  */
 int auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
 	struct auth_node *node = (struct auth_node *)db_data2ptr(data);
-	
+
 	if(DIFF_TICK(gettick(),node->node_created)>60000) {
 		const char* states[] = { "Login", "Logout", "Map change" };
 		switch (node->state) {
@@ -1095,7 +1095,7 @@ int chrif_ban(int fd) {
 	}
 
 	sd->login_id1++; // change identify, because if player come back in char within the 5 seconds, he can change its characters
-	if (res == 0) { 
+	if (res == 0) {
 		int ret_status = RFIFOL(fd,7); // status or final date of a banishment
 		if(0<ret_status && ret_status<=9)
 			clif_displaymessage(sd->fd, msg_txt(sd,411+ret_status));
@@ -1120,7 +1120,7 @@ int chrif_ban(int fd) {
 
 int chrif_req_charban(int aid, const char* character_name, int32 timediff){
 	chrif_check(-1);
-	
+
 	WFIFOHEAD(char_fd,10+NAME_LENGTH);
 	WFIFOW(char_fd,0) = 0x2b28;
 	WFIFOL(char_fd,2) = aid;
@@ -1132,7 +1132,7 @@ int chrif_req_charban(int aid, const char* character_name, int32 timediff){
 
 int chrif_req_charunban(int aid, const char* character_name){
 	chrif_check(-1);
-	
+
 	WFIFOHEAD(char_fd,6+NAME_LENGTH);
 	WFIFOW(char_fd,0) = 0x2b2a;
 	WFIFOL(char_fd,2) = aid;

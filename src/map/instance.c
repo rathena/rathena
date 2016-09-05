@@ -244,7 +244,7 @@ static int instance_startidletimer(struct instance_data *im, unsigned short inst
 static int instance_stopidletimer(struct instance_data *im, unsigned short instance_id)
 {
 	nullpo_retr(0, im);
-	
+
 	// No timer
 	if(im->idle_timer == INVALID_TIMER)
 		return 1;

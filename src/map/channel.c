@@ -940,7 +940,7 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 		clif_displaymessage(sd->fd, output);
 		return -1;
 	}
-	
+
 	s = ARRAYLENGTH(opt_str);
 	ARR_FIND(1,s,k,( strncmpi(option,opt_str[k],3) == 0 )); //we only cmp 3 letter atm
 	if(!option || option[0] == '\0' || k >= s ) {
@@ -1156,7 +1156,7 @@ void do_init_channel(void) {
 void do_final_channel(void) {
 	DBIterator *iter;
 	struct Channel *channel;
-	
+
 	//delete all in remaining chan db
 	iter = db_iterator(channel_db);
 	for( channel = (struct Channel *)dbi_first(iter); dbi_exists(iter); channel = (struct Channel *)dbi_next(iter) ) {

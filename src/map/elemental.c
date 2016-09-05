@@ -766,7 +766,7 @@ static bool read_elementaldb_sub(char* str[], int columns, int current) {
 		db = &elemental_db[elemental_count];
 	else
 		db = &elemental_db[i];
-	
+
 	db->class_ = atoi(str[0]);
 	safestrncpy(db->sprite, str[1], NAME_LENGTH);
 	safestrncpy(db->name, str[2], NAME_LENGTH);

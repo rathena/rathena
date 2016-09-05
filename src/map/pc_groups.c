@@ -63,7 +63,7 @@ static void read_config(void)
 	config_setting_t *groups = NULL;
 	const char *config_filename = "conf/groups.conf"; // FIXME hardcoded name
 	int group_count = 0;
-	
+
 	if (conf_read_file(&pc_group_config, config_filename))
 		return;
 
@@ -135,10 +135,10 @@ static void read_config(void)
 
 			strdb_put(pc_groupname_db, groupname, group_settings);
 			idb_put(pc_group_db, id, group_settings);
-			
+
 		}
 		group_count = config_setting_length(groups); // Save number of groups
-		
+
 		// Check if all commands and permissions exist
 		iter = db_iterator(pc_group_db);
 		for (group_settings = (GroupSettings *)dbi_first(iter); dbi_exists(iter); group_settings = (GroupSettings *)dbi_next(iter)) {
@@ -191,9 +191,9 @@ static void read_config(void)
 				                 *commands = group_settings->commands,
 					             *permissions = group_settings->permissions;
 				int j, inherit_count = 0, done = 0;
-				
+
 				if (group_settings->inheritance_done) // group already processed
-					continue; 
+					continue;
 
 				if ((inherit = group_settings->inherit) == NULL ||
 				    (inherit_count = config_setting_length(inherit)) <= 0) { // this group does not inherit from others
@@ -201,7 +201,7 @@ static void read_config(void)
 					group_settings->inheritance_done = true;
 					continue;
 				}
-				
+
 				for (j = 0; j < inherit_count; ++j) {
 					GroupSettings *inherited_group = NULL;
 					const char *groupname = config_setting_get_string_elem(inherit, j);
@@ -234,7 +234,7 @@ static void read_config(void)
 
 					++done; // copied commands and permissions from one of inherited groups
 				}
-				
+
 				if (done == inherit_count) { // copied commands from all of inherited groups
 					++i;
 					group_settings->inheritance_done = true; // we're done with this group
@@ -272,7 +272,7 @@ static void read_config(void)
 
 	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' groups in '"CL_WHITE"%s"CL_RESET"'.\n", group_count, config_filename);
 
-	
+
 	if( ( pc_group_max = group_count ) ) {
 		DBIterator *iter = db_iterator(pc_group_db);
 		GroupSettings *group_settings = NULL;
@@ -281,11 +281,11 @@ static void read_config(void)
 		for (group_settings = (GroupSettings *)dbi_first(iter); dbi_exists(iter); group_settings = (GroupSettings *)dbi_next(iter)) {
 			group_ids[i++] = group_settings->id;
 		}
-		
+
 		atcommand_db_load_groups(group_ids);
-		
+
 		aFree(group_ids);
-		
+
 		dbi_destroy(iter);
 	}
 }
@@ -330,7 +330,7 @@ bool pc_group_can_use_command(int group_id, const char *command, AtCommandType t
 	commands = group->commands;
 	if (commands != NULL) {
 		config_setting_t *cmd = NULL;
-		
+
 		// <commandname> : <bool> (only atcommand)
 		if (type == COMMAND_ATCOMMAND && config_setting_lookup_bool(commands, command, &result))
 			return (bool)result;
@@ -454,7 +454,7 @@ void pc_groups_reload(void) {
 
 	do_final_pc_groups();
 	do_init_pc_groups();
-	
+
 	/* refresh online users permissions */
 	iter = mapit_getallusers();
 	for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter))	{
