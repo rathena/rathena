@@ -8474,11 +8474,11 @@ the given map.
 
 ---------------------------------------
 
-*waitingroom2bg("<map name>",<x>,<y>,"<On Quit Event>","<On Death Event>"{,"<NPC Name>"});
+*waitingroom2bg("<map name>",<x>,<y>,{"<On Quit Event>","<On Death Event>"{,"<NPC Name>"}});
 
 <map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
-<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog.
-<On Death Event> refers to an NPC label that attaches to the character and is run when they die. Can be "" for empty.
+<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
+<On Death Event> refers to an NPC label that attaches to the character and is run when they die. (Optional)
 
 Unlike the prior command, the latter will attach a GROUP in a waiting room to the battleground, and 
 sets the array $@arenamembers[0] where 0 holds the IDs of the first group, and 1 holds the IDs of the second.
@@ -8492,13 +8492,13 @@ Example:
 
 ---------------------------------------
 
-*bg_create("<map name>",<x>,<y>,"<On Quit Event>","<On Death Event>");
+*bg_create("<map name>",<x>,<y>{,"<On Quit Event>","<On Death Event>"});
 
 Creates an instance of battleground battle group that can be used in other battleground commands.
 
 <map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
-<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog.
-<On Death Event> refers to an NPC label that attaches to the character and is run when they die. Can be "" for empty.
+<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
+<On Death Event> refers to an NPC label that attaches to the character and is run when they die. (Optional)
 
 Returns battle group ID on success. Returns 0 on failure.
 

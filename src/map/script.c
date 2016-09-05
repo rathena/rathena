@@ -18665,8 +18665,10 @@ BUILDIN_FUNC(waitingroom2bg)
 
 	x = script_getnum(st,3);
 	y = script_getnum(st,4);
-	ev = script_getstr(st,5); // Logout Event
-	dev = script_getstr(st,6); // Die Event
+	if(script_hasdata(st,5))
+		ev = script_getstr(st,5); // Logout Event
+	if(script_hasdata(st,6))
+		dev = script_getstr(st,6); // Die Event
 
 	if (ev[0] != '\0')
 		check_event(st, ev);
@@ -18729,7 +18731,7 @@ BUILDIN_FUNC(waitingroom2bg_single)
 
 
 /// Creates an instance of battleground battle group.
-/// *bg_create("<map name>",<x>,<y>,"<On Quit Event>","<On Death Event>");
+/// *bg_create("<map name>",<x>,<y>{,"<On Quit Event>","<On Death Event>"});
 /// @author [secretdataz]
 BUILDIN_FUNC(bg_create) {
 	const char *map_name, *ev = "", *dev = "";
@@ -18748,8 +18750,10 @@ BUILDIN_FUNC(bg_create) {
 
 	x = script_getnum(st, 3);
 	y = script_getnum(st, 4);
-	ev = script_getstr(st, 5); // Logout Event
-	dev = script_getstr(st, 6); // Die Event
+	if(script_hasdata(st, 5))
+		ev = script_getstr(st, 5); // Logout Event
+	if(script_hasdata(st, 6))
+		dev = script_getstr(st, 6); // Die Event
 
 	if (ev[0] != '\0')
 		check_event(st, ev);
