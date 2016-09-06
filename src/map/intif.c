@@ -3099,7 +3099,7 @@ void intif_itembound_guild_retrieve(uint32 char_id,uint32 account_id,int guild_i
  */
 void intif_parse_itembound_ack(int fd) {
 	int guild_id = RFIFOW(fd,6);
-	struct s_storage *gstor = guild2storage(guild_id);
+	struct s_storage *gstor = guild2storage2(guild_id);
 	if (gstor)
 		gstor->lock = false; //Unlock now that operation is completed
 }
