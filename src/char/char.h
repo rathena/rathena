@@ -257,7 +257,6 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf);
 int char_delete_char_sql(uint32 char_id);
 int char_rename_char_sql(struct char_session_data *sd, uint32 char_id);
 int char_divorce_char_sql(int partner_id1, int partner_id2);
-int char_inventory_to_sql(const struct item items[], int max, int char_id);
 int char_memitemdata_to_sql(const struct item items[], int max, int id, int tableswitch);
 
 void disconnect_player(uint32 account_id);

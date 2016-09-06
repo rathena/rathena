@@ -22,7 +22,7 @@
  */
 static int inventory_tosql(uint32 char_id, struct s_storage* p)
 {
-	return char_inventory_to_sql(p->u.items_inventory, MAX_INVENTORY, char_id);
+	return char_memitemdata_to_sql(p->u.items_inventory, MAX_INVENTORY, char_id, TABLE_INVENTORY);
 }
 
 /**
