@@ -18704,8 +18704,10 @@ BUILDIN_FUNC(waitingroom2bg_single)
 	}
 	if (script_hasdata(st, 3)) {
 		map_name = script_getstr(st, 3);
-		if ((mapindex = mapindex_name2id(map_name)) == 0)
+		if ((mapindex = mapindex_name2id(map_name)) == 0) {
+			script_pushint(st, false);
 			return SCRIPT_CMD_SUCCESS; // Invalid Map
+		}
 		x = script_getnum(st, 4);
 		y = script_getnum(st, 5);
 	}
@@ -18744,8 +18746,8 @@ BUILDIN_FUNC(bg_create) {
 	map_name = script_getstr(st, 2);
 	if (strcmp(map_name, "-") != 0 && (mapindex = mapindex_name2id(map_name)) == 0)
 	{ // Invalid Map
-			script_pushint(st, 0);
-			return SCRIPT_CMD_SUCCESS;
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	x = script_getnum(st, 3);
@@ -18780,8 +18782,10 @@ BUILDIN_FUNC(bg_join) {
 	}
 	if (script_hasdata(st, 3)) {
 		map_name = script_getstr(st, 3);
-		if ((mapindex = mapindex_name2id(map_name)) == 0)
+		if ((mapindex = mapindex_name2id(map_name)) == 0) {
+			script_pushint(st, false);
 			return SCRIPT_CMD_SUCCESS; // Invalid Map
+		}
 		x = script_getnum(st, 4);
 		y = script_getnum(st, 5);
 	} else {
