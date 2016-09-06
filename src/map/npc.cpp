@@ -4214,6 +4214,19 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.nocostume = state;
 	else if (!strcmpi(w3,"hidemobhpbar"))
 		map[m].flag.hidemobhpbar = state;
+	else if (!strcmpi(w3, "skill_duration")) {
+		if (!state && map[m].skill_duration.count)
+			map_skill_duration_free(&map[m]);
+		else {
+			char skill_name[SKILL_NAME_LENGTH];
+			uint16 per = 0;
+			if (sscanf(w4, "%30[^,],%5hu[^\n]", skill_name, &per) == 2) {
+				uint16 skill_id = skill_name2id(skill_name);
+				if (!skill_id || !map_skill_duration_add(&map[m], skill_id, per))
+					ShowError("npc_parse_mapflag: skill_duration: Skipping (file '%s', line '%d')\n", filepath, strline(buffer,start-buffer));
+			}
+		}
+	}
 	else if (!strcmpi(w3,"skill_damage")) {
 #ifdef ADJUST_SKILL_DAMAGE
 		char skill[SKILL_NAME_LENGTH];

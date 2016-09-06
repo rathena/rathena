@@ -323,6 +323,16 @@ Notes:
 
 ---------------------------------------
 
+*skill_duration	skill_name,percentage
+
+Sets skill (trap-type) time limit to n% of original duration.
+
+// Example:
+// Makes HT_ANKLESNARE lifetime in the castle is longer 4x than normal maps.
+prtg_cas01	mapflag	skill_duration	HT_ANKLESNARE,400
+
+---------------------------------------
+
 ==================
 | 3. Map Effects |
 ==================

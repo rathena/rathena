@@ -3489,6 +3489,7 @@ void map_flags_init(void)
 			map[i].flag.pvp = 1; // make all maps pvp for pk_mode [Valaris]
 
 		map_free_questinfo(i);
+		map_skill_duration_free(&map[i]);
 	}
 }
 
@@ -4351,6 +4352,61 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, 
 #endif
 
 /**
+ * Add skill_duration to a map.
+ * @param map Pointer to specified map.
+ * @param skill_id Skill ID.
+ * @param per Skill duration adjustment value in percent.
+ * @return True:Success, False:Failed
+ **/
+bool map_skill_duration_add(struct map_data *map, uint16 skill_id, uint16 per) {
+
+	if (!map || !skill_get_index(skill_id))
+		return false;
+	else {
+		uint16 i;
+		struct s_skill_duration *entry = NULL;
+
+		for (i = 0; i < map->skill_duration.count; i++) {
+			if (map->skill_duration.entries[i] && map->skill_duration.entries[i]->skill_id == skill_id) {// Replace
+				map->skill_duration.entries[i]->per = per;
+				return true;
+			}
+		}
+
+		RECREATE(map->skill_duration.entries, struct s_skill_duration *, map->skill_duration.count+1);
+		CREATE(map->skill_duration.entries[map->skill_duration.count], struct s_skill_duration, 1);
+		map->skill_duration.entries[map->skill_duration.count]->skill_id = skill_id;
+		map->skill_duration.entries[map->skill_duration.count]->per = per;
+		map->skill_duration.count++;
+	}
+
+	return true;
+}
+
+/**
+ * Clear skill_duration adjustment from a map.
+ * @param map Pointer to specified map.
+ **/
+void map_skill_duration_free(struct map_data *map) {
+	uint16 i;
+
+	if (!map)
+		return;
+
+	if (map->skill_duration.entries) {
+		for (i = 0; i < map->skill_duration.count; i++) {
+			if (map->skill_duration.entries[i]) {
+				aFree(map->skill_duration.entries[i]);
+				map->skill_duration.entries[i] = NULL;
+			}
+		}
+		aFree(map->skill_duration.entries);
+	}
+	map->skill_duration.entries = NULL;
+	map->skill_duration.count = 0;
+}
+
+/**
  * @see DBApply
  */
 static int cleanup_db_sub(DBKey key, DBData *data, va_list va)
@@ -4438,6 +4494,7 @@ void do_final(void)
 				if (map[i].moblist[j]) aFree(map[i].moblist[j]);
 		}
 		map_free_questinfo(i);
+		map_skill_duration_free(&map[i]);
 #ifdef ADJUST_SKILL_DAMAGE
 		if (map[i].skill_damage.count)
 			map_skill_damage_free(&map[i]);

@@ -12664,7 +12664,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 
 	nullpo_retr(NULL, src);
 
-	limit = skill_get_time(skill_id,skill_lv);
+	limit = skill_get_time3(skill_id,skill_lv,src);
 	range = skill_get_unit_range(skill_id,skill_lv);
 	interval = skill_get_unit_interval(skill_id);
 	target = skill_get_unit_target(skill_id);
@@ -20794,6 +20794,30 @@ static bool skill_check_unit_movepos(uint8 check_flag, struct block_list *bl, sh
 		return false;
 
 	return unit_movepos(bl, dst_x, dst_y, easy, checkpath);
+}
+
+/**
+ * Get skill duration after adjustments by skill_duration mapflag.
+ * @param skill_id Skill ID.
+ * @param skill_lv Skill level.
+ * @param src Source BL to map location.
+ * @return Adjusted skill duration.
+ **/
+int skill_get_time3(uint16 skill_id, uint16 skill_lv, struct block_list *src) {
+	int time = 0;
+
+	if (!skill_get_index(skill_id) || !(time = skill_get_time(skill_id, skill_lv)))
+		return 0;
+	if (src && map[src->m].skill_duration.count && map[src->m].skill_duration.entries) {
+		struct s_skill_duration *entry = NULL;
+		uint16 i;
+
+		for (i = 0; i < map[src->m].skill_duration.count; i++) {
+			if ((entry = map[src->m].skill_duration.entries[i]) && entry->skill_id == skill_id)
+				return time * entry->per / 100;
+		}
+	}
+	return time;
 }
 
 /*==========================================
