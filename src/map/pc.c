@@ -12213,14 +12213,23 @@ void pc_set_costume_view(struct map_session_data *sd) {
 			sd->status.robe = id->look;
 	}
 
-	if (head_low != sd->status.head_bottom || sd->setlook_head_bottom)
-		clif_changelook(&sd->bl, LOOK_HEAD_BOTTOM, sd->setlook_head_bottom ? sd->setlook_head_bottom : sd->status.head_bottom);
-	if (head_mid != sd->status.head_mid || sd->setlook_head_mid)
-		clif_changelook(&sd->bl, LOOK_HEAD_MID, sd->setlook_head_mid ? sd->setlook_head_mid : sd->status.head_mid);
-	if (head_top != sd->status.head_top || sd->setlook_head_top)
-		clif_changelook(&sd->bl, LOOK_HEAD_TOP, sd->setlook_head_top ? sd->setlook_head_top : sd->status.head_top);
-	if (robe != sd->status.robe || sd->setlook_robe)
-		clif_changelook(&sd->bl, LOOK_ROBE, sd->setlook_robe ? sd->setlook_robe : sd->status.robe);
+	if (sd->setlook_head_bottom)
+		sd->status.head_bottom = sd->setlook_head_bottom;
+	if (sd->setlook_head_mid)
+		sd->status.head_mid = sd->setlook_head_mid;
+	if (sd->setlook_head_top)
+		sd->status.head_top = sd->setlook_head_top;
+	if (sd->setlook_robe)
+		sd->status.robe = sd->setlook_robe;
+
+	if (head_low != sd->status.head_bottom)
+		clif_changelook(&sd->bl, LOOK_HEAD_BOTTOM, sd->status.head_bottom);
+	if (head_mid != sd->status.head_mid)
+		clif_changelook(&sd->bl, LOOK_HEAD_MID, sd->status.head_mid);
+	if (head_top != sd->status.head_top)
+		clif_changelook(&sd->bl, LOOK_HEAD_TOP, sd->status.head_top);
+	if (robe != sd->status.robe)
+		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
 }
 
 /*==========================================
