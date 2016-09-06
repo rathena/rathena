@@ -660,7 +660,7 @@ void storage_guild_storageadd(struct map_session_data* sd, int index, int amount
 		return;
 	}
 
-	if(!storage_guild_additem(sd,stor,&sd->inventory.u.items_inventory[index],amount))
+	if(storage_guild_additem(sd,stor,&sd->inventory.u.items_inventory[index],amount))
 		pc_delitem(sd,index,amount,0,4,LOG_TYPE_GSTORAGE);
 	else {
 		clif_storageitemremoved(sd,index,0);
@@ -733,7 +733,7 @@ void storage_guild_storageaddfromcart(struct map_session_data* sd, int index, in
 	if( amount < 1 || amount > sd->cart.u.items_cart[index].amount )
 		return;
 
-	if(!storage_guild_additem(sd,stor,&sd->cart.u.items_cart[index],amount))
+	if(storage_guild_additem(sd,stor,&sd->cart.u.items_cart[index],amount))
 		pc_cart_delitem(sd,index,amount,0,LOG_TYPE_GSTORAGE);
 	else {
 		clif_storageitemremoved(sd,index,0);
