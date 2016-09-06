@@ -8,33 +8,34 @@
 //= rAthena Project
 //===== Additional Comments: =================================
 //= 1.0 Initial release [Ridley8819]
+//= 1.1 Dialogue cleanup [Aleos]
 //============================================================
 
 glast_01,195,273,4	script	Hugin's Follower#n_gh	123,{
 	mes "[Hugin's Follower]";
-	mes "I can't move between time and dimension like a master Hugin but I can pretend to move.";
+	mes "I can't move between time and dimensions like master Hugin but I can pretend to.";
 	next;
 	mes "[Hugin's Follower]";
-	mes "What about this Glast Heim is born with powerful dark force?";
+	mes "What's causing this Glast Heim to be imbued with such a powerful dark force?";
 	next;
 	if( select( "I don't care:That is interesting, please tell me more" ) == 2 ){
 		mes "[Hugin's Follower]";
-		mes "As learning ability from Hugin, I just find out the path to Old Glast Heim of more powerful dark force.";
+		mes "Thanks to Hugin, I found the way to access this Old Glast Heim, which is imbued by such powerful dark forces."
 		next;
 		mes "[Hugin's Follower]";
-		mes "How is it? Do you want to explore there?";
+		mes "What do you say? Do you want to explore there?";
 		next;
-		if( select( "No, I want to stop it:I really want to do that!" ) == 2 ){
+		if( select( "No exploration for me:I really want to explore!" ) == 2 ){
 			mes "[Hugin's Follower]";
-			mes "Sure that is not free~ I have to get something little bit. Hoho...";
+			mes "Sure, but this is not a free service! I have to get something in return. Hoho...";
 			next;
 			mes "[Hugin's Follower]";
-			mes "I can send you just two place. How is it? Do you want to try?";
+			mes "I can send you to two places. Which place would you like me to send you?";
 			next;
-			switch( select( "Cancel:Monastery Cemetery (Lv100~130) - 5000z:Corridor of 2nd floor (Over Lv140) - 10000z" ) ){
+			switch( select( "Cancel:Monastery Cemetery (Lv100~130) - 5000z:2nd floor Corridor (Over Lv140) - 10000z" ) ){
 				case 1:
 					mes "[Hugin's Follower]";
-					mes "Alright, please come back whenever you change mind. I think you will have lots of thing to talk with me...";
+					mes "Alright, please come back whenever you change your mind. I think you will have lots to talk with me about...";
 					close;
 				case 2:
 					.@map$ = "gl_chyard_";
@@ -51,7 +52,7 @@ glast_01,195,273,4	script	Hugin's Follower#n_gh	123,{
 			}
 			if( Zeny < .@zeny ){
 				mes "[Hugin's Follower]";
-				mes "What, did you ask me without money?";
+				mes "What? Did you expect this service for free?";
 				close;
 			}
 			Zeny -= .@zeny;
@@ -60,18 +61,18 @@ glast_01,195,273,4	script	Hugin's Follower#n_gh	123,{
 		}
 	}
 	mes "[Hugin's Follower]";
-	mes "Well~ If you are not interested in it, never mind.";
+	mes "Well, if you are not interested in it, never mind.";
 	close;
 }
 
 gl_chyard_,148,149,4	script	Hugin's Follower#n_gh1	123,{
 	mes "[Hugin's Follower]";
-	mes "You want to break?";
-	mes "Ok, let's get out of here.?";
+	mes "You want to return?";
+	mes "Ok, let's get out of here.";
 	next;
-	if( select( "Ah, wrong click... I mean I was not talk to you:Please let me out from here" ) == 1 ){
+	if( select( "I didn't mean to talk to you:Please get me out of here" ) == 1 ){
 		mes "[Hugin's Follower]";
-		mes "Alright just tell me whenever you want to leave.";
+		mes "Alright, just tell me whenever you want to leave.";
 		close;
 	}
 	warp "glast_01", 210, 269;
