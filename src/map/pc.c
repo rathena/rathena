@@ -8616,12 +8616,15 @@ void pc_changelook(struct map_session_data *sd,int type,int val) {
 		break;
 	case LOOK_HEAD_BOTTOM:
 		sd->status.head_bottom = val;
+		sd->setlook_head_bottom = val;
 		break;
 	case LOOK_HEAD_TOP:
 		sd->status.head_top = val;
+		sd->setlook_head_top = val;
 		break;
 	case LOOK_HEAD_MID:
 		sd->status.head_mid = val;
+		sd->setlook_head_mid = val;
 		break;
 	case LOOK_HAIR_COLOR:	//Use the battle_config limits! [Skotlex]
 		val = cap_value(val, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
@@ -8645,6 +8648,7 @@ void pc_changelook(struct map_session_data *sd,int type,int val) {
 		break;
 	case LOOK_ROBE:
 		sd->status.robe = val;
+		sd->setlook_robe = val;
 		break;
 	case LOOK_BODY2:
 		val = cap_value(val, MIN_BODY_STYLE, MAX_BODY_STYLE);
@@ -9691,60 +9695,10 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
 	}
-	//Added check to prevent sending the same look on multiple slots ->
-	//causes client to redraw item on top of itself. (suggested by Lupus)
-	if(pos & EQP_HEAD_LOW && pc_checkequip(sd,EQP_COSTUME_HEAD_LOW) == -1) {
-		if(id && !(pos&(EQP_HEAD_TOP|EQP_HEAD_MID)))
-			sd->status.head_bottom = id->look;
-		else
-			sd->status.head_bottom = 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
-	}
-	if(pos & EQP_HEAD_TOP && pc_checkequip(sd,EQP_COSTUME_HEAD_TOP) == -1) {
-		if(id)
-			sd->status.head_top = id->look;
-		else
-			sd->status.head_top = 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_top);
-	}
-	if(pos & EQP_HEAD_MID && pc_checkequip(sd,EQP_COSTUME_HEAD_MID) == -1) {
-		if(id && !(pos&EQP_HEAD_TOP))
-			sd->status.head_mid = id->look;
-		else
-			sd->status.head_mid = 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_MID,sd->status.head_mid);
-	}
-	if(pos & EQP_COSTUME_HEAD_TOP) {
-		if(id){
-			sd->status.head_top = id->look;
-		} else
-			sd->status.head_top = 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_top);
-	}
-	if(pos & EQP_COSTUME_HEAD_MID) {
-		if(id && !(pos&EQP_HEAD_TOP)){
-			sd->status.head_mid = id->look;
-		} else
-			sd->status.head_mid = 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_MID,sd->status.head_mid);
-	}
-	if(pos & EQP_COSTUME_HEAD_LOW) {
-		if(id && !(pos&(EQP_HEAD_TOP|EQP_HEAD_MID))){
-			sd->status.head_bottom = id->look;
-		} else
-			sd->status.head_bottom = 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
-	}
 	if(pos & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
-	if(pos&EQP_GARMENT && pc_checkequip(sd,EQP_COSTUME_GARMENT) == -1) {
-		sd->status.robe = id ? id->look : 0;
-		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
-	}
-	if(pos & EQP_COSTUME_GARMENT) {
-		sd->status.robe = id ? id->look : 0;
-		clif_changelook(&sd->bl,LOOK_ROBE,sd->status.robe);
-	}
+
+	pc_set_costume_view(sd);
 
 	pc_checkallowskill(sd); //Check if status changes should be halted.
 	iflag = sd->npc_item_flag;
@@ -9850,48 +9804,12 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
 	}
-	if(sd->status.inventory[n].equip & EQP_HEAD_LOW && pc_checkequip(sd,EQP_COSTUME_HEAD_LOW) == -1 ) {
-		sd->status.head_bottom = 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
-	}
-	if(sd->status.inventory[n].equip & EQP_HEAD_TOP && pc_checkequip(sd,EQP_COSTUME_HEAD_TOP) == -1 ) {
-		sd->status.head_top = 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_top);
-	}
-	if(sd->status.inventory[n].equip & EQP_HEAD_MID && pc_checkequip(sd,EQP_COSTUME_HEAD_MID) == -1 ) {
-		sd->status.head_mid = 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_MID,sd->status.head_mid);
-	}
-
-	if(sd->status.inventory[n].equip & EQP_COSTUME_HEAD_TOP) {
-		sd->status.head_top = ( pc_checkequip(sd,EQP_HEAD_TOP) >= 0 ) ? sd->inventory_data[pc_checkequip(sd,EQP_HEAD_TOP)]->look : 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_TOP,sd->status.head_top);
-	}
-
-	if(sd->status.inventory[n].equip & EQP_COSTUME_HEAD_MID) {
-		sd->status.head_mid = ( pc_checkequip(sd,EQP_HEAD_MID) >= 0 ) ? sd->inventory_data[pc_checkequip(sd,EQP_HEAD_MID)]->look : 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_MID,sd->status.head_mid);
-	}
-
-	if(sd->status.inventory[n].equip & EQP_COSTUME_HEAD_LOW) {
-		sd->status.head_bottom = ( pc_checkequip(sd,EQP_HEAD_LOW) >= 0 ) ? sd->inventory_data[pc_checkequip(sd,EQP_HEAD_LOW)]->look : 0;
-		clif_changelook(&sd->bl,LOOK_HEAD_BOTTOM,sd->status.head_bottom);
-	}
 
 	if(sd->status.inventory[n].equip & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
 
-	if(sd->status.inventory[n].equip&EQP_GARMENT && pc_checkequip(sd,EQP_COSTUME_GARMENT) == -1) {
-		sd->status.robe = 0;
-		clif_changelook(&sd->bl, LOOK_ROBE, 0);
-	}
-
-	if(sd->status.inventory[n].equip & EQP_COSTUME_GARMENT) {
-		sd->status.robe = ( pc_checkequip(sd,EQP_GARMENT) >= 0 ) ? sd->inventory_data[pc_checkequip(sd,EQP_GARMENT)]->look : 0;
-		clif_changelook(&sd->bl,LOOK_ROBE,sd->status.robe);
-	}
-
 	clif_unequipitemack(sd,n,sd->status.inventory[n].equip,1);
+	pc_set_costume_view(sd);
 
 	status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
 	// On weapon change (right and left hand)
@@ -12264,6 +12182,82 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
 		return false;
 
 	return true;
+}
+
+/**
+ * Tells client about player's costume view on mapchange for checking 'nocostume' mapflag.
+ * @param sd
+ **/
+void pc_set_costume_view(struct map_session_data *sd) {
+	int i = -1, head_low = 0, head_mid = 0, head_top = 0, robe = 0;
+	struct item_data *id = NULL;
+
+	nullpo_retv(sd);
+
+	head_low = sd->status.head_bottom;
+	head_mid = sd->status.head_mid;
+	head_top = sd->status.head_top;
+	robe = sd->status.robe;
+
+	sd->status.head_bottom = sd->status.head_mid = sd->status.head_top = sd->status.robe = 0;
+
+	//Added check to prevent sending the same look on multiple slots ->
+	//causes client to redraw item on top of itself. (suggested by Lupus)
+	// Normal headgear checks
+	if ((i = sd->equip_index[EQI_HEAD_LOW]) != -1 && (id = sd->inventory_data[i])) {
+		if (!(id->equip&(EQP_HEAD_MID|EQP_HEAD_TOP)))
+			sd->status.head_bottom = id->look;
+		else
+			sd->status.head_bottom = 0;
+	}
+	if ((i = sd->equip_index[EQI_HEAD_MID]) != -1 && (id = sd->inventory_data[i])) {
+		if (!(id->equip&(EQP_HEAD_TOP)))
+			sd->status.head_mid = id->look;
+		else
+			sd->status.head_mid = 0;
+	}
+	if ((i = sd->equip_index[EQI_HEAD_TOP]) != -1 && (id = sd->inventory_data[i]))
+		sd->status.head_top = id->look;
+	if ((i = sd->equip_index[EQI_GARMENT]) != -1 && (id = sd->inventory_data[i]))
+		sd->status.robe = id->look;
+
+	// Costumes check
+	if (!map[sd->bl.m].flag.nocostume) {
+		if ((i = sd->equip_index[EQI_COSTUME_HEAD_LOW]) != -1 && (id = sd->inventory_data[i])) {
+			if (!(id->equip&(EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_TOP)))
+				sd->status.head_bottom = id->look;
+			else
+				sd->status.head_bottom = 0;
+		}
+		if ((i = sd->equip_index[EQI_COSTUME_HEAD_MID]) != -1 && (id = sd->inventory_data[i])) {
+			if (!(id->equip&EQP_COSTUME_HEAD_TOP))
+				sd->status.head_mid = id->look;
+			else
+				sd->status.head_mid = 0;
+		}
+		if ((i = sd->equip_index[EQI_COSTUME_HEAD_TOP]) != -1 && (id = sd->inventory_data[i]))
+			sd->status.head_top = id->look;
+		if ((i = sd->equip_index[EQI_COSTUME_GARMENT]) != -1 && (id = sd->inventory_data[i]))
+			sd->status.robe = id->look;
+	}
+
+	if (sd->setlook_head_bottom)
+		sd->status.head_bottom = sd->setlook_head_bottom;
+	if (sd->setlook_head_mid)
+		sd->status.head_mid = sd->setlook_head_mid;
+	if (sd->setlook_head_top)
+		sd->status.head_top = sd->setlook_head_top;
+	if (sd->setlook_robe)
+		sd->status.robe = sd->setlook_robe;
+
+	if (head_low != sd->status.head_bottom)
+		clif_changelook(&sd->bl, LOOK_HEAD_BOTTOM, sd->status.head_bottom);
+	if (head_mid != sd->status.head_mid)
+		clif_changelook(&sd->bl, LOOK_HEAD_MID, sd->status.head_mid);
+	if (head_top != sd->status.head_top)
+		clif_changelook(&sd->bl, LOOK_HEAD_TOP, sd->status.head_top);
+	if (robe != sd->status.robe)
+		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
 }
 
 /*==========================================
