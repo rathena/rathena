@@ -3116,7 +3116,7 @@ iz_ac01,36,52,3	script	Odd Novice#ac	4_M_SIT_NOVICE,{
 			mes "How about it? Newfangled.";
 			mes "Idling away too long,";
 			mes "All the skills learnt over your shoulder could be used.";
-			specialeffect EF_SIGHT, "Odd Novice#nk1";
+			specialeffect EF_SIGHT, AREA, "Odd Novice#nk1";
 			next;
 			mes "[Odd Novice]";
 			mes "Ugh, all my SP is gone...";

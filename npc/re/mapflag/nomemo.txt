@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: ========================================= 
@@ -11,6 +11,7 @@
 //= Also disables marriage warp skills.
 //===== Additional Comments: ================================= 
 //= 1.0 Renewal split. [Euphy]
+//= 1.1 Added Nightmare Clock Tower [Secret]
 //============================================================
 
 // Episode 13 ====================
@@ -99,6 +100,8 @@ ecl_tdun04	mapflag	nomemo
 ecl_hub01	mapflag	nomemo
 moc_prydn1	mapflag	nomemo
 moc_prydn2	mapflag	nomemo
+c_tower2_	mapflag	nomemo
+c_tower3_	mapflag	nomemo
 
 //Orc's Memory ===================
 1@orcs	mapflag	nomemo

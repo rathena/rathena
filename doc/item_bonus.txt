@@ -155,6 +155,8 @@ bonus2 bHPRegenRate,n,t;		Gain n HP every t milliseconds
 bonus2 bHPLossRate,n,t; 		Lose n HP every t milliseconds
 bonus2 bSPRegenRate,n,t;		Gain n SP every t milliseconds
 bonus2 bSPLossRate,n,t; 		Lose n SP every t milliseconds
+bonus2 bRegenPercentHP,n,t;		Gain n% of max HP every t milliseconds
+bonus2 bRegenPercentSP,n,t;		Gain n% of max SP every t milliseconds
 bonus bNoRegen,x;       		Stops HP or SP regeneration (x: 1=HP, 2=SP)
 
 bonus bUseSPrate,n;         		SP consumption + n%

@@ -8331,6 +8331,7 @@ static const struct _battle_data {
 	{ "mvp_exp_reward_message",             &battle_config.mvp_exp_reward_message,          0,      0,      1,              },
 	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
 	{ "atcommand_levelup_events",			&battle_config.atcommand_levelup_events,		0,		0,		1,				},
+	{ "block_account_in_same_party",		&battle_config.block_account_in_same_party,		1,		0,		1,				},
 
 #include "../custom/battle_config_init.inc"
 };

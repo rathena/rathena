@@ -6167,7 +6167,7 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 		((map[bl->m].flag.pvp?1:0)<<5)| // COUNT_PK - Show the PvP counter
 		((map[bl->m].flag.partylock?1:0)<<6)| // NO_PARTY_FORMATION - Prevents party creation/modification (Might be used for instance dungeons)
 		((map[bl->m].flag.battleground?1:0)<<7)| // BATTLEFIELD - Unknown (Does something for battlegrounds areas)
-		((map[bl->m].flag.noitemconsumption?1:0)<<8)| // DISABLE_COSTUMEITEM - Unknown - (Prevents wearing of costume items?)
+		((map[bl->m].flag.nocostume?1:0)<<8)| // DISABLE_COSTUMEITEM - Disable costume sprites
 		((map[bl->m].flag.nousecart?0:1)<<9)| // USECART - Allow opening cart inventory (Well force it to always allow it)
 		((map[bl->m].flag.nosumstarmiracle?0:1)<<10); // SUNMOONSTAR_MIRACLE - Unknown - (Guessing it blocks Star Gladiator's Miracle from activating)
 		//(1<<11); // Unused bits. 1 - 10 is 0x1 length and 11 is 0x15 length. May be used for future settings.
@@ -7291,23 +7291,14 @@ void clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd)
 /// Party invite result.
 /// 00fd <nick>.24S <result>.B (ZC_ACK_REQ_JOIN_GROUP)
 /// 02c5 <nick>.24S <result>.L (ZC_PARTY_JOIN_REQ_ACK)
-/// result=0 : char is already in a party -> MsgStringTable[80]
-/// result=1 : party invite was rejected -> MsgStringTable[81]
-/// result=2 : party invite was accepted -> MsgStringTable[82]
-/// result=3 : party is full -> MsgStringTable[83]
-/// result=4 : char of the same account already joined the party -> MsgStringTable[608]
-/// result=5 : char blocked party invite -> MsgStringTable[1324] (since 20070904)
-/// result=7 : char is not online or doesn't exist -> MsgStringTable[71] (since 20070904)
-/// result=8 : (%s) TODO instance related? -> MsgStringTable[1388] (since 20080527)
-/// return=9 : TODO map prohibits party joining? -> MsgStringTable[1871] (since 20110205)
-void clif_party_inviteack(struct map_session_data* sd, const char* nick, int result)
+void clif_party_invite_reply(struct map_session_data* sd, const char* nick, enum e_party_invite_reply reply)
 {
 	int fd;
 	nullpo_retv(sd);
 	fd=sd->fd;
 
 #if PACKETVER < 20070904
-	if( result == 7 ) {
+	if( reply == PARTY_REPLY_OFFLINE ) {
 		clif_displaymessage(fd, msg_txt(sd,3));
 		return;
 	}
@@ -7317,13 +7308,13 @@ void clif_party_inviteack(struct map_session_data* sd, const char* nick, int res
 	WFIFOHEAD(fd,packet_len(0xfd));
 	WFIFOW(fd,0) = 0xfd;
 	safestrncpy((char*)WFIFOP(fd,2),nick,NAME_LENGTH);
-	WFIFOB(fd,26) = result;
+	WFIFOB(fd,26) = reply;
 	WFIFOSET(fd,packet_len(0xfd));
 #else
 	WFIFOHEAD(fd,packet_len(0x2c5));
 	WFIFOW(fd,0) = 0x2c5;
 	safestrncpy((char*)WFIFOP(fd,2),nick,NAME_LENGTH);
-	WFIFOL(fd,26) = result;
+	WFIFOL(fd,26) = reply;
 	WFIFOSET(fd,packet_len(0x2c5));
 #endif
 }
@@ -10091,6 +10082,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #else
 	clif_changelook(&sd->bl,LOOK_WEAPON,0);
 #endif
+	pc_set_costume_view(sd);
 
 	if(sd->vd.cloth_color)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);
@@ -17214,7 +17206,11 @@ static void clif_parse_SearchStoreInfo(int fd, struct map_session_data* sd)
 ///     1 = "next" label to retrieve more results
 void clif_search_store_info_ack(struct map_session_data* sd)
 {
+#if PACKETVER >= 20150226
+	const unsigned int blocksize = MESSAGE_SIZE+26+5*MAX_ITEM_RDM_OPT;
+#else
 	const unsigned int blocksize = MESSAGE_SIZE+26;
+#endif
 	int fd = sd->fd;
 	unsigned int i, start, end;
 
@@ -17248,6 +17244,7 @@ void clif_search_store_info_ack(struct map_session_data* sd)
 		it.amount = ssitem->amount;
 
 		clif_addcards(WFIFOP(fd,i*blocksize+25+MESSAGE_SIZE), &it);
+		clif_add_random_options(WFIFOP(fd,i*blocksize+31+MESSAGE_SIZE), &it);
 	}
 
 	WFIFOSET(fd,WFIFOW(fd,2));

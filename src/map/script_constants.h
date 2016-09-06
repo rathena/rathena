@@ -396,6 +396,7 @@
 	export_constant(MF_NOLOCKON);
 	export_constant(MF_NOTOMB);
 	export_constant(MF_SKILL_DAMAGE);
+	export_constant(MF_NOCOSTUME);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -664,6 +665,8 @@
 	script_set_constant("bDropAddClass", SP_DROP_ADDCLASS, false);
 	script_set_constant("bNoMadoFuel", SP_NO_MADO_FUEL, false);
 	script_set_constant("bIgnoreDefClassRate", SP_IGNORE_DEF_CLASS_RATE, false);
+	script_set_constant("bRegenPercentHP", SP_REGEN_PERCENT_HP, false);
+	script_set_constant("bRegenPercentSP", SP_REGEN_PERCENT_SP, false);
 
 	/* equip indices */
 	export_constant(EQI_HEAD_TOP);
