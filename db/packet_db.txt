@@ -40,7 +40,7 @@
 // Maximum key value is 0x7FFFFFFF.
 // NOTE: Keys won't be reloaded, initialized on first load only.
 //
-//packet_db_ver: 46
+//packet_db_ver: 25
 packet_db_ver: default
 packet_keys_use: default
 
