@@ -12619,8 +12619,6 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 			ARR_FIND(0, MAX_SKILL_ITEM_REQUIRE, i, req.itemid[i] && (req.itemid[i] == ITEMID_TRAP || req.itemid[i] == ITEMID_TRAP_ALLOY));
 			if( i != MAX_SKILL_ITEM_REQUIRE && req.itemid[i] )
 				req_item = req.itemid[i];
-			if( map_flag_gvg(src->m) || map[src->m].flag.battleground )
-				limit *= 4; // longer trap times in WOE [celest]
 			if( battle_config.vs_traps_bctall && map_flag_vs(src->m) && (src->type&battle_config.vs_traps_bctall) )
 				target = BCT_ALL;
 		}
