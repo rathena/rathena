@@ -20973,33 +20973,35 @@ BUILDIN_FUNC(npcshopupdate) {
 // Clan System
 BUILDIN_FUNC(clan_join){
 	struct map_session_data *sd;
-	int clan_id;
-
-	clan_id = script_getnum(st,2);
+	int clan_id = script_getnum(st,2);
 
 	if( !script_charid2sd( 3, sd ) ){
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( clan_member_join( sd, clan_id, sd->status.account_id, sd->status.char_id ) ){
-		return SCRIPT_CMD_SUCCESS;
-	}else{
-		return SCRIPT_CMD_FAILURE;
-	}
+	if( clan_member_join( sd, clan_id, sd->status.account_id, sd->status.char_id ) )
+		script_pushint(st, true);
+	else
+		script_pushint(st, false);
+
+	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(clan_leave){
 	struct map_session_data *sd;
 
 	if( !script_charid2sd( 2, sd ) ){
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( clan_member_leave( sd, sd->status.clan_id, sd->status.account_id, sd->status.char_id ) ){
-		return SCRIPT_CMD_SUCCESS;
-	}else{
-		return SCRIPT_CMD_FAILURE;
-	}
+	if( clan_member_leave( sd, sd->status.clan_id, sd->status.account_id, sd->status.char_id ) )
+		script_pushint(st, true);
+	else
+		script_pushint(st, false);
+
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /**
