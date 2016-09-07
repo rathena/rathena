@@ -260,7 +260,7 @@ payon,103,63,3	script	Jason	88,3,3,{
 	mes "a lonely lad like me?";
 	close;
 
-OnTouch:
+OnTouch_:
 	mes "[???]";
 	mes "Errrrrrr...";
 	close;

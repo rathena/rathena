@@ -295,7 +295,7 @@ prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
 	mes "See you in a better world!";
 	close;
 
-OnTouch:
+OnTouch_:
 	mes "[Leon]";
 	mes "Hahahahahahaha!";
 	mes "Hahahahahahaha!";

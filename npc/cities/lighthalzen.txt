@@ -1032,7 +1032,7 @@ lighthalzen,297,239,3	duplicate(Berru#lhz_01)	Pilia#lhz_01	818
 lighthalzen,312,233,3	script	Beggar#lhz_02	777,3,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[Beggar]";
 	mes "Please...";
 	mes "My child is starving...";
@@ -1818,7 +1818,7 @@ lhz_in01,35,226,5	script	Rekenber Guard#li01	867,{
 }
 
 lhz_in01,23,132,3	script	Rekenber Guard#li02	867,5,5,{
-OnTouch:
+OnTouch_:
 	if (isequipped(2241) && isequipped(2243)) {
 		mes "[Rekenber Guard]";
 		mes "Keep your eyes open.";
@@ -1924,7 +1924,7 @@ lhz_in01,199,137,3	script	Scientist#li_03	865,{
 }
 
 lhz_in01,46,125,3	script	Rekenber Guard#li03	867,5,5,{
-OnTouch:
+OnTouch_:
 	if (isequipped(2241) && isequipped(2243)) {
 		mes "[Rekenber Guard]";
 		mes "......................";
@@ -2901,7 +2901,7 @@ lighthalzen,40,107,4	script	Vergil#zen4	869,{
 }
 
 lhz_in01,144,53,3	script	Jorje#zero	98,1,1,{
-OnTouch:
+OnTouch_:
 	switch(rand(1,3)) {
 	case 1:
 		mes "[Jorje]";
@@ -2970,7 +2970,7 @@ lhz_in01,139,48,7	script	Leimi#mimir	73,{
 }
 
 lhz_in01,138,47,0	script	#mimir_camera	-1,2,2,{
-OnTouch:
+OnTouch_:
 	if (BaseJob == Job_Assassin) {
 		if (Sex) {
 			mes "^3355FF*Click*^000000";

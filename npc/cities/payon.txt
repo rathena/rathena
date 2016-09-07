@@ -115,7 +115,7 @@ payon,173,82,0	script	Young Man#2payon	88,{
 payon,158,246,3	script	Guardsman#payon	708,3,3,{
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[Guardsman]";
 	mes "This is the Central Palace of Payon. This place is open to the public, but in accordance with our laws, you must behave in an orderly fashion once inside.";
 	next;
@@ -468,7 +468,7 @@ payon_in01,180,7,2	script	Waitress#payon	90,{
 payon_in03,96,116,3	script	Chief Guardsman#payon	708,3,3,{
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[Chief Guardsman]";
 	mes "What brings";
 	mes "you here? ";
@@ -832,7 +832,7 @@ payon_in01,47,59,2	script	Archer Wolt#payon	88,{
 payon_in03,99,190,4	script	Chief#payon	107,2,2,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (BaseLevel < 30) {
 		mes "[Guard]";
 		mes "Hey...";

@@ -370,7 +370,7 @@ aldeg_cas04,156,210,0	warp	aldeg-4-13_aldeg-4-5	1,1,aldeg_cas04,169,97
 aldeg_cas04,108,210,0	warp	aldeg-4-14_aldeg-4-4	1,1,aldeg_cas04,186,92
 aldeg_cas04,132,231,0	script	aldeg-4-15_aldeg-4-	45,1,1,{
 
-OnTouch:
+OnTouch_:
 	switch (rand(1,5)) {
 		case 1:	warp "aldeg_cas04",152,210; end;
 		case 2:	warp "aldeg_cas04",111,210; end;
