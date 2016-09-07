@@ -1205,7 +1205,7 @@ OnEnable:
 	enablenpc instance_npcname("#potal_01");
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("1@lhz"), 151, 29;
 	end;
 }
@@ -1223,7 +1223,7 @@ OnDisable:
 	disablenpc instance_npcname("#2_0");
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent instance_npcname("Lab2#2_1")+"::OnEnable";
 	donpcevent instance_npcname("#2_0")+"::OnDisable";
 	end;
@@ -1574,7 +1574,7 @@ OnEnable:
 	enablenpc instance_npcname("#potal_02");
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("1@lhz"), 84, 28;
 	end;
 }
@@ -1592,7 +1592,7 @@ OnDisable:
 	disablenpc instance_npcname("#3_0");
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent instance_npcname("Lab3#3_1")+"::OnEnable";
 	donpcevent instance_npcname("#3_0")+"::OnDisable";
 	end;
@@ -1776,7 +1776,7 @@ OnDisable:
 	disablenpc instance_npcname("#potal_03");
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("1@lhz"), 137, 100;
 	end;
 }
@@ -1794,7 +1794,7 @@ OnDisable:
 	disablenpc instance_npcname("#4_0");
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent instance_npcname("Lab4#4_1")+"::OnEnable";
 	donpcevent instance_npcname("#4_0")+"::OnDisable";
 	end;

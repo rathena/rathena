@@ -161,7 +161,7 @@ mal_dun01,153,237,5	script	Weird Entrance	844,{
 //============================================================
 1@cash,199,99,0	script	oct_enter	139,4,4,{
 	end;
-OnTouch:
+OnTouch_:
 	donpcevent instance_npcname("oct_enter_broad")+"::OnEnable";
 	specialeffect EF_BASH;
 	disablenpc instance_npcname("oct_enter");
@@ -297,7 +297,7 @@ OnDisable:
 	killmonster instance_mapname("1@cash"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead"; // Not in official script.
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
-OnTouch:
+OnTouch_:
 	if (getd("."+strnpcinfo(0)+instance_id())) end;
 	setd "."+strnpcinfo(0)+instance_id(),1;
 	hideonnpc instance_npcname(strnpcinfo(0));
@@ -435,7 +435,7 @@ OnDisable:
 OnInstanceInit:
 	disablenpc instance_npcname("oct_backattack1");
 	end;
-OnTouch:
+OnTouch_:
 	set .@map$, instance_mapname("1@cash");
 	monster .@map$,39,59,"Hydra",1068,1;
 	monster .@map$,40,59,"Hydra",1068,1;
@@ -458,7 +458,7 @@ OnEnable:
 OnInstanceInit:
 	disablenpc instance_npcname("oct_backattack2");
 	end;
-OnTouch:
+OnTouch_:
 	if (getd("."+instance_id())) end;
 	setd "."+instance_id(),1;
 	initnpctimer;
@@ -498,7 +498,7 @@ OnEnable:
 OnInstanceInit:
 	disablenpc instance_npcname("oct_backattack3");
 	end;
-OnTouch:
+OnTouch_:
 	if (getd("."+instance_id())) end;
 	setd "."+instance_id(),1;
 	set .@map$, instance_mapname("1@cash");
@@ -525,7 +525,7 @@ OnEnable:
 OnInstanceInit:
 	disablenpc instance_npcname("oct_backattack4");
 	end;
-OnTouch:
+OnTouch_:
 	if (getd("."+instance_id())) end;
 	setd "."+instance_id(),1;
 	set .@map$, instance_mapname("1@cash");

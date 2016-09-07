@@ -808,7 +808,7 @@ kh_school,57,142,6	script	Student#kha	893,3,3,{
 	mes "a new faculty member, are you?";
 	close;
 
-OnTouch:
+OnTouch_:
 	mes "[Laci]";
 	mes "Hey, Nesha...!";
 	mes "have you heard why";
@@ -5158,8 +5158,8 @@ OnTouch:
 // - Anyone can enter
 // - After 30-40 seonds this NPC should be disabled.
 //----------------------------------------------------------------------------
-kh_mansion,29,27,0	script	Kiehl_Room_Warp	45,2,2,{
-OnTouch:
+kh_mansion,27,27,0	script	Kiehl_Room_Warp	45,2,2,{
+OnTouch_:
 	warp "kh_kiehl01",10,31;
 	end;
 
@@ -5445,7 +5445,7 @@ yuno,250,132,0	script	Old Lady#kh	711,{
 // Warp portal into Rosimier Mansion
 //----------------------------------------------------------------------------
 yuno,273,141,0	script	Rosimmir_Entrance	45,2,2,{
-OnTouch:
+OnTouch_:
 	if (countitem(7498) < 1) {
 		mes "That mansion seems to have";
 		mes "been destroyed by the time.";
@@ -6088,7 +6088,7 @@ OnTimer30000:
 	set getvariableofnpc(.KHDoor1Opened,"Big Door#BigDoorKHQ1"),0;
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "kh_kiehl01",55,33;
 	end;
 }
@@ -6131,7 +6131,7 @@ kh_kiehl01,174,40,0	script	Big Door#BigDoorKHQ2	111,{
 	}
 }
 
-kh_kiehl01,174,39,0	script	Big_Door_2_Warp	45,1,1,{
+kh_kiehl01,173,39,0	script	Big_Door_2_Warp	45,1,1,{
 OnEnable:
 	initnpctimer;
 	specialeffect EF_SUMMONSLAVE;
@@ -6148,8 +6148,11 @@ OnTimer30000:
 	set getvariableofnpc(.KHDoor2Opened,"Big Door#BigDoorKHQ2"),0;
 	end;
 
-OnTouch:
-	warp "kh_kiehl01",173,52;
+OnTouch_:
+	if (KielHyreQuest == 48)
+		warp "kh_kiehl01",173,35;
+	else
+		warp "kh_kiehl01",173,52;
 	end;
 }
 
@@ -6191,7 +6194,7 @@ kh_kiehl01,77,108,0	script	Big Door#BigDoorKHQ3	111,{
 	}
 }
 
-kh_kiehl01,78,108,0	script	Big_Door_3_Warp	45,1,1,{
+kh_kiehl01,78,107,0	script	Big_Door_3_Warp	45,1,1,{
 OnEnable:
 	initnpctimer;
 	specialeffect EF_SUMMONSLAVE;
@@ -6208,8 +6211,11 @@ OnTimer30000:
 	set getvariableofnpc(.KHDoor3Opened,"Big Door#BigDoorKHQ3"),0;
 	end;
 
-OnTouch:
-	warp "kh_kiehl01",68,108;
+OnTouch_:
+	if (KielHyreQuest == 49)
+		warp "kh_kiehl01",82,108;
+	else
+		warp "kh_kiehl01",68,108;
 	end;
 }
 
@@ -6251,7 +6257,7 @@ kh_kiehl01,42,177,0	script	Big Door#BigDoorKHQ4	111,{
 	}
 }
 
-kh_kiehl01,41,177,0	script	Big_Door_4_Warp	45,1,1,{
+kh_kiehl01,41,178,0	script	Big_Door_4_Warp	45,1,1,{
 OnEnable:
 	initnpctimer;
 	specialeffect EF_SUMMONSLAVE;
@@ -6268,8 +6274,11 @@ OnTimer30000:
 	set getvariableofnpc(.KHDoor4Opened,"Big Door#BigDoorKHQ4"),0;
 	end;
 
-OnTouch:
-	warp "kh_kiehl01",49,177;
+OnTouch_:
+	if (KielHyreQuest == 50)
+		warp "kh_kiehl01",38,178;
+	else
+		warp "kh_kiehl01",47,171;
 	end;
 }
 
@@ -6479,7 +6488,7 @@ OnInit:
 	disablenpc "Big_Door_5_Warp";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (KielHyreQuest >= 46)
 		warp "kh_kiehl02",50,7;
 	else
@@ -7095,11 +7104,11 @@ OnInit:
 //----------------------------------------------------------------------------
 // Kiehl's Room; Kiehl_Room_Exit
 //----------------------------------------------------------------------------
-kh_kiehl02,50,59,0	script	Kiehl_Room_Exit	45,1,1,{
-OnTouch:
+kh_kiehl02,49,56,0	script	Kiehl_Room_Exit	45,1,1,{
+OnTouch_:
 	if (getmapusers("kh_kiehl02") < 1)
 		donpcevent "KiehlRoom::OnReset";
-	warp "lighthalzen",193,202;
+	warp "lighthalzen",193,200;
 	end;
 
 OnEnable:

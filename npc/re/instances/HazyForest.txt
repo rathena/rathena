@@ -175,7 +175,7 @@ bif_fild01,161,355,0	script	Log Tunnel	844,{
 OnInstanceInit:
 	enablenpc instance_npcname("#Whisper_mist");
 	end;
-OnTouch:
+OnTouch_:
 	disablenpc instance_npcname("#Whisper_mist");
 	initnpctimer;
 	end;
@@ -1033,7 +1033,7 @@ bif_fild01,38,374,0	script	Mysterious Flower#ep14_1	844,{
 
 1@mist,109,70,0	script	a1_a2	45,1,1,{
 	end;
-OnTouch:
+OnTouch_:
 	if (checkquest(7211,PLAYTIME) == -1)
 		setquest 7211;
 	warp instance_mapname("1@mist"),116,40;

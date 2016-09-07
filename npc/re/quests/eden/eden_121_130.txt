@@ -552,7 +552,7 @@ S_Erasequest:
 		next;
 	}
 	return;
-OnTouch:
+OnTouch_:
 	if (para_120lv01 == 1) {
 		emotion e_gasp;
 		mes "[Melody-Jack]";
