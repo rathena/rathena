@@ -531,6 +531,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, int tabl
 			selectoption = "char_id";
 			break;
 		case TABLE_CART:
+		case TABLE_CART_:
 			tablename = schema_config.cart_db;
 			selectoption = "char_id";
 			break;
@@ -717,7 +718,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, int tabl
 		errors++;
 	}
 
-	ShowInfo("Saved %s data for %s: %d\n", (tableswitch == TABLE_INVENTORY ? "Inventory" : (tableswitch == TABLE_CART ? "Cart" : (tableswitch == TABLE_STORAGE ? "Storage" : "Guild Storage"))), selectoption, id);
+	ShowInfo("Saved %s data for %s: %d\n", (tableswitch == TABLE_INVENTORY ? "Inventory" : (tableswitch == TABLE_GUILD_STORAGE ? "Guild Storage" : (tableswitch == TABLE_STORAGE ? "Storage" : "Cart"))), selectoption, id);
 
 	StringBuf_Destroy(&buf);
 	aFree(flag);
