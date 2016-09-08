@@ -1357,6 +1357,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				status_change_end(bl, SC_STONEHARDSKIN, INVALID_TIMER);
 		}
 
+		if (src->type == BL_PC && sc->data[SC_GVG_GOLEM]) {
+			if (flag&BF_WEAPON)
+				damage -= damage * sc->data[SC_GVG_GOLEM]->val3 / 100;
+			if (flag&BF_MAGIC)
+				damage -= damage * sc->data[SC_GVG_GOLEM]->val4 / 100;
+		}
+
 #ifdef RENEWAL
 		// Renewal: steel body reduces all incoming damage to 1/10 [helvetica]
 		if( sc->data[SC_STEELBODY] )
@@ -1447,6 +1454,9 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if ((sce = sc->data[SC_BLOODLUST]) && flag&BF_WEAPON && damage > 0 && rnd()%100 < sce->val3)
 			status_heal(src, damage * sce->val4 / 100, 0, 3);
+
+		if (flag&BF_MAGIC && bl->type == BL_PC && sc->data[SC_GVG_GIANT] && sc->data[SC_GVG_GIANT]->val4)
+			damage += damage * sc->data[SC_GVG_GIANT]->val4 / 100;
 
 		// [Epoque]
 		if (bl->type == BL_MOB) {
@@ -4475,6 +4485,11 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 				ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_ARCLOUSEDASH]->val4);
 				RE_ALLATK_ADDRATE(wd, sc->data[SC_ARCLOUSEDASH]->val4);
 			}
+		}
+
+		if (sd && wd.flag&BF_WEAPON && sc->data[SC_GVG_GIANT] && sc->data[SC_GVG_GIANT]->val3) {
+			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_GVG_GIANT]->val3);
+			RE_ALLATK_ADDRATE(wd, sc->data[SC_GVG_GIANT]->val3);
 		}
 	}
 

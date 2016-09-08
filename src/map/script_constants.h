@@ -1404,6 +1404,15 @@
 	export_constant(SC_MAPLE_FALLS);
 	export_constant(SC_TIME_ACCESSORY);
 	export_constant(SC_MAGICAL_FEATHER);
+	export_constant(SC_GVG_GIANT);
+	export_constant(SC_GVG_GOLEM);
+	export_constant(SC_GVG_STUN);
+	export_constant(SC_GVG_STONE);
+	export_constant(SC_GVG_FREEZ);
+	export_constant(SC_GVG_SLEEP);
+	export_constant(SC_GVG_CURSE);
+	export_constant(SC_GVG_SILENCE);
+	export_constant(SC_GVG_BLIND);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
