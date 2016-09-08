@@ -5820,10 +5820,17 @@ void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id
 /// 0196 <index>.W <id>.L <state>.B (ZC_MSG_STATE_CHANGE) [used for ending status changes and starting them on non-pc units (when needed)]
 /// 043f <index>.W <id>.L <state>.B <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE2) [used exclusively for starting statuses on pcs]
 /// 0983 <index>.W <id>.L <state>.B <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE3) (PACKETVER >= 20120618)
-void clif_status_change_sub(struct block_list *bl,int type,int flag,int tick,int val1, int val2, int val3, enum send_target target_type)
+/// @param bl Sends packet to clients around this object
+/// @param id ID of object that has this effect
+/// @param type Status icon see enum si_type
+/// @param flag 1:Active, 0:Deactive
+/// @param tick Duration in ms
+/// @param val1
+/// @param val2
+/// @param val3
+void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, int tick, int val1, int val2, int val3, enum send_target target_type)
 {
 	unsigned char buf[32];
-	struct map_session_data *sd;
 
 	if (type == SI_BLANK)  //It shows nothing on the client...
 		return;
@@ -5833,36 +5840,32 @@ void clif_status_change_sub(struct block_list *bl,int type,int flag,int tick,int
 
 	nullpo_retv(bl);
 
-	sd = BL_CAST(BL_PC, bl);
-
-	if (!(status_type2relevant_bl_types(type)&bl->type)) // only send status changes that actually matter to the client
-		return;
 #if PACKETVER >= 20120618
-	if(flag && battle_config.display_status_timers && sd)
-		WBUFW(buf,0)=0x983;
+	if (flag && battle_config.display_status_timers)
+		WBUFW(buf,0) = 0x983;
 	else
 #elif PACKETVER >= 20090121
-	if(flag && battle_config.display_status_timers && sd)
-		WBUFW(buf,0)=0x43f;
+	if (flag && battle_config.display_status_timers)
+		WBUFW(buf,0) = 0x43f;
 	else
 #endif
-		WBUFW(buf,0)=0x196;
-	WBUFW(buf,2)=type;
-	WBUFL(buf,4)=bl->id;
-	WBUFB(buf,8)=flag;
+		WBUFW(buf,0) = 0x196;
+	WBUFW(buf,2) = type;
+	WBUFL(buf,4) = id;
+	WBUFB(buf,8) = flag;
 #if PACKETVER >= 20120618
-	if(flag && battle_config.display_status_timers && sd) {
+	if (flag && battle_config.display_status_timers) {
 		if (tick <= 0)
 			tick = 9999; // this is indeed what official servers do
 
-		WBUFL(buf,9)=tick;/* at this stage remain and total are the same value I believe */
-		WBUFL(buf,13)=tick;
+		WBUFL(buf,9) = tick;/* at this stage remain and total are the same value I believe */
+		WBUFL(buf,13) = tick;
 		WBUFL(buf,17) = val1;
 		WBUFL(buf,21) = val2;
 		WBUFL(buf,25) = val3;
 	}
 #elif PACKETVER >= 20090121
-	if(flag && battle_config.display_status_timers && sd) {
+	if (flag && battle_config.display_status_timers) {
 		if (tick <= 0)
 			tick = 9999; // this is indeed what official servers do
 
@@ -5872,11 +5875,20 @@ void clif_status_change_sub(struct block_list *bl,int type,int flag,int tick,int
 		WBUFL(buf,21) = val3;
 	}
 #endif
-	clif_send(buf,packet_len(WBUFW(buf,0)),bl, target_type);
+	clif_send(buf, packet_len(WBUFW(buf,0)), bl, target_type);
 }
 
-void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val1, int val2, int val3) {
-	struct map_session_data *sd;
+/* Sends status effect to clients around the bl
+ * @param bl Object that has the effect
+ * @param type Status icon see enum si_type
+ * @param flag 1:Active, 0:Deactive
+ * @param tick Duration in ms
+ * @param val1
+ * @param val2
+ * @param val3
+ */
+void clif_status_change(struct block_list *bl, int type, int flag, int tick, int val1, int val2, int val3) {
+	struct map_session_data *sd = NULL;
 
 	if (type == SI_BLANK)  //It shows nothing on the client...
 		return;
@@ -5891,7 +5903,7 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 	if (!(status_type2relevant_bl_types(type)&bl->type)) // only send status changes that actually matter to the client
 		return;
 
-	clif_status_change_sub(bl,type, flag, tick, val1, val2, val3, (sd && sd->status.option&OPTION_INVISIBLE) ? SELF : AREA);
+	clif_status_change_sub(bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (sd->status.option&OPTION_INVISIBLE ? SELF : AREA) : AREA_WOS)));
 }
 
 /**
@@ -5923,10 +5935,7 @@ void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list 
 #if PACKETVER > 20120418
 		clif_efst_status_change((target == SELF) ? &sd->bl : bl, bl->id, target, StatusIconChangeTable[type], tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3);
 #else
-		/** !CHECKME: Corrected packet for this client for clif_efst_status_change.
-		 * The packet sent by clif_status_change_sub only works only the char with the effect sends the effect detail.
-		 **/
-		clif_status_change_sub(&tsd->bl, StatusIconChangeTable[type], 1, tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3, (target == SELF) ? AREA_WOS : AREA);
+		clif_status_change_sub(&sd->bl, bl->id, StatusIconChangeTable[type], 1, tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3, target);
 #endif
 	}
 }
