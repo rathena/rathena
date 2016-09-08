@@ -18794,7 +18794,7 @@ BUILDIN_FUNC(bg_join) {
 		y = bg->y;
 	}
 
-	if ((sd = script_charid2sd(6, sd)) == NULL) {
+	if ((script_charid2sd(6, sd)) == NULL) {
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
