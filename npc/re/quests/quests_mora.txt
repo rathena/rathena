@@ -1,16 +1,21 @@
 //===== rAthena Script =======================================
 //= Mora Quest NPCs
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
 //= Quest NPCs related to Mora:
 //== Theore's Request, Chesire's New Day,
 //== Helping Lope and Euridi, Mora Daily Quests,
 //== Find the Research Tools, Knights of the Neighborhood
-//===== Changelogs: =================================
+//===== Additional Comments: =================================
 //= 0.1 NPCs are currently placeholders. [Euphy]
 //= 1.0 Implemented all official quests. [Euphy]
 //= 1.1 Added GM management function and NPCs. [Euphy]
-//= 1.2 Corrected Mora Daily Quest Job EXP formula [Secretdataz]
 //============================================================
 
 // Theore's Request :: ep14_1_bs
@@ -4527,9 +4532,9 @@ mora,115,98,8	script	Hotcha#pa0829	509,{
 			erasequest .@i;
 			specialeffect2 EF_STEAL;
 			if (BaseLevel > 99)
-				getexp 0, ((JobLevel < 50)?JobLevel * JobLevel * 110 / 100 * 50:0);
+				getexp 0, ((JobLevel < 50)?JobLevel * JobLevel * (110/100) * 50:0);
 			else
-				getexp 0, ((JobLevel < 70)?JobLevel * JobLevel * 110 / 100 * 10:0);
+				getexp 0, ((JobLevel < 70)?JobLevel * JobLevel * (110/100) * 10:0);
 			getitem 6380,3; //Mora_Coin
 			close;
 		}
@@ -4728,9 +4733,9 @@ L_CheckQuest:
 		erasequest getarg(0);
 		specialeffect2 EF_STEAL;
 		if (BaseLevel > 99)
-			getexp 0, ((JobLevel < 50)?JobLevel * JobLevel * 110 / 100 * 50:0);
+			getexp 0, ((JobLevel < 50)?JobLevel * JobLevel * (110/100) * 50:0);
 		else
-			getexp 0, ((JobLevel < 70)?JobLevel * JobLevel * 110 / 100 * 10:0);
+			getexp 0, ((JobLevel < 70)?JobLevel * JobLevel * (110/100) * 10:0);
 		getitem 6380,1; //Mora_Coin
 		close;
 	}
@@ -4924,9 +4929,9 @@ L_CheckQuest:
 		erasequest getarg(0);
 		specialeffect2 EF_STEAL;
 		if (BaseLevel > 99)
-			getexp 0, ((JobLevel < 50)?JobLevel * JobLevel * 110 / 100 * 50:0);
+			getexp 0, ((JobLevel < 50)?JobLevel * JobLevel * (110/100) * 50:0);
 		else
-			getexp 0, ((JobLevel < 70)?JobLevel * JobLevel * 110 / 100 * 10:0);
+			getexp 0, ((JobLevel < 70)?JobLevel * JobLevel * (110/100) * 10:0);
 		getitem 6380,1; //Mora_Coin
 		close;
 	}
