@@ -1,17 +1,12 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable Warp Portal memory.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Prevents players from using /memo on a map.
 //= Also disables marriage warp skills.
-//===== Additional Comments: ================================= 
+//===== Changelogs: ================================= 
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added Nightmare Clock Tower [Secret]
+//= 1.2 Added dali, dali02 [Nova]
 //============================================================
 
 // Episode 13 ====================
@@ -128,3 +123,4 @@ gl_cas02_	mapflag	nomemo
 1@sara	mapflag	nomemo
 1@gef_in	mapflag	nomemo
 dali	mapflag	nomemo
+dali02	mapflag	nomemo
