@@ -1513,6 +1513,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 			mes "[Boonthom]";
 			mes "The ancient building consists";
 			mes "of 2 levels. Before you enter the 2nd underground level, please return to me so that I can tell you how to enter that place.";
+			close;
 		}
 		mes "[Boonthom]";
 		mes "Did you forget what materials";
