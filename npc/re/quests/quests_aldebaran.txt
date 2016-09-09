@@ -23,12 +23,13 @@ c_tower1,232,222,5	script	Belljamin Button#ct	968,{
 	mes "[Belljamin Button]";
 	mes "I'm begging you not to ask more about it. It might put your life in danger.";
 	next;
-	switch( select( "Don't ask:Go to 2nd floor of warped tower:Go to 3rd floor of warped tower" ) ){
+	.@menu = select("Don't ask:Go to 2nd floor of warped tower:Go to 3rd floor of warped tower");
+	switch(.@menu){
 		case 1:
 			break;
 		case 2:
 		case 3:
-			if( @menu == 2 ){
+			if( .@menu == 2 ){
 				.@map$ = "c_tower2_";
 				.@x = 268;
 				.@y = 26;
