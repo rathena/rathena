@@ -156,7 +156,7 @@ static bool cart_fromsql(uint32 char_id, struct s_storage* p)
 		StringBuf_Printf(&buf, ", `option_val%d`", i);
 		StringBuf_Printf(&buf, ", `option_parm%d`", i);
 	}
-	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`=? LIMIT %d", schema_config.cart_db, MAX_CART);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id`=? ORDER BY `id` LIMIT %d", schema_config.cart_db, MAX_CART);
 
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
 		||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
@@ -677,15 +677,22 @@ static void mapif_storage_data_loaded(int fd, uint32 account_id, char type, stru
  * IZ 0x388b <account_id>.L <result>.B <type>.B
  * @param fd
  * @param account_id
+ * @param char_id
  * @param type
  */
-void mapif_storage_saved(int fd, uint32 account_id, bool sucess, char type) {
+void mapif_storage_saved(int fd, uint32 account_id, uint32 char_id, bool sucess, char type) {
 	WFIFOHEAD(fd,8);
 	WFIFOW(fd, 0) = 0x388b;
 	WFIFOL(fd, 2) = account_id;
 	WFIFOB(fd, 6) = sucess;
 	WFIFOB(fd, 7) = type;
 	WFIFOSET(fd,8);
+
+	if (type == TABLE_CART_) {
+		struct s_storage stor;
+		memset(&stor, 0, sizeof(struct s_storage));
+		mapif_storage_data_loaded(fd, account_id, type, stor, cart_fromsql(char_id, &stor));
+	}
 }
 
 /**
@@ -738,10 +745,13 @@ bool mapif_parse_StorageSave(int fd) {
 	switch(type){
 		case TABLE_INVENTORY: inventory_tosql(cid, &stor); break;
 		case TABLE_STORAGE:   storage_tosql(aid, &stor);   break;
-		case TABLE_CART:      cart_tosql(cid, &stor);      break;
+		case TABLE_CART:
+		case TABLE_CART_:
+			cart_tosql(cid, &stor);
+			break;
 		default: return false;
 	}
-	mapif_storage_saved(fd, aid, true, type);
+	mapif_storage_saved(fd, aid, cid, true, type);
 	return false;
 }
 

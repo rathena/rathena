@@ -519,6 +519,7 @@ struct map_session_data {
 	int vended_id;
 	int vender_id;
 	int vend_num;
+	uint16 vend_skill_lv;
 	char message[MESSAGE_SIZE];
 	struct s_vending vending[MAX_VENDING];
 
