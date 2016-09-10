@@ -1328,7 +1328,7 @@
 	export_constant(SC_MOONSTAR);
 	export_constant(SC_SUPER_STAR);
 	export_constant(SC_HEAT_BARREL);
-	export_constant(SC_HEAT_BARREL_AFTER);
+	export_constant(SC_MAGICALBULLET);
 	export_constant(SC_P_ALTER);
 	export_constant(SC_E_CHAIN);
 	export_constant(SC_C_MARKER);

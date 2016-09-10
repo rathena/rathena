@@ -674,7 +674,7 @@ typedef enum sc_type {
 	 * Rebellion [Cydh]
 	 **/
 	SC_HEAT_BARREL,
-	SC_HEAT_BARREL_AFTER,
+	SC_MAGICALBULLET,
 	SC_P_ALTER,
 	SC_E_CHAIN,
 	SC_C_MARKER,
