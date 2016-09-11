@@ -18208,6 +18208,7 @@ void clif_clan_basicinfo( struct map_session_data *sd ){
 	}
 
 	length = 8 + 2 * NAME_LENGTH + MAP_NAME_LENGTH_EXT + 2;
+	fd = sd->fd;
 
 	WFIFOHEAD(fd,length);
 
