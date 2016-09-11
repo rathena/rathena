@@ -1,5 +1,5 @@
 --
--- Table structure for table `elemental`
+-- Table structure for table `clan`
 --
 CREATE TABLE `clan` (
   `clan_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
