@@ -6,7 +6,7 @@
 //= 1.0 First Version. [Nova]
 //============================================================
 
-mid_camp,207,290,6	script	Expedition Guide#01	852,{
+mid_camp,207,290,6	script	Expedition Guide#01	4_M_EIN_SOLDIER,{
 	mes "[Expedition Guide]";
 	mes "Are you going to enter the ^0000FFDimensional Gap^000000?  Please use this Transport Device you see here.";
 	next;
@@ -34,20 +34,20 @@ mid_camp,207,290,6	script	Expedition Guide#01	852,{
 	}
 }
 
-mid_camp,212,290,4	script	Expedition Guide#02	852,{
+mid_camp,212,290,4	script	Expedition Guide#02	4_M_EIN_SOLDIER,{
 	mes "[Expedition Guide]";
 	mes "Please use a ^0000FFTransport Device^000000 if you wish to travel through the dimensional rift.  The insides have not been fully explored yet so please be careful in there.";
 	close;
 }
 
-moc_fild22b,225,198,6	duplicate(Expedition Guide#01)	Expedition Guide#03	707
-moc_fild22b,223,203,4	duplicate(Expedition Guide#02)	Expedition Guide#04	707
-bif_fild01,314,155,6	duplicate(Expedition Guide#01)	Expedition Guide#05	852
-bif_fild01,320,154,4	duplicate(Expedition Guide#02)	Expedition Guide#06	852
-dic_fild02,236,33,6	duplicate(Expedition Guide#01)	Expedition Guide#07	852
-dic_fild02,239,36,4	duplicate(Expedition Guide#02)	Expedition Guide#08	852
+moc_fild22b,225,198,6	duplicate(Expedition Guide#01)	Expedition Guide#03	4_M_MOC_SOLDIER
+moc_fild22b,223,203,4	duplicate(Expedition Guide#02)	Expedition Guide#04	4_M_MOC_SOLDIER
+bif_fild01,314,155,6	duplicate(Expedition Guide#01)	Expedition Guide#05	4_M_EIN_SOLDIER
+bif_fild01,320,154,4	duplicate(Expedition Guide#02)	Expedition Guide#06	4_M_EIN_SOLDIER
+dic_fild02,236,33,6	duplicate(Expedition Guide#01)	Expedition Guide#07	4_M_EIN_SOLDIER
+dic_fild02,239,36,4	duplicate(Expedition Guide#02)	Expedition Guide#08	4_M_EIN_SOLDIER
 
-dali,137,87,4	script	Allied Forces Soldier	997,{
+dali,137,87,4	script	Allied Forces Soldier	4_M_MOCASS1,{
 	mes "[Allied Forces Soldier]";
 	mes "This dimensional rift is connected to the Allied Forces ^0000FFExpedition Camp^000000 in Jotunheim.";
 	next;
@@ -56,7 +56,7 @@ dali,137,87,4	script	Allied Forces Soldier	997,{
 	close;
 }
 
-dali,122,60,4	script	Morroc Soldier	707,{
+dali,122,60,4	script	Morroc Soldier	4_M_MOC_SOLDIER,{
 	mes "[Morroc Soldier]";
 	mes "This dimensional rift is connected to ^0000FFMorroc^000000 back in Rune Midgard.";
 	next;
@@ -65,7 +65,7 @@ dali,122,60,4	script	Morroc Soldier	707,{
 	close;
 }
 
-dali,51,104,6	script	Spledide Soldier	461,{
+dali,51,104,6	script	Spledide Soldier	4_M_FAIRYSOLDIER2,{
 	mes "[Spledide Soldier]";
 	mes "This dimensional rift is connected to the south of ^0000FFBifrost^000000.  It enables quick travel to the Splendide frontline.";
 	next;
@@ -77,7 +77,7 @@ dali,51,104,6	script	Spledide Soldier	461,{
 	close;
 }
 
-dali,56,126,4	script	Dispatched Sapha	449,{
+dali,56,126,4	script	Dispatched Sapha	4_MAN_BENKUNI,{
 	mes "[Dispatched Sapha]";
 	mes "This dimensional rift is connected to the southern area of the ^0000FFKamidal Mountains^000000 in El Dicastes.  I just dropped by for my research, but it is incredible.";
 	next;
@@ -86,9 +86,9 @@ dali,56,126,4	script	Dispatched Sapha	449,{
 	close;
 }
 
-dali,109,94,4	shop	Sundries Merchant	496,611:-1,1750:-1,1065:-1
+dali,109,94,4	shop	Sundries Merchant	4_M_MERCAT2,611:-1,1750:-1,1065:-1
 
-dali,112,95,4	script	Logistics Manager	496,{
+dali,112,95,4	script	Logistics Manager	4_M_MERCAT2,{
 	mes "[Logistics Manager]";
 	mes "Welcome.  I am in charge of logistics to take care of your items in this weird place.  Do you need to access your storage?";
 	next;
@@ -116,165 +116,13 @@ dali,112,95,4	script	Logistics Manager	496,{
 	close;
 }
 
-dali,119,76,7	script	Party Member#SHADOW	482,{
-	end;
-OnChat12:
-	npctalk "Are you awake?";
-	end;
-OnChat16:
-	npctalk "I have no idea. There might be an accident up front.";
-	end;
-OnChat23:
-	npctalk "Right.. I should have entered with another group!";
-	end;
-OnChat31:
-	npctalk "Take a nap. I am sleepy too, so we'll take shifts.";
-	end;
-}
-dali,120,77,4	script	Party Member#SURA	484,{
-	end;
-OnChat10:
-	emotion e_yawn;
-	npctalk "Huh? What is this? You still haven't entered?";
-	end;
-OnChat13:
-	emotion e_an;
-	npctalk "Why are you still here?";
-	end;
-OnChat19:
-	emotion e_an;
-	end;
-OnChat20:
-	npctalk "Damn! I am pissed off! I came here because I heard only a party is allowed to get in!";
-	end;
-OnChat22:
-	emotion e_an;
-	end;
-OnChat27:
-	emotion e_yawn;
-	npctalk "Bah, I don't care. I'm gonna take a nap, so wake me up when we're ready.";
-	end;
-}
-dali,119,78,2	script	Party Member#GUILL	466,{
-	end;
-OnChat5:
-	npctalk "You want to eat again?";
-	end;
-OnChat9:
-	npctalk "I just saw a street trader passing by... Where is he?";
-	end;
-OnChat13:
-	npctalk "Hang on a bit. The merchant is going to pass by soon.";
-	end;
-OnChat18:
-	npctalk "Give me a sip of juice.";
-	end;
-OnChat23:
-	npctalk "So mean.. I won't eat then.";
-	end;
-OnChat25:
-	npctalk "Not at all.";
-	end;
-OnChat30:
-	emotion e_ag;
-	npctalk "No!!!!!!!!!";
-	end;
-}
-dali,117,79,5	script	Party Member#CRU	745,{
-	end;
-OnChat4:
-	npctalk "Uh, I'm a little bit hungry... I wonder if anybody is selling some warm sweet potatoes or even dumplings...";
-	end;
-OnChat7:
-	npctalk "I need to eat something before doing anything.";
-	end;
-OnChat11:
-	npctalk "Can I come back after having a meal?";
-	end;
-OnChat15:
-	npctalk "I want to buy cold grape juice~";
-	end;
-OnChat21:
-	npctalk "You pay for your food.";
-	end;
-OnChat24:
-	emotion e_gg;
-	npctalk "Hey. Are you pissed off?";
-	end;
-OnChat28:
-	emotion e_gg;
-	npctalk "You are upset!!";
-	end;
-}
-dali,120,81,3	script	Party Member#EINOLD	847,{
-	end;
-OnChat18:
-	npctalk "Cough~ Cough~";
-	end;
-OnChat28:
-	npctalk "What? You, we gotta talk! I've been too nice to you!";
-	end;
-}
-dali,117,81,7	script	Party Member#WANDERER	485,{
-	end;
-OnChat2:
-	npctalk "We heard about a magic competition being held here!";
-	end;
-OnChat6:
-	npctalk "I am just wondering about the tournament..";
-	end;
-OnChat12:
-	npctalk "Can you even catch that?";
-	end;
-OnChat17:
-	npctalk "What? How dare you?!";
-	end;
-OnChat23:
-	npctalk "Whatever, I'm not eating.";
-	end;
-OnChat28:
-	npctalk "Can I get back before I die...";
-	end;
-OnChat31:
-	npctalk "He's angry all right....";
-	end;
-	
-}
-dali,118,83,3	script	Party Member#MONK	746,{
-	end;
-OnChat1:
-	npctalk "I heard rumors about some magic swordman. Let's go find him.";
-	end;
-OnChat3:
-	npctalk "Where is it?!";
-	end;
-OnChat8:
-	npctalk "By the way, I also heard about something called the Devil's Tower.";
-	end;
-OnChat10:
-	npctalk "I am curious about the Faceworms I heard about from a Laphine.";
-	end;
-OnChat14:
-	npctalk "That is your wish....";
-	end;
-OnChat21:
-	npctalk "Are you going to hit me? Do it!";
-	emotion e_ag;
-	end;
-OnChat26:
-	emotion e_gg;
-	npctalk "Look at him snoozing. Hehe.";
-	end;
-OnChat30:
-	npctalk "Whatever~";
-	end;
-}
-dali,115,85,5	script	Party Leader#dali	119,{
+dali,115,85,5	script	Party Leader#dali	2_M_SWORDMASTER,{
 	hideonnpc "Party Leader#dali";
 	hideoffnpc "Party Leader#dali2";
 	donpcevent "#dalichat::OnEnable";
 	end;
 }
+
 dali,115,85,0	script	#dalichat	-1,{
 	end;
 OnInit:
@@ -285,164 +133,155 @@ OnEnable:
 	initnpctimer;
 	end;
 OnTimer1000:
-	donpcevent "Party Leader#dali2::OnChat1";
+	npctalk "Attention!!!", "Party Leader#dali2";
 	end;
 OnTimer2000:
-	donpcevent "Party Leader#dali2::OnChat2";
+	npctalk "Here, here. Everybody be quiet and line up!", "Party Leader#dali2";
 	end;
 OnTimer3000:
-	donpcevent "Party Leader#dali2::OnChat3";
+	npctalk "We have now entered the inside of the Dimensional Crack. Where should be go first?", "Party Leader#dali2";
 	end;
 OnTimer4000:
-	donpcevent "Party Leader#dali2::OnChat4";
+	npctalk "Anyone have an opinion?", "Party Leader#dali2";
 	end;
 OnTimer6000:
-	donpcevent "Party Member#MONK::OnChat1";
+	npctalk "I heard rumors about some magic swordman. Let's go find him.", "Party Member#MONK";
 	end;
 OnTimer7500:
-	donpcevent "Party Member#WANDERER::OnChat2";
+	npctalk "We heard about a magic competition being held here!", "Party Member#WANDERER";
 	end;
 OnTimer9000:
-	donpcevent "Party Member#MONK::OnChat3";
+	npctalk "Where is it?!", "Party Member#MONK";
 	end;
 OnTimer10500:
-	donpcevent "Party Member#CRU::OnChat4";
+	npctalk "Uh, I'm a little bit hungry... I wonder if anybody is selling some warm sweet potatoes or even dumplings...", "Party Member#CRU";
 	end;
 OnTimer12000:
-	donpcevent "Party Member#GUILL::OnChat5";
+	npctalk "You want to eat again?", "Party Member#GUILL";
 	end;
 OnTimer13500:
-	donpcevent "Party Member#WANDERER::OnChat6";
+	npctalk "I am just wondering about the tournament..", "Party Member#WANDERER";
 	end;
 OnTimer15000:
-	donpcevent "Party Member#CRU::OnChat7";
+	npctalk "I need to eat something before doing anything.", "Party Member#CRU";
 	end;
 OnTimer16500:
-	donpcevent "Party Member#MONK::OnChat8";
+	npctalk "By the way, I also heard about something called the Devil's Tower.", "Party Member#MONK";
 	end;
 OnTimer18000:
-	donpcevent "Party Member#GUILL::OnChat9";
+	npctalk "I just saw a street trader passing by... Where is he?", "Party Member#GUILL";
 	end;
 OnTimer19500:
-	donpcevent "Party Member#SURA::OnChat10";
+	emotion e_yawn, 0, "Party Member#SURA";
+	npctalk "Huh? What is this? You still haven't entered?", "Party Member#SURA";
 	end;
 OnTimer20000:
-	donpcevent "Party Member#MONK::OnChat10";
+	npctalk "I am curious about the Faceworms I heard about from a Laphine.", "Party Member#MONK";
 	end;
 OnTimer21000:
-	donpcevent "Party Member#CRU::OnChat11";
+	npctalk "Can I come back after having a meal?", "Party Member#CRU";
 	end;
 OnTimer22500:
-	donpcevent "Party Member#WANDERER::OnChat12";
-	donpcevent "Party Member#SHADOW::OnChat12";
+	npctalk "Can you even catch that?", "Party Member#WANDERER";
+	npctalk "Are you awake?", "Party Member#SHADOW";
 	end;
 OnTimer24000:
-	donpcevent "Party Member#SURA::OnChat13";
+	emotion e_an, 0, "Party Member#SURA";
+	npctalk "Why are you still here?", "Party Member#SURA";
 	end;
 OnTimer24500:
-	donpcevent "Party Member#GUILL::OnChat13";
+	npctalk "Hang on a bit. The merchant is going to pass by soon.", "Party Member#GUILL";
 	end;
 OnTimer25500:
-	donpcevent "Party Member#MONK::OnChat14";
+	npctalk "That is your wish....", "Party Member#MONK";
 	end;
 OnTimer27000:
-	donpcevent "Party Member#CRU::OnChat15";
+	npctalk "I want to buy cold grape juice~", "Party Member#CRU";
 	end;
 OnTimer28500:
-	donpcevent "Party Member#SHADOW::OnChat16";
+	npctalk "I have no idea. There might be an accident up front.", "Party Member#SHADOW";
 	end;
 OnTimer30000:
-	donpcevent "Party Member#WANDERER::OnChat17";
+	npctalk "What? How dare you?!", "Party Member#WANDERER";
 	end;
 OnTimer31500:
-	donpcevent "Party Member#GUILL::OnChat18";
+	npctalk "Give me a sip of juice.", "Party Member#GUILL";
 	end;
 OnTimer32000:
-	donpcevent "Party Member#EINOLD::OnChat18";
+	npctalk "Cough~ Cough~", "Party Member#EINOLD";
 	end;
 OnTimer33000:
-	donpcevent "Party Member#SURA::OnChat19";
+	emotion e_an, 0, "Party Member#SURA";
 	end;
 OnTimer34000:
-	donpcevent "Party Member#SURA::OnChat20";
+	npctalk "Damn! I am pissed off! I came here because I heard only a party is allowed to get in!", "Party Member#SURA";
 	end;
 OnTimer36000:
-	donpcevent "Party Member#MONK::OnChat21";
-	donpcevent "Party Member#CRU::OnChat21";
+	npctalk "Are you going to hit me? Do it!", "Party Member#MONK";
+	emotion e_ag, 0, "Party Member#MONK";
+	npctalk "You pay for your food.", "Party Member#CRU";
 	end;
 OnTimer37500:
-	donpcevent "Party Member#SURA::OnChat22";
+	emotion e_an, 0, "Party Member#SURA";
 	end;
 OnTimer39000:
-	donpcevent "Party Member#WANDERER::OnChat23";
-	donpcevent "Party Member#GUILL::OnChat23";
-	donpcevent "Party Member#SHADOW::OnChat23";
+	npctalk "Whatever, I'm not eating.", "Party Member#WANDERER";
+	npctalk "So mean.. I won't eat then.", "Party Member#GUILL";
+	npctalk "Right.. I should have entered with another group!", "Party Member#SHADOW";
 	end;
 OnTimer40500:
-	donpcevent "Party Member#CRU::OnChat24";
+	emotion e_gg, 0, "Party Member#CRU::OnChat24";
+	npctalk "Hey. Are you pissed off?", "Party Member#CRU::OnChat24";
 	end;
 OnTimer42000:
-	donpcevent "Party Member#GUILL::OnChat25";
+	npctalk "Not at all.", "Party Member#GUILL";
 	end;
 OnTimer43500:
-	donpcevent "Party Member#MONK::OnChat26";
+	emotion e_gg, 0, "Party Member#MONK";
+	npctalk "Look at him snoozing. Hehe.", "Party Member#MONK";
 	end;
 OnTimer45000:
-	donpcevent "Party Member#SURA::OnChat27";
+	emotion e_yawn, 0, "Party Member#SURA";
+	npctalk "Bah, I don't care. I'm gonna take a nap, so wake me up when we're ready.";
 	end;
 OnTimer46500:
-	donpcevent "Party Member#CRU::OnChat28";
-	donpcevent "Party Member#WANDERER::OnChat28";
-	donpcevent "Party Member#EINOLD::OnChat28";
+	emotion e_gg, 0, "Party Member#CRU";
+	npctalk "You are upset!!", "Party Member#CRU";
+	npctalk "Can I get back before I die...", "Party Member#WANDERER";
+	npctalk "What? You, we gotta talk! I've been too nice to you!", "Party Member#EINOLD";
 	end;
 OnTimer48000:
-	donpcevent "Party Leader#dali2::OnChat29";
+	npctalk "Excuse me..... everyone.............?", "Party Leader#dali2";
 	end;
 OnTimer49500:
-	donpcevent "Party Member#GUILL::OnChat30";
-	donpcevent "Party Member#MONK::OnChat30";
+	emotion e_ag, 0, "Party Member#GUILL";
+	npctalk "No!!!!!!!!!", "Party Member#GUILL";
+	npctalk "Whatever~", "Party Member#MONK";
 	end;
 OnTimer51000:
-	donpcevent "Party Leader#dali2::OnChat31";
+	emotion e_sob, 0, "Party Leader#dali2";
+	npctalk "Please listen to me....", "Party Leader#dali2";
+	npctalk "He's angry all right....", "Party Member#WANDERER";
+	npctalk "Take a nap. I am sleepy too, so we'll take shifts.", "Party Member#SHADOW";
 	end;
 OnTimer52500:
-	donpcevent "Party Leader#dali2::OnChat32";
+	hideonnpc "Party Leader#dali2";
+	hideoffnpc "Party Leader#dali";
 	stopnpctimer;
 	disablenpc "#dalichat";
 	end;
 }
 
-dali,115,85,3	script	Party Leader#dali2	119,{
-	end;
-OnInit:
-	hideonnpc "Party Leader#dali2";
-	end;
-OnChat1:
-	npctalk "Attention!!!";
-	end;
-OnChat2:
-	npctalk "Here, here. Everybody be quiet and line up!";
-	end;
-OnChat3:
-	npctalk "We have now entered the inside of the Dimensional Crack. Where should be go first?";
-	end;
-OnChat4:
-	npctalk "Anyone have an opinion?";
-	end;
-OnChat29:
-	npctalk "Excuse me..... everyone.............?";
-	end;
-OnChat31:
-	emotion e_sob;
-	npctalk "Please listen to me....";
-	end;
-OnChat32:
-	hideonnpc "Party Leader#dali2";
-	hideoffnpc "Party Leader#dali";
-	end;
-}
+dali,115,85,3	script	Party Leader#dali2	2_M_SWORDMASTER,{}
+dali,117,81,7	script	Party Member#WANDERER	4_F_WANDERER,{}
+dali,117,79,5	script	Party Member#CRU	4_F_CRU,{}
+dali,118,83,3	script	Party Member#MONK	4_F_MONK,{}
+dali,119,76,7	script	Party Member#SHADOW	4_F_SHADOWCHASER,{}
+dali,119,78,2	script	Party Member#GUILL	4_M_JPNOJI,{}
+dali,120,77,4	script	Party Member#SURA	4_F_SURA,{}
+dali,120,81,3	script	Party Member#EINOLD	4_M_EINOLD,{}
 
-dali,102,83,5	script	Merchant Prince#HUMERC	900,2,2,{
+dali,102,83,5	script	Merchant Prince#HUMERC	4_M_HUMERCHANT,2,2,{
 	mes "[Prince Canet]";
 	mes "Who're you?";
 	next;
@@ -501,14 +340,14 @@ OnTouch:
 	close;
 }
 
-dali,105,82,1	script	Jumpy Knight#JP_RUN	430,{
+dali,105,82,1	script	Jumpy Knight#JP_RUN	4_M_JP_RUN,{
 	end;
 OnInit:
 	hideonnpc "Jumpy Knight#JP_RUN";
 	end;
 }
 
-dali,63,112,7	script	Merchant Prince#HUMERC2	900,2,2,{
+dali,63,112,7	script	Merchant Prince#HUMERC2	4_M_HUMERCHANT,2,2,{
 	mes "[Prince Canet]";
 	mes "You need to pay a toll to get past here.";
 	next;
@@ -553,14 +392,14 @@ OnTouch:
 	close;
 }
 
-dali,67,113,3	script	Jumpy Knight#JP_RUN2	430,{
+dali,67,113,3	script	Jumpy Knight#JP_RUN2	4_M_JP_RUN,{
 	end;
 OnInit:
 	hideonnpc "Jumpy Knight#JP_RUN2";
 	end;
 }
 
-dali,89,97,3	script	Merchant Prince#HUMERC3	900,{
+dali,89,97,3	script	Merchant Prince#HUMERC3	4_M_HUMERCHANT,{
 	mes "[Prince Canet]";
 	mes "You are lucky that you have met up";
 	mes "with me.";
@@ -609,7 +448,7 @@ OnInit:
 	end;
 }
 
-dali,89,94,7	script	Jumpy Knight#JP_RUN3	430,{
+dali,89,94,7	script	Jumpy Knight#JP_RUN3	4_M_JP_RUN,{
 	end;
 OnInit:
 	hideonnpc "Jumpy Knight#JP_RUN3";
@@ -617,7 +456,7 @@ OnInit:
 }
 
 
-dali02,58,123,3	script	Curious Knight#KY_KNT	418,{
+dali02,58,123,3	script	Curious Knight#KY_KNT	4_M_KY_KNT,{
 	mes "[Curious Knight]";
 	mes "The Royal Guard in here";
 	mes "was desperate for help.";
@@ -631,7 +470,7 @@ dali02,58,123,3	script	Curious Knight#KY_KNT	418,{
 	mes "Knighthood.";
 	close;
 }
-dali02,51,112,5	script	Confused Thief#DST_SOL	939,{
+dali02,51,112,5	script	Confused Thief#DST_SOL	4_DST_SOLDIER,{
 	mes "[Confused Thief]";
 	mes "One minute I'm in a bar...";
 	mes "The next minute I'm here...";
@@ -643,7 +482,7 @@ dali02,51,112,5	script	Confused Thief#DST_SOL	939,{
 	mes "in this place...";
 	close;
 }
-dali02,65,115,5	script	Adventurous Rafflesia#ra	516,{
+dali02,65,115,5	script	Adventurous Rafflesia#ra	4_M_RAFLE_GR,{
 	mes "[Adventurous Rafflesia]";
 	mes "No no this has to be Thanatos";
 	mes "Tower...";
@@ -664,7 +503,7 @@ dali02,65,115,5	script	Adventurous Rafflesia#ra	516,{
 	close;
 }
 
-dali02,68,117,5	script	Guide#ra	516,{
+dali02,68,117,5	script	Guide#ra	4_M_RAFLE_GR,{
 	mes "[Guide]";
 	mes "Oh, we're back here again.";
 	mes "I cannot find a way out!";
@@ -685,7 +524,7 @@ dali02,68,117,5	script	Guide#ra	516,{
 	close;
 }
 
-dali02,65,119,5	script	Tourist#ra	516,{
+dali02,65,119,5	script	Tourist#ra	4_M_RAFLE_GR,{
 	mes "[Tourist]";
 	mes "Is this place the famous Prontera?";
 	mes "It is dark just like a big city!";
@@ -706,7 +545,7 @@ dali02,65,119,5	script	Tourist#ra	516,{
 	close;
 }
 
-dali02,69,122,5	script	Traveller#ra	516,{
+dali02,69,122,5	script	Traveller#ra	4_M_RAFLE_GR,{
 	mes "[Traveller]";
 	mes "I hear a ticking clock.";
 	mes "This place must be Geffen!";
