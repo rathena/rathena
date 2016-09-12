@@ -648,7 +648,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname(strnpcinfo(0));
 	end;
-OnTouch:
+OnTouch_:
 	set .@map1$, instance_mapname("1@gl_k");
 	set .@map2$, instance_mapname("2@gl_k");
 	switch(atoi(replacestr(strnpcinfo(2),"ghinstancewarp",""))) {
@@ -848,7 +848,7 @@ OnMyMobDead:
 //============================================================
 1@gl_k,221,82,3	script	Breathless Man#GHtramp1	849,4,4,{
 	end;
-OnTouch:
+OnTouch_:
 	set .@i, rand(1,10);
 	if (.@i == 1) set .@mobs,3;
 	else if (.@i == 2) set .@mobs,4;
@@ -968,7 +968,7 @@ OnMyMobDead:
 
 1@gl_k,150,257,3	script	#GHMclear3	111,9,9,{
 	end;
-OnTouch:
+OnTouch_:
 	donpcevent instance_npcname("#controlGH3")+"::OnEnable";
 	specialeffect EF_BASH;
 	donpcevent instance_npcname("#GHMclear3")+"::OnDisable";
@@ -1144,7 +1144,7 @@ OnEnable:
 
 2@gl_k,150,67,0	script	#effectGH01	111,10,10,{
 	end;
-OnTouch:
+OnTouch_:
 	if (.touch) {
 		set .touch,0;
 		specialeffect EF_BASH;
@@ -1490,7 +1490,7 @@ OnEnable:
 
 2@gl_k,150,179,0	script	#controlGH6	111,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce instance_mapname("2@gl_k"), "???: Do not come! There are traps everywhere here... Aaaaack!!!!",bc_map,"0xFF0000";
 	specialeffect EF_BASH;
 	donpcevent instance_npcname("Himmelmez#ghinstance3")+"::OnEnable";
@@ -1510,7 +1510,7 @@ OnEnable:
 
 2@gl_k,158,252,1	script	Himmelmez#ghinstance3	650,7,7,{
 	end;
-OnTouch:
+OnTouch_:
 	specialeffect EF_BASH;
 	donpcevent instance_npcname("#controlGH5")+"::OnEnable";
 	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnEnable";

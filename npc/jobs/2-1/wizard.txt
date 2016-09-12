@@ -1253,7 +1253,7 @@ OnInit:
 	disablenpc "Room of Water#Failed";
 	end;
 
-OnTouch:
+OnTouch_:
 	mapannounce "job_wiz",strcharinfo(0)+" has not succeeded.",bc_map;
 	warp "geffen",120,110;
 	end;
@@ -1433,7 +1433,7 @@ OnInit:
 	disablenpc "Room of Earth#Failed";
 	end;
 
-OnTouch:
+OnTouch_:
 	mapannounce "job_wiz",strcharinfo(0) + " has not succeeded.",bc_map;
 	warp "geffen",120,110;
 	end;
@@ -1616,7 +1616,7 @@ OnInit:
 	disablenpc "Room of Fire#Failed";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "geffen",120,110;
 	end;
 }

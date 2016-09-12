@@ -8754,9 +8754,11 @@ void pc_setoption(struct map_session_data *sd,int type)
 	clif_skillinfoblock(sd); // Skill list needs to be updated after base change.
 }
 
-/*==========================================
+/**
  * Give player a cart
- *------------------------------------------*/
+ * @param sd Player
+ * @param type 0:Remove cart, 1 ~ MAX_CARTS: Cart type
+ **/
 bool pc_setcart(struct map_session_data *sd,int type) {
 #ifndef NEW_CARTS
 	int cart[6] = {0x0000,OPTION_CART1,OPTION_CART2,OPTION_CART3,OPTION_CART4,OPTION_CART5};
@@ -8783,10 +8785,12 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 			if( !sd->sc.data[SC_PUSH_CART] ) /* first time, so fill cart data */
 				clif_cartlist(sd);
 			clif_updatestatus(sd, SP_CARTINFO);
-			sc_start(&sd->bl,&sd->bl, SC_PUSH_CART, 100, type, 0);
+			sc_start(&sd->bl,&sd->bl, SC_PUSH_CART, 100, type, -1);
+#if PACKETVER > 20120418
 			clif_efst_status_change(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, 9999, type, 0, 0);
 			if( sd->sc.data[SC_PUSH_CART] )/* forcefully update */
 				sd->sc.data[SC_PUSH_CART]->val1 = type;
+#endif
 			break;
 	}
 

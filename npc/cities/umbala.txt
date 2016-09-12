@@ -1001,7 +1001,7 @@ um_in,158,71,3	script	Utan villager#um	787,{
 }
 
 umbala,140,197,1	script	Bungee Jump	-1,0,0,{
-OnTouch:
+OnTouch_:
 	switch(rand(1,3)) {
 	case 1:
 		percentheal -100,0;
@@ -1021,7 +1021,7 @@ OnTouch:
 }
 
 umbala,136,195,0	script	 #jump	-1,1,1,{
-OnTouch:
+OnTouch_:
 	warp "umbala",145,166;
 	end;
 }
