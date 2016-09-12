@@ -19,7 +19,7 @@
 //=     TODO: Dialogues "Engrish" cleanup.
 //============================================================ 
 
-glast_01,204,273,6	script	Hugin#ghinstance	755,{
+glast_01,204,273,6	script	Hugin#ghinstance	4_M_SAGE_C,{
 	if (BaseLevel < 130) {
 		mes "[Hugin]";
 		mes "Why don't you come back after becoming stronger?";
@@ -163,7 +163,7 @@ glast_01,204,273,6	script	Hugin#ghinstance	755,{
 
 // Floor 1
 //============================================================
-1@gl_k,149,41,6	script	Varmundt#ghinstance1	654,{
+1@gl_k,149,41,6	script	Varmundt#ghinstance1	4_M_BARMUND,{
 	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
 		cutin "gl_barmund1",2;
 		mes "[Varmundt]";
@@ -227,7 +227,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,145,54,6	script	Khalitzburg Knightage#1	655,{
+1@gl_k,145,54,6	script	Khalitzburg Knightage#1	4_F_KHALITZBURG,{
 	mes "["+strnpcinfo(1)+"]";
 	switch ((atoi(strnpcinfo(2)) + 1) / 2) {
 		case 1: mes "Is there something you need?"; break;
@@ -250,29 +250,29 @@ OnEnable:
 	hideoffnpc instance_npcname(strnpcinfo(0));
 	end;
 }
-1@gl_k,154,54,3	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#2	655
-1@gl_k,145,59,6	duplicate(Khalitzburg Knightage#1)	White Knight#3	657
-1@gl_k,154,59,3	duplicate(Khalitzburg Knightage#1)	White Knight#4	657
-1@gl_k,145,64,6	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#5	655
-1@gl_k,154,64,3	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#6	655
-1@gl_k,145,69,6	duplicate(Khalitzburg Knightage#1)	White Knight#7	657
-1@gl_k,154,69,3	duplicate(Khalitzburg Knightage#1)	White Knight#8	657
-1@gl_k,145,74,6	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#9	655
-1@gl_k,154,74,3	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#10	655
-1@gl_k,145,79,6	duplicate(Khalitzburg Knightage#1)	White Knight#11	657
-1@gl_k,154,79,3	duplicate(Khalitzburg Knightage#1)	White Knight#12	657
-1@gl_k,145,84,6	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#13	655
-1@gl_k,154,84,3	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#14	655
-1@gl_k,145,89,6	duplicate(Khalitzburg Knightage#1)	White Knight#15	657
-1@gl_k,154,89,3	duplicate(Khalitzburg Knightage#1)	White Knight#16	657
-1@gl_k,145,94,6	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#17	655
-1@gl_k,154,94,3	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#18	655
-1@gl_k,145,99,6	duplicate(Khalitzburg Knightage#1)	White Knight#19	657
-1@gl_k,154,99,3	duplicate(Khalitzburg Knightage#1)	White Knight#20	657
-1@gl_k,145,104,6	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#21	655
-1@gl_k,154,104,3	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#22	655
+1@gl_k,154,54,3	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#2	4_F_KHALITZBURG
+1@gl_k,145,59,6	duplicate(Khalitzburg Knightage#1)	White Knight#3	4_WHITEKNIGHT
+1@gl_k,154,59,3	duplicate(Khalitzburg Knightage#1)	White Knight#4	4_WHITEKNIGHT
+1@gl_k,145,64,6	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#5	4_F_KHALITZBURG
+1@gl_k,154,64,3	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#6	4_F_KHALITZBURG
+1@gl_k,145,69,6	duplicate(Khalitzburg Knightage#1)	White Knight#7	4_WHITEKNIGHT
+1@gl_k,154,69,3	duplicate(Khalitzburg Knightage#1)	White Knight#8	4_WHITEKNIGHT
+1@gl_k,145,74,6	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#9	4_F_KHALITZBURG
+1@gl_k,154,74,3	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#10	4_F_KHALITZBURG
+1@gl_k,145,79,6	duplicate(Khalitzburg Knightage#1)	White Knight#11	4_WHITEKNIGHT
+1@gl_k,154,79,3	duplicate(Khalitzburg Knightage#1)	White Knight#12	4_WHITEKNIGHT
+1@gl_k,145,84,6	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#13	4_F_KHALITZBURG
+1@gl_k,154,84,3	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#14	4_F_KHALITZBURG
+1@gl_k,145,89,6	duplicate(Khalitzburg Knightage#1)	White Knight#15	4_WHITEKNIGHT
+1@gl_k,154,89,3	duplicate(Khalitzburg Knightage#1)	White Knight#16	4_WHITEKNIGHT
+1@gl_k,145,94,6	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#17	4_F_KHALITZBURG
+1@gl_k,154,94,3	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#18	4_F_KHALITZBURG
+1@gl_k,145,99,6	duplicate(Khalitzburg Knightage#1)	White Knight#19	4_WHITEKNIGHT
+1@gl_k,154,99,3	duplicate(Khalitzburg Knightage#1)	White Knight#20	4_WHITEKNIGHT
+1@gl_k,145,104,6	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#21	4_F_KHALITZBURG
+1@gl_k,154,104,3	duplicate(Khalitzburg Knightage#1)	Khalitzburg Knightage#22	4_F_KHALITZBURG
 
-1@gl_k,149,100,6	script	Heinrich#ghinstance1	652,{
+1@gl_k,149,100,6	script	Heinrich#ghinstance1	4_M_HEINRICH,{
 	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
 		cutin "gl_heinrich2",2;
 		select("Sir. Heinrich. Varmundt...");
@@ -346,7 +346,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,152,97,3	script	Varmundt#ghinstance2	654,{
+1@gl_k,152,97,3	script	Varmundt#ghinstance2	4_M_BARMUND,{
 	end;
 OnInstanceInit:
 OnDisable:
@@ -357,7 +357,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,149,97,6	script	Heinrich#ghinstance2	652,{
+1@gl_k,149,97,6	script	Heinrich#ghinstance2	4_M_HEINRICH,{
 	end;
 OnInstanceInit:
 OnDisable:
@@ -368,7 +368,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,149,100,6	script	Heinrich#ghinstance3	652,{
+1@gl_k,149,100,6	script	Heinrich#ghinstance3	4_M_HEINRICH,{
 	end;
 OnInstanceInit:
 OnDisable:
@@ -379,7 +379,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,149,89,1	script	Himelmez#ghinstance1	650,{
+1@gl_k,149,89,1	script	Himelmez#ghinstance1	4_F_HIMEL,{
 	end;
 OnInstanceInit:
 OnDisable:
@@ -622,7 +622,7 @@ OnMyMobDead:
 	end;
 }
 
-1@gl_k,145,54,6	script	.#ghinstance1	111,{
+1@gl_k,145,54,6	script	.#ghinstance1	HIDDEN_NPC,{
 	end;
 OnInstanceInit:
 OnDisable:
@@ -636,29 +636,29 @@ OnEffect1:
 	specialeffect EF_LEXAETERNA;
 	end;
 }
-1@gl_k,154,54,3	duplicate(.#ghinstance1)	.#ghinstance2	111
-1@gl_k,145,59,6	duplicate(.#ghinstance1)	.#ghinstance3	111
-1@gl_k,154,59,3	duplicate(.#ghinstance1)	.#ghinstance4	111
-1@gl_k,145,64,6	duplicate(.#ghinstance1)	.#ghinstance5	111
-1@gl_k,154,64,3	duplicate(.#ghinstance1)	.#ghinstance6	111
-1@gl_k,145,69,6	duplicate(.#ghinstance1)	.#ghinstance7	111
-1@gl_k,154,69,3	duplicate(.#ghinstance1)	.#ghinstance8	111
-1@gl_k,145,74,6	duplicate(.#ghinstance1)	.#ghinstance9	111
-1@gl_k,154,74,3	duplicate(.#ghinstance1)	.#ghinstance10	111
-1@gl_k,145,79,6	duplicate(.#ghinstance1)	.#ghinstance11	111
-1@gl_k,154,79,3	duplicate(.#ghinstance1)	.#ghinstance12	111
-1@gl_k,145,84,6	duplicate(.#ghinstance1)	.#ghinstance13	111
-1@gl_k,154,84,3	duplicate(.#ghinstance1)	.#ghinstance14	111
-1@gl_k,145,89,6	duplicate(.#ghinstance1)	.#ghinstance15	111
-1@gl_k,154,89,3	duplicate(.#ghinstance1)	.#ghinstance16	111
-1@gl_k,145,94,6	duplicate(.#ghinstance1)	.#ghinstance17	111
-1@gl_k,154,94,3	duplicate(.#ghinstance1)	.#ghinstance18	111
-1@gl_k,145,99,6	duplicate(.#ghinstance1)	.#ghinstance19	111
-1@gl_k,154,99,3	duplicate(.#ghinstance1)	.#ghinstance20	111
-1@gl_k,145,104,6	duplicate(.#ghinstance1)	.#ghinstance21	111
-1@gl_k,154,104,3	duplicate(.#ghinstance1)	.#ghinstance22	111
+1@gl_k,154,54,3	duplicate(.#ghinstance1)	.#ghinstance2	HIDDEN_NPC
+1@gl_k,145,59,6	duplicate(.#ghinstance1)	.#ghinstance3	HIDDEN_NPC
+1@gl_k,154,59,3	duplicate(.#ghinstance1)	.#ghinstance4	HIDDEN_NPC
+1@gl_k,145,64,6	duplicate(.#ghinstance1)	.#ghinstance5	HIDDEN_NPC
+1@gl_k,154,64,3	duplicate(.#ghinstance1)	.#ghinstance6	HIDDEN_NPC
+1@gl_k,145,69,6	duplicate(.#ghinstance1)	.#ghinstance7	HIDDEN_NPC
+1@gl_k,154,69,3	duplicate(.#ghinstance1)	.#ghinstance8	HIDDEN_NPC
+1@gl_k,145,74,6	duplicate(.#ghinstance1)	.#ghinstance9	HIDDEN_NPC
+1@gl_k,154,74,3	duplicate(.#ghinstance1)	.#ghinstance10	HIDDEN_NPC
+1@gl_k,145,79,6	duplicate(.#ghinstance1)	.#ghinstance11	HIDDEN_NPC
+1@gl_k,154,79,3	duplicate(.#ghinstance1)	.#ghinstance12	HIDDEN_NPC
+1@gl_k,145,84,6	duplicate(.#ghinstance1)	.#ghinstance13	HIDDEN_NPC
+1@gl_k,154,84,3	duplicate(.#ghinstance1)	.#ghinstance14	HIDDEN_NPC
+1@gl_k,145,89,6	duplicate(.#ghinstance1)	.#ghinstance15	HIDDEN_NPC
+1@gl_k,154,89,3	duplicate(.#ghinstance1)	.#ghinstance16	HIDDEN_NPC
+1@gl_k,145,94,6	duplicate(.#ghinstance1)	.#ghinstance17	HIDDEN_NPC
+1@gl_k,154,94,3	duplicate(.#ghinstance1)	.#ghinstance18	HIDDEN_NPC
+1@gl_k,145,99,6	duplicate(.#ghinstance1)	.#ghinstance19	HIDDEN_NPC
+1@gl_k,154,99,3	duplicate(.#ghinstance1)	.#ghinstance20	HIDDEN_NPC
+1@gl_k,145,104,6	duplicate(.#ghinstance1)	.#ghinstance21	HIDDEN_NPC
+1@gl_k,154,104,3	duplicate(.#ghinstance1)	.#ghinstance22	HIDDEN_NPC
 
-1@gl_k,96,80,0	script	#ghinstancewarp1	45,2,2,{
+1@gl_k,96,80,0	script	#ghinstancewarp1	WARPNPC,2,2,{
 	end;
 OnInstanceInit:
 OnDisable:
@@ -689,20 +689,20 @@ OnTouch:
 	}
 	end;
 }
-1@gl_k,90,80,0	duplicate(#ghinstancewarp1)	#ghinstancewarp2	45,2,2
-1@gl_k,202,79,0	duplicate(#ghinstancewarp1)	#ghinstancewarp3	45,2,2
-1@gl_k,206,79,0	duplicate(#ghinstancewarp1)	#ghinstancewarp4	45,2,2
-1@gl_k,228,216,0	duplicate(#ghinstancewarp1)	#ghinstancewarp5	45,2,2
-1@gl_k,222,216,0	duplicate(#ghinstancewarp1)	#ghinstancewarp6	45,2,2
-1@gl_k,150,284,0	duplicate(#ghinstancewarp1)	#ghinstancewarp7	45,2,2
-2@gl_k,145,123,0	duplicate(#ghinstancewarp1)	#ghinstancewarp8	45,2,2
-2@gl_k,136,122,0	duplicate(#ghinstancewarp1)	#ghinstancewarp9	45,2,2
-2@gl_k,154,101,0	duplicate(#ghinstancewarp1)	#ghinstancewarp10	45,2,2
-2@gl_k,165,101,0	duplicate(#ghinstancewarp1)	#ghinstancewarp11	45,2,2
-2@gl_k,150,163,0	duplicate(#ghinstancewarp1)	#ghinstancewarp12	45,2,2
-2@gl_k,150,167,0	duplicate(#ghinstancewarp1)	#ghinstancewarp13	45,2,2
-2@gl_k,150,32,0	duplicate(#ghinstancewarp1)	#ghinstancewarp14	45,2,2
-1@gl_k,69,168,0	duplicate(#ghinstancewarp1)	#ghinstancewarp15	45,2,2
+1@gl_k,90,80,0	duplicate(#ghinstancewarp1)	#ghinstancewarp2	WARPNPC,2,2
+1@gl_k,202,79,0	duplicate(#ghinstancewarp1)	#ghinstancewarp3	WARPNPC,2,2
+1@gl_k,206,79,0	duplicate(#ghinstancewarp1)	#ghinstancewarp4	WARPNPC,2,2
+1@gl_k,228,216,0	duplicate(#ghinstancewarp1)	#ghinstancewarp5	WARPNPC,2,2
+1@gl_k,222,216,0	duplicate(#ghinstancewarp1)	#ghinstancewarp6	WARPNPC,2,2
+1@gl_k,150,284,0	duplicate(#ghinstancewarp1)	#ghinstancewarp7	WARPNPC,2,2
+2@gl_k,145,123,0	duplicate(#ghinstancewarp1)	#ghinstancewarp8	WARPNPC,2,2
+2@gl_k,136,122,0	duplicate(#ghinstancewarp1)	#ghinstancewarp9	WARPNPC,2,2
+2@gl_k,154,101,0	duplicate(#ghinstancewarp1)	#ghinstancewarp10	WARPNPC,2,2
+2@gl_k,165,101,0	duplicate(#ghinstancewarp1)	#ghinstancewarp11	WARPNPC,2,2
+2@gl_k,150,163,0	duplicate(#ghinstancewarp1)	#ghinstancewarp12	WARPNPC,2,2
+2@gl_k,150,167,0	duplicate(#ghinstancewarp1)	#ghinstancewarp13	WARPNPC,2,2
+2@gl_k,150,32,0	duplicate(#ghinstancewarp1)	#ghinstancewarp14	WARPNPC,2,2
+1@gl_k,69,168,0	duplicate(#ghinstancewarp1)	#ghinstancewarp15	WARPNPC,2,2
 
 // Sector 1 Mobs
 //============================================================
@@ -734,7 +734,7 @@ OnMyMobDead:
 	end;
 }
 
-1@gl_k,17,51,3	script	Altar boy Domun#clearGH	706,{
+1@gl_k,17,51,3	script	Altar boy Domun#clearGH	4_M_KID1,{
 	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
 		mes "[Altar boy Domun]";
 		mes "Save me! Save me!!!";
@@ -820,7 +820,7 @@ OnMyMobDead:
 	end;
 }
 
-1@gl_k,291,145,3	script	Holgren the Destroyer	726,{
+1@gl_k,291,145,3	script	Holgren the Destroyer	4_F_JOB_BLACKSMITH,{
 	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
 		mes "[Holgren the Destroyer]";
 		mes "Die!! You shall die!!!";
@@ -873,7 +873,7 @@ OnEnable:
 
 // Tramp Mobs
 //============================================================
-1@gl_k,221,82,3	script	A dead man#GHtramp1	849,4,4,{
+1@gl_k,221,82,3	script	A dead man#GHtramp1	4_M_DIEMAN,4,4,{
 	end;
 OnTouch:
 	.@i = rand(1,10);
@@ -897,43 +897,43 @@ OnDisable:
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
 }
-1@gl_k,213,63,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp2	849,4,4
-1@gl_k,230,50,2	duplicate(A dead man#GHtramp1)	A dead man#GHtramp3	849,4,4
-1@gl_k,222,39,2	duplicate(A dead man#GHtramp1)	A dead man#GHtramp4	849,4,4
-1@gl_k,214,27,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp5	849,4,4
-1@gl_k,223,17,2	duplicate(A dead man#GHtramp1)	A dead man#GHtramp6	849,4,4
-1@gl_k,235,16,4	duplicate(A dead man#GHtramp1)	A dead man#GHtramp7	849,4,4
-1@gl_k,251,20,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp8	849,4,4
-1@gl_k,240,43,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp9	849,4,4
-1@gl_k,271,19,1	duplicate(A dead man#GHtramp1)	A dead man#GHtramp10	849,4,4
-1@gl_k,246,62,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp11	849,4,4
-1@gl_k,282,48,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp12	849,4,4
-1@gl_k,285,81,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp13	849,4,4
-1@gl_k,241,86,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp14	849,4,4
-1@gl_k,249,101,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp15	849,4,4
-1@gl_k,276,106,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp16	849,4,4
-1@gl_k,252,120,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp17	849,4,4
-1@gl_k,258,150,1	duplicate(A dead man#GHtramp1)	A dead man#GHtramp18	849,4,4
-1@gl_k,255,157,6	duplicate(A dead man#GHtramp1)	A dead man#GHtramp19	849,4,4
-1@gl_k,261,164,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp20	849,4,4
-1@gl_k,269,173,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp21	849,4,4
-1@gl_k,280,167,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp22	849,4,4
-1@gl_k,293,161,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp23	849,4,4
-1@gl_k,226,96,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp24	849,4,4
-1@gl_k,222,119,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp25	849,4,4
-1@gl_k,233,123,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp26	849,4,4
-2@gl_k,147,203,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp27	849,4,4
-2@gl_k,141,222,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp28	849,4,4
-2@gl_k,167,225,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp29	849,4,4
-2@gl_k,145,236,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp30	849,4,4
-2@gl_k,143,260,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp31	849,4,4
-2@gl_k,170,259,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp32	849,4,4
-2@gl_k,143,197,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp33	849,4,4
-2@gl_k,155,195,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp34	849,4,4
-2@gl_k,154,188,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp35	849,4,4
-2@gl_k,153,214,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp36	849,4,4
-2@gl_k,172,233,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp37	849,4,4
-2@gl_k,176,245,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp38	849,4,4
+1@gl_k,213,63,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp2	4_M_DIEMAN,4,4
+1@gl_k,230,50,2	duplicate(A dead man#GHtramp1)	A dead man#GHtramp3	4_M_DIEMAN,4,4
+1@gl_k,222,39,2	duplicate(A dead man#GHtramp1)	A dead man#GHtramp4	4_M_DIEMAN,4,4
+1@gl_k,214,27,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp5	4_M_DIEMAN,4,4
+1@gl_k,223,17,2	duplicate(A dead man#GHtramp1)	A dead man#GHtramp6	4_M_DIEMAN,4,4
+1@gl_k,235,16,4	duplicate(A dead man#GHtramp1)	A dead man#GHtramp7	4_M_DIEMAN,4,4
+1@gl_k,251,20,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp8	4_M_DIEMAN,4,4
+1@gl_k,240,43,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp9	4_M_DIEMAN,4,4
+1@gl_k,271,19,1	duplicate(A dead man#GHtramp1)	A dead man#GHtramp10	4_M_DIEMAN,4,4
+1@gl_k,246,62,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp11	4_M_DIEMAN,4,4
+1@gl_k,282,48,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp12	4_M_DIEMAN,4,4
+1@gl_k,285,81,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp13	4_M_DIEMAN,4,4
+1@gl_k,241,86,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp14	4_M_DIEMAN,4,4
+1@gl_k,249,101,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp15	4_M_DIEMAN,4,4
+1@gl_k,276,106,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp16	4_M_DIEMAN,4,4
+1@gl_k,252,120,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp17	4_M_DIEMAN,4,4
+1@gl_k,258,150,1	duplicate(A dead man#GHtramp1)	A dead man#GHtramp18	4_M_DIEMAN,4,4
+1@gl_k,255,157,6	duplicate(A dead man#GHtramp1)	A dead man#GHtramp19	4_M_DIEMAN,4,4
+1@gl_k,261,164,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp20	4_M_DIEMAN,4,4
+1@gl_k,269,173,7	duplicate(A dead man#GHtramp1)	A dead man#GHtramp21	4_M_DIEMAN,4,4
+1@gl_k,280,167,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp22	4_M_DIEMAN,4,4
+1@gl_k,293,161,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp23	4_M_DIEMAN,4,4
+1@gl_k,226,96,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp24	4_M_DIEMAN,4,4
+1@gl_k,222,119,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp25	4_M_DIEMAN,4,4
+1@gl_k,233,123,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp26	4_M_DIEMAN,4,4
+2@gl_k,147,203,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp27	4_M_DIEMAN,4,4
+2@gl_k,141,222,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp28	4_M_DIEMAN,4,4
+2@gl_k,167,225,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp29	4_M_DIEMAN,4,4
+2@gl_k,145,236,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp30	4_M_DIEMAN,4,4
+2@gl_k,143,260,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp31	4_M_DIEMAN,4,4
+2@gl_k,170,259,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp32	4_M_DIEMAN,4,4
+2@gl_k,143,197,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp33	4_M_DIEMAN,4,4
+2@gl_k,155,195,5	duplicate(A dead man#GHtramp1)	A dead man#GHtramp34	4_M_DIEMAN,4,4
+2@gl_k,154,188,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp35	4_M_DIEMAN,4,4
+2@gl_k,153,214,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp36	4_M_DIEMAN,4,4
+2@gl_k,172,233,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp37	4_M_DIEMAN,4,4
+2@gl_k,176,245,3	duplicate(A dead man#GHtramp1)	A dead man#GHtramp38	4_M_DIEMAN,4,4
 
 // Sector 3 Mobs
 //============================================================
@@ -1001,7 +1001,7 @@ OnMyMobDead:
 	end;
 }
 
-1@gl_k,150,257,3	script	#GHMclear3	111,9,9,{
+1@gl_k,150,257,3	script	#GHMclear3	HIDDEN_NPC,9,9,{
 	end;
 OnTouch:
 	donpcevent instance_npcname("#controlGH3")+"::OnEnable";
@@ -1077,7 +1077,7 @@ OnTimer38000:
 	end;
 }
 
-1@gl_k,144,258,6	script	Heinrich#ghinstance4	652,{
+1@gl_k,144,258,6	script	Heinrich#ghinstance4	4_M_HEINRICH,{
 	cutin "gl_heinrich1",2;
 	mes "[Heinrich]";
 	mes "Himelmez... I will never forget what you've done to my men.";
@@ -1093,7 +1093,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,150,257,3	script	Himelmez#ghinstance2	650,{
+1@gl_k,150,257,3	script	Himelmez#ghinstance2	4_F_HIMEL,{
 	cutin "gl_himel2",2;
 	mes "[Himelmez]";
 	mes "Don't look at me nervous like that.";
@@ -1110,7 +1110,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,156,259,3	script	Varmundt#ghinstance3	654,{
+1@gl_k,156,259,3	script	Varmundt#ghinstance3	4_M_BARMUND,{
 	if (checkquest(12318,HUNTING) == 2) {
 		cutin "gl_barmund1",2;
 		mes "[Varmundt]";
@@ -1144,7 +1144,7 @@ OnEnable:
 
 // Floor 2
 //============================================================
-2@gl_k,148,67,1	script	Heinrich#ghinstance5	652,{
+2@gl_k,148,67,1	script	Heinrich#ghinstance5	4_M_HEINRICH,{
 	cutin "gl_heinrich1",2;
 	mes "[Heinrich]";
 	mes "Himelmez's closed space covers everywhere...";
@@ -1160,7 +1160,7 @@ OnEnable:
 	end;
 }
 
-2@gl_k,151,71,7	script	Varmundt#ghinstance4	654,{
+2@gl_k,151,71,7	script	Varmundt#ghinstance4	4_M_BARMUND,{
 	cutin "gl_barmund1",2;
 	mes "[Varmundt]";
 	mes "How many times I do this job. In my dream, I did it over and over again...";
@@ -1176,7 +1176,7 @@ OnEnable:
 	end;
 }
 
-2@gl_k,150,67,0	script	#effectGH01	111,10,10,{
+2@gl_k,150,67,0	script	#effectGH01	HIDDEN_NPC,10,10,{
 	end;
 OnTouch:
 	if ('touch) {
@@ -1505,7 +1505,7 @@ OnMyMobDead:
 	end;
 }
 
-2@gl_k,155,250,7	script	Heinrich#ghinstance6	652,{
+2@gl_k,155,250,7	script	Heinrich#ghinstance6	4_M_HEINRICH,{
 	cutin "gl_heinrich1",2;
 	mes "[Heinrich]";
 	mes "What are you decorating Himelmez!";
@@ -1521,7 +1521,7 @@ OnEnable:
 	end;
 }
 
-2@gl_k,162,250,1	script	Varmundt#ghinstance5	654,{
+2@gl_k,162,250,1	script	Varmundt#ghinstance5	4_M_BARMUND,{
 	cutin "gl_barmund2",2;
 	mes "[Varmundt]";
 	mes "Can't take off this bridle...";
@@ -1537,7 +1537,7 @@ OnEnable:
 	end;
 }
 
-2@gl_k,158,252,3	script	Himelmez#ghinstance4	650,{
+2@gl_k,158,252,3	script	Himelmez#ghinstance4	4_F_HIMEL,{
 	cutin "gl_himel2",2;
 	mes "[Himelmez]";
 	mes "That is amazing ~ you made it all the way here. May I say thank you?";
@@ -1553,7 +1553,7 @@ OnEnable:
 	end;
 }
 
-2@gl_k,150,179,0	script	#controlGH6	111,2,2,{
+2@gl_k,150,179,0	script	#controlGH6	HIDDEN_NPC,2,2,{
 	end;
 OnTouch:
 	mapannounce instance_mapname("2@gl_k"),"???: Do not come here! It's a trap... Kkkkah!!!",bc_map,"0xFF0000",FW_NORMAL,18;
@@ -1573,7 +1573,7 @@ OnEnable:
 	end;
 }
 
-2@gl_k,158,252,1	script	Himelmez#ghinstance3	650,7,7,{
+2@gl_k,158,252,1	script	Himelmez#ghinstance3	4_F_HIMEL,7,7,{
 	end;
 OnTouch:
 	specialeffect EF_BASH;
@@ -1590,7 +1590,7 @@ OnEnable:
 	end;
 }
 
-2@gl_k,158,255,3	script	Gerhalt#ghinstance1	651,{
+2@gl_k,158,255,3	script	Gerhalt#ghinstance1	4_LEVITATEMAN,{
 	mes "[Gerhalt]";
 	mes "Uuuuu... Khhhah! Just run away with the commander.";
 	close;
@@ -1717,7 +1717,7 @@ OnTimer80000:
 	end;
 }
 
-2@gl_k,158,241,1	script	Hugin#ghinstance1	755,{
+2@gl_k,158,241,1	script	Hugin#ghinstance1	4_M_SAGE_C,{
 	if (checkquest(12319,HUNTING) == 2) {
 		mes "[Hugin]";
 		mes "Hm, you are very well. First of all, let me give you some loot from Amdarais.";
@@ -1785,7 +1785,7 @@ OnEnable:
 
 // Treasure Room
 //============================================================
-1@gl_k,269,267,0	script	Strange crack#entrace	111,{
+1@gl_k,269,267,0	script	Strange crack#entrace	HIDDEN_NPC,{
 	if (checkquest(12322) == -1) {
 		mes "The crack looks suspicious, but nothing more to check.";
 		close;
@@ -1793,7 +1793,7 @@ OnEnable:
 	warp instance_mapname("1@gl_k"),149,198;
 }
 
-1@gl_k,129,136,0	script	Strange crack#1	111,{
+1@gl_k,129,136,0	script	Strange crack#1	HIDDEN_NPC,{
 	specialeffect EF_SPELLBREAKER;
 	specialeffect EF_BASH;
 	.@random = rand(1,4);
@@ -1812,7 +1812,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,135,136,0	script	Strange crack#2	111,{
+1@gl_k,135,136,0	script	Strange crack#2	HIDDEN_NPC,{
 	specialeffect EF_SPELLBREAKER;
 	specialeffect EF_BASH;
 	.@random = rand(1,4);
@@ -1831,7 +1831,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,141,136,0	script	Strange crack#3	111,{
+1@gl_k,141,136,0	script	Strange crack#3	HIDDEN_NPC,{
 	specialeffect EF_SPELLBREAKER;
 	specialeffect EF_BASH;
 	.@random = rand(1,4);
@@ -1851,7 +1851,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,147,136,0	script	Strange crack#4	111,{
+1@gl_k,147,136,0	script	Strange crack#4	HIDDEN_NPC,{
 	specialeffect EF_SPELLBREAKER;
 	specialeffect EF_BASH;
 	.@random = rand(1,4);
@@ -1872,7 +1872,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,153,136,0	script	Strange crack#5	111,{
+1@gl_k,153,136,0	script	Strange crack#5	HIDDEN_NPC,{
 	specialeffect EF_SPELLBREAKER;
 	specialeffect EF_BASH;
 	.@random = rand(1,4);
@@ -1892,7 +1892,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,159,136,0	script	Strange crack#6	111,{
+1@gl_k,159,136,0	script	Strange crack#6	HIDDEN_NPC,{
 	specialeffect EF_SPELLBREAKER;
 	specialeffect EF_BASH;
 	.@random = rand(1,4);
@@ -1912,7 +1912,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,165,136,0	script	Strange crack#7	111,{
+1@gl_k,165,136,0	script	Strange crack#7	HIDDEN_NPC,{
 	specialeffect EF_SPELLBREAKER;
 	specialeffect EF_BASH;
 	.@random = rand(1,4);
@@ -1928,7 +1928,7 @@ OnEnable:
 	end;
 }
 
-1@gl_k,171,136,0	script	Strange crack#8	111,{
+1@gl_k,171,136,0	script	Strange crack#8	HIDDEN_NPC,{
 	specialeffect EF_SPELLBREAKER;
 	specialeffect EF_BASH;
 	.@random = rand(1,4);
