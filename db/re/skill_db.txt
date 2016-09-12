@@ -865,6 +865,28 @@
 //725,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_REVERBERATION,Reverberation 2
 //726,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_REVERBERATION_ATK,Reverberation Attack
 //727,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_LEX_AETERNA,Lex Aeterna 2
+//728,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_ARROWSTORM,NPC Arrow Storm
+//729,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_CHEAL,NPC Coluceo Heal
+//730,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_SR_CURSEDCIRCLE,NPC 
+//731,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DRAGONBREATH,NPC Dragon Breath
+//732,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_FATALMENACE,NPC Fatal Menace
+//733,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MAGMA_ERUPTION,NPC Magma Eruption
+//734,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MAGMA_ERUPTION_DOTDAMAGE,NPC Magma Eruption Dot Damage
+//735,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MANDRAGORA,NPC Howling of Mandragora
+//736,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_PSYCHIC_WAVE,NPC Psychic Wave
+//737,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_RAYOFGENESIS,NPC Ray of Genesis
+//738,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_VENOMIMPRESS,NPC Venom Impress
+//739,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_CLOUD_KILL,NPC Cloud Kill
+//740,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_IGNITIONBREAK,NPC Ignition Break
+//741,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_PHANTOMTHRUST,NPC Phantom Thrust
+//742,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_POISON_BUSTER,NPC Poison Blaster
+//743,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_HALLUCINATIONWALK,NPC Hallucination Walk
+//744,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_ELECTRICWALK,NPC Electric Walk
+//745,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_FIREWALK,NPC Fire Walk
+//746,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDEDISPEL,Wide Dispell
+//747,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_LEASH,Leash
+//748,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDELEASH,Wide Leash
+//749,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDECRITICALWOUND,Wide Critical Wound
 
 //****
 // 2nd Quest Skills

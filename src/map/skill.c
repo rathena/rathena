@@ -645,7 +645,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all the restrictions above
 	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
 	 */
-	if( sd->skillitem == skill_id )
+	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement )
 		return false;
 	// Check skill restrictions [Celest]
 	if( (!map_flag_vs(m) && skill_get_nocast (skill_id) & 1) ||
@@ -2941,6 +2941,9 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 				dir = map_calc_dir(target, src->x, src->y);
 			else
 				dir = map_calc_dir(target, skill_area_temp[4], skill_area_temp[5]);
+			break;
+		case HT_PHANTASMIC: // issue #1378
+			if (status_get_hp(target) - damage <= 0) return;
 			break;
 	}
 
@@ -6109,6 +6112,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				sd->state.abra_flag = 1;
 				sd->skillitem = abra_skill_id;
 				sd->skillitemlv = abra_skill_lv;
+				sd->skillitem_keep_requirement = false;
 				clif_item_skill(sd, abra_skill_id, abra_skill_lv);
 			}
 			else
@@ -8609,6 +8613,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if ((dstsd = g->member[i].sd) != NULL && sd != dstsd && !dstsd->state.autotrade && !pc_isdead(dstsd)) {
 					if (map[dstsd->bl.m].flag.nowarp && !map_flag_gvg2(dstsd->bl.m))
 						continue;
+					if (!pc_job_can_entermap((enum e_job)dstsd->status.class_, src->m, dstsd->group_level))
+						continue;
 					if(map_getcell(src->m,src->x+dx[j],src->y+dy[j],CELL_CHKNOREACH))
 						dx[j] = dy[j] = 0;
 					if (!pc_setpos(dstsd, map_id2index(src->m), src->x+dx[j], src->y+dy[j], CLR_RESPAWN))
@@ -9997,6 +10003,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				sd->state.abra_flag = 2;
 				sd->skillitem = improv_skill_id;
 				sd->skillitemlv = improv_skill_lv;
+				sd->skillitem_keep_requirement = false;
 				clif_item_skill(sd, improv_skill_id, improv_skill_lv);
 			} else {
 				struct unit_data *ud = unit_bl2ud(src);
@@ -10096,6 +10103,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			status_change_end(bl, SC_DECREASEAGI, INVALID_TIMER);
 			break;
 		}
+		clif_skill_damage(src, bl, tick, status_get_amotion(src), 0, -30000, 1, skill_id, 1, DMG_SKILL);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		break;
 
@@ -11213,8 +11221,8 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 				skill_blockpc_start(sd,BD_ADAPTATION,3000);
 		}
 
-		if( sd && ud->skill_id != SA_ABRACADABRA && ud->skill_id != WM_RANDOMIZESPELL ) // they just set the data so leave it as it is.[Inkfish]
-			sd->skillitem = sd->skillitemlv = 0;
+		if (sd && ud->skill_id != SA_ABRACADABRA && ud->skill_id != WM_RANDOMIZESPELL) // they just set the data so leave it as it is.[Inkfish]
+			sd->skillitem = sd->skillitemlv = sd->skillitem_keep_requirement = 0;
 
 		if (ud->skilltimer == INVALID_TIMER) {
 			if(md) md->skill_idx = -1;
@@ -11272,7 +11280,7 @@ int skill_castend_id(int tid, unsigned int tick, int id, intptr_t data)
 	//sent in ALL cases, even cases where skill_check_condition fails
 	//which would lead to double 'skill failed' messages u.u [Skotlex]
 	if(sd)
-		sd->skillitem = sd->skillitemlv = 0;
+		sd->skillitem = sd->skillitemlv = sd->skillitem_keep_requirement = 0;
 	else if(md)
 		md->skill_idx = -1;
 	return 0;
@@ -11409,7 +11417,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 			status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER); // Applies to the first skill if active
 
 		if( sd && sd->skillitem != AL_WARP ) // Warp-Portal thru items will clear data in skill_castend_map. [Inkfish]
-			sd->skillitem = sd->skillitemlv = 0;
+			sd->skillitem = sd->skillitemlv = sd->skillitem_keep_requirement = 0;
 
 		if (ud->skilltimer == INVALID_TIMER) {
 			if (md) md->skill_idx = -1;
@@ -11425,7 +11433,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 		ud->canact_tick = tick;
 	ud->skill_id = ud->skill_lv = 0;
 	if(sd)
-		sd->skillitem = sd->skillitemlv = 0;
+		sd->skillitem = sd->skillitemlv = sd->skillitem_keep_requirement = 0;
 	else if(md)
 		md->skill_idx  = -1;
 	return 0;
@@ -12361,7 +12369,7 @@ int skill_castend_map (struct map_session_data *sd, uint16 skill_id, const char 
 			}
 
 			skill_consume_requirement(sd,sd->menuskill_id,lv,2);
-			sd->skillitem = sd->skillitemlv = 0; // Clear data that's skipped in 'skill_castend_pos' [Inkfish]
+			sd->skillitem = sd->skillitemlv = sd->skillitem_keep_requirement = 0; // Clear data that's skipped in 'skill_castend_pos' [Inkfish]
 
 			if((group=skill_unitsetting(&sd->bl,skill_id,lv,wx,wy,0))==NULL) {
 				skill_failed(sd);
@@ -13142,12 +13150,13 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 					if( --count <= 0 )
 						skill_delunitgroup(sg);
 
-					if ( map_mapindex2mapid(sg->val3) == sd->bl.m && x == sd->bl.x && y == sd->bl.y )
+					if ( map_mapindex2mapid(m) == sd->bl.m && x == sd->bl.x && y == sd->bl.y )
 						working = 1;/* we break it because officials break it, lovely stuff. */
 
 					sg->val1 = (count<<16)|working;
 
-					pc_setpos(sd,m,x,y,CLR_TELEPORT);
+					if (pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(m), sd->group_level))
+						pc_setpos(sd,m,x,y,CLR_TELEPORT);
 				}
 			} else if(bl->type == BL_MOB && battle_config.mob_warp&2) {
 				int16 m = map_mapindex2mapid(sg->val3);
@@ -14741,7 +14750,8 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			else if( sd->status.inventory[i].expire_time == 0 )
 				pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME); // Rental usable items are not consumed until expiration
 		}
-		return true;
+		if(!sd->skillitem_keep_requirement)
+			return true;
 	}
 
 	if( pc_is90overweight(sd) ) {
@@ -15589,7 +15599,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 			break;
 	}
 
-	if( sd->skillitem == skill_id ) // Casting finished (Item skill or Hocus-Pocus)
+	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement ) // Casting finished (Item skill or Hocus-Pocus)
 		return true;
 
 	if( pc_is90overweight(sd) ) {
@@ -15852,7 +15862,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 	if( !sd )
 		return req;
 
-	if( sd->skillitem == skill_id )
+	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement )
 		return req; // Item skills and Hocus-Pocus don't have requirements.[Inkfish]
 
 	sc = &sd->sc;
@@ -18128,13 +18138,13 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 				if(group->val1) {
 					sd = map_charid2sd(group->val1);
 					group->val1 = 0;
-					if (sd && !map[sd->bl.m].flag.nowarp)
+					if (sd && !map[sd->bl.m].flag.nowarp && pc_job_can_entermap((enum e_job)sd->status.class_, unit->bl.m, sd->group_level))
 						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,CLR_TELEPORT);
 				}
 				if(group->val2) {
 					sd = map_charid2sd(group->val2);
 					group->val2 = 0;
-					if (sd && !map[sd->bl.m].flag.nowarp)
+					if (sd && !map[sd->bl.m].flag.nowarp && pc_job_can_entermap((enum e_job)sd->status.class_, unit->bl.m, sd->group_level))
 						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,CLR_TELEPORT);
 				}
 				skill_delunit(unit);

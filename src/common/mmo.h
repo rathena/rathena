@@ -403,7 +403,7 @@ struct mmo_charstatus {
 	unsigned int base_exp,job_exp;
 	int zeny;
 
-	short class_;
+	short class_; ///< Player's JobID
 	unsigned int status_point,skill_point;
 	int hp,max_hp,sp,max_sp;
 	unsigned int option;

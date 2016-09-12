@@ -1267,7 +1267,7 @@ OnInit:
 	disablenpc "#!@#$%";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (um_wind == 4) {
 		set um_wind,5;
 		mes "^3355FFAs you enter the house";
@@ -1296,7 +1296,7 @@ OnInit:
 	disablenpc "#unpc";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (um_wind == 5) {
 		mes "^3355FFAs you realized what happened";
 		mes "after being kicked out of the";

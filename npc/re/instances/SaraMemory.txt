@@ -268,7 +268,7 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 		mes "Hi Daddy!";
 		next;
 		cutin "sara_elder_irine1",2;
-		donpcevent instance_npcname("Doyen Irene#01", instance_id())+"::OnTalk01";
+		npctalk "Sweetheart you look so happy.", instance_npcname("Doyen Irene#01", instance_id());
 		mes "[Doyen Irene]";
 		mes "Sweetheart you look so happy.";
 		next;
@@ -278,7 +278,7 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 		mes "You said you would come back soon! I waited for you and you lied!";
 		next;
 		cutin "sara_elder_irine1",2;
-		donpcevent instance_npcname("Doyen Irene#01", instance_id())+"::OnTalk02";
+		npctalk "Sweetheart, I am sorry I made you wait so long. The meeting with the village elders took longer than expected.", instance_npcname("Doyen Irene#01", instance_id());
 		mes "[Doyen Irene]";
 		mes "Sweetheart, I am sorry I made you wait so long. The meeting with the village elders took longer than expected.";
 		next;
@@ -288,7 +288,7 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 		mes "I hate those old fogeys.";
 		next;
 		cutin "sara_elder_irine1",2;
-		donpcevent instance_npcname("Doyen Irene#01", instance_id())+"::OnTalk03";
+		npctalk "Don't say that sweetheart... Who is this with you?", instance_npcname("Doyen Irene#01", instance_id());
 		mes "[Doyen Irene]";
 		mes "Don't say that sweetheart... Who is this with you?";
 		next;
@@ -304,7 +304,7 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 		mes "Here you go daddy!";
 		next;
 		cutin "sara_elder_irine1",2;
-		donpcevent instance_npcname("Doyen Irene#01", instance_id())+"::OnTalk04";
+		npctalk "Oh Sara, may I have them?", instance_npcname("Doyen Irene#01", instance_id());
 		mes "[Doyen Irene]";
 		mes "Oh Sara, may I have them?";
 		next;
@@ -317,7 +317,7 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 		mes "^FF0000After being given the flowers the Doyen's mood seems to greatly improve.^000000";
 		next;
 		cutin "sara_elder_irine1",2;
-		donpcevent instance_npcname("Doyen Irene#01", instance_id())+"::OnTalk05";
+		npctalk "Alright my princess, where should we go now?", instance_npcname("Doyen Irene#01", instance_id());
 		mes "[Doyen Irene]";
 		mes "Alright my princess, where should we go now?";
 		next;
@@ -327,7 +327,7 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 		mes "Oh daddy! Lets go to the top of that hill over there!";
 		next;
 		cutin "sara_elder_irine1",2;
-		donpcevent instance_npcname("Doyen Irene#01", instance_id())+"::OnTalk06";
+		npctalk "Hah! Ok, hold onto me tight!", instance_npcname("Doyen Irene#01", instance_id());
 		mes "[Doyen Irene]";
 		mes "Hah! Ok, hold onto me tight!";
 		next;
@@ -339,23 +339,23 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 		mapannounce instance_mapname("1@sara"), "As they wander off you hear strange voices from around the corner...",bc_area,"0xffffff";
 		mes "^FF0000As they wander off you hear strange voices from around the corner...^000000";
 		next;
-		donpcevent instance_npcname("Strange Old Man#01", instance_id())+"::OnTalk01";
+		npctalk "I can feel Sara's power growing. We cannot just stand by and let her achieve her full potential!", instance_npcname("Strange Old Man#01", instance_id());
 		mes "[Strange Old Man]";
 		mes "I can feel Sara's power growing. We cannot just stand by and let her achieve her full potential!";
 		next;
-		donpcevent instance_npcname("Mysterious Old Man#02", instance_id())+"::OnTalk01";
+		npctalk "She was born under a bad sign and her mother isn't even one of us!", instance_npcname("Mysterious Old Man#02", instance_id());
 		mes "[Mysterious Old Man]";
 		mes "She was born under a bad sign and her mother isn't even one of us!";
 		next;
-		donpcevent instance_npcname("Mysterious Old Man#02", instance_id())+"::OnTalk02";
+		npctalk "Someday she will cause blood to flow in our streets.", instance_npcname("Mysterious Old Man#02", instance_id());
 		mes "[Mysterious Old Man]";
 		mes "Someday she will cause blood to flow in our streets.";
 		next;
-		donpcevent instance_npcname("Strange Old Man#01", instance_id())+"::OnTalk02";
+		npctalk "We have to do something before the Holy creatures select her. I asked 'HIM' to take care of it.", instance_npcname("Strange Old Man#01", instance_id());
 		mes "[Strange Old Man]";
 		mes "We have to do something before the Holy creatures select her. I asked 'HIM' to take care of it.";
 		next;
-		donpcevent instance_npcname("Mysterious Old Man#02", instance_id())+"::OnTalk03";
+		npctalk "We will see... I look forward to hearing the bad news that has befallen her...", instance_npcname("Mysterious Old Man#02", instance_id());
 		mes "[Mysterious Old Man]";
 		mes "We will see... I look forward to hearing the bad news that has befallen her...";
 		next;
@@ -385,25 +385,6 @@ OnDisable:
 1@sara,268,158,4	script	Doyen Irene#01	684,{
 	end;
 
-OnTalk01:
-	npctalk "Sweetheart you look so happy.";
-	end;
-OnTalk02:
-	npctalk "Sweetheart, I am sorry I made you wait so long. The meeting with the village elders took longer than expected.";
-	end;
-OnTalk03:
-	npctalk "Don't say that sweetheart... Who is this with you?";
-	end;
-OnTalk04:
-	npctalk "Oh Sara, may I have them?";
-	end;
-OnTalk05:
-	npctalk "Alright my princess, where should we go now?";
-	end;
-OnTalk06:
-	npctalk "Hah! Ok, hold onto me tight!";
-	end;
-
 OnInstanceInit:
 OnDisable:
 	disablenpc instance_npcname("Doyen Irene#01");
@@ -416,13 +397,6 @@ OnEnable:
 1@sara,260,156,4	script	Strange Old Man#01	-1,{
 	end;
 
-OnTalk01:
-	npctalk "I can feel Sara's power growing. We cannot just stand by and let her achieve her full potential!";
-	end;
-OnTalk02:
-	npctalk "We have to do something before the Holy creatures select her. I asked 'HIM' to take care of it.";
-	end;
-
 OnInstanceInit:
 OnDisable:
 	disablenpc instance_npcname("Strange Old Man#01");
@@ -433,16 +407,6 @@ OnEnable:
 }
 
 1@sara,260,156,4	script	Mysterious Old Man#02	-1,{
-	end;
-
-OnTalk01:
-	npctalk "She was born under a bad sign and her mother isn't even one of us!";
-	end;
-OnTalk02:
-	npctalk "Someday she will cause blood to flow in our streets.";
-	end;
-OnTalk03:
-	npctalk "We will see... I look forward to hearing the bad news that has befallen her...";
 	end;
 
 OnInstanceInit:
@@ -482,7 +446,7 @@ OnEnable:
 		mes "[Sara Irene]";
 		mes "...";
 		next;
-		donpcevent instance_npcname("Sara's Mother", instance_id())+"::OnTalk01";
+		npctalk "Sara...Ru-...away...", instance_npcname("Sara's Mother", instance_id());
 		mes "[Sara's Mother]";
 		mes "Sara...Ru-...away...";
 		next;
@@ -498,7 +462,7 @@ OnEnable:
 		next;
 		cutin "sara_momdie",255;
 		cutin "sara_elder_irine4",2;
-		donpcevent instance_npcname("Doyen Irene#02", instance_id())+"::OnTalk01";
+		npctalk "Ahh Sara! I was just looking for you...", instance_npcname("Doyen Irene#02", instance_id());
 		mes "[Doyen Irene]";
 		mes "Ahh Sara! I was just looking for you...";
 		next;
@@ -509,7 +473,7 @@ OnEnable:
 		next;
 		switch(select("Escape with Sara.")) {}
 		cutin "sara_elder_irine3",2;
-		donpcevent instance_npcname("Doyen Irene#02", instance_id())+"::OnTalk02";
+		npctalk "Guards! GUARDS!! There is a murderer here! Catch him!", instance_npcname("Doyen Irene#02", instance_id());
 		mes "[Doyen Irene]";
 		mes "Guards! GUARDS!! There is a murderer here! Catch him!";
 		next;
@@ -560,10 +524,6 @@ OnEnable:
 1@sara,107,325,4	script	Sara's Mother	-1,{
 	end;
 
-OnTalk01:
-	npctalk "Sara...Ru-...away...";
-	end;
-
 OnInstanceInit:
 OnDisable:
 	disablenpc instance_npcname("Sara's Mother");
@@ -574,13 +534,6 @@ OnEnable:
 }
 
 1@sara,107,325,4	script	Doyen Irene#02	-1,{
-	end;
-
-OnTalk01:
-	npctalk "Ahh Sara! I was just looking for you...";
-	end;
-OnTalk02:
-	npctalk "Guards! GUARDS!! There is a murderer here! Catch him!";
 	end;
 
 OnInstanceInit:
@@ -600,7 +553,7 @@ OnEnable:
 		mes "Mommy!";
 		next;
 		cutin "sara_elder_irine4",2;
-		donpcevent instance_npcname("Doyen Irene#03", instance_id())+"::OnTalk01";
+		npctalk "Sara...", instance_npcname("Doyen Irene#03", instance_id());
 		mes "[Doyen Irene]";
 		mes "Sara...";
 		next;
@@ -610,7 +563,7 @@ OnEnable:
 		mes "No!";
 		next;
 		cutin "sara_elder_irine4",2;
-		donpcevent instance_npcname("Doyen Irene#03", instance_id())+"::OnTalk02";
+		npctalk "I have been looking for you Sara. Please come with daddy, it is very dangerous here!", instance_npcname("Doyen Irene#03", instance_id());
 		mes "[Doyen Irene]";
 		mes "I have been looking for you Sara. Please come with daddy, it is very dangerous here!";
 		next;
@@ -619,7 +572,7 @@ OnEnable:
 		mes "I won't let you take Sara!";
 		next;
 		cutin "sara_elder_irine3",2;
-		donpcevent instance_npcname("Doyen Irene#03", instance_id())+"::OnTalk03";
+		npctalk "The murderer is here! Guards! We will finish him once and for all!", instance_npcname("Doyen Irene#03", instance_id());
 		mes "[Doyen Irene]";
 		mes "The murderer is here! Guards! We will finish him once and for all!";
 		next;
@@ -652,16 +605,6 @@ OnEnable:
 }
 
 1@sara,152,233,4	script	Doyen Irene#03	-1,{
-	end;
-
-OnTalk01:
-	npctalk "Sara...";
-	end;
-OnTalk02:
-	npctalk "I have been looking for you Sara. Please come with daddy, it is very dangerous here!";
-	end;
-OnTalk03:
-	npctalk "The murderer is here! Guards! We will finish him once and for all!";
 	end;
 
 OnInstanceInit:
@@ -759,18 +702,18 @@ OnEnable:
 		mes "^FF0000As you are about to call out to Sara, a sudden blow knocks you down from behind.^000000";
 		next;
 		cutin "sara_beholder",2;
-		donpcevent instance_npcname("?????#01", instance_id())+"::OnTalk01";
+		npctalk "The time travellers cannot interfere any longer. You cannot stop us from meeting Sara.", instance_npcname("?????#01", instance_id());
 		mes "[?????]";
 		mes "The time travellers cannot interfere any longer. You cannot stop us from meeting Sara.";
 		next;
-		donpcevent instance_npcname("?????#01", instance_id())+"::OnTalk02";
+		npctalk "You should go back to the time where you belong.", instance_npcname("?????#01", instance_id());
 		mes "[?????]";
 		mes "You should go back to the time where you belong.";
 		next;
 		mapannounce instance_mapname("1@sara"), "As you fall to the ground, two dark figures approach Sara.",bc_area,"0xffffff";
 		mes "^FF0000As you fall to the ground, two dark figures approach Sara.^000000";
 		next;
-		donpcevent instance_npcname("?????#01", instance_id())+"::OnTalk03";
+		npctalk "A girl full of betrayal, despair, and hate. We will guide you to your ultimate fate.", instance_npcname("?????#01", instance_id());
 		mes "[?????]";
 		mes "A girl full of betrayal, despair, and hate. We will guide you to your ultimate fate.";
 		next;
@@ -780,7 +723,7 @@ OnEnable:
 		mes "...";
 		next;
 		cutin "sara_beholder",2;
-		donpcevent instance_npcname("?????#01", instance_id())+"::OnTalk04";
+		npctalk "Sara Irene, 'he' will make your dreams come true.", instance_npcname("?????#01", instance_id());
 		mes "[?????]";
 		mes "Sara Irene, 'he' will make your dreams come true.";
 		next;
@@ -808,19 +751,6 @@ OnEnable:
 }
 
 1@sara,39,142,4	script	?????#01	-1,{
-	end;
-
-OnTalk01:
-	npctalk "The time travellers cannot interfere any longer. You cannot stop us from meeting Sara.";
-	end;
-OnTalk02:
-	npctalk "You should go back to the time where you belong.";
-	end;
-OnTalk03:
-	npctalk "A girl full of betrayal, despair, and hate. We will guide you to your ultimate fate.";
-	end;
-OnTalk04:
-	npctalk "Sara Irene, 'he' will make your dreams come true.";
 	end;
 
 OnInstanceInit:

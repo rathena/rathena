@@ -194,7 +194,7 @@ morocc,43,108,5	script	Sharp-Looking Kid#dan_07	82,{
 }
 
 morocc,45,110,0	script	que_job01#01	45,2,2,{
-OnTouch:
+OnTouch_:
 	if (BaseClass == Job_Assassin) {
 		warp "que_job01",9,94;
 		end;
@@ -219,7 +219,7 @@ que_job01,17,48,0	warp	que_job01#02	2,2,que_job01,68,92
 que_job01,68,96,0	warp	que_job01#03	2,2,que_job01,17,53
 
 que_job01,80,77,0	script	que_job01#04	45,2,2,{
-OnTouch:
+OnTouch_:
 	if (BaseClass == Job_Assassin) {
 		warp "que_job01",61,50;
 		end;
@@ -671,7 +671,7 @@ OnReset:
 	set $@maobar_room,0;
 	end;
 
-OnTouch:
+OnTouch_:
 	if (prt_curse == 24) {
 		if ($@maobar_room == 0) {
 			set $@maobar_room,1;
@@ -780,7 +780,7 @@ OnDisable:
 	disablenpc "#room1_warp";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	end;
 }
@@ -788,7 +788,7 @@ OnTouch:
 que_job01,51,44,0	warp	que_job01#room_2	1,1,que_job01,80,23
 
 que_job01,11,4,0	script	que_job01#room1_out	45,1,1,{
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	donpcevent " #room1timer::OnStop";
 	end;
@@ -1190,7 +1190,7 @@ moc_fild20,215,336,3	duplicate(MocConGuard)	Continental Guard#08	707,3,3
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if (BaseLevel > 79) {
 		mes "[Continental Guard Messenger]";
 		mes "Are you... "+ strcharinfo(0) +"?";
@@ -1865,7 +1865,7 @@ moc_fild21,38,193,0	script	Morocc Timer#edq	-1,6,6,{
 //	set $@re_moc_time$,"";
 //	end;
 
-OnTouch:
+OnTouch_:
 	if ($@re_moc == 0) {
 		set $@re_moc,1;
 		donpcevent "Satan Broadcast#edq::OnEnable";
@@ -7646,7 +7646,7 @@ OnDisable:
 }
 
 prt_castle,318,276,0	script	#eisen	45,1,1,{
-OnTouch:
+OnTouch_:
 	if ((nkprince_eisen == 4) || (nkprince_eisen == 5)) {
 		donpcevent "Prince#another_ern::OnEnable";
 		set nkprince_eisen,5;
@@ -7738,7 +7738,7 @@ OnTouch:
 }
 
 prt_castle,336,276,0	script	#ern	45,1,1,{
-OnTouch:
+OnTouch_:
 	if (checkquest(10023) == 0 || checkquest(10023) == 1) {
 		donpcevent "Prince#eisen6::OnEnable";
 	}
@@ -7747,7 +7747,7 @@ OnTouch:
 }
 
 prt_castle,300,276,0	script	#erich	45,1,1,{
-OnTouch:
+OnTouch_:
 	if (checkquest(10020) == 0 || checkquest(10020) == 1) {
 		donpcevent "Prince#eisen1::OnEnable";
 	}
@@ -7756,7 +7756,7 @@ OnTouch:
 }
 
 prt_castle,330,271,0	script	#helmut	45,1,1,{
-OnTouch:
+OnTouch_:
 	if (checkquest(10022) == 0 || checkquest(10022) == 1) {
 		donpcevent "Prince#eisen3::OnEnable";
 	}
@@ -7765,7 +7765,7 @@ OnTouch:
 }
 
 prt_castle,348,271,0	script	#poe	45,1,1,{
-OnTouch:
+OnTouch_:
 	if (checkquest(10018) == 0 || checkquest(10018) == 1) {
 		donpcevent "Prince#eisen4::OnEnable";
 	}
@@ -7774,7 +7774,7 @@ OnTouch:
 }
 
 prt_castle,354,276,0	script	#peter	45,1,1,{
-OnTouch:;
+OnTouch_:
 	if (checkquest(10019) == 0 || checkquest(10019) == 1) {
 		donpcevent "Prince#eisen5::OnEnable";
 	}
@@ -7783,7 +7783,7 @@ OnTouch:;
 }
 
 prt_castle,310,271,0	script	#urgen	45,1,1,{
-OnTouch:
+OnTouch_:
 	if (checkquest(10021) == 0 || checkquest(10021) == 1) {
 		donpcevent "Prince#eisen2::OnEnable";
 	}

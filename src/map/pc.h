@@ -308,6 +308,7 @@ struct map_session_data {
 	time_t emotionlasttime; // to limit flood with emotion packets
 
 	short skillitem,skillitemlv;
+	bool skillitem_keep_requirement;
 	uint16 skill_id_old,skill_lv_old;
 	uint16 skill_id_dance,skill_lv_dance;
 	short cook_mastery; // range: [0,1999] [Inkfish]
@@ -396,7 +397,7 @@ struct map_session_data {
 		short value;
 		int rate;
 		int tick;
-	} hp_loss, sp_loss, hp_regen, sp_regen;
+	} hp_loss, sp_loss, hp_regen, sp_regen, percent_hp_regen, percent_sp_regen;
 	struct {
 		short class_, rate;
 	}	add_def[MAX_PC_BONUS], add_mdef[MAX_PC_BONUS], add_mdmg[MAX_PC_BONUS];
@@ -689,6 +690,7 @@ struct map_session_data {
 	} roulette;
 
 	unsigned short instance_id;
+	short setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
 
 #if PACKETVER >= 20150513
 	uint32* hatEffectIDs;
@@ -799,6 +801,10 @@ struct {
 	struct s_params {
 		uint16 str, agi, vit, int_, dex, luk;
 	} max_param;
+	struct s_job_noenter_map {
+		uint32 zone;
+		uint8 group_lv;
+	} noenter_map;
 } job_info[CLASS_COUNT];
 
 #define EQP_WEAPON EQP_HAND_R
@@ -1096,6 +1102,7 @@ void pc_setriding(struct map_session_data* sd, int flag);
 void pc_setmadogear(struct map_session_data* sd, int flag);
 void pc_changelook(struct map_session_data *,int,int);
 void pc_equiplookall(struct map_session_data *sd);
+void pc_set_costume_view(struct map_session_data *sd);
 
 int pc_readparam(struct map_session_data *sd, int type);
 bool pc_setparam(struct map_session_data *sd, int type, int val);
@@ -1264,6 +1271,8 @@ void pc_validate_skill(struct map_session_data *sd);
 
 void pc_show_questinfo(struct map_session_data *sd);
 void pc_show_questinfo_reinit(struct map_session_data *sd);
+
+bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type);

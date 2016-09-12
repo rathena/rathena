@@ -396,6 +396,7 @@
 	export_constant(MF_NOLOCKON);
 	export_constant(MF_NOTOMB);
 	export_constant(MF_SKILL_DAMAGE);
+	export_constant(MF_NOCOSTUME);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -457,9 +458,9 @@
 	script_set_constant("CharRename",SP_CHARRENAME,true);
 	script_set_constant("Font",SP_CHARFONT,true);
 	script_set_constant("BankVault",SP_BANK_VAULT,true);
-	script_set_constant("RouletteBronze",SP_ROULETTE_BRONZE,true);
-	script_set_constant("RouletteSilver",SP_ROULETTE_SILVER,true);
-	script_set_constant("RouletteGold",SP_ROULETTE_GOLD,true);
+	script_set_constant(ROULETTE_BRONZE_VAR,SP_ROULETTE_BRONZE,true);
+	script_set_constant(ROULETTE_SILVER_VAR,SP_ROULETTE_SILVER,true);
+	script_set_constant(ROULETTE_GOLD_VAR,SP_ROULETTE_GOLD,true);
 
 	script_set_constant("bMaxHP",SP_MAXHP,false);
 	script_set_constant("bMaxSP",SP_MAXSP,false);
@@ -664,6 +665,8 @@
 	script_set_constant("bDropAddClass", SP_DROP_ADDCLASS, false);
 	script_set_constant("bNoMadoFuel", SP_NO_MADO_FUEL, false);
 	script_set_constant("bIgnoreDefClassRate", SP_IGNORE_DEF_CLASS_RATE, false);
+	script_set_constant("bRegenPercentHP", SP_REGEN_PERCENT_HP, false);
+	script_set_constant("bRegenPercentSP", SP_REGEN_PERCENT_SP, false);
 
 	/* equip indices */
 	export_constant(EQI_HEAD_TOP);
@@ -1401,6 +1404,15 @@
 	export_constant(SC_MAPLE_FALLS);
 	export_constant(SC_TIME_ACCESSORY);
 	export_constant(SC_MAGICAL_FEATHER);
+	export_constant(SC_GVG_GIANT);
+	export_constant(SC_GVG_GOLEM);
+	export_constant(SC_GVG_STUN);
+	export_constant(SC_GVG_STONE);
+	export_constant(SC_GVG_FREEZ);
+	export_constant(SC_GVG_SLEEP);
+	export_constant(SC_GVG_CURSE);
+	export_constant(SC_GVG_SILENCE);
+	export_constant(SC_GVG_BLIND);
 	export_constant(SC_CLAN_INFO);
 	export_constant(SC_SWORDCLAN);
 	export_constant(SC_ARCWANDCLAN);
