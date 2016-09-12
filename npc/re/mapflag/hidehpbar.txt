@@ -29,4 +29,34 @@ te_aldecas5	mapflag	hidehpbar
 // teg_dun01	mapflag	hidehpbar
 // teg_dun02	mapflag	hidehpbar
 
-// TODO : info on WoE FE & SE castle / dungeon
+// TODO : info on WoE FE & SE / dungeon
+aldeg_cas01	mapflag	hidehpbar
+aldeg_cas02	mapflag	hidehpbar
+aldeg_cas03	mapflag	hidehpbar
+aldeg_cas04	mapflag	hidehpbar
+aldeg_cas05	mapflag	hidehpbar
+gefg_cas01	mapflag	hidehpbar
+gefg_cas02	mapflag	hidehpbar
+gefg_cas03	mapflag	hidehpbar
+gefg_cas04	mapflag	hidehpbar
+gefg_cas05	mapflag	hidehpbar
+payg_cas01	mapflag	hidehpbar
+payg_cas02	mapflag	hidehpbar
+payg_cas03	mapflag	hidehpbar
+payg_cas04	mapflag	hidehpbar
+payg_cas05	mapflag	hidehpbar
+prtg_cas01	mapflag	hidehpbar
+prtg_cas02	mapflag	hidehpbar
+prtg_cas03	mapflag	hidehpbar
+prtg_cas04	mapflag	hidehpbar
+prtg_cas05	mapflag	hidehpbar
+schg_cas01	mapflag	hidehpbar
+schg_cas02	mapflag	hidehpbar
+schg_cas03	mapflag	hidehpbar
+schg_cas04	mapflag	hidehpbar
+schg_cas05	mapflag	hidehpbar
+arug_cas01	mapflag	hidehpbar
+arug_cas02	mapflag	hidehpbar
+arug_cas03	mapflag	hidehpbar
+arug_cas04	mapflag	hidehpbar
+arug_cas05	mapflag	hidehpbar
