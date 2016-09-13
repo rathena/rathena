@@ -178,7 +178,7 @@ nif_in,31,20,3	script	Kuzkahina#nif	794,{
 niflheim,208,103,1	script	#Graveyard1	111,1,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (nif_esc == 5 || nif_esc == 7 || nif_esc == 8 || nif_esc == 10) {
 		mes "^3355FFYou found something";
 		mes "half-buried near a grave.";
@@ -200,7 +200,7 @@ OnTouch:
 niflheim,169,71,1	script	#Graveyard2	111,1,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (nif_esc == 6 || nif_esc == 9) {
 		mes "^3355FFYou found something";
 		mes "half-buried near a grave.";
@@ -219,7 +219,7 @@ OnTouch:
 nif_in,115,181,0	script	#Piano	111,1,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (nif_esc == 0 && (MISC_QUEST & 32) == 0) {
 		mes "^3355FFYou see a big, heavy piano.";
 		mes "You get the feeling that";
@@ -252,7 +252,7 @@ OnTouch:
 nif_in,114,181,0	script	#Piano3	111,1,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (nif_esc == 12 || nif_esc == 13 || (MISC_QUEST & 32)) {
 		mes "^3355FFAs you bend towards";
 		mes "the final empty key space";

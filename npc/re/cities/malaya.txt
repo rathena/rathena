@@ -167,7 +167,7 @@ OnBingx2:
 		donpcevent "Unidentified Creature#"+.@npc$[.@i]+"::"+((.@i == .@rand)?"OnEnable":"OnDisable");
 	donpcevent strnpcinfo(0)+"::OnDisable";
 	end;
-OnTouch:
+OnTouch_:
 	if (getcharid(1)) {
 		if ($ma_name04$ == strcharinfo(0) || $ma_name05$ == strcharinfo(0) || $ma_name06$ == strcharinfo(0)) {
 			donpcevent strnpcinfo(0)+"::OnBingx2";
@@ -218,7 +218,7 @@ OnBingx2:
 		donpcevent "Unidentified Creature#"+.@npc$[.@i]+"::"+((.@i == .@rand)?"OnEnable":"OnDisable");
 	donpcevent strnpcinfo(0)+"::OnDisable";
 	end;
-OnTouch:
+OnTouch_:
 	set .@i, atoi(strnpcinfo(2));
 	if (.@i%4 == 2) {
 		if (getcharid(0) == getpartyleader(getcharid(1),2))

@@ -1275,7 +1275,7 @@ prt_monk,28,260,5	script	Hedrick	1_M_04,{
 // Weapon Merchant
 //============================================================
 prt_monk,136,261,0	script	Weapon Merchant#tu	HIDDEN_WARP_NPC,9,9,{
-OnTouch:
+OnTouch_:
 	if(tu_acolyte01 != 20 || countitem(1081) == 0) end;// Merchant_Box_1
 	mes "[Weapon Merchant]";
 	mes "The stuff I requested from the guild is finally here!";

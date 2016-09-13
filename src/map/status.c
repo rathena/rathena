@@ -1053,6 +1053,15 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_MTF_MSP] = SI_MTF_MSP;
 	StatusIconChangeTable[SC_MTF_PUMPKIN] = SI_MTF_PUMPKIN;
 	StatusIconChangeTable[SC_NORECOVER_STATE] = SI_HANDICAPSTATE_NORECOVER;
+	StatusIconChangeTable[SC_GVG_GIANT] = SI_GVG_GIANT;
+	StatusIconChangeTable[SC_GVG_GOLEM] = SI_GVG_GOLEM;
+	StatusIconChangeTable[SC_GVG_STUN] = SI_GVG_STUN;
+	StatusIconChangeTable[SC_GVG_STONE] = SI_GVG_STONE;
+	StatusIconChangeTable[SC_GVG_FREEZ] = SI_GVG_FREEZ;
+	StatusIconChangeTable[SC_GVG_SLEEP] = SI_GVG_SLEEP;
+	StatusIconChangeTable[SC_GVG_CURSE] = SI_GVG_CURSE;
+	StatusIconChangeTable[SC_GVG_SILENCE] = SI_GVG_SILENCE;
+	StatusIconChangeTable[SC_GVG_BLIND] = SI_GVG_BLIND;
 
 	// Costumes
 	StatusIconChangeTable[SC_MOONSTAR] = SI_MOONSTAR;
@@ -8085,24 +8094,52 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0;
 		break;
 	case SC_STONE:
-		if(sc->data[SC_POWER_OF_GAIA])
-			return 0;
-	case SC_FREEZE:
-		// Undead are immune to Freeze/Stone
+		// Undead are immune to Stone
 		if (undead_flag && !(flag&SCSTART_NOAVOID))
 			return 0;
-	case SC_DEEPSLEEP:
-	case SC_SLEEP:
-	case SC_STUN:
+		if(sc->data[SC_POWER_OF_GAIA])
+			return 0;
+		if (sc->data[SC_GVG_STONE])
+			return 0;
+		break;
+	case SC_FREEZE:
+		// Undead are immune to Freeze
+		if (undead_flag && !(flag&SCSTART_NOAVOID))
+			return 0;
+		if (sc->data[SC_GVG_FREEZ])
+			return 0;
 	case SC_FREEZING:
 	case SC_CRYSTALIZE:
 		if (sc->opt1)
 			return 0; // Cannot override other opt1 status changes. [Skotlex]
-		if((type == SC_FREEZE || type == SC_FREEZING || type == SC_CRYSTALIZE) && sc->data[SC_WARMER])
+		if (sc->data[SC_WARMER])
 			return 0; // Immune to Frozen and Freezing status if under Warmer status. [Jobbie]
+		break;
+	case SC_SLEEP:
+		if (sc->data[SC_GVG_SLEEP])
+			return 0;
+	case SC_DEEPSLEEP:
+		if (sc->opt1)
+			return 0; // Cannot override other opt1 status changes. [Skotlex]
+		break;
+	case SC_STUN:
+		if (sc->opt1)
+			return 0; // Cannot override other opt1 status changes. [Skotlex]
+		if (sc->data[SC_GVG_STUN])
+			return 0;
 		break;
 	case SC_BLIND:
 		if (sc->data[SC_FEAR])
+			return 0;
+		if (sc->data[SC_GVG_BLIND])
+			return 0;
+		break;
+	case SC_CURSE:
+		if (sc->data[SC_GVG_CURSE])
+			return 0;
+		break;
+	case SC_SILENCE:
+		if (sc->data[SC_GVG_SILENCE])
 			return 0;
 		break;
 	case SC_ALL_RIDING:
@@ -10625,6 +10662,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_JEXPBOOST:
 		case SC_ITEMBOOST:
 		case SC_JP_EVENT04:
+		case SC_PUSH_CART:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting
@@ -11085,6 +11123,18 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			//Send mini-map, don't wait for first timer triggered
 			if (src->type == BL_PC && (sd = map_id2sd(src->id)))
 				clif_crimson_marker(sd, bl, false);
+			break;
+		case SC_GVG_GIANT:
+		case SC_GVG_GOLEM:
+		case SC_GVG_STUN:
+		case SC_GVG_STONE:
+		case SC_GVG_FREEZ:
+		case SC_GVG_SLEEP:
+		case SC_GVG_CURSE:
+		case SC_GVG_SILENCE:
+		case SC_GVG_BLIND:
+			if (val1 || val2)
+				status_zap(bl, val1 ? val1 : 0, val2 ? val2 : 0);
 			break;
 	}
 
@@ -12559,7 +12609,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				map_freeblock_lock();
 				dounlock = true;
 				skill_attack(skill_get_type(status_sc2skill(type)), src, unit_bl, bl, SO_CLOUD_KILL, sce->val1, tick, 0);
-				sc_timer_next(500 + tick, status_change_timer, bl->id, data);
+				if (!status_isdead(bl))
+					sc_timer_next(500 + tick, status_change_timer, bl->id, data);
 			}
 		}
 		break;

@@ -4165,6 +4165,8 @@ ACMD_FUNC(mapinfo) {
 		strcat(atcmd_output, " NoLockOn |");
 	if (map[m_id].flag.notomb)
 		strcat(atcmd_output, " NoTomb |");
+	if (map[m_id].flag.nocostume)
+		strcat(atcmd_output, " NoCostume |");
 	clif_displaymessage(fd, atcmd_output);
 
 	switch (list) {
@@ -8036,7 +8038,7 @@ ACMD_FUNC(mapflag) {
 		checkflag(nodrop);				checkflag(novending);			checkflag(loadevent);			checkflag(nochat);
 		checkflag(partylock);			checkflag(guildlock);			checkflag(reset);				checkflag(chmautojoin);
 		checkflag(nousecart);			checkflag(noitemconsumption);	checkflag(nosumstarmiracle);	checkflag(nomineeffect);
-		checkflag(nolockon);			checkflag(notomb);				checkflag(hidehpbar);
+		checkflag(nolockon);			checkflag(notomb);				checkflag(nocostume);			checkflag(hidehpbar);
 #ifdef ADJUST_SKILL_DAMAGE
 		checkflag(skill_damage);
 #endif
@@ -8060,7 +8062,7 @@ ACMD_FUNC(mapflag) {
 	setflag(nodrop);			setflag(novending);			setflag(loadevent);				setflag(nochat);
 	setflag(partylock);			setflag(guildlock);			setflag(reset);					setflag(chmautojoin);
 	setflag(nousecart);			setflag(noitemconsumption);	setflag(nosumstarmiracle);		setflag(nomineeffect);
-	setflag(nolockon);			setflag(notomb);			setflag(hidehpbar);
+	setflag(nolockon);			setflag(notomb);			setflag(nocostume);				setflag(hidehpbar);
 #ifdef ADJUST_SKILL_DAMAGE
 	setflag(skill_damage);
 #endif
@@ -8075,8 +8077,8 @@ ACMD_FUNC(mapflag) {
 	clif_displaymessage(sd->fd,"nozenypenalty, notrade, noskill, nowarp, nowarpto, noicewall, snow, clouds, clouds2,");
 	clif_displaymessage(sd->fd,"fog, fireworks, sakura, leaves, nogo, nobaseexp, nojobexp, nomobloot, nomvploot,");
 	clif_displaymessage(sd->fd,"nightenabled, restricted, nodrop, novending, loadevent, nochat, partylock, guildlock,");
-	clif_displaymessage(sd->fd,"reset, chmautojoin, nousecart, noitemconsumption, nosumstarmiracle, nolockon, notomb");
-	clif_displaymessage(sd->fd,"hidehpbar");
+	clif_displaymessage(sd->fd,"reset, chmautojoin, nousecart, noitemconsumption, nosumstarmiracle, nolockon, notomb,");
+	clif_displaymessage(sd->fd,"nocostume, hidehpbar");
 #ifdef ADJUST_SKILL_DAMAGE
 	clif_displaymessage(sd->fd,"skill_damage");
 #endif

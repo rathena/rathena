@@ -307,7 +307,7 @@ dic_dun01,284,102,5	script	Dirty Vigilante#ep13_3	450,{
 
 mid_camp,216,246,0	script	#ep133_event03	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (ep13_3_secret == 23) {
 		donpcevent "Suspicious Guy#ep133_::OnEnable";
 		cutin "ep13_loki01",2;
@@ -1794,7 +1794,7 @@ dic_in01,300,280,5	script	Minister Ahat#ep133_21	493,{
 }
 
 dic_in01,138,188,0	script	#ep133_event02	139,4,4,{
-OnTouch:
+OnTouch_:
 	if (ep13_3_secret == 19) {
 		if (!isequipped(2782)) {
 			mes "[Quiet Voice]";

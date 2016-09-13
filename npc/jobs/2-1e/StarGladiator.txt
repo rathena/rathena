@@ -327,7 +327,7 @@ payon,215,102,3	script	Moohyun#job_star	828,3,3,{
 	mes "they meet the right people~";
 	close;
 
-OnTouch:
+OnTouch_:
 	if (Class == Job_Taekwon) {
 		if (STGL_Q == 0) {
 			mes "[Moohyun]";

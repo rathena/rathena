@@ -2462,7 +2462,7 @@ OnInit:
 	disablenpc "Nine Tails#Kitsune Mask";
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[Nine Tails]";
 	mes "Yelp! Yelp yelp!";
 	mes "Yelp! Yelp yelp!";
@@ -2633,7 +2633,7 @@ OnMyMobDead2:
 // Orc Hero Helmet
 //============================================================
 in_orcs01,31,93,1	script	Orc Warrior#1	1023,2,2,{
-OnTouch:
+OnTouch_:
 	disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
@@ -3504,7 +3504,7 @@ OnTouch:
 }
 
 in_orcs01,162,33,1	script	Orc Hero#1	1087,2,2,{
-OnTouch:
+OnTouch_:
 	if (checkweight(1201,1) == 0) {
 		mes "- Wait a minute !! -";
 		mes "- Currently you're carrying -";

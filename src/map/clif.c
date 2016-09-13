@@ -5822,10 +5822,75 @@ void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id
 /// 0196 <index>.W <id>.L <state>.B (ZC_MSG_STATE_CHANGE) [used for ending status changes and starting them on non-pc units (when needed)]
 /// 043f <index>.W <id>.L <state>.B <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE2) [used exclusively for starting statuses on pcs]
 /// 0983 <index>.W <id>.L <state>.B <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE3) (PACKETVER >= 20120618)
-void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val1, int val2, int val3)
+/// @param bl Sends packet to clients around this object
+/// @param id ID of object that has this effect
+/// @param type Status icon see enum si_type
+/// @param flag 1:Active, 0:Deactive
+/// @param tick Duration in ms
+/// @param val1
+/// @param val2
+/// @param val3
+void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, int tick, int val1, int val2, int val3, enum send_target target_type)
 {
 	unsigned char buf[32];
-	struct map_session_data *sd;
+
+	if (type == SI_BLANK)  //It shows nothing on the client...
+		return;
+
+	if (type == SI_ACTIONDELAY && tick == 0)
+		return;
+
+	nullpo_retv(bl);
+
+#if PACKETVER >= 20120618
+	if (flag && battle_config.display_status_timers)
+		WBUFW(buf,0) = 0x983;
+	else
+#elif PACKETVER >= 20090121
+	if (flag && battle_config.display_status_timers)
+		WBUFW(buf,0) = 0x43f;
+	else
+#endif
+		WBUFW(buf,0) = 0x196;
+	WBUFW(buf,2) = type;
+	WBUFL(buf,4) = id;
+	WBUFB(buf,8) = flag;
+#if PACKETVER >= 20120618
+	if (flag && battle_config.display_status_timers) {
+		if (tick <= 0)
+			tick = 9999; // this is indeed what official servers do
+
+		WBUFL(buf,9) = tick;/* at this stage remain and total are the same value I believe */
+		WBUFL(buf,13) = tick;
+		WBUFL(buf,17) = val1;
+		WBUFL(buf,21) = val2;
+		WBUFL(buf,25) = val3;
+	}
+#elif PACKETVER >= 20090121
+	if (flag && battle_config.display_status_timers) {
+		if (tick <= 0)
+			tick = 9999; // this is indeed what official servers do
+
+		WBUFL(buf,9) = tick;
+		WBUFL(buf,13) = val1;
+		WBUFL(buf,17) = val2;
+		WBUFL(buf,21) = val3;
+	}
+#endif
+	clif_send(buf, packet_len(WBUFW(buf,0)), bl, target_type);
+}
+
+/* Sends status effect to clients around the bl
+ * @param bl Object that has the effect
+ * @param type Status icon see enum si_type
+ * @param flag 1:Active, 0:Deactive
+ * @param tick Duration in ms
+ * @param val1
+ * @param val2
+ * @param val3
+ */
+void clif_status_change(struct block_list *bl, int type, int flag, int tick, int val1, int val2, int val3) {
+	struct map_session_data *sd = NULL;
 
 	if (type == SI_BLANK)  //It shows nothing on the client...
 		return;
@@ -5839,42 +5904,8 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 
 	if (!(status_type2relevant_bl_types(type)&bl->type)) // only send status changes that actually matter to the client
 		return;
-#if PACKETVER >= 20120618
-	if(flag && battle_config.display_status_timers && sd)
-		WBUFW(buf,0)=0x983;
-	else
-#elif PACKETVER >= 20090121
-	if(flag && battle_config.display_status_timers && sd)
-		WBUFW(buf,0)=0x43f;
-	else
-#endif
-		WBUFW(buf,0)=0x196;
-	WBUFW(buf,2)=type;
-	WBUFL(buf,4)=bl->id;
-	WBUFB(buf,8)=flag;
-#if PACKETVER >= 20120618
-	if(flag && battle_config.display_status_timers && sd) {
-		if (tick <= 0)
-			tick = 9999; // this is indeed what official servers do
 
-		WBUFL(buf,9)=tick;/* at this stage remain and total are the same value I believe */
-		WBUFL(buf,13)=tick;
-		WBUFL(buf,17) = val1;
-		WBUFL(buf,21) = val2;
-		WBUFL(buf,25) = val3;
-	}
-#elif PACKETVER >= 20090121
-	if(flag && battle_config.display_status_timers && sd) {
-		if (tick <= 0)
-			tick = 9999; // this is indeed what official servers do
-
-		WBUFL(buf,9) = tick;
-		WBUFL(buf,13) = val1;
-		WBUFL(buf,17) = val2;
-		WBUFL(buf,21) = val3;
-	}
-#endif
-	clif_send(buf,packet_len(WBUFW(buf,0)),bl, (sd && sd->status.option&OPTION_INVISIBLE) ? SELF : AREA);
+	clif_status_change_sub(bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (sd->status.option&OPTION_INVISIBLE ? SELF : AREA) : AREA_WOS)));
 }
 
 /**
@@ -5903,7 +5934,11 @@ void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list 
 
 		if (td)
 			tick = DIFF_TICK(td->tick, gettick());
+#if PACKETVER > 20120418
 		clif_efst_status_change((target == SELF) ? &sd->bl : bl, bl->id, target, StatusIconChangeTable[type], tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3);
+#else
+		clif_status_change_sub(&sd->bl, bl->id, StatusIconChangeTable[type], 1, tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3, target);
+#endif
 	}
 }
 
@@ -6167,7 +6202,7 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 		((map[bl->m].flag.pvp?1:0)<<5)| // COUNT_PK - Show the PvP counter
 		((map[bl->m].flag.partylock?1:0)<<6)| // NO_PARTY_FORMATION - Prevents party creation/modification (Might be used for instance dungeons)
 		((map[bl->m].flag.battleground?1:0)<<7)| // BATTLEFIELD - Unknown (Does something for battlegrounds areas)
-		((map[bl->m].flag.noitemconsumption?1:0)<<8)| // DISABLE_COSTUMEITEM - Unknown - (Prevents wearing of costume items?)
+		((map[bl->m].flag.nocostume?1:0)<<8)| // DISABLE_COSTUMEITEM - Disable costume sprites
 		((map[bl->m].flag.nousecart?0:1)<<9)| // USECART - Allow opening cart inventory (Well force it to always allow it)
 		((map[bl->m].flag.nosumstarmiracle?0:1)<<10); // SUNMOONSTAR_MIRACLE - Unknown - (Guessing it blocks Star Gladiator's Miracle from activating)
 		//(1<<11); // Unused bits. 1 - 10 is 0x1 length and 11 is 0x15 length. May be used for future settings.
@@ -10079,6 +10114,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #else
 	clif_changelook(&sd->bl,LOOK_WEAPON,0);
 #endif
+	pc_set_costume_view(sd);
 
 	if(sd->vd.cloth_color)
 		clif_refreshlook(&sd->bl,sd->bl.id,LOOK_CLOTHES_COLOR,sd->vd.cloth_color,SELF);

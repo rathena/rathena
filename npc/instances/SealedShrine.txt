@@ -972,7 +972,7 @@ OnTimer3500000:
 }
 
 2@cata,80,144,0	script	ins_2f_enter	-1,3,3,{
-OnTouch:
+OnTouch_:
 	donpcevent instance_npcname("ins_2f_enter_broad")+"::OnEnable";
 	disablenpc instance_npcname("ins_2f_enter");
 	end;
@@ -1009,7 +1009,7 @@ OnTimer18000:
 }
 
 2@cata,50,67,0	script	slave_left	-1,5,5,{
-OnTouch:
+OnTouch_:
 	set .@map$, instance_mapname("2@cata");
 	mapannounce .@map$, "Apostle of Baphomet : Kill the humans! Don't let them interrupt the revival of our Master!",bc_map,"0xFFFF00";
 	monster .@map$,55,67,"Apostle of Baphomet",1869,1;
@@ -1033,7 +1033,7 @@ OnTouch:
 }
 
 2@cata,109,67,0	script	slave_right	-1,5,5,{
-OnTouch:
+OnTouch_:
 	set .@map$, instance_mapname("2@cata");
 	mapannounce .@map$, "Apostle of Baphomet : Kill the humans! Don't let them interrupt the revival of our Master!",bc_map,"0xFFFF00";
 	monster .@map$,105,67,"Apostle of Baphomet",1869,1;
@@ -1057,7 +1057,7 @@ OnTouch:
 }
 
 2@cata,79,39,0	script	slave_down	-1,5,5,{
-OnTouch:
+OnTouch_:
 	set .@map$, instance_mapname("2@cata");
 	mapannounce .@map$, "Apostle of Baphomet : Kill the humans! Don't let them interrupt the revival of our Master!",bc_map,"0xFFFF00";
 	monster .@map$,78,41,"Apostle of Baphomet",1869,1;
