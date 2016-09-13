@@ -19,52 +19,48 @@
  *----------------------------------------------------------------------------
  */
 /*======================================
- * Nullチェック 及び 情報出力後 return
- *・展開するとifとかreturn等が出るので
- *  一行単体で使ってください。
- *・nullpo_ret(x = func());
- *  のような使用法も想定しています。
+ * Check for NULL pointer and output information
  *--------------------------------------
  * nullpo_ret(t)
- *   戻り値 0固定
- * [引数]
- *  t       チェック対象
+ *   Returns 0 if <t> is NULL.
+ * [Argument]
+ *  t       Target to check
  *--------------------------------------
  * nullpo_retv(t)
- *   戻り値 なし
- * [引数]
- *  t       チェック対象
+ *   Returns nothing (void) if <t> is NULL.
+ * [Argument]
+ *  t       Target to check
  *--------------------------------------
  * nullpo_retr(ret, t)
- *   戻り値 指定
- * [引数]
- *  ret     return(ret);
- *  t       チェック対象
+ * Returns <ret> if <t> is NULL.
+ * [Arguments]
+ *  ret     Value to return;
+ *  t       Target to check
  *--------------------------------------
  * nullpo_ret_f(t, fmt, ...)
- *   詳細情報出力用
- *   戻り値 0
- * [引数]
- *  t       チェック対象
- *  fmt ... vprintfに渡される
- *    備考や関係変数の書き出しなどに
+ *   For displaying additional information
+ *   Returns 0 if t is NULL.
+ * [Arguments]
+ *  t       Target to check
+ *  fmt ... Passed to vprintf
+ *    Format and arguments such as description
  *--------------------------------------
  * nullpo_retv_f(t, fmt, ...)
- *   詳細情報出力用
- *   戻り値 なし
- * [引数]
- *  t       チェック対象
- *  fmt ... vprintfに渡される
- *    備考や関係変数の書き出しなどに
+ *   For displaying additional information
+ *   Returns nothing (void) if <t> is NULL.
+ * [Arguments]
+ *  t       Target to check
+ *  fmt ... Passed to vprintf
+ *    Format and arguments such as description
  *--------------------------------------
  * nullpo_retr_f(ret, t, fmt, ...)
- *   詳細情報出力用
- *   戻り値 指定
- * [引数]
+ *   For displaying additional information
+ *   Returns <ret> if <t> is NULL.
+ * [Arguments]
  *  ret     return(ret);
- *  t       チェック対象
- *  fmt ... vprintfに渡される
- *    備考や関係変数の書き出しなどに
+ *  t       Target to check
+ *  fmt ... Passed to vprintf
+ *    Format and arguments such as description
  *--------------------------------------
  */
 
@@ -82,9 +78,9 @@
 #define nullpo_retb(t) \
 	if (nullpo_chk(NLP_MARK, (void *)(t))) {break;}
 
-// 可変引数マクロに関する条件コンパイル
+// Different C compilers uses different argument formats
 #if __STDC_VERSION__ >= 199901L
-/* C99に対応 */
+/* C99 standard */
 #define nullpo_ret_f(t, fmt, ...) \
 	if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) {return(0);}
 
@@ -98,7 +94,7 @@
 	if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), __VA_ARGS__)) {break;}
 
 #elif __GNUC__ >= 2
-/* GCC用 */
+/* For GCC */
 #define nullpo_ret_f(t, fmt, args...) \
 	if (nullpo_chk_f(NLP_MARK, (void *)(t), (fmt), ## args)) {return(0);}
 
@@ -113,7 +109,7 @@
 
 #else
 
-/* その他の場合・・・ orz */
+/* Otherwise... orz */
 
 #endif
 
@@ -121,31 +117,30 @@
 /* No Nullpo check */
 
 // if((t)){;}
-// 良い方法が思いつかなかったので・・・苦肉の策です。
-// 一応ワーニングは出ないはず
+// Do nothing if Nullpo check is disabled
 
 #define nullpo_ret(t) (void)(t)
 #define nullpo_retv(t) (void)(t)
 #define nullpo_retr(ret, t) (void)(t)
 #define nullpo_retb(t) (void)(t)
 
-// 可変引数マクロに関する条件コンパイル
+// Different C compilers uses different argument formats
 #if __STDC_VERSION__ >= 199901L
-/* C99に対応 */
+/* C99 standard */
 #define nullpo_ret_f(t, fmt, ...) (void)(t)
 #define nullpo_retv_f(t, fmt, ...) (void)(t)
 #define nullpo_retr_f(ret, t, fmt, ...) (void)(t)
 #define nullpo_retb_f(t, fmt, ...) (void)(t)
 
 #elif __GNUC__ >= 2
-/* GCC用 */
+/* For GCC */
 #define nullpo_ret_f(t, fmt, args...) (void)(t)
 #define nullpo_retv_f(t, fmt, args...) (void)(t)
 #define nullpo_retr_f(ret, t, fmt, args...) (void)(t)
 #define nullpo_retb_f(t, fmt, args...) (void)(t)
 
 #else
-/* その他の場合・・・ orz */
+/* Otherwise... orz */
 #endif
 
 #endif /* NULLPO_CHECK */
@@ -156,14 +151,14 @@
  */
 /*======================================
  * nullpo_chk
- *   Nullチェック 及び 情報出力
- * [引数]
+ *   Check for null and output information
+ * [Arguments]
  *  file    __FILE__
  *  line    __LINE__
- *  func    __func__ (関数名)
- *    これらには NLP_MARK を使うとよい
- *  target  チェック対象
- * [返り値]
+ *  func    __func__ (name of the function)
+ *    You may pass NLP_MARK
+ *  target  Target to check
+ * [Return values]
  *  0 OK
  *  1 NULL
  *--------------------------------------
@@ -173,16 +168,16 @@ int nullpo_chk(const char *file, int line, const char *func, const void *target)
 
 /*======================================
  * nullpo_chk_f
- *   Nullチェック 及び 詳細な情報出力
- * [引数]
+ *   Check for NULL pointer and output detailed information
+ * [Arguments]
  *  file    __FILE__
  *  line    __LINE__
- *  func    __func__ (関数名)
- *    これらには NLP_MARK を使うとよい
- *  target  チェック対象
- *  fmt ... vprintfに渡される
- *    備考や関係変数の書き出しなどに
- * [返り値]
+ *  func    __func__ (name of the function)
+ *    You may pass NLP_MARK
+ *  target  Target to check
+ *  fmt ... Passed to vprintf
+ *    Format and arguments such as description
+ * [Return values]
  *  0 OK
  *  1 NULL
  *--------------------------------------
@@ -194,12 +189,12 @@ int nullpo_chk_f(const char *file, int line, const char *func, const void *targe
 
 /*======================================
  * nullpo_info
- *   nullpo情報出力
- * [引数]
+ *   Display information of the code that cause this function to trigger
+ * [Arguments]
  *  file    __FILE__
  *  line    __LINE__
- *  func    __func__ (関数名)
- *    これらには NLP_MARK を使うとよい
+ *  func    __func__ (name of the function)
+ *    You may pass NLP_MARK
  *--------------------------------------
  */
 void nullpo_info(const char *file, int line, const char *func);
@@ -207,14 +202,15 @@ void nullpo_info(const char *file, int line, const char *func);
 
 /*======================================
  * nullpo_info_f
- *   nullpo詳細情報出力
- * [引数]
+ *   Check for NULL pointer with additional
+ *   information.
+ * [Arguments]
  *  file    __FILE__
  *  line    __LINE__
- *  func    __func__ (関数名)
- *    これらには NLP_MARK を使うとよい
- *  fmt ... vprintfに渡される
- *    備考や関係変数の書き出しなどに
+ *  func    __func__ (name of the function)
+ *    You may pass NLP_MARK
+ *  fmt ... Passed to vprintf
+ *    Format and arguments such as description
  *--------------------------------------
  */
 void nullpo_info_f(const char *file, int line, const char *func, 
