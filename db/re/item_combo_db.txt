@@ -469,6 +469,7 @@
 20797:4174,{ bonus2 bSubEle,Ele_All,50; bonus2 bSubEle,Ele_Neutral,-50; }
 22069:2195,{ bonus2 bSubEle,Ele_Neutral,5; bonus2 bAddEle,Ele_Neutral,getequiprefinerycnt(EQI_HAND_L); }
 22069:20753,{ bonus2 bAddEle,Ele_Neutral,5; .@r = getequiprefinerycnt(EQI_GARMENT); bonus bMaxHPrate,.@r; bonus bMaxSPrate,.@r; }
+22106:2160,{ .@r = getequiprefinerycnt(EQI_SHOES); if (.@r > 6) { bonus2 bSubSize,Size_Large,2; bonus2 bSubClass,Class_Boss,2; } if (.@r > 8) { bonus2 bSubSize,Size_Large,2; bonus2 bSubClass,Class_Boss,2; } }
 22122:28443:28444,{ bonus bAspdRate,4; bonus bHit,4; }
 22123:28445:28446,{ bonus bAspdRate,8; bonus bHit,8; }
 22124:28447:28448,{ bonus bAspdRate,8; bonus bHit,8; bonus2 bExpAddClass,Class_All,2; }
