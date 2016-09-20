@@ -7205,6 +7205,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				if (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
 					status_change_end(bl, SC_STONE, INVALID_TIMER);
 			}
+			if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
+				status_change_end(bl, SC_SPIRIT, INVALID_TIMER);
 			break;
 		case SC_INCREASEAGI:
 			if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
