@@ -2592,6 +2592,10 @@
 	export_constant(SCF_REM_ON_CHANGEMAP);
 	export_constant(SCF_REM_ON_MAPWARP);
 	export_constant(SCF_REM_CHEM_PROTECT);
+	export_constant(SCF_OVERLAP_FAIL);
+	export_constant(SCF_OPT_CHANGEOPTION);
+	export_constant(SCF_OPT_CHANGELOOK);
+	export_constant(SCF_TRIGGER_ONTOUCH_);
 
 	/* elements */
 	export_constant(ELE_NEUTRAL);

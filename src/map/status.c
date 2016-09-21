@@ -55,27 +55,27 @@ short current_equip_opt_index; /// Contains random option index of an equipped i
 
 /// Struct of SC configs [Cydh]
 struct s_status_change_db {
-	//StringBuf *name; ///< SC name (Debug Only)
-	enum sc_type type; ///< SC_
-	enum si_type icon; ///< SI_
-	uint32 state; ///< SCS_
-	uint32 calc_flag; ///< SCB_ flags
-	uint8 opt1; ///< OPT1_
-	uint16 opt2; ///< OPT2_
-	uint32 opt3; ///< OPT1_
-	uint32 look; ///, OPTION_ Changelook
-	uint32 flag; ///< SCF_ Flags, enum e_status_change_flag
-	bool display; ///< Display status effect/icon (for certain state)
-	uint16 skill_id; ///< Associated skill for (addeff) duration lookups
-	enum sc_type *end, ///< List of SC that will be ended when this SC is activated
-		*fail; ///< List of SC that causing this SC cannot be activated
-	uint8 end_count, ///< Number of SC end list
-		fail_count; ///< Number of SC fail list
-	bool end_return; ///< After SC ends the SC from end list, it does nothing
-	struct script_code *script; ///< Exceuted script when SC is active
-	uint32 min_duration; ///< Minimum duration effect (after all status reduction)
-	uint16 min_rate; ///< Minimum rate to be applied (after all status reduction)
-	uint32 disabledon; ///< SC disabled on map zones
+	//StringBuf *name;		    ///< SC name (Debug Only)
+	enum sc_type type;		    ///< SC_
+	enum si_type icon;		    ///< SI_
+	uint32 state;			    ///< SCS_
+	uint32 calc_flag;		    ///< SCB_ flags
+	uint8 opt1;				    ///< OPT1_
+	uint16 opt2;			    ///< OPT2_
+	uint32 opt3;			    ///< OPT1_
+	uint32 look;			    ///, OPTION_ Changelook
+	uint32 flag;			    ///< SCF_ Flags, enum e_status_change_flag
+	bool display;			    ///< Display status effect/icon (for certain state)
+	uint16 skill_id;		    ///< Associated skill for (addeff) duration lookups
+	enum sc_type *end,		    ///< List of SC that will be ended when this SC is activated
+		*fail;				    ///< List of SC that causing this SC cannot be activated
+	uint8 end_count,		    ///< Number of SC end list
+		fail_count;			    ///< Number of SC fail list
+	bool end_return;		    ///< After SC ends the SC from end list, it does nothing
+	struct script_code *script; ///< Executes this script when SC is active
+	uint32 min_duration;	    ///< Minimum duration effect (after all status reduction)
+	uint16 min_rate;		    ///< Minimum rate to be applied (after all status reduction)
+	uint32 disabledon;		    ///< SC disabled on map zones
 };
 /// Status Change DB
 //static struct s_status_change_db *StatusChange[SC_MAX];
@@ -83,10 +83,18 @@ struct s_status_change_db {
 static DBMap *StatusChangeDB; /// StatusChange Database: s_status_change_db -> type
 
 /// Determine who will receive a clif_status_change packet for effects that require one to display correctly
-static uint16 StatusChangeIcon[SI_MAX];
+static uint16 StatusRelevantBLTypes[SI_MAX];
 
+/** Validates if type is in SC ranges
+ * @param type SC type
+ * @return True if type is in range, false otherwise
+ **/
 #define CHK_SC(type) ( ((type) > SC_NONE && (type) < SC_MAX) )
 
+/** Check if SC has entry in StatusChangeDB
+ * @param type SC Type
+ * @return Entry of sc data in StatusChangeDB
+ **/
 struct s_status_change_db *status_sc_exists(enum sc_type type) {
 	if (!CHK_SC(type))
 		return NULL;
@@ -105,6 +113,13 @@ struct s_status_change_db *status_sc_exists(enum sc_type type) {
 //	return StringBuf_Value(sc->name);
 //}
 
+/**
+ * Validates the variable of sc data by 'type'
+ * @param type SC type
+ * @param var Variable of s_status_change_db
+ * @param ret Returns this value if the data is not found
+ * @return True value of 'var'
+ **/
 #define CHK_SC2(type, var, ret) {\
 	struct s_status_change_db *scdb = status_sc_exists((type));\
 	if (!scdb)\
@@ -138,14 +153,14 @@ uint32 status_sc_get_calc_flag(enum sc_type type) { CHK_SC2(type, calc_flag, SCB
  * @param type: SC type
  * @return opt1: OPT1 value
  **/
-uint8 status_sc_get_opt1(enum sc_type type) { CHK_SC2(type, opt1, 0); }
+uint8 status_sc_get_opt1(enum sc_type type) { CHK_SC2(type, opt1, OPT1_NONE); }
 
 /**
  * Get Opt2 of SC
  * @param type: SC type
  * @return opt2: OPT2 value
  **/
-uint16 status_sc_get_opt2(enum sc_type type) { CHK_SC2(type, opt2, 0); }
+uint16 status_sc_get_opt2(enum sc_type type) { CHK_SC2(type, opt2, OPT2_NONE); }
 
 /**
  * Get Opt3 of SC
@@ -190,9 +205,9 @@ uint32 status_sc_get_min_rate(enum sc_type type) { CHK_SC2(type, min_rate, 0); }
 struct script_code *status_sc_get_script(enum sc_type type) { CHK_SC2(type, script, NULL); }
 
 /**
- * Get SC's minimum rate after sc_def calculation
+ * Will the SC stop its init after ends other SC in end_list?
  * @param sc: SC type
- * @return minimum rate 0 ~ 10000
+ * @return True: Stop, False: Continue
  **/
 bool status_sc_get_end_return(enum sc_type type) { CHK_SC2(type, end_return, 0); }
 
@@ -232,7 +247,7 @@ enum sc_type *status_sc_get_fail_list(enum sc_type type, uint8 *count) {
 uint16 status_si_get_bl_type(enum si_type si) {
 	if (si <= SI_BLANK || si >= SI_MAX)
 		return BL_PC;
-	return StatusChangeIcon[si];
+	return StatusRelevantBLTypes[si];
 }
 
 /**
@@ -6917,22 +6932,20 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	struct status_change_entry* sce;
 	struct status_data *status;
 	struct view_data *vd;
-	int opt_flag, calc_flag, undead_flag, val_flag = 0, tick_time = 0;
+	int opt_flag, calc_flag, undead_flag, val_flag = 0, tick_time = 0, opt = 0;
 	bool sc_isnew = true;
-	uint32 sc_flag = 0;
-	uint8 count_list = 0;
+	struct s_status_change_db *scdb = NULL;
 	enum sc_type *list = NULL, use_sc = type;
+	uint8 count_list = 0;
 
 	nullpo_ret(bl);
 	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);
 
-	if( type <= SC_NONE || type >= SC_MAX ) {
+	if( type <= SC_NONE || type >= SC_MAX || !(scdb = status_sc_exists(type)) ) {
 		ShowError("status_change_start: Invalid status change (%d)!\n", type);
 		return 0;
 	}
-
-	sc_flag = status_sc_get_flag(type);
 
 	if( !sc )
 		return 0; // Unable to receive status changes
@@ -6948,22 +6961,22 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 //		if (status_get_race2(bl) == RC2_GVG && status_sc2scb_flag(type)&SCB_MAXHP) return 0;
 
 	// Fail if Madogear is active
-	if (sc->option&OPTION_MADOGEAR && sc_flag&SCF_FAILED_MADO)
+	if (sc->option&OPTION_MADOGEAR && scdb->flag&SCF_FAILED_MADO)
 		return 0;
 
 	// Check for Boss resistances
-	if(status->mode&MD_STATUS_IMMUNE && !(flag&SCSTART_NOAVOID) && sc_flag&SCF_BOSS_RESIST)
+	if(status->mode&MD_STATUS_IMMUNE && !(flag&SCSTART_NOAVOID) && scdb->flag&SCF_BOSS_RESIST)
 		return 0;
 
 	// Check for MVP resistance
-	if(status->mode&MD_MVP && !(flag&SCSTART_NOAVOID) && sc_flag&SCF_MVP_RESIST)
+	if(status->mode&MD_MVP && !(flag&SCSTART_NOAVOID) && scdb->flag&SCF_MVP_RESIST)
 		return 0;
 
 	// Check failing SCs from list
-	if ((list = status_sc_get_fail_list(type, &count_list))) {
+	if (scdb->fail && scdb->fail_count) {
 		uint8 i;
-		for (i = 0; i < count_list; i ++) {
-			if (list[i] && sc->data[list[i]])
+		for (i = 0; i < scdb->fail_count; i ++) {
+			if (scdb->fail[i] && sc->data[scdb->fail[i]])
 				return 0;
 		}
 	}
@@ -7204,6 +7217,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				status_change_end(bl, SC_CURSE, INVALID_TIMER);
 				if (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
 					status_change_end(bl, SC_STONE, INVALID_TIMER);
+				if (sc->data[SC_CURSE]) {
+						status_change_end(bl, SC_CURSE, INVALID_TIMER);
+						return 1; // End Curse and do not give stat boost
+				}
 			}
 			if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
 				status_change_end(bl, SC_SPIRIT, INVALID_TIMER);
@@ -7226,16 +7243,20 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		default:
 			// If new SC has OPT1 while unit has OPT1, fail it!
-			if (sc->opt1 && status_sc_get_opt1(type))
+			if (sc->opt1 && scdb->opt1)
 				return 0;
 			break;
 	}
 
 	if (type == SC_BERSERK && val3 == SC__BLOODYLUST) //There is some reasons that using SC_BERSERK first before SC__BLOODYLUST itself on Akinari's fix
-		use_sc = SC__BLOODYLUST;
+		list = status_sc_get_end_list(SC__BLOODYLUST, &count_list);
+	else {
+		list = scdb->end;
+		count_list = scdb->end_count;
+	}
 
 	// End the SCs from the list
-	if ((list = status_sc_get_end_list(use_sc, &count_list))) {
+	if (list && count_list) {
 		uint8 i;
 		bool isRemoving = false;
 
@@ -7260,6 +7281,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Check for overlapping fails
 	if( (sce = sc->data[type]) ) {
+		if (scdb->flag&SCF_OVERLAP_FAIL)
+			return 0;
 		switch( type ) {
 			case SC_MERC_FLEEUP:
 			case SC_MERC_ATKUP:
@@ -7331,7 +7354,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	vd = status_get_viewdata(bl);
-	calc_flag = status_sc_get_calc_flag(type);
+	calc_flag = scdb->calc_flag;
 	if(!(flag&SCSTART_LOADED)) // &4 - Do not parse val settings when loading SCs
 	switch(type) {
 		/* Permanent effects */
@@ -7356,7 +7379,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ADORAMUS:
 			if (type == SC_ADORAMUS) {
 				// 1000% base chance to blind, but still can be resisted
-				sc_start(src, bl, SC_BLIND, 1000, val1, skill_get_time(status_sc_get_skill(type), val1));
+				sc_start(src, bl, SC_BLIND, 1000, val1, skill_get_time(scdb->skill_id, val1));
 				if (sc->data[SC_ADORAMUS])
 					return 0; //Adoramus can't refresh itself, but it can cause blind again
 			}
@@ -7760,7 +7783,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		case SC_JOINTBEAT:
 			if( val2&BREAK_NECK )
-				sc_start2(src,bl,SC_BLEEDING,100,val1,val3,skill_get_time2(status_sc_get_skill(type),val1));
+				sc_start2(src,bl,SC_BLEEDING,100,val1,val3,skill_get_time2(scdb->skill_id,val1));
 			break;
 
 		case SC_BERSERK:
@@ -7770,7 +7793,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				sc_start4(src,bl, SC_ENDURE, 100,10,0,0,2, tick);
 			// HP healing is performing after the calc_status call.
 			// Val2 holds HP penalty
-			if (!val4) val4 = skill_get_time2(status_sc_get_skill(type),val1);
+			if (!val4) val4 = skill_get_time2(scdb->skill_id,val1);
 			if (!val4) val4 = 10000; // Val4 holds damage interval
 			val3 = tick/val4; // val3 holds skill duration
 			tick_time = val4; // [GodLesZ] tick time
@@ -8453,7 +8476,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 5000; // [GodLesZ] tick time
 			break;
 		case SC_SATURDAYNIGHTFEVER:
-			if (!val4) val4 = skill_get_time2(status_sc_get_skill(type),val1);
+			if (!val4) val4 = skill_get_time2(scdb->skill_id,val1);
 			if (!val4) val4 = 3000;
 			val3 = tick/val4;
 			tick_time = val4; // [GodLesZ] tick time
@@ -8974,12 +8997,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			//val3 = 6 + val1; // Hits !TODO: Does it have hits too?
 			break;
 
-		default:
-			if( calc_flag == SCB_NONE && status_sc_get_skill(type) <= 0 && status_sc_get_icon(type) == SI_BLANK ) {
-				// Status change with no calc, no icon, and no skill associated...?
-				ShowError("status_change_start: Unknown SC %d\n", type);
-				return 0;
-			}
+		//default:
+		//	if( calc_flag == SCB_NONE && scdb->skill_id <= 0 && scdb->icon == SI_BLANK ) {
+		//		// Status change with no calc, no icon, and no skill associated...?
+		//		ShowError("status_change_start: Unknown SC %d\n", type);
+		//		return 0;
+		//	}
 	} else // Special considerations when loading SC data.
 		switch( type ) {
 			case SC_WEDDING:
@@ -9076,7 +9099,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	/* [Ind] */
-	if (sd && sc_flag&SCF_DISPLAY) {
+	if (sd && scdb->flag&SCF_DISPLAY) {
 		int dval1 = 0, dval2 = 0, dval3 = 0;
 
 		switch (type) {
@@ -9091,15 +9114,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	//SC that force player to stand if is sitting
-	if (sd && pc_issit(sd) && sc_flag&SCF_SET_STAND)
+	if (scdb->flag&SCF_SET_STAND && sd && pc_issit(sd))
 		pc_setstand(sd, true);
 
 	//SC that make stop attacking [LuzZza]
-	if (sc_flag&SCF_STOP_ATTACKING)
+	if (scdb->flag&SCF_STOP_ATTACKING)
 		unit_stop_attack(bl);
 
 	//SC that make stop walking
-	if (sc_flag&SCF_STOP_WALKING) {
+	if (scdb->flag&SCF_STOP_WALKING) {
 		switch (type) {
 			case SC_ANKLE:
 				if (battle_config.skill_trap_type || !map_flag_gvg(bl->m))
@@ -9115,6 +9138,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					unit_stop_attack(bl);
 				}
 				break;
+			case SC_WHITEIMPRISON:
+			case SC_DEEPSLEEP:
+			case SC_CRYSTALIZE:
+			case SC_FREEZE:
+			case SC_STUN:
+				if (sc->data[SC_DANCING])
+					unit_stop_walking(bl, 1);
+				break;
 			default:
 				if (!unit_blown_immune(bl,0x1))
 					unit_stop_walking(bl,1);
@@ -9123,50 +9154,42 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	//SC that make stop casting
-	if (battle_config.sc_castcancel&bl->type && sc_flag&SCF_STOP_CASTING)
+	if (battle_config.sc_castcancel&bl->type && scdb->flag&SCF_STOP_CASTING)
 		unit_skillcastcancel(bl,0);
 
 	opt_flag = 0;
-	// Set option as needed
-	// Set opt_flag, depends on OPT1, OPT2, OPT3, and OPTION that carried by SC. TODO: Clean me later
-	if (status_sc_get_opt1(type)) {
-		sc->opt1 = status_sc_get_opt1(type);
-		opt_flag |= 1;
-	}
+	sc->opt1 = scdb->opt1;
+	sc->opt2 |= scdb->opt2;
+	sc->opt3 |= scdb->opt3;
+	sc->option |= scdb->look;
 
-	if (status_sc_get_opt2(type)) {
-		sc->opt2 |= status_sc_get_opt2(type);
-		opt_flag |= 1;
-	}
+	opt_flag = scdb->flag&SCF_OPT_FLAGS;
 
-	if (status_sc_get_opt3(type)) {
-		switch(type) {
-			case SC_DANCING:
-				if ((val1&0xFFFF) != CG_MOONLIT)
-					break;
-			default:
-				sc->opt3 |= status_sc_get_opt3(type);
-				opt_flag |= 1;
+	switch(type) {
+		case SC_STONE: 
+			if (val3 > 0)
+				sc->opt1 = OPT1_STONEWAIT;
+			else
+				sc->opt1 = OPT1_STONE;
+			break;
+		case SC_DANCING:
+			if ((val1&0xFFFF) != CG_MOONLIT)
+				sc->opt3 |= OPT3_MOONLIT;
+			opt_flag = 0;
+			break;
+		case SC_INCATKRATE:
+			// Simulate Explosion Spirits effect for NPC_POWERUP [Skotlex]
+			if (bl->type != BL_MOB) {
+				opt_flag = 0;
 				break;
-		}
-	}
-
-	if (status_sc_get_look(type)) {
-		sc->option |= status_sc_get_look(type);
-		opt_flag |= 4;
-		switch (status_sc_get_look(type)) {
-			case OPTION_CLOAK:
-			case OPTION_INVISIBLE:
-			case OPTION_HIDE:
-			case OPTION_CHASEWALK:
-				opt_flag |= 2;
-		}
+			}
+			break;
 	}
 
 	// On Aegis, when turning on a status change, first goes the option packet, then the sc packet.
-	if(opt_flag) {
+	if (scdb->flag) {
 		clif_changeoption(bl);
-		if(sd && (opt_flag&0x4)) {
+		if(sd && (opt_flag&SCF_OPT_CHANGELOOK)) {
 			clif_changelook(bl,LOOK_BASE,vd->class_);
 			clif_changelook(bl,LOOK_WEAPON,0);
 			clif_changelook(bl,LOOK_SHIELD,0);
@@ -9192,8 +9215,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		calc_flag&=~SCB_BODY;
 	}*/
 
-	if(!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && sc_flag&SCF_DISPLAY))
-		clif_status_change(bl,status_sc_get_icon(type),1,tick,(val_flag&1)?val1:1,(val_flag&2)?val2:0,(val_flag&4)?val3:0);
+	if(!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag&SCF_DISPLAY))
+		clif_status_change(bl,scdb->icon,1,tick,(val_flag&1)?val1:1,(val_flag&2)?val2:0,(val_flag&4)?val3:0);
 
 	// Used as temporary storage for scs with interval ticks, so that the actual duration is sent to the client first.
 	if( tick_time )
@@ -9222,8 +9245,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Non-zero
 	// Calc state for SC_STONE when OPT1_STONE in the timer
-	if (sc_isnew && status_sc_get_state(type) && type != SC_STONE)
-		status_calc_state(bl,sc,status_sc_get_state(type),true);
+	if (sc_isnew && scdb->state && type != SC_STONE)
+		status_calc_state(bl,sc,scdb->state,true);
 
 
 	if(sd) {
@@ -9323,7 +9346,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
-	if( opt_flag&2 && sd && sd->touching_id )
+	if( scdb->flag&SCF_TRIGGER_ONTOUCH_ && sd && sd->touching_id )
 		npc_touchnext_areanpc(sd,false); // Run OnTouch_ on next char in range
 
 	return 1;
@@ -9362,11 +9385,13 @@ int status_change_clear(struct block_list* bl, int type)
 		return 0;
 
 	for (i = 0; i < SC_MAX; i++) {
+		uint32 sc_flag = 0;
 		if (!sc->data[i])
 			continue;
 
+		sc_flag = status_sc_get_flag((sc_type)i);
 		if (type == 0) { // Type 0: PC killed
-			if (status_sc_get_flag((sc_type)i)&SCF_NO_REM_ONDEAD) {
+			if (sc_flag&SCF_NO_REM_ONDEAD) {
 				switch (i) {
 					case SC_ELEMENTALCHANGE: // Only when its Holy or Dark that it doesn't dispell on death
 						if (sc->data[i]->val2 != ELE_HOLY && sc->data[i]->val2 != ELE_DARK)
@@ -9377,7 +9402,7 @@ int status_change_clear(struct block_list* bl, int type)
 			}
 		}
 
-		if (type == 3 && status_sc_get_flag((sc_type)i)&SCF_PERMANENT)
+		if (type == 3 && sc_flag&SCF_PERMANENT)
 			continue;
 
 		status_change_end(bl, (sc_type)i, INVALID_TIMER);
@@ -9418,13 +9443,14 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	struct status_data *status;
 	struct view_data *vd;
 	int opt_flag = 0, calc_flag;
+	struct s_status_change_db *scdb = NULL;
 
 	nullpo_ret(bl);
 
 	sc = status_get_sc(bl);
 	status = status_get_status_data(bl);
 
-	if(type < 0 || type >= SC_MAX || !sc || !(sce = sc->data[type]))
+	if(type < 0 || type >= SC_MAX || !sc || !(sce = sc->data[type]) || !(scdb = status_sc_exists(type)))
 		return 0;
 
 	sd = BL_CAST(BL_PC,bl);
@@ -9461,16 +9487,16 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	(sc->count)--;
 
-	if (status_sc_get_state(type))
-		status_calc_state(bl,sc,status_sc_get_state(type),false);
+	if (scdb->state)
+		status_calc_state(bl,sc,scdb->state,false);
 
 	sc->data[type] = NULL;
 
-	if (sd && status_sc_get_flag(type)&SCF_DISPLAY)
+	if (sd && scdb->flag&SCF_DISPLAY)
 		status_display_remove(sd,type);
 
 	vd = status_get_viewdata(bl);
-	calc_flag = status_sc_get_calc_flag(type);
+	calc_flag = scdb->calc_flag;
 	switch(type) {
 		case SC_GRANITIC_ARMOR:
 			{
@@ -9499,7 +9525,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				DIFF_TICK(gettick(), sce->val4) <= 1000 &&
 				(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0))
 			)
-				sc_start(bl,bl,SC_SPURT,100,sce->val1,skill_get_time2(status_sc_get_skill(type), sce->val1));
+				sc_start(bl,bl,SC_SPURT,100,sce->val1,skill_get_time2(scdb->skill_id, sce->val1));
 		}
 		break;
 		case SC_AUTOBERSERK:
@@ -9637,7 +9663,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			if (sce->val2 > 0) {
 				// Caster has been unlocked... nearby chars need to be unlocked.
 				int range = 1
-					+ skill_get_range2(bl, status_sc_get_skill(type), sce->val1, true)
+					+ skill_get_range2(bl, scdb->skill_id, sce->val1, true)
 					+ skill_get_range2(bl, TF_BACKSLIDING, 1, true); // Since most people use this to escape the hold....
 				map_foreachinarea(status_change_timer_sub,
 					bl->m, bl->x-range, bl->y-range, bl->x+range,bl->y+range,BL_CHAR,bl,sce,type,gettick());
@@ -9875,7 +9901,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			break;
 		case SC_FULL_THROTTLE: {
-				int sec = skill_get_time2(status_sc_get_skill(type), sce->val1);
+				int sec = skill_get_time2(scdb->skill_id, sce->val1);
 
 				clif_status_change(bl, SI_DECREASEAGI, 1, sec, 0, 0, 0);
 				sc_start(bl, bl, SC_REBOUND, 100, sce->val1, sec);
@@ -9931,45 +9957,36 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	}
 	
 	// Reset the options as needed
-	// Set opt_flag, depends on OPT1, OPT2, OPT3, and OPTION that carried by SC. TODO: Clean me later
+	opt_flag = scdb->flag&SCF_OPT_FLAGS;
 	switch (type) {
 		case SC_SWOO:
-			opt_flag = 8;
+		case SC_SKA:
+			opt_flag = 0x8;
  			break;
-		default:
+		case SC_DANCING:
+			if ((sce->val1&0xFFFF) == CG_MOONLIT)
+				sc->opt3 &= ~OPT3_MOONLIT;
 			opt_flag = 0;
-	}
-	if (status_sc_get_opt1(type)) {
-		sc->opt1 = OPT1_NONE;
-		opt_flag |= 1;
-	}
-	if (status_sc_get_opt2(type)) {
-		sc->opt2 &= ~(status_sc_get_opt2(type));
-		opt_flag |= 1;
-	}
-	if (status_sc_get_opt3(type)) {
-		switch (type) {
-			case SC_DANCING:
-				if ((sce->val1&0xFFFF) != CG_MOONLIT)
-					break;
-			default:
-				sc->opt3 &= ~(status_sc_get_opt3(type));
-				opt_flag |= 1;
+			break;
+		case SC_INCATKRATE: // Simulated Explosion spirits effect.
+			if (bl->type != BL_MOB) {
+				opt_flag = 0;
 				break;
-		}
+			}
+			break;
 	}
-	if (status_sc_get_look(type)) {
-		sc->option &= ~(status_sc_get_look(type));
-		opt_flag |= 4;
-		// Check for warp trigger + AoE trigger
-		switch (status_sc_get_look(type)) {
-			case OPTION_CLOAK:
-			case OPTION_INVISIBLE:
-			case OPTION_HIDE:
-			case OPTION_CHASEWALK:
-				opt_flag |= 2;
-		}
-	}
+
+	if (scdb->opt1)
+		sc->opt1 = OPT1_NONE;
+
+	if (scdb->opt2)
+		sc->opt2 &= ~scdb->opt2;
+
+	if (scdb->opt3)
+		sc->opt3 &= ~scdb->opt3;
+
+	if (scdb->look)
+		sc->option &= ~scdb->look;
 
 	if (calc_flag&SCB_DYE) { // Restore DYE color
 		if (vd && !vd->cloth_color && sce->val4)
@@ -9985,13 +10002,13 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	}*/
 
 	// On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
-	clif_status_change(bl,status_sc_get_icon(type),0,0,0,0,0);
+	clif_status_change(bl,scdb->icon,0,0,0,0,0);
 
-	if( opt_flag&8 ) // bugreport:681
+	if( opt_flag&0x8 ) // bugreport:681
 		clif_changeoption2(bl);
 	else if(opt_flag) {
 		clif_changeoption(bl);
-		if (sd && (opt_flag&0x4)) {
+		if (sd && (opt_flag&SCF_OPT_CHANGELOOK)) {
 			clif_changelook(bl,LOOK_BASE,sd->vd.class_);
 			clif_get_weapon_view(sd,&sd->vd.weapon,&sd->vd.shield);
 			clif_changelook(bl,LOOK_WEAPON,sd->vd.weapon);
@@ -10012,10 +10029,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		}
 	}
 
-	if(opt_flag&4) // Out of hiding, invoke on place.
+	if (scdb->look&OPTION_HIDE) // Out of hiding, invoke on place.
 		skill_unit_move(bl,gettick(),1);
 
-	if(opt_flag&2 && sd && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
+	if (opt_flag&&SCF_TRIGGER_ONTOUCH_ && sd && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
 		npc_touch_areanpc(sd,bl->m,bl->x,bl->y); // Trigger on-touch event.
 
 	ers_free(sc_data_ers, sce);
@@ -11599,43 +11616,43 @@ uint32 status_split_bit(char *str, const char *delim, const char *file, int line
  * Free single StatusChangeDB entry
  * @param sc
  **/
-static void status_sc_freedb_sub(struct s_status_change_db *sc) {
-	nullpo_retv(sc);
+static void status_sc_freedb_sub(struct s_status_change_db *scdb) {
+	nullpo_retv(scdb);
 
 	// Clear fail list
-	if (sc->fail_count)
-		aFree(sc->fail);
-	sc->fail = NULL;
+	if (scdb->fail)
+		aFree(scdb->fail);
+	scdb->fail = NULL;
 
 	// Clear end list
-	if (sc->end_count)
-		aFree(sc->end);
-	sc->end = NULL;
+	if (scdb->end)
+		aFree(scdb->end);
+	scdb->end = NULL;
 
 	// Clear script
-	if (sc->script)
-		script_free_code(sc->script);
-	sc->script = NULL;
+	if (scdb->script)
+		script_free_code(scdb->script);
+	scdb->script = NULL;
 
 	//if (sc->name)
 	//	StringBuf_Free(sc->name);
 
-	memset(sc, 0, sizeof(sc));
-	sc->icon = SI_BLANK;
+	memset(scdb, 0, sizeof(struct s_status_change_db));
+	scdb->icon = SI_BLANK;
 }
 
 /**
  * Free StatusChangeDB entries
  **/
 static int status_sc_freedb(DBKey key, DBData *data, va_list ap) {
-	struct s_status_change_db *sc = (struct s_status_change_db *)db_data2ptr(data);
+	struct s_status_change_db *scdb = (struct s_status_change_db *)db_data2ptr(data);
 	//int free = va_arg(ap, int);
 
-	if (!sc)
+	if (!scdb)
 		return 0;
 
-	status_sc_freedb_sub(sc);
-	aFree(sc);
+	status_sc_freedb_sub(scdb);
+	aFree(scdb);
 	return 1;
 }
 
@@ -11671,13 +11688,8 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 					continue;
 
 				sc_name = config_setting_name(sc);
-				if (sc_name[0] == 'I' && sc_name[1] == 'D')
-					sc_id = atoi(sc_name+2);
-				else
-					script_get_constant(sc_name, &sc_id);
-
 				// Validate SC
-				if (!CHK_SC(sc_id)) {
+				if (!script_get_constant(sc_name, &sc_id) || !CHK_SC(sc_id)) {
 					ShowError("status_sc_readconf_sub: Invalid SC '%s' in file '%s'. Skipping...\n", sc_name, filename);
 					failed++;
 					continue;
@@ -11685,13 +11697,16 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 
 				if (!(scdb = (struct s_status_change_db *)uidb_get(StatusChangeDB, sc_id))) {
 					CREATE(scdb, struct s_status_change_db, 1);
-					scdb->icon = SI_BLANK;
 					uidb_put(StatusChangeDB, sc_id, scdb);
 				}
 				else // Clear previous value
 					status_sc_freedb_sub(scdb);
 
 				scdb->type = (sc_type)sc_id;
+				scdb->icon = SI_BLANK;
+				scdb->fail = NULL;
+				scdb->end = NULL;
+				scdb->script = NULL;
 
 				//scdb->name = StringBuf_Malloc();
 				//StringBuf_AppendStr(scdb->name, sc_name);
@@ -11699,13 +11714,8 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 				// Icon
 				if (config_setting_lookup_string(sc, "Icon", &icon) && icon && icon[0] != '\0') {
 					int icon_id = SI_BLANK;
-					if (sc_name[0] == 'I' && sc_name[1] == 'D')
-						icon_id = atoi(icon+2);
-					else
-						script_get_constant(icon, &icon_id);
-
-					if (icon_id <= SI_BLANK || icon_id >= SI_MAX)
-						ShowWarning("status_sc_readconf_sub: Invalid Icon '%s' for SC '%s' (%d) in file '%s'. Skipping...\n", icon, sc_name, sc_id, filename);
+					if (!script_get_constant(icon, &icon_id) || icon_id <= SI_BLANK || icon_id >= SI_MAX)
+						ShowWarning("status_sc_readconf_sub: Invalid Icon '%s' for SC '%s' (%d) in file '%s'. Ignoring...\n", icon, sc_name, sc_id, filename);
 					else
 						scdb->icon = (enum si_type)icon_id;
 				}
@@ -11713,12 +11723,7 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 				// Skill lookup
 				if (config_setting_lookup_string(sc, "DurationLookup",  &skill) && skill && skill[0] != '\0') {
 					uint16 skill_id = 0, idx = 0;
-					if (skill[0] == 'I' && skill[1] == 'D')
-						skill_id = atoi(skill+2);
-					else
-						skill_id = skill_name2id(skill);
-
-					if (!(idx = skill_get_index(skill_id)))
+					if (!(skill_id = skill_name2id(skill)) || !(idx = skill_get_index(skill_id)))
 						ShowWarning("status_sc_readconf_sub: Invalid Skill 'DurationLookup' '%s' for SC '%s' (%d) in file '%s'. Skipping...\n", skill, sc_name, sc_id, filename);
 					else
 						scdb->skill_id = skill_id;
@@ -11769,16 +11774,11 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 						const char *fail_sc = config_setting_get_string_elem(list, j);
 						int fail_sc_id = 0;
 
-						if (!fail_sc || fail_sc[0] == '\0' || (fail_sc[0] > 0 && fail_sc[0] == 32))
+						if (!fail_sc || fail_sc[0] == '\0' || !ISALNUM(fail_sc[0]))
 							continue;
 
-						if (fail_sc[0] == 'I' && fail_sc[1] == 'D')
-							fail_sc_id = atoi(fail_sc+2);
-						else
-							script_get_constant(fail_sc, &fail_sc_id);
-
-						if (!CHK_SC(fail_sc_id)) {
-							ShowWarning("status_sc_readconf_sub: Invalid SC '%s' in 'Fail' for SC '%s' (%d) in file '%s'. Removing...\n", fail_sc, sc_name, sc_id, filename);
+						if (!script_get_constant(fail_sc, &fail_sc_id) || !CHK_SC(fail_sc_id)) {
+							ShowWarning("status_sc_readconf_sub: Invalid SC '%s' in 'Fail' for '%s' (%d) in file '%s'. Ignoring...\n", fail_sc, sc_name, sc_id, filename);
 							continue;
 						}
 
@@ -11796,16 +11796,11 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 						const char *end_sc = config_setting_get_string_elem(list, j);
 						int end_sc_id = 0;
 
-						if (!end_sc || end_sc[0] == '\0' || (end_sc[0] > 0 && end_sc[0] == 32))
+						if (!end_sc || end_sc[0] == '\0' || !ISALNUM(end_sc[0]))
 							continue;
 
-						if (end_sc[0] == 'I' && end_sc[1] == 'D')
-							end_sc_id = atoi(end_sc+2);
-						else
-							script_get_constant(end_sc, &end_sc_id);
-
-						if (!CHK_SC(end_sc_id)) {
-							ShowWarning("status_sc_readconf_sub: Invalid SC '%s' in 'End' for SC '%s' (%d) in file '%s'. Removing...\n", end_sc, sc_name, sc_id, filename);
+						if (!script_get_constant(end_sc, &end_sc_id) || !CHK_SC(end_sc_id)) {
+							ShowWarning("status_sc_readconf_sub: Invalid SC '%s' in 'End' for '%s' (%d) in file '%s'. Ignoring...\n", end_sc, sc_name, sc_id, filename);
 							continue;
 						}
 
@@ -11815,15 +11810,15 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 				}
 
 				// End return
-				if (config_setting_lookup_bool(sc, "EndReturn", &end_return)) {
-					scdb->end_return = (end_return);
-				}
+				if (config_setting_lookup_bool(sc, "EndReturn", &end_return))
+					scdb->end_return = end_return;
 
 				// Disabled on Map Zone
 				if (config_setting_lookup_string(sc, "DisabledOn", &disabledon) && disabledon && disabledon[0] != '\0')
 					scdb->disabledon = status_split_bit((char *)disabledon, "|", filename, sc->line);
 
 				// Additional Script
+				// !TODO: Normal string grammar for look up maybe incompatible for this case
 				if (config_setting_lookup_string(sc, "Script", &script_str) && script_str && script_str != '\0') {
 					struct script_code *script = parse_script(script_str, filename, 0, 0);
 					if (script) {
@@ -11832,10 +11827,10 @@ static void status_sc_readconf_sub(const char *filename, bool silent) {
 					}
 				}
 
-				StatusChangeIcon[scdb->icon] = BL_PC;
+				StatusRelevantBLTypes[scdb->icon] = BL_PC;
 				// Set BL_SCEFFECT for this status icon
-				if (scdb->flag&SCF_BLEFFECT && scdb->icon > SI_BLANK && scdb->icon < SI_MAX)
-					StatusChangeIcon[scdb->icon] |= BL_SCEFFECT;
+				if (scdb->flag&SCF_BLEFFECT && scdb->icon != SI_BLANK)
+					StatusRelevantBLTypes[scdb->icon] |= BL_SCEFFECT;
 			}
 		}
 	}

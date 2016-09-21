@@ -5945,9 +5945,9 @@ void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list 
 		if (td)
 			tick = DIFF_TICK(td->tick, gettick());
 #if PACKETVER > 20120418
-		clif_efst_status_change((target == SELF) ? &sd->bl : bl, bl->id, target, StatusIconChangeTable[type], tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3);
+		clif_efst_status_change((target == SELF) ? &sd->bl : bl, bl->id, target, status_sc_get_icon(type), tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3);
 #else
-		clif_status_change_sub(&sd->bl, bl->id, StatusIconChangeTable[type], 1, tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3, target);
+		clif_status_change_sub(&sd->bl, bl->id, status_sc_get_icon(type), 1, tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3, target);
 #endif
 	}
 }

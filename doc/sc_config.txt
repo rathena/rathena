@@ -1,227 +1,308 @@
 //===== rAthena Documentation ================================
 //= rAthena SC Configution
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Last Updated: ========================================
-//= 20160705
 //===== Description: =========================================
 //= Parameters usage on sc_config.conf file.
 //============================================================
 
 ---------------------------------------
 
-SC: Status Change name/constants or ID.
-    See src/map/script_constants.h for SC_
+StatusID
+
+Status Change ID.
+See src/map/script_constants.h for SC_ constants.
 
 ---------------------------------------
 
-SI: Status Icon or client effect that will be displayed client-side.
-    See src/map/script_constants.h for SI_
+Icon
+
+Status Icon or client effect that will be displayed client-side.
+Default to SI_BLANK, see src/map/script_constants.h for SI_ constants.
 
 ---------------------------------------
 
-SCS: Specified states given when the SC is active. Use "|" as delimiter for multiple values.
-     SCS_NONE               = (Default) Means nothing.
-     SCS_NOMOVE             = Cannot move.
-     SCS_NOMOVECOND         = Condition check for SCS_NOMOVE.
-     SCS_NOPICKITEM         = Cannot pick item.
-     SCS_NOPICKITEMCOND     = Condition check for SCS_NOPICKITEM.
-     SCS_NODROPITEM         = Cannot drop item.
-     SCS_NODROPITEMCOND     = Condition check for SCS_NODROPITEM.
-     SCS_NOCAST             = Cannot cast a skill.
-     SCS_NOCASTCOND         = Condition check for SCS_NOCAST.
-     SCS_NOCHAT             = Cannot chat and open chat room.
-     SCS_NOCHATCOND         = Condition check for SCS_NOCHATCOND.
-     SCS_NOEQUIPITEM        = Cannot put on equipment.
-     SCS_NOEQUIPITEMCOND    = Condition check for SCS_NOEQUIPITEM.
-     SCS_NOUNEQUIPITEM      = Cannot put off equipment.
-     SCS_NOUNEQUIPITEMCOND  = Condition check for SCS_NOUNEQUIPITEM.
-     SCS_NOCONSUMEITEM      = Cannot consume item.
-     SCS_NOCONSUMEITEMCOND  = Condition check for SCS_NOCONSUMEITEM.
-     SCS_NOATTACK           = Cannot attack.
-     SCS_NOATTACKCOND       = Condition check for SCS_NOATTACK.
+DurationLookup
 
-	 Example, if we want to make the player unable to move and unable to cast skills when Berserk/Frenzy is active, the SCS value is:
-	 SCS_NOMOVE|SCS_NOCAST
-
-	 SCS that have a suffix of "COND" means the SCS has hardcoded conditions in status.c::status_calc_state
+Used for default duration lookup in 'status_sc_get_skill()' based on skill_cast_db.txt,
+commonly the lookup is used for some item bonuses as default duration. Example: bonus bAddEff
 
 ---------------------------------------
 
-SCB: Flag that indicates which status calculation needs to be performed. Use "|" as delimiter for multiple values.
-     SCB_NONE    = (Default) Calculates nothing.
-     SCB_BASE    = Base status
-     SCB_MAXHP   = Maximum HP
-     SCB_MAXSP   = Maximum SP
-     SCB_STR     = STR
-     SCB_AGI     = AGI
-     SCB_VIT     = VIT
-     SCB_INT     = INT
-     SCB_DEX     = DEX
-     SCB_LUK     = LUK
-     SCB_BATK    = Base Attack
-     SCB_WATK    = Weapon Attack
-     SCB_MATK    = Magic Attack
-     SCB_HIT     = Hit/accuracy rate
-     SCB_FLEE    = Flee/dodge rate
-     SCB_DEF     = Equipment Defense
-     SCB_DEF2    = Defense
-     SCB_MDEF    = Equipment Magic Defense
-     SCB_MDEF2   = Magic Defense
-     SCB_SPEED   = Walk speed
-     SCB_ASPD    = Attack speed
-     SCB_DSPD    = 
-     SCB_CRI     = Critical rate
-     SCB_FLEE2   = Perfect dodge rate
-     SCB_ATK_ELE = Attack Element
-     SCB_DEF_ELE = Defense Element
-     SCB_MODE    = Mode
-     SCB_SIZE    = Size
-     SCB_RACE    = Race
-     SCB_RANGE   = Range
-     SCB_REGEN   = Regeneration
-     SCB_DYE     = Dye
-     SCB_BATTLE  = All SCBs without SCB_BASE
-     SCB_ALL     = Calculates all SCBs
+SCS
+
+Specified states given when the SC is active.
+Use "|" as delimiter for multiple values.
+
+	SCS_NONE               = (Default) Means nothing.
+	SCS_NOMOVE             = Cannot move.
+	SCS_NOMOVECOND         = Condition check for SCS_NOMOVE.
+	SCS_NOPICKITEM         = Cannot pick item.
+	SCS_NOPICKITEMCOND     = Condition check for SCS_NOPICKITEM.
+	SCS_NODROPITEM         = Cannot drop item.
+	SCS_NODROPITEMCOND     = Condition check for SCS_NODROPITEM.
+	SCS_NOCAST             = Cannot cast a skill.
+	SCS_NOCASTCOND         = Condition check for SCS_NOCAST.
+	SCS_NOCHAT             = Cannot chat and open chat room.
+	SCS_NOCHATCOND         = Condition check for SCS_NOCHATCOND.
+	SCS_NOEQUIPITEM        = Cannot put on equipment.
+	SCS_NOEQUIPITEMCOND    = Condition check for SCS_NOEQUIPITEM.
+	SCS_NOUNEQUIPITEM      = Cannot put off equipment.
+	SCS_NOUNEQUIPITEMCOND  = Condition check for SCS_NOUNEQUIPITEM.
+	SCS_NOCONSUMEITEM      = Cannot consume item.
+	SCS_NOCONSUMEITEMCOND  = Condition check for SCS_NOCONSUMEITEM.
+	SCS_NOATTACK           = Cannot attack.
+	SCS_NOATTACKCOND       = Condition check for SCS_NOATTACK.
+
+Example, if we want to make the player unable to move and unable to cast skills when Berserk/Frenzy is active, the SCS value is:
+SCS_NOMOVE|SCS_NOCAST
+
+SCS that have a suffix of "COND" means the SCS has hardcoded conditions in status.c::status_calc_state
 
 ---------------------------------------
 
-OPT1: Special effect when status is active. This option is not stackable. These effects also apply their special behaviors.
-      OPT1_STONE        = Stone curse effect
-      OPT1_FREEZE       = Freeze effect
-      OPT1_STUN         = Stun effect
-      OPT1_SLEEP        = Sleep effect
-      OPT1_STONEWAIT    = Effect before Stone is really applied
-      OPT1_BURNING      = Burning effect
-      OPT1_IMPRISON     = Imprison effect
-      OPT1_CRYSTALIZE   = Crystalize effect
+SCB
+
+Flag that indicates which status calculation needs to be performed.
+Use "|" as delimiter for multiple values.
+Even the value is changed in sc_config.conf file, if the SC doesn't have
+hardcoded respective bonus, it doesn't give any effect.
+
+	SCB_NONE    = (Default) Calculates nothing.
+	SCB_BASE    = Base status
+	SCB_MAXHP   = Maximum HP
+	SCB_MAXSP   = Maximum SP
+	SCB_STR     = STR
+	SCB_AGI     = AGI
+	SCB_VIT     = VIT
+	SCB_INT     = INT
+	SCB_DEX     = DEX
+	SCB_LUK     = LUK
+	SCB_BATK    = Base Attack
+	SCB_WATK    = Weapon Attack
+	SCB_MATK    = Magic Attack
+	SCB_HIT     = Hit/accuracy rate
+	SCB_FLEE    = Flee/dodge rate
+	SCB_DEF     = Equipment Defense
+	SCB_DEF2    = Defense
+	SCB_MDEF    = Equipment Magic Defense
+	SCB_MDEF2   = Magic Defense
+	SCB_SPEED   = Walk speed
+	SCB_ASPD    = Attack speed
+	SCB_DSPD    = 
+	SCB_CRI     = Critical rate
+	SCB_FLEE2   = Perfect dodge rate
+	SCB_ATK_ELE = Attack Element
+	SCB_DEF_ELE = Defense Element
+	SCB_MODE    = Mode
+	SCB_SIZE    = Size
+	SCB_RACE    = Race
+	SCB_RANGE   = Range
+	SCB_REGEN   = Regeneration
+	SCB_DYE     = Dye
+	SCB_BATTLE  = All SCBs without SCB_BASE
+	SCB_ALL     = Calculates all SCBs
 
 ---------------------------------------
 
-OPT2: Special option/client effect when status is active. Use "|" as delimiter for multiple values.
-      OPT2_POISON         = Posioned effect
-      OPT2_CURSE          = Cursed effect
-      OPT2_SILENCE        = Silence effect
-      OPT2_SIGNUMCRUCIS   = Signum Crucis effect
-      OPT2_BLIND          = Blind effect
-      OPT2_ANGELUS        = Angelus effect
-      OPT2_BLEEDING       = Bleeding effect
-      OPT2_DPOISON        = DPoison effect
-      OPT2_FEAR           = Fear effect
+OPT1
+
+Special effect when status is active (Aegis: Body State).
+This option is not stackable. These effects also apply their special behaviors.
+
+	OPT1_STONE        = Stone curse effect
+	OPT1_FREEZE       = Freeze effect
+	OPT1_STUN         = Stun effect
+	OPT1_SLEEP        = Sleep effect
+	OPT1_STONEWAIT    = Effect before Stone is really applied
+	OPT1_BURNING      = Burning effect
+	OPT1_IMPRISON     = Imprison effect
+	OPT1_CRYSTALIZE   = Crystalize effect
 
 ---------------------------------------
 
-OPT3: Special option/client effect when status is active. Use "|" as delimiter for multiple values.
-      OPT3_QUICKEN           = Quicken effect
-      OPT3_OVERTHRUST        = Overthrust effect
-      OPT3_ENERGYCOAT        = Energy Coat effect
-      OPT3_EXPLOSIONSPIRITS  = Explosion Spirits effect
-      OPT3_STEELBODY         = Steel Body effect
-      OPT3_BLADESTOP         = Blade Stop effect
-      OPT3_AURABLADE         = Aura Blade effect
-      OPT3_BERSERK           = Berserk effect
-      OPT3_LIGHTBLADE        = Light Blade effect
-      OPT3_MOONLIT           = Moonlit effect
-      OPT3_MARIONETTE        = Marionette effect
-      OPT3_ASSUMPTIO         = Assumptio effect
-      OPT3_WARM              = Warm effect
-      OPT3_KAITE             = Kaite effect
-      OPT3_BUNSIN            = Bunshin effect
-      OPT3_SOULLINK          = Soul Link effect
-      OPT3_UNDEAD            = Undead effect
-      OPT3_CONTRACT          = Contract effect
+OPT2
+
+Special option/client effect when status is active (Aegis: Health State).
+Use "|" as delimiter for multiple values.
+
+	OPT2_POISON         = Posioned effect
+	OPT2_CURSE          = Cursed effect
+	OPT2_SILENCE        = Silenced effect
+	OPT2_SIGNUMCRUCIS   = Signum Crucis effect
+	OPT2_BLIND          = Blind effect
+	OPT2_ANGELUS        = Angelus effect
+	OPT2_BLEEDING       = Bleeding effect
+	OPT2_DPOISON        = Heavy Poisoned effect
+	OPT2_FEAR           = Fear effect
 
 ---------------------------------------
 
-Option: Special option/client effect when status is active. Use "|" as delimiter for multiple values.
-        OPTION_SIGHT          = Sight effect
-        OPTION_HIDE           = Hide effect
-        OPTION_CLOAK          = Cloaking effect
-        OPTION_FALCON         = Falcon effect
-        OPTION_RIDING         = Riding effect
-        OPTION_INVISIBLE      = Invisible effect
-        OPTION_ORCISH         = Orcish effect, the ugly face!
-        OPTION_WEDDING        = Wedding costume
-        OPTION_RUWACH         = Ruwach effect
-        OPTION_CHASEWALK      = Chasewalk effect
-        OPTION_FLYING         = Flying effect (Star Gladiator's Union)
-        OPTION_XMAS           = Christmas costume
-        OPTION_TRANSFORM      = Transformation
-        OPTION_SUMMER         = Summer costume
-        OPTION_DRAGON1        = Dragon
-        OPTION_WUG            = Wug
-        OPTION_WUGRIDER       = Riding a Wug
-        OPTION_MADOGEAR       = Madogear
-        OPTION_DRAGON2        = Dragon
-        OPTION_DRAGON3        = Dragon
-        OPTION_DRAGON4        = Dragon
-        OPTION_DRAGON5        = Dragon
-        OPTION_HANBOK         = Hanbok costume
-        OPTION_OKTOBERFEST    = Oktoberfest costume
+OPT3
+
+Special option/client effect when status is active.
+Use "|" as delimiter for multiple values.
+
+	OPT3_QUICKEN           = Quicken effect
+	OPT3_OVERTHRUST        = Overthrust effect
+	OPT3_ENERGYCOAT        = Energy Coat effect
+	OPT3_EXPLOSIONSPIRITS  = Explosion Spirits effect
+	OPT3_STEELBODY         = Steel Body effect
+	OPT3_BLADESTOP         = Blade Stop effect
+	OPT3_AURABLADE         = Aura Blade effect
+	OPT3_BERSERK           = Berserk effect
+	OPT3_LIGHTBLADE        = Light Blade effect
+	OPT3_MOONLIT           = Moonlit effect
+	OPT3_MARIONETTE        = Marionette effect
+	OPT3_ASSUMPTIO         = Assumptio effect
+	OPT3_WARM              = Warm effect
+	OPT3_KAITE             = Kaite effect
+	OPT3_BUNSIN            = Bunshin effect
+	OPT3_SOULLINK          = Soul Link effect
+	OPT3_UNDEAD            = Undead effect
+	OPT3_CONTRACT          = Contract effect
 
 ---------------------------------------
 
-Flag: Various status flags for specifc usage.
-      SCF_BLEFFECT            = Status should have BL_SCEFFECT as relevant effect, must have SI (displays on BL_PC, BL_HOM, BL_MER, BL_MOB, BL_ELEM). BL_PC is the default value.
-      SCF_DISPLAY             = Displays status effect when player logs in.
-      SCF_PERMANENT           = Has a permanent effect. Unable to be removed by 'sc_end SC_ALL', 'status_change_clear(block_list,3)', etc.
-      SCF_DEBUFF              = SC is considered as a debuff.
-      SCF_SET_STAND           = Sets player to standing state.
-      SCF_FAILED_MADO         = Cannot be applied if Madogear is active.
-      SCF_FAILED_IMMUNITY     = Cannot be applied if target has immunity to Golden Thief Bug Card's effect or Wand of Hermode.
+Option
 
-      SCF_NO_CLEARBUFF        = Cannot be removed by status_change_clear_buffs().
-      SCF_NO_REM_ONDEAD       = Cannot be removed when dead. 'status_change_clear(block_list,0)'
-      SCF_NO_REM_ONMADOGEAR   = Cannot be removed while activating/deactivating Madogear.
-      SCF_NO_DISPELL          = Cannot be removed by Dispell (SA_DISPELL).
-      SCF_NO_CLEARANCE        = Cannot be removed by Clearance (AB_CLEARANCE).
-      SCF_NO_BANISHING_BUSTER = Cannot be removed by Banishing Buster (RL_BANISHING_BUSTER).
-      SCF_NO_SAVE             = Won't be saved when player logs out. 'map_quit()'
+Special option/client effect state when status is active.
+Use "|" as delimiter for multiple values.
 
-      SCF_REM_ON_DAMAGED      = Removed when receiving damage.
-      SCF_REM_ON_REFRESH      = Removed by Refresh (RK_REFRESH) in status_change_clear_buffs().
-      SCF_REM_ON_LUXANIMA     = Removed by Luxanima (RK_LUXANIMA) in status_change_clear_buffs().
-      SCF_REM_ON_MAPWARP      = Removed when warping to another map.
-      SCF_REM_ON_CHANGEMAP    = Removed when changing map-server.
-	  SCF_REM_ON_CHEM_PROTECT = Removed by Chemical Protection (AM_CP_ARMOR/HELM/SHIELD/WEAPON) in status_change_clear_buffs().
-
-      SCF_STOP_ATTACKING      = Makes the unit stop attacking for a while.
-      SCF_STOP_CASTING        = Makes the uint stop skill casting process.
-      SCF_STOP_WALKING        = Makes the unit stop walking for a while.
-
-      SCF_BOSS_RESIST         = Cannot be applied to Boss Monster.
-      SCF_MVP_RESIST          = Cannot be applied to MvP.
-
----------------------------------------
-
-MinDuration: Minimum duration, in miliseconds, after reduction calculation for SC resistance.
+	OPTION_SIGHT          = Sight effect
+	OPTION_HIDE           = Hide effect
+	OPTION_CLOAK          = Cloaking effect
+	OPTION_FALCON         = Falcon effect
+	OPTION_RIDING         = Riding effect
+	OPTION_INVISIBLE      = Invisible effect
+	OPTION_ORCISH         = Orcish effect, the ugly face!
+	OPTION_WEDDING        = Wedding costume
+	OPTION_RUWACH         = Ruwach effect
+	OPTION_CHASEWALK      = Chasewalk effect
+	OPTION_FLYING         = Flying effect (Star Gladiator's Union)
+	OPTION_XMAS           = Christmas costume
+	OPTION_TRANSFORM      = Transformation
+	OPTION_SUMMER         = Summer costume
+	OPTION_DRAGON1        = Dragon
+	OPTION_WUG            = Wug
+	OPTION_WUGRIDER       = Riding a Wug
+	OPTION_MADOGEAR       = Madogear
+	OPTION_DRAGON2        = Dragon
+	OPTION_DRAGON3        = Dragon
+	OPTION_DRAGON4        = Dragon
+	OPTION_DRAGON5        = Dragon
+	OPTION_HANBOK         = Hanbok costume
+	OPTION_OKTOBERFEST    = Oktoberfest costume
 
 ---------------------------------------
 
-MinRate: Minimum success rate, in n/10000, after reduction calculation for SC resistance.
+Flag
+
+Various status flags for specifc usage.
+
+	SCF_BLEFFECT            = Status should have BL_SCEFFECT as relevant effect, must have SI (displays on BL_PC, BL_HOM, BL_MER, BL_MOB, BL_ELEM). BL_PC is the default value.
+	SCF_DISPLAY             = Displays status effect when player logs in.
+	SCF_PERMANENT           = Has a permanent effect. Unable to be removed by 'sc_end SC_ALL', 'status_change_clear(block_list,3)', etc.
+	SCF_DEBUFF              = SC is considered as a debuff.
+	SCF_SET_STAND           = Sets player to standing state.
+	SCF_OVERLAP_FAIL        = The SC be be failed to active in the end of process if the SC is still active.
+	SCF_FAILED_MADO         = Cannot be applied if Madogear is active.
+	SCF_FAILED_IMMUNITY     = Cannot be applied if target has immunity to Golden Thief Bug Card's effect or Wand of Hermode.
+
+	SCF_NO_CLEARBUFF        = Cannot be removed by status_change_clear_buffs().
+	SCF_NO_REM_ONDEAD       = Cannot be removed when dead. 'status_change_clear(block_list,0)'
+	SCF_NO_REM_ONMADOGEAR   = Cannot be removed while activating/deactivating Madogear.
+	SCF_NO_DISPELL          = Cannot be removed by Dispell (SA_DISPELL).
+	SCF_NO_CLEARANCE        = Cannot be removed by Clearance (AB_CLEARANCE).
+	SCF_NO_BANISHING_BUSTER = Cannot be removed by Banishing Buster (RL_BANISHING_BUSTER).
+	SCF_NO_SAVE             = Won't be saved when player logs out. 'map_quit()'
+
+	SCF_REM_ON_DAMAGED      = Removed when receiving damage.
+	SCF_REM_ON_REFRESH      = Removed by Refresh (RK_REFRESH) in status_change_clear_buffs().
+	SCF_REM_ON_LUXANIMA     = Removed by Luxanima (RK_LUXANIMA) in status_change_clear_buffs().
+	SCF_REM_ON_MAPWARP      = Removed when warping to another map.
+	SCF_REM_ON_CHANGEMAP    = Removed when changing map-server.
+	SCF_REM_ON_CHEM_PROTECT = Removed by Chemical Protection (AM_CP_ARMOR/HELM/SHIELD/WEAPON) in status_change_clear_buffs().
+
+	SCF_STOP_ATTACKING      = Makes the unit stop attacking for a while.
+	SCF_STOP_CASTING        = Makes the uint stop skill casting process.
+	SCF_STOP_WALKING        = Makes the unit stop walking for a while.
+
+	SCF_BOSS_RESIST         = Cannot be applied to Boss Monster.
+	SCF_MVP_RESIST          = Cannot be applied to MvP.
+
+	SCF_OPT_CHANGEOPTION    = Sends clif_changeoption, usually for SC that has OPT1_ and OPT2_, which OPT3_ always set to 0.
+	SCF_OPT_CHANGELOOK      = Sends clif_changelook, usually for SC that has body/look changes by OPTION_ (only for BL_PC).
+	SCF_TRIGGER_ONTOUCH_    = Triggers OnTouch_ event, usually for SC that has invisible effect.
 
 ---------------------------------------
 
-DisabledOn: Status Change will always be removed or fail to be inflicted on the specified map(s). Use "|" as delimiter for multiple values.
-      1    - restricted in normal maps
-      2    - restricted in PVP
-      4    - restricted in GVG
-      8    - restricted in Battlegrounds
-      Restricted zones - configured by 'restricted <number>' mapflag
-      32   - restricted in zone 1
-      64   - restricted in zone 2
-      128  - restricted in zone 3
-      256  - restricted in zone 4
-      512  - restricted in zone 5
-      1024 - restricted in zone 6
-      2048 - restricted in zone 7
+MinDuration
 
-      The different zones are bitmask values and can be applied using the "|" delimeter or by combining the values.
+Minimum duration, in miliseconds, after reduction calculation for SC resistance.
 
-      Example:
-         DisabledOn: "4" // Status will be removed when the player enters GvG and WoE Castle maps; Also cannot be inflicted on those maps. (Single zone)
-	     DisabledOn: "1|4" // Status will be removed when the player enters Normal, GvG, WoE Castle maps; Also cannot be inflicted on those maps. (Multiple zones using "|")
-	     DisabledOn: "5" // Status will be removed when the player enters Normal, GvG, WoE Castle maps; Also cannot be inflicted on those maps. (Multiple zones combined values)
+---------------------------------------
+
+MinRate
+
+Minimum success rate, in n/10000, after reduction calculation for SC resistance.
+
+---------------------------------------
+
+Fail
+
+List of status that causes this SC to fail to activate.
+
+For multiple values follow this example:
+	Fail: ( "SC_REFRESH", "SC_INSPIRATION", "SC_POWER_OF_GAIA", "SC_GVG_STONE" )
+
+---------------------------------------
+
+End
+
+List of status that will end if the SC activates.
+
+For multiple values follow this example:
+	End: ( "SC_DANCING", "SC_AETERNA" )
+
+---------------------------------------
+
+EndReturn
+
+If SC has 'End' list and succeeds to end other SC in the list, it won't give its effect.
+
+---------------------------------------
+
+DisabledOn
+
+Status Change will always be removed or fail to be inflicted on the specified map(s).
+The different zones are bitmask values and can be applied using the "|" delimeter or by combining the values.
+
+	1    - restricted in normal maps
+	2    - restricted in PVP
+	4    - restricted in GVG
+	8    - restricted in Battlegrounds
+	Restricted zones - configured by 'restricted <number>' mapflag
+	32   - restricted in zone 1
+	64   - restricted in zone 2
+	128  - restricted in zone 3
+	256  - restricted in zone 4
+	512  - restricted in zone 5
+	1024 - restricted in zone 6
+	2048 - restricted in zone 7
+
+Example:
+	DisabledOn: "4" // Status will be removed when the player enters GvG and WoE Castle maps; Also cannot be inflicted on those maps. (Single zone)
+	DisabledOn: "1|4" // Status will be removed when the player enters Normal, GvG, WoE Castle maps; Also cannot be inflicted on those maps. (Multiple zones using "|")
+	DisabledOn: "5" // Status will be removed when the player enters Normal, GvG, WoE Castle maps; Also cannot be inflicted on those maps. (Multiple zones combined values)
+
+---------------------------------------
+
+Script
+
+Running limited-usage-script for active SC.
+BY using this script please DO NOT use nested script such autobonus,
+bonus_script, or sc_start.
+
+For now, this script block DOES NOT support multiple lines.
 
 ---------------------------------------
 
@@ -240,3 +321,17 @@ While Gospel and Inspiration remove buffs and debuffs.
 Refresh and Luxanima only remove statuses that have the flag SCF_REM_ON_REFRESH or SCF_REM_ON_LUXANIMA. Works
 just like Dispell (SA_DISPELL), Clearance (AB_CLEARANCE), and Banishing Buster (RL_BANISHING_BUSTER) that has
 effect to remove buffs or debuffs.
+
+---- Removed comments from source ----
+- Mado is immune to increase agi, wind walk, cart boost, etc (others above) [Ind]
+- Cart Boost cannot be affected by Slow grace. Assumed if player got Slow Grace first, Cart Boost is failed since Cart Boost doesn't cancel Slow Grace effect
+  http://irowiki.org/wiki/Cart_Boost_%28Genetic%29 (view date: 2014-01-26)
+  http://irowiki.org/wiki/Cart_Boost (view date: 2014-01-26)
+- kRO Update 2014-02-12: Cannot be stacked with Platinum Alter and Madness Canceler (and otherwise?) [Cydh]
+- SC_BERSERK, SC_SATURDAYNIGHTFEVER, and SC__BLOODYLUST are all like berserk, do not everlap each other.
+- SC_STONE, SC_FREEZE, SC_DEEPSLEEP, SC_SLEEP, SC_STUN, SC_FREEZING, and SC_CRYSTALIZE cannot override other opt1 status changes. [Skotlex]
+  TODO: SC that has OPT1: SC_STONE, SC_FREEZE, SC_STUN, SC_SLEEP, SC_BURNING, SC_WHITEIMPRISON, SC_CRYSTALIZE
+- Immune to Frozen and Freezing status if under Warmer status. [Jobbie]
+- SC_ONEHAND removes the Aspd potion effect, as reported by Vicious. [Skotlex]
+- SC_ALL_RIDING. Already mounted, just dismount.
+- SC_GN_CARTBOOST andSC_CARTBOOST cancel Decrease Agi, but take no further effect [Skotlex]

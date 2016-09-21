@@ -2009,32 +2009,38 @@ enum e_status_bonus {
 ///Enum of Status Change Flags [Cydh]
 enum e_status_change_flag {
 	SCF_NONE = 0x0,
-	SCF_BLEFFECT			= 0x0000001,
-	SCF_DISPLAY				= 0x0000002,
-	SCF_PERMANENT			= 0x0000004,
-	SCF_NO_CLEARBUFF		= 0x0000008,
-	SCF_NO_REM_ONDEAD		= 0x0000010,
-	SCF_NO_REM_ONMADOGEAR	= 0x0000020,
-	SCF_NO_DISPELL			= 0x0000040,
-	SCF_NO_CLEARANCE		= 0x0000080,
-	SCF_NO_BANISHING_BUSTER	= 0x0000100,
-	SCF_NO_SAVE				= 0x0000200,
-	SCF_REM_ON_DAMAGED		= 0x0000400,
-	SCF_REM_ON_REFRESH		= 0x0000800,
-	SCF_REM_ON_LUXANIMA		= 0x0001000,
-	SCF_STOP_ATTACKING		= 0x0002000,
-	SCF_STOP_CASTING		= 0x0004000,
-	SCF_STOP_WALKING		= 0x0008000,
-	SCF_BOSS_RESIST			= 0x0010000,
-	SCF_MVP_RESIST			= 0x0020000,
-	SCF_SET_STAND			= 0x0040000,
-	SCF_FAILED_MADO			= 0x0080000,
-	SCF_DEBUFF				= 0x0100000,
-	SCF_FAILED_IMMUNITY		= 0x0200000,
-	SCF_REM_ON_CHANGEMAP	= 0x0400000,
-	SCF_REM_ON_MAPWARP		= 0x0800000,
-	SCF_REM_CHEM_PROTECT    = 0x1000000,
+	SCF_BLEFFECT			= 0x00000001,
+	SCF_DISPLAY				= 0x00000002,
+	SCF_PERMANENT			= 0x00000004,
+	SCF_NO_CLEARBUFF		= 0x00000008,
+	SCF_NO_REM_ONDEAD		= 0x00000010,
+	SCF_NO_REM_ONMADOGEAR   = 0x00000020,
+	SCF_NO_DISPELL			= 0x00000040,
+	SCF_NO_CLEARANCE		= 0x00000080,
+	SCF_NO_BANISHING_BUSTER = 0x00000100,
+	SCF_NO_SAVE				= 0x00000200,
+	SCF_REM_ON_DAMAGED		= 0x00000400,
+	SCF_REM_ON_REFRESH		= 0x00000800,
+	SCF_REM_ON_LUXANIMA		= 0x00001000,
+	SCF_STOP_ATTACKING		= 0x00002000,
+	SCF_STOP_CASTING		= 0x00004000,
+	SCF_STOP_WALKING		= 0x00008000,
+	SCF_BOSS_RESIST			= 0x00010000,
+	SCF_MVP_RESIST			= 0x00020000,
+	SCF_SET_STAND			= 0x00040000,
+	SCF_FAILED_MADO			= 0x00080000,
+	SCF_DEBUFF				= 0x00100000,
+	SCF_FAILED_IMMUNITY		= 0x00200000,
+	SCF_REM_ON_CHANGEMAP	= 0x00400000,
+	SCF_REM_ON_MAPWARP		= 0x00800000,
+	SCF_REM_CHEM_PROTECT	= 0x01000000,
+	SCF_OVERLAP_FAIL		= 0x02000000,
+	SCF_OPT_CHANGEOPTION	= 0x04000000,
+	SCF_OPT_CHANGELOOK		= 0x08000000,
+	SCF_TRIGGER_ONTOUCH_	= 0x10000000,
 };
+
+#define SCF_OPT_FLAGS (SCF_OPT_CHANGEOPTION|SCF_OPT_CHANGELOOK|SCF_TRIGGER_ONTOUCH_)
 
 //Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
 #define BL_CONSUME (BL_PC|BL_HOM|BL_MER|BL_ELEM)
@@ -2055,14 +2061,6 @@ struct weapon_atk {
 	unsigned char wlv;
 #endif
 };
-
-sc_type SkillStatusChangeTable[MAX_SKILL];   /// skill  -> status
-int StatusIconChangeTable[SC_MAX];           /// status -> "icon" (icon is a bit of a misnomer, since there exist values with no icon associated)
-unsigned int StatusChangeFlagTable[SC_MAX];  /// status -> flags
-int StatusSkillChangeTable[SC_MAX];          /// status -> skill
-int StatusRelevantBLTypes[SI_MAX];           /// "icon" -> enum bl_type (for clif->status_change to identify for which bl types to send packets)
-unsigned int StatusChangeStateTable[SC_MAX]; /// status -> flags
-bool StatusDisplayType[SC_MAX];
 
 ///For holding basic status (which can be modified by status changes)
 struct status_data {
