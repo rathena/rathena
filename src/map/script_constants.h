@@ -1019,7 +1019,7 @@
 	export_constant(SC_INCCRI);
 	//export_constant(SC_INCDEF);
 	//export_constant(SC_INCBASEATK);
-	//export_constant(SC_FASTCAST 264);
+	//export_constant(SC_FASTCAST);
 	export_constant(SC_MDEF_RATE);
 	//export_constant(SC_HPREGEN);
 	export_constant(SC_INCHEALRATE);
@@ -2370,6 +2370,8 @@
 	export_constant(SI_MTF_MARIONETTE);
 	export_constant(SI_MTF_LUDE);
 	export_constant(SI_MTF_CRUISER);
+	export_constant(SI_MERMAID_LONGING);
+	export_constant(SI_MAGICAL_FEATHER);
 	export_constant(SI_DRACULA_CARD);
 	export_constant(SI_LIMIT_POWER_BOOSTER);
 	export_constant(SI_TIME_ACCESSORY);
