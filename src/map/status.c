@@ -3380,6 +3380,8 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, uint32 
 						(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
 						(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
 						))
+				  || (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB)
+				  || (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
  				 )
 				 sc->cant.move = ( start ? 1 : 0 );
 	}

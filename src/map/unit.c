@@ -1355,23 +1355,8 @@ bool unit_can_move(struct block_list *bl) {
 		return false; // Can't move
 
 	// Status changes that block movement
-	if (sc) {
-		if( sc->cant.move // status placed here are ones that cannot be cached by sc->cant.move for they depend on other conditions other than their availability
-			|| (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
-			|| (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
-				!sc->data[SC_LONGING] ||
-				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
-				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
-				) )
-			)
-			return false;
-
-		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING && !(sc->opt1 == OPT1_CRYSTALIZE && bl->type == BL_MOB))
-			return false;
-
-		if ((sc->option & OPTION_HIDE) && (!sd || pc_checkskill(sd, RG_TUNNELDRIVE) <= 0))
-			return false;
-	}
+	if (sc && sc->cant.move)
+		return false;
 
 	// Icewall walk block special trapped monster mode
 	if(bl->type == BL_MOB) {
