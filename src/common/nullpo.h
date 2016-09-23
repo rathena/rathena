@@ -53,7 +53,7 @@
 	if (nullpo_chk(NLP_MARK, (void *)(t))) {break;}
 
 // Different C compilers uses different argument formats
-#if __STDC_VERSION__ >= 199901L
+#if __STDC_VERSION__ >= 199901L || defined(_MSC_VER)
 /* C99 standard */
 /**
  * Return 0 and display additional information if pointer is not found.
@@ -144,7 +144,7 @@
 #define nullpo_retb(t) (void)(t)
 
 // Different C compilers uses different argument formats
-#if __STDC_VERSION__ >= 199901L
+#if __STDC_VERSION__ >= 199901L || defined(_MSC_VER)
 /* C99 standard */
 #define nullpo_ret_f(t, fmt, ...) (void)(t)
 #define nullpo_retv_f(t, fmt, ...) (void)(t)
