@@ -4966,6 +4966,27 @@ static void mob_load(void)
 		"/"DBIMPORT,
 	};
 
+	// First we parse all the possible monsters to add additional data in the second loop
+	if( db_use_sqldbs ){
+		mob_read_sqldb();
+		mob_read_sqlskilldb();
+	}else{
+		for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
+			int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
+			char* dbsubpath2 = (char*)aMalloc(n2+1);
+
+			if( i == 0 ){
+				safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+			}else{
+				safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
+			}
+
+			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, i);
+
+			aFree(dbsubpath2);
+		}
+	}
+
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){	
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
@@ -4982,12 +5003,7 @@ static void mob_load(void)
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 		
-		if (db_use_sqldbs && i==0) //only read once for sql
-		{
-			mob_read_sqldb();
-			mob_read_sqlskilldb();
-		} else {
-			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, i);
+		if( !db_use_sqldbs ){
 			mob_readskilldb(dbsubpath2,i);
 		}
 
