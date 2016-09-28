@@ -1684,6 +1684,16 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case KO_MAKIBISHI:
 		sc_start(src,bl, SC_STUN, 10 * skill_lv, skill_lv, skill_get_time2(skill_id,skill_lv));
 		break;
+	case MH_EQC:
+		{
+			struct homun_data *hd = BL_CAST(BL_HOM, src);
+
+			if (hd) {
+				sc_start2(src, bl, SC_STUN, 100, skill_lv, bl->id, 1000 * hd->homunculus.level / 50 + 500 * skill_lv);
+				status_change_end(bl, SC_TINDER_BREAKER2, INVALID_TIMER);
+			}
+		}
+		break;
 	case MH_LAVA_SLIDE:
 		sc_start4(src,bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;

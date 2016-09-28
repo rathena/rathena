@@ -575,7 +575,7 @@ void initChangeTables(void)
 	set_sc(MH_TINDER_BREAKER	, SC_TINDER_BREAKER2	, SI_TINDER_BREAKER		, SCB_FLEE );
 	set_sc(MH_TINDER_BREAKER	, SC_TINDER_BREAKER	, SI_TINDER_BREAKER_POSTDELAY	, SCB_FLEE );
 	set_sc(MH_CBC			, SC_CBC		, SI_CBC			, SCB_FLEE );
-	set_sc(MH_EQC			, SC_EQC		, SI_EQC			, SCB_DEF2|SCB_BATK|SCB_MAXHP );
+	set_sc(MH_EQC			, SC_EQC		, SI_EQC			, SCB_DEF2|SCB_MAXHP );
 
 	add_sc( MER_CRASH		, SC_STUN		);
 	set_sc( MER_PROVOKE		, SC_PROVOKE		, SI_PROVOKE		, SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
@@ -2948,7 +2948,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			if(sc->data[SC_GT_CHANGE]) // Max HP decrease: [Skill Level x 4] %
 				bonus -= (4 * sc->data[SC_GT_CHANGE]->val1);
 			if(sc->data[SC_EQC])
-				bonus -= sc->data[SC_EQC]->val4;
+				bonus -= sc->data[SC_EQC]->val3;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus,-100,INT_MAX);
@@ -5602,8 +5602,6 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += 100 * sc->data[SC_SATURDAYNIGHTFEVER]->val1;
 	if( sc->data[SC_ZANGETSU] )
 		batk += sc->data[SC_ZANGETSU]->val2;
-	if(sc->data[SC_EQC])
-		batk -= batk * sc->data[SC_EQC]->val3 / 100;
 	if(sc->data[SC_QUEST_BUFF1])
 		batk += sc->data[SC_QUEST_BUFF1]->val1;
 	if(sc->data[SC_QUEST_BUFF2])
@@ -8814,9 +8812,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		status_change_end(bl,SC_FOOD_DEX_CASH,INVALID_TIMER);
 		status_change_end(bl,SC_FOOD_LUK_CASH,INVALID_TIMER);
 		break;
-	case SC_EQC:
-		status_change_end(bl,SC_TINDER_BREAKER2,INVALID_TIMER);
-		break;
 	case SC_FIGHTINGSPIRIT:
 	case SC_OVERED_BOOST:
 	case SC_MAGICPOWER:
@@ -10435,9 +10430,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_EQC:
 			val2 = 5 * val1; // def % reduc
-			val3 = 5 * val1; // atk % reduc
-			val4 = 2 * val1; // HP drain %
-			sc_start2(src, bl,SC_STUN,100,val1,bl->id,(1000*status_get_lv(src))/50+500*val1);
+			val3 = 2 * val1; // HP drain %
 			break;
 		case SC_ASH:
 			val2 = 0; // hit % reduc

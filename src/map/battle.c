@@ -4451,6 +4451,12 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 			ATK_ADD(wd.equipAtk, wd.equipAtk2, 200);
 #endif
 		}
+		if (sc->data[SC_EQC]) {
+			ATK_ADDRATE(wd.damage, wd.damage2, -sc->data[SC_EQC]->val2);
+#ifdef RENEWAL
+			ATK_ADDRATE(wd.equipAtk, wd.equipAtk2, -sc->data[SC_EQC]->val2);
+#endif
+		}
 		if(sc->data[SC_STYLE_CHANGE]) {
 			TBL_HOM *hd = BL_CAST(BL_HOM,src);
 
@@ -6542,6 +6548,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case RL_B_TRAP:
 			// kRO 2014-02-12: Damage: Caster's DEX, Target's current HP, Skill Level
 			md.damage = ((200 + status_get_dex(src)) * skill_lv * 10) + sstatus->hp; // (custom)
+			break;
+		case MH_EQC:
+			md.damage = max(tstatus->hp - sstatus->hp, 0);
 			break;
 	}
 
