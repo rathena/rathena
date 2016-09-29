@@ -11883,8 +11883,7 @@ static int script_mapflag_pvp_sub(struct block_list *bl,va_list ap) {
 		sd->pvp_won = 0;
 		sd->pvp_lost = 0;
 	}
-	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
-	clif_maptypeproperty2(&sd->bl,SELF);
+	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE,SELF);
 	return 0;
 }
 
@@ -11914,14 +11913,9 @@ BUILDIN_FUNC(setmapflag)
 				break;
 			case MF_PVP_NOPARTY:		map[m].flag.pvp_noparty = 1; break;
 			case MF_PVP_NOGUILD:		map[m].flag.pvp_noguild = 1; break;
-			case MF_GVG: {
-				struct block_list bl;
+			case MF_GVG:
 				map[m].flag.gvg = 1;
 				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-				bl.type = BL_NUL;
-				bl.m = m;
-				clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
 				break;
 			case MF_GVG_NOPARTY:		map[m].flag.gvg_noparty = 1; break;
 			case MF_NOTRADE:			map[m].flag.notrade = 1; break;
@@ -12024,25 +12018,15 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOBRANCH:			map[m].flag.nobranch = 0; break;
 			case MF_NOPENALTY:			map[m].flag.noexppenalty = 0; map[m].flag.nozenypenalty = 0; break;
 			case MF_NOZENYPENALTY:		map[m].flag.nozenypenalty = 0; break;
-			case MF_PVP: {
-				struct block_list bl;
-				bl.type = BL_NUL;
-				bl.m = m;
+			case MF_PVP:
 				map[m].flag.pvp = 0;
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-				clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
 				break;
 			case MF_PVP_NOPARTY:		map[m].flag.pvp_noparty = 0; break;
 			case MF_PVP_NOGUILD:		map[m].flag.pvp_noguild = 0; break;
-			case MF_GVG: {
-				struct block_list bl;
-				bl.type = BL_NUL;
-				bl.m = m;
+			case MF_GVG:
 				map[m].flag.gvg = 0;
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-				clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
 				break;
 			case MF_GVG_NOPARTY:		map[m].flag.gvg_noparty = 0; break;
 			case MF_NOTRADE:			map[m].flag.notrade = 0; break;
@@ -12129,7 +12113,6 @@ BUILDIN_FUNC(pvpon)
 	const char *str;
 	TBL_PC* sd = NULL;
 	struct s_mapiterator* iter;
-	struct block_list bl;
 
 	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
@@ -12138,9 +12121,6 @@ BUILDIN_FUNC(pvpon)
 
 	map[m].flag.pvp = 1;
 	clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
-	bl.type = BL_NUL;
-	bl.m = m;
-	clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 
 	if(battle_config.pk_mode) // disable ranking functions if pk_mode is on [Valaris]
 		return SCRIPT_CMD_SUCCESS;
@@ -12177,7 +12157,6 @@ BUILDIN_FUNC(pvpoff)
 {
 	int16 m;
 	const char *str;
-	struct block_list bl;
 
 	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
@@ -12186,9 +12165,6 @@ BUILDIN_FUNC(pvpoff)
 
 	map[m].flag.pvp = 0;
 	clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-	bl.type = BL_NUL;
-	bl.m = m;
-	clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 
 	if(battle_config.pk_mode) // disable ranking options if pk_mode is on [Valaris]
 		return SCRIPT_CMD_SUCCESS;
@@ -12201,16 +12177,12 @@ BUILDIN_FUNC(gvgon)
 {
 	int16 m;
 	const char *str;
-	struct block_list bl;
 
 	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
 	if(m >= 0 && !map[m].flag.gvg) {
 		map[m].flag.gvg = 1;
 		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-		bl.type = BL_NUL;
-		bl.m = m;
-		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12223,12 +12195,8 @@ BUILDIN_FUNC(gvgoff)
 	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
 	if(m >= 0 && map[m].flag.gvg) {
-		struct block_list bl;
 		map[m].flag.gvg = 0;
 		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-		bl.type = BL_NUL;
-		bl.m = m;
-		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
