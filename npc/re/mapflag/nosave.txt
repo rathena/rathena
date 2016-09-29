@@ -1,17 +1,11 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable auto-save.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Characters logging out on the specified map will be warped
 //= to the map specified in the last field, or "SavePoint".
-//===== Additional Comments: ================================= 
+//===== Changelogs: ==========================================
 //= 1.0 Renewal split. [Euphy]
-//= 1.1 Added GVG TE Guild Dungeons. [Cydh]
+//= 1.1 Added GVG TE Guild Dungeons. [Capuche]
 //============================================================
 
 // Job Quests ====================
