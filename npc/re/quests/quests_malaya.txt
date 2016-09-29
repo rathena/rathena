@@ -1515,7 +1515,7 @@ ma_fild01,178,206,0	script	Black Bamboo#malaya	844,4,4,{
 	mes "[" + strcharinfo(0) + "]";
 	mes "I knew I could do this!";
 	close;
-OnTouch:
+OnTouch_:
 	if ((checkquest(7366) != -1) || (checkquest(7380) != -1)) {
 		specialeffect EF_LEVEL99_4;
 	}
@@ -4278,7 +4278,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "Would there be something awesome to surprise people with?";
 		close;
 	}
-OnTouch:
+OnTouch_:
 	emotion e_omg;
 	end;
 }
@@ -5475,7 +5475,7 @@ ma_fild01,165,237,4	script	Malaya Immigrant#bako2	582,{
 
 ma_fild01,171,235,0	script	#bako1	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (malaya_bakona1 == 5) {
 		mes "The damage is so severe";
 		mes "that the record is unidentifiable.";
@@ -6196,7 +6196,7 @@ ma_fild01,54,253,4	script	Gruffy Worker#bako2	582,{
 
 ma_fild01,54,244,0	script	#bako2	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (malaya_bakona2 == 9) {
 		mes "I should set up the trap";
 		mes "right about here.";
@@ -6265,7 +6265,7 @@ ma_fild01,236,119,5	script	Grumpy Worker#bako2	577,{
 
 ma_fild01,242,116,0	script	#bako3	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (malaya_bakona2 == 10) {
 		mes "I should set up the trap";
 		mes "right about here.";
@@ -6338,7 +6338,7 @@ ma_scene01,177,89,4	script	Cowardly Worker#bako2	578,{
 
 ma_scene01,179,85,0	script	#bako4	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (malaya_bakona2 == 11) {
 		mes "I should set up the trap";
 		mes "right about here.";
@@ -6408,7 +6408,7 @@ ma_scene01,141,118,4	script	Gloomy Worker#bako2	582,{
 
 ma_scene01,138,122,0	script	#bako5	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (malaya_bakona2 == 12) {
 		mes "I should set up the trap";
 		mes "right about here.";
@@ -6475,7 +6475,7 @@ ma_scene01,175,170,5	script	Sentimental Worker#bako2	578,{
 
 ma_scene01,171,174,0	script	#bako6	139,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	if (malaya_bakona2 == 13) {
 		mes "I should set up the trap";
 		mes "right about here.";

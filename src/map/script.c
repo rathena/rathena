@@ -362,6 +362,7 @@ enum {
 	MF_NOLOCKON,
 	MF_NOTOMB,
 	MF_SKILL_DAMAGE,	//60
+	MF_NOCOSTUME,
 	MF_GVG_TE_CASTLE,
 	MF_GVG_TE,
 };
@@ -9565,6 +9566,7 @@ BUILDIN_FUNC(itemskill)
 {
 	int id;
 	int lv;
+	bool keep_requirement;
 	TBL_PC* sd;
 	struct script_data *data;
 
@@ -9576,9 +9578,15 @@ BUILDIN_FUNC(itemskill)
 	get_val(st, data); // Convert into value in case of a variable
 	id = ( data_isstring(data) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
 	lv = script_getnum(st,3);
+	if (script_hasdata(st, 4)) {
+		keep_requirement = (script_getnum(st, 4) != 0);
+	} else {
+		keep_requirement = false;
+	}
 
 	sd->skillitem=id;
 	sd->skillitemlv=lv;
+	sd->skillitem_keep_requirement = keep_requirement;
 	clif_item_skill(sd,id,lv);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -11840,6 +11848,7 @@ BUILDIN_FUNC(getmapflag)
 			case MF_NOMINEEFFECT:		script_pushint(st,map[m].flag.nomineeffect); break;
 			case MF_NOLOCKON:			script_pushint(st,map[m].flag.nolockon); break;
 			case MF_NOTOMB:				script_pushint(st,map[m].flag.notomb); break;
+			case MF_NOCOSTUME:			script_pushint(st,map[m].flag.nocostume); break;
 			case MF_GVG_TE_CASTLE:		script_pushint(st,map[m].flag.gvg_te_castle); break;
 			case MF_GVG_TE:				script_pushint(st,map[m].flag.gvg_te); break;
 #ifdef ADJUST_SKILL_DAMAGE
@@ -11965,6 +11974,7 @@ BUILDIN_FUNC(setmapflag)
 			case MF_NOMINEEFFECT:		map[m].flag.nomineeffect = 1 ; break;
 			case MF_NOLOCKON:			map[m].flag.nolockon = 1 ; break;
 			case MF_NOTOMB:				map[m].flag.notomb = 1; break;
+			case MF_NOCOSTUME:			map[m].flag.nocostume = 1; break;
 			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 1; break;
 			case MF_GVG_TE:
 				{
@@ -12087,6 +12097,7 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOMINEEFFECT:		map[m].flag.nomineeffect = 0 ; break;
 			case MF_NOLOCKON:			map[m].flag.nolockon = 0 ; break;
 			case MF_NOTOMB:				map[m].flag.notomb = 0; break;
+			case MF_NOCOSTUME:			map[m].flag.nocostume = 0; break;
 			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 0; break;
 			case MF_GVG_TE:
 				{
@@ -12511,7 +12522,7 @@ BUILDIN_FUNC(getcastledata)
 
 	if (gc == NULL) {
 		script_pushint(st,0);
-		ShowWarning("buildin_setcastledata: guild castle for map '%s' not found\n", mapname);
+		ShowWarning("buildin_getcastledata: guild castle for map '%s' not found\n", mapname);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -12540,7 +12551,7 @@ BUILDIN_FUNC(getcastledata)
 				break;
 			}
 			script_pushint(st,0);
-			ShowWarning("buildin_setcastledata: index = '%d' is out of allowed range\n", index);
+			ShowWarning("buildin_getcastledata: index = '%d' is out of allowed range\n", index);
 			return SCRIPT_CMD_FAILURE;
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -18775,27 +18786,27 @@ BUILDIN_FUNC(waitingroom2bg)
 	}
 
 	map_name = script_getstr(st,2);
-	if( strcmp(map_name,"-") != 0 )
-	{
-		mapindex = mapindex_name2id(map_name);
-		if( mapindex == 0 )
+	if (strcmp(map_name, "-") != 0 && (mapindex = mapindex_name2id(map_name)) == 0)
 		{ // Invalid Map
-			script_pushint(st,0);
+		script_pushint(st, 0);
 			return SCRIPT_CMD_SUCCESS;
 		}
-	}
 
 	x = script_getnum(st,3);
 	y = script_getnum(st,4);
+	if(script_hasdata(st,5))
 	ev = script_getstr(st,5); // Logout Event
+	if(script_hasdata(st,6))
 	dev = script_getstr(st,6); // Die Event
+
+	check_event(st, ev);
+	check_event(st, dev);
 
 	if( (bg_id = bg_create(mapindex, x, y, ev, dev)) == 0 )
 	{ // Creation failed
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;
 	}
-
         
 	for (i = 0; i < cd->users; i++) { // Only add those who are in the chat room
 		struct map_session_data *sd;
@@ -18816,15 +18827,29 @@ BUILDIN_FUNC(waitingroom2bg_single)
 	struct npc_data *nd;
 	struct chat_data *cd;
 	struct map_session_data *sd;
+	struct battleground_data *bg;
 	int x, y, mapindex, bg_id;
 
 	bg_id = script_getnum(st,2);
-	map_name = script_getstr(st,3);
-	if( (mapindex = mapindex_name2id(map_name)) == 0 )
+	if ((bg = bg_team_search(bg_id)) == NULL) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	if (script_hasdata(st, 3)) {
+		map_name = script_getstr(st, 3);
+		if ((mapindex = mapindex_name2id(map_name)) == 0) {
+			script_pushint(st, false);
 		return SCRIPT_CMD_SUCCESS; // Invalid Map
+		}
+		x = script_getnum(st, 4);
+		y = script_getnum(st, 5);
+	}
+	else {
+		mapindex = bg->mapindex;
+		x = bg->x;
+		y = bg->y;
+	}
 
-	x = script_getnum(st,4);
-	y = script_getnum(st,5);
 	nd = npc_name2id(script_getstr(st,6));
 
 	if( nd == NULL || (cd = (struct chat_data *)map_id2bl(nd->chat_id)) == NULL || cd->users <= 0 )
@@ -18833,13 +18858,86 @@ BUILDIN_FUNC(waitingroom2bg_single)
 	if( (sd = cd->usersd[0]) == NULL )
 		return SCRIPT_CMD_SUCCESS;
 
-	if( bg_team_join(bg_id, sd) )
+	if( bg_team_join(bg_id, sd) && pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) == SETPOS_OK)
 	{
-		pc_setpos(sd, mapindex, x, y, CLR_TELEPORT);
-		script_pushint(st,1);
+		script_pushint(st, true);
 	}
 	else
-		script_pushint(st,0);
+		script_pushint(st, false);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+
+/// Creates an instance of battleground battle group.
+/// *bg_create("<map name>",<x>,<y>{,"<On Quit Event>","<On Death Event>"});
+/// @author [secretdataz]
+BUILDIN_FUNC(bg_create) {
+	const char *map_name, *ev = "", *dev = "";
+	int x, y, mapindex = 0;
+
+	map_name = script_getstr(st, 2);
+	if (strcmp(map_name, "-") != 0 && (mapindex = mapindex_name2id(map_name)) == 0)
+	{ // Invalid Map
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	x = script_getnum(st, 3);
+	y = script_getnum(st, 4);
+	if(script_hasdata(st, 5))
+		ev = script_getstr(st, 5); // Logout Event
+	if(script_hasdata(st, 6))
+		dev = script_getstr(st, 6); // Die Event
+
+	check_event(st, ev);
+	check_event(st, dev);
+
+	script_pushint(st, bg_create(mapindex, x, y, ev, dev));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// Adds attached player or <char id> (if specified) to an existing 
+/// battleground group and warps it to the specified coordinates on
+/// the given map.
+/// bg_join(<battle group>,{"<map name>",<x>,<y>{,<char id>}});
+/// @author [secretdataz]
+BUILDIN_FUNC(bg_join) {
+	const char* map_name;
+	struct map_session_data *sd;
+	struct battleground_data *bg;
+	int x, y, bg_id, mapindex;
+
+	bg_id = script_getnum(st, 2);
+	if ((bg = bg_team_search(bg_id)) == NULL) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	if (script_hasdata(st, 3)) {
+		map_name = script_getstr(st, 3);
+		if ((mapindex = mapindex_name2id(map_name)) == 0) {
+			script_pushint(st, false);
+			return SCRIPT_CMD_SUCCESS; // Invalid Map
+		}
+		x = script_getnum(st, 4);
+		y = script_getnum(st, 5);
+	} else {
+		mapindex = bg->mapindex;
+		x = bg->x;
+		y = bg->y;
+	}
+
+	if (!script_charid2sd(6, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (bg_team_join(bg_id, sd) && pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) == SETPOS_OK)
+	{
+		script_pushint(st, true);
+	}
+	else
+		script_pushint(st, false);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -20356,6 +20454,7 @@ BUILDIN_FUNC(party_create)
  * @param party_id: The party that will be entered by player
  * @param char_id: Char id of player that will be joined to the party
  * @return val: Result value
+ *	-5	- another character of the same account is in the party
  *	-4	- party is full
  *	-3	- party is not found
  *	-2	- player is in party already
@@ -20382,6 +20481,15 @@ BUILDIN_FUNC(party_addmember)
 	if( !(party = party_search(party_id)) ) {
 		script_pushint(st,-3);
 		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (battle_config.block_account_in_same_party) {
+		int i;
+		ARR_FIND(0, MAX_PARTY, i, party->party.member[i].account_id == sd->status.account_id);
+		if (i < MAX_PARTY) {
+			script_pushint(st,-5);
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
 	if( party->party.count >= MAX_PARTY ) {
@@ -22091,7 +22199,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(gettimestr,"si"),
 	BUILDIN_DEF(openstorage,""),
 	BUILDIN_DEF(guildopenstorage,""),
-	BUILDIN_DEF(itemskill,"vi"),
+	BUILDIN_DEF(itemskill,"vi?"),
 	BUILDIN_DEF(produce,"i"),
 	BUILDIN_DEF(cooking,"i"),
 	BUILDIN_DEF(monster,"siisii???"),
@@ -22385,8 +22493,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(agitend2,""),
 	BUILDIN_DEF(agitcheck2,""),
 	// BattleGround
-	BUILDIN_DEF(waitingroom2bg,"siiss?"),
-	BUILDIN_DEF(waitingroom2bg_single,"isiis"),
+	BUILDIN_DEF(waitingroom2bg,"sii???"),
+	BUILDIN_DEF(waitingroom2bg_single,"i????"),
 	BUILDIN_DEF(bg_team_setxy,"iii"),
 	BUILDIN_DEF(bg_warp,"isii"),
 	BUILDIN_DEF(bg_monster,"isiisi?"),
@@ -22397,6 +22505,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_get_data,"ii"),
 	BUILDIN_DEF(bg_getareausers,"isiiii"),
 	BUILDIN_DEF(bg_updatescore,"sii"),
+	BUILDIN_DEF(bg_join,"i????"),
+	BUILDIN_DEF(bg_create,"sii??"),
 
 	// Instancing
 	BUILDIN_DEF(instance_create,"s??"),

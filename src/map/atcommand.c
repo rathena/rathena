@@ -1752,7 +1752,8 @@ ACMD_FUNC(bodystyle)
 	// Limit body styles to certain jobs since not all of them are released yet.
 	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC
 		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP || (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER)) {
+		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP || (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER
+		|| (sd->class_&MAPID_THIRDMASK) == MAPID_WARLOCK)) {
 		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}
@@ -4209,6 +4210,8 @@ ACMD_FUNC(mapinfo) {
 		strcat(atcmd_output, " NoLockOn |");
 	if (map[m_id].flag.notomb)
 		strcat(atcmd_output, " NoTomb |");
+	if (map[m_id].flag.nocostume)
+		strcat(atcmd_output, " NoCostume |");
 	clif_displaymessage(fd, atcmd_output);
 
 	switch (list) {
@@ -8080,7 +8083,8 @@ ACMD_FUNC(mapflag) {
 		checkflag(nodrop);				checkflag(novending);			checkflag(loadevent);			checkflag(nochat);
 		checkflag(partylock);			checkflag(guildlock);			checkflag(reset);				checkflag(chmautojoin);
 		checkflag(nousecart);			checkflag(noitemconsumption);	checkflag(nosumstarmiracle);	checkflag(nomineeffect);
-		checkflag(nolockon);			checkflag(notomb);				checkflag(gvg_te);				checkflag(gvg_te_castle);
+		checkflag(nolockon);			checkflag(notomb);				checkflag(nocostume);			checkflag(gvg_te);
+		checkflag(gvg_te_castle);
 #ifdef ADJUST_SKILL_DAMAGE
 		checkflag(skill_damage);
 #endif
@@ -8104,7 +8108,8 @@ ACMD_FUNC(mapflag) {
 	setflag(nodrop);			setflag(novending);			setflag(loadevent);				setflag(nochat);
 	setflag(partylock);			setflag(guildlock);			setflag(reset);					setflag(chmautojoin);
 	setflag(nousecart);			setflag(noitemconsumption);	setflag(nosumstarmiracle);		setflag(nomineeffect);
-	setflag(nolockon);			setflag(notomb);			setflag(gvg_te);				setflag(gvg_te_castle);
+	setflag(nolockon);			setflag(notomb);			setflag(nocostume);				setflag(gvg_te);
+	setflag(gvg_te_castle);
 #ifdef ADJUST_SKILL_DAMAGE
 	setflag(skill_damage);
 #endif
@@ -8119,8 +8124,8 @@ ACMD_FUNC(mapflag) {
 	clif_displaymessage(sd->fd,"nozenypenalty, notrade, noskill, nowarp, nowarpto, noicewall, snow, clouds, clouds2,");
 	clif_displaymessage(sd->fd,"fog, fireworks, sakura, leaves, nogo, nobaseexp, nojobexp, nomobloot, nomvploot,");
 	clif_displaymessage(sd->fd,"nightenabled, restricted, nodrop, novending, loadevent, nochat, partylock, guildlock,");
-	clif_displaymessage(sd->fd,"reset, chmautojoin, nousecart, noitemconsumption, nosumstarmiracle, nolockon, notomb");
-	clif_displaymessage(sd->fd,"gvg_te, gvg_te_castle");
+	clif_displaymessage(sd->fd,"reset, chmautojoin, nousecart, noitemconsumption, nosumstarmiracle, nolockon, notomb,");
+	clif_displaymessage(sd->fd,"nocostume,gvg_te, gvg_te_castle");
 #ifdef ADJUST_SKILL_DAMAGE
 	clif_displaymessage(sd->fd,"skill_damage");
 #endif

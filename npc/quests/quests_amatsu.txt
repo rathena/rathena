@@ -387,7 +387,7 @@ OnReset:
 }
 
 ama_test,34,25,0	script	Hanako chan#ama	-1,2,2,{
-OnTouch:
+OnTouch_:
 	mes "[Hanako chan]";
 	mes ".......Eeeeheeheehee";
 	mes ".....................";
@@ -418,7 +418,7 @@ OnInit:
 	disablenpc "Grandma#ama1";
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[Grandma]";
 	mes "Arrrk!!!";
 	next;
@@ -662,7 +662,7 @@ OnInit:
 	disablenpc "Coach#ama";
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[Coach]";
 	mes "Boom bam Boooom!!!";
 	mes "Tada~~~ !";
@@ -713,7 +713,7 @@ OnInit:
 	disablenpc "Coach#after";
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[Coach]";
 	mes "( Clap- Clap- Clap- )";
 	next;
@@ -784,7 +784,7 @@ OnInit:
 	disablenpc "backwarp#ama";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "amatsu",115,95;
 	end;
 }

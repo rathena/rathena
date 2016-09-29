@@ -2047,7 +2047,7 @@ tur_dun03,105,76,4	script	Knight Leader#tur	110,5,5,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	mes "[Scared Voice]";
 	mes "Wh-wh-whaat?!";
 	next;

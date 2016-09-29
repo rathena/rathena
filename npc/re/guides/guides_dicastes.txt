@@ -15,7 +15,7 @@
 //= 1.2 Navigation system update. [Euphy]
 //============================================================ 
 
-dicastes01,181,191,5	script	Traveler Ichack#info	481,2,2,{
+dicastes01,189,191,5	script	Traveler Ichack#info	481,2,2,{
 	mes "[Traveler Ichack]";
 	mes "Oh!! You are a stranger!";
 	mes "I'm Ichack, the first adventurer that arrived here in El Dicastes!";

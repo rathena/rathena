@@ -476,7 +476,7 @@ enum _sp {
 	SP_HP_VANISH_RACE_RATE, SP_SP_VANISH_RACE_RATE, SP_ABSORB_DMG_MAXHP, SP_SUB_SKILL, SP_SUBDEF_ELE, // 2074-2078
 	SP_STATE_NORECOVER_RACE, SP_CRITICAL_RANGEATK, SP_MAGIC_ADDRACE2, SP_IGNORE_MDEF_RACE2_RATE, // 2079-2082
 	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, SP_DROP_ADDRACE, SP_DROP_ADDCLASS, SP_NO_MADO_FUEL, // 2083-2087
-	SP_IGNORE_DEF_CLASS_RATE, //2088
+	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, //2088-2091
 };
 
 enum _look {
@@ -669,6 +669,7 @@ struct map_data {
 		unsigned nomineeffect : 1; //allow /mineeffect
 		unsigned nolockon : 1;
 		unsigned notomb : 1;
+		unsigned nocostume : 1; // Disable costume sprites [Cydh]
 		unsigned gvg_te : 1; // GVG WOE:TE. This was added as purpose to change 'gvg' for GVG TE, so item_noequp, skill_nocast exlude GVG TE maps from 'gvg' (flag &4)
 		unsigned gvg_te_castle : 1; // GVG WOE:TE Castle
 #ifdef ADJUST_SKILL_DAMAGE

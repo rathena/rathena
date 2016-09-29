@@ -769,6 +769,15 @@ typedef enum sc_type {
 	SC_MAPLE_FALLS,
 	SC_TIME_ACCESSORY,
 	SC_MAGICAL_FEATHER,
+	SC_GVG_GIANT,
+	SC_GVG_GOLEM,
+	SC_GVG_STUN,
+	SC_GVG_STONE,
+	SC_GVG_FREEZ,
+	SC_GVG_SLEEP,
+	SC_GVG_CURSE,
+	SC_GVG_SILENCE,
+	SC_GVG_BLIND,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
