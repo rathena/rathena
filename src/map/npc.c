@@ -430,7 +430,7 @@ int npc_event_doall(const char* name)
 int npc_event_doall_id(const char* name, int rid)
 {
 	int c = 0;
-	char buf[64];
+	char buf[EVENT_NAME_LENGTH];
 	safesnprintf(buf, sizeof(buf), "::%s", name);
 	ev_db->foreach(ev_db,npc_event_doall_sub,&c,buf,rid);
 	return c;
@@ -445,7 +445,7 @@ int npc_event_do_clock(int tid, unsigned int tick, int id, intptr_t data)
 	static struct tm ev_tm_b; // tracks previous execution time
 	time_t timer;
 	struct tm* t;
-	char buf[64];
+	char buf[EVENT_NAME_LENGTH];
 	int c = 0;
 
 	timer = time(NULL);
@@ -3550,7 +3550,7 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 		int l;
 		ARR_FIND( 0, MAX_EVENTQUEUE, l, sd->eventqueue[l][0] == '\0' );
 		if( l < MAX_EVENTQUEUE ) {
-			safestrncpy(sd->eventqueue[l],eventname,50); //Event enqueued.
+			safestrncpy(sd->eventqueue[l],eventname,EVENT_NAME_LENGTH); //Event enqueued.
 			return 0;
 		}
 
@@ -4380,9 +4380,9 @@ void npc_read_event_script(void)
 		DBIterator* iter;
 		DBKey key;
 		DBData *data;
+		char name[EVENT_NAME_LENGTH];
 
-		char name[64]="::";
-		safestrncpy(name+2,config[i].event_name,62);
+		safesnprintf(name,EVENT_NAME_LENGTH,"::%s",config[i].event_name);
 
 		script_event[i].event_count = 0;
 		iter = db_iterator(ev_db);
