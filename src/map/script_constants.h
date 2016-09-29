@@ -6,6 +6,10 @@
 
 	#define export_constant(a) script_set_constant(#a,a,false)
 
+	/* min and maximum variable value */
+	export_constant(INT_MIN);
+	export_constant(INT_MAX);
+
 	/* server defines */
 	export_constant(PACKETVER);
 	export_constant(MAX_LEVEL);
@@ -21,6 +25,10 @@
 	export_constant(MAX_CHAT_USERS);
 	export_constant(VIP_SCRIPT);
 	export_constant(MIN_STORAGE);
+	export_constant(MAX_SLOTS);
+	export_constant(MAX_ITEM_RDM_OPT);
+	export_constant(NAME_LENGTH);
+	export_constant(PASSWD_LENGTH);
 
 	/* boolean values */
 	export_constant(true);
