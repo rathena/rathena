@@ -785,8 +785,7 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
 void clif_heal(int fd,int type,int val);
 void clif_resurrection(struct block_list *bl,int type);
-void clif_map_property(struct map_session_data* sd, enum map_property property);
-void clif_maptypeproperty2(struct block_list *bl,enum send_target t);
+void clif_map_property(struct block_list *bl, enum map_property property, enum send_target t);
 void clif_pvpset(struct map_session_data *sd, int pvprank, int pvpnum,int type);
 void clif_map_property_mapall(int map, enum map_property property);
 void clif_refine(int fd, int fail, int index, int val);

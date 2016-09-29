@@ -6181,28 +6181,24 @@ void clif_resurrection(struct block_list *bl,int type)
 }
 
 
-/// Sets the map property (ZC_NOTIFY_MAPPROPERTY).
-/// 0199 <type>.W
-void clif_map_property(struct map_session_data* sd, enum map_property property)
+/// Sets the map property
+/// 0199 <type>.W (ZC_NOTIFY_MAPPROPERTY)
+/// 099b <type>.W <flags>.L (ZC_MAPPROPERTY_R2)
+void clif_map_property(struct block_list *bl, enum map_property property, enum send_target t)
 {
-	int fd;
-
-	nullpo_retv(sd);
-
-	fd=sd->fd;
-	WFIFOHEAD(fd,packet_len(0x199));
-	WFIFOW(fd,0)=0x199;
-	WFIFOW(fd,2)=property;
-	WFIFOSET(fd,packet_len(0x199));
-}
-
-
-void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 #if PACKETVER >= 20121010
+	short cmd = 0x99b;
 	unsigned char buf[8];
+#else
+	short cmd = 0x199;
+	unsigned char buf[4];
+#endif
+	
+	WBUFW(buf,0)=cmd;
+	WBUFW(buf,2)=property;
 
-	unsigned int NotifyProperty =
-		((map[bl->m].flag.pvp?1:0)<<0)| // PARTY - Show attack cursor on non-party members (PvP)
+#if PACKETVER >= 20121010
+	WBUFL(buf,4) = ((map[bl->m].flag.pvp?1:0)<<0)| // PARTY - Show attack cursor on non-party members (PvP)
 		((map[bl->m].flag.battleground || map_flag_gvg(bl->m)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
 		((map[bl->m].flag.battleground || map_flag_gvg2(bl->m)?1:0)<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((map[bl->m].flag.nomineeffect || !map_flag_gvg2(bl->m)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
@@ -6214,14 +6210,9 @@ void clif_maptypeproperty2(struct block_list *bl,enum send_target t) {
 		((map[bl->m].flag.nousecart?0:1)<<9)| // USECART - Allow opening cart inventory (Well force it to always allow it)
 		((map[bl->m].flag.nosumstarmiracle?0:1)<<10); // SUNMOONSTAR_MIRACLE - Unknown - (Guessing it blocks Star Gladiator's Miracle from activating)
 		//(1<<11); // Unused bits. 1 - 10 is 0x1 length and 11 is 0x15 length. May be used for future settings.
-
-	WBUFW(buf,0)=0x99b;
-	WBUFW(buf,2)=0x28; // Type - What is it asking for? MAPPROPERTY? MAPTYPE? I don't know. Do we even need it? [Rytech]
-	WBUFL(buf,4)=NotifyProperty;
-	WBUFW(buf,6) = 0; // sparebit [5-15], + extra[4]
-
-	clif_send(buf,packet_len(0x99b),bl,t);
 #endif
+	
+	clif_send(buf,packet_len(cmd),bl,t);
 }
 
 /// Set the map type (ZC_NOTIFY_MAPPROPERTY2).
@@ -6277,16 +6268,13 @@ void clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 void clif_map_property_mapall(int map_idx, enum map_property property)
 {
 	struct block_list bl;
-	unsigned char buf[16];
 
 	bl.id = 0;
 	bl.type = BL_NUL;
 	bl.m = map_idx;
-	WBUFW(buf,0)=0x199;
-	WBUFW(buf,2)=property;
-	clif_send(buf,packet_len(0x199),&bl,ALL_SAMEMAP);
+	
+	clif_map_property( &bl, property, ALL_SAMEMAP );
 }
-
 
 /// Notifies the client about the result of a refine attempt (ZC_ACK_ITEMREFINING).
 /// 0188 <result>.W <index>.W <refine>.W
@@ -10177,15 +10165,15 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 			sd->pvp_won = 0;
 			sd->pvp_lost = 0;
 		}
-		clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
+		clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
 	} else if(sd->duel_group) // set flag, if it's a duel [LuzZza]
-		clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
-
-	if (map[sd->bl.m].flag.gvg_dungeon)
-		clif_map_property(sd, MAPPROPERTY_FREEPVPZONE); //TODO: Figure out the real packet to send here.
-
-	if( map_flag_gvg(sd->bl.m) )
-		clif_map_property(sd, MAPPROPERTY_AGITZONE);
+		clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
+	else if (map[sd->bl.m].flag.gvg_dungeon)
+		clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF); //TODO: Figure out the real packet to send here.
+	else if( map_flag_gvg(sd->bl.m) )
+		clif_map_property(&sd->bl, MAPPROPERTY_AGITZONE, SELF);
+	else
+		clif_map_property(&sd->bl, MAPPROPERTY_NOTHING, SELF);
 
 	// info about nearby objects
 	// must use foreachinarea (CIRCULAR_AREA interferes with foreachinrange)
@@ -10375,8 +10363,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 
 	mail_clear(sd);
-
-	clif_maptypeproperty2(&sd->bl,SELF);
 
 	/* Guild Aura Init */
 	if( sd->state.gmaster_flag ) {
