@@ -4,7 +4,7 @@
 //===== Description: =========================================
 //= General script functions.
 //===== Changelogs: ==========================================
-//= 1.0 WoeTECheckHour(X) function check if the woe
+//= 1.0 WoeTETimeStart(X) function check if the woe
 //	will start in X seconds or less. [Capuche]
 //============================================================
 
