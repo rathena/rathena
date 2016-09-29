@@ -70,13 +70,13 @@ OnAgitInit3:
 			monster .@map$,.@emproom[0],.@emproom[1],"Guardian Knight of Emperium",1219,2,.@npc_name$ +"::OnMyMobDead";
 			monster .@map$,.@emproom[0],.@emproom[1],"Raydric Archer",1276,5,.@npc_name$ +"::OnMyMobDead";
 		}
-		disablenpc "Kafra Staff#"+ .@map$;
+		disablenpc "Kafra Employee#"+ .@map$;
 	}
 	else {
 		requestguildinfo .@guild_id;
 		donpcevent "::OnFlagTE" + strnpcinfo(2);// Guild emblem on flags.
 		if (getcastledata(.@map$,9)  == 0)
-			disablenpc "Kafra Staff#"+ .@map$;
+			disablenpc "Kafra Employee#"+ .@map$;
 
 		// Load purchased Guardian in castles.
 		if (.@map$ == "te_aldecas1") donpcevent "Clode::OnSpawnGuardians";
@@ -163,14 +163,14 @@ OnAgitBreak:
 	if (agitcheck3())
 		donpcevent strnpcinfo(0) +"::OnEmpSpawn";
 	sleep 7000;
-	announce strnpcinfo(2) +" in the fortress of [" + getcastlename(.@map$) + "] is occupied by [" + getguildname(.@guild_id) + "] guild.", bc_all,"0xFF0000",FW_NORMAL,10;
+	announce "The [" + getcastlename(.@map$) + "] castle has been conquered by the [" + getguildName(.@guild_id) + "] guild.",bc_all|bc_woe;
 	end;
 
 OnGuildBreak:
 	.@map$ = strnpcinfo(4);
 	if (.@map$ == "") end;
-	killmonster .@map$, "Kafra Staff#"+ strnpcinfo(4) +"::OnGuardianDied";
-	disablenpc "Kafra Staff#"+ .@map$;
+	killmonster .@map$, "Kafra Employee#"+ strnpcinfo(4) +"::OnGuardianDied";
+	disablenpc "Kafra Employee#"+ .@map$;
 	setcastledata .@map$,1,0;
 	sleep 7000;
 	announce "Guild Base [" + getcastlename(.@map$) + "] has been abandoned.",bc_all;
@@ -182,7 +182,7 @@ S_Message:
 	.@guild_id = getcastledata(.@map$,1);
 	
 	if (.@guild_id)
-		announce strnpcinfo(2) +" in the fortress of [" + getcastlename(.@map$) + "] is occupied by [" + getguildname(.@guild_id) + "] guild.", bc_all,"0xFF0000",FW_NORMAL,10;
+		announce "The [" + getcastlename(.@map$) + "] castle is occupied by the [" + getguildname(.@guild_id) + "] guild.",bc_all,"0xFF0000",FW_NORMAL,10;
 	else
 		announce "The [" + getcastlename(.@map$) + "] castle is currently unoccupied.", bc_all,"0xFF0000",FW_NORMAL,10;
 	if (compare( .@map$,"te_alde" ))
@@ -214,18 +214,27 @@ OnMyMobDead:
 	.@guildname$ = getguildname(.@guild_id);
 
 	cutin "kafra_01",2;
-	mes "[Kafra Staff]";
+	mes "[Kafra Employee]";
 	if (.@guild_id == getcharid(2)) {
-		mes "Welcome, members of ^ff0000" + .@guildname$ + "^000000.";
-		mes "Kafra Service Inc. is always on your side.";
+		mes "Welcome. ^ff0000" + .@guildname$ + "^000000 Member.";
+		mes "The Kafra Corporation will stay with you wherever you go.";
 		next;
-		switch( select( "Use storage service", "Use warp service", "Use cart service", "Close it" ) ) {
+		switch( select( "Use Storage", "Use Teleport Service", "Rent a Pushcart", "Cancel" ) ) {
 		case 1:
-			if (getskilllv("NV_BASIC") > 5)
+			if (getskilllv("NV_BASIC") > 5) {
+				mes "[Kafra Employee]";
+				mes "Here, let me open";
+				mes "your Storage for you.";
+				mes "Thank you for using";
+				mes "the Kafra Service.";
+				close2;
 				openstorage;
-			else {
-				mes "[Kafra Staff]";
-				mes "To use the storage service, your beginner skill level must be higher than 6.";
+			} else {
+				mes "[Kafra Employee]";
+				mes "I'm sorry, but you";
+				mes "need the Novice's";
+				mes "Basic Skill Level 6 to";
+				mes "use the Storage Service.";
 				close2;
 			}
 			break;
@@ -235,23 +244,34 @@ OnMyMobDead:
 			else
 				callsub( S_Warp, "Prontera", "prontera",278,211 );
 		case 3:
-			mes "[Kafra Staff]";
+			mes "[Kafra Employee]";
 			if (BaseClass != Job_Merchant) {
-				mes "We're sorry.";
-				mes "Cart service is an exclusive service for merchants, blacksmiths, and alchemists only.";
+				mes "I'm sorry, but the";
+				mes "Pushcart rental service";
+				mes "is only available to Merchants,";
+				mes "Blacksmiths and Alchemists.";
 				close2;
 			}
 			else if (checkcart()) {
-				mes "You have a cart installed to you currently.";
+				mes "You already have";
+				mes "a Pushcart equipped.";
+				mes "Unfortunately, we can't";
+				mes "rent more than one to";
+				mes "each customer at a time.";
 				close2;
 			}
 			else {
-				mes "We charge 800 Zeny for the cart service. Would you like to use it?";
+				mes "The Pushcart rental";
+				mes "fee is 800 zeny. Would";
+				mes "you like to rent a Pushcart?";
 				next;
-				if (select( "Yes","No" ) == 1) {
+				if (select( "Rent a Pushcart","Cancel" ) == 1) {
 					if (Zeny < 800) {
-						mes "[Kafra Staff]";
-						mes "You don't have enough money to purchase this service. You need 800 Zeny in order to use the cart service.";
+						mes "[Kafra Employee]";
+						mes "I'm sorry, but you";
+						mes "don't have enough";
+						mes "zeny to pay the Pushcart";
+						mes "rental fee of 800 zeny.";
 						close2;
 					}
 					else {
@@ -263,29 +283,33 @@ OnMyMobDead:
 			}
 			break;
 		case 4:
-			mes "[Kafra Staff]";
-			mes "At Kafra Service Inc., we do our utmost to provide the best and satisfy our customers by managing the quality of our services strictly.";
-			mes "Thanks for choosing Kafra Service Inc.";
+			mes "[Kafra Employee]";
+			mes "We, here at Kafra Corporation,";
+			mes "are always endeavoring to provide you with the best services. We hope that we meet your adventuring needs and standards of excellence.";
 			close2;
 			break;
 		}
 	}
 	else {
-		mes "I made a contract to work for members of ^ff0000" + .@guildname$ + "^000000 only. Please consult one of our Kafra personnel in different locations. We're sorry for the inconvenience.";
+		mes "I am instructed to only offer my services to the ^ff0000"+.@guildname$+"^000000 Guild. Please try another Kafra Employee around here. Sorry for the inconvenience.";
 		close2;
 	}
 	cutin "",255;
 	end;
 
 S_Warp:
-	mes "[Kafra Staff]";
-	mes "Tell me your destination.";
+	mes "[Kafra Employee]";
+	mes "Please choose";
+	mes "your destination.";
 	next;
 	switch( select( getarg(0) + " -> 200 z", "Cancel it" ) ) {
 	case 1:
 		if (Zeny < 200) {
-			mes "[Kafra Staff]";
-			mes "Member -. You don't have enough money to purchase the service. Please check your account again.";
+			mes "[Kafra Employee]";
+			mes "I'm sorry, but you don't have";
+			mes "enough zeny for the Teleport";
+			mes "Service. The fee to teleport";
+			mes "to "+getarg(0)+" is 200 zeny.";
 			close2;
 			cutin "",255;
 			end;
@@ -315,32 +339,32 @@ function GuardianData;
 
 	mes .@npc_name$;
 	if (.@guild_id == 0) {
-		mes "I'm waiting for someone who are meant to be my master.";
-		mes "Oh, you courageous one... tempt your fate.";
+		mes "I have been waiting for a master to fulfill my destiny.";
+		mes "Brave soul... fate will guide you towards your future...";
 		close;
 	}
 	if (strcharinfo(0) != .@guildmaster$) {
-		mes "No matter how much you threaten me, I shall follow my master ^ff0000" + .@guildmaster$ + "^000000 only! Where are the guardians! Kick out these scondrels immediately!";
+		mes "No matter how much you pester me, I'll still follow my master ^ff0000"+.@guildmaster$+"^000000. Where are the Guardians?! Send these ruffians away right now!";
 		close;
 	}
-	mes "Welcome. ^ff0000" + .@guildmaster$ + "^000000, my master...";
-	mes "You may command my services. I shall carry out my duties faithfully.";
+	mes "Welcome. My honorable master, ^ff0000"+strcharinfo(0)+"^000000...";
+	mes "Your humble servent, "+strnpcinfo(1)+", is here to serve you.";
 	next;
-	switch( select( "Check current status of the fortress", "Invest in commercial development level", "Invest in defense level", "Deploy guardians", "Employ / Dismiss a warehouseman", "Enter master's room" ) ) {
+	switch( select( "Castle briefing", "Invest in commercial growth", "Invest in Castle Defenses", "Summon Guardian", "Hire / Fire a Kafra Employee", "Go into Master's room" ) ) {
 	case 1:
 		.@economy_today = getcastledata(.@map$,4);
 		.@defense_today = getcastledata(.@map$,5);
 		mes .@npc_name$;
-		mes "Let me give you a report on the current status of the fortress.";
-		mes "";
-		mes "^0000ffThe current commercial level is " + getcastledata(.@map$,2) + "~.";
+		mes "I will report the Castle briefing, Master.";
+		mes " ";
+		mes "^0000ffNow, the commercial growth level is "+GetCastleData(.@map$,2)+".";
 		if (.@economy_today > 0)
-			mes "You have invested ~ " + .@economy_today + " times within the past 1 day.";
-		mes "The current defense level is " + getcastledata(.@map$,3) +  "~.^000000";
+			mes " You invested "+.@economy_today+" times in past 1 day.";
+		mes " Now, the Castle Defense level is "+GetCastleData(.@map$,3)+".^000000";
 		if (.@defense_today > 0)
-			mes "^0000ff- Within the past 1 day, you have invested ~ " + .@defense_today + " times.^000000";
-		mes "";
-		mes "That's about it.";
+			mes " ^0000ff- You invested "+.@defense_today+" times in past 1 day.^000000";
+		mes " ";
+		mes "That's all I have to report, Master.";
 		close;
 
 	case 2:
@@ -349,7 +373,7 @@ function GuardianData;
 			55,280000, 60,335000, 65,395000, 70,460000, 75,530000, 80,605000, 85,685000, 90,770000, 95,860000, 100,955000;
 		for ( .@i = 0; .@i < getarraysize(.@eco_invest); .@i += 2 )
 			if (.@economy <= .@eco_invest[.@i]) break;
-		callsub( S_Invest, 4, .@eco_invest[.@i+1], getcastledata(.@map$,4), "commercial development", "number of items produced within the guild increases" );
+		callsub( S_Invest, 4, .@eco_invest[.@i+1], getcastledata(.@map$,4), "commercial growth", "quantity of goods made by the guild will increase", "future", "economist", "riches" );
 
 	case 3:
 		.@defense = getcastledata(.@map$,3);
@@ -357,12 +381,12 @@ function GuardianData;
 			55,560000, 60,670000, 65,790000, 70,920000, 75,1060000, 80,1210000, 85,1370000, 90,1540000, 95,1720000, 100,1910000;
 		for ( .@i = 0; .@i < getarraysize(.@def_invest); .@i += 2 )
 			if (.@defense <= .@def_invest[.@i]) break;
-		callsub( S_Invest, 5, .@def_invest[.@i+1], getcastledata(.@map$,5), "defense", "durability of guardian and Emperiums increase" );
+		callsub( S_Invest, 5, .@def_invest[.@i+1], getcastledata(.@map$,5), "Castle Defenses", "durability of Guardians and the Emperium will increase", "coming battles", "strategist", "Defenses" );
 
 	case 4:
 		mes .@npc_name$;
-		mes "Do you want to install a guardian? A guardian will be protecting our fortress ceaselessly.";
-		mes "Select a guardian that you wish to install.";
+		mes "Will you summon a Guardian? It'll be a protector to defend us loyally.";
+		mes "Please select a guardian to defend us.";
 		next;
 		GuardianData( .@mob_id, .@x, .@y, .@name$ );
 		for ( .@i = 0; .@i < MAX_GUARDIANS ; .@i++ ) {
@@ -373,109 +397,108 @@ function GuardianData;
 		}
 		.@s = select(.@menu$) -1;
 		mes .@npc_name$;
-		mes "Are you sure you want to install the selected guardian? You need 10000 Zeny to proceed.";
+		mes "Will you summon the chosen guardian? 10,000 zeny are required to summon a Guardian.";
 		next;
-		if (select( "Install it.","Forget it." ) == 2) {
+		if (select( "Summon","Cancel" ) == 2) {
 			mes .@npc_name$;
-			mes "I did just as you said. However, make sure to install a guardian in the future when you can afford it.";
+			mes "I did as you ordered. But please remember if you the have money to spare, it'll be better to set it up.";
 			close;
 		}
 		mes .@npc_name$;
 		if (getgdskilllv(.@guild_id,10002) == 0) {
-			mes "Master, you do not have any research knowledge required for installation of a guardian. In order to accumulate knowledge about installation of a guardian, you need to master ^ff0000Guardian Manufacturing Studies^000000 among other guild skills.";
-			mes "You have failed to install a guardian.";
+			mes "Master, we have not the resources to Summon the Guardian. If you want to accumulate them, you have to learn the Guild skill. We failed to summon the Guardian.";
 		}
 		else if (getcastledata( .@map$,(.@s+10) ) == 1)
-			mes "Master... you have installed that guardian already. You may not proceed with the installation.";
+			mes "Master, you already have summoned that Guardian. We cannot summon another.";
 		else if (Zeny <  10000)
-			mes "You don't have enough resources required for installation of a guardian. Unfortunately... you have failed to install a guardian.";
+			mes "Well... I'm sorry but we don't have funds to summon the Guardian. We failed to summon the Guardian.";
 		else {
 			Zeny = Zeny - 10000;
 			setcastledata .@map$,(.@s+10),1;
-			guardian .@map$, .@x[.@s], .@y[.@s], .@name$[.@s], .@mob_id[.@s], "Kafra Staff#"+ strnpcinfo(4) +"::OnGuardianDied", .@s;
-			mes "A guardian has been installed successfully. We have a reliable ally that protects our fortress now.";
+			guardian .@map$, .@x[.@s], .@y[.@s], .@name$[.@s], .@mob_id[.@s], "Kafra Employee#"+ strnpcinfo(4) +"::OnGuardianDied", .@s;
+			mes "We completed the summoning of the Guardian. Our defenses are now increased with it in place.";
 		}
 		close;
 
 	case 5:
 		mes .@npc_name$;
 		if (getcastledata(.@map$,9) == 1) {
-			mes "Currently, a Kafra staff is employed... Do you want to fire a Kafra staff?";
+			mes "We are currently hiring a Kafra Employee... Do you want to fire the Kafra Employee?";
 			next;
-			if (select( "Dismiss him.","Forget it." ) == 2) {
+			if (select( "Fire","Cancel" ) == 2) {
 				mes .@npc_name$;
-				mes "I think that Kafra staff is working really hard. I thought it'd be nice to just keep him thinking about other members.";
+				mes "She worked hard in my opinion. It was a good decision to keep her.";
 				close;
 			}
 			cutin "kafra_01",2;
-			mes "[ Hired Kafra Staff ]";
-			mes "I've been working so hard... but why are you firing me? Please, Master... show me your generosity and please reconsider it, please.";
+			mes "[ Hired Kafra Employee ]";
+			mes "I worked so hard... How can you do that, Master?... Please... Please reconsider... Check it again, Master... Please...";
 			next;
-			if (select( "Dismiss him.","Forget it." ) == 2) {
-				mes "[ Hired Kafra Staff ]";
-				mes "I'll do my best... thank you so much.";
+			if (select( "Fire","Cancel" ) == 2) {
+				mes "[ Hired Kafra Employee ]";
+				mes "I'll work hard for you... Thank you!";
 				close;
 			}
-			mes "[ Hired Kafra Staff ]";
-			mes "Aahhhh! It's not fair~!";
+			mes "[ Hired Kafra Employee ]";
+			mes "Oh, my goodness! This is nonsense!";
 			next;
 			cutin "",255;
-			disablenpc "Kafra Staff#" + .@map$;
+			disablenpc "Kafra Employee#" + .@map$;
 			setcastledata .@map$,9,0;
 			mes .@npc_name$;
-			mes "... .";
-			mes "A Kafra staff has been fired... Was there something you didn't like about him?";
+			mes "....";
+			mes "I have discharged the Kafra Employee... But... are you unsatisfied with something?";
 			close;
 		}
-		mes "Do you want to make a contract with Kafra's headquarter and hire a staff in the fortress?";
-		mes "^ff0000You need 10000 Zeny for that though...";
+		mes "Will you contact the kafra Main Office and Hire a Employee for our Castle?";
+		mes "^ff0000 10,000 zeny is required for their services. ";
 		next;
-		if (select( "Hire a staff.","Forget it." ) == 2) {
+		if (select( "Hire.","Cancel" ) == 2) {
 			mes .@npc_name$;
-			mes "Your wish is my command. But we should hire a Kafra staff sooner of later for the sake of other members.";
+			mes "I did as you ordered, but some of our members will be unhappy. It will be better to hire a Kafra Employee quickly.";
 			close;
 		}
 		mes .@npc_name$;
 		if (getgdskilllv(.@guild_id,10001) == 0) {
-			mes "Master, you are unable to hire a Kafra staff since you didn't make a contract with Kafra's headquarter yet. In order to make a contract with Kafra's headquarter, you need to master ^ff0000 Contract with Kafra^000000 skill among other guild skills.";
+			mes "Master, we can't hire a Kafra Employee because we don't have a contract with the Kafra Main Office. If you want to obtain a contract with the Kafra Main Office, you will need to learn the Guild skill first.";
 			close;
 		}
 		if (Zeny <  10000) {
-			mes "Unfortunately... you do not have enough money in your account. You have failed to hire a Kafra staff.";
+			mes "Well... I'm sorry but we don't have enough funds to hire a Kafra Employee.";
 			close;
 		}
 		Zeny = Zeny - 10000;
-		enablenpc "Kafra Staff#" + .@map$;
+		enablenpc "Kafra Employee#" + .@map$;
 		setcastledata .@map$,9,1;
 
-		mes "You have made a contract with Kafra's headquarter successfully. You have hired a Kafra staff.";
+		mes "We obtained a contract with the kafra Main Office, and hired a Kafra Employee.";
 		next;
 		cutin "kafra_01",2;
-		mes "[ Hired Kafra Staff ]";
-		mes "Nice to meet you. I'm Kafra dispatched from the headquarter.";
-		mes "I'll do my best to live up to the guild's reputation.";
+		mes "[ Hired Kafra Employee ]";
+		mes "How do you do? I was dispatched from the Main Office.";
+		mes "I'll do my best to not tarnish the reputation of the Guild.";
 		next;
 		cutin "",255;
 		mes .@npc_name$;
-		mes "The contract period for a Kafra staff will be one month, and after that, you pay extra fees.";
-		mes "From now on, it's going to be much easier for the members.";
+		mes "The Contract terms of the hired Kafra Employee are for 1 month and after this term, you will need to to pay an additional fee.";
+		mes "It will be useful for our members.";
 		close;
 
 	case 6:
 		mes .@npc_name$;
-		mes "Do you want to go to the room where our precious items are stored?";
-		mes "It's a place only for you, our master... no one, other than you, is allowed to enter.";
+		mes "Do you want to visit the room where our valuables are stored?";
+		mes "That room is restricted to you... you are the only one with access to it.";
 		next;
 		mes .@npc_name$;
 		mes "If you don't open the treasure box within time limits, there is a possibility of losing it when unexpected situation occurs.";
 		mes "Please make sure to remember that always, Master.";
 		mes "So, for our guild's improvement, you must find time to collect it.";
 		next;
-		switch( select( "Enter master's room","Do not enter." ) ) {
+		switch( select( "Go into Master's room.","Cancel" ) ) {
 		case 1:
 			mes .@npc_name$;
-			mes "I will take you to the secret path that leads to the room. Follow me, please.";
-			mes "When you wish to return, press a secret button.";
+			mes "I'll show you the secret path. Follow me...please.";
+			mes "When you want to return here, please press the secret switch.";
 			close2;
 			if (.@map$ == "te_aldecas1") warp "te_aldecas1",113,223;
 			else if (.@map$ == "te_aldecas2") warp "te_aldecas2",134,225;
@@ -490,8 +513,8 @@ function GuardianData;
 			end;
 		case 2:
 			mes .@npc_name$;
-			mes "Items are produced once a day... but if you don't collect them in time, they don't come in anymore.";
-			mes "So, for our guild's improvement, you must find time to collect them.";
+			mes "Goods are produced once a day... if you don't remove them in time, they will not be produced anymore.";
+			mes "Therefore, it will be better if you check up on them from time to time.";
 			close;
 		}
 	}
@@ -504,37 +527,37 @@ S_Invest:
 		.@cost_invest = .@cost_invest * 4;
 
 	mes .@npc_name$;
-	mes "If you raise "+ getarg(3) +" level, the "+ getarg(4) +". So, if you think about the future, you have to invest in it.";
-	mes "";
-	mes "Originally, you are allowed to invest once a day. However, if you pay extra, you can also invest in it twice a day.";
-	mes "";
+	mes "If you invest in "+ getarg(3) +", the "+ getarg(4) +". Therfore, if you consider our "+ getarg(5) +", investments will be a necessity.";
+	mes " ";
+	mes "Initially, you are able to invest just once but if you pay more money, you will be able to invest twice.";
+	mes " ";
 	if (getcastledata(strnpcinfo(4),2) >= 100) {
-		mes "^ff0000But the current level is already 100%, which is as high as it can get, and you don't need to invest in it anymore. Surely, you have a great insight.^000000";
+		mes "^ff0000The "+ getarg(3) +" level of our Castle is at it's highest, 100%. No more investments are needed. Just as I have expected from a great "+ getarg(6) +" like you, Master.^000000";
 		close;
 	}
 	if (.@num_invest_today >= 2) {
-		mes "^ff0000But since you have already invested twice, you are not allowed to make any additional investment today. ^000000I can't wait until we become wealthy with increased level of commercial development.";
+		mes "^ff0000You have already invested twice today. You cannot invest any more.^000000 I expect the "+ getarg(7) +" of the guild to grow at a high rate.";
 		close;
 	}
 	if (.@num_invest_today == 0)
-		mes "The amount of investment required is ^ff0000" + .@cost_invest + "^000000 Zeny. Would you like to invest?";
+		mes "The current investment amount required is ^ff0000"+.@cost_invest+"^000000 zeny. Will you invest?";
 	else
-		mes "You've already invested once. Do you want to invest again? ^ff0000" + .@cost_invest + "^000000 Zeny is needed additionally.";
+		mes "You've invested once today... if you wish to invest once more, ^ff0000"+.@cost_invest+"^000000 more zeny will be needed.";
 	next;
-	switch( select( "Invest in commercial development level","Forget it." ) ) {
+	switch( select( "Invest in "+ getarg(3) +".","Cancel" ) ) {
 	case 1:
 		mes .@npc_name$;
 		if (Zeny < .@cost_invest) {
-			mes "Master, unfortunately, we do not have enough Zeny in our account. We failed to make an investment.";
+			mes "I'm sorry but there is not enough zeny to invest. You will have to try again when you have the funds, Master.";
 			close;
 		}
 		Zeny = Zeny - .@cost_invest;
 		setcastledata strnpcinfo(4), getarg(0), (.@num_invest_today +1);
-		mes "We have made an investment successfully! I'm looking forward to our future. The level of our commercial development will be increased by tomorrow.";
+		mes "We finished the investment safely. I expect that our "+ getarg(3) +" level will be increased by tomorrow.";
 		close;
 	case 2:
 		mes .@npc_name$;
-		mes "Your wish is my command, my master... There is no need to rush. We will do just fine.";
+		mes "I'll do as you bid, my master... There is no hurry. We will do our best.";
 		close;
 	}
 
@@ -662,10 +685,10 @@ function GuardianData {
 OnSpawnGuardians:
 	GuardianData( .@mob_id, .@x, .@y, .@name$ );
 	.@map$ = strnpcinfo(4);
-	killmonster .@map$, "Kafra Staff#"+ strnpcinfo(4) +"::OnGuardianDied";
+	killmonster .@map$, "Kafra Employee#"+ strnpcinfo(4) +"::OnGuardianDied";
 	for ( .@i = 0; .@i < MAX_GUARDIANS; .@i++ ) {
 		if (getcastledata( .@map$,(.@i+10) ))
-			guardian .@map$, .@x[.@i], .@y[.@i], .@name$[.@i], .@mob_id[.@i], "Kafra Staff#"+ strnpcinfo(4) +"::OnGuardianDied",.@i;
+			guardian .@map$, .@x[.@i], .@y[.@i], .@name$[.@i], .@mob_id[.@i], "Kafra Employee#"+ strnpcinfo(4) +"::OnGuardianDied",.@i;
 	}
 }
 
@@ -674,17 +697,17 @@ OnSpawnGuardians:
 -	script	lever2_TE	-1,{
 	.@guild_id = getcastledata( strnpcinfo(4),1 );
 	if (.@guild_id == 0) {
-		mes "[ A penetrative voice ]";
-		mes "You, who overcame hardships and became the master of courage, shall find another path of trials... '";
+		mes "[Ringing Voice]";
+		mes "'Those who overcome an ordeal shows a great deal of bravery... and will find their way to another ordeal.'";
 		close;
 	}
-	mes "[ A penetrative voice ]";
-	mes "Only the master of courage shall be put to the test.'";
+	mes "[Ringing Voice]";
+	mes "'Only the truly brave can take the test.'";
 	next;
 	mes " ";
-	mes "There is a small lever. Do you want to pull it?";
+	mes "There's a small lever. Will you pull it?";
 	next;
-	if (select( "Pull it.","Do not pull it." ) == 1) {
+	if (select( "Pull.","Don't pull." ) == 1) {
 		if (.@guild_id == getcharid(2)) {
 			.@npc_map$ = strnpcinfo(4);
 			if (compare( .@npc_map$,"te_alde" )) {
@@ -718,9 +741,9 @@ OnSpawnGuardians:
 //============================================================
 -	script	lever1_TE	-1,{
 	mes " ";
-	mes "There is a small lever. Do you want to pull it?";
+	mes "There's a small lever. Will you pull it?";
 	next;
-	if ( select( "Pull it.","Do not pull it." ) == 1 ) {
+	if ( select( "Pull.","Do not." ) == 1 ) {
 		.@map$ = strnpcinfo(4);
 		if (.@map$ == "te_aldecas1") setarray .@coord[0],218,176;
 		else if (.@map$ == "te_aldecas2") setarray .@coord[0],51,179;
@@ -1048,28 +1071,27 @@ function	script	F_flag_woe_TE	{
 	.@castle$ = getarg(1);
 	.@guild_id = getcastledata( .@castle$,1 );
 	if (.@guild_id == 0) {
-		mes "[ Decree of Sacred Kingdom of Rune-Midgarts ]";
-		mes "";
-		mes "1. The Treaty of Sacred Kingdom of Rune-Midgarts";
-		mes "and the Republic of Schwaltzvalt";
-		mes "hereby declares that this is a fortress";
-		mes "with no legal ownership.";
-		mes "";
-		mes "2. However, those who overcome hardships";
-		mes "and destroy Emperiums";
-		mes "shall be endowed with the ownership";
-		mes "of this fortress,";
-		mes "authorized by the King.";
+		mes "[ Edict of the Divine Rune-Midgarts Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
 		close;
 	}
 	if (.@guild_id == getcharid(2) && getarg(0)) {
-		mes "[ A penetrative voice ]";
-		mes "Come, all ye brave...";
-		mes "Do you wish to return with honor?";
+		mes "[ Echoing Voice ]";
+		mes "Brave ones...";
+		mes "Do you wish to return to your honorable place?";
 		next;
-		if (select( "Return to the fortress.","Forget it." ) == 1) {
+		if (select( "Return to the guild castle.","Quit." ) == 1) {
 			if (jobcanentermap(.@castle$) == 0) {
-				mes "Tertiary job class and users with expanded levels are not allowed to participate in Siege Battles TE.";
+				mes "Tertiary job class and users with expanded levels are not allowed to participate in Training Siege Battles.";
 				close;
 			}
 			if (getcastledata( getarg(1),1 ) == getcharid(2))
@@ -1079,17 +1101,16 @@ function	script	F_flag_woe_TE	{
 	}
 	.@guildname$ = getguildname(.@guild_id);
 	.@guildmaster$ = getguildmaster(.@guild_id);
-	mes "[ Decree of Sacred Kingdom of Rune-Midgarts ]";
-	mes "";
-	mes "1. The Treaty of Sacred Kingdom of Rune-Midgarts";
-	mes "and the Republic of Schwaltzvalt hereby declares that";
-	mes "hereby declares that this place belongs to^ff0000 " + .@guildname$;
-	mes "^000000 guild.";
-	mes "";
-	mes "2. The master of ^ff0000" + .@guildname$ + "^000000 guild is";
-	mes "^ff0000" + .@guildmaster$ + "^000000, and";
-	mes "whoever wishes to make objections to this";
-	mes "shall raise his sword and uphold his honor.";
+	mes "[ Edict of the Divine Rune-Midgarts Kingdom ]";
+	mes " ";
+	mes "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, ";
+	mes "we approve that this place is in";
+	mes "the private prossession of ^ff0000"+.@guildname$+"^000000 Guild.";
+	mes " ";
+	mes "2. The guild Master of ^ff0000"+.@guildname$+"^000000 Guild is";
+	mes "^ff0000"+.@guildmaster$+"^000000";
+	mes "If there is anyone who objects to this,";
+	mes "prove your strength and honor with a steel blade in your hand.";
 	close;
 }
 

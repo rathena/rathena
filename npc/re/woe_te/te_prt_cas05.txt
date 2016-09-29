@@ -36,7 +36,7 @@ te_prt_gld,197,236,2	duplicate(Nerious#9)	Nerious#12	GUILD_FLAG
 
 // Guild kafra
 //============================================================
-te_prtcas05,52,41,4	duplicate(Kafra_Staff_TE)	Kafra Staff#te_prtcas05	4_F_KAFRA1
+te_prtcas05,52,41,4	duplicate(Kafra_Staff_TE)	Kafra Employee#te_prtcas05	4_F_KAFRA1
 
 // Lever 1 (warp outside treasure)
 //============================================================

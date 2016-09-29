@@ -38,7 +38,7 @@ te_prt_gld,122,236,6	duplicate(Heine#11)	Heine#14	GUILD_FLAG
 
 // Guild kafra
 //============================================================
-te_prtcas04,258,247,4	duplicate(Kafra_Staff_TE)	Kafra Staff#te_prtcas04	4_F_KAFRA1
+te_prtcas04,258,247,4	duplicate(Kafra_Staff_TE)	Kafra Employee#te_prtcas04	4_F_KAFRA1
 
 // Lever 1 (warp outside treasure)
 //============================================================

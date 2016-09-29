@@ -40,7 +40,7 @@ te_alde_gld,99,244,4	duplicate(Defolty#15)	Defolty#16	GUILD_FLAG
 
 // Guild kafra
 //============================================================
-te_aldecas2,84,74,0	duplicate(Kafra_Staff_TE)	Kafra Staff#te_aldecas2	4_F_KAFRA1
+te_aldecas2,84,74,0	duplicate(Kafra_Staff_TE)	Kafra Employee#te_aldecas2	4_F_KAFRA1
 
 // Lever 1 (warp outside treasure)
 //============================================================

@@ -43,7 +43,7 @@ te_alde_gld,138,83,0	duplicate(Sorin#18)	Sorin#19	GUILD_FLAG
 
 // Guild kafra
 //============================================================
-te_aldecas3,118,76,0	duplicate(Kafra_Staff_TE)	Kafra Staff#te_aldecas3	4_F_KAFRA1
+te_aldecas3,118,76,0	duplicate(Kafra_Staff_TE)	Kafra Employee#te_aldecas3	4_F_KAFRA1
 
 // Lever 1 (warp outside treasure)
 //============================================================
