@@ -18787,17 +18787,17 @@ BUILDIN_FUNC(waitingroom2bg)
 
 	map_name = script_getstr(st,2);
 	if (strcmp(map_name, "-") != 0 && (mapindex = mapindex_name2id(map_name)) == 0)
-		{ // Invalid Map
+	{ // Invalid Map
 		script_pushint(st, 0);
-			return SCRIPT_CMD_SUCCESS;
-		}
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	x = script_getnum(st,3);
 	y = script_getnum(st,4);
 	if(script_hasdata(st,5))
-	ev = script_getstr(st,5); // Logout Event
+		ev = script_getstr(st,5); // Logout Event
 	if(script_hasdata(st,6))
-	dev = script_getstr(st,6); // Die Event
+		dev = script_getstr(st,6); // Die Event
 
 	check_event(st, ev);
 	check_event(st, dev);
@@ -18807,7 +18807,7 @@ BUILDIN_FUNC(waitingroom2bg)
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;
 	}
-        
+
 	for (i = 0; i < cd->users; i++) { // Only add those who are in the chat room
 		struct map_session_data *sd;
 		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd) ){
@@ -18839,7 +18839,7 @@ BUILDIN_FUNC(waitingroom2bg_single)
 		map_name = script_getstr(st, 3);
 		if ((mapindex = mapindex_name2id(map_name)) == 0) {
 			script_pushint(st, false);
-		return SCRIPT_CMD_SUCCESS; // Invalid Map
+			return SCRIPT_CMD_SUCCESS; // Invalid Map
 		}
 		x = script_getnum(st, 4);
 		y = script_getnum(st, 5);
