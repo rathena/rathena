@@ -2445,6 +2445,14 @@ void clif_add_random_options(unsigned char* buf, struct item *it) {
 		WBUFW(buf, i*5 + 2) = it->option[i].value;	// Value
 		WBUFB(buf, i*5 + 4) = it->option[i].param;	// Param1
 	}
+	
+#if MAX_ITEM_RDM_OPT < 5
+	for ( ; i < MAX_ITEM_RDM_OPT; i++) {
+		WBUFW(buf, i*5 + 0) = 0;		// OptIndex
+		WBUFW(buf, i*5 + 2) = 0;	// Value
+		WBUFB(buf, i*5 + 4) = 0;	// Param1
+	}
+#endif
 #endif
 }
 
