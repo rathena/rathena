@@ -266,18 +266,14 @@ because it does not necessarily require PvP mode to be set.
 *gvg_noparty
 *gvg_castle
 *gvg_dungeon
+*gvg_te
+*gvg_te_castle
 
 Enables Guild vs. Guild mode on a map and applies the corresponding damage adjustments.
 'gvg_noparty' will ignore party alliances.
 'gvg_castle' marks a guild castle. GvG mode will be active only during the War of Emperium.
 'gvg_dungeon' marks a guild dungeon. Players will be warped out after two deaths.
-
----------------------------------------
-
-*gvg_te
-*gvg_te_castle
-
-Used to determines map is WOE:TE area. Special restrictions are applied.
+'gvg_te' and 'gvg_te_castle' marks a WOE:TE area and special restrictions are applied.
 
 ---------------------------------------
 

@@ -3670,7 +3670,7 @@ Name is optional, and defaults to the attached player if omitted.
 
 These function will let you check whether the server is currently in WoE:FE mode
 (agitcheck()), WoE:SE mode (agitcheck2()), or WoE:TE mode (agitcheck3()) and will
-return 1 if War of Emperium is on and 0 if it isn't. 
+return true if War of Emperium is on and false if it isn't. 
 
 ---------------------------------------
 
@@ -6693,7 +6693,7 @@ For examples, check the WoE scripts in the distribution.
 *agitstart3;
 *agitend3;
 
-These six commands will start and end War of Emperium, War of Emperium SE,
+These commands will start and end War of Emperium FE, War of Emperium SE,
 or War of Emperium TE.
 
 This is a bit more complex than it sounds, since the commands themselves won't 

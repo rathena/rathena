@@ -5,10 +5,10 @@
 //= General script functions.
 //===== Changelogs: ==========================================
 //= 1.0 WoeTECheckHour(X) function check if the woe
-//	will start in X seconds. [Capuche]
+//	will start in X seconds or less. [Capuche]
 //============================================================
 
-// WoeTETimeStart(<seconds>) : return 1 if the woe te will start in less than X seconds, 0 otherwise
+// WoeTETimeStart(<seconds>) : return true if the woe te will start in X seconds or less, false otherwise
 function	script	WoeTETimeStart	{
 	.@woe_status = agitcheck3();
 	.@min_today  = gettime(2);
@@ -20,8 +20,8 @@ function	script	WoeTETimeStart	{
 		if (.@h > .@hour_today) {
 			.@time = (60 - .@min_today) *60 + ( .@h - .@hour_today -1 ) *3600;
 			if (.@time <= getarg(0))
-				return 1;
+				return true;
 		}
 	}
-	return 0;
+	return false;
 }
