@@ -1,0 +1,19 @@
+//===== rAthena Script =======================================
+//= Guild Mission - NPC Duplicates
+//===== Description: =========================================
+//= Mission NPCs for Guild Mission added in episode 14.3
+//===== Changelogs: ==========================================
+//= [Official Conversion]
+//= 1.0 First version [Secretdataz]
+//============================================================
+
+alde_gld,176,163,5	duplicate(gld_mission#core)	Luina Training Instructor#gqaldeg	4_M_HUMAN_02
+gef_fild13,197,242,3	duplicate(gld_mission#core)	Britoria Training Instructor#gqgefg	4_M_HUMAN_02
+pay_gld,198,178,5	duplicate(gld_mission#core)	Greenwood Lake Training Instructor#gqpayg	4_M_HUMAN_02
+prt_gld,125,149,3	duplicate(gld_mission#core)	Valkyrie Realm Training Instructor#gqprtg	4_M_HUMAN_02
+
+aru_gld,96,203,3	duplicate(gld_mission#core)	Valfreyja Training Instructor#gqaru	4_M_HUMAN_02
+sch_gld,270,117,3	duplicate(gld_mission#core)	Nidhoggur Training Instructor#gqsch	4_M_HUMAN_02
+
+te_alde_gld,189,159,3	duplicate(gld_mission#core)	Kafragarten Training Instructor#gqtealde	4_M_HUMAN_02
+te_prt_gld,112,150,5	duplicate(gld_mission#core)	Gloria Training Instructor#gqteprt	4_M_HUMAN_02
