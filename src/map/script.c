@@ -11939,14 +11939,8 @@ BUILDIN_FUNC(setmapflag)
 			case MF_NOCOSTUME:			map[m].flag.nocostume = 1; break;
 			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 1; break;
 			case MF_GVG_TE:
-				{
-					struct block_list bl;
-					map[m].flag.gvg_te = 1;
-					clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-					bl.type = BL_NUL;
-					bl.m = m;
-					clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
+				map[m].flag.gvg_te = 1;
+				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
 				break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
@@ -12052,14 +12046,8 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOCOSTUME:			map[m].flag.nocostume = 0; break;
 			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 0; break;
 			case MF_GVG_TE:
-				{
-					struct block_list bl;
-					bl.type = BL_NUL;
-					bl.m = m;
-					map[m].flag.gvg_te = 0;
-					clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-					clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
+				map[m].flag.gvg_te = 0;
+				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 				break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
@@ -12173,16 +12161,12 @@ BUILDIN_FUNC(gvgon3)
 {
 	int16 m;
 	const char *str;
-	struct block_list bl;
 
 	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
 	if (m >= 0 && !map[m].flag.gvg_te) {
 		map[m].flag.gvg_te = 1;
 		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-		bl.type = BL_NUL;
-		bl.m = m;
-		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12195,12 +12179,8 @@ BUILDIN_FUNC(gvgoff3)
 	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
 	if (m >= 0 && map[m].flag.gvg_te) {
-		struct block_list bl;
 		map[m].flag.gvg_te = 0;
 		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-		bl.type = BL_NUL;
-		bl.m = m;
-		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
