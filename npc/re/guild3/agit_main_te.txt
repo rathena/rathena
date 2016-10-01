@@ -70,13 +70,13 @@ OnAgitInit3:
 			monster .@map$,.@emproom[0],.@emproom[1],"Guardian Knight of Emperium",1219,2,.@npc_name$ +"::OnMyMobDead";
 			monster .@map$,.@emproom[0],.@emproom[1],"Raydric Archer",1276,5,.@npc_name$ +"::OnMyMobDead";
 		}
-		disablenpc "Kafra Employee#"+ .@map$;
+		disablenpc "Kafra Employee#"+ replacestr(.@map$, "cas", "");
 	}
 	else {
 		requestguildinfo .@guild_id;
 		donpcevent "::OnFlagTE" + strnpcinfo(2);// Guild emblem on flags.
 		if (getcastledata(.@map$,9)  == 0)
-			disablenpc "Kafra Employee#"+ .@map$;
+			disablenpc "Kafra Employee#"+ replacestr(.@map$, "cas", "");
 
 		// Load purchased Guardian in castles.
 		if (.@map$ == "te_aldecas1") donpcevent "Clode::OnSpawnGuardians";
@@ -169,8 +169,9 @@ OnAgitBreak:
 OnGuildBreak:
 	.@map$ = strnpcinfo(4);
 	if (.@map$ == "") end;
-	killmonster .@map$, "Kafra Employee#"+ strnpcinfo(4) +"::OnGuardianDied";
-	disablenpc "Kafra Employee#"+ .@map$;
+	.@tmp$ = replacestr(.@map$, "cas", "");
+	killmonster .@map$, "Kafra Employee#"+ .@tmp$ +"::OnGuardianDied";
+	disablenpc "Kafra Employee#"+ .@tmp$;
 	setcastledata .@map$,1,0;
 	sleep 7000;
 	announce "Guild Base [" + getcastlename(.@map$) + "] has been abandoned.",bc_all;
@@ -291,7 +292,7 @@ OnMyMobDead:
 		}
 	}
 	else {
-		mes "I am instructed to only offer my services to the ^ff0000"+.@guildname$+"^000000 Guild. Please try another Kafra Employee around here. Sorry for the inconvenience.";
+		mes "I am instructed to only offer my services to the ^ff0000"+ .@guildname$ +"^000000 Guild. Please try another Kafra Employee around here. Sorry for the inconvenience.";
 		close2;
 	}
 	cutin "",255;
@@ -415,7 +416,7 @@ function GuardianData;
 		else {
 			Zeny = Zeny - 10000;
 			setcastledata .@map$,(.@s+10),1;
-			guardian .@map$, .@x[.@s], .@y[.@s], .@name$[.@s], .@mob_id[.@s], "Kafra Employee#"+ strnpcinfo(4) +"::OnGuardianDied", .@s;
+			guardian .@map$, .@x[.@s], .@y[.@s], .@name$[.@s], .@mob_id[.@s], "Kafra Employee#"+ replacestr(.@map$, "cas", "") +"::OnGuardianDied", .@s;
 			mes "We completed the summoning of the Guardian. Our defenses are now increased with it in place.";
 		}
 		close;
@@ -443,7 +444,7 @@ function GuardianData;
 			mes "Oh, my goodness! This is nonsense!";
 			next;
 			cutin "",255;
-			disablenpc "Kafra Employee#" + .@map$;
+			disablenpc "Kafra Employee#" + replacestr(.@map$, "cas", "");
 			setcastledata .@map$,9,0;
 			mes .@npc_name$;
 			mes "....";
@@ -468,7 +469,7 @@ function GuardianData;
 			close;
 		}
 		Zeny = Zeny - 10000;
-		enablenpc "Kafra Employee#" + .@map$;
+		enablenpc "Kafra Employee#" + replacestr(.@map$, "cas", "");
 		setcastledata .@map$,9,1;
 
 		mes "We obtained a contract with the kafra Main Office, and hired a Kafra Employee.";
@@ -685,10 +686,11 @@ function GuardianData {
 OnSpawnGuardians:
 	GuardianData( .@mob_id, .@x, .@y, .@name$ );
 	.@map$ = strnpcinfo(4);
-	killmonster .@map$, "Kafra Employee#"+ strnpcinfo(4) +"::OnGuardianDied";
+	.@tmp$ = replacestr(.@map$, "cas", "");
+	killmonster .@map$, "Kafra Employee#"+ .@tmp$ +"::OnGuardianDied";
 	for ( .@i = 0; .@i < MAX_GUARDIANS; .@i++ ) {
 		if (getcastledata( .@map$,(.@i+10) ))
-			guardian .@map$, .@x[.@i], .@y[.@i], .@name$[.@i], .@mob_id[.@i], "Kafra Employee#"+ strnpcinfo(4) +"::OnGuardianDied",.@i;
+			guardian .@map$, .@x[.@i], .@y[.@i], .@name$[.@i], .@mob_id[.@i], "Kafra Employee#"+ .@tmp$ +"::OnGuardianDied",.@i;
 	}
 }
 

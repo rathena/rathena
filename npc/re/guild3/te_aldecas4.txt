@@ -45,7 +45,7 @@ te_alde_gld,239,239,2	duplicate(Bennit#18)	Bennit#20	GUILD_FLAG
 
 // Guild kafra
 //============================================================
-te_aldecas4,45,88,0	duplicate(Kafra_Staff_TE)	Kafra Employee#te_aldecas4	4_F_KAFRA1
+te_aldecas4,45,88,0	duplicate(Kafra_Staff_TE)	Kafra Employee#te_alde4	4_F_KAFRA1
 
 // Lever 1 (warp outside treasure)
 //============================================================

@@ -45,7 +45,7 @@ te_alde_gld,51,87,8	duplicate(Glaris#18)	Glaris#21	GUILD_FLAG
 
 // Guild kafra
 //============================================================
-te_aldecas1,218,170,0	duplicate(Kafra_Staff_TE)	Kafra Employee#te_aldecas1	4_F_KAFRA1
+te_aldecas1,218,170,0	duplicate(Kafra_Staff_TE)	Kafra Employee#te_alde1	4_F_KAFRA1
 
 // Lever 1 (warp outside treasure)
 //============================================================
