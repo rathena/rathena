@@ -10,6 +10,7 @@
 //= 1.2 Added Nightmare Clock Tower [Lemongrass]
 //= 1.3 Added dali02 [Nova]
 //= 1.4 Added Nightmare Glastheim [Ridley8819]
+//= 1.5 Added WOE:TE maps [Cydh]
 //============================================================
 
 // 3rd Class Job Maps & Paradise
@@ -101,3 +102,17 @@ izlude_d	mapflag	nobranch
 1@ge_st	mapflag	nobranch
 dali	mapflag	nobranch
 dali02	mapflag	nobranch
+
+// WOE:TE Maps ===================
+te_alde_gld	mapflag	nobranch
+te_prt_gld	mapflag	nobranch
+te_prtcas01	mapflag	nobranch
+te_prtcas02	mapflag	nobranch
+te_prtcas03	mapflag	nobranch
+te_prtcas04	mapflag	nobranch
+te_prtcas05	mapflag	nobranch
+te_aldecas1	mapflag	nobranch
+te_aldecas2	mapflag	nobranch
+te_aldecas3	mapflag	nobranch
+te_aldecas4	mapflag	nobranch
+te_aldecas5	mapflag	nobranch

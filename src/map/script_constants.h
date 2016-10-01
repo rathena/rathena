@@ -20,6 +20,7 @@
 	export_constant(MAX_PARTY);
 	export_constant(MAX_GUILD);
 	export_constant(MAX_GUILDLEVEL);
+	export_constant(MAX_GUARDIANS);
 	export_constant(MAX_GUILD_STORAGE);
 	export_constant(MAX_BG_MEMBERS);
 	export_constant(MAX_CHAT_USERS);
@@ -405,6 +406,8 @@
 	export_constant(MF_NOTOMB);
 	export_constant(MF_SKILL_DAMAGE);
 	export_constant(MF_NOCOSTUME);
+	export_constant(MF_GVG_TE_CASTLE);
+	export_constant(MF_GVG_TE);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);

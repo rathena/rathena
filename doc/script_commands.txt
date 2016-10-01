@@ -876,6 +876,9 @@ OnAgitInit:
 OnAgitStart2:
 OnAgitEnd2:
 OnAgitInit2:
+OnAgitStart3:
+OnAgitEnd3:
+OnAgitInit3:
 
 OnAgitStart will run whenever the server shifts into WoE mode, whether it is 
 done with @agitstart GM command or with 'AgitStart' script command. OnAgitEnd 
@@ -3184,7 +3187,7 @@ This command requests the guild data from the char server and merrily continues
 with the execution. Whenever the guild information becomes available (which 
 happens instantly if the guild information is already in memory, or later, if it 
 isn't and the map server has to wait for the char server to reply) it will run 
-the specified event as in a 'doevent' call.
+the specified event as in a 'donpcevent' call.
 
 ---------------------------------------
 
@@ -3663,10 +3666,11 @@ Name is optional, and defaults to the attached player if omitted.
 
 *agitcheck()
 *agitcheck2()
+*agitcheck3()
 
-These function will let you check whether the server is currently in WoE mode
-(or WoE SE mode if the second function is called) and will return 1 if War of
-Emperium is on and 0 if it isn't. 
+These function will let you check whether the server is currently in WoE:FE mode
+(agitcheck()), WoE:SE mode (agitcheck2()), or WoE:TE mode (agitcheck3()) and will
+return true if War of Emperium is on and false if it isn't. 
 
 ---------------------------------------
 
@@ -6686,15 +6690,19 @@ For examples, check the WoE scripts in the distribution.
 *agitend;
 *agitstart2;
 *agitend2;
+*agitstart3;
+*agitend3;
 
-These four commands will start and end War of Emperium or War of Emperium SE.
+These commands will start and end War of Emperium FE, War of Emperium SE,
+or War of Emperium TE.
 
 This is a bit more complex than it sounds, since the commands themselves won't 
 actually do anything interesting, except causing all 'OnAgitStart:' and 
-'OnAgitEnd:', or 'OnAgitStart2:' and 'OnAgitEnd2:' in the case of latter two
-commands, events to run everywhere, respectively. They are used as  simple 
-triggers to run a lot of complex scripts all across the server, and they, 
-in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
+'OnAgitEnd:', 'OnAgitStart2:' and 'OnAgitEnd2:', or 'OnAgitStart3:' and
+'OnAgitEnd3:' in the case of latter two commands, events to run everywhere,
+respectively. They are used as  simple triggers to run a lot of complex scripts
+all across the server, and they, in turn, are triggered by clock with an
+'OnClock<time>:' time-triggering label.
 
 ---------------------------------------
 
@@ -6704,6 +6712,13 @@ in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
 These commands will turn GVG mode for the specified maps on and off, setting up 
 appropriate map flags. In GVG mode, maps behave as if during the time of WoE, 
 even though WoE itself may or may not actually be in effect. 
+
+---------------------------------------
+
+*gvgon3 "<map name>";
+*gvgoff3 "<map name>";
+
+Theses commands behave identically to gvgon/gvgoff, but apply GVG_TE mapflag. 
 
 ---------------------------------------
 
@@ -6750,6 +6765,22 @@ Type indicates what information to return:
  0 - visibility (whether the guardian is installed or not)
  1 - max. hp
  2 - current hp
+
+---------------------------------------
+
+*getguildalliance(<guild id1>, <guild id2>);
+
+This command will return the relation between 2 guilds.
+
+NOTE: This should be used in collaboration with 'requestguildinfo' as the
+map-server needs to request for information from the char-server.
+
+Return values:
+	-2 - Guild ID1 does not exist
+	-1 - Guild ID2 does not exist
+	 0 - Both guilds have no relation OR guild ID aren't given
+	 1 - Both guilds are allies
+	 2 - Both guilds are antagonists
 
 ---------------------------------------
 //

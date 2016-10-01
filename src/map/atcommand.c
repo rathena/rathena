@@ -3475,74 +3475,116 @@ ACMD_FUNC(breakguild)
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/**
+ * Start WoE:FE
+ */
 ACMD_FUNC(agitstart)
 {
 	nullpo_retr(-1, sd);
-	if (agit_flag == 1) {
+
+	if (agit_flag) {
 		clif_displaymessage(fd, msg_txt(sd,73)); // War of Emperium is currently in progress.
 		return -1;
 	}
 
-	agit_flag = 1;
+	agit_flag = true;
 	guild_agit_start();
 	clif_displaymessage(fd, msg_txt(sd,72)); // War of Emperium has been initiated.
 
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/**
+ * Start WoE:SE
+ */
 ACMD_FUNC(agitstart2)
 {
 	nullpo_retr(-1, sd);
-	if (agit2_flag == 1) {
+
+	if (agit2_flag) {
 		clif_displaymessage(fd, msg_txt(sd,404)); // "War of Emperium SE is currently in progress."
 		return -1;
 	}
 
-	agit2_flag = 1;
+	agit2_flag = true;
 	guild_agit2_start();
 	clif_displaymessage(fd, msg_txt(sd,403)); // "War of Emperium SE has been initiated."
 
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/**
+ * Start WoE:TE
+ */
+ACMD_FUNC(agitstart3)
+{
+	nullpo_retr(-1, sd);
+
+	if (agit3_flag) {
+		clif_displaymessage(fd, msg_txt(sd,750)); // "War of Emperium TE is currently in progress."
+		return -1;
+	}
+
+	agit3_flag = true;
+	guild_agit3_start();
+	clif_displaymessage(fd, msg_txt(sd,749)); // "War of Emperium TE has been initiated."
+
+	return 0;
+}
+
+/**
+ * End WoE:FE
+ */
 ACMD_FUNC(agitend)
 {
 	nullpo_retr(-1, sd);
-	if (agit_flag == 0) {
+
+	if (!agit_flag) {
 		clif_displaymessage(fd, msg_txt(sd,75)); // War of Emperium is currently not in progress.
 		return -1;
 	}
 
-	agit_flag = 0;
+	agit_flag = false;
 	guild_agit_end();
 	clif_displaymessage(fd, msg_txt(sd,74)); // War of Emperium has been ended.
 
 	return 0;
 }
 
-/*==========================================
- *
- *------------------------------------------*/
+/**
+ * End WoE:SE
+ */
 ACMD_FUNC(agitend2)
 {
 	nullpo_retr(-1, sd);
-	if (agit2_flag == 0) {
+
+	if (!agit2_flag) {
 		clif_displaymessage(fd, msg_txt(sd,406)); // "War of Emperium SE is currently not in progress."
 		return -1;
 	}
 
-	agit2_flag = 0;
+	agit2_flag = false;
 	guild_agit2_end();
 	clif_displaymessage(fd, msg_txt(sd,405)); // "War of Emperium SE has been ended."
+
+	return 0;
+}
+
+/**
+ * End WoE:TE
+ */
+ACMD_FUNC(agitend3)
+{
+	nullpo_retr(-1, sd);
+
+	if (!agit3_flag) {
+		clif_displaymessage(fd, msg_txt(sd,752));// War of Emperium TE is currently not in progress.
+		return -1;
+	}
+
+	agit3_flag = false;
+	guild_agit3_end();
+	clif_displaymessage(fd, msg_txt(sd,751));// War of Emperium TE has been ended.
 
 	return 0;
 }
@@ -4056,6 +4098,10 @@ ACMD_FUNC(mapinfo) {
 		strcat(atcmd_output, " GvG Dungeon |");
 	if (map[m_id].flag.gvg_castle)
 		strcat(atcmd_output, " GvG Castle |");
+	if (map[m_id].flag.gvg_te)
+		strcat(atcmd_output, " GvG TE |");
+	if (map[m_id].flag.gvg_te_castle)
+		strcat(atcmd_output, " GvG TE Castle |");
 	if (map[m_id].flag.gvg_noparty)
 		strcat(atcmd_output, " NoParty |");
 	clif_displaymessage(fd, atcmd_output);
@@ -8037,7 +8083,8 @@ ACMD_FUNC(mapflag) {
 		checkflag(nodrop);				checkflag(novending);			checkflag(loadevent);			checkflag(nochat);
 		checkflag(partylock);			checkflag(guildlock);			checkflag(reset);				checkflag(chmautojoin);
 		checkflag(nousecart);			checkflag(noitemconsumption);	checkflag(nosumstarmiracle);	checkflag(nomineeffect);
-		checkflag(nolockon);			checkflag(notomb);				checkflag(nocostume);
+		checkflag(nolockon);			checkflag(notomb);				checkflag(nocostume);			checkflag(gvg_te);
+		checkflag(gvg_te_castle);
 #ifdef ADJUST_SKILL_DAMAGE
 		checkflag(skill_damage);
 #endif
@@ -8061,7 +8108,8 @@ ACMD_FUNC(mapflag) {
 	setflag(nodrop);			setflag(novending);			setflag(loadevent);				setflag(nochat);
 	setflag(partylock);			setflag(guildlock);			setflag(reset);					setflag(chmautojoin);
 	setflag(nousecart);			setflag(noitemconsumption);	setflag(nosumstarmiracle);		setflag(nomineeffect);
-	setflag(nolockon);			setflag(notomb);			setflag(nocostume);
+	setflag(nolockon);			setflag(notomb);			setflag(nocostume);				setflag(gvg_te);
+	setflag(gvg_te_castle);
 #ifdef ADJUST_SKILL_DAMAGE
 	setflag(skill_damage);
 #endif
@@ -8077,7 +8125,7 @@ ACMD_FUNC(mapflag) {
 	clif_displaymessage(sd->fd,"fog, fireworks, sakura, leaves, nogo, nobaseexp, nojobexp, nomobloot, nomvploot,");
 	clif_displaymessage(sd->fd,"nightenabled, restricted, nodrop, novending, loadevent, nochat, partylock, guildlock,");
 	clif_displaymessage(sd->fd,"reset, chmautojoin, nousecart, noitemconsumption, nosumstarmiracle, nolockon, notomb,");
-	clif_displaymessage(sd->fd,"nocostume");
+	clif_displaymessage(sd->fd,"nocostume, gvg_te, gvg_te_castle");
 #ifdef ADJUST_SKILL_DAMAGE
 	clif_displaymessage(sd->fd,"skill_damage");
 #endif
@@ -10127,6 +10175,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(clonestat),
 		ACMD_DEF(bodystyle),
 		ACMD_DEF(adopt),
+		ACMD_DEF(agitstart3),
+		ACMD_DEF(agitend3),
 	};
 	AtCommandInfo* atcommand;
 	int i;

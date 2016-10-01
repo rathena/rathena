@@ -91,8 +91,8 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP);
 static int status_get_sc_interval(enum sc_type type);
 
-static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone);
-#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs((m)), map[(m)].flag.pvp, map_flag_gvg((m)), map[(m)].flag.battleground, map[(m)].zone << 3) )
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
+#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs2((m)), map[(m)].flag.pvp, map_flag_gvg2_no_te((m)), map[(m)].flag.battleground, map[(m)].zone << 3, map_flag_gvg2_te((m))) )
 
 /**
  * Returns the status change associated with a skill.
@@ -13619,9 +13619,10 @@ int status_get_refine_chance(enum refine_type wlv, int refine)
  * @param mapIsGVG: If the map is a map_flag_gvg type
  * @param mapIsBG: If the map is a Battleground type
  * @param mapZone: Map Zone type
+ * @param mapIsTE: If the map us WOE TE
  * @return True - SC disabled on map; False - SC not disabled on map/Invalid SC
  */
-static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone)
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE)
 {
 	if (type <= SC_NONE || type >= SC_MAX)
 		return false;
@@ -13630,6 +13631,7 @@ static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapI
 		(mapIsPVP && SCDisabled[type]&2) ||
 		(mapIsGVG && SCDisabled[type]&4) ||
 		(mapIsBG && SCDisabled[type]&8) ||
+		(mapIsTE && SCDisabled[type]&16) ||
 		(SCDisabled[type]&(mapZone)))
 	{
 		return true;
@@ -13649,17 +13651,18 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 
 	if (sc && sc->count) {
 		unsigned short i;
-		bool mapIsVS = map_flag_vs(bl->m);
+		bool mapIsVS = map_flag_vs2(bl->m);
 		bool mapIsPVP = map[bl->m].flag.pvp;
-		bool mapIsGVG = map_flag_gvg(bl->m);
+		bool mapIsGVG = map_flag_gvg2_no_te(bl->m);
 		bool mapIsBG = map[bl->m].flag.battleground;
+		bool mapIsTE = map_flag_gvg2_te(bl->m);
 		unsigned int mapZone = map[bl->m].zone << 3;
 
 		for (i = 0; i < SC_MAX; i++) {
 			if (!sc->data[i] || !SCDisabled[i])
 				continue;
 
-			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone))
+			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone, mapIsTE))
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
 		}
 	}

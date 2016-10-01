@@ -363,6 +363,8 @@ enum {
 	MF_NOTOMB,
 	MF_SKILL_DAMAGE,	//60
 	MF_NOCOSTUME,
+	MF_GVG_TE_CASTLE,
+	MF_GVG_TE,
 };
 
 const char* script_op2name(int op)
@@ -11847,6 +11849,8 @@ BUILDIN_FUNC(getmapflag)
 			case MF_NOLOCKON:			script_pushint(st,map[m].flag.nolockon); break;
 			case MF_NOTOMB:				script_pushint(st,map[m].flag.notomb); break;
 			case MF_NOCOSTUME:			script_pushint(st,map[m].flag.nocostume); break;
+			case MF_GVG_TE_CASTLE:		script_pushint(st,map[m].flag.gvg_te_castle); break;
+			case MF_GVG_TE:				script_pushint(st,map[m].flag.gvg_te); break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -11971,6 +11975,17 @@ BUILDIN_FUNC(setmapflag)
 			case MF_NOLOCKON:			map[m].flag.nolockon = 1 ; break;
 			case MF_NOTOMB:				map[m].flag.notomb = 1; break;
 			case MF_NOCOSTUME:			map[m].flag.nocostume = 1; break;
+			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 1; break;
+			case MF_GVG_TE:
+				{
+					struct block_list bl;
+					map[m].flag.gvg_te = 1;
+					clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
+					bl.type = BL_NUL;
+					bl.m = m;
+					clif_maptypeproperty2(&bl,ALL_SAMEMAP);
+				}
+				break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -12083,6 +12098,17 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOLOCKON:			map[m].flag.nolockon = 0 ; break;
 			case MF_NOTOMB:				map[m].flag.notomb = 0; break;
 			case MF_NOCOSTUME:			map[m].flag.nocostume = 0; break;
+			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 0; break;
+			case MF_GVG_TE:
+				{
+					struct block_list bl;
+					bl.type = BL_NUL;
+					bl.m = m;
+					map[m].flag.gvg_te = 0;
+					clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+					clif_maptypeproperty2(&bl,ALL_SAMEMAP);
+				}
+				break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -12206,6 +12232,43 @@ BUILDIN_FUNC(gvgoff)
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
+
+BUILDIN_FUNC(gvgon3)
+{
+	int16 m;
+	const char *str;
+	struct block_list bl;
+
+	str = script_getstr(st,2);
+	m = map_mapname2mapid(str);
+	if (m >= 0 && !map[m].flag.gvg_te) {
+		map[m].flag.gvg_te = 1;
+		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
+		bl.type = BL_NUL;
+		bl.m = m;
+		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(gvgoff3)
+{
+	int16 m;
+	const char *str;
+
+	str = script_getstr(st,2);
+	m = map_mapname2mapid(str);
+	if (m >= 0 && map[m].flag.gvg_te) {
+		struct block_list bl;
+		map[m].flag.gvg_te = 0;
+		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+		bl.type = BL_NUL;
+		bl.m = m;
+		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  *	Shows an emoticon on top of the player/npc
  *	emotion emotion#, <target: 0 - NPC, 1 - PC>, <NPC/PC name>
@@ -12297,53 +12360,119 @@ BUILDIN_FUNC(maprespawnguildid)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Siege commands
+
+/**
+ * Start WoE:FE
+ * agitstart();
+ */
 BUILDIN_FUNC(agitstart)
 {
-	if(agit_flag==1) return SCRIPT_CMD_SUCCESS;      // Agit already Start.
-	agit_flag=1;
+	if (agit_flag)
+		return SCRIPT_CMD_SUCCESS;// Agit already Started.
+	agit_flag = true;
 	guild_agit_start();
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * End WoE:FE
+ * agitend();
+ */
 BUILDIN_FUNC(agitend)
 {
-	if(agit_flag==0) return SCRIPT_CMD_SUCCESS;      // Agit already End.
-	agit_flag=0;
+	if (!agit_flag)
+		return SCRIPT_CMD_SUCCESS;// Agit already Ended.
+	agit_flag = false;
 	guild_agit_end();
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Start WoE:SE
+ * agitstart2();
+ */
 BUILDIN_FUNC(agitstart2)
 {
-	if(agit2_flag==1) return SCRIPT_CMD_SUCCESS;      // Agit2 already Start.
-	agit2_flag=1;
+	if (agit2_flag)
+		return SCRIPT_CMD_SUCCESS;// Agit2 already Started.
+	agit2_flag = true;
 	guild_agit2_start();
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * End WoE:SE
+ * agitend();
+ */
 BUILDIN_FUNC(agitend2)
 {
-	if(agit2_flag==0) return SCRIPT_CMD_SUCCESS;      // Agit2 already End.
-	agit2_flag=0;
+	if (!agit2_flag)
+		return SCRIPT_CMD_SUCCESS;// Agit2 already Ended.
+	agit2_flag = false;
 	guild_agit2_end();
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * Returns whether woe is on or off.	// choice script
- *------------------------------------------*/
+/**
+ * Start WoE:TE
+ * agitstart3();
+ */
+BUILDIN_FUNC(agitstart3)
+{
+	if (agit3_flag)
+		return SCRIPT_CMD_SUCCESS;// AgitTE already Started.
+	agit3_flag = true;
+	guild_agit3_start();
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * End WoE:TE
+ * agitend3();
+ */
+BUILDIN_FUNC(agitend3)
+{
+	if (!agit3_flag)
+		return SCRIPT_CMD_SUCCESS;// AgitTE already Ended.
+	agit3_flag = false;
+	guild_agit3_end();
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Returns whether WoE:FE is on or off.
+ * agitcheck();
+ */
 BUILDIN_FUNC(agitcheck)
 {
-	script_pushint(st,agit_flag);
+	script_pushint(st, agit_flag);
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * Returns whether woese is on or off.	// choice script
- *------------------------------------------*/
+/**
+ * Returns whether WoE:SE is on or off.
+ * agitcheck2();
+ */
 BUILDIN_FUNC(agitcheck2)
 {
-	script_pushint(st,agit2_flag);
+	script_pushint(st, agit2_flag);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Returns whether WoE:TE is on or off.
+ * agitcheck3();
+ */
+BUILDIN_FUNC(agitcheck3)
+{
+	script_pushint(st, agit3_flag);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18678,7 +18807,7 @@ BUILDIN_FUNC(waitingroom2bg)
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;
 	}
-	
+
 	for (i = 0; i < cd->users; i++) { // Only add those who are in the chat room
 		struct map_session_data *sd;
 		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd) ){
@@ -21839,6 +21968,62 @@ BUILDIN_FUNC(jobcanentermap) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Return alliance information between the two guilds.
+ * getguildalliance(<guild id1>,<guild id2>);
+ * Return values:
+ *	-2 - Guild ID1 does not exist
+ *	-1 - Guild ID2 does not exist
+ *	 0 - Both guilds have no relation OR guild ID aren't given
+ *	 1 - Both guilds are allies
+ *	 2 - Both guilds are antagonists
+ */
+BUILDIN_FUNC(getguildalliance)
+{
+	struct guild *guild_data1, *guild_data2;
+	int guild_id1, guild_id2, i = 0;
+
+	guild_id1 = script_getnum(st,2);
+	guild_id2 = script_getnum(st,3);
+
+	if (guild_id1 < 1 || guild_id2 < 1) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (guild_id1 == guild_id2) {
+		script_pushint(st, 1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	guild_data1 = guild_search(guild_id1);
+	guild_data2 = guild_search(guild_id2);
+
+	if (guild_data1 == NULL) {
+		ShowWarning("buildin_getguildalliance: Requesting non-existent GuildID1 '%d'.\n", guild_id1);
+		script_pushint(st, -2);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (guild_data2 == NULL) {
+		ShowWarning("buildin_getguildalliance: Requesting non-existent GuildID2 '%d'.\n", guild_id2);
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	ARR_FIND(0, MAX_GUILDALLIANCE, i, guild_data1->alliance[i].guild_id == guild_id2);
+	if (i == MAX_GUILDALLIANCE) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (guild_data1->alliance[i].opposition)
+		script_pushint(st, 2);
+	else
+		script_pushint(st, 1);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -22416,6 +22601,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setquestinfo_job,"ii*"),
 	BUILDIN_DEF(opendressroom,"i?"),
 	BUILDIN_DEF(navigateto,"s???????"),
+	BUILDIN_DEF(getguildalliance,"ii"),
 	BUILDIN_DEF(adopt,"vv"),
 	BUILDIN_DEF(getexp2,"ii?"),
 	BUILDIN_DEF(recalculatestat,""),
@@ -22425,6 +22611,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setrandomoption,"iiiii?"),
 	BUILDIN_DEF(needed_status_point,"ii?"),
 	BUILDIN_DEF(jobcanentermap,"s?"),
+
+	// WoE TE
+	BUILDIN_DEF(agitstart3,""),
+	BUILDIN_DEF(agitend3,""),
+	BUILDIN_DEF(agitcheck3,""),
+	BUILDIN_DEF(gvgon3,"s"),
+	BUILDIN_DEF(gvgoff3,"s"),
 
 #include "../custom/script_def.inc"
 
