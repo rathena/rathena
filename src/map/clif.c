@@ -2462,6 +2462,14 @@ void clif_add_random_options(unsigned char* buf, struct item *it) {
 		WBUFW(buf, i*5 + 2) = it->option[i].value;	// Value
 		WBUFB(buf, i*5 + 4) = it->option[i].param;	// Param1
 	}
+	
+#if MAX_ITEM_RDM_OPT < 5
+	for ( ; i < 5; i++) {
+		WBUFW(buf, i*5 + 0) = 0;		// OptIndex
+		WBUFW(buf, i*5 + 2) = 0;	// Value
+		WBUFB(buf, i*5 + 4) = 0;	// Param1
+	}
+#endif
 #endif
 }
 
@@ -13285,7 +13293,7 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd){
 	if( !emblem_len || !sd->state.gmaster_flag )
 		return;
 
-	if(!(battle_config.emblem_woe_change) && (agit_flag || agit2_flag) ){
+	if(!(battle_config.emblem_woe_change) && is_agit_start() ){
 		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,385)); //"You not allowed to change emblem during woe"
 		return;
 	}

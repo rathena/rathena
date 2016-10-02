@@ -91,8 +91,8 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP);
 static int status_get_sc_interval(enum sc_type type);
 
-static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone);
-#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs((m)), map[(m)].flag.pvp, map_flag_gvg((m)), map[(m)].flag.battleground, map[(m)].zone << 3) )
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
+#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs2((m)), map[(m)].flag.pvp, map_flag_gvg2_no_te((m)), map[(m)].flag.battleground, map[(m)].zone << 3, map_flag_gvg2_te((m))) )
 
 /**
  * Returns the status change associated with a skill.
@@ -575,7 +575,7 @@ void initChangeTables(void)
 	set_sc(MH_TINDER_BREAKER	, SC_TINDER_BREAKER2	, SI_TINDER_BREAKER		, SCB_FLEE );
 	set_sc(MH_TINDER_BREAKER	, SC_TINDER_BREAKER	, SI_TINDER_BREAKER_POSTDELAY	, SCB_FLEE );
 	set_sc(MH_CBC			, SC_CBC		, SI_CBC			, SCB_FLEE );
-	set_sc(MH_EQC			, SC_EQC		, SI_EQC			, SCB_DEF2|SCB_BATK|SCB_MAXHP );
+	set_sc(MH_EQC			, SC_EQC		, SI_EQC			, SCB_DEF2|SCB_MAXHP );
 
 	add_sc( MER_CRASH		, SC_STUN		);
 	set_sc( MER_PROVOKE		, SC_PROVOKE		, SI_PROVOKE		, SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
@@ -2973,7 +2973,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			if(sc->data[SC_GT_CHANGE]) // Max HP decrease: [Skill Level x 4] %
 				bonus -= (4 * sc->data[SC_GT_CHANGE]->val1);
 			if(sc->data[SC_EQC])
-				bonus -= sc->data[SC_EQC]->val4;
+				bonus -= sc->data[SC_EQC]->val3;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus,-100,INT_MAX);
@@ -5650,8 +5650,6 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += 100 * sc->data[SC_SATURDAYNIGHTFEVER]->val1;
 	if( sc->data[SC_ZANGETSU] )
 		batk += sc->data[SC_ZANGETSU]->val2;
-	if(sc->data[SC_EQC])
-		batk -= batk * sc->data[SC_EQC]->val3 / 100;
 	if(sc->data[SC_QUEST_BUFF1])
 		batk += sc->data[SC_QUEST_BUFF1]->val1;
 	if(sc->data[SC_QUEST_BUFF2])
@@ -8862,9 +8860,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		status_change_end(bl,SC_FOOD_DEX_CASH,INVALID_TIMER);
 		status_change_end(bl,SC_FOOD_LUK_CASH,INVALID_TIMER);
 		break;
-	case SC_EQC:
-		status_change_end(bl,SC_TINDER_BREAKER2,INVALID_TIMER);
-		break;
 	case SC_FIGHTINGSPIRIT:
 	case SC_OVERED_BOOST:
 	case SC_MAGICPOWER:
@@ -10484,9 +10479,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_EQC:
 			val2 = 5 * val1; // def % reduc
-			val3 = 5 * val1; // atk % reduc
-			val4 = 2 * val1; // HP drain %
-			sc_start2(src, bl,SC_STUN,100,val1,bl->id,(1000*status_get_lv(src))/50+500*val1);
+			val3 = 2 * val1; // HP drain %
 			break;
 		case SC_ASH:
 			val2 = 0; // hit % reduc
@@ -12693,7 +12686,9 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 				map_freeblock_lock();
 				dounlock = true;
 				skill_attack(skill_get_type(status_sc2skill(type)), src, unit_bl, bl, SO_CLOUD_KILL, sce->val1, tick, 0);
-				sc_timer_next(500 + tick, status_change_timer, bl->id, data);
+				if (!status_isdead(bl)) {
+					sc_timer_next(500 + tick, status_change_timer, bl->id, data);
+				}
 			}
 		}
 		break;
@@ -13708,9 +13703,10 @@ int status_get_refine_chance(enum refine_type wlv, int refine)
  * @param mapIsGVG: If the map is a map_flag_gvg type
  * @param mapIsBG: If the map is a Battleground type
  * @param mapZone: Map Zone type
+ * @param mapIsTE: If the map us WOE TE
  * @return True - SC disabled on map; False - SC not disabled on map/Invalid SC
  */
-static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone)
+static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE)
 {
 	if (type <= SC_NONE || type >= SC_MAX)
 		return false;
@@ -13719,6 +13715,7 @@ static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapI
 		(mapIsPVP && SCDisabled[type]&2) ||
 		(mapIsGVG && SCDisabled[type]&4) ||
 		(mapIsBG && SCDisabled[type]&8) ||
+		(mapIsTE && SCDisabled[type]&16) ||
 		(SCDisabled[type]&(mapZone)))
 	{
 		return true;
@@ -13738,17 +13735,18 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 
 	if (sc && sc->count) {
 		unsigned short i;
-		bool mapIsVS = map_flag_vs(bl->m);
+		bool mapIsVS = map_flag_vs2(bl->m);
 		bool mapIsPVP = map[bl->m].flag.pvp;
-		bool mapIsGVG = map_flag_gvg(bl->m);
+		bool mapIsGVG = map_flag_gvg2_no_te(bl->m);
 		bool mapIsBG = map[bl->m].flag.battleground;
+		bool mapIsTE = map_flag_gvg2_te(bl->m);
 		unsigned int mapZone = map[bl->m].zone << 3;
 
 		for (i = 0; i < SC_MAX; i++) {
 			if (!sc->data[i] || !SCDisabled[i])
 				continue;
 
-			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone))
+			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone, mapIsTE))
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
 		}
 	}
