@@ -5461,10 +5461,9 @@ BUILDIN_FUNC(warp)
 	int ret;
 	int x,y;
 	const char* str;
-	TBL_PC* sd;
+	struct map_session_data* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
+	if(!script_charid2sd(5, sd))
 		return SCRIPT_CMD_SUCCESS;
 
 	str = script_getstr(st,2);
@@ -5594,37 +5593,6 @@ BUILDIN_FUNC(areapercentheal)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * warpchar [LuzZza]
- * Useful for warp one player from
- * another player npc-session.
- * Using: warpchar "mapname",x,y,Char_ID;
- *------------------------------------------*/
-BUILDIN_FUNC(warpchar)
-{
-	int x,y,a;
-	const char *str;
-	TBL_PC *sd;
-
-	str=script_getstr(st,2);
-	x=script_getnum(st,3);
-	y=script_getnum(st,4);
-	a=script_getnum(st,5);
-
-	sd = map_charid2sd(a);
-	if( sd == NULL )
-		return SCRIPT_CMD_SUCCESS;
-
-	if(strcmp(str, "Random") == 0)
-		pc_randomwarp(sd, CLR_TELEPORT);
-	else
-	if(strcmp(str, "SavePoint") == 0)
-		pc_setpos(sd, sd->status.save_point.map,sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
-	else
-		pc_setpos(sd, mapindex_name2id(str), x, y, CLR_TELEPORT);
-
-	return SCRIPT_CMD_SUCCESS;
-}
 /*==========================================
  * Warpparty - [Fredzilla] [Paradox924X]
  * Syntax: warpparty "to_mapname",x,y,Party_ID,{"from_mapname"};
@@ -22092,9 +22060,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(jobchange,"i??"),
 	BUILDIN_DEF(jobname,"i"),
 	BUILDIN_DEF(input,"r??"),
-	BUILDIN_DEF(warp,"sii"),
+	BUILDIN_DEF(warp,"sii?"),
+	BUILDIN_DEF2(warp, "warpchar", "sii?"),
 	BUILDIN_DEF(areawarp,"siiiisii??"),
-	BUILDIN_DEF(warpchar,"siii"), // [LuzZza]
 	BUILDIN_DEF(warpparty,"siii?"), // [Fredzilla] [Paradox924X]
 	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
 	BUILDIN_DEF(setlook,"ii?"),

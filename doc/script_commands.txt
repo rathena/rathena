@@ -3836,9 +3836,9 @@ will be seen to everyone around but not in chat window.
 
 ---------------------------------------
 
-*warp "<map name>",<x>,<y>;
+*warp "<map name>",<x>,<y>{,<char id>};
 
-This command will take the invoking character to the specified map, and if 
+This command will take the invoking character or <char id>, if specified, to the specified map, and if 
 wanted, specified coordinates too, but these can be random.
 
     warp "place",50,55;
@@ -3914,18 +3914,6 @@ Example:
 	.@party_id = getcharid(1);
 	warpparty "prontera",150,100,.@party_id;
 	close;
-
----------------------------------------
-
-*warpchar "<map name>",<x>,<y>,<char id>;
-
-Warps another player to specified map and coordinate given the char id, which you can get with
-getcharid(0,<player_name>). Obviously this is useless if you want to warp the same player that
-is executing this script, unless it's some kind of "chosen" script. 
- 
-Example:
- 
-warpchar "prontera",150,100,150001;
 
 ---------------------------------------
 
