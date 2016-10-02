@@ -47,7 +47,7 @@ function calcjobexp;
 		.@edition = 3;
 	} else {
 		// Custom error message.
-		debugmes "Guild mission script called from an unknown agit region.";
+		debugmes "Guild mission script called from an unknown agit region [" + .@zone$ + "].";
 		end;
 	}
 	.@npcname$ = .npcname$[.@zoneid];
@@ -70,9 +70,6 @@ function calcjobexp;
 					mes "If you have luck on your side, you'll have a good result.";
 					close;
 				} else if(.@time_check1 == 2){
-					/*if(.@time_check1 == 3){ // *egis leftover
-						recall_completequest .conquer_delay_questid[.@zoneid]
-					}*/
 					erasequest .conquer_delay_questid[.@zoneid];
 					mes .@npcname$;
 					mes "I have confirmed that the waiting time for conquering missions has ended.";
@@ -81,7 +78,7 @@ function calcjobexp;
 				} else {
 					.@siege_check = (.@edition == 1 ? agitcheck() : .@edition == 2 ? agitcheck2() : agitcheck3());
 					.@time = atoi(gettimestr("%H%M",4));
-					.@after_time = ((.@weekday == gettime(4)) && ((.@time > .start_time[.@zoneid]) && (.@time < .end_time[.@zoneid])));
+					.@after_time = ((.weekday[.@zoneid] == gettime(4)) && ((.@time > .start_time[.@zoneid]) && (.@time < .end_time[.@zoneid])));
 					
 					if(.@siege_check && .@after_time){
 						mes .@npcname$;
@@ -211,7 +208,7 @@ function calcjobexp;
 					close;
 				} else {
 					mes .@npcname$;
-					mes "This is the " + .p$[.@sel] + " mission in " + .region$[.@zoneid] + ".";
+					mes "This is the " + .ordinal$[.@sel] + " mission in " + .region$[.@zoneid] + ".";
 					brief(.daily_hunting_questid[.@index]);
 					next;
 					mes .@npcname$;
@@ -316,7 +313,7 @@ OnInit:
 		7555,7556,0,	//sch
 		7563,7564,0,	//tealde
 		7559,7560,0;	//teprt
-	setarray .p$[0],"first","second","third";
+	setarray .ordinal$[0],"first","second","third";
 	end;
 
 	function brief {
@@ -337,7 +334,7 @@ OnInit:
 	function mob_brief {
 		switch(getarg(0)){
 			case 7525:
-				mes "You should hunt 50 or more Caterillars and Cremy Fear monsters..";
+				mes "You should hunt 50 or more Caterpillars and Creamy Fear monsters..";
 				return 0;
 			case 7526:
 				mes "Hunt down 30 or more of all 3 types of Abyss Kobolds.";
@@ -361,19 +358,19 @@ OnInit:
 				mes "^4d4dffHunt 50 GLD_DARK_SHADOW, 20 GLD_DARK_FRAME, and 20 GLD_DARK_PRIEST monsters.^000000";
 				return 0;
 			case 7533:
-				mes "They are ^4d4dff'Kades' and 'Rudo' who wonder around the dead's hill.^000000";
+				mes "They are ^4d4dff'Kades' and 'Rudo' who wander around the dead's hill.^000000";
 				return 1;
 			case 7534:
-				mes "^4d4dffHunt 50 or more Gullin Bursti and Leib Olmai, respectively.^000000.";
+				mes "^4d4dffHunt 50 or more Gullinbursti and Leib Olmai, respectively.^000000.";
 				return 0;
 			case 7535:
 				mes "^4d4dffHunt 45 or more Skeleton General, 20 or more Am Mut and 25 or more Gajomart, respectively.^000000.";
 				return 0;
 			case 7536:
-				mes "^4d4dffThey are Old Empire's General'Daehyon' and Guard 'Soheon'^000000.";
+				mes "^4d4dffThey are Old Empire's General 'Daehyon' and Guard 'Soheon'^000000.";
 				return 1;
 			case 7537:
-				mes "^4d4dffHunt 50 or more Hell Apocalips and Zakudam, respectively.^000000.";
+				mes "^4d4dffHunt 50 or more Hell Apocalypse and Zakudam, respectively.^000000.";
 				return 0;
 			case 7538:
 				mes "^4d4dffHunt 35 or more Heavy Metaling and Cobalt Mineral, respectively.^000000.";
@@ -407,7 +404,7 @@ OnInit:
 		if(!.@isboss && BaseLevel > .@maxlevel){
 			return 1000 * (100 + ((.@maxlevel - 100) * 3));
 		} else {
-			return 1000 * (100 + ((BaseLevel - 100) * 3)) * (2 * .@isboss);
+			return 1000 * (100 + ((BaseLevel - 100) * 3)) * (1 + .@isboss);
 		}
 	}
 	
@@ -422,6 +419,8 @@ OnInit:
 				else
 					return 5000;
 			}
+			debugmes "unexpected case for gld_mission#core::calcjobexp";
+			return 0;
 		} else if(.@hasFixedBonus ) {
 			if(JobLevel > 50)
 				return 1000 * (50 + ((JobLevel - 50) * 3));
@@ -430,5 +429,7 @@ OnInit:
 		} else {
 			return 5000 * (50 + (JobLevel - 50));
 		}
+		debugmes "unexpected case for gld_mission#core::calcjobexp";
+		return 0;
 	}
 }
