@@ -20580,9 +20580,9 @@ BUILDIN_FUNC(party_destroy)
 		for( j = 0; j < MAX_PARTY; j++ ) {
 			TBL_PC *sd = party->data[j].sd;
 			if(sd)
-				party_member_withdraw(party->party.party_id,sd->status.account_id,sd->status.char_id);
+				party_member_withdraw(party->party.party_id,sd->status.account_id,sd->status.char_id,sd->status.name,PARTY_MEMBER_WITHDRAW_LEAVE);
 			else if( party->party.member[j].char_id )
-				intif_party_leave(party->party.party_id,party->party.member[j].account_id,party->party.member[j].char_id);
+				intif_party_leave(party->party.party_id,party->party.member[j].account_id,party->party.member[j].char_id,party->party.member[j].name,PARTY_MEMBER_WITHDRAW_LEAVE);
 		}
 		party_broken(party->party.party_id);
 		script_pushint(st,1);

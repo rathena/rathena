@@ -162,6 +162,13 @@ enum e_party_invite_reply {
 	PARTY_REPLY_INVALID_MAPPROPERTY_ME, ///< return=9 : !TODO "Cannot join a party in this map" -> MsgStringTable[1871] (since 20110205)
 };
 
+typedef enum PARTY_MEMBER_WITHDRAW {
+	PARTY_MEMBER_WITHDRAW_LEAVE,	  ///< /leave
+	PARTY_MEMBER_WITHDRAW_EXPEL,	  ///< Kicked
+	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< TODO: Cannot /leave
+	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< TODO: Cannot be kicked
+} PARTY_MEMBER_WITHDRAW;
+
 // packet_db[SERVER] is reserved for server use
 #define SERVER 0
 #define packet_len(cmd) packet_db[SERVER][cmd].len
@@ -721,7 +728,7 @@ void clif_party_info(struct party_data* p, struct map_session_data *sd);
 void clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd);
 void clif_party_invite_reply(struct map_session_data* sd, const char* nick, enum e_party_invite_reply reply);
 void clif_party_option(struct party_data *p,struct map_session_data *sd,int flag);
-void clif_party_withdraw(struct party_data* p, struct map_session_data* sd, uint32 account_id, const char* name, int flag);
+void clif_party_withdraw(struct map_session_data *sd, uint32 account_id, const char* name, PARTY_MEMBER_WITHDRAW result, enum send_target target);
 void clif_party_message(struct party_data* p, uint32 account_id, const char* mes, int len);
 void clif_party_xy(struct map_session_data *sd);
 void clif_party_xy_single(int fd, struct map_session_data *sd);
