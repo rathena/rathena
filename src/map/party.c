@@ -609,14 +609,14 @@ int party_leave(struct map_session_data *sd)
 }
 
 /// Invoked (from char-server) when a party member leaves the party.
-int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, int type)
+int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, enum PARTY_MEMBER_WITHDRAW type)
 {
 	struct map_session_data* sd = map_charid2sd(char_id);
 	struct party_data* p = party_search(party_id);
 
 	if( p ) {
 		int i;
-		clif_party_withdraw(party_getavailablesd(p), account_id, name, (PARTY_MEMBER_WITHDRAW)type,PARTY);
+		clif_party_withdraw(party_getavailablesd(p), account_id, name, type, PARTY);
 		ARR_FIND( 0, MAX_PARTY, i, p->party.member[i].account_id == account_id && p->party.member[i].char_id == char_id );
 		if( i < MAX_PARTY ) {
 			memset(&p->party.member[i], 0, sizeof(p->party.member[0]));
