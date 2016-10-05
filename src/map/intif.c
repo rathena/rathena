@@ -620,7 +620,7 @@ int intif_party_changeoption(int party_id,uint32 account_id,int exp,int item)
  * @param char_id : cid of player to leave
  * @return 0:char-serv disconected, 1=msg sent
  */
-int intif_party_leave(int party_id, uint32 account_id, uint32 char_id, char *name, PARTY_MEMBER_WITHDRAW type)
+int intif_party_leave(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -1530,7 +1530,7 @@ int intif_parse_PartyMemberWithdraw(int fd)
 {
 	if(battle_config.etc_log)
 		ShowInfo("intif: party member withdraw: Type(%d) Party(%d), Account(%d), Char(%d), Name(%s)\n",RFIFOB(fd,14+NAME_LENGTH),RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),(char*)RFIFOP(fd,14));
-	party_member_withdraw(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),(char*)RFIFOP(fd,14),(PARTY_MEMBER_WITHDRAW)RFIFOB(fd,14+NAME_LENGTH));
+	party_member_withdraw(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),(char*)RFIFOP(fd,14),(enum e_party_member_withdraw)RFIFOB(fd,14+NAME_LENGTH));
 	return 1;
 }
 

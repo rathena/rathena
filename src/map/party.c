@@ -609,7 +609,7 @@ int party_leave(struct map_session_data *sd)
 }
 
 /// Invoked (from char-server) when a party member leaves the party.
-int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, enum PARTY_MEMBER_WITHDRAW type)
+int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type)
 {
 	struct map_session_data* sd = map_charid2sd(char_id);
 	struct party_data* p = party_search(party_id);

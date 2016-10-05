@@ -7409,7 +7409,7 @@ void clif_party_option(struct party_data *p,struct map_session_data *sd,int flag
  * @param result Party leave result @see PARTY_MEMBER_WITHDRAW
  * @param target Send target
  **/
-void clif_party_withdraw(struct map_session_data *sd, uint32 account_id, const char* name, enum PARTY_MEMBER_WITHDRAW result, enum send_target target) {
+void clif_party_withdraw(struct map_session_data *sd, uint32 account_id, const char* name, enum e_party_member_withdraw result, enum send_target target) {
 	unsigned char buf[2+4+NAME_LENGTH+1];
 
 	if (!sd)

@@ -28,7 +28,7 @@ static DBMap* party_db_; // int party_id -> struct party_data*
 
 int mapif_party_broken(int party_id,int flag);
 int party_check_empty(struct party_data *p);
-int mapif_parse_PartyLeave(int fd, int party_id, uint32 account_id, uint32 char_id, char *name, PARTY_MEMBER_WITHDRAW type);
+int mapif_parse_PartyLeave(int fd, int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type);
 int party_check_exp_share(struct party_data *p);
 int mapif_party_optionchanged(int fd,struct party *p, uint32 account_id, int flag);
 
@@ -404,7 +404,7 @@ int mapif_party_optionchanged(int fd,struct party *p,uint32 account_id,int flag)
 }
 
 //Withdrawal notification party
-int mapif_party_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, PARTY_MEMBER_WITHDRAW type) {
+int mapif_party_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type) {
 	unsigned char buf[15+NAME_LENGTH];
 
 	WBUFW(buf,0) = 0x3824;
@@ -588,7 +588,7 @@ int mapif_parse_PartyChangeOption(int fd,int party_id,uint32 account_id,int exp,
 }
 
 //Request leave party
-int mapif_parse_PartyLeave(int fd, int party_id, uint32 account_id, uint32 char_id, char *name, PARTY_MEMBER_WITHDRAW type)
+int mapif_parse_PartyLeave(int fd, int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type)
 {
 	struct party_data *p;
 	int i,j=-1;
@@ -778,7 +778,7 @@ int inter_party_parse_frommap(int fd)
 	case 0x3021: mapif_parse_PartyInfo(fd, RFIFOL(fd,2), RFIFOL(fd,6)); break;
 	case 0x3022: mapif_parse_PartyAddMember(fd, RFIFOL(fd,4), (struct party_member*)RFIFOP(fd,8)); break;
 	case 0x3023: mapif_parse_PartyChangeOption(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOW(fd,10), RFIFOW(fd,12)); break;
-	case 0x3024: mapif_parse_PartyLeave(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), (char *)RFIFOP(fd,14), (PARTY_MEMBER_WITHDRAW)RFIFOB(fd,14+NAME_LENGTH)); break;
+	case 0x3024: mapif_parse_PartyLeave(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), (char *)RFIFOP(fd,14), (enum e_party_member_withdraw)RFIFOB(fd,14+NAME_LENGTH)); break;
 	case 0x3025: mapif_parse_PartyChangeMap(fd, RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOW(fd,14), RFIFOB(fd,16), RFIFOW(fd,17)); break;
 	case 0x3026: mapif_parse_BreakParty(fd, RFIFOL(fd,2)); break;
 	case 0x3027: mapif_parse_PartyMessage(fd, RFIFOL(fd,4), RFIFOL(fd,8), (char*)RFIFOP(fd,12), RFIFOW(fd,2)-12); break;
