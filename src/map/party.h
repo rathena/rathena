@@ -65,7 +65,7 @@ int party_member_added(int party_id,uint32 account_id,uint32 char_id,int flag);
 int party_leave(struct map_session_data *sd);
 int party_removemember(struct map_session_data *sd,uint32 account_id,char *name);
 int party_removemember2(struct map_session_data *sd,uint32 char_id,int party_id);
-int party_member_withdraw(int party_id,uint32 account_id,uint32 char_id);
+int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type);
 int party_reply_invite(struct map_session_data *sd,int party_id,int flag);
 #define party_add_member(party_id,sd) party_reply_invite(sd,party_id,1)
 int party_recv_noinfo(int party_id, uint32 char_id);

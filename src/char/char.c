@@ -1701,7 +1701,7 @@ int char_delete_char_sql(uint32 char_id){
 
 	//Make the character leave the party [Skotlex]
 	if (party_id)
-		inter_party_leave(party_id, account_id, char_id);
+		inter_party_leave(party_id, account_id, char_id, name);
 
 	/* delete char's pet */
 	//Delete the hatched pet if you have one...
