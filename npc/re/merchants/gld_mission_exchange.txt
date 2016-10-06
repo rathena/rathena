@@ -5,6 +5,7 @@
 //= NPCs reward from Guild Dungeon's Daily Missions.
 //===== Changelogs: ==========================================
 //= 1.0 First Version. [Cydh]
+//= 1.1 Minified the script. [Secretdataz]
 //============================================================
 
 // Templates
@@ -35,34 +36,14 @@
 				mes "^4d4dffDrains 300 SP, but decreases the damage taken from the user's counterpart players by 50% for 10 seconds.";
 				mes "Required Level: 80 or higher^000000";
 				next;
-				mes "= Fairy's Tear (Stun) =";
-				mes "A potion developed by Vicent, a pharmaceutical genius. Gives the user supernatural powers for a short period of time.";
-				mes "^4d4dff Drains 3000 HP, but allows the user to become immune to Stun status for 10 seconds.^000000";
-				next;
-				mes "= Fairy's Tear (Petrify) =";
-				mes "A potion developed by Vicent, a pharmaceutical genius. Gives the user supernatural powers for a short period of time.";
-				mes "^4d4dff Drains 3000 HP, but allows the user to become immune to Petrification status for 10 seconds.^000000";
-				next;
-				mes "= Fairy's Tear (Frozen) =";
-				mes "A potion developed by Vicent, a pharmaceutical genius. Gives the user supernatural powers for a short period of time.";
-				mes "^4d4dff Drains 3000 HP, but allows the user to become immune to Frozen status for 10 seconds.^000000";
-				next;
-				mes "= Fairy's Tear (Sleep) =";
-				mes "A potion developed by Vicent, a pharmaceutical genius. Gives the user supernatural powers for a short period of time.";
-				mes "^4d4dff Drains 3000 HP, but allows the user to become immune to Sleep status for 10 seconds.^000000";
-				next;
-				mes "= Fairy's Tear (Curse) =";
-				mes "A potion developed by Vicent, a pharmaceutical genius. Gives the user supernatural powers for a short period of time.";
-				mes "^4d4dff Drains 3000 HP, but allows the user to become immune to Curse status for 10 seconds.^000000";
-				next;
-				mes "= Fairy's Tear (Silence) =";
-				mes "A potion developed by Vicent, a pharmaceutical genius. Gives the user supernatural powers for a short period of time.";
-				mes "^4d4dff Drains 3000 HP, but allows the user to become immune to Silence status for 10 seconds.^000000";
-				next;
-				mes "= Fairy's Tear (Blind) =";
-				mes "A potion developed by Vicent, a pharmaceutical genius. Gives the user supernatural powers for a short period of time.";
-				mes "^4d4dff Drains 3000 HP, but allows the user to become immune to Blind status for 10 seconds.^000000";
-				next;
+				setarray .@status$, "Stun", "Petrify", "Frozen", "Sleep", "Curse", "Silence", "Blind";
+				.@size = getarraysize(.@status$);
+				for(.@i = 0; .@i < .@size; ++.@i) {
+					mes "= Fairy's Tear (" + .@status$[.@i] + ") =";
+					mes "A potion developed by Vicent, a pharmaceutical genius. Gives the user supernatural powers for a short period of time.";
+					mes "^4d4dff Drains 3000 HP, but allows the user to become immune to " + (.@i == 1 ? "Petrification" : .@status$[.@i]) + " status for 10 seconds.^000000";
+					next;
+				}
 				mes "= Feather Beret[1] =";
 				mes "A comfortable, sky blue-colored hat decorated with feathers.";
 				mes "^4d4dff MDEF + 1, Decreases the damage taken from the user's counterpart players by 10%.";
@@ -110,243 +91,36 @@
 				next;
 				switch(select("Blood of Frost Giants", "Core of Golem", "Fairy's Tear (Stun)", "Fairy's Tear (Frozen)", "Fairy's Tear (Sleep)", "Fairy's Tear (Curse)", "Fairy's Tear (Petrify)", "Fairy's Tear (Silence)", "Fairy's Tear (Blind)", "View other items.")) {
 					case 1:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Blood of Frost Giant, meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 299) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,300; // Siege_Guild_Coin
-									getitem 12874,1; // Frost_Giant_Blood
-									next;
-								} else {
-									mes "One good medicine is worth 300 commemorative coins that you've raked and scraped...";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
-					break;
-
+						callsub S_PurchaseMedicine, "Blood of Frost Giant", 12874;
+						break;
 					case 2:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Core of Golem, meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 299) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,300; // Siege_Guild_Coin
-									getitem 12875,1; // Golem_Stone
-									next;
-								} else {
-									mes "One good medicine is worth 300 commemorative coins that you've raked and scraped...";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
-					break;
-
+						callsub S_PurchaseMedicine, "Core of Golem", 12875;
+						break;
 					case 3:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Fairy's Tear(Stun), meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 299) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,300; // Siege_Guild_Coin
-									getitem 12876,1; // Elf_Tear_Stun
-									next;
-								} else {
-									mes "One good medicine is worth 300 commemorative coins that you've raked and scraped...";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
-					break;
-
+						callsub S_PurchaseMedicine, "Fairy's Tear(Stun)", 12876;
+						break;
 					case 4:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Fairy's Tear(Frozen), meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 299) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,300; // Siege_Guild_Coin
-									getitem 12878,1; // Elf_Tear_Freezing
-									next;
-								} else {
-									mes "One good medicine is worth 300 commemorative coins that you've raked and scraped...";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
-					break;
-
+						callsub S_PurchaseMedicine, "Fairy's Tear(Frozen)", 12878;
+						break;
 					case 5:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Fairy's Tear(Sleep), meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 299) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,300; // Siege_Guild_Coin
-									getitem 12879,1; // Elf_Tear_Sleep
-									next;
-								} else {
-									mes "One good medicine is worth 300 commemorative coins that you've raked and scraped...";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
-					break;
-
+						callsub S_PurchaseMedicine, "Fairy's Tear(Sleep)", 12879;
+						break;
 					case 6:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Fairy's Tear(Curse), meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 299) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,300; // Siege_Guild_Coin
-									getitem 12880,1; // Elf_Tear_Curse
-									next;
-								} else {
-									mes "One good medicine is worth 300 commemorative coins that you've raked and scraped...";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
-					break;
-
+						callsub S_PurchaseMedicine, "Fairy's Tear(Curse)", 12880;
+						break;
 					case 7:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Fairy's Tear(Petrify), meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 299) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,300; // Siege_Guild_Coin
-									getitem 12877,1; // Elf_Tear_Stone_Curse
-									next;
-								} else {
-									mes "One good medicine is worth 300 commemorative coins that you've raked and scraped...";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
-					break;
-
+						callsub S_PurchaseMedicine, "Fairy's Tear(Petrify)", 12877;
+						break;
 					case 8:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Fairy's Tear(Silence), meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 299) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,300; // Siege_Guild_Coin
-									getitem 12881,1; // Elf_Tear_Silence
-									next;
-								} else {
-									mes "One good medicine is worth 300 commemorative coins that you've raked and scraped...";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
-					break;
-
+						callsub S_PurchaseMedicine, "Fairy's Tear(Silence)", 12881;
+						break;
 					case 9:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Fairy's Tear(Blind), meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 299) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,300; // Siege_Guild_Coin
-									getitem 12882,1; // Elf_Tear_Blind
-									next;
-								} else {
-									mes "One good medicine is worth 300 commemorative coins that you've raked and scraped...";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
-					break;
-
+						callsub S_PurchaseMedicine, "Fairy's Tear(Blind)", 12882;
+						break;
 					case 10:
 						mes "You've decided to view other items.";
 						next;
-					break;
+						break;
 				}
 			break;
 
@@ -357,140 +131,20 @@
 				next;
 				switch(select("Old Card Album -500 Coins", "Old Purple Box -300 Coins", "Old Blue Box -100 Coins", "Jewelry Box -500 Coins", "Wrapped Mask -500 Coins", "Feather Beret","Leave")) {
 					case 1:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Old Card Album, meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 499) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,500; // Siege_Guild_Coin
-									getitem 616,1; // Old_Card_Album
-									next;
-								} else {
-									mes "You need 500 Commemorative Coins in order to purchase the selected item.";
-									mes "You've decided to view other items.";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
+						callsub S_PurchaseGift, "Old Card Album", 616, 500;
 					break;
-
 					case 2:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Old Purple Box, meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 299) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,300; // Siege_Guild_Coin
-									getitem 617,1; // Old_Violet_Box
-									next;
-								} else {
-									mes "You need 300 Commemorative Coins in order to purchase the selected item.";
-									mes "You've decided to view other items.";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
+						callsub S_PurchaseGift, "Old Purple box", 617, 300;
 					break;
-
 					case 3:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Old Blue Box, meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 99) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,100; // Siege_Guild_Coin
-									getitem 603,1; // Old_Blue_Box
-									next;
-								} else {
-									mes "You need 100 Commemorative Coins in order to purchase the selected item.";
-									mes "You've decided to view other items.";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
+						callsub S_PurchaseGift, "Old Blue Box", 603, 100;
 					break;
-
 					case 4:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Jewelry Box, meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 499) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,500; // Siege_Guild_Coin
-									getitem 12106,1; // Accessory_Box
-									next;
-								} else {
-									mes "You need 500 Commemorative Coins in order to purchase the selected item.";
-									mes "You've decided to view other items.";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
+						callsub S_PurchaseGift, "Jewelry Box", 12106, 500;
 					break;
-
 					case 5:
-						mes "[ClickClick MeowMeow-GX]";
-						mes "You're purchasing 1 Wrapped Mask, meow!";
-						mes "Are you sure?";
-						next;
-						switch(select("Yes!","No!")) {
-							case 1:
-								if (countitem(6615) /*Siege_Guild_Coin*/ > 499) {
-									mes "[ClickClick MeowMeow-GX]";
-									mes "Thank you for using our service, meow!";
-									delitem 6615,500; // Siege_Guild_Coin
-									getitem 12107,1; // Wrapped_Mask
-									next;
-								} else {
-									mes "You need 500 Commemorative Coins in order to purchase the selected item.";
-									mes "You've decided to view other items.";
-									next;
-								}
-							break;
-
-							case 2:
-								mes "You've decided to view other items.";
-								next;
-							break;
-						}
+						callsub S_PurchaseGift, "Wrapped Mask", 12107, 500;
 					break;
-
 					case 6:
 						mes "[ClickClick MeowMeow-GX]";
 						mes "You have selected a nice beret decorated with feathers!";
@@ -1041,6 +695,63 @@
 		}
 	}
 	close;
+
+S_PurchaseMedicine:
+	mes "[ClickClick MeowMeow-GX]";
+	mes "You're purchasing 1 " + getarg(0) + ", meow!";
+	mes "Are you sure?";
+	next;
+	switch(select("Yes!","No!")) {
+		case 1:
+			if (countitem(6615) /*Siege_Guild_Coin*/ > 299) {
+				mes "[ClickClick MeowMeow-GX]";
+				mes "Thank you for using our service, meow!";
+				delitem 6615,300; // Siege_Guild_Coin
+				getitem getarg(1),1;
+				next;
+			} else {
+				mes "[ClickClick MeowMeow-GX]";
+				mes "One good medicine is worth 300 commemorative coins that you've raked and scraped...";
+				next;
+			}
+		break;
+
+		case 2:
+			mes "You've decided to view other items.";
+			next;
+		break;
+	}
+	return;
+	
+S_PurchaseGift:
+	.@itemid = getarg(1);
+	.@price = getarg(2);
+	mes "[ClickClick MeowMeow-GX]";
+	mes "You're purchasing 1 " + getarg(0) + ", meow!";
+	mes "Are you sure?";
+	next;
+	switch(select("Yes!","No!")) {
+		case 1:
+			if (countitem(6615) /*Siege_Guild_Coin*/ >= .@price) {
+				mes "[ClickClick MeowMeow-GX]";
+				mes "Thank you for using our service, meow!";
+				delitem 6615,.@price; // Siege_Guild_Coin
+				getitem .@itemid,1;
+				next;
+			} else {
+				mes "[ClickClick MeowMeow-GX]";
+				mes "You need " + .@price + " Commemorative Coins in order to purchase the selected item.";
+				mes "You've decided to view other items.";
+				next;
+			}
+		break;
+
+		case 2:
+			mes "You've decided to view other items.";
+			next;
+		break;
+	}
+	return;
 }
 
 // Main NPCs
