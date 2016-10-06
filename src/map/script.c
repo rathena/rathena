@@ -12648,6 +12648,12 @@ BUILDIN_FUNC(successremovecards) {
 
 		for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 			item_tmp.card[j]=sd->status.inventory[i].card[j];
+		
+		for (j = 0; j < MAX_ITEM_RDM_OPT; j++){
+			item_tmp.option[j].id=sd->status.inventory[i].option[j].id;
+			item_tmp.option[j].value=sd->status.inventory[i].option[j].value;
+			item_tmp.option[j].param=sd->status.inventory[i].option[j].param;
+		}
 
 		pc_delitem(sd,i,1,0,3,LOG_TYPE_SCRIPT);
 		if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	//chk if can be spawn in inventory otherwise put on floor
@@ -12706,8 +12712,7 @@ BUILDIN_FUNC(failedremovecards) {
 	if(cardflag == 1) {
 		if(typefail == 0 || typefail == 2){	// destroy the item
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
-		}
-		if(typefail == 1){	// destroy the card
+		}else if(typefail == 1){ // destroy the card
 			unsigned char flag = 0, j;
 			struct item item_tmp;
 
@@ -12722,6 +12727,12 @@ BUILDIN_FUNC(failedremovecards) {
 
 			for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 				item_tmp.card[j]=sd->status.inventory[i].card[j];
+			
+			for (j = 0; j < MAX_ITEM_RDM_OPT; j++){
+				item_tmp.option[j].id=sd->status.inventory[i].option[j].id;
+				item_tmp.option[j].value=sd->status.inventory[i].option[j].value;
+				item_tmp.option[j].param=sd->status.inventory[i].option[j].param;
+			}
 
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 
@@ -20583,9 +20594,9 @@ BUILDIN_FUNC(party_destroy)
 		for( j = 0; j < MAX_PARTY; j++ ) {
 			TBL_PC *sd = party->data[j].sd;
 			if(sd)
-				party_member_withdraw(party->party.party_id,sd->status.account_id,sd->status.char_id);
+				party_member_withdraw(party->party.party_id,sd->status.account_id,sd->status.char_id,sd->status.name,PARTY_MEMBER_WITHDRAW_LEAVE);
 			else if( party->party.member[j].char_id )
-				intif_party_leave(party->party.party_id,party->party.member[j].account_id,party->party.member[j].char_id);
+				intif_party_leave(party->party.party_id,party->party.member[j].account_id,party->party.member[j].char_id,party->party.member[j].name,PARTY_MEMBER_WITHDRAW_LEAVE);
 		}
 		party_broken(party->party.party_id);
 		script_pushint(st,1);
