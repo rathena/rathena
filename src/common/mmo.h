@@ -80,6 +80,7 @@
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
 #define MAX_CLAN 500
+#define MAX_CLANALLIANCE 6
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -846,6 +847,12 @@ enum e_party_member_withdraw {
 	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< TODO: Cannot be kicked
 };
 
+struct clan_alliance {
+	int opposition;
+	int clan_id;
+	char name[NAME_LENGTH];
+};
+
 struct clan{
 	int id;
 	char name[NAME_LENGTH];
@@ -853,6 +860,7 @@ struct clan{
 	char map[MAP_NAME_LENGTH_EXT];
 	short max_member, connect_member;
 	struct map_session_data *members[MAX_CLAN];
+	struct clan_alliance alliance[MAX_CLANALLIANCE];
 };
 
 // Sanity checks...

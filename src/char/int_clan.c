@@ -30,6 +30,7 @@ struct clan* inter_clan_fromsql(int clan_id){
 	struct clan* clan;
 	char* data;
 	size_t len;
+	int i;
 
 	if( clan_id <= 0 )
 		return NULL;
@@ -50,6 +51,7 @@ struct clan* inter_clan_fromsql(int clan_id){
 	}
 
 	CREATE(clan, struct clan, 1);
+	memset(clan, 0, sizeof(struct clan));
 
 	clan->id = clan_id;
 	Sql_GetData(sql_handle,  0, &data, &len); memcpy(clan->name, data, min(len, NAME_LENGTH));
@@ -64,6 +66,20 @@ struct clan* inter_clan_fromsql(int clan_id){
 	if( clan->max_member > MAX_CLAN ){
 		ShowWarning("Clan %d:%s specifies higher capacity (%d) than MAX_CLAN (%d)\n", clan_id, clan->name, clan->max_member, MAX_CLAN);
 		clan->max_member = MAX_CLAN;
+	}
+
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `opposition`,`alliance_id`,`name` FROM `%s` WHERE `clan_id`='%d'", schema_config.clan_alliance_table, clan_id) ){
+		Sql_ShowDebug(sql_handle);
+		aFree(clan);
+		return NULL;
+	}
+
+	for( i = 0; i < MAX_CLANALLIANCE && SQL_SUCCESS == Sql_NextRow(sql_handle); i++ ){
+		struct clan_alliance* a = &clan->alliance[i];
+
+		Sql_GetData(sql_handle, 0, &data, NULL); a->opposition = atoi(data);
+		Sql_GetData(sql_handle, 1, &data, NULL); a->clan_id = atoi(data);
+		Sql_GetData(sql_handle, 2, &data, &len); memcpy(a->name, data, zmin(len, NAME_LENGTH));
 	}
 
 	idb_put( clan_db, clan_id, clan);

@@ -2331,7 +2331,7 @@ bool char_checkdb(void){
                 schema_config.auction_db, schema_config.quest_db, schema_config.homunculus_db, schema_config.skill_homunculus_db,
                 schema_config.mercenary_db, schema_config.mercenary_owner_db,
 		schema_config.elemental_db, schema_config.ragsrvinfo_db, schema_config.skillcooldown_db, schema_config.bonus_script_db,
-		schema_config.clan_table
+		schema_config.clan_table, schema_config.clan_alliance_table
 	};
 	ShowInfo("Start checking DB integrity\n");
 	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can acces them in sql-server
@@ -2565,6 +2565,12 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
+	//checking clan alliance table
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `clan_id`,`opposition`,`alliance_id`,`name`"
+		" FROM `%s` LIMIT 1;", schema_config.clan_alliance_table) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
 	Sql_FreeResult(sql_handle);
 	ShowInfo("DB integrity check finished with success\n");
 	return true;
@@ -2658,6 +2664,8 @@ void char_sql_config_read(const char* cfgName) {
 			safestrncpy(schema_config.acc_reg_num_table, w2, sizeof(schema_config.acc_reg_num_table));
 		else if(!strcmpi(w1,"clan_table"))
 			safestrncpy(schema_config.clan_table, w2, sizeof(schema_config.clan_table));
+		else if(!strcmpi(w1,"clan_alliance_table"))
+			safestrncpy(schema_config.clan_alliance_table, w2, sizeof(schema_config.clan_alliance_table));
 		//support the import command, just like any other config
 		else if(!strcmpi(w1,"import"))
 			char_sql_config_read(w2);
@@ -2706,6 +2714,7 @@ void char_set_default_sql(){
 	safestrncpy(schema_config.acc_reg_str_table,"acc_reg_str",sizeof(schema_config.acc_reg_str_table));
 	safestrncpy(schema_config.acc_reg_num_table,"acc_reg_num",sizeof(schema_config.acc_reg_num_table));
 	safestrncpy(schema_config.clan_table,"clan",sizeof(schema_config.clan_table));
+	safestrncpy(schema_config.clan_table,"clan_alliance",sizeof(schema_config.clan_alliance_table));
 }
 
 //set default config

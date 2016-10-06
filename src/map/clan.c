@@ -129,33 +129,33 @@ void clan_member_left( struct map_session_data* sd ){
 	}
 }
 
-int clan_member_join( struct map_session_data *sd, int clan_id, uint32 account_id, uint32 char_id ){
+bool clan_member_join( struct map_session_data *sd, int clan_id, uint32 account_id, uint32 char_id ){
 	struct clan *clan;
 
 	nullpo_ret(sd);
 
 	if( ( clan = clan_search( clan_id ) ) == NULL ){
-		return 0;
+		return false;
 	}
 
 	if( sd->status.account_id != account_id || sd->status.char_id != char_id || sd->status.clan_id != 0 ){
-		return 0;
+		return false;
 	}
 
 	sd->status.clan_id = clan->id;
 
 	clan_member_joined(sd);
 
-	return 1;
+	return true;
 }
 
-int clan_member_leave( struct map_session_data* sd, int clan_id, uint32 account_id, uint32 char_id ){
+bool clan_member_leave( struct map_session_data* sd, int clan_id, uint32 account_id, uint32 char_id ){
 	struct clan *clan;
 
 	nullpo_ret(sd);
 
 	if( sd->status.account_id != account_id || sd->status.char_id != char_id || sd->status.clan_id != clan_id || ( clan = sd->clan ) == NULL ){
-		return 0;
+		return false;
 	}
 
 	clan_member_left(sd);
@@ -165,7 +165,7 @@ int clan_member_leave( struct map_session_data* sd, int clan_id, uint32 account_
 
 	clif_clan_leave(sd);
 
-	return 1;
+	return true;
 }
 
 void clan_recv_message(int clan_id,uint32 account_id,const char *mes,int len) {
@@ -183,4 +183,18 @@ void clan_send_message( struct map_session_data *sd, const char *mes, int len ){
 	intif_clan_message(sd->status.clan_id,sd->status.account_id,mes,len);
 	clan_recv_message(sd->status.clan_id,sd->status.account_id,mes,len);
 	log_chat( LOG_CHAT_CLAN, sd->status.clan_id, sd->status.char_id, sd->status.account_id, mapindex_id2name( sd->mapindex ), sd->bl.x, sd->bl.y, NULL, mes );
+}
+
+int clan_get_alliance_count( struct clan *clan, int flag ){
+	int i, count;
+
+	nullpo_ret(clan);
+
+	for( i = 0, count = 0; i < MAX_CLANALLIANCE; i++ ){
+		if(	clan->alliance[i].clan_id > 0 && clan->alliance[i].opposition == flag ){
+			count++;
+		}
+	}
+
+	return count;
 }

@@ -18224,7 +18224,7 @@ void clif_parse_clan_chat( int fd, struct map_session_data* sd ){
 **/
 void clif_clan_basicinfo( struct map_session_data *sd ){
 #if PACKETVER >= 20131223
-	int fd, offset, length;
+	int fd, offset, length, i, flag;
 	struct clan* clan;
 	char mapname[MAP_NAME_LENGTH_EXT];
 	
@@ -18244,7 +18244,6 @@ void clif_clan_basicinfo( struct map_session_data *sd ){
 	memset( WFIFOP(fd, 0), 0, length );
 
 	WFIFOW( fd, 0 ) = 0x98a;
-	WFIFOW( fd, 2 ) = length;
 	WFIFOL( fd, 4 ) = clan->id;
 	offset = 8;
 	safestrncpy( (char*)WFIFOP( fd, offset ), clan->name, NAME_LENGTH );
@@ -18255,7 +18254,20 @@ void clif_clan_basicinfo( struct map_session_data *sd ){
 	safestrncpy( (char*)WFIFOP( fd, offset ), mapname, MAP_NAME_LENGTH_EXT );
 	offset += MAP_NAME_LENGTH_EXT;
 
-	WFIFOSET(fd,length);
+	WFIFOB(fd,offset++) = clan_get_alliance_count(clan,0);
+	WFIFOB(fd,offset++) = clan_get_alliance_count(clan,1);
+
+	for( flag = 0; flag < 2; flag++ ){
+		for( i = 0; i < MAX_CLANALLIANCE; i++ ){
+			if( clan->alliance[i].clan_id > 0 && clan->alliance[i].opposition == flag ){
+				safestrncpy( (char*)WFIFOP( fd, offset ), clan->alliance[i].name, NAME_LENGTH );
+				offset += NAME_LENGTH;
+			}
+		}
+	}
+
+	WFIFOW( fd, 2 ) = offset;
+	WFIFOSET(fd,offset);
 #endif
 }
 
