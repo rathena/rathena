@@ -332,6 +332,10 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 	return 1;
 }
 
+/**
+ * Receive account data from login-server
+ * AH 0x2717 <aid>.L <email>.40B <expiration_time>.L <group_id>.B <birthdate>.11B <pincode>.5B <pincode_change>.L <isvip>.B <char_vip>.B <char_billing>.B
+ **/
 int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 	int u_fd; //user fd
 	if (RFIFOREST(fd) < 75)

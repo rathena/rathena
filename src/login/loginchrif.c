@@ -163,7 +163,7 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 	char birthdate[10+1] = "";
 	char pincode[PINCODE_LENGTH+1];
 	char isvip = false;
-	uint8 char_slots = MIN_CHARS, char_vip = 0;
+	uint8 char_slots = MIN_CHARS, char_vip = 0, char_billing = 0;
 	AccountDB* accounts = login_get_accounts_db();
 
 	memset(pincode,0,PINCODE_LENGTH+1);
@@ -183,6 +183,7 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 			char_slots = login_config.char_per_account + char_vip;
 		} else
 			char_slots = login_config.char_per_account;
+		char_billing = MAX_CHAR_BILLING; //TODO create a config for this
 #endif
 	}
 
@@ -198,7 +199,7 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 	WFIFOL(fd,68) = (uint32)acc.pincode_change;
 	WFIFOB(fd,72) = isvip;
 	WFIFOB(fd,73) = char_vip;
-	WFIFOB(fd,74) = MAX_CHAR_BILLING; //TODO create a config for this
+	WFIFOB(fd,74) = char_billing;
 	WFIFOSET(fd,75);
 	return 1;
 }
