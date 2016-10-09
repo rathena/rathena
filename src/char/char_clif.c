@@ -468,7 +468,7 @@ void chclif_char_delete2_cancel_ack(int fd, uint32 char_id, uint32 result) {
 int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(6)
 	{
-		uint32 char_id, i;
+		uint32 char_id, i, guild_id, party_id;
 		char* data;
 		time_t delete_date;
 
@@ -482,7 +482,7 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 			return 1;
 		}
 
-		if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `delete_date` FROM `%s` WHERE `char_id`='%d'", schema_config.char_db, char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
+		if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `delete_date`,`party_id`,`guild_id` FROM `%s` WHERE `char_id`='%d'", schema_config.char_db, char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
 		{
 			Sql_ShowDebug(sql_handle);
 			chclif_char_delete2_ack(fd, char_id, 3, 0);
@@ -490,28 +490,26 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 		}
 
 		Sql_GetData(sql_handle, 0, &data, NULL); delete_date = strtoul(data, NULL, 10);
+		Sql_GetData(sql_handle, 1, &data, NULL); party_id    = strtoul(data, NULL, 10);
+		Sql_GetData(sql_handle, 2, &data, NULL); guild_id    = strtoul(data, NULL, 10);
 
 		if( delete_date ) {// character already queued for deletion
 			chclif_char_delete2_ack(fd, char_id, 0, 0);
 			return 1;
 		}
 
-	/*
-		// Aegis imposes these checks probably to avoid dead member
-		// entries in guilds/parties, otherwise they are not required.
-		// TODO: Figure out how these are enforced during waiting.
-		if( guild_id )
-		{// character in guild
+		if (guild_id) // character is in guild
+		{
 			chclif_char_delete2_ack(fd, char_id, 4, 0);
 			return 1;
 		}
 
-		if( party_id )
-		{// character in party
+		if (party_id) // character is in party
+		{
 			chclif_char_delete2_ack(fd, char_id, 5, 0);
 			return 1;
 		}
-	*/
+		
 		// success
 		delete_date = time(NULL)+(charserv_config.char_config.char_del_delay);
 
