@@ -8902,6 +8902,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_REUSE_LIMIT_RECALL:
 			case SC_REUSE_LIMIT_ASPD_POTION:
 				return 0;
+			case SC_PUSH_CART:
 			case SC_COMBO:
 			case SC_DANCING:
 			case SC_DEVOTION:
