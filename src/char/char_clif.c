@@ -498,13 +498,13 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 			return 1;
 		}
 
-		if (guild_id) // character is in guild
+		if (charserv_config.char_config.char_del_restriction&CHAR_DEL_RESTRICT_GUILD && guild_id) // character is in guild
 		{
 			chclif_char_delete2_ack(fd, char_id, 4, 0);
 			return 1;
 		}
 
-		if (party_id) // character is in party
+		if (charserv_config.char_config.char_del_restriction&CHAR_DEL_RESTRICT_PARTY && party_id) // character is in party
 		{
 			chclif_char_delete2_ack(fd, char_id, 5, 0);
 			return 1;
