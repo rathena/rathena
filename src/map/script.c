@@ -12711,9 +12711,9 @@ BUILDIN_FUNC(successremovecards) {
 			item_tmp.card[j]=sd->inventory.u.items_inventory[i].card[j];
 		
 		for (j = 0; j < MAX_ITEM_RDM_OPT; j++){
-			item_tmp.option[j].id=sd->status.inventory[i].option[j].id;
-			item_tmp.option[j].value=sd->status.inventory[i].option[j].value;
-			item_tmp.option[j].param=sd->status.inventory[i].option[j].param;
+			item_tmp.option[j].id=sd->inventory.u.items_inventory[i].option[j].id;
+			item_tmp.option[j].value=sd->inventory.u.items_inventory[i].option[j].value;
+			item_tmp.option[j].param=sd->inventory.u.items_inventory[i].option[j].param;
 		}
 
 		pc_delitem(sd,i,1,0,3,LOG_TYPE_SCRIPT);
@@ -12790,9 +12790,9 @@ BUILDIN_FUNC(failedremovecards) {
 				item_tmp.card[j]=sd->inventory.u.items_inventory[i].card[j];
 			
 			for (j = 0; j < MAX_ITEM_RDM_OPT; j++){
-				item_tmp.option[j].id=sd->status.inventory[i].option[j].id;
-				item_tmp.option[j].value=sd->status.inventory[i].option[j].value;
-				item_tmp.option[j].param=sd->status.inventory[i].option[j].param;
+				item_tmp.option[j].id=sd->inventory.u.items_inventory[i].option[j].id;
+				item_tmp.option[j].value=sd->inventory.u.items_inventory[i].option[j].value;
+				item_tmp.option[j].param=sd->inventory.u.items_inventory[i].option[j].param;
 			}
 
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
