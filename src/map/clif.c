@@ -2445,6 +2445,14 @@ void clif_add_random_options(unsigned char* buf, struct item *it) {
 		WBUFW(buf, i*5 + 2) = it->option[i].value;	// Value
 		WBUFB(buf, i*5 + 4) = it->option[i].param;	// Param1
 	}
+	
+#if MAX_ITEM_RDM_OPT < 5
+	for ( ; i < 5; i++) {
+		WBUFW(buf, i*5 + 0) = 0;		// OptIndex
+		WBUFW(buf, i*5 + 2) = 0;	// Value
+		WBUFB(buf, i*5 + 4) = 0;	// Param1
+	}
+#endif
 #endif
 }
 
@@ -5822,10 +5830,75 @@ void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id
 /// 0196 <index>.W <id>.L <state>.B (ZC_MSG_STATE_CHANGE) [used for ending status changes and starting them on non-pc units (when needed)]
 /// 043f <index>.W <id>.L <state>.B <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE2) [used exclusively for starting statuses on pcs]
 /// 0983 <index>.W <id>.L <state>.B <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_MSG_STATE_CHANGE3) (PACKETVER >= 20120618)
-void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val1, int val2, int val3)
+/// @param bl Sends packet to clients around this object
+/// @param id ID of object that has this effect
+/// @param type Status icon see enum si_type
+/// @param flag 1:Active, 0:Deactive
+/// @param tick Duration in ms
+/// @param val1
+/// @param val2
+/// @param val3
+void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, int tick, int val1, int val2, int val3, enum send_target target_type)
 {
 	unsigned char buf[32];
-	struct map_session_data *sd;
+
+	if (type == SI_BLANK)  //It shows nothing on the client...
+		return;
+
+	if (type == SI_ACTIONDELAY && tick == 0)
+		return;
+
+	nullpo_retv(bl);
+
+#if PACKETVER >= 20120618
+	if (flag && battle_config.display_status_timers)
+		WBUFW(buf,0) = 0x983;
+	else
+#elif PACKETVER >= 20090121
+	if (flag && battle_config.display_status_timers)
+		WBUFW(buf,0) = 0x43f;
+	else
+#endif
+		WBUFW(buf,0) = 0x196;
+	WBUFW(buf,2) = type;
+	WBUFL(buf,4) = id;
+	WBUFB(buf,8) = flag;
+#if PACKETVER >= 20120618
+	if (flag && battle_config.display_status_timers) {
+		if (tick <= 0)
+			tick = 9999; // this is indeed what official servers do
+
+		WBUFL(buf,9) = tick;/* at this stage remain and total are the same value I believe */
+		WBUFL(buf,13) = tick;
+		WBUFL(buf,17) = val1;
+		WBUFL(buf,21) = val2;
+		WBUFL(buf,25) = val3;
+	}
+#elif PACKETVER >= 20090121
+	if (flag && battle_config.display_status_timers) {
+		if (tick <= 0)
+			tick = 9999; // this is indeed what official servers do
+
+		WBUFL(buf,9) = tick;
+		WBUFL(buf,13) = val1;
+		WBUFL(buf,17) = val2;
+		WBUFL(buf,21) = val3;
+	}
+#endif
+	clif_send(buf, packet_len(WBUFW(buf,0)), bl, target_type);
+}
+
+/* Sends status effect to clients around the bl
+ * @param bl Object that has the effect
+ * @param type Status icon see enum si_type
+ * @param flag 1:Active, 0:Deactive
+ * @param tick Duration in ms
+ * @param val1
+ * @param val2
+ * @param val3
+ */
+void clif_status_change(struct block_list *bl, int type, int flag, int tick, int val1, int val2, int val3) {
+	struct map_session_data *sd = NULL;
 
 	if (type == SI_BLANK)  //It shows nothing on the client...
 		return;
@@ -5839,42 +5912,8 @@ void clif_status_change(struct block_list *bl,int type,int flag,int tick,int val
 
 	if (!(status_type2relevant_bl_types(type)&bl->type)) // only send status changes that actually matter to the client
 		return;
-#if PACKETVER >= 20120618
-	if(flag && battle_config.display_status_timers && sd)
-		WBUFW(buf,0)=0x983;
-	else
-#elif PACKETVER >= 20090121
-	if(flag && battle_config.display_status_timers && sd)
-		WBUFW(buf,0)=0x43f;
-	else
-#endif
-		WBUFW(buf,0)=0x196;
-	WBUFW(buf,2)=type;
-	WBUFL(buf,4)=bl->id;
-	WBUFB(buf,8)=flag;
-#if PACKETVER >= 20120618
-	if(flag && battle_config.display_status_timers && sd) {
-		if (tick <= 0)
-			tick = 9999; // this is indeed what official servers do
 
-		WBUFL(buf,9)=tick;/* at this stage remain and total are the same value I believe */
-		WBUFL(buf,13)=tick;
-		WBUFL(buf,17) = val1;
-		WBUFL(buf,21) = val2;
-		WBUFL(buf,25) = val3;
-	}
-#elif PACKETVER >= 20090121
-	if(flag && battle_config.display_status_timers && sd) {
-		if (tick <= 0)
-			tick = 9999; // this is indeed what official servers do
-
-		WBUFL(buf,9) = tick;
-		WBUFL(buf,13) = val1;
-		WBUFL(buf,17) = val2;
-		WBUFL(buf,21) = val3;
-	}
-#endif
-	clif_send(buf,packet_len(WBUFW(buf,0)),bl, (sd && sd->status.option&OPTION_INVISIBLE) ? SELF : AREA);
+	clif_status_change_sub(bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (sd->status.option&OPTION_INVISIBLE ? SELF : AREA) : AREA_WOS)));
 }
 
 /**
@@ -5903,7 +5942,11 @@ void clif_efst_status_change_sub(struct map_session_data *sd, struct block_list 
 
 		if (td)
 			tick = DIFF_TICK(td->tick, gettick());
+#if PACKETVER > 20120418
 		clif_efst_status_change((target == SELF) ? &sd->bl : bl, bl->id, target, StatusIconChangeTable[type], tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3);
+#else
+		clif_status_change_sub(&sd->bl, bl->id, StatusIconChangeTable[type], 1, tick, tsd->sc_display[i]->val1, tsd->sc_display[i]->val2, tsd->sc_display[i]->val3, target);
+#endif
 	}
 }
 
@@ -7358,37 +7401,26 @@ void clif_party_option(struct party_data *p,struct map_session_data *sd,int flag
 		clif_send(buf,packet_len(cmd),&sd->bl,SELF);
 }
 
+/**
+ * 0105 <account id>.L <char name>.24B <result>.B (ZC_DELETE_MEMBER_FROM_GROUP).
+ * @param sd Send the notification for this player
+ * @param account_id Account ID of kicked member
+ * @param name Name of kicked member
+ * @param result Party leave result @see PARTY_MEMBER_WITHDRAW
+ * @param target Send target
+ **/
+void clif_party_withdraw(struct map_session_data *sd, uint32 account_id, const char* name, enum e_party_member_withdraw result, enum send_target target) {
+	unsigned char buf[2+4+NAME_LENGTH+1];
 
-/// 0105 <account id>.L <char name>.24B <result>.B (ZC_DELETE_MEMBER_FROM_GROUP).
-/// result:
-///     0 = leave
-///     1 = expel
-///     2 = cannot leave party on this map
-///     3 = cannot expel from party on this map
-void clif_party_withdraw(struct party_data* p, struct map_session_data* sd, uint32 account_id, const char* name, int flag)
-{
-	unsigned char buf[64];
+	if (!sd)
+		return;
 
-	nullpo_retv(p);
+	WBUFW(buf,0) = 0x0105;
+	WBUFL(buf,2) = account_id;
+	memcpy(WBUFP(buf,6), name, NAME_LENGTH);
+	WBUFB(buf,6+NAME_LENGTH) = result;
 
-	if(!sd && (flag&0xf0)==0)
-	{
-		int i;
-		ARR_FIND(0,MAX_PARTY,i,p->data[i].sd);
-		if (i < MAX_PARTY)
-			sd = p->data[i].sd;
-	}
-
-	if(!sd) return;
-
-	WBUFW(buf,0)=0x105;
-	WBUFL(buf,2)=account_id;
-	memcpy(WBUFP(buf,6),name,NAME_LENGTH);
-	WBUFB(buf,30)=flag&0x0f;
-	if((flag&0xf0)==0)
-		clif_send(buf,packet_len(0x105),&sd->bl,PARTY);
-	else
-		clif_send(buf,packet_len(0x105),&sd->bl,SELF);
+	clif_send(buf, 2+4+NAME_LENGTH+1, &sd->bl, target);
 }
 
 
@@ -13228,7 +13260,7 @@ void clif_parse_GuildChangeEmblem(int fd,struct map_session_data *sd){
 	if( !emblem_len || !sd->state.gmaster_flag )
 		return;
 
-	if(!(battle_config.emblem_woe_change) && (agit_flag || agit2_flag) ){
+	if(!(battle_config.emblem_woe_change) && is_agit_start() ){
 		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,385)); //"You not allowed to change emblem during woe"
 		return;
 	}

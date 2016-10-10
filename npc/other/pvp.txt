@@ -397,7 +397,7 @@ pvp_room,86,85,4	duplicate(PVPSpectator)	Spectator's Entrance#4	105
 // Spectator Warps
 //============================================================ 
 -	script	Combat Square Staff#dum::PVPSpecWarp	-1,{
-OnTouch:
+OnTouch_:
 	mes "[Combat Square Staff]";
 	mes "May I help you?";
 	if (select("To the center viewer seat.:Leave Combat Square.") == 1) {
@@ -432,7 +432,7 @@ pvp_2vs2,40,40,0	script	Combat Square Staff#5	45,1,1,{
 // PVP Area Exit warp
 //============================================================ 
 pvp_room,51,19,0	script	out#eventpvp	45,4,2,{
-OnTouch:
+OnTouch_:
 	mes "[Combat Square Staff]";
 	mes "Did you have fun in Combat Square?";
 	mes "May I ask where you want to go?";

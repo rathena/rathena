@@ -6,6 +6,10 @@
 
 	#define export_constant(a) script_set_constant(#a,a,false)
 
+	/* min and maximum variable value */
+	export_constant(INT_MIN);
+	export_constant(INT_MAX);
+
 	/* server defines */
 	export_constant(PACKETVER);
 	export_constant(MAX_LEVEL);
@@ -16,11 +20,16 @@
 	export_constant(MAX_PARTY);
 	export_constant(MAX_GUILD);
 	export_constant(MAX_GUILDLEVEL);
+	export_constant(MAX_GUARDIANS);
 	export_constant(MAX_GUILD_STORAGE);
 	export_constant(MAX_BG_MEMBERS);
 	export_constant(MAX_CHAT_USERS);
 	export_constant(VIP_SCRIPT);
 	export_constant(MIN_STORAGE);
+	export_constant(MAX_SLOTS);
+	export_constant(MAX_ITEM_RDM_OPT);
+	export_constant(NAME_LENGTH);
+	export_constant(PASSWD_LENGTH);
 
 	/* boolean values */
 	export_constant(true);
@@ -397,6 +406,8 @@
 	export_constant(MF_NOTOMB);
 	export_constant(MF_SKILL_DAMAGE);
 	export_constant(MF_NOCOSTUME);
+	export_constant(MF_GVG_TE_CASTLE);
+	export_constant(MF_GVG_TE);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -1019,7 +1030,7 @@
 	export_constant(SC_INCCRI);
 	//export_constant(SC_INCDEF);
 	//export_constant(SC_INCBASEATK);
-	//export_constant(SC_FASTCAST 264);
+	//export_constant(SC_FASTCAST);
 	export_constant(SC_MDEF_RATE);
 	//export_constant(SC_HPREGEN);
 	export_constant(SC_INCHEALRATE);
@@ -1404,6 +1415,15 @@
 	export_constant(SC_MAPLE_FALLS);
 	export_constant(SC_TIME_ACCESSORY);
 	export_constant(SC_MAGICAL_FEATHER);
+	export_constant(SC_GVG_GIANT);
+	export_constant(SC_GVG_GOLEM);
+	export_constant(SC_GVG_STUN);
+	export_constant(SC_GVG_STONE);
+	export_constant(SC_GVG_FREEZ);
+	export_constant(SC_GVG_SLEEP);
+	export_constant(SC_GVG_CURSE);
+	export_constant(SC_GVG_SILENCE);
+	export_constant(SC_GVG_BLIND);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -2361,6 +2381,8 @@
 	export_constant(SI_MTF_MARIONETTE);
 	export_constant(SI_MTF_LUDE);
 	export_constant(SI_MTF_CRUISER);
+	export_constant(SI_MERMAID_LONGING);
+	export_constant(SI_MAGICAL_FEATHER);
 	export_constant(SI_DRACULA_CARD);
 	export_constant(SI_LIMIT_POWER_BOOSTER);
 	export_constant(SI_TIME_ACCESSORY);

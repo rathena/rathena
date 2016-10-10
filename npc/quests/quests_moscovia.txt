@@ -8393,7 +8393,7 @@ mosk_fild02,101,200,0	duplicate(NoSwim)	Caution#rus02	2_BULLETIN_BOARD
 //----------------------------------------------------------------------------
 mosk_fild02,116,202,3	script	Lusalka#07russai_22	-1,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	if (rhea_rus_main != 8 || rhea_rus_hair < 2) {
 		emotion e_what,1;
 		end;
@@ -9015,7 +9015,7 @@ moc_pryd04,126,120,0	script	Soldier#rus26	4_M_RUSMAN1,{
 //----------------------------------------------------------------------------
 mosk_dun01,45,250,3	script	1#rus27	WARPNPC,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	warp "mosk_que",49,22;
 	end;
 
@@ -9037,7 +9037,7 @@ mosk_que,0,0,0,0	monster	Sasquatch	1243,15,10000,0,0
 
 mosk_que,49,22,3	script	#rus27	-1,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	if (rhea_rus_main == 8) {
 		if (!rhea_rus_quiz) {
 			mes "[Voice unidentified]";
@@ -9978,7 +9978,7 @@ OnMyMobDead:
 //----------------------------------------------------------------------------
 mosk_dun02,257,193,0	script	Cow#rus33	4_BULL,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	mes "[Cow]";
 	mes "Moo...";
 	if (rhea_rus_main == 11) {

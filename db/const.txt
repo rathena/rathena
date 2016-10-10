@@ -485,6 +485,10 @@ IG_Animal_Costume_Scroll	467
 IG_Midgard_Lucky_Scroll	468
 IG_Blessing_Scarlet_Egg	469
 IG_Mystical_Costume_Scroll	470
+IG_Ink_Ball	471
+IG_Something_Candy_Holder	472
+IG_Shining_Egg	473
+IG_Shining_Blue_Lucky_Egg	474
 
 EF_NONE	-1
 EF_HIT1	0

@@ -1989,11 +1989,11 @@ OnMyMobDead:
 	end;
 }
 
-job_knt,145,57,1	script	Warp#knt	107,22,22,{
+job_knt,143,57,1	script	Warp#knt	107,22,22,{
 OnInit:
 	disablenpc "Warp#knt";
 	end;
-OnTouch:
+OnTouch_:
 	set KNIGHT_Q,12;
 	changequest 9010,9011;
 	warp "prt_in",80,100;
