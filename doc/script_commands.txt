@@ -5321,8 +5321,8 @@ behavior of the command.
 
 *statusup <stat>{,<char_id>};
 
-This command will bump a specified stat of the invoking character up by one 
-permanently. Stats are to be given as number, but you can use these constants to 
+This command will change a specified stat of the invoking character up by one
+permanently. Stats are to be given as number, but you can use these constants to
 replace them:
 
 bStr -  Strength
@@ -5336,11 +5336,11 @@ bLuk -  Luck
 
 *statusup2 <stat>,<amount>{,<char_id>};
 
-This command will bump a specified stat of the invoking character up by the 
+This command will change a specified stat of the invoking character by the
 specified amount permanently. The amount can be negative. See 'statusup'.
 
-// This will decrease a character's Vit forever.
-    statusup bVit,-1;
+	// This will decrease a character's Vit forever.
+	statusup2 bVit,-1;
 
 ---------------------------------------
 
