@@ -336,8 +336,8 @@ int chclif_mmo_send006b(int fd, struct char_session_data* sd){
 	WFIFOW(fd,0) = 0x6b;
 	if(newvers){ //20100413
 		WFIFOB(fd,4) = MAX_CHARS; // Max slots.
-		WFIFOB(fd,5) = sd->char_slots; // Available slots. (PremiumStartSlot)
-		WFIFOB(fd,6) = MAX_CHARS; // Premium slots. (Any existent chars past sd->char_slots but within MAX_CHARS will show a 'Premium Service' in red)
+		WFIFOB(fd,5) = MIN_CHARS; // Available slots. (PremiumStartSlot)
+		WFIFOB(fd,6) = MIN_CHARS+sd->chars_vip; // Premium slots. (Any existent chars past sd->char_slots but within MAX_CHARS will show a 'Premium Service' in red)
 	}
 	memset(WFIFOP(fd,4 + offset), 0, 20); // unknown bytes
 	j+=char_mmo_chars_fromsql(sd, WFIFOP(fd,j));
@@ -356,11 +356,11 @@ void chclif_mmo_send082d(int fd, struct char_session_data* sd) {
 	WFIFOHEAD(fd,29);
 	WFIFOW(fd,0) = 0x82d;
 	WFIFOW(fd,2) = 29;
-	WFIFOB(fd,4) = sd->char_slots;
-	WFIFOB(fd,5) = MAX_CHARS - sd->char_slots;
-	WFIFOB(fd,6) = MAX_CHARS - sd->char_slots;
-	WFIFOB(fd,7) = sd->char_slots;
-	WFIFOB(fd,8) = sd->char_slots;
+	WFIFOB(fd,4) = MIN_CHARS; // normal_slot
+	WFIFOB(fd,5) = sd->chars_vip; // premium_slot
+	WFIFOB(fd,6) = sd->chars_billing; // billing_slot
+	WFIFOB(fd,7) = sd->char_slots; // producible_slot
+	WFIFOB(fd,8) = MAX_CHARS; // valid_slot
 	memset(WFIFOP(fd,9), 0, 20); // unused bytes
 	WFIFOSET(fd,29);
 }
