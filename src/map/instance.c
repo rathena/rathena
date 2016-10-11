@@ -850,26 +850,30 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 	db->limit = strtol(str[2], &ptr, 10);
 	if (ptr) {
 		ShowError("instance_readdb_sub: TimeLimit must be an integer value for instance '%d', skipping...\n", id);
+		instance_db_free_sub(db);
 		return false;
 	}
 
 	db->timeout = strtol(str[3], &ptr, 10);
 	if (ptr) {
 		ShowError("instance_readdb_sub: IdleTimeOut must be an integer value for instance '%d', skipping...\n", id);
+		instance_db_free_sub(db);
 		return false;
 	}
 
 	StringBuf_AppendStr(db->enter.mapname, str[4]);
 
-	db->enter.x = strtol(str[5], &ptr, 10);
+	db->enter.x = (short)strtol(str[5], &ptr, 10);
 	if (ptr) {
 		ShowError("instance_readdb_sub: EnterX must be an integer value for instance '%d', skipping...\n", id);
+		instance_db_free_sub(db);
 		return false;
 	}
 
-	db->enter.y = strtol(str[6], &ptr, 10);
+	db->enter.y = (short)strtol(str[6], &ptr, 10);
 	if (ptr) {
 		ShowError("instance_readdb_sub: EnterY must be an integer value for instance '%d', skipping...\n", id);
+		instance_db_free_sub(db);
 		return false;
 	}
 
