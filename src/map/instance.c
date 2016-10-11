@@ -818,8 +818,8 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 	struct instance_db *db;
 	bool isNew = false;
 
-	if (!id || id >  USHRT_MAX || ptr) {
-		ShowError("instance_readdb_sub: Cannot add instance with ID '%d'. Valid ID is 1 ~ %d, skipping...\n", id, USHRT_MAX);
+	if (!id || id >  USHRT_MAX || *ptr) {
+		ShowError("instance_readdb_sub: Cannot add instance with ID '%d'. Valid IDs are 1 ~ %d, skipping...\n", id, USHRT_MAX);
 		return false;
 	}
 
@@ -848,14 +848,14 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 	StringBuf_AppendStr(db->name, str[1]);
 
 	db->limit = strtol(str[2], &ptr, 10);
-	if (ptr) {
+	if (*ptr) {
 		ShowError("instance_readdb_sub: TimeLimit must be an integer value for instance '%d', skipping...\n", id);
 		instance_db_free_sub(db);
 		return false;
 	}
 
 	db->timeout = strtol(str[3], &ptr, 10);
-	if (ptr) {
+	if (*ptr) {
 		ShowError("instance_readdb_sub: IdleTimeOut must be an integer value for instance '%d', skipping...\n", id);
 		instance_db_free_sub(db);
 		return false;
@@ -864,14 +864,14 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 	StringBuf_AppendStr(db->enter.mapname, str[4]);
 
 	db->enter.x = (short)strtol(str[5], &ptr, 10);
-	if (ptr) {
+	if (*ptr) {
 		ShowError("instance_readdb_sub: EnterX must be an integer value for instance '%d', skipping...\n", id);
 		instance_db_free_sub(db);
 		return false;
 	}
 
 	db->enter.y = (short)strtol(str[6], &ptr, 10);
-	if (ptr) {
+	if (*ptr) {
 		ShowError("instance_readdb_sub: EnterY must be an integer value for instance '%d', skipping...\n", id);
 		instance_db_free_sub(db);
 		return false;
