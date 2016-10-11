@@ -8785,12 +8785,7 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 			if( !sd->sc.data[SC_PUSH_CART] ) /* first time, so fill cart data */
 				clif_cartlist(sd);
 			clif_updatestatus(sd, SP_CARTINFO);
-			sc_start(&sd->bl,&sd->bl, SC_PUSH_CART, 100, type, -1);
-#if PACKETVER > 20120418
-			clif_efst_status_change(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, 9999, type, 0, 0);
-			if( sd->sc.data[SC_PUSH_CART] )/* forcefully update */
-				sd->sc.data[SC_PUSH_CART]->val1 = type;
-#endif
+			sc_start(&sd->bl, &sd->bl, SC_PUSH_CART, 100, type, 0);
 			break;
 	}
 

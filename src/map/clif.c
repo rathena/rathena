@@ -7401,37 +7401,26 @@ void clif_party_option(struct party_data *p,struct map_session_data *sd,int flag
 		clif_send(buf,packet_len(cmd),&sd->bl,SELF);
 }
 
+/**
+ * 0105 <account id>.L <char name>.24B <result>.B (ZC_DELETE_MEMBER_FROM_GROUP).
+ * @param sd Send the notification for this player
+ * @param account_id Account ID of kicked member
+ * @param name Name of kicked member
+ * @param result Party leave result @see PARTY_MEMBER_WITHDRAW
+ * @param target Send target
+ **/
+void clif_party_withdraw(struct map_session_data *sd, uint32 account_id, const char* name, enum e_party_member_withdraw result, enum send_target target) {
+	unsigned char buf[2+4+NAME_LENGTH+1];
 
-/// 0105 <account id>.L <char name>.24B <result>.B (ZC_DELETE_MEMBER_FROM_GROUP).
-/// result:
-///     0 = leave
-///     1 = expel
-///     2 = cannot leave party on this map
-///     3 = cannot expel from party on this map
-void clif_party_withdraw(struct party_data* p, struct map_session_data* sd, uint32 account_id, const char* name, int flag)
-{
-	unsigned char buf[64];
+	if (!sd)
+		return;
 
-	nullpo_retv(p);
+	WBUFW(buf,0) = 0x0105;
+	WBUFL(buf,2) = account_id;
+	memcpy(WBUFP(buf,6), name, NAME_LENGTH);
+	WBUFB(buf,6+NAME_LENGTH) = result;
 
-	if(!sd && (flag&0xf0)==0)
-	{
-		int i;
-		ARR_FIND(0,MAX_PARTY,i,p->data[i].sd);
-		if (i < MAX_PARTY)
-			sd = p->data[i].sd;
-	}
-
-	if(!sd) return;
-
-	WBUFW(buf,0)=0x105;
-	WBUFL(buf,2)=account_id;
-	memcpy(WBUFP(buf,6),name,NAME_LENGTH);
-	WBUFB(buf,30)=flag&0x0f;
-	if((flag&0xf0)==0)
-		clif_send(buf,packet_len(0x105),&sd->bl,PARTY);
-	else
-		clif_send(buf,packet_len(0x105),&sd->bl,SELF);
+	clif_send(buf, 2+4+NAME_LENGTH+1, &sd->bl, target);
 }
 
 
