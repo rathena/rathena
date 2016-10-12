@@ -7751,6 +7751,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_ARCWANDCLAN:
 					case SC_GOLDENMACECLAN:
 					case SC_CROSSBOWCLAN:
+					case SC_JUMPINGCLAN:
 						continue;
 					//bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
 					case SC_WHISTLE:

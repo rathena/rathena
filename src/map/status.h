@@ -784,6 +784,7 @@ typedef enum sc_type {
 	SC_ARCWANDCLAN,
 	SC_GOLDENMACECLAN,
 	SC_CROSSBOWCLAN,
+	SC_JUMPINGCLAN,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled

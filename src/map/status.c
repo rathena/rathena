@@ -1106,6 +1106,7 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_ARCWANDCLAN] = SI_ARCWANDCLAN;
 	StatusIconChangeTable[SC_GOLDENMACECLAN] = SI_GOLDENMACECLAN;
 	StatusIconChangeTable[SC_CROSSBOWCLAN] = SI_CROSSBOWCLAN;
+	StatusIconChangeTable[SC_JUMPINGCLAN] = SI_JUMPINGCLAN;
 
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
@@ -1244,6 +1245,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_ARCWANDCLAN] |= SCB_INT|SCB_DEX|SCB_MAXHP|SCB_MAXSP;
 	StatusChangeFlagTable[SC_GOLDENMACECLAN] |= SCB_LUK|SCB_INT|SCB_MAXHP|SCB_MAXSP;
 	StatusChangeFlagTable[SC_CROSSBOWCLAN] |= SCB_DEX|SCB_AGI|SCB_MAXHP|SCB_MAXSP;
+	StatusChangeFlagTable[SC_JUMPINGCLAN] |= SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK;
 
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
@@ -5237,6 +5239,8 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		str -= sc->data[SC_KYOUGAKU]->val2;
 	if(sc->data[SC_SWORDCLAN])
 		str += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		str += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		str += str * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 
@@ -5305,6 +5309,8 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi -= sc->data[SC_KYOUGAKU]->val2;
 	if(sc->data[SC_CROSSBOWCLAN])
 		agi += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		agi += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		agi += agi * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 	if (sc->data[SC_ARCLOUSEDASH])
@@ -5362,6 +5368,8 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 	if(sc->data[SC_KYOUGAKU])
 		vit -= sc->data[SC_KYOUGAKU]->val2;
 	if(sc->data[SC_SWORDCLAN])
+		vit += 1;
+	if(sc->data[SC_JUMPINGCLAN])
 		vit += 1;
 	if(sc->data[SC_STRIPARMOR] && bl->type != BL_PC)
 		vit -= vit * sc->data[SC_STRIPARMOR]->val2/100;
@@ -5436,6 +5444,8 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 	if(sc->data[SC_ARCWANDCLAN])
 		int_ += 1;
 	if(sc->data[SC_GOLDENMACECLAN])
+		int_ += 1;
+	if(sc->data[SC_JUMPINGCLAN])
 		int_ += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		int_ += int_ * sc->data[SC_FULL_THROTTLE]->val3 / 100;
@@ -5512,6 +5522,8 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		dex += 1;
 	if(sc->data[SC_CROSSBOWCLAN])
 		dex += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		dex += 1;
 	if(sc->data[SC__STRIPACCESSORY] && bl->type != BL_PC)
 		dex -= dex * sc->data[SC__STRIPACCESSORY]->val2 / 100;
 	if(sc->data[SC_MARSHOFABYSS])
@@ -5575,6 +5587,8 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 	if(sc->data[SC_BANANA_BOMB])
 		luk -= 75;
 	if(sc->data[SC_GOLDENMACECLAN])
+		luk += 1;
+	if(sc->data[SC_JUMPINGCLAN])
 		luk += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		luk += luk * sc->data[SC_FULL_THROTTLE]->val3 / 100;
@@ -10652,6 +10666,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ARCWANDCLAN:
 		case SC_GOLDENMACECLAN:
 		case SC_CROSSBOWCLAN:
+		case SC_JUMPINGCLAN:
 			tick = -1;
 			status_change_start(src,bl,SC_CLAN_INFO,10000,0,val2,0,0,-1,flag);
 			break;
@@ -10716,6 +10731,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ARCWANDCLAN:
 		case SC_GOLDENMACECLAN:
 		case SC_CROSSBOWCLAN:
+		case SC_JUMPINGCLAN:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting
@@ -11334,6 +11350,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_ARCWANDCLAN:
 			case SC_GOLDENMACECLAN:
 			case SC_CROSSBOWCLAN:
+			case SC_JUMPINGCLAN:
 				continue;
 			}
 		}
@@ -11366,6 +11383,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_ARCWANDCLAN:
 			case SC_GOLDENMACECLAN:
 			case SC_CROSSBOWCLAN:
+			case SC_JUMPINGCLAN:
 				continue;
 			}
 		}
@@ -11930,6 +11948,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_ARCWANDCLAN:
 		case SC_GOLDENMACECLAN:
 		case SC_CROSSBOWCLAN:
+		case SC_JUMPINGCLAN:
 			status_change_end(bl,SC_CLAN_INFO,INVALID_TIMER);
 			break;
 	}

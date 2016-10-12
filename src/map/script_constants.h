@@ -1429,6 +1429,7 @@
 	export_constant(SC_ARCWANDCLAN);
 	export_constant(SC_GOLDENMACECLAN);
 	export_constant(SC_CROSSBOWCLAN);
+	export_constant(SC_JUMPINGCLAN);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
