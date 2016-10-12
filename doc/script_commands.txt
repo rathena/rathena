@@ -1094,6 +1094,27 @@ to alberta (98,154) when clicked.
 
 See also 'navigateto', which can be used for certain NPC events.
 
+Items
+-----
+You can refer to items by using HTML-like links to certain items:
+
+	<ITEMLINK>Display Name<INFO>Item ID</INFO></ITEMLINK>
+
+Where <Display Name> is the name that will be displayed for your link and
+<Item ID> being the ID of the item you want to link to when clicked.
+
+In 2015 the tag name was changed to <ITEM> resulting in the following syntax:
+
+	<ITEM>Display Name<INFO>Item ID</INFO></ITEM>
+	
+The following sample will open a preview window for Red Potion:
+
+	mes "Did you ever consume a <ITEMLINK>Red Potion<INFO>501</INFO></ITEMLINK>?";
+	// Or in 2015:
+	mes "Did you ever consume a <ITEM>Red Potion<INFO>501</INFO></ITEM>?";
+	
+NOTE: Be aware that item links are rendered incorrectly in 2015+ clients at the moment.
+
 URLs
 ----
 Similarly, you can create links to websites that launch in a new window:
