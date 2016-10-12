@@ -11035,7 +11035,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 				set_var(sd,variablename,(char *) split_data[i]);
 			}
 
-			safesnprintf(event,sizeof(event),"%s::OnWhisperGlobal", npc->exname);
+			safesnprintf(event,sizeof(event),"%s::%s", npc->exname,script_config.onwhisper_event_name);
 			npc_event(sd,event,0); // Calls the NPC label
 
 			return;
@@ -14119,7 +14119,7 @@ void clif_friendslist_send(struct map_session_data *sd)
 	for(i = 0; i < MAX_FRIENDS && sd->status.friends[i].char_id; i++) {
 		WFIFOL(fd, 4 + 32 * i + 0) = sd->status.friends[i].account_id;
 		WFIFOL(fd, 4 + 32 * i + 4) = sd->status.friends[i].char_id;
-		safestrncpy(WFIFOP(fd, 4 + 32 * i + 8), &sd->status.friends[i].name, NAME_LENGTH);
+		safestrncpy(WFIFOP(fd, 4 + 32 * i + 8), sd->status.friends[i].name, NAME_LENGTH);
 	}
 
 	if (i) {
