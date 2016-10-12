@@ -10303,12 +10303,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_partyinvitationstate(sd);
 		clif_equipcheckbox(sd);
 #endif
-#ifdef VIP_ENABLE
-		if (!sd->vip.disableshowrate) {
-			clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
-			//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
-		}
-#endif
 
 		if (sd->guild && battle_config.guild_notice_changemap == 1)
 			clif_guild_notice(sd, sd->guild); // Displays after VIP
