@@ -17279,8 +17279,12 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 		case UNT_COBALTTRAP:
 		case UNT_MAIZETRAP:
 		case UNT_VERDURETRAP:
-			if( bl->type != BL_PC && status_get_class_(bl) != CLASS_BOSS )
-				sc_start2(ss,bl,SC_ELEMENTALCHANGE,100,sg->skill_lv,skill_get_ele(sg->skill_id,sg->skill_lv),skill_get_time2(sg->skill_id,sg->skill_lv));
+			if( bl->type == BL_MOB && status_get_class_(bl) != CLASS_BOSS ) {
+				struct status_data *status = status_get_status_data(bl);
+
+				status->def_ele = skill_get_ele(sg->skill_id, sg->skill_lv);
+				status->ele_lv = (unsigned char)sg->skill_lv;
+			}
 			break;
 		case UNT_REVERBERATION: // For proper skill delay animation when used with Dominion Impulse
 			skill_addtimerskill(ss, tick + status_get_amotion(ss), bl->id, 0, 0, WM_REVERBERATION_MELEE, sg->skill_lv, BF_WEAPON, 0);
