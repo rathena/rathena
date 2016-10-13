@@ -44,7 +44,7 @@ static int npc_cache_mob=0;
 #if PACKETVER >= 20131223
 struct s_npc_market {
 	struct npc_item_list *list;
-	char exname[NAME_LENGTH+1];
+	char exname[NPC_NAME_LENGTH+1];
 	uint16 count;
 };
 static DBMap *NPCMarketDB; /// Stock persistency! Temporary market stocks from `market` table. struct s_npc_market, key: NPC exname
@@ -3401,7 +3401,7 @@ static void npc_market_fromsql(void) {
 		if (!(market = (struct s_npc_market *)strdb_get(NPCMarketDB,data))) {
 			CREATE(market, struct s_npc_market, 1);
 			market->count = 0;
-			safestrncpy(market->exname, data, strlen(data)+1);
+			safestrncpy(market->exname, data, NPC_NAME_LENGTH);
 			strdb_put(NPCMarketDB, market->exname, market);
 		}
 
