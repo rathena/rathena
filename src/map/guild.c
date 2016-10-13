@@ -605,7 +605,7 @@ int guild_invite(struct map_session_data *sd, struct map_session_data *tsd) {
 
 	if(tsd->status.guild_id>0 ||
 		tsd->guild_invite>0 ||
-		((agit_flag || agit2_flag) && map[tsd->bl.m].flag.gvg_castle))
+		map_flag_gvg(tsd->bl.m))
 	{	//Can't invite people inside castles. [Skotlex]
 		clif_guild_inviteack(sd,0);
 		return 0;
@@ -774,7 +774,7 @@ int guild_leave(struct map_session_data* sd, int guild_id, uint32 account_id, ui
 
 	if(sd->status.account_id!=account_id ||
 		sd->status.char_id!=char_id || sd->status.guild_id!=guild_id ||
-		((agit_flag || agit2_flag) && map[sd->bl.m].flag.gvg_castle))
+		map_flag_gvg(sd->bl.m))
 		return 0;
 
 	guild_trade_bound_cancel(sd);
@@ -806,7 +806,7 @@ int guild_expulsion(struct map_session_data* sd, int guild_id, uint32 account_id
 	//Can't leave inside guild castles.
 	if ((tsd = map_id2sd(account_id)) &&
 		tsd->status.char_id == char_id &&
-		((agit_flag || agit2_flag) && map[tsd->bl.m].flag.gvg_castle))
+		map_flag_gvg(tsd->bl.m))
 		return 0;
 
 	// find the member and perform expulsion
@@ -1350,7 +1350,7 @@ int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id) {
 void guild_guildaura_refresh(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv) {
 	struct skill_unit_group* group = NULL;
 	sc_type type = status_skill2sc(skill_id);
-	if( !(battle_config.guild_aura&((agit_flag || agit2_flag)?2:1)) &&
+	if( !(battle_config.guild_aura&(is_agit_start()?2:1)) &&
 			!(battle_config.guild_aura&(map_flag_gvg2(sd->bl.m)?8:4)) )
 		return;
 	if( !skill_lv )
@@ -1418,7 +1418,7 @@ int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd) 
 	struct guild *g[2];
 	int i;
 
-	if(agit_flag || agit2_flag) {	// Disable alliance creation during woe [Valaris]
+	if(is_agit_start()) {	// Disable alliance creation during woe [Valaris]
 		clif_displaymessage(sd->fd,msg_txt(sd,676)); //"Alliances cannot be made during Guild Wars!"
 		return 0;
 	}	// end addition [Valaris]
@@ -1534,7 +1534,7 @@ int guild_reply_reqalliance(struct map_session_data *sd,uint32 account_id,int fl
 int guild_delalliance(struct map_session_data *sd,int guild_id,int flag) {
 	nullpo_ret(sd);
 
-	if(agit_flag || agit2_flag)	{	// Disable alliance breaking during woe [Valaris]
+	if(is_agit_start()) {	// Disable alliance breaking during woe [Valaris]
 		clif_displaymessage(sd->fd,msg_txt(sd,677)); //"Alliances cannot be broken during Guild Wars!"
 		return 0;
 	}	// end addition [Valaris]
@@ -1571,7 +1571,7 @@ int guild_opposition(struct map_session_data *sd,struct map_session_data *tsd) {
 				clif_guild_oppositionack(sd,2);
 				return 0;
 			}
-			if(agit_flag || agit2_flag) // Prevent the changing of alliances to oppositions during WoE.
+			if(is_agit_start()) // Prevent the changing of alliances to oppositions during WoE.
 				return 0;
 			//Change alliance to opposition.
 			intif_guild_alliance( sd->status.guild_id,tsd->status.guild_id,
@@ -2032,6 +2032,7 @@ int guild_castledataloadack(int len, struct guild_castle *gc) {
 	if( ev < 0 ) { //No castles owned, invoke OnAgitInit as it is.
 		npc_event_doall("OnAgitInit");
 		npc_event_doall("OnAgitInit2");
+		npc_event_doall("OnAgitInit3");
 	} else // load received castles into memory, one by one
 	for( i = 0; i < n; i++, gc++ ) {
 		struct guild_castle *c = guild_castle_search(gc->castle_id);
@@ -2049,6 +2050,7 @@ int guild_castledataloadack(int len, struct guild_castle *gc) {
 			else { // last owned one
 				guild_npc_request_info(c->guild_id, "::OnAgitInit");
 				guild_npc_request_info(c->guild_id, "::OnAgitInit2");
+				guild_npc_request_info(c->guild_id, "::OnAgitInit3");
 			}
 		}
 	}
@@ -2056,36 +2058,58 @@ int guild_castledataloadack(int len, struct guild_castle *gc) {
 	return 0;
 }
 
-/*====================================================
- * Start normal woe and triggers all npc OnAgitStart
- *---------------------------------------------------*/
-void guild_agit_start(void) {	// Run All NPC_Event[OnAgitStart]
+/**
+ * Start WoE:FE and triggers all npc OnAgitStart
+ */
+void guild_agit_start(void)
+{
 	int c = npc_event_doall("OnAgitStart");
 	ShowStatus("NPC_Event:[OnAgitStart] Run (%d) Events by @AgitStart.\n",c);
 }
 
-/*====================================================
- * End normal woe and triggers all npc OnAgitEnd
- *---------------------------------------------------*/
-void guild_agit_end(void) {	// Run All NPC_Event[OnAgitEnd]
+/**
+ * End WoE:FE and triggers all npc OnAgitEnd
+ */
+void guild_agit_end(void)
+{
 	int c = npc_event_doall("OnAgitEnd");
 	ShowStatus("NPC_Event:[OnAgitEnd] Run (%d) Events by @AgitEnd.\n",c);
 }
 
-/*====================================================
- * Start woe2 and triggers all npc OnAgitStart2
- *---------------------------------------------------*/
-void guild_agit2_start(void) {	// Run All NPC_Event[OnAgitStart2]
+/**
+ * Start WoE:SE and triggers all npc OnAgitStart2
+ */
+void guild_agit2_start(void)
+{
 	int c = npc_event_doall("OnAgitStart2");
 	ShowStatus("NPC_Event:[OnAgitStart2] Run (%d) Events by @AgitStart2.\n",c);
 }
 
-/*====================================================
- * End woe2 and triggers all npc OnAgitEnd2
- *---------------------------------------------------*/
-void guild_agit2_end(void) {	// Run All NPC_Event[OnAgitEnd2]
+/**
+ * End WoE:SE and triggers all npc OnAgitEnd2
+ */
+void guild_agit2_end(void)
+{
 	int c = npc_event_doall("OnAgitEnd2");
 	ShowStatus("NPC_Event:[OnAgitEnd2] Run (%d) Events by @AgitEnd2.\n",c);
+}
+
+/**
+ * Start WoE:TE and triggers all npc OnAgitStart3
+ */
+void guild_agit3_start(void)
+{
+	int c = npc_event_doall("OnAgitStart3");
+	ShowStatus("NPC_Event:[OnAgitStart3] Run (%d) Events by @AgitStart3.\n",c);
+}
+
+/**
+ * End WoE:TE and triggers all npc OnAgitEnd3
+ */
+void guild_agit3_end(void)
+{
+	int c = npc_event_doall("OnAgitEnd3");
+	ShowStatus("NPC_Event:[OnAgitEnd3] Run (%d) Events by @AgitEnd3.\n",c);
 }
 
 // How many castles does this guild have?

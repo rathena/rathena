@@ -1678,6 +1678,18 @@ int char_delete_char_sql(uint32 char_id){
 			return -1;
 	}
 
+	if (charserv_config.char_config.char_del_restriction&CHAR_DEL_RESTRICT_GUILD && guild_id) // character is in guild
+	{
+		ShowInfo("Char deletion aborted: %s, Guild ID: %i\n", name, guild_id);
+		return -1;
+	}
+
+	if (charserv_config.char_config.char_del_restriction&CHAR_DEL_RESTRICT_PARTY && party_id) // character is in party
+	{
+		ShowInfo("Char deletion aborted: %s, Party ID: %i\n", name, party_id);
+		return -1;
+	}
+
 	/* Divorce [Wizputer] */
 	if( partner_id )
 		char_divorce_char_sql(char_id, partner_id);
@@ -1701,7 +1713,7 @@ int char_delete_char_sql(uint32 char_id){
 
 	//Make the character leave the party [Skotlex]
 	if (party_id)
-		inter_party_leave(party_id, account_id, char_id);
+		inter_party_leave(party_id, account_id, char_id, name);
 
 	/* delete char's pet */
 	//Delete the hatched pet if you have one...
@@ -2720,6 +2732,7 @@ void char_set_defaults(){
 #else
 	charserv_config.char_config.char_del_option = CHAR_DEL_EMAIL;
 #endif
+	charserv_config.char_config.char_del_restriction = CHAR_DEL_RESTRICT_ALL;
 
 //	charserv_config.userid[24];
 //	charserv_config.passwd[24];
@@ -2998,6 +3011,8 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.char_config.char_del_delay = atoi(w2);
 		} else if (strcmpi(w1, "char_del_option") == 0) {
 			charserv_config.char_config.char_del_option = atoi(w2);
+		} else if (strcmpi(w1, "char_del_restriction") == 0) {
+			charserv_config.char_config.char_del_restriction = atoi(w2);
 		} else if(strcmpi(w1,"db_path")==0) {
 			safestrncpy(schema_config.db_path, w2, sizeof(schema_config.db_path));
 		} else if (strcmpi(w1, "fame_list_alchemist") == 0) {

@@ -27,7 +27,7 @@
 static const int packet_len_table[]={
 	-1,-1,27,-1, -1, 0,37,-1, 10+NAME_LENGTH,-1, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
 	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
-	39,-1,15,15, 14,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
+	39,-1,15,15, 15+NAME_LENGTH,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
 	-1, 0, 0,14,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0, //0x3840
 	-1,-1, 7, 7,  7,11, 8,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] itembound[Akinari]
@@ -620,16 +620,18 @@ int intif_party_changeoption(int party_id,uint32 account_id,int exp,int item)
  * @param char_id : cid of player to leave
  * @return 0:char-serv disconected, 1=msg sent
  */
-int intif_party_leave(int party_id,uint32 account_id, uint32 char_id)
+int intif_party_leave(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type)
 {
 	if (CheckForCharServer())
 		return 0;
-	WFIFOHEAD(inter_fd,14);
-	WFIFOW(inter_fd,0)=0x3024;
-	WFIFOL(inter_fd,2)=party_id;
-	WFIFOL(inter_fd,6)=account_id;
-	WFIFOL(inter_fd,10)=char_id;
-	WFIFOSET(inter_fd,14);
+	WFIFOHEAD(inter_fd,15+NAME_LENGTH);
+	WFIFOW(inter_fd,0) = 0x3024;
+	WFIFOL(inter_fd,2) = party_id;
+	WFIFOL(inter_fd,6) = account_id;
+	WFIFOL(inter_fd,10) = char_id;
+	memcpy((char *)WFIFOP(inter_fd,14), name, NAME_LENGTH);
+	WFIFOB(inter_fd,14+NAME_LENGTH) = type;
+	WFIFOSET(inter_fd,15+NAME_LENGTH);
 	return 1;
 }
 
@@ -1527,8 +1529,8 @@ int intif_parse_PartyOptionChanged(int fd)
 int intif_parse_PartyMemberWithdraw(int fd)
 {
 	if(battle_config.etc_log)
-		ShowInfo("intif: party member withdraw: Party(%d), Account(%d), Char(%d)\n",RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10));
-	party_member_withdraw(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10));
+		ShowInfo("intif: party member withdraw: Type(%d) Party(%d), Account(%d), Char(%d), Name(%s)\n",RFIFOB(fd,14+NAME_LENGTH),RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),(char*)RFIFOP(fd,14));
+	party_member_withdraw(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),(char*)RFIFOP(fd,14),(enum e_party_member_withdraw)RFIFOB(fd,14+NAME_LENGTH));
 	return 1;
 }
 

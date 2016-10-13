@@ -3586,6 +3586,21 @@ int mob_is_clone(int mob_id)
 	return mob_id;
 }
 
+/**
+ * Previously, using skill_nocast with flag 16
+ * @param skill_id
+ * @return True:If disabled, False:If enabled
+ * @!TODO : Move this hardcodes!
+ **/
+static bool mob_clone_disabled_skills(uint16 skill_id) {
+	switch (skill_id) {
+		case PR_TURNUNDEAD:
+		case PR_MAGNUS:
+			return true;
+	}
+	return false;
+}
+
 //Flag values:
 //&1: Set special ai (fight mobs, not players)
 //If mode is not passed, a default aggressive mode is used.
@@ -3650,7 +3665,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 		uint16 sk_idx = 0;
 		if (!skill_id || !(sk_idx = skill_get_index(skill_id)) || sd->status.skill[sk_idx].lv < 1 ||
 			(skill_get_inf2(skill_id)&(INF2_WEDDING_SKILL|INF2_GUILD_SKILL)) ||
-			skill_get_nocast(skill_id)&16
+			mob_clone_disabled_skills(skill_id)
 		)
 			continue;
 		//Normal aggressive mob, disable skills that cannot help them fight
@@ -4966,6 +4981,27 @@ static void mob_load(void)
 		"/"DBIMPORT,
 	};
 
+	// First we parse all the possible monsters to add additional data in the second loop
+	if( db_use_sqldbs ){
+		mob_read_sqldb();
+		mob_read_sqlskilldb();
+	}else{
+		for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
+			int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
+			char* dbsubpath2 = (char*)aMalloc(n2+1);
+
+			if( i == 0 ){
+				safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+			}else{
+				safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
+			}
+
+			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, i);
+
+			aFree(dbsubpath2);
+		}
+	}
+
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){	
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
@@ -4982,12 +5018,7 @@ static void mob_load(void)
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 		
-		if (db_use_sqldbs && i==0) //only read once for sql
-		{
-			mob_read_sqldb();
-			mob_read_sqlskilldb();
-		} else {
-			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, i);
+		if( !db_use_sqldbs ){
 			mob_readskilldb(dbsubpath2,i);
 		}
 
