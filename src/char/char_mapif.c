@@ -1206,16 +1206,15 @@ int chmapif_parse_updfamelist(int fd){
  * HZ 0x2b2b
  * Transmist vip data to mapserv
  */
-int chmapif_vipack(int mapfd, uint32 aid, uint32 vip_time, uint8 isvip, uint8 isgm, uint32 groupid) {
+int chmapif_vipack(int mapfd, uint32 aid, uint32 vip_time, uint32 groupid, uint8 flag) {
 #ifdef VIP_ENABLE
-	uint8 buf[16];
+	uint8 buf[15];
 	WBUFW(buf,0) = 0x2b2b;
 	WBUFL(buf,2) = aid;
 	WBUFL(buf,6) = vip_time;
-	WBUFB(buf,10) = isvip;
-	WBUFB(buf,11) = isgm;
-	WBUFL(buf,12) = groupid;
-	chmapif_send(mapfd,buf,16);  // inform the mapserv back
+	WBUFL(buf,10) = groupid;
+	WBUFB(buf,14) = flag;
+	chmapif_send(mapfd,buf,15);  // inform the mapserv back
 #endif
 	return 0;
 }
