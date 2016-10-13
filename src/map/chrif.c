@@ -299,9 +299,9 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	chrif_bsdata_save(sd, (flag && (flag != 3)));
 
 	if (sd->state.storage_flag == 1)
-        intif_storage_save(sd,TABLE_STORAGE);
-    intif_storage_save(sd,TABLE_INVENTORY);
-    intif_storage_save(sd,TABLE_CART);
+		intif_storage_save(sd,TABLE_STORAGE);
+	intif_storage_save(sd,TABLE_INVENTORY);
+	intif_storage_save(sd,TABLE_CART);
 
 	//For data sync
 	if (sd->state.storage_flag == 2)

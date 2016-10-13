@@ -4486,7 +4486,7 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 				sd->inventory.u.items_inventory[i].bound == item->bound &&
 				sd->inventory.u.items_inventory[i].expire_time == 0 &&
 				sd->inventory.u.items_inventory[i].unique_id == item->unique_id &&
-			    memcmp(&sd->inventory.u.items_inventory[i].card, &item->card, sizeof(item->card)) == 0 ) {
+				memcmp(&sd->inventory.u.items_inventory[i].card, &item->card, sizeof(item->card)) == 0 ) {
 				if( amount > MAX_AMOUNT - sd->inventory.u.items_inventory[i].amount || ( id->stack.inventory && amount > id->stack.amount - sd->inventory.u.items_inventory[i].amount ) )
 					return ADDITEM_OVERAMOUNT;
 				sd->inventory.u.items_inventory[i].amount += amount;
@@ -5070,7 +5070,7 @@ void pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type,e_log
 	nullpo_retv(sd);
 
 	if(sd->cart.u.items_cart[n].nameid == 0 ||
-	   sd->cart.u.items_cart[n].amount < amount)
+		sd->cart.u.items_cart[n].amount < amount)
 		return;
 
 	log_pick_pc(sd, log_type, -amount, &sd->cart.u.items_cart[n]);

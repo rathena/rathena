@@ -678,13 +678,14 @@ static void mapif_storage_data_loaded(int fd, uint32 account_id, char type, stru
  * @param fd
  * @param account_id
  * @param char_id
+ * @param success
  * @param type
  */
-void mapif_storage_saved(int fd, uint32 account_id, uint32 char_id, bool sucess, char type) {
+void mapif_storage_saved(int fd, uint32 account_id, uint32 char_id, bool success, char type) {
 	WFIFOHEAD(fd,8);
 	WFIFOW(fd, 0) = 0x388b;
 	WFIFOL(fd, 2) = account_id;
-	WFIFOB(fd, 6) = sucess;
+	WFIFOB(fd, 6) = success;
 	WFIFOB(fd, 7) = type;
 	WFIFOSET(fd,8);
 }
