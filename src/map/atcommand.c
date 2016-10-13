@@ -9549,8 +9549,6 @@ ACMD_FUNC(vip) {
 	pl_sd->vip.time += vipdifftime; //increase or reduce VIP duration
 	
 	if (pl_sd->vip.time <= now) {
-		pl_sd->vip.time = 0;
-		pl_sd->vip.enabled = 0;
 		clif_displaymessage(pl_sd->fd, msg_txt(pl_sd,703)); // GM has removed your VIP time.
 		clif_displaymessage(fd, msg_txt(sd,704)); // Player is no longer VIP.
 	} else {

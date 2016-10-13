@@ -10232,7 +10232,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->state.connect_new) {
 		int lv;
 		guild_notice = true;
-		sd->state.connect_new = 0;
 		clif_skillinfoblock(sd);
 		clif_hotkeys_send(sd);
 		clif_updatestatus(sd,SP_BASEEXP);
@@ -10303,12 +10302,6 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_partyinvitationstate(sd);
 		clif_equipcheckbox(sd);
 #endif
-#ifdef VIP_ENABLE
-		if (!sd->vip.disableshowrate) {
-			clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
-			//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
-		}
-#endif
 
 		if (sd->guild && battle_config.guild_notice_changemap == 1)
 			clif_guild_notice(sd, sd->guild); // Displays after VIP
@@ -10353,7 +10346,18 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		status_change_clear_onChangeMap(&sd->bl, &sd->sc);
 		map_iwall_get(sd); // Updates Walls Info on this Map to Client
 		status_calc_pc(sd, SCO_NONE); // Some conditions are map-dependent so we must recalculate
-		sd->state.changemap = false;
+
+#ifdef VIP_ENABLE
+		if (!sd->state.connect_new &&
+			!sd->vip.disableshowrate &&
+			sd->state.pmap != sd->bl.m &&
+			map[sd->state.pmap].adjust.bexp != map[sd->bl.m].adjust.bexp
+			)
+		{
+			clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
+			//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
+		}
+#endif
 
 		// Instances do not need their own channels
 		if( channel_config.map_enable && channel_config.map_autojoin && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id )
@@ -10420,6 +10424,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	pc_show_questinfo_reinit(sd);
 	pc_show_questinfo(sd);
+
+	sd->state.connect_new = 0;
+	sd->state.changemap = false;
 }
 
 
