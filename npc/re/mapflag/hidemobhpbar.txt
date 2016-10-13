@@ -1,0 +1,62 @@
+//===== rAthena Script =======================================
+//= Mapflag: hidemobhpbar.
+//===== Description: =========================================
+//= Hide monster's HP bar (added in episode 14.2).
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Capuche]
+//============================================================
+
+// Izlude Academy
+iz_ac01	mapflag	hidemobhpbar
+iz_ac01_a	mapflag	hidemobhpbar
+iz_ac01_b	mapflag	hidemobhpbar
+iz_ac01_c	mapflag	hidemobhpbar
+iz_ac01_d	mapflag	hidemobhpbar
+
+// WoE TE castle
+te_prtcas01	mapflag	hidemobhpbar
+te_prtcas02	mapflag	hidemobhpbar
+te_prtcas03	mapflag	hidemobhpbar
+te_prtcas04	mapflag	hidemobhpbar
+te_prtcas05	mapflag	hidemobhpbar
+te_aldecas1	mapflag	hidemobhpbar
+te_aldecas2	mapflag	hidemobhpbar
+te_aldecas3	mapflag	hidemobhpbar
+te_aldecas4	mapflag	hidemobhpbar
+te_aldecas5	mapflag	hidemobhpbar
+
+// TODO : info on TE dungeon
+// teg_dun01	mapflag	hidemobhpbar
+// teg_dun02	mapflag	hidemobhpbar
+
+// TODO : info on WoE FE & SE / dungeon
+aldeg_cas01	mapflag	hidemobhpbar
+aldeg_cas02	mapflag	hidemobhpbar
+aldeg_cas03	mapflag	hidemobhpbar
+aldeg_cas04	mapflag	hidemobhpbar
+aldeg_cas05	mapflag	hidemobhpbar
+gefg_cas01	mapflag	hidemobhpbar
+gefg_cas02	mapflag	hidemobhpbar
+gefg_cas03	mapflag	hidemobhpbar
+gefg_cas04	mapflag	hidemobhpbar
+gefg_cas05	mapflag	hidemobhpbar
+payg_cas01	mapflag	hidemobhpbar
+payg_cas02	mapflag	hidemobhpbar
+payg_cas03	mapflag	hidemobhpbar
+payg_cas04	mapflag	hidemobhpbar
+payg_cas05	mapflag	hidemobhpbar
+prtg_cas01	mapflag	hidemobhpbar
+prtg_cas02	mapflag	hidemobhpbar
+prtg_cas03	mapflag	hidemobhpbar
+prtg_cas04	mapflag	hidemobhpbar
+prtg_cas05	mapflag	hidemobhpbar
+schg_cas01	mapflag	hidemobhpbar
+schg_cas02	mapflag	hidemobhpbar
+schg_cas03	mapflag	hidemobhpbar
+schg_cas04	mapflag	hidemobhpbar
+schg_cas05	mapflag	hidemobhpbar
+arug_cas01	mapflag	hidemobhpbar
+arug_cas02	mapflag	hidemobhpbar
+arug_cas03	mapflag	hidemobhpbar
+arug_cas04	mapflag	hidemobhpbar
+arug_cas05	mapflag	hidemobhpbar

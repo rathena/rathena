@@ -365,7 +365,8 @@ enum {
 	MF_NOCOSTUME,
 	MF_GVG_TE_CASTLE,
 	MF_GVG_TE,
-	MF_HIDE_HP_BAR,};
+	MF_HIDEMOBHPBAR,
+};
 
 const char* script_op2name(int op)
 {
@@ -11819,7 +11820,7 @@ BUILDIN_FUNC(getmapflag)
 			case MF_NOCOSTUME:			script_pushint(st,map[m].flag.nocostume); break;
 			case MF_GVG_TE_CASTLE:		script_pushint(st,map[m].flag.gvg_te_castle); break;
 			case MF_GVG_TE:				script_pushint(st,map[m].flag.gvg_te); break;
-			case MF_HIDE_HP_BAR:		script_pushint(st,map[m].flag.hidehpbar); break;
+			case MF_HIDEMOBHPBAR:		script_pushint(st,map[m].flag.hidemobhpbar); break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -11943,7 +11944,7 @@ BUILDIN_FUNC(setmapflag)
 				map[m].flag.gvg_te = 1;
 				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
 				break;
-			case MF_HIDE_HP_BAR:		map[m].flag.hidehpbar = 1; break;
+			case MF_HIDEMOBHPBAR:		map[m].flag.hidemobhpbar = 1; break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -12051,7 +12052,7 @@ BUILDIN_FUNC(removemapflag)
 				map[m].flag.gvg_te = 0;
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 				break;
-			case MF_HIDE_HP_BAR:		map[m].flag.hidehpbar = 0; break;
+			case MF_HIDEMOBHPBAR:		map[m].flag.hidemobhpbar = 0; break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{

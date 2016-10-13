@@ -4173,8 +4173,8 @@ ACMD_FUNC(mapinfo) {
 		strcat(atcmd_output, " AllowKS |");
 	if (map[m_id].flag.reset)
 		strcat(atcmd_output, " Reset |");
-	if (map[m_id].flag.hidehpbar)
-		strcat(atcmd_output, " HideHPBar |");
+	if (map[m_id].flag.hidemobhpbar)
+		strcat(atcmd_output, " HideMobHPBar |");
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,msg_txt(sd,1051)); // Other Flags2:
@@ -8082,7 +8082,7 @@ ACMD_FUNC(mapflag) {
 		checkflag(partylock);			checkflag(guildlock);			checkflag(reset);				checkflag(chmautojoin);
 		checkflag(nousecart);			checkflag(noitemconsumption);	checkflag(nosumstarmiracle);	checkflag(nomineeffect);
 		checkflag(nolockon);			checkflag(notomb);				checkflag(nocostume);			checkflag(gvg_te);
-		checkflag(gvg_te_castle);		checkflag(hidehpbar);
+		checkflag(gvg_te_castle);		checkflag(hidemobhpbar);
 #ifdef ADJUST_SKILL_DAMAGE
 		checkflag(skill_damage);
 #endif
@@ -8107,7 +8107,7 @@ ACMD_FUNC(mapflag) {
 	setflag(partylock);			setflag(guildlock);			setflag(reset);					setflag(chmautojoin);
 	setflag(nousecart);			setflag(noitemconsumption);	setflag(nosumstarmiracle);		setflag(nomineeffect);
 	setflag(nolockon);			setflag(notomb);			setflag(nocostume);				setflag(gvg_te);
-	setflag(gvg_te_castle);		setflag(hidehpbar);
+	setflag(gvg_te_castle);		setflag(hidemobhpbar);
 #ifdef ADJUST_SKILL_DAMAGE
 	setflag(skill_damage);
 #endif
@@ -8123,7 +8123,7 @@ ACMD_FUNC(mapflag) {
 	clif_displaymessage(sd->fd,"fog, fireworks, sakura, leaves, nogo, nobaseexp, nojobexp, nomobloot, nomvploot,");
 	clif_displaymessage(sd->fd,"nightenabled, restricted, nodrop, novending, loadevent, nochat, partylock, guildlock,");
 	clif_displaymessage(sd->fd,"reset, chmautojoin, nousecart, noitemconsumption, nosumstarmiracle, nolockon, notomb,");
-	clif_displaymessage(sd->fd,"nocostume, gvg_te, gvg_te_castle, hidehpbar");
+	clif_displaymessage(sd->fd,"nocostume, gvg_te, gvg_te_castle, hidemobhpbar");
 #ifdef ADJUST_SKILL_DAMAGE
 	clif_displaymessage(sd->fd,"skill_damage");
 #endif
