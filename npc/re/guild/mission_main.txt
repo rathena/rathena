@@ -19,7 +19,7 @@ function calcjobexp;
 		mes "Please lighten your load and try again.";
 		close;
 	}
-	
+
 	.@zone$ = strnpcinfo(2);
 	if(.@zone$ == "gqaldeg"){
 		.@zoneid = 3;
@@ -67,7 +67,7 @@ function calcjobexp;
 					mes "Come back when the waiting time is over.";
 					next;
 					mes .@npcname$;
-					mes "If you have luck on your side, you'll have a good result.";
+					mes "If you have luck on your side, you'll have good results.";
 					close;
 				} else if(.@time_check1 == 2){
 					erasequest .conquer_delay_questid[.@zoneid];
@@ -79,11 +79,11 @@ function calcjobexp;
 					.@siege_check = (.@edition == 1 ? agitcheck() : .@edition == 2 ? agitcheck2() : agitcheck3());
 					.@time = atoi(gettimestr("%H%M",4));
 					.@after_time = ((.weekday[.@zoneid] == gettime(4)) && ((.@time > .start_time[.@zoneid]) && (.@time < .end_time[.@zoneid])));
-					
+
 					if(.@siege_check && .@after_time){
 						mes .@npcname$;
-						mes "According to ^4d4dff the number of fortresses that your guild has conquered at this very moment, ^000000 I'll give you a reward.";
-						mes "Do you want to check right now? You're aware that ^4d4dff the number can change even as we speak,^000000 right?";
+						mes "According to ^4d4dffthe number of fortresses that your guild has conquered at this very moment,^000000 I'll give you a reward.";
+						mes "Do you want to check right now? You're aware that ^4d4dffthe number can change even as we speak,^000000 right?";
 						next;
 						if(select("I'll come back later.","Let's check right now!") == 1){
 							mes .@npcname$;
@@ -95,7 +95,7 @@ function calcjobexp;
 							for(.@i = 0; .@i < 5; ++.@i){
 								.@total += (.@gid == getcastledata(.castle$[.@i+.@zoneid*5],0));
 							}
-							
+
 							if(!.@total){
 								mes .@npcname$;
 								mes "Unfortunately, there is no fortress that your guild has conquered.";
@@ -106,7 +106,7 @@ function calcjobexp;
 								if(.@total == 5)
 									mes "Incredible.";
 								else
-									mes "Currently, the total number of fortress that your guild has conquered";
+									mes "Currently, the total number of fortresses that your guild has conquered";
 								for(.@i = 0; .@i < 5; ++.@i){
 									mes getcastlename(.castle$[.@i+.@zoneid*5]) + (.@gid == getcastledata(.castle$[.@i+.@zoneid*5],0) ? ": ^4d4dffOccupied^000000" : "");
 								}
@@ -158,7 +158,7 @@ function calcjobexp;
 			}
 			if(BaseLevel < .level_req[.@index]){
 				mes .@npcname$;
-				mes "Mm, unfortunately, this mission is limited to users with ^4d4dff level " + .level_req[.@index] + " ^000000 or higher only.";
+				mes "Hmm, unfortunately, this mission is limited to users with ^4d4dfflevel " + .level_req[.@index] + "^000000 or higher only.";
 				mes "Your level is not high enough.";
 				close;
 			}
@@ -177,7 +177,7 @@ function calcjobexp;
 					getitem 6615,1;
 				} else {
 					mes .@npcname$;
-					mes "Mm? It seems like you haven't completed the mission yet…";
+					mes "Hmm? It seems like you haven't completed the mission yet…";
 					mes "Is there any problem?";
 					next;
 					if(select("No.","Give up the quest.") == 1){
@@ -234,12 +234,12 @@ function calcjobexp;
 		case 3: // About quests
 			mes .@npcname$;
 			mes "It's not difficult at all.";
-			mes "I give a reward ^4d4dff depending on how many fortresses you have conquered.^000000";
-			mes "^4d4dff The type and quality of the reward depend on the number of conquered fortresses at the very moment I check.^000000";
+			mes "I give a reward ^4d4dffdepending on how many fortresses you have conquered.^000000";
+			mes "^4d4dffThe type and quality of the reward depend on the number of conquered fortresses at the very moment I check.^000000";
 			next;
 			mes .@npcname$;
 			mes "And of course, I check during the siege hours only.";
-			mes "^4d4dff Receiving a reward is followed by an hour of waiting time. So you'd better figure out the right timing as well.^000000";
+			mes "^4d4dffReceiving a reward is followed by an hour of waiting time. So you'd better figure out the right timing as well.^000000";
 			next;
 			mes .@npcname$;
 			mes "If you are a master of a guild that is currently participating in siege battles, you should give it a try.";
@@ -335,64 +335,64 @@ OnInit:
 		switch(getarg(0)){
 			case 7525:
 				mes "You should hunt 50 or more Caterpillars and Creamy Fear monsters..";
-				return 0;
+				break;
 			case 7526:
 				mes "Hunt down 30 or more of all 3 types of Abyss Kobolds.";
-				return 0;
+				break;
 			case 7527:
 				mes "^4d4dffYou should kill furious 'Pyuriel' and warrior 'Lora'.^000000";
 				return 1;
 			case 7528:
-				mes "^4d4dff Hunt 50 or more of Giant Hornets and Ancient Worms, respectively.^000000";
-				return 0;
+				mes "^4d4dffHunt 50 or more of Giant Hornets and Ancient Worms, respectively.^000000";
+				break;
 			case 7529:
-				mes "^4d4dff Hunt 40 or more of Killer Mantises and 50 or more of Angra Mantises.^000000";
-				return 0;
+				mes "^4d4dffHunt 40 or more of Killer Mantises and 50 or more of Angra Mantises.^000000";
+				break;
 			case 7530:
-				mes "They are ^4d4dff 'Elvira' and 'Gioia,' which is a strange mechanical creature of heroes' tears.^000000";
+				mes "They are ^4d4dff'Elvira' and 'Gioia,' which is a strange mechanical creature of heroes' tears.^000000";
 				return 1;
 			case 7531:
 				mes "^4d4dffHunt 50 or more Zombie Masters and Wraith Deads, respectively.^000000";
-				return 0;
+				break;
 			case 7532:
 				mes "^4d4dffHunt 50 GLD_DARK_SHADOW, 20 GLD_DARK_FRAME, and 20 GLD_DARK_PRIEST monsters.^000000";
-				return 0;
+				break;
 			case 7533:
 				mes "They are ^4d4dff'Kades' and 'Rudo' who wander around the dead's hill.^000000";
 				return 1;
 			case 7534:
-				mes "^4d4dffHunt 50 or more Gullinbursti and Leib Olmai, respectively.^000000.";
-				return 0;
+				mes "^4d4dffHunt 50 or more Gullinbursti and Leib Olmai, respectively.^000000";
+				break;
 			case 7535:
-				mes "^4d4dffHunt 45 or more Skeleton General, 20 or more Am Mut and 25 or more Gajomart, respectively.^000000.";
-				return 0;
+				mes "^4d4dffHunt 45 or more Skeleton General, 20 or more Am Mut and 25 or more Gajomart, respectively.^000000";
+				break;
 			case 7536:
-				mes "^4d4dffThey are Old Empire's General 'Daehyon' and Guard 'Soheon'^000000.";
+				mes "^4d4dffThey are Old Empire's General 'Daehyon' and Guard 'Soheon'.^000000";
 				return 1;
 			case 7537:
-				mes "^4d4dffHunt 50 or more Hell Apocalypse and Zakudam, respectively.^000000.";
-				return 0;
+				mes "^4d4dffHunt 50 or more Hell Apocalypse and Zakudam, respectively.^000000";
+				break;
 			case 7538:
-				mes "^4d4dffHunt 35 or more Heavy Metaling and Cobalt Mineral, respectively.^000000.";
-				return 0;
+				mes "^4d4dffHunt 35 or more Heavy Metaling and Cobalt Mineral, respectively.^000000";
+				break;
 			case 7539:
-				mes "^4d4dffHunt more than 50 Banshee Masters and 30 Beholder Masters^000000.";
-				return 0;
+				mes "^4d4dffHunt more than 50 Banshee Masters and 30 Beholder Masters.^000000";
+				break;
 			case 7540:
-				mes "^4d4dffHunt 50 Aunoes, and 20 Fanats^000000.";
-				return 0;
+				mes "^4d4dffHunt 50 Aunoes, and 20 Fanats.^000000";
+				break;
 			case 7541:
-				mes "^4d4dffHunt 30 or more Knight, Blacksmith, Assassin, respectively^000000.";
-				return 0;
+				mes "^4d4dffHunt 30 or more Knight, Blacksmith, Assassin, respectively.^000000";
+				break;
 			case 7542:
-				mes "^4d4dffHunt 30 or more Wizard, Priest, Hunter respectively^000000.";
-				return 0;
+				mes "^4d4dffHunt 30 or more Wizard, Priest, Hunter respectively.^000000";
+				break;
 			case 7561:
-				mes "^4d4dffHunt 30 or more, Crusader, Rogue, Alchemist, respectively^000000.";
-				return 0;
+				mes "^4d4dffHunt 30 or more, Crusader, Rogue, Alchemist, respectively.^000000";
+				break;
 			case 7562:
-				mes "^4d4dffHunt 30 or more Sage, Monk, Bard, respectively^000000.";
-				return 0;
+				mes "^4d4dffHunt 30 or more Sage, Monk, Bard, respectively.^000000";
+				break;
 		}
 		return 0;
 	}
