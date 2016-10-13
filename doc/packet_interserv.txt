@@ -468,7 +468,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2743:
 	Type: AH
-	Structure: <cmd>.W <aid>.L <vip_time>.L <flag>.B <groupid>.L <mapfd>.B
+	Structure: <cmd>.W <aid>.L <vip_time>.L <flag>.B <groupid>.L <mapfd>.L
 	index: 0,2,6,10,11,15
 	len: 19
 	parameter:
