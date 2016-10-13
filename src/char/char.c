@@ -515,30 +515,33 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 }
 
 /// Saves an array of 'item' entries into the specified table.
-int char_memitemdata_to_sql(const struct item items[], int max, int id, int tableswitch) {
+int char_memitemdata_to_sql(const struct item items[], int max, int id, enum storage_type tableswitch) {
 	StringBuf buf;
 	SqlStmt* stmt;
-	int i, j, offset = 0;
-	const char* tablename, *selectoption;
+	int i, j, offset = 0, errors = 0;
+	const char *tablename, *selectoption, *printname;
 	struct item item; // temp storage variable
 	bool* flag; // bit array for inventory matching
 	bool found;
-	int errors = 0;
 
 	switch (tableswitch) {
 		case TABLE_INVENTORY:
+			printname = "Inventory";
 			tablename = schema_config.inventory_db;
 			selectoption = "char_id";
 			break;
 		case TABLE_CART:
+			printname = "Cart";
 			tablename = schema_config.cart_db;
 			selectoption = "char_id";
 			break;
 		case TABLE_STORAGE:
+			printname = "Storage";
 			tablename = schema_config.storage_db;
 			selectoption = "account_id";
 			break;
 		case TABLE_GUILD_STORAGE:
+			printname = "Guild Storage";
 			tablename = schema_config.guild_storage_db;
 			selectoption = "guild_id";
 			break;
@@ -717,12 +720,117 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, int tabl
 		errors++;
 	}
 
-	ShowInfo("Saved %s data for %s: %d\n", (tableswitch == TABLE_INVENTORY ? "Inventory" : (tableswitch == TABLE_GUILD_STORAGE ? "Guild Storage" : (tableswitch == TABLE_STORAGE ? "Storage" : "Cart"))), selectoption, id);
+	ShowInfo("Saved %s data for %s: %d\n", printname, selectoption, id);
 
 	StringBuf_Destroy(&buf);
 	aFree(flag);
 
 	return errors;
+}
+
+bool char_memitemdata_from_sql( struct s_storage* p, int max, int id, enum storage_type tableswitch ){
+	StringBuf buf;
+	SqlStmt* stmt;
+	int i,j, offset = 0;
+	struct item item, *storage;
+	const char *tablename, *selectoption, *printname;
+
+	switch (tableswitch) {
+		case TABLE_INVENTORY:
+			printname = "Inventory";
+			tablename = schema_config.inventory_db;
+			selectoption = "char_id";
+			storage = p->u.items_inventory;
+			break;
+		case TABLE_CART:
+			printname = "Cart";
+			tablename = schema_config.cart_db;
+			selectoption = "char_id";
+			storage = p->u.items_cart;
+			break;
+		case TABLE_STORAGE:
+			printname = "Storage";
+			tablename = schema_config.storage_db;
+			selectoption = "account_id";
+			storage = p->u.items_storage;
+			break;
+		case TABLE_GUILD_STORAGE:
+			printname = "Guild Storage";
+			tablename = schema_config.guild_storage_db;
+			selectoption = "guild_id";
+			storage = p->u.items_guild;
+			break;
+		default:
+			ShowError("Invalid table name!\n");
+			return false;
+	}
+
+	memset(p, 0, sizeof(struct s_storage)); //clean up memory
+	p->id = id;
+	p->type = tableswitch;
+
+	stmt = SqlStmt_Malloc(sql_handle);
+	if (stmt == NULL) {
+		SqlStmt_ShowDebug(stmt);
+		return false;
+	}
+
+	StringBuf_Init(&buf);
+	StringBuf_AppendStr(&buf, "SELECT `id`,`nameid`,`amount`,`equip`,`identify`,`refine`,`attribute`,`expire_time`,`bound`,`unique_id`");
+	if (tableswitch == TABLE_INVENTORY) {
+		StringBuf_Printf(&buf, ", `favorite`");
+		offset = 1;
+	}
+	for( j = 0; j < MAX_SLOTS; ++j )
+		StringBuf_Printf(&buf, ",`card%d`", j);
+	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
+		StringBuf_Printf(&buf, ", `option_id%d`", j);
+		StringBuf_Printf(&buf, ", `option_val%d`", j);
+		StringBuf_Printf(&buf, ", `option_parm%d`", j);
+	}
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `%s`=? ORDER BY `nameid`", tablename, selectoption );
+
+	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
+		||	SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &id, 0)
+		||	SQL_ERROR == SqlStmt_Execute(stmt) )
+	{
+		SqlStmt_ShowDebug(stmt);
+		SqlStmt_Free(stmt);
+		StringBuf_Destroy(&buf);
+		return false;
+	}
+
+	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,          &item.id,        0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 1, SQLDT_USHORT,       &item.nameid,    0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,        &item.amount,    0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 3, SQLDT_UINT,         &item.equip,     0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 4, SQLDT_CHAR,         &item.identify,  0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 5, SQLDT_CHAR,         &item.refine,    0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 6, SQLDT_CHAR,         &item.attribute, 0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 7, SQLDT_UINT,         &item.expire_time, 0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 8, SQLDT_CHAR,         &item.bound,     0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 9, SQLDT_ULONGLONG,    &item.unique_id, 0, NULL, NULL);
+	if (tableswitch == TABLE_INVENTORY)
+		SqlStmt_BindColumn(stmt, 10, SQLDT_CHAR, &item.favorite,    0, NULL, NULL);
+	for( i = 0; i < MAX_SLOTS; ++i )
+		SqlStmt_BindColumn(stmt, 10+offset+i, SQLDT_USHORT, &item.card[i],   0, NULL, NULL);
+ 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
+		SqlStmt_BindColumn(stmt, 10+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].id, 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 11+offset+MAX_SLOTS+i*3, SQLDT_SHORT, &item.option[i].value, 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 12+offset+MAX_SLOTS+i*3, SQLDT_CHAR, &item.option[i].param, 0, NULL, NULL);
+ 	}
+
+	for( i = 0; i < max && SQL_SUCCESS == SqlStmt_NextRow(stmt); ++i )
+		memcpy(&storage[i], &item, sizeof(item));
+
+	p->amount = i;
+	ShowInfo("Loaded %s data from DB for %s: %d (total: %d)\n", printname, selectoption, id, p->amount);
+
+	SqlStmt_FreeResult(stmt);
+	SqlStmt_Free(stmt);
+	StringBuf_Destroy(&buf);
+
+	return true;
 }
 
 /**

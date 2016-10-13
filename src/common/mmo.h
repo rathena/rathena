@@ -299,7 +299,6 @@ struct skill_cooldown_data {
 enum storage_type {
 	TABLE_INVENTORY = 1,
 	TABLE_CART,
-	TABLE_CART_,
 	TABLE_STORAGE,
 	TABLE_GUILD_STORAGE,
 };
