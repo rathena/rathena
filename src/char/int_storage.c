@@ -687,12 +687,6 @@ void mapif_storage_saved(int fd, uint32 account_id, uint32 char_id, bool sucess,
 	WFIFOB(fd, 6) = sucess;
 	WFIFOB(fd, 7) = type;
 	WFIFOSET(fd,8);
-
-	if (type == TABLE_CART_) {
-		struct s_storage stor;
-		memset(&stor, 0, sizeof(struct s_storage));
-		mapif_storage_data_loaded(fd, account_id, type, stor, cart_fromsql(char_id, &stor));
-	}
 }
 
 /**
@@ -743,12 +737,9 @@ bool mapif_parse_StorageSave(int fd) {
 
 	//ShowInfo("Saving storage data for AID=%d.\n", aid);
 	switch(type){
-		case TABLE_INVENTORY: inventory_tosql(cid, &stor); break;
-		case TABLE_STORAGE:   storage_tosql(aid, &stor);   break;
-		case TABLE_CART:
-		case TABLE_CART_:
-			cart_tosql(cid, &stor);
-			break;
+		case TABLE_INVENTORY:	inventory_tosql(cid, &stor); break;
+		case TABLE_STORAGE:		storage_tosql(aid, &stor); break;
+		case TABLE_CART:		cart_tosql(cid, &stor); break;
 		default: return false;
 	}
 	mapif_storage_saved(fd, aid, cid, true, type);

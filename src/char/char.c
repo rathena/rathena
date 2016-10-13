@@ -531,7 +531,6 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, int tabl
 			selectoption = "char_id";
 			break;
 		case TABLE_CART:
-		case TABLE_CART_:
 			tablename = schema_config.cart_db;
 			selectoption = "char_id";
 			break;

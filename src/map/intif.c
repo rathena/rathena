@@ -3163,7 +3163,6 @@ static bool intif_parse_StorageReceived(int fd)
 		case TABLE_INVENTORY: stor = &sd->inventory; break;
 		case TABLE_STORAGE: stor = &sd->storage; break;
 		case TABLE_CART:
-		case TABLE_CART_:
 			stor = &sd->cart;
 			break;
 		default: return false;
@@ -3216,11 +3215,9 @@ static bool intif_parse_StorageReceived(int fd)
 			if (sd->state.autotrade) {
 				clif_parse_LoadEndAck(sd->fd, sd);
 				sd->autotrade_tid = add_timer(gettick() + battle_config.feature_autotrade_open_delay, pc_autotrade_timer, sd->bl.id, 0);
+			}else if( sd->state.prevend ){
+				clif_openvendingreq(sd, sd->vend_skill_lv+2);
 			}
-			break;
-
-		case TABLE_CART_:
-			clif_openvendingreq(sd, sd->vend_skill_lv+2);
 			break;
 
 		case TABLE_STORAGE:
@@ -3246,8 +3243,14 @@ static void intif_parse_StorageSaved(int fd)
 				//ShowInfo("Storage has been saved (AID: %d).\n", RFIFOL(fd, 2));
 				break;
 			case TABLE_CART: // cart
-			case TABLE_CART_:
 				//ShowInfo("Cart has been saved (AID: %d).\n", RFIFOL(fd, 2));
+				{
+					struct map_session_data *sd = map_id2sd(RFIFOL(fd, 2));
+
+					if( sd && sd->state.prevend ){
+						intif_storage_request(sd,TABLE_CART);
+					}
+				}
 				break;
 			default:
 				break;
@@ -3301,8 +3304,7 @@ bool intif_storage_save(struct map_session_data *sd, enum storage_type type)
 		case TABLE_STORAGE: 
 			stor = &sd->storage;
 			break;
-		case TABLE_CART: 
-		case TABLE_CART_:
+		case TABLE_CART:
 			stor = &sd->cart;
 			break;
 		default:
