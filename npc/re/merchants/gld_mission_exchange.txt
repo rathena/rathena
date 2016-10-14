@@ -6,6 +6,8 @@
 //===== Changelogs: ==========================================
 //= 1.0 First Version. [Cydh]
 //= 1.1 Minified the script. [Secretdataz]
+//= 1.2 Script cleanup. [aleos]
+//= 1.3 Minified Kvasir's ring part. [Lemongrass]
 //============================================================
 
 // Templates
@@ -250,85 +252,15 @@
 								break;
 
 							case 2:
-								mes "[ClickClick MeowMeow-GX]";
-								if ((countitem(2952) > 0) & (countitem(6615) > 9)) {
-									mes "You have Kvasir's Ring (Red).";
-									mes "Do you want to trade this in for Kvasir's Ring (Blue)?";
-									next;
-									switch(select("Yes!","Leave")) {
-										case 1:
-											mes "[ClickClick MeowMeow-GX]";
-											if ((countitem(2952) > 0) & (countitem(6615) > 9)) {
-												mes "You have traded Kvasir's Ring (Red) for Kvasir's Ring (Blue).";
-												delitem 2952,1; // Kvasir_Ring_Red
-												delitem 6615,10; // Siege_Guild_Coin
-												getitem 2951,1; // Kvasir_Ring_Blue
-											} else
-												mes "You need 1 Kvasir's Ring (Red) and 10 Commemorative Coins in order to complete the purchase.";
-											break;
-
-										case 2:
-											mes "[ClickClick MeowMeow-GX]";
-											mes "You've decided to view other items.";
-											break;
-									}
-								} else
-									mes "You need 1 Kvasir's Ring (Red) and 10 Commemorative Coins in order to complete the purchase.";
+								callsub S_Kvasir, "Kvasir's Ring (Red)", 2952, "Kvasir's Ring (Blue)", 2951;
 								break;
 
 							case 3:
-								mes "[ClickClick MeowMeow-GX]";
-								if ((countitem(2953) > 0) & (countitem(6615) > 9)) {
-									mes "You have Kvasir's Ring (Green).";
-									mes "Do you want to trade this in for Kvasir's Ring (Blue)?";
-									next;
-									switch(select("Yes!","Leave")) {
-										case 1:
-											mes "[ClickClick MeowMeow-GX]";
-											if ((countitem(2953) > 0) & (countitem(6615) > 9)) {
-												mes "You have traded Kvasir's Ring (Green) for Kvasir's Ring (Blue).";
-												delitem 2953,1; // Kvasir_Ring_Green
-												delitem 6615,10; // Siege_Guild_Coin
-												getitem 2951,1; // Kvasir_Ring_Blue
-											} else {
-												mes "[ClickClick MeowMeow-GX]";
-												mes "You need 1 Kvasir's Ring (Green) and 10 Commemorative Coins in order to complete the purchase.";
-											}
-											break;
-
-										case 2:
-											mes "[ClickClick MeowMeow-GX]";
-											mes "You've decided to view other items.";
-											break;
-									}
-								} else
-									mes "You need 1 Kvasir's Ring (Green) and 10 Commemorative Coins in order to complete the purchase.";
+								callsub S_Kvasir, "Kvasir's Ring (Green)", 2953, "Kvasir's Ring (Blue)", 2951;
 								break;
 
 							case 4:
-								mes "[ClickClick MeowMeow-GX]";
-								if ((countitem(2954) > 0) & (countitem(6615) > 9)) {
-									mes "You have Kvasir's Ring (Brown).";
-									mes "Do you want to trade this in for Kvasir's Ring (Blue)?";
-									next;
-									switch(select("Yes!","Leave")) {
-										case 1:
-											mes "[ClickClick MeowMeow-GX]";
-											if ((countitem(2954) > 0) & (countitem(6615) > 9)) {
-												mes "You have traded Kvasir's Ring (Brown) for Kvasir's Ring (Blue).";
-												delitem 2954,1; // Kvasir_Ring_Brown
-												delitem 6615,10; // Siege_Guild_Coin
-												getitem 2951,1; // Kvasir_Ring_Blue
-											} else
-												mes "You need 1 Kvasir's Ring (Brown) and 10 Commemorative Coins in order to complete the purchase.";
-											break;
-
-										case 2:
-											mes "You've decided to view other items.";
-											break;
-									}
-								} else
-									mes "You need 1 Kvasir's Ring (Brown) and 10 Commemorative Coins in order to complete the purchase.";
+								callsub S_Kvasir, "Kvasir's Ring (Brown)", 2954, "Kvasir's Ring (Blue)", 2951;
 								break;
 
 							case 5:
@@ -350,83 +282,15 @@
 						next;
 						switch(select("Kvasir's Ring (Blue)","Kvasir's Ring (Green)","Kvasir's Ring (Brown)","Leave")) {
 							case 1:
-								mes "[ClickClick MeowMeow-GX]";
-								if ((countitem(2951) > 0) & (countitem(6615) > 9)) {
-									mes "You have Kvasir's Ring (Blue).";
-									mes "Do you want to trade this in for Kvasir's Ring (Red)?";
-									next;
-									switch(select("Yes!","Leave")) {
-										case 1:
-											mes "[ClickClick MeowMeow-GX]";
-											if ((countitem(2951) > 0) & (countitem(6615) > 9)) {
-												mes "You have traded Kvasir's Ring (Blue) for Kvasir's Ring (Red).";
-												delitem 2951,1; // Kvasir_Ring_Blue
-												delitem 6615,10; // Siege_Guild_Coin
-												getitem 2952,1; // Kvasir_Ring_Red
-											} else
-												mes "You need 1 Kvasir's Ring (Blue) and 10 Commemorative Coins in order to complete the purchase.";
-											break;
-
-										case 2:
-											mes "[ClickClick MeowMeow-GX]";
-											mes "You've decided to view other items.";
-											break;
-									}
-								} else
-									mes "You need 1 Kvasir's Ring (Blue) and 10 Commemorative Coins in order to complete the purchase.";
+								callsub S_Kvasir, "Kvasir's Ring (Blue)", 2951, "Kvasir's Ring (Red)", 2952;
 								break;
 
 							case 2:
-								mes "[ClickClick MeowMeow-GX]";
-								if ((countitem(2953) > 0) & (countitem(6615) > 9)) {
-									mes "You have Kvasir's Ring (Green).";
-									mes "Do you want to trade this in for Kvasir's Ring (Red)?";
-									next;
-									switch(select("Yes!","Leave")) {
-										case 1:
-											mes "[ClickClick MeowMeow-GX]";
-											if ((countitem(2953) > 0) & (countitem(6615) > 9)) {
-												mes "You have traded Kvasir's Ring (Green) for Kvasir's Ring (Red).";
-												delitem 2953,1; // Kvasir_Ring_Green
-												delitem 6615,10; // Siege_Guild_Coin
-												getitem 2952,1; // Kvasir_Ring_Red
-											} else
-												mes "You need 1 Kvasir's Ring (Green) and 10 Commemorative Coins in order to complete the purchase.";
-											break;
-
-										case 2:
-											mes "You've decided to view other items.";
-											break;
-									}
-								} else
-									mes "You need 1 Kvasir's Ring (Green) and 10 Commemorative Coins in order to complete the purchase.";
+								callsub S_Kvasir, "Kvasir's Ring (Green)", 2953, "Kvasir's Ring (Red)", 2952;
 								break;
 
 							case 3:
-								mes "[ClickClick MeowMeow-GX]";
-								if ((countitem(2954) > 0) & (countitem(6615) > 9)) {
-									mes "You have Kvasir's Ring (Brown).";
-									mes "Do you want to trade this in for Kvasir's Ring (Red)?";
-									next;
-									switch(select("Yes!","Leave")) {
-										case 1:
-											mes "[ClickClick MeowMeow-GX]";
-											if ((countitem(2954) > 0) & (countitem(6615) > 9)) {
-												mes "You have traded Kvasir's Ring (Brown) for Kvasir's Ring (Red).";
-												delitem 2954,1; // Kvasir_Ring_Brown
-												delitem 6615,10; // Siege_Guild_Coin
-												getitem 2952,1; // Kvasir_Ring_Red
-											} else
-												mes "You need 1 Kvasir's Ring (Brown) and 10 Commemorative Coins in order to complete the purchase.";
-											break;
-
-										case 2:
-											mes "[ClickClick MeowMeow-GX]";
-											mes "You've decided to view other items.";
-											break;
-									}
-								} else
-									mes "You need 1 Kvasir's Ring (Brown) and 10 Commemorative Coins in order to complete the purchase.";
+								callsub S_Kvasir, "Kvasir's Ring (Brown)", 2954, "Kvasir's Ring (Red)", 2952;
 								break;
 
 							case 4:
@@ -448,84 +312,15 @@
 						next;
 						switch(select("Kvasir's Ring (Blue)","Kvasir's Ring (Red)","Kvasir's Ring (Brown)","Leave")) {
 							case 1:
-								mes "[ClickClick MeowMeow-GX]";
-								if ((countitem(2951) > 0) & (countitem(6615) > 9)) {
-									mes "You have Kvasir's Ring (Blue).";
-									mes "Do you want to trade this in for Kvasir's Ring (Green)?";
-									next;
-									switch(select("Yes!","Leave")) {
-										case 1:
-											mes "[ClickClick MeowMeow-GX]";
-											if ((countitem(2951) > 0) & (countitem(6615) > 9)) {
-												mes "You have traded Kvasir's Ring (Blue) for Kvasir's Ring (Green).";
-												delitem 2951,1; // Kvasir_Ring_Blue
-												delitem 6615,10; // Siege_Guild_Coin
-												getitem 2953,1; // Kvasir_Ring_Green
-											} else
-												mes "You need 1 Kvasir's Ring (Blue) and 10 Commemorative Coins in order to complete the purchase.";
-											break;
-
-										case 2:
-											mes "[ClickClick MeowMeow-GX]";
-											mes "You've decided to view other items.";
-											break;
-									}
-								} else
-									mes "You need 1 Kvasir's Ring (Blue) and 10 Commemorative Coins in order to complete the purchase.";
+								callsub S_Kvasir, "Kvasir's Ring (Blue)", 2951, "Kvasir's Ring (Green)", 2953;
 								break;
 
 							case 2:
-								mes "[ClickClick MeowMeow-GX]";
-								if ((countitem(2952) > 0) & (countitem(6615) > 9)) {
-									mes "You have Kvasir's Ring (Red).";
-									mes "Do you want to trade this in for Kvasir's Ring (Green)?";
-									next;
-									switch(select("Yes!","Leave")) {
-										case 1:
-											mes "[ClickClick MeowMeow-GX]";
-											if ((countitem(2952) > 0) & (countitem(6615) > 9)) {
-												mes "You have traded Kvasir's Ring (Red) for Kvasir's Ring (Green).";
-												delitem 2952,1; // Kvasir_Ring_Red
-												delitem 6615,10; // Siege_Guild_Coin
-												getitem 2953,1; // Kvasir_Ring_Green
-											} else
-												mes "You need 1 Kvasir's Ring (Red) and 10 Commemorative Coins in order to complete the purchase.";
-											break;
-
-										case 2:
-											mes "[ClickClick MeowMeow-GX]";
-											mes "You've decided to view other items.";
-											break;
-									}
-								} else
-									mes "You need 1 Kvasir's Ring (Red) and 10 Commemorative Coins in order to complete the purchase.";
+								callsub S_Kvasir, "Kvasir's Ring (Red)", 2952, "Kvasir's Ring (Green)", 2953;
 								break;
 
 							case 3:
-								mes "[ClickClick MeowMeow-GX]";
-								if ((countitem(2954) > 0) & (countitem(6615) > 9)) {
-									mes "You have Kvasir's Ring (Brown).";
-									mes "Do you want to trade this in for Kvasir's Ring (Green)?";
-									next;
-									switch(select("Yes!","Leave")) {
-										case 1:
-											mes "[ClickClick MeowMeow-GX]";
-											if ((countitem(2954) > 0) & (countitem(6615) > 9)) {
-												mes "You have traded Kvasir's Ring (Brown) for Kvasir's Ring (Green).";
-												delitem 2954,1; // Kvasir_Ring_Brown
-												delitem 6615,10; // Siege_Guild_Coin
-												getitem 2953,1; // Kvasir_Ring_Green
-											} else
-												mes "You need 1 Kvasir's Ring (Brown) and 10 Commemorative Coins in order to complete the purchase.";
-											break;
-
-										case 2:
-											mes "[ClickClick MeowMeow-GX]";
-											mes "You've decided to view other items.";
-											break;
-									}
-								} else
-									mes "You need 1 Kvasir's Ring (Brown) and 10 Commemorative Coins in order to complete the purchase.";
+								callsub S_Kvasir, "Kvasir's Ring (Brown)", 2954, "Kvasir's Ring (Green)", 2953;
 								break;
 
 							case 4:
@@ -547,84 +342,15 @@
 						next;
 						switch(select("Kvasir's Ring (Blue)","Kvasir's Ring (Red)","Kvasir's Ring (Green)","Leave")) {
 							case 1:
-								mes "[ClickClick MeowMeow-GX]";
-								if ((countitem(2951) > 0) & (countitem(6615) > 9)) {
-									mes "You have Kvasir's Ring (Blue).";
-									mes "Do you want to trade this in for Kvasir's Ring (Brown)?";
-									next;
-									switch(select("Yes!","Leave")) {
-										case 1:
-											mes "[ClickClick MeowMeow-GX]";
-											if ((countitem(2951) > 0) & (countitem(6615) > 9)) {
-												mes "You have traded Kvasir's Ring (Blue) for Kvasir's Ring (Brown).";
-												delitem 2951,1; // Kvasir_Ring_Blue
-												delitem 6615,10; // Siege_Guild_Coin
-												getitem 2954,1; // Kvasir_Ring_Brown
-											} else
-												mes "You need 1 Kvasir's Ring (Blue) and 10 Commemorative Coins in order to complete the purchase.";
-											break;
-
-										case 2:
-											mes "[ClickClick MeowMeow-GX]";
-											mes "You've decided to view other items.";
-											break;
-									}
-								} else
-									mes "You need 1 Kvasir's Ring (Blue) and 10 Commemorative Coins in order to complete the purchase.";
+								callsub S_Kvasir, "Kvasir's Ring (Blue)", 2951, "Kvasir's Ring (Brown)", 2954;
 								break;
 
 							case 2:
-								mes "[ClickClick MeowMeow-GX]";
-								if ((countitem(2952) > 0) & (countitem(6615) > 9)) {
-									mes "You have Kvasir's Ring (Red).";
-									mes "Do you want to trade this in for Kvasir's Ring (Brown)?";
-									next;
-									switch(select("Yes!","Leave")) {
-										case 1:
-											mes "[ClickClick MeowMeow-GX]";
-											if ((countitem(2952) > 0) & (countitem(6615) > 9)) {
-												mes "You have traded Kvasir's Ring (Red) for Kvasir's Ring (Brown).";
-												delitem 2952,1; // Kvasir_Ring_Red
-												delitem 6615,10; // Siege_Guild_Coin
-												getitem 2954,1; // Kvasir_Ring_Brown
-											} else
-												mes "You need 1 Kvasir's Ring (Red) and 10 Commemorative Coins in order to complete the purchase.";
-											break;
-
-										case 2:
-											mes "[ClickClick MeowMeow-GX]";
-											mes "You've decided to view other items.";
-											break;
-									}
-								} else
-									mes "You need 1 Kvasir's Ring (Red) and 10 Commemorative Coins in order to complete the purchase.";
+								callsub S_Kvasir, "Kvasir's Ring (Red)", 2952, "Kvasir's Ring (Brown)", 2954;
 								break;
 
 							case 3:
-								mes "[ClickClick MeowMeow-GX]";
-								if ((countitem(2953) > 0) & (countitem(6615) > 9)) {
-									mes "You have Kvasir's Ring (Green).";
-									mes "Do you want to trade this in for Kvasir's Ring (Brown)?";
-									next;
-									switch(select("Yes!","Leave")) {
-										case 1:
-											mes "[ClickClick MeowMeow-GX]";
-											if ((countitem(2953) > 0) & (countitem(6615) > 9)) {
-												mes "You have traded Kvasir's Ring (Green) for Kvasir's Ring (Brown).";
-												delitem 2953,1; // Kvasir_Ring_Green
-												delitem 6615,10; // Siege_Guild_Coin
-												getitem 2954,1; // Kvasir_Ring_Brown
-											} else
-												mes "You need 1 Kvasir's Ring (Green) and 10 Commemorative Coins in order to complete the purchase.";
-											break;
-
-										case 2:
-											mes "[ClickClick MeowMeow-GX]";
-											mes "You've decided to view other items.";
-											break;
-									}
-								} else
-									mes "You need 1 Kvasir's Ring (Green) and 10 Commemorative Coins in order to complete the purchase.";
+								callsub S_Kvasir, "Kvasir's Ring (Green)", 2953, "Kvasir's Ring (Brown)", 2954;
 								break;
 
 							case 4:
@@ -697,6 +423,38 @@ S_PurchaseGift:
 			mes "You've decided to view other items.";
 			break;
 	}
+	return;
+
+S_Kvasir:
+	.@fromid = getarg(1);
+	.@fromname$ = getarg(2);
+	.@toid = getarg(3);
+	.@toname$ = getarg(4);
+	
+	mes "[ClickClick MeowMeow-GX]";
+	// One of Kvasir's Rings and 10 Siege_Guild_Coin
+	if( countitem( .@fromid ) > 0 && countitem( 6615 ) > 9 ){
+		mes "You have " + .@fromname$ + ".";
+		mes "Do you want to trade this in for " + .@toname$ + "?";
+		next;
+		mes "[ClickClick MeowMeow-GX]";
+		switch( select( "Yes!:Leave" ) ){
+			case 1:
+				// Recheck the items once more
+				if( countitem( .@fromid ) > 0 && countitem( 6615 ) > 9 ){
+					mes "You have traded " + .@fromname$ + " for " + .@toname$ + ".";
+					delitem .@fromid, 1;
+					delitem 6615, 10; // Siege_Guild_Coin
+					getitem .@toid, 1;
+					close;
+				}
+				break;
+			case 2:
+				mes "You've decided to view other items.";
+				return;
+		}
+	}
+	mes "You need 1 " + .@fromname$ + " and 10 Commemorative Coins in order to complete the purchase.";
 	return;
 }
 
