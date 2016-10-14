@@ -79,6 +79,7 @@
 #define MAX_QUEST_DROPS 3 ///Max quest drops for a quest
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
+#define DB_NAME_LEN 256 //max len of dbs
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -303,19 +304,39 @@ enum storage_type {
 	TABLE_GUILD_STORAGE,
 };
 
+enum e_storage_mode {
+	STOR_MODE_NONE = 0x0,
+	STOR_MODE_GET = 0x1,
+	STOR_MODE_PUT = 0x2,
+	STOR_MODE_ALL = 0x3,
+};
+
 struct s_storage {
 	bool dirty; ///< Dirty status, data needs to be saved
 	bool status; ///< Current status of storage (opened or closed)
-	int amount; ///< Amount of items in storage
+	uint16 amount; ///< Amount of items in storage
 	bool lock; ///< If locked, can't use storage when item bound retrieval
 	uint32 id; ///< Account ID / Character ID / Guild ID (owner of storage)
 	enum storage_type type; ///< Type of storage (inventory, cart, storage, guild storage)
+	uint16 max_amount;
+	uint8 stor_id; ///< Storage ID
+	struct {
+		unsigned get : 1;
+		unsigned put : 1;
+	} state;
 	union { // Max for inventory, storage, cart, and guild storage are 1637 each without changing this struct and struct item [2014/10/27]
 		struct item items_inventory[MAX_INVENTORY];
 		struct item items_storage[MAX_STORAGE];
 		struct item items_cart[MAX_CART];
 		struct item items_guild[MAX_GUILD_STORAGE];
 	} u;
+};
+
+struct s_storage_table {
+	char name[NAME_LENGTH];
+	char table[DB_NAME_LEN];
+	uint16 max_num;
+	uint8 id;
 };
 
 struct s_pet {

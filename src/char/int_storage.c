@@ -1,6 +1,7 @@
 // Copyright (c) Athena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "../common/malloc.h"
 #include "../common/mmo.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
@@ -15,6 +16,54 @@
 #define STORAGE_MEMINC	16
 
 /**
+ * Check if sotrage ID is valid
+ * @param id Storage ID
+ * @return True:Valid, False:Invalid
+ **/
+bool inter_premiumStorage_exists(uint8 id) {
+	if (interserv_config.storages && interserv_config.storage_count) {
+		int i;
+		for (i = 0; i < interserv_config.storage_count; i++) {
+			if (interserv_config.storages[i].id == id)
+				return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Get max storage amount
+ * @param id Storage ID
+ * @return Max amount
+ **/
+int inter_premiumStorage_getMax(uint8 id) {
+	if (interserv_config.storages && interserv_config.storage_count) {
+		int i;
+		for (i = 0; i < interserv_config.storage_count; i++) {
+			if (&interserv_config.storages[i] && interserv_config.storages[i].id == id)
+				return interserv_config.storages[i].max_num;
+		}
+	}
+	return MAX_STORAGE;
+}
+
+/**
+ * Get table name of storage
+ * @param id Storage ID
+ * @return Table name
+ **/
+const char *inter_premiumStorage_getTableName(uint8 id) {
+	if (interserv_config.storages && interserv_config.storage_count) {
+		int i;
+		for (i = 0; i < interserv_config.storage_count; i++) {
+			if (&interserv_config.storages[i] && interserv_config.storages[i].id == id)
+				return interserv_config.storages[i].table;
+		}
+	}
+	return schema_config.storage_db;
+}
+
+/**
  * Save inventory entries to SQL
  * @param char_id: Character ID to save
  * @param p: Inventory entries
@@ -22,7 +71,7 @@
  */
 static int inventory_tosql(uint32 char_id, struct s_storage* p)
 {
-	return char_memitemdata_to_sql(p->u.items_inventory, MAX_INVENTORY, char_id, TABLE_INVENTORY);
+	return char_memitemdata_to_sql(p->u.items_inventory, MAX_INVENTORY, char_id, TABLE_INVENTORY, p->stor_id);
 }
 
 /**
@@ -33,7 +82,7 @@ static int inventory_tosql(uint32 char_id, struct s_storage* p)
  */
 static int storage_tosql(uint32 account_id, struct s_storage* p)
 {
-	return char_memitemdata_to_sql(p->u.items_storage, MAX_STORAGE, account_id, TABLE_STORAGE);
+	return char_memitemdata_to_sql(p->u.items_storage, MAX_STORAGE, account_id, TABLE_STORAGE, p->stor_id);
 }
 
 /**
@@ -44,7 +93,7 @@ static int storage_tosql(uint32 account_id, struct s_storage* p)
  */
 static int cart_tosql(uint32 char_id, struct s_storage* p)
 {
-	return char_memitemdata_to_sql(p->u.items_cart, MAX_CART, char_id, TABLE_CART);
+	return char_memitemdata_to_sql(p->u.items_cart, MAX_CART, char_id, TABLE_CART, p->stor_id);
 }
 
 /**
@@ -55,7 +104,7 @@ static int cart_tosql(uint32 char_id, struct s_storage* p)
  */
 static bool inventory_fromsql(uint32 char_id, struct s_storage* p)
 {
-	return char_memitemdata_from_sql( p, MAX_INVENTORY, char_id, TABLE_INVENTORY );
+	return char_memitemdata_from_sql( p, MAX_INVENTORY, char_id, TABLE_INVENTORY, p->stor_id );
 }
 
 /**
@@ -66,18 +115,19 @@ static bool inventory_fromsql(uint32 char_id, struct s_storage* p)
  */
 static bool cart_fromsql(uint32 char_id, struct s_storage* p)
 {
-	return char_memitemdata_from_sql( p, MAX_CART, char_id, TABLE_CART );
+	return char_memitemdata_from_sql( p, MAX_CART, char_id, TABLE_CART, p->stor_id );
 }
 
 /**
  * Fetch storage entries from table
  * @param char_id: Character ID to fetch
  * @param p: Storage list to save the entries
+ * @param stor_id: Storage ID
  * @return True if success, False if failed
  */
 static bool storage_fromsql(uint32 account_id, struct s_storage* p)
 {
-	return char_memitemdata_from_sql( p, MAX_STORAGE, account_id, TABLE_STORAGE );
+	return char_memitemdata_from_sql( p, MAX_STORAGE, account_id, TABLE_STORAGE, p->stor_id );
 }
 
 /**
@@ -89,7 +139,7 @@ static bool storage_fromsql(uint32 account_id, struct s_storage* p)
 bool guild_storage_tosql(int guild_id, struct s_storage* p)
 {
 	//ShowInfo("Guild Storage has been saved (GID: %d)\n", guild_id);
-	return char_memitemdata_to_sql(p->u.items_guild, MAX_GUILD_STORAGE, guild_id, TABLE_GUILD_STORAGE);
+	return char_memitemdata_to_sql(p->u.items_guild, MAX_GUILD_STORAGE, guild_id, TABLE_GUILD_STORAGE, p->stor_id);
 }
 
 /**
@@ -100,13 +150,31 @@ bool guild_storage_tosql(int guild_id, struct s_storage* p)
  */
 bool guild_storage_fromsql(int guild_id, struct s_storage* p)
 {
-	return char_memitemdata_from_sql( p, MAX_GUILD_STORAGE, guild_id, TABLE_GUILD_STORAGE );
+	return char_memitemdata_from_sql( p, MAX_GUILD_STORAGE, guild_id, TABLE_GUILD_STORAGE, p->stor_id );
+}
+
+static void inter_storage_checkDB(void) {
+	int i = 0;
+	// Checking storage tables
+	for (i = 0; i < interserv_config.storage_count; i++) {
+		if (!&interserv_config.storages[i] || !interserv_config.storages[i].name || !interserv_config.storages[i].table || interserv_config.storages[i].table == '\0')
+			continue;
+		if (SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`account_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
+			"`attribute`,`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,"
+			"`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,"
+			"`expire_time`,`bound`,`unique_id`"
+			" FROM `%s` LIMIT 1;", interserv_config.storages[i].table) ){
+			Sql_ShowDebug(sql_handle);
+		}
+	}
+	Sql_FreeResult(sql_handle);
 }
 
 //---------------------------------------------------------
 // storage data initialize
 void inter_storage_sql_init(void)
 {
+	inter_storage_checkDB();
 	return;
 }
 
@@ -423,41 +491,56 @@ static void mapif_storage_data_loaded(int fd, uint32 account_id, char type, stru
  * @param char_id
  * @param success
  * @param type
+ * @param stor_id
  */
-void mapif_storage_saved(int fd, uint32 account_id, uint32 char_id, bool success, char type) {
-	WFIFOHEAD(fd,8);
+void mapif_storage_saved(int fd, uint32 account_id, uint32 char_id, bool success, char type, uint8 stor_id) {
+	WFIFOHEAD(fd,9);
 	WFIFOW(fd, 0) = 0x388b;
 	WFIFOL(fd, 2) = account_id;
 	WFIFOB(fd, 6) = success;
 	WFIFOB(fd, 7) = type;
-	WFIFOSET(fd,8);
+	WFIFOB(fd, 8) = stor_id;
+	WFIFOSET(fd,9);
 }
 
 /**
  * Requested inventory/cart/storage data for a player
- * ZI 0x308a <type>.B <account_id>.L <char_id>.L
+ * ZI 0x308a <type>.B <account_id>.L <char_id>.L <storage_id>.B <mode>.B
  * @param fd
  */
 bool mapif_parse_StorageLoad(int fd) {
 	uint32 aid, cid;
 	int type;
+	uint8 stor_id, mode;
 	struct s_storage stor;
 	bool res = true;
 
-	RFIFOHEAD(fd);
 	type = RFIFOB(fd,2);
 	aid = RFIFOL(fd,3);
 	cid = RFIFOL(fd,7);
+	stor_id = RFIFOB(fd,11);
 
 	memset(&stor, 0, sizeof(struct s_storage));
+	stor.stor_id = stor_id;
 
 	//ShowInfo("Loading storage for AID=%d.\n", aid);
 	switch (type) {
 		case TABLE_INVENTORY: res = inventory_fromsql(cid, &stor); break;
-		case TABLE_STORAGE:   res = storage_fromsql(aid, &stor);   break;
+		case TABLE_STORAGE:
+			if (!inter_premiumStorage_exists(stor_id)) {
+				ShowError("Invalid storage with id %d\n", stor_id);
+				return false;
+			}
+			res = storage_fromsql(aid, &stor);
+			break;
 		case TABLE_CART:      res = cart_fromsql(cid, &stor);      break;
 		default: return false;
 	}
+
+	mode = RFIFOB(fd, 12);
+	stor.state.put = (mode&STOR_MODE_PUT) ? 1 : 0;
+	stor.state.get = (mode&STOR_MODE_GET) ? 1 : 0;
+
 	mapif_storage_data_loaded(fd, aid, type, stor, res);
 	return true;
 }
@@ -482,11 +565,17 @@ bool mapif_parse_StorageSave(int fd) {
 	//ShowInfo("Saving storage data for AID=%d.\n", aid);
 	switch(type){
 		case TABLE_INVENTORY:	inventory_tosql(cid, &stor); break;
-		case TABLE_STORAGE:		storage_tosql(aid, &stor); break;
-		case TABLE_CART:		cart_tosql(cid, &stor); break;
+		case TABLE_STORAGE:
+			if (!inter_premiumStorage_exists(stor.stor_id)) {
+				ShowError("Invalid storage with id %d\n", stor.stor_id);
+				return false;
+			}
+			storage_tosql(aid, &stor);
+			break;
+		case TABLE_CART:	cart_tosql(cid, &stor); break;
 		default: return false;
 	}
-	mapif_storage_saved(fd, aid, cid, true, type);
+	mapif_storage_saved(fd, aid, cid, true, type, stor.stor_id);
 	return false;
 }
 

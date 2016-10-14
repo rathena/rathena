@@ -922,6 +922,11 @@ ACMD_FUNC(guildstorage)
 		return -1;
 	}
 
+	if (sd->state.storage_flag == 3) {
+		clif_displaymessage(fd, msg_txt(sd,250));
+		return -1;
+	}
+
 	storage_guild_storageopen(sd);
 	clif_displaymessage(fd, msg_txt(sd,920)); // Guild storage opened.
 	return 0;
@@ -5490,7 +5495,7 @@ ACMD_FUNC(storeall)
 		if (sd->inventory.u.items_inventory[i].amount) {
 			if(sd->inventory.u.items_inventory[i].equip != 0)
 				pc_unequipitem(sd, i, 3);
-			storage_storageadd(sd,  i, sd->inventory.u.items_inventory[i].amount);
+			storage_storageadd(sd, &sd->storage, i, sd->inventory.u.items_inventory[i].amount);
 		}
 	}
 	storage_storageclose(sd);
@@ -5508,10 +5513,14 @@ ACMD_FUNC(clearstorage)
 		clif_displaymessage(fd, msg_txt(sd,250));
 		return -1;
 	}
+	if (sd->state.storage_flag == 3) {
+		clif_displaymessage(fd, msg_txt(sd,250));
+		return -1;
+	}
 
 	j = sd->storage.amount;
 	for (i = 0; i < j; ++i) {
-		storage_delitem(sd, i, sd->storage.u.items_storage[i].amount);
+		storage_delitem(sd, &sd->storage, i, sd->storage.u.items_storage[i].amount);
 	}
 	sd->state.storage_flag = 1;
 	storage_storageclose(sd);
@@ -5541,6 +5550,11 @@ ACMD_FUNC(cleargstorage)
 
 	if (sd->state.storage_flag == 2) {
 		clif_displaymessage(fd, msg_txt(sd,251));
+		return -1;
+	}
+
+	if (sd->state.storage_flag == 3) {
+		clif_displaymessage(fd, msg_txt(sd,250));
 		return -1;
 	}
 
@@ -8606,7 +8620,7 @@ ACMD_FUNC(itemlist)
 	if( strcmp(parent_cmd, "storagelist") == 0 ) {
 		location = "storage";
 		items = sd->storage.u.items_storage;
-		size = sd->storage_size;
+		size = sd->storage.max_amount;
 	} else if( strcmp(parent_cmd, "cartlist") == 0 ) {
 		location = "cart";
 		items = sd->cart.u.items_cart;

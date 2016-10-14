@@ -11,6 +11,10 @@ void inter_storage_sql_final(void);
 void inter_storage_delete(uint32 account_id);
 void inter_guild_storage_delete(int guild_id);
 
+bool inter_premiumStorage_exists(uint8 id);
+int inter_premiumStorage_getMax(uint8 id);
+const char *inter_premiumStorage_getTableName(uint8 id);
+
 bool inter_storage_parse_frommap(int fd);
 
 bool guild_storage_tosql(int guild_id, struct s_storage *p);
