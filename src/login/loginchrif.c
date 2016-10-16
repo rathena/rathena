@@ -163,7 +163,7 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 	char birthdate[10+1] = "";
 	char pincode[PINCODE_LENGTH+1];
 	char isvip = false;
-	uint8 char_slots = MIN_CHARS, char_vip = 0;
+	uint8 char_slots = MIN_CHARS, char_vip = 0, char_billing = 0;
 	AccountDB* accounts = login_get_accounts_db();
 
 	memset(pincode,0,PINCODE_LENGTH+1);
@@ -183,6 +183,7 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 			char_slots = login_config.char_per_account + char_vip;
 		} else
 			char_slots = login_config.char_per_account;
+		char_billing = MAX_CHAR_BILLING; //TODO create a config for this
 #endif
 	}
 
@@ -198,25 +199,28 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 	WFIFOL(fd,68) = (uint32)acc.pincode_change;
 	WFIFOB(fd,72) = isvip;
 	WFIFOB(fd,73) = char_vip;
-	WFIFOB(fd,74) = MAX_CHAR_BILLING; //TODO create a config for this
+	WFIFOB(fd,74) = char_billing;
 	WFIFOSET(fd,75);
 	return 1;
 }
 
 /**
  * Transmit vip specific data to char-serv (will be transfered to mapserv)
+ * @param fd
+ * @param acc
+ * @param flag 0x1: VIP, 0x2: GM, 0x4: Show rates on player
+ * @param mapfd
  */
-int logchrif_sendvipdata(int fd, struct mmo_account acc, char isvip, char isgm, int mapfd) {
+int logchrif_sendvipdata(int fd, struct mmo_account acc, unsigned char flag, int mapfd) {
 #ifdef VIP_ENABLE
 	WFIFOHEAD(fd,19);
 	WFIFOW(fd,0) = 0x2743;
 	WFIFOL(fd,2) = acc.account_id;
 	WFIFOL(fd,6) = (int)acc.vip_time;
-	WFIFOB(fd,10) = isvip;
+	WFIFOB(fd,10) = flag;
 	WFIFOL(fd,11) = acc.group_id; //new group id
-	WFIFOL(fd,15) = isgm;
-	WFIFOL(fd,16) = mapfd; //link to mapserv
-	WFIFOSET(fd,20);
+	WFIFOL(fd,15) = mapfd; //link to mapserv
+	WFIFOSET(fd,19);
 	logchrif_send_accdata(fd,acc.account_id); //refresh char with new setting
 #endif
 	return 1;
@@ -648,8 +652,9 @@ int logchrif_parse_pincode_authfail(int fd){
 /**
  * Received a vip data reqest from char
  * type is the query to perform
- *  &1 : Select info and update old_groupid
- *  &2 : Update vip time
+ *  0x1 : Select info and update old_groupid
+ *  0x2 : VIP duration is changed by atcommand or script
+ *  0x8 : First request on player login
  * @param fd link to charserv
  * @return 0 missing data, 1 succeeded
  */
@@ -661,7 +666,7 @@ int logchrif_parse_reqvipdata(int fd) {
 		struct mmo_account acc;
 		AccountDB* accounts = login_get_accounts_db();
 		int aid = RFIFOL(fd,2);
-		int8 type = RFIFOB(fd,6);
+		int8 flag = RFIFOB(fd,6);
 		int32 timediff = RFIFOL(fd,7);
 		int mapfd = RFIFOL(fd,11);
 		RFIFOSKIP(fd,15);
@@ -672,10 +677,10 @@ int logchrif_parse_reqvipdata(int fd) {
 			bool isvip = false;
 
 			if( acc.group_id > login_config.vip_sys.group ) { //Don't change group if it's higher.
-				logchrif_sendvipdata(fd,acc,false,true,mapfd);
+				logchrif_sendvipdata(fd,acc,0x2|((flag&0x8)?0x4:0),mapfd);
 				return 1;
 			}
-			if( type&2 ) {
+			if( flag&2 ) {
 				if(!vip_time)
 					vip_time = now; //new entry
 				vip_time += timediff; // set new duration
@@ -695,8 +700,8 @@ int logchrif_parse_reqvipdata(int fd) {
 			}
 			acc.vip_time = vip_time;
 			accounts->save(accounts,&acc);
-			if( type&1 )
-				logchrif_sendvipdata(fd,acc,isvip,false,mapfd);
+			if( flag&1 )
+				logchrif_sendvipdata(fd,acc,((isvip)?0x1:0)|((flag&0x8)?0x4:0),mapfd);
 		}
 	}
 #endif

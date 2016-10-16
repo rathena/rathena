@@ -17,7 +17,7 @@ struct npc_timerevent_list {
 };
 
 struct npc_label_list {
-	char name[NAME_LENGTH];
+	char name[NAME_LENGTH+1];
 	int pos;
 };
 
@@ -44,8 +44,8 @@ struct npc_data {
 	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
 	struct npc_data *master_nd;
 	short class_,speed,instance_id;
-	char name[NAME_LENGTH+1];// display name
-	char exname[NAME_LENGTH+1];// unique npc name
+	char name[NPC_NAME_LENGTH+1];// display name
+	char exname[NPC_NAME_LENGTH+1];// unique npc name
 	int chat_id,touching_id;
 	unsigned int next_walktime;
 

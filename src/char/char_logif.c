@@ -332,6 +332,10 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 	return 1;
 }
 
+/**
+ * Receive account data from login-server
+ * AH 0x2717 <aid>.L <email>.40B <expiration_time>.L <group_id>.B <birthdate>.11B <pincode>.5B <pincode_change>.L <isvip>.B <char_vip>.B <char_billing>.B
+ **/
 int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 	int u_fd; //user fd
 	if (RFIFOREST(fd) < 75)
@@ -617,38 +621,37 @@ int chlogif_parse_updip(int fd, struct char_session_data* sd){
  */
 int chlogif_parse_vipack(int fd) {
 #ifdef VIP_ENABLE
-	if (RFIFOREST(fd) < 20)
+	if (RFIFOREST(fd) < 19)
 		return 0;
 	else {
 		uint32 aid = RFIFOL(fd,2); //aid
 		uint32 vip_time = RFIFOL(fd,6); //vip_time
-		uint8 isvip = RFIFOB(fd,10); //isvip
+		uint8 flag = RFIFOB(fd,10);
 		uint32 groupid = RFIFOL(fd,11); //new group id
-		uint8 isgm = RFIFOB(fd,15); //isgm
-		int mapfd = RFIFOL(fd,16); //link to mapserv for ack
-		RFIFOSKIP(fd,20);
-		chmapif_vipack(mapfd,aid,vip_time,isvip,isgm,groupid);
+		int mapfd = RFIFOL(fd,15); //link to mapserv for ack
+		RFIFOSKIP(fd,19);
+		chmapif_vipack(mapfd,aid,vip_time,groupid,flag);
 	}
 #endif
 	return 1;
 }
 
 /**
- * HZ 0x2b2b
- * Request vip data from loginserv
+ * HA 0x2742
+ * Request vip data to loginserv
  * @param aid : account_id to request the vip data
- * @param type : &2 define new duration, &1 load info
+ * @param flag : 0x1 Select info and update old_groupid, 0x2 VIP duration is changed by atcommand or script, 0x8 First request on player login
  * @param add_vip_time : tick to add to vip timestamp
  * @param mapfd: link to mapserv for ack
  * @return 0 if success
  */
-int chlogif_reqvipdata(uint32 aid, uint8 type, int32 timediff, int mapfd) {
+int chlogif_reqvipdata(uint32 aid, uint8 flag, int32 timediff, int mapfd) {
 	loginif_check(-1);
 #ifdef VIP_ENABLE
 	WFIFOHEAD(login_fd,15);
 	WFIFOW(login_fd,0) = 0x2742;
 	WFIFOL(login_fd,2) = aid; //aid
-	WFIFOB(login_fd,6) = type; //type
+	WFIFOB(login_fd,6) = flag; //flag
 	WFIFOL(login_fd,7) = timediff; //req_inc_duration
 	WFIFOL(login_fd,11) = mapfd; //req_inc_duration
 	WFIFOSET(login_fd,15);
