@@ -190,12 +190,12 @@ int logchrif_send_accdata(int fd, uint32 aid) {
 	WFIFOHEAD(fd,75);
 	WFIFOW(fd,0) = 0x2717;
 	WFIFOL(fd,2) = aid;
-	safestrncpy((char*)WFIFOP(fd,6), email, 40);
+	safestrncpy(WFIFOCP(fd,6), email, 40);
 	WFIFOL(fd,46) = (uint32)expiration_time;
 	WFIFOB(fd,50) = (unsigned char)group_id;
 	WFIFOB(fd,51) = char_slots;
-	safestrncpy((char*)WFIFOP(fd,52), birthdate, 10+1);
-	safestrncpy((char*)WFIFOP(fd,63), pincode, 4+1 );
+	safestrncpy(WFIFOCP(fd,52), birthdate, 10+1);
+	safestrncpy(WFIFOCP(fd,63), pincode, 4+1 );
 	WFIFOL(fd,68) = (uint32)acc.pincode_change;
 	WFIFOB(fd,72) = isvip;
 	WFIFOB(fd,73) = char_vip;
@@ -276,8 +276,8 @@ int logchrif_parse_reqchangemail(int fd, int id, char* ip){
 		char new_email[40];
 
 		uint32 account_id = RFIFOL(fd,2);
-		safestrncpy(actual_email, (char*)RFIFOP(fd,6), 40);
-		safestrncpy(new_email, (char*)RFIFOP(fd,46), 40);
+		safestrncpy(actual_email, RFIFOCP(fd,6), 40);
+		safestrncpy(new_email, RFIFOCP(fd,46), 40);
 		RFIFOSKIP(fd, 86);
 
 		if( e_mail_check(actual_email) == 0 )
@@ -612,7 +612,7 @@ int logchrif_parse_updpincode(int fd){
 		AccountDB* accounts = login_get_accounts_db();
 
 		if( accounts->load_num(accounts, &acc, RFIFOL(fd,4) ) ){
-			strncpy( acc.pincode, (char*)RFIFOP(fd,8), PINCODE_LENGTH+1 );
+			strncpy( acc.pincode, RFIFOCP(fd,8), PINCODE_LENGTH+1 );
 			acc.pincode_change = time( NULL );
 			accounts->save(accounts, &acc);
 		}
@@ -736,19 +736,19 @@ int logchrif_parse_accinfo(int fd) {
 			WFIFOL(fd, 19) = acc.group_id;
 			WFIFOL(fd, 23) = acc.logincount;
 			WFIFOL(fd, 27) = acc.state;
-			safestrncpy((char*)WFIFOP(fd, 31), acc.email, 40);
-			safestrncpy((char*)WFIFOP(fd, 71), acc.last_ip, 16);
-			safestrncpy((char*)WFIFOP(fd, 87), acc.lastlogin, 24);
-			safestrncpy((char*)WFIFOP(fd, 111), acc.birthdate, 11);
+			safestrncpy(WFIFOCP(fd, 31), acc.email, 40);
+			safestrncpy(WFIFOCP(fd, 71), acc.last_ip, 16);
+			safestrncpy(WFIFOCP(fd, 87), acc.lastlogin, 24);
+			safestrncpy(WFIFOCP(fd, 111), acc.birthdate, 11);
 			if ((unsigned int)u_group >= acc.group_id) {
-				safestrncpy((char*)WFIFOP(fd, 122), acc.pass, 33);
-				safestrncpy((char*)WFIFOP(fd, 155), acc.pincode, PINCODE_LENGTH);
+				safestrncpy(WFIFOCP(fd, 122), acc.pass, 33);
+				safestrncpy(WFIFOCP(fd, 155), acc.pincode, PINCODE_LENGTH);
 			}
 			else {
 				memset(WFIFOP(fd, 122), '\0', 33);
 				memset(WFIFOP(fd, 155), '\0', PINCODE_LENGTH);
 			}
-			safestrncpy((char*)WFIFOP(fd, 155 + PINCODE_LENGTH), acc.userid, NAME_LENGTH);
+			safestrncpy(WFIFOCP(fd, 155 + PINCODE_LENGTH), acc.userid, NAME_LENGTH);
 			WFIFOSET(fd, len);
 		}
 		else {
