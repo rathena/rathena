@@ -15984,7 +15984,7 @@ void clif_quest_send_list(struct map_session_data *sd)
 				offset += 2;
 				WFIFOW(fd, offset) = qi->objectives[j].count;
 				offset += 2;
-				safestrncpy(WFIFOP(fd, offset), mob->jname, NAME_LENGTH);
+				safestrncpy((char*)WFIFOP(fd, offset), mob->jname, NAME_LENGTH);
 				offset += NAME_LENGTH;
 			}
 		}
