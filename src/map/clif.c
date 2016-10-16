@@ -645,6 +645,7 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 /// Notifies the client, that it's connection attempt was accepted.
 /// 0073 <start time>.L <position>.3B <x size>.B <y size>.B (ZC_ACCEPT_ENTER)
 /// 02eb <start time>.L <position>.3B <x size>.B <y size>.B <font>.W (ZC_ACCEPT_ENTER2)
+/// 0a18 <start time>.L <position>.3B <x size>.B <y size>.B <font>.W <sex>.B (ZC_ACCEPT_ENTER3)
 void clif_authok(struct map_session_data *sd)
 {
 #if PACKETVER < 20080102
@@ -9221,6 +9222,7 @@ void clif_refresh(struct map_session_data *sd)
 		clif_clearunit_single(sd->bl.id,CLR_DEAD,sd->fd);
 	else
 		clif_changed_dir(&sd->bl, SELF);
+	clif_efst_status_change_sub(sd,&sd->bl,SELF);
 
 	// unlike vending, resuming buyingstore crashes the client.
 	buyingstore_close(sd);
@@ -9240,9 +9242,10 @@ void clif_refresh(struct map_session_data *sd)
 /// Updates the object's (bl) name on client.
 /// 0095 <id>.L <char name>.24B (ZC_ACK_REQNAME)
 /// 0195 <id>.L <char name>.24B <party name>.24B <guild name>.24B <position name>.24B (ZC_ACK_REQNAMEALL)
+/// 0a30 <id>.L <char name>.24B <party name>.24B <guild name>.24B <position name>.24B <title ID>.L (ZC_ACK_REQNAMEALL2)
 void clif_charnameack (int fd, struct block_list *bl)
 {
-	unsigned char buf[103];
+	unsigned char buf[106];
 	int cmd = 0x95;
 
 	nullpo_retv(bl);
@@ -9254,56 +9257,56 @@ void clif_charnameack (int fd, struct block_list *bl)
 	{
 	case BL_PC:
 		{
-			struct map_session_data *ssd = (struct map_session_data *)bl;
+			struct map_session_data *sd = (struct map_session_data *)bl;
 			struct party_data *p = NULL;
-			struct guild *g = NULL;
-			int ps = -1;
+
+#if PACKETVER >= 20150513
+			WBUFW(buf, 0) = cmd = 0xa30;
+#else
+			WBUFW(buf, 0) = cmd = 0x195;
+#endif
 
 			//Requesting your own "shadow" name. [Skotlex]
-			if (ssd->fd == fd && ssd->disguise)
+			if( sd->fd == fd && sd->disguise ){
 				WBUFL(buf,2) = -bl->id;
+			}
 
-			if( ssd->fakename[0] ) {
-				WBUFW(buf, 0) = cmd = 0x195;
-				safestrncpy((char*)WBUFP(buf,6), ssd->fakename, NAME_LENGTH);
+			if( sd->fakename[0] ) {
+				safestrncpy((char*)WBUFP(buf,6), sd->fakename, NAME_LENGTH);
 				WBUFB(buf,30) = WBUFB(buf,54) = WBUFB(buf,78) = 0;
+#if PACKETVER >= 20150513
+				WBUFL(buf,102) = 0; // Title ID
+#endif
 				break;
 			}
-			safestrncpy((char*)WBUFP(buf,6), ssd->status.name, NAME_LENGTH);
+			safestrncpy((char*)WBUFP(buf,6), sd->status.name, NAME_LENGTH);
 
-			if( ssd->status.party_id ) {
-				p = party_search(ssd->status.party_id);
-			}
-			if( ssd->status.guild_id ) {
-				if( ( g = ssd->guild ) != NULL ) {
-					int i;
-
-					ARR_FIND(0, g->max_member, i, g->member[i].account_id == ssd->status.account_id && g->member[i].char_id == ssd->status.char_id);
-					if( i < g->max_member ) ps = g->member[i].position;
-				}
+			if( sd->status.party_id ){
+				p = party_search(sd->status.party_id);
 			}
 
-			if( !battle_config.display_party_name && g == NULL ) {// do not display party unless the player is also in a guild
-				p = NULL;
-			}
-
-			if (p == NULL && g == NULL)
-				break;
-
-			WBUFW(buf, 0) = cmd = 0x195;
-			if (p)
+			// do not display party unless the player is also in a guild
+			if( p && ( sd->guild || battle_config.display_party_name ) ){
 				safestrncpy((char*)WBUFP(buf,30), p->party.name, NAME_LENGTH);
-			else
+			}else{
 				WBUFB(buf,30) = 0;
+			}
 
-			if (g && ps >= 0 && ps < MAX_GUILDPOSITION)
-			{
-				safestrncpy((char*)WBUFP(buf,54), g->name,NAME_LENGTH);
-				safestrncpy((char*)WBUFP(buf,78), g->position[ps].name, NAME_LENGTH);
-			} else { //Assume no guild.
+			if( sd->guild ){
+				int i;
+
+				ARR_FIND(0, sd->guild->max_member, i, sd->guild->member[i].account_id == sd->status.account_id && sd->guild->member[i].char_id == sd->status.char_id);
+
+				safestrncpy((char*)WBUFP(buf,54), sd->guild->name,NAME_LENGTH);
+				safestrncpy((char*)WBUFP(buf,78), sd->guild->position[i].name, NAME_LENGTH);
+			}else{ //Assume no guild.
 				WBUFB(buf,54) = 0;
 				WBUFB(buf,78) = 0;
 			}
+
+#if PACKETVER >= 20150513
+			WBUFL(buf,102) = 0; // Title ID
+#endif
 		}
 		break;
 	//[blackhole89]
@@ -19221,7 +19224,7 @@ void packetdb_readdb(bool reload)
 #endif
 		-1,  0,  0, 26,  0,  0,  0,  0,  14,  2, 23,  2, -1,  2,  3,  2,
 	   21,  3,  5,  0, 66,  0,  0,  8,  3,  0,  0,  -1,  0,  -1,  0,  0,
- 		0,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
+ 	  106,  0,  0,  0,  0,  4,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	};
 	struct {
 		void (*func)(int, struct map_session_data *);
