@@ -26,7 +26,7 @@
 #define WFIFOP(fd,pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
 
 #define RFIFOCP(fd,pos) ((char*)RFIFOP(fd,pos))
-#define WFIFOCP(fd,pos) ((char*)RFIFOP(fd,pos))
+#define WFIFOCP(fd,pos) ((char*)WFIFOP(fd,pos))
 #define RFIFOB(fd,pos) (*(uint8*)RFIFOP(fd,pos))
 #define WFIFOB(fd,pos) (*(uint8*)WFIFOP(fd,pos))
 #define RFIFOW(fd,pos) (*(uint16*)RFIFOP(fd,pos))
