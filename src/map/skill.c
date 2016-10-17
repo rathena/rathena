@@ -10971,12 +10971,10 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 		case WZ_ESTIMATION:
 		case SL_SKE:
 		case SL_SKA:
+		case RK_PHANTOMTHRUST:
 			if (target->type == BL_MOB && ((TBL_MOB*)target)->mob_id == MOBID_EMPERIUM)
 				return USESKILL_FAIL_MAX;
 			break;
-		case RK_PHANTOMTHRUST:
-			if (!map_flag_vs(src->m))
-				return USESKILL_FAIL_MAX;
 	}
 
 	if (inf && battle_check_target(src, target, inf) <= 0) {
