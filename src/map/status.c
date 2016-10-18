@@ -2014,6 +2014,10 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				&& (src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_id))
 				return false;
 			break;
+		case SC_MANHOLE:
+			// Skill is disabled against special racial grouped monsters(GvG and Battleground)
+			if (status_get_race2(target) == RC2_GVG || status_get_race2(target) == RC2_BATTLEFIELD)
+				return false;
 		default:
 			break;
 	}
@@ -2187,14 +2191,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			if( tsc ) {
 				if( tsc->option&hide_flag && !status_has_mode(status,MD_DETECTOR))
 					return false;
-			}
-			if (status_get_race2(target) == RC2_GVG || status_get_race2(target) == RC2_BATTLEFIELD) { // Skills disabled in GvG and Battleground against special racial grouped monsters
-				switch (skill_id) {
-					case SC_MANHOLE:
-						return false;
-					default:
-						break;
-				}
 			}
 	}
 	return true;
