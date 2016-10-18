@@ -152,7 +152,7 @@ int chclif_parse_pincode_check( int fd, struct char_session_data* sd ){
 		return 1;
 
 	memset(pin,0,PINCODE_LENGTH+1);
-	strncpy((char*)pin, (char*)RFIFOP(fd, 6), PINCODE_LENGTH);
+	strncpy((char*)pin, RFIFOCP(fd, 6), PINCODE_LENGTH);
 	RFIFOSKIP(fd,10);
 
 	char_pincode_decrypt(sd->pincode_seed, pin );
@@ -246,8 +246,8 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 		
 		memset(oldpin,0,PINCODE_LENGTH+1);
 		memset(newpin,0,PINCODE_LENGTH+1);
-		strncpy(oldpin, (char*)RFIFOP(fd,6), PINCODE_LENGTH);
-		strncpy(newpin, (char*)RFIFOP(fd,10), PINCODE_LENGTH);
+		strncpy(oldpin, RFIFOCP(fd,6), PINCODE_LENGTH);
+		strncpy(newpin, RFIFOCP(fd,10), PINCODE_LENGTH);
 		RFIFOSKIP(fd,14);
 		
 		char_pincode_decrypt(sd->pincode_seed,oldpin);
@@ -280,7 +280,7 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 	else {
 		char newpin[PINCODE_LENGTH+1];
 		memset(newpin,0,PINCODE_LENGTH+1);
-		strncpy( newpin, (char*)RFIFOP(fd,6), PINCODE_LENGTH );
+		strncpy( newpin, RFIFOCP(fd,6), PINCODE_LENGTH );
 		RFIFOSKIP(fd,10);
 
 		char_pincode_decrypt( sd->pincode_seed, newpin );
@@ -674,8 +674,8 @@ int chclif_parse_maplogin(int fd){
 		return 0;
 	else {
 		int i;
-		char* l_user = (char*)RFIFOP(fd,2);
-		char* l_pass = (char*)RFIFOP(fd,26);
+		char* l_user = RFIFOCP(fd,2);
+		char* l_pass = RFIFOCP(fd,26);
 		l_user[23] = '\0';
 		l_pass[23] = '\0';
 		ARR_FIND( 0, ARRAYLENGTH(map_server), i, map_server[i].fd <= 0 );
@@ -906,7 +906,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		WFIFOHEAD(fd,28);
 		WFIFOW(fd,0) = 0x71;
 		WFIFOL(fd,2) = cd->char_id;
-		mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map), (char*)WFIFOP(fd,6));
+		mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map), WFIFOCP(fd,6));
 		subnet_map_ip = char_lan_subnetcheck(ipl); // Advanced subnet check [LuzZza]
 		WFIFOL(fd,22) = htonl((subnet_map_ip) ? subnet_map_ip : map_server[i].ip);
 		WFIFOW(fd,26) = ntows(htons(map_server[i].port)); // [!] LE byte order here [!]
@@ -943,13 +943,13 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 		i = -2;
 	else {
 #if PACKETVER >= 20151001
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29),RFIFOW(fd,31),RFIFOW(fd,32),RFIFOB(fd,35));
+			i = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29),RFIFOW(fd,31),RFIFOW(fd,32),RFIFOB(fd,35));
 			RFIFOSKIP(fd,36);
 #elif PACKETVER >= 20120307
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
+			i = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
 			RFIFOSKIP(fd,31);
 #else
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
+			i = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
 			RFIFOSKIP(fd,37);
 #endif
 	}
@@ -1067,7 +1067,7 @@ int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
 	if(cmd == 0x8fc){
 		FIFOSD_CHECK(30)
 		cid =RFIFOL(fd,2);
-		safestrncpy(name, (char *)RFIFOP(fd,6), NAME_LENGTH);
+		safestrncpy(name, RFIFOCP(fd,6), NAME_LENGTH);
 		RFIFOSKIP(fd,30);
 	}
 	else if(cmd == 0x28d) {
@@ -1075,7 +1075,7 @@ int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
 		FIFOSD_CHECK(34);
 		aid = RFIFOL(fd,2);
 		cid =RFIFOL(fd,6);
-		safestrncpy(name, (char *)RFIFOP(fd,10), NAME_LENGTH);
+		safestrncpy(name, RFIFOCP(fd,10), NAME_LENGTH);
 		RFIFOSKIP(fd,34);
 		if( aid != sd->account_id )
 			return 1;

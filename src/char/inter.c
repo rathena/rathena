@@ -370,7 +370,7 @@ void inter_to_fd(int fd, int u_fd, int aid, char* msg, ...) {
 	WFIFOW(fd,2) = 12 + (unsigned short)len;
 	WFIFOL(fd,4) = u_fd;
 	WFIFOL(fd,8) = aid;
-	safestrncpy((char*)WFIFOP(fd,12), msg_out, len);
+	safestrncpy(WFIFOCP(fd,12), msg_out, len);
 
 	WFIFOSET(fd,12 + len);
 
@@ -389,7 +389,7 @@ static void mapif_acc_info_ack(int fd, int u_fd, int acc_id, const char* acc_nam
 	WFIFOW(fd,0) = 0x3808;
 	WFIFOL(fd,2) = u_fd;
 	WFIFOL(fd,6) = acc_id;
-	safestrncpy((char*)WFIFOP(fd,10),acc_name,NAME_LENGTH);
+	safestrncpy(WFIFOCP(fd,10),acc_name,NAME_LENGTH);
 	WFIFOSET(fd,10 + NAME_LENGTH);
 }
 
@@ -405,7 +405,7 @@ void mapif_parse_accinfo(int fd) {
 	int account_id = 0;
 	char *data;
 
-	safestrncpy(query, (char*) RFIFOP(fd,15), NAME_LENGTH);
+	safestrncpy(query, RFIFOCP(fd,15), NAME_LENGTH);
 	Sql_EscapeString(sql_handle, query_esq, query);
 
 	account_id = atoi(query);
@@ -614,7 +614,7 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
 		plen += 1;
 
-		safestrncpy((char*)WFIFOP(fd,plen), data, len);
+		safestrncpy(WFIFOCP(fd,plen), data, len);
 		plen += len;
 
 		Sql_GetData(sql_handle, 1, &data, NULL);
@@ -628,7 +628,7 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 254
 		plen += 1;
 
-		safestrncpy((char*)WFIFOP(fd,plen), data, len);
+		safestrncpy(WFIFOCP(fd,plen), data, len);
 		plen += len;
 
 		WFIFOW(fd, 14) += 1;
@@ -694,7 +694,7 @@ int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type)
 		WFIFOB(fd, plen) = (unsigned char)len;/* won't be higher; the column size is 32 */
 		plen += 1;
 
-		safestrncpy((char*)WFIFOP(fd,plen), data, len);
+		safestrncpy(WFIFOCP(fd,plen), data, len);
 		plen += len;
 
 		Sql_GetData(sql_handle, 1, &data, NULL);
@@ -1023,7 +1023,7 @@ int mapif_parse_WisRequest(int fd)
 		return 0;
 	}
 
-	safestrncpy(name, (char*)RFIFOP(fd,28), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
+	safestrncpy(name, RFIFOCP(fd,28), NAME_LENGTH); //Received name may be too large and not contain \0! [Skotlex]
 
 	Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `name` FROM `%s` WHERE `name`='%s'", schema_config.char_db, esc_name) )
@@ -1045,7 +1045,7 @@ int mapif_parse_WisRequest(int fd)
 		memset(name, 0, NAME_LENGTH);
 		memcpy(name, data, zmin(len, NAME_LENGTH));
 		// if source is destination, don't ask other servers.
-		if( strncmp((const char*)RFIFOP(fd,4), name, NAME_LENGTH) == 0 )
+		if( strncmp(RFIFOCP(fd,4), name, NAME_LENGTH) == 0 )
 		{
 			uint8 buf[27];
 			WBUFW(buf, 0) = 0x3802;
@@ -1126,7 +1126,7 @@ int mapif_parse_Registry(int fd)
 
 		for(i = 0; i < count; i++) {
 			unsigned int index;
-			safestrncpy(key, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
+			safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 			cursor += RFIFOB(fd, cursor) + 1;
 
 			index = RFIFOL(fd, cursor);
@@ -1143,7 +1143,7 @@ int mapif_parse_Registry(int fd)
 					break;
 				// str
 				case 2:
-					safestrncpy(sval, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
+					safestrncpy(sval, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 					cursor += RFIFOB(fd, cursor) + 1;
 					inter_savereg(account_id,char_id,key,index,(intptr_t)sval,true);
 					break;
@@ -1197,7 +1197,7 @@ int mapif_parse_NameChangeRequest(int fd)
 	account_id = RFIFOL(fd,2);
 	char_id = RFIFOL(fd,6);
 	type = RFIFOB(fd,10);
-	name = (char*)RFIFOP(fd,11);
+	name = RFIFOCP(fd,11);
 
 	// Check Authorised letters/symbols in the name
 	if (charserv_config.char_config.char_name_option == 1) { // only letters/symbols in char_name_letters are authorised

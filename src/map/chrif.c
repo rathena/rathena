@@ -861,7 +861,7 @@ int chrif_req_login_operation(int aid, const char* character_name, enum chrif_re
 	WFIFOHEAD(char_fd,44);
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = aid;
-	safestrncpy((char*)WFIFOP(char_fd,6), character_name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(char_fd,6), character_name, NAME_LENGTH);
 	WFIFOW(char_fd,30) = operation_type;
 
 	if ( operation_type == CHRIF_OP_LOGIN_BAN || operation_type == CHRIF_OP_LOGIN_VIP)
@@ -883,7 +883,7 @@ int chrif_changesex(struct map_session_data *sd, bool change_account) {
 	WFIFOHEAD(char_fd,44);
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = sd->status.account_id;
-	safestrncpy((char*)WFIFOP(char_fd,6), sd->status.name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(char_fd,6), sd->status.name, NAME_LENGTH);
 	WFIFOW(char_fd,30) = (change_account ? CHRIF_OP_LOGIN_CHANGESEX : CHRIF_OP_CHANGECHARSEX);
 	if (!change_account)
 		WFIFOB(char_fd,32) = sd->status.sex == SEX_MALE ? SEX_FEMALE : SEX_MALE;
@@ -1131,7 +1131,7 @@ int chrif_req_charban(int aid, const char* character_name, int32 timediff){
 	WFIFOW(char_fd,0) = 0x2b28;
 	WFIFOL(char_fd,2) = aid;
 	WFIFOL(char_fd,6) = timediff;
-	safestrncpy((char*)WFIFOP(char_fd,10), character_name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(char_fd,10), character_name, NAME_LENGTH);
 	WFIFOSET(char_fd,10+NAME_LENGTH); //default 34
 	return 0;
 }
@@ -1142,7 +1142,7 @@ int chrif_req_charunban(int aid, const char* character_name){
 	WFIFOHEAD(char_fd,6+NAME_LENGTH);
 	WFIFOW(char_fd,0) = 0x2b2a;
 	WFIFOL(char_fd,2) = aid;
-	safestrncpy((char*)WFIFOP(char_fd,6), character_name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(char_fd,6), character_name, NAME_LENGTH);
 	WFIFOSET(char_fd,6+NAME_LENGTH);
 	return 0;
 }
@@ -1805,10 +1805,10 @@ int chrif_parse(int fd) {
 			case 0x2b03: clif_charselectok(RFIFOL(fd,2), RFIFOB(fd,6)); break;
 			case 0x2b04: chrif_recvmap(fd); break;
 			case 0x2b06: chrif_changemapserverack(RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), RFIFOW(fd,18), RFIFOW(fd,20), RFIFOW(fd,22), RFIFOL(fd,24), RFIFOW(fd,28)); break;
-			case 0x2b09: map_addnickdb(RFIFOL(fd,2), (char*)RFIFOP(fd,6)); break;
+			case 0x2b09: map_addnickdb(RFIFOL(fd,2), RFIFOCP(fd,6)); break;
 			case 0x2b0b: chrif_skillcooldown_load(fd); break;
 			case 0x2b0d: chrif_changedsex(fd); break;
-			case 0x2b0f: chrif_ack_login_req(RFIFOL(fd,2), (char*)RFIFOP(fd,6), RFIFOW(fd,30), RFIFOW(fd,32)); break;
+			case 0x2b0f: chrif_ack_login_req(RFIFOL(fd,2), RFIFOCP(fd,6), RFIFOW(fd,30), RFIFOW(fd,32)); break;
 			case 0x2b12: chrif_divorceack(RFIFOL(fd,2), RFIFOL(fd,6)); break;
 			case 0x2b14: chrif_ban(fd); break;
 			case 0x2b1b: chrif_recvfamelist(fd); break;
