@@ -2010,6 +2010,10 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				&& (src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_id))
 				return false;
 			break;
+		case SC_MANHOLE:
+			// Skill is disabled against special racial grouped monsters(GvG and Battleground)
+			if (status_get_race2(target) == RC2_GVG || status_get_race2(target) == RC2_BATTLEFIELD)
+				return false;
 		default:
 			break;
 	}
