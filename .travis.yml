@@ -41,8 +41,11 @@ env:
     - DB_PASS="ragnarok"
     - PACKETDBVER=45
   matrix:
-    - CONFIGURE_FLAGS="--enable-prere=no"
-    - CONFIGURE_FLAGS="--enable-prere=yes"
+  matrix:
+    - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no"
+    - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=no"
+    - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=yes"
+    - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=yes"
 
 notifications:
   email: false
