@@ -4273,7 +4273,7 @@ static bool mob_parse_row_chatdb(char* fields[], int columns, int current)
 	msg_id = atoi(fields[0]);
 
 	if (msg_id <= 0 || msg_id > MAX_MOB_CHAT){
-		ShowError("mob_parse_row_chatdb: Invalid chat ID: %d at %s, line %d\n", msg_id, columns, current);
+		ShowError("mob_parse_row_chatdb: Invalid chat ID '%d' in line %d\n", msg_id, current);
 		return false;
 	}
 
