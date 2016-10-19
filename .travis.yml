@@ -41,11 +41,10 @@ env:
     - DB_PASS="ragnarok"
     - PACKETDBVER=45
   matrix:
-  matrix:
-    - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no"
-    - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=no"
-    - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=yes"
-    - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=yes"
+    - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=no --enable_buildbot=yes"
+    - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=no --enable_buildbot=yes"
+    - CONFIGURE_FLAGS="--enable-prere=no --enable-vip=yes --enable_buildbot=yes"
+    - CONFIGURE_FLAGS="--enable-prere=yes --enable-vip=yes --enable_buildbot=yes"
 
 notifications:
   email: false
