@@ -4435,8 +4435,8 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 	if( j < ARRAYLENGTH(state) )
 		ms->state = state[j].id;
 	else {
-		ShowWarning("mob_parse_row_mobskilldb: Unrecognized state %s\n", str[2]);
-		ms->state = MSS_ANY;
+		ShowError("mob_parse_row_mobskilldb: Unrecognized state '%s' in line %d\n", str[2], current);
+		return false;
 	}
 
 	//Skill ID
