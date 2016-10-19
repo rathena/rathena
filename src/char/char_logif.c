@@ -315,7 +315,7 @@ int chlogif_parse_ackaccreq(int fd, struct char_session_data* sd){
 			sd->version = version;
 			sd->clienttype = clienttype;
 			if(sd->version != date2version(PACKETVER))
-				ShowWarning("s aid=%d has an incorect version=%d in clientinfo. Server compiled for %d\n",
+				ShowWarning("aid=%d has an incorect version=%d in clientinfo. Server compiled for %d\n",
 					sd->account_id,sd->version,date2version(PACKETVER));
 
 			switch( result )
