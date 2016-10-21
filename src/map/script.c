@@ -13646,45 +13646,6 @@ BUILDIN_FUNC(petrecovery)
 }
 
 /*==========================================
- * pet healing [Valaris] //Rewritten by [Skotlex]
- *------------------------------------------*/
-BUILDIN_FUNC(petheal)
-{
-	struct pet_data *pd;
-	TBL_PC *sd=script_rid2sd(st);
-
-	if(sd==NULL || sd->pd==NULL)
-		return SCRIPT_CMD_SUCCESS;
-
-	pd=sd->pd;
-	if (pd->s_skill)
-	{ //Clear previous skill
-		if (pd->s_skill->timer != INVALID_TIMER)
-		{
-			if (pd->s_skill->id)
-				delete_timer(pd->s_skill->timer, pet_skill_support_timer);
-			else
-				delete_timer(pd->s_skill->timer, pet_heal_timer);
-		}
-	} else //init memory
-		pd->s_skill = (struct pet_skill_support *) aMalloc(sizeof(struct pet_skill_support));
-
-	pd->s_skill->id=0; //This id identifies that it IS petheal rather than pet_skillsupport
-	//Use the lv as the amount to heal
-	pd->s_skill->lv=script_getnum(st,2);
-	pd->s_skill->delay=script_getnum(st,3);
-	pd->s_skill->hp=script_getnum(st,4);
-	pd->s_skill->sp=script_getnum(st,5);
-
-	//Use delay as initial offset to avoid skill/heal exploits
-	if (battle_config.pet_equip_required && pd->pet.equip == 0)
-		pd->s_skill->timer = INVALID_TIMER;
-	else
-		pd->s_skill->timer = add_timer(gettick()+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/*==========================================
  * pet attack skills [Valaris] //Rewritten by [Skotlex]
  *------------------------------------------*/
 /// petskillattack <skill id>,<level>,<rate>,<bonusrate>
@@ -22243,7 +22204,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(petskillbonus,"iiii"), // [Valaris]
 	BUILDIN_DEF(petrecovery,"ii"), // [Valaris]
 	BUILDIN_DEF(petloot,"i"), // [Valaris]
-	BUILDIN_DEF(petheal,"iiii"), // [Valaris]
 	BUILDIN_DEF(petskillattack,"viii"), // [Skotlex]
 	BUILDIN_DEF(petskillattack2,"viiii"), // [Valaris]
 	BUILDIN_DEF(petskillsupport,"viiii"), // [Skotlex]
