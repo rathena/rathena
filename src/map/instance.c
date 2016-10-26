@@ -602,6 +602,9 @@ int instance_destroy(unsigned short instance_id)
 			map_delinstancemap(im->map[i]->m);
 			ers_free(instance_maps_ers, im->map[i]);
 		}
+		im->cnt_map = 0;
+		aFree(im->map);
+		im->map = NULL;
 	}
 
 	if(im->keep_timer != INVALID_TIMER) {
