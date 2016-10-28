@@ -11453,6 +11453,11 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
  */
 void pc_scdata_received(struct map_session_data *sd) {
 	pc_inventory_rentals(sd); // Needed here to remove rentals that have Status Changes after chrif_load_scdata has finished
+
+	if (pc_iscarton(sd)) {
+		sd->cart_weight_max = 0; // Force a client refesh
+		status_calc_cart_weight(sd, 1|2|4);
+	}
 }
 
 /**

@@ -8480,13 +8480,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0;
 		break;
 
-	case SC_PUSH_CART:
-	if (sd) {
-		sd->cart_weight_max = 0; // Force a client refesh
-		status_calc_cart_weight(sd, 1|2|4);
-	}
-	break;
-
 	case SC_WEDDING:
 	case SC_XMAS:
 	case SC_SUMMER:
