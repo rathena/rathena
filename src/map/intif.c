@@ -3213,11 +3213,12 @@ static bool intif_parse_StorageReceived(int fd)
 
 		case TABLE_CART:
 			pc_check_available_item(sd, ITMCHK_CART);
-			status_calc_cart_weight(sd, 1|2);
 			if (sd->state.autotrade) {
 				clif_parse_LoadEndAck(sd->fd, sd);
 				sd->autotrade_tid = add_timer(gettick() + battle_config.feature_autotrade_open_delay, pc_autotrade_timer, sd->bl.id, 0);
 			}else if( sd->state.prevend ){
+				clif_clearcart(sd->fd);
+				clif_cartlist(sd);
 				clif_openvendingreq(sd, sd->vend_skill_lv+2);
 			}
 			break;

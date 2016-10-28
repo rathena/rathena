@@ -1399,6 +1399,12 @@ void pc_reg_received(struct map_session_data *sd)
 		return;
 	sd->state.active = 1;
 
+	intif_storage_request(sd,TABLE_INVENTORY); // Request inventory data
+	intif_storage_request(sd,TABLE_CART); // Request cart data
+	intif_storage_request(sd,TABLE_STORAGE); // Request storage data
+
+	sd->storage_size = MIN_STORAGE; //default to min
+
 	if (sd->status.party_id)
 		party_member_joined(sd);
 	if (sd->status.guild_id)
@@ -1423,7 +1429,6 @@ void pc_reg_received(struct map_session_data *sd)
 
 	chrif_skillcooldown_request(sd->status.account_id, sd->status.char_id);
 	chrif_bsdata_request(sd->status.char_id);
-	sd->storage_size = MIN_STORAGE; //default to min
 #ifdef VIP_ENABLE
 	sd->vip.time = 0;
 	sd->vip.enabled = 0;
@@ -1451,10 +1456,6 @@ void pc_reg_received(struct map_session_data *sd)
 
 		clif_changeoption( &sd->bl );
 	}
-
-	intif_storage_request(sd,TABLE_STORAGE); // Request storage data
-	intif_storage_request(sd,TABLE_CART); // Request cart data
-	intif_storage_request(sd,TABLE_INVENTORY); // Request inventory data
 }
 
 static int pc_calc_skillpoint(struct map_session_data* sd)

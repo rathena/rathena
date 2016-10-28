@@ -3134,6 +3134,10 @@ bool status_calc_weight(struct map_session_data *sd, uint8 flag)
 /**
  * Calculates player's cart weight
  * @param sd: Player object
+ * @param flag: Calculation type
+ *   1 - Cart item weight
+ *   2 - Skill/Status/Configuration max weight bonus
+ *   4 - Whether to check for cart status
  * @return false - failed, true - success
  */
 bool status_calc_cart_weight(struct map_session_data *sd, uint8 flag)
@@ -3142,7 +3146,7 @@ bool status_calc_cart_weight(struct map_session_data *sd, uint8 flag)
 
 	nullpo_retr(false, sd);
 
-	if (!pc_iscarton(sd))
+	if (!pc_iscarton(sd) && !(flag&4))
 		return false;
 
 	b_cart_weight_max = sd->cart_weight_max; // Store cart max weight for later comparison
@@ -3201,9 +3205,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->battle_status.sp = sd->status.sp;
 		sd->regen.sregen = &sd->sregen;
 		sd->regen.ssregen = &sd->ssregen;
-
-		status_calc_weight(sd, 1);
-		status_calc_cart_weight(sd, 1);
 	}
 
 	base_status = &sd->base_status;
@@ -8478,6 +8479,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		if (sc->data[SC_DEVOTION] || sc->data[SC_WHITEIMPRISON])
 			return 0;
 		break;
+
+	case SC_PUSH_CART:
+	if (sd) {
+		sd->cart_weight_max = 0; // Force a client refesh
+		status_calc_cart_weight(sd, 1|2|4);
+	}
+	break;
 
 	case SC_WEDDING:
 	case SC_XMAS:
