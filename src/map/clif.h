@@ -672,8 +672,9 @@ void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len);
 void clif_wis_end(int fd, int result);
 
 void clif_solved_charname(int fd, int charid, const char* name);
-void clif_charnameack(int fd, struct block_list *bl);
-void clif_charnameupdate(struct map_session_data *ssd);
+void clif_name( struct block_list* src, struct block_list *bl, send_target target );
+#define clif_name_self(bl) clif_name( (bl), (bl), SELF )
+#define clif_name_area(bl) clif_name( (bl), (bl), AREA )
 
 void clif_use_card(struct map_session_data *sd,int idx);
 void clif_insert_card(struct map_session_data *sd,int idx_equip,int idx_card,int flag);

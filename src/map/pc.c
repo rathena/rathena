@@ -7642,7 +7642,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 				if( battle_config.show_mob_info&4 )
 				{// update name with new level
-					clif_charnameack(0, &md->bl);
+					clif_name_area(&md->bl);
 				}
 			}
 			src = battle_get_master(src); // Maybe Player Summon

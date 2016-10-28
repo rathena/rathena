@@ -17232,8 +17232,8 @@ BUILDIN_FUNC(setunitdata)
 		switch (type) {
 			case UMOB_SIZE: md->status.size = (unsigned char)value; break;
 			case UMOB_LEVEL: md->level = (unsigned short)value; break;
-			case UMOB_HP: status_set_hp(bl, (unsigned int)value, 0); clif_charnameack(0, &md->bl); break;
-			case UMOB_MAXHP: status_set_maxhp(bl, (unsigned int)value, 0); clif_charnameack(0, &md->bl); break;
+			case UMOB_HP: status_set_hp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
+			case UMOB_MAXHP: status_set_maxhp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
 			case UMOB_MASTERAID: md->master_id = value; break;
 			case UMOB_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UMOB_X: if (!unit_walktoxy(bl, (short)value, md->bl.y, 2)) unit_movepos(bl, (short)value, md->bl.y, 0, 0); break;
@@ -17637,7 +17637,7 @@ BUILDIN_FUNC(setunitname)
 			ShowWarning("buildin_setunitname: Unknown object type!\n");
 			return SCRIPT_CMD_FAILURE;
 	}
-	clif_charnameack(0, bl); // Send update to client.
+	clif_name_area(bl); // Send update to client.
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18893,7 +18893,7 @@ BUILDIN_FUNC(bg_monster_set_team)
 	mob_stop_attack(md);
 	mob_stop_walking(md, 0);
 	md->target_id = md->attacked_id = 0;
-	clif_charnameack(0, &md->bl);
+	clif_name_area(&md->bl);
 
 	return SCRIPT_CMD_SUCCESS;
 }

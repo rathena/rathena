@@ -505,7 +505,7 @@ int guild_recv_info(struct guild *sg) {
 			//Also set the guild master flag.
 			sd->guild = g;
 			sd->state.gmaster_flag = 1;
-			clif_charnameupdate(sd); // [LuzZza]
+			clif_name_area(&sd->bl); // [LuzZza]
 			clif_guild_masterormember(sd);
 		}
 	} else {
@@ -521,7 +521,7 @@ int guild_recv_info(struct guild *sg) {
 	for(i=bm=m=0;i<g->max_member;i++){
 		if(g->member[i].account_id>0){
 			sd = g->member[i].sd = guild_sd_check(g->guild_id, g->member[i].account_id, g->member[i].char_id);
-			if (sd) clif_charnameupdate(sd); // [LuzZza]
+			if (sd) clif_name_area(&sd->bl); // [LuzZza]
 			m++;
 		}else
 			g->member[i].sd=NULL;
@@ -883,7 +883,7 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 			}
 		}
 
-		clif_charnameupdate(sd); //Update display name [Skotlex]
+		clif_name_area(&sd->bl); //Update display name [Skotlex]
 		status_change_end(&sd->bl,SC_LEADERSHIP,INVALID_TIMER);
 		status_change_end(&sd->bl,SC_GLORYWOUNDS,INVALID_TIMER);
 		status_change_end(&sd->bl,SC_SOULCOLD,INVALID_TIMER);
@@ -1074,7 +1074,7 @@ int guild_memberposition_changed(struct guild *g,int idx,int pos) {
 
 	// Update char position in client [LuzZza]
 	if(g->member[idx].sd != NULL)
-		clif_charnameupdate(g->member[idx].sd);
+		clif_name_area(&g->member[idx].sd->bl);
 	return 0;
 }
 
@@ -1108,7 +1108,7 @@ int guild_position_changed(int guild_id,int idx,struct guild_position *p) {
 	// Update char name in client [LuzZza]
 	for(i=0;i<g->max_member;i++)
 		if(g->member[i].position == idx && g->member[i].sd != NULL)
-			clif_charnameupdate(g->member[i].sd);
+			clif_name_area(&g->member[i].sd->bl);
 	return 0;
 }
 
@@ -1729,7 +1729,7 @@ int guild_broken(int guild_id,int flag) {
 			sd->guild = NULL;
 			sd->state.gmaster_flag = 0;
 			clif_guild_broken(g->member[i].sd,0);
-			clif_charnameupdate(sd); // [LuzZza]
+			clif_name_area(&sd->bl); // [LuzZza]
 			status_change_end(&sd->bl,SC_LEADERSHIP,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_GLORYWOUNDS,INVALID_TIMER);
 			status_change_end(&sd->bl,SC_SOULCOLD,INVALID_TIMER);

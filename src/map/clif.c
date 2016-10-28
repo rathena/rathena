@@ -9240,14 +9240,16 @@ void clif_refresh(struct map_session_data *sd)
 
 
 /// Updates the object's (bl) name on client.
+/// Used to update when a char leaves a party/guild. [Skotlex]
+/// Needed because when you send a 0x95 packet, the client will not remove the cached party/guild info that is not sent.
 /// 0095 <id>.L <char name>.24B (ZC_ACK_REQNAME)
 /// 0195 <id>.L <char name>.24B <party name>.24B <guild name>.24B <position name>.24B (ZC_ACK_REQNAMEALL)
 /// 0a30 <id>.L <char name>.24B <party name>.24B <guild name>.24B <position name>.24B <title ID>.L (ZC_ACK_REQNAMEALL2)
-void clif_charnameack (int fd, struct block_list *bl)
-{
+void clif_name( struct block_list* src, struct block_list *bl, send_target target ){
 	unsigned char buf[106];
 	int cmd = 0x95;
 
+	nullpo_retv(src);
 	nullpo_retv(bl);
 
 	WBUFW(buf,0) = cmd;
@@ -9267,7 +9269,7 @@ void clif_charnameack (int fd, struct block_list *bl)
 #endif
 
 			//Requesting your own "shadow" name. [Skotlex]
-			if( sd->fd == fd && sd->disguise ){
+			if( src == bl && target == SELF && sd->disguise ){
 				WBUFL(buf,2) = -bl->id;
 			}
 
@@ -9365,75 +9367,12 @@ void clif_charnameack (int fd, struct block_list *bl)
 		safestrncpy(WBUFCP(buf,6), ((TBL_ELEM*)bl)->db->name, NAME_LENGTH);
 		break;
 	default:
-		ShowError("clif_charnameack: bad type %d(%d)\n", bl->type, bl->id);
+		ShowError("clif_name: bad type %d(%d)\n", bl->type, bl->id);
 		return;
 	}
 
-	// if no receipient specified just update nearby clients
-	if (fd == 0)
-		clif_send(buf, packet_len(cmd), bl, AREA);
-	else {
-		WFIFOHEAD(fd, packet_len(cmd));
-		memcpy(WFIFOP(fd, 0), buf, packet_len(cmd));
-		WFIFOSET(fd, packet_len(cmd));
-	}
+	clif_send(buf, packet_len(cmd), src, target);
 }
-
-
-//Used to update when a char leaves a party/guild. [Skotlex]
-//Needed because when you send a 0x95 packet, the client will not remove the cached party/guild info that is not sent.
-void clif_charnameupdate (struct map_session_data *ssd)
-{
-	unsigned char buf[103];
-	int cmd = 0x195, ps = -1;
-	struct party_data *p = NULL;
-	struct guild *g = NULL;
-
-	nullpo_retv(ssd);
-
-	if( ssd->fakename[0] )
-		return; //No need to update as the party/guild was not displayed anyway.
-
-	WBUFW(buf,0) = cmd;
-	WBUFL(buf,2) = ssd->bl.id;
-
-	safestrncpy(WBUFCP(buf,6), ssd->status.name, NAME_LENGTH);
-
-	if (!battle_config.display_party_name) {
-		if (ssd->status.party_id > 0 && ssd->status.guild_id > 0 && (g = ssd->guild) != NULL)
-			p = party_search(ssd->status.party_id);
-	}else{
-		if (ssd->status.party_id > 0)
-			p = party_search(ssd->status.party_id);
-	}
-
-	if( ssd->status.guild_id > 0 && (g = ssd->guild) != NULL )
-	{
-		int i;
-		ARR_FIND(0, g->max_member, i, g->member[i].account_id == ssd->status.account_id && g->member[i].char_id == ssd->status.char_id);
-		if( i < g->max_member ) ps = g->member[i].position;
-	}
-
-	if( p )
-		safestrncpy(WBUFCP(buf,30), p->party.name, NAME_LENGTH);
-	else
-		WBUFB(buf,30) = 0;
-
-	if( g && ps >= 0 && ps < MAX_GUILDPOSITION )
-	{
-		safestrncpy(WBUFCP(buf,54), g->name,NAME_LENGTH);
-		safestrncpy(WBUFCP(buf,78), g->position[ps].name, NAME_LENGTH);
-	}
-	else
-	{
-		WBUFB(buf,54) = 0;
-		WBUFB(buf,78) = 0;
-	}
-
-	// Update nearby clients
-	clif_send(buf, packet_len(cmd), &ssd->bl, AREA);
-}
-
 
 /// Taekwon Jump (TK_HIGHJUMP) effect (ZC_HIGHJUMP).
 /// 01ff <id>.L <x>.W <y>.W
@@ -10676,7 +10615,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd)
 	}
 	*/
 
-	clif_charnameack(fd, bl);
+	clif_name(&sd->bl,bl,SELF);
 }
 
 
