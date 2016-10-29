@@ -9295,12 +9295,13 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 			}
 
 			if( sd->guild ){
-				int i;
+				int position;
 
-				ARR_FIND(0, sd->guild->max_member, i, sd->guild->member[i].account_id == sd->status.account_id && sd->guild->member[i].char_id == sd->status.char_id);
+				// Will get the position of the guild the player is in
+				position = guild_getposition( NULL, sd );
 
 				safestrncpy(WBUFCP(buf,54), sd->guild->name,NAME_LENGTH);
-				safestrncpy(WBUFCP(buf,78), sd->guild->position[i].name, NAME_LENGTH);
+				safestrncpy(WBUFCP(buf,78), sd->guild->position[position].name, NAME_LENGTH);
 			}else{ //Assume no guild.
 				WBUFB(buf,54) = 0;
 				WBUFB(buf,78) = 0;
