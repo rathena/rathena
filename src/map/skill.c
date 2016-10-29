@@ -1043,10 +1043,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				time = sd->addeff[i].duration;
 
 				if (sd->addeff[i].flag&ATF_TARGET)
-					status_change_start(src,bl,type,10000,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NORATEDEF);
+					status_change_start(src,bl,type,10000,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
 
 				if (sd->addeff[i].flag&ATF_SELF)
-					status_change_start(src,src,type,10000,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NORATEDEF);
+					status_change_start(src,src,type,10000,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
 			}
 		}
 
@@ -1064,9 +1064,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				time = sd->addeff[i].duration;
 
 				if( sd->addeff_onskill[i].target&ATF_TARGET )
-					status_change_start(src,bl,type,10000,7,0,0,0,time,SCSTART_NORATEDEF);
+					status_change_start(src,bl,type,10000,7,0,0,0,time,SCSTART_NONE);
 				if( sd->addeff_onskill[i].target&ATF_SELF )
-					status_change_start(src,src,type,10000,7,0,0,0,time,SCSTART_NORATEDEF);
+					status_change_start(src,src,type,10000,7,0,0,0,time,SCSTART_NONE);
 			}
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
