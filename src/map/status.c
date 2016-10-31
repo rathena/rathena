@@ -828,6 +828,7 @@ void initChangeTables(void)
 	set_sc( RL_B_TRAP		, SC_B_TRAP		, SI_B_TRAP		, SCB_SPEED );
 	set_sc( RL_E_CHAIN		, SC_E_CHAIN	, SI_E_CHAIN	, SCB_NONE );
 	set_sc( RL_P_ALTER		, SC_P_ALTER	, SI_P_ALTER	, SCB_NONE );
+	set_sc( RL_FALLEN_ANGEL , SC_FALLEN_ANGEL, SI_BLANK, SCB_NONE );
 	set_sc( RL_SLUGSHOT		, SC_STUN		, SI_SLUGSHOT	, SCB_NONE );
 	set_sc( RL_HEAT_BARREL	, SC_HEAT_BARREL	, SI_HEAT_BARREL	, SCB_HIT|SCB_ASPD );
 	set_sc_with_vfx( RL_C_MARKER	, SC_C_MARKER		, SI_C_MARKER		, SCB_FLEE );

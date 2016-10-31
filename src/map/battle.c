@@ -3664,6 +3664,8 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case GS_DESPERADO:
 			skillratio += 50 * (skill_lv - 1);
+			if (sc && sc->data[SC_FALLEN_ANGEL])
+				skillratio *= 2;
 			break;
 		case GS_DUST:
 			skillratio += 50 * skill_lv;

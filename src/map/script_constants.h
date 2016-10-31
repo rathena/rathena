@@ -1413,6 +1413,7 @@
 	export_constant(SC_GVG_CURSE);
 	export_constant(SC_GVG_SILENCE);
 	export_constant(SC_GVG_BLIND);
+	export_constant(SC_FALLEN_ANGEL);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
