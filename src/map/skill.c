@@ -15686,10 +15686,23 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 	}
 
 	if( require.ammo ) { //Skill requires stuff equipped in the ammo slot.
+		uint8 extra_ammo = 0;
+
+#ifdef RENEWAL
+		switch(skill_id) { // 2016-10-26 kRO update made these skills require an extra ammo to cast
+			case WM_SEVERE_RAINSTORM:
+			case RL_R_TRIP:
+			case RL_FIRE_RAIN:
+				extra_ammo = 1;
+				break;
+			default:
+				break;
+		}
+#endif
 		if((i=sd->equip_index[EQI_AMMO]) < 0 || !sd->inventory_data[i] ) {
 			clif_arrow_fail(sd,0);
 			return false;
-		} else if( sd->status.inventory[i].amount < require.ammo_qty ) {
+		} else if( sd->status.inventory[i].amount < require.ammo_qty + extra_ammo ) {
 			char e_msg[100];
 			if (require.ammo&(1<<AMMO_BULLET|1<<AMMO_GRENADE|1<<AMMO_SHELL)) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_MORE_BULLET,0);
