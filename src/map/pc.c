@@ -4876,7 +4876,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC__MANHOLE] ||
 		sd->sc.data[SC_KAGEHUMI] ||
 		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM) ||
-		sd->sc.data[SC_HEAT_BARREL_AFTER] ||
 		sd->sc.data[SC_KINGS_GRACE] ||
 		sd->sc.data[SC_SUHIDE]))
 		return false;
@@ -9819,7 +9818,6 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 			skill_enchant_elemental_end(&sd->bl, SC_NONE);
 		status_change_end(&sd->bl, SC_FEARBREEZE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_EXEEDBREAK, INVALID_TIMER);
-		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
 	}
 
 	// On armor change
@@ -9831,7 +9829,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	}
 
 	// On ammo change
-	if (sd->inventory_data[n]->type == IT_AMMO)
+	if (sd->inventory_data[n]->type == IT_AMMO && (sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET || sd->inventory_data[n]->nameid != ITEMID_PURIFICATION_BULLET || sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET_))
 		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
 
 	if( sd->state.autobonus&sd->status.inventory[n].equip )
