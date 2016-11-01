@@ -11,6 +11,7 @@
 //===== Changelogs: ================================= 
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added dali, dali02 [Nova]
+//= 1.2 Added WOE:TE maps [Cydh,Capuche]
 //============================================================
 
 // Cities ========================
@@ -92,3 +93,25 @@ gl_cas02_	mapflag	noteleport
 1@gef_in	mapflag	monster_noteleport
 dali	mapflag	noteleport
 dali02	mapflag	noteleport
+
+// WOE:TE Maps ===================
+te_prtcas01	mapflag	noteleport
+te_prtcas02	mapflag	noteleport
+te_prtcas03	mapflag	noteleport
+te_prtcas04	mapflag	noteleport
+te_prtcas05	mapflag	noteleport
+te_aldecas1	mapflag	noteleport
+te_aldecas2	mapflag	noteleport
+te_aldecas3	mapflag	noteleport
+te_aldecas4	mapflag	noteleport
+te_aldecas5	mapflag	noteleport
+te_prtcas01	mapflag	monster_noteleport
+te_prtcas02	mapflag	monster_noteleport
+te_prtcas03	mapflag	monster_noteleport
+te_prtcas04	mapflag	monster_noteleport
+te_prtcas05	mapflag	monster_noteleport
+te_aldecas1	mapflag	monster_noteleport
+te_aldecas2	mapflag	monster_noteleport
+te_aldecas3	mapflag	monster_noteleport
+te_aldecas4	mapflag	monster_noteleport
+te_aldecas5	mapflag	monster_noteleport

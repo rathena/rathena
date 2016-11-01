@@ -1443,7 +1443,7 @@ void pc_reg_received(struct map_session_data *sd)
 #ifdef VIP_ENABLE
 	sd->vip.time = 0;
 	sd->vip.enabled = 0;
-	chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_VIP, 0, 1, 0);  // request VIP information
+	chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_VIP, 0, 1|8, 0);  // request VIP information
 #endif
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 	intif_request_questlog(sd);
@@ -8753,9 +8753,11 @@ void pc_setoption(struct map_session_data *sd,int type)
 	clif_skillinfoblock(sd); // Skill list needs to be updated after base change.
 }
 
-/*==========================================
+/**
  * Give player a cart
- *------------------------------------------*/
+ * @param sd Player
+ * @param type 0:Remove cart, 1 ~ MAX_CARTS: Cart type
+ **/
 bool pc_setcart(struct map_session_data *sd,int type) {
 #ifndef NEW_CARTS
 	int cart[6] = {0x0000,OPTION_CART1,OPTION_CART2,OPTION_CART3,OPTION_CART4,OPTION_CART5};
@@ -8782,10 +8784,7 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 			if( !sd->sc.data[SC_PUSH_CART] ) /* first time, so fill cart data */
 				clif_cartlist(sd);
 			clif_updatestatus(sd, SP_CARTINFO);
-			sc_start(&sd->bl,&sd->bl, SC_PUSH_CART, 100, type, 0);
-			clif_efst_status_change(&sd->bl, sd->bl.id, AREA, SI_ON_PUSH_CART, 9999, type, 0, 0);
-			if( sd->sc.data[SC_PUSH_CART] )/* forcefully update */
-				sd->sc.data[SC_PUSH_CART]->val1 = type;
+			sc_start(&sd->bl, &sd->bl, SC_PUSH_CART, 100, type, 0);
 			break;
 	}
 
@@ -9118,6 +9117,8 @@ int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
 				script_array_update(&sd->regs, reg, false);
 			p->value = aStrdup(val);
 		} else {
+			if (p->value)
+				aFree(p->value);
 			p->value = NULL;
 			if( index )
 				script_array_update(&sd->regs, reg, true);
@@ -12171,10 +12172,11 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
 	if (!job_info[idx].noenter_map.zone || group_lv > job_info[idx].noenter_map.group_lv)
 		return true;
 
-	if ((!map_flag_vs(m) && job_info[idx].noenter_map.zone&1) || // Normal
+	if ((!map_flag_vs2(m) && job_info[idx].noenter_map.zone&1) || // Normal
 		(map[m].flag.pvp && job_info[idx].noenter_map.zone&2) || // PVP
-		(map_flag_gvg2(m) && job_info[idx].noenter_map.zone&4) || // GVG
+		(map_flag_gvg2_no_te(m) && job_info[idx].noenter_map.zone&4) || // GVG
 		(map[m].flag.battleground && job_info[idx].noenter_map.zone&8) || // Battleground
+		(map_flag_gvg2_te(m) && job_info[idx].noenter_map.zone&16) || // WOE:TE
 		(map[m].flag.restricted && job_info[idx].noenter_map.zone&(8*map[m].zone)) // Zone restriction
 		)
 		return false;

@@ -2258,8 +2258,8 @@ SC_EQC	(SI_EQC)
 	desc:
 	val1:
 	val2: -% Def
-	val3: -% Atk
-	val4: -%MaxHP
+	val3: -%MaxHP
+	val4:
 
 SC_GOLDENE_FERSE	(SI_GOLDENE_FERSE)
 	desc:

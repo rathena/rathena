@@ -160,6 +160,7 @@ extern struct Script_Config {
 
 	const char* ontouch_name;
 	const char* ontouch2_name;
+	const char* onwhisper_event_name;
 } script_config;
 
 typedef enum c_op {

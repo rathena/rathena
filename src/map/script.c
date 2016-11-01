@@ -185,6 +185,7 @@ struct Script_Config script_config = {
 	1, // warn_func_mismatch_argtypes
 	1, 65535, 2048, //warn_func_mismatch_paramnum/check_cmdcount/check_gotocount
 	0, INT_MAX, // input_min_value/input_max_value
+	// NOTE: None of these event labels should be longer than <NAME_LENGTH> characters
 	"OnPCDieEvent", //die_event_name
 	"OnPCKillEvent", //kill_pc_event_name
 	"OnNPCKillEvent", //kill_mob_event_name
@@ -196,6 +197,7 @@ struct Script_Config script_config = {
 	"OnPCStatCalcEvent", //stat_calc_event_name
 	"OnTouch_",	//ontouch_name (runs on first visible char to enter area, picks another char if the first char leaves)
 	"OnTouch",	//ontouch2_name (run whenever a char walks into the OnTouch area)
+	"OnWhisperGlobal",	//onwhisper_event_name (is executed when a player sends a whisper message to the NPC)
 };
 
 static jmp_buf     error_jump;
@@ -363,6 +365,8 @@ enum {
 	MF_NOTOMB,
 	MF_SKILL_DAMAGE,	//60
 	MF_NOCOSTUME,
+	MF_GVG_TE_CASTLE,
+	MF_GVG_TE,
 };
 
 const char* script_op2name(int op)
@@ -5459,10 +5463,9 @@ BUILDIN_FUNC(warp)
 	int ret;
 	int x,y;
 	const char* str;
-	TBL_PC* sd;
+	struct map_session_data* sd;
 
-	sd = script_rid2sd(st);
-	if( sd == NULL )
+	if(!script_charid2sd(5, sd))
 		return SCRIPT_CMD_SUCCESS;
 
 	str = script_getstr(st,2);
@@ -5592,37 +5595,6 @@ BUILDIN_FUNC(areapercentheal)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * warpchar [LuzZza]
- * Useful for warp one player from
- * another player npc-session.
- * Using: warpchar "mapname",x,y,Char_ID;
- *------------------------------------------*/
-BUILDIN_FUNC(warpchar)
-{
-	int x,y,a;
-	const char *str;
-	TBL_PC *sd;
-
-	str=script_getstr(st,2);
-	x=script_getnum(st,3);
-	y=script_getnum(st,4);
-	a=script_getnum(st,5);
-
-	sd = map_charid2sd(a);
-	if( sd == NULL )
-		return SCRIPT_CMD_SUCCESS;
-
-	if(strcmp(str, "Random") == 0)
-		pc_randomwarp(sd, CLR_TELEPORT);
-	else
-	if(strcmp(str, "SavePoint") == 0)
-		pc_setpos(sd, sd->status.save_point.map,sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
-	else
-		pc_setpos(sd, mapindex_name2id(str), x, y, CLR_TELEPORT);
-
-	return SCRIPT_CMD_SUCCESS;
-}
 /*==========================================
  * Warpparty - [Fredzilla] [Paradox924X]
  * Syntax: warpparty "to_mapname",x,y,Party_ID,{"from_mapname"};
@@ -11847,6 +11819,8 @@ BUILDIN_FUNC(getmapflag)
 			case MF_NOLOCKON:			script_pushint(st,map[m].flag.nolockon); break;
 			case MF_NOTOMB:				script_pushint(st,map[m].flag.notomb); break;
 			case MF_NOCOSTUME:			script_pushint(st,map[m].flag.nocostume); break;
+			case MF_GVG_TE_CASTLE:		script_pushint(st,map[m].flag.gvg_te_castle); break;
+			case MF_GVG_TE:				script_pushint(st,map[m].flag.gvg_te); break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -11879,8 +11853,7 @@ static int script_mapflag_pvp_sub(struct block_list *bl,va_list ap) {
 		sd->pvp_won = 0;
 		sd->pvp_lost = 0;
 	}
-	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
-	clif_maptypeproperty2(&sd->bl,SELF);
+	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE,SELF);
 	return 0;
 }
 
@@ -11910,14 +11883,9 @@ BUILDIN_FUNC(setmapflag)
 				break;
 			case MF_PVP_NOPARTY:		map[m].flag.pvp_noparty = 1; break;
 			case MF_PVP_NOGUILD:		map[m].flag.pvp_noguild = 1; break;
-			case MF_GVG: {
-				struct block_list bl;
+			case MF_GVG:
 				map[m].flag.gvg = 1;
 				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-				bl.type = BL_NUL;
-				bl.m = m;
-				clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
 				break;
 			case MF_GVG_NOPARTY:		map[m].flag.gvg_noparty = 1; break;
 			case MF_NOTRADE:			map[m].flag.notrade = 1; break;
@@ -11971,6 +11939,11 @@ BUILDIN_FUNC(setmapflag)
 			case MF_NOLOCKON:			map[m].flag.nolockon = 1 ; break;
 			case MF_NOTOMB:				map[m].flag.notomb = 1; break;
 			case MF_NOCOSTUME:			map[m].flag.nocostume = 1; break;
+			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 1; break;
+			case MF_GVG_TE:
+				map[m].flag.gvg_te = 1;
+				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
+				break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -12009,25 +11982,15 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOBRANCH:			map[m].flag.nobranch = 0; break;
 			case MF_NOPENALTY:			map[m].flag.noexppenalty = 0; map[m].flag.nozenypenalty = 0; break;
 			case MF_NOZENYPENALTY:		map[m].flag.nozenypenalty = 0; break;
-			case MF_PVP: {
-				struct block_list bl;
-				bl.type = BL_NUL;
-				bl.m = m;
+			case MF_PVP:
 				map[m].flag.pvp = 0;
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-				clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
 				break;
 			case MF_PVP_NOPARTY:		map[m].flag.pvp_noparty = 0; break;
 			case MF_PVP_NOGUILD:		map[m].flag.pvp_noguild = 0; break;
-			case MF_GVG: {
-				struct block_list bl;
-				bl.type = BL_NUL;
-				bl.m = m;
+			case MF_GVG:
 				map[m].flag.gvg = 0;
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-				clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
 				break;
 			case MF_GVG_NOPARTY:		map[m].flag.gvg_noparty = 0; break;
 			case MF_NOTRADE:			map[m].flag.notrade = 0; break;
@@ -12083,6 +12046,11 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOLOCKON:			map[m].flag.nolockon = 0 ; break;
 			case MF_NOTOMB:				map[m].flag.notomb = 0; break;
 			case MF_NOCOSTUME:			map[m].flag.nocostume = 0; break;
+			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 0; break;
+			case MF_GVG_TE:
+				map[m].flag.gvg_te = 0;
+				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+				break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -12103,7 +12071,6 @@ BUILDIN_FUNC(pvpon)
 	const char *str;
 	TBL_PC* sd = NULL;
 	struct s_mapiterator* iter;
-	struct block_list bl;
 
 	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
@@ -12112,9 +12079,6 @@ BUILDIN_FUNC(pvpon)
 
 	map[m].flag.pvp = 1;
 	clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
-	bl.type = BL_NUL;
-	bl.m = m;
-	clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 
 	if(battle_config.pk_mode) // disable ranking functions if pk_mode is on [Valaris]
 		return SCRIPT_CMD_SUCCESS;
@@ -12151,7 +12115,6 @@ BUILDIN_FUNC(pvpoff)
 {
 	int16 m;
 	const char *str;
-	struct block_list bl;
 
 	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
@@ -12160,9 +12123,6 @@ BUILDIN_FUNC(pvpoff)
 
 	map[m].flag.pvp = 0;
 	clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-	bl.type = BL_NUL;
-	bl.m = m;
-	clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 
 	if(battle_config.pk_mode) // disable ranking options if pk_mode is on [Valaris]
 		return SCRIPT_CMD_SUCCESS;
@@ -12175,16 +12135,12 @@ BUILDIN_FUNC(gvgon)
 {
 	int16 m;
 	const char *str;
-	struct block_list bl;
 
 	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
 	if(m >= 0 && !map[m].flag.gvg) {
 		map[m].flag.gvg = 1;
 		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-		bl.type = BL_NUL;
-		bl.m = m;
-		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12197,15 +12153,40 @@ BUILDIN_FUNC(gvgoff)
 	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
 	if(m >= 0 && map[m].flag.gvg) {
-		struct block_list bl;
 		map[m].flag.gvg = 0;
 		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-		bl.type = BL_NUL;
-		bl.m = m;
-		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
+
+BUILDIN_FUNC(gvgon3)
+{
+	int16 m;
+	const char *str;
+
+	str = script_getstr(st,2);
+	m = map_mapname2mapid(str);
+	if (m >= 0 && !map[m].flag.gvg_te) {
+		map[m].flag.gvg_te = 1;
+		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(gvgoff3)
+{
+	int16 m;
+	const char *str;
+
+	str = script_getstr(st,2);
+	m = map_mapname2mapid(str);
+	if (m >= 0 && map[m].flag.gvg_te) {
+		map[m].flag.gvg_te = 0;
+		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  *	Shows an emoticon on top of the player/npc
  *	emotion emotion#, <target: 0 - NPC, 1 - PC>, <NPC/PC name>
@@ -12297,53 +12278,119 @@ BUILDIN_FUNC(maprespawnguildid)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Siege commands
+
+/**
+ * Start WoE:FE
+ * agitstart();
+ */
 BUILDIN_FUNC(agitstart)
 {
-	if(agit_flag==1) return SCRIPT_CMD_SUCCESS;      // Agit already Start.
-	agit_flag=1;
+	if (agit_flag)
+		return SCRIPT_CMD_SUCCESS;// Agit already Started.
+	agit_flag = true;
 	guild_agit_start();
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * End WoE:FE
+ * agitend();
+ */
 BUILDIN_FUNC(agitend)
 {
-	if(agit_flag==0) return SCRIPT_CMD_SUCCESS;      // Agit already End.
-	agit_flag=0;
+	if (!agit_flag)
+		return SCRIPT_CMD_SUCCESS;// Agit already Ended.
+	agit_flag = false;
 	guild_agit_end();
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Start WoE:SE
+ * agitstart2();
+ */
 BUILDIN_FUNC(agitstart2)
 {
-	if(agit2_flag==1) return SCRIPT_CMD_SUCCESS;      // Agit2 already Start.
-	agit2_flag=1;
+	if (agit2_flag)
+		return SCRIPT_CMD_SUCCESS;// Agit2 already Started.
+	agit2_flag = true;
 	guild_agit2_start();
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * End WoE:SE
+ * agitend();
+ */
 BUILDIN_FUNC(agitend2)
 {
-	if(agit2_flag==0) return SCRIPT_CMD_SUCCESS;      // Agit2 already End.
-	agit2_flag=0;
+	if (!agit2_flag)
+		return SCRIPT_CMD_SUCCESS;// Agit2 already Ended.
+	agit2_flag = false;
 	guild_agit2_end();
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * Returns whether woe is on or off.	// choice script
- *------------------------------------------*/
+/**
+ * Start WoE:TE
+ * agitstart3();
+ */
+BUILDIN_FUNC(agitstart3)
+{
+	if (agit3_flag)
+		return SCRIPT_CMD_SUCCESS;// AgitTE already Started.
+	agit3_flag = true;
+	guild_agit3_start();
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * End WoE:TE
+ * agitend3();
+ */
+BUILDIN_FUNC(agitend3)
+{
+	if (!agit3_flag)
+		return SCRIPT_CMD_SUCCESS;// AgitTE already Ended.
+	agit3_flag = false;
+	guild_agit3_end();
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Returns whether WoE:FE is on or off.
+ * agitcheck();
+ */
 BUILDIN_FUNC(agitcheck)
 {
-	script_pushint(st,agit_flag);
+	script_pushint(st, agit_flag);
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * Returns whether woese is on or off.	// choice script
- *------------------------------------------*/
+/**
+ * Returns whether WoE:SE is on or off.
+ * agitcheck2();
+ */
 BUILDIN_FUNC(agitcheck2)
 {
-	script_pushint(st,agit2_flag);
+	script_pushint(st, agit2_flag);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Returns whether WoE:TE is on or off.
+ * agitcheck3();
+ */
+BUILDIN_FUNC(agitcheck3)
+{
+	script_pushint(st, agit3_flag);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -12548,6 +12595,12 @@ BUILDIN_FUNC(successremovecards) {
 
 		for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 			item_tmp.card[j]=sd->status.inventory[i].card[j];
+		
+		for (j = 0; j < MAX_ITEM_RDM_OPT; j++){
+			item_tmp.option[j].id=sd->status.inventory[i].option[j].id;
+			item_tmp.option[j].value=sd->status.inventory[i].option[j].value;
+			item_tmp.option[j].param=sd->status.inventory[i].option[j].param;
+		}
 
 		pc_delitem(sd,i,1,0,3,LOG_TYPE_SCRIPT);
 		if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	//chk if can be spawn in inventory otherwise put on floor
@@ -12606,8 +12659,7 @@ BUILDIN_FUNC(failedremovecards) {
 	if(cardflag == 1) {
 		if(typefail == 0 || typefail == 2){	// destroy the item
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
-		}
-		if(typefail == 1){	// destroy the card
+		}else if(typefail == 1){ // destroy the card
 			unsigned char flag = 0, j;
 			struct item item_tmp;
 
@@ -12622,6 +12674,12 @@ BUILDIN_FUNC(failedremovecards) {
 
 			for (j = sd->inventory_data[i]->slot; j < MAX_SLOTS; j++)
 				item_tmp.card[j]=sd->status.inventory[i].card[j];
+			
+			for (j = 0; j < MAX_ITEM_RDM_OPT; j++){
+				item_tmp.option[j].id=sd->status.inventory[i].option[j].id;
+				item_tmp.option[j].value=sd->status.inventory[i].option[j].value;
+				item_tmp.option[j].param=sd->status.inventory[i].option[j].param;
+			}
 
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 
@@ -13584,45 +13642,6 @@ BUILDIN_FUNC(petrecovery)
 	pd->recovery->type = (sc_type)sc;
 	pd->recovery->delay = script_getnum(st,3);
 	pd->recovery->timer = INVALID_TIMER;
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/*==========================================
- * pet healing [Valaris] //Rewritten by [Skotlex]
- *------------------------------------------*/
-BUILDIN_FUNC(petheal)
-{
-	struct pet_data *pd;
-	TBL_PC *sd=script_rid2sd(st);
-
-	if(sd==NULL || sd->pd==NULL)
-		return SCRIPT_CMD_SUCCESS;
-
-	pd=sd->pd;
-	if (pd->s_skill)
-	{ //Clear previous skill
-		if (pd->s_skill->timer != INVALID_TIMER)
-		{
-			if (pd->s_skill->id)
-				delete_timer(pd->s_skill->timer, pet_skill_support_timer);
-			else
-				delete_timer(pd->s_skill->timer, pet_heal_timer);
-		}
-	} else //init memory
-		pd->s_skill = (struct pet_skill_support *) aMalloc(sizeof(struct pet_skill_support));
-
-	pd->s_skill->id=0; //This id identifies that it IS petheal rather than pet_skillsupport
-	//Use the lv as the amount to heal
-	pd->s_skill->lv=script_getnum(st,2);
-	pd->s_skill->delay=script_getnum(st,3);
-	pd->s_skill->hp=script_getnum(st,4);
-	pd->s_skill->sp=script_getnum(st,5);
-
-	//Use delay as initial offset to avoid skill/heal exploits
-	if (battle_config.pet_equip_required && pd->pet.equip == 0)
-		pd->s_skill->timer = INVALID_TIMER;
-	else
-		pd->s_skill->timer = add_timer(gettick()+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18657,20 +18676,21 @@ BUILDIN_FUNC(waitingroom2bg)
 	}
 
 	map_name = script_getstr(st,2);
-	if( strcmp(map_name,"-") != 0 )
-	{
-		mapindex = mapindex_name2id(map_name);
-		if( mapindex == 0 )
-		{ // Invalid Map
-			script_pushint(st,0);
-			return SCRIPT_CMD_SUCCESS;
-		}
+	if (strcmp(map_name, "-") != 0 && (mapindex = mapindex_name2id(map_name)) == 0)
+	{ // Invalid Map
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	x = script_getnum(st,3);
 	y = script_getnum(st,4);
-	ev = script_getstr(st,5); // Logout Event
-	dev = script_getstr(st,6); // Die Event
+	if(script_hasdata(st,5))
+		ev = script_getstr(st,5); // Logout Event
+	if(script_hasdata(st,6))
+		dev = script_getstr(st,6); // Die Event
+
+	check_event(st, ev);
+	check_event(st, dev);
 
 	if( (bg_id = bg_create(mapindex, x, y, ev, dev)) == 0 )
 	{ // Creation failed
@@ -18678,7 +18698,6 @@ BUILDIN_FUNC(waitingroom2bg)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-        
 	for (i = 0; i < cd->users; i++) { // Only add those who are in the chat room
 		struct map_session_data *sd;
 		if( (sd = cd->usersd[i]) != NULL && bg_team_join(bg_id, sd) ){
@@ -18698,15 +18717,29 @@ BUILDIN_FUNC(waitingroom2bg_single)
 	struct npc_data *nd;
 	struct chat_data *cd;
 	struct map_session_data *sd;
+	struct battleground_data *bg;
 	int x, y, mapindex, bg_id;
 
 	bg_id = script_getnum(st,2);
-	map_name = script_getstr(st,3);
-	if( (mapindex = mapindex_name2id(map_name)) == 0 )
-		return SCRIPT_CMD_SUCCESS; // Invalid Map
+	if ((bg = bg_team_search(bg_id)) == NULL) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	if (script_hasdata(st, 3)) {
+		map_name = script_getstr(st, 3);
+		if ((mapindex = mapindex_name2id(map_name)) == 0) {
+			script_pushint(st, false);
+			return SCRIPT_CMD_SUCCESS; // Invalid Map
+		}
+		x = script_getnum(st, 4);
+		y = script_getnum(st, 5);
+	}
+	else {
+		mapindex = bg->mapindex;
+		x = bg->x;
+		y = bg->y;
+	}
 
-	x = script_getnum(st,4);
-	y = script_getnum(st,5);
 	nd = npc_name2id(script_getstr(st,6));
 
 	if( nd == NULL || (cd = (struct chat_data *)map_id2bl(nd->chat_id)) == NULL || cd->users <= 0 )
@@ -18715,13 +18748,86 @@ BUILDIN_FUNC(waitingroom2bg_single)
 	if( (sd = cd->usersd[0]) == NULL )
 		return SCRIPT_CMD_SUCCESS;
 
-	if( bg_team_join(bg_id, sd) )
+	if( bg_team_join(bg_id, sd) && pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) == SETPOS_OK)
 	{
-		pc_setpos(sd, mapindex, x, y, CLR_TELEPORT);
-		script_pushint(st,1);
+		script_pushint(st, true);
 	}
 	else
-		script_pushint(st,0);
+		script_pushint(st, false);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+
+/// Creates an instance of battleground battle group.
+/// *bg_create("<map name>",<x>,<y>{,"<On Quit Event>","<On Death Event>"});
+/// @author [secretdataz]
+BUILDIN_FUNC(bg_create) {
+	const char *map_name, *ev = "", *dev = "";
+	int x, y, mapindex = 0;
+
+	map_name = script_getstr(st, 2);
+	if (strcmp(map_name, "-") != 0 && (mapindex = mapindex_name2id(map_name)) == 0)
+	{ // Invalid Map
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	x = script_getnum(st, 3);
+	y = script_getnum(st, 4);
+	if(script_hasdata(st, 5))
+		ev = script_getstr(st, 5); // Logout Event
+	if(script_hasdata(st, 6))
+		dev = script_getstr(st, 6); // Die Event
+
+	check_event(st, ev);
+	check_event(st, dev);
+
+	script_pushint(st, bg_create(mapindex, x, y, ev, dev));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/// Adds attached player or <char id> (if specified) to an existing 
+/// battleground group and warps it to the specified coordinates on
+/// the given map.
+/// bg_join(<battle group>,{"<map name>",<x>,<y>{,<char id>}});
+/// @author [secretdataz]
+BUILDIN_FUNC(bg_join) {
+	const char* map_name;
+	struct map_session_data *sd;
+	struct battleground_data *bg;
+	int x, y, bg_id, mapindex;
+
+	bg_id = script_getnum(st, 2);
+	if ((bg = bg_team_search(bg_id)) == NULL) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	if (script_hasdata(st, 3)) {
+		map_name = script_getstr(st, 3);
+		if ((mapindex = mapindex_name2id(map_name)) == 0) {
+			script_pushint(st, false);
+			return SCRIPT_CMD_SUCCESS; // Invalid Map
+		}
+		x = script_getnum(st, 4);
+		y = script_getnum(st, 5);
+	} else {
+		mapindex = bg->mapindex;
+		x = bg->x;
+		y = bg->y;
+	}
+
+	if (!script_charid2sd(6, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (bg_team_join(bg_id, sd) && pc_setpos(sd, mapindex, x, y, CLR_TELEPORT) == SETPOS_OK)
+	{
+		script_pushint(st, true);
+	}
+	else
+		script_pushint(st, false);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -20396,9 +20502,9 @@ BUILDIN_FUNC(party_destroy)
 		for( j = 0; j < MAX_PARTY; j++ ) {
 			TBL_PC *sd = party->data[j].sd;
 			if(sd)
-				party_member_withdraw(party->party.party_id,sd->status.account_id,sd->status.char_id);
+				party_member_withdraw(party->party.party_id,sd->status.account_id,sd->status.char_id,sd->status.name,PARTY_MEMBER_WITHDRAW_LEAVE);
 			else if( party->party.member[j].char_id )
-				intif_party_leave(party->party.party_id,party->party.member[j].account_id,party->party.member[j].char_id);
+				intif_party_leave(party->party.party_id,party->party.member[j].account_id,party->party.member[j].char_id,party->party.member[j].name,PARTY_MEMBER_WITHDRAW_LEAVE);
 		}
 		party_broken(party->party.party_id);
 		script_pushint(st,1);
@@ -21752,6 +21858,62 @@ BUILDIN_FUNC(jobcanentermap) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Return alliance information between the two guilds.
+ * getguildalliance(<guild id1>,<guild id2>);
+ * Return values:
+ *	-2 - Guild ID1 does not exist
+ *	-1 - Guild ID2 does not exist
+ *	 0 - Both guilds have no relation OR guild ID aren't given
+ *	 1 - Both guilds are allies
+ *	 2 - Both guilds are antagonists
+ */
+BUILDIN_FUNC(getguildalliance)
+{
+	struct guild *guild_data1, *guild_data2;
+	int guild_id1, guild_id2, i = 0;
+
+	guild_id1 = script_getnum(st,2);
+	guild_id2 = script_getnum(st,3);
+
+	if (guild_id1 < 1 || guild_id2 < 1) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (guild_id1 == guild_id2) {
+		script_pushint(st, 1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	guild_data1 = guild_search(guild_id1);
+	guild_data2 = guild_search(guild_id2);
+
+	if (guild_data1 == NULL) {
+		ShowWarning("buildin_getguildalliance: Requesting non-existent GuildID1 '%d'.\n", guild_id1);
+		script_pushint(st, -2);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (guild_data2 == NULL) {
+		ShowWarning("buildin_getguildalliance: Requesting non-existent GuildID2 '%d'.\n", guild_id2);
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	ARR_FIND(0, MAX_GUILDALLIANCE, i, guild_data1->alliance[i].guild_id == guild_id2);
+	if (i == MAX_GUILDALLIANCE) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (guild_data1->alliance[i].opposition)
+		script_pushint(st, 2);
+	else
+		script_pushint(st, 1);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -21820,9 +21982,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(jobchange,"i??"),
 	BUILDIN_DEF(jobname,"i"),
 	BUILDIN_DEF(input,"r??"),
-	BUILDIN_DEF(warp,"sii"),
+	BUILDIN_DEF(warp,"sii?"),
+	BUILDIN_DEF2(warp, "warpchar", "sii?"),
 	BUILDIN_DEF(areawarp,"siiiisii??"),
-	BUILDIN_DEF(warpchar,"siii"), // [LuzZza]
 	BUILDIN_DEF(warpparty,"siii?"), // [Fredzilla] [Paradox924X]
 	BUILDIN_DEF(warpguild,"siii"), // [Fredzilla]
 	BUILDIN_DEF(setlook,"ii?"),
@@ -22042,7 +22204,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(petskillbonus,"iiii"), // [Valaris]
 	BUILDIN_DEF(petrecovery,"ii"), // [Valaris]
 	BUILDIN_DEF(petloot,"i"), // [Valaris]
-	BUILDIN_DEF(petheal,"iiii"), // [Valaris]
 	BUILDIN_DEF(petskillattack,"viii"), // [Skotlex]
 	BUILDIN_DEF(petskillattack2,"viiii"), // [Valaris]
 	BUILDIN_DEF(petskillsupport,"viiii"), // [Skotlex]
@@ -22221,8 +22382,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(agitend2,""),
 	BUILDIN_DEF(agitcheck2,""),
 	// BattleGround
-	BUILDIN_DEF(waitingroom2bg,"siiss?"),
-	BUILDIN_DEF(waitingroom2bg_single,"isiis"),
+	BUILDIN_DEF(waitingroom2bg,"sii???"),
+	BUILDIN_DEF(waitingroom2bg_single,"i????"),
 	BUILDIN_DEF(bg_team_setxy,"iii"),
 	BUILDIN_DEF(bg_warp,"isii"),
 	BUILDIN_DEF(bg_monster,"isiisi?"),
@@ -22233,6 +22394,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_get_data,"ii"),
 	BUILDIN_DEF(bg_getareausers,"isiiii"),
 	BUILDIN_DEF(bg_updatescore,"sii"),
+	BUILDIN_DEF(bg_join,"i????"),
+	BUILDIN_DEF(bg_create,"sii??"),
 
 	// Instancing
 	BUILDIN_DEF(instance_create,"s??"),
@@ -22327,6 +22490,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setquestinfo_job,"ii*"),
 	BUILDIN_DEF(opendressroom,"i?"),
 	BUILDIN_DEF(navigateto,"s???????"),
+	BUILDIN_DEF(getguildalliance,"ii"),
 	BUILDIN_DEF(adopt,"vv"),
 	BUILDIN_DEF(getexp2,"ii?"),
 	BUILDIN_DEF(recalculatestat,""),
@@ -22336,6 +22500,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setrandomoption,"iiiii?"),
 	BUILDIN_DEF(needed_status_point,"ii?"),
 	BUILDIN_DEF(jobcanentermap,"s?"),
+
+	// WoE TE
+	BUILDIN_DEF(agitstart3,""),
+	BUILDIN_DEF(agitend3,""),
+	BUILDIN_DEF(agitcheck3,""),
+	BUILDIN_DEF(gvgon3,"s"),
+	BUILDIN_DEF(gvgoff3,"s"),
 
 #include "../custom/script_def.inc"
 

@@ -876,6 +876,9 @@ OnAgitInit:
 OnAgitStart2:
 OnAgitEnd2:
 OnAgitInit2:
+OnAgitStart3:
+OnAgitEnd3:
+OnAgitInit3:
 
 OnAgitStart will run whenever the server shifts into WoE mode, whether it is 
 done with @agitstart GM command or with 'AgitStart' script command. OnAgitEnd 
@@ -1090,6 +1093,27 @@ to alberta (98,154) when clicked.
     mes "Have you checked out the <NAVI>[Tool Shop]<INFO>alberta,98,154,0,000,0</INFO></NAVI>?";
 
 See also 'navigateto', which can be used for certain NPC events.
+
+Items
+-----
+You can refer to items by using HTML-like links to certain items:
+
+	<ITEMLINK>Display Name<INFO>Item ID</INFO></ITEMLINK>
+
+Where <Display Name> is the name that will be displayed for your link and
+<Item ID> being the ID of the item you want to link to when clicked.
+
+In 2015 the tag name was changed to <ITEM> resulting in the following syntax:
+
+	<ITEM>Display Name<INFO>Item ID</INFO></ITEM>
+	
+The following sample will open a preview window for Red Potion:
+
+	mes "Did you ever consume a <ITEMLINK>Red Potion<INFO>501</INFO></ITEMLINK>?";
+	// Or in 2015:
+	mes "Did you ever consume a <ITEM>Red Potion<INFO>501</INFO></ITEM>?";
+	
+NOTE: Be aware that item links are rendered incorrectly in 2015+ clients at the moment.
 
 URLs
 ----
@@ -3184,7 +3208,7 @@ This command requests the guild data from the char server and merrily continues
 with the execution. Whenever the guild information becomes available (which 
 happens instantly if the guild information is already in memory, or later, if it 
 isn't and the map server has to wait for the char server to reply) it will run 
-the specified event as in a 'doevent' call.
+the specified event as in a 'donpcevent' call.
 
 ---------------------------------------
 
@@ -3663,10 +3687,11 @@ Name is optional, and defaults to the attached player if omitted.
 
 *agitcheck()
 *agitcheck2()
+*agitcheck3()
 
-These function will let you check whether the server is currently in WoE mode
-(or WoE SE mode if the second function is called) and will return 1 if War of
-Emperium is on and 0 if it isn't. 
+These function will let you check whether the server is currently in WoE:FE mode
+(agitcheck()), WoE:SE mode (agitcheck2()), or WoE:TE mode (agitcheck3()) and will
+return true if War of Emperium is on and false if it isn't. 
 
 ---------------------------------------
 
@@ -3832,9 +3857,9 @@ will be seen to everyone around but not in chat window.
 
 ---------------------------------------
 
-*warp "<map name>",<x>,<y>;
+*warp "<map name>",<x>,<y>{,<char id>};
 
-This command will take the invoking character to the specified map, and if 
+This command will take the invoking character or <char id>, if specified, to the specified map, and if 
 wanted, specified coordinates too, but these can be random.
 
     warp "place",50,55;
@@ -3910,18 +3935,6 @@ Example:
 	.@party_id = getcharid(1);
 	warpparty "prontera",150,100,.@party_id;
 	close;
-
----------------------------------------
-
-*warpchar "<map name>",<x>,<y>,<char id>;
-
-Warps another player to specified map and coordinate given the char id, which you can get with
-getcharid(0,<player_name>). Obviously this is useless if you want to warp the same player that
-is executing this script, unless it's some kind of "chosen" script. 
- 
-Example:
- 
-warpchar "prontera",150,100,150001;
 
 ---------------------------------------
 
@@ -5329,8 +5342,8 @@ behavior of the command.
 
 *statusup <stat>{,<char_id>};
 
-This command will bump a specified stat of the invoking character up by one 
-permanently. Stats are to be given as number, but you can use these constants to 
+This command will change a specified stat of the invoking character up by one
+permanently. Stats are to be given as number, but you can use these constants to
 replace them:
 
 bStr -  Strength
@@ -5344,11 +5357,11 @@ bLuk -  Luck
 
 *statusup2 <stat>,<amount>{,<char_id>};
 
-This command will bump a specified stat of the invoking character up by the 
+This command will change a specified stat of the invoking character by the
 specified amount permanently. The amount can be negative. See 'statusup'.
 
-// This will decrease a character's Vit forever.
-    statusup bVit,-1;
+	// This will decrease a character's Vit forever.
+	statusup2 bVit,-1;
 
 ---------------------------------------
 
@@ -6686,15 +6699,19 @@ For examples, check the WoE scripts in the distribution.
 *agitend;
 *agitstart2;
 *agitend2;
+*agitstart3;
+*agitend3;
 
-These four commands will start and end War of Emperium or War of Emperium SE.
+These commands will start and end War of Emperium FE, War of Emperium SE,
+or War of Emperium TE.
 
 This is a bit more complex than it sounds, since the commands themselves won't 
 actually do anything interesting, except causing all 'OnAgitStart:' and 
-'OnAgitEnd:', or 'OnAgitStart2:' and 'OnAgitEnd2:' in the case of latter two
-commands, events to run everywhere, respectively. They are used as  simple 
-triggers to run a lot of complex scripts all across the server, and they, 
-in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
+'OnAgitEnd:', 'OnAgitStart2:' and 'OnAgitEnd2:', or 'OnAgitStart3:' and
+'OnAgitEnd3:' in the case of latter two commands, events to run everywhere,
+respectively. They are used as  simple triggers to run a lot of complex scripts
+all across the server, and they, in turn, are triggered by clock with an
+'OnClock<time>:' time-triggering label.
 
 ---------------------------------------
 
@@ -6704,6 +6721,13 @@ in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
 These commands will turn GVG mode for the specified maps on and off, setting up 
 appropriate map flags. In GVG mode, maps behave as if during the time of WoE, 
 even though WoE itself may or may not actually be in effect. 
+
+---------------------------------------
+
+*gvgon3 "<map name>";
+*gvgoff3 "<map name>";
+
+Theses commands behave identically to gvgon/gvgoff, but apply GVG_TE mapflag. 
 
 ---------------------------------------
 
@@ -6750,6 +6774,22 @@ Type indicates what information to return:
  0 - visibility (whether the guardian is installed or not)
  1 - max. hp
  2 - current hp
+
+---------------------------------------
+
+*getguildalliance(<guild id1>, <guild id2>);
+
+This command will return the relation between 2 guilds.
+
+NOTE: This should be used in collaboration with 'requestguildinfo' as the
+map-server needs to request for information from the char-server.
+
+Return values:
+	-2 - Guild ID1 does not exist
+	-1 - Guild ID2 does not exist
+	 0 - Both guilds have no relation OR guild ID aren't given
+	 1 - Both guilds are allies
+	 2 - Both guilds are antagonists
 
 ---------------------------------------
 //
@@ -8466,19 +8506,18 @@ Mark Color:
 ============================
 ---------------------------------------
 
-*waitingroom2bg_single(<battle group>,"<map name>",<x>,<y>,"<npc name>");
+*waitingroom2bg_single(<battle group>,{"<map name>",<x>,<y>{,"<npc name>"}});
 
-Adds the first waiting player from the chat room of the given NPC to an
-existing battleground group and warps it to the specified coordinates on
-the given map.
+Adds the first waiting player from the chat room of the given NPC to an existing battleground group.
+The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
 
 ---------------------------------------
 
-*waitingroom2bg("<map name>",<x>,<y>,"<On Quit Event>","<On Death Event>"{,"<NPC Name>"});
+*waitingroom2bg("<map name>",<x>,<y>,{"<On Quit Event>","<On Death Event>"{,"<NPC Name>"}});
 
 <map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
-<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog.
-<On Death Event> refers to an NPC label that attaches to the character and is run when they die. Can be "" for empty.
+<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
+<On Death Event> refers to an NPC label that attaches to the character and is run when they die. (Optional)
 
 Unlike the prior command, the latter will attach a GROUP in a waiting room to the battleground, and 
 sets the array $@arenamembers[0] where 0 holds the IDs of the first group, and 1 holds the IDs of the second.
@@ -8489,6 +8528,26 @@ Example:
 	// Battle Group will be referred to as $@KvM01BG_id1, and when they die, respawn at bat_c01,52,129.
 	set $@KvM01BG_id1, waitingroom2bg("bat_c01",52,129,"KvM01_BG::OnGuillaumeQuit","KvM01_BG::OnGuillaumeDie");
 	end;
+
+---------------------------------------
+
+*bg_create("<map name>",<x>,<y>{,"<On Quit Event>","<On Death Event>"});
+
+Creates an instance of battleground battle group that can be used with other battleground commands.
+
+<map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
+<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
+<On Death Event> refers to an NPC label that attaches to the character and is run when they die. (Optional)
+
+Returns battle group ID on success. Returns 0 on failure.
+
+---------------------------------------
+
+*bg_join(<battle group>,{"<map name>",{<x>,<y>{,<char id>}});
+
+Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+
+Returns true on success. Returns false on failure.
 
 ---------------------------------------
 
@@ -8673,9 +8732,7 @@ to be executed from pet scripts. They will modify the pet AI decision-making for
 the current pet of the invoking character, and will NOT have any independent 
 effect by themselves, which is why only one of them each may be in effect at any 
 time for a specific pet. A pet may have 'petloot', 'petskillbonus', 
-'petskillattack' OR 'petpetskillattack2' and 'petskillsupport' OR 'petheal' at 
-the same time. 'petheal' is deprecated and is no longer used in the default pet 
-scripts.
+'petskillattack' OR 'petpetskillattack2' and 'petskillsupport'.
 
 All commands with delays and durations will only make the behavior active for 
 the specified duration of seconds, with a delay of the specified number of 
@@ -8730,13 +8787,11 @@ when pet performance is activated.
 
 *petskillsupport <skill id>,<skill level>,<delay>,<percent hp>,<percent sp>;
 *petskillsupport "<skill name>",<skill level>,<delay>,<percent hp>,<percent sp>;
-*petheal <level>,<delay>,<percent hp>,<percent sp>;
 
 This will make the pet use a specified support skill on the owner whenever the 
 HP and SP are below the given percent values, with a specified delay time 
 between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
-'petheal' works the same as 'petskillsupport' but has the skill ID hard-coded to 
-AL_HEAL (ID:28). This command is deprecated.
+
 It's not quite certain who's stats will be used for the skills cast, the 
 character's or the pets. Probably, Skotlex can answer that question.
 

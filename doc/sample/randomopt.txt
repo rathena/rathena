@@ -1,0 +1,54 @@
+//===== rAthena Script =======================================
+//= Sample Random Option Script
+//===== Description: =========================================
+//= Enchant a weapon with a random element option 
+//= to a weapon with no random option.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Secretdataz]
+//============================================================
+
+prontera,162,195,4	script	Elemental Master	1_M_WIZARD,{
+	disable_items;
+	mes "[Elemental Master]";
+	mes "I could enchant your weapon with an element.";
+	mes "Are you interested?";
+	next;
+	if(select("Yes, I'm interested in that.") == 1){
+		.@id = getequipid(EQI_HAND_R);
+		for(.@i = 0; .@i < .sz; ++.@i){
+			if(.@id == .alloweditems[.@i])
+				.@allowed = 1;
+		}
+		mes "[Elemental Master]";
+		if(.@id == -1) {
+			mes "You are not holding anything in your hand.";
+			close;
+		} else if(!.@allowed){
+			mes "Your item can't be enchanted.";
+			close;
+		} else if(getequiprandomoption(EQI_HAND_R,0,ROA_ID)){
+			mes "Your weapon has already been enchanted.";
+			close;
+		}
+		mes "Do you want to enchant your " + getitemname(.@id) + " with a random element?";
+		next;
+		if(select("Yes, proceed.") == 1){
+			mes "[Elemental Master]";
+			mes "*mumble mumble*";
+			progressbar "#00FF00",2;
+			next;
+			setrandomoption(EQI_HAND_R,0,RDMOPT_WEAPON_ATTR_NOTHING + rand(10),0,0);
+			mes "[Elemental Master]";
+			mes "Here's your weapon";
+			close;
+		}
+		close;
+	}
+	else{
+		close;
+	}
+	
+OnInit:
+	setarray .alloweditems[0],1201,1202; // Add more item ids here
+	.sz = getarraysize(.alloweditems);
+}

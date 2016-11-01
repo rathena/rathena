@@ -96,6 +96,8 @@
 //Includes null-terminator as it is the length of the array.
 #define NAME_LENGTH (23 + 1)
 #define PASSWD_LENGTH (32+1)
+//NPC names can be longer than it's displayed on client (NAME_LENGTH).
+#define NPC_NAME_LENGTH 50
 //For item names, which tend to have much longer names.
 #define ITEM_NAME_LENGTH 50
 //For Map Names, which the client considers to be 16 in length including the .gat extension
@@ -836,6 +838,13 @@ enum e_pc_reg_loading {
 	PRL_ACCL = 0x2, // local
 	PRL_ACCG = 0x4, // global
 	PRL_ALL = 0xFF,
+};
+
+enum e_party_member_withdraw {
+	PARTY_MEMBER_WITHDRAW_LEAVE,	  ///< /leave
+	PARTY_MEMBER_WITHDRAW_EXPEL,	  ///< Kicked
+	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< TODO: Cannot /leave
+	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< TODO: Cannot be kicked
 };
 
 // Sanity checks...

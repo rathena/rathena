@@ -454,13 +454,13 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2742:
 	Type: HA
-	Structure: <cmd>.W <aid>.L <type>.B <timediff>.L <mapfd>.L
+	Structure: <cmd>.W <aid>.L <flag>.B <timediff>.L <mapfd>.L
 	index: 0,2,6,7,11
 	len: 15
 	parameter:
 		- cmd : packet identification (0x2742)
 		- aid: account identification
-		- type: &1 ack vip data to char-serv, &2 add duration
+		- flag: 0x1 ack vip data to char-serv, 0x2 add duration, 0x8 First request on player login
 		- timediff: tick to add to viptime
 		- mapfd: map-serv link to ack if type&1
 	desc:
@@ -468,16 +468,15 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2743:
 	Type: AH
-	Structure: <cmd>.W <aid>.L <vip_time>.L <isvip>.B <groupid>.L <isgm>.L <mapfd>.B
-	index: 0,2,6,10,11,15,16
-	len: 20
+	Structure: <cmd>.W <aid>.L <vip_time>.L <flag>.B <groupid>.L <mapfd>.L
+	index: 0,2,6,10,11,15
+	len: 19
 	parameter:
 		- cmd : packet identification (0x2743)
 		- aid: account identification
 		- vip_time: timestamp of vip_time if he is vip
-		- isvip: is this account in vip mode atm
+		- flag: 0x1: isvip, is this account in vip mode atm, 0x2: isgm, 0x4: show rates on player
 		- groupid: group id of account
-		- isgm: is he a gm
 		- mapfd: map-serv link to ack
 	desc:
 		- Transmit vip specific data to char-serv (will be transfered to mapserv)
@@ -703,16 +702,18 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x3024
 	Type: ZI
-	Structure: <cmd>.W <party_id>.L <aid>.L <cid>.L
-	index: 0,2,6,10
-	len: 14
+	Structure: <cmd>.W <party_id>.L <aid>.L <cid>.L <name>.24B <type>.B
+	index: 0,2,6,10,14,48
+	len: 49
 	parameter:
 		- cmd : packet identification (0x3024)
-		- party_id
-		- aid
-		- cid
+		- party_id : Party ID
+		- aid : Account ID
+		- cid : Character ID
+		- name : Character Name
+		- type : Leave (PARTY_MEMBER_WITHDRAW_LEAVE) or kick (PARTY_MEMBER_WITHDRAW_EXPEL) the player
 	desc:
-		- Request to leave party
+		- Request to leave party or kick party member
 
 0x3025
 	Type: ZI
@@ -1615,15 +1616,16 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x3824
 	Type: IZ
-	Structure: <cmd>.W <party_id>.L <account_id>.L <char_id>.L <?>.?B
-	index: 0,2,6,10,14
-	len: 16?
+	Structure: <cmd>.W <party_id>.L <account_id>.L <char_id>.L <name>.24B <type>.B
+	index: 0,2,6,10,14,48
+	len: 49
 	parameter:
 		- cmd : packet identification (0x3824)
-		- party_ud
-		- account_id
-		- char_id
-		- ?
+		- party_id : Party ID
+		- account_id : Account ID
+		- char_id : Character ID
+		- name : Character Name
+		- type : Leaving reason/result
 	desc:
 		- Withdrawal notification party
 
@@ -2498,16 +2500,15 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x2b2b
 	Type: AZ
-	Structure: <cmd>.W <aid>.L <vip_time>.L <isvip>.B <isgm>.B <groupid>.L
-	index: 0,2,6,10,11,12
-	len: 16
+	Structure: <cmd>.W <aid>.L <vip_time>.L <groupid>.L <flag>.B
+	index: 0,2,6,10,11
+	len: 15
 	parameter:
 		- cmd : packet identification (0x2b2b)
 		- aid
 		- vip_time
-		- isvip
-		- isgm
 		- groupid
+		- flag : 0x1: isvip, is this account in vip mode atm, 0x2: isgm, 0x4: show rates on player
 	desc:
 		- Received vip-data from char-serv, fill map-serv data
 
