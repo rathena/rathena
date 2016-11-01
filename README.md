@@ -160,6 +160,9 @@ Examples:
 	* irc://irc.rizon.net/rathena
 	* Web Chat: https://rathena.org/board/page/chat.html
 
+* rAthena Discord Chat
+	https://discord.gg/0XP9qqhUV9GLSfCh
+
 * rAthena Wiki
 	https://rathena.org/board/index.php?app=ipbwiki
 
