@@ -9118,6 +9118,8 @@ int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
 				script_array_update(&sd->regs, reg, false);
 			p->value = aStrdup(val);
 		} else {
+			if (p->value)
+				aFree(p->value);
 			p->value = NULL;
 			if( index )
 				script_array_update(&sd->regs, reg, true);
