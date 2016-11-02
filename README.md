@@ -161,7 +161,7 @@ Examples:
 	* Web Chat: https://rathena.org/board/page/chat.html
 
 * rAthena Discord Chat
-	https://discord.gg/0XP9qqhUV9GLSfCh
+	https://discord.rathena.org
 
 * rAthena Wiki
 	https://rathena.org/board/index.php?app=ipbwiki
