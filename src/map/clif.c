@@ -7989,14 +7989,16 @@ void clif_guild_created(struct map_session_data *sd,int flag)
 /// mode:
 ///     &0x01 = allow invite
 ///     &0x10 = allow expel
-void clif_guild_belonginfo(struct map_session_data *sd, struct guild *g)
+void clif_guild_belonginfo(struct map_session_data *sd)
 {
 	int ps,fd;
+	struct guild* g;
+
 	nullpo_retv(sd);
-	nullpo_retv(g);
+	nullpo_retv(g = sd->guild);
 
 	fd=sd->fd;
-	ps=guild_getposition(g,sd);
+	ps=guild_getposition(sd);
 	WFIFOHEAD(fd,packet_len(0x16c));
 	WFIFOW(fd,0)=0x16c;
 	WFIFOL(fd,2)=g->guild_id;
@@ -8402,12 +8404,13 @@ void clif_guild_skillinfo(struct map_session_data* sd)
 
 /// Sends guild notice to client (ZC_GUILD_NOTICE).
 /// 016f <subject>.60B <notice>.120B
-void clif_guild_notice(struct map_session_data* sd, struct guild* g)
+void clif_guild_notice(struct map_session_data* sd)
 {
 	int fd;
+	struct guild* g;
 
 	nullpo_retv(sd);
-	nullpo_retv(g);
+	nullpo_retv(g = sd->guild);
 
 	fd = sd->fd;
 
@@ -9298,7 +9301,7 @@ void clif_name( struct block_list* src, struct block_list *bl, send_target targe
 				int position;
 
 				// Will get the position of the guild the player is in
-				position = guild_getposition( NULL, sd );
+				position = guild_getposition(sd);
 
 				safestrncpy(WBUFCP(buf,54), sd->guild->name,NAME_LENGTH);
 				safestrncpy(WBUFCP(buf,78), sd->guild->position[position].name, NAME_LENGTH);
@@ -10248,7 +10251,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #endif
 
 		if (sd->guild && battle_config.guild_notice_changemap == 1)
-			clif_guild_notice(sd, sd->guild); // Displays after VIP
+			clif_guild_notice(sd); // Displays after VIP
 
 		if( (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) &&
 			(map_flag_gvg(sd->state.pmap) || map_flag_gvg(sd->bl.m) || map[sd->state.pmap].flag.battleground || map[sd->bl.m].flag.battleground) )
@@ -10307,7 +10310,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if( channel_config.map_enable && channel_config.map_autojoin && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id )
 			channel_mjoin(sd); //join new map
 	} else if (sd->guild && (battle_config.guild_notice_changemap == 2 || guild_notice))
-		clif_guild_notice(sd, sd->guild); // Displays at end
+		clif_guild_notice(sd); // Displays at end
 
 
 	mail_clear(sd);

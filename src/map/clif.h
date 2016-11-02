@@ -732,7 +732,7 @@ void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp);
 
 // guild
 void clif_guild_created(struct map_session_data *sd,int flag);
-void clif_guild_belonginfo(struct map_session_data *sd, struct guild *g);
+void clif_guild_belonginfo(struct map_session_data *sd);
 void clif_guild_masterormember(struct map_session_data *sd);
 void clif_guild_basicinfo(struct map_session_data *sd);
 void clif_guild_allianceinfo(struct map_session_data *sd);
@@ -748,7 +748,7 @@ void clif_guild_positionchanged(struct guild *g,int idx);
 void clif_guild_memberpositionchanged(struct guild *g,int idx);
 void clif_guild_emblem(struct map_session_data *sd,struct guild *g);
 void clif_guild_emblem_area(struct block_list* bl);
-void clif_guild_notice(struct map_session_data* sd, struct guild* g);
+void clif_guild_notice(struct map_session_data* sd);
 void clif_guild_message(struct guild *g,uint32 account_id,const char *mes,int len);
 void clif_guild_reqalliance(struct map_session_data *sd,uint32 account_id,const char *name);
 void clif_guild_allianceack(struct map_session_data *sd,int flag);
