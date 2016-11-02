@@ -7,12 +7,12 @@ We are accepting people's contribution and here are how to do it.
 * Do not forget to [fork rAthena](https://help.github.com/articles/fork-a-repo/#step-3-configure-git-to-sync-your-fork-with-the-original-spoon-knife-repository) to your account.
 * Before making changes, makes sure you [create a new branch](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) for working tree.
 * After completing your changes, commit then push it. We allow you to add `sign-off` line in every your commit message.
-* Then you ready to (Creating a pull request)[https://help.github.com/articles/creating-a-pull-request/] for rAthena.
+* Then you ready to [Creating a pull request](https://help.github.com/articles/creating-a-pull-request/) for rAthena.
 
 ## Staff Application
-* Before you sending us staff application, make sure you have (rAthena account)[https://rathena.org/board/index.php?app=core&module=global&section=register].
+* Before you sending us staff application, make sure you have [rAthena account](https://rathena.org/board/index.php?app=core&module=global&section=register).
 * Better [introduce](https://rathena.org/board/forum/89-introductions/) yourself first, for your first post.
-* Please fill this (Staff Application)[https://rathena.org/board/page/staff_applications.html] form.
+* Please fill this [Staff Application](https://rathena.org/board/page/staff_applications.html) form.
 
 ## Other Contributors
 rAthena will never forget people who have contributed to the development of Athena through the years, they are listed in [AUTHORS.md](https://github.com/rathena/rathena/blob/master/AUTHORS).
