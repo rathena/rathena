@@ -332,7 +332,7 @@ int party_recv_info(struct party* sp, uint32 char_id)
 		if( sd == NULL )
 			continue;// not online
 
-		clif_charnameupdate(sd); //Update other people's display. [Skotlex]
+		clif_name_area(&sd->bl); //Update other people's display. [Skotlex]
 		clif_party_member_info(p,sd);
 		// Only send this on party creation, otherwise it will be sent by party_send_movemap [Lemongrass]
 		if( sd->party_creating ){
@@ -536,7 +536,7 @@ int party_member_added(int party_id,uint32 account_id,uint32 char_id, int flag)
 
 	clif_party_hp(sd);
 	clif_party_xy(sd);
-	clif_charnameupdate(sd); //Update char name's display [Skotlex]
+	clif_name_area(&sd->bl); //Update char name's display [Skotlex]
 
 	if( p->instance_id )
 		instance_reqinfo(sd,p->instance_id);
@@ -647,7 +647,7 @@ int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char 
 #endif
 
 		sd->status.party_id = 0;
-		clif_charnameupdate(sd); //Update name display [Skotlex]
+		clif_name_area(&sd->bl); //Update name display [Skotlex]
 		//TODO: hp bars should be cleared too
 
 		if( p->instance_id ) {

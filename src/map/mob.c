@@ -2244,7 +2244,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	}
 
 	if (battle_config.show_mob_info&3)
-		clif_charnameack(0, &md->bl);
+		clif_name_area(&md->bl);
 
 #if PACKETVER >= 20120404
 	if( battle_config.monster_hp_bars_info){
@@ -2912,7 +2912,7 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 	skill_unit_move(&md->bl,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
 	if (battle_config.show_mob_info&3)
-		clif_charnameack (0, &md->bl);
+		clif_name_area(&md->bl);
 }
 
 int mob_guardian_guildchange(struct mob_data *md)
@@ -3045,7 +3045,7 @@ int mob_class_change (struct mob_data *md, int mob_id)
 	md->target_id = md->attacked_id = md->norm_attacked_id = 0;
 
 	//Need to update name display.
-	clif_charnameack(0, &md->bl);
+	clif_name_area(&md->bl);
 	return 0;
 }
 
@@ -3055,7 +3055,7 @@ int mob_class_change (struct mob_data *md, int mob_id)
 void mob_heal(struct mob_data *md,unsigned int heal)
 {
 	if (battle_config.show_mob_info&3)
-		clif_charnameack (0, &md->bl);
+		clif_name_area(&md->bl);
 #if PACKETVER >= 20120404
 	if( battle_config.monster_hp_bars_info){
 		int i;

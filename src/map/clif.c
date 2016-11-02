@@ -7989,14 +7989,16 @@ void clif_guild_created(struct map_session_data *sd,int flag)
 /// mode:
 ///     &0x01 = allow invite
 ///     &0x10 = allow expel
-void clif_guild_belonginfo(struct map_session_data *sd, struct guild *g)
+void clif_guild_belonginfo(struct map_session_data *sd)
 {
 	int ps,fd;
+	struct guild* g;
+
 	nullpo_retv(sd);
-	nullpo_retv(g);
+	nullpo_retv(g = sd->guild);
 
 	fd=sd->fd;
-	ps=guild_getposition(g,sd);
+	ps=guild_getposition(sd);
 	WFIFOHEAD(fd,packet_len(0x16c));
 	WFIFOW(fd,0)=0x16c;
 	WFIFOL(fd,2)=g->guild_id;
@@ -8402,12 +8404,13 @@ void clif_guild_skillinfo(struct map_session_data* sd)
 
 /// Sends guild notice to client (ZC_GUILD_NOTICE).
 /// 016f <subject>.60B <notice>.120B
-void clif_guild_notice(struct map_session_data* sd, struct guild* g)
+void clif_guild_notice(struct map_session_data* sd)
 {
 	int fd;
+	struct guild* g;
 
 	nullpo_retv(sd);
-	nullpo_retv(g);
+	nullpo_retv(g = sd->guild);
 
 	fd = sd->fd;
 
@@ -9240,14 +9243,16 @@ void clif_refresh(struct map_session_data *sd)
 
 
 /// Updates the object's (bl) name on client.
+/// Used to update when a char leaves a party/guild. [Skotlex]
+/// Needed because when you send a 0x95 packet, the client will not remove the cached party/guild info that is not sent.
 /// 0095 <id>.L <char name>.24B (ZC_ACK_REQNAME)
 /// 0195 <id>.L <char name>.24B <party name>.24B <guild name>.24B <position name>.24B (ZC_ACK_REQNAMEALL)
 /// 0a30 <id>.L <char name>.24B <party name>.24B <guild name>.24B <position name>.24B <title ID>.L (ZC_ACK_REQNAMEALL2)
-void clif_charnameack (int fd, struct block_list *bl)
-{
+void clif_name( struct block_list* src, struct block_list *bl, send_target target ){
 	unsigned char buf[106];
 	int cmd = 0x95;
 
+	nullpo_retv(src);
 	nullpo_retv(bl);
 
 	WBUFW(buf,0) = cmd;
@@ -9267,7 +9272,7 @@ void clif_charnameack (int fd, struct block_list *bl)
 #endif
 
 			//Requesting your own "shadow" name. [Skotlex]
-			if( sd->fd == fd && sd->disguise ){
+			if( src == bl && target == SELF && sd->disguise ){
 				WBUFL(buf,2) = -bl->id;
 			}
 
@@ -9293,12 +9298,13 @@ void clif_charnameack (int fd, struct block_list *bl)
 			}
 
 			if( sd->guild ){
-				int i;
+				int position;
 
-				ARR_FIND(0, sd->guild->max_member, i, sd->guild->member[i].account_id == sd->status.account_id && sd->guild->member[i].char_id == sd->status.char_id);
+				// Will get the position of the guild the player is in
+				position = guild_getposition(sd);
 
 				safestrncpy(WBUFCP(buf,54), sd->guild->name,NAME_LENGTH);
-				safestrncpy(WBUFCP(buf,78), sd->guild->position[i].name, NAME_LENGTH);
+				safestrncpy(WBUFCP(buf,78), sd->guild->position[position].name, NAME_LENGTH);
 			}else{ //Assume no guild.
 				WBUFB(buf,54) = 0;
 				WBUFB(buf,78) = 0;
@@ -9365,75 +9371,12 @@ void clif_charnameack (int fd, struct block_list *bl)
 		safestrncpy(WBUFCP(buf,6), ((TBL_ELEM*)bl)->db->name, NAME_LENGTH);
 		break;
 	default:
-		ShowError("clif_charnameack: bad type %d(%d)\n", bl->type, bl->id);
+		ShowError("clif_name: bad type %d(%d)\n", bl->type, bl->id);
 		return;
 	}
 
-	// if no receipient specified just update nearby clients
-	if (fd == 0)
-		clif_send(buf, packet_len(cmd), bl, AREA);
-	else {
-		WFIFOHEAD(fd, packet_len(cmd));
-		memcpy(WFIFOP(fd, 0), buf, packet_len(cmd));
-		WFIFOSET(fd, packet_len(cmd));
-	}
+	clif_send(buf, packet_len(cmd), src, target);
 }
-
-
-//Used to update when a char leaves a party/guild. [Skotlex]
-//Needed because when you send a 0x95 packet, the client will not remove the cached party/guild info that is not sent.
-void clif_charnameupdate (struct map_session_data *ssd)
-{
-	unsigned char buf[103];
-	int cmd = 0x195, ps = -1;
-	struct party_data *p = NULL;
-	struct guild *g = NULL;
-
-	nullpo_retv(ssd);
-
-	if( ssd->fakename[0] )
-		return; //No need to update as the party/guild was not displayed anyway.
-
-	WBUFW(buf,0) = cmd;
-	WBUFL(buf,2) = ssd->bl.id;
-
-	safestrncpy(WBUFCP(buf,6), ssd->status.name, NAME_LENGTH);
-
-	if (!battle_config.display_party_name) {
-		if (ssd->status.party_id > 0 && ssd->status.guild_id > 0 && (g = ssd->guild) != NULL)
-			p = party_search(ssd->status.party_id);
-	}else{
-		if (ssd->status.party_id > 0)
-			p = party_search(ssd->status.party_id);
-	}
-
-	if( ssd->status.guild_id > 0 && (g = ssd->guild) != NULL )
-	{
-		int i;
-		ARR_FIND(0, g->max_member, i, g->member[i].account_id == ssd->status.account_id && g->member[i].char_id == ssd->status.char_id);
-		if( i < g->max_member ) ps = g->member[i].position;
-	}
-
-	if( p )
-		safestrncpy(WBUFCP(buf,30), p->party.name, NAME_LENGTH);
-	else
-		WBUFB(buf,30) = 0;
-
-	if( g && ps >= 0 && ps < MAX_GUILDPOSITION )
-	{
-		safestrncpy(WBUFCP(buf,54), g->name,NAME_LENGTH);
-		safestrncpy(WBUFCP(buf,78), g->position[ps].name, NAME_LENGTH);
-	}
-	else
-	{
-		WBUFB(buf,54) = 0;
-		WBUFB(buf,78) = 0;
-	}
-
-	// Update nearby clients
-	clif_send(buf, packet_len(cmd), &ssd->bl, AREA);
-}
-
 
 /// Taekwon Jump (TK_HIGHJUMP) effect (ZC_HIGHJUMP).
 /// 01ff <id>.L <x>.W <y>.W
@@ -10308,7 +10251,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #endif
 
 		if (sd->guild && battle_config.guild_notice_changemap == 1)
-			clif_guild_notice(sd, sd->guild); // Displays after VIP
+			clif_guild_notice(sd); // Displays after VIP
 
 		if( (battle_config.bg_flee_penalty != 100 || battle_config.gvg_flee_penalty != 100) &&
 			(map_flag_gvg(sd->state.pmap) || map_flag_gvg(sd->bl.m) || map[sd->state.pmap].flag.battleground || map[sd->bl.m].flag.battleground) )
@@ -10367,7 +10310,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		if( channel_config.map_enable && channel_config.map_autojoin && !map[sd->bl.m].flag.chmautojoin && !map[sd->bl.m].instance_id )
 			channel_mjoin(sd); //join new map
 	} else if (sd->guild && (battle_config.guild_notice_changemap == 2 || guild_notice))
-		clif_guild_notice(sd, sd->guild); // Displays at end
+		clif_guild_notice(sd); // Displays at end
 
 
 	mail_clear(sd);
@@ -10676,7 +10619,7 @@ void clif_parse_GetCharNameRequest(int fd, struct map_session_data *sd)
 	}
 	*/
 
-	clif_charnameack(fd, bl);
+	clif_name(&sd->bl,bl,SELF);
 }
 
 
