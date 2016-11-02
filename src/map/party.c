@@ -435,6 +435,14 @@ int party_reply_invite(struct map_session_data *sd,int party_id,int flag)
 		return 0;
 	}
 
+	// The character is already in a party, possibly left a party invite open and created his own party
+	if( sd->status.party_id != 0 ){
+		// On Aegis no rejection packet is sent to the inviting player
+		sd->party_invite = 0;
+		sd->party_invite_account = 0;
+		return 0;
+	}
+
 	tsd = map_id2sd(sd->party_invite_account);
 
 	if( flag == 1 && !sd->party_creating && !sd->party_joining ) { // accepted and allowed
