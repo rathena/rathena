@@ -346,6 +346,7 @@
     <Copy SourceFiles="..\db\import-tmpl\produce_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\produce_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\quest_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\quest_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\refine_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\refine_db.txt')" />
+	<Copy SourceFiles="..\db\import-tmpl\sc_config.conf" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\sc_config.conf')" />
     <Copy SourceFiles="..\db\import-tmpl\size_fix.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\size_fix.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\skill_cast_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\skill_cast_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\skill_castnodex_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\skill_castnodex_db.txt')" />
