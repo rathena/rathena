@@ -11,6 +11,7 @@ Table of Contents
 4. Troubleshooting
 5. Helpful Links
 6. More Documentation
+7. How to Contribute?
 
 1. What is rAthena?
 ---------
@@ -177,3 +178,7 @@ directory. These include detailed explanations of NPC script commands, atcommand
 group permissions, item bonuses, and packet structures, among many other topics. We
 recommend that all users take the time to look over this directory before asking for
 assistance elsewhere.
+
+7. How to Contribute?
+---------
+Details how to contribute to rAthena, please read [CONTRIBUTING.md](https://github.com/rathena/rathena/blob/master/CONTRIBUTING.md)
