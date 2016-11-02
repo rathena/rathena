@@ -302,8 +302,8 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP);
 static int status_get_sc_interval(enum sc_type type);
 
-static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
-#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs2((m)), map[(m)].flag.pvp, map_flag_gvg2_no_te((m)), map[(m)].flag.battleground, map[(m)].zone << 3, map_flag_gvg2_te((m))) )
+static bool status_change_isDisabledOnMap_(struct s_status_change_db *scdb, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
+#define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_(status_sc_exists((type)), map_flag_vs2((m)), map[(m)].flag.pvp, map_flag_gvg2_no_te((m)), map[(m)].flag.battleground, map[(m)].zone << 3, map_flag_gvg2_te((m))) )
 
 /** Creates dummy status */
 static void initDummyData(void) {
@@ -6934,7 +6934,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	struct status_change_entry* sce;
 	struct status_data *status;
 	struct view_data *vd;
-	int opt_flag, calc_flag, undead_flag, val_flag = 0, tick_time = 0, opt = 0;
+	int opt_flag, calc_flag, undead_flag, val_flag = 0, tick_time = 0;
 	bool sc_isnew = true;
 	struct s_status_change_db *scdb = NULL;
 	enum sc_type *list = NULL, use_sc = type;
@@ -11417,7 +11417,7 @@ int status_get_refine_chance(enum refine_type wlv, int refine)
 
 /**
  * Check if status is disabled on a map
- * @param type: Status Change data
+ * @param scdb: Status Change data
  * @param mapIsVS: If the map is a map_flag_vs type
  * @param mapisPVP: If the map is a PvP type
  * @param mapIsGVG: If the map is a map_flag_gvg type
@@ -11426,17 +11426,17 @@ int status_get_refine_chance(enum refine_type wlv, int refine)
  * @param mapIsTE: If the map us WOE TE
  * @return True - SC disabled on map; False - SC not disabled on map/Invalid SC
  */
-static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE)
+static bool status_change_isDisabledOnMap_(struct s_status_change_db *scdb, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE)
 {
-	if (type <= SC_NONE || type >= SC_MAX)
+	if (!scdb || !scdb->disabledon)
 		return false;
 
-	if ((!mapIsVS && status_sc_exists(type)->disabledon&1) ||
-		(mapIsPVP && status_sc_exists(type)->disabledon&2) ||
-		(mapIsGVG && status_sc_exists(type)->disabledon&4) ||
-		(mapIsBG && status_sc_exists(type)->disabledon&8) ||
-		(mapIsTE && status_sc_exists(type)->disabledon&16) ||
-		(status_sc_exists(type)->disabledon&(mapZone)))
+	if ((!mapIsVS && scdb->disabledon&1) ||
+		(mapIsPVP && scdb->disabledon&2) ||
+		(mapIsGVG && scdb->disabledon&4) ||
+		(mapIsBG && scdb->disabledon&8) ||
+		(mapIsTE && scdb->disabledon&16) ||
+		(scdb->disabledon&(mapZone)))
 	{
 		return true;
 	}
@@ -11463,10 +11463,11 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 		unsigned int mapZone = map[bl->m].zone << 3;
 
 		for (i = 0; i < SC_MAX; i++) {
-			if (!sc->data[i] || !status_sc_exists(i)->disabledon)
+			struct s_status_change_db *scdb;
+			if (!sc->data[i] || !(scdb = status_sc_exists((sc_type)i)) || !scdb->disabledon)
 				continue;
 
-			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone, mapIsTE))
+			if (status_change_isDisabledOnMap_(scdb, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone, mapIsTE))
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
 		}
 	}
