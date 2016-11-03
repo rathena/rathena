@@ -5086,14 +5086,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 #endif
 	case RK_DRAGONBREATH_WATER:
 	case RK_DRAGONBREATH:
-		if( tsc->data[SC_HIDING] )
+		if( tsc && tsc->data[SC_HIDING] )
 			clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 		else
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
 	case NPC_SELFDESTRUCTION:
-		if( tsc->data[SC_HIDING] )
+		if( tsc && tsc->data[SC_HIDING] )
 			break;
 	case HVAN_EXPLOSION:
 		if (src != bl)
