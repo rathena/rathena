@@ -300,13 +300,15 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	chrif_bsdata_save(sd, (flag && (flag != 3)));
 
 	if (sd->state.storage_flag == 1)
-		intif_storage_save(sd,TABLE_STORAGE);
-	intif_storage_save(sd,TABLE_INVENTORY);
-	intif_storage_save(sd,TABLE_CART);
+		intif_storage_save(sd,&sd->storage);
+	intif_storage_save(sd,&sd->inventory);
+	intif_storage_save(sd,&sd->cart);
 
 	//For data sync
 	if (sd->state.storage_flag == 2)
 		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
+	if (&sd->premiumStorage && sd->premiumStorage.dirty)
+		intif_storage_save(sd, &sd->premiumStorage);
 
 	if (flag)
 		sd->state.storage_flag = 0; //Force close it.
@@ -1602,10 +1604,10 @@ void chrif_parse_ack_vipActive(int fd) {
 			sd->vip.enabled = 1;
 			sd->vip.time = vip_time;
 			// Increase storage size for VIP.
-			sd->storage_size = battle_config.vip_storage_increase + MIN_STORAGE;
-			if (sd->storage_size > MAX_STORAGE) {
+			sd->storage.max_amount = battle_config.vip_storage_increase + MIN_STORAGE;
+			if (sd->storage.max_amount > MAX_STORAGE) {
 				ShowError("intif_parse_ack_vipActive: Storage size for player %s (%d:%d) is larger than MAX_STORAGE. Storage size has been set to MAX_STORAGE.\n", sd->status.name, sd->status.account_id, sd->status.char_id);
-				sd->storage_size = MAX_STORAGE;
+				sd->storage.max_amount = MAX_STORAGE;
 			}
 			// Magic Stone requirement avoidance for VIP.
 			if (battle_config.vip_gemstone)
@@ -1613,7 +1615,7 @@ void chrif_parse_ack_vipActive(int fd) {
 		} else if (sd->vip.enabled) {
 			sd->vip.enabled = 0;
 			sd->vip.time = 0;
-			sd->storage_size = MIN_STORAGE;
+			sd->storage.max_amount = MIN_STORAGE;
 			sd->special_state.no_gemstone = 0;
 			clif_displaymessage(sd->fd,msg_txt(sd,438));
 		}
@@ -1995,6 +1997,12 @@ void do_init_chrif(void) {
 	if(sizeof(struct mmo_charstatus) > 0xFFFF){
 		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF)\n",
 			sizeof(struct mmo_charstatus));
+		exit(EXIT_FAILURE);
+	}
+
+	if (sizeof(struct s_storage) > 0xFFFF){
+		ShowError("s_storage size = %d is too big to be transmitted. (must be below 0xFFFF) \n",
+			sizeof(struct s_storage));
 		exit(EXIT_FAILURE);
 	}
 

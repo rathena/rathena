@@ -2813,7 +2813,7 @@ void clif_equiplist(struct map_session_data *sd)
 	}
 }
 
-void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length)
+void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length, const char *storename)
 {
 	static const int client_buf = 0x5000; // Max buffer to send
 	struct item_data *id;
@@ -2883,7 +2883,7 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 		WFIFOW(sd->fd,0)=cmd;
 		WFIFOW(sd->fd,2)=sidx+nn*s;
 #if PACKETVER >= 20120925
-		memset((char*)WFIFOP(sd->fd,4),0,24); //storename
+		safestrncpy((char*)WFIFOP(sd->fd,4), storename, NAME_LENGTH); //storename
 #endif
 		memcpy(WFIFOP(sd->fd,sidx),buf + sidx + i*s,nn*s);
 		WFIFOSET(sd->fd,WFIFOW(sd->fd,2));
@@ -2895,9 +2895,20 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 		WFIFOW(sd->fd,0)=cmde;
 		WFIFOW(sd->fd,2)=sidxe+nn*se;
 #if PACKETVER >= 20120925
-		memset((char*)WFIFOP(sd->fd,4),0,24); //storename
+		safestrncpy((char*)WFIFOP(sd->fd,4), storename, NAME_LENGTH); //storename
 #endif
 		memcpy(WFIFOP(sd->fd,sidxe),bufe + sidxe + i*se,nn*se);
+		WFIFOSET(sd->fd,WFIFOW(sd->fd,2));
+	}
+
+	// Empty storage
+	if (n == 0 && ne == 0) {
+		WFIFOHEAD(sd->fd, 4+NAME_LENGTH);
+		WFIFOW(sd->fd,0) = cmd;
+		WFIFOW(sd->fd,2) = 4+NAME_LENGTH;
+#if PACKETVER >= 20120925
+		safestrncpy((char*)WFIFOP(sd->fd,4), storename, NAME_LENGTH); //storename
+#endif
 		WFIFOSET(sd->fd,WFIFOW(sd->fd,2));
 	}
 
@@ -9155,7 +9166,7 @@ void clif_refresh_storagewindow(struct map_session_data *sd) {
 	// Notify the client that the storage is open
 	if( sd->state.storage_flag == 1 ) {
 		storage_sortitem(sd->storage.u.items_storage, ARRAYLENGTH(sd->storage.u.items_storage));
-		clif_storagelist(sd, sd->storage.u.items_storage, ARRAYLENGTH(sd->storage.u.items_storage));
+		clif_storagelist(sd, sd->storage.u.items_storage, ARRAYLENGTH(sd->storage.u.items_storage), storage_getName(0));
 		clif_updatestorageamount(sd, sd->storage.amount, MAX_STORAGE);
 	}
 	// Notify the client that the gstorage is open otherwise it will
@@ -9167,7 +9178,7 @@ void clif_refresh_storagewindow(struct map_session_data *sd) {
 			intif_request_guild_storage(sd->status.account_id, sd->status.guild_id);
 		else {
 			storage_sortitem(gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild));
-			clif_storagelist(sd, gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild));
+			clif_storagelist(sd, gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild), "Guild Storage");
 			clif_updatestorageamount(sd, gstor->amount, MAX_GUILD_STORAGE);
 		}
 	}
@@ -12504,10 +12515,12 @@ void clif_parse_MoveToKafra(int fd, struct map_session_data *sd)
 		return;
 
 	if (sd->state.storage_flag == 1)
-		storage_storageadd(sd, item_index, item_amount);
+		storage_storageadd(sd, &sd->storage, item_index, item_amount);
 	else
 	if (sd->state.storage_flag == 2)
 		storage_guild_storageadd(sd, item_index, item_amount);
+	else if (sd->state.storage_flag == 3)
+		storage_storageadd(sd, &sd->premiumStorage, item_index, item_amount);
 }
 
 
@@ -12524,9 +12537,11 @@ void clif_parse_MoveFromKafra(int fd,struct map_session_data *sd)
 	item_amount = RFIFOL(fd,info->pos[1]);
 
 	if (sd->state.storage_flag == 1)
-		storage_storageget(sd, item_index, item_amount);
+		storage_storageget(sd, &sd->storage, item_index, item_amount);
 	else if(sd->state.storage_flag == 2)
 		storage_guild_storageget(sd, item_index, item_amount);
+	else if(sd->state.storage_flag == 3)
+		storage_storageget(sd, &sd->premiumStorage, item_index, item_amount);
 }
 
 
@@ -12544,9 +12559,11 @@ void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd){
 		return;
 
 	if (sd->state.storage_flag == 1)
-		storage_storageaddfromcart(sd, idx, amount);
+		storage_storageaddfromcart(sd, &sd->storage, idx, amount);
 	else if (sd->state.storage_flag == 2)
 		storage_guild_storageaddfromcart(sd, idx, amount);
+	else if (sd->state.storage_flag == 3)
+		storage_storageaddfromcart(sd, &sd->premiumStorage, idx, amount);
 }
 
 
@@ -12563,10 +12580,12 @@ void clif_parse_MoveFromKafraToCart(int fd, struct map_session_data *sd){
 		return;
 
 	if (sd->state.storage_flag == 1)
-		storage_storagegettocart(sd, idx, amount);
+		storage_storagegettocart(sd, &sd->storage, idx, amount);
 	else
 	if (sd->state.storage_flag == 2)
 		storage_guild_storagegettocart(sd, idx, amount);
+	else if (sd->state.storage_flag == 3)
+		storage_storagegettocart(sd, &sd->premiumStorage, idx, amount);
 }
 
 
@@ -12579,6 +12598,8 @@ void clif_parse_CloseKafra(int fd, struct map_session_data *sd)
 	else
 	if( sd->state.storage_flag == 2 )
 		storage_guild_storageclose(sd);
+	else if( sd->state.storage_flag == 3 )
+		storage_premiumStorage_close(sd);
 }
 
 

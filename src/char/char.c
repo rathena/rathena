@@ -23,6 +23,7 @@
 #include "int_mercenary.h"
 #include "int_elemental.h"
 #include "int_party.h"
+#include "int_storage.h"
 #include "inter.h"
 #include "char_logif.h"
 #include "char_mapif.h"
@@ -515,7 +516,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 }
 
 /// Saves an array of 'item' entries into the specified table.
-int char_memitemdata_to_sql(const struct item items[], int max, int id, enum storage_type tableswitch) {
+int char_memitemdata_to_sql(const struct item items[], int max, int id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
 	SqlStmt* stmt;
 	int i, j, offset = 0, errors = 0;
@@ -537,7 +538,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 			break;
 		case TABLE_STORAGE:
 			printname = "Storage";
-			tablename = schema_config.storage_db;
+			tablename = inter_premiumStorage_getTableName(stor_id);
 			selectoption = "account_id";
 			break;
 		case TABLE_GUILD_STORAGE:
@@ -720,15 +721,14 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 		errors++;
 	}
 
-	ShowInfo("Saved %s data for %s: %d\n", printname, selectoption, id);
-
+	ShowInfo("Saved %s (%d) data to table %s for %s: %d\n", printname, stor_id, tablename, selectoption, id);
 	StringBuf_Destroy(&buf);
 	aFree(flag);
 
 	return errors;
 }
 
-bool char_memitemdata_from_sql( struct s_storage* p, int max, int id, enum storage_type tableswitch ){
+bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
 	SqlStmt* stmt;
 	int i,j, offset = 0;
@@ -750,7 +750,7 @@ bool char_memitemdata_from_sql( struct s_storage* p, int max, int id, enum stora
 			break;
 		case TABLE_STORAGE:
 			printname = "Storage";
-			tablename = schema_config.storage_db;
+			tablename = inter_premiumStorage_getTableName(stor_id);
 			selectoption = "account_id";
 			storage = p->u.items_storage;
 			break;
@@ -768,6 +768,8 @@ bool char_memitemdata_from_sql( struct s_storage* p, int max, int id, enum stora
 	memset(p, 0, sizeof(struct s_storage)); //clean up memory
 	p->id = id;
 	p->type = tableswitch;
+	p->stor_id = stor_id;
+	p->max_amount = inter_premiumStorage_getMax(p->stor_id);
 
 	stmt = SqlStmt_Malloc(sql_handle);
 	if (stmt == NULL) {
@@ -824,7 +826,7 @@ bool char_memitemdata_from_sql( struct s_storage* p, int max, int id, enum stora
 		memcpy(&storage[i], &item, sizeof(item));
 
 	p->amount = i;
-	ShowInfo("Loaded %s data from DB for %s: %d (total: %d)\n", printname, selectoption, id, p->amount);
+	ShowInfo("Loaded %s (%d) data from table %s for %s: %d (total: %d)\n", printname, p->stor_id, tablename, selectoption, id, p->amount);
 
 	SqlStmt_FreeResult(stmt);
 	SqlStmt_Free(stmt);
@@ -2181,7 +2183,7 @@ bool char_checkdb(void){
 	int i;
 	const char* sqltable[] = {
 		schema_config.char_db, schema_config.hotkey_db, schema_config.scdata_db, schema_config.cart_db, 
-                schema_config.inventory_db, schema_config.charlog_db, schema_config.storage_db, 
+                schema_config.inventory_db, schema_config.charlog_db,
                 schema_config.char_reg_str_table, schema_config.char_reg_num_table, schema_config.acc_reg_str_table,
                 schema_config.acc_reg_num_table, schema_config.skill_db, schema_config.interlog_db, schema_config.memo_db,
 		schema_config.guild_db, schema_config.guild_alliance_db, schema_config.guild_castle_db, 
@@ -2404,13 +2406,6 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking storage_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`account_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
-		"`attribute`,`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,`expire_time`,`bound`,`unique_id`"
-		" FROM `%s` LIMIT 1;", schema_config.storage_db) ){
-		Sql_ShowDebug(sql_handle);
-		return false;
-	}
 	//checking guild_storage_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`guild_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
 		"`attribute`,`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,`expire_time`,`bound`,`unique_id`"
@@ -2449,8 +2444,6 @@ void char_sql_config_read(const char* cfgName) {
 			safestrncpy(schema_config.inventory_db, w2, sizeof(schema_config.inventory_db));
 		else if(!strcmpi(w1,"charlog_db"))
 			safestrncpy(schema_config.charlog_db, w2, sizeof(schema_config.charlog_db));
-		else if(!strcmpi(w1,"storage_db"))
-			safestrncpy(schema_config.storage_db, w2, sizeof(schema_config.storage_db));
 		else if(!strcmpi(w1,"skill_db"))
 			safestrncpy(schema_config.skill_db, w2, sizeof(schema_config.skill_db));
 		else if(!strcmpi(w1,"interlog_db"))

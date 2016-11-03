@@ -7382,7 +7382,7 @@ static void buildin_delitem_delete(struct map_session_data* sd, int idx, int* am
 				pc_cart_delitem(sd,idx,delamount,0,LOG_TYPE_SCRIPT);
 				break;
 			case TABLE_STORAGE:
-				storage_delitem(sd,idx,delamount);
+				storage_delitem(sd,&sd->storage,idx,delamount);
 				log_pick_pc(sd,LOG_TYPE_SCRIPT,-delamount,itm);
 				break;
 			case TABLE_GUILD_STORAGE:
@@ -22012,7 +22012,28 @@ BUILDIN_FUNC(getguildalliance)
 		script_pushint(st, 2);
 	else
 		script_pushint(st, 1);
+	return SCRIPT_CMD_SUCCESS;
+}
 
+/*
+ * openstorage2 <storage_id>,<mode>{,<account_id>}
+ * mode @see enum e_storage_mode
+ **/
+BUILDIN_FUNC(openstorage2) {
+	int stor_id = script_getnum(st, 2);
+	TBL_PC *sd = NULL;
+
+	if (!script_accid2sd(4, sd)) {
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!storage_exists(stor_id)) {
+		ShowError("buildin_openstorage2: Invalid storage_id '%d'!\n", stor_id);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, storage_premiumStorage_load(sd, stor_id, script_getnum(st, 3)));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -22607,6 +22628,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(setrandomoption,"iiiii?"),
 	BUILDIN_DEF(needed_status_point,"ii?"),
 	BUILDIN_DEF(jobcanentermap,"s?"),
+	BUILDIN_DEF(openstorage2,"ii?"),
 
 	// WoE TE
 	BUILDIN_DEF(agitstart3,""),
