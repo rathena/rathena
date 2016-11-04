@@ -1339,7 +1339,7 @@
 	export_constant(SC_MOONSTAR);
 	export_constant(SC_SUPER_STAR);
 	export_constant(SC_HEAT_BARREL);
-	export_constant(SC_HEAT_BARREL_AFTER);
+	export_constant(SC_MAGICALBULLET);
 	export_constant(SC_P_ALTER);
 	export_constant(SC_E_CHAIN);
 	export_constant(SC_C_MARKER);
@@ -1424,6 +1424,7 @@
 	export_constant(SC_GVG_CURSE);
 	export_constant(SC_GVG_SILENCE);
 	export_constant(SC_GVG_BLIND);
+	export_constant(SC_FALLEN_ANGEL);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

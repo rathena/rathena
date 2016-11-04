@@ -674,7 +674,7 @@ typedef enum sc_type {
 	 * Rebellion [Cydh]
 	 **/
 	SC_HEAT_BARREL,
-	SC_HEAT_BARREL_AFTER,
+	SC_MAGICALBULLET,
 	SC_P_ALTER,
 	SC_E_CHAIN,
 	SC_C_MARKER,
@@ -778,6 +778,8 @@ typedef enum sc_type {
 	SC_GVG_CURSE,
 	SC_GVG_SILENCE,
 	SC_GVG_BLIND,
+
+	SC_FALLEN_ANGEL,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
