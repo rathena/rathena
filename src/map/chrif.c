@@ -2000,20 +2000,14 @@ void do_init_chrif(void) {
 		exit(EXIT_FAILURE);
 	}
 
-	if (sizeof(struct s_storage) > 0xFFFF){
-		ShowError("s_storage size = %d is too big to be transmitted. (must be below 0xFFFF) \n",
-			sizeof(struct s_storage));
+	if (sizeof(struct s_storage) > 0xFFFF) {
+		ShowError("s_storage size = %d is too big to be transmitted. (must be below 0xFFFF)\n", sizeof(struct s_storage));
 		exit(EXIT_FAILURE);
 	}
 
 	if((sizeof(struct bonus_script_data) * MAX_PC_BONUS_SCRIPT) > 0xFFFF){
 		ShowError("bonus_script_data size = %d is too big, please reduce MAX_PC_BONUS_SCRIPT (%d) size. (must be below 0xFFFF).\n",
 			(sizeof(struct bonus_script_data) * MAX_PC_BONUS_SCRIPT), MAX_PC_BONUS_SCRIPT);
-		exit(EXIT_FAILURE);
-	}
-
-	if(sizeof(struct s_storage) > 0xFFFF) {
-		ShowError("s_storage size = %d is too big to be transmitted. (must be below 0xFFFF)\n", sizeof(struct s_storage));
 		exit(EXIT_FAILURE);
 	}
 
