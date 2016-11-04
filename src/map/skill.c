@@ -17127,9 +17127,11 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 				return 1;
 			}
 			break;
+		case GN_CRAZYWEED_ATK:
+			if (skill_get_unit_flag(unit->group->skill_id)&UF_CRAZYWEED_IMMUNE)
+				break;
 		case HW_GANBANTEIN:
 		case LG_EARTHDRIVE:
-		case GN_CRAZYWEED_ATK:
 			// Officially songs/dances are removed
 			skill_delunit(unit);
 			return 1;

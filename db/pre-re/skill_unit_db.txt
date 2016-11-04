@@ -20,7 +20,7 @@
 //      0x00800(UF_DUALMODE)			Spell has effects both at an interval and when you step in/out
 //      0x01000(UF_NOKNOCKBACK)			Cannot be knocked back (only unit that can be damaged)
 //      0x02000(UF_RANGEDSINGLEUNIT)	Layout hack, use layout range propriety but only display center.
-//      0x04000(UF_NONE)				Free
+//      0x04000(UF_CRAZYWEED_IMMUNE)	Immune to GN_CRAZYWEED removal
 //      0x08000(UF_REM_FIRERAIN)		Removed if be overlapped by RL_FIRE_RAIN
 //      0x10000(UF_KNOCKBACK_GROUP) 	Knock back a whole skill group (by default, skill unit is knocked back each unit)
 //      0x20000(UF_HIDDEN_TRAP) 		Hidden trap, see 'traps_setting' skill config to enable this flag
