@@ -13484,13 +13484,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 						skill_area_temp[3] = 0;
 					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 					break;
-				case GN_CRAZYWEED_ATK:
-					if( bl->type == BL_SKILL ) {
-						struct skill_unit *su = (struct skill_unit *)bl;
-						if( su && !(skill_get_inf2(su->group->skill_id)&INF2_TRAP) )
-							break;
-					}
-					//Fall through
 				default:
 					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			}
@@ -17136,6 +17129,7 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 			break;
 		case HW_GANBANTEIN:
 		case LG_EARTHDRIVE:
+		case GN_CRAZYWEED_ATK:
 			// Officially songs/dances are removed
 			skill_delunit(unit);
 			return 1;
@@ -17190,14 +17184,6 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 			if (unit->group->skill_id == skill_id)
 			{
 				(*alive) = 0;
-				return 1;
-			}
-			break;
-		case GN_CRAZYWEED_ATK:
-			if (unit->group->skill_id == WZ_FIREPILLAR && unit->group->unit_id != UNT_FIREPILLAR_ACTIVE)
-				break;
-			if (skill_get_unit_flag(unit->group->skill_id)&UF_REM_CRAZYWEED) {
-				skill_delunit(unit);
 				return 1;
 			}
 			break;

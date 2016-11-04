@@ -322,7 +322,7 @@ enum e_skill_unit_flag {
 	UF_DUALMODE         = 0x00800,	// Spells should trigger both ontimer and onplace/onout/onleft effects.
 	UF_NOKNOCKBACK      = 0x01000,	// Skill unit cannot be knocked back
 	UF_RANGEDSINGLEUNIT = 0x02000,	// hack for ranged layout, only display center
-	UF_REM_CRAZYWEED    = 0x04000,	// removed by Crazyweed
+	UF_FREE             = 0x04000,	// Free
 	UF_REM_FIRERAIN     = 0x08000,	// removed by Fire Rain
 	UF_KNOCKBACK_GROUP  = 0x10000,	// knockback skill unit with its group instead of single unit
 	UF_HIDDEN_TRAP      = 0x20000,	// Hidden trap [Cydh]
