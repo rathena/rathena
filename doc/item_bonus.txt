@@ -331,7 +331,8 @@ bonus2 bWeaponComaRace,r,n; 		Adds a n/100% chance to cause Coma when attacking 
 | 5. AutoSpell Bonuses |
 ========================
 NOTES:
-  - For all AutoSpell bonuses, target must be within the spell's range to go off.
+  - For all AutoSpell bonuses, target does not have be within the spell's range to go off.
+  -- Enable conf/battle/battle.conf::autospell_check_range to force a range check.
   - By default, AutoSpell skills are casted on target unless it is a self or support skill (inf = 4/16).
 
 bonus3 bAutoSpell,sk,y,n;       	Adds a n/10% chance to cast skill sk of level y when attacking

@@ -512,7 +512,7 @@ void pc_inventory_rental_clear(struct map_session_data *sd)
 void pc_inventory_rentals(struct map_session_data *sd)
 {
 	int i, c = 0;
-	unsigned int expire_tick, next_tick = UINT_MAX;
+	unsigned int next_tick = UINT_MAX;
 
 	for( i = 0; i < MAX_INVENTORY; i++ ) { // Check for Rentals on Inventory
 		if( sd->status.inventory[i].nameid == 0 )
@@ -525,8 +525,9 @@ void pc_inventory_rentals(struct map_session_data *sd)
 			clif_rental_expired(sd->fd, i, sd->status.inventory[i].nameid);
 			pc_delitem(sd, i, sd->status.inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
 		} else {
-			expire_tick = (unsigned int)(sd->status.inventory[i].expire_time - time(NULL)) * 1000;
-			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, (int)(expire_tick / 1000));
+			unsigned int expire_tick = (unsigned int)(sd->status.inventory[i].expire_time - time(NULL));
+
+			clif_rental_time(sd->fd, sd->status.inventory[i].nameid, (int)expire_tick);
 			next_tick = umin(expire_tick, next_tick);
 			c++;
 		}
