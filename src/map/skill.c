@@ -2043,7 +2043,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				}
 			}
 			if (battle_config.autospell_check_range &&
-				!battle_check_range(src, tbl, skill_get_range2(src, skill, autospl_skill_lv, true)))
+				!battle_check_range(bl, tbl, skill_get_range2(src, skill, autospl_skill_lv, true)))
 				continue;
 
 			if (skill == AS_SONICBLOW)
@@ -2172,7 +2172,7 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 			}
 		}
 		if (battle_config.autospell_check_range &&
-			!battle_check_range(&sd->bl, tbl, skill_get_range2(&sd->bl, skill, skill_lv, true)))
+			!battle_check_range(bl, tbl, skill_get_range2(&sd->bl, skill, skill_lv, true)))
 			continue;
 
 		sd->state.autocast = 1;
@@ -2383,7 +2383,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				}
 			}
 
-			if (!battle_check_range(src, tbl, skill_get_range2(src, autospl_skill_id, autospl_skill_lv, true)) && battle_config.autospell_check_range)
+			if (!battle_check_range(bl, tbl, skill_get_range2(src, autospl_skill_id, autospl_skill_lv, true)) && battle_config.autospell_check_range)
 				continue;
 
 			dstsd->state.autocast = 1;
@@ -5085,20 +5085,16 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	break;
 #endif
 	case RK_DRAGONBREATH_WATER:
-	case RK_DRAGONBREATH: {
-			struct status_change *tsc2 = NULL;
-			if( (tsc2 = status_get_sc(bl)) && (tsc2->data[SC_HIDING] )) {
-				clif_skill_nodamage(src,src,skill_id,skill_lv,1);
-			} else
-				skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		}
+	case RK_DRAGONBREATH:
+		if( tsc && tsc->data[SC_HIDING] )
+			clif_skill_nodamage(src,src,skill_id,skill_lv,1);
+		else
+			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	case NPC_SELFDESTRUCTION: {
-		struct status_change *tsc2 = NULL;
-		if( (tsc2 = status_get_sc(bl)) && tsc2->data[SC_HIDING] )
+	case NPC_SELFDESTRUCTION:
+		if( tsc && tsc->data[SC_HIDING] )
 			break;
-		}
 	case HVAN_EXPLOSION:
 		if (src != bl)
 			skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
@@ -5558,15 +5554,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 		break;
 
-	case SO_POISON_BUSTER: {
-			struct status_change *tsc2 = status_get_sc(bl);
-			if( tsc2 && tsc2->data[SC_POISON] ) {
-				skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-				status_change_end(bl, SC_POISON, INVALID_TIMER);
-			}
-			else if( sd )
-				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+	case SO_POISON_BUSTER:
+		if( tsc && tsc->data[SC_POISON] ) {
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
+			status_change_end(bl, SC_POISON, INVALID_TIMER);
 		}
+		else if( sd )
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 		break;
 
 	case GN_SPORE_EXPLOSION:
@@ -5660,14 +5654,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case EL_TIDAL_WEAPON:
 		if( src->type == BL_ELEM ) {
 			struct elemental_data *ele = BL_CAST(BL_ELEM,src);
-			struct status_change *sc2 = status_get_sc(&ele->bl);
-			struct status_change *tsc2 = status_get_sc(bl);
+			struct status_change *tsc_ele = status_get_sc(&ele->bl);
 			sc_type type = status_skill2sc(skill_id), type2;
 			type2 = type-1;
 
 			clif_skill_nodamage(src,battle_get_master(src),skill_id,skill_lv,1);
 			clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
-			if( (sc2 && sc2->data[type2]) || (tsc2 && tsc2->data[type]) ) {
+			if( (tsc_ele && tsc_ele->data[type2]) || (tsc && tsc->data[type]) ) {
 				elemental_clean_single_effect(ele, skill_id);
 			}
 			if( rnd()%100 < 50 )
@@ -10925,10 +10918,10 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 		case MER_LEXDIVINA:
 			{
 				//If it's not an enemy, and not silenced, you can't use the skill on them. [Skotlex]
-				if (battle_check_target(src,target, BCT_ENEMY) <= 0 && (!tsc || !tsc->data[SC_SILENCE])) {
-					clif_skill_nodamage (src, target, skill_id, skill_lv, 0);
-					return USESKILL_FAIL_MAX;
-				}
+				if (battle_check_target(src,target, BCT_ENEMY) <= 0 && (!tsc || !tsc->data[SC_SILENCE]))
+					return USESKILL_FAIL_LEVEL;
+				else
+					return -1; //Works on silenced allies
 			}
 			break;
 		case RA_WUGSTRIKE:
@@ -10976,12 +10969,10 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 		case WZ_ESTIMATION:
 		case SL_SKE:
 		case SL_SKA:
+		case RK_PHANTOMTHRUST:
 			if (target->type == BL_MOB && ((TBL_MOB*)target)->mob_id == MOBID_EMPERIUM)
 				return USESKILL_FAIL_MAX;
 			break;
-		case RK_PHANTOMTHRUST:
-			if (!map_flag_vs(src->m))
-				return USESKILL_FAIL_MAX;
 	}
 
 	if (inf && battle_check_target(src, target, inf) <= 0) {
@@ -13379,7 +13370,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 	struct block_list *ss;
 	TBL_PC* tsd;
 	struct status_data *tstatus;
-	struct status_change *tsc;
+	struct status_change *sc, *tsc;
 	struct skill_unit_group_tickset *ts;
 	enum sc_type type;
 	uint16 skill_id;
@@ -13396,9 +13387,13 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 
 	tsd = BL_CAST(BL_PC, bl);
 	tsc = status_get_sc(bl);
+	sc = status_get_sc(ss);
 	tstatus = status_get_status_data(bl);
 	type = status_skill2sc(sg->skill_id);
 	skill_id = sg->skill_id;
+
+	if (sc && sc->data[SC_VOICEOFSIREN] && sc->data[SC_VOICEOFSIREN]->val2 == bl->id && (skill_get_inf2(skill_id)&INF2_TRAP))
+		return 0; // Traps cannot be activated by the Maestro or Wanderer that enticed the trapper with this skill.
 
 	if (tsc && tsc->data[SC_HOVERING] && skill_get_inf3(skill_id)&INF3_NO_EFF_HOVERING)
 		return 0; // Under Hovering characters are immune to trap and ground target skills.
@@ -13494,13 +13489,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 						skill_area_temp[3] = 0;
 					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 					break;
-				case GN_CRAZYWEED_ATK:
-					if( bl->type == BL_SKILL ) {
-						struct skill_unit *su = (struct skill_unit *)bl;
-						if( su && !(skill_get_inf2(su->group->skill_id)&INF2_TRAP) )
-							break;
-					}
-					//Fall through
 				default:
 					skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,0);
 			}
@@ -15693,10 +15681,23 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 	}
 
 	if( require.ammo ) { //Skill requires stuff equipped in the ammo slot.
+		uint8 extra_ammo = 0;
+
+#ifdef RENEWAL
+		switch(skill_id) { // 2016-10-26 kRO update made these skills require an extra ammo to cast
+			case WM_SEVERE_RAINSTORM:
+			case RL_R_TRIP:
+			case RL_FIRE_RAIN:
+				extra_ammo = 1;
+				break;
+			default:
+				break;
+		}
+#endif
 		if((i=sd->equip_index[EQI_AMMO]) < 0 || !sd->inventory_data[i] ) {
 			clif_arrow_fail(sd,0);
 			return false;
-		} else if( sd->inventory.u.items_inventory[i].amount < require.ammo_qty ) {
+		} else if( sd->inventory.u.items_inventory[i].amount < require.ammo_qty + extra_ammo ) {
 			char e_msg[100];
 			if (require.ammo&(1<<AMMO_BULLET|1<<AMMO_GRENADE|1<<AMMO_SHELL)) {
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_NEED_MORE_BULLET,0);
@@ -16200,7 +16201,7 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 			// Skill-specific reductions work regardless of flag
 			for(i = 0; i < ARRAYLENGTH(sd->skillcastrate) && sd->skillcastrate[i].id; i++) {
 				if (sd->skillcastrate[i].id == skill_id) {
-					reduce_cast_rate -= sd->skillcastrate[i].val;
+					time += time * sd->skillcastrate[i].val / 100;
 					break;
 				}
 			}
@@ -17131,6 +17132,9 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 				return 1;
 			}
 			break;
+		case GN_CRAZYWEED_ATK:
+			if (skill_get_unit_flag(unit->group->skill_id)&UF_CRAZYWEED_IMMUNE)
+				break;
 		case HW_GANBANTEIN:
 		case LG_EARTHDRIVE:
 			// Officially songs/dances are removed
@@ -17187,14 +17191,6 @@ static int skill_cell_overlap(struct block_list *bl, va_list ap)
 			if (unit->group->skill_id == skill_id)
 			{
 				(*alive) = 0;
-				return 1;
-			}
-			break;
-		case GN_CRAZYWEED_ATK:
-			if (unit->group->skill_id == WZ_FIREPILLAR && unit->group->unit_id != UNT_FIREPILLAR_ACTIVE)
-				break;
-			if (skill_get_unit_flag(unit->group->skill_id)&UF_REM_CRAZYWEED) {
-				skill_delunit(unit);
 				return 1;
 			}
 			break;
@@ -17284,8 +17280,12 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 		case UNT_COBALTTRAP:
 		case UNT_MAIZETRAP:
 		case UNT_VERDURETRAP:
-			if( bl->type != BL_PC && status_get_class_(bl) != CLASS_BOSS )
-				sc_start2(ss,bl,SC_ELEMENTALCHANGE,100,sg->skill_lv,skill_get_ele(sg->skill_id,sg->skill_lv),skill_get_time2(sg->skill_id,sg->skill_lv));
+			if( bl->type == BL_MOB && status_get_class_(bl) != CLASS_BOSS ) {
+				struct status_data *status = status_get_status_data(bl);
+
+				status->def_ele = skill_get_ele(sg->skill_id, sg->skill_lv);
+				status->ele_lv = (unsigned char)sg->skill_lv;
+			}
 			break;
 		case UNT_REVERBERATION: // For proper skill delay animation when used with Dominion Impulse
 			skill_addtimerskill(ss, tick + status_get_amotion(ss), bl->id, 0, 0, WM_REVERBERATION_MELEE, sg->skill_lv, BF_WEAPON, 0);

@@ -181,6 +181,7 @@ struct Script_Config script_config = {
 	1, // warn_func_mismatch_argtypes
 	1, 65535, 2048, //warn_func_mismatch_paramnum/check_cmdcount/check_gotocount
 	0, INT_MAX, // input_min_value/input_max_value
+	// NOTE: None of these event labels should be longer than <NAME_LENGTH> characters
 	"OnPCDieEvent", //die_event_name
 	"OnPCKillEvent", //kill_pc_event_name
 	"OnNPCKillEvent", //kill_mob_event_name
@@ -192,6 +193,7 @@ struct Script_Config script_config = {
 	"OnPCStatCalcEvent", //stat_calc_event_name
 	"OnTouch_",	//ontouch_name (runs on first visible char to enter area, picks another char if the first char leaves)
 	"OnTouch",	//ontouch2_name (run whenever a char walks into the OnTouch area)
+	"OnWhisperGlobal",	//onwhisper_event_name (is executed when a player sends a whisper message to the NPC)
 };
 
 static jmp_buf     error_jump;
@@ -13708,45 +13710,6 @@ BUILDIN_FUNC(petrecovery)
 }
 
 /*==========================================
- * pet healing [Valaris] //Rewritten by [Skotlex]
- *------------------------------------------*/
-BUILDIN_FUNC(petheal)
-{
-	struct pet_data *pd;
-	TBL_PC *sd=script_rid2sd(st);
-
-	if(sd==NULL || sd->pd==NULL)
-		return SCRIPT_CMD_SUCCESS;
-
-	pd=sd->pd;
-	if (pd->s_skill)
-	{ //Clear previous skill
-		if (pd->s_skill->timer != INVALID_TIMER)
-		{
-			if (pd->s_skill->id)
-				delete_timer(pd->s_skill->timer, pet_skill_support_timer);
-			else
-				delete_timer(pd->s_skill->timer, pet_heal_timer);
-		}
-	} else //init memory
-		pd->s_skill = (struct pet_skill_support *) aMalloc(sizeof(struct pet_skill_support));
-
-	pd->s_skill->id=0; //This id identifies that it IS petheal rather than pet_skillsupport
-	//Use the lv as the amount to heal
-	pd->s_skill->lv=script_getnum(st,2);
-	pd->s_skill->delay=script_getnum(st,3);
-	pd->s_skill->hp=script_getnum(st,4);
-	pd->s_skill->sp=script_getnum(st,5);
-
-	//Use delay as initial offset to avoid skill/heal exploits
-	if (battle_config.pet_equip_required && pd->pet.equip == 0)
-		pd->s_skill->timer = INVALID_TIMER;
-	else
-		pd->s_skill->timer = add_timer(gettick()+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/*==========================================
  * pet attack skills [Valaris] //Rewritten by [Skotlex]
  *------------------------------------------*/
 /// petskillattack <skill id>,<level>,<rate>,<bonusrate>
@@ -17333,8 +17296,8 @@ BUILDIN_FUNC(setunitdata)
 		switch (type) {
 			case UMOB_SIZE: md->status.size = (unsigned char)value; break;
 			case UMOB_LEVEL: md->level = (unsigned short)value; break;
-			case UMOB_HP: status_set_hp(bl, (unsigned int)value, 0); clif_charnameack(0, &md->bl); break;
-			case UMOB_MAXHP: status_set_maxhp(bl, (unsigned int)value, 0); clif_charnameack(0, &md->bl); break;
+			case UMOB_HP: status_set_hp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
+			case UMOB_MAXHP: status_set_maxhp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
 			case UMOB_MASTERAID: md->master_id = value; break;
 			case UMOB_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UMOB_X: if (!unit_walktoxy(bl, (short)value, md->bl.y, 2)) unit_movepos(bl, (short)value, md->bl.y, 0, 0); break;
@@ -17738,7 +17701,7 @@ BUILDIN_FUNC(setunitname)
 			ShowWarning("buildin_setunitname: Unknown object type!\n");
 			return SCRIPT_CMD_FAILURE;
 	}
-	clif_charnameack(0, bl); // Send update to client.
+	clif_name_area(bl); // Send update to client.
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18994,7 +18957,7 @@ BUILDIN_FUNC(bg_monster_set_team)
 	mob_stop_attack(md);
 	mob_stop_walking(md, 0);
 	md->target_id = md->attacked_id = 0;
-	clif_charnameack(0, &md->bl);
+	clif_name_area(&md->bl);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -22331,7 +22294,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(petskillbonus,"iiii"), // [Valaris]
 	BUILDIN_DEF(petrecovery,"ii"), // [Valaris]
 	BUILDIN_DEF(petloot,"i"), // [Valaris]
-	BUILDIN_DEF(petheal,"iiii"), // [Valaris]
 	BUILDIN_DEF(petskillattack,"viii"), // [Skotlex]
 	BUILDIN_DEF(petskillattack2,"viiii"), // [Valaris]
 	BUILDIN_DEF(petskillsupport,"viiii"), // [Skotlex]

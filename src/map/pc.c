@@ -512,7 +512,7 @@ void pc_inventory_rental_clear(struct map_session_data *sd)
 void pc_inventory_rentals(struct map_session_data *sd)
 {
 	int i, c = 0;
-	unsigned int expire_tick, next_tick = UINT_MAX;
+	unsigned int next_tick = UINT_MAX;
 
 	for( i = 0; i < MAX_INVENTORY; i++ ) { // Check for Rentals on Inventory
 		if( sd->inventory.u.items_inventory[i].nameid == 0 )
@@ -525,8 +525,9 @@ void pc_inventory_rentals(struct map_session_data *sd)
 			clif_rental_expired(sd->fd, i, sd->inventory.u.items_inventory[i].nameid);
 			pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 0, 0, LOG_TYPE_OTHER);
 		} else {
-			expire_tick = (unsigned int)(sd->inventory.u.items_inventory[i].expire_time - time(NULL)) * 1000;
-			clif_rental_time(sd->fd, sd->inventory.u.items_inventory[i].nameid, (int)(expire_tick / 1000));
+			unsigned int expire_tick = (unsigned int)(sd->inventory.u.items_inventory[i].expire_time - time(NULL));
+
+			clif_rental_time(sd->fd, sd->inventory.u.items_inventory[i].nameid, (int)expire_tick);
 			next_tick = umin(expire_tick, next_tick);
 			c++;
 		}
@@ -3534,7 +3535,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			sd->ignore_def_by_race[type2] += val;
 		break;
 	case SP_IGNORE_DEF_CLASS_RATE: // bonus2 bIgnoreDefClassRate,r,n;
-		PC_BONUS_CHK_RACE(type2, SP_IGNORE_DEF_CLASS_RATE);
+		PC_BONUS_CHK_CLASS(type2, SP_IGNORE_DEF_CLASS_RATE);
 		if (sd->state.lr_flag != 2)
 			sd->ignore_def_by_class[type2] += val;
 		break;
@@ -4742,6 +4743,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		case ITEMID_ANODYNE:
 			if( map_flag_gvg(sd->bl.m) )
 				return false;
+			break;
 		case ITEMID_WING_OF_FLY:
 		case ITEMID_GIANT_FLY_WING:
 			if( map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m) ) {
@@ -7619,7 +7621,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 				if( battle_config.show_mob_info&4 )
 				{// update name with new level
-					clif_charnameack(0, &md->bl);
+					clif_name_area(&md->bl);
 				}
 			}
 			src = battle_get_master(src); // Maybe Player Summon
@@ -9095,6 +9097,8 @@ int pc_setregistry_str(struct map_session_data *sd, int64 reg, const char *val)
 				script_array_update(&sd->regs, reg, false);
 			p->value = aStrdup(val);
 		} else {
+			if (p->value)
+				aFree(p->value);
 			p->value = NULL;
 			if( index )
 				script_array_update(&sd->regs, reg, true);

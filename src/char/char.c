@@ -1742,7 +1742,7 @@ int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
 	offset += 2;
 #if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
-	mapindex_getmapname_ext(mapindex_id2name(p->last_point.map), (char*)WBUFP(buf,108));
+	mapindex_getmapname_ext(mapindex_id2name(p->last_point.map), WBUFCP(buf,108));
 	offset += MAP_NAME_LENGTH_EXT;
 #endif
 #if PACKETVER >= 20100803
@@ -3032,7 +3032,8 @@ int do_init(int argc, char **argv)
 	char_sql_config_read(SQL_CONF_NAME);
 	msg_config_read(MSG_CONF_NAME_EN);
 
-	if (strcmp(charserv_config.userid, "s1")==0 && strcmp(charserv_config.passwd, "p1")==0) {
+	// Skip this check if the server is run with run-once flag
+	if (runflag!=CORE_ST_STOP && strcmp(charserv_config.userid, "s1")==0 && strcmp(charserv_config.passwd, "p1")==0) {
 		ShowWarning("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
 		ShowNotice("Please edit your 'login' table to create a proper inter-server user/password (gender 'S')\n");
 		ShowNotice("And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)\n");

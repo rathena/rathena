@@ -8030,9 +8030,9 @@ ACMD_FUNC(fakename)
 		if( sd->fakename[0] )
 		{
 			sd->fakename[0] = '\0';
-			clif_charnameack(0, &sd->bl);
+			clif_name_area(&sd->bl);
 			if (sd->disguise)
-				clif_charnameack(sd->fd, &sd->bl);
+				clif_name_self(&sd->bl);
 			clif_displaymessage(sd->fd, msg_txt(sd,1307)); // Returned to real name.
 			return 0;
 		}
@@ -8048,9 +8048,9 @@ ACMD_FUNC(fakename)
 	}
 
 	safestrncpy(sd->fakename, message, sizeof(sd->fakename));
-	clif_charnameack(0, &sd->bl);
+	clif_name_area(&sd->bl);
 	if (sd->disguise) // Another packet should be sent so the client updates the name for sd
-		clif_charnameack(sd->fd, &sd->bl);
+		clif_name_self(&sd->bl);
 	clif_displaymessage(sd->fd, msg_txt(sd,1310)); // Fake name enabled.
 
 	return 0;
@@ -9587,10 +9587,10 @@ ACMD_FUNC(vip) {
 ACMD_FUNC(showrate) {
 	nullpo_retr(-1,sd);
 	if (!sd->vip.disableshowrate) {
-		sprintf(atcmd_output,msg_txt(sd,718)); //Personal rate information is not displayed now.
+		safestrncpy(atcmd_output,msg_txt(sd,718),CHAT_SIZE_MAX); //Personal rate information is not displayed now.
 		sd->vip.disableshowrate = 1;
 	} else {
-		sprintf(atcmd_output,msg_txt(sd,719)); //Personal rate information will be shown.
+		safestrncpy(atcmd_output,msg_txt(sd,719),CHAT_SIZE_MAX); //Personal rate information will be shown.
 		sd->vip.disableshowrate = 0;
 	}
 	clif_displaymessage(fd,atcmd_output);
