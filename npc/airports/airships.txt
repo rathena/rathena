@@ -1423,6 +1423,8 @@ function	script	applegamble	{
 				getitem 512,.@amount; //Apple
 				end;
 			}
+			mes "Alright.";
+			mes "Let me cast the dice again.";
 		}
 		else {
 			mes "^FF0000" + strcharinfo(0) + "^000000, you got ^FF0000" + .@player3 + "^000000 and the total is now ^FF0000" + .@playertotal + "^000000. Now it is my turn.";
