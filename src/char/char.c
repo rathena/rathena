@@ -618,6 +618,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 			&&  items[i].card[0] == item.card[0]
 			&&  items[i].card[2] == item.card[2]
 			&&  items[i].card[3] == item.card[3]
+			&&  items[i].unique_id == item.unique_id
 			) {	//They are the same item.
 				int k;
 				
@@ -633,7 +634,6 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 				    items[i].attribute == item.attribute &&
 				    items[i].expire_time == item.expire_time &&
 				    items[i].bound == item.bound &&
-					items[i].unique_id == item.unique_id &&
 					(tableswitch != TABLE_INVENTORY || items[i].favorite == item.favorite) )
 				;	//Do nothing.
 				else
