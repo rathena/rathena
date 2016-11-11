@@ -3294,9 +3294,10 @@ void intif_parse_StorageInfo_recv(int fd) {
 	storage_db = NULL;
 
 	for (i = 0; i < count; i++) {
-		char name[NAME_LENGTH+1];
-		safestrncpy(name, (char *)RFIFOP(fd, 5 + size * i), NAME_LENGTH);
-		if (!name || name[0] == '\0')
+		char name[NAME_LENGTH + 1];
+
+		safestrncpy(name, RFIFOCP(fd, 5 + size * i), NAME_LENGTH);
+		if (name[0] == '\0')
 			continue;
 		RECREATE(storage_db, struct s_storage_table, storage_count+1);
 		memcpy(&storage_db[storage_count], RFIFOP(fd, 4 + size * i), size);

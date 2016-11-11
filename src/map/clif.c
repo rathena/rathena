@@ -2896,7 +2896,7 @@ void clif_storagelist(struct map_session_data* sd, struct item* items, int items
 		WFIFOW(sd->fd,0)=cmde;
 		WFIFOW(sd->fd,2)=sidxe+nn*se;
 #if PACKETVER >= 20120925
-		safestrncpy(WFIFOP(sd->fd,4), storename, NAME_LENGTH); //storename
+		safestrncpy(WFIFOCP(sd->fd,4), storename, NAME_LENGTH); //storename
 #endif
 		memcpy(WFIFOP(sd->fd,sidxe),bufe + sidxe + i*se,nn*se);
 		WFIFOSET(sd->fd,WFIFOW(sd->fd,2));
