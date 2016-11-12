@@ -154,7 +154,7 @@ Examples:
 	* [Windows](https://github.com/rathena/rathena/wiki/Install-on-Windows)
 	* [CentOS](https://github.com/rathena/rathena/wiki/Install-on-Centos)
 	* [Debian](https://github.com/rathena/rathena/wiki/Install-on-Debian)
-	* [FreeBSD](https://github.com/rathena/rathena/wiki/Install-on-Centos)
+	* [FreeBSD](https://github.com/rathena/rathena/wiki/Install-on-FreeBSD)
 	
 * rAthena IRC Channel
 	* irc://irc.rizon.net/rathena
