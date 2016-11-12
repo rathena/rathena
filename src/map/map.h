@@ -211,8 +211,8 @@ enum e_mapid {
 #define CHATROOM_PASS_SIZE (8 + 1)
 //Max allowed chat text length
 #define CHAT_SIZE_MAX (255 + 1)
-//24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
-#define EVENT_NAME_LENGTH ( NAME_LENGTH * 2 + 3 )
+// <NPC_NAME_LENGTH> for npc name + 2 for a "::" + <NAME_LENGTH> for label + 1 for EOS
+#define EVENT_NAME_LENGTH ( NPC_NAME_LENGTH + 2 + NAME_LENGTH + 1 )
 
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 

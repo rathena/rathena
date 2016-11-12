@@ -186,6 +186,7 @@ struct Script_Config script_config = {
 	1, // warn_func_mismatch_argtypes
 	1, 65535, 2048, //warn_func_mismatch_paramnum/check_cmdcount/check_gotocount
 	0, INT_MAX, // input_min_value/input_max_value
+	// NOTE: None of these event labels should be longer than <NAME_LENGTH> characters
 	"OnPCDieEvent", //die_event_name
 	"OnPCKillEvent", //kill_pc_event_name
 	"OnNPCKillEvent", //kill_mob_event_name
@@ -197,6 +198,7 @@ struct Script_Config script_config = {
 	"OnPCStatCalcEvent", //stat_calc_event_name
 	"OnTouch_",	//ontouch_name (runs on first visible char to enter area, picks another char if the first char leaves)
 	"OnTouch",	//ontouch2_name (run whenever a char walks into the OnTouch area)
+	"OnWhisperGlobal",	//onwhisper_event_name (is executed when a player sends a whisper message to the NPC)
 };
 
 static jmp_buf     error_jump;
@@ -11854,8 +11856,7 @@ static int script_mapflag_pvp_sub(struct block_list *bl,va_list ap) {
 		sd->pvp_won = 0;
 		sd->pvp_lost = 0;
 	}
-	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE);
-	clif_maptypeproperty2(&sd->bl,SELF);
+	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE,SELF);
 	return 0;
 }
 
@@ -11885,14 +11886,9 @@ BUILDIN_FUNC(setmapflag)
 				break;
 			case MF_PVP_NOPARTY:		map[m].flag.pvp_noparty = 1; break;
 			case MF_PVP_NOGUILD:		map[m].flag.pvp_noguild = 1; break;
-			case MF_GVG: {
-				struct block_list bl;
+			case MF_GVG:
 				map[m].flag.gvg = 1;
 				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-				bl.type = BL_NUL;
-				bl.m = m;
-				clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
 				break;
 			case MF_GVG_NOPARTY:		map[m].flag.gvg_noparty = 1; break;
 			case MF_NOTRADE:			map[m].flag.notrade = 1; break;
@@ -11948,14 +11944,8 @@ BUILDIN_FUNC(setmapflag)
 			case MF_NOCOSTUME:			map[m].flag.nocostume = 1; break;
 			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 1; break;
 			case MF_GVG_TE:
-				{
-					struct block_list bl;
-					map[m].flag.gvg_te = 1;
-					clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-					bl.type = BL_NUL;
-					bl.m = m;
-					clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
+				map[m].flag.gvg_te = 1;
+				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
 				break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
@@ -11995,25 +11985,15 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOBRANCH:			map[m].flag.nobranch = 0; break;
 			case MF_NOPENALTY:			map[m].flag.noexppenalty = 0; map[m].flag.nozenypenalty = 0; break;
 			case MF_NOZENYPENALTY:		map[m].flag.nozenypenalty = 0; break;
-			case MF_PVP: {
-				struct block_list bl;
-				bl.type = BL_NUL;
-				bl.m = m;
+			case MF_PVP:
 				map[m].flag.pvp = 0;
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-				clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
 				break;
 			case MF_PVP_NOPARTY:		map[m].flag.pvp_noparty = 0; break;
 			case MF_PVP_NOGUILD:		map[m].flag.pvp_noguild = 0; break;
-			case MF_GVG: {
-				struct block_list bl;
-				bl.type = BL_NUL;
-				bl.m = m;
+			case MF_GVG:
 				map[m].flag.gvg = 0;
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-				clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
 				break;
 			case MF_GVG_NOPARTY:		map[m].flag.gvg_noparty = 0; break;
 			case MF_NOTRADE:			map[m].flag.notrade = 0; break;
@@ -12071,14 +12051,8 @@ BUILDIN_FUNC(removemapflag)
 			case MF_NOCOSTUME:			map[m].flag.nocostume = 0; break;
 			case MF_GVG_TE_CASTLE:		map[m].flag.gvg_te_castle = 0; break;
 			case MF_GVG_TE:
-				{
-					struct block_list bl;
-					bl.type = BL_NUL;
-					bl.m = m;
-					map[m].flag.gvg_te = 0;
-					clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-					clif_maptypeproperty2(&bl,ALL_SAMEMAP);
-				}
+				map[m].flag.gvg_te = 0;
+				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 				break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
@@ -12100,7 +12074,6 @@ BUILDIN_FUNC(pvpon)
 	const char *str;
 	TBL_PC* sd = NULL;
 	struct s_mapiterator* iter;
-	struct block_list bl;
 
 	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
@@ -12109,9 +12082,6 @@ BUILDIN_FUNC(pvpon)
 
 	map[m].flag.pvp = 1;
 	clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
-	bl.type = BL_NUL;
-	bl.m = m;
-	clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 
 	if(battle_config.pk_mode) // disable ranking functions if pk_mode is on [Valaris]
 		return SCRIPT_CMD_SUCCESS;
@@ -12148,7 +12118,6 @@ BUILDIN_FUNC(pvpoff)
 {
 	int16 m;
 	const char *str;
-	struct block_list bl;
 
 	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
@@ -12157,9 +12126,6 @@ BUILDIN_FUNC(pvpoff)
 
 	map[m].flag.pvp = 0;
 	clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-	bl.type = BL_NUL;
-	bl.m = m;
-	clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 
 	if(battle_config.pk_mode) // disable ranking options if pk_mode is on [Valaris]
 		return SCRIPT_CMD_SUCCESS;
@@ -12172,16 +12138,12 @@ BUILDIN_FUNC(gvgon)
 {
 	int16 m;
 	const char *str;
-	struct block_list bl;
 
 	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
 	if(m >= 0 && !map[m].flag.gvg) {
 		map[m].flag.gvg = 1;
 		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-		bl.type = BL_NUL;
-		bl.m = m;
-		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12194,12 +12156,8 @@ BUILDIN_FUNC(gvgoff)
 	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
 	if(m >= 0 && map[m].flag.gvg) {
-		struct block_list bl;
 		map[m].flag.gvg = 0;
 		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-		bl.type = BL_NUL;
-		bl.m = m;
-		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12208,16 +12166,12 @@ BUILDIN_FUNC(gvgon3)
 {
 	int16 m;
 	const char *str;
-	struct block_list bl;
 
 	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
 	if (m >= 0 && !map[m].flag.gvg_te) {
 		map[m].flag.gvg_te = 1;
 		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-		bl.type = BL_NUL;
-		bl.m = m;
-		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12230,12 +12184,8 @@ BUILDIN_FUNC(gvgoff3)
 	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
 	if (m >= 0 && map[m].flag.gvg_te) {
-		struct block_list bl;
 		map[m].flag.gvg_te = 0;
 		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-		bl.type = BL_NUL;
-		bl.m = m;
-		clif_maptypeproperty2(&bl,ALL_SAMEMAP);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -13695,45 +13645,6 @@ BUILDIN_FUNC(petrecovery)
 	pd->recovery->type = (sc_type)sc;
 	pd->recovery->delay = script_getnum(st,3);
 	pd->recovery->timer = INVALID_TIMER;
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/*==========================================
- * pet healing [Valaris] //Rewritten by [Skotlex]
- *------------------------------------------*/
-BUILDIN_FUNC(petheal)
-{
-	struct pet_data *pd;
-	TBL_PC *sd=script_rid2sd(st);
-
-	if(sd==NULL || sd->pd==NULL)
-		return SCRIPT_CMD_SUCCESS;
-
-	pd=sd->pd;
-	if (pd->s_skill)
-	{ //Clear previous skill
-		if (pd->s_skill->timer != INVALID_TIMER)
-		{
-			if (pd->s_skill->id)
-				delete_timer(pd->s_skill->timer, pet_skill_support_timer);
-			else
-				delete_timer(pd->s_skill->timer, pet_heal_timer);
-		}
-	} else //init memory
-		pd->s_skill = (struct pet_skill_support *) aMalloc(sizeof(struct pet_skill_support));
-
-	pd->s_skill->id=0; //This id identifies that it IS petheal rather than pet_skillsupport
-	//Use the lv as the amount to heal
-	pd->s_skill->lv=script_getnum(st,2);
-	pd->s_skill->delay=script_getnum(st,3);
-	pd->s_skill->hp=script_getnum(st,4);
-	pd->s_skill->sp=script_getnum(st,5);
-
-	//Use delay as initial offset to avoid skill/heal exploits
-	if (battle_config.pet_equip_required && pd->pet.equip == 0)
-		pd->s_skill->timer = INVALID_TIMER;
-	else
-		pd->s_skill->timer = add_timer(gettick()+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -17324,8 +17235,8 @@ BUILDIN_FUNC(setunitdata)
 		switch (type) {
 			case UMOB_SIZE: md->status.size = (unsigned char)value; break;
 			case UMOB_LEVEL: md->level = (unsigned short)value; break;
-			case UMOB_HP: status_set_hp(bl, (unsigned int)value, 0); clif_charnameack(0, &md->bl); break;
-			case UMOB_MAXHP: status_set_maxhp(bl, (unsigned int)value, 0); clif_charnameack(0, &md->bl); break;
+			case UMOB_HP: status_set_hp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
+			case UMOB_MAXHP: status_set_maxhp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
 			case UMOB_MASTERAID: md->master_id = value; break;
 			case UMOB_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UMOB_X: if (!unit_walktoxy(bl, (short)value, md->bl.y, 2)) unit_movepos(bl, (short)value, md->bl.y, 0, 0); break;
@@ -17729,7 +17640,7 @@ BUILDIN_FUNC(setunitname)
 			ShowWarning("buildin_setunitname: Unknown object type!\n");
 			return SCRIPT_CMD_FAILURE;
 	}
-	clif_charnameack(0, bl); // Send update to client.
+	clif_name_area(bl); // Send update to client.
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18985,7 +18896,7 @@ BUILDIN_FUNC(bg_monster_set_team)
 	mob_stop_attack(md);
 	mob_stop_walking(md, 0);
 	md->target_id = md->attacked_id = 0;
-	clif_charnameack(0, &md->bl);
+	clif_name_area(&md->bl);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -22330,7 +22241,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(petskillbonus,"iiii"), // [Valaris]
 	BUILDIN_DEF(petrecovery,"ii"), // [Valaris]
 	BUILDIN_DEF(petloot,"i"), // [Valaris]
-	BUILDIN_DEF(petheal,"iiii"), // [Valaris]
 	BUILDIN_DEF(petskillattack,"viii"), // [Skotlex]
 	BUILDIN_DEF(petskillattack2,"viiii"), // [Valaris]
 	BUILDIN_DEF(petskillsupport,"viiii"), // [Skotlex]

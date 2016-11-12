@@ -838,7 +838,7 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 	}
 
 	memcpy(pd->pet.name, name, NAME_LENGTH);
-	clif_charnameack (0,&pd->bl);
+	clif_name_area(&pd->bl);
 	pd->pet.rename_flag = 1;
 	clif_pet_equip_area(pd);
 	clif_send_petstatus(sd);

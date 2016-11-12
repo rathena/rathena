@@ -1679,6 +1679,18 @@ int char_delete_char_sql(uint32 char_id){
 			return -1;
 	}
 
+	if (charserv_config.char_config.char_del_restriction&CHAR_DEL_RESTRICT_GUILD && guild_id) // character is in guild
+	{
+		ShowInfo("Char deletion aborted: %s, Guild ID: %i\n", name, guild_id);
+		return -1;
+	}
+
+	if (charserv_config.char_config.char_del_restriction&CHAR_DEL_RESTRICT_PARTY && party_id) // character is in party
+	{
+		ShowInfo("Char deletion aborted: %s, Party ID: %i\n", name, party_id);
+		return -1;
+	}
+
 	/* Divorce [Wizputer] */
 	if( partner_id )
 		char_divorce_char_sql(char_id, partner_id);
@@ -1880,7 +1892,7 @@ int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p)
 	WBUFW(buf,106) = ( p->rename > 0 ) ? 0 : 1;
 	offset += 2;
 #if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
-	mapindex_getmapname_ext(mapindex_id2name(p->last_point.map), (char*)WBUFP(buf,108));
+	mapindex_getmapname_ext(mapindex_id2name(p->last_point.map), WBUFCP(buf,108));
 	offset += MAP_NAME_LENGTH_EXT;
 #endif
 #if PACKETVER >= 20100803
@@ -2740,6 +2752,7 @@ void char_set_defaults(){
 #else
 	charserv_config.char_config.char_del_option = CHAR_DEL_EMAIL;
 #endif
+	charserv_config.char_config.char_del_restriction = CHAR_DEL_RESTRICT_ALL;
 
 //	charserv_config.userid[24];
 //	charserv_config.passwd[24];
@@ -3018,6 +3031,8 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.char_config.char_del_delay = atoi(w2);
 		} else if (strcmpi(w1, "char_del_option") == 0) {
 			charserv_config.char_config.char_del_option = atoi(w2);
+		} else if (strcmpi(w1, "char_del_restriction") == 0) {
+			charserv_config.char_config.char_del_restriction = atoi(w2);
 		} else if(strcmpi(w1,"db_path")==0) {
 			safestrncpy(schema_config.db_path, w2, sizeof(schema_config.db_path));
 		} else if (strcmpi(w1, "fame_list_alchemist") == 0) {
@@ -3195,7 +3210,8 @@ int do_init(int argc, char **argv)
 	char_sql_config_read(SQL_CONF_NAME);
 	msg_config_read(MSG_CONF_NAME_EN);
 
-	if (strcmp(charserv_config.userid, "s1")==0 && strcmp(charserv_config.passwd, "p1")==0) {
+	// Skip this check if the server is run with run-once flag
+	if (runflag!=CORE_ST_STOP && strcmp(charserv_config.userid, "s1")==0 && strcmp(charserv_config.passwd, "p1")==0) {
 		ShowWarning("Using the default user/password s1/p1 is NOT RECOMMENDED.\n");
 		ShowNotice("Please edit your 'login' table to create a proper inter-server user/password (gender 'S')\n");
 		ShowNotice("And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)\n");

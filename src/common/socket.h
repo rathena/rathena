@@ -25,6 +25,8 @@
 #define RFIFOP(fd,pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
 #define WFIFOP(fd,pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
 
+#define RFIFOCP(fd,pos) ((char*)RFIFOP(fd,pos))
+#define WFIFOCP(fd,pos) ((char*)WFIFOP(fd,pos))
 #define RFIFOB(fd,pos) (*(uint8*)RFIFOP(fd,pos))
 #define WFIFOB(fd,pos) (*(uint8*)WFIFOP(fd,pos))
 #define RFIFOW(fd,pos) (*(uint16*)RFIFOP(fd,pos))
@@ -50,12 +52,14 @@
 
 // buffer I/O macros
 #define RBUFP(p,pos) (((uint8*)(p)) + (pos))
+#define RBUFCP(p,pos) ((char*)RBUFP((p),(pos)))
 #define RBUFB(p,pos) (*(uint8*)RBUFP((p),(pos)))
 #define RBUFW(p,pos) (*(uint16*)RBUFP((p),(pos)))
 #define RBUFL(p,pos) (*(uint32*)RBUFP((p),(pos)))
 #define RBUFQ(p,pos) (*(uint64*)RBUFP((p),(pos)))
 
 #define WBUFP(p,pos) (((uint8*)(p)) + (pos))
+#define WBUFCP(p,pos) ((char*)WBUFP((p),(pos)))
 #define WBUFB(p,pos) (*(uint8*)WBUFP((p),(pos)))
 #define WBUFW(p,pos) (*(uint16*)WBUFP((p),(pos)))
 #define WBUFL(p,pos) (*(uint32*)WBUFP((p),(pos)))

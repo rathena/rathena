@@ -1619,7 +1619,6 @@ ACMD_FUNC(pvpoff)
 
 	if (!battle_config.pk_mode){
 		clif_map_property_mapall(sd->bl.m, MAPPROPERTY_NOTHING);
-		clif_maptypeproperty2(&sd->bl,ALL_SAMEMAP);
 	}
 	map_foreachinmap(atcommand_pvpoff_sub,sd->bl.m, BL_PC);
 	map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
@@ -1657,7 +1656,6 @@ ACMD_FUNC(pvpon)
 
 	if (!battle_config.pk_mode) {// display pvp circle and rank
 		clif_map_property_mapall(sd->bl.m, MAPPROPERTY_FREEPVPZONE);
-		clif_maptypeproperty2(&sd->bl,ALL_SAMEMAP);
 		map_foreachinmap(atcommand_pvpon_sub,sd->bl.m, BL_PC);
 	}
 
@@ -1680,7 +1678,6 @@ ACMD_FUNC(gvgoff)
 
 	map[sd->bl.m].flag.gvg = 0;
 	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_NOTHING);
-	clif_maptypeproperty2(&sd->bl,ALL_SAMEMAP);
 	map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
 	clif_displaymessage(fd, msg_txt(sd,33)); // GvG: Off.
 
@@ -1701,7 +1698,6 @@ ACMD_FUNC(gvgon)
 
 	map[sd->bl.m].flag.gvg = 1;
 	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_AGITZONE);
-	clif_maptypeproperty2(&sd->bl,ALL_SAMEMAP);
 	clif_displaymessage(fd, msg_txt(sd,34)); // GvG: On.
 
 	return 0;
@@ -8029,9 +8025,9 @@ ACMD_FUNC(fakename)
 		if( sd->fakename[0] )
 		{
 			sd->fakename[0] = '\0';
-			clif_charnameack(0, &sd->bl);
+			clif_name_area(&sd->bl);
 			if (sd->disguise)
-				clif_charnameack(sd->fd, &sd->bl);
+				clif_name_self(&sd->bl);
 			clif_displaymessage(sd->fd, msg_txt(sd,1307)); // Returned to real name.
 			return 0;
 		}
@@ -8047,9 +8043,9 @@ ACMD_FUNC(fakename)
 	}
 
 	safestrncpy(sd->fakename, message, sizeof(sd->fakename));
-	clif_charnameack(0, &sd->bl);
+	clif_name_area(&sd->bl);
 	if (sd->disguise) // Another packet should be sent so the client updates the name for sd
-		clif_charnameack(sd->fd, &sd->bl);
+		clif_name_self(&sd->bl);
 	clif_displaymessage(sd->fd, msg_txt(sd,1310)); // Fake name enabled.
 
 	return 0;
@@ -9558,8 +9554,6 @@ ACMD_FUNC(vip) {
 	pl_sd->vip.time += vipdifftime; //increase or reduce VIP duration
 	
 	if (pl_sd->vip.time <= now) {
-		pl_sd->vip.time = 0;
-		pl_sd->vip.enabled = 0;
 		clif_displaymessage(pl_sd->fd, msg_txt(pl_sd,703)); // GM has removed your VIP time.
 		clif_displaymessage(fd, msg_txt(sd,704)); // Player is no longer VIP.
 	} else {
@@ -9588,10 +9582,10 @@ ACMD_FUNC(vip) {
 ACMD_FUNC(showrate) {
 	nullpo_retr(-1,sd);
 	if (!sd->vip.disableshowrate) {
-		sprintf(atcmd_output,msg_txt(sd,718)); //Personal rate information is not displayed now.
+		safestrncpy(atcmd_output,msg_txt(sd,718),CHAT_SIZE_MAX); //Personal rate information is not displayed now.
 		sd->vip.disableshowrate = 1;
 	} else {
-		sprintf(atcmd_output,msg_txt(sd,719)); //Personal rate information will be shown.
+		safestrncpy(atcmd_output,msg_txt(sd,719),CHAT_SIZE_MAX); //Personal rate information will be shown.
 		sd->vip.disableshowrate = 0;
 	}
 	clif_displaymessage(fd,atcmd_output);

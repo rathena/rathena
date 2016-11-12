@@ -667,10 +667,6 @@ void initChangeTables(void)
 	set_sc( RA_WUGDASH			, SC_WUGDASH		, SI_WUGDASH		, SCB_SPEED|SCB_DSPD );
 	set_sc( RA_WUGBITE          , SC_BITE           , SI_WUGBITE        , SCB_NONE );
 	set_sc( RA_CAMOUFLAGE		, SC_CAMOUFLAGE		, SI_CAMOUFLAGE		, SCB_SPEED|SCB_DEF|SCB_DEF2 );
-	add_sc( RA_MAGENTATRAP		, SC_ELEMENTALCHANGE	);
-	add_sc( RA_COBALTTRAP		, SC_ELEMENTALCHANGE	);
-	add_sc( RA_MAIZETRAP		, SC_ELEMENTALCHANGE	);
-	add_sc( RA_VERDURETRAP		, SC_ELEMENTALCHANGE	);
 	set_sc( RA_FIRINGTRAP       , SC_BURNING        , SI_BURNT          , SCB_MDEF );
 	set_sc_with_vfx( RA_ICEBOUNDTRAP, SC_FREEZING		, SI_FROSTMISTY		, SCB_SPEED|SCB_ASPD|SCB_DEF|SCB_DEF2 );
 	set_sc( RA_UNLIMIT		, SC_UNLIMIT		, SI_UNLIMIT		, SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2 );
@@ -2033,6 +2029,10 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				&& (src->type != BL_PC || ((TBL_PC*)src)->skillitem != skill_id))
 				return false;
 			break;
+		case SC_MANHOLE:
+			// Skill is disabled against special racial grouped monsters(GvG and Battleground)
+			if (target && ( status_get_race2(target) == RC2_GVG || status_get_race2(target) == RC2_BATTLEFIELD ) )
+				return false;
 		default:
 			break;
 	}
@@ -2052,6 +2052,9 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				clif_skill_fail((TBL_PC*)src,skill_id,USESKILL_FAIL_LEVEL,0);
 			return false;
 		}
+
+		if (flag == 1 && sc->data[SC_CURSEDCIRCLE_TARGET] && skill_id == MO_ABSORBSPIRITS) // Absorb Spirits fails to go through
+			return false;
 
 		if (skill_id != RK_REFRESH && sc->opt1 && !(sc->opt1 == OPT1_CRYSTALIZE && src->type == BL_MOB) && sc->opt1 != OPT1_BURNING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
@@ -8753,15 +8756,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_MOONLITSERENADE:
 	case SC_RUSHWINDMILL:
 	case SC_ECHOSONG:
-	case SC_HARMONIZE:
-	case SC_FRIGG_SONG: // Group A doesn't overlap
+	case SC_HARMONIZE: // Group A doesn't overlap
 		if (type != SC_SWINGDANCE) status_change_end(bl, SC_SWINGDANCE, INVALID_TIMER);
 		if (type != SC_SYMPHONYOFLOVER) status_change_end(bl, SC_SYMPHONYOFLOVER, INVALID_TIMER);
 		if (type != SC_MOONLITSERENADE) status_change_end(bl, SC_MOONLITSERENADE, INVALID_TIMER);
 		if (type != SC_RUSHWINDMILL) status_change_end(bl, SC_RUSHWINDMILL, INVALID_TIMER);
 		if (type != SC_ECHOSONG) status_change_end(bl, SC_ECHOSONG, INVALID_TIMER);
 		if (type != SC_HARMONIZE) status_change_end(bl, SC_HARMONIZE, INVALID_TIMER);
-		if (type != SC_FRIGG_SONG) status_change_end(bl, SC_FRIGG_SONG, INVALID_TIMER);
 		break;
 	case SC_VOICEOFSIREN:
 	case SC_DEEPSLEEP:
@@ -8964,6 +8965,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_REUSE_LIMIT_RECALL:
 			case SC_REUSE_LIMIT_ASPD_POTION:
 				return 0;
+			case SC_PUSH_CART:
 			case SC_COMBO:
 			case SC_DANCING:
 			case SC_DEVOTION:
@@ -11237,7 +11239,18 @@ int status_change_clear(struct block_list* bl, int type)
 
 	sc = status_get_sc(bl);
 
-	if (!sc || !sc->count)
+	if (!sc)
+		return 0;
+
+	// Cleaning all extras vars
+	sc->comet_x = 0;
+	sc->comet_y = 0;
+#ifndef RENEWAL
+	sc->sg_counter = 0;
+#endif
+	sc->bs_counter = 0;
+
+	if (!sc->count)
 		return 0;
 
 	for(i = 0; i < SC_MAX; i++) {
@@ -11402,14 +11415,6 @@ int status_change_clear(struct block_list* bl, int type)
 	sc->opt1 = 0;
 	sc->opt2 = 0;
 	sc->opt3 = 0;
-
-	// Cleaning all extras vars
-	sc->comet_x = 0;
-	sc->comet_y = 0;
-#ifndef RENEWAL
-	sc->sg_counter = 0;
-#endif
-	sc->bs_counter = 0;
 
 	if( type == 0 || type == 2 )
 		clif_changeoption(bl);

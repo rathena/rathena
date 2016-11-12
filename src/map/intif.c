@@ -402,7 +402,7 @@ int intif_saveregistry(struct map_session_data *sd)
 		WFIFOB(inter_fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
 		plen += 1;
 
-		safestrncpy((char*)WFIFOP(inter_fd,plen), varname, len);
+		safestrncpy(WFIFOCP(inter_fd,plen), varname, len);
 		plen += len;
 
 		WFIFOL(inter_fd, plen) = script_getvaridx(key.i64);
@@ -420,7 +420,7 @@ int intif_saveregistry(struct map_session_data *sd)
 				WFIFOB(inter_fd, plen) = (unsigned char)len; // won't be higher; the column size is 254
 				plen += 1;
 
-				safestrncpy((char*)WFIFOP(inter_fd,plen), p->value, len);
+				safestrncpy(WFIFOCP(inter_fd,plen), p->value, len);
 				plen += len;
 			} else {
 				script_reg_destroy_single(sd,key.i64,&p->flag);
@@ -631,7 +631,7 @@ int intif_party_leave(int party_id, uint32 account_id, uint32 char_id, char *nam
 	WFIFOL(inter_fd,2) = party_id;
 	WFIFOL(inter_fd,6) = account_id;
 	WFIFOL(inter_fd,10) = char_id;
-	memcpy((char *)WFIFOP(inter_fd,14), name, NAME_LENGTH);
+	memcpy(WFIFOCP(inter_fd,14), name, NAME_LENGTH);
 	WFIFOB(inter_fd,14+NAME_LENGTH) = type;
 	WFIFOSET(inter_fd,15+NAME_LENGTH);
 	return 1;
@@ -846,7 +846,7 @@ int intif_guild_leave(int guild_id,uint32 account_id,uint32 char_id,int flag,con
 	WFIFOL(inter_fd, 6) = account_id;
 	WFIFOL(inter_fd,10) = char_id;
 	WFIFOB(inter_fd,14) = flag;
-	safestrncpy((char*)WFIFOP(inter_fd,15),mes,40);
+	safestrncpy(WFIFOCP(inter_fd,15),mes,40);
 	WFIFOSET(inter_fd,55);
 	return 1;
 }
@@ -1214,7 +1214,7 @@ int intif_parse_WisMessage(int fd)
 
 	id=RFIFOL(fd,4);
 
-	safestrncpy(name, (char*)RFIFOP(fd,32), NAME_LENGTH);
+	safestrncpy(name, RFIFOCP(fd,32), NAME_LENGTH);
 	sd = map_nick2sd(name);
 	if(sd == NULL || strcmp(sd->status.name, name) != 0)
 	{	//Not found
@@ -1225,7 +1225,7 @@ int intif_parse_WisMessage(int fd)
 		intif_wis_replay(id, 2);
 		return 0;
 	}
-	wisp_source = (char *) RFIFOP(fd,8); // speed up [Yor]
+	wisp_source = RFIFOCP(fd,8); // speed up [Yor]
 	for(i=0; i < MAX_IGNORE_LIST &&
 		sd->ignore[i].name[0] != '\0' &&
 		strcmp(sd->ignore[i].name, wisp_source) != 0
@@ -1237,7 +1237,7 @@ int intif_parse_WisMessage(int fd)
 		return 0;
 	}
 	//Success to send whisper.
-	clif_wis_message(sd->fd, wisp_source, (char*)RFIFOP(fd,56),RFIFOW(fd,2)-56);
+	clif_wis_message(sd->fd, wisp_source, RFIFOCP(fd,56),RFIFOW(fd,2)-56);
 	intif_wis_replay(id,0);   // success
 	return 1;
 }
@@ -1253,7 +1253,7 @@ int intif_parse_WisEnd(int fd)
 
 	if (battle_config.etc_log)
 		ShowInfo("intif_parse_wisend: player: %s, flag: %d\n", RFIFOP(fd,2), RFIFOB(fd,26)); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-	sd = (struct map_session_data *)map_nick2sd((char *) RFIFOP(fd,2));
+	sd = (struct map_session_data *)map_nick2sd(RFIFOCP(fd,2));
 	if (sd != NULL)
 		clif_wis_end(sd->fd, RFIFOB(fd,26));
 
@@ -1300,8 +1300,8 @@ int mapif_parse_WisToGM(int fd)
 	message = (char *) aMalloc(mes_len+1);
 
 	permission = RFIFOL(fd,4+NAME_LENGTH);
-	safestrncpy(Wisp_name, (char*)RFIFOP(fd,4), NAME_LENGTH);
-	safestrncpy(message, (char*)RFIFOP(fd,8+NAME_LENGTH), mes_len+1);
+	safestrncpy(Wisp_name, RFIFOCP(fd,4), NAME_LENGTH);
+	safestrncpy(message, RFIFOCP(fd,8+NAME_LENGTH), mes_len+1);
 	// information is sent to all online GM
 	map_foreachpc(mapif_parse_WisToGM_sub, permission, Wisp_name, message, mes_len);
 	aFree(message);
@@ -1367,13 +1367,13 @@ void intif_parse_Registers(int fd)
 		if (type) {
 			for(i = 0; i < max; i++) {
 				char sval[254];
-				safestrncpy(key, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
+				safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 				cursor += RFIFOB(fd, cursor) + 1;
 
 				index = RFIFOL(fd, cursor);
 				cursor += 4;
 
-				safestrncpy(sval, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
+				safestrncpy(sval, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 				cursor += RFIFOB(fd, cursor) + 1;
 
 				set_reg(NULL,sd,reference_uid(add_str(key), index), key, (void*)sval, NULL);
@@ -1387,7 +1387,7 @@ void intif_parse_Registers(int fd)
 		} else {
 			for(i = 0; i < max; i++) {
 				int ival;
-				safestrncpy(key, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
+				safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 				cursor += RFIFOB(fd, cursor) + 1;
 
 				index = RFIFOL(fd, cursor);
@@ -1476,7 +1476,7 @@ int intif_parse_PartyCreated(int fd)
 {
 	if(battle_config.etc_log)
 		ShowInfo("intif: party created by account %d\n\n", RFIFOL(fd,2));
-	party_created(RFIFOL(fd,2), RFIFOL(fd,6),RFIFOB(fd,10),RFIFOL(fd,11), (char *)RFIFOP(fd,15));
+	party_created(RFIFOL(fd,2), RFIFOL(fd,6),RFIFOB(fd,10),RFIFOL(fd,11), RFIFOCP(fd,15));
 	return 1;
 }
 
@@ -1531,8 +1531,8 @@ int intif_parse_PartyOptionChanged(int fd)
 int intif_parse_PartyMemberWithdraw(int fd)
 {
 	if(battle_config.etc_log)
-		ShowInfo("intif: party member withdraw: Type(%d) Party(%d), Account(%d), Char(%d), Name(%s)\n",RFIFOB(fd,14+NAME_LENGTH),RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),(char*)RFIFOP(fd,14));
-	party_member_withdraw(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),(char*)RFIFOP(fd,14),(enum e_party_member_withdraw)RFIFOB(fd,14+NAME_LENGTH));
+		ShowInfo("intif: party member withdraw: Type(%d) Party(%d), Account(%d), Char(%d), Name(%s)\n",RFIFOB(fd,14+NAME_LENGTH),RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOCP(fd,14));
+	party_member_withdraw(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOCP(fd,14),(enum e_party_member_withdraw)RFIFOB(fd,14+NAME_LENGTH));
 	return 1;
 }
 
@@ -1565,7 +1565,7 @@ int intif_parse_PartyMove(int fd)
  */
 int intif_parse_PartyMessage(int fd)
 {
-	party_recv_message(RFIFOL(fd,4),RFIFOL(fd,8),(char *) RFIFOP(fd,12),RFIFOW(fd,2)-12);
+	party_recv_message(RFIFOL(fd,4),RFIFOL(fd,8),RFIFOCP(fd,12),RFIFOW(fd,2)-12);
 	return 1;
 }
 
@@ -1618,7 +1618,7 @@ int intif_parse_GuildMemberAdded(int fd)
  */
 int intif_parse_GuildMemberWithdraw(int fd)
 {
-	guild_member_withdraw(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOB(fd,14),(char *)RFIFOP(fd,55),(char *)RFIFOP(fd,15));
+	guild_member_withdraw(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOB(fd,14),RFIFOCP(fd,55),RFIFOCP(fd,15));
 	return 1;
 }
 
@@ -1739,7 +1739,7 @@ int intif_parse_GuildSkillUp(int fd)
  */
 int intif_parse_GuildAlliance(int fd)
 {
-	guild_allianceack(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOL(fd,14),RFIFOB(fd,18),(char *) RFIFOP(fd,19),(char *) RFIFOP(fd,43));
+	guild_allianceack(RFIFOL(fd,2),RFIFOL(fd,6),RFIFOL(fd,10),RFIFOL(fd,14),RFIFOB(fd,18),RFIFOCP(fd,19),RFIFOCP(fd,43));
 	return 1;
 }
 
@@ -1750,7 +1750,7 @@ int intif_parse_GuildAlliance(int fd)
  */
 int intif_parse_GuildNotice(int fd)
 {
-	guild_notice_changed(RFIFOL(fd,2),(char *) RFIFOP(fd,6),(char *) RFIFOP(fd,66));
+	guild_notice_changed(RFIFOL(fd,2),RFIFOCP(fd,6),RFIFOCP(fd,66));
 	return 1;
 }
 
@@ -1761,7 +1761,7 @@ int intif_parse_GuildNotice(int fd)
  */
 int intif_parse_GuildEmblem(int fd)
 {
-	guild_emblem_changed(RFIFOW(fd,2)-12,RFIFOL(fd,4),RFIFOL(fd,8), (char *)RFIFOP(fd,12));
+	guild_emblem_changed(RFIFOW(fd,2)-12,RFIFOL(fd,4),RFIFOL(fd,8), RFIFOCP(fd,12));
 	return 1;
 }
 
@@ -1772,7 +1772,7 @@ int intif_parse_GuildEmblem(int fd)
  */
 int intif_parse_GuildMessage(int fd)
 {
-	guild_recv_message(RFIFOL(fd,4),RFIFOL(fd,8),(char *) RFIFOP(fd,12),RFIFOW(fd,2)-12);
+	guild_recv_message(RFIFOL(fd,4),RFIFOL(fd,8),RFIFOCP(fd,12),RFIFOW(fd,2)-12);
 	return 1;
 }
 
@@ -1871,10 +1871,10 @@ int intif_parse_ChangeNameOk(int fd)
 	case 0: //Players [NOT SUPPORTED YET]
 		break;
 	case 1: //Pets
-		pet_change_name_ack(sd, (char*)RFIFOP(fd,12), RFIFOB(fd,11));
+		pet_change_name_ack(sd, RFIFOCP(fd,12), RFIFOB(fd,11));
 		break;
 	case 2: //Hom
-		hom_change_name_ack(sd, (char*)RFIFOP(fd,12), RFIFOB(fd,11));
+		hom_change_name_ack(sd, RFIFOCP(fd,12), RFIFOB(fd,11));
 		break;
 	}
 	return 1;
@@ -2376,8 +2376,8 @@ static void intif_parse_Mail_new(int fd)
 {
 	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
 	int mail_id = RFIFOL(fd,6);
-	const char* sender_name = (char*)RFIFOP(fd,10);
-	const char* title = (char*)RFIFOP(fd,34);
+	const char* sender_name = RFIFOCP(fd,10);
+	const char* title = RFIFOCP(fd,34);
 
 	if( sd == NULL )
 		return;
@@ -2915,7 +2915,7 @@ int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char typ
 	WFIFOL(inter_fd,6) = aid;
 	WFIFOL(inter_fd,10) = group_lv;
 	WFIFOB(inter_fd,14) = type;
-	safestrncpy((char *)WFIFOP(inter_fd,15), query, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd,15), query, NAME_LENGTH);
 
 	WFIFOSET(inter_fd,2 + 4 + 4 + 4 + 1 + NAME_LENGTH);
 	return 1;
@@ -2929,7 +2929,7 @@ void intif_parse_accinfo_ack( int fd ) {
 	char acc_name[NAME_LENGTH];
 	int u_fd = RFIFOL(fd,2);
 	int acc_id = RFIFOL(fd,6);
-	safestrncpy(acc_name, (char*)RFIFOP(fd,10), NAME_LENGTH);
+	safestrncpy(acc_name, RFIFOCP(fd,10), NAME_LENGTH);
 	clif_account_name(u_fd, acc_id, acc_name);
 }
 
@@ -2946,7 +2946,7 @@ void intif_parse_MessageToFD(int fd) {
 		/* matching e.g. previous fd owner didn't dc during request or is still the same */
 		if( sd->bl.id == aid ) {
 			char msg[512];
-			safestrncpy(msg, (char*)RFIFOP(fd,12), RFIFOW(fd,2) - 12);
+			safestrncpy(msg, RFIFOCP(fd,12), RFIFOW(fd,2) - 12);
 			clif_displaymessage(u_fd,msg);
 		}
 
@@ -2990,7 +2990,7 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
 	WFIFOW(inter_fd, 4) = nameid;
 	WFIFOW(inter_fd, 6) = sourceid;
 	WFIFOB(inter_fd, 8) = type;
-	safestrncpy((char *)WFIFOP(inter_fd, 9), sd->status.name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd, 9), sd->status.name, NAME_LENGTH);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3023,8 +3023,8 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
 	WFIFOW(inter_fd, 4) = nameid;
 	WFIFOW(inter_fd, 6) = 0;
 	WFIFOB(inter_fd, 8) = ITEMOBTAIN_TYPE_NPC;
-	safestrncpy((char *)WFIFOP(inter_fd, 9), sd->status.name, NAME_LENGTH);
-	safestrncpy((char *)WFIFOP(inter_fd, 9 + NAME_LENGTH), srcname, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd, 9), sd->status.name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd, 9 + NAME_LENGTH), srcname, NAME_LENGTH);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3039,9 +3039,9 @@ void intif_parse_broadcast_obtain_special_item(int fd) {
 	int type = RFIFOB(fd, 8);
 	char name[NAME_LENGTH], srcname[NAME_LENGTH];
 
-	safestrncpy(name, (char *)RFIFOP(fd, 9), NAME_LENGTH);
+	safestrncpy(name, RFIFOCP(fd, 9), NAME_LENGTH);
 	if (type == ITEMOBTAIN_TYPE_NPC)
-		safestrncpy(name, (char *)RFIFOP(fd, 9 + NAME_LENGTH), NAME_LENGTH);
+		safestrncpy(name, RFIFOCP(fd, 9 + NAME_LENGTH), NAME_LENGTH);
 
 	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, srcname);
 }
@@ -3233,9 +3233,9 @@ int intif_parse(int fd)
 	switch(cmd){
 	case 0x3800:
 		if (RFIFOL(fd,4) == 0xFF000000) //Normal announce.
-			clif_broadcast(NULL, (char *) RFIFOP(fd,16), packet_len-16, BC_DEFAULT, ALL_CLIENT);
+			clif_broadcast(NULL, RFIFOCP(fd,16), packet_len-16, BC_DEFAULT, ALL_CLIENT);
 		else //Color announce.
-			clif_broadcast2(NULL, (char *) RFIFOP(fd,16), packet_len-16, RFIFOL(fd,4), RFIFOW(fd,8), RFIFOW(fd,10), RFIFOW(fd,12), RFIFOW(fd,14), ALL_CLIENT);
+			clif_broadcast2(NULL, RFIFOCP(fd,16), packet_len-16, RFIFOL(fd,4), RFIFOW(fd,8), RFIFOW(fd,10), RFIFOW(fd,12), RFIFOW(fd,14), ALL_CLIENT);
 		break;
 	case 0x3801:	intif_parse_WisMessage(fd); break;
 	case 0x3802:	intif_parse_WisEnd(fd); break;
