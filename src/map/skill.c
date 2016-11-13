@@ -10285,96 +10285,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 						skill_attack(BF_WEAPON,src,src,bl,GN_SLINGITEM_RANGEMELEEATK,skill_lv,tick,flag);
 				} else //Otherwise, it fails, shows animation and removes items.
 					clif_skill_fail(sd,GN_SLINGITEM_RANGEMELEEATK,USESKILL_FAIL,0);
-			} else if (itemdb_is_GNthrowable(ammo_id)) {
-				switch (ammo_id) {
-				case ITEMID_MYSTERIOUS_POWDER: //MaxHP -2%
-					sc_start(src, bl, SC_MYSTERIOUS_POWDER, 100, 2, 10000);
-					break;
-				case ITEMID_BOOST500_TO_THROW: //ASPD +10%
-					sc_start(src, bl, SC_BOOST500, 100, 10, 500000);
-					break;
-				case ITEMID_FULL_SWINGK_TO_THROW: //WATK +50
-					sc_start(src, bl, SC_FULL_SWING_K, 100, 50, 500000);
-					break;
-				case ITEMID_MANA_PLUS_TO_THROW: //MATK +50
-					sc_start(src, bl, SC_MANA_PLUS, 100, 50, 500000);
-					break;
-				case ITEMID_CURE_FREE_TO_THROW: //Cures Silence, Bleeding, Poison, Curse, Orcish, Undead, Blind, Confusion, DPoison and heals 500 HP
-					status_change_end(bl, SC_SILENCE, INVALID_TIMER);
-					status_change_end(bl, SC_BLEEDING, INVALID_TIMER);
-					status_change_end(bl, SC_POISON, INVALID_TIMER);
-					status_change_end(bl, SC_CURSE, INVALID_TIMER);
-					status_change_end(bl, SC_ORCISH, INVALID_TIMER);
-					status_change_end(bl, SC_CHANGEUNDEAD, INVALID_TIMER);
-					status_change_end(bl, SC_BLIND, INVALID_TIMER);
-					status_change_end(bl, SC_CONFUSION, INVALID_TIMER);
-					status_change_end(bl, SC_DPOISON, INVALID_TIMER);
-					status_heal(bl, 500, 0, 0);
-					break;
-				case ITEMID_STAMINA_UP_M_TO_THROW: //MaxHP +5%
-					sc_start(src, bl, SC_MUSTLE_M, 100, 5, 500000);
-					break;
-				case ITEMID_DIGESTIVE_F_TO_THROW: //MaxSP +5%
-					sc_start(src, bl, SC_LIFE_FORCE_F, 100, 5, 500000);
-					break;
-				case ITEMID_HP_INC_POTS_TO_THROW: //MaxHP +(500 + Thrower BaseLv * 10 / 3) and heals 1% MaxHP
-					sc_start4(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 1, status_get_lv(src), 0, 500000);
-					status_percent_heal(bl, 1, 0);
-					break;
-				case ITEMID_HP_INC_POTM_TO_THROW: //MaxHP +(1500 + Thrower BaseLv * 10 / 3) and heals 2% MaxHP
-					sc_start4(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 2, status_get_lv(src), 0, 500000);
-					status_percent_heal(bl, 2, 0);
-					break;
-				case ITEMID_HP_INC_POTL_TO_THROW: //MaxHP +(2500 + Thrower BaseLv * 10 / 3) and heals 5% MaxHP
-					sc_start4(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 3, status_get_lv(src), 0, 500000);
-					status_percent_heal(bl, 5, 0);
-					break;
-				case ITEMID_SP_INC_POTS_TO_THROW: //MaxSP +(Thrower BaseLv / 10 - 5)% and recovers 2% MaxSP
-					sc_start4(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 1, status_get_lv(src), 0, 500000);
-					status_percent_heal(bl, 0, 2);
-					break;
-				case ITEMID_SP_INC_POTM_TO_THROW: //MaxSP +(Thrower BaseLv / 10)% and recovers 4% MaxSP
-					sc_start4(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 2, status_get_lv(src), 0, 500000);
-					status_percent_heal(bl, 0, 4);
-					break;
-				case ITEMID_SP_INC_POTL_TO_THROW: //MaxSP +(Thrower BaseLv / 10 + 5)% and recovers 8% MaxSP
-					sc_start4(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 3, status_get_lv(src), 0, 500000);
-					status_percent_heal(bl, 0, 8);
-					break;
-				case ITEMID_EN_WHITE_POTZ_TO_THROW: //Natural HP Recovery +20% and heals 1000 HP
-					sc_start(src, bl, SC_EXTRACT_WHITE_POTION_Z, 100, 20, 500000);
-					pc_itemheal((TBL_PC *)bl, ITEMID_EN_WHITE_POTZ_TO_THROW, 1000, 0);
-					break;
-				case ITEMID_VITATA500_TO_THROW: //Natural SP Recovery +20%, MaxSP +5%, and recovers 200 SP
-					sc_start2(src, bl, SC_VITATA_500, 100, 20, 5, 500000);
-					pc_itemheal((TBL_PC *)bl, ITEMID_VITATA500_TO_THROW, 0, 200);
-					break;
-				case ITEMID_EN_CEL_JUICE_TO_THROW: //ASPD +10%
-					sc_start(src, bl, SC_EXTRACT_SALAMINE_JUICE, 100, 10, 500000);
-					break;
-				case ITEMID_SAVAGE_BBQ_TO_THROW: //STR +20
-					sc_start(src, bl, SC_SAVAGE_STEAK, 100, 20, 300000);
-					break;
-				case ITEMID_WUG_COCKTAIL_TO_THROW: //INT +20
-					sc_start(src, bl, SC_COCKTAIL_WARG_BLOOD, 100, 20, 300000);
-					break;
-				case ITEMID_M_BRISKET_TO_THROW: //VIT +20
-					sc_start(src, bl, SC_MINOR_BBQ, 100, 20, 300000);
-					break;
-				case ITEMID_SIROMA_ICETEA_TO_THROW: //DEX +20
-					sc_start(src, bl, SC_SIROMA_ICE_TEA, 100, 20, 300000);
-					break;
-				case ITEMID_DROCERA_STEW_TO_THROW: //AGI +20
-					sc_start(src, bl, SC_DROCERA_HERB_STEAMED, 100, 20, 300000);
-					break;
-				case ITEMID_PETTI_NOODLE_TO_THROW: //LUK +20
-					sc_start(src, bl, SC_PUTTI_TAILS_NOODLES, 100, 20, 300000);
-					break;
-				case ITEMID_BLACK_THING_TO_THROW: //Reduces all stats by random 5 - 10
-					sc_start(src, bl, SC_STOMACHACHE, 100, rnd_value(5, 10), 60000);
-					break;
-				}
-			}
+			} else if (itemdb_is_GNthrowable(ammo_id))
+				if (dstsd)
+					run_script(sd->inventory_data[i]->script, 0, dstsd->bl.id, fake_nd->bl.id);
 		}
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);// This packet is received twice actually, I think it is to show the animation.
