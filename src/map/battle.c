@@ -7992,6 +7992,7 @@ static const struct _battle_data {
 	{ "natural_heal_skill_interval",        &battle_config.natural_heal_skill_interval,     10000,  NATURAL_HEAL_INTERVAL, INT_MAX, },
 	{ "natural_heal_weight_rate",           &battle_config.natural_heal_weight_rate,        50,     50,     101             },
 	{ "arrow_decrement",                    &battle_config.arrow_decrement,                 1,      0,      2,              },
+	{ "weapon_ammo_unequip",				&battle_config.weapon_ammo_unequip,				3,		0,		3,				},
 	{ "max_aspd",                           &battle_config.max_aspd,                        190,    100,    199,            },
 	{ "max_third_aspd",                     &battle_config.max_third_aspd,                  193,    100,    199,            },
 	{ "max_walk_speed",                     &battle_config.max_walk_speed,                  300,    100,    100*DEFAULT_WALK_SPEED, },
