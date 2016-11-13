@@ -10,12 +10,12 @@ We are accepting people's contribution and here are how to do it.
 * Then you ready to [Creating a pull request](https://help.github.com/articles/creating-a-pull-request/) for rAthena.
 
 ## Staff Application
-* Before you sending us staff application, make sure you have [rAthena account](https://rathena.org/board/index.php?app=core&module=global&section=register).
+* Before you sending us staff application, make sure you have [rAthena account](https://rathena.org/board/register/).
 * Better [introduce](https://rathena.org/board/forum/89-introductions/) yourself first, for your first post.
-* Please fill this [Staff Application](https://rathena.org/board/page/staff_applications.html) form.
+* Please fill this [Staff Application](https://rathena.org/board/staffapplications/) form.
 
 ## Other Contributors
-rAthena will never forget people who have contributed to the development of Athena through the years, they are listed in [AUTHORS.md](https://github.com/rathena/rathena/blob/master/AUTHORS).
+rAthena will never forget people who have contributed to the development of Athena through the years, they are listed in [AUTHORS](https://github.com/rathena/rathena/blob/master/AUTHORS).
 Don't worry, if your name is now listed there, we will never forget you as [contributors](https://github.com/rathena/rathena/graphs/contributors).
 
 ## Found a Bug? Create New Issue
@@ -24,6 +24,7 @@ Before that, please read [GitHub Issues and rAthena Bug Reporting](https://rathe
 The points are:
 * Please make clear title about the bug you found.
 * Write the `hash` or `revision` of rAthena you use. **Never write latest!**
+* Write also your **client date**.
 * Write **first** the bug you found, better with some screenshots or video.
 * Then write the **how does it supposed to** sentences. Please always use **official servers as references.**
 * We will reply your new issue as comment or even label, and sometimes we need some clarification and feedback, please be patient.
