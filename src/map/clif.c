@@ -10303,7 +10303,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 		status_change_clear_onChangeMap(&sd->bl, &sd->sc);
 		map_iwall_get(sd); // Updates Walls Info on this Map to Client
-		status_calc_pc(sd, SCO_NONE); // Some conditions are map-dependent so we must recalculate
+		status_calc_pc(sd, sd->state.autotrade ? SCO_FIRST : SCO_NONE); // Some conditions are map-dependent so we must recalculate
 
 #ifdef VIP_ENABLE
 		if (!sd->state.connect_new &&

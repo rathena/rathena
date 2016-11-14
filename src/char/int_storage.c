@@ -64,6 +64,22 @@ const char *inter_premiumStorage_getTableName(uint8 id) {
 }
 
 /**
+* Get printable name of storage
+* @param id Storage ID
+* @return printable name
+**/
+const char *inter_premiumStorage_getPrintableName(uint8 id) {
+	if (interserv_config.storages && interserv_config.storage_count) {
+		int i;
+		for (i = 0; i < interserv_config.storage_count; i++) {
+			if (&interserv_config.storages[i] && interserv_config.storages[i].id == id)
+				return interserv_config.storages[i].name;
+		}
+	}
+	return "Storage";
+}
+
+/**
  * Save inventory entries to SQL
  * @param char_id: Character ID to save
  * @param p: Inventory entries

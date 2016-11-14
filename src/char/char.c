@@ -537,7 +537,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 			selectoption = "char_id";
 			break;
 		case TABLE_STORAGE:
-			printname = "Storage";
+			printname = inter_premiumStorage_getPrintableName(stor_id);
 			tablename = inter_premiumStorage_getTableName(stor_id);
 			selectoption = "account_id";
 			break;
@@ -826,7 +826,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 		memcpy(&storage[i], &item, sizeof(item));
 
 	p->amount = i;
-	ShowInfo("Loaded %s (%d) data from table %s for %s: %d (total: %d)\n", printname, p->stor_id, tablename, selectoption, id, p->amount);
+	ShowInfo("Loaded %s data from table %s for %s: %d (total: %d)\n", printname, tablename, selectoption, id, p->amount);
 
 	SqlStmt_FreeResult(stmt);
 	SqlStmt_Free(stmt);
