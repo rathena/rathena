@@ -8,8 +8,6 @@ struct s_storage;
 
 void inter_storage_sql_init(void);
 void inter_storage_sql_final(void);
-void inter_storage_delete(uint32 account_id);
-void inter_guild_storage_delete(int guild_id);
 
 bool inter_premiumStorage_exists(uint8 id);
 int inter_premiumStorage_getMax(uint8 id);

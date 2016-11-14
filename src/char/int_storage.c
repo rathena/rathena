@@ -184,19 +184,6 @@ void inter_storage_sql_final(void)
 	return;
 }
 
-// Delete char storage
-void inter_storage_delete(uint32 account_id)
-{
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id`='%d'", schema_config.storage_db, account_id) )
-		Sql_ShowDebug(sql_handle);
-}
-
-void inter_guild_storage_delete(int guild_id)
-{
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id`='%d'", schema_config.guild_storage_db, guild_id) )
-		Sql_ShowDebug(sql_handle);
-}
-
 //---------------------------------------------------------
 // packet from map server
 
