@@ -10,8 +10,7 @@
 
 struct Channel;
 struct item;
-struct storage_data;
-struct guild_storage;
+struct s_storage;
 //#include "map.h"
 struct block_list;
 struct unit_data;
@@ -617,7 +616,7 @@ void clif_tradecompleted(struct map_session_data* sd, int fail);
 void clif_tradeundo(struct map_session_data* sd);
 
 // storage
-void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length);
+void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length, const char *storename);
 void clif_updatestorageamount(struct map_session_data* sd, int amount, int max_amount);
 void clif_storageitemadded(struct map_session_data* sd, struct item* i, int index, int amount);
 void clif_storageitemremoved(struct map_session_data* sd, int index, int amount);

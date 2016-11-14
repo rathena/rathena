@@ -643,7 +643,7 @@ int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char 
 		j = pc_bound_chk(sd,BOUND_PARTY,idxlist);
 
 		for(i = 0; i < j; i++)
-			pc_delitem(sd,idxlist[i],sd->status.inventory[idxlist[i]].amount,0,1,LOG_TYPE_BOUND_REMOVAL);
+			pc_delitem(sd,idxlist[i],sd->inventory.u.items_inventory[idxlist[i]].amount,0,1,LOG_TYPE_BOUND_REMOVAL);
 #endif
 
 		sd->status.party_id = 0;
