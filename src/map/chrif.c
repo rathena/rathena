@@ -1198,9 +1198,9 @@ int chrif_updatefamelist(struct map_session_data* sd) {
 	chrif_check(-1);
 
 	switch(sd->class_ & MAPID_UPPERMASK) {
-		case MAPID_BLACKSMITH: type = 1; break;
-		case MAPID_ALCHEMIST:  type = 2; break;
-		case MAPID_TAEKWON:    type = 3; break;
+		case MAPID_BLACKSMITH: type = RANK_BLACKSMITH; break;
+		case MAPID_ALCHEMIST:  type = RANK_ALCHEMIST; break;
+		case MAPID_TAEKWON:    type = RANK_TAEKWON; break;
 		default:
 			return 0;
 	}
@@ -1272,9 +1272,9 @@ int chrif_updatefamelist_ack(int fd) {
 	uint8 index;
 
 	switch (RFIFOB(fd,2)) {
-		case 1: list = smith_fame_list;   break;
-		case 2: list = chemist_fame_list; break;
-		case 3: list = taekwon_fame_list; break;
+		case RANK_BLACKSMITH:	list = smith_fame_list;   break;
+		case RANK_ALCHEMIST:	list = chemist_fame_list; break;
+		case RANK_TAEKWON:		list = taekwon_fame_list; break;
 		default: return 0;
 	}
 

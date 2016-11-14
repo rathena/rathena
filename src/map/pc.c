@@ -393,16 +393,19 @@ int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
 */
 void pc_addfame(struct map_session_data *sd,int count)
 {
-	int ranktype=-1;
+	enum e_rank ranktype;
 	nullpo_retv(sd);
 	sd->status.fame += count;
 	if(sd->status.fame > MAX_FAME)
 		sd->status.fame = MAX_FAME;
 
 	switch(sd->class_&MAPID_UPPERMASK){
-		case MAPID_BLACKSMITH:	ranktype = 0; break;
-		case MAPID_ALCHEMIST:	ranktype = 1; break;
-		case MAPID_TAEKWON:		ranktype = 2; break;
+		case MAPID_BLACKSMITH:	ranktype = RANK_BLACKSMITH; break;
+		case MAPID_ALCHEMIST:	ranktype = RANK_ALCHEMIST; break;
+		case MAPID_TAEKWON:		ranktype = RANK_TAEKWON; break;
+		default:
+			ShowWarning( "pc_addfame: Trying to add fame to class '%s'(%d).\n", job_name(sd->class_), sd->class_ );
+			return;
 	}
 
 	clif_update_rankingpoint(sd,ranktype,count);

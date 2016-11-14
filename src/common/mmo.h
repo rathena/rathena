@@ -847,6 +847,13 @@ enum e_party_member_withdraw {
 	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< TODO: Cannot be kicked
 };
 
+enum e_rank {
+	RANK_BLACKSMITH = 0,
+	RANK_ALCHEMIST = 1,
+	RANK_TAEKWON = 2,
+	RANK_KILLER = 3
+};
+
 // Sanity checks...
 #if MAX_ZENY > INT_MAX
 #error MAX_ZENY is too big
