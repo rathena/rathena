@@ -578,8 +578,9 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 
 	result = sConnect(fd, (struct sockaddr *)(&remote_address), sizeof(struct sockaddr_in));
 
-	if( result == SOCKET_ERROR ) {
-		// That is the error we intend, because we want to use a timeout
+	// Only enter if a socket error occurred
+	while( result == SOCKET_ERROR ) {
+		// Specially handle the error number for connection attempts that would block, because we want to use a timeout
 		if( sErrno == S_EWOULDBLOCK ){
 			fd_set writeSet;
 			struct timeval tv;
@@ -590,30 +591,19 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 			tv.tv_sec = timeout;
 			tv.tv_usec = 0;
 
-			// Try to find out if the socket is writeable yet(within the timeout)
-			if( sSelect(0, NULL, &writeSet, NULL, &tv) == 0 ){
-				// Our connection attempt timed out
-				if( !silent )
-					ShowError("make_connection: connect failed because of a timeout (socket #%d)!\n", fd); // No socket error to report here
-				do_close(fd);
-				return -1;
-			}else{
-				// Check if the socket is writeable
-				if( sFD_ISSET(fd,&writeSet) == 0 ){
-					if( !silent )
-						ShowError("make_connection: connect failed (socket #%d, %s)!\n", fd, error_msg());
-					do_close(fd);
-					return -1;
-				}
+			// Try to find out if the socket is writeable yet(within the timeout) and check if it is really writeable afterwards
+			if( sSelect(0, NULL, &writeSet, NULL, &tv) != 0 && sFD_ISSET(fd, &writeSet) != 0 ){
 				// Our socket is writeable now => we have connected successfully
+				break;
 			}
-		}else{
-			// All other errors should be reported immediately
-			if( !silent )
-				ShowError("make_connection: connect failed (socket #%d, %s)!\n", fd, error_msg());
-			do_close(fd);
-			return -1;
+			// Our connection attempt timed out or the socket was not writeable
 		}
+
+		if( !silent )
+			ShowError("make_connection: connect failed (socket #%d, %s)!\n", fd, error_msg());
+
+		do_close(fd);
+		return -1;
 	}
 	// Keep the socket in non-blocking mode, since we would set it to non-blocking here on unix. [Lemongrass]
 #else
