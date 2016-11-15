@@ -3177,6 +3177,10 @@
 	export_constant(CARD0_CREATE);
 	export_constant(CARD0_PET);
 
+	export_constant(STOR_MODE_NONE);
+	export_constant(STOR_MODE_GET);
+	export_constant(STOR_MODE_PUT);
+
 	#undef export_constant
 
 #endif /* _SCRIPT_CONSTANTS_H_ */

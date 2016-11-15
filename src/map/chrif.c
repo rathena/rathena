@@ -300,9 +300,16 @@ int chrif_save(struct map_session_data *sd, int flag) {
 
 	chrif_bsdata_save(sd, (flag && (flag != 3)));
 
+	if (sd->state.storage_flag == 1)
+		intif_storage_save(sd,&sd->storage);
+	intif_storage_save(sd,&sd->inventory);
+	intif_storage_save(sd,&sd->cart);
+
 	//For data sync
 	if (sd->state.storage_flag == 2)
-		gstorage_storagesave(sd->status.account_id, sd->status.guild_id, flag);
+		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
+	if (&sd->premiumStorage && sd->premiumStorage.dirty)
+		intif_storage_save(sd, &sd->premiumStorage);
 
 	if (flag)
 		sd->state.storage_flag = 0; //Force close it.
@@ -1042,14 +1049,14 @@ int chrif_divorceack(uint32 char_id, int partner_id) {
 	if( ( sd = map_charid2sd(char_id) ) != NULL && sd->status.partner_id == partner_id ) {
 		sd->status.partner_id = 0;
 		for(i = 0; i < MAX_INVENTORY; i++)
-			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
+			if (sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_M || sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_F)
 				pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
 	if( ( sd = map_charid2sd(partner_id) ) != NULL && sd->status.partner_id == char_id ) {
 		sd->status.partner_id = 0;
 		for(i = 0; i < MAX_INVENTORY; i++)
-			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
+			if (sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_M || sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_F)
 				pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
@@ -1200,9 +1207,9 @@ int chrif_updatefamelist(struct map_session_data* sd) {
 	chrif_check(-1);
 
 	switch(sd->class_ & MAPID_UPPERMASK) {
-		case MAPID_BLACKSMITH: type = 1; break;
-		case MAPID_ALCHEMIST:  type = 2; break;
-		case MAPID_TAEKWON:    type = 3; break;
+		case MAPID_BLACKSMITH: type = RANK_BLACKSMITH; break;
+		case MAPID_ALCHEMIST:  type = RANK_ALCHEMIST; break;
+		case MAPID_TAEKWON:    type = RANK_TAEKWON; break;
 		default:
 			return 0;
 	}
@@ -1274,9 +1281,9 @@ int chrif_updatefamelist_ack(int fd) {
 	uint8 index;
 
 	switch (RFIFOB(fd,2)) {
-		case 1: list = smith_fame_list;   break;
-		case 2: list = chemist_fame_list; break;
-		case 3: list = taekwon_fame_list; break;
+		case RANK_BLACKSMITH:	list = smith_fame_list;   break;
+		case RANK_ALCHEMIST:	list = chemist_fame_list; break;
+		case RANK_TAEKWON:		list = taekwon_fame_list; break;
 		default: return 0;
 	}
 
@@ -1599,10 +1606,10 @@ void chrif_parse_ack_vipActive(int fd) {
 			sd->vip.enabled = 1;
 			sd->vip.time = vip_time;
 			// Increase storage size for VIP.
-			sd->storage_size = battle_config.vip_storage_increase + MIN_STORAGE;
-			if (sd->storage_size > MAX_STORAGE) {
+			sd->storage.max_amount = battle_config.vip_storage_increase + MIN_STORAGE;
+			if (sd->storage.max_amount > MAX_STORAGE) {
 				ShowError("intif_parse_ack_vipActive: Storage size for player %s (%d:%d) is larger than MAX_STORAGE. Storage size has been set to MAX_STORAGE.\n", sd->status.name, sd->status.account_id, sd->status.char_id);
-				sd->storage_size = MAX_STORAGE;
+				sd->storage.max_amount = MAX_STORAGE;
 			}
 			// Magic Stone requirement avoidance for VIP.
 			if (battle_config.vip_gemstone)
@@ -1610,7 +1617,7 @@ void chrif_parse_ack_vipActive(int fd) {
 		} else if (sd->vip.enabled) {
 			sd->vip.enabled = 0;
 			sd->vip.time = 0;
-			sd->storage_size = MIN_STORAGE;
+			sd->storage.max_amount = MIN_STORAGE;
 			sd->special_state.no_gemstone = 0;
 			clif_displaymessage(sd->fd,msg_txt(sd,438));
 		}
@@ -1933,19 +1940,6 @@ int chrif_removefriend(uint32 char_id, int friend_id) {
 	return 0;
 }
 
-int chrif_send_report(char* buf, int len) {
-
-#ifndef STATS_OPT_OUT
-	chrif_check(-1);
-	WFIFOHEAD(char_fd,len + 2);
-	WFIFOW(char_fd,0) = 0x3008;
-	memcpy(WFIFOP(char_fd,2), buf, len);
-	WFIFOSET(char_fd,len + 2);
-	flush_fifo(char_fd); /* ensure it's sent now. */
-#endif
-	return 0;
-}
-
 /**
  * @see DBApply
  */
@@ -1990,8 +1984,13 @@ void do_final_chrif(void) {
  *------------------------------------------*/
 void do_init_chrif(void) {
 	if(sizeof(struct mmo_charstatus) > 0xFFFF){
-		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF) \n",
+		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF)\n",
 			sizeof(struct mmo_charstatus));
+		exit(EXIT_FAILURE);
+	}
+
+	if (sizeof(struct s_storage) > 0xFFFF) {
+		ShowError("s_storage size = %d is too big to be transmitted. (must be below 0xFFFF)\n", sizeof(struct s_storage));
 		exit(EXIT_FAILURE);
 	}
 

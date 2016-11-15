@@ -2077,7 +2077,8 @@ amatsu,189,166,5	script	Kouji#ama	764,{
 		mes "A fox is following me!";
 		mes "If he doesn't leave when I scream and shout!";
 		mes "The North Shrine Priest should help me out~";
-		changequest 8132,8133;
+		if (isbegin_quest(8132) == 1)
+			changequest 8132,8133;
 	}
 	else if (event_amatsu == 4) {
 		mes "Priest, priest~";

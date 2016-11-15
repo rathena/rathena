@@ -2071,8 +2071,6 @@ int map_quit(struct map_session_data *sd) {
 	if (sd->ed) // Remove effects here rather than unit_remove_map_pc so we don't clear on Teleport/map change.
 		elemental_clean_effect(sd->ed);
 
-	if( sd->state.storage_flag == 1 ) sd->state.storage_flag = 0; // No need to Double Save Storage on Quit.
-
 	if (sd->state.permanent_speed == 1) sd->state.permanent_speed = 0; // Remove lock so speed is set back to normal at login.
 
 	if( map[sd->bl.m].instance_id )
@@ -4660,6 +4658,9 @@ int do_init(int argc, char *argv[])
 
 	rnd_init();
 	map_config_read(MAP_CONF_NAME);
+
+	if (save_settings == CHARSAVE_NONE)
+		ShowWarning("Value of 'save_settings' is not set, player's data only will be saved every 'autosave_time' (%d seconds).\n", autosave_interval/1000);
 
 	// loads npcs
 	map_reloadnpc(false);

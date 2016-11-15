@@ -556,8 +556,8 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 
 		//Delete egg from inventory. [Skotlex]
 		for (i = 0; i < MAX_INVENTORY; i++) {
-			if(sd->status.inventory[i].card[0] == CARD0_PET &&
-				p->pet_id == MakeDWord(sd->status.inventory[i].card[1], sd->status.inventory[i].card[2]))
+			if(sd->inventory.u.items_inventory[i].card[0] == CARD0_PET &&
+				p->pet_id == MakeDWord(sd->inventory.u.items_inventory[i].card[1], sd->inventory.u.items_inventory[i].card[2]))
 				break;
 		}
 
@@ -601,8 +601,8 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 	if(egg_index < 0 || egg_index >= MAX_INVENTORY)
 		return 0; //Forged packet!
 
-	if(sd->status.inventory[egg_index].card[0] == CARD0_PET)
-		intif_request_petdata(sd->status.account_id, sd->status.char_id, MakeDWord(sd->status.inventory[egg_index].card[1], sd->status.inventory[egg_index].card[2]) );
+	if(sd->inventory.u.items_inventory[egg_index].card[0] == CARD0_PET)
+		intif_request_petdata(sd->status.account_id, sd->status.char_id, MakeDWord(sd->inventory.u.items_inventory[egg_index].card[1], sd->inventory.u.items_inventory[egg_index].card[2]) );
 	else
 		ShowError("wrong egg item inventory %d\n",egg_index);
 
@@ -861,10 +861,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 
 	pd = sd->pd;
 
-	if (!pd)
-		return 1;
-
-	nameid = sd->status.inventory[index].nameid;
+	nameid = sd->inventory.u.items_inventory[index].nameid;
 
 	if(pd->petDB->AcceID == 0 || nameid != pd->petDB->AcceID || pd->pet.equip != 0) {
 		clif_equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
