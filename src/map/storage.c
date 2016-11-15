@@ -441,22 +441,57 @@ void storage_storagegettocart(struct map_session_data* sd, struct s_storage *sto
 	}
 }
 
-
 /**
- * Make player close his storage
- * @author : [massdriller] / modified by [Valaris]
- * @param sd : player
+ * Request to save storage
+ * @param sd: Player who has the storage
  */
-void storage_storageclose(struct map_session_data* sd)
+void storage_storagesave(struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	clif_storageclose(sd);
+	if (!&sd->storage)
+		return;
 
-	if (save_settings&CHARSAVE_STORAGE)
-		chrif_save(sd,0);
+	intif_storage_save(sd, &sd->storage);
+}
 
-	sd->state.storage_flag = 0;
+/**
+ * Ack of storage has been saved
+ * @param sd: Player who has the storage
+ */
+void storage_storagesaved(struct map_session_data *sd)
+{
+	if (!sd)
+		return;
+
+	if (&sd->storage)
+		sd->storage.dirty = false;
+	if (sd->state.storage_flag == 1) {
+		sd->state.storage_flag = 0;
+		clif_storageclose(sd);
+	}
+}
+
+/**
+ * Make player close his storage
+ * @param sd: Player who has the storage
+ * @author [massdriller] / modified by [Valaris]
+ */
+void storage_storageclose(struct map_session_data *sd)
+{
+	nullpo_retv(sd);
+
+	if (!&sd->storage)
+		return;
+
+	if (sd->storage.dirty) {
+		intif_storage_save(sd, &sd->storage);
+		if (sd->state.storage_flag == 1) {
+			sd->state.storage_flag = 0;
+			clif_storageclose(sd);
+		}
+	} else 
+		storage_storagesaved(sd);
 }
 
 /**
@@ -471,10 +506,10 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
 {
 	nullpo_retv(sd);
 
-	if (save_settings&CHARSAVE_STORAGE)
-		chrif_save(sd,0);
+	if (!&sd->storage)
+		return;
 
-	sd->state.storage_flag = 0;
+	intif_storage_save(sd, &sd->storage);
 }
 
 /**

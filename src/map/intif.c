@@ -3162,7 +3162,9 @@ static bool intif_parse_StorageReceived(int fd)
 	p = (struct s_storage *)RFIFOP(fd,10);
 
 	switch (type) { 
-		case TABLE_INVENTORY: stor = &sd->inventory; break;
+		case TABLE_INVENTORY:
+			stor = &sd->inventory;
+			break;
 		case TABLE_STORAGE:
 			if (p->stor_id == 0)
 				stor = &sd->storage;
@@ -3172,7 +3174,8 @@ static bool intif_parse_StorageReceived(int fd)
 		case TABLE_CART:
 			stor = &sd->cart;
 			break;
-		default: return false;
+		default:
+			return false;
 	}
 
 	if (stor->stor_id == p->stor_id) {

@@ -299,7 +299,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 
 	chrif_bsdata_save(sd, (flag && (flag != 3)));
 
-	if (sd->state.storage_flag == 1)
+	if (&sd->storage && sd->storage.dirty)
 		intif_storage_save(sd,&sd->storage);
 	intif_storage_save(sd,&sd->inventory);
 	intif_storage_save(sd,&sd->cart);
