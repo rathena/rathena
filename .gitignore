@@ -30,6 +30,7 @@ Thumbs.db
 /config.log
 /config.status
 /core
+/enc_temp_folder
 /ipch
 /login-server
 /Makefile
