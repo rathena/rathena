@@ -501,7 +501,6 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- mes: message to send
 	desc:
 		- Broadcasts a message to all map-servs connected to this char-serv
-		- NB carefull (also using cmd=3000 rAthena_report but encapsulate it into cmd 3008 for map-char)
 
 
 0x3001
@@ -2940,14 +2939,3 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- count
 	desc:
 		- Stores bonus_script data(s) to the table
-
-0x3008
-	Type: ZA
-	Structure: <cmd>.W <buf>.?B
-	index: 0,2
-	len: variable: 2+len
-	parameter:
-		- cmd : packet identification (0x3008)
-		- buf
-	desc:
-		- chrif_send_report
