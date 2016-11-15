@@ -29,8 +29,8 @@ int intif_wis_message_to_gm(char *Wisp_name, int permission, char *mes);
 int intif_saveregistry(struct map_session_data *sd);
 int intif_request_registry(struct map_session_data *sd, int flag);
 
-int intif_request_guild_storage(uint32 account_id, int guild_id);
-int intif_send_guild_storage(uint32 account_id, struct guild_storage *gstor);
+bool intif_request_guild_storage(uint32 account_id, int guild_id);
+bool intif_send_guild_storage(uint32 account_id, struct s_storage *gstor);
 
 int intif_create_party(struct party_member *member,char *name,int item,int item2);
 int intif_request_partyinfo(int party_id, uint32 char_id);
@@ -109,6 +109,10 @@ int intif_elemental_delete(int ele_id);
 int intif_elemental_save(struct s_elemental *ele);
 
 int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char type);
+
+// STORAGE
+bool intif_storage_request(struct map_session_data *sd, enum storage_type type, uint8 stor_id, uint8 mode);
+bool intif_storage_save(struct map_session_data *sd, struct s_storage *stor);
 
 int CheckForCharServer(void);
 

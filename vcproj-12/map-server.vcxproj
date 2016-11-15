@@ -286,6 +286,7 @@
     <Copy SourceFiles="..\conf\import-tmpl\battle_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\battle_conf.txt')" />
     <Copy SourceFiles="..\conf\import-tmpl\char_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\char_conf.txt')" />
     <Copy SourceFiles="..\conf\import-tmpl\inter_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\inter_conf.txt')" />
+    <Copy SourceFiles="..\conf\import-tmpl\inter_server.conf" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\inter_server.conf')" />
     <Copy SourceFiles="..\conf\import-tmpl\log_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\log_conf.txt')" />
     <Copy SourceFiles="..\conf\import-tmpl\login_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\login_conf.txt')" />
     <Copy SourceFiles="..\conf\import-tmpl\map_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\map_conf.txt')" />
