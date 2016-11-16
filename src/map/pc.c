@@ -8542,6 +8542,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	pc_equiplookall(sd);
 	pc_show_questinfo(sd);
 
+	chrif_save(sd, 0);
 	//if you were previously famous, not anymore.
 	if (fame_flag) {
 		chrif_save(sd,0);
