@@ -911,7 +911,6 @@ void guild_retrieveitembound(uint32 char_id, uint32 account_id, int guild_id) {
 			struct guild *g = guild_search(guild_id);
 			int i;
 			if (stor && stor->status) { //Someone is in guild storage, close them
-				int i;
 				for (i = 0; i < g->max_member; i++) {
 					TBL_PC *pl_sd = g->member[i].sd;
 					if (pl_sd && pl_sd->state.storage_flag == 2)
