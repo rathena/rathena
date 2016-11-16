@@ -6475,7 +6475,7 @@ BUILDIN_FUNC(countitem)
 	uint16 size, count = 0;
 	struct item *items;
 	TBL_PC *sd = NULL;
-	struct s_storage *gstor;
+	struct s_storage *gstor = NULL;
 
 	if( command[strlen(command)-1] == '2' ) {
 		i = 1;
