@@ -9,9 +9,9 @@
 //#include "../common/mmo.h"
 
 struct Channel;
+struct clan;
 struct item;
-struct storage_data;
-struct guild_storage;
+struct s_storage;
 //#include "map.h"
 struct block_list;
 struct unit_data;
@@ -203,6 +203,8 @@ typedef enum send_target {
 	BG_SAMEMAP_WOS,
 	BG_AREA,
 	BG_AREA_WOS,
+
+	CLAN,				// Clan System
 } send_target;
 
 typedef enum broadcast_flags {
@@ -619,7 +621,7 @@ void clif_tradecompleted(struct map_session_data* sd, int fail);
 void clif_tradeundo(struct map_session_data* sd);
 
 // storage
-void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length);
+void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length, const char *storename);
 void clif_updatestorageamount(struct map_session_data* sd, int amount, int max_amount);
 void clif_storageitemadded(struct map_session_data* sd, struct item* i, int index, int amount);
 void clif_storageitemremoved(struct map_session_data* sd, int index, int amount);
@@ -981,6 +983,12 @@ void clif_spiritcharm(struct map_session_data *sd);
 
 void clif_snap( struct block_list *bl, short x, short y );
 void clif_monster_hp_bar( struct mob_data* md, int fd );
+
+// Clan System
+void clif_clan_basicinfo( struct map_session_data *sd );
+void clif_clan_message(struct clan *clan,const char *mes,int len);
+void clif_clan_onlinecount( struct clan* clan );
+void clif_clan_leave( struct map_session_data* sd );
 
 /**
  * Color Table

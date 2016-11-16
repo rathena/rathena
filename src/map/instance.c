@@ -816,17 +816,18 @@ static bool instance_db_free_sub(struct instance_db *db);
 static bool instance_readdb_sub(char* str[], int columns, int current)
 {
 	uint8 i;
-	int id = atoi(str[0]);
+	char *ptr;
+	int id = strtol(str[0], &ptr, 10);
 	struct instance_db *db;
 	bool isNew = false;
 
-	if (!id || id >  USHRT_MAX) {
-		ShowError("instance_readdb_sub: Cannot add instance with ID '%d'. Valid ID is 1 ~ %d.\n", id, USHRT_MAX);
+	if (!id || id >  USHRT_MAX || *ptr) {
+		ShowError("instance_readdb_sub: Cannot add instance with ID '%d'. Valid IDs are 1 ~ %d, skipping...\n", id, USHRT_MAX);
 		return false;
 	}
 
 	if (mapindex_name2id(str[4]) == 0) {
-		ShowError("instance_readdb_sub: Invalid map '%s' as entrance map.\n", str[4]);
+		ShowError("instance_readdb_sub: Invalid map '%s' as entrance map, skipping...\n", str[4]);
 		return false;
 	}
 
@@ -836,8 +837,7 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 		db->name = StringBuf_Malloc();
 		db->enter.mapname = StringBuf_Malloc();
 		isNew = true;
-	}
-	else {
+	} else {
 		StringBuf_Clear(db->name);
 		StringBuf_Clear(db->enter.mapname);
 		if (db->maplist_count) {
@@ -849,11 +849,36 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 	}
 
 	StringBuf_AppendStr(db->name, str[1]);
-	db->limit = atoi(str[2]);
-	db->timeout = atoi(str[3]);
+
+	db->limit = strtol(str[2], &ptr, 10);
+	if (*ptr) {
+		ShowError("instance_readdb_sub: TimeLimit must be an integer value for instance '%d', skipping...\n", id);
+		instance_db_free_sub(db);
+		return false;
+	}
+
+	db->timeout = strtol(str[3], &ptr, 10);
+	if (*ptr) {
+		ShowError("instance_readdb_sub: IdleTimeOut must be an integer value for instance '%d', skipping...\n", id);
+		instance_db_free_sub(db);
+		return false;
+	}
+
 	StringBuf_AppendStr(db->enter.mapname, str[4]);
-	db->enter.x = atoi(str[5]);
-	db->enter.y = atoi(str[6]);
+
+	db->enter.x = (short)strtol(str[5], &ptr, 10);
+	if (*ptr) {
+		ShowError("instance_readdb_sub: EnterX must be an integer value for instance '%d', skipping...\n", id);
+		instance_db_free_sub(db);
+		return false;
+	}
+
+	db->enter.y = (short)strtol(str[6], &ptr, 10);
+	if (*ptr) {
+		ShowError("instance_readdb_sub: EnterY must be an integer value for instance '%d', skipping...\n", id);
+		instance_db_free_sub(db);
+		return false;
+	}
 
 	//Instance maps
 	for (i = 7; i < columns; i++) {

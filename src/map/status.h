@@ -779,6 +779,13 @@ typedef enum sc_type {
 	SC_GVG_SILENCE,
 	SC_GVG_BLIND,
 
+	SC_CLAN_INFO,
+	SC_SWORDCLAN,
+	SC_ARCWANDCLAN,
+	SC_GOLDENMACECLAN,
+	SC_CROSSBOWCLAN,
+	SC_JUMPINGCLAN,
+
 	SC_FALLEN_ANGEL,
 
 #ifdef RENEWAL
@@ -2273,6 +2280,8 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 #define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, SCB_ALL, opt)
 #define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, SCB_ALL, opt)
 
+bool status_calc_weight(struct map_session_data *sd, uint8 flag);
+bool status_calc_cart_weight(struct map_session_data *sd, uint8 flag);
 void status_calc_bl_(struct block_list *bl, enum scb_flag flag, enum e_status_calc_opt opt);
 int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt);
 void status_calc_pet_(struct pet_data* pd, enum e_status_calc_opt opt);

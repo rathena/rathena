@@ -45,7 +45,6 @@ int chmapif_parse_save_scdata(int fd);
 int chmapif_parse_keepalive(int fd);
 int chmapif_parse_reqauth(int fd, int id);
 int chmapif_parse_updmapip(int fd, int id);
-int chmapif_parse_fw_configstats(int fd);
 
 int chmapif_vipack(int mapfd, uint32 aid, uint32 vip_time, uint32 groupid, uint8 flag);
 int chmapif_parse_reqcharban(int fd);

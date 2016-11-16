@@ -1836,7 +1836,7 @@ void itemdb_reload(void) {
 	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		pc_setinventorydata(sd);
-		pc_check_available_item(sd); // Check for invalid(ated) items.
+		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
 		/* clear combo bonuses */
 		if( sd->combos.count ) {
 			aFree(sd->combos.bonus);
