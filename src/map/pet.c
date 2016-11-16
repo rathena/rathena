@@ -861,6 +861,9 @@ int pet_equipitem(struct map_session_data *sd,int index)
 
 	pd = sd->pd;
 
+	if (!pd)
+		return 1;
+
 	nameid = sd->inventory.u.items_inventory[index].nameid;
 
 	if(pd->petDB->AcceID == 0 || nameid != pd->petDB->AcceID || pd->pet.equip != 0) {
