@@ -18057,8 +18057,8 @@ void clif_clan_message(struct clan *clan,const char *mes,int len){
 	WBUFW(buf, 2) = len + 5 + NAME_LENGTH;
 	
 	// Offially the sender name should also be filled here, but it is not required by the client and since it's in the message too we do not fill it
-	//safestrncpy((char*)WBUFP(buf,4), sendername, NAME_LENGTH);
-	safestrncpy((char*)WBUFP(buf,4+NAME_LENGTH), mes, len+1);
+	//safestrncpy(WBUFCP(buf,4), sendername, NAME_LENGTH);
+	safestrncpy(WBUFCP(buf,4+NAME_LENGTH), mes, len+1);
 
 	if((sd = clan_getavailablesd(clan)) != NULL)
 		clif_send(buf, WBUFW(buf,2), &sd->bl, CLAN);
@@ -18077,7 +18077,7 @@ void clif_parse_clan_chat( int fd, struct map_session_data* sd ){
 	if( !clif_process_message(sd, false, name, message, output ) )
 		return;
 
-	clan_send_message( sd, (char*)RFIFOP(fd,4), RFIFOW(fd,2) - 4 );
+	clan_send_message( sd, RFIFOCP(fd,4), RFIFOW(fd,2) - 4 );
 #endif
 }
 
@@ -18110,12 +18110,12 @@ void clif_clan_basicinfo( struct map_session_data *sd ){
 	WFIFOW( fd, 0 ) = 0x98a;
 	WFIFOL( fd, 4 ) = clan->id;
 	offset = 8;
-	safestrncpy( (char*)WFIFOP( fd, offset ), clan->name, NAME_LENGTH );
+	safestrncpy( WFIFOCP( fd, offset ), clan->name, NAME_LENGTH );
 	offset += NAME_LENGTH;
-	safestrncpy( (char*)WFIFOP( fd, offset ), clan->master, NAME_LENGTH );
+	safestrncpy( WFIFOCP( fd, offset ), clan->master, NAME_LENGTH );
 	offset += NAME_LENGTH;
 	mapindex_getmapname_ext( clan->map, mapname );
-	safestrncpy( (char*)WFIFOP( fd, offset ), mapname, MAP_NAME_LENGTH_EXT );
+	safestrncpy( WFIFOCP( fd, offset ), mapname, MAP_NAME_LENGTH_EXT );
 	offset += MAP_NAME_LENGTH_EXT;
 
 	WFIFOB(fd,offset++) = clan_get_alliance_count(clan,0);
@@ -18124,7 +18124,7 @@ void clif_clan_basicinfo( struct map_session_data *sd ){
 	for( flag = 0; flag < 2; flag++ ){
 		for( i = 0; i < MAX_CLANALLIANCE; i++ ){
 			if( clan->alliance[i].clan_id > 0 && clan->alliance[i].opposition == flag ){
-				safestrncpy( (char*)WFIFOP( fd, offset ), clan->alliance[i].name, NAME_LENGTH );
+				safestrncpy( WFIFOCP( fd, offset ), clan->alliance[i].name, NAME_LENGTH );
 				offset += NAME_LENGTH;
 			}
 		}
