@@ -20378,9 +20378,9 @@ BUILDIN_FUNC(party_create)
 {
 	char party_name[NAME_LENGTH];
 	int item1 = 0, item2 = 0;
-	TBL_PC *sd;
+	TBL_PC *sd = NULL;
 
-	if( (!script_hasdata(st,3) && !(sd = script_rid2sd(st))) || (script_hasdata(st,3) && !(sd = map_charid2sd(script_getnum(st,3)))) ) {
+	if (!script_charid2sd(3, sd)) {
 		script_pushint(st,-1);
 		return SCRIPT_CMD_FAILURE;
 	}

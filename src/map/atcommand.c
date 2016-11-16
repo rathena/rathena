@@ -3478,7 +3478,6 @@ ACMD_FUNC(breakguild)
 		clif_displaymessage(fd, msg_txt(sd,252)); // You are not in a guild.
 		return -1;
 	}
-	return 0;
 }
 
 /**
