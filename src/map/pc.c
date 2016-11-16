@@ -20,6 +20,7 @@
 #include "channel.h"
 #include "chat.h"
 #include "chrif.h"
+#include "clan.h"
 #include "date.h" // is_day_of_*()
 #include "duel.h"
 #include "intif.h"
@@ -1412,6 +1413,8 @@ void pc_reg_received(struct map_session_data *sd)
 		party_member_joined(sd);
 	if (sd->status.guild_id)
 		guild_member_joined(sd);
+	if( sd->status.clan_id )
+		clan_member_joined(sd);
 
 	// pet
 	if (sd->status.pet_id > 0)

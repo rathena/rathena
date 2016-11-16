@@ -73,6 +73,8 @@ struct Schema_Config {
 	char acc_reg_str_table[DB_NAME_LEN];
 	char char_reg_str_table[DB_NAME_LEN];
 	char char_reg_num_table[DB_NAME_LEN];
+	char clan_table[DB_NAME_LEN];
+	char clan_alliance_table[DB_NAME_LEN];
 };
 extern struct Schema_Config schema_config;
 

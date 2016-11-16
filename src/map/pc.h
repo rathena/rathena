@@ -12,6 +12,7 @@
 #include "atcommand.h" // AtCommandType
 #include "battle.h" // battle_config
 #include "buyingstore.h"  // struct s_buyingstore
+#include "clan.h"
 #include "itemdb.h" // MAX_ITEMGROUP
 #include "script.h" // struct script_reg, struct script_regstr
 #include "searchstore.h"  // struct s_search_store_info
@@ -515,6 +516,8 @@ struct map_session_data {
 	short guild_x,guild_y; // For guildmate position display. [Skotlex] should be short [zzo]
 	int guildspy; // [Syrus22]
 	int partyspy; // [Syrus22]
+
+	struct clan *clan;
 
 	int vended_id;
 	int vender_id;

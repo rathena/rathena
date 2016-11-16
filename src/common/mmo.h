@@ -80,6 +80,8 @@
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
 #define DB_NAME_LEN 256 //max len of dbs
+#define MAX_CLAN 500
+#define MAX_CLANALLIANCE 6
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -439,7 +441,7 @@ struct mmo_charstatus {
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
 	short hair,hair_color,clothes_color,body;
-	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id;
+	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id,clan_id;
 	int fame;
 
 	// Mercenary Guilds Rank
@@ -878,6 +880,22 @@ enum e_rank {
 	RANK_ALCHEMIST = 1,
 	RANK_TAEKWON = 2,
 	RANK_KILLER = 3
+};
+
+struct clan_alliance {
+	int opposition;
+	int clan_id;
+	char name[NAME_LENGTH];
+};
+
+struct clan{
+	int id;
+	char name[NAME_LENGTH];
+	char master[NAME_LENGTH];
+	char map[MAP_NAME_LENGTH_EXT];
+	short max_member, connect_member;
+	struct map_session_data *members[MAX_CLAN];
+	struct clan_alliance alliance[MAX_CLANALLIANCE];
 };
 
 // Sanity checks...

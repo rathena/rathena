@@ -107,6 +107,11 @@ int intif_elemental_create(struct s_elemental *ele);
 int intif_elemental_request(int ele_id, uint32 char_id);
 int intif_elemental_delete(int ele_id);
 int intif_elemental_save(struct s_elemental *ele);
+// CLAN SYSTEM
+int intif_clan_requestclans();
+int intif_clan_message(int clan_id,uint32 account_id,const char *mes,int len);
+int intif_clan_member_joined( int clan_id );
+int intif_clan_member_left( int clan_id );
 
 int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char type);
 

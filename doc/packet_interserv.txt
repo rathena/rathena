@@ -1416,7 +1416,51 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	desc:
 		- Homunculus rename
 
+0x30A0:
+	Type: ZI
+	Structure: <cmd>.W
+	index: 0
+	len: 2
+	parameter:
+		- cmd : packet identification (0x30A0)
+	desc:
+		- Requests the loaded clans from the inter server
 
+0x30A1
+	Type: ZI
+	Structure: <cmd>.W <size>.W <clan id>.L <account id>.L <message>.?B
+	index: 0,2,4,8,12
+	len: variable: 12+message
+	parameter:
+		- cmd : packet identification (0x30A1)
+		- size
+		- clan id : the clan id the message is sent to
+		- account id : the account id of the sender
+		- message : the message to be sent
+	desc:
+		- Sends a clan message to the inter server to relay it to all other mapservers
+
+0x30A2:
+	Type: ZI
+	Structure: <cmd>.W <clan id>.L
+	index: 0,2
+	len: 6
+	parameter:
+		- cmd : packet identification (0x30A2)
+		- clan id : the clan id
+	desc:
+		- Notifies the inter server that a player has left the clan or disconnected
+
+0x30A3:
+	Type: ZI
+	Structure: <cmd>.W <clan id>.L
+	index: 0,2
+	len: 6
+	parameter:
+		- cmd : packet identification (0x30A3)
+		- clan id : the clan id
+	desc:
+		- Notifies the inter server that a player has joined the clan or connected
 
 0x3800:
 	Type: IZ
@@ -2255,6 +2299,42 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- flag: 1 Homunculus deleted
 	desc:
 		- Send homunculus deletion status
+
+0x38A0
+	Type: IZ
+	Structure: <cmd>.W <size>.W <clan structure>.?B * n
+	index: 0, 2, 4
+	len: variable: 4+clan*n
+	parameter:
+		- cmd : packet identification (0x38A0)
+		- size
+		- clan structure
+	desc:
+		- Send all loaded clans to the map server
+
+0x38A1
+	Type: IZ
+	Structure: <cmd>.W <size>.W <message>.?B
+	index: 0, 2, 4
+	len: variable: 4+message
+	parameter:
+		- cmd : packet identification (0x38A1)
+		- size
+		- message : the data of the clan chat message packet
+	desc:
+		- Sends a clan chat message to other map servers
+
+0x38A2
+	Type: IZ
+	Structure: <cmd>.W <clan id>.L <online count>.W
+	index: 0, 2, 6
+	len: 8
+	parameter:
+		- cmd : packet identification (0x38A2)
+		- clan id : the clan id of the clan that needs an update
+		- online count : the amount of currently connected players in the clan
+	desc:
+		- Updates the online clan member count for all other map servers
 
 ========================
 | 3.2 Char-Map Packets |

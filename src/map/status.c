@@ -1096,6 +1096,14 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_REUSE_STORMBLAST] = SI_REUSE_STORMBLAST;
 	StatusIconChangeTable[SC_ALL_RIDING_REUSE_LIMIT] = SI_ALL_RIDING_REUSE_LIMIT;
 
+	// Clan System
+	StatusIconChangeTable[SC_CLAN_INFO] = SI_CLAN_INFO;
+	StatusIconChangeTable[SC_SWORDCLAN] = SI_SWORDCLAN;
+	StatusIconChangeTable[SC_ARCWANDCLAN] = SI_ARCWANDCLAN;
+	StatusIconChangeTable[SC_GOLDENMACECLAN] = SI_GOLDENMACECLAN;
+	StatusIconChangeTable[SC_CROSSBOWCLAN] = SI_CROSSBOWCLAN;
+	StatusIconChangeTable[SC_JUMPINGCLAN] = SI_JUMPINGCLAN;
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
@@ -1227,6 +1235,14 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_TIME_ACCESSORY] |= SCB_NONE;
 	StatusChangeFlagTable[SC_MAGICAL_FEATHER] |= SCB_NONE;
 
+	// Clan System
+	StatusChangeFlagTable[SC_CLAN_INFO] |= SCB_NONE;
+	StatusChangeFlagTable[SC_SWORDCLAN] |= SCB_STR|SCB_VIT|SCB_MAXHP|SCB_MAXSP;
+	StatusChangeFlagTable[SC_ARCWANDCLAN] |= SCB_INT|SCB_DEX|SCB_MAXHP|SCB_MAXSP;
+	StatusChangeFlagTable[SC_GOLDENMACECLAN] |= SCB_LUK|SCB_INT|SCB_MAXHP|SCB_MAXSP;
+	StatusChangeFlagTable[SC_CROSSBOWCLAN] |= SCB_DEX|SCB_AGI|SCB_MAXHP|SCB_MAXSP;
+	StatusChangeFlagTable[SC_JUMPINGCLAN] |= SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK;
+
 #ifdef RENEWAL
 	// renewal EDP increases your weapon atk
 	StatusChangeFlagTable[SC_EDP] |= SCB_WATK;
@@ -1288,6 +1304,9 @@ void initChangeTables(void)
 	StatusDisplayType[SC_MAPLE_FALLS] = true;
 	StatusDisplayType[SC_TIME_ACCESSORY] = true;
 	StatusDisplayType[SC_MAGICAL_FEATHER] = true;
+
+	// Clans
+	StatusDisplayType[SC_CLAN_INFO] = true;
 
 	/* StatusChangeState (SCS_) NOMOVE */
 	StatusChangeStateTable[SC_ANKLE]				|= SCS_NOMOVE;
@@ -2890,6 +2909,14 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_MTF_MHP]->val1;
 			if(sc->data[SC_MARIONETTE])
 				bonus -= 1000;
+			if(sc->data[SC_SWORDCLAN])
+				bonus += 30;
+			if(sc->data[SC_ARCWANDCLAN])
+				bonus += 30;
+			if(sc->data[SC_GOLDENMACECLAN])
+				bonus += 30;
+			if(sc->data[SC_CROSSBOWCLAN])
+				bonus += 30;
 		}
 	} else if (type == STATUS_BONUS_RATE) {
 		struct status_change *sc = status_get_sc(bl);
@@ -3002,6 +3029,14 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 50;
 			if(sc->data[SC_MTF_MSP])
 				bonus += sc->data[SC_MTF_MSP]->val1;
+			if(sc->data[SC_SWORDCLAN])
+				bonus += 10;
+			if(sc->data[SC_ARCWANDCLAN])
+				bonus += 10;
+			if(sc->data[SC_GOLDENMACECLAN])
+				bonus += 10;
+			if(sc->data[SC_CROSSBOWCLAN])
+				bonus += 10;
 		}
 	} else if (type == STATUS_BONUS_RATE) {
 		struct status_change *sc = status_get_sc(bl);
@@ -5265,6 +5300,10 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		str -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
 		str -= sc->data[SC_KYOUGAKU]->val2;
+	if(sc->data[SC_SWORDCLAN])
+		str += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		str += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		str += str * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 
@@ -5331,6 +5370,10 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
 		agi -= sc->data[SC_KYOUGAKU]->val2;
+	if(sc->data[SC_CROSSBOWCLAN])
+		agi += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		agi += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		agi += agi * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 	if (sc->data[SC_ARCLOUSEDASH])
@@ -5387,6 +5430,10 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
 		vit -= sc->data[SC_KYOUGAKU]->val2;
+	if(sc->data[SC_SWORDCLAN])
+		vit += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		vit += 1;
 	if(sc->data[SC_STRIPARMOR] && bl->type != BL_PC)
 		vit -= vit * sc->data[SC_STRIPARMOR]->val2/100;
 	if(sc->data[SC_FULL_THROTTLE])
@@ -5457,6 +5504,12 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		int_ -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
 		int_ -= sc->data[SC_KYOUGAKU]->val2;
+	if(sc->data[SC_ARCWANDCLAN])
+		int_ += 1;
+	if(sc->data[SC_GOLDENMACECLAN])
+		int_ += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		int_ += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		int_ += int_ * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 
@@ -5528,7 +5581,12 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		dex -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
 		dex -= sc->data[SC_KYOUGAKU]->val2;
-
+	if(sc->data[SC_ARCWANDCLAN])
+		dex += 1;
+	if(sc->data[SC_CROSSBOWCLAN])
+		dex += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		dex += 1;
 	if(sc->data[SC__STRIPACCESSORY] && bl->type != BL_PC)
 		dex -= dex * sc->data[SC__STRIPACCESSORY]->val2 / 100;
 	if(sc->data[SC_MARSHOFABYSS])
@@ -5591,6 +5649,10 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 		luk -= luk * sc->data[SC__STRIPACCESSORY]->val2 / 100;
 	if(sc->data[SC_BANANA_BOMB])
 		luk -= 75;
+	if(sc->data[SC_GOLDENMACECLAN])
+		luk += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		luk += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		luk += luk * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 
@@ -9036,6 +9098,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_DODGE:
 		case SC_PUSH_CART:
 		case SC_SPRITEMABLE:
+		case SC_CLAN_INFO:
 			tick = -1;
 			break;
 
@@ -10661,6 +10724,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = (status->max_hp * (val1 * 10) / 100); // %Max HP to absorb
 			//val3 = 6 + val1; // Hits !TODO: Does it have hits too?
 			break;
+		case SC_SWORDCLAN:
+		case SC_ARCWANDCLAN:
+		case SC_GOLDENMACECLAN:
+		case SC_CROSSBOWCLAN:
+		case SC_JUMPINGCLAN:
+			tick = -1;
+			status_change_start(src,bl,SC_CLAN_INFO,10000,0,val2,0,0,-1,flag);
+			break;
 
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == -1 && StatusIconChangeTable[type] == SI_BLANK ) {
@@ -10718,6 +10789,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ITEMBOOST:
 		case SC_JP_EVENT04:
 		case SC_PUSH_CART:
+		case SC_SWORDCLAN:
+		case SC_ARCWANDCLAN:
+		case SC_GOLDENMACECLAN:
+		case SC_CROSSBOWCLAN:
+		case SC_JUMPINGCLAN:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting
@@ -10738,6 +10814,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WILD_STORM_OPTION:
 		case SC_UPHEAVAL_OPTION:
 		case SC_CIRCLE_OF_FIRE_OPTION:
+		case SC_CLAN_INFO:
 			val_flag |= 1|2;
 			break;
 		// Start |1|2|4 val_flag setting
@@ -10770,6 +10847,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		switch (type) {
 			case SC_ALL_RIDING:
 				dval1 = 1;
+				break;
+			case SC_CLAN_INFO:
+				dval1 = val1;
+				dval2 = val2;
+				dval3 = val3;
 				break;
 			default: /* All others: just copy val1 */
 				dval1 = val1;
@@ -11335,6 +11417,13 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_MAPLE_FALLS:
 			case SC_TIME_ACCESSORY:
 			case SC_MAGICAL_FEATHER:
+			// Clans
+			case SC_CLAN_INFO:
+			case SC_SWORDCLAN:
+			case SC_ARCWANDCLAN:
+			case SC_GOLDENMACECLAN:
+			case SC_CROSSBOWCLAN:
+			case SC_JUMPINGCLAN:
 				continue;
 			}
 		}
@@ -11361,6 +11450,13 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_MAPLE_FALLS:
 			case SC_TIME_ACCESSORY:
 			case SC_MAGICAL_FEATHER:
+			// Clans
+			case SC_CLAN_INFO:
+			case SC_SWORDCLAN:
+			case SC_ARCWANDCLAN:
+			case SC_GOLDENMACECLAN:
+			case SC_CROSSBOWCLAN:
+			case SC_JUMPINGCLAN:
 				continue;
 			}
 		}
@@ -11912,6 +12008,13 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_VACUUM_EXTREME:
 			///< !CHECKME: Seems on official, there's delay before same target can be vacuumed in same area again [Cydh]
 			sc_start2(bl, bl, SC_VACUUM_EXTREME_POSTDELAY, 100, sce->val1, sce->val2, skill_get_time2(SO_VACUUM_EXTREME,sce->val1));
+			break;
+		case SC_SWORDCLAN:
+		case SC_ARCWANDCLAN:
+		case SC_GOLDENMACECLAN:
+		case SC_CROSSBOWCLAN:
+		case SC_JUMPINGCLAN:
+			status_change_end(bl,SC_CLAN_INFO,INVALID_TIMER);
 			break;
 	}
 
