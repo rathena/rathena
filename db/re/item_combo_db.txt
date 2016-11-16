@@ -414,17 +414,17 @@
 15090:18820:20721:22033,{ bonus2 bSubEle,Ele_Neutral,15; bonus bMaxHPrate,25; bonus bMaxSPrate,25; bonus bMatkRate,10; bonus3 bAutoSpellWhenHit,"WL_DRAINLIFE",3,1; }
 15116:20743:22046,{ bonus bMaxHPrate,25; bonus bMaxSPrate,25; bonus bSpeedAddRate,10; }
 15126:20788:22083,{ bonus bMaxHP,2000; bonus bNoCastCancel,1; bonus bFixedCastrate,-15-(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)); }
-15126:20788:22083:28380:28416,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; bonus2 bSkillAtk,"SU_CN_METEOR",100; }
+15126:20788:22083:28382:28416,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; bonus2 bSkillAtk,"SU_CN_METEOR",100; }
 15126:20788:22083:28380:28419,{ bonus bMaxHPrate,20; bonus bMaxSPrate,3; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",100; }
 15126:20788:22083:28381:28413,{ bonus bMaxHPrate,15; bonus bMaxSPrate,5; bonus bHealPower,10; skill "AL_HEAL",5,1; }
 15129:20789:22084,{ bonus bMaxHP,3000; bonus bNoCastCancel,1; bonus bFixedCastrate,-20-(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)); }
-15129:20789:22084:28380:28417,{ bonus bMaxHPrate,15; bonus bMaxSPrate,15; bonus2 bSkillAtk,"SU_CN_METEOR",150; }
+15129:20789:22084:28382:28417,{ bonus bMaxHPrate,15; bonus bMaxSPrate,15; bonus2 bSkillAtk,"SU_CN_METEOR",150; }
 15129:20789:22084:28380:28420,{ bonus bMaxHPrate,25; bonus bMaxSPrate,6; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",150; }
 15129:20789:22084:28381:28414,{ bonus bMaxHPrate,20; bonus bMaxSPrate,10; bonus bHealPower,20; skill "AL_HEAL",7,1; }
 15138:19026,{ bonus2 bSubRace,RC_Fish,(10+getequiprefinerycnt(EQI_ARMOR)); }
 15138:19026:20756:22059,{ bonus bMaxHP,1000; bonus bMaxSP,100; bonus2 bExpAddRace,RC_Fish,20; bonus2 bMagicAddRace,RC_Fish,50; bonus2 bSubEle,Ele_Water,50; }
 15156:20790:22085,{ bonus bMaxHP,4000; bonus bNoCastCancel,1; bonus bFixedCastrate,-25-(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)); }
-15156:20790:22085:28380:28418,{ bonus bMaxHPrate,20; bonus bMaxSPrate,20; bonus2 bSkillAtk,"SU_CN_METEOR",200; }
+15156:20790:22085:28382:28418,{ bonus bMaxHPrate,20; bonus bMaxSPrate,20; bonus2 bSkillAtk,"SU_CN_METEOR",200; }
 15156:20790:22085:28380:28421,{ bonus bMaxHPrate,30; bonus bMaxSPrate,9; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",200; }
 15156:20790:22085:28381:28415,{ bonus bMaxHPrate,25; bonus bMaxSPrate,15; bonus bHealPower,30; skill "AL_HEAL",9,1; }
 15181:28443:28444,{ bonus bAtk,20; bonus2 bSubEle,Ele_All,2; bonus2 bSubEle,Ele_Neutral,-2; }
