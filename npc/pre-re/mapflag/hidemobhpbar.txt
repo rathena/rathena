@@ -1,0 +1,13 @@
+//===== rAthena Script =======================================
+//= Mapflag: hidemobhpbar.
+//===== Description: =========================================
+//= Hide monster's HP bar (added in episode 14.2).
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Lemongrass]
+//============================================================
+
+// Guild Dungeons =============
+gld_dun01	mapflag	hidemobhpbar
+gld_dun02	mapflag	hidemobhpbar
+gld_dun03	mapflag	hidemobhpbar
+gld_dun04	mapflag	hidemobhpbar
