@@ -327,6 +327,7 @@
     <Copy SourceFiles="..\db\import-tmpl\item_stack.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\item_stack.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\item_trade.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\item_trade.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\item_randomopt_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\item_randomopt_db.txt')" />
+    <Copy SourceFiles="..\db\import-tmpl\item_randomopt_group.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\item_randomopt_group.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\job_basehpsp_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\job_basehpsp_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\job_db1.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\job_db1.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\job_db2.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\job_db2.txt')" />
@@ -342,6 +343,7 @@
     <Copy SourceFiles="..\db\import-tmpl\mob_avail.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_avail.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_chat_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_chat_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_db.txt')" />
+    <Copy SourceFiles="..\db\import-tmpl\mob_drop.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_drop.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_item_ratio.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_item_ratio.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_race2_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_race2_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\mob_random_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\mob_random_db.txt')" />
