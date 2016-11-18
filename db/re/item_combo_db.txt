@@ -523,8 +523,7 @@
 24090:24102:24103,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 20) bonus2 bResEff,Eff_Bleeding,10000; }
 24090:24104:24105:24106,{ bonus bDef,4; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 30) bonus2 bResEff,Eff_Stun,10000; }
 24090:24107:24108,{ bonus bDef,5; if (getequiprefinerycnt(EQI_SHADOW_SHIELD)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 20) bonus2 bResEff,Eff_Curse,10000; }
-24109:24110,{ bonus bNoCastCancel2,1; bonus bVariableCastrate,40-(getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)); }
-//The above should be 24109:24110/*:Caster Shadow Pendant*/,{ bonus bFixedCastrate,-(getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)+getequiprefinerycnt(EQI_SHADOW_ACC_R)); }
+24048:24109:24110,{ bonus bNoCastCancel2,1; bonus bVariableCastrate,40-(getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L)); }
 24111:24112:24113,{ bonus bNoCastCancel,1; bonus bUseSPrate,40-getequiprefinerycnt(EQI_SHADOW_SHIELD)-getequiprefinerycnt(EQI_SHADOW_ARMOR)-getequiprefinerycnt(EQI_SHADOW_SHOES); }
 24150:24151,{ bonus bAtkRate,1; if (getequiprefinerycnt(EQI_SHADOW_ACC_R)+getequiprefinerycnt(EQI_SHADOW_ACC_L) >= 15) bonus bNoSizeFix,1; }
 24152:24153,{ bonus bAtk,getequiprefinerycnt(EQI_SHADOW_WEAPON); if (getequiprefinerycnt(EQI_SHADOW_WEAPON)+getequiprefinerycnt(EQI_SHADOW_ACC_R) >= 15) bonus bUnbreakableWeapon,1; }
