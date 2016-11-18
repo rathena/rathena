@@ -9433,7 +9433,7 @@
 18505,Umbala_Spirit,Umbala Spirit,4,0,,0,,1,,0,0xFFFFFFFF,63,2,1,,30,0,675,{ bonus bMaxHPrate,1; bonus2 bAddMonsterDropItem,517,500; bonus2 bAddItemHealRate,517,25; /*Gold PC Room: bonus bAllStats,1;*/},{},{}
 18506,Hattah_Black,Hattah Black,4,12000,,4000,,2,,1,0xFFFFFFFF,63,2,769,,1,1,676,{ bonus bMaxHPrate,10; bonus bMaxSPrate,10; },{},{}
 18507,Elven_Ears_,Elven Ears,4,20,,100,,0,,1,0xFFFFFFFE,63,2,512,,70,0,73,{},{},{}
-18508,Garuda_Hat,Garuda Hat,4,20,,100,,4,,1,0xFFFFFFFE,63,2,256,,30,1,677,{ bonus bLuk,5; bonus bMdef,3; bonus2 bSubEle,Ele_Neutral,5; bonus2 bSubEle,Ele_Fire,5; bonus2 bSubEle,Ele_Water,5; bonus2 bSubEle,Ele_Wind,5; bonus2 bSubEle,Ele_Earth,5; bonus2 bSubEle,Ele_Dark,5; bonus2 bSubEle,Ele_Holy,5; bonus2 bSubEle,Ele_Ghost,5; bonus bHit,10; bonus bDelayRate,-5; .@r = getrefine(); if(.@r>=7) bonus2 bAddMonsterDropItem,522,100*(.@r-6); },{},{}
+18508,Garuda_Hat,Garuda Hat,4,20,,100,,4,,1,0xFFFFFFFE,63,2,256,,30,1,677,{ bonus bLuk,5; bonus bMdef,3; bonus2 bSubEle,Ele_All,5; bonus bHit,10; bonus bDelayRate,-5; .@r = getrefine(); if(.@r>=7) bonus2 bAddMonsterDropItem,522,100*(.@r-6); },{},{}
 18509,RWC2010_Indonesia,RWC2010 Indonesia,4,20,,100,,6,,1,0xFFFFFFFE,63,2,256,,15,1,678,{ bonus bLuk,5; bonus2 bSubRace,RC_Player,10; bonus2 bSubRace,RC_DemiHuman,10; bonus2 bAddItemHealRate,501,100; bonus2 bAddItemHealRate,504,100; bonus bCritical,10; bonus bAspd,1; bonus2 bAddClass,Class_All,3; bonus bMatkRate,3; },{},{}
 18510,Blood_Angel_Hair_Band,Blood Angel Hair Band,4,0,,0,,1,,0,0xFFFFFFFF,63,2,256,,60,0,679,{ bonus2 bSubRace,RC_Player,10; bonus2 bSubRace,RC_DemiHuman,10; },{},{}
 18511,Blood_Angel_Wing_Ear,Blood Angel Wing Ear,4,0,,0,,1,,0,0xFFFFFFFF,63,2,512,,60,0,680,{},{},{}
