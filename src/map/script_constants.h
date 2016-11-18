@@ -3220,6 +3220,9 @@
 	export_constant(MOBG_Red_Pouch_Of_Surprise);
 	export_constant(MOBG_ClassChange);
 
+	/* Item Random Option Group */
+	export_constant(RDMOPTG_None);
+
 	/* random option attributes */
 	export_constant(ROA_ID);
 	export_constant(ROA_VALUE);
