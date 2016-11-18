@@ -2113,7 +2113,7 @@
 2910,Bakonawa_Tattoo,Bakunawa Agimat Tattoo,4,20,,100,,0,,0,0xFFFFFFFF,63,2,136,,1,0,0,{ bonus2 bAddClass,Class_All,7; bonus bAspdRate,10; },{},{}
 2911,Bangungot_Tattoo,Bangungot Agimat Tattoo,4,20,,100,,0,,0,0xFFFFFFFF,63,2,136,,1,0,0,{ bonus bHealPower,4; bonus bHealPower2,7; },{},{}
 2912,Xylitol_2011,Xylitol 2011,4,20,,300,,0,,1,0xFFFFFFFF,63,2,136,,0,0,0,{},{},{}
-2913,Thief_Handcuff,Thief Handcuff,4,20,,1400,,0,,1,0xFFFFFFFF,63,2,136,,10,0,0,{},{},{}
+2913,Thief_Handcuff,Thief Handcuff,4,20,,1400,,0,,1,0xFFFFFFFF,63,2,136,,10,0,0,{ bonus bBaseAtk,5; },{},{}
 2914,Wizard_Left_Eye,Wizard Left Eye,4,20,,100,,1,,1,0x00CFDF80,63,2,136,,0,0,0,{ bonus bInt,4; bonus bMdef,3; },{},{}
 2915,Ettlang_Keepsake,Ettlang Keepsake,4,20,,50,,0,,0,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bMdef,10; },{},{}
 2916,Fairy_Wing,Fairy Wing,4,0,,10,,0,,0,0xFFFFFFFF,63,2,136,,90,0,0,{ skill "ECLAGE_RECALL",1; },{},{}
