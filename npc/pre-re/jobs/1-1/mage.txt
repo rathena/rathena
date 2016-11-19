@@ -87,7 +87,7 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 		}
 		if (job_magician_q == 0) {
 			mes "Wanna be a Mage, eh...?";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "Hey, look at you! You're kinda cute~! Not my type though...";
 			else {
 				mes "Oooh, you're such a hot babe~!";
@@ -232,7 +232,7 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 	case 2:
 		mes "[Mage Guildsman]";
 		mes "Wanna be a Mage, eh?";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "For a cutie like you, I'd be happy to explain the requirements!";
 		else
 			mes "I'd be happy to explain the requirements for a pretty girl like you!";

@@ -383,7 +383,7 @@ amatsu,243,202,3	script	Drama Teacher#ama	760,{
 	mes "Also, this town is the origin of";
 	mes "legendary play, 'White Dryad.' ";
 	next;
-	if (Sex) {
+	if (Sex == SEX_MALE) {
 		mes "[Garakame sensei]";
 		mes "If you know a girl who is";
 		mes "talented in acting, please";
@@ -531,7 +531,7 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 		mes "Nymph of cherry tree... What would";
 		mes "be her position in the play?^000000";
 		next;
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "^3355FFI would like to find";
 			mes "a person who is talented";
 			mes "in acting and help her until";

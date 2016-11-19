@@ -44,7 +44,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
   	if (!getpartnerid()) {
 		mes "Bwah hah hah~!";
 		mes "That look in your eyes~!";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Those are definitely the eyes";
 			mes "of a lonely male bachelor.";
 			mes "I'm almost 100 percent sure";
@@ -76,7 +76,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 	mes "I sense that you carry a";
 	mes "tiresome burden...";
 	mes "If I'm not wrong, you're";
-	if (Sex)
+	if (Sex == SEX_MALE)
 		mes "a married man, aren't you?";
 	else
 		mes "a married woman, aren't you?";
@@ -99,7 +99,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 	mes "At the end of the day, you and";
 	mes "your partner fight, and you feel";
 	mes "totally totally miserable.";
-	if (Sex)
+	if (Sex == SEX_MALE)
 		mes "...all because of HER.";
 	else
 		mes "...all because of HIM.";
@@ -123,7 +123,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 	mes "[Deviruchi]";
 	mes "*whispers*";
 	mes "^555555It's not like you're breaking^000000";
-	if (Sex) {
+	if (Sex == SEX_MALE) {
 		mes "^555555any promises, and it's not";
 		mes "like your wife will care if she";
 		mes "doesn't know... Don't you";
@@ -171,7 +171,7 @@ nif_in,190,112,5	script	Deviruchi#divorce	738,{
 		mes "[Deviruchi]";
 		mes "I understand. But if you think";
 		mes "about anything, think about";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "your wife's nagging, and";
 			mes "how great it would be to";
 			mes "finally free yourself of the";

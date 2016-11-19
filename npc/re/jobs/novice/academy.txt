@@ -5730,7 +5730,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 				mes "[Otter Samssoon]";
 				switch(.@style) {
 				case 1:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Play Dead' cut?";
 						mes "This looks neat and relaxed.. So popular style.";
 					} else {
@@ -5740,7 +5740,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 2:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Two Handed Sword Mastery' cut?";
 						mes "You... You know the famous D..? He has exactly the same style!";
 					} else {
@@ -5749,7 +5749,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 3:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Napalm Beat' cut?";
 						mes "It has well arranges hair line that makes feel charisma.";
 					} else {
@@ -5758,7 +5758,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 4:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Double Strafe' cut?";
 						mes "Natural hair is shaking by wind.. Clean and good feeling.";
 					} else {
@@ -5767,7 +5767,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 5:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Angelus' cut?";
 						mes "Calm and piety feeling.. Not boring style.";
 					} else {
@@ -5776,7 +5776,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 6:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Push Cart' cut?";
 						mes "Big Kar is motivated for this style with a romance of a man.";
 					} else {
@@ -5785,7 +5785,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 7:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Envenom' cut?";
 						mes "Tough style makes addicted.";
 					} else {
@@ -5795,7 +5795,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 8:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Bowling Bash' cut?";
 						mes "This style makes a nice guy to challenge.";
 						mes "Just a giving a glance can steal the heart.";
@@ -5805,7 +5805,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 9:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Venom Dust' cut?";
 						mes "This style has special ending line that looks fatal.";
 					} else {
@@ -5814,7 +5814,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 10:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Turn Undead' cut?";
 						mes "This style is like a cold city man who is strong enough to kill a monster.";
 					} else {
@@ -5823,7 +5823,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 11:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Dragonology' cut?";
 						mes "This style is intelligent style of mysterious dragon.";
 					} else {
@@ -5832,7 +5832,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 12:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Mace Mastery' cut?";
 						mes "Look fresh and look neat with wax treatment.";
 					} else {
@@ -5841,7 +5841,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 13:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Thunder Storm' cut?";
 						mes "This style has natural attractive perm which is like hitting by thunder storm.";
 					} else {
@@ -5850,7 +5850,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 14:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Encore' cut?";
 						mes "Rocker's favorite style.. Even the name itself..";
 					} else {
@@ -5859,7 +5859,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 15:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Grimtooth' cut?";
 						mes "The style with edge.";
 					} else {
@@ -5869,7 +5869,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 16:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Blitz Beat' cut?";
 						mes "It is the style my senior invented after he broke up with his girlfriends 5 times.";
 					} else {
@@ -5878,7 +5878,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 17:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Find Ore' cut?";
 						mes "This style seems to bring encounter or find unexpected things while walking on the street.";
 					} else {
@@ -5887,7 +5887,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 18:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Fire Pillar' cut?";
 						mes "Everyone used to have this hair style.. Which means that was a trend of an era.";
 					} else {
@@ -5896,7 +5896,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 					}
 					break;
 				case 19:
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "Oh my!!? 'Guillotine Fist'";
 						mes "It is like one-shot style.. Like a real man. Right?";
 					} else {
@@ -6035,7 +6035,7 @@ iz_ac01,69,36,3	script	Otter Samssoon#ac	4W_SAILOR,{
 	}
 
 L_cutin:
-	if (Sex) {
+	if (Sex == SEX_MALE) {
 		if (getarg(0) < 10)
 			cutin "hair_m_0"+getarg(0),4;
 		else
@@ -7136,7 +7136,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			mes "You're so cute! A ^ff0000Gunslinger^000000 who has true grit wield his weapons bringing justice in these wild times.";
 			next;
 			mes "[Lusa]";
-			if (Sex == 1)
+			if (Sex == SEX_MALE)
 				mes "Ya, know you remind me of my little brother, that varmint couldn't shoot the broadside of a barn.. at least not until I taught him.";
 			else
 				mes "Ya, know you remind me of my little sister, that scamp couldn't shoot the broadside of barn.. At least not until I taught her.";
@@ -8187,7 +8187,7 @@ iz_ac02,70,85,5	script	Arang#ac	4_F_TAEKWON,{
 				if (JobLevel >= 10) {
 					cutin "arang01.bmp", 0;
 					mes "[Arang]";
-					mes "It's time to choose your job? How about Taekwon "+(Sex ? "boy" : "girl")+"? You may be a nice adult like me.";
+					mes "It's time to choose your job? How about Taekwon "+(Sex == SEX_MALE ? "boy" : "girl")+"? You may be a nice adult like me.";
 					next;
 				}
 				while (1) {

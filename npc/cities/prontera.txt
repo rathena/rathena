@@ -469,7 +469,7 @@ prt_in,177,18,2	script	Marvin#pront	80,{
 	mes "Whether it's schmoozing with a member of the opposite sex, or battling monsters, I gotta say, it's all about ^333399skills^000000.";
 	next;
 	mes "[Marvin]";
-	if (Sex)
+	if (Sex == SEX_MALE)
 		mes "I can't help you much when it comes to the subject of talking to attractive women such as myself, but I can tell you a little more about skills that help in battle.";
 	else
 		mes "I don't really have any advice for skills when it comes to talking to a cute guy, but I can let you in on what I know about skills that help in battle.";

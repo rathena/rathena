@@ -276,7 +276,7 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 				mes ".........?";
 				next;
 				mes "[Busy-Looking Boy]";
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "Ack! You're that clumsy";
 					mes "dude who made me drop";
 				}
@@ -302,7 +302,7 @@ prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 			next;
 			select("Well, I, um...");
 			mes "[Busy-Looking Boy]";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Yeah... A real";
 				mes "man wouldn't have";
 				mes "ditched back then";
@@ -2259,7 +2259,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "sent this adventurer here";
 		mes "for a favor, it probably means";
 		mes "she trusts this person. Besides, we need somebody to carry out";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "this task for us. Why not him?";
 		else
 			mes "this task for us. Why not her?";

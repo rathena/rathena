@@ -47,8 +47,8 @@ OnZombieDead:
 	if ($@UNEASY_MOB>0) end;
 	set $UNEASY_DL,0;
 	set $UNEASY_H$,strcharinfo(0);
-	if (Sex==1) mapannounce "prontera","[Mother Mathana]: Brave "+$UNEASY_H$+" has just killed the last undead in Prontera!",0;
-	if (Sex==0) mapannounce "prontera","[Mother Mathana]: Lady "+$UNEASY_H$+" has just killed the last undead in Prontera!",0;
+	if (Sex==SEX_MALE) mapannounce "prontera","[Mother Mathana]: Brave "+$UNEASY_H$+" has just killed the last undead in Prontera!",0;
+	else mapannounce "prontera","[Mother Mathana]: Lady "+$UNEASY_H$+" has just killed the last undead in Prontera!",0;
 	set JobExp,JobExp+100;
 	set BaseExp,BaseExp+50;
 	end;
@@ -105,8 +105,8 @@ L_Undead_Walk:
 	mes "[Mother Mathana]";
 	mes "Our Church is going to thank you personally...";
 	next;
-	if (Sex==1) mapannounce "prontera","[Mother Mathana]: In the name of Odin we declare handsom "+$UNEASY_H$+" as a Prontera savior!",0;
-	if (Sex==0) mapannounce "prontera","[Mother Mathana]: In the name of Odin we declare beautiful "+$UNEASY_H$+" as a Prontera savior!",0;
+	if (Sex==SEX_MALE) mapannounce "prontera","[Mother Mathana]: In the name of Odin we declare handsom "+$UNEASY_H$+" as a Prontera savior!",0;
+	else mapannounce "prontera","[Mother Mathana]: In the name of Odin we declare beautiful "+$UNEASY_H$+" as a Prontera savior!",0;
 	mes "[Mother Mathana]";
 	mes "In the name of Odin we bless you and decently present a modest gift just from Mareusis' wine-cellar.";
 	getitem 505,1; //Blue_Potion

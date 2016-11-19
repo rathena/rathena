@@ -636,7 +636,7 @@ prt_in,172,109,0	script	A File#megin1	111,{
 	}
 	else if (god_eremes < 7) {
 		mes "[Librarian Jekan]";
-		mes "I'm sorry "+((Sex)?"sir":"ma'am")+",";
+		mes "I'm sorry "+((Sex == SEX_MALE)?"sir":"ma'am")+",";
 		mes "but special authorization is required to browse that section. Otherwise, it's off limits.";
 		close;
 	}

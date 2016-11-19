@@ -125,7 +125,7 @@ geffen,129,148,3	script	Argen#1	779,{
 	mes "Impress the ladies...?";
 	next;
 	emotion e_gasp;
-	if (Sex) {
+	if (Sex == SEX_MALE) {
 		mes "[Argen]";
 		mes "Yeah dude. There are two things chicks dig. Small, adorable presents. And suave dudes.";
 		next;
@@ -435,7 +435,7 @@ prontera,165,232,3	script	Nephia#1	744,{
 	mes "[Nephia]";
 	mes "Ooh~! You know what would make your hair so much cuter? I think if you tied it back with a big, red ribbon, you would look sooo ^FF66CCadorable^000000!";
 	next;
-	if (Sex) {
+	if (Sex == SEX_MALE) {
 		if (select("Um, lady, I'm a dude.:^FF66CCOoh~! You're right!^000000") == 1) {
 			mes "["+ strcharinfo(0) +"]";
 			mes "Woman, can't you that I'm a man?";
@@ -1009,7 +1009,7 @@ xmas,183,267,3	script	Pretty Lindsay#1	793,{
 		mes "I made this hat with all my heart, so you gotta promise me you will take care of this, okay?";
 		close;
 	}
-	if (Sex == 1) {
+	if (Sex == SEX_MALE) {
 		mes "[Pretty Lindsay]";
 		mes "Hello, there?";
 		mes "Mister...?";
@@ -1130,7 +1130,7 @@ xmas,175,156,3	script	Fuzzy Fuzz#1	712,{
 	mes "My specialty is the 'Teddybear Hat.' When it's worn, it makes you as cute as a teddy bear, and your hugs twice as warm and cuddly.";
 	next;
 	mes "[Fuzzy Fuzz]";
-	if (Sex) {
+	if (Sex == SEX_MALE) {
 		mes "The 'Teddybear Hat' can't be worn by just anyone, since it's cuddling powers are easily abused.";
 		next;
 		mes "[Fuzzy Fuzz]";
@@ -3301,7 +3301,7 @@ OnTouch_:
 					next;
 					mes "[Orc Warrior]";
 					mes "You are now...";
-					if (Sex)
+					if (Sex == SEX_MALE)
 						mes "an Orc Warrior!!";
 					else
 						mes "an Orc Lady!!";

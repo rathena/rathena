@@ -4431,10 +4431,10 @@ OnTouch:
 		mes "who robbed our house.";
 		next;
 		mes "[Mother Rosa]";
-		mes "How can you believe what "+ (Sex?"he's":"she's") +" saying?";
-		mes "How do you know "+ (Sex?"he's":"she's") +" not lying";
-		mes "after robbing our stuff "+ (Sex?"himself":"herself") +"?";
-		mes "Search "+ (Sex?"his":"her") +" possessions immediately!!";
+		mes "How can you believe what "+ (Sex == SEX_MALE?"he's":"she's") +" saying?";
+		mes "How do you know "+ (Sex == SEX_MALE?"he's":"she's") +" not lying";
+		mes "after robbing our stuff "+ (Sex == SEX_MALE?"himself":"herself") +"?";
+		mes "Search "+ (Sex == SEX_MALE?"his":"her") +" possessions immediately!!";
 		next;
 		mes "[Father Dames]";
 		mes "No, how could you say such things?";
