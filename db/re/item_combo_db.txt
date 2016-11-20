@@ -70,13 +70,13 @@
 1730:1752:19048,{ bonus bLongAtkRate,20; bonus2 bSubEle,Ele_Fire,-10; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus bAspd,1; }
 1730:19019,{ bonus bLongAtkRate,45; }
 1731:1754,{ bonus bLongAtkRate,25; }
-1731:1754:19048,{ bonus bLongAtkRate,20; bonus2 bSubEle,Ele_Fire,-10; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus2 bResEff,Eff_Freeze,-1000; /* Confirm: Resistance reduction */ }
+1731:1754:19048,{ bonus bLongAtkRate,20; bonus2 bAddEff,Eff_Freeze,-1000; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus bAspd,1; }
 1731:19019,{ bonus bLongAtkRate,45; }
 1732:1756,{ bonus bLongAtkRate,25; bonus2 bAddEff,Eff_Stone,1000; }
-1732:1756:19048,{ bonus bLongAtkRate,20; bonus2 bSubEle,Ele_Fire,-10; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus2 bResEff,Eff_Stone,-1000; /* Confirm: Resistance reduction */ }
+1732:1756:19048,{ bonus bLongAtkRate,20; bonus2 bAddEff,Eff_Stone,-1000; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus bAspd,1; }
 1732:19019,{ bonus bLongAtkRate,45; }
-1733:1755,{ bonus bLongAtkRate,25; bonus3 bAutoSpell,"NJ_HUUJIN",5,100; if(readparam(bInt)>39) bonus3 bAutoSpell,"NJ_HUUJIN",5,200; }
-1733:1755:19048,{ bonus bLongAtkRate,20; bonus2 bSubEle,Ele_Fire,-10; /* if (getequiprefinerycnt(EQI_HAND_R) >= 10)  TO DO: Disable autocast Wind Blade */ }
+1733:1755,{ bonus bLongAtkRate,25; bonus3 bAutoSpell,"NJ_HUUJIN",5,(readparam(bInt)>39) ? 300 : 100; }
+1733:1755:19048,{ bonus bLongAtkRate,20; bonus3 bAutoSpell,"NJ_HUUJIN",5,(readparam(bInt)>39) ? -300 : -100; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus bAspd,1; }
 1733:19019,{ bonus bLongAtkRate,45; }
 1734:1753,{ bonus bLongAtkRate,50; }
 1741:2748,{ bonus bBaseAtk,25; bonus3 bAddEff,Eff_Curse,200,ATF_WEAPON|ATF_LONG|ATF_TARGET; }
@@ -446,13 +446,13 @@
 18137:1752:19048,{ bonus bLongAtkRate,20; bonus2 bSubEle,Ele_Fire,-10; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus bAspd,1; }
 18137:19019,{ bonus bLongAtkRate,45; }
 18138:1754,{ bonus bLongAtkRate,25; }
-18138:1754:19048,{ bonus bLongAtkRate,20; bonus2 bSubEle,Ele_Fire,-10; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus2 bResEff,Eff_Freeze,-1000; /* Confirm: Resistance reduction */ }
+18138:1754:19048,{ bonus bLongAtkRate,20; bonus2 bAddEff,Eff_Freeze,-1000; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus bAspd,1; }
 18138:19019,{ bonus bLongAtkRate,45; }
 18139:1756,{ bonus bLongAtkRate,25; bonus2 bAddEff,Eff_Stone,1000; }
-18139:1756:19048,{ bonus bLongAtkRate,20; bonus2 bSubEle,Ele_Fire,-10; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus2 bResEff,Eff_Stone,-1000; /* Confirm: Resistance reduction */ }
+18139:1756:19048,{ bonus bLongAtkRate,20; bonus2 bAddEff,Eff_Stone,-1000; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus bAspd,1; }
 18139:19019,{ bonus bLongAtkRate,45; }
-18140:1755,{ bonus bLongAtkRate,25; bonus3 bAutoSpell,"NJ_HUUJIN",5,100; if(readparam(bInt)>39) bonus3 bAutoSpell,"NJ_HUUJIN",5,200; }
-18140:1755:19048,{ bonus bLongAtkRate,20; bonus2 bSubEle,Ele_Fire,-10; /* if (getequiprefinerycnt(EQI_HAND_R) >= 10)  TO DO: Disable autocast Wind Blade */ }
+18140:1755,{ bonus bLongAtkRate,25; bonus3 bAutoSpell,"NJ_HUUJIN",5,(readparam(bInt)>39) ? 300 : 100; }
+18140:1755:19048,{ bonus bLongAtkRate,20; bonus3 bAutoSpell,"NJ_HUUJIN",5,(readparam(bInt)>39) ? -300 : -100;; if (getequiprefinerycnt(EQI_HAND_R) >= 10)  bonus bAspd,1; }
 18140:19019,{ bonus bLongAtkRate,45; }
 18507:18539,{ bonus bUseSPrate,-3; }
 18559:18560,{ bonus bCritAtkRate,5; }
