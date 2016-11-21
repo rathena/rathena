@@ -61,10 +61,10 @@
 220,0xb0,    ,  0, 0,  -1,all,   0x8002	//RG_GRAFFITI
 229,0xb1,    ,  0, 1, 500,enemy, 0x006	//AM_DEMONSTRATION
 254,0x86,    , -1, 0, 300,enemy, 0x010	//CR_GRANDCROSS
-285,0x9a,    ,  3, 0,  -1,all,   0xA010	//SA_VOLCANO
-286,0x9b,    ,  3, 0,  -1,all,   0xA010	//SA_DELUGE
-287,0x9c,    ,  3, 0,  -1,all,   0xA010	//SA_VIOLENTGALE
-288,0x9d,    ,  3:3:4:4:5,0, -1,all,   0xA010	//SA_LANDPROTECTOR
+285,0x9a,    ,  3, 0,  -1,all,   0x8010	//SA_VOLCANO
+286,0x9b,    ,  3, 0,  -1,all,   0x8010	//SA_DELUGE
+287,0x9c,    ,  3, 0,  -1,all,   0x8010	//SA_VIOLENTGALE
+288,0x9d,    ,  3:3:4:4:5,0, -1,all,   0x8010	//SA_LANDPROTECTOR
 306,0x9e,    ,  4, 0,6000,enemy,   0x200	//BD_LULLABY
 307,0x9f,    ,  4, 0,  -1,enemy, 0x220	//BD_RICHMANKIM
 308,0xa0,    ,  4, 0,  -1,enemy, 0x8200	//BD_ETERNALCHAOS
