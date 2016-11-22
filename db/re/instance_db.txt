@@ -19,3 +19,4 @@
 12,Old Glast Heim,3600,300,1@gl_k,150,20,2@gl_k
 13,Eclage Interior,1200,300,1@ecl,60,50
 14,Sara's Memories,3600,300,1@sara,250,155
+15,Horror of Toy,3600,300,1@xm_d,115,20

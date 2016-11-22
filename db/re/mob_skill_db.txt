@@ -10794,3 +10794,56 @@
 3074,Time Holder@NPC_PULSESTRIKE,attack,661,5,2000,0,30000,yes,self,always,0,,,,,,,
 3074,Time Holder@NPC_SUMMONSLAVE,attack,196,5,1000,700,10000,no,self,slavele,0,2917,,,,,,
 3074,Time Holder@NPC_SUMMONSLAVE,idle,196,5,1000,700,10000,no,self,slavele,0,2917,,,,,,
+
+// Horror Toy Factory 14.2
+2987,XM_TREE,chase,21,20,2000,1500,5000,yes,target,always,0,,,,,,,
+2987,XM_TREE,attack,149,1,1000,0,5000,no,target,always,0,,,,,,,
+2987,XM_TREE,attack,181,3,1000,0,5000,no,target,always,0,,,,,,,
+2987,XM_TREE,attack,347,2,500,0,5000,no,target,always,0,,,,,,,
+2988,XM_ANTONIO@NPC_RUN,attack,354,1,10000,0,0,yes,self,always,0,,,,,,26,
+2989,XM_COOKIE,attack,14,6,1000,500,5000,yes,target,always,0,,,,,,,21
+2989,XM_COOKIE,chase,14,6,500,500,5000,yes,target,always,0,,,,,,,21
+2989,XM_COOKIE,attack,78,1,1000,1000,5000,yes,target,always,0,,,,,,,6
+2989,XM_COOKIE,chase,78,1,500,1000,5000,yes,target,always,0,,,,,,,6
+2989,XM_COOKIE,attack,200,1,1000,0,5000,yes,target,always,0,,,,,,,30
+2989,XM_COOKIE,chase,200,1,500,0,5000,yes,target,always,0,,,,,,,30
+2991,XM_MYSTCASE,attack,181,3,1000,0,5000,no,target,always,0,,,,,,,
+2991,XM_MYSTCASE,chase,207,1,500,0,5000,yes,target,always,0,,,,,,,6
+2991,XM_MYSTCASE,attack,207,1,500,0,5000,yes,target,always,0,,,,,,,6
+2991,XM_MYSTCASE,attack,663,1,1000,1200,25000,yes,self,always,0,,,,,,,
+2991,XM_MYSTCASE,attack,110,3,500,1500,5000,yes,target,myhpltmaxrate,50,,,,,,,
+2992,XM_LUDE,idle,135,1,500,0,5000,yes,self,always,0,,,,,,,
+2993,XM_HYLOZOIST,idle,135,1,500,0,5000,yes,self,always,0,,,,,,,
+2993,XM_HYLOZOIST,chase,207,1,500,0,5000,yes,target,always,0,,,,,,,
+2993,XM_HYLOZOIST,attack,207,1,500,0,5000,yes,target,always,0,,,,,,,
+2993,XM_HYLOZOIST,attack,178,5,2000,0,5000,no,target,always,0,,,,,,,
+2993,XM_HYLOZOIST,attack,191,5,500,0,5000,yes,target,always,0,,,,,,,
+2994,XM_MARIONETTE,idle,135,1,500,0,5000,yes,self,always,0,,,,,,,
+2994,XM_MARIONETTE,chase,17,5,500,800,5000,yes,target,always,0,,,,,,,
+2994,XM_MARIONETTE,attack,191,5,500,0,5000,yes,target,always,0,,,,,,,
+2995,XM_TEDDY_BEAR,attack,181,3,1000,0,5000,no,target,always,0,,,,,,,
+2995,XM_TEDDY_BEAR,attack,110,5,500,1500,5000,no,target,always,0,,,,,,,
+2995,XM_TEDDY_BEAR,attack,170,1,500,0,5000,no,target,always,0,,,,,,,
+2996,XM_CELINE_KIMI,attack,58,10,1000,2000,5000,no,target,always,0,,,,,,,
+2996,XM_CELINE_KIMI,attack,397,5,10000,0,10000,no,target,myhpltmaxrate,80,,,,,,,
+2996,XM_CELINE_KIMI,attack,349,5,10000,0,60000,yes,self,myhpltmaxrate,10,,,,,,,
+2996,XM_CELINE_KIMI,attack,60,1,10000,0,60000,yes,self,myhpltmaxrate,50,,,,,,,
+2996,XM_CELINE_KIMI,idle,661,3,10000,0,5000,yes,self,always,0,,,,,,,
+2996,XM_CELINE_KIMI,attack,661,3,2000,0,30000,yes,self,always,0,,,,,,,
+2996,XM_CELINE_KIMI,attack,170,2,2000,0,5000,yes,target,always,0,,,,,,,
+2996,XM_CELINE_KIMI,attack,186,5,500,500,5000,no,target,myhpltmaxrate,80,,,,,,,
+2996,XM_CELINE_KIMI,attack,7,9,10000,1000,5000,no,self,attackpcge,2,,,,,,,
+2996,XM_CELINE_KIMI,idle,28,10,10000,500,5000,no,self,myhpltmaxrate,99,,,,,,,
+2997,G_XM_CELINE_KIMI,attack,340,9,1000,0,5000,yes,target,always,0,,,,,,,
+2997,G_XM_CELINE_KIMI,attack,341,9,500,1000,5000,no,target,always,0,,,,,,,
+2997,G_XM_CELINE_KIMI,attack,349,5,10000,0,60000,yes,self,myhpltmaxrate,10,,,,,,,
+2997,G_XM_CELINE_KIMI,chase,405,1,10000,0,25000,yes,target,always,0,,,,,,,
+2997,G_XM_CELINE_KIMI,chase,666,3,10000,1000,15000,no,self,always,0,,,,,,,
+2997,G_XM_CELINE_KIMI,chase,668,3,10000,1000,15000,no,self,always,0,,,,,,,
+2997,G_XM_CELINE_KIMI,chase,680,3,10000,1000,15000,no,self,always,0,,,,,,,
+2997,G_XM_CELINE_KIMI,attack,47,10,2000,0,5000,yes,target,myhpltmaxrate,50,,,,,,,
+2997,G_XM_CELINE_KIMI,attack,661,5,10000,5000,50000,no,self,myhpltmaxrate,80,,,,,,,
+2997,G_XM_CELINE_KIMI,attack,289,5,2000,0,30000,yes,target,always,0,,,,,,,
+2997,G_XM_CELINE_KIMI,attack,367,1,2000,500,30000,no,target,myhpltmaxrate,80,,,,,,,
+2997,G_XM_CELINE_KIMI,chase,367,1,2000,500,30000,no,target,always,0,,,,,,,
+2997,G_XM_CELINE_KIMI,idle,28,10,10000,500,5000,no,self,myhpltmaxrate,99,,,,,,,
