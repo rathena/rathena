@@ -438,7 +438,7 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 			mes "Just give the item to the Demon Hunter, the guy who's all the way to the left in this area~";
 			next;
 			mes "[Hunter Sherin]";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "If you decide to become a Hunter, promise to come visit me. I want to see you as a Hunter. You would look great!!";
 			else
 				mes "If you decide to become a Hunter, come and visit me, okay? You're pretty, but... You'd be even prettier as a Hunter. Hehe~";

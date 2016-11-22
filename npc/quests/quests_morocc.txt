@@ -2214,7 +2214,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 				mes "All I'm asking is to check out a book from Prontera Library for me. It sounds easy, doesn't it?";
 				mes "Well, you don't look like someone who loves reading, but I hope you at least know how to check out a book from a library.";
 				next;
-				if (Sex == 1) {
+				if (Sex == SEX_MALE) {
 					mes "[Benjamin]";
 					mes "If you help me, I'll show you a limited picture book edition of Mammi... Once. Hehehehe.";
 					mes "What do you say? You do want to help me, right?";

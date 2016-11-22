@@ -23,7 +23,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 	}
 	if (lhz_boss > 30) {
 		if (!lght_duk01) {
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				emotion e_pif, "Giacomo Girolamo#kiup2";
 				mes "[Giacomo Girolamo]";
 				mes "....a guy....?";
@@ -166,7 +166,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 			close;
 		} else {
 			mes "[Giacomo Girolamo]";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				emotion e_paper, "Giacomo Girolamo#kiup2";
 				mes "Take care yourself and don't disappear!";
 			} else {
@@ -176,7 +176,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 			close;
 		}
 	} else {
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			emotion e_ho, "Giacomo Girolamo#kiup2";
 			mes "[Giacomo Girolamo]";
 			mes "Only those beautiful ladies are the reason of my life~!";
@@ -288,7 +288,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 
 OnTouch:
 	if (!lght_duk01)
-		emotion (Sex ? e_pif : e_lv2), "Giacomo Girolamo#kiup2";
+		emotion (Sex == SEX_MALE? e_pif : e_lv2), "Giacomo Girolamo#kiup2";
 	end;
 }
 

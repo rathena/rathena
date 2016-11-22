@@ -47,7 +47,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 			mes "Now, excuse me.";
 			next;
 			mes "[Catherine]";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "Well, If you intended to ask me on a date... I appreciate it...hohoho.";
 			else
 				mes "Well, if you fix me up with a cute guy... I'd appreciate it...hohoho!.";
@@ -375,7 +375,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "You...*sigh*...I didn't think you would do such a dishonorable thing.";
 		next;
 		mes "[Catherine]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Granted you're a mage, but how could a guy be so weak?!";
 			mes "Well, at least your alive still. Go back and try harder this time. ~tehehehe";
 		}
@@ -457,7 +457,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			next;
 			mes "[Raulel]";
 			mes "Don't live dishonestly, or impolitely, or else one day you'll be caught in a spell you can't control, and BOOM, your dead!";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "If you don't want that to happen, then learn how to use spells properly!";
 				next;
 				mes "[Raulel]";

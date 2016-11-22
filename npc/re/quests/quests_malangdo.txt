@@ -6628,7 +6628,7 @@ mal_in01,31,210,2	script	Cat Gamers Director	549,{
 		mes "I should remember it and";
 		mes "tell it to my kids. Heh~";
 		next;
-		if (Sex == 0)
+		if (Sex == SEX_FEMALE)
 			setarray .@sex$[0],"Mr.","boy";
 		else
 			setarray .@sex$[0],"Miss","girl";

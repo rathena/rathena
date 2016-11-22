@@ -254,8 +254,8 @@ L_Nope:
 
 Notime:
 	mes "^FF0000[Porter]^000000";
-	if(Sex==0) mes "Sorry, ma'am, but the plane currently isn't ported.  However, you can view the airplane's hourly itinerary.";
-	if(Sex==1) mes "Sorry, sir, but the plane currently isn't ported.  However, you can view the airplane's hourly itinerary.";
+	if(Sex==SEX_FEMALE) mes "Sorry, ma'am, but the plane currently isn't ported.  However, you can view the airplane's hourly itinerary.";
+	else mes "Sorry, sir, but the plane currently isn't ported.  However, you can view the airplane's hourly itinerary.";
 	next;
 	menu "Yes, please.",Itin,"No thanks.",L_Nope;
 	close;
@@ -365,8 +365,8 @@ Lnope:
 
 Notime:
 	mes "^FF0000[Airplane Attendant]^000000";
-	if(Sex==0) mes "Sorry, ma'am, but the plane currently isn't docked.  Please wait.";
-	if(Sex==1) mes "Sorry, sir, but the plane currently isn't docked.  Please wait.";
+	if(Sex==SEX_FEMALE) mes "Sorry, ma'am, but the plane currently isn't docked.  Please wait.";
+	else mes "Sorry, sir, but the plane currently isn't docked.  Please wait.";
 	close;
 
 Nowhere:

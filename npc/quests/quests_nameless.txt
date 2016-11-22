@@ -3608,7 +3608,7 @@ alberta,127,143,3	script	Belder	85,{
 		next;
 		switch(select("I'll promote your loans!:Uh...")) {
 		case 1:
-			if (Sex == 1) {
+			if (Sex == SEX_MALE) {
 				mes "[Belder]";
 				mes "You? But you're a dude!";
 				mes "No sweaty, stinky, sleazy";
@@ -4002,7 +4002,7 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 				close;
 			}
 		case 2:
-			if (Sex == 1) {
+			if (Sex == SEX_MALE) {
 				mes "[Dorian]";
 				mes "Ah, my apologies.";
 				mes "Too many have asked, so";
@@ -5259,7 +5259,7 @@ alberta,102,80,3	script	Jhonnita	86,{
 				mes "I doubt you can afford them.";
 				mes "Jewels aren't cheap, you know?";
 				next;
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "[Jhonnita]";
 					mes "Oh, I get it now. You want";
 					mes "to give one as a present to";
@@ -5855,7 +5855,7 @@ payon_in03,167,149,3	script	Wola	75,2,2,{
 			next;
 			switch(select("Will you go out with me?:Leblo's back medicine?")) {
 			case 1:
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "[Wola]";
 					mes "^666666*Blush*^000000 But it's too";
 					mes "early for us to just go";
@@ -5944,7 +5944,7 @@ payon_in03,167,149,3	script	Wola	75,2,2,{
 		next;
 		switch(select("Will you go out with me?:Leblo's back medicine?")) {
 		case 1:
-			if (Sex == 1) {
+			if (Sex == SEX_MALE) {
 				mes "^666666*Blush*^000000 But it's too";
 				mes "early for us to just go";
 				mes "on a date. I'm sorry, it's...";
@@ -6961,7 +6961,7 @@ in_rogue,359,116,3	script	Marybell	747,{
 				mes "Can't tell what";
 				mes "you're saying exactly.";
 				next;
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "[Marybell]";
 					mes "If this is some kind";
 					mes "of weird come-on, you'd";

@@ -330,6 +330,10 @@
 
 	script_set_constant("EAJ_SUMMONER",MAPID_SUMMONER,false);
 
+	/* sex */
+	export_constant(SEX_FEMALE);
+	export_constant(SEX_MALE);
+
 	/* broadcasts */
 	export_constant(BC_ALL);
 	export_constant(BC_MAP);

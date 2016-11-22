@@ -516,7 +516,7 @@ einbech,46,107,6	script	Shena#ein::EinMonsters	846,{
 		mes "adorable little girl?";
 		mes "Hello, dearie~";
 		next;
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			select("Excuse me, but I'm actually a guy.");
 			mes "[Shena]";
 			mes "Oh, oh are you now?";
@@ -542,7 +542,7 @@ einbech,46,107,6	script	Shena#ein::EinMonsters	846,{
 		mes "about the monsters around";
 		mes "here, young lady?";
 		next;
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			select("I told you, I'm a dude...!");
 			mes "[Shena]";
 			mes "Hmm. ''Dude.'' I think";

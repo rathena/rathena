@@ -258,7 +258,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		mes "Sorry I am not a teacher. But!";
 		next;
 		mes "[Guide Gion]";
-		mes "I can help you on the path you've chosen, the ^33CC71"+((Sex)?"Kagerou":"Oboro")+"^000000 path.";
+		mes "I can help you on the path you've chosen, the ^33CC71"+((Sex == SEX_MALE)?"Kagerou":"Oboro")+"^000000 path.";
 		next;
 		mes "^1A95E6You hear Guide Gion's voice faintly as you slip away.^1A95E6";
 		next;
@@ -266,14 +266,14 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		setquest 5134;
 		set job_kagero,4;
 		mes "[Guide Gion]";
-		mes "If you are prepared to follow me, Guide Gion, on the "+((Sex)?"Kagerou":"Oboro")+" path, we will meet again.";
+		mes "If you are prepared to follow me, Guide Gion, on the "+((Sex == SEX_MALE)?"Kagerou":"Oboro")+" path, we will meet again.";
 		close2;
 		warp "amatsu",147,136;
 		end;
 	} else if (job_kagero == 4) {
 		cutin "job_ko02",2;
 		mes "[Guide Gion]";
-		mes "I thought you were afraid of the ^33CC71path of the "+((Sex)?"Kagerou":"Oboro")+"^33CC71 and wouldn't come back.";
+		mes "I thought you were afraid of the ^33CC71path of the "+((Sex == SEX_MALE)?"Kagerou":"Oboro")+"^33CC71 and wouldn't come back.";
 		next;
 		mes "[Guide Gion]";
 		mes "But from the look of your eyes, I guess I misjudged you.";
@@ -663,7 +663,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		mes "And if you are lucky, there will be others targeting the monster.";
 		next;
 		mes "[Guide Gion]";
-		mes "May the blessings of '" + ((Sex)?"Kagerou, dancing sun":"Oboro, misty moonlight") + "' be with you.";
+		mes "May the blessings of '" + ((Sex == SEX_MALE)?"Kagerou, dancing sun":"Oboro, misty moonlight") + "' be with you.";
 		next;
 		setquest 5146;
 		set job_kagero,7;
@@ -2557,9 +2557,9 @@ job_ko,148,46,4	script	Guide Gion#ko2	588,{
 		mes "[Guide Gion]";
 		mes "The Test of Battle will be put off for a while. Don't worry because this does not have affect to other tests.";
 		next;
-		mapannounce "job_ko","[Gion] My Friend " + strcharinfo(0) + " made it to " + ((Sex)?"Kagerou":"Oboro") + " Path. Congratulations!!",bc_map;
+		mapannounce "job_ko","[Gion] My Friend " + strcharinfo(0) + " made it to " + ((Sex == SEX_MALE)?"Kagerou":"Oboro") + " Path. Congratulations!!",bc_map;
 		mes "[Guide Gion]";
-		mes "My friend " + strcharinfo(0) + " made it to " + ((Sex)?"Kagerou":"Oboro") + " Path. Congratulations!!";
+		mes "My friend " + strcharinfo(0) + " made it to " + ((Sex == SEX_MALE)?"Kagerou":"Oboro") + " Path. Congratulations!!";
 		next;
 		cutin "job_ko02",2;
 		mes "[Guide Gion]";
@@ -2623,7 +2623,7 @@ job_ko,148,46,4	script	Guide Gion#ko2	588,{
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,9;
 		getnameditem .@item,strcharinfo(0);
-		jobchange (Sex)?Job_Kagerou:Job_Oboro;
+		jobchange (Sex == SEX_MALE)?Job_Kagerou:Job_Oboro;
 		donpcevent "Summon Target#ko::OnEnable";
 		mes "[Guide Gion]";
 		mes "I hope the blessings of Kagerou, dancing sun and Oboro, misty moonlight will be with you on your journey ahead.";

@@ -84,7 +84,7 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 				mes "[Rogue Guildsman]";
 				mes "So what's a kid";
 				mes "like you doin' here?";
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "Oh, I get it now...";
 					mes "The widdle boy wants";
 				}
