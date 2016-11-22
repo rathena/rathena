@@ -98,7 +98,7 @@ OnTouch:
 		mes "Being a swordsman must come with a lot of responsibility and sacrifice.";
 		next;
 		mes "[De Thomas]";
-		if (Sex == SEX_FEMALE)
+		if (Sex == SEX_MALE)
 			mes "For these swordsmen and knights, there is a wonderful skill.";
 		else
 			mes "For these swordswomen and knights, there is a wonderful skill young lady.";
