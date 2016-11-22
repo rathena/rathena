@@ -8312,25 +8312,22 @@ BUILDIN_FUNC(getequipid)
 	}
 
 	num = script_getnum(st,2);
-	if( !equip_index_check(num) )
-	{
-		script_pushint(st,-1);
-		return SCRIPT_CMD_FAILURE;
-	}
 
-	// get inventory position of item
-	i = pc_checkequip(sd,equip_bitmask[num]);
-	if( i < 0 )
-	{
+	if (num == -1) {
+		i = current_equip_item_index;
+	}
+	else if (equip_index_check(num)) {
+		// get inventory position of item
+		i = pc_checkequip(sd, equip_bitmask[num]);
+	} else	{
 		script_pushint(st,-1);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	item = sd->inventory_data[i];
-	if( item != 0 )
-		script_pushint(st,item->nameid);
+	if (i >= 0 && sd->inventory_data[i])
+		script_pushint(st, sd->inventory_data[i]->nameid);
 	else
-		script_pushint(st,0);
+		script_pushint(st, 0);
 
 	return SCRIPT_CMD_SUCCESS;
 }

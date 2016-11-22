@@ -2558,6 +2558,9 @@ EQI_SHADOW_SHOES (18)     - Shadow Shoes
 EQI_SHADOW_ACC_R (19)     - Shadow Accessory 2
 EQI_SHADOW_ACC_L (20)     - Shadow Accessory 1
 
+If -1 is passed as the equipment slot argument then equipment slot for the item calling this function, 
+assuming it is called by an item script, will be used.
+
 Notice that a few items occupy several equipment slots, and if the character is 
 wearing such an item, 'getequipid' will return its ID number for either slot.
 
