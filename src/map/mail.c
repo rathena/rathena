@@ -83,16 +83,16 @@ bool mail_setitem(struct map_session_data *sd, short idx, uint32 amount) {
 
 		if( idx < 0 || idx >= MAX_INVENTORY )
 			return false;
-		if( amount > sd->status.inventory[idx].amount )
+		if( amount > sd->inventory.u.items_inventory[idx].amount )
 			return false;
-		if( !pc_can_give_items(sd) || sd->status.inventory[idx].expire_time
-			|| !itemdb_available(sd->status.inventory[idx].nameid)
-			|| !itemdb_canmail(&sd->status.inventory[idx],pc_get_group_level(sd))
-			|| (sd->status.inventory[idx].bound && !pc_can_give_bounded_items(sd)) )
+		if( !pc_can_give_items(sd) || sd->inventory.u.items_inventory[idx].expire_time
+			|| !itemdb_available(sd->inventory.u.items_inventory[idx].nameid)
+			|| !itemdb_canmail(&sd->inventory.u.items_inventory[idx],pc_get_group_level(sd))
+			|| (sd->inventory.u.items_inventory[idx].bound && !pc_can_give_bounded_items(sd)) )
 			return false;
 
 		sd->mail.index = idx;
-		sd->mail.nameid = sd->status.inventory[idx].nameid;
+		sd->mail.nameid = sd->inventory.u.items_inventory[idx].nameid;
 		sd->mail.amount = amount;
 		return true;
 	}
@@ -111,16 +111,16 @@ bool mail_setattachment(struct map_session_data *sd, struct mail_message *msg)
 	n = sd->mail.index;
 	if( sd->mail.amount )
 	{
-		if( sd->status.inventory[n].nameid != sd->mail.nameid )
+		if( sd->inventory.u.items_inventory[n].nameid != sd->mail.nameid )
 			return false;
 
-		if( sd->status.inventory[n].amount < sd->mail.amount )
+		if( sd->inventory.u.items_inventory[n].amount < sd->mail.amount )
 			return false;
 
 		if( sd->weight > sd->max_weight )
 			return false;
 
-		memcpy(&msg->item, &sd->status.inventory[n], sizeof(struct item));
+		memcpy(&msg->item, &sd->inventory.u.items_inventory[n], sizeof(struct item));
 		msg->item.amount = sd->mail.amount;
 	}
 	else

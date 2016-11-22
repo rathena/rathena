@@ -2356,6 +2356,7 @@ Type is the kind of associated ID number required:
  2 - Guild ID
  3 - Account ID
  4 - Battle Ground ID
+ 5 - Clan ID
 
 For most purposes other than printing it, a number is better to have than a name 
 (people do horrifying things to their character names).
@@ -4617,9 +4618,14 @@ database. If the name is not found, nothing will be deleted.
 *cartdelitem "<item name>",<amount>{,<account ID>};
 *storagedelitem <item id>,<amount>{,<account ID>};
 *storagedelitem "<item name>",<amount>{,<account ID>};
+*guildstoragedelitem <item id>,<amount>{,<account ID>};
+*guildstoragedelitem "<item name>",<amount>{,<account ID>};
 
 This command behaves identically to 'delitem', but deletes items from the player's
-cart or storage. If no cart is mounted, 'cartdelitem' will fail.
+cart, storage, or guild storage.
+
+If no cart is mounted, 'cartdelitem' will return -1.
+If player is not in a guild or storage is open, 'guildstoragedelitem' will return -1.
 
 ---------------------------------------
 
@@ -4635,9 +4641,14 @@ See 'getitem2' for an explanation of the expanded parameters.
 *cartdelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *storagedelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *storagedelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*guildstoragedelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*guildstoragedelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command behaves identically to 'delitem2', but deletes items from the player's
-cart or storage. If no cart is mounted, 'cartdelitem2' will fail.
+cart, storage, or guild storage.
+
+If no cart is mounted, 'cartdelitem2' will return -1.
+If player is not in a guild or storage is open, 'guildstoragedelitem2' will return -1.
 
 ---------------------------------------
 
@@ -4663,13 +4674,18 @@ adding up strings:
     
 ---------------------------------------
 
-*cartcountitem(<item id>)
-*cartcountitem("<item name>")
-*storagecountitem(<item id>)
-*storagecountitem("<item name>")
+*cartcountitem(<item id>{,<accountID>})
+*cartcountitem("<item name>"{,<accountID>})
+*storagecountitem(<item id>{,<accountID>})
+*storagecountitem("<item name>"{,<accountID>})
+*guildstoragecountitem(<nameID>{,<accountID>})
+*guildstoragecountitem("<item name>"{,<accountID>})
 
 This command behaves identically to 'countitem', but counts items from the player's
-cart or storage. If no cart is mounted, 'cartcountitem' will return -1.
+cart, storage, or guild storage.
+
+If no cart is mounted, 'cartcountitem' will return -1.
+If player is not in a guild or storage is open, 'guildstoragecountitem' will return -1.
 
 ---------------------------------------
 
@@ -4684,13 +4700,18 @@ See 'getitem2' for an explanation of the expanded parameters.
 
 ---------------------------------------
 
-*cartcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*cartcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*storagecountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*storagecountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*cartcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*cartcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*storagecountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*storagecountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*guildstoragecountitem2(<nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
+*guildstoragecountitem2("<item name>",<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
 
 This command behaves identically to 'countitem2', but counts items from the player's
-cart or storage. If no cart is mounted, 'cartcountitem2' will return -1.
+cart, storage, or guild storage.
+
+If no cart is mounted, 'cartcountitem2' will return -1.
+If player is not in a guild or storage is open, 'guildstoragecountitem2' will return -1.
 
 ---------------------------------------
 
@@ -5051,6 +5072,33 @@ window, to avoid any disruption when both windows overlap.
     close2;
     openstorage;
     end;
+
+---------------------------------------
+
+*openstorage2 <storage_id>,<mode>{,<account_id>};
+
+Just like the 'openstorage' command, except this command can open additional storages
+by the specified <storage_id>. For <storage_id>, please read the conf/inter_server.conf
+for storage groups.
+
+Values for <mode> are:
+	STOR_MODE_NONE : Player only can read the storage entries.
+	STOR_MODE_GET  : Player can get items from the storage.
+	STOR_MODE_PUT  : Player can put items in the storage.
+
+Example:
+	if (vip_status(1)) {
+		mes "I will open your Premium storage.";
+		mes "Thank you for using our service.";
+		close2;
+		openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
+	} else {
+		mes "Sorry, your Premium status is expired.";
+		mes "Storage will be opened but you can't put any item into it.";
+		close2;
+		openstorage2 1,STOR_MODE_GET;
+	}
+	end;
 
 ---------------------------------------
 
@@ -9293,6 +9341,22 @@ index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
 ID - ID of random option. See db/const.txt for constants.
 Value - Value of random option
 Param - Parameter of random option
+
+---------------------------------------
+
+*clan_join(<clan id>{,<char id>});
+
+The attached player joins the clan with the <clan id>. On a successful join,
+true is returned, else false if the join failed.
+If <char id> is specified, the specified player is used rather than the attached one.
+
+---------------------------------------
+
+*clan_leave({<char id>});
+
+The attached player will leave their clan. On a successful leave, true is returned,
+else false if the leave failed.
+If <char id> is specified, the specified player is used rather than the attached one.
 
 ---------------------------------------
 

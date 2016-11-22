@@ -946,7 +946,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			break;
 		case SC_MANHOLE:
 			// Skill is disabled against special racial grouped monsters(GvG and Battleground)
-			if (status_get_race2(target) == RC2_GVG || status_get_race2(target) == RC2_BATTLEFIELD)
+			if (target && ( status_get_race2(target) == RC2_GVG || status_get_race2(target) == RC2_BATTLEFIELD ) )
 				return false;
 		default:
 			break;
@@ -967,6 +967,9 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				clif_skill_fail((TBL_PC*)src,skill_id,USESKILL_FAIL_LEVEL,0);
 			return false;
 		}
+
+		if (flag == 1 && sc->data[SC_CURSEDCIRCLE_TARGET] && skill_id == MO_ABSORBSPIRITS) // Absorb Spirits fails to go through
+			return false;
 
 		if (skill_id != RK_REFRESH && sc->cant.cast && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
@@ -1821,6 +1824,14 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_MTF_MHP]->val1;
 			if(sc->data[SC_MARIONETTE])
 				bonus -= 1000;
+			if(sc->data[SC_SWORDCLAN])
+				bonus += 30;
+			if(sc->data[SC_ARCWANDCLAN])
+				bonus += 30;
+			if(sc->data[SC_GOLDENMACECLAN])
+				bonus += 30;
+			if(sc->data[SC_CROSSBOWCLAN])
+				bonus += 30;
 		}
 	} else if (type == STATUS_BONUS_RATE) {
 		struct status_change *sc = status_get_sc(bl);
@@ -1933,6 +1944,14 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += 50;
 			if(sc->data[SC_MTF_MSP])
 				bonus += sc->data[SC_MTF_MSP]->val1;
+			if(sc->data[SC_SWORDCLAN])
+				bonus += 10;
+			if(sc->data[SC_ARCWANDCLAN])
+				bonus += 10;
+			if(sc->data[SC_GOLDENMACECLAN])
+				bonus += 10;
+			if(sc->data[SC_CROSSBOWCLAN])
+				bonus += 10;
 		}
 	} else if (type == STATUS_BONUS_RATE) {
 		struct status_change *sc = status_get_sc(bl);
@@ -2011,6 +2030,105 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
 }
 
 /**
+ * Calculates player's weight
+ * @param sd: Player object
+ * @param flag: Calculation type
+ *   1 - Item weight
+ *   2 - Skill/Status/Configuration max weight bonus
+ * @return false - failed, true - success
+ */
+bool status_calc_weight(struct map_session_data *sd, uint8 flag)
+{
+	int b_weight, b_max_weight, skill, i;
+	struct status_change *sc;
+
+	nullpo_retr(false, sd);
+
+	sc = &sd->sc;
+	b_max_weight = sd->max_weight; // Store max weight for later comparison
+	b_weight = sd->weight; // Store current weight for later comparison
+	sd->max_weight = job_info[pc_class2idx(sd->status.class_)].max_weight_base + sd->status.str * 300; // Recalculate max weight
+
+	if (flag&1) {
+		sd->weight = 0; // Reset current weight
+
+		for(i = 0; i < MAX_INVENTORY; i++) {
+			if (!sd->inventory.u.items_inventory[i].nameid || sd->inventory_data[i] == NULL)
+				continue;
+			sd->weight += sd->inventory_data[i]->weight * sd->inventory.u.items_inventory[i].amount;
+		}
+	}
+
+	if (flag&2) {
+		// Skill/Status bonus weight increases
+		if ((skill = pc_checkskill(sd, MC_INCCARRY)) > 0)
+			sd->max_weight += 2000 * skill;
+		if (pc_isriding(sd) && pc_checkskill(sd, KN_RIDING) > 0)
+			sd->max_weight += 10000;
+		else if (pc_isridingdragon(sd))
+			sd->max_weight += 5000 + 2000 * pc_checkskill(sd, RK_DRAGONTRAINING);
+		if (sc->data[SC_KNOWLEDGE])
+			sd->max_weight += sd->max_weight * sc->data[SC_KNOWLEDGE]->val1 / 10;
+		if ((skill = pc_checkskill(sd, ALL_INCCARRY)) > 0)
+			sd->max_weight += 2000 * skill;
+	}
+
+	// Update the client if the new weight calculations don't match
+	if (b_weight != sd->weight)
+		clif_updatestatus(sd, SP_WEIGHT);
+	if (b_max_weight != sd->max_weight) {
+		clif_updatestatus(sd, SP_MAXWEIGHT);
+		pc_updateweightstatus(sd);
+	}
+
+	return true;
+}
+
+/**
+ * Calculates player's cart weight
+ * @param sd: Player object
+ * @param flag: Calculation type
+ *   1 - Cart item weight
+ *   2 - Skill/Status/Configuration max weight bonus
+ *   4 - Whether to check for cart status
+ * @return false - failed, true - success
+ */
+bool status_calc_cart_weight(struct map_session_data *sd, uint8 flag)
+{
+	int b_cart_weight_max, i;
+
+	nullpo_retr(false, sd);
+
+	if (!pc_iscarton(sd) && !(flag&4))
+		return false;
+
+	b_cart_weight_max = sd->cart_weight_max; // Store cart max weight for later comparison
+	sd->cart_weight_max = battle_config.max_cart_weight; // Recalculate max weight
+
+	if (flag&1) {
+		sd->cart_weight = 0; // Reset current cart weight
+		sd->cart_num = 0; // Reset current cart item count
+
+		for(i = 0; i < MAX_CART; i++) {
+			if (!sd->cart.u.items_cart[i].nameid)
+				continue;
+			sd->cart_weight += itemdb_weight(sd->cart.u.items_cart[i].nameid) * sd->cart.u.items_cart[i].amount; // Recalculate current cart weight
+			sd->cart_num++; // Recalculate current cart item count
+		}
+	}
+
+	// Skill bonus max weight increases
+	if (flag&2)
+		sd->cart_weight_max += (pc_checkskill(sd, GN_REMODELING_CART) * 5000);
+
+	// Update the client if the new weight calculations don't match
+	if (b_cart_weight_max != sd->cart_weight_max)
+		clif_updatestatus(sd, SP_CARTINFO);
+
+	return true;
+}
+
+/**
  * Calculates player data from scratch without counting SC adjustments
  * Should be invoked whenever players raise stats, learn passive skills or change equipment
  * @param sd: Player object
@@ -2023,8 +2141,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	struct status_data *base_status; ///< Pointer to the player's base status
 	const struct status_change *sc = &sd->sc;
 	struct s_skill b_skill[MAX_SKILL]; ///< Previous skill tree
-	int b_weight, b_max_weight, b_cart_weight_max, ///< Previous weight
-	i, skill,refinedef=0;
+	int i, skill, refinedef = 0;
 	short index = -1;
 
 	if (++calculating > 10) // Too many recursive calls!
@@ -2032,13 +2149,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	// Remember player-specific values that are currently being shown to the client (for refresh purposes)
 	memcpy(b_skill, &sd->status.skill, sizeof(b_skill));
-	b_weight = sd->weight;
-	b_max_weight = sd->max_weight;
-	b_cart_weight_max = sd->cart_weight_max;
 
 	pc_calc_skilltree(sd);	// SkillTree calculation
-
-	sd->max_weight = job_info[pc_class2idx(sd->status.class_)].max_weight_base+sd->status.str*300;
 
 	if (opt&SCO_FIRST) {
 		// Load Hp/SP from char-received data.
@@ -2046,20 +2158,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->battle_status.sp = sd->status.sp;
 		sd->regen.sregen = &sd->sregen;
 		sd->regen.ssregen = &sd->ssregen;
-		sd->weight=0;
-		for(i=0;i<MAX_INVENTORY;i++) {
-			if(sd->status.inventory[i].nameid==0 || sd->inventory_data[i] == NULL)
-				continue;
-			sd->weight += sd->inventory_data[i]->weight*sd->status.inventory[i].amount;
-		}
-		sd->cart_weight=0;
-		sd->cart_num=0;
-		for(i=0;i<MAX_CART;i++) {
-			if(sd->status.cart[i].nameid==0)
-				continue;
-			sd->cart_weight+=itemdb_weight(sd->status.cart[i].nameid)*sd->status.cart[i].amount;
-			sd->cart_num++;
-		}
 	}
 
 	base_status = &sd->base_status;
@@ -2111,7 +2209,10 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->ignore_mdef_by_race)
 		+ sizeof(sd->ignore_mdef_by_class)
 		+ sizeof(sd->ignore_def_by_race)
+		+ sizeof(sd->ignore_def_by_class)
 		+ sizeof(sd->sp_gain_race)
+		+ sizeof(sd->magic_addrace2)
+		+ sizeof(sd->ignore_mdef_by_race2)
 		+ sizeof(sd->dropaddrace)
 		+ sizeof(sd->dropaddclass)
 		);
@@ -2175,6 +2276,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->sp_loss)
 		+ sizeof(sd->hp_regen)
 		+ sizeof(sd->sp_regen)
+		+ sizeof(sd->percent_hp_regen)
+		+ sizeof(sd->percent_sp_regen)
 		+ sizeof(sd->add_def)
 		+ sizeof(sd->add_mdef)
 		+ sizeof(sd->add_mdmg)
@@ -2225,17 +2328,17 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		}
 
 		// Sanitize the refine level in case someone decreased the value inbetween
-		if (sd->status.inventory[index].refine > MAX_REFINE)
-			sd->status.inventory[index].refine = MAX_REFINE;
+		if (sd->inventory.u.items_inventory[index].refine > MAX_REFINE)
+			sd->inventory.u.items_inventory[index].refine = MAX_REFINE;
 
 		if (sd->inventory_data[index]->type == IT_WEAPON) {
-			int r = sd->status.inventory[index].refine, wlv = sd->inventory_data[index]->wlv;
+			int r = sd->inventory.u.items_inventory[index].refine, wlv = sd->inventory_data[index]->wlv;
 			struct weapon_data *wd;
 			struct weapon_atk *wa;
 
 			if(wlv >= REFINE_TYPE_MAX)
 				wlv = REFINE_TYPE_MAX - 1;
-			if(i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L) {
+			if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) {
 				wd = &sd->left_weapon; // Left-hand weapon
 				wa = &base_status->lhw;
 			} else {
@@ -2266,18 +2369,18 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 				if (!calculating) // Abort, run_script retriggered this. [Skotlex]
 					return 1;
 			}
-			if(sd->status.inventory[index].card[0]==CARD0_FORGE) { // Forged weapon
-				wd->star += (sd->status.inventory[index].card[1]>>8);
+			if(sd->inventory.u.items_inventory[index].card[0] == CARD0_FORGE) { // Forged weapon
+				wd->star += (sd->inventory.u.items_inventory[index].card[1]>>8);
 				if(wd->star >= 15) wd->star = 40; // 3 Star Crumbs now give +40 dmg
-				if(pc_famerank(MakeDWord(sd->status.inventory[index].card[2],sd->status.inventory[index].card[3]) ,MAPID_BLACKSMITH))
+				if(pc_famerank(MakeDWord(sd->inventory.u.items_inventory[index].card[2],sd->inventory.u.items_inventory[index].card[3]) ,MAPID_BLACKSMITH))
 					wd->star += 10;
 				if (!wa->ele) // Do not overwrite element from previous bonuses.
-					wa->ele = (sd->status.inventory[index].card[1]&0x0f);
+					wa->ele = (sd->inventory.u.items_inventory[index].card[1]&0x0f);
 			}
 		} else if(sd->inventory_data[index]->type == IT_ARMOR) {
 			int r;
 
-			if ( (r = sd->status.inventory[index].refine) )
+			if ( (r = sd->inventory.u.items_inventory[index].refine) )
 				refinedef += refine_info[REFINE_TYPE_ARMOR].bonus[r-1];
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if( i == EQI_HAND_L ) // Shield
@@ -2362,10 +2465,10 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 			struct item_data *data;
 
 			// Card script execution.
-			if (itemdb_isspecial(sd->status.inventory[index].card[0]))
+			if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 				continue;
 			for (j = 0; j < MAX_SLOTS; j++) { // Uses MAX_SLOTS to support Soul Bound system [Inkfish]
-				int c = sd->status.inventory[index].card[j];
+				int c = sd->inventory.u.items_inventory[index].card[j];
 				current_equip_card_id= c;
 				if(!c)
 					continue;
@@ -2381,7 +2484,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 					continue;
 				if(!pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(data,sd->bl.m)) // Card restriction checks.
 					continue;
-				if(i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L) { // Left hand status.
+				if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) { // Left hand status.
 					sd->state.lr_flag = 1;
 					run_script(data->script,0,sd->bl.id,0);
 					sd->state.lr_flag = 0;
@@ -2411,7 +2514,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 			int j;
 			struct s_random_opt_data *data;
 			for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
-				short opt_id = sd->status.inventory[index].option[j].id;
+				short opt_id = sd->inventory.u.items_inventory[index].option[j].id;
 
 				if (!opt_id)
 					continue;
@@ -2421,7 +2524,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 					continue;
 				if (!pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && itemdb_isNoEquip(sd->inventory_data[index], sd->bl.m))
 					continue;
-				if (i == EQI_HAND_L && sd->status.inventory[index].equip == EQP_HAND_L) { // Left hand status.
+				if (i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) { // Left hand status.
 					sd->state.lr_flag = 1;
 					run_script(data->script, 0, sd->bl.id, 0);
 					sd->state.lr_flag = 0;
@@ -2761,18 +2864,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 // ----- MISC CALCULATIONS -----
 
 	// Weight
-	if((skill=pc_checkskill(sd,MC_INCCARRY))>0)
-		sd->max_weight += 2000*skill;
-	if(pc_isriding(sd) && pc_checkskill(sd,KN_RIDING)>0)
-		sd->max_weight += 10000;
-	else if(pc_isridingdragon(sd))
-		sd->max_weight += 5000+2000*pc_checkskill(sd,RK_DRAGONTRAINING);
-	if(sc->data[SC_KNOWLEDGE])
-		sd->max_weight += sd->max_weight*sc->data[SC_KNOWLEDGE]->val1/10;
-	if((skill=pc_checkskill(sd,ALL_INCCARRY))>0)
-		sd->max_weight += 2000*skill;
-
-	sd->cart_weight_max = battle_config.max_cart_weight + (pc_checkskill(sd, GN_REMODELING_CART)*5000);
+	status_calc_weight(sd, 2);
+	status_calc_cart_weight(sd, 2);
 
 	if (pc_checkskill(sd,SM_MOVINGRECOVERY)>0)
 		sd->regen.state.walk = 1;
@@ -2906,15 +2999,6 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	}
 	if(memcmp(b_skill,sd->status.skill,sizeof(sd->status.skill)))
 		clif_skillinfoblock(sd);
-	if(b_weight != sd->weight)
-		clif_updatestatus(sd,SP_WEIGHT);
-	if(b_max_weight != sd->max_weight) {
-		clif_updatestatus(sd,SP_MAXWEIGHT);
-		pc_updateweightstatus(sd);
-	}
-	if( b_cart_weight_max != sd->cart_weight_max ) {
-		clif_updatestatus(sd,SP_CARTINFO);
-	}
 
 	// If the skill is learned, the status is infinite.
 	if( (skill = pc_checkskill(sd,SU_SPRITEMABLE)) > 0 )
@@ -4191,6 +4275,10 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 		str -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
 		str -= sc->data[SC_KYOUGAKU]->val2;
+	if(sc->data[SC_SWORDCLAN])
+		str += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		str += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		str += str * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 
@@ -4257,6 +4345,10 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 		agi -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
 		agi -= sc->data[SC_KYOUGAKU]->val2;
+	if(sc->data[SC_CROSSBOWCLAN])
+		agi += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		agi += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		agi += agi * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 	if (sc->data[SC_ARCLOUSEDASH])
@@ -4313,6 +4405,10 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
 		vit -= sc->data[SC_KYOUGAKU]->val2;
+	if(sc->data[SC_SWORDCLAN])
+		vit += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		vit += 1;
 	if(sc->data[SC_STRIPARMOR] && bl->type != BL_PC)
 		vit -= vit * sc->data[SC_STRIPARMOR]->val2/100;
 	if(sc->data[SC_FULL_THROTTLE])
@@ -4383,6 +4479,12 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 		int_ -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
 		int_ -= sc->data[SC_KYOUGAKU]->val2;
+	if(sc->data[SC_ARCWANDCLAN])
+		int_ += 1;
+	if(sc->data[SC_GOLDENMACECLAN])
+		int_ += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		int_ += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		int_ += int_ * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 
@@ -4454,7 +4556,12 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 		dex -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
 		dex -= sc->data[SC_KYOUGAKU]->val2;
-
+	if(sc->data[SC_ARCWANDCLAN])
+		dex += 1;
+	if(sc->data[SC_CROSSBOWCLAN])
+		dex += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		dex += 1;
 	if(sc->data[SC__STRIPACCESSORY] && bl->type != BL_PC)
 		dex -= dex * sc->data[SC__STRIPACCESSORY]->val2 / 100;
 	if(sc->data[SC_MARSHOFABYSS])
@@ -4517,6 +4624,10 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 		luk -= luk * sc->data[SC__STRIPACCESSORY]->val2 / 100;
 	if(sc->data[SC_BANANA_BOMB])
 		luk -= 75;
+	if(sc->data[SC_GOLDENMACECLAN])
+		luk += 1;
+	if(sc->data[SC_JUMPINGCLAN])
+		luk += 1;
 	if(sc->data[SC_FULL_THROTTLE])
 		luk += luk * sc->data[SC_FULL_THROTTLE]->val3 / 100;
 
@@ -6794,7 +6905,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 
 		// Item resistance (only applies to rate%)
 		if(sd && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX) {
-			if( sd->reseff[type-SC_COMMON_MIN] > 0 )
+			if( sd->reseff[type-SC_COMMON_MIN] )
 				rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
 			if( sd->sc.data[SC_COMMONSC_RESIST] )
 				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1/100;
@@ -7373,6 +7484,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_DODGE:
 		case SC_PUSH_CART:
 		case SC_SPRITEMABLE:
+		case SC_CLAN_INFO:
 			tick = -1;
 			break;
 
@@ -8998,6 +9110,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = (status->max_hp * (val1 * 10) / 100); // %Max HP to absorb
 			//val3 = 6 + val1; // Hits !TODO: Does it have hits too?
 			break;
+		case SC_SWORDCLAN:
+		case SC_ARCWANDCLAN:
+		case SC_GOLDENMACECLAN:
+		case SC_CROSSBOWCLAN:
+		case SC_JUMPINGCLAN:
+			tick = -1;
+			status_change_start(src,bl,SC_CLAN_INFO,10000,0,val2,0,0,-1,flag);
+			break;
 
 		//default:
 		//	if( calc_flag == SCB_NONE && scdb->skill_id <= 0 && scdb->icon == SI_BLANK ) {
@@ -9055,6 +9175,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_ITEMBOOST:
 		case SC_JP_EVENT04:
 		case SC_PUSH_CART:
+		case SC_SWORDCLAN:
+		case SC_ARCWANDCLAN:
+		case SC_GOLDENMACECLAN:
+		case SC_CROSSBOWCLAN:
+		case SC_JUMPINGCLAN:
 			val_flag |= 1;
 			break;
 		// Start |1|2 val_flag setting
@@ -9075,6 +9200,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WILD_STORM_OPTION:
 		case SC_UPHEAVAL_OPTION:
 		case SC_CIRCLE_OF_FIRE_OPTION:
+		case SC_CLAN_INFO:
 			val_flag |= 1|2;
 			break;
 		// Start |1|2|4 val_flag setting
@@ -9107,6 +9233,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		switch (type) {
 			case SC_ALL_RIDING:
 				dval1 = 1;
+				break;
+			case SC_CLAN_INFO:
+				dval1 = val1;
+				dval2 = val2;
+				dval3 = val3;
 				break;
 			default: /* All others: just copy val1 */
 				dval1 = val1;
@@ -9955,6 +10086,13 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_VACUUM_EXTREME:
 			///< !CHECKME: Seems on official, there's delay before same target can be vacuumed in same area again [Cydh]
 			sc_start2(bl, bl, SC_VACUUM_EXTREME_POSTDELAY, 100, sce->val1, sce->val2, skill_get_time2(SO_VACUUM_EXTREME,sce->val1));
+			break;
+		case SC_SWORDCLAN:
+		case SC_ARCWANDCLAN:
+		case SC_GOLDENMACECLAN:
+		case SC_CROSSBOWCLAN:
+		case SC_JUMPINGCLAN:
+			status_change_end(bl,SC_CLAN_INFO,INVALID_TIMER);
 			break;
 	}
 	

@@ -10,6 +10,7 @@
 #include "map.h"
 #include "battle.h"
 #include "chrif.h"
+#include "clan.h"
 #include "clif.h"
 #include "pc.h"
 #include "intif.h"
@@ -21,10 +22,12 @@
 #include "elemental.h"
 #include "mail.h"
 #include "quest.h"
+#include "status.h"
 
 #include <stdlib.h>
 
-static const int packet_len_table[]={
+/// Received packet Lengths from inter-server
+static const int packet_len_table[] = {
 	-1,-1,27,-1, -1, 0,37,-1, 10+NAME_LENGTH,-1, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
 	 0, 0, 0, 0,  0, 0, 0, 0, -1,11, 0, 0,  0, 0,  0, 0, //0x3810
 	39,-1,15,15, 15+NAME_LENGTH,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
@@ -33,8 +36,9 @@ static const int packet_len_table[]={
 	-1,-1, 7, 7,  7,11, 8,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] itembound[Akinari]
 	-1, 7, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0, -1, 3,  3, 0, //0x3870  Mercenaries [Zephyrus] / Elemental [pakpil]
-	12,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3880
+	12,-1, 7, 3,  0, 0, 0, 0,  0, 0,-1, 9, -1, 0,  0, 0, //0x3880  Pet System,  Storages
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
+	-1,-1, 8, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x38A0  Clans
 };
 
 extern int char_fd; // inter server Fd used for char_fd
@@ -50,6 +54,23 @@ extern int char_fd; // inter server Fd used for char_fd
 int CheckForCharServer(void)
 {
 	return ((char_fd <= 0) || session[char_fd] == NULL || session[char_fd]->wdata == NULL);
+}
+
+/**
+ * Get sd from pc_db (map_id2db) or auth_db (in case if parsing packet from inter-server when sd not added to pc_db yet)
+ * @param account_id
+ * @param char_id
+ * @return sd Found sd or NULL if not found
+ */
+struct map_session_data *inter_search_sd(uint32 account_id, uint32 char_id)
+{
+	struct map_session_data *sd = NULL;
+	struct auth_node *node = chrif_auth_check(account_id, char_id, ST_LOGIN);
+	if (node)
+		sd = node->sd;
+	else
+		sd = map_id2sd(account_id);
+	return sd;
 }
 
 /**
@@ -493,40 +514,40 @@ int intif_request_registry(struct map_session_data *sd, int flag)
 
 /**
  * Request to load guild storage from char-serv
- * @param account_id : Player account identification
- * @param guild_id : Guild of player
- * @return 0:error, 1=msg sent
+ * @param account_id: Player account identification
+ * @param guild_id: Guild of player
+ * @return false - error, true - message sent
  */
-int intif_request_guild_storage(uint32 account_id,int guild_id)
+bool intif_request_guild_storage(uint32 account_id, int guild_id)
 {
 	if (CheckForCharServer())
-		return 0;
+		return false;
 	WFIFOHEAD(inter_fd,10);
 	WFIFOW(inter_fd,0) = 0x3018;
 	WFIFOL(inter_fd,2) = account_id;
 	WFIFOL(inter_fd,6) = guild_id;
 	WFIFOSET(inter_fd,10);
-	return 1;
+	return true;
 }
 
 /**
  * Request to save guild storage
- * @param account_id : account requesting the save
- * @param gstor : Guild storage struct to save
- * @return 
+ * @param account_id: account requesting the save
+ * @param gstor: Guild storage struct to save
+ * @return false - error, true - message sent
  */
-int intif_send_guild_storage(uint32 account_id,struct guild_storage *gstor)
+bool intif_send_guild_storage(uint32 account_id, struct s_storage *gstor)
 {
 	if (CheckForCharServer())
-		return 0;
-	WFIFOHEAD(inter_fd,sizeof(struct guild_storage)+12);
+		return false;
+	WFIFOHEAD(inter_fd,sizeof(struct s_storage)+12);
 	WFIFOW(inter_fd,0) = 0x3019;
-	WFIFOW(inter_fd,2) = (unsigned short)sizeof(struct guild_storage)+12;
+	WFIFOW(inter_fd,2) = (unsigned short)sizeof(struct s_storage)+12;
 	WFIFOL(inter_fd,4) = account_id;
-	WFIFOL(inter_fd,8) = gstor->guild_id;
-	memcpy( WFIFOP(inter_fd,12),gstor, sizeof(struct guild_storage) );
+	WFIFOL(inter_fd,8) = gstor->id;
+	memcpy( WFIFOP(inter_fd,12),gstor, sizeof(struct s_storage) );
 	WFIFOSET(inter_fd,WFIFOW(inter_fd,2));
-	return 1;
+	return true;
 }
 
 /**
@@ -1412,7 +1433,7 @@ void intif_parse_Registers(int fd)
  */
 int intif_parse_LoadGuildStorage(int fd)
 {
-	struct guild_storage *gstor;
+	struct s_storage *gstor;
 	struct map_session_data *sd;
 	int guild_id, flag;
 
@@ -1428,12 +1449,12 @@ int intif_parse_LoadGuildStorage(int fd)
 			return 0;
 		}
 	}
-	gstor = gstorage_guild2storage(guild_id);
+	gstor = guild2storage(guild_id);
 	if (!gstor) {
 		ShowWarning("intif_parse_LoadGuildStorage: error guild_id %d not exist\n",guild_id);
 		return 0;
 	}
-	if (gstor->opened) { // Already open.. lets ignore this update
+	if (gstor->status) { // Already open.. lets ignore this update
 		ShowWarning("intif_parse_LoadGuildStorage: storage received for a client already open (User %d:%d)\n", flag?sd->status.account_id:1, flag?sd->status.char_id:1);
 		return 0;
 	}
@@ -1441,15 +1462,15 @@ int intif_parse_LoadGuildStorage(int fd)
 		ShowWarning("intif_parse_LoadGuildStorage: received storage for an already modified non-saved storage! (User %d:%d)\n", flag?sd->status.account_id:1, flag?sd->status.char_id:1);
 		return 0;
 	}
-	if( RFIFOW(fd,2)-13 != sizeof(struct guild_storage) ){
-		ShowError("intif_parse_LoadGuildStorage: data size error %d %d\n",RFIFOW(fd,2)-13 , sizeof(struct guild_storage));
-		gstor->opened = 0;
+	if (RFIFOW(fd,2)-13 != sizeof(struct s_storage)) {
+		ShowError("intif_parse_LoadGuildStorage: data size error %d %d\n",RFIFOW(fd,2)-13 , sizeof(struct s_storage));
+		gstor->status = false;
 		return 0;
 	}
 
-	memcpy(gstor,RFIFOP(fd,13),sizeof(struct guild_storage));
+	memcpy(gstor,RFIFOP(fd,13),sizeof(struct s_storage));
 	if( flag )
-		gstorage_storageopen(sd);
+		storage_guild_storageopen(sd);
 
 	return 1;
 }
@@ -1461,7 +1482,7 @@ int intif_parse_LoadGuildStorage(int fd)
  */
 int intif_parse_SaveGuildStorage(int fd)
 {
-	gstorage_storagesaved(/*RFIFOL(fd,2), */RFIFOL(fd,6));
+	storage_guild_storagesaved(/*RFIFOL(fd,2), */RFIFOL(fd,6));
 	return 1;
 }
 
@@ -3058,7 +3079,7 @@ void intif_parse_broadcast_obtain_special_item(int fd) {
  * @param guild_id : Guild of char
  */
 void intif_itembound_guild_retrieve(uint32 char_id,uint32 account_id,int guild_id) {
-	struct guild_storage *gstor = gstorage_get_storage(guild_id);
+	struct s_storage *gstor = guild2storage2(guild_id);
 	
 	if( CheckForCharServer() )
 		return;
@@ -3070,7 +3091,7 @@ void intif_itembound_guild_retrieve(uint32 char_id,uint32 account_id,int guild_i
 	WFIFOW(inter_fd,10) = guild_id;
 	WFIFOSET(inter_fd,12);
 	if (gstor)
-		gstor->locked = true; //Lock for retrieval process
+		gstor->lock = true; //Lock for retrieval process
 	ShowInfo("Request guild bound item(s) retrieval for CID = "CL_WHITE"%d"CL_RESET", AID = %d, Guild ID = "CL_WHITE"%d"CL_RESET".\n", char_id, account_id, guild_id);
 }
 
@@ -3082,21 +3103,21 @@ void intif_itembound_guild_retrieve(uint32 char_id,uint32 account_id,int guild_i
  */
 void intif_parse_itembound_ack(int fd) {
 	int guild_id = RFIFOW(fd,6);
-	struct guild_storage *gstor = gstorage_get_storage(guild_id);
+	struct s_storage *gstor = guild2storage2(guild_id);
 	if (gstor)
-		gstor->locked = false; //Unlock now that operation is completed
+		gstor->lock = false; //Unlock now that operation is completed
 }
 
 /**
-* IZ 0x3857 <size>.W <count>.W <guild_id>.W { <item>.?B }.*MAX_INVENTORY
-* Received the retrieved guild bound items from inter-server, store them to guild storage.
-* @param fd
-* @author [Cydh]
-*/
+ * IZ 0x3857 <size>.W <count>.W <guild_id>.W { <item>.?B }.*MAX_INVENTORY
+ * Received the retrieved guild bound items from inter-server, store them to guild storage.
+ * @param fd
+ * @author [Cydh]
+ */
 void intif_parse_itembound_store2gstorage(int fd) {
 	unsigned short i, failed = 0;
 	short count = RFIFOW(fd, 4), guild_id = RFIFOW(fd, 6);
-	struct guild_storage *gstor = gstorage_guild2storage(guild_id);
+	struct s_storage *gstor = guild2storage(guild_id);
 
 	if (!gstor) {
 		ShowError("intif_parse_itembound_store2gstorage: Guild '%d' not found.\n", guild_id);
@@ -3108,14 +3129,323 @@ void intif_parse_itembound_store2gstorage(int fd) {
 		struct item *item = (struct item*)RFIFOP(fd, 8 + i*sizeof(struct item));
 		if (!item)
 			continue;
-		if (!gstorage_additem2(gstor, item, item->amount))
+		if (!storage_guild_additem2(gstor, item, item->amount))
 			failed++;
 	}
 	ShowInfo("Retrieved '"CL_WHITE"%d"CL_RESET"' (failed: %d) guild bound item(s) for Guild ID = "CL_WHITE"%d"CL_RESET".\n", count, failed, guild_id);
-	gstor->locked = false;
-	gstor->opened = 0;
+	gstor->lock = false;
+	gstor->status = false;
 }
 #endif
+
+/**
+ * Receive inventory/cart/storage data for player
+ * IZ 0x388a <size>.W <type>.B <account_id>.L <result>.B <storage>.?B
+ * @param fd
+ */
+static bool intif_parse_StorageReceived(int fd)
+{
+	char type =  RFIFOB(fd,4);
+	uint32 account_id = RFIFOL(fd, 5);
+	struct map_session_data *sd = map_id2sd(account_id);
+	struct s_storage *stor, *p; //storage
+	size_t sz_stor = sizeof(struct s_storage);
+
+	if (!sd) {
+		ShowError("intif_parse_StorageReceived: No player online for receiving inventory/cart/storage data (AID: %d)\n", account_id);
+		return false;
+	}
+
+	if (!RFIFOB(fd, 9)) {
+		ShowError("intif_parse_StorageReceived: Failed to load! (AID: %d, type: %d)\n", account_id, type);
+		return false;
+	}
+
+	p = (struct s_storage *)RFIFOP(fd,10);
+
+	switch (type) { 
+		case TABLE_INVENTORY:
+			stor = &sd->inventory;
+			break;
+		case TABLE_STORAGE:
+			if (p->stor_id == 0)
+				stor = &sd->storage;
+			else
+				stor = &sd->premiumStorage;
+			break;
+		case TABLE_CART:
+			stor = &sd->cart;
+			break;
+		default:
+			return false;
+	}
+
+	if (stor->stor_id == p->stor_id) {
+		if (stor->status) { // Already open.. lets ignore this update
+			ShowWarning("intif_parse_StorageReceived: storage received for a client already open (User %d:%d)\n", sd->status.account_id, sd->status.char_id);
+			return false;
+		}
+		if (stor->dirty) { // Already have storage, and it has been modified and not saved yet! Exploit!
+			ShowWarning("intif_parse_StorageReceived: received storage for an already modified non-saved storage! (User %d:%d)\n", sd->status.account_id, sd->status.char_id);
+			return false;
+		}
+	}
+	if (RFIFOW(fd,2)-10 != sz_stor) {
+		ShowError("intif_parse_StorageReceived: data size error %d %d\n",RFIFOW(fd,2)-10 , sz_stor);
+		stor->status = false;
+		return false;
+	}
+
+	memcpy(stor, p, sz_stor); //copy the items data to correct destination
+
+	switch (type) {
+		case TABLE_INVENTORY: {
+#ifdef BOUND_ITEMS
+			int j, idxlist[MAX_INVENTORY];
+#endif
+			pc_setinventorydata(sd);
+			pc_setequipindex(sd);
+			pc_check_expiration(sd);
+			pc_check_available_item(sd, ITMCHK_INVENTORY);
+			pc_itemcd_do(sd, true);
+#ifdef BOUND_ITEMS
+			// Party bound item check
+			if (sd->status.party_id == 0 && (j = pc_bound_chk(sd, BOUND_PARTY, idxlist))) { // Party was deleted while character offline
+				int i;
+				for (i = 0; i < j; i++)
+					pc_delitem(sd, idxlist[i], sd->inventory.u.items_inventory[idxlist[i]].amount, 0, 1, LOG_TYPE_OTHER);
+			}
+#endif
+			//Set here because we need the inventory data for weapon sprite parsing.
+			status_set_viewdata(&sd->bl, sd->status.class_);
+			pc_load_combo(sd);
+			status_calc_pc(sd, (enum e_status_calc_opt)(SCO_FIRST|SCO_FORCE));
+			status_calc_weight(sd, 1|2); // Refresh item weight data
+			chrif_scdata_request(sd->status.account_id, sd->status.char_id);
+			break;
+		}
+
+		case TABLE_CART:
+			pc_check_available_item(sd, ITMCHK_CART);
+			if (sd->state.autotrade) {
+				clif_parse_LoadEndAck(sd->fd, sd);
+				sd->autotrade_tid = add_timer(gettick() + battle_config.feature_autotrade_open_delay, pc_autotrade_timer, sd->bl.id, 0);
+			}else if( sd->state.prevend ){
+				clif_clearcart(sd->fd);
+				clif_cartlist(sd);
+				clif_openvendingreq(sd, sd->vend_skill_lv+2);
+			}
+			break;
+
+		case TABLE_STORAGE:
+			if (stor->stor_id)
+				storage_premiumStorage_open(sd);
+			else {
+#ifdef VIP_ENABLE
+				if (!pc_isvip(sd))
+					stor->max_amount = MIN_STORAGE;
+#endif
+				pc_check_available_item(sd, ITMCHK_STORAGE);
+			}
+			break;
+	}
+	return true;
+}
+
+/**
+ * Save inventory/cart/storage data for a player
+ * IZ 0x388b <account_id>.L <result>.B <type>.B <storage_id>.B
+ * @param fd
+ */
+static void intif_parse_StorageSaved(int fd)
+{
+	if (RFIFOB(fd, 6)) {
+		switch (RFIFOB(fd, 7)) {
+			case TABLE_INVENTORY: //inventory
+				//ShowInfo("Inventory has been saved (AID: %d).\n", RFIFOL(fd, 2));
+				break;
+			case TABLE_STORAGE: //storage
+				//ShowInfo("Storage has been saved (AID: %d).\n", RFIFOL(fd, 2));
+				if (RFIFOB(fd, 8))
+					storage_premiumStorage_saved(map_id2sd(RFIFOL(fd, 2)));
+				break;
+			case TABLE_CART: // cart
+				//ShowInfo("Cart has been saved (AID: %d).\n", RFIFOL(fd, 2));
+				{
+					struct map_session_data *sd = map_id2sd(RFIFOL(fd, 2));
+
+					if( sd && sd->state.prevend ){
+						intif_storage_request(sd,TABLE_CART,0,STOR_MODE_ALL);
+					}
+				}
+				break;
+			default:
+				break;
+		}
+	} else
+		ShowError("Failed to save inventory/cart/storage data (AID: %d, type: %d).\n", RFIFOL(fd, 2), RFIFOB(fd, 7));
+}
+
+/**
+ * IZ 0x388c <len>.W { <storage_table>.? }*?
+ * Receive storage information
+ **/
+void intif_parse_StorageInfo_recv(int fd) {
+	int i, size = sizeof(struct s_storage_table), count = (RFIFOW(fd, 2) - 4) / size;
+
+	storage_count = 0;
+	if (storage_db)
+		aFree(storage_db);
+	storage_db = NULL;
+
+	for (i = 0; i < count; i++) {
+		char name[NAME_LENGTH + 1];
+
+		safestrncpy(name, RFIFOCP(fd, 5 + size * i), NAME_LENGTH);
+		if (name[0] == '\0')
+			continue;
+		RECREATE(storage_db, struct s_storage_table, storage_count+1);
+		memcpy(&storage_db[storage_count], RFIFOP(fd, 4 + size * i), size);
+		storage_count++;
+	}
+
+	if (battle_config.etc_log)
+		ShowInfo("Received '"CL_WHITE"%d"CL_RESET"' storage info from inter-server.\n", storage_count);
+}
+
+/**
+ * Request inventory/cart/storage data for a player
+ * ZI 0x308a <type>.B <account_id>.L <char_id>.L <storage_id>.B
+ * @param sd: Player data
+ * @param type: Storage type
+ * @param stor_id: Storage ID
+ * @param mode: Storage mode
+ * @return false - error, true - message sent
+ */
+bool intif_storage_request(struct map_session_data *sd, enum storage_type type, uint8 stor_id, uint8 mode)
+{
+	if (CheckForCharServer())
+		return false;
+
+	WFIFOHEAD(inter_fd, 13);
+	WFIFOW(inter_fd, 0) = 0x308a;
+	WFIFOB(inter_fd, 2) = type;
+	WFIFOL(inter_fd, 3) = sd->status.account_id;
+	WFIFOL(inter_fd, 7) = sd->status.char_id;
+	WFIFOB(inter_fd, 11) = stor_id;
+	WFIFOB(inter_fd, 12) = mode;
+	WFIFOSET(inter_fd, 13);
+	return true;
+}
+
+/**
+ * Request to save inventory/cart/storage data from player
+ * ZI 0x308b <size>.W <type>.B <account_id>.L <char_id>.L <entries>.?B
+ * @param sd: Player data
+ * @param stor: Storage data
+ * @ return false - error, true - message sent
+ */
+bool intif_storage_save(struct map_session_data *sd, struct s_storage *stor)
+{
+	int stor_size = sizeof(struct s_storage);
+
+	nullpo_retr(false, sd);
+	nullpo_retr(false, stor);
+
+	if (CheckForCharServer())
+		return false;
+
+	WFIFOHEAD(inter_fd, stor_size+13);
+	WFIFOW(inter_fd, 0) = 0x308b;
+	WFIFOW(inter_fd, 2) = stor_size+13;
+	WFIFOB(inter_fd, 4) = stor->type;
+	WFIFOL(inter_fd, 5) = sd->status.account_id;
+	WFIFOL(inter_fd, 9) = sd->status.char_id;
+	memcpy(WFIFOP(inter_fd, 13), stor, stor_size);
+	WFIFOSET(inter_fd, stor_size+13);
+	return true;
+}
+
+int intif_clan_requestclans(){
+	if (CheckForCharServer())
+		return 0;
+	WFIFOHEAD(inter_fd, 2);
+	WFIFOW(inter_fd, 0) = 0x30A0;
+	WFIFOSET(inter_fd, 2);
+	return 1;
+}
+
+void intif_parse_clans( int fd ){
+	clan_load_clandata( ( RFIFOW(fd, 2) - 4 ) / sizeof( struct clan ), (struct clan*)RFIFOP(fd,4) );
+}
+
+int intif_clan_message(int clan_id,uint32 account_id,const char *mes,int len){
+	if (CheckForCharServer())
+		return 0;
+
+	if (other_mapserver_count < 1)
+		return 0; //No need to send.
+
+	WFIFOHEAD(inter_fd, len + 12);
+	WFIFOW(inter_fd,0)=0x30A1;
+	WFIFOW(inter_fd,2)=len+12;
+	WFIFOL(inter_fd,4)=clan_id;
+	WFIFOL(inter_fd,8)=account_id;
+	memcpy(WFIFOP(inter_fd,12),mes,len);
+	WFIFOSET(inter_fd,len+12);
+
+	return 1;
+}
+
+int intif_parse_clan_message( int fd ){
+	clan_recv_message(RFIFOL(fd,4),RFIFOL(fd,8),(char *) RFIFOP(fd,12),RFIFOW(fd,2)-12);
+
+	return 1;
+}
+
+int intif_clan_member_left( int clan_id ){
+	if (CheckForCharServer())
+		return 0;
+
+	if (other_mapserver_count < 1)
+		return 0; //No need to send.
+
+	WFIFOHEAD(inter_fd,6);
+	WFIFOW(inter_fd,0) = 0x30A2;
+	WFIFOL(inter_fd,2) = clan_id;
+	WFIFOSET(inter_fd,6);
+	
+	return 1;
+}
+
+int intif_clan_member_joined( int clan_id ){
+	if (CheckForCharServer())
+		return 0;
+
+	if (other_mapserver_count < 1)
+		return 0; //No need to send.
+
+	WFIFOHEAD(inter_fd,6);
+	WFIFOW(inter_fd,0) = 0x30A3;
+	WFIFOL(inter_fd,2) = clan_id;
+	WFIFOSET(inter_fd,6);
+	
+	return 1;
+}
+
+int intif_parse_clan_onlinecount( int fd ){
+	struct clan* clan = clan_search(RFIFOL(fd,2));
+
+	if( clan == NULL ){
+		return 0;
+	}
+
+	clan->connect_member = RFIFOW(fd,6);
+
+	clif_clan_onlinecount(clan);
+
+	return 1;
+}
 
 //-----------------------------------------------------------------
 
@@ -3231,17 +3561,29 @@ int intif_parse(int fd)
 	case 0x3882:	intif_parse_SavePetOk(fd); break;
 	case 0x3883:	intif_parse_DeletePetOk(fd); break;
 
-	// Homunculus
+	// Storage
+	case 0x388a:	intif_parse_StorageReceived(fd); break;
+	case 0x388b:	intif_parse_StorageSaved(fd); break;
+	case 0x388c:	intif_parse_StorageInfo_recv(fd); break;
+
+	// Homunculus System
 	case 0x3890:	intif_parse_CreateHomunculus(fd); break;
 	case 0x3891:	intif_parse_RecvHomunculusData(fd); break;
 	case 0x3892:	intif_parse_SaveHomunculusOk(fd); break;
 	case 0x3893:	intif_parse_DeleteHomunculusOk(fd); break;
 
+	// Clan system
+	case 0x38A0:	intif_parse_clans(fd); break;
+	case 0x38A1:	intif_parse_clan_message(fd); break;
+	case 0x38A2:	intif_parse_clan_onlinecount(fd); break;
+
 	default:
 		ShowError("intif_parse : unknown packet %d %x\n",fd,RFIFOW(fd,0));
 		return 0;
 	}
+
 	// Skip packet
 	RFIFOSKIP(fd,packet_len);
+
 	return 1;
 }

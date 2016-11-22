@@ -187,7 +187,7 @@ IG_Pet_Egg_Scroll_Box3,12932,0,1,0,0,0,1	// 1x Pet_Egg_Scroll3
 
 IG_Pet_Egg_Scroll_Box4,12933,0,1,0,0,0,1	// 1x Pet_Egg_Scroll4
 
-IG_Pet_Egg_Scroll_Box4,12934,0,1,0,0,0,1	// 1x Pet_Egg_Scroll5
+IG_Pet_Egg_Scroll_Box5,12934,0,1,0,0,0,1	// 1x Pet_Egg_Scroll5
 
 IG_Pet_Egg_Scroll3,12208,100,2,1,0,0,1	// 2x Battle_Manual
 IG_Pet_Egg_Scroll3,12209,200,2,1,0,0,1	// 2x Insurance

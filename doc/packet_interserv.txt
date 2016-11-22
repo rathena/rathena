@@ -501,7 +501,6 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- mes: message to send
 	desc:
 		- Broadcasts a message to all map-servs connected to this char-serv
-		- NB carefull (also using cmd=3000 rAthena_report but encapsulate it into cmd 3008 for map-char)
 
 
 0x3001
@@ -1328,6 +1327,33 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	desc:
 		- Delete pet data
 
+0x308a
+	Type: ZI
+	Structure: <cmd>.W <type>.B <account_id>.L <char_id>.L
+	index: 0,2,3,7
+	len: 11
+	parameter:
+		- cmd : packet identification (0x308a)
+		- type : 0 - TABLE_INVENTORY, 1 - TABLE_CART, 2 - TABLE_STORAGE
+		- account_id
+		- char_id
+	desc:
+		- Request inventory/cart/storage data for a player/guild if type = 3
+
+0x308b
+	Type: ZI
+	Structure: <size>.W <type>.B <account_id>.L <char_id>.L <entries>.?B
+	index: 0,2,4,5,9,13
+	len: 11
+	parameter:
+		- cmd : packet identification (0x308a)
+		- type : 0 - TABLE_INVENTORY, 1 - TABLE_CART, 2 - TABLE_STORAGE
+		- account_id
+		- char_id
+		- entries : Inventory/cart/storage entries that will be saved
+	desc:
+		- Request to save inventory/cart/storage entries
+
 0x3090:
 	Type: ZI
 	Structure: <cmd>.W <s_homunculus>.W <aid>.L <sh>.?B
@@ -1390,7 +1416,51 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	desc:
 		- Homunculus rename
 
+0x30A0:
+	Type: ZI
+	Structure: <cmd>.W
+	index: 0
+	len: 2
+	parameter:
+		- cmd : packet identification (0x30A0)
+	desc:
+		- Requests the loaded clans from the inter server
 
+0x30A1
+	Type: ZI
+	Structure: <cmd>.W <size>.W <clan id>.L <account id>.L <message>.?B
+	index: 0,2,4,8,12
+	len: variable: 12+message
+	parameter:
+		- cmd : packet identification (0x30A1)
+		- size
+		- clan id : the clan id the message is sent to
+		- account id : the account id of the sender
+		- message : the message to be sent
+	desc:
+		- Sends a clan message to the inter server to relay it to all other mapservers
+
+0x30A2:
+	Type: ZI
+	Structure: <cmd>.W <clan id>.L
+	index: 0,2
+	len: 6
+	parameter:
+		- cmd : packet identification (0x30A2)
+		- clan id : the clan id
+	desc:
+		- Notifies the inter server that a player has left the clan or disconnected
+
+0x30A3:
+	Type: ZI
+	Structure: <cmd>.W <clan id>.L
+	index: 0,2
+	len: 6
+	parameter:
+		- cmd : packet identification (0x30A3)
+		- clan id : the clan id
+	desc:
+		- Notifies the inter server that a player has joined the clan or connected
 
 0x3800:
 	Type: IZ
@@ -2139,6 +2209,46 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	desc:
 		- Send pet deletion status
 
+0x388a
+	Type: IZ
+	Structure: <cmd>.W <size>.W <type>.B <account_id>.L <result>.B <entries>.?B
+	index: 0,2,4,5,9
+	len: 9+variable
+	parameter:
+		- cmd : packet identification (0x388a)
+		- size
+		- type : Storage type, 0 - TABLE_INVENTORY, 1 - TABLE_CART, 2 - TABLE_STORAGE
+		- account_id
+		- result : True if data loaded, false if failed
+		- entries : Inventory/cart/storage entries
+	desc:
+		- Process inventory/cart/storage entries for player from inter-server
+
+0x388b
+	Type: IZ
+	Structure: <cmd>.W <account_id>.L <result>.B <type>.B
+	index: 0,2,6,7
+	len: 11
+	parameter:
+		- cmd : packet identification (0x388b)
+		- account_id
+		- result : 1 - success, 0 - failed
+		- type : Storage type, 0 - TABLE_INVENTORY, 1 - TABLE_CART, 2 - TABLE_STORAGE
+	desc:
+		- Info about inventory/cart/storage data is saved
+
+0x388c
+	Type: IZ
+	Structure: <cmd>.W <len>.W { <storage_table>.? }*?
+	index: 0,2,6,...
+	len: 6+variable
+	parameter:
+		- cmd : packet identification (0x388c)
+		- len : Pakcet length
+		- storage_table : Storage table information
+	desc:
+		- Receive storage information
+
 0x3890
 	Type: IZ
 	Structure: <cmd>.W <size>.W <account_id>.L <flag>.B <s_homunculus>.?B
@@ -2189,6 +2299,42 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- flag: 1 Homunculus deleted
 	desc:
 		- Send homunculus deletion status
+
+0x38A0
+	Type: IZ
+	Structure: <cmd>.W <size>.W <clan structure>.?B * n
+	index: 0, 2, 4
+	len: variable: 4+clan*n
+	parameter:
+		- cmd : packet identification (0x38A0)
+		- size
+		- clan structure
+	desc:
+		- Send all loaded clans to the map server
+
+0x38A1
+	Type: IZ
+	Structure: <cmd>.W <size>.W <message>.?B
+	index: 0, 2, 4
+	len: variable: 4+message
+	parameter:
+		- cmd : packet identification (0x38A1)
+		- size
+		- message : the data of the clan chat message packet
+	desc:
+		- Sends a clan chat message to other map servers
+
+0x38A2
+	Type: IZ
+	Structure: <cmd>.W <clan id>.L <online count>.W
+	index: 0, 2, 6
+	len: 8
+	parameter:
+		- cmd : packet identification (0x38A2)
+		- clan id : the clan id of the clan that needs an update
+		- online count : the amount of currently connected players in the clan
+	desc:
+		- Updates the online clan member count for all other map servers
 
 ========================
 | 3.2 Char-Map Packets |
@@ -2873,14 +3019,3 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- count
 	desc:
 		- Stores bonus_script data(s) to the table
-
-0x3008
-	Type: ZA
-	Structure: <cmd>.W <buf>.?B
-	index: 0,2
-	len: variable: 2+len
-	parameter:
-		- cmd : packet identification (0x3008)
-		- buf
-	desc:
-		- chrif_send_report

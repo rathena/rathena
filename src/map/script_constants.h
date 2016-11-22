@@ -1424,6 +1424,12 @@
 	export_constant(SC_GVG_CURSE);
 	export_constant(SC_GVG_SILENCE);
 	export_constant(SC_GVG_BLIND);
+	export_constant(SC_CLAN_INFO);
+	export_constant(SC_SWORDCLAN);
+	export_constant(SC_ARCWANDCLAN);
+	export_constant(SC_GOLDENMACECLAN);
+	export_constant(SC_CROSSBOWCLAN);
+	export_constant(SC_JUMPINGCLAN);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -2794,6 +2800,7 @@
 	export_constant(BG_SAMEMAP_WOS);
 	export_constant(BG_AREA);
 	export_constant(BG_AREA_WOS);
+	export_constant(CLAN);
 
 	/* mercenary guilds */
 	export_constant(ARCH_MERC_GUILD);
@@ -3298,6 +3305,10 @@
 	export_constant(CARD0_FORGE);
 	export_constant(CARD0_CREATE);
 	export_constant(CARD0_PET);
+
+	export_constant(STOR_MODE_NONE);
+	export_constant(STOR_MODE_GET);
+	export_constant(STOR_MODE_PUT);
 
 	#undef export_constant
 

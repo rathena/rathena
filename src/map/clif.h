@@ -9,9 +9,9 @@
 //#include "../common/mmo.h"
 
 struct Channel;
+struct clan;
 struct item;
-struct storage_data;
-struct guild_storage;
+struct s_storage;
 //#include "map.h"
 struct block_list;
 struct unit_data;
@@ -203,6 +203,8 @@ typedef enum send_target {
 	BG_SAMEMAP_WOS,
 	BG_AREA,
 	BG_AREA_WOS,
+
+	CLAN,				// Clan System
 } send_target;
 
 typedef enum broadcast_flags {
@@ -617,7 +619,7 @@ void clif_tradecompleted(struct map_session_data* sd, int fail);
 void clif_tradeundo(struct map_session_data* sd);
 
 // storage
-void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length);
+void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length, const char *storename);
 void clif_updatestorageamount(struct map_session_data* sd, int amount, int max_amount);
 void clif_storageitemadded(struct map_session_data* sd, struct item* i, int index, int amount);
 void clif_storageitemremoved(struct map_session_data* sd, int index, int amount);
@@ -672,8 +674,9 @@ void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len);
 void clif_wis_end(int fd, int result);
 
 void clif_solved_charname(int fd, int charid, const char* name);
-void clif_charnameack(int fd, struct block_list *bl);
-void clif_charnameupdate(struct map_session_data *ssd);
+void clif_name( struct block_list* src, struct block_list *bl, send_target target );
+#define clif_name_self(bl) clif_name( (bl), (bl), SELF )
+#define clif_name_area(bl) clif_name( (bl), (bl), AREA )
 
 void clif_use_card(struct map_session_data *sd,int idx);
 void clif_insert_card(struct map_session_data *sd,int idx_equip,int idx_card,int flag);
@@ -731,7 +734,7 @@ void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp);
 
 // guild
 void clif_guild_created(struct map_session_data *sd,int flag);
-void clif_guild_belonginfo(struct map_session_data *sd, struct guild *g);
+void clif_guild_belonginfo(struct map_session_data *sd);
 void clif_guild_masterormember(struct map_session_data *sd);
 void clif_guild_basicinfo(struct map_session_data *sd);
 void clif_guild_allianceinfo(struct map_session_data *sd);
@@ -747,7 +750,7 @@ void clif_guild_positionchanged(struct guild *g,int idx);
 void clif_guild_memberpositionchanged(struct guild *g,int idx);
 void clif_guild_emblem(struct map_session_data *sd,struct guild *g);
 void clif_guild_emblem_area(struct block_list* bl);
-void clif_guild_notice(struct map_session_data* sd, struct guild* g);
+void clif_guild_notice(struct map_session_data* sd);
 void clif_guild_message(struct guild *g,uint32 account_id,const char *mes,int len);
 void clif_guild_reqalliance(struct map_session_data *sd,uint32 account_id,const char *name);
 void clif_guild_allianceack(struct map_session_data *sd,int flag);
@@ -978,6 +981,12 @@ void clif_spiritcharm(struct map_session_data *sd);
 
 void clif_snap( struct block_list *bl, short x, short y );
 void clif_monster_hp_bar( struct mob_data* md, int fd );
+
+// Clan System
+void clif_clan_basicinfo( struct map_session_data *sd );
+void clif_clan_message(struct clan *clan,const char *mes,int len);
+void clif_clan_onlinecount( struct clan* clan );
+void clif_clan_leave( struct map_session_data* sd );
 
 /**
  * Color Table

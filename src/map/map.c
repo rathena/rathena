@@ -18,6 +18,7 @@
 #include "map.h"
 #include "path.h"
 #include "chrif.h"
+#include "clan.h"
 #include "clif.h"
 #include "duel.h"
 #include "intif.h"
@@ -1982,6 +1983,9 @@ int map_quit(struct map_session_data *sd) {
 	if( sd->bg_id )
 		bg_team_leave(sd,1);
 
+	if( sd->status.clan_id )
+		clan_member_left(sd);
+
 	pc_itemcd_do(sd,false);
 
 	npc_script_event(sd, NPCE_LOGOUT);
@@ -2033,8 +2037,6 @@ int map_quit(struct map_session_data *sd) {
 
 	if (sd->ed) // Remove effects here rather than unit_remove_map_pc so we don't clear on Teleport/map change.
 		elemental_clean_effect(sd->ed);
-
-	if( sd->state.storage_flag == 1 ) sd->state.storage_flag = 0; // No need to Double Save Storage on Quit.
 
 	if (sd->state.permanent_speed == 1) sd->state.permanent_speed = 0; // Remove lock so speed is set back to normal at login.
 
@@ -4354,6 +4356,7 @@ void do_final(void)
 	do_final_atcommand();
 	do_final_battle();
 	do_final_chrif();
+	do_final_clan();
 	do_final_clif();
 	do_final_npc();
 	do_final_quest();
@@ -4623,6 +4626,9 @@ int do_init(int argc, char *argv[])
 	rnd_init();
 	map_config_read(MAP_CONF_NAME);
 
+	if (save_settings == CHARSAVE_NONE)
+		ShowWarning("Value of 'save_settings' is not set, player's data only will be saved every 'autosave_time' (%d seconds).\n", autosave_interval/1000);
+
 	// loads npcs
 	map_reloadnpc(false);
 
@@ -4691,6 +4697,7 @@ int do_init(int argc, char *argv[])
 	do_init_instance();
 	do_init_channel();
 	do_init_chrif();
+	do_init_clan();
 	do_init_clif();
 	do_init_script();
 	do_init_itemdb();

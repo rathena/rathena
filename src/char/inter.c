@@ -21,6 +21,7 @@
 #include "int_auction.h"
 #include "int_quest.h"
 #include "int_elemental.h"
+#include "int_clan.h"
 
 #include <stdlib.h>
 
@@ -39,10 +40,10 @@ char char_server_id[32] = "ragnarok";
 char char_server_pw[32] = ""; // Allow user to send empty password (bugreport:7787)
 char char_server_db[32] = "ragnarok";
 char default_codepage[32] = ""; //Feature by irmin.
-
+struct Inter_Config interserv_config;
 unsigned int party_share_level = 10;
 
-// recv. packet list
+/// Received packet Lengths from map-server
 int inter_recv_packet_length[] = {
 	-1,-1, 7,-1, -1,13,36, (2+4+4+4+1+NAME_LENGTH),  0,-1, 0, 0,  0, 0,  0, 0,	// 3000-
 	 6,-1, 0, 0,  0, 0, 0, 0, 10,-1, 0, 0,  0, 0,  0, 0,	// 3010-
@@ -52,8 +53,9 @@ int inter_recv_packet_length[] = {
 	-1,-1,10,10,  0,-1,12, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3050-  Auction System [Zephyrus]
 	 6,-1, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3060-  Quest system [Kevin] [Inkfish]
 	-1,10, 6,-1,  0, 0, 0, 0,  0, 0, 0, 0, -1,10,  6,-1,	// 3070-  Mercenary packets [Zephyrus], Elemental packets [pakpil]
-	48,14,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3080-
+	48,14,-1, 6,  0, 0, 0, 0,  0, 0,13,-1,  0, 0,  0, 0,	// 3080-  Pet System, Storage
 	-1,10,-1, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 3090-  Homunculus packets [albator]
+	 2,-1, 6, 6,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0,	// 30A0-  Clan packets
 };
 
 struct WisData {
@@ -402,7 +404,7 @@ void mapif_parse_accinfo(int fd) {
 	int u_fd = RFIFOL(fd,2), u_aid = RFIFOL(fd,6), u_group = RFIFOL(fd,10);
 	char type= RFIFOB(fd,14);
 	char query[NAME_LENGTH], query_esq[NAME_LENGTH*2+1];
-	int account_id = 0;
+	uint32 account_id = 0;
 	char *data;
 
 	safestrncpy(query, RFIFOCP(fd,15), NAME_LENGTH);
@@ -495,7 +497,7 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 		}
 	} else {
 		while ( SQL_SUCCESS == Sql_NextRow(sql_handle) ) {
-			int char_id, class_;
+			uint32 char_id, class_;
 			short char_num, base_level, job_level, online;
 			char name[NAME_LENGTH];
 			char *data;
@@ -773,6 +775,8 @@ static int inter_config_read(const char* cfgName)
 			party_share_level = (unsigned int)atof(w2);
 		else if(!strcmpi(w1,"log_inter"))
 			charserv_config.log_inter = atoi(w2);
+		else if(!strcmpi(w1,"inter_server_conf"))
+			strcpy(interserv_config.cfgFile, w2);
 		else if(!strcmpi(w1,"import"))
 			inter_config_read(w2);
 	}
@@ -801,11 +805,86 @@ int inter_log(char* fmt, ...)
 	return 0;
 }
 
+/**
+ * Read inter config file
+ **/
+static void inter_config_readConf(void) {
+	int count = 0;
+	config_setting_t *config = NULL;
+
+	if (conf_read_file(&interserv_config.cfg, interserv_config.cfgFile))
+		return;
+
+	// Read storages
+	config = config_lookup(&interserv_config.cfg, "storages");
+	if (config && (count = config_setting_length(config))) {
+		int i;
+		for (i = 0; i < count; i++) {
+			int id, max_num;
+			const char *name, *tablename;
+			struct s_storage_table table;
+			config_setting_t *entry = config_setting_get_elem(config, i);
+
+			if (!config_setting_lookup_int(entry, "id", &id)) {
+				ShowConfigWarning(entry, "inter_config_readConf: Cannot find storage \"id\" in member %d", i);
+				continue;
+			}
+
+			if (!config_setting_lookup_string(entry, "name", &name)) {
+				ShowConfigWarning(entry, "inter_config_readConf: Cannot find storage \"name\" in member %d", i);
+				continue;
+			}
+
+			if (!config_setting_lookup_string(entry, "table", &tablename)) {
+				ShowConfigWarning(entry, "inter_config_readConf: Cannot find storage \"table\" in member %d", i);
+				continue;
+			}
+
+			if (!config_setting_lookup_int(entry, "max", &max_num))
+				max_num = MAX_STORAGE;
+			else if (max_num > MAX_STORAGE) {
+				ShowConfigWarning(entry, "Storage \"%s\" has \"max\" %d, max is MAX_STORAGE (%d)!\n", name, max_num, MAX_STORAGE);
+				max_num = MAX_STORAGE;
+			}
+
+			memset(&table, 0, sizeof(struct s_storage_table));
+
+			RECREATE(interserv_config.storages, struct s_storage_table, interserv_config.storage_count+1);
+			interserv_config.storages[interserv_config.storage_count].id = id;
+			safestrncpy(interserv_config.storages[interserv_config.storage_count].name, name, NAME_LENGTH);
+			safestrncpy(interserv_config.storages[interserv_config.storage_count].table, tablename, DB_NAME_LEN);
+			interserv_config.storages[interserv_config.storage_count].max_num = max_num;
+			interserv_config.storage_count++;
+		}
+	}
+
+	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' storage informations in '"CL_WHITE"%s"CL_RESET"'\n", interserv_config.storage_count, interserv_config.cfgFile);
+}
+
+void inter_config_finalConf(void) {
+
+	if (interserv_config.storages)
+		aFree(interserv_config.storages);
+	interserv_config.storages = NULL;
+	interserv_config.storage_count = 0;
+
+	config_destroy(&interserv_config.cfg);
+}
+
+static void inter_config_defaults(void) {
+	interserv_config.storage_count = 0;
+	interserv_config.storages = NULL;
+
+	safestrncpy(interserv_config.cfgFile, "conf/inter_server.conf", sizeof(interserv_config.cfgFile));
+}
+
 // initialize
 int inter_init_sql(const char *file)
 {
 	//int i;
 
+
+	inter_config_defaults();
 	inter_config_read(file);
 
 	//DB connection initialized
@@ -813,7 +892,7 @@ int inter_init_sql(const char *file)
 	ShowInfo("Connect Character DB server.... (Character Server)\n");
 	if( SQL_ERROR == Sql_Connect(sql_handle, char_server_id, char_server_pw, char_server_ip, (uint16)char_server_port, char_server_db) )
 	{
-		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
+		ShowError("Couldn't connect with username = '%s', password = '%s', host = '%s', port = '%d', database = '%s'\n",
 			char_server_id, char_server_pw, char_server_ip, char_server_port, char_server_db);
 		Sql_ShowDebug(sql_handle);
 		Sql_Free(sql_handle);
@@ -826,6 +905,7 @@ int inter_init_sql(const char *file)
 	}
 
 	wis_db = idb_alloc(DB_OPT_RELEASE_DATA);
+	inter_config_readConf();
 	inter_guild_sql_init();
 	inter_storage_sql_init();
 	inter_party_sql_init();
@@ -835,6 +915,7 @@ int inter_init_sql(const char *file)
 	inter_elemental_sql_init();
 	inter_mail_sql_init();
 	inter_auction_sql_init();
+	inter_clan_init();
 
 	geoip_readdb();
 	return 0;
@@ -845,6 +926,7 @@ void inter_final(void)
 {
 	wis_db->destroy(wis_db, NULL);
 
+	inter_config_finalConf();
 	inter_guild_sql_final();
 	inter_storage_sql_final();
 	inter_party_sql_final();
@@ -854,14 +936,35 @@ void inter_final(void)
 	inter_elemental_sql_final();
 	inter_mail_sql_final();
 	inter_auction_sql_final();
+	inter_clan_final();
 
 	if(geoip_cache) aFree(geoip_cache);
 	
 	return;
 }
 
+/**
+ * IZ 0x388c <len>.W { <storage_table>.? }*?
+ * Sends storage information to map-server
+ * @param fd
+ **/
+void inter_Storage_sendInfo(int fd) {
+	int size = sizeof(struct s_storage_table), len = 4 + interserv_config.storage_count * size, i = 0;
+	// Send storage table information
+	WFIFOHEAD(fd, len);
+	WFIFOW(fd, 0) = 0x388c;
+	WFIFOW(fd, 2) = len;
+	for (i = 0; i < interserv_config.storage_count; i++) {
+		if (!&interserv_config.storages[i] || !interserv_config.storages[i].name)
+			continue;
+		memcpy(WFIFOP(fd, 4 + size*i), &interserv_config.storages[i], size);
+	}
+	WFIFOSET(fd, len);
+}
+
 int inter_mapif_init(int fd)
 {
+	inter_Storage_sendInfo(fd);
 	return 0;
 }
 
@@ -1265,7 +1368,7 @@ int inter_parse_frommap(int fd)
 	case 0x3005: mapif_parse_RegistryRequest(fd); break;
 	case 0x3006: mapif_parse_NameChangeRequest(fd); break;
 	case 0x3007: mapif_parse_accinfo(fd); break;
-	/* 0x3008 is used by the report stuff */
+	/* 0x3008 unused */
 	case 0x3009: mapif_parse_broadcast_item(fd); break;
 	default:
 		if(  inter_party_parse_frommap(fd)
@@ -1278,6 +1381,7 @@ int inter_parse_frommap(int fd)
 		  || inter_mail_parse_frommap(fd)
 		  || inter_auction_parse_frommap(fd)
 		  || inter_quest_parse_frommap(fd)
+		  || inter_clan_parse_frommap(fd)
 		   )
 			break;
 		else
