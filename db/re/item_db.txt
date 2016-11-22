@@ -11399,7 +11399,7 @@
 27027,Fire_Sandman_Card,Fire Sandman Card,6,20,,10,,,,,0xFFFFFFFF,63,2,16,,,,,{ bonus bDef,50; bonus2 bSubDefEle,Ele_Fire,10; },{},{}
 27028,Fire_Frilldora_Card,Fire Frilldora Card,6,20,,10,,,,,0xFFFFFFFF,63,2,2,,,,,{ .@r = getrefine(); bonus2 bMagicAddEle,Ele_Earth,3+((.@r>=7)*5)+((.@r>=9)*7); },{},{}
 27029,Fire_Golem_Card,Fire Golem Card,6,20,,10,,,,,0xFFFFFFFF,63,2,32,,,,,{ bonus2 bSubEle,Ele_Fire,20; bonus2 bAddEle,Ele_Fire,5; },{},{}
-27030,Fulbuk_Card,Fulbuk Card,6,20,,10,,,,,0xFFFFFFFF,63,2,769,,,,,{ bonus2 bAddEff,Eff_Burning,700,ATF_WEAPON|ATF_MAGIC; },{},{}
+27030,Fulbuk_Card,Fulbuk Card,6,20,,10,,,,,0xFFFFFFFF,63,2,769,,,,,{ bonus3 bAddEff,Eff_Burning,700,ATF_WEAPON|ATF_MAGIC; },{},{}
 //===================================================================
 // New Katars
 //===================================================================
