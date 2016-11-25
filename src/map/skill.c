@@ -8865,55 +8865,37 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			map_foreachinrange(skill_area_sub, bl,i,BL_CHAR,
 				src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		break;
-	case RK_STONEHARDSKIN:
-		if( sd && pc_checkskill(sd,RK_RUNEMASTERY) >= 4 )
-		{
-			int heal = sstatus->hp / 5; // 20% HP
-			if( status_charge(bl,heal,0) )
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start2(src,bl,type,100,skill_lv,heal,skill_get_time(skill_id,skill_lv)));
-			else
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-		}
-		break;
-	case RK_REFRESH:
-		if( sd && pc_checkskill(sd,RK_RUNEMASTERY) >= 8 )
-		{
-			int heal = status_get_max_hp(bl) * 25 / 100;
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,
-				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-			status_heal(bl,heal,0,1);
-			status_change_clear_buffs(bl, SCCB_REFRESH);
-		}
-		break;
-
-	case RK_MILLENNIUMSHIELD:
-		if( sd && pc_checkskill(sd,RK_RUNEMASTERY) >= 9 )
-		{
-			int8 rate = rnd()%100;
-			int16 shields = ((rate < 20) ? 4 : (rate < 50) ? 3 : 2);
-			sc_start4(src,bl,type,100,skill_lv,shields,1000,0,skill_get_time(skill_id,skill_lv));
-			clif_millenniumshield(bl,shields);
-			clif_skill_nodamage(src,bl,skill_id,1,1);
-		}
-		break;
-
 	case RK_GIANTGROWTH:
+	case RK_STONEHARDSKIN:
 	case RK_VITALITYACTIVATION:
 	case RK_ABUNDANCE:
 	case RK_CRUSHSTRIKE:
-		if( sd )
-		{
-			int lv = 1; // RK_GIANTGROWTH
-			if( skill_id == RK_VITALITYACTIVATION )
-				lv = 2;
-			else if( skill_id == RK_ABUNDANCE )
-				lv = 6;
-			else if( skill_id == RK_CRUSHSTRIKE )
-				lv = 7;
-			if( pc_checkskill(sd,RK_RUNEMASTERY) >= lv )
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		}
-		break;
+	case RK_REFRESH:
+	case RK_MILLENNIUMSHIELD:
+		if (sd) {
+			uint8 rune_level = 1; // RK_GIANTGROWTH
+
+			if (skill_id == RK_VITALITYACTIVATION)
+ 				rune_level = 2;
+			else if (skill_id == RK_STONEHARDSKIN)
+				rune_level = 4;
+			else if (skill_id == RK_ABUNDANCE)
+ 				rune_level = 6;
+			else if (skill_id == RK_CRUSHSTRIKE)
+ 				rune_level = 7;
+			else if (skill_id == RK_REFRESH)
+				rune_level = 8;
+			else if (skill_id == RK_MILLENNIUMSHIELD)
+				rune_level = 9;
+			if (pc_checkskill(sd, RK_RUNEMASTERY) >= rune_level) {
+				if (sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)))
+					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+				else if (skill_id == RK_STONEHARDSKIN)
+					clif_skill_fail(sd, skill_id, USESKILL_FAIL_HP_INSUFFICIENT, 0);
+			} else
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+ 		}
+ 		break;
 
 	case RK_FIGHTINGSPIRIT: {
 			// val1: ATKBonus: Caster: 7*PartyMember. Member: 7*PartyMember/4
@@ -8939,58 +8921,36 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case RK_LUXANIMA:
-		if( !sd || !sd->status.party_id || flag&1 ) {
-			if( src == bl ) break;
-			while( skill_area_temp[5] >= 0x10 ) {
-				type = SC_NONE;
-				i = 0;
-				if( skill_area_temp[5]&0x10 ) {
-					if( dstsd ) {
-						i = (rnd()%100 < 50) ? 4 : ((rnd()%100 < 80) ? 3 : 2);
-						clif_millenniumshield(bl,i);
-						skill_area_temp[5] &= ~0x10;
-						type = SC_MILLENNIUMSHIELD;
+		{
+			enum sc_type runes[] = { SC_MILLENNIUMSHIELD, SC_REFRESH, SC_GIANTGROWTH, SC_STONEHARDSKIN, SC_VITALITYACTIVATION, SC_ABUNDANCE };
+
+			if (sd == NULL || sd->status.party_id == 0 || flag&1) {
+				enum sc_type type = runes[skill_area_temp[5]];
+
+				if (src->id == bl->id) // Don't give it back to the RK
+					break;
+
+				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				status_change_clear_buffs(bl, SCCB_LUXANIMA); // For bonus_script
+			} else if (sd) { // Find which SC is going to be given
+				int i = 0, recent = 0, result = -1;
+
+				for (i = 0; i < ARRAYLENGTH(runes); i++) {
+					if (sd->sc.data[runes[i]] && ((sd->sc.data[runes[i]]->timer * (runes[i] == SC_REFRESH? 3 : 1)) > recent || recent == 0)) {
+						recent = sd->sc.data[runes[i]]->timer;
+						result = i;
 					}
-				} else if( skill_area_temp[5]&0x20 ) {
-					i = status_get_max_hp(bl) * 25 / 100;
-					status_change_clear_buffs(bl, SCCB_REFRESH);
-					skill_area_temp[5] &= ~0x20;
-					status_heal(bl,i,0,1);
-					type = SC_REFRESH;
-				} else if( skill_area_temp[5]&0x40 ) {
-					skill_area_temp[5] &= ~0x40;
-					type = SC_GIANTGROWTH;
-				} else if( skill_area_temp[5]&0x80 ) {
-					if( dstsd ) {
-						i = sstatus->hp / 5;
-						if( status_charge(bl,i,0) )
-						type = SC_STONEHARDSKIN;
-						skill_area_temp[5] &= ~0x80;
-					}
-				} else if( skill_area_temp[5]&0x100 ) {
-					skill_area_temp[5] &= ~0x100;
-					type = SC_VITALITYACTIVATION;
-				} else if( skill_area_temp[5]&0x200 ) {
-					skill_area_temp[5] &= ~0x200;
-					type = SC_ABUNDANCE;
 				}
-				if( type > SC_NONE )
-				clif_skill_nodamage(bl,bl,skill_id,skill_lv,
-				sc_start4(src,bl,type,100,skill_lv,i,0,1,skill_get_time(skill_id,skill_lv)));
-			} //end while
-		} else if( sd ) {
-			if( tsc && tsc->count ) {
-				if( tsc->data[SC_MILLENNIUMSHIELD] ) skill_area_temp[5] |= 0x10;
-				if( tsc->data[SC_REFRESH] ) skill_area_temp[5] |= 0x20;
-				if( tsc->data[SC_GIANTGROWTH] ) skill_area_temp[5] |= 0x40;
-				if( tsc->data[SC_STONEHARDSKIN] ) skill_area_temp[5] |= 0x80;
-				if( tsc->data[SC_VITALITYACTIVATION] ) skill_area_temp[5] |= 0x100;
-				if( tsc->data[SC_ABUNDANCE] ) skill_area_temp[5] |= 0x200;
+
+				if (result != -1) {
+					skill_area_temp[5] = result;
+					status_change_end(src, runes[result], INVALID_TIMER);
+					party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
+					clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+				}
 			}
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			party_foreachsamemap(skill_area_sub,sd,skill_get_splash(skill_id,skill_lv),src,skill_id,skill_lv,tick,flag|BCT_PARTY|1,skill_castend_nodamage_id);
 		}
-	break;
+		break;
 
 	case GC_ROLLINGCUTTER:
 		{

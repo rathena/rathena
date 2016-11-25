@@ -27,6 +27,7 @@
 12731,20,1  // Thurisaz Rune
 12732,20,1  // Wyrd Rune
 12733,20,1  // Hagalaz Rune
+22540,20,1  // Lux Anima Rune
 
 // Arch Bishop
 12333,3,1  // Ancilla

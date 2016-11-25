@@ -9975,9 +9975,29 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 500 + 100 * val1;
 			break;
 		case SC_STONEHARDSKIN:
-			if( sd )
-				val1 = sd->status.job_level * pc_checkskill(sd, RK_RUNEMASTERY) / 4; // DEF/MDEF Increase
+			{
+				int hp = status->hp / 5; // 20% of HP
+
+				if (sd)
+					val1 = sd->status.job_level * pc_checkskill(sd, RK_RUNEMASTERY) / 4; // DEF/MDEF Increase
+				if (!status_charge(bl, hp, 0))
+					return 0;
+				val2 = hp;
+			}
 			break;
+		case SC_REFRESH:
+			status_heal(bl, status_get_max_hp(bl) * 25 / 100, 0, 1);
+			status_change_clear_buffs(bl, SCCB_REFRESH);
+			break;
+		case SC_MILLENNIUMSHIELD:
+			{
+				int8 rate = rnd()%100;
+
+				val2 = ((rate < 20) ? 4 : (rate < 50) ? 3 : 2); // Shield count
+				val3 = 1000; // Shield HP
+				clif_millenniumshield(bl, val2);
+			}
+ 			break;
 		case SC_ABUNDANCE:
 			val4 = tick / 10000;
 			tick_time = 10000; // [GodLesZ] tick time
