@@ -10857,7 +10857,6 @@
 2996,XM_CELINE_KIMI@NPC_WIDESTONE,attack,666,5,10000,1000,30000,yes,target,myhpltmaxrate,20,,,,,,,
 2996,XM_CELINE_KIMI@NPC_WIDESLEEP,attack,668,5,10000,1000,30000,yes,target,myhpltmaxrate,20,,,,,,,
 2996,XM_CELINE_KIMI@NPC_WIDESOULDRAIN,attack,680,5,10000,5000,50000,yes,target,myhpltmaxrate,10,,,,,,,
-2996,XM_CELINE_KIMI@NPC_MAXPAIN,attack,716,9,10000,3000,50000,yes,target,myhpltmaxrate,10,,,,,,,
 2996,XM_CELINE_KIMI@NPC_POWERUP,attack,349,5,10000,0,50000,no,self,myhpltmaxrate,5,,,,,,,
 2997,G_XM_CELINE_KIMI@AL_HEAL,idle,28,10,10000,500,5000,no,self,myhpltmaxrate,90,,,,,,,
 2997,G_XM_CELINE_KIMI@NPC_CRITICALWOUND,attack,673,2,1000,0,10000,no,target,always,0,,,,,,,
@@ -10867,5 +10866,4 @@
 2997,G_XM_CELINE_KIMI@NPC_WIDESTONE,attack,666,5,10000,1000,30000,yes,target,myhpltmaxrate,20,,,,,,,
 2997,G_XM_CELINE_KIMI@NPC_WIDESLEEP,attack,668,5,10000,1000,30000,yes,target,myhpltmaxrate,20,,,,,,,
 2997,G_XM_CELINE_KIMI@NPC_WIDESOULDRAIN,attack,680,5,10000,5000,50000,yes,target,myhpltmaxrate,10,,,,,,,
-2997,G_XM_CELINE_KIMI@NPC_MAXPAIN,attack,716,9,10000,3000,50000,yes,target,myhpltmaxrate,10,,,,,,,
 2997,G_XM_CELINE_KIMI@NPC_POWERUP,attack,349,5,10000,0,50000,no,self,myhpltmaxrate,5,,,,,,,
