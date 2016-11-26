@@ -4005,7 +4005,7 @@ void pc_bonus5(struct map_session_data *sd,int type,int type2,int type3,int type
  *	2 - Like 1, except the level granted can stack with previously learned level.
  *	4 - Like 0, except the skill will ignore skill tree (saves through job changes and resets).
  *------------------------------------------*/
-bool pc_skill(TBL_PC* sd, uint16 skill_id, int level, enum e_addskill_type type) {
+bool pc_skill(struct map_session_data* sd, uint16 skill_id, int level, enum e_addskill_type type) {
 	uint16 idx = 0;
 	nullpo_ret(sd);
 
@@ -8789,7 +8789,7 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 /*==========================================
  * Give player a falcon
  *------------------------------------------*/
-void pc_setfalcon(TBL_PC* sd, int flag)
+void pc_setfalcon(struct map_session_data* sd, int flag)
 {
 	if( flag ){
 		if( pc_checkskill(sd,HT_FALCON)>0 )	// add falcon if he have the skill
@@ -8802,7 +8802,7 @@ void pc_setfalcon(TBL_PC* sd, int flag)
 /*==========================================
  *  Set player riding
  *------------------------------------------*/
-void pc_setriding(TBL_PC* sd, int flag)
+void pc_setriding(struct map_session_data* sd, int flag)
 {
 	if( &sd->sc && sd->sc.data[SC_ALL_RIDING] )
 		return;
@@ -8818,7 +8818,7 @@ void pc_setriding(TBL_PC* sd, int flag)
 /*==========================================
  * Give player a mado
  *------------------------------------------*/
-void pc_setmadogear(TBL_PC* sd, int flag)
+void pc_setmadogear(struct map_session_data* sd, int flag)
 {
 	if( flag ){
 		if( pc_checkskill(sd,NC_MADOLICENCE) > 0 )

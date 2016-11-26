@@ -267,13 +267,9 @@ int char_divorce_char_sql(int partner_id1, int partner_id2);
 int char_memitemdata_to_sql(const struct item items[], int max, int id, enum storage_type tableswitch, uint8 stor_id);
 bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storage_type tableswitch, uint8 stor_id);
 
-void disconnect_player(uint32 account_id);
-
 int char_married(int pl1,int pl2);
 int char_child(int parent_id, int child_id);
 int char_family(int pl1,int pl2,int pl3);
-
-int char_request_accreg2(uint32 account_id, uint32 char_id);
 
 //extern bool char_gm_read;
 int char_loadName(uint32 char_id, char* name);

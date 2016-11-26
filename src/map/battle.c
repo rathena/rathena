@@ -1965,7 +1965,7 @@ static int64 battle_calc_base_damage(struct status_data *status, struct weapon_a
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-void battle_consume_ammo(TBL_PC*sd, int skill, int lv)
+void battle_consume_ammo(struct map_session_data*sd, int skill, int lv)
 {
 	int qty = 1;
 

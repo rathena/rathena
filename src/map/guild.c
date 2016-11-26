@@ -1295,7 +1295,7 @@ int guild_getexp(struct map_session_data *sd,int exp) {
 /*====================================================
  * Ask to increase guildskill skill_id
  *---------------------------------------------------*/
-void guild_skillup(TBL_PC* sd, uint16 skill_id) {
+void guild_skillup(struct map_session_data* sd, uint16 skill_id) {
 	struct guild* g;
 	short idx = guild_skill_get_index(skill_id);
 	short max = 0;

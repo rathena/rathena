@@ -952,7 +952,6 @@ int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
-int pc_getrefinebonus(int lv,int type);
 bool pc_can_give_items(struct map_session_data *sd);
 bool pc_can_give_bounded_items(struct map_session_data *sd);
 
@@ -983,7 +982,7 @@ bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min,
 void pc_scdata_received(struct map_session_data *sd);
 void pc_check_expiration(struct map_session_data *sd);
 int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
-int pc_global_expiration_timer(int tid, unsigned tick, int id, intptr_t data);
+int pc_global_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
 void pc_expire_check(struct map_session_data *sd);
 
 void pc_calc_skilltree(struct map_session_data *sd);

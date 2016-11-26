@@ -1976,7 +1976,7 @@ QUESTLOG SYSTEM FUNCTIONS
  * Requests a character's quest log entries to the inter server.
  * @param sd Character's data
  */
-void intif_request_questlog(TBL_PC *sd)
+void intif_request_questlog(struct map_session_data *sd)
 {
 	if (CheckForCharServer())
 		return;
@@ -2059,7 +2059,7 @@ void intif_parse_questsave(int fd)
  * @param sd Character's data
  * @return 0 in case of success, nonzero otherwise
  */
-int intif_quest_save(TBL_PC *sd)
+int intif_quest_save(struct map_session_data *sd)
 {
 	int len = sizeof(struct quest) * sd->num_quests + 8;
 

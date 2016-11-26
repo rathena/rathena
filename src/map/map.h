@@ -887,7 +887,7 @@ bool                    mapit_exists(struct s_mapiterator* mapit);
 int map_check_dir(int s_dir,int t_dir);
 uint8 map_calc_dir(struct block_list *src,int16 x,int16 y);
 uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir);
-int map_random_dir(struct block_list *bl, short *x, short *y); // [Skotlex]
+int map_random_dir(struct block_list *bl, int16 *x, int16 *y); // [Skotlex]
 
 int cleanup_sub(struct block_list *bl, va_list ap);
 
@@ -901,7 +901,6 @@ void map_iwall_remove(const char *wall_name);
 int map_addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
 void map_spawnmobs(int16 m); // [Wizputer]
 void map_removemobs(int16 m); // [Wizputer]
-void do_reconnect_map(void); //Invoked on map-char reconnection [Skotlex]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 

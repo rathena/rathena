@@ -60,14 +60,13 @@ int chrif_char_reset_offline(void);
 int send_users_tochar(void);
 int chrif_char_online(struct map_session_data *sd);
 int chrif_changesex(struct map_session_data *sd, bool change_account);
-int chrif_chardisconnect(struct map_session_data *sd);
 int chrif_divorce(int partner_id1, int partner_id2);
 
 int chrif_removefriend(uint32 char_id, int friend_id);
 
 void chrif_parse_ack_vipActive(int fd);
 
-int chrif_req_charban(int aid, const char* character_name, int timediff);
+int chrif_req_charban(int aid, const char* character_name, int32 timediff);
 int chrif_req_charunban(int aid, const char* character_name);
 
 int chrif_bsdata_request(uint32 char_id);
