@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.1
 //=====	Changelog:	==========================================
-//=	1.0 Release [Unknown]
+//=	1.0 Release [Auriga]
 //=	1.1 Translate and add functionality to script
 //===== Compatible With: =====================================
 //= rAthena Project
