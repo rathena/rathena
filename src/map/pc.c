@@ -532,7 +532,7 @@ void pc_inventory_rentals(struct map_session_data *sd)
 			unsigned int expire_tick = (unsigned int)(sd->inventory.u.items_inventory[i].expire_time - time(NULL));
 
 			clif_rental_time(sd->fd, sd->inventory.u.items_inventory[i].nameid, (int)expire_tick);
-			next_tick = umin(expire_tick, next_tick);
+			next_tick = umin(expire_tick * 1000U, next_tick);
 			c++;
 		}
 	}
