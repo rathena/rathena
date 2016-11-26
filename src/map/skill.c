@@ -8922,18 +8922,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case RK_LUXANIMA:
 		{
-			enum sc_type runes[] = { SC_MILLENNIUMSHIELD, SC_REFRESH, SC_GIANTGROWTH, SC_STONEHARDSKIN, SC_VITALITYACTIVATION, SC_ABUNDANCE };
+			sc_type runes[] = { SC_MILLENNIUMSHIELD, SC_REFRESH, SC_GIANTGROWTH, SC_STONEHARDSKIN, SC_VITALITYACTIVATION, SC_ABUNDANCE };
 
 			if (sd == NULL || sd->status.party_id == 0 || flag&1) {
-				enum sc_type type = runes[skill_area_temp[5]];
-
 				if (src->id == bl->id) // Don't give it back to the RK
 					break;
 
-				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				sc_start(src, bl, runes[skill_area_temp[5]], 100, skill_lv, skill_get_time(skill_id, skill_lv));
 				status_change_clear_buffs(bl, SCCB_LUXANIMA); // For bonus_script
 			} else if (sd) { // Find which SC is going to be given
-				int i = 0, recent = 0, result = -1;
+				int recent = 0, result = -1;
 
 				for (i = 0; i < ARRAYLENGTH(runes); i++) {
 					if (sd->sc.data[runes[i]] && ((sd->sc.data[runes[i]]->timer * (runes[i] == SC_REFRESH? 3 : 1)) > recent || recent == 0)) {

@@ -9991,9 +9991,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_MILLENNIUMSHIELD:
 			{
-				int8 rate = rnd()%100;
+				int8 chance = rnd()%100;
 
-				val2 = ((rate < 20) ? 4 : (rate < 50) ? 3 : 2); // Shield count
+				val2 = ((chance < 20) ? 4 : (chance < 50) ? 3 : 2); // Shield count
 				val3 = 1000; // Shield HP
 				clif_millenniumshield(bl, val2);
 			}
