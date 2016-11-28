@@ -851,9 +851,10 @@ struct s_random_opt_data
 	struct script_code *script;
 };
 
-/// Enum for Random Option Group, for checking in source
+/// Enum for Random Option Groups
 enum Random_Option_Group {
 	RDMOPTG_None = 0,
+	RDMOPTG_Crimson_Weapon,
 };
 
 /// Struct for random option group entry
