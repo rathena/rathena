@@ -31,6 +31,7 @@ que_lhz	mapflag	nowarpto
 
 // 14.2 Eclage ===================
 1@ecl	mapflag	nowarpto
+1@xm_d	mapflag	nowarpto
 
 // Pyramids Basement Nightmare Mode
 moc_prydn1	mapflag	nowarpto

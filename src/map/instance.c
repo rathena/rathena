@@ -655,7 +655,7 @@ int instance_enter(struct map_session_data *sd, unsigned short instance_id, cons
 	nullpo_retr(-1, sd);
 
 	if (db == NULL)
-		return 2;
+		return 3;
 
 	return instance_enter_position(sd, instance_id, name, db->enter.x, db->enter.y);
 }
@@ -669,12 +669,18 @@ int instance_enter_position(struct map_session_data *sd, unsigned short instance
 	struct instance_db *db = instance_searchname_db(name);
 	struct party_data *p = NULL;
 	struct guild *g = NULL;
+	enum instance_mode mode;
 	int16 m;
 
 	nullpo_retr(-1, sd);
 	nullpo_retr(3, db);
 
-	switch(instance_data[instance_id].mode) {
+	if (instance_data[instance_id].state == INSTANCE_FREE) // default mode IM_PARTY for official instance
+		mode = IM_PARTY;
+	else
+		mode = instance_data[instance_id].mode;
+
+	switch(mode) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:

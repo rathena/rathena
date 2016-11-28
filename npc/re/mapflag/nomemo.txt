@@ -110,6 +110,9 @@ gl_cas02_	mapflag	nomemo
 1@nyd	mapflag	nomemo
 2@nyd	mapflag	nomemo
 
+// Horror Toy Factory
+1@xm_d	mapflag	nomemo
+
 // Glast Heim Memorial Dungeon ===
 1@gl_k	mapflag	nomemo
 2@gl_k	mapflag	nomemo

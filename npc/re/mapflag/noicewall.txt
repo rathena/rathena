@@ -32,6 +32,9 @@
 // Inside Eclage ===========
 1@ecl	mapflag	noicewall
 
+// Horror Toy Factory
+1@xm_d	mapflag	noicewall
+
 // Heroes' Trail Part 1 =======
 1@sara	mapflag	noicewall
 1@face	mapflag	noicewall
