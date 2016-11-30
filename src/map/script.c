@@ -9440,22 +9440,34 @@ BUILDIN_FUNC(setmadogear)
 
 /// Sets the save point of the player.
 ///
-/// save "<map name>",<x>,<y>{,<char_id>}
-/// savepoint "<map name>",<x>,<y>{,<char_id>}
+/// save "<map name>",<x>,<y>{{<x>,<y>},<char_id>}
+/// savepoint "<map name>",<x>,<y>{{<x>,<y>},<char_id>}
 BUILDIN_FUNC(savepoint)
 {
-	int x;
-	int y;
+	int x, y, cid_pos = 5;
 	short map_idx;
 	const char* str;
 	TBL_PC* sd;
 
-	if (!script_charid2sd(5,sd))
+	if (script_lastdata(st) > 5)
+		cid_pos = 7;
+
+	if (!script_charid2sd(cid_pos,sd))
 		return SCRIPT_CMD_FAILURE;// no player attached, report source
 
 	str = script_getstr(st, 2);
 	x   = script_getnum(st,3);
 	y   = script_getnum(st,4);
+
+	if (cid_pos == 7) {
+		int dx = script_getnum(st,5), dy = script_getnum(st,6), x1 = x + dx, y1 = y + dy;
+		x -= dx;
+		y -= dy;
+		// Give random coordinates (we can't check for valid cells :P)
+		x = x + rnd()%(x1-x+1);
+		y = y + rnd()%(y1-y+1);
+	}
+
 	map_idx = mapindex_name2id(str);
 	if( map_idx )
 		pc_setsavepoint(sd, map_idx, x, y);
@@ -22209,8 +22221,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkwug,"?"),
 	BUILDIN_DEF(checkmadogear,"?"),
 	BUILDIN_DEF(setmadogear,"??"),
-	BUILDIN_DEF2(savepoint,"save","sii?"),
-	BUILDIN_DEF(savepoint,"sii?"),
+	BUILDIN_DEF2(savepoint,"save","sii???"),
+	BUILDIN_DEF(savepoint,"sii???"),
 	BUILDIN_DEF(gettimetick,"i"),
 	BUILDIN_DEF(gettime,"i"),
 	BUILDIN_DEF(gettimestr,"si"),
