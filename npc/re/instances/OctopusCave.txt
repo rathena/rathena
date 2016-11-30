@@ -134,7 +134,7 @@ mal_dun01,153,237,5	script	Weird Entrance	844,{
 			case 0:
 				mapannounce "mal_dun01", getpartyname(getcharid(1))+" party's "+strcharinfo(0)+" member started to hunt the Octopus!",bc_map,"0x00ff99";
 				if (checkquest(4197) == -1) setquest 4197;
-				//warp "1@cash",199,99;
+				//warp instance_mapname("1@cash"),199,99;
 				close;
 			default:
 				mes "[Starfish]";
@@ -701,41 +701,41 @@ OnTouch:
 //============================================================
 1@cash,193,82,0	script	oct_door1	WARPNPC,2,2,{
 OnTouch:
-	warp "1@cash",151,48;
+	warp instance_mapname("1@cash"),151,48;
 	end;
 }
 1@cash,154,53,0	script	oct_door2	WARPNPC,2,2,{
 OnTouch:
-	warp "1@cash",197,87;
+	warp instance_mapname("1@cash"),197,87;
 	end;
 }
 1@cash,187,99,0	script	oct_door3	WARPNPC,2,2,{
 OnTouch:
-	warp "1@cash",148,128;
+	warp instance_mapname("1@cash"),148,128;
 	end;
 }
 1@cash,153,133,0	script	oct_door4	WARPNPC,2,2,{
 OnTouch:
-	warp "1@cash",197,99;
+	warp instance_mapname("1@cash"),197,99;
 	end;
 }
 1@cash,209,100,0	script	oct_door5	WARPNPC,2,2,{
 OnTouch:
-	warp "1@cash",250,111;
+	warp instance_mapname("1@cash"),250,111;
 	end;
 }
 1@cash,244,118,0	script	oct_door6	WARPNPC,2,2,{
 OnTouch:
-	warp "1@cash",199,100;
+	warp instance_mapname("1@cash"),199,100;
 	end;
 }
 1@cash,209,83,0	script	oct_door7	WARPNPC,2,2,{
 OnTouch:
-	warp "1@cash",252,46;
+	warp instance_mapname("1@cash"),252,46;
 	end;
 }
 1@cash,246,53,0	script	oct_door8	WARPNPC,2,2,{
 OnTouch:
-	warp "1@cash",203,83;
+	warp instance_mapname("1@cash"),203,83;
 	end;
 }
