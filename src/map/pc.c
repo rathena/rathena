@@ -3024,7 +3024,7 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 #endif
 		case SP_ADDMAXWEIGHT:
 			if (sd->state.lr_flag != 2)
-				sd->max_weight += val;
+				sd->add_max_weight += val;
 			break;
 		case SP_ABSORB_DMG_MAXHP: // bonus bAbsorbDmgMaxHP,n;
 			sd->bonus.absorb_dmg_maxhp = max(sd->bonus.absorb_dmg_maxhp, val);
@@ -11464,7 +11464,7 @@ void pc_scdata_received(struct map_session_data *sd) {
 
 	if (pc_iscarton(sd)) {
 		sd->cart_weight_max = 0; // Force a client refesh
-		status_calc_cart_weight(sd, 1|2|4);
+		status_calc_cart_weight(sd, CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE);
 	}
 }
 
