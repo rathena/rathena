@@ -486,7 +486,7 @@ gl_church,105,115,0	duplicate(Delicate trace#01)	Delicate trace#11	844
 
 gl_church,158,100,0	script	#Clue of traces	111,4,4,{
 	end;
-OnTouch:
+OnTouch_:
 	if (job_royal == 4 && countitem(6274) == 0) {
 		specialeffect2 EF_FREEZE;
 		mes "I can feel strong power around here. It would be better to explore around here.";

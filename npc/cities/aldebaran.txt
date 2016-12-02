@@ -688,7 +688,7 @@ aldeba_in,156,179,4	script	Master#alde	61,{
 	mes "Who's your";
 	mes "favorite Kafra girl?";
 	next;
-	if (Sex == 0) {
+	if (Sex == SEX_FEMALE) {
 		mes "[Master]";
 		mes "Oh, and don't worry. I know that girls have some kind of opinion about how pretty other girls are.";
 		next;

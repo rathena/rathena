@@ -53,7 +53,7 @@ OnInit:
 	disablenpc "Killer#Rogueguild";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (ROG_SK == 10) {
 		specialeffect2 EF_CHANGECOLD;
 		specialeffect EF_CHANGEWIND;
@@ -1036,7 +1036,7 @@ in_rogue,181,114,3	script	Jay Greg#rogueguild	85,{
 }
 
 prt_are01,150,150,0	script	#1strecog	-1,10,10,{
-OnTouch:
+OnTouch_:
 	donpcevent "#1st5min::OnEnable";
 	donpcevent "#1stmove::OnEnable";
 	disablenpc "#1strecog";
@@ -1155,7 +1155,7 @@ OnDisable:
 
 prt_are01,149,162,0	script	Kienna#1st	700,1,1,{
 	end;
-OnTouch:
+OnTouch_:
 	callfunc "F_Kienna",strnpcinfo(2);
 	end;
 }

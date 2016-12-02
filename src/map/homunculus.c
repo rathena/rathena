@@ -515,7 +515,7 @@ int hom_levelup(struct homun_data *hd)
 	APPLY_HOMUN_LEVEL_STATWEIGHT();
 
 	// Needed to update skill list for mutated homunculus so unlocked skills will appear when the needed level is reached.
-	status_calc_homunculus(hd,0);
+	status_calc_homunculus(hd,SCO_NONE);
 	clif_hominfo(hd->master,hd,0);
 	clif_homskillinfoblock(hd->master);
 
@@ -959,7 +959,7 @@ void hom_change_name_ack(struct map_session_data *sd, char* name, int flag)
 		return;
 	}
 	safestrncpy(hd->homunculus.name,name,NAME_LENGTH);
-	clif_charnameack (0,&hd->bl);
+	clif_name_area(&hd->bl);
 	hd->homunculus.rename_flag = 1;
 	clif_hominfo(sd,hd,0);
 }

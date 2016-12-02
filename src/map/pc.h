@@ -12,6 +12,7 @@
 #include "atcommand.h" // AtCommandType
 #include "battle.h" // battle_config
 #include "buyingstore.h"  // struct s_buyingstore
+#include "clan.h"
 #include "itemdb.h" // MAX_ITEMGROUP
 #include "script.h" // struct script_reg, struct script_regstr
 #include "searchstore.h"  // struct s_search_store_info
@@ -206,7 +207,7 @@ struct map_session_data {
 		unsigned int arrow_atk : 1;
 		unsigned int gangsterparadise : 1;
 		unsigned int rest : 1;
-		unsigned int storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]
+		unsigned int storage_flag : 3; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex], 3: Premium Storage
 		unsigned int snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
 		unsigned int abra_flag : 2; // Abracadabra bugfix by Aru
 		unsigned int autocast : 1; // Autospell flag [Inkfish]
@@ -274,9 +275,14 @@ struct map_session_data {
 	uint32 packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 ... 18
 	struct mmo_charstatus status;
 
+	// Item Storages
+	struct s_storage storage, premiumStorage;
+	struct s_storage inventory;
+	struct s_storage cart;
+
 	struct item_data* inventory_data[MAX_INVENTORY]; // direct pointers to itemdb entries (faster than doing item_id lookups)
 	short equip_index[EQI_MAX];
-	unsigned int weight,max_weight;
+	unsigned int weight,max_weight,add_max_weight;
 	int cart_weight,cart_num,cart_weight_max;
 	int fd;
 	unsigned short mapindex;
@@ -307,6 +313,7 @@ struct map_session_data {
 	time_t emotionlasttime; // to limit flood with emotion packets
 
 	short skillitem,skillitemlv;
+	bool skillitem_keep_requirement;
 	uint16 skill_id_old,skill_lv_old;
 	uint16 skill_id_dance,skill_lv_dance;
 	short cook_mastery; // range: [0,1999] [Inkfish]
@@ -368,6 +375,7 @@ struct map_session_data {
 	int ignore_mdef_by_race[RC_MAX];
 	int ignore_mdef_by_class[CLASS_MAX];
 	int ignore_def_by_race[RC_MAX];
+	int ignore_def_by_class[CLASS_MAX];
 	short sp_gain_race[RC_MAX];
 	int magic_addrace2[RC2_MAX];
 	int ignore_mdef_by_race2[RC2_MAX];
@@ -394,7 +402,7 @@ struct map_session_data {
 		short value;
 		int rate;
 		int tick;
-	} hp_loss, sp_loss, hp_regen, sp_regen;
+	} hp_loss, sp_loss, hp_regen, sp_regen, percent_hp_regen, percent_sp_regen;
 	struct {
 		short class_, rate;
 	}	add_def[MAX_PC_BONUS], add_mdef[MAX_PC_BONUS], add_mdmg[MAX_PC_BONUS];
@@ -509,9 +517,12 @@ struct map_session_data {
 	int guildspy; // [Syrus22]
 	int partyspy; // [Syrus22]
 
+	struct clan *clan;
+
 	int vended_id;
 	int vender_id;
 	int vend_num;
+	uint16 vend_skill_lv;
 	char message[MESSAGE_SIZE];
 	struct s_vending vending[MAX_VENDING];
 
@@ -646,7 +657,6 @@ struct map_session_data {
 	int c_marker[MAX_SKILL_CRIMSON_MARKER]; /// Store target that marked by Crimson Marker [Cydh]
 	bool flicker; /// Check RL_FLICKER usage status [Cydh]
 
-	int storage_size; /// Holds player storage size (VIP system).
 #ifdef VIP_ENABLE
 	struct vip_info vip;
 #endif
@@ -685,6 +695,12 @@ struct map_session_data {
 	} roulette;
 
 	unsigned short instance_id;
+	short setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
+
+#if PACKETVER >= 20150513
+	uint32* hatEffectIDs;
+	uint8 hatEffectCount;
+#endif
 };
 
 struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -775,6 +791,14 @@ enum adopt_responses {
 	ADOPT_MARRIED,
 };
 
+enum item_check {
+	ITMCHK_NONE      = 0x0,
+	ITMCHK_INVENTORY = 0x1,
+	ITMCHK_CART      = 0x2,
+	ITMCHK_STORAGE   = 0x4,
+	ITMCHK_ALL       = ITMCHK_INVENTORY|ITMCHK_CART|ITMCHK_STORAGE,
+};
+
 struct {
 	unsigned int base_hp[MAX_LEVEL], base_sp[MAX_LEVEL]; //Storage for the first calculation with hp/sp factor and multiplicator
 	int hp_factor, hp_multiplicator, sp_factor;
@@ -790,6 +814,10 @@ struct {
 	struct s_params {
 		uint16 str, agi, vit, int_, dex, luk;
 	} max_param;
+	struct s_job_noenter_map {
+		uint32 zone;
+		uint8 group_lv;
+	} noenter_map;
 } job_info[CLASS_COUNT];
 
 #define EQP_WEAPON EQP_HAND_R
@@ -924,7 +952,6 @@ int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
-int pc_getrefinebonus(int lv,int type);
 bool pc_can_give_items(struct map_session_data *sd);
 bool pc_can_give_bounded_items(struct map_session_data *sd);
 
@@ -942,6 +969,7 @@ void pc_reg_received(struct map_session_data *sd);
 void pc_close_npc(struct map_session_data *sd,int flag);
 int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data);
 
+void pc_setequipindex(struct map_session_data *sd);
 uint8 pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
 void pc_setinventorydata(struct map_session_data *sd);
@@ -954,7 +982,7 @@ bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min,
 void pc_scdata_received(struct map_session_data *sd);
 void pc_check_expiration(struct map_session_data *sd);
 int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
-int pc_global_expiration_timer(int tid, unsigned tick, int id, intptr_t data);
+int pc_global_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
 void pc_expire_check(struct map_session_data *sd);
 
 void pc_calc_skilltree(struct map_session_data *sd);
@@ -1065,7 +1093,7 @@ int pc_resethate(struct map_session_data*);
 bool pc_equipitem(struct map_session_data *sd, short n, int req_pos);
 bool pc_unequipitem(struct map_session_data*,int,int);
 void pc_checkitem(struct map_session_data*);
-void pc_check_available_item(struct map_session_data *sd);
+void pc_check_available_item(struct map_session_data *sd, uint8 type);
 int pc_useitem(struct map_session_data*,int);
 
 int pc_skillatk_bonus(struct map_session_data *sd, uint16 skill_id);
@@ -1087,6 +1115,7 @@ void pc_setriding(struct map_session_data* sd, int flag);
 void pc_setmadogear(struct map_session_data* sd, int flag);
 void pc_changelook(struct map_session_data *,int,int);
 void pc_equiplookall(struct map_session_data *sd);
+void pc_set_costume_view(struct map_session_data *sd);
 
 int pc_readparam(struct map_session_data *sd, int type);
 bool pc_setparam(struct map_session_data *sd, int type, int val);
@@ -1144,12 +1173,10 @@ int pc_mapid2jobid(unsigned short class_, int sex);	// Skotlex
 const char * job_name(int class_);
 
 struct skill_tree_entry {
-	uint16 id;
-	uint8 max;
-	uint8 joblv;
+	uint16 skill_id, skill_lv;
+	uint32 baselv, joblv;
 	struct {
-		uint16 id;
-		uint8 lv;
+		uint16 skill_id, skill_lv;
 	} need[MAX_PC_SKILL_REQUIRE];
 }; // Celest
 extern struct skill_tree_entry skill_tree[CLASS_COUNT][MAX_SKILL_TREE];
@@ -1257,6 +1284,8 @@ void pc_validate_skill(struct map_session_data *sd);
 
 void pc_show_questinfo(struct map_session_data *sd);
 void pc_show_questinfo_reinit(struct map_session_data *sd);
+
+bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv);
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
 int pc_level_penalty_mod(int level_diff, uint32 mob_class, enum e_mode mode, int type);

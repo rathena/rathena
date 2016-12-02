@@ -407,10 +407,11 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
 	ud->walktimer = INVALID_TIMER;
 
-	if (ud->state.walk_script && bl->x == ud->to_x && bl->y == ud->to_y) {
+	if (bl->x == ud->to_x && bl->y == ud->to_y) {
 		if (ud->walk_done_event[0])
 			npc_event_do_id(ud->walk_done_event,bl->id);
-		ud->state.walk_script = 0;
+		if (ud->state.walk_script)
+			ud->state.walk_script = 0;
 	}
 
 	switch(bl->type) {
@@ -2910,7 +2911,9 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				if (sd->state.storage_flag == 1)
 					storage_storage_quit(sd,0);
 				else if (sd->state.storage_flag == 2)
-					gstorage_storage_quit(sd,0);
+					storage_guild_storage_quit(sd, 0);
+				else if (sd->state.storage_flag == 3)
+					storage_premiumStorage_quit(sd);
 
 				sd->state.storage_flag = 0; //Force close it when being warped.
 			}
@@ -2977,7 +2980,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			else if (--map[bl->m].users == 0 && battle_config.dynamic_mobs)
 				map_removemobs(bl->m);
 
-			if( !(sd->sc.option&OPTION_INVISIBLE) ) // Decrement the number of active pvp players on the map
+			if( !pc_isinvisible(sd) ) // Decrement the number of active pvp players on the map
 				--map[bl->m].users_pvp;
 
 			if( sd->state.hpmeter_visible ) {
@@ -3210,6 +3213,14 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->qi_display = NULL;
 			}
 			sd->qi_count = 0;
+
+#if PACKETVER >= 20150513
+			if( sd->hatEffectCount > 0 ){
+				aFree(sd->hatEffectIDs);
+				sd->hatEffectIDs = NULL;
+				sd->hatEffectCount = 0;
+			}
+#endif
 
 			// Clearing...
 			if (sd->bonus_script.head)

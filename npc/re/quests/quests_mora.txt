@@ -531,6 +531,11 @@ splendide,183,117,4	script	Tired-looking Fairy	438,{
 		close;
 	} else if (ep14_1_bs < 10) {
 		if (checkquest(11187) == -1) {
+			if(!isbegin_quest(11186)) { // TODO: Confirm official dialog (is there one?)
+				mes "[Tired-looking Fairy]";
+				mes "I'm tired, don't talk to me.";
+				close;
+			}
 			mes "[Tired-looking Fairy]";
 			mes "I'm tired, don't talk to me.";
 			next;
@@ -1464,7 +1469,7 @@ sec_in02,35,175,0	script	Theore Set Guid	436,{
 //============================================================
 dic_in01,262,191,0	script	#ep14_1_xq02	139,0,3,{
 	end;
-OnTouch:
+OnTouch_:
 	if (ep13_3_secret > 22 && checkquest(7206) == -1) {
 		enablenpc "Cheshire#ep14_1_xq01";
 		cutin "ep13_cheshire_h",1;
@@ -1855,7 +1860,7 @@ L_CheckPlaytime:
 
 dicastes02,125,192,0	script	#call_cheshir_ep14	139,0,3,{
 	end;
-OnTouch:
+OnTouch_:
 	if (ep13_3_secret > 22) {
 		if (rand(2)) {
 			emotion e_ho,1;

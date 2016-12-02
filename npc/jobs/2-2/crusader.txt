@@ -207,7 +207,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 			close;
 		}
 		mes "[Michael Halig]";
-		if (Sex) mes "If you, too, are a man of the sword, constantly train and prepare yourself. No one knows when the Holy War may begin.";
+		if (Sex == SEX_MALE) mes "If you, too, are a man of the sword, constantly train and prepare yourself. No one knows when the Holy War may begin.";
 		else mes "As a woman of the sword, you must train diligently and constantly. Prepare yourself, for no one knows when the Holy War may be coming.";
 		close;
 	}
@@ -295,7 +295,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 		mes "[Michael Halig]";
 		mes "Now you are";
 		mes "one of us!";
-		if (Sex) mes "...Brother.";
+		if (Sex == SEX_MALE) mes "...Brother.";
 		else mes "...Comrade.";
 		next;
 		if(.@JobLevel != 50) getitem 504, 6;
@@ -347,7 +347,7 @@ prt_castle,164,32,1	script	Man in Anguish	733,{
 	else if(CRUS_Q == 4) {
 		mes "What is it...?";
 		mes "Do you have business";
-		if (Sex) mes "with me, man of the sword?";
+		if (Sex == SEX_MALE) mes "with me, man of the sword?";
 		else mes "with me, woman of the sword?";
 		next;
 		if (select("I'd like to take the Crusader test.:Nothing.") == 1) {
@@ -1205,7 +1205,7 @@ OnDead:
 
 
 job_cru,98,105,4	script	 Summoner#cr5	45,3,3,{
-OnTouch:
+OnTouch_:
 	set CRUS_Q,6;
 	changequest 3010,3011;
 	warp "prt_castle",164,28;
@@ -1253,7 +1253,7 @@ OnStart:
 }
 
 job_cru,168,17,0	script	Zombie Guide	-1,2,2,{
-OnTouch:
+OnTouch_:
 	mes "[Bliant Piyord]";
 	mes "Go forth and defeat all";
 	mes "the monsters that appear.";
@@ -1324,7 +1324,7 @@ OnInit:
 	disablenpc "Monster Summon#cr1";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "Monster Summon#cr0::OnMonster1";
 	donpcevent "Monster Summon#cr1::OnEnd";
 	end;
@@ -1343,7 +1343,7 @@ OnInit:
 	disablenpc "Monster Summon#cr2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "Monster Summon#cr0::OnMonster2";
 	donpcevent "Monster Summon#cr2::OnEnd";
 	end;
@@ -1362,7 +1362,7 @@ OnInit:
 	disablenpc "Monster Summon#cr3";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "Monster Summon#cr0::OnMonster3";
 	donpcevent "Monster Summon#cr3::OnEnd";
 	end;
@@ -1381,7 +1381,7 @@ OnInit:
 	disablenpc "Monster Summon#cr4";
 	end;
 
-OnTouch:
+OnTouch_:
 	monster "job_cru",168,150,strcharinfo(0),1036,1,"Monster Summon#cr4-a::OnDead";
 	donpcevent "Monster Summon#cr4::OnEnd";
 	end;
@@ -1415,7 +1415,7 @@ OnInit:
 	disablenpc "Monster Summon#cr5";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "prt_castle",35,147;
 	donpcevent "Monster Summon#cr0::OnReset";
 	donpcevent "Monster Summon#cr4::OnReset";

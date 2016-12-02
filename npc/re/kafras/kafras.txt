@@ -24,6 +24,7 @@
 //= 1.3 Added Eden Group Kafra. [Euphy]
 //= 1.3a Moved Rune Knight Kafra from job file. [Euphy]
 //= 1.4 Added Izlude duplicates. [Euphy]
+//= 1.5 Added Glastheim Kafra [Ridley8819]
 //============================================================ 
 
 // Brasilis
@@ -42,6 +43,15 @@ dewata,202,184,6	script	Kafra Employee::kaf_dewata	117,{
 	callfunc "F_Kafra",0,10,1,40,700;
 	savepoint "dewata",206,174;
 	callfunc "F_KafEnd",0,1,"on Dewata Island";
+}
+
+// Glastheim
+//============================================================
+glast_01,200,275,5	script	Kafra Employee::kaf_glast	115,{
+	cutin "kafra_03",2;
+	callfunc "F_Kafra",0,3,2,500,700;
+	savepoint "glast_01",200,272;
+	callfunc "F_KafEnd",0,1,"in Glast Heim";
 }
 
 // Eden Group

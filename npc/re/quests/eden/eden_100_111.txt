@@ -682,7 +682,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						emotion e_heh;
 						break;
 					case 2:
-						if (Sex == 1)
+						if (Sex == SEX_MALE)
 							mes "I'm not sure if I'm cut out for that job. Besides...";
 						else
 							mes "I am sorry to say this but I am the only pupil of master now and forever... He said ^FF0000I don't need an ugly female pupil^000000 but I still stick to him.";

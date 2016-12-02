@@ -370,7 +370,7 @@ que_qsch05,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch05	403
 	function	SMonster;
 	set .@sub$, callfunc("F_Okolnir");
 	
-OnTouch:
+OnTouch_:
 	set .@sub$, callfunc("F_Okolnir");
 	set .@saram,getmapusers("que_q"+.@sub$);
 	if (.@saram < 21) {
@@ -937,7 +937,7 @@ que_qsch05,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch05	844
 -	script	windpath01_main	-1,{
 	end;
 	
-OnTouch:
+OnTouch_:
 	set .@sub$,callfunc("F_Okolnir");
 	if (countitem(7839)) {
 		mes "The Warp Gate responds to the Crystal Key.";
@@ -1005,7 +1005,7 @@ OnDisable:
 	stopnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	initnpctimer;
 	set .@sub$,callfunc("F_Okolnir");
 	disablenpc "#event_start01_"+.@sub$;
@@ -1276,7 +1276,7 @@ OnDisable:
 	disablenpc "#getspell0"+.@c+"_"+.@sub$;
 	end;
 
-OnTouch:
+OnTouch_:
 	set .@sub$,callfunc("F_Okolnir");
 	sc_start SC_Stone,300000,0,10000;
 	switch (getd("$@gqse_"+.@sub$+"_gd")) {
@@ -1387,7 +1387,7 @@ que_qsch05,146,121,0	duplicate(#getspells_main)	#getspell08_sch05	-1,1,1
 -	script	#main_cages	-1,{
 	end;
 	
-OnTouch:
+OnTouch_:
 	set .@sub$,callfunc("F_Okolnir");
 	sc_end SC_Stone;
 	setarray .@n, 108,151,107,135,113,114,158,106,163,133,150,154;
@@ -1513,7 +1513,7 @@ que_qsch05,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch05_mobctrl	844
 -	script	windpaths_main	-1,{
 	end;
 	
-OnTouch:
+OnTouch_:
 	set .@sub$,callfunc("F_Okolnir");
 	if (compare(strnpcinfo(0),"windpath03")) {
 		warp "que_q"+.@sub$,119,103;
@@ -1553,7 +1553,7 @@ que_qsch05,128,104,0	duplicate(windpaths_main)	windpath04_sch05	45,1,1
 -	script	#nm_switch_main	-1,{
 	end;
 	
-OnTouch:
+OnTouch_:
 	set .@sub$,callfunc("F_Okolnir");
 	disablenpc "#nm_switch_"+.@sub$;
 	initnpctimer;
@@ -1886,7 +1886,7 @@ que_qsch05,2,10,0	duplicate(#main_stone03)	#sch05_stone03	844
 -	script	Guard of Shadow#main_all	-1,{
 	end;
 	
-OnTouch:
+OnTouch_:
 	set .@sub$,callfunc("F_Okolnir");
 	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
 	disablenpc "Guard of Shadow#"+.@sub$+"_0"+.@in;
@@ -1960,7 +1960,7 @@ que_qsch05,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_0
 -	script	Bloody Hunter#main_all	-1,{
 	end;
 	
-OnTouch:
+OnTouch_:
 	set .@sub$,callfunc("F_Okolnir");
 	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
 	disablenpc "Bloody Hunter#"+.@sub$+"_ac0"+.@in;
@@ -2034,7 +2034,7 @@ que_qsch05,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac04	
 -	script	Temple Keeper#main_all	-1,{
 	end;
 	
-OnTouch:
+OnTouch_:
 	set .@sub$,callfunc("F_Okolnir");
 	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
 	disablenpc "Temple Keeper#"+.@sub$+"_ac0"+.@in;
@@ -2273,7 +2273,7 @@ que_qsch05,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch05_gift	403
 -	script	#to_agit_main_gate	-1,{
 	end;
 	
-OnTouch:
+OnTouch_:
 	set .@t$, ((compare(strnpcinfo(4),"aru"))?"arug_cas0":"schg_cas0")+(charat(strnpcinfo(4),getstrlen(strnpcinfo(4))-1));
 	warp .@t$,157,369;
 	end;

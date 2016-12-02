@@ -120,7 +120,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 				close;
 			case 2:
 				mes "[Roberto]";
-				mes "...hey "+((Sex)?"mister":"miss")+".";
+				mes "...hey "+((Sex == SEX_MALE)?"mister":"miss")+".";
 				mes "...be careful at night.";
 				close;
 			}
@@ -260,7 +260,7 @@ payon,103,63,3	script	Jason	88,3,3,{
 	mes "a lonely lad like me?";
 	close;
 
-OnTouch:
+OnTouch_:
 	mes "[???]";
 	mes "Errrrrrr...";
 	close;

@@ -152,7 +152,7 @@ int chclif_parse_pincode_check( int fd, struct char_session_data* sd ){
 		return 1;
 
 	memset(pin,0,PINCODE_LENGTH+1);
-	strncpy((char*)pin, (char*)RFIFOP(fd, 6), PINCODE_LENGTH);
+	strncpy((char*)pin, RFIFOCP(fd, 6), PINCODE_LENGTH);
 	RFIFOSKIP(fd,10);
 
 	char_pincode_decrypt(sd->pincode_seed, pin );
@@ -246,8 +246,8 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 		
 		memset(oldpin,0,PINCODE_LENGTH+1);
 		memset(newpin,0,PINCODE_LENGTH+1);
-		strncpy(oldpin, (char*)RFIFOP(fd,6), PINCODE_LENGTH);
-		strncpy(newpin, (char*)RFIFOP(fd,10), PINCODE_LENGTH);
+		strncpy(oldpin, RFIFOCP(fd,6), PINCODE_LENGTH);
+		strncpy(newpin, RFIFOCP(fd,10), PINCODE_LENGTH);
 		RFIFOSKIP(fd,14);
 		
 		char_pincode_decrypt(sd->pincode_seed,oldpin);
@@ -280,7 +280,7 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 	else {
 		char newpin[PINCODE_LENGTH+1];
 		memset(newpin,0,PINCODE_LENGTH+1);
-		strncpy( newpin, (char*)RFIFOP(fd,6), PINCODE_LENGTH );
+		strncpy( newpin, RFIFOCP(fd,6), PINCODE_LENGTH );
 		RFIFOSKIP(fd,10);
 
 		char_pincode_decrypt( sd->pincode_seed, newpin );
@@ -336,8 +336,8 @@ int chclif_mmo_send006b(int fd, struct char_session_data* sd){
 	WFIFOW(fd,0) = 0x6b;
 	if(newvers){ //20100413
 		WFIFOB(fd,4) = MAX_CHARS; // Max slots.
-		WFIFOB(fd,5) = sd->char_slots; // Available slots. (PremiumStartSlot)
-		WFIFOB(fd,6) = MAX_CHARS; // Premium slots. (Any existent chars past sd->char_slots but within MAX_CHARS will show a 'Premium Service' in red)
+		WFIFOB(fd,5) = MIN_CHARS; // Available slots. (PremiumStartSlot)
+		WFIFOB(fd,6) = MIN_CHARS+sd->chars_vip; // Premium slots. (Any existent chars past sd->char_slots but within MAX_CHARS will show a 'Premium Service' in red)
 	}
 	memset(WFIFOP(fd,4 + offset), 0, 20); // unknown bytes
 	j+=char_mmo_chars_fromsql(sd, WFIFOP(fd,j));
@@ -356,11 +356,11 @@ void chclif_mmo_send082d(int fd, struct char_session_data* sd) {
 	WFIFOHEAD(fd,29);
 	WFIFOW(fd,0) = 0x82d;
 	WFIFOW(fd,2) = 29;
-	WFIFOB(fd,4) = sd->char_slots;
-	WFIFOB(fd,5) = MAX_CHARS - sd->char_slots;
-	WFIFOB(fd,6) = MAX_CHARS - sd->char_slots;
-	WFIFOB(fd,7) = sd->char_slots;
-	WFIFOB(fd,8) = sd->char_slots;
+	WFIFOB(fd,4) = MIN_CHARS; // normal_slot
+	WFIFOB(fd,5) = sd->chars_vip; // premium_slot
+	WFIFOB(fd,6) = sd->chars_billing; // billing_slot
+	WFIFOB(fd,7) = sd->char_slots; // producible_slot
+	WFIFOB(fd,8) = MAX_CHARS; // valid_slot
 	memset(WFIFOP(fd,9), 0, 20); // unused bytes
 	WFIFOSET(fd,29);
 }
@@ -468,7 +468,7 @@ void chclif_char_delete2_cancel_ack(int fd, uint32 char_id, uint32 result) {
 int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(6)
 	{
-		uint32 char_id, i;
+		uint32 char_id, i, guild_id, party_id;
 		char* data;
 		time_t delete_date;
 
@@ -482,7 +482,7 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 			return 1;
 		}
 
-		if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `delete_date` FROM `%s` WHERE `char_id`='%d'", schema_config.char_db, char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
+		if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `delete_date`,`party_id`,`guild_id` FROM `%s` WHERE `char_id`='%d'", schema_config.char_db, char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
 		{
 			Sql_ShowDebug(sql_handle);
 			chclif_char_delete2_ack(fd, char_id, 3, 0);
@@ -490,28 +490,26 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 		}
 
 		Sql_GetData(sql_handle, 0, &data, NULL); delete_date = strtoul(data, NULL, 10);
+		Sql_GetData(sql_handle, 1, &data, NULL); party_id    = strtoul(data, NULL, 10);
+		Sql_GetData(sql_handle, 2, &data, NULL); guild_id    = strtoul(data, NULL, 10);
 
 		if( delete_date ) {// character already queued for deletion
 			chclif_char_delete2_ack(fd, char_id, 0, 0);
 			return 1;
 		}
 
-	/*
-		// Aegis imposes these checks probably to avoid dead member
-		// entries in guilds/parties, otherwise they are not required.
-		// TODO: Figure out how these are enforced during waiting.
-		if( guild_id )
-		{// character in guild
+		if (charserv_config.char_config.char_del_restriction&CHAR_DEL_RESTRICT_GUILD && guild_id) // character is in guild
+		{
 			chclif_char_delete2_ack(fd, char_id, 4, 0);
 			return 1;
 		}
 
-		if( party_id )
-		{// character in party
+		if (charserv_config.char_config.char_del_restriction&CHAR_DEL_RESTRICT_PARTY && party_id) // character is in party
+		{
 			chclif_char_delete2_ack(fd, char_id, 5, 0);
 			return 1;
 		}
-	*/
+		
 		// success
 		delete_date = time(NULL)+(charserv_config.char_config.char_del_delay);
 
@@ -563,8 +561,7 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(12)
 	{
 		char birthdate[8+1];
-		uint32 char_id;
-		int i, k;
+		uint32 char_id, i, k;
 		unsigned int base_level;
 		char* data;
 		time_t delete_date;
@@ -638,8 +635,7 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 
 // CH: <082b>.W <char id>.L
 int chclif_parse_char_delete2_cancel(int fd, struct char_session_data* sd) {
-	uint32 char_id;
-	int i;
+	uint32 char_id, i;
 
 	FIFOSD_CHECK(6)
 
@@ -676,8 +672,8 @@ int chclif_parse_maplogin(int fd){
 		return 0;
 	else {
 		int i;
-		char* l_user = (char*)RFIFOP(fd,2);
-		char* l_pass = (char*)RFIFOP(fd,26);
+		char* l_user = RFIFOCP(fd,2);
+		char* l_pass = RFIFOCP(fd,26);
 		l_user[23] = '\0';
 		l_pass[23] = '\0';
 		ARR_FIND( 0, ARRAYLENGTH(map_server), i, map_server[i].fd <= 0 );
@@ -840,7 +836,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 
 		//Have to switch over to the DB instance otherwise data won't propagate [Kevin]
 		cd = (struct mmo_charstatus *)idb_get(char_db_, char_id);
-		if (cd->sex == 99)
+		if (cd->sex == SEX_ACCOUNT)
 			cd->sex = sd->sex;
 
 		if (charserv_config.log_char) {
@@ -908,7 +904,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		WFIFOHEAD(fd,28);
 		WFIFOW(fd,0) = 0x71;
 		WFIFOL(fd,2) = cd->char_id;
-		mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map), (char*)WFIFOP(fd,6));
+		mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map), WFIFOCP(fd,6));
 		subnet_map_ip = char_lan_subnetcheck(ipl); // Advanced subnet check [LuzZza]
 		WFIFOL(fd,22) = htonl((subnet_map_ip) ? subnet_map_ip : map_server[i].ip);
 		WFIFOW(fd,26) = ntows(htons(map_server[i].port)); // [!] LE byte order here [!]
@@ -945,13 +941,13 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 		i = -2;
 	else {
 #if PACKETVER >= 20151001
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29),RFIFOW(fd,31),RFIFOW(fd,32),RFIFOB(fd,35));
+			i = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29),RFIFOW(fd,31),RFIFOW(fd,32),RFIFOB(fd,35));
 			RFIFOSKIP(fd,36);
 #elif PACKETVER >= 20120307
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
+			i = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
 			RFIFOSKIP(fd,31);
 #else
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
+			i = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
 			RFIFOSKIP(fd,37);
 #endif
 	}
@@ -1069,7 +1065,7 @@ int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
 	if(cmd == 0x8fc){
 		FIFOSD_CHECK(30)
 		cid =RFIFOL(fd,2);
-		safestrncpy(name, (char *)RFIFOP(fd,6), NAME_LENGTH);
+		safestrncpy(name, RFIFOCP(fd,6), NAME_LENGTH);
 		RFIFOSKIP(fd,30);
 	}
 	else if(cmd == 0x28d) {
@@ -1077,7 +1073,7 @@ int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
 		FIFOSD_CHECK(34);
 		aid = RFIFOL(fd,2);
 		cid =RFIFOL(fd,6);
-		safestrncpy(name, (char *)RFIFOP(fd,10), NAME_LENGTH);
+		safestrncpy(name, RFIFOCP(fd,10), NAME_LENGTH);
 		RFIFOSKIP(fd,34);
 		if( aid != sd->account_id )
 			return 1;

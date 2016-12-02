@@ -418,7 +418,7 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 		mes "for yourself?! I must smite";
 		mes "you now before you are";
 		mes "consumed by its darkness!";
-		close;
+		close2;
 		percentheal -100,0;
 		end;
 	}
@@ -661,7 +661,7 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 	mes "... ... ...";
 	close;
 
-OnTouch:
+OnTouch_:
 	if (HELLIONQ == 57 && countitem(7334) > 0) {
 		specialeffect2 EF_HEAL2; 
 		specialeffect EF_HEAL2;
@@ -1075,7 +1075,7 @@ prontera,223,82,0	script	#prt_key-1	111,{
 }
 
 prontera,45,67,0	script	 #prt_key-1-1	111,1,1,{
-OnTouch:
+OnTouch_:
 	if (HELLIONQ == 40 || HELLIONQ == 41) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Well, according to the";
@@ -1604,7 +1604,7 @@ payon,182,132,3	script	Grout'he Tuccok#hellion	48,{
 }
 
 payon,101,190,0	script	 #paypuzz1	-1,1,1,{
-OnTouch:
+OnTouch_:
 	if (HELLIONQ == 48) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Well, this is where";
@@ -1878,7 +1878,7 @@ pay_arche,142,28,0	script	Buddha Statue#paypuzz6	111,5,5,{
 		}
 	}
 
-OnTouch:
+OnTouch_:
 	if (HELLIONQ == 56 && countitem(7333) > 0) {
 		specialeffect2 EF_HEAL2;
 		specialeffect EF_HEAL2;
@@ -2247,7 +2247,7 @@ geffen,110,200,3	script	Sage Welshyun#hellion	754,3,3,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if (HELLIONQ == 58 && countitem(7335) > 0) {
 		specialeffect2 EF_HEAL2;
 		specialeffect EF_HEAL2;
@@ -2426,7 +2426,7 @@ gef_fild09,296,59,0	script	Hidden Cave#hellion	111,3,3,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if (HELLIONQ == 68 && countitem(7332) > 0) {
 		specialeffect2 EF_HEAL2;
 		specialeffect EF_HEAL2;

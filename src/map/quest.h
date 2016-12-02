@@ -48,7 +48,6 @@ int quest_update_objective_sub(struct block_list *bl, va_list ap);
 void quest_update_objective(TBL_PC * sd, int mob_id);
 int quest_update_status(TBL_PC * sd, int quest_id, enum quest_state status);
 int quest_check(TBL_PC * sd, int quest_id, enum quest_check_type type);
-void quest_clear(void);
 
 struct quest_db *quest_search(int quest_id);
 

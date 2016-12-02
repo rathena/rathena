@@ -44,7 +44,7 @@
 				AdditionalOptions="/MP"
 				Optimization="0"
 				AdditionalIncludeDirectories="..\3rdparty\libconfig;..\3rdparty\mysql\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar"
-				PreprocessorDefinitions="WIN32;_WIN32;__WIN32;_DEBUG;FD_SETSIZE=4096;LIBCONFIG_STATIC;YY_USE_CONST"
+				PreprocessorDefinitions="$(DefineConstants);WIN32;_WIN32;__WIN32;_DEBUG;FD_SETSIZE=4096;LIBCONFIG_STATIC;YY_USE_CONST"
 				GeneratePreprocessedFile="0"
 				ExceptionHandling="0"
 				BasicRuntimeChecks="3"
@@ -494,6 +494,14 @@
 			</File>
 			<File
 				RelativePath="..\src\char\int_auction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\int_clan.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\int_clan.h"
 				>
 			</File>
 			<File

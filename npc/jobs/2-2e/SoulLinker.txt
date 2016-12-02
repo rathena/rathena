@@ -36,7 +36,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 	}
 	if (Class == Job_Star_Gladiator) {
 		mes "[Kid]";
-		if (Sex == 1) {
+		if (Sex == SEX_MALE) {
 			mes "Aren't you a warrior";
 			mes "of the sun? I'm familiar";
 		}
@@ -334,7 +334,7 @@ OnInit:
 }
 
 job_soul,30,31,0	script	Maia#link2::SLTester	-1,3,3,{
-OnTouch:
+OnTouch_:
 	if (Class == Job_Taekwon) {
 		if (JobLevel < 40) {
 			set getvariableofnpc(.SoulLinkerTest,"Kid#link1"),0;

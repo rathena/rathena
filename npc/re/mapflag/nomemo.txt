@@ -1,16 +1,14 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable Warp Portal memory.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Prevents players from using /memo on a map.
 //= Also disables marriage warp skills.
-//===== Additional Comments: ================================= 
+//===== Changelogs: ================================= 
 //= 1.0 Renewal split. [Euphy]
+//= 1.1 Added Nightmare Clock Tower [Secret]
+//= 1.2 Added dali, dali02 [Nova]
+//= 1.3 Added Nightmare Glastheim [Ridley8819]
+//= 1.4 Added GVG TE Maps. [Cydh]
 //============================================================
 
 // Episode 13 ====================
@@ -99,6 +97,10 @@ ecl_tdun04	mapflag	nomemo
 ecl_hub01	mapflag	nomemo
 moc_prydn1	mapflag	nomemo
 moc_prydn2	mapflag	nomemo
+c_tower2_	mapflag	nomemo
+c_tower3_	mapflag	nomemo
+gl_chyard_	mapflag	nomemo
+gl_cas02_	mapflag	nomemo
 
 //Orc's Memory ===================
 1@orcs	mapflag	nomemo
@@ -125,3 +127,18 @@ gl_cas02_	mapflag	nomemo
 1@sara	mapflag	nomemo
 1@gef_in	mapflag	nomemo
 dali	mapflag	nomemo
+dali02	mapflag	nomemo
+
+// WOE:TE Maps ===================
+te_prtcas01	mapflag	nomemo
+te_prtcas02	mapflag	nomemo
+te_prtcas03	mapflag	nomemo
+te_prtcas04	mapflag	nomemo
+te_prtcas05	mapflag	nomemo
+te_aldecas1	mapflag	nomemo
+te_aldecas2	mapflag	nomemo
+te_aldecas3	mapflag	nomemo
+te_aldecas4	mapflag	nomemo
+te_aldecas5	mapflag	nomemo
+teg_dun01	mapflag	nomemo
+teg_dun02	mapflag	nomemo

@@ -685,7 +685,7 @@ static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t d
 /*==========================================
  * Summoning Guardians [Valaris]
  *------------------------------------------*/
-int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobname, int mob_id, const char* event, int guardian, bool has_index)
+int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobname, int mob_id, const char* event, int guardian, bool has_index)
 {
 	struct mob_data *md=NULL;
 	struct spawn_data data;
@@ -790,7 +790,7 @@ int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobnam
 /*==========================================
  * Summoning BattleGround [Zephyrus]
  *------------------------------------------*/
-int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int mob_id, const char* event, unsigned int bg_id)
+int mob_spawn_bg(const char* mapname, int16 x, int16 y, const char* mobname, int mob_id, const char* event, unsigned int bg_id)
 {
 	struct mob_data *md = NULL;
 	struct spawn_data data;
@@ -1344,7 +1344,9 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		if (ud) {
 			struct block_list *tbl=NULL;
 			if (ud->target && ud->state.attack_continue)
-				tbl=map_id2bl(ud->target);
+				tbl = map_id2bl(ud->target);
+			else if (ud->target_to && ud->state.attack_continue)
+				tbl = map_id2bl(ud->target_to);
 			else if (ud->skilltarget) {
 				tbl = map_id2bl(ud->skilltarget);
 				//Required check as skilltarget is not always an enemy. [Skotlex]
@@ -2244,7 +2246,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	}
 
 	if (battle_config.show_mob_info&3)
-		clif_charnameack(0, &md->bl);
+		clif_name_area(&md->bl);
 
 #if PACKETVER >= 20120404
 	if( battle_config.monster_hp_bars_info){
@@ -2912,7 +2914,7 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 	skill_unit_move(&md->bl,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
 	if (battle_config.show_mob_info&3)
-		clif_charnameack (0, &md->bl);
+		clif_name_area(&md->bl);
 }
 
 int mob_guardian_guildchange(struct mob_data *md)
@@ -3045,7 +3047,7 @@ int mob_class_change (struct mob_data *md, int mob_id)
 	md->target_id = md->attacked_id = md->norm_attacked_id = 0;
 
 	//Need to update name display.
-	clif_charnameack(0, &md->bl);
+	clif_name_area(&md->bl);
 	return 0;
 }
 
@@ -3055,7 +3057,7 @@ int mob_class_change (struct mob_data *md, int mob_id)
 void mob_heal(struct mob_data *md,unsigned int heal)
 {
 	if (battle_config.show_mob_info&3)
-		clif_charnameack (0, &md->bl);
+		clif_name_area(&md->bl);
 #if PACKETVER >= 20120404
 	if( battle_config.monster_hp_bars_info){
 		int i;
@@ -3586,6 +3588,21 @@ int mob_is_clone(int mob_id)
 	return mob_id;
 }
 
+/**
+ * Previously, using skill_nocast with flag 16
+ * @param skill_id
+ * @return True:If disabled, False:If enabled
+ * @!TODO : Move this hardcodes!
+ **/
+static bool mob_clone_disabled_skills(uint16 skill_id) {
+	switch (skill_id) {
+		case PR_TURNUNDEAD:
+		case PR_MAGNUS:
+			return true;
+	}
+	return false;
+}
+
 //Flag values:
 //&1: Set special ai (fight mobs, not players)
 //If mode is not passed, a default aggressive mode is used.
@@ -3646,11 +3663,11 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 
 	//Go Backwards to give better priority to advanced skills.
 	for (i=0,j = MAX_SKILL_TREE-1;j>=0 && i< MAX_MOBSKILL ;j--) {
-		uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].id;
+		uint16 skill_id = skill_tree[pc_class2idx(sd->status.class_)][j].skill_id;
 		uint16 sk_idx = 0;
 		if (!skill_id || !(sk_idx = skill_get_index(skill_id)) || sd->status.skill[sk_idx].lv < 1 ||
 			(skill_get_inf2(skill_id)&(INF2_WEDDING_SKILL|INF2_GUILD_SKILL)) ||
-			skill_get_nocast(skill_id)&16
+			mob_clone_disabled_skills(skill_id)
 		)
 			continue;
 		//Normal aggressive mob, disable skills that cannot help them fight
@@ -4258,7 +4275,7 @@ static bool mob_parse_row_chatdb(char* fields[], int columns, int current)
 	msg_id = atoi(fields[0]);
 
 	if (msg_id <= 0 || msg_id > MAX_MOB_CHAT){
-		ShowError("mob_parse_row_chatdb: Invalid chat ID: %d at %s, line %d\n", msg_id, columns, current);
+		ShowError("mob_parse_row_chatdb: Invalid chat ID '%d' in line %d\n", msg_id, current);
 		return false;
 	}
 
@@ -4420,8 +4437,8 @@ static bool mob_parse_row_mobskilldb(char** str, int columns, int current)
 	if( j < ARRAYLENGTH(state) )
 		ms->state = state[j].id;
 	else {
-		ShowWarning("mob_parse_row_mobskilldb: Unrecognized state %s\n", str[2]);
-		ms->state = MSS_ANY;
+		ShowError("mob_parse_row_mobskilldb: Unrecognized state '%s' in line %d\n", str[2], current);
+		return false;
 	}
 
 	//Skill ID
@@ -4966,6 +4983,27 @@ static void mob_load(void)
 		"/"DBIMPORT,
 	};
 
+	// First we parse all the possible monsters to add additional data in the second loop
+	if( db_use_sqldbs ){
+		mob_read_sqldb();
+		mob_read_sqlskilldb();
+	}else{
+		for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
+			int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
+			char* dbsubpath2 = (char*)aMalloc(n2+1);
+
+			if( i == 0 ){
+				safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+			}else{
+				safesnprintf(dbsubpath2,n2,"%s%s",db_path,dbsubpath[i]);
+			}
+
+			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, i);
+
+			aFree(dbsubpath2);
+		}
+	}
+
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){	
 		int n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
 		int n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
@@ -4982,12 +5020,7 @@ static void mob_load(void)
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 		
-		if (db_use_sqldbs && i==0) //only read once for sql
-		{
-			mob_read_sqldb();
-			mob_read_sqlskilldb();
-		} else {
-			sv_readdb(dbsubpath2, "mob_db.txt", ',', 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, 31+2*MAX_MVP_DROP+2*MAX_MOB_DROP, -1, &mob_readdb_sub, i);
+		if( !db_use_sqldbs ){
 			mob_readskilldb(dbsubpath2,i);
 		}
 

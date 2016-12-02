@@ -17,6 +17,7 @@
 static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
 static DBMap *itemdb_group; /// Item Group DB
+static DBMap *itemdb_randomopt; /// Random option DB
 
 struct item_data *dummy_item; /// This is the default dummy item used for non-existant items. [Skotlex]
 
@@ -1519,11 +1520,11 @@ static int itemdb_read_sqldb(void) {
 bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	if (!id->flag.no_equip)
 		return false;
-	/* on restricted maps the item is consumed but the effect is not used */
-	if ((!map_flag_vs(m) && id->flag.no_equip&1) || // Normal
+	if ((!map_flag_vs2(m) && id->flag.no_equip&1) || // Normal
 		(map[m].flag.pvp && id->flag.no_equip&2) || // PVP
-		(map_flag_gvg(m) && id->flag.no_equip&4) || // GVG
+		(map_flag_gvg2_no_te(m) && id->flag.no_equip&4) || // GVG
 		(map[m].flag.battleground && id->flag.no_equip&8) || // Battleground
+		(map_flag_gvg2_te(m) && id->flag.no_equip&16) || // WOE:TE
 		(map[m].flag.restricted && id->flag.no_equip&(8*map[m].zone)) // Zone restriction
 		)
 		return true;
@@ -1541,6 +1542,111 @@ bool itemdb_is_spellbook2(unsigned short nameid) {
 		return false;
 	ARR_FIND(0, MAX_SKILL_SPELLBOOK_DB, i, skill_spellbook_db[i].nameid == nameid);
 	return i == MAX_SKILL_SPELLBOOK_DB ? false : true;
+}
+
+/**
+* Retrieves random option data
+*/
+struct s_random_opt_data* itemdb_randomopt_exists(short id) {
+	return ((struct s_random_opt_data*)uidb_get(itemdb_randomopt, id));
+}
+
+/** Random option
+* <ID>,<{Script}>
+*/
+static bool itemdb_read_randomopt(const char* basedir, bool silent) {
+	uint32 lines = 0, count = 0;
+	char line[1024];
+
+	char path[256];
+	FILE* fp;
+
+	sprintf(path, "%s/%s", basedir, "item_randomopt_db.txt");
+
+	if ((fp = fopen(path, "r")) == NULL) {
+		if (silent == 0) ShowError("itemdb_read_randomopt: File not found \"%s\".\n", path);
+		return false;
+	}
+
+	while (fgets(line, sizeof(line), fp)) {
+		char *str[2], *p;
+
+		lines++;
+
+		if (line[0] == '/' && line[1] == '/') // Ignore comments
+			continue;
+
+		memset(str, 0, sizeof(str));
+
+		p = line;
+
+		p = trim(p);
+
+		if (*p == '\0')
+			continue;// empty line
+
+		if (!strchr(p, ','))
+		{
+			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+
+		str[0] = p;
+		p = strchr(p, ',');
+		*p = '\0';
+		p++;
+
+		str[1] = p;
+
+		if (str[1][0] != '{') {
+			ShowError("itemdb_read_randomopt(#1): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+		/* no ending key anywhere (missing \}\) */
+		if (str[1][strlen(str[1]) - 1] != '}') {
+			ShowError("itemdb_read_randomopt(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
+			continue;
+		}
+		else {
+			int id = -1;
+			struct s_random_opt_data *data;
+			struct script_code *code;
+
+			str[0] = trim(str[0]);
+			if (ISDIGIT(str[0][0])) {
+				id = atoi(str[0]);
+			}
+			else {
+				script_get_constant(str[0], &id);
+			}
+
+			if (id < 0) {
+				ShowError("itemdb_read_randomopt: Invalid Random Option ID '%s' in line %d of \"%s\", skipping.\n", str[0], lines, path);
+				continue;
+			}
+
+			if ((data = itemdb_randomopt_exists(id)) == NULL) {
+				CREATE(data, struct s_random_opt_data, 1);
+				uidb_put(itemdb_randomopt, id, data);
+			}
+			data->id = id;
+			if ((code = parse_script(str[1], path, lines, 0)) == NULL) {
+				ShowWarning("itemdb_read_randomopt: Invalid script on option ID #%d.\n", id);
+				continue;
+			}
+			if (data->script) {
+				script_free_code(data->script);
+				data->script = NULL;
+			}
+			data->script = code;
+		}
+		count++;
+	}
+	fclose(fp);
+
+	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, path);
+
+	return true;
 }
 
 /**
@@ -1575,7 +1681,7 @@ static void itemdb_read(void) {
 		}
 		
 		sv_readdb(dbsubpath1, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail, i);
-		sv_readdb(dbsubpath1, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i);
+		sv_readdb(dbsubpath2, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i);
 		sv_readdb(dbsubpath1, "item_nouse.txt",         ',', 3, 3, -1, &itemdb_read_nouse, i);
 		sv_readdb(dbsubpath2, "item_group_db.txt",		',', 2, 10, -1, &itemdb_read_group, i);
 		sv_readdb(dbsubpath2, "item_bluebox.txt",		',', 2, 10, -1, &itemdb_read_group, i);
@@ -1588,6 +1694,7 @@ static void itemdb_read(void) {
 		sv_readdb(dbsubpath2, "item_package.txt",		',', 2, 10, -1, &itemdb_read_group, i);
 #endif
 		itemdb_read_combos(dbsubpath2,i); //TODO change this to sv_read ? id#script ?
+		itemdb_read_randomopt(dbsubpath2, i);
 		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i);
 		sv_readdb(dbsubpath2, "item_trade.txt",         ',', 3, 3, -1, &itemdb_read_itemtrade, i);
 		sv_readdb(dbsubpath2, "item_delay.txt",         ',', 2, 3, -1, &itemdb_read_itemdelay, i);
@@ -1664,6 +1771,17 @@ static int itemdb_group_free(DBKey key, DBData *data, va_list ap) {
 	return 0;
 }
 
+static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
+	struct s_random_opt_data *opt = (struct s_random_opt_data *)db_data2ptr(data);
+	if (!opt)
+		return 0;
+	if (opt->script)
+		script_free_code(opt->script);
+	opt->script = NULL;
+	aFree(opt);
+	return 1;
+}
+
 /**
 * Reload Item DB
 */
@@ -1674,6 +1792,7 @@ void itemdb_reload(void) {
 	int i,d,k;
 
 	itemdb_group->clear(itemdb_group, itemdb_group_free);
+	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
 	itemdb->clear(itemdb, itemdb_final_sub);
 	db_clear(itemdb_combo);
 	if (battle_config.feature_roulette)
@@ -1717,7 +1836,7 @@ void itemdb_reload(void) {
 	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		pc_setinventorydata(sd);
-		pc_check_available_item(sd); // Check for invalid(ated) items.
+		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
 		/* clear combo bonuses */
 		if( sd->combos.count ) {
 			aFree(sd->combos.bonus);
@@ -1741,6 +1860,7 @@ void itemdb_reload(void) {
 void do_final_itemdb(void) {
 	db_destroy(itemdb_combo);
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
+	itemdb_randomopt->destroy(itemdb_randomopt, itemdb_randomopt_free);
 	itemdb->destroy(itemdb, itemdb_final_sub);
 	destroy_item_data(dummy_item);
 	if (battle_config.feature_roulette)
@@ -1754,6 +1874,7 @@ void do_init_itemdb(void) {
 	itemdb = uidb_alloc(DB_OPT_BASE);
 	itemdb_combo = uidb_alloc(DB_OPT_BASE);
 	itemdb_group = uidb_alloc(DB_OPT_BASE);
+	itemdb_randomopt = uidb_alloc(DB_OPT_BASE);
 	itemdb_create_dummy();
 	itemdb_read();
 

@@ -924,7 +924,7 @@ prontera,156,242,0	script	Oholy#pron::OholyDup	79,{
 		mes "The Lord has come.";
 		specialeffect EF_GLORIA;
 		next;
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "[Oholy]";
 			mes "Merry Christmas!";
 			mes "Dear brother, what comes in";

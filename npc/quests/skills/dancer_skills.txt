@@ -376,7 +376,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 	}
 
 	else if (BaseJob != Job_Dancer) {
-		if (Sex == 0) {
+		if (Sex == SEX_FEMALE) {
 			mes "[Canell]";
 			mes "Oh, what a cute";
 			mes "little girl~! Such";

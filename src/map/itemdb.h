@@ -453,6 +453,13 @@ struct item_data
 	short delay_sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
 };
 
+// Struct for item random option [Secret]
+struct s_random_opt_data
+{
+	unsigned short id;
+	struct script_code *script;
+};
+
 struct item_data* itemdb_searchname(const char *name);
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_search(unsigned short nameid);
@@ -524,9 +531,10 @@ struct item_combo *itemdb_combo_exists(unsigned short combo_id);
 
 struct s_item_group_db *itemdb_group_exists(unsigned short group_id);
 char itemdb_pc_get_itemgroup(uint16 group_id, struct map_session_data *sd);
-uint16 itemdb_get_randgroupitem_count(uint16 group_id, uint8 sub_group, unsigned short nameid);
 
 bool itemdb_parse_roulette_db(void);
+
+struct s_random_opt_data *itemdb_randomopt_exists(short id);
 
 void itemdb_reload(void);
 

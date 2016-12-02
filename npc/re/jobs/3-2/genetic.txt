@@ -1019,7 +1019,7 @@ job3_gen01,85,25,1	script	Opened Book#gen	111,{
 }
 
 job3_gen01,81,81,0	script	#dbroom	139,2,2,{
-OnTouch:
+OnTouch_:
 	mes "- It's a room that looks like a storehouse, thanks to so many parcels piled up in the room. -";
 	close;
 }
