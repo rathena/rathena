@@ -409,6 +409,7 @@
 	export_constant(MF_GVG_TE_CASTLE);
 	export_constant(MF_GVG_TE);
 	export_constant(MF_HIDEMOBHPBAR);
+
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
 	export_constant(CELL_SHOOTABLE);
