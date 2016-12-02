@@ -54,43 +54,6 @@ short current_equip_opt_index; /// Contains random option index of an equipped i
 
 unsigned int SCDisabled[SC_MAX]; ///< List of disabled SC on map zones. [Cydh]
 
-static unsigned short status_calc_str(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_agi(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_vit(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_int(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_dex(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_luk(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_batk(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_watk(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_matk(struct block_list *,struct status_change *,int);
-static signed short status_calc_hit(struct block_list *,struct status_change *,int);
-static signed short status_calc_critical(struct block_list *,struct status_change *,int);
-static signed short status_calc_flee(struct block_list *,struct status_change *,int);
-static signed short status_calc_flee2(struct block_list *,struct status_change *,int);
-static defType status_calc_def(struct block_list *bl, struct status_change *sc, int);
-static signed short status_calc_def2(struct block_list *,struct status_change *,int);
-static defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int);
-static signed short status_calc_mdef2(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_speed(struct block_list *,struct status_change *,int);
-static short status_calc_aspd_rate(struct block_list *,struct status_change *,int);
-static unsigned short status_calc_dmotion(struct block_list *bl, struct status_change *sc, int dmotion);
-#ifdef RENEWAL_ASPD
-static short status_calc_aspd(struct block_list *bl, struct status_change *sc, bool fixed);
-#endif
-static short status_calc_fix_aspd(struct block_list *bl, struct status_change *sc, int);
-static unsigned int status_calc_maxhp(struct block_list *bl, uint64 maxhp);
-static unsigned int status_calc_maxsp(struct block_list *bl, uint64 maxsp);
-static unsigned char status_calc_element(struct block_list *bl, struct status_change *sc, int element);
-static unsigned char status_calc_element_lv(struct block_list *bl, struct status_change *sc, int lv);
-static enum e_mode status_calc_mode(struct block_list *bl, struct status_change *sc, enum e_mode mode);
-#ifdef RENEWAL
-static unsigned short status_calc_ematk(struct block_list *,struct status_change *,int);
-#endif
-static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type);
-static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
-static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP);
-static int status_get_sc_interval(enum sc_type type);
-
 static bool status_change_isDisabledOnMap_(sc_type type, bool mapIsVS, bool mapIsPVP, bool mapIsGVG, bool mapIsBG, unsigned int mapZone, bool mapIsTE);
 #define status_change_isDisabledOnMap(type, m) ( status_change_isDisabledOnMap_((type), map_flag_vs2((m)), map[(m)].flag.pvp, map_flag_gvg2_no_te((m)), map[(m)].flag.battleground, map[(m)].zone << 3, map_flag_gvg2_te((m))) )
 
