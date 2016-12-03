@@ -811,7 +811,7 @@ int npc_settimerevent_tick(struct npc_data* nd, int newtimer)
 	nd->u.scr.rid = 0;
 
 	// Check if timer is started
-	flag = (nd->u.scr.timerid != INVALID_TIMER);
+	flag = (nd->u.scr.timerid != INVALID_TIMER || nd->u.scr.timertick);
 
 	if( flag ) npc_timerevent_stop(nd);
 	nd->u.scr.timer = newtimer;
