@@ -582,6 +582,11 @@ struct s_skill_damage {
 struct eri *map_skill_damage_ers;
 #endif
 
+struct s_skill_duration {
+	uint16 skill_id;
+	uint16 per;
+};
+
 struct questinfo_req {
 	unsigned int quest_id;
 	unsigned state : 2; // 0: Doesn't have, 1: Inactive, 2: Active, 3: Complete //! TODO: CONFIRM ME!!
@@ -701,6 +706,11 @@ struct map_data {
 		uint8 count;
 	} skill_damage;
 #endif
+	struct {
+		struct s_skill_duration **entries;
+		uint16 count;
+	} skill_duration;
+
 	// Instance Variables
 	unsigned short instance_id;
 	int instance_src_map;
@@ -908,6 +918,9 @@ void map_removemapdb(struct map_data *m);
 void map_skill_damage_free(struct map_data *m);
 void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, int boss, int other, uint8 caster);
 #endif
+
+bool map_skill_duration_add(struct map_data *map, uint16 skill_id, uint16 per);
+void map_skill_duration_free(struct map_data *map);
 
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level
