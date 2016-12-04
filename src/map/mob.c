@@ -2249,7 +2249,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		clif_name_area(&md->bl);
 
 #if PACKETVER >= 20120404
-	if( battle_config.monster_hp_bars_info){
+	if (battle_config.monster_hp_bars_info && !map[md->bl.m].flag.hidemobhpbar) {
 		int i;
 		for(i = 0; i < DAMAGELOG_SIZE; i++){ // must show hp bar to all char who already hit the mob.
 			struct map_session_data *sd = map_charid2sd(md->dmglog[i].id);
@@ -3059,7 +3059,7 @@ void mob_heal(struct mob_data *md,unsigned int heal)
 	if (battle_config.show_mob_info&3)
 		clif_name_area(&md->bl);
 #if PACKETVER >= 20120404
-	if( battle_config.monster_hp_bars_info){
+	if (battle_config.monster_hp_bars_info && !map[md->bl.m].flag.hidemobhpbar) {
 		int i;
 		for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
 			if( md->dmglog[i].id ) {

@@ -1130,7 +1130,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,53) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20120221
-	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
+	if ( battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,55) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,59) = status_get_hp(bl);		// HP
 	} else {
@@ -1273,7 +1273,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFW(buf,60) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20120221
-	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
+	if ( battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,62) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,66) = status_get_hp(bl);		// HP
 	} else {
@@ -4612,7 +4612,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect_single(bl,421,sd->fd);
 #if PACKETVER >= 20120404
-			if( battle_config.monster_hp_bars_info){
+			if (battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar) {
 				int i;
 				for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
 					if( md->dmglog[i].id == sd->status.char_id )

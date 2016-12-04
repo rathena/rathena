@@ -4131,6 +4131,8 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.notomb = state;
 	else if (!strcmpi(w3,"nocostume"))
 		map[m].flag.nocostume = state;
+	else if (!strcmpi(w3,"hidemobhpbar"))
+		map[m].flag.hidemobhpbar = state;
 	else if (!strcmpi(w3,"skill_damage")) {
 #ifdef ADJUST_SKILL_DAMAGE
 		char skill[SKILL_NAME_LENGTH];
