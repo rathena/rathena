@@ -9440,8 +9440,8 @@ BUILDIN_FUNC(setmadogear)
 
 /// Sets the save point of the player.
 ///
-/// save "<map name>",<x>,<y>{{<x>,<y>},<char_id>}
-/// savepoint "<map name>",<x>,<y>{{<x>,<y>},<char_id>}
+/// save "<map name>",<x>,<y>{,{<range x>,<range y>,}<char_id>}
+/// savepoint "<map name>",<x>,<y>{,{<range x>,<range y>,}<char_id>}
 BUILDIN_FUNC(savepoint)
 {
 	int x, y, m, cid_pos = 5;
