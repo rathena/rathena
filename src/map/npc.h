@@ -173,6 +173,7 @@ void npc_event_do_oninit(void);
 int npc_event_do(const char* name);
 int npc_event_do_id(const char* name, int rid);
 int npc_event_doall(const char* name);
+void npc_event_runall( const char* eventname );
 int npc_event_doall_id(const char* name, int rid);
 
 int npc_timerevent_start(struct npc_data* nd, int rid);
@@ -189,6 +190,7 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type);
 
 int npc_duplicate4instance(struct npc_data *snd, int16 m);
 int npc_instanceinit(struct npc_data* nd);
+int npc_instancedestroy(struct npc_data* nd);
 int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amount, int points);
 
 void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, int cost[2], bool display);

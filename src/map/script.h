@@ -161,6 +161,42 @@ extern struct Script_Config {
 	const char* ontouch_name;
 	const char* ontouch2_name;
 	const char* onwhisper_event_name;
+	const char* oncommand_event_name;
+
+	// Init related
+	const char* init_event_name;
+	const char* inter_init_event_name;
+	const char* inter_init_once_event_name;
+
+	// Guild related
+	const char* guild_break_event_name;
+	const char* agit_start_event_name;
+	const char* agit_init_event_name;
+	const char* agit_end_event_name;
+	const char* agit_start2_event_name;
+	const char* agit_init2_event_name;
+	const char* agit_end2_event_name;
+	const char* agit_start3_event_name;
+	const char* agit_init3_event_name;
+	const char* agit_end3_event_name;
+
+	// Timer related
+	const char* timer_event_name;
+	const char* timer_minute_event_name;
+	const char* timer_hour_event_name;
+	const char* timer_clock_event_name;
+	const char* timer_day_event_name;
+	const char* timer_sunday_event_name;
+	const char* timer_monday_event_name;
+	const char* timer_tuesday_event_name;
+	const char* timer_wednesday_event_name;
+	const char* timer_thursday_event_name;
+	const char* timer_friday_event_name;
+	const char* timer_saturday_event_name;
+
+	// Instance related
+	const char* instance_init_event_name;
+	const char* instance_destroy_event_name;
 } script_config;
 
 typedef enum c_op {

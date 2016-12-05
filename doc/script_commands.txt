@@ -6060,6 +6060,8 @@ A debug message also shows on the console when no events are triggered.
 This is simply "donpcevent <npc name>::OnCommand<command>".
 It is an approximation of official server script language's 'cmdothernpc'.
 
+Returns true if the command was executed on the other NPC successfully, false if not.
+
 ---------------------------------------
 
 *npctalk "<message>"{,"<NPC name>"};
