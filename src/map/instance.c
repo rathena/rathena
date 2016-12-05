@@ -673,7 +673,7 @@ enum e_instance_enter instance_enter(struct map_session_data *sd, unsigned short
 	
 	im = &instance_data[instance_id];
 
-	switch(instance_data[instance_id].mode) {
+	switch(im->mode) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:
