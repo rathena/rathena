@@ -19163,10 +19163,10 @@ BUILDIN_FUNC(instance_destroy)
 /*==========================================
  * Warps player to instance
  * Results:
- *	0: Success
- *	1: Character not in party/guild (for party/guild type instances)
- *	2: Character/Party/Guild doesn't have instance
- *	3: Other errors (instance not in DB, instance doesn't match with character/party/guild, etc.)
+ *	IE_OK: Success
+ *	IE_NOMEMBER: Character not in party/guild (for party/guild type instances)
+ *	IE_NOINSTANCE: Character/Party/Guild doesn't have instance
+ *	IE_OTHER: Other errors (instance not in DB, instance doesn't match with character/party/guild, etc.)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_enter)
 {
@@ -19183,10 +19183,7 @@ BUILDIN_FUNC(instance_enter)
 	if (!script_charid2sd(5,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	if (x != -1 && y != -1)
-		script_pushint(st, instance_enter_position(sd, instance_id, script_getstr(st, 2), x, y));
-	else
-		script_pushint(st, instance_enter(sd, instance_id, script_getstr(st, 2)));
+	script_pushint(st, instance_enter(sd, instance_id, script_getstr(st, 2), x, y));
 
 	return SCRIPT_CMD_SUCCESS;
 }
