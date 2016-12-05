@@ -877,7 +877,7 @@ lhz_dun04,147,279,0	script	Laboratory Entrance#memo	CLEAR_NPC,{
 			mes "You have stopped entering to Wolfchev's laboratory.";
 			close;
 		}
-		if (instance_enter("Wolfchev's Laboratory") != 0) {  // probably missing failure cases
+		if (instance_enter("Wolfchev's Laboratory") != IE_OK) {  // probably missing failure cases
 			mes "^FF0000Warning^000000";
 			mes ""+ strcharinfo(0) +". . .";
 			mes "^FF0000Unregistered personnel^000000";
