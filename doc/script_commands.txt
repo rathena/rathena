@@ -900,6 +900,13 @@ This label will be executed when an instance is created and initialized through
 the 'instance_create' command. It will run again if @reloadscript is used while
 an instance is in progress.
 
+OnInstanceDestroy:
+
+This label will be executed when an instance is destroyed by a timeout, exceeding
+the keepalive time or through the 'instance_destroy' command. It will be called
+exactly before the instance will be destroyed and all other NPCs of the instance
+will still be available at this point of time.
+
 OnTouch:
 
 This label will be executed if a trigger area is defined for the NPC object it's 
@@ -8274,7 +8281,8 @@ Destroys instance with the ID <instance id>. If no ID is specified, the instance
 the script is attached to is used. If the script is not attached to an instance,
 the instance of the currently attached player is used (if it is a character, party,
 or guild mode). If it is not owned by anyone, no player needs to be attached. If
-that fails, the script will come to a halt.
+that fails, the script will come to a halt. This will also trigger the "OnInstanceDestroy"
+label in all NPCs inside the instance.
 
 ---------------------------------------
 

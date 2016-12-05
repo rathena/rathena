@@ -148,6 +148,7 @@ extern struct Script_Config {
 	int input_min_value;
 	int input_max_value;
 
+	// PC related
 	const char *die_event_name;
 	const char *kill_pc_event_name;
 	const char *kill_mob_event_name;
@@ -158,8 +159,10 @@ extern struct Script_Config {
 	const char *joblvup_event_name;
 	const char *stat_calc_event_name;
 
-	const char* ontouch_name;
-	const char* ontouch2_name;
+	// NPC related
+	const char* ontouch_event_name;
+	const char* ontouch2_event_name;
+	const char* ontouchnpc_event_name;
 	const char* onwhisper_event_name;
 	const char* oncommand_event_name;
 
