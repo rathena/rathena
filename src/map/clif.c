@@ -5936,6 +5936,9 @@ void clif_status_change(struct block_list *bl, int type, int flag, int tick, int
 	if (type == SI_ACTIONDELAY && tick == 0)
 		return;
 
+	if (type == SI_HALLUCINATION && !battle_config.display_hallucination) // Disable Hallucination.
+		return;
+
 	nullpo_retv(bl);
 
 	sd = BL_CAST(BL_PC, bl);

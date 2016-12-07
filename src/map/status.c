@@ -1249,9 +1249,6 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_EDP] |= SCB_WATK;
 #endif
 
-	if( !battle_config.display_hallucination ) // Disable Hallucination.
-		StatusIconChangeTable[SC_HALLUCINATION] = SI_BLANK;
-
 	/* StatusDisplayType Table [Ind] */
 	StatusDisplayType[SC_ALL_RIDING]	  = true;
 	StatusDisplayType[SC_PUSH_CART]		  = true;
