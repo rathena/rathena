@@ -66,7 +66,7 @@ iz_int,96,73,0	script	iz_int_iz	WARPNPC,2,2,{
 	end;
 
 OnTouch:
-	savepoint "izlude", 128, 98;
+	savepoint "izlude",128,98,1,1;
 	warp "izlude"+strnpcinfo(2)+"", 195, 209;
 	end;
 }

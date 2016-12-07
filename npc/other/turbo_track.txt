@@ -3654,7 +3654,7 @@ turbo_room,130,92,3	script	Kafra Staff#tt	115,{
 	callfunc "F_Kafra",5,8,1,40,0;
 
 	M_Save:
-		savepoint "aldebaran",168,112;
+		savepoint "aldebaran",168,112,1,1;
 		callfunc "F_KafEnd",0,1,"in Al De Baran";
 
 }
