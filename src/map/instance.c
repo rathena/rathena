@@ -654,16 +654,15 @@ enum e_instance_enter instance_enter(struct map_session_data *sd, unsigned short
 	struct instance_db *db = NULL;
 	struct party_data *p = NULL;
 	struct guild *g = NULL;
+	enum instance_mode mode;
 	int16 m;
 
 	nullpo_retr(IE_OTHER, sd);
 	
-	// Check if it is a valid instance
-	if( instance_id == 0 ){
-		return IE_NOINSTANCE;
+	if( (db = instance_searchname_db(name)) == NULL ){
+		ShowError( "instance_enter: Unknown instance \"%s\".\n", name );
+		return IE_OTHER;
 	}
-	
-	nullpo_retr(IE_OTHER,db = instance_searchname_db(name));
 	
 	// If one of the two coordinates was not given or is below zero, we use the entry point from the database
 	if( x < 0 || y < 0 ){
@@ -671,9 +670,16 @@ enum e_instance_enter instance_enter(struct map_session_data *sd, unsigned short
 		y = db->enter.y;
 	}
 	
-	im = &instance_data[instance_id];
+	// Check if it is a valid instance
+	if( instance_id == 0 ){
+		// im will stay NULL and by default party checks will be used
+		mode = IM_PARTY;
+	}else{
+		im = &instance_data[instance_id];
+		mode = im->mode;
+	}
 
-	switch(im->mode) {
+	switch(mode) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:
@@ -687,7 +693,7 @@ enum e_instance_enter instance_enter(struct map_session_data *sd, unsigned short
 				return IE_NOMEMBER;
 			if ((p = party_search(sd->status.party_id)) == NULL)
 				return IE_NOMEMBER;
-			if (p->instance_id == 0) // Party must have an instance
+			if (p->instance_id == 0 || im == NULL) // Party must have an instance
 				return IE_NOINSTANCE;
 			if (im->owner_id != p->party.party_id)
 				return IE_OTHER;
