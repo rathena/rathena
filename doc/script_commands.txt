@@ -2311,10 +2311,11 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 ---------------------------------------
 
 *readparam(<parameter number>{,"<character name>"})
+*readparam(<parameter number>{,"<char_id>"})
 
 This function will return the specified stat of the invoking character, or, if a
-character name is specified, of that player. The stat can either be a number or
-parameter name, defined in 'src/map/script_constants.h'.
+character name or character id is specified, of that player. The stat can either
+be a number or parameter name, defined in 'src/map/script_constants.h'.
 
 Some example parameters:
 
