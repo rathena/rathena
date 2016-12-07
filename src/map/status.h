@@ -786,6 +786,8 @@ typedef enum sc_type {
 	SC_CROSSBOWCLAN,
 	SC_JUMPINGCLAN,
 
+	SC_TAROTCARD,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

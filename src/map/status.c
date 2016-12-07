@@ -473,6 +473,7 @@ void initChangeTables(void)
 	set_sc( WS_OVERTHRUSTMAX	, SC_MAXOVERTHRUST	, SI_MAXOVERTHRUST	, SCB_NONE );
 	set_sc( CG_LONGINGFREEDOM	, SC_LONGING		, SI_LONGING		, SCB_SPEED|SCB_ASPD );
 	set_sc( CG_HERMODE		, SC_HERMODE	, SI_HERMODE	, SCB_NONE		);
+	set_sc( CG_TAROTCARD		, SC_TAROTCARD	, SI_TAROT	, SCB_NONE	);
 	set_sc( ITEM_ENCHANTARMS	, SC_ENCHANTARMS	, SI_BLANK		, SCB_ATK_ELE );
 	set_sc( SL_HIGH			, SC_SPIRIT		, SI_SPIRIT		, SCB_ALL );
 	set_sc( KN_ONEHAND		, SC_ONEHAND		, SI_ONEHAND		, SCB_ASPD );
@@ -9540,6 +9541,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				tick_time = 10000; // [GodLesZ] tick time
 				status_change_clear_buffs(bl, SCCB_BUFFS|SCCB_DEBUFFS|SCCB_CHEM_PROTECT); // Remove buffs/debuffs
 			}
+			break;
+
+		case SC_TAROTCARD:
+			sc_start(src, bl, SC_INCATKRATE, 100, -20, tick);
+			sc_start(src, bl, SC_INCMATKRATE, 100, -20, tick);
+			sc_start(src, bl, SC_INCHITRATE, 100, -20, tick);
+			sc_start(src, bl, SC_INCFLEERATE, 100, -20, tick);
+			sc_start(src, bl, SC_INCDEFRATE, 100, -20, tick);
 			break;
 
 		case SC_MARIONETTE:
