@@ -3980,7 +3980,7 @@ player's save point. The values will randomly add or subtract from the given <x>
 and <y> coordinates.
 
     savepoint "place",350,75;
-	savepoint "place",350,75,2,2; // Randomly save the character between 350,75 and 352,77
+	savepoint "place",350,75,2,2; // Randomly save the character between 348,73 and 352,77
 
 ---------------------------------------
 
