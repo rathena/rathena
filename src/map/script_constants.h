@@ -1434,6 +1434,7 @@
 	export_constant(SC_GOLDENMACECLAN);
 	export_constant(SC_CROSSBOWCLAN);
 	export_constant(SC_JUMPINGCLAN);
+	export_constant(SC_MAXPAIN);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
