@@ -772,7 +772,8 @@ OnInstanceInit:
 			close;
 		}
 		close2;
-		pcblockmove getcharid(3),1;// todo : not able to move / use skills / attack? / talk to npc (like when talking to npc)
+		pcblockmove getcharid(3),1;// todo : not able to talk to npc
+		pcblockskill getcharid(3),1;
 		switch(.@num) {
 		case 1:
 			npctalk "Worker: Ah! Grandpa? He's a real good man. He oiled us everyday and cleaned the dust very often.";
@@ -831,6 +832,7 @@ OnInstanceInit:
 			donpcevent instance_npcname("#fac2wpc") + "::OnStart";
 		}
 		pcblockmove getcharid(3),0;
+		pcblockskill getcharid(3),0;
 		end;
 	}
 	mes "[Worker]";
