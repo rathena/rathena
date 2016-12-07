@@ -4280,7 +4280,7 @@ static int skill_reveal_trap(struct block_list *bl, va_list ap)
 }
 
 /**
- * Attempt to reaveal trap in area
+ * Attempt to reveal trap in area
  * @param src Skill caster
  * @param range Affected range
  * @param x
@@ -4292,6 +4292,110 @@ void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y) {
 		return;
 	nullpo_retv(src);
 	map_foreachinarea(skill_reveal_trap, src->m, x-range, y-range, x+range, y+range, BL_SKILL);
+}
+
+/*========================================== [Playtester]
+* Process tarot card's effects
+* @ param src: Source of the tarot card effect
+* @ param target: Target of the tartor card effect
+* @ param skill_id: ID of the skill used
+* @ param skill_lv: Level of the skill used
+* @ param tick: Processing tick time
+* @ return Card number
+*------------------------------------------*/
+static int skill_tarotcard(struct block_list* src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int tick)
+{
+	int rate = rnd() % 100;
+
+	if (rate < 10) // THE FOOL - heals SP to 0
+	{
+		status_percent_damage(src, target, 0, 100, false);
+		return 1;
+	}
+	else if (rate < 20)  // THE MAGICIAN - matk halved
+	{
+		sc_start(src, target, SC_INCMATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
+		return 2;
+	}
+	else if (rate < 30) // THE HIGH PRIESTESS - all buffs removed
+	{
+		status_change_clear_buffs(target, SCCB_BUFFS | SCCB_CHEM_PROTECT);
+		return 3;
+	}
+	else if (rate < 37) // THE CHARIOT - 1000 damage, random armor destroyed
+	{
+		status_fix_damage(src, target, 1000, 0);
+		clif_damage(src, target, tick, 0, 0, 1000, 0, DMG_NORMAL, 0, false);
+		if (!status_isdead(target))
+		{
+			unsigned short where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM };
+			skill_break_equip(src, target, where[rnd() % 3], 10000, BCT_ENEMY);
+		}
+		return 4;
+	}
+	else if (rate < 47) // STRENGTH - atk halved
+	{
+		sc_start(src, target, SC_INCATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
+		return 5;
+	}
+	else if (rate < 62) // THE LOVERS - 2000HP heal, random teleported
+	{
+		status_heal(target, 2000, 0, 0);
+		if (!map_flag_vs(target->m))
+			unit_warp(target, -1, -1, -1, CLR_TELEPORT);
+		return 6;
+	}
+	else if (rate < 63) // WHEEL OF FORTUNE - random 2 other effects
+	{
+		// Recursive call
+		skill_tarotcard(src, target, skill_id, skill_lv, tick);
+		skill_tarotcard(src, target, skill_id, skill_lv, tick);
+		return 7;
+	}
+	else if (rate < 69) // THE HANGED MAN - stop, freeze or stoned
+	{
+		enum sc_type sc[] = { SC_STOP, SC_FREEZE, SC_STONE };
+		uint8 rand_eff = rnd() % 3;
+		sc_start2(src, target, sc[rand_eff], 100, skill_lv, (rand_eff == 2 ? src->id : 0), skill_get_time2(skill_id, skill_lv));
+		return 8;
+	}
+	else if (rate < 74) // DEATH - curse, coma and poison
+	{
+		status_change_start(src, target, SC_COMA, 10000, skill_lv, 0, src->id, 0, 0, SCSTART_NONE);
+		sc_start(src, target, SC_CURSE, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		sc_start2(src, target, SC_POISON, 100, skill_lv, src->id, skill_get_time2(skill_id, skill_lv));
+		return 9;
+	}
+	else if (rate < 82) // TEMPERANCE - confusion
+	{
+		sc_start(src, target, SC_CONFUSION, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		return 10;
+	}
+	else if (rate < 83) // THE DEVIL - 6666 damage, atk and matk halved, cursed
+	{
+		status_fix_damage(src, target, 6666, 0);
+		clif_damage(src, target, tick, 0, 0, 6666, 0, DMG_NORMAL, 0, false);
+		sc_start(src, target, SC_INCATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, target, SC_INCMATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, target, SC_CURSE, skill_lv, 100, skill_get_time2(skill_id, skill_lv));
+		return 11;
+	}
+	else if (rate < 85) // THE TOWER - 4444 damage
+	{
+		status_fix_damage(src, target, 4444, 0);
+		clif_damage(src, target, tick, 0, 0, 4444, 0, DMG_NORMAL, 0, false);
+		return 12;
+	}
+	else if (rate < 90) // THE STAR - stun
+	{
+		sc_start(src, target, SC_STUN, 100, skill_lv, 5000);
+		return 13;
+	}
+	else // THE SUN - atk, matk, hit, flee and def reduced, immune to more tarot card effects
+	{
+		sc_start(src, target, SC_TAROTCARD, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		return 14;
+	}
 }
 
 /*==========================================
@@ -8422,10 +8526,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			status_zap(src,0,skill_get_sp(skill_id,skill_lv)); // consume sp only if succeeded [Inkfish]
 			card = skill_tarotcard(src, bl, skill_id, skill_lv, tick); // actual effect is executed here
-			if(card == 6)
-				clif_specialeffect(src, 522 + card, AREA);
-			else
-				clif_specialeffect(bl, 522 + card, AREA);
+			clif_specialeffect((card == 6) ? src : bl, 522 + card, AREA);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
@@ -16829,110 +16930,6 @@ int skill_greed(struct block_list *bl, va_list ap)
 		pc_takeitem(sd, fitem);
 
 	return 0;
-}
-
-/*========================================== [Playtester]
-* Process tarot card's effects
-* @ param src: Source of the tarot card effect
-* @ param target: Target of the tartor card effect
-* @ param skill_id: ID of the skill used
-* @ param skill_lv: Level of the skill used
-* @ param tick: Processing tick time
-* @ return Card number
-*------------------------------------------*/
-static int skill_tarotcard(struct block_list* src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int tick)
-{
-	int rate = rnd() % 100;
-
-	if (rate < 10) // THE FOOL - heals SP to 0
-	{
-		status_percent_damage(src, target, 0, 100, false);
-		return 1;
-	}
-	else if (rate < 20)  // THE MAGICIAN - matk halved
-	{
-		sc_start(src, target, SC_INCMATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		return 2;
-	}
-	else if (rate < 30) // THE HIGH PRIESTESS - all buffs removed
-	{
-		status_change_clear_buffs(target, SCCB_BUFFS | SCCB_CHEM_PROTECT);
-		return 3;
-	}
-	else if (rate < 37) // THE CHARIOT - 1000 damage, random armor destroyed
-	{
-		status_fix_damage(src, target, 1000, 0);
-		clif_damage(src, target, tick, 0, 0, 1000, 0, DMG_NORMAL, 0, false);
-		if (!status_isdead(target))
-		{
-			unsigned short where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM };
-			skill_break_equip(src, target, where[rnd() % 3], 10000, BCT_ENEMY);
-		}
-		return 4;
-	}
-	else if (rate < 47) // STRENGTH - atk halved
-	{
-		sc_start(src, target, SC_INCATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		return 5;
-	}
-	else if (rate < 62) // THE LOVERS - 2000HP heal, random teleported
-	{
-		status_heal(target, 2000, 0, 0);
-		if (!map_flag_vs(target->m))
-			unit_warp(target, -1, -1, -1, CLR_TELEPORT);
-		return 6;
-	}
-	else if (rate < 63) // WHEEL OF FORTUNE - random 2 other effects
-	{
-		// Recursive call
-		skill_tarotcard(src, target, skill_id, skill_lv, tick);
-		skill_tarotcard(src, target, skill_id, skill_lv, tick);
-		return 7;
-	}
-	else if (rate < 69) // THE HANGED MAN - stop, freeze or stoned
-	{
-		enum sc_type sc[] = { SC_STOP, SC_FREEZE, SC_STONE };
-		uint8 rand_eff = rnd() % 3;
-		sc_start2(src, target, sc[rand_eff], 100, skill_lv, (rand_eff == 2 ? src->id : 0), skill_get_time2(skill_id, skill_lv));
-		return 8;
-	}
-	else if (rate < 74) // DEATH - curse, coma and poison
-	{
-		status_change_start(src, target, SC_COMA, 10000, skill_lv, 0, src->id, 0, 0, SCSTART_NONE);
-		sc_start(src, target, SC_CURSE, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		sc_start2(src, target, SC_POISON, 100, skill_lv, src->id, skill_get_time2(skill_id, skill_lv));
-		return 9;
-	}
-	else if (rate < 82) // TEMPERANCE - confusion
-	{
-		sc_start(src, target, SC_CONFUSION, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		return 10;
-	}
-	else if (rate < 83) // THE DEVIL - 6666 damage, atk and matk halved, cursed
-	{
-		status_fix_damage(src, target, 6666, 0);
-		clif_damage(src, target, tick, 0, 0, 6666, 0, DMG_NORMAL, 0, false);
-		sc_start(src, target, SC_INCATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_INCMATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_CURSE, skill_lv, 100, skill_get_time2(skill_id, skill_lv));
-		return 11;
-	}
-	else if (rate < 85) // THE TOWER - 4444 damage
-	{
-		status_fix_damage(src, target, 4444, 0);
-		clif_damage(src, target, tick, 0, 0, 4444, 0, DMG_NORMAL, 0, false);
-		return 12;
-	}
-	else if (rate < 90) // THE STAR - stun
-	{
-		sc_start(src, target, SC_STUN, 100, skill_lv, 5000);
-		return 13;
-	}
-	else // THE SUN - atk, matk, hit, flee and def reduced, immune to more tarot card effects
-	{
-		sc_start(src, target, SC_TAROTCARD, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		return 14;
-	}
 }
 
 /// Ranger's Detonator [Jobbie/3CeAM]

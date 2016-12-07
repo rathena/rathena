@@ -988,7 +988,7 @@ enum si_type {
 	SI_MAXOVERTHRUST	= 188,
 	SI_LONGING = 189,
 	SI_HERMODE = 190,
-	SI_TAROT		= 191, // the icon allows no doubt... but what is it really used for ?? [DracoRPG]
+	SI_TAROT		= 191,
 //	SI_HLIF_AVOID = 192,
 //	SI_HFLI_FLEET = 193,
 //	SI_HFLI_SPEED = 194,
