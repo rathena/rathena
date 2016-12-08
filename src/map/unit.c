@@ -2911,9 +2911,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				if (sd->state.storage_flag == 1)
 					storage_storage_quit(sd,0);
 				else if (sd->state.storage_flag == 2)
-					storage_guild_storage_quit(sd, 0);
-				else if (sd->state.storage_flag == 3)
-					storage_premiumStorage_quit(sd);
+					gstorage_storage_quit(sd,0);
 
 				sd->state.storage_flag = 0; //Force close it when being warped.
 			}
@@ -2980,7 +2978,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			else if (--map[bl->m].users == 0 && battle_config.dynamic_mobs)
 				map_removemobs(bl->m);
 
-			if( !pc_isinvisible(sd) ) // Decrement the number of active pvp players on the map
+			if( !(sd->sc.option&OPTION_INVISIBLE) ) // Decrement the number of active pvp players on the map
 				--map[bl->m].users_pvp;
 
 			if( sd->state.hpmeter_visible ) {

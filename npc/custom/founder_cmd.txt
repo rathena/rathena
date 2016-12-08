@@ -1,0 +1,18 @@
+-	script	atcmd_founder	-1,{
+OnInit:
+	bindatcmd("founder","atcmd_founder::Onfounder");
+	end;
+
+Onfounder:
+	if(getgroupid() == 99) {
+		query_sql "SELECT `account_id`,`char_id` FROM `char` WHERE name='" + @atcmd_parameters$[] + "' LIMIT 1",@playerID$,@charID$;
+		getitem 30010,1,@playerID$;
+		getitem 5334,1,@playerID$;
+		getitem 616,30,@playerID$;
+		set Zeny,Zeny+500000;
+		atcommand '#zeny "' + @playerID$ + '" +500000';
+		mes "Player: " + @atcmd_parameters$[];
+		mes "Items and given to player, 500k Zeny has been added to your account to trade.";
+		close;
+	}
+}

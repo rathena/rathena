@@ -231,9 +231,6 @@ static void party_check_state(struct party_data *p)
 			case JOB_MONK:
 			case JOB_BABY_MONK:
 			case JOB_CHAMPION:
-			case JOB_SURA:
-			case JOB_SURA_T:
-			case JOB_BABY_SURA:
 				p->state.monk = 1;
 			break;
 			case JOB_STAR_GLADIATOR:
@@ -335,7 +332,7 @@ int party_recv_info(struct party* sp, uint32 char_id)
 		if( sd == NULL )
 			continue;// not online
 
-		clif_name_area(&sd->bl); //Update other people's display. [Skotlex]
+		clif_charnameupdate(sd); //Update other people's display. [Skotlex]
 		clif_party_member_info(p,sd);
 		// Only send this on party creation, otherwise it will be sent by party_send_movemap [Lemongrass]
 		if( sd->party_creating ){
@@ -438,14 +435,6 @@ int party_reply_invite(struct map_session_data *sd,int party_id,int flag)
 		return 0;
 	}
 
-	// The character is already in a party, possibly left a party invite open and created his own party
-	if( sd->status.party_id != 0 ){
-		// On Aegis no rejection packet is sent to the inviting player
-		sd->party_invite = 0;
-		sd->party_invite_account = 0;
-		return 0;
-	}
-
 	tsd = map_id2sd(sd->party_invite_account);
 
 	if( flag == 1 && !sd->party_creating && !sd->party_joining ) { // accepted and allowed
@@ -539,7 +528,7 @@ int party_member_added(int party_id,uint32 account_id,uint32 char_id, int flag)
 
 	clif_party_hp(sd);
 	clif_party_xy(sd);
-	clif_name_area(&sd->bl); //Update char name's display [Skotlex]
+	clif_charnameupdate(sd); //Update char name's display [Skotlex]
 
 	if( p->instance_id )
 		instance_reqinfo(sd,p->instance_id);
@@ -646,11 +635,11 @@ int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char 
 		j = pc_bound_chk(sd,BOUND_PARTY,idxlist);
 
 		for(i = 0; i < j; i++)
-			pc_delitem(sd,idxlist[i],sd->inventory.u.items_inventory[idxlist[i]].amount,0,1,LOG_TYPE_BOUND_REMOVAL);
+			pc_delitem(sd,idxlist[i],sd->status.inventory[idxlist[i]].amount,0,1,LOG_TYPE_BOUND_REMOVAL);
 #endif
 
 		sd->status.party_id = 0;
-		clif_name_area(&sd->bl); //Update name display [Skotlex]
+		clif_charnameupdate(sd); //Update name display [Skotlex]
 		//TODO: hp bars should be cleared too
 
 		if( p->instance_id ) {

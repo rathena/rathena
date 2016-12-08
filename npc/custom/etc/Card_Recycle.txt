@@ -1,0 +1,101 @@
+
+/*
+	make sure you loaded the "extra_function.txt" before use this NPC.
+*/
+
+-	shop	card_merge_shop	-1,909:100
+
+prontera,147,253,5	script	Card Recycle#card	563,{
+do{
+	mes "Pick an option";
+	mes " ";
+	.@option = select( "merge "+.card_count+" card","information" );
+	if( .@option == 1 ){
+		if( Zeny < .zeny_cost ){
+			mes "You need ^FF0000"+.zeny_cost+" zeny^000000 per merge.";
+			close;
+		}
+		if( npcshopattach( .shop_npc_name$ ) ){
+			deletearray @sold_nameid;
+			mes "Put ^FF0000 "+.card_count+" x Different Card^000000 into the window.";
+			callshop .shop_npc_name$,2;
+			end;
+		}
+	
+	}
+	else{
+		mes "You need to give ";
+		mes "  ^FF0000"+.card_count+" Monster Card + "+.zeny_cost+" Zeny^000000";
+		mes "to get a New Card each time.";
+		next;
+	}
+
+}while( .@option == 2 );
+close;
+
+OnSellItem:
+	.@sold_size = getarraysize( @sold_nameid );
+	if( .@sold_size == .card_count ){
+		mes "^0055FF[Card Checking]^000000";
+		for( .@i = 0; .@i < .@sold_size; .@i++ ){
+			if( compare( .forbidden_card$,"|"+@sold_nameid[.@i]+"|" ) ){
+				mes " ~ "+getitemname( @sold_nameid[.@i] )+"^000000 cant be used.";
+				close;
+			}
+			.@item_type[.@i] = getiteminfo( @sold_nameid[.@i],2 );
+			.@not_valid = ( .@item_type[.@i] != IT_CARD || @sold_nameid[.@i] < .card_id_range[0] || @sold_nameid[.@i] > .card_id_range[1] );
+			mes " ~ "+getitemname( @sold_nameid[.@i] )+"^000000 is "+( ( .@not_valid )?"^FF0000NOT":"a" )+" Card^000000.";
+			if( .@not_valid ) .@failed++;
+		}
+		if( !.@failed ){
+			mes " ";
+			mes "Confirm to exchange these "+.card_count+" Cards into a NEW Card ??";
+			next;
+			if( select( "YES","No" ) == 1 ){
+				Zeny -= .zeny_cost;
+				for( .@i = 0; .@i < .@sold_size; .@i++ )
+					delitem @sold_nameid[.@i],1;
+					
+				mes "Rolling a new card.....";
+				for( .@i = 0; .@i < 25 ; .@i++ ){
+					if( .@i == 20 )
+						mes "^777777-- stopping --^000000";
+					cutin card_illust( rand( .card_id_range[0],.card_id_range[1] ) ),4;
+					sleep2 ( .@i * 25 + 100 );
+				}
+				
+				do{
+					.@new_card = rand( .card_id_range[0],.card_id_range[1] );
+				}while( compare( .forbidden_card$,"|"+.@new_card+"|" ) );
+				
+				cutin card_illust( .@new_card ),4;
+				mes " ";
+				mes "Gained a New Card: ";
+				mes " ~ ^0055FF"+getitemname( .@new_card )+"^000000";
+				getitem .@new_card,1;
+			}
+		}
+		
+	}
+	else{
+		mes "Make sure you input ^FF0000 "+.card_count+" Different Card^000000.";
+	}
+	close2;
+	cutin "",255;
+	end;
+
+OnInit:
+	// how many card requried to change to 1 New card
+	.card_count = 2;
+
+	// zeny required for this process.
+	.zeny_cost = 10000;
+
+	// list of card that cant be used to exchange/get.
+	.forbidden_card$ = "|4246|4359|4425|4327|4147|4145|4168|4386|4142|4137|4123|4330|4441|4324|4408|4128|4363|4365|4430|4263|4403|4318|4419|4376|4357|4276|4146|4132|4131|4143|4135|4144|4148|4121|4342|4367|4302|4399|4305|4407|4374|4361|4352|4578|4675|4591|4590|4662|4636|4592|4562|4697|4560|4603|4563|4580|4635|4633|4547|4548|4446|4634|4451|4556|4574|4532|4681|4576|4509|4606|4674|4566|4365|4646|4645|4648|4650|4647|4649|4651|4642|4643|4644|4609|4525|4677|4673|4456|4652|4630|4565|4561|4507|4676|4602|4604|4680|4679|4610|4495|4536|4486|4488|4483|4496|4504|4544|4539|4482|4485|4501|4541|4487|4480|4481|4498|4540|4502|4484|4490|4492|4500|4489|4537|4535|4499|4491|4497|4493|4494|4503|4538|4682|4553|4367|4671|4564|4672|4625|4696|4687|4692|4693|4684|4691|4694|4688|4686|4685|4690|4689|4695|4550|4549|4683|4678|4557|4608|4236|";
+
+	// current card id range.
+	setarray .card_id_range,4001,4500;
+	.shop_npc_name$ = "card_merge_shop";
+	end;
+}

@@ -349,8 +349,8 @@ D31: Restrict("RE",7,8);
 D32: setarray @c[2],140,11,32,21,8,149,204,218,150,9;
 	 Disp("Rachel Sanctuary",1,5); Pick("ra_san");
 D33: Restrict("RE");
-	 setarray @c[2],364,44,101,141;
-	 Disp("Scaraba Hole",1,2); Pick("dic_dun");
+	 setarray @c[2],364,44,101,141,102,143;
+	 Disp("Scaraba Hole",1,3); Pick("dic_dun");
 D34: setarray @c[2],288,9,149,81,210,54,10,222,100,99;
 	 Disp("Sphinx",1,5); Pick("","in_sphinx1","in_sphinx2","in_sphinx3","in_sphinx4","in_sphinx5");
 D35: setarray @c[2],69,24,102,27;
@@ -481,7 +481,7 @@ einbroch,69,202,4	duplicate(Warper)	Warper#einbr	811
 gef_fild10,71,339,4	duplicate(Warper)	Warper#orc	811
 geffen,124,72,4	duplicate(Warper)	Warper#gef	811
 glast_01,372,308,4	duplicate(Warper)	Warper#glh	811
-gonryun,162,122,4	duplicate(Warper)	Warper#gon	811
+gonryun,165,122,4	duplicate(Warper)	Warper#gon	811
 hugel,101,151,4	duplicate(Warper)	Warper#hug	811
 izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	811
 izlude,134,150,4	duplicate(Warper)	Warper#izl	811	//Pre-RE: (132,120)

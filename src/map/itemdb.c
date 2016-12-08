@@ -1681,7 +1681,7 @@ static void itemdb_read(void) {
 		}
 		
 		sv_readdb(dbsubpath1, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail, i);
-		sv_readdb(dbsubpath2, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i);
+		sv_readdb(dbsubpath1, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i);
 		sv_readdb(dbsubpath1, "item_nouse.txt",         ',', 3, 3, -1, &itemdb_read_nouse, i);
 		sv_readdb(dbsubpath2, "item_group_db.txt",		',', 2, 10, -1, &itemdb_read_group, i);
 		sv_readdb(dbsubpath2, "item_bluebox.txt",		',', 2, 10, -1, &itemdb_read_group, i);
@@ -1836,7 +1836,7 @@ void itemdb_reload(void) {
 	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		pc_setinventorydata(sd);
-		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
+		pc_check_available_item(sd); // Check for invalid(ated) items.
 		/* clear combo bonuses */
 		if( sd->combos.count ) {
 			aFree(sd->combos.bonus);

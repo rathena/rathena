@@ -1,0 +1,11 @@
+-	script	#channel_autojoin	-1,{
+
+OnPCLoginEvent:
+	atcommand "@join #main";
+	atcommand "@join #support";
+	atcommand "@join #trade";
+	if(!#newplayer) announce "Welcome "+strcharinfo(0)+" to Divine-RO",bc_all;
+	#newplayer = 1;
+	end;
+
+}

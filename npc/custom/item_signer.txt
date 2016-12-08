@@ -13,21 +13,21 @@
 //= 1.1a Added 'disable_items' command. [Euphy]
 //============================================================
 
-prt_in,24,61,7	script	Perchik	47,{
+prontera,182,214,5	script	Perchik	47,{
 	
 	setarray .@Item[0],644,3;	// Item requirements: <ID>,<Count>{,...} (0 to disable)
 	setarray .@Cost[0],0,5000;	// Zeny requirements: <base price>,<price per refine>
 
 	disable_items;
-	mes "[Perchik]";
+	mes "[Item Signer]";
 	mes "I can ^0055FFsign your name^000000 on almost any rare item you hold.";
 	next;
 	if(select("Tell me more...:Sign my items, please!") == 1) {
-		mes "[Perchik]";
+		mes "[Item Signer]";
 		mes "I can put your name on any slotless equipment or weapon.";
 		emotion e_ic;
 		next;
-		mes "[Perchik]";
+		mes "[Item Signer]";
 		if (getarraysize(.@Item) || getarraysize(.@Cost)) {
 			mes "For my work I accept:";
 			if (getarraysize(.@Item)) for(set .@i,0; .@i<getarraysize(.@Item); set .@i,.@i+2)
@@ -38,17 +38,17 @@ prt_in,24,61,7	script	Perchik	47,{
 		else mes "I work for free, but...";
 		next;
 		emotion e_cry;
-		mes "[Perchik]";
+		mes "[Item Signer]";
 		mes "Alas, I have 12 hungry children";
 		mes "and a very angry wife.";
 		next;
-		mes "[Perchik]";
+		mes "[Item Signer]";
 		mes "Or it was 12 angry children";
 		mes "and a very hungry wife...";
 		emotion e_hmm;
 		close;
 	}
-	mes "[Perchik]";
+	mes "[Item Signer]";
 	mes "Show me your items to sign...";
 	next;
 	setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW;
@@ -60,7 +60,7 @@ prt_in,24,61,7	script	Perchik	47,{
 	set .@part, .@indices[ select(.@menu$) ];
 	set .@id, getequipid(.@part);
 	set .@ref, getequiprefinerycnt(.@part);
-	mes "[Perchik]";
+	mes "[Item Signer]";
 	if (!getequipisequiped(.@part)) {
 		mes "Nothing is equipped there!";
 		emotion e_wah;
@@ -104,12 +104,12 @@ prt_in,24,61,7	script	Perchik	47,{
 	mes "Shall I sign your ^0055FF"+getitemname(.@id)+"^000000?";
 	next;
 	if(select("Ok!:Leave")==2) {
-		mes "[Perchik]";
+		mes "[Item Signer]";
 		mes "See you...";
 		emotion e_yawn;
 		close;
 	}
-	mes "[Perchik]";
+	mes "[Item Signer]";
 	if (Zeny < .@price || .@nr) {
 		mes "I don't work for 'thanks'.";
 		emotion e_sry;
@@ -117,7 +117,7 @@ prt_in,24,61,7	script	Perchik	47,{
 	}
 	if (!countitem2(.@id,1,.@ref,0,.@slot[0],.@slot[1],.@slot[2],.@slot[3])) {
 		mes "Where is "+getitemname(@id)+"...?";
-		npctalk "Perchik : You're a snoozy cheater!";
+		npctalk "Item Signer : You're a snoozy cheater!";
 		logmes "Hack: Tried to sign an item not having it: "+getitemname(@id);
 		emotion e_wah;
 		close;

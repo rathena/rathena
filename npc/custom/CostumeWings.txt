@@ -1,0 +1,277 @@
+//===== rAthena Script =======================================
+//= Euphy's Costume Wing Quests
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= rAthena SVN r16862+
+//===== Description: =========================================
+//= A dynamic quest shop based on Lunar's, with easier config.
+//= Includes support for multiple shops & cashpoints.
+//= Item Preview script by ToastOfDoom.
+//============================================================
+
+// Shop NPCs -- supplying no argument displays entire menu.
+//	callfunc "qshop"{,<shop ID>{,<shop ID>{,...}}};
+//============================================================
+prontera,164,247,3	script	Costume Wing Quests#1	403,{ callfunc "qshop"; }
+
+
+// Script Core
+//============================================================
+-	script	quest_shop	-1,{ 
+function Add; function Chk; function Slot; function A_An;
+OnInit:
+	freeloop(1);
+
+// -----------------------------------------------------------
+//  Basic shop settings.
+// -----------------------------------------------------------
+
+	set .Announce,1;	// Announce quest completion? (1: yes / 0: no)
+	set .ShowSlot,1;	// Show item slots? (2: all equipment / 1: if slots > 0 / 0: never)
+	set .ShowID,1;  	// Show item IDs? (1: yes / 0: no)
+	set .ShowZeny,1;	// Show Zeny cost, if any? (1: yes / 0: no)
+	set .MaxStack,1;	// Max number of quest items purchased at one time.
+
+// -----------------------------------------------------------
+//  Points variable -- optional quest requirement.
+//	setarray .Points$[0],"<variable name>","<display name>";
+// -----------------------------------------------------------
+
+	setarray .Points$[0],"#CASHPOINTS","Cash Points";
+
+// -----------------------------------------------------------
+//  Shop IDs -- to add shops, copy dummy data at bottom of file.
+//	setarray .Shops$[1],"<Shop 1>","<Shop 2>"{,...};
+// -----------------------------------------------------------
+
+	setarray .Shops$[1],"Master Wings","Angeling Wings","ArcAngeling Wings";
+
+// -----------------------------------------------------------
+//  Quest items -- do NOT use a reward item more than once!
+//	Add(<shop ID>,<reward ID>,<reward amount>,
+//	    <Zeny cost>,<point cost>,
+//	    <required item ID>,<required item amount>{,...});
+// -----------------------------------------------------------
+	
+	//Animated Angel Wing
+	
+	Add(1,30041,1,250000,0,7615,1);
+	//Animated Devil Wings
+	
+	Add(1,30042,1,250000,0,7615,1);
+	//Sparrow Wings
+	
+	Add(1,30045,1,250000,0,7615,1);
+	//Crow Wings
+	
+	Add(1,30047,1,250000,0,7615,1);
+	//Little Devil Wings
+	
+	Add(1,30059,1,250000,0,7615,1);
+	
+	//Tier 2
+	//Animated Angel Wings Tier 2
+	Add(2,30039,1,250000,0,7615,1);
+	
+	Add(2,30043,1,250000,0,7615,1);
+	
+	//Animated Devil Wings Tier 2
+	Add(2,30058,1,250000,0,7615,1);
+	
+	Add(2,30054,1,250000,0,7615,1);
+	
+	//Sparrow Wings Tier 2
+	Add(2,30053,1,250000,0,7615,1);
+	
+	Add(2,30050,1,250000,0,7615,1);
+	
+	//Crow Wings Tier 2
+	Add(2,30044,1,250000,0,7615,1);
+	
+	Add(2,30063,1,250000,0,7615,1);
+
+	//Little Devil Wings Tier 2
+	Add(2,30055,1,250000,0,7615,1);
+	
+	Add(2,30060,1,250000,0,7615,1);
+	
+	//Tier 3
+	//Animated Angel Wings Tier 3
+	Add(3,30036,1,250000,0,7615,1);
+	
+	Add(3,30048,1,250000,0,7615,1);
+	
+	//Animated Devil Wings Tier 3
+	Add(3,30057,1,250000,0,7615,1);
+	
+	Add(3,30062,1,250000,0,7615,1);
+	
+	//Sparrow Wings Tier 3
+	Add(3,30049,1,250000,0,7615,1);
+	
+	Add(3,30051,1,250000,0,7615,1);
+	
+	//Crow Wings Tier 3
+	Add(3,30064,1,250000,0,7615,1);
+	
+	Add(3,30068,1,250000,0,7615,1);
+	
+	//Little Devil Wings Tier 3
+	Add(3,30052,1,250000,0,7615,1);
+	
+	Add(3,30038,1,250000,0,7615,1);
+	
+// -----------------------------------------------------------
+
+	freeloop(0);
+	set .menu$,"";
+	for(set .@i,1; .@i<=getarraysize(.Shops$); set .@i,.@i+1) {
+		set .menu$, .menu$+.Shops$[.@i]+":";
+		npcshopdelitem "qshop"+.@i,909;
+	}
+	end;
+
+OnMenu:
+	set .@size, getarraysize(@i);
+	if (!.@size) set .@i, select(.menu$);
+	else if (.@size == 1) set .@i, @i[0];
+	else {
+		for(set .@j,0; .@j<.@size; set .@j,.@j+1)
+			set .@menu$, .@menu$+.Shops$[@i[.@j]]+":";
+		set .@i, @i[select(.@menu$)-1];
+	}
+	deletearray @i[0],getarraysize(@i);
+	if (.Shops$[.@i] == "") {
+		message strcharinfo(0),"An error has occurred.";
+		end;
+	}
+	dispbottom "Select one item at a time.";
+	callshop "qshop"+.@i,1;
+	npcshopattach "qshop"+.@i;
+	end;
+
+OnBuyItem:
+	// .@q[] : RewardID, BoughtAmt, RewardAmt, BaseAmt, ReqZeny, ReqPts, { ReqItem, ReqAmt, ... }
+	setarray .@q[0],@bought_nameid[0],((@bought_quantity[0] > .MaxStack)?.MaxStack:@bought_quantity[0]);
+	copyarray .@q[3],getd(".q_"+.@q[0]+"[0]"),getarraysize(getd(".q_"+.@q[0]));
+	set .@q[2],.@q[1]*.@q[3];
+	if (!.@q[2] || .@q[2] > 30000) {
+		message strcharinfo(0),"You can't purchase that many "+getitemname(.@q[0])+".";
+		end;
+	}
+	mes "[Costume Wing Quests]";
+	mes "Reward: ^0055FF"+((.@q[2] > 1)?.@q[2]+"x ":"")+Slot(.@q[0])+"^000000";
+	mes "Requirements:";
+	if (.@q[4]) mes " > "+Chk(Zeny,.@q[4]*.@q[1])+(.@q[4]*.@q[1])+" Zeny^000000";
+	if (.@q[5]) mes " > "+Chk(getd(.Points$[0]),.@q[5]*.@q[1])+(.@q[5]*.@q[1])+" "+.Points$[1]+" ("+getd(.Points$[0])+"/"+(.@q[5]*.@q[1])+")^000000";
+	if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
+		mes " > "+Chk(countitem(.@q[.@i]),.@q[.@i+1]*.@q[1])+((.ShowID)?"{"+.@q[.@i]+"} ":"")+Slot(.@q[.@i])+" ("+countitem(.@q[.@i])+"/"+(.@q[.@i+1]*.@q[1])+")^000000";
+	next;
+	setarray @qe[1], getiteminfo(.@q[0],5), getiteminfo(.@q[0],11);
+	if (((@qe[1] & 1) || (@qe[1] & 256) || (@qe[1] & 512)) && @qe[2] > 0)
+		set .@preview,1;
+	addtimer 1000, strnpcinfo(0)+"::OnEnd";
+	while(1) {
+		switch(select(" ~ Purchase ^0055FF"+getitemname(.@q[0])+"^000000:"+((.@preview && !@qe[6])?" ~ Preview...":"")+": ~ ^777777Cancel^000000")) {
+		case 1:
+			if (@qe[0]) { 
+				mes "[Costume Wing Quests]";
+				mes "You're missing one or more quest requirements.";
+				close;
+			}
+			if (!checkweight(.@q[0],.@q[2])) {
+				mes "[Costume Wing Quests]";
+				mes "^FF0000You need "+(((.@q[2]*getiteminfo(.@q[0],6))+Weight-MaxWeight)/10)+" additional weight capacity to complete this trade.^000000";
+				close;
+			}
+			if (.@q[4]) set Zeny, Zeny-(.@q[4]*.@q[1]);
+			if (.@q[5]) setd .Points$[0], getd(.Points$[0])-(.@q[5]*.@q[1]);
+			if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
+				delitem .@q[.@i],.@q[.@i+1]*.@q[1];
+			getitem .@q[0],.@q[2];
+			if (.Announce) announce strcharinfo(0)+" has created "+((.@q[2] > 1)?.@q[2]+"x "+getitemname(.@q[0]):A_An(getitemname(.@q[0])))+"!",0;
+			specialeffect2 699;
+			close;
+		case 2:
+			setarray @qe[3], getlook(LOOK_HEAD_BOTTOM), getlook(LOOK_HEAD_TOP), getlook(LOOK_HEAD_MID), 1;
+			if (@qe[1] & 1) changelook LOOK_HEAD_BOTTOM, @qe[2];
+			if (@qe[1] & 256) changelook LOOK_HEAD_TOP, @qe[2];
+			if (@qe[1] & 512) changelook LOOK_HEAD_MID, @qe[2];
+			break;
+		case 3:
+			close;
+		}
+	}
+
+OnEnd:
+	if (@qe[6]) {
+		changelook LOOK_HEAD_BOTTOM, @qe[3];
+		changelook LOOK_HEAD_TOP, @qe[4];
+		changelook LOOK_HEAD_MID, @qe[5];
+	}
+	deletearray @qe[0],7;
+	end;
+
+function Add {
+	if (getitemname(getarg(1)) == "null") {
+		debugmes "Quest reward #"+getarg(1)+" invalid (skipped).";
+		return;
+	}
+	setarray .@j[0],getarg(2),getarg(3),getarg(4);
+	for(set .@i,5; .@i<getargcount(); set .@i,.@i+2) {
+		if (getitemname(getarg(.@i)) == "null") {
+			debugmes "Quest requirement #"+getarg(.@i)+" invalid (skipped).";
+			return;
+		} else
+			setarray .@j[.@i-2],getarg(.@i),getarg(.@i+1);
+	}
+	copyarray getd(".q_"+getarg(1)+"[0]"),.@j[0],getarraysize(.@j);
+	npcshopadditem "qshop"+getarg(0),getarg(1),((.ShowZeny)?getarg(3):0);
+	return;
+}
+
+function Chk {
+	if (getarg(0) < getarg(1)) {
+		set @qe[0],1;
+		return "^FF0000";
+	} else
+		return "^00FF00";
+}
+
+function Slot {
+	set .@s$,getitemname(getarg(0));
+	switch(.ShowSlot) {
+		case 1: if (!getitemslots(getarg(0))) return .@s$;
+		case 2: if (getiteminfo(getarg(0),2) == 4 || getiteminfo(getarg(0),2) == 5) return .@s$+" ["+getitemslots(getarg(0))+"]";
+		default: return .@s$;
+	}
+}
+
+function A_An {
+	setarray .@A$[0],"a","e","i","o","u";
+	set .@B$, "_"+getarg(0);
+	for(set .@i,0; .@i<5; set .@i,.@i+1)
+		if (compare(.@B$,"_"+.@A$[.@i])) return "an "+getarg(0);
+	return "a "+getarg(0);
+}
+}
+
+function	script	qshop	{
+	deletearray @i[0],getarraysize(@i);
+	for(set .@i,0; .@i<getargcount(); set .@i,.@i+1)
+		set @i[.@i],getarg(.@i);
+	doevent "quest_shop::OnMenu";
+	end;
+}
+
+
+// Dummy shop data -- copy as needed.
+//============================================================
+-	shop	qshop1	-1,909:-1
+-	shop	qshop2	-1,909:-1
+-	shop	qshop3	-1,909:-1
+-	shop	qshop4	-1,909:-1
+-	shop	qshop5	-1,909:-1

@@ -52,3 +52,43 @@ prontera,150,193,4	script	Reset Girl	124,{
 	if(.@Reset[3]) set reset_limit,reset_limit + 1;
 	close;
 }
+
+// Duplicates
+//============================================================
+alberta,33,240,6	duplicate(Reset Girl)	Reset Girl#alb	124
+aldebaran,133,117,6	duplicate(Reset Girl)	Reset Girl#alde	124
+amatsu,203,85,4	duplicate(Reset Girl)	Reset Girl#ama	124
+ayothaya,203,173,6	duplicate(Reset Girl)	Reset Girl#ayo	124
+comodo,185,163,6	duplicate(Reset Girl)	Reset Girl#com	124
+einbech,60,43,6	duplicate(Reset Girl)	Reset Girl#einbe	124
+einbroch,72,205,6	duplicate(Reset Girl)	Reset Girl#einbr	124
+geffen,124,69,6	duplicate(Reset Girl)	Reset Girl#gef	124
+gonryun,156,126,6	duplicate(Reset Girl)	Reset Girl#gon	124
+hugel,90,145,6	duplicate(Reset Girl)	Reset Girl#hug	124
+izlude,121,150,5	duplicate(Reset Girl)	Reset Girl#izl	124
+jawaii,248,141,4	duplicate(Reset Girl)	Reset Girl#jaw	124
+lighthalzen,151,102,6	duplicate(Reset Girl)	Reset Girl#lhz	124
+louyang,212,105,4	duplicate(Reset Girl)	Reset Girl#lou	124
+manuk,270,142,6	duplicate(Reset Girl)	Reset Girl#man	124
+mid_camp,202,286,6	duplicate(Reset Girl)	Reset Girl#mid	124
+moc_ruins,72,164,4	duplicate(Reset Girl)	Reset Girl#moc	124
+morocc,150,97,6	duplicate(Reset Girl)	Reset Girl#mor	124
+moscovia,217,191,4	duplicate(Reset Girl)	Reset Girl#mos	124
+niflheim,212,182,5	duplicate(Reset Girl)	Reset Girl#nif	124
+payon,166,99,4	duplicate(Reset Girl)	Reset Girl#pay	124
+rachel,122,117,6	duplicate(Reset Girl)	Reset Girl#rac	124
+splendide,208,153,4	duplicate(Reset Girl)	Reset Girl#spl	124
+thor_camp,249,74,4	duplicate(Reset Girl)	Reset Girl#thor	124
+umbala,102,150,3	duplicate(Reset Girl)	Reset Girl#umb	124
+veins,221,125,4	duplicate(Reset Girl)	Reset Girl#ve	124
+xmas,140,128,4	duplicate(Reset Girl)	Reset Girl#xmas	124
+yuno,151,45,4	duplicate(Reset Girl)	Reset Girl#yuno	124
+
+// Duplicates (Renewal)
+//============================================================
+brasilis,189,226,6	duplicate(Reset Girl)	Reset Girl#bra	124
+dewata,197,189,4	duplicate(Reset Girl)	Reset Girl#dew	124
+dicastes01,188,197,4	duplicate(Reset Girl)	Reset Girl#dic	124
+malangdo,142,110,6	duplicate(Reset Girl)	Reset Girl#mal	124
+malaya,240,209,6	duplicate(Reset Girl)	Reset Girl#ma	124
+mora,50,149,4	duplicate(Reset Girl)	Reset Girl#mora	124

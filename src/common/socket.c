@@ -1218,13 +1218,6 @@ void socket_final(void)
 	aFree(session[0]->session_data);
 	aFree(session[0]);
 	session[0] = NULL;
-
-#ifdef WIN32
-	// Shut down windows networking
-	if( WSACleanup() != 0 ){
-		ShowError("socket_final: WinSock could not be cleaned up! %s\n", error_msg() );
-	}
-#endif
 }
 
 /// Closes a socket.

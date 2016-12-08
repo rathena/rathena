@@ -1,0 +1,70 @@
+prontera,145,231,6	script	ReName Me NPC	987,{
+	//Name Change Limit Per Account
+	set .changeLimit, 3;
+	
+	// NPC Name to display during chat.
+	set .npcName$,"[The Name Changer]";
+	
+	// Zeny Cost per name change
+	set .zenyCost, 500000;
+	
+	// Users char ID
+	set .cID, getcharid(0);
+	
+	//Change Name To
+	set .changeTo$,"";
+	
+	// --------------- End NPC Settings ---------------
+
+	// ----------------- Begin Script -----------------
+	query_sql "SELECT `name_changes` FROM `login` WHERE `account_id` = " + getcharid(3),.@name_changes;
+	if(.@name_changes < .changeLimit) {
+		mes .npcName$;
+		mes "Well hello there " + (Sex ? "good sir!" : "young madam!");
+		mes "So you would like to change your name?";
+		mes "I can do it, sure...but it will cost you " + .zenyCost + " Zenny.";
+		prompt("I wish to change my name:I am merely perusing the area");
+		switch(@menu) {
+			case 1:
+				next;
+				if(Zeny >= .zenyCost) {
+					mes .npcName$;
+					mes "What would you like your new name to be?";
+					input @rename$;
+					set .changeTo$,@rename$;
+					next;
+					mes "You have changed your name " + .@name_changes + " times.";
+					query_sql "SELECT `char_id` FROM `char` WHERE `name` = '" + @rename$ +"'",.@check_name;
+					if(.@check_name == 0) {
+						mes "Total users with the name: " + @rename$ + ": " + .@check_name;
+						query_sql "UPDATE `char` SET `name`='" + .changeTo$ + "' WHERE `char_id`=" + getcharid(0);
+						set Zeny,Zeny-.zenyCost;
+						query_sql "UPDATE `login` SET `name_changes`=name_changes+1 WHERE account_id=" + getcharid(3);
+						mes "Your name has been changed.  You must relogin for it to update.";
+						atcommand "@kick "+.cID;
+						close;
+					} else {
+						mes "That name is already taken sorry.";
+						close;
+					}
+				} else {
+					mes .npcName$;
+					mes "You do not have enough Zeny!";
+					mes "Get outta here!!!";
+					close;
+				}
+			break;
+			default:
+				next;
+				mes .npcName$;
+				mes "Get outta here you are scaring away my customers!";
+				close;
+			break;
+		}
+	} else {
+		mes .npcName$;
+		mes "You have hit the account name change limit of " + .changeLimit + ".";
+		mes "To do anymore name changes you must do it through the cash shop.";
+		close;
+	}	
+}

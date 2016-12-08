@@ -1,0 +1,47 @@
+prontera,167,194,1	script	Deckkard Kain	121,{
+	mes "[Deckkard Kain]";
+	mes "Greetings...Stay awhile and listen!";
+	atcommand "@identifyall";
+	mes "All your items have been identified";
+	close;
+}	
+
+// Duplicates
+//============================================================
+alberta,28,235,6	duplicate(Deckkard Kain)	Deckkard Kain#alb	121
+aldebaran,133,107,6	duplicate(Deckkard Kain)	Deckkard Kain#alde	121
+amatsu,193,85,4	duplicate(Deckkard Kain)	Deckkard Kain#ama	121
+ayothaya,212,173,6	duplicate(Deckkard Kain)	Deckkard Kain#ayo	121
+comodo,192,163,6	duplicate(Deckkard Kain)	Deckkard Kain#com	121
+einbech,67,42,6	duplicate(Deckkard Kain)	Deckkard Kain#einbe	121
+einbroch,56,205,6	duplicate(Deckkard Kain)	Deckkard Kain#einbr	121
+geffen,128,62,6	duplicate(Deckkard Kain)	Deckkard Kain#gef	121
+gonryun,161,126,6	duplicate(Deckkard Kain)	Deckkard Kain#gon	121
+hugel,103,148,6	duplicate(Deckkard Kain)	Deckkard Kain#hug	121
+izlude,129,153,5	duplicate(Deckkard Kain)	Deckkard Kain#izl	121
+jawaii,254,133,4	duplicate(Deckkard Kain)	Deckkard Kain#jaw	121
+lighthalzen,166,102,6	duplicate(Deckkard Kain)	Deckkard Kain#lhz	121
+louyang,222,105,4	duplicate(Deckkard Kain)	Deckkard Kain#lou	121
+manuk,288,144,6	duplicate(Deckkard Kain)	Deckkard Kain#man	121
+mid_camp,218,286,6	duplicate(Deckkard Kain)	Deckkard Kain#mid	121
+moc_ruins,72,164,4	duplicate(Deckkard Kain)	Deckkard Kain#moc	121
+morocc,164,97,6	duplicate(Deckkard Kain)	Deckkard Kain#mor	121
+moscovia,222,197,4	duplicate(Deckkard Kain)	Deckkard Kain#mos	121
+niflheim,212,186,5	duplicate(Deckkard Kain)	Deckkard Kain#nif	121
+payon,166,111,4	duplicate(Deckkard Kain)	Deckkard Kain#pay	121
+rachel,138,117,6	duplicate(Deckkard Kain)	Deckkard Kain#rac	121
+splendide,198,153,4	duplicate(Deckkard Kain)	Deckkard Kain#spl	121
+thor_camp,249,74,4	duplicate(Deckkard Kain)	Deckkard Kain#thor	121
+umbala,102,148,3	duplicate(Deckkard Kain)	Deckkard Kain#umb	121
+veins,211,121,4	duplicate(Deckkard Kain)	Deckkard Kain#ve	121
+xmas,156,128,4	duplicate(Deckkard Kain)	Deckkard Kain#xmas	121
+yuno,158,45,4	duplicate(Deckkard Kain)	Deckkard Kain#yuno	121
+
+// Duplicates (Renewal)
+//============================================================
+brasilis,203,226,6	duplicate(Deckkard Kain)	Deckkard Kain#bra	121
+dewata,200,184,4	duplicate(Deckkard Kain)	Deckkard Kain#dew	121
+dicastes01,197,196,4	duplicate(Deckkard Kain)	Deckkard Kain#dic	121
+malangdo,137,115,6	duplicate(Deckkard Kain)	Deckkard Kain#mal	121
+malaya,240,214,6	duplicate(Deckkard Kain)	Deckkard Kain#ma	121
+mora,53,149,4	duplicate(Deckkard Kain)	Deckkard Kain#mora	121

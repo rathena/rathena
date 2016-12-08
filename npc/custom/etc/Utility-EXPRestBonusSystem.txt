@@ -1,0 +1,117 @@
+
+function	script	epoch_time	{
+	.@time = getarg(0);
+	.@hour = ( .@time / 3600 );
+	.@min = ( .@time % 3600 ) / 60 ;
+	.@sec = ( ( .@time % 3600 ) % 60 ) % 60;
+	
+	return sprintf( "%02d:%02d:%02d",.@hour,.@min,.@sec );
+}
+
+
+-	script	logout_rest_bonus_system	FAKE,{
+	function func_max_base_level;
+	function func_max_job_level;
+	
+	function	func_max_base_level	{
+		.@eaclass = getarg( 0,0 );
+		
+		if ( .@eaclass == EAJ_SUPER_BABY || .@eaclass == EAJ_SUPER_BABY_E || .@eaclass == .@eaclass == EAJ_SUPER_NOVICE_E  ) return 160;
+		else if ( .@eaclass == EAJ_KAGEROUOBORO || .@eaclass == EAJ_REBELLION ) return 160;
+		else if ( .@eaclass & EAJL_THIRD ) return 175;
+		
+		else return 99;
+	}
+	
+	function	func_max_job_level	{
+		.@eaclass = getarg( 0,0 );
+		
+		if ( .@eaclass == EAJ_NOVICE || .@eaclass == EAJ_NOVICE_HIGH ) return 10;
+		else if ( .@eaclass == EAJ_NINJA || .@eaclass == EAJ_GUNSLINGER ) return 70;
+		else if ( .@eaclass == EAJ_SUPER_BABY || .@eaclass == EAJ_SUPER_BABY_E || .@eaclass == .@eaclass == EAJ_SUPER_NOVICE_E  ) return 99;
+		else if ( .@eaclass & EAJL_THIRD ) return 60;
+		else if ( .@eaclass & EAJL_UPPER && .@eaclass & EAJL_2 ) return 70;
+
+		else return 50;
+	}
+	
+	OnInit:
+		.exp_per_second = 500;
+		.max_exp = ( .exp_per_second * 86400 * 21 );
+		
+		bindatcmd "restexp",strnpcinfo(3)+"::OnAtcommand";
+		end;
+		
+	OnNPCKillEvent:
+		sleep2 1;
+		
+		.@map$ = strcharinfo(3);
+		.@killedrid = killedrid;
+		if ( getmonsterinfo( .@killedrid,MOB_NAME ) != "null" ) {
+		
+			.@eaclass = eaclass();
+			.@max_base_level = func_max_base_level( .@eaclass );
+			.@max_job_level = func_max_job_level( .@eaclass );
+			
+			if ( !getmapflag( .@map$,mf_nobaseexp ) && BaseLevel < .@max_base_level && #EXP_REST_BASE > 0 ) {
+				.@mob_bexp = getmonsterinfo( .@killedrid,MOB_BASEEXP );
+				.@base_exp = min( .@mob_bexp,#EXP_REST_BASE );
+				BaseExp += .@base_exp;
+				#EXP_REST_BASE -= .@base_exp;
+			}
+			
+			if ( !getmapflag( .@map$,mf_nojobexp ) && JobLevel < .@max_job_level && #EXP_REST_JOB > 0  ) {
+				.@mob_jexp = getmonsterinfo( .@killedrid,MOB_JOBEXP );
+				.@job_exp = min( .@mob_jexp,#EXP_REST_JOB );
+				JobExp += .@job_exp;
+				#EXP_REST_JOB -= .@job_exp;
+			}
+
+			if ( @rest_exp_system )
+				dispbottom "[EXP Rest System] Gained "+F_InsertComma( .@base_exp )+" / "+F_InsertComma( .@job_exp )+" EXP.";
+		}
+		end;
+		
+	OnPCLoginEvent:
+		sleep2 100;
+		if ( #EXP_REST_LAST_LOGOUT ) {
+			.@gettimetick = gettimetick(2) - #EXP_REST_LAST_LOGOUT;
+			
+			if ( #EXP_REST_BASE < .max_exp ) {
+				#EXP_REST_BASE = #EXP_REST_BASE + ( .@gettimetick * .exp_per_second );
+				#EXP_REST_BASE = min( #EXP_REST_BASE, .max_exp );
+			}
+			
+			if ( #EXP_REST_JOB < .max_exp ) {
+				#EXP_REST_JOB = #EXP_REST_JOB + ( .@gettimetick  * .exp_per_second );
+				#EXP_REST_JOB = min( #EXP_REST_JOB, .max_exp );
+			}
+		}
+		
+		.@eaclass = eaclass();
+		.@max_base_level = func_max_base_level( .@eaclass );
+		.@max_job_level = func_max_job_level( .@eaclass );
+			
+		if ( BaseLevel >= .@max_base_level && JobLevel >= .@max_job_level || #EXP_REST_LAST_LOGOUT <= 0 ) end;
+		
+	OnAtcommand:
+		if ( compare( .@atcmd_parameters$[0],"on" ) ) {
+			@rest_exp_system = 1;
+			dispbottom "[EXP Rest System] EXP will be display.";
+		}
+		else if ( compare( .@atcmd_parameters$[0],"on" ) ) {
+			@rest_exp_system = 0;
+			dispbottom "[EXP Rest System] EXP will no longer display.";
+		}
+		else {
+			dispbottom "Usage: "+( ( .@atcmd_command$ != "" ) ? .@atcmd_command$ : "@restexp" )+" - Display total accumulated EXP";
+			dispbottom "[EXP Rest System] You have accumulated "+F_InsertComma( #EXP_REST_BASE )+" / "+F_InsertComma( #EXP_REST_JOB )+" EXP. ( +"+epoch_time( .@gettimetick )+" )";
+		}
+		end;
+		
+	OnPCLogoutEvent:
+		// sleep2 1;
+		#EXP_REST_LAST_LOGOUT = gettimetick(2);
+		end;
+		
+}

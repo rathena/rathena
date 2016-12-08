@@ -12,7 +12,6 @@
 
 #include "map.h"
 #include "battle.h"
-#include "clan.h"
 #include "clif.h"
 #include "intif.h"
 #include "npc.h"
@@ -217,7 +216,7 @@ static bool chrif_auth_logout(TBL_PC* sd, enum sd_state state) {
 	return chrif_sd_to_auth(sd, state);
 }
 
-bool chrif_auth_finished(struct map_session_data* sd) {
+bool chrif_auth_finished(TBL_PC* sd) {
 	struct auth_node *node= chrif_search(sd->status.account_id);
 
 	if ( node && node->sd == sd && node->state == ST_LOGIN ) {
@@ -300,16 +299,9 @@ int chrif_save(struct map_session_data *sd, int flag) {
 
 	chrif_bsdata_save(sd, (flag && (flag != 3)));
 
-	if (&sd->storage && sd->storage.dirty)
-		intif_storage_save(sd,&sd->storage);
-	intif_storage_save(sd,&sd->inventory);
-	intif_storage_save(sd,&sd->cart);
-
 	//For data sync
 	if (sd->state.storage_flag == 2)
-		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
-	if (&sd->premiumStorage && sd->premiumStorage.dirty)
-		intif_storage_save(sd, &sd->premiumStorage);
+		gstorage_storagesave(sd->status.account_id, sd->status.guild_id, flag);
 
 	if (flag)
 		sd->state.storage_flag = 0; //Force close it.
@@ -509,7 +501,6 @@ int chrif_connectack(int fd) {
 	if( !char_init_done ) {
 		ShowStatus("Event '"CL_WHITE"OnInterIfInitOnce"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInitOnce"));
 		guild_castle_map_init();
-		intif_clan_requestclans();
 	}
 
 	return 0;
@@ -1049,14 +1040,14 @@ int chrif_divorceack(uint32 char_id, int partner_id) {
 	if( ( sd = map_charid2sd(char_id) ) != NULL && sd->status.partner_id == partner_id ) {
 		sd->status.partner_id = 0;
 		for(i = 0; i < MAX_INVENTORY; i++)
-			if (sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_M || sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_F)
+			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
 				pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
 	if( ( sd = map_charid2sd(partner_id) ) != NULL && sd->status.partner_id == char_id ) {
 		sd->status.partner_id = 0;
 		for(i = 0; i < MAX_INVENTORY; i++)
-			if (sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_M || sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_F)
+			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
 				pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
@@ -1211,7 +1202,7 @@ int chrif_updatefamelist(struct map_session_data* sd) {
 		case MAPID_ALCHEMIST:  type = RANK_ALCHEMIST; break;
 		case MAPID_TAEKWON:    type = RANK_TAEKWON; break;
 		default:
-			return 0;
+				return 0;
 	}
 
 	WFIFOHEAD(char_fd, 11);
@@ -1606,10 +1597,10 @@ void chrif_parse_ack_vipActive(int fd) {
 			sd->vip.enabled = 1;
 			sd->vip.time = vip_time;
 			// Increase storage size for VIP.
-			sd->storage.max_amount = battle_config.vip_storage_increase + MIN_STORAGE;
-			if (sd->storage.max_amount > MAX_STORAGE) {
+			sd->storage_size = battle_config.vip_storage_increase + MIN_STORAGE;
+			if (sd->storage_size > MAX_STORAGE) {
 				ShowError("intif_parse_ack_vipActive: Storage size for player %s (%d:%d) is larger than MAX_STORAGE. Storage size has been set to MAX_STORAGE.\n", sd->status.name, sd->status.account_id, sd->status.char_id);
-				sd->storage.max_amount = MAX_STORAGE;
+				sd->storage_size = MAX_STORAGE;
 			}
 			// Magic Stone requirement avoidance for VIP.
 			if (battle_config.vip_gemstone)
@@ -1617,7 +1608,7 @@ void chrif_parse_ack_vipActive(int fd) {
 		} else if (sd->vip.enabled) {
 			sd->vip.enabled = 0;
 			sd->vip.time = 0;
-			sd->storage.max_amount = MIN_STORAGE;
+			sd->storage_size = MIN_STORAGE;
 			sd->special_state.no_gemstone = 0;
 			clif_displaymessage(sd->fd,msg_txt(sd,438));
 		}
@@ -1940,6 +1931,19 @@ int chrif_removefriend(uint32 char_id, int friend_id) {
 	return 0;
 }
 
+int chrif_send_report(char* buf, int len) {
+
+#ifndef STATS_OPT_OUT
+	chrif_check(-1);
+	WFIFOHEAD(char_fd,len + 2);
+	WFIFOW(char_fd,0) = 0x3008;
+	memcpy(WFIFOP(char_fd,2), buf, len);
+	WFIFOSET(char_fd,len + 2);
+	flush_fifo(char_fd); /* ensure it's sent now. */
+#endif
+	return 0;
+}
+
 /**
  * @see DBApply
  */
@@ -1984,13 +1988,8 @@ void do_final_chrif(void) {
  *------------------------------------------*/
 void do_init_chrif(void) {
 	if(sizeof(struct mmo_charstatus) > 0xFFFF){
-		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF)\n",
+		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF) \n",
 			sizeof(struct mmo_charstatus));
-		exit(EXIT_FAILURE);
-	}
-
-	if (sizeof(struct s_storage) > 0xFFFF) {
-		ShowError("s_storage size = %d is too big to be transmitted. (must be below 0xFFFF)\n", sizeof(struct s_storage));
 		exit(EXIT_FAILURE);
 	}
 

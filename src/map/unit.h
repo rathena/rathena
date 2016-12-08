@@ -14,8 +14,8 @@ struct map_session_data;
 #include "path.h" // struct walkpath_data
 #include "skill.h" // struct skill_timerskill, struct skill_unit_group, struct skill_unit_group_tickset
 
-extern const short dirx[DIR_MAX]; ///lookup to know where will move to x according dir
-extern const short diry[DIR_MAX]; ///lookup to know where will move to y according dir
+extern const short dirx[8]; ///lookup to know where will move to x according dir
+extern const short diry[8]; ///lookup to know where will move to y according dir
 
 struct unit_data {
 	struct block_list *bl; ///link to owner object BL_PC|BL_MOB|BL_PET|BL_NPC|BL_HOM|BL_MER|BL_ELEM
@@ -135,6 +135,7 @@ int unit_set_target(struct unit_data* ud, int target_id);
 // unit_data
 void unit_dataset(struct block_list *bl);
 
+int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int tick,int sdelay,int ddelay,int64 damage,int div,int type,int64 damage2);
 // Remove unit
 struct unit_data* unit_bl2ud(struct block_list *bl);
 void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype);

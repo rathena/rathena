@@ -151,20 +151,17 @@ Examples:
 	* https://github.com/rathena/rathena
 
 * Full Installation Instructions
-	* [Windows](https://github.com/rathena/rathena/wiki/Install-on-Windows)
-	* [CentOS](https://github.com/rathena/rathena/wiki/Install-on-Centos)
-	* [Debian](https://github.com/rathena/rathena/wiki/Install-on-Debian)
-	* [FreeBSD](https://github.com/rathena/rathena/wiki/Install-on-FreeBSD)
+	* Windows: https://rathena.org/wiki/Installation_on_Windows
+	* CentOS: https://rathena.org/wiki/Installation_(CentOS)
+	* Debian: https://rathena.org/wiki/Installation_(Debian)
+	* FreeBSD: https://rathena.org/wiki/Installation_(FreeBSD)
 	
 * rAthena IRC Channel
 	* irc://irc.rizon.net/rathena
 	* Web Chat: https://rathena.org/board/page/chat.html
 
-* rAthena Discord Chat
-	http://discord.rathena.org
-
 * rAthena Wiki
-	https://github.com/rathena/rathena/wiki
+	https://rathena.org/board/index.php?app=ipbwiki
 
 * Fork and Pull Request Q&A
 	https://rathena.org/board/topic/86913-pull-request-qa/

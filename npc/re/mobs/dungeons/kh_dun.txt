@@ -16,21 +16,22 @@
 //==================================================
 // kh_dun01 - Robot Factory level 1 
 //==================================================
-kh_dun01,0,0,0,0	monster	Aliza	1737,45,5000,0,0
-kh_dun01,0,0,0,0	monster	Alice	1275,25,5000,0,0
+kh_dun01,0,0,0,0	monster	Aliza	1737,80,5000,0,0
+kh_dun01,0,0,0,0	monster	Alice	1275,30,5000,0,0
 kh_dun01,0,0,0,0	monster	Constant	1738,8,5000,0,0
 kh_dun01,0,0,0,0	monster	Constant	1745,5,5000,0,0
-kh_dun01,0,0,0,0	monster	Alicel	1735,3,5000,0,0
-kh_dun01,0,0,0,0	monster	Aliot	1736,3,5000,0,0
+kh_dun01,0,0,0,0	monster	Alicel	1735,6,5000,0,0
+kh_dun01,0,0,0,0	monster	Aliot	1736,6,5000,0,0
 
 //==================================================
 // kh_dun02 - Robot Factory level 2
 //==================================================
-kh_dun02,0,0,0,0	monster	Alicel	1735,30,5000,0,0
-kh_dun02,0,0,0,0	monster	Aliot	1736,25,5000,0,0
+kh_dun02,0,0,0,0	monster	Alicel	1735,60,5000,0,0
+kh_dun02,0,0,0,0	monster	Aliot	1736,50,5000,0,0
 kh_dun02,0,0,0,0	monster	Constant	1738,15,5000,0,0
-kh_dun02,0,0,0,0	monster	Aliza	1737,10,5000,0,0
+kh_dun02,0,0,0,0	monster	Aliza	1737,50,5000,0,0
 kh_dun02,0,0,0,0	monster	Constant	1745,5,5000,0,0
+kh_dun02,0,0,0,0	monster	Alice	1275,35,5000,0,0
 kh_dun02,0,0,0,0	boss_monster	Kiel D-01	1734,1,7200000,600000,0
 
 //==================================================

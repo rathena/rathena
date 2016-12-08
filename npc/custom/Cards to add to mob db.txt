@@ -1,0 +1,33 @@
+Cards to add to corresponding mobs:
+Angry Student - 4578
+Buwaya - 4592
+Bakonawa - 4591
+Celia - 4568
+Champion Chen - 4562
+Chen - 4569
+B_Alphossio - 
+Alphossio - 4567
+Soheon - 4575
+Corruption Root - 4603
+Creator Flamel - 4563
+Dark Guardian Kades - 4580
+Flamel - 4570
+General Daehyon - 4574
+Gertie - 4571
+Gioia - 4576
+Gold Scaraba Queen - 4509
+Gypsy Trentini - 4566
+Kraken - 4525
+Nightmare Amon Ra - 4652
+Nightmare Ancient Mummy - 4657
+Nightmare Arclouse - 4653
+Nightmare Mimic - 4654
+Nightmare Minorous - 4655
+Nightmare Mummy - 4656
+Nightmare Timer Keeper - 4630
+Nightmare Verit - 4658
+Paladin Randel - 4565
+Professor Celia - 4561
+Queen Scaraba - 4507
+Time Holder - 4625
+Trentini - 4573

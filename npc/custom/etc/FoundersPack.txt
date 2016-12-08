@@ -1,0 +1,14 @@
+prontera,148,187,5	script	Founders Pack	911,{
+if( !#Founders ) {
+set #Founders,1;
+mes "Welcome to Divine-RO! Thanks for being a founding member!!";
+getitem 30010,1;
+close;
+} else {
+mes "You have claim the Reward already.";
+close;
+}
+OnInit:
+waitingroom "Founders Gear Here",0;
+end;
+}

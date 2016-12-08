@@ -1,0 +1,94 @@
+//**********************************************************************************
+// ____                    _                                            _   _  ____ 
+//|  _ \ ___   ___   ____ | |  ___   ____   ___   ___   __  ___   _  _ | |_| |/ __ |
+//| |__// _ \ / _ \ |  _ \| | / _ \ |  _ \ / _ \ /  _| / _)/ _ \ | \| ||___  |\__  |
+//| |  |  __/ ||_|| | |__/| | | __/ | |__/|  __/ | |  _\ \ ||_|| | \\ |    | |   | |
+//|_|___\___|_\___/_| |___|_|_\___|_| |____\___|_|_|_(___/ \___/_|_|\_|____|_|___|_|
+//------------------|_|-------------|_|---------------------------------------------
+//**********************************************************************************
+//===== rAthena Script =============================================================
+//= Delete Character Command
+//===== By: ========================================================================
+//= Peopleperson49 (Eddie) - peopleperson49@hotmail.com
+//===== Start Date: ================================================================
+//= 24MAR2014
+//===== Current Version: ===========================================================
+//= 1.2
+//===== Compatible With: ===========================================================
+//= rAthena SVN
+//===== Description: ===============================================================
+//=This script allows you to delete characters in-game. When they type
+//=	@deletecharacter it will ask the player to confirm and then kick them out of the
+//=	server. When they log back their character and in all variables will be gone
+//=	forever. It is handy since some clients won't properly delete characters
+//=	properly.
+//===== Version Control: ===========================================================
+//= 1.0 Original Version
+//= 1.1 Modified it to ask for the account password before a character can be
+//= 	deleted.
+//= 1.2	Added a warning about placing items in storage and immediately deleting the
+//= 	character.
+//===== Additional Comments:========================================================
+//=The map server will get an error that says, "charif_ack_login_req failed -
+//=	player not online". However all functions work great. I'm working on what error
+//=	but I think it has to do with the script still going after the player is kicked.
+//=	If anybody has any ideas let me know.
+//=If there are any tables listed below that are not part of the official list
+//=	please let me know, I use this for my server and might have missed one of 
+//=	many custom tables.
+//==================================================================================
+-	script	DeleteChar	-1,{
+
+OnDeleteCharacter:
+mes "Are you sure you want to ^0000FFDELETE^000000 this character? All experience, items, zeny, and progress will be gone forever! WARNING: If you recently placed items in storage to keep you must wait until the server saves that information (~60 seconds) or you will loose those items forever! If your 100% sure type in your account password.";
+input .@MyInput$;
+query_sql ("SELECT COUNT(user_pass) FROM `login` WHERE `user_pass`='"+escape_sql(.@MyInput$)+"'",.@PWCheck);
+if(.@PWCheck) { set DCCheck,1; } else { next; mes "Your password does not match. Your character will not be deleted."; close; }
+atcommand "@kick "+strcharinfo(0)+"";
+end;
+
+OnPCLogoutEvent:
+if(playerattached()==0) { end; }
+if(DCCheck!=1) { end; } else { set DCCheck,0; }
+set .@char_id,getcharid(0);
+query_sql("DELETE FROM `atcommandlog` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `bonus_script` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `branchlog` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `buyingstore_items` WHERE `buyingstore_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `buyingstores` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `cashlog` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `cp_charprefs` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `cp_choko_rename_log` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `elemental` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `emprank` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `friends` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `guild` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `guild_member` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `homunculus` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `hotkey` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `memo` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `mercenary` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `mercenary_owner` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `mvplog` WHERE `kill_char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `mvprank` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `npclog` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `party` WHERE `leader_char`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `pet` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `picklog` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `pvprank` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `quest` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `sc_data` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `skill` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `skillcooldown` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `vendings` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `zenylog` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `inventory` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `cart_inventory` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `global_reg_value` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+query_sql("DELETE FROM `char` WHERE `char_id`='"+escape_sql(.@char_id)+"'");
+end;
+
+OnInit:
+bindatcmd("deletecharacter",strnpcinfo(0)+"::OnDeleteCharacter");
+end;
+}
