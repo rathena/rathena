@@ -5,7 +5,7 @@
 //===== Current Version: =====================================
 //= 1.1
 //===== Compatible With: =====================================
-//= rAthena Project
+//= rAthena SVN
 //===== Description: =========================================
 //= Basic healer script.
 //===== Additional Comments: =================================
@@ -15,30 +15,47 @@
 
 -	script	Healer	-1,{
 
-	.@Price = 0;	// Zeny required for heal
-	.@Buffs = 0;	// Also buff players? (1: yes / 0: no)
-	.@Delay = 0;	// Heal delay, in seconds
+	set .@Price,0;	// Zeny required for heal
+	set .@Buffs,1;	// Also buff players? (1: yes / 0: no)
+	set .@Delay,1;	// Heal delay, in seconds
 
-	if (@HD > gettimetick(2))
-		end;
+	if (@HD > gettimetick(2)) end;
 	if (.@Price) {
-		message strcharinfo(0), "Healing costs " + callfunc("F_InsertComma",.@Price) + " Zeny.";
-		if (Zeny < .@Price)
-			end;
-		if (select("^0055FFHeal^000000:^777777Cancel^000000") == 2)
-			end;
-		Zeny -= .@Price;
+		message strcharinfo(0),"Healing costs "+.@Price+" Zeny.";
+		if (Zeny < .@Price) end;
+		if(select("^0055FFHeal^000000:^777777Cancel^000000") == 2) end;
+		
+		set Zeny, Zeny-.@Price;
 	}
-	specialeffect2 EF_HEAL2;
-	percentheal 100,100;
+	specialeffect2 EF_HEAL2; percentheal 100,100;
 	if (.@Buffs) {
-		specialeffect2 EF_INCAGILITY;
-		sc_start SC_INCREASEAGI,240000,10;
-		specialeffect2 EF_BLESSING;
-		sc_start SC_BLESSING,240000,10;
+		specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,240000,10;
+		specialeffect2 EF_BLESSING; sc_start SC_BLESSING,240000,10;
+		sc_start SC_IMPOSITIO,240000,5;
+		sc_start SC_ANGELUS,240000,10;
+		sc_end sc_stone;
+		sc_end sc_freeze;
+		sc_end sc_sleep;
+		sc_end sc_curse;
+		sc_end sc_silence;
+		sc_end sc_confusion;
+		sc_end sc_blind;
+		sc_end sc_bleeding;
+		sc_end sc_decreaseagi;
+		sc_end sc_poison;
+		sc_end sc_hallucination;
+		sc_end sc_stripweapon;
+		sc_end sc_striparmor;
+		sc_end sc_striphelm;
+		sc_end sc_stripshield;
+		sc_end sc_changeundead;
+		sc_end sc_orcish;
+		sc_end sc_berserk;
+		sc_end sc_ske;
+		sc_end sc_swoo;
+		sc_end sc_ska;
 	}
-	if (.@Delay)
-		@HD = gettimetick(2) + .@Delay;
+	if (.@Delay) set @HD, gettimetick(2)+.@Delay;
 	end;
 }
 
@@ -55,7 +72,7 @@ einbroch,57,202,6	duplicate(Healer)	Healer#einbr	909
 geffen,115,72,6	duplicate(Healer)	Healer#gef	909
 gonryun,156,122,6	duplicate(Healer)	Healer#gon	909
 hugel,89,150,6	duplicate(Healer)	Healer#hug	909
-izlude,121,150,6	duplicate(Healer)	Healer#izl	909	//Pre-RE: (125,118)
+izlude,125,148,5	duplicate(Healer)	Healer#izl	909
 jawaii,250,139,4	duplicate(Healer)	Healer#jaw	909
 lighthalzen,152,100,6	duplicate(Healer)	Healer#lhz	909
 louyang,226,103,4	duplicate(Healer)	Healer#lou	909
@@ -82,5 +99,5 @@ dewata,195,187,4	duplicate(Healer)	Healer#dew	909
 dicastes01,201,194,4	duplicate(Healer)	Healer#dic	909
 ecl_in01,45,60,4	duplicate(Healer)	Healer#ecl	909
 malangdo,132,114,6	duplicate(Healer)	Healer#mal	909
-malaya,227,204,6	duplicate(Healer)	Healer#ma	909
+malaya,205,205,6	duplicate(Healer)	Healer#ma	909
 mora,55,152,4	duplicate(Healer)	Healer#mora	909

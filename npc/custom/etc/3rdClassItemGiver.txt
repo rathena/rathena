@@ -1,0 +1,30 @@
+prontera,155,181,5 script 3rd Class Items 757,{
+if( Class < 4060 ){
+mes "Only 3rd Job Class can take.";
+}else if( ThirdJobItem ){
+mes "You have already taken this ^FF0000"+getitemname(ThirdJobItem)+"^000000 before.";
+}else{
+switch( BaseJob ){
+ Case Job_Knight: set .@Item,5746; break;
+ Case Job_Wizard: set .@Item,5753; break;
+ Case Job_Hunter: set .@Item,5748; break;
+ Case Job_Priest: set .@Item,5747; break;
+ Case Job_Blacksmith: set .@Item,5749; break;
+ Case Job_Assassin: set .@Item,5755; break;
+ Case Job_Crusader: set .@Item,5757; break;
+ Case Job_Sage: set .@Item,5756; break;
+ Case Job_Bard: set .@Item,5751; break;
+ Case Job_Dancer: set .@Item,5758; break;
+ Case Job_Monk: set .@Item,5754; break;
+ Case Job_Alchemist: set .@Item,5752; break;
+ Case Job_Rogue: set .@Item,5750; break;
+ default:
+  mes "Sorry, I don't have anything for you.";
+  close;
+}
+getitem .@Item,1;
+set ThirdJobItem,.@Item;
+mes "You have gained 1 x ^FF0000"+getitemname(.@Item)+"^000000";
+}
+close;
+}

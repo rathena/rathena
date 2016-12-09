@@ -1,0 +1,17 @@
+-	script	onlyTwoPerIP	-1,{
+OnPCLoginEvent:
+	if (getgmlevel() >= 99) end;
+	set .@myname1$, strcharinfo(0);
+	if (query_sql("SELECT `char`.`name` FROM `char` LEFT JOIN login ON `char`.account_id=login.account_id WHERE login.last_ip='"+getcharip()+"' AND `login`.group_id!=99 AND `char`.online=1 AND `char`.char_id!="+getcharid(0), .@name2$) >= 1) {
+		for (set .@i,0; .@i<getarraysize(.@name2$); set .@i,.@i+1) {
+			if (checkvending(.@name2$[.@i]) != 2)
+				set .@sameip, .@sameip +1;
+		}
+		if (.@sameip >= 3) {
+			announce "Sorry, only 3 accounts per IP can be logged in at a time.", bc_self;
+			sleep 1000;
+			atcommand "@kick " + .@myname1$;
+		}
+	}
+	end;
+}

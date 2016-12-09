@@ -47,8 +47,8 @@ iz_dun02,0,0,0,0	monster	Black Mushroom	1084,15,180000,90000,1
 //==================================================
 // iz_dun03 - Undersea Tunnel
 //==================================================
-iz_dun03,0,0,0,0	monster	Phen	1158,45,5000,0,0
-iz_dun03,0,0,0,0	monster	Marc	1045,40,5000,0,0
+iz_dun03,0,0,0,0	monster	Phen	1158,90,5000,0,0
+iz_dun03,0,0,0,0	monster	Marc	1045,80,5000,0,0
 iz_dun03,0,0,0,0	monster	Swordfish	1069,40,5000,0,0
 iz_dun03,0,0,0,0	monster	Marine Sphere	1142,20,5000,0,0
 iz_dun03,0,0,0,0	monster	Merman	1264,3,5000,0,0
@@ -86,11 +86,11 @@ iz_dun03,197,144,0,0	monster	Hydra	1068,1,2960000,150000,0
 //==================================================
 // iz_dun04 - Undersea Tunnel
 //==================================================
-iz_dun04,0,0,0,0	monster	Merman	1264,52,5000,0,0
-iz_dun04,0,0,0,0	monster	Strouf	1065,50,5000,0,0
+iz_dun04,0,0,0,0	monster	Merman	1264,104,5000,0,0
+iz_dun04,0,0,0,0	monster	Strouf	1065,100,5000,0,0
 iz_dun04,0,0,0,0	monster	Marine Sphere	1142,10,5000,0,0
-iz_dun04,0,0,0,0	monster	Swordfish	1069,10,5000,0,0
-iz_dun04,0,0,0,0	monster	Deviace	1108,3,5000,0,0
+iz_dun04,0,0,0,0	monster	Swordfish	1069,100,5000,0,0
+iz_dun04,0,0,0,0	monster	Deviace	1108,30,5000,0,0
 iz_dun04,80,246,0,0	monster	Hydra	1068,1,294000,150000,0
 iz_dun04,79,246,0,0	monster	Hydra	1068,1,300000,150000,0
 iz_dun04,111,41,0,0	monster	Hydra	1068,1,300000,150000,0
@@ -113,8 +113,8 @@ iz_dun04,33,115,0,0	monster	Hydra	1068,1,321000,150000,0
 //==================================================
 // iz_dun05 - Undersea Tunnel F6
 //==================================================
-iz_dun05,0,0,0,0	monster	Sropho	2201,50,5000,0,0
-iz_dun05,0,0,0,0	monster	Sedora	2204,60,5000,0,0
+iz_dun05,0,0,0,0	monster	Sropho	2201,150,5000,0,0
+iz_dun05,0,0,0,0	monster	Sedora	2204,160,5000,0,0
 iz_dun05,0,0,0,0	monster	Pot Dofle	2203,30,5000,0,0
-iz_dun05,0,0,0,0	monster	King Dramoh	2198,25,5000,0,0
+iz_dun05,0,0,0,0	monster	King Dramoh	2198,125,5000,0,0
 iz_dun05,0,0,0,0	boss_monster	Kraken	2202,1,7200000,1800000,0

@@ -1,0 +1,411 @@
+//===== rAthena Script =======================================
+//= Euphy's Wing Quests
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= rAthena SVN r16862+
+//===== Description: =========================================
+//= A dynamic quest shop based on Lunar's, with easier config.
+//= Includes support for multiple shops & cashpoints.
+//= Item Preview script by ToastOfDoom.
+//============================================================
+
+// Shop NPCs -- supplying no argument displays entire menu.
+//	callfunc "qshop"{,<shop ID>{,<shop ID>{,...}}};
+//============================================================
+prontera,164,253,3	script	Wing Quests#1	403,{ callfunc "qshop",1,2,3; }
+
+prontera,164,242,3	script	Costume Wing Quests#1	403,{ callfunc "qshop",4,5,6; }
+
+
+prontera,164,249,3	script	Aesthetic Wing Quests#1	403,{ callfunc "qshop",7,8,9; }
+
+// Script Core
+//============================================================
+-	script	quest_shop	-1,{ 
+function Add; function Chk; function Slot; function A_An;
+OnInit:
+	freeloop(1);
+
+// -----------------------------------------------------------
+//  Basic shop settings.
+// -----------------------------------------------------------
+
+	set .Announce,1;	// Announce quest completion? (1: yes / 0: no)
+	set .ShowSlot,1;	// Show item slots? (2: all equipment / 1: if slots > 0 / 0: never)
+	set .ShowID,1;  	// Show item IDs? (1: yes / 0: no)
+	set .ShowZeny,1;	// Show Zeny cost, if any? (1: yes / 0: no)
+	set .MaxStack,1;	// Max number of quest items purchased at one time.
+
+// -----------------------------------------------------------
+//  Points variable -- optional quest requirement.
+//	setarray .Points$[0],"<variable name>","<display name>";
+// -----------------------------------------------------------
+
+	setarray .Points$[0],"#CASHPOINTS","Cash Points";
+
+// -----------------------------------------------------------
+//  Shop IDs -- to add shops, copy dummy data at bottom of file.
+//	setarray .Shops$[1],"<Shop 1>","<Shop 2>"{,...};
+// -----------------------------------------------------------
+
+	setarray .Shops$[1],"Master Wings","Angeling Wings","ArcAngeling Wings","Costume Master Wings","Costume Angeling Wings","Costume ArcAngeling Wings","Aesthetic Master Wings","Aesthetic Angeling Wings","Aesthetic ArcAngeling Wings";
+
+// -----------------------------------------------------------
+//  Quest items -- do NOT use a reward item more than once!
+//	Add(<shop ID>,<reward ID>,<reward amount>,
+//	    <Zeny cost>,<point cost>,
+//	    <required item ID>,<required item amount>{,...});
+// -----------------------------------------------------------
+	
+	//Animated Angel Wings
+	Add(1,30075,1,250000,0,710,100,7938,300,949,1000,916,1000);
+	//Animated Devil Wings
+	Add(1,30076,1,250000,0,970,100,748,200,949,1000,916,1000);
+	//Sparrow Wings
+	Add(1,30079,1,250000,0,6245,200,7440,200,949,1000,916,1000);
+	//Crow Wings
+	Add(1,30081,1,250000,0,702,100,7441,200,949,1000,916,1000);
+	//Little Devil Wings
+	Add(1,30093,1,250000,0,6254,100,7206,300,949,1000,916,1000);
+	
+	//Tier 2
+	//Animated Angel Wings Tier 2
+	Add(2,30073,1,5000000,0,30075,1,7510,50,6022,50,7294,50,7016,300,1001,700,7443,300,7752,15000,7317,30000);
+	Add(2,30077,1,5000000,0,30075,1,7510,50,6022,50,7294,50,7016,300,1001,700,7443,300,7752,15000,7317,30000);
+	
+	//Animated Devil Wings Tier 2
+	Add(2,30092,1,5000000,0,30076,1,706,200,7292,50,7041,150,707,300,726,300,1049,300,1003,15000,7317,30000);
+	Add(2,30088,1,5000000,0,30076,1,706,200,7292,50,7041,150,707,300,726,300,1049,300,1003,15000,7317,30000);
+	
+	//Sparrow Wings Tier 2
+	Add(2,30087,1,5000000,0,30079,1,1006,150,6223,100,708,50,7277,300,727,300,7226,300,7053,15000,7317,30000);
+	Add(2,30084,1,5000000,0,30079,1,1006,150,6223,100,708,50,7277,300,727,300,7226,300,7053,15000,7317,30000);
+	
+	//Crow Wings Tier 2
+	Add(2,30078,1,5000000,0,30081,1,709,200,7290,50,732,50,7445,1000,7864,100,7095,500,746,15000,7317,30000);
+	Add(2,30097,1,5000000,0,30081,1,709,200,7290,50,732,50,7445,1000,7864,100,7095,500,746,15000,7317,30000);
+
+	//Little Devil Wings Tier 2
+	Add(2,30089,1,5000000,0,30093,1,7435,200,7297,50,749,100,7799,300,923,200,746,300,1036,30000,7317,30000);
+	Add(2,30094,1,5000000,0,30093,1,7435,200,7297,50,749,100,7799,300,923,200,746,300,1036,30000,7317,30000);
+	
+	//Tier 3
+	//Animated Angel Wings Tier 3
+	Add(3,30070,1,25000000,0,30073,1,30077,1,7211,500,2700,30,7444,150,7022,50,754,100,7019,100,7021,100,7017,1000,728,10000,7165,10000,731,10000,730,10000,970,10000,7216,30000,7206,30000,7220,300000,740,30000);
+	Add(3,30082,1,25000000,0,30073,1,30077,1,7211,500,2700,30,7444,150,7022,50,754,100,7019,100,7021,100,7017,1000,728,10000,7165,10000,731,10000,730,10000,970,10000,7216,30000,7206,30000,7220,300000,740,30000);
+	
+	//Animated Devil Wings Tier 3
+	Add(3,30091,1,25000000,0,30092,1,30088,1,5160,1,6499,200,7444,150,7296,300,7048,3000,7440,1000,2614,10,736,5000,1064,100000,722,100000,6254,10000,11002,4000,7442,10000,7216,300000,7220,30000,740,30000);
+	Add(3,30096,1,25000000,0,30092,1,30088,1,1476,1,6499,200,7444,150,7296,300,7048,3000,7440,1000,2614,10,736,5000,1064,100000,722,100000,6254,10000,11002,4000,7442,10000,7216,300000,7220,30000,740,30000);
+	
+	//Sparrow Wings Tier 3
+	Add(3,30083,1,25000000,0,30087,1,30084,1,1722,1,1189,10,7444,150,7293,100,7023,50,7021,250,7291,100,1004,5000,739,1000,723,1000,6253,10000,733,10000,747,10000,7216,30000,7206,30000,7220,30000,740,30000);
+	Add(3,30085,1,25000000,0,30087,1,30084,1,1722,1,1189,10,7444,150,7293,100,7023,50,7021,250,7291,100,1004,5000,739,1000,723,1000,6253,10000,733,10000,747,10000,7216,30000,7206,30000,7220,30000,740,30000);
+	
+	//Crow Wings Tier 3
+	Add(3,30098,1,25000000,0,30078,1,30097,1,12246,100,7109,2,7444,150,7289,100,714,100,1005,100,972,15000,1008,150,7352,10000,7353,10000,7354,10000,7355,10000,7063,10000,7216,30000,7206,30000,7220,30000,740,30000);
+	Add(3,30102,1,25000000,0,30078,1,30097,1,1531,5,2717,50,7444,150,7289,100,714,100,1005,100,972,15000,1008,150,7352,10000,7353,10000,7354,10000,7355,10000,7063,10000,7216,30000,7206,30000,7220,30000,740,30000);
+	
+	//Little Devil Wings Tier 3
+	Add(3,30086,1,25000000,0,30089,1,30094,1,1165,1,7020,5,7444,150,7296,100,969,200,1009,100,1007,50,724,300,752,1000,743,1000,6086,10000,753,1000,971,10000,7216,30000,7206,30000,7220,30000,740,30000);
+	Add(3,30072,1,25000000,0,30089,1,30094,1,5162,2,7018,2,7444,150,7296,100,969,200,1009,100,1007,50,724,300,752,1000,743,1000,6086,10000,753,1000,971,10000,7216,30000,7206,30000,7220,30000,740,30000);
+	
+	
+	//------------------------------------ COSTUME WINGS --------------------------
+	
+	Add(4,30041,1,250000,0,7615,1);
+	//Animated Devil Wings
+	
+	Add(4,30042,1,250000,0,7615,1);
+	//Sparrow Wings
+	
+	Add(4,30045,1,250000,0,7615,1);
+	//Crow Wings
+	
+	Add(4,30047,1,250000,0,7615,1);
+	//Little Devil Wings
+	
+	Add(4,30059,1,250000,0,7615,1);
+	
+	//Tier 2
+	//Animated Angel Wings Tier 2
+	Add(5,30039,1,250000,0,7615,1);
+	Add(5,30043,1,250000,0,7615,1);
+	
+	//Animated Devil Wings Tier 2
+	Add(5,30058,1,250000,0,7615,1);
+	
+	Add(5,30054,1,250000,0,7615,1);
+	
+	//Sparrow Wings Tier 2
+	Add(5,30053,1,250000,0,7615,1);
+	
+	Add(5,30050,1,250000,0,7615,1);
+	
+	//Crow Wings Tier 2
+	Add(5,30044,1,250000,0,7615,1);
+	
+	Add(5,30063,1,250000,0,7615,1);
+
+	//Little Devil Wings Tier 2
+	Add(5,30055,1,250000,0,7615,1);
+	
+	Add(5,30060,1,250000,0,7615,1);
+	
+	//Tier 3
+	//Animated Angel Wings Tier 3
+	Add(6,30036,1,250000,0,7615,1);
+	
+	Add(6,30048,1,250000,0,7615,1);
+	
+	//Animated Devil Wings Tier 3
+	Add(6,30057,1,250000,0,7615,1);
+	
+	Add(6,30062,1,250000,0,7615,1);
+	
+	//Sparrow Wings Tier 3
+	Add(6,30049,1,250000,0,7615,1);
+	
+	Add(6,30051,1,250000,0,7615,1);
+	
+	//Crow Wings Tier 3
+	Add(6,30064,1,250000,0,7615,1);
+	
+	Add(6,30068,1,250000,0,7615,1);
+	
+	//Little Devil Wings Tier 3
+	Add(6,30052,1,250000,0,7615,1);
+	
+	Add(6,30038,1,250000,0,7615,1);
+	
+	
+	//-----------------------------Aesthetic Wings
+	
+	
+	//Animated Angel Wing
+	
+	Add(7,30005,1,250000,0,7615,3);
+	//Animated Devil Wings
+	
+	Add(7,30006,1,250000,0,7615,3);
+	//Sparrow Wings
+	
+	Add(7,30009,1,250000,0,7615,3);
+	//Crow Wings
+	
+	Add(7,30011,1,250000,0,7615,3);
+	//Little Devil Wings
+	
+	Add(7,30023,1,250000,0,7615,3);
+	
+	//Tier 2
+	//Animated Angel Wings Tier 2
+	Add(8,30003,1,250000,0,7615,5);
+	
+	Add(8,30007,1,250000,0,7615,5);
+	
+	//Animated Devil Wings Tier 2
+	Add(8,30022,1,250000,0,7615,5);
+	
+	Add(8,30018,1,250000,0,7615,5);
+	
+	//Sparrow Wings Tier 2
+	Add(8,30017,1,250000,0,7615,5);
+	
+	Add(8,30014,1,250000,0,7615,5);
+	
+	//Crow Wings Tier 2
+	Add(8,30008,1,250000,0,7615,5);
+	
+	Add(8,30027,1,250000,0,7615,5);
+
+	//Little Devil Wings Tier 2
+	Add(8,30019,1,250000,0,7615,5);
+	
+	Add(8,30024,1,250000,0,7615,5);
+	
+	//Tier 3
+	//Animated Angel Wings Tier 3
+	Add(9,30000,1,250000,0,7615,7);
+	
+	Add(9,30012,1,250000,0,7615,7);
+	
+	//Animated Devil Wings Tier 3
+	Add(9,30021,1,250000,0,7615,7);
+	
+	Add(9,30026,1,250000,0,7615,7);
+	
+	//Sparrow Wings Tier 3
+	Add(9,30013,1,250000,0,7615,7);
+	
+	Add(9,30015,1,250000,0,7615,7);
+	
+	//Crow Wings Tier 3
+	Add(9,30028,1,250000,0,7615,7);
+	
+	Add(9,30032,1,250000,0,7615,7);
+	
+	//Little Devil Wings Tier 3
+	Add(9,30016,1,250000,0,7615,7);
+	
+	Add(9,30002,1,250000,0,7615,7);
+	
+	
+// -----------------------------------------------------------
+
+	freeloop(0);
+	set .menu$,"";
+	for(set .@i,1; .@i<=getarraysize(.Shops$); set .@i,.@i+1) {
+		set .menu$, .menu$+.Shops$[.@i]+":";
+		npcshopdelitem "qshop"+.@i,909;
+	}
+	end;
+
+OnMenu:
+	set .@size, getarraysize(@i);
+	if (!.@size) set .@i, select(.menu$);
+	else if (.@size == 1) set .@i, @i[0];
+	else {
+		for(set .@j,0; .@j<.@size; set .@j,.@j+1)
+			set .@menu$, .@menu$+.Shops$[@i[.@j]]+":";
+		set .@i, @i[select(.@menu$)-1];
+	}
+	deletearray @i[0],getarraysize(@i);
+	if (.Shops$[.@i] == "") {
+		message strcharinfo(0),"An error has occurred.";
+		end;
+	}
+	dispbottom "Select one item at a time.";
+	callshop "qshop"+.@i,1;
+	npcshopattach "qshop"+.@i;
+	end;
+
+OnBuyItem:
+	// .@q[] : RewardID, BoughtAmt, RewardAmt, BaseAmt, ReqZeny, ReqPts, { ReqItem, ReqAmt, ... }
+	setarray .@q[0],@bought_nameid[0],((@bought_quantity[0] > .MaxStack)?.MaxStack:@bought_quantity[0]);
+	copyarray .@q[3],getd(".q_"+.@q[0]+"[0]"),getarraysize(getd(".q_"+.@q[0]));
+	set .@q[2],.@q[1]*.@q[3];
+	if (!.@q[2] || .@q[2] > 30000) {
+		message strcharinfo(0),"You can't purchase that many "+getitemname(.@q[0])+".";
+		end;
+	}
+	mes "[Wing Quests]";
+	mes "Reward: ^0055FF"+((.@q[2] > 1)?.@q[2]+"x ":"")+Slot(.@q[0])+"^000000";
+	mes "Requirements:";
+	if (.@q[4]) mes " > "+Chk(Zeny,.@q[4]*.@q[1])+(.@q[4]*.@q[1])+" Zeny^000000";
+	if (.@q[5]) mes " > "+Chk(getd(.Points$[0]),.@q[5]*.@q[1])+(.@q[5]*.@q[1])+" "+.Points$[1]+" ("+getd(.Points$[0])+"/"+(.@q[5]*.@q[1])+")^000000";
+	if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
+		mes " > "+Chk(countitem(.@q[.@i]),.@q[.@i+1]*.@q[1])+((.ShowID)?"{"+.@q[.@i]+"} ":"")+Slot(.@q[.@i])+" ("+countitem(.@q[.@i])+"/"+(.@q[.@i+1]*.@q[1])+")^000000";
+	next;
+	setarray @qe[1], getiteminfo(.@q[0],5), getiteminfo(.@q[0],11);
+	if (((@qe[1] & 1) || (@qe[1] & 256) || (@qe[1] & 512)) && @qe[2] > 0)
+		set .@preview,1;
+	addtimer 1000, strnpcinfo(0)+"::OnEnd";
+	while(1) {
+		switch(select(" ~ Purchase ^0055FF"+getitemname(.@q[0])+"^000000:"+((.@preview && !@qe[6])?" ~ Preview...":"")+": ~ ^777777Cancel^000000")) {
+		case 1:
+			if (@qe[0]) { 
+				mes "[Wing Quests]";
+				mes "You're missing one or more quest requirements.";
+				close;
+			}
+			if (!checkweight(.@q[0],.@q[2])) {
+				mes "[Wing Quests]";
+				mes "^FF0000You need "+(((.@q[2]*getiteminfo(.@q[0],6))+Weight-MaxWeight)/10)+" additional weight capacity to complete this trade.^000000";
+				close;
+			}
+			if (.@q[4]) set Zeny, Zeny-(.@q[4]*.@q[1]);
+			if (.@q[5]) setd .Points$[0], getd(.Points$[0])-(.@q[5]*.@q[1]);
+			if (.@q[6]) for(set .@i,6; .@i<getarraysize(.@q); set .@i,.@i+2)
+				delitem .@q[.@i],.@q[.@i+1]*.@q[1];
+			getitem .@q[0],.@q[2];
+			if (.Announce) announce strcharinfo(0)+" has created "+((.@q[2] > 1)?.@q[2]+"x "+getitemname(.@q[0]):A_An(getitemname(.@q[0])))+"!",0;
+			specialeffect2 699;
+			close;
+		case 2:
+			setarray @qe[3], getlook(LOOK_HEAD_BOTTOM), getlook(LOOK_HEAD_TOP), getlook(LOOK_HEAD_MID), 1;
+			if (@qe[1] & 1) changelook LOOK_HEAD_BOTTOM, @qe[2];
+			if (@qe[1] & 256) changelook LOOK_HEAD_TOP, @qe[2];
+			if (@qe[1] & 512) changelook LOOK_HEAD_MID, @qe[2];
+			break;
+		case 3:
+			close;
+		}
+	}
+
+OnEnd:
+	if (@qe[6]) {
+		changelook LOOK_HEAD_BOTTOM, @qe[3];
+		changelook LOOK_HEAD_TOP, @qe[4];
+		changelook LOOK_HEAD_MID, @qe[5];
+	}
+	deletearray @qe[0],7;
+	end;
+
+function Add {
+	if (getitemname(getarg(1)) == "null") {
+		debugmes "Quest reward #"+getarg(1)+" invalid (skipped).";
+		return;
+	}
+	setarray .@j[0],getarg(2),getarg(3),getarg(4);
+	for(set .@i,5; .@i<getargcount(); set .@i,.@i+2) {
+		if (getitemname(getarg(.@i)) == "null") {
+			debugmes "Quest requirement #"+getarg(.@i)+" invalid (skipped).";
+			return;
+		} else
+			setarray .@j[.@i-2],getarg(.@i),getarg(.@i+1);
+	}
+	copyarray getd(".q_"+getarg(1)+"[0]"),.@j[0],getarraysize(.@j);
+	npcshopadditem "qshop"+getarg(0),getarg(1),((.ShowZeny)?getarg(3):0);
+	return;
+}
+
+function Chk {
+	if (getarg(0) < getarg(1)) {
+		set @qe[0],1;
+		return "^FF0000";
+	} else
+		return "^00FF00";
+}
+
+function Slot {
+	set .@s$,getitemname(getarg(0));
+	switch(.ShowSlot) {
+		case 1: if (!getitemslots(getarg(0))) return .@s$;
+		case 2: if (getiteminfo(getarg(0),2) == 4 || getiteminfo(getarg(0),2) == 5) return .@s$+" ["+getitemslots(getarg(0))+"]";
+		default: return .@s$;
+	}
+}
+
+function A_An {
+	setarray .@A$[0],"a","e","i","o","u";
+	set .@B$, "_"+getarg(0);
+	for(set .@i,0; .@i<5; set .@i,.@i+1)
+		if (compare(.@B$,"_"+.@A$[.@i])) return "an "+getarg(0);
+	return "a "+getarg(0);
+}
+}
+
+function	script	qshop	{
+	deletearray @i[0],getarraysize(@i);
+	for(set .@i,0; .@i<getargcount(); set .@i,.@i+1)
+		set @i[.@i],getarg(.@i);
+	doevent "quest_shop::OnMenu";
+	end;
+}
+
+
+// Dummy shop data -- copy as needed.
+//============================================================
+-	shop	qshop1	-1,909:-1
+-	shop	qshop2	-1,909:-1
+-	shop	qshop3	-1,909:-1
+-	shop	qshop4	-1,909:-1
+-	shop	qshop5	-1,909:-1
+-	shop	qshop6	-1,909:-1
+-	shop	qshop7	-1,909:-1
+-	shop	qshop8	-1,909:-1
+-	shop	qshop9	-1,909:-1

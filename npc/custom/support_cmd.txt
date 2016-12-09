@@ -1,0 +1,46 @@
+//===== rAthena Script =======================================
+//= @support
+//===== By: ==================================================
+//= Akkarin
+//===== Current Version: =====================================
+//= 1.00.01
+//===== Description: ========================================= 
+//= Script control over @support
+//============================================================
+
+-	script	atcmd_support	-1,{
+OnInit:
+	bindatcmd("support","atcmd_support::Onsupport");
+	end;
+
+Onsupport:
+	query_sql "SELECT `cat_id`, `name` FROM `cp_servicedeskcat` WHERE `display` = 1 ORDER BY `name`", @cat_id, @cat_name$;
+	mes "Please select one of the following categories";
+	set @j,0;
+	for(set @i, 0; @i < getarraysize(@cat_id); set @i, @i + 1){	set @menulist$[@j],@cat_name$[@i]; set @menureference[@j],@i; set @j,@j+1; }
+	menu @menulist$[0],-,@menulist$[1],-,@menulist$[2],-,@menulist$[3],-,@menulist$[4],-,@menulist$[5],-,@menulist$[6],-,@menulist$[7],-,@menulist$[8],-,@menulist$[9],-,@menulist$[10],-,@menulist$[11],-,@menulist$[12],-,@menulist$[13],-,@menulist$[14],-,@menulist$[15],-,@menulist$[16],-,@menulist$[17],-,@menulist$[18],-,@menulist$[19],-,@menulist$[20],-,@menulist$[21],-,@menulist$[22],-,@menulist$[23],-,@menulist$[24],-,@menulist$[25],-,@menulist$[26],-,@menulist$[27],-,@menulist$[28],-,@menulist$[29],-,@menulist$[30],-;
+	next;
+	mes "Next, please type in a subject line";
+	input @subject$;
+	next;
+	mes "Please tell us what the problem is. You must make sure that you keep this brief so all the text fits into the box!";
+	input @body$;
+	next;
+	mes "This is what we have so far.", "Click 'Next' to view each entry, then submit your ticket.";
+	next;
+	mes "^FF0000Category^000000", "You selected "+@cat_name$[@menureference[@menu-1]]; next;
+	mes "^FF0000Subject^000000", @subject$; next;
+	mes "^FF0000Body^000000", @body$; next;
+	mes "If this is all correct, your ticket will be created.", "Continue?";
+	if(select("Yes:No")==1) {
+		query_sql "SELECT `email`, `last_ip` FROM `login` WHERE `account_id` = '"+getcharid(3)+"'", @player_email$, @player_lastip$;
+		query_sql("INSERT INTO `cp_servicedesk` (`account_id`, `category`, `char_id`, `timestamp`, `sslink`, `chatlink`, `videolink`, `subject`, `text`, `ip`, `curemail`) VALUES ('"+getcharid(3)+"', '"+@cat_id[@menureference[@menu-1]]+"', '"+getcharid(0)+"', NOW(), '0', '0', '0', '"+@subject$+"', '"+@body$+"', '"+@player_lastip$+"', '"+@player_email$+"')");
+		mes "Ticket created.";
+		close;
+	} else {
+		mes "Submission terminated.";
+		close;
+		end;
+	}
+	end;
+}

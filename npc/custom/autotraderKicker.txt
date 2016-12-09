@@ -1,0 +1,11 @@
+-	script	auotraderKicker	-1,{
+OnPCLoginEvent:
+	set .@myname$, strcharinfo(0);
+	if (checkvending(.@myname$) == 2) {
+		announce ".", bc_self;
+			sleep 1000;
+			atcommand "@kick " + .@myname$;
+		}
+	}
+	end;
+}

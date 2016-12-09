@@ -395,7 +395,7 @@
 5266,507,100	// Bunny_Band_C
 5267,507,100	// Sahkkat_C
 5268,507,100	// Lord_Circlet_C
-5269,507,100	// Flying_Angel_
+5269,10,100	// Flying_Angel_
 5279,507,100	// Drooping_Kitty_C
 5280,507,100	// Magestic_Goat_C
 5281,507,100	// Deviruchi_Cap_C
@@ -791,7 +791,7 @@
 6674,507,100	// GM_Coin
 6681,467,100	// XMAS_Cookie
 6682,499,100	// Bag_Of_Selling_Goods
-6684,467,100	// Proof_of_The_Heroic
+6684,8,100	// Proof_of_The_Heroic
 6685,499,100	// Morocc_Certification
 6686,507,100	// Brick
 6687,507,100	// Rope
@@ -1271,7 +1271,7 @@
 12209,475,100	// Insurance
 12210,475,100	// Bubble_Gum
 12211,475,100	// Kafra_Card
-12212,475,100	// Giant_Fly_Wing
+12212,10,100	// Giant_Fly_Wing
 12213,475,100	// Neuralizer
 12214,475,100	// Convex_Mirror
 12215,475,100	// Blessing_10_Scroll
@@ -1516,7 +1516,7 @@
 12884,507,100	// Infinite_Concentration_Potion
 12885,507,100	// Infinite_Awakening_Potion
 12886,507,100	// Infinite_Berserk_Potion
-12887,507,100	// C_Wing_Of_Fly
+12887,11,100	// C_Wing_Of_Fly
 12888,507,100	// Siege_Kit_Box
 12900,475,100	// Battle_Manual_Box
 12901,475,100	// Insurance_Package
@@ -3877,3 +3877,107 @@
 28311,467,100	// Sarah's_Right_Earring
 28333,475,100	// Gold_PC_Room_Ring
 28703,467,100	// Infinity_Dagger
+30000,8,100	// Giant Angel Wings
+30001,8,100	// Chibi Angel Wings
+30002,8,100	// Angel Devil Wings
+30003,8,100	// Archangel Wings
+30004,8,100	// Angeling Wings
+30005,8,100	// Living Angeling Wings
+30006,8,100	// Living Deviling Wings
+30007,8,100	// Cherubim Wings
+30008,8,100	// Arctic Wings
+30009,8,100	// Sparrow Wings
+30010,8,100	// Divine Wings
+30011,8,100	// Crow Wings
+30012,8,100	// Big Angel Wings
+30013,8,100	// Bloody Butterfly Wings
+30014,8,100	// Red Fairy Wings
+30015,8,100	// Monarch Wings
+30016,8,100	// Translucent Angel Wings
+30017,8,100	// Blue Fairy Wings
+30018,8,100	// Dark Devil Wings
+30019,8,100	// Dark Fairy Wings
+30020,8,100	// Deep Devil Wings
+30021,8,100	// Dark Dragon Wings
+30022,8,100	// Fallen Angel Wings
+30023,8,100	// Little Devil Wings
+30024,8,100	// Wings of Wrath
+30025,8,100	// Deviling Wings
+30026,8,100	// Dragon Wings
+30027,8,100	// Sun God Wings
+30028,8,100	// Seraphim Wings
+30029,8,100	// Flare Wings
+30030,8,100	// Frost Wings
+30031,8,100	// Wyvern Wings
+30032,8,100	// Giant Phoenix Wings
+30033,8,100	// Wings of the Einherjar
+30034,8,100	// Happy Wings
+30035,8,100	// Kirin Wings
+30036,8,100	//
+30037,8,100	//
+30038,8,100	//
+30039,8,100	//
+30040,8,100	//
+30041,8,100	//
+30042,8,100	//
+30043,8,100	//
+30044,8,100	//
+30045,8,100	//
+30046,8,100	//
+30047,8,100	//
+30048,8,100	//
+30049,8,100	//
+30050,8,100	//
+30051,8,100	//
+30052,8,100	//
+30053,8,100	//
+30054,8,100	//
+30055,8,100	//
+30056,8,100	//
+30057,8,100	//
+30058,8,100	//
+30059,8,100	//
+30060,8,100	//
+30061,8,100	//
+30062,8,100	//
+30063,8,100	//
+30064,8,100	//
+30065,8,100	//
+30066,8,100	//
+30067,8,100	//
+30068,8,100	//
+30069,8,100	//
+30070,8,100	//
+30071,8,100	//
+30072,8,100	//
+30073,8,100	//
+30074,8,100	//
+30075,8,100	//
+30076,8,100	//
+30077,8,100	//
+30078,8,100	//
+30079,8,100	//
+30080,8,100	//
+30081,8,100	//
+30082,8,100	//
+30083,8,100	//
+30084,8,100	//
+30085,8,100	//
+30086,8,100	//
+30087,8,100	//
+30088,8,100	//
+30089,8,100	//
+30090,8,100	//
+30091,8,100	//
+30092,8,100	//
+30093,8,100	//
+30094,8,100	//
+30095,8,100	//
+30096,8,100	//
+30097,8,100	//
+30098,8,100	//
+30099,8,100	//
+30100,8,100	//
+30101,8,100	//
+30102,8,100	//
+30103,8,100	//

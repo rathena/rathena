@@ -1,0 +1,26 @@
+prontera,239,313,4	script	Reverend Nick	412,{
+	mes "[Reverend Nick]";
+	mes "Would you like to exchange your ring?";
+	switch(select("Yes:No")) {
+		case 1:
+			if(countitem(2634) > 0) {
+				delitem 2634,1;
+				getitem2 2635,1,1,0,0,0,0,0,0;
+			} else {
+				if(countitem(2635) > 0) {
+					delitem 2635,1;
+					getitem2 2634,1,1,0,0,0,0,0,0;
+					
+				} else {
+					mes "You don't have a ring to exchange!";
+					close;
+				}
+			}
+			mes "Here ya go!  Bless you my child and I hope your big day is amazing!";
+			close;
+		case 2:
+			close;
+	}
+}
+
+//@Machiezmo I need you to script an NPC that exchanges item #2634 for 2635 and vise versa

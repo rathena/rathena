@@ -1,0 +1,38 @@
+-	script	Highest Peak	-,{
+	// CONFIGS
+	// Would you like an announcement when you reach a higher peak?
+	// 1 = Yes
+	// 0 = No
+	.displaypeakannounce = 1;
+
+// END CONFIGS
+
+OnPCLoginEvent:
+
+// Asign current number of online players
+sleep 1000;
+.onlineusers = getusers(1);
+
+// Today's date
+.date$ = gettime(7)+"-"+gettime(6)+"-"+gettime(5);
+
+// Query for the highest peak in the database
+query_sql("SELECT `users` FROM `cp_onlinepeak` ORDER BY `users` LIMIT 1",.@countusers);
+	
+.playerpeak = .@countusers[0];
+if(getarraysize(.@countusers) == 0) {
+	// There doesn't seem to be a row in our table, so lets create one
+	query_sql("INSERT INTO `cp_onlinepeak` (users, date) VALUES ("+.onlineusers+", '"+.date$+"')");
+} else {
+	if(.onlineusers>.playerpeak) {
+		// This is where we check if we want to announce a new peak
+		if(.displaypeakannounce == 1){
+			announce "We have reached a new player peak! We now have "+.onlineusers+" online!",bc_all;
+		}
+		// Now lets update the table with our new player peak
+		query_sql("UPDATE `cp_onlinepeak` SET users = '" + .onlineusers + "', date = '" + .date$ + "'");
+	}
+}
+end;
+
+}

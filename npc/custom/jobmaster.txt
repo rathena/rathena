@@ -50,13 +50,13 @@ function Job_Menu;
 			close;
 		}
 		if (Class > Job_Crusader2) {
-			mes "Switch to third class?";
+			mes "Switch to third class? WARNING. DO NOT SELECT THIRD CLASSES WITHOUT TRANSCENDING FIRST.";
 			next;
 			Job_Menu(roclass(.@eac|EAJL_THIRD));
 			close;
 		}
 		while(1) {
-			mes "Select an option.";
+			mes "Select an option. WARNING. DO NOT SELECT THIRD CLASSES WITHOUT TRANSCENDING FIRST.";
 			next;
 			.@i = select(" ~ ^0055FFRebirth^000000:" + ((.ThirdClass) ? " ~ ^FF0000Third Class^000000" : "") + ": ~ ^777777Cancel^000000");
 			if (.@i == 3)

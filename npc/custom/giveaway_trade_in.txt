@@ -1,0 +1,72 @@
+prontera,148,166,5	script	Halloween Turn-In	999,{
+	set .npcName$,"[Halloween Turn-In]";
+	mes "Greetings traveler...";
+	mes "I am here looking for Proof of the Heroic and will trade for it!";
+	next;
+	switch(select("200 for a Bunny Band:400 for a Neko Mimi:600 for King Frog Hat:800 for a Drooping Duneyrr:1,000 for a Flapping Angel Wings (Special Edition):Nevermind")) {
+		case 1:
+			if(countitem(6684) < 200) {
+				mes .npcName$;
+				mes "I need 200 Proof of the Heroic for that item!";
+				close;
+			} else {
+				delitem 6684,200;
+				getitem 2214,1;
+				mes .npcName$;
+				mes "Here is your Bunny Band.";
+				close;
+			}
+		case 2:
+			if(countitem(6684) < 400) {
+				mes .npcName$;
+				mes "I need 400 Proof of the Heroic for that item!";
+				close;
+			} else {
+				delitem 6684,400;
+				getitem 5099,1;
+				mes .npcName$;
+				mes "Here is your Neko Mimi.";
+				close;
+			}
+		case 3:
+			if(countitem(6684) < 600) {
+				mes .npcName$;
+				mes "I need 600 Proof of the Heroic for that item!";
+				close;
+			} else {
+				delitem 6684,600;
+				getitem 5528,1;
+				mes .npcName$;
+				mes "Here is your King Frog Hat.";
+				close;
+			}
+		case 4:
+			if(countitem(6684) < 800) {
+				mes .npcName$;
+				mes "I need 800 Proof of the Heroic for that item!";
+				close;
+			} else {
+				delitem 6684,800;
+				getitem 5762,1;
+				mes .npcName$;
+				mes "Here is your Drooping Duneyrr.";
+				close;
+			}
+		case 5:
+			if(countitem(6684) < 1000) {
+				mes .npcName$;
+				mes "I need 1,000 Proof of the Heroic for that item!";
+				close;
+			} else {
+				delitem 6684,1000;
+				getitem 5269,1;
+				mes .npcName$;
+				mes "Here is your Flapping Angel Wings (SE).";
+				close;
+			}
+		case 6:
+			mes .npcName$;
+			mes "Nevermind yourself!";
+			close;
+	}
+}

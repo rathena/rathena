@@ -1,0 +1,178 @@
+prontera,146,204,3	script	Donor Rewards Redeemer	987,{
+	// ----------------- NPC Settings -----------------
+	// --- SET THESE BEFORE LOADING THE SCRIPT! ---
+	
+	// Server Name
+	set .serverName$,"Divine-RO";
+	
+	// NPC Name to display during chat.
+	// Default: "[Donor Rewards Redeemer]"
+	set .npcName$,"[Donor Rewards Redeemer]";
+	
+	// DO NOT CHANGE THIS!
+	// Default: "cp_redeemlog"
+	set .redeemTable$,"cp_redeemlog";
+	
+	// Display Credits to FluxCP Creators?
+	// Help promote our product if its useful.
+	// 0 = Disable. 1 = Enable.
+	// Default: 1
+	set .showCredits,0;
+	
+	// Max number of unique items to redeem at a time.
+	// DO NOT RAISE THIS VALUE ABOVE 128 WITHOUT
+	// MAKING THE NECESSARY SCRIPT ENGINE MODS
+	// FOR SCRIPT ARRAY SIZING! DANGEROUS!
+	// Default: 128
+	set .numRedemptionsSimul,128; 
+	// --------------- End NPC Settings ---------------
+
+	// ----------------- Begin Script -----------------
+	mes .npcName$;
+	mes "Well hello there " + (Sex ? "good sir!" : "young madam!");
+	mes "How may I be of assistance to you on this fine day?";
+	next;
+	prompt("I wish to redeem items:Who might you be?:I am merely perusing the area");
+	mes .npcName$;
+	switch(@menu) {
+		case 1:
+			query_sql "SELECT `id`, `nameid`, `quantity` FROM `" + escape_sql(.redeemTable$) + "` WHERE `account_id` = " + getcharid(3) + " AND `redeemed` = 0 LIMIT " + .numRedemptionsSimul,.@id,.@nameid,.@quantity;
+			if (getarraysize(.@id) > 0) {
+				mes "Items Pending Redemption: " + getarraysize(.@id);
+				for (set .@i,0; .@i < getarraysize(.@id); set .@i,.@i+1)
+					if (checkweight(.@nameid[.@i],.@quantity[.@i]) == 0 && .@nameid[.@i] != 31111) {
+						mes "I'm terribly sorry, but you are carrying too much to accept " + (.@i ? "any more of " : " ") + "your rewards at this time.";
+						mes "Please come back with fewer items.";
+					}
+					
+					 else {
+						query_sql "UPDATE `" + escape_sql(.redeemTable$) + "` SET `char_id` = " + getcharid(0) + ", `redeemed` = 1, `redemption_date` = NOW() WHERE `id` = " + .@id[.@i];
+						if(.@nameid[.@i] != 31111) {
+							getitem .@nameid[.@i],.@quantity[.@i];
+						}
+						if(.@nameid[.@i] == 30001) {
+							getitem 30002,.@quantity[.@i];
+							//getitem 30003,.@quantity[.@i];
+							//getitem 30004,.@quantity[.@i];
+							//getitem 30005,.@quantity[.@i];
+							//getitem 30006,.@quantity[.@i];
+							//getitem 30007,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30003) {
+							getitem 30039,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30007) {
+							getitem 30043,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30008) {
+							getitem 30044,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 300014) {
+							getitem 30050,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 300017) {
+							getitem 30053,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 300018) {
+							getitem 30054,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30019) {
+							getitem 30055,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30022) {
+							getitem 30058,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30024) {
+							getitem 30060,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30027) {
+							getitem 30063,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30000) {
+							getitem 30036,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30002) {
+							getitem 30038,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30012) {
+							getitem 30048,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30013) {
+							getitem 30049,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30015) {
+							getitem 30051,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30016) {
+							getitem 30052,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30021) {
+							getitem 30057,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30026) {
+							getitem 30062,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30028) {
+							getitem 30064,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30032) {
+							getitem 30068,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30001) {
+							getitem 30037,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30004) {
+							getitem 30040,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30005) {
+							getitem 30041,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30006) {
+							getitem 30042,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30009) {
+							getitem 30045,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30010) {
+							getitem 30046,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30011) {
+							getitem 30047,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30020) {
+							getitem 30056,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30023) {
+							getitem 30059,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30025) {
+							getitem 30061,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30029) {
+							getitem 30065,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30030) {
+							getitem 30066,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30031) {
+							getitem 30067,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 30033) {
+							getitem 30069,.@quantity[.@i];
+						} else if(.@nameid[.@i] == 31111) {
+							getitem 30010,.@quantity[.@i];
+							set .cards,.@quantity[.@i]*30;
+							getitem 616,.cards;
+							set .totalZeny,.@quantity[.@i]*500000;
+							set Zeny,Zeny+.totalZeny;
+						}
+						if(.@nameid[.@i] == 31111) {
+							mes .@quantity[.@i] + "x Founder Packs";
+						} else {
+							mes .@quantity[.@i] + "x " + getitemname(.@nameid[.@i]);
+						}
+					}
+				if (.@i == getarraysize(.@id)) {
+					mes "Thank you for your patronage " + (Sex ? "fine sir." : "ma'am.");
+					mes "Please enjoy your stay on " + .serverName$ + "!";
+				}
+				if (.showCredits)
+					callfunc "F_FluxCredits";
+			} else {
+				mes "My records indicate that there are no rewards awaiting to be redeemed.";
+				mes "My deepest apologies for the misunderstanding.";
+			}
+		break;
+		case 2:
+			mes "I am here to allow for the redemption of rewards for donations to " + .serverName$ + ".";
+			mes "Donations may be made to the server via the control panel.";
+		break;
+		default:
+			mes "Very well then.";
+			mes "Good day to you.";
+		break;
+	}
+	close;
+	// ------------------ End Script ------------------
+}
+
+// ------------ Credits to FluxCP Creators ------------
+// - Please do not modify or delete this function or  -
+// - its contents. To disable the credits from being  -
+// - shown, set .showCredits to 0 in the NPC Settings -
+// - at the top of this file.                         -
+// ----------------------------------------------------
+
+function	script	F_FluxCredits	{
+	mes "-----------------------------------";
+	mes "Powered by Flux Control Panel.";
+	mes "Copyright © 2008-2012 Matthew Harris and Nikunj Mehta.";
+	mes "http://fluxcp.googlecode.com/";
+	return;
+}

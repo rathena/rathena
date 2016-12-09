@@ -10,7 +10,6 @@ MOBG_Bloody_Dead_Branch,1046,Doppelganger,500000
 MOBG_Bloody_Dead_Branch,1059,Mistress,500000
 MOBG_Bloody_Dead_Branch,1086,Golden Thief Bug,500000
 MOBG_Bloody_Dead_Branch,1087,Orc Hero,500000
-MOBG_Bloody_Dead_Branch,1096,Angeling,500000
 MOBG_Bloody_Dead_Branch,1112,Drake,500000
 MOBG_Bloody_Dead_Branch,1115,Eddga,500000
 MOBG_Bloody_Dead_Branch,1120,Ghostring,500000

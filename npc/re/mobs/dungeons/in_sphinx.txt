@@ -48,9 +48,9 @@ in_sphinx4,0,0,0,0	monster	Mimic	1191,4,5000,0,0
 //==================================================
 // in_sphinx5 - Sphinx
 //==================================================
-in_sphinx5,0,0,0,0	monster	Pasana	1154,70,5000,0,0
-in_sphinx5,0,0,0,0	monster	Side Winder	1037,20,5000,0,0
-in_sphinx5,0,0,0,0	monster	Matyr	1146,10,5000,0,0
-in_sphinx5,0,0,0,0	monster	Anubis	1098,10,5000,0,0
-in_sphinx5,0,0,0,0	monster	Mimic	1191,7,5000,0,0
+in_sphinx5,0,0,0,0	monster	Pasana	1154,170,5000,0,0
+in_sphinx5,0,0,0,0	monster	Side Winder	1037,120,5000,0,0
+in_sphinx5,0,0,0,0	monster	Matyr	1146,30,5000,0,0
+in_sphinx5,0,0,0,0	monster	Anubis	1098,30,5000,0,0
+in_sphinx5,0,0,0,0	monster	Mimic	1191,27,5000,0,0
 in_sphinx5,0,0,0,0	boss_monster	Pharaoh	1157,1,3600000,600000,1

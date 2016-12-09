@@ -1,0 +1,276 @@
+SQL Tables
+
+CREATE TABLE IF NOT EXISTS `promo_code` (
+	`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`code` VARCHAR(50) CHARACTER SET LATIN1 COLLATE LATIN1_GENERAL_CS NOT NULL DEFAULT '',
+	`nameid` INT(11) NOT NULL DEFAULT '0',
+	`amount` INT(11) NOT NULL DEFAULT '0',
+	`count` INT(11) NOT NULL DEFAULT '0',
+	`left` INT(11) NOT NULL DEFAULT '0',
+	`gm_aid` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+	`gm_cid` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+	`time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+CREATE TABLE IF NOT EXISTS `promo_code_log` (
+	`id` INT(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+	`code` VARCHAR(50) CHARACTER SET LATIN1 COLLATE LATIN1_GENERAL_CS NOT NULL DEFAULT '',
+	`aid` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+	`cid` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+	`time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	PRIMARY KEY (`id`)
+) ENGINE=MyISAM;
+
+
+
+
+prontera,155,171,4	script	Sample#promo_code	4_F_KAFRA9,{
+	doevent "promo_code_main::OnTalk";
+}
+
+-	script	promo_code_main	FAKE_NPC,{
+	function func_RandString;
+	function func_PromoCode;
+	
+	OnInit:
+		.gm_level = 60;
+		setarray .promo_code_length,10,15;
+		.max_item_per_code = 10;
+		.query_limit = 50;
+		bindatcmd "promo",strnpcinfo(3)+"::OnAtcommand";
+		end;
+	
+	function	func_RandString	{
+		.@length = getarg( 0 );
+		.@type = getarg( 1,0 );
+		
+		if ( .@type & 1 ) .@string_list$ = .@string_list$ + "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		if ( .@type & 2 ) .@string_list$ = .@string_list$ + "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		if ( .@type & 4 ) .@string_list$ = .@string_list$ + "0123456789";
+		
+		if ( .@string_list$ != "" ) {
+			.@total_length = getstrlen( .@string_list$ );
+			while ( getstrlen( .@rand_string$ ) < .@length )
+				.@rand_string$ = .@rand_string$ + charat( .@string_list$,rand( .@total_length ) );
+		}
+		
+		return .@rand_string$;
+	}
+	
+	function	func_PromoCode	{
+		.@code$ = getarg( 0,"" );
+		
+		query_sql( "SELECT `nameid`,`amount`,`left` FROM `promo_code` WHERE `code` LIKE '"+escape_sql( .@code$ )+"' LIMIT "+.query_limit,.@nameid,.@amount,.@left );
+		.@size = getarraysize( .@nameid );
+		if ( .@size <= 0 ) {
+			mes "Invalid Promo Codes";
+		}
+		else if ( .@left > 0 ) {
+			mes "-^FF0000 "+.@code$+"^000000";
+			mes " ";
+			for ( .@i = 0; .@i < .@size; .@i++ ) {
+				mes " > "+.@amount[.@i]+" x "+getitemname( .@nameid[.@i] );
+			}
+			next;
+			if ( select( "Claim","Cancel" ) == 1 ) {
+				.@aid = getcharid(3);
+				.@cid = getcharid(0);
+				query_sql( "SELECT `id`,`time` FROM `promo_code_log` WHERE `code` LIKE '"+.@code$+"' AND ( `aid` = "+.@aid+" OR `cid` = "+.@cid+" )",.@id,.@time$ );
+				
+				if ( .@id ) {
+					mes "You claimed this Promo Code since "+.@time$;
+				}
+				else {
+					query_sql( "SELECT `left` FROM `promo_code` WHERE `code` LIKE '"+escape_sql( .@code$ )+"' LIMIT "+.query_limit,.@left );
+					if ( .@left > 0 ) {
+						query_sql( "UPDATE `promo_code` SET `left` = `left` - 1 WHERE `code` LIKE '"+escape_sql( .@code$ )+"'" );
+						for ( .@i = 0; .@i < .@size; .@i++ )
+							getitem .@nameid[.@i],.@amount[.@i];
+							
+						.@sql$ = "INSERT INTO `promo_code_log` "
+								+ "( `code`,`aid`,`cid`,`time` ) "
+								+ "VALUES " 
+								+ "( '"+.@code$+"', "+.@aid+", "+.@cid+", NOW() )";
+						query_sql( .@sql$ );
+					}
+					else {
+						mes "Promo Code No longer available.";
+					}
+				}
+			}
+		}
+		else {
+			mes "Promo Code no longer available.";
+		}
+		close;
+	}
+	
+	OnAtcommand:
+		if ( .@atcmd_parameters$ == "" ) {
+			dispbottom "Usage : "+.@atcmd_command$+" <promo code>";
+		}
+		else {
+			func_PromoCode( .@atcmd_parameters$ );
+		}
+		end;
+	
+	
+	OnTalk:
+		.@gm_level = getgmlevel();
+		.@not_gm = ( .@gm_level < .gm_level || !.gm_level || !.@gm_level );
+		
+		mes "Promo Code";
+		next;
+		switch ( select(
+			"Submit Promo Code",
+			( .@not_gm )? "":"^FF0000[GM]^000000 List Promo Code",
+			( .@not_gm )? "":"^FF0000[GM]^000000 Create Promo Code",
+			( .@not_gm )? "":"^FF0000[GM]^000000 Delete Promo Code",
+			"Information"
+		)) {
+			case 1:
+				mes "Enter Promo Code";
+				input .@code$;
+				func_PromoCode( .@code$ );
+				break;
+			case 2:
+				query_sql( "SELECT `code`,`left`,`count` FROM `promo_code` WHERE `left` > 0 GROUP BY `code` ORDER BY `time` DESC LIMIT "+.query_limit,.@code$,.@left,.@count );
+				.@size = getarraysize( .@code$ );
+				if ( .@size ) {
+					mes "Promo Code List:";
+					for ( .@i = 0; .@i < .@size; .@i++ )
+						mes "-^FF0000 "+.@code$[.@i]+"  ^777777("+.@left[.@i]+"/"+.@count[.@i]+" left)^000000";
+				}
+				else {
+					mes "Dont have any available codes.";
+				}
+				break;
+			case 3:
+				do {
+					mes "Code : "+.@promo_code$;
+					mes "Limit : "+.@promo_limit;
+					mes "Items :";
+					for ( .@i = 0; .@i < .@promo_item_size; .@i++ ) 
+						mes " > "+.@promo_amount[.@i]+" x "+getitemname( .@promo_itemid[.@i] );
+
+					.@option = select(
+						"Generate Promo Code",
+						"Set Limit",
+						"Set Items",
+						( .@promo_limit && .@promo_item_size && .@promo_code$ != "" ) ? "Complete" : "",
+						"Cancel"
+					);
+					
+					switch ( .@option ) {
+						case 1:
+							switch ( select( 
+								"Randomly Generate",
+								"Manually Input",
+								"Back"
+							)) {
+								case 1:	
+									.@promo_code$ = func_RandString( rand( .promo_code_length[0] ,.promo_code_length[1] ), 1|2|4 );
+									break;
+								case 2:
+									while ( input( .@promo_code$,4,50 ) );
+								default:
+									break;
+							}
+							break;
+						case 2:
+							mes "This code can use how many times ?";
+							input .@promo_limit,0,10000;
+							break;
+						case 3:
+							do {
+								next;
+								mes "Item List:";
+								for ( .@i = 0; .@i < .@promo_item_size; .@i++ ) 
+									mes " > "+.@promo_amount[.@i]+" x "+getitemname( .@promo_itemid[.@i] );
+								
+								.@option = select( 
+									( .@promo_item_size < .max_item_per_code ) ? "Add Item" : "",
+									( .@promo_item_size ) ? "Delete Item" : "",
+									"Back"
+								);
+								
+								switch ( .@option ) {
+									case 1:
+										mes "Enter Item ID";
+										input .@itemid,0,32767;
+										.@temp_itemname$ = getitemname( .@itemid );
+										if ( .@temp_itemname$ != "null" ) {
+											.@item_type = getiteminfo( .@itemid,2 );
+											.@max_amount = ( .@item_type == IT_ARMOR || .@item_type == IT_WEAPON ) ? 100 : 30000;
+											mes "How many "+.@temp_itemname$;
+											input .@amount,0,.@max_amount;
+											if ( .@amount ) {
+												mes "Added "+.@amount+" x "+getitemname( .@itemid );
+												.@promo_itemid[.@promo_item_size] = .@itemid;
+												.@promo_amount[.@promo_item_size] = .@amount;
+												.@promo_item_size++;
+											}
+										}
+										break;
+									case 2:
+										.@temp_menu$ = "";
+										for ( .@i = 0; .@i < .@promo_item_size; .@i++ ) 
+											.@temp_menu$ = .@temp_menu$ + .@promo_amount[.@i] + " x " + getitemname( .@promo_itemid[.@i] ) + ":";
+										.@i = select( .@temp_menu$ + "Back" ) - 1;
+										if ( .@i < .@promo_item_size ) {
+											deletearray .@promo_itemid[.@i],1;
+											deletearray .@promo_amount[.@i],1;
+											.@promo_item_size--;
+										}
+										break;
+									default:
+										break;
+								}
+							} while ( .@option < 3 );
+							break;
+						case 4:
+							if ( .@option == 4 && .@promo_item_size && .@promo_code$ != "" ) {
+								.@gm_aid = getcharid(3);
+								.@gm_cid = getcharid(0);
+								for ( .@i = 0; .@i < .@promo_item_size; .@i++ ) {
+									.@sql$ = "INSERT INTO `promo_code` "
+											+ "( `code`,`nameid`,`amount`,`count`,`left`,`gm_aid`,`gm_cid`,`time` ) "
+											+ "VALUES " 
+											+ "( '"+.@promo_code$+"', "+.@promo_itemid[.@i]+", "+.@promo_amount[.@i]+", "+.@promo_limit+", "+.@promo_limit+", "+.@gm_aid+", "+.@gm_cid+", NOW() )";
+									query_sql( .@sql$ );
+								}
+								mes "Promo Code Added.";
+							}
+							break;
+						default:
+							break;
+					}
+					next;
+				} while ( .@option < 4 );
+				break;
+			case 4:
+				query_sql( "SELECT `code` FROM `promo_code` WHERE `left` > 0 GROUP BY `code` ORDER BY `time` DESC LIMIT "+.query_limit,.@code$ );
+				.@size = getarraysize( .@code$ );
+				if ( .@size ) {
+					for ( .@i = 0; .@i < .@size; .@i++ )
+						.@menu$ = .@menu$ + .@code$[.@i] + ":";
+						
+					.@i = select( .@menu$ ) - 1;
+					if ( select( "Delete","Cancel" ) == 1 ) {
+						query_sql( "UPDATE `promo_code` SET `left` = 0 WHERE `code` LIKE '"+escape_sql( .@code$[.@i] )+"'" );
+						mes "Removed Promo Code.";
+					}
+				}
+				else {
+					mes "Dont have any available codes.";
+				}
+				break;
+			default:
+				mes "This is Promo Code NPC.";
+				mes "You give me a code, then I will give you certain items.";
+				break;
+		}
+		close;
+		
+}

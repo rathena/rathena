@@ -1,0 +1,18 @@
+prontera,156,195,5	script	Starter Pack	718,{
+if( !#Freebies ) {
+set #Freebies,1;
+mes "Welcome to Divine-RO! Enjoy your welcome gift!";
+getitem 30104,1;
+getitem 1208,1;
+getitem 1705,1;
+getitem 1608,1;
+set Zeny, Zeny + 10000;
+close;
+} else {
+mes "You have claim the Reward already.";
+close;
+}
+OnInit:
+waitingroom "Starter Gear Here",0;
+end;
+}

@@ -497,14 +497,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\src\char\int_clan.c"
-				>
-			</File>
-			<File
-				RelativePath="..\src\char\int_clan.h"
-				>
-			</File>
-			<File
 				RelativePath="..\src\char\int_elemental.c"
 				>
 			</File>

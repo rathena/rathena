@@ -1039,7 +1039,7 @@ int chmapif_parse_reqauth(int fd, int id){
 		}
 		if( runflag == CHARSERVER_ST_RUNNING && autotrade && cd ){
 			uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
-			if (cd->sex == SEX_ACCOUNT)
+			if (cd->sex == 99)
 				cd->sex = sex;
 
 			WFIFOHEAD(fd,mmo_charstatus_len);
@@ -1068,7 +1068,7 @@ int chmapif_parse_reqauth(int fd, int id){
 			)
 		{// auth ok
 			uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
-			if (cd->sex == SEX_ACCOUNT)
+			if (cd->sex == 99)
 				cd->sex = sex;
 
 			WFIFOHEAD(fd,mmo_charstatus_len);
@@ -1115,6 +1115,34 @@ int chmapif_parse_updmapip(int fd, int id){
 }
 
 /**
+ *  transmit emu usage for anom stats
+ * @param fd: wich fd to parse from
+ * @return : 0 not enough data received, 1 success
+ */
+int chmapif_parse_fw_configstats(int fd){
+	if( RFIFOREST(fd) < RFIFOW(fd,4) )
+		return 0;/* packet wasn't fully received yet (still fragmented) */
+	else {
+		int sfd;/* stat server fd */
+		RFIFOSKIP(fd, 2);/* we skip first 2 bytes which are the 0x3008, so we end up with a buffer equal to the one we send */
+
+		if( (sfd = make_connection(host2ip("stats.rathena.org"),(uint16)25421,true,10) ) == -1 ) {
+			RFIFOSKIP(fd, RFIFOW(fd,2) );/* skip this packet */
+			return 0;/* connection not possible, we drop the report */
+		}
+
+		session[sfd]->flag.server = 1;/* to ensure we won't drop our own packet */
+		WFIFOHEAD(sfd, RFIFOW(fd,2) );
+		memcpy(WFIFOCP(sfd,0), RFIFOCP(fd, 0), RFIFOW(fd,2));
+		WFIFOSET(sfd, RFIFOW(fd,2) );
+		flush_fifo(sfd);
+		do_close(sfd);
+		RFIFOSKIP(fd, RFIFOW(fd,2) );/* skip this packet */
+	}
+	return 1;
+}
+
+/**
  * Received an update of fame point  for char_id cid
  * Update the list associated and transmit the new ranking
  * @param fd: wich fd to parse from
@@ -1134,10 +1162,10 @@ int chmapif_parse_updfamelist(int fd){
 
             switch(type)
             {
-				case RANK_BLACKSMITH:	size = fame_list_size_smith;	list = smith_fame_list;		break;
-				case RANK_ALCHEMIST:	size = fame_list_size_chemist;	list = chemist_fame_list;	break;
-				case RANK_TAEKWON:		size = fame_list_size_taekwon;	list = taekwon_fame_list;	break;
-				default:				size = 0;						list = NULL;				break;
+                    case RANK_BLACKSMITH:	size = fame_list_size_smith;	list = smith_fame_list;		break;
+					case RANK_ALCHEMIST:	size = fame_list_size_chemist;	list = chemist_fame_list;	break;
+					case RANK_TAEKWON:		size = fame_list_size_taekwon;	list = taekwon_fame_list;	break;
+					default:				size = 0;						list = NULL;				break;
             }
 
             ARR_FIND(0, size, player_pos, list[player_pos].id == cid);// position of the player
@@ -1457,6 +1485,7 @@ int chmapif_parse(int fd){
 			//case 0x2b2c: /*free*/; break;
 			case 0x2b2d: next=chmapif_bonus_script_get(fd); break; //Load data
 			case 0x2b2e: next=chmapif_bonus_script_save(fd); break;//Save data
+			case 0x3008: next=chmapif_parse_fw_configstats(fd); break;
 			default:
 			{
 					// inter server - packet

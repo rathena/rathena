@@ -685,7 +685,7 @@ static int mob_spawn_guardian_sub(int tid, unsigned int tick, int id, intptr_t d
 /*==========================================
  * Summoning Guardians [Valaris]
  *------------------------------------------*/
-int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobname, int mob_id, const char* event, int guardian, bool has_index)
+int mob_spawn_guardian(const char* mapname, short x, short y, const char* mobname, int mob_id, const char* event, int guardian, bool has_index)
 {
 	struct mob_data *md=NULL;
 	struct spawn_data data;
@@ -790,7 +790,7 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 /*==========================================
  * Summoning BattleGround [Zephyrus]
  *------------------------------------------*/
-int mob_spawn_bg(const char* mapname, int16 x, int16 y, const char* mobname, int mob_id, const char* event, unsigned int bg_id)
+int mob_spawn_bg(const char* mapname, short x, short y, const char* mobname, int mob_id, const char* event, unsigned int bg_id)
 {
 	struct mob_data *md = NULL;
 	struct spawn_data data;
@@ -1344,9 +1344,7 @@ static int mob_ai_sub_hard_slavemob(struct mob_data *md,unsigned int tick)
 		if (ud) {
 			struct block_list *tbl=NULL;
 			if (ud->target && ud->state.attack_continue)
-				tbl = map_id2bl(ud->target);
-			else if (ud->target_to && ud->state.attack_continue)
-				tbl = map_id2bl(ud->target_to);
+				tbl=map_id2bl(ud->target);
 			else if (ud->skilltarget) {
 				tbl = map_id2bl(ud->skilltarget);
 				//Required check as skilltarget is not always an enemy. [Skotlex]
@@ -2246,10 +2244,10 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	}
 
 	if (battle_config.show_mob_info&3)
-		clif_name_area(&md->bl);
+		clif_charnameack(0, &md->bl);
 
 #if PACKETVER >= 20120404
-	if (battle_config.monster_hp_bars_info && !map[md->bl.m].flag.hidemobhpbar) {
+	if( battle_config.monster_hp_bars_info){
 		int i;
 		for(i = 0; i < DAMAGELOG_SIZE; i++){ // must show hp bar to all char who already hit the mob.
 			struct map_session_data *sd = map_charid2sd(md->dmglog[i].id);
@@ -2914,7 +2912,7 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 	skill_unit_move(&md->bl,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
 	if (battle_config.show_mob_info&3)
-		clif_name_area(&md->bl);
+		clif_charnameack (0, &md->bl);
 }
 
 int mob_guardian_guildchange(struct mob_data *md)
@@ -3047,7 +3045,7 @@ int mob_class_change (struct mob_data *md, int mob_id)
 	md->target_id = md->attacked_id = md->norm_attacked_id = 0;
 
 	//Need to update name display.
-	clif_name_area(&md->bl);
+	clif_charnameack(0, &md->bl);
 	return 0;
 }
 
@@ -3057,9 +3055,9 @@ int mob_class_change (struct mob_data *md, int mob_id)
 void mob_heal(struct mob_data *md,unsigned int heal)
 {
 	if (battle_config.show_mob_info&3)
-		clif_name_area(&md->bl);
+		clif_charnameack (0, &md->bl);
 #if PACKETVER >= 20120404
-	if (battle_config.monster_hp_bars_info && !map[md->bl.m].flag.hidemobhpbar) {
+	if( battle_config.monster_hp_bars_info){
 		int i;
 		for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
 			if( md->dmglog[i].id ) {

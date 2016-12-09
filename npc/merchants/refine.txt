@@ -523,31 +523,31 @@ ein_in01,38,29,0	script	Paul Spanner	63,{
 // Weapon/Armor Refiners
 //============================================================
 prt_in,63,60,0	script	Hollgrehenn	85,{
-	callfunc "refinemain","Hollgrehenn",0;
+	callfunc "refinemain","Hollgrehenn",1;
 	end;
 }
 morocc_in,73,38,6	script	Aragham	99,{
-	callfunc "refinemain","Aragham",0;
+	callfunc "refinemain","Aragham",1;
 	end;
 }
 payon,144,173,5	script	Antonio	88,{
-	callfunc "refinemain","Antonio",0;
+	callfunc "refinemain","Antonio",1;
 	end;
 }
 alberta_in,28,58,0	script	Fredrik	85,{
-	callfunc "refinemain","Fredrik",0;
+	callfunc "refinemain","Fredrik",1;
 	end;
 }
 yuno_in01,171,21,4	script	Lambert	88,{
-	callfunc "refinemain","Lambert",0;
+	callfunc "refinemain","Lambert",1;
 	end;
 }
 ein_in01,24,87,5	script	Manthasman	826,{
-	callfunc "refinemain","Manthasman Pruhag",0;
+	callfunc "refinemain","Manthasman Pruhag",1;
 	end;
 }
 lhz_in02,282,20,7	script	Fulerr	869,{
-	callfunc "refinemain","Fulerr",0;
+	callfunc "refinemain","Fulerr",1;
 	end;
 }
 
@@ -1027,37 +1027,43 @@ function	script	orimain	{
 	next;
 	switch(select("Make Oridecon:Make Elunium:Ask about Enchanted Stones")) {
 	case 1:
-		if (countitem(756) > 4) {
-			delitem 756,5;  //Oridecon_Stone
-			getitem 984,1; // Oridecon
-			mes "["+ .@npc_name$ +"]";
-			mes "Here's your Oridecon.";
-			mes "You're welcome to come";
-			mes "back whenever you want.";
-			close;
+		set .@itemTotal,countitem(756);
+		set .@totalOri,0;
+		while (1) {
+			if(.@itemTotal > 4) {
+				delitem 756,5;  //Oridecon_Stone
+				getitem 984,1; // Oridecon
+				set .@itemTotal,.@itemTotal - 5;
+				set .@totalOri,.@totalOri + 1;
+			} else {
+				break;
+			}
 		}
-		else {
-			mes "["+ .@npc_name$ +"]";
-			mes "You're kidding me, right?";
-			mes "I just told you that I need 5 Rough Oridecons to make a pure Oridecon.";
-			close;
-		}
+		mes "["+ .@npc_name$ +"]";
+		mes "Here's your Oridecon.";
+		mes "You got a total of: " + .@totalOri;
+		mes "You're welcome to come";
+		mes "back whenever you want.";
+		close;
 	case 2:
-		if (countitem(757) > 4) {
-			delitem 757,5;  //Elunium_Stone
-			getitem 985,1; // Elunium
-			mes "["+ .@npc_name$ +"]";
-			mes "Here's your Elunium.";
-			mes "You're welcome to come";
-			mes "back whenever you want.";
-			close;
+		set .@itemTotal,countitem(756);
+		set .@totalElu,0;
+		while(1) {
+			if (.@itemTotal > 4) {
+				delitem 757,5;  //Elunium_Stone
+				getitem 985,1; // Elunium
+				set .@itemTotal,.@itemTotal - 5;
+				set .@totalElu,.@totalElu + 1;
+			} else {
+				break;
+			}
 		}
-		else {
-			mes "["+ .@npc_name$ +"]";
-			mes "You're kidding me, right?";
-			mes "I just told you that I need 5 Rough Eluniums to make a pure Elunium.";
-			close;
-		}
+		mes "["+ .@npc_name$ +"]";
+		mes "Here's your Elunium.";
+		mes "You got a total of: " + .@totalElu;
+		mes "You're welcome to come";
+		mes "back whenever you want.";
+		close;
 	case 3:
 		mes "["+ .@npc_name$ +"]";
 		mes "Enchanted Stones...?";

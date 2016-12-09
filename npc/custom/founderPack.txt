@@ -1,0 +1,27 @@
+izlude_a,202,213,1	script	Founders Pack Redeemer	55,{
+	set .npcName$,"[Founder Pack Redeemer]";
+	query_sql "SELECT `account_id` FROM `login` WHERE `last_ip` = '" + getcharip() + "' && `account_id` != " + getcharid(3) + " && `founder_pack_claimed` = 1",.@multis;
+	if(.@multis > 0) {
+		query_sql "SELECT `founder_pack_claimed` FROM `login` WHERE `account_id` = " + getcharid(3),.@claimed;
+		if(.@claimed == 0) {
+			mes .npcName$;
+			mes "Well hello there " + (Sex ? "good sir!" : "young madam!");
+			mes "Let me get you your founders pack!";
+			getitem 30010,1;
+			getitem 5334,1;
+			getitem 616,30;
+			set Zeny,Zeny+500000;
+			query_sql "UPDATE `login` SET `founder_pack_claimed`=1 WHERE `account_id` = " + getcharid(3);
+			mes "There you go all set.  You should have your wings, cap, 50 cards, and 500k Zenny.";
+			close;
+		} else {
+			mes .npcName$;
+			mes "You already claimed your founders pack...get outta here ya bum!";
+			close;
+		}
+	} else {
+		mes .npcName$;
+		mes "You already claimed your founders pack on another account...get outta here ya bum!";
+		close;
+	}
+}

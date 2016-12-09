@@ -1,0 +1,17 @@
+-	script	DayNight	-1,{
+	end;
+OnClock0600:
+	announce "The sun rises once more to usher in a new day. [6:00]",bc_all,0xEEEEEE;
+	day;
+	end;
+OnInit:
+	// setting correct mode upon server start-up
+	if(gettime(3)>=6 && gettime(3)<18)
+	{
+		end;
+	}
+OnClock1800:
+	announce "The moon rises once more upon the land. [6:00]",bc_all,0xEEEEEE;
+	night;
+	end;
+}

@@ -4,6 +4,8 @@
 #ifndef _CHAR_SQL_H_
 #define _CHAR_SQL_H_
 
+#define DB_NAME_LEN 256 //max len of dbs
+
 #include "../config/core.h"
 #include "../common/core.h" // CORE_ST_LAST
 #include "../common/msg_conf.h"
@@ -21,6 +23,13 @@ enum E_CHARSERVER_ST {
 	CHARSERVER_ST_STARTING,
 	CHARSERVER_ST_SHUTDOWN,
 	CHARSERVER_ST_LAST
+};
+
+enum {
+	TABLE_INVENTORY,
+	TABLE_CART,
+	TABLE_STORAGE,
+	TABLE_GUILD_STORAGE,
 };
 
 enum e_char_delete {
@@ -73,8 +82,6 @@ struct Schema_Config {
 	char acc_reg_str_table[DB_NAME_LEN];
 	char char_reg_str_table[DB_NAME_LEN];
 	char char_reg_num_table[DB_NAME_LEN];
-	char clan_table[DB_NAME_LEN];
-	char clan_alliance_table[DB_NAME_LEN];
 };
 extern struct Schema_Config schema_config;
 
@@ -203,7 +210,8 @@ DBMap* char_get_onlinedb(); // uint32 account_id -> struct online_char_data*
 
 struct char_session_data {
 	bool auth; // whether the session is authed or not
-	uint32 account_id, login_id1, login_id2, sex;
+	uint32 account_id, login_id1, login_id2;
+	int sex;
 	int found_char[MAX_CHARS]; // ids of chars on this account
 	char email[40]; // e-mail (default: a@a.com) by [Yor]
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
@@ -264,12 +272,15 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf);
 int char_delete_char_sql(uint32 char_id);
 int char_rename_char_sql(struct char_session_data *sd, uint32 char_id);
 int char_divorce_char_sql(int partner_id1, int partner_id2);
-int char_memitemdata_to_sql(const struct item items[], int max, int id, enum storage_type tableswitch, uint8 stor_id);
-bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storage_type tableswitch, uint8 stor_id);
+int char_memitemdata_to_sql(const struct item items[], int max, int id, int tableswitch);
+
+void disconnect_player(uint32 account_id);
 
 int char_married(int pl1,int pl2);
 int char_child(int parent_id, int child_id);
 int char_family(int pl1,int pl2,int pl3);
+
+int char_request_accreg2(uint32 account_id, uint32 char_id);
 
 //extern bool char_gm_read;
 int char_loadName(uint32 char_id, char* name);
