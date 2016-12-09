@@ -60,7 +60,7 @@
 
 			case 2:
 				mes "[ClickClick MeowMeow-GX]";
-				mes "We exchange the ^4d4dff1Investment Certificate^000000 of Cat's Paw Merchant Group for ^4d4dff10Commemorative Coints!^000000";
+				mes "We exchange the ^4d4dff1Investment Certificate^000000 of Cat's Paw Merchant Group for ^4d4dff10Commemorative Coins!^000000";
 				mes "Do you want to exchange?";
 				next;
 				switch(select("Yes.","View other items.")) {

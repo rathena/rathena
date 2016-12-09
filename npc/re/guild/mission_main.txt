@@ -418,7 +418,7 @@ OnInit:
 				else
 					return 5000;
 			} else {
-				debugmes "Unexpected case for Job: " + Class + "(" + getjobname(Class) + ") for gld_mission#core::calcjobexp";
+				debugmes "Unexpected case for Job: " + Class + "(" + jobname(Class) + ") for gld_mission#core::calcjobexp";
 				return 0;
 			}
 		} else if(.@edition == 2 ) {
