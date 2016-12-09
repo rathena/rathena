@@ -171,9 +171,7 @@ function calcjobexp;
 					mes "It isn't much, but hopefully it will be helpful.";
 					setquest .daily_delay_questid[.@index];
 					erasequest .daily_hunting_questid[.@index];
-					.@hasFixedBonus = (.@zoneid > 3);
-					.@TErestricted = (.@zoneid == 4 || .@zoneid == 5);
-					getexp calcexp(.@zoneid,.@index),calcjobexp(.@hasFixedBonus,.@TErestricted);
+					getexp calcexp(.@zoneid,.@index),calcjobexp(.@edition);
 					getitem 6615,1;
 				} else {
 					mes .@npcname$;
@@ -411,19 +409,19 @@ OnInit:
 	}
 	
 	function calcjobexp {
-		.@hasFixedBonus = getarg(0,0);
-		.@TErestricted = getarg(1,0);
+		.@edition = getarg(0);
 		
-		if(.@TErestricted){
+		if(.@edition == 3){
 			if(jobcanentermap("te_prtcas01")){
 				if (JobLevel > 50)
 					return 1000 * (50 + ((JobLevel - 50) * 3));
 				else
 					return 5000;
+			} else {
+				debugmes "Unexpected case for Job: " + Class + "(" + getjobname(Class) + ") for gld_mission#core::calcjobexp";
+				return 0;
 			}
-			debugmes "unexpected case for gld_mission#core::calcjobexp";
-			return 0;
-		} else if(.@hasFixedBonus ) {
+		} else if(.@edition == 2 ) {
 			if(JobLevel > 50)
 				return 1000 * (50 + ((JobLevel - 50) * 3));
 			else
@@ -431,7 +429,6 @@ OnInit:
 		} else {
 			return 5000 * JobLevel;
 		}
-		debugmes "unexpected case for gld_mission#core::calcjobexp";
 		return 0;
 	}
 }
