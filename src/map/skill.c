@@ -4296,12 +4296,12 @@ void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y) {
 
 /*========================================== [Playtester]
 * Process tarot card's effects
-* @ param src: Source of the tarot card effect
-* @ param target: Target of the tartor card effect
-* @ param skill_id: ID of the skill used
-* @ param skill_lv: Level of the skill used
-* @ param tick: Processing tick time
-* @ return Card number
+* @param src: Source of the tarot card effect
+* @param target: Target of the tartor card effect
+* @param skill_id: ID of the skill used
+* @param skill_lv: Level of the skill used
+* @param tick: Processing tick time
+* @return Card number
 *------------------------------------------*/
 static int skill_tarotcard(struct block_list* src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int tick)
 {
