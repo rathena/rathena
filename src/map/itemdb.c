@@ -47,7 +47,7 @@ struct s_item_group_db *itemdb_group_exists(unsigned short group_id) {
 bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid)
 {
 	struct s_item_group_db *group = (struct s_item_group_db *)uidb_get(itemdb_group, group_id);
-	uint8 i, j;
+	unsigned short i, j;
 
 	if (!group)
 		return false;
