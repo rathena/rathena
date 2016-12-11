@@ -7781,7 +7781,7 @@ BUILDIN_FUNC(disableitemuse)
  * Returns a character's specified stat.
  * Check pc_readparam for available options.
  * readparam <param>{,"<nick>"}
- * readparam <param>{,"<char_id>"}
+ * readparam <param>{,<char_id>}
  *------------------------------------------*/
 BUILDIN_FUNC(readparam)
 {
