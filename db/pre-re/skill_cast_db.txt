@@ -655,7 +655,7 @@
 //-- PF_FOGWALL
 404,0,0,0,20000,10000,0
 //-- PF_SPIDERWEB
-405,0,0,0,30000,8000,0
+405,0,0,0,16000,8000,0
 //-- ASC_METEORASSAULT (Upkeep2 times are duration of: blind(lv1), stun(lv2) or bleeding (lv3))
 406,500,500,0,0,30000:5000:120000,0
 //-- ASC_CDP
