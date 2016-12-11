@@ -6217,6 +6217,8 @@ BUILDIN_FUNC(copyarray)
 BUILDIN_FUNC(getarraysize)
 {
 	struct script_data* data;
+	const char* name;
+	struct map_session_data* sd = NULL;
 
 	data = script_getdata(st, 2);
 	if( !data_isreference(data) )
@@ -6228,7 +6230,15 @@ BUILDIN_FUNC(getarraysize)
 		return SCRIPT_CMD_FAILURE;// not a variable
 	}
 
-	script_pushint(st, script_array_highest_key(st, st->rid ? script_rid2sd(st) : NULL, reference_getname(data), reference_getref(data)));
+	name = reference_getname(data);
+
+	if( not_server_variable(*name) ){
+		sd = script_rid2sd(st);
+		if (sd == NULL)
+			return SCRIPT_CMD_SUCCESS;// no player attached
+	}
+
+	script_pushint(st, script_array_highest_key(st, sd, reference_getname(data), reference_getref(data)));
 	return SCRIPT_CMD_SUCCESS;
 }
 
