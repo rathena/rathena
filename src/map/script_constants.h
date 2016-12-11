@@ -3186,6 +3186,12 @@
 	export_constant(STOR_MODE_GET);
 	export_constant(STOR_MODE_PUT);
 	
+	/* instance enter */
+	export_constant(IE_OK);
+	export_constant(IE_NOMEMBER);
+	export_constant(IE_NOINSTANCE);
+	export_constant(IE_OTHER);
+	
 	/* months */
 	export_constant(JANUARY);
 	export_constant(FEBRUARY);

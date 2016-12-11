@@ -222,8 +222,7 @@ Disables mine effects on a map.
 
 *nolockon
 
-Disables locking on a map.
-[More information needed.]
+Disables attacking another player without holding shift or using /ns on a map.
 
 ---------------------------------------
 
