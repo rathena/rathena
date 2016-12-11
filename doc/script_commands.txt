@@ -2311,7 +2311,7 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 ---------------------------------------
 
 *readparam(<parameter number>{,"<character name>"})
-*readparam(<parameter number>{,"<char_id>"})
+*readparam(<parameter number>{,<char_id>})
 
 This function will return the specified stat of the invoking character, or, if a
 character name or character id is specified, of that player. The stat can either
