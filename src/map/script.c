@@ -33,6 +33,7 @@
 #include "clan.h"
 #include "clif.h"
 #include "chrif.h"
+#include "date.h" // date type enum, date_get()
 #include "itemdb.h"
 #include "pc.h"
 #include "storage.h"
@@ -9503,7 +9504,7 @@ BUILDIN_FUNC(savepoint)
 }
 
 /*==========================================
- * GetTimeTick(0: System Tick, 1: Time Second Tick)
+ * GetTimeTick(0: System Tick, 1: Time Second Tick, 2: Unix epoch)
  *------------------------------------------*/
 BUILDIN_FUNC(gettimetick)	/* Asgard Version */
 {
@@ -9535,51 +9536,36 @@ BUILDIN_FUNC(gettimetick)	/* Asgard Version */
 }
 
 /*==========================================
- * GetTime(Type);
- * 1: Sec     2: Min     3: Hour
- * 4: WeekDay     5: MonthDay     6: Month
- * 7: Year
+ * GetTime(Type)
+ *
+ * Returns the current value of a certain date type.
+ * Possible types are:
+ * - DT_SECOND Current seconds
+ * - DT_MINUTE Current minute
+ * - DT_HOUR Current hour
+ * - DT_DAYOFWEEK Day of current week
+ * - DT_DAYOFMONTH Day of current month
+ * - DT_MONTH Current month
+ * - DT_YEAR Current year
+ * - DT_DAYOFYEAR Day of current year
+ *
+ * If none of the above types is supplied -1 will be returned to the script
+ * and the script source will be reported into the mapserver console.
  *------------------------------------------*/
-BUILDIN_FUNC(gettime)	/* Asgard Version */
+BUILDIN_FUNC(gettime)
 {
 	int type;
-	time_t timer;
-	struct tm *t;
 
-	type=script_getnum(st,2);
+	type = script_getnum(st,2);
 
-	time(&timer);
-	t=localtime(&timer);
-
-	switch(type){
-	case 1://Sec(0~59)
-		script_pushint(st,t->tm_sec);
-		break;
-	case 2://Min(0~59)
-		script_pushint(st,t->tm_min);
-		break;
-	case 3://Hour(0~23)
-		script_pushint(st,t->tm_hour);
-		break;
-	case 4://WeekDay(0~6)
-		script_pushint(st,t->tm_wday);
-		break;
-	case 5://MonthDay(01~31)
-		script_pushint(st,t->tm_mday);
-		break;
-	case 6://Month(01~12)
-		script_pushint(st,t->tm_mon+1);
-		break;
-	case 7://Year(20xx)
-		script_pushint(st,t->tm_year+1900);
-		break;
-	case 8://Year Day(01~366)
-		script_pushint(st,t->tm_yday+1);
-		break;
-	default://(format error)
+	if( type <= DT_MIN || type >= DT_MAX ){
+		ShowError( "buildin_gettime: Invalid date type %d\n", type );
+		script_reportsrc(st);
 		script_pushint(st,-1);
-		break;
+	}else{
+		script_pushint(st,date_get((enum e_date_type)type));
 	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 

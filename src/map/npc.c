@@ -13,6 +13,7 @@
 #include "map.h"
 #include "log.h"
 #include "clif.h"
+#include "date.h" // days of week enum
 #include "intif.h"
 #include "pc.h"
 #include "pet.h"
@@ -475,13 +476,13 @@ int npc_event_do_clock(int tid, unsigned int tick, int id, intptr_t data)
 		c += npc_event_doall(buf);
 
 		switch (t->tm_wday) {
-			case 0: day = script_config.timer_sunday_event_name; break;
-			case 1: day = script_config.timer_monday_event_name; break;
-			case 2: day = script_config.timer_tuesday_event_name; break;
-			case 3: day = script_config.timer_wednesday_event_name; break;
-			case 4: day = script_config.timer_thursday_event_name; break;
-			case 5: day = script_config.timer_friday_event_name; break;
-			case 6: day = script_config.timer_saturday_event_name; break;
+			case SUNDAY:	day = script_config.timer_sunday_event_name; break;
+			case MONDAY:	day = script_config.timer_monday_event_name; break;
+			case TUESDAY:	day = script_config.timer_tuesday_event_name; break;
+			case WEDNESDAY:	day = script_config.timer_wednesday_event_name; break;
+			case THURSDAY:	day = script_config.timer_thursday_event_name; break;
+			case FRIDAY:	day = script_config.timer_friday_event_name; break;
+			case SATURDAY:	day = script_config.timer_saturday_event_name; break;
 		}
 
 		if( day != NULL ){

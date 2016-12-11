@@ -2524,7 +2524,7 @@ mora,31,138,6	script	Raffle Researcher#ep14	522,{
 		close;
 	}
 	// NPC disabled from 12am ~ 5am.
-	if (gettime(3) >= 0 && gettime(3) < 5) {
+	if (gettime(DT_HOUR) >= 0 && gettime(DT_HOUR) < 5) {
 		if (ep14_1_muk > 0) {
 			mes "[Raffle Researcher]";
 			mes "Don't humans sleep?";

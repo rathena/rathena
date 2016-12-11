@@ -19,24 +19,16 @@ OnSun2100:// date woe end
 	end;
 
 OnAgitInit3:
-	WoeTimer( "Sunday",20,21 );// <day>, <hour start>, <hour end>
+	WoeTimer( SUNDAY,20,21 );// <day>, <hour start>, <hour end>
 	end;
 
 function WoeTimer {
-	.@Sunday    = 0;
-	.@Monday    = 1;
-	.@Tuesday   = 2;
-	.@Wednesday = 3;
-	.@Thursday  = 4;
-	.@Friday    = 5;
-	.@Saturday  = 6;
-
-	.@day = getd( ".@"+ getarg(0) );
+	.@day = getarg(0);
 	.@hour_start = getarg(1);
 	.@hour_end   = getarg(2);
 	.@woe_status = agitcheck3();
-	.@hour_today = gettime(3);
-	.@day_today  = gettime(4);
+	.@hour_today = gettime(DT_HOUR);
+	.@day_today  = gettime(DT_DAYOFWEEK);
 	setd ".day_"+ .@day, 1;
 	setd ".hour_start_"+ .@hour_start, 1;
 

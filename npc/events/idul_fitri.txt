@@ -14,7 +14,7 @@
 
 prontera,146,92,3	script	Cellerb	58,{
 	mes "[Staff Idul Fitri]";
-	if((gettime(6)==10 && (gettime(5)==24 || gettime(5)==25))==0) {
+	if((gettime(DT_MONTH)==OCTOBER && (gettime(DT_DAYOFMONTH)==24 || gettime(DT_DAYOFMONTH)==25))==0) {
 		mes "Congratulation! Celebrate Feast Day Of Ramadan Idul Fitri 1427 H.";
 		specialeffect EF_SANDMAN;
 		close;

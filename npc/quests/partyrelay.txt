@@ -403,7 +403,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 		mes "instructions, didn't you?";
 		close;
 	}
-	set .@relaytime,gettime(3);
+	set .@relaytime,gettime(DT_HOUR);
 	if (party_relay == 28) {
 		mes "[Gatan]";
 		mes "Say, I don't think it's";
@@ -1839,7 +1839,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "with any of the other guys?";
 		close;
 	}
-	set .@relaytime,gettime(3);
+	set .@relaytime,gettime(DT_HOUR);
 	if (party_relay == 30) {
 		mes "[Bafhail]";
 		mes "Did you give that ticket";
@@ -2473,7 +2473,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		mes "have to meet either, but...";
 		close;
 	}
-	set .@relaytime,gettime(3);
+	set .@relaytime,gettime(DT_HOUR);
 	getmapxy(.@m$,.@x,.@y,UNITTYPE_NPC,strnpcinfo(3));
 	set .@juwi,getareausers(.@m$,.@x-8,.@y-8,.@x+8,.@y+8);
 	if (party_relay == 32) {

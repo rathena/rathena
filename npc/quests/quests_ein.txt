@@ -5698,7 +5698,7 @@ OnTouch_:
 			mes "Failure to do so will result";
 			mes "in lockout. Please wait.";
 			next;
-			set .@startseconds,gettime(3)*60*60+gettime(2)*60+gettime(1);
+			set .@startseconds,gettimetick(1);
 			mes "[Security System]";
 			switch(rand(1,7)) {
 			case 1:
@@ -5767,7 +5767,7 @@ OnTouch_:
 			}
 			next;
 			input .@input2$;
-			set .@endtime,gettime(3)*60*60+gettime(2)*60+gettime(1);
+			set .@endtime,gettimetick(1);
 			set .@time,.@endtime-.@startseconds;
 			mes "[Security System]";
 			if ((.@input1$ == .@word1$) && (.@input2$ == .@word2$)) {
