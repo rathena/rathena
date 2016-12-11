@@ -7791,6 +7791,7 @@ BUILDIN_FUNC(disableitemuse)
  * Returns a character's specified stat.
  * Check pc_readparam for available options.
  * readparam <param>{,"<nick>"}
+ * readparam <param>{,<char_id>}
  *------------------------------------------*/
 BUILDIN_FUNC(readparam)
 {
@@ -7798,9 +7799,18 @@ BUILDIN_FUNC(readparam)
 	struct script_data *data = script_getdata(st, 2);
 	TBL_PC *sd;
 
-	if (!script_nick2sd(3,sd)) {
-		script_pushint(st,-1);
-		return SCRIPT_CMD_FAILURE;
+	if( script_hasdata(st, 3) ){
+		if( script_isint(st, 3) ){
+			if( !script_charid2sd(3, sd) ){
+				script_pushint(st, -1);
+				return SCRIPT_CMD_FAILURE;
+			}
+		}else{
+			if( !script_nick2sd(3, sd) ){
+				script_pushint(st, -1);
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
 	}
 
 	// If you use a parameter, return the value behind it
@@ -21266,6 +21276,15 @@ BUILDIN_FUNC(getvar) {
 	}
 
 	name = reference_getname(data);
+
+	if (reference_toparam(data)) {
+		ShowError("buildin_getvar: '%s' is a parameter - please use readparam instead\n", name);
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	if (name[0] == '.' || name[0] == '$' || name[0] == '\'') { // Not a PC variable
 		ShowError("buildin_getvar: Invalid scope (not PC variable)\n");
 		script_reportdata(data);
