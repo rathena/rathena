@@ -13038,7 +13038,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 					else if (sc->data[type]->val4 == 0)
 						sc->data[type]->val4 = sg->group_id;
 					//Overwrite status change with new duration
-					if (td = get_timer(sc->data[type]->timer))
+					if ((td = get_timer(sc->data[type]->timer))!=NULL)
 						status_change_start(ss, bl, type, 10000, sc->data[type]->val1 + 1, sc->data[type]->val2, sc->data[type]->val3, sc->data[type]->val4,
 							max(DIFF_TICK(td->tick, tick), sec), SCSTART_NORATEDEF);
 				}
