@@ -9540,14 +9540,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 
-		case SC_TAROTCARD:
-			sc_start(src, bl, SC_INCATKRATE, 100, -20, tick);
-			sc_start(src, bl, SC_INCMATKRATE, 100, -20, tick);
-			sc_start(src, bl, SC_INCHITRATE, 100, -20, tick);
-			sc_start(src, bl, SC_INCFLEERATE, 100, -20, tick);
-			sc_start(src, bl, SC_INCDEFRATE, 100, -20, tick);
-			break;
-
 		case SC_MARIONETTE:
 		{
 			int stat;
