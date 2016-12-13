@@ -7801,16 +7801,17 @@ BUILDIN_FUNC(readparam)
 
 	if( script_hasdata(st, 3) ){
 		if( script_isint(st, 3) ){
-			if( !script_charid2sd(3, sd) ){
-				script_pushint(st, -1);
-				return SCRIPT_CMD_FAILURE;
-			}
+			script_charid2sd(3, sd);
 		}else{
-			if( !script_nick2sd(3, sd) ){
-				script_pushint(st, -1);
-				return SCRIPT_CMD_FAILURE;
-			}
+			script_nick2sd(3, sd);
 		}
+	}else{
+		sd = script_rid2sd(st);
+	}
+	
+	if( !sd ){
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	// If you use a parameter, return the value behind it
