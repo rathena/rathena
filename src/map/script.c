@@ -16913,7 +16913,11 @@ BUILDIN_FUNC(getunittype)
 	struct block_list* bl;
 	uint8 value = 0;
 
-	bl = map_id2bl(script_getnum(st, 2));
+	int unit_id = script_getnum(st,2);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (!bl) {
 		ShowWarning("buildin_getunittype: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
@@ -16957,7 +16961,11 @@ BUILDIN_FUNC(getunitdata)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	bl = map_id2bl(script_getnum(st, 2));
+	int unit_id = script_getnum(st,2);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (!bl) {
 		ShowWarning("buildin_getunitdata: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
@@ -17279,7 +17287,11 @@ BUILDIN_FUNC(setunitdata)
 	TBL_NPC* nd = NULL;
 	int type, value = 0;
 
-	bl = map_id2bl(script_getnum(st, 2));
+	int unit_id = script_getnum(st,2);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (!bl) {
 		ShowWarning("buildin_setunitdata: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
@@ -17667,7 +17679,11 @@ BUILDIN_FUNC(getunitname)
 {
 	struct block_list* bl = NULL;
 
-	bl = map_id2bl(script_getnum(st, 2));
+	int unit_id = script_getnum(st,2);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (!bl) {
 		ShowWarning("buildin_getunitname: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
@@ -17692,7 +17708,11 @@ BUILDIN_FUNC(setunitname)
 	TBL_HOM* hd = NULL;
 	TBL_PET* pd = NULL;
 
-	bl = map_id2bl(script_getnum(st, 2));
+	int unit_id = script_getnum(st,2);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (!bl) {
 		ShowWarning("buildin_setunitname: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
@@ -17749,7 +17769,11 @@ BUILDIN_FUNC(unitwalk)
 	const char *cmd = script_getfuncname(st), *done_label = "";
 	uint8 off = 5;
 
-	bl = map_id2bl(script_getnum(st,2));
+	int unit_id = script_getnum(st,2);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (!bl) {
 		ShowError("buildin_unitwalk: Invalid unit with ID '%d'.\n", script_getnum(st,2));
@@ -17791,7 +17815,13 @@ BUILDIN_FUNC(unitwalk)
 /// unitkill <unit_id>;
 BUILDIN_FUNC(unitkill)
 {
-	struct block_list* bl = map_id2bl(script_getnum(st,2));
+	struct block_list* bl;
+
+	int unit_id = script_getnum(st,2);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (bl != NULL)
 		status_kill(bl);
@@ -17849,7 +17879,11 @@ BUILDIN_FUNC(unitattack)
 	struct script_data* data;
 	int actiontype = 0;
 
-	unit_bl = map_id2bl(script_getnum(st,2));
+	int unit_id = script_getnum(st,2);
+	if(!unit_id)
+		unit_bl = map_id2bl(st->rid);
+	else
+		unit_bl = map_id2bl(unit_id);
 
 	if (!unit_bl) {
 		script_pushint(st, 0);
@@ -17904,7 +17938,10 @@ BUILDIN_FUNC(unitstopattack)
 	struct block_list* bl;
 
 	unit_id = script_getnum(st,2);
-	bl = map_id2bl(unit_id);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (bl != NULL) {
 		unit_stop_attack(bl);
@@ -17924,7 +17961,10 @@ BUILDIN_FUNC(unitstopwalk)
 	struct block_list* bl;
 
 	unit_id = script_getnum(st,2);
-	bl = map_id2bl(unit_id);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (bl != NULL)
 		unit_stop_walking(bl, 0);
@@ -17944,7 +17984,10 @@ BUILDIN_FUNC(unittalk)
 	unit_id = script_getnum(st,2);
 	message = script_getstr(st, 3);
 
-	bl = map_id2bl(unit_id);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (bl != NULL) {
 		struct StringBuf sbuf;
@@ -17971,7 +18014,10 @@ BUILDIN_FUNC(unitemote)
 
 	unit_id = script_getnum(st,2);
 	emotion = script_getnum(st,3);
-	bl = map_id2bl(unit_id);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (bl != NULL)
 		clif_emotion(bl, emotion);
@@ -17997,7 +18043,10 @@ BUILDIN_FUNC(unitskilluseid)
 	skill_lv = script_getnum(st,4);
 	target_id = ( script_hasdata(st,5) ? script_getnum(st,5) : unit_id );
 	casttime = ( script_hasdata(st,6) ? script_getnum(st,6) : 0 );
-	bl = map_id2bl(unit_id);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (bl != NULL) {
 		if (bl->type == BL_NPC) {
@@ -18031,7 +18080,10 @@ BUILDIN_FUNC(unitskillusepos)
 	skill_x  = script_getnum(st,5);
 	skill_y  = script_getnum(st,6);
 	casttime = ( script_hasdata(st,7) ? script_getnum(st,7) : 0 );
-	bl = map_id2bl(unit_id);
+	if(!unit_id)
+		bl = map_id2bl(st->rid);
+	else
+		bl = map_id2bl(unit_id);
 
 	if (bl != NULL) {
 		if (bl->type == BL_NPC) {
