@@ -12,6 +12,7 @@
 #include "../common/strlib.h"
 
 #include "battle.h"
+#include "itemdb.h"
 #include "map.h"
 #include "path.h"
 #include "pc.h"
@@ -473,6 +474,7 @@ void initChangeTables(void)
 	set_sc( WS_OVERTHRUSTMAX	, SC_MAXOVERTHRUST	, SI_MAXOVERTHRUST	, SCB_NONE );
 	set_sc( CG_LONGINGFREEDOM	, SC_LONGING		, SI_LONGING		, SCB_SPEED|SCB_ASPD );
 	set_sc( CG_HERMODE		, SC_HERMODE	, SI_HERMODE	, SCB_NONE		);
+	set_sc( CG_TAROTCARD		, SC_TAROTCARD	, SI_TAROT	, SCB_NONE	);
 	set_sc( ITEM_ENCHANTARMS	, SC_ENCHANTARMS	, SI_BLANK		, SCB_ATK_ELE );
 	set_sc( SL_HIGH			, SC_SPIRIT		, SI_SPIRIT		, SCB_ALL );
 	set_sc( KN_ONEHAND		, SC_ONEHAND		, SI_ONEHAND		, SCB_ASPD );
@@ -1250,9 +1252,6 @@ void initChangeTables(void)
 	// renewal EDP increases your weapon atk
 	StatusChangeFlagTable[SC_EDP] |= SCB_WATK;
 #endif
-
-	if( !battle_config.display_hallucination ) // Disable Hallucination.
-		StatusIconChangeTable[SC_HALLUCINATION] = SI_BLANK;
 
 	/* StatusDisplayType Table [Ind] */
 	StatusDisplayType[SC_ALL_RIDING]	  = true;
@@ -3120,11 +3119,11 @@ static unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned
  * Calculates player's weight
  * @param sd: Player object
  * @param flag: Calculation type
- *   1 - Item weight
- *   2 - Skill/Status/Configuration max weight bonus
+ *   CALCWT_ITEM - Item weight
+ *   CALCWT_MAXBONUS - Skill/Status/Configuration max weight bonus
  * @return false - failed, true - success
  */
-bool status_calc_weight(struct map_session_data *sd, uint8 flag)
+bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag)
 {
 	int b_weight, b_max_weight, skill, i;
 	struct status_change *sc;
@@ -3136,7 +3135,7 @@ bool status_calc_weight(struct map_session_data *sd, uint8 flag)
 	b_weight = sd->weight; // Store current weight for later comparison
 	sd->max_weight = job_info[pc_class2idx(sd->status.class_)].max_weight_base + sd->status.str * 300; // Recalculate max weight
 
-	if (flag&1) {
+	if (flag&CALCWT_ITEM) {
 		sd->weight = 0; // Reset current weight
 
 		for(i = 0; i < MAX_INVENTORY; i++) {
@@ -3146,8 +3145,9 @@ bool status_calc_weight(struct map_session_data *sd, uint8 flag)
 		}
 	}
 
-	if (flag&2) {
+	if (flag&CALCWT_MAXBONUS) {
 		// Skill/Status bonus weight increases
+		sd->max_weight += sd->add_max_weight; // From bAddMaxWeight
 		if ((skill = pc_checkskill(sd, MC_INCCARRY)) > 0)
 			sd->max_weight += 2000 * skill;
 		if (pc_isriding(sd) && pc_checkskill(sd, KN_RIDING) > 0)
@@ -3175,24 +3175,24 @@ bool status_calc_weight(struct map_session_data *sd, uint8 flag)
  * Calculates player's cart weight
  * @param sd: Player object
  * @param flag: Calculation type
- *   1 - Cart item weight
- *   2 - Skill/Status/Configuration max weight bonus
- *   4 - Whether to check for cart status
+ *   CALCWT_ITEM - Cart item weight
+ *   CALCWT_MAXBONUS - Skill/Status/Configuration max weight bonus
+ *   CALCWT_CARTSTATE - Whether to check for cart state
  * @return false - failed, true - success
  */
-bool status_calc_cart_weight(struct map_session_data *sd, uint8 flag)
+bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag)
 {
 	int b_cart_weight_max, i;
 
 	nullpo_retr(false, sd);
 
-	if (!pc_iscarton(sd) && !(flag&4))
+	if (!pc_iscarton(sd) && !(flag&CALCWT_CARTSTATE))
 		return false;
 
 	b_cart_weight_max = sd->cart_weight_max; // Store cart max weight for later comparison
 	sd->cart_weight_max = battle_config.max_cart_weight; // Recalculate max weight
 
-	if (flag&1) {
+	if (flag&CALCWT_ITEM) {
 		sd->cart_weight = 0; // Reset current cart weight
 		sd->cart_num = 0; // Reset current cart item count
 
@@ -3205,7 +3205,7 @@ bool status_calc_cart_weight(struct map_session_data *sd, uint8 flag)
 	}
 
 	// Skill bonus max weight increases
-	if (flag&2)
+	if (flag&CALCWT_MAXBONUS)
 		sd->cart_weight_max += (pc_checkskill(sd, GN_REMODELING_CART) * 5000);
 
 	// Update the client if the new weight calculations don't match
@@ -3260,6 +3260,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	sd->critical_rate = sd->hit_rate = sd->flee_rate = sd->flee2_rate = 100;
 	sd->def_rate = sd->def2_rate = sd->mdef_rate = sd->mdef2_rate = 100;
 	sd->regen.state.block = 0;
+	sd->add_max_weight = 0;
 
 	// Zeroed arrays, order follows the order in pc.h.
 	// Add new arrays to the end of zeroed area in pc.h (see comments) and size here. [zzo]
@@ -3296,7 +3297,10 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->ignore_mdef_by_race)
 		+ sizeof(sd->ignore_mdef_by_class)
 		+ sizeof(sd->ignore_def_by_race)
+		+ sizeof(sd->ignore_def_by_class)
 		+ sizeof(sd->sp_gain_race)
+		+ sizeof(sd->magic_addrace2)
+		+ sizeof(sd->ignore_mdef_by_race2)
 		+ sizeof(sd->dropaddrace)
 		+ sizeof(sd->dropaddclass)
 		);
@@ -3360,6 +3364,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->sp_loss)
 		+ sizeof(sd->hp_regen)
 		+ sizeof(sd->sp_regen)
+		+ sizeof(sd->percent_hp_regen)
+		+ sizeof(sd->percent_sp_regen)
 		+ sizeof(sd->add_def)
 		+ sizeof(sd->add_mdef)
 		+ sizeof(sd->add_mdmg)
@@ -3487,7 +3493,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		if(sd->inventory_data[index]) { // Arrows
 			sd->bonus.arrow_atk += sd->inventory_data[index]->atk;
 			sd->state.lr_flag = 2;
-			if( !itemdb_is_GNthrowable(sd->inventory_data[index]->nameid) ) // Don't run scripts on throwable items
+			if( !itemdb_group_item_exists(IG_THROWABLE, sd->inventory_data[index]->nameid) ) // Don't run scripts on throwable items
 				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 			sd->state.lr_flag = 0;
 			if (!calculating) // Abort, run_script retriggered status_calc_pc. [Skotlex]
@@ -3935,8 +3941,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 // ----- MISC CALCULATIONS -----
 
 	// Weight
-	status_calc_weight(sd, 2);
-	status_calc_cart_weight(sd, 2);
+	status_calc_weight(sd, CALCWT_MAXBONUS);
+	status_calc_cart_weight(sd, CALCWT_MAXBONUS);
 
 	if (pc_checkskill(sd,SM_MOVINGRECOVERY)>0)
 		sd->regen.state.walk = 1;
@@ -6109,7 +6115,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	// Rate value
 	if(sc->data[SC_INCFLEERATE])
 		flee += flee * sc->data[SC_INCFLEERATE]->val1/100;
-	if(sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
+	if(sc->data[SC_SPIDERWEB])
 		flee -= flee * 50/100;
 	if(sc->data[SC_BERSERK])
 		flee -= flee * 50/100;
@@ -7965,7 +7971,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 
 		// Item resistance (only applies to rate%)
 		if(sd && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX) {
-			if( sd->reseff[type-SC_COMMON_MIN] > 0 )
+			if( sd->reseff[type-SC_COMMON_MIN] )
 				rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
 			if( sd->sc.data[SC_COMMONSC_RESIST] )
 				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1/100;
@@ -9859,10 +9865,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if(status_has_mode(status,MD_STATUS_IMMUNE))
 				tick /= 5; // !TODO: Reduce skill's duration. But for how long?
 			break;
-		case SC_SPIDERWEB:
-			if( bl->type == BL_PC )
-				tick /= 2;
-			break;
 		case SC_ARMOR:
 			// NPC_DEFENDER:
 			val2 = 80; // Damage reduction
@@ -9974,9 +9976,29 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 500 + 100 * val1;
 			break;
 		case SC_STONEHARDSKIN:
-			if( sd )
-				val1 = sd->status.job_level * pc_checkskill(sd, RK_RUNEMASTERY) / 4; // DEF/MDEF Increase
+			{
+				int hp = status->hp / 5; // 20% of HP
+
+				if (sd)
+					val1 = sd->status.job_level * pc_checkskill(sd, RK_RUNEMASTERY) / 4; // DEF/MDEF Increase
+				if (!status_charge(bl, hp, 0))
+					return 0;
+				val2 = hp;
+			}
 			break;
+		case SC_REFRESH:
+			status_heal(bl, status_get_max_hp(bl) * 25 / 100, 0, 1);
+			status_change_clear_buffs(bl, SCCB_REFRESH);
+			break;
+		case SC_MILLENNIUMSHIELD:
+			{
+				int8 chance = rnd()%100;
+
+				val2 = ((chance < 20) ? 4 : (chance < 50) ? 3 : 2); // Shield count
+				val3 = 1000; // Shield HP
+				clif_millenniumshield(bl, val2);
+			}
+ 			break;
 		case SC_ABUNDANCE:
 			val4 = tick / 10000;
 			tick_time = 10000; // [GodLesZ] tick time
@@ -11517,6 +11539,41 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		if (type == SC_ENDURE && sce->val4)
 			// Do not end infinite endure.
 			return 0;
+		if (type == SC_SPIDERWEB) {
+			//Delete the unit group first to expire found in the status change
+			struct skill_unit_group *group = NULL, *group2 = NULL;
+			unsigned int tick = gettick();
+			int pos = 1;
+			if (sce->val2)
+				if (!(group = skill_id2group(sce->val2)))
+					sce->val2 = 0;
+			if (sce->val3) {
+				if (!(group2 = skill_id2group(sce->val3)))
+					sce->val3 = 0;
+				else if (!group || ((group->limit - DIFF_TICK(tick, group->tick)) > (group2->limit - DIFF_TICK(tick, group2->tick)))) {
+					group = group2;
+					pos = 2;
+				}
+			}
+			if (sce->val4) {
+				if (!(group2 = skill_id2group(sce->val4)))
+					sce->val4 = 0;
+				else if (!group || ((group->limit - DIFF_TICK(tick, group->tick)) > (group2->limit - DIFF_TICK(tick, group2->tick)))) {
+					group = group2;
+					pos = 3;
+				}
+			}
+			if (pos == 1)
+				sce->val2 = 0;
+			else if (pos == 2)
+				sce->val3 = 0;
+			else if (pos == 3)
+				sce->val4 = 0;
+			if (group)
+				skill_delunitgroup(group);
+			if (!status_isdead(bl) && (sce->val2 || sce->val3 || sce->val4))
+				return 0; //Don't end the status change yet as there are still unit groups associated with it
+		}
 		if (sce->timer != INVALID_TIMER) // Could be a SC with infinite duration
 			delete_timer(sce->timer,status_change_timer);
 		if (sc->opt1)
@@ -13955,8 +14012,6 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
 					p++;
                                 //TODO seem unsafe to continue without check
 				attr_fix_table[lv-1][i][j] = atoi(p);
-				if (battle_config.attr_recover == 0 && attr_fix_table[lv-1][i][j] < 0)
-					attr_fix_table[lv-1][i][j] = 0;
 				p = strchr(p,',');
 				if(p)
 					*p++=0;

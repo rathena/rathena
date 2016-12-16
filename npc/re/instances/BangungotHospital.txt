@@ -283,21 +283,21 @@ L_Enter:
 		end;
 	case 2:
 		switch(instance_enter(.@md_name$)) {
-		case 3:
+		case IE_OTHER:
 			mes "[Nurse Maenne]";
 			mes "A critical situation has happened.";
 			mes "You can't go up to the 2nd floor.";
 			close2;
 			cutin "",255;
 			end;
-		case 2:
+		case IE_NOINSTANCE:
 			mes "[Nurse Maenne]";
 			mes "You can't go up to";
 			mes "the 2nd floor now.";
 			close2;
 			cutin "",255;
 			end;
-		case 1:
+		case IE_NOMEMBER:
 			mes "[Nurse Maenne]";
 			mes "It's too dangerous to go";
 			mes "up to the 2nd floor alone.";
@@ -306,7 +306,7 @@ L_Enter:
 			close2;
 			cutin "",255;
 			end;
-		case 0:
+		case IE_OK:
 			mapannounce "ma_dun01", getpartyname(getcharid(1))+" party's "+strcharinfo(0)+" member entered "+.@md_name$+".",bc_map,"0x00ff99";
 			if (getarg(1)) {
 				if (checkquest(9223) > -1) {

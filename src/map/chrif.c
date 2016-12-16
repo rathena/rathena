@@ -217,7 +217,7 @@ static bool chrif_auth_logout(TBL_PC* sd, enum sd_state state) {
 	return chrif_sd_to_auth(sd, state);
 }
 
-bool chrif_auth_finished(TBL_PC* sd) {
+bool chrif_auth_finished(struct map_session_data* sd) {
 	struct auth_node *node= chrif_search(sd->status.account_id);
 
 	if ( node && node->sd == sd && node->state == ST_LOGIN ) {

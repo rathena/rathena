@@ -1097,7 +1097,7 @@ ein_in01,121,99,3	script	Mirror#ein	HIDDEN_NPC,{
 			mes "good. So this must be";
 			mes "why I get such great";
 			mes "service at restaurants...";
-		} else if (Sex) {
+		} else if (Sex == SEX_MALE) {
 			switch(.@r) {
 			case 1:
 				mes "["+strcharinfo(0)+"]";

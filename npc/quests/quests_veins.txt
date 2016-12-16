@@ -7339,7 +7339,7 @@ ve_in,237,131,1	script	Female Customer#ve1	940,{
 	mes "men? You know, I've been";
 	mes "pretty lonely lately...";
 	next;
-	if (Sex == 0) {
+	if (Sex == SEX_FEMALE) {
 		mes "[Bartender]";
 		mes "Haha, well,";
 		mes "I'm not so sure..";

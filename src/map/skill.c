@@ -4087,7 +4087,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				case GN_SPORE_EXPLOSION:
 					clif_skill_damage(src, target, tick, status_get_amotion(src), 0, -30000, 1, skl->skill_id, skl->skill_lv, DMG_SKILL);
 					map_foreachinrange(skill_area_sub, target, skill_get_splash(skl->skill_id, skl->skill_lv), BL_CHAR,
-									   src, skl->skill_id, skl->skill_lv, 0, skl->flag|1|BCT_ENEMY, skill_castend_damage_id);
+									   src, skl->skill_id, skl->skill_lv, tick, skl->flag|1|BCT_ENEMY, skill_castend_damage_id);
 					break;
 				case CH_PALMSTRIKE:
 					{
@@ -4255,7 +4255,7 @@ static int skill_reveal_trap(struct block_list *bl, va_list ap)
 }
 
 /**
- * Attempt to reaveal trap in area
+ * Attempt to reveal trap in area
  * @param src Skill caster
  * @param range Affected range
  * @param x
@@ -4267,6 +4267,145 @@ void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y) {
 		return;
 	nullpo_retv(src);
 	map_foreachinarea(skill_reveal_trap, src->m, x-range, y-range, x+range, y+range, BL_SKILL);
+}
+
+/*========================================== [Playtester]
+* Process tarot card's effects
+* @param src: Source of the tarot card effect
+* @param target: Target of the tartor card effect
+* @param skill_id: ID of the skill used
+* @param skill_lv: Level of the skill used
+* @param tick: Processing tick time
+* @return Card number
+*------------------------------------------*/
+static int skill_tarotcard(struct block_list* src, struct block_list *target, uint16 skill_id, uint16 skill_lv, int tick)
+{
+	int card = 0;
+
+	if (battle_config.tarotcard_equal_chance) {
+		//eAthena equal chances
+		card = rand() % 14 + 1;
+	}
+	else {
+		//Official chances
+		int rate = rand() % 100;
+		if (rate < 10) card = 1; // THE FOOL
+		else if (rate < 20) card = 2; // THE MAGICIAN
+		else if (rate < 30) card = 3; // THE HIGH PRIESTESS
+		else if (rate < 37) card = 4; // THE CHARIOT
+		else if (rate < 47) card = 5; // STRENGTH
+		else if (rate < 62) card = 6; // THE LOVERS
+		else if (rate < 63) card = 7; // WHEEL OF FORTUNE
+		else if (rate < 69) card = 8; // THE HANGED MAN
+		else if (rate < 74) card = 9; // DEATH
+		else if (rate < 82) card = 10; // TEMPERANCE
+		else if (rate < 83) card = 11; // THE DEVIL
+		else if (rate < 85) card = 12; // THE TOWER
+		else if (rate < 90) card = 13; // THE STAR
+		else card = 14; // THE SUN
+	}
+
+	switch (card) {
+	case 1: // THE FOOL - heals SP to 0
+	{
+		status_percent_damage(src, target, 0, 100, false);
+		break;
+	}
+	case 2: // THE MAGICIAN - matk halved
+	{
+		sc_start(src, target, SC_INCMATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
+		break;
+	}
+	case 3: // THE HIGH PRIESTESS - all buffs removed
+	{
+		status_change_clear_buffs(target, SCCB_BUFFS | SCCB_CHEM_PROTECT);
+		break;
+	}
+	case 4: // THE CHARIOT - 1000 damage, random armor destroyed
+	{
+		status_fix_damage(src, target, 1000, 0);
+		clif_damage(src, target, tick, 0, 0, 1000, 0, DMG_NORMAL, 0, false);
+		if (!status_isdead(target))
+		{
+			unsigned short where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM };
+			skill_break_equip(src, target, where[rnd() % 3], 10000, BCT_ENEMY);
+		}
+		break;
+	}
+	case 5: // STRENGTH - atk halved
+	{
+		sc_start(src, target, SC_INCATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
+		break;
+	}
+	case 6: // THE LOVERS - 2000HP heal, random teleported
+	{
+		status_heal(target, 2000, 0, 0);
+		if (!map_flag_vs(target->m))
+			unit_warp(target, -1, -1, -1, CLR_TELEPORT);
+		break;
+	}
+	case 7: // WHEEL OF FORTUNE - random 2 other effects
+	{
+		// Recursive call
+		skill_tarotcard(src, target, skill_id, skill_lv, tick);
+		skill_tarotcard(src, target, skill_id, skill_lv, tick);
+		break;
+	}
+	case 8: // THE HANGED MAN - stop, freeze or stoned
+	{
+		enum sc_type sc[] = { SC_STOP, SC_FREEZE, SC_STONE };
+		uint8 rand_eff = rnd() % 3;
+		sc_start2(src, target, sc[rand_eff], 100, skill_lv, (rand_eff == 2 ? src->id : 0), skill_get_time2(skill_id, skill_lv));
+		break;
+	}
+	case 9: // DEATH - curse, coma and poison
+	{
+		status_change_start(src, target, SC_COMA, 10000, skill_lv, 0, src->id, 0, 0, SCSTART_NONE);
+		sc_start(src, target, SC_CURSE, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		sc_start2(src, target, SC_POISON, 100, skill_lv, src->id, skill_get_time2(skill_id, skill_lv));
+		break;
+	}
+	case 10: // TEMPERANCE - confusion
+	{
+		sc_start(src, target, SC_CONFUSION, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+		break;
+	}
+	case 11: // THE DEVIL - 6666 damage, atk and matk halved, cursed
+	{
+		status_fix_damage(src, target, 6666, 0);
+		clif_damage(src, target, tick, 0, 0, 6666, 0, DMG_NORMAL, 0, false);
+		sc_start(src, target, SC_INCATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, target, SC_INCMATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, target, SC_CURSE, skill_lv, 100, skill_get_time2(skill_id, skill_lv));
+		break;
+	}
+	case 12: // THE TOWER - 4444 damage
+	{
+		status_fix_damage(src, target, 4444, 0);
+		clif_damage(src, target, tick, 0, 0, 4444, 0, DMG_NORMAL, 0, false);
+		break;
+	}
+	case 13: // THE STAR - stun
+	{
+		sc_start(src, target, SC_STUN, 100, skill_lv, 5000);
+		break;
+	}
+	default: // THE SUN - atk, matk, hit, flee and def reduced, immune to more tarot card effects
+	{
+#ifdef RENEWAL
+		//In renewal, this card gives the SC_TAROTCARD status change which makes you immune to other cards
+		sc_start(src, target, SC_TAROTCARD, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+#endif
+		sc_start(src, target, SC_INCATKRATE, 100, -20, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, target, SC_INCMATKRATE, 100, -20, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, target, SC_INCHITRATE, 100, -20, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, target, SC_INCFLEERATE, 100, -20, skill_get_time2(skill_id, skill_lv));
+		sc_start(src, target, SC_INCDEFRATE, 100, -20, skill_get_time2(skill_id, skill_lv));
+		return 14; //To make sure a valid number is returned
+	}
+	}
+
+	return card;
 }
 
 /*==========================================
@@ -8375,7 +8514,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case CG_TAROTCARD:
 		{
-			int count = -1;
+			int card = -1;
+			if (tsc && tsc->data[SC_TAROTCARD]) {
+				//Target currently has the SUN tarot card effect and is immune to any other effect
+				map_freeblock_unlock();
+				return 0;
+			}
 			if( rnd() % 100 > skill_lv * 8 || (tsc && tsc->data[SC_BASILICA]) ||
 			(dstmd && ((dstmd->guardian_data && dstmd->mob_id == MOBID_EMPERIUM) || status_get_class_(bl) == CLASS_BATTLEFIELD)) ) {
 				if( sd )
@@ -8385,85 +8529,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				return 0;
 			}
 			status_zap(src,0,skill_get_sp(skill_id,skill_lv)); // consume sp only if succeeded [Inkfish]
-			do {
-				int eff = rnd() % 14;
-				clif_specialeffect(bl, 523 + eff, AREA);
-				switch (eff)
-				{
-				case 0:	// heals SP to 0
-					status_percent_damage(src, bl, 0, 100, false);
-					break;
-				case 1:	// matk halved
-					sc_start(src,bl,SC_INCMATKRATE,100,-50,skill_get_time2(skill_id,skill_lv));
-					break;
-				case 2:	// all buffs removed
-					status_change_clear_buffs(bl, SCCB_BUFFS|SCCB_CHEM_PROTECT);
-					break;
-				case 3:	// 1000 damage, random armor destroyed
-					{
-						status_fix_damage(src, bl, 1000, 0);
-						clif_damage(src,bl,tick,0,0,1000,0,DMG_NORMAL,0,false);
-						if( !status_isdead(bl) ) {
-							int where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM, EQP_SHOES, EQP_GARMENT };
-							skill_break_equip(src,bl, where[rnd()%5], 10000, BCT_ENEMY);
-						}
-					}
-					break;
-				case 4:	// atk halved
-					sc_start(src,bl,SC_INCATKRATE,100,-50,skill_get_time2(skill_id,skill_lv));
-					break;
-				case 5:	// 2000HP heal, random teleported
-					status_heal(src, 2000, 0, 0);
-					if( !map_flag_vs(bl->m) )
-						unit_warp(bl, -1,-1,-1, CLR_TELEPORT);
-					break;
-				case 6:	// random 2 other effects
-					if (count == -1)
-						count = 3;
-					else
-						count++; //Should not retrigger this one.
-					break;
-				case 7:	// stop freeze or stoned
-					{
-						enum sc_type sc[] = { SC_STOP, SC_FREEZE, SC_STONE };
-						uint8 rand_eff = rnd()%3;
-
-						sc_start2(src,bl,sc[rand_eff],100,skill_lv,(rand_eff == 2 ? src->id : 0),skill_get_time2(skill_id,skill_lv));
-					}
-					break;
-				case 8:	// curse coma and poison
-					status_change_start(src, bl, SC_COMA, 10000, skill_lv, 0, src->id, 0, 0, SCSTART_NONE);
-					sc_start(src,bl,SC_CURSE,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-					sc_start2(src,bl,SC_POISON,100,skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
-					break;
-				case 9:	// confusion
-					sc_start(src,bl,SC_CONFUSION,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-					break;
-				case 10:	// 6666 damage, atk matk halved, cursed
-					status_fix_damage(src, bl, 6666, 0);
-					clif_damage(src,bl,tick,0,0,6666,0,DMG_NORMAL,0,false);
-					sc_start(src,bl,SC_INCATKRATE,100,-50,skill_get_time2(skill_id,skill_lv));
-					sc_start(src,bl,SC_INCMATKRATE,100,-50,skill_get_time2(skill_id,skill_lv));
-					sc_start(src,bl,SC_CURSE,skill_lv,100,skill_get_time2(skill_id,skill_lv));
-					break;
-				case 11:	// 4444 damage
-					status_fix_damage(src, bl, 4444, 0);
-					clif_damage(src,bl,tick,0,0,4444,0,DMG_NORMAL,0,false);
-					break;
-				case 12:	// stun
-					sc_start(src,bl,SC_STUN,100,skill_lv,5000);
-					break;
-				case 13:	// atk,matk,hit,flee,def reduced
-					sc_start(src,bl,SC_INCATKRATE,100,-20,skill_get_time2(skill_id,skill_lv));
-					sc_start(src,bl,SC_INCMATKRATE,100,-20,skill_get_time2(skill_id,skill_lv));
-					sc_start(src,bl,SC_INCHITRATE,100,-20,skill_get_time2(skill_id,skill_lv));
-					sc_start(src,bl,SC_INCFLEERATE,100,-20,skill_get_time2(skill_id,skill_lv));
-					sc_start(src,bl,SC_INCDEFRATE,100,-20,skill_get_time2(skill_id,skill_lv));
-					break;
-				default:
-					break;
-				}
-			} while ((--count) > 0);
+			card = skill_tarotcard(src, bl, skill_id, skill_lv, tick); // actual effect is executed here
+			clif_specialeffect((card == 6) ? src : bl, 522 + card, AREA);
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		}
 		break;
@@ -8834,55 +8901,37 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			map_foreachinrange(skill_area_sub, bl,i,BL_CHAR,
 				src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		break;
-	case RK_STONEHARDSKIN:
-		if( sd && pc_checkskill(sd,RK_RUNEMASTERY) >= 4 )
-		{
-			int heal = sstatus->hp / 5; // 20% HP
-			if( status_charge(bl,heal,0) )
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start2(src,bl,type,100,skill_lv,heal,skill_get_time(skill_id,skill_lv)));
-			else
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-		}
-		break;
-	case RK_REFRESH:
-		if( sd && pc_checkskill(sd,RK_RUNEMASTERY) >= 8 )
-		{
-			int heal = status_get_max_hp(bl) * 25 / 100;
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,
-				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-			status_heal(bl,heal,0,1);
-			status_change_clear_buffs(bl, SCCB_REFRESH);
-		}
-		break;
-
-	case RK_MILLENNIUMSHIELD:
-		if( sd && pc_checkskill(sd,RK_RUNEMASTERY) >= 9 )
-		{
-			int8 rate = rnd()%100;
-			int16 shields = ((rate < 20) ? 4 : (rate < 50) ? 3 : 2);
-			sc_start4(src,bl,type,100,skill_lv,shields,1000,0,skill_get_time(skill_id,skill_lv));
-			clif_millenniumshield(bl,shields);
-			clif_skill_nodamage(src,bl,skill_id,1,1);
-		}
-		break;
-
 	case RK_GIANTGROWTH:
+	case RK_STONEHARDSKIN:
 	case RK_VITALITYACTIVATION:
 	case RK_ABUNDANCE:
 	case RK_CRUSHSTRIKE:
-		if( sd )
-		{
-			int lv = 1; // RK_GIANTGROWTH
-			if( skill_id == RK_VITALITYACTIVATION )
-				lv = 2;
-			else if( skill_id == RK_ABUNDANCE )
-				lv = 6;
-			else if( skill_id == RK_CRUSHSTRIKE )
-				lv = 7;
-			if( pc_checkskill(sd,RK_RUNEMASTERY) >= lv )
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		}
-		break;
+	case RK_REFRESH:
+	case RK_MILLENNIUMSHIELD:
+		if (sd) {
+			uint8 rune_level = 1; // RK_GIANTGROWTH
+
+			if (skill_id == RK_VITALITYACTIVATION)
+ 				rune_level = 2;
+			else if (skill_id == RK_STONEHARDSKIN)
+				rune_level = 4;
+			else if (skill_id == RK_ABUNDANCE)
+ 				rune_level = 6;
+			else if (skill_id == RK_CRUSHSTRIKE)
+ 				rune_level = 7;
+			else if (skill_id == RK_REFRESH)
+				rune_level = 8;
+			else if (skill_id == RK_MILLENNIUMSHIELD)
+				rune_level = 9;
+			if (pc_checkskill(sd, RK_RUNEMASTERY) >= rune_level) {
+				if (sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)))
+					clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+				else if (skill_id == RK_STONEHARDSKIN)
+					clif_skill_fail(sd, skill_id, USESKILL_FAIL_HP_INSUFFICIENT, 0);
+			} else
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+ 		}
+ 		break;
 
 	case RK_FIGHTINGSPIRIT: {
 			// val1: ATKBonus: Caster: 7*PartyMember. Member: 7*PartyMember/4
@@ -8908,58 +8957,34 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case RK_LUXANIMA:
-		if( !sd || !sd->status.party_id || flag&1 ) {
-			if( src == bl ) break;
-			while( skill_area_temp[5] >= 0x10 ) {
-				type = SC_NONE;
-				i = 0;
-				if( skill_area_temp[5]&0x10 ) {
-					if( dstsd ) {
-						i = (rnd()%100 < 50) ? 4 : ((rnd()%100 < 80) ? 3 : 2);
-						clif_millenniumshield(bl,i);
-						skill_area_temp[5] &= ~0x10;
-						type = SC_MILLENNIUMSHIELD;
+		{
+			sc_type runes[] = { SC_MILLENNIUMSHIELD, SC_REFRESH, SC_GIANTGROWTH, SC_STONEHARDSKIN, SC_VITALITYACTIVATION, SC_ABUNDANCE };
+
+			if (sd == NULL || sd->status.party_id == 0 || flag&1) {
+				if (src->id == bl->id) // Don't give it back to the RK
+					break;
+
+				sc_start(src, bl, runes[skill_area_temp[5]], 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				status_change_clear_buffs(bl, SCCB_LUXANIMA); // For bonus_script
+			} else if (sd) { // Find which SC is going to be given
+				int recent = 0, result = -1;
+
+				for (i = 0; i < ARRAYLENGTH(runes); i++) {
+					if (sd->sc.data[runes[i]] && ((sd->sc.data[runes[i]]->timer * (runes[i] == SC_REFRESH? 3 : 1)) > recent || recent == 0)) {
+						recent = sd->sc.data[runes[i]]->timer;
+						result = i;
 					}
-				} else if( skill_area_temp[5]&0x20 ) {
-					i = status_get_max_hp(bl) * 25 / 100;
-					status_change_clear_buffs(bl, SCCB_REFRESH);
-					skill_area_temp[5] &= ~0x20;
-					status_heal(bl,i,0,1);
-					type = SC_REFRESH;
-				} else if( skill_area_temp[5]&0x40 ) {
-					skill_area_temp[5] &= ~0x40;
-					type = SC_GIANTGROWTH;
-				} else if( skill_area_temp[5]&0x80 ) {
-					if( dstsd ) {
-						i = sstatus->hp / 5;
-						if( status_charge(bl,i,0) )
-						type = SC_STONEHARDSKIN;
-						skill_area_temp[5] &= ~0x80;
-					}
-				} else if( skill_area_temp[5]&0x100 ) {
-					skill_area_temp[5] &= ~0x100;
-					type = SC_VITALITYACTIVATION;
-				} else if( skill_area_temp[5]&0x200 ) {
-					skill_area_temp[5] &= ~0x200;
-					type = SC_ABUNDANCE;
 				}
-				if( type > SC_NONE )
-				clif_skill_nodamage(bl,bl,skill_id,skill_lv,
-				sc_start4(src,bl,type,100,skill_lv,i,0,1,skill_get_time(skill_id,skill_lv)));
-			} //end while
-		} else if( sd ) {
-			if( tsc && tsc->count ) {
-				if( tsc->data[SC_MILLENNIUMSHIELD] ) skill_area_temp[5] |= 0x10;
-				if( tsc->data[SC_REFRESH] ) skill_area_temp[5] |= 0x20;
-				if( tsc->data[SC_GIANTGROWTH] ) skill_area_temp[5] |= 0x40;
-				if( tsc->data[SC_STONEHARDSKIN] ) skill_area_temp[5] |= 0x80;
-				if( tsc->data[SC_VITALITYACTIVATION] ) skill_area_temp[5] |= 0x100;
-				if( tsc->data[SC_ABUNDANCE] ) skill_area_temp[5] |= 0x200;
+
+				if (result != -1) {
+					skill_area_temp[5] = result;
+					status_change_end(src, runes[result], INVALID_TIMER);
+					party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
+					clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+				}
 			}
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			party_foreachsamemap(skill_area_sub,sd,skill_get_splash(skill_id,skill_lv),src,skill_id,skill_lv,tick,flag|BCT_PARTY|1,skill_castend_nodamage_id);
 		}
-	break;
+		break;
 
 	case GC_ROLLINGCUTTER:
 		{
@@ -10262,7 +10287,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if( ammo_id <= 0 )
 				break;
 			sd->itemid = ammo_id;
-			if( itemdb_is_GNbomb(ammo_id) ) {
+			if( itemdb_group_item_exists(IG_BOMB, ammo_id) ) {
 				if(battle_check_target(src,bl,BCT_ENEMY) > 0) {// Only attack if the target is an enemy.
 					if( ammo_id == ITEMID_PINEAPPLE_BOMB )
 						map_foreachincell(skill_area_sub,bl->m,bl->x,bl->y,BL_CHAR,src,GN_SLINGITEM_RANGEMELEEATK,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
@@ -10270,7 +10295,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 						skill_attack(BF_WEAPON,src,src,bl,GN_SLINGITEM_RANGEMELEEATK,skill_lv,tick,flag);
 				} else //Otherwise, it fails, shows animation and removes items.
 					clif_skill_fail(sd,GN_SLINGITEM_RANGEMELEEATK,USESKILL_FAIL,0);
-			} else if (itemdb_is_GNthrowable(ammo_id))
+			} else if (itemdb_group_item_exists(IG_THROWABLE, ammo_id))
 				if (dstsd)
 					run_script(sd->inventory_data[i]->script, 0, dstsd->bl.id, fake_nd->bl.id);
 		}
@@ -12975,23 +13000,49 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, un
 	skill_id = sg->skill_id; //In case the group is deleted, we need to return the correct skill id, still.
 	switch (sg->unit_id) {
 		case UNT_SPIDERWEB:
-			if( sc && sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1 > 0 ) {
-				// If you are fiberlocked and can't move, it will only increase your fireweakness level. [Inkfish]
-				sc->data[SC_SPIDERWEB]->val2++;
-				break;
-			} else if( sc && battle_check_target(&unit->bl,bl,sg->target_flag) > 0 ) {
-				int sec = skill_get_time2(sg->skill_id,sg->skill_lv);
-				if( status_change_start(ss, bl,type,10000,sg->skill_lv,1,sg->group_id,0,sec,SCSTART_NORATEDEF) ) {
-					const struct TimerData* td = sc->data[type]?get_timer(sc->data[type]->timer):NULL;
-					if( td )
-						sec = DIFF_TICK(td->tick, tick);
-					map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
-					clif_fixpos(bl);
-					sg->val2 = bl->id;
+			if (sc) {
+				//Duration in PVM is: 1st - 8s, 2nd - 16s, 3rd - 8s
+				//Duration in PVP is: 1st - 4s, 2nd - 8s, 3rd - 12s
+				int sec = skill_get_time2(sg->skill_id, sg->skill_lv);
+				const struct TimerData* td;
+				if (map_flag_vs(bl->m))
+					sec /= 2;
+				if (sc->data[type]) {
+					if (sc->data[type]->val2 && sc->data[type]->val3 && sc->data[type]->val4) {
+						//Already triple affected, immune
+						sg->limit = DIFF_TICK(tick, sg->tick);
+						break;
+					}
+					//Don't increase val1 here, we need a higher val in status_change_start so it overwrites the old one
+					if (map_flag_vs(bl->m) && sc->data[type]->val1 < 3)
+						sec *= (sc->data[type]->val1 + 1);
+					else if(!map_flag_vs(bl->m) && sc->data[type]->val1 < 2)
+						sec *= (sc->data[type]->val1 + 1);
+					//Add group id to status change
+					if (sc->data[type]->val2 == 0)
+						sc->data[type]->val2 = sg->group_id;
+					else if (sc->data[type]->val3 == 0)
+						sc->data[type]->val3 = sg->group_id;
+					else if (sc->data[type]->val4 == 0)
+						sc->data[type]->val4 = sg->group_id;
+					//Overwrite status change with new duration
+					if ((td = get_timer(sc->data[type]->timer))!=NULL)
+						status_change_start(ss, bl, type, 10000, sc->data[type]->val1 + 1, sc->data[type]->val2, sc->data[type]->val3, sc->data[type]->val4,
+							max(DIFF_TICK(td->tick, tick), sec), SCSTART_NORATEDEF);
 				}
-				else
-					sec = 3000; //Couldn't trap it?
-				sg->limit = DIFF_TICK(tick,sg->tick)+sec;
+				else {
+					if (status_change_start(ss, bl, type, 10000, 1, sg->group_id, 0, 0, sec, SCSTART_NORATEDEF)) {
+						td = sc->data[type] ? get_timer(sc->data[type]->timer) : NULL;
+						if (td)
+							sec = DIFF_TICK(td->tick, tick);
+						map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
+						clif_fixpos(bl);
+					}
+					else
+						sec = 3000; //Couldn't trap it?
+				}
+				sg->val2 = bl->id;
+				sg->limit = DIFF_TICK(tick, sg->tick) + sec;
 			}
 			break;
 		case UNT_SAFETYWALL:
@@ -14017,7 +14068,7 @@ int skill_unit_onout(struct skill_unit *src, struct block_list *bl, unsigned int
 	type = status_skill2sc(sg->skill_id);
 	sce = (sc && type != -1)?sc->data[type]:NULL;
 
-	if( bl->prev==NULL || (status_isdead(bl) && sg->unit_id != UNT_ANKLESNARE && sg->unit_id != UNT_SPIDERWEB) ) //Need to delete the trap if the source died.
+	if (bl->prev == NULL || (status_isdead(bl) && sg->unit_id != UNT_ANKLESNARE)) //Need to delete the trap if the source died.
 		return 0;
 
 	switch(sg->unit_id){
@@ -15717,7 +15768,7 @@ void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uin
 			if( !require.itemid[i] )
 				continue;
 
-			if( itemid_isgemstone(require.itemid[i]) && skill_id != HW_GANBANTEIN && sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD )
+			if( itemdb_group_item_exists(IG_GEMSTONE, require.itemid[i]) && skill_id != HW_GANBANTEIN && sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_WIZARD )
 				continue; //Gemstones are checked, but not substracted from inventory.
 
 			switch( skill_id ){
@@ -15898,11 +15949,11 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 								continue;
 							break;
 						case AB_ADORAMUS:
-							if( itemid_isgemstone(skill_db[idx]->require.itemid[i]) && (sd->special_state.no_gemstone == 2 || skill_check_pc_partner(sd,skill_id,&skill_lv, 1, 2)) )
+							if( itemdb_group_item_exists(IG_GEMSTONE, skill_db[idx]->require.itemid[i]) && (sd->special_state.no_gemstone == 2 || skill_check_pc_partner(sd,skill_id,&skill_lv, 1, 2)) )
 								continue;
 							break;
 						case WL_COMET:
-							if( itemid_isgemstone(skill_db[idx]->require.itemid[i]) && (sd->special_state.no_gemstone == 2 || skill_check_pc_partner(sd,skill_id,&skill_lv, 1, 0)) )
+							if( itemdb_group_item_exists(IG_GEMSTONE, skill_db[idx]->require.itemid[i]) && (sd->special_state.no_gemstone == 2 || skill_check_pc_partner(sd,skill_id,&skill_lv, 1, 0)) )
 								continue;
 							break;
 					}
@@ -15925,7 +15976,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 				}
 
 				// Check requirement for gemstone.
-				if (itemid_isgemstone(req.itemid[i])) {
+				if (itemdb_group_item_exists(IG_GEMSTONE, req.itemid[i])) {
 					if( sd->special_state.no_gemstone == 2 ) // Remove all Magic Stone required for all skills for VIP.
 						req.itemid[i] = req.amount[i] = 0;
 					else {
@@ -16782,6 +16833,9 @@ int skill_attack_area(struct block_list *bl, va_list ap)
 
 	switch (skill_id) {
 		case WZ_FROSTNOVA: //Skills that don't require the animation to be removed
+			if (src->x == bl->x && src->y == bl->y)
+				return 0; //Does not hit current cell
+			//Fall through
 		case NPC_ACIDBREATH:
 		case NPC_DARKNESSBREATH:
 		case NPC_FIREBREATH:
@@ -18060,6 +18114,23 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 			}
 			break;
 
+			case UNT_SPIDERWEB:
+			{
+				struct block_list* target = map_id2bl(group->val2);
+				struct status_change *sc;
+				//Clear group id from status change
+				if (target && (sc = status_get_sc(target)) != NULL && sc->data[SC_SPIDERWEB]) {
+					if (sc->data[SC_SPIDERWEB]->val2 == group->group_id)
+						sc->data[SC_SPIDERWEB]->val2 = 0;
+					else if (sc->data[SC_SPIDERWEB]->val3 == group->group_id)
+						sc->data[SC_SPIDERWEB]->val3 = 0;
+					else if (sc->data[SC_SPIDERWEB]->val4 == group->group_id)
+						sc->data[SC_SPIDERWEB]->val4 = 0;
+				}
+				skill_delunit(unit);
+			}
+			break;
+
 			case UNT_REVERBERATION:
 			case UNT_NETHERWORLD:
 				if( unit->val1 <= 0 ) { // If it was deactivated.
@@ -19327,7 +19398,7 @@ int skill_magicdecoy(struct map_session_data *sd, unsigned short nameid) {
 	nullpo_ret(sd);
 	skill = sd->menuskill_val;
 
-	if( !nameid || !itemdb_is_element(nameid) || (i = pc_search_inventory(sd,nameid)) < 0 || !skill || pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME) ) {
+	if( !nameid || !itemdb_group_item_exists(IG_ELEMENT, nameid) || (i = pc_search_inventory(sd,nameid)) < 0 || !skill || pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME) ) {
 		clif_skill_fail(sd,NC_MAGICDECOY,USESKILL_FAIL_LEVEL,0);
 		return 0;
 	}

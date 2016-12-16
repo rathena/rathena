@@ -169,7 +169,6 @@ void do_clear_npc(void);
 void do_final_npc(void);
 void do_init_npc(void);
 void npc_event_do_oninit(void);
-int npc_do_ontimer(int npc_id, int option);
 
 int npc_event_do(const char* name);
 int npc_event_do_id(const char* name, int rid);

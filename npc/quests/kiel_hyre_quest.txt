@@ -4655,7 +4655,7 @@ kh_mansion,22,28,4	script	Kiel Hyre#kh	903,{
 		getitem 7509,1; //Fancy_Key_Card
 		set KielHyreQuest,108;
 		next;
-		if (Sex == 0) {
+		if (Sex == SEX_FEMALE) {
 			if (getpartnerid() == 0) set .@KHTitle$,"Miss";
 			else set .@KHSTitle$,"Mrs";
 		}

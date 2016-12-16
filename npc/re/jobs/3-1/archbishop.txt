@@ -76,7 +76,7 @@ prt_church,103,88,3	script	Praying Minister#arch	60,{
 			mes "All ministers of Odin should be diligent. They should never be too lazy to serve Odin.";
 			next;
 			mes "[Praying Minister]";
-			mes (Sex?"Brother":"Sister")+", how has your life been? Have you lived it to its fullest?";
+			mes (Sex == SEX_MALE?"Brother":"Sister")+", how has your life been? Have you lived it to its fullest?";
 			mes "Have you served your life in the light of Odin?";
 			next;
 			mes "[Praying Minister]";
@@ -88,7 +88,7 @@ prt_church,103,88,3	script	Praying Minister#arch	60,{
 			mes "We should not fall prey to lies and deceit.";
 			next;
 			mes "[Praying Minister]";
-			mes (Sex?"Brother":"Sister")+"...";
+			mes (Sex == SEX_MALE?"Brother":"Sister")+"...";
 			mes "Even though we serve Odin, we are normal people.";
 			mes "We can be degraded in spite of ourselves and we must realize that.";
 			next;
@@ -412,7 +412,7 @@ umbala,139,227,3	script	Priest#arch	60,{
 		next;
 		mes "[Priest Dayan]";
 		mes "Thank you very much.";
-		mes "Feel free to visit here when you want to pray, "+(Sex?"brother.":"sister.");
+		mes "Feel free to visit here when you want to pray, "+(Sex == SEX_MALE?"brother.":"sister.");
 		mes "A visit from a friend always makes me happy.";
 		set job_arch,4;
 		changequest 2188,2189;
@@ -596,7 +596,7 @@ hu_in01,205,204,7	script	Praying Nun#benew	79,{
 		mes "[Vinue]";
 		mes "Ah, Welcome.";
 		mes "It's not time to have a service yet...";
-		mes "Are you here to pray, "+(Sex?"brother":"sister")+"?";
+		mes "Are you here to pray, "+(Sex == SEX_MALE?"brother":"sister")+"?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "I came here to say hello from Priest Dayan from Prontera.";
@@ -615,7 +615,7 @@ hu_in01,205,204,7	script	Praying Nun#benew	79,{
 		next;
 		mes "[Vinue]";
 		mes "Ah...";
-		mes "He's very kind. As are you "+(Sex?"brother":"sister")+".";
+		mes "He's very kind. As are you "+(Sex == SEX_MALE?"brother":"sister")+".";
 		next;
 		mes "[Vinue]";
 		mes "But don't worry.";

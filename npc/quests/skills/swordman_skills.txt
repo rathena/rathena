@@ -98,7 +98,7 @@ OnTouch:
 		mes "Being a swordsman must come with a lot of responsibility and sacrifice.";
 		next;
 		mes "[De Thomas]";
-		if (Sex == 0)
+		if (Sex == SEX_MALE)
 			mes "For these swordsmen and knights, there is a wonderful skill.";
 		else
 			mes "For these swordswomen and knights, there is a wonderful skill young lady.";
@@ -209,7 +209,7 @@ prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
 		next;
 		select("Eh, I... just...");
 		mes "[Leon]";
-		if (Sex == 0) {
+		if (Sex == SEX_FEMALE) {
 			mes "No need to be surprised.";
 			mes "If you use a sword, of course you ought to have a good arm!";
 		}

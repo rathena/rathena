@@ -76,7 +76,7 @@ yuno,129,156,3	script	Chainheart	923,{
 			next;
 			set job__mechanic,12;
 			completequest 10101;
-			if (Sex)
+			if (Sex == SEX_MALE)
 				getitem 5749,1; //Driver_Band
 			else
 				getitem 5760,1; //Driver_Band_

@@ -178,7 +178,6 @@ struct mob_data {
 		unsigned int steal_coin_flag : 1;
 		unsigned int soul_change_flag : 1; // Celest
 		unsigned int alchemist: 1;
-		unsigned int spotted: 1;
 		unsigned int npc_killmonster: 1; //for new killmonster behavior
 		unsigned int rebirth: 1; // NPC_Rebirth used
 		unsigned int boss : 1;
@@ -194,6 +193,7 @@ struct mob_data {
 		unsigned int dmg;
 		unsigned int flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 	} dmglog[DAMAGELOG_SIZE];
+	uint32 spotted_log[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int spawn_timer; //Required for Convex Mirror
 	struct s_mob_lootitem *lootitems;
@@ -290,8 +290,7 @@ int mobdb_searchname_array(struct mob_db** data, int size, const char *str);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
 
-struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m,
-	short x, short y, const char *mobname, int mob_id, const char *event, unsigned int size, unsigned int ai);
+struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int mob_id, const char *event, unsigned int size, unsigned int ai);
 
 int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y,
 	const char* mobname, int mob_id, int amount, const char* event, unsigned int size, unsigned int ai);
@@ -339,8 +338,6 @@ int mob_linksearch(struct block_list *bl,va_list ap);
 
 int mobskill_use(struct mob_data *md,unsigned int tick,int event);
 int mobskill_event(struct mob_data *md,struct block_list *src,unsigned int tick, int flag);
-int mobskill_castend_id( int tid, unsigned int tick, int id,int data );
-int mobskill_castend_pos( int tid, unsigned int tick, int id,int data );
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
 int mob_countslave(struct block_list *bl);
 int mob_count_sub(struct block_list *bl, va_list ap);

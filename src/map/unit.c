@@ -1357,7 +1357,7 @@ int unit_can_move(struct block_list *bl) {
 	// Status changes that block movement
 	if (sc) {
 		if( sc->cant.move // status placed here are ones that cannot be cached by sc->cant.move for they depend on other conditions other than their availability
-			|| (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
+			|| sc->data[SC_SPIDERWEB]
 			|| (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
 				!sc->data[SC_LONGING] ||
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
@@ -2977,7 +2977,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			else if (--map[bl->m].users == 0 && battle_config.dynamic_mobs)
 				map_removemobs(bl->m);
 
-			if( !(sd->sc.option&OPTION_INVISIBLE) ) // Decrement the number of active pvp players on the map
+			if( !pc_isinvisible(sd) ) // Decrement the number of active pvp players on the map
 				--map[bl->m].users_pvp;
 
 			if( sd->state.hpmeter_visible ) {

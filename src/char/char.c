@@ -846,7 +846,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
  *
  * @retval SEX_MALE if the per-character sex is male
  * @retval SEX_FEMALE if the per-character sex is female
- * @retval 99 if the per-character sex is not defined or the current PACKETVER doesn't support it.
+ * @retval SEX_ACCOUNT if the per-character sex is not defined or the current PACKETVER doesn't support it.
  */
 int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charstatus *p, char sex)
 {
@@ -859,7 +859,7 @@ int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charsta
 			return SEX_FEMALE;
 		case 'U':
 		default:
-			return 99;
+			return SEX_ACCOUNT;
 	}
 #else
 	if (sex == 'M' || sex == 'F') {
@@ -867,7 +867,7 @@ int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charsta
 			// sd is not available, there isn't much we can do. Just return and print a warning.
 			ShowWarning("Character '%s' (CID: %d, AID: %d) has sex '%c', but PACKETVER does not support per-character sex. Defaulting to 'U'.\n",
 					p->name, p->char_id, p->account_id, sex);
-			return 99;
+			return SEX_ACCOUNT;
 		}
 		if ((sex == 'M' && sd->sex == SEX_FEMALE)
 		 || (sex == 'F' && sd->sex == SEX_MALE)) {
@@ -880,7 +880,7 @@ int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charsta
 			Sql_ShowDebug(sql_handle);
 		}
 	}
-	return 99;
+	return SEX_ACCOUNT;
 #endif
 }
 

@@ -2388,7 +2388,7 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	447,{
 			mes "[Arc]";
 			mes "Ah, finally. I've been speaking with Terra while we waited for you.";
 			mes "Terra. This is who saved you...";
-			mes "You should thank "+((Sex)?"him.":"her.");
+			mes "You should thank "+((Sex == SEX_MALE)?"him.":"her.");
 			next;
 			mes "[Terra]";
 			mes "Thank you...";

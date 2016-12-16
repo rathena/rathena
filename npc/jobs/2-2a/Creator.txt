@@ -111,6 +111,8 @@ valkyrie,53,50,3	script	Biochemist#Valkyrie	122,{
 			close;
 		}
 		jobchange Job_Creator;
+		if (bioeth == 13)
+			skill "AM_BIOETHICS",1,SKILL_PERM;
 		set ADVJOB,0;
 		mes "[Biochemist]";
 		mes "Congratulations!";

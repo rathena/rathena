@@ -3388,12 +3388,12 @@ mosk_in,135,191,5	script	Landlord#mos	4_F_RUSWOMAN3,{
 	case 3:
 		mes "[Landlord]";
 		emotion e_lv;
-		mes "Oh~! You look great! Look at the "+((Sex)?"solid muscle":"fair skin")+"!";
+		mes "Oh~! You look great! Look at the "+((Sex == SEX_MALE)?"solid muscle":"fair skin")+"!";
 		mes "But you look tired. Is it because of a long journey?";
 		next;
 		mes "[Landlord]";
-		mes "We've got a room available just for you. "+((Sex)?"It's the best in town. How about staying the night?":"It's like a princess' room.");
-		mes (Sex)?"I'll charge you at reasonable price for you, handsome guy.":"How about staying the night? I'll mark down the price for you, beautiful lady.";
+		mes "We've got a room available just for you. "+((Sex == SEX_MALE)?"It's the best in town. How about staying the night?":"It's like a princess' room.");
+		mes (Sex == SEX_MALE)?"I'll charge you at reasonable price for you, handsome guy.":"How about staying the night? I'll mark down the price for you, beautiful lady.";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Oh, I'm sorry but I didn't come to stay here.";
@@ -4901,7 +4901,7 @@ OnTouch:
 				mes "I need to kick your ass more.";
 				next;
 				mes "[Baba Yaga, the Horrible]";
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "I will bewitch";
 					mes "and enslave you.";
 					mes "Come here, Heeee!";
@@ -7755,7 +7755,7 @@ moscovia,213,216,3	script	Ryubaba#rus08	4_F_RUSWOMAN2,{
 				mes "Are you crazy!? Don't you know how wide the world is and how many beautiful people there are? You're pretty full of it, country girl!";
 				next;
 				mes "["+ strcharinfo(0) +"]";
-				if (!Sex)
+				if (Sex == SEX_FEMALE)
 					mes "Besides, if there was a most beautiful girl in the world it would be me, me, me!";
 				else {
 					mes "Have you seen dancers dancing? Have you seen beautiful and pure priests?!";

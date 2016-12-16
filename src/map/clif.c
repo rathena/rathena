@@ -1130,7 +1130,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,53) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20120221
-	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
+	if ( battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,55) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,59) = status_get_hp(bl);		// HP
 	} else {
@@ -1273,7 +1273,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFW(buf,60) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20120221
-	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
+	if ( battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,62) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,66) = status_get_hp(bl);		// HP
 	} else {
@@ -4612,7 +4612,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect_single(bl,421,sd->fd);
 #if PACKETVER >= 20120404
-			if( battle_config.monster_hp_bars_info){
+			if (battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar) {
 				int i;
 				for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
 					if( md->dmglog[i].id == sd->status.char_id )
@@ -5936,6 +5936,9 @@ void clif_status_change(struct block_list *bl, int type, int flag, int tick, int
 	if (type == SI_ACTIONDELAY && tick == 0)
 		return;
 
+	if (type == SI_HALLUCINATION && !battle_config.display_hallucination) // Disable Hallucination.
+		return;
+
 	nullpo_retv(bl);
 
 	sd = BL_CAST(BL_PC, bl);
@@ -5943,7 +5946,7 @@ void clif_status_change(struct block_list *bl, int type, int flag, int tick, int
 	if (!(status_type2relevant_bl_types(type)&bl->type)) // only send status changes that actually matter to the client
 		return;
 
-	clif_status_change_sub(bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (sd->status.option&OPTION_INVISIBLE ? SELF : AREA) : AREA_WOS)));
+	clif_status_change_sub(bl, bl->id, type, flag, tick, val1, val2, val3, ((sd ? (pc_isinvisible(sd) ? SELF : AREA) : AREA_WOS)));
 }
 
 /**
@@ -6232,7 +6235,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 		((map[bl->m].flag.battleground || map_flag_gvg(bl->m)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
 		((map[bl->m].flag.battleground || map_flag_gvg2(bl->m)?1:0)<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((map[bl->m].flag.nomineeffect || !map_flag_gvg2(bl->m)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
-		((map[bl->m].flag.nolockon?1:0)<<4)| // DISABLE_LOCKON - Unknown (By the name it might disable cursor lock-on)
+		((map[bl->m].flag.nolockon || map_flag_vs(bl->m)?1:0)<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
 		((map[bl->m].flag.pvp?1:0)<<5)| // COUNT_PK - Show the PvP counter
 		((map[bl->m].flag.partylock?1:0)<<6)| // NO_PARTY_FORMATION - Prevents party creation/modification (Might be used for instance dungeons)
 		((map[bl->m].flag.battleground?1:0)<<7)| // BATTLEFIELD - Unknown (Does something for battlegrounds areas)
@@ -6282,7 +6285,7 @@ void clif_pvpset(struct map_session_data *sd,int pvprank,int pvpnum,int type)
 		else
 			WBUFL(buf,6) = pvprank;
 		WBUFL(buf,10) = pvpnum;
-		if(sd->sc.option&OPTION_INVISIBLE || sd->disguise) //Causes crashes when a 'mob' with pvp info dies.
+		if(pc_isinvisible(sd) || sd->disguise) //Causes crashes when a 'mob' with pvp info dies.
 			clif_send(buf,packet_len(0x19a),&sd->bl,SELF);
 		else if(!type)
 			clif_send(buf,packet_len(0x19a),&sd->bl,AREA);
@@ -10109,7 +10112,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if( map[sd->bl.m].users++ == 0 && battle_config.dynamic_mobs )
 		map_spawnmobs(sd->bl.m);
-	if( !(sd->sc.option&OPTION_INVISIBLE) ) { // increment the number of pvp players on the map
+	if( !pc_isinvisible(sd) ) { // increment the number of pvp players on the map
 		map[sd->bl.m].users_pvp++;
 	}
 	sd->state.debug_remove_map = 0; // temporary state to track double remove_map's [FlavioJS]
@@ -10130,7 +10133,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	if( sd->bg_id ) clif_bg_hp(sd); // BattleGround System
 
-	if(map[sd->bl.m].flag.pvp && !(sd->sc.option&OPTION_INVISIBLE)) {
+	if(map[sd->bl.m].flag.pvp && !pc_isinvisible(sd)) {
 		if(!battle_config.pk_mode) { // remove pvp stuff for pk_mode [Valaris]
 			if (!map[sd->bl.m].flag.pvp_nocalcrank)
 				sd->pvp_timer = add_timer(gettick()+200, pc_calc_pvprank_timer, sd->bl.id, 0);
@@ -11048,7 +11051,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 
 	// if player ignores everyone
 	if (dstsd->state.ignoreAll && pc_get_group_level(sd) <= pc_get_group_level(dstsd)) {
-		if (dstsd->sc.option & OPTION_INVISIBLE && pc_get_group_level(sd) < pc_get_group_level(dstsd))
+		if (pc_isinvisible(dstsd) && pc_get_group_level(sd) < pc_get_group_level(dstsd))
 			clif_wis_end(fd, 1); // 1: target character is not logged in
 		else
 			clif_wis_end(fd, 3); // 3: everyone ignored by target
@@ -17302,7 +17305,7 @@ int clif_magicdecoy_list(struct map_session_data *sd, uint16 skill_lv, short x, 
 	WFIFOW(fd,0) = 0x1ad; // This is the official packet. [pakpil]
 
 	for( i = 0, c = 0; i < MAX_INVENTORY; i ++ ) {
-		if( itemdb_is_element(sd->inventory.u.items_inventory[i].nameid) ) {
+		if( itemdb_group_item_exists(IG_ELEMENT, sd->inventory.u.items_inventory[i].nameid) ) {
 			WFIFOW(fd, c * 2 + 4) = sd->inventory.u.items_inventory[i].nameid;
 			c ++;
 		}
@@ -17335,7 +17338,7 @@ int clif_poison_list(struct map_session_data *sd, uint16 skill_lv) {
 	WFIFOW(fd,0) = 0x1ad; // This is the official packet. [pakpil]
 
 	for( i = 0, c = 0; i < MAX_INVENTORY; i ++ ) {
-		if( itemdb_is_poison(sd->inventory.u.items_inventory[i].nameid) ) {
+		if( itemdb_group_item_exists(IG_POISON, sd->inventory.u.items_inventory[i].nameid) ) {
 			WFIFOW(fd, c * 2 + 4) = sd->inventory.u.items_inventory[i].nameid;
 			c ++;
 		}

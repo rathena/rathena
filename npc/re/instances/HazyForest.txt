@@ -140,22 +140,22 @@ bif_fild01,161,355,0	script	Log Tunnel	844,{
 	if(select("Enter the tunnel.:Give up.") == 2)
 		close;
 	switch(instance_enter("Mistwood Maze")) {
-	case 3:
+	case IE_OTHER:
 		mes "[Laphine Soldier]";
 		mes "Something doesn't feel right. Looks like something dangerous is going on, so you'd better turn back today.";
 		close;
-	case 2:
+	case IE_NOINSTANCE:
 		mes "You try to crawl into the log, but some mysterious power pushes you back with a gush of wind.";
 		mes "It seems like you can't force your way into the forest.";
 		close;
-	case 1:
+	case IE_NOMEMBER:
 		mes "[Laphine Soldier]";
 		mes "Hey, look!";
 		mes "Are you going alone?";
 		mes "That's impossible. Too rash.";
 		mes "Team up with some friends and go together!";
 		close;
-	case 0:
+	case IE_OK:
 		if (checkquest(7211,PLAYTIME) == 2) erasequest 7211;
 		if (checkquest(7211,PLAYTIME) == -1) setquest 7211;
 		mapannounce "bif_fild01",getpartyname(getcharid(1))+" party's "+strcharinfo(0)+" member is entering the Mistwood Maze.",bc_map,"0x00ff99"; //FW_NORMAL 12 0 0

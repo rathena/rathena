@@ -503,7 +503,7 @@ jawaii_in,25,98,0	script	Employee#jaw3	724,{
 		mes "Oh~";
 		mes "Look at you...";
 		mes "You look perfect";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "for your wife~";
 		else
 			mes "with your husband~";
@@ -517,7 +517,7 @@ jawaii_in,25,98,0	script	Employee#jaw3	724,{
 		mes "Hmm...?";
 		mes "You don't look like";
 		mes "you're married, are you?";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			next;
 			mes "[Employee Buffy]";
 			mes "I'm pretty good";
@@ -1176,7 +1176,7 @@ jawaii_in,41,106,3	script	Customer#Cage	98,{
 		mes "After all, everyone knows marriage is a sham for desperate, lonely people!";
 		next;
 		mes "[Cage]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "I don't trust anybody!";
 			mes "You're a fool for chaining";
 			mes "yourself to some gorgeous";
@@ -1356,7 +1356,7 @@ prt_in,173,13,4	script	Customer#SoloHan	86,{
 		mes "...Wha!?";
 		mes "Oh man!";
 		mes "Get outta my face!";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "You smell like,";
 			mes "whupped boyfriend";
 			mes "or something!";

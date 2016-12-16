@@ -64,7 +64,6 @@ void guild_skillup(struct map_session_data* sd, uint16 skill_id);
 void guild_block_skill(struct map_session_data *sd, int time);
 int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd);
 int guild_reply_reqalliance(struct map_session_data *sd,uint32 account_id,int flag);
-int guild_alliance(int guild_id1,int guild_id2,uint32 account_id1,uint32 account_id2);
 int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 account_id2,
 	int flag,const char *name1,const char *name2);
 int guild_delalliance(struct map_session_data *sd,int guild_id,int flag);

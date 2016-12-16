@@ -5818,7 +5818,7 @@ hugel,76,134,3	script	Neha	101,{
 			mes "this soup isn't good if it";
 			mes "isn't steaming hot?";
 			next;
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "[Neha]";
 				mes "But... You're a handsome";
 				mes "fellow, so I'll forgive you...";

@@ -385,7 +385,7 @@ OnTouch_:
 			close;
 		case 2:
 			mes "[Assassin 'Khai']";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Huh. You must have a lot of self confidence to be a Thief nowadays.";
 				next;
 				mes "[Assassin 'Khai']";
@@ -1887,7 +1887,7 @@ OnTouch_:
 				mes "Haha, the needs of the body are sometimes hard to ignore. It's best to accept that part of human nature.";
 				next;
 				mes "[Guildmaster]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "But you must never reveal to her the Assassin side of your life. No matter what it takes.";
 				else
 					mes "But you must never reveal to him the Assassin side of your life, no matter what it takes.";

@@ -364,6 +364,7 @@ enum {
 	MF_NOCOSTUME,
 	MF_GVG_TE_CASTLE,
 	MF_GVG_TE,
+	MF_HIDEMOBHPBAR,
 };
 
 const char* script_op2name(int op)
@@ -3095,7 +3096,7 @@ int set_reg(struct script_state* st, TBL_PC* sd, int64 num, const char* name, co
 	}
 }
 
-int set_var(TBL_PC* sd, char* name, void* val)
+int set_var(struct map_session_data* sd, char* name, void* val)
 {
 	return set_reg(NULL, sd, reference_uid(add_str(name),0), name, val, NULL);
 }
@@ -5501,6 +5502,9 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 		pc_randomwarp((TBL_PC *)bl,CLR_TELEPORT);
 	else if(x3 && y3) {
 		int max, tx, ty, j = 0;
+		int16 m;
+
+		m = map_mapindex2mapid(index);
 
 		// choose a suitable max number of attempts
 		if( (max = (y3-y2+1)*(x3-x2+1)*3) > 1000 )
@@ -5511,7 +5515,7 @@ static int buildin_areawarp_sub(struct block_list *bl,va_list ap)
 			tx = rnd()%(x3-x2+1)+x2;
 			ty = rnd()%(y3-y2+1)+y2;
 			j++;
-		} while( map_getcell(index,tx,ty,CELL_CHKNOPASS) && j < max );
+		} while( map_getcell(m,tx,ty,CELL_CHKNOPASS) && j < max );
 
 		pc_setpos((TBL_PC *)bl,index,tx,ty,CLR_OUTSIGHT);
 	}
@@ -6213,6 +6217,8 @@ BUILDIN_FUNC(copyarray)
 BUILDIN_FUNC(getarraysize)
 {
 	struct script_data* data;
+	const char* name;
+	struct map_session_data* sd = NULL;
 
 	data = script_getdata(st, 2);
 	if( !data_isreference(data) )
@@ -6224,7 +6230,15 @@ BUILDIN_FUNC(getarraysize)
 		return SCRIPT_CMD_FAILURE;// not a variable
 	}
 
-	script_pushint(st, script_array_highest_key(st, st->rid ? script_rid2sd(st) : NULL, reference_getname(data), reference_getref(data)));
+	name = reference_getname(data);
+
+	if( not_server_variable(*name) ){
+		sd = script_rid2sd(st);
+		if (sd == NULL)
+			return SCRIPT_CMD_SUCCESS;// no player attached
+	}
+
+	script_pushint(st, script_array_highest_key(st, sd, reference_getname(data), reference_getref(data)));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -7777,6 +7791,7 @@ BUILDIN_FUNC(disableitemuse)
  * Returns a character's specified stat.
  * Check pc_readparam for available options.
  * readparam <param>{,"<nick>"}
+ * readparam <param>{,<char_id>}
  *------------------------------------------*/
 BUILDIN_FUNC(readparam)
 {
@@ -7784,8 +7799,18 @@ BUILDIN_FUNC(readparam)
 	struct script_data *data = script_getdata(st, 2);
 	TBL_PC *sd;
 
-	if (!script_nick2sd(3,sd)) {
-		script_pushint(st,-1);
+	if( script_hasdata(st, 3) ){
+		if( script_isint(st, 3) ){
+			script_charid2sd(3, sd);
+		}else{
+			script_nick2sd(3, sd);
+		}
+	}else{
+		sd = script_rid2sd(st);
+	}
+	
+	if( !sd ){
+		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -11888,6 +11913,7 @@ BUILDIN_FUNC(getmapflag)
 			case MF_NOCOSTUME:			script_pushint(st,map[m].flag.nocostume); break;
 			case MF_GVG_TE_CASTLE:		script_pushint(st,map[m].flag.gvg_te_castle); break;
 			case MF_GVG_TE:				script_pushint(st,map[m].flag.gvg_te); break;
+			case MF_HIDEMOBHPBAR:		script_pushint(st,map[m].flag.hidemobhpbar); break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -12011,6 +12037,7 @@ BUILDIN_FUNC(setmapflag)
 				map[m].flag.gvg_te = 1;
 				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
 				break;
+			case MF_HIDEMOBHPBAR:		map[m].flag.hidemobhpbar = 1; break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -12118,6 +12145,7 @@ BUILDIN_FUNC(removemapflag)
 				map[m].flag.gvg_te = 0;
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 				break;
+			case MF_HIDEMOBHPBAR:		map[m].flag.hidemobhpbar = 0; break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
@@ -19163,24 +19191,27 @@ BUILDIN_FUNC(instance_destroy)
 /*==========================================
  * Warps player to instance
  * Results:
- *	0: Success
- *	1: Character not in party/guild (for party/guild type instances)
- *	2: Character/Party/Guild doesn't have instance
- *	3: Other errors (instance not in DB, instance doesn't match with character/party/guild, etc.)
+ *	IE_OK: Success
+ *	IE_NOMEMBER: Character not in party/guild (for party/guild type instances)
+ *	IE_NOINSTANCE: Character/Party/Guild doesn't have instance
+ *	IE_OTHER: Other errors (instance not in DB, instance doesn't match with character/party/guild, etc.)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_enter)
 {
 	struct map_session_data *sd = NULL;
 	int x = script_hasdata(st,3) ? script_getnum(st, 3) : -1;
 	int y = script_hasdata(st,4) ? script_getnum(st, 4) : -1;
+	unsigned short instance_id;
+
+	if (script_hasdata(st, 6))
+		instance_id = script_getnum(st, 6);
+	else
+		instance_id = script_instancegetid(st);
 
 	if (!script_charid2sd(5,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	if (x != -1 && y != -1)
-		script_pushint(st, instance_enter_position(sd, script_instancegetid(st), script_getstr(st, 2), x, y));
-	else
-		script_pushint(st, instance_enter(sd, script_instancegetid(st), script_getstr(st, 2)));
+	script_pushint(st, instance_enter(sd, instance_id, script_getstr(st, 2), x, y));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -21246,6 +21277,15 @@ BUILDIN_FUNC(getvar) {
 	}
 
 	name = reference_getname(data);
+
+	if (reference_toparam(data)) {
+		ShowError("buildin_getvar: '%s' is a parameter - please use readparam instead\n", name);
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	if (name[0] == '.' || name[0] == '$' || name[0] == '\'') { // Not a PC variable
 		ShowError("buildin_getvar: Invalid scope (not PC variable)\n");
 		script_reportdata(data);
@@ -22528,7 +22568,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_create,"s??"),
 	BUILDIN_DEF(instance_destroy,"?"),
 	BUILDIN_DEF(instance_id,""),
-	BUILDIN_DEF(instance_enter,"s???"),
+	BUILDIN_DEF(instance_enter,"s????"),
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(instance_mapname,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii?"),

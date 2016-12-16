@@ -594,10 +594,6 @@ void clif_changechatstatus(struct chat_data* cd);	// chat
 void clif_refresh_storagewindow(struct map_session_data *sd);
 void clif_refresh(struct map_session_data *sd);	// self
 
-void clif_fame_blacksmith(struct map_session_data *sd, int points);
-void clif_fame_alchemist(struct map_session_data *sd, int points);
-void clif_fame_taekwon(struct map_session_data *sd, int points);
-
 void clif_emotion(struct block_list *bl,int type);
 void clif_talkiebox(struct block_list* bl, const char* talkie);
 void clif_wedding_effect(struct block_list *bl);
