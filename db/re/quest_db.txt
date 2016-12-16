@@ -1385,6 +1385,16 @@
 7515,14400,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"30 Paychecks"
 7516,1200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"A break for Commercial Development"
 
+// Guild Occupy Quest
+7517,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Occupy Valkyrie Realm"
+7518,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Occupy Luina"
+7519,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Occupy Britoniah"
+7520,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Occupy Greenwood Lake"
+7521,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Occupy Nidabehl"
+7522,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Occupy Valfreyja"
+7523,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Occupy Gloria"
+7524,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Occupy Kafragaten"
+
 // Guild Dungeon Daily Quest
 7525,0,1300,50,1293,50,0,0,0,0,0,0,0,0,0,0,0,"Valkyrie Realm Challenge 1"
 7526,0,2284,30,2285,30,2286,30,0,0,0,0,0,0,0,0,0,"Valkyrie Realm Challenge 2"
