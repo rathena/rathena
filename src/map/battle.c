@@ -4218,7 +4218,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case RL_FIREDANCE:
 			skillratio += -100 + 200 * skill_lv;
-			skillratio += (sd ? pc_checkskill(sd, GS_DESPERADO) : 0) * 50;
+			skillratio += (sd ? pc_checkskill(sd, GS_DESPERADO) * 50 : 0);
 			break;
 		case RL_BANISHING_BUSTER:
 			skillratio += -100 + 2000 + 300 * skill_lv;

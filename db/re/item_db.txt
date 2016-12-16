@@ -7307,24 +7307,29 @@
 13206,Blind_Sphere,Blind Sphere,10,80,,5,50,,,,0x41000000,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,500; },{},{}
 13207,Freezing_Sphere,Freezing Sphere,10,80,,5,50,,,,0x41000000,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Water; },{},{}
 13208,Gong_Bug,Sow Bug,10,0,,5,50,,,,0x41000000,63,2,32768,,50,,3,{ bonus2 bAddEff,Eff_Stun,1000; },{},{}
-13210,Slug_Ammunition_L,Slug Ammunition L,3,250,,250,30,,,,,,,,,,,10,{},{},{}
-13211,Slug_Ammunition_M,Slug Ammunition M,3,500,,500,30,,,,,,,,,,,10,{},{},{}
-13212,Slug_Ammunition_H,Slug Ammunition H,3,750,,750,30,,,,,,,,,,,10,{},{},{}
-13213,Slug_Ammunition_SH,Slug Ammunition SH,3,1,,1000,30,,,,,,,,,,,10,{},{},{}
-13214,Slug_Ammunition_XH,Slug Ammunition XH,3,1,,1200,30,,,,,,,,,,,10,{},{},{}
-13215,Armor_Burnt,Armor Burnt,10,10,,2,50,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Neutral; },{},{}
-13216,Incandescence_Shot,Incandescence Shot,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Fire; },{},{}
-13217,Glaciation_Shot,Glaciation Shot,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Water; },{},{}
-13218,Dengeki_Shot,Dengeki Shot,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Wind; },{},{}
-13219,Hearthstone_Shot,Hearthstone Shot,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Earth; },{},{}
-13220,Purification_Shot,Purification Shot,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Holy; },{},{}
-13221,Silver_Bullet_,Silver Bullet,10,10,,2,15,,,0,0xFFFFFFFF,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Holy; },{},{}
-13222,Bloody_Shell,Bloody Shell,10,10,,2,30,,,0,0xFFFFFFFF,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Neutral; },{},{}
-13223,Flare_Sphere_,Flare Sphere,10,10,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Fire; },{},{}
-13224,Lightning_Sphere,Lightning Sphere,10,10,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Wind; },{},{}
-13225,Poison_Sphere_,Poison Sphere,10,10,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Poison; },{},{}
-13226,Blind_Sphere_,Blind Sphere,10,10,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Dark; },{},{}
-13227,Freezing_Sphere_,Freezing Sphere,10,10,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Water; },{},{}
+13210,Slug_Bullet_1,Slug Shot L,3,250,,250,30,,,,,,,,,,,10,{},{},{}
+13211,Slug_Bullet_2,Slug Shot M,3,500,,500,30,,,,,,,,,,,10,{},{},{}
+13212,Slug_Bullet_3,Slug Shot H,3,750,,750,30,,,,,,,,,,,10,{},{},{}
+13213,Slug_Bullet_4,Slug Shot SH,3,1,,1000,30,,,,,,,,,,,10,{},{},{}
+13214,Slug_Bullet_5,Slug Shot XH,3,1,,1200,30,,,,,,,,,,,10,{},{},{}
+13215,AP_Ammo,Armor-Piercing Bullet,10,10,,2,50,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Neutral; },{},{}
+13216,Blaze_Bullet,Blazing Bullet,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Fire; },{},{}
+13217,Freezing_Bullet,Freezing Bullet,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Water; },{},{}
+13218,Electric_Shock_Bullet,Lightning Bullet,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Wind; },{},{}
+13219,Magical_Stone_Bullet,Magic Stone Bullet,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Earth; },{},{}
+13220,Sanctified_Bullet,Purifying Bullet,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Holy; },{},{}
+13221,Silver_Bullet_,Silver Bullet,10,5,,2,40,,,0,0xFFFFFFFF,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Holy; },{},{}
+13222,Shell_Of_Blood_,Bloody Shell,10,10,,2,30,,,0,0xFFFFFFFF,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Neutral; },{},{}
+13223,Flare_Sphere_,Incendiary Grenade,10,15,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Fire; },{},{}
+13224,Lighting_Sphere_,Lightning Grenade,10,15,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Wind; },{},{}
+13225,Poison_Sphere_,Poison Grenade,10,15,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Poison; },{},{}
+13226,Blind_Sphere_,Flash Grenade,10,15,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Dark; },{},{}
+13227,Freezing_Sphere_,Cryo Grenade,10,15,,5,50,,,0,0xFFFFFFFF,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Water; },{},{}
+13228,Flare_Bullet,Flare Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Fire; },{},{}
+13229,Lightning_Bullet,Lightning Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Wind; },{},{}
+13230,Ice_Bullet,Ice Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Water; },{},{}
+13231,Poison_Bullet,Poison Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Poison; },{},{}
+13232,Blind_Bullet,Blind Bullet,10,1,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Dark; },{},{}
 //===================================================================
 // Shurikens & Kunais
 //===================================================================
