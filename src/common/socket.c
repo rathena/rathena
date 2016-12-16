@@ -579,6 +579,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 	result = sConnect(fd, (struct sockaddr *)(&remote_address), sizeof(struct sockaddr_in));
 
 	// Only enter if a socket error occurred
+	// Create a pseudo scope to be able to break out in case of successful connection
 	while( result == SOCKET_ERROR ) {
 		// Specially handle the error number for connection attempts that would block, because we want to use a timeout
 		if( sErrno == S_EWOULDBLOCK ){
@@ -594,7 +595,7 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 			// Try to find out if the socket is writeable yet(within the timeout) and check if it is really writeable afterwards
 			if( sSelect(0, NULL, &writeSet, NULL, &tv) != 0 && sFD_ISSET(fd, &writeSet) != 0 ){
 				// Our socket is writeable now => we have connected successfully
-				break;
+				break; // leave the pseudo scope
 			}
 			// Our connection attempt timed out or the socket was not writeable
 		}
