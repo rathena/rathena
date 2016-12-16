@@ -17929,13 +17929,13 @@ BUILDIN_FUNC(unittalk)
 {
 	const char* message;
 	struct block_list* bl;
+	struct StringBuf sbuf;
 
 	message = script_getstr(st, 3);
 
 	if(!script_rid2bl(2,bl))
 		return SCRIPT_CMD_SUCCESS;
 
-	struct StringBuf sbuf;
 	StringBuf_Init(&sbuf);
 	StringBuf_Printf(&sbuf, "%s", message);
 	clif_disp_overhead(bl, StringBuf_Value(&sbuf));
@@ -17985,7 +17985,6 @@ BUILDIN_FUNC(unitskilluseid)
 	
 	if(!script_rid2bl(2,bl))
 		return SCRIPT_CMD_FAILURE;
-
 	
 	if (bl->type == BL_NPC) {
 		if (!((TBL_NPC*)bl)->status.hp)
