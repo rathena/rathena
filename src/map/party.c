@@ -760,7 +760,6 @@ int party_optionchanged(int party_id,uint32 account_id,int exp,int item,int flag
 int party_changeleader(struct map_session_data *sd, struct map_session_data *tsd, struct party_data *p)
 {
 	int mi, tmi;
-	bool must_samemap = false;
 
 	if ( !p ) {
 		if (!sd || !sd->status.party_id)
@@ -792,7 +791,10 @@ int party_changeleader(struct map_session_data *sd, struct map_session_data *tsd
 		if (tmi == MAX_PARTY)
 			return 0; // Shouldn't happen
 
-		must_samemap = battle_config.change_party_leader_samemap;
+		if (battle_config.change_party_leader_samemap && p->party.member[mi].map != p->party.member[tmi].map) {
+			clif_msg(sd, PARTY_MASTER_CHANGE_SAME_MAP);
+			return 0;
+		}
 	} else {
 		ARR_FIND(0,MAX_PARTY,mi,p->party.member[mi].leader);
 
@@ -803,12 +805,6 @@ int party_changeleader(struct map_session_data *sd, struct map_session_data *tsd
 
 		if (tmi == MAX_PARTY)
 			return 0; // Shouldn't happen
-	}
-
-	if (must_samemap && p->party.member[mi].map != p->party.member[tmi].map) {
-		if (sd)
-			clif_msg(sd, PARTY_MASTER_CHANGE_SAME_MAP);
-		return 0;
 	}
 
 	// Change leadership.
