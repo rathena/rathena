@@ -4111,6 +4111,13 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 						skill_attack(skl->type,src,src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
 						break;
 					}
+				case SC_ESCAPE:
+					if (skl->type < 4 + skl->skill_lv) {
+						clif_skill_damage(src, src, tick, 0, 0, -30000, 1, skl->skill_id, skl->skill_lv, 0);
+						skill_blown(src, src, 1, unit_getdir(src), 0);
+						skill_addtimerskill(src, tick + 100, src->id, 0, 0, skl->skill_id, skl->skill_lv, skl->type + 1, 0);
+					}
+					break;
 				// For SR_FLASHCOMBO
 				case SR_DRAGONCOMBO:
 				case SR_FALLENEMPIRE:
@@ -11986,9 +11993,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 
 	case SC_ESCAPE:
-		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
-		skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), 0);
-		clif_skill_nodamage(src,src,skill_id,skill_lv,1);
+		clif_skill_nodamage(src, src, skill_id, -1, 1);
+		skill_unitsetting(src, skill_id, skill_lv, x, y, 2);
+		skill_addtimerskill(src, tick, src->id, 0, 0, skill_id, skill_lv, 0, 0);
 		flag |= 1;
 		break;
 
