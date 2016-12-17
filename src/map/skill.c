@@ -3167,10 +3167,10 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		}
 
 		if(tsc && tsc->data[SC_MAGICROD] && src == dsrc) {
+			int sp = skill_get_sp(skill_id,skill_lv);
 #ifndef RENEWAL 
 			clif_skill_nodamage(bl,bl,SA_MAGICROD,skill_lv,1);
 #endif
-			int sp = skill_get_sp(skill_id,skill_lv);
 			dmg.damage = dmg.damage2 = 0;
 			dmg.dmg_lv = ATK_MISS; //This will prevent skill additional effect from taking effect. [Skotlex]
 			sp = sp * tsc->data[SC_MAGICROD]->val2 / 100;
