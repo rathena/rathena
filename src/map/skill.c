@@ -17873,6 +17873,27 @@ int skill_delunitgroup_(struct skill_unit_group *group, const char* file, int li
 	}
 
 	switch( group->skill_id ) {
+		case PF_SPIDERWEB:
+		{
+			struct block_list* target = map_id2bl(group->val2);
+			struct status_change *sc;
+			bool removed = true;
+			//Clear group id from status change
+			if (target && (sc = status_get_sc(target)) != NULL && sc->data[SC_SPIDERWEB]) {
+				if (sc->data[SC_SPIDERWEB]->val2 == group->group_id)
+					sc->data[SC_SPIDERWEB]->val2 = 0;
+				else if (sc->data[SC_SPIDERWEB]->val3 == group->group_id)
+					sc->data[SC_SPIDERWEB]->val3 = 0;
+				else if (sc->data[SC_SPIDERWEB]->val4 == group->group_id)
+					sc->data[SC_SPIDERWEB]->val4 = 0;
+				else //Group was already removed in status_change_end, don't call it again!
+					removed = false;
+
+				//The last group was cleared, end status change
+				if(removed && sc->data[SC_SPIDERWEB]->val2 == 0 && sc->data[SC_SPIDERWEB]->val3 == 0 && sc->data[SC_SPIDERWEB]->val4 == 0)
+					status_change_end(target, SC_SPIDERWEB, INVALID_TIMER);
+			}
+		}
 		case SG_SUN_WARM:
 		case SG_MOON_WARM:
 		case SG_STAR_WARM:
@@ -18146,23 +18167,6 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 					group->val2 = 0;
 					if (sd && !map[sd->bl.m].flag.nowarp && pc_job_can_entermap((enum e_job)sd->status.class_, unit->bl.m, sd->group_level))
 						pc_setpos(sd,map_id2index(unit->bl.m),unit->bl.x,unit->bl.y,CLR_TELEPORT);
-				}
-				skill_delunit(unit);
-			}
-			break;
-
-			case UNT_SPIDERWEB:
-			{
-				struct block_list* target = map_id2bl(group->val2);
-				struct status_change *sc;
-				//Clear group id from status change
-				if (target && (sc = status_get_sc(target)) != NULL && sc->data[SC_SPIDERWEB]) {
-					if (sc->data[SC_SPIDERWEB]->val2 == group->group_id)
-						sc->data[SC_SPIDERWEB]->val2 = 0;
-					else if (sc->data[SC_SPIDERWEB]->val3 == group->group_id)
-						sc->data[SC_SPIDERWEB]->val3 = 0;
-					else if (sc->data[SC_SPIDERWEB]->val4 == group->group_id)
-						sc->data[SC_SPIDERWEB]->val4 = 0;
 				}
 				skill_delunit(unit);
 			}
