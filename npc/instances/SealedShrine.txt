@@ -215,15 +215,15 @@ monk_test,306,151,3	script	Grave of Baphomet#edq	111,{
 
 	if (.@ins_bapho_check == -1) {
 		switch(instance_enter("Sealed Catacomb")) {
-		case 3:
-		case 2:
+		case IE_OTHER:
+		case IE_NOINSTANCE:
 			mes "It's cold to the touch. It doesn't respond.";
 			close;
-		case 1:
+		case IE_NOMEMBER:
 			mes "[Friar Patrick]";
 			mes "To enter this dangerous place, you can't go alone. Come again after you join a party.";
 			close;
-		case 0:
+		case IE_OK:
 			mapannounce "monk_test","[" + strcharinfo(0) + "] member of the [" + getpartyname(.@party_id) + "] party has entered the Sealed Shrine.",bc_map,"0x00ff99";
 			setquest 3040;
 			//warp "1@cata",100,224;

@@ -811,7 +811,7 @@ int npc_settimerevent_tick(struct npc_data* nd, int newtimer)
 	nd->u.scr.rid = 0;
 
 	// Check if timer is started
-	flag = (nd->u.scr.timerid != INVALID_TIMER);
+	flag = (nd->u.scr.timerid != INVALID_TIMER || nd->u.scr.timertick);
 
 	if( flag ) npc_timerevent_stop(nd);
 	nd->u.scr.timer = newtimer;
@@ -4131,6 +4131,8 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		map[m].flag.notomb = state;
 	else if (!strcmpi(w3,"nocostume"))
 		map[m].flag.nocostume = state;
+	else if (!strcmpi(w3,"hidemobhpbar"))
+		map[m].flag.hidemobhpbar = state;
 	else if (!strcmpi(w3,"skill_damage")) {
 #ifdef ADJUST_SKILL_DAMAGE
 		char skill[SKILL_NAME_LENGTH];

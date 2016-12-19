@@ -1130,7 +1130,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,53) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20120221
-	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
+	if ( battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,55) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,59) = status_get_hp(bl);		// HP
 	} else {
@@ -1273,7 +1273,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFW(buf,60) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20120221
-	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
+	if ( battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,62) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,66) = status_get_hp(bl);		// HP
 	} else {
@@ -3891,6 +3891,11 @@ void clif_changeoption(struct block_list* bl)
 	} else
 		clif_send(buf,packet_len(0x119),bl,AREA);
 #endif
+
+	//Whenever we send "changeoption" to the client, the provoke icon is lost
+	//There is probably an option for the provoke icon, but as we don't know it, we have to do this for now
+	if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->timer == INVALID_TIMER)
+		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, -1, 0, 0, 0);
 }
 
 
@@ -4612,7 +4617,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect_single(bl,421,sd->fd);
 #if PACKETVER >= 20120404
-			if( battle_config.monster_hp_bars_info){
+			if (battle_config.monster_hp_bars_info && !map[bl->m].flag.hidemobhpbar) {
 				int i;
 				for(i = 0; i < DAMAGELOG_SIZE; i++)// must show hp bar to all char who already hit the mob.
 					if( md->dmglog[i].id == sd->status.char_id )
@@ -4656,6 +4661,25 @@ static int clif_calc_walkdelay(struct block_list *bl,int delay, char type, int64
 	return (delay > 0) ? delay:1; //Return 1 to specify there should be no noticeable delay, but you should stop walking.
 }
 
+/*========================================== [Playtester]
+* Returns hallucination damage the client displays
+*------------------------------------------*/
+static int clif_hallucination_damage()
+{
+	int digit = rnd() % 5 + 1;
+	switch (digit)
+	{
+	case 1:
+		return (rnd() % 10);
+	case 2:
+		return (rnd() % 100);
+	case 3:
+		return (rnd() % 1000);
+	case 4:
+		return (rnd() % 10000);
+	}
+	return (rnd() % 32767);
+}
 
 /// Sends a 'damage' packet (src performs action on dst)
 /// 008a <src ID>.L <dst ID>.L <server tick>.L <src speed>.L <dst speed>.L <damage>.W <div>.W <type>.B <damage2>.W (ZC_NOTIFY_ACT)
@@ -4699,8 +4723,8 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 	sc = status_get_sc(dst);
 	if(sc && sc->count) {
 		if(sc->data[SC_HALLUCINATION]) {
-			if(damage) damage = damage*(sc->data[SC_HALLUCINATION]->val2) + rnd()%100;
-			if(damage2) damage2 = damage2*(sc->data[SC_HALLUCINATION]->val2) + rnd()%100;
+			if(damage) damage = clif_hallucination_damage();
+			if(damage2) damage2 = clif_hallucination_damage();
 		}
 	}
 
@@ -5440,7 +5464,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 
 	if( ( sc = status_get_sc(dst) ) && sc->count ) {
 		if(sc->data[SC_HALLUCINATION] && damage)
-			damage = damage*(sc->data[SC_HALLUCINATION]->val2) + rnd()%100;
+			damage = clif_hallucination_damage();
 	}
 
 #if PACKETVER < 3
@@ -5537,7 +5561,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned in
 
 	if(sc && sc->count) {
 		if(sc->data[SC_HALLUCINATION] && damage)
-			damage = damage*(sc->data[SC_HALLUCINATION]->val2) + rnd()%100;
+			damage = clif_hallucination_damage();
 	}
 
 	WBUFW(buf,0)=0x115;
@@ -5936,6 +5960,9 @@ void clif_status_change(struct block_list *bl, int type, int flag, int tick, int
 	if (type == SI_ACTIONDELAY && tick == 0)
 		return;
 
+	if (type == SI_HALLUCINATION && !battle_config.display_hallucination) // Disable Hallucination.
+		return;
+
 	nullpo_retv(bl);
 
 	sd = BL_CAST(BL_PC, bl);
@@ -6232,7 +6259,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 		((map[bl->m].flag.battleground || map_flag_gvg(bl->m)?1:0)<<1)|// GUILD - Show attack cursor on non-guild members (GvG)
 		((map[bl->m].flag.battleground || map_flag_gvg2(bl->m)?1:0)<<2)|// SIEGE - Show emblem over characters heads when in GvG (WoE castle)
 		((map[bl->m].flag.nomineeffect || !map_flag_gvg2(bl->m)?0:1)<<3)| // USE_SIMPLE_EFFECT - Automatically enable /mineffect
-		((map[bl->m].flag.nolockon?1:0)<<4)| // DISABLE_LOCKON - Unknown (By the name it might disable cursor lock-on)
+		((map[bl->m].flag.nolockon || map_flag_vs(bl->m)?1:0)<<4)| // DISABLE_LOCKON - Only allow attacks on other players with shift key or /ns active
 		((map[bl->m].flag.pvp?1:0)<<5)| // COUNT_PK - Show the PvP counter
 		((map[bl->m].flag.partylock?1:0)<<6)| // NO_PARTY_FORMATION - Prevents party creation/modification (Might be used for instance dungeons)
 		((map[bl->m].flag.battleground?1:0)<<7)| // BATTLEFIELD - Unknown (Does something for battlegrounds areas)
@@ -17302,7 +17329,7 @@ int clif_magicdecoy_list(struct map_session_data *sd, uint16 skill_lv, short x, 
 	WFIFOW(fd,0) = 0x1ad; // This is the official packet. [pakpil]
 
 	for( i = 0, c = 0; i < MAX_INVENTORY; i ++ ) {
-		if( itemdb_is_element(sd->inventory.u.items_inventory[i].nameid) ) {
+		if( itemdb_group_item_exists(IG_ELEMENT, sd->inventory.u.items_inventory[i].nameid) ) {
 			WFIFOW(fd, c * 2 + 4) = sd->inventory.u.items_inventory[i].nameid;
 			c ++;
 		}
@@ -17335,7 +17362,7 @@ int clif_poison_list(struct map_session_data *sd, uint16 skill_lv) {
 	WFIFOW(fd,0) = 0x1ad; // This is the official packet. [pakpil]
 
 	for( i = 0, c = 0; i < MAX_INVENTORY; i ++ ) {
-		if( itemdb_is_poison(sd->inventory.u.items_inventory[i].nameid) ) {
+		if( itemdb_group_item_exists(IG_POISON, sd->inventory.u.items_inventory[i].nameid) ) {
 			WFIFOW(fd, c * 2 + 4) = sd->inventory.u.items_inventory[i].nameid;
 			c ++;
 		}

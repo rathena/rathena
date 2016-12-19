@@ -786,7 +786,10 @@ typedef enum sc_type {
 	SC_CROSSBOWCLAN,
 	SC_JUMPINGCLAN,
 
+	SC_TAROTCARD,
+
 	SC_MAXPAIN,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
@@ -987,7 +990,7 @@ enum si_type {
 	SI_MAXOVERTHRUST	= 188,
 	SI_LONGING = 189,
 	SI_HERMODE = 190,
-	SI_TAROT		= 191, // the icon allows no doubt... but what is it really used for ?? [DracoRPG]
+	SI_TAROT		= 191,
 //	SI_HLIF_AVOID = 192,
 //	SI_HFLI_FLEET = 193,
 //	SI_HFLI_SPEED = 194,
@@ -2004,6 +2007,14 @@ enum e_status_bonus {
 	STATUS_BONUS_RATE = 1,
 };
 
+/// Enum for status_calc_weight and status_calc_cart_weight
+enum e_status_calc_weight_opt {
+	CALCWT_NONE = 0x0,
+	CALCWT_ITEM = 0x1,		///< Recalculate item weight
+	CALCWT_MAXBONUS = 0x2,	///< Recalculate max weight based on skill/status/configuration bonuses
+	CALCWT_CARTSTATE = 0x4,	///< Whether to check for cart state
+};
+
 ///Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
 #define BL_CONSUME (BL_PC|BL_HOM|BL_MER|BL_ELEM)
 ///Define to determine who has regen
@@ -2278,8 +2289,8 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 #define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, SCB_ALL, opt)
 #define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, SCB_ALL, opt)
 
-bool status_calc_weight(struct map_session_data *sd, uint8 flag);
-bool status_calc_cart_weight(struct map_session_data *sd, uint8 flag);
+bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
+bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
 void status_calc_bl_(struct block_list *bl, enum scb_flag flag, enum e_status_calc_opt opt);
 int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt);
 void status_calc_pet_(struct pet_data* pd, enum e_status_calc_opt opt);
