@@ -6465,7 +6465,19 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage = 500 + 300 * skill_lv;
 			break;
 		case PA_GOSPEL:
-			md.damage = 1 + rnd()%9999;
+			if (mflag > 0)
+				md.damage = (rnd() % 4000) + 1500;
+			else {
+				md.damage = (rnd() % 5000) + 3000;
+#ifdef RENEWAL
+				md.damage -= (int64)status_get_def(target);
+#else
+				md.damage -= (md.damage * (int64)status_get_def(target)) / 100;
+#endif
+				md.damage -= tstatus->def2;
+				if (md.damage < 0)
+					md.damage = 0;
+			}
 			break;
 		case CR_ACIDDEMONSTRATION:
 #ifdef RENEWAL

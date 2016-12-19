@@ -2869,6 +2869,8 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_CHASEWALK, INVALID_TIMER);
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
 			status_change_end(bl, SC_GOSPEL, INVALID_TIMER);
+		if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->timer == INVALID_TIMER)
+			status_change_end(bl, SC_PROVOKE, INVALID_TIMER); //End infinite provoke to prevent exploit
 		status_change_end(bl, SC_CHANGE, INVALID_TIMER);
 		status_change_end(bl, SC_STOP, INVALID_TIMER);
 		status_change_end(bl, SC_WUGDASH, INVALID_TIMER);
