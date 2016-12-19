@@ -122,17 +122,19 @@ static bool script_nick2sd_(struct script_state *st, uint8 loc, struct map_sessi
  * @return True if `bl` is assigned, false otherwise
  **/
 static bool script_rid2bl_(struct script_state *st, uint8 loc, struct block_list **bl, const char *func) {
-	
 	int unit_id;
+
 	if ( !script_hasdata(st, loc) || ( unit_id = script_getnum(st, loc) ) == 0)
 		unit_id = st->rid;
 		
 	*bl =  map_id2bl(unit_id);
 
-	if(!*bl)
+	if ( *bl )
+		return true;
+	else {
 		ShowError("%s: Unit with ID '%d' is not found.\n", func, unit_id);
-
-	return (*bl) ? true : false;
+		return false;
+	}
 }
 
 #define script_accid2sd(loc,sd) script_accid2sd_(st,(loc),&(sd),__FUNCTION__)
@@ -17683,8 +17685,10 @@ BUILDIN_FUNC(getunitname)
 {
 	struct block_list* bl = NULL;
 
-	if(!script_rid2bl(2,bl))
+	if(!script_rid2bl(2,bl)){
+		script_pushconststr(st, "Unknown");
 		return SCRIPT_CMD_FAILURE;
+	}
 
 	script_pushstrcopy(st, status_get_name(bl));
 
@@ -17906,15 +17910,12 @@ BUILDIN_FUNC(unitstopattack)
 {
 	struct block_list* bl;
 
-	if(!script_rid2bl(2,bl))
+	if(script_rid2bl(2,bl))
 	{
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
+		unit_stop_attack(bl);
+		if (bl->type == BL_MOB)
+			((TBL_MOB*)bl)->target_id = 0;
 	}
-
-	unit_stop_attack(bl);
-	if (bl->type == BL_MOB)
-		((TBL_MOB*)bl)->target_id = 0;
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -17926,13 +17927,8 @@ BUILDIN_FUNC(unitstopwalk)
 {
 	struct block_list* bl;
 
-	if(!script_rid2bl(2,bl))
-	{
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
-	}
-
-	unit_stop_walking(bl, 0);
+	if(script_rid2bl(2,bl))
+		unit_stop_walking(bl, 0);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -17944,20 +17940,18 @@ BUILDIN_FUNC(unittalk)
 {
 	const char* message;
 	struct block_list* bl;
-	struct StringBuf sbuf;
 
 	message = script_getstr(st, 3);
 
-	if(!script_rid2bl(2,bl))
+	if(script_rid2bl(2,bl))
 	{
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
-	}
+		struct StringBuf sbuf;
 
-	StringBuf_Init(&sbuf);
-	StringBuf_Printf(&sbuf, "%s", message);
-	clif_disp_overhead(bl, StringBuf_Value(&sbuf));
-	StringBuf_Destroy(&sbuf);
+		StringBuf_Init(&sbuf);
+		StringBuf_Printf(&sbuf, "%s", message);
+		clif_disp_overhead(bl, StringBuf_Value(&sbuf));
+		StringBuf_Destroy(&sbuf);
+	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -17974,13 +17968,8 @@ BUILDIN_FUNC(unitemote)
 
 	emotion = script_getnum(st,3);
 
-	if(!script_rid2bl(2,bl))
-	{
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
-	}
-
-	clif_emotion(bl, emotion);
+	if(script_rid2bl(2,bl))
+		clif_emotion(bl, emotion);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18004,20 +17993,15 @@ BUILDIN_FUNC(unitskilluseid)
 	target_id = ( script_hasdata(st,5) ? script_getnum(st,5) : unit_id );
 	casttime = ( script_hasdata(st,6) ? script_getnum(st,6) : 0 );
 	
-	if(!script_rid2bl(2,bl))
-	{
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
+	if(script_rid2bl(2,bl)){
+		if (bl->type == BL_NPC) {
+			if (!((TBL_NPC*)bl)->status.hp)
+				status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
+			else
+				status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
+		}
+		unit_skilluse_id2(bl, target_id, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
 	}
-	
-	if (bl->type == BL_NPC) {
-		if (!((TBL_NPC*)bl)->status.hp)
-			status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
-		else
-			status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
-	}
-	unit_skilluse_id2(bl, target_id, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
-
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18041,19 +18025,15 @@ BUILDIN_FUNC(unitskillusepos)
 	skill_y  = script_getnum(st,6);
 	casttime = ( script_hasdata(st,7) ? script_getnum(st,7) : 0 );
 
-	if(!script_rid2bl(2,bl))
-	{
-		script_pushint(st, 0);
-		return SCRIPT_CMD_SUCCESS;
+	if(script_rid2bl(2,bl)){
+		if (bl->type == BL_NPC) {
+			if (!((TBL_NPC*)bl)->status.hp)
+				status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
+			else
+				status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
+		}
+		unit_skilluse_pos2(bl, skill_x, skill_y, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
 	}
-
-	if (bl->type == BL_NPC) {
-		if (!((TBL_NPC*)bl)->status.hp)
-			status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
-		else
-			status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
-	}
-	unit_skilluse_pos2(bl, skill_x, skill_y, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
 
 	return SCRIPT_CMD_SUCCESS;
 }
