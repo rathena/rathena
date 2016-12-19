@@ -122,21 +122,16 @@ static bool script_nick2sd_(struct script_state *st, uint8 loc, struct map_sessi
  * @return True if `bl` is assigned, false otherwise
  **/
 static bool script_rid2bl_(struct script_state *st, uint8 loc, struct block_list **bl, const char *func) {
-	if (script_hasdata(st, loc)) {
-		int unit_id = script_getnum(st, loc);
-		if (!unit_id)
-		{
-			if (!(*bl = map_id2bl(st->rid)))
-				ShowError("%s: Unit with ID '%d' is not found.\n", func, unit_id);
-		}
-		else
-		{
-		if (!(*bl = map_id2bl(unit_id)))
-				ShowError("%s: Unit with ID '%d' is not found.\n", func, unit_id);
-		}
-	}
-	else
-		*bl = NULL;
+	
+	int unit_id;
+	if ( !script_hasdata(st, loc) || ( unit_id = script_getnum(st, loc) ) == 0)
+		unit_id = st->rid;
+		
+	*bl =  map_id2bl(unit_id);
+
+	if(!*bl)
+		ShowError("%s: Unit with ID '%d' is not found.\n", func, unit_id);
+
 	return (*bl) ? true : false;
 }
 
@@ -16941,7 +16936,10 @@ BUILDIN_FUNC(getunittype)
 	uint8 value = 0;
 
 	if(!script_rid2bl(2,bl))
+	{
+		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
+	}
 
 	switch (bl->type) {
 		case BL_PC:   value = UNITTYPE_PC; break;
@@ -16980,7 +16978,10 @@ BUILDIN_FUNC(getunitdata)
 	}
 
 	if(!script_rid2bl(2,bl))
+	{
+		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
+	}
 
 	switch (bl->type) {
 		case BL_MOB:  md = map_id2md(bl->id); break;
@@ -17297,7 +17298,10 @@ BUILDIN_FUNC(setunitdata)
 	int type, value = 0;
 
 	if(!script_rid2bl(2,bl))
+	{
+		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
+	}
 
 	switch (bl->type) {
 		case BL_MOB:  md = map_id2md(bl->id); break;
@@ -17700,7 +17704,10 @@ BUILDIN_FUNC(setunitname)
 	TBL_PET* pd = NULL;
 
 	if(!script_rid2bl(2,bl))
+	{
+		script_pushconststr(st, "Unknown");
 		return SCRIPT_CMD_FAILURE;
+	}
 
 	switch (bl->type) {
 		case BL_MOB:  md = map_id2md(bl->id); break;
@@ -17752,7 +17759,10 @@ BUILDIN_FUNC(unitwalk)
 	uint8 off = 5;
 	
 	if(!script_rid2bl(2,bl))
+	{
+		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
+	}
 
 	ud = unit_bl2ud(bl);
 
@@ -17790,10 +17800,8 @@ BUILDIN_FUNC(unitkill)
 {
 	struct block_list* bl;
 
-	if(!script_rid2bl(2,bl))
-		return SCRIPT_CMD_FAILURE;
-
-	status_kill(bl);
+	if(script_rid2bl(2,bl))
+		status_kill(bl);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -17815,7 +17823,10 @@ BUILDIN_FUNC(unitwarp)
 	y = (short)script_getnum(st,5);
 
 	if(!script_rid2bl(2,bl))
-		return SCRIPT_CMD_FAILURE;
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	if (!strcmp(mapname,"this"))
 		map_idx = bl?bl->m:-1;
@@ -17844,9 +17855,7 @@ BUILDIN_FUNC(unitattack)
 	struct script_data* data;
 	int actiontype = 0;
 
-	script_rid2bl(2,unit_bl);
-
-	if (!unit_bl) {
+	if (!script_rid2bl(2,unit_bl)) {
 		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -17898,7 +17907,10 @@ BUILDIN_FUNC(unitstopattack)
 	struct block_list* bl;
 
 	if(!script_rid2bl(2,bl))
-		return SCRIPT_CMD_FAILURE;
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	unit_stop_attack(bl);
 	if (bl->type == BL_MOB)
@@ -17915,7 +17927,10 @@ BUILDIN_FUNC(unitstopwalk)
 	struct block_list* bl;
 
 	if(!script_rid2bl(2,bl))
-		return SCRIPT_CMD_FAILURE;
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	unit_stop_walking(bl, 0);
 
@@ -17934,7 +17949,10 @@ BUILDIN_FUNC(unittalk)
 	message = script_getstr(st, 3);
 
 	if(!script_rid2bl(2,bl))
+	{
+		script_pushint(st, 0);
 		return SCRIPT_CMD_SUCCESS;
+	}
 
 	StringBuf_Init(&sbuf);
 	StringBuf_Printf(&sbuf, "%s", message);
@@ -17957,7 +17975,10 @@ BUILDIN_FUNC(unitemote)
 	emotion = script_getnum(st,3);
 
 	if(!script_rid2bl(2,bl))
-		return SCRIPT_CMD_FAILURE;
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	clif_emotion(bl, emotion);
 
@@ -17984,7 +18005,10 @@ BUILDIN_FUNC(unitskilluseid)
 	casttime = ( script_hasdata(st,6) ? script_getnum(st,6) : 0 );
 	
 	if(!script_rid2bl(2,bl))
-		return SCRIPT_CMD_FAILURE;
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
 	
 	if (bl->type == BL_NPC) {
 		if (!((TBL_NPC*)bl)->status.hp)
@@ -18018,7 +18042,10 @@ BUILDIN_FUNC(unitskillusepos)
 	casttime = ( script_hasdata(st,7) ? script_getnum(st,7) : 0 );
 
 	if(!script_rid2bl(2,bl))
-		return SCRIPT_CMD_FAILURE;
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	if (bl->type == BL_NPC) {
 		if (!((TBL_NPC*)bl)->status.hp)
