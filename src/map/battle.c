@@ -432,15 +432,27 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 		switch(atk_elem){
 			case ELE_FIRE:
 				if (sc->data[SC_VOLCANO])
+#ifdef RENEWAL
 					ratio += sc->data[SC_VOLCANO]->val3;
+#else
+					damage += (int64)((damage*sc->data[SC_VOLCANO]->val3) / 100);
+#endif
 				break;
 			case ELE_WIND:
 				if (sc->data[SC_VIOLENTGALE])
+#ifdef RENEWAL
 					ratio += sc->data[SC_VIOLENTGALE]->val3;
+#else
+					damage += (int64)((damage*sc->data[SC_VIOLENTGALE]->val3) / 100);
+#endif
 				break;
 			case ELE_WATER:
 				if (sc->data[SC_DELUGE])
+#ifdef RENEWAL
 					ratio += sc->data[SC_DELUGE]->val3;
+#else
+					damage += (int64)((damage*sc->data[SC_DELUGE]->val3) / 100);
+#endif
 				break;
 			case ELE_GHOST:
 				if (sc->data[SC_TELEKINESIS_INTENSE])
@@ -474,11 +486,10 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 		switch(atk_elem) {
 			case ELE_FIRE:
 				if (tsc->data[SC_SPIDERWEB]) {
-					tsc->data[SC_SPIDERWEB]->val1 = 0; // free to move now
-					if (tsc->data[SC_SPIDERWEB]->val2-- > 0)
-						ratio += 100; // double damage
-					if (tsc->data[SC_SPIDERWEB]->val2 == 0)
-						status_change_end(target, SC_SPIDERWEB, INVALID_TIMER);
+					//Double damage
+					damage *= 2;
+					//Remove a unit group or end whole status change
+					status_change_end(target, SC_SPIDERWEB, INVALID_TIMER);
 				}
 				if (tsc->data[SC_THORNSTRAP] && battle_getcurrentskill(src) != GN_CARTCANNON)
 					status_change_end(target, SC_THORNSTRAP, INVALID_TIMER);
@@ -516,6 +527,9 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 				break;
 		}
 	}
+
+	if (battle_config.attr_recover == 0 && ratio < 0)
+		ratio = 0;
 
 #ifdef RENEWAL
 	//In renewal, reductions are always rounded down so damage can never reach 0 unless ratio is 0
@@ -1601,8 +1615,11 @@ int64 battle_calc_bg_damage(struct block_list *src, struct block_list *bl, int64
 bool battle_can_hit_gvg_target(struct block_list *src,struct block_list *bl,uint16 skill_id,int flag)
 {
 	struct mob_data* md = BL_CAST(BL_MOB, bl);
+	struct unit_data *ud = unit_bl2ud(bl);
 	int class_ = status_get_class(bl);
 
+	if (ud && ud->immune_attack)
+		return false;
 	if(md && md->guardian_data) {
 		if ((status_bl_has_mode(bl,MD_SKILL_IMMUNE) || (class_ == MOBID_EMPERIUM && !(skill_get_inf3(skill_id)&INF3_HIT_EMP))) && flag&BF_SKILL) //Skill immunity.
 			return false;
@@ -5172,13 +5189,15 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 		struct map_session_data *tsd = BL_CAST(BL_PC, target);
 		struct status_change *tsc = status_get_sc(target);
 		struct status_data *sstatus = status_get_status_data(src);
+		struct unit_data *ud = unit_bl2ud(target);
 		int tick = gettick(), rdelay = 0;
 
 		if (!tsc)
 			return;
 
 		// Calculate skill reflect damage separately
-		rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id,true);
+		if ((ud && !ud->immune_attack) || !status_bl_has_mode(target, MD_SKILL_IMMUNE))
+			rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id,true);
 		if( rdamage > 0 ) {
 			struct block_list *d_bl = battle_check_devotion(src);
 
@@ -8368,6 +8387,7 @@ static const struct _battle_data {
 	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
 	{ "atcommand_levelup_events",			&battle_config.atcommand_levelup_events,		0,		0,		1,				},
 	{ "block_account_in_same_party",		&battle_config.block_account_in_same_party,		1,		0,		1,				},
+	{ "tarotcard_equal_chance",             &battle_config.tarotcard_equal_chance,          0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };

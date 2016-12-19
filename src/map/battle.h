@@ -611,6 +611,7 @@ extern struct Battle_Config
 	int can_damage_skill; //Which BL types can damage traps
 	int atcommand_levelup_events;
 	int block_account_in_same_party;
+	int tarotcard_equal_chance; //Official or equal chance for each card
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;

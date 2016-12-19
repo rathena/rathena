@@ -222,8 +222,7 @@ Disables mine effects on a map.
 
 *nolockon
 
-Disables locking on a map.
-[More information needed.]
+Disables attacking another player without holding shift or using /ns on a map.
 
 ---------------------------------------
 
@@ -417,5 +416,12 @@ Disables costume sprites on a map.
 This only disables the sprites and not the effect of the items.
 If a player logs out on a nocostume map the costume sprites will also not be shown in the
 character server.
+
+---------------------------------------
+
+*hidemobhpbar
+
+Hides monster's HP bar on a map.
+Ignores config value of 'monster_hp_bars_info'.
 
 ---------------------------------------
