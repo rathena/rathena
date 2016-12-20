@@ -1114,7 +1114,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				clif_skill_nodamage(bl,bl,CR_AUTOGUARD,sce->val1,1);
 				unit_set_walkdelay(bl,gettick(),delay,1);
 				if( sc->data[SC_SHRINK] && rnd()%100 < 5 * sce->val1 )
-					skill_blown(bl,src,skill_get_blewcount(CR_SHRINK,1),-1,0);
+					skill_blown(bl,src,skill_get_blewcount(CR_SHRINK,1),-1,BLOWN_NONE);
 				d->dmg_lv = ATK_MISS;
 				return 0;
 			}
@@ -1185,7 +1185,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				skill_counter_additional_effect( src, bl, skill_id, skill_lv, flag, gettick() );
 			if (sce) {
 				clif_specialeffect(bl, 462, AREA);
-				skill_blown(src,bl,sce->val3,-1,0);
+				skill_blown(src,bl,sce->val3,-1,BLOWN_NONE);
 			}
 			//Both need to be consumed if they are active.
 			if (sce && --(sce->val2) <= 0)
@@ -5005,7 +5005,7 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 		if (ratio > 5000) ratio = 5000; // Maximum of 5000% ATK
 		rdamage = battle_calc_base_damage(tstatus,&tstatus->rhw,tsc,sstatus->size,tsd,0);
 		rdamage = (int64)rdamage * ratio / 100 + wd.damage * (10 + tsc->data[SC_CRESCENTELBOW]->val1 * 20 / 10) / 10;
-		skill_blown(target, src, skill_get_blewcount(SR_CRESCENTELBOW_AUTOSPELL, tsc->data[SC_CRESCENTELBOW]->val1), unit_getdir(src), 0);
+		skill_blown(target, src, skill_get_blewcount(SR_CRESCENTELBOW_AUTOSPELL, tsc->data[SC_CRESCENTELBOW]->val1), unit_getdir(src), BLOWN_NONE);
 		clif_skill_damage(target, src, gettick(), status_get_amotion(src), 0, rdamage,
 			1, SR_CRESCENTELBOW_AUTOSPELL, tsc->data[SC_CRESCENTELBOW]->val1, DMG_SKILL); // This is how official does
 		clif_damage(src, target, gettick(), status_get_amotion(src)+1000, 0, rdamage/10, 1, DMG_NORMAL, 0, false);
@@ -6802,7 +6802,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 						rd1 = min(damage,status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
 						*dmg = rd1 * 30 / 100; // Received damage = 30% of amplified damage.
 						clif_skill_damage(src, bl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1, DMG_SKILL);
-						skill_blown(bl, src, skill_get_blewcount(RK_DEATHBOUND, 1), unit_getdir(src), 0);
+						skill_blown(bl, src, skill_get_blewcount(RK_DEATHBOUND, 1), unit_getdir(src), BLOWN_NONE);
 						status_change_end(bl, SC_DEATHBOUND, INVALID_TIMER);
 						rdamage += rd1 * 70 / 100; // Target receives 70% of the amplified damage. [Rytech]
 					}
@@ -7261,7 +7261,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 		if (su && su->group) {
 			if (su->group->skill_id == HT_BLASTMINE)
-				skill_blown(src, target, 3, -1, 0);
+				skill_blown(src, target, 3, -1, BLOWN_NONE);
 			if (su->group->skill_id == GN_WALLOFTHORN) {
 				if (--su->val2 <= 0)
 					skill_delunit(su);
