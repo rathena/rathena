@@ -19729,15 +19729,30 @@ BUILDIN_FUNC(showdigit)
 
 	value = script_getnum(st,2);
 
-	if( script_hasdata(st,3) )
-	{
+	if( script_hasdata(st,3) ){
 		type = script_getnum(st,3);
+	}
 
-		if( type > 3 )
-		{
+	switch( type ){
+		case 0:
+			break;
+		case 1:
+		case 2:
+			// Use absolute value and then the negative value of it as starting value
+			// This is what gravity's client does for these counters
+			value = -abs(value);
+			break;
+		case 3:
+			value = abs(value);
+			if( value > 99 ){
+				ShowWarning("buildin_showdigit: type 3 can display 2 digits at max. Capping value %d to 99...\n", value);
+				script_reportsrc(st);
+				value = 99;
+			}
+			break;
+		default:
 			ShowError("buildin_showdigit: Invalid type %u.\n", type);
 			return SCRIPT_CMD_FAILURE;
-		}
 	}
 
 	clif_showdigit(sd, (unsigned char)type, value);
