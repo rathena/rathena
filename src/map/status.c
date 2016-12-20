@@ -10637,10 +10637,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val1 = MOBID_PORING; // Default poring
 			break;
 		case SC_APPLEIDUN:
+		{
+			struct map_session_data * s_sd = BL_CAST(BL_PC, src);
 			val2 = (5 + 2 * val1) + (status_get_vit(src) / 10); //HP Rate: (5 + 2 * skill_lv) + (vit/10) + (BA_MUSICALLESSON level)
-			if (sd)
-				val2 += pc_checkskill(sd,BA_MUSICALLESSON);
+			if (s_sd)
+				val2 += pc_checkskill(s_sd, BA_MUSICALLESSON) / 2;
 			break;
+		}
 		case SC_EPICLESIS:
 			val2 = 5 * val1; //HP rate bonus
 			break;
