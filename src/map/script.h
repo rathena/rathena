@@ -642,6 +642,18 @@ enum random_option_attribute {
 	ROA_VALUE,
 	ROA_PARAM,
 };
+
+enum instance_info_type {
+	IIT_ID,
+	IIT_LIMITTIME,
+	IIT_IDLETIMEOUT,
+	IIT_ENTER_MAP,
+	IIT_ENTER_X,
+	IIT_ENTER_Y,
+	IIT_MAPCOUNT,
+	IIT_MAP
+};
+
 /**
  * used to generate quick script_array entries
  **/

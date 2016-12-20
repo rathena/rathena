@@ -71,6 +71,7 @@ extern int instance_start;
 extern struct instance_data instance_data[MAX_INSTANCE_DATA];
 
 struct instance_db *instance_searchtype_db(unsigned short instance_id);
+struct instance_db *instance_searchname_db(const char* name);
 void instance_getsd(unsigned short instance_id, struct map_session_data **sd, enum send_target *target);
 
 int instance_create(int owner_id, const char *name, enum instance_mode mode);

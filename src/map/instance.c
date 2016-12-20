@@ -50,7 +50,7 @@ static uint16 instance_name2id(const char *instance_name) {
 /*==========================================
  * Searches for an instance name in the database
  *------------------------------------------*/
-static struct instance_db *instance_searchname_db(const char *instance_name) {
+struct instance_db *instance_searchname_db(const char *instance_name) {
 	uint16 id = instance_name2id(instance_name);
 	if (id == 0)
 		return NULL;
