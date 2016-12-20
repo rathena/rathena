@@ -391,7 +391,7 @@ S_WarpChar:
 	mes "[Teleporter]";
 	mes "Have a nice trip.";
 	close2;
-	savepoint getarg(0),getarg(1),getarg(2);
+	savepoint getarg(0),getarg(1),getarg(2),1,1;
 	warp getarg(0),getarg(1),getarg(2);
 	end;
 }

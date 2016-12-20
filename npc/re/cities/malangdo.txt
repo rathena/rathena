@@ -320,7 +320,7 @@ malangdo,147,117,3	script	Innkeeper#malang	554,{
 	case 2:
 		mes "[Innkeeper]";
 		mes "Location saved. We should keep company, haha~";
-		savepoint "malangdo",142,118;
+		savepoint "malangdo",142,118,1,1;
 		close;
 	case 3:
 		mes "[Innkeeper]";

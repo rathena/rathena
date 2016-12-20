@@ -817,7 +817,7 @@ ein_in01,206,224,3	script	Hotel Employee#ein	855,{
 			mes "Thank you, and please";
 			mes "come again.";
 			close2;
-			savepoint "ein_in01",200,224;
+			savepoint "ein_in01",200,224,1,1;
 			end;
 		case 2:
 			if (Zeny > 4999) {
