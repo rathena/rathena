@@ -3366,7 +3366,7 @@ mosk_in,135,191,5	script	Landlord#mos	4_F_RUSWOMAN3,{
 		mes "[Landlord]";
 		mes "Your respawn point has been saved.";
 		mes "Hope we can see you again next time hoho.";
-		savepoint "mosk_in",142,189;
+		savepoint "mosk_in",142,189,1,1;
 		close;
 	case 2:
 		if (Zeny > 4999) {

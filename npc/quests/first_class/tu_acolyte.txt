@@ -325,7 +325,7 @@ prt_monk,230,106,3	script	Asthe#tu	1_F_PRIEST,{
 			tu_acolyte01 = 4;
 			getitem 1504,1; //Mace
 			getitem 602,1; //Wing_Of_Butterfly
-			savepoint "prt_monk",30,250;
+			savepoint "prt_monk",30,250,1,1;
 		}
 		else {
 			mes "[Asthe]";

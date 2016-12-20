@@ -2054,7 +2054,7 @@ iz_ac01,59,43,3	script	Therapist#ac	4_M_6THPRIN1,{
 		mes "[Therapist]";
 		mes "I see...";
 		mes "For emergency situations, in case you've fainted and want to be brought back here, I will save your current location.";
-		savepoint "iz_ac01", 45, 46;
+		savepoint "iz_ac01",45,46,1,1;
 		close;
 	}
 
@@ -5146,7 +5146,7 @@ iz_ac01,95,46,5	script	Kafra Guide Trainer#ac	4_F_KAFRA1,{
 					next;
 					mes "[Kafra Guide Trainer]";
 					mes "It's already done. Easy huh?";
-					savepoint "izlude", 128, 98;
+					savepoint "izlude",128,98,1,1;
 					next;
 					mes "[Kafra Guide Trainer]";
 					mes "Now, when you use a ^006400Butterfly Wing^000000, it will send you to the last saved location.";
@@ -9325,7 +9325,7 @@ iz_ac02,148,110,3	script	Mage Chuck#ac	4_M_JOB_WIZARD,{
 									cutin "", 255;
 									next;
 									setquest 9264;
-									savepoint "geffen", 120, 38;
+									savepoint "geffen",120,38,1,1;
 									warp "gef_fild07", 88, 205;
 									end;
 								}
@@ -14126,7 +14126,7 @@ new_1-1,53,114,3	script	Training Instructor#1a	4_F_03,{
 	} else if (strnpcinfo(4) == "new_5-1" || strnpcinfo(4) == "new_5-2" || strnpcinfo(4) == "new_5-3" || strnpcinfo(4) == "new_5-4") {
 		.@warp$ = "iz_int04";
 	}
-	savepoint .@warp$, 98, 88;
+	savepoint .@warp$,98,88,1,1;
 	warp .@warp$, 98, 88;
 	end;
 }
