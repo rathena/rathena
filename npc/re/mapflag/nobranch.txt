@@ -23,6 +23,7 @@ job3_guil01	mapflag	nobranch
 job3_guil02	mapflag	nobranch
 job3_guil03	mapflag	nobranch
 job_ko	mapflag	nobranch
+job_gun	mapflag	nobranch
 job3_rang01	mapflag	nobranch
 job3_rang02	mapflag	nobranch
 job3_rune01	mapflag	nobranch
