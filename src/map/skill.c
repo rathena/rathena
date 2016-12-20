@@ -1307,7 +1307,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case NPC_SILENCEATTACK:
 	case NPC_STUNATTACK:
 	case NPC_BLEEDING:
-	case NPC_HELLPOWER:
 		sc_start(src,bl,status_skill2sc(skill_id),(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case NPC_ACIDBREATH:
@@ -6632,8 +6631,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case NPC_HALLUCINATION:
+	case NPC_HELLPOWER:
 		clif_skill_nodamage(src, bl, skill_id, skill_lv,
-			sc_start(src, bl, type, skill_lv*20, skill_lv, skill_get_time(skill_id, skill_lv)));
+			sc_start(src, bl, type, skill_lv*20, skill_lv, skill_get_time2(skill_id, skill_lv)));
 		break;
 
 	case SU_STOOP:
@@ -13715,7 +13715,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			break;
 
 		case UNT_GOSPEL:
-			if (rnd() % 100 > 50 + sg->skill_lv * 5 || ss == bl)
+			if (rnd() % 100 >= 50 + sg->skill_lv * 5 || ss == bl)
 				break;
 			if (battle_check_target(ss, bl, BCT_PARTY) > 0)
 			{ // Support Effect only on party, not guild
@@ -13781,7 +13781,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 			else if (battle_check_target(&unit->bl, bl, BCT_ENEMY) > 0)
 			{ // Offensive Effect
 				int i = rnd() % 10; // Negative buff count
-				int time = skill_get_time2(sg->skill_id, sg->skill_lv);
 				switch (i)
 				{
 					case 0: // Deal 3000~7999 damage reduced by DEF
