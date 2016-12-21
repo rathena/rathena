@@ -1105,7 +1105,7 @@ mora,43,127,3	script	Innkeeper#mora_inn	522,{
 		mes "[Innkeeper]";
 		mes "You know, haste makes waste. Tsk tsk.";
 		mes "Well, the game's been saved.";
-		savepoint "mora",56,143;
+		savepoint "mora",56,143,1,1;
 		close;
 	case 2:
 		mes "[Innkeeper]";

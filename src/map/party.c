@@ -790,6 +790,11 @@ int party_changeleader(struct map_session_data *sd, struct map_session_data *tsd
 		ARR_FIND( 0, MAX_PARTY, tmi, p->data[tmi].sd == tsd);
 		if (tmi == MAX_PARTY)
 			return 0; // Shouldn't happen
+
+		if (battle_config.change_party_leader_samemap && p->party.member[mi].map != p->party.member[tmi].map) {
+			clif_msg(sd, PARTY_MASTER_CHANGE_SAME_MAP);
+			return 0;
+		}
 	} else {
 		ARR_FIND(0,MAX_PARTY,mi,p->party.member[mi].leader);
 

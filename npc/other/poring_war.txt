@@ -292,7 +292,7 @@ poring_w01,96,97,3	script	Sweet Devi#wop	738,{
 		mes "I'll send you back to your savepoint.";
 		close2;
 		if (WoP_SaveMap$ != "") {
-			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y;
+			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y,1,1;
 			set WoP_SaveMap$,"";
 			set WoP_SaveMap_X,0;
 			set WoP_SaveMap_Y,0;
@@ -305,7 +305,7 @@ OnPCLogoutEvent:
 	getmapxy .@map$,.@x,.@y,UNITTYPE_PC;
 	if (.@map$ == "poring_w02") {
 		if (WoP_SaveMap$ != "") {
-			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y;
+			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y,1,1;
 			set WoP_SaveMap$,"";
 			set WoP_SaveMap_X,0;
 			set WoP_SaveMap_Y,0;

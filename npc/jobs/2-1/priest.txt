@@ -1737,7 +1737,7 @@ function	script	F_FatherRub	{
 			mes "[Father Rubalkabara]";
 			mes "Well then, please head to your next destination for your pilgrimage. Be safe in your travels.";
 			close2;
-			savepoint "prt_fild03",361,255;
+			savepoint "prt_fild03",361,255,1,1;
 			set PRIEST_Q,2;
 			end;
 		}
@@ -1785,7 +1785,7 @@ function	script	F_MotherMart	{
 			mes "God for safety";
 			mes "on your journey.";
 			close2;
-			savepoint "moc_fild07",35,355;
+			savepoint "moc_fild07",35,355,1,1;
 			set PRIEST_Q,3;
 			end;
 		}
@@ -1845,7 +1845,7 @@ function	script	F_FatherYos	{
 			mes "your trials is now";
 			mes "completed.";
 			close2;
-			savepoint "prt_fild00",206,230;
+			savepoint "prt_fild00",206,230,1,1;
 			set PRIEST_Q,4;
 			end;
 		}
