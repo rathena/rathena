@@ -7310,8 +7310,8 @@
 13210,Slug_Ammunition_L,Slug Ammunition L,10,250,,250,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
 13211,Slug_Ammunition_M,Slug Ammunition M,10,500,,500,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
 13212,Slug_Ammunition_H,Slug Ammunition H,10,750,,750,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-13213,Slug_Ammunition_SH,Slug Ammunition SH,10,1,,1000,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-13214,Slug_Ammunition_XH,Slug Ammunition XH,10,1,,1200,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
+13213,Slug_Ammunition_SH,Slug Ammunition SH,10,1000,,1000,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
+13214,Slug_Ammunition_XH,Slug Ammunition XH,10,1200,,1200,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
 13215,Armor_Burnt,Armor Burnt,10,10,,2,50,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Neutral; },{},{}
 13216,Incandescence_Shot,Incandescence Shot,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Fire; },{},{}
 13217,Glaciation_Shot,Glaciation Shot,10,10,,2,40,,,0,0xFFFFFFFF,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Water; },{},{}

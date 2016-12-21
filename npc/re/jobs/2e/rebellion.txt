@@ -84,7 +84,7 @@ job_gun,214,36,0	script	Auto Anvil#1	CLEAR_NPC,{
 		mes "Only authorized user can do the operation.";
 		close;
 	}
-	if (countitem(13118)) {// Tiny_Flame
+	if ((countitem(13118) - isequipped(13118)) > 0) {// Tiny_Flame
 		mes "Unauthorized firearm creation has been detected. Report to Manager Elwin.";
 		close;
 	}
@@ -258,7 +258,12 @@ einbroch,54,97,3	script	Bouncer	4_M_REBELLION,{
 		mes "No loitering around the venue.";
 		close;
 	}
-	if (isbegin_quest(12340) == 1) {
+	switch( isbegin_quest(12340) ) {
+	case 0:
+		mes "[Bouncer]";
+		mes "Under construction, can't get in.";
+		close;
+	case 1:
 		mes "[Bouncer]";
 		mes "*Gasp* You! I thought you were already captured. Ooh, doesn't matter now. You're my Get Out of Jail Free card!";
 		next;
@@ -277,8 +282,7 @@ einbroch,54,97,3	script	Bouncer	4_M_REBELLION,{
 		close2;
 		warp "job_gun",81,29;
 		end;
-	}
-	if (isbegin_quest(12340) == 2) {
+	case 2:
 		mes "[Bouncer]";
 		mes "You're back. Why?";
 		next;
@@ -293,9 +297,6 @@ einbroch,54,97,3	script	Bouncer	4_M_REBELLION,{
 		warp "job_gun",70,28;
 		end;
 	}
-	mes "[Bouncer]";
-	mes "Under construction, can't get in.";
-	close;
 }
 
 job_gun,68,33,3	script	Ruthless Rebellion	4_F_REBELLION,{
@@ -343,7 +344,12 @@ job_gun,86,29,3	script	Kulbertinov	4_M_REBELLION,{
 		mes "Are you looking for me?";
 		close;
 	}
-	if (isbegin_quest(12340) == 1) {
+	switch( isbegin_quest(12340) ) {
+	case 0:
+		mes "[Kulbertinov]";
+		mes "Can I help you?";
+		close;
+	case 1:
 		mes "[Kulbertinov]";
 		mes "What do you want?";
 		next;
@@ -395,8 +401,7 @@ job_gun,86,29,3	script	Kulbertinov	4_M_REBELLION,{
 		close2;
 		warp "job_gun",19,15;
 		end;
-	}
-	if (isbegin_quest(12340) == 2) {
+	case 2:
 		mes "[Kulbertinov]";
 		mes "Do you have business with Elwin Conick?";
 		next;
@@ -411,9 +416,6 @@ job_gun,86,29,3	script	Kulbertinov	4_M_REBELLION,{
 		warp "job_gun",19,15;
 		end;
 	}
-	mes "[Kulbertinov]";
-	mes "Can I help you?";
-	close;
 }
 
 job_gun,19,24,3	script	Elwin Conick#1	4_F_REBELLION,{
@@ -644,7 +646,7 @@ job_gun,198,39,3	script	Elwin Conick#3	4_F_REBELLION,{
 	if (isbegin_quest(12342) == 1) {
 		.@emt_chk = getstatus(SC_MONSTER_TRANSFORM,1);
 		if (.@emt_chk == 3169) {
-			if ((countitem(13118) - isequipped(13118)) < 1) {
+			if ((countitem(13118) - isequipped(13118)) < 1) {// don't count if equipped
 				mes "[Elwin Conick]";
 				mes "Are you done? I don't see any completed firearm in your inventory.";
 				close;
@@ -716,7 +718,7 @@ job_gun,120,138,3	script	Ivan Sidorenko#1	4_M_REBELLION,{
 		warp "job_gun",81,29;
 		end;
 	}
-	if (!isbegin_quest(12343)) {
+	if (isbegin_quest(12343) == 0) {
 		mes "[Ivan Sidorenko]";
 		mes "Hey, stay focused--we're using live ammo here, and you can get shot anytime.";
 		next;
@@ -745,9 +747,9 @@ job_gun,120,138,3	script	Ivan Sidorenko#1	4_M_REBELLION,{
 		end;
 	}
 	if (isbegin_quest(12343) == 1) {
-		if (isbegin_quest(12343,HUNTING) == 2)
+		if (checkquest(12343,HUNTING) == 2)
 			.@j_r_s = 10;
-		if (isbegin_quest(12344,HUNTING) == 2)
+		if (checkquest(12344,HUNTING) == 2)
 			.@j_r_f = 2;
 		if (getstatus(SC_MONSTER_TRANSFORM,1) != 3169)
 			.@j_r_t = 5;
@@ -812,7 +814,7 @@ job_gun,220,132,3	script	Ivan Sidorenko#2	10062,{
 		mes "The items in your inventory are weighing you down. Lighten your weight first.";
 		close;
 	}
-	if (!isbegin_quest(12345)) {
+	if (isbegin_quest(12345) == 0) {
 		mes "[Ivan Sidorenko]";
 		mes "There must have been a mistake. You aren't supposed to remain here.";
 		close2;
