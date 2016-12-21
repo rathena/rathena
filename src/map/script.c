@@ -16901,7 +16901,7 @@ BUILDIN_FUNC(pcblockmove)
 
 /**
  * Toggle a unit from casting skills.
- * pcblockmove(<unit_id>,<option>);
+ * pcblockskill(<unit_id>,<option>);
  */
 BUILDIN_FUNC(pcblockskill)
 {
