@@ -13,6 +13,7 @@
 //    5: Buff
 //    6: Heal
 //    7: Other
+//    8: Sale
 //
 // Price:
 //    Item cost, in cash points (#CASHPOINTS).
