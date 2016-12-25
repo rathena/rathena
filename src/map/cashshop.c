@@ -659,6 +659,30 @@ void do_final_cashshop( void ){
 		aFree( cash_shop_items[tab].item );
 	}
 	memset( cash_shop_items, 0, sizeof( cash_shop_items ) );
+
+#if PACKETVER_SUPPORTS_SALES
+	if( sale_items.count > 0 ){
+		for( i = 0; i < sale_items.count; i++ ){
+			struct sale_item_data* it = sale_items.item[i];
+
+			if( it->timer_start != INVALID_TIMER ){
+				delete_timer( it->timer_start, sale_start_timer );
+				it->timer_start = INVALID_TIMER;
+			}
+
+			if( it->timer_end != INVALID_TIMER ){
+				delete_timer( it->timer_end, sale_end_timer );
+				it->timer_end = INVALID_TIMER;
+			}
+
+			aFree(it);
+		}
+
+		aFree(sale_items.item);
+
+		sale_items.count = 0;
+	}
+#endif
 }
 
 /*
