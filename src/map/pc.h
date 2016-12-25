@@ -69,6 +69,14 @@ enum equip_index {
 	EQI_MAX
 };
 
+enum prevent_logout_trigger {
+	PLT_NONE = 0,
+	PLT_LOGIN = 1,
+	PLT_ATTACK = 2,
+	PLT_SKILL = 4,
+	PLT_DAMAGE = 8
+};
+
 extern unsigned int equip_bitmask[EQI_MAX];
 
 #define equip_index_check(i) ( (i) >= EQI_ACC_L && (i) < EQI_MAX )
