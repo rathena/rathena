@@ -49,6 +49,7 @@ enum e_pc_permission {
 	PC_PERM_ENABLE_COMMAND      = 0x01000000,
 	PC_PERM_BYPASS_STAT_ONCLONE = 0x02000000,
 	PC_PERM_BYPASS_MAX_STAT     = 0x04000000,
+	PC_PERM_CASHSHOP_SALE		= 0x08000000,
 	//.. add other here
 	PC_PERM_ALLPERMISSION       = 0xFFFFFFFF,
 };
@@ -84,6 +85,7 @@ static const struct {
 	{ "command_enable",PC_PERM_ENABLE_COMMAND },
 	{ "bypass_stat_onclone",PC_PERM_BYPASS_STAT_ONCLONE },
 	{ "bypass_max_stat",PC_PERM_BYPASS_MAX_STAT },
+	{ "cashshop_sale", PC_PERM_CASHSHOP_SALE },
 	{ "all_permission", PC_PERM_ALLPERMISSION },
 };
 

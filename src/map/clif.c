@@ -18972,7 +18972,7 @@ void clif_parse_sale_open( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	if( pc_get_group_level(sd) < 99 ){
+	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
 		return;
 	}
 
@@ -19042,7 +19042,7 @@ void clif_parse_sale_search( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	if( pc_get_group_level(sd) < 99 ){
+	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
 		return;
 	}
 
@@ -19095,7 +19095,7 @@ void clif_parse_sale_add( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	if( pc_get_group_level(sd) < 99 ){
+	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
 		return;
 	}
 
@@ -19132,7 +19132,7 @@ void clif_parse_sale_remove( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	if( pc_get_group_level(sd) < 99 ){
+	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
 		return;
 	}
 
