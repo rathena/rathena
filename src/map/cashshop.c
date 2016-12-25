@@ -614,11 +614,18 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 
 #if PACKETVER_SUPPORTS_SALES
 				if( tab == CASHSHOP_TAB_SALE ){
-					sale->amount -= get_amt;
-					clif_sale_amount( sale, NULL, ALL_CLIENT );
+					uint32 new_amount = sale->amount - get_amt;
 
-					if( sale->amount == 0 ){
-						clif_sale_end( sale, NULL, ALL_CLIENT );
+					if( new_amount == 0 ){
+						sale_remove_item(sale->nameid);
+					}else{
+						if( SQL_ERROR == Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = '%d' WHERE `nameid` = '%d'", sales_table, new_amount, nameid ) ){
+							Sql_ShowDebug(mmysql_handle);
+						}
+
+						sale->amount = new_amount;
+
+						clif_sale_amount(sale, NULL, ALL_CLIENT);
 					}
 				}
 #endif
