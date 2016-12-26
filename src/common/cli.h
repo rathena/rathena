@@ -24,6 +24,8 @@ extern "C" {
  extern char* ATCOMMAND_CONF_FILENAME;
  extern char* SCRIPT_CONF_NAME;
  extern char* GRF_PATH_FILENAME;
+// Set during startup when attempting to export the lang, unset after server initialization is over
+ extern char *lang_export_file; // for lang_export_fp
 //char
  extern char* CHAR_CONF_NAME;
  extern char* SQL_CONF_NAME;
@@ -37,6 +39,7 @@ extern void display_helpscreen(bool exit);
 bool cli_hasevent();
 void display_versionscreen(bool do_exit);
 bool opt_has_next_value(const char* option, int i, int argc);
+bool opt_has_next_value_(const char* option, int i, int argc);
 int cli_get_options(int argc, char ** argv);
 int parse_console_timer(int tid, unsigned int tick, int id, intptr_t data);
 extern int parse_console(const char* buf); //particular for each serv

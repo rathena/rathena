@@ -9,7 +9,7 @@
 #include "../common/mmo.h"
 #include "../common/mapindex.h"
 #include "../common/db.h"
-#include "../common/msg_conf.h"
+#include "../common/utils.h"
 
 #include "../config/core.h"
 
@@ -25,14 +25,6 @@ enum E_MAPSERVER_ST {
 	MAPSERVER_ST_SHUTDOWN,
 	MAPSERVER_ST_LAST
 };
-
-#define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
-#define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
-#define do_final_msg() map_do_final_msg()
-int map_msg_config_read(char *cfgName,int lang);
-const char* map_msg_txt(struct map_session_data *sd,int msg_number);
-void map_do_final_msg(void);
-void map_msg_reload(void);
 
 #define MAX_NPC_PER_MAP 512
 #define AREA_SIZE battle_config.area_size
@@ -751,6 +743,7 @@ extern char motd_txt[];
 extern char help_txt[];
 extern char help2_txt[];
 extern char charhelp_txt[];
+extern char language_conf[];
 
 extern char wisp_server_name[];
 
@@ -925,16 +918,8 @@ extern char *ATCOMMAND_CONF_FILENAME;
 extern char *SCRIPT_CONF_NAME;
 extern char *MSG_CONF_NAME_EN;
 extern char *GRF_PATH_FILENAME;
-//Other languages supported
-char *MSG_CONF_NAME_RUS;
-char *MSG_CONF_NAME_SPN;
-char *MSG_CONF_NAME_GRM;
-char *MSG_CONF_NAME_CHN;
-char *MSG_CONF_NAME_MAL;
-char *MSG_CONF_NAME_IDN;
-char *MSG_CONF_NAME_FRN;
-char *MSG_CONF_NAME_POR;
-char *MSG_CONF_NAME_THA;
+extern FILE *lang_export_fp;
+extern char *lang_export_file;
 
 //Useful typedefs from jA [Skotlex]
 typedef struct map_session_data TBL_PC;
@@ -976,6 +961,9 @@ extern int db_use_sqldbs;
 extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
+
+extern const char *default_lang_str;
+extern uint8 default_lang_id;
 
 extern char buyingstores_db[32];
 extern char buyingstore_items_db[32];

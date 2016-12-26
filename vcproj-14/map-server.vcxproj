@@ -292,15 +292,7 @@
     <Copy SourceFiles="..\conf\import-tmpl\map_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\map_conf.txt')" />
     <Copy SourceFiles="..\conf\import-tmpl\packet_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\packet_conf.txt')" />
     <Copy SourceFiles="..\conf\import-tmpl\script_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\script_conf.txt')" />
-    <Copy SourceFiles="..\conf\msg_conf\import-tmpl\map_msg_chn_conf.txt" DestinationFolder="..\conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\msg_conf\import\map_msg_chn_conf.txt')" />
     <Copy SourceFiles="..\conf\msg_conf\import-tmpl\map_msg_eng_conf.txt" DestinationFolder="..\conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\msg_conf\import\map_msg_eng_conf.txt')" />
-    <Copy SourceFiles="..\conf\msg_conf\import-tmpl\map_msg_frn_conf.txt" DestinationFolder="..\conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\msg_conf\import\map_msg_frn_conf.txt')" />
-    <Copy SourceFiles="..\conf\msg_conf\import-tmpl\map_msg_grm_conf.txt" DestinationFolder="..\conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\msg_conf\import\map_msg_grm_conf.txt')" />
-    <Copy SourceFiles="..\conf\msg_conf\import-tmpl\map_msg_idn_conf.txt" DestinationFolder="..\conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\msg_conf\import\map_msg_idn_conf.txt')" />
-    <Copy SourceFiles="..\conf\msg_conf\import-tmpl\map_msg_mal_conf.txt" DestinationFolder="..\conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\msg_conf\import\map_msg_mal_conf.txt')" />
-    <Copy SourceFiles="..\conf\msg_conf\import-tmpl\map_msg_por_conf.txt" DestinationFolder="..\conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\msg_conf\import\map_msg_por_conf.txt')" />
-    <Copy SourceFiles="..\conf\msg_conf\import-tmpl\map_msg_rus_conf.txt" DestinationFolder="..\conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\msg_conf\import\map_msg_rus_conf.txt')" />
-    <Copy SourceFiles="..\conf\msg_conf\import-tmpl\map_msg_spn_conf.txt" DestinationFolder="..\conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\msg_conf\import\map_msg_spn_conf.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\abra_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\abra_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\attr_fix.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\attr_fix.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\castle_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\castle_db.txt')" />

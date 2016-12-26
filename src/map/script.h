@@ -178,6 +178,7 @@ typedef enum c_op {
 	C_USERFUNC, // internal script function
 	C_USERFUNC_POS, // internal script function label
 	C_REF, // the next call to c_op2 should push back a ref to the left operand
+	C_LSTR,
 
 	// operators
 	C_OP3, // a ? b : c
@@ -292,6 +293,18 @@ struct script_array {
 	unsigned int id;       ///< the first 32b of the 64b uid, aka the id
 	unsigned int size;     ///< how many members
 	unsigned int *members; ///< member list
+};
+
+struct script_string_buf {
+	char *ptr;
+	size_t pos,size;
+};
+
+struct string_translation {
+	int string_id;
+	uint8 translations;
+	unsigned int len;
+	char *buf;
 };
 
 enum script_parse_options {
@@ -652,6 +665,24 @@ unsigned int next_id;
 struct eri *st_ers;
 struct eri *stack_ers;
 
+/// Script String Storage
+char *string_list;
+int string_list_size;
+int string_list_pos;
+// Set and unset on npc_parse_script
+char *parser_current_npc_name;
+DBMap *translation_db; // npc_name => DBMap (strings)
+char **translation_buf;
+uint32 translation_buf_size;
+extern char **languages;
+extern char **lang_motd_txt;
+extern char **lang_help_txt;
+uint8 max_lang_id;
+struct script_string_buf parse_simpleexpr_str;
+struct script_string_buf lang_export_line_buf;
+struct script_string_buf lang_export_unescaped_buf;
+int parse_cleanup_timer_id;
+
 const char* skip_space(const char* p);
 void script_error(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 void script_warning(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
@@ -690,6 +721,15 @@ void do_final_script(void);
 int add_str(const char* p);
 const char* get_str(int id);
 void script_reload(void);
+
+int string_dup(char *str);
+void script_load_translations(void);
+uint32 script_load_translation(uint8 lang_id, const char *file);
+int script_translation_db_destroyer(DBKey key, DBData *data, va_list ap);
+void script_clear_translations(bool reload);
+int script_parse_cleanup_timer(int tid, unsigned int tick, int id, intptr_t data);
+uint8 script_add_language(const char *name);
+void script_parser_clean_leftovers(void);
 
 // @commands (script based)
 void setd_sub(struct script_state *st, TBL_PC *sd, const char *varname, int elem, void *value, struct reg_db *ref);
