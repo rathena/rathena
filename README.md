@@ -60,14 +60,22 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 	* If you want to have your own forked version but still get updates from the main rathena branch
 		* Fork this repository to your github account
 		* List the current configured remote repository for your fork
+		
 				git remote -v origin
+
 		* Specify a new remote upstream repository that will be synced with your fork
+		
 				git remote add upstream https://github.com/rathena/rathena.git
+				
 		* Verify the new upstream repository you've specified for your fork.
+		
 				git remove-v origin
+				
 		* You should see the main rathena repository as well as your forked repository
 		* Now, when you want to get updates from rathena, simply do:
+		
 				git pull upstream master
+				
 	* Open MySQL Workbench and create an instance to connect to your MySQL Server
 	* Create a database (rathena), a user (rathena), give permissions (GRANT SELECT,INSERT,UPDATE,DELETE)
 		and then login using the new user
