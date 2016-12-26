@@ -139,7 +139,7 @@ and 'doc/mapflags.txt'.
 
 ** Create a permanent monster spawn:
 
-<map name>,<x>,<y>,<xs>,<ys>%TAB%monster%TAB%<monster name>%TAB%<mob id>,<amount>,<delay1>,<delay2>,<event>{,<mob size>,<mob ai>}
+<map name>,<x>,<y>,<xs>,<ys>%TAB%monster%TAB%<monster name>%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 
 Map name is the name of the map the monsters will spawn on. x,y are the
 coordinates where the mob should spawn. If xs and ys are non-zero, they
@@ -174,9 +174,9 @@ should start with "On". As with all events, if the NPC is an on-touch NPC, the
 player who triggers the script must be within 'trigger' range for the event to
 work.
 
-There are two optional fields for monster size and AI.  Size can be 0 (medium),
-1 (small), or 2 (big).  AI can be 0 (default), 1 (attack/friendly), 2 (sphere),
-3 (flora), or 4 (zanzou).
+There are two fields for monster size and AI.
+- Size can be 0 (medium), 1 (small), or 2 (big).
+- AI can be 0 (default), 1 (attack/friendly), 2 (sphere), 3 (flora), or 4 (zanzou).
 
 Alternately, a monster spawned using 'boss_monster' instead of 'monster' is able
 to be detected on the map with the SC_BOSSMAPINFO status (used by Convex Mirror).

@@ -737,4 +737,4 @@ OnTouch_:
 }
 jupe_core2,150,33,0	duplicate(#Acquiring Knowledge)	#Acquiring Knowledge2	139,1,0
 
-jupe_core2,0,0,0,0	monster	Dimik	1669,100,0,0,0
+jupe_core2,0,0,0,0	monster	Dimik	1669,100
