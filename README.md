@@ -94,7 +94,7 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 				./athena-start start
 
 * Optional
-	* If you want to have your own forked version but still get updates from the main rathena branch
+	* If you want to have your own forked version but still get updates from the main rathena repository
 		* Fork this repository to your github account
 		* List the current configured remote repository for your fork
 		
