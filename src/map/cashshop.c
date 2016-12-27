@@ -680,6 +680,7 @@ void do_final_cashshop( void ){
 
 		aFree(sale_items.item);
 
+		sale_items.item = NULL;
 		sale_items.count = 0;
 	}
 #endif
