@@ -71,7 +71,6 @@ struct sale_item_data{
 	uint16 nameid;
 	time_t start;
 	time_t end;
-	uint32 price;
 	uint32 amount;
 
 	// Timers

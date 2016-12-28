@@ -146,7 +146,7 @@ static int cashshop_read_db_sql( void ){
 #if PACKETVER_SUPPORTS_SALES
 static bool sale_parse_dbrow( char* fields[], int columns, int current ){
 	unsigned short nameid = atoi(fields[0]);
-	int start = atoi(fields[1]), end = atoi(fields[2]), price = atoi(fields[3]), amount = atoi(fields[4]), i;
+	int start = atoi(fields[1]), end = atoi(fields[2]), amount = atoi(fields[3]), i;
 	time_t now = time(NULL);
 	struct sale_item_data* sale_item = NULL;
 
@@ -159,16 +159,6 @@ static bool sale_parse_dbrow( char* fields[], int columns, int current ){
 
 	if( i == cash_shop_items[CASHSHOP_TAB_SALE].count ){
 		ShowWarning( "sale_parse_dbrow: ID %hu is not registered in the limited tab in line '%d', skipping...\n", nameid, current );
-		return false;
-	}
-
-	if( price < 1 ){
-		ShowWarning( "sale_parse_dbrow: Invalid price %d for item %hu in line '%d', skipping...\n", price, nameid, current );
-		return false;
-	}
-
-	if( price > cash_shop_items[CASHSHOP_TAB_SALE].item[i]->price ){
-		ShowWarning( "sale_parse_dbrow: Price %d for item %hu is higher than the original price %d\n", price, nameid, cash_shop_items[CASHSHOP_TAB_SALE].item[i]->price );
 		return false;
 	}
 
@@ -196,7 +186,6 @@ static bool sale_parse_dbrow( char* fields[], int columns, int current ){
 	sale_item->nameid = nameid;
 	sale_item->start = start;
 	sale_item->end = end;
-	sale_item->price = price;
 	sale_item->amount = amount;
 	sale_item->timer_start = INVALID_TIMER;
 	sale_item->timer_end = INVALID_TIMER;
@@ -207,18 +196,18 @@ static bool sale_parse_dbrow( char* fields[], int columns, int current ){
 static void sale_read_db_sql( void ){
 	uint32 lines = 0, count = 0;
 
-	if( SQL_ERROR == Sql_Query( mmysql_handle, "SELECT `nameid`, UNIX_TIMESTAMP(`start`), UNIX_TIMESTAMP(`end`), `price`, `amount` FROM `%s` WHERE `end` > now()", sales_table ) ){
+	if( SQL_ERROR == Sql_Query( mmysql_handle, "SELECT `nameid`, UNIX_TIMESTAMP(`start`), UNIX_TIMESTAMP(`end`), `amount` FROM `%s` WHERE `end` > now()", sales_table ) ){
 		Sql_ShowDebug(mmysql_handle);
 		return;
 	}
 
 	while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ){
-		char* str[5];
+		char* str[4];
 		int i;
 
 		lines++;
 
-		for( i = 0; i < 5; i++ ){
+		for( i = 0; i < 4; i++ ){
 			Sql_GetData( mmysql_handle, i, &str[i], NULL );
 
 			if( str[i] == NULL ){
@@ -226,7 +215,7 @@ static void sale_read_db_sql( void ){
 			}
 		}
 
-		if( !sale_parse_dbrow( str, 5, lines ) ){
+		if( !sale_parse_dbrow( str, 4, lines ) ){
 			ShowError( "sale_read_db_sql: Cannot process table '%s' at line '%d', skipping...\n", sales_table, lines );
 			continue;
 		}
@@ -303,7 +292,7 @@ enum e_sale_add_result sale_add_item( uint16 nameid, int32 count, time_t from, t
 		return SALE_ADD_DUPLICATE;
 	}
 	
-	if( SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`nameid`,`start`,`end`,`price`,`amount`) VALUES ( '%d', FROM_UNIXTIME(%d), FROM_UNIXTIME(%d), '%d', '%d' )", sales_table, nameid, (uint32)from, (uint32)to, cash_shop_items[CASHSHOP_TAB_SALE].item[i]->price, count) ){
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`nameid`,`start`,`end`,`amount`) VALUES ( '%d', FROM_UNIXTIME(%d), FROM_UNIXTIME(%d), '%d', '%d' )", sales_table, nameid, (uint32)from, (uint32)to, cash_shop_items[CASHSHOP_TAB_SALE].item[i]->price, count) ){
 		Sql_ShowDebug(mmysql_handle);
 		return SALE_ADD_FAILED;
 	}
@@ -315,7 +304,6 @@ enum e_sale_add_result sale_add_item( uint16 nameid, int32 count, time_t from, t
 	sale_item->nameid = nameid;
 	sale_item->start = from;
 	sale_item->end = to;
-	sale_item->price = cash_shop_items[CASHSHOP_TAB_SALE].item[i]->price;
 	sale_item->amount = count;
 	sale_item->timer_start = add_timer( gettick() + (unsigned int)(from - time(NULL)) * 1000, sale_start_timer, 0, (intptr_t)sale_item );
 	sale_item->timer_end = INVALID_TIMER;
