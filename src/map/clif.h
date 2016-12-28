@@ -489,6 +489,7 @@ enum clif_messages {
 	ITEM_REUSE_LIMIT = 0x746,
 	WORK_IN_PROGRESS = 0x783,
 	NEED_REINS_OF_MOUNT = 0x78c,
+	PARTY_MASTER_CHANGE_SAME_MAP = 0x82e, ///< "It is only possible to change the party leader while on the same map."
 	MERGE_ITEM_NOT_AVAILABLE = 0x887,
 };
 

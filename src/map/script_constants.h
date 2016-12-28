@@ -2476,9 +2476,18 @@
 	export_constant(SI_EP16_2_BUFF_AC);
 	export_constant(SI_GS_MAGICAL_BULLET);
 	export_constant(SI_FALLEN_ANGEL);
+	export_constant(SI_BLAZE_BEAD);
+	export_constant(SI_FROZEN_BEAD);
+	export_constant(SI_BREEZE_BEAD);
+	export_constant(SI_AID_PERIOD_RECEIVEITEM_2ND);
+	export_constant(SI_AID_PERIOD_PLUSEXP_2ND);
+	export_constant(SI_AID_PERIOD_PLUSJOBEXP_2ND);
+	export_constant(SI_PRONTERA_JP);
 	export_constant(SI_GLOOM_CARD);
 	export_constant(SI_PHARAOH_CARD);
 	export_constant(SI_KIEL_CARD);
+	export_constant(SI_S_MANAPOTION);
+	export_constant(SI_M_DEFSCROLL);
 
 	/* elements */
 	export_constant(ELE_NEUTRAL);

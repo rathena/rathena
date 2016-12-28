@@ -114,9 +114,33 @@ static bool script_nick2sd_(struct script_state *st, uint8 loc, struct map_sessi
 	return (*sd) ? true : false;
 }
 
+/**
+ * Get `bl` from an ID in `loc` param, if ID is 0 will return the `bl` of the script's activator.
+ * @param st Script
+ * @param loc Location to look for ID in script parameter
+ * @param bl Variable that will be assigned
+ * @return True if `bl` is assigned, false otherwise
+ **/
+static bool script_rid2bl_(struct script_state *st, uint8 loc, struct block_list **bl, const char *func) {
+	int unit_id;
+
+	if ( !script_hasdata(st, loc) || ( unit_id = script_getnum(st, loc) ) == 0)
+		unit_id = st->rid;
+		
+	*bl =  map_id2bl(unit_id);
+
+	if ( *bl )
+		return true;
+	else {
+		ShowError("%s: Unit with ID '%d' is not found.\n", func, unit_id);
+		return false;
+	}
+}
+
 #define script_accid2sd(loc,sd) script_accid2sd_(st,(loc),&(sd),__FUNCTION__)
 #define script_charid2sd(loc,sd) script_charid2sd_(st,(loc),&(sd),__FUNCTION__)
 #define script_nick2sd(loc,sd) script_nick2sd_(st,(loc),&(sd),__FUNCTION__)
+#define script_rid2bl(loc,bl) script_rid2bl_(st,(loc),&(bl),__FUNCTION__)
 
 /// temporary buffer for passing around compiled bytecode
 /// @see add_scriptb, set_label, parse_script
@@ -9465,25 +9489,49 @@ BUILDIN_FUNC(setmadogear)
 
 /// Sets the save point of the player.
 ///
-/// save "<map name>",<x>,<y>{,<char_id>}
-/// savepoint "<map name>",<x>,<y>{,<char_id>}
+/// save "<map name>",<x>,<y>{,{<range x>,<range y>,}<char_id>}
+/// savepoint "<map name>",<x>,<y>{,{<range x>,<range y>,}<char_id>}
 BUILDIN_FUNC(savepoint)
 {
-	int x;
-	int y;
-	short map_idx;
+	int x, y, m, cid_pos = 5;
+	unsigned short map_idx;
 	const char* str;
 	TBL_PC* sd;
 
-	if (!script_charid2sd(5,sd))
+	if (script_lastdata(st) > 5)
+		cid_pos = 7;
+
+	if (!script_charid2sd(cid_pos,sd))
 		return SCRIPT_CMD_FAILURE;// no player attached, report source
 
 	str = script_getstr(st, 2);
-	x   = script_getnum(st,3);
-	y   = script_getnum(st,4);
+
 	map_idx = mapindex_name2id(str);
-	if( map_idx )
-		pc_setsavepoint(sd, map_idx, x, y);
+	if( !map_idx )
+		return SCRIPT_CMD_FAILURE;
+
+	x = script_getnum(st,3);
+	y = script_getnum(st,4);
+	m = map_mapindex2mapid(map_idx);
+
+	if (cid_pos == 7) {
+		int dx = script_getnum(st,5), dy = script_getnum(st,6),
+			x1 = x + dx, y1 = y + dy,
+			x0 = x - dx, y0 = y - dy;
+		uint8 n = 10;
+		do {
+			x = x0 + rnd()%(x1-x0+1);
+			y = y0 + rnd()%(y1-y0+1);
+		} while (m != -1 && (--n) > 0 && !map_getcell(m, x, y, CELL_CHKPASS));
+	}
+
+	// Check for valid coordinates if map in local map-server
+	if (m != -1 && !map_getcell(m, x, y, CELL_CHKPASS)) {
+		ShowError("buildin_savepoint: Invalid coordinates %d,%d at map %s.\n", x, y, str);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	pc_setsavepoint(sd, map_idx, x, y);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16913,10 +16961,8 @@ BUILDIN_FUNC(getunittype)
 	struct block_list* bl;
 	uint8 value = 0;
 
-	bl = map_id2bl(script_getnum(st, 2));
-
-	if (!bl) {
-		ShowWarning("buildin_getunittype: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+	if(!script_rid2bl(2,bl))
+	{
 		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -16957,10 +17003,8 @@ BUILDIN_FUNC(getunitdata)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	bl = map_id2bl(script_getnum(st, 2));
-
-	if (!bl) {
-		ShowWarning("buildin_getunitdata: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+	if(!script_rid2bl(2,bl))
+	{
 		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -17279,10 +17323,8 @@ BUILDIN_FUNC(setunitdata)
 	TBL_NPC* nd = NULL;
 	int type, value = 0;
 
-	bl = map_id2bl(script_getnum(st, 2));
-
-	if (!bl) {
-		ShowWarning("buildin_setunitdata: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+	if(!script_rid2bl(2,bl))
+	{
 		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -17667,10 +17709,7 @@ BUILDIN_FUNC(getunitname)
 {
 	struct block_list* bl = NULL;
 
-	bl = map_id2bl(script_getnum(st, 2));
-
-	if (!bl) {
-		ShowWarning("buildin_getunitname: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+	if(!script_rid2bl(2,bl)){
 		script_pushconststr(st, "Unknown");
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -17692,10 +17731,8 @@ BUILDIN_FUNC(setunitname)
 	TBL_HOM* hd = NULL;
 	TBL_PET* pd = NULL;
 
-	bl = map_id2bl(script_getnum(st, 2));
-
-	if (!bl) {
-		ShowWarning("buildin_setunitname: Error in finding object with given game ID %d!\n", script_getnum(st, 2));
+	if(!script_rid2bl(2,bl))
+	{
 		script_pushconststr(st, "Unknown");
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -17748,11 +17785,9 @@ BUILDIN_FUNC(unitwalk)
 	struct unit_data *ud = NULL;
 	const char *cmd = script_getfuncname(st), *done_label = "";
 	uint8 off = 5;
-
-	bl = map_id2bl(script_getnum(st,2));
-
-	if (!bl) {
-		ShowError("buildin_unitwalk: Invalid unit with ID '%d'.\n", script_getnum(st,2));
+	
+	if(!script_rid2bl(2,bl))
+	{
 		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -17791,9 +17826,9 @@ BUILDIN_FUNC(unitwalk)
 /// unitkill <unit_id>;
 BUILDIN_FUNC(unitkill)
 {
-	struct block_list* bl = map_id2bl(script_getnum(st,2));
+	struct block_list* bl;
 
-	if (bl != NULL)
+	if(script_rid2bl(2,bl))
 		status_kill(bl);
 
 	return SCRIPT_CMD_SUCCESS;
@@ -17805,22 +17840,21 @@ BUILDIN_FUNC(unitkill)
 /// unitwarp(<unit_id>,"<map name>",<x>,<y>) -> <bool>
 BUILDIN_FUNC(unitwarp)
 {
-	int unit_id;
 	int map_idx;
 	short x;
 	short y;
 	struct block_list* bl;
 	const char *mapname;
 
-	unit_id = script_getnum(st,2);
 	mapname = script_getstr(st, 3);
 	x = (short)script_getnum(st,4);
 	y = (short)script_getnum(st,5);
 
-	if (!unit_id) //Warp the script's runner
-		bl = map_id2bl(st->rid);
-	else
-		bl = map_id2bl(unit_id);
+	if(!script_rid2bl(2,bl))
+	{
+		script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
 
 	if (!strcmp(mapname,"this"))
 		map_idx = bl?bl->m:-1;
@@ -17849,9 +17883,7 @@ BUILDIN_FUNC(unitattack)
 	struct script_data* data;
 	int actiontype = 0;
 
-	unit_bl = map_id2bl(script_getnum(st,2));
-
-	if (!unit_bl) {
+	if (!script_rid2bl(2,unit_bl)) {
 		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -17900,13 +17932,10 @@ BUILDIN_FUNC(unitattack)
 /// unitstopattack <unit_id>;
 BUILDIN_FUNC(unitstopattack)
 {
-	int unit_id;
 	struct block_list* bl;
 
-	unit_id = script_getnum(st,2);
-	bl = map_id2bl(unit_id);
-
-	if (bl != NULL) {
+	if(script_rid2bl(2,bl))
+	{
 		unit_stop_attack(bl);
 		if (bl->type == BL_MOB)
 			((TBL_MOB*)bl)->target_id = 0;
@@ -17920,13 +17949,9 @@ BUILDIN_FUNC(unitstopattack)
 /// unitstopwalk <unit_id>;
 BUILDIN_FUNC(unitstopwalk)
 {
-	int unit_id;
 	struct block_list* bl;
 
-	unit_id = script_getnum(st,2);
-	bl = map_id2bl(unit_id);
-
-	if (bl != NULL)
+	if(script_rid2bl(2,bl))
 		unit_stop_walking(bl, 0);
 
 	return SCRIPT_CMD_SUCCESS;
@@ -17937,16 +17962,13 @@ BUILDIN_FUNC(unitstopwalk)
 /// unittalk <unit_id>,"<message>";
 BUILDIN_FUNC(unittalk)
 {
-	int unit_id;
 	const char* message;
 	struct block_list* bl;
 
-	unit_id = script_getnum(st,2);
 	message = script_getstr(st, 3);
 
-	bl = map_id2bl(unit_id);
-
-	if (bl != NULL) {
+	if(script_rid2bl(2,bl))
+	{
 		struct StringBuf sbuf;
 
 		StringBuf_Init(&sbuf);
@@ -17965,15 +17987,12 @@ BUILDIN_FUNC(unittalk)
 /// @see e_* in db/const.txt
 BUILDIN_FUNC(unitemote)
 {
-	int unit_id;
 	int emotion;
 	struct block_list* bl;
 
-	unit_id = script_getnum(st,2);
 	emotion = script_getnum(st,3);
-	bl = map_id2bl(unit_id);
 
-	if (bl != NULL)
+	if(script_rid2bl(2,bl))
 		clif_emotion(bl, emotion);
 
 	return SCRIPT_CMD_SUCCESS;
@@ -17997,9 +18016,8 @@ BUILDIN_FUNC(unitskilluseid)
 	skill_lv = script_getnum(st,4);
 	target_id = ( script_hasdata(st,5) ? script_getnum(st,5) : unit_id );
 	casttime = ( script_hasdata(st,6) ? script_getnum(st,6) : 0 );
-	bl = map_id2bl(unit_id);
-
-	if (bl != NULL) {
+	
+	if(script_rid2bl(2,bl)){
 		if (bl->type == BL_NPC) {
 			if (!((TBL_NPC*)bl)->status.hp)
 				status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
@@ -18018,12 +18036,11 @@ BUILDIN_FUNC(unitskilluseid)
 /// unitskillusepos <unit_id>,"<skill name>",<skill_lv>,<target_x>,<target_y>{,<casttime>};
 BUILDIN_FUNC(unitskillusepos)
 {
-	int unit_id, skill_x, skill_y, casttime;
+	int skill_x, skill_y, casttime;
 	uint16 skill_id, skill_lv;
 	struct block_list* bl;
 	struct script_data *data;
 
-	unit_id  = script_getnum(st,2);
 	data = script_getdata(st, 3);
 	get_val(st, data); // Convert into value in case of a variable
 	skill_id = ( data_isstring(data) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
@@ -18031,9 +18048,8 @@ BUILDIN_FUNC(unitskillusepos)
 	skill_x  = script_getnum(st,5);
 	skill_y  = script_getnum(st,6);
 	casttime = ( script_hasdata(st,7) ? script_getnum(st,7) : 0 );
-	bl = map_id2bl(unit_id);
 
-	if (bl != NULL) {
+	if(script_rid2bl(2,bl)){
 		if (bl->type == BL_NPC) {
 			if (!((TBL_NPC*)bl)->status.hp)
 				status_calc_npc(((TBL_NPC*)bl), SCO_FIRST);
@@ -19729,15 +19745,30 @@ BUILDIN_FUNC(showdigit)
 
 	value = script_getnum(st,2);
 
-	if( script_hasdata(st,3) )
-	{
+	if( script_hasdata(st,3) ){
 		type = script_getnum(st,3);
+	}
 
-		if( type > 3 )
-		{
+	switch( type ){
+		case 0:
+			break;
+		case 1:
+		case 2:
+			// Use absolute value and then the negative value of it as starting value
+			// This is what gravity's client does for these counters
+			value = -abs(value);
+			break;
+		case 3:
+			value = abs(value);
+			if( value > 99 ){
+				ShowWarning("buildin_showdigit: type 3 can display 2 digits at max. Capping value %d to 99...\n", value);
+				script_reportsrc(st);
+				value = 99;
+			}
+			break;
+		default:
 			ShowError("buildin_showdigit: Invalid type %u.\n", type);
 			return SCRIPT_CMD_FAILURE;
-		}
 	}
 
 	clif_showdigit(sd, (unsigned char)type, value);
@@ -22249,8 +22280,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(checkwug,"?"),
 	BUILDIN_DEF(checkmadogear,"?"),
 	BUILDIN_DEF(setmadogear,"??"),
-	BUILDIN_DEF2(savepoint,"save","sii?"),
-	BUILDIN_DEF(savepoint,"sii?"),
+	BUILDIN_DEF2(savepoint,"save","sii???"),
+	BUILDIN_DEF(savepoint,"sii???"),
 	BUILDIN_DEF(gettimetick,"i"),
 	BUILDIN_DEF(gettime,"i"),
 	BUILDIN_DEF(gettimestr,"si"),

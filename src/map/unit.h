@@ -80,6 +80,16 @@ struct view_data {
 	unsigned dead_sit : 2;
 };
 
+/// Enum for unit_blown_immune
+enum e_unit_blown {
+	UB_KNOCKABLE = 0, // Can be knocked back / stopped
+	UB_NO_KNOCKBACK_MAP, // On a WoE/BG map
+	UB_MD_KNOCKBACK_IMMUNE, // Target is MD_KNOCKBACK_IMMUNE
+	UB_TARGET_BASILICA, // Target is in Basilica area
+	UB_TARGET_NO_KNOCKBACK, // Target has 'special_state.no_knockback'
+	UB_TARGET_TRAP, // Target is a trap that cannot be knocked back
+};
+
 // PC, MOB, PET
 
 // Does walk action for unit
@@ -104,8 +114,8 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 int unit_warp(struct block_list *bl, short map, short x, short y, clr_type type);
 int unit_setdir(struct block_list *bl, unsigned char dir);
 uint8 unit_getdir(struct block_list *bl);
-int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag);
-uint8 unit_blown_immune(struct block_list* bl, uint8 flag);
+int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_blown flag);
+enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag);
 
 // Can-reach checks
 bool unit_can_reach_pos(struct block_list *bl,int x,int y,int easy);

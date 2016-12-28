@@ -217,7 +217,7 @@ void initChangeTables(void)
 	add_sc( NPC_STUNATTACK		, SC_STUN		);
 	add_sc( NPC_SLEEPATTACK		, SC_SLEEP		);
 	set_sc( NPC_POISON		, SC_POISON		, SI_BLANK		, SCB_DEF2|SCB_REGEN );
-	set_sc( NPC_CURSEATTACK		, SC_CURSE		, SI_BLANK		, SCB_LUK|SCB_BATK|SCB_WATK|SCB_SPEED );
+	set_sc( NPC_WIDECURSE		, SC_CURSE		, SI_BLANK		, SCB_LUK|SCB_BATK|SCB_WATK|SCB_SPEED );
 	add_sc( NPC_SILENCEATTACK	, SC_SILENCE		);
 	add_sc( NPC_WIDECONFUSE		, SC_CONFUSION		);
 	set_sc( NPC_BLINDATTACK		, SC_BLIND		, SI_BLANK		, SCB_HIT|SCB_FLEE );
@@ -7753,6 +7753,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		case SC_POISON:
 		case SC_DPOISON:
 			sc_def = status->vit*100;
+#ifndef RENEWAL
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			if (sd) {
 				// For players: 60000 - 450*vit - 100*luk
@@ -7763,6 +7764,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 				tick>>=1;
 				tick_def = (status->vit*200)/3;
 			}
+#endif
 			break;
 		case SC_STUN:
 			sc_def = status->vit*100;
@@ -9923,9 +9925,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (val1 < 1)
 				val1 = 1;
 			break;
-		case SC_HALLUCINATION:
-			val2 = 5+val1; // Factor by which displayed damage is increased by
-			break;
 		case SC_DOUBLECAST:
 			val2 = 30+10*val1; // Trigger rate
 			break;
@@ -10642,10 +10641,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val1 = MOBID_PORING; // Default poring
 			break;
 		case SC_APPLEIDUN:
+		{
+			struct map_session_data * s_sd = BL_CAST(BL_PC, src);
 			val2 = (5 + 2 * val1) + (status_get_vit(src) / 10); //HP Rate: (5 + 2 * skill_lv) + (vit/10) + (BA_MUSICALLESSON level)
-			if (sd)
-				val2 += pc_checkskill(sd,BA_MUSICALLESSON);
+			if (s_sd)
+				val2 += pc_checkskill(s_sd, BA_MUSICALLESSON) / 2;
 			break;
+		}
 		case SC_EPICLESIS:
 			val2 = 5 * val1; //HP rate bonus
 			break;
