@@ -14,32 +14,32 @@
 1. To begin, please make sure the map-server is compiled.
 2. Once compiled, execute the following command:
 ### Windows:
-````
+```
 map-server.exe --generate-translations [path/to/generated.file]
-````
+```
 ### Linux:
-````
+```
 map-server --generate-translations [path/to/generated.file]
-````
+```
 
 ## 2. Translating Language (.po) File
 1. After generating the translation/template .pot file, rename it to "My_Translation.po"
 2. Open the file, then find this dialog:
-````
-#: npc/re/jobs/novice/novice.txt
-# mes "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips.";
-msgctxt "Sprakki#newbe01::NvSprakkiA"
-msgid "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips."
-msgstr ""
-````
+    ```
+    #: npc/re/jobs/novice/novice.txt
+    # mes "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips.";
+    msgctxt "Sprakki#newbe01::NvSprakkiA"
+    msgid "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips."
+    msgstr ""
+    ```
 3. Add/edit the dialog inside `msgstr ""` (Example in Indonesian from idRO)
-````
-#: npc/re/jobs/novice/novice.txt
-# mes "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips.";
-msgctxt "Sprakki#newbe01::NvSprakkiA"
-msgid "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips."
-msgstr "Halo! Selamat datang di Ragnarok Online Indonesia. Namaku adalah Sprakki dan aku disini untuk membantumu mengenai pengetahuan dasar bermain."
-````
+    ```
+    #: npc/re/jobs/novice/novice.txt
+    # mes "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips.";
+    msgctxt "Sprakki#newbe01::NvSprakkiA"
+    msgid "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips."
+    msgstr "Halo! Selamat datang di Ragnarok Online Indonesia. Namaku adalah Sprakki dan aku disini untuk membantumu mengenai pengetahuan dasar bermain."
+    ```
 4. Make sure the EOL is set to UNIX.
 5. Save the file.
 
@@ -51,13 +51,13 @@ msgstr "Halo! Selamat datang di Ragnarok Online Indonesia. Namaku adalah Sprakki
 2. Add your new language name and the file for the translations.
 
 Example:
-````
+```
 	My_Language: {						// Language Name
 		lang: (
 			"lang/My_Translation.po"	// Translation file
 		)
 	}
-````
+```
 
 **NOTE:**
 * More than 1 language can be added.
@@ -66,9 +66,9 @@ Example:
 ## 4. Set Default Language
 1. Before changing the default language of the server, make sure the new language is added.
 2. Change the default language value in:
-````
+```
 default_language: "My_Language"
-````
+```
 
 ## 5. Changing Language
 Use `@langtype` in-game to change the user's default language.
@@ -84,7 +84,7 @@ Besides NPC dialogs, translations are also available for:
 * Message of The Day (MOTD)
 
 Example:
-````
+```
 translations: {
 	My_Language: {								// Language Name
 		motd: "lang/Indonesian/motd.txt"		// MOTD Translation
@@ -94,7 +94,7 @@ translations: {
 		)
 	}
 }
-````
+```
 
 ## 7. Contributions
 * rAthena **DOES NOT** officially manage the translation files. Please contact the respective party that provided the translation.
