@@ -19528,10 +19528,10 @@ BUILDIN_FUNC(instance_info)
 		case IIT_ID:
 			script_pushint(st, db->id);
 			break;
-		case IIT_LIMITTIME:
+		case IIT_TIME_LIMIT:
 			script_pushint(st, db->limit);
 			break;
-		case IIT_IDLETIMEOUT:
+		case IIT_IDLE_TIMEOUT:
 			script_pushint(st, db->timeout);
 			break;
 		case IIT_ENTER_MAP:
