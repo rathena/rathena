@@ -106,7 +106,7 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 				
 		* Verify the new upstream repository you've specified for your fork:
 		
-				git remove-v origin
+				git remote -v origin
 				
 		* You should see the main rAthena repository as well as your forked repository
 		* Now, when you want to get updates from rAthena, simply do:
