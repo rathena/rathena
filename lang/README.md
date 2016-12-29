@@ -25,6 +25,7 @@ map-server --generate-translations [path/to/generated.file]
 ## 2. Translating Language (.po) File
 1. After generating the translation/template .pot file, rename it to "My_Translation.po"
 2. Open the file, then find this dialog:
+
     ```
     #: npc/re/jobs/novice/novice.txt
     # mes "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips.";
@@ -32,7 +33,9 @@ map-server --generate-translations [path/to/generated.file]
     msgid "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips."
     msgstr ""
     ```
+
 3. Add/edit the dialog inside `msgstr ""` (Example in Indonesian from idRO)
+
     ```
     #: npc/re/jobs/novice/novice.txt
     # mes "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips.";
@@ -40,6 +43,7 @@ map-server --generate-translations [path/to/generated.file]
     msgid "Hello there! Welcome to the World of Ragnarok Online. My name is Sprakki and I'm in charge of giving you basic gameplay tips."
     msgstr "Halo! Selamat datang di Ragnarok Online Indonesia. Namaku adalah Sprakki dan aku disini untuk membantumu mengenai pengetahuan dasar bermain."
     ```
+
 4. Make sure the EOL is set to UNIX.
 5. Save the file.
 
