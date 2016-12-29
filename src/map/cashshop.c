@@ -292,7 +292,7 @@ enum e_sale_add_result sale_add_item( uint16 nameid, int32 count, time_t from, t
 		return SALE_ADD_DUPLICATE;
 	}
 	
-	if( SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`nameid`,`start`,`end`,`amount`) VALUES ( '%d', FROM_UNIXTIME(%d), FROM_UNIXTIME(%d), '%d', '%d' )", sales_table, nameid, (uint32)from, (uint32)to, cash_shop_items[CASHSHOP_TAB_SALE].item[i]->price, count) ){
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`nameid`,`start`,`end`,`amount`) VALUES ( '%d', FROM_UNIXTIME(%d), FROM_UNIXTIME(%d), '%d' )", sales_table, nameid, (uint32)from, (uint32)to, count) ){
 		Sql_ShowDebug(mmysql_handle);
 		return SALE_ADD_FAILED;
 	}
