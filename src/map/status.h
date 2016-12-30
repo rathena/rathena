@@ -788,6 +788,11 @@ typedef enum sc_type {
 
 	SC_TAROTCARD,
 
+	// Geffen Magic Tournament Buffs
+	SC_GEFFEN_MAGIC1,
+    SC_GEFFEN_MAGIC2,
+    SC_GEFFEN_MAGIC3,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
