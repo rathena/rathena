@@ -11404,6 +11404,11 @@
 //===================================================================
 // New Accessories
 //===================================================================
+28302,Vesper_Core01_,Vesper Core 01,4,20,,500,,1,,1,0x00CFFF80,18,2,136,,1,0,0,{ bonus bMdef,3; bonus bInt,2; bonus bMaxSPrate,5; },{},{}
+28303,Vesper_Core02_,Vesper Core 02,4,20,,500,,1,,1,0x00CFFF80,18,2,136,,1,0,0,{ bonus bMdef,3; bonus bStr,3; bonus bBaseAtk,10; },{},{}
+28304,Vesper_Core03_,Vesper Core 03,4,20,,500,,1,,1,0x00CFFF80,18,2,136,,1,0,0,{ bonus bMdef,3; bonus bAgi,3; bonus bFlee,5; },{},{}
+28305,Vesper_Core04_,Vesper Core 04,4,20,,500,,1,,1,0x00CFFF80,18,2,136,,1,0,0,{ bonus bMdef,3; bonus bDex,3; bonus bHit,10; },{},{}
+28306,Bless_Of_Moon,Luna's Blessing,4,20,,100,,5,,0,0xFFFFFFFF,63,2,136,,1,0,,{ bonus bAllStats,1; bonus bMdef,2; bonus3 bAutoSpell,"CG_TAROTCARD",5,100; },{},{}
 28315,RCC2013_ARMLET,RCC2013_ARMLET,4,200,,200,,,,0,0xFFFFFFFF,63,2,136,,1,0,,{ bonus2 bAddClass,Class_All,1; },{},{}
 28316,RCC2013_ARMLET_,RCC2013_ARMLET_,4,200,,200,,,,1,0xFFFFFFFF,63,2,136,,1,0,,{ bonus2 bAddClass,Class_All,1; },{},{}
 28317,RCC2013_RING,RCC2013_RING,4,200,,200,,,,0,0xFFFFFFFF,63,2,136,,1,0,,{ bonus2 bAddClass,Class_All,1; },{},{}
@@ -11411,6 +11416,7 @@
 28310,Sarah's_Left_Earring,Sarah's Left Earring,4,10,,100,,,,0,0xFFFFFFFF,63,2,128,,145,0,,{ skill "AL_HEAL",1; },{},{}
 28311,Sarah's_Right_Earring,Sarah's Right Earring,4,10,,100,,,,0,0xFFFFFFFF,63,2,8,,145,0,,{ skill "AL_TELEPORT",1; },{},{}
 28321,Falconer_Claw,Falconer Claw,4,0,,100,,5,,1,0x00000800,63,2,136,1,80,0,,{ bonus bDex,1; bonus2 bSkillAtk,"HT_BLITZBEAT",getskilllv("HT_STEELCROW")*10; },{},{}
+28322,Falconer_Glove,Falconer Glove,4,0,,100,,5,,1,0x00000800,63,2,136,1,80,0,,{ bonus bDex,1; bonus bUseSPrate,-5; },{},{}
 28326,Broken_Chips_01,Broken Chips 01,4,10,,100,,,,1,0xFFFFFFFF,63,2,136,,100,0,,{ bonus bStr,4; },{},{}
 28327,Broken_Chips_02,Broken Chips 02,4,10,,100,,,,1,0xFFFFFFFF,63,2,136,,100,0,,{ bonus bInt,4; },{},{}
 28332,Jewerly_Ring,Jewerly Ring,4,10,,100,,,,0,0xFFFFFFFF,63,2,136,,1,0,,{ bonus bLuk,20; autobonus "{ bonus bAspd,2; }",50,2000,BF_WEAPON|BF_MAGIC; },{},{}
