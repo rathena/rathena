@@ -4010,6 +4010,7 @@
 5971,Moon_Eyepatch,Moon Eyepatch,4,0,,100,,,,1,0xFFFFFFFF,63,2,512,1,10,1,1370,{ bonus2 bSubEle,Ele_Water,5; },{},{}
 5972,Chatty_Parrot,Chatty Parrot,4,0,,100,,,,0,0xFFFFFFFF,63,2,1,1,80,1,1116,{ bonus bMatkRate,BaseLevel/50; bonus bVariableCast,-readparam(bInt)/30; },{},{}
 5973,Ancient_Elven_Ear_J,Ancient Elven Ear J,4,0,,200,,,,0,0xFFFFFFFF,63,2,512,1,70,1,665,{ bonus bLuk,10; bonus bMdef,10; bonus bFlee2,2; },{},{}
+5978,Syringe_Toy,Toy Syringe,4,0,,100,,3,,0,0xFFFFFFFF,63,2,1,1,70,0,842,{ bonus bMdef,3; bonus2 bAddItemHealRate,545,150; bonus2 bAddItemHealRate,546,150; bonus2 bAddItemHealRate,547,150; },{},{}
 5979,C_Angel_Fluttering,C Angel Fluttering,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,1,1,1,1380,{ hateffect HAT_EF_ANGEL_FLUTTERING,true; },{},{ hateffect HAT_EF_ANGEL_FLUTTERING,false; }
 5980,C_Classical_Fhat,C Classical Fhat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,1,1,1,1381,{},{},{}
 5985,Noble_Mask,Noble Mask,4,0,,200,,,,0,0xFFFFFFFF,63,2,256,1,30,1,1409,{ bonus2 bSkillAtk,"PA_SACRIFICE",BaseLevel*2; bonus2 bSkillVariableCast,"PA_PRESSURE",-2000; bonus2 bSkillVariableCast,"CR_DEVOTION",-2000; if (BaseLevel > 149) { bonus bMaxHPrate,3; bonus bAspdRate,3; } else  if (BaseLevel > 99) { bonus bMaxHPrate,2; bonus bAspdRate,2; } else { bonus bMaxHPrate,1; bonus bAspdRate,1; } },{},{}
