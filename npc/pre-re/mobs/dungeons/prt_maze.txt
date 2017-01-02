@@ -44,8 +44,8 @@ prt_maze01,99,180,21,21	monster	Dustiness	1114,5,120000,40000
 prt_maze01,59,180,21,21	monster	Martin	1145,5,120000,40000
 prt_maze01,19,180,21,21	monster	Savage	1166,3,120000,40000
 prt_maze01,19,180,21,21	monster	Savage	1166,5,120000,40000
-prt_maze01,0,0,0,0	monster	Hunter Fly	1035,1
-prt_maze01,0,0,0,0	monster	Vagabond Wolf	1092,1,3600000,1800000
+prt_maze01,0,0	monster	Hunter Fly	1035,1
+prt_maze01,0,0	monster	Vagabond Wolf	1092,1,3600000,1800000
 prt_maze01,101,138,5,5	monster	Shining Plant	1083,1,1800000,900000
 prt_maze01,101,138,5,5	monster	White Plant	1082,1,1800000,900000
 prt_maze01,99,181,5,5	monster	White Plant	1082,2,1800000,900000
@@ -53,7 +53,7 @@ prt_maze01,60,140,10,15	monster	Blue Plant	1079,1,1800000,900000
 prt_maze01,61,101,10,10	monster	Yellow Plant	1081,1,1800000,900000
 prt_maze01,141,100,10,10	monster	Shining Plant	1083,1,1800000,900000
 prt_maze01,141,100,10,10	monster	Blue Plant	1079,1,1800000,900000
-prt_maze01,0,0,0,0	monster	Red Plant	1078,5,180000,90000
+prt_maze01,0,0	monster	Red Plant	1078,5,180000,90000
 prt_maze01,100,100,10,10	monster	Blue Plant	1079,1,1800000,900000
 prt_maze01,100,100,10,10	monster	Yellow Plant	1081,1,1800000,900000
 prt_maze01,176,132,5,5	monster	Black Mushroom	1084,3,180000,90000
@@ -64,19 +64,19 @@ prt_maze01,168,60,3,3	monster	Red Mushroom	1085,2,180000,90000
 //==================================================
 // prt_maze02 - Labyrinth Forest F2
 //==================================================
-prt_maze02,0,0,0,0	monster	Poporing	1031,25
-prt_maze02,0,0,0,0	monster	Bigfoot	1060,5
-prt_maze02,0,0,0,0	monster	Sasquatch	1243,1,900000,40000
-prt_maze02,0,0,0,0	monster	Leib Olmai	1306,1,1800000,900000
+prt_maze02,0,0	monster	Poporing	1031,25
+prt_maze02,0,0	monster	Bigfoot	1060,5
+prt_maze02,0,0	monster	Sasquatch	1243,1,900000,40000
+prt_maze02,0,0	monster	Leib Olmai	1306,1,1800000,900000
 
 //==================================================
 // prt_maze03 - Labyrinth Forest F3
 //==================================================
-prt_maze03,0,0,0,0	monster	Poporing	1031,45
-prt_maze03,0,0,0,0	monster	Side Winder	1037,10
-prt_maze03,0,0,0,0	monster	Hunter Fly	1035,30
-prt_maze03,0,0,0,0	monster	Ghostring	1120,1,6800000,3400000
-prt_maze03,0,0,0,0	monster	Killer Mantis	1294,1
+prt_maze03,0,0	monster	Poporing	1031,45
+prt_maze03,0,0	monster	Side Winder	1037,10
+prt_maze03,0,0	monster	Hunter Fly	1035,30
+prt_maze03,0,0	monster	Ghostring	1120,1,6800000,3400000
+prt_maze03,0,0	monster	Killer Mantis	1294,1
 prt_maze03,150,50,70,70	monster	Side Winder	1037,20,300000,150000
 prt_maze03,150,50,70,70	monster	Vocal	1088,1,1920000,1500000
 prt_maze03,50,150,70,70	monster	Stem Worm	1215,20,300000,150000
@@ -96,7 +96,7 @@ prt_maze03,17,58,10,10	monster	Shining Plant	1083,1,1800000,900000
 prt_maze03,17,58,10,10	monster	Blue Plant	1079,1,1800000,900000
 prt_maze03,99,141,10,10	monster	Blue Plant	1079,2,1800000,900000
 prt_maze03,99,21,10,10	monster	Blue Plant	1079,1,1800000,900000
-prt_maze03,0,0,0,0	monster	Red Plant	1078,5,180000,90000
+prt_maze03,0,0	monster	Red Plant	1078,5,180000,90000
 prt_maze03,99,21,10,10	monster	Black Mushroom	1084,3,180000,90000
 prt_maze03,54,15,10,10	monster	Black Mushroom	1084,3,180000,90000
 prt_maze03,171,180,3,3	monster	Red Mushroom	1085,2,180000,90000

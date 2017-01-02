@@ -15,13 +15,13 @@
 //==================================================
 // Wild Rose City Spawns
 //==================================================
-brasilis,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000
-dewata,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000
-malaya,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000
-izlude_a,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000
-izlude_b,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000
-izlude_c,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000
-izlude_d,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000
+brasilis,0,0	monster	Wild Rose	1261,1,7200000,3600000
+dewata,0,0	monster	Wild Rose	1261,1,7200000,3600000
+malaya,0,0	monster	Wild Rose	1261,1,7200000,3600000
+izlude_a,0,0	monster	Wild Rose	1261,1,7200000,3600000
+izlude_b,0,0	monster	Wild Rose	1261,1,7200000,3600000
+izlude_c,0,0	monster	Wild Rose	1261,1,7200000,3600000
+izlude_d,0,0	monster	Wild Rose	1261,1,7200000,3600000
 
 //==================================================
 // Thief Bug Egg City Spawns

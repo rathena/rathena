@@ -15,16 +15,16 @@
 //==================================================
 // um_dun01 - Carpenter's Shop in the Tree
 //==================================================
-um_dun01,0,0,0,0	monster	Stone Shooter	1495,70
-um_dun01,0,0,0,0	monster	Wootan Fighter	1499,10
-um_dun01,0,0,0,0	monster	Wootan Shooter	1498,10
-um_dun01,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000
-um_dun01,0,0,0,0	monster	Green Plant	1080,5,180000,90000
+um_dun01,0,0	monster	Stone Shooter	1495,70
+um_dun01,0,0	monster	Wootan Fighter	1499,10
+um_dun01,0,0	monster	Wootan Shooter	1498,10
+um_dun01,0,0	monster	Yellow Plant	1081,5,180000,90000
+um_dun01,0,0	monster	Green Plant	1080,5,180000,90000
 
 //==================================================
 // um_dun02 - Passage to a Foreign World
 //==================================================
-um_dun02,0,0,0,0	monster	Wooden Golem	1497,50
+um_dun02,0,0	monster	Wooden Golem	1497,50
 um_dun02,79,227,10,10	monster	Wooden Golem	1497,2,240000,60000
 um_dun02,87,189,10,10	monster	Wooden Golem	1497,2,240000,60000
 um_dun02,170,145,10,10	monster	Wooden Golem	1497,2,240000,60000
@@ -41,8 +41,8 @@ um_dun02,272,163,15,15	monster	Wooden Golem	1497,2,360000,60000
 um_dun02,272,163,15,15	monster	Wooden Golem	1497,2,180000,60000
 um_dun02,232,156,15,15	monster	Wooden Golem	1497,2,300000,60000
 um_dun02,232,156,15,15	monster	Wooden Golem	1497,2,180000,60000
-um_dun02,0,0,0,0	monster	Driller	1380,5
-um_dun02,0,0,0,0	monster	Wootan Shooter	1498,10
+um_dun02,0,0	monster	Driller	1380,5
+um_dun02,0,0	monster	Wootan Shooter	1498,10
 um_dun02,213,217,15,15	monster	Wootan Shooter	1498,2,120000,60000
 um_dun02,72,258,15,15	monster	Wootan Shooter	1498,3,120000,60000
 um_dun02,79,227,10,10	monster	Wootan Shooter	1498,1,120000,60000
@@ -50,7 +50,7 @@ um_dun02,170,145,10,10	monster	Wootan Shooter	1498,1,120000,60000
 um_dun02,209,34,15,15	monster	Wootan Shooter	1498,1,120000,60000
 um_dun02,272,163,15,15	monster	Wootan Shooter	1498,1,120000,60000
 um_dun02,232,156,15,15	monster	Wootan Shooter	1498,1,120000,60000
-um_dun02,0,0,0,0	monster	Dryad	1493,25
-um_dun02,0,0,0,0	monster	Yellow Plant	1081,5,180000,90000
-um_dun02,0,0,0,0	monster	Red Plant	1078,5,180000,90000
-um_dun02,0,0,0,0	monster	Shining Plant	1083,6,180000,90000
+um_dun02,0,0	monster	Dryad	1493,25
+um_dun02,0,0	monster	Yellow Plant	1081,5,180000,90000
+um_dun02,0,0	monster	Red Plant	1078,5,180000,90000
+um_dun02,0,0	monster	Shining Plant	1083,6,180000,90000

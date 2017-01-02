@@ -3756,6 +3756,11 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	if (ai > AI_NONE && ai <= AI_MAX)
 		mob.state.ai = ai;
 
+	if (mob.xs < 1)
+		mob.xs = 0;
+	if (mob.ys < 1)
+		mob.ys = 0;
+
 	if (mob.num > 1 && battle_config.mob_count_rate != 100) {
 		if ((mob.num = mob.num * battle_config.mob_count_rate / 100) < 1)
 			mob.num = 1;

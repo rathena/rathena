@@ -12434,15 +12434,15 @@ OnReset:
 	end;
 }
 
-que_sign02,0,0,0,0	monster	Ancient Mummy	1522,8
-que_sign02,0,0,0,0	monster	Evil Druid	1435,8
-que_sign02,0,0,0,0	monster	Ghoul	1423,20
-que_sign02,0,0,0,0	monster	Incubus	1580,8
-que_sign02,0,0,0,0	monster	Injustice	1446,8
-que_sign02,0,0,0,0	monster	Skeleton Prisoner	1479,15
-que_sign02,0,0,0,0	monster	Zombie Prisoner	1480,15
-que_sign02,0,0,0,0	monster	Wraith	1475,15
-que_sign02,0,0,0,0	monster	Wraith Dead	1566,8
+que_sign02,0,0	monster	Ancient Mummy	1522,8
+que_sign02,0,0	monster	Evil Druid	1435,8
+que_sign02,0,0	monster	Ghoul	1423,20
+que_sign02,0,0	monster	Incubus	1580,8
+que_sign02,0,0	monster	Injustice	1446,8
+que_sign02,0,0	monster	Skeleton Prisoner	1479,15
+que_sign02,0,0	monster	Zombie Prisoner	1480,15
+que_sign02,0,0	monster	Wraith	1475,15
+que_sign02,0,0	monster	Wraith Dead	1566,8
 
 que_sign02,378,235,0	script	sign_w6	45,1,1,{
 OnTouch_:

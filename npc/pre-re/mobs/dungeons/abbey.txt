@@ -38,7 +38,7 @@ nameless_n,234,95,40,58	monster	Banshee	1867,4,15000
 nameless_n,234,95,40,58	monster	Ghoul	1036,10,30000
 
 // Cursed Abbey Dungeon 1
-abbey01,0,0,0,0	monster	Banshee	1867,30
+abbey01,0,0	monster	Banshee	1867,30
 abbey01,97,270,87,87	monster	Banshee	1867,30
 abbey01,97,270,87,87	monster	Hell Poodle	1866,15
 abbey01,97,270,87,87	monster	Zombie Slaughter	1864,10

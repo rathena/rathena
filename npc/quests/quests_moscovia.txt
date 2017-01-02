@@ -9031,9 +9031,9 @@ OnInit:
 	disablenpc "1#rus27";
 	end;
 }
-mosk_que,0,0,0,0	monster	Freezer	1887,10,20000
-mosk_que,0,0,0,0	monster	Hatii Baby	1888,3,300000
-mosk_que,0,0,0,0	monster	Sasquatch	1243,15,10000
+mosk_que,0,0	monster	Freezer	1887,10,20000
+mosk_que,0,0	monster	Hatii Baby	1888,3,300000
+mosk_que,0,0	monster	Sasquatch	1243,15,10000
 
 mosk_que,49,22,3	script	#rus27	-1,3,3,{
 	end;

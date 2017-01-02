@@ -29,5 +29,5 @@ lou_fild01,273,128,75,50	monster	Mi Gao	1516,7
 lou_fild01,224,315,100,50	monster	Anacondaq	1030,2
 lou_fild01,203,225,110,35	monster	Anacondaq	1030,1
 lou_fild01,273,128,75,50	monster	Anacondaq	1030,2
-lou_fild01,0,0,0,0	monster	Black Mushroom	1084,5
-lou_fild01,0,0,0,0	monster	Yellow Plant	1081,10
+lou_fild01,0,0	monster	Black Mushroom	1084,5
+lou_fild01,0,0	monster	Yellow Plant	1081,10
