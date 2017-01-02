@@ -3981,12 +3981,26 @@ void script_stop_instances(struct script_code *code) {
 int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct script_state *st = (struct script_state *)data;
-	TBL_PC *sd = map_id2sd(st->rid);
 
-	if ((sd && sd->status.char_id != id) || (st->rid && !sd)) { // Character mismatch. Cancel execution.
-		st->rid = 0;
-		st->state = END;
+	// If it was a player before going to sleep and there is still a unit attached to the script
+	if( id != 0 && st->rid ){
+		struct map_session_data *sd = map_id2sd(st->rid);
+
+		// Attached player is offline or another unit type - should not happen
+		if( !sd ){
+			ShowWarning( "Script sleep timer called by an offline character or non player unit.\n" );
+			script_reportsrc(st);
+			st->rid = 0;
+			st->state = END;
+		// Character mismatch. Cancel execution.
+		}else if( sd->status.char_id != id ){
+			ShowWarning( "Script sleep timer detected a character mismatch CID %d != %d\n", sd->status.char_id, id );
+			script_reportsrc(st);
+			st->rid = 0;
+			st->state = END;
+		}
 	}
+
 	st->sleep.timer = INVALID_TIMER;
 	if(st->state != RERUNLINE)
 		st->sleep.tick = 0;
@@ -18092,8 +18106,8 @@ BUILDIN_FUNC(sleep)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Pauses the execution of the script, keeping the player attached
-/// Returns if a player is still attached
+/// Pauses the execution of the script, keeping the unit attached
+/// Returns if the unit is still attached
 ///
 /// sleep2(<mili secconds>) -> <bool>
 BUILDIN_FUNC(sleep2)
@@ -18104,7 +18118,7 @@ BUILDIN_FUNC(sleep2)
 
 	if( ticks <= 0 )
 	{// do nothing
-		script_pushint(st, (map_id2sd(st->rid)!=NULL));
+		script_pushint(st, (map_id2bl(st->rid)!=NULL));
 	}
 	else if( !st->sleep.tick )
 	{// sleep for the target amount of time
@@ -18115,7 +18129,7 @@ BUILDIN_FUNC(sleep2)
 	{// sleep time is over
 		st->state = RUN;
 		st->sleep.tick = 0;
-		script_pushint(st, (map_id2sd(st->rid)!=NULL));
+		script_pushint(st, (map_id2bl(st->rid)!=NULL));
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18138,22 +18152,14 @@ BUILDIN_FUNC(awake)
 
 	for (tst = dbi_first(iter); dbi_exists(iter); tst = dbi_next(iter)) {
 		if (tst->oid == nd->bl.id) {
-			TBL_PC* sd = map_id2sd(tst->rid);
-
 			if (tst->sleep.timer == INVALID_TIMER) { // already awake ???
 				continue;
 			}
-			if ((sd && sd->status.char_id != tst->sleep.charid) || (tst->rid && !sd)) {
-				// char not online anymore / another char of the same account is online - Cancel execution
-				tst->state = END;
-				tst->rid = 0;
-			}
 
 			delete_timer(tst->sleep.timer, run_script_timer);
-			tst->sleep.timer = INVALID_TIMER;
-			if (tst->state != RERUNLINE)
-				tst->sleep.tick = 0;
-			run_script_main(tst);
+
+			// Trigger the timer function
+			run_script_timer(INVALID_TIMER, gettick(), tst->sleep.charid, (intptr_t)tst);
 		}
 	}
 	dbi_destroy(iter);
