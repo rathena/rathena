@@ -139,7 +139,7 @@ and 'doc/mapflags.txt'.
 
 ** Create a permanent monster spawn:
 
-<map name>,<x>,<y>,<xs>,<ys>%TAB%monster%TAB%<monster name>%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
+<map name>,<x>,<y>{,<xs>{,<ys>}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 
 Map name is the name of the map the monsters will spawn on. x,y are the
 coordinates where the mob should spawn. If xs and ys are non-zero, they
@@ -155,6 +155,7 @@ is given as "--ja--", the 'japanese name' field from the monster database is
 used, (which, in rAthena, actually contains an English name) if it's "--en--", 
 it's the 'english name' from the monster database (which contains an uppercase 
 name used to summon the monster with a GM command).
+Monster level will change the level of the monsters spawn (optionnal).
 
 Amount is the amount of monsters that will be spawned when this command is 
 executed, it is affected by spawn rates in 'battle_athena.conf'.
@@ -181,7 +182,7 @@ There are two optionnals fields for monster size and AI.
 	Size_Medium	(1)
 	Size_Large	(2)
 
-- AI can be:
+<mob ai> can be:
 	AI_NONE		(0)		(default)
 	AI_ATTACK	(1)		(attack/friendly)
 	AI_SPHERE	(2)		(Alchemist skill)
