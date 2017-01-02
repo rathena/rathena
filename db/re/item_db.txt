@@ -8637,10 +8637,10 @@
 15147,Invective_Robe,Invective Robe,4,20,,100,,0,,1,0xFFFFFFFF,63,2,16,,100,1,,{ skill "AC_CONCENTRATION",1; .@i = getrefine()*4; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,.@i; bonus2 bIgnoreDefRaceRate,RC_Demon,.@i; bonus2 bIgnoreDefRaceRate,RC_Undead,.@i; },{},{}
 15150,White_Shirt,White Shirt,4,20,,50,,25,,1,0x80000000,7,2,16,,6,1,,{ bonus bMaxHP,70; bonus bFlee,5; },{},{}
 15151,White_Eco-Shirt,White Eco-Shirt,4,20,,100,,40,,1,0x80000000,7,2,16,,15,1,,{ bonus bMaxHP,150; bonus bFlee,10; },{},{}
-15152,Unity_Mail,Unity Mail,4,10,,300,,45,,1,0xFFFFFFFF,63,2,16,,1,1,0,{ .@r = getrefine(); if(BaseLevel<100) { bonus2 bExpAddRace,RC_All,4; bonus bStr,2; bonus bMaxHPrate,2*(.@r/2); },{},{}
-15153,Unity_Mantle,Unity Mantle,4,10,,300,,45,,1,0xFFFFFFFF,63,2,16,,1,1,0,{ .@r = getrefine(); if(BaseLevel<100) { bonus2 bExpAddRace,RC_All,4; bonus bAgi,2; bonus bFlee,3*(.@r/2); },{},{}
-15154,Unity_Suit,Unity Suit,4,10,,300,,45,,1,0xFFFFFFFF,63,2,16,,1,1,0,{ .@r = getrefine(); if(BaseLevel<100) { bonus2 bExpAddRace,RC_All,4; bonus bDex,2; bonus bCritical,2*(.@r/2); },{},{}
-15155,Unity_Robe,Unity Robe,4,10,,300,,45,,1,0xFFFFFFFF,63,2,16,,1,1,0,{ .@r = getrefine(); if(BaseLevel<100) { bonus2 bExpAddRace,RC_All,4; bonus bInt,2; bonus bUseSPrate,-(.@r/2); },{},{}
+15152,Unity_Mail,Unity Mail,4,10,,300,,45,,1,0xFFFFFFFF,63,2,16,,1,1,0,{ .@r = getrefine(); if(BaseLevel<100) { bonus2 bExpAddRace,RC_All,4; bonus bStr,2; bonus bMaxHPrate,2*(.@r/2); } },{},{}
+15153,Unity_Mantle,Unity Mantle,4,10,,300,,45,,1,0xFFFFFFFF,63,2,16,,1,1,0,{ .@r = getrefine(); if(BaseLevel<100) { bonus2 bExpAddRace,RC_All,4; bonus bAgi,2; bonus bFlee,3*(.@r/2); } },{},{}
+15154,Unity_Suit,Unity Suit,4,10,,300,,45,,1,0xFFFFFFFF,63,2,16,,1,1,0,{ .@r = getrefine(); if(BaseLevel<100) { bonus2 bExpAddRace,RC_All,4; bonus bDex,2; bonus bCritical,2*(.@r/2); } },{},{}
+15155,Unity_Robe,Unity Robe,4,10,,300,,45,,1,0xFFFFFFFF,63,2,16,,1,1,0,{ .@r = getrefine(); if(BaseLevel<100) { bonus2 bExpAddRace,RC_All,4; bonus bInt,2; bonus bUseSPrate,-(.@r/2); } },{},{}
 15156,Elegant_Doram_Suit,Elegant Doram Suit,4,20,,900,,120,,1,0x80000000,7,2,16,,175,1,,{ bonus bMaxHPrate,15; bonus bMaxSPrate,15; .@r = getrefine(); bonus bDex,.@r; bonus bInt,.@r; if(.@r > 9) bonus bUseSPrate,-5; },{},{}
 15162,Lounge_Suit,Lounge Suit,4,20,,300,,40,,1,0xFFFFFFFE,63,2,16,,80,1,,{ bonus bAspdRate,3; bonus bCastrate,-3; bonus bDelayrate,-3; if(getrefine() > 6) { bonus bAspdRate,2; bonus bCastrate,-2; bonus bDelayrate,-2; } },{},{}
 15163,Fictitious_Robe,Fictitious Robe,4,20,,100,,0,,1,0xFFFFFFFF,63,2,16,,100,1,,{ skill "SA_SPELLBREAKER",1; .@i = BaseLevel; bonus bMatkRate,(.@i>=140)?(14):((.@i>=120)?(9):(5)); },{},{}
