@@ -11584,6 +11584,16 @@
 //===================================================================
 // New Cards
 //===================================================================
+31006,LoVA_Hades_Card,LoVA Hades Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bSubRace,RC_Undead,10; },{},{}
+31007,LoVA_Realization_Hades_Card,LoVA Realization Hades Card,6,20,,10,,,,,,,,16,,,,,{ bonus bDefEle,Ele_Undead; bonus2 bSubRace,RC_Undead,10; },{},{}
+31008,LoVA_Lulu_Card,LoVA Lulu Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bHPRegenRate,BaseLevel,10000; if(getrefine()>=7) { bonus bAtk,6*(readparam(bStr)/60); bonus bMaxHPrate,readparam(bStr)/60; } },{},{}
+31009,LoVA_Realization_Lulu_Card,LoVA Realization Lulu Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bHPRegenRate,1+BaseLevel,10000; if(getrefine()>=7) { bonus bAtk,6*(readparam(bStr)/20); bonus bMaxHPrate,readparam(bStr)/20; } },{},{}
+31010,LoVA_Kima_Card,LoVA Kima Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bSPRegenRate,BaseLevel/6,10000; if(getrefine()>=7) { bonus bMatk,6*(readparam(bInt)/30); bonus bMaxSPrate,readparam(bInt)/30; } },{},{}
+31011,LoVA_Realization_Kima_Card,LoVA Realization Kima Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bSPRegenRate,BaseLevel/2,10000; if(getrefine()>=7) { bonus bMatk,6*(readparam(bInt)/10); bonus bMaxSPrate,readparam(bInt)/10; } },{},{}
+31012,LoVA_Bahamut_Card,LoVA Bahamut Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,"RK_DRAGONBREATH",5; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",5; if(getrefine()>=7) { bonus bDelayrate,-1; } },{},{}
+31013,LoVA_Realization_Bahamut_Card,LoVA Realization Bahamut Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSkillAtk,"RK_DRAGONBREATH",15; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",15; if(getrefine()>=7) { bonus bDelayrate,-3; } },{},{}
+31014,LoVA_Ragnarok_Card,LoVA Ragnarok Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMdef,7; bonus bMaxHPrate,6; if(getrefine()>=7) { bonus2 bSkillAtk,"HW_GRAVITATION",9; } },{},{}
+31015,LoVA_Realization_Ragnarok_Card,LoVA Realization Ragnarok Card,6,20,,10,,,,,,,,4,,,,,{ bonus bMdef,10; bonus bMaxHPrate,10; if(getrefine()>=7) { bonus2 bSkillAtk,"HW_GRAVITATION",769; } },{},{}
 31016,Evil_Decorated_Tree_Card,Evil Decorated Tree Card,6,20,,10,,,,,,,,16,,,,,{ bonus bMaxHP,1000; bonus bMaxSP,150; bonus bFlee,-25; },{},{}
 31017,Tyrannical_Cookie_Card,Tyrannical Cookie Card,6,20,,10,,,,,,,,64,,,,,{ .@r = getrefine(); bonus bAtkRate,1+.@r; bonus bMatkRate,1+.@r; bonus bMaxHPrate,-(2+(.@r*2)); },{},{}
 31018,Evil_Imbued_Box_Card,Evil Imbued Box Card,6,20,,10,,,,,,,,2,,,,,{ bonus bMaxHP,-1225; bonus3 bAddEff,Eff_Curse,300,ATF_MAGIC; /* unofficial chance [Secret] */ },{},{}
