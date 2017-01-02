@@ -461,6 +461,7 @@
 18140:19019,{ bonus bLongAtkRate,45; }
 18507:18539,{ bonus bUseSPrate,-3; }
 18559:18560,{ bonus bCritAtkRate,5; }
+18563:18564,{ bonus bFixedCastrate,-10; }
 18776:20710,{ bonus bBaseAtk,10; }
 18776:22015,{ bonus bMatk,20; }
 18823:28372,{ bonus2 bSkillAtk,"CR_GRANDCROSS",BaseLevel; bonus2 bVariableCastrate,"CR_GRANDCROSS",-BaseLevel*2; bonus2 bSkillAtk,"CR_GRANDCROSS",BaseLevel/30; bonus2 bSkillUseSP,"CR_GRANDCROSS",-(BaseLevel/30)*10; }
