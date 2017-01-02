@@ -7916,7 +7916,7 @@ ACMD_FUNC(me)
  *------------------------------------------*/
 ACMD_FUNC(size)
 {
-	int size = 0;
+	int size = SZ_SMALL;
 	nullpo_retr(-1, sd);
 
 	size = cap_value(atoi(message),SZ_SMALL,SZ_BIG);
@@ -7943,7 +7943,7 @@ ACMD_FUNC(sizeall)
 	struct s_mapiterator* iter;
 
 	size = atoi(message);
-	size = cap_value(size,0,2);
+	size = cap_value(size,SZ_SMALL,SZ_BIG);
 
 	iter = mapit_getallusers();
 	for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) ) {
@@ -7968,7 +7968,7 @@ ACMD_FUNC(sizeall)
 
 ACMD_FUNC(sizeguild)
 {
-	int size = 0, i;
+	int size = SZ_SMALL, i;
 	char guild[NAME_LENGTH];
 	struct map_session_data *pl_sd;
 	struct guild *g;

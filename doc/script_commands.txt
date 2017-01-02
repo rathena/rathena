@@ -174,8 +174,13 @@ should start with "On". As with all events, if the NPC is an on-touch NPC, the
 player who triggers the script must be within 'trigger' range for the event to
 work.
 
-There are two fields for monster size and AI.
-- Size can be 0 (medium), 1 (small), or 2 (big).
+There are two optionnals fields for monster size and AI.
+
+<mob size> can be:
+	Size_Small	(0)
+	Size_Medium	(1)
+	Size_Large	(2)
+
 - AI can be:
 	AI_NONE		(0)		(default)
 	AI_ATTACK	(1)		(attack/friendly)
@@ -5748,9 +5753,9 @@ attached at this execution will be the RID of the killing character. The variabl
 'killedrid' is set to the Class (mob ID) of the monster killed.
 
 <size> can be:
-	0 = medium (default)
-	1 = small
-	2 = big
+	Size_Small	(0)		(default)
+	Size_Medium	(1)
+	Size_Large	(2)
 	
 <ai> can be:
 	AI_NONE		(0)		(default)
