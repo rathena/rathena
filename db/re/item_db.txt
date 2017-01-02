@@ -9755,6 +9755,7 @@
 18872,Snake_Hat,Snake Hat,4,20,,100,,5,,1,0xFFFFFFFF,63,2,256,,0,1,986,{ bonus bStr,3; bonus bInt,3; bonus bMdef,5; bonus bUnbreakableHelm,1; },{},{}
 18873,Sweet_Valentine_Out,Sweet Valentine Out,4,20,,100,,1,,0,0xFFFFFFFF,63,2,256,,1,1,865,{ bonus bMaxHPrate,7; bonus bMaxSPrate,7; },{},{}
 18874,Cyclops_Glasses,Cyclops Glasses,4,10,,100,,,,1,0xFFFFFFFF,63,2,512,,1,,23,{},{},{}
+18877,Baron_Evil_Eye,Baron's Evil Eye,4,10,,300,,,,0,0xFFFFFFFF,63,2,512,,30,,989,{ bonus bDelayrate,5; bonus bUseSPrate,5; },{},{}
 18878,Palace_Guard_Cap,Palace Guard Cap,4,10,,1000,,15,,1,0xFFFFFFFF,63,2,256,,50,1,991,{ .@r = getrefine(); bonus2 bAddEle,Ele_Neutral,4+.@r/6; bonus bLongAtkRate,4+.@r; bonus bUnbreakableHelm,1; },{},{}
 18879,Angry_Scorpion_Hat,Angry Scorpion Hat,4,10,,100,,5,,0,0xFFFFFFFF,63,2,256,,0,1,995,{ bonus bMdef,5; },{},{}
 18880,Advanced_Jao_King_Hat,Advanced Jao King Hat,4,10,,1500,,4,,1,0xFFFFFFFF,63,2,256,,175,1,996,{ bonus bAllStats,3; bonus bMaxHPrate,5; bonus bMaxSPrate,5; },{},{}
