@@ -11683,7 +11683,12 @@
 31103,C_JP_EV09,Costume Taini Hat Green,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1540,{},{},{}
 31104,C_Taini_Hat,Costume Taini Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,722,{},{},{}
 31105,C_RO_Celebration_Hat,Costume RO Celebration Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1541,{},{},{}
+31106,C_Eyepatch_of_Peace,Costume Eyepatch of Peace,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,0,697,{},{},{}
+31107,C_Eyepatch_of_Prosperity,Costume Eyepatch of Prosperity,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,0,698,{},{},{}
+31113,C_Doctor_Headband,Costume Doctor headband,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,60,{},{},{}
+31114,C_Theater_Prop,Costume Theater Prop,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,80,{},{},{}
 31118,C_Assassin_Skull_Mask,Costume Scratch Mask,4,0,,0,,,,0,0xFFFFFFFF,63,2,6144,,1,0,984,{},{},{}
+31117,C_Hoplite_Helmet,Costume Hoplite Helmet,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,0,660,{},{},{}
 31119,C_Blue_Magicianhat,Costume Magician Hat Blue,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,285,{},{},{}
 31120,C_Vampire_Familiar,Costume Vampire Familiar,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,0,1548,{},{},{}
 31121,C_Stall_Of_Bat,Costume Stall Of Bat,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1549,{},{},{}
@@ -11691,8 +11696,13 @@
 31123,C_Ghostring_Tall_Hat,Costume Ghostring Tall Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1551,{},{},{}
 31124,C_Ribbon_Chef_Hat,Costume Ribbon Chief Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,785,{},{},{}
 31125,C_QueenAnzRevenge,Costume Queen Anne's Revenge,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1360,{},{},{}
+31126,C_Nestea_Hat,Costume Nestea Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,756,{},{},{}
+31127,C_Flag_Cap,Costume Flag Cap,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,482,{},{},{}
 31128,C_Bride_Mask,Costume Bride Mask,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,223,{},{},{}
 31129,C_Munchs_Scream,Costume Scratch Mask,4,0,,0,,,,0,0xFFFFFFFF,63,2,6144,,1,0,75,{},{},{}
+31130,C_Indian_Hairband,Costume Indian Hairband,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,96,{},{},{}
+31131,C_Monk_Hat,Costume Monk Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,35,{},{},{}
+31132,C_Christmas_Wreath,Costume Christmas Wreath,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1554,{},{},{}
 31133,C_Gambler_Seal,Costume Gambler Seal,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,0,1202,{},{},{}
 31134,C_Happy_Parrot,Costume Talkactive Parrot,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1116,{},{},{}
 31135,C_Mini_Crown1,Costume Luxury Mini Crown,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,707,{},{},{}
@@ -11702,4 +11712,18 @@
 31139,C_White_Rabbit_Ear,Costume White Rabbit Ears,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1558,{},{},{}
 31140,C_Cowboy_Hat_,Costume Cowboy Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,159,{},{},{}
 31141,C_Rose_Corsage_,Costume Cactus Flower Corsage,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,533,{},{},{}
+31142,C_Time_Prison,Costume Prison of Time,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1309,{},{ sc_start SC_TIME_ACCESSORY,-1,0; },{ sc_end SC_TIME_ACCESSORY; }
 31144,C_Indi_Feather_Band,Costume Indian Feather Headband,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,809,{},{},{}
+31145,C_AliceFriesinger_Hat_69,Costume AliceFriesinger Hat 69,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1249,{},{},{}
+31146,C_KarduiEar,Costume Kardui Ears,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,0,1357,{},{},{}
+31147,C_Tare_Domovoi,Costume Drooping Domovoi,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,781,{},{},{}
+31148,C_Tare_W_Doll,Costume Drooping W Doll,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,359,{},{},{}
+31149,C_Nydhog_Wig,Costume Nydhoggur Wig,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1563,{},{},{}
+31150,C_Shalosh_Head_Dress,Costume Shalosh Headdress,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1564,{},{},{}
+31151,C_Chasher_Ear,Costume Cheshire's Cat Ears,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1565,{},{},{}
+31152,C_Piamette_BowTie_Red,Costume Piamette's Red Bow Tie,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1566,{},{},{}
+31153,C_Aniv_Star_Hat2,Costume Cactus Flower Corsage,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1567,{},{},{}
+31169,C_Hat_Of_Outlaw,Costume Hilarious Bandit Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,486,{},{},{}
+31170,C_Wind_Wings,Costume Wings of Wind,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,493,{},{},{}
+31171,C_Nekomimi,Costume Nekomimi,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,182,{},{},{}
+31172,C_Roast_Memory,Costume Roast Memory,4,0,,0,,,,0,0xFFFFFFFF,63,2,7168,,1,0,1576,{},{},{}
