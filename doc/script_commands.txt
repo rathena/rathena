@@ -176,7 +176,14 @@ work.
 
 There are two fields for monster size and AI.
 - Size can be 0 (medium), 1 (small), or 2 (big).
-- AI can be 0 (default), 1 (attack/friendly), 2 (sphere), 3 (flora), or 4 (zanzou).
+- AI can be:
+	AI_NONE		(0)		(default)
+	AI_ATTACK	(1)		(attack/friendly)
+	AI_SPHERE	(2)		(Alchemist skill)
+	AI_FLORA	(3)		(Alchemist skill)
+	AI_ZANZOU	(4)		(Kagerou/Oboro skill)
+	AI_LEGION	(5)		(Sera skill)
+	AI_FAW		(6)		(Mechanic skill)
 
 Alternately, a monster spawned using 'boss_monster' instead of 'monster' is able
 to be detected on the map with the SC_BOSSMAPINFO status (used by Convex Mirror).
@@ -5746,13 +5753,13 @@ attached at this execution will be the RID of the killing character. The variabl
 	2 = big
 	
 <ai> can be:
-	0 = none (default)
-	1 = attack/friendly
-	2 = sphere (Alchemist skill)
-	3 = flora (Alchemist skill)
-	4 = zanzou (Kagerou/Oboro skill)
-	5 = legion (Sera skill)
-	6 = faw (Mechanic skill)
+	AI_NONE		(0)		(default)
+	AI_ATTACK	(1)		(attack/friendly)
+	AI_SPHERE	(2)		(Alchemist skill)
+	AI_FLORA	(3)		(Alchemist skill)
+	AI_ZANZOU	(4)		(Kagerou/Oboro skill)
+	AI_LEGION	(5)		(Sera skill)
+	AI_FAW		(6)		(Mechanic skill)
 
     monster "place",60,100,"Poring",1002,1,"NPCNAME::OnLabel";
 

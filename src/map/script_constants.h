@@ -2534,6 +2534,15 @@
 	script_set_constant("Size_Large",SZ_BIG,false);
 	script_set_constant("Size_All",SZ_ALL,false);
 
+	/* ai */
+	export_constant(AI_NONE);
+	export_constant(AI_ATTACK);
+	export_constant(AI_SPHERE);
+	export_constant(AI_FLORA);
+	export_constant(AI_ZANZOU);
+	export_constant(AI_LEGION);
+	export_constant(AI_FAW);
+
 	/* battle flags */
 	export_constant(BF_WEAPON);
 	export_constant(BF_MAGIC);
