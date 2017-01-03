@@ -75,13 +75,13 @@ ecl_hub01,130,15,0	script	It is closed shut.	844,{
 				close;
 			}
 			switch (instance_enter(.@md_name$)) {
-			case 3:
+			case IE_OTHER:
 				mes "An unknown error has occurred.";
 				close;
-			case 2:
+			case IE_NOINSTANCE:
 				mes "It is closed shut.";
 				close;
-			case 0:
+			case IE_OK:
 				mapannounce "ecl_hub01",getpartyname(.@party_id) + " Party leader " + strcharinfo(0) + " is entering " + .@md_name$,bc_map,"0x00ff99";
 				end;
 			default:

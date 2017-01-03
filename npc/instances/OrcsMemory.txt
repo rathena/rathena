@@ -85,17 +85,17 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 	close;
 L_Enter:
 	switch(instance_enter("Orc's Memory")) {
-	case 3:
+	case IE_OTHER:
 		mes "An unknown error has occurred.";
 		close;
-	case 2:
+	case IE_NOINSTANCE:
 		mes "Memorial Dungeon Orc's Memory does not exist.";
 		mes "Memorial Dungeon has been destroyed by the Party Leader, or because of the time limit. Please try again after 2 hours.";
 		close;
-	case 1:
+	case IE_NOMEMBER:
 		mes "Only a member of the party can enter the Memorial Dungeon.";
 		close;
-	case 0:
+	case IE_OK:
 		mapannounce "gef_fild10", getpartyname( getcharid(1) ) +" party's member "+strcharinfo(0)+" has entered the Orc's Memory.",bc_map,"0x00ff99";
 		if (checkquest(12059) == -1) setquest 12059;
 		//warp "1@orcs",179,15;

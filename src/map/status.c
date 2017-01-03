@@ -12,6 +12,7 @@
 #include "../common/strlib.h"
 
 #include "battle.h"
+#include "itemdb.h"
 #include "map.h"
 #include "path.h"
 #include "pc.h"
@@ -216,7 +217,7 @@ void initChangeTables(void)
 	add_sc( NPC_STUNATTACK		, SC_STUN		);
 	add_sc( NPC_SLEEPATTACK		, SC_SLEEP		);
 	set_sc( NPC_POISON		, SC_POISON		, SI_BLANK		, SCB_DEF2|SCB_REGEN );
-	set_sc( NPC_CURSEATTACK		, SC_CURSE		, SI_BLANK		, SCB_LUK|SCB_BATK|SCB_WATK|SCB_SPEED );
+	set_sc( NPC_WIDECURSE		, SC_CURSE		, SI_BLANK		, SCB_LUK|SCB_BATK|SCB_WATK|SCB_SPEED );
 	add_sc( NPC_SILENCEATTACK	, SC_SILENCE		);
 	add_sc( NPC_WIDECONFUSE		, SC_CONFUSION		);
 	set_sc( NPC_BLINDATTACK		, SC_BLIND		, SI_BLANK		, SCB_HIT|SCB_FLEE );
@@ -1104,6 +1105,11 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_GOLDENMACECLAN] = SI_GOLDENMACECLAN;
 	StatusIconChangeTable[SC_CROSSBOWCLAN] = SI_CROSSBOWCLAN;
 	StatusIconChangeTable[SC_JUMPINGCLAN] = SI_JUMPINGCLAN;
+
+	// Geffen Magic Tournament Buffs
+	StatusIconChangeTable[SC_GEFFEN_MAGIC1] = SI_GEFFEN_MAGIC1;
+    StatusIconChangeTable[SC_GEFFEN_MAGIC2] = SI_GEFFEN_MAGIC2;
+    StatusIconChangeTable[SC_GEFFEN_MAGIC3] = SI_GEFFEN_MAGIC3;
 
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
@@ -3490,7 +3496,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		if(sd->inventory_data[index]) { // Arrows
 			sd->bonus.arrow_atk += sd->inventory_data[index]->atk;
 			sd->state.lr_flag = 2;
-			if( !itemdb_is_GNthrowable(sd->inventory_data[index]->nameid) ) // Don't run scripts on throwable items
+			if( !itemdb_group_item_exists(IG_THROWABLE, sd->inventory_data[index]->nameid) ) // Don't run scripts on throwable items
 				run_script(sd->inventory_data[index]->script,0,sd->bl.id,0);
 			sd->state.lr_flag = 0;
 			if (!calculating) // Abort, run_script retriggered status_calc_pc. [Skotlex]
@@ -4018,6 +4024,20 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->subele[ELE_HOLY] += sc->data[SC_PROVIDENCE]->val2;
 			sd->subrace[RC_DEMON] += sc->data[SC_PROVIDENCE]->val2;
 		}
+        if (sc->data[SC_GEFFEN_MAGIC1]) {
+            sd->right_weapon.addrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC1]->val1;
+            sd->right_weapon.addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
+            sd->left_weapon.addrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC1]->val1;
+            sd->left_weapon.addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
+        }
+        if (sc->data[SC_GEFFEN_MAGIC2]) {
+            sd->magic_addrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC2]->val1;
+            sd->magic_addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC2]->val1;
+        }
+        if(sc->data[SC_GEFFEN_MAGIC3]) {
+            sd->subrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC3]->val1;
+            sd->subrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC3]->val1;
+        }
 		if(sc->data[SC_ARMOR_ELEMENT]) {	// This status change should grant card-type elemental resist.
 			sd->subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT]->val1;
 			sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT]->val2;
@@ -6110,7 +6130,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	// Rate value
 	if(sc->data[SC_INCFLEERATE])
 		flee += flee * sc->data[SC_INCFLEERATE]->val1/100;
-	if(sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
+	if(sc->data[SC_SPIDERWEB])
 		flee -= flee * 50/100;
 	if(sc->data[SC_BERSERK])
 		flee -= flee * 50/100;
@@ -7752,6 +7772,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		case SC_POISON:
 		case SC_DPOISON:
 			sc_def = status->vit*100;
+#ifndef RENEWAL
 			sc_def2 = status->luk*10 + status_get_lv(bl)*10 - status_get_lv(src)*10;
 			if (sd) {
 				// For players: 60000 - 450*vit - 100*luk
@@ -7762,6 +7783,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 				tick>>=1;
 				tick_def = (status->vit*200)/3;
 			}
+#endif
 			break;
 		case SC_STUN:
 			sc_def = status->vit*100;
@@ -9540,14 +9562,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 
-		case SC_TAROTCARD:
-			sc_start(src, bl, SC_INCATKRATE, 100, -20, tick);
-			sc_start(src, bl, SC_INCMATKRATE, 100, -20, tick);
-			sc_start(src, bl, SC_INCHITRATE, 100, -20, tick);
-			sc_start(src, bl, SC_INCFLEERATE, 100, -20, tick);
-			sc_start(src, bl, SC_INCDEFRATE, 100, -20, tick);
-			break;
-
 		case SC_MARIONETTE:
 		{
 			int stat;
@@ -9868,10 +9882,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if(status_has_mode(status,MD_STATUS_IMMUNE))
 				tick /= 5; // !TODO: Reduce skill's duration. But for how long?
 			break;
-		case SC_SPIDERWEB:
-			if( bl->type == BL_PC )
-				tick /= 2;
-			break;
 		case SC_ARMOR:
 			// NPC_DEFENDER:
 			val2 = 80; // Damage reduction
@@ -9929,9 +9939,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_INCHEALRATE:
 			if (val1 < 1)
 				val1 = 1;
-			break;
-		case SC_HALLUCINATION:
-			val2 = 5+val1; // Factor by which displayed damage is increased by
 			break;
 		case SC_DOUBLECAST:
 			val2 = 30+10*val1; // Trigger rate
@@ -10649,10 +10656,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val1 = MOBID_PORING; // Default poring
 			break;
 		case SC_APPLEIDUN:
+		{
+			struct map_session_data * s_sd = BL_CAST(BL_PC, src);
 			val2 = (5 + 2 * val1) + (status_get_vit(src) / 10); //HP Rate: (5 + 2 * skill_lv) + (vit/10) + (BA_MUSICALLESSON level)
-			if (sd)
-				val2 += pc_checkskill(sd,BA_MUSICALLESSON);
+			if (s_sd)
+				val2 += pc_checkskill(s_sd, BA_MUSICALLESSON) / 2;
 			break;
+		}
 		case SC_EPICLESIS:
 			val2 = 5 * val1; //HP rate bonus
 			break;
@@ -11436,6 +11446,9 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_REUSE_STORMBLAST:
 			case SC_ALL_RIDING_REUSE_LIMIT:
 			case SC_SPRITEMABLE:
+            case SC_GEFFEN_MAGIC1:
+            case SC_GEFFEN_MAGIC2:
+            case SC_GEFFEN_MAGIC3:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -11550,6 +11563,41 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		if (type == SC_ENDURE && sce->val4)
 			// Do not end infinite endure.
 			return 0;
+		if (type == SC_SPIDERWEB) {
+			//Delete the unit group first to expire found in the status change
+			struct skill_unit_group *group = NULL, *group2 = NULL;
+			unsigned int tick = gettick();
+			int pos = 1;
+			if (sce->val2)
+				if (!(group = skill_id2group(sce->val2)))
+					sce->val2 = 0;
+			if (sce->val3) {
+				if (!(group2 = skill_id2group(sce->val3)))
+					sce->val3 = 0;
+				else if (!group || ((group->limit - DIFF_TICK(tick, group->tick)) > (group2->limit - DIFF_TICK(tick, group2->tick)))) {
+					group = group2;
+					pos = 2;
+				}
+			}
+			if (sce->val4) {
+				if (!(group2 = skill_id2group(sce->val4)))
+					sce->val4 = 0;
+				else if (!group || ((group->limit - DIFF_TICK(tick, group->tick)) > (group2->limit - DIFF_TICK(tick, group2->tick)))) {
+					group = group2;
+					pos = 3;
+				}
+			}
+			if (pos == 1)
+				sce->val2 = 0;
+			else if (pos == 2)
+				sce->val3 = 0;
+			else if (pos == 3)
+				sce->val4 = 0;
+			if (group)
+				skill_delunitgroup(group);
+			if (!status_isdead(bl) && (sce->val2 || sce->val3 || sce->val4))
+				return 0; //Don't end the status change yet as there are still unit groups associated with it
+		}
 		if (sce->timer != INVALID_TIMER) // Could be a SC with infinite duration
 			delete_timer(sce->timer,status_change_timer);
 		if (sc->opt1)
@@ -13394,6 +13442,9 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_ALL_RIDING_REUSE_LIMIT:
 			case SC_SPRITEMABLE:
 			case SC_BITESCAR:
+            case SC_GEFFEN_MAGIC1:
+            case SC_GEFFEN_MAGIC2:
+            case SC_GEFFEN_MAGIC3:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -13993,8 +14044,6 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
 					p++;
                                 //TODO seem unsafe to continue without check
 				attr_fix_table[lv-1][i][j] = atoi(p);
-				if (battle_config.attr_recover == 0 && attr_fix_table[lv-1][i][j] < 0)
-					attr_fix_table[lv-1][i][j] = 0;
 				p = strchr(p,',');
 				if(p)
 					*p++=0;

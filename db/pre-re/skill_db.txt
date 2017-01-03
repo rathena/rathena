@@ -318,7 +318,7 @@
 204,0,0,4,0,0x1,0,1,1,no,0,0x2,0,magic,0,0x0,	NPC_BARRIER,Barrier
 205,0,0,4,0,0x1,0,1,1,no,0,0x2,0,weapon,0,0x0,	NPC_DEFENDER,Defender
 206,1,6,1,-1,0x1,0,5,1,no,0,0x2,0,weapon,0,0x0,	NPC_LICK,Lick
-207,9,0,1,0,0x1,0,10,1,no,0,0x2,0,magic,0,0x0,	NPC_HALLUCINATION,Hallucination
+207,9,0,1,0,0x1,0,5,1,no,0,0x2,0,magic,0,0x0,	NPC_HALLUCINATION,Hallucination
 208,0,0,4,0,0x1,0,1,1,no,0,0x2,0,magic,0,0x0,	NPC_REBIRTH,Rebirth
 209,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0,0x0,	NPC_SUMMONMONSTER,Monster Summons
 
@@ -814,7 +814,7 @@
 //****
 // Additional NPC skill (Episode 12)
 682,0,0,4,0,0x1,0,1,1,no,0,0x2,0,none,0,0x0,	NPC_TALK,Talk
-683,-9,6,1,-1,0,0,1,1,no,0,0x2,0,none,0,0x0,	NPC_HELLPOWER,Hell Power
+683,-9,0,1,0,0x1,0,5,1,no,0,0x2,0,none,0,0x0,	NPC_HELLPOWER,Hell Power
 684,0,6,4,0,0x3,-1,1,1,no,0,0x2,0,none,0,0x0,	NPC_WIDEHELLDIGNITY,Hell Dignity
 685,0,0,4,0,0x1,0,1,1,no,0,0x2,0,none,0,0x0,	NPC_INVINCIBLE,Invincible
 686,0,0,4,0,0x1,0,1,1,no,0,0x2,0,none,0,0x0,	NPC_INVINCIBLEOFF,Invincible off

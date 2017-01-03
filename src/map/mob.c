@@ -34,10 +34,10 @@
 
 // Probability for mobs far from players from doing their IDLE skill. (rate of 1000 minute)
 // in Aegis, this is 100% for mobs that have been activated by players and none otherwise.
-#define MOB_LAZYSKILLPERC(md) (md->state.spotted?1000:0)
+#define MOB_LAZYSKILLPERC(md) (mob_is_spotted(md)?1000:0)
 // Move probability for mobs away from players (rate of 1000 minute)
 // in Aegis, this is 100% for mobs that have been activated by players and none otherwise.
-#define MOB_LAZYMOVEPERC(md) (md->state.spotted?1000:0)
+#define MOB_LAZYMOVEPERC(md) (mob_is_spotted(md)?1000:0)
 #define MOB_MAX_DELAY (24*3600*1000)
 #define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
 #define RUDE_ATTACKED_COUNT 1	//After how many rude-attacks should the skill be used?
@@ -137,6 +137,58 @@ static int mobdb_searchname_array_sub(struct mob_db* mob, const char *str)
 	if(stristr(mob->name,str))
 		return 0;
 	return strcmpi(mob->jname,str);
+}
+
+/*========================================== [Playtester]
+* Removes all characters that spotted the monster but are no longer online
+* @param md: Monster whose spotted log should be cleaned
+*------------------------------------------*/
+void mob_clean_spotted(struct mob_data *md) {
+	int i;
+	for (i = 0; i < DAMAGELOG_SIZE; i++) {
+		if (md->spotted_log[i] && !map_charid2sd(md->spotted_log[i]))
+			md->spotted_log[i] = 0;
+	}
+}
+
+/*========================================== [Playtester]
+* Adds a char_id to the spotted log of a monster
+* @param md: Monster to whose spotted log char_id should be added
+* @param char_id: Char_id to add to the spotted log
+*------------------------------------------*/
+void mob_add_spotted(struct mob_data *md, uint32 char_id) {
+	int i;
+
+	//Check if char_id is already logged
+	for (i = 0; i < DAMAGELOG_SIZE; i++) {
+		if (md->spotted_log[i] == char_id)
+			return;
+	}
+
+	//Not logged, add char_id to first empty slot
+	for (i = 0; i < DAMAGELOG_SIZE; i++) {
+		if (md->spotted_log[i] == 0) {
+			md->spotted_log[i] = char_id;
+			return;
+		}
+	}
+}
+
+/*========================================== [Playtester]
+* Checks if a monster was spotted
+* @param md: Monster to check
+* @return Returns true if the monster is spotted, otherwise 0
+*------------------------------------------*/
+bool mob_is_spotted(struct mob_data *md) {
+	int i;
+
+	//Check if monster is spotted
+	for (i = 0; i < DAMAGELOG_SIZE; i++) {
+		if (md->spotted_log[i] != 0)
+			return true; //Spotted
+	}
+
+	return false; //Not spotted
 }
 
 /**
@@ -1033,6 +1085,8 @@ int mob_spawn (struct mob_data *md)
 
 	for (i = 0, c = tick-MOB_MAX_DELAY; i < MAX_MOBSKILL; i++)
 		md->skilldelay[i] = c;
+	for (i = 0; i < DAMAGELOG_SIZE; i++)
+		md->spotted_log[i] = 0;
 
 	memset(md->dmglog, 0, sizeof(md->dmglog));
 	md->tdmg = 0;
@@ -1409,8 +1463,9 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 		md->ud.target_to = 0;
 		unit_set_target(&md->ud, 0);
 	}
-	if(battle_config.official_cell_stack_limit > 0
-		&& map_count_oncell(md->bl.m, md->bl.x, md->bl.y, BL_CHAR|BL_NPC, 1) > battle_config.official_cell_stack_limit) {
+	if (battle_config.official_cell_stack_limit > 0
+		&& (md->min_chase == md->db->range3 || battle_config.mob_ai & 0x8)
+		&& map_count_oncell(md->bl.m, md->bl.x, md->bl.y, BL_CHAR | BL_NPC, 1) > battle_config.official_cell_stack_limit) {
 		unit_walktoxy(&md->bl, md->bl.x, md->bl.y, 8);
 	}
 
@@ -1600,7 +1655,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 		{	//Rude attacked check.
 			if( !battle_check_range(&md->bl, tbl, md->status.rhw.range)
 			&&  ( //Can't attack back and can't reach back.
-					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || (md->sc.data[SC_SPIDERWEB] && md->sc.data[SC_SPIDERWEB]->val1)
+					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]
 						|| md->sc.data[SC_BITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNSTRAP]
 						|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
 						|| md->walktoxy_fail_count > 0)
@@ -1625,7 +1680,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 				|| (battle_config.mob_ai&0x2 && !status_check_skilluse(&md->bl, abl, 0, 0)) // Cannot normal attack back to Attacker
 				|| (!battle_check_range(&md->bl, abl, md->status.rhw.range) // Not on Melee Range and ...
 				&& ( // Reach check
-					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || (md->sc.data[SC_SPIDERWEB] && md->sc.data[SC_SPIDERWEB]->val1)
+					(!can_move && DIFF_TICK(tick, md->ud.canmove_tick) > 0 && (battle_config.mob_ai&0x2 || md->sc.data[SC_SPIDERWEB]
 						|| md->sc.data[SC_BITE] || md->sc.data[SC_VACUUM_EXTREME] || md->sc.data[SC_THORNSTRAP]
 						|| md->sc.data[SC__MANHOLE] // Not yet confirmed if boss will teleport once it can't reach target.
 						|| md->walktoxy_fail_count > 0)
@@ -1834,11 +1889,11 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 static int mob_ai_sub_hard_timer(struct block_list *bl,va_list ap)
 {
 	struct mob_data *md = (struct mob_data*)bl;
+	uint32 char_id = va_arg(ap, uint32);
 	unsigned int tick = va_arg(ap, unsigned int);
 	if (mob_ai_sub_hard(md, tick))
 	{	//Hard AI triggered.
-		if(!md->state.spotted)
-			md->state.spotted = 1;
+		mob_add_spotted(md, char_id);
 		md->last_pcneartime = tick;
 	}
 	return 0;
@@ -1851,7 +1906,7 @@ static int mob_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
 {
 	unsigned int tick;
 	tick=va_arg(ap,unsigned int);
-	map_foreachinrange(mob_ai_sub_hard_timer,&sd->bl, AREA_SIZE+ACTIVE_AI_RANGE, BL_MOB,tick);
+	map_foreachinrange(mob_ai_sub_hard_timer,&sd->bl, AREA_SIZE+ACTIVE_AI_RANGE, BL_MOB, sd->status.char_id, tick);
 
 	return 0;
 }
@@ -1895,6 +1950,9 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 			return (int)mob_ai_sub_hard(md, tick);
 		md->last_pcneartime = 0;
 	}
+
+	//Clean the spotted log
+	mob_clean_spotted(md);
 
 	if(DIFF_TICK(tick,md->last_thinktime)< 10*MIN_MOBTHINKTIME)
 		return 0;

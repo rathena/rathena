@@ -328,6 +328,18 @@ enum e_skill_unit_flag {
 	UF_HIDDEN_TRAP      = 0x20000,	// Hidden trap [Cydh]
 };
 
+/// Enum for skill_blown
+enum e_skill_blown	{
+	BLOWN_NONE					= 0x00,
+	BLOWN_DONT_SEND_PACKET		= 0x01, // Position update packets must not be sent to the client
+	BLOWN_IGNORE_NO_KNOCKBACK	= 0x02, // Ignores players' special_state.no_knockback
+	// These flags return 'count' instead of 0 if target is cannot be knocked back
+	BLOWN_NO_KNOCKBACK_MAP		= 0x04, // On a WoE/BG map
+	BLOWN_MD_KNOCKBACK_IMMUNE	= 0x08, // If target is MD_KNOCKBACK_IMMUNE
+	BLOWN_TARGET_NO_KNOCKBACK	= 0x10, // If target has 'special_state.no_knockback'
+	BLOWN_TARGET_BASILICA		= 0x20, // If target is in Basilica area
+};
+
 /// Create Database item
 struct s_skill_produce_db {
 	unsigned short nameid; /// Product ID
@@ -432,7 +444,7 @@ int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int 
 // Results? Added
 int skill_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,enum damage_lv dmg_lv,unsigned int tick);
 int skill_counter_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,unsigned int tick);
-short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, unsigned char flag);
+short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, enum e_skill_blown flag);
 int skill_break_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int flag);
 int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int lv, int time);
 // Skills unit

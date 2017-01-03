@@ -331,6 +331,7 @@ extern struct Battle_Config
 	int item_drop_adddrop_min,item_drop_adddrop_max; //[Skotlex]
 
 	int prevent_logout;	// Added by RoVeRT
+	int prevent_logout_trigger;
 
 	int alchemist_summon_reward;	// [Valaris]
 	int drops_by_luk;
@@ -611,6 +612,9 @@ extern struct Battle_Config
 	int can_damage_skill; //Which BL types can damage traps
 	int atcommand_levelup_events;
 	int block_account_in_same_party;
+	int tarotcard_equal_chance; //Official or equal chance for each card
+	int change_party_leader_samemap;
+	int dispel_song; //Can songs be dispelled?
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;
