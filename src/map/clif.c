@@ -18914,7 +18914,7 @@ void clif_sale_end( struct sale_item_data* sale_item, struct block_list* bl, enu
 }
 
 /// Update the remaining amount of a sale item.
-/// 09ad <item id>.W <amount>.L (ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO)
+/// 09c4 <item id>.W <amount>.L (ZC_ACK_COUNT_BARGAIN_SALE_ITEM)
 void clif_sale_amount( struct sale_item_data* sale_item, struct block_list* bl, enum send_target target ){
 #if PACKETVER_SUPPORTS_SALES
 	unsigned char buf[8];
@@ -18963,7 +18963,7 @@ void clif_sale_open( struct map_session_data* sd ){
 
 /// Client request to open the sale administration window.
 /// This is sent by /limitedsale
-/// 09b5 <account id>.L (CZ_OPEN_BARGAIN_SALE_TOOL)
+/// 09b4 <account id>.L (CZ_OPEN_BARGAIN_SALE_TOOL)
 void clif_parse_sale_open( int fd, struct map_session_data* sd ){
 #if PACKETVER_SUPPORTS_SALES
 	nullpo_retv(sd);
@@ -19110,7 +19110,7 @@ void clif_parse_sale_add( int fd, struct map_session_data* sd ){
 }
 
 /// Reply to an item removal from sale.
-/// 09b1 <result>.W (HEADER_ZC_ACK_REMOVE_BARGAIN_SALE_ITEM)
+/// 09b1 <result>.W (ZC_ACK_REMOVE_BARGAIN_SALE_ITEM)
 void clif_sale_remove_reply( struct map_session_data* sd, bool failed ){
 #if PACKETVER_SUPPORTS_SALES
 	int fd = sd->fd;
