@@ -11336,7 +11336,19 @@
 24243,S_Reload_Shoes,Reload Shadow Shoes,12,0,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ .@r = getrefine(); bonus bDelayrate,(.@r<7)?-1:((.@r<9)?-2:-3); },{},{}
 24244,S_Reload_Shield,Reload Shadow Shield,12,0,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ .@r = getrefine(); bonus bDelayrate,(.@r<7)?-1:((.@r<9)?-2:-3); },{},{}
 24245,S_Reload_Armor,Reload Shadow Armor,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ .@r = getrefine(); bonus bDelayrate,(.@r<7)?-1:((.@r<9)?-2:-3); },{},{}
-//
+24246,S_Swordman_Earring,Swordman Shadow Earring,12,0,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ .@r = getrefine(); bonus2 bSkillUseSPrate,"SM_BASH",-20-(3*.@r); },{},{}
+24247,S_Merchant_Earring,Merchant Shadow Earring,12,0,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ .@r = getrefine(); bonus2 bSkillUseSPrate,"MC_MAMMONITE",-20-(3*.@r); },{},{}
+24248,S_Acolyte_Earring,Acolyte Shadow Earring,12,0,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ .@r = getrefine(); bonus2 bSkillUseSPrate,"AL_HEAL",-20-(3*.@r); },{},{}
+24249,S_Magician_Earring,Magician Shadow Earring,12,0,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ .@r = getrefine(); bonus2 bSkillUseSPrate,"MG_COLDBOLT",-20-(3*.@r); bonus2 bSkillUseSPrate,"MG_FIREBOLT",-20-(3*.@r); bonus2 bSkillUseSPrate,"MG_LIGHTNINGBOLT",-20-(3*.@r); },{},{}
+24250,S_Swordman_Pendant,Swordman Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,,,{ .@r = getrefine(); bonus2 bSkillAtk,"SM_MAGNUM",20+(5*.@r); },{},{}
+24251,S_Merchant_Pendant,Merchant Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,,,{ .@r = getrefine(); bonus2 bSkillAtk,"MC_CARTREVOLUTION",20+(5*.@r); },{},{}
+24252,S_Acolyte_Pendant,Acolyte Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,,,{ .@r = getrefine(); bonus2 bSkillAtk,"AL_HOLYLIGHT",20+(5*.@r); },{},{}
+24253,S_Thief_Pendant,Thief Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,,,{ .@r = getrefine(); bonus2 bSkillAtk,"TF_POISON",20+(5*.@r); },{},{}
+24254,S_Magician_Pendant,Magician Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,,,{ .@r = getrefine(); bonus2 bMagicAtkEle,Ele_Fire,20+(5*.@r); },{},{}
+24255,S_Archer_Pendant,Archer Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,,,{ .@r = getrefine(); bonus2 bSkillAtk,"AC_SHOWER",20+(5*.@r); },{},{}
+//===================================================================
+// New etc.
+//===================================================================
 25132,Pumpkin_Deco,Pumpkin Deco,3,0,,0,,,,,,,,,,,,,{},{},{}
 25133,Dried_White_Stem,Dried White Stem,3,0,,0,,,,,,,,,,,,,{},{},{}
 25142,Doram_Token,Doram Token,3,,0,0,,,,,,,,,,,,,{},{},{}
@@ -11430,6 +11442,8 @@
 28381,Cute_Grass_Necklace,Cute Grass Necklace,4,20,,10,,0,,1,0x80000000,7,2,136,,100,0,,{ bonus bHealPower,5; bonus2 bSkillCooldown,"SU_TUNAPARTY",-7000; },{},{}
 28382,Charm_Grass_Necklace,Charm Grass Necklace,4,20,,10,,0,,1,0x80000000,7,2,136,,100,0,,{ bonus bMdef,5; bonus2 bVariableCastrate,"SU_CN_METEOR",-1000; },{},{}
 28386,Fallen_Monk_Rosary,Fallen Monk Rosary,4,0,,100,,,,1,0xFFFFFFFF,63,2,136,1,20,0,,{ bonus bAspdRate,5; bonus bCritical,5; bonus2 bSkillUseSP,"CH_SOULCOLLECT",-5; if (BaseLevel > 14) bonus2 bSkillAtk,"SR_DRAGONCOMBO",BaseLevel/15; if (BaseLevel > 19) bonus2 bSkillAtk,"SR_KNUCKLEARROW",BaseLevel/20; if (BaseLevel > 29) bonus2 bSkillAtk,"SR_SKYNETBLOW",BaseLevel/30; },{},{}
+28391,S_Thief_Earring,Thief Shadow Earring,12,0,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ autobonus3 "{ bonus bBaseAtk,30l bonus bFlee,30; }",200,5000,"TF_THROWSTONE","{ specialeffect2 EF_ENHANCE; }"; },{},{}
+28392,S_Archer_Earring,Archer Shadow Earring,12,0,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ .@r = getrefine(); autobonus3 "{ bonus bBaseAtk,30+.@r; bonus bHit,30+.@r; }",200,5000,"AC_DOUBLE","{ specialeffect2 EF_ENHANCE; }"; },{},{}
 28410,Sapphire_Wrist,Sapphire Wrist,4,0,,500,,3,,1,0xFFFFFFFF,63,2,136,1,50,1,,{ bonus bDex,5; bonus bLuk,5; bonus bInt,5; bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",BaseLevel/5; bonus2 bVariableCastrate,"CR_ACIDDEMONSTRATION",-(BaseLevel/4); .@n = getskilllv("CR_SLIMPITCHER"); bonus bDex,.@n/2; bonus bLuk,.@n/2; bonus bInt,.@n/2; bonus bMatk,(.@n/2)*20; },{},{}
 28411,Emerald_Earring,Emerald Earring,4,0,,500,,3,,1,0xFFFFFFFF,63,2,136,1,50,1,,{ bonus bDex,5; bonus bAgi,5; bonus bInt,5; bonus2 bSkillAtk,"CG_ARROWVULCAN",BaseLevel; bonus2 bSkillAtk,"BA_MUSICALSTRIKE",BaseLevel; bonus2 bSkillAtk,"DC_THROWARROW",BaseLevel; bonus2 bSkillAtk,"WM_METALICSOUND",2*(BaseLevel/5); .@n = getskilllv("WM_METALICSOUND"); bonus2 bVariableCastrate,"WM_METALICSOUND",.@n/2; bonus bDex,.@n/2; bonus bAgi,.@n/2; bonus bInt,.@n/2; bonus bMatk,(.@n/2)*20; },{},{}
 28413,Lesser_Mackerel_Talisman,Lesser Mackerel Talisman,4,0,,100,,1,,1,0x80000000,63,2,136,,100,,,{ bonus bVit,1; },{},{}
