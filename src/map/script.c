@@ -7866,12 +7866,8 @@ BUILDIN_FUNC(getcharid)
 	TBL_PC *sd;
 
 	num = script_getnum(st,2);
-	if( script_hasdata(st,3) )
-		sd=map_nick2sd(script_getstr(st,3),false);
-	else
-		sd=script_rid2sd(st);
 
-	if(sd==NULL){
+	if( !script_nick2sd(3,sd) ){
 		script_pushint(st,0); //return 0, according docs
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -10470,13 +10466,7 @@ BUILDIN_FUNC(attachnpctimer)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( script_hasdata(st,2) )
-		sd = map_nick2sd(script_getstr(st,2),false);
-	else
-		sd = script_rid2sd(st);
-
-	if( !sd )
-	{
+	if( !script_nick2sd(2,sd) ){
 		script_pushint(st,1);
 		ShowWarning("attachnpctimer: Invalid player.\n");
 		return SCRIPT_CMD_FAILURE;
@@ -20627,12 +20617,7 @@ BUILDIN_FUNC(vip_status) {
 	time_t now = time(NULL);
 	int type = script_getnum(st, 2);
 
-	if (script_hasdata(st, 3))
-		sd = map_nick2sd(script_getstr(st, 3),false);
-	else
-		sd = script_rid2sd(st);
-
-	if (sd == NULL)
+	if( !script_nick2sd(3,sd) )
 		return SCRIPT_CMD_FAILURE;
 
 	switch(type) {
@@ -20676,12 +20661,7 @@ BUILDIN_FUNC(vip_time) {
 	TBL_PC *sd;
 	int viptime = script_getnum(st, 2) * 60; // Convert since it's given in minutes.
 
-	if (script_hasdata(st, 3))
-		sd = map_nick2sd(script_getstr(st, 3),false);
-	else
-		sd = script_rid2sd(st);
-
-	if (sd == NULL)
+	if( !script_nick2sd(3,sd) )
 		return SCRIPT_CMD_FAILURE;
 
 	chrif_req_login_operation(sd->status.account_id, sd->status.name, CHRIF_OP_LOGIN_VIP, viptime, 7, 0); 

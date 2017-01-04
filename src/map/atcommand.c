@@ -9554,7 +9554,7 @@ ACMD_FUNC(vip) {
 		return -1;
 	}
 
-	if ((pl_sd = map_nick2sd(atcmd_player_name)) == NULL) {
+	if ((pl_sd = map_nick2sd(atcmd_player_name,false)) == NULL) {
 		clif_displaymessage(fd, msg_txt(sd,3)); // Character not found.
 		return -1;
 	}
