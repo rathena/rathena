@@ -1,0 +1,130 @@
+//===== rAthena Script ======================================= 
+//= Renewal Mage Job Quest
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Job Change to Mage Class
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Kisuka]
+//= 1.1 Added support for Baby classes. [Euphy]
+//============================================================ 
+geffen_in,164,124,4	script	Mage Guildsman#mage	123,{
+	if (Upper == 1) {
+		if (ADVJOB == Job_High_Wizard || ADVJOB == Job_Professor) {
+			if (Class == Job_Novice_High) {
+				mes "[Mage Guildsman]";
+				mes "Whoa, long time no see! But weren't you supposed to be dead?";
+				next;
+				mes "[Mage Guildsman]";
+				mes "Ah, you must have been reborn. Well, I'm glad to have you back.";
+				next;
+				if (getskilllv("NV_BASIC") < 9) {
+					mes "[Mage Guildsman]";
+					mes "I'm sorry, but I don't think you're ready to learn magic yet. Why don't you go finish learning the Basic Skills first?";
+					next;
+					mes "[Mage Guildsman]";
+					mes "Take your time. The more you learn, the more ready you'll be to learn magic again.";
+					close;
+				}
+				mes "[Mage Guildsman]";
+				mes "Well, since you have passed the Mage test once, I will not question your qualification. You want to have your magic skills back immediately, don't you?";
+				next;
+				skill "NV_TRICKDEAD",0,SKILL_PERM;
+				jobchange Job_Mage_High;
+				skill "MG_ENERGYCOAT",1,SKILL_PERM;
+				mes "[Mage Guildsman]";
+				mes "Wow, for some reason, you look way better than you did before. Anyway, I believe you will do a better job being a Mage as well.";
+				close;
+			}else{
+				mes "[Mage Guildsman]";
+				mes "Is there anything more I can help you with? If not, why don't you go test your skills? The world is waiting for you~!";
+				close;
+			}
+		}else{
+			mes "[Mage Guildsman]";
+			mes "What, are you interested in the Mage guild? I didn't want to tell you this, but you don't belong here.";
+			next;
+			mes "[Mage Guildsman]";
+			mes "I am not sure why you're still standing in front of me, but I can tell that you're not meant to be a Mage.";
+			close;
+		}
+	}
+	mes "[Mage Guildsman]";
+	if(BaseJob != Job_Novice) {
+		if(BaseJob == Job_Mage) {
+			mes "Hey, haven't you realized? You're already a Mage, silly!";
+			mes "One of these days you'll realize the power inside of you when you can make Fire with your mind!";
+		} else
+			mes "Hey~ C'mon. Quit playing games. You can't be a Mage because you already have another Job.";
+		close;
+	}else{
+		mes "Hey?";
+		next;
+		switch(select("I want to be a Mage:What are the requirements to be a Mage?:Nothing, thanks.")) {
+		case 1:
+			mes "[Mage Guildsman]";
+			mes "Wanna be a Mage? Eh...";
+			next;
+			mes "[Mage Guildsman]";
+			if (Sex) {
+				mes "Hey, look at you! You're kinda cute~! Not my type though...";
+			}else{
+				mes "Oooh, you're such a hot babe~!";
+				mes "I like girls like you~";
+			}
+			mes "Right, you said that you wanna be a Mage?";
+			next;
+			if(select("I want to be a Mage.:Nothing, thanks.") == 2) {
+				mes "[Mage Guildsman]";
+				mes "Whaaaaat~?! Right after you tell me that you wanna become a Mage, you change your mind?! Be a bit more decisive!";
+				close;
+			}
+			mes "[Mage Guildsman]";
+			if (getskilllv("NV_BASIC") < 9) {
+				mes "Oh, man your Basic Skill Level doesn't reach enough to be a Mage.";
+				mes "Go back and level up your Basic Skill.";
+				close;
+			}
+			mes "Alright.. sign the application form.... Wow~ you have good handwriting! Ahh, okay. That's enough.";
+			mes "You are... "+strcharinfo(0)+".";
+			next;
+			mes "[Mage Guildsman]";
+			mes "Hmm I can see that you've tried hard in your own way. Though it seems to be a little clumsy, but well I think it's okay!";
+			mes "Good! Always sticking to the basics is the best! I will transform you right away.";
+			next;
+			mes "[Mage Guildsman]";
+			mes "Hahh..! You are now a Mage, one of our colleagues!";
+			mes "We welcome you to the Mage Guild, our new friend!";
+			next;
+			mes "[Mage Guildsman]";
+			mes "'Welcome to the Mage Guild~'";
+			mes "Congratulations on becoming a member of the Mage Guild! Go for it!";
+			callfunc "Job_Change",Job_Mage;
+			getitem 1639,1;	// N_Rod
+			close;
+		case 2:
+			mes "[Mage Guildsman]";
+			mes "Wanna be a Mage, eh?";
+			mes "I'd be happy to explain the requirements for a pretty girl like you!";
+			next;
+			mes "[Mage Guildsman]";
+			mes "First of all, you have to reach Novice Job Level 10 and learn all of the Basic Skills.";
+			next;
+			mes "[Mage Guildsman]";
+			mes "In the past, there was a complicated potion making test. Because of that, we'd lost an aplicant slowly.";
+			mes "So, we decided to accept all aplicants who meet the basic requirements.";
+			next;
+			mes "[Mage Guildsman]";
+			mes "Don't hesitate. Just be a magician!";
+			close;
+		case 3:
+			mes "[Mage Guildsman]";
+			mes "Nothing...?";
+			close;
+		}
+	}
+}

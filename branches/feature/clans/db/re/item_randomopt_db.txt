@@ -1,0 +1,200 @@
+// Items Random Option Database	
+//
+// Structure of Database:
+// ID,{ Bonus Script }
+RDMOPT_VAR_MAXHPAMOUNT,{ bonus bMaxHP,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_MAXSPAMOUNT,{ bonus bMaxSP,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_STRAMOUNT,{ bonus bStr,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_AGIAMOUNT,{ bonus bAgi,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_VITAMOUNT,{ bonus bVit,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_INTAMOUNT,{ bonus bInt,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_DEXAMOUNT,{ bonus bDex,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_LUKAMOUNT,{ bonus bLuk,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_MAXHPPERCENT,{ bonus bMaxHPrate,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_MAXSPPERCENT,{ bonus bMaxSPrate,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_HPACCELERATION,{ bonus bHPrecovRate,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_SPACCELERATION,{ bonus bSPrecovRate,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_ATKPERCENT,{ bonus bAtkRate,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_MAGICATKPERCENT,{ bonus bMatkRate,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_PLUSASPD,{ bonus bAspd,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_PLUSASPDPERCENT,{ bonus bAspdRate,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_ATTPOWER,{ bonus bAtk,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_HITSUCCESSVALUE,{ bonus bHit,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_ATTMPOWER,{ bonus bMatk,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_ITEMDEFPOWER,{ bonus bDef,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_MDEFPOWER,{ bonus bMdef,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_AVOIDSUCCESSVALUE,{ bonus bFlee,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_PLUSAVOIDSUCCESSVALUE,{ bonus bFlee2,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_CRITICALSUCCESSVALUE,{ bonus bCritical,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_ATTR_TOLERACE_NOTHING,{ bonus2 bSubEle,Ele_Neutral,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_ATTR_TOLERACE_WATER,{ bonus2 bSubEle,Ele_Water,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_ATTR_TOLERACE_GROUND,{ bonus2 bSubEle,Ele_Earth,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_ATTR_TOLERACE_FIRE,{ bonus2 bSubEle,Ele_Fire,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_ATTR_TOLERACE_WIND,{ bonus2 bSubEle,Ele_Wind,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_ATTR_TOLERACE_POISON,{ bonus2 bSubEle,Ele_Poison,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_ATTR_TOLERACE_SAINT,{ bonus2 bSubEle,Ele_Holy,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_ATTR_TOLERACE_DARKNESS,{ bonus2 bSubEle,Ele_Dark,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_ATTR_TOLERACE_TELEKINESIS,{ bonus2 bSubEle,Ele_Ghost,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_ATTR_TOLERACE_UNDEAD,{ bonus2 bSubEle,Ele_Undead,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_ATTR_TOLERACE_ALL,{ bonus2 bSubEle,Ele_All,getrandomoptinfo(ROA_VALUE); }
+// TODO: Confirm if damage reduction is implemented correctly.
+// kRO desc : <ELEMENT> 몬스터로부터 받는 물리 데미지 %d%% 감소.
+RDMOPT_DAMAGE_PROPERTY_NOTHING_USER,{ bonus3 bSubEle,Ele_Neutral,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET,{ bonus2 bAddEle,Ele_Neutral,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_PROPERTY_WATER_USER,{ bonus3 bSubEle,Ele_Water,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_WATER_TARGET,{ bonus2 bAddEle,Ele_Water,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_PROPERTY_GROUND_USER,{ bonus3 bSubEle,Ele_Earth,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET,{ bonus2 bAddEle,Ele_Earth,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_PROPERTY_FIRE_USER,{ bonus3 bSubEle,Ele_Fire,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET,{ bonus2 bAddEle,Ele_Fire,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_PROPERTY_WIND_USER,{ bonus3 bSubEle,Ele_Wind,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_WIND_TARGET,{ bonus2 bAddEle,Ele_Wind,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_PROPERTY_POISON_USER,{ bonus3 bSubEle,Ele_Poison,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_POISON_TARGET,{ bonus2 bAddEle,Ele_Poison,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_PROPERTY_SAINT_USER,{ bonus3 bSubEle,Ele_Holy,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET,{ bonus2 bAddEle,Ele_Holy,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_PROPERTY_DARKNESS_USER,{ bonus3 bSubEle,Ele_Dark,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET,{ bonus2 bAddEle,Ele_Dark,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_USER,{ bonus3 bSubEle,Ele_Ghost,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET,{ bonus2 bAddEle,Ele_Ghost,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_PROPERTY_UNDEAD_USER,{ bonus3 bSubEle,Ele_Undead,getrandomoptinfo(ROA_VALUE),BF_NORMAL; }
+RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET,{ bonus2 bAddEle,Ele_Undead,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_MDAMAGE_PROPERTY_NOTHING_USER,{ bonus3 bSubEle,Ele_Neutral,getrandomoptinfo(ROA_VALUE),BF_MAGIC; }
+RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET,{ bonus2 bMagicAddEle,Ele_Neutral,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_MDAMAGE_PROPERTY_WATER_USER,{ bonus3 bSubEle,Ele_Water,getrandomoptinfo(ROA_VALUE),BF_MAGIC; }
+RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET,{ bonus2 bMagicAddEle,Ele_Water,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_MDAMAGE_PROPERTY_GROUND_USER,{ bonus3 bSubEle,Ele_Earth,getrandomoptinfo(ROA_VALUE),BF_MAGIC; }
+RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET,{ bonus2 bMagicAddEle,Ele_Earth,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_MDAMAGE_PROPERTY_FIRE_USER,{ bonus3 bSubEle,Ele_Fire,getrandomoptinfo(ROA_VALUE),BF_MAGIC; }
+RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET,{ bonus2 bMagicAddEle,Ele_Fire,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_MDAMAGE_PROPERTY_WIND_USER,{ bonus3 bSubEle,Ele_Wind,getrandomoptinfo(ROA_VALUE),BF_MAGIC; }
+RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET,{ bonus2 bMagicAddEle,Ele_Wind,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_MDAMAGE_PROPERTY_POISON_USER,{ bonus3 bSubEle,Ele_Poison,getrandomoptinfo(ROA_VALUE),BF_MAGIC; }
+RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET,{ bonus2 bMagicAddEle,Ele_Poison,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_MDAMAGE_PROPERTY_SAINT_USER,{ bonus3 bSubEle,Ele_Holy,getrandomoptinfo(ROA_VALUE),BF_MAGIC; }
+RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET,{ bonus2 bMagicAddEle,Ele_Holy,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_MDAMAGE_PROPERTY_DARKNESS_USER,{ bonus3 bSubEle,Ele_Dark,getrandomoptinfo(ROA_VALUE),BF_MAGIC; }
+RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET,{ bonus2 bMagicAddEle,Ele_Dark,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_USER,{ bonus3 bSubEle,Ele_Ghost,getrandomoptinfo(ROA_VALUE),BF_MAGIC; }
+RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET,{ bonus2 bMagicAddEle,Ele_Ghost,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_MDAMAGE_PROPERTY_UNDEAD_USER,{ bonus3 bSubEle,Ele_Undead,getrandomoptinfo(ROA_VALUE),BF_MAGIC; }
+RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET,{ bonus2 bMagicAddEle,Ele_Undead,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_BODY_ATTR_NOTHING,{ bonus bDefEle,Ele_Neutral; }
+RDMOPT_BODY_ATTR_WATER,{ bonus bDefEle,Ele_Water; }
+RDMOPT_BODY_ATTR_GROUND,{ bonus bDefEle,Ele_Earth; }
+RDMOPT_BODY_ATTR_FIRE,{ bonus bDefEle,Ele_Fire; }
+RDMOPT_BODY_ATTR_WIND,{ bonus bDefEle,Ele_Wind; }
+RDMOPT_BODY_ATTR_POISON,{ bonus bDefEle,Ele_Poison; }
+RDMOPT_BODY_ATTR_SAINT,{ bonus bDefEle,Ele_Holy; }
+RDMOPT_BODY_ATTR_DARKNESS,{ bonus bDefEle,Ele_Dark; }
+RDMOPT_BODY_ATTR_TELEKINESIS,{ bonus bDefEle,Ele_Ghost; }
+RDMOPT_BODY_ATTR_UNDEAD,{ bonus bDefEle,Ele_Undead; }
+//RDMOPT_BODY_ATTR_ALL,{ /* Needs more info */ }
+RDMOPT_RACE_TOLERACE_NOTHING,{ bonus2 bSubRace,RC_Formless,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_TOLERACE_UNDEAD,{ bonus2 bSubRace,RC_Undead,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_TOLERACE_ANIMAL,{ bonus2 bSubRace,RC_Brute,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_TOLERACE_PLANT,{ bonus2 bSubRace,RC_Plant,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_TOLERACE_INSECT,{ bonus2 bSubRace,RC_Insect,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_TOLERACE_FISHS,{ bonus2 bSubRace,RC_Fish,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_TOLERACE_DEVIL,{ bonus2 bSubRace,RC_Demon,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_TOLERACE_HUMAN,{ bonus2 bSubRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bSubRace,RC_Player,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_TOLERACE_ANGEL,{ bonus2 bSubRace,RC_Angel,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_TOLERACE_DRAGON,{ bonus2 bSubRace,RC_Dragon,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_DAMAGE_NOTHING,{ bonus2 bAddRace,RC_Formless,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_DAMAGE_UNDEAD,{ bonus2 bAddRace,RC_Undead,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_DAMAGE_ANIMAL,{ bonus2 bAddRace,RC_Brute,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_DAMAGE_PLANT,{ bonus2 bAddRace,RC_Plant,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_DAMAGE_INSECT,{ bonus2 bAddRace,RC_Insect,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_DAMAGE_FISHS,{ bonus2 bAddRace,RC_Fish,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_DAMAGE_DEVIL,{ bonus2 bAddRace,RC_Demon,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_DAMAGE_HUMAN,{ bonus2 bAddRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bAddRace,RC_Player,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_DAMAGE_ANGEL,{ bonus2 bAddRace,RC_Angel,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_DAMAGE_DRAGON,{ bonus2 bAddRace,RC_Dragon,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_MDAMAGE_NOTHING,{ bonus2 bMagicAddRace,RC_Formless,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_MDAMAGE_UNDEAD,{ bonus2 bMagicAddRace,RC_Undead,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_MDAMAGE_ANIMAL,{ bonus2 bMagicAddRace,RC_Brute,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_MDAMAGE_PLANT,{ bonus2 bMagicAddRace,RC_Plant,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_MDAMAGE_INSECT,{ bonus2 bMagicAddRace,RC_Insect,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_MDAMAGE_FISHS,{ bonus2 bMagicAddRace,RC_Fish,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_MDAMAGE_DEVIL,{ bonus2 bMagicAddRace,RC_Demon,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_MDAMAGE_HUMAN,{ bonus2 bMagicAddRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bMagicAddRace,RC_Player,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_MDAMAGE_ANGEL,{ bonus2 bMagicAddRace,RC_Angel,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_MDAMAGE_DRAGON,{ bonus2 bMagicAddRace,RC_Dragon,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_CRI_PERCENT_NOTHING,{ bonus2 bCriticalAddRace,RC_Formless,getrandomoptinfo(ROA_VALUE)/10; }
+RDMOPT_RACE_CRI_PERCENT_UNDEAD,{ bonus2 bCriticalAddRace,RC_Undead,getrandomoptinfo(ROA_VALUE)/10; }
+RDMOPT_RACE_CRI_PERCENT_ANIMAL,{ bonus2 bCriticalAddRace,RC_Brute,getrandomoptinfo(ROA_VALUE)/10; }
+RDMOPT_RACE_CRI_PERCENT_PLANT,{ bonus2 bCriticalAddRace,RC_Plant,getrandomoptinfo(ROA_VALUE)/10; }
+RDMOPT_RACE_CRI_PERCENT_INSECT,{ bonus2 bCriticalAddRace,RC_Insect,getrandomoptinfo(ROA_VALUE)/10; }
+RDMOPT_RACE_CRI_PERCENT_FISHS,{ bonus2 bCriticalAddRace,RC_Fish,getrandomoptinfo(ROA_VALUE)/10; }
+RDMOPT_RACE_CRI_PERCENT_DEVIL,{ bonus2 bCriticalAddRace,RC_Demon,getrandomoptinfo(ROA_VALUE)/10; }
+RDMOPT_RACE_CRI_PERCENT_HUMAN,{ bonus2 bCriticalAddRace,RC_DemiHuman,getrandomoptinfo(ROA_VALUE)/10; bonus2 bCriticalAddRace,RC_Player,getrandomoptinfo(ROA_VALUE)/10; }
+RDMOPT_RACE_CRI_PERCENT_ANGEL,{ bonus2 bCriticalAddRace,RC_Angel,getrandomoptinfo(ROA_VALUE)/10; }
+RDMOPT_RACE_CRI_PERCENT_DRAGON,{ bonus2 bCriticalAddRace,RC_Dragon,getrandomoptinfo(ROA_VALUE)/10; }
+RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING,{ bonus2 bIgnoreDefRaceRate,RC_Formless,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD,{ bonus2 bIgnoreDefRaceRate,RC_Undead,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL,{ bonus2 bIgnoreDefRaceRate,RC_Brute,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT,{ bonus2 bIgnoreDefRaceRate,RC_Plant,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT,{ bonus2 bIgnoreDefRaceRate,RC_Insect,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS,{ bonus2 bIgnoreDefRaceRate,RC_Fish,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL,{ bonus2 bIgnoreDefRaceRate,RC_Demon,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN,{ bonus2 bIgnoreDefRaceRate,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bIgnoreDefRaceRate,RC_Player,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL,{ bonus2 bIgnoreDefRaceRate,RC_Angel,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON,{ bonus2 bIgnoreDefRaceRate,RC_Dragon,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_MDEF_PERCENT_NOTHING,{ bonus2 bIgnoreMdefRaceRate,RC_Formless,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_MDEF_PERCENT_UNDEAD,{ bonus2 bIgnoreMdefRaceRate,RC_Undead,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANIMAL,{ bonus2 bIgnoreMdefRaceRate,RC_Brute,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLANT,{ bonus2 bIgnoreMdefRaceRate,RC_Plant,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_MDEF_PERCENT_INSECT,{ bonus2 bIgnoreMdefRaceRate,RC_Insect,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_MDEF_PERCENT_FISHS,{ bonus2 bIgnoreMdefRaceRate,RC_Fish,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_MDEF_PERCENT_DEVIL,{ bonus2 bIgnoreMdefRaceRate,RC_Demon,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_MDEF_PERCENT_HUMAN,{ bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,getrandomoptinfo(ROA_VALUE); bonus2 bIgnoreMdefRaceRate,RC_Player,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANGEL,{ bonus2 bIgnoreMdefRaceRate,RC_Angel,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RACE_IGNORE_MDEF_PERCENT_DRAGON,{ bonus2 bIgnoreMdefRaceRate,RC_Dragon,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_CLASS_DAMAGE_NORMAL_TARGET,{ bonus2 bAddClass,Class_Normal,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_CLASS_DAMAGE_BOSS_TARGET,{ bonus2 bAddClass,Class_Boss,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_CLASS_DAMAGE_NORMAL_USER,{ bonus2 bSubClass,Class_Normal,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_CLASS_DAMAGE_BOSS_USER,{ bonus2 bSubClass,Class_Boss,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_CLASS_MDAMAGE_NORMAL,{ bonus2 bMagicAddClass,Class_Normal,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_CLASS_MDAMAGE_BOSS,{ bonus2 bMagicAddClass,Class_Boss,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL,{ bonus2 bIgnoreDefClassRate,Class_Normal,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS,{ bonus2 bIgnoreDefClassRate,Class_Boss,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_CLASS_IGNORE_MDEF_PERCENT_NORMAL,{ bonus2 bIgnoreMdefClassRate,Class_Normal,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_CLASS_IGNORE_MDEF_PERCENT_BOSS,{ bonus2 bIgnoreMdefClassRate,Class_Boss,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_SIZE_SMALL_TARGET,{ bonus2 bAddSize,Size_Small,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_SIZE_MIDIUM_TARGET,{ bonus2 bAddSize,Size_Medium,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_SIZE_LARGE_TARGET,{ bonus2 bAddSize,Size_Large,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_SIZE_SMALL_USER,{ bonus2 bSubSize,Size_Small,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_SIZE_MIDIUM_USER,{ bonus2 bSubSize,Size_Medium,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_SIZE_LARGE_USER,{ bonus2 bSubSize,Size_Large,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_SIZE_PERFECT,{ bonus bNoSizeFix,1; }
+RDMOPT_DAMAGE_CRI_TARGET,{ bonus bCritAtkRate,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DAMAGE_CRI_USER,{ bonus bCriticalDef,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RANGE_ATTACK_DAMAGE_TARGET,{ bonus bLongAtkRate,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_RANGE_ATTACK_DAMAGE_USER,{ bonus bLongAtkDef,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_HEAL_VALUE,{ bonus bHealPower,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_HEAL_MODIFY_PERCENT,{ bonus bHealPower2,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_DEC_SPELL_CAST_TIME,{ bonus bVariableCastrate,-(getrandomoptinfo(ROA_VALUE));}
+RDMOPT_DEC_SPELL_DELAY_TIME,{ bonus bDelayrate,-(getrandomoptinfo(ROA_VALUE)); }
+RDMOPT_DEC_SP_CONSUMPTION,{ bonus bUseSPrate,-(getrandomoptinfo(ROA_VALUE)); }
+//RDMOPT_HP_DRAIN,{ /* Needs more info */ }
+//RDMOPT_SP_DRAIN,{ /* Needs more info */ }
+RDMOPT_WEAPON_ATTR_NOTHING,{ bonus bAtkEle,Ele_Neutral; }
+RDMOPT_WEAPON_ATTR_WATER,{ bonus bAtkEle,Ele_Water; }
+RDMOPT_WEAPON_ATTR_GROUND,{ bonus bAtkEle,Ele_Earth; }
+RDMOPT_WEAPON_ATTR_FIRE,{ bonus bAtkEle,Ele_Fire; }
+RDMOPT_WEAPON_ATTR_WIND,{ bonus bAtkEle,Ele_Wind; }
+RDMOPT_WEAPON_ATTR_POISON,{ bonus bAtkEle,Ele_Poison; }
+RDMOPT_WEAPON_ATTR_SAINT,{ bonus bAtkEle,Ele_Holy; }
+RDMOPT_WEAPON_ATTR_DARKNESS,{ bonus bAtkEle,Ele_Dark; }
+RDMOPT_WEAPON_ATTR_TELEKINESIS,{ bonus bAtkEle,Ele_Ghost; }
+RDMOPT_WEAPON_ATTR_UNDEAD,{ bonus bAtkEle,Ele_Undead; }
+RDMOPT_WEAPON_INDESTRUCTIBLE,{ bonus bUnbreakableWeapon,1; }
+RDMOPT_BODY_INDESTRUCTIBLE,{ bonus bUnbreakableArmor,1; }
+RDMOPT_MDAMAGE_SIZE_SMALL_TARGET,{ bonus2 bMagicAddSize,Size_Small,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_MDAMAGE_SIZE_MIDIUM_TARGET,{ bonus2 bMagicAddSize,Size_Medium,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_MDAMAGE_SIZE_LARGE_TARGET,{ bonus2 bMagicAddSize,Size_Large,getrandomoptinfo(ROA_VALUE); }
+//RDMOPT_MDAMAGE_SIZE_SMALL_USER,{}
+//RDMOPT_MDAMAGE_SIZE_MIDIUM_USER,{}
+//RDMOPT_MDAMAGE_SIZE_LARGE_USER,{}
+//redefined?
+//RDMOPT_ATTR_TOLERACE_ALL,{}

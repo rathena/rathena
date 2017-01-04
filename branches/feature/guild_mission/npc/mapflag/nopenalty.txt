@@ -1,0 +1,273 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable death penalty.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Same as 'noexppenalty' and 'nozenypenalty' combined.
+//===== Additional Comments: ================================= 
+//= 1.2 Updated. [Lupus]
+//= 1.3 Added all novice maps. [L0ne_W0lf]
+//= 1.4 Removed Nightmare PVP maps. [L0ne_W0lf]
+//= 1.5 Updated. [L0ne_Wolf]
+//= 1.6 Renewal split. [Euphy]
+//============================================================
+
+// Towns ====================
+ayo_in01	mapflag	nopenalty
+ayo_in02	mapflag	nopenalty
+alb_ship	mapflag	nopenalty
+alberta	mapflag	nopenalty
+alberta_in	mapflag	nopenalty
+aldebaran	mapflag	nopenalty
+aldeba_in	mapflag	nopenalty
+amatsu	mapflag	nopenalty
+ama_in01	mapflag	nopenalty
+ama_in02	mapflag	nopenalty
+ama_test	mapflag	nopenalty
+arena_room	mapflag	nopenalty
+comodo	mapflag	nopenalty
+cmd_in01	mapflag	nopenalty
+cmd_in02	mapflag	nopenalty
+geffen	mapflag	nopenalty
+gef_dun03	mapflag	nopenalty
+gef_tower	mapflag	nopenalty
+geffen_in	mapflag	nopenalty
+gonryun	mapflag	nopenalty
+gon_in	mapflag	nopenalty
+gon_test	mapflag	nopenalty
+hugel	mapflag	nopenalty
+in_orcs01	mapflag	nopenalty
+izlude	mapflag	nopenalty
+izlude_in	mapflag	nopenalty
+jawaii	mapflag	nopenalty
+jawaii_in	mapflag	nopenalty
+lighthalzen	mapflag	nopenalty
+louyang	mapflag	nopenalty
+lou_in01	mapflag	nopenalty
+lou_in02	mapflag	nopenalty
+morocc	mapflag	nopenalty
+moc_castle	mapflag	nopenalty
+morocc_in	mapflag	nopenalty
+new_zone01	mapflag	nopenalty
+new_zone02	mapflag	nopenalty
+new_zone03	mapflag	nopenalty
+new_zone04	mapflag	nopenalty
+new_1-1	mapflag	nopenalty
+new_1-2	mapflag	nopenalty
+new_1-3	mapflag	nopenalty
+new_1-4	mapflag	nopenalty
+new_2-1	mapflag	nopenalty
+new_2-2	mapflag	nopenalty
+new_2-3	mapflag	nopenalty
+new_2-4	mapflag	nopenalty
+new_3-1	mapflag	nopenalty
+new_3-2	mapflag	nopenalty
+new_3-3	mapflag	nopenalty
+new_3-4	mapflag	nopenalty
+new_4-1	mapflag	nopenalty
+new_4-2	mapflag	nopenalty
+new_4-3	mapflag	nopenalty
+new_4-4	mapflag	nopenalty
+new_5-1	mapflag	nopenalty
+new_5-2	mapflag	nopenalty
+new_5-3	mapflag	nopenalty
+new_5-4	mapflag	nopenalty
+nif_in	mapflag	nopenalty
+pay_arche	mapflag	nopenalty
+payon	mapflag	nopenalty
+payon_in01	mapflag	nopenalty
+payon_in02	mapflag	nopenalty
+payon_in03	mapflag	nopenalty
+prontera	mapflag	nopenalty
+prt_are_in	mapflag	nopenalty
+prt_are01	mapflag	nopenalty
+prt_castle	mapflag	nopenalty
+prt_church	mapflag	nopenalty
+prt_in	mapflag	nopenalty
+umbala	mapflag	nopenalty
+um_in	mapflag	nopenalty
+xmas	mapflag	nopenalty
+xmas_in	mapflag	nopenalty
+yuno	mapflag	nopenalty
+yuno_in01	mapflag	nopenalty
+yuno_in02	mapflag	nopenalty
+yuno_in03	mapflag	nopenalty
+yuno_in04	mapflag	nopenalty
+yuno_in05	mapflag	nopenalty
+yuno_pre	mapflag	nopenalty
+y_airport	mapflag	nopenalty
+lhz_airport	mapflag	nopenalty
+lhz_in01	mapflag	nopenalty
+lhz_in02	mapflag	nopenalty
+lhz_in03	mapflag	nopenalty
+rachel	mapflag	nopenalty
+ra_in01	mapflag	nopenalty
+ra_temin	mapflag	nopenalty
+ra_temple	mapflag	nopenalty
+ra_temsky	mapflag	nopenalty
+que_rachel	mapflag	nopenalty
+airplane	mapflag	nopenalty
+airport	mapflag	nopenalty
+einbech	mapflag	nopenalty
+einbroch	mapflag	nopenalty
+ein_in01	mapflag	nopenalty
+job_soul	mapflag	nopenalty
+job_star	mapflag	nopenalty
+auction_01	mapflag	nopenalty
+auction_02	mapflag	nopenalty
+hu_in01	mapflag	nopenalty
+que_ng	mapflag	nopenalty
+kh_mansion	mapflag	nopenalty
+kh_rossi	mapflag	nopenalty
+kh_school	mapflag	nopenalty
+kh_vila	mapflag	nopenalty
+kh_kiehl01	mapflag	nopenalty
+kh_kiehl02	mapflag	nopenalty
+ayothaya	mapflag	nopenalty
+veins	mapflag	nopenalty
+ve_in	mapflag	nopenalty
+ve_in02	mapflag	nopenalty
+thor_camp	mapflag	nopenalty
+moc_para01	mapflag	nopenalty
+mid_camp	mapflag	nopenalty
+mid_campin	mapflag	nopenalty
+moc_fild22b	mapflag	nopenalty
+manuk	mapflag	nopenalty
+man_in01	mapflag	nopenalty
+splendide	mapflag	nopenalty
+spl_in01	mapflag	nopenalty
+spl_in02	mapflag	nopenalty
+
+// Job Quests ========================
+job_sword1	mapflag	nopenalty
+job_thief1	mapflag	nopenalty
+// 2-1 -----------------------
+job_prist	mapflag	nopenalty
+job_wiz	mapflag	nopenalty
+job_hunte	mapflag	nopenalty
+in_hunter	mapflag	nopenalty
+in_moc_16	mapflag	nopenalty
+// 2-2 --------------------
+alde_alche	mapflag	nopenalty
+job_cru	mapflag	nopenalty
+job_duncer	mapflag	nopenalty
+job_monk	mapflag	nopenalty
+monk_test	mapflag	nopenalty
+monk_in	mapflag	nopenalty
+in_rogue	mapflag	nopenalty
+job_sage	mapflag	nopenalty
+
+// Misc Quests =======================
+mosk_ship	mapflag	nopenalty
+que_sign01	mapflag	nopenalty
+que_sign02	mapflag	nopenalty
+
+// GvG Arenas ===================
+guild_vs1	mapflag	nopenalty
+guild_vs2	mapflag	nopenalty
+guild_vs3	mapflag	nopenalty
+guild_vs4	mapflag	nopenalty
+guild_vs5	mapflag	nopenalty
+
+// Arenas=======================
+sec_in01	mapflag	nopenalty
+sec_in02	mapflag	nopenalty
+
+// Izlude Arena ========================
+force_1-1	mapflag	nopenalty
+force_1-2	mapflag	nopenalty
+force_1-3	mapflag	nopenalty
+force_2-1	mapflag	nopenalty
+force_2-2	mapflag	nopenalty
+force_2-3	mapflag	nopenalty
+force_3-1	mapflag	nopenalty
+force_3-2	mapflag	nopenalty
+force_3-3	mapflag	nopenalty
+
+// PvP Arenas =========================
+pvp_y_1-1	mapflag	nopenalty
+pvp_y_1-2	mapflag	nopenalty
+pvp_y_1-3	mapflag	nopenalty
+pvp_y_1-4	mapflag	nopenalty
+pvp_y_1-5	mapflag	nopenalty
+pvp_y_2-1	mapflag	nopenalty
+pvp_y_2-2	mapflag	nopenalty
+pvp_y_2-3	mapflag	nopenalty
+pvp_y_2-4	mapflag	nopenalty
+pvp_y_2-5	mapflag	nopenalty
+pvp_y_3-1	mapflag	nopenalty
+pvp_y_3-2	mapflag	nopenalty
+pvp_y_3-3	mapflag	nopenalty
+pvp_y_3-4	mapflag	nopenalty
+pvp_y_3-5	mapflag	nopenalty
+pvp_y_4-1	mapflag	nopenalty
+pvp_y_4-2	mapflag	nopenalty
+pvp_y_4-3	mapflag	nopenalty
+pvp_y_4-4	mapflag	nopenalty
+pvp_y_4-5	mapflag	nopenalty
+pvp_y_5-1	mapflag	nopenalty
+pvp_y_5-2	mapflag	nopenalty
+pvp_y_5-3	mapflag	nopenalty
+pvp_y_5-4	mapflag	nopenalty
+pvp_y_5-5	mapflag	nopenalty
+pvp_y_6-1	mapflag	nopenalty
+pvp_y_6-2	mapflag	nopenalty
+pvp_y_6-3	mapflag	nopenalty
+pvp_y_6-4	mapflag	nopenalty
+pvp_y_6-5	mapflag	nopenalty
+pvp_y_7-1	mapflag	nopenalty
+pvp_y_7-2	mapflag	nopenalty
+pvp_y_7-3	mapflag	nopenalty
+pvp_y_7-4	mapflag	nopenalty
+pvp_y_7-5	mapflag	nopenalty
+pvp_y_8-1	mapflag	nopenalty
+pvp_y_8-2	mapflag	nopenalty
+pvp_y_8-3	mapflag	nopenalty
+pvp_y_8-4	mapflag	nopenalty
+pvp_y_8-5	mapflag	nopenalty
+pvp_2vs2	mapflag	nopenalty
+
+//Aldebaran Turbo Track
+turbo_room	mapflag	nopenalty
+turbo_n_1	mapflag	nopenalty
+turbo_n_4	mapflag	nopenalty
+turbo_n_8	mapflag	nopenalty
+turbo_n_16	mapflag	nopenalty
+turbo_e_4	mapflag	nopenalty
+turbo_e_8	mapflag	nopenalty
+turbo_e_16	mapflag	nopenalty
+
+//Monster Races ================
+p_track01	mapflag	nopenalty
+p_track02	mapflag	nopenalty
+
+// Poring War ==================
+poring_w02	mapflag	nopenalty
+
+//Vision of Okolnir =============
+que_qsch01	mapflag	nopenalty
+que_qsch02	mapflag	nopenalty
+que_qsch03	mapflag	nopenalty
+que_qsch04	mapflag	nopenalty
+que_qsch05	mapflag	nopenalty
+que_qaru01	mapflag	nopenalty
+que_qaru02	mapflag	nopenalty
+que_qaru03	mapflag	nopenalty
+que_qaru04	mapflag	nopenalty
+que_qaru05	mapflag	nopenalty
+
+// Battle Grounds ==============
+bat_c01	mapflag	nopenalty
+bat_c02	mapflag	nopenalty
+bat_c03	mapflag	nopenalty
+bat_room	mapflag	nopenalty
+bat_b01	mapflag	nopenalty
+bat_b02	mapflag	nopenalty
+bat_a01	mapflag	nopenalty
+bat_a02	mapflag	nopenalty
+
+//evt_zombie	mapflag	nopenalty

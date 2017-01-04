@@ -1,0 +1,42 @@
+//===== rAthena Script =======================================
+//= Mission WoE TE
+//===== Description: =========================================
+//= [Official Conversion]
+//= NPC for mission WoE TE at Aldebaran
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Capuche]
+//============================================================
+
+te_aldecas1,2,2,0	duplicate(#popswitch)	#popswitch_alde01	CLEAR_NPC
+te_aldecas2,2,2,0	duplicate(#popswitch)	#popswitch_alde02	CLEAR_NPC
+te_aldecas3,2,2,0	duplicate(#popswitch)	#popswitch_alde03	CLEAR_NPC
+te_aldecas4,2,2,0	duplicate(#popswitch)	#popswitch_alde04	CLEAR_NPC
+te_aldecas5,2,2,0	duplicate(#popswitch)	#popswitch_alde05	CLEAR_NPC
+
+te_aldecas1,2,3,0	duplicate(pop_mission_TE)	#popa_alde01	CLEAR_NPC
+te_aldecas1,2,3,0	duplicate(pop_mission_TE)	#popb_alde01	CLEAR_NPC
+te_aldecas1,2,3,0	duplicate(pop_mission_TE)	#popc_alde01	CLEAR_NPC
+te_aldecas1,2,3,0	duplicate(pop_mission_TE)	#popd_alde01	CLEAR_NPC
+
+te_aldecas2,2,3,0	duplicate(pop_mission_TE)	#popa_alde02	CLEAR_NPC
+te_aldecas2,2,3,0	duplicate(pop_mission_TE)	#popb_alde02	CLEAR_NPC
+te_aldecas2,2,3,0	duplicate(pop_mission_TE)	#popc_alde02	CLEAR_NPC
+te_aldecas2,2,3,0	duplicate(pop_mission_TE)	#popd_alde02	CLEAR_NPC
+
+te_aldecas3,2,3,0	duplicate(pop_mission_TE)	#popa_alde03	CLEAR_NPC
+te_aldecas3,2,3,0	duplicate(pop_mission_TE)	#popb_alde03	CLEAR_NPC
+te_aldecas3,2,3,0	duplicate(pop_mission_TE)	#popc_alde03	CLEAR_NPC
+te_aldecas3,2,3,0	duplicate(pop_mission_TE)	#popd_alde03	CLEAR_NPC
+
+te_aldecas4,2,3,0	duplicate(pop_mission_TE)	#popa_alde04	CLEAR_NPC
+te_aldecas4,2,3,0	duplicate(pop_mission_TE)	#popb_alde04	CLEAR_NPC
+te_aldecas4,2,3,0	duplicate(pop_mission_TE)	#popc_alde04	CLEAR_NPC
+te_aldecas4,2,3,0	duplicate(pop_mission_TE)	#popd_alde04	CLEAR_NPC
+
+te_aldecas5,2,3,0	duplicate(pop_mission_TE)	#popa_alde05	CLEAR_NPC
+te_aldecas5,2,3,0	duplicate(pop_mission_TE)	#popb_alde05	CLEAR_NPC
+te_aldecas5,2,3,0	duplicate(pop_mission_TE)	#popc_alde05	CLEAR_NPC
+te_aldecas5,2,3,0	duplicate(pop_mission_TE)	#popd_alde05	CLEAR_NPC
+
+
+te_alde_gld,218,182,5	duplicate(Training_Instructor_TE)	Kafragarten Instructor#t	4_M_HUMAN_02

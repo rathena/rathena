@@ -1,0 +1,68 @@
+//===== rAthena Script ======================================= 
+//= Valhallen Items Quests NPC
+//===== By: ================================================== 
+//= Avaji
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= All-in-one: Mjolnir,Sleipnir,Brisingamen,Gleipnir,Megingjard
+//= Custom quest, ingredients based on official RO FAQ
+//===== Additional Comments: ================================= 
+//= 1.1 Optimized. [Euphy]
+//============================================================ 
+
+prontera,147,171,5	script	Lenneth	811,{
+	mes "[Lenneth]";
+	mes "I come from Valhalla to aid you.";
+	mes "I can transmute for you many of the Valhallen items,";
+	mes "although they require many rare elements to make.";
+	next;
+	switch(select("Mjolnir:Sleipnir:Brisingamen:Gleipnir:Megingjard")) {
+		case 1:
+			mes "[Lenneth]";
+			mes "^3355FFMjolnir^000000 is the mighty Hammer of Thor.";
+			setarray .@Items[0],1530,1531,2,984,20,985,5,969,40,7074,2,7075,4,7078,5,7087,5,7089,5;
+			break;
+		case 2:
+			mes "[Lenneth]";
+			mes "^3355FFSleipnir^000000 are boots made after Odin's War Horse.";
+			setarray .@Items[0],2410,2406,2,984,1,969,20,985,10,7076,3,7079,5,7083,3,7086,3;
+			break;
+		case 3:
+			mes "[Lenneth]";
+			mes "^3355FFBrisingammen^000000 is the magical Necklace of Freyja, goddess of Beauty.";
+			setarray .@Items[0],2630,2603,1,726,2,722,3,727,10,723,5,969,20,7073,4,7077,4,7088,3,7090,3,7092,3;
+			break;
+		case 4:
+			mes "[Lenneth]";
+			mes "The ^3355FFGleipnir^000000 is a light yet strong rope required to make ^3355FFMegingjard^000000";
+			setarray .@Items[0],7058,7080,4,7081,5,7082,4,7084,3,7085,3;
+			break;
+		case 5:
+			mes "[Lenneth]";
+			mes "The ^3355FFMegingjard^000000 is the powerful Belt of Thor.";
+			setarray .@Items[0],2629,7058,1,2627,1,969,10,726,10,984,5;
+			break; }
+	mes "^FF0000The items I need are as follows:^000000";
+	for(set .@i,1; .@i<getarraysize(.@Items[0]); set .@i,.@i+2) {
+		mes " ~ "+.@Items[.@i+1]+"x ^3355FF"+getitemname(.@Items[.@i])+"^000000";
+		if (countitem(.@Items[.@i]) < .@Items[.@i+1]) set .@nr,1; }
+	if (.@nr) close;
+	next;
+	mes "[Lenneth]";
+	mes "Do you desire ^3355FF"+getitemname(.@Items[0])+"^000000?";
+	next;
+	if(select("Yes:No")==2) {
+		mes "[Lenneth]";
+		mes "Please return if you change your mind.";
+		close; }
+	mes "[Lenneth]";
+	mes "Here is your ^3355FF"+getitemname(.@Items[0])+"^000000.";
+	mes "May it serve you well.";
+	for(set .@i,1; .@i<getarraysize(.@Items); set .@i,.@i+2)
+		delitem .@Items[.@i], .@Items[.@i+1];
+	getitem .@Items[0],1;
+	close;
+}

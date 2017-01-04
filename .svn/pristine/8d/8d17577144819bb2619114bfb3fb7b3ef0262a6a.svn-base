@@ -1,0 +1,200 @@
+//===== rAthena Script =======================================
+//= Advanced Refiner
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Refiner that uses Enriched ores to increase upgrade success.
+//= After a conversation with Doddler, it's been established that
+//= the advanced refiner works similar the the "Bubble Gum" item.
+//= The success percentage is not "increased" however, if it fails
+//= You get a second try. This tries twice at the same time,
+//= effectively giving you a re-roll on your attempt.
+//===== Additional Comments: =================================
+//= 1.0 Added Malangdo Refiner "Holink". [Euphy]
+//============================================================
+
+// Main NPC :: mal_jerun
+//============================================================
+malangdo,221,174,6	script	Holink#mal_cash	559,{
+	disable_items;
+	mes "[Holink]";
+	mes "I am the meow~ Blacksmith Holink~";
+	mes "Master of refining, Holink~";
+	mes "I am the special cat Holink who learned from Morroc~";
+	mes "My daughter is so proud of me, Holink~";
+	mes "What should Holink~ refine today?";
+	next;
+	setarray .@position$[1],"Head","Body","Left Hand","Right Hand","Robe","Shoes","Accessory 1","Accessory 2","Head 2","Head 3";
+	set .@menu$,"";
+	for(set .@i,1; .@i<=10; set .@i,.@i+1)
+		set .@menu$, .@menu$+((getequipisequiped(.@i))?getequipname(.@i):.@position$[.@i]+"-[Empty]")+":";
+	set .@part, select(.@menu$);
+	if (!getequipisequiped(.@part)) {
+		mes "[Holink]";
+		switch(.@part) {
+		case 1:
+			mes "My teacher Aragam said meow~";
+			mes "There's no cure for stupidity...";
+			break;
+		case 2:
+			mes "There's nothing to see here, meow!!";
+			break;
+		case 3:
+			mes "Meow? What do you want me to do with this left hand...?";
+			break;
+		case 4:
+			mes "Meow? What do you want me to do with this right hand...?";
+			break;
+		case 5:
+			mes "Meow? You don't have anything on.";
+			break;
+		case 6:
+			mes "Kyang~! Do not mess with my sensitive olfactory, meow~.";
+			break;
+		case 7:
+		case 8:
+			mes "Meow? Where is the accessory?";
+			break;
+		case 9:
+		case 10:
+			mes "Meow? You talking about the other head parts, meow?~";
+			break;
+		}
+		close;
+	}
+	if (!getequipisenableref(.@part)) {
+		mes "[Holink]";
+		mes "Even Aragam can't refine such a thing, meow.";
+		close;
+	}
+	if (getequiprefinerycnt(.@part) >= 10) {
+		mes "[Holink]";
+		mes "Meow~ Perfect refining. Did Aragam do this, meow?~";
+		close;
+	}
+	mes "[Holink]";
+	switch(getequipweaponlv(.@part)) {
+	default:
+	case 0: // Armor
+		set .@price,15000;
+		set .@material,7619; //Enriched_Elunium
+		set .@type$,"armor";
+		mes "You have chosen an armor, meow~";
+		break;
+	case 1: // Level 1 Weapon
+		set .@price,500;
+		set .@material,7620; //Enriched_Oridecon
+		set .@type$,"weapon";
+		mes "A level 1 weapon...?";
+		break;
+	case 2: // Level 2 Weapon
+		set .@price,2000;
+		set .@material,7620; //Enriched_Oridecon
+		set .@type$,"weapon";
+		mes "Meow, a level 2 weapon...?";
+		break;
+	case 3: // Level 3 Weapon
+		set .@price,20000;
+		set .@material,7620; //Enriched_Oridecon
+		set .@type$,"weapon";
+		mes "Meow Meow~~ A level 3 weapon~~";
+		break;
+	case 4: // Level 4 Weapon
+		set .@price,50000;
+		set .@material,7620; //Enriched_Oridecon
+		set .@type$,"weapon";
+		mes "Me-Meow!... A level 4 weapon...!";
+		mes "I've only seen it twice while";
+		mes "learning from Aragam... Me-Meow!!";
+		break;
+	}
+	mes "You need ^ff9999"+getitemname(.@material)+"^000000 and ^ff9999"+.@price+"^000000 Zeny for this refine, meow~";
+	mes "Want to continue, meow?~";
+	next;
+	if(select("Yes!!:No!!") == 2) {
+		mes "[Holink]";
+		mes "Kyack!!";
+		mes "You don't belive in refine master Holink, meow?~";
+		close;
+	}
+	if (getequippercentrefinery(.@part) < 100) {
+		mes "[Holink]";
+		mes "Meow!!";
+		if (.@type$ == "armor")
+			mes "This armor was already refined so many times, meow.";
+		else {
+			mes "Danger. Danger~";
+			mes "This weapon was refined a lot, meow~";
+			next;
+			mes "[Holink]";
+		}
+		mes "You might break it if you continue";
+		mes "to try refining this item further, meow.";
+		next;
+		mes "[Holink]";
+		mes "Once the "+.@type$+" is broken, you can";
+		mes "never use it again, meow. Not to mention... all current";
+		mes "^ff0000cards and enchantments will vanish for sure^000000.";
+		mes "You still want to try, meow~?";
+		next;
+		if(select("Yes, I do!!:Forget about it!!") == 2) {
+			mes "[Holink]";
+			mes "Meow! Wise choice, meow.";
+			mes "But!!";
+			mes "I am not happy to see you doubting the refine master Holink, meow~";
+			close;
+		}
+	}
+	if (countitem(.@material) == 0 || Zeny < .@price) {
+		mes "[Holink]";
+		mes "You don't have the ingredients.";
+		mes "You need ^ff9999"+getitemname(.@material)+"^000000 and ^ff9999"+.@price+"^000000 Zeny, meow~";
+		mes "Go get it, meow~";
+		close;
+	}
+	delitem .@material,1;
+	set Zeny, Zeny-.@price;
+	if (getequippercentrefinery(.@part) > rand(100) || getequippercentrefinery(.@part) > rand(100)) {
+		successrefitem .@part;
+		mes "[Holink]";
+		mes "Me~ Me~ Meow! Fun fun refining~";
+		next;
+		emotion e_kis;
+		mes "[Holink]";
+		mes "Perfect!! Perfect, meow!!";
+		mes "I am the disciple of the refining wizard Aragam~";
+		mes "Holink!!";
+		mes "Another day of successful refining, meow!!";
+		close;
+	}
+	failedrefitem .@part;
+	mes "[Holink]";
+	mes "Meo~ Meow~ Kyaaak!!";
+	next;
+	switch(rand(1,5)) {
+		case 1: emotion e_sob; break;
+		case 2: emotion e_swt2; break;
+		case 3: emotion e_wah; break;
+		case 4: emotion e_hmm; break;
+		case 5: emotion e_lv2; break;
+	}
+	mes "[Holink]";
+	mes "Meow!! Aaaaakk~~!!!!";
+	mes "Kyaaak!! I have failed, meow!!";
+	next;
+	mes "[Holink]";
+	mes "......";
+	mes "......";
+	mes "All~ Everything~ Broken, meow...";
+	next;
+	mes "[Holink]";
+	mes "Meow.... Master Aragam once said,";
+	mes "learn from your failures...";
+	mes "Human, this one failure will be the beginning of your success in the future.";
+	close;
+}

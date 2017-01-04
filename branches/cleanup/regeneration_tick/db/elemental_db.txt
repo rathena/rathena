@@ -1,0 +1,25 @@
+// Elemental Summons Database
+//
+// Structure of Database:
+// ID,Sprite_Name,Name,LV,HP,SP,Range1,ATK1,ATK2,DEF,MDEF,STR,AGI,VIT,INT,DEX,LUK,Range2,Range3,Scale,Race,Element,Speed,aDelay,aMotion,dMotion
+//
+// Notes:
+// Summoned Elemental’s STATs are affected by the Caster’s Base Level and STATs.
+// In other words, all values specified will be added to (and will not override) the calculated STATs of the summoned elemental.
+
+// Monster Elementals
+2114,EL_AGNI_S,Agni,100,0,1,1,0,0,0,0,0,0,0,0,0,0,5,12,0,0,83,200,504,1020,360
+2115,EL_AGNI_M,Agni,100,0,1,1,0,0,0,0,0,0,0,0,0,0,5,12,1,0,83,200,504,1020,360
+2116,EL_AGNI_L,Agni,100,0,1,1,0,0,0,0,0,0,0,0,0,0,5,12,2,0,83,200,504,1020,360
+
+2117,EL_AQUA_S,Aqua,100,0,1,1,0,0,0,0,0,0,0,0,0,0,5,12,0,0,81,200,504,1020,360
+2118,EL_AQUA_M,Aqua,100,0,1,1,0,0,0,0,0,0,0,0,0,0,5,12,1,0,81,200,504,1020,360
+2119,EL_AQUA_L,Aqua,100,0,1,1,0,0,0,0,1,1,1,1,1,1,5,12,2,0,81,200,504,1020,360
+
+2120,EL_VENTUS_S,Ventus,100,0,1,1,0,0,0,0,0,0,0,0,0,0,5,12,0,0,84,200,504,1020,360
+2121,EL_VENTUS_M,Ventus,100,0,1,1,0,0,0,0,0,0,0,0,0,0,5,12,1,0,84,200,504,1020,360
+2122,EL_VENTUS_L,Ventus,100,0,1,1,0,0,0,0,0,0,0,0,0,0,5,12,2,0,84,200,504,1020,360
+
+2123,EL_TERA_S,Tera,100,0,1,1,0,0,0,0,0,0,0,0,0,0,5,12,0,0,82,200,504,1020,360
+2124,EL_TERA_M,Tera,100,0,1,1,0,0,0,0,0,0,0,0,0,0,5,12,1,0,82,200,504,1020,360
+2125,EL_TERA_L,Tera,100,0,1,1,0,0,0,0,0,0,0,0,0,0,5,12,2,0,82,200,504,1020,360

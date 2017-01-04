@@ -1,0 +1,15 @@
+//===== rAthena Script =======================================
+//= Sample: Getequipid
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20140208
+//===== Description: ========================================= 
+//= Demonstrates the 'getequipid' command.
+//============================================================
+
+prontera,161,181,6	script	getequipid sample	105,{
+	for (.@i = 1; .@i < 11; .@i++)
+		mes "getequipid(" + .@i + ") : " + getequipid(.@i);
+	close;
+}

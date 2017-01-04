@@ -1,0 +1,40 @@
+//===== rAthena Script =======================================
+//= City Cleaners Monster Spawn Script
+//===== By: ==================================================
+//= massdriller
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Spawns monsters to clean up cities.
+//===== Additional Comments: =================================
+//= 0.1a Added a few more towns to spawn Wild rose [MasterOfMuppets]
+//= 0.1b And even more from Poki#3 [Komurka]
+//= 1.0 Removed unofficial city cleaners [Playtester]
+//= 1.1 Added other city spawns [Playtester]
+//= 1.2 Split spawns into Pre-RE/RE and Town files. [Euphy]
+//============================================================
+
+//==================================================
+// Wild Rose City Spawns
+//==================================================
+prontera,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+morocc,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+alberta,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+aldebaran,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+geffen,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+payon,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+comodo,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+izlude,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+yuno,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+einbroch,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+lighthalzen,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+hugel,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+umbala,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+amatsu,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+gonryun,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+louyang,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+ayothaya,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+moscovia,0,0,0,0	monster	Wild Rose	1261,1,7200000,3600000,0
+einbech,0,0,0,0	monster	Wild Rose	1261,1,3600000,3000000,0

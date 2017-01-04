@@ -1,0 +1,119 @@
+//===== rAthena Script =======================================
+//= Morroc Field Warp Script
+//===== By: ==================================================
+//= Nana (1.0)
+//===== Current Version: =====================================
+//= 1.4b
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Morroc Fields
+//===== Additional Comments: =================================
+//= 1.1 changed 'anthell' to @anthell [Lupus]
+//= 1.2 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.3 Updated warps for episode 12.1 [L0ne_W0lf]
+//= 1.4 Uncommented warp that shouldn't have been commented. [L0ne_W0lf]
+//= 1.4a Uncommented yet ANOTHER warp that was taken out. [L0ne_W0lf]
+//= 1.4b Uncommented ANOTHER warp! Yay! :D [L0ne_W0lf]
+//============================================================
+
+//= Sograt Dessert ===========================================
+//moc_fild01,101,16,0	warp	mocf01-1	15,3,moc_fild04,317,376
+moc_fild01,101,16,0	warp	mocf01-1	15,3,moc_fild20,210,342
+moc_fild01,22,242,0	warp	mocf005	2,2,prt_fild09,380,237
+moc_fild01,239,382,0	warp	mocf006	12,1,prt_fild08,233,20
+moc_fild01,301,16,0	warp	mocf02	10,1,moc_fild02,77,338
+moc_fild01,321,16,0	warp	mocf02-1	10,1,moc_fild02,77,338
+moc_fild01,341,16,0	warp	mocf02-2	10,1,moc_fild02,77,338
+moc_fild01,379,162,0	warp	mocf011	2,12,pay_fild04,20,165
+moc_fild01,56,384,0	warp	moc007a	3,2,prt_fild08,54,24
+//moc_fild01,68,16,0	warp	mocf01	15,3,moc_fild04,317,376
+moc_fild02,228,29,0	warp	mocf03	4,2,moc_fild13,298,367
+moc_fild02,332,19,0	warp	mocf04	5,3,moc_fild03,70,336
+moc_fild02,350,339,0	warp	mocf012	6,2,pay_fild04,194,20
+moc_fild02,67,342,0	warp	mocf02-3	11,3,moc_fild01,315,25
+moc_fild02,71,18,0	warp	mocf05	4,2,moc_fild13,146,365
+moc_fild02,92,342,0	warp	mocf02-4	11,3,moc_fild01,315,25
+moc_fild03,17,37,0	warp	mocf06	2,4,moc_fild13,305,49
+moc_fild03,179,16,0	warp	mocf013	4,2,pay_fild11,38,327
+moc_fild03,303,170,0	warp	mocf014	2,7,pay_fild01,17,152
+moc_fild03,70,341,0	warp	mocf04-1	5,2,moc_fild02,332,23
+//moc_fild04,14,122,0	warp	mocf07-1	1,11,moc_fild05,378,119
+//moc_fild04,14,146,0	warp	mocf07-2	1,11,moc_fild05,378,119
+//moc_fild04,14,98,0	warp	mocf07	1,11,moc_fild05,378,119
+//moc_fild04,175,18,0	warp	mocf08	3,2,moc_fild08,170,380
+//moc_fild04,19,206,0	warp	mocf09	3,15,moc_fild05,373,208
+//moc_fild04,219,327,0	script	mocf016	45,3,4,{ set @anthell,0; warp "anthell01",35,262; }
+//moc_fild04,292,381,0	warp	mocf01-2	10,1,moc_fild01,76,25
+//moc_fild04,314,381,0	warp	mocf01-3	10,1,moc_fild01,76,25
+//moc_fild04,336,381,0	warp	mocf01-4	10,1,moc_fild01,76,25
+//moc_fild04,92,381,0	warp	mocf008	9,2,prt_fild09,246,19
+//moc_fild05,144,375,0	warp	mocf009	11,2,prt_fild10,263,23
+//moc_fild05,18,136,0	warp	mocf10	1,8,moc_fild06,367,317
+//moc_fild05,18,154,0	warp	mocf10-1	1,8,moc_fild06,367,317
+//moc_fild05,18,172,0	warp	mocf10-2	1,8,moc_fild06,367,317
+//moc_fild05,268,18,0	warp	mocf11	4,2,moc_fild09,267,368
+//moc_fild05,325,382,0	warp	mocf010	6,2,prt_fild09,95,19
+//moc_fild05,378,208,0	warp	mocf09-1	3,14,moc_fild04,26,206
+//moc_fild05,384,108,0	warp	mocf07-3	1,8,moc_fild04,22,123
+//moc_fild05,384,126,0	warp	mocf07-4	1,8,moc_fild04,22,123
+//moc_fild05,384,144,0	warp	mocf07-5	1,8,moc_fild04,22,123
+//moc_fild05,82,16,0	warp	mocf12	5,2,moc_fild09,80,366
+//moc_fild06,18,198,0	warp	mocf13	1,18,moc_fild07,378,201
+//moc_fild06,207,18,0	warp	mocf14	11,2,moc_fild10,208,295
+//moc_fild06,377,316,0	warp	mocf10-3	1,15,moc_fild05,24,153
+moc_fild07,198,21,0	warp	mocf001	2,2,morocc,160,294
+//moc_fild07,381,201,0	warp	mocf13-1	2,16,moc_fild06,28,201
+moc_fild07,380,201,0	warp	mocf13-1	2,16,moc_fild20,36,177
+//moc_fild08,16,207,0	warp	mocf15	2,4,moc_fild09,371,195
+//moc_fild08,170,383,0	warp	mocf08-1	3,2,moc_fild04,175,21
+//moc_fild08,204,16,0	warp	mocf16	4,2,moc_fild14,196,379
+//moc_fild08,383,211,0	warp	mocf17	2,4,moc_fild13,32,171
+//moc_fild09,126,20,0	warp	mocf18	4,2,moc_fild15,158,360
+//moc_fild09,267,371,0	warp	mocf11-1	4,2,moc_fild05,268,21
+//moc_fild09,30,162,0	warp	mocf19	2,3,moc_fild10,381,258
+//moc_fild09,374,195,0	warp	mocf15-1	2,8,moc_fild08,19,207
+//moc_fild09,80,369,0	warp	mocf12-1	7,2,moc_fild05,82,19
+//moc_fild10,189,23,0	warp	mocf20	3,2,moc_fild11,189,360
+//moc_fild10,19,207,0	warp	mocf002	2,2,morocc,299,207
+//moc_fild10,208,298,0	warp	mocf14-1	10,2,moc_fild06,207,21
+//moc_fild10,384,258,0	warp	mocf19-1	2,3,moc_fild09,33,162
+//moc_fild11,189,363,0	warp	mocf20-1	3,2,moc_fild10,189,26
+moc_fild11,189,360,0	warp	mocf20-1	3,2,moc_fild20,197,24
+moc_fild11,212,29,0	warp	mocf21	4,2,moc_fild17,218,366
+moc_fild11,26,161,0	warp	mocf22	2,10,moc_fild12,286,168
+//moc_fild11,379,197,0	warp	mocf23	2,6,moc_fild15,41,105
+moc_fild11,377,197,0	warp	mocf23	2,6,moc_fild20,36,177
+moc_fild12,118,30,0	warp	mocf24	4,2,moc_fild18,158,379
+moc_fild12,159,381,0	warp	mocf003	2,2,morocc,160,20
+moc_fild12,289,168,0	warp	mocf22-1	2,3,moc_fild11,29,161
+moc_fild13,146,368,0	warp	mocf05-1	5,2,moc_fild02,71,21
+//moc_fild13,29,171,0	warp	mocf17-1	2,4,moc_fild08,380,211
+moc_fild13,32,171,0	warp	mocf17-1	2,4,moc_fild20,349,179
+moc_fild13,298,370,0	warp	mocf03-1	4,2,moc_fild02,228,32
+moc_fild13,308,49,0	warp	mocf06-1	2,4,moc_fild03,20,37
+//moc_fild14,16,278,0	warp	mocf25	2,6,moc_fild15,364,276
+//moc_fild14,196,382,0	warp	mocf16-1	4,2,moc_fild08,204,19
+//moc_fild15,104,16,0	warp	mocf26	9,2,moc_fild16,125,380
+//moc_fild15,158,363,0	warp	mocf18-1	6,2,moc_fild09,126,23
+//moc_fild15,258,253,0	script	mocf017	45,3,3,{ set @anthell,1; warp "anthell01",35,262; }
+//moc_fild15,348,18,0	warp	mocf27	5,2,moc_fild16,334,379
+//moc_fild15,367,276,0	warp	mocf25-1	2,4,moc_fild14,19,278
+//moc_fild15,38,105,0	warp	mocf23-1	2,4,moc_fild11,376,197
+//moc_fild16,125,383,0	warp	mocf26-1	5,2,moc_fild15,104,19
+moc_fild16,124,381,0	warp	mocf26-1	5,2,moc_fild20,197,24
+moc_fild16,16,179,0	warp	mocf28	2,6,moc_fild17,366,272
+//moc_fild16,334,382,0	warp	mocf27-1	4,2,moc_fild15,348,21
+moc_fild16,333,380,0	warp	mocf27-1	4,2,moc_fild20,197,24
+moc_fild17,218,369,0	warp	mocf21-1	5,2,moc_fild11,212,32
+moc_fild17,30,300,0	warp	moc29	2,5,moc_fild18,379,305
+moc_fild17,369,272,0	warp	mocf28-1	2,3,moc_fild16,19,179
+moc_fild18,158,382,0	warp	mocf24-1	4,2,moc_fild12,118,33
+moc_fild18,382,305,0	warp	moc29-1	2,4,moc_fild17,33,300
+moc_fild19,169,107,0	warp	mocf004	1,4,morocc,27,164
+moc_fild19,71,170,0	warp	mocf018	8,2,moc_ruins,71,19
+moc_fild19,98,99,0	warp	mocf019	1,1,in_sphinx1,288,9
+
+// Satan Morroc Addition
+moc_fild21,26,196,0	warp	mocf020	1,1,moc_fild20,349,179
+moc_fild22,32,196,0	warp	mocf021	1,1,moc_fild20,349,179

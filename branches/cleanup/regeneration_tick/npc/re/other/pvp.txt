@@ -1,0 +1,93 @@
+//===== rAthena Script ======================================= 
+//= PvP NPCs
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= PvP NPCs that are found in the Inns in major cities.
+//= Includes Yoyo Mode, Nightmare Mode, and Event Mode.
+//===== Additional Comments: ================================= 
+//= 1.0 First version, Renewal.
+//============================================================
+
+// PVP Warpers
+//============================================================ 
+pvp_y_room,30,85,4	script	Fight Square Reception#1	105,{ //5,5
+	callfunc "F_PVP_FSRS",50,69;
+	end;
+
+OnInit:
+	waitingroom "LV 50 ~ LV 69",0;
+	end;
+}
+
+pvp_y_room,38,85,4	script	Fight Square Reception#2	105,{ //5,5
+	callfunc "F_PVP_FSRS",70,89;
+	end;
+
+OnInit:
+	waitingroom "LV 70 ~ LV 89",0;
+	end;
+}
+
+pvp_y_room,46,85,4	script	Fight Square Reception#3	105,{ //5,5
+	callfunc "F_PVP_FSRS",90,99;
+	end;
+
+OnInit:
+	waitingroom "LV 90 ~ LV 99",0;
+	end;
+}
+
+pvp_y_room,54,85,4	script	Fight Square Reception#8	105,{
+	callfunc "F_PVP_FSRS";
+	end;
+
+OnInit:
+	waitingroom "Free for all",0;
+	end;
+}
+
+pvp_y_room,62,85,4	script	Fight Square Reception#4	105,{
+	//if (ADVJOB > 0) {
+	if (Upper == 1) {
+		mes "[PVP Fight Square Reception Staff]";
+		mes "You have been transcended.";
+		mes "You are not allowed to enter.";
+		close;
+	}
+	callfunc "F_PVP_FSRS";
+	end;
+
+OnInit:
+	waitingroom "Normal Jobs Only",0;
+	end;
+}
+
+pvp_y_room,70,85,4	script	Fight Square Reception#5	105,{
+	//if (ADVJOB == 0) {
+	if (Upper != 1) {
+		mes "[PVP Fight Square Reception Staff]";
+		mes "You have not transcended.";
+		mes "You are not allowed to enter.";
+		close;
+	}
+	callfunc "F_PVP_FSRS";
+	end;
+
+OnInit:
+	waitingroom "Trans Jobs Only",0;
+	end;
+}
+
+pvp_n_room,86,85,4	script	Fight Square Reception#n	105,{
+	callfunc "F_PVP_FSRS";
+	end;
+
+OnInit:
+	waitingroom "Free for all",0;
+	end;
+}

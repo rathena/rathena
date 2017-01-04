@@ -1,0 +1,17 @@
+// Hocus-Pocus (Abracadabra) Castable Skills Database
+//
+// Structure of Database:
+// SkillID,DummyName,ProbabilityPerLvl
+//
+// 01. SkillID                  Skill ID to be casted by hocus pocus.
+// 02. DummyName                Name of the skill (informative, not used by server).
+// 03. ProbabilityPerLvl        Not a rate! Chance at which the skill is selected compared
+//                              with other entries probabilties
+//
+// NOTE:
+// - The skill is picked at random from the entire database and then tested for rate. If it
+//   does not succeed at that rate, another skill is picked and tested. This continues
+//   until a skill succeeds. Abracadabra-specific skills have a different chance to occur
+//   depending on skill level used. All other skills have an equal chance and appear from
+//   level 1 onward.
+// - To remove entry by importing, put "clear" (without quotes) in DummyName

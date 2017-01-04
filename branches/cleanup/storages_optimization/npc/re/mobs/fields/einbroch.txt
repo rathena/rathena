@@ -1,0 +1,105 @@
+//===== rAthena Script =======================================
+//= Einbroch Fields Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 correct spawn maps, but not yet exact amount of
+//=     monsters [Lupus]
+//=     maps, marked with * are correct
+//= 1.2 Updated to correct mobs. Many thanks to vicious_pucca
+//=    again for providing the information [MasterOfMuppets]
+//= 1.2a Fixed missing tabs [Lupus]
+//= 1.3 Updated after Episode 10.4 - Hugel [Poki#3]
+//=     Mob quantity is custom.
+//= 1.3b Changed the spawn numbers a bit. [Poki#3]
+//=     Thanks to Playtester and Emperium.org
+//= 1.4 Updated by using Tharis' Homun AI, by Tharis [Vicious]
+//= 1.5 Adjusted some spawns according to official info [Playtester]
+//= 1.6 More accurate spawns [Playtester]
+//= 1.7 Updated to Renewal Spawns [Kisuka]
+//============================================================
+
+//==================================================
+// ein_fild01 - Spawns disabled on Renewal
+//==================================================
+
+//==================================================
+// ein_fild02 - Disabled on Renewal
+//==================================================
+
+//==================================================
+// ein_fild03 - Einbroch Field
+//==================================================
+ein_fild03,0,0,0,0	monster	Teddy Bear	1622,100,5000,0,0
+ein_fild03,0,0,0,0	monster	Venomous	1621,20,5000,0,0
+ein_fild03,0,0,0,0	monster	Noxious	1620,20,5000,0,0
+ein_fild03,0,0,0,0	monster	Pitman	1616,20,5000,0,0
+ein_fild03,0,0,0,0	monster	Yellow Plant	1081,15,60000,30000,0
+ein_fild03,0,0,0,0	monster	Green Plant	1080,15,60000,30000,0
+
+//==================================================
+// ein_fild04 - Einbroch Field
+//==================================================
+ein_fild04,0,0,0,0	monster	Venomous	1621,100,5000,0,0
+ein_fild04,0,0,0,0	monster	Noxious	1620,30,5000,0,0
+ein_fild04,0,0,0,0	monster	Teddy Bear	1622,20,5000,0,0
+ein_fild04,0,0,0,0	monster	Demon Pungus	1378,15,5000,0,0
+ein_fild04,0,0,0,0	monster	Pitman	1616,10,5000,0,0
+ein_fild04,0,0,0,0	monster	Red Plant	1078,10,60000,30000,0
+ein_fild04,0,0,0,0	monster	Yellow Plant	1081,10,60000,30000,0
+ein_fild04,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
+
+//==================================================
+// ein_fild05 - Einbroch Field
+//==================================================
+ein_fild05,0,0,0,0	monster	Noxious	1620,100,5000,0,0
+ein_fild05,0,0,0,0	monster	Venomous	1621,30,5000,0,0
+ein_fild05,0,0,0,0	monster	Teddy Bear	1622,20,5000,0,0
+ein_fild05,0,0,0,0	monster	Demon Pungus	1378,15,5000,0,0
+ein_fild05,0,0,0,0	monster	Pitman	1616,10,5000,0,0
+
+//==================================================
+// ein_fild06 - Einbroch Field
+//==================================================
+ein_fild06,0,0,0,0	monster	Holden	1628,100,5000,0,0
+ein_fild06,0,0,0,0	monster	Metaling	1613,30,5000,0,0
+ein_fild06,0,0,0,0	monster	Red Plant	1078,10,120000,60000,0
+ein_fild06,0,0,0,0	monster	Yellow Plant	1081,10,120000,60000,0
+ein_fild06,0,0,0,0	monster	Black Mushroom	1084,5,120000,60000,0
+
+//==================================================
+// ein_fild07 - Einbroch Field
+//==================================================
+ein_fild07,0,0,0,0	monster	Metaling	1613,90,5000,0,0
+ein_fild07,0,0,0,0	monster	Porcellio	1619,30,5000,0,0
+ein_fild07,0,0,0,0	monster	Holden	1628,10,5000,0,0
+ein_fild07,0,0,0,0	monster	Ungoliant	1618,1,86400000,86000000,0
+ein_fild07,0,0,0,0	monster	Red Plant	1078,10,120000,60000,0
+ein_fild07,0,0,0,0	monster	Yellow Plant	1081,10,120000,60000,0
+ein_fild07,0,0,0,0	monster	Red Mushroom	1085,10,120000,60000,0
+
+//==================================================
+// ein_fild08 - Einbroch Field
+//==================================================
+ein_fild08,0,0,0,0	monster	Metaling	1613,100,5000,0,0
+ein_fild08,0,0,0,0	monster	Porcellio	1619,30,5000,0,0
+ein_fild08,0,0,0,0	monster	Red Plant	1078,10,120000,60000,0
+ein_fild08,0,0,0,0	monster	Yellow Plant	1081,10,120000,60000,0
+ein_fild08,0,0,0,0	monster	Red Mushroom	1085,10,120000,60000,0
+
+//==================================================
+// ein_fild09 - Einbroch Field
+//==================================================
+ein_fild09,0,0,0,0	monster	Porcellio	1619,70,5000,0,0
+ein_fild09,0,0,0,0	monster	Metaling	1613,30,5000,0,0
+ein_fild09,0,0,0,0	monster	Red Plant	1078,10,120000,60000,0
+ein_fild09,0,0,0,0	monster	Yellow Plant	1081,10,120000,60000,0
+ein_fild09,0,0,0,0	monster	Red Mushroom	1085,10,120000,60000,0
+
+//==================================================
+// ein_fild10 - Disabled on Renewal
+//==================================================

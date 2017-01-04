@@ -1,0 +1,23 @@
+//===== rAthena Script =======================================
+//= Mapflag: Guild versus Guild mode.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Players can attack other guilds, and will have their guild
+//= icons shown. WoE damage reductions will also take place.
+//= gvg: Turns on GvG mode.
+//= gvg_castle: Describes castle maps for WoE.
+//= gvg_dungeon: Describes dungeon maps for WoE.
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//============================================================
+
+// Guild Dungeons =========
+gld2_ald	mapflag	gvg_dungeon
+gld2_gef	mapflag	gvg_dungeon
+gld2_pay	mapflag	gvg_dungeon
+gld2_prt	mapflag	gvg_dungeon

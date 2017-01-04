@@ -1,0 +1,477 @@
+//===== rAthena Script ======================================= 
+//= Episode 12 Socket Enchant NPC
+//===== By: ================================================== 
+//= Gepard
+//===== Current Version: ===================================== 
+//= 1.1a
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Adds slots to selected weapons and armor.
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//= 1.1 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
+//= 1.1a Added 'disable_items' command. [Euphy]
+//============================================================ 
+
+-	script	Leablem#dummy::SocketEnchant2	-1,{
+	if (checkweight(1201,1) == 0)
+	{
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you lose some weight. -";
+		close;
+	}
+	mes "[Leablem]";
+	mes "Good day. My name is Leablem,";
+	mes "and I'm a technician that specializes in";
+	mes "adding slots to weapons and armors.";
+	mes "It can be very hard sometimes, but I like";
+	mes "what I do, and take pride in it.";
+	next;
+	mes "[Leablem]";
+	mes "I've learned most of the things from my brother, Seyablem,";
+	mes "but I think I still have a lot to learn.";
+	mes "So please understand my slotting services are limited,";
+	mes "unlike my brother Seyablem.";
+	next;
+	mes "[Leablem]";
+	mes "My brother wasn't so happy to teach me";
+	mes "his skills because he was worried that his skills";
+	mes "wouldn't be unique anymore. He did, however, his best";
+	mes "to teach me.";
+	next;
+	mes "[Leablem]";
+	mes "Thanks to him, I've learned lots of things.";
+	mes "I'm not very confident";
+	mes "in trying many different things,";
+	mes "but I'll do what";
+	mes "I can do for now.";
+	next;
+	mes "[Leablem]";
+	mes "In fact, there's one thing";
+	mes "that my brother doesn't want me to do.";
+	mes "I don't want to upset him, so...let's just skip that part.";
+	mes "I'll say no more about it!";
+	next;
+	mes "[Leablem]";
+	mes "Anyways, do you have any equipment";
+	mes "which you'd like to add to the slots?";
+	mes "My service charge, the materials,";
+	mes "and the success chance all depend on";
+	mes "the specific item I'm working on.";
+	next;
+	switch(select("Weapon:Armor:About that thing you skipped:More information:Quit"))
+	{
+		case 1:
+			mes "[Leablem]";
+			mes "Weapon, you said? Sure, no problem.";
+			mes "Weapons are divided into 4 different class";
+			mes "depending on the work difficulty.";
+			mes "C class is the easiest one, and S class is the hardest one.";
+			mes "Which class would you like to try?";
+			next;
+			switch(select("C:B:A:S"))
+			{
+				case 1:
+					mes "[Leablem]";
+					mes "C class, I see.";
+					mes "So, what kind of weapon do you have?";
+					next;
+					switch(select("Book of Mother Earth:Book of Billows:Book of Gust of Wind:Book of the Blazing Sun"))
+					{
+						case 1: callfunc "Func_Socket2",1554,1569,40,66,200,1010,10;
+						case 2: callfunc "Func_Socket2",1553,1568,40,66,200,1010,10;
+						case 3: callfunc "Func_Socket2",1556,1571,40,66,200,1010,10;
+						case 4: callfunc "Func_Socket2",1555,1570,40,66,200,1010,10;
+					}
+				case 2:
+					mes "[Leablem]";
+					mes "You have chosen average B class.";
+					mes "So, what kind of weapon do you have?";
+					next;
+					switch(select("Orcish Axe:Scimiter:Spike"))
+					{
+						case 1: callfunc "Func_Socket2",1304,1309,40,66,200,984,1;
+						case 2: callfunc "Func_Socket2",1113,1114,40,66,200,984,1;
+						case 3: callfunc "Func_Socket2",1523,1538,40,61,300,984,1;
+					}
+				case 3:
+					mes "[Leablem]";
+					mes "A class? You seem to want little too much. But, no problem.";
+					mes "So, what kind of weapon do you have?";
+					next;
+					switch(select("Dragon Killer:Katar of Quaking:Katar of Raging Blaze:Katar of Frozen Icicle:Katar of Piercing Wind:Golden Mace:Oriental Lute:Queen's Whip:Spectral Spear:Gae Bolg:Schweizersabel"))
+					{
+						case 1:  callfunc "Func_Socket2",13001,13030,40,61,500,984,2;
+						case 2:  callfunc "Func_Socket2", 1257, 1276,40,66,500,984,2;
+						case 3:  callfunc "Func_Socket2", 1258, 1277,40,66,500,984,2;
+						case 4:  callfunc "Func_Socket2", 1256, 1275,40,66,500,984,2;
+						case 5:  callfunc "Func_Socket2", 1259, 1278,40,66,500,984,2;
+						case 6:  callfunc "Func_Socket2", 1524, 1539,40,61,500,984,2;
+						case 7:  callfunc "Func_Socket2", 1918, 1922,40,61,500,984,2;
+						case 8:  callfunc "Func_Socket2", 1970, 1976,40,61,500,984,2;
+						case 9:  callfunc "Func_Socket2", 1477, 1479,40,56,500,984,2;
+						case 10: callfunc "Func_Socket2", 1474, 1480,40,56,500,984,2;
+						case 11: callfunc "Func_Socket2", 1167, 1178,40,61,500,984,2;
+					}
+				case 4:
+					mes "[Leablem]";
+					mes "Huh, S Class?! Oh my god, are you serious?*Tremble*";
+					mes "So...which S class weapon would you like to make a slot?!";
+					next;
+					switch(select("Zephyrus:Mailbreaker:Dragon Slayer:Swordbreaker:Assasin Dagger:Grand Cross:Executioner"))
+					{
+						case 1: callfunc "Func_Socket2",1468, 1481,40,51,1000,984,5,999,10;
+						case 2: callfunc "Func_Socket2",1225,13032,40,51,1000,984,5,999,10;
+						case 3: callfunc "Func_Socket2",1166, 1180,40,51,1000,984,5,999,10;
+						case 4: callfunc "Func_Socket2",1224,13031,40,51,1000,984,5,999,10;
+						case 5: callfunc "Func_Socket2",1232,13033,40,51,1000,984,5,999,10;
+						case 6: callfunc "Func_Socket2",1528, 1540,40,51,1000,984,5,999,10;
+						case 7: callfunc "Func_Socket2",1169, 1179,40,51,1000,984,5,999,10;
+					}
+			}
+		case 2:
+			mes "[Leablem]";
+			mes "Armor, you said? Sure, no problem.";
+			mes "Weapons are divided into 4 different class";
+			mes "depending on the work difficulty.";
+			mes "C class is the easiest one, and S class is the hardest one.";
+			mes "Which class would you like to try?";
+			next;
+			switch(select("C:B:A:S"))
+			{
+				case 1:
+					mes "[Leablem]";
+					mes "C class, I see.";
+					mes "So, what kind of armor do you have?";
+					next;
+					switch(select("Sunflower:Ph.D Hat:Big Ribbon:Boys Cap"))
+					{
+						case 1: callfunc "Func_Socket2",2253,5351,40,66,100,999,3;
+						case 2: callfunc "Func_Socket2",5012,5347,40,66,100,999,3;
+						case 3: callfunc "Func_Socket2",2244,5348,40,66,100,999,5;
+						case 4: callfunc "Func_Socket2",5016,5349,40,66,100,999,5;
+					}
+				case 2:
+					mes "[Leablem]";
+					mes "You have chosen average B class.";
+					mes "So, what kind of armor do you have?";
+					next;
+					switch(select("Skull Ring:High Heels"))
+					{
+						case 1: callfunc "Func_Socket2",2609,2715,40,61,300,999,5;
+						case 2: callfunc "Func_Socket2",2409,2432,40,61,300,999,5;
+					}
+				case 3:
+					mes "[Leablem]";
+					mes "A class? You seem to want little too much. But, no problem.";
+					mes "So, what kind of armor do you have?";
+					next;
+					switch(select("Pirate Bandana:Black Leather Boots"))
+					{
+						case 1: callfunc "Func_Socket2",2287,5350,50,61,500,985,1; // 50,61 - it's not a typo
+						case 2: callfunc "Func_Socket2",2425,2434,40,51,500,985,1;
+						//case 3: callfunc "Func_Socket2",15053,15056,x,x,x,x,x;	// Special Ninja Suit (Needs more info)
+					}
+				case 4:
+					mes "[Leablem]";
+					mes "Huh, S Class?! Oh my god, are you serious?*Tremble*";
+					mes "So...which S class armor would you like to make a slot?!";
+					next;
+					switch(select("Mage Coat:Holy Robe:Sacred Mission:Undershirt:Pantie"))
+					{
+						case 1: callfunc "Func_Socket2",2334,2372,40,51,1000,985,1; // Mage Coat has 10% success chance
+						case 2: callfunc "Func_Socket2",2327,2373,45,51,1000,985,1; // the rest has 5%
+						case 3: callfunc "Func_Socket2",2111,2128,45,51,1000,985,1;
+						case 4: callfunc "Func_Socket2",2522,2523,45,51,1000,985,1;
+						case 5: callfunc "Func_Socket2",2339,2371,45,51,1000,985,1;
+					}
+			}
+		case 3:
+			mes "[Leablem]";
+			mes "Oh, it's nothing special, but he thinks";
+			mes "it's not something for humans to mess with. ";
+			mes "I don't want to upset my brother,";
+			mes "so I'd better forget about it.";
+			next;
+			mes "[Leablem]";
+			mes "...That service itself has a very high success chance,";
+			mes "but requires a lot of materials and a high-rate service charge. ";
+			mes "I highly doubt that anyone would actually want to use";
+			mes "the service, even if I did open it.";
+			next;
+			mes "[Leablem]";
+			mes "...Ummm...";
+			next;
+			mes "[Leablem]";
+			mes ".............";
+			next;
+			mes "[Leablem]";
+			mes ".............";
+			next;
+			mes "[Leablem]";
+			mes "You seem interested in using that service.";
+			mes "If you want, I can at least tell you about it. ";
+			mes "But you must promise to keep this a secret.";
+			mes "If my brother finds out what I'm about to tell you,";
+			mes "he's gonna give me a beating!";
+			next;
+			mes "[Leablem]";
+			mes "This special service has a 90% success chance,";
+			mes "but requires 2 Gold and 2 hundred million zeny:";
+			mes "I can add slots to the Hat of the Sun God.";
+			next;
+			mes "[Leablem]";
+			mes "My brother said that, even since ancient times, it's forbidden to modify that hat. ";
+			mes "But I believe humans are too curious not to";
+			mes "experiment, especially when it's forbidden.";
+			mes "I just don't want my brother to yell at me. That's all.";
+			next;
+			switch(select("Use the Service","Quit"))
+			{
+				case 1:
+					mes "[Leablem]";
+					mes ".................";
+					next;
+					mes "[Leablem]";
+					mes ".................";
+					next;
+					mes "[Leablem]";
+					mes "...Wh... What? No!";
+					mes "Giving me that dirty look";
+					mes "won't make me do it!";
+					mes "No, I said no! No is no! No!";
+					next;
+					mes "[Leablem]";
+					mes "No, I won't! No!";
+					next;
+					mes "[Leablem]";
+					mes "I can't do it...";
+					next;
+					mes "[Leablem]";
+					mes "I can't do... It...";
+					next;
+					mes "[Leablem]";
+					mes ".................";
+					next;
+					mes "[Leablem]";
+					mes "Umm...";
+					next;
+					mes "[Leablem]";
+					mes "You're so persistent. Okay, I'll make you an exception.";
+					mes "Just don't tell anyone,";
+					mes "especially my brother. Do you promise?";
+					next;
+					mes "[Leablem]";
+					mes "Okay then, please bring me";
+					mes "^FF00002 Gold, 2 hundred million zeny -- the service charge --,";
+					mes "^FF0000and a Hat of the Sun God.";
+					mes "^FF0000You know your chance of success is 90% with this, don't you?^000000";
+					mes "We don't have time to waste,";
+					mes "so let's get down to business right away.";
+					next;
+					if ((Zeny > 199999999) && (countitem(969) > 1) && (countitem(5022) > 0))
+					{
+						mes "[Leablem]";
+						mes "Shall we start now?";
+						mes "Pray to your gods for good luck.";
+						next;
+						set .@a, rand(1,100);
+						if ((.@a > 4) && (.@a < 95))
+						{
+							specialeffect EF_LORD;
+							mes "[Leablem]";
+							mes "Excellent! Wow, I guess the 90% success chance is true!";
+							mes "Look, the slot was added in the perfect place.";
+							mes "Congratulations.";
+							delitem 5022,1; //Helm_Of_Sun
+							delitem 969,2; //Gold
+							set Zeny, Zeny - 200000000;
+							getitem 5353,1; //Helm_Of_Sun_
+							next;
+							mes "[Leablem]";
+							mes "This is the first and last time I will do this for you.";
+							mes "Don't ever tell anyone";
+							mes "about this. Okay?";
+							close;
+						}
+						else
+						{
+							specialeffect EF_SUI_EXPLOSION;
+							mes "[Leablem]";
+							mes "Wah! Oh my god, we failed!";
+							mes "My god, I guess we had the worst kind of luck...";
+							mes "What should we do? ...This is why";
+							mes "I didn't want to do in the first place!";
+							delitem 5022,1; //Helm_Of_Sun
+							delitem 969,2; //Gold
+							set Zeny, Zeny - 200000000;
+							next;
+							mes "[Leablem]";
+							mes "No, don't ever ask me to do such a risky thing again!";
+							mes "Bah~";
+							close;
+						}
+					}
+					else
+					{
+						mes "[Leablem]";
+						mes "Umm...";
+						next;
+						mes "[Leablem]";
+						mes "You don't have enough materials.";
+						mes "Man, why did you even ask me to try?";
+						mes "I'm not going to do this again for you,";
+						mes "even if you bring enough materials. Bah~";
+						close;
+					}
+				case 2:
+					mes "[Leablem]";
+					mes "Don't ever tell anyone";
+					mes "about what I told you. Okay?";
+					close;
+			}
+		case 4:
+			mes "[Leablem]";
+			mes "Do you want to know more information?";
+			mes "Well, I don't think there's something";
+			mes "that you specifically need to know.";
+			mes "But I can at least give you a tip.";
+			next;
+			mes "[Leablem]";
+			mes "The slot technicians in each town";
+			mes "provide different slotting success chances";
+			mes "depending on your equipment's upgrade level.";
+			mes "I don't know if that's true,";
+			mes "but I can see the difference in each town.";
+			next;
+			mes "[Leablem]";
+			mes "For instance, a slot technician in one town";
+			mes "provides a higher success chance to";
+			mes "equipment items at higher upgrade levels,";
+			mes "while a technician in another town has higher";
+			mes "success at lower upgrade levels.";
+			next;
+			mes "[Leablem]";
+			mes "When you fail to add a slot, the equipment";
+			mes "will become broken and disappear.";
+			mes "I try my best to succeed, but";
+			mes "slotting is complicated work.";
+			next;
+			mes "[Leablem]";
+			mes "Oh, there's an important thing that you need to be careful about.";
+			mes "^FF0000Try not to carry two identical equipment items";
+			mes "^FF0000with you when you add slots.";
+			mes "^FF0000Otherwise, slots may be added to one of the randomly chosen items,";
+			mes "^FF0000and in the worst case, you may lose an item that is more valuable to you.^000000";
+			next;
+			mes "[Leablem]";
+			mes "I hope this information will be helpful to you.";
+			mes "Thanks.";
+			close;
+		case 5:
+			mes "[Leablem]";
+			mes "Alright, then.";
+			close;
+	}
+}
+
+payon,236,199,3	duplicate(SocketEnchant2)	Leablem#pay	86
+lighthalzen,96,137,3	duplicate(SocketEnchant2)	Leablem#lhz	86
+prt_in,22,60,6	duplicate(SocketEnchant2)	Leablem#prt	86
+moc_ruins,154,86,3	duplicate(SocketEnchant2)	Leablem#moc	86
+
+function	script	Func_Socket2	{
+	.@item_id = getarg(0);
+	.@zeny_req = getarg(4);
+	setarray .@item_req[0], getarg(5), getarg(7,0);
+	setarray .@req_amount[0], getarg(6), getarg(8,0);
+
+	disable_items;
+	mes "[Leablem]";
+	if (.@item_req[1] != 0 && .@req_amount[1] != 0)
+	{
+		mes getitemname(.@item_id) +"... Okay, then you need to bring me";
+		mes "^FF0000"+ (.@zeny_req >= 1000 ? (.@zeny_req /1000 +",000") : .@zeny_req) +",000 zeny as service charge,";
+		mes "^FF0000"+ .@req_amount[0] +"ea "+ getitemname(.@item_req[0]) +" and "+ .@req_amount[1] +"ea "+ getitemname(.@item_req[1]) +".";
+		mes "^FF0000Of course, you need a "+ getitemname(.@item_id) +".^000000";
+	}
+	else
+	{
+		mes getitemname(.@item_id) +"? Okay, then you need to bring me";
+		mes "^FF0000"+ (.@zeny_req >= 1000 ? (.@zeny_req/1000 +",000") : .@zeny_req) +",000 zeny as service charge and "+ .@req_amount[0] +" "+ getitemname(.@item_req[0]) + (.@req_amount[0] > 1 && .@item_req[0] != 999 ? "s":"") +" as the requirement.";
+		mes "^FF0000Of course, don't forget to bring me a "+ getitemname(.@item_id) +".";
+		mes "^FF0000You should have all items.^000000";
+	}
+	next;
+	mes "[Leablem]";
+	mes "Did you already bring all of them?";
+	mes "For your information, if you fail to create a slot,";
+	mes "you will lose all the item requirement as well as the target "+ ((getiteminfo(.@item_id,5)&EQP_HAND_R) ? "weapon" : "armor") +".";
+	mes "Also remember, if the "+ ((getiteminfo(.@item_id,5)&EQP_HAND_R) ? "weapon" : "armor") +" has been upgraded, and has been inserted with a card,";
+	mes "you will lose them even if you succeed in creating a slot.";
+	next;
+	switch(select("Ask for slot creation.:Try next time."))
+	{
+		case 1:
+			if ((Zeny >= .@zeny_req*1000) && countitem(.@item_req[0]) >= .@req_amount[0] && countitem(getarg(7,512)) >= .@req_amount[1] && countitem(.@item_id) > 0)// if there's no .@req_amount[0] and .@req_amount[1] provided, check itemcount against 0 (we still need a valid item ID though)
+			{
+				mes "[Leablem]";
+				mes "Alright then, let the work begin!";
+				mes "You'd better pray for a successful result.";
+				next;
+				set .@a, rand(1,100);
+				if ((.@a > getarg(2)) && (.@a < getarg(3)))
+				{
+					specialeffect EF_LORD;
+					mes "[Leablem]";
+					mes "Great, it seems to be successful.";
+					mes "It looks pretty well done. Congratulations!";
+					delitem .@item_id,1;
+					delitem .@item_req[0],.@req_amount[0];
+					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
+						delitem .@item_req[1],.@req_amount[1];
+					Zeny = Zeny - .@zeny_req *1000;
+					getitem getarg(1),1;
+					next;
+					mes "[Leablem]";
+					mes "See you again, buddy!";
+					close;
+				}
+				else
+				{
+					specialeffect EF_SUI_EXPLOSION;
+					mes "[Leablem]";
+					mes "Wah! ...I am so sorry, it failed.";
+					mes "However, I am completely innocent.";
+					mes "This is your luck, and it is destined by god, okay?";
+					mes "Don't be so disappointed,";
+					mes "and try next time.";
+					delitem .@item_id,1;
+					delitem .@item_req[0],.@req_amount[0];
+					if (.@item_req[1] != 0 && .@req_amount[1] != 0)
+						delitem .@item_req[1],.@req_amount[1];
+					Zeny = Zeny - .@zeny_req *1000;
+					next;
+					mes "[Leablem]";
+					mes "See you again, buddy!";
+					close;
+				}
+			}
+			else
+			{
+				mes "[Leablem]";
+				mes "Are you stupid or what? You didn't bring all of the required items!";
+				mes "Go bring them quick!";
+				close;
+			}
+		case 2:
+			mes "[Leablem]";
+			mes "See you next time.";
+			close;
+	}
+}

@@ -1,0 +1,82 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable warping.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Disables warping from a map.
+//= Script commands 'warpparty' and 'warpguild' will not warp
+//=   players.
+//= Atcommands @warp, @go, @load, @jump, @partyrecall,
+//=   @guildrecall, and @recallall will not warp players.
+//= GD_EMERGENCYCALL and UNT_CALLFAMILY will not warp players.
+//===== Additional Comments: ================================= 
+//= 1.3 Added WoE SE maps.
+//============================================================
+
+// Special Quests Places =====
+ama_test	mapflag	nowarp
+gon_test	mapflag	nowarp
+
+// Guild Castles =============
+aldeg_cas01	mapflag	nowarp
+aldeg_cas02	mapflag	nowarp
+aldeg_cas03	mapflag	nowarp
+aldeg_cas04	mapflag	nowarp
+aldeg_cas05	mapflag	nowarp
+gefg_cas01	mapflag	nowarp
+gefg_cas02	mapflag	nowarp
+gefg_cas03	mapflag	nowarp
+gefg_cas04	mapflag	nowarp
+gefg_cas05	mapflag	nowarp
+payg_cas01	mapflag	nowarp
+payg_cas02	mapflag	nowarp
+payg_cas03	mapflag	nowarp
+payg_cas04	mapflag	nowarp
+payg_cas05	mapflag	nowarp
+prtg_cas01	mapflag	nowarp
+prtg_cas02	mapflag	nowarp
+prtg_cas03	mapflag	nowarp
+prtg_cas04	mapflag	nowarp
+prtg_cas05	mapflag	nowarp
+schg_cas01	mapflag	nowarp
+schg_cas02	mapflag	nowarp
+schg_cas03	mapflag	nowarp
+schg_cas04	mapflag	nowarp
+schg_cas05	mapflag	nowarp
+arug_cas01	mapflag	nowarp
+arug_cas02	mapflag	nowarp
+arug_cas03	mapflag	nowarp
+arug_cas04	mapflag	nowarp
+arug_cas05	mapflag	nowarp
+n_castle	mapflag	nowarp
+nguild_alde	mapflag	nowarp
+nguild_gef	mapflag	nowarp
+nguild_pay	mapflag	nowarp
+nguild_prt	mapflag	nowarp
+//Aldebaran Turbo Track ======
+turbo_n_1	mapflag	nowarp
+turbo_n_4	mapflag	nowarp
+turbo_n_8	mapflag	nowarp
+turbo_n_16	mapflag	nowarp
+turbo_e_4	mapflag	nowarp
+turbo_e_8	mapflag	nowarp
+turbo_e_16	mapflag	nowarp
+//Monster Races ================
+p_track01	mapflag	nowarp
+p_track02	mapflag	nowarp
+// Battle Grounds ==============
+bat_c01	mapflag	nowarp
+bat_c02	mapflag	nowarp
+bat_c03	mapflag	nowarp
+bat_b01	mapflag	nowarp
+bat_b02	mapflag	nowarp
+bat_a01	mapflag	nowarp
+bat_a02	mapflag	nowarp
+
+// Poring War ==================
+poring_w01	mapflag	nowarp
+poring_w02	mapflag	nowarp

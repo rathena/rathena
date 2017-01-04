@@ -1,0 +1,1001 @@
+//===== rAthena Script ======================================= 
+//= Assassin Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Venom Knife, Sonic Acceleration
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
+//============================================================
+
+in_moc_16,14,27,5	script	Assassin#realman	884,{
+	if (BaseJob == Job_Assassin && ASSN_SK2 == 1) {
+		if (getskilllv("AS_VENOMKNIFE") == 0) {
+			mes "[Killtin]";
+			mes "Ah yes, that's why you";
+			mes "look so familiar. You're";
+			mes "of those to whom I've taught";
+			mes "the ^990099Venom Knife^000000 skill. So, what";
+			mes "brings you to me this time?";
+			next;
+			mes "[Killtin]";
+			mes "What's that...?!";
+			mes "You want me to teach";
+			mes "it to you once again?";
+			mes "It's a shame you've forgotten,";
+			mes "but I suppose it can't be helped. Alright, alright, I'll teach you.";
+			next;
+			mes "[Killtin]";
+			mes "First, you need to equip";
+			mes "a Knife class weapon, and";
+			mes "then cast Envenom on your";
+			mes "knife. Throwing the blade?";
+			mes "That's all in the wrist. Now,";
+			mes "watch me closely and take note.";
+			next;
+			mes "[Killtin]";
+			mes "You see? Having";
+			mes "good form is essential";
+			mes "to performing flawless";
+			mes "technique. Always basics";
+			mes "before the specifics. Now,";
+			mes "why don't you give it a try?";
+			specialeffect EF_INVENOM;
+			next;
+			mes "[Killtin]";
+			mes "Good... Very good...";
+			mes "Perfect form. Yes...";
+			mes "Hmm. Are you sure that";
+			mes "you forgot how to do this";
+			mes "skill? I suppose that all you";
+			mes "needed was a quick refresher.";
+			specialeffect2 EF_INVENOM;
+			next;
+			mes "[Killtin]";
+			mes "Alright, I think it's";
+			mes "safe to say that you've";
+			mes "mastered the Venom Knife";
+			mes "skill. Leave me now, and";
+			mes "always fight for the honor";
+			mes "of the Assassin Guild!";
+			skill "AS_VENOMKNIFE",1,SKILL_PERM;
+			close;
+		}
+		else {
+			mes "[Killtin]";
+			mes "So how has that";
+			mes "^990099Venom Knife^000000 skill";
+			mes "been working for you?";
+			mes "Be careful, and make sure";
+			mes "that your victims always";
+			mes "deserve what you give them!";
+			close;
+		}
+	}
+	else if (ASSN_SK2 == 1 && ASSN_SK == 7) {
+		mes "[Killtin]";
+		mes "So you've learned all of";
+		mes "the specialized Assassin";
+		mes "skills, eh? Don't let yourself";
+		mes "become overconfident. Strive";
+		mes "for even greater strength for";
+		mes "the Assassin Guild's honor.";
+		close;
+	}
+	else if (ASSN_SK2 == 1) {
+		mes "[Killtin]";
+		mes "So how has that";
+		mes "^990099Venom Knife^000000 skill";
+		mes "been working for you?";
+		mes "Be careful, and make sure";
+		mes "that your victims always";
+		mes "deserve what you give them!";
+		close;
+	}
+	else {
+		if (BaseJob == Job_Assassin) {
+			mes "[Killtin]";
+			mes "Hm? Ah, you're definitely";
+			mes "a member of the Assassin";
+			mes "Guild. Great, you've come";
+			mes "just at the right time.";
+			next;
+			mes "[Killtin]";
+			mes "Our guildmaster recently";
+			mes "succeeded in developing two";
+			mes "new skills for Assassins. I've";
+			mes "been charged with the task of";
+			mes "teaching these new skills to";
+			mes "all the members of our guild.";
+			next;
+			select("New skills?");
+			mes "[Killtin]";
+			mes "That's right, "+ strcharinfo(0) +".";
+			mes "The first skill specifically";
+			mes "enhances the Sonic Blow";
+			mes "skill, and the second skill";
+			mes "is a long range attack that's";
+			mes "named ''^990099Venom Knife^000000.''";
+			next;
+			mes "[Killtin]";
+			mes "If you have any questions,";
+			mes "feel free to ask me about";
+			mes "any of these new skills. It's";
+			mes "my job to teach you as much";
+			mes "as I can about them.";
+			next;
+			while(1) {
+				switch(select("^0000FFSonic Blow Enhancement^000000:^990099Venom Knife^000000:Continue Conversation")) {
+				case 1:
+					mes "[Killtin]";
+					mes "If you've been an Assassin";
+					mes "for a while, then you must";
+					mes "be familiar with the Sonic";
+					mes "Blow skill, which inflicts 8";
+					mes "powerful strikes at an enemy";
+					mes "in one blindingly fast attack.";
+					next;
+					mes "[Killtin]";
+					mes "However, due to the speed";
+					mes "involved in that skill, Sonic";
+					mes "Blow isn't as accurate as it";
+					mes "can be. After years of testing";
+					mes "and research, our guildmaster";
+					mes "developed a way to fix this.";
+					next;
+					mes "[Killtin]";
+					mes "He created a new skill";
+					mes "named ''Sonic Acceleration''";
+					mes "that Assassins can cast on";
+					mes "themselves in order to quickly";
+					mes "detect and accurately strike";
+					mes "the target's fatal points.";
+					next;
+					mes "[Killtin]";
+					mes "In effect, Sonic Acceleration";
+					mes "roughly doubles the damage";
+					mes "that you can inflict with the";
+					mes "Sonic Blow. If you use Sonic";
+					mes "Blow pretty often, then this";
+					mes "skill will be pretty useful.";
+					next;
+					mes "[Killtin]";
+					mes "I suggest that you learn";
+					mes "the Venom Knife skill from";
+					mes "me first. Then, you can talk";
+					mes "to Esmille, the beautiful";
+					mes "Assassin Cross right next to me, to learn Sonic Acceleration.";
+					next;
+					break;
+				case 2:
+					mes "[Killtin]";
+					mes "As you may well know, our";
+					mes "job isn't really known for its";
+					mes "long range attacks. Sure, we";
+					mes "can use Bows, and we've got";
+					mes "a few long distance skills, but";
+					mes "their uses are kind of limited.";
+					next;
+					mes "[Killtin]";
+					mes "This Venom Knife skill was";
+					mes "developed with this weakness";
+					mes "in long range attacking in mind. Basically, we use the Envenom";
+					mes "skill on a knife and throw it at a distant enemy to poison them.";
+					next;
+					break;
+				case 3:
+					mes "[Killtin]";
+					mes "Now, if you like, I can";
+					mes "teach you the ^009900Venom Knife^000000";
+					mes "skill right now. It won't take";
+					mes "that much time, so what do";
+					mes "you say? You ready to learn?";
+					next;
+					while(1) {
+						if (select("Learn Venom Knife:I d-don't wanna learn!") == 1) {
+							mes "[Killtin]";
+							mes "First, you need to equip";
+							mes "a Knife class weapon, and";
+							mes "then cast Envenom on your";
+							mes "knife. Throwing the blade?";
+							mes "That's all in the wrist. Now,";
+							mes "watch me closely and take note.";
+							next;
+							mes "[Killtin]";
+							mes "You see? Having";
+							mes "good form is essential";
+							mes "to performing flawless";
+							mes "technique. Always basics";
+							mes "before the specifics. Now,";
+							mes "why don't you give it a try?";
+							specialeffect EF_INVENOM;
+							next;
+							mes "[Killtin]";
+							mes "Hey, that's pretty good.";
+							mes "You're catching on really";
+							mes "quick. Heh heh, but still,";
+							mes "I guess I can take a little";
+							mes "bit of credit for my excellent";
+							mes "instruction. Ah, very nice.";
+							next;
+							specialeffect2 EF_INVENOM;
+							next;
+							mes "[Killtin]";
+							mes "Alright, you may need";
+							mes "to practice a bit more";
+							mes "of this skill, but for the most";
+							mes "part, you can use Venom";
+							mes "Knife pretty easily in battle.";
+							set ASSN_SK2,1;
+							set ASSN_SK,1;
+							skill "AS_VENOMKNIFE",1,SKILL_PERM;
+							next;
+							mes "[Killtin]";
+							mes "Well, that's all I can";
+							mes "teach you. Use this skill";
+							mes "expertly, and bring woe to";
+							mes "your enemies for the honor";
+							mes "of the Assassin Guild!";
+							close;
+						}
+						if (.@teach ==1) {
+							mes "[Killtin]";
+							mes "Y-you don't want to";
+							mes "learn? Tough! It's my";
+							mes "job to teach this Venom";
+							mes "Knife skill to every member";
+							mes "of the Assassin Guild! You're^FFFFFFaaaaa^000000 not leaving until I tell you to!";
+							next;
+						}
+						else {
+							mes "[Killtin]";
+							mes "You can't refuse an";
+							mes "order from our guildmaster...";
+							mes "Like it or not, this skill will";
+							mes "make you a better Assassin.";
+							mes "Trust me on this and just agree";
+							mes "to learn the skill, will you?";
+							next;
+						}
+					}
+				}
+			}
+		}
+		else if (BaseJob == Job_Thief) {
+			mes "[Killtin]";
+			mes "A Thief...? Huh.";
+			mes "That's a respectable";
+			mes "job. But listen, if you";
+			mes "want me to be able to";
+			mes "teach you anything, you'll";
+			mes "need to get stronger first.";
+			close;
+		}
+		else {
+			mes "[Assassin]";
+			mes "...............................";
+			mes "Just keep moving.";
+			close;
+		}
+	}
+}
+
+in_moc_16,23,27,5	script	Assassin#realgirl	885,{
+	if (BaseJob == Job_Assassin && ASSN_SK == 7) {
+		if (getskilllv("AS_SONICACCEL") == 0) {
+			mes "[Esmille]";
+			mes "Mm? Ah, you've transcended";
+			mes "and become an Assassin Cross";
+			mes "as well. I understand the trouble that you must have gone through";
+			mes "to be reborn with new strength.";
+			next;
+			mes "[Esmille]";
+			mes "You probably need to learn";
+			mes "the Sonic Acceleration skill";
+			mes "again after having lost some";
+			mes "of your memories. I truly";
+			mes "sympathize, and am willing";
+			mes "to teach it to you again.";
+			next;
+			if (getskilllv("AS_SONICBLOW") == 0) {
+				mes "[Esmille]";
+				mes "First, go and learn the";
+				mes "Sonic Blow skill. The skill";
+				mes "I will teach you is completely";
+				mes "useless unless you learn how";
+				mes "to perform a Sonic Blow. I shall be waiting right here till then.";
+				close;
+			}
+			mes "[Esmille]";
+			mes "Now, right before you";
+			mes "perform Sonic Blow, make";
+			mes "sure your feet are positioned";
+			mes "like this. Then, as smoothly";
+			mes "and quickly as possible, shift";
+			mes "your weight over to this side.";
+			specialeffect EF_SONICBLOW;
+			next;
+			mes "[Esmille]";
+			mes "Watch carefully, this";
+			mes "is the most important";
+			mes "part. See where my hands";
+			mes "are and the angle of my";
+			mes "arms? This is the form that";
+			mes "you've got to memorize.";
+			specialeffect EF_SONICBLOW;
+			next;
+			mes "[Esmille]";
+			mes "Alright, that's all";
+			mes "you need to know. Now,";
+			mes "please try it so I can give";
+			mes "you feedback on your form.";
+			next;
+			specialeffect2 EF_SONICBLOW;
+			next;
+			mes "[Esmille]";
+			mes "Hmm, you're shifting";
+			mes "your weight kind of";
+			mes "unsteadily. It might";
+			mes "help if your center of";
+			mes "gravity was like this...";
+			next;
+			specialeffect2 EF_SONICBLOW;
+			next;
+			mes "[Esmille]";
+			mes "Ah, you're so very";
+			mes "close to perfection.";
+			mes "Focus more on smoothly";
+			mes "transitioning from your";
+			mes "stance to executed action.";
+			next;
+			mes "[Esmille]";
+			mes "Yes, that's it...!";
+			mes "Very well executed.";
+			mes "Good work, "+ strcharinfo(0) +".";
+			skill "AS_SONICACCEL",1,SKILL_PERM;
+			set ASSN_SK,7;
+			next;
+			mes "[Esmille]";
+			mes "Do you understand now?";
+			mes "You should have no problem";
+			mes "remembering this skill now.";
+			mes "I can teach you nothing more,";
+			mes "so all I can do now is wish";
+			mes "you luck on your journeys.";
+			close;
+		}
+		else {
+			mes "[Esmille]";
+			mes "I trust that using";
+			mes "Sonic Acceleration in";
+			mes "battle has given you an";
+			mes "edge over the enemy. Bring";
+			mes "swift defeat to your foes for";
+			mes "the Assassin Guild's honor.";
+			close;
+		}
+	}
+	else if (ASSN_SK == 7) {
+		mes "[Esmille]";
+		mes "I trust that using";
+		mes "Sonic Acceleration in";
+		mes "battle has given you an";
+		mes "edge over the enemy. Bring";
+		mes "swift defeat to your foes for";
+		mes "the Assassin Guild's honor.";
+		close;
+	}
+	else if (ASSN_SK == 6) {
+		mes "[Esmille]";
+		mes "Please focus on the";
+		mes "training... If we continue to";
+		mes "be interrupted, you'll never";
+		mes "be able to learn anything.";
+		mes "Now, please listen closely.";
+		next;
+		mes "[Esmille]";
+		mes "Now, right before you";
+		mes "perform Sonic Blow, make";
+		mes "sure your feet are positioned";
+		mes "like this. Then, as smoothly";
+		mes "and quickly as possible, shift";
+		mes "your weight over to this side.";
+		specialeffect EF_SONICBLOW;
+		next;
+		mes "[Esmille]";
+		mes "Watch carefully, this";
+		mes "is the most important";
+		mes "part. See where my hands";
+		mes "are and the angle of my";
+		mes "arms? This is the form that";
+		mes "you've got to memorize.";
+		specialeffect EF_SONICBLOW;
+		next;
+		mes "[Esmille]";
+		mes "Alright, that's all";
+		mes "you need to know. Now,";
+		mes "please try it so I can give";
+		mes "you feedback on your form.";
+		next;
+		specialeffect2 EF_SONICBLOW;
+		next;
+		mes "[Esmille]";
+		mes "Hmm, you're shifting";
+		mes "your weight kind of";
+		mes "unsteadily. It might";
+		mes "help if your center of";
+		mes "gravity was like this...";
+		next;
+		specialeffect2 EF_SONICBLOW;
+		next;
+		mes "[Esmille]";
+		mes "That's a little better.";
+		mes "Hmmm. Try to think of";
+		mes "the enemy's weak point";
+		mes "and follow through with";
+		mes "the stabbing motion.";
+		next;
+		specialeffect2 EF_SONICBLOW;
+		next;
+		mes "[Esmille]";
+		mes "Ah, you're so very";
+		mes "close to perfection.";
+		mes "Focus more on smoothly";
+		mes "transitioning from your";
+		mes "stance to executed action.";
+		specialeffect2 EF_SONICBLOW;
+		next;
+		mes "[Esmille]";
+		mes "Yes, that's it...!";
+		mes "Very well executed.";
+		mes "Good work, "+ strcharinfo(0) +".";
+		skill "AS_SONICACCEL",1,SKILL_PERM;
+		set ASSN_SK,7;
+		next;
+		mes "[Esmille]";
+		mes "Do you understand now?";
+		mes "You should have no problem";
+		mes "remembering this skill now.";
+		mes "I can teach you nothing more,";
+		mes "so all I can do now is wish";
+		mes "you luck on your journeys.";
+		close;
+	}
+	else if (ASSN_SK == 5) {
+		mes "[Esmille]";
+		mes "So how is your little";
+		mes "mission coming along?";
+		mes "I trust that you've completed";
+		mes "that task I assigned for you.";
+		next;
+		if ((ASSN_SK == 5 && countitem(726) > 0) || (ASSN_SK == 5 && countitem(723) > 0) || (ASSN_SK == 5 && countitem(720) > 0)) {
+			select("How's this for treasure?");
+			mes "[Esmille]";
+			mes "Oh, that jewel...!";
+			mes "It's so captivating~";
+			mes "I haven't seen anything";
+			mes "so beautiful in such a long";
+			mes "time. You've done very well...";
+			next;
+			mes "[Esmille]";
+			mes "That jewel is yours";
+			mes "to keep. In truth, I don't";
+			mes "really need any treasure, just some proof of your qualification.";
+			mes "It looks like you're ready for me to teach you Sonic Acceleration.";
+			set ASSN_SK,6;
+			next;
+			mes "[Esmille]";
+			mes "Now, right before you";
+			mes "perform Sonic Blow, make";
+			mes "sure your feet are positioned";
+			mes "like this. Then, as smoothly";
+			mes "and quickly as possible, shift";
+			mes "your weight over to this side.";
+			specialeffect EF_SONICBLOW;
+			next;
+			mes "[Esmille]";
+			mes "Watch carefully, this";
+			mes "is the most important";
+			mes "part. See where my hands";
+			mes "are and the angle of my";
+			mes "arms? This is the form that";
+			mes "you've got to memorize.";
+			specialeffect EF_SONICBLOW;
+			next;
+			mes "[Esmille]";
+			mes "Alright, that's all";
+			mes "you need to know. Now,";
+			mes "please try it so I can give";
+			mes "you feedback on your form.";
+			next;
+			specialeffect2 EF_SONICBLOW;
+			next;
+			mes "[Esmille]";
+			mes "Hmm, you're shifting";
+			mes "your weight kind of";
+			mes "unsteadily. It might";
+			mes "help if your center of";
+			mes "gravity was like this...";
+			next;
+			specialeffect2 EF_SONICBLOW;
+			next;
+			mes "[Esmille]";
+			mes "That's a little better.";
+			mes "Hmmm. Try to think of";
+			mes "the enemy's weak point";
+			mes "and follow through with";
+			mes "the stabbing motion.";
+			next;
+			specialeffect2 EF_SONICBLOW;
+			next;
+			mes "[Esmille]";
+			mes "Yes, that's it...!";
+			mes "Very well executed.";
+			mes "Good work, "+ strcharinfo(0) +".";
+			skill "AS_SONICACCEL",1,SKILL_PERM;
+			set ASSN_SK,7;
+			next;
+			mes "[Esmille]";
+			mes "Do you understand now?";
+			mes "You should have no problem";
+			mes "remembering this skill now.";
+			mes "I can teach you nothing more,";
+			mes "so all I can do now is wish";
+			mes "you luck on your journeys.";
+			close;
+		}
+		else {
+			mes "[Esmille]";
+			mes "Hmmm...";
+			close;
+		}
+	}
+	else if (ASSN_SK == 2 || ASSN_SK == 3 || ASSN_SK == 4) {
+		mes "[Esmille]";
+		mes "So how is your little";
+		mes "mission coming along?";
+		mes "If you've forgotten the";
+		mes "location I've asked you to";
+		mes "search for treasure, then";
+		mes "I can briefly remind you.";
+		next;
+		mes "[Esmille]";
+		mes "Find something valuable";
+		if (ASSN_SK == 2) {
+			mes "for me by searching the";
+			mes "^FF0000Coffins^000000 in the Sphinx.";
+		}
+		else if (ASSN_SK == 3) {
+			mes "for me by searching the";
+			mes "^FF0000Stone Statues^000000 in the Sphinx.";
+		}
+		else if (ASSN_SK == 4) {
+			mes "in the ^FF0000flooded crypt in the";
+			mes "bottom floor^000000 of the Pyramids.";
+		}
+		mes "Only the strong can explore";
+		mes "that area, so doing this will";
+		mes "prove your competency to me.";
+		close;
+	}
+	else if (ASSN_SK == 1) {
+		mes "[Esmille]";
+		mes "Ah. Hello, comrade.";
+		mes "Have you heard about";
+		mes "the latest news from";
+		mes "the Assassin Guild?";
+		mes "Ah, you've spoken to";
+		mes "Killtin. Good, good...";
+		next;
+		mes "[Esmille]";
+		mes "Now, I've been charged";
+		mes "with the responsibility of";
+		mes "teaching the Sonic Acceleration skill to all interested Assassins.";
+		mes "I can tell you more about it if";
+		mes "Killtin didn't fully explain.";
+		next;
+		while(1) {
+			switch(select("Please tell me more...:I want to learn Sonic Acceleration!")) {
+			case 1:
+				mes "[Esmille]";
+				mes "Sonic Acceleration is";
+				mes "a ^FF0000support skill used in";
+				mes "conjunction with Sonic Blow^000000.";
+				mes "Assassins can only cast this";
+				mes "skill on themselves for their";
+				mes "own personal benefit.";
+				next;
+				mes "[Esmille]";
+				mes "If you're familiar with";
+				mes "Sonic Blow, you'll know";
+				mes "that it's difficult to inflict";
+				mes "fatal damage with that skill.";
+				mes "It's far too fast to be able";
+				mes "to attack very accurately...";
+				next;
+				mes "[Esmille]";
+				mes "However, by learning";
+				mes "Sonic Acceleration, you";
+				mes "can overcome this accuracy";
+				mes "drawback and fulfill the full";
+				mes "damage potential of the";
+				mes "Sonic Blow skill.";
+				next;
+				mes "[Esmille]";
+				mes "This skill is truly great.";
+				mes "And our guildmaster,";
+				mes "the one who invented this";
+				mes "skill, is also... He's a man";
+				mes "amongst men, I must say.";
+				emotion e_lv;
+				next;
+				break;
+			case 2:
+				mes "[Esmille]";
+				mes "Ah, I'm glad to see";
+				mes "that you're so enthusiastic";
+				mes "about learning this skill.";
+				mes "But first, there we need to";
+				mes "take care of the prerequisites...";
+				next;
+				if (getskilllv("AS_SONICBLOW") == 0) {
+					mes "[Esmille]";
+					mes "First, go and learn the";
+					mes "Sonic Blow skill. The skill";
+					mes "I will teach you is completely";
+					mes "useless unless you learn how";
+					mes "to perform a Sonic Blow. I shall be waiting right here till then.";
+					close;
+				}
+				mes "[Esmille]";
+				mes "Your task will be to bring";
+				switch(rand(1,3)) {
+				case 1:
+					mes "treasure from the Sphinx.";
+					mes "Search the ^FF0000Coffins^000000 that";
+					mes "are there for precious";
+					mes "valuables. Consider this";
+					mes "a test of your strength.";
+					set ASSN_SK,2;
+					next;
+					mes "[Esmille]";
+					mes "Whether you can complete";
+					mes "this task will determine";
+					mes "if you are worthy enough";
+					mes "for me to teach you the";
+					mes "Sonic Acceleration skill.";
+					mes "Best of luck, and please hurry.";
+					close;
+				case 2:
+					mes "treasure from the Sphinx.";
+					mes "Search the ^FF0000Stone Statues^000000";
+					mes "there for precious valuables.";
+					mes "Consider this excursion as";
+					mes "a test of your strength.";
+					set ASSN_SK,3;
+					next;
+					mes "[Esmille]";
+					mes "Whether you can complete";
+					mes "this task will determine";
+					mes "if you are worthy enough";
+					mes "for me to teach you the";
+					mes "Sonic Acceleration skill.";
+					mes "Best of luck, and please hurry.";
+					close;
+				case 3:
+					mes "treasure from the Pyramids.";
+					mes "Search the ^FF0000flooded crypt at";
+					mes "the bottom floor for precious";
+					mes "valuables^000000. Consider this as";
+					mes "a test of your strength.";
+					set ASSN_SK,4;
+					next;
+					mes "[Esmille]";
+					mes "Whether you can complete";
+					mes "this task will determine";
+					mes "if you are worthy enough";
+					mes "for me to teach you the";
+					mes "Sonic Acceleration skill.";
+					mes "Best of luck, and please hurry.";
+					close;
+				}
+			}
+		}
+	}
+	else {
+		if (BaseJob == Job_Assassin) {
+			mes "[Assassin]";
+			mes "Ah. Hello, comrade.";
+			mes "Have you heard about";
+			mes "the latest news from";
+			mes "the Assassin Guild?";
+			emotion e_heh;
+			next;
+			select("News from the Assassin Guild?");
+			mes "[Assassin]";
+			mes "Hm. You must not have";
+			mes "heard it, then. If you want";
+			mes "to know more about it, you";
+			mes "should speak to Killtin, who";
+			mes "is right next to me. He will";
+			mes "explain everything clearly.";
+			close;
+		}
+		mes "[Assassin]";
+		mes "Hm. Do you know any";
+		mes "Assassins? Tell them";
+		mes "to come here if they";
+		mes "haven't already.";
+		close;
+	}
+}
+
+in_sphinx2,259,213,0	script	Old Coffin#qsk_as	-1,7,8,{
+OnTouch:
+	if (ASSN_SK == 2) {
+		mes "^3355FFIt's an ancient coffin";
+		mes "with a broken lid that";
+		mes "is slightly ajar. You";
+		mes "momentarily catch a glint";
+		mes "of something shining inside.^000000";
+		specialeffect EF_CONE;
+		next;
+		while(1) {
+			switch(select("Put your hand inside:Inspect the coffin's opening:Lift the lid:Turn the coffin upside down:Ignore it")) {
+			case 1:
+				mes "^3355FFYou carefully put your";
+				mes "hand inside the coffin";
+				mes "and try to retrieve the";
+				mes "shining object that";
+				mes "you had glimpsed.";
+				mes "...............................^000000";
+				next;
+				mes "^3355FFSomething inside";
+				mes "the coffin bit your";
+				mes "hand really hard!^000000";
+				sc_start SC_Poison,30000,0;
+				sc_start SC_Bleeding,10000,0;
+				emotion e_omg,1;
+				close;
+			case 2:
+				mes "^3355FFYou try to peek";
+				mes "inside the coffin";
+				mes "through the gap";
+				mes "between the coffin's";
+				mes "edge and the lid.";
+				mes "...............................^000000";
+				next;
+				mes "^3355FFYou're barely able to";
+				mes "perceive that something";
+				mes "is squirming inside the";
+				mes "coffin, but it's far too dark";
+				mes "to see anything else.^000000";
+				sc_start SC_Blind,30000,0;
+				next;
+				break;
+			case 3:
+				mes "^3355FFYou don't have the";
+				mes "strength to move";
+				mes "something as heavy";
+				mes "as this coffin's lid...^000000";
+				sc_start SC_Curse,30000,0;
+				next;
+				break;
+			case 4:
+				mes "^3355FFYou don't have the";
+				mes "strength to turn this";
+				mes "coffin upside down.^000000";
+				next;
+				break;
+			case 5:
+				close;
+			}
+		}
+	}
+}
+
+in_sphinx2,212,267,0	script	Old Coffin#qsk_as2	-1,5,6,{
+OnTouch:
+	if (ASSN_SK == 2) {
+		mes "^3355FFIt's an ancient coffin";
+		mes "with a broken lid that";
+		mes "is slightly ajar. You";
+		mes "momentarily catch a glint";
+		mes "of something shining inside.^000000";
+		specialeffect EF_CONE;
+		next;
+		while(1) {
+			switch(select("Put your hand inside:Inspect the coffin's opening:Lift the lid:Turn the coffin upside down:Ignore it")) {
+			case 1:
+				mes "^3355FFYou carefully put your";
+				mes "hand inside the coffin";
+				mes "and try to retrieve the";
+				mes "shining object that";
+				mes "you had glimpsed.";
+				mes "...............................^000000";
+				next;
+				if (rand(1,3) != 3) {
+					mes "^3355FFYou carefully put your";
+					mes "hand inside the coffin";
+					mes "and try to retrieve the";
+					mes "shining object that";
+					mes "you had glimpsed.";
+					mes "...............................^000000";
+					next;
+					mes "^3355FFSomething inside";
+					mes "the coffin bit your";
+					mes "hand really hard!^000000";
+					sc_start SC_Poison,30000,0;
+					sc_start SC_Bleeding,10000,0;
+					emotion e_omg,1;
+					close;
+				}
+				else {
+					mes "^3355FFYour fingers manage";
+					mes "to find a solid object";
+					mes "that you pull out of the";
+					mes "coffin. You have obtained";
+					mes "a Sapphire for Esmille.^000000";
+					set ASSN_SK,5;
+					getitem 726,1; //Blue_Jewel
+					close;
+				}
+			case 2:
+				mes "^3355FFYou try to peek";
+				mes "inside the coffin";
+				mes "through the gap";
+				mes "between the coffin's";
+				mes "edge and the lid.";
+				mes "...............................^000000";
+				next;
+				mes "^3355FFYou're barely able to";
+				mes "perceive that something";
+				mes "is squirming inside the";
+				mes "coffin, but it's far too dark";
+				mes "to see anything else.^000000";
+				sc_start SC_Blind,30000,0;
+				next;
+				break;
+			case 3:
+				mes "^3355FFYou don't have the";
+				mes "strength to move";
+				mes "something as heavy";
+				mes "as this coffin's lid...^000000";
+				sc_start SC_Curse,30000,0;
+				next;
+				break;
+			case 4:
+				mes "^3355FFYou don't have the";
+				mes "strength to turn this";
+				mes "coffin upside down.^000000";
+				next;
+				break;
+			case 5:
+				close;
+			}
+		}
+	}
+}
+
+in_sphinx2,13,163,0	script	Stone Statue#qsk_as	-1,7,7,{
+OnTouch:
+	if (ASSN_SK == 3) {
+		specialeffect EF_CONE;
+		mes "^3355FFThis ancient stone statue";
+		mes "is covered with cracks and";
+		mes "looks close to falling apart.";
+		mes "The glimmer of a shining object";
+		mes "peers out from beneath one of";
+		mes "the feet. The ground appears";
+		mes "soft enough to dig through...^000000";
+		specialeffect EF_CONE;
+		next;
+		if (select("Dig to retrieve the shining object:Ignore it") == 1) {
+			mes "^3355FFAs your fingers dig into";
+			mes "the soft ground, it emits^000000";
+			if (rand(1,3) != 3){
+				mes "^3355FFa yellow gas that clouds";
+				mes "your senses and briefly";
+				mes "knocks you unconscious.^000000";
+				sc_start SC_Sleep,30000,0;
+				close;
+			}
+			mes "^3355FFa yellow gas. However, you";
+			mes "hold your breath in and expel";
+			mes "all gas in your lungs in time";
+			mes "to escape its effects. You've";
+			mes "retrieved a Ruby for Esmille.^000000";
+			set ASSN_SK,5;
+			getitem 723,1; //Cardinal_Jewel
+		}
+		close;
+	}
+}
+
+in_sphinx2,13,146,0	script	Stone Statue#qsk_as2	-1,7,7,{
+OnTouch:
+	if (ASSN_SK == 3) {
+		specialeffect EF_CONE;
+		mes "^3355FFThis ancient stone statue";
+		mes "is covered with cracks and";
+		mes "looks close to falling apart.";
+		mes "The glimmer of a shining object";
+		mes "peers out from beneath one of";
+		mes "the feet. The ground appears";
+		mes "soft enough to dig through...^000000";
+		specialeffect EF_CONE;
+		next;
+		if (select("Dig to retrieve the shining object:Ignore it") == 1) {
+			mes "^3355FFAs your fingers dig into";
+			mes "the soft ground, it emits^000000";
+			if (rand(1,3) != 3) {
+				mes "^3355FFa yellow gas that clouds";
+				mes "your senses and briefly";
+				mes "knocks you unconscious.^000000";
+				sc_start SC_Sleep,30000,0;
+				close;
+			}
+			mes "^3355FFa yellow gas. However, you";
+			mes "hold your breath in and expel";
+			mes "all gas in your lungs in time";
+			mes "to escape its effects. Sadly,";
+			mes "all you found was broken glass.^000000";
+			emotion e_omg,1;
+		}
+		close;
+	}
+}
+
+moc_pryd04,85,96,0	script	¡¡#crypt	-1,3,3,{
+OnTouch:
+	if (ASSN_SK == 4) {
+		specialeffect EF_CONE;
+		mes "^3355FFThere's something";
+		mes "glimmering beneath";
+		mes "the surface of the water...^000000";
+		next;
+		if (select("Pick it up:Ignore it") == 1) {
+			mes "^3355FFAs soon as you dip your";
+			mes "hand into the water, the";
+			mes "water's freezing chill shoots";
+			mes "up through your arm. You ";
+			mes "better hurry before you freeze!^000000";
+			next;
+			if (rand(1,3) != 3) {
+				mes "^3355FFIt's too late!";
+				mes "Your body has just";
+				mes "been frozen solid.^000000";
+				sc_start SC_Freeze,10000,0;
+				close;
+			}
+			mes "^3355FFYou quickly pick up";
+			mes "the glimmering object";
+			mes "before the water can";
+			mes "freeze you. You obtained";
+			mes "an Aquamarine for Esmille.^000000";
+			set ASSN_SK,5;
+			getitem 720,1; //Skyblue_Jewel
+		}
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================

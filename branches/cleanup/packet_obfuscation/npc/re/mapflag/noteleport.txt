@@ -1,0 +1,98 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable teleportation.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Disables all means of teleportation within a map.
+//= Script commands 'warp', 'areawarp', 'warpchar',
+//=   'warpparty', 'warpguild', 'warpwaitingpc' will not
+//=   work with "Random" destination.
+//= Disables skills AL_TELEPORT and TK_HIGHJUMP.
+//= Disables the following items:
+//=   Fly Wing (601), Giant Fly Wing (12212)
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//============================================================
+
+// Cities ========================
+moc_para01	mapflag	noteleport
+
+// Episode 13 ====================
+s_atelier	mapflag	noteleport
+bra_in01	mapflag	noteleport
+dic_in01	mapflag	noteleport
+job3_gen01	mapflag	noteleport
+job3_sha01	mapflag	noteleport
+
+// Episode 14 ====================
+1@mist	mapflag	noteleport
+1@mist	mapflag	monster_noteleport
+dew_in01	mapflag	noteleport
+mal_in01	mapflag	noteleport
+mal_in02	mapflag	noteleport
+1@cash	mapflag	noteleport
+1@cash	mapflag	monster_noteleport
+1@pump	mapflag	noteleport
+1@pump	mapflag	monster_noteleport
+2@pump	mapflag	noteleport
+2@pump	mapflag	monster_noteleport
+que_lhz	mapflag	noteleport
+que_lhz	mapflag	monster_noteleport
+1@lhz	mapflag	noteleport
+1@lhz	mapflag	monster_noteleport
+ma_scene01	mapflag	noteleport
+ma_in01	mapflag	noteleport
+1@ma_h	mapflag	noteleport
+1@ma_h	mapflag	monster_noteleport
+1@ma_c	mapflag	noteleport
+1@ma_c	mapflag	monster_noteleport
+1@ma_b	mapflag	noteleport
+1@ma_b	mapflag	monster_noteleport
+ma_zif01	mapflag	noteleport
+ma_zif02	mapflag	noteleport
+ma_zif03	mapflag	noteleport
+ma_zif04	mapflag	noteleport
+ma_zif05	mapflag	noteleport
+ma_zif06	mapflag	noteleport
+ma_zif07	mapflag	noteleport
+ma_zif08	mapflag	noteleport
+ma_zif09	mapflag	noteleport
+job_ko	mapflag	noteleport
+ecl_in01	mapflag	noteleport
+ecl_in02	mapflag	noteleport
+ecl_in03	mapflag	noteleport
+ecl_in04	mapflag	noteleport
+1@ecl	mapflag	noteleport
+1@ecl	mapflag	monster_noteleport
+ecl_hub01	mapflag	noteleport
+
+// Glast Heim Memorial Dungeon ===
+1@gl_k	mapflag	noteleport
+1@gl_k	mapflag	monster_noteleport
+2@gl_k	mapflag	noteleport
+2@gl_k	mapflag	monster_noteleport
+gl_chyard_	mapflag	noteleport
+gl_cas02_	mapflag	noteleport
+
+// Wave Mode Memorial Dungeon ====
+1@def01	mapflag	noteleport
+1@def01	mapflag	monster_noteleport
+1@def02	mapflag	noteleport
+1@def02	mapflag	monster_noteleport
+1@def03	mapflag	noteleport
+1@def03	mapflag	monster_noteleport
+
+// Heroes' Trails - Part 1 =======
+1@gef	mapflag	noteleport
+1@gef	mapflag	monster_noteleport
+1@face	mapflag	noteleport
+1@face	mapflag	monster_noteleport
+1@sara	mapflag	noteleport
+1@sara	mapflag	monster_noteleport
+1@gef_in	mapflag	noteleport
+1@gef_in	mapflag	monster_noteleport
+dali	mapflag	noteleport

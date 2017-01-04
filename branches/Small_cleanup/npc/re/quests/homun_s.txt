@@ -1,0 +1,1362 @@
+//===== rAthena Script ======================================= 
+//= Homunculus S Mutation Quest
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Genetic quest to mutate a level 99 evolved Homunculus
+//= into a Homunculus S.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version, entirely custom. [Masao]
+//= 1.1 Cleaning. [Euphy]
+//= 1.2 Replaced with official script. [Euphy]
+//============================================================ 
+
+// Main NPCs :: Homun_S
+//============================================================
+job3_gen01,12,44,3	script	Viorel#job3_gen01	542,{
+	if (countitem(6415)) {
+		if (Class == Job_Genetic || Class == Job_Genetic_T || Class == Job_Baby_Genetic) {
+			disable_items;
+			if (checkquest(4159) == -1 && checkquest(4160) == -1) {
+				mes "[Viorel]";
+				mes "Why are you here?";
+				mes "Shouldn't you be at ^005DFFJeyna^000000's house?";
+				close2;
+				for(set .@i,4154; .@i<=4160; set .@i,.@i+1) {
+					if (checkquest(.@i) > -1)
+						erasequest .@i;
+				}
+				setquest 4154;
+				setquest 4159;
+				morphembryo;
+				if (countitem(6415) == 0)
+					getitem 6415,1; //Strange_Embryo
+				else if (countitem(6415) > 1)
+					delitem 6415, (countitem(6415) - 1); //Strange_Embryo
+				warp "que_house_s",63,41;
+				end;
+			}
+			enable_items;
+		} else if (Class == Job_Novice_High || Class == Job_Merchant_High || Class == Job_Alchemist || Class == Job_Creator) {
+			emotion e_what;
+			mes "[Viorel]";
+			mes "I don't know what's going on, but the way I remember it you were supposed to be qualified to research ^FF4800Homunculus^000000.";
+			next;
+			mes "[Viorel]";
+			mes "Whatever the reason, you're not able to continue the research on ^FF4800Homunculus^000000.";
+			mes "Come back after you become a ^005DFFGenetic^000000 and have obtained a ^0000FFBioethics^000000.";
+			close;
+		} else {
+			delitem 6415, countitem(6415); //Strange_Embryo
+			mes "[Viorel]";
+			mes "Wait, that embryo you have seems a little strange.";
+			next;
+			mes "[Viorel]";
+			mes "Unless you have a job researching ^FF4800Homunculus^000000....";
+			mes "It will be of no help to you what so ever.";
+			next;
+			mes "[Viorel]";
+			mes "I'm in charge of managing ^0000FFStrange Embryo^000000 so I'll take care of that for you.";
+			mes "No offense, and I'm not doing anything bad here.";
+			close;
+		}
+	}
+	if ((Class == Job_Genetic || Class == Job_Genetic_T || Class == Job_Baby_Genetic) && (checkquest(4154) > -1)) {
+		if ((checkquest(4155) > -1) || (checkquest(4160) > -1)) {
+			mes "[Viorel]";
+			mes "Weather's great.";
+			next;
+			callsub L_CheckHomunculus;
+			mes "[Viorel]";
+			mes "Ready to go to my house?";
+			next;
+			switch(select("Go to ^005DFFViorel^000000's house.:Don't go.")) {
+			case 1:
+				mes "[Viorel]";
+				mes "Good choice.";
+				mes "Now, close your eyes for a second...";
+				close2;
+				warp "que_house_s",19,42;
+				end;
+			case 2:
+				mes "[Viorel]";
+				mes "Come back when you're ready.";
+				mes "You must come with the ^FF4800Homunculus^000000.";
+				close;
+			}
+		} else {
+			mes "[Viorel]";
+			mes "Why are you here?";
+			mes "Shouldn't you be at ^005DFFJeyna^000000's house?";
+			next;
+			callsub L_CheckHomunculus;
+			mes "[Viorel]";
+			mes "Now, ready to go to ^005DFFJeyna^000000?";
+			next;
+			switch(select("Go to ^005DFFJeyna^000000's room.:Don't go.")) {
+			case 1:
+				mes "[Viorel]";
+				mes "Good choice.";
+				mes "Now, close your eyes for a second...";
+				close2;
+				warp "que_house_s",63,41;
+				end;
+			case 2:
+				mes "[Viorel]";
+				mes "Come back when you're ready.";
+				mes "You must come with the ^FF4800Homunculus^000000.";
+				close;
+			}
+		}
+	}
+	if (BaseJob == Job_Merchant) {
+		mes "[Viorel]";
+		mes "I used to be a merchant once, just like you.";
+		mes "I'm researching on ^FF4800Homunculus^000000.";
+		next;
+		mes "[Viorel]";
+		mes "If you're interested in ^FF4800Homunculus^000000, become an ^005DFFAlchemist^000000 or a ^005DFFCreator^000000.";
+		close;
+ 	} else if (BaseJob == Job_Alchemist && Class < Job_Genetic) {
+		mes "[Viorel]";
+		mes "I've spent lots of time and energy on Homunculus.";
+		mes "If you feel like you're at a dead end, come back next time with a ^FF4800Homunculus^000000.";
+		next;
+		mes "[Viorel]";
+		mes "Oh. Of course you need to have the suitable potentials. You could probably prove yourself once you become a ^FF4800Genetic^000000.";
+		close;
+	} else if (Class == Job_Genetic || Class == Job_Genetic_T || Class == Job_Baby_Genetic) {
+		if (gethominfo(6) >= 99 && (gethominfo(1) >= 6009 && gethominfo(1) <= 6016)) { // Level 99+ evolved Homunculus
+			mes "[Viorel]";
+			mes "Oh, great~!";
+			mes "You have a ^FF4800Homunculus^000000.";
+			mes "With passion invested in its research we can make them better.";
+			next;
+			mes "[Viorel]";
+			mes "I must speak to you in private. Would you mind going to my house with me?";
+			next;
+			switch(select("Go to ^005DFFViorel^000000's home.:Stay here.")) {
+			case 1:
+				mes "[Viorel]";
+				mes "Good choice.";
+				mes "Now, close your eyes for a second...";
+				close2;
+				setquest 4154;
+				setquest 4155;
+				warp "que_house_s",19,42;
+				end;
+			case 2:
+				mes "[Viorel]";
+				mes "If you feel like you're at a dead end, come back next time with a ^FF4800Homunculus^000000.";
+				close;
+			}
+		} else if (gethominfo(6) >= 99 && (gethominfo(1) >= 6048 && gethominfo(1) <= 6052)) { // Level 99+ mutated Homunculus-S
+			mes "[Viorel]";
+			mes "Hello again.";
+			mes "Perhaps you may be interested";
+			mes "in the newly created ^FF4800Homunculus^000000,";
+			mes "born from the new ^006400Homunculus Mutation System^000000?";
+			next;
+			switch(select("Nope. Good bye.:Please, I'm busy.:That's exactly what I wanted to hear.:Why are you always standing there?")) {
+			case 1:
+				emotion e_heh;
+				mes "[Viorel]";
+				mes "Okay.";
+				mes "Good seeing you.";
+				mes "Good bye then~!";
+				close;
+			case 2:
+				emotion e_omg;
+				mes "[Viorel]";
+				mes "!!!!";
+				mes "I... I see.";
+				mes "I thought you were here to see me.";
+				close;
+			case 3:
+				emotion e_ic;
+				mes "[Viorel]";
+				mes "Just as I thought.";
+				mes "Let's have a look at the notes my dear friend Jeyna left.";
+				next;
+				playbgm "30.mp3"; // One Step Closer
+				callfunc "F_HomMutateInfo","[Memo Pad Notes]";
+				mes "[Viorel]";
+				mes "Hmm.";
+				mes "Well, that's all there is to it.";
+				mes "It's up to you to find out more.";
+				close2;
+				playbgm "08.mp3"; // Theme of Prontera
+				end;
+			case 4:
+				emotion e_swt;
+				mes "[Viorel]";
+				mes "No, I do not stand here every day.";
+				mes "But why do YOU stand there every day?";
+				next;
+				mes "[Viorel]";
+				mes "What?";
+				mes "No, the way I see it";
+				mes "you seem to be here every time I'm here.";
+				close;
+			}
+		} else {
+			if (gethominfo(1) >= 6009) { // Evolved Homunculus
+				mes "[Viorel]";
+				mes "Hmm, you seem to have a special bond with your ^FF4800Homunculus^000000.";
+				next;
+				mes "[Viorel]";
+				mes "Come back to me when that ^FF4800Homunculus^000000 reaches ^0000FFlevel 99^000000.";
+				close;
+			} else {
+				mes "[Viorel]";
+				mes "You do not yet possess an evolved ^FF4800Homunculus^000000...";
+				mes "As you may well know about evolution:";
+				next;
+				mes "[Viorel]";
+				mes "Using the ^0000FFStone of Sage^000000 when intimacy level is above ^006400Intimate^000000, the ^FF4800Homunculus^000000 goes through ^006400Evolution^000000.";
+				close;
+			}
+		}
+	}
+	mes "[Viorel]";
+	mes "^FF4800Homunculus^000000 research requires a lot of time and funding.";
+	mes "However, I believe passion is the most important factor.";
+	next;
+	switch(select("End conversation.:What are you talking about?:Why are you always standing there?")) {
+	case 1:
+		mes "[Viorel]";
+		mes "So long~!";
+		close;
+	case 2:
+		mes "[Viorel]";
+		mes "You see, ^006400Alchemists^000000 have an inquisitive nature.";
+		mes "People like me, especially, even think of creating life itself.";
+		next;
+		mes "[Viorel]";
+		mes "You'd have to research ^FF4800Homunculus^000000 to understand.";
+		mes "Now, if you'll excuse me~!";
+		close;
+	case 3:
+		emotion e_swt;
+		mes "[Viorel]";
+		mes "What, is it so strange to see an Alchemist in their own lab?";
+		mes "How so?";
+		close;
+	}
+	end;
+L_CheckHomunculus:
+	if (gethominfo(6) < 99 || (gethominfo(1) < 6009 || gethominfo(1) > 6016)) { // Not level 99+ evolved Homunculus
+		mes "[Viorel]";
+		mes "Huh?";
+		mes "Where's the ^FF4800Homunculus^000000 you used to have?";
+		mes "Perhaps I've mistaken it for something else...";
+		next;
+		mes "[Viorel]";
+		mes ".......";
+		mes " ";
+		mes "(Seems to be thinking about something.)";
+		next;
+		emotion e_heh;
+		mes "[Viorel]";
+		mes "Ha ha~";
+		mes "I think I've mistaken you for someone else.";
+		mes "If you'll excuse me.";
+		close;
+	}
+	return;
+}
+
+que_house_s,24,47,3	script	Viorel#homun_s	542,{
+	if (checkquest(4155) > -1) {
+		emotion e_dum;
+		mes "[Viorel]";
+		mes "Good.";
+		mes "I see that you mean business.";
+		next;
+		playbgm "33.mp3"; // Yuna Song
+		mes "[Viorel]";
+		mes "Maybe you'll agree.";
+		mes "Currently, your ^FF4800Homunculus^000000 is not in its perfect state.";
+		next;
+		mes "[Viorel]";
+		mes "These days, studies on the growth of the ^FF4800Homunculus^000000 are actively taking place.";
+		mes "But, I do believe that I have found something special.";
+		next;
+		mes "[Viorel]";
+		mes "In order to break the current limitations of the ^FF4800Homunculus^000000, mutations need to happen.";
+		next;
+		switch(select("Like, biological experiments...?!:Well, yeah, naturally.:I don't want to hurt my Homunculus!")) {
+		case 1:
+			emotion e_swt2;
+			mes "[Viorel]";
+			mes "Don't look so surprised.";
+			mes "Ethics in biology are kind of blurry right now, right?";
+			mes "I mean...";
+			next;
+			mes "[Viorel]";
+			mes "It's my duty to study the true potential of the ^FF4800Homunculus^000000.";
+			next;
+			mes "[Viorel]";
+			mes "So far, Homunculus haven't demonstrated their full potential, but I know that I am close to a breakthrough.";
+			next;
+			break;
+		case 2:
+			emotion e_sigh;
+			mes "[Viorel]";
+			mes "Yes.";
+			mes "I'm glad you're not upset.";
+			mes "Mutation,";
+			mes "a word that sparks evil in the minds of the ordinary,";
+			mes "which made my research very difficult to proceed with.";
+			next;
+			mes "[Viorel]";
+			mes "Do you remember?";
+			mes "^005DFFKellasus^000000 of ^8B4513Lighthalzen^000000, the pioneer of ^FF4800Homunculus^000000 research.";
+			next;
+			mes "[Viorel]";
+			mes "I believe that this research fulfills the promise made with ^005DFFKellasus^000000, the giver of knowledge and belief.";
+			next;
+			break;
+		case 3:
+			emotion e_swt;
+			mes "[Viorel]";
+			mes "I understand your concern.";
+			mes "But I want to assure you that this Mutation does not harm or hurt your ^FF4800Homunculus^000000.";
+			next;
+			mes "[Viorel]";
+			mes "On the contrary, the ^FF4800Homunculus^000000 of today are in pain from imperfection, unable to live up to their supposed potentials.";
+			mes "Moreover, those ^FF4800Homunculus^000000 were often abandoned.";
+			next;
+			mes "[Viorel]";
+			mes "Don't get me wrong, I study the ^FF4800Homunculus^000000 because I love them.";
+			next;
+			break;
+		}
+		mes "[Viorel]";
+		mes "Well, by the way...";
+		mes "I have found this new mutation to be quite stable.";
+		next;
+		mes "[Viorel]";
+		mes "^006400The technology exists,";
+		mes "and they will likely have new";
+		mes "skills when mutated...^000000";
+		next;
+		mes "[Viorel]";
+		mes "The minor side effect...";
+		mes "^006400Their appearance will change^000000.";
+		mes "But I think you'll find that pretty satisfying.";
+		next;
+		mes "[Viorel]";
+		mes "I quote from ^005DFFKassibian^000000, an expert in ^FF4800Homunculus^000000 techniques,";
+		mes "^006400The truth is not in a single form~!^000000";
+		mes "Ha ha.";
+		next;
+		emotion e_flash;
+		mes "[Viorel]";
+		mes "I know it's a little abrupt, but...";
+		mes "How about changing your ^FF4800Homunculus^000000 into something incredible with my marvelous achievement, the ^006400Homunculus Mutation System^000000?";
+		next;
+		switch(select("Explore the ^006400Homunculus Mutation System^000000.:Cancel.")) {
+		case 1:
+			emotion e_no1;
+			mes "[Viorel]";
+			mes "Good choice.";
+			mes "Success lurks outside the box of conventional thinking, right?";
+			next;
+			mes "[Viorel]";
+			mes "The first person to help with the research is ^005DFFJeyna^000000.";
+			mes "I'll send you to ^005DFFJeyna^000000.";
+			mes "There, you'll learn more about the new ^0000FFHomunculus^000000.";
+			close2;
+			setquest 4156;
+			erasequest 4155;
+			warp "que_house_s",63,41;
+			end;
+		case 2:
+			emotion e_dots;
+			mes "[Viorel]";
+			mes "I don't see why you hesitate.";
+			mes "I am not trying to deceive you.";
+			mes "Maybe you need some time to think about it?";
+			next;
+			switch(select("Think about it.:I'm just going to walk away.")) {
+			case 1:
+				mes "[Viorel]";
+				mes "We'll talk in a bit then.";
+				close;
+			case 2:
+				emotion e_otl;
+				mes "[Viorel]";
+				mes "Shame.";
+				mes "However, I respect your opinion.";
+				mes "I'll send you back to the ^8B4513Laboratory^000000.";
+				close2;
+				erasequest 4154;
+				erasequest 4155;
+				warp "job3_gen01",12,47;
+				end;
+			}
+		}
+	} else if (checkquest(4160) > -1) {
+		playbgm "33.mp3"; // Yuna Song
+		mes "[Viorel]";
+		mes "The ^FF4800Homunculus^000000 I saw before has returned to its ^0000FFembryo^000000 state.";
+		mes "A little strange, but...";
+		mes "You don't have to worry about it.";
+		next;
+		mes "[Viorel]";
+		mes "By the way...";
+		mes "I forgot to tell you something.";
+		mes "In order to stabilize the Mutation process, I need some materials first.";
+		next;
+		mes "[Viorel]";
+		mes "Fortunately, you don't have to find them yourself because I have them here already..";
+		mes "But, I'll need ^FF000050,000 zeny^000000, you know, as a service fee.";
+		next;
+		mes "[Viorel]";
+		mes "I wish that I could do it for free but I'm not exactly made of money, you know.";
+		mes "That and I lack any investors to support my research at the moment.";
+		next;
+		mes "[Viorel]";
+		mes "In fact, if I had enough zeny to continue my research, then I could solve a lot of my problems...";
+		next;
+		mes "[Viorel]";
+		mes "Anyways, you can try to do this with or without the stabilization process. It's all up to you.";
+		next;
+		mes "[Viorel]";
+		mes "If you choose the unstable";
+		mes "mutation, I can't guarentee what kind of Homunculus you're going to get.";
+		mes "Anyways, it's up to you.";
+		next;
+		switch(select("Mutation stabilization (50,000 zeny):Unstable mutation")) {
+		case 1:
+			if (Zeny < 50000) {
+				mes "[Viorel]";
+				mes "I don't think you have ^FF000050 thousand Zeny^000000 with you right now.";
+				mes "Please bring enough Zeny.";
+				mes "I'll be waiting.";
+				mes "Want me to send you back to the ^8B4513Laboratory^000000?";
+				next;
+				switch(select("No thanks.:Yes. Send me back to the Lab.")) {
+				case 1:
+					mes "[Viorel]";
+					mes "Alright.";
+					mes "I'll see you in a bit.";
+					close;
+				case 2:
+					mes "[Viorel]";
+					mes "Alright.";
+					mes "I'll be waiting at the ^8B4513Laboratory^000000.";
+					close2;
+					warp "job3_gen01",12,47;
+					end;
+				}
+			}
+			emotion e_no1;
+			playbgm "19.mp3"; // Under the Ground
+			mes "[Viorel]";
+			mes "Good choice.";
+			mes "Choose from the different types of ^0000FFHomunculus^000000.";
+			next;
+			switch(select("Eira:Sera:Dieter:Bayeri:Eleanor")) {
+			case 1:
+				cutin "Mer_Eira_Card",3;
+				set .@Homunculus,6048; //MER_EIRA
+				break;
+			case 2:
+				cutin "Mer_Sera_Card",3;
+				set .@Homunculus,6050; //MER_SERA
+				break;
+			case 3:
+				cutin "Mer_Dieter_Card",3;
+				set .@Homunculus,6051; //MER_DIETER
+				break;
+			case 4:
+				cutin "Mer_Bayeri_Card",3;
+				set .@Homunculus,6049; //MER_BAYERI
+				break;
+			case 5:
+				cutin "Mer_Eleanor_Card",3;
+				set .@Homunculus,6052; //MER_ELEANOR
+				break;
+			}
+			mes "[Viorel]";
+			mes "Are you sure?";
+			next;
+			if(select("Yes.:No.") == 2) {
+				cutin "",255;
+				playbgm "33.mp3"; // Yuna Song
+				mes "[Viorel]";
+				mes "I see.";
+				mes "Give it more time to think.";
+				close;
+			}
+			cutin "",255;
+			mes "[Viorel]";
+			mes "Excellent!";
+			mes "Let's get on with it.";
+			next;
+			specialeffect2 EF_BASH;
+			mes "[Viorel]";
+			mes "Now focus~!";
+			mes "You... need...";
+			mes "... concentration.";
+			next;
+			specialeffect2 EF_PROVIDENCE;
+			mes "[Viorel]";
+			mes "Good. Almost done!";
+			next;
+			specialeffect2 EF_SUI_EXPLOSION;
+			set Zeny, Zeny - 50000;
+			hommutate .@Homunculus;
+			break;
+		case 2:
+			emotion e_hmm;
+			mes "[Viorel]";
+			mes "So, your choice is the Unstable Mutation Process.";
+			mes "You believe in destiny?";
+			mes "Seriously...";
+			mes "Do you really wish to proceed";
+			mes "with the process of random outcome?";
+			next;
+			if(select("Go ahead. (Random Mutation):Cancel.") == 2) {
+				playbgm "33.mp3"; // Yuna Song
+				mes "[Viorel]";
+				mes "I see.";
+				mes "Give it more time to think.";
+				close;
+			}
+			emotion e_dots;
+			mes "[Viorel]";
+			mes "Hmm...";
+			mes "The exploration of knowledge";
+			mes "is full of surprises.";
+			mes ".......";
+			next;
+			emotion e_heh;
+			mes "[Viorel]";
+			mes "Ha ha.";
+			mes "Hey, I feel like a Blacksmith!";
+			mes "Now let's get on with it.";
+			next;
+			specialeffect2 EF_BASH;
+			mes "[Viorel]";
+			mes "Now focus~!";
+			mes "You... need...";
+			mes "... concentration.";
+			next;
+			specialeffect2 EF_PRESSURE;
+			mes "[Viorel]";
+			mes "Concentrate a little more!";
+			next;
+			specialeffect2 EF_PROVIDENCE;
+			mes "[Viorel]";
+			mes "Good. Almost done!";
+			next;
+			specialeffect2 EF_SUI_EXPLOSION;
+			hommutate;
+			break;
+		}
+		erasequest 4160;
+		erasequest 4154;
+		emotion e_ho;
+		playbgm "64.mp3"; // One Fine Day
+		mes "[Viorel]";
+		mes "Okay, Mutation Complete.";
+		mes "Phew... Didn't skip a heartbeat, did you?";
+		next;
+		mes "[Viorel]";
+		mes "Remember what ^005DFFKellasus^000000 said?";
+		mes "To the doorstep of the truth...";
+		mes "We must see for ourselves";
+		mes "the path that leads to it.";
+		next;
+		mes "[Viorel]";
+		mes "^0000FF" + strcharinfo(0) + "^000000,";
+		mes "I haven't known you";
+		mes "for a very long time,";
+		mes "but I get the feeling that";
+		mes "you'll achieve great things.";
+		next;
+		mes "[Viorel]";
+		mes "Good luck on you adventures.";
+		mes "I hope that your new ^FF4800Homunculus^000000 will excel under your care.";
+		next;
+		mes "[Viorel]";
+		mes "And don't you forget.";
+		mes "Our research";
+		mes "has only just begun~!";
+		close;
+	} else {
+		for(set .@i,4154; .@i<=4160; set .@i,.@i+1) {
+			if (checkquest(.@i) > -1)
+				erasequest .@i;
+		}
+		mes "[Viorel]";
+		mes "Now that all the work is done, I ask you to take your leave.";
+		mes "I need to recuperate.";
+		close2;
+		warp "job3_gen01",12,47;
+		end;
+	}
+}
+
+que_house_s,80,42,3	script	Jeyna#homun_s	558,{
+	if (checkquest(4156) > -1) {
+		playbgm "28.mp3"; // You're in Ruins
+		emotion e_gasp;
+		mes "[Jeyna]";
+		mes "Welcome.";
+		mes "I just got word from ^005DFFViorel^000000 that you were coming.";
+		next;
+		emotion e_hmm;
+		mes "[Jeyna]";
+		mes "By the way...";
+		mes "Did he convince you to do something...?";
+		mes "He does have a way with words.";
+		next;
+		mes "[Jeyna]";
+		mes "He needs them because Alchemists are such awkward people.";
+		emotion e_sigh;
+		next;
+		mes "[Jeyna]";
+		mes "Anyways~";
+		mes "^0000FF"+strcharinfo(0)+"^000000 and ^005DFFViorel^000000 seem like two peas in a pod.";
+		next;
+		emotion e_heh;
+		mes "[Jeyna]";
+		mes "Hahaha~ No offense.";
+		mes "I think it's a good thing.";
+		mes "Oh, yes.";
+		mes "You're here for the ^FF4800Homunculus^000000 Mutation.";
+		next;
+		mes "[Jeyna]";
+		mes "While I do some preparation,";
+		mes "why don't you take a look at that board?";
+		mes "The ^006400Homunculus Mutation System^000000 has ^0000FF5 different types^000000 of new mutations.";
+		next;
+		emotion e_gasp,0,"Magic Board#homun_s";
+		mes "[Jeyna]";
+		mes "Your ^FF4800Homunculus^000000 can mutate into any of the 5 different forms.";
+		next;
+		emotion e_ic;
+		mes "[Jeyna]";
+		mes "Let's see...";
+		mes "The ^006400Homunculus Mutation System^000000 includes new evolutions of the normal ^0000FFHomunculus^000000.";
+		mes "After they mutate, all previously learned skills will also remain.";
+		next;
+		mes "[Jeyna]";
+		mes "In other words...";
+		mes "Even if you change the magic wielder ^FF4800Vanilmirth^000000 to a fighter type,";
+		mes "skills such as Caprice will be";
+		mes "^006400retained and usable even after Mutation^000000.";
+		next;
+		emotion e_gasp,0,"Magic Board#homun_s";
+		mes "[Jeyna]";
+		mes "Take a look at the Magic Board behind me and decide for yourself.";
+		close2;
+		setquest 4157;
+		erasequest 4156;
+		end;
+	} else if (checkquest(4157) > -1) {
+		emotion e_what;
+		mes "[Jeyna]";
+		mes "Take a look at the board behind me, on the right.";
+		close2;
+		emotion e_gasp,0,"Magic Board#homun_s";
+		end;
+	} else if (checkquest(4158) > -1) {
+		playbgm "28.mp3"; // You're in Ruins
+		disable_items;
+		mes "[Jeyna]";
+		mes "Okay, I'm ready too.";
+		mes "In order to revert the process now, I need the Homunculus in its embryo form.";
+		next;
+		callsub L_CheckHomunculus;
+		if (checkweight(6415,1) == 0) {
+			mes "[Jeyna]";
+			mes "But,";
+			mes "You don't have enough space to carry an ^0000FFembryo^000000.";
+			mes "Please come back with enough space in your bag.";
+			next;
+			mes "[Jeyna]";
+			mes "Please return to the ^8B4513Laboratory^000000.";
+			mes "You can find ^005DFFViorel^000000 at the ^8B4513Laboratory^000000 once you empty your bag.";
+			next;
+			mes "[Jeyna]";
+			mes "When you're done with emptying your bag, ask ^005DFFViorel^000000 to send you back here.";
+			mes "Go on and empty your bag~!";
+			close2;
+			warp "job3_gen01",12,47;
+			end;
+		}
+		mes "[Jeyna]";
+		mes "Now's about time for a decision.";
+		mes "To go through the Mutation to the new ^0000FFHomunculus^000000 with the Homunculus Mutation System,";
+		mes "you need to go through the process of regression to turn the Homunculus back to its ^0000FFembryo^000000 state.";
+		next;
+		mes "[Jeyna]";
+		mes "And...";
+		mes "^006400You cannot use the ability Call Homunculus until the process is complete.^000000";
+		mes "It won't take long, so don't wander off.";
+		next;
+		mes "[Jeyna]";
+		mes "So, please decide.";
+		mes "Do you want to proceed with the new ^0000FFHomunculus Mutation System^000000?";
+		next;
+		switch(select("Yes, I do.:I need to think more.")) {
+		case 1:
+			if (checkhomcall() == 1) {
+				mes "[Jeyna]";
+				mes "Oh, wait a minute.";
+				mes "To proceed with the Mutation, you need to wake up the Homunculus from the state of Vaporization.";
+				next;
+				mes "[Jeyna]";
+				mes "Come back after you've done that.";
+				close;
+			}
+			emotion e_no1;
+			mes "[Jeyna]";
+			mes "Good thinking.";
+			mes "It is unacceptable for Alchemists like us to fear challenge.";
+			next;
+			playbgm "01.mp3"; // Title
+			mes "[Jeyna]";
+			mes "Now I need you to focus.";
+			next;
+			specialeffect2 EF_ABSORBSPIRITS;
+			mes "[Jeyna]";
+			mes "We need to...";
+			mes "Stabilize a little more.";
+			mes ".......";
+			next;
+			specialeffect2 EF_CURE;
+			mes "[Jeyna]";
+			mes "In a few moments, the ^FF4800Homunculus^000000 will return to its embryo state.";
+			next;
+			specialeffect2 EF_HOLYHIT;
+			mes "[Jeyna]";
+			mes "Into a special embryo...";
+			next;
+			callsub L_CheckHomunculus;
+			specialeffect2 EF_BLESSING;
+			morphembryo;
+			setquest 4159;
+			erasequest 4158;
+			emotion e_ho;
+			mes "[Jeyna]";
+			mes "Phew~ All done.";
+			mes "Hmm, its state is a little strange.";
+			next;
+			emotion e_heh;
+			mes "[Jeyna]";
+			mes "I guess it'll be just fine.";
+			mes "Don't lose that ^0000FFStrange Embryo^000000.";
+			mes "Also...";
+			next;
+			mes "[Jeyna]";
+			mes "Don't do anything like changing jobs or anything like that before the process is over.";
+			mes "If so, you, ^0000FF"+strcharinfo(0)+"^000000 might lose all the abilities you have over the Homunculus.";
+			next;
+			mes "[Jeyna]";
+			mes "All that concentration made me tired.";
+			mes "I'll just take a glass of water.";
+			close;
+		case 2:
+			playbgm "28.mp3"; // You're in Ruins
+			emotion e_sigh;
+			mes "[Jeyna]";
+			mes "Maybe I shouldn't have asked in the first place.";
+			close;
+		}
+	} else if (checkquest(4159) > -1 || checkquest(4160) > -1) {
+		playbgm "28.mp3"; // You're in Ruins
+		mes "[Jeyna]";
+		mes "^005DFFViorel^000000 will finish the mutation process.";
+		mes "Now it's my time to say good bye.";
+		next;
+		mes "[Jeyna]";
+		mes "It was short, but it was nice to meet you.";
+		mes "We'll see each other again some time.";
+		next;
+		mes "[Jeyna]";
+		mes "Best of luck~!";
+		close2;
+		setquest 4160;
+		erasequest 4159;
+		warp "que_house_s",19,42;
+		end;
+	} else {
+		if (checkquest(4154) > -1)
+			erasequest 4154;
+		mes "[Jeyna]";
+		mes "Hey, how did you get in here?";
+		mes "Please get out. I'm changing~!";
+		close2;
+		warp "job3_gen01",12,47;
+		end;
+	}
+	end;
+L_CheckHomunculus:
+	if (gethominfo(6) < 99 || (gethominfo(1) < 6009 || gethominfo(1) > 6016)) { // Not level 99+ evolved Homunculus
+		mes "[Jeyna]";
+		mes "Hey, wait.";
+		mes "The condition of the ^FF4800Homunculus^000000 is not suitable.";
+		mes "That was close.";
+		next;
+		mes "[Jeyna]";
+		mes "To use the Homunculus Mutation System";
+		mes "to change to the new";
+		mes "^FF4800Homunculus^000000,";
+		mes "the ^006400Homunculus must be above level 99 and evolved^000000.";
+		next;
+		mes "[Jeyna]";
+		mes "Come back to ^005DFFViorel^000000 when you're ready.";
+		mes "I'll see you later then~!";
+		close2;
+		erasequest 4154;
+		erasequest 4158;
+		warp "job3_gen01",12,47;
+		end;
+	}
+	return;
+}
+
+// Magic Board
+//============================================================
+que_house_s,83,47,3	script	Magic Board#homun_s	857,{
+	playbgm "26.mp3"; // Everlasting Wanderers
+	callfunc "F_HomMutateInfo","[Magic Board Posts]";
+	mes "[Magic Board Posts]";
+	mes ":: ^0000FFHomunculus^000000 research is";
+ 	mes ":: so much fun.";
+	mes ":: Be an Alchemist";
+	mes ":: who always enjoys";
+	mes ":: one's research.";
+	next;
+	mes "[Magic Board Posts]";
+	mes ":: Oh, and Viorel...";
+	mes ":: About what you said";
+	mes "::  yesterday...";
+	mes "::";
+	mes "::";
+	next;
+	mes "--------------------------";
+	mes "The rest is sealed because it seems to be a private message.";
+	close2;
+	if (checkquest(4157) > -1) {
+		setquest 4158;
+		erasequest 4157;
+	}
+	end;
+}
+
+function	script	F_HomMutateInfo	{
+	mes getarg(0);
+	mes ":: The ability of the mutated";
+	mes ":: ^0000FFHomunculus^000000 clearly goes";
+	mes ":: beyond the previous state.";
+	mes ":: In addition, its appearance";
+	mes ":: will evolve as well.";
+	next;
+	mes getarg(0);
+	mes ":: ^0000FFHomunculus^000000 appearances of the";
+	mes ":: new types can be classified";
+	mes ":: based on different species.";
+	mes ":: Creatures of the same species";
+	mes ":: generally have a similar";
+	mes ":: appearance.";
+	next;
+	mes getarg(0);
+	mes ":: The category, appearance and";
+	mes ":: ability of the ^0000FFHomunculus^000000";
+	mes ":: via the Homunculus Mutation";
+	mes ":: System are as follows:";
+	next;
+	cutin "Mer_Eira_Card",3;
+	mes getarg(0);
+	mes ":: The first of the five";
+	mes ":: is called ^FF4800Eira^000000.";
+	mes ":: Beautiful and graceful.";
+	next;
+	mes getarg(0);
+	mes ":: ^FF4800Eira^000000 uses";
+	mes ":: ^006400Wind Element^000000 Magic Attacks and";
+	mes ":: Support Skills.";
+	mes ":: It even has the ability";
+	mes ":: to revive its";
+	mes ":: fallen master.";
+	next;
+	mes getarg(0);
+	mes ":: ^FF4800Eira^000000 eats";
+	mes ":: ^0000FFSmall Snow Flower^000000.";
+	mes ":: Surprising how it survives on";
+	mes ":: such a small amount.";
+	mes ":: ^0000FFSmall Snow Flower^000000 can be bought";
+	mes ":: from ^005DFFTaming Merchants^000000.";
+	next;
+	cutin "",255;
+	cutin "Mer_Sera_Card",3;
+	mes getarg(0);
+	mes ":: The second of the five";
+	mes ":: is known as ^FF4800Sera^000000.";
+	mes ":: It looks just like ^FF0000Mistress^000000 but";
+	mes ":: it doesn't run away.";
+	next;
+	mes getarg(0);
+	mes ":: ^FF4800Sera^000000";
+	mes ":: specializes in ^006400Poison Attacks^000000.";
+	mes ":: Also, it uses distinct";
+	mes ":: Support Skills using poisons.";
+	next;
+	mes getarg(0);
+	mes ":: ^FF4800Sera^000000 eats";
+	mes ":: ^0000FFApple Pudding^000000.";
+	mes ":: It prefers sweet food.";
+	mes ":: ^0000FFApple Pudding^000000 can be bought";
+	mes ":: from ^005DFFTaming Merchants^000000.";
+	next;
+	cutin "",255;
+	cutin "Mer_Dieter_Card",3;
+	mes getarg(0);
+	mes ":: The third of the five";
+	mes ":: is ^FF4800Dieter^000000.";
+	mes ":: It looks unusual but it";
+	mes ":: has a good demeanor.";
+	next;
+	mes getarg(0);
+	mes ":: ^FF4800Dieter^000000 uses";
+	mes ":: ^FF0000Fire^000000 based Attacks and";
+	mes ":: Support Skills.";
+	mes ":: It is just as fragile...";
+	mes ":: ah, reliable, as it looks.";
+	next;
+	mes getarg(0);
+	mes ":: ^FF4800Dieter^000000 eats";
+	mes ":: ^0000FFBig Cell^000000.";
+	mes ":: ^0000FFBig Cell^000000 can be bought";
+	mes ":: from ^005DFFTaming Merchants^000000.";
+	next;
+	cutin "",255;
+	cutin "Mer_Bayeri_Card",3;
+	mes getarg(0);
+	mes ":: The fourth of the five";
+	mes ":: is ^FF4800Bayeri^000000.";
+	mes ":: Bayeri has the form of a";
+	mes ":: unicorn.";
+	next;
+	mes getarg(0);
+	mes ":: It has a powerful dash skill";
+	mes ":: and uses ^006400Holy Element^000000 magic.";
+	mes ":: Unfortunately,";
+	mes ":: they won't let you ride them.";
+	mes ":: Not all four-legged creatures";
+	mes ":: can be ridden.";
+	next;
+	mes getarg(0);
+	mes ":: ^FF4800Bayeri^000000 eats";
+	mes ":: ^0000FFFresh Plant^000000.";
+	mes ":: No matter how hungry it";
+	mes ":: never feeds on rotten greens.";
+	mes ":: ^0000FFFresh Plant^000000 can be bought";
+	mes ":: from ^005DFFTaming Merchants^000000.";
+	next;
+	cutin "",255;
+	cutin "Mer_Eleanor_Card",3;
+	mes getarg(0);
+	mes ":: The last of the five";
+	mes ":: is ^FF4800Eleanor^000000.";
+	mes ":: It has a feminine appearance";
+	mes ":: and outstanding physical skill.";
+	next;
+	mes getarg(0);
+	mes ":: ^FF4800Eleanor^000000";
+	mes ":: uses ^006400Strike or Grapple Attacks^000000";
+	mes ":: sequentially in battle.";
+	mes ":: Absolutely stunning.";
+	next;
+	mes getarg(0);
+	mes ":: ^FF4800Eleanor^000000 eats";
+	mes ":: ^0000FFKid's Dumpling^000000.";
+	mes ":: Don't confuse it with a normal";
+	mes ":: dumpling.";
+	mes ":: ^0000FFKid's Dumpling^000000 can be bought";
+	mes ":: from ^005DFFTaming Merchants^000000.";
+	next;
+	cutin "",255;
+	return;
+}
+
+// Books
+//============================================================
+que_house_s,13,52,3	script	Open Book#01homun_s	111,{
+	switch(rand(1,7)) {
+	case 1:
+		mes "[Bookcase Notes]";
+		mes "Insanity and Genius are the same in concept in that they are both abnormal phenomenon.";
+		mes "Observing the chemist ^005DFFMorgenstein^000000 of ^8B4513Geffen^000000, I consider them equal.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "Once I had to visit...";
+		mes "the strange ^005DFFMorgenstein^000000 for research purposes.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "I had a meat stew before I met ^005DFFMorgenstein^000000,";
+		mes "surprisingly enough, he muttered that he smelled meat even before I was close.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "I never thought that chemists had a great sense of smell.";
+		mes "The next time I give";
+		mes "^005DFFMorgenstein^000000 a visit,";
+		mes "I'll eat some other meal.";
+		close;
+	case 2:
+		mes "[Bookcase Notes]";
+		mes "^005DFFDe Bris^000000 thinks the enthusiasm of Alchemists has lately dropped <Dramatically>...";
+		next;
+		mes "[Bookcase Notes]";
+		mes "He especially didn't like the fact that I was bound tightly to ^FF4800Homunculus^000000 research.";
+		mes "He didn't say such a thing when we studied together in ^8B4513Rune Midgarts^000000.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "One day, I'll show ^005DFFDe Bris^000000 my ^FF4800Homunculus^000000 research data.";
+		mes "I love watching him jump out of his skin.... I look forward to the day.";
+		close;
+	case 3:
+		mes "[Bookcase Notes]";
+		mes "^005DFFDe Bris^000000' passion for the ^57007FGenetic^000000 arts is amazing.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "Recently, the Alchemist Union offered me the chance to join the ^57007FGenetic^000000 through a letter.";
+		mes "I wonder what ^005DFFDe Bris^000000 said to the union...";
+		next;
+		mes "[Bookcase Notes]";
+		mes "Well, I appreciate it...";
+		mes "However, for me right now";
+		mes "my research is of utmost priority.";
+		close;
+	case 4:
+		mes "[Bookcase Notes]";
+		mes "There's something funny ^005DFFDarcia^000000 said to me.";
+		mes "It was about when ^005DFFJeyna^000000 first came to learn about potion combination......";
+		next;
+		mes "[Bookcase Notes]";
+		mes "She did good up to the stage of pouring water into the mixture.";
+		mes "She just had to put it into an empty bottle...";
+		next;
+		mes "[Bookcase Notes]";
+		mes "^005DFFDarcia^000000 watched what she would do with the last stage,";
+		mes "and the confused ^005DFFJeyna^000000 drank the mixture out of the bowl and told her that it healed well.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "To think that even ^005DFFJeyna^000000,";
+		mes "now a master of potion combination,";
+		mes "had her rookie mistakes";
+		mes "shows how hard it is to imagine";
+		mes "and forecast one's past and future.";
+		close;
+	case 5:
+		mes "[Bookcase Notes]";
+		mes "^005DFFVincent^000000, I think I did it.";
+		mes "I will never forget your words of courage ";
+		mes "and I am grateful that I now get to pay you back.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "It was indeed a long process.";
+		mes "When many of the union";
+		mes "considered my research insignificant";
+		mes "... Though I did not lose my belief";
+		mes "it did heart deep inside.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "The few friends who believed me";
+		mes "especially ^005DFFJeyna^000000";
+		mes "and you ^005DFFVincent^000000 ...";
+		mes "I am sincerely thankful with all my soul.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "They say that,";
+		mes "the end justifies the means.";
+		mes "At first,";
+		mes "I did not know what it meant...";
+		next;
+		mes "[Bookcase Notes]";
+		mes "Now I know.";
+		mes "I know how important it is";
+		mes "to follow one's heart.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "I'll drop by very soon.";
+		mes "Be well until then.";
+		close;
+	case 6:
+		mes "[Bookcase Notes]";
+		mes "A game called ^0000FFThe Epic Battle 2^000000, similar to chess, was intriguing.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "Some time ago, I met a ^0000FFFruit Seller^000000 who excelled in The Epic Battle 2.";
+		mes "He even overcame the infamous ^006400Grizzly Shockwave Strategy^000000 and ^006400God of Death Terror^000000 with ease.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "To overcome those in the early stages of the battle of the ^0000FFPriest Faction^000000...";
+		mes "It is difficult for me, since I need to combine the pieces and use some luring skills.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "I wonder when I'll become a 3 Carat Diamond level player.";
+		close;
+	case 7:
+		mes "[Bookcase Notes]";
+		mes "There are many Alchemists who like the ^FF4800Vanilmirth^000000.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "But I prefer the ^FF4800Amistr^000000.";
+		mes "It's cute when it wags its tale with those shiny eyes.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "My Amistr Jonathan is clever and mellow, making it ever so lovable.";
+		mes "We're good friends, aren't we Jonathan?";
+		close;
+	}
+}
+
+que_house_s,16,52,3	script	Open Book#02homun_s	111,{
+	switch(rand(1,8)) {
+	case 1:
+		mes "[Bookcase Notes]";
+		mes "What should I write to ^005DFFDe Bris^000000.";
+		mes ":: To my noted ";
+		mes ":: Genetic friend De Bris.";
+		mes ":: How's Lighthalzen?";
+		mes ":: Do they have enough of those";
+		mes ":: cookies you oh so love?";
+		next;
+		mes "[Bookcase Notes]";
+		mes ":: I'll drop by soon";
+		mes ":: with some cookies.";
+		mes ":: When we meet,";
+		mes ":: I'll introduce you to my";
+		mes ":: ^006400New Homunculus^000000.";
+		next;
+		mes "[Bookcase Notes]";
+		mes ":: No need to be alert.";
+		mes ":: Unlike you,";
+		mes ":: they aren't interested in ";
+		mes ":: what others have to eat.";
+		mes ":: I'll see you soon~!";
+		mes ":: Dare close the door on me.";
+		close;
+	case 2:
+		mes "[Bookcase Notes]";
+		mes "The last time I visited the Alchemist Union, there was an interesting debate on the table.";
+		mes "I think it was something to do with ^006400Negligence of Homunculus in public places^000000.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "While the master dozed off,";
+		mes "one of the ^FF4800Homunculus^000000 off its leash";
+		mes "caused some sort of problem.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "I will make sure that my Homunculus Jonathan...";
+		mes "is trained well not to cause trouble around other people.";
+		close;
+	case 3:
+		mes "[Bookcase Notes]";
+		mes "There's a new toy me and ^005DFFJeyna^000000 have grown fond of.";
+		mes "It's relatively new,";
+		mes "called... ^0000FF'Helo'^000000, I think?";
+		next;
+		mes "[Bookcase Notes]";
+		mes "There was a related song to it, sung by some ^57007FMinstrel^000000.";
+		mes "The lyrics were something like ^006400'Ahhh~Ahh~Ahhhhhhhh'^000000.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "The entertainment itself is fun,";
+		mes "but the music is also excellent,";
+		mes "and when I listen to it";
+		mes "it feels like my SP is restored significantly.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "I must say,";
+		mes "entertainment is crucial when resting";
+		mes "to boost morale for research.";
+		mes "^006400For Homunculus~!^000000";
+		close;
+	case 4:
+		mes "[Bookcase Notes]";
+		mes "From what I heard from the union member";
+		mes "^005DFFParmy^000000,";
+		mes "^005DFFRaspuchin^000000 is still his own weird self.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "It may not be such a good idea";
+		mes "to drive those energetic souls";
+		mes "coming to change jobs";
+		mes "with such enthusiasm.";
+		close;
+	case 5:
+		mes "[Bookcase Notes]";
+		mes "A friend of mine who was into painting,";
+		mes "suggested making a <Graphic Novel> called";
+		mes "^0000FFMUTATIONER^000000";
+		mes "after he heard about my research";
+		mes "and my works.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "The story begins...";
+		mes "With an alien";
+		mes "^FF4800Homunculus^000000";
+		mes "visiting our world.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "The visiting alien";
+		mes "^FF4800Homunculus^000000 can survive";
+		mes "without a master";
+		mes "and it could change into";
+		mes "various creatures that";
+		mes "roam our world.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "These alien^FF4800Homunculus^000000";
+		mes "have two opposing factions";
+		mes "divided by political differences.";
+		mes "In our world, we call them";
+		mes "^006400Aut-homun^000000 and ";
+		mes "^006400Decept-homun^000000";
+		next;
+		mes "[Bookcase Notes]";
+		mes "The ^006400Aut-homun^000000 are our friends.";
+		mes "Their leader,";
+		mes "called ^005DFFOptimus Poring^000000,";
+		mes "is built and so cool";
+		mes "for a poring,";
+		mes "and it summons a cart at will!";
+		next;
+		mes "[Bookcase Notes]";
+		mes "The opposing side, the ^006400Decept-homun^000000,";
+		mes "is led by ^005DFFMegatroll^000000";
+		mes "and they use all means ";
+		mes "to destroy our world.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "The hero of this story";
+		mes "is one from ^8B4513Alberta^000000 called ^005DFFJam Wicky^000000,";
+		mes "who meets ^005DFFOptimus Poring^000000";
+		mes "while shopping for a cart,";
+		mes "as if it was his destiny.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "And so thus";
+		mes "unfolds an epic battle";
+		mes "in the ^8B4513Moroc Desert^000000";
+		mes "where the fate of our world";
+		mes "lies in his hands...";
+		next;
+		mes "[Bookcase Notes]";
+		mes "Enough of that~!";
+		mes "The rest of the story can be";
+		mes "checked in the published copy.";
+		mes "^0000FFMUTATIONER^000000";
+		mes "It's going to be awesome~!";
+		close;
+	case 6:
+		mes "[Bookcase Notes]";
+		mes "The Union sent a special gift to its members.";
+		mes "It's called a ^0000FFHigh Clip 4^000000.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "It is originally used as a tool to allow easy whispering between members, but it also has other useful functions.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "A guild invented this. I recall that their emblem had an image of an apple.";
+		close;
+	case 7:
+		mes "[Bookcase Notes]";
+		mes "Homunculus is indeed worthy.";
+		mes "However, like everyone else, I sometimes question its meaning and future.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "I believe that life given by nature was supposed to be used for oneself.";
+		mes "However...";
+		next;
+		mes "[Bookcase Notes]";
+		mes "The research to give the Homunculus life is, in reality, for the benefit of man.";
+		mes "Perhaps mankind is not ready ethically to create life.";
+		close;
+	case 8:
+		mes "[Bookcase Notes]";
+		mes "Some time ago, ^005DFFJeyna^000000 introduced me to someone.";
+		mes "She is from ^8B4513Geffen^000000,";
+		mes "and she introduced herself as a ^005DFFChicken Researcher^000000.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "She is an expert on something called the ^006400Legendary Bijofnil^000000.";
+		mes "She finds it offensive that people think that the Bijofnil is a hawk.";
+		next;
+		mes "[Bookcase Notes]";
+		mes "She said something about somewhere in ^8B4513Hvergilmir's Fountain^000000";
+		mes "there exists a ^005DFFtalking chicken^000000 and other stories...";
+		mes "Well, it went on like that";
+		mes "and it was interesting.";
+		close;
+	}
+}
+
+// Notifiers
+//============================================================
+que_house_s,11,52,3	script	#03homun_s	111,{
+	end;
+OnInit:
+	initnpctimer;
+	end;
+OnTimer6000:
+	emotion e_gasp;
+	end;
+OnTimer7000:
+	emotion e_gasp,0,"#04homun_s";
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+
+que_house_s,14,52,3	script	#04homun_s	111,{
+	end;
+}
+
+// Researcher's Pet
+//============================================================
+que_house_s,24,46,3	script	Jonathan#homun_s	6002,{
+	end;
+}
+
+que_house_s,23,46,3	script	#05homun_s	111,{
+	emotion e_no,0,"Jonathan#homun_s";
+	if (gethominfo(1) < 6048 || gethominfo(1) > 6052) { // Not mutated Homunculus-S
+		mes "[Jonathan]";
+		mes "Hwang~ Hwang!";
+		next;
+		mes ":: It seems to be Viorel's";
+		mes ":: Homunculus.";
+		mes ":: It is wearing a small necklace";
+		mes ":: with the name Jonathan engraved";
+		mes ":: on it.";
+		close;
+	} else {
+		mes "[Jonathan]";
+		mes "Hwang~?!";
+		next;
+		emotion e_swt2,0,"Jonathan#homun_s";
+		mes "[Jonathan]";
+		mes "*Sniff* ...";
+		next;
+		mes ":: This Amistr";
+		mes ":: called Jonathan";
+		mes ":: seems to be surprised by my";
+		mes ":: new Homunculus.";
+		close;
+	}
+}

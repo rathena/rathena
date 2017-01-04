@@ -1,0 +1,39 @@
+
+LIBCONFIG_OBJ =  $(shell ls *.c | sed -e "s/\.c/\.o/g")
+LIBCONFIG_DIR_OBJ = $(LIBCONFIG_OBJ:%=obj/%)
+LIBCONFIG_H =  $(shell ls *.h)
+LIBCONFIG_AR = obj/libconfig.a
+
+@SET_MAKE@
+
+#####################################################################
+.PHONY : all clean help libconfig
+
+all: libconfig
+
+clean:
+	@echo "	CLEAN	libconfig"
+	@rm -rf obj *.o
+
+help:
+	@echo "possible targets are 'all' 'clean' 'help'"
+	@echo "'libconfig' - build $(LIBCONFIG_AR)
+	@echo "'all'       - builds $(LIBCONFIG_DIR_OBJ)"
+	@echo "'clean'     - deletes $(LIBCONFIG_DIR_OBJ)"
+	@echo "'help'      - outputs this message"
+
+#####################################################################
+
+obj:
+	@echo "	MKDIR	obj"
+	@-mkdir obj
+	
+obj/%.o: %.c $(LIBCONFIG_H)
+	@echo "	CC	$<"
+	@@CC@ @CFLAGS_AR@ @DEFS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+libconfig: obj $(LIBCONFIG_DIR_OBJ) $(LIBCONFIG_AR)
+
+$(LIBCONFIG_AR): $(LIBCONFIG_DIR_OBJ)
+	@echo "	AR	$@"
+	@@AR@ rcs obj/libconfig.a $(LIBCONFIG_DIR_OBJ)

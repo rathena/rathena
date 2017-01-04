@@ -1,0 +1,148 @@
+//===== rAthena Script =======================================
+//= Port Malaya Warp Script
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Port Malaya
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Updated to match official scripts. [Masao]
+//= 1.2 Added official Jeepney warp scripts. [Euphy]
+//============================================================
+
+// Town Warps
+//============================================================
+ma_in01,86,16,0	warp	mal_in_ws	1,1,malaya,115,212
+ma_in01,24,77,0	warp	mal_in_inn	1,1,malaya,178,208
+malaya,370,277,0	warp	malaya_mal_fild01	1,1,ma_fild01,40,272
+ma_fild01,37,272,0	warp	mal_fild01_malaya	1,1,malaya,367,277
+ma_in01,33,152,0	warp	mal_in_house01	1,1,malaya,52,75
+malaya,309,70,0	warp	malaya_ship_mal_in_ship	1,1,ma_in01,108,92
+ma_in01,105,92,0	warp	mal_in_ship_malaya_ship	1,1,malaya,310,67
+ma_fild01,266,359,0	warp	mafild01_to02	1,1,ma_fild02,248,36
+ma_fild02,248,33,0	warp	mafild02_to01	1,1,ma_fild01,266,356
+ma_fild01,288,52,0	warp	mafild01_tobknw	1,1,ma_scene01,142,78
+ma_scene01,140,80,0	warp	bknw_tofild01	1,1,ma_fild01,288,55
+ma_in01,9,24,0	warp	mal_in_ts	1,1,malaya,296,167
+ma_in01,126,17,0	warp	mal_in_shop_malaya_shop	1,1,malaya,261,237
+ma_fild01,251,190,0	warp	mf_minga_mf_in_minga	1,1,ma_in01,108,160
+ma_in01,105,160,0	warp	mf_in_minga_mf_minga	1,1,ma_fild01,248,190
+
+// Locked Warps
+//============================================================
+malaya,178,211,0	script	malaya_inn	45,1,1,{
+	end;
+OnTouch:
+	if (malaya_hi < 10) {
+		mes "Door is closed. It seems to be keeping its eyes on you.";
+		close;
+	}
+	warp "ma_in01",24,80;
+	end;
+}
+
+malaya,112,212,0	script	malaya_ws	45,1,1,{
+	end;
+OnTouch:
+	if (malaya_hi < 20) {
+		mes "Door is closed. It seems to be keeping its eyes on you.";
+		close;
+	}
+	warp "ma_in01",83,16;
+	end;
+}
+
+malaya,299,167,0	script	malaya_ts	45,1,1,{
+	end;
+OnTouch:
+	if (malaya_hi < 20) {
+		mes "Door is closed. It seems to be keeping its eyes on you.";
+		close;
+	}
+	warp "ma_in01",12,24;
+	end;
+}
+
+malaya,261,240,0	script	malaya_shop	45,1,1,{
+	end;
+OnTouch:
+	if (malaya_hi < 20) {
+		mes "Door is closed. It seems to be keeping its eyes on you.";
+		close;
+	}
+	warp "ma_in01",126,20;
+	end;
+}
+
+malaya,300,211,0	script	malaya_house01	45,1,1,{
+	end;
+OnTouch:
+	if (malaya_hi < 10) {
+		mes "Door is closed. It seems to be keeping its eyes on you.";
+		close;
+	}
+	warp "ma_in01",36,152;
+	end;
+}
+
+// Jeepney Warps
+//============================================================
+function	script	F_Malaya_Warp	{
+	mes "Where would you like to go?";
+	next;
+	set .@i$, getarg(select("Back outside",getarg(1)+" Jeepney",getarg(2)+" Jeepney") - 1);
+	close2;
+	switch(getarg(3)) {
+	case 1: // 12 passenger
+		if (.@i$ == "Center")
+			warp "malaya",241,238;
+		if (.@i$ == "Southwest")
+			warp "malaya",71,43;
+		else if (.@i$ == "Southeast")
+			warp "malaya",284,129;
+		break;
+	case 2: // 30 passenger
+		if (.@i$ == "Northwest")
+			warp "malaya",134,247;
+		else if (.@i$ == "Southeast")
+			warp "malaya",341,150;
+		else if (.@i$ == "Northeast")
+			warp "malaya",294,293;
+		break;
+	case 3: // 60 passenger
+		if (.@i$ == "Center")
+			warp "malaya",239,221;
+		else if (.@i$ == "Northwest")
+			warp "malaya",59,246;
+		else if (.@i$ == "Southeast")
+			warp "malaya",254,68;
+		break;
+	}
+	end;
+}
+
+ma_zif01,30,22,0	script	Town Warp#zif01	45,1,1,{ callfunc "F_Malaya_Warp","Center","Southwest","Southeast",1; }
+ma_zif02,30,22,0	script	Town Warp#zif02	45,1,1,{ callfunc "F_Malaya_Warp","Southwest","Center","Southeast",1; }
+ma_zif03,30,22,0	script	Town Warp#zif03	45,1,1,{ callfunc "F_Malaya_Warp","Southeast","Center","Southwest",1; }
+
+ma_zif04,30,22,0	script	Town Warp#zif04	45,1,1,{ callfunc "F_Malaya_Warp","Northwest","Southeast","Northeast",2; }
+ma_zif05,30,22,0	script	Town Warp#zif05	45,1,1,{ callfunc "F_Malaya_Warp","Southeast","Northwest","Northeast",2; }
+ma_zif06,30,22,0	script	Town Warp#zif06	45,1,1,{ callfunc "F_Malaya_Warp","Northeast","Northwest","Southeast",2; }
+
+ma_zif07,30,22,0	script	Town Warp#zif07	45,1,1,{ callfunc "F_Malaya_Warp","Center","Northwest","Southeast",3; }
+ma_zif08,30,22,0	script	Town Warp#zif08	45,1,1,{ callfunc "F_Malaya_Warp","Northwest","Center","Southeast",3; }
+ma_zif09,30,22,0	script	Town Warp#zif09	45,1,1,{ callfunc "F_Malaya_Warp","Southeast","Center","Northwest",3; }
+
+//ma_zif01,30,22,0	warp	malaya_car0001	1,1,malaya,241,238
+//ma_zif02,30,22,0	warp	malaya_car0002	1,1,malaya,71,43
+//ma_zif03,30,22,0	warp	malaya_car0003	1,1,malaya,284,129
+//ma_zif04,30,22,0	warp	malaya_car0004	1,1,malaya,134,247
+//ma_zif05,30,22,0	warp	malaya_car0005	1,1,malaya,341,150
+//ma_zif06,30,22,0	warp	malaya_car0006	1,1,malaya,294,293
+//ma_zif07,30,22,0	warp	malaya_car0007	1,1,malaya,239,221
+//ma_zif08,30,22,0	warp	malaya_car0008	1,1,malaya,59,246
+//ma_zif09,30,22,0	warp	malaya_car0009	1,1,malaya,254,68

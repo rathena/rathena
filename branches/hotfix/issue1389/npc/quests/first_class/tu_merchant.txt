@@ -1,0 +1,907 @@
+//===== rAthena Script =======================================
+//= Merchant Class Tutorial and Job Specific Quest
+//===== By: ==================================================
+//= Fix up by Jukka
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Merchant training quest.
+//===== Additional Comments: =================================
+//= 1.0 Fully working
+//= 1.1 Fixed bugs, optimized [Lupus]
+//= 1.2 fixed Weight check
+//= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.3 Misc. updates. [L0ne_W0lf]
+//= 2.0 Clean-up. [Capuche]
+//============================================================
+
+// Guarnien
+//============================================================
+alberta_in,70,51,5	script	Guarnien	4W_M_02,{
+	mes "[Guarnien]";
+	if(Class != Job_Merchant){
+		mes "Hello stranger.";
+		mes "I wish I could";
+		mes "offer you help";
+		mes "on your adventures...";
+		next;
+		mes "[Guarnien]";
+		mes "However, what I have to teach would only benefit Merchants. Trading and money making are my areas of expertise. If you have any Merchant friends, send them to me.";
+		if(Class == Job_Merchant_High){
+			next;
+			mes "[Guarnien]";
+			mes "Technically, yes, you're a Merchant, but I know an expert when I see one. You've been through the Merchant life before, I can tell!";
+		}
+		close;
+	}
+	switch(tu_merchant){
+	case 17:
+		mes "We can't even begin";
+		mes "to fathom the number";
+		mes "of markets and people";
+		mes "out there in this wide,";
+		mes "wide world of ours.";
+		next;
+		mes "[Guarnien]";
+		mes "All of them are possible customers and business partners. Of course, it'll be up to you to meet them.";
+		mes "If you can be sincerely kind to everyone that you meet, you'll";
+		mes "have no problem.";
+		close;
+	case 15:
+	case 16:
+		.@chk_vend = getskilllv("MC_VENDING");
+		if (tu_merchant == 15) {
+			mes "I believe it's time";
+			mes "for my final lecture.";
+			mes "I'll discuss the definitive";
+			mes "skill of the Merchant: ^871F78Vending^000000. Please listen carefully.";
+			next;
+			mes "[Guarnien]";
+			mes "The Vending skill is an active skill which allows you to open your own shop where you stand. Vending allows you to do real business with other people.";
+			next;
+			mes "[Guarnien]";
+			mes "However, you can only vend items that are stored in your PushCart,";
+			mes "so you'll need one of those. The maximum price you can set for";
+			mes "each item is 99,990,000 Zeny.";
+			next;
+			mes "[Guarnien]";
+			mes "Basically, you've got to learn the Push Cart skill first before you can learn the Vending skill.";
+			next;
+			mes "[Guarnien]";
+			mes "The higher the level of the Vending skill, the more items you can vend at one time. Vending is mastered at Skill Level 10.";
+			next;
+			mes "[Guarnien]";
+			mes "Level 1 Vending allows you";
+			mes "to vend a total of 3 items at one time. Each time you level up the Vending skill, the total number of items you can vend will";
+			mes "increase by one.";
+			next;
+			mes "[Guarnien]";
+			if((.@chk_vend > 3) && (.@chk_vend < 10)){
+				mes "But I see that you must already know that, huh? Well, seeing as you're so clever, I think you've earned this little prize~";
+				getexp 186,60;
+			} else if(.@chk_vend == 10){
+				mes "But it looks like I just put my foot in my mouth. I'm sorry, I didn't notice that you already mastered the Vending skill...";
+				next;
+				mes "[Guarnien]";
+				mes "You're such an";
+				mes "excellent student!";
+				mes "Please, take this";
+				mes "little reward for";
+				mes "all your efforts~";
+				getexp 199,69;
+			} else {
+				mes "For your final assignment, I will ask you to learn the Vending skill up to Skill Level 4. Of course, once you do, I'll give you a little reward. I'll be waiting, so do your best~";
+				tu_merchant = 16;
+				erasequest 8239;
+				setquest 8240;
+				close;
+			}
+			completequest 8239;
+		}
+		else {
+			mes "So...";
+			mes "How much have";
+			mes "you learned";
+			mes "about Vending?";
+			next;
+			mes "[Guarnien]";
+			if((.@chk_vend > 3) && (.@chk_vend < 10)){
+				mes "Excellent!";
+				mes "You've taught yourself well. Here, you've earned this little reward~";
+				getexp 186,43;
+			} else if(.@chk_vend == 10){
+				mes "Oh, I see that you're very serious about being a Merchant. I'm proud that you've managed to master this skill! Here, you deserve this reward!";
+				getexp 199,69;
+			} else {
+				mes "Hmm...";
+				mes "Haven't learned Level 4 Vending yet, huh? Just keep in mind that being able to vend things is one";
+				mes "of the defining characteristics of being a Merchant!";
+				close;
+			}
+			completequest 8240;
+		}
+		tu_merchant = 17;
+		next;
+		mes "[Guarnien]";
+		mes "Ah, now you have mastered the fundamentals of the Merchant class. Just keep practicing the basic principles, like researching the market for item prices, and you should be fine.";
+		next;
+		mes "[Guarnien]";
+		mes "Although everything we do is for money, never forget customer needs and always sell your products at a suitably fair price. Otherwise, no one may buy your goods!";
+		next;
+		mes "[Guarnien]";
+		mes "Well, there's nothing more I can teach you for now. Go out into the world and make your mark as a Merchant.";
+		next;
+		mes "[Guarnien]";
+		mes "And feel free to";
+		mes "visit me whenever";
+		mes "the mood strikes you.";
+		mes "Good luck to you~";
+		close;
+	case 13:
+	case 14:
+		.@chk_cart = getskilllv("MC_PUSHCART");
+		if (tu_merchant == 13) {
+			mes "Now to talk about";
+			mes "^871F78Push Cart^000000. First off, you need to know Level 5 Increase Weight Limit before you can even learn the Push Cart skill.";
+			next;
+			mes "[Guarnien]";
+			mes "Push Cart can be mastered at";
+			mes "Skill Level 10. This skill allows you to carry a Push Cart with you. You can carry a maximum of 100 different kinds of items that weigh less than 8,000.";
+			next;
+			mes "[Guarnien]";
+			mes "As you can see, this skill is an advanced form of the Increase Weight Limit skill. You can procure a PushCart from most Kafra Ladies for a certain fee.";
+			next;
+			mes "[Guarnien]";
+			mes "Once you have rented a Cart, you can hold on to it so long as you don't take it off. The disadvantage to using a PushCart is that your movement speed is reduced to";
+			mes "almost half! Horrible, isn't it?";
+			next;
+			mes "[Guarnien]";
+			mes "Fortunately, when you increase";
+			mes "the level of the Push Cart skill, your movement speed will slowly be restored. With Push Cart Level 10, a PushCart won't slow you";
+			mes "down at all!";
+			next;
+			erasequest 8237;
+			.@chk_cart = getskilllv("MC_PUSHCART");
+			mes "[Guarnien]";
+			if(.@chk_cart > 3 && .@chk_cart < 10){
+				mes "Ah, and I see that you've been focusing on learning Push Cart. Although you might still have a problem with your movement";
+				mes "speed, it shouldn't be a big deal.";
+				mes "Well done~";
+				getexp 162,52;
+			} else if(.@chk_cart == 10){
+				mes "Wonderful! You've already";
+				mes "mastered the Push Cart skill.";
+				mes "You truly deserve a little bit of a reward~";
+				getexp 186,60;
+			} else {
+				mes "For now, why don't";
+				mes "you learn the Push Cart";
+				mes "skill up to Level 4? Once";
+				mes "you do that, I can go on to";
+				mes "my next lecture.";
+				tu_merchant = 14;
+				setquest 8238;
+				close;
+			}
+			setquest 8239;
+		}
+		else {
+			mes "So, have you";
+			mes "learned Push Cart up";
+			mes "to Level 4 like I asked?";
+			next;
+			mes "[Guarnien]";
+			if(.@chk_cart > 3 && .@chk_cart < 10){
+				mes "Well done~";
+				mes "You've been a very";
+				mes "cooperative student.";
+				mes "You deserve a little";
+				mes "reward for your effort~";
+				getexp 162,52;
+			} else if(.@chk_cart == 10){
+				mes "Excellent!";
+				mes "You've actually went above and beyond mastered the Push Cart skill. Great work!";
+				getexp 186,60;
+			} else {
+				mes "Still not there, huh?";
+				mes "Well, remember that you need";
+				mes "Level 5 Increase Weight Limit before you can learn the Push";
+				mes "Cart skill. I hope that helps.";
+				close;
+			}
+			erasequest 8238;
+			setquest 8239;
+		}
+		tu_merchant = 15;
+		next;
+		mes "[Guarnien]";
+		mes "Next time, I'll talk about the skill that sets Merchants apart from all the other classes: ^871F78Vending^000000. So don't miss it!";
+		close;
+	case 11:
+	case 12:
+		.@chk_over = getskilllv("MC_OVERCHARGE");
+		if (tu_merchant == 11) {
+			mes "Ah, ready to";
+			mes "learn already,";
+			mes "are you? Alright,";
+			mes "let me tell you";
+			mes "about ^871F78Over Charge^000000.";
+			next;
+			mes "[Guarnien]";
+			mes "Like Discount, Over Charge is a Passive skill that can be mastered at Skill Level 10. Therefore, it doesn't require SP to use it.";
+			next;
+			mes "[Guarnien]";
+			mes "Over Charge allows you to sell items to NPC shops for more Zeny. The higher your Over Charge Skill Level, the more Zeny you'll receive for items sold to NPCs.";
+			next;
+			mes "[Guarnien]";
+			erasequest 8235;
+			.@chk_over = getskilllv("MC_OVERCHARGE");
+			if(.@chk_over > 3 && .@chk_over < 10){
+				mes "Ah, you've already learned Level 4 Over Charge. Perfect! Let me give you a little reward~";
+				getexp 126,27;
+			} else if(.@chk_over == 10){
+				mes "Amazing! You've already mastered the Over Charge skill! You must have wanted this reward badly~";
+				getexp 142,33;
+			} else {
+				mes "Personally, I think you should learn this skill for sure! For your next assignment, learn Over Charge up to Level 4. It shouldn't be too difficult to do.";
+				tu_merchant = 12;
+				setquest 8236;
+				next;
+				mes "[Guarnien]";
+				mes "Once you do that,";
+				mes "we can talk about";
+				mes "more advanced stuff.";
+				mes "Do your best~";
+				close;
+			}
+			setquest 8237;
+		}
+		else {
+			mes "So...";
+			mes "How is it going";
+			mes "with learning that";
+			mes "^871F78Over Charge^000000 skill?";
+			next;
+			mes "[Guarnien]";
+			if(.@chk_over > 3 && .@chk_over < 10){
+				mes "Nice work!";
+				mes "I can tell that";
+				mes "you've done just";
+				mes "as I asked. Please,";
+				mes "take this little reward~";
+				getexp 126,27;
+			} else if(.@chk_over == 10){
+				mes "Whoa...";
+				mes "You actually";
+				mes "mastered Over Charge?";
+				mes "Most impressive! You deserve a small reward for your work!";
+				getexp 142,33;
+			} else {
+				mes "Mm? You haven't";
+				mes "learned Over Charge";
+				mes "up to Skill Level 4 yet?";
+				mes "There's no rush, but I won't be able to lecture on anything until you finish this little task.";
+				close;
+			}
+			erasequest 8236;
+			setquest 8237;
+		}
+		tu_merchant = 13;
+		next;
+		mes "[Guarnien]";
+		mes "Next time, I'll discuss the";
+		mes "Push Cart skill. Be ready for this lecture, as Push Cart is one of the more important skills for a Merchant.";
+		close;
+	case 10:
+		mes "Let me see those";
+		mes "Red Potions. Now,";
+		mes "how much did you";
+		mes "pay for these...?";
+		next;
+		mes "[Guarnien]";
+		mes "Ah...!";
+		mes "It looks like...";
+		mes "You were scammed!";
+		mes "D-don't worry, though,";
+		mes "I won't tell anybody.";
+		next;
+		mes "[Guarnien]";
+		mes "Oh well, it happens even to the best of us. Just think of this as an invaluable learning experience.";
+		next;
+		mes "[Guarnien]";
+		mes "Now, why don't you go to Prontera and try to buy 10 Red Potions from an NPC for the cheapest price again?";
+		tu_merchant = rand(6,8);
+		close;
+	case 9:
+		mes "Let me see those";
+		mes "Red Potions. Ah, it seems you researched the market and bought the cheapest ones! Great work!";
+		tu_merchant = 11;
+		changequest 8234,8235;
+		getexp 112,22;
+		next;
+		mes "[Guarnien]";
+		mes "Alright, next time, we'll talk about the skill that you can learn after knowing how to Discount:";
+		mes "^871F78Over Charge^000000.";
+		close;
+	case 6:
+	case 7:
+	case 8:
+		mes "Hmm...";
+		mes "You'll find some NPCs";
+		mes "selling 10 Red Potions";
+		mes "in Prontera. Your task";
+		mes "is to buy the potions";
+		mes "for the cheapest price.";
+		next;
+		mes "[Guarnien]";
+		mes "First, you'll probably want to research the market price for Red Potions. And always, be careful of scammers and cheats!";
+		close;
+	case 5:
+		mes "Alright...";
+		mes "I've given it some thought and I've come up with a little challenge for you. Bring me... 10 Red Potions!";
+		next;
+		mes "[Guarnien]";
+		mes "It's not too hard, but the stipulation I'm adding is that you've got to find the merchant selling Red Potions for the cheapest price.";
+		next;
+		mes "[Guarnien]";
+		mes "So first, you'll need to research the market price for Red Potions. Also, be careful of scammers! If the price is too good to be true, it usually is.";
+		next;
+		mes "[Guarnien]";
+		mes "Ha ha ha, let me make your goal a bit less confusing. You will need to buy 10 Red Potions from an NPC in Prontera.";
+		next;
+		mes "[Guarnien]";
+		mes "Prontera's a bit far from here, isn't it? I'll just use this Kafra Warp-- Mahnsoo has a bunch for";
+		mes "some reason --to send you there right now. Get ready...!";
+		next;
+		tu_merchant = rand(6,8);
+		changequest 8233,8234;
+		warp "prontera",155,46;
+		end;
+	case 3:
+	case 4:
+		.@chk_disc = getskilllv("MC_DISCOUNT");
+		if (tu_merchant == 3) {
+			mes "Ah, you're back!";
+			mes "Now, I was going";
+			mes "to tell you about";
+			mes "the Discount skill, right?";
+			next;
+			mes "[Guarnien]";
+			mes "The ^871F78Discount^000000 skill allows you to buy items at lower prices from NPC shops. It is a ^871F78Passive Skill^000000 which is always in effect and does not consume SP.";
+			next;
+			mes "[Guarnien]";
+			mes "The Discount skill is";
+			mes "mastered at ^871F78Level 10^000000. The higher the skill level, the less you have to pay for items at NPC shops.";
+			next;
+			mes "[Guarnien]";
+			if(.@chk_disc > 3 && .@chk_disc < 10){
+				mes "Oooh, good work.";
+				mes "I see that you've";
+				mes "raised your Discount";
+				mes "to Level 4 already.";
+				mes "Here, take this";
+				mes "small reward~";
+				getexp 83,11;
+			} else if(.@chk_disc == 10){
+				mes "Incredible!";
+				mes "You've actually mastered the Discount skill! You're such a great student. You deserve a bit of a reward!";
+				getexp 97,18;
+			} else {
+				mes "Alright! Now, in order to become closer towards becoming a true Merchant, I want you to learn the Discount skill up to Level 4.";
+				next;
+				mes "[Guarnien]";
+				mes "It'd be nicer if you could";
+				mes "master it, but you might be more interested in devoting your time to other skills.";
+				next;
+				mes "[Guarnien]";
+				mes "Still, you can't ignore the fact that bargaining is an essential skill for a Merchant! Come back to me when you're ready~";
+				tu_merchant = 4;
+				erasequest 8231;
+				setquest 8232;
+				close;
+			}
+			erasequest 8231;
+			setquest 8233;
+		}
+		else {
+			mes "So, how is it going with learning the Discount skill? Like I always say, if you can't make a bargain, you can't be a Merchant!";
+			next;
+			mes "[Guarnien]";
+			if(.@chk_disc > 3 && .@chk_disc < 10){
+				mes "Ah, you've learned";
+				mes "how to use the Discount skill";
+				mes "well enough. Good, here's a little reward for your hard work~";
+				getexp 83,11;
+			} else if(.@chk_disc == 10){
+				mes "Incredible!";
+				mes "You've actually mastered the Discount skill! You're such a great student. You deserve a bit of a reward!";
+				getexp 97,18;
+			} else {
+				mes "Not yet, huh?";
+				mes "Well, you should be able to reach that goal soon. After all, it's one of the basics of being a Merchant!";
+				close;
+			}
+			erasequest 8232;
+			setquest 8233;
+		}
+		tu_merchant = 5;
+		next;
+		mes "[Guarnien]";
+		mes "Alright, my next lesson will hopefully offer you a bit more of a challenge. Come back when you think you're ready, alright?";
+		close;
+	case 2:
+		mes "Ah, you've come back to learn more. Let's see, what was I going to tell you about... Right, Mammonite!";
+		next;
+		mes "[Guarnien]";
+		mes "^871F78Mammonite^000000 is a skill that lets you greatly damage targets with Zeny. Money really is power!";
+		next;
+		mes "[Guarnien]";
+		mes "The upside is that it inflicts great damage and only uses a little SP. However, the downside is that it will also consume your Zeny!";
+		next;
+		mes "[Guarnien]";
+		mes "So if you use this skill too often, you might end up bankrupt! So be really careful. Also, as the Skill Level for Mammonite increases, so does the attack strength and Zeny consumption.";
+		next;
+		mes "[Guarnien]";
+		.@chk_mam = getskilllv("MC_MAMMONITE");
+		if(.@chk_mam > 3 && .@chk_mam < 10){
+			mes "Ah, I see that you've already tried this skill. How much money have you wasted using Mammonite? Not too much, I hope.";
+			next;
+			mes "[Guarnien]";
+			mes "Well, since you're still green, I feel awfully sorry if you've wasted Zeny. Why don't you take this as compensation?";
+			tu_merchant = 3;
+			erasequest 8230;
+			setquest 8231;
+			getexp 70,12;
+			next;
+			mes "[Guarnien]";
+			mes "Okay. Now I think we're ready for me to discuss the ^871F78Discount^000000 skill. Come back when you'd like me to tell you more about it, okay?";
+			close;
+		} else {
+			mes "Okay. Now I think we're ready for me to discuss the ^871F78Discount^000000 skill. Come back when you'd like me to tell you more about it, okay?";
+			tu_merchant = 3;
+			erasequest 8230;
+			setquest 8231;
+			close;
+		}
+	case 1:
+		mes "So...";
+		mes "Did you learn the";
+		mes "Increase Weight Limit";
+		mes "skill up to Level 4";
+		mes "like I asked?";
+		next;
+		mes "[Guarnien]";
+		.@chk_soji = getskilllv("MC_INCCARRY");
+		if(.@chk_soji > 3 && .@chk_soji < 10){
+			mes "Ah. I can tell that you have. Not bad! By now you should be able to learn the ^871F78Discount^000000 skill, but I'll teach you about that later.";
+			next;
+			mes "[Guarnien]";
+			mes "There are a few other basic skills which you can learn right away that I'll talk about first. Let's not rush~";
+			next;
+			mes "[Guarnien]";
+			mes "First, there's the ^871F78Item Appraisal^000000 skill. This ability, once you've learned it, allows you to ^871F78identify unknown items^000000.";
+			next;
+			mes "[Guarnien]";
+			mes "This skill works exactly like a ^871F78Magnifier^000000, so you won't have to spend any Zeny on them. Also, this skill is mastered at ^871F78Level 1^000000.";
+			next;
+			if(getskilllv("MC_IDENTIFY")){
+				mes "[Guarnien]";
+				mes "I see in your eyes that you've already learned to appraise items. Haha, although having that knowledge is reward in itself, let me give you something extra!";
+				tu_merchant = 2;
+				erasequest 8229;
+				setquest 8230;
+				getexp 58,11;
+				getitem 1351,1; //Battle_Axe
+				next;
+				mes "[Guarnien]";
+				mes "Alright, next time";
+				mes "I'll talk about the Mammonite skill. For now, let me take a little bit of a break from all of this arduous lecture. ^666666*Whew!*^000000";
+				close;
+			}
+		} else {
+			mes "No? That's fine.";
+			mes "But I can't teach you";
+			mes "much more if you can't grasp these simple basics, so hurry and learn those skills, okay?";
+			close;
+		}
+		mes "Alright, next time";
+		mes "I'll talk about the Mammonite skill. For now, let me take a little bit of a break from all of this arduous lecture. ^666666*Whew!*^000000";
+		tu_merchant = 2;
+		erasequest 8229;
+		setquest 8230;
+		close;
+	}
+	mes "You've just started out as a Merchant, haven't you? How would you like to learn the fundamentals of business from an experienced colleague?";
+	next;
+	if (select("Sure!:I'll make it on my own!") == 1){
+		if(getskilllv("MC_INCCARRY") < 4){
+			tu_merchant = 1;
+			setquest 8229;
+			mes "[Guarnien]";
+			mes callfunc("F_Sex","Atta girl~!","Atta boy~!");
+			mes "But first things first!";
+			mes "You better learn the";
+			mes "^871F78Increase Weight Limit^000000 skill!";
+			next;
+			mes "[Guarnien]";
+			mes "You can't really be a Merchant if you can't even carry around goods to sell. As you increase the level of this skill, you can carry around more items.";
+			next;
+			mes "[Guarnien]";
+			mes "Why don't you upgrade your";
+			mes "Increase Weight Limit skill up to Level 4? After that, we can talk more about becoming a true Merchant.";
+			close;
+		} else {
+			mes "[Guarnien]";
+			mes "Great...!";
+			mes "Ah, and I see that you've learned the ^871F78Increase Weight Limit^000000 skill to at least Level 4. You're a real go-getter, aren't you?";
+			next;
+			mes "[Guarnien]";
+			mes "Since your Increase Weight";
+			mes "Limit skill level is high enough, you must be able to see a new skill in your Skill Window: ^871F78Discount^000000!";
+			next;
+			mes "[Guarnien]";
+			mes "But we'll discuss the Discount skill later. There are a few other basic skills which you can learn right away that I'll talk about first. Let's not rush~";
+			next;
+			mes "[Guarnien]";
+			mes "First, there's the ^871F78Item Appraisal^000000 skill. This ability, once you've learned it, allows you to ^871F78identify unknown items^000000.";
+			next;
+			mes "[Guarnien]";
+			mes "This skill works exactly like a ^871F78Magnifier^000000, so you won't have to spend any Zeny on them. Also, this skill is mastered at ^871F78Level 1^000000.";
+			next;
+			mes "[Guarnien]";
+			if(getskilllv("MC_IDENTIFY")){
+				mes "I see in your eyes that you've already learned to appraise items. Haha, although having that knowledge is reward in itself, let me give you something extra!";
+				tu_merchant = 2;
+				erasequest 8229;
+				setquest 8230;
+				getexp 58,11;
+				getitem 1351,1; //Battle_Axe
+				next;
+				mes "[Guarnien]";
+				mes "Alright, next time";
+				mes "I'll talk about the Mammonite skill. For now, let me take a little bit of a break from all of this arduous lecture. ^666666*Whew!*^000000";
+				close;
+			}
+			mes "Alright, next time";
+			mes "I'll talk about the Mammonite skill. For now, let me take a little bit of a break from all of this arduous study.";
+			next;
+			mes "[Guarnien]";
+			mes "Oh...";
+			mes "And I'll tell you";
+			mes "more about the Discount";
+			mes "skill later. I always manage";
+			mes "to forget about that!";
+			tu_merchant = 2;
+			erasequest 8229;
+			setquest 8230;
+			close;
+		}
+	} else {
+		mes "[Guarnien]";
+		mes "On your own?";
+		mes "Hahaha, that's the spirit!";
+		mes "But still, the advice I'm giving is free. It couldn't hurt to give what I say a little bit of thought.";
+		next;
+		mes "[Guarnien]";
+		mes "Well, if you ever change your mind, stop by and talk to me anytime. And as a Merchant, you should know that free advice is the best!";
+		close;
+	}
+}
+
+// Sagle
+//============================================================
+prontera,66,111,3	script	Sagle	4_KID01,{
+	mes "[Sagle]";
+	if (tu_merchant == 6)
+		callsub L_Potions, 390,9;// <Zeny cost>, <next 'tu_merchant' value>
+	else if (tu_merchant == 7)
+		callsub L_Potions, 410,10;
+	else if (tu_merchant == 8)
+		callsub L_Potions, 420,10;
+	mes "It's on the tip";
+	mes "of my tongue, but";
+	mes "I can't quite remember...";
+	next;
+	mes "[Sagle]";
+	mes "You know, the name of the company that has all those beautiful ladies working for it. Ka... Ka-something. Anyway, I hear they're concerned about their growing competition. ";
+	next;
+	mes "[Sagle]";
+	mes "It's none of my business, but it's good to know what's going on in";
+	mes "the world, particularly if it'll affect the markets.";
+	close;
+
+L_Potions:
+	.@cost = getarg(0);
+	mes "Hello, hello~";
+	mes "Why don't you buy";
+	mes "some Red Potions?";
+	mes "They're essential for travel, and these Red Potions are the best for newer adventurers~";
+	next;
+	mes "[Sagle]";
+	mes "I will sell you 10 Red Potions for ^871F78"+ .@cost +" zeny^000000. You'd better get them now while they're still here!";
+	next;
+	switch(select("Buy:Cancel")){
+	case 1:
+		mes "[Sagle]";
+		mes "Excellent!";
+		mes "You certainly have an eye for bargains. Here you go, 10 Red Potions fresh from the... Potioner...";
+		if(Zeny < .@cost){
+			next;
+			mes "[Sagle]";
+			mes "Whoa, hold on!";
+			mes "You can't afford";
+			mes "these potions...";
+			mes "Please come back";
+			mes "when you have enough";
+			mes "Zeny, alright?";
+			close;
+		}
+		if(MaxWeight - Weight < 71){
+			next;
+			mes "[Sagle]";
+			mes "Whoa, hold on!";
+			mes "There's no way you carry all of this! Why don't you put some of your stuff in Kafra Storage before coming back?";
+		} else {
+			Zeny = Zeny - .@cost;
+			tu_merchant = getarg(1);
+			getitem 501,10; //Red_Potion
+		}
+		close;
+	case 2:
+		mes "[Sagle]";
+		mes "Alright...";
+		mes "But don't";
+		mes "complain if";
+		mes "these potions";
+		mes "are sold out!";
+		close;
+	}
+}
+
+// Kellion
+//============================================================
+prontera,93,330,3	script	Kellion	4W_M_01,{
+	mes "[Kellion]";
+	if (tu_merchant == 6)
+		callsub L_Potions, 400,10;// <Zeny cost>, <next 'tu_merchant' value>
+	else if (tu_merchant == 7)
+		callsub L_Potions, 390,9;
+	else if (tu_merchant == 8)
+		callsub L_Potions, 340,10;
+	mes "Recently, I hear that something";
+	mes "has happened to the royal family.";
+	next;
+	mes "[Kellion]";
+	mes "It's probably not even a reliable rumor, but I've heard that members of the royal family have been dying from some unknown cause.";
+	next;
+	mes "[Kellion]";
+	mes "Huh.";
+	mes "Now that's some morbid news!";
+	mes "Well, hopefully, there's no truth to it whatsoever. None at all...";
+	close;
+
+L_Potions:
+	.@cost = getarg(0);
+	mes "I'm selling sets of";
+	mes "10 Red Potions for "+ .@cost +" Zeny.";
+	mes "Would you like some?";
+	next;
+	switch(select("Buy:Cancel")){
+	case 1:
+		mes "[Kellion]";
+		mes "Good choice~";
+		mes "Thank you for";
+		mes "using my shop.";
+		if(Zeny < .@cost){
+			next;
+			mes "[Kellion]";
+			mes "Ooops!";
+			mes "I'm sorry, but you don't have enough Zeny. I've got to stay in business somehow, you know?";
+			close;
+		}
+		if(MaxWeight - Weight < 71){
+			next;
+			mes "[Kellion]";
+			mes "...Huh?";
+			mes "You better put some of your stuff in Kafra Storage, you can't carry much else!";
+		} else {
+			Zeny = Zeny - .@cost;
+			tu_merchant = getarg(1);
+			getitem 501,10; //Red_Potion
+		}
+		close;
+	case 2:
+		mes "[Kellion]";
+		mes "Well, I'm sorry";
+		mes "to hear that. But";
+		mes "I guess I'll see";
+		mes "you later.";
+		close;
+	}
+}
+
+// Aigie
+//============================================================
+prt_in,169,11,3	script	Aigie	4_F_03,{
+	mes "[Aigie]";
+	if (tu_merchant == 6)
+		callsub L_Potions, 340,10;// <Zeny cost>, <next 'tu_merchant' value>
+	else if (tu_merchant == 7)
+		callsub L_Potions, 420,10;
+	else if (tu_merchant == 8)
+		callsub L_Potions, 390,9;
+	mes "It's true that money isn't everything. I'm sure other things are important to have in order to be happy.";
+	next;
+	mes "[Aigie]";
+	mes "However, money can be much more dependable than some people I know. You can rely on money more than anything else in this world.";
+	close;
+
+L_Potions:
+	.@cost = getarg(0);
+	mes "Welcome to my shop.";
+	mes "I'm just a young girl who's a victim of circumstance, forced to sell potions on the street for dirt cheap prices.";
+	next;
+	mes "[Aigie]";
+	mes "Would you like";
+	mes "to buy 10 Red Potions";
+	mes "for "+ .@cost +" Zeny, kind adventurer?";
+	next;
+	switch(select("Buy:Cancel")){
+	case 1:
+		mes "[Aigie]";
+		mes "Thank you so much.";
+		mes "Now I can finally";
+		mes "afford food again...";
+		if(Zeny < .@cost){
+			next;
+			mes "[Aigie]";
+			mes "Wait, wait!";
+			mes "I am sorry, but you don't have enough money. Would you please get some more Zeny before coming back?";
+			close;
+		}
+		if(MaxWeight - Weight < 71){
+			next;
+			mes "[Aigie]";
+			mes "Wait, wait!";
+			mes "You can't possibly carry any more items. Why don't you put your things in Kafra Storage first?";
+		} else {
+			Zeny = Zeny - .@cost;
+			tu_merchant = getarg(1);
+			getitem 501,10; //Red_Potion
+		}
+		close;
+	case 2:
+		mes "[Aigie]";
+		mes "I understand.";
+		mes "But I hope you";
+		mes "see that I'm offering";
+		mes "you a really good price.";
+		mes "^666666*Sniff Sniff*^000000";
+		close;
+	}
+}
+
+// Jayon
+//============================================================
+prontera,247,129,3	script	Jayon	4_M_03,{
+	mes "[Jayon]";
+	if (tu_merchant == 6)
+		callsub L_Potions, 410,10;// <Zeny cost>, <next 'tu_merchant' value>
+	else if (tu_merchant == 7)
+		callsub L_Potions, 400,10;
+	else if (tu_merchant == 8)
+		callsub L_Potions, 410,10;
+	mes "The Schwaltzvalt Republic...";
+	mes "It's a really interesting country. There's Juno and a few other places worth looking around. ";
+	next;
+	mes "[Jayon]";
+	mes "They may not be the best places";
+	mes "for sight seeing, but I'm sure they'll offer something of interest to you adventurers.";
+	close;
+
+L_Potions:
+	.@cost = getarg(0);
+	mes "If you've checked out the market for Red Potions, you know that my price is the best. I'm offering 10 Red Potions for only "+ .@cost +" Zeny!";
+	next;
+	switch(select("Buy:Cancel")){
+	case 1:
+		mes "[Jayon]";
+		mes "Heh heh...!";
+		mes "It looks like";
+		mes "you know your";
+		mes "stuff. You're a";
+		mes "Merchant yourself,";
+		mes "aren't you?";
+		if(Zeny < .@cost){
+			next;
+			mes "[Jayon]";
+			mes "But sorry buddy.";
+			mes "Rules are rules.";
+			mes "You gotta meet my price";
+			mes "if you want these potions.";
+			close;
+		}
+		if(MaxWeight - Weight < 71){
+			next;
+			mes "[Jayon]";
+			mes "But sorry buddy. I can't let you carry more than you can handle.";
+			mes "You ought to free up some of your inventory space when you get the chance.";
+		} else {
+			Zeny = Zeny - .@cost;
+			tu_merchant = getarg(1);
+			getitem 501,10; //Red_Potion
+		}
+		close;
+	case 2:
+		mes "[Jayon]";
+		mes "Just looking";
+		mes "around, eh?";
+		mes "I understand.";
+		mes "But you better take";
+		mes "advantage of a real";
+		mes "deal when you see one!";
+		close;
+	}
+}
+
+// Maos
+//============================================================
+prt_in,251,129,3	script	Maos	4_M_SEAMAN,{
+	mes "[Maos]";
+	if (tu_merchant == 6)
+		callsub L_Potions, 400,10;// <Zeny cost>, <next 'tu_merchant' value>
+	else if (tu_merchant == 7)
+		callsub L_Potions, 340,10;
+	else if (tu_merchant == 8)
+		callsub L_Potions, 420,10;
+	mes "I see too many people struggling to scrape every penny and put it all into their savings...";
+	next;
+	mes "[Maos]";
+	mes "Now, don't get me wrong. It's a good idea to invest in the future. But money exists to be spent! Enjoy every moment, that's what I say~";
+	next;
+	mes "[Maos]";
+	mes "Besides...";
+	mes "You can't take";
+	mes "your money with you";
+	mes "when your time's up,";
+	mes "you know?";
+	close;
+
+L_Potions:
+	.@cost = getarg(0);
+	mes "Don't say anything.";
+	mes "I know what you want.";
+	mes "10 Red Potions, right?";
+	mes "I'll sell them to you";
+	mes "for the low price of "+ .@cost +" Zeny~";
+	next;
+	switch(select("Buy:Cancel")){
+	case 1:
+		mes "[Maos]";
+		mes "Excellent choice!";
+		mes "Good products at affordable prices! That's my ethic as a merchant.";
+		if(Zeny < .@cost){
+			next;
+			mes "[Maos]";
+			mes "Ooh, but you don't even have enough Zeny to purchase these potions. I'm sorry, but I can't sell these just to lose money, you know?";
+			close;
+		}
+		if(MaxWeight - Weight < 71){
+			next;
+			mes "[Maos]";
+			mes "Ooh, but it doesn't look like you've got enough inventory space to carry any more items.";
+		} else {
+			Zeny = Zeny - .@cost;
+			tu_merchant = getarg(1);
+			getitem 501,10; //Red_Potion
+		}
+		close;
+	case 2:
+		mes "[Maos]";
+		mes "Well, I can't force you to buy these, but I'm telling you that you're passing up a real bargain!";
+		close;
+	}
+}

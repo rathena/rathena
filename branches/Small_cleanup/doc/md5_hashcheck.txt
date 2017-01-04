@@ -1,0 +1,54 @@
+//===== rAthena Documentation ================================
+//= MD5 Hash Check
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20140208
+//===== Description: =========================================
+//= This file outlines the login server's MD5 hash check.
+//============================================================
+
+The login server is able to perform a check of the client's MD5 hash.
+This will ensure that a user has not tampered with the client and that
+the client is the one specific to your server.
+
+The client can only send the correct MD5 hash to the server on certain
+server types, so a client diff is required to ensure the hash is sent.
+Please refer to your client diff tool manual for the appropriate patch,
+called "Force Send Client Hash Packet" or a similar name. A link
+containing the WeeDiffGen plugin can be found at:
+http://rathena.org/board/topic/70841-r16771-client-md5-hash-check/
+
+The server-side settings for the hash check are located in
+'conf\login_athena.conf':
+
+// Client MD5 hash check
+// If turned on, the login server will check if the client's hash matches
+// the value below, and will not connect tampered clients.
+// Note: see 'doc/md5_hashcheck.txt' for more details.
+client_hash_check: off
+
+// Client MD5 hashes
+// The client with the specified hash can be used to log in by players with
+// a group_id equal to or greater than the given value.
+// If you specify 'disabled' as hash, players with a group_id greater than or
+// equal to the given value will be able to log in regardless of hash (and even
+// if their client does not send a hash at all.)
+// Format: group_id, hash
+// Note: see 'doc/md5_hashcheck.txt' for more details.
+client_hash: 0, 113e195e6c051bb1cfb12a644bb084c5
+client_hash: 10, cb1ea78023d337c38e8ba5124e2338ae
+client_hash: 99, disabled
+
+To enable MD5 hash checks, set 'client_hash_check' to 'on' and add one
+'client_hash' entry for each client you want to use.
+The group_id can be any of the groups in 'conf/groups.conf', and it is
+useful in case if you want to allow GMs to use a different client
+than normal players; for example, a GM client could be hexed
+differently, perhaps with dual-clienting enabled and chat flood
+disabled.
+You will need to replace the example MD5 hashes with the actual hash of
+your client. You can use any MD5 hash tools to generate it, e.g.:
+- md5sum (command line) on linux
+- WinMD5 on Windows
+- md5 (command line) on Mac OS X

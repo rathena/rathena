@@ -1,0 +1,2497 @@
+//===== rAthena Script ======================================= 
+//= Swordman Class Tutorial and Job Specific Quest
+//===== By: ================================================== 
+//= Fix up by Jukka
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Swordman training quest.
+//===== Additional Comments: ================================= 
+//= 1.0 Fully working
+//= 1.1 optimized [Lupus]
+//= 1.2 Fixed a typo on NPC name. [SinSloth]
+//= 1.3 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.4 Misc. updates. [L0ne_W0lf]
+//= 1.5 Added Renewal Izlude coordinates.
+//= 1.6 Added Pre-Renewal support. [Euphy]
+//============================================================ 
+
+// Shurank
+//============================================================
+izlude_in,82,163,3	script	Shurank	733,{
+	mes "[Shurank]";
+	if(Class == Job_Novice || Class == Job_Baby){
+		mes "Still wondering";
+		mes "what to do with";
+		mes "your future, eh?";
+		next;
+		mes "[Shurank]";
+		mes "If I may be so bold,";
+		mes "I suggest that you follow";
+		mes "the path of strength.";
+		mes "Become... A Swordman.";
+		next;
+		mes "[Shurank]";
+		mes "If you wish to stake your life on the way of the sword, speak to the Swordman Association representative to the left.";
+		next;
+		mes "[Shurank]";
+		mes "Whatever you do,";
+		mes "I hope that you live out your life without any regrets. And if you do happen to become a Swordman,";
+		mes "come back to me...";
+		close;
+	}
+	if(BaseClass == Job_Swordman && (eaclass()&(EAJL_2|EAJL_UPPER|EAJL_THIRD))){
+		mes "From your raiment,";
+		mes "I see that you are";
+		if(Sex == SEX_MALE)
+			mes "a man of the sword.";
+		else
+			mes "a woman of the sword.";
+		mes "Your eyes tell me that";
+		mes "you've seen many a battle.";
+		next;
+		mes "[Shurank]";
+		mes "There's nothing that I can actually offer to teach you. But if you know any new Swordmen that show potential, please direct them to me.";
+		close;
+	}
+	if(BaseClass != Job_Swordman){
+		mes "Greetings adventurer.";
+		mes "If you happen to know";
+		mes "any new Swordmen,";
+		mes "please direct them to me.";
+		next;
+		mes "[Shurank]";
+		mes "My specialty happens to be teaching the fundamentals of the Swordman job to green recruits that have just made the job change.";
+		next;
+		mes "[Shurank]";
+		mes "Although it would be great if everyone can wield a sword,";
+		mes "I'm afraid there's nothing I can effectively teach to you. The methods of your job are...";
+		mes "Foreign to me.";
+		close;
+	}
+	switch(tu_swordman){
+	case 23:
+		mes "Greetings, my friend.";
+		mes "There is nothing more";
+		mes "that I can teach you...";
+		next;
+		mes "[Shurank]";
+		mes "To improve your skills,";
+		mes "you must explore this vast world and experience all sorts of battle situations. And always commit yourself to your training.";
+		close;
+	case 22:
+		mes "This will be my";
+		mes "final lecture to you.";
+		mes "Please listen carefully";
+		mes "as I tell you all about";
+		mes "Magnum Break.";
+		next;
+		mes "[Shurank]";
+		mes "Magnum Break, mastered at Skill Level 10, requires ^5D478BLevel 5 Bash^000000. When used, this skill inflicts splash damage to enemies surrounding the caster.";
+		next;
+		mes "[Shurank]";
+		mes "Enemies struck by Magnum Break";
+		mes "will be pushed back by a Fire property attack. Afterwards, your weapon will temporarily inflict 20% more damage with Fire property attacks.";
+		next;
+		mes "[Shurank]";
+		mes "Magnum Break is ideal for use";
+		mes "when surrounded by foes, but also keep in mind that it also inflicts a little damage on its caster.";
+		next;
+		set .@chk_magnum, getskilllv("SM_MAGNUM");
+		if(.@chk_magnum > 5){
+			mes "[Shurank]";
+			mes "I see that you've been training in the use of Magnum Break. Although it is an awesome skill, it's not for every Swordman. Still, there's no harm in learning it.";
+			next;
+			mes "[Shurank]";
+			mes "Here is a humble reward for";
+			mes "your great efforts. But do not let your talents allow you to grow arrogant!";
+			set tu_swordman, 23;
+			completequest 8228;
+			if (checkre(3))
+				getexp 186,0;
+			else
+				getexp 1860,0;
+			getitem 1113,1; //Scimiter
+			next;
+			mes "[Shurank]";
+			mes "That is all I have to teach you about Swordman skills. Hopefully, I've been able to clear up anything you haven't understood about your job and skills.";
+			next;
+			mes "[Shurank]";
+			mes "As for the matter concerning";
+			mes "that murderer, it's no longer in our hands. At this time, there's nothing that we can effectively";
+			mes "do about it.";
+			next;
+			mes "[Shurank]";
+			mes "However, I'd like";
+			mes "to ask that you keep the";
+			mes "information you've learned";
+			mes "to yourself. This matter is considered highly classified...";
+			next;
+			mes "[Shurank]";
+			mes "In any case, there's no need to worry about it anymore. But if we ever need assistance, I'll remember to ask you for your help.";
+			next;
+			mes "[Shurank]";
+			mes "You've done very well. Continue training and if you reach ^5D478BJob Level 40^000000, you can be promoted to a Knight or a Crusader.";
+			next;
+			mes "[Shurank]";
+			mes "Well...";
+			mes "We Swordmen typically aren't prone to being sentimental, but I'm glad to have met you. Do your best and become a splendid Swordman.";
+			close;
+		}
+		mes "[Shurank]";
+		mes "That is all I have to teach you about Swordman skills. Hopefully, I've been able to clear up anything you haven't understood about your job and skills.";
+		next;
+		mes "[Shurank]";
+		mes "As for the matter concerning";
+		mes "that murderer, it's no longer in our hands. At this time, there's nothing that we can effectively do about it.";
+		next;
+		mes "[Shurank]";
+		mes "However, I'd like";
+		mes "to ask that you keep the";
+		mes "information you've learned";
+		mes "to yourself. This matter is considered highly classified...";
+		next;
+		mes "[Shurank]";
+		mes "In any case, there's no need to worry about it anymore. But if we ever need assistance, I'll remember to ask you for your help.";
+		next;
+		mes "[Shurank]";
+		mes "You've done very well. Continue training and if you reach ^5D478BJob Level 40^000000, you can be promoted to a Knight or a Crusader.";
+		next;
+		mes "[Shurank]";
+		mes "Well...";
+		mes "We Swordmen typically aren't prone to being sentimental, but I'm glad to have met you. Do your best and become a splendid Swordman.";
+		next;
+		mes "[Shurank]";
+		mes "Before you go, please take this.";
+		mes "I hope that you make good use of it as you train to become stronger and stronger. Good luck out there.";
+		set tu_swordman, 23;
+		completequest 8228;
+		getitem 1113,1; //Scimiter
+		close;
+	case 21:
+		mes "Ah, you've returned. I've just received a communique from";
+		mes "Dequ'ee. It seems you've been working very hard and that you've made the most of this experience.";
+		next;
+		mes "[Shurank]";
+		mes "For now, I believe you'll benefit from learning some more about Swordman skills. First, let me tell you more about the Sword Masteries.";
+		next;
+		mes "[Shurank]";
+		mes "There are two different kinds:";
+		mes "^5D478BOne Handed Sword Mastery^000000 and";
+		mes "^5D478BTwo Handed Sword Mastery^000000. Both";
+		mes "are Passive Skills that increase your Attack Power as these skills are leveled up.";
+		next;
+		mes "[Shurank]";
+		mes "One Handed Sword Mastery";
+		mes "increases the damage of Daggers and One Handed Swords while Two Handed Sword Mastery increases the damage of Two Handed Swords.";
+		next;
+		set .@chk_hanson, getskilllv("SM_SWORD");
+		set .@chk_yangson, getskilllv("SM_TWOHAND");
+		if((.@chk_hanson > 9) || (.@chk_yangson > 9)){
+			mes "[Shurank]";
+			mes "Ah, from the way you handle your Sword, I see that you have mastered a Sword Mastery. I'm thoroughly impressed.";
+			next;
+			mes "[Shurank]";
+			mes "Let me give you";
+			mes "this small reward";
+			mes "in recognition of";
+			mes "your accomplishment.";
+			set tu_swordman, 22;
+			changequest 8227,8228;
+			if (checkre(3))
+				getexp 186,0;
+			else
+				getexp 1860,0;
+			next;
+			mes "[Shurank]";
+			mes "Next time, I will tell you more about the Magnum Break skill.";
+			mes "I'll be here when you're ready to learn more.";
+			close;
+		}
+		mes "[Shurank]";
+		mes "Next time, I will tell you more about the Magnum Break skill.";
+		mes "I'll be here when you're ready to learn more.";
+		set tu_swordman, 22;
+		close;
+	case 13:
+		mes "You should leave as soon as possible to meet Dequ'ee in Geffen. You do remember where to find him, don't you?";
+		close;
+	case 12:
+		mes "So how has your";
+		mes "training for the Endure";
+		mes "skill coming along?";
+		next;
+		set .@chk_endure, getskilllv("SM_ENDURE");
+		if(.@chk_endure > 1){
+			mes "[Shurank]";
+			mes "From that gleen of toughness upon your skin, I see now that I was foolish to ask. Well done~";
+			set tu_swordman, 13;
+			erasequest 8221;
+			setquest 8222;
+			if (checkre(3))
+				getexp 126,0;
+			else
+				getexp 1260,0;
+			next;
+			mes "[Shurank]";
+			mes "Ah, once again, I have";
+			mes "another task for you to perform. Please visit Dequ'ee in Geffen since it seems he has something";
+			mes "to ask of you.";
+			next;
+			mes "[Shurank]";
+			mes "Hurry and meet with Dequ'ee and return to me when you complete whatever it is that he wishes for you to do.";
+			close;
+		} else {
+			mes "[Shurank]";
+			mes "Hmm...";
+			mes "You're not quite";
+			mes "there yet. In the";
+			mes "meantime, I encourage";
+			mes "you to double your efforts!";
+			close;
+		}
+	case 11:
+		mes "So have you";
+		mes "learned how to use";
+		mes "the Endure skill yet?";
+		next;
+		set .@chk_endure, getskilllv("SM_ENDURE");
+		if((.@chk_endure > 0) && (.@chk_endure < 2)){
+			mes "[Shurank]";
+			mes "I see that you";
+			mes "know how to use the";
+			mes "Endure skill. Still, it wouldn't hurt if I review the basic details regarding its use...";
+			next;
+			mes "[Shurank]";
+			mes "As you've noticed, receiving any damage causes you to reel in pain, stunning you for an instant. Thus, rapidly attacking enemies are dangerous since it's difficult to counter or escape them.";
+			next;
+			mes "[Shunrank]";
+			mes "Activating Endure enables you to shrug off attacks. You'll receive damage, but enemy attacks will not impede you as much. This means you can counter enemy attacks or escape if you need to.";
+			next;
+			mes "[Shurank]";
+			mes "Of course, you can't use Endure forever. However, the more you increase the level of the Endure";
+			mes "skill, the longer Endure's effect will last. Also, remember that Endure also has a skill delay.";
+			next;
+			mes "[Shurank]";
+			mes "Since you've learned the Endure skill already, I don't think I need to explain it any further. You've done well.";
+			erasequest 8221;
+			setquest 8222;
+			set tu_swordman, 13;
+			next;
+			mes "[Shurank]";
+			mes "Ah, once again, I have";
+			mes "another task for you to perform. Please visit Dequ'ee in Geffen since it seems he has something";
+			mes "to ask of you.";
+			next;
+			mes "[Shurank]";
+			mes "Hurry and meet with Dequ'ee and return to me when you complete whatever it is that he wishes for you to do.";
+			close2;
+			end;
+		} else if(.@chk_endure > 1){
+			mes "[Shurank]";
+			mes "From that gleen of toughness upon your skin, I see now that I was foolish to ask. Well done~";
+			set tu_swordman, 13;
+			erasequest 8221;
+			setquest 8222;
+			if (checkre(3))
+				getexp 126,0;
+			else
+				getexp 1260,0;
+			next;
+			mes "[Shurank]";
+			mes "Ah, once again, I have";
+			mes "another task for you to perform. Please visit Dequ'ee in Geffen since it seems he has something";
+			mes "to ask of you.";
+			next;
+			mes "[Shurank]";
+			mes "Hurry and meet with Dequ'ee and return to me when you complete whatever it is that he wishes for you to do.";
+			close;
+		} else {
+			mes "[Shurank]";
+			mes "No...?";
+			mes "I recommend that you learn it as soon as you can. Endure is an invaluable skill for any Swordman to have!";
+			close;
+		}
+	case 10:
+		mes "The time has come";
+		mes "for me to tell you";
+		mes "all I know about";
+		mes "the Endure skill.";
+		next;
+		set .@chk_endure, getskilllv("SM_ENDURE");
+		if(.@chk_endure == 0){
+			mes "[Shurank]";
+			mes "As you've noticed, receiving any damage causes you to reel in pain, stunning you for an instant. Thus, rapidly attacking enemies are dangerous since it's difficult to counter or escape them.";
+			next;
+			mes "[Shunrank]";
+			mes "Activating Endure enables you to shrug off attacks. You'll receive damage, but enemy attacks will not impede you as much. This means you can counter enemy attacks or escape if you need to.";
+			next;
+			mes "[Shurank]";
+			mes "Of course, you can't use Endure forever. However, the more you increase the level of the Endure";
+			mes "skill, the longer Endure's effect will last. Also, remember that Endure also has a skill delay.";
+			next;
+			mes "[Shurank]";
+			mes "Alright. Now I want you to train in the use of the Endure skill. You can become a great Swordman";
+			mes "if you can endure attacks";
+			mes "from your enemies!";
+			set tu_swordman, 11;
+			changequest 8220,8221;
+			close;
+		} else if((.@chk_endure > 0) && (.@chk_endure < 2)){
+			mes "[Shurank]";
+			mes "I see that you";
+			mes "know how to use the";
+			mes "Endure skill. Still, it wouldn't hurt if I review the basic details regarding its use...";
+			next;
+			mes "[Shurank]";
+			mes "As you've noticed, receiving any damage causes you to reel in pain, stunning you for an instant. Thus, rapidly attacking enemies are dangerous since it's difficult to counter or escape them.";
+			next;
+			mes "[Shurank]";
+			mes "Activating Endure enables you to shrug off attacks. You'll receive damage, but enemy attacks will not impede you as much. This means you can counter enemy attacks or escape if you need to.";
+			next;
+			mes "[Shurank]";
+			mes "Of course, you can't use Endure forever. However, the more you increase the level of the Endure";
+			mes "skill, the longer Endure's effect will last. Also, remember that Endure also has a skill delay.";
+			next;
+			mes "[Shurank]";
+			mes "Since you've learned the Endure skill already, I don't think I need to explain it any further. You've done well.";
+			set tu_swordman, 13;
+			erasequest 8221;
+			setquest 8222;
+			next;
+			mes "[Shurank]";
+			mes "Ah, once again, I have";
+			mes "another task for you to perform. Please visit Dequ'ee in Geffen since it seems he has something";
+			mes "to ask of you.";
+			next;
+			mes "[Shurank]";
+			mes "Hurry and meet with Dequ'ee and return to me when you complete whatever it is that he wishes for you to do.";
+			close;
+		} else if(.@chk_endure > 1){
+			mes "[Shurank]";
+			mes "Hm. But judging from the gleen of toughness on your skin, I suppose teaching you about Endure would be a waste of your time. Well done!";
+			set tu_swordman, 13;
+			erasequest 8221;
+			setquest 8222;
+			if (checkre(3))
+				getexp 126,0;
+			else
+				getexp 1260,0;
+			next;
+			mes "[Shurank]";
+			mes "Ah, once again, I have";
+			mes "another task for you to perform. Please visit Dequ'ee in Geffen since it seems he has something";
+			mes "to ask of you.";
+			next;
+			mes "[Shurank]";
+			mes "Hurry and meet with Dequ'ee and return to me when you complete whatever it is that he wishes for you to do.";
+			close;
+		}
+	case 9:
+		mes "So have you been";
+		mes "learning more about";
+		mes "the use of the Provoke skill?";
+		next;
+		set .@chk_provoke, getskilllv("SM_PROVOKE");
+		if((.@chk_provoke > 4) && (.@chk_provoke < 10)){
+			mes "[Shurank]";
+			mes "Ah, I see that you have a fairly good understanding of the Provoke skill. Let me reward you in this small way for your efforts.";
+			set tu_swordman, 10;
+			if (checkre(3))
+				getexp 112,0;
+			else
+				getexp 1120,0;
+			next;
+			mes "[Shurank]";
+			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
+			close;
+		} else if(.@chk_provoke == 10){
+			mes "[Shurank]";
+			mes "Y-you've mastered";
+			mes "Provoke? Impressive!";
+			mes "I see that you've made";
+			mes "up your mind to become";
+			mes "an outstanding Swordman.";
+			mes "Here is a small reward...";
+			set tu_swordman, 10;
+			if (checkre(3))
+				getexp 126,0;
+			else
+				getexp 1260,0;
+			next;
+			mes "[Shurank]";
+			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
+			close;
+		} else {
+			mes "[Shurank]";
+			mes "Hmm, I acknowledge";
+			mes "your progress, but you're not quite there yet. You've got to become more skilled in Provoke before";
+			mes "I can continue my lectures.";
+			close;
+		}
+	case 8:
+		mes "Ah, you've returned.";
+		mes "So how has your training";
+		mes "in the use of the Provoke";
+		mes "skill been progressing?";
+		next;
+		set .@chk_provoke, getskilllv("SM_PROVOKE");
+		if((.@chk_provoke > 0) && (.@chk_provoke < 5)){
+			mes "[Shurank]";
+			mes "Ah, now I can see that you";
+			mes "know how to use it. That's a vast improvement over not being able to use it at all. Let me refesh you on Provoke's details.";
+			next;
+			mes "[Shurank]";
+			mes "In order to effectively use Provoke, you must understand";
+			mes "how it works: Provoke infuriates your opponents, making them";
+			mes "want to attack you.";
+			next;
+			mes "[Shurank]";
+			mes "When provoked, an enemy will have greater attack strength, making it more dangerous, but will also have reduced defense, making your enemy easier to defeat.";
+			next;
+			mes "[Shurank]";
+			mes "Ideally, you may wish to use Provoke on enemies when they are weakened enough so that you can finish them off more quickly. But that's up to you.";
+			next;
+			mes "[Shurank]";
+			mes "Also, the higher the level of Provoke that is used, the higher the attack increase and defense decrease of your target.";
+			next;
+			mes "[Shurank]";
+			mes "As an Active Skill, Provoke will consume a small amount of SP, just like Bash. So be careful not to run out of SP when using this skill.";
+			next;
+			mes "[Shurank]";
+			mes "Alright, come back to me when you become sufficiently skilled in the use of Provoke. In the meantime, keep training.";
+			set tu_swordman, 9;
+			close;
+		} else if((.@chk_provoke > 4) && (.@chk_provoke < 10)){
+			mes "[Shurank]";
+			mes "Ah, I see that you have a fairly good understanding of the Provoke skill. Let me reward you in this small way for your efforts.";
+			set tu_swordman, 10;
+			if (checkre(3))
+				getexp 112,0;
+			else
+				getexp 1120,0;
+			next;
+			mes "[Shurank]";
+			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
+			close;
+		} else if(.@chk_provoke == 10){
+			mes "[Shurank]";
+			mes "Y-you've mastered";
+			mes "Provoke? Impressive!";
+			mes "I see that you've made";
+			mes "up your mind to become";
+			mes "an outstanding Swordman.";
+			mes "Here is a small reward...";
+			set tu_swordman, 10;
+			if (checkre(3))
+				getexp 126,0;
+			else
+				getexp 1260,0;
+			next;
+			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
+			close;
+		} else {
+			mes "[Shurank]";
+			mes "Still haven't learned Provoke, eh? As a Swordman, I believe that it's important that you at least be able to use Provoke!";
+			close;
+		}
+	case 7:
+		mes "Ah, you've returned. For a new Swordman, you are doing quite";
+		mes "well. So what is the message";
+		mes "from Dequ'ee?";
+		next;
+		mes "[Shurank]";
+		mes "I see...";
+		mes "Well, now that we taken care";
+		mes "of that, let me continue your instruction on Swordman skills. This time, we'll cover Provoke.";
+		next;
+		set .@chk_provoke, getskilllv("SM_PROVOKE");
+		if(.@chk_provoke == 0){
+			mes "[Shurank]";
+			mes "You haven't";
+			mes "learned Provoke yet?";
+			mes "Hm. All the more reason why";
+			mes "I should explain it to you then.";
+			next;
+			mes "[Shurank]";
+			mes "In order to effectively use Provoke, you must understand";
+			mes "how it works: Provoke infuriates your opponents, making them";
+			mes "want to attack you.";
+			next;
+			mes "[Shurank]";
+			mes "When provoked, an enemy will have greater attack strength, making it more dangerous, but will also have reduced defense, making your enemy easier to defeat.";
+			next;
+			mes "[Shurank]";
+			mes "Ideally, you may wish to use Provoke on enemies when they are weakened enough so that you can finish them off more quickly. But that's up to you.";
+			next;
+			mes "[Shurank]";
+			mes "Also, the higher the level of Provoke that is used, the higher the attack increase and defense decrease of your target.";
+			next;
+			mes "[Shurank]";
+			mes "As an Active Skill, Provoke will consume a small amount of SP, just like Bash. So be careful not to run out of SP when using this skill.";
+			next;
+			mes "[Shurank]";
+			mes "Now I ask that you train yourself in the use of Provoke. Come back";
+			mes "to me when you have a sufficient understanding of the use of the Provoke skill.";
+			set tu_swordman, 8;
+			changequest 8217,8218;
+			close;
+		} else if((.@chk_provoke > 0) && (.@chk_provoke < 5)){
+			mes "[Shurank]";
+			mes "Hm. You seem to have a basic understanding of Provoke, but let me give you a few details so that you can better understand the use of that skill.";
+			next;
+			mes "[Shurank]";
+			mes "In order to effectively use Provoke, you must understand";
+			mes "how it works: Provoke infuriates your opponents, making them";
+			mes "want to attack you.";
+			next;
+			mes "[Shurank]";
+			mes "When provoked, an enemy will have greater attack strength, making it more dangerous, but will also have reduced defense, making your enemy easier to defeat.";
+			next;
+			mes "[Shurank]";
+			mes "Ideally, you may wish to use Provoke on enemies when they are weakened enough so that you can finish them off more quickly. But that's up to you.";
+			next;
+			mes "[Shurank]";
+			mes "Also, the higher the level of Provoke that is used, the higher the attack increase and defense decrease of your target.";
+			next;
+			mes "[Shurank]";
+			mes "As an Active Skill, Provoke will consume a small amount of SP, just like Bash. So be careful not to run out of SP when using this skill.";
+			next;
+			mes "[Shurank]";
+			mes "Now I ask that you train yourself in the use of Provoke. Come back";
+			mes "to me when you have a sufficient understanding of the use of the Provoke skill.";
+			set tu_swordman, 9;
+			changequest 8218,8219;
+			close;
+		} else if((.@chk_provoke > 4) && (.@chk_provoke < 10)){
+			mes "[Shurank]";
+			mes "Ah, I see that you have a fairly good understanding of the Provoke skill. Let me reward you in this small way for your efforts.";
+			set tu_swordman, 10;
+			changequest 8219,8220;
+			if (checkre(3))
+				getexp 112,0;
+			else
+				getexp 1120,0;
+			next;
+			mes "[Shurank]";
+			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
+			close;
+		} else if(.@chk_provoke == 10){
+			mes "[Shurank]";
+			mes "Y-you've mastered";
+			mes "Provoke? Impressive!";
+			mes "I see that you've made";
+			mes "up your mind to become";
+			mes "an outstanding Swordman.";
+			mes "Here is a small reward...";
+			set tu_swordman, 10;
+			completequest 8218;
+			completequest 8219;
+			completequest 8220;
+			setquest 8221;
+			if (checkre(3))
+				getexp 126,0;
+			else
+				getexp 1260,0;
+			next;
+			mes "[Shurank]";
+			mes "Next time we speak, I will tell you what I know about the ^5D478BEndure^000000 skill. When you're ready to learn, come back to me.";
+			close;
+		}
+	case 6:
+		mes "I wish for you to find a Knight named ^5D478BDequ'ee^000000 in ^5D478BGeffen^000000. Listen carefully, this is the message";
+		mes "I want you to give him.";
+		next;
+		mes "[Shurank]";
+		mes "^0000FFWhat happened";
+		mes "to the murderer?^000000";
+		mes "^0000FFDid you find out who he is? If you did, what are we supposed to do now?^000000";
+		next;
+		mes "[Shurank]";
+		mes "If you use those exact words, Dequ'ee will understand what";
+		mes "you're talking about. Remember his response and let me know his answer.";
+		next;
+		mes "[Shurank]";
+		mes "It shouldn't be too hard fighting the monsters on the way to Geffen, but if you encounter any that are too strong, there's no shame in running away.";
+		next;
+		mes "[Shurank]";
+		mes "But now that I think about it, it may take you a while to travel to Geffen. I shall send you there myself! Good luck!";
+		next;
+		warp "gef_fild07",35,192;
+		close;
+	case 5:
+		mes "Ah, you've returned. I know I said that I would teach you what I know about the Provoke skill, but...";
+		next;
+		mes "[Shurank]";
+		mes "I actually have an important task that I'd like for you to perform. It's not very difficult: All you must do is deliver a message.";
+		next;
+		mes "[Shurank]";
+		mes "I wish for you to find a Knight named ^5D478BDequ'ee^000000 in ^5D478BGeffen^000000. Listen carefully, this is the message";
+		mes "I want you to give him.";
+		next;
+		mes "[Shurank]";
+		mes "^0000FFWhat happened";
+		mes "to the murderer?^000000";
+		mes "^0000FFDid you find out who he is? If you did, what are we supposed to do now?^000000";
+		next;
+		mes "[Shurank]";
+		mes "If you use those exact words, Dequ'ee will understand what";
+		mes "you're talking about. Remember his response and let me know his answer.";
+		next;
+		mes "[Shurank]";
+		mes "It shouldn't be too hard fighting the monsters on the way to Geffen, but if you encounter any that are too strong, there's no shame in running away.";
+		next;
+		mes "[Shurank]";
+		mes "Although there's a Warp service,";
+		mes "I recommend traveling by foot. You cannot grow strong without testing your strength and practicing your skills!";
+		set tu_swordman, 6;
+		changequest 8215,8216;
+		close;
+	case 4:
+		mes "Since you've mastered Bash,";
+		mes "I feel that you're ready to learn more about Swordman skills.";
+		next;
+		mes "[Shurank]";
+		mes "Now, you must be familiar with the ^5D478BIncrease HP Recovery Skill^000000. When";
+		mes "it comes to damage, you must be";
+		mes "able to both take it and dish it out.";
+		next;
+		set .@chk_hp, getskilllv("SM_RECOVERY");
+		if(.@chk_hp == 0){
+			mes "[Shurank]";
+			mes "But judging from that";
+			mes "scrawny frame of yours,";
+			mes "its looks like you haven't learned the Increase HP Recovery Skill at all...!";
+			next;
+			mes "[Shurank]";
+			mes "The Increase HP Recovery Skill";
+			mes "is a passive skill that is always in effect and does not consume";
+			mes "any of your SP.";
+			next;
+			mes "[Shurank]";
+			mes "It enables you to regenerate your health twice as fast. This might not seem like a big deal, but it will reduce the time you need to rest from battles.";
+			next;
+			mes "[Shurank]";
+			mes "I strongly suggest that you";
+			mes "learn this skill! Of course, there are other Swordman skills that are just as important, though...";
+			set tu_swordman, 5;
+			next;
+		} else if(.@chk_hp == 10){
+			mes "[Shurank]";
+			mes "Ah! That healthy glow!";
+			mes "I see that you've mastered this skill already. Let me give you a little reward for your hard training!";
+			set tu_swordman, 5;
+			if (checkre(3))
+				getexp 112,0;
+			else
+				getexp 1120,0;
+			next;
+		} else {
+			mes "[Shurank]";
+			mes "Ah, and I see that you've already learned a little bit about it. But let me briefly tell you more about Increase HP Recovery.";
+			next;
+			mes "[Shurank]";
+			mes "The Increase HP Recovery Skill";
+			mes "is a passive skill that is always in effect and does not consume";
+			mes "any of your SP.";
+			next;
+			mes "[Shurank]";
+			mes "It enables you to regenerate your health twice as fast. This might not seem like a big deal, but it will reduce the time you need to rest from battles.";
+			next;
+			mes "[Shurank]";
+			mes "Increase HP Recovery is a fairly important skill, but whether or not you want to master that is really up to you.";
+			set tu_swordman, 5;
+			next;
+		}
+		setquest 8215;
+		mes "[Shurank]";
+		mes "By now, I believe that you know enough about the Increase HP Recovery skill. Next time, I shall teach you what I know about the Provoke skill.";
+		close;
+	case 3:
+		mes "If you want to be";
+		mes "able to use the full";
+		mes "power of the Bash skill,";
+		mes "you better have mastered it";
+		mes "if you want me to acknowledge";
+		mes "you as a fellow Swordman.";
+		next;
+		set .@chk_bash, getskilllv("SM_BASH");
+		if(.@chk_bash == 10){
+			mes "[Shurank]";
+			mes "Those calluses...!";
+			mes "Only a master of the Bash skill has those kinds of hands. Great work, Swordman. I'm very impressed.";
+			next;
+			mes "[Shurank]";
+			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
+			mes "all of the basics.";
+			set tu_swordman, 4;
+			changequest 8213,8214;
+			if (checkre(3))
+				getexp 97,0;
+			else
+				getexp 970,0;
+			getitem 2503,1; //Muffler
+			close;
+		} else {
+			mes "[Shurank]";
+			mes "Hmm, you might be able to";
+			mes "use Bash quite well, but you are not a master of it yet. I encourage you to master Bash in order to unleash its true potential!";
+			close;
+		}
+	case 2:
+		mes "I hope you've been";
+		mes "training yourself in using";
+		mes "Bash. If you want to grow as a Swordman, you will have great";
+		mes "need to master this skill.";
+		next;
+		set .@chk_bash, getskilllv("SM_BASH");
+		if((.@chk_bash > 4) && (.@chk_bash < 10)){
+			mes "[Shurank]";
+			mes "Hm. It doesn't look like you've gained mastery of Bash, but it seems like you're trying hard.";
+			next;
+			mes "[Shurank]";
+			mes "Let me review the use of the Bash skill to you. If you've heard this before, it'll be a good refresher.";
+			next;
+			mes "[Shurank]";
+			mes "Bash is an active skill, mastered at Level 10, which allows you to smash your target. In essense,";
+			mes "it's a highly damaging attack!";
+			next;
+			mes "[Shurank]";
+			mes "Since it's an active skill, Bash consumes SP each time it is";
+			mes "used. If you're not careful, you'll be out of SP in no time...!";
+			next;
+			mes "[Shurank]";
+			mes "Here's a little reward for all of your hard work. I hope you realize the importance of using Bash as";
+			mes "you grow stronger.";
+			set tu_swordman, 3;
+			changequest 8212,8213;
+			if (checkre(3))
+				getexp 83,0;
+			else
+				getexp 830,0;
+			close;
+		} else if(.@chk_bash == 10){
+			mes "[Shurank]";
+			mes "Those calluses...!";
+			mes "Only a master of the Bash skill has those kinds of hands. Great work, Swordman. I'm very impressed.";
+			next;
+			mes "[Shurank]";
+			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
+			mes "all of the basics.";
+			set tu_swordman, 4;
+			changequest 8212,8214;
+			if (checkre(3))
+				getexp 97,0;
+			else
+				getexp 970,0;
+			getitem 2503,1; //Muffler
+			close;
+		} else {
+			mes "[Shurank]";
+			mes "Hmm, you might be able to";
+			mes "use Bash quite well, but you are not a master of it yet. I encourage you to master Bash in order to unleash its true potential!";
+			close;
+		}
+	case 1:
+		mes "Have you been learning";
+		mes "the art of using Bash? I fervently believe that the Bash skill is the essense of Swordmanship!";
+		next;
+		set .@chk_bash, getskilllv("SM_BASH");
+		if((.@chk_bash > 0) && (.@chk_bash < 5)){
+			mes "[Shurank]";
+			mes "I see that you understand";
+			mes "a little bit about the Bash skill. But still, it's not enough. Let me explain in detail...";
+			next;
+			mes "[Shurank]";
+			mes "Bash is an active skill, mastered at Level 10, which allows you to smash your target. In essense,";
+			mes "it's a highly damaging attack!";
+			next;
+			mes "[Shurank]";
+			mes "Since it's an active skill, Bash consumes SP each time it is";
+			mes "used. If you're not careful, you'll be out of SP in no time...!";
+			next;
+			mes "[Shurank]";
+			mes "Well, that's all I can tell you about Bash for now. As for its subtle nuances, you'll have to experience them for yourself";
+			mes "in battle.";
+			next;
+			mes "[Shurank]";
+			mes "Still, for your training efforts, let me give you a humble reward. But remember, we still have more";
+			mes "of the fundamentals to cover!";
+			set tu_swordman, 2;
+			changequest 8211,8212;
+			if (checkre(3))
+				getexp 58,0;
+			else
+				getexp 580,0;
+			close;
+		} else if((.@chk_bash > 4) && (.@chk_bash < 10)){
+			mes "[Shurank]";
+			mes "Hmm...";
+			mes "Still haven't mastered Bash, eh? Well, in any case, I think you've made some progress.";
+			next;
+			mes "[Shurank]";
+			mes "Let me explain the use of the Bash skill to you. If you've heard this before, it'll be a good refresher.";
+			next;
+			mes "[Shurank]";
+			mes "I see that you understand";
+			mes "a little bit about the Bash skill. But still, it's not enough. Let me explain in detail...";
+			next;
+			mes "[Shurank]";
+			mes "Bash is an active skill, mastered at Level 10, which allows you to smash your target. In essense,";
+			mes "it's a highly damaging attack!";
+			next;
+			mes "[Shurank]";
+			mes "Since it's an active skill, Bash consumes SP each time it is";
+			mes "used. If you're not careful, you'll be out of SP in no time...!";
+			next;
+			mes "[Shurank]";
+			mes "Well, that's all I can tell you about Bash for now. As for its subtle nuances, you'll have to experience them for yourself";
+			mes "in battle.";
+			next;
+			mes "[Shurank]";
+			mes "For your efforts and patience, I offer you this small reward. Please take it and grow even stronger...";
+			set tu_swordman, 3;
+			changequest 8211,8213;
+			if (checkre(3))
+				getexp 83,0;
+			else
+				getexp 830,0;
+			next;
+			mes "[Shurank]";
+			mes "I believe that every true Swordman should master the Bash skill. If you ever do master the skill as a Swordman, come back to me.";
+			close;
+		} else if(.@chk_bash == 10){
+			mes "[Shurank]";
+			mes "Those calluses...!";
+			mes "Only a master of the Bash skill has those kinds of hands. Great work, Swordman. I'm very impressed.";
+			next;
+			mes "[Shurank]";
+			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
+			mes "all of the basics.";
+			set tu_swordman, 4;
+			changequest 8211,8214;
+			if (checkre(3))
+				getexp 97,0;
+			else
+				getexp 970,0;
+			getitem 2503,1; //Muffler
+			close;
+		} else {
+			mes "[Shurank]";
+			mes "You still can't even use Bash...? What's the use of a sword if not to smash things?! Come back to me";
+			mes "once you've learned how to use";
+			mes "that skill!";
+			close;
+		}
+	case 0:
+		mes "Ah, a comrade in arms.";
+		mes "Allow me to introduce myself. I am Shurank Chainlier, a Knight in the service of the Prontera Chivalry.";
+		next;
+		mes "[Shurank]";
+		mes "It concerns me deeply that the Swordmen of today may not truly understand the way of the sword. And to think that they may become Knights later...";
+		next;
+		mes "[Shurank]";
+		mes "Have you been training";
+		mes "to be an expert Swordman?";
+		mes "If so, you must learn the";
+		mes "fundamentals, the first of";
+		mes "which is the ^5D478BBash^000000 skill.";
+		next;
+		set .@chk_bash, getskilllv("SM_BASH");
+		if(.@chk_bash == 0){
+			mes "[Shurank]";
+			mes "^333333*Gasp*^000000";
+			mes "Those soft, delicate hands! You've never learned how to use Bash, haven't you?! How do you expect to lead battles without knowing Bash?";
+			next;
+			mes "[Shurank]";
+			mes "Now, if you wish to become a true Swordman, you must learn the Bash skill. There's no question about it: You've got to know these basics! Take this, and learn to Bash!";
+			set tu_swordman, 1;
+			if (checkre(3))
+				getexp 49,0;
+			else
+				getexp 490,0;
+			setquest 8211;
+			close;
+		} else if((.@chk_bash > 0) && (.@chk_bash < 5)){
+			mes "[Shurank]";
+			mes "I see that you understand";
+			mes "a little bit about the Bash skill. But still, it's not enough. Let me explain in detail...";
+			next;
+			mes "[Shurank]";
+			mes "Bash is an active skill, mastered at Level 10, which allows you to smash your target. In essense,";
+			mes "it's a highly damaging attack!";
+			next;
+			mes "[Shurank]";
+			mes "Since it's an active skill, Bash consumes SP each time it is";
+			mes "used. If you're not careful, you'll be out of SP in no time...!";
+			next;
+			mes "[Shurank]";
+			mes "Well, that's all I can tell you about Bash for now. As for its subtle nuances, you'll have to experience them for yourself";
+			mes "in battle.";
+			next;
+			mes "[Shurank]";
+			mes "Still, for your training efforts, let me give you a humble reward. But remember, we still have more";
+			mes "of the fundamentals to cover!";
+			set tu_swordman, 2;
+			setquest 8212;
+			if (checkre(3))
+				getexp 58,0;
+			else
+				getexp 580,0;
+			close;
+		} else if((.@chk_bash > 4) && (.@chk_bash < 10)){
+			mes "[Shurank]";
+			mes "I see that you've gained some proficiency with the Bash skill. But still, it's not enough. Let me explain...";
+			next;
+			mes "[Shurank]";
+			mes "Bash is an active skill, mastered at Level 10, which allows you to smash your target. In essense,";
+			mes "it's a highly damaging attack!";
+			next;
+			mes "[Shurank]";
+			mes "Since it's an active skill, Bash consumes SP each time it is";
+			mes "used. If you're not careful, you'll be out of SP in no time...!";
+			next;
+			mes "[Shurank]";
+			mes "Well, that's all I can tell you about Bash for now. As for its subtle nuances, you'll have to experience them for yourself";
+			mes "in battle.";
+			next;
+			mes "[Shurank]";
+			mes "Still, for your training efforts, let me give you a humble reward. But remember, we still have more";
+			mes "of the fundamentals to cover!";
+			set tu_swordman, 3;
+			setquest 8213;
+			if (checkre(3))
+				getexp 83,0;
+			else
+				getexp 830,0;
+			next;
+			mes "[Shurank]";
+			mes "But if you wish to become an expert Swordman in my eyes, you must master Bash!";
+			close;
+		} else if(.@chk_bash == 10){
+			mes "[Shurank]";
+			mes "Those calluses...!";
+			mes "Only a master of the Bash skill has those kinds of hands. Great work, Swordman. I'm very impressed.";
+			next;
+			mes "[Shurank]";
+			mes "Here's a small prize in recognition of your efforts thus far. But don't relax yet! You still have a long way to go before grasping";
+			mes "all of the basics.";
+			set tu_swordman, 4;
+			// completequest 8211;
+			// completequest 8212;
+			// completequest 8213;
+			setquest 8214;
+			if (checkre(3))
+				getexp 97,0;
+			else
+				getexp 970,0;
+			getitem 2503,1; //Muffler
+			close;
+		}
+	}
+	mes "...";
+	mes "......";
+	close;
+}
+
+// Daqu'ee
+//============================================================
+geffen,154,143,3	script	Dequ'ee	734,{
+	if(BaseJob == Job_Novice){
+		mes "[Dequ'ee]";
+		mes "Hey there.";
+		mes "Frustrated with";
+		mes "being a Novice?";
+		mes "I know, I know,";
+		mes "we've all been";
+		mes "there once.";
+		next;
+		mes "[Dequ'ee]";
+		mes "If you want to become stronger,";
+		mes "why don't you consider becoming a Swordman? It'll require discipline on your part, but that job will shape you into a tough warrior.";
+		next;
+		mes "[Dequ'ee]";
+		mes "It's ultimately your decision.";
+		mes "I don't know how you want to live your life, but you should give the Swordman job some serious thought...";
+		close;
+	}
+	if(BaseClass == Job_Swordman && (eaclass()&(EAJL_2|EAJL_UPPER))){
+		mes "[Dequ'ee]";
+		mes "Ah...";
+		mes "A fellow sword wielder!";
+		mes "How have you been doing?";
+		next;
+		mes "[Dequ'ee]";
+		mes "There must be many who must";
+		mes "depend on the strength of your blade. It's an awesome responsibility, but we can never let our allies down in battle...";
+		close;
+	}
+	if(BaseClass != Job_Swordman){
+		mes "[Dequ'ee]";
+		mes "Hello there.";
+		mes "Not a fan of swords, are you?";
+		mes "Well, if you were, we'd have";
+		mes "something to talk about.";
+		next;
+		mes "[Dequ'ee]";
+		mes "Yeah.";
+		mes "Not much";
+		mes "conversation";
+		mes "happening here.";
+		mes "Pretty boring...";
+		close;
+	}
+	if(tu_swordman > 20){
+		mes "[Dequ'ee]";
+		mes "I hope you continue";
+		mes "to train yourself in";
+		mes "the ways of the sword.";
+		mes "There's an art to";
+		mes "wielding a blade...";
+		close;
+	}
+	if(tu_swordman == 20){
+		mes "[Dequ'ee]";
+		mes "Huh...?";
+		mes "Aren't you supposed";
+		mes "to keep an eye on Bankley?";
+		mes "What happened?";
+		next;
+		mes "[Dequ'ee]";
+		mes "Suicide...?";
+		mes "Are you serious?!";
+		mes "But there's no need to kill";
+		mes "himself if he suspected that he's been caught. Something shady's going on here!";
+		next;
+		mes "[Dequ'ee]";
+		mes "Well, you've done a good job.";
+		mes "As for the other three suspects, I'll make sure that they're monitored by members of the Swordman Association.";
+		next;
+		mes "[Dequ'ee]";
+		mes "Still, I don't think we'll learn anything new from those three.";
+		mes "It looks like this case is closed for now. Once again, thanks for your help.";
+		next;
+		mes "[Dequ'ee]";
+		mes "Why don't you report back to Shurank now? I guess he still";
+		mes "wants to show you the ropes of Swordmanship.";
+		set tu_swordman, 21;
+		changequest 8226,8227;
+		close2;
+		if (checkre(0))
+			warp "izlude",127,100;
+		else
+			warp "izlude",35,78;
+		end;
+	}
+	if(tu_swordman == 19){
+		mes "[Dequ'ee]";
+		mes "What are still doing here?";
+		mes "Hurry and check on Bankley!";
+		mes "There's no telling what";
+		mes "he might be up to!";
+		close;
+	}
+	if((tu_swordman == 17) || (tu_swordman == 18)){
+		mes "[Dequ'ee]";
+		if(tu_swordman == 17){
+			mes "TheisWesomeof";
+			mes "ConBanfoevidehi";
+			mes "victkleyundncem";
+			mes "hekdlfiDrindkelsd";
+			next;
+		} else if(tu_swordman == 18){
+			mes "hekdlfiDrindkelsd";
+			mes "TheisWesomeof";
+			mes "ConBanfoevidehi";
+			mes "victkleyundncem";
+			next;
+		}
+		mes "[Dequ'ee]";
+		mes "I get it now!";
+		mes "This is a complex transposition cipher in which we remove one person's code from the rest of them. So who do you think is";
+		mes "the murderer?";
+		next;
+		switch(select("Hans:Bankley:Geil:Muetro")) {
+		case 1:
+			mes "[Dequ'ee]";
+			mes "Hans...?";
+			mes "That can't be right.";
+			mes "It doesn't match with";
+			mes "this algorithm I just";
+			mes "made up. You've got";
+			mes "to try it again!";
+			close;
+		case 2:
+			mes "[Dequ'ee]";
+			mes "Bankley...?";
+			mes "Hey, you might be";
+			mes "right. Let me check...";
+			next;
+			mes "[Dequ'ee]";
+			mes "Yeah, when you take out Bankley's password from the rest of them and read it all in the right order...";
+			next;
+			mes "[Dequ'ee]";
+			mes "Alright! It looks like Bankley is the murderer! Although we can't trust this 100%, this evidence is pretty conclusive.";
+			next;
+			mes "[Dequ'ee]";
+			mes "Hurry over to Morroc and monitor Bankley in case he does anything desperate. If something happens, report to me right away!";
+			set tu_swordman, 19;
+			changequest 8224,8225;
+			if (checkre(3))
+				getexp 162,0;
+			else
+				getexp 1620,0;
+			close2;
+			warp "moc_fild07",359,201;
+			end;
+		case 3:
+			mes "[Dequ'ee]";
+			mes "Geil...?";
+			mes "That can't be right.";
+			mes "It doesn't match with";
+			mes "this algorithm I just";
+			mes "made up. You've got";
+			mes "to try it again!";
+			close;
+		case 4:
+			mes "[Dequ'ee]";
+			mes "Muetro...?";
+			mes "That can't be right.";
+			mes "It doesn't match with";
+			mes "this algorithm I just";
+			mes "made up. You've got";
+			mes "to try it again!";
+			close;
+		}
+	}
+	if(tu_swordman == 16){
+		mes "[Dequ'ee]";
+		mes "I guess these codes need to be arranged in a certain order before we can figure out its secrets.";
+		next;
+		mes "[Dequ'ee]";
+		mes "Hm, you guess the order and I'll try to formulate a cryptanalysis based on your guess.";
+		next;
+		switch(select("Muetro:Hans:Geil:Bankley")) {
+		case 1:
+			mes "[Dequ'ee]";
+			mes "Okay, Muetro's";
+			mes "code is what we'll";
+			mes "use first. Now, whose";
+			mes "code do you think";
+			mes "should go second?";
+			next;
+			switch(select("Hans:Geil:Bankley")) {
+			case 1:
+				mes "[Dequ'ee]";
+				mes "Hans...?";
+				mes "Alright, then";
+				mes "the person with";
+				mes "the third code";
+				mes "would be...?";
+				next;
+				switch(select("Geil:Bankley")) {
+				case 1:
+					mes "[Dequ'ee]";
+					mes "Muetro, Hans,";
+					mes "Geil and Bankley.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "ConBanfoevidehi";
+					mes "victkleyundncem";
+					mes "TheisWesomeof";
+					mes "hekdlfiDrindkelsd";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				case 2:
+					mes "[Dequ'ee]";
+					mes "Muetro, Hans,";
+					mes "Geil and Bankley.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "ConBanfoevidehi";
+					mes "victkleyundncem";
+					mes "hekdlfiDrindkelsd";
+					mes "TheisWesomeof";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				}
+			case 2:
+				mes "[Dequ'ee]";
+				mes "Geil's...?";
+				mes "Alright, then";
+				mes "the person with";
+				mes "the third code";
+				mes "would be...?";
+				next;
+				switch(select("Hans:Bankley")) {
+				case 1:
+					mes "[Dequ'ee]";
+					mes "Muetro, Geil,";
+					mes "Hans and Bankley.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "ConBanfoevidehi";
+					mes "TheisWesomeof";
+					mes "victkleyundncem";
+					mes "hekdlfiDrindkelsd";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				case 2:
+					mes "[Dequ'ee]";
+					mes "Muetro, Geil,";
+					mes "Bankley and Hans.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "ConBanfoevidehi";
+					mes "TheisWesomeof";
+					mes "hekdlfiDrindkelsd";
+					mes "victkleyundncem";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				}
+			case 3:
+				mes "[Dequ'ee]";
+				mes "Bankley's...?";
+				mes "Alright, then";
+				mes "the person with";
+				mes "the third code";
+				mes "would be...?";
+				next;
+				switch(select("Hans:Geil")) {
+				case 1:
+					mes "[Dequ'ee]";
+					mes "Muetro, Bankley,";
+					mes "Hans and Geil.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "ConBanfoevidehi";
+					mes "hekdlfiDrindkelsd";
+					mes "victkleyundncem";
+					mes "TheisWesomeof";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				case 2:
+					mes "[Dequ'ee]";
+					mes "Muetro, Bankley,";
+					mes "Geil and Hans.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "ConBanfoevidehi";
+					mes "hekdlfiDrindkelsd";
+					mes "TheisWesomeof";
+					mes "victkleyundncem";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				}
+			}
+			break;
+		case 2:
+			mes "[Dequ'ee]";
+			mes "Okay, Hans's";
+			mes "code is what we'll";
+			mes "use first. Now, whose";
+			mes "code do you think";
+			mes "should go second?";
+			next;
+			switch(select("Muetro:Geil:Bankley")) {
+			case 1:
+				mes "[Dequ'ee]";
+				mes "Muestro's...?";
+				mes "Alright, then";
+				mes "the person with";
+				mes "the third code";
+				mes "would be...?";
+				next;
+				switch(select("Geil:Bankley")) {
+				case 1:
+					mes "[Dequ'ee]";
+					mes "Hans, Muetro,";
+					mes "Geil and Bankley.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "victkleyundncem";
+					mes "ConBanfoevidehi";
+					mes "TheisWesomeof";
+					mes "hekdlfiDrindkelsd";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				case 2:
+					mes "[Dequ'ee]";
+					mes "Hans, Muetro,";
+					mes "Bankley and Geil.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "victkleyundncem";
+					mes "ConBanfoevidehi";
+					mes "hekdlfiDrindkelsd";
+					mes "TheisWesomeof";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				}
+			case 2:
+				mes "[Dequ'ee]";
+				mes "Geil's...?";
+				mes "Alright, then";
+				mes "the person with";
+				mes "the third code";
+				mes "would be...?";
+				next;
+				switch(select("Muetro:Bankley")) {
+				case 1:
+					mes "[Dequ'ee]";
+					mes "Hans, Geil,";
+					mes "Muetro and Bankley.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "victkleyundncem";
+					mes "TheisWesomeof";
+					mes "ConBanfoevidehi";
+					mes "hekdlfiDrindkelsd";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				case 2:
+					mes "[Dequ'ee]";
+					mes "Hans, Geil,";
+					mes "Bankley and Muetro.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "victkleyundncem";
+					mes "TheisWesomeof";
+					mes "hekdlfiDrindkelsd";
+					mes "ConBanfoevidehi";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				}
+			case 3:
+				mes "[Dequ'ee]";
+				mes "Bankley's...?";
+				mes "Alright, then";
+				mes "the person with";
+				mes "the third code";
+				mes "would be...?";
+				next;
+				switch(select("Muetro:Geil")) {
+				case 1:
+					mes "[Dequ'ee]";
+					mes "Hans, Bankley,";
+					mes "Muetro and Geil.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "victkleyundncem";
+					mes "hekdlfiDrindkelsd";
+					mes "ConBanfoevidehi";
+					mes "TheisWesomeof";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				case 2:
+					mes "[Dequ'ee]";
+					mes "Hans, Bankley,";
+					mes "Geil and Muetro.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "victkleyundncem";
+					mes "hekdlfiDrindkelsd";
+					mes "TheisWesomeof";
+					mes "ConBanfoevidehi";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				}
+			}
+			break;
+		case 3:
+			mes "[Dequ'ee]";
+			mes "Okay, Geil's";
+			mes "code is what we'll";
+			mes "use first. Now, whose";
+			mes "code do you think";
+			mes "should go second?";
+			next;
+			switch(select("Muetro:Hans:Bankley")) {
+			case 1:
+				mes "[Dequ'ee]";
+				mes "Muestro's...?";
+				mes "Alright, then";
+				mes "the person with";
+				mes "the third code";
+				mes "would be...?";
+				next;
+				switch(select("Hans:Bankley")) {
+				case 1:
+					mes "[Dequ'ee]";
+					mes "Geil, Muetro,";
+					mes "Hans and Bankley.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "TheisWesomeof";
+					mes "ConBanfoevidehi";
+					mes "victkleyundncem";
+					mes "hekdlfiDrindkelsd";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try... Wait!";
+					next;
+					mes "[Dequ'ee]";
+					mes "I think that we";
+					mes "can make sense of this";
+					mes "thing! Give me a while";
+					mes "to formulate an algorithm!";
+					set tu_swordman, 17;
+					close;
+				case 2:
+					mes "[Dequ'ee]";
+					mes "Geil, Muetro,";
+					mes "Bankley and Hans.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "TheisWesomeof";
+					mes "ConBanfoevidehi";
+					mes "hekdlfiDrindkelsd";
+					mes "victkleyundncem";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				}
+			case 2:
+				mes "[Dequ'ee]";
+				mes "Han's...?";
+				mes "Alright, then";
+				mes "the person with";
+				mes "the third code";
+				mes "would be...?";
+				next;
+				switch(select("Muetro:Bankley")) {
+				case 1:
+					mes "[Dequ'ee]";
+					mes "Geil, Hans,";
+					mes "Muetro and Bankley.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "TheisWesomeof";
+					mes "victkleyundncem";
+					mes "ConBanfoevidehi";
+					mes "hekdlfiDrindkelsd";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				case 2:
+					mes "[Dequ'ee]";
+					mes "Geil, Hans,";
+					mes "Bankley and Muetro.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "TheisWesomeof";
+					mes "victkleyundncem";
+					mes "hekdlfiDrindkelsd";
+					mes "ConBanfoevidehi";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				}
+			case 3:
+				mes "[Dequ'ee]";
+				mes "Bankley's...?";
+				mes "Alright, then";
+				mes "the person with";
+				mes "the third code";
+				mes "would be...?";
+				next;
+				switch(select("Muetro:Hans")) {
+				case 1:
+					mes "[Dequ'ee]";
+					mes "Geil, Bankley,";
+					mes "Muetro and Hans.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "TheisWesomeof";
+					mes "hekdlfiDrindkelsd";
+					mes "ConBanfoevidehi";
+					mes "victkleyundncem";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				case 2:
+					mes "[Dequ'ee]";
+					mes "Geil, Bankley,";
+					mes "Hans and Muetro.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "TheisWesomeof";
+					mes "hekdlfiDrindkelsd";
+					mes "victkleyundncem";
+					mes "ConBanfoevidehi";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				}
+			}
+			break;
+		case 4:
+			mes "[Dequ'ee]";
+			mes "Okay, Bankley's";
+			mes "code is what we'll";
+			mes "use first. Now, whose";
+			mes "code do you think";
+			mes "should go second?";
+			next;
+			switch(select("Muetro:Hans:Geil")) {
+			case 1:
+				mes "[Dequ'ee]";
+				mes "Muestro's...?";
+				mes "Alright, then";
+				mes "the person with";
+				mes "the third code";
+				mes "would be...?";
+				next;
+				switch(select("Hans:Geil")) {
+				case 1:
+					mes "[Dequ'ee]";
+					mes "Bankley, Muetro,";
+					mes "Hans and Geil.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "hekdlfiDrindkelsd";
+					mes "ConBanfoevidehi";
+					mes "victkleyundncem";
+					mes "TheisWesomeof";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				case 2:
+					mes "[Dequ'ee]";
+					mes "Bankley, Muetro,";
+					mes "Geil and Hans.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "hekdlfiDrindkelsd";
+					mes "ConBanfoevidehi";
+					mes "TheisWesomeof";
+					mes "victkleyundncem";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				}
+			case 2:
+				mes "[Dequ'ee]";
+				mes "Hans's...?";
+				mes "Alright, then";
+				mes "the person with";
+				mes "the third code";
+				mes "would be...?";
+				next;
+				switch(select("Muetro:Geil")) {
+				case 1:
+					mes "[Dequ'ee]";
+					mes "Bankley, Hans,";
+					mes "Muetro and Geil.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "hekdlfiDrindkelsd";
+					mes "victkleyundncem";
+					mes "ConBanfoevidehi";
+					mes "TheisWesomeof";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				case 2:
+					mes "[Dequ'ee]";
+					mes "Bankley, Hans,";
+					mes "Geil and Muetro.";
+					mes "So then the full";
+					mes "code would be...";
+					mes " ";
+					mes "hekdlfiDrindkelsd";
+					mes "victkleyundncem";
+					mes "TheisWesomeof";
+					mes "ConBanfoevidehi";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				}
+			case 3:
+				mes "[Dequ'ee]";
+				mes "Geil's...?";
+				mes "Alright, then";
+				mes "the person with";
+				mes "the third code";
+				mes "would be...?";
+				next;
+				switch(select("Muetro:Hans")) {
+				case 1:
+					mes "[Dequ'ee]";
+					mes "Bankley, Geil,";
+					mes "Muetro, and Hans.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "hekdlfiDrindkelsd";
+					mes "TheisWesomeof";
+					mes "ConBanfoevidehi";
+					mes "victkleyundncem";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try... Wait!";
+					next;
+					mes "[Dequ'ee]";
+					mes "I think that we";
+					mes "can make sense of this";
+					mes "thing! Give me a while";
+					mes "to formulate an algorithm!";
+					set tu_swordman, 18;
+					close;
+				case 2:
+					mes "[Dequ'ee]";
+					mes "Bankley, Geil,";
+					mes "Hans, Muetro.";
+					mes "So then the full";
+					mes "code would be...";
+					next;
+					mes "[Dequ'ee]";
+					mes " ";
+					mes "hekdlfiDrindkelsd";
+					mes "TheisWesomeof";
+					mes "victkleyundncem";
+					mes "ConBanfoevidehi";
+					next;
+					mes "[Dequ'ee]";
+					mes "No...";
+					mes "There's no way";
+					mes "I can decode it the";
+					mes "way it is now. Let's";
+					mes "try another combination.";
+					close;
+				}
+			}
+			break;
+		}
+	}
+	if(tu_swordman == 15){
+		set .@hans$, "victkleyundncem";
+		set .@bang$, "hekdlfiDrindkelsd";
+		set .@mutr$, "ConBanfoevidehi";
+		set .@geil$, "TheisWesomeof";
+		mes "[Dequ'ee]";
+		mes "Ah, you're back.";
+		mes "I've just got a new";
+		mes "lead on the possible";
+		mes "identity of the killer.";
+		next;
+		mes "[Dequ'ee]";
+		mes "I've just heard that all our suspects have pieces of some";
+		mes "sort of code. If we can put the code together and decipher it, we can figure out who the murderer might be.";
+		next;
+		mes "[Dequ'ee]";
+		mes "Did you get all the codes";
+		mes "from all the suspects? First,";
+		mes "tell me the code that Hans had.";
+		next;
+		input .@inputstr$;
+		if(.@inputstr$ == .@hans$){
+			mes "[Dequ'ee]";
+			mes "victkleyundncem?";
+			mes "That's certainly";
+			mes "strange sounding.";
+			mes "Now, tell me Bankley's.";
+			next;
+			input .@inputstr$;
+			if(.@inputstr$ == .@bang$){
+				mes "[Dequ'ee]";
+				mes "hekdlfiDrindkelsd..";
+				mes "What the hell is that...?";
+				mes "It's certainly cryptic.";
+				mes "What about Muetro's?";
+				next;
+				input .@inputstr$;
+				if(.@inputstr$ == .@mutr$){
+					mes "[Dequ'ee]";
+					mes "ConBanfoevidehi.";
+					mes "This is going to";
+					mes "be tough to figure";
+					mes "out. Alright, now";
+					mes "tell me Geil's.";
+					next;
+					input .@inputstr$;
+					if(.@inputstr$ == .@geil$){
+						mes "[Dequ'ee]";
+						mes "TheisWesomeof...";
+						mes "Alright, great.";
+						mes "Now all we have to";
+						mes "do is figure out what";
+						mes "all of this means.";
+						next;
+						mes "[Dequ'ee]";
+						mes "This is going to";
+						mes "be really difficult.";
+						mes "Do you have any ideas?";
+						mes "We have to figure this";
+						mes "out, it's the only clue";
+						mes "that we have...";
+						set tu_swordman, 16;
+						changequest 8223,8224;
+						close;
+					} else {
+						mes "[Dequ'ee]";
+						mes "...Are you sure that you heard";
+						mes "him right? Why don't you go check it out again?";
+						close;
+					}
+				} else {
+	
+					mes "[Dequ'ee]";
+					mes "...Are you sure that you heard";
+					mes "him right? Why don't you go check it out again?";
+					close;
+	
+				}
+			} else {
+				mes "[Dequ'ee]";
+				mes "...Are you sure that you heard";
+				mes "him right? Why don't you go check it out again?";
+				close;
+			}
+		} else {
+	
+			mes "[Dequ'ee]";
+			mes "Are you sure that's right?";
+			mes "No, no, I don't think it is.";
+			mes "Would you check that code and interrogate the suspects again";
+			mes "if you need to?";
+			close;
+	
+		}
+	}
+	if(tu_swordman == 14){
+		mes "[Dequ'ee]";
+		mes "Didn't I ask you";
+		mes "to interrogate the";
+		mes "suspects over in Morroc?";
+		mes "We need to finish this";
+		mes "investigation as soon";
+		mes "as possible!";
+		close;
+	}
+	if(tu_swordman == 13){
+		mes "[Dequ'ee]";
+		mes "Ah, you're here!";
+		mes "Shurank must have";
+		mes "asked you to help me.";
+		mes "I really appreciate that.";
+		next;
+		mes "[Dequ'ee]";
+		mes "As you've probably figured out, I'm currently investigating a murder. Basically, I want you to help me figure out who the killer is.";
+		next;
+		mes "[Dequ'ee]";
+		mes "As for the victim, well, that's classified information. You understand, don't you?";
+		next;
+		mes "[Dequ'ee]";
+		mes "Now, I want you to go to Morroc and interrogate four suspects. Their names are ^5D478BMuetro^000000, ^5D478BGeil^000000, ^5D478BHans^000000";
+		mes "and ^5D478BBankley^000000. It shouldn't be too difficult.";
+		next;
+		mes "[Dequ'ee]";
+		mes "After you speak to all of them, come back and report to me. And it's especially important that you remember or write down any important clues you might get";
+		mes "from our suspects.";
+		next;
+		mes "[Dequ'ee]";
+		mes "Also, keep in mind that this is a special mission for the Swordman Association. So keep everything you learn a secret. Understood?";
+		next;
+		mes "[Dequ'ee]";
+		mes "Now go and see if you can learn anything from Muetro, Geil, Hans and Bankley. We've got to figure out the killer's identity as soon as we can!";
+		next;
+		mes "[Dequ'ee]";
+		mes "Oh wait...";
+		mes "Morroc is a little far. Alright, I'll drop you off somewhere";
+		mes "near that city.";
+		next;
+		set tu_swordman, 14;
+		changequest 8222,8223;
+		warp "moc_fild07",359,201;
+		close;
+	}
+	if((tu_swordman > 7) && (tu_swordman < 13)){
+		mes "[Dequ'ee]";
+		mes "Hmm...";
+		mes "Still receiving";
+		mes "special training";
+		mes "from Shurank?";
+		next;
+		mes "[Dequ'ee]";
+		mes "That's great.";
+		mes "Swordmen nowadays are getting sloppier and sloppier. Someone has to keep the new guys in line and on their toes!";
+		close;
+	}
+	if(tu_swordman == 7){
+		mes "[Dequ'ee]";
+		mes "What are you";
+		mes "still doing here?";
+		mes "Go and deliver my";
+		mes "message to Shurank.";
+		next;
+		mes "[Dequ'ee]";
+		mes "Let him now that we aren't";
+		mes "sure of the killer's identity,";
+		mes "but we have a list of suspects.";
+		mes "Sooner or later, we'll figure";
+		mes "out who he is.";
+		close;
+	}
+	if(tu_swordman == 6){
+		mes "[Dequ'ee]";
+		mes "Ah...!";
+		mes "Are you the Swordman";
+		mes "sent by Shurank? Good,";
+		mes "I've been waiting...";
+		next;
+		mes "[Dequ'ee]";
+		mes "Now tell me...";
+		mes "What message does";
+		mes "Shurank have for me?";
+		next;
+		switch(select("Killer...:Murderer...")) {
+		case 1:
+			mes "[" + strcharinfo(0) + "]";
+			mes "What happened";
+			mes "to the killer?";
+			next;
+			switch(select("Who he is...:Who is behind...")) {
+			case 1:
+				mes "[" + strcharinfo(0) + "]";
+				mes "Did you find";
+				mes "out who he is?";
+				mes "If you did...";
+				next;
+				switch(select("Why are we...:What are we...")) {
+				case 1:
+					mes "[" + strcharinfo(0) + "]";
+					mes "Why are sitting";
+					mes "around, doing nothing?!";
+					next;
+					mes "[Dequ'ee]";
+					mes "So Shurank is asking,";
+					mes "'What happened to the killer?";
+					mes "Did you find out who he is? If you did, why are we sitting around, doing nothing?'";
+					next;
+					mes "[Dequ'ee]";
+					mes "Hmm...";
+					mes "That doesn't seem to";
+					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
+					mes "a response...";
+					close;
+				case 2:
+					mes "[" + strcharinfo(0) + "]";
+					mes "What are we";
+					mes "supposed to do now?";
+					next;
+					mes "[Dequ'ee]";
+					mes "So Shurank is asking,";
+					mes "'What happened to the killer?";
+					mes "Did you find out who he is? If you did, what are we supposed to do now?'";
+					next;
+					mes "[Dequ'ee]";
+					mes "Hmm...";
+					mes "That doesn't seem to";
+					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
+					mes "a response...";
+					close;
+				}
+			case 2:
+				mes "[" + strcharinfo(0) + "]";
+				mes "Did you figure out";
+				mes "who's behind all this?";
+				mes "If you did...";
+				next;
+				switch(select("Why are we...:What are we...")) {
+				case 1:
+					mes "[" + strcharinfo(0) + "]";
+					mes "Why are sitting";
+					mes "around, doing nothing?!";
+					next;
+					mes "[Dequ'ee]";
+					mes "So Shurank is asking,";
+					mes "'What happened to the killer?";
+					mes "Did you figure out who's behind all this? If you did, why are we sitting around, doing nothing?'";
+					next;
+					mes "[Dequ'ee]";
+					mes "Hmm...";
+					mes "That doesn't seem to";
+					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
+					mes "a response...";
+					close;
+				case 2:
+					mes "[" + strcharinfo(0) + "]";
+					mes "What are we";
+					mes "supposed to do now?";
+					next;
+					mes "[Dequ'ee]";
+					mes "So Shurank is asking,";
+					mes "'What happened to the killer?";
+					mes "Did you figure out who's behind all this? If you did, what are we supposed to do now?'";
+					next;
+					mes "[Dequ'ee]";
+					mes "Hmm...";
+					mes "That doesn't seem to";
+					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
+					mes "a response...";
+					close;
+				}
+			}
+			break;
+		case 2:
+			mes "[" + strcharinfo(0) + "]";
+			mes "What happened";
+			mes "to the murderer?";
+			next;
+			switch(select("Who he is...:Who is behind...")) {
+			case 1:
+				mes "[" + strcharinfo(0) + "]";
+				mes "Did you find";
+				mes "out who he is?";
+				mes "If you did...";
+				next;
+				switch(select("Why are we...:What are we...")) {
+				case 1:
+					mes "[" + strcharinfo(0) + "]";
+					mes "Why are sitting";
+					mes "around, doing nothing?!";
+					next;
+					mes "[Dequ'ee]";
+					mes "So Shurank is asking,";
+					mes "'What happened to the";
+					mes "murderer? Did you find";
+					mes "out who he is? If you did,";
+					mes "why are we sitting around,";
+					mes "doing nothing?'";
+					next;
+					mes "[Dequ'ee]";
+					mes "Hmm...";
+					mes "That doesn't seem to";
+					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
+					mes "a response...";
+					close;
+				case 2:
+					mes "[" + strcharinfo(0) + "]";
+					mes "What are we";
+					mes "supposed to do now?";
+					next;
+					mes "[Dequ'ee]";
+					mes "So Shurank is asking,";
+					mes "'What happened to the";
+					mes "murderer? Did you find";
+					mes "out who he is? If you did,";
+					mes "what are we supposed to do now?'";
+					next;
+					mes "[Dequ'ee]";
+					mes "Hmm...";
+					mes "I understand";
+					mes "his concerns.";
+					mes "Alright, now please";
+					mes "give him this answer.";
+					next;
+					mes "[Dequ'ee]";
+					mes "We haven't found";
+					mes "out who the murderer";
+					mes "is for sure. However,";
+					mes "we have a list of suspects";
+					mes "and we'll figure it out soon.";
+					next;
+					mes "[Dequ'ee]";
+					mes "Thank you for taking the trouble to come this far. Let me reward you with some experience points.";
+					set tu_swordman, 7;
+					changequest 8216,8217;
+					if (checkre(3))
+						getexp 112,0;
+					else
+						getexp 1120,0;
+					next;
+					mes "[Dequ'ee]";
+					mes "Take care";
+					mes "of yourself,";
+					mes "brave Swordman.";
+					next;
+					if (checkre(0))
+						warp "izlude",127,100;
+					else
+						warp "izlude",35,78;
+					close;
+				}
+			case 2:
+				mes "[" + strcharinfo(0) + "]";
+				mes "Did you figure out";
+				mes "who's behind all this?";
+				mes "If you did...";
+				next;
+				switch(select("Why are we...:What are we...")) {
+				case 1:
+					mes "[" + strcharinfo(0) + "]";
+					mes "Why are sitting";
+					mes "around, doing nothing?!";
+					next;
+					mes "[Dequ'ee]";
+					mes "So Shurank is asking,";
+					mes "'What happened to the";
+					mes "murderer? Did you figure";
+					mes "out who's behind all this?";
+					mes "If you did, why are we sitting around, doing nothing?'";
+					next;
+					mes "[Dequ'ee]";
+					mes "Hmm...";
+					mes "That doesn't seem to";
+					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
+					mes "a response...";
+					close;
+				case 2:
+					mes "[" + strcharinfo(0) + "]";
+					mes "What are we";
+					mes "supposed to do now?";
+					next;
+					mes "[Dequ'ee]";
+					mes "So Shurank is asking,";
+					mes "'What happened to the";
+					mes "murderer? Did you figure";
+					mes "out who's behind all this?";
+					mes "If you did, what are we";
+					mes "supposed to do now?";
+					next;
+					mes "[Dequ'ee]";
+					mes "Hmm...";
+					mes "That doesn't seem to";
+					mes "be the message I'm supposed to receive from Shurack. I need his exact message or I can't send";
+					mes "a response...";
+					close;
+				}
+			}
+			break;
+		}
+	}
+	
+	mes "Hmm...?";
+	mes "Do you have any";
+	mes "business with me?";
+	close;
+}
+
+// Geil
+//============================================================
+morocc_in,51,101,3	script	Geil	89,{
+	mes "[Geil]";
+	if(tu_swordman == 15){
+		mes "Were you sent by the authorities? Quit giving me such a hard time! I'm not the murderer! I don't even know who was killed. I'm not the one you're looking for!";
+		next;
+		mes "[Geil]";
+		mes "Sure, some weird";
+		mes "guy told me some";
+		mes "kind of code related to all this, but that's it! That's all I know! I'm not the killer, I'm not an accessory, nothing!";
+		next;
+		mes "[Geil]";
+		mes "^5D478BTheisWesomeof^000000";
+		mes "That's the code. I can't believe that I'm unable to forget this.";
+		mes "I mean, I think I was drunk";
+		mes "when that guy told me.";
+		next;
+		mes "[Geil]";
+		mes "What's so important about this code, and why do you guys keep hounding me about the murder?!";
+		close;
+	}
+	if(tu_swordman == 14){
+		mes "Were you sent by the authorities? Quit giving me such a hard time! I'm not the murderer! I don't even know who was killed. I'm not the one you're looking for!";
+		next;
+		mes "[Geil]";
+		mes "Sure, some weird";
+		mes "guy told me some";
+		mes "kind of code related to all this, but that's it! That's all I know! I'm not the killer, I'm not an accessory, nothing!";
+		next;
+		mes "[Geil]";
+		mes "^5D478BTheisWesomeof^000000";
+		mes "That's the code. I can't believe that I'm unable to forget this.";
+		mes "I mean, I think I was drunk";
+		mes "when that guy told me.";
+		next;
+		mes "[Geil]";
+		mes "What's so important about this code, and why do you guys keep hounding me about the murder?!";
+		set tu_swordman, 15;
+		close;
+	}
+	mes "We should all";
+	mes "strive to live in";
+	mes "peace and harmony";
+	mes "with our fellow man.";
+	next;
+	mes "[Geil]";
+	mes "But fear, distrust and panic always seem to get in the way and mess up world events. We've got to find it within ourselves to get along with others. Don't you agree?";
+	close;
+}
+
+// Meutro
+//============================================================
+morocc,82,292,5	script	Muetro	84,{
+	mes "[Muetro]";
+	if(tu_swordman == 15){
+		mes "You're just";
+		mes "like all the others.";
+		mes "You want the code";
+		mes "I know, right?";
+		next;
+		mes "[Muetro]";
+		mes "^5D478BConBanfoevidehi^000000";
+		mes "Happy now? Now";
+		mes "leave me alone and";
+		mes "catch the murderer.";
+		close;
+	}
+	if(tu_swordman == 14){
+		mes "You're just";
+		mes "like all the others.";
+		mes "You want the code";
+		mes "I know, right?";
+		next;
+		mes "[Muetro]";
+		mes "^5D478BConBanfoevidehi^000000";
+		mes "Happy now? Now";
+		mes "leave me alone and";
+		mes "catch the murderer.";
+		set tu_swordman, 15;
+		close;
+	}
+	mes "^666666*Sigh*^000000";
+	mes "I try and I try, but sometimes ridiculous things happen and";
+	mes "I can't do anything about them.";
+	next;
+	mes "[Muetro]";
+	mes "I suppose it's fate. There's no escaping what I can't possibly";
+	mes "hope to control or understand.";
+	close;
+}
+
+// Hans
+//============================================================
+morocc,240,72,3	script	Hans	86,{
+	mes "[Hans]";
+	if(tu_swordman == 15){
+		mes "Help me!";
+		mes "Please help me!";
+		mes "I'm no murderer!";
+		mes "I'm practically";
+		mes "harmless!";
+		next;
+		mes "[Hans]";
+		mes "^5D478Bvictkleyundncem^000000";
+		mes "This is code I know.";
+		mes "Some strange person";
+		mes "told it to me earlier and said";
+		mes "that I'd need to know it soon!";
+		next;
+		mes "[Hans]";
+		mes "He said that this code";
+		mes "would save my life. First,";
+		mes "I thought he was crazy, but for";
+		mes "some reason I can't forget it.";
+		next;
+		mes "[Hans]";
+		mes "It's like he used magic or something to make it stick out in my brain. Please leave me alone, this is all I know!";
+		close;
+	}
+	if(tu_swordman == 14){
+		mes "Help me!";
+		mes "Please help me!";
+		mes "I'm no murderer!";
+		mes "I'm practically";
+		mes "harmless!";
+		next;
+		mes "[Hans]";
+		mes "^5D478Bvictkleyundncem^000000";
+		mes "This is code I know.";
+		mes "Some strange person";
+		mes "told it to me earlier and said";
+		mes "that I'd need to know it soon!";
+		next;
+		mes "[Hans]";
+		mes "He said that this code";
+		mes "would save my life. First,";
+		mes "I thought he was crazy, but for";
+		mes "some reason I can't forget it.";
+		next;
+		mes "[Hans]";
+		mes "It's like he used magic or something to make it stick out in my brain. Please leave me alone, this is all I know!";
+		set tu_swordman, 15;
+		close;
+	}
+	mes "I'm sorry...";
+	mes "But I don't think I can be of any help to you. Right now, it seems that I've got problems of my own...";
+	close;
+}
+
+// Bankley
+//============================================================
+morocc_in,12,156,3	script	Bankley	97,{
+	if(tu_swordman > 19){
+		mes "^3355FFBankley had a pitiable";
+		mes "expression on his face.^000000";
+		mes "^3355FFHis body is completely lifeless. There's a long, deep wound in his chest, and a blood drenched knife is clenched in his right hand.^000000";
+		close;
+	}
+	if(tu_swordman == 19){
+		mes "...";
+		mes "......";
+		next;
+		mes "^3355FFHe's dead!^000000";
+		next;
+		mes "^3355FFBankley had a sad, pitiable expression on his face. Since the color is still fresh in his cheeks, he died only a little while ago.";
+		mes "^3355FFThere is a long, deep wound in his chest, and a blood drenched knife is clenched in his right hand.^000000";
+		set tu_swordman, 20;
+		changequest 8225,8226;
+		close;
+	}
+	mes "[Bankley]";
+	if(tu_swordman == 15){
+		mes "I didn't kill anybody...!";
+		mes "I'm innocent and don't";
+		mes "have anything to hide!";
+		next;
+		mes "[Bankley]";
+		mes "But look...";
+		mes "If it helps, let me give you this weird code that some strange guy gave me. I guess it's supposed to be some kind of clue.";
+		next;
+		mes "[Bankley]";
+		mes "^5D478BhekdlfiDrindkelsd^000000";
+		mes "Do you understand what";
+		mes "it means? I have no idea, but";
+		mes "I told you everything I know!";
+		next;
+		mes "[Bankley]";
+		mes "I feel so violated!";
+		mes "Once you prove I'm innocent, are you going to compensate me for";
+		mes "my mental suffering!?";
+		next;
+		mes "[Bankley]";
+		mes "Stop bothering me";
+		mes "and wasting your time.";
+		mes "You're better off hunting";
+		mes "for the real culprit!";
+		close;
+	}
+	if(tu_swordman == 14){
+		mes "I didn't kill anybody...!";
+		mes "I'm innocent and don't";
+		mes "have anything to hide!";
+		next;
+		mes "[Bankley]";
+		mes "But look...";
+		mes "If it helps, let me give you this weird code that some strange guy gave me. I guess it's supposed to be some kind of clue.";
+		next;
+		mes "[Bankley]";
+		mes "^5D478BhekdlfiDrindkelsd^000000";
+		mes "Do you understand what";
+		mes "it means? I have no idea, but";
+		mes "I told you everything I know!";
+		next;
+		mes "[Bankley]";
+		mes "I feel so violated!";
+		mes "Once you prove I'm innocent, are you going to compensate me for";
+		mes "my mental suffering!?";
+		next;
+		mes "[Bankley]";
+		mes "Stop bothering me";
+		mes "and wasting your time.";
+		mes "You're better off hunting";
+		mes "for the real culprit!";
+		set tu_swordman, 15;
+		close;
+	}
+	mes "Even though I can't afford it now, my dream is to travel around the world and visit all of its great cities!";
+	next;
+	mes "[Bankley]";
+	mes "Someday, I'm sure I'll get the chance to make my dreams";
+	mes "come true. But for now, I'll have to live as best as I can.";
+	close;
+}

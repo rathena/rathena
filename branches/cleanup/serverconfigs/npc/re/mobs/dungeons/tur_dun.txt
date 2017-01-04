@@ -1,0 +1,52 @@
+//===== rAthena Script =======================================
+//= Turtle Island Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.2 Official kRO 10.1 spawns [Playtester]
+//============================================================
+
+//==================================================
+// tur_dun01 - Turtle Island
+//==================================================
+tur_dun01,0,0,0,0	monster	Dragon Tail	1321,25,5000,0,0
+tur_dun01,0,0,0,0	monster	Spring Rabbit	1322,25,5000,0,0
+tur_dun01,0,0,0,0	monster	Pest	1256,15,5000,0,0
+tur_dun01,0,0,0,0	monster	Thara Frog	1034,10,5000,0,0
+tur_dun01,0,0,0,0	monster	Permeter	1314,10,5000,0,0
+
+//==================================================
+// tur_dun02 - Turtle Island Dungeon
+//==================================================
+tur_dun02,0,0,0,0	monster	Solider	1316,40,5000,0,0
+tur_dun02,0,0,0,0	monster	Permeter	1314,40,5000,0,0
+tur_dun02,0,0,0,0	monster	Freezer	1319,20,5000,0,0
+tur_dun02,0,0,0,0	monster	Pest	1256,15,5000,0,0
+
+//==================================================
+// tur_dun03 - Good Turtles Village
+//==================================================
+tur_dun03,0,0,0,0	monster	Freezer	1319,40,5000,0,0
+tur_dun03,0,0,0,0	monster	Assaulter	1315,35,5000,0,0
+tur_dun03,0,0,0,0	monster	Permeter	1314,15,5000,0,0
+tur_dun03,0,0,0,0	monster	Heater	1318,10,5000,0,0
+
+//==================================================
+// tur_dun04 - Turtle Palace
+//==================================================
+tur_dun04,0,0,0,0	monster	Assaulter	1315,41,5000,0,0
+tur_dun04,0,0,0,0	monster	Heater	1318,33,5000,0,0
+tur_dun04,0,0,0,0	monster	Freezer	1319,15,5000,0,0
+tur_dun04,0,0,0,0	monster	Permeter	1314,4,5000,0,0
+tur_dun04,99,93,20,20	boss_monster	Turtle General	1312,1,3600000,600000,0
+
+//==================================================
+// tur_dun05 - Underground Swamp Zone
+//==================================================
+tur_dun05,0,0,0,0	monster	Freezer	1319,5,5000,0,0
+tur_dun05,0,0,0,0	monster	Permeter	1314,3,5000,0,0
+tur_dun05,0,0,0,0	monster	Assaulter	1315,1,5000,0,0

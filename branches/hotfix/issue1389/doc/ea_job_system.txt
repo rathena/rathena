@@ -1,0 +1,249 @@
+//===== rAthena Documentation ================================
+//= eAthena Job System
+//===== By: ==================================================
+//= Skotlex
+//===== Last Updated: ========================================
+//= 20130209
+//===== Description: =========================================
+//= A reference description of eA's inner job system (for use
+//= in scripts through the eaclass and roclass script commands).
+//============================================================
+
+Preface:
+-------------------------------------------------------------------------------
+
+	Most scripters are aware of the class values used in RO and their constants
+	specified in src/map/script_constants.h. Each class has a number associated
+	to it for referencing, so when someone's class is 9 that means they are a
+	wizard. However, this list of job numbers has no real order behind it, and
+	no logic behind it's assignation.
+
+	You can add 3999 to a job to get their rebirth ID, but if you try to do the
+	same to get the Baby class ID, that fails on the super Baby class. Also,
+	there's no way to calculate, from a given first class, which classes would
+	be their "evolution". That is, given the Archer's ID, you cannot just add
+	a value that will return you "Hunter", and will still work if applied to
+	the other classes. It didn't help much when they added Taekwon Boy, a first
+	class, with an ID of 4046, and much later they added Ninja/Gunslinger with
+	the IDs 25/24. How do you identify a first class on all this mess without
+	recurring to very ugly range checks?
+
+The eA Job System:
+-------------------------------------------------------------------------------
+
+	Since the code also required to do this kind of checks for various skills
+	(the Soul Linker Spirit buffs specifically come to mind), an alternate job
+	ID system was developed, which attempts to make more sense and make it
+	easier to check where a particular job stands in relation to the rest.
+
+	The scheme consists in that every job can be broken down by 3 criteria:
+
+- Base Job: This determines to which class-tree a job belongs. All jobs can be
+  traced back to their root. The base job of all classes has to be one of the
+  following:
+
+	EAJ_NOVICE		0x0
+	EAJ_SWORDMAN	0x1
+	EAJ_MAGE		0x2
+	EAJ_ARCHER		0x3
+	EAJ_ACOLYTE		0x4
+	EAJ_MERCHANT	0x5
+	EAJ_THIEF		0x6
+	EAJ_TAEKWON		0x7
+	EAJ_GUNSLINGER	0x9
+	EAJ_NINJA		0x0A
+	EAJ_GANGSI		0x0D
+
+- Branch: All classes can be classified as "1st Class", "2-1 Class" or
+  "2-2 Class":
+
+	EAJL_2_1	0x100
+	EAJL_2_2	0x200
+	EAJL_2		0x300
+
+- The third category is type. Classes can either be normal, rebirth/advanced,
+  adopted, or third class.
+
+	EAJL_UPPER	0x1000
+	EAJL_BABY	0x2000
+	EAJL_THIRD	0x4000
+
+So using these three categories, any job class can be constructed from the
+others. Let's take a swordman, for example.
+
+The first step is basic swordman, with nothing else:
+
+	EAJ_SWORDMAN
+
+If a swordman is adopted...
+
+	EAJ_SWORDMAN|EAJL_BABY -> EAJ_BABY_SWORDMAN
+
+The next step is to either become a 2-1 or a 2-2 job:
+
+	EAJ_SWORDMAN|EAJL_2_1 -> EAJ_KNIGHT
+	EAJ_SWORDMAN|EAJL_2_2 -> EAJ_CRUSADER
+
+Getting out the rebirth versions of a swordman:
+
+	EAJ_SWORDMAN|EAJL_UPPER 			-> EAJ_SWORDMAN_HIGH
+	EAJ_SWORDMAN|EAJL_2_1|EAJL_UPPER	-> EAJ_LORD_KNIGHT
+	EAJ_SWORDMAN|EAJL_2_2|EAJL_UPPER	-> EAJ_PALADIN
+
+Or getting the third job versions:
+
+	EAJ_SWORDMAN|EAJL_2_1|EAJL_THIRD	-> EAJ_RUNE_KNIGHT
+	EAJ_SWORDMAN|EAJL_2_2|EAJL_THIRD	-> EAJ_ROYAL_GUARD
+
+Why are we using the bitwise OR operand ('|') rather than just adding? Because
+the OR is wreck-proof:
+
+	EAJ_SWORDMAN_HIGH|EAJL_UPPER -> EAJ_SWORDMAN_HIGH
+
+If we had used addition, we would have gotten a completely different result.
+
+The EAJL (eA Job Level) constants
+-------------------------------------------------------------------------------
+
+	There are a few constants which can be used to filter out and make job
+	comparisons easier. The comparisons involve eA job IDs, not classic job
+	IDs, using the eaclass() command explained in the next section.
+
+	set @eac, eaclass();
+
+EAJL_2_1:
+	Checks if the class is a 2-1 class:
+	if (@eac&EAJL_2_1)
+		mes "Using the classic 2-1 job, huh?";
+
+EAJL_2_2:
+	Checks if the class is a 2-2 class:
+	if (@eac&EAJL_2_2)
+		mes "Oh, a 2-2 job!";
+
+EAJL_2:
+	Checks if the class is a 2nd Class. If the check fails, you can be sure
+	the character is a first class.
+	if (!(@eac&EAJL_2))
+		mes "Will you wait until Job 50 to change?";
+
+EAJL_UPPER:
+	Check if a class is Rebirth/Advanced:
+	if(@eac&EAJL_UPPER)
+		mes "It must have taken you a LONG time...";
+
+EAJL_BABY:
+	Check if a class is an adopted class.
+	if (@eac&EAJL_BABY)
+		mes "Don't you hate being weak?";
+
+EAJL_THIRD:
+	Checks if a class is a third job.
+	if(@eac&EAJL_THIRD)
+		mes "Wow, you've really grown!";
+
+EAJ_UPPERMASK:
+	The upper mask can be used to "strip" the upper/baby characteristics of a
+	class, used when you want to know if someone is a certain class regardless
+	of rebirth/adopted status. For example, the following code would go through
+	for Monks, Champions and Baby Monks:
+	if ((@eac&EAJ_UPPERMASK) == EAJ_MONK)
+		mes "Aren't knuckles such a cool weapon?";
+
+	Note that if instead of EAJ_MONK you used EAJ_CHAMPION or EAJ_BABY_MONK,
+	the check would had never passed, since the upper/baby state has been
+	removed from the original job when checking.
+
+EAJ_BASEMASK:
+	This mask strips also the 2nd class attributes. It can be used to check
+	against the basic job of a character. For example, the following code would
+	go through for Merchants (+Baby Merchant and High Merchant), Blacksmiths
+	(+Baby blacksmiths and Whitesmith) and Alchemist (+Baby Alchemist and
+	+Creator):
+	if ((@eac&EAJ_BASEMASK) == EAJ_MERCHANT)
+		mes "Why I can't have discount like you guys do?";
+
+	Note that, like before, if you try to check versus any of the other
+	classes  (High merchant, blacksmith, etc) instead of basic merchant, the
+	check will  always fail for the same reasons previously explained.
+
+EAJ_THIRDMASK:
+	This mask strips 3rd class attributes.  It will give the "normal" class of
+	a third job, regardless of rebirth/adopted status.  When used on non-third
+	class characters, it will return the second job, or, if that also doesn't
+	exist, the first.
+	if ((@eac&EAJ_THIRDMASK) == EAJ_WARLOCK_T)
+		mes "You've gone through rebirth, I see.";
+
+The script commands eaclass, roclass:
+-------------------------------------------------------------------------------
+
+	These script commands are what you can use in scripts to convert between
+	the RO classic job id, and eA's job system. The following script code
+	demonstrates how to use these script commands to guess what your next job
+	will be:
+
+	set @eac, eaclass();
+	if (@eac&EAJL_2)
+	{	//2nd class
+		//If upper or baby, you can't rebirth
+		if (@eac&(EAJL_UPPER|EAJL_BABY)) {
+			mes "You can't go anywhere, can you?";
+			close;
+		}
+		//Note that if we remove the EAJL_BABY check up there, the following
+		//check will also fail, because there's no such thing as Rebirth-Baby
+		//classes.
+		set @newclass, roclass(@eac|EAJL_UPPER);
+		if (@newclass == -1) {
+			//Don't you hate this of SG and SL?
+			mes "Haha, your class doesn't has a rebirth version yet!";
+			close;
+		}
+		mes "Still dreaming of the day you become a "+jobname(@newclass)+"?";
+		close;
+	}
+	set @class1, roclass(@eac|EAJL_2_1);
+	set @class2, roclass(@eac|EAJL_2_2);
+	if (@class1 == -1) {
+		mes "Looks like you are stuck forever on that class.";
+		close;
+	}
+	if (@class2 == -1) {
+		//Not quite true, currently the only 1st class that doesn't has two
+		//choices is Novice -> Supernovice (see s.novice section below)
+		mes "Looks like you have no choice but to be a "+jobname(@class1)+".";
+		close;
+	}
+	mes "Have you decided yet if you want to be a "+jobname(@class1)+" or a "+jobname(@class2)+"?";
+	close;
+
+
+Oddities of the System:
+-------------------------------------------------------------------------------
+About Bards and Dancers:
+	These two classes are considered the same in eA's job system, since they
+	both are the 2-2 job of archers. The only way to tell them apart is by
+	using the gender of the character we are referring to. The script command
+	roclass() will automatically use the gender of the attached player (or
+	'male' if there's no such player), but you can also explicitly pass the
+	gender to the script command when there's no player attached.
+
+About Novices and Super Novices:
+	These are treated a bit differently from you'd expect. Because.. for
+	instance, a novice is not supposed to be a 1st class, but it is considered
+	as one on this tree system:
+
+	EAJ_NOVICE                    -> Novice
+	EAJ_NOVICE|EAJL_2_1           -> EAJ_SUPER_NOVICE
+	EAJ_NOVICE|EAJL_UPPER         -> EAJ_NOVICE_HIGH
+	EAJ_NOVICE|EAJL_BABY          -> EAJ_BABY
+	EAJ_NOVICE|EAJL_BABY|EAJL_2_1 -> EAJ_SUPER_BABY
+
+	So as you can see, on this job system, the Super Novice is treated as the
+	2-1 job of a Novice, and the Novice job it's at the same level of the other
+	1st jobs. Even though that may seem like a hindrance, it makes it very easy
+	to add a check to discard Novice types from a quest:
+
+	if ((eaclass()&EAJ_BASEMASK) == EAJ_NOVICE)
+		//Novice class detected.

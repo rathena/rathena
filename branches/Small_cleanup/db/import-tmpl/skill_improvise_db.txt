@@ -1,0 +1,8 @@
+// Improvise Database
+// Database for skills that can be summoned trough Randomize Spell/Improvised Song (Minstrel/Wanderer Skill).
+//
+// Structure of Database:
+// SkillID,Rate
+//
+// - To remove entry by importing, put 0 on 'Rate'
+

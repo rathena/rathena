@@ -1,0 +1,104 @@
+//===== rAthena Script =======================================
+//= Kunai Merchant Kashin
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.3a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Trades a few shurikens + ninja stones for elemental kunai.
+//===== Additional Comments: =================================
+//= 1.0 Added the npc. It uses a function that sends the item 
+//=     id of the 2 required items plus the amount. Can trade
+//=     up to 500 units (5,000 kunais) at once. [erKURITA]
+//= 1.1 Officialized script [Playtester]
+//= 1.2a Optimized/cleaned up a bit [ultramage]
+//= 1.3 Updated to match AEGIS script. [Kisuka]
+//= 1.3a Kagerou/Oboro support (BaseJob -> BaseClass) [Euphy]
+//============================================================
+
+que_ng,72,29,3	script	Kunai Merchant Kashin	83,{
+	if(BaseClass == Job_Ninja) {
+		mes "[Kashin]";
+		mes "I am Kashin, distributor";
+		mes "of Kunai for Ninjas. Take";
+		mes "a look around and let me";
+		mes "know if you're interested";
+		mes "in any of my wares.";
+		next;
+		switch(select("10 Fell Poison Kunai:10 Icicle Kunai:10 High Wind Kunai:10 Black Earth Kunai:10 Heat Wave Kunai:Cancel")) {
+		case 1: callfunc "Kunai_Trade",13250,20,7524,1,13259; break;
+		case 2: callfunc "Kunai_Trade",13251,8,7522,2,13255; break;
+		case 3: callfunc "Kunai_Trade",13252,4,7523,2,13257; break;
+		case 4: callfunc "Kunai_Trade",13253,2,7524,1,13256; break;
+		case 5: callfunc "Kunai_Trade",13254,1,7521,2,13258; break;
+		case 6:
+			mes "[Kashin]";
+			mes "Well then, thank you";
+			mes "for visiting my shop.";
+			mes "Please come to me when";
+			mes "you need to buy some";
+			mes "Kunais. Goodbye for now~";
+			close;
+		}
+	}
+	mes "[Kashin]";
+	mes "I am Kashin, distributor";
+	mes "of Kunai for Ninjas. If you";
+	mes "have any friends that are";
+	mes "Ninjas, then you might";
+	mes "want to tell them about me.";
+	close;
+}
+
+function	script	Kunai_Trade	{
+	mes "[Kashin]";
+	mes "You can exchange";
+	mes ""+getarg(1)+" "+getitemname(getarg(0))+" and";
+	mes ""+getarg(3)+" "+getitemname(getarg(2))+" for every";
+	mes "set of 10 "+getitemname(getarg(4))+".";
+	next;
+	mes "[Kashin]";
+	mes "I can only give you a maximum of 500 sets of Kunais at a time.";
+	mes "If you want to cancel the trade, then please enter ''0.'' How many";
+	mes "Kunai sets would you like?";
+	next;
+	input .@amount;
+	if(.@amount < 1 || .@amount > 500) {
+		mes "[Kashin]";
+		mes "Eh? I'm sorry, but";
+		mes "I can't give you that";
+		mes "many Kunai sets. Please";
+		mes "enter a value less than 500.";
+		close;
+	}
+	if(countitem(getarg(0)) < .@amount*getarg(1) || countitem(getarg(2)) < .@amount*getarg(3)) {
+		mes "[Kashin]";
+		mes "Hmm, you don't have";
+		mes "enough items for this";
+		mes "Kunai exchange. Please";
+		mes "check your items again.";
+		close;
+ 	}
+	if(checkweight(getarg(4), .@amount*10) == 0) {
+		mes "[Kashin]";
+		mes "Hmm, it seems like your";
+		mes "Inventory doesn't have";
+		mes "enough space to store";
+		mes "more items. You better";
+		mes "free up some space first.";
+		close;
+	}
+	mes "[Kashin]";
+	mes "Great, everything is in";
+	mes "order, so let's go ahead";
+	mes "and complete this trade.";
+	mes "I'm sure that you'll be";
+	mes "quite satisfied with";
+	mes "these Kunais.";
+	delitem getarg(0),getarg(1)*.@amount;
+	delitem getarg(2),getarg(3)*.@amount;
+	getitem getarg(4),10*.@amount;
+	close;
+}

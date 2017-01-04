@@ -1,0 +1,76 @@
+//===== rAthena Script =======================================
+//= War of Emperium SE - Skidbladnir
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Merged to template file.
+//============================================================
+
+-	duplicate(Manager#template)	Manager#schg_cas05	-1
+-	duplicate(gard#template)	gard1#schg_cas05	-1
+-	duplicate(gard#template)	gard2#schg_cas05	-1
+-	duplicate(df#template)	df1#schg_cas05	-1
+-	duplicate(df#template)	df2#schg_cas05	-1
+-	duplicate(RL#template)	RL0#schg_cas05	-1
+-	duplicate(RL#template)	RL1#schg_cas05	-1
+-	duplicate(RL#template)	RL2#schg_cas05	-1
+-	duplicate(RL#template)	RL3#schg_cas05	-1
+
+schg_cas05,247,305,3	duplicate(Steward#template)	Steward#sc05	55
+schg_cas05,123,306,3	duplicate(Guardian#template)	Ef#sc05	868
+schg_cas05,300,287,5	duplicate(Kafra#template)	Kafra Employee#sc05	117
+schg_cas05,27,36,0	duplicate(Guardian Stone#template)	1st Guardian Stone#sc05	844
+schg_cas05,208,75,0	duplicate(Guardian Stone#template)	2nd Guardian Stone#sc05	844
+schg_cas05,124,52,0	duplicate(Control#template)	Control Device01#sc05	111
+schg_cas05,128,157,0	duplicate(Control#template)	Control Device02#sc05	111
+schg_cas05,109,247,0	duplicate(Control#template)	Control Device03#sc05	111
+schg_cas05,391,391,0	duplicate(Switch#template)	 #sch05_switch	111
+schg_cas05,280,391,3	duplicate(Sunflower#template)	Mysterious Sunflower#05	976
+
+schg_cas05,106,302,0	script	LF-01#schg_cas05	111,{ callfunc "LinkFlag","First Gate House",19,26,"Second Gate House",219,90; }
+schg_cas05,109,302,0	script	LF-02#schg_cas05	111,{ callfunc "LinkFlag","Defense Area 1-1",89,43,"Defense Area 1-2",141,45; }
+schg_cas05,112,302,0	script	LF-03#schg_cas05	111,{ callfunc "LinkFlag","Defense Area 2-1",137,54,"Defense Area 2-2",102,54; }
+schg_cas05,115,302,0	script	LF-04#schg_cas05	111,{ callfunc "LinkFlag","Defense Area 2-3",94,147,"Defense Area 2-4",163,140; }
+schg_cas05,118,302,0	script	LF-05#schg_cas05	111,{ callfunc "LinkFlag","Defense Area 2-3",87,220,"Defense Area 2-4",151,220; }
+schg_cas05,121,302,0	script	LF-06#schg_cas05	111,{ callfunc "LinkFlag","Defense Area 3-1",100,242,"Defense Area 3-2",136,242; }
+schg_cas05,124,302,0	script	LF-07#schg_cas05	111,{ callfunc "LinkFlag","Center 1 Area",120,168,"Center 2 Area",119,211; }
+schg_cas05,127,302,0	script	LF-08#schg_cas05	111,{ callfunc "LinkFlag","Area 1-1",89,43,"Area 2-1",94,147,"Area 3-1",100,242; }
+schg_cas05,130,302,0	script	LF-09#schg_cas05	111,{ callfunc "LinkFlag","Area 1-2",141,45,"Area 2-3",163,140,"Area 3-2",136,243; }
+schg_cas05,133,302,0	script	LF-10#schg_cas05	111,{ callfunc "LinkFlag","Convenience Facility",275,244; }
+schg_cas05,17,45,0	script	Skidbladnir#LF_sc05_1::LF_sc05_1	111,{ callfunc "LinkFlag","Emperium Center",120,290; }
+schg_cas05,207,95,0	duplicate(LF_sc05_1)	Skidbladnir#LF_sc05_2	111
+schg_cas05,111,46,4	script	Skidbladnir#LF_sc05_3::LF_sc05_2	722,{
+	callfunc "LinkFlag","Emperium Center",120,290;
+	end;
+OnAgitInit2:
+OnRecvCastlesc05:
+	FlagEmblem GetCastleData("schg_cas05",1);
+	end;
+}
+schg_cas05,129,46,4	duplicate(LF_sc05_2)	Skidbladnir#LF_sc05_4	722
+schg_cas05,99,77,0	duplicate(LF_sc05_1)	Skidbladnir#LF_sc05_5	111
+schg_cas05,140,77,0	duplicate(LF_sc05_1)	Skidbladnir#LF_sc05_6	111
+schg_cas05,109,150,4	duplicate(LF_sc05_2)	Skidbladnir#LF_sc05_7	722
+schg_cas05,130,150,4	duplicate(LF_sc05_2)	Skidbladnir#LF_sc05_8	722
+schg_cas05,112,212,0	duplicate(LF_sc05_1)	Skidbladnir#LF_sc05_9	111
+schg_cas05,127,212,0	duplicate(LF_sc05_1)	Skidbladnir#LF_sc05_10	111
+schg_cas05,113,238,0	duplicate(LF_sc05_1)	Skidbladnir#LF_sc05_11	111
+schg_cas05,126,238,0	duplicate(LF_sc05_1)	Skidbladnir#LF_sc05_12	111
+schg_cas05,95,247,0	duplicate(LF_sc05_1)	Skidbladnir#LF_sc05_13	111
+schg_cas05,144,247,0	duplicate(LF_sc05_1)	Skidbladnir#LF_sc05_14	111
+
+sch_gld,101,284,4	script	Skidbladnir#flag_sc05_1::sc05_Flag	722,{
+	callfunc "ReturnFlag","schg_cas05",1;
+	end;
+OnAgitInit2:
+OnRecvCastlesc05:
+	FlagEmblem GetCastleData("schg_cas05",1);
+	end;
+}
+sch_gld,91,284,4	duplicate(sc05_Flag)	Skidbladnir#flag_sc05_2	722
+sch_gld,66,320,6	duplicate(sc05_Flag)	Skidbladnir#flag_sc05_3	722
+sch_gld,66,310,6	duplicate(sc05_Flag)	Skidbladnir#flag_sc05_4	722

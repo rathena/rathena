@@ -1,0 +1,48 @@
+//===== rAthena Script =======================================
+//= Sample: Quest Test
+//===== By: ==================================================
+//= Akkarin
+//===== Last Updated: ========================================
+//= 20121227
+//===== Description: ========================================= 
+//= Demonstrates quest commands.
+//============================================================
+
+// Before installing an NPC like the one below, you would
+// need to add the quest to /db/quest_db.txt - e.g:
+// 70000,0,1002,3,0,0,0,0,"3 Splats Please!"
+
+prontera,90,95,1	script	Jelly	123,{
+	if(checkquest(70000) == -1) {	// Quest not yet started.
+		mes "[Jelly]";
+		mes "Hey there! Would you help me?";
+		next;
+		switch(select("I'd rather not:What's up?")){
+		case 1:
+			mes "[Jelly]";
+			mes "I didn't want your help anyway!";
+			close;
+		case 2:
+			mes "[Jelly]";
+			mes "Those Porings are weirding me out.";
+			mes "Would you kill 3 for me?";
+			setquest 70000;	// Adds the quest to your Quest Window.
+			close;
+		}
+	} else if(checkquest(70000,HUNTING) == 2) {	// All monsters killed.
+		mes "[Jelly]";
+		mes "Awesome! Thank you!";
+		getexp 10000,0;
+		dispbottom "You have been rewarded with 10,000 Base Exp.";
+		completequest 70000;	// Sets quest status to "complete".
+		close;
+	} else if(checkquest(70000) == 1) {	// Quest is active.
+		mes "[Jelly]";
+		mes "Keep going, almost there!";
+		close;
+	} else if(checkquest(70000) == 2) {	// Quest finished.
+		mes "[Jelly]";
+		mes "Thanks again for doing that for me!";
+		close;
+	}
+}

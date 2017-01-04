@@ -1,0 +1,35 @@
+// Client<->Map Packet Database
+//
+// Structure of Database:
+// PacketType,PacketLength[,Name,FieldIndex1:FieldIndex2:FieldIndex3:...]
+//
+// 01. PacketType       ID of the packet.
+// 02. PacketLength     Length of the packet. If 0, packet is disabled in current packet version. If -1, packet has variable size.
+// 03. Name             Name of the packet parser function (optional, for incoming packets only).
+// 04. FieldIndex       Specifies the offset of a packet field in bytes from the begin of the packet (only specified when Name is given).
+//                      Can be 0, when the layout is not known.
+// ...
+//
+// NOTE: Up to MAX_PACKET_POS (typically 20) field indexes may be used.
+//
+// The packet database allows you to add support for new clients,
+// because packets change every release.
+//
+// Note: Every packet version needs a wanttoconnection specification, since
+// that is the packet used to identify a client's version.
+// If multiple versions have the same connection packet, the higher version
+// will be used (unless the lower one is specified as the default)
+//
+// Incoming packets have their parser function and layout specified, which enables
+// them for the current and all higher versions, unless explicitely disabled.
+//
+// Outgoing packets must be specified in order to enable them for the current
+// and all higher versions, unless explicitely disabled. Packets that are not
+// enabled for a packet version are silently discarded when sent as multicast.
+//
+// Every packet version inherits packet definitions from the previous (lower)
+// packet version.
+//
+// Main packet version of the DB to use (default = max available version)
+// Client detection is faster when all clients use this version.
+// Version 23 is the latest Sakexe (above versions are for Renewal clients)

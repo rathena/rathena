@@ -1,0 +1,85 @@
+// Change Material Database
+//
+// Structure of Database:
+// ID,ProductID,BaseRate,MakeAmount1,MakeAmountRate1...,MakeAmount5,MakeAmountRate5
+//
+// NOTE:
+// - ID is used to identify item order that will be used for overwriting on db/import.
+//   Value is started from 0 until 74 (MAX_SKILL_CHANGEMATERIAL_DB-1). Use same ID on import file to overwrite original result & requirements
+// - Up to 5 ID/Amount pairs can be specified.
+// - Rate = n/10%
+
+0,703,1000,4,800,2,200	// Hinalle 
+1,958,800,9,1000		// Horrendous_Mouth
+2,959,800,7,1000		// Rotten_Scale
+3,960,1000,6,800,9,200	// Nipper 
+4,961,800,3,1000		// Conch
+5,962,1000,4,800,6,200	// Tentacle 
+6,963,800,3,1000		// Sharp_Scale
+7,964,800,8,1000		// Crap_Shell
+8,967,800,4,1000		// Turtle_Shell
+9,968,800,5,1000		// Voucher_Of_Orcish_Hero
+10,970,800,9,1000		// Alchol
+11,971,800,5,1000		// Detrimindexta
+12,973,800,4,1000		// Counteragent
+13,974,1000,4,800,6,200	// Mixture 
+14,991,1000,1,500,1,500	// Crystal_Blue 
+15,992,1000,1,500,1,500	// Wind_Of_Verdure 
+16,999,1000,10,1000		// Steel
+17,1003,500,1,1000		// Coal
+18,1008,800,6,1000		// Frozen_Heart
+19,1009,800,4,1000		// Sacred_Marks
+20,1010,800,8,1000		// Phracon
+21,1011,800,4,1000		// Emveretarcon
+22,1012,800,3,1000		// Lizard_Scruff
+23,1013,1000,9,800,13,200	// Colorful_Shell
+24,1014,1000,4,800,6,200	// Jaws_Of_Ant
+25,1016,1000,7,800,10,200	// Rat_Tail 
+26,1019,800,2,1000		// Wooden_Block
+27,1020,1000,4,800,6,200	// Long_Hair 
+28,1021,800,4,1000		// Dokkaebi_Horn
+29,1022,1000,2,800,3,200	// Fox_Tail 
+30,1024,800,4,1000		// Chinese_Ink
+31,1025,800,8,1000		// Spiderweb
+32,1026,800,4,1000		// Acorn
+33,1030,800,2,1000		// Tiger_Footskin
+34,1033,1000,4,800,6,200	// Root_Of_Maneater 
+35,1034,1000,6,800,9,200	// Cobold_Hair 
+36,1035,1000,8,800,12,200	// Dragon_Canine 
+37,1037,800,6,1000		// Dragon_Train
+38,1038,1000,1,1000		// Petite_Dablofs_Horn 
+39,1040,1000,8,800,12,200	// Elder_Pixie's_Beard 
+40,1041,800,3,1000		// Lantern
+41,1042,800,6,1000		// Short_Leg
+42,1043,800,6,1000		// Nail_Of_Orc
+43,1045,800,8,1000		// Sacred_Masque
+44,1046,800,4,1000		// Tweezer
+45,1049,800,6,1000		// Skirt_Of_Virgin
+46,1050,800,3,1000		// Tendon
+47,1051,800,7,1000		// Detonator
+48,1053,1000,6,800,9,200	// Tooth_Of_Ancient_Fish 
+49,1056,800,8,1000		// Grit
+50,1058,800,5,1000		// Wing_Of_Moth
+51,1059,1000,5,1000		// Transparent_Cloth
+52,1061,800,2,1000		// Starsand_Of_Witch
+53,1061,1000,1,1000		// Starsand_Of_Witch
+54,1064,800,8,1000		// Reins
+55,1615,200,1,1000		// Bone_Wand
+56,2267,1000,1,1000		// Cigar
+57,7063,1000,1,200,1,200,1,100	// Soft_Feather
+58,7166,1000,2,1000		// Soft_Silk_Cloth
+59,13269,1000,5,500,2,250,1,100	// Boost500_To_Throw
+60,13270,1000,5,500,2,250,1,100	// Full_SwingK_To_Throw
+61,13271,1000,5,500,2,250,1,100	// Mana_Plus_To_Throw
+62,13272,1000,5,500,2,250,1,100	// Cure_Free_To_Throw
+63,13273,1000,5,500,2,250,1,100	// Stamina_Up_M_To_Throw
+64,13274,1000,5,500,2,250,1,100	// Digestive_F_To_Throw
+65,13275,1000,10,1000	// HP_Inc_PotS_To_Throw
+66,13276,1000,10,1000	// HP_Inc_PotM_To_Throw
+67,13277,1000,10,1000	// HP_Inc_PotL_To_Throw
+68,13278,1000,10,1000	// SP_Inc_PotS_To_Throw
+69,13279,1000,10,1000	// SP_Inc_PotM_To_Throw
+70,13280,1000,10,1000	// SP_Inc_PotL_To_Throw
+71,13281,1000,10,1000	// En_White_PotZ_To_Throw
+72,13282,1000,10,1000	// Vitata500_To_Throw
+73,13283,1000,10,1000	// En_Cel_Juice_To_Throw

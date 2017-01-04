@@ -1,0 +1,68 @@
+//===== rAthena Script =======================================
+//= Reset NPC
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Resets skills, stats, or both.
+//===== Additional Comments: =================================
+//= 1.0 First Version
+//= 1.1 Optimized for the greater good. [Kisuka]
+//= 1.2 Cleaning [Euphy]
+//= 1.3 All statuses removed upon skill reset. [Euphy]
+//============================================================
+
+prontera,150,193,4	script	Reset Girl	124,{
+
+	.@ResetStat  = 5000;	// Zeny for stat reset
+	.@ResetSkill = 5000;	// Zeny for skill reset
+	.@ResetBoth  = 9000;	// Zeny for resetting both together
+
+	mes "[Reset Girl]";
+	mes "I am the Reset Girl.";
+	mes "Reset Stats: "  + callfunc("F_InsertComma", .@ResetStat)  + "z";
+	mes "Reset Skills: " + callfunc("F_InsertComma", .@ResetSkill) + "z";
+	mes "Reset Both: "   + callfunc("F_InsertComma", .@ResetBoth)  + "z";
+	mes "Please select the service you want:";
+	next;
+	switch(select("^FF3355Reset Skills:Reset Stats:Reset Both^000000:Cancel")) {
+	case 1:
+		mes "[Reset Girl]";
+		if (Zeny < .@ResetSkill) {
+			mes "Sorry, you don't have enough Zeny.";
+			close;
+		}
+		Zeny -= .@ResetSkill;
+		sc_end SC_ALL;
+		resetskill;
+		mes "There you go!";
+		close;
+	case 2:
+		mes "[Reset Girl]";
+		if (Zeny < .@ResetStat) {
+			mes "Sorry, you don't have enough Zeny.";
+			close;
+		}
+		Zeny -= .@ResetStat;
+		resetstatus;
+		mes "There you go!";
+		close;
+	case 3:
+		mes "[Reset Girl]";
+		if (Zeny < .@ResetBoth) {
+			mes "Sorry, you don't have enough Zeny.";
+			close;
+		}
+		Zeny -= .@ResetBoth;
+		sc_end SC_ALL;
+		resetskill;
+		resetstatus;
+		mes "There you go!";
+		close;
+	case 4:
+		close;
+	}
+}

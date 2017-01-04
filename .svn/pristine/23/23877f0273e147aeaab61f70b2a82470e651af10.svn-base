@@ -1,0 +1,20 @@
+//===== rAthena Script ======================================= 
+//= Quest NPCs related to Ash-Vacuum
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Contains duplicate NPCs from main script.
+//===== Additional Comments: ================================= 
+//= 1.0 Moved Izlude NPC to pre-re/re paths. [Euphy]
+//= 1.1 Added Izlude duplicates. [Euphy]
+//============================================================ 
+
+izlude,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz	100
+izlude_a,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz_a	100
+izlude_b,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz_b	100
+izlude_c,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz_c	100
+izlude_d,102,171,6	duplicate(PromotionalStaff_izlude)	Promotional Staff#iz_d	100

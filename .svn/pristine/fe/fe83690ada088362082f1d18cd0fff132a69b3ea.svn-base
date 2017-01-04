@@ -1,0 +1,11 @@
+// Instance Database
+//
+// Structure of Database:
+// ID,Name,LimitTime,IdleTimeOut,EnterMap,EnterX,EnterY,Map2,Map3,...,Map255
+//
+// EnterMap is considered as Map1
+
+1,Endless Tower,14400,300,1@tower,50,355,2@tower,3@tower,4@tower,5@tower,6@tower
+2,Sealed Catacomb,7200,300,1@cata,100,224,2@cata
+3,Orc's Memory,3600,300,1@orcs,179,15,2@orcs
+4,Nidhoggur's Nest,14400,300,1@nyd,32,36,2@nyd

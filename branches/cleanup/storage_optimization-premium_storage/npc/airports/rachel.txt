@@ -1,0 +1,38 @@
+//===== rAthena Script ======================================= 
+//= Rachel Airport NPCs
+//===== By: ================================================== 
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Rachel Airport NPCs
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//============================================================ 
+
+ra_fild12,295,208,0	script	toairplane#rachel	45,1,1,{
+	end;
+OnTouch:
+	mes "To use the airship, you are required to pay 1,200 zeny or a Free Airship Ticket.";
+	mes "Would you like to use the service?";
+	next;
+	if (select("Yes:No") == 1) {
+		if (countitem(7311) > 0) {
+			delitem 7311,1; //Free_Flying_Ship_Ticket
+			warp "airplane_01",245,60;
+			end;
+		}
+		if (Zeny >= 1200) {
+			set Zeny, Zeny - 1200;
+			warp "airplane_01",245,60;
+			end;
+		}
+		mes "I am sorry, but you do not have enough money.";
+		mes "Please remember, you are required to pay 1,200 zeny to use the service.";
+		close;
+	}
+	mes "Thank you, please come again.";
+	close;
+}

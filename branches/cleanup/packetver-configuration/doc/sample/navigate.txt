@@ -1,0 +1,59 @@
+//===== rAthena Script =======================================
+//= Sample: Navigation
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20160306
+//===== Description: ========================================= 
+//= Shows how to use the navigateto command.
+//=
+//= NOTE:
+//= Please note that we do not have any influence on how
+//= stupid the client calculates the route to your target.
+//============================================================
+
+prontera,162,188,4	script	Navigation Test	112,{
+	cutin "kafra_06",2;
+
+	mes "[Navigation Test]";
+	mes "Welcome to Prontera's Navigation Test.";
+	mes "Where do you want to go?";
+	next;
+	switch( select( "Izlude", "Poring War Recruiter", "Izlude without Kafra", "Poring War Recruiter with Window", "Show me Porings" ) ){
+		case 1:
+			mes "[Navigation Test]";
+			mes "I will now start your navigation system.";
+			close2;
+			cutin "kafra_06",255;
+			navigateto "izlude";
+			end;
+		case 2:
+			mes "[Navigation Test]";
+			mes "I will now start your navigation system.";
+			close2;
+			cutin "kafra_06",255;
+			navigateto "prt_fild08", 157, 371;
+			end;
+		case 3:
+			mes "[Navigation Test]";
+			mes "I will now start your navigation system.";
+			close2;
+			cutin "kafra_06",255;
+			navigateto "izlude", 0, 0, NAV_NONE;
+			end;
+		case 4:
+			mes "[Navigation Test]";
+			mes "I will now start your navigation system.";
+			close2;
+			cutin "kafra_06",255;
+			navigateto "prt_fild08", 157, 371, NAV_NONE, 0;
+			end;
+		case 5:
+			mes "[Navigation Test]";
+			mes "I will now start your navigation system.";
+			close2;
+			cutin "kafra_06",255;
+			navigateto "prt_fild08", 0, 0, NAV_NONE, 1, 1002;
+			end;
+	}
+}

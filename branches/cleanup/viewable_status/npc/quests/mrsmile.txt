@@ -1,0 +1,111 @@
+//===== rAthena Script ======================================= 
+//= Mr. Smile Quest
+//===== By: ================================================== 
+//= kobra_k88, Akaru
+//===== Current Version: ===================================== 
+//= 1.4a
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Trade Clover, Fluff and Jellopy for a Mr. Smile mask.
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.4a Fixed a little Typo error in duplicates. (bugreport:749) [Samuray22]
+//============================================================ 
+
+-	script	Smile Assistance::SmileHelper	92,{
+	mes "[Smile Girl]";
+	mes "Hi ~ Hi ~";
+	mes "This is Smile Assistance.";
+	mes "How may I help you ?";
+	next;
+	switch(select("^3355FFMr. Smile^000000 ?:Construct ^3355FFMr. Smile^000000 :Quit")) {
+	case 1:
+		mes "[Smile Girl]";
+		mes "National Event held by the command of ^5577FFHis majesty Tristram the 3rd^000000,";
+		mes "that intends to encourage the nation of the Rune-Midgarts Kingdom";
+		mes " to play in more enjoyable atmosphere!";
+		mes "I am ^3355FF' Smile Assistance '^000000,";
+		mes ".. who leads the national event under the name of ";
+		mes "^3355FFSmile throughout the Rune-Midgarts Kingdom~^000000";
+		next;
+		mes "[Smile Girl]";
+		mes "With simple and easy-to-get items,";
+		mes "I can provide you";
+		mes "^3355FF' Mr. Smile '^000000.";
+		mes "The requirements are followings.";
+		next;
+		mes "[Smile Girl]";
+		mes "^3355FF10 Jellopy^000000";
+		mes "^3355FF10 Fluff^000000";
+		mes "^3355FF10 Clover^000000";
+		next;
+		mes "[Smile Girl]";
+		mes "With this event";
+		mes "Everybody will be happy and smile,";
+		mes "getting together with other people,";
+		mes "And will try to make Ragnarok the most enjoyable game in the world.";
+		close;
+	case 2:
+		if (countitem(909) > 9 && countitem(914) > 9 && countitem(705) > 9) {
+			mes "[Smile Girl]";
+			mes "Congratulations !";
+			mes "Now please take this Mr.Smile.";
+			next;
+			delitem 909,10; //Jellopy
+			delitem 914,10; //Fluff
+			delitem 705,10; //Clover
+			getitem 2278,1; //Mr_Smile
+			mes "[Smile Girl]";
+			mes "His majesty,Tristram the 3rd";
+			mes "has promised to try his best to make Ragnarok better and more enjoyable.";
+			next;
+			mes "The fact mentioned above";
+			mes "was announced by";
+			mes "the Public Information Bureau of the Rune-Midgarts Kingom.";
+			close;
+		}
+		else {
+			mes "[Smile Girl]";
+			mes "Oh - unfortunately";
+			mes "You have not brought";
+			mes "enough items for Mr. Smile.";
+			mes "^3355FF10 Jellopy^000000";
+			mes "^3355FF10 Fluff^000000";
+			mes "^3355FF10 Clover^000000";
+			mes "Please check the requirements above.";
+			close;
+		}
+	case 3:
+		mes "[Smile Girl]";
+		mes "Thank you for visiting us.";
+		mes "We ..";
+		mes "The Rune-Midgarts Kingdom";
+		mes "always try to make Ragnarok";
+		mes "better and more enjoyable game.";
+		next;
+		mes "[Smile Girl]";
+		mes "We sincerely ask you";
+		mes "to cooperate.";
+		mes "The fact mentioned above";
+		mes "was announced by the Public Information Bureau of the Rune-Midgarts Kingom.";
+		close;
+	}
+}
+
+// Additional Smile Assistance staff
+alberta,113,53,4	duplicate(SmileHelper)	Smile Assistance#alb	92
+aldebaran,136,135,4	duplicate(SmileHelper)	Smile Assistance#alde	92
+geffen,119,107,4	duplicate(SmileHelper)	Smile Assistance#gef	92
+moc_ruins,59,154,3	duplicate(SmileHelper)	Smile Assistance#moc	92
+payon,186,104,5	duplicate(SmileHelper)	Smile Assistance#pay	92
+prontera,157,187,4	duplicate(SmileHelper)	Smile Assistance#prt	92
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= Fully working. 1.1 Optimized
+//= 1.2 updated Payon coords [Lupus]
+//= 1.3 fixed exploit [Lupus]
+//============================================================ 

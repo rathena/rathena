@@ -1,0 +1,1946 @@
+//===== rAthena Script =======================================
+//= Old Blue Box Quest
+//===== By ===================================================
+//= Celesta, Lupus
+//===== Version ==============================================
+//= 2.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+// [Official Conversion]
+//= Old Blue Box quest (?)
+//= Officially this quest gave an OBB in exhange for a the
+//= required items unlimitedly, however this was changed by
+//= Gravity, who claimed this behavior as a bug. 
+//= The exact purpose of this quest is undetermined, but
+//= Gravity claimed that another quest would eventually
+//= branch from this one.
+//===== Additional Comments: ================================= 
+//= 1.7 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 1.8 Added missing checkweights. [L0ne_W0lf]
+//= 1.9 Moved Morroc NPCs to Morroc Ruins. [L0ne_W0lf]
+//= 2.0 Removed unused "name" variable. [L0ne_W0lf]
+//============================================================ 
+
+alberta,43,244,0	script	Tourist#thai	99,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a moment! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please enlighten your weight -";
+		mes "- and try again. -";
+		close;
+	}
+	if (thai_head >= 1 && thai_head <= 5) {
+		switch(thai_head) {
+		case 1:
+			set .@th_rand,rand(1,100);
+			if (.@th_rand > 6 && .@th_rand < 20) {
+				mes "[Tourist]";
+				mes "...........";
+				next;
+				mes "[Tourist]";
+				mes "You're that meanie...";
+				next;
+				mes "[Tourist]";
+				mes "...........";
+				next;
+				mes "[Tourist]";
+				mes "...........";
+				next;
+				mes "[Tourist]";
+				mes "...........";
+				next;
+				mes "[Tourist]";
+				mes "Aren't you...?";
+				next;
+				mes "[Tourist]";
+				mes "...........";
+				next;
+				mes "[Tourist]";
+				mes "...........";
+				next;
+				mes "[Tourist]";
+				mes "...........";
+				next;
+				mes "[Tourist]";
+				mes "Alright, alright, but you don't have to be mean.";
+				set thai_head,2;
+				close;
+			}
+			mes "[Tourist]";
+			mes "...........";
+			next;
+			mes "[Tourist]";
+			mes "I didn't think you were that";
+			mes "mean. Scram, I ain't in the mood";
+			mes "to talk to you.";
+			close;
+		case 2:
+			mes "[Tourist]";
+			mes "..........";
+			next;
+			switch(select("So do you have business in Lutie?:You don't want to go to Lutie for a tour.:What made you come over here?")) {
+			case 1:
+				mes "[Tourist]";
+				mes "Yes.";
+				mes "Well, actually...";
+				next;
+				mes "[Tourist]";
+				mes "I wanted to give my girlfriend";
+				mes "some well baked cookies.";
+				mes "Sadly, in my hometown of";
+				mes "Morroc, we don't have fancy";
+				mes "foods like that.";
+				next;
+				mes "[Tourist]";
+				mes "I've been asking all these";
+				mes "merchants about it, and I was";
+				mes "told that I could only get them";
+				mes "in Lutie...that's my story.";
+				next;
+				mes "[Tourist]";
+				mes "Now I'm running out of money and";
+				mes "food...I can't stay here much longer...";
+				next;
+				if (select("Do you want me to help you?:Well, good luck with everything.") == 1) {
+					set thai_head,3;
+					mes "[Tourist]";
+					mes "Thank god! Thank you so much.";
+					mes "I knew you would help me~!";
+					next;
+					mes "[Tourist]";
+					mes "Umm...";
+					mes "Before we talk about that help...";
+					mes "Er, hmmmm...";
+					mes "Well, you know I'm pretty";
+					mes "much starving to death now...";
+					next;
+					mes "[Tourist]";
+					mes "Could you please get me some Meat?";
+					mes "I know I'm asking you too much,";
+					mes "but I'm pretty much penniless";
+					mes "so I don't really have much";
+					mes "of a choice...";
+					close;
+				}
+				set thai_head,1;
+				mes "[Tourist]";
+				mes ".........";
+				mes "How could you be so cold";
+				mes "hearted after hearing my story?";
+				mes "...You're pretty mean!";
+				close;
+			case 2:
+				mes "[Tourist]";
+				mes "...Oh really? Hmm...people said I";
+				mes "could only get the well baked";
+				mes "cookie in Lutie.";
+				next;
+				mes "[Tourist]";
+				mes "I wanted to give my girlfriend";
+				mes "some well baked cookies.";
+				mes "Sadly, in my hometown of";
+				mes "Morroc, we don't have fancy";
+				mes "foods like that.";
+				next;
+				mes "[Tourist]";
+				mes "I've been asking all these";
+				mes "merchants about it, and I was";
+				mes "told that I could only get them";
+				mes "in Lutie...that's my story.";
+				next;
+				mes "[Tourist]";
+				mes "Now I'm running out of money and";
+				mes "food...I can't stay here much longer...";
+				next;
+				if (select("Do you want me to help you?:Well, good luck with everything.") == 1) {
+					set thai_head,3;
+					mes "[Tourist]";
+					mes "Thank god! Thank you so much.";
+					mes "I knew you would help me~!";
+					next;
+					mes "[Tourist]";
+					mes "Umm...";
+					mes "Before we talk about that help...";
+					mes "Er, hmmmm...";
+					mes "Well, you know I'm pretty";
+					mes "much starving to death now...";
+					next;
+					mes "[Tourist]";
+					mes "Could you please get me some Meat?";
+					mes "I know I'm asking you too much,";
+					mes "but I'm pretty much penniless";
+					mes "so I don't really have much";
+					mes "of a choice...";
+					close;
+				}
+				set thai_head,1;
+				mes "[Tourist]";
+				mes ".........";
+				mes "How could you be so cold";
+				mes "hearted after hearing my story?";
+				mes "...You're pretty mean!";
+				close;
+			case 3:
+				mes "[Tourist]";
+				mes "I was told that I could only find";
+				mes "the entrance to Lutie in";
+				mes "Al De Baran...";
+				next;
+				mes "[Tourist]";
+				mes "So I came here after searching";
+				mes "for Al De Baran...almost";
+				mes "killing myself when I passed the desert...*Sob*";
+				close;
+			}
+		case 3:
+			if (countitem(517) == 0) {
+				mes "[Tourist]";
+				mes "I see...I can understand that you";
+				mes "can't help me. It's alright...";
+				mes "It's not like I have the right";
+				mes "to demand anything of you...";
+				mes "But...";
+				next;
+				mes "[Tourist]";
+				mes "*Sob*...so... hungry...";
+				close;
+			}
+			set .@th_rand,rand(1,100);
+			if (.@th_rand > 0 && .@th_rand < 10) {
+				if (countitem(517) == 10) {
+					mes "[Tourist]";
+					mes "Ah...thanks! Thank you so much!";
+					delitem 517,10; //Meat
+					next;
+				}
+				else if (countitem(517) < 10) {
+					mes "[Tourist]";
+					mes "I appreciate that you're";
+					mes "helping me out of the";
+					mes "goodness of your heart,";
+					mes "but...";
+					next;
+					mes "[Tourist]";
+					mes "What are you...";
+					mes "Cheap?! You can feed";
+					mes "a starving man more";
+					mes "than this...bring me";
+					mes "more Meat!";
+					close;
+				}
+				else if (countitem(517) > 10) {
+					mes "[Tourist]";
+					mes "I appreciate you bringing";
+					mes "all this for me but...";
+					next;
+					mes "[Tourist]";
+					mes "Geez, you want I should";
+					mes "choke myself to death?";
+					mes "I can't eat all of this!";
+					mes "Bring me less Meat, yeah?";
+					close;
+				}
+			}
+			else if (.@th_rand > 11 && .@th_rand < 80) {
+				if (countitem(517) == 20) {
+					mes "[Tourist]";
+					mes "Ah...thanks! Thank you so much!";
+					delitem 517,20; //Meat
+					next;
+				}
+				else if (countitem(517) < 20) {
+					mes "[Tourist]";
+					mes "I appreciate that you're";
+					mes "helping me out of the";
+					mes "goodness of your heart,";
+					mes "but...";
+					next;
+					mes "[Tourist]";
+					mes "What are you...";
+					mes "Cheap?! You can feed";
+					mes "a starving man more";
+					mes "than this...bring me";
+					mes "more Meat!";
+					close;
+				}
+				else if (countitem(517) > 20) {
+					mes "[Tourist]";
+					mes "I appreciate you bringing";
+					mes "all this for me but...";
+					next;
+					mes "[Tourist]";
+					mes "Geez, you want I should";
+					mes "choke myself to death?";
+					mes "I can't eat all of this!";
+					mes "Bring me less Meat, yeah?";
+					close;
+				}
+			}
+			else {
+				if (countitem(517) == 40) {
+					mes "[Tourist]";
+					mes "Ah...thanks! Thank you so much!";
+					delitem 517,40; //Meat
+					next;
+				}
+				else if (countitem(517) < 40) {
+					mes "[Tourist]";
+					mes "I appreciate that you're";
+					mes "helping me out of the";
+					mes "goodness of your heart,";
+					mes "but...";
+					next;
+					mes "[Tourist]";
+					mes "What are you...";
+					mes "Cheap?! You can feed";
+					mes "a starving man more";
+					mes "than this...bring me";
+					mes "more Meat!";
+					close;
+				}
+				else if (countitem(517) > 40) {
+					mes "[Tourist]";
+					mes "Geez, you want I should";
+					mes "choke myself to death?";
+					mes "I can't eat all of this!";
+					mes "Bring me less Meat, yeah?";
+					close;
+				}
+			}
+			set thai_head,4;
+			mes "^3355FFHe seemed to have been";
+			mes "starving for a long time.";
+			mes "He ate all the meat I gave him";
+			mes "and it was all gone in a flash.^000000";
+			if (countitem(538) > 0) {
+				mes "^0000FF...Oh my! He took my cookies without even asking and ate all of those too!!^000000";
+				delitem 538,countitem(538); //Well_Baked_Cookie
+			}
+			next;
+			mes "[Tourist]";
+			mes "*Phew*...thanks.";
+			mes "At long last...";
+			mes "I feel stuffed.";
+			mes "...Oh. Right.";
+			mes "My girlfriend.";
+			next;
+			mes "[Tourist]";
+			mes "Er...about the well-baked";
+			mes "cookie I told you about? Um... I";
+			mes "know I'm being rude and selfish";
+			mes "...But I don't think I can find";
+			mes "it on my own.";
+			next;
+			mes "[Tourist]";
+			mes "So, could you bring me ^0000FF20 Well-baked Cookies^000000?";
+			next;
+			mes "[Tourist]";
+			mes "Although I shouldn't be asking for";
+			mes "any more favors, and you'd have";
+			mes "to go through all this trouble...";
+			mes "while I'd be safe over here...";
+			next;
+			mes "[Tourist]";
+			mes "I really want to make my";
+			mes "girlfriend happy. Everything";
+			mes "would be worth it for";
+			mes "that smile on her face...";
+			mes "I just can't pass this chance up!";
+			next;
+			mes "[Tourist]";
+			mes "Haven't you been in love...?";
+			mes "Surely you understand the";
+			mes "sway that this woman has";
+			mes "over me! Otherwise...I'd be";
+			mes "selling jewels...anything";
+			mes "other than this.";
+			next;
+			mes "[Tourist]";
+			mes "I'm begging you, since you're";
+			mes "stronger and less delicate";
+			mes "than me, please bring me";
+			mes "^0000FF20 Well-baked Cookies^000000!";
+			mes "For me, it's impossible!!";
+			close;
+		case 4:
+			if (countitem(538) > 19) {
+				mes "[Tourist]";
+				mes "Ah~!! Thank you so much!!";
+				mes "There really are many good";
+				mes "people like you in this world.";
+				next;
+				set thai_head,5;
+				delitem 538,20; //Well_Baked_Cookie
+				mes "[Tourist]";
+				mes "I appreciate what you've done for";
+				mes "me...now I can see her smile with";
+				mes "happiness.";
+				next;
+				mes "[Tourist]";
+				mes "Hmm, there is still one problem";
+				mes "left for me though...How do I";
+				mes "get back home to Morroc??";
+				mes "Well, if it can make my girl";
+				mes "happy...";
+				next;
+				mes "[Tourist]";
+				mes "...I'll get around to it.";
+				mes "Sooner or later. Man,";
+				mes "that desert's really big,";
+				mes "you know?";
+				close;
+			}
+			mes "[Tourist]";
+			mes "I see...I can understand that you";
+			mes "can't help me. It's alright...";
+			mes "It's not like I have the right";
+			mes "to demand anything of you...";
+			mes "But...";
+			close;
+		case 5:
+			mes "[Tourist]";
+			mes "Thank you so much!";
+			next;
+			mes "[Tourist]";
+			mes "Hmm...I wanna pay you back...";
+			mes "And you're an adventurer...";
+			mes "But I don't got any like...";
+			mes "magic armor or those";
+			mes "cards you guys are";
+			mes "always playing with...";
+			next;
+			mes "[Tourist]";
+			mes "Hmmm...";
+			mes "....I got it!";
+			mes "Sooner or later, you";
+			mes "wanna visit some sort";
+			mes "of wise man or...";
+			mes "...something, right?";
+			next;
+			mes "[Tourist]";
+			mes "Visit my pal ^649664Jacob^000000 in";
+			mes "Morroc. Tell him that I";
+			mes "introduced you. He knows";
+			mes "about a wise man...";
+			mes "Though, he isn't one";
+			mes "himself...";
+			next;
+			mes "[Tourist]";
+			mes "Ah, sorry, I haven't even told";
+			mes "you my name. My name is...";
+			mes "^0000FFPandger Mayer^000000.";
+			next;
+			mes "[Tourist]";
+			mes "So yeah, tell my pal Jacob";
+			mes "that Pandger Mayer introduced you.";
+			next;
+			mes "[Tourist]";
+			mes "So...you tell 'em:";
+			mes "^0000FFPandger Mayer introduced you^000000";
+			mes "Exactly like that~";
+			mes "^0000FFPandger Mayer introduced you^000000";
+			mes "^FF0000Don't forget it~^000000";
+			next;
+			mes "[Tourist]";
+			mes "Sorry I can't pay you back with";
+			mes "more than this, though. Kinda";
+			mes "stinks, huh?";
+			next;
+			mes "[Tourist]";
+			mes "Here, take this as an extra";
+			mes "token of my gratitute.";
+			mes "This doohickey has been";
+			mes "pretty handy in sticky";
+			mes "situations...";
+			next;
+			mes "[Tourist]";
+			mes "Hopefully, it'll be useful.";
+			if (MaxWeight - Weight < 500) {
+				mes "Umm...it seems you're carrying too much stuff with you.";
+				mes "Doncha want me to help you?";
+				close;
+			}
+			set thai_head,6;
+			getitem 1205,1; //Cutter_
+			next;
+			mes "[Tourist]";
+			mes "Heh...once gain, thanks for";
+			mes "the help. Take care, guy.";
+			close;
+		}
+	}
+	else if (thai_head > 5) {
+		switch(rand(1,3)) {
+		case 1:
+			mes "[Tourist]";
+			mes "Hey, thanks a bunch for your";
+			mes "help. Anyways...now I remember";
+			mes "I gotta go back through the";
+			mes "desert again...*Sigh*";
+			mes "Yeah, I better get back...";
+			next;
+			mes "[Tourist]";
+			mes "...no matter how hard it is.";
+			mes "But...yeah. It's gonna be pretty";
+			mes "hard. Crossing the desert...";
+			mes "alone. By myself...crud.";
+			close;
+		case 2:
+			mes "[Tourist]";
+			mes "Hey, thanks a bunch for your";
+			mes "help....I ain't sure if I";
+			mes "can make it back to Morroc";
+			mes "in one piece...";
+			next;
+			mes "[Tourist]";
+			mes "But I better go back";
+			mes "to my girlfriend. That's";
+			mes "the point of me coming";
+			mes "here in the first place,";
+			mes "anyway.";
+			close;
+		case 3:
+			mes "[Tourist]";
+			mes "Hey, thanks a bunch for your";
+			mes "help. Man...Morroc is a long";
+			mes "way off, isn't it? Aw nuts...";
+			mes "I guess if I was crazy";
+			mes "enough to come here because";
+			mes "of my girlfriend...";
+			next;
+			mes "[Tourist]";
+			mes "I'm crazy enough to walk all";
+			mes "way back to Morroc...";
+			mes "...";
+			mes "...unless...";
+			mes "You'll gimme a piggy-back ride?";
+			next;
+			mes "[Tourist]";
+			mes "...kidding. I'm not that";
+			mes "big of a jerk, I guess.";
+			mes "Try not to look so";
+			mes "surprised!";
+			close;
+		}
+	}
+	else {
+		if (JobLevel < 36) {
+			mes "[Tourist]";
+			mes "Where am I...?";
+			mes "...Who am I?";
+			next;
+			mes "[Tourist]";
+			mes ".........";
+			next;
+			mes "[Tourist]";
+			mes ".....";
+			next;
+			mes "[Tourist]";
+			mes ".........";
+			next;
+			mes "[Tourist]";
+			mes "Mahahahahahaha!!";
+			next;
+			mes "[Tourist]";
+			mes "*Drools*...I love chocolate!";
+			next;
+			mes "[Tourist]";
+			mes "Wait...";
+			mes "I have a girlfriend...";
+			mes "and...and...";
+			mes "cookies...?";
+			mes "I feel sooo lost...";
+			next;
+			mes "^3355FFWe don't talk to crazy people~^000000";
+			close;
+		}
+		mes "[Tourist]";
+		mes "Where am I?";
+		mes "*Sob*...I guess I got lost...";
+		mes "Hey, where is this!?";
+		next;
+		switch(select("Ignore him.:This is Alberta.:This is Al De Baran.")) {
+		case 1:
+			mes "[Tourist]";
+			mes "..........";
+			close;
+		case 2:
+			mes "[Tourist]";
+			mes "Ah...I see. So this is";
+			mes "Alberta...crud. I'm";
+			mes "supposed to go to ^0000FFLutie^000000...";
+			next;
+			mes "[Tourist]";
+			mes "Hey, thanks for letting me know.";
+			mes "Now at least I know where I am.";
+			mes "Geez...they got boats here";
+			mes "that go everywhere, yeah?";
+			next;
+			mes "[Tourist]";
+			mes "Oh right, everywhere...but Lutie.";
+			mes "Man, this stinks.";
+			close2;
+			set thai_head,2;
+			end;
+		case 3:
+			mes "[Tourist]";
+			mes "Oh...oh right!";
+			mes "Yeah, Al De Baran...";
+			mes "Guess I'm not lost";
+			mes "after all.";
+			next;
+			mes "[Tourist]";
+			mes "I was told that I can see a ^FF0000Clock Tower^000000 in Al De Baran.";
+			mes "Can you tell me where I can find the ^FF0000Clock Tower^000000?";
+			next;
+			if (select("It's in the center of the town.:Eh, I think I gave you the wrong town name.") == 1) {
+				mes "[Tourist]";
+				mes "..............";
+				mes "You know, I'm beginning";
+				mes "to feel like...";
+				mes "you're pullin' my";
+				mes "chain...";
+				set thai_head,1;
+				close;
+			}
+			mes "[Tourist]";
+			mes "Hah~!...I knew it! Well, it's";
+			mes "pretty hard to admit when";
+			mes "you do something wrong.";
+			mes "Thanks for being honest, pal.";
+			close;
+		}
+	}
+}
+
+moc_ruins,105,62,4	script	Jacob#thai	50,{
+	if (thai_head >= 6 && thai_head <= 11) {
+		switch (thai_head) {
+		case 6:
+			mes "[Tommy]";
+			mes "Wahhhh~~~!!";
+			mes "Dad~~ let me have a Munak~~~!";
+			mes "Waaahhhh!";
+			next;
+			mes "[Tommy]";
+			mes "I want Munak, Munakkkk~~!!";
+			mes "Other people have a Munak, why can't I~~?";
+			next;
+			mes "[Tommy]";
+			mes "Munak Munak Munak Munak~~~!";
+			next;
+			mes "[Jacob]";
+			mes "Er...Ummm...";
+			next;
+			mes "[Tommy]";
+			mes "Munak Munak Munak Munak~~~!";
+			next;
+			mes "[Jacob]";
+			mes "Tommy, daddy is kind of busy right now...";
+			next;
+			mes "[Tommy]";
+			mes "Munak Munak Munak Munak~~~!";
+			next;
+			mes "[Jacob]";
+			mes "*Sigh*...alright...alright. If you want it that bad...";
+			next;
+			mes "[Jacob]";
+			mes "Gosh...being a dad is not an easy";
+			mes "thing to do...Hmmm? Do you have any business with me?";
+			mes " ";
+			mes "[Tommy]";
+			mes "^FF0000Munak Munak Munak Munak!!^000000";
+			next;
+			input .@input$;
+			if (.@input$ != "Pandger Mayer introduced you") {
+				mes "["+strcharinfo(0)+"]";
+				mes ""+.@input$+"";
+				next;
+				mes "[Jacob]";
+				mes "....Sorry, what did you say? I have no idea what you're talking about.";
+				close;
+			}
+			mes "["+strcharinfo(0)+"]";
+			mes "Pandger Mayer introduced you.";
+			next;
+			mes "[Jacob]";
+			mes "Oh, you mean that guy in love?";
+			mes "Last time I saw him, he was";
+			mes "leaving to find cookies somewhere...";
+			next;
+			mes "[Jacob]";
+			mes "There is only one reason he could have mentioned my name to you...";
+			mes " ";
+			mes " ";
+			mes "[Tommy]";
+			mes "^FF0000Munak Munak Munak Munak!!^000000";
+			next;
+			mes "[Jacob]";
+			mes "......";
+			mes "*Sigh* For now, I have a favor to";
+			mes "ask of you. Could you bring me";
+			mes "^0000FF1 No Recipient^000000?";
+			set thai_head,7;
+			next;
+			mes "[Jacob]";
+			mes "I need this kid to calm down first...";
+			mes " ";
+			mes " ";
+			mes "[Tommy]";
+			mes "^FF0000Munak Munak Munak Munak!!^000000";
+			close;
+		case 7:
+			if (countitem(636) > 0) {
+				delitem 636,1; //No_Recipient
+				mes "[Tommy]";
+				mes "^FF0000Munak Munak Munak Munak!!^000000";
+				next;
+				mes "[Jacob]";
+				mes "Oh, thank you so much...";
+				mes "Let me calm this kid down";
+				mes "first. Sorry my little boy is being so loud.";
+				next;
+				mes "[Jacob]";
+				mes "Tommy, Tommy?";
+				next;
+				mes "[Tommy]";
+				mes "^FF0000Moo^9F0000naah^5F0000ahhh^3F0000ahhh^000000kkk!!..Err?";
+				mes "What's this, Daddy?";
+				next;
+				mes "[Jacob]";
+				mes "This is called No Recipient~";
+				mes "With this, I can get you a Munak~";
+				next;
+				mes "[Tommy]";
+				mes "Are you serious, Daddy?!";
+				next;
+				mes "[Jacob]";
+				mes "Yes, I am~";
+				mes "Have you ever heard me lie?";
+				next;
+				mes "[Tommy]";
+				mes ".......";
+				mes "I know you always lie to Mommy.";
+				next;
+				mes "[Jacob]";
+				mes "..........";
+				mes "No no no no no...that's not";
+				mes "considered lying, Tommy.";
+				mes "I am just trying to make it sound better to Mommy~";
+				next;
+				mes "[Tommy]";
+				mes ".......";
+				next;
+				mes "^3355FFHe looks at his father in";
+				mes "doubt. Kids are too smart";
+				mes "to lie to nowadays...^000000";
+				next;
+				mes "[Tommy]";
+				if (Sex == SEX_MALE)
+					mes "So, mister, do you think my Daddy can catch a Munak with this?";
+				else
+					mes "So, lady, do you think my Daddy can catch a Munak with this?";
+				next;
+				switch(select("Yes.:...not sure.:No, ^FF0000never^000000.")) {
+				case 1:
+					mes "[Tommy]";
+					mes "Heh!! I knew my Daddy";
+					mes "wouldn't tell me a lie!! Thank you!!";
+					next;
+					mes "[Jacob]";
+					mes "(...*Phew!* Thank you~)";
+					set thai_head,9;
+					close;
+				case 2:
+					mes "[Tommy]";
+					if (Sex == SEX_MALE)
+						mes "So tell me, mister. Did he lie to me, then?";
+					else
+						mes "So tell me, lady. Did he lie to me, then?";
+					next;
+					mes "[Jacob]";
+					mes "Wait...wait, Tommy, that's not true...";
+					mes "(^0000FFGosh, why are you doing this to me, help me already!!^000000)";
+					next;
+					mes "[Tommy]";
+					mes "Can we catch a Munak with this or";
+					mes "not, huh? Tell meeeeehhhh~~~!";
+					next;
+					switch(select("Yes, we can.:No, we can't.")) {
+					case 1:
+						mes "[Tommy]";
+						mes "Heh heh! I knew it!";
+						mes "Thank you~!!!";
+						next;
+						mes "[Tommy]";
+						mes "Now I can have a Munak!";
+						next;
+						mes "[Jacob]";
+						mes "(...*Phew* Thank you~)";
+						set thai_head,9;
+						close;
+					case 2:
+						set thai_head,8;
+						mes "[Tommy]";
+						mes "I knew it!! Daddy, you're a liar!!";
+						next;
+						mes "[Tommy]";
+						mes "I hate you...I hate you!!!";
+						mes "I wish Baphomet would take you somewhere and eat you!!";
+						next;
+						mes "[Jacob]";
+						mes "Shoot...Tommy, Tommy...";
+						mes "Listen to me....";
+						next;
+						mes "[Tommy]";
+						mes "I don't wanna listen to you!!!";
+						mes "I hate yoooooouhhhh!!";
+						next;
+						mes "[Jacob]";
+						mes "....You.";
+						next;
+						mes "[Jacob]";
+						mes "I don't want to see your ugly face";
+						mes "around here any more...";
+						mes "Leave~!";
+						mes "How could you do this to me, huh?";
+						next;
+						mes "[Tommy]";
+						mes "I hate yoooooouhhhh!!";
+						mes " ";
+						mes " ";
+						mes "[Jacob]";
+						mes "Tommy...Tommy please...";
+						mes "Will you let me explain...?";
+						set thai_head,8;
+						close;
+					}
+				case 3:
+					set thai_head,8;
+					mes "[Tommy]";
+					mes "I knew it!! Daddy, you're a liar!!";
+					next;
+					mes "[Tommy]";
+					mes "I hate you...I hate you!!!";
+					mes "I wish Baphomet will take you somewhere and eat you!!";
+					next;
+					mes "[Jacob]";
+					mes "Shoot...Tommy, Tommy...";
+					mes "Listen to me....";
+					next;
+					mes "[Tommy]";
+					mes "I don't wanna listen to you!!!";
+					mes "I hate yoooooouhhhh!!";
+					next;
+					mes "[Jacob]";
+					mes "....You.";
+					next;
+					mes "[Jacob]";
+					mes "I don't want to see";
+					mes "your ugly face any more.";
+					mes "Leave!";
+					mes "How could you do this to me, huh?";
+					next;
+					mes "[Tommy]";
+					mes "I hate yoooooouhhhh!!";
+					mes "[Jacob]";
+					mes "Tommy...Tommy, please...";
+					mes "Will you let me explain...?";
+					set thai_head,8;
+					close;
+				}
+			}
+			mes "[Tommy]";
+			mes "^FF0000Munak Munak Munak Munak!!^000000";
+			next;
+			mes "[Jacob]";
+			mes "*Sigh*...that's my boy. Please get me a No Recipient as soon as you can!";
+			close;
+		case 8:
+			if (rand(1,1000) == 792) {
+				mes "[Tommy]";
+				mes "^FF0000Munak Munak Munak Munak!!^000000";
+				next;
+				mes "[Jacob]";
+				mes "....*Sigh* Okay.";
+				mes "I will give you a chance";
+				mes "to make up for your mistake.";
+				mes "Please get me a No Recipient as soon as you can.";
+				set thai_head,7;
+				close;
+			}
+			mes "[Jacob]";
+			mes "....I don't want to talk to YOU";
+			mes "anymore. Get outta here~!";
+			mes "It's your fault my little";
+			mes "boy thinks I'm a big liar!";
+			close;
+		case 9:
+			mes "[Jacob]";
+			mes "*Phew* Now I can leave him alone.";
+			mes "Kids nowadays are so impatient...I am worried about my son.";
+			next;
+			mes "[Jacob]";
+			mes "However, I can't do anything";
+			mes "about his temper...I think";
+			mes "he's just too young to know";
+			mes "what he's doing.";
+			next;
+			mes "[Jacob]";
+			mes "I'm having a hard time trying to";
+			mes "be a good parent, and I'm";
+			mes "beginning to appreciate my";
+			mes "own parents' efforts to raise me.";
+			next;
+			mes "[Jacob]";
+			mes "Respect your parents while they're";
+			mes "still alive. It's too late to be";
+			mes "sorry after you've lost them.";
+			next;
+			mes "[Jacob]";
+			mes "I was a wild kid as well...my";
+			mes "parents had a hard time raising";
+			mes "me. I'm ashamed of what I've done";
+			mes "when I was young...";
+			next;
+			mes "[Jacob]";
+			mes "Those days, my parents couldn't";
+			mes "afford to feed me three meals a";
+			mes "day. And there were many";
+			mes "creditors that always came";
+			mes "to our house early";
+			mes "early in the morning.";
+			next;
+			mes "[Jacob]";
+			mes "Have you every heard about";
+			mes "distraint-papers? As soon";
+			mes "as those creditors put that";
+			mes "distraint-paper on any of my";
+			mes "things,it would no longer be";
+			mes "mine.";
+			next;
+			mes "[Jacob]";
+			mes "I hated my parents for not providing me with a sweet home,";
+			mes "and I became rebellious.";
+			mes "But, no matter how bad I was,";
+			mes "Even in those difficult circumstances...";
+			next;
+			mes "[Jacob]";
+			mes "They never gave up on me.";
+			mes "Later, they told me that I was their one and only hope...";
+			mes "even though I was more of a burden than anything else at the moment.";
+			next;
+			mes "[Tommy]";
+			mes "Daddy, do you realize you've told";
+			mes "that story hundreds of times already? *Piff~*";
+			mes "Stop it already~";
+			next;
+			mes "^3355FFTommy was jumping and running";
+			mes "around like a crazy rabbit and";
+			mes "eventually bumped against me.^000000";
+			next;
+			mes "[Jacob]";
+			mes "...Tommy, respect your dad.";
+			mes "This is the story of your father's life.";
+			next;
+			mes "[Jacob]";
+			mes "A.aa.aand.!!!";
+			next;
+			mes "[Jacob]";
+			mes "How many times have I told you";
+			mes "to behave in front of other people?!";
+			next;
+			mes "[Jacob]";
+			if (Sex == SEX_MALE)
+				mes "Say you're sorry to him!";
+			else
+				mes "Say you're sorry to her!";
+			next;
+			mes "[Tommy]";
+			mes "*Piff~*";
+			next;
+			mes "[Jacob]";
+			mes "I don't hear it~!!";
+			next;
+			mes "[Tommy]";
+			mes "...I'm sorry...*bows head*";
+			set thai_head,10;
+			close;
+		case 10:
+			set .@rem,rand(1,11);
+			if (.@rem == 1) {
+				mes "[Jacob]";
+				mes "Ah~ yes! Didn't you say Pandger Mayer introduced me to you?";
+				mes "He wouldn't introduce me to just anyone. Oh, you must be";
+				mes "...an adventurer.";
+				next;
+				mes "[Jacob]";
+				mes "Right.";
+				mes "I have something to tell you.";
+				next;
+				mes "[Jacob]";
+				mes "When you go west from Morroc, and";
+				mes "pass through a cave, you will";
+				mes "arrive at a town called Comodo.";
+				next;
+				mes "[Jacob]";
+				mes "When you get there, you will see an old man named ^0000FFElder Creek^000000.";
+				mes "As a Sage, he has gained the respect of many.";
+				next;
+				mes "[Jacob]";
+				mes "People say that many adventurers";
+				mes "are visiting this man for some";
+				mes "reason. Why don't you go talk to him and see if he has some wisdom for you?";
+				set thai_head,11;
+				close;
+			}
+			else if (.@rem > 1 && .@remrem < 7) {
+				mes "[Jacob]";
+				mes "Respect your parents when they're";
+				mes "still alive. It's too late to be sorry after you've lost them.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "(Hmmm...I just know that there's more that this guy can tell me...)";
+				close;
+			}
+			else {
+				mes "[Jacob]";
+				mes "When you have a kid,";
+				mes "don't forget to teach them";
+				mes "this one thing:";
+				next;
+				mes "[Jacob]";
+				mes "'^0000FFBe good to other people.^000000'";
+				mes "'^0000FFTry to be in someone else's shoes before judging that person.^000000'";
+				mes "Do you understand?";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "(There's more this guy can tell me, I just know it...)";
+				close;
+			}
+		case 11:
+			mes "[Jacob]";
+			mes "Now, why don't you visit the Sage?";
+			mes "And I thank you for your kindness.";
+			next;
+			mes "[Jacob]";
+			mes "He's in Comodo, if you didn't";
+			mes "catch that. An adventurer like you should be able to get there with no problem.";
+			close;
+		}
+	}
+	else if (thai_head > 11) {
+		mes "[Jacob]";
+		mes "Thank you for the favour you did";
+		mes "for me...although we couldn't";
+		mes "catch a Munak in the end...";
+		next;
+		mes "[Jacob]";
+		mes "It seems he learned something";
+		mes "through the experience.";
+		mes "He no longer demands something";
+		mes "I cannot do for him, or";
+		mes "misbehaves.";
+		next;
+		mes "[Jacob]";
+		mes "That was another favor you did for me, even if you didn't mean to. Thank you.";
+		close;
+	}
+	else {
+		mes "[Jacob]";
+		mes "*Yawns*....";
+		mes "Today is such a boring day~.";
+		mes "I guess I'd better go take a walk";
+		mes "with my son. Do you want to walk with me?";
+		next;
+		mes "[Jacob's son]";
+		mes "I'm happy to hear that, daddy~";
+		close;
+	}
+}
+
+comodo,68,195,0	script	Old Man#thai	120,{
+	if (checkweight(1201,1) == 0) {
+		mes "- Wait a moment! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please enlighten your weight -";
+		mes "- and try again. -";
+		close;
+	}
+	if (thai_head >= 11 && thai_head <= 15) {
+		switch(thai_head) {
+		case 11:
+			mes "[Elder Creek]";
+			mes "Good day, adventurer.";
+			mes "What kind of business";
+			mes "do you have with me?";
+			next;
+			mes "[Elder Creek]";
+			mes "Are you seeking fortune or";
+			mes "mental relief? If not, do";
+			mes "you wish to finish something";
+			mes "you've started?";
+			next;
+			mes "[Elder Creek]";
+			mes "Answer me, adventurer!";
+			next;
+			switch(select("I seek fortune!:I seek...wisdom.:I want to finish what I've started.")) {
+			case 1:
+				mes "[Elder Creek]";
+				mes "You're honest...!";
+				mes "However, I suggest that you try not to be enamored with wealth.";
+				next;
+				mes "[Elder Creek]";
+				mes "Do you know the exact meaning";
+				mes "of the old saying...";
+				mes "^0000FFToo much is as bad as too little^000000?";
+				mes "I will give you what you want if";
+				mes "you answer the way I expect you to.";
+				next;
+				switch(select("It's necessary to have a lot!:Too dumb to see the future.:Too much of a good thing can be bad.:Cringe to the powerful.")) {
+				case 1:
+					mes "[Elder Creek]";
+					mes "...";
+					mes "Get out of my sight,";
+					mes "you greedy fool.";
+					set thai_head,12;
+					close;
+				case 2:
+					mes "[Elder Creek]";
+					mes "Bah! The more ignorant they are, the more arrogantly they act!";
+					mes "Did you think that I would accept just any meaning?";
+					mes "Take care, you ignorant fool.";
+					set thai_head,12;
+					close;
+				case 3:
+					mes "[Elder Creek]";
+					mes "That's right. You know it pretty";
+					mes "well. That adage serves as a lesson in greed.";
+					next;
+					mes "[Elder Creek]";
+					mes "There is a man I've known for a";
+					mes "long time...he was so greedy for";
+					mes "money and fortune, he didn't care what other people thought of him.";
+					next;
+					mes "[Elder Creek]";
+					mes "Consequently, people around him";
+					mes "didn't like him at all. In the end, he lost his friends due to his greed.";
+					next;
+					mes "[Elder Creek]";
+					mes "Of course, this rule applies to";
+					mes "you as well. That sort of thing is a universal principle, after all.";
+					set thai_head,13;
+					close;
+				case 4:
+					mes "[Elder Creek]";
+					mes ".....";
+					mes "Did you think that I would accept just any meaning??";
+					mes "Take care, you ignorant fool.";
+					set thai_head,12;
+					close;
+				}
+			case 2:
+				mes "[Elder Creek]";
+				mes "I see. I have been trying to help";
+				mes "other people who need advice in";
+				mes "order to improve their lives.";
+				next;
+				mes "[Elder Creek]";
+				mes "Since you need my advice";
+				mes "as well, I will try to";
+				mes "impart my wisdom in a";
+				mes "way that you will understand.";
+				next;
+				mes "[Elder Creek]";
+				mes "Now, tell me what is bothering right now.";
+				next;
+				switch(select("Boy/girlfriend issue.:Financial problem.:Bored to death.:Career issue.:I want money.:Give me items, old man.")) {
+				case 1:
+					mes "[Elder Creek]";
+					mes "I'm envious of you! Still, young";
+					mes "folk like you are lucky to";
+					mes "have such problems...sadly,";
+					mes "no one but yourself can really";
+					mes "help you in those kinds of";
+					mes "situations...";
+					next;
+					mes "[Elder Creek]";
+					mes "However, the advice I can give you";
+					mes "is this: Be honest with your";
+					mes "beloved. One lie leads to";
+					mes "another lie in no time.";
+					next;
+					mes "[Elder Creek]";
+					mes "If you treat the person you love";
+					mes "as special to you, that person";
+					mes "will eventually come to";
+					mes "understand your feelings...";
+					next;
+					mes "[Elder Creek]";
+					mes "And, remember this...";
+					mes "Everyone has a different way of showing that they love someone.";
+					mes "So...don't be discouraged if your feelings aren't returned.";
+					next;
+					mes "[Elder Creek]";
+					mes "But still, I believe being honest";
+					mes "is the best way to gain your";
+					mes "true love.";
+					next;
+					mes "[Elder Creek]";
+					mes "....well, that is all I can tell";
+					mes "you. I hope you will be happy";
+					mes "with that nugget of wisdom.";
+					close2;
+					set thai_head,14;
+					end;
+				case 2:
+					mes "[Elder Creek]";
+					mes "...yes, everybody has their own";
+					mes "financial problems. However, think of it in this way:";
+					next;
+					mes "[Elder Creek]";
+					mes "Money is important to make";
+					mes "a living, but it's not what life is all about.";
+					next;
+					mes "[Elder Creek]";
+					mes "Some may have the life goal of";
+					mes "making fortunes, but I don't think it's the happiest way of living.";
+					next;
+					mes "[Elder Creek]";
+					mes "As you see, there are powerful";
+					mes "people in this world who can control our lives. But oftentimes...";
+					next;
+					mes "[Elder Creek]";
+					mes "They are too greedy to be in that";
+					mes "position and they don't have";
+					mes "their priorities straight.";
+					mes "Instead of improving the world, they use their power to only help themselves.";
+					next;
+					mes "[Elder Creek]";
+					mes "If I were them, I wouldn't want to";
+					mes "rule the world in that way.";
+					next;
+					mes "[Elder Creek]";
+					mes "Don't you think we need somebody who can change this world??";
+					next;
+					mes "[Elder Creek]";
+					mes ".....I apologize for being short";
+					mes "tempered. I just wanted to let";
+					mes "you know that money is not everything. But, it is something you need to live.";
+					next;
+					mes "[Elder Creek]";
+					mes "I'm aware that greedy people";
+					mes "ridicule this belief, saying";
+					mes "that it is a poor man's effort";
+					mes "to protect his pride.";
+					next;
+					mes "[Elder Creek]";
+					mes "But, I still believe I am right.";
+					mes "After all...I am a Sage.";
+					mes "I hope you will be happy with my wise advice.";
+					close2;
+					set thai_head,14;
+					end;
+				case 3:
+					mes "[Elder Creek]";
+					mes "Yes, we always need to be";
+					mes "entertained. But...it";
+					mes "seems you may not be satisfied with anything.";
+					next;
+					mes "[Elder Creek]";
+					mes "It's all about the various tastes";
+					mes "and interests people will have.";
+					mes "Things other people enjoy might not";
+					mes "displease you. Also, if your";
+					mes "mind is unwilling to be happy,";
+					mes "you will not enjoy life.";
+					next;
+					mes "[Elder Creek]";
+					mes "Here's an example of having";
+					mes "the right frame of mind.";
+					mes "Let's say we're cleaning";
+					mes "the street for the town,";
+					mes "which can be hard, grueling work...";
+					next;
+					mes "[Elder Creek]";
+					mes "You're always covered in dust.";
+					mes "In the summer, your body is";
+					mes "sticky with sweat...";
+					mes "In the winter, you'll be";
+					mes "be out in the freezing cold...";
+					next;
+					mes "[Elder Creek]";
+					mes "However, even so, it will be different to someone with a different perspective.";
+					next;
+					mes "[Elder Creek]";
+					mes "Ideally, we should try";
+					mes "to find joy in making";
+					mes "other people happy.";
+					mes "By cleaning the street, we can";
+					mes "give others a reason to smile.";
+					next;
+					mes "[Elder Creek]";
+					mes "Tourists passing through the street";
+					mes "can enjoy its cleanliness...";
+					mes "Overall, it makes the entire community look good.";
+					next;
+					mes "[Elder Creek]";
+					mes "If your parents see you cleaning";
+					mes "the street, they will be proud of";
+					mes "their child.";
+					mes "...But now, I think I'm beginning to make no sense.";
+					next;
+					mes "[Elder Creek]";
+					mes "Oh well, I apologize.";
+					mes "Just try to think positively.";
+					mes "With the right attitude, eventually you will find something to enjoy.";
+					next;
+					mes "[Elder Creek]";
+					mes "Haha~ I can see you're just";
+					mes "clicking the 'next' button on these";
+					mes "windows, because you're sick and tired of this NPC conversation.";
+					next;
+					mes "[Elder Creek]";
+					mes "....anyway, that is all.";
+					mes "I hope you will be happy";
+					mes "with my wise advice.";
+					close2;
+					set thai_head,14;
+					end;
+				case 4:
+					mes "[Elder Creek]";
+					mes "That's an agonizing thought for every young person.";
+					mes "But you have a lot time to think about what you want to do in the future.";
+					next;
+					mes "[Elder Creek]";
+					mes "Experience more in many different";
+					mes "places, and read as many books";
+					mes "as you can. Focus on broadening your perspective.";
+					next;
+					mes "[Elder Creek]";
+					mes "Then, you will realize what you really want to do.";
+					mes "....that's all I can say.";
+					mes "I hope you will be happy with my wise advice.";
+					close2;
+					set thai_head,14;
+					end;
+				case 5:
+					mes "[Elder Creek]";
+					mes "....";
+					mes "I see, you chose the wrong answer in the first place.";
+					next;
+					mes "[Elder Creek]";
+					mes "I believe this will be a lesson to be more honest with yourself.";
+					mes "Choose the right answer next time!";
+					close;
+				case 6:
+					mes "[Elder Creek]";
+					mes "You rascal!";
+					next;
+					mes "[Elder Creek]";
+					mes "Get out of my sight immediately! I don't talk to trash!";
+					set thai_head,12;
+					close;
+				}
+			case 3:
+				mes "[Elder Creek]";
+				mes "Yes, you need to see things to the end.";
+				close;
+			}
+		case 12:
+			if (rand(1,1000) == 792) {
+				mes "[Elder Creek]";
+				mes "....*Sigh* Okay.";
+				mes "I forgive you.";
+				set thai_head,11;
+				close;
+			}
+			mes "[Elder Creek]";
+			mes "I do not wish to continue this conversation with you.";
+			mes "Get out of my sight immediately!";
+			close;
+		case 13:
+			mes "[Elder Creek]";
+			mes "...I was just testing you";
+			mes "in order to give you something";
+			mes "special. I'm the only person in the world that can give you this...";
+			next;
+			mes "[Elder Creek]";
+			mes "I had to check if you are the right person as I initially thought.";
+			mes "....Hmm.";
+			next;
+			mes "[Elder Creek]";
+			mes "But you don't expect me to give something special without any compensation, do you?";
+			mes "Would you bring the items I want?";
+			next;
+			mes "[Elder Creek]";
+			mes "It's not a hard thing to do.";
+			mes "That is...";
+			next;
+			mes "[Elder Creek]";
+			mes "10 Brigan,";
+			mes "15 Clam Shell,";
+			mes "10 Crab Shell";
+			mes "and 50 Cyfar.";
+			next;
+			mes "[Elder Creek]";
+			mes "Well, I am collecting those as my hobby.";
+			next;
+			mes "[Elder Creek]";
+			mes "I have no doubt that you will be able to gather them all.";
+			next;
+			mes "[Elder Creek]";
+			mes "Do me this favor, young man.";
+			set thai_head,15;
+			close;
+		case 14:
+			if (rand(1,30) == 5) {
+				mes "[Elder Creek]";
+				mes "....hmm. I see you want more.";
+				mes "Come back later.";
+				set thai_head,13;
+				close;
+			}
+			mes "[Elder Creek]";
+			mes "Is there any business left between";
+			mes "us? Tell me, young adventurer...";
+			next;
+			mes "^3355FFYou feel there may be something you missed.^000000";
+			close;
+		case 15:
+			if (countitem(7054) > 9 && countitem(965) > 14 && countitem(964) > 9 && countitem(7053) > 49) {
+				mes "[Elder Creek]";
+				mes "I see you know how the world";
+				mes "works. When you need something";
+				mes "from someone, you must give";
+				mes "in order to receive.";
+				mes "Thank you for your kindness.";
+				delitem 7054,10; //Brigan
+				delitem 965,15; //Clam_Shell
+				delitem 964,10; //Crap_Shell
+				delitem 7053,50; //Cyfar
+				next;
+				set thai_head,16;
+				getitem 603,1; //Old_Blue_Box
+				mes "[Elder Creek]";
+				mes "Please, take this first.";
+				mes "If you would, please go talk to my";
+				mes "grandson later. He seemed to witness something horrible a while ago...";
+				next;
+				mes "[Elder Creek]";
+				mes "I have no idea what he saw,";
+				mes "because the shock took away";
+				mes "his ability to speak.";
+				mes "When he recovers, I will tell you.";
+				next;
+				mes "[Elder Creek]";
+				mes "In fact, the items I have asked";
+				mes "for will be used to cure";
+				mes "his condition. I don't";
+				mes "really collect these as a";
+				mes "hobby...";
+				next;
+				mes "[Elder Creek]";
+				mes "I am sorry to cause you";
+				mes "much trouble for my own good.";
+				close;
+			}
+			mes "[Elder Creek]";
+			mes "Remember, when you want something,";
+			mes "especially when it's special, you";
+			mes "should always offer something in exchange.";
+			next;
+			mes "[Elder Creek]";
+			mes "I want...";
+			next;
+			mes "[Elder Creek]";
+			mes "10 Brigan,";
+			mes "15 Clam Shell,";
+			mes "10 Crab Shell and";
+			mes "50 Cyfar.";
+			close;
+		}
+	}
+	else if (thai_head > 15) {
+		mes "[Elder Creek]";
+		mes "Feel free to come back anytime...";
+		mes "And if you need advice, I am more than willing to help you.";
+		next;
+		mes "[Elder Creek]";
+		mes "Do you wish for me to give you advice, adventurer?";
+		next;
+		if (select("Yes.:No.") == 1) {
+			mes "[Elder Creek]";
+			mes "Now, tell me what bothers you at the moment.";
+			next;
+			switch(select("Boy/girlfriend issue.:Financial problem.:Bored to death.:Career issue.:Give me items, old man.")) {
+			case 1:
+				mes "[Elder Creek]";
+				mes "I'm envious of you! Still, young";
+				mes "folk like you are lucky to";
+				mes "have such problems...sadly,";
+				mes "no one but yourself can really";
+				mes "help you in those kinds of";
+				mes "situations...";
+				next;
+				mes "[Elder Creek]";
+				mes "However, the advice I can give you";
+				mes "is this: Be honest with your";
+				mes "beloved. One lie leads to";
+				mes "another lie in no time.";
+				next;
+				mes "[Elder Creek]";
+				mes "If you treat the person you love";
+				mes "as special to you, that person";
+				mes "will eventually come to";
+				mes "understand your feelings...";
+				next;
+				mes "[Elder Creek]";
+				mes "And, remember this...";
+				mes "Everyone has a different way of showing that they love someone.";
+				mes "So...don't be discouraged if your feelings aren't returned.";
+				next;
+				mes "[Elder Creek]";
+				mes "But still, I believe being honest";
+				mes "is the best way to gain your";
+				mes "true love.";
+				next;
+				mes "[Elder Creek]";
+				mes "....well, that is all I can tell";
+				mes "you. I hope you will be happy";
+				mes "with that nugget of wisdom.";
+				close;
+			case 2:
+				mes "[Elder Creek]";
+				mes "...yes, everybody has their own";
+				mes "financial problems. However, think of it in this way:";
+				next;
+				mes "[Elder Creek]";
+				mes "Money is important to make";
+				mes "a living, but it's not what life is all about.";
+				next;
+				mes "[Elder Creek]";
+				mes "Some may have the life goal of";
+				mes "making fortunes, but I don't think it's the happiest way of living.";
+				next;
+				mes "[Elder Creek]";
+				mes "As you see, there are powerful";
+				mes "people in this world who can control our lives. But oftentimes...";
+				next;
+				mes "[Elder Creek]";
+				mes "They are too greedy to be in that";
+				mes "position and they don't have";
+				mes "their priorities straight.";
+				mes "Instead of improving the world, they use their power to only help themselves.";
+				next;
+				mes "[Elder Creek]";
+				mes "If I were them, I wouldn't want to";
+				mes "rule the world in that way.";
+				next;
+				mes "[Elder Creek]";
+				mes "Don't you think we need somebody who can change this world??";
+				next;
+				mes "[Elder Creek]";
+				mes ".....I apologize for being short";
+				mes "tempered. I just wanted to let";
+				mes "you know that money is not everything. But, it is something you need to live.";
+				next;
+				mes "[Elder Creek]";
+				mes "I'm aware that greedy people";
+				mes "ridicule this belief, saying";
+				mes "that it is a poor man's effort";
+				mes "to protect his pride.";
+				next;
+				mes "[Elder Creek]";
+				mes "But, I still believe I am right.";
+				mes "After all...I am a Sage.";
+				mes "I hope you will be happy with my wise advice.";
+				close;
+			case 3:
+				mes "[Elder Creek]";
+				mes "Yes, we always need to be";
+				mes "entertained. But...it seems";
+				mes "you may not be satisfied";
+				mes "with anything.";
+				next;
+				mes "[Elder Creek]";
+				mes "It's all about the various tastes";
+				mes "and interests people will have.";
+				mes "Things other people enjoy might";
+				mes "displease you. Also, if your";
+				mes "mind is unwilling to be happy,";
+				mes "you will not enjoy life.";
+				next;
+				mes "[Elder Creek]";
+				mes "Here's an example of having";
+				mes "the right frame of mind.";
+				mes "Let's say we're cleaning";
+				mes "the street for the town,";
+				mes "which can be hard, grueling work...";
+				next;
+				mes "[Elder Creek]";
+				mes "You're always covered in dust.";
+				mes "In the summer, your body is";
+				mes "sticky with sweat...";
+				mes "In the winter, you'll be";
+				mes "be out in the freezing cold...";
+				next;
+				mes "[Elder Creek]";
+				mes "However, even so, it will be different to someone with a different perspective.";
+				next;
+				mes "[Elder Creek]";
+				mes "Ideally, we should try";
+				mes "to find joy in making";
+				mes "other people happy.";
+				mes "By cleaning the street, we can";
+				mes "give others a reason to smile.";
+				next;
+				mes "[Elder Creek]";
+				mes "Tourists passing through the";
+				mes "street can enjoy its";
+				mes "cleanliness...";
+				mes "Overall, it makes the entire community look good.";
+				next;
+				mes "[Elder Creek]";
+				mes "If your parents see you cleaning";
+				mes "the street, they will be proud of";
+				mes "their child.";
+				mes "...But now, I think I'm beginning to make no sense.";
+				next;
+				mes "[Elder Creek]";
+				mes "Oh well, I apologize.";
+				mes "Just try to think positively.";
+				mes "With the right attitude, eventually you will find something to enjoy.";
+				next;
+				mes "[Elder Creek]";
+				mes "Haha~ I can see you're just";
+				mes "clicking the 'next' button on";
+				mes "these windows, because you're sick and tired of this NPC conversation.";
+				next;
+				mes "[Elder Creek]";
+				mes "....anyway, that is all.";
+				mes "I hope you will be happy";
+				mes "with my wise advice.";
+				close;
+			case 4:
+				mes "[Elder Creek]";
+				mes "That's an agonizing thought for every young person.";
+				mes "But you have a lot time to think about what you want to do in the future.";
+				next;
+				mes "[Elder Creek]";
+				mes "Experience more in many different";
+				mes "places, and read as many books";
+				mes "as you can. Focus on broadening your perspective.";
+				next;
+				mes "[Elder Creek]";
+				mes "Then, you will realize what you really want to do.";
+				mes "....that's all I can say.";
+				mes "I hope you will be happy with my wise advice.";
+				close;
+			case 5:
+				mes "[Elder Creek]";
+				mes "You rascal!";
+				next;
+				mes "[Elder Creek]";
+				mes "Get out of my sight immediately! I don't talk to trash!";
+				close2;
+				warp "comodo",196,255;
+				end;
+			}
+		}
+		mes "[Elder Creek]";
+		mes "I hope you will enjoy your life. Remember, time flies and you live only once.";
+		close;
+	}
+	else {
+		mes "[Elder Creek]";
+		mes "I have been helping people by giving them advice to improve their lives.";
+		next;
+		mes "[Elder Creek]";
+		mes "Since you need my help as well, I shall endeavor to impart some wisdom.";
+		next;
+		mes "[Elder Creek]";
+		mes "Now tell me, what bothers you right now?";
+		next;
+		switch(select("Boy/girlfriend issue.:Financial problem.:Bored to death.:Career issue.:Give me items, old man.")) {
+		case 1:
+			mes "[Elder Creek]";
+			mes "I'm envious of you! Still, young";
+			mes "folk like you are lucky to";
+			mes "have such problems...sadly,";
+			mes "no one but yourself can really";
+			mes "help you in those kinds of";
+			mes "situations...";
+			next;
+			mes "[Elder Creek]";
+			mes "However, the advice I can give you";
+			mes "is this: Be honest with your";
+			mes "beloved. One lie leads to";
+			mes "another lie in no time.";
+			next;
+			mes "[Elder Creek]";
+			mes "If you treat the person you love";
+			mes "as special to you, that person";
+			mes "will eventually come to";
+			mes "understand your feelings...";
+			next;
+			mes "[Elder Creek]";
+			mes "And, remember this...";
+			mes "Everyone has a different way of showing that they love someone.";
+			mes "So...don't be discouraged if your feelings aren't returned.";
+			next;
+			mes "[Elder Creek]";
+			mes "But still, I believe being honest";
+			mes "is the best way to gain your";
+			mes "true love.";
+			next;
+			mes "[Elder Creek]";
+			mes "....well, that is all I can tell";
+			mes "you. I hope you will be happy";
+			mes "with that nugget of wisdom.";
+			close;
+		case 2:
+			mes "[Elder Creek]";
+			mes "...yes, everybody has their own";
+			mes "financial problems. However, think of it in this way:";
+			next;
+			mes "[Elder Creek]";
+			mes "Money is important to make";
+			mes "a living, but it's not what life is all about.";
+			next;
+			mes "[Elder Creek]";
+			mes "Some may have the life goal of";
+			mes "making fortunes, but I don't think it's the happiest way of living.";
+			next;
+			mes "[Elder Creek]";
+			mes "As you see, there are powerful";
+			mes "people in this world who can control our lives. But oftentimes...";
+			next;
+			mes "[Elder Creek]";
+			mes "They are too greedy to be in that";
+			mes "position and they don't have";
+			mes "their priorities straight.";
+			mes "Instead of improving the world, they use their power to only help themselves.";
+			next;
+			mes "[Elder Creek]";
+			mes "If I were them, I wouldn't want to";
+			mes "rule the world in that way.";
+			next;
+			mes "[Elder Creek]";
+			mes "Don't you think we need somebody who can change this world??";
+			next;
+			mes "[Elder Creek]";
+			mes ".....I apologize for being short";
+			mes "tempered. I just wanted to let";
+			mes "you know that money is not everything. But, it is something you need to live.";
+			next;
+			mes "[Elder Creek]";
+			mes "I'm aware that greedy people";
+			mes "ridicule this belief, saying";
+			mes "that it is a poor man's effort";
+			mes "to protect his pride.";
+			next;
+			mes "[Elder Creek]";
+			mes "But, I still believe I am right.";
+			mes "After all...I am a Sage.";
+			mes "I hope you will be happy with my wise advice.";
+			close;
+		case 3:
+			mes "[Elder Creek]";
+			mes "Yes, we always need to be";
+			mes "entertained. But...it seems";
+			mes "you may not be satisfied";
+			mes "with anything.";
+			next;
+			mes "[Elder Creek]";
+			mes "It's all about the various tastes";
+			mes "and interests people will have.";
+			mes "Things other people enjoy might";
+			mes "displease you. Also, if your";
+			mes "mind is unwilling to be happy,";
+			mes "you will not enjoy life.";
+			next;
+			mes "[Elder Creek]";
+			mes "Here's an example of having";
+			mes "the right frame of mind.";
+			mes "Let's say we're cleaning";
+			mes "the street for the town,";
+			mes "which can be hard, grueling work...";
+			next;
+			mes "[Elder Creek]";
+			mes "You're always covered in dust.";
+			mes "In the summer, your body is";
+			mes "sticky with sweat...";
+			mes "In the winter, you'll be";
+			mes "be out in the freezing cold...";
+			next;
+			mes "[Elder Creek]";
+			mes "However, even so, it will be different to someone with a different perspective.";
+			next;
+			mes "[Elder Creek]";
+			mes "Ideally, we should try";
+			mes "to find joy in making";
+			mes "other people happy.";
+			mes "By cleaning the street, we can";
+			mes "give others a reason to smile.";
+			next;
+			mes "[Elder Creek]";
+			mes "Tourists passing through the";
+			mes "street can enjoy its";
+			mes "cleanliness...";
+			mes "Overall, it makes the entire community look good.";
+			next;
+			mes "[Elder Creek]";
+			mes "If your parents see you cleaning";
+			mes "the street, they will be proud of";
+			mes "their child.";
+			mes "...But now, I think I'm beginning to make no sense.";
+			next;
+			mes "[Elder Creek]";
+			mes "Oh well, I apologize.";
+			mes "Just try to think positively.";
+			mes "With the right attitude, eventually you will find something to enjoy.";
+			next;
+			mes "[Elder Creek]";
+			mes "Haha~ I can see you're just";
+			mes "clicking the 'next' button on";
+			mes "these windows, because you're sick and tired of this NPC conversation.";
+			next;
+			mes "[Elder Creek]";
+			mes "....anyway, that is all.";
+			mes "I hope you will be happy";
+			mes "with my wise advice.";
+			close;
+		case 4:
+			mes "[Elder Creek]";
+			mes "That's an agonizing thought for every young person.";
+			mes "But you have a lot time to think about what you want to do in the future.";
+			next;
+			mes "[Elder Creek]";
+			mes "Experience more in many different";
+			mes "places, and read as many books";
+			mes "as you can. Focus on broadening your perspective.";
+			next;
+			mes "[Elder Creek]";
+			mes "Then, you will realize what you really want to do.";
+			mes "....that's all I can say.";
+			mes "I hope you will be happy with my wise advice.";
+			close;
+		case 5:
+			mes "[Elder Creek]";
+			mes "You rascal!";
+			next;
+			mes "[Elder Creek]";
+			mes "Get out of my sight immediately! I don't talk to trash!";
+			close2;
+			warp "comodo",196,255;
+			end;
+		}
+	}
+}
+
+moc_ruins,107,62,0	script	Tommy#thai	716,{
+	if (thai_head >= 6 && thai_head <= 11) {
+		switch(thai_head) {
+		case 6:
+			mes "[Tommy]";
+			mes "Wahhhhhh~~~!!";
+			mes "Daddy~~ let me have a Munak~~~!";
+			mes "Waaaahhhh....";
+			next;
+			mes "[Tommy]";
+			mes "I want my Munak~~!!";
+			mes "Other people have one, why can't I have one too?!";
+			next;
+			mes "[Tommy]";
+			mes "Munak Munak Munak Munak~~~";
+			next;
+			mes "[Jacob]";
+			mes "Umm..Tommy...";
+			next;
+			mes "[Tommy]";
+			mes "Munak Munak Munak Munak~~~";
+			next;
+			mes "[Jacob]";
+			mes "Tommy, your daddy is kind of busy now...";
+			next;
+			mes "[Tommy]";
+			mes "Munak Munak Munak Munak!";
+			next;
+			mes "[Jacob]";
+			mes "Sigh...alright, alright...";
+			close;
+		case 7:
+			mes "[Tommy]";
+			mes "*cries*...I want Munak!....*cries*";
+			mes "My friends all have Munak, and I don't have it...";
+			mes "Waaaahhhhh~~";
+			close;
+		case 8:
+			mes "[Tommy]";
+			mes "Daddy, I hate you!!";
+			mes "I hate all of you!!!";
+			next;
+			mes "[Tommy]";
+			mes "Waaaahhh~~~!";
+			mes "I don't care what anybody's telling";
+			mes "me! I'll be bad because I hate everyone!";
+			close;
+		case 9:
+			mes "[Tommy]";
+			mes "Heh~!";
+			mes "I'm so happy~";
+			mes "We're gonna get a Munak~!";
+			mes "Heh heh heh~!";
+			close;
+		case 10:
+			mes "[Tommy]";
+			mes "Heh~!";
+			mes "I am so happy~";
+			mes "We're gonna get a Munak~!";
+			mes "Heh heh heh~!";
+			close;
+		case 11:
+			mes "[Tommy]";
+			mes "Heh~!";
+			mes "I like you~ ";
+			mes "Cuz now we're gonna";
+			mes "get a Munak~";
+			mes "So happy! *smiles*";
+			close;
+		}
+	}
+	else if (thai_head > 11) {
+		mes "[Tommy]";
+		mes "Daddy...I won't ask you for something that's too hard for you.";
+		next;
+		mes "[Tommy]";
+		mes "I saw you're huffing and puffing when we went to catch a Munak.";
+		mes "I'm so sorry that I gave you a hard time, daddy...";
+		next;
+		mes "[Tommy]";
+		mes "I will be good from now on.";
+		mes "I will be nice to my Daddy, to you and to anyone.";
+		next;
+		mes "[Tommy]";
+		mes "My dad told me that I will be a good kid if I don't behave bad sometimes.";
+		close;
+	}
+	else {
+		mes "[Tommy]";
+		mes "I hate to see my daddy resting in his room all day in the weekends.";
+		mes "But I am so happy today because my daddy and I will take a walk together!!";
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= Official OBB Quest. You can pass it any times you want.
+//= 1.6 Updated, fixed, optimized and translated into English [Lupus]
+//= 1.6a Halved the required items to make an obb, thanks to marquis007 [MasterOfMuppets]
+//============================================================ 

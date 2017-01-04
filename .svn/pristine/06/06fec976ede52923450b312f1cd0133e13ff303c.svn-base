@@ -1,0 +1,55 @@
+// --------------------------------------------------------------
+// -                         Guild Wars                         -
+// --------------------------------------------------------------
+
+// ----------------------- War of Emperium ----------------------
+// - Guild WoE time settings
+npc: npc/guild/agit_controller.txt 
+// - Guild NPC Template file
+npc: npc/guild/agit_main.txt
+// - Al De Baran
+npc: npc/guild/aldeg_cas01.txt
+npc: npc/guild/aldeg_cas02.txt
+npc: npc/guild/aldeg_cas03.txt
+npc: npc/guild/aldeg_cas04.txt
+npc: npc/guild/aldeg_cas05.txt
+// - Geffen
+npc: npc/guild/gefg_cas01.txt
+npc: npc/guild/gefg_cas02.txt
+npc: npc/guild/gefg_cas03.txt
+npc: npc/guild/gefg_cas04.txt
+npc: npc/guild/gefg_cas05.txt
+// - Payon
+npc: npc/guild/payg_cas01.txt
+npc: npc/guild/payg_cas02.txt
+npc: npc/guild/payg_cas03.txt
+npc: npc/guild/payg_cas04.txt
+npc: npc/guild/payg_cas05.txt
+// - Prontera
+npc: npc/guild/prtg_cas01.txt
+npc: npc/guild/prtg_cas02.txt
+npc: npc/guild/prtg_cas03.txt
+npc: npc/guild/prtg_cas04.txt
+npc: npc/guild/prtg_cas05.txt
+// - Treasure Room Protection
+//npc: npc/guild/trs_rp.txt
+
+// --------------- War of Emperium Second Edition ---------------
+// - WoE SE time settings
+npc: npc/guild2/agit_start_se.txt
+// - Guild NPC Template file
+npc: npc/guild2/agit_main_se.txt
+// - Town Flags
+npc: npc/guild2/guild_flags.txt
+// - Arunafeltz
+npc: npc/guild2/arug_cas01.txt
+npc: npc/guild2/arug_cas02.txt
+npc: npc/guild2/arug_cas03.txt
+npc: npc/guild2/arug_cas04.txt
+npc: npc/guild2/arug_cas05.txt
+// - Schwaltzvalt
+npc: npc/guild2/schg_cas01.txt
+npc: npc/guild2/schg_cas02.txt
+npc: npc/guild2/schg_cas03.txt
+npc: npc/guild2/schg_cas04.txt
+npc: npc/guild2/schg_cas05.txt

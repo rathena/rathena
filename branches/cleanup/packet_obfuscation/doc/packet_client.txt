@@ -1,0 +1,11 @@
+//===== rAthena Documentation ================================
+//= Source Documentation
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20140718
+//===== Description: =========================================
+//= List of all packets used by login-serv (A), char-serv (H),
+//= and map-serv (Z) to communicate to the client.
+//= See packet_interserv.txt for communication between servers.
+//============================================================

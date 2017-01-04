@@ -1,0 +1,43 @@
+// Mob Availability and Alias Database
+//
+// Structure of Database:
+// MobID,SpriteID{,Equipment}
+//
+// 01. MobID        Mob ID to change.
+// 02. SpriteID     Mob ID which will be sent to the client instead of MobID.
+//                  If 0, the mob becomes unavailable for use.
+// 03. Equipment    Item ID of pet equipment (must be available for pet counterpart, or this will cause problems).
+//
+// To disguise a mob as a player:
+// MobID,SpriteID,Sex,Hair_Style,Hair_Color,Weapon,Shield,Head_Top,Head_Middle,Head_Bottom,Option,Dye_Color
+//
+// SpriteID is a job class value.
+// Weapon and Shield uses Item ID, while Head uses View ID.
+
+//1002,1039		// Poring - Baphomet
+//1970,1002,10013	// Displays a Poring with a backpack
+
+// Easter Event Monsters
+//1920,1047,0
+//1921,1093,0
+
+// rAthena Dev Team
+// Valaris
+//1900,4013,1,1,1,1254,0,67,12,54,16,1
+// Valaris Worshiper
+//1901,6,1,1,1,1219,2101,67,12,54,0,1
+// MC Cameri
+//1902,14,1,6,6,1101,2105,0,0,0,32,3
+// Poki#3
+//1903,4012,1,21,0,1720,0,102,184,57,16,0
+// Sentry
+//1904,1286,0
+
+// iRO Halloween Event 2008
+//3000,1015,0
+//3001,1036,0
+//3002,1298,0
+
+// iRO Halloween Event 2009
+//3014,1179,0
+//3015,1272,0

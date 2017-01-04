@@ -1,0 +1,80 @@
+//===== rAthena Script =======================================
+//= Sample: Bank Test
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20140208
+//===== Description: ========================================= 
+//= Contains commands needed for a basic bank.
+//============================================================
+
+prontera,162,188,1	script	Bank Test	112,{
+	cutin "kafra_06",2;
+
+	mes "[Bank Test]";
+	mes "Welcome to Prontera's Bank Test.";
+	mes "You can only deposit a minimal of";
+	mes "1000z. What do you want to do?";
+	next;
+	switch (select("Deposit","Withdraw","Exit")) {
+	case 1:
+		mes "[Bank Test]";
+		mes "How much do you want to deposit?";
+		next;
+		input .@kafrabank;
+
+		if (.@kafrabank < 1000) {
+			mes "[Bank Test]";
+			mes "The minimum deposit is 1000z";
+			next;
+			break;
+		}
+		if (.@kafrabank > Zeny) {
+			mes "[Bank Test]";
+			mes "You don't have enough money.";
+			next;
+			break;
+		}
+		Zeny -= .@kafrabank;
+		#kafrabank += .@kafrabank;
+		mes "[Bank Test]";
+		mes "You now have ^135445" + Zeny + "z^000000";
+		mes "and your bank account ^135445" + #kafrabank + "z^000000";
+		next;
+		break;
+	case 2:
+		if (#kafrabank == 0) {
+			mes "[Bank Test]";
+			mes "Your bank account is currently empty, you can't withdraw.";
+			next;
+			break;
+		}
+		mes "[Bank Test]";
+		mes "Current balance: ^135445" + #kafrabank + "^000000z";
+		mes "How much do you want to withdraw?";
+		next;
+		input .@kafrabank;
+
+		if (.@kafrabank < 1)
+			break;
+		if (.@kafrabank > #kafrabank) {
+			mes "[Bank Test]";
+			mes "You can't withdraw more than ^135445"+ #kafrabank + "^000000z.";
+			next;
+			break;
+		}
+		#kafrabank -= .@kafrabank;
+		Zeny += .@kafrabank;
+		mes "[Bank Test]";
+		mes "You now have ^135445" + Zeny + "z^000000";
+		mes "and your bank account ^135445" + #kafrabank + "z^000000";
+		next;
+		break;
+	case 3:
+		break;
+	}
+
+	mes "Good bye!";
+	cutin "kafra_06",255;
+	close;
+}

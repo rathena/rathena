@@ -1,0 +1,15 @@
+//===== rAthena Script =======================================
+//= Magazine Dealers
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Turns bullets into magazines/packs.
+//===== Additional Comments: =================================
+//= 1.0 First version, Pre-Renewal duplicates.
+//============================================================
+
+izlude,171,127,3	duplicate(mdk)	Magazine Dealer Kenny#iz	83

@@ -1,0 +1,214 @@
+//===== rAthena Script =======================================
+//= Lighthalzen Dungeon Warp Script
+//===== By: ==================================================
+//= Sara-chan (1.0)
+//===== Current Version: =====================================
+//= 2.1b
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 8+
+//===== Description: =========================================
+//= Warp Points for Lighthalzen Dungeon
+//===== Additional Comments: =================================
+//= 1.1 Added temp restriction by Azazel [Lupus]
+//= 1.2 Optimized [Lupus]
+//=     and fixed 005 and 005a warps coords, thanks to Justin84 
+//= 1.3 Fixed entrance condition check, thanx2Daegaladh [Lupus]
+//= 1.4 Added coords of secret dungeon entrance, thanks to Justin84
+//=     proved with screenshots [Lupus]
+//= 1.5a thx2 Justin84, some additions and fixes [Lupus]
+//= 1.5b re-enabled main entrance warp [Lupus] <-reverted 1.5c
+//= 1.6 Updated entrances, added Cube room warps, thanx 2 Justin84
+//= 1.6a Disabled the "Entrance" to lhz_dun01 [Poki#3]
+//= 1.6b Updated Sewer Pipe [Vicious]
+//= 1.7 Fixed a warp-back
+//= 1.8 Some small changes [MasterOfMuppets]
+//= 1.9 Removed duplicates [Toms]
+//= 2.0 Now use MISC_QUEST&512 instead of 'hzdun' [Lupus]
+//= 2.1 Updated all standard dungeon warps. [L0ne_W0lf]
+//=     Updated Sewer pipe dungeon entrance.
+//=     Removed dialog from level 3 entrance warp.
+//= 2.1a Updated 3rd floor warp. Again... [L0ne_W0lf]
+//= 2.1b Fixed reverse level requirement in 3rd floor warp. [L0ne_W0lf]
+//============================================================
+
+lhz_dun01,149,291,0	warp	lhz_dun1-1	1,1,lhz_in01,19,129
+lhz_dun01,281,150,0	warp	lhz_dun2-1	1,1,lhz_dun02,282,153
+lhz_dun02,282,161,0	warp	lhz_dun2-2	1,1,lhz_dun01,281,154
+lhz_dun01,149,9,0	warp	lhz_dun3-1	1,1,lhz_dun02,153,19
+lhz_dun02,146,19,0	warp	lhz_dun3-2	1,1,lhz_dun01,144,9
+lhz_dun01,18,145,0	warp	lhz_dun4-1	1,1,lhz_dun02,17,150
+lhz_dun02,17,156,0	warp	lhz_dun4-2	1,1,lhz_dun01,18,150
+lhz_dun02,149,149,4	script	lhz_dun5-1	45,2,2,{
+OnTouch:
+	if ((Upper != 1 && BaseLevel<95) || (Upper == 1 && BaseLevel<90)) {
+		warp "lhz_dun02",145,149;
+	}
+	else {
+		warp "lhz_dun03",140,133;
+	}
+	end;
+}
+lhz_dun03,139,137,0	warp	lhz_dun5-2	1,1,lhz_dun02,149,142
+
+//--------------------------Sewer Pipe--------------------------
+
+lighthalzen,313,301,0	script	Sewer Pipe#lt	111,{
+	if (MISC_QUEST&512) {
+		mes "^3355FFYou found some sort";
+		mes "of large sewage pipe.";
+		mes "Naturally, the stench";
+		mes "emanating from inside";
+		mes "the pipe is barely endurable.^000000";
+		next;
+		if (select("Enter:Cancel") == 1) {
+			warp "lhz_cube",231,17;
+			end;
+		}
+		close;
+	}
+	mes "^3355FFYou found some sort";
+	mes "of large sewage pipe.";
+	mes "Naturally, the stench";
+	mes "emanating from inside";
+	mes "the pipe is barely endurable.^000000";
+	close;
+}
+
+//--------------------------Warp--------------------------
+
+//Cube room <-> Organism test laboratory level 2
+lhz_cube,231,96,0	warp	lhzcube1	1,1,lhz_dun02,220,6
+lhz_dun02,224,6,0	warp	lhzcube2	1,1,lhz_cube,231,90
+
+//Cube room -> Lighthalzen
+lhz_cube,231,12,0	warp	lhzcube3	1,1,lighthalzen,310,302
+lhz_cube,177,96,0	warp	lhzcube4	1,1,lighthalzen,310,302
+
+//----------------- Cube Room Maze ---------------------------
+// -1 are warps facing east.
+// -2 the warps facing south.
+// -3 are warps facing west.
+// -4 are warps facing north.
+//----------------- Room 66 74 -------------------------------
+lhz_cube,74,74,0	script	cubew01-1	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,66,67,0	warp	cubew01-2	2,2,lhz_cube,10,18
+lhz_cube,59,74,0	script	cubew01-3	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,66,82,0	script	cubew01-4	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+//----------------- Room 66 136 ------------------------------
+lhz_cube,74,136,0	warp	cubew02-1	2,2,lhz_cube,10,193
+lhz_cube,66,129,0	script	cubew02-2	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,59,136,0	script	cubew02-3	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,66,144,0	script	cubew02-4	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+//----------------- Room 67 193 ------------------------------
+lhz_cube,74,192,0	script	cubew03-1	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,67,185,0	script	cubew03-2	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,59,192,0	script	cubew03-3	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,67,200,0	warp	cubew03-4	2,2,lhz_cube,10,136
+//----------------- Room 66 18 -------------------------------
+lhz_cube,74,18,0	script	cubew04-1	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,66,11,0	warp	cubew04-2	2,2,lhz_cube,10,18
+lhz_cube,59,18,0	script	cubew04-3	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,66,26,0	warp	cubew04-4	2,2,lhz_cube,123,18
+//----------------- Room 66 18 -------------------------------
+lhz_cube,18,18,0	warp	cubew05-1	2,2,lhz_cube,10,193
+lhz_cube,10,11,0	warp	cubew05-2	2,2,lhz_cube,123,18
+lhz_cube,3,18,0	script	cubew05-3	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,10,26,0	script	cubew05-4	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+//----------------- Room 10 74 -------------------------------
+lhz_cube,18,74,0	script	cubew06-1	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,10,67,0	warp	cubew06-2	2,2,lhz_cube,123,18
+lhz_cube,3,74,0	warp	cubew06-3	2,2,lhz_cube,66,18
+lhz_cube,10,82,0	script	cubew06-4	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+//----------------- Room 10 136 ------------------------------
+lhz_cube,18,136,0	warp	cubew07-1	2,2,lhz_cube,10,74
+lhz_cube,10,129,0	script	cubew07-2	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,3,136,0	script	cubew07-3	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,10,144,0	script	cubew07-4	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+//----------------- Room 10 193 ------------------------------
+lhz_cube,18,192,0	script	cubew08-1	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,10,185,0	script	cubew08-2	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,3,192,0	warp	cubew08-3	2,2,lhz_cube,10,74
+lhz_cube,10,200,0	warp	cubew08-4	2,2,lhz_cube,66,18
+//----------------- Room 123 18 ------------------------------
+lhz_cube,130,18,0	script	cubew09-1	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,123,11,0	script	cubew09-2	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+lhz_cube,115,18,0	warp	cubew09-3	2,2,lhz_cube,248,184
+lhz_cube,123,26,0	script	cubew09-4	45,1,1,{
+	callfunc "randomw";
+	end;
+}
+ 
+//----- Function for Random Warps ----------------------------
+function	script	randomw	{
+	switch(rand(3)) {
+	case 1: warp "lhz_cube",66,136; end;
+	case 2: warp "lhz_cube",66,74; end;
+ 	default: warp "lhz_cube",67,193; end;
+	}
+}

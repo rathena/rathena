@@ -1,0 +1,218 @@
+//===== rAthena Script ======================================= 
+//= BattleGround System - KvM Entrance NPCs
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Kreiger Von Midgard Battleground Entrance NPCs
+//= Original NPCs scrapped from bg_common.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//= 1.1 Corrected some typos, and shifted messages around.
+//=     Corrected iRO style quest log entries, however it's
+//=     advisable that you not use them, as they conflict.
+//============================================================
+
+// KvM Officer - Guillaume
+//============================================================
+bat_room,164,178,5	script	KVM Mercenary Officer#1	418,{
+	/*
+	set .@kvm,checkquest(6026,PLAYTIME);
+	if ((.@kvm == 0) || (.@kvm == 1)) {
+		mes "[Croix Mercenary Officer]";
+		mes "I know that you've already signed with the Croix. Go back and join their team. We will not accept traitors to fight for us.";
+		close;
+	}
+	else if (.@kvm == 2) erasequest 6026;
+	*/
+	set .@permit,checkquest(6025,PLAYTIME);
+	if ((.@permit == 0) || (.@permit == 1)) {
+		mes "[Guillaume Mercenary Officer]";
+		mes "It seems you have recently participated in a KVM battle. You must wait 5 minutes before signing up again.";
+		close;
+	}
+	else if (.@permit == 2) erasequest 6025;
+	mes "[Guillaume Mercenary Officer]";
+	mes "Let them know the real might of Guillaume!";
+	next;
+	switch(select("I will fight with you.:End Conversation.")) {
+	case 1:
+		mes "[Guillaume Mercenary Officer]";
+		mes "Show them how strong we are.";
+		mes "Today, everyone will hear the shout of triumph from Guillaume!";
+		close2;
+		//setquest 6025;
+		if (BaseLevel > 79)  warp "bat_room",169,223;
+		else if (BaseLevel < 60) warp "bat_room",197,223;
+		else warp "bat_room",225,223;
+		end;
+	case 2:
+		mes "[Guillaume Mercenary Officer]";
+		mes "We will win!";
+		close;
+	}
+}
+
+// Guillaume Knight - KvM
+//============================================================
+bat_room,167,178,5	script	Guillaume Knight#kvm	417,{
+	mes "[Guillaume Knight]";
+	mes "Hello.";
+	mes "What do you want to know?";
+	next;
+	switch(select("Apply for KVM.:What is KVM?:How do I participate in KVM?:I want to know my Kreiger Points.")) {
+	case 1:
+		mes "[Guillaume Knight]";
+		mes "Applications are not available yet.";
+		mes "To apply, you need to go to a KVM Mercenary Officer.";
+		close;
+	case 2:
+		mes "[Guillaume Knight]";
+		mes "KVM is the abbreviation of Kreiger Von Midgard.";
+		mes "Adventurer, are you aware that the way to the new world has been opened?";
+		next;
+		mes "[Guillaume Knight]";
+		mes "We, the Guillaume Administration, have several plans to advance to the new world.";
+		mes "And KVM is one of them.";
+		next;
+		mes "[Guillaume Knight]";
+		mes "It means that we, one of many countries in the Midgard continent,";
+		mes "have decided to employ many adventurers for the immediate advance to the new world.";
+		next;
+		mes "[Guillaume Knight]";
+		mes "Therefore, to select the best adventurers, we are holding the KVM.";
+		mes "We exspect responses from many adventurers.";
+		next;
+		mes "[Guillaume Knight]";
+		mes "And we will give them rewards for their participation!";
+		mes "As for the rewards, please contact a KVM Logistic Officer.";
+		close;
+	case 3:
+		mes "[Guillaume Knight]";
+		mes "Basically, KVM is a 5 on 5 battle.";
+		mes "First, you apply with a KVM receptionist, in a group or individually.";
+		next;
+		mes "[Guillaume Knight]";
+		mes "Group applications are for when you intend to enter the KVM with your party members,";
+		mes "and a personal application is for when you intend to enter the KVM individually.";
+		next;
+		mes "[Guillaume Knight]";
+		mes "Please apply with a KVM officer, and he will contact you later when you are in Prontera.";
+		next;
+		mes "[Guillaume Knight]";
+		mes "Then you enter and follow the instructions in the battlefield.";
+		next;
+		mes "[Guillaume Knight]";
+		mes "However, please be advised that unless you are in the KVM office, he cannot contact you.";
+		close;
+	case 4:
+		mes "[Guillaume Knight]";
+		mes "Your Kreiger Points are:";
+		mes ""+kvm_point+".";
+		close;
+	}
+}
+
+// KvM Officer - Croix
+//============================================================
+bat_room,164,121,1	script	KVM Mercenary Officer#2	414,{
+	/*
+	set .@kvm,checkquest(6025,PLAYTIME);
+	if ((.@kvm == 0) || (.@kvm == 1)) {
+		mes "[Croix Mercenary Officer]";
+		mes "I know that you've already signed with the Guillaume. Go back and join their team. We will not accept traitors to fight for us.";
+		close;
+	}
+	else if (.@kvm == 2) erasequest 6025;
+	*/
+	set .@permit,checkquest(6025,PLAYTIME);
+	if ((.@permit == 0) || (.@permit == 1)) {
+		mes "[Croix Mercenary Officer]";
+		mes "It seems you have recently participated in a KVM battle. You must wait 5 minutes before signing up again.";
+		close;
+	}
+	else if (.@permit == 2) erasequest 6025;
+	mes "[Croix Mercenary Officer]";
+	mes "Let them know the real might of Croix!";
+	next;
+	switch(select("I will fight with you.:End Conversation.")) {
+	case 1:
+		mes "[Croix Mercenary Officer]";
+		mes "Show them how strong we are.";
+		mes "Today, everyone will hear the shout of triumph from Croix!";
+		close2;
+		//setquest 6026;
+		if (BaseLevel > 79) warp "bat_room",169,207;
+		else if (BaseLevel < 60) warp "bat_room",197,207;
+		else warp "bat_room",225,207;
+		end;
+	case 2:
+		mes "[Croix Mercenary Officer]";
+		mes "We will win!";
+		close;
+	}
+}
+
+// Croix Knight - KvM
+//============================================================
+bat_room,167,121,1	script	Croix Knight#kvm	413,{
+	mes "[Croix Knight]";
+	mes "Hello.";
+	mes "What do you want to know?";
+	next;
+	switch(select("Apply for KVM.:What is KVM?:How do I participate in KVM?:I want to know my Kreiger Points.")) {
+	case 1:
+		mes "[Croix Knight]";
+		mes "Applications are not available yet.";
+		mes "To apply, you need to go to a KVM Mercenary Officer.";
+		close;
+	case 2:
+		mes "[Croix Knight]";
+		mes "KVM is the abbreviation of Kreiger Von Midgard.";
+		mes "Adventurer, are you aware that the way to the new world has been opened?";
+		next;
+		mes "[Croix Knight]";
+		mes "We, the Croix Administration, have several plans to advance to the new world.";
+		mes "And KVM is one of them.";
+		next;
+		mes "[Croix Knight]";
+		mes "It means that we, one of many countries in the Midgard continent,";
+		mes "have decided to employ many adventurers for the immediate advance to the new world.";
+		next;
+		mes "[Croix Knight]";
+		mes "Therefore, to select the best adventurers, we are holding the KVM.";
+		mes "We exspect responses from many adventurers.";
+		next;
+		mes "[Croix Knight]";
+		mes "And we will give them rewards for their participation!";
+		mes "As for the rewards, please contact a KVM Logistic Officer.";
+		close;
+	case 3:
+		mes "[Croix Knight]";
+		mes "Basically, KVM is a 5 on 5 battle.";
+		mes "First, you apply with a KVM receptionist, in a group or individually.";
+		next;
+		mes "[Croix Knight]";
+		mes "Group applications are for when you intend to enter the KVM with your party members,";
+		mes "and a personal application is for when you intend to enter the KVM individually.";
+		next;
+		mes "[Croix Knight]";
+		mes "Please apply with a KVM officer, and he will contact you later when you are in Prontera.";
+		next;
+		mes "[Croix Knight]";
+		mes "Then you enter and follow the instructions in the battlefield.";
+		next;
+		mes "[Croix Knight]";
+		mes "However, please be advised that unless you are in the KVM office, he cannot contact you.";
+		close;
+	case 4:
+		mes "[Croix Knight]";
+		mes "Your Kreiger Points are:";
+		mes ""+kvm_point+".";
+		close;
+	}
+}

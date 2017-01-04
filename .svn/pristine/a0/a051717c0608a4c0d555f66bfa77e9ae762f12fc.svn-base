@@ -1,0 +1,339 @@
+//--------------------------------------------------------------
+// rAthena Battle Configuration File
+// Originally Translated by Peter Kieser <pfak@telus.net>
+// Made in to plainer English by Ancyker
+//--------------------------------------------------------------
+// Note 1: Value is a config switch (on/off, yes/no or 1/0)
+// Note 2: Value is in percents (100 means 100%)
+// Note 3: Value is a bit field. If no description is given,
+//         assume unit types (1: Pc, 2: Mob, 4: Pet, 8: Homun, 16: Mercenary)
+//--------------------------------------------------------------
+
+// The rate of time it takes to cast a spell (Note 2, 0 = No casting time)
+casting_rate: 100
+
+// Delay time after casting (Note 2)
+delay_rate: 100
+
+// Does the delay time depend on the caster's DEX and/or AGI? (Note 1)
+// Note: On Official servers, neither Dex nor Agi affect delay time
+delay_dependon_dex: no
+delay_dependon_agi: no
+
+// Minimum allowed delay for ANY skills after casting (in milliseconds) (Note 1)
+// Note: Setting this to anything above 0 can stop speedhacks.
+min_skill_delay_limit: 100
+
+// This delay is the min 'can't walk delay' of all skills.
+// NOTE: Do not set this too low, if a character starts moving too soon after 
+// doing a skill, the client will not update this, and the player/mob will 
+// appear to "teleport" afterwards.
+default_walk_delay: 300
+
+//Completely disable skill delay of the following types (Note 3)
+//NOTE: By default mobs don't have the skill delay as specified in the skill
+//  database, but follow their own 'reuse' skill delay which is specified on
+//  the mob skill db. When set, the delay for all skills become
+//  min_skill_delay_limit.
+no_skill_delay: 2
+
+// At what dex does the cast time become zero (instacast)?
+castrate_dex_scale: 150
+
+// How much (dex*2+int) does variable cast turns zero?
+vcast_stat_scale: 530
+
+// What level of leniency should the skill system give for skills when
+// accounting attack motion (ASPD) for casting skills (Note 2, between 0 and 300)
+//
+// NOTE: Setting this to 100% may cause some issues with valid skills not being cast.
+//       The time difference between client and server varies so allowing 90% leniency
+//       should be enough to forgive very small margins of error.
+skill_amotion_leniency: 90
+
+// Will normal attacks be able to ignore the delay after skills? (Note 1)
+skill_delay_attack_enable: yes
+
+// Range added to skills after their cast time finishes.
+// Decides how far away the target can walk away after the skill began casting before the skill fails.
+// 0 disables this range checking (default)
+skill_add_range: 0
+
+// If the target moves out of range while casting, do we take the items and SP for the skill anyway? (Note 1)
+skill_out_range_consume: no
+
+// Does the distance between caster and target define if the skill is a ranged skill? (Note 3)
+// If set, when the distance between caster and target is greater than 3 the skill is considered long-range, otherwise it's a melee range.
+// If not set, then the range is determined by the skill's range (if it is above 5, the skill is ranged).
+// Default 14 (mobs + pets + homun)
+skillrange_by_distance: 14
+
+// Should the equipped weapon's range override the skill's range defined in the skill_db for most weapon-based skills? (Note 3)
+// NOTE: Skills affected by this option are those whose range in the skill_db are negative. By default always the skill range is used.
+// Note that if you want all monster skills to have a range of 9 you need to set monster_ai&0x400.
+skillrange_from_weapon: 0
+
+// Should a check on the caster's status be performed in all skill attacks?
+// When set to yes, meteors, storm gust and any other ground skills will have 
+// no effect while the caster is unable to fight (eg: stunned).
+skill_caster_check: yes
+
+// Should ground placed skills be removed as soon as the caster dies? (Note 3)
+clear_skills_on_death: 0
+
+// Should ground placed skills be removed when the caster changes maps? (Note 3)
+clear_skills_on_warp: 15
+
+//Setting this to YES will override the target mode of ground-based skills with the flag 0x01 to "No Enemies"
+//The two skills affected by default are Pneuma and Safety Wall (if set to yes, those two skills will not protect everyone, but only allies)
+//See db/skill_unit_db.txt for more info.
+defunit_not_enemy: no
+
+// Should skills always do at least 'hits' damage when they don't miss/are blocked?
+// Many skills will have their damage multiplied by their number of hits (see skill_db), these will always deal 1 HP
+// damage per hit, even against plants. But some skills are actually a single hit that is just displayed as multiple
+// hits. For these skills, damage gets divided by number of hits and rounded down. That means that plants won't take
+// any damage from them. Examples: Sonic Blow, Lord of Vermillion
+// With this setting, you can change the official behavior and make these skills deal at least 1 HP damage per hit.
+// Values: 1 for weapon-based attacks, 2 for magic attacks, 4 for misc attacks.
+skill_min_damage: 0
+
+// The delay rate of monk's combo (Note 2)
+combo_delay_rate: 100
+
+// Use alternate auto Counter Attack Skill Type? (Note 3)
+// For those characters on which it is set, 100% Critical,
+// Otherwise it disregard DEF and HIT+20, CRI*2
+auto_counter_type: 15
+
+// Can ground skills be placed on top of each other? (Note 3)
+// By default, skills with UF_NOREITERATION set cannot be stacked on top of 
+// other skills, this setting will override that. (skill_unit_db)
+skill_reiteration: 0
+
+// Can ground skills NOT be placed underneath/near players/monsters? (Note 3)
+// If set, only skills with UF_NOFOOTSET set will be affected (skill_unit_db)
+skill_nofootset: 1
+
+// Should traps (hunter traps + quagmire) change their target to "all" inside gvg/pvp grounds? (Note 3)
+// Default on official servers: 1 (for players)
+gvg_traps_target_all: 1
+
+// Hunter's traps visibility setting:
+// 1: (Official) Many of Hunter's traps are invisible at all times.
+//    But any player who see the Hunter laying the trap will be able to see the trap until they move out of sight of it.
+//    Although, invisible traps can be revealed through Hunter's Detecting skill.
+traps_setting: 1
+
+// Restrictions applied to the Alchemist's Summon Flora skill (add as necessary)
+// 1: Enable players to damage the floras outside of versus grounds.
+// 2: Disable having different types out at the same time
+//    (eg: forbid summoning anything except hydras when there's already 
+//     one hydra out)
+summon_flora_setting: 3
+
+// Whether placed down skills will check walls (Note 1)
+// (ex. Storm Gust cast against a wall will not hit the other side.) 
+skill_wall_check: yes
+
+// When cloaking, Whether the wall is checked or not. (Note 1)
+// Note: When the skill does not checks for walls, you will always be considered
+//  as if you had a wall-next to you (you always get the wall-based speed). 
+//  Add the settings as required, being hit always uncloaks you.
+// 
+// 0 = doesn't check for walls
+// 1 = Check for walls
+// 2 = Cloaking is not cancelled when attacking.
+// 4 = Cloaking is not cancelled when using skills
+player_cloak_check_type: 1
+monster_cloak_check_type: 4
+
+// Can't place unlimited land skills at the same time (Note 3)
+land_skill_limit: 9
+
+//Determines which kind of skill-failed messages should be sent:
+// 1 - Disable all skill-failed messages.
+// 2 - Disable skill-failed messages due to can-act delays.
+// 4 - Disable failed message from Snatcher
+// 8 - Disable failed message from Envenom
+display_skill_fail: 2
+
+// Can a player in chat room (in-game), be warped by a warp portal? (Note 1)
+chat_warpportal: no
+
+// What should the wizard's "Sense" skill display on the defense fields?
+// 0: Do not show defense
+// 1: Base defense [RE default]
+// 2: Vit/Int defense
+// 3: Both (the addition of both) 
+sense_type: 1
+
+// Which finger offensive style will be used?
+// 0 = Aegis style (single multi-hit attack)
+// 1 = Athena style (multiple consecutive attacks)
+finger_offensive_type: 0
+
+// Grandcross Settings (Don't mess with these)
+// If set to no, hit interval is increased based on the amount of mobs standing on the same cell
+// (means that when there's stacked mobs in the same cell, they won't receive all hits)
+gx_allhit: no
+
+// Grandcross display type (Default 1)
+// 0: Yellow character
+// 1: White character
+gx_disptype: 1
+
+// Max Level Difference for Devotion
+devotion_level_difference: 10
+
+// Using 'old' behavior for devotion vs reflect damage? (Note 2)
+// Default is 0 (official). If 'devotion_rdamage' is > 0 (chance to devote the reflected damage),
+// when player with devotion attacks player with reflect damage ability (item bonus or skill),
+// the damage will be taken by the person who provides devotion instead the attacker.
+devotion_rdamage: 0
+
+// Officially, reflecting shield (SC_REFLECTDAMAGE) reflects physical damage by skill or normal attack.
+// But if the target is being devoted, it ONLY reflects the damage for melee skill. (Note 1)
+devotion_rdamage_skill_only: yes
+
+// If no than you can use the ensemble skills alone. (Note 1)
+player_skill_partner_check: yes
+
+// Remove trap type
+// 0 = Aegis system : Returns 1 'Trap' item
+// 1 = Athena system : Returns all items used to deploy the trap
+skill_removetrap_type: 0
+
+// Does using bow to do a backstab give a 50% damage penalty? (Note 1)
+backstab_bow_penalty: yes
+
+// How many times you could try to steal from a mob.
+// Note: It helps to avoid stealing exploit on monsters with few rare items
+// Use 0 to disable (max allowed value is 255)
+skill_steal_max_tries: 0
+
+// Does Berserk/Frenzy cancel other self-buffs when used?
+berserk_cancels_buffs: no
+
+// Level and Strength of "MVP heal". When someone casts a heal of this level or
+// above, the heal formula is bypassed and this value is used instead.
+max_heal: 9999
+max_heal_lv: 11
+
+// Emergency Recall Guild Skill setting (add as appropriate).
+// Note that for the skill to be usable at all, 
+// you need at least one of 1/2 and 4/8
+// 1: Skill is usable outside of woe.
+// 2: Skill is usable during woe.
+// 4: Skill is usable outside of GvG grounds
+// 8: Skill is usable on GvG grounds
+//16: Disable skill from "nowarpto" maps
+//    (it will work on GVG castles even if they are set to nowarpto, though)
+emergency_call: 11
+
+// Guild Aura Skills setting (add as appropriate).
+// (This affects GD_LEADERSHIP, GD_GLORYWOUNDS, GD_SOULCOLD and GD_HAWKEYES)
+// Note that for the skill to be usable at all, 
+// you need at least one of 1/2 and 4/8
+// 1: Skill works outside of woe.
+// 2: Skill works during woe.
+// 4: Skill works outside of GvG grounds
+// 8: Skill works on GvG grounds
+//16: Disable skill from affecting Guild Master
+guild_aura: 31
+
+// Max Possible Level of Monster skills
+// Note: If your MVPs are too tough, reduce it to 10.
+mob_max_skilllvl: 100
+
+// Allows players to skip menu when casting Teleport level 1
+// Menu contains two options. "Random" and "Cancel"
+skip_teleport_lv1_menu: no
+
+// Allow use of SG skills without proper day (Sun/Moon/Star) ?
+allow_skill_without_day: no
+
+// Allow use of ES-type magic on players?
+allow_es_magic_player: no
+
+// Miracle of the Sun, Moon and Stars skill ratio (100% = 10000)
+sg_miracle_skill_ratio: 2
+
+// Miracle of the Sun, Moon and Stars skill duration in milliseconds
+sg_miracle_skill_duration: 3600000
+
+// Angel of the Sun, Moon and Stars skill ratio (100% = 10000)
+sg_angel_skill_ratio: 10
+
+// Skills that bHealPower has effect on
+// 1: Heal, 2: Sanctuary, 4: Potion Pitcher, 8: Slim Pitcher, 16: Apple of Idun
+skill_add_heal_rate: 7
+
+// Whether the damage of EarthQuake with a single target on screen is able to be reflected.
+// Note: On official servers, EQ is reflectable when there is only one target on the screen, 
+//	 which might be an exploit to hunt the MVPs.
+eq_single_target_reflectable: yes
+
+// On official server, you will receive damage from Reflection and some Tarot Card even in invincible status.
+// When this setting is enabled, it allows you to immune to all kinds of damage, including those stated previous.
+// (The number will show but no actual damage will be done)
+invincible.nodamage: no
+
+// Dancing Weapon Switch
+// On official servers, a fix is in place that prevents the switching of weapons to cancel songs.
+// Default: yes
+dancing_weaponswitch_fix: yes
+
+// Skill Trap Type
+// On official servers if a unit is completely immune to knockback, it will still walk to the last target tile before
+// stopping when inflicted by a stopping status effect (including traps like Ankle Snare and Spiderweb). All traps on
+// the way will be activated.
+// This does NOT include being immune to knock back from equip. This bonus only helps against knockback skills.
+// 0: (official)
+// 1: Stop effects in GvG/WoE make units stop immediately.
+// 2: Stop effects make monsters immune to knockback / bosses stop immediately.
+// 3: 1+2
+skill_trap_type: 0
+
+// Area of Bowling Bash chain reaction
+// 0: Use official gutter line system
+// 1: Gutter line system without demi gutter bug
+// 2-20: Area around caster (2 = 5x5, 3 = 7x7, 4 = 9x9, ..., 20 = 41x41)
+// Note: If you knock the target out of the area it will only be hit once and won't do splash damage
+bowling_bash_area: 0
+
+// Pushback behavior (Note 1)
+// On official servers, hitting a wall will always cause the unit to stop moving.
+// If "no", the unit will continue moving when approaching walls diagonally (old Athena behavior).
+path_blown_halt: yes
+
+// Taekwon Mission mob name check
+// iRO Wiki States: If your target is Goblin, any monster called "Goblin" will count toward the mission.
+// 0: Off (default)
+// 1: All 5 of the Goblin monsters will count, regardless of Mob ID (Mob ID: 1122-1126) - iRO default
+// 2: Any monster with the same exact name will count, regardless of Mob ID - Comparison based off of jName
+taekwon_mission_mobname: 0
+
+// Can a player Teleport on top of a Map Warp Portal? (Note 1)
+// On official servers players have been unable to do so.
+teleport_on_portal: no
+
+// Is the knockback direction for Cart Revolution always West? (Note 1)
+// On official servers it will knock the target always to the West. If disabled it will knock the target backwards.
+cart_revo_knockback: yes
+
+// On official servers, Arrow Shower blow direction always rely on skill placed location to target instead of caster to target
+arrow_shower_knockback: yes
+
+// On official servers, Storm Gust consists of 81 units that all deal 3x3 splash damage "away from center". Due to
+// south-western cells being processed first, this usually leads to a knockback to the northeast. Knockback at the
+// edges will be away from SG. Knockback direction can also be influenced by Ganbantein and Land Protector. If you
+// punch a hole into SG it will for example create a "suck in" effect.
+// If you disable this setting, the knockback direction will be completely random (eAthena style).
+stormgust_knockback: yes
+
+// For RENEWAL_CAST (Note 2)
+// By default skill that has '0' value for Fixed Casting Time will use 20% of cast time
+// as Fixed Casting Time, and the rest (80%) as Variable Casting Time.
+// Put it 0 to disable default Fixed Casting Time (just like -1 is the skill_cast_db.txt).
+default_fixed_castrate: 20

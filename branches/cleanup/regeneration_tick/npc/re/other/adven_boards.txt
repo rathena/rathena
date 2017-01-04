@@ -1,0 +1,3335 @@
+//===== rAthena Script =======================================
+//= Dungeon Signposts - Monster Info
+//===== Description: =========================================
+//= [Official Conversion]
+//= Informations Boards about monsters.
+//===== Changelogs: ==========================================
+//= 1.0 Initial release. [Capuche] [Cydh]
+//= 1.0.1 Typos clean up. [Aleos]
+//============================================================
+
+function	script	F_AvenBoard	{
+	.@mo_board = select( "Look up monsters by floor",
+					"Monster Information Retrieval System",
+					( countitem(909) == 30000 ? "Request" : "" ),
+					"Cancel" );
+	if (.@mo_board == 1)
+		return 1;
+	else if (.@mo_board == 2) {
+		while(1) {
+			mes "[Monster Information Retrieval System]";
+			mes "This is Monster Information Retrieval System. Information of the monsters that appear in this dungeon can be searched. Enter Monster Name, including spaces, when searching.";
+			next;
+			input .@inputstr$;
+			setarray .@element$[0],"Neutral","Water","Earth","Fire","Wind","Poison","Holy","Shadow","Ghost","Undead";
+			setarray .@size$[0],"Medium","Small","Big";
+			setarray .@race$[0],"Formless","Undead","Animal","Plant","Insect","Fish","Demon","Demihuman","Angel","Dragon";
+			.@size = getargcount();
+			.@i = 0;
+			while( .@i < .@size && getarg(.@i+1,"") != .@inputstr$ ) .@i += 3;
+			mes "[Monster Information Retrieval System]";
+			mes "Now searching";
+			next;
+			mes "[Monster Information Retrieval System]";
+			mes "Search has been completed.";
+			mes "Now showing the search results.";
+			next;
+			mes "[Monster Information Retrieval System]";
+			if (.@i >= .@size) {
+				mes "There is no information available for that monster.";
+				mes "Please check your monster name.";
+			}
+			else {
+				.@mob_id = getarg(.@i);
+				mes "- Name : "+ getarg(.@i+1);
+				mes "- Element : "+ .@element$[ getmonsterinfo(.@mob_id,MOB_ELEMENT) ];
+				mes "- Size : "+ .@size$[ getmonsterinfo(.@mob_id,MOB_SIZE) ];
+				mes "- Race : "+ .@race$[ getmonsterinfo(.@mob_id,MOB_RACE) ];
+				mes "--------------------------------^FD8D02";
+				mes getarg(.@i+2);
+			}
+			next;
+			mes "[Monster Information Retrieval System]";
+			mes "Would you like to search for other monster information?";
+			next;
+			if (select( "Search","Cancel" ) == 1)
+				continue;
+			mes "[Monster Information Retrieval System]";
+			mes "Monster search system will now shut down.";
+			next;
+			return 2;
+		}
+	}
+	else if (.@mo_board == 3) {
+		mes "Requested information will appear - There's no problem if it appears";
+		next;
+		return 3;
+	}
+	else if (.@mo_board == 4)
+		close;
+	else {
+		mes "Operation Error.";
+		close;
+	}
+}
+
+function	script	F_InfoBoard	{
+	next;
+	mes "[Adventurer Group]";
+	mes "For more Information on the monsters";
+	mes "Monster Information Retrieval System";
+	mes "Must be used.";
+	next;
+	return;
+}
+
+cmd_fild08,326,357,0	script	Signpost#Ant Hell 1	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Ant Hell]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1005,"Familiar","Familiar is a aggressive bat creature that can cause problems for the unaware adventurer.",
+			1097,"Ant Egg","Not a threat by itself, but it will hatch a variety of giant ants.",
+			1105,"Deniro","This greedy worker ant will not attack on sight but will eat up items dropped nearby.",
+			1160,"Piere","This greedy worker ant will not attack on sight but will eat up items dropped nearby.",
+			1095,"Andre","This greedy worker ant will not attack on sight but will eat up items dropped nearby.",
+			1176,"Vitata","This larger variety of insect produces honey and royal jelly for the colony.",
+			1121,"Giearth","This small, demonic pixie can be found in limited numbers in this dungeon.",
+			1289,"Maya Purple","This ant Queen rare spawn monster will drop valuable minerals when killed, but should be approached with caution.",
+			1147,"Maya","Found in the second level of Ant Hell dungeon, this MVP is a more powerful version of Maya Purple." );
+		if (.@mo_board == 1) {
+			mes "[Ant Hell]";
+			mes "Ant Hell dungeon is infested with gigantic insects, when one is attacked others may join the fight.";
+			next;
+			while(1) {
+				switch( select( "Ant Hell B1","Ant Hell B2","Cancel" ) ) {
+				case 1:
+					mes "[Ant Hell B1]";
+					mes "------------ Monster ------------";
+					mes "Familiar(24)";
+					mes "Ant Egg(28)";
+					mes "Deniro(31)";
+					mes "Piere(32)";
+					mes "Andre(33)";
+					mes "Vitata(35)";
+					mes "Giearth(42)";
+					mes "Maya Purple(81)";
+					mes "--------------------------------";
+					next;
+					mes "<Maya Purple? What the hell difference with Maya! Hand who knows--I wonder Grape killing explorer.>";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Ant Hell B2]";
+					mes "------------ Monster ------------";
+					mes "Familiar(24)";
+					mes "Ant Egg(28)";
+					mes "Deniro(31)";
+					mes "Piere(32)";
+					mes "Andre(33)";
+					mes "Vitata(35)";
+					mes "Giearth(42)";
+					mes "--------------------------------";
+					next;
+					mes "<The Queen of ants! Boss Monster Maya! I view it's disgusting - huh? Maya did not get two? Okay I got it. Drop the rock! - Maya love grape explorer>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+cmd_fild08,341,84,0	duplicate(Signpost#Ant Hell 1)	Signposts#Ant Hell2	2_BULLETIN_BOARD
+
+gef_tower,55,142,0	script	Signposts#Geffen Dungeon	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Geffen Dungeon]";
+		mes "Caution! Geffen Dungeon consists of 3 levels that are too dangerous for new adventurers. Please provide information tips to the adventurer group to revise the information.";
+		mes "Recommended for players around level 60~70.";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1077,"Poison Spore","An aggressive mushroom creature, it is recommended to carry green herbs to counteract it's toxic special attack.",
+			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
+			1035,"Hunter Fly","The bane of early acolytes, this deadly flying insect is found in dark, fetid places...",
+			1015,"Zombie","The ubiquitous Undead creature, the zombie is weak alone but can be a threat in large numbers.",
+			1036,"Ghoul","A more ancient variant of the zombie, hundreds of years of death have made them a tougher enemy.",
+			1130,"Jakk","This terrifying gourd-headed monster can surprise with a fire or curse attack.",
+			1111,"Drainliar","A big, ugly Familiar. This red menace is an unwelcome presence in many dark dungeons .",
+			1061,"Nightmare","Do not attempt to ride this ghostly horse.",
+			1204,"Ogretooth","An enchanted sword gone wrong.",
+			1179,"Whisper","Ghost monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.",
+			1109,"Deviruchi","An apprentice demon, relatively inexperienced in demonosity.",
+			1143,"Marionette","A puppeteer's worst nightmare, the Marionette can unleash fire or freezing spells.",
+			1046,"Doppelganger","Demons that steal other people's appearance. If you see a swordsman coming up behind you, check to make sure it's not an evil monster first.",
+			1389,"Dracula","These MVP vampires do not sparkle.^000000" );
+		if (.@mo_board == 1) {
+			mes "[Geffen Dungeon]";
+			mes "Which part of the dungeon would you like to read about?";
+			next;
+			while(1) {
+				switch( select( "Geffen Dungeon B1","Geffen Dungeon B2","Geffen Dungeon B3","Cancel" ) ) {
+				case 1:
+					mes "[Geffen Dungeon B1]";
+					mes "------------ Monster ------------";
+					mes "Poison Spore(26)";
+					mes "PoPoring(30),";
+					mes "Hunter Fly(63)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Geffen Dungeon B2]";
+					mes "------------ Monster ------------";
+					mes "Zombie(17)";
+					mes "Drainliar(47)";
+					mes "Ghoul(61)";
+					mes "Jakk(63)";
+					mes "Nightmare(69)";
+					mes "Ogretooth(114)";
+					mes "--------------------------------";
+					next;
+					mes "<This dungeon is home to the rare spawn sword monster Ogretooth.>";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Geffen Dungeon B3]";
+					mes "------------ Monster ------------";
+					mes "Whisper(34)";
+					mes "Ghoul(61)";
+					mes "Hunter Fly(63)";
+					mes "Nightmare(69)";
+					mes "Deviruchi(93)";
+					mes "Marionette(90)";
+					mes "--------------------------------";
+					next;
+					mes "<The home of demonic ponies, cute demons and puppet demons. If you like demons, you should get in here.>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+glast_01,372,298,0	script	Signposts#Glastheim	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Glastheim]";
+		mes "Glast Heim is an enormous dungeon with countless levels. Recommended for adventurers levels 70~130.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1036,"Ghoul","Corpse that is revived by Unholy Necromancer's curse. It ambushes nearby living creatures and devours their corpses to satiate its hunger, but because it's a reanimated corpse, it is unable to feel satisfied.^000000",
+			1186,"GiantWhisper","Adventurer's tips are needed.",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
+			1195,"Rideword","Magic Tome brought to life with demon's powers. It does not possess emotions or a mind of its own, programmed to rely on its instincts to attack living creatures.",
+			1143,"Marionette","Demon with the appearance of a marionette doll used in puppet theatre. Normal weapons are ineffective against its spiritual body.^000000",
+			1191,"Mimic","Adventurer's tips are needed.",
+			1203,"Mysteltainn","It appears to be a sealed demon blade, but it's actually being sealed by a chain type monster. It manipulates the chained sword to attack.",
+			1208,"Wanderer","Stray Samurai that is revived as an Undead monster. It attacks using previously mastered swordsmanship techniques, precise enough to slice flying insects in half.",
+			1219,"Abysmal Knight","Demon knight that serves the owner of legendary labyrinth. It is very powerful and brutal.",
+			1320,"Owl Duke","Owl Baron's sibling that wears a blue manteau. It enjoys rainy days.",
+			1295,"Owl Baron","Bird monster that wears red manteau. Getting fooled by its gentleman appearance will result in being ambushed by fierce magic attacks.",
+			1194,"Arclouze","Monster with hardened shell. It rolls its body to attack with its shell.",
+			1275,"Alice","Automatic doll tasked with various chores in the castle. Its main priority is to clean the vicinity, however it will attack intruders with a steel broom stick.",
+			1204,"Ogretooth","Adventurer's tips are needed.",
+			1179,"Whisper","Ghost monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.^000000",
+			1015,"Zombie","Dead soul trapped by unholy necromancer in a rotting corpse, cursed to live without being able to feel pain. Its impurity is capable of inflicting poison.^000000",
+			1209,"Cramp","Rodent found living deep within the dungeon. Its appearance is similar to Tarou, however it is much more vicious and its teeth poisonous.",
+			1268,"Bloody Knight","A soul of a valorous knight, cursed to be trapped within the bloody armor as a monster. It is powerful enough to lead the Castle's Chivalry.",
+			1035,"Hunter Fly","A bright crimson red Chonchon. Its agility is 3 times higher than a Chonchon and possess much more attack. Player captured Chonchon Pet cannot compare to Hunter Fly! 'Chonchon and ...' name will undoubtedly be popular amongst the pet keepers...^000000",
+			1253,"Gargoyle","Low ranking Demon with big wings. It utilizes its flying capabilities to attack in the air.",
+			1260,"Dark Frame","Mirror possessed by a demon. It hangs by the walls until someone walks nearby to look into the mirror, or it will wander around looking for its prey.",
+			1163,"Raydric","An infantry soul cursed to be trapped within the armor as a monster. Its sole purpose is to drive away intruders in the castle.",
+			1276,"Raydric Archer","An archer soul cursed to be trapped within the armor as a monster. Unlike Raydric, Raydric Archer uses bows to attack from afar.",
+			1192,"Wraith","Malevolent person cursed to become an Undead monster after death. It believes that sacrificing living creatures will revive it, and quietly as for unfortunate sacrifice in a dark corner.",
+			1201,"Rybio","Monster that was in charge of torturing inmates in an old prison. It always used mask to conceal its face in fear of reprisal.",
+			1310,"Majoruros","Monster with an appearance of a cow. It swings its hammer much more fiercely than a Minorous.",
+			1281,"Sageworm","These worms possess much more intellect, being worshipped as a god by other worms. It's a passive monster that will only attack with its encyclopedia when it senses danger.",
+			1196,"Skel Prisoner","Once an unjustly incarcerated prisoner, only its regret remained after its death as a monster.",
+			1207,"Sting","Monster covered in mud; its attacks are long and hard to dodge. Be cautious around this monster.",
+			1117,"Evil Druid","Once a proud high priest corrupted and turned into a monster by Demon's schemes. It maintains its strength as a former high priest.",
+			1257,"Injustice","Adventurer's tips are needed.",
+			1197,"Zombie Prisoner","Once a dead corpse of a prisoner in a castle that has revived as an Undead monster. No longer satisfied with resenting those that incarcerated it, it now resents all living creatures.",
+			1200,"Zealotus","A lady from a demon tribe. Its dominant nature forces humans to serve her as slaves. Its whip rarely misses its target when swung.",
+			1132,"Khalitzburg","A knight's soul cursed to be trapped within the armor as a monster. Its formidable strength remains as a former knight.",
+			1267,"Carat","Demon with an appearance of a Pierrot. It's seen walking on top of a circus ball like a Pierrot but...",
+			1202,"Phendark","Prison Advisor. It wore a mask to shape its face at birth, and it enjoys twisting people's minds.",
+			1283,"Chimera","Magical Beast made from various different monster parts. Its only purpose is to murder and destroy targets with powerful attacks.",
+			1198,"Dark Priest","Adventurer's tips are needed.",
+			1263,"Wind Ghost","Adventurer's tips are needed.",
+			1302,"Dark Illusion","Dark Lord's guard. It summons meteors from the sky as if to destroy the world.",
+			1272,"Dark Lord","Powerful Demon King. It is unable to utilize its full power, but it's still powerful enough to destroy normal adventurers with a motion of its hand." );
+		if (.@mo_board == 1) {
+			mes "[Glastheim]";
+			mes "The dungeons consist of several underground levels connected by ancient tunnels. Be prepared for attacks from Undead or demonic monsters within.";
+			next;
+			while(1) {
+				switch( select( "Cancel","Glastheim Indoor","Glastheim Level B1","Glastheim Level B2","Glastheim Chivalry B1","Glastheim Chivalry B2","Glastheim St. Abbey","Glastheim Churchyard","Glastheim Cave B1","Glastheim Cave B2","Glast Heim Underprison B1","Glast Heim Underprison B2","Glastheim Culvert B1","Glastheim Culvert B2","Glastheim Culvert B3","Glastheim Culvert B4","Glastheim Staircase" ) ) {
+				case 2:
+					mes "[Glastheim Indoor]";
+					mes "------------ Monster ------------";
+					mes "Sageworm(70)";
+					mes "Rideword(74)";
+					mes "Dark Frame(76)";
+					mes "Marionette(90)";
+					mes "Alice(100)";
+					mes "Wanderer(120)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Glastheim Level B1]";
+					mes "------------ Monster ------------";
+					mes "Whisper(34)";
+					mes "Sageworm(70)";
+					mes "Rideword(74)";
+					mes "Dark Frame(76)";
+					mes "Owl Duke(92)";
+					mes "Alice(100)";
+					mes "Carat(103)";
+					mes "Owl Baron(120)";
+					mes "--------------------------------";
+					mes "Middle 6 o'clock - Level B2";
+					mes "Middle 9 o'clock, 3 o'clock, Big 1 o'clock - Under Prison B1";
+					F_InfoBoard;
+					continue;
+				case 4:
+					mes "[Glastheim Level B2]";
+					mes "------------ Monster ------------";
+					mes "Mimic(59)";
+					mes "Chimera(70)";
+					mes "Rideword(74)";
+					mes "Evil Druid(80)";
+					mes "Raydric Archer(82)";
+					mes "Alice(100)";
+					mes "Ogretooth(114)";
+					mes "Raydric(115)";
+					mes "Khalitzburg(118)";
+					mes "Wanderer(120)";
+					mes "Abysmal Knight(122)";
+					mes "Mysteltainn(130)";
+					mes "--------------------------------";
+					mes "Big 6 o'clock - Level B1";
+					F_InfoBoard;
+					continue;
+				case 5:
+					mes "[Glastheim Chivalry B1]";
+					mes "------------ Monster ------------";
+					mes "GiantWhisper(66)";
+					mes "Rideword(74)";
+					mes "Raydric Archer(82)";
+					mes "Alice(100)";
+					mes "Raydric(115)";
+					mes "Khalitzburg(118)";
+					mes "Abysmal Knight(122)";
+					mes "--------------------------------";
+					mes "Big 9 o'clock, 12 o'clock, 3 o'clock - Chivalry B2";
+					mes "Middle 2 o'clock - Culvert B2";
+					F_InfoBoard;
+					continue;
+				case 6:
+					mes "[Glastheim Chivalry B2]";
+					mes "------------ Monster ------------";
+					mes "Raydric Archer(82)";
+					mes "Alice(100)";
+					mes "Raydric(115)";
+					mes "Bloody Knight(116)";
+					mes "Khalitzburg(118)";
+					mes "Abysmal Knight(122)";
+					mes "Mysteltainn(130)";
+					mes "--------------------------------";
+					mes "Big 9 o'clock, 12 o'clock, 3 o'clock - Chivalry B1";
+					F_InfoBoard;
+					continue;
+				case 7:
+					mes "[Glastheim St. Abbey]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Ghoul(61)";
+					mes "Wraith(77)";
+					mes "Evil Druid(80)";
+					mes "Dark Illusion(96)";
+					mes "Dark Priest(98)";
+					mes "--------------------------------";
+					mes "Big 11 o'clock, 5 o'clock - Churchyard";
+					F_InfoBoard;
+					continue;
+				case 8:
+					mes "[Glastheim Churchyard]";
+					mes "------------ Monster ------------";
+					mes "Zombie(17)";
+					mes "Mimic(56)";
+					mes "Ghoul(61)";
+					mes "Hunter Fly(63)";
+					mes "Wraith(77)";
+					mes "Evil Druid(80)";
+					mes "Dark Lord(96)MVP";
+					mes "--------------------------------";
+					mes "Big 12 o'clock, 6 o'clock - St. Abbey";
+					mes "Big 9 o'clock - Culvert B2";
+					next;
+					mes "<Dark Lord is quite tall. Dark Illusion is also tall. ... Damn.. - Short Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				case 9:
+					mes "[Glastheim Cave B1]";
+					mes "------------ Monster ------------";
+					mes "Sting(104)";
+					mes "Arclouze(107)";
+					mes "--------------------------------";
+					mes "Big 11 o'clock - Culvert B4";
+					mes "Big 5 o'clock - Cave B2";
+					F_InfoBoard;
+					continue;
+				case 10:
+					mes "[Glastheim Cave B2]";
+					mes "------------ Monster ------------";
+					mes "Gargoyle(100)";
+					mes "Majoruros(107)";
+					mes "--------------------------------";
+					mes "Big 2 o'clock - Cave B1";
+					F_InfoBoard;
+					continue;
+				case 11:
+					mes "[Glast Heim Underprison B1]";
+					mes "------------ Monster ------------";
+					mes "Hunter Fly(63)";
+					mes "Zombie Prisoner(89)";
+					mes "Injustice(95)";
+					mes "Rybio(98)";
+					mes "--------------------------------";
+					mes "Big 1 o'clock - Under Prison B2";
+					mes "Big 8 o'clock - Level B1";
+					F_InfoBoard;
+					continue;
+				case 12:
+					mes "[Glast Heim Underprison B2]";
+					mes "------------ Monster ------------";
+					mes "Hunter Fly(63)";
+					mes "Cramp(82)";
+					mes "Skel Prisoner(91)";
+					mes "Injustice(95)";
+					mes "Rybio(98)";
+					mes "Phendark(102)";
+					mes "Zealotus(105)";
+					mes "--------------------------------";
+					mes "Big 11 o'clock - Culvert B1";
+					mes "Big 5 o'clock - Under Prison B1";
+					F_InfoBoard;
+					continue;
+				case 13:
+					mes "[Glastheim Culvert B1]";
+					mes "------------ Monster ------------";
+					mes "Whisper(34)";
+					mes "Gargoyle(100)";
+					mes "Arclouze(107)";
+					mes "--------------------------------";
+					mes "Big 1 o'clock - Under Prison B2";
+					mes "Big 8 o'clock - Culvert B2";
+					F_InfoBoard;
+					continue;
+				case 14:
+					mes "[Glastheim Culvert B2]";
+					mes "------------ Monster ------------";
+					mes "Cramp(82)";
+					mes "Gargoyle(100)";
+					mes "--------------------------------";
+					mes "Big 11 o'clock - Culvert B1";
+					mes "Big 1 o'clock - Culvert B3";
+					mes "Big 3 o'clock - Staircase Dungeon";
+					mes "Big 5 o'clock - Chivalry B1";
+					mes "Big 7 o'clock - Under Prison B2";
+					mes "Big 10 o'clock - Churchyard";
+					F_InfoBoard;
+					continue;
+				case 15:
+					mes "[Glastheim Culvert B3]";
+					mes "------------ Monster ------------";
+					mes "Gargoyle(100)";
+					mes "Sting(104)";
+					mes "--------------------------------";
+					mes "Big 12 o'clock - Culvert B2";
+					mes "Big 7 o'clock - Culvert B4";
+					F_InfoBoard;
+					continue;
+				case 16:
+					mes "[Glastheim Culvert B4]";
+					mes "------------ Monster ------------";
+					mes "Drainliar(47)";
+					mes "Gargoyle(100)";
+					mes "Anolian(109)";
+					mes "--------------------------------";
+					mes "Big 11 o'clock - Culvert B3";
+					mes "Middle 7 o'clock - Cave B1";
+					F_InfoBoard;
+					continue;
+				case 17:
+					mes "[Glastheim Staircase]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Wind Ghost(80)";
+					mes "Raydric Archer(82)";
+					mes "--------------------------------";
+					mes "Middle - Culvert B2";
+					mes "Big 7 o'clock - Glastheim Field";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+yuno_fild03,37,143,0	script	Signposts#Nogg Road	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Magma Dungeon]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1381,"Grizzly","Bear that inhabits magma flowing regions. Its furs appear as if it's on fire. It will be popular amongst the fur lovers.",
+			1072,"Kaho","Demon covered in flames. Its attacks are flashy, but it's actually a low ranking demon with fairly weak attack.",
+			1383,"Explosion","Bat that inhabits magma flowing regions. It no longer possesses supersonic scream in exchange for near perfect eyesight and the ability to emit bright light.",
+			1367,"Blazer","Fireball monster. Skeletal frame maintains its shape.",
+			1366,"Lava Golem","Golem formed from hardened magma. It possesses powerful strength.",
+			1387,"Gig","Scorpion inhabitant of this humid place. It takes shelter from the heat by digging into the sand. Its sting is coated with paralyzing poison.",
+			1382,"Diabolic","Appears to be a cute little demon, however it's actually a horrible demon with a hobby of pushing people into the fire.",
+			1384,"Deleter (Sky)","One of the magma region inhabitants, Fire Dragon Petite. Its head is disproportionately large, preventing it from flying.",
+			1385,"Deleter (Ground)","One of the magma region inhabitants, Earth Dragon Petite.",
+			1379,"Nightmare Terror","Its name follows its literal meaning. It feeds on other creatures' terror and becomes stronger." );
+		if (.@mo_board == 1) {
+			mes "[Magma Dungeon]";
+			mes "Nogg road is a B2 dungeon that houses fierce monsters. Inexperienced adventurer should not enter this place. Furthermore roads within the dungeon are very narrow, so be careful to not cause inconvenience to other players.";
+			next;
+			while(1) {
+				switch( select( "Magma Dungeon B1","Magma Dungeon B2","Cancel" ) ) {
+				case 1:
+					mes "[Magma Dungeon B1]";
+					mes "------------ Monster ------------";
+					mes "Grizzly(66)";
+					mes "Kaho(98)";
+					mes "Explosion(100)";
+					mes "Blazer(101)";
+					mes "Lava Golem(103)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Magma Dungeon B2]";
+					mes "------------ Monster ------------";
+					mes "Gig(100)";
+					mes "Blazer(101)";
+					mes "Diabolic(104)";
+					mes "Deleter (Sky)(105)";
+					mes "Deleter (Ground)(105)";
+					mes "Nightmare terror(107)";
+					mes "--------------------------------";
+					next;
+					mes "<B1 is too hot.. B2 is also hot, but not hot as B1~ - Melted Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+mjolnir_02,76,362,0	script	Signposts#Mjolnir Dead	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Mjolnir Dead Pit]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1175,"Tarou","Rodent that inhabits dark places. It possesses white and plushy furs.",
+			1005,"Familiar","Colonial bat that inhabits dark caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
+			1145,"Martin","Underground inhabitant, mole. It usually lives in a small tunnel, sometimes coming out of the tunnel to look for food.",
+			1169,"Skel Worker","Miner that died in an unfortunate accident in a mine. Their unyielding will to dig the mines have been embedded into their skeletal bodies, turning them into monsters.",
+			1121,"Giearth","Underground Pixie inhabitant. It collects minerals and processes them for a living. It will remain passive as long as adventurers don't touch them. This monster appears in several dungeons such as Mjolnir Dead Pit and Ant Hell.",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
+			1151,"Myst","Monster with an appearance of Poisonous Gas. It's actual identity is unknown, however it is speculated to be a mass of microorganisms.",
+			1209,"Cramp","Rodent found living deep within the dungeon. Its appearance is similar to Tarou, however it is much more vicious and its teeth poisonous." );
+		if (.@mo_board == 1) {
+			mes "[Mjolnir Dead Pit]";
+			mes "Mjolnir Dead Pit is a dungeon comprised of B3 levels. This place is designed for beginner to intermediate adventurers. Adventurers may want to visit this dungeon to obtain Various ores can be found in this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Mjolnir Dead Pit B1","Mjolnir Dead Pit B2","Mjolnir Dead Pit B3","Cancel" ) ) {
+				case 1:
+					mes "[Mjolnir Dead Pit B1]";
+					mes "------------ Monster ------------";
+					mes "Tarou(22)";
+					mes "Familiar(24)";
+					mes "Martin(39)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Mjolnir Dead Pit B2]";
+					mes "------------ Monster ------------";
+					mes "Martin(39)";
+					mes "Giearth(42)";
+					mes "Skel Worker(44)";
+					mes "Drainliar(47)";
+					mes "--------------------------------";
+					next;
+					mes "<B2 of the dungeon is practically a labyrinth of tunnels created by Skel Workers. Be careful to not to get lost in the labyrinth. I didn't have any problem, but you might have some. - Expert Navigator Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Mjolnir Dead Pit B3]";
+					mes "------------ Monster ------------";
+					mes "Martin(39)";
+					mes "Giearth(42)";
+					mes "Skel Worker(44)";
+					mes "Myst(49)";
+					mes "Cramp(82)";
+					mes "--------------------------------";
+					next;
+					mes "<Monsters regularly surround you in mass numbers. It happens all the time !! I'm glad I brought flywings. Phew ~ - Ragged Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+prt_fild01,139,369,0	script	Signposts#Prontera_Laby	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Forest of Labyrinth]";
+		mes "A twisty, turny maze with varying levels of monsters within.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1002,"Poring","Jelly creature that can be found in just about anywhere. This monster is very passive and weak, perfect for beginners. It has a tendency to eat any items that come across.",
+			1145,"Martin","Underground inhabitant, mole. It usually lives in a small tunnel, sometimes coming out of the tunnel to look for food.",
+			1042,"Steel Chonchon","One of Chonchon type monster, possessing hard shells. It loves to quickly collect items on the ground.",
+			1035,"Hunter Fly","A bright crimson red Chonchon. Its agility is 3 times higher than a Chonchon and possess much more attack. Player captured Chonchon Pet cannot compare to Hunter Fly! 'Chonchon and ...' name will undoubtedly be popular amongst the pet keepers...^000000",
+			1037,"Side Winder","One headed snake. It uses its tail like its head to confuse the enemies.",
+			1090,"Mastering","A mutated giant poring. It wanders around with other Porings.",
+			1120,"Ghostring","A dead poring that turned into a Ghost monster due to powerful ghost's influence. Normal weapons are ineffective against this monster.",
+			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
+			1063,"Lunatic","A rodent with soft furs commonly seen around the world. Its favorite food is a carrot.",
+			1008,"Pupa","Chrysalis of a soon to be Creamy. Its skin is elastic and sturdy, but it's unable to move.",
+			1011,"Chonchon","Common insect type monster that can be seen in many places. Fly Wings dropped by this monster have the same effect as Acolyte skill: Teleport.",
+			1007,"Fabre","Creamy in larvae stage. This monster is perfect for new adventurers to fight. It sometimes turns into a chrysalis.",
+			1052,"Rocker","This monster enjoys playing violin peacefully. It loves music just as much as humans.",
+			1025,"Boa","Adventurer's tips are needed.",
+			1174,"Stainer","Ladybug with rainbow colored shell. Its shell is highly sought after as an ingredient for decorations.",
+			1018,"Creamy","Creamy is the final form reached when Fabre successfully goes through evolution.",
+			1103,"Caramel","Hedgehog monster. It has docile personality, but it hates being touched. It uses sharp needles on its back to attack.",
+			1060,"Bigfoot","Bear monster living deep within the cave. Due to its gluttonous trait, it's fat. It is very lazy in nature, spending most of its time sleeping, however it becomes ferocious when provoked. Adventurers will not find this monster a threat as long as they avoid provoking it.",
+			1056,"Smokie","Raccoon monster living deep within the forest, unaware of the outside world. It occasionally transforms into a human being by using the leaf on its head.",
+			1128,"Horn","Giant Beetle monster. It concentrates solely on its business, disregarding what other creatures' are up to. When it feels danger, it uses scissor shaped horn on its head to repel the enemy.",
+			1104,"Coco","Mischievous animal that's regularly seen deep within the forest. This monster is known to have similar intelligence as a human, and at times it even pranks on them. Its favorite food is a Banana.",
+			1057,"Yoyo","Tiny squirrel monster. It's not strong, but its agility may prove to be too difficult for beginners.",
+			1013,"Wolf","Wolf monster commonly seen in most Midgard areas. It preys on small animals. It's fear for humans makes it passive around humans.",
+			1100,"Argos","This giant spider is able to prey on other creatures by using its webs to trap them, or by simply walking on the ground to chase them.",
+			1166,"Savage","Boar, an inhabitant of the forest. It's simple minded, however when it's unstoppable when it's attacking. It is generally docile.",
+			1114,"Dustiness","Moth type monster with fairly hard body. It's usually found within dark reaches of the cave, however it can also sometimes be found in Mt. Mjolnir.",
+			1099,"Argiope","Giant Larva monster. It attacks with poison tipped canines.",
+			1243,"Sasquatch","Bear found in Lutie area. It has very vicious personality and attacks all adventurers on sight. Due to the living environment, its furs are as white as snow.",
+			1306,"Leib Olmai","Bear with extremely vicious personality. Its body is covered with numerous scars from various fights with other creatures.",
+			1088,"Vocal","Leader of Rocker monsters. Its voice is very melodic, earning the respect of Rocker monsters. It carries around a violin as a weapon.",
+			1101,"Baphomet Jr.","Adventurer's tips are needed.",
+			1215,"Stem Worm","This monster is a Worm Tail variant. Its tail is much more stronger than worm tail's.",
+			1139,"Mantis","Adventurer's tips are needed.",
+			1294,"Killer Mantis","This monster is a Mantis variant. It is much stronger than a mantis.",
+			1214,"Choco","Adventurer's tips are needed.",
+			1093,"Eclipse","This monster is a Lunatic variant. It is bigger and stronger than a normal Lunatic. It is extremely vicious and commands other lunatics to attack nearby adventurers.",
+			1092,"Vagabond Wolf","A lone stray wolf separated from its pack. It commands other stray wolves to attack nearby creatures.",
+			1039,"Baphomet","Demon living deep within the forest. It considers humans as insignificant. It uses a scythe as a weapon, which is sharp enough to cut numerous trees in one blow. It has yet to use its scythe to repel intruders." );
+		if (.@mo_board == 1) {
+			mes "[Forest of Labyrinth]";
+			mes "Forest of Labyrinth is comprised of B3 floors, where various monsters reside in 1, 2, B3. Be well prepared before venturing to this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Forest of Labyrinth B1","Forest of Labyrinth B2","Forest of Labyrinth B3","Cancel" ) ) {
+				case 1:
+					mes "[Forest of Labyrinth B1]";
+					mes "------------ Monster ------------";
+					mes "Poring(1)";
+					mes "Lunatic(3)";
+					mes "Pupa(4)";
+					mes "Chonchon(5)";
+					mes "Fabre(6)";
+					mes "Rocker(15)";
+					mes "Boa(18)";
+					mes "Stainer(21)";
+					mes "Creamy(23)";
+					mes "Caramel(25)";
+					mes "Bigfoot(29)";
+					mes "Smokie(29)";
+					mes "PoPoring(30)";
+					mes "Horn(32)";
+					mes "Coco(38)";
+					mes "Yoyo(38)";
+					mes "Martin(39)";
+					mes "Wolf(45)";
+					mes "Argos(47)";
+					mes "Steel Chonchon(48)";
+					mes "Choco(48)";
+					mes "Savage(59)";
+					mes "Dustiness(62)";
+					mes "Hunter Fly(63)";
+					mes "Mantis(65)";
+					mes "Side Winder(70)";
+					mes "Argiope(75)";
+					mes "Vagabond Wolf(93)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Forest of Labyrinth B2]";
+					mes "------------ Monster ------------";
+					mes "Bigfoot(29)";
+					mes "PoPoring(30)";
+					mes "Sasquatch(72)";
+					mes "Leib Olmai(87)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Forest of Labyrinth B3]";
+					mes "------------ Monster ------------";
+					mes "Vocal(18)";
+					mes "PoPoring(30)";
+					mes "Eclipse(31)";
+					mes "Mastering(42)";
+					mes "Baphomet Jr.(57)";
+					mes "Hunter Fly(63)";
+					mes "Mantis(65)";
+					mes "Side Winder(70)";
+					mes "Stem Worm(84)";
+					mes "Ghostring(90)";
+					mes "Killer Mantis(91)";
+					mes "Vagabond Wolf(93)";
+					mes "--------------------------------";
+					next;
+					mes "<Looking at all those Baphomet Jr., Don't you think Baphomet is vigorous? No? - Jealous Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+mjolnir_12,40,18,0	script	Signposts#Alde_Laby	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Forest of Labyrinth]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1002,"Poring","Jelly creature that can be found in just about anywhere. This monster is very passive and weak, perfect for beginners. It has a tendency to eat any items that come across.",
+			1145,"Martin","Underground inhabitant, Mole. It usually lives in a small tunnel, sometimes coming out of the tunnel to look for food.",
+			1042,"Steel Chonchon","One of Chonchon type monster, possessing hard shells. It loves to quickly collect items on the ground.",
+			1035,"Hunter Fly","A bright crimson red Chonchon. Its agility is 3 times higher than a Chonchon and possess much more attack. Player captured Chonchon Pet cannot compare to Hunter Fly! 'Chonchon and ...' name will undoubtedly be popular amongst the pet keepers...^000000",
+			1037,"Side Winder","One headed snake. It uses its tail like its head to confuse the enemies.",
+			1090,"Mastering","A mutated giant poring. It wanders around with other Porings.",
+			1120,"Ghostring","A dead poring that turned into a Ghost monster due to powerful ghost's influence. Normal weapons are ineffective against this monster.",
+			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
+			1063,"Lunatic","A rodent with soft furs commonly seen around the world. Its favorite food is a carrot.",
+			1008,"Pupa","Chrysalis of a soon to be Creamy. Its skin is elastic and sturdy, but its unable to move.",
+			1011,"Chonchon","Common insect type monster that can be seen in many places. Fly Wings dropped by this monster have the same effect as Acolyte skill: Teleport.",
+			1007,"Fabre","Creamy in Larvae stage. This monster is perfect for new adventurers to fight. It sometimes turns into a chrysalis.",
+			1052,"Rocker","This monster enjoys playing violin peacefully. It loves music just as much as humans.",
+			1025,"Boa","Adventurer's tips are needed.",
+			1174,"Stainer","Ladybug with rainbow colored shell. Its shell is highly sought after as an ingredient for decorations.",
+			1018,"Creamy","Creamy is the final form reached when Fabre successfully goes through evolution.",
+			1103,"Caramel","Hedgehog monster. It has docile personality, but it hates being touched. It uses sharp needles on its back to attack.",
+			1060,"Bigfoot","Bear monster living deep within the cave. Due to its gluttonous trait, it's fat. It is very lazy in nature, spending most of its time sleeping, however it becomes ferocious when provoked. Adventurers will not find this monster a threat as long as they avoid provoking it.",
+			1056,"Smokie","Raccoon monster living deep within the forest, unaware of the outside world. It occasionally transforms into a human being by using the leaf on its head.",
+			1128,"Horn","Giant Beetle monster. It concentrates solely on its business, disregarding what other creatures' are up to. When it feels danger, it uses scissor shaped horn on its head to repel the enemy.",
+			1104,"Coco","Mischievous animal that's regularly seen deep within the forest. This monster is known to have similar intelligence as a human, and at times it even pranks on them. Its favorite food is a Banana.",
+			1057,"Yoyo","Tiny squirrel monster. It's not strong, but its agility may prove to be too difficult for beginners.",
+			1013,"Wolf","Wolf monster commonly seen in most Midgard areas. It preys on small animals. It's fear for humans makes it passive around humans.",
+			1100,"Argos","This giant spider is able to prey on other creatures by using its webs to trap them, or by simply walking on the ground to chase them.",
+			1166,"Savage","Boar, an inhabitant of the forest. It's simple minded, however when it's unstoppable when it's attacking. It is generally docile.",
+			1114,"Dustiness","Moth type monster with fairly hard body. It's usually found within dark reaches of the cave, however it can also sometimes be found in Mt. Mjolnir.",
+			1099,"Argiope","Giant Larva monster. It attacks with poison tipped canines.",
+			1243,"Sasquatch","Bear found in Lutie area. It has very vicious personality and attacks all adventurers on sight. Due to the living environment, its furs are as white as snow.",
+			1306,"Leib Olmai","Bear with extremely vicious personality. Its body is covered with numerous scars from various fights with other creatures.",
+			1088,"Vocal","Leader of Rocker monsters. Its voice is very melodic, earning the respect of Rocker monsters. It carries around a violin as a weapon.",
+			1101,"Baphomet Jr.","Adventurer's tips are needed.",
+			1215,"Stem Worm","This monster is a Worm Tail variant. Its tail is much more stronger than worm tail's.",
+			1139,"Mantis","Adventurer's tips are needed.",
+			1294,"Killer Mantis","This monster is a Mantis variant. It is much stronger than a mantis.",
+			1214,"Choco","Adventurer's tips are needed.",
+			1093,"Eclipse","This monster is a Lunatic variant. It is bigger and stronger than a normal Lunatic. It is extremely vicious and commands other lunatics to attack nearby adventurers.",
+			1092,"Vagabond Wolf","A lone stray wolf separated from its pack. It commands other stray wolves to attack nearby creatures.",
+			1039,"Baphomet","Demon living deep within the forest. It considers humans as insignificant. It uses scythe as a weapon, which is sharp enough to cut numerous trees in one blow. It has yet to use its scythe to repel intruders." );
+		if (.@mo_board == 1) {
+			mes "[Forest of Labyrinth]";
+			mes "Forest of Labyrinth is comprised of B3 floors, where various monsters reside in 1, 2, B3. Be well prepared before venturing to this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Forest of Labyrinth B1","Forest of Labyrinth B2","Forest of Labyrinth B3","Cancel" ) ) {
+				case 1:
+					mes "[Forest of Labyrinth B1]";
+					mes "------------ Monster ------------";
+					mes "Poring(1)";
+					mes "Lunatic(3)";
+					mes "Pupa(4)";
+					mes "Chonchon(5)";
+					mes "Fabre(6)";
+					mes "Rocker(15)";
+					mes "Boa(18)";
+					mes "Stainer(21)";
+					mes "Creamy(23)";
+					mes "Caramel(25)";
+					mes "Bigfoot(29)";
+					mes "Smokie(29)";
+					mes "PoPoring(30)";
+					mes "Horn(32)";
+					mes "Coco(38)";
+					mes "Yoyo(38)";
+					mes "Martin(39)";
+					mes "Wolf(45)";
+					mes "Argos(47)";
+					mes "Steel Chonchon(48)";
+					mes "Choco(48)";
+					mes "Savage(59)";
+					mes "Dustiness(62)";
+					mes "Hunter Fly(63)";
+					mes "Mantis(65)";
+					mes "Side Winder(70)";
+					mes "Argiope(75)";
+					mes "Vagabond Wolf(93)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Forest of Labyrinth B2]";
+					mes "------------ Monster ------------";
+					mes "Smokie(29)";
+					mes "PoPoring(30)";
+					mes "Sasquatch(72)";
+					mes "Leib Olmai(87)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Forest of Labyrinth B3]";
+					mes "------------ Monster ------------";
+					mes "Vocal(18)";
+					mes "PoPoring(30)";
+					mes "Eclipse(31)";
+					mes "Mastering(42)";
+					mes "Baphomet Jr.(57)";
+					mes "Hunter Fly(63)";
+					mes "Mantis(65)";
+					mes "Side Winder(70)";
+					mes "Stem Worm(84)";
+					mes "Ghostring(90)";
+					mes "Killer Mantis(91)";
+					mes "Vagabond Wolf(93)";
+					mes "--------------------------------";
+					next;
+					mes "<Looking at all those Baphomet Jr., Don't you think Baphomet is vigorous? No? - Jealous Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+moc_fild19,107,101,0	script	Signposts#Sphinx	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Sphinx]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
+			1146,"Matyr","King's protector, gatekeeper. Dog is used as a medium to summon the gatekeeper using forbidden magic. Its body is covered in dark mist and it is very agile.",
+			1178,"Zerom","Morroc natives were drafted to help with the construction of the Sphinx. They were cursed to become a monster and protect the Sphinx for all eternity.",
+			1164,"Requiem","Morroc natives were drafted to help with the construction of the Sphinx. They were cursed to become a monster and protect the Sphinx for all eternity.",
+			1191,"Mimic","Adventurer's tips are needed.",
+			1140,"Marduk","Augur of Morroc Natives. It controls cursed Morroc natives to protect King's Tomb.",
+			1154,"Pasana","Protector of the Pyramid. In order to continue to protect the now deceased king, it has willingly received the curse of the Pyramid.",
+			1149,"Minorous","Unknown creature living deep within the labyrinth. It is not on friendly term with Orcs, but they rarely come across each other. When it encounters a creature, it will chase down the target and attack with its giant hammer.",
+			1098,"Anubis","Adventurer's tips are needed.",
+			1037,"Side Winder","One headed snake. It uses its tail like its head to confuse the enemies.",
+			1157,"Pharaoh","King of the Pyramid. As a king of ancient kingdom, its body now lies within royal coffin." );
+		if (.@mo_board == 1) {
+			mes "[Sphinx]";
+			mes "Sphinx is comprised of 5 underground floors. This dungeon's difficulty is appropriate for intermediate to expert adventurers. All monsters in this dungeon are aggressive, so adventurers are advised to have a method to escape in emergencies.";
+			next;
+			while(1) {
+				switch( select( "Sphinx B1","Sphinx B2","Sphinx B3","Sphinx B4","Sphinx B5","Cancel" ) ) {
+				case 1:
+					mes "[Sphinx B1]";
+					mes "------------ Monster ------------";
+					mes "Drainliar(47)";
+					mes "Matyr(58)";
+					mes "Zerom(70)";
+					mes "Requiem(71)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Sphinx B2]";
+					mes "------------ Monster ------------";
+					mes "Drainliar(47)";
+					mes "Matyr(58)";
+					mes "Zerom(70)";
+					mes "Requiem(71)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Sphinx B3]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Matyr(58)";
+					mes "Marduk(73)";
+					mes "Pasana(79)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 4:
+					mes "[Sphinx B4]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Minorous(58)";
+					mes "Pasana(79)";
+					mes "Anubis(105)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 5:
+					mes "[Sphinx B5]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Matyr(58)";
+					mes "Side Winder(70)";
+					mes "Pasana(79)";
+					mes "Pharaoh(85)";
+					mes "Anubis(105)";
+					mes "--------------------------------";
+					next;
+					mes "<Selling Pharaoh Mask~ Oops.. Sorry, when I saw Pharaoh, I remembered a bard's farfetched story. - Frozen Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+aldebaran,136,133,0	script	Signposts#Clock Tower	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Clock Tower Dungeon]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1195,"Rideword","Magic Tome brought to life with demon's powers. It does not possess emotions or a mind of its own, programmed to rely on its instincts to attack living creatures.",
+			1199,"Punk","Giant mold monster. It usually floats around and attacks any nearby creatures in hopes of multiplying itself.",
+			1102,"Bathory","Demon worshipping witch. It flies around in the air and attacks with a crystal ball. Surprisingly, it loves cute things.",
+			1270,"Tower Keeper","Magical creature created to maintain Clock Tower. It is passive, however it will retaliate against any hostile actions against Clock Tower inhabitants.",
+			1191,"Mimic","Adventurer's tips are needed.",
+			1269,"Clock","Old Grandfather clock that turned into a monster. It is passive against humans since it spent countless years with them.",
+			1377,"Elder","Once an elder of magic association. It delved too deep into magic, turning into a magical monster that attack adventurers on sight.",
+			1193,"Alarm","Magically powered alarm clock with the sole purpose of protecting Clock Tower. It will attack any intruders within Clock Tower.",
+			1320,"Owl Duke","Owl Baron's sibling that wears a blue manteau. It enjoys rainy days.",
+			1179,"Whisper","Ghost Monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.^000000",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
+			1194,"Arclouze","Monster with hardened shell. It rolls its body to attack with its shell.",
+			1211,"Brilight","Ladybug mysteriously transformed into a vicious bug. It inhabits dark areas and attacks nearby adventurers.",
+			1189,"Orc Archer","Adventurer's tips are needed.",
+			1213,"High Orc","Elite orc warrior that possess enhanced physical and mental qualities compared to a normal orc. It periodically attacks nearby village due to its brutal nature.",
+			1209,"Cramp","Rodent found living deep within the dungeon. Its appearance is similar to Tarou, however it is much more vicious and its teeth poisonous.",
+			1216,"Penomena","It looks similar to a hydra, but it is capable of moving and its attacks are much stronger. Underestimating it will result in quick death. Be cautious around this monster.",
+			1131,"Joker","Creature created from countless experiments by demons. It's main priority is to repel invaders." );
+		if (.@mo_board == 1) {
+			mes "[Clock Tower Dungeon]";
+			mes "Clock Tower Dungeon is comprised of B4 ground floors and B4 underground floors. Warp points inside the dungeon are complex, sending adventurers to random locations. Exercise caution to not get lost inside the dungeon.";
+			next;
+			while(1) {
+				switch( select( "Ground Floor B1","Ground Floor B2","Ground Floor B3","Ground Floor B4","Underground Floor B1","Underground Floor B2","Underground Floor B3","Underground Floor B4","Cancel" ) ) {
+				case 1:
+					mes "[Clock Tower Dungeon Ground Floor B1]";
+					mes "------------ Monster ------------";
+					mes "Rideword(74)";
+					mes "Punk(82)";
+					mes "Bathory(86)";
+					mes "Tower Keeper(90)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Clock Tower Dungeon Ground Floor B2]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Rideword(74)";
+					mes "Clock(81)";
+					mes "Punk(82)";
+					mes "Tower Keeper(90)";
+					mes "Elder(92)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Clock Tower Dungeon Ground Floor B3]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Rideword(74)";
+					mes "Alarm(88)";
+					mes "Tower Keeper(90)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 4:
+					mes "[Clock Tower Dungeon Ground Floor B4]";
+					mes "------------ Monster ------------";
+					mes "Whisper(34)";
+					mes "Mimic(56)";
+					mes "Rideword(74)";
+					mes "Clock(81)";
+					mes "Alarm(88)";
+					mes "Tower Keeper(90)";
+					mes "Owl Duke(92)";
+					mes "Elder(92)";
+					mes "--------------------------------";
+					next;
+					mes "<Owl Duke's lightning bolt hurts! - Bankrupt Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				case 5:
+					mes "[Clock Tower Dungeon Underground Floor B1]";
+					mes "------------ Monster ------------";
+					mes "Drainliar(47)";
+					mes "Arclouze(107)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 6:
+					mes "[Clock Tower Dungeon Underground Floor B2]";
+					mes "------------ Monster ------------";
+					mes "Brilight(71)";
+					mes "Orc Archer(78)";
+					mes "High Orc(81)";
+					mes "Arclouze(107)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 7:
+					mes "[Clock Tower Dungeon Underground Floor B3]";
+					mes "------------ Monster ------------";
+					mes "Drainliar(47)";
+					mes "Cramp(82)";
+					mes "Penomena(85)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 8:
+					mes "[Clock Tower Dungeon Underground Floor B4]";
+					mes "------------ Monster ------------";
+					mes "Whisper(34)";
+					mes "Bathory(86)";
+					mes "Joker(90)";
+					mes "--------------------------------";
+					next;
+					mes "<Bathory.. is it a grandma? girl? it'd be better if it was a girl? Don't you agree? - Starsand hunting Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+gef_fild10,69,340,0	script	Signposts#Orc Dungeon	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Orc Dungeon]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1005,"Familiar","Colonial bat that inhabits dark caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
+			1042,"Steel Chonchon","One of Chonchon type monster, possessing hard shells. It loves to quickly collect items on the ground",
+			1153,"Orc Zombie","Orc Warrior corpse has been revived as an Undead monster. It moves very slowly.",
+			1152,"Orc Skeleton","Skeletal Orc warrior corpse has been revived as an Undead monster. It uses weapons that was once used when it was still alive. This monster is stronger than a normal orc warrior.",
+			1177,"Zenorc","Orc variant, residing deep within underground cave. It will devour anything in sight to satisfy its appetite. It is passive against adventurers.",
+			1189,"Orc Archer","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Orc Dungeon]";
+			mes "Orc Dungeon is comprised of 2 floors. Monsters that appear in this dungeon are not strong individually, but adventurers may be overwhelmed by the number. Holy element weapons will make adventurer's life easier in this dungeon. You can also utilize Priest skill, Aspersio.";
+			next;
+			while(1) {
+				switch( select( "Orc Dungeon B1","Orc Dungeon B2","Cancel" ) ) {
+				case 1:
+					mes "[Orc Dungeon B1]";
+					mes "------------ Monster ------------";
+					mes "Familiar(24)";
+					mes "Drainliar(47)";
+					mes "Steel Chonchon(48)";
+					mes "Orc Zombie(51)";
+					mes "Orc Skeleton(53)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Orc Dungeon B2]";
+					mes "------------ Monster ------------";
+					mes "Drainliar(47)";
+					mes "Steel Chonchon(48)";
+					mes "Orc Skeleton(53)";
+					mes "Zenorc(54)";
+					mes "Orc Archer(78)";
+					mes "--------------------------------";
+					next;
+					mes "<Why are there so many monsters?? There are way too many... - Irritated Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+jupe_cave,35,57,0	script	Signposts#Juperos Ruins	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Juperos Ruins]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1677,"Venatu (Green)","Automatic walking machine guards created by ancient machinery civilization. It uses 2 vulcan cannons in its arms to attack.",
+			1676,"Venatu (Purple)","Automatic walking machine guards created by ancient machinery civilization. It uses 2 vulcan cannons in its arms to attack.",
+			1678,"Venatu (Orange)","Automatic walking machine guards created by ancient machinery civilization. It uses destructive shock cannons to attack.",
+			1679,"Venatu (Blue)","Automatic walking machine guards created by ancient machinery civilization. It uses destructive shock cannons to attack.",
+			1670,"Dimik (Green)","Automatic walking machine guards created by ancient machinery civilization. It fires 2 vulcan cannons to attack.",
+			1671,"Dimik (Blue)","Automatic walking machine guards created by ancient machinery civilization. It fires 2 vulcan cannons to attack.",
+			1672,"Dimik (Orange)","Automatic walking machine guards created by ancient machinery civilization. It fires 2 vulcan cannons to attack.",
+			1673,"Dimik (Red)","Automatic walking machine guards created by ancient machinery civilization. It fires 2 vulcan cannons to attack.",
+			1365,"Apocalipse","Ancient weapon. It was created as a guard and it will remain passive until threatened. It regularly scans the area with its various faces.",
+			1668,"Archdam","Ancient Machine suit. It appears to be piloted automatically by a software, rather than manually.",
+			1685,"Vesper","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Juperos Ruins]";
+			mes "Juperos Ruins is comprised to 2 floors that can be accessed normally, and 1 center floor that can only be accessed by completing specific challenges.";
+			next;
+			while(1) {
+				switch( select( "Juperos Ruins B1","Juperos Ruins B2","Juperos Ruins Center","Cancel" ) ) {
+				case 1:
+					mes "[Juperos Ruins B1]";
+					mes "------------ Monster ------------";
+					mes "Venatu (Green)(113)";
+					mes "Venatu (Purple)(113)";
+					mes "Venatu (Orange)(113)";
+					mes "Venatu (Blue)(113)";
+					mes "Dimik (Green)(116)";
+					mes "Dimik (Blue)(116)";
+					mes "Dimik (Orange)(116)";
+					mes "Dimik (Red)(116)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Juperos Ruins B2]";
+					mes "------------ Monster ------------";
+					mes "Venatu (Green)(113)";
+					mes "Venatu (Purple)(113)";
+					mes "Venatu (Orange)(113)";
+					mes "Venatu (Blue)(113)";
+					mes "Apocalipse(121)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Juperos Ruins Center]";
+					mes "------------ Monster ------------";
+					mes "Venatu (Green)(113)";
+					mes "Venatu (Purple)(113)";
+					mes "Venatu (Orange)(113)";
+					mes "Dimik (Green)(116)";
+					mes "Dimik (Blue)(116)";
+					mes "Dimik (Orange)(116)";
+					mes "Dimik (Red)(116)";
+					mes "Archdam(119)";
+					mes "--------------------------------";
+					next;
+					mes "<Whoever that's reading this! Have you seen MVP monster, Vesper?? I can't understand! How is that a brute? Just how could it be... - Conspiracy suspecting Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+izlu2dun,111,87,0	script	Signposts#Izlude	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Izlude Undersea Tunnel]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
+			1161,"Plankton","Small organism monster seen floating in the water. This monster is usually preyed on by other sea creatures.",
+			1070,"Kukre","Worm monster. Its agility is surprisingly fast when scouring for objects on the ground.",
+			1141,"Marina","Jellyfish monster with surprisingly strong tentacles that allow it to swim or walk on land. Its tentacles are used in various ways.",
+			1066,"Vadon","Crayfish monster that's usually seen around beach. Its body is covered with hard shell, protecting it from attacks.",
+			1067,"Cornutus","Conch monster. It usually lives within its hard shell. This monster is usually seen around Izlude beach areas.",
+			1144,"Marse","Marine inhabitant, squid monster. It spins its body rapidly to use its two tentacles as whips to attack.",
+			1044,"Obeaune","Mermaid monster. Its hair is always pointed up, disturbing other creatures in the vicinity. It will attack adventurers on sight.",
+			1264,"Merman","Ambitious Merman monster with ambition to rule over surface world. It's usually seen deep under the ocean or caves in beach areas.",
+			1142,"Marine Sphere","Spherical monster seen wandering around aimlessly within the ocean. When it feels threatened, it will self destruct.",
+			1158,"Phen","Fish monster that live deep within the ocean. This fish is highly sought after for dining purposes.",
+			1045,"Marc","Seahorse monster. It's covered in thick husks and may prove to be a formidable opponent for unsuspecting adventurers.",
+			1069,"Swordfish","Swordfish monster. It uses supersonic waves to attack.",
+			1108,"Deviace","Devilfish monster. It will remain passive as long as adventurers don't provoke it.",
+			1065,"Strouf","King of the Merman monsters. Although it is able to order Mermen around, it is not much stronger than a Merman.",
+			2201,"Lamp Ray","Adventurer's tips are needed.",
+			2204,"Squidgitte","Adventurer's tips are needed.",
+			2203,"Octo Pot","Adventurer's tips are needed.",
+			2198,"King Kray","Adventurer's tips are needed.",
+			2202,"Kraken","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Izlude Undersea Tunnel]";
+			mes "Byalan Island's Undersea Tunnel is comprised of 6 floors. This dungeon is appropriate for beginners to expert adventurers. Most monsters in this dungeon are water element, therefore having wind element weapons will prove to be helpful.";
+			next;
+			while(1) {
+				switch( select( "Izlude Undersea Tunnel B1","Izlude Undersea Tunnel B2","Izlude Undersea Tunnel B3","Izlude Undersea Tunnel B4","Izlude Undersea Tunnel B5","Izlude Undersea Tunnel B6","Cancel" ) ) {
+				case 1:
+					mes "[Izlude Undersea Tunnel B1]";
+					mes "------------ Monster ------------";
+					mes "Hydra(34)";
+					mes "Plankton(40)";
+					mes "Kukre(42)";
+					mes "Marina(42)";
+					mes "Vadon(45)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Izlude Undersea Tunnel B2]";
+					mes "------------ Monster ------------";
+					mes "Hydra(34)";
+					mes "Plankton(40)";
+					mes "Kukre(42)";
+					mes "Marina(42)";
+					mes "Vadon(45)";
+					mes "Cornutus(48)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Izlude Undersea Tunnel B3]";
+					mes "------------ Monster ------------";
+					mes "Hydra(34)";
+					mes "Marse(47)";
+					mes "Cornutus(48)";
+					mes "Obeaune(53)";
+					mes "Merman(60)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 4:
+					mes "[Izlude Undersea Tunnel B4]";
+					mes "------------ Monster ------------";
+					mes "Hydra(34)";
+					mes "Marine Sphere(51)";
+					mes "Phen(52)";
+					mes "Marc(56)";
+					mes "Swordfish(57)";
+					mes "Merman(60)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 5:
+					mes "[Izlude Undersea Tunnel B5]";
+					mes "------------ Monster ------------";
+					mes "Hydra(34)";
+					mes "Marine Sphere(51)";
+					mes "Swordfish(57)";
+					mes "Deviace(60)";
+					mes "Merman(60)";
+					mes "Strouf(61)";
+					mes "--------------------------------";
+					next;
+					mes "<Where is this? You don't know? Are you scared? This is definitely underwater, but I can breathe. Did I just grow gills out of nowhere? - Silly Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				case 6:
+					mes "[Izlude Undersea Tunnel B6]";
+					mes "------------ Monster ------------";
+					mes "Lamp Rey(110)";
+					mes "Squidgitte(113)";
+					mes "Octo Pot(115)";
+					mes "King Kray(117)";
+					mes "--------------------------------";
+					next;
+					mes "<Kraken is a squid? But why does it have octopus legs?! A.. Amazing..? - Visiting Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+xmas,147,311,0	script	Signposts#Toy Factory	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Toy Factory]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1002,"Poring","Jelly creature that can be found just about anywhere. This monster is very passive and weak, perfect for beginners. It has a tendency to eat any items that come across.",
+			1113,"Drops","Poring monster that's adapted to the desert environment. As usual, it will devour any items on sight.",
+			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
+			1265,"Cookie (Green)","Pixie monster that works at the toy factory in Lutie. It loves pranks. It will assist other cookie monsters in the vicinity.",
+			1242,"Marin","Poring monster that's adapted to frigid environment in Lutie. Unlike other Poring monsters, it will not devour items on sight.",
+			1246,"Cookie (Red)","Pixie monster that works at the toy factory in Lutie. It loves pranks.",
+			1249,"Myst Case","Present Box monster that can be seen inside the Toy Factory dungeon. Unlike the Mimic, this present box monster is actually alive. It will remain passive as long as it is not provoked.",
+			1090,"Mastering","A mutated giant Poring. It wanders around with other Porings.",
+			1250,"Chepet","This monster appears to be a little girl holding a monstrous doll, however the doll is the main body. It attacks by using the matchstick to create fire.",
+			1096,"Angeling","Final form of Poring monster at the end of the evolution! Despite its cute appearance, it's very strong. It strongly dislikes humans.",
+			1248,"Cruiser","Guard of the toy factory in Lutie. It wields shotgun as a weapon.",
+			1251,"Stormy Knight","Boss monster from the legendary story that's passed down the generations in Lutie. It's known to appear with blizzard and destroy everything on sight." );
+		if (.@mo_board == 1) {
+			mes "[Toy Factory]";
+			mes "Toy Factory is comprised of 2 floors. Strong monsters sometimes appear within the dungeon. This dungeon is appropriate for leisure adventure experience, however some caution should be exercised.";
+			next;
+			while(1) {
+				switch( select( "Toy Factory B1","Toy Factory B2","Cancel" ) ) {
+				case 1:
+					mes "[Toy Factory B1]";
+					mes "------------ Monster ------------";
+					mes "Poring(1)";
+					mes "Drops(2)";
+					mes "PoPoring(30)";
+					mes "Cookie (Green)(35)";
+					mes "Marin(37)";
+					mes "Cookie (Red)(37)";
+					mes "Myst Case(39)";
+					mes "Mastering(42)";
+					mes "Chepet(42)";
+					mes "Angeling(77)";
+					mes "--------------------------------";
+					next;
+					mes "<Do you think Porings are cute? Would you change your mind if you met Angeling? It loves harassing people. Be wary of Angeling beginners! Be wary! That's all~ - Orc masked explorer grape>";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Toy Factory B2]";
+					mes "------------ Monster ------------";
+					mes "Cookie (Green)(35)";
+					mes "Cookie (Red)(37)";
+					mes "Myst Case(39)";
+					mes "Cruiser(41)";
+					mes "--------------------------------";
+					next;
+					mes "<I approached a new monster out of sheer curiosity. I actually witnessed it. Stormy Knight with red nose with christmas stockings on its feet, commandeering cookie monsters!! I might just become its fan. - Thick glove-wearing explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+alb2trea,75,101,0	script	Signposts#Sunken Ship	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Sunken Ship]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
+			1179,"Whisper","Ghost monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.^000000",
+			1070,"Kukre","Worm monster. Its agility is surprisingly fast when scouring for objects on the ground.",
+			1071,"Pirate Skeleton","Dead sailors revived as an Undead monster. It still wears previously worn pirate bandana on its skull.",
+			1191,"Mimic","Adventurer's tips are needed.",
+			1216,"Penomena","It looks similar to a Hydra, but it is capable of moving and its attacks are much stronger. Underestimating it will result in quick death. Be cautious around this monster.",
+			1120,"Ghostring","A mutated giant poring. It wanders around with other Porings.",
+			1143,"Marionette","Demon with the appearance of a marionette doll used in puppet theatre. Normal weapons is ineffective against its spiritual body.^000000",
+			1208,"Wanderer","Stray Samurai that is revived as an Undead monster. It attacks using previously mastered swordsmanship techniques, precise enough to slice flying insects in half.",
+			1112,"Drake","Attempted to find phantom treasures but ended up dying in the process, Pirate King. Due to its strong regret, the pirates were cursed to walk the world of the living as an Undead. It protects its treasures from adventurers." );
+		if (.@mo_board == 1) {
+			mes "[Sunken Ship]";
+			mes "Sunken Ship is not completely submerged in water, allowing access to a total of 2 floors. Despite the size of the map, many monsters appear in this dungeon. Exercise caution inside the dungeon.";
+			next;
+			while(1) {
+				switch( select( "Sunken Ship B1","Sunken Ship B2","Cancel" ) ) {
+				case 1:
+					mes "[Sunken Ship B1]";
+					mes "------------ Monster ------------";
+					mes "Poison Spore(26)";
+					mes "Hydra(34)";
+					mes "Whisper(34)";
+					mes "Kukre(42)";
+					mes "Pirate Skeleton(48)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Sunken Ship B2]";
+					mes "------------ Monster ------------";
+					mes "Hydra(34)";
+					mes "Whisper(34)";
+					mes "Kukre(42)";
+					mes "Pirate Skeleton(48)";
+					mes "Mimic(56)";
+					mes "Penomena(85)";
+					mes "Ghostring(90)";
+					mes "Marionette(90)";
+					mes "Wanderer(120)";
+					mes "--------------------------------";
+					next;
+					mes "<Ghostring runs away when it sees me.. It must be shy. Former captain of this sunken ship is also very rude. Pfft~! - Jealous of Captain's hat, Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+comodo,327,177,0	script	Signposts#Comodo East	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Comodo East Cave, Mao]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
+			1034,"Thara Frog","Frog monster that loves dark and wet places. It may be too hard of an opponent for a beginner adventurer.",
+			1064,"Megalodon","Fish skeleton monster revived with magic. It still acts like a fish as an Undead.",
+			1255,"Nereid","Worm monster that lives inside the cave. Its eye sight is horrible, relying solely on sense of smell to detect nearby prey." );		
+		if (.@mo_board == 1) {
+			mes "[Comodo East Cave, Mao]";
+			mes "East Cave, Mao is a tunnel that leads to Papuchicha Forest. This place is popular for highly sought after cards, Thara Frog and Hydra. Visit this place if you are in dire need of zeny.";
+			next;
+			mes "[Comodo East Cave, Mao]";
+			mes "------------ Monster ------------";
+			mes "Hydra(34)";
+			mes "Thara Frog(40)";
+			mes "Megalodon(46)";
+			mes "Nereid(98)";
+			mes "--------------------------------";
+			next;
+			mes "<Thara Frog.. It's just a frog right? Ew.. It looks hideous.. - Frog loving Explorer Grape>";
+			next;
+		}
+	}
+}
+
+comodo,31,217,0	script	Signposts#Comodo West	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Comodo West Cave, Karu]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1264,"Merman","Ambitious Merman monster with ambition to rule over surface world. It's usually seen deep under the ocean or caves in beach areas.",
+			1256,"Pest","Monster with unknown origin. It attacks by spinning its sharp eyelids.",
+			1255,"Nereid","Worm monster that lives inside the cave. Its eye sight is horrible, relying solely on sense of smell to detect nearby prey.",
+			1148,"Medusa","Monster with snakes as its hair. Looking directly into its eyes may cause your body to petrify.",
+			1583,"Tao Gunka","MVP monster with large, round face and crude expression. Most adventurers run away from this monster in fear. Despite its appearance, it's fairly strong." );
+		if (.@mo_board == 1) {
+			mes "[Comodo West Cave, Karu]";
+			mes "This dungeon introduces Medusa monster that will surely cause you to turn to stone if you look at it in the eyes. There are no other exits in this cave.";
+			next;
+			mes "[Comodo West Cave, Karu]";
+			mes "------------ Monster ------------";
+			mes "Merman(60)";
+			mes "Pest(89)";
+			mes "Nereid(98)";
+			mes "Medusa(102)";
+			mes "--------------------------------";
+			next;
+			mes "<Tao Gunka? That monster with huge face? How strong is it? It's weak.. very weak.. Oh!! It might be strong for you.. - Trolling Explorer Grape>";
+			next;
+		}
+	}
+}
+
+comodo,178,354,0	script	Signposts#Comodo North	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Comodo North Cave, Ruande]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
+			1274,"Megalith","Stone statue monster that can be seen in Comodo areas. It moves rocks in the vicinity to attack.",
+			1279,"Tri Joint","This creature has existed for millennia. It's usually found in dark caves.",
+			1278,"Stalactic Golem","Evolved Golem monster. Its body is covered with stalactite and it's much stronger than a normal Golem.",
+			1255,"Nereid","Worm monster that lives inside the cave. Its eye sight is horrible, relying solely on sense of smell to detect nearby prey." );
+		if (.@mo_board == 1) {
+			mes "[Comodo North Cave, Ruande]";
+			mes "Adventurers can reach Umbala by going through Ruande cave. Stalactic Golem monster can only be seen in this cave.";
+			next;
+			mes "[Comodo North Cave, Ruande]";
+			mes "------------ Monster ------------";
+			mes "Hydra(34)";
+			mes "Megalith(65)";
+			mes "Tri Joint(66)";
+			mes "Stalactic Golem(68)";
+			mes "Nereid(98)";
+			mes "--------------------------------";
+			next;
+			mes "<Stalactic Golem? Phew~ Why did I come here? Ah! That's right I came here to go to Umbala..!! - Passing explorer Grape>";
+			next;
+		}
+	}
+}
+
+pay_arche,39,134,0	script	Signposts#Payon Cave	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Payon Cave]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1015,"Zombie","Dead soul trapped by unholy necromancer in a rotting corpse, cursed to live without being able to feel pain. Its impurity is capable of inflicting poison.",
+			1005,"Familiar","Colonial bat that inhabits dark caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
+			1076,"Skeleton","Skeleton filled with regret. This Undead monster is aggressive.",
+			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
+			1028,"Soldier Skeleton","Skeleton soldier can only be seen deep inside the dungeon, where sunlight would never reach. Unlike Skeleton Archers, it attacks with dual swords.",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.",
+			1016,"Archer Skeleton","Skeleton Archer can only be seen deep inside the dungeon, where sunlight would never reach. This monster's quivers does not run out of arrows.",
+			1116,"Eggyra","Egg monster. Its shell are harder than Pecopeco Egg's shell. It loiters around the dungeon aimlessly.",
+			1020,"Mandragora","Adventurer's tips are needed.",
+			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
+			1277,"Greatest General","Once a guardian of a town. It was since long forgotten by the people. This monster is aggressive and attacks passing by adventurers, but it's unable to move.",
+			1188,"Bongun","Male Kyonshi who have willingly become a monster in order to protect Munak.",
+			1026,"Munak","Dead girl's spirit resides within the dead body, turning it into a Kyonshi monster. It sucks blood from nearby creatures.",
+			1180,"Nine Tail","Nine tailed fox. It's much smarter than a normal fox, and it's unknown whether it is able to transform into a human or not.",
+			1129,"Horong","Fire monster with an appearance of Dokebi light. Origin of this monster is unknown.",
+			1110,"Dokebi","Demon monster that can only be seen near Payon areas. It sometimes riddles passing by adventurers.",
+			1301,"Am Mut","Monster from Payon Legend. It looks like a small kid, however it is known to harrass passing by adventurers.",
+			1290,"Skeleton General","Once a general that protected Payon Castle. After its death, it's become a monster who wander around the Payon Cave.",
+			1186,"GiantWhisper","Adventurer's tips are needed.",
+			1170,"Sohee","Virgin woman who've died a sad death. It can only be found near Payon area and it's passive.",
+			1307,"Cat O'Nine Tails","9 tailed Demon. It uses the bell to lure and attack humans.",
+			1150,"Moonlight Flower","Medium rank Demon, queen of foxes. Underestimating its cute appearance will result in death." );		
+		if (.@mo_board == 1) {
+			mes "[Payon Cave]";
+			mes "Payon Cave is comprised of 5 floors. Most monsters are Undead or Demon. Holy property weapons will prove to be useful in this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Payon Cave B1","Payon Cave B2","Payon Cave B3","Payon Cave B4","Payon Cave B5","Cancel" ) ) {
+				case 1:
+					mes "[Payon Cave B1]";
+					mes "------------ Monster ------------";
+					mes "Zombie(17)";
+					mes "Familiar(24)";
+					mes "Skeleton(27)";
+					mes "PoPoring(30)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Payon Cave B2]";
+					mes "------------ Monster ------------";
+					mes "Soldier Skeleton(34)";
+					mes "Drainliar(47)";
+					mes "Archer Skeleton(50)";
+					mes "Eggyra(53)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Payon Cave B3]";
+					mes "------------ Monster ------------";
+					mes "Mandragora(13)";
+					mes "PoPoring(30)";
+					mes "Soldier Skeleton(34)";
+					mes "Hydra(34)";
+					mes "Archer Skeleton(50)";
+					mes "Munak(58)";
+					mes "Bongun(59)";
+					mes "Nine Tail(72)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 4:
+					mes "[Payon Cave B4]";
+					mes "------------ Monster ------------";
+					mes "Mandragora(13)";
+					mes "Hydra(34)";
+					mes "Greatest General(55)";
+					mes "Munak(58)";
+					mes "Bongun(59)";
+					mes "Sohee(64)";
+					mes "GiantWhisper(66)";
+					mes "Nine Tail(72)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 5:
+					mes "[Payon Cave B5]";
+					mes "------------ Monster ------------";
+					mes "Archer Skeleton(50)";
+					mes "Greatest General(55)";
+					mes "Horong(66)";
+					mes "Dokebi(68)";
+					mes "Nine Tail(72)";
+					mes "Am Mut(76)";
+					mes "Skeleton General(88)";
+					mes "--------------------------------";
+					next;
+					mes "<Cat O'Nine Tails wears an underwear, but I'm not wearing one. Hey you over there, don't just watch!! - Extremely embarrassed Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+moc_ruins,61,164,0	script	Signposts#Pyramid	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Pyramid]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1005,"Familiar","Colonial bat that inhabits dark caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
+			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
+			1028,"Soldier Skeleton","Skeleton soldier can only be seen deep inside the dungeon, where sunlight would never reach. Unlike Skeleton Archers, it attacks with dual swords.",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
+			1016,"Archer Skeleton","Skeleton Archer can only be seen deep inside the dungeon, where sunlight would never reach. This monster's quivers does not run out of arrows.",
+			1041,"Mummy","Mummy monster found within the forgotten pyramid. It sometimes appears with Verit monster, surprising nearby adventurer. It's an aggressive monster.",
+			1029,"Isis","Mutated female servant who was buried alive with a king's deceased body. It transformed into a snake monster. It still remains loyal to the king.",
+			1032,"Verit","Mummified pet that was once a companion of a human. It will devour any items on sight.",
+			1191,"Mimic","Adventurer's tips are needed.",
+			1146,"Matyr","King's protector, gatekeeper. Dog is used as a medium to summon the gatekeeper using forbidden magic. Its body is covered in dark mist and it is very agile.",
+			1297,"Ancient Mummy","Ancient Mummy was once a high ranking official. Unlike a normal mummy, it's wrapped in high quality crimson bandages.",
+			1149,"Minorous","Unknown creature living deep within the labyrinth. It is not on friendly term with Orcs, but they rarely come across each other. When it encounters a creature, it will chase down the target and attack with its giant hammer.",
+			1194,"Arclouze","Monster with hardened shell. It rolls its body to attack with its shell.",
+			1038,"Osiris","King of the Pyramid. It was once worshipped as the solar god by its people, however it's now just a strong MVP monster.",
+			1511,"Amon Ra","MVP monster that attacks while seated in the chair. This MVP feels like it could be another king of the pyramid. What's happening behind its chair?" );
+		if (.@mo_board == 1) {
+			mes "[Pyramid]";
+			mes "Pyramid is comprised of B4 ground floors and B3 underground floors. This dungeon is appropriate for beginner to expert adventurers. Thief Guild is located in underground B1 floor.";
+			next;
+			while(1) {
+				switch( select( "Pyramid Ground Floor B1","Pyramid Ground Floor B2","Pyramid Ground Floor B3","Pyramid Ground Floor B4","Pyramid Underground Floor B2","Pyramid Underground Floor B3","Cancel" ) ) {
+				case 1:
+					mes "[Pyramid Ground Floor B1]";
+					mes "------------ Monster ------------";
+					mes "Familiar(24)";
+					mes "PoPoring(30)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Pyramid Ground Floor B2]";
+					mes "------------ Monster ------------";
+					mes "PoPoring(30)";
+					mes "Soldier Skeleton(34)";
+					mes "Drainliar(47)";
+					mes "Archer Skeleton(50)";
+					mes "Mummy(55)";
+					mes "Isis(59)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Pyramid Ground Floor B3]";
+					mes "------------ Monster ------------";
+					mes "Drainliar(47)";
+					mes "Verit(52)";
+					mes "Mummy(55)";
+					mes "Mimic(56)";
+					mes "Matyr(58)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 4:
+					mes "[Pyramid Ground Floor B4]";
+					mes "------------ Monster ------------";
+					mes "Mummy(55)";
+					mes "Mimic(56)";
+					mes "Matyr(58)";
+					mes "Isis(59)";
+					mes "Ancient Mummy(114)";
+					mes "--------------------------------";
+					next;
+					mes "<King of the pyramid! I should change his bandages. His bandages have turned purple over the ages. He's dangerous? It's ok~ It's ok~ - Bandage carrying Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				case 5:
+					mes "[Pyramid Underground Floor B2]";
+					mes "------------ Monster ------------";
+					mes "Verit(52)";
+					mes "Mummy(55)";
+					mes "Minorous(58)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 6:
+					mes "[Pyramid Underground Floor B3]";
+					mes "------------ Monster ------------";
+					mes "Verit(52)";
+					mes "Mimic(56)";
+					mes "Arclouze(107)";
+					mes "Ancient Mummy(114)";
+					mes "--------------------------------";
+					next;
+					mes "<There's an MVP monster that attacks while sitting on its chair. He must have been very lazy. It didn't even move from the spot. That happens to be sometimes. - Lazy Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+/// adven_board02.sc
+
+hu_fild05,188,210,0	script	Signpost#Abyss Lake	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Abyss Lake Dungeon]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1191,"Mimic","Adventurer's tips are needed.",
+			1216,"Penomena","It looks similar to a hydra, but it is capable of moving and its attacks are much stronger. Underestimating it will result in quick death. Be cautious around this monster.",
+			1699,"Ancient Mimic","Adventurer's tips are needed.",
+			1721,"Dragon Egg","Adventurer's tips are needed.",
+			1715,"Novus (Red)","Adventurer's tips are needed.",
+			1718,"Novus (Yellow)","Adventurer's tips are needed.",
+			1714,"Ferus (Red)","Adventurer's tips are needed.",
+			1717,"Ferus (Green)","Adventurer's tips are needed.",
+			1713,"Acidus (Gold)","Adventurer's tips are needed.",
+			1716,"Acidus (Blue)","Adventurer's tips are needed.",
+			1720,"Hydrolancer","Adventurer's tips are needed.",
+			1719,"Detardeurus","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Abyss Lake Dungeon]";
+			mes "Abyss Lake Dungeon is comprised of B3 floors, and monsters in this dungeon are mostly Dragon race. Prepare yourself before venturing into this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Abyss Lake Dungeon B1","Abyss Lake Dungeon B2","Abyss Lake Dungeon B3","Cancel" ) ) {
+				case 1:
+					mes "[Abyss Lake Dungeon B1]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Novus (Red)(84)";
+					mes "Penomena(85)";
+					mes "Novus (Yellow)(90)";
+					mes "Ancient Mimic(112)";
+					mes "Dragon Egg(119)";
+					mes "Ferus (Red)(126)";
+					mes "Ferus (Green)(126)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Abyss Lake Dungeon B2]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Novus (Red)(84)";
+					mes "Novus (Yellow)(90)";
+					mes "Ancient Mimic(112)";
+					mes "Dragon Egg(119)";
+					mes "Ferus (Red)(126)";
+					mes "Acidus (Gold)(130)";
+					mes "Acidus (Blue)(130)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Abyss Lake Dungeon B3]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Ancient Mimic(112)";
+					mes "Dragon Egg(119)";
+					mes "Hydrolancer(121)";
+					mes "Ferus (Red)(126)";
+					mes "Ferus (Green)(126)";
+					mes "Acidus (Gold)(130)";
+					mes "Acidus (Blue)(130)";
+					mes "--------------------------------";
+					next;
+					mes "<Detardeurus is so big!! Doesn't it look strong? If you are not interested, nevermind. - Eager to ride the dragon, Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+einbech,142,250,0	script	Signpost#Einbech Dungeon	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Einbech Dungeon]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1619,"Porcellio","Tiny larva monster. Despite its size, it's surprisingly strong.",
+			1620,"Noxious","Crimson Smog monster. This monster cannot be truly defeated.",
+			1621,"Venomous","Green Dust monster. This monster cannot be truly defeated.",
+			1616,"Pitman","Hard working tiny pixie miners. It uses a pickaxe to attack.",
+			1622,"Teddy Bear","Cute stuffed teddy bear monster. It lures unsuspecting creatures with charm and attacks them with a walking stick.",
+			1617,"Waste Stove","It looks like an extremely old stove at first glance. When adventurers approach it carelessly, it will attack.",
+			1614,"Mineral","Mineral monster. It sometimes hides in the ground and ambushes passing by adventurer.",
+			1615,"Obsidian","Small black crystal monster that excel in close; combat. It sometimes hides in the ground and ambushes passing by adventurer.",
+			1618,"Ungoliant","Giant earwig monster. It uses pincers to attack.",
+			1623,"RSX-0806","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Einbech Dungeon]";
+			mes "Einbech Dungeon is comprised of 2 floors, and most of the monsters that appear in this dungeon are Formless. Prepare before venturing into this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Einbech Dungeon 1f","Einbech Dungeon 2f","Cancel" ) ) {
+				case 1:
+					mes "[Einbech Dungeon 1f]";
+					mes "------------ Monster ------------";
+					mes "Porcellio(85)";
+					mes "Noxious(87)";
+					mes "Venomous(87)";
+					mes "Pitman(90)";
+					mes "Waste Stove(92)";
+					mes "Ungoliant(94)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Einbech Dungeon 2f]";
+					mes "------------ Monster ------------";
+					mes "Teddy Bear(91)";
+					mes "Waste Stove(92)";
+					mes "Mineral(96)";
+					mes "Obsidian(97)";
+					mes "--------------------------------";
+					next;
+					mes "<RSX-0806 ... That name is complex. - Intelligent Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+ra_fild01,228,330,0	script	Signpost#Ice Cave	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Ice Cave]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1782,"Roween","Adventurer's tips are needed.",
+			1776,"Siroma","Adventurer's tips are needed.",
+			1780,"Muscipular","Adventurer's tips are needed.",
+			1778,"Gazeti","Adventurer's tips are needed.",
+			1789,"Iceicle","Adventurer's tips are needed.",
+			1775,"Snowier","Adventurer's tips are needed.",
+			1777,"Ice Titan","Adventurer's tips are needed.",
+			1779,"Ktullanux","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Ice Cave]";
+			mes "Ice Cave is comprised of B3 floors, and most monsters within the dungeon are Water element. Prepare before venturing into this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Ice Cave B1","Ice Cave B2","Ice Cave B3","Cancel" ) ) {
+				case 1:
+					mes "[Ice Cave B1]";
+					mes "------------ Monster ------------";
+					mes "Roween(95)";
+					mes "Siroma(98)";
+					mes "Muscipular(105)";
+					mes "Gazeti(106)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Ice Cave B2]";
+					mes "------------ Monster ------------";
+					mes "Siroma(98)";
+					mes "Iceicle(100)";
+					mes "Snowier(103)";
+					mes "Gazeti(106)";
+					mes "Ice Titan(110)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Ice Cave B3]";
+					mes "------------ Monster ------------";
+					mes "Iceicle(100)";
+					mes "Snowier(103)";
+					mes "Gazeti(106)";
+					mes "Ice Titan(110)";
+					mes "--------------------------------";
+					next;
+					mes "<Rare monster Ktullanux.. Sigh.. Even it's name is complex.. How would Ktullanux ice shave taste like? - Ice shave hungering Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+ve_fild03,172,239,0	script	Signpost#Thor Volcano	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Thor Volcano Dungeon]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1072,"Kaho","Demon covered in flames. Its attacks are flashy, but it's actually a low ranking demon with fairly weak attack.",
+			1836,"Magmaring","Adventurer's tips are needed.",
+			1838,"Knocker","Adventurer's tips are needed.",
+			1837,"Imp","Adventurer's tips are needed.",
+			1830,"Bow Guardian","Adventurer's tips are needed.",
+			1829,"Sword Guardian","Adventurer's tips are needed.",
+			1833,"Kasa","Adventurer's tips are needed.",
+			1839,"Byorgue","Adventurer's tips are needed.",
+			1831,"Salamander","Adventurer's tips are needed.",
+			1832,"Ifrit","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Thor Volcano Dungeon]";
+			mes "Thor Volcano Dungeon is comprised of B3 floors, and the monsters that appear in this dungeon are mostly Fire element. Prepare before venturing into this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Thor Volcano Dungeon B1","Thor Volcano Dungeon B2","Thor Volcano Dungeon B3","Cancel" ) ) {
+				case 1:
+					mes "[Thor Volcano Dungeon B1]";
+					mes "------------ Monster ------------";
+					mes "Magmaring(110)";
+					mes "Imp(129)";
+					mes "Bow Guardian(132)";
+					mes "Sword Guardian(133)";
+					mes "Kasa(135)";
+					mes "Byorgue(135)";
+					mes "Salamander(138)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Thor Volcano Dungeon B2]";
+					mes "------------ Monster ------------";
+					mes "Kaho(98)";
+					mes "Magmaring(110)";
+					mes "Knocker(126)";
+					mes "Imp(129)";
+					mes "Bow Guardian(132)";
+					mes "Sword Guardian(133)";
+					mes "Salamander(138)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Thor Volcano Dungeon B3]";
+					mes "------------ Monster ------------";
+					mes "Bow Guardian(132)";
+					mes "Sword Guardian(133)";
+					mes "Kasa(135)";
+					mes "Byorgue(135)";
+					mes "Salamander(138)";
+					mes "--------------------------------";
+					next;
+					mes "<Young explorer~ Why are you here in Thor Volcano Dungeon~ Why are you crying~ Wah~ Wah~ Ifrit is scalding hot~ - Thor Sauna representative explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+odin_tem01,111,141,0	script	Signpost#Odin Temple	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Odin Temple]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1692,"Breeze","Adventurer's tips are needed.",
+			1697,"Plasma (Blue)","Adventurer's tips are needed.",
+			1695,"Plasma (Green)","Adventurer's tips are needed.",
+			1696,"Plasma (Purple)","Adventurer's tips are needed.",
+			1694,"Plasma (Red)","Adventurer's tips are needed.",
+			1693,"Plasma (Yellow)","Adventurer's tips are needed.",
+			1752,"Skogul","Adventurer's tips are needed.",
+			1753,"Frus","Adventurer's tips are needed.",
+			1754,"Skeggiold (Black)","Adventurer's tips are needed.",
+			1755,"Skeggiold (Blue)","Adventurer's tips are needed.",
+			1765,"Valkyrie","Adventurer's tips are needed.",
+			1751,"Valkyrie Randgris","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Odin Temple]";
+			mes "Odin Temple is comprised of 3 areas , and most monsters that appear here have fast movement speed. Be prepared to get ambushed by multiple monsters.";
+			next;
+			while(1) {
+				switch( select( "Odin Temple West","Odin Temple South","Odin Temple North","Cancel" ) ) {
+				case 1:
+					mes "[Odin Temple West]";
+					mes "------------ Monster ------------";
+					mes "Breeze(92)";
+					mes "Plasma (Blue)(115)";
+					mes "Plasma (Green)(116)";
+					mes "Plasma (Purple)(117)";
+					mes "Plasma (Red)(118)";
+					mes "Plasma (Yellow)(119)";
+					mes "Skogul(126)";
+					mes "Frus(128)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Odin Temple South]";
+					mes "------------ Monster ------------";
+					mes "Plasma (Yellow)(119)";
+					mes "Skogul(126)";
+					mes "Frus(128)";
+					mes "Skeggiold (Black)(131)";
+					mes "Skeggiold (Blue)(131)";
+					mes "Valkyrie(141)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Odin Temple North]";
+					mes "------------ Monster ------------";
+					mes "Plasma (Yellow)(119)";
+					mes "Skogul(126)";
+					mes "Frus(128)";
+					mes "Skeggiold (Black)(131)";
+					mes "Skeggiold (Blue)(131)";
+					mes "Valkyrie(141)";
+					mes "--------------------------------";
+					next;
+					mes "<Valkyrie Randgris, how I wish to be wrapped around your soft wings - Dreamy explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+malangdo,77,238,0	script	Signpost#Starlight Reef	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Starlight Reef]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1073,"Crab","Crustaceans monster that can be seen commonly around beach. It's not strong, but its hardened shell may prove to be difficult to cut through.",
+			1074,"Shellfish","Creature that can be seen commonly around the beach. It uses its legs to attack.",
+			1266,"Aster","Aquatic creature, Aster. It's personality is rather docile.",
+			2199,"Siorava","Adventurer's tips are needed.",
+			2197,"Red Eruma","Adventurer's tips are needed.",
+			2208,"Wild Rider","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Starlight Reef]";
+			mes "Starlight Reef introduces rather weak monsters. Be careful around Red Eruma monsters as it will assist other monsters in its vicinity. Prepare before venturing into this dungeon.";
+			next;
+			while(1) {
+				if (select( "Starlight Reef","Cancel" ) == 2)
+					break;
+				mes "[Starlight Reef]";
+				mes "------------ Monster ------------";
+				mes "Crab(43)";
+				mes "Shellfish(50)";
+				mes "Aster(50)";
+				mes "Siorava(87)";
+				mes "Red Eruma(91)";
+				mes "Wild Rider(95)";
+				mes "--------------------------------";
+				next;
+				mes "<Wild Rider..? Huh? Is it a cat? Why is a cat riding on a swordfish? - Mounted on picky, explorer Grape>";
+				F_InfoBoard;
+			}
+		}
+	}
+}
+
+/// adven_board03.sc
+
+gefenia01,61,173,0	script	Signpost#Geffenia1	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Geffenia]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1204,"Ogretooth","Adventurer's tips are needed.",
+			1205,"Executioner","It appears to be a sealed demon blade, but it's actually being sealed by a chain type monster. It manipulates the chained sword to attack.",
+			1371,"False Angel","Demon with an appearance of an angel. It lures humans and takes their life.",
+			1268,"Bloody Knight","A soul of a valorous knight, cursed to be trapped within the bloody armor as a monster.It is powerful enough to leading the Castle's Chivalry.",
+			1292,"Mini Demon","Tiny Demon. It's appearance is somewhat cute, but it is quite vicious. It attacks with a lance in its hands and summons reinforcements.",
+			1390,"Violy","Its violin performance is melodic, but painful at times.",
+			1370,"Succubus","Female demon. Lures males and sucks their life energy.",
+			1374,"Incubus","Male demon. Lures females and sucks their life energy.",
+			1219,"Abysmal Knight","Demon Knight that serves the owner of legendary labyrinth. It is very powerful and brutal.",
+			1203,"Mysteltainn","It appears to be a sealed demon blade, but it's actually being sealed by a chain type monster. It manipulates the chained sword to attack." );
+		if (.@mo_board == 1) {
+			mes "[Geffenia Section "+ charat( strnpcinfo(2),8 ) +"]";
+			mes "Ancient Elf's lost city, Geffenia is comprised of 4 sections. Most monsters that appear in this dungeon are strong, so be prepared before you venture into this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Geffenia Section 1","Geffenia Section 2","Geffenia Section 3","Geffenia Section 4","Cancel" ) ) {
+				case 1:
+					mes "[Geffenia Section 1]";
+					mes "------------ Monster ------------";
+					mes "Executioner(101)";
+					mes "False Angel(105)";
+					mes "Ogretooth(114)";
+					mes "Bloody Knight(116)";
+					mes "Mini Demon(117)";
+					mes "Violy(118)";
+					mes "Succubus(118)";
+					mes "Incubus(120)";
+					mes "Abysmal Knight(122)";
+					mes "Mysteltainn(130)";
+					mes "--------------------------------";
+					next;
+					continue;
+				case 2:
+					mes "[Geffenia Section 2]";
+					mes "------------ Monster ------------";
+					mes "Executioner(101)";
+					mes "False Angel(105)";
+					mes "Ogretooth(114)";
+					mes "Bloody Knight(116)";
+					mes "Mini Demon(117)";
+					mes "Violy(118)";
+					mes "Succubus(118)";
+					mes "Incubus(120)";
+					mes "Abysmal Knight(122)";
+					mes "Mysteltainn(130)";
+					mes "--------------------------------";
+					next;
+					continue;
+				case 3:
+					mes "[Geffenia Section 3]";
+					mes "------------ Monster ------------";
+					mes "Executioner(101)";
+					mes "False Angel(105)";
+					mes "Ogretooth(114)";
+					mes "Bloody Knight(116)";
+					mes "Mini Demon(117)";
+					mes "Violy(118)";
+					mes "Succubus(118)";
+					mes "Incubus(120)";
+					mes "Abysmal Knight(122)";
+					mes "Mysteltainn(130)";
+					mes "--------------------------------";
+					next;
+					continue;
+				case 4:
+					mes "[Geffenia Section 4]";
+					mes "------------ Monster ------------";
+					mes "Executioner(101)";
+					mes "False Angel(105)";
+					mes "Ogretooth(114)";
+					mes "Bloody Knight(116)";
+					mes "Mini Demon(117)";
+					mes "Violy(118)";
+					mes "Succubus(118)";
+					mes "Incubus(120)";
+					mes "Abysmal Knight(122)";
+					mes "Mysteltainn(130)";
+					mes "--------------------------------";
+					next;
+					mes "<Hey Incubus~ Look at... Ugh... - Embarrassed Explorer Grape>";
+					next;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+gefenia02,120,108,0	duplicate(Signpost#Geffenia1)	Signpost#Geffenia2	2_BULLETIN_BOARD
+gefenia03,131,201,0	duplicate(Signpost#Geffenia1)	Signpost#Geffenia3	2_BULLETIN_BOARD
+gefenia04,130,95,0	duplicate(Signpost#Geffenia1)	Signpost#Geffenia4	2_BULLETIN_BOARD
+
+nameless_n,259,213,0	script	Signpost#Nameless Island	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Nameless Island St. Abbey]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1036,"Ghoul","Corpse that is revived by Unholy Necromancer's curse. It ambushes nearby living creatures and devours their corpses to satiate its hunger, but because it's a reanimated corpse, it is unable to feel satisfied.^000000",
+			1866,"Hell Poodle","Adventurer's tips are needed.",
+			1867,"Banshee","Adventurer's tips are needed.",
+			1869,"Flame Skull","Adventurer's tips are needed.",
+			1865,"Ragged Zombie","Adventurer's tips are needed.",
+			1864,"Zombie Slaughter","Adventurer's tips are needed.",
+			1870,"Necromancer","Adventurer's tips are needed.",
+			2107,"Fallen Bishop Hibram","Adventurer's tips are needed.",
+			1873,"Beelzebub","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Nameless Island St. Abbey]";
+			mes "Nameless Island St. Abbey is comprised of 3 floors, and most monsters that appear in this dungeon are Undead or demon. Prepare before venturing into this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Nameless Island St. Abbey 1F","Nameless Island St. Abbey 2F","Nameless Island St. Abbey 3F","Cancel" ) ) {
+				case 1:
+					mes "[Nameless Island St. Abbey 1F]";
+					mes "------------ Monster ------------";
+					mes "Ghoul(61)";
+					mes "Hell Poodle(115)";
+					mes "Flame Skull(121)";
+					mes "Ragged Zombie(123)";
+					mes "Zombie Slaughter(124)";
+					mes "Banshee(130)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Nameless Island St. Abbey 2F]";
+					mes "------------ Monster ------------";
+					mes "Flame Skull(121)";
+					mes "Ragged Zombie(123)";
+					mes "Zombie Slaughter(124)";
+					mes "Necromancer(133)";
+					mes "--------------------------------";
+					next;
+					mes "<Do you know how scary a Bishop can be when it becomes fallen..? Hibram.. I saw it.. - All knowing Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Nameless Island St. Abbey 3F]";
+					mes "------------ Monster ------------";
+					mes "Flame Skull(121)";
+					mes "Banshee(130)";
+					mes "Necromancer(133)";
+					mes "--------------------------------";
+					next;
+					mes "<Beelzebub is not a Steel Chonchon, because Chonchons are weak. ... ... ... Run away! - Fleeing Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+lhz_cube,234,97,0	script	Signpost#Somatology	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Somatology Laboratory]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1613,"Metaling","At first glance, it seems like a normal poring monster, but it's actually made of machinery parts.",
+			1627,"Anopheles","Almost invisible to the naked eye. Adventurers are often attacked by this monster without realizing it.",
+			1682,"Remover","Former member of Einbroch fire fighters. After an unfortunate accident in a mine, it's become a vicious monster.",
+			1653,"Wickebine Tres","Unknown Thief with unknown age and motive. Broke into the laboratory for unknown reason, but was quickly apprehended and became a specimen. It's known to be a vicious monster with surprisingly femininity.",
+			1655,"Errende Ebecee","Boy who once tread on the road as an Acolyte. Unfortunately, it has fallen prey to the schemes of an unknown group and turned into a specimen.",
+			1657,"Laurell Weinder","Once a gifted Magician who had a bright future ahead of him. Unfortunately it was involved in bio experiment and turned into a specimen.",
+			1654,"Armeyer Dinze","Merchant girl who believe in the methodology of time and money. She met a travelling Swordsman one day and started accompanying her.",
+			1656,"Kavach Icarus","A former Hunter, but he was quickly subdued and became Renkenber's specimen. He now walks amongst other specimen in the Somatology Laboratory.",
+			1681,"Gemini-S58","Unknown creature that have gone through mutation. It enjoys its male appearance.",
+			1652,"Egnigem Cenia","Once a carefree wandering knight. She met a merchant girl during one of her travels, but they were caught by Renkenber to be used as specimen.",
+			1635,"Eremes Guile","Former Assassin Cross who wanted to be faster than any other assassins. His ambitions lead him to become a specimen for bio experiment.",
+			1637,"Margaretha Sorin","Former High Priestess who had travelled to Lighthalzen to train. Shortly after her departure, she was subdued by Renkenber and she was turned into a specimen.",
+			1638,"Cecil Damon","Former Sniper who co-existed with the environment. However, after becoming a specimen for bio experiment, her personality went under a shocking change.",
+			1639,"Kathryne Keyron","Former High Wizard who had graduated from wizard school at an early age. Her talent caught Rekenber's attention and ended up being captured as a specimen.",
+			1634,"Seyren Windsor","Former Lord Knight who was famously known for his valor. While he was protecting a nearby adventurer, he was subdued and became a specimen.",
+			1636,"Howard Alt-Eisen","Former Mastersmith who had been tricked into becoming a specimen on his own accord. While he was alive, he had no interest in anything but weapon smithing.",
+			1658,"Boss Egnigem Cenia","Former Knight who was famously known by the adventurers. In order to reveal Renkenber's schemes, she willingly let herself be taken into the laboratory, but she could not escape her fate.",
+			1640,"Lord Knight Seyren","Adventurer's tips are needed.",
+			1641,"Assassin Cross Eremes","Adventurer's tips are needed.",
+			1643,"High Priest Margaretha","Adventurer's tips are needed.",
+			1644,"Sniper Cecil","Adventurer's tips are needed.",
+			1645,"High Wizard Kathryne","Adventurer's tips are needed.",
+			1648,"Master Smith Howard","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Somatology Laboratory]";
+			mes "Somatology Laboratory is comprised of 3 floors, and monsters that appear are mostly Demi-human. These monsters are very powerful so be sure to explore with another adventurer.";
+			next;
+			while(1) {
+				switch( select( "Somatology Laboratory 1F","Somatology Laboratory 2F","Somatology Laboratory 3F","Cancel" ) ) {
+				case 1:
+					mes "[Somatology Laboratory 1F]";
+					mes "------------ Monster ------------";
+					mes "Metaling(81)";
+					mes "Anopheles(95)";
+					mes "Remover(121)";
+					mes "Wickebine Tres(132)";
+					mes "Errende Ebecee(133)";
+					mes "Laurell Weinder(133)";
+					mes "Armeyer Dinze(134)";
+					mes "Kavach Icarus(135)";
+					mes "Gemini-S58(135)";
+					mes "Egnigem Cenia(136)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Somatology Laboratory 2F]";
+					mes "------------ Monster ------------";
+					mes "Remover(121)";
+					mes "Wickebine Tres(132)";
+					mes "Errende Ebecee(133)";
+					mes "Laurell Weinder(133)";
+					mes "Armeyer Dinze(134)";
+					mes "Kavach Icarus(135)";
+					mes "Gemini-S58(135)";
+					mes "Egnigem Cenia(136)";
+					mes "Eremes Guile(140)";
+					mes "--------------------------------";
+					next;
+					mes "<There are even places like these.. Conducting experiments on human specimen.. MVP Egnigem Cenia... She's.. - Tearful Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Somatology Laboratory 3F]";
+					mes "------------ Monster ------------";
+					mes "Eremes Guile(140)";
+					mes "Margaretha Sorin(140)";
+					mes "Cecil Damon(141)";
+					mes "Kathryne Keyron(141)";
+					mes "Seyren Windsor(142)";
+					mes "Howard Alt-Eisen(142)";
+					mes "--------------------------------";
+					next;
+					mes "<I've finally reached here.. Who's conducting these experiments.. What did they do to these people? Eremes.. Margaretha.. Cecil.. Kathryne.. Seyren.. Howard.. ... - Extremely tearful explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+ra_temin,31,316,0	script	Signpost#Holy Ground	2_BULLETIN_BOARD,{
+	if (MISC_QUEST & 8192 == 0) {
+		mes "Holy Ground";
+		mes "- High Priest Zhed -";
+		close;
+	}
+	while(1) {
+		mes "[Holy Ground]";
+		mes "Only those that have requested permission from High Priest Zhed may enter this dungeon. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1632,"Gremlin","Adventurer's tips are needed.",
+			1633,"Beholder","Adventurer's tips are needed.",
+			1773,"Hodremlin","Adventurer's tips are needed.",
+			1771,"Vanberk","Adventurer's tips are needed.",
+			1772,"Isilla","Adventurer's tips are needed.",
+			1774,"Seeker","Adventurer's tips are needed.",
+			1770,"Echio","Adventurer's tips are needed.",
+			1769,"Agav","Adventurer's tips are needed.",
+			1768,"Gloom Under Night","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Holy Ground]";
+			mes "Holy Ground is comprised of 5 floors, and monsters that appear in this dungeon use magic skills. Prepare before venturing into this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Holy Ground 1F","Holy Ground 2F","Holy Ground 3F","Holy Ground 4F","Holy Ground 5F","Cancel" ) ) {
+				case 1:
+					mes "[Holy Ground 1F]";
+					mes "------------ Monster ------------";
+					mes "Gremlin(118)";
+					mes "Beholder(120)";
+					mes "Hodremlin(122)";
+					mes "Vanberk(123)";
+					mes "Isilla(124)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Holy Ground 2F]";
+					mes "------------ Monster ------------";
+					mes "Gremlin(118)";
+					mes "Beholder(120)";
+					mes "Hodremlin(122)";
+					mes "Vanberk(123)";
+					mes "Isilla(124)";
+					mes "Seeker(124)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Holy Ground 3F]";
+					mes "------------ Monster ------------";
+					mes "Gremlin(118)";
+					mes "Beholder(120)";
+					mes "Hodremlin(122)";
+					mes "Seeker(124)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 4:
+					mes "[Holy Ground 4F]";
+					mes "------------ Monster ------------";
+					mes "Hodremlin(122)";
+					mes "Seeker(124)";
+					mes "Echio(126)";
+					mes "Agav(128)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 5:
+					mes "[Holy Ground 5F]";
+					mes "------------ Monster ------------";
+					mes "Hodremlin(122)";
+					mes "Isilla(124)";
+					mes "Seeker(124)";
+					mes "Echio(126)";
+					mes "Agav(128)";
+					mes "--------------------------------";
+					next;
+					mes "<Gloom Under Night's eyes are so round and cute. I want to make it my pet.. But what's its taming item? I probably can't tame it then.. - Hopeful Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+yuno_fild08,82,178,2	script	Signpost#Robot Factory	4_BULLETIN_BOARD2,{
+	if (countitem(7509) > 0) {// Luxurious Keycard
+		mes "- Your ^0000FFLuxurious Keycard^000000resonates with Signpost and uncovers new information. -";
+		next;
+	}
+	else {
+		mes "Kiel Hyre Academy students cannot enter here.";
+		close;
+	}
+	while(1) {
+		mes "[Robot Factory]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1275,"Alice","Automatic doll tasked with various chores in the castle. Its main priority is to clean the vicinity, however it will attack intruders with a steel broom stick.",
+			1738,"Constant","Adventurer's tips are needed.",
+			1736,"Aliot","Adventurer's tips are needed.",
+			1737,"Aliza","Adventurer's tips are needed.",
+			1735,"Alicel","Adventurer's tips are needed.",
+			1733,"Kiel","Adventurer's tips are needed.",
+			1734,"Kiel-D-01","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Robot Factory]";
+			mes "Robot Factory is comprised of 2 floors, and monsters that appear here are mostly formless. Constant monster self destructs to repel any invaders, so be cautious.";
+			next;
+			while(1) {
+				switch( select( "Robot Factory 1F","Robot Factory 2F","Cancel" ) ) {
+				case 1:
+					mes "[Robot Factory 1F]";
+					mes "------------ Monster ------------";
+					mes "Alice(100)";
+					mes "Constant(108)";
+					mes "Aliot(112)";
+					mes "Aliza(112)";
+					mes "Alicel(115)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Robot Factory 2F]";
+					mes "------------ Monster ------------";
+					mes "Kiel(90)";
+					mes "Constant(108)";
+					mes "Aliot(112)";
+					mes "Aliza(112)";
+					mes "Alicel(115)";
+					mes "--------------------------------";
+					next;
+					mes "<I don't know why but there are 2 types of Kiel. Kiel and Kiel-D-01... Kiel-D-01 is the newer version of the two.. Should I request Kiel to make me a robot too? - Greedy Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+tha_t01,142,78,0	script	Guide#Thanatos1	CLEAR_NPC,{
+	mes "[Thanatos Tower Guide]";
+	if (thana_tower == 0) {
+		mes "Thanatos Tower is comprised of 12 floors, but only 3 floors are open to the public. If you wish to progress, you must have signed a contract with '^0000FFRenkenber^000000'.";
+		next;
+		mes "[Thanatos Tower Guide]";
+		mes "According to the information there are a total of 12 floors. Prepare for all kinds of situation before venturing in this dungeon....";
+		next;
+		mes "[Public Announcement]";
+		mes "Please don't touch it. Only those that have a contract with '^0000FFRenkenber^000000' can progress.";
+		emotion 23;
+		close;
+	}
+	mes "Thanatos Tower is comprised of 12 floors, but only 3 floors are open to the public. If you wish to progress, you must have signed a contract with'^0000FFRenkenber^000000'.";
+	next;
+	mes "[Thanatos Tower Guide]";
+	mes "According to the information there are a total of 12 floors. Prepare for all kinds of situation before venturing in this dungeon.";
+	next;
+	while(1) {
+		mes "[Thanatos Tower Guide]";
+		mes "You have signed the contract with '^0000FFRenkenber^000000', the following information are now available. To revise the information, contact Adventurer Group or '^0000FFRenkenber^000000'with information tip.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1191,"Mimic","Adventurer's tips are needed.",
+			1195,"Rideword","Magic Tome brought to life with demon's powers. It does not possess emotions or a mind of its own, programmed to rely on its instincts to attack living creatures.",
+			1377,"Elder","Once an elder of magic association. It delved too deep into magic, turning into a magical monster that attack adventurers on sight.",
+			1275,"Alice","Automatic doll tasked with various chores in the castle. Its main priority is to clean the vicinity, however it will attack intruders with a steel broom stick.",
+			1699,"Ancient Mimic","Adventurer's tips are needed.",
+			1320,"Owl Duke","Owl Baron's sibling that wears a blue manteau. It enjoys rainy days.",
+			1295,"Owl Baron","Bird monster that wears red manteau. Getting fooled by its gentleman appearance will result in being ambushed by fierce magic attacks.",
+			1698,"Death Word","Adventurer's tips are needed.",
+			1697,"Plasma (Blue)","Adventurer's tips are needed.",
+			1695,"Plasma (Green)","Adventurer's tips are needed.",
+			1696,"Plasma (Purple)","Adventurer's tips are needed.",
+			1694,"Plasma (Red)","Adventurer's tips are needed.",
+			1693,"Plasma (Yellow)","Adventurer's tips are needed.",
+			1707,"Dolor of Thanatos","Adventurer's tips are needed.",
+			1706,"Maero of Thanatos","Adventurer's tips are needed.",
+			1705,"Despero of Thanatos","Adventurer's tips are needed.",
+			1704,"Odium of Thanatos","Adventurer's tips are needed.",
+			1702,"Baroness of Retribution","Adventurer's tips are needed.",
+			1703,"Lady Solace","Adventurer's tips are needed.",
+			1701,"Mistress of Shelter","Adventurer's tips are needed.",
+			1700,"Dame of Sentinel","Adventurer's tips are needed.",
+			1708,"Memory of Thanatos","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Thanatos Tower Guide]";
+			mes "Please choose an appropriate floor for monster information.";
+			next;
+			while(1) {
+				switch( select( "Cancel","Thanatos Tower 1F","Thanatos Tower 2F","Thanatos Tower 3F","Thanatos Tower 4F","Thanatos Tower 5F","Thanatos Tower 6F","Thanatos Tower 7F","Thanatos Tower 8F","Thanatos Tower 9F","Thanatos Tower 10F","Thanatos Tower 11F","Thanatos Tower 12F","Thanatos Tower Top Floor" ) ) {
+				case 2:
+					mes "[Thanatos Tower 1F]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Rideword(74)";
+					mes "Alice(100)";
+					mes "Plasma (Green)(116)";
+					mes "Lady Solace(123)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Thanatos Tower 2F]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Rideword(74)";
+					mes "Elder(92)";
+					mes "Alice(100)";
+					mes "Ancient Mimic(112)";
+					mes "Death Word(114)";
+					mes "Plasma (Blue)(116)";
+					mes "Baroness of Retribution(121)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 4:
+					mes "[Thanatos Tower 3F]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Rideword(74)";
+					mes "Elder(92)";
+					mes "Ancient Mimic(112)";
+					mes "Death Word(114)";
+					mes "Plasma (Purple)(117)";
+					mes "Mistress of Shelter(125)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 5:
+					mes "[Thanatos Tower 4F]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Rideword(74)";
+					mes "Owl Duke(92)";
+					mes "Elder(92)";
+					mes "Ancient Mimic(112)";
+					mes "Death Word(114)";
+					mes "Plasma (Red)(118)";
+					mes "Owl Baron(120)";
+					mes "Dame of Sentinel(127)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 6:
+					mes "[Thanatos Tower 5F]";
+					mes "------------ Monster ------------";
+					mes "Owl Duke(92)";
+					mes "Elder(92)";
+					mes "Ancient Mimic(112)";
+					mes "Death Word(114)";
+					mes "Plasma (Blue)(115)";
+					mes "Plasma (Green)(116)";
+					mes "Plasma (Purple)(117)";
+					mes "Plasma (Red)(118)";
+					mes "Owl Baron(120)";
+					mes "Dolor of Thanatos(129)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 7:
+					mes "[Thanatos Tower 6F]";
+					mes "------------ Monster ------------";
+					mes "Owl Duke(92)";
+					mes "Elder(92)";
+					mes "Ancient Mimic(112)";
+					mes "Death Word(114)";
+					mes "Plasma (Blue)(115)";
+					mes "Plasma (Green)(116)";
+					mes "Plasma (Purple)(117)";
+					mes "Plasma (Red)(118)";
+					mes "Owl Baron(120)";
+					mes "Maero of Thanatos(129)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 8:
+					mes "[Thanatos Tower 7F]";
+					mes "------------ Monster ------------";
+					mes "Ancient Mimic(112)";
+					mes "Death Word(114)";
+					mes "Baroness of Retribution(121)";
+					mes "Lady Solace(123)";
+					mes "Mistress of Shelter(125)";
+					mes "Dame of Sentinel(127)";
+					mes "Despero of Thanatos(129)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 9:
+					mes "[Thanatos Tower 8F]";
+					mes "------------ Monster ------------";
+					mes "Ancient Mimic(112)";
+					mes "Death Word(114)";
+					mes "Baroness of Retribution(121)";
+					mes "Lady Solace(123)";
+					mes "Mistress of Shelter(125)";
+					mes "Dame of Sentinel(127)";
+					mes "Odium of Thanatos(129)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 10:
+					mes "[Thanatos Tower 9F]";
+					mes "------------ Monster ------------";
+					mes "Plasma (Red)(118)";
+					mes "Baroness of Retribution(121)";
+					mes "Lady Solace(123)";
+					mes "Mistress of Shelter(125)";
+					mes "Dame of Sentinel(127)";
+					mes "Odium of Thanatos(129)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 11:
+					mes "[Thanatos Tower 10F]";
+					mes "------------ Monster ------------";
+					mes "Plasma (Blue)(115)";
+					mes "Baroness of Retribution(121)";
+					mes "Lady Solace(123)";
+					mes "Mistress of Shelter(125)";
+					mes "Dame of Sentinel(127)";
+					mes "Maero of Thanatos(129)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 12:
+					mes "[Thanatos Tower 11F]";
+					mes "------------ Monster ------------";
+					mes "Plasma (Green)(116)";
+					mes "Baroness of Retribution(121)";
+					mes "Lady Solace(123)";
+					mes "Mistress of Shelter(125)";
+					mes "Dame of Sentinel(127)";
+					mes "Despero of Thanatos(129)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 13:
+					mes "[Thanatos Tower 12F]";
+					mes "------------ Monster ------------";
+					mes "Plasma (Yellow)(119)";
+					mes "Baroness of Retribution(121)";
+					mes "Lady Solace(123)";
+					mes "Mistress of Shelter(125)";
+					mes "Dame of Sentinel(127)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 14:
+					mes "[Thanatos Tower Top Floor]";
+					mes "------------ Monster ------------";
+					mes "- Adventurer's tips are needed -";
+					mes "--------------------------------";
+					next;
+					mes "<It's so empty.. I came all the way up here but there's nothing here.. - Angry Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+tha_t01,156,78,0	duplicate(Guide#Thanatos1)	Guide#Thanatos2	CLEAR_NPC
+
+prt_fild05,278,220,0	script	Signpost#Culvert	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Prontera Culvert]";
+		mes "Prontera Culvert can only be accessed by adventurers who have the permission from Rune Midgard Kingdrom.";
+		mes "-- Adventurer Group --";
+		next;
+		if (MISC_QUEST & 8 == 0) {
+			mes "[Prontera Culvert]";
+			mes "Prontera Culvert can only be accessed by adventurers who have signed a volunteer form at Prontera Chivalry. Would you like to go sign the volunteer form?";
+			next;
+			switch( select( "Volunteer","Do not volunteer" ) ) {
+			case 1:
+				mes "[Prontera Culvert]";
+				mes "You will be warped to Prontera Chivalry.";
+				next;
+				warp "prontera",49,342;
+				break;
+			case 2:
+				mes "[Prontera Culvert]";
+				mes "Prontera Chivalry is looking to enlist brave adventurers.";
+				close;
+			}
+		}
+		.@mo_board = callfunc( "F_AvenBoard",
+			1111,"Drainliar","Colonial bat that inhabits dark caves. It uses its big, sharp teeth to attack nearby creatures and sucks in blood. It's bigger than a Familiar.^000000",
+			1077,"Poison Spore","An aggressive mushroom creature, it is recommended to carry green herbs to counteract it's toxic special attack.",
+			1209,"Cramp","Rodent found living deep within the dungeon. Its appearance is similar to Tarou, however it is much more vicious and has poisonous teeth.",
+			1161,"Plankton","Small organism monster seen floating in the water. This monster is usually preyed on by other sea creatures.",
+			1175,"Tarou","Rodent that inhabits dark places. It possesses white and plushy furs.",
+			1005,"Familiar","Colonial bat that inhabits dark caves. Its small fangs are sharp enough to suck blood from nearby creatures.",
+			1014,"Spore","Mushroom monster. It leaps very rhythmically, attracting attention from passing adventurers.",
+			1048,"Thief Bug Egg","Thief Bug Egg. It turns into Thief Bug monster once it hatches.",
+			1051,"Thief Bug","This monster is usually seen in small, damp places. It's movement is rather fast, and it devours any items on sight.",
+			1053,"Female Thief Bug","Female Thief Bug. It's movement is fast and it devours any items on sight.",
+			1054,"Male Thief Bug","Male Thief Bug. It's movement is fast and attacks approaching adventurers.",
+			1086,"Golden Thief Bug","MVP thief bug monster with its body covered in gold. This monster is much stronger than other thief bug monsters." );
+		if (.@mo_board == 1) {
+			mes "[Prontera Culvert]";
+			mes "Prontera Culvert is comprised of B4 floors. This dungeon is appropriate for beginner adventurers and most monsters that appear here will assist others monsters with the same name.";
+			next;
+			while(1) {
+				switch( select( "Prontera Culvert 1F","Prontera Culvert 2F","Prontera Culvert 3F","Prontera Culvert 4F","Cancel" ) ) {
+				case 1:
+					mes "[Prontera Culvert 1F]";
+					mes "------------ Monster ------------";
+					mes "Thief Bug Egg(20)";
+					mes "Thief Bug(21)";
+					mes "Tarou(22)";
+					mes "Familiar(24)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Prontera Culvert 2F]";
+					mes "------------ Monster ------------";
+					mes "Spore(18)";
+					mes "Thief Bug Egg(20)";
+					mes "Thief Bug(21)";
+					mes "Tarou(22)";
+					mes "Familiar(24)";
+					mes "Female Thief Bug(28)";
+					mes "Plankton(40)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Prontera Culvert 3F]";
+					mes "------------ Monster ------------";
+					mes "Thief Bug Egg(20)";
+					mes "Thief Bug(21)";
+					mes "Tarou(22)";
+					mes "Familiar(24)";
+					mes "Poison Spore(26)";
+					mes "Female Thief Bug(28)";
+					mes "Male Thief Bug(30)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 4:
+					mes "[Prontera Culvert 4F]";
+					mes "------------ Monster ------------";
+					mes "Thief Bug Egg(20)";
+					mes "Thief Bug(21)";
+					mes "Female Thief Bug(28)";
+					mes "Male Thief Bug(30)";
+					mes "Drainliar(47)";
+					mes "Golden Thief Bug(65)";
+					mes "Cramp(82)";
+					mes "--------------------------------";
+					next;
+					mes "<There is a shiny bug living in Prontera Culvert 4F. It's called Golden Thief Bug. Prontera Sewage system regularly blocked by this monster. Ew~ It's nasty. - Irritated Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+tur_dun01,158,241,0	script	Signpost#Turtle Island	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Turtle Island]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1256,"Pest","Monster with an unknown origin. It attacks by spinning its sharp eyelids.",
+			1314,"Permeter","One of the most docile turtles on Turtle Island. Small trees grow on its shell.",
+			1316,"Solider","Turtle with small castle walls on its shell.",
+			1319,"Freezer","Turtle with ice spikes on its shell.",
+			1318,"Heater","Heat emitting turtle. Its shell is always hot to the touch. It could be used as a heater during winter.",
+			1315,"Assaulter","Turtle assassin. It can throw its shell carapace like a shuriken.",
+			1312,"Turtle General","King of Turtle Island. It's known to have lived for over thousand years." );
+		if (.@mo_board == 1) {
+			mes "[Turtle Island]";
+			mes "Turtle Island is comprised of 3 floors, and the monsters that appear here are mostly brute. Prepare before venturing into this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Turtle Island","Turtles Village","Turtle Palace","Cancel" ) ) {
+				case 1:
+					mes "[Turtle Island]";
+					mes "------------ Monster ------------";
+					mes "Pest(89)";
+					mes "Permeter(90)";
+					mes "Solider(92)";
+					mes "Freezer(94)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Turtle Island - Turtle Village]";
+					mes "------------ Monster ------------";
+					mes "Permeter(90)";
+					mes "Freezer(94)";
+					mes "Heater(98)";
+					mes "Assaulter(100)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Turtle Island - Turtle Palace]";
+					mes "------------ Monster ------------";
+					mes "Permeter(90)";
+					mes "Freezer(94)";
+					mes "Heater(98)";
+					mes "Assaulter(100)";
+					mes "--------------------------------";
+					next;
+					mes "<Turtles are known for their longevity right? How old is Turtle General? - Young explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+/// adven_board04.sc
+
+ama_dun01,233,14,0	script	Signpost#Amatsu Dungeon	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Amatsu Dungeon]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1191,"Mimic","Adventurer's tips are needed.",
+			1129,"Horong","Fire monster with an appearance of Dokebi light. Origin of this monster is unknown.",
+			1404,"Miyabi Doll","Popular doll amongst the girls with the ability to move. You can sometimes see its face behind all the hair.",
+			1403,"Firelock Soldier","Ancient soldier from the eastern kingdom.",
+			1401,"Shinobi","Ancient ninja from far eastern kingdom. It is capable of transforming or hiding itself.",
+			1375,"The Paper","Slim paper monster. Its edges are much sharper than a knife.",
+			1405,"Tengu","Ghost from far eastern kingdom. It sometimes blends in with the humans or pranks on them.",
+			1402,"Poisonous Toad","Toad monster. It possesses paralyzing poison.",
+			1492,"Samurai Specter","Little child MVP that summons Samurai spirit under his control. Samurai spirit is forced to obey every command." );
+		if (.@mo_board == 1) {
+			mes "[Amatsu Dungeon]";
+			mes "Amatsu Dungeon is comprised of 3 floors. This dungeon's maze is very complex and fly wings cannot be used. Prepare before venturing into this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Amatsu Dungeon - Tatami Maze","Amatsu Dungeon - Battle Field in the Underground Forest","Amatsu Dungeon - Amatsu Underground Shrine","Cancel" ) ) {
+				case 1:
+					mes "[Amatsu Dungeon - Tatami Maze]";
+					mes "------------ Monster ------------";
+					mes "Miyabi Doll(85)";
+					mes "Firelock Soldier(88)";
+					mes "Shinobi(95)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Amatsu Dungeon - Battle Field in the Underground Forest]";
+					mes "------------ Monster ------------";
+					mes "Horong(66)";
+					mes "Miyabi Doll(85)";
+					mes "Poisonous Toad(87)";
+					mes "Firelock Soldier(88)";
+					mes "Shinobi(95)";
+					mes "The Paper(97)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Amatsu Dungeon - Amatsu Underground Shrine]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Miyabi Doll(85)";
+					mes "Firelock Soldier(88)";
+					mes "Shinobi(95)";
+					mes "The Paper(97)";
+					mes "Tengu(98)";
+					mes "--------------------------------";
+					next;
+					mes "<Samurai Specter is very rude. I wanted to introduce myself to him by giving him my name card, but he wasn't happy about it.. Pfft - Dejected Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+gonryun,155,198,0	script	Signpost#Kunlun Dungeon	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Kunlun Dungeon]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1415,"Baby Leopard","Cute little baby leopard, but it's vicious.",
+			1413,"Hermit Plant","Plant that's very healthy for the body. It may be hard for people to eat this.",
+			1417,"Zipper Bear","It looks like a normal bear at first glance, but it has a zipper on its back. There's no way to know what's inside it.",
+			1410,"Enchanted Peach Tree","Living Peach Tree. Peaches grown on this tree is too hard to eat.",
+			1408,"Bloody Butterfly","Butterfly that lures with its mystical appearance and sucks their blood. It emits sweet odor from its wings.",
+			1412,"Taoist Hermit","Cloud riding hermit. It loves playing checkers.",
+			1416,"Evil Nymph","Fairy monster, otherwise known as angel in western kingdom. It enjoys making accessories with beads.",
+			1418,"Evil Snake Lord","Giant snake monster. Its white skin looks very mysterious. It's rumored that its caligraphy is legendary." );
+		if (.@mo_board == 1) {
+			mes "[Kunlun Dungeon]";
+			mes "Kunlun Dungeon is comprised of 3 floors. Royal Jelly and Dead Branch items can be obtained from monsters in this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Kunlun Dungeon - Shrine of Kunlun Queen","Kunlun Dungeon - Hermit's Checkers","Kunlun Dungeon - Arcadia","Cancel" ) ) {
+				case 1:
+					mes "[Kunlun Dungeon - Shrine of Kunlun Queen]";
+					mes "------------ Monster ------------";
+					mes "Zipper Bear(90)";
+					mes "Enchanted Peach Tree(92)";
+					mes "Bloody Butterfly(94)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Kunlun Dungeon - Hermit's Checkers]";
+					mes "------------ Monster ------------";
+					mes "Baby Leopard(68)";
+					mes "Enchanted Peach Tree(92)";
+					mes "Bloody Butterfly(94)";
+					mes "Taoist Hermit(96)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Kunlun Dungeon - Arcadia]";
+					mes "------------ Monster ------------";
+					mes "Hermit Plant(90)";
+					mes "Taoist Hermit(96)";
+					mes "Evil Nymph(97)";
+					mes "--------------------------------";
+					next;
+					mes "<Is it true that Evil Snake Lord's caligraphy is phenomenal? I went there to take a look at it.. But I couldn't see its caligraphy.. - Forgetful Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+louyang,37,276,0	script	Signpost#Louyang Dungeon	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Louyang Dungeon]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1191,"Mimic","Adventurer's tips are needed.",
+			1026,"Munak","Dead girl's spirit resides within the dead body, turning it into a Kyonshi monster. It sucks blood from nearby creatures.",
+			1129,"Horong","Fire monster with an appearance of Dokebi light. Origin of this monster is unknown.",
+			1381,"Grizzly","Bear that inhabits magma flowing regions. Its furs appear as if it's on fire. It will be popular amongst the fur lovers.",
+			1037,"Side Winder","One headed snake. It uses its tail like its head to confuse the enemies.",
+			1306,"Leib Olmai","Bear with extremely vicious personality. Its body is covered with numerous scars from various fights with other creatures.",
+			1517,"Jing Guai","Monster that looks like it's a tiger costume. It barks like a dog.",
+			1516,"Mi Gao","Sand monster. It creates a sand pillar to attack.",
+			1514,"Zhu Po Long","It looks like a long dragon mask. It might be possible to spot this monster during festivals.",
+			1519,"Green Maiden","Cute little female martial artist, but it's actually possessed by a mature female martial artist.",
+			1512,"Yao Jun","Kyounshi monster. It seems somewhat proficient in martial arts.",
+			1513,"Mao Guai","Evil cat spirit in human clothing. It walks on two legs like a human and attacks with a fan in its hands.",
+			1518,"White Lady","This MVP monster lures nearby adventurers with its beauty. Some adventurers become enchanted by its scream." );
+		if (.@mo_board == 1) {
+			mes "[Louyang Dungeon]";
+			mes "Louyang Dungeon is comprised of 3 floors and the monsters that appear here tend to overpower adventurers in mass numbers. Prepare before venturing into this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Louyang Dungeon - Suei Long Gon","Louyang Dungeon - The Royal Tomb","Louyang Dungeon - Inside the Royal Tomb","Cancel" ) ) {
+				case 1:
+					mes "[Louyang Dungeon - Suei Long Gon]";
+					mes "------------ Monster ------------";
+					mes "Horong(66)";
+					mes "Grizzly(66)";
+					mes "Side Winder(70)";
+					mes "Jing Guai(80)";
+					mes "Mi Gao(83)";
+					mes "Leib Olmai(87)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Louyang Dungeon - The Royal Tomb]";
+					mes "------------ Monster ------------";
+					mes "Mimic(56)";
+					mes "Munak(58)";
+					mes "Zhu Po Long(82)";
+					mes "Yao Jun(87)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Louyang Dungeon - Inside the Royal Tomb]";
+					mes "------------ Monster ------------";
+					mes "Zhu Po Long(82)";
+					mes "Green Maiden(82)";
+					mes "Yao Jun(87)";
+					mes "Mao Guai(89)";
+					mes "--------------------------------";
+					next;
+					mes "<White Lady.. She's.. Beautiful.. She's Kind.. If it wasn't for Green Maidens.. Pfft - Dejected Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+ayo_fild02,279,147,0	script	Signpost#Ayothaya	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Ayothaya Dungeon]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1179,"Whisper","Ghost monster that appears to be covered in a bed cover. Normal weapons are ineffective against its spiritual body.^000000",
+			1036,"Ghoul","Corpse that is revived by Unholy Necromancer's curse. It ambushes nearby living creatures and devours their corpses to satiate its hunger, but because it's a reanimated corpse, it is unable to feel satisfied.^000000",
+			1586,"Leaf Cat","Cat monster wearing leaves as clothing. Its cute appearance is popular amongst the adventurers.",
+			1587,"Kraben","Obnoxious monster. It attacks with what appears to be 2 giant pots.",
+			1584,"Tamruan","Sword wielding status-like monster. It wears powerful armor to protect itself.",
+			1688,"Lady Tanee","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Ayothaya Dungeon]";
+			mes "Ayothaya Dungeon is comprised of 2 floors. Monsters in this dungeon can be found hiding in the labyrinth.";
+			next;
+			while(1) {
+				switch( select( "Ayothaya Dungeon - Ancient Shrine Maze","Ayothaya Dungeon - Inside Ancient Shrine","Cancel" ) ) {
+				case 1:
+					mes "[Ayothaya Dungeon - Ancient Shrine Maze]";
+					mes "------------ Monster ------------";
+					mes "Whisper(34)";
+					mes "Ghoul(61)";
+					mes "Leaf Cat(64)";
+					mes "Kraben(70)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Ayothaya Dungeon - Inside Ancient Shrine]";
+					mes "------------ Monster ------------";
+					mes "Whisper(34)";
+					mes "Kraben(70)";
+					mes "Tamruan(73)";
+					mes "--------------------------------";
+					next;
+					mes "<Oh Lady Tanee, don't be so shy and run away~ - Catch me ~ Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+mosk_fild02,187,251,0	script	Signpost#Moscovia	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Moscovia Dungeon]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1031,"PoPoring","Elder sibling of Poring found in swamp areas. Its body is comprised of poisonous substance and it's sturdier than a Poring.",
+			1139,"Mantis","Adventurer's tips are needed.",
+			1880,"Wood Goblin","Adventurer's tips are needed.",
+			1881,"Les","Adventurer's tips are needed.",
+			1884,"Mavka","Adventurer's tips are needed.",
+			1883,"Uzhas","Adventurer's tips are needed.",
+			1882,"Baba Yaga","Adventurer's tips are needed.",
+			1885,"Gopinch","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Moscovia Dungeon]";
+			mes "Moscovia Dungeon is comprised of 3 areas, introducing passive and aggressive monsters in each areas. Prepare before venturing into this area.";
+			next;
+			while(1) {
+				switch( select( "Moscovia Dungeon - Forest","Moscovia Dungeon - Deep within the Forest","Moscovia Dungeon - Extremely Deep within the forest","Cancel" ) ) {
+				case 1:
+					mes "[Moscovia Dungeon - Forest]";
+					mes "------------ Monster ------------";
+					mes "PoPoring(30)";
+					mes "Mantis(65)";
+					mes "Wood Goblin(81)";
+					mes "Les(82)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Moscovia Dungeon - Deep within the Forest]";
+					mes "------------ Monster ------------";
+					mes "Wood Goblin(81)";
+					mes "Les(82)";
+					mes "Uzhas(85)";
+					mes "Baba Yaga(87)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 3:
+					mes "[Moscovia Dungeon - Extremely Deep within the Forest]";
+					mes "------------ Monster ------------";
+					mes "Mavka(84)";
+					mes "Uzhas(85)";
+					mes "Baba Yaga(87)";
+					mes "--------------------------------";
+					next;
+					mes "<Gopinch is 3 headed yah? Yes, well just telling you that it has 3 heads. - One headed Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+bra_dun01,208,109,0	script	Signpost#Brasilis	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Brasilis Dungeon]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
+			1070,"Kukre","Worm monster. Its agility is surprisingly fast when scouring for objects on the ground.",
+			1141,"Marina","Jellyfish monster with surprisngly strong tentacles that allow it to swim or walk on land. Its tentacles are used in various ways.",
+			2070,"Piranha","Adventurer's tips are needed.",
+			2069,"Iara","Adventurer's tips are needed.",
+			2068,"Boitata","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Brasilis Dungeon]";
+			mes "Brasilis Dungeon is comprised of 2 floors, and the monsters that appear in this dungeon are mostly water element. Wind element weapon will prove to be exceptional useful in this dungeon.";
+			next;
+			while(1) {
+				switch( select( "Brasilis Dungeon Entrance","Brasilis Dungeon Interior","Cancel" ) ) {
+				case 1:
+					mes "[Brasilis Dungeon Entrance]";
+					mes "------------ Monster ------------";
+					mes "Hydra(34)";
+					mes "Kukre(42)";
+					mes "Marina(42)";
+					mes "Piranha(75)";
+					mes "Iara(79)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Brasilis Dungeon Interior]";
+					mes "------------ Monster ------------";
+					mes "Hydra(34)";
+					mes "Kukre(42)";
+					mes "Marina(42)";
+					mes "Piranha(75)";
+					mes "Iara(79)";
+					mes "--------------------------------";
+					next;
+					mes "<There is a monster named Boitata making a bell sound. Why is it making such noise? - Misperceiving it as a pet dog - Explorer Grape>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+
+dew_dun01,294,158,0	script	Signpost#Dewata_Krakatau	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Krakatau Volcano]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1305,"Ancient Worm","Ancient worm monster that can only be found in ancient ruins. It rapidly spins its body to attack.",
+			1311,"Gullinbursti","Boar monster. It's very vicious, but its meat is one of the sought after delicacy.",
+			2152,"Comodo","Adventurer's tips are needed.",
+			2156,"Leak","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Krakatau Volcano]";
+			mes "Dewata Volcano can only be accessed by adventurers who have received permission from the Jati tribe. All of the monsters that appear in this place are aggressive. Only experienced adventurers should venture here.";
+			next;
+			mes "[Krakatau Volcano]";
+			mes "------------ Monster ------------";
+			mes "Comodo(81)";
+			mes "Ancient Worm(83)";
+			mes "Gullinbursti(89)";
+			mes "--------------------------------";
+			next;
+			mes "<Scary MVP Leak lives in Krakatau Volcano.. What's so scary about it though? - It's more cute than scary(?) Explorer Grape>";
+			next;
+			mes "[Adventurer Group]";
+			mes "For more Information on the monsters";
+			mes "Monster Information Retrieval System";
+			mes "Must be used.";
+			next;
+		}
+	}
+}
+
+dew_fild01,51,61,0	script	Signpost#Dewata_Istana	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Istana Cave]";
+		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
+		mes "-- Adventurer Group --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			1301,"Am Mut","Monster from Payon Legend. It looks like a small kid, however it is known to harrass passing by adventurers.",
+			1309,"Gajomart","Popularly known as Dokebi flame in eastern countries. It's exact identity is unknown.",
+			2154,"Banaspaty","Adventurer's tips are needed.",
+			2155,"Butoijo","Adventurer's tips are needed." );
+		if (.@mo_board == 1) {
+			mes "[Istana Cave]";
+			mes "Monsters that appear in Istana Cave are all aggressive. Only experienced adventurers should venture here.";
+			next;
+			mes "[Istana Cave]";
+			mes "------------ Monster ------------";
+			mes "Am Mut(76)";
+			mes "Gajomart(81)";
+			mes "Banaspaty(85)";
+			mes "Butoijo(88)";
+			mes "--------------------------------";
+			next;
+			mes "Dewata's Jaty tribe holds their trial of strength here. - Brave Explorer Grape>";
+			next;
+			mes "[Adventurer Group]";
+			mes "For more Information on the monsters";
+			mes "Monster Information Retrieval System";
+			mes "Must be used.";
+			next;
+		}
+	}
+}
+
+/// adven_board05.sc
+
+dic_dun01,30,208,0	script	Signpost#Kamidal	2_BULLETIN_BOARD,{
+	while(1) {
+		mes "[Kamidal Tunnel]";
+		mes "Adventurers who travel all over the world, combining the information gathered from the public.";
+		mes "-- Adventurer Tip --";
+		next;
+		.@mo_board = callfunc( "F_AvenBoard",
+			2088,"Uni-horn Scaraba Egg","Adventurer's tip is required.",
+			2089,"Horn Scaraba Egg","Adventurer's tip is required.",
+			2090,"Antler Scaraba Egg","Adventurer's tip is required.",
+			2091,"Rake Horn Scaraba Egg","Adventurer's tip is required.",
+			2083,"Uni-horn Scaraba","Adventurer's tip is required.",
+			2084,"Horn Scaraba","Adventurer's tip is required.",
+			2085,"Antler Scaraba","Adventurer's tip is required.",
+			2086,"Rake Horn Scaraba","Adventurer's tip is required.",
+			2304,"Queen Scaraba","Adventurer's tip is required." );
+		if (.@mo_board == 1) {
+			mes "[Kamidal Tunnel]";
+			mes "This tunnel consists of two floors, and most monsters that appear here are insect-type.";
+			next;
+			while(1) {
+				switch( select( "Kamidal Tunnel","Scaraba Hall","Cancel" ) ) {
+				case 1:
+					mes "[Kamidal Tunnel]";
+					mes "------------ Monster ------------";
+					mes "Uni-horn Scaraba Egg(125)";
+					mes "Horn Scaraba Egg(126)";
+					mes "Uni-horn Scaraba(130)";
+					mes "Horn Scaraba(134)";
+					mes "--------------------------------";
+					F_InfoBoard;
+					continue;
+				case 2:
+					mes "[Scaraba Hall]";
+					mes "------------ Monster ------------";
+					mes "Antler Scaraba Egg(127)";
+					mes "Rake Scaraba Egg(128)";
+					mes "Antler Scaraba(136)";
+					mes "Rake Scaraba(139)";
+					mes "--------------------------------";
+					next;
+					mes "<MVP Queen Scaraba... You'll have to explore to find it.>";
+					F_InfoBoard;
+					continue;
+				}
+				break;
+			}
+		}
+	}
+}
+dic_fild01,27,83,0	duplicate(Signpost#Kamidal)	Signpost#Kamidal Exit	2_BULLETIN_BOARD

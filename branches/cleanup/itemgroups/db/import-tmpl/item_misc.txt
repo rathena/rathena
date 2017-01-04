@@ -1,0 +1,4 @@
+//
+// Structure of Database:
+// GroupID,ItemID,Rate
+//

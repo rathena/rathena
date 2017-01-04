@@ -1,0 +1,160 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable Ice Wall.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.9
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Blocks usage of WZ_ICEWALL.
+//===== Additional Comments: ================================= 
+//= 1.6a Re-enabled icewalls for cities [Lupus]
+//= 1.7 Officially icewall is allowed on interiors. [L0ne_w0lf]
+//= 1.8 Fixed arug_cas map names.
+//= 1.9 Renewal split. [Euphy]
+//============================================================
+
+//ayo_in01	mapflag	noicewall
+//ayo_in02	mapflag	noicewall
+//alberta_in	mapflag	noicewall
+//alberta	mapflag	noicewall
+//alde_alche	mapflag	noicewall
+//aldeba_in	mapflag	noicewall
+//aldebaran	mapflag	noicewall
+//ama_in01	mapflag	noicewall
+//ama_in02	mapflag	noicewall
+//amatsu	mapflag	noicewall
+//ayothaya	mapflag	noicewall
+//cmd_in01	mapflag	noicewall
+//cmd_in02	mapflag	noicewall
+//comodo	mapflag	noicewall
+//einbroch	mapflag	noicewall
+//einbech	mapflag	noicewall
+//gef_tower	mapflag	noicewall
+//geffen	mapflag	noicewall
+//geffen_in	mapflag	noicewall
+//gon_in	mapflag	noicewall
+//gonryun	mapflag	noicewall
+//in_hunter	mapflag	noicewall
+//in_moc_16	mapflag	noicewall
+//in_orcs01	mapflag	noicewall
+//izlude_in	mapflag	noicewall
+//izlude	mapflag	noicewall
+//hugel	mapflag	noicewall
+//jawaii	mapflag	noicewall
+//moc_castle	mapflag	noicewall
+//monk_in	mapflag	noicewall
+//morocc_in	mapflag	noicewall
+//morocc	mapflag	noicewall
+//mosk_in	mapflag	noicewall
+//payon_in01	mapflag	noicewall
+//payon_in02	mapflag	noicewall
+//payon_in03	mapflag	noicewall
+//payon	mapflag	noicewall
+//pay_arche	mapflag	noicewall
+//prt_are_in	mapflag	noicewall
+//prt_are01	mapflag	noicewall
+//prt_castle	mapflag	noicewall
+//prt_church	mapflag	noicewall
+//prt_in	mapflag	noicewall
+//prontera	mapflag	noicewall
+//sec_in01	mapflag	noicewall
+//job_sword1	mapflag	noicewall
+//um_in	mapflag	noicewall
+//umbala	mapflag	noicewall
+//xmas_in	mapflag	noicewall
+//xmas	mapflag	noicewall
+//yuno_in01	mapflag	noicewall
+//yuno_in02	mapflag	noicewall
+//yuno_in03	mapflag	noicewall
+//yuno_in04	mapflag	noicewall
+//yuno_in05	mapflag	noicewall
+//yuno	mapflag	noicewall
+//gon_test	mapflag	noicewall
+//nif_in	mapflag	noicewall
+//louyang	mapflag	noicewall
+//que_sign01	mapflag	noicewall
+//ein_in01	mapflag	noicewall
+//airport	mapflag	noicewall
+//airplane	mapflag	noicewall
+//airplane_01	mapflag	noicewall
+//lighthalzen	mapflag	noicewall
+//yuno_pre	mapflag	noicewall
+//y_airport	mapflag	noicewall
+//lhz_airport	mapflag	noicewall
+//lhz_in01	mapflag	noicewall
+//lhz_in02	mapflag	noicewall
+//lhz_in03	mapflag	noicewall
+//rachel	mapflag	noicewall
+//ra_in01	mapflag	noicewall
+//ra_temin	mapflag	noicewall
+//ra_temple	mapflag	noicewall
+//ra_temsky	mapflag	noicewall
+//que_rachel	mapflag	noicewall
+//auction_01	mapflag	noicewall
+//auction_02	mapflag	noicewall
+//hu_in01	mapflag	noicewall
+//kh_mansion	mapflag	noicewall
+//kh_rossi	mapflag	noicewall
+//kh_school	mapflag	noicewall
+//kh_vila	mapflag	noicewall
+//ve_in	mapflag	noicewall
+//ve_in02	mapflag	noicewall
+
+// Guild Castles ==========
+aldeg_cas01	mapflag	noicewall
+aldeg_cas02	mapflag	noicewall
+aldeg_cas03	mapflag	noicewall
+aldeg_cas04	mapflag	noicewall
+aldeg_cas05	mapflag	noicewall
+gefg_cas01	mapflag	noicewall
+gefg_cas02	mapflag	noicewall
+gefg_cas03	mapflag	noicewall
+gefg_cas04	mapflag	noicewall
+gefg_cas05	mapflag	noicewall
+payg_cas01	mapflag	noicewall
+payg_cas02	mapflag	noicewall
+payg_cas03	mapflag	noicewall
+payg_cas04	mapflag	noicewall
+payg_cas05	mapflag	noicewall
+prtg_cas01	mapflag	noicewall
+prtg_cas02	mapflag	noicewall
+prtg_cas03	mapflag	noicewall
+prtg_cas04	mapflag	noicewall
+prtg_cas05	mapflag	noicewall
+schg_cas01	mapflag	noicewall
+schg_cas02	mapflag	noicewall
+schg_cas03	mapflag	noicewall
+schg_cas04	mapflag	noicewall
+schg_cas05	mapflag	noicewall
+arug_cas01	mapflag	noicewall
+arug_cas02	mapflag	noicewall
+arug_cas03	mapflag	noicewall
+arug_cas04	mapflag	noicewall
+arug_cas05	mapflag	noicewall
+// Novice Guild Castles ===
+nguild_alde	mapflag	noicewall
+nguild_gef	mapflag	noicewall
+nguild_pay	mapflag	noicewall
+nguild_prt	mapflag	noicewall
+
+//Endless Tower ==================
+1@tower	mapflag	noicewall
+2@tower	mapflag	noicewall
+3@tower	mapflag	noicewall
+4@tower	mapflag	noicewall
+5@tower	mapflag	noicewall
+6@tower	mapflag	noicewall
+
+// Orc's Memory ===================
+1@orcs	mapflag	noicewall
+2@orcs	mapflag	noicewall
+
+// Nidhoggr's Instance ===========
+1@nyd	mapflag	noicewall
+2@nyd	mapflag	noicewall
+
+// Poring War ====================
+poring_w01	mapflag	noicewall
+poring_w02	mapflag	noicewall

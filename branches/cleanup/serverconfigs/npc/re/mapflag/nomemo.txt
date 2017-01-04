@@ -1,0 +1,127 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable Warp Portal memory.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Prevents players from using /memo on a map.
+//= Also disables marriage warp skills.
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//============================================================
+
+// Episode 13 ====================
+job3_arch01	mapflag	nomemo
+job3_arch02	mapflag	nomemo
+job3_arch03	mapflag	nomemo
+job3_guil01	mapflag	nomemo
+job3_guil02	mapflag	nomemo
+job3_guil03	mapflag	nomemo
+job3_rang01	mapflag	nomemo
+job3_rang02	mapflag	nomemo
+job3_rune01	mapflag	nomemo
+job3_rune02	mapflag	nomemo
+job3_rune03	mapflag	nomemo
+job3_war01	mapflag	nomemo
+job3_war02	mapflag	nomemo
+job3_gen01	mapflag	nomemo
+job3_sha01	mapflag	nomemo
+jupe_core2	mapflag	nomemo
+s_atelier	mapflag	nomemo
+bra_in01	mapflag	nomemo
+bra_dun01	mapflag	nomemo
+bra_dun02	mapflag	nomemo
+dicastes01	mapflag	nomemo
+dicastes02	mapflag	nomemo
+dic_in01	mapflag	nomemo
+dic_fild01	mapflag	nomemo
+dic_fild02	mapflag	nomemo
+dic_dun01	mapflag	nomemo
+dic_dun02	mapflag	nomemo
+
+// Episode 14 ====================
+bif_fild01	mapflag	nomemo
+bif_fild02	mapflag	nomemo
+1@mist	mapflag	nomemo
+mora	mapflag	nomemo
+dew_dun01	mapflag	nomemo
+dew_dun02	mapflag	nomemo
+dew_in01	mapflag	nomemo
+dic_dun03	mapflag	nomemo
+mal_in01	mapflag	nomemo
+mal_in02	mapflag	nomemo
+mal_dun01	mapflag	nomemo
+1@cash	mapflag	nomemo
+1@pump	mapflag	nomemo
+2@pump	mapflag	nomemo
+iz_dun05	mapflag	nomemo
+lhz_dun04	mapflag	nomemo
+que_lhz	mapflag	nomemo
+1@lhz	mapflag	nomemo
+gld_dun01_2	mapflag	nomemo
+gld_dun02_2	mapflag	nomemo
+gld_dun03_2	mapflag	nomemo
+gld_dun04_2	mapflag	nomemo
+gld2_ald	mapflag	nomemo
+gld2_gef	mapflag	nomemo
+gld2_pay	mapflag	nomemo
+gld2_prt	mapflag	nomemo
+job_ko	mapflag	nomemo
+ma_scene01	mapflag	nomemo
+ma_in01	mapflag	nomemo
+ma_dun01	mapflag	nomemo
+1@ma_h	mapflag	nomemo
+1@ma_c	mapflag	nomemo
+1@ma_b	mapflag	nomemo
+ma_zif01	mapflag	nomemo
+ma_zif02	mapflag	nomemo
+ma_zif03	mapflag	nomemo
+ma_zif04	mapflag	nomemo
+ma_zif05	mapflag	nomemo
+ma_zif06	mapflag	nomemo
+ma_zif07	mapflag	nomemo
+ma_zif08	mapflag	nomemo
+ma_zif09	mapflag	nomemo
+eclage	mapflag	nomemo
+ecl_fild01	mapflag	nomemo
+ecl_in01	mapflag	nomemo
+ecl_in02	mapflag	nomemo
+ecl_in03	mapflag	nomemo
+ecl_in04	mapflag	nomemo
+1@ecl	mapflag	nomemo
+ecl_tdun01	mapflag	nomemo
+ecl_tdun02	mapflag	nomemo
+ecl_tdun03	mapflag	nomemo
+ecl_tdun04	mapflag	nomemo
+ecl_hub01	mapflag	nomemo
+moc_prydn1	mapflag	nomemo
+moc_prydn2	mapflag	nomemo
+
+//Orc's Memory ===================
+1@orcs	mapflag	nomemo
+2@orcs	mapflag	nomemo
+
+// Nidhoggr's Instance ===========
+1@nyd	mapflag	nomemo
+2@nyd	mapflag	nomemo
+
+// Glast Heim Memorial Dungeon ===
+1@gl_k	mapflag	nomemo
+2@gl_k	mapflag	nomemo
+gl_chyard_	mapflag	nomemo
+gl_cas02_	mapflag	nomemo
+
+// Wave Mode Memorial Dungeon ====
+1@def01	mapflag	nomemo
+1@def02	mapflag	nomemo
+1@def03	mapflag	nomemo
+
+// Heroes' Trails - Part 1 =======
+1@gef	mapflag	nomemo
+1@face	mapflag	nomemo
+1@sara	mapflag	nomemo
+1@gef_in	mapflag	nomemo
+dali	mapflag	nomemo

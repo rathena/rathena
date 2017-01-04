@@ -1,0 +1,241 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Earthworm Peelings)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+moc_fild17,208,346,5	script	Shone#Hode_Hunt	707,{
+	if (checkquest(60104) != -1) {
+		if (checkquest(60104,HUNTING) != 2 ) {
+			mes "[Shone]";
+			mes "Have you finished hunting the 50 Hodes?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Shone]";
+				mes "Hmm, I don't think you've hunted 50 yet...";
+				close;
+			case 2:
+				mes "[Shone]";
+				mes "Remember, I need help hunting Hodes so go and hunt 50 of them.";
+				close;
+			case 3:
+				mes "[Shone]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Shone]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60104;
+					close;
+				case 2:
+					mes "[Shone]";
+					mes "Please kill 50 Hodes.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Shone]";
+			mes "Amazing, you did that with speed.";
+			getexp 15775,1125;
+			erasequest 60104;
+			close;
+		}
+	}
+	if (checkquest(60105) != -1) {
+		if (checkquest(60105,HUNTING) != 2 ) {
+			mes "[Shone]";
+			mes "Have you finished hunting the 50 Hodes?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Shone]";
+				mes "Hmm, I don't think you've hunted 100 yet...";
+				close;
+			case 2:
+				mes "[Shone]";
+				mes "Remember, I need help hunting Hodes so go and hunt 100 of them.";
+				close;
+			case 3:
+				mes "[Shone]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Shone]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60105;
+					close;
+				case 2:
+					mes "[Shone]";
+					mes "Please kill 100 Hodes.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Shone]";
+			mes "Amazing, you did that with speed.";
+			getexp 15775,1125;
+			getexp 15775,1125;
+			erasequest 60105;
+			close;
+		}
+	}
+	if (checkquest(60106) != -1) {
+		if (checkquest(60106,HUNTING) != 2 ) {
+			mes "[Shone]";
+			mes "Have you finished hunting the 150 Hodes?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Shone]";
+				mes "Hmm, I don't think you've hunted 150 yet...";
+				close;
+			case 2:
+				mes "[Shone]";
+				mes "Remember, I need help hunting Hodes so go and hunt 150 of them.";
+				close;
+			case 3:
+				mes "[Shone]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Shone]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60106;
+					close;
+				case 2:
+					mes "[Shone]";
+					mes "Please kill 150 Hodes.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Shone]";
+			mes "Amazing, you did that with speed.";
+			getexp 15775,1125;
+			getexp 15775,1125;
+			getexp 15775,1125;
+			erasequest 60106;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 24) {
+		//for maximum level
+		if (BaseLevel < 61) {
+			mes "[Shone]";
+			mes "Wait! You can see me?";
+			mes "Oh well, I haven't yet mastered my skills.";
+			next;
+			mes "[Shone]";
+			mes "Hey do you think you can help me?";
+			next;
+			switch(select("Sure:No")) {
+			case 1:
+				mes "[Shone]";
+				mes "Thanks a lot, pal!";
+				next;
+				switch(select("Gather Items:Hunt Hodes:Cancel")) {
+				case 1:
+					// Item turn in
+					mes "[Shone]";
+					mes "I am trying to collect ^00CE0025 Earthworm Peelings^000000.";
+					mes "I will reward you if you help.";
+					next;
+					switch(select("I have 25 Earthworm Peelings:What was it again?")) {
+					case 1:
+						/*
+						if (checkweight(502,10) == 0) {
+							mes "[Shone]";
+							mes "Hey, it looks like that the weight on";
+							mes "your back will crush you. Come back";
+							mes "after you have lost some weight.";
+							close;
+						}
+						*/
+						if (countitem(1055) > 24) {
+							mes "Thank you for the 25 Earthworm";
+							mes "Peelings!";
+							mes "Here is that reward I promised you, I hope take this wisdom I have passed on to you and share it with others.";
+							delitem 1055,25; //Earthworm_Peeling
+							getexp 15775,1125;
+							//getitem 502,10; //Orange_Potion
+							close;
+						}
+						else {
+							mes "[Shone]";
+							mes "I don't see any ^00CE00Earthworm Peerlings^000000.";
+							mes "Are you trying to scam me?";
+							close;
+						}
+					case 2:
+						mes "[Shone]";
+						mes "I need ^00CE0025 Earthworm Peelings^000000.";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[Shone]";
+					mes "Ah, ok I think you can help me out by hunting some Hodes.";
+					mes "How many would you like to hunt?";
+					next;
+					switch(select("50 Hodes:100 Hodes:150 Hodes")) {
+					case 1:
+						mes "[Shone]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60104;
+						close;
+					case 2:
+						mes "[Shone]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60105;
+						close;
+					case 3:
+						mes "[Shone]";
+						mes "Come back when you've finished your task and I will give you a small reward.";
+						setquest 60106;
+						close;
+					}
+				case 3:
+					mes "[Shone]";
+					mes "If you change your mind, please come back.";
+					close;
+				}
+			case 2:
+				mes "[Shone]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		}
+		else {
+			mes "[Shone]";
+			mes "You are much too strong to be fighting these things!";
+			close;
+		}
+	}
+	else {
+		mes "[Shone]";
+		mes "You need some help, but I can't provide that for you.";
+		mes "Come back when you are stronger and have earned much more wisdom.";
+		close;
+	}
+}

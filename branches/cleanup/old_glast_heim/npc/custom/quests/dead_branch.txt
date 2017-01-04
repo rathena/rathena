@@ -1,0 +1,104 @@
+//===== rAthena Script ======================================= 
+//= Dead Branch (+Bloody Branch) Quest
+//===== By: ================================================== 
+//= GM-Yevon
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+// Simple item trade-in quest, a person can get a Dead Branch
+// by simply providing the items: Log x3 (7201), Wooden Heart x1 (7189), 
+// Trunk x5 (1019), and Wooden Gnarl x1 (7222).
+//===== Additional Comments: ================================= 
+//= 1.1 Optimized, added Bloody Branch with 0.01% chance [Lupus]
+//============================================================
+
+niflheim,204,179,3	script	Mister Mobry	121,{
+
+	mes "[Mister Mobry]";
+	mes "Trees possess spirits you know...";
+	next;
+
+	mes "[Mister Mobry]";
+	mes "In fact I know a secret about these spirits that can in some way... perhaps aid you...";
+	next;
+
+	mes "[Mister Mobry]";
+	mes "I can create a spirited branch... That is, if you can provide me with the correct materials...";
+	next;
+	goto L_MENU;
+
+L_MENU:
+	menu "What Do I Need?",-,"Where Can I find this Crap?",M_FIND,"Make me a Dead Branch!",M_CREATE,"Forget it...",M_END;
+
+	mes "[Mister Mobry]";
+	mes "Mwehehe... I see you want to control tree spirits am I right? Ok... I need:";
+	mes "^1354453 Logs^000000";
+	mes "^1354451 Wooden Heart^000000";
+	mes "^1354455 Trunk^000000";
+	mes "^1354451 Wooden Gnarl^000000";
+	next;
+	goto L_MENU;
+
+M_FIND:
+	mes "[Mister Mobry]";
+	mes "You can find the following items from certain monsters heheh...";
+	mes "^135445Logs can be found off of Tree Golems.^000000";
+	mes "^135445Wooden Hearts the essence of Tree Golems.^000000";
+	mes "^135445Trunks? Seriously, think wood...^000000";
+	mes "^135445Wooden Gnarl... Gibbet...^000000";
+	next;
+	goto L_MENU;
+
+L_NOLOG:
+	mes "[Mister Mobry]";
+	mes "^135445Logs^000000 are the body... I need more of them.";
+	mes "Get me three logs and I'll make you the spirit...";
+	close;
+
+L_NOHEART:
+	mes "[Mister Mobry]";
+	mes "The ^135445Wooden Heart^000000 is the essence of the spirit.";
+	mes "Get me one wooden heart and I'll make you the spirit...";
+	close;
+
+L_NOTRUNK:
+	mes "[Mister Mobry]";
+	mes "What? You couldn't even find ^1354455 Trunks^000000?";
+	mes "Kill Elder Willows or something... Geez... no trunks heh... pathetic.";
+	close;
+
+L_NOGNARL:
+	mes "[Mister Mobry]";
+	mes "How can I make one without a ^135445Wooden Gnarl^000000?";
+	mes "I said Gibbet... they are all around this place...";
+	close;
+
+M_CREATE:
+	mes "[Mister Mobry]";
+	mes "Well...let us see what you brought me...";
+	next;
+	if(countitem(7201)<3) goto L_NOLOG;
+	if(countitem(7189)<1) goto L_NOHEART;
+	if(countitem(1019)<5) goto L_NOTRUNK;
+	if(countitem(7222)<1) goto L_NOGNARL;
+	delitem 7201,3;
+	delitem 7189,1;
+	delitem 1019,5;
+	delitem 7222,1;
+	mes "[Mister Mobry]";
+	mes "Heh... Hope you have fun with the tree spirits... Careful now...";
+	mes "Heh... careful now? What do I care if you di..... Never mind.";
+	if(rand(1000)==0) goto L_GIVE2;
+	getitem 604,1; //Dead Branch
+	close;
+L_GIVE2:
+	getitem 12103,1; //Bloody Branch
+	close;
+
+M_END:
+	mes "[Mister Mobry]";
+	mes "No spirit for you... then go!";
+	close;
+}

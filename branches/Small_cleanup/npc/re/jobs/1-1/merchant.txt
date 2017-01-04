@@ -1,0 +1,125 @@
+//===== rAthena Script ======================================= 
+//= Renewal Merchant Job Quest
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Job Change to Merchant Class
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Kisuka]
+//= 1.1 Added support for Baby classes. [Euphy]
+//============================================================ 
+alberta_in,53,43,6	script	Merchant#mer	86,{
+	if (Upper == 1) {
+		if (Class == Job_Novice_High && (ADVJOB == Job_Whitesmith || ADVJOB == Job_Creator)) {
+			mes "[Chief Mahnsoo]";
+			mes "Long time no see!";
+			mes "Hey, you didn't quit";
+			mes "your business, did you?";
+			mes "What happened?";
+			next;
+			mes "[Chief Mahnsoo]";
+			mes "Whoa...";
+			mes "You've actually been to Valhalla?! Wow, you've come a long way...";
+			next;
+			if (getskilllv("NV_BASIC") < 9) {
+				mes "[Chief Mahnsoo]";
+				mes "Hmmm...";
+				mes "It seems that you're not ready to become a Merchant again. Go finish learning the Basic Novice Skills first.";
+				next;
+				mes "[Chief Mahnsoo]";
+				mes "Don't worry, we'll always have a Merchant position open for you. Just come back when you're ready, okay?";
+				close;
+			}
+			mes "[Chief Mahnsoo]";
+			mes "I guess it's destiny that we meet like this once more. Alright. Once again, let me change you into a Merchant!";
+			next;
+			skill "NV_TRICKDEAD",0,SKILL_PERM;
+			jobchange Job_Merchant_High;
+			skill "MC_CARTREVOLUTION",1,SKILL_PERM;
+			skill "MC_CHANGECART",1,SKILL_PERM;
+			skill "MC_LOUD",1,SKILL_PERM;
+			mes "[Chief Mahnsoo]";
+			mes "Ah~ How nostalgic. Just like old times! Alright, do your best!";
+			close;
+		}else{
+			mes "[Chief Mahnsoo]";
+			mes "^333333*Sigh*^000000";
+			mes "I'm so bored...";
+			mes "When will I hear from my lovely Blossom?";
+			close;
+		}
+	}
+	mes "[Guildsman Mahnsoo]";
+	mes "Hey, why are you here?";
+	next;
+	switch(select("I want to be a merchant.:I want to know more about merchants.:Ask him the requirements to be a merchant.:Nothing.")) {
+	case 1:
+		mes "[Guildsman Mahnsoo]";
+		if(BaseJob != Job_Novice) {
+			if(BaseJob == Job_Merchant) {
+				mes ".....? Sorry? What are you saying?";
+				mes "You are already a merchant. Oh my..";
+				mes "Huh?! ...Do I need to laugh right now?!";
+			}else{
+				mes "Ahh? Are you trying to have both ways?";
+				mes "How about just giving yourself over to your original job?";
+				next;
+				mes "[Guildsman Mahnsoo]";
+				mes "We have business ethics you know.";
+			}
+			close;
+		}else{
+			mes "Want to be a merchant? Hmm...";
+			next;
+			if (getskilllv("NV_BASIC") < 9) {
+				mes "[Guildsman Mahnsoo]";
+				mes "But if you want to be a merchant, your basic skill level must reach Level 9 or you must spend all of your skill points.";
+				next;
+				mes "[Guildsman Mahnsoo]";
+				mes "Don't you think we need to learn some basic skills although we just deal with money?";
+				close;
+			}
+			mes "[Guildsman Mahnsoo]";
+			mes "Good, I think you're fully ready for it seeing that your basic skill level is fulfilled.";
+			mes "Now I allow you to be a merchant.";
+			next;
+			mes "[Guildsman Mahnsoo]";
+			mes "Congratulations on becoming a merchant!";
+			mes "Congratulations again for being a member of the merchant guild and one of our colleagues. I expect your active participation from now on!";
+			callfunc "Job_Change",Job_Merchant;
+			getitem 1381,1;	// N_Battle_Axe
+			next;
+			mes "[Guildsman Mahnsoo]";
+			mes "Absolutely, we need young people who have passion to achieve our great goal for securing 20% of the worldwide currency volume. You get it? Huh?";
+			mes "Well, I'm just saying... it means let's make lots of money in the end. You guys know that~";
+			close;
+		}
+	case 2:
+		mes "[Guildsman Mahnsoo]";
+		mes "Merchant? To put it simply, the person who sells good and makes money is a merchant.";
+		mes "Not good at fighting and doesn't have special attack/recovery skills... but a merchant can buy things at a low price and then sell them and make money.";
+		next;
+		mes "[Guildsman Mahnsoo]";
+		mes "Well, a merchant has an ultimate skill called Mammonite which strikes an enemy with his/her money... We can equip everything except Bows, Rods, and Two-Handed Swords. But we can always sell and buy those.";
+		mes "Yes... we merchants always have money on our minds, got it?";
+		close;
+	case 3:
+		mes "[Guildsman Mahnsoo]";
+		mes "To become a merchant, although just selling and receiving money is our job, you must reach at least basic skill level 9.";
+		next;
+		mes "[Guildsman Mahnsoo]";
+		mes "Well, we used to receive a start-up fee before. Wasn't it hard to make that money?";
+		mes "There were too many people who couldn't gather that money and kept crying.";
+		next;
+		mes "[Guildsman Mahnsoo]";
+		mes "So recently, we decided to allow any Novice who wants to be a merchant become one.";
+		mes "Because to be alive or not later is all up to one's ability.";
+		close;
+	case 4:
+		close;
+	}
+}

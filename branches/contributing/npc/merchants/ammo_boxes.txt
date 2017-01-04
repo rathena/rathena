@@ -1,0 +1,132 @@
+//===== rAthena Script =======================================
+//= Magazine Dealers
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 2.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Turns bullets into magazines/packs.
+//===== Additional Comments: =================================
+//= 1.0 First version. [SinSloth]
+//= 1.1 Optimized version - Reduced to only one function [SinSloth]
+//= 1.2 Optimized^2, corrected npc's name [ultramage]
+//= 1.2a Optimized. Please, ommit extra NPC names [Lupus]
+//= 1.3 Updated to match AEGIS script. [Kisuka]
+//= 1.4 Updated to match AEGIS script again. [Masao]
+//= 1.5 Moved Izlude duplicate to pre-re/re paths. [Euphy]
+//= 2.0 Clean-up. [Capuche]
+//= 2.1 Fixes Issue #1482, where Rebellion jobs cannot use this npc. [Limestone]
+//============================================================
+
+alberta,118,157,3	script	Magazine Dealer Kenny::mdk	4_M_01,{
+	mes "[Kenny]";
+	if (BaseClass == Job_Gunslinger) {
+		mes "Welcome to my Magazine Shop.";
+		mes "As you may know, large numbers";
+		mes "of bullets can be carried more";
+		mes "easily when they're in Magazines. Now, can I interest you in";
+		mes "anything in particular?";
+		next;
+		switch(select("Wind Sphere Pack:Shadow Sphere Pack:Poison Sphere Pack:Water Sphere Pack:Fire Sphere Pack:Cartridge:Blood Cartridge:Silver Cartridge:Cancel")) {
+		case 1: callsub S_Casing,13204,12144;// <bullet id>, <pack id>
+		case 2: callsub S_Casing,13206,12145;
+		case 3: callsub S_Casing,13205,12146;
+		case 4: callsub S_Casing,13207,12147;
+		case 5: callsub S_Casing,13203,12148;
+		case 6: callsub S_Casing,13200,12149;
+		case 7: callsub S_Casing,13202,12150;
+		case 8: callsub S_Casing,13201,12151;
+		case 9:
+			mes "[Kenny]";
+			mes "Well, if you ever find";
+			mes "that you have too many";
+			mes "bullets, come and see me.";
+			mes "It's a smart idea to store";
+			mes "bullets with my Magazines.";
+			close;
+		}
+	}
+	mes "Welcome to my shop.";
+	mes "Here, I provide Magazines";
+	mes "and Cartridges for Gunslingers.";
+	mes "Sorry, but it doesn't look like";
+	mes "my services would be of any";
+	mes "use to you, adventurer.";
+	next;
+	mes "[Kenny]";
+	mes "Eh, but if you happen to";
+	mes "know any Gunslingers, send";
+	mes "them my way. You can never";
+	mes "have too many bullets.";
+	close;
+
+S_Casing:
+	.@bullet_id = getarg(0);
+	.@pack_id = getarg(1);
+
+	mes "[Kenny]";
+	mes "Now, you can trade";
+	mes callfunc("F_InsertPlural",500,getitemname(.@bullet_id));
+	mes "and 500 zeny for 1 "+getitemname(.@pack_id)+", so make sure";
+	mes "you have sufficient bullets";
+	mes "and zeny for this exchange.";
+	next;
+	mes "[Kenny]";
+	mes "You can exchange "+callfunc("F_InsertPlural",500,getitemname(.@bullet_id))+" and 500 zeny";
+	mes "with 1 "+getitemname(.@pack_id)+".";
+	next;
+	mes "[Kenny]";
+	mes "Remember that I can't give";
+	mes "you more than 50 Magazines";
+	mes "at a time. Now please enter";
+	mes "the number of Magazines you";
+	mes "want to receive. If you want to cancel, then just enter ''0.''";
+	next;
+	input .@amount;
+	mes "[Kenny]";
+	if (.@amount > 50 || .@amount == 0) {
+		mes "Hey, I can't give you";
+		mes "that many Magazines.";
+		mes "Please try again, and";
+		mes "enter a number no";
+		mes "greater than 50.";
+	}
+	else if (countitem(.@bullet_id) >= (500*.@amount)) {
+		if (Zeny >= (500*.@amount)) {
+			if (checkweight(.@pack_id,.@amount) == 0) {
+				mes "Hey, you've got a lot";
+				mes "of junk crammed in your";
+				mes "Inventory. Free up some";
+				mes "space, and then come back";
+				mes "and trade your bullets for";
+				mes "some Magazines later, okay?";
+			} else {
+				mes "Alright, here are";
+				mes "your Magazines. Thanks";
+				mes "for visiting my shop, and";
+				mes "I hope that you use all";
+				mes "of your ammo wisely.";
+				Zeny = Zeny -500*.@amount;
+				delitem .@bullet_id,(500*.@amount);
+				getitem .@pack_id,.@amount;
+			}
+		} else {
+			mes "Sorry, but you don't";
+			mes "have enough zeny for";
+			mes "this Magazine exchange.";
+			mes "Come back to my shop";
+			mes "after you've saved up";
+			mes "some more money.";
+		}
+	} else {
+		mes "Sorry, but you don't";
+		mes "have enough bullets for";
+		mes "this Magazine exchange.";
+		mes "Maybe you should double";
+		mes "check your Inventory, and";
+		mes "then come back to me later.";
+	}
+	close;
+}

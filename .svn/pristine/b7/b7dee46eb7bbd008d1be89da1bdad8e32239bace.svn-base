@@ -1,0 +1,91 @@
+//--------------------------------------------------------------
+// rAthena Battle Configuration File
+// Originally Translated by Peter Kieser <pfak@telus.net>
+// Made in to plainer English by Ancyker
+//--------------------------------------------------------------
+// Note 1: Value is a config switch (on/off, yes/no or 1/0)
+// Note 2: Value is in percents (100 means 100%)
+// Note 3: The max level of classes is stored in the exp table.
+//         See files db/exp.txt and db/exp2.txt to change them.
+//--------------------------------------------------------------
+
+// Rate at which exp. is given. (Note 2)
+base_exp_rate: 100
+
+// Rate at which job exp. is given. (Note 2)
+job_exp_rate: 100
+
+// Turn this on to allow a player to level up more than once from a kill. (Note 1)
+multi_level_up: no
+
+// Setting this can cap the max experience one can get per kill specified as a
+// % of the current exp bar. (Every 10 = 1.0%)
+// For example, set it to 500 and no matter how much exp the mob gives, 
+// it can never give you above half of your current exp bar.
+max_exp_gain_rate: 0
+
+// Method of calculating earned experience when defeating a monster:
+// 0 = uses damage given / total damage as damage ratio
+// 1 = uses damage given / max_hp as damage ratio
+// NOTE: Using type 1 disables the bonus where the first attacker gets 
+//       his share of the exp doubled when multiple people attack the mob.
+exp_calc_type: 0
+
+// Experience increase per attacker. That is, every additional attacker to the
+// monster makes it give this much more experience
+// (eg: 5 people attack with 25 here, +(25*4)% -> +100% exp)
+exp_bonus_attacker: 25
+
+// Max number of attackers at which exp bonus is capped
+// (eg: if set at 5, the max bonus is 4*bonus-per-char regardless of attackers)
+exp_bonus_max_attacker: 12
+
+// MVP bonus exp rate. (Note 2)
+mvp_exp_rate: 100
+
+// Rate of base/job exp given by NPCs. (Note 2)
+quest_exp_rate: 100
+
+// The rate of job exp. from using Heal skill (100 is the same as the heal amount, 200 is double.
+// The balance of the exp. rate is best used with 5 to 10)
+heal_exp: 0
+
+// The rate of exp. that is gained by the process of resurrection, a unit is 0.01%.
+// Experience calculations for the experience value * level difference of the person revived / 100 * resurrection_exp/10000 which the revived player has can be got.
+resurrection_exp: 0
+
+// The rate of job exp. when using discount and overcharge on an NPC
+// (in 0.01% increments - 100 is 1%, 10000 is normal, 20000 is double.)
+// The way it is calculated is (money received * skill lv) * shop_exp / 10000.
+shop_exp: 0
+
+// PVP exp.  Do players get exp in PvP maps
+// (Note: NOT exp from players, but from normal leveling)
+pvp_exp: yes
+
+// When a player dies, how should we penalize them?
+// 0 = No penalty.
+// 1 = Lose % of current level when killed.
+// 2 = Lose % of total experience when killed.
+death_penalty_type: 1
+
+// Base exp. penalty rate (Each 100 is 1% of their exp)
+death_penalty_base: 100
+
+// Job exp. penalty rate (Each 100 is 1% of their exp)
+death_penalty_job: 100
+
+// When a player dies (to another player), how much zeny should we penalize them with?
+// NOTE: It is a percentage of their zeny, so 100 = 1%
+zeny_penalty: 0
+
+// Will display experience gained from killing a monster. (Note 1)
+disp_experience: no
+
+// Will display zeny earned (from mobs, trades, etc) (Note 1)
+disp_zeny: no
+
+// Use the contents of db/statpoint.txt when doing a stats reset and leveling up? (Note 1)
+// If no, an equation will be used which preserves statpoints earned/lost 
+// through external means (ie: stat point buyers/sellers)
+use_statpoint_table: yes

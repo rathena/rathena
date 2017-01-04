@@ -1,0 +1,13 @@
+// Item Usage Restriction Configuration File
+// Defines if an item cannot be used under special circumstances.
+//
+// Structure of Database:
+// ItemID,Flag,Group ID Override
+//
+// Flag:
+//	1 = Cannot use item while sitting
+//	... [more to come]
+//
+// Group ID Override:
+//	Group ID necessary to override this setting.
+

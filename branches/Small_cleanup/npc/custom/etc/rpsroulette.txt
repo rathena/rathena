@@ -1,0 +1,128 @@
+//===== rAthena Script =======================================
+//= Rock Scissors Roulette
+//===== By: ==================================================
+//= acky
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Plays a hybrid Russian Roulette Rock Scissors Paper game.
+//===== Additional Comments: =================================
+//= Prizes customizable, Added emotions.
+//= 1.2 Fixes by Blackthunder and me [Poki#3]
+//============================================================
+
+cmd_in02,182,126,2	script	Crazy Boris	85,{
+	set .@counter,1;
+	mes "Hey you! Up for Rock Scissors Roulette?";
+	next;
+	menu "Let me play.",PLAY,"Explain the rules.",RULES,"Leave",LEAVE;
+SAME:
+	mes "Draw! Again!";
+	next;
+PLAY:
+	mes "Rock... Paper...";
+	set .@opp, rand(1,3);
+	menu "^0000FFROCK!",-,"^FF0000SCISSORS!",SCISSORS,"^00FF00PAPER!^000000",PAPER;
+
+  	if (.@lastchoice == 1) set .@opp, rand(1,3);
+  	if (.@opp == 1) emotion e_rock;
+  	else if (.@opp == 2) emotion e_scissors;
+  	else emotion e_paper;
+  	set .@lastchoice,1;
+	if (.@opp == 1) goto SAME;
+	if (.@opp == 2) goto WIN;
+	goto LOSE;
+
+SCISSORS:
+	if (.@lastchoice == 2) set .@opp,rand(1,2);
+  	if (.@opp == 1) emotion e_rock;
+  	else if (.@opp == 2) emotion e_scissors;
+  	else emotion e_paper;
+  	set .@lastchoice,2;
+	if (.@opp == 1) goto LOSE;
+	if (.@opp == 2) goto SAME;
+	goto WIN;
+
+PAPER:
+	if (.@lastchoice == 3) set .@opp,rand(2,3);
+  	if (.@opp == 1) emotion e_rock;
+  	else if (.@opp == 2) emotion e_scissors;
+  	else emotion e_paper;
+  	set .@lastchoice,3;
+	if (.@opp == 1) goto WIN;
+	if (.@opp == 2) goto LOSE;
+	goto SAME;
+
+WIN:
+	mes "Damnit, You Win!";
+	emotion e_swt2;
+	next;
+	set .@win, 1;
+	goto YOUPULL;
+
+LOSE:
+	emotion e_heh;
+	mes "Boorah! You Lose!";
+	next;
+	set .@win, 0;
+
+YOUPULL:
+	mes .@counter +" of 6";
+	if ( .@counter == 6 )
+		mes "Say your prayers";
+	set .@pull, rand( 1,( 7 -.@counter ) );
+	set .@counter, .@counter +1;
+	next;
+	if ( .@pull == 1 ) {
+		if ( .@win ) goto KILL;
+		specialeffect2 EF_SUI_EXPLOSION;
+		emotion e_gg;
+		percentheal -100,-100;
+		mes "*^0000FFClick^000000* *^FF0000BANG^000000*";
+		mes "You're dead!";
+		close;
+	}
+	emotion e_pif;
+	mes "*^0000FFClick^000000* whew...";
+	goto PLAY;
+
+RULES:
+	mes "Ok here are the rules:";
+	mes "I have with me a ^FF00006^000000 chamber pistol with ^FF00001^000000 round. First we play ^FF0000Scissors ^00FF00Paper ^0000FFRock^000000. The loser pulls the trigger. The winner is whoever comes out best.";
+	mes "Beat me to win a prize.";
+	next;
+	menu "Let me play.",-,"No thanks.",LEAVE;
+	mes "Ok here we go...";
+	next;
+	goto PLAY;
+
+KILL:
+	specialeffect EF_SUI_EXPLOSION;
+	emotion e_omg;
+	mes "*^0000FFClick^000000* *^FF0000BANG^000000*";
+	mes "OWWW @#$%^!! THAT HURT LIKE HELL!!";
+	next;
+	mes "Congratulations! You have won...";
+	switch( rand( 1,10 ) ) {
+		case 1: setarray .@reward[0], 10,984; break;
+		case 3: setarray .@reward[0],100,601; break;	// 100x Fly Wings
+		case 4: setarray .@reward[0],  8,603; break;	// 8x Old Blue Box
+		case 5: setarray .@reward[0],  4,617; break;	// 4x Old Violet Box
+		case 6: setarray .@reward[0],  1,616; break;	// 1x Old Card Album
+		case 7: setarray .@reward[0], 10,604; break;	// 10x Dead Branch
+		case 8: setarray .@reward[0],  3,969; break;	// 3x Gold
+		case 10: setarray .@reward[0],20,505; break;	// 20x Blue Potion
+		case 2:
+		case 9:
+			setarray .@reward[0], 10,985;
+	}
+	mes .@reward[0] +"x "+ getitemname( .@reward[1] ) +"!";
+	getitem .@reward[1], .@reward[0];
+	close;
+
+LEAVE:
+	mes "Pansy.";
+	close;
+}

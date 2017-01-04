@@ -1,0 +1,738 @@
+//===== rAthena Script ======================================= 
+//= Dancer Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Charming Wink
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//= 1.4a Changed NPC location [Yommy]
+//= 1.5 Replaced effect numerics with constants. [L0ne_W0lf]
+//============================================================
+
+comodo,204,172,5	script	Canell#qsk_dan01	724,{
+	if (BaseJob == Job_Dancer && JobLevel > 39) {
+		if (DANCER_SK == 0) {
+			mes "[Canell]";
+			mes "It's well known that we must";
+			mes "be beautiful to captivate those";
+			mes "who watch us dance. But to rely";
+			mes "on just our outward appearance";
+			mes "is a ghastly waste of our full";
+			mes "potential as performers.";
+			next;
+			mes "[Canell]";
+			mes "Yes, I can tell that you";
+			mes "don't quite understand that";
+			mes "the correct frame of mind is";
+			mes "an essential element to true";
+			mes "beauty. Now tell me, are you";
+			mes "confident in your dancing...?";
+			next;
+			if (select("Of course, old crone!:I... I'm not sure...") == 1) {
+				mes "[Canell]";
+				mes "Ho-ho~ I believe you've";
+				mes "confused confidence with";
+				mes "arrogance! The naive cannot";
+				mes "tell there's a vitally important distinction between the two.";
+				mes "Now... Prepare for punishment!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Ow...!";
+				mes "Th-that whip!";
+				mes "I-i-it huuuurts!";
+				specialeffect2 EF_HIT2;
+				percentheal -5,0;
+				close;
+			}
+			mes "[Canell]";
+			mes "Awareness of your own flaws";
+			mes "and faults is the first crucial";
+			mes "step towards improvement.";
+			mes "Yet your obvious neglect of";
+			mes "your gift of dancing is...";
+			mes "grounds for punishment!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "What the...? Ack!";
+			mes "S-stop wh-whipping";
+			mes "me! It... It stiiings!";
+			specialeffect2 EF_HIT2;
+			percentheal -10,0;
+			next;
+			mes "[Canell]";
+			mes "Ho-ho~! Fortunately for";
+			mes "you, I will teach you what";
+			mes "you must learn to rise above";
+			mes "your current limitations. When";
+			mes "I'm finished with you, angels and demons won't resist your charms~";
+			next;
+			if (select("No way, you're not teaching me!:Alright, I'll see what I can learn.") == 1) {
+				mes "[Canell]";
+				mes "So... You still haven't";
+				mes "mastered the fine art of";
+				mes "exuding charm and humility!";
+				mes "There must be consequences";
+				mes "for this blatant affront to our";
+				mes "profession! Prepare yourself!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Nooooo--!";
+				mes "Not that whip";
+				mes "again! Arrgh, it's--";
+				mes "It hurts so much!";
+				specialeffect2 EF_HIT2;
+				percentheal -10,0;
+				close;
+			}
+			mes "[Canell]";
+			mes "Ho-ho~ It's good that you";
+			mes "recognize that you have much";
+			mes "to learn. Well, let's not waste";
+			mes "any time. Your first lesson will be on image training and self";
+			mes "visualization. Now, for that...";
+			next;
+			mes "[Canell]";
+			mes "...You must bring";
+			mes "me ^FF00001 Crystal Mirror^000000!";
+			mes "This tool is imperative";
+			mes "to the lesson, so fetch it";
+			mes "and bring it to me quickly!";
+			set DANCER_SK,1;
+			close;
+		}
+		else if (DANCER_SK == 1) {
+			if (countitem(747) > 0) {
+				mes "[Canell]";
+				mes "Finally, you've come";
+				mes "with the mirror. Now,";
+				mes "look deeply and scrutinize";
+				mes "your reflection. Gaze upon";
+				mes "each blemish and fault, each";
+				mes "charming trait of your face.";
+				next;
+				mes "[Canell]";
+				mes "No face is perfect, but";
+				mes "know that your face is yours";
+				mes "alone, and that it is what gives you a beauty that can be no";
+				mes "one else's. Now, repeat";
+				mes "these truisms after me...";
+				next;
+				mes "[Canell]";
+				mes "''I am beautiful...";
+				mes "I am irresistable...''";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "I am beautiful...";
+				mes "I am irresistable...";
+				next;
+				mes "[Intoxicated Canell]";
+				mes "Louder!";
+				mes "More feeling!";
+				mes "''I am beautiful!";
+				mes "I am irresistable!";
+				mes "I am the most attractive";
+				mes "woman in the whole world!''";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "I am beautiful!";
+				mes "I am irresistable!";
+				mes "I am the most attractive";
+				mes "woman in the whole world!";
+				specialeffect2 EF_FLASHER;
+				next;
+				mes "^3355FFYour self esteem has";
+				mes "sky rocketed. Fortunately,";
+				mes "you've managed to avoid";
+				mes "becoming a prima donna.^000000";
+				delitem 747,1; //Crystal_Mirror
+				set DANCER_SK,2;
+				close;
+			}
+			else {
+				mes "[Frustrated Canell]";
+				mes "Did I tell you to come";
+				mes "back here without bringing";
+				mes "^FF00001 Crystal Mirror^000000!? Now go";
+				mes "and get it before I find";
+				mes "reason to punish you!";
+				specialeffect EF_CLAYMORE;
+				close;
+			}
+		}
+		else if (DANCER_SK == 2) {
+			mes "[Canell]";
+			mes "Yes, the first and most";
+			mes "important step to becoming";
+			mes "beautiful is to realize and";
+			mes "accept your gorgeousness.";
+			mes "Confidence first, then beauty.";
+			mes "Never the other way around.";
+			next;
+			mes "[Canell]";
+			mes "Now that you've established";
+			mes "the proper attitude on beauty,";
+			mes "it's time for you to learn an";
+			mes "advanced technique of- shall";
+			mes "we say- enticement. I know an";
+			mes "expert that I highly recommend.";
+			next;
+			mes "[Canell]";
+			mes "Go and find my sister";
+			mes "in Prontera Chruch. If you";
+			mes "mention me by name, she";
+			mes "should be willing to teach";
+			mes "you. I'd do it myself, but I need to enjoy my new Crystal Mirror~";
+			next;
+			mes "^3355FFIt figures that she'd";
+			mes "keep your mirror.^000000";
+			emotion e_ag,1;
+			set DANCER_SK,3;
+			close;
+		}
+		else if (DANCER_SK > 2 && DANCER_SK < 7) {
+			mes "[Canell]";
+			mes "Ah, such a glamorous";
+			mes "face and figure. My";
+			mes "beauty is incompara--";
+			mes "Oh! It's you. So did my";
+			mes "sister in Prontera Church";
+			mes "teach you anything yet?";
+			emotion e_go;
+			close;
+		}
+		else if (DANCER_SK == 7) {
+			mes "[Canell]";
+			mes "Ah, so were you";
+			mes "able to find Aelle?";
+			mes "Were you able to learn";
+			mes "anything from her?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Actually, I only learned";
+			mes "about winks, but not so";
+			mes "much as how to do them.";
+			mes "She... She got drunk and";
+			mes "couldn't teach me more.";
+			next;
+			mes "[Canell]";
+			mes "Oh, I should have known";
+			mes "this would happen. Oh,";
+			mes "well, I guess there's no way";
+			mes "around it now. But you should";
+			mes "know that gettng my sister";
+			mes "drunk... is punishable.";
+			next;
+			mes "[Canell]";
+			mes "Bam!";
+			specialeffect2 EF_HIT2;
+			percentheal -5,0;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "?!";
+			mes "What the";
+			mes "hell was that?";
+			next;
+			mes "[Canell]";
+			mes "Now, a true Dancer should";
+			mes "be able to figure out the";
+			mes "secret to winking on her";
+			mes "own. But since I'm such";
+			mes "a kind woman, I will deign";
+			mes "to explain it to you. Ho-ho~";
+			next;
+			mes "^3355FFKind woman...?";
+			mes "But she just hit you!";
+			mes "Lightly, of course, but";
+			mes "still, a smack is a smack.^000000";
+			set DANCER_SK,8;
+			close;
+		}
+		else if (DANCER_SK == 8) {
+			mes "[Canell]";
+			mes "Alright, the secret to";
+			mes "proper winking is to allow";
+			mes "your eyelid to seductively";
+			mes "move to a natural rhythm.";
+			mes "Close your eye for a second, then open it slowly to this count.";
+			next;
+			mes "[Canell]";
+			mes "Un, deux, trois~";
+			mes "Look at me, do it";
+			mes "like this. Un, deux, trois~";
+			mes "Now, let me see you try it.";
+			emotion e_no1;
+			next;
+			switch(select("Un deux trois~-:Un, doux trois~:Un, deux, trois~")) {
+			default:
+				mes "[Canell]";
+				mes "No, no!";
+				mes "That's wrong,";
+				mes "completely wrong!";
+				mes "Can't you do it right?!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "O-ow!";
+				mes "P-please...!";
+				mes "Not the whip again!";
+				specialeffect2 EF_HIT2;
+				percentheal -5,0;
+				close;
+			case 3:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Un, deux, trois~";
+				emotion e_no1,1;
+				specialeffect2 EF_FLASHER;
+				next;
+				mes "[Canell]";
+				mes "Great, that's exactly";
+				mes "how you do it. Now,";
+				mes "don't forget, the elements";
+				mes "of rhythm and naturalness";
+				mes "are absolutely essential to";
+				mes "this technique of enticement.";
+				emotion e_kis;
+				next;
+				mes "[Canell]";
+				mes "Now that you've mastered";
+				mes "the art of winking, you.";
+				mes "should know that you cannot";
+				mes "allure those who are much";
+				mes "stronger than you. So your";
+				mes "winks won't work on everyone.";
+				next;
+				mes "[Canell]";
+				mes "Of course, my winks don't";
+				mes "have that drawback. Ho-ho~";
+				mes "Anyway, it's time for us to part now. I hope that you grow to";
+				mes "become a more glamorous and charming dancer in days to come.";
+				emotion e_heh;
+				next;
+				mes "^3355FFYou have finally learned";
+				mes "the Charming Wink skill.^000000";
+				set DANCER_SK,9;
+				specialeffect2 EF_ABSORBSPIRITS;
+				skill "DC_WINKCHARM",1,SKILL_PERM;
+				close;
+			}
+		}
+		else if (DANCER_SK > 8 && getskilllv("DC_WINKCHARM")) {
+			mes "[Canell]";
+			mes "Hm...?";
+			mes "Is there anything";
+			mes "more you wanted to";
+			mes "ask me? Ah, you must";
+			mes "be mesmerized by my";
+			mes "beauty, aren't you?";
+			emotion e_pif;
+			next;
+			mes "[Canell]";
+			mes "Oh, to be so beautiful";
+			mes "must be a sin! I should";
+			mes "work in Prontera Church,";
+			mes "just like my sister, to";
+			mes "pray for forgiveness~";
+			close;
+		}
+
+		else if (DANCER_SK == 9 && getskilllv("DC_WINKCHARM") == 0) {
+			mes "[Canell]";
+			mes "Hm? Oh, I remember you!";
+			mes "A Gypsy now, I see~ That";
+			mes "look suits you. Now, I'm";
+			mes "sure you've forgotten a few";
+			mes "things since transcending,";
+			mes "am I right? Watch this wink...";
+			next;
+			mes "[Canell]";
+			mes "Remember now? It's all";
+			mes "in the natural, seductive";
+			mes "and rhythmic movement of";
+			mes "the eyelid. I hope you use";
+			mes "your Charming Wink to let";
+			mes "your inner beauty shine~";
+			next;
+			mes "^3355FFYou have learned the";
+			mes "Charming Wink skill.^000000";
+			specialeffect2 EF_ABSORBSPIRITS;
+			skill "DC_WINKCHARM",1,SKILL_PERM;
+			close;
+		}
+	}
+	else if (BaseJob == Job_Dancer && JobLevel < 40) {
+		mes "[Canell]";
+		mes "Oh, you're such an";
+		mes "adorable little girl! Ah,";
+		mes "I'm sorry, but when you";
+		mes "become a lady at, oh, I don't";
+		mes "know, Job Level 40, then I'll";
+		mes "be able to teach you something~";
+		close;
+	}
+
+	else if (BaseJob != Job_Dancer) {
+		if (Sex == 0) {
+			mes "[Canell]";
+			mes "Oh, what a cute";
+			mes "little girl~! Such";
+			mes "a chubby lil' belly,";
+			mes "so cuuuuuuuuuuute~";
+			close;
+		}
+		else {
+			mes "[Canell]";
+			mes "Hey there,";
+			mes "handsome~";
+			mes "^333333*Wink~*^000000";
+			emotion e_kis;
+			specialeffect2 EF_VALLENTINE2;
+			next;
+			mes "^3355FFStrangely enough,";
+			mes "her wink has made";
+			mes "your heart throb.^000000";
+			close;
+		}
+	}
+}
+
+prontera,183,333,1	script	Aelle#qsk_dan02	79,{
+	if (BaseJob == Job_Dancer) {
+		if (DANCER_SK == 3) {
+			mes "[Aelle]";
+			mes "Pssst, hey! I got";
+			mes "some cheap, but slightly";
+			mes "illegal, warps to the Orc";
+			mes "Dungeon, Glast Heim";
+			mes "and the Dead Pit. So";
+			mes "you want in on this?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Actually, um, I'm here";
+			mes "to look for somebody.";
+			mes "You wouldn't happen";
+			mes "to know Canelle's";
+			mes "sister, would you?";
+			next;
+			mes "[Aelle]";
+			mes "Ah, so my stuck up";
+			mes "sister sent you, huh?";
+			mes "I should have known,";
+			mes "judging from your clothes.";
+			mes "So you want to become a";
+			mes "more alluring performer, eh?";
+			next;
+			mes "[Aelle]";
+			mes "Awww...";
+			mes "That's disappointing.";
+			mes "So... You didn't come";
+			mes "here to buy these warps?";
+			mes "You sure you don't want any?";
+			set DANCER_SK,4;
+			close;
+		}
+		else if (DANCER_SK == 4) {
+			mes "[Aelle]";
+			mes "Okay, okay...";
+			mes "So you came for me to";
+			mes "teach you some enticement";
+			mes "technique or something, right?";
+			mes "Huh. Well, this lecture I give?";
+			mes "It's long and complicated.";
+			next;
+			mes "[Aelle]";
+			mes "Talking and explaining";
+			mes "all of the intricate details";
+			mes "for so long will definitely";
+			mes "parch my throat. So first, you";
+			mes "gotta bring me a refreshing";
+			mes "drink before we can begin...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Oh... Okay.";
+			mes "Alright, I guess";
+			mes "I can spare a potion";
+			mes "or two, or maybe bring";
+			mes "back a bottle of juic--";
+			next;
+			mes "[Aelle]";
+			mes "Whoa, whoa, none of";
+			mes "that junk! I want to";
+			mes "have a real drink.";
+			mes "You know, something";
+			mes "more... ^FF0000Alcohol^000000ic.";
+			next;
+			mes "[Aelle]";
+			mes "Oh, and I need some";
+			mes "snacks to sustain all of";
+			mes "my teaching energy! Yeah,";
+			mes "some yummy fruit on a plate";
+			mes "and some cookies too!";
+			next;
+			mes "[Aelle]";
+			mes "Soooo, I wanna eat";
+			mes "^FF00001 Apple^000000, ^FF00003 Bananas^000000 and";
+			mes "^FF00005 Well-Baked Cookies^000000. Ah,";
+			mes "make sure you bring ^FF0000China^000000";
+			mes "to serve them on, and don't";
+			mes "forget the ^FF0000Alcohol^000000, okay?";
+			next;
+			mes "[Aelle]";
+			mes "One last thing...!";
+			mes "Don't let anyone here";
+			mes "in the church know what";
+			mes "we're doing. I don't wanna";
+			mes "get in too much trouble!";
+			set DANCER_SK,5;
+			close;
+		}
+		else if (DANCER_SK == 5) {
+			if (countitem(970) > 0 && countitem(512) > 0 && countitem(513) > 2 && countitem(538) > 4 && countitem(736) > 0) {
+				mes "[Aelle]";
+				mes "Great, you've brought";
+				mes "the food! It's a good thing";
+				mes "I'm famished because";
+				mes "I'm going to finish it all!";
+				next;
+				mes "^3355FFAelle devoured the";
+				mes "food like a ravenous,";
+				mes "hungry beast that had";
+				mes "been deprived for too long.^000000";
+				next;
+				mes "[Aelle]";
+				mes "That was sooo good!";
+				mes "I haven't eaten so much";
+				mes "in such a long time! Then";
+				mes "again, you don't get many";
+				mes "chances to pig out in church.";
+				mes "Ah, that's right, the lesson!";
+				next;
+				mes "[Aelle]";
+				mes "Now, the easiest, most";
+				mes "subtle and most appealing";
+				mes "gesture of all time is the";
+				mes "^FF0000wink^000000. It's saved me in times";
+				mes "of crisis, and mastering it";
+				mes "will enhance your charms.";
+				next;
+				mes "[Aelle]";
+				mes "To the untrained eye,";
+				mes "the wink only looks like";
+				mes "a simple movement, right?";
+				mes "You close one eye, and then";
+				mes "you reopen that eye. But if";
+				mes "you do it right... If you...";
+				next;
+				mes "[Aelle]";
+				mes "Oh, it's been so long";
+				mes "since I've had so much";
+				mes "to drink! Ugh, f-feeling";
+				mes "kinda--anyway, j-just close";
+				mes "and yer-- ^333333*burp*^000000 winking";
+				mes "is so so so so eeeeeasy~";
+				next;
+				mes "[Drunken Aelle]";
+				mes "Do it! Copy me as";
+				mes "I do it! Wink, j-just";
+				mes "like this, okay? Y' see?";
+				mes "^333333*Wiiiiiiiiiiiiiink*^000000";
+				emotion e_no1;
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Wh-whoa...";
+				mes "That was...";
+				mes "It's so beautiful!";
+				mes "And all with just";
+				mes "a simple wink!";
+				next;
+				mes "[Totally Drunk Aelle]";
+				mes "Y-yea... The...";
+				mes "The secret ish...";
+				mes "*Urp* It'sh in the--";
+				mes "Bwahahahaahah!";
+				mes "It's all spinning!";
+				emotion e_heh;
+				next;
+				mes "^3355FFIn her drunken stupor,";
+				mes "Aelle pummels you with";
+				mes "her fists and laughs";
+				mes "maniacally to herself.^000000";
+				percentheal -10,0;
+				specialeffect2 EF_HIT2;
+				emotion e_dots,1;
+				delitem 970,1; //Alchol
+				delitem 512,1; //Apple
+				delitem 513,3; //Banana
+				delitem 538,5; //Well_Baked_Cookie
+				delitem 736,1; //White_Platter
+				set DANCER_SK,6;
+				close;
+			}
+			else {
+				mes "[Aelle]";
+				mes "How can you expect";
+				mes "me to teach you anything";
+				mes "if I faint in the middle of";
+				mes "the lesson? That's right,";
+				mes "I'll need some nourishing,";
+				mes "yet delicious, snacks to eat~";
+				next;
+				mes "[Aelle]";
+				mes "Soooo, I wanna eat";
+				mes "^FF00001 Apple^000000, ^FF00003 Bananas^000000 and";
+				mes "^FF00005 Well-Baked Cookies^000000. Ah,";
+				mes "make sure you bring ^FF0000China^000000";
+				mes "to serve them on, and don't";
+				mes "forget the ^FF0000Alcohol^000000, okay?";
+				close;
+			}
+		}
+		else if (DANCER_SK == 6) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "You still haven't told";
+			mes "me the secret to making";
+			mes "a simple wink have so";
+			mes "much provocative charm.";
+			mes "I really need to--";
+			next;
+			mes "[Totally Hammered Aelle]";
+			mes "ZzzZzz... Huh?";
+			mes "Yesh, I know, I'm...";
+			mes "I'm a geeenius, yeah...";
+			mes "...ZzzzZzzzZzZzzzZZZzz...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "W-wake up!";
+			mes "I went through";
+			mes "all this trouble to";
+			mes "learn this technique!";
+			next;
+			mes "[Annoyed Aelle]";
+			mes "SHADDUP!";
+			mes "I'M SHLEEEEEPY!";
+			mes "G-go away. Talk to";
+			mes "Canell, my sister...";
+			mes "...ZzzzzZzZZZzzzZZ....";
+			set DANCER_SK,7;
+			close2;
+			warp "prontera",156,272;
+			end;
+		}
+		else if (DANCER_SK > 6 && DANCER_SK < 8) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Aelle, I really";
+			mes "need you to teach";
+			mes "me everything else";
+			mes "I need to know about";
+			mes "winking and--";
+			next;
+			mes "[Aelle]";
+			mes "^333333*Hiccup*^000000 Zzz--wha?";
+			mes "I need ta teach you";
+			mes "to go'way. Talk to my";
+			mes "sister, too tired now.";
+			mes "Go lemme alone girl!";
+			close2;
+			warp "prontera",156,272;
+			end;
+		}
+		else if (DANCER_SK > 8) {
+			mes "[Sober Aelle]";
+			mes "Ohhh...";
+			mes "H-headache...";
+			emotion e_an;
+			next;
+			mes "[Aelle]";
+			mes "Oh, wow, look at you!";
+			mes "I can tell that you've";
+			mes "become much more";
+			mes "beautiful. Yes, you're";
+			mes "more elegant and refined";
+			mes "than I can remember.";
+			next;
+			mes "[Aelle]";
+			mes "Always believe in your";
+			mes "beauty, wield your charm";
+			mes "like a weapon... And anything";
+			mes "you desire in this world can";
+			mes "be yours! Bwahahahahaha!";
+			close;
+		}
+		else {
+			mes "[Aelle]";
+			mes "Pssst, hey! I got";
+			mes "some cheap, but slightly";
+			mes "illegal, warps to the Orc";
+			mes "Dungeon, Glast Heim";
+			mes "and the Dead Pit. So";
+			mes "you want in on this?";
+			next;
+			mes "[??????]";
+			mes "Sister Aelle...";
+			mes "Are you still trying";
+			mes "to sell illegal warps";
+			mes "again? Sister Aelle?";
+			next;
+			mes "[Aelle]";
+			mes "Oh crap, it's the pastor!";
+			mes "Shhh, if anybody asks you,";
+			mes "I wasn't doing anything!";
+			emotion e_omg;
+			next;
+			mes "[Aelle]";
+			mes "Thanks, hon...";
+			mes "I know you can";
+			mes "keep my contraband";
+			mes "our little secret. ^333333*Wink*^000000";
+			emotion e_no1;
+			close;
+		}
+	}
+	else {
+		mes "[Aelle]";
+		mes "Pssst, hey! I got";
+		mes "some cheap, but slightly";
+		mes "illegal, warps to the Orc";
+		mes "Dungeon, Glast Heim";
+		mes "and the Dead Pit. So";
+		mes "you want in on this?";
+		next;
+		mes "[??????]";
+		mes "Sister Aelle...";
+		mes "Are you still trying";
+		mes "to sell illegal warps";
+		mes "again? Sister Aelle?";
+		next;
+		mes "[Aelle]";
+		mes "Oh crap, it's the pastor!";
+		mes "Shhh, if anybody asks you,";
+		mes "I wasn't doing anything!";
+		emotion e_omg;
+		next;
+		mes "[Aelle]";
+		mes "Thanks, hon...";
+		mes "I know you can";
+		mes "keep my contraband";
+		mes "our little secret. ^333333*Wink*^000000";
+		emotion e_no1;
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================

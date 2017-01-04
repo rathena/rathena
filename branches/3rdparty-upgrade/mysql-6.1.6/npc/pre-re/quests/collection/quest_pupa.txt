@@ -1,0 +1,233 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Added Monster Killing quests.
+//= Repeatable EXP Quest (Chrysalis)
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+gef_fild04,191,54,3	script	Halgus#Pupa_Hunt	123,{
+	if (checkquest(60110) != -1) {
+		if (checkquest(60110,HUNTING) != 2 ) {
+			mes "[Halgus]";
+			mes "Have you gotten rid of the Pupa?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Halgus]";
+				mes "Hmm, I don't think you've gotten rid of 50 Pupa yet...";
+				close;
+			case 2:
+				mes "[Halgus]";
+				mes "Remember, get rid of 50 of those Pupa from the field.";
+				close;
+			case 3:
+				mes "[Halgus]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Halgus]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60110;
+					close;
+				case 2:
+					mes "[Halgus]";
+					mes "Remember, get rid of 50 of those Pupa from the field.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Halgus]";
+			mes "Oh thank you so much.";
+			mes "I know that I could've probably done this myself but it's not easy to be standing here all of the time.";
+			getexp 385,30;
+			erasequest 60110;
+			close;
+		}
+	}
+	if (checkquest(60111) != -1) {
+		if (checkquest(60111,HUNTING) != 2 ) {
+			mes "[Halgus]";
+			mes "Have you gotten rid of the Pupa?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Halgus]";
+				mes "Hmm, I don't think you've gotten rid of 100 Pupa yet...";
+				close;
+			case 2:
+				mes "[Halgus]";
+				mes "Remember, get rid of 100 of those Pupa from the field.";
+				close;
+			case 3:
+				mes "[Halgus]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Halgus]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60111;
+					close;
+				case 2:
+					mes "[Halgus]";
+					mes "Remember, get rid of 100 of those Pupa from the field.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Halgus]";
+			mes "Oh thank you so much.";
+			mes "I know that I could've probably done this myself but it's not easy to be standing here all of the time.";
+			getexp 385,30;
+			getexp 385,30;
+			erasequest 60111;
+			close;
+		}
+	}
+	if (checkquest(60112) != -1) {
+		if (checkquest(60112,HUNTING) != 2 ) {
+			mes "[Halgus]";
+			mes "Have you gotten rid of the Pupa?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Halgus]";
+				mes "Hmm, I don't think you've gotten rid of 150 Pupa yet...";
+				close;
+			case 2:
+				mes "[Halgus]";
+				mes "Remember, get rid of 150 of those Pupa from the field.";
+				close;
+			case 3:
+				mes "[Halgus]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Halgus]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60112;
+					close;
+				case 2:
+					mes "[Halgus]";
+					mes "Remember, get rid of 150 of those Pupa from the field.";
+					close;
+				}
+			}
+		}
+		else {
+			mes "[Halgus]";
+			mes "Oh thank you so much.";
+			mes "I know that I could've probably done this myself but it's not easy to be standing here all of the time.";
+			getexp 385,30;
+			getexp 385,30;
+			getexp 385,30;
+			erasequest 60112;
+			close;
+		}
+	}
+	//for minimum level
+	if (BaseLevel > 1) {
+		//for maximum level
+		if (BaseLevel < 21) {
+			mes "[Halgus]";
+			mes "New here are you?";
+			mes "Well look, I like helping new faces around here.";
+			mes "And lets be honest, you are not the prettiest looking face I've seen.";
+			next;
+			mes "[Halgus]";
+			mes "None-the-less my daughter thought it would be fun to gather pupa around this field and it's becoming unsightly.";
+			mes "Do you mind helping me get rid of some Pupa to clear out this field?";
+			next;
+			switch(select("Sure, I don't mind:No")) {
+			case 1:
+				mes "[Halgus]";
+				mes "Really? What would you like to do to help?";
+				next;
+				switch(select("Gather Items:Get rid of Pupa:Cancel")) {
+				case 1:
+					// Item turn in
+					mes "[Halgus]";
+					mes "Can you collect ^00CE0025 Chrysalis^000000 and return them to me, I promise to reward you well.";
+					next;
+					switch(select("I have Chrysalis:What did you need?")) {
+					case 1:
+						if (countitem(915) > 24) {
+							mes "[Halgus]";
+							mes "Amazing you found so many that fast.";
+							mes "Like I promised, give me the Chrysalis and I will reward you with my wisdom.";
+							delitem 915,25; //Chrysalis
+							getexp 385,30;
+							close;
+						}
+						else {
+							mes "[Halgus]";
+							mes "I need ^00CE0025 Chrysalis^000000 and no less please.";
+							close;
+						}
+					case 2:
+						mes "[Halgus]";
+						mes "I need ^00CE0025 Chrysalis^000000.";
+						close;
+					}
+				case 2:
+					// Kill Count Quest
+					mes "[Halgus]";
+					mes "Thank you so much!";
+					mes "How many would you like to get rid of?";
+					next;
+					switch(select("50 Pupa:100 Pupa:150 Pupa")) {
+					case 1:
+						mes "[Halgus]";
+						mes "If you can get rid of 50 of those Pupa from the field I will be grateful.";
+						setquest 60110;
+						close;
+					case 2:
+						mes "[Halgus]";
+						mes "If you can get rid of 100 of those Pupa from the field I will be grateful.";
+						setquest 60111;
+						close;
+					case 3:
+						mes "[Halgus]";
+						mes "If you can get rid of 150 of those Pupa from the field I will be grateful.";
+						setquest 60112;
+						close;
+					}
+				case 3:
+					mes "[Halgus]";
+					mes "If you change your mind, please come back.";
+					close;
+				}
+			case 2:
+				mes "[Halgus]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		}
+		else {
+			mes "[Halgus]";
+			mes "You could probably easily help me out, but I want to give charity to those who are not as strong as you.";
+			close;
+		}
+	}
+	else {
+		mes "[Halgus]";
+		mes "Please return to me when you are a little stronger.";
+		close;
+	}
+}

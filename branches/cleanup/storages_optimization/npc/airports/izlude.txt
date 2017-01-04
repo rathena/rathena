@@ -1,0 +1,53 @@
+//===== rAthena Script ======================================= 
+//= Izlude Airport NPCs
+//===== By: ================================================== 
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Izlude Airport NPCs
+//===== Additional Comments: ================================= 
+//= 1.0 First version.
+//============================================================ 
+
+-	script	::Airship_Staff_izlude	-1,{
+	mes "[Airship Staff]";
+	mes "Welcome! Would you like";
+	mes "to board the Airship that";
+	mes "departs on the flight wich stops";
+	mes "in Juno and Rachel?";
+	next;
+	if (select("Board the Airship to Juno/Rachel.:Cancel.") == 1) {
+		mes "[Airship Staff]";
+		mes "The boarding fee is";
+		mes "1,200 zeny. However, this";
+		mes "charged is waived if you use";
+		mes "a Free Ticket for Airship. Now,";
+		mes "would you still like to board?";
+		next;
+		if (select("Yes:No") == 1) {
+			if (countitem(7311) > 0) {
+				delitem 7311,1; //Free_Flying_Ship_Ticket
+				warp "airplane_01",244,58;
+				end;
+			}
+			if (Zeny >= 1200) {
+				set Zeny, Zeny - 1200;
+				warp "airplane_01",244,58;
+				end;
+			}
+			mes "[Airship Staff]";
+			mes "I'm sorry, but you don't";
+			mes "have 1,200 zeny to pay";
+			mes "for the boarding fee.";
+			close;
+		}
+	}
+	mes "[Airship Staff]";
+	mes "Thank you and";
+	mes "please come again.";
+	mes "Have a good day~";
+	close;
+}

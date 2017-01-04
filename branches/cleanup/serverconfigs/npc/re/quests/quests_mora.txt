@@ -1,0 +1,5359 @@
+//===== rAthena Script =======================================
+//= Mora Quest NPCs
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Quest NPCs related to Mora:
+//== Theore's Request, Chesire's New Day,
+//== Helping Lope and Euridi, Mora Daily Quests,
+//== Find the Research Tools, Knights of the Neighborhood
+//===== Additional Comments: =================================
+//= 0.1 NPCs are currently placeholders. [Euphy]
+//= 1.0 Implemented all official quests. [Euphy]
+//= 1.1 Added GM management function and NPCs. [Euphy]
+//============================================================
+
+// Theore's Request :: ep14_1_bs
+//============================================================
+mid_camp,148,222,4	script	Theore#ep14_1_bs	982,3,3,{
+	if (BaseLevel < 100) {
+		mes "- A person with a white gown -";
+		mes "- is pulling at his hair. -";
+		close;
+	}
+	if (ep14_1_bs == 0) {
+		mes "[Theore]";
+		mes "Aaaarrrggghh!!!";
+		mes "Darn it!!!!";
+		mes "I'm finished!!!";
+		next;
+		mes "[Theore]";
+		mes "How am I supposed to submit a report that's so bad!!! A 5-year-old could do better!!!";
+		mes "Noooo!!!";
+		set ep14_1_bs,1;
+		close;
+	} else if (ep14_1_bs == 1) {
+		mes "- A person with a white gown -";
+		mes "- is pulling at his hair. -";
+		next;
+		if(select("Try talking to him.:How noisy.") == 2) {
+			mes "[Theore]";
+			mes "Oh, of course, I'm sorry.";
+			mes "I'll keep it down.";
+			close;
+		}
+		mes "["+strcharinfo(0)+"]";
+		mes "Sir... Are you okay?";
+		mes "You will lose all your hair like that.";
+		mes "Calm down.";
+		next;
+		mes "[Theore]";
+		mes "Sob.......";
+		next;
+		mes "[Theore]";
+		mes ".......";
+		next;
+		mes "[Theore]";
+		mes "Odin!!!";
+		mes "Freyja!!!!";
+		mes "Sazarim!!!";
+		mes "Thank you!!";
+		mes "It's not all over!!";
+		next;
+		mes "[Theore]";
+		mes "There's always hope! I, Theore, will persevere and go on!!";
+		next;
+		mes "[Theore]";
+		mes "Dear Adventurer!!!";
+		mes "No, no, dear Warrior!!!!";
+		mes "Are you busy at the moment?";
+		mes "If you spare me a little time, I will see to it that you're rewarded handsomely!";
+		next;
+		switch(select("I'm busy.:Listen to him more.")) {
+		case 1:
+			mes "[Theore]";
+			mes ".......";
+			mes "I see, I suppose it can't be helped.";
+			mes "I'll probably lose all my hair and be on the ad for hair growth solutions. But I won't hold it against you, Warrior.";
+			next;
+			mes "[Theore]";
+			mes "Dear God! My luck ends here. *sob*";
+			mes "Even though the world is turning its back on me, I won't blame anyone!!!";
+			close;
+		case 2:
+			mes "[Theore]";
+			mes "Ahhh!";
+			mes "I feel like I was saved.";
+			mes "So the thing is.......";
+			next;
+			mes "[Theore]";
+			mes "Oh! Oh dear!";
+			mes "How rude of me, I haven't even introduced myself.";
+			mes "My name is Theore, and I work for 'Bazett Teablack's Institute of Culture of the Other World.' ";
+			next;
+			mes "[Theore]";
+			mes "I'm currently working on researching Laphines in the Splendide Basecamp.";
+			mes "Might be because I've been working soooo hard, but these days the Laphines all run away as soon as they see me.";
+			next;
+			mes "[Theore]";
+			mes "The deadline is approaching, and I still haven't figured out the most critical part. ";
+			mes "My professor will be very disappointed .......";
+			next;
+			mes "[Theore]";
+			mes "So won't you give me a hand?!";
+			mes "Your help will be acknowledged fully - I will tell the professor myself!";
+			next;
+			switch(select("Help.:Don't help.")) {
+			case 1:
+				mes "[Theore]";
+				mes "Sob sob Warrior, you're the best!";
+				mes "I will not forget this!!!";
+				mes "I'm going to write about it in my diary!!";
+				mes "And in the report!!!";
+				mes "And in a letter I'm sending home!!";
+				next;
+				mes "[Theore]";
+				mes "I'll tell my buddies at the lab!!!";
+				mes "I'll tell Lugen!!!";
+				mes "I'll write it in the bulletin board!!!";
+				mes "Let's see!!! Where else?";
+				next;
+				mes "- The man seems to be in a manic state. -";
+				mes "- Wait until he calms down -";
+				mes "- and try speaking to him again. -";
+				set ep14_1_bs,2;
+				setquest 11182;
+				close;
+			case 2:
+				mes "[Theore]";
+				mes ".......";
+				mes "You bad person, making me all worked up.";
+				mes "*sob*";
+				close;
+			}
+		}
+	} else if (ep14_1_bs == 2) {
+		if (checkquest(11182,PLAYTIME) < 2) {
+			mes "[Theore]";
+			mes "......";
+			switch(rand(1,4)) {
+			case 1:
+				mes "I must tell my next-door neighbor Pico!!!";
+				mes "And Kachua!!!";
+				break;
+			case 2:
+				mes "Tell the merchant across the street!!!";
+				mes "And also tell the administrator!!!";
+				break;
+			case 3:
+				mes "Tell Mr. Holgren!!!";
+				mes "Write up a report for the King!!!";
+				break;
+			case 4:
+				mes "Tell the people around here!!!";
+				mes "Shout it out loud from the observatory so the whole world hears!!!";
+				break;
+			}
+			next;
+			mes "- He is still manic. -";
+			mes "- Wait until he calms down -";
+			mes "- and try speaking to him again. -";
+			close;
+		}
+		mes "[Theore]";
+		mes "My apologies.";
+		mes "I got a little excited.";
+		mes "I do apologize.";
+		next;
+		mes "[Theore]";
+		mes "I'm usually a calm and rational person, but it feels like I've been everywhere - heaven AND hell - today!";
+		next;
+		mes "[Theore]";
+		mes "To the point: what I would like to ask you is not a hard task.";
+		next;
+		mes "[Theore]";
+		mes "As you probably know, the Laphines are at war with the Saphas.";
+		mes "Until recently, they attacked the Saphas mercilessly.";
+		next;
+		mes "[Theore]";
+		mes "But lately, the frequency of attacks has decreased significantly.";
+		mes "I can't figure out why, they are single-minded creatures and it's not likely that they just took pity on the Saphas' situation.";
+		next;
+		mes "[Theore]";
+		mes "Also, there are rumors of unarmed Laphines flying through the fields.";
+		next;
+		mes "[Theore]";
+		mes "I have seen it once, but he ran away as soon as he spotted me and I didn't get a chance to ask him.";
+		mes "I'm sure that he went back to the village. But as desperately as I want to ask, I was banned from entering the Splendide Basecamp.";
+		next;
+		select("Banned?");
+		mes "[Theore]";
+		mes "Well...";
+		mes "I got so excited after the professor assigned me to this research project.......";
+		mes "that I combed through Splendide night and day, and they finally kicked me out.";
+		mes "Ha ha ha!";
+		next;
+		mes "[Theore]";
+		mes "The Laphines may look cute, but they are combat specialists.......";
+		mes "So here I am, without the courage to sneak in, but with the report half-finished.......";
+		next;
+		mes "[Theore]";
+		mes "Tell me, is there a life more unfortunate than mine?";
+		mes "*chuckle*";
+		next;
+		mes "[Theore]";
+		mes "So Warrior, would you please find the Laphines who are coming to the Splendide field, and find out what they're up to?";
+		next;
+		mes "[Theore]";
+		mes "They may run away if you try to speak to them, so pay close attention when you find one.";
+		next;
+		mes "[Theore]";
+		mes "The Laphines are such a rowdy crew, and it's very unsettling to see how quiet they've been - almost like a period of calm before a giant thunderstorm.";
+		set ep14_1_bs,3;
+		changequest 11182,11183;
+		close;
+	} else if (ep14_1_bs == 3) {
+		mes "[Theore]";
+		mes "So Warrior, would you please find the Laphines who are coming to the Splendide field, and ask them what they're up to?";
+		next;
+		mes "[Theore]";
+		mes "They may run away if you try to speak to them, so pay close attention when you find one.";
+		next;
+		mes "[Theore]";
+		mes "The Laphines are such a rowdy crew, and it's very unsettling to see how quiet they've been - almost like a period of calm before a giant thunderstorm.";
+		close;
+	} else if (ep14_1_bs < 10) {
+		if (ep14_1_bs2 == 0) {
+			mes "- He is in no state for conversations. You should take the pouch to Splendide and look for its owner. -";
+			close;
+		} else if (ep14_1_bs2 < 4) {
+			mes "[Theore]";
+			mes "Hmm...... They were rummaging through the bushes?";
+			mes "Hmm... Hmm...";
+			next;
+			mes "[Theore]";
+			mes "They may have left a clue, can you please look around the area?";
+			mes "If they were looking through the bushes, they may have been looking for something they've lost.";
+			mes "Or they may have left something behind.";
+			close;
+		} else if (ep14_1_bs2 < 7) {
+			if (countitem(6390) == 0) {
+				mes "[Theore]";
+				mes "They may have left a clue, can you please look around the area?";
+				mes "If they were looking through the bushes, they may have been looking for something they've lost.";
+				mes "Or they may have left something behind.";
+				close;
+			}
+			mes "[Theore]";
+			mes "A pouch that a Laphine dropped as it fled?";
+			mes "Hmm... Hmm... A soft leather pouch with a string made by soaking dried vines in oil.... too small for humans or Saphas to use...";
+			next;
+			mes "[Theore]";
+			mes "Could... Could it be??!!";
+			mes "that object?!";
+			mes "that I've only heard about, but never came across!!!";
+			next;
+			mes "[Theore]";
+			mes "In the ancient times, Laphines used to carry fairy dust - such as the flying dust, minimizing dust - in a small pouch like this.";
+			next;
+			mes "[Theore]";
+			mes "They usually enjoy extravagant designs, but this 'fairy dust pouch' is something that they always carry around, and it is made simply without extravagant ornaments, keeping in line with tradition.";
+			next;
+			mes "[Theore]";
+			mes "I'm not sure what it'll be like nowadays, but if this is the 'fairy dust pouch,' the owner should be anxious to find it.";
+			next;
+			mes "[Theore]";
+			mes "We can't give it back for free though. In exchange for some information - that's a fair deal!";
+			next;
+			mes "[Theore]";
+			mes "And perhaps they won't be too upset if we look inside the pouch!";
+			mes "Wooow!!";
+			mes "I always believed when I was little that a fairy would come and sprinkle me with flying dust to make me fly!!!";
+			next;
+			mes "- Before I can stop him, -";
+			mes "- he opened the small pouch. -";
+			next;
+			mes "[Theore]";
+			mes ".......";
+			next;
+			mes "[Theore]";
+			mes "Oh...";
+			mes "Berries......and leaves?";
+			mes ".......";
+			next;
+			mes "[Theore]";
+			mes "......What about the flying dust?";
+			mes "Noooo!";
+			mes "My poor innocent imagination!!!!";
+			next;
+			mes "- He is in no state for conversations. You should take the pouch to Splendide and look for its owner. -";
+			set ep14_1_bs2, ep14_1_bs2+3; //4,5,6 -> 7,8,9
+			changequest 11185,11186;
+			close;
+		} else {
+			mes "- He is in no state for conversations. You should take the pouch to Splendide and look for its owner. -";
+			close;
+		}
+	} else if (ep14_1_bs < 18) {
+		mes "- He appears to be busy. You should finish the task at hand and come back. -";
+		close;
+	} else if (ep14_1_bs == 18) {
+		mes "[Theore]";
+		mes "At last, you're back!!!!";
+		mes "How did the investigation go?!";
+		next;
+		mes "[Theore]";
+		mes "Wow!!!";
+		mes "Incredible!!!!!!";
+		mes "Unbelievable!!!";
+		next;
+		mes "[Theore]";
+		mes "The best!!!!";
+		mes "This is surely enough to write an excellent report on!!";
+		mes "All thanks to you, Warrior!!";
+		next;
+		mes "[Theore]";
+		mes "I'll never, EVER forget what you've done for me!";
+		mes "No!!";
+		mes "My grandchildren's grandchildren will remember!!!!";
+		mes "*Sob*";
+		next;
+		mes "[Theore]";
+		mes "Then I'm off to put the finishing touches on the report!!!!!!!";
+		mes "Oh yeah!!!!";
+		set ep14_1_bs,19;
+		getexp 0,200000;
+		getitem 6380,5; //Mora_Coin
+		close;
+	} else if (ep14_1_bs > 18) {
+		mes "[Theore]";
+		mes "I'll write the report with lightning speed!!!!!!!";
+		mes "Oh yeah!!!!";
+		close;
+	}
+	end;
+OnTouch:
+	if (BaseLevel > 99) {
+		if (ep14_1_bs == 0) {
+			mes "[Theore]";
+			mes "Aaaarrrggghh!!!";
+			mes "Darn it!!!!";
+			mes "I'm finished!!!";
+			next;
+			mes "[Theore]";
+			mes "How am I supposed to submit a report that's so bad!!! A 5-year-old could do better!!!";
+			mes "Noooo!!!";
+			set ep14_1_bs,1;
+			close;
+		}
+	}
+	end;
+}
+
+-	script	#mora_bush	-1,{
+	if (ep14_1_bs != 3 || rand(5)) {
+		mes "- It's just an ordinary bush. -";
+		close;
+	}
+	set .@i, atoi(charat(strnpcinfo(2),9));
+	set .@rand, rand(1,3);
+	mes "[Unarmed Laphine]";
+	mes "Aaaarrrrrggggghhhhh!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!";
+	donpcevent "Fairy#cmd"+.@i+.@rand+"::OnEnable";
+	set ep14_1_bs, .@i+3;
+	set ep14_1_bs2, .@rand;
+	changequest 11183,11184;
+	next;
+	mes "- You try to talk to the Laphine, -";
+	mes "- who is looking around the bushes, -";
+	mes "- but it flew away -";
+	mes "- while yelling fearfully. -";
+	next;
+	mes "- What was the fairy doing? -";
+	mes "- You decide to look around. -";
+	donpcevent "Bush"+.@i+"Timer::OnEnable";
+	close;
+OnEnable:
+	enablenpc strnpcinfo(0);
+	donpcevent "Bush"+charat(strnpcinfo(2),9)+"Timer::OnDisable";
+	end;
+OnDisable:
+	disablenpc strnpcinfo(0);
+	end;
+}
+
+-	script	#mora_pouch	-1,{
+	end;
+OnTouch:
+	set .@i, atoi(charat(strnpcinfo(2),9));
+	if (ep14_1_bs == .@i+3) {
+		if (countitem(6390) == 0) {
+			if (checkweight(1201,1) == 0) {
+				mes " - Hang on there !! -";
+				mes " - You are carrying too many kinds of items - ";
+		   		mes " - to receive any more items. - ";
+				mes " - Please lighten your load - ";
+		   		mes " - and try again. - ";
+				close;
+			}
+			if (MaxWeight - Weight < 1000) {
+				mes " - Hang on there !! -";
+			 	mes " - You are carrying too much weight - ";
+				mes " - Please lighten your load - ";
+		   		mes " - and try again. - ";
+				close;
+			}
+			mes "- Jumble Fumble -";
+			mes "- Rustle Bustle -";
+			next;
+			if (rand(1,5) == 4) {
+				mes "- You've found a Small pouch. -";
+				if (ep14_1_bs2 > 0 && ep14_1_bs2 < 4)
+					set ep14_1_bs2, ep14_1_bs2+3;
+				changequest 11184,11185;
+				getitem 6390,1; //Small_Pocket
+				close;
+			} else {
+				mes "- You didn't find anything. -";
+				close;
+			}
+		}
+	}
+	end;
+}
+
+-	script	#mora_fairy	-1,{
+	end;
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnEnable:
+	enablenpc strnpcinfo(0);
+	initnpctimer;
+	end;
+OnDisable:
+	disablenpc strnpcinfo(0);
+	stopnpctimer;
+	end;
+OnTimer5000:
+	donpcevent strnpcinfo(0)+"::OnDisable";
+	stopnpctimer;
+	end;
+}
+
+spl_fild02,79,104,0	duplicate(#mora_bush)	Bush#ep14_1_bs1	111
+spl_fild02,79,104,0	duplicate(#mora_pouch)	#ep14_1_bs1	139,2,2
+spl_fild02,79,104,6	duplicate(#mora_fairy)	Fairy#cmd11	440
+spl_fild02,79,104,6	duplicate(#mora_fairy)	Fairy#cmd12	445
+spl_fild02,79,104,6	duplicate(#mora_fairy)	Fairy#cmd13	439
+
+spl_fild02,103,344,0	duplicate(#mora_bush)	Bush#ep14_1_bs2	111
+spl_fild02,103,344,0	duplicate(#mora_pouch)	#ep14_1_bs2	139,2,2
+spl_fild02,103,344,6	duplicate(#mora_fairy)	Fairy#cmd21	440
+spl_fild02,103,344,6	duplicate(#mora_fairy)	Fairy#cmd22	445
+spl_fild02,103,344,6	duplicate(#mora_fairy)	Fairy#cmd23	439
+
+spl_fild02,261,323,0	duplicate(#mora_bush)	Bush#ep14_1_bs3	111
+spl_fild02,261,323,0	duplicate(#mora_pouch)	#ep14_1_bs3	139,2,2
+spl_fild02,261,323,6	duplicate(#mora_fairy)	Fairy#cmd31	440
+spl_fild02,261,323,6	duplicate(#mora_fairy)	Fairy#cmd32	445
+spl_fild02,261,323,6	duplicate(#mora_fairy)	Fairy#cmd33	439
+
+spl_fild02,137,305,0	duplicate(#mora_bush)	Bush#ep14_1_bs4	111
+spl_fild02,137,305,0	duplicate(#mora_pouch)	#ep14_1_bs4	139,2,2
+spl_fild02,137,305,6	duplicate(#mora_fairy)	Fairy#cmd41	440
+spl_fild02,137,305,6	duplicate(#mora_fairy)	Fairy#cmd42	445
+spl_fild02,137,305,6	duplicate(#mora_fairy)	Fairy#cmd43	439
+
+spl_fild02,23,196,0	duplicate(#mora_bush)	Bush#ep14_1_bs5	111
+spl_fild02,23,196,0	duplicate(#mora_pouch)	#ep14_1_bs5	139,2,2
+spl_fild02,23,196,6	duplicate(#mora_fairy)	Fairy#cmd51	440
+spl_fild02,23,196,6	duplicate(#mora_fairy)	Fairy#cmd52	445
+spl_fild02,23,196,6	duplicate(#mora_fairy)	Fairy#cmd53	439
+
+spl_fild02,186,260,0	duplicate(#mora_bush)	Bush#ep14_1_bs6	111
+spl_fild02,186,260,0	duplicate(#mora_pouch)	#ep14_1_bs6	139,2,2
+spl_fild02,186,260,6	duplicate(#mora_fairy)	Fairy#cmd61	440
+spl_fild02,186,260,6	duplicate(#mora_fairy)	Fairy#cmd62	445
+spl_fild02,186,260,6	duplicate(#mora_fairy)	Fairy#cmd63	439
+
+-	script	#mora_bush_timer	-1,{
+	end;
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+OnEnable:
+	enablenpc strnpcinfo(0);
+	initnpctimer;
+	end;
+OnDisable:
+	stopnpctimer;
+	disablenpc strnpcinfo(0);
+	end;
+OnTimer1000:
+	donpcevent "Bush#ep14_1_bs"+charat(strnpcinfo(0),4)+"::OnDisable";
+	end;
+OnTimer600000:
+	donpcevent "Bush#ep14_1_bs"+charat(strnpcinfo(0),4)+"::OnEnable";
+	donpcevent strnpcinfo(0)+"::OnDisable";
+	end;
+}
+spl_fild02,180,1,0	duplicate(#mora_bush_timer)	Bush1Timer	440
+spl_fild02,181,1,0	duplicate(#mora_bush_timer)	Bush2Timer	440
+spl_fild02,182,1,0	duplicate(#mora_bush_timer)	Bush3Timer	440
+spl_fild02,183,1,0	duplicate(#mora_bush_timer)	Bush4Timer	440
+spl_fild02,184,1,0	duplicate(#mora_bush_timer)	Bush5Timer	440
+spl_fild02,186,1,0	duplicate(#mora_bush_timer)	Bush6Timer	440
+
+spl_fild02,187,1,0	script	Field Bush Switch	440,{
+	callfunc "F_GM_NPC";
+	donpcevent "Bush#ep14_1_bs1::OnEnable";
+	end;
+}
+
+splendide,183,117,4	script	Tired-looking Fairy	438,{
+	if (!isequipped(2782)) {
+		mes "[Tired-looking Fairy]";
+		mes "VeOsaRiveh No ModAsh";
+		next;
+		mes "- You can't understand the fairy's words. -";
+		mes "- You need something to help you interpret them. -";
+		close;
+	}
+	if (ep14_1_bs < 4) {
+		mes "[Tired-looking Fairy]";
+		mes "I'm tired, don't talk to me.";
+		close;
+	} else if (ep14_1_bs < 10) {
+		if (checkquest(11187) == -1) {
+			mes "[Tired-looking Fairy]";
+			mes "I'm tired, don't talk to me.";
+			next;
+			select("Show the pouch.");
+			mes "[Tired-looking Fairy]";
+			mes "Huh?!";
+			mes "Where did you get this from?!";
+			next;
+			select("I found it in the bushes.");
+			mes "[Tired-looking Fairy]";
+			mes "It may not look like much, but it is an important object for us. I suppose I should say thanks.";
+			next;
+			mes "[Tired-looking Fairy]";
+			mes "But it won't be easy to find its owner with just the pouch...";
+			changequest 11186,11187;
+			next;
+			if(select("I think I saw a fairy that might be the owner.:I'll think about it.") == 2) {
+				mes "[Tired-looking Fairy]";
+				mes "Then tell me if you remember anything.";
+				close;
+			}
+		} else if (checkquest(11187) == 2) {
+			mes "[Tired-looking Fairy]";
+			mes "I hope you can find the owner.";
+			close;
+		}
+		mes "[Tired-looking Fairy]";
+		mes "Do you remember how the fairy looked?";
+		next;
+
+		setarray .@Hair$[0],"blonde","grassy-green","woody-brown","sea-blue";
+		setarray .@Skin$[0],"dark","light";
+		setarray .@Clothing$[0],"snow-white","grape","sky-blue","grassy-green";
+		setarray .@Wings$[0],"round","two pairs of","characteristic";
+
+		setarray .@i[1],
+			select("Blonde hair:Grassy-green hair:Woody-brown hair:Sea-blue hair"),
+			select("Dark-skinned:Light-skinned"),
+			select("Snow-white clothing:Grape clothing:Sky-blue clothing:Grassy-green clothing"),
+			select("Round wings:Two pairs of wings:Characteristic Wings");
+
+		set .@i[0], (1 << .@i[1]) | (1 << (.@i[2]+4)) | (1 << (.@i[3]+6)) | (1 << (.@i[4]+10));
+
+		mes "[Tired-looking Fairy]";
+		mes "A "+.@Skin$[.@i[2]-1]+"-skinned fairy with "+.@Hair$[.@i[1]-1]+" hair and "+.@Wings$[.@i[4]-1]+" wings, dressed in "+.@Clothing$[.@i[3]-1]+" clothing.......";
+		switch(.@i[0]) {
+		case 4418: // Kusmi: blonde hair, light skin, grape clothing, two pairs of wings
+			mes "Hmm...... That must be Kusmi.";
+			next;
+			mes "[Tired-looking Fairy]";
+			mes "Kusmi must be roaming the area southeast of the village.";
+			mes "Go see if she has lost her pouch.";
+			if (ep14_1_bs2 == 7)
+				set ep14_1_bs2,10;
+			close;
+		case 2212: // Theodore: grassy-green hair, dark skin, snow-white clothing, round wings
+			mes "Hmm......That must be Theodore.";
+			next;
+			mes "[Tired-looking Fairy]";
+			mes "Theodore must be roaming the area northeast of the village.";
+			mes "Go see if he has lost his pouch.";
+			if (ep14_1_bs2 == 8)
+				set ep14_1_bs2,11;
+			close;
+		case 9264: // Pauchon: sea-blue hair, dark skin, grassy-green clothing, characteristic wings
+			mes "Hmm......That must be Pauchon.";
+			next;
+			mes "[Tired-looking Fairy]";
+			mes "Pauchon must be roaming the area north of the village.";
+			mes "Go see if she has lost her pouch.";
+			if (ep14_1_bs2 == 9)
+				set ep14_1_bs2,12;
+			close;
+		default:
+			next;
+			mes "[Tired-looking Fairy]";
+			mes "Hmm...";
+			mes "I don't remember seeing such a fairy.";
+			mes "Are you sure you're not mistaken?";
+			mes "Try to remember it again.";
+			close;
+		}
+	}
+	mes "[Tired-looking Fairy]";
+	mes "What's up?";
+	mes "Did you find the owner of the pouch?";
+	close;
+}
+
+splendide,119,138,4	script	Kusmi#ep14_1_bs	440,{
+	if (!isequipped(2782)) {
+		mes "[Kusmi]";
+		mes "DimFusTal Mu Lars";
+		mes "ModAnduLo";
+		mes "Mod";
+		mes "DorDuMe U NohLarsFulo Mu Fus";
+		next;
+		mes "- You can't understand the fairy's words. -";
+		mes "- You need something to help you interpret them. -";
+		close;
+	}
+	if (ep14_1_bs > 3 && ep14_1_bs < 10) {
+		mes "[Kusmi]";
+		mes "And who mayy you be?";
+		next;
+		select("Show the pouch.");
+		if (countitem(6390) == 0) {
+			mes "[Kusmi]";
+			mes "What is it that you want to show mee?";
+			close;
+		}
+		if (ep14_1_bs2 == 10) {
+			mes "[Kusmi]";
+			mes "Ahh!!";
+			mes "My pouch!!!!!";
+			mes "Thank you sirr!!!!!";
+			mes "I've been looking for it all overr!";
+			next;
+			select("Ask about the rumor.");
+			mes "[Kusmi]";
+			mes "That's a difficult questionn!";
+			mes "But you've returned my pouch, so I'll have to answerr......";
+			next;
+			mes "[Kusmi]";
+			mes "Promise me you won't tell anyonee!";
+			mes "If you can promise, please talk to me againn.";
+			delitem 6390,1; //Small_Pocket
+			set ep14_1_bs,10;
+			changequest 11187,11188;
+			close;
+		} else {
+			mes "[Kusmi]";
+			mes "Hmm I don't know who, but must be a slobb to be dropping his pouch like soo.";
+			mes "Huh? Mine??";
+			mes "No, mine is right here safelyy?";
+			next;
+			mes "[Kusmi]";
+			mes "It's a precious object so I hope you'll find the owner itt.";
+			close;
+		}
+	}
+	if (ep14_1_bs2 == 10) {
+		if (ep14_1_bs == 10) {
+			mes "[Kusmi]";
+			mes "You can't say this to anybody okayy~?";
+			mes "Recently,";
+			mes "the supplies from our the mainland have been cutt!";
+			mes "Or rather, the supply route is being blocked and we can't get our suppliess?";
+			next;
+			mes "[Kusmi]";
+			mes "We need to find enough food before we run out of stored goods, that's why we've been rummaging the bushess.";
+			next;
+			mes "[Kusmi]";
+			mes "But this cursed frozen land has no good foods.";
+			mes "We're barely keeping it green using magic, but it takes too much power to make fruit.";
+			next;
+			mes "[Kusmi]";
+			mes "The energy spent in making food is probably twice as much as the energy gained from eatingg.";
+			mes "Those higher up don't want to admit it, but it's going to become a serious problem soonn.";
+			next;
+			mes "[Kusmi]";
+			mes "We can't leave the battleground because we're in war, so we can't go checkk.";
+			mes "I am curiousss.......";
+			next;
+			mes "[Kusmi]";
+			mes "Not just me, but many Laphines are worriedd.";
+			mes "Well that's the situation, so if you meet a Laphine in the bushes please don't talk to himm.";
+			mes "It's embarrassingg!!!";
+			next;
+			mes "[Kusmi]";
+			mes "Oh, and you must never ever tell anyone about what happened todayy!";
+			mes "Unless that person wanted to help uss... spreading the word won't do Splendide any goood.";
+			set ep14_1_bs,11;
+			completequest 11188;
+			setquest 11189;
+			close;
+		} else if (ep14_1_bs == 11) {
+			mes "[Kusmi]";
+			mes "Eh?";
+			mes "You stilll want to talk?";
+			next;
+			select("Supply route from the mainland?");
+			mes "[Kusmi]";
+			mes "Well if you hear that you'll have to helpp!";
+			mes "Still want to knoww?!";
+			next;
+			switch(select("Yes.:No.")) {
+			case 1:
+				mes "[Kusmi]";
+				mes "It's not a special road or anythingg.";
+				mes "Just an old roadd.";
+				mes "Some say it connects different continents. It also connects the Splendide Basecamp and Alfheim through the backk.";
+				next;
+				mes "[Kusmi]";
+				mes "If you're headed that way, please go see that all's okayy.";
+				set ep14_1_bs,12;
+				changequest 11189,11190;
+				close;
+			case 2:
+				mes "[Kusmi]";
+				mes "Thank you for finding my pouchh.";
+				mes "I would give you some fairy dust, but there is none leftt.";
+				close;
+			}
+		} else if (ep14_1_bs == 12) {
+			mes "[Kusmi]";
+			mes "It's not a special road or anythingg.";
+			mes "Just an old roadd.";
+			mes "Some say it connects different continents. It also connects the Splendide Basecamp and Alfheim through the backk.";
+			next;
+			mes "[Kusmi]";
+			mes "If you're headed that way, please go see that all's okayy.";
+			close;
+		} else if (ep14_1_bs == 13) {
+			mes "[Kusmi]";
+			mes "A crevicee?";
+			mes "That's why we couldn't contact the mainland.";
+			mes "Urggg.......";
+			mes "It would be good to know what's going on up theree.";
+			next;
+			mes "[Kusmi]";
+			mes "If you happen to go through Bifrost, please figure out what's going onn.";
+			mes "In the middle of Bifrost is a small village called 'Mora.' All the supplies from the mainland come through that villagee.";
+			next;
+			mes "[Kusmi]";
+			mes "If you go to the warehouse in Mora Village, the manager will tell you moree.";
+			mes "Also, on the way back, will you check to see that my friend Rondo is in Mora Villagee?";
+			next;
+			mes "[Kusmi]";
+			mes "He always used to visit Splendide around this time, but the situation is no good now. I'll have to tell him to come another time.";
+			set ep14_1_bs,14;
+			changequest 11191,11192;
+			close;
+		} else if (ep14_1_bs == 14) {
+			mes "[Kusmi]";
+			mes "If you happen to go through Bifrost, please figure out what's going onn.";
+			mes "In the middle of Bifrost is a small village called 'Mora.' All the supplies from the mainland come through that villagee.";
+			next;
+			mes "[Kusmi]";
+			mes "If you go to the warehouse in Mora Village, the manager will tell you moree.";
+			if (checkquest(11193) > -1 && checkquest(11193) < 2)
+				close;
+			mes "Also, on the way back, will you check to see that my friend Rondo is in Mora Villagee?";
+			next;
+			mes "[Kusmi]";
+			mes "He always used to visit Splendide around this time, but the situation is no good now. I'll have to tell him to come another time.";
+			close;
+		} else if (ep14_1_bs > 14) {
+			if (checkquest(11193) == -1) {
+				mes "[Kusmi]";
+				mes "Will you check to see that my friend Rondo is in Mora Villagee?";
+				next;
+				mes "[Kusmi]";
+				mes "He always used to visit Splendide around this time, but the situation is no good now. I'll have to tell him to come another time.";
+				close;
+			}
+			mes "[Kusmi]";
+			mes "Heee!";
+			mes "You really went through the fog of the Maze of the Hazy Forest?";
+			mes "Wow!!!";
+			mes "That's very impressivee.";
+			next;
+			mes "[Kusmi]";
+			mes "Thank you soooo much.";
+			mes "I hope we'll be able to go through Bifrost againn.";
+			mes "I want to meet Rondo and talk to him againn.";
+			if (ep14_1_bs == 17) {
+				next;
+				mes "[Kusmi]";
+				mes "Oh, And Daphrer is in northwest Splendide.";
+			}
+			if (checkquest(11193) < 2) {
+				completequest 11192;
+				completequest 11193;
+			}
+			close;
+		}
+	}
+	mes "[Kusmi]";
+	mes "This place is always coldd.";
+	mes "So different from my heavenly hometownn.";
+	close;
+}
+
+splendide,304,295,4	script	Theodore#ep14_1_bs	445,{
+	if (!isequipped(2782)) {
+		mes "[Theodore]";
+		mes "DimFusTal Mu Lars";
+		mes "ModAnduLo";
+		mes "Mod";
+		mes "DorDuMe U NohLarsFulo Mu Fus";
+		next;
+		mes "- You can't understand the fairy's words. -";
+		mes "- You need something to help you interpret them. -";
+		close;
+	}
+	if (ep14_1_bs > 3 && ep14_1_bs < 10) {
+		mes "[Theodore]";
+		mes "Who are you!";
+		next;
+		select("Show the pouch.");
+		if (countitem(6390) == 0) {
+			mes "[Theodore]";
+			mes "Hmm? What do you mean?";
+			close;
+		}
+		if (ep14_1_bs2 == 11) {
+			mes "[Theodore]";
+			mes "Ahh!!";
+			mes "My pouch!!!!!";
+			mes "I've been looking for it all over the place.";
+			mes "Thanks!";
+			next;
+			select("Ask about the rumor.");
+			mes "[Theodore]";
+			mes "Hrm!!";
+			mes "What a penetrating question!";
+			next;
+			mes "[Theodore]";
+			mes "If you really want to hear the answer, talk to me again.";
+			mes "I need time to think.";
+			delitem 6390,1; //Small_Pocket
+			set ep14_1_bs,10;
+			changequest 11187,11194;
+			close;
+		} else {
+			mes "[Theodore]";
+			mes "What is that dirty pouch!";
+			mes "It is definitely not mine.";
+			next;
+			mes "[Theodore]";
+			mes "But I hope you find its rightful owner.";
+			close;
+		}
+	}
+	if (ep14_1_bs2 == 11) {
+		if (ep14_1_bs == 10) {
+			mes "[Theodore]";
+			mes "You are not to tell anyone what I'm about to tell you.";
+			next;
+			mes "[Theodore]";
+			mes "Recently, there's a big problem in Splendide.";
+			mes "There is no communication with the mainland.";
+			mes "Not just communication, but supplies have been cut off also. People act indifferent but actually there is deep panic.";
+			next;
+			mes "[Theodore]";
+			mes "This frozen land is no use for collecting food, but to farm it would be too much work.";
+			next;
+			mes "[Theodore]";
+			mes "In fact, just maintaining the green is costing an incredible amount of magic power.";
+			mes "No word has come from higher up, but from the rumors it's not an easily fixable problem.";
+			next;
+			mes "[Theodore]";
+			mes "And because there is no easy fix, everybody is worried sick.";
+			mes "By military law, our soldiers cannot leave the battlefield during war, so it's impossible to get more information.";
+			next;
+			mes "[Theodore]";
+			mes "Therefore, if you happen to run into a Laphine, please don't mention any of this.";
+			mes "Everybody is trying as hard as they can, but we are still a proud race.";
+			next;
+			mes "[Theodore]";
+			mes "And as I said before, what I told you is a secret and you must not tell anyone.";
+			mes "We do need help, but we are cornered and we don't want others to know.";
+			set ep14_1_bs,11;
+			completequest 11194;
+			setquest 11195;
+			close;
+		} else if (ep14_1_bs == 11) {
+			mes "[Theodore]";
+			mes "You have further business with me?";
+			next;
+			select("Supply route from the mainland?");
+			mes "[Theodore]";
+			mes "Hmm... if you hear that, you might just have to help us out?";
+			mes "Do you still want to know?";
+			next;
+			switch(select("Yes.:No.")) {
+			case 1:
+				mes "[Theodore]";
+				mes "The supply route comes through Bifrost, and you can get to it from the back of the Splendide Basecamp.";
+				mes "That is why we set up the basecamp here.";
+				mes "The origin of the route is unclear, but it has been known for a long time to be a bridge that connects continents.";
+				next;
+				mes "[Theodore]";
+				mes "If you happen to venture there, please ask a guard what things are like there.";
+				set ep14_1_bs,12;
+				changequest 11195,11196;
+				close;
+			case 2:
+				mes "[Theodore]";
+				mes "Thank you for getting the pouch back to me.";
+				mes "Fairy dust? I don't carry around such a thing.";
+				close;
+			}
+		} else if (ep14_1_bs == 12) {
+			mes "[Theodore]";
+			mes "The supply route comes through Bifrost, and you can get to it from the back of the Splendide Basecamp.";
+			mes "That is why we set up the basecamp here.";
+			mes "The origin of the route is unclear, but it has been known for a long time to be a bridge that connects continents.";
+			next;
+			mes "[Theodore]";
+			mes "If you happen to venture there, please ask a guard what things are like there.";
+			close;
+		} else if (ep14_1_bs == 13) {
+			mes "[Theodore]";
+			mes "A crevice?";
+			mes "So that was why we couldn't reach the mainland.";
+			mes "It would be good to know what's going on up there.";
+			next;
+			mes "[Theodore]";
+			mes "Hmm...";
+			mes "I can't leave here, but you would be able to, no?";
+			mes "The supplies from the mainland come through 'Mora' Village, which is located in the middle of Bifrost.";
+			next;
+			mes "[Theodore]";
+			mes "If you speak to the Warehouse Manager of Mora Village, you'd be able to get more information.";
+			mes "If you're willing, will you go to Bifrost's 'Mora' Village and meet the Warehouse Manager?";
+			next;
+			mes "[Theodore]";
+			mes "And if it's not too much trouble, you could drop by my friend Lilitia's also...";
+			set ep14_1_bs,14;
+			changequest 11197,11198;
+			close;
+		} else if (ep14_1_bs == 14) {
+			mes "[Theodore]";
+			mes "If you speak to the Warehouse Manager of Mora Village, you'd be able to get more information.";
+			mes "If you're willing, will you go to Bifrost's 'Mora' Village and meet the Warehouse Manager?";
+			if (checkquest(11199) > -1 && checkquest(11199) < 2)
+				close;
+			next;
+			mes "[Theodore]";
+			mes "And if it's not too much trouble, you could drop by my friend Lilitia's also...";
+			close;
+		} else if (ep14_1_bs > 14) {
+			if (checkquest(11199) == -1) {
+				mes "[Theodore]";
+				mes "And if it's not too much trouble, you could drop by my friend Lilitia's also...";
+				close;
+			}
+			mes "[Theodore]";
+			mes "Wow!!!";
+			mes "So you went through the Maze of the Hazy Forest and returned from Mora Village.";
+			mes "I made the right decision by asking you!";
+			next;
+			mes "[Theodore]";
+			mes "Thank you.";
+			mes "I hope this gets resolved soon...";
+			mes "I don't want to further upset Lilitia...";
+			if (ep14_1_bs == 17) {
+				next;
+				mes "[Theodore]";
+				mes "Oh, And Daphrer is in northwest Splendide.";
+			}
+			if (checkquest(11199) < 2) {
+				completequest 11198;
+				completequest 11199;
+			}
+			close;
+		}
+	}
+	mes "[Theodore]";
+	mes "Sometimes, I sense a painful beauty in this frozen earth, quite different from the beauty of my hometown.";
+	mes "But this is a difficult environment for us to live in, certainly.";
+	close;
+}
+
+splendide,168,301,4	script	Pauchon#ep14_1_bs	439,{
+	if (!isequipped(2782)) {
+		mes "[Pauchon]";
+		mes "DimFusTal Mu Lars";
+		mes "ModAnduLo";
+		mes "Mod";
+		mes "DorDuMe U NohLarsFulo Mu Fus";
+		next;
+		mes "- You can't understand the fairy's words. -";
+		mes "- You need something to help you interpret them. -";
+		close;
+	}
+	if (ep14_1_bs > 3 && ep14_1_bs < 10) {
+		mes "[Pauchon]";
+		mes "What can I do for you, sir?";
+		next;
+		select("Show the pouch.");
+		if (countitem(6390) == 0) {
+			mes "[Pauchon]";
+			mes "Huh? Do you see something?";
+			mes "I don't see anything...";
+			close;
+		}
+		if (ep14_1_bs2 == 12) {
+			mes "[Pauchon]";
+			mes "Good heavens...!";
+			mes "I think this is mine!";
+			mes "Thank you.";
+			mes "I've been worried since I lost it, you lifted a burden off of my mind.";
+			next;
+			select("Ask about the rumor.");
+			mes "[Pauchon]";
+			mes "That's not easy for me to answer...";
+			mes "I do appreciate you finding my pouch.... Hmm...";
+			mes "Please give me some time to think..";
+			delitem 6390,1; //Small_Pocket
+			set ep14_1_bs,10;
+			changequest 11187,11200;
+			close;
+		} else {
+			mes "[Pauchon]";
+			mes "Oh dear. It's not mine.";
+			mes "But to carelessly drop such an important object!";
+			mes "I don't know who it is, but that Laphine needs a lesson!";
+			close;
+		}
+	}
+	if (ep14_1_bs2 == 12) {
+		if (ep14_1_bs == 10) {
+			mes "[Pauchon]";
+			mes "What I'm about to tell you is top secret!";
+			mes "We don't even talk about it amongst ourselves!";
+			mes "How would we say that the supply from the mainland's been cut off like that!";
+			next;
+			mes "[Pauchon]";
+			mes "Ugh?!";
+			mes "Oh boy... I've done it....";
+			mes "It's really a top secret!!";
+			mes "Don't tell anybody!";
+			next;
+			mes "[Pauchon]";
+			mes "Well since I spilled the beans already... oh well, too late.";
+			mes "So it's been a while since we received supplies from the mainland.";
+			next;
+			mes "[Pauchon]";
+			mes "We're not starving, but we're receiving less and less food.";
+			mes "I was hungry so I went to go pick fruit, but in this cold climate there are no fruit trees.";
+			next;
+			mes "[Pauchon]";
+			mes "And the people higher up only tell us to wait... I'm so tired of waiting!";
+			mes "But the instant I leave this place, I'll end up going to prison....";
+			next;
+			mes "[Pauchon]";
+			mes "So I'm stuck here, and I'll be stuck here, suffering from hunger.... *sob*";
+			next;
+			mes "[Pauchon]";
+			mes "I'd eat the bark off of that tree if I could.";
+			mes "If only somebody could help. *sob*";
+			set ep14_1_bs,11;
+			completequest 11200;
+			setquest 11201;
+			close;
+		} else if (ep14_1_bs == 11) {
+			mes "[Pauchon]";
+			mes "What?";
+			mes "What do you want... I'm hungry, don't have energy to talk...";
+			next;
+			select("Supply route from the mainland?");
+			mes "[Pauchon]";
+			mes "Are you going to help me if I tell you?";
+			mes "If not, I won't tell.";
+			next;
+			switch(select("Yes.:No.")) {
+			case 1:
+				mes "[Pauchon]";
+				mes "A giant road leads away from the back of Splendide.";
+				mes "I don't know if it's related to legends and what not, but I've heard that the road's been there forever.";
+				next;
+				mes "[Pauchon]";
+				mes "Oh! The guard there might know something.";
+				mes "If you're headed that way, please go find out what's up.";
+				set ep14_1_bs,12;
+				changequest 11201,11202;
+				close;
+			case 2:
+				mes "[Pauchon]";
+				mes "Thank you for finding the pouch.";
+				mes "Ugh... I'm starving... I suppose I'll have to eat these bitter berries...";
+				close;
+			}
+		} else if (ep14_1_bs == 12) {
+			mes "[Pauchon]";
+			mes "A giant road leads away from the back of Splendide.";
+			mes "I don't know if it's related to legends and what not, but I've heard that the road's been there forever.";
+			next;
+			mes "[Pauchon]";
+			mes "Oh! The guard there might know something.";
+			mes "If you're headed that way, please go find out what's up.";
+			close;
+		} else if (ep14_1_bs == 13) {
+			mes "[Pauchon]";
+			mes "Crevice?!?";
+			mes "Hmm I have heard that crevices are creeping up here and there, but it even infiltrated Bifrost....";
+			mes "It appears to be more serious than I had imagined.";
+			next;
+			mes "[Pauchon]";
+			mes "If you can, would you go to 'Mora' Village in Bifrost and figure out what's going on?";
+			next;
+			mes "[Pauchon]";
+			mes "The supplies from the mainland come through the Village. If you go speak to the Warehouse Manager, he'll be able to tell you something.";
+			mes "Also, please pay a visit to my friend Humming.";
+			next;
+			mes "[Pauchon]";
+			mes "He's such a flighty guy, might have already left, but we were supposed to meet up in Mora Village.";
+			set ep14_1_bs,14;
+			changequest 11203,11204;
+			close;
+		} else if (ep14_1_bs == 14) {
+			mes "[Pauchon]";
+			mes "If you can, would you go to 'Mora' Village in Bifrost and figure out what's going on?";
+			next;
+			mes "[Pauchon]";
+			mes "The supplies from the mainland come through the Village. If you go speak to the Warehouse Manager, he'll be able to tell you something.";
+			if (checkquest(11205) > -1 && checkquest(11205) < 2)
+				close;
+			mes "Also, please pay a visit to my friend Humming.";
+			next;
+			mes "[Pauchon]";
+			mes "He's such a flighty guy, might have already left, but we were supposed to meet up in Mora Village.";
+			close;
+		} else if (ep14_1_bs > 14) {
+			if (checkquest(11205) == -1) {
+				mes "[Pauchon]";
+				mes "Please pay a visit to my friend Humming.";
+				mes "He's such a flighty guy, might have already left, but we were supposed to meet up in Mora Village.";
+				close;
+			}
+			mes "[Pauchon]";
+			mes "I had my doubts...But you really did cross the legendary Maze of the Hazy Forest...";
+			mes "I'm very impressed.";
+			next;
+			mes "[Pauchon]";
+			mes "I really appreciate your help.";
+			mes "I hope this gets resolved soon.";
+			mes "What I'm really afraid of... is hunger. More than war.";
+			if (ep14_1_bs == 17) {
+				next;
+				mes "[Pauchon]";
+				mes "Oh, And Daphrer is in northwest Splendide.";
+			}
+			if (checkquest(11205) < 2) {
+				completequest 11204;
+				completequest 11205;
+			}
+			close;
+		}
+	}
+	mes "[Pauchon]";
+	mes "Ah... I'm hungry.";
+	mes "When I get back to the mainland I'm going to stuff my belly until it bursts.";
+	close;
+}
+
+splendide,262,376,4	script	Laphine Soldier#ep14_1	447,{
+	if (!isequipped(2782)) {
+		mes "[Laphine Soldier]";
+		mes "DielFarmar Di RiniIyazser Ha mahAgolAsh U  U ";
+		mes "TurNohnar Di DurNeiFar Ra AnuVerNoth Ha AshRivehDor Ha BurWehLars Ur RinimanMod";
+		next;
+		mes "- You can't understand the fairy's words. -";
+		mes "- You need something to help you interpret them. -";
+		close;
+	}
+	mes "[Laphine Soldier]";
+	mes "This is Bifrost, which leads to Alfheim.";
+	mes "Please note that entry is forbidden due to a crevice caused by an unidentified source.";
+	if (ep14_1_bs != 12)
+		close;
+	next;
+	mes "[Laphine Soldier]";
+	mes "The other way leads to the Maze of the Hazy Forest.";
+	next;
+	mes "[Laphine Soldier]";
+	mes "You can get to Alfheim by making it through the Maze of the Hazy Forest. However, nobody has ever come back from the Maze of the Hazy Forest.";
+	if (checkquest(11190) > -1 && checkquest(11190) < 2) {
+		set ep14_1_bs,13;
+		changequest 11190,11191;
+	} else if (checkquest(11196) > -1 && checkquest(11196) < 2) {
+		set ep14_1_bs,13;
+		changequest 11196,11197;
+	} else if (checkquest(11202) > -1 && checkquest(11202) < 2) {
+		set ep14_1_bs,13;
+		changequest 11202,11203;
+	}
+	close;
+}
+
+mora,185,163,2	script	Warehouse Manager#ep14_1	516,{
+	if (ep14_1_bs < 15) {
+		mes "[Warehouse Manager]";
+		mes "No, sir!";
+		mes "You cannot enter at will.";
+		mes "This is a warehouse. If you need something, please ask the staff outside.";
+		if (ep14_1_bs < 14)
+			close;
+		next;
+		select("Supplies for Laphine?");
+		mes "[Warehouse Manager]";
+		mes "Ah!";
+		mes "You're from Splendide?";
+		mes "Let's see...";
+		mes "All the supplies from over there to there are destined for Splendide.";
+		next;
+		mes "[Warehouse Manager]";
+		mes "We are quite worried too because the crevice in Bifrost has made it impossible to deliver these goods.";
+		next;
+		mes "[Warehouse Manager]";
+		mes "And the travelers who were heading down are also stuck here. The increasing number of customers is both a blessing and a curse..";
+		next;
+		mes "[Warehouse Manager]";
+		mes "If you plan to go back to Splendide, pay a visit to Jones at the Inn.";
+		mes "He has something that needs to be urgently delivered to the army of Splendide.";
+		set ep14_1_bs,15;
+		setquest 11206;
+		close;
+	} else if (ep14_1_bs == 15) {
+		mes "[Warehouse Manager]";
+		mes "If you plan to go back to Splendide, pay a visit to Jones at the Inn.";
+		mes "He has something that needs to be urgently delivered to the army of Splendide.";
+		close;
+	} else {
+		mes "[Warehouse Manager]";
+		mes "We are quite worried too because the crevice in Bifrost has made it impossible to deliver these goods.";
+		next;
+		mes "[Warehouse Manager]";
+		mes "And the travelers who were heading down are also stuck here. The increasing number of customers is both a blessing and a curse...";
+		close;
+	}
+	end;
+}
+
+mora,35,119,4	script	Rondo#ep14_1_bs	513,{
+	mes "[Rondo]";
+	mes "Mora is such a mysterious place.";
+	mes "You can understand any language.";
+	next;
+	mes "[Rondo]";
+	mes "Of course, when we leave this area I won't be able to understand what you say, but I'll be able to remember the conversations we had. And I'll look forward to the day we meet again, here.";
+	if (ep14_1_bs > 13 && ep14_1_bs2 == 10) {
+		next;
+		mes "[Rondo]";
+		mes "Please tell Kusmi";
+		mes "that if he wants to meet, we can meet any time. There is nothing to worry about.";
+		if (checkquest(11193) == -1)
+			setquest 11193;
+	}
+	close;
+}
+
+mora,98,66,4	script	Lilitia#ep14_1_bs	518,{
+	if (ep14_1_bs > 13 && ep14_1_bs2 == 11) {
+		mes "[Lilitia]";
+		mes "Boo!!!";
+		mes "He broke his promise again!!!";
+		next;
+		mes "[Lilitia]";
+		mes "He said he'd be here this time for sure!!!";
+		mes "That place is too cold for me to visit!!!!!";
+		mes "My precious leaves will wither there.";
+		next;
+		mes "[Lilitia]";
+		mes "What? Theodore sent you?";
+		mes "Please tell him that I'm so mad!!";
+		if (checkquest(11199) == -1)
+			setquest 11199;
+		close;
+	}
+	mes "[Lilitia]";
+	mes "I really hate the cold.";
+	mes "That's why Mora is a lovely place to live.";
+	next;
+	mes "[Lilitia]";
+	mes "The leaves are always fresh here. And, the stress about languages just disappears.";
+	close;
+}
+
+mora,139,102,2	script	Humming#ep14_1_bs	515,{
+	if (ep14_1_bs > 13 && ep14_1_bs2 == 12) {
+		mes "[Humming]";
+		mes "Oh!";
+		mes "You're here because Pauchon sent you?";
+		next;
+		mes "[Humming]";
+		mes "It must've been hard for you to get here. I'm impressed.";
+		mes "The Maze of the Hazy Forest~ It fuels my adventurous spirit!";
+		next;
+		mes "[Humming]";
+		mes "If you reach Splendide before me, please tell Pauchon";
+		mes "that I'm going through the Maze of the Hazy Forest.";
+		if (checkquest(11205) == -1)
+			setquest 11205;
+		close;
+	}
+	mes "[Humming]";
+	mes "I heard that a crevice crept in between Jotunheim and Midgard, so I wanted to check it out. But I got stuck here.";
+	mes "I was looking forward to seeing a new place.";
+	next;
+	mes "[Humming]";
+	mes "Are you from Midgard?";
+	mes "What is it like there?";
+	mes "I've always wanted to see a creature called Poring.";
+	close;
+}
+
+mora,55,124,2	script	Jones#ep14_1_bs	495,{
+	if (ep14_1_bs < 15) {
+		mes "[Jones]";
+		mes "Oh.... Darn.......";
+		mes "I can't go down, and I can't go back. My credibility that I've worked so hard on is just crumbling into dust.";
+		close;
+	} else if (ep14_1_bs == 15) {
+		mes "[Jones]";
+		mes "Ah, are you the traveler who came through the Maze of the Hazy Forest from Splendide?";
+		mes "If you plan to go back, can you please deliver this to the Splendide army?";
+		next;
+		mes "[Jones]";
+		mes "A person high up requested it, but I can't cross Bifrost.";
+		next;
+		mes "[Jones]";
+		mes "Deliveries to other places have all stopped also. Ah, my credibility is suffering....";
+		next;
+		switch(select("Yes.:No.")) {
+		case 1:
+			mes "[Jones]";
+			mes "Thank you.";
+			set ep14_1_bs,16;
+			changequest 11206,11207;
+			close;
+		case 2:
+			mes "[Jones]";
+			mes "I'm a bit embarrassed to ask this of a stranger...... Ha ha!";
+			close;
+		}
+	} else if (ep14_1_bs == 16) {
+		if (checkweight(1201,1) == 0) {
+			mes "[Jones]";
+			mes "You have too many kinds of items. Please lighten your load and come back.";
+			close;
+		}
+		if (MaxWeight - Weight < 3500) {
+			mes "[Jones]";
+			mes "You are carrying too much weight. Please lighten your load and come back.";
+			close;
+		}
+		mes "[Jones]";
+		mes "Please take good care of it.";
+		mes "It's for Daphrer in Splendide.";
+		set ep14_1_bs,17;
+		getitem 6391,1; //Splendid_Supply_Kit
+		changequest 11207,11208;
+		close;
+	} else if (ep14_1_bs == 17) {
+		mes "[Jones]";
+		mes "Please take good care of it.";
+		mes "It's for Daphrer in Splendide.";
+		close;
+	} else if (ep14_1_bs > 17) {
+		mes "[Jones]";
+		mes "Thanks to you, the job is well done.";
+		mes "Hehe, I see potential in you as a delivery man.";
+		mes "Interested in the career of delivery?";
+		close;
+	} else {
+		mes "[Jones]";
+		mes "Hehe, I see potential in you as a delivery man.";
+		mes "Interested in the career of delivery?";
+		close;
+	}
+	end;
+}
+
+splendide,121,260,4	script	Daphrer#ep14_1_bs	435,{
+	if (!isequipped(2782)) {
+		mes "[Daphrer]";
+		mes "DRHSfhsdfGSDH FGkkmvoifk DFG DFHshfeksmn fgg FDbbd fjnnvk n skncki dfgd F FHdfkdfjkmv";
+		close;
+	}
+	if (countitem(6391)) {
+		mes "[Daphrer]";
+		mes "Oh....";
+		mes "I've been waiting for you.";
+		next;
+		mes "[Daphrer]";
+		mes "This was urgently needed so thank you for bringing it here, I hope I haven't caused you too much trouble..";
+		next;
+		mes "[Daphrer]";
+		mes "This is probably too small to be a reward, but please accept this as a sign of my gratitude.";
+		delitem 6391,1; //Splendid_Supply_Kit
+		if (ep14_1_bs == 17) {
+			set ep14_1_bs,18;
+			completequest 11208;
+			getexp 0,500000;
+			getitem 6380,5; //Mora_Coin
+		} else
+			getitem 6380,2; //Mora_Coin
+		close;
+	}
+	if (ep14_1_bs == 17) {
+		mes "[Daphrer]";
+		mes "Oh....";
+		mes "So you lost the item on the way.";
+		next;
+		mes "[Daphrer]";
+		mes "I knew that it was probably a stretch......";
+		mes "Perhaps I've been unrealistic.";
+		mes "But I thank you for your trouble anyway. Please accept this as a sign of my gratitude.";
+		set ep14_1_bs,18;
+		completequest 11208;
+		getexp 0,200000;
+		getitem 6380,2; //Mora_Coin
+		close;
+	}
+	mes "[Daphrer]";
+	mes "For me, a drop of water to make a flower blossom is more important than a sword for war.";
+	close;
+}
+
+sec_in02,35,175,0	script	Theore Set Guid	436,{
+	callfunc "F_GM_NPC";
+	switch(select("Set0:Set33:Set2_0")) {
+	case 1:
+		set ep14_1_bs,0;
+		end;
+	case 2:
+		set ep4_1_bs,3;
+		setquest 11183;
+		end;
+	case 3:
+		set ep14_1_bs2,0;
+		end;
+	}
+}
+
+// Chesire's New Day :: ep14_1_cheshir2
+//============================================================
+dic_in01,262,191,0	script	#ep14_1_xq02	139,0,3,{
+	end;
+OnTouch:
+	if (ep13_3_secret > 22 && checkquest(7206) == -1) {
+		enablenpc "Cheshire#ep14_1_xq01";
+		cutin "ep13_cheshire_h",1;
+		mes "[Cheshire]";
+		mes "Oh, wait!";
+		mes "There's another thing I'd like you to do.";
+		mes "There's not enough time to go into details...";
+		next;
+		mes "- Cheshire glanced at the guard standing close to you, and leaned close and whispered into your ear.-";
+		next;
+		mes "[Cheshire]";
+		mes "You'll find cat caravans in the middle of ^4d4dffKamidal Tunnel^000000.";
+		mes "There is ^4d4dffa marked box among the caravans' goods to the west of the entrance to the Scaraba Hole^000000.";
+		next;
+		mes "[Cheshire]";
+		mes "I'd like you to bring it to me.";
+		mes "You'll see where you should bring it by looking at the box.";
+		mes "This is an important matter.";
+		next;
+		mes "[Cheshire]";
+		mes "I have something to get done in advance...";
+		mes "Good luck!";
+		setquest 7206;
+		close2;
+		disablenpc "Cheshire#ep14_1_xq01";
+		cutin "",255;
+	}
+	end;
+}
+
+dic_in01,260,194,4	script	Cheshire#ep14_1_xq01	498,{
+	end;
+OnInit:
+	disablenpc "Cheshire#ep14_1_xq01";
+	end;
+}
+
+dic_dun01,274,114,0	script	Stacked Boxes of Goods	844,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
+		mes "- You have too many items to do this quest. -";
+		close;
+	}
+	set .@playtime, checkquest(7208,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "Boxes with all kinds of goods in them are stacked to the ceiling.";
+		mes "The marked box Cheshire was talking about doesn't seem to be here yet.";
+		close;
+	} else if (.@playtime == 2) {
+		mes "Boxes with all kinds of goods in them are stacked to the ceiling.";
+		mes "Looking closely, you find a box with a small piece of paper stuck to it.";
+		mes "You've found the box of goods Cheshire was talking about.";
+		next;
+		switch(select("Move the box.:Give up.")) {
+		case 1:
+			mes "You promised to take the box of Bradium to Cheshire, who will be waiting for you near the Crevice of Bifrost.";
+			erasequest 7208;
+			setquest 7210;
+			getitem 6392,1; //Bradium_Box
+			close;
+		case 2:
+			mes "You decided to give up delivering the box.";
+			mes "You left the box as it is.";
+			erasequest 7208;
+			close;
+		}
+	} else {
+		if (checkquest(7207) == -1) {
+			if (checkquest(7206) > -1) {
+				mes "Boxes with all kinds of goods in them are stacked to the ceiling.";
+				mes "Looking closely, you find a box with a small piece of paper stuck to it.";
+				next;
+				mes "The piece of paper is marked with some mysterious symbol, and below it is written ^4d4dffTo: The Crevice of Bifrost^000000 in small letters.";
+				next;
+				mes "This must the box Cheshire was talking about.";
+				mes "You decide to take it to the location shown on the piece of paper.";
+				completequest 7206;
+				setquest 7207;
+				getitem 6392,1; //Bradium_Box
+				close;
+			}
+		} else if (checkquest(7207) < 2) {
+			mes "You've already obtained the box Cheshire was talking about.";
+			mes "Now you only have to take it to the Crevice of Bifrost.";
+			close;
+		}
+		mes "Boxes with all kinds of goods in them are stacked to the ceiling.";
+		close;
+	}
+	end;
+}
+
+bif_fild01,335,168,3	script	Cheshire#ep14_1_xq04	497,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 1000) {
+		mes "- You have too many items to do this quest. -";
+		close;
+	}
+	cutin "ep13_cheshire",1;
+	if (checkquest(7209) > -1) {
+		if (countitem(6090) < 20) {
+			mes "[Cheshire]";
+			mes "Bring me 20 pieces of refined Bradium.";
+			mes "In exchange for the box, which you carelessly and irresponsibly sold to somebody.";
+			mes "Have I made myself clear?!";
+			close2;
+			cutin "",255;
+			end;
+		}
+		mes "[Cheshire]";
+		mes "So you've brought it?";
+		mes "The amount is less than it was, but I guess I can't help it.";
+		mes "Next time, you must bring the box to me intact.";
+		next;
+		mes "- Cheshire threw the Bradium into the Crevice. -";
+		next;
+		mes "[Cheshire]";
+		mes "You made a mistake of losing the box, you have to be content with this.";
+		mes "And starting tomorrow, get the box here intact.";
+		mes "Every day.";
+		delitem 6090,20; //Purified_Bradium
+		erasequest 7209;
+		setquest 7208;
+		getitem 6304,1; //Sapa_Feat_Cert
+		close2;
+		cutin "",255;
+		end;
+	}
+	callsub L_CheckPlaytime;
+	if (checkquest(7210) > -1) {
+		if (countitem(6392) == 0)
+			callsub L_LostQuest,7210;
+		else {
+			mes "[Cheshire]";
+			mes "You've come at just the right time.";
+			mes "And I see the box is intact!";
+			mes "Well done.";
+			next;
+			mes "[Cheshire]";
+			mes "Well, I'll be counting on you, tomorrow as well.";
+			mes "Get it?";
+			mes "Now, leave this place before the Laphines grow suspicious.";
+			erasequest 7210;
+			setquest 7208;
+			delitem 6392,1; //Bradium_Box
+			getitem 6304,1; //Sapa_Feat_Cert
+			getexp 50000,40000;
+			close2;
+			cutin "",255;
+			end;
+		}
+	}
+	if (ep13_3_secret > 22) {
+		if (checkquest(7207) == -1) {
+			if (checkquest(7206) == -1) {
+				mes "[Cheshire]";
+				mes "...Hmm? Huh?";
+				mes "It's "+strcharinfo(0)+"!";
+				mes "What are you doing here?";
+				next;
+				select("Huh? Cheshire?");
+				mes "[Cheshire]";
+				mes "What makes you so surprised?";
+				mes "Does it surprise you to see me here?";
+				next;
+				select("Nothing, it's just the hood...");
+				mes "[Cheshire]";
+				mes "Oh... This. Because it's bothersome.";
+				mes "And here, I don't have to mind others.";
+				mes "Oh, and well met!";
+				mes "I was going to put you to work when you came to Diel.";
+				next;
+				mes "[Cheshire]";
+				mes ".......What? Why are you staring at me like that?";
+				mes "his is all for Ahat's good.";
+				next;
+				switch(select("I guess I have no choice.:I have a lot of things to do!")) {
+				case 1:
+					mes "["+strcharinfo(0)+"]";
+					mes "(He will be suspicious if I refuse to do it... I guess I should play along for now.)";
+					mes "Okay.";
+					mes "I'll do anything for Ahat's pleasure.";
+					mes "So, what do you need me for?";
+					next;
+					break;
+				case 2:
+					mes "[Cheshire]";
+					mes "Things to do?";
+					mes "What things?";
+					mes "This is one of the things you must do.";
+					mes "Don't forget you're are loyal to Ahat.";
+					next;
+					break;
+				}
+				mes "[Cheshire]";
+				mes "Great! Now I will tell you what to do.";
+				mes "You know there is an entrance to Scaraba Hole in the middle of Kamidal Tunnel?";
+				mes "You will find cat caravans around there who sell supplies and some simple tools.";
+				next;
+				mes "[Cheshire]";
+				mes "There is a marked box among the goods stacked there.";
+				mes "I'd like you to bring the box to me.";
+				next;
+				mes "[Cheshire]";
+				mes "It's a simple job of picking up and delivering a box.";
+				mes "Do it ^4d4dff quickly and quietly, without being noticed^000000.";
+				setquest 7206;
+				next;
+				mes "[Cheshire]";
+				mes "Now, move!";
+				close2;
+				cutin "",255;
+				end;
+			} else {
+				mes "[Cheshire]";
+				mes "Bring the box from Kamidal Tunnel.";
+				mes "Quickly and quietly!";
+				mes "No, get a move on!";
+				close2;
+				cutin "",255;
+				end;
+			}
+		} else if (checkquest(7207) < 2) {
+			if (countitem(6392) == 0)
+				callsub L_LostQuest,7207;
+			else {
+				mes "[Cheshire]";
+				mes "........That box!";
+				mes "Oh, yes. It's the right one!";
+				mes "You've done a good job.";
+				mes "This is very important.";
+				mes "Ahat will be pleased.";
+				next;
+				mes "[Cheshire]";
+				mes "The boxes will be at the same place every day.";
+				mes "I'll leave the job to you.";
+				next;
+				select("Why don't you do it yourself?");
+				mes "[Cheshire]";
+				mes "........ Hmm...";
+				mes "It's only you humans that have free access to any place.";
+				mes "Plus, this place is Laphine territory.";
+				next;
+				mes "[Cheshire]";
+				mes "I don't attract their attention much, looking like this,";
+				mes "but what would Saphas think?";
+				mes "To see Ahat's man in a Laphine territory?";
+				next;
+				mes "[Cheshire]";
+				mes "They will grow suspicious.";
+				mes "But you humans are free from such troubles, so that's why you're the right one for the job.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "(... I don't buy his story, but he believes I'm on his side, so I guess I should play along.)";
+				mes "What happens to this Bradium, then?";
+				next;
+				mes "[Cheshire]";
+				mes "That thing?";
+				mes "Hand it to me.";
+				next;
+				mes "- Cheshire opened the box, checked the Bradium in it, threw them into the Crevice,";
+				mes "and looked back, dusting his hands off, and with a triumphant look on his face. -";
+				next;
+				mes "[Cheshire]";
+				mes "This is what happens.";
+				mes "*laugh* Beyond the Crevice lies a path unknown to you.";
+				next;
+				mes "[Cheshire]";
+				mes "Well, I'll leave the matter to you.";
+				mes "Try to bring the box to me every day.";
+				mes "Okay?";
+				delitem 6392,1; //Bradium_Box
+				completequest 7207;
+				setquest 7208;
+				getitem 6304,1; //Sapa_Feat_Cert
+				getexp 50000,40000;
+				next;
+				mes "[Cheshire]";
+				mes "In compensation for your efforts, I'll give you an Exploit Certification of Sapha and a little cash.";
+				mes "Now, leave this place before the Laphines grow suspicious.";
+				close2;
+				cutin "",255;
+				end;
+			}
+		} else {
+			callsub L_CheckPlaytime;
+			mes "[Cheshire]";
+			mes "Huh? What's up?";
+			mes "You haven't brought the box today?";
+			next;
+			mes "[Cheshire]";
+			mes "Hmm, this is unexpected...";
+			mes "Well, I have no choice then.";
+			mes "I'll have another guy do it today.";
+			mes "But you must do it starting tomorrow, okay?";
+			setquest 7208;
+			close2;
+			cutin "",255;
+			end;
+		}
+	} else if (ep13_3_secret > 15) {
+		mes "[Cheshire]";
+		mes "... Huh? I think I've seen you somewhere...";
+		mes "..........Oh!";
+		mes strcharinfo(0)+"...?!";
+		mes "What brings you here?";
+		next;
+		mes "[Cheshire]";
+		mes "You say you've forgotten what to do?";
+		mes "You're not supposed to be here.";
+		mes "You're supposed to be at the crevice to the south of Dicastes.";
+		next;
+		mes "[Cheshire]";
+		mes "Whoa.";
+		mes "What was Ahat thinking when he sent such an idiot to me?";
+		mes "Now, get a move on and do your job.";
+		close2;
+		cutin "",255;
+		end;
+	}
+	mes "[Cheshire]";
+	mes "...Why isn't this fellow showing up?";
+	mes "Should be here by now...";
+	mes "Lost the way back perhaps...?";
+	mes "....? Eh? Who, who are you? How long have you been standing here?";
+	next;
+	select("A cat?!");
+	mes "[Cheshire]";
+	mes "Who... who's a cat?!";
+	mes "Get lost!";
+	close2;
+	cutin "",255;
+	end;
+L_LostQuest:
+	mes "[Cheshire]";
+	mes "Oh, have you been there?";
+	mes "What happened to the box?";
+	mes "Why are you empty-handed?";
+	next;
+	switch(select("I'll look for it again!:I lost it...")) {
+	case 1:
+		mes "[Cheshire]";
+		mes "Make sure you do a good job!";
+		mes "And keep looking for it.";
+		mes "You must not lose it.";
+		break;
+	case 2:
+		mes "[Cheshire]";
+		mes "Where?";
+		mes "Which merchant did you sell it to?";
+		mes "Can't you distinguish between what to sell and what not to sell?";
+		mes "Were you asleep when you made the deal?";
+		next;
+		mes "[Cheshire]";
+		mes "This is utterly ridiculous.";
+		mes "Make up for what you lost!";
+		mes "^4d4dff20 pieces of refined Bradium^000000!!!";
+		erasequest getarg(0);
+		setquest 7209;
+		break;
+	}
+	close2;
+	cutin "",255;
+	end;
+L_CheckPlaytime:
+	set .@playtime, checkquest(7208,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "[Cheshire]";
+		mes "Each day, one of these boxes is sent to Kamidal Tunnel.";
+		mes "It's smuggled in among other items.";
+		next;
+		mes "[Cheshire]";
+		mes "Sneak into the place on time, and bring the box to me. The boxes will be at the same place every day.";
+		mes "You'll be doing it every day.";
+		close2;
+		cutin "",255;
+		end;
+	} else if (.@playtime == 2) {
+		mes "[Cheshire]";
+		mes "It's about time.";
+		mes "Now go get the box.";
+		mes "It should be lying near the entrance to Scaraba Hole in the Kamidal Tunnel.";
+		mes "You've done this before, so you must be familiar with it?";
+		close2;
+		cutin "",255;
+		end;
+	} else
+		return;
+}
+
+dicastes02,125,192,0	script	#call_cheshir_ep14	139,0,3,{
+	end;
+OnTouch:
+	if (ep13_3_secret > 22) {
+		if (rand(2)) {
+			emotion e_ho,1;
+			mes "..........?";
+			mes "You sense someone moving around.";
+			mes "There must be someone down there.";
+			if ($@cheshire_on == 0) {
+				donpcevent "Cheshire#ep14_extra::OnEnable";
+				set $@cheshire_on,1;
+			}
+			close;
+		}
+	}
+	end;
+}
+
+dicastes02,103,190,3	script	Cheshire#ep14_extra	497,{
+	if (ep13_3_secret > 22) {
+		cutin "ep13_cheshire",1;
+		mes "[Cheshire]";
+		mes "...Eh?";
+		mes "What a surprise. What are you doing here?";
+		next;
+		switch(select("And what are YOU doing here?:Those ears...?")) {
+		case 1:
+			mes "[Cheshire]";
+			mes "Out for a walk?";
+			mes "I came out with Ahat, but he went back in to take care of an urgent matter.";
+			next;
+			mes "[Cheshire]";
+			mes ".. ..............";
+			next;
+			select("....:Wha... What a pretty tree.");
+			mes "[Cheshire]";
+			mes "This tree... it's white, transparent, and shiny.";
+			mes "It's a Sapha's body.";
+			next;
+			mes "[Cheshire]";
+			mes "You know Saphas slowly turn to stone throughout their lives.";
+			mes "So when they die, they turn to stony trees.";
+			mes "This forest is... their cemetery, so to speak.";
+			next;
+			mes "[Cheshire]";
+			mes "....... Look closely, and you can make out his arms and legs.";
+			mes "Interesting, isn't it?";
+			next;
+			mes "[Cheshire]";
+			mes "... .. ...";
+			next;
+			mes "[Cheshire]";
+			mes "Oh, this is so annoying.";
+			mes "I'm off!";
+			next;
+			mes "- Cheshire stormed off... -";
+			break;
+		case 2:
+			mes "[Cheshire]";
+			mes "What? The ears?";
+			mes "Well, it's no wonder because I'm a beastman.";
+			mes "... Why... Why are you staring me like that?";
+			next;
+			select("Are you responsible for the report?!");
+			mes "[Cheshire]";
+			mes "What are you talking about?";
+			mes "I don't know such a thing!";
+			next;
+			mes "- Cheshire ran away... -";
+			break;
+		}
+		disablenpc "Cheshire#ep14_extra";
+		stopnpctimer;
+		close2;
+		cutin "",255;
+		end;
+	}
+	mes "A boy dressed in unusual clothing is standing, with a fierce look in his eyes.";
+	mes "You guess you'd better leave him alone.";
+	close;
+OnInit:
+	disablenpc "Cheshire#ep14_extra";
+	end;
+OnEnable:
+	enablenpc "Cheshire#ep14_extra";
+	initnpctimer;
+	end;
+OnDisable:
+	disablenpc "Cheshire#ep14_extra";
+	stopnpctimer;
+	end;
+OnTimer600000:
+	disablenpc "Cheshire#ep14_extra";
+	set $@cheshire_on,0;
+	stopnpctimer;
+	end;
+}
+
+// Helping Lope and Euridi :: ep14_1_rofe
+//============================================================
+mora,117,66,3	script	Euridi#pa	521,{
+	if (BaseLevel < 100) {
+		mes "[Euridi]";
+		mes "You are very delicate.";
+		mes "It's true that I need help,";
+		mes "but I don't think you can help.";
+		close;
+	}
+	if (ep14_1_rope == 0) {
+		mes "[Euridi]";
+		mes "I hear you passed through the Hazy Forest.";
+		mes "Did you...";
+		mes "Did you happen to see";
+		mes "Lope, my fiance, there?";
+		next;
+		switch(select("Yes, I did.:No, I didn't.")) {
+		case 1:
+			mes "[Euridi]";
+			mes "Are you sure? Where did you see him?";
+			mes "Take me there, quick!";
+			mes "...";
+			next;
+			mes "[Euridi]";
+			mes "What?";
+			mes "You're kidding...?";
+			mes "How could you?";
+			close;
+		case 2:
+			mes "[Euridi]";
+			mes "Please find my Lope.";
+			mes "I came here to the Village of Mora";
+			mes "after asking all around,";
+			mes "but there is nothing more I can do.";
+			next;
+			mes "[Euridi]";
+			mes "My heart aches at the thought of Lope...";
+			mes "He will be desperately looking for me...";
+			next;
+			switch(select("Sorry, I'm busy!:I'll help you!")) {
+			case 1:
+				mes "[Euridi]";
+				mes "How heartless!";
+				close;
+			case 2:
+				mes "[Euridi]";
+				mes "I heard that he had gone into the Hazy Forest,";
+				mes "while guiding tourists around the village.";
+				mes "One of the tourists who went with Lope";
+				mes "must still be at the inn.";
+				next;
+				mes "[Euridi]";
+				mes "He wouldn't see me and locked himself in the room.";
+				mes "But he might be willing to see you, because you've been to the Hazy Forest.";
+				setquest 1109;
+				set ep14_1_rope,1;
+				close;
+			}
+		}
+	} else if (ep14_1_rope == 1) {
+		mes "[Euridi]";
+		mes "The tourist is at the inn,";
+		mes "not in front of me!";
+		close;
+	} else if (ep14_1_rope == 2) {
+		mes "[Euridi]";
+		mes "So you've seen Pitt!";
+		mes "I knew he would be willing to see you.";
+		mes "What did he say?";
+		next;
+		mes "[Euridi]";
+		mes "...No way....!";
+		mes "That is utter nonsense.";
+		mes "To blame Lope for it!";
+		mes "I found this piece of paper";
+		mes "near the Hazy Forest.";
+		mes "I'm sure it's Lope's.";
+		next;
+		mes "[Euridi]";
+		mes "If you find the rest of ^0000FFLope's Clues^000000,";
+		mes "you'll be able to find out";
+		mes "where he is.";
+		mes "I'm counting on you, "+strcharinfo(0)+".";
+		changequest 1110,1111;
+		set ep14_1_rope,3;
+		close;
+	} else if (ep14_1_rope == 3) {
+		mes "[Euridi]";
+		mes "If you come across a ^0000FFLope's Clue^000000, please show it to Pitt.";
+		mes "I hope he will tell the truth soon.";
+		close;
+	} else if (ep14_1_rope == 4) {
+		mes "[Euridi]";
+		mes "I don't understand it.";
+		mes "I'm now suspicious of his motives.";
+		mes "Why is he trying so hard to accuse Lope?";
+		mes "Wait... those clues...";
+		next;
+		mes "[Euridi]";
+		mes "Those seem to be more than simple notes.";
+		mes "Can I have a look at them?";
+		mes "...";
+		mes "These fit together like a puzzle.";
+		mes "... Oh!... This is...";
+		next;
+		mes "[Lope's Letter]";
+		mes "...We've been wandering around the Forest for days.";
+		mes "...So we're not protecting the tourists,";
+		mes "I got sick from deadly poison, and became a burden to everyone.";
+		mes "How pathetic...";
+		next;
+		mes "[Lope's Letter]";
+		mes "No wonder I was kicked out of";
+		mes "the Splendide Expedition.";
+		mes "...But I managed to protect at least one tourist.";
+		mes "He will deliver this letter and the ring to you.";
+		next;
+		mes "[Lope's Letter]";
+		mes "...I wanted to propose to you";
+		mes "as a proud member of the Expedition.";
+		mes "I'm sorry, Euridi.";
+		mes "See you soon.";
+		next;
+		mes "Having read the letter,";
+		mes "Euridi is standing staring blankly like someone who wasn't all there.";
+		mes "Let's go show the letter to Pitt.";
+		changequest 1112,1113;
+
+		//delitem 6383,30; //Clue_Of_Lope
+		set .@count, countitem(6383);
+		if (.@count) delitem 6383,((.@count > 30)?30:.@count); //Clue_Of_Lope
+
+		set ep14_1_rope,5;
+		close;
+	} else if (ep14_1_rope == 5) {
+		mes "[Euridi]";
+		mes "No, Lope must be safe.";
+		mes "He will come back no matter what...";
+		close;
+	} else if (ep14_1_rope == 6) {
+		mes "[Euridi]";
+		mes "......";
+		next;
+		mes "You hear a song coming from the girl who is hanging her head low.";
+		mes "Her friend seems to have something to say.";
+		close;
+	} else if (ep14_1_rope == 7 || ep14_1_rope == 8) {
+		mes "You hear a quiet singing voice.";
+		mes "You can't make the words out.";
+		close;
+	} else if (ep14_1_rope == 9) {
+		mes "[Euridi]";
+		mes "Have you found Lope?";
+		mes "Is he safe?";
+		next;
+		switch(select("Tell her you can't possibly find him.:Tell her he is dead.")) {
+		case 1:
+			mes "[Euridi]";
+			mes "I'll go look for him myself.";
+			mes "Hopefully... it's not too late, yet.";
+			mes "Let me go, there's no time to lose!";
+			close;
+		case 2:
+			mes "[Euridi]";
+			mes "I don't believe it.";
+			mes "He told me he would come back soon...";
+			mes "He told me to hang on.";
+			mes "It can't be... It just can't be...";
+			next;
+			mes "You hand her Lope's Ring, which Pitt gave you.";
+			mes "With the ring in her hand, Euridi bursts into tears.";
+			mes "She starts to sing in a strained voice, still crying.";
+			changequest 1116,1117;
+			set ep14_1_rope,10;
+
+			//delitem 6384,1; //Ring_Of_Lope
+			if (countitem(6384)) delitem 6384,1; //Ring_Of_Lope
+
+			close;
+		}
+	} else if (ep14_1_rope > 9) {
+		mes "You stand frozen.";
+		mes "You hear a quiet singing voice.";
+		close;
+	}
+}
+
+mora,115,68,3	script	Euridi's Friend#pa	520,{
+	if (ep14_1_rope < 2) {
+		mes "[Euridi's Friend]";
+		mes "Please stop Euridi.";
+		mes "She is desperate to find her missing fiance.";
+		close;
+	} else if (ep14_1_rope == 2) {
+		mes "[Euridi's Friend]";
+		mes "Pitt is definitely suspicious.";
+		mes "I think he is avoiding Euridi...";
+		mes "He must be hiding something.";
+		close;
+	} else if (ep14_1_rope == 3) {
+		mes "[Euridi's Friend]";
+		mes "To tell the truth, I don't think";
+		mes "that Lope is alive.";
+		mes "I'm just worried about Euridi.";
+		next;
+		mes "[Euridi]";
+		mes "Aaarrrggghhh!!!!!!!!";
+		next;
+		mes "[Euridi's Friend]";
+		mes "...";
+		mes "To tell the truth, I really believe";
+		mes "that Lope is alive.";
+		mes "...";
+		mes "*sigh*";
+		close;
+	} else if (ep14_1_rope == 4) {
+		mes "[Euridi's Friend]";
+		mes "How's Pitt doing?";
+		mes "I think I should go visit him";
+		mes "and make him feel worse!";
+		mes "He's so disgusting!";
+		close;
+	} else if (ep14_1_rope == 5) {
+		mes "[Euridi's Friend]";
+		mes "Go to Pitt, quick.";
+		close;
+	} else if (ep14_1_rope == 6) {
+		mes "[Euridi's Friend]";
+		mes "Euridi is singing a song of healing";
+		mes "to protect her weakened body and mind.";
+		mes "At this rate, something's going to happen to her too.";
+		next;
+		mes "[Euridi's Friend]";
+		mes "Oh, I remember a traveler telling me";
+		mes "that he had seen a suspicious man";
+		mes "near the entrance to the Hazy Forest.";
+		next;
+		mes "[Euridi's Friend]";
+		mes "The traveler says he looked creepy standing there staring blankly,";
+		mes "but he couldn't see clearly";
+		mes "because of the thick fog.";
+		mes "I think it's worth investigating.";
+		changequest 1114,1115;
+		set ep14_1_rope,7;
+		close;
+	} else if (ep14_1_rope == 7) {
+		mes "[Euridi's Friend]";
+		mes "I hear that a suspicious man was seen";
+		mes "near the entrance to the Hazy Forest.";
+		mes "The traveler says he looked creepy standing there staring blankly,";
+		mes "but he couldn't see clearly";
+		mes "because of the thick fog.";
+		mes "I think it's worth investigating.";
+		close;
+	} else if (ep14_1_rope == 8 || ep14_1_rope == 9) {
+		mes "[Euridi's Friend]";
+		mes "Your face is dark.";
+		mes "Bad news?";
+		close;
+	} else if (ep14_1_rope == 10) {
+		mes "[Euridi's Friend]";
+		mes "There is a Laphine saying that";
+		mes "desperation invites disaster.";
+		mes "Maybe we're responsible";
+		mes "for what happened.";
+		next;
+		if (checkweight(6380,1) == 0) {
+			mes "[Euridi's Friend]";
+			mes "You have too many things with you.";
+			mes "Can you throw out some of them?";
+			close;
+		}
+		mes "[Euridi's Friend]";
+		mes "Lope will be able to rest in peace now.";
+		mes "Thank you. I won't forget what you've done for me.";
+		completequest 1117;
+		set ep14_1_rope,11;
+		getexp 1000000,2000000;
+		getitem 6380,10; //Mora_Coin
+		close;
+	} else if (ep14_1_rope > 10) {
+		mes "[Euridi's Friend]";
+		mes "Thank you. I won't forget your help.";
+		close;
+	}
+}
+
+mora,65,145,3	script	Pitt#pa	519,{
+	if (ep14_1_rope == 0) {
+		mes "[Pitt]";
+		mes "So you're quite good,";
+		mes "since you passed through the Hazy Forest alive.";
+		mes "I'm completely messed up, you see,";
+		mes "so I can't afford to listen to the tales of your exploits.";
+		mes "Now leave.";
+		close;
+	} else if (ep14_1_rope == 1) {
+		mes "[Pitt]";
+		mes "You have a knack for pestering people, don't you?";
+		mes "Euridi sent you, eh?";
+		mes "The Laphine couple is";
+		mes "anxious to kill me.";
+		next;
+		mes "[Pitt]";
+		mes "Go and tell her!";
+		mes "That the stupid guide";
+		mes "pushed us reluctant tourists into the forest,";
+		mes "and ran off to save his own skin!";
+		next;
+		mes "[Pitt]";
+		mes "So you're sorry that it's me, not him, that's here?";
+		mes "He will be alive somewhere,";
+		mes "so go and try to find him! Just stop bothering me!";
+		changequest 1109,1110;
+		set ep14_1_rope,2;
+		close;
+	} else if (ep14_1_rope == 2) {
+		mes "[Pitt]";
+		mes "This is all because of";
+		mes "the stupid guide!";
+		mes "I hate Laphines!";
+		close;
+	} else if (ep14_1_rope == 3) {
+		if (countitem(6383) < 30) {
+			mes "[Pitt]";
+			mes "This is all because of";
+			mes "the stupid guide!";
+			mes "I hate Laphines!";
+			close;
+		}
+		mes "[Pitt]";
+		mes "That thing you have in your hand...";
+		mes "It looks very strange.";
+		mes "I've never seen such a thing before.";
+		mes "You'd better not keep that.";
+		mes "Can I have it?";
+		next;
+		switch(select("Give it to him.:Don't give it to him.")) {
+		case 1:
+			mes "[Pitt]";
+			mes "So I swallow it like this,";
+			mes "and voila! Evidence gone!";
+			mes "Now I can sleep soundly, thank you!";
+			delitem 6383,5; //Clue_Of_Lope
+			close;
+		case 2:
+			mes "[Pitt]";
+			mes "Why are you showing me such a thing?";
+			mes "I don't know anything! I'm the victim here!";
+			mes "I'm a victim of the schemes of the Laphine couple.";
+			mes "It's unfair...";
+			next;
+			mes "It's no use trying to talk to him any more.";
+			mes "Try talking to Euridi.";
+			changequest 1111,1112;
+			set ep14_1_rope,4;
+			close;
+		}
+	} else if (ep14_1_rope == 4) {
+		mes "[Pitt]";
+		mes "This is unfair!";
+		mes "This is so totally unfair!";
+		close;
+	} else if (ep14_1_rope == 5) {
+		if (checkweight(6384,1) == 0) {
+			mes "[Pitt]";
+			mes "What are you, a professional mover?";
+			mes "Stomping about with a ton of stuff on your back!";
+			mes "I can't rest because of the noise!";
+			mes "Throw away all that stuff!";
+			close;
+		}
+		mes "[Pitt]";
+		mes "I never imagined you'd find them all";
+		mes "and piece them together.";
+		mes "Is this a divine punishment...?";
+		mes "Or Laphines' curse?";
+		mes "Whew...";
+		next;
+		mes "[Pitt]";
+		mes "That guide fellow,";
+		mes "he opened the gate out";
+		mes "when he was hit hard";
+		mes "by the poison.";
+		next;
+		mes "[Pitt]";
+		mes "When I was hesitating whether to take him with me,";
+		mes "he handed me that letter and the ring.";
+		mes "Laphines' jewelry...";
+		mes "It's rumored that nobody could ever have it except Laphines,";
+		mes "including the Gods themselves.";
+		next;
+		mes "[Pitt]";
+		mes "So I had in my hands";
+		mes "a treasure among treasures!";
+		mes "How...! Just how on earth";
+		mes "could I have let it pass through!";
+		next;
+		mes "[Pitt]";
+		mes "I was going to leave this place";
+		mes "as soon as I pulled myself together.";
+		mes "But now I'm stuck here,";
+		mes "affected by the poison myself.";
+		next;
+		mes "[Pitt]";
+		mes "I'll give you the ring back,";
+		mes "so please leave me alone!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Then where could Lope...?";
+		next;
+		mes "[Pitt]";
+		mes "If he died near the exit of the forest,";
+		mes "he must be somewhere around there,";
+		mes "in whatever form he might be in.";
+		changequest 1113,1114;
+		set ep14_1_rope,6;
+		getitem 6384,1; //Ring_Of_Lope
+		close;
+	} else if (ep14_1_rope == 6 || ep14_1_rope == 7) {
+		mes "[Pitt]";
+		mes "I'm a victim, too!";
+		mes "So leave me alone! I beg you!";
+		close;
+	} else if (ep14_1_rope == 8) {
+		mes "[Pitt]";
+		mes "...";
+		close;
+	} else if (ep14_1_rope > 8) {
+		mes "He's sleeping.";
+		mes "He seems to be in a very deep sleep.";
+		close;
+	}
+}
+
+bif_fild01,132,338,3	script	Lope#pa	461,2,2,{
+	if (ep14_1_rope < 8) {
+		mes "[Suspicious Man]";
+		mes "......";
+		close;
+	} else if (ep14_1_rope == 8) {
+		donpcevent "Lope#pa::OnEnable";
+		mes "[Suspicious Man]";
+		mes "Aaaarrrrrggggghhhh!!!!!!";
+		mes "I can't see anything.";
+		mes "Who's there?";
+		mes "Answer, or I'll take you as an enemy and kill you.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Euridi is looking for you.";
+		next;
+		mes "[Suspicious Man]";
+		mes "......";
+		next;
+		mes "[Lope]";
+		mes "Wraith, how can you be so harsh to me?";
+		mes "I asked you to wipe the name off my mind";
+		mes "in return for bearing the curse!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Will you please calm down and listen to...";
+		next;
+		mes "[Lope]";
+		mes "My desire to help";
+		mes "led me to my death,";
+		mes "And my desire to survive and take revenge";
+		mes "led me to my rebirth.";
+		mes "I will not side with life any more.";
+		next;
+		mes "[Lope]";
+		mes "As soon as my transformation is over,";
+		mes "I will punish you all with the bloody confusion of the Hazy Forest,";
+		mes "which saved my life!";
+		next;
+		mes "You put the letter Euridi pieced together in Lope's hands.";
+		next;
+		mes "[Lope]";
+		mes "...This is!";
+		mes "I feel Euridi's touch.";
+		mes "So the letter... was delivered to Euridi?";
+		mes "This is unbelievable...";
+		next;
+		mes "[Lope]";
+		mes "Deformed as I am now,";
+		mes "I'm not her love any more.";
+		mes "Go back, and tell her that Lope turned to dust";
+		mes "on the ground of the Hazy Forest long ago.";
+		next;
+		mes "[Lope]";
+		mes "Now go!";
+		mes "This is my last request as a Laphine called Lope...";
+		set ep14_1_rope,9;
+		changequest 1115,1116;
+		close;
+	} else {
+		mes "[Lope]";
+		mes "Deformed as I am now,";
+		mes "I'm not her love any more.";
+		mes "Go back, and tell her that Lope turned to dust";
+		mes "on the ground of the Hazy Forest long ago.";
+		next;
+		mes "[Lope]";
+		mes "Now go!";
+		mes "This is my last request as a Laphine called Lope...";
+		next;
+		mes "You see a ring glowing faintly on his left hand.";
+		close;
+	}
+	end;
+OnEnable:
+	setnpcdisplay "Lope#pa",999;
+	end;
+OnDisable:
+	disablenpc "Lope#pa";
+	initnpctimer;
+	end;
+OnReset:
+	setnpcdisplay "Lope#pa",461;
+	enablenpc "Lope#pa";
+	end;
+OnTimer2000:
+	donpcevent "Lope#pa::OnReset";
+	stopnpctimer;
+	end;
+OnTouch:
+	mes "I see a suspicious man. Should I try talking to him?";
+	next;
+	switch(select("Leave him alone.:Talk to him.")) {
+	case 1:
+		donpcevent "Lope#pa::OnDisable";
+		mes "[Suspicious Man]";
+		mes "......";
+		close;
+	case 2:
+		donpcevent "Lope#pa::OnDisable";
+		if (ep14_1_rope == 7) {
+			mes "[Suspicious Man]";
+			mes ".";
+			mes "...";
+			mes "........!!!";
+			next;
+			mes "[Suspicious Man]";
+			mes "Aaaaarrrrrggghh!!!!!";
+			set ep14_1_rope,8;
+			close;
+		} else {
+			mes "[Suspicious Man]";
+			mes "......";
+			close;
+		}
+	}
+}
+
+// Find the Research Tools :: ep14_1_muk
+//============================================================
+mora,31,138,6	script	Raffle Researcher#ep14	522,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 500) {
+		mes "^FF0000- Warning message -";
+		mes "- Hang on there!! -";
+		mes "- You have too many items -";
+		mes "- to receive any more items. -";
+		mes "- Please lighten your load -";
+		mes "- and try again. -^000000";
+		close;
+	}
+	// NPC disabled from 12am ~ 5am.
+	if (gettime(3) >= 0 && gettime(3) < 5) {
+		if (ep14_1_muk > 0) {
+			mes "[Raffle Researcher]";
+			mes "Don't humans sleep?";
+			mes "People should be sleeping at this hour.";
+			mes "Why on earth are you bothering me?";
+			next;
+			mes "[Raffle Researcher]";
+			mes "I can't get any sleep because of you.";
+			mes "I have to sleep for my research tomorrow.";
+			mes "You should go sleep too.";
+			close;
+		} else {
+			mes "Z z Z z";
+			next;
+			mes "^FF0000He appears to be asleep.^000000";
+			close;
+		}
+	}
+	if (ep14_1_muk == 0) {
+		mes "[Raffle Researcher]";
+		mes "Oh no~ My research tools...";
+		mes "What...... What was it?";
+		emotion e_sob;
+		next;
+		select("What is your business here?");
+		mes "[Raffle Researcher]";
+		mes "Hmm?";
+		emotion e_what;
+		next;
+		mes "[Raffle Researcher]";
+		mes "You're human...? Are you human...?";
+		mes "You... came from the underworld?";
+		next;
+		mes "[Raffle Researcher]";
+		mes "Human beings are incredible...";
+		mes "You survived the crevice and made it here.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "... ... ...";
+		next;
+		mes "[Raffle Researcher]";
+		mes "You, come here for a minute.";
+		mes "It's a simple experiment, so there's no need to be afraid.";
+		emotion e_gg;
+		next;
+		if(select("What a crazy Raffle. I must run away.:... ...") == 1) {
+			mes "[Raffle Researcher]";
+			mes "You said you had made it up from the Crevice,";
+			mes "so I was wondering what race you were,";
+			mes "but a mere human? How did you get up here?";
+			emotion e_lv;
+			close;
+		}
+		if (BaseLevel < 100) {
+			mes "[Raffle Researcher]";
+			mes "What... I thought a human who made it up from the Crevice";
+			mes "would be extraordinary,";
+			mes "but you're no more than a kid.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "Go hunt more ^000000Porings^000000";
+			mes "and come back when your level is in the triple digits kid!";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "... ... ...";
+		emotion e_dots;
+		next;
+		mes "[Raffle Researcher]";
+		mes "You... You're not like the other humans.";
+		mes "You're not running away...";
+		next;
+		mes "[Raffle Researcher]";
+		mes "You've got some serious guts...";
+		mes "Now I really want to do some experiments on you...";
+		next;
+		select("Well... that's... um...");
+		mes "[Raffle Researcher]";
+		mes "Ha ha... Just kidding...";
+		mes "I'm a Raffle researcher,";
+		mes "but I don't research humans.";
+		mes "Actually, I have no idea";
+		mes "what to research";
+		mes "about humans...";
+		next;
+		select("Glad to hear that...");
+		mes "[Raffle Researcher]";
+		mes "That's that. You're not busy, are you?";
+		mes "I'd like you to give me a hand...";
+		next;
+		select("Help him.:Help willingly.:Although you feel a little embarrassed, help anyhow.:Help with conviction.:Help adorably.:You're suspicious, but help anyhow.:You have no choice. Help him.");
+		mes "[Raffle Researcher]";
+		mes "I haven't met many humans";
+		mes "but you clearly care about";
+		mes "another person's hardship.";
+		mes "You must be an ^FF0000extremely^000000 nice human.";
+		emotion e_no1;
+		next;
+		mes "[Raffle Researcher]";
+		mes "I'll save my thanks for time's sake.";
+		mes "It's important, so please take care of it quickly.";
+		mes "I can't proceed with the research because of it.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "Here at the Mora Inn,";
+		mes "there's a very famous bath.";
+		mes "If anybody, not just us Raffles,";
+		mes "goes into the bath water";
+		mes "their wounds will be healed instantly...";
+		next;
+		mes "[Raffle Researcher]";
+		mes "So being a great researcher, I went into the bath";
+		mes "to check it out further";
+		mes "and... unfortunately...";
+		next;
+		mes "[Raffle Researcher]";
+		mes "I was attacked by a mysterious creature,";
+		mes "and I lost consciousness.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "When I woke up, I realized that";
+		mes "my important research tools were missing...";
+		mes "So I was at a loss for what to do.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "And here you are, a human,";
+		mes "a brave, heroic human that arrived at Mora Village from the Crevice.";
+		mes "Your willingness to help has really taken this load off of my mind.";
+		next;
+		select("... ... ...");
+		mes "[Raffle Researcher]";
+		mes "Please go to the bath house and retrieve my research tools.";
+		mes "The sooner you get them back,";
+		mes "the sooner I can get back to my research.";
+		setquest 5016;
+		set ep14_1_muk,1;
+		next;
+		mes "[Raffle Researcher]";
+		mes "Have a safe trip.";
+		emotion e_paper;
+		close;
+	} else if (ep14_1_muk == 1) {
+		if (checkquest(5016) > -1 && countitem(6385) == 0) {
+			mes "[Raffle Researcher]";
+			mes "You're back? Where are my research tools?";
+			emotion e_what;
+			next;
+			mes "[Raffle Researcher]";
+			mes "You still haven't found the research tools?";
+			mes "I'm disappointed. Get yourself to the bath";
+			mes "and quickly retrieve my research tools";
+			mes "taken away from me.";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "Wow!! You found the research tools...?";
+		mes "You're quite capable.";
+		mes "I really like how you handle your work.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "I like you.";
+		mes "Do you want to work on my research with me?";
+		mes "I could use your help here and there,";
+		mes "until I'm done with this research.";
+		next;
+		select("As you wish.");
+		mes "[Raffle Researcher]";
+		mes "Great. Thanks, and when we're done,";
+		mes "I'll pay you handsomely.";
+		mes "Also, for every research project that's completed,";
+		mes "I'll also give you some pocket money.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "Young Raffles these days... they are just plain stupid.";
+		mes "I've always wanted a capable research assistant,";
+		mes "but it hasn't been easy to find one.";
+		next;
+		if (checkweight(6380,1) == 0) {
+			mes "[Raffle Researcher]";
+			mes "By the way... Was it that difficult to";
+			mes "reclaim the research tools?";
+			mes "You're carrying some very heavy looking equipment.";
+			mes "Go lighten your load, and I'll pay you for your work.";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "It must've been hard work to retrieve the tools.";
+		mes "Why don't you take this and go to the inn";
+		mes "and rest up? There's nothing for you to do right now.";
+		delitem 6385,1; //Research_Tool_Bag
+		set ep14_1_muk,2;
+		getitem 6380,1; //Mora_Coin
+		erasequest 5016;
+		close;
+	} else if (ep14_1_muk == 2) {
+		// Unofficial check, but it's needed here.
+		if (checkquest(5029,PLAYTIME) == 0 || checkquest(5029,PLAYTIME) == 1) {
+			mes "[Raffle Researcher]";
+			mes "It must've been hard work to retrieve the tools.";
+			mes "Why don't you take this and go to the inn";
+			mes "and rest up? There's nothing for you to do right now.";
+			close;
+		}
+		switch(rand(1,5)) {
+		case 1:
+			mes "[Raffle Researcher]";
+			mes "I'm still preparing for the research.";
+			mes "Unfortunately a few research tools";
+			mes "were damaged.";
+			emotion e_an;
+			close;
+		case 2:
+			mes "[Raffle Researcher]";
+			mes "Come to think of it, I don't think";
+			mes "I told you my name.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "My name is Inffle. If anybody";
+			mes "asks you who you are working with,";
+			mes "you can say ^0000FFI'm working with Researcher Inffle.^000000";
+			mes "That's why I'm telling you my name.";
+			emotion e_ok;
+			close;
+		case 3:
+			mes "[Raffle Researcher]";
+			mes "Why? The inn is closed?";
+			mes "That's strange, it shouldn't be.";
+			mes "Why don't you go try again?";
+			emotion e_what;
+			close;
+		case 4:
+			break;
+		case 5:
+			mes "[Raffle Researcher]";
+			mes "Darn, I get more worked up the more I think about it.";
+			mes "It's not like I went with bad intentions...";
+			mes "I just wanted to do some research...";
+			mes "Can't believe I got attacked...";
+			mes "I just can't believe it...";
+			mes "What do you think?";
+			emotion e_an;
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "Good thing you're here.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "I've been thinking about";
+		mes "the unidentified creature in the bath.";
+		mes "He's quite the little devil, to take research tools,";
+		mes "which are as important to a researcher as his life...";
+		next;
+		mes "[Raffle Researcher]";
+		mes "A research assistant's job";
+		mes "is to make sure that the researcher can focus on his research";
+		mes "And not have to worry about anything else... VERY! Important.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "I'd like you to take my revenge";
+		mes "on the unidentified creature for me...";
+		next;
+		mes "[Raffle Researcher]";
+		mes "I don't even want anything that drastic.";
+		mes "3 times! Go bully him for just 3 times.";
+		mes "You can draw on his face,";
+		mes "pinch him, tickle him,";
+		mes "whatever you want. Just bully him 3 times.";
+		set ep14_1_muk,3;
+		setquest 5017;
+		close;
+	} else if (ep14_1_muk  < 6) {
+		mes "[Raffle Researcher]";
+		mes "How's the work going?";
+		mes "An assistant has to work swiftly and effectively.";
+		mes "Could it be that you have forgotten";
+		mes "what your task is?";
+		next;
+		select("Exactly. What should I do?");
+		mes "[Raffle Researcher]";
+		mes "Go bully the unidentified creature";
+		mes "just 3 times.";
+		mes "You can draw on his face,";
+		mes "pinch him, tickle him, or whatever.";
+		mes "Bully him 3 times.";
+		emotion e_gg;
+		close;
+	} else if (ep14_1_muk == 6) {
+		mes "[Raffle Researcher]";
+		mes "So you taught him a lesson? Great. I feel avenged!";
+		emotion e_heh;
+		next;
+		mes "[Raffle Researcher]";
+		mes "For a while, I couldn't sleep";
+		mes "because I couldn't stop thinking about the lost research tools.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "That's that! We need to begin the bath research now.";
+		mes "I need to finish the research quickly,";
+		mes "so that I can start on a new topic.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "Go to the bath water";
+		mes "with the sample tube that I give you,";
+		mes "and gather some samples.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "Look around the bath water,";
+		mes "and you will find an area emitting a distinct aura.";
+		mes "You can collect the samples";
+		mes "from that area.";
+		next;
+		if (MaxWeight - Weight < 100 || checkweight(1092,10) == 0) {
+			mes "[Raffle Researcher]";
+			mes "You are carrying too much weight.";
+			mes "I can't give you the sample tube.";
+			mes "Why don't you lighten your load and come back?";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "Here is the sample tube for collecting.";
+		mes "Go and collect 10 samples!";
+		set ep14_1_muk,7;
+		getitem 1092,10; //Empty_Cylinder
+		erasequest 5018;
+		setquest 5019;
+		close;
+	} else if (ep14_1_muk == 7) {
+		if (checkquest(5019) > -1 && countitem(6386) < 10) {
+			mes "[Raffle Researcher]";
+			mes "Have you collected the samples yet?";
+			mes "Please hurry up.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "Look around the bath water,";
+			mes "and you will find an area emitting a distinct aura.";
+			mes "You can collect the samples";
+			mes "from that area.";
+			close;
+		}
+		if (checkweight(6380,1) == 0) {
+			mes "[Raffle Researcher]";
+			mes "I know that you've done a lot...";
+			mes "but you are carrying too many things.";
+			mes "Even though I want to give you pocket money, I can't.";
+			mes "Could you lighten your load and come back?";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "You got the bath water sample. Great job.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "I'll have to run a few tests";
+		mes "with the bath water samples.";
+		mes "It usually takes about 24 hours.";
+		mes "Why don't you come back then?";
+		delitem 6386,10; //Bathtub_R_Sample
+		getitem 6380,1; //Mora_Coin
+		set ep14_1_muk,8;
+		erasequest 5019;
+		setquest 5020;
+		close;
+	} else if (ep14_1_muk == 8) {
+		if (checkquest(5020,PLAYTIME) == 0 || checkquest(5020,PLAYTIME) == 1) {
+			mes "[Raffle Researcher]";
+			mes "The basic tests have not been completed yet.";
+			mes "There's nothing for you to do now.";
+			mes "Go for a walk.";
+			mes "Spend some money that I gave you.";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "The basic tests are done.";
+		mes "As I thought...";
+		mes "There were many interesting substances in the bath water.";
+		emotion e_ho;
+		next;
+		mes "[Raffle Researcher]";
+		mes "The most notable is this unidentifiable DNA.";
+		mes "I didn't have a chance to compare it to a lot of DNA samples,";
+		mes "but I'm pretty sure that this DNA";
+		mes "has been transformed by the mysterious substances of the bath.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "After much thought,";
+		mes "I concluded that this DNA probably belongs to";
+		mes "the unidentified creature that attacked me.";
+		next;
+		if (rand(2)) {
+			set .@str$,"teeth";
+			set .@quest,5021;
+		} else {
+			set .@str$,"scales";
+			set .@quest,5022;
+		}
+		mes "[Raffle Researcher]";
+		mes "I'd better compare the two.";
+		mes "Please return to the bath";
+		mes "and look for the creature's "+.@str$+".";
+		mes "If you can, please bring me 10 of them.";
+		set ep14_1_muk,9;
+		erasequest 5020;
+		setquest .@quest;
+		close;
+	} else if (ep14_1_muk == 9) {
+		if (checkquest(5021) > -1 || checkquest(5022) > -1) {
+			if (checkquest(5021) > -1) {
+				set .@quest,5021;
+				set .@item,6387; //Teeth_Sample
+				setarray .@str$[0],"tooth","teeth";
+			} else {
+				set .@quest,5022;
+				set .@item,6388; //Scale_Sample
+				setarray .@str$[0],"scale","scales";
+			}
+			if (countitem(.@item) < 10) {
+				mes "[Raffle Researcher]";
+				mes "Haven't you found the unidentified creature's "+.@str$[1]+" yet?";
+				mes "Look carefully!";
+				mes "I'm certain that the creature";
+				mes "dropped his "+.@str$[1]+" somewhere.";
+				close;
+			}
+			mes "[Raffle Researcher]";
+			mes "You've collected all the "+.@str$[0]+" samples, finally.";
+			mes "As humans say,";
+			mes "I've been waiting forever for them.";
+			next;
+			if (checkweight(6380,1) == 0) {
+				mes "[Raffle Researcher]";
+				mes "I know that you've done a lot...";
+				mes "but you are carrying too many things.";
+				mes "Even though I want to give you pocket money, I can't.";
+				mes "Could you lighten your load and come back?";
+				close;
+			}
+			mes "[Raffle Researcher]";
+			mes "OK, I'll get to work right away.";
+			mes "If you have any business to attend to, do so.";
+			mes "The DNA analysis takes about 6 hours.";
+			mes "Why don't you go for a walk";
+			mes "and come back then?";
+			delitem .@item,10;
+			getitem 6380,1; //Mora_Coin
+			erasequest .@quest;
+			setquest 5023;
+			close;
+		} else if (checkquest(5023,PLAYTIME) == 0 || checkquest(5023,PLAYTIME) == 1) {
+			mes "[Raffle Researcher]";
+			mes "I'm still analyzing the DNA.";
+			mes "The DNA analysis takes about 6 hours.";
+			mes "Why don't you go for a walk and come back then?";
+			close;
+		} else {
+			switch(rand(1,6)) {
+			case 1:
+			case 3:
+				set .@quest,5021;
+				set .@item,6387; //Teeth_Sample
+				setarray .@str$[0],"tooth","teeth";
+				break;
+			case 2:
+			case 4:
+				set .@quest,5022;
+				set .@item,6388; //Scale_Sample
+				setarray .@str$[0],"scale","scales";
+				break;
+			case 5:
+			case 6:
+				break;
+			}
+			if (.@quest) {
+				mes "[Raffle Researcher]";
+				mes "This is not it.";
+				mes "The samples that you collected belonged to a normal species.";
+				emotion e_swt2;
+				next;
+				mes "[Raffle Researcher]";
+				mes "Must be because so many species of creatures";
+				mes "have been in the bath.";
+				next;
+				mes "[Raffle Researcher]";
+				mes "I'm sorry, but please re-collect the samples.";
+				mes "This time, the "+.@str$[1]+"... Yes.";
+				mes "Please bring the "+.@str$[0]+" samples.";
+				erasequest 5023;
+				setquest .@quest;
+				close;
+			}
+			mes "[Raffle Researcher]";
+			mes "Great! These samples are surely";
+			mes "from the mysterious creature.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "According to the analysis,";
+			mes "The DNA is a mutant form of fish DNA.";
+			mes "I'm not sure how long this creature";
+			mes "has lived in the bath,";
+			mes "but this DNA is 70% evolved";
+			mes "from the original fish DNA.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "Where did this fish come from?";
+			mes "How can it survive in the warm bath water?";
+			mes "After the DNA analysis,";
+			mes "my head is filled with even more questions.";
+			next;
+			mes "... ... ... ... ...";
+			emotion e_dots;
+			emotion e_dots,1;
+			next;
+			mes "[Raffle Researcher]";
+			mes "The village elders say";
+			mes "that the bath water comes from";
+			mes "the puddles around the village.";
+			next;
+			callsub L_CheckWeight;
+			mes "[Raffle Researcher]";
+			mes "If you get me a sample from the puddle";
+			mes "to the east, at 2 o'clock from here,";
+			mes "I'll tell you what to do next.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "You probably don't need to run around";
+			mes "like you did collecting";
+			mes "the bath water samples.";
+			set ep14_1_muk,10;
+			getitem 1092,1; //Empty_Cylinder
+			erasequest 5023;
+			setquest 5024;
+			next;
+			mes "[Raffle Researcher]";
+			mes "If you get all 4 puddle samples at once";
+			mes "it may be more convenient. However,";
+			mes "there's the risk of samples being damaged or mixed up.";
+			mes "Therefore, I'm going to send you one place at a time. Good luck.";
+			close;
+		}
+	} else if (ep14_1_muk == 10) {
+		if (countitem(6389) == 0) {
+			mes "[Raffle Researcher]";
+			mes "You still haven't gone to collect the puddle sample?";
+			mes "Go to the puddle to the east of the village,";
+			mes "and collect a sample.";
+			mes "It's going to be at 2 o'clock from here.";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "You have the sample from the puddle to the east?";
+		mes "Great job, but it's no time to rest -";
+		mes "the research is almost done.";
+		next;
+		callsub L_CheckWeight;
+		mes "[Raffle Researcher]";
+		mes "Get me a sample from the puddle from the west.";
+		mes "It's not completely to the west...";
+		mes "The puddle should be at 7 o'clock";
+		mes "from the village.";
+		delitem 6389,1; //Puddle_R_Sample
+		set ep14_1_muk,11;
+		getitem 1092,1; //Empty_Cylinder
+		changequest 5024,5025;
+		next;
+		mes "[Raffle Researcher]";
+		mes "Take care not to damage the sample.";
+		mes "Good luck!";
+		close;
+	} else if (ep14_1_muk == 11) {
+		if (countitem(6389) == 0) {
+			mes "[Raffle Researcher]";
+			mes "You still haven't gone to collect the puddle sample?";
+			mes "Go to the puddle to the west of the village,";
+			mes "and collect a sample.";
+			mes "It's going to be at 7 o'clock from here.";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "You have the sample from the puddle to the west?";
+		mes "Great job, but it's no time to rest -";
+		mes "the research is almost done.";
+		next;
+		callsub L_CheckWeight;
+		mes "[Raffle Researcher]";
+		mes "Get me a sample from the puddle from the south.";
+		mes "The puddle to the south";
+		mes "should be... at 6 o'clock from here.";
+		delitem 6389,1; //Puddle_R_Sample
+		set ep14_1_muk,12;
+		getitem 1092,1; //Empty_Cylinder
+		changequest 5025,5026;
+		next;
+		mes "[Raffle Researcher]";
+		mes "I can't emphasize this enough, even if I did it 1000000000000000000000 times.";
+		mes "Please take care that";
+		mes "the sample is not damaged.";
+		close;
+	} else if (ep14_1_muk == 12) {
+		if (countitem(6389) == 0) {
+			mes "You still haven't gone to collect the puddle sample?";
+			mes "Get me a sample from the puddle from the south.";
+			mes "The puddle to the south is located";
+			mes "at 6 o'clock from here.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "You know what I'm going to say?";
+			mes "Be careful.";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "You have the sample from the puddle to the south?";
+		mes "Now only the puddle to the north";
+		mes "remains to be sampled.";
+		next;
+		callsub L_CheckWeight;
+		mes "[Raffle Researcher]";
+		mes "Please get me the sample from the puddle to the north.";
+		mes "It's not completely to the north.";
+		mes "it's at 11 o'clock from the village.";
+		delitem 6389,1; //Puddle_R_Sample
+		set ep14_1_muk,13;
+		getitem 1092,1; //Empty_Cylinder
+		changequest 5026,5027;
+		next;
+		mes "[Raffle Researcher]";
+		mes "You know what I'm going to say?";
+		mes "Be careful.";
+		close;
+	} else if (ep14_1_muk == 13) {
+		if (countitem(6389) == 0) {
+			mes "[Raffle Researcher]";
+			mes "You still haven't gone to collect the puddle sample?";
+			mes "Please get me a sample from the puddle to the north.";
+			mes "It's not exactly north of the village.";
+			mes "The puddle should be located at 11 o'clock";
+			mes "from the village.";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "You brought the last sample from the puddle from the north.";
+		mes "Great work. You've done really well.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "Now, I'm going to do some research";
+		mes "with these samples,";
+		mes "looking at the relationship between";
+		mes "these puddles and the bath.";
+		next;
+		if (checkweight(6380,4) == 0) {
+			mes "[Raffle Researcher]";
+			mes "I know that you've done a lot...";
+			mes "but you are carrying too many things.";
+			mes "Even though I want to give you pocket money, I can't.";
+			mes "Could you lighten your load and come back?";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "If I finish this experiment...";
+		mes "There's probably nothing else to do. While I run the experiment,";
+		mes "why don't you go and entertain yourself?";
+		delitem 6389,1; //Puddle_R_Sample
+		set ep14_1_muk,14;
+		getitem 6380,4; //Mora_Coin
+		erasequest 5027;
+		setquest 5028;
+		next;
+		mes "[Raffle Researcher]";
+		mes "Comparison of the samples and the bath water";
+		mes "will take about 12 hours.";
+		close;
+	} else if (ep14_1_muk == 14) {
+		if (checkquest(5028,PLAYTIME) == 0 || checkquest(5028,PLAYTIME) == 1) {
+			mes "[Raffle Researcher]";
+			mes "What? You're here? Well...";
+			next;
+			mes "[Raffle Researcher]";
+			mes "But the sample studies have not been finished.";
+			mes "This is an experiment for the final result,";
+			mes "so don't be too hasty.";
+			mes "I think the research will take about 12 hours.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "Come back then.";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "You're here? Finally,";
+		mes "the experiment results are all in.";
+		mes "Do you want to look at the results?";
+		next;
+		switch(select("Actually, I don't want to.:Look at the results.")) {
+		case 1:
+			mes "[Raffle Researcher]";
+			mes "Good thinking. Actually, it may hurt";
+			mes "regular people's brains to look at it.";
+			mes "I suppose it's time for your reward";
+			mes "for helping me out so much.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "Did I talk to you about the reward before the experiment?";
+			mes "That you won't be sorry that you helped out...";
+			next;
+			break;
+		case 2:
+			mes "[Raffle Researcher]";
+			mes "You're curious about the results? Really???";
+			mes "OK, here it is.";
+			next;
+			callsub L_ShowReport;
+			mes "[Raffle Researcher]";
+			mes "There are no volcanoes around the area";
+			mes "and no record of volcanoes in the past,";
+			mes "but the water temperature is that high...";
+			mes "Isn't it surprising?";
+			next;
+			mes "[Raffle Researcher]";
+			mes "The ingredients are... yes.";
+			mes "There are certainly substances that are beneficial for you humans.";
+			mes "But, there are also substances";
+			mes "that are fatal to us Raffles,";
+			mes "or other races.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "And if you look at the electric conductivity,";
+			mes "it is quite higher than that of the average water.";
+			mes "My theory is that";
+			mes "this must be the cause of the mysterious power.";
+			mes "That's what I'm thinking about.";
+			mes "Anyhow.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "There is something at work that science cannot explain";
+			mes "in the bath water...";
+			mes "Take the unidentified creature, for instance.";
+			mes "How strange is it that a fish can live";
+			mes "in such warm water?";
+			next;
+			mes "[Raffle Researcher]";
+			mes "I'm not satisfied with the research results and conclusions.";
+			mes "I guess in the end,";
+			mes "it will remain a mystery...";
+			next;
+			mes "[Raffle Researcher]";
+			mes "I suppose it's time for your reward";
+			mes "for helping me out so much.";
+			next;
+			mes "[Raffle Researcher]";
+			mes "Did I talk to you about the reward before the experiment?";
+			mes "That you won't be sorry that you helped out...";
+			next;
+			break;
+		}
+		mes "[Raffle Researcher]";
+		mes "I was thinking about what you would want";
+		mes "for your reward... and I felt";
+		mes "a little... sad.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "... ... ... ...";
+		next;
+		mes "[Raffle Researcher]";
+		mes "During our short time here together working on these projects,";
+		mes "I sent you all over the place.";
+		mes "It must've been hard, but you didn't complain at all.";
+		mes "And unlike some of the other guys I've had,";
+		mes "you never skipped work.";
+		next;
+		mes "[Raffle Researcher]";
+		mes "I suppose I've grown fond of you,";
+		mes "so that it saddens me to say goodbye...";
+		next;
+		mes "[Raffle Researcher]";
+		mes "But thank you anyhow. I've been researching for a while,";
+		mes "but I've never met such an excellent research assistant as you.";
+		next;
+		if (MaxWeight - Weight < 100 || checkweight(1092,1) == 0) {
+			mes "[Raffle Researcher]";
+			mes "Hmm? By the way...";
+			mes "You are carrying too much weight.";
+			mes "Could it be because you are also sad";
+			mes "about parting ways?";
+			next;
+			mes "[Raffle Researcher]";
+			mes "With this weight, I can't give you a reward!";
+			close;
+		}
+		mes "[Raffle Researcher]";
+		mes "The best research assistant in my life...";
+		mes "is you, "+strcharinfo(0)+"!!!";
+		set ep14_1_muk,15;
+		completequest 5028;
+		getexp 1000000,4000000;
+		getitem 6380,30; //Mora_Coin
+		next;
+		mes "[Raffle Researcher]";
+		mes "If we happen to run into each other again,";
+		mes "let's work on a research project once more.";
+		close;
+	} else if (ep14_1_muk == 15) {
+		mes "[Raffle Researcher]";
+		mes "Hmm? No?... What are you doing here?";
+		next;
+		mes "[Raffle Researcher]";
+		mes "Could it be that you suddenly want to look at";
+		mes "the research report???";
+		next;
+		switch(select("Look at the report.:I came to say hello.")) {
+		case 1:
+			mes "[Raffle Researcher]";
+			mes "Haven't I shown it to you before?";
+			next;
+			mes "[Raffle Researcher]";
+			mes "... ... ... ...";
+			emotion e_dots;
+			next;
+			mes "[Raffle Researcher]";
+			mes "Maybe I haven't shown you.";
+			mes "Sorry about that. So you wanted to see it so badly";
+			mes "that you came back to see me?";
+			mes "Great! Here it is.";
+			next;
+			while(1) {
+				callsub L_ShowReport;
+				mes "[Raffle Researcher]";
+				mes "This concludes the report of";
+				mes "Mora Village's mysterious bath.";
+				mes "You want to look again?";
+				emotion e_what;
+				next;
+				switch(select("Look again.:Don't look again.")) {
+				case 1:
+					mes "[Raffle Researcher]";
+					mes "Sure... As you wish!!";
+					next;
+					break;
+				case 2:
+					mes "[Raffle Researcher]";
+					mes "Goodbye. Come by any time,";
+					mes "if you want to look at the results again.";
+					mes "You're always welcome here.";
+					close;
+				}
+			}
+		case 2:
+			mes "[Raffle Researcher]";
+			mes "Oh, You came to say hi. I see.";
+			mes "Long time no see, "+strcharinfo(0)+".";
+			next;
+			mes "[Raffle Researcher]";
+			mes "I've been telling you that I lucked out in picking you as my research assistant.";
+			mes "Come by any time,";
+			mes "if you want to look at the results again.";
+			mes "You're always welcome here.";
+			close;
+		}
+	} else {
+		mes "[Raffle Researcher]";
+		mes "Hmm? I'm Researcher Inffle.";
+		mes "Who are you?";
+		close;
+	}
+	end;
+L_ShowReport:
+	mes "[Experimental Results]";
+	mes "*** Researcher - Inffle";
+	mes "*** Research Assistant - "+strcharinfo(0);
+	mes "¡¡";
+	mes "<Research topic>";
+	mes "*** Bath of Mora Village";
+	mes "¡¡";
+	mes "<Aim>";
+	mes "To investigate the mysterious power of the bath water";
+	mes "and to find out ways to better utilize";
+	mes "the water.";
+	mes "¡¡";
+	mes "<Methods>";
+	mes "1. Obtained an unidentified DNA sample.";
+	mes "Obtained a sample of an unidentified DNA,";
+	mes "and collected more samples to look further into it.";
+	mes "¡¡";
+	mes "2. A comparison analysis on the unidentified DNA";
+	mes "Concluded that the DNA belongs to";
+	mes "an unidentified creature living in the bath water.";
+	mes "combine and result in";
+	mes "from the swordfish DNA.";
+	mes "¡¡";
+	mes "3. Research on the puddles around the village";
+	mes "From the four puddles around the village,";
+	mes "confirmed that the testing substances were";
+	mes "distributed evenly across the puddles.";
+	mes "It is thought that the four puddles";
+	mes "combine and result in";
+	mes "the mysterious power.";
+	mes "¡¡";
+	mes "<Material analysis>";
+	mes "*** Temperature ***** 33.5° ";
+	mes "*** PH ************ 9.8";
+	mes "*** Solid residues *** 176";
+	mes "*** K+ ************ 0,23";
+	mes "*** Ca++ ********** 1.83";
+	mes "*** Cl- *********** 26.2";
+	mes "*** HCO3- ********* 31.0";
+	mes "*** H2S *********** 1.7";
+	mes "*** Na++ ********** 51.9";
+	mes "*** Mg+ *********** 0.03";
+	mes "*** SO4- ********** 5.0";
+	mes "*** F ************* 12.8";
+	mes "*** SiO2 ********** 23.9";
+	mes "*** Li ************ 0.06";
+	mes "*** CO3+ ********** 22.8";
+	mes "*** Sr ************ 0.04";
+	mes "*** Ge ************ 0.004";
+	mes "*** T-solids ****** 165";
+	mes "*** Electric conductivity **** 500";
+	mes "*** Longitude ********** 4.6";
+	next;
+	return;
+L_CheckWeight:
+	if (MaxWeight - Weight < 100 || checkweight(1092,1) == 0) {
+		mes "[Raffle Researcher]";
+		mes "You are carrying too much weight.";
+		mes "I can't give you the sample tube.";
+		mes "Why don't you lighten your load and come back?";
+		close;
+	}
+	return;
+}
+
+mora,114,79,0	script	Black Shadow#ep14_muk	844,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 500) {
+		mes "^FF0000- Warning message -";
+		mes "- Hang on there!! -";
+		mes "- You have too many items -";
+		mes "- to receive any more items. -";
+		mes "- Please lighten your load -";
+		mes "- and try again. -^000000";
+		close;
+	}
+	if (BaseLevel < 100) {
+		mes "Something looks at you from head to toe, and disappears, mocking you.";
+		close2;
+		donpcevent "Black Shadow#ep14_muk::OnDisable";
+		end;
+	}
+	set .@playtime, checkquest(5029,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "You see a dark hole. As you show interest, something disappears quickly into the dark hole.";
+		close2;
+		donpcevent "Black Shadow#ep14_muk::OnDisable";
+		end;
+	} else if (.@playtime == 2)
+		erasequest 5029;
+	if (ep14_1_goki == 30) {
+		if (checkquest(5030) == -1 && checkquest(5031) == -1 && checkquest(5032) == -1 && checkquest(5033) == -1 && checkquest(5034) == -1) {
+			mes "[Unidentified creature]";
+			mes "Arrgghh!!!";
+			mes "Why you bother me.";
+			mes "You stop bullying me.";
+			next;
+			if(select("Bully anyway.:I'll stop.") == 1) {
+				emotion e_sob;
+				set ep14_1_goki,0;
+				close2;
+				donpcevent "Black Shadow#ep14_muk::OnDisable";
+				end;
+			}
+			mes "[Unidentified creature]";
+			mes "You... Good.";
+			mes "Everybody calls me monster.";
+			mes "Hit me. Bully. Me tired.";
+			next;
+			mes "[Fishee]";
+			mes "My name Fishee.";
+			mes "Dad name me.";
+			next;
+			mes "... ... ... ... ...";
+			next;
+			mes "He appears to be rambling.";
+			next;
+			mes "[Fishee]";
+			mes "Bully. Fun. Every day.";
+			mes "I talk. Still bully.";
+			next;
+			mes "[Fishee]";
+			mes "You... Good. Help Fishee?";
+			next;
+			if(select("Don't help.:Help.") == 1) {
+				emotion e_sob;
+				set ep14_1_goki,0;
+				close2;
+				donpcevent "Black Shadow#ep14_muk::OnDisable";
+				end;
+			}
+			mes "[Fishee]";
+			mes "You good. Good!";
+			next;
+			mes "[Fishee]";
+			mes "Me didn't live here.";
+			mes "Me lived puddle.";
+			mes "Puddle. Live there.";
+			next;
+			mes "[Fishee]";
+			mes "Me sleep weird.";
+			mes "Wake up one day.";
+			mes "Here, bath.";
+			next;
+			mes "[Fishee]";
+			mes "Don't know how go home.";
+			mes "Me just live here.";
+			mes "Grow big. Hole small.";
+			mes "Can't get in.";
+			next;
+			mes "[Fishee]";
+			mes "Me miss family. Me want to see family.";
+			mes "You good. How my family do.";
+			mes "Bring me. Good.";
+			next;
+			select("How would I know who is your family?");
+			mes "[Fishee]";
+			mes "Us fish stupid.";
+			mes "Stupid. But know family name.";
+			next;
+			mes "[Fishee]";
+			mes "Family know name Fishee. Family come.";
+			next;
+			mes "[Fishee]";
+			mes "Please. In puddle.";
+			mes "You tell me my family do okay.";
+			setquest 5030+rand(4); //5030,5031,5032,5033
+			close;
+		} else if (checkquest(5030) > -1 || checkquest(5031) > -1 || checkquest(5032) > -1 || checkquest(5033) > -1) {
+			mes "[Fishee]";
+			mes "Please. In puddle.";
+			mes "You tell me my family do okay.";
+			next;
+			mes "[Fishee]";
+			mes "You forgot me name?";
+			next;
+			if(select("Please tell me your name again!:I know your name.") == 1) {
+				mes "[Fishee]";
+				mes "Your memory, like fish.";
+				mes "Stupid. I talk.";
+				mes "My name Fishee, Fishee!!";
+				next;
+			}
+			mes "[Fishee]";
+			mes "Please. In puddle.";
+			mes "You tell me my family do okay.";
+			close;
+		} else if (checkquest(5034) > -1 && checkquest(5034) < 2) {
+			if (MaxWeight - Weight < 100 || checkweight(5792,1) == 0) {
+				mes "[Fishee]";
+				mes "You have lots.";
+				mes "I give. To you.";
+				mes "Empty bag. Come back.";
+				close;
+			}
+			mes "[Fishee]";
+			mes "You told me my family ok. Thank you.";
+			mes "I know thank you. Fish.";
+			mes "Re... Don't know word.";
+			next;
+			select("Perhaps... Reward??");
+			mes "[Fishee]";
+			mes "Yes. That. You good.";
+			mes "Smart. Give you reward.";
+			mes "I know thank you. Fish.";
+			next;
+			mes "[Fishee]";
+			mes "This, I got from bath.";
+			mes "No. Someone left it.";
+			mes "... ... Good guy. I give you.";
+			completequest 5034;
+			getitem 5792,1; //Fish_Pin
+			close;
+		} else if (checkquest(5034) == 2) {
+			mes "[Fishee]";
+			mes "You...  I saw. Feeling. I saw. Feeling.";
+			mes "You... Name?";
+			next;
+			input .@inputstr$;
+			mes "[Fishee]";
+			mes .@inputstr$+" do.";
+			mes "No know. No remember..";
+			mes "Who.. you... are?";
+			close;
+		}
+	}
+	set .@weapon$, ((getequipisequiped(EQI_HAND_R))?getequipname(EQI_HAND_R):"Bare handed");
+	set .@pc_hp, 200;
+	set .@npc_hp, 200;
+	setarray .@skills$[0],"Midsection punch","Headbutt","Wiggle wiggle","Screw punch","Mumble muble";
+	mes "The unidentified creature is attacking. What will you do?";
+	next;
+	while(1) {
+		switch(select("Attack with a weapon.:Attack using a skill.:Attack using teeth.:Run away in fear.")) {
+		case 1: // Weapon
+			set .@p_damage,10;
+			set .@pc_attack, rand(1,10);
+			mes "["+strcharinfo(0)+"'s Attack]";
+			switch(.@pc_attack) {
+			// Miss.
+			case 3:
+				mes "You attempt to attack with your recent expensive purchase ^FF0000["+.@weapon$+"]^000000, but the unidentified creature rapidly dodged.";
+				break;
+			case 6:
+				mes "By mistake, you use ^FF0000["+.@weapon$+"]^000000 that Holgren has thrown your way to attack the unidentified creature, but the creature foresaw the attack and dodged.";
+				break;
+			case 9:
+				mes "You use your precious ^FF0000[+"+.@weapon$+"+]^000000 to attack the unidentified creature, but the creature pulled back and dodged your attack.";
+				break;
+			// Hit.
+			default:
+				specialeffect EF_HIT1;
+				set .@npc_hp, .@npc_hp - .@p_damage;
+				switch(.@pc_attack) {
+					case 1: set .@str$,"With your precious ^FF0000["+.@weapon$+"]^000000, you attacked the unidentified creature. The weapon pierced the creature's body."; break;
+					case 2: set .@str$,"By mistake, you use ^FF0000["+.@weapon$+"]^000000 that Holgren has thrown your way to attack the unidentified creature. With a thud, the unidentified creature's body is swaying."; break;
+					case 4: set .@str$,"You attempt to attack with your recent expensive purchase ^FF0000["+.@weapon$+"]^000000. You hit the unidentified creature's body with a thud."; break;
+					case 5: set .@str$,"You use a borrowed ^FF0000["+.@weapon$+"]^000000 to attack the unidentified creature, but the weapon slipped. But the weapon flies off and pierces the creature's body."; break;
+					case 7: set .@str$,"With your precious ^FF0000["+.@weapon$+"]^000000, you attacked the unidentified creature. It was as if the weapon was part of your body."; break;
+					case 8: set .@str$,"You use your lucky ^FF0000["+.@weapon$+"]^000000 to attack the unidentified creature."; break;
+					case 10: set .@str$,"You use a friend's ^FF0000["+.@weapon$+"]^000000 to attack the unidentified creature."; break;
+				}
+				mes .@str$+" ^FF0000["+.@p_damage+"]^000000 damage inflicted.";
+				break;
+			}
+			next;
+			break;
+		case 2: // Skill
+			set .@p_damage,20;
+			set .@pc_attack, rand(1,6);
+			set .@skillname$, .@skills$[rand(5)];
+			mes "["+strcharinfo(0)+"'s Attack]";
+			switch(.@pc_attack) {
+			// Miss.
+			case 2:
+				mes "You use skill ^0000FF["+.@skillname$+"]^000000 but you couldn't concentrate, and failed to use the skill properly.";
+				break;
+			case 4:
+				mes "You use skill ^0000FF["+.@skillname$+"]^000000 with all your might, but the unidentified creature dodged lightly and mocked you.";
+				break;
+			case 6:
+				mes "You use skill ^0000FF["+.@skillname$+"]^000000 to attack the creature, but he got out of sight and you failed to use the skill.";
+				break;
+			// Hit.
+			default:
+				specialeffect EF_BASH;
+				set .@npc_hp, .@npc_hp - .@p_damage;
+				switch(.@pc_attack) {
+					case 1: set .@str$, "With an attack so fast and furious, the creature is too stunned to move."; break;
+					case 3: set .@str$, "The creature dodged, but you foresaw his movements and targeted accurately."; break;
+					case 5: set .@str$, "Your skill flew in a perfect parabola and hit the creature exactly."; break;
+				}
+				mes "You use skill ^0000FF["+.@skillname$+"]^000000 to attack the unidentified creature. "+.@str$+" ^FF0000["+.@p_damage+"]^000000 damage inflicted.";
+				break;
+			}
+			next;
+			break;
+		case 3: // Tooth
+			set .@p_damage,50;
+			set .@pc_attack, rand(1,10);
+			mes "["+strcharinfo(0)+"'s Attack]";
+			if (.@pc_attack == 4 || .@pc_attack == 7) {
+				specialeffect EF_HIT1;
+				set .@npc_hp, .@npc_hp - .@p_damage;
+				mes "You use your well-groomed teeth to bite the unidentified creature hard until your teeth sink into its flesh. ^FF0000["+.@p_damage+"]^000000 damage inflicted.";
+			} else
+				mes "You use your steel-like teeth to bite the unidentified creature, but the frightened creature dodged. He stares at you with strange eyes.";
+			next;
+			break;
+		case 4: // Run
+			mes "You get scared of the unidentified creature, and attempt to run.";
+			next;
+			mes "["+strcharinfo(0)+"'s Escape]";
+			if (rand(1,2) == 1) {
+				mes "Fortunately, the unidentified creature did not come after you.";
+				close;
+			} else {
+				mes "When you attempt to run away, the unidentified creature sees you and attacks. You fail to escape.";
+				next;
+				specialeffect2 EF_HIT1;
+				mes "The creature slams you with its tail. It's so painful that a tear rolls out of your eyes. ^FF000010^000000 damaged received.";
+				set .@pc_hp, .@pc_hp - 10;
+				next;
+				// Unofficial check, but it's needed here.
+				callsub L_CheckPCAlive, .@pc_hp;
+			}
+			break;
+		}
+		if (.@npc_hp <= 0) {
+			mes "You won. The unidentified creature is unconscious.";
+			next;
+			if (checkquest(5016) > -1 && countitem(6385) == 0) {
+				mes "What will you do?";
+				next;
+				select("Look for the research tools.");
+				if (checkweight(6385,1) == 0) {
+					mes "You attempted to look for the research tools,";
+					mes "but you are carrying too many things.";
+					mes "You'd better lighten your load";
+					mes "and come back.";
+					close2;
+					donpcevent "Black Shadow#ep14_muk::OnDisable";
+					end;
+				}
+				mes "Found Researcher Raffle's ^0000FF Research tool ^000000.";
+				set ep14_1_goki, ep14_1_goki+1;
+				getitem 6385,1; //Research_Tool_Bag
+				setquest 5029;
+				next;
+				mes "The creature wakes up and disappears into the dark hole.";
+				close2;
+				donpcevent "Black Shadow#ep14_muk::OnDisable";
+				end;
+			} else if (checkquest(5017) > -1) {
+				mes "How will you bully the creature?";
+				next;
+				input .@inputstr$;
+				mes "You do ^0000FF"+.@inputstr$+"^000000 to bully the unidentified creature.";
+				next;
+				setquest 5029;
+				switch(ep14_1_muk) {
+				case 3:
+					mes "You bully the unidentified creature. This is kind of fun.";
+					break;
+				case 4:
+					mes "You bully the unidentified creature for the second time. It's definitely entertaining.";
+					break;
+				case 5:
+					mes "You bully the unidentified creature for the third time. It's fun, but now it is time to stop.";
+					changequest 5017,5018;
+					break;
+				}
+				set ep14_1_muk, ep14_1_muk+1;
+				set ep14_1_goki, ep14_1_goki+1;
+				close2;
+				donpcevent "Black Shadow#ep14_muk::OnDisable";
+				end;
+			} else {
+				mes "What will you do?";
+				next;
+				if(select("Check the body of the unidentified creature.:Leave.") == 2) {
+					setquest 5029;
+					set ep14_1_goki, ep14_1_goki+1;
+					close2;
+					donpcevent "Black Shadow#ep14_muk::OnDisable";
+					end;
+				}
+				if (rand(1,30) == 7) {
+					if (checkweight(6380,1) == 0) {
+						mes "While you were checking the body of the unidentified creature, your fingers touch something. You got lucky, but due to your heavy load you failed to obtain a ^0000FF Mora Coin^000000.";
+						set ep14_1_goki, ep14_1_goki+1;
+						setquest 5029;
+						close2;
+						donpcevent "Black Shadow#ep14_muk::OnDisable";
+						end;
+					}
+					mes "While you were checking the body of the unidentified creature, your fingers touch something. Lucky. Obtained a ^0000FF Mora Coin^000000.";
+					set ep14_1_goki, ep14_1_goki+1;
+					getitem 6380,1; //Mora_Coin
+					setquest 5029;
+					next;
+					mes "The creature wakes up and disappears into the dark hole.";
+				} else {
+					mes "As soon as you touch the creature's body, it wakes up and disappears into the dark hole.";
+					set ep14_1_goki, ep14_1_goki+1;
+					setquest 5029;
+				}
+				close2;
+				donpcevent "Black Shadow#ep14_muk::OnDisable";
+				end;
+			}
+		}
+		mes "[ Current Progress ]";
+		mes strcharinfo(0)+" HP = "+.@pc_hp;
+		mes "Unidentified Creature HP = "+.@npc_hp;
+		next;
+		mes "[Attack of the unidentified creature]";
+		set .@npc_attack, rand(1,3);
+		switch(.@npc_attack) {
+		case 1:
+			set .@n_damage,10;
+			mes "The unidentified creature shoots a stream of bath water.";
+			break;
+		case 2:
+			set .@n_damage,20;
+			mes "The unidentified creature dashes at you with great speed. It appears to be attempting a headbutt.";
+			break;
+		case 3:
+			set .@n_damage,50;
+			mes "The unidentified creature runs at you with its teeth bared. It appears to be attempting to bite.";
+			break;
+		}
+		next;
+		mes "What will you do?";
+		next;
+		switch(select("... ... ...:Dodge.:Block.:It's too much. Run away.")) {
+		case 1:
+			switch(.@npc_attack) {
+			case 1:
+				specialeffect2 EF_ICEARROW;
+				mes "You stand still. The stream of water hits your face squarely. Your mind is clear in an instant. ^FF0000["+.@n_damage+"]^000000 damage received.";
+				break;
+			case 2:
+				specialeffect2 EF_BASH;
+				mes "You stand still. The creature headbutts you squarely. Your mind is clear in an instant. ^FF0000["+.@n_damage+"]^000000 damage received.";
+				break;
+			case 3:
+				specialeffect2 EF_HIT1;
+				mes "You stand still. While you were standing stupidly, the creature comes near and bites you mercilessly. Your mind is clear in an instant. ^FF0000["+.@n_damage+"]^000000 damage received.";
+				break;
+			}
+			set .@pc_hp, .@pc_hp - .@n_damage;
+			next;
+			break;
+		case 2:
+			switch(.@npc_attack) {
+			case 1:
+				set .@miss, rand(1,5);
+				mes "[Attack of the unidentified creature]";
+				switch(.@miss) {
+				// Miss.
+				case 1:
+					mes "The unidentified creature shoots a stream of water at you, but you dodge it easily by tilting your body.";
+					break;
+				case 3:
+					mes "The unidentified creature shoots a stream of water at you, but you dodge it while picking your nose.";
+					break;
+				// Hit.
+				default:
+					specialeffect2 EF_ICEARROW;
+					set .@pc_hp, .@pc_hp - .@n_damage;
+					switch(.@miss) {
+						case 2: set .@str$,"face"; break;
+						case 4: set .@str$,"stomach"; break;
+						case 5: set .@str$,"arm"; break;
+					}
+					mes "The stream of water hits your "+.@str$+" squarely. ^FF0000["+.@n_damage+"]^000000 damage received.";
+					break;
+				}
+				next;
+				break;
+			case 2:
+				set .@miss, rand(1,10);
+				mes "[Attack of the unidentified creature]";
+				switch(.@miss) {
+				// Miss.
+				case 1:
+					mes "The unidentified creature dashes at you attempting a headbutt, but you are not the one to succumb to such an attack.";
+					break;
+				case 3:
+					mes "The unidentified creature dashes at you attempting a headbutt, but you move slightly to dodge the attack.";
+					break;
+				case 5:
+					mes "The unidentified creature dashes at you attempting a headbutt, but you dodge the attack while picking your nose.";
+					break;
+				case 7:
+					mes "The unidentified creature dashes at you attempting a headbutt, but you dodge the attack easily.";
+					break;
+				// Hit.
+				default:
+					specialeffect2 EF_BASH;
+					set .@pc_hp, .@pc_hp - .@n_damage;
+					switch(.@miss) {
+						case 2: set .@str$,"With a thud, you can feel intense pain."; break;
+						case 4: set .@str$,"*thud* Your back seems to give way."; break;
+						case 6: set .@str$,"The creature's attack hits you in the shoulder."; break;
+						case 8: set .@str$,"The attack is like an arrow."; break;
+						case 9: set .@str$,"The attack was fast and accurate."; break;
+						case 10: set .@str$,"It hits your hand with a thud."; break;
+					}
+					mes "The unidentified creature dashes at you and headbutts. "+.@str$+" ^FF0000["+.@n_damage+"]^000000 damage received.";
+					break;
+				}
+				next;
+				break;
+			case 3:
+				set .@miss, rand(1,10);
+				mes "[Attack of the unidentified creature]";
+				switch(.@miss) {
+				// Miss.
+				case 1:
+					mes "The unidentified creature runs at you with its teeth bared, but you dodge the attack sneering.";
+					break;
+				case 3:
+					mes "The unidentified creature runs at you with its teeth bared, but you dodge the attack by moving slightly.";
+					break;
+				case 5:
+					mes "The unidentified creature runs at you with its teeth bared, but you dodge the attack while stretching.";
+					break;
+				case 7:
+					mes "The unidentified creature runs at you with its teeth bared, but you dodge the attack while counting Zenies.";
+					break;
+				case 8:
+					mes "The unidentified creature runs at you with its teeth bared, but you dodge the attack lightly.";
+					break;
+				case 9:
+					mes "The unidentified creature runs at you with its teeth bared, but you dodge the attack sneering.";
+					break;
+				// Hit.
+				default:
+					specialeffect2 EF_HIT1;
+					set .@pc_hp, .@pc_hp - .@n_damage;
+					switch(.@miss) {
+						case 2: set .@str$,"leg. Its sharp teeth penetrate your legs."; break;
+						case 4: set .@str$,"arm. Its sharp teeth penetrate your arm."; break;
+						case 6: set .@str$,"toe. You feel like your toe is being cut off."; break;
+						case 10: set .@str$,"finger. You feel like your finger is being cut off."; break;
+					}
+					mes "The unidentified creature runs at you with its teeth bared, and bites your "+.@str$+" ^FF0000["+.@n_damage+"]^000000 damage received.";
+					break;
+				}
+				next;
+				break;
+			}
+			break;
+		case 3:
+			set .@defend, rand(1,10);
+			switch(.@npc_attack) {
+			case 1:
+				if (.@defend == 3 || .@defend == 6) {
+					set .@n_damage, .@n_damage / 2;
+					specialeffect2 EF_GUARD;
+				} else
+					specialeffect2 EF_ICEARROW;
+				set .@pc_hp, .@pc_hp - .@n_damage;
+				mes "[Defense of "+strcharinfo(0)+"]";
+				switch(.@defend) {
+					// Blocked.
+					case 3: set .@str$,"You block the stream of water with your strong butt. Feels refreshing. HP reduced only by half."; break;
+					case 6: set .@str$,"You block the stream of water with your strong hands. Your hands sting a little. HP reduced only by half."; break;
+					// Not blocked.
+					case 1: set .@str$,"You try to block the stream of water with your strong butt, but it's too late."; break;
+					case 2: set .@str$,"You try to block the stream of water with your big gut, but to no avail."; break;
+					case 4: set .@str$,"You try to block the stream of water with your gathered hands, but the creature targets a different place."; break;
+					case 5: set .@str$,"You try to block the stream of water with your strong hands, but you fail."; break;
+					case 7: set .@str$,"You try to block the stream of water with arms crossed, but you fold them wrong."; break;
+					case 8: set .@str$,"You try to block the stream of water with your rock-like head, but it was not possible."; break;
+					case 9: set .@str$,"You try to block the stream of water with your solid muscles, but it was not possible."; break;
+					case 10: set .@str$,"You try to block the stream of water with your strong feet, but your effort was wasted."; break;
+				}
+				mes .@str$+" ^FF0000["+.@n_damage+"]^000000 damage received.";
+				next;
+				break;
+			case 2:
+				if (.@defend == 1 || .@defend == 3 || .@defend == 5 || .@defend == 7) {
+					set .@n_damage, .@n_damage / 2;
+					specialeffect2 EF_GUARD;
+				} else
+					specialeffect2 EF_BASH;
+				set .@pc_hp, .@pc_hp - .@n_damage;
+				mes "[Defense of "+strcharinfo(0)+"]";
+				switch(.@defend) {
+					// Blocked.
+					case 1: set .@str$,"You block the dash attack with your fat butt. Your butt is world class. HP reduced only by half."; break;
+					case 3: set .@str$,"You block the dash attack with your big gut. Your gut is world class. HP reduced only by half."; break;
+					case 5: set .@str$,"You block the dash attack with your strong hands. Your hands are world class. HP reduced only by half."; break;
+					case 7: set .@str$,"The unidentified creature dashed with lightning speed, but you easily block the attack with your big gut. Your gut is world class. HP reduced only by half."; break;
+					// Not blocked.
+					case 2: set .@str$,"You try to block the dash attack with your fat butt, but miss and get hit in an unmentionable place."; break;
+					case 4: set .@str$,"You try to block the dash attack with your big gut, but your gut isn't big enough to absorb the impact."; break;
+					case 6: set .@str$,"You try to block the dash attack with arms crossed, but you feel an incredible force."; break;
+					case 8: set .@str$,"You try to block the dash attack, to no avail."; break;
+					case 9: set .@str$,"You try to block the dash attack with your strong hands, to no avail."; break;
+					case 10: set .@str$,"You try to block the dash attack with your durable feet, but the pain woke you up."; break;
+				}
+				mes .@str$+" ^FF0000["+.@n_damage+"]^000000 damage received.";
+				next;
+				break;
+			case 3:
+				if (.@defend == 2 || .@defend == 4 || .@defend == 6 || .@defend == 8) {
+					set .@n_damage, .@n_damage / 2;
+					specialeffect2 EF_GUARD;
+				}
+				set .@pc_hp, .@pc_hp - .@n_damage;
+				mes "[Defense of "+strcharinfo(0)+"]";
+				switch(.@defend) {
+					// Blocked.
+					case 2: set .@str$,"but you block its attack with a branch nearby. HP reduced only by half."; break;
+					case 4: set .@str$,"but you block its attack with a weapon. HP reduced only by half."; break;
+					case 6: set .@str$,"but you block its attack using skill ^0000FFFriend Shield^000000. HP reduced only by half."; break;
+					case 8: set .@str$,"but you block its attack using a book you always carry around. HP reduced only by half."; break;
+					// Not blocked.
+					case 1: set .@str$,"and bites your arm."; break;
+					case 3: set .@str$,"and bites your leg."; break;
+					case 5: set .@str$,"and bites your shoulder."; break;
+					case 7: set .@str$,"and bites your finger."; break;
+					case 9: set .@str$,"and bites your finger."; break;
+					case 10: set .@str$,"and bites your toe."; break;
+				}
+				mes "The unidentified creature runs at you with its teeth bared, "+.@str$+" ^FF0000["+.@n_damage+"]^000000 damage received.";
+				next;
+				break;
+			}
+			break;
+		case 4:
+			mes "You get scared of the unidentified creature, and attempt to run.";
+			next;
+			mes "["+strcharinfo(0)+"'s Escape]";
+			if (rand(1,2) == 1) {
+				mes "Fortunately ^BF2C15Unidentified creature^000000";
+				mes "did not come after you.";
+				close;
+			} else {
+				mes "When you attempt to run away, the unidentified creature sees you and attacks.";
+				mes "You fail to escape.";
+				next;
+				mes "The creature slams you with its tail. It's so painful that a tear rolls out of your eyes. ^FF000010^000000 damaged received.";
+				set .@pc_hp, .@pc_hp - 10;
+				next;
+			}
+			break;
+		}
+		callsub L_CheckPCAlive, .@pc_hp;
+		mes "[ Current Progress ]";
+		mes strcharinfo(0)+" HP = "+.@pc_hp;
+		mes "Unidentified Creature HP = "+.@npc_hp;
+		next;
+	}
+	end;
+L_CheckPCAlive:
+	if (getarg(0) <= 0) {
+		mes "You lost to the unidentified creature. Your mind goes blank and you faint.";
+		next;
+		mes "You leave the bath with somebody's help.";
+		percentheal -99,0;
+		donpcevent "Black Shadow#ep14_muk::OnDisable";
+		warp "mora",31,132;
+		end;
+	}
+	return;
+OnInit:
+	disablenpc "Black Shadow#ep14_muk";
+	end;
+OnEnable:
+	enablenpc "Black Shadow#ep14_muk";
+	disablenpc "???#ep14_muk01";
+	disablenpc "???#ep14_muk02";
+	disablenpc "???#ep14_muk03";
+	disablenpc "???#ep14_muk04";
+	disablenpc "???#ep14_muk05";
+	end;
+OnDisable:
+	disablenpc "Black Shadow#ep14_muk";
+	donpcevent "Black Shadow#ep14_muk::OnFullon";
+	mapannounce "mora","You can now use the mysterious power of bath water.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+	end;
+OnFullon:
+	donpcevent "???#ep14_muk01::OnReset";
+	donpcevent "???#ep14_muk02::OnReset";
+	donpcevent "???#ep14_muk03::OnReset";
+	donpcevent "???#ep14_muk04::OnReset";
+	donpcevent "???#ep14_muk05::OnReset";
+	end;
+}
+
+-	script	???#mora	-1,{
+	if (checkquest(5019) > -1) {
+		mes "You find an area emitting a distinct aura.";
+		mes "You may be able to collect bath water samples.";
+		mes "What will you do?";
+		next;
+		if(select("Collect samples.:Leave.") == 2) {
+			donpcevent strnpcinfo(0)+"::OnDisable";
+			end;
+		}
+		if (countitem(6386) >= 10) {
+			mes "You will not need additional samples.";
+			close2;
+			donpcevent strnpcinfo(0)+"::OnDisable";
+			end;
+		}
+		if (countitem(1092) == 0) {
+			mes "To obtain a sample, you need a sample tube.";
+			close2;
+			donpcevent strnpcinfo(0)+"::OnDisable";
+			end;
+		}
+		mes "Collecting samples.";
+		next;
+		progressbar "ffff00",3;
+		if (!rand(3)) {
+			if (checkweight(6386,1) == 0) {
+				mes "You have so many items";
+				mes "that it is difficult to collect samples.";
+				mes "You will have to lighten your load and come back.";
+				close2;
+				donpcevent strnpcinfo(0)+"::OnDisable";
+				end;
+			}
+			mes "Bath water sample collection complete.";
+			delitem 1092,1; //Empty_Cylinder
+			getitem 6386,1; //Bathtub_R_Sample
+		} else {
+			mes "Bath water sample collection failed.";
+			percentheal 5,5;
+		}
+		close2;
+		donpcevent strnpcinfo(0)+"::OnDisable";
+		end;
+	} else if (checkquest(5021) > -1 || checkquest(5022) > -1) {
+		if (checkquest(5021) > -1) {
+			set .@str$,"tooth";
+			set .@item,6387; //Teeth_Sample
+		} else {
+			set .@str$,"scale";
+			set .@item,6388; //Scale_Sample
+		}
+		mes "Something is shining in the water.";
+		mes "You may be able to collect the unidentified creature's "+.@str$+" samples.";
+		mes "What do you want to do?";
+		next;
+		if(select("Look further.:Leave.") == 2) {
+			donpcevent strnpcinfo(0)+"::OnDisable";
+			end;
+		}
+		if (countitem(.@item) >= 10) {
+			mes "You will not need additional samples.";
+			close2;
+			donpcevent strnpcinfo(0)+"::OnDisable";
+			end;
+		}
+		progressbar "ffff00",3;
+		if (!rand(3)) {
+			if (checkweight(.@item,1) == 0) {
+				mes "You have so many items";
+				mes "that it is difficult to collect samples.";
+				mes "You will have to lighten your load and come back.";
+				close;
+			}
+			mes "Obtained a "+.@str$+" sample";
+			mes "of the unidentified creature.";
+			getitem .@item,1;
+		} else
+			mes "You thought you saw it on the ground, but it was an illusion.";
+		close2;
+		donpcevent strnpcinfo(0)+"::OnDisable";
+		end;
+	} else {
+		mes "???";
+		next;
+		select("???");
+		mes "???";
+		close;
+	}
+	end;
+OnEnable:
+	enablenpc strnpcinfo(0);
+	stopnpctimer;
+	end;
+OnDisable:
+	disablenpc strnpcinfo(0);
+	initnpctimer;
+	end;
+OnReset:
+	if (rand(2))
+		donpcevent strnpcinfo(0)+"::OnEnable";
+	else
+		initnpctimer;
+	end;
+OnTimer10000:
+OnTimer20000:
+OnTimer30000:
+OnTimer40000:
+OnTimer50000:
+	if (rand(2)) 
+		donpcevent strnpcinfo(0)+"::OnEnable";
+	end;
+OnTimer60000:
+	donpcevent strnpcinfo(0)+"::OnEnable";
+	end;
+OnTouch:
+	if (checkquest(5034) == 2 || ep14_1_muk == 0 || rand(5)) {
+		percentheal 5,5;
+		end;
+	}
+	set .@playtime, checkquest(5029,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		percentheal 5,5;
+		end;
+	} else if (.@playtime == 2) {
+		erasequest 5029;
+		end;
+	} else {
+		mapannounce "mora","You can no longer use the mysterious power of the bath water.",bc_map,"0xFFFF00"; //FW_NORMAL 12 0 0
+		mes "^FF0000Something appeared.^000000";
+		mes "^FFFF00You cannot use the mysterious power of the bath water.^000000";
+		close2;
+		donpcevent "Black Shadow#ep14_muk::OnEnable";
+		end;
+	}
+}
+mora,108,86,0	duplicate(???#mora)	???#ep14_muk01	844,2,2
+mora,107,82,0	duplicate(???#mora)	???#ep14_muk02	844,2,2
+mora,113,84,0	duplicate(???#mora)	???#ep14_muk03	844,2,2
+mora,116,81,0	duplicate(???#mora)	???#ep14_muk04	844,2,2
+mora,118,86,0	duplicate(???#mora)	???#ep14_muk05	844,2,2
+
+-	script	#mora_puddle	-1,{
+	set .@i, atoi(charat(strnpcinfo(2),9));
+
+	// This script has a lot of checks,
+	// so arrays are only set when used.
+	setarray .@quest1[1],5024,5025,5026,5027;
+	setarray .@dir$[1],"east","west","south","north";
+
+	if (checkquest(.@quest1[.@i]) > -1) {
+		if (countitem(6389) == 0) {
+			mes "This appears to be the puddle to the "+.@dir$[.@i];
+			mes "that the researcher talked about.";
+			mes "Will you collect a sample?";
+			next;
+			if(select("Collect a sample.:Don't collect a sample.") == 2)
+				close;
+			if (countitem(1092) == 0) {
+				mes "You have no empty sample tubes.";
+				close;
+			}
+			progressbar "ffff00",5;
+			if (checkweight(6389,1) == 0) {
+				mes "You have so many items";
+				mes "that it is difficult to collect samples.";
+				mes "You will have to lighten your load and come back.";
+				close;
+			}
+			mes "You have collected a sample from the puddle to the "+.@dir$[.@i]+".";
+			delitem 1092,1; //Empty_Cylinder
+			getitem 6389,1; //Puddle_R_Sample
+			close;
+		} else {
+			mes "You already have a sample.";
+			close;
+		}
+	}
+
+	set .@quest1[0], .@quest1[.@i];
+	set .@dir$[0], .@dir$[.@i];
+	deletearray .@quest1[.@i],1;
+	deletearray .@dir$[.@i],1;
+
+	if (checkquest(.@quest1[1]) > -1 || checkquest(.@quest1[2]) > -1 || checkquest(.@quest1[3]) > -1) {
+		for(set .@j,1; .@j<=3; set .@j,.@j+1) {
+			if (checkquest(.@quest1[.@j]) > -1)
+				break;
+		}
+		mes "This is not the puddle to the "+.@dir$[.@j]+".";
+		close;
+	}
+
+	setarray .@quest2[1],5030,5031,5032,5033;
+	set .@quest2[0], .@quest2[.@i];
+	deletearray .@quest2[.@i],1;
+
+	if (ep14_1_goki == 30 && checkquest(.@quest2[0]) > -1) {
+		mes "You arrived at the puddle to the "+.@dir$[0]+".";
+		mes "You should look for the unidentified creature's family.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Fish~ Fish~";
+		next;
+		mes "When you called out, an answer came";
+		mes "from the puddle.";
+		next;
+		mes "[???]";
+		mes "Who? Fisher? Go!";
+		next;
+		select("I'm looking for a particular fish's family.");
+		mes "[???]";
+		mes "Family? What be that fish name?";
+		next;
+		mes "What was the name of the unidentified creature?";
+		next;
+		input .@inputstr$;
+		if (.@inputstr$ != "Fishee") {
+			mes "[???]";
+			mes "No Family. "+.@inputstr$+" No.";
+			mes "You go.";
+			next;
+			mes "It appears that the unidentified creature's family is not here.";
+			close;
+		}
+		mes "[???]";
+		mes .@inputstr$+"? Oh... How...";
+		mes "Husband here come. Your son.";
+		mes "News here.";
+		next;
+		mes "Another creature from the puddle spoke to you.";
+		next;
+		mes "[????]";
+		mes "What? Missing son news?";
+		next;
+		mes "The two fish were very excited,";
+		mes "and their conversation was hard to follow.";
+		mes "You waited for them to calm down";
+		mes "and told them the full story.";
+		next;
+		mes "[Fishee's Dad]";
+		mes "Yes... At night, son";
+		mes "gone... Night fishers.";
+		mes "Son stupid. Caught. Dead. OK.";
+		next;
+		mes "[Fishee's Mom]";
+		mes "Fishee alive. Great. Great.";
+		next;
+		mes "[Fishee's Dad]";
+		mes "Yes... Human give son news.";
+		mes "Thanks. Son,";
+		mes "We okay. Happy. Here. You tell son.";
+		changequest .@quest2[0],5034;
+		close;
+	} else if (checkquest(5034) > -1 && checkquest(5034) < 2) {
+		mes "[Fishee's Dad]";
+		mes "Yes... Human give son news.";
+		mes "Thanks. Son,";
+		mes "We okay. Happy. Here. You tell son.";
+		close;
+	} else if (checkquest(.@quest2[1]) > -1 || checkquest(.@quest2[2]) > -1 || checkquest(.@quest2[3]) > -1) {
+		mes "You arrived at the puddle to the "+.@dir$[0]+".";
+		mes "You should look for the unidentified creature's family.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Fish~ Fish~";
+		next;
+		mes "You yelled out loud for fish,";
+		mes "but there is no response.";
+		mes "I don't think anybody lives";
+		mes "in this puddle.";
+		close;
+	}
+	mes "You see a puddle with a calm surface.";
+	close;
+}
+bif_fild02,315,285,0	duplicate(#mora_puddle)	Puddle#ep14_muk01	844
+bif_fild02,65,109,0	duplicate(#mora_puddle)	Puddle#ep14_muk02	844
+bif_fild02,223,71,0	duplicate(#mora_puddle)	Puddle#ep14_muk03	844
+bif_fild02,113,340,0	duplicate(#mora_puddle)	Puddle#ep14_muk04	844
+
+// Mora Daily Quests :: ep14_1_dealer
+//============================================================
+mora,133,80,6	script	Elephantine#pa0829	509,{
+	if (checkweight(1201,1) == 0) {
+		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You are carrying too much weight to do that. Reduce the weight and try again.";
+		close;
+	}
+	if (ep14_1_mistwoods < 10) {
+		mes "[Elephantine]";
+		mes "Hmm, you don't look reliable enough to perform tasks for me.";
+		close;
+	}
+	if (BaseLevel < 135) {
+		mes "[Elephantine]";
+		mes "Why don't you come back when you've grown stronger? I can't give you tasks when you're in your current state.";
+		close;
+	}
+	set .@playtime, checkquest(12230,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "[Elephantine]";
+		mes "I have no additional tasks available now. If I get some, I'll let you know when you come back.";
+		close;
+	} else if (.@playtime == 2) {
+		mes "[Elephantine]";
+		mes "Will you please check with ^990099Hotcha^000000";
+		mes "on the details of the previous task?";
+		close;
+	}
+	mes "[Elephantine]";
+	mes "Welcome.";
+	mes "I have some tasks for you - will you take a look at them?";
+	next;
+	if(select("What kind of tasks do you have for me?:Tell me about today's task.") == 1) {
+		mes "[Elephantine]";
+		mes "I'm the Head of the Volunteer Patrol of the Village of Mora. It didn't used to be like this, he he.";
+		next;
+		mes "[Elephantine]";
+		mes "Each day, I'll be giving you a quest to kill off monsters in the surrounding area.";
+		next;
+		mes "[Elephantine]";
+		mes "You might get a task that's far too difficult for you to take care of alone - in that case, try to get help from your fellow adventurers.";
+		close;
+	}
+	mes "[Elephantine]";
+	mes "Let me see what tasks we've got today... Hmm...";
+	next;
+	mes "[Elephantine]";
+	mes "How about this one?";
+	next;
+	switch(rand(1,5)) {
+	case 1:
+		setquest 12225;
+		setquest 12230;
+		mes "[Elephantine]";
+		mes "Strange insects that carry fruit on their backs roam this area - you must've seen them.";
+		next;
+		mes "[Elephantine]";
+		mes "I'd like you to take them out as you see them, before they try to sell anything to the adventurers lost in the forest.";
+		set .@n$,"Fruit-Carrying Insects";
+		break;
+	case 2:
+		setquest 12226;
+		setquest 12230;
+		mes "[Elephantine]";
+		mes "There have been a lot of reports lately about mantises disguised as flowers attacking creatures passing by.";
+		next;
+		mes "[Elephantine]";
+		mes "No casualties have been reported yet, but it wouldn't hurt to take precautions. Please deal with them appropriately.";
+		set .@n$,"Flowery Hunters";
+		break;
+	case 3:
+		setquest 12227;
+		setquest 12230;
+		mes "[Elephantine]";
+		mes "An adventurer was reported to have been attacked by little birds while gathering resources in the vicinity of Bifrost.";
+		next;
+		mes "[Elephantine]";
+		mes "They didn't look so ferocious... but the adventurer has asked me to get rid of them, so you'll have to do it.";
+		set .@n$,"Small but Ferocious...";
+		break;
+	case 4:
+		setquest 12228;
+		setquest 12230;
+		mes "[Elephantine]";
+		mes "I have qualms about this one, but somebody anonymously asked me to hunt down the naughty fairies.";
+		next;
+		mes "[Elephantine]";
+		mes "I don't know what grudge he has against the fairies, but a request is a request.";
+		set .@n$,"An Unknown Grudge";
+		break;
+	case 5:
+		setquest 12229;
+		setquest 12230;
+		mes "[Elephantine]";
+		mes "Would you believe it if I said there are balls of blonde hair rolling around? You wouldn't, would you?";
+		next;
+		mes "[Elephantine]";
+		mes "They don't seem so dangerous, but they are reported to steal books and sweets from adventurers. Please deal with them appropriately.";
+		set .@n$,"Blondie Ann";
+		break;
+	}
+	next;
+	mes "You have received the task ^005500"+.@n$+"^000000. Open and see the quest window for the details.";
+	close;
+}
+
+mora,115,98,8	script	Hotcha#pa0829	509,{
+	if (checkweight(1201,1) == 0) {
+		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You are carrying too much weight to do that. Reduce the weight and try again.";
+		close;
+	}
+	if (ep14_1_mistwoods < 10) {
+		mes "[Hotcha]";
+		mes "Hmm, you don't look reliable enough for Elephantine's tasks.";
+		close;
+	}
+	if (BaseLevel < 97) {
+		mes "[Hotcha]";
+		mes "This place is like a paradise for adventurers. Not for weak ones like you, though.";
+		close;
+	}
+	set .@playtime, checkquest(12230,PLAYTIME);
+	if (.@playtime == -1) {
+		mes "[Hotcha]";
+		mes "I see you haven't received";
+		mes "any tasks yet.";
+		mes "Go talk to Elephantine,";
+		mes "and Elephantine will give you";
+		mes "one of the countless tasks.";
+		close;
+	} else if (.@playtime == 2) {
+		mes "[Hotcha]";
+		mes "The time is up to complete the existing tasks.";
+		next;
+		mes "[Hotcha]";
+		mes "If you have any unfinished tasks in your quest log, they are considered 'failed' and removed from the log.";
+		next;
+		mes "[Hotcha]";
+		mes "Once they are removed, go talk to Elephantine and you can receive new tasks.";
+		for(set .@i,12225; .@i<=12229; set .@i,.@i+1) {
+			if (checkquest(.@i) > -1)
+				erasequest .@i;
+		}
+		erasequest 12230;
+		close;
+	}
+	mes "[Hotcha]";
+	mes "Welcome.";
+	mes "How may I help you?";
+	next;
+	select("I have completed a task.");
+	mes "Oh.";
+	mes "Have you?";
+	mes "Please wait a minute while I check the documents.";
+	next;
+
+	for(set .@i,12225; .@i<=12229; set .@i,.@i+1) {
+		if (checkquest(.@i,HUNTING) == 2) {
+			mes "[Hotcha]";
+			mes "Yes, I see you've completed the task. It has been confirmed as completed.";
+			erasequest .@i;
+			specialeffect2 EF_STEAL;
+			if (BaseLevel > 99)
+				getexp 0, ((JobLevel < 50)?JobLevel * JobLevel * (110/100) * 50:0);
+			else
+				getexp 0, ((JobLevel < 70)?JobLevel * JobLevel * (110/100) * 10:0);
+			getitem 6380,3; //Mora_Coin
+			close;
+		}
+	}
+
+	mes "[Hotcha]";
+	mes "Hmm... "+strcharinfo(0)+".";
+	mes "It may be a documentation error, but according to the documents, you have nothing to do with the tasks.";
+	close;
+}
+
+mora,119,103,4	script	Bow-wow#pa0829	513,{
+	if (checkweight(1201,1) == 0) {
+		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You are carrying too much weight to do that. Reduce the weight and try again.";
+		close;
+	}
+	if (ep14_1_mistwoods < 10) {
+		mes "[Bow-wow]";
+		mes "I try to give tasks only to reliable people. You are......... no, never mind.";
+		close;
+	}
+	if (BaseLevel < 97) {
+		mes "[Bow-wow]";
+		mes "You really have no clue. What could you do with such a weak body?";
+		close;
+	}
+	set .@playtime, checkquest(12241,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "[Bow-wow]";
+		mes "I have no additional tasks available now. If I get some, I'll let you know when you come back.";
+		close;
+	} else if (.@playtime == 2) {
+		mes "[Bow-wow]";
+		mes "Will you please check with the ^990099General Goods Dealer^000000";
+		mes "on the details of the previous task?";
+		close;
+	}
+	mes "[Bow-wow]";
+	mes "Welcome.";
+	mes "I have some tasks for you - will you take a look at them?";
+	next;
+	if(select("What kind of tasks do you have for me?:Tell me about today's task.") == 1) {
+		mes "[Bow-wow]";
+		mes "Here, we make all kinds of supplies for adventurers.";
+		next;
+		mes "[Bow-wow]";
+		mes "We accept raw materials for the supplies once a day.";
+		next;
+		mes "[Bow-wow]";
+		mes "Sometimes, we might ask for materials that are very difficult to obtain. In that case, try to get help from your fellow adventurers.";
+		close;
+	}
+	mes "[Bow-wow]";
+	mes "Let me see... what supplies are we making today...?";
+	next;
+	mes "[Bow-wow]";
+	mes "How about this one?";
+	next;
+	switch(rand(1,5)) {
+	case 1:
+		setquest 12231;
+		setquest 12241;
+		mes "[Bow-wow]";
+		mes "The adventurers here make sure to bring with them, on their exploration to dungeons, a preservative to keep their food fresh. Do you know what the preservative is made from?";
+		next;
+		mes "[Bow-wow]";
+		mes "*grin* None other than... Insect Feelers! The General Goods Dealer there asked me to get four of them. I personally would not eat it for all the world...";
+		set .@n$,"Material for the Preservative";
+		break;
+	case 2:
+		setquest 12232;
+		setquest 12241;
+		mes "[Bow-wow]";
+		mes "These days, it's common for adventurers here to make talismans to protect themselves on their dangerous adventures. Like a kind of insurance.";
+		next;
+		mes "[Bow-wow]";
+		mes "Immortal Hearts seem to be all the rage lately. The General Goods Merchant asked me to get five of them.";
+		set .@n$,"A Symbol of Resistance";
+		break;
+	case 3:
+		setquest 12233;
+		setquest 12241;
+		mes "[Bow-wow]";
+		mes "They need tons of Rotten Bandages for making first aid bandages. They must have run out of new materials.";
+		next;
+		mes "[Bow-wow]";
+		mes "The client is the General Goods Merchant over there. Three bunches of them will be enough.";
+		set .@n$,"Material for First Aid Kits";
+		break;
+	case 4:
+		setquest 12234;
+		setquest 12241;
+		mes "[Bow-wow]";
+		mes "Symbols of strong warriors give adventurers great support on their journeys. That's why Orcish Vouchers sell like hotcakes.";
+		next;
+		mes "[Bow-wow]";
+		mes "The General Goods Dealer asked me to get three Orcish Vouchers, which are to be used to make symbols of courage.";
+		set .@n$,"Symbols of Courage";
+		break;
+	case 5:
+		setquest 12235;
+		setquest 12241;
+		mes "[Bow-wow]";
+		mes "It seems to be rumored among adventurers that drinking powdered bones mixed with water helps boost their stamina.";
+		next;
+		mes "[Bow-wow]";
+		mes "The General Goods Dealer asked me to get three Skel-Bones, which are to be used to make tonic.";
+		set .@n$,"Good for Stamina...";
+		break;
+	}
+	next;
+	mes "You have received the task ^880088"+.@n$+"^000000. Open and see the quest window for the details.";
+	close;
+}
+
+mora,119,118,4	script	General Good Dealer#pa0	516,{
+	if (checkweight(1201,1) == 0) {
+		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You are carrying too much weight to do that. Reduce the weight and try again.";
+		close;
+	}
+	if (ep14_1_mistwoods < 10) {
+		mes "[General Good Dealer]";
+		mes "Hmm, you don't look reliable enough for Bow-wow's tasks.";
+		close;
+	}
+	if (BaseLevel < 97) {
+		mes "[General Good Dealer]";
+		mes "What could you do with that fragile body? Go get some exercise.";
+		close;
+	}
+	set .@playtime, checkquest(12241,PLAYTIME);
+	if (.@playtime == -1) {
+		mes "[General Good Dealer]";
+		mes "I see you haven't received";
+		mes "any tasks yet.";
+		mes "Go talk to Bow-wow,";
+		mes "and Bow-wow will give you";
+		mes "one of the countless tasks.";
+		close;
+	} else if (.@playtime == 2) {
+		mes "[General Good Dealer]";
+		mes "The time is up to complete the existing tasks.";
+		next;
+		mes "[General Good Dealer]";
+		mes "If you have any unfinished tasks in your quest log, they are considered 'failed' and removed from the log.";
+		next;
+		mes "[General Good Dealer]";
+		mes "Once they are removed, go talk to Bow-wow and you can receive new tasks.";
+		for(set .@i,12231; .@i<=12235; set .@i,.@i+1) {
+			if (checkquest(.@i) > -1)
+				erasequest .@i;
+		}
+		erasequest 12241;
+		close;
+	}
+	mes "[General Good Dealer]";
+	mes "Welcome.";
+	mes "How may I help you?";
+	next;
+	select("I have completed a task.");
+	mes "[General Good Dealer]";
+	mes "Oh.";
+	mes "Have you?";
+	mes "Please wait a minute while I check the documents.";
+	next;
+
+	callsub L_CheckQuest,12231,928,4; //Insect_Feeler
+	callsub L_CheckQuest,12232,929,5; //Immortal_Heart
+	callsub L_CheckQuest,12233,930,1; //Rotten_Bandage
+	callsub L_CheckQuest,12234,931,3; //Orcish_Voucher
+	callsub L_CheckQuest,12235,932,3; //Skel_Bone
+
+	mes "[General Good Dealer]";
+	mes "Hmm... "+strcharinfo(0)+".";
+	mes "It may be a documentation error, but according to the documents, you have nothing to do with the tasks.";
+	close;
+
+L_CheckQuest:
+	if (checkquest(getarg(0)) > -1) {
+		if (countitem(getarg(1)) < getarg(2)) {
+			mes "[General Good Dealer]";
+			mes "The amount is not enough...";
+			close;
+		}
+		mes "[General Good Dealer]";
+		mes "I've received the items all right. It will be some time before I have another task for you, so why don't you visit the hot spring and relax?";
+		delitem getarg(1),getarg(2);
+		erasequest getarg(0);
+		specialeffect2 EF_STEAL;
+		if (BaseLevel > 99)
+			getexp 0, ((JobLevel < 50)?JobLevel * JobLevel * (110/100) * 50:0);
+		else
+			getexp 0, ((JobLevel < 70)?JobLevel * JobLevel * (110/100) * 10:0);
+		getitem 6380,1; //Mora_Coin
+		close;
+	}
+	return;
+}
+
+mora,124,108,7	script	Woof-grrr#pa0829	514,{
+	if (checkweight(1201,1) == 0) {
+		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You are carrying too much weight to do that. Reduce the weight and try again.";
+		close;
+	}
+	if (ep14_1_mistwoods < 10) {
+		mes "[Woof-grrr]";
+		mes "Can you please keep away from me? You're getting in the way.";
+		close;
+	}
+	if (BaseLevel < 97) {
+		mes "[Woof-grrr]";
+		mes "This place is not a nursery. Grow up and come back, and I'll gladly give you tasks.";
+		close;
+	}
+	set .@playtime, checkquest(12242,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "[Woof-grrr]";
+		mes "I have no additional tasks available now. If I get some, I'll let you know when you come back.";
+		close;
+	} else if (.@playtime == 2) {
+		mes "[Woof-grrr]";
+		mes "Will you please check with the ^990099Commodities Dealer^000000, standing across from me,";
+		mes "on the details of the previous task?";
+		close;
+	}
+	mes "[Woof-grrr]";
+	mes "Nice to see you.";
+	mes "I have some tasks for you - will you take a look at them?";
+	next;
+	if(select("What kind of tasks do you have for me?:Tell me about today's task.") == 1) {
+		mes "[Woof-grrr]";
+		mes "Bow-wow and I are in the same industry.";
+		next;
+		mes "[Woof-grrr]";
+		mes "We are a manufacturer of adventurers' supplies.";
+		next;
+		mes "[Woof-grrr]";
+		mes "My tasks won't be easy - you'd better prepare yourself.";
+		close;
+	}
+	mes "[Woof-grrr]";
+	mes "Hmm... What tasks are at hand today?";
+	next;
+	mes "[Woof-grrr]";
+	mes "Oh. This one looks good.";
+	next;
+	switch(rand(1,5)) {
+	case 1:
+		setquest 12236;
+		setquest 12242;
+		mes "[Woof-grrr]";
+		mes "Some people just hang their talismans around their necks, but more people choose to seal them in special cases and carry them on their bodies.";
+		next;
+		mes "[Woof-grrr]";
+		mes "Mementos serve as inspirations for designers of those cases. The Commodities Dealer across from me asked me to get two of them.";
+		set .@n$,"The Latest Trend in Talismans";
+		break;
+	case 2:
+		setquest 12237;
+		setquest 12242;
+		mes "[Woof-grrr]";
+		mes "Adventurers make sure to keep their talismans safe, because they could save their lives.";
+		next;
+		mes "[Woof-grrr]";
+		mes "The Commodities Dealer across from me seems to make protective cases out of Shells. I was asked to get three of them.";
+		set .@n$,"Keep Your Valuables Safe";
+		break;
+	case 3:
+		setquest 12238;
+		setquest 12242;
+		mes "[Woof-grrr]";
+		mes "Adventurers that go into the bushes of the Maze of the Hazy Forest always wear knee protectors.";
+		next;
+		mes "[Woof-grrr]";
+		mes "The Commodities Dealer across from me asked me to get three Scale Shells, which are to be used to make knee protectors.";
+		set .@n$,"Material for Knee Protectors";
+		break;
+	case 4:
+		setquest 12239;
+		setquest 12242;
+		mes "[Woof-grrr]";
+		mes "I have a task for you at hand, making a vaccine for possible poisonous insects.";
+		next;
+		mes "[Woof-grrr]";
+		mes "The Commodities Dealer across from me asked me to get two Venom Canines, which are to be used in the research of the substance.";
+		set .@n$,"Poison for Poison...";
+		break;
+	case 5:
+		setquest 12240;
+		setquest 12242;
+		mes "[Woof-grrr]";
+		mes "It seems they have run out of the material for adding non-slip soles to shoes.";
+		next;
+		mes "[Woof-grrr]";
+		mes "The Commodities Dealer across from me commissioned me to get five globs of Sticky Mucus.";
+		set .@n$,"Don't Slip and Fall";
+		break;
+	}
+	next;
+	mes "You have received the task ^880088"+.@n$+"^000000. Open and see the quest window for the details.";
+	close;
+}
+
+mora,127,112,4	script	Commodities Dealer#pa08	518,{
+	if (checkweight(1201,1) == 0) {
+		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You are carrying too much weight to do that. Reduce the weight and try again.";
+		close;
+	}
+	if (ep14_1_mistwoods < 10) {
+		mes "[Commodities Dealer]";
+		mes "Well, Woof-grrr can't have given a weakling like you tasks.";
+		close;
+	}
+	if (BaseLevel < 97) {
+		mes "[Commodities Dealer]";
+		mes "Go away! I can't concentrate on cataloging with you hanging around like that...";
+		close;
+	}
+	set .@playtime, checkquest(12242,PLAYTIME);
+	if (.@playtime == -1) {
+		mes "[Commodities Dealer]";
+		mes "I see you haven't received";
+		mes "any tasks yet.";
+		mes "Go talk to Woof-grrr,";
+		mes "and Woof-grrr will give you";
+		mes "one of the countless tasks.";
+		close;
+	} else if (.@playtime == 2) {
+		mes "[Commodities Dealer]";
+		mes "The time is up to complete the existing tasks.";
+		next;
+		mes "[Commodities Dealer]";
+		mes "If you have any unfinished tasks in your quest log, they are considered 'failed' and removed from the log.";
+		next;
+		mes "[Commodities Dealer]";
+		mes "Once they are removed, go talk to Woof-grrr and you can receive new tasks.";
+		for(set .@i,12236; .@i<=12240; set .@i,.@i+1) {
+			if (checkquest(.@i) > -1)
+				erasequest .@i;
+		}
+		erasequest 12242;
+		close;
+	}
+	mes "[Commodities Dealer]";
+	mes "Welcome.";
+	mes "How may I help you?";
+	next;
+	select("I have completed a task.");
+	mes "[Commodities Dealer]";
+	mes "Oh.";
+	mes "Have you?";
+	mes "Please wait a minute while I check the documents.";
+	next;
+
+	callsub L_CheckQuest,12236,934,2; //Mementos
+	callsub L_CheckQuest,12237,935,3; //Shell
+	callsub L_CheckQuest,12238,936,3; //Scales_Shell
+	callsub L_CheckQuest,12239,937,2; //Posionous_Canine
+	callsub L_CheckQuest,12240,938,5; //Sticky_Mucus
+
+	mes "[Commodities Dealer]";
+	mes "Hmm... "+strcharinfo(0)+".";
+	mes "It may be a documentation error, but according to the documents, you have nothing to do with the tasks.";
+	close;
+
+L_CheckQuest:
+	if (checkquest(getarg(0)) > -1) {
+		if (countitem(getarg(1)) < getarg(2)) {
+			mes "[Commodities Dealer]";
+			mes "The amount is not enough...";
+			close;
+		}
+		mes "[Commodities Dealer]";
+		mes "I've received the items all right. I look forward to working with you again.";
+		delitem getarg(1),getarg(2);
+		erasequest getarg(0);
+		specialeffect2 EF_STEAL;
+		if (BaseLevel > 99)
+			getexp 0, ((JobLevel < 50)?JobLevel * JobLevel * (110/100) * 50:0);
+		else
+			getexp 0, ((JobLevel < 70)?JobLevel * JobLevel * (110/100) * 10:0);
+		getitem 6380,1; //Mora_Coin
+		close;
+	}
+	return;
+}
+
+mora,170,101,4	script	Soul Guide#pa0829	515,{
+	if (checkweight(1201,1) == 0) {
+		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
+		close;
+	}
+	if (MaxWeight - Weight < 1000) {
+		mes "You are carrying too much weight to do that. Reduce the weight and try again.";
+		close;
+	}
+	if (ep14_1_mistwoods < 10) {
+		mes "[Soul Guide]";
+		mes "Reliability is the primary quality needed in looking for lost souls. You don't look so reliable to me.";
+		close;
+	}
+	if (BaseLevel < 97) {
+		mes "[Soul Guide]";
+		mes "You need to have a strong spirit to do this task. I think you need a lot more discipline.";
+		close;
+	}
+	set .@playtime, checkquest(12253,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "You still have marks of the haunting souls on your body.";
+		next;
+		mes "You'll have to come back when the marks have disappeared.";
+		close;
+	} else if (.@playtime == 2) {
+		mes "You feel your mind has calmed down once again. You now have enough energy to go look for other souls, so talk to the Guide again.";
+		for(set .@i,12243; .@i<=12252; set .@i,.@i+1) {
+			if (checkquest(.@i) > -1)
+				erasequest .@i;
+		}
+		erasequest 12253;
+		close;
+	}
+	mes "[Soul Guide]";
+	mes "Welcome.";
+	mes "Are you ready?";
+	next;
+	if(select("What kind of tasks do you have for me?:Tell me about today's task.") == 1) {
+		mes "[Soul Guide]";
+		mes "My job is to gather the remains of the souls haunting the forest and put them to rest.";
+		next;
+		mes "[Soul Guide]";
+		mes "There are countless souls trapped in the Maze.";
+		next;
+		mes "[Soul Guide]";
+		mes "Help them get their long-deserved rest.";
+		close;
+	}
+	mes "[Soul Guide]";
+	mes "I'll show you the details of one of the lost souls.";
+	next;
+	switch(rand(1,10)) {
+	case 1:
+		setquest 12243;
+		setquest 12253;
+		mes "^660066Age 32. Comes from Midgard. Has been missing for 3 months since he went to the Maze of the Hazy Forest in order to collect the native plants. Low chance of survival.^000000";
+		set .@n$,"Tazar";
+		break;
+	case 2:
+		setquest 12244;
+		setquest 12253;
+		mes "^660066Age 19. Adventurer who came from a far, unknown place by ship. Been missing for 2 months since he went to explore the Maze dressed in thin tights, despite dissuasion of all Mora residents.";
+		mes "Even if he's alive, he would cause trouble to the rescue team.^000000";
+		set .@n$,"Niger";
+		break;
+	case 3:
+		setquest 12245;
+		setquest 12253;
+		mes "^660066Age unknown. Has some mental illness. Went alone in order to purify the Maze of the Hazy forest. He insists that he has good ancestry but no one trusts him.";
+		mes "Disappearance period : 12 years. Not much chance of survival.^000000";
+		set .@n$,"Messil";
+		break;
+	case 4:
+		setquest 12246;
+		setquest 12253;
+		mes "^660066Age 51. Used to be a big thief who stole famous swords from all around the world.";
+		mes "Went missing in the Maze after being pursued for running an illegal casino house which caused massive casualties in his final years. Low chance of survival.^000000";
+		set .@n$,"Noirit";
+		break;
+	case 5:
+		setquest 12247;
+		setquest 12253;
+		mes "^660066Age 22. An apprentice of an airship pilot. He has gone missing while drinking in Mora town, where he went for a break.";
+		mes "Rumor has it that he fled after signing somewhere. Disappearance period : 4 months. Low chance of survival.^000000";
+		set .@n$,"Pajama Sin";
+		break;
+	case 6:
+		setquest 12248;
+		setquest 12253;
+		mes "^660066Age Unknown. A female with long hair, dressed in black. Went on an expedition to the forest of the Maze in search of eternal life. Disappearance period : 3 months. Low chance of survival.^000000";
+		set .@n$,"Mendel";
+		break;
+	case 7:
+		setquest 12249;
+		setquest 12253;
+		mes "^660066Age around 50. The current Mayor of the Mora village. He ran away to the Forest of Maze after being caught pocketing profits by cheating the residents. Survival uncertain.^000000";
+		set .@n$,"Milebit";
+		break;
+	case 8:
+		setquest 12250;
+		setquest 12253;
+		mes "^660066Age 29. A young man with an unknown background.";
+		mes "Fled to the forest of maze after scamming 1200 Mora coins from Mora residents while pretending to start a lot of business and adapting himself in Mora. Survival uncertain.^000000";
+		set .@n$,"Kunmoon";
+		break;
+	case 9:
+		setquest 12251;
+		setquest 12253;
+		mes "^660066Age 34. Flirted with several women in Mora. Fled from Mora villagers to the forest of maze. Survival uncertain.^000000";
+		set .@n$,"Chaihokin";
+		break;
+	case 10:
+		setquest 12252;
+		setquest 12253;
+		mes "^660066Age Unknown. Disappered with coins which were joint controlled by the villagers. Low chance of survival.^000000";
+		set .@n$,"Tual";
+		break;
+	}
+	next;
+	mes "^990099Information on missing person "+.@n$+"^000000 has been found. Check your Quest Window for further information.";
+	specialeffect2 EF_STEAL;
+	close;
+}
+
+mora,131,165,7	script	Wandering Customer#pa082	520,{
+	mes "[Wandering Customer]";
+	mes "I don't know whether to believe this art dealer... He made me stand here like this for days.... Ah... I feel dizzy.";
+	close;
+}
+
+mora,125,174,2	script	A Random Customer#pa0829	520,{
+	mes "[Naive Customer]";
+	mes "I don't know when carving my pendant will be completed. Since he is a reliable art dealer, I suppose he won't break my pendant.";
+	close;
+}
+
+mora,104,172,7	script	Victim#pa0829	520,{
+	mes "[Victim]";
+	mes "You Bastard! I want my rugged outwear! That was passed on to me by my father *SOB*";
+	next;
+	mes "^990099 It seems that he has gotten a great deal of damage from the art dealer.^000000";
+	close;
+}
+
+sec_in02,29,34,5	script	Initializing Mora Sanjo	453,{
+	callfunc "F_GM_NPC";
+	mes "Enter your password";
+	if (callfunc("F_GM_NPC","1854",1) == 0) {
+		mes "Hehe";
+		close;
+	} else {
+		mes "[Initialization]";
+		mes "14.1 Initializing all quest window include related daily quest and map and so on";
+		freeloop(1);
+		for(set .@i,12225; .@i<=12353; set .@i,.@i+1) {
+			if (checkquest(.@i) > -1)
+				erasequest .@i;
+		}
+		freeloop(0);
+		set ep14_1_mistwoods,10;
+		close;
+	}
+}
+
+// Mora Daily Quests - Souls :: md_cadaver_in
+//============================================================
+// callfunc "mora_remains",<quest ID>,<NPC name>,<Mora Coin amount>,<reward ID>,<max reward amount>;
+function	script	mora_remains	{
+	if (MaxWeight - Weight < 1000) {
+		mes "You have to make space in your inventory.";
+		close;
+	}
+	if (checkquest(getarg(0)) > -1) {
+		specialeffect2 EF_BLIND;
+		specialeffect2 EF_BEGINSPELL;
+		progressbar "ffff00",4;
+		erasequest getarg(0);
+		mes "These must be ["+getarg(1)+"]'s Remains. So carefully gather his remains.";
+		specialeffect2 EF_STEAL;
+		getitem getarg(3), rand(1,getarg(4));
+		if (rand(10)) {
+			next;
+			mes "You picked up "+getarg(2)+" Mora Coins next to the remains.";
+			specialeffect2 EF_STEAL;
+			getitem 6380,getarg(2); //Mora_Coin
+		}
+		close;
+	}
+	mes "You see traces of recent digging.";
+	close;
+}
+1@mist,132,100,0	script	Tazaar's Remains#33	844,{ callfunc "mora_remains",12243,"Tazaar",6,526,3; }	//Royal_Jelly
+1@mist,102,242,0	script	Naizar's Remains#33	844,{ callfunc "mora_remains",12244,"Naizar",5,942,17; }	//Yoyo_Tail
+1@mist,145,245,0	script	Meshir's Remains#33	844,{ callfunc "mora_remains",12245,"Meshir",5,943,4; }	//Solid_Shell
+1@mist,196,276,0	script	Noirit's Remains#33	844,{ callfunc "mora_remains",12246,"Noirit",6,549,3; }	//Nice_Sweet_Potato
+1@mist,304,327,0	script	Pajama God's Remains#33	844,{ callfunc "mora_remains",12247,"Pajama God",5,945,18; }	//Raccoon_Leaf
+1@mist,334,287,0	script	Mendel's Remains#33	844,{ callfunc "mora_remains",12248,"Mendel",7,946,31; }	//Snail's_Shell
+1@mist,330,177,0	script	Milebit's Remains#33	844,{ callfunc "mora_remains",12249,"Milebit",5,7008,17; }	//Stiff_Horn
+1@mist,284,84,0	script	Kunmun's Remains#33	844,{ callfunc "mora_remains",12250,"Kunmun",4,6380,20; }	//Mora_Coin
+1@mist,170,54,0	script	Tsaihokin's Remains#33	844,{ callfunc "mora_remains",12251,"Tsaihokin",2,929,5; }	//Immortal_Heart
+1@mist,118,43,0	script	Tuar's Remains#33	844,{ callfunc "mora_remains",12252,"Tuar",3,6380,20; }	//Mora_Coin
+
+// Knights of the Neighborhood :: ep14_1_mora_knight
+//============================================================
+mora,118,166,6	script	Knights Chief#mo	525,{
+	mes "[Order of the Knights Chief]";
+	mes "We are the legendary order of the Neighborhood Knights, founded just five minutes ago!";
+	next;
+	mes "[Order of the Knights Chief]";
+	mes "We have four chiefs but no foot soldiers...";
+	mes "It's so frustrating!";
+	next;
+	mes "[Other Leaders]";
+	mes "Those other guys are all soldiers, but I'm the Boss!";
+	mes "I, the Head, will tell you what to do!";
+	mes "The Leader is the highest in the rank!";
+	mes "You talked me into joining the order, and now look at this!";
+	close;
+}
+
+mora,116,165,5	script	Knights Boss#mo	524,{
+	set .@playtime, checkquest(1119,PLAYTIME);
+	if (.@playtime == 0 || .@playtime == 1) {
+		mes "[Order of the Knights Boss]";
+		mes "We've run out of Mora Coins.";
+		mes "Come back tomorrow!";
+		close;
+	} else if (.@playtime == 2)
+		erasequest 1119;
+	if (checkweight(6380,1) == 0) {
+		mes "[Order of the Knights Boss]";
+		mes "You have a lot of things with you!";
+		mes "Why not dump some of them in my pocket?";
+		close;
+	}
+	if (countitem(12561) >= 200) {
+		mes "[Order of the Knights Boss]";
+		mes "So you've brought back";
+		mes "200 ^FF0000Mysterious Seeds^000000.";
+		mes "Are you working under my command?";
+		mes "I'm so confused";
+		mes "because I've been sending random people on errands.";
+		next;
+		mes "[Order of the Knights Boss]";
+		mes "I'll reward you as I promised.";
+		mes "You made sure everyone knows";
+		mes "it's the Order of the Neighborhood Knights's work, right?";
+		setquest 1119;
+		delitem 12561,200; //Mysterious_Seed
+		getitem 6380,1; //Mora_Coin
+		close;
+	}
+	mes "[Order of the Knights Boss]";
+	mes "You have courage to";
+	mes "show up out of nowhere";
+	mes "and demand Mora Coins... how impressive!";
+	mes "You're more than qualified to be a soldier of the Order of the Neighborhood Knights.";
+	next;
+	mes "[Order of the Knights Boss]";
+	mes "Soldier, I need you to do something for me.";
+	mes "Go to the Hazy Forest and gather 200 ^FF0000Mysterious Seeds^000000!";
+	next;
+	switch(select("Yes, sir!:I challenge you to a duel!")) {
+	case 1:
+		mes "[Order of the Knights Boss]";
+		mes "Good attitude, "+strcharinfo(0)+" Soldier!";
+		mes "I'll reward you handsomely when you get back.";
+		next;
+		mes "[Other Bosses]";
+		mes "This is from me, the Chief!";
+		mes "Don't look down on the Head!";
+		mes "It's from me, the Leader!";
+		close;
+	case 2:
+		mes "[Order of the Knights Boss]";
+		mes "See the Chief if you want to have a duel!";
+		mes "I'm in charge of recruiting here.";
+		mes "Ahem...";
+		close;
+	}
+}
+
+mora,114,163,5	script	Knights Head#mo	522,{
+	if (checkweight(6380,1) == 0) {
+		mes "[Order of the Knights Head]";
+		mes "You have a lot of things with you!";
+		mes "Why not dump some of them in my pocket?";
+		close;
+	}
+	if (ep14_1_rope < 11) {
+		mes "[Order of the Knights Head]";
+		mes "I hear that a Laphine called 'Lope'";
+		mes "went missing in the Hazy Forest.";
+		mes "I wish the Order of the Neighborhood Knights";
+		next;
+		mes "[Order of the Knights Head]";
+		mes "could help solve the case,";
+		mes "but we can't now";
+		mes "because we're not done cleaning the yard yet.";
+		mes "So, what I'm trying to say is";
+		next;
+		mes "[Order of the Knights Head]";
+		mes "why don't you go";
+		mes "and deal with the problem";
+		mes "on behalf of the Order of the Neighborhood Knights!";
+		next;
+		mes "[Order of the Knights Head]";
+		mes "I promise, as the Head of the Order,";
+		mes "that I'll give you more work";
+		mes "when you get back!";
+		next;
+		mes "[Other Heads]";
+		mes "I approve it, as the Chief.";
+		mes "You can thank me, the Boss.";
+		mes "You know the Leader is the boss here, right?";
+		close;
+	} else if (ep14_1_rope == 11) {
+		mes "[Order of the Knights Head]";
+		mes "So the missing Laphine";
+		mes "is dead?";
+		mes "I'm sorry to hear that.";
+		mes "I could have saved him.";
+		next;
+		mes "[Order of the Knights Head]";
+		mes "I hear that there are more ^0000FFLope's Clues^000000";
+		mes "in the Hazy Forest.";
+		mes "Go look for the rest of them";
+		mes "and bring back about 30 of them.";
+		mes "They will make great souvenirs.";
+		next;
+		switch(select("Am I doing all the work here or what?:Yes, sir!")) {
+		case 1:
+			mes "[Order of the Knights Head]";
+			mes "So you've noticed it?";
+			mes "Darn! I should have given you work earlier!";
+			close;
+		case 2:
+			mes "[Order of the Knights Head]";
+			mes "It was worthwhile to have trained you after all.";
+			mes "I'm proud of you,"+strcharinfo(0)+" Soldier!";
+			next;
+			mes "[Other Heads]";
+			mes "I think you'll make a great right-hand man, the Chief.";
+			mes "I feel rewarded, as the Boss.";
+			mes "As the Leader, I'm so pleased to see you all improve.";
+			set ep14_1_rope,12;
+			setquest 1118;
+			close;
+		}
+	} else if (ep14_1_rope == 12) {
+		if (countitem(6383) < 30) {
+			mes "[Order of the Knights Head]";
+			mes "You still haven't gathered";
+			mes "^0000FFLope's Clues^000000?";
+			mes "I feel somewhat good,";
+			mes "because that's about what I expected out of you.";
+			close;
+		}
+		mes "[Order of the Knights Head]";
+		mes "So you've brought back ^0000FFLope's Clues^000000.";
+		mes "Let's see ...";
+		mes "Assemble, assemble";
+		mes "Attach, attach";
+		next;
+		mes "[Lope's Letter]";
+		mes "...a traveler... attacked...";
+		mes "...under disguise... deadly poison...";
+		mes "...the Village... in danger...";
+		next;
+		mes "[Order of the Knights Head]";
+		mes "What on earth does this mean?";
+		mes "Well done, anyway.";
+		mes "Cheer up, you will be a great head of the Knights like myself, someday.";
+		next;
+		mes "[Other Heads]";
+		mes "I'm not so sure!";
+		mes "It's too much for us.";
+		mes "It's no use trying to do it.";
+		completequest 1118;
+		delitem 6383,30; //Clue_Of_Lope
+		set ep14_1_rope,13;
+		getitem 6380,2; //Mora_Coin
+		getexp 1000000,1000000;
+		close;
+	} else if (ep14_1_rope > 12) {
+		mes "[Order of the Knights Head]";
+		mes "We're in trouble.";
+		mes "We're sick of being knights.";
+		mes "We're thinking of forming";
+		mes "a circus troupe instead.";
+		mes "Are you interested in trying tightrope walking?";
+		next;
+		switch(select("Well, I could do a fire show.:This is so absurd.")) {
+		case 1:
+			mes "[Order of the Knights Head]";
+			mes "No, it's impossible.";
+			mes "I burned down a few houses";
+			mes "playing with fire.";
+			close;
+		case 2:
+			mes "[Order of the Knights Head]";
+			mes "That's the answer I expected.";
+			mes "I'm proud of myself.";
+			close;
+		}
+		close;
+	}
+	end;
+}
+
+mora,112,161,5	script	Knights Leader#mo	523,{
+	mes "[Order of the Knights Leader]";
+	mes "I'm the Leader of the Order -";
+	mes "you can tell me.";
+	mes "What brings you here? Do you have some work for us?";
+	next;
+	mes "[Other Leaders]";
+	mes "Huh! I said the Boss is the boss!";
+	mes "No, the Chief is the best!";
+	mes "How rude you all are! I'm the Head here!";
+	emotion e_swt2,1;
+	close;
+}

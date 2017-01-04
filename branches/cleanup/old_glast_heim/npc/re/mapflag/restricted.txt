@@ -1,0 +1,39 @@
+//===== rAthena Script =======================================
+//= Mapflag: Restricted.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Disables items configured in item_noequip.txt
+//= and skills configured in skill_nocast_db.txt.
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Copied towns into this file. [Euphy]
+//============================================================
+
+// Instances =====================
+1@mist	mapflag	restricted	6
+1@cash	mapflag	restricted	6
+1@pump	mapflag	restricted	6
+2@pump	mapflag	restricted	6
+1@lhz	mapflag	restricted	6
+1@ma_h	mapflag	restricted	6
+1@ma_c	mapflag	restricted	6
+1@ma_b	mapflag	restricted	6
+1@ecl	mapflag	restricted	6
+
+// Towns =========================
+brasilis	mapflag	restricted	7
+dewata	mapflag	restricted	7
+dicastes01	mapflag	restricted	7
+eclage	mapflag	restricted	7
+izlude_a	mapflag	restricted	7
+izlude_b	mapflag	restricted	7
+izlude_c	mapflag	restricted	7
+izlude_d	mapflag	restricted	7
+malangdo	mapflag	restricted	7
+malaya	mapflag	restricted	7
+mora	mapflag	restricted	7

@@ -1,0 +1,14 @@
+// Arrow Crafting Database
+//
+// Structure of Database:
+// SourceID,MakeID1,MakeAmount1,...,MakeID5,MakeAmount5
+//
+// 01. SourceID     ID of the item, that is consumed by Arrow Crafting.
+// 02. MakeID       ID of the item received from Arrow Crafting.
+// 03. MakeAmount   Amount of MakeID item received from Arrow Crafting.
+// ...
+//
+// NOTE:
+// - Up to MAX_ARROW_RESULT (typically 5) ID/Amount pairs can be specified.
+// - To remove entry by importing, put 0 on 'MakeID'
+

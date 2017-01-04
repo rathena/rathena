@@ -1,0 +1,38 @@
+//===== rAthena Script =======================================
+//= Kiel Dungeon Warp Script
+//===== By: ==================================================
+//= Lost Kakashi
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for the Kiel Dungeon
+//===== Additional Comments: =================================
+//= 1.1 Added official Kiel Dungeon entrance [Playtester]
+//= 1.2 Changed warps because of Kiel quest [Playtester]
+//= 1.3 Added second floor exit. [L0ne_W0lf]
+//=     Corrected coordinated for some of the other warps.
+//============================================================
+
+//= Kiel Dungeon =============================================
+kh_dun01,3,234,0	warp	kh_dun_00	1,1,yuno_fild08,74,174
+
+//Factory Restricted Area Exit
+kh_dun01,232,226,0	warp	kh_dun_01	1,1,kh_dun01,13,12
+
+//Factory side warps
+kh_dun01,63,7,0	warp	kh_dun_02	1,1,kh_dun01,227,176
+kh_dun01,232,176,0	warp	kh_dun_03	1,1,kh_dun01,63,12
+
+//Second Floor -> First floor Random warp
+kh_dun02,43,195,0	script	kh_dun04	45,1,1,{
+OnTouch:
+	if (rand(1,2) == 1) {
+		warp "kh_dun01",41,206;
+	}
+	else {
+		warp "kh_dun01",32,199;
+	}
+
+}

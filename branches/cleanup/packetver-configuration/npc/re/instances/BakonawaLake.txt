@@ -1,0 +1,549 @@
+//===== rAthena Script ======================================= 
+//= Bakonawa Lake
+//===== By: ================================================== 
+//= Euphy
+//===== Current Version: ===================================== 
+//= 1.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Defeat Bakonawa before he eats the moon.
+//= Part of the "Bakonawa Extermination" quest.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [Euphy]
+//= 1.1 Added GM management NPC. [Euphy]
+//= 1.2 Added VIP features. [Euphy]
+//============================================================ 
+
+// Instance Creation :: ma_baku
+//============================================================
+ma_scene01,174,179,4	script	Taho	541,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "You are carrying too many items. Come back after taking off some of them.";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "You are carrying too much weight. Come back after reducing the weight.";
+		close;
+	}
+	if (BaseLevel < 140) {
+		mes "[Taho]";
+		mes "Hey. This is too dangerous a place for you. You cannot keep yourself safe. Get out of here and go to the village right now!";
+		close;
+	}
+	if (malaya_bakona1 < 7 && malaya_bakona2 < 15) {
+		mes "[Taho]";
+		mes "We are gonna be killed all by that Bakonawa. Ah, we must slay him but unfortunately we are not prepared.";
+		close;
+	}
+
+	set .@party_id,getcharid(1);
+	set .@md_name$, "Bakonawa Lake";
+
+	set .@baku_time, checkquest(12278,PLAYTIME);
+	if (.@baku_time == -1) {
+		if (checkquest(12279) == -1) setquest 12279;
+	}
+	if (!.@party_id) {
+		mes "[Taho]";
+		mes "Isn't there any company who can go with you? Or even if you wanna go alone, come after organizing a party.";
+		close;
+	}
+	if (.@baku_time == -1) {
+		if (getcharid(0) == getpartyleader(.@party_id,2)) {
+			mes "[Taho]";
+			mes "Are you the leader of the Bakonawa slayers? The road is not well so we have to go down the cliff with a rope, is that OK?";
+			next;
+			set .@i, select("Please weave a rope.:Now I will go down.:Cancel.");
+		} else {
+			mes "[Taho]";
+			mes "You came for slaying Bakonawa. The leader of your party has to help me weaving the rope for going down.";
+			next;
+			set .@i, select(":Now I will go down.:Cancel.");
+		}
+		switch(.@i) {
+		case 1:
+			if (instance_create(.@md_name$) < 0) {
+				mes "[Taho]";
+				mes "Oh, the rope got dropped. I have to make a new one.";
+				close;
+			}
+			mes "[Taho]";
+			mes "Now I'm weaving, so you can go down when I'm done.";
+			close;
+		case 2:
+			switch(instance_enter(.@md_name$)) {
+			case 3:
+				mes "[Taho]";
+				mes "An unknown error occurred.";
+				close;
+			case 2:
+				mes "[Taho]";
+				mes "The rope hasn't been weaved yet. Wait a little.";
+				close;
+			case 1:
+				mes "[Taho]";
+				mes "Civilians cannot enter.";
+				close;
+			case 0:
+				mapannounce "ma_scene01","A party member, "+strcharinfo(0)+" of the party "+getpartyname(.@party_id)+" is entering the dungeon, "+.@md_name$+".",bc_map,"0x00ff99"; //FW_NORMAL 12 0 0
+				setquest 12278;
+				//warp "1@ma_b",64,51;
+				close;
+			}
+		case 3:
+			close;
+		}
+	} else if (.@baku_time == 0 || .@baku_time == 1) {
+		mes "[Taho]";
+		mes "The rope used for getting to the Lake is already broken. We are now cleaning up the surroundings so come back after some time.";
+		close;
+	} else if (.@baku_time == 2) {
+		mes "[Taho]";
+		mes "It's all cleaned up around here. Now you can go down again after getting a rope.";
+		erasequest 12278;
+		close;
+	}
+}
+
+sec_in02,26,26,4	script	Bakonawa's Rage	541,{
+	callfunc "F_GM_NPC";
+	mes "[Taho]";
+	mes "My name is Minky.";
+	if (callfunc("F_GM_NPC",1854,0) == 1) {
+		erasequest 12278;
+		erasequest 12279;
+		set malaya_bakona1,7;
+		set malaya_bakona2,15;
+	}
+	close;
+}
+
+// Instance Scripts :: in_baku01
+//============================================================
+1@ma_b,62,52,4	script	Taho#nf	541,{
+	mes "[Taho]";
+	mes "Heehee, I could join the Bakonawa hunt, but I'd rather hide behind that rock and cheer you guys on.";
+	next;
+	mes "[Taho]";
+	mes "Bakonawa becomes invincible at some point. When that time comes, listen to my guides carefully. Just trust me and all will be good.";
+	next;
+	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
+		mes "[Taho]";
+		mes "Now I will make Bakonawa spring out from the lake.";
+		next;
+		switch(select("Hold on! I'm not ready yet!:Let's do it!")) {
+		case 1:
+			mes "[Taho]";
+			mes "Oh... alright... tell me when you are ready.";
+			close;
+		case 2:
+			mes "[Taho]";
+			mes "Then I will drop a drop of Albopal to this lake.";
+			next;
+			mes "[Taho]";
+			mes "Once Bakonawa tastes this, he will surface...";
+			donpcevent instance_npcname("#Bakonawan1")+"::OnStart";
+			disablenpc instance_npcname("Taho#nf");
+			close;
+		}
+	} else {
+		mes "[Taho]";
+		mes "I am dropping the Alpopal to make Bakonawa mad. Bakonawa can be a good source of protein once we get him.";
+		close;
+	}
+}
+
+1@ma_b,36,111,4	script	#Bakonawan1	844,{
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname("#Bakonawan1");
+	end;
+OnStart:
+	enablenpc instance_npcname("#Bakonawan1");
+	set .@map$, instance_mapname("1@ma_b");
+	mapannounce .@map$,"Taho: I can see him there on the surface! ATTACK!!!",bc_map,"0x00ffff"; //FW_NORMAL 15 0 0
+	monster .@map$,78,81,"Bakonawa",2320,1,instance_npcname("#Bakonawan1")+"::OnMyMobDead"; //original: (78,83)
+	initnpctimer;
+	end;
+OnFail:
+	killmonster instance_mapname("1@ma_b"),instance_npcname("#Bakonawan1")+"::OnMyMobDead";
+	end;
+OnMyMobDead:
+	set .@map$, instance_mapname("1@ma_b");
+	if (mobcount(.@map$,instance_npcname("#Bakonawan1")+"::OnMyMobDead") < 1) {
+		donpcevent instance_npcname("#BakonawaDeadn1")+"::OnStart";
+		killmonster .@map$,instance_npcname("#Bakonawan1")+"::OnMyMobDead";
+		stopnpctimer;
+		disablenpc instance_npcname("#Bakonawan1");
+	}
+	end;
+OnTimer1000:	callsub OnAnnounce,"10 minutes";
+OnTimer60000:	callsub OnAnnounce,"9 minutes";
+OnTimer120000:	callsub OnAnnounce,"8 minutes";
+OnTimer180000:	callsub OnAnnounce,"7 minutes";
+OnTimer240000:	callsub OnAnnounce,"6 minutes";
+OnTimer300000:	callsub OnAnnounce,"5 minutes";
+OnTimer360000:	callsub OnAnnounce,"4 minutes";
+OnTimer420000:	callsub OnAnnounce,"3 minutes";
+OnTimer480000:	callsub OnAnnounce,"2 minutes";
+OnTimer540000:	callsub OnAnnounce,"1 minute";
+OnTimer570000:
+	mapannounce instance_mapname("1@ma_b"),"Time Limit: 30 seconds",bc_map,"0xff4400"; //FW_NORMAL 18 0 0
+	donpcevent instance_npcname("#SummonPuppetsn1")+"::OnStart";
+	end;
+OnTimer600000:
+	set .@map$, instance_mapname("1@ma_b");
+	mapannounce .@map$,"Bakonawa has escaped deep into the lake.",bc_map,"0xffff00"; //FW_NORMAL 20 0 0
+	donpcevent instance_npcname("Taho#Fail")+"::OnStart";
+	donpcevent instance_npcname("#Bakonawan1")+"::OnFail";
+	killmonster .@map$,instance_npcname("#Bakonawan1")+"::OnMyMobDead";
+	stopnpctimer;
+	disablenpc instance_npcname("#Bakonawan1");
+	end;
+OnAnnounce:
+	mapannounce instance_mapname("1@ma_b"),"Time Limit: "+getarg(0),bc_map,"0xff4400"; //FW_NORMAL 15 0 0
+	donpcevent instance_npcname("#SummonPuppetsn1")+"::OnStart";
+	end;
+}
+
+1@ma_b,78,81,0	script	#SummonPuppetsn1	139,4,5,{
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname("#SummonPuppetsn1");
+	end;
+OnStart:
+	stopnpctimer;
+	enablenpc instance_npcname("#SummonPuppetsn1");
+	initnpctimer;
+	end;
+OnTouch:
+	stopnpctimer;
+	disablenpc instance_npcname("#SummonPuppetsn1");
+	end;
+OnTimer5000:
+	setarray .@x[0],79,71,60,61,57,89,95,96,99;
+	setarray .@y[0],71,72,80,90,99,73,82,90,99;
+	set .@map$, instance_mapname("1@ma_b");
+	for(set .@i,0; .@i<9; set .@i,.@i+1) {
+		set .@rand, rand(1,10);
+		if (.@rand > 7)
+			monster .@map$,.@x[.@i],.@y[.@i],"Bakonawa's Will",2337,1,instance_npcname("#SummonPuppetsn1")+"::OnMyMobDead";
+		else if (.@rand < 4)
+			monster .@map$,.@x[.@i],.@y[.@i],"Bakonawa's Will",2343,1,instance_npcname("#SummonPuppetsn1")+"::OnMyMobDead";
+	}
+	end;
+OnTimer50000:
+	killmonster instance_mapname("1@ma_b"),instance_npcname("#SummonPuppetsn1")+"::OnMyMobDead";
+	stopnpctimer;
+	disablenpc instance_npcname("#SummonPuppetsn1");
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@ma_b,1,5,4	script	#BakonawaDeadn1	844,{
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname("#BakonawaDeadn1");
+	end;
+OnStart:
+	enablenpc instance_npcname("#BakonawaDeadn1");
+	initnpctimer;
+	end;
+OnTimer100:
+	mapannounce instance_mapname("1@ma_b"),"Taho: Good! Bakonawa is hidden under water. He will now try to swallow the moon.",bc_map,"0x00ffff"; //FW_NORMAL 15 0 0
+	end;
+OnTimer5000:
+	mapannounce instance_mapname("1@ma_b"),"Taho: We must make loud noises with caldron and gong so he can never concentrate on the moon!",bc_map,"0x00ffff"; //FW_NORMAL 15 0 0
+	end;
+OnTimer10000:
+	mapannounce instance_mapname("1@ma_b"),"Taho: Do not engage on him even if he come above the surface. Just make loud noises!",bc_map,"0x00ffff"; //FW_NORMAL 15 0 0
+	end;
+OnTimer15000:
+	mapannounce instance_mapname("1@ma_b"),"Mission - Destroy 2 caldrons and 2 gongs on left and right sides of the lake.",bc_map,"0xff3300"; //FW_NORMAL 15 0 0
+	donpcevent instance_npcname("#Bakonawan2")+"::OnStart";
+	stopnpctimer;
+	disablenpc instance_npcname("#BakonawaDeadn1");
+	end;
+}
+
+1@ma_b,36,111,4	script	#Bakonawan2	844,{
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname("#Bakonawan2");
+	end;
+OnStart:
+	enablenpc instance_npcname("#Bakonawan2");
+	set .@label$, instance_npcname("#Bakonawan2")+"::OnMyMobDead";
+	set .@map$, instance_mapname("1@ma_b");
+	monster .@map$,95,98,"Caldron",2328,1,.@label$;
+	monster .@map$,60,98,"Caldron",2328,1,.@label$;
+	monster .@map$,97,104,"Gong",2328,1,.@label$;
+	monster .@map$,58,104,"Gong",2328,1,.@label$;
+	donpcevent instance_npcname("#Bakonawan2-1")+"::OnStart";
+	initnpctimer;
+	end;
+OnMyMobDead:
+	set .@map$, instance_mapname("1@ma_b");
+	set .@mob_dead_num, mobcount(.@map$,instance_npcname("#Bakonawan2")+"::OnMyMobDead");
+	if (.@mob_dead_num < 1) {
+		donpcevent instance_npcname("#Bakonawan2-1")+"::OnEnd";
+		stopnpctimer;
+		disablenpc instance_npcname("#Bakonawan2");
+	} else
+		mapannounce .@map$,"Taho: Good! "+.@mob_dead_num+" left to go!",bc_map,"0x00ffff"; //FW_NORMAL 15 0 0
+	 end;
+OnTimer1000:	callsub OnAnnounce,"5 minutes",15,1;
+OnTimer60000:	callsub OnAnnounce,"4 minutes",15,1;
+OnTimer120000:	callsub OnAnnounce,"3 minutes",15,1;
+OnTimer180000:	callsub OnAnnounce,"2 minutes",15,1;
+OnTimer240000:	callsub OnAnnounce,"1 minute",15,1;
+OnTimer270000:	callsub OnAnnounce,"30 seconds",15,0;
+OnTimer280000:	callsub OnAnnounce,"20 seconds",15,0;
+OnTimer290000:	callsub OnAnnounce,"10 seconds",15,0;
+OnTimer295000:	callsub OnAnnounce,"5 seconds",16,0;
+OnTimer296000:	callsub OnAnnounce,"4 seconds",17,0;
+OnTimer297000:	callsub OnAnnounce,"3 seconds",18,0;
+OnTimer298000:	callsub OnAnnounce,"2 seconds",19,0;
+OnTimer299000:	callsub OnAnnounce,"1 second",20,0;
+OnTimer300000:
+	set .@map$, instance_mapname("1@ma_b");
+	mapannounce .@map$,"Bakonawa has escaped deep into the lake.",bc_map,"0xffff00"; //FW_NORMAL 20 0 0
+	donpcevent instance_npcname("Taho#Fail")+"::OnStart";
+	donpcevent instance_npcname("#Bakonawan2-1")+"::OnFail";
+	killmonster .@map$,instance_npcname("#Bakonawan2")+"::OnMyMobDead";
+	stopnpctimer;
+	disablenpc instance_npcname("#Bakonawan2");
+	end;
+OnAnnounce:
+	mapannounce instance_mapname("1@ma_b"),"Time Limit: "+getarg(0),bc_map,"0xff4400"; //FW_NORMAL getarg(1) 0 0
+	if (getarg(2)) donpcevent instance_npcname("#SummonPuppetsn1")+"::OnStart";
+	end;
+}
+
+1@ma_b,36,111,4	script	#Bakonawan2-1	844,{
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname("#Bakonawan2-1");
+	end;
+OnStart:
+	enablenpc instance_npcname("#Bakonawan2-1");
+	monster instance_mapname("1@ma_b"),78,81,"Enraged Bakonawa",2321,1,instance_npcname("#Bakonawan2-1")+"::OnMyMobDead"; //original: (78,93)
+	end;
+OnFail:
+	killmonster instance_mapname("1@ma_b"),instance_npcname("#Bakonawan2-1")+"::OnMyMobDead";
+	end;
+OnEnd:
+	enablenpc instance_npcname("#Bakonawan2-1");
+	killmonster instance_mapname("1@ma_b"),instance_npcname("#Bakonawan2-1")+"::OnMyMobDead";
+	initnpctimer;
+	end;
+OnTimer1000:
+	mapannounce instance_mapname("1@ma_b"),"Taho: He is back into the lake again. Is it over?",bc_map,"0x00ffff"; //FW_NORMAL 15 0 0
+	end;
+OnTimer5000:
+	mapannounce instance_mapname("1@ma_b"),"Taho: UHM! Something is moving up rapidly under the water! Ba... Bakonawa is coming!!",bc_map,"0x00ffff"; //FW_NORMAL 15 0 0
+	end;
+OnTimer10000:
+	mapannounce instance_mapname("1@ma_b"),"Mission - Eliminate Bakonawa who became more fierce.",bc_map,"0xff3300"; //FW_NORMAL 15 0 0
+	donpcevent instance_npcname("#Bakonawan3")+"::OnStart";
+	stopnpctimer;
+	disablenpc instance_npcname("#Bakonawan2-1");
+	end;
+OnMyMobDead:
+	end;
+}
+
+1@ma_b,36,111,4	script	#Bakonawan3	844,{
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname("#Bakonawan3");
+	end;
+OnStart:
+	enablenpc instance_npcname("#Bakonawan3");
+	initnpctimer;
+	monster instance_mapname("1@ma_b"),78,81,"Enraged Bakonawa",2322,1,instance_npcname("#Bakonawan3")+"::OnMyMobDead"; //original: (78,83)
+	donpcevent instance_npcname("#Bakonawan3-1")+"::OnStart";
+	end;
+OnMyMobDead:
+	set .@map$, instance_mapname("1@ma_b");
+	set .@mob_dead_num, mobcount(.@map$,instance_npcname("#Bakonawan3")+"::OnMyMobDead");
+	if (.@mob_dead_num < 1) {
+		mapannounce .@map$,"Taho: We got him! I can see he has threw up something that looks like a box.",bc_map,"0x00ffff"; //FW_NORMAL 15 0 0
+		donpcevent instance_npcname("Taho#Completed")+"::OnStart";
+		donpcevent instance_npcname("#Bakonawan3-1")+"::OnEnd";
+		killmonster .@map$,instance_npcname("#Bakonawan3")+"::OnMyMobDead";
+		stopnpctimer;
+		disablenpc instance_npcname("#Bakonawan3");
+	}
+	end;
+OnTimer1000:
+	callsub OnAnnounce,"10 minutes",15,1;
+	end;
+OnTimer60000:
+OnTimer120000:
+OnTimer180000:
+OnTimer240000:
+	donpcevent instance_npcname("#SummonPuppetsn1")+"::OnStart";
+	end;
+OnTimer300000:	callsub OnAnnounce,"5 minutes",15,1;
+OnTimer360000:	callsub OnAnnounce,"4 minutes",15,1;
+OnTimer420000:	callsub OnAnnounce,"3 minutes",15,1;
+OnTimer480000:	callsub OnAnnounce,"2 minutes",15,1;
+OnTimer540000:	callsub OnAnnounce,"1 minute",15,1;
+OnTimer570000:	callsub OnAnnounce,"30 seconds",15,0;
+OnTimer580000:	callsub OnAnnounce,"20 seconds",15,0;
+OnTimer590000:	callsub OnAnnounce,"10 seconds",15,0;
+OnTimer595000:	callsub OnAnnounce,"5 seconds",16,0;
+OnTimer596000:	callsub OnAnnounce,"4 seconds",17,0;
+OnTimer597000:	callsub OnAnnounce,"3 seconds",18,0;
+OnTimer598000:	callsub OnAnnounce,"2 seconds",19,0;
+OnTimer599000:	callsub OnAnnounce,"1 second",20,0;
+OnTimer600000:
+	set .@map$, instance_mapname("1@ma_b");
+	mapannounce .@map$,"Bakonawa has escaped deep into the lake.",bc_map,"0xffff00"; //FW_NORMAL 20 0 0
+	donpcevent instance_npcname("Taho#Fail")+"::OnStart";
+	killmonster .@map$,instance_npcname("#Bakonawan3")+"::OnMyMobDead";
+	stopnpctimer;
+	disablenpc instance_npcname("#Bakonawan3");
+	end;
+OnAnnounce:
+	mapannounce instance_mapname("1@ma_b"),"Time Limit: "+getarg(0),bc_map,"0xff4400"; //FW_NORMAL getarg(1) 0 0
+	if (getarg(2)) donpcevent instance_npcname("#SummonPuppetsn1")+"::OnStart";
+	end;
+}
+
+1@ma_b,36,111,4	script	#Bakonawan3-1	844,{
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname("#Bakonawan3-1");
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnEnd:
+	killmonster instance_mapname("1@ma_b"),instance_npcname("#Bakonawan3-1")+"::OnMyMobDead";
+	//showdigit 0;
+	stopnpctimer;
+	end;
+OnMyMobDead:
+	showdigit mobcount(instance_mapname("1@ma_b"),instance_npcname("#Bakonawan3-1")+"::OnMyMobDead");
+	end;
+OnTimer120000:	callsub OnMobSpawn,10;
+OnTimer180000:	callsub OnMobSpawn,15;
+OnTimer240000:	callsub OnMobSpawn,20;
+//OnTimer300000:	callsub OnMobSpawn,25;
+OnTimer300000:	callsub OnMobSpawn,30;
+OnTimer360000:	callsub OnMobSpawn,35;
+OnTimer420000:	callsub OnMobSpawn,40;
+OnTimer480000:	callsub OnMobSpawn,45;
+OnTimer540000:	callsub OnMobSpawn,50;
+OnTimer600000:
+	killmonster instance_mapname("1@ma_b"),instance_npcname("#Bakonawan3-1")+"::OnMyMobDead";
+	stopnpctimer;
+	end;
+OnMobSpawn:
+	set .@label$, instance_npcname("#Bakonawan3-1")+"::OnMyMobDead";
+	set .@map$, instance_mapname("1@ma_b");
+	killmonster .@map$,.@label$;
+	set .@mob_dead_num, mobcount(.@map$,.@label$);
+	if (.@mob_dead_num < 50) {
+		set .@mob_rg, 50 - .@mob_dead_num;
+		if (.@mob_rg > getarg(0))
+			set .@mob_rg, getarg(0);
+		while(1) {
+			areamonster .@map$,74,74,82,74,"Bakonawa's Puppet",2334,1,.@label$;
+			set .@mob_dead_num, mobcount(.@map$,.@label$);
+			if (.@mob_dead_num >= .@mob_rg) {
+				break;
+			}
+		}
+	}
+	end;
+}
+
+1@ma_b,62,52,4	script	Taho#Completed	541,{
+	disable_items;
+	if (checkweight(1201,1) == 0) {
+		mes "It seems you are carrying too many different kinds of items. Please try again after reducing it.";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "It seems you are already carrying items of too much weight. Please try again after reducing the weight.";
+		close;
+              }
+	if (checkquest(12279,HUNTING) == 2) {
+		erasequest 12279;
+		mes "[Taho]";
+		mes "This was found from Bakonawa's corpse. It would be better if you take this.";
+		if (!VIP_SCRIPT || vip_status(1))
+			getitem 6499,7; //Ancient_Grudge
+		else
+			getitem 6499,5; //Ancient_Grudge
+		getexp 0,100000;
+		next;
+	}
+	mes "[Taho]";
+	mes "We better hurry and get out of this place. This place is still dangerous even without Bakonawa...";
+	next;
+	mes "[Taho]";
+	mes "Then let's use to the rope to go up!";
+	close2;
+	warp "ma_scene01",175,176;
+	end;
+OnInstanceInit:
+	disablenpc instance_npcname("Taho#Completed");
+	end;
+OnStart:
+	enablenpc instance_npcname("Taho#Completed");
+	initnpctimer;
+	end;
+OnTimer1000:
+	monster instance_mapname("1@ma_b"),78,74,"Bakonawa Treasure Box",2335,1;
+	end;
+OnTimer10000:
+	mapannounce instance_mapname("1@ma_b"),"Taho: After opening the treasure box, please visit me at the top of the hill. I've got something to give to you.",bc_map,"0x00ffff"; //FW_NORMAL 15 0 0
+	stopnpctimer;
+	end;
+}
+
+1@ma_b,62,52,4	script	Taho#Fail	541,{
+	mes "[Taho]";
+	mes "HMM. We almost got him but he is one fast creature...";
+	next;
+	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
+		mes "[Taho]";
+		mes "Are we going to try again?";
+		next;
+		switch(select("Hold on a sec!:Of course! We cannot stand back now!")) {
+		case 1:
+			mes "[Taho]";
+			mes "AWW... I almost brought him out.";
+			close;
+		case 2:
+			mes "[Taho]";
+			mes "Then I will use Albopal once again to the lake.";
+			next;
+			mes "[Taho]";
+			mes "We are about to see Bakonawa with intenser anger...";
+			disablenpc instance_npcname("Taho#Fail");
+			donpcevent instance_npcname("#Bakonawan1")+"::OnStart";
+			close;
+		}
+		close;
+	} else {
+		mes "[Taho]";
+		mes "I am dropping Albopal like I did a while ago. I hope it pisses him off...";
+		close;
+	}
+
+OnInstanceInit:
+	disablenpc instance_npcname("Taho#Fail");
+	end;
+OnStart:
+	enablenpc instance_npcname("Taho#Fail");
+	end;
+}

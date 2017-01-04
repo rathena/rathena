@@ -1,0 +1,42 @@
+//===== rAthena Script =======================================
+//= Sample: NPC Timers
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20121003
+//===== Description: ========================================= 
+//= Demonstrates NPC timer commands.
+//============================================================
+
+prontera,156,183,0	script	NPCtimerTest::npctimerX0000	116,{
+	mes "Timer value" + getnpctimer(0);
+	mes "State timer" + getnpctimer(1,"npctimerX0000");
+	mes "Number of events" + getnpctimer(2);
+	switch(select("Initialization:Stop:Start:Settings")) {
+	case 1:
+		initnpctimer;
+		close;
+	case 2:
+		stopnpctimer;
+		close;
+	case 3:
+		startnpctimer;
+		close;
+	case 4:
+		input .@temp;
+		setnpctimer .@temp;
+		close;
+	}
+
+OnTimer1000:
+	npctalk "After a second...";
+	end;
+
+OnTimer5000:
+	npctalk "After 5 seconds...";
+	end;
+
+OnTimer10000:
+	npctalk "After 10 seconds...";
+	end;
+}

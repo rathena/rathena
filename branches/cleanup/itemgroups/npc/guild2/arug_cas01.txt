@@ -1,0 +1,77 @@
+//===== rAthena Script =======================================
+//= War of Emperium SE - Mardol
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Merged to template file.
+//============================================================
+
+-	duplicate(Manager#template)	Manager#arug_cas01	-1
+-	duplicate(gard#template)	gard1#arug_cas01	-1
+-	duplicate(gard#template)	gard2#arug_cas01	-1
+-	duplicate(df#template)	df1#arug_cas01	-1
+-	duplicate(df#template)	df2#arug_cas01	-1
+-	duplicate(RL#template)	RL0#arug_cas01	-1
+-	duplicate(RL#template)	RL1#arug_cas01	-1
+-	duplicate(RL#template)	RL2#arug_cas01	-1
+-	duplicate(RL#template)	RL3#arug_cas01	-1
+
+arug_cas01,92,380,3	duplicate(Steward#template)	Steward#ar01	55
+arug_cas01,112,193,1	duplicate(Guardian#template)	Brace#ar01	868
+arug_cas01,31,362,3	duplicate(Kafra#template)	Kafra Employee#ar01	117
+arug_cas01,211,234,0	duplicate(Guardian Stone#template)	1st Guardian Stone#ar01	844
+arug_cas01,308,189,0	duplicate(Guardian Stone#template)	2nd Guardian Stone#ar01	844
+arug_cas01,247,52,0	duplicate(Control#template)	Control Device01#ar01	111
+arug_cas01,118,131,0	duplicate(Control#template)	Control Device02#ar01	111
+arug_cas01,82,172,0	duplicate(Control#template)	Control Device03#ar01	111
+arug_cas01,259,371,0	duplicate(Switch#template)	#aru01_switch	111
+arug_cas01,157,345,3	duplicate(Sunflower#template)	Mysterious Sunflower#06	977
+
+arug_cas01,74,232,0	script	LF-01#arug_cas01	111,{ callfunc "LinkFlag","First Gate House",158,237,"Second Gate House",297,248; }
+arug_cas01,77,232,0	script	LF-02#arug_cas01	111,{ callfunc "LinkFlag","Defense Area 1-1",197,144,"Defense Area 1-2",245,103; }
+arug_cas01,80,232,0	script	LF-03#arug_cas01	111,{ callfunc "LinkFlag","Defense Area 2-1",256,35,"Defense Area 2-2",186,26; }
+arug_cas01,83,232,0	script	LF-04#arug_cas01	111,{ callfunc "LinkFlag","Defense Area 2-3",146,65,"Defense Area 2-4",176,111; }
+arug_cas01,86,232,0	script	LF-05#arug_cas01	111,{ callfunc "LinkFlag","Defense Area 3-1",94,126,"Defense Area 3-2",126,126; }
+arug_cas01,89,232,0	script	LF-06#arug_cas01	111,{ callfunc "LinkFlag","Defense Area 3-3",68,171,"Defense Area 3-4",105,182; }
+arug_cas01,92,232,0	script	LF-07#arug_cas01	111,{ callfunc "LinkFlag","Gate House Fork",233,130; }
+arug_cas01,95,232,0	script	LF-08#arug_cas01	111,{ callfunc "LinkFlag","Area 1-1",197,144,"Area 2-1",256,35,"Area 3-1",146,65; }
+arug_cas01,98,232,0	script	LF-09#arug_cas01	111,{ callfunc "LinkFlag","Area 1-2",245,103,"Area 2-2",186,26,"Area 3-3",68,171; }
+arug_cas01,101,232,0	script	LF-10#arug_cas01	111,{ callfunc "LinkFlag","Convenience Facility",121,357; }
+arug_cas01,72,176,0	script	Mardol#LF_ar01_1::LF_ar01_1	111,{ callfunc "LinkFlag","Emperium Center",67,193; }
+arug_cas01,103,186,0	duplicate(LF_ar01_1)	Mardol#LF_ar01_2	111
+arug_cas01,92,126,4	script	Mardol#LF_ar01_3::LF_ar01_2	111,{
+	callfunc "LinkFlag","Emperium Center",67,193;
+	end;
+OnAgitInit2:
+OnRecvCastleAr01:
+	FlagEmblem GetCastleData("arug_cas01",1);
+	end;
+}
+arug_cas01,127,126,4	duplicate(LF_ar01_2)	Mardol#LF_ar01_3	111
+arug_cas01,150,102,0	duplicate(LF_ar01_1)	Mardol#LF_ar01_4	111
+arug_cas01,208,68,0	duplicate(LF_ar01_1)	Mardol#LF_ar01_5	111
+arug_cas01,249,52,0	duplicate(LF_ar01_1)	Mardol#LF_ar01_6	111
+arug_cas01,234,76,0	duplicate(LF_ar01_1)	Mardol#LF_ar01_7	111
+arug_cas01,249,76,0	duplicate(LF_ar01_1)	Mardol#LF_ar01_8	111
+arug_cas01,204,142,0	duplicate(LF_ar01_1)	Mardol#LF_ar01_9	111
+arug_cas01,183,244,0	duplicate(LF_ar01_1)	Mardol#LF_ar01_10	111
+arug_cas01,292,219,0	duplicate(LF_ar01_1)	Mardol#LF_ar01_11	111
+arug_cas01,102,120,4	duplicate(LF_ar01_2)	Mardol#LF_ar01_12	722
+arug_cas01,117,120,4	duplicate(LF_ar01_2)	Mardol#LF_ar01_13	722
+arug_cas01,233,140,4	duplicate(LF_ar01_2)	Mardol#LF_ar01_14	722
+
+aru_gld,164,270,4	script	Mardol#flag_Ar01_1::Ar01_Flag	722,{
+	callfunc "ReturnFlag","arug_cas01",1;
+	end;
+OnAgitInit2:
+OnRecvCastleAr01:
+	FlagEmblem GetCastleData("arug_cas01",1);
+	end;
+}
+aru_gld,142,235,4	duplicate(Ar01_Flag)	Mardol#flag_Ar01_2	722
+aru_gld,164,245,5	duplicate(Ar01_Flag)	Mardol#flag_Ar01_3	722
+aru_gld,182,255,5	duplicate(Ar01_Flag)	Mardol#flag_Ar01_4	722

@@ -1,0 +1,187 @@
+// Forbidden Skills Database
+// Defines unusable skills in map types and zones.
+//
+// Structure of Database:
+// SkillID,Flag
+//
+// Legend for 'Flag' field (bitmask):
+// 1    - cannot be used in normal maps
+// 2    - cannot be used in PvP maps (use this instead of 1 for PK-mode servers)
+// 4    - cannot be used in GvG maps
+// 8    - cannot be used in Battleground maps
+// 16   - cannot be cloned (clones will not copy this skill)
+// Restricted zones - configured by 'restricted <number>' mapflag
+// 32   - cannot be used in zone 1 maps
+// 64   - cannot be used in zone 2 maps
+// 128  - cannot be used in zone 3 maps
+// 256  - cannot be used in zone 4 maps
+// 512  - cannot be used in zone 5 maps
+// 1024 - cannot be used in zone 6 maps
+// 2048 - cannot be used in zone 7 maps
+//
+// Example:
+// 8,6  // Endure cannot be used in PvP and GvG maps (2+4)
+
+//----------------------------------------------------------------------------
+// Normal
+//----------------------------------------------------------------------------
+2422,1	//WM_LULLABY_DEEPSLEEP
+2423,1	//WM_SIRCLEOFNATURE
+2430,1	//WM_SATURDAY_NIGHT_FEVER
+2455,1	//SO_ARRULLO
+
+//----------------------------------------------------------------------------
+// PVP
+//----------------------------------------------------------------------------
+1013,2	//BS_GREED
+
+//----------------------------------------------------------------------------
+// GVG
+//----------------------------------------------------------------------------
+26,4	//AL_TELEPORT
+27,4	//AL_WARP
+87,4	//WZ_ICEWALL
+150,4	//TF_BACKSLIDING
+219,4	//RG_INTIMIDATE
+336,4	//WE_CALLPARTNER
+361,4	//HP_ASSUMPTIO
+362,4	//HP_BASILICA
+395,4	//CG_MOONLIT
+409,4	//WE_CALLPARENT
+410,4	//WE_CALLBABY
+491,4	//CR_CULTIVATION
+530,4	//NJ_KIRIKAGE
+691,4	//CASH_ASSUMPTIO
+1013,4	//BS_GREED
+2284,4	//SC_FATALMENACE
+2300,4	//SC_DIMENSIONDOOR
+
+//----------------------------------------------------------------------------
+// Battlegrounds
+//----------------------------------------------------------------------------
+26,8	//AL_TELEPORT
+27,8	//AL_WARP
+87,8	//WZ_ICEWALL
+150,8	//TF_BACKSLIDING
+219,8	//RG_INTIMIDATE
+264,8	//MO_BODYRELOCATION
+336,8	//WE_CALLPARTNER
+361,8	//HP_ASSUMPTIO
+362,8	//HP_BASILICA
+395,8	//CG_MOONLIT
+409,8	//WE_CALLPARENT
+410,8	//WE_CALLBABY
+491,8	//CR_CULTIVATION
+411,8	//TK_RUN
+426,8	//TK_HIGHJUMP
+427,8	//SG_FEEL
+428,8	//SG_SUN_WARM
+429,8	//SG_MOON_WARM
+430,8	//SG_STAR_WARM
+431,8	//SG_SUN_COMFORT
+432,8	//SG_MOON_COMFORT
+433,8	//SG_STAR_COMFORT
+434,8	//SG_HATE
+435,8	//SG_SUN_ANGER
+436,8	//SG_MOON_ANGER
+437,8	//SG_STAR_ANGER
+438,8	//SG_SUN_BLESS
+439,8	//SG_MOON_BLESS
+440,8	//SG_STAR_BLESS
+530,8	//NJ_KIRIKAGE
+691,8	//CASH_ASSUMPITO
+2284,8	//SC_FATALMENACE
+2300,8	//SC_DIMENSIONDOOR
+
+//----------------------------------------------------------------------------
+// Mixed
+//----------------------------------------------------------------------------
+488,3	//CG_HERMODE
+3013,3	//KO_KYOUGAKU
+
+//----------------------------------------------------------------------------
+// Clone Forbidden/pointless skills
+//----------------------------------------------------------------------------
+77,16	//PR_TURNUNDEAD
+79,16	//PR_MAGNUS
+
+//----------------------------------------------------------------------------
+// Zone 1 - Aldebaran Turbo Track
+//----------------------------------------------------------------------------
+8,32	//SM_ENDURE
+26,32	//AL_TELEPORT
+27,32	//AL_WARP
+35,32	//AL_CURE
+51,32	//TF_HIDING
+87,32	//WZ_ICEWALL
+135,32	//AS_CLOAKING
+219,32	//RG_INTIMIDATE
+264,32	//MO_BODYRELOCATION
+357,32	//LK_CONCENTRATION
+359,32	//LK_BERSERK
+362,32	//HP_BASILICA
+387,32	//WS_CARTBOOST
+389,32	//ST_CHASEWALK
+395,32	//CG_MOONLIT
+2284,32	//SC_FATALMENACE
+2300,32	//SC_DIMENSIONDOOR
+2478,32	//GN_CARTBOOST
+
+//----------------------------------------------------------------------------
+// Zone 2 - Jail
+//----------------------------------------------------------------------------
+421,64	//TK_JUMPKICK
+426,64	//TK_HIGHJUMP
+
+//----------------------------------------------------------------------------
+// Zone 3 - Izlude Battle Arena
+//----------------------------------------------------------------------------
+219,128 //RG_INTIMIDATE
+26,128	//AL_TELEPORT
+2284,128	//SC_FATALMENACE
+2300,128	//SC_DIMENSIONDOOR
+
+//----------------------------------------------------------------------------
+// Zone 4 - WoE:SE
+//----------------------------------------------------------------------------
+426,256 //TK_HIGHJUMP
+290,256	//SA_ABRACADABRA
+
+//----------------------------------------------------------------------------
+// Zone 5 - Sealed Shrine
+//----------------------------------------------------------------------------
+12,512	//MG_SAFETYWALL
+26,512	//AL_TELEPORT
+219,512	//RG_INTIMIDATE
+361,512	//HP_ASSUMPTIO
+691,512	//CASH_ASSUMPTIO
+2284,512	//SC_FATALMENACE
+2294,512	//SC_IGNORANCE
+2300,512	//SC_DIMENSIONDOOR
+
+//----------------------------------------------------------------------------
+// Zone 6 - Endless Tower, Orc's Memory, Nidhoggur's Nest
+//----------------------------------------------------------------------------
+26,1024	//AL_TELEPORT
+87,1024	//WZ_ICEWALL
+219,1024	//RG_INTIMIDATE
+405,1024	//PF_SPIDERWEB
+674,1024	//NPC_EXPULSION
+2284,1024	//SC_FATALMENACE
+2294,1024	//SC_IGNORANCE
+2300,1024	//SC_DIMENSIONDOOR
+
+//----------------------------------------------------------------------------
+// Zone 7 - Towns
+//----------------------------------------------------------------------------
+232,2048	//AM_CANNIBALIZE
+233,2048	//AM_SPHEREMINE
+491,2048	//CR_CULTIVATION
+1013,2048	//BS_GREED
+2299,2048	//SC_MANHOLE
+2300,2048	//SC_DIMENSIONDOOR
+2301,2048	//SC_CHAOSPANIC
+2303,2048	//SC_BLOODYLUST
+2419,2048	//WM_POEMOFNETHERWORLD
+2482,2048	//GN_WALLOFTHORN
+2493,2048	//GN_SLINGITEM

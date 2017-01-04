@@ -1,0 +1,227 @@
+// Hocus-Pocus (Abracadabra) Castable Skills Database
+//
+// Structure of Database:
+// SkillID,DummyName,ProbabilityPerLvl
+//
+// 01. SkillID                  Skill ID to be casted by hocus pocus.
+// 02. DummyName                Name of the skill (informative, not used by server).
+// 03. ProbabilityPerLvl        Not a rate! Chance at which the skill is selected compared
+//                              with other entries probabilties
+//
+// NOTE:
+// - The skill is picked at random from the entire database and then tested for rate. If it
+//   does not succeed at that rate, another skill is picked and tested. This continues
+//   until a skill succeeds. Abracadabra-specific skills have a different chance to occur
+//   depending on skill level used. All other skills have an equal chance and appear from
+//   level 1 onward.
+// - To remove entry by importing, put "clear" (without quotes) in DummyName
+
+5,Bash,500
+6,Provoke,500
+7,Magnum Break,500
+8,Endure,500
+
+10,Sight,500
+11,Napalm Beat,500
+12,Safety Wall,500
+13,Soul Strike,500
+14,Cold Bolt,500
+15,Frost Diver,500
+16,Stone Curse,500
+17,Fire Ball,500
+18,Fire Wall,500
+19,Fire Bolt,500
+20,Lightning Bolt,500
+21,Thunder Storm,500
+
+24,Ruwach,500
+25,Pneuma,500
+26,Teleport,500
+27,Warp Portal,500
+28,Heal,500
+29,Increase AGI,500
+30,Decrease AGI,500
+31,Aqua Benedicta,500
+32,Signum Crucis,500
+33,Angelus,500
+34,Blessing,500
+35,Cure,500
+
+40,Item Appraisal,500
+41,Vending,500
+42,Mammonite,500
+
+45,Improve Concentration,500
+46,Double Strafe,500
+47,Arrow Shower,500
+
+50,Steal,500
+51,Hiding,500
+52,Envenom,500
+53,Detoxify,500
+
+54,Resurrection,500
+
+56,Pierce,500
+57,Brandish Spear,500
+58,Spear Stab,500
+59,Spear Boomerang,500
+60,TwoHand Quicken,500
+61,Counter Attack,500
+62,Bowling Bash,500
+
+66,Impositio Manus,500
+67,Suffragium,500
+68,Aspersio,500
+69,B.S Sacramenti,500
+70,Sanctuary,500
+71,Slow poison,500
+72,Status Recovery,500
+73,Kyrie Eleison,500
+74,Magnificat,500
+75,Gloria,500
+76,Lex Divina,500
+77,Turn Undead,500
+78,Lex Aeterna,500
+79,Magnus Exorcismus,500
+
+80,Fire Pillar,500
+81,Sightrasher,500
+//82,Fire Ivy,500
+83,Meteor Storm,500
+84,Jupitel Thunder,500
+85,Lord of Vermilion,500
+86,Water Ball,500
+87,Ice Wall,500
+88,Frost Nova,500
+89,Storm Gust,500
+90,Earth spike,500
+91,Heaven's Drive,500
+92,Quagmire,500
+93,Sense,500
+
+//108,Weapon Repair,500
+110,Hammer Fall,500
+111,Adrenaline Rush,500
+112,Weapon Perfection,500
+113,Power-Thrust,500
+114,Maximize Power,500
+
+115,Skid Trap,500
+116,Land Mine,500
+117,Ankle Snare,500
+118,Shockwave Trap,500
+119,Sandman,500
+120,Flasher,500
+121,Freezing Trap,500
+122,Blast Mine,500
+123,Claymore Trap,500
+124,Remove Trap,500
+125,Talkie box,500
+129,Blitz Beat,500
+130,Detect,500
+131,Spring Trap,500
+
+135,Cloaking,500
+136,Sonic Blow,500
+137,Grimtooth,500
+138,Enchant Poison,500
+139,Poison React,500
+140,Venom Dust,500
+141,Venom Splasher,500
+
+//---EP4.0 Skill---
+211,Mug,500
+212,Back Stab,500
+214,Sightless Raid,500
+215,Divest Weapon,500
+216,Divest Shield,500
+217,Divest Armor,500
+218,Divest Helm,500
+219,Snatch,500
+220,Scribble,500
+//221,Piece,500
+222,Remover,500
+
+249,Guard,500
+250,Smite,500
+251,Shield Boomerang,500
+252,Shield Reflect,500
+253,Holy Cross,500
+254,Grand Cross,500
+255,Sacrifice,500
+256,Resistant Souls,500
+257,Defending Aura,500
+258,Spear Quicken,500
+
+261,Summon Spirit Sphere,500
+262,Absorb Spirit Sphere,500
+264,Snap,500
+266,Occult Impact,500
+267,Throw Spirit Sphere,500
+268,Mental Strength,500
+269,Root,500
+270,Fury,500
+271,Asura Strike,500
+//272,Raging Quadruple Blow,500
+//273,Raging Thrust,500
+
+275,Cast Cancel,500
+276,Magic Rod,500
+277,Spell Break,500
+279,Hindsight,500
+280,Endow Blaze,500
+281,Endow Tsunami,500
+282,Endow Tornado,500
+283,Endow Quake,500
+285,Volcano,500
+286,Deluge,500
+287,Whirlwind,500
+288,Magnetic Earth,500
+289,Dispel,500
+
+// Abracadabra Derivation Skill
+291,Monocell,250:500:750:1000:1250:1200:1750:2000:2250:2500
+292,Class Change,0:0:0:0:10:10:20:20:30:30
+293,Summon Monster,100:200:300:400:500:600:700:800:900:1000
+294,Grampus Morph,0:0:0:0:0:0:0:10:50:100
+295,Grim Reaper,50:100:150:200:250:300:350:400:450:500
+//296,Gold Digger,50:100:150:200:250:300:350:400:450:500
+//297,Beastly Hypnosis,50:100:150:200:250:300:350:400:450:500
+298,Questioning,1000:800:600:400:200:0:0:0:0:0
+299,Gravity,0:0:0:0:0:0:0:20:50:100
+//300,Leveling,0:0:0:0:0:0:0:0:10:50
+301,Suicide,0:0:0:0:0:0:0:10:50:100
+302,Rejuvination,0:0:0:0:0:0:20:50:100:200
+303,Coma,0:0:0:0:100:200:300:400:500:600
+
+// Dancer / Bard commonness
+//304,Amp,500
+//305,Encore,500
+//306,Lullaby,500
+//307,Mental Sensing,500
+//308,Down Tempo,500
+//309,Battle Theme,500
+//310,Harmonic Lick,500
+//311,Classical Pluck,500
+//312,Power Chord,500
+//313,Acoustic Rhythm,500
+//314,Ragnarok,500
+
+// Bard skill
+316,Melody Strike,500
+//317,Unchained Serenade,500
+318,Unbarring Octave,500
+//319,Perfect Tablature,500
+//320,Impressive Riff,500
+//321,Magic Strings,500
+//322,Song of Lutie,500
+
+// Dancer skill
+324,Slinging Arrow,500
+//325,Hip Shaker,500
+326,Dazzler,500
+//327,Focus Ballet,500
+//328,Slow Grace,500
+//329,Lady Luck,500
+//330,Gypsy's Kiss,500

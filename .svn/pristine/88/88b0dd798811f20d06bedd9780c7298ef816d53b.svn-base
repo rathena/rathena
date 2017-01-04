@@ -1,0 +1,27 @@
+//===== rAthena Script ======================================= 
+//= Cash Shop NPCs
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Sell Cash shop items.
+//= Based on iRO's Cash shop. Headgears omitted.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. Sample shop per-say.
+//= 1.1 FIxed typo. (bugreport:1078) [L0ne_W0lf]
+//============================================================
+
+// Payon
+//============================================================
+// Sells:
+// Battle Manual Box, Life Insurance Box, Bubble Gum Box,
+// Kafra Card Box, Giant Fly Wing Box, Neuralizer Box,
+// Token of Ziegfried Box, Enriched Oridecon and Elunium,
+// Assumpito, Wind Walk, Aspersio, Adreniline Rush,
+// Blessing and Increase Agility Scroll boxes, Dungeon
+// Teleport Scroll Box, Stat Food boxes, and Gym Passes.
+
+payon,171,142,4	cashshop	Kafra Shop Employee	116,12900:1000,12901:200,12902:1000,12909:100,12910:100,12911:1500,12922:150,7619:100,7620:100,12916:150,12917:150,12915:100,12918:100,12913:125,12914:125,13553:50,12903:100,12904:100,12905:100,12906:100,12907:100,12908:100,7776:50

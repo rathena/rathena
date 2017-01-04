@@ -1,0 +1,284 @@
+//===== rAthena Script =======================================
+//= MVP Arena
+//===== By: ==================================================
+//= Darkchild
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Rooms containing 16 different MVPs
+//===== Additional Comments: =================================
+//= 1.0 - First version of script
+//= 1.1 - Optimised The MVP arena [massdriller]
+//= 1.2 - NPC in prontera [Silent]
+//= 1.3 - Removed Duplicates
+//= 1.4 - Optimized, text edited [Euphy]
+//============================================================
+
+// Entrance
+prontera,154,197,3	script	MVP Warper	768,{
+	mes "[ ^0065DFMVP Warper^000000 ]";
+	mes "Would you like to enter";
+	mes "the MVP Arena?";
+	if (select("Yes!","No thanks.") == 2) close;
+	warp "quiz_00",50,24;
+	close;
+}
+
+// Information
+quiz_00,49,31,4	script	MVP Arena Guide	778,{
+	mes "[ ^0065DFMVP Arena Guide^000000 ]";
+	mes "Welcome and behold this sacred place. Here you will find out if you truly have what it takes to call yourself a warrior.";
+	next;
+	switch(select("Information","Heal me!","Return to Prontera","Cancel")) {
+	case 1:
+		mes "[ ^0065DFMVP Arena Guide^000000 ]";
+		mes "There are four Keepers, and each can spawn four different MVPs.";
+		mes "There are eight rooms per Keeper, and sixteen MVPs in total.";
+		close;
+	case 2:
+		specialeffect2 EF_HEAL2;
+		percentheal 100,100;
+		close;
+	case 3:
+		warp "prontera",156,179;
+		close;
+	case 4:
+		close;
+	}
+}
+
+// Keepers
+function	script	Keeper	{
+	set .@arg, getarg(0);
+	mes "[ ^0065DF"+strnpcinfo(1)+"^000000 ]";
+	mes "Which arena would you";
+	mes "like to enter?";
+	for(set .@i,1; .@i<9; set .@i,.@i+1)
+		set .@menu$, .@menu$+"Arena "+.@i+" ["+getmapusers("pvp_n_"+.@i+"-"+.@arg)+"/20]:";
+	set .@i, select(.@menu$);
+	if (getmapusers("pvp_n_"+.@i+"-"+ .@arg)>19) {
+		mes "[ ^0065DF"+strnpcinfo(1)+"^000000 ]";
+		mes "Sorry, this arena is full!";
+		close;
+	}
+	warp "pvp_n_"+.@i+"-"+ .@arg,102,102;
+	close;
+}
+quiz_00,56,31,4	script	Alpha MVP	770,{ callfunc "Keeper",2; }
+quiz_00,58,31,4	script	Beta MVP	773,{ callfunc "Keeper",3; }
+quiz_00,60,31,4	script	Theta MVP	774,{ callfunc "Keeper",4; }
+quiz_00,62,31,4	script	Epsilon MVP	776,{ callfunc "Keeper",5; }
+
+// Protectors
+function	script	Protector	{
+	switch(select(""+((getarg(0)=="")?"":"Harder Monsters")+":Heal:Exit")) {
+	case 1:
+		warp getarg(0),102,102;
+		end;
+	case 2:
+		specialeffect2 EF_HEAL2;
+		percentheal 100,100;
+		end;
+	case 3:
+		warp "prontera",156,179;
+		end;
+	}
+}
+pvp_n_1-2,100,100,4	script	MVP-Protector#01	727,{ callfunc "Protector","pvp_n_2-2"; }
+pvp_n_2-2,100,100,4	script	MVP-Protector#02	727,{ callfunc "Protector","pvp_n_3-2"; }
+pvp_n_3-2,100,100,4	script	MVP-Protector#03	727,{ callfunc "Protector","pvp_n_4-2"; }
+pvp_n_4-2,100,100,4	script	MVP-Protector#04	727,{ callfunc "Protector","pvp_n_5-2"; }
+pvp_n_5-2,100,100,4	script	MVP-Protector#05	727,{ callfunc "Protector","pvp_n_6-2"; }
+pvp_n_6-2,100,100,4	script	MVP-Protector#06	727,{ callfunc "Protector","pvp_n_7-2"; }
+pvp_n_7-2,100,100,4	script	MVP-Protector#07	727,{ callfunc "Protector","pvp_n_8-2"; }
+pvp_n_8-2,100,100,4	script	MVP-Protector#08	727,{ callfunc "Protector",""; }
+pvp_n_1-3,100,100,4	script	MVP-Protector#09	727,{ callfunc "Protector","pvp_n_2-3"; }
+pvp_n_2-3,100,100,4	script	MVP-Protector#10	727,{ callfunc "Protector","pvp_n_3-3"; }
+pvp_n_3-3,100,100,4	script	MVP-Protector#11	727,{ callfunc "Protector","pvp_n_4-3"; }
+pvp_n_4-3,100,100,4	script	MVP-Protector#12	727,{ callfunc "Protector","pvp_n_5-3"; }
+pvp_n_5-3,100,100,4	script	MVP-Protector#13	727,{ callfunc "Protector","pvp_n_6-3"; }
+pvp_n_6-3,100,100,4	script	MVP-Protector#14	727,{ callfunc "Protector","pvp_n_7-3"; }
+pvp_n_7-3,100,100,4	script	MVP-Protector#15	727,{ callfunc "Protector","pvp_n_8-3"; }
+pvp_n_8-3,100,100,4	script	MVP-Protector#16	727,{ callfunc "Protector",""; }
+pvp_n_1-4,100,100,4	script	MVP-Protector#17	727,{ callfunc "Protector","pvp_n_2-4"; }
+pvp_n_2-4,100,100,4	script	MVP-Protector#18	727,{ callfunc "Protector","pvp_n_3-4"; }
+pvp_n_3-4,100,100,4	script	MVP-Protector#19	727,{ callfunc "Protector","pvp_n_4-4"; }
+pvp_n_4-4,100,100,4	script	MVP-Protector#20	727,{ callfunc "Protector","pvp_n_5-4"; }
+pvp_n_5-4,100,100,4	script	MVP-Protector#21	727,{ callfunc "Protector","pvp_n_6-4"; }
+pvp_n_6-4,100,100,4	script	MVP-Protector#22	727,{ callfunc "Protector","pvp_n_7-4"; }
+pvp_n_7-4,100,100,4	script	MVP-Protector#23	727,{ callfunc "Protector","pvp_n_8-4"; }
+pvp_n_8-4,100,100,4	script	MVP-Protector#24	727,{ callfunc "Protector",""; }
+pvp_n_1-5,100,100,4	script	MVP-Protector#25	727,{ callfunc "Protector","pvp_n_2-5"; }
+pvp_n_2-5,100,100,4	script	MVP-Protector#26	727,{ callfunc "Protector","pvp_n_3-5"; }
+pvp_n_3-5,100,100,4	script	MVP-Protector#27	727,{ callfunc "Protector","pvp_n_4-5"; }
+pvp_n_4-5,100,100,4	script	MVP-Protector#28	727,{ callfunc "Protector","pvp_n_5-5"; }
+pvp_n_5-5,100,100,4	script	MVP-Protector#29	727,{ callfunc "Protector","pvp_n_6-5"; }
+pvp_n_6-5,100,100,4	script	MVP-Protector#30	727,{ callfunc "Protector","pvp_n_7-5"; }
+pvp_n_7-5,100,100,4	script	MVP-Protector#31	727,{ callfunc "Protector","pvp_n_8-5"; }
+pvp_n_8-5,100,100,4	script	MVP-Protector#32	727,{ callfunc "Protector",""; }
+
+// Alpha
+pvp_n_1-2,0,0,0,0	monster	Eddga	1115,3,60000,66000
+pvp_n_1-2,0,0,0,0	monster	Mistress	1059,1,60000,66000
+pvp_n_2-2,0,0,0,0	monster	Mistress	1059,3,60000,66000
+pvp_n_2-2,0,0,0,0	monster	Moonlight	1150,1,60000,66000
+pvp_n_3-2,0,0,0,0	monster	Mistress	1059,1,60000,66000
+pvp_n_3-2,0,0,0,0	monster	Moonlight	1150,2,60000,66000
+pvp_n_3-2,0,0,0,0	monster	Maya	1147,1,60000,66000
+pvp_n_4-2,0,0,0,0	monster	Eddga	1115,1,60000,66000
+pvp_n_4-2,0,0,0,0	monster	Mistress	1059,1,60000,66000
+pvp_n_4-2,0,0,0,0	monster	Moonlight	1150,1,60000,66000
+pvp_n_4-2,0,0,0,0	monster	Maya	1147,1,60000,66000
+pvp_n_5-2,0,0,0,0	monster	Eddga	1115,1,60000,66000
+pvp_n_5-2,0,0,0,0	monster	Mistress	1059,2,60000,66000
+pvp_n_5-2,0,0,0,0	monster	Moonlight	1150,1,60000,66000
+pvp_n_5-2,0,0,0,0	monster	Maya	1147,2,60000,66000
+pvp_n_6-2,0,0,0,0	monster	Eddga	1115,2,60000,66000
+pvp_n_6-2,0,0,0,0	monster	Mistress	1059,3,60000,66000
+pvp_n_6-2,0,0,0,0	monster	Moonlight	1150,1,60000,66000
+pvp_n_6-2,0,0,0,0	monster	Maya	1147,2,60000,66000
+pvp_n_7-2,0,0,0,0	monster	Eddga	1115,3,60000,66000
+pvp_n_7-2,0,0,0,0	monster	Mistress	1059,3,60000,66000
+pvp_n_7-2,0,0,0,0	monster	Moonlight	1150,2,60000,66000
+pvp_n_7-2,0,0,0,0	monster	Maya	1147,2,60000,66000
+pvp_n_8-2,0,0,0,0	monster	Eddga	1115,3,60000,66000
+pvp_n_8-2,0,0,0,0	monster	Mistress	1059,3,60000,66000
+pvp_n_8-2,0,0,0,0	monster	Moonlight	1150,3,60000,66000
+pvp_n_8-2,0,0,0,0	monster	Maya	1147,3,60000,66000
+
+// Beta
+pvp_n_1-3,0,0,0,0	monster	Phreeoni	1159,3,60000,66000
+pvp_n_1-3,0,0,0,0	monster	Turtle General	1312,1,60000,66000
+pvp_n_2-3,0,0,0,0	monster	Phreeoni	1159,2,60000,66000
+pvp_n_2-3,0,0,0,0	monster	Turtle General	1312,1,60000,66000
+pvp_n_2-3,0,0,0,0	monster	Orc Hero	1087,1,60000,66000
+pvp_n_3-3,0,0,0,0	monster	Phreeoni	1159,1,60000,66000
+pvp_n_3-3,0,0,0,0	monster	Turtle General	1312,1,60000,66000
+pvp_n_3-3,0,0,0,0	monster	Orc Hero	1087,1,60000,66000
+pvp_n_3-3,0,0,0,0	monster	Orc Lord	1190,1,60000,66000
+pvp_n_4-3,0,0,0,0	monster	Phreeoni	1159,2,60000,66000
+pvp_n_4-3,0,0,0,0	monster	Turtle General	1312,1,60000,66000
+pvp_n_4-3,0,0,0,0	monster	Orc Hero	1087,1,60000,66000
+pvp_n_4-3,0,0,0,0	monster	Orc Lord	1190,1,60000,66000
+pvp_n_5-3,0,0,0,0	monster	Phreeoni	1159,1,60000,66000
+pvp_n_5-3,0,0,0,0	monster	Turtle General	1312,2,60000,66000
+pvp_n_5-3,0,0,0,0	monster	Orc Hero	1087,2,60000,66000
+pvp_n_5-3,0,0,0,0	monster	Orc Lord	1190,1,60000,66000
+pvp_n_6-3,0,0,0,0	monster	Phreeoni	1159,2,60000,66000
+pvp_n_6-3,0,0,0,0	monster	Turtle General	1312,1,60000,66000
+pvp_n_6-3,0,0,0,0	monster	Orc Hero	1087,2,60000,66000
+pvp_n_6-3,0,0,0,0	monster	Orc Lord	1190,2,60000,66000
+pvp_n_7-3,0,0,0,0	monster	Phreeoni	1159,3,60000,66000
+pvp_n_7-3,0,0,0,0	monster	Turtle General	1312,1,60000,66000
+pvp_n_7-3,0,0,0,0	monster	Orc Hero	1087,2,60000,66000
+pvp_n_7-3,0,0,0,0	monster	Orc Lord	1190,3,60000,66000
+pvp_n_8-3,0,0,0,0	monster	Phreeoni	1159,3,60000,66000
+pvp_n_8-3,0,0,0,0	monster	Turtle General	1312,3,60000,66000
+pvp_n_8-3,0,0,0,0	monster	Orc Hero	1087,3,60000,66000
+pvp_n_8-3,0,0,0,0	monster	Orc Lord	1190,3,60000,66000
+
+// Theta
+pvp_n_1-4,0,0,0,0	monster	Drake	1112,3,60000,66000
+pvp_n_1-4,0,0,0,0	monster	Osiris	1038,1,60000,66000
+pvp_n_2-4,0,0,0,0	monster	Drake	1112,2,60000,66000
+pvp_n_2-4,0,0,0,0	monster	Osiris	1038,1,60000,66000
+pvp_n_2-4,0,0,0,0	monster	Doppelganger	1046,1,60000,66000
+pvp_n_3-4,0,0,0,0	monster	Drake	1112,1,60000,66000
+pvp_n_3-4,0,0,0,0	monster	Osiris	1038,1,60000,66000
+pvp_n_3-4,0,0,0,0	monster	Doppelganger	1046,1,60000,66000
+pvp_n_3-4,0,0,0,0	monster	Lord of Death	1373,1,60000,66000
+pvp_n_4-4,0,0,0,0	monster	Drake	1112,2,60000,66000
+pvp_n_4-4,0,0,0,0	monster	Osiris	1038,1,60000,66000
+pvp_n_4-4,0,0,0,0	monster	Doppelganger	1046,2,60000,66000
+pvp_n_4-4,0,0,0,0	monster	Lord of Death	1373,1,60000,66000
+pvp_n_5-4,0,0,0,0	monster	Drake	1112,3,60000,66000
+pvp_n_5-4,0,0,0,0	monster	Osiris	1038,2,60000,66000
+pvp_n_5-4,0,0,0,0	monster	Doppelganger	1046,2,60000,66000
+pvp_n_5-4,0,0,0,0	monster	Lord of Death	1373,1,60000,66000
+pvp_n_6-4,0,0,0,0	monster	Drake	1112,3,60000,66000
+pvp_n_6-4,0,0,0,0	monster	Osiris	1038,2,60000,66000
+pvp_n_6-4,0,0,0,0	monster	Doppelganger	1046,2,60000,66000
+pvp_n_6-4,0,0,0,0	monster	Lord of Death	1373,2,60000,66000
+pvp_n_7-4,0,0,0,0	monster	Drake	1112,3,60000,66000
+pvp_n_7-4,0,0,0,0	monster	Osiris	1038,2,60000,66000
+pvp_n_7-4,0,0,0,0	monster	Doppelganger	1046,3,60000,66000
+pvp_n_7-4,0,0,0,0	monster	Lord of Death	1373,2,60000,66000
+pvp_n_8-4,0,0,0,0	monster	Drake	1112,3,60000,66000
+pvp_n_8-4,0,0,0,0	monster	Osiris	1038,3,60000,66000
+pvp_n_8-4,0,0,0,0	monster	Doppelganger	1046,3,60000,66000
+pvp_n_8-4,0,0,0,0	monster	Lord of Death	1373,3,60000,66000
+
+// Epsilon
+pvp_n_1-5,0,0,0,0	monster	Incantation Samurai	1492,3,60000,66000
+pvp_n_1-5,0,0,0,0	monster	Pharoh	1157,1,60000,66000
+pvp_n_2-5,0,0,0,0	monster	Incantation Samurai	1492,2,60000,66000
+pvp_n_2-5,0,0,0,0	monster	Pharoh	1157,1,60000,66000
+pvp_n_2-5,0,0,0,0	monster	Dark Lord	1272,1,60000,66000
+pvp_n_3-5,0,0,0,0	monster	Incantation Samurai	1492,1,60000,66000
+pvp_n_3-5,0,0,0,0	monster	Pharoh	1157,1,60000,66000
+pvp_n_3-5,0,0,0,0	monster	Dark Lord	1272,1,60000,66000
+pvp_n_3-5,0,0,0,0	monster	Baphomet	1039,1,60000,66000
+pvp_n_4-5,0,0,0,0	monster	Incantation Samurai	1492,3,60000,66000
+pvp_n_4-5,0,0,0,0	monster	Pharoh	1157,1,60000,66000
+pvp_n_4-5,0,0,0,0	monster	Dark Lord	1272,1,60000,66000
+pvp_n_4-5,0,0,0,0	monster	Baphomet	1039,1,60000,66000
+pvp_n_5-5,0,0,0,0	monster	Incantation Samurai	1492,2,60000,66000
+pvp_n_5-5,0,0,0,0	monster	Pharoh	1157,2,60000,66000
+pvp_n_5-5,0,0,0,0	monster	Dark Lord	1272,2,60000,66000
+pvp_n_5-5,0,0,0,0	monster	Baphomet	1039,1,60000,66000
+pvp_n_6-5,0,0,0,0	monster	Incantation Samurai	1492,2,60000,66000
+pvp_n_6-5,0,0,0,0	monster	Pharoh	1157,2,60000,66000
+pvp_n_6-5,0,0,0,0	monster	Dark Lord	1272,2,60000,66000
+pvp_n_6-5,0,0,0,0	monster	Baphomet	1039,1,60000,66000
+pvp_n_7-5,0,0,0,0	monster	Incantation Samurai	1492,2,60000,66000
+pvp_n_7-5,0,0,0,0	monster	Pharoh	1157,2,60000,66000
+pvp_n_7-5,0,0,0,0	monster	Dark Lord	1272,2,60000,66000
+pvp_n_7-5,0,0,0,0	monster	Baphomet	1039,2,60000,66000
+pvp_n_8-5,0,0,0,0	monster	Incantation Samurai	1492,3,60000,66000
+pvp_n_8-5,0,0,0,0	monster	Pharoh	1157,2,60000,66000
+pvp_n_8-5,0,0,0,0	monster	Dark Lord	1272,2,60000,66000
+pvp_n_8-5,0,0,0,0	monster	Baphomet	1039,2,60000,66000
+
+// Mapflags
+pvp_n_1-1	mapflag	pvp_nightmaredrop	off
+pvp_n_2-1	mapflag	pvp_nightmaredrop	off
+pvp_n_3-1	mapflag	pvp_nightmaredrop	off
+pvp_n_4-1	mapflag	pvp_nightmaredrop	off
+pvp_n_5-1	mapflag	pvp_nightmaredrop	off
+pvp_n_6-1	mapflag	pvp_nightmaredrop	off
+pvp_n_7-1	mapflag	pvp_nightmaredrop	off
+pvp_n_8-1	mapflag	pvp_nightmaredrop	off
+pvp_n_1-2	mapflag	pvp_nightmaredrop	off
+pvp_n_2-2	mapflag	pvp_nightmaredrop	off
+pvp_n_3-2	mapflag	pvp_nightmaredrop	off
+pvp_n_4-2	mapflag	pvp_nightmaredrop	off
+pvp_n_5-2	mapflag	pvp_nightmaredrop	off
+pvp_n_6-2	mapflag	pvp_nightmaredrop	off
+pvp_n_7-2	mapflag	pvp_nightmaredrop	off
+pvp_n_8-2	mapflag	pvp_nightmaredrop	off
+pvp_n_1-3	mapflag	pvp_nightmaredrop	off
+pvp_n_2-3	mapflag	pvp_nightmaredrop	off
+pvp_n_3-3	mapflag	pvp_nightmaredrop	off
+pvp_n_4-3	mapflag	pvp_nightmaredrop	off
+pvp_n_5-3	mapflag	pvp_nightmaredrop	off
+pvp_n_6-3	mapflag	pvp_nightmaredrop	off
+pvp_n_7-3	mapflag	pvp_nightmaredrop	off
+pvp_n_8-3	mapflag	pvp_nightmaredrop	off
+pvp_n_1-4	mapflag	pvp_nightmaredrop	off
+pvp_n_2-4	mapflag	pvp_nightmaredrop	off
+pvp_n_3-4	mapflag	pvp_nightmaredrop	off
+pvp_n_4-4	mapflag	pvp_nightmaredrop	off
+pvp_n_5-4	mapflag	pvp_nightmaredrop	off
+pvp_n_6-4	mapflag	pvp_nightmaredrop	off
+pvp_n_7-4	mapflag	pvp_nightmaredrop	off
+pvp_n_8-4	mapflag	pvp_nightmaredrop	off
+pvp_n_1-5	mapflag	pvp_nightmaredrop	off
+pvp_n_2-5	mapflag	pvp_nightmaredrop	off
+pvp_n_3-5	mapflag	pvp_nightmaredrop	off
+pvp_n_4-5	mapflag	pvp_nightmaredrop	off
+pvp_n_5-5	mapflag	pvp_nightmaredrop	off
+pvp_n_6-5	mapflag	pvp_nightmaredrop	off
+pvp_n_7-5	mapflag	pvp_nightmaredrop	off
+pvp_n_8-5	mapflag	pvp_nightmaredrop	off

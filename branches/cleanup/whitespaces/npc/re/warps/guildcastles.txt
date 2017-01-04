@@ -1,0 +1,43 @@
+//===== rAthena Script =======================================
+//= Guild Castles Warp Script
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Renewal Guild Castles
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//============================================================
+
+// Hall of Abyss
+//============================================================
+gld2_prt,10,22,0	warp	dun2prt_to_gld	1,1,prt_gld,252,247
+gld2_prt,14,252,0	warp	dun2prt_to_gld#2	1,1,prt_gld,63,66
+gld2_prt,266,236,0	warp	dun2prt_to_gld#3	1,1,prt_gld,252,247
+gld2_prt,226,21,0	warp	dun2prt_to_gld#4	1,1,prt_gld,63,66
+gld2_prt,103,11,0	warp	dun2prt_to_gld#5	1,1,prt_gld,252,247
+gld_dun03_2,238,274,0	warp	gdun03a_prtg#abyss	1,1,prt_gld,252,247
+gld_dun03_2,42,30,0	warp	gdun03b_prtg#abyss	1,1,prt_gld,63,66
+gld2_pay,33,105,0	warp	dun2pay_to_gld	1,1,pay_gld,53,141
+gld2_pay,119,21,0	warp	dun2pay_to_gld#2	1,1,pay_gld,53,141
+gld2_pay,205,105,0	warp	dun2pay_to_gld#3	1,1,pay_gld,53,141
+gld2_pay,175,215,0	warp	dun2pay_to_gld#4	1,1,pay_gld,53,141
+gld2_pay,61,215,0	warp	dun2pay_to_gld#5	1,1,pay_gld,53,141
+gld_dun01_2,119,14,0	warp	gdun01_payg#abyss	1,1,pay_gld,53,141
+gld2_gef,28,205,0	warp	dun2gef_to_gld	1,1,gef_fild13,42,331
+gld2_gef,221,145,0	warp	dun2gef_to_gld#2	1,1,gef_fild13,373,62
+gld2_gef,175,198,0	warp	dun2gef_to_gld#3	1,1,gef_fild13,42,331
+gld2_gef,25,68,0	warp	dun2gef_to_gld#4	1,1,gef_fild13,373,62
+gld2_gef,111,35,0	warp	dun2gef_to_gld#5	1,1,gef_fild13,42,331
+gld_dun04_2,37,230,0	warp	gdun04_g13a#abyss	1,1,gef_fild13,42,331
+gld_dun04_2,110,20,0	warp	gdun04_g13b#abyss	1,1,gef_fild13,373,62
+gld2_ald,172,46,0	warp	dun2gef_to_gld#6	1,1,alde_gld,242,121
+gld2_ald,77,58,0	warp	dun2gef_to_gld#7	1,1,alde_gld,229,185
+gld2_ald,46,122,0	warp	dun2gef_to_gld#8	1,1,alde_gld,242,121
+gld2_ald,104,250,0	warp	dun2gef_to_gld#9	1,1,alde_gld,229,185
+gld2_ald,247,156,0	warp	dun2gef_to_gld#10	1,1,alde_gld,242,121
+gld_dun02_2,20,160,0	warp	gdun02a_aldega#abyss	1,1,alde_gld,229,185
+gld_dun02_2,180,112,0	warp	gdun02b_aldegb#abyss	1,1,alde_gld,242,121

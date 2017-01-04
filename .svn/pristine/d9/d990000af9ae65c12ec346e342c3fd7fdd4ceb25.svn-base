@@ -1,0 +1,3177 @@
+//===== rAthena Script =======================================
+//= Wolfchev's Laboratory
+//===== By: ==================================================
+//= Kisuka
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Defeat Wolfchev's human experimentations.
+//===== Additional Comments: =================================
+//= 1.0 First version, edited. [Euphy]
+//============================================================
+
+// Giacomo Girolam
+//============================================================
+lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
+	if ((MaxWeight - Weight) < 1000 || !checkweight(1201, 1)) {
+		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
+		close;
+	}
+	if (lhz_boss > 30) {
+		if (!lght_duk01) {
+			if (Sex) {
+				emotion e_pif, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "....a guy....?";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "Ah! Hey! Man!";
+				next;
+				select("What's up?");
+				emotion e_what, 1;
+				mes "[Giacomo Girolamo]";
+				mes "Have you ever heard of horrific human experimentation committed in Rekenber Corporation whose head office is here in Lighthalzen?";
+				next;
+				select("Whaaat?! human experimentation?");
+				emotion e_omg, 1;
+				mes "[Giacomo Girolamo]";
+				mes "Yea! human experimentation!!";
+				mes "There are a lot of rumors that horrible human experimentation is actually performed, but these people in the slum....don't want to believe that due to the welfare movement from Rekenber.";
+				next;
+				emotion e_swt2, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "Well! and those rich people, seem to know something but they never mention that...";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "Ahh!! And this is a secret that just SOME PEOPLE know. I heard that from Rekenber Lab.,.. a person named...um...Wol....";
+				next;
+				emotion e_hmm, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "Anyway!! A scientist named Wolf.. something suddenly got sacked. and he must be related with this rumor, I think...";
+				next;
+				select("You mean... Wolfchev?");
+				emotion e_gasp, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "Ohhhh?! yeah Wolfchev!! That's right, the name was Wolfchev.. The mad scientist..";
+				next;
+				emotion e_ok, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "I suppose you can then understand the story faster... I am sure that he's involved in the rumor. I swear.";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "By the way..what about you? Is there anything that you know about him?";
+				next;
+				if (select("Pretend you know nothing.", "Tell him what you know.") == 1) {
+					mes "["+ strcharinfo(0) +"]";
+					mes "Not really. I've ever heard of his name, but I don't know anything about him..";
+					next;
+					mes "[Giacomo Girolamo]";
+					mes "Hm.... You sound suspicious, dude! huh?";
+					next;
+				} else {
+					mes "["+ strcharinfo(0) +"]";
+					mes "He happens to research into Human 'Homunculus' without telling that to Rekenber Corp., and there was a whistle-blower who reported to the corp. so he was fired.";
+					next;
+					emotion e_no1, "Giacomo Girolamo#kiup2";
+					mes "[Giacomo Girolamo]";
+					mes "Oh! Man..! You seem to know pretty much! By any chance, are you concerned with Rekenber??";
+					next;
+					emotion e_dots;
+					mes "["+ strcharinfo(0) +"]";
+					mes "... .... ...";
+					next;
+				}
+				emotion e_hmm, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "Don't worry. I didn't mean anything.";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "Well! I am just curious only because some people in the slum and some adventurers were missing,";
+				mes "and I heard that Rekenber was doing human experimentation with those missing people. Hope you don't get me wrong.";
+				next;
+				lght_duk01 = 1;
+				setquest 5109;
+				mes "Actually, it is not a funny rumor.";
+				mes "Should investigate the lab where the experiment was carried out.";
+				close;
+			} else {
+				emotion e_lv, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "Oh! What a beautiful lady!!";
+				next;
+				emotion e_what, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "How come a beauty is here, in a place with dangerous rumor?";
+				next;
+				switch(select("Walking...", "To hang out...", "Shopping...")) {
+				case 1:
+					mes "[Giacomo Girolamo]";
+					mes "Ahh.. Lady, you are so graceful even when you are just walking.....";
+					next;
+					break;
+				case 2:
+					mes "[Giacomo Girolamo]";
+					mes "Lady. You are a dignified lady even if you hang out in this poor town...";
+					next;
+					break;
+				case 3:
+					mes "[Giacomo Girolamo]";
+					mes "Ahh.. Lady.. Shopping in the slum!!.. Are you a type who needs to look around every single shop?";
+					next;
+					break;
+				}
+			}
+			select("... .... ... ....");
+			mes "[Giacomo Girolamo]";
+			mes "Well, how dare I ask you and be interested in what the lady does...";
+			next;
+			emotion e_ok, "Giacomo Girolamo#kiup2";
+			mes "[Giacomo Girolamo]";
+			mes "I just hope that the lady gets out of this town with dangerous rumors..";
+			next;
+			select("Dangerous rumors?");
+			emotion e_what, 1;
+			mes "[Giacomo Girolamo]";
+			mes "Ah... Lady may not have heard of the rumor.";
+			next;
+			mes "[Giacomo Girolamo]";
+			mes "Recently, some people from this town, actually from the slum...and some adventurers are missing...";
+			next;
+			mes "[Giacomo Girolamo]";
+			mes "and then the rumor came up, since disappearance cases happen pretty often, that Rekenber is committing a horrible human experimentation in their secret lab.";
+			next;
+			select("Excuse me?! human experimentation?");
+			emotion e_omg, 1;
+			mes "[Giacomo Girolamo]";
+			mes "Yea! human experimentation!!";
+			mes "There are a lot of rumors that horrible human experimentation is actually performed, but these people in the slum....don't want to believe that due to the welfare movement from Rekenber.";
+			next;
+			mes "[Giacomo Girolamo]";
+			mes "Well! the rich people either want to believe..I think.. Ah!! And couple of weeks ago. um. what's his name? Wolfchev??";
+			next;
+			mes "[Giacomo Girolamo]";
+			mes "Anyway!! that research got fired from the lab. I think he must be involved with this rumor.";
+			next;
+			mes "[Giacomo Girolamo]";
+			mes "So, please, lady. Please don't be in a place like this and stay in safe ways.";
+			next;
+			lght_duk01 = 1;
+			setquest 5109;
+			mes "............ It seems a pretty serious matter.";
+			mes "Should investigate the lab where the experiment was carried out.";
+			close;
+		} else {
+			mes "[Giacomo Girolamo]";
+			if (Sex) {
+				emotion e_paper, "Giacomo Girolamo#kiup2";
+				mes "Take care yourself and don't disappear!";
+			} else {
+				emotion e_lv2, "Giacomo Girolamo#kiup2";
+				mes "Be careful, Lady.";
+			}
+			close;
+		}
+	} else {
+		if (Sex) {
+			emotion e_ho, "Giacomo Girolamo#kiup2";
+			mes "[Giacomo Girolamo]";
+			mes "Only those beautiful ladies are the reason of my life~!";
+			mes "I, Giacomo Girolamo Casanova de Seingalt am never interested in guys like you though!!";
+			next;
+			emotion e_an, "Giacomo Girolamo#kiup2";
+			mes "[Giacomo Girolamo]";
+			mes "but I can listen to you...you wanna say anything to me?";
+			next;
+			switch(select("No..?", "About ladies..", "You Womanizer!!", "Envy you...", "What's the rumor lately?")) {
+			case 1:
+				emotion e_hmm, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "Hey you, get out of my way then..";
+				close;
+			case 2:
+				emotion e_an, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "I don't feel like talking about my precious ladies making fun of them. You do it with your friends.";
+				close;
+			case 3:
+				mes "[Giacomo Girolamo]";
+				mes "Hey.. Excuse me!!! but I'm not a 'Womanizer', I am just a person who adores ladies.";
+				next;
+				emotion e_ok, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "Of course..... Yea... If I'm a womanizer, all the men on earth are too! I'm just Casanova. umhahahaha.";
+				close;
+			case 4:
+				emotion e_what, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "Haa.. Do you....? not have any woman but your sister and mother around you?";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "... .... ...";
+				next;
+				emotion e_swt2, "Giacomo Girolamo#kiup2";
+				mes "[Giacomo Girolamo]";
+				mes "Oh...... sorry.. I got your point....";
+				close;
+			case 5:
+				mes "[Giacomo Girolamo]";
+				mes "You.. are not like how you seem? Interesting..";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "Yea, actually recently a lot of people from the slum and some wandering adventurers got disappeared. and I don't know why.";
+				next;
+				mes "[Giacomo Girolamo]";
+				mes "You gotta be careful too..";
+				close;
+			}
+		} else {
+			emotion e_what, "Giacomo Girolamo#kiup2";
+			mes "[Giacomo Girolamo]";
+			mes "Hey, lady?";
+			next;
+			mes "[Giacomo Girolamo]";
+			switch(rand(1,10)) {
+			case 1:
+				mes "Wasn't it painful when you fell down from Heaven, my Angel?";
+				next;
+				break;
+			case 2:
+				mes "You must be tired. Because you are always wandering my mind.";
+				next;
+				break;
+			case 3:
+				mes "Are you not tired of walking around in my dream last night?";
+				next;
+				break;
+			case 4:
+				mes "Excuse me. But I think I lost my heart. Could you please borrow me yours?";
+				next;
+				break;
+			case 5:
+				mes "Do you believe in love at first sight?? Or can we start again..?";
+				next;
+				break;
+			case 6:
+				mes "I am so sorry but, can you kiss with a person who just met?? Noo? Ok then let me introduce myself.";
+				next;
+				break;
+			case 7:
+				mes "I'm so lost here since it's the first time. Can you let me know which is the way to your heart?";
+				next;
+				break;
+			case 8:
+				mes "Give me a map please.. To get a way....I'm fallen in your eyes.";
+				next;
+				break;
+			case 9:
+				mes "Your eyes....I wanna be forever there.";
+				next;
+				break;
+			case 10:
+				mes "I promise that I will be your everything in any case, in any difficult situation.";
+				next;
+				break;
+			}
+			emotion e_lv2, "Giacomo Girolamo#kiup2";
+			mes "[Giacomo Girolamo]";
+			mes "Today is the first day we met, but I love you, Lady <3 ";
+			next;
+			mes "[Giacomo Girolamo]";
+			mes "And I am telling you this because I'm just worried about you. You need to get out of this town which is full of disappearance cases.";
+			close;
+		}
+	}
+
+OnTouch:
+	if (!lght_duk01)
+		emotion (Sex ? e_pif : e_lv2), "Giacomo Girolamo#kiup2";
+	end;
+}
+
+// Weird Old Man (Rewards)
+//============================================================
+lighthalzen,342,291,4	script	Weird old man#Bio4Reward	4_M_EINOLD,{
+	if ((MaxWeight - Weight) < 2800 || !checkweight(1201, 1)) {
+		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
+		close;
+	}
+	mes "[Weird old man]";
+	mes "Phew, those young people nowadays, are so rude and have no manners.";
+	next;
+	if (select("Ignore him", "Talk with him") == 1) {
+		mes "[Weird old man]";
+		mes "You, Very bad young man!";
+		close;
+	}
+	mes "["+ strcharinfo(0) +"]";
+	mes "Sir, Are you alright??";
+	next;
+	mes "[Weird old man]";
+	mes "....?? You are not like other young people. You have good manners! You know what happened to me..?";
+	next;
+	switch(rand(1,2)) {
+	case 1:
+		mes "[Weird old man]";
+		mes "I was on the way to visit my son who lives in Rune Midgarts. It's really far away, so I took the airplane, and..";
+		next;
+		mes "[Weird old man]";
+		mes "those young people...so noisy.... I was standing but non of them offered me a seat..and they were just talking in loud voices which bothered everyone.";
+		next;
+		mes "[Weird old man]";
+		mes "I could lecture them if I were 10 years younger than now..";
+		next;
+		mes "[Weird old man]";
+		mes "Pffff.. Never like the time passing....";
+		next;
+		mes "[Weird old man]";
+		mes "So, you... what would you do??";
+		next;
+		mes "[Weird old man]";
+		mes "In an open, public place, you are supposed to stay quiet to the destination and offer your seat to the elderly and the infirm.";
+		next;
+		break;
+	case 2:
+		mes "[Weird old man]";
+		mes "I was on the way to visit my son who lives in Rune Midgarts. It's really far away, so I took the airplane, and..";
+		next;
+		mes "[Weird old man]";
+		mes "those young people...so noisy.... I was standing but non of them offered me a seat..and they were just talking in loud voices which bothered everyone.";
+		next;
+		mes "[Weird old man]";
+		mes "I could lecture them if I were 10 years younger than now..";
+		next;
+		mes "[Weird old man]";
+		mes "Pffff.. Never like the time passing....";
+		next;
+		mes "[Weird old man]";
+		mes "So, you... what would you do??";
+		next;
+		mes "[Weird old man]";
+		mes "In an open, public place, you are supposed to stay quiet to the destination and offer your seat to the elderly and the infirm. Right?";
+		next;
+		mes "[Weird old man]";
+		mes "Isn't that right?!";
+		next;
+		switch(rand(1,2)) {
+		case 1:
+			mes "[Weird old man]";
+			mes "Oh, and then! you know what...?";
+			next;
+			mes "[Weird old man]";
+			mes "Once I was walking in the town, and some boy were spitting on the street, and were bothering girls who were passing by...tut tut!";
+			next;
+			mes "[Weird old man]";
+			mes "The world is going to the dogs.. How will it be?? It was even a day time when they were doing it..tut tut.";
+			next;
+			switch(rand(1,2)) {
+			case 1:
+				mes "[Weird old man]";
+				mes "Oh, and then! you know what...?";
+				next;
+				break;
+			case 2:
+				mes "[Weird old man]";
+				mes "Oh, and then! you know what...?";
+				next;
+				mes "[Weird old man]";
+				mes "Lately young people are not so patient!!!!";
+				next;
+				mes "[Weird old man]";
+				mes "That often, they say they will quit.. they say they can't more. How will they live all the lift with that kind of mentality..tut tut.";
+				next;
+				mes "[Weird old man]";
+				mes "It's not easy to find a job, it is very difficult to be hired. But then they even cannot stand a week there, and leave the work already.";
+				next;
+				mes "[Weird old man]";
+				mes "How impatient and irresponsible!!";
+				next;
+				mes "[Weird old man]";
+				mes "Oh, and then! you know what...?";
+				next;
+				break;
+			}
+		case 2:
+			mes "[Weird old man]";
+			mes "Oh, and then! you know what...?";
+			next;
+			break;
+		}
+	}
+	mes "^E7A43DThe old man talked over and over again.^000000";
+	next;
+	mes "[Weird old man]";
+	mes "Hm......You are not like common young people, you seem pretty patient too. I like that!!!";
+	next;
+	mes "[Weird old man]";
+	mes "Now I am just an old, weak man but when I was young, I was a famous merchant in the town.";
+	next;
+	mes "[Weird old man]";
+	mes "It's been a while since I stopped the business,";
+	mes "but a former client of mine contacted me and asked me";
+	next;
+	mes "[Weird old man]";
+	mes "If I could get him some unknown objects named 'Will of Warrior', 'Thirst for Blood', 'Chill of the Dead'.";
+	next;
+	mes "[Weird old man]";
+	mes "I liked your politeness which is not like most of young people, so if you get me those, I will dare to give you some stuffs that I consider as my treasures.";
+	next;
+	while(1) {
+		switch(select("When I gather them, I will come back", "Show me the armors", "Show me the weapons")) {
+		case 1:
+			mes "[Weird old man]";
+			mes "OK, young man. See you later.";
+			close;
+		case 2:
+			mes "[Weird old man]";
+			mes "So, you are interested in armors.";
+			next;
+			mes "[Weird old man]";
+			mes "These are the armors I have.";
+			next;
+			for(.@i = 1; .@i < 8; .@i++) {
+				if (((.@i == 1 || .@i == 5) && (countitem(6469) >= 100) && (countitem(6470) >= 50) && (countitem(6471) >= 35)) || 
+				    ((.@i == 2 || .@i == 3) && (countitem(6469) >= 100) && (countitem(6470) >= 50) && (countitem(6471) >= 22)) ||
+				    ((.@i == 4 || .@i == 7) && (countitem(6469) >= 300) && (countitem(6470) >= 300) && (countitem(6471) >= 400)) ||
+				    ((.@i == 6) && (countitem(6469) >= 100) && (countitem(6470) >= 50) && (countitem(6471) >= 30))) {
+					.@armor$[.@i] = "^0000FF";
+				} else {
+					.@armor$[.@i] = "^FF0000";
+				}
+			}
+			while(1) {
+				switch(select(
+					"Show me other items.",
+					""+.@armor$[1]+"Giant Shield^000000",
+					""+.@armor$[2]+"Acient Book of Geffenia-Water^000000",
+					""+.@armor$[3]+"Bible of Promise(2nd Vol.)^000000",
+					""+.@armor$[4]+"Salvage Cape^000000",
+					""+.@armor$[5]+"Assassin's Handcuffs^000000",
+					""+.@armor$[6]+"Green Operating Gown^000000",
+					""+.@armor$[7]+"Ancient Gold Decoration^000000"
+				)) {
+				case 1:
+					mes "[Weird old man]";
+					mes "Have a look.";
+					next;
+					.@break = 1;
+					break;
+				case 2:
+					mes "<<Giant Shield[1]>>";
+					mes "Decrease 5% of Damage from Large Monsters, if Refine Lv is 9, decrease 5% more of the Damage.";
+					mes "Shield / Def 130 / Weight 280 / Required Lv 100 / Socket 1 / for 3rd Swordman Classes";
+					callsub L_Reward, 2160, 100, 50, 35; //Giant_Shield
+					break;
+				case 3:
+					mes "<<Acient Book of Geffenia-Water[1]>>";
+					mes "INT + 1, MDEF + 2. If Original INT point is 120, MATK + 10, MHP + 800.";
+					mes "When equipping with Lacryma Stick, the casting % from Storm Gust, Frost Misty and Jack frost will discount equivalent to 4 times Refine Lv.";
+					mes "Shield / Def 30 / Weight 100 / Required Lv 100 / Socket 1 / for Warlock";
+					callsub L_Reward, 2161, 100, 50, 22; //Geffenia_Book_Water
+					break;
+				case 4:
+					mes "<<Bible of Promise(2nd Vol.)[1]>>";
+					mes "MDEF + 5, Allow to use 'Odin's Power'(Lv 2). Increase 5% more for Heal skill.";
+					mes "Shield / Def 20 / Weight 50 / Required Lv 140 / Socket 1 / for Archbishop";
+					callsub L_Reward, 2162, 100, 50, 22; //Bible_Of_Promise2
+					break;
+				case 5:
+					mes "<<Salvage Cape[0]>>";
+					mes "Allow to use 'Cicada Skin Shed'(Lv 1). Cool time for this skill will be 30 seconds. When equiping it, SP consumption for using any skill will be doubled, When taking it off, SP - 1200.";
+					mes "Garment / Def 1 / Weight 40 / Required Lv 130 / Socket 0 / for Archbishop";
+					callsub L_Reward, 2582, 100, 50, 35; //Salvage_Cape
+					break;
+				case 6:
+					mes "<<Assassin's Handcuffs[1]>>";
+					mes "MSP + 20, CRI + 3. When equipping with Krishna, ATK + 50, ATK power from 'Sonic Blow' 50% increased, FLEE - 30. When equipping with Cakram CRI + 4, Critical ATK power 40% increased, MHP - 10%.";
+					mes "Accessory / Def 3 / Weight 40 / Required Lv 100 / Socket 1 / for Guillotine Cross";
+					callsub L_Reward, 2892, 300, 300, 400; //Assassin_Handcuffs
+					break;
+				case 7:
+					mes "<<Green Operating Gown[1]>>";
+					mes "DEX + 1, MSP + 30. Equipping with Scalpel will let to drop 'Immortal Heart', 'Alcohol' with a certain chance when hunting Human, Animal type monsters. Refine Lv affects the drop rate.";
+					mes "Armor / Def 66 / Weight 66 / Required Lv 100 / Socket 1 / for Generic";
+					callsub L_Reward, 15044, 100, 50, 30; //Green_Operation_Coat
+					break;
+				case 8:
+					mes "<<Ancient Gold Decoration[1]>>";
+					mes "If the base lv is 150, All State + 2. for Swordman, Merchant, Thief Classes ATK + 8%, for Magician, Acolyte classes MATK + 8%, Heal Power + 7%, for Archer classes DEX + 3, Long Distance ATK power + 10%.";
+					mes "Helm / Def 7 / Location - Upper / Weight 40 / Required Lv 100 / Socket 1 / for 3rd Job Classes";
+					callsub L_Reward, 18570, 300, 300, 400; //Ancient_Gold_Deco
+					break;
+				}
+				if (.@break) {
+					.@break = 0;
+					break;
+				}
+			}
+			break;
+		case 3:
+			mes "[Weird old man]";
+			mes "So, you are interested in weapons.";
+			next;
+			mes "[Weird old man]";
+			mes "These are the weapons I've got.";
+			next;
+			for(.@i = 1; .@i < 15; .@i++) {
+				if (((.@i == 1) && (countitem(6469) >= 50) && (countitem(6470) >= 100) && (countitem(6471) >= 10)) ||
+				((.@i == 2) && (countitem(6469) >= 50) && (countitem(6470) >= 100) && (countitem(6471) >= 85)) ||
+				((.@i == 3 || .@i == 4 || (.@i >= 8 && .@i < 11) || .@i >= 12) && (countitem(6469) >= 50) && (countitem(6470) >= 100) && (countitem(6471) >= 35)) ||
+				((.@i == 5 || .@i == 7 || .@i == 11) && (countitem(6469) >= 50) && (countitem(6470) >= 100) && (countitem(6471) >= 40)) ||
+				((.@i == 6) && (countitem(6469) >= 300) && (countitem(6470) >= 300) && (countitem(6471) >= 400))) {
+					.@weapon$[.@i] = "^0000FF";
+				} else {
+					.@weapon$[.@i] = "^FF0000";
+				}
+			}
+			while(1) {
+				switch(select(
+					"Show me other items.",
+					""+.@weapon$[1]+"Agent Katar^000000",
+					""+.@weapon$[2]+"Guillotine Katar^000000",
+					""+.@weapon$[3]+"Ygnus Stale^000000",
+					""+.@weapon$[4]+"End Sektura^000000",
+					""+.@weapon$[5]+"Cannon Spear^000000",
+					""+.@weapon$[6]+"Giant Lance^000000",
+					""+.@weapon$[7]+"Chilly Spell Book^000000",
+					""+.@weapon$[8]+"Recovery Light^000000",
+					""+.@weapon$[9]+"Aztoe Nail^000000",
+					""+.@weapon$[10]+"Scarletto Nail^000000",
+					""+.@weapon$[11]+"Bloody Cross^000000",
+					""+.@weapon$[12]+"Catapult^000000",
+					""+.@weapon$[13]+"Big CrossBow^000000",
+					""+.@weapon$[14]+"Creeper Bow^000000"
+				)) {
+				case 1:
+					mes "[Weird old man]";
+					mes "Have a look.";
+					next;
+					.@break = 1;
+					break;
+				case 2:
+					mes "<<Agent Katar[1]>>";
+					mes "Every 2 Original LUK points gets additional 1 HIT point";
+					mes "Katar / ATK 170 / Weight 120 / Weapon Lv 3 / Required Lv 100 / Socket 1 / for Guillotine Cross";
+					callsub L_Reward, 1290, 50, 100, 10; //Agent_Katar
+					break;
+				case 3:
+					mes "<<Guillotine Katar[1]>>";
+					mes "DEX + 2. FLEE - 30. 50% more damage to Human monsters. Add 30% more damage for Cross Impact skill.";
+					mes "Katar / ATK 200 / Weight 150 / Weapon Lv 4 / Required Lv 140 / Socket 1 / for Guillotine Cross";
+					callsub L_Reward, 1291, 50, 100, 85; //Guillotine_Katar
+					break;
+				case 4:
+					mes "<<Ygnus Stale[1]>>";
+					mes "When doing short distance attack, cast ¹ßÈ­ to the player and to the enemy with a certain chance.";
+					mes "Two-Handed Axe / ATK 250 / Weight 190 / Fire Property / Weapon Lv 4 / Required Lv 95 / Socket 1 / for High Swordman/Merchant Classes";
+					callsub L_Reward, 1392, 50, 100, 35; //Ygnus_Stale
+					break;
+				case 5:
+					mes "<<End Sektura[1]>>";
+					mes "When doing short distance attack, cast Freezing to the player and to the enemy with a certain chance.";
+					mes "Two-Handed Axe / ATK 250 / Weight 190 / Water Property / Weapon Lv 4 / Required Lv 95 / Socket 1 / for High Swordman/Merchant Classes";
+					callsub L_Reward, 1393, 50, 100, 35; //End_Sektura
+					break;
+				case 6:
+					mes "<<Cannon Spear[1]>>";
+					mes "MSP - 100, Increases 10% of Damage impacted with Cannon Spear, Additional ATK power of Cannon Spear equivalent to 3 times Refine Lv.";
+					mes "One-Handed Spear / ATK 180 / Weight 160 / Weapon Lv 4 / Required Lv 100 / Socket 1 / for Royal Guard";
+					callsub L_Reward, 1435, 50, 100, 40; //Cannon_Spear
+					break;
+				case 7:
+					mes "<<Giant Lance[0]>>";
+					mes "ASPD - 10, When it's taken off, the character gets SP - 600. 20 more seconds of Delay time exists before using back the Clashing Spiral. If the original STR points are 120, + ATK 300.";
+					mes "Two-Handed Lance / ATK 20 / Weight 2000 / Weapon Lv 4 / Required Lv 140 / Socket 0 / for Rune Knight";
+					callsub L_Reward, 1490, 300, 300, 400; //Giant_Lance
+					break;
+				case 8:
+					mes "<<Chilly Spell Book[2]>>";
+					mes "MATK + 160, DEX + 1. Increases ATK % of Cold Bolt, Diamond Dust equivalent to 3 times Refine Lv, also SP consumption from those skills increased equivalent to 5 times Refine Lv. Undestroyable.";
+					mes "Book / ATK 100 / Weight 100 / Water Property / Weapon Lv 4 / Required Lv 100 / Socket 2 / for Sorcerer";
+					callsub L_Reward, 1584, 50, 100, 40; //Chilly_Spell_Book
+					break;
+				case 9:
+					mes "<<Recovery Light[1]>>";
+					mes "MATK + 160. Depending on its Refine Lv, Heal Ability and SP consumption for the skill increased. Indestructible.";
+					mes "One-Handed Staff / ATK 30 / Weight 40 / Saint Property / Weapon Lv 4 / Required Lv 110 / Socket 1 / for Archbishop.";
+					callsub L_Reward, 1659, 50, 100, 35; //Recovery_Light
+					break;
+				case 10:
+					mes "<<Aztoe Nail[0]>>";
+					mes "MATK + 80. For Physical Melee Attack, cast Freezing to the target with a certain chance. The chance is affected by Refine Lv.";
+					mes "Dagger / ATK 160 / Weight 50 / Wind Property / Weapon Lv 4 / Required Lv 110 / Socket 0 / for High Swordman/Merchant/Theif Classes";
+					callsub L_Reward, 13069, 50, 100, 35; //Aztoe_Nail
+					break;
+				case 11:
+					mes "<<Scarletto Nail[0]>>";
+					mes "MATK + 80. For Physical Melee Attack, cast Stone curse to the target with a certain chance. The chance is affected by Refine Lv.";
+					mes "Dagger / ATK 160 / Weight 50 / Fire Property / Weapon Lv 4 / Required Lv 110 / Socket 0 / for High Swordman/Merchant/Theif Classes";
+					callsub L_Reward, 13070, 50, 100, 35; //Scarletto_Nail
+					break;
+				case 12:
+					mes "<<Bloody Cross[0]>>";
+					mes "For Physical Melee Attack, autocast 'Hell Inferno'(Lv 1) with a certain chance. The chance is affected by Refine Lv.";
+					mes "Mace / ATK 170 / Weight 150 / Darkness Property / Weapon Lv 4 / Required Lv 100 / Socket 0 / for High Acolyte Classes";
+					callsub L_Reward, 16017, 50, 100, 40; //Bloody_Cross
+					break;
+				case 13:
+					mes "<<Catapult[2]>>";
+					mes "Increases ATK % of 'Triangle Shot' equivalent to 2 times Refine Lv, Also SP consumption from the skill increased.";
+					mes "Bow / ATK 150 / Weight 110 / Weapon Lv 4 / Required Lv 100 / Socket 2 / for Shadow Chaser";
+					callsub L_Reward, 18109, 50, 100, 35; //Catapult
+					break;
+				case 14:
+					mes "<<Big CrossBow[2]>>";
+					mes "Increases ATK % of 'Arrow Storm' equivalent to 5 times Refine Lv. Also SP consumption from the skill increased, If the Original AGI points are 120, ASPD + 1.";
+					mes "Bow / ATK 160 / Weight 90 / Weapon Lv 4 / Required Lv 110 / Socket 2 / for Ranger";
+					callsub L_Reward, 18110, 50, 100, 35; //Big_CrossBow
+					break;
+				case 15:
+					mes "<<Creeper Bow[2]>>";
+					mes "DEX + 1, For Physical Attack, auto-cast 'Fiber Lock'(Lv 1) with a certain chance.";
+					mes "Bow / ATK 150 / Weight 150 / Weapon Lv 3 / Required Lv 120 / Socket 2 / for 3rd Archer Classes";
+					callsub L_Reward, 18111, 50, 100, 35; //Creeper_Bow
+					break;
+				}
+				if (.@break) {
+					.@break = 0;
+					break;
+				}
+			}
+		}
+	}
+	close;
+
+L_Reward:
+	next;
+	mes ""+getarg(1)+" Will of Warrior, "+getarg(2)+" Thirst for Blood, "+getarg(3)+" Chill of the Dead are needed for the exchange.";
+	next;
+	if (countitem(6469) >= getarg(1) && countitem(6470) >= getarg(2) && countitem(6471) >= getarg(3)) {
+		if (select("Don't exchange", "Exchange") == 1) {
+			mes "[Weird old man]";
+			mes "Okay..";
+			close;
+		}
+		emotion e_swt2, "Weird old man#Bio4Reward";
+		progressbar "FF00FF", 2;
+		delitem 6469, getarg(1); //Will_Of_Warrior
+		delitem 6470, getarg(2); //Blood_Thirst
+		delitem 6471, getarg(3); //Goast_Chill
+		getitem getarg(0), 1;
+		mes "[Weird old man]";
+		mes "There you go. Visit me sometimes and we could talk.";
+		close;
+	}
+	return;
+}
+
+// Sorcerer (Rewards)
+//============================================================
+lhz_cube,233,24,4	script	Sorcerer#Bio4Reward	4_M_UMDANCEKID,{
+	if ((MaxWeight - Weight) < 1200 || !checkweight(1201, 1)) {
+		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
+		close;
+	}
+	disable_items;
+	mes "[Pudding]";
+	mes "... .... ...";
+	next;
+	switch(select("Umba umba humbaa", "What are you doing here?", "Which are the equipments found so far?", "Here you are, Sir.")) {
+	case 1:
+		emotion e_an;
+		mes "[Pudding]";
+		mes "Hey, excuse me, but I'm not from Umbala! You are so rude.";
+		close;
+	case 2:
+		mes "[Pudding]";
+		mes "As you can see, I'm a training Sorcerer, and my name is Pudding.";
+		next;
+		select("....?");
+		emotion e_an;
+		mes "[Pudding]";
+		mes "... What's that face? I'm starting to feel unpleasant..";
+		next;
+		emotion e_ok;
+		mes "[Pudding]";
+		mes "Couple of days ago, while I was undergoing discipline, I felt a strange, bizzare tinge. So I followed that and it brought me here.";
+		next;
+		select("I see.");
+		mes "[Pudding]";
+		mes "OK, let me continue. I am so bothered if you disturb me while I'm talking.";
+		next;
+		mes "[Pudding]";
+		mes "And I entered to the laboratory here in order to investigate, and oh gosh! I found those monsters which were like doppelgangers from 'Geffen Dungeon'. It was full of them.";
+		next;
+		mes "[Pudding]";
+		mes "From those monsters, I could find rare items like '^F2766EWill of Warrior^000000' '^952420Thirst for Blood^000000' '^88C6F7Chill of the Dead^000000' which you cannot find from any other place.";
+		next;
+		emotion e_what, "Sorcerer#Bio4Reward";
+		mes "[Pudding]";
+		mes "And after many hours of research on my own, I finally figured out a way to use those items. Do you wanna know?";
+		next;
+		switch(select("Oh....pardon?!", "Of course, I really wanna know.")) {
+		case 1:
+			emotion e_omg, 1;
+			emotion e_an, "Sorcerer#Bio4Reward";
+			mes "[Pudding]";
+			mes "Oh my! You fell asleep after you asked me something? Well, anyway I feel lazy to explain again so I will just continue.";
+			next;
+			break;
+		case 2:
+			emotion e_heh, "Sorcerer#Bio4Reward";
+			mes "[Pudding]";
+			mes "Good, I am content that you are listening to my story carefully. Then I will keep explaining.";
+			next;
+			break;
+		}
+		mes "[Pudding]";
+		mes "Those '^F2766EWill of Warrior^000000' and '^952420Thirst for Blood^000000'..... are aggresive but warm materials.";
+		next;
+		mes "[Pudding]";
+		mes "So '^F2766EWill of Warrior^000000' can dwell a special power to the 4th slot of an equipment,";
+		next;
+		mes "[Pudding]";
+		mes "and '^952420Thirst for Blood^000000' can dwell a special power to the 3rd slot.";
+		next;
+		mes "[Pudding]";
+		mes "Whereas!!!";
+		mes "'^88C6F7Chill of the Dead^000000' is a cold type material.";
+		mes "which allows to return the power from '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000' so it let the equipment to be 'ZERO'.";
+		next;
+		mes "[Pudding]";
+		mes "What do you say? Doesn't it sound interesting? But, there's a problem...";
+		next;
+		mes "[Pudding]";
+		mes "Since those materials can only be found from the monsters in the Lab., the special power also can be dwelt into certain equipments which can be obtained from the Lab.";
+		next;
+		select("So what's the conclusion?");
+		emotion e_what, 1;
+		emotion e_an;
+		mes "[Pudding]";
+		mes "Gee.. I told you not to cut while I talk, didn't I? Well, I will answer that becuase that's important.";
+		next;
+		mes "[Pudding]";
+		mes "If you bring me 10 '^F2766EWill of Warrior^000000' or 10 '^952420Thirst for Blood^000000', I will dwell some power to certain equipments that you can find in the Lab..";
+		next;
+		mes "[Pudding]";
+		mes "And if you are not satisfied with the power you got, bring me 10 '^88C6F7Chill of the Dead^000000', and I will take off that power.";
+		next;
+		mes "[Pudding]";
+		mes "WHat do you say? Having both options.....quite nice, huh?";
+		next;
+		mes "[Pudding]";
+		mes "If you obtain '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000', and obtain also equipment which is capable to accept their power, bring them to me. I will be waiting.";
+		close;
+	case 3:
+		mes "[Pudding]";
+		mes "Hm.... Equipment which are discovered so far are....";
+		next;
+		mes "- checking -";
+		mes "Pudding takes some paper out from a pocket.";
+		next;
+		mes "[Pudding]";
+		mes "Let me see.. the equipments discovered until now are....";
+		mes "6 Armors, 14 Weapons.";
+		next;
+		while(1) {
+			switch(select("Ok, I don't have to know more.", "6 Armors", "14 Weapons")) {
+			case 1:
+				mes "[Pudding]";
+				mes "If you obtain '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000', and obtain also equipment which is capable to accept their power, bring them to me. I will be waiting.";
+				close;
+			case 2:
+				mes "< Armor List >";
+				mes "Giant Shield[1]";
+				mes "Acient Book of Geffenia-Water[1]";
+				mes "Bible of Promise(2nd Vol.)[1]";
+				mes "Salvage Cape[0]";
+				mes "Assassin's Handcuffs[1]";
+				mes "Green Operating Gown[1]";
+				mes "Ancient Gold Decoration[1]";
+				next;
+				mes "[Pudding]";
+				mes "So far these are the Armors discovered. Do you wanna see other things?";
+				next;
+				break;
+			case 3:
+				mes "< Weapon List >";
+				mes "Agent Katar[1]";
+				mes "Guillotine Katar[1]";
+				mes "Ygnus Stale[1]";
+				mes "End Sektura[1]";
+				mes "Cannon Spear[1]";
+				mes "Giant Lance[0]";
+				mes "Chilly Spell Book[2]";
+				mes "Recovery Light[1]";
+				mes "Aztoe Nail[0]";
+				mes "Scarletto Nail[0]";
+				mes "Bloody Cross[0]";
+				mes "Catapult[2]";
+				mes "Big CrossBow[2]";
+				mes "Creeper Bow[2]";
+				next;
+				mes "[Pudding]";
+				mes "So far these are the Weapons discovered. Do you wanna see other things?";
+				next;
+				break;
+			}
+		}
+		close;
+	case 4:
+		emotion e_flash;
+		mes "[Pudding]";
+		mes "Ohhhhh Have you brought them?";
+		next;
+		break;
+	}
+	mes "[Pudding]";
+	mes "OKAY! In which equipment you want to dwell the power?";
+	next;
+	setarray .@parts[0], EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_TOP;
+	for(.@i = 0; .@i < 7; .@i++) {
+		if (!getequipisequiped(.@parts[.@i])) {
+			switch(.@i) {
+				case 0:
+					.@equipped$[.@i] = "^999999Armor-[Not equipped]^000000";
+					break;
+				case 1:
+					.@equipped$[.@i] = "^999999Left Hand-[Not equipped]^000000";
+					break;
+				case 2:
+					.@equipped$[.@i] = "^999999Right Hand-[Not equipped]^000000";
+					break;
+				case 3:
+					.@equipped$[.@i] = "^999999Garment-[Not equipped]^000000";
+					break;
+				case 4:
+					.@equipped$[.@i] = "^999999Accessory-[Not equipped]^000000";
+					break;
+				case 5:
+					.@equipped$[.@i] = "^999999Accessory-[Not equipped]^000000";
+					break;
+				case 6:
+					.@equipped$[.@i] = "^999999Helm-[Not equipped]^000000";
+					break;
+			}
+		} else {
+			.@equipped$[.@i] = getequipname(.@parts[.@i]);
+		}
+	}
+	switch(select("I changed my mind.", .@equipped$[0], .@equipped$[1], .@equipped$[2], .@equipped$[3], .@equipped$[4], 
+	.@equipped$[5], .@equipped$[6])) {
+	case 1:
+		mes "[Pudding]";
+		mes "Well, I was looking forward to doing it, but I cannot help then.";
+		close;
+	case 2:
+		if (!getequipisequiped(EQI_ARMOR)) {
+			mes "[Pudding]";
+			mes "Hey..Where is the armor?";
+			close;
+		}
+		.@part = EQI_ARMOR;
+		break;
+	case 3:
+		if (!getequipisequiped(EQI_HAND_L)) {
+			mes "[Pudding]";
+			mes "Well.. You are not equipping anything on the left hand.";
+			close;
+		}
+		.@part = EQI_HAND_L;
+		break;
+	case 4:
+		if (!getequipisequiped(EQI_HAND_R)) {
+			mes "[Pudding]";
+			mes "Well.. You are not equipping anything on the right hand.";
+			close;
+		}
+		.@part = EQI_HAND_R;
+		break;
+	case 5:
+		if (!getequipisequiped(EQI_GARMENT)) {
+			mes "[Pudding]";
+			mes "Um.... Where's your robe?";
+			close;
+		}
+		.@part = EQI_GARMENT;
+		break;
+	case 6:
+		if (!getequipisequiped(EQI_ACC_L)) {
+			mes "[Pudding]";
+			mes ".....Where's the accessory?";
+			close;
+		}
+		.@part = EQI_ACC_L;
+		break;
+	case 7:
+		if (!getequipisequiped(EQI_ACC_R)) {
+			mes "[Pudding]";
+			mes ".....Where's the accessory?";
+			close;
+		}
+		.@part = EQI_ACC_R;
+		break;
+	case 8:
+		if (!getequipisequiped(EQI_HEAD_TOP)) {
+			mes "[Pudding]";
+			mes "Hey.. Are you not wearing any Helm?";
+			close;
+		}
+		.@part = EQI_HEAD_TOP;
+		break;
+	}
+	.@refine_count = getequiprefinerycnt(.@part);
+	.@equip_item = getequipid(.@part);
+	.@lhz_max_num = 4000;
+	if (.@equip_item == 13069 || .@equip_item == 1291 || .@equip_item == 1392 || 
+	    .@equip_item == 1393 || .@equip_item == 1435 || .@equip_item == 1490 || 
+	    .@equip_item == 13069 || .@equip_item == 13070 || .@equip_item == 16017) {
+		.@type = 1;
+		if (.@equip_item == 1490)
+			.@lhz_max_num = 4200;
+	} else if (.@equip_item == 18109 || .@equip_item == 18110 || .@equip_item == 18111) {
+		.@type = 2;
+	} else if (.@equip_item == 1584 || .@equip_item == 1659) {
+		.@type = 3;
+	} else if (.@equip_item == 2160 || .@equip_item == 2161 || .@equip_item == 2162 ||
+	           .@equip_item == 2582 || .@equip_item == 2892 || .@equip_item == 15044 || 
+	           .@equip_item == 18570) {
+		.@type = 4;
+		if (.@equip_item == 2582 || .@equip_item == 18570)
+			.@lhz_max_num = 4200;
+	} else {
+		mes "[Pudding]";
+		mes "Before! I need to check if this equipment can accept the power.";
+		next;
+		specialeffect2 EF_SPHERE;
+		progressbar "ffff00", 2;
+		specialeffect2 EF_SUI_EXPLOSION;
+		emotion e_sob;
+		mes "[Pudding]";
+		mes "Hm.... This equipment cannot accept the power of '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000'.";
+		close;
+	}
+	emotion e_ho;
+	mes "[Pudding]";
+	mes "OHHH.. This equipment could accept the power of '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000'.";
+	next;
+	if (countitem(6469) >= 10)
+		.@menu_in$[1] = "Dwell the power of '^F2766EWill of Warrior^000000'";
+	else
+		.@menu_in$[1] = "Not enough ^999999'Will of Warrior'^000000";
+
+	if (countitem(6470) >= 10)
+		.@menu_in$[2] = "Dwell the power of '^952420Thirst for Blood^000000'";
+	else
+		.@menu_in$[2] = "Not enough ^999999'Thirst for Blood'^000000";
+
+	if (countitem(6471) >= 10)
+		.@menu_in$[3] = "Consume the '^88C6F7Chill of the Dead^000000'";
+	else
+		.@menu_in$[3] = "Not enough ^999999'Chill of the Dead'^000000";
+	mes "[Pudding]";
+	mes "OK! Which power do you want to dwell in your equipment?";
+	next;
+	switch(select("I say no! I don't need that!!", .@menu_in$[1], .@menu_in$[2], .@menu_in$[3])) {
+	case 1:
+		mes "[Pudding]";
+		mes "Ohhh.. I was looking forward to doing it, but it's all up to you......";
+		close;
+	case 2:
+		if (countitem(6469) < 10) {
+			mes "[Pudding]";
+			mes "Not enough '^F2766EWill of Warrior^000000', You need to bring 10 '^F2766EWill of Warrior^000000'";
+			close;
+		}
+		else if (getequipcardid(.@part, 3) > 0) {
+			mes "[Pudding]";
+			mes "This equipment already got the power of '^F2766EWill of Warrior^000000'.";
+			close;
+		} else {
+			.@socket_type = 4;
+		}
+		break;
+	case 3:
+		if (countitem(6470) < 10) {
+			mes "[Pudding]";
+			mes "Not enough '^952420Thirst for Blood^000000', You need to bring 10 '^952420Thirst for Blood^000000'";
+			close;
+		}
+		else if (getequipcardid(.@part, 2) > 0) {
+			mes "[Pudding]";
+			mes "This equipment already got the power of '^952420Thirst for Blood^000000'.";
+			close;
+		} else {
+			.@socket_type = 3;
+		}
+		break;
+	case 4:
+		// Enchant Removal
+		if (countitem(6471) < 10) {
+			.@menu_clear$[1] = "^999999Not enough 'Chill of the Dead'^000000";
+			.@menu_clear$[2] = "^999999Not enough 'Chill of the Dead'^000000";
+			.@4thzptsodyd = 1;
+			.@3thzptsodyd = 1;
+		} else {
+			if (getequipcardid(.@part, 3) > 0) {
+				.@menu_clear$[1] = "Remove the power of '^F2766EWill of Warrior^000000'";
+			} else {
+				.@menu_clear$[1] = "^999999There's no power to remove^000000";
+				.@4thzptsodyd = 1;
+			}
+			if (getequipcardid(.@part, 2) > 0) {
+				.@menu_clear$[2] = "Remove the power of '^952420Thirst for Blood^000000'";
+			} else {
+				.@menu_clear$[2] = "^999999There's no power to remove^000000";
+				.@3thzptsodyd = 1;
+			}
+		}
+		mes "[Pudding]";
+		mes "Alright, which power do you want to remove?";
+		next;
+		.@menu = select("No, I don't wannna remove any.", .@menu_clear$[1], .@menu_clear$[2]);
+		switch(.@menu){
+		case 1:
+			mes "[Pudding]";
+			mes "Really? Ok. I got it..";
+			close;
+		case 2:
+		case 3:
+			if (countitem(6471) < 10) {
+				mes "[Pudding]";
+				mes "Not enough '^88C6F7Chill of the Dead^000000', You need to bring 10 '^88C6F7Chill of the Dead^000000'";
+				close;
+			}
+			if ( (.@menu==3 && .@3thzptsodyd == 1) || (.@menu==2 && .@4thzptsodyd == 1) ) {
+				mes "[Pudding]";
+				mes "This equipment didn't get any special power.";
+				close;
+			}
+			setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+			if (.@menu == 2)
+				.@equip_card[3] = 0;
+			else
+				.@equip_card[2] = 0;
+			.@equip_item = getequipid(.@part);
+			specialeffect EF_BEGINSPELL2, AREA, "Sorcerer#Bio4Reward";
+			progressbar "ffff00", 2;
+			specialeffect2 EF_FROSTWEAPON;
+			delitem 6471, 10; //Goast_Chill
+			delequip .@part;
+			getitem2 .@equip_item, 1, 1, .@refine_count, 0, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3];
+			mes "[Pudding]";
+			if (.@menu == 3)
+				mes "The power of '^952420Thirst for Blood^000000' has been perfectly removed.";
+			else
+				mes "The power of '^F2766EWill of Warrior^000000' has been perfectly removed.";
+			close;
+		}
+	}
+	mes "[Pudding]";
+	mes "Before I dwell the power, let me explain to you cautions.";
+	next;
+	mes "[Pudding]";
+	mes "While dwelling the power of '^F2766EWill of Warrior^000000' or '^952420Thirst for Blood^000000', the equipment would be not capable to accept that and will be destryed..";
+	next;
+	mes "[Pudding]";
+	mes "^9D2628If the equipment is destroyed, you will also lose the cards you inserted in it, and the refine Lv will be removed too.^000000";
+	next;
+	mes "[Pudding]";
+	mes "Alright. will you really wish to dwell the power into the equipment?";
+	next;
+	if (select("Wait, I will think again.", "Sure, carry on.") == 1) {
+		mes "[Pudding]";
+		mes "OK. I will be hoping to see you again.";
+		close;
+	}
+	mes "[Pudding]";
+	mes "I wish you made a correct decision...";
+	next;
+	if (.@socket_type >= 3) {
+		switch(.@type){
+			case 1:	// Short Distance
+				.@r = rand(1, .@lhz_max_num);
+				if      (.@r < 401)  .@enchant = 4700; //Strength1
+				else if (.@r < 441)  .@enchant = 4701; //Strength2
+				else if (.@r < 445)  .@enchant = 4702; //Strength3
+				else if (.@r < 845)  .@enchant = 4730; //Agility1
+				else if (.@r < 885)  .@enchant = 4731; //Agility2
+				else if (.@r < 889)  .@enchant = 4732; //Agility3
+				else if (.@r < 1289) .@enchant = 4740; //Vitality1
+				else if (.@r < 1329) .@enchant = 4741; //Vitality2
+				else if (.@r < 1333) .@enchant = 4742; //Vitality3
+				else if (.@r < 1523) .@enchant = 4710; //Inteligence1
+				else if (.@r < 1542) .@enchant = 4711; //Inteligence2
+				else if (.@r < 1544) .@enchant = 4712; //Inteligence3
+				else if (.@r < 1844) .@enchant = 4720; //Dexterity1
+				else if (.@r < 1874) .@enchant = 4721; //Dexterity2
+				else if (.@r < 1877) .@enchant = 4722; //Dexterity3
+				else if (.@r < 2067) .@enchant = 4750; //Luck1
+				else if (.@r < 2086) .@enchant = 4751; //Luck2
+				else if (.@r < 2088) .@enchant = 4752; //Luck3
+				else if (.@r < 2491) .@enchant = 0;
+				else if (.@r < 2891) .@enchant = 4811; //Fighting_Spirit1
+				else if (.@r < 2931) .@enchant = 4810; //Fighting_Spirit2
+				else if (.@r < 2935) .@enchant = 4809; //Fighting_Spirit3
+				else if (.@r < 3125) .@enchant = 4815; //Spell1
+				else if (.@r < 3144) .@enchant = 4814; //Spell2
+				else if (.@r < 3146) .@enchant = 4813; //Spell3
+				else if (.@r < 3148) .@enchant = 4807; //Atk_Speed1
+				else if (.@r < 3348) .@enchant = 4818; //Sharp1
+				else if (.@r < 3368) .@enchant = 4817; //Sharp2
+				else if (.@r < 3370) .@enchant = 4816; //Sharp3
+				else if (.@r < 3560) .@enchant = 4832; //Expert_Archer1
+				else if (.@r < 3579) .@enchant = 4833; //Expert_Archer2
+				else if (.@r < 3581) .@enchant = 4834; //Expert_Archer3
+				else                 .@enchant = 0;
+				break;
+			case 2:	// Long Distance
+				.@r = rand(1, .@lhz_max_num);
+				if      (.@r < 191)  .@enchant = 4700; //Strength1
+				else if (.@r < 210)  .@enchant = 4701; //Strength2
+				else if (.@r < 212)  .@enchant = 4702; //Strength3
+				else if (.@r < 612)  .@enchant = 4730; //Agility1
+				else if (.@r < 652)  .@enchant = 4731; //Agility2
+				else if (.@r < 656)  .@enchant = 4732; //Agility3
+				else if (.@r < 846)  .@enchant = 4740; //Vitality1
+				else if (.@r < 865)  .@enchant = 4741; //Vitality2
+				else if (.@r < 867)  .@enchant = 4742; //Vitality3
+				else if (.@r < 1167) .@enchant = 4710; //Inteligence1
+				else if (.@r < 1197) .@enchant = 4711; //Inteligence2
+				else if (.@r < 1200) .@enchant = 4712; //Inteligence3
+				else if (.@r < 1600) .@enchant = 4720; //Dexterity1
+				else if (.@r < 1640) .@enchant = 4721; //Dexterity2
+				else if (.@r < 1644) .@enchant = 4722; //Dexterity3
+				else if (.@r < 1834) .@enchant = 4750; //Luck1
+				else if (.@r < 1853) .@enchant = 4751; //Luck2
+				else if (.@r < 1855) .@enchant = 4752; //Luck3
+				else if (.@r < 2258) .@enchant = 0;
+				else if (.@r < 2448) .@enchant = 4811; //Fighting_Spirit1
+				else if (.@r < 2467) .@enchant = 4810; //Fighting_Spirit2
+				else if (.@r < 2469) .@enchant = 4809; //Fighting_Spirit3
+				else if (.@r < 2669) .@enchant = 4815; //Spell1
+				else if (.@r < 2689) .@enchant = 4814; //Spell2
+				else if (.@r < 2691) .@enchant = 4813; //Spell3
+				else if (.@r < 2693) .@enchant = 4807; //Atk_Speed1
+				else if (.@r < 3093) .@enchant = 4818; //Sharp1
+				else if (.@r < 3133) .@enchant = 4817; //Sharp2
+				else if (.@r < 3137) .@enchant = 4816; //Sharp3
+				else if (.@r < 3537) .@enchant = 4832; //Expert_Archer1
+				else if (.@r < 3577) .@enchant = 4833; //Expert_Archer2
+				else if (.@r < 3581) .@enchant = 4834; //Expert_Archer3
+				else                 .@enchant = 0;
+				break;
+			case 3:
+				.@r = rand(1, .@lhz_max_num);
+				if      (.@r < 301)  .@enchant = 4700; //Strength1
+				else if (.@r < 331)  .@enchant = 4701; //Strength2
+				else if (.@r < 334)  .@enchant = 4702; //Strength3
+				else if (.@r < 534)  .@enchant = 4730; //Agility1
+				else if (.@r < 554)  .@enchant = 4731; //Agility2
+				else if (.@r < 556)  .@enchant = 4732; //Agility3
+				else if (.@r < 956)  .@enchant = 4740; //Vitality1
+				else if (.@r < 996)  .@enchant = 4741; //Vitality2
+				else if (.@r < 1000) .@enchant = 4742; //Vitality3
+				else if (.@r < 1400) .@enchant = 4710; //Inteligence1
+				else if (.@r < 1440) .@enchant = 4711; //Inteligence2
+				else if (.@r < 1444) .@enchant = 4712; //Inteligence3
+				else if (.@r < 1844) .@enchant = 4720; //Dexterity1
+				else if (.@r < 1884) .@enchant = 4721; //Dexterity2
+				else if (.@r < 1888) .@enchant = 4722; //Dexterity3
+				else if (.@r < 2078) .@enchant = 4750; //Luck1
+				else if (.@r < 2097) .@enchant = 4751; //Luck2
+				else if (.@r < 2099) .@enchant = 4752; //Luck3
+				else if (.@r < 2502) .@enchant = 0;
+				else if (.@r < 2692) .@enchant = 4811; //Fighting_Spirit1
+				else if (.@r < 2711) .@enchant = 4810; //Fighting_Spirit2
+				else if (.@r < 2713) .@enchant = 4809; //Fighting_Spirit3
+				else if (.@r < 3113) .@enchant = 4815; //Spell1
+				else if (.@r < 3153) .@enchant = 4814; //Spell2
+				else if (.@r < 3157) .@enchant = 4813; //Spell3
+				else if (.@r < 3159) .@enchant = 4807; //Atk_Speed1
+				else if (.@r < 3349) .@enchant = 4818; //Sharp1
+				else if (.@r < 3368) .@enchant = 4817; //Sharp2
+				else if (.@r < 3370) .@enchant = 4816; //Sharp3
+				else if (.@r < 3560) .@enchant = 4832; //Expert_Archer1
+				else if (.@r < 3579) .@enchant = 4833; //Expert_Archer2
+				else if (.@r < 3581) .@enchant = 4834; //Expert_Archer3
+				else                 .@enchant = 0;
+				break;
+			case 4:	// Armor
+				.@r = rand(1, .@lhz_max_num);
+				if      (.@r < 301)  .@enchant = 4700; //Strength1
+				else if (.@r < 331)  .@enchant = 4701; //Strength2
+				else if (.@r < 334)  .@enchant = 4702; //Strength3
+				else if (.@r < 634)  .@enchant = 4730; //Agility1
+				else if (.@r < 664)  .@enchant = 4731; //Agility2
+				else if (.@r < 667)  .@enchant = 4732; //Agility3
+				else if (.@r < 967)  .@enchant = 4740; //Vitality1
+				else if (.@r < 997)  .@enchant = 4741; //Vitality2
+				else if (.@r < 1000) .@enchant = 4742; //Vitality3
+				else if (.@r < 1300) .@enchant = 4710; //Inteligence1
+				else if (.@r < 1330) .@enchant = 4711; //Inteligence2
+				else if (.@r < 1333) .@enchant = 4712; //Inteligence3
+				else if (.@r < 1633) .@enchant = 4720; //Dexterity1
+				else if (.@r < 1663) .@enchant = 4721; //Dexterity2
+				else if (.@r < 1666) .@enchant = 4722; //Dexterity3
+				else if (.@r < 1966) .@enchant = 4750; //Luck1
+				else if (.@r < 1996) .@enchant = 4751; //Luck2
+				else if (.@r < 1999) .@enchant = 4752; //Luck3
+				else if (.@r < 2399) .@enchant = 0;
+				else if (.@r < 2549) .@enchant = 4786; //Mdef2
+				else if (.@r < 2599) .@enchant = 4787; //Mdef4
+				else if (.@r < 2609) .@enchant = 4788; //Mdef6
+				else if (.@r < 2614) .@enchant = 4789; //Mdef8
+				else if (.@r < 2616) .@enchant = 4790; //Mdef10
+				else if (.@r < 2766) .@enchant = 4791; //Def3
+				else if (.@r < 2866) .@enchant = 4792; //Def6
+				else if (.@r < 2876) .@enchant = 4793; //Def9
+				else if (.@r < 2878) .@enchant = 4794; //Def12
+				else if (.@r < 3278) .@enchant = 0;
+				else if (.@r < 3428) .@enchant = 4859; //Evasion1
+				else if (.@r < 3478) .@enchant = 4860; //Evasion3
+				else if (.@r < 3488) .@enchant = 4762; //Evasion6
+				else if (.@r < 3498) .@enchant = 4800; //SP50
+				else if (.@r < 3734) .@enchant = 4795; //HP100
+				else if (.@r < 3834) .@enchant = 4796; //HP200
+				else if (.@r < 3884) .@enchant = 4797; //HP300
+				else                 .@enchant = 0;
+			break;
+		}
+		setarray .@equip_card[0], getequipcardid(.@part,0),getequipcardid(.@part,1),getequipcardid(.@part,2),getequipcardid(.@part,3);
+		.@equip_card[(.@socket_type-1)] = .@enchant;
+		.@equip_item = getequipid(.@part);
+		specialeffect EF_BEGINSPELL3, AREA, "Sorcerer#Bio4Reward";
+		progressbar "ffff00", 2;
+		if (.@socket_type == 3)
+			delitem 6470, 10; //Blood_Thirst
+		else
+			delitem 6469, 10; //Will_Of_Warrior
+		delequip .@part;
+		
+		if (.@enchant == 0){
+			specialeffect2 EF_SUI_EXPLOSION;
+			emotion e_otl;
+			mes "[Pudding]";
+			mes "...Well....the equipment could not accept the power of "+((.@socket_type==3)?"'^952420Thirst for Blood^000000'":"'^F2766EWill of Warrior^000000'")+" and it got destroyed.";
+			close;
+		} else {
+			specialeffect2 EF_FIREHIT;
+			getitem2 .@equip_item, 1, 1, .@refine_count, 0, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3];
+			emotion e_ho;
+			mes "[Pudding]";
+			mes "Fortunately the power of "+((.@socket_type==3)?"'^952420Thirst for Blood^000000'":"'^F2766EWill of Warrior^000000'")+" has been dwelt well in your equipment...";
+			close;
+		}
+	}
+	end;
+}
+
+// Warp portal to the 4th Fl.
+//============================================================
+lhz_dun03,239,78,1	script	lhz_dun03_lhz_dun04	WARPNPC,1,1,{
+	end;
+
+OnTouch:
+	if (lght_duk01 > 0 && lght_duk01 < 6) {
+		mes "In order to investigate human experimentation, I had to go down whilst I didn't want to because of gruesome sound.";
+		close2;
+		if (lght_duk01 < 3) {
+			warp "que_lhz", 245, 56;
+		} else if (lght_duk01 == 3) {
+			warp "que_lhz", 96, 136;
+		} else {
+			warp "que_lhz", 148, 215;
+		}
+	} else {
+		if (lhz_boss < 31) {
+			mes "- Whistling sound -";
+			mes "From below, there comes a gruesome sound mingling with the wind.";
+			close2;
+		}
+		warp "lhz_dun04", 245, 56;
+	}
+	end;
+}
+
+// Warp Portal to the 3rd Fl.
+//============================================================
+lhz_dun04,244,61,1	warp	lhz_dun04_lhz_dun03	1,1,lhz_dun03,240,75
+
+// Inside the Lab
+//============================================================
+que_lhz,242,50,0	script	#01Startpoint	-1,3,3,{
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	mapannounce "que_lhz", "Man's whisper: Pl.. please.. save me.. I don't wanna die.. wouaaaa..", bc_map, "0x7DCBF0";
+	end;
+
+OnTimer120000:
+	mapannounce "que_lhz", "Woman's whisper: .. Save.. aaaah.. us...", bc_map, "0x7DCBF0";
+	end;
+
+OnTimer180000:
+	mapannounce "que_lhz", "Kid's whisper: Bawwww~ Where am I? Mama......aaaa....", bc_map, "0x7DCBF0";
+	end;
+
+OnTimer240000:
+	mapannounce "que_lhz", "Oldman's whisper: Kirk...hel...help......", bc_map, "0x7DCBF0";
+	end;
+
+OnTimer300000:
+	stopnpctimer;
+	initnpctimer;
+	end;
+
+OnTouch:
+	if (lght_duk01 == 1) {
+		mes "I arrived at a research facility which seems it has been used till these days.";
+		next;
+		mes "There are some destroyed part, but the basic facility seem fine.";
+		next;
+		lght_duk01 = 2;
+		mes "Get around a little more...";
+		close;
+	}
+	end;
+}
+
+que_lhz,206,74,4	script	Researcher#02	4_LGTSCIENCE,3,3,{
+	end;
+
+OnTouch:
+	if (lght_duk01 == 2) {
+		emotion e_omg, 1;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You!!!! are Wolfchev?";
+		next;
+		emotion e_gg, "Researcher#02";
+		mes "[Wolfchev]";
+		mes "A Human! kaahaha. People tend to hate this place, why are you here?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You!!! I heard that you were committing human experimentation. Wolfchev!!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "And I see that you are still committing that!!!";
+		next;
+		emotion e_gg, "Researcher#02";
+		mes "[Wolfchev]";
+		mes "Kihihihi. I can see that you know something about me. Is that you who accused me?";
+		mes "How dare you come back to me after you did that. Kihihih";
+		next;
+		mes "[Wolfchev]";
+		mes "I feel good to see a human";
+		mes "in a long time, but I gotta go. Kihihihi.";
+		next;
+		mes "- Wolfchev ran away giving a awkward laughing sound. -";
+		next;
+		erasequest 5109;
+		setquest 5110;
+		lght_duk01 = 3;
+		emotion e_omg, 1;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Whoa! Wolfchev, stop!";
+		close2;
+		warp "que_lhz", 96, 136;
+	}
+	end;
+}
+
+que_lhz,94,119,4	script	Researcher#03	4_LGTSCIENCE,{
+	if ((MaxWeight - Weight) < 1000 || !checkweight(1201, 1)) {
+		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
+		close;
+	}
+	if (lght_duk01 == 3) {
+		emotion e_swt2, "Researcher#03";
+		mes "[Wolfchev]";
+		mes "(Gasping) Pshaw... you are still following me. Hey, why do you keep following me?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Wolfchev.. You said before. that you are doing research for everybody.";
+		next;
+		mes "[Wolfchev]";
+		mes "I might have said that.... so what?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "But, your experiment seem really dangerous. How come this is what everybody wants?";
+		next;
+		emotion e_gg, "Researcher#03";
+		mes "[Wolfchev]";
+		mes "Everyone has a desire to be stronger and wants to dominate others so those other people obey and admire you. Do you not have that desire?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "... .... ...";
+		next;
+		mes "[Wolfchev]";
+		mes "If you want to save yourself, should stop following me. Bugger off.";
+		next;
+		mes "Wolfchev is again running away with a strange sound.";
+		next;
+		lght_duk01 = 4;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Awwww!! You!! running away again..... Stop!";
+		close2;
+		warp "que_lhz", 148, 215;
+	}
+	end;
+}
+
+que_lhz,147,224,4	script	Researcher#04	4_LGTSCIENCE,{
+	if ((MaxWeight - Weight) < 1000 || !checkweight(1201, 1)) {
+		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
+		close;
+	}
+	if (lght_duk01 == 4) {
+		mes "[Wolfchev]";
+		mes "You are pretty persistent, aren't you? Or I think.......that you like me, huh? Kihihii.";
+		next;
+		emotion e_dots;
+		mes "["+ strcharinfo(0) +"]";
+		mes "... .... ...";
+		next;
+		specialeffect EF_SIGHTRASHER;
+		mes "Wolfchev mocked you at your silence and pressed a button in his hand. Then guinea pigs woken up around him.";
+		next;
+		for(.@i = 1; .@i < 9; .@i++)
+			donpcevent "Human Guinea pig#0"+.@i+"::OnEnable";
+		mes "[Wolfchev]";
+		mes "Again.. it's time to say goodbye.";
+		next;
+		emotion e_gasp, "Researcher#04";
+		mes "[Wolfchev]";
+		mes "Well! May be....";
+		next;
+		mes "[Wolfchev]";
+		mes "If you come to me for the experimentation, I can treat you better.";
+		next;
+		donpcevent "#Eventctrl::OnEnable";
+		progressbar "FF00FF", 5;
+		emotion e_omg, "Researcher#04";
+		mes "[Wolfchev]";
+		mes "Oh my,... What happened?";
+		next;
+		donpcevent "#Eventctrl::OnEnable2";
+		for(.@i = 1; .@i < 9; .@i++)
+			donpcevent "Human Guinea pig#0"+.@i+"::OnDisable";
+		mes "[Wolfchev]";
+		mes "No! Don't come to me! Don't!!";
+		next;
+		lght_duk01 = 5;
+		mes "First of all, I gotta handle those guinea pigs!";
+		close;
+	} else if (lght_duk01 == 5) {
+		.@i = rand(1,3);
+		if (.@i == 2) {
+			mes "Wolfchev is confused and has no idea now since those monsters are attacking him too.";
+			next;
+			specialeffect EF_STUNATTACK;
+			specialeffect EF_STUNATTACK;
+			mes "- Hit him to wake him up -";
+			next;
+			specialeffect EF_DARKBREATH;
+			emotion e_no;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Hey Dude! Anyway let's get out of here first! Isn't there any place where they cannot reach?";
+			next;
+			mes "[Wolfchev]";
+			mes "Oooops.. then my....my lab....to my lab...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Your lab?? Okay, where's that?";
+			next;
+			mes "[Wolfchev]";
+			mes "to the north....... . Not so far from here..";
+			next;
+			erasequest 5110;
+			setquest 5111;
+			lght_duk01 = 6;
+			mes "Go to '^0000FFWolfchev's Lab^000000' at the 12 o'clock direction...";
+			close;
+		} else {
+			emotion e_spin, "Researcher#04";
+			mes "Wolfchev is confused and has no idea now since those monsters are attacking him too.";
+			close;
+		}
+	} else if (lght_duk01 == 6) {
+		mes "Go to '^0000FFWolfchev's Lab^000000' at the 12 o'clock direction...";
+		close;
+	}
+	end;
+}
+
+// Warp to lhz_dun04 from Wolfchev's Lab
+//============================================================
+que_lhz,148,251,0	script	#Move2lab	-1,12,0,{
+	end;
+
+OnTouch:
+	if (lght_duk01 == 6) {
+		mes "I arrived at '^0000FFWolfchev's Lab^000000'.";
+		close2;
+		warp "lhz_dun04", 148, 269;
+		end;
+	} else {
+		mes "I still have something to do with Wolfchev.";
+		close;
+	}
+}
+
+// Event Controller
+//============================================================
+que_lhz,1,1,0	script	#Eventctrl	-1,{
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnEnable2:
+	monster "que_lhz", 139, 232, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 147, 232, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 156, 232, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 156, 224, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 156, 215, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 147, 215, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 139, 215, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	monster "que_lhz", 139, 224, "Human Guinea pig", 2244, 1, "#Eventctrl::OnMyMobDead";
+	end;
+
+OnTimer1000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#01";
+	specialeffect EF_BEGINASURA, "Human Guinea pig#01";
+	end;
+
+OnTimer2000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#02";
+	specialeffect EF_BEGINASURA, "Human Guinea pig#02";
+	end;
+
+OnTimer3000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#03";
+	specialeffect EF_BEGINASURA, "Human Guinea pig#03";
+	end;
+
+OnTimer4000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#04";
+	specialeffect EF_BEGINASURA, "Human Guinea pig#04";
+	end;
+
+OnTimer5000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#05";
+	specialeffect EF_BEGINASURA, "Human Guinea pig#05";
+	end;
+
+OnTimer6000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#06";
+	specialeffect EF_BEGINASURA, "Human Guinea pig#06";
+	end;
+
+OnTimer7000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#07";
+	specialeffect EF_BEGINASURA, "Human Guinea pig#07";
+	end;
+
+OnTimer8000:
+	specialeffect EF_SUI_EXPLOSION,AREA, "#08";
+	specialeffect EF_BEGINASURA, "Human Guinea pig#08";
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	if (mobcount("que_lhz", "#Eventctrl::OnMyMobDead") < 4)
+		killmonster "que_lhz", "#Eventctrl::OnMyMobDead";
+}
+que_lhz,139,232,0	script	#01	-1,{ end; }
+que_lhz,147,232,0	script	#02	-1,{ end; }
+que_lhz,156,232,0	script	#03	-1,{ end; }
+que_lhz,156,224,0	script	#04	-1,{ end; }
+que_lhz,156,215,0	script	#05	-1,{ end; }
+que_lhz,147,215,0	script	#06	-1,{ end; }
+que_lhz,139,215,0	script	#07	-1,{ end; }
+que_lhz,139,224,0	script	#08	-1,{ end; }
+
+// Human Guinea pigs
+//============================================================
+que_lhz,140,231,1	script	Human Guinea pig#01	2224,{
+	end;
+
+OnInit:
+	disablenpc strnpcinfo(0);
+	end;
+
+OnEnable:
+	enablenpc strnpcinfo(0);
+	end;
+
+OnDisable:
+	specialeffect EF_FLASHER;
+	disablenpc strnpcinfo(0);
+	end;
+}
+que_lhz,147,231,0	duplicate(Human Guinea pig#01)	Human Guinea pig#02	2224
+que_lhz,155,231,7	duplicate(Human Guinea pig#01)	Human Guinea pig#03	2224
+que_lhz,155,224,6	duplicate(Human Guinea pig#01)	Human Guinea pig#04	2224
+que_lhz,155,216,5	duplicate(Human Guinea pig#01)	Human Guinea pig#05	2224
+que_lhz,147,216,4	duplicate(Human Guinea pig#01)	Human Guinea pig#06	2224
+que_lhz,140,216,3	duplicate(Human Guinea pig#01)	Human Guinea pig#07	2224
+que_lhz,140,224,2	duplicate(Human Guinea pig#01)	Human Guinea pig#08	2224
+
+// Instance Creation
+//============================================================
+lhz_dun04,151,276,3	script	Researcher#memo	4_LGTSCIENCE,{
+	if ((MaxWeight - Weight) < 1000 || !checkweight(1201, 1)) {
+		mes "^FF0000You cannot continue the process due to possessing too many belongings.^000000";
+		close;
+	}
+	.@quest_time = checkquest(5112, PLAYTIME);
+	.@killed_bosses = true;
+	for(.@quest_id = 5113; .@quest_id <= 5125; .@quest_id++) {
+		if (checkquest(.@quest_id, HUNTING) <= 1)
+			.@killed_bosses = false;
+	}
+	if (lght_duk01 < 6) {
+		mes "[Researcher]";
+		mes "What! Do you have any business here?";
+		next;
+		if (select("Yes I do!!", "Umm.. No..") == 1) {
+			mes "[Researcher]";
+			mes "Why don't stop staring at other's laboratory, and be on your way?";
+			close;
+		}
+		mes "[Researcher]";
+		mes "Stop wondering here, and be on your way. Will you? Khh Khh.";
+		close;
+	} else if (lght_duk01 == 6) {
+		mes "It seems experimental creatures cannot come near the laboratory, just like Wolfchev said.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hey, is there any way to stop those creatures? You should know something, you made those things!";
+		next;
+		mes "[Wolfchev]";
+		mes "Urrgg.. I didn't expect them to loose control like that...";
+		next;
+		mes "[Wolfchev]";
+		mes "What is wrong with this whole thing?";
+		next;
+		mes "[Wolfchev]";
+		mes "Urr.. I think they will ruin my whole laboratory!";
+		next;
+		emotion e_loud, 1;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hey! Wolfchev!!";
+		next;
+		mes "[Wolfchev]";
+		mes "You!? Hey, please stop them!";
+		mes "Creatures are ^9f6077organically connected with same job field^000000.";
+		next;
+		mes "[Wolfchev]";
+		mes "There is one special creature being their ^46B951boss position^000000...";
+		mes "If you could deactivate that creature, all ^A1BB44slave creatures^000000 walking around here will stop moving right away.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Boss creature?";
+		mes "Hey! Wolfchev! Where is that ^46B951Boss creature^000000?";
+		next;
+		mes "[Wolfchev]";
+		mes "Inside.. of laboratory.. It should be waken up now. It's sad to destroy my life of work, but I can't take this any more.. ...";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "How can I get into the Wolfchev's laboratory?";
+		next;
+		mes "[Wolfchev]";
+		mes "Oh.. Wait!";
+		mes "I will help you get in there.";
+		next;
+		mes "[Wolfchev]";
+		mes "Good news is that boss creatures are not set up to wake up all at once, even though slaves are.";
+		next;
+		erasequest 5111;
+		lght_duk01 = 7;
+		for(.@i = 5113; .@i <= 5125; .@i++)
+			setquest .@i;
+		mes "[Wolfchev]";
+		mes "But still, it is really dangerous since we don't know when they will escape from there.";
+		mes "So, please prepare your party members, and take care of those boss creatures. I'm not sure how long this place can hold.";
+		close;
+	} else if (lght_duk01 > 6) {
+		if (getcharid(1) > 0) {
+			mes "[Wolfchev]";
+			mes "Are you all set there? I will prepare the entrance if you are the leader of that party.";
+			next;
+			switch(select("Any warnings?", "Going into the laboratory", "Do not enter")) {
+			case 1:
+				mes "[Wolfchev]";
+				mes "I didn't know pressing the emergency alarm would cause such problem. The management system seems to be changed to emergency mode.";
+				next;
+				mes "[Wolfchev]";
+				mes "There are so many systems set up inside of the laboratory, so eve I cannot be sure how systems are twisted by now.";
+				next;
+				mes "[Wolfchev]";
+				mes "Ah! If the emergency system is activating, only the leader of party should control everything. It is a lot of pressure I understand.";
+				next;
+				mes "[Wolfchev]";
+				mes "And just so you know, please do not touch random things out of curiosity. I don't want you to get hurt.";
+				close;
+			case 2:
+				if (.@quest_time == 0) {
+					mes "[Wolfchev]";
+					mes "I'm sorry, but it seems you still cannot enter to the laboratory yet. Will you come back later? The system is kind of tricky you know.";
+					close;
+				} else {
+					//if (.@quest_time == 2)
+						//recall_completequest 5112;
+					if (isbegin_quest(5112))
+						erasequest 5112;
+					if (!.@killed_bosses) {
+						if (lght_duk01 == 9) {
+							mes "[Wolfchev]";
+							mes "You came back, Ka Ha Ha.";
+							next;
+							mes "[Wolfchev]";
+							mes "After you left, I was fixing some system parts. And then suddenly strange thing happened.";
+							next;
+							mes "["+ strcharinfo(0) +"]";
+							mes "What was that?";
+							next;
+							mes "[Wolfchev]";
+							mes "All those boss creatures you took care of started to regenerate themselves..";
+							next;
+							mes "["+ strcharinfo(0) +"]";
+							mes "What.. How is that possible...?!";
+							next;
+							mes "[Wolfchev]";
+							mes "I am also completely lost here.. But, this should not be happening..";
+							next;
+							mes "["+ strcharinfo(0) +"]";
+							mes "... .... ...";
+							next;
+							mes "[Wolfchev]";
+							mes "As you can see, you are the only one I can trust. Would you and your party help me once again deactivating those creatures?";
+							next;
+							if (select("I am not sure", "Why not") == 1) {
+								mes "[Wolfchev]";
+								mes "I see. I understand why you are hesitating, and don't want to press you any more. But, still I'm not sure why you want go there anyways,";
+								next;
+							} else {
+								for(.@i = 5113; .@i <= 5125; .@i++) {
+									setquest .@i;
+								}
+								lght_duk01 = 10;
+								mes "[Wolfchev]";
+								mes "Thank you very much. "+strcharinfo(0)+"";
+								mes "I will help you get in the laboratory right away.";
+								next;
+							}
+						} else {
+							mes "[Wolfchev]";
+							mes "Hmm.. Those boss creatures regenerating once again..";
+							next;
+							mes "[Wolfchev]";
+							mes "Can you help me just one more time?";
+							next;
+							if (select("I am not sure", "Why not") == 1) {
+								mes "[Wolfchev]";
+								mes "I see. I understand why you are hesitating, and don't want to press you any more. But, still I'm not sure why you want go there anyways,";
+								next;
+							} else {
+								for(.@i = 5113; .@i <= 5125; .@i++) {
+									setquest .@i;
+								}
+								lght_duk01 = 10;
+								mes "[Wolfchev]";
+								mes "Thank you. "+strcharinfo(0)+"";
+								mes "You want to get in there fast, right?";
+								next;
+							}
+						}
+					}
+				}
+				if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+					if (instance_create("Wolfchev's Laboratory") < 0) {
+						mes "[Wolfchev]";
+						mes "Hmm.. Lab entering system is a bit weird. Would wait for me to check the system?";
+						close;
+					}
+					mes "[Wolfchev]";
+					mes "Please hold on...";
+					next;
+					mes "Wolfchev starts to control certain gear.";
+					next;
+					progressbar "FF00FF", 2;
+					mes "[Wolfchev]";
+					mes "Alright! I have marked lan entering system code as";
+					mes "^0000ff"+ strcharinfo(1) +"^000000 party leader's name ^0000ff"+ strcharinfo(0) +"^000000!!.";
+					next;
+					mes "[Wolfchev]";
+					mes "Now, your party is free to pass the entrance.";
+					close;
+				} else {
+					mes "[Wolfchev]";
+					mes "You are not the ^0000ffLeader of the party^000000, are you? Please go get the leader.";
+					close;
+				}
+			case 3:
+				mes "[Wolfchev]";
+				mes "Need more preparation? Please, we don't have all day.";
+				close;
+			}
+		} else {
+			mes "[Wolfchev]";
+			mes "Are you trying to go there along? That is a suicide! Our lab entering system is not as easy as you thinkz`.";
+			close;
+		}
+	} else {
+		mes "[Wolfchev]";
+		mes "Woot! Something weird just happen. If this keep happening, maybe we should try other way..";
+		close;
+	}
+}
+
+lhz_dun04,147,279,0	script	Laboratory Entrance#memo	CLEAR_NPC,{
+	if ((MaxWeight - Weight) < 1000 || !checkweight(1201, 1)) {
+		mes "^FF0000You cannot continue the process due to possessing too many belongings.^000000";
+		close;
+	}
+	.@lhz_time = checkquest(5112, PLAYTIME);
+	if (lght_duk01 < 7) {
+		mes "It says,";
+		mes "'^0000FF****'s laboratory member only^000000'";
+		close;
+	}
+	if (.@lhz_time == -1) {
+		mes "This is an entrance towards Wolfchev's laboratory. Something is howling over the entrance.";
+		next;
+		if (select("Go inside", "Think one more time") == 2) {
+			mes "You have stopped entering to Wolfchev's laboratory.";
+			close;
+		}
+		if (instance_enter("Wolfchev's Laboratory") != 0) {  // probably missing failure cases
+			mes "^FF0000Warning^000000";
+			mes ""+ strcharinfo(0) +". . .";
+			mes "^FF0000Unregistered personnel^000000";
+			next;
+			pushpc 0, 10;
+			percentheal -5,0;
+			specialeffect EF_AUTOCOUNTER;
+			specialeffect2 EF_BASH;
+			mes "You have been wounded by laboratory entrance system attack.";
+			close;
+		}
+		mapannounce "lhz_dun04","Laboratory entrance system ["+ strcharinfo(1) +"] member ["+ strcharinfo(0) +"] access granted..",bc_map,"0x0DF297";
+		setquest 5112;
+		//warp "1@lhz", 45, 148;
+		close;
+	} else if (.@lhz_time == 0) {
+		mes "Di Rit- Di- Di- Dit-";
+		next;
+		mes ""+ strcharinfo(0) +". . .";
+		mes "^FF0000Forbidden personnel^000000";
+		next;
+		mes "The system denied your entrance.";
+		close;
+	} else if (.@lhz_time >= 1) {
+		mes "Di Rit- Di- Di- Dit-";
+		next;
+		//if (.@lhz_time == 2)
+			//recall_completequest 5112;
+		erasequest 5112;
+		mes ""+ strcharinfo(0) +". . .";
+		mes "^FF0000Access denial has been deactivated.^000000";
+		close;
+	} else {
+		mes "^FF0000Error! Error!^000000";
+		mes "^FF0000Please try again.^000000";
+		close;
+	}
+}
+
+// The Lab No.1 : System 1_1
+//============================================================
+1@lhz,35,108,4	script	Lab1#1_1	CLEAR_NPC,{
+	end;
+
+OnInstanceInit:
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnType_02:
+	donpcevent instance_npcname("Manual Sheet#1_1")+"::OnEnable";
+	donpcevent instance_npcname("Valve#1_2")+"::OnEnable";
+	donpcevent instance_npcname("Valve#1_3")+"::OnEnable";
+	mapannounce instance_mapname("1@lhz"),"[Security System] the persons concerned, access with the emergency access method.",bc_map,"0xff9977";
+	end;
+
+OnTimer1000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] This is a warning notice! Warning notice! Intruder Detected.",bc_map,"0xff9977";
+	end;
+
+OnTimer2000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, The Lab No.1's security system will be activated.",bc_map,"0xff9977";
+	end;
+
+OnTimer7000:
+	donpcevent instance_npcname("MobCtrl1#mob01")+"::OnEnable";
+	end;
+}
+
+// The Lab No.1 Monster Control
+//============================================================
+1@lhz,37,108,4	script	MobCtrl1#mob01	CLEAR_NPC,{
+	end;
+
+OnEnable:
+	.@map$ = instance_mapname("1@lhz");
+	mapannounce .@map$,"[Security System] Security system Activated !! Experimental animals are released. The persons concerned have to evacuate.",bc_map,"0xff9977";
+	areamonster .@map$,35,159,50,169,"Starving Lab animal",2242,rand(10,15),instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	initnpctimer;
+	end;
+
+OnDisable:
+	killmonster instance_mapname("1@lhz"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	end;
+
+OnTimer180000:
+	stopnpctimer;
+	if (mobcount(instance_mapname("1@lhz"), instance_npcname(strnpcinfo(0))+"::OnMyMobDead") < 1) {
+		donpcevent instance_npcname("Lab1#1_1")+"::OnType_02";
+		mapannounce instance_mapname("1@lhz"),"[Security System] The Lab No.1's security system has been stopped.",bc_map,"0xff9977";
+	} else {
+		initnpctimer;
+	}
+	end;
+
+OnMyMobDead:
+	if (mobcount(instance_mapname("1@lhz"), instance_npcname(strnpcinfo(0))+"::OnMyMobDead") < 1) {
+		donpcevent instance_npcname("Lab1#1_1")+"::OnType_02";
+		mapannounce instance_mapname("1@lhz"),"[Security System] The Lab No.1's security system has been stopped.",bc_map,"0xff9977";
+		stopnpctimer;
+	}
+	end;
+}
+
+// Emergency Access Valve Manual
+//============================================================
+1@lhz,39,168,0	script	Manual Sheet#1_1	CLEAR_NPC,{
+	mes "There are valve manual sheets littered on the floor.";
+	next;
+	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+		mes "You the party leader, started to read the manual.";
+		next;
+		mes "[Emergency Access Valve Manual]";
+		switch(lght_duk02) {
+		case 0:
+			switch(rand(1,6)) {
+			case 1:
+				lght_duk02 = 1;
+				mes "Turn the left valve Clockwise twice, Counterclockwise once, Clockwise once";
+				break;
+			case 2:
+				lght_duk02 = 2;
+				mes "Turn the left valve Clockwise once, Counterclockwise twice, Clockwise once";
+				break;
+			case 3:
+				lght_duk02 = 3;
+				mes "Turn the left valve Clockwise once, Counterclockwise once, Clockwise twice";
+				break;
+			case 4:
+				lght_duk02 = 4;
+				mes "Turn the right valve Counterclockwise twice, Clockwise once, Counterclockwise once";
+				break;
+			case 5:
+				lght_duk02 = 5;
+				mes "Turn the right valve Counterclockwise once, Clockwise twice, Counterclockwise once";
+				break;
+			case 6:
+				lght_duk02 = 6;
+				mes "Turn the right valve Counterclockwise once, Clockwise once, Counterclockwise twice";
+				break;
+			default:
+				mes "This is a unknown Error. If you get the same problem after trying one more time, contact GM.";
+				break;
+			}
+			break;
+		case 1:
+			mes "Turn the left valve Clockwise twice, Counterclockwise once, Clockwise once";
+			break;
+		case 2:
+			mes "Turn the left valve Clockwise once, Counterclockwise twice, Clockwise once";
+			break;
+		case 3:
+			mes "Turn the left valve Clockwise once, Counterclockwise once, Clockwise twice";
+			break;
+		case 4:
+			mes "Turn the right valve Counterclockwise twice, Clockwise once, Counterclockwise once";
+			break;
+		case 5:
+			mes "Turn the right valve Counterclockwise once, Clockwise twice, Counterclockwise once";
+			break;
+		case 6:
+			mes "Turn the right valve Counterclockwise once, Clockwise once, Counterclockwise twice";
+			break;
+		default:
+			mes "This is an unknown error. If you get the same problem after trying one more time, contact a GM.";
+			break;
+		}
+	} else {
+		mes "Let your party leader handle the valve.";
+	}
+	close;
+
+OnInstanceInit:
+	disablenpc instance_npcname("Manual Sheet#1_1");
+	end;
+
+OnEnable:
+	specialeffect EF_LIGHTSPHERE;
+	enablenpc instance_npcname("Manual Sheet#1_1");
+	end; 
+}
+
+// Left Valve
+//============================================================
+1@lhz,41,172,0	script	Valve#1_2	CLEAR_NPC,{
+	.@open_portal = 0;
+	mes "This is the left valve for the emergency access.";
+	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+		next;
+		mes "To which direction do you wish to turn?";
+		next;
+		if (lght_duk02 < 1 || lght_duk02 > 3) {
+			for(.@i = 1; .@i <= 4; .@i++) {
+				select("Clockwise", "Counterclockwise");
+				mes "-A metal sound-";
+				if (.@i != 4)
+					mes "and, to which direction then?";
+				next;
+			}
+		} else {
+			// lght_duk02 == 1 : Clockwise, Clockwise, Counterclockwise, Clockwise
+			// lght_duk02 == 2 : Clockwise, Counterclockwise, Counterclockwise, Clockwise
+			// lght_duk02 == 3 : Clockwise, Counterclockwise, Clockwise, Clockwise
+			for(.@i = 1; .@i <= 4; .@i++) {
+				switch(select("Clockwise", "Counterclockwise")) {
+				case 1:
+					if ((.@i == 1 || .@i == 4) || (.@i == 2 && lght_duk02 == 1) || (.@i == 3 && lght_duk02 == 3)) {
+						.@open_portal += 1;
+					}
+				case 2:
+					if ((.@i == 2 && lght_duk02 != 1) || (.@i == 3 && lght_duk02 != 3)) {
+						.@open_portal += 1;
+					}
+				}
+				mes "-A metal sound-";
+				if (.@i != 4)
+					mes "and, to which direction then?";
+				next;
+			}
+		}
+		if (.@open_portal == 4) {
+			donpcevent instance_npcname("#potal_01")+"::OnEnable";
+			lght_duk02 = 0;
+			mes "-Door opened-";
+			next;
+			mes "The door which connects to the Lab No.2 is now open.";
+		} else {
+			lght_duk02 = 0;
+			mes "Nothing happened.";
+			next;
+			mes "You need to review the manual.";
+		}
+	}
+	close;
+
+OnInstanceInit:
+	disablenpc instance_npcname("Valve#1_2");
+	end;
+
+OnEnable:
+	specialeffect EF_LIGHTSPHERE;
+	enablenpc instance_npcname("Valve#1_2");
+	end;
+}
+
+// Right Valve
+//============================================================
+1@lhz,52,172,0	script	Valve#1_3	CLEAR_NPC,{
+	.@open_portal = 0;
+	mes "This is the left valve for the emergency access.";
+	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+		next;
+		mes "To which direction do you wish to turn?";
+		next;
+		if (lght_duk02 < 4 || lght_duk02 > 6) {
+			for(.@i = 1; .@i <= 4; .@i++) {
+				select("Clockwise", "Counterclockwise");
+				mes "-A metal sound-";
+				if (.@i != 4)
+					mes "and, to which direction then?";
+				next;
+			}
+		} else {
+			// lght_duk02 == 4 : Counterclockwise, Counterclockwise, Clockwise, Counterclockwise
+			// lght_duk02 == 5 : Counterclockwise, Clockwise, Clockwise, Counterclockwise
+			// lght_duk02 == 6 : Counterclockwise, Clockwise, Counterclockwise, Counterclockwise
+			for(.@i = 1; .@i <= 4; .@i++) {
+				switch(select("Clockwise", "Counterclockwise")) {
+				case 1:
+					if ((.@i == 2 && lght_duk02 != 4) || (.@i == 3 && lght_duk02 != 6))
+						.@open_portal += 1;
+					break;
+				case 2:
+					if ((.@i == 1 || .@i == 4) || (.@i == 2 && lght_duk02 == 4) || (.@i == 3 && lght_duk02 == 6))
+						.@open_portal += 1;
+					break;
+				}
+				mes "-A metal sound-";
+				if (.@i != 4)
+					mes "and, to which direction then?";
+				next;
+			}
+		}
+		if (.@open_portal == 4) {
+			donpcevent instance_npcname("#potal_01")+"::OnEnable";
+			lght_duk02 = 0;
+			mes "-Door opened-";
+			next;
+			mes "The door which connects to the Lab No.2 is now open.";
+		} else {
+			lght_duk02 = 0;
+			mes "Nothing happened.";
+			next;
+			mes "You need to review the manual.";
+		}
+	}
+	close;
+
+OnInstanceInit:
+	disablenpc instance_npcname("Valve#1_3");
+	end;
+
+OnEnable:
+	specialeffect EF_LIGHTSPHERE;
+	enablenpc instance_npcname("Valve#1_3");
+	end;
+}
+
+
+// The Lab No.1 >> The Lab No.2 Warp portal
+//============================================================
+1@lhz,45,173,0	script	#potal_01	WARPNPC,2,2,{
+	end;
+
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("#potal_01");
+	end;
+
+OnEnable:
+	mapannounce instance_mapname("1@lhz"),"[Management System] The door which connects to the Lab No.2 is now open.",bc_map,"0xff9977";
+	enablenpc instance_npcname("#potal_01");
+	end;
+
+OnTouch:
+	warp instance_mapname("1@lhz"), 151, 29;
+	end;
+}
+
+// The Lab No.2
+//============================================================
+1@lhz,151,29,0	script	#2_0	-1,1,1,{
+	end;
+
+OnEnable:
+	enablenpc instance_npcname("#2_0");
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("#2_0");
+	end;
+
+OnTouch:
+	donpcevent instance_npcname("Lab2#2_1")+"::OnEnable";
+	donpcevent instance_npcname("#2_0")+"::OnDisable";
+	end;
+}
+
+// The Lab No.2 2_1 System - Control of Monster Wave and Pipe right before exploding
+//============================================================
+1@lhz,35,106,4	script	Lab2#2_1	CLEAR_NPC,{
+	end;
+
+OnInstanceInit:
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] This is a warning notice! Warning notice! Intruder Detected in The Lab No.2!!",bc_map,"0xff9977";
+	end;
+
+OnTimer3000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, The Lab No.2 Security system will start working.",bc_map,"0xff9977";
+	end;
+
+OnTimer5000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure in the Lab No.2 is too high.",bc_map,"0xff99ff";
+	end;
+
+OnTimer8000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] First security system activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl2#mob02")+"::On01";
+	end;
+
+OnTimer10000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer190000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer303000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, Second Security system will start working.",bc_map,"0xff9977";
+	end;
+
+OnTimer308000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Second security system activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl2#mob02")+"::On02";
+	end;
+
+OnTimer370000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer550000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer603000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, Third Security system will start working.",bc_map,"0xff9977";
+	end;
+
+OnTimer608000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Third security system activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl2#mob02")+"::On03";
+	end;
+
+OnTimer730000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer903000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, Fourth Security system will start working.",bc_map,"0xff9977";
+	end;
+
+OnTimer908000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Fourth security system activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl2#mob02")+"::On04";
+	end;
+
+OnTimer910000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer1090000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	end;
+
+OnTimer1203000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, Fifth Security system will start working.",bc_map,"0xff9977";
+	end;
+
+OnTimer1208000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Fifth security system activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl2#mob02")+"::On05";
+	end;
+
+OnTimer1270000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Warning! The pipe pressure is too high. Open the valve.",bc_map,"0xff99ff";
+	donpcevent instance_npcname("Lab2#2_2")+"::OnPipePressure";
+	stopnpctimer;
+	end;
+}
+
+// The Lab No.2 2_2 System - Pipe Operation Control
+// When 3 pipes explode, system will shut down.
+//============================================================
+1@lhz,37,106,4	script	Lab2#2_2	CLEAR_NPC,{
+	end;
+
+OnInstanceInit:
+	'broken_pipes = 0;
+	stopnpctimer;
+	end;
+
+OnPipePressure:
+	switch(rand(1,6)) {
+	case 1:
+		donpcevent instance_npcname("Valve#2_1")+"::OnEnable";
+		donpcevent instance_npcname("MobCtrl2#mob02")+"::On2_01";
+	case 2:
+		donpcevent instance_npcname("Valve#2_2")+"::OnEnable";
+		donpcevent instance_npcname("MobCtrl2#mob02")+"::On2_02";
+	case 3:
+		donpcevent instance_npcname("Valve#2_3")+"::OnEnable";
+		donpcevent instance_npcname("MobCtrl2#mob02")+"::On2_03";
+	case 4:
+		donpcevent instance_npcname("Valve#2_4")+"::OnEnable";
+		donpcevent instance_npcname("MobCtrl2#mob02")+"::On2_04";
+	case 5:
+		donpcevent instance_npcname("Valve#2_5")+"::OnEnable";
+		donpcevent instance_npcname("MobCtrl2#mob02")+"::On2_05";
+	case 6:
+		donpcevent instance_npcname("Valve#2_6")+"::OnEnable";
+		donpcevent instance_npcname("MobCtrl2#mob02")+"::On2_06";
+	}
+	initnpctimer;
+	end;
+
+OnDisableValve1:
+	disablenpc instance_npcname("Valve#2_1");
+	stopnpctimer;
+	end;
+
+OnDisableValve2:
+	disablenpc instance_npcname("Valve#2_2");
+	stopnpctimer;
+	end;
+
+OnDisableValve3:
+	disablenpc instance_npcname("Valve#2_3");
+	stopnpctimer;
+	end;
+
+OnDisableValve4:
+	disablenpc instance_npcname("Valve#2_4");
+	stopnpctimer;
+	end;
+
+OnDisableValve5:
+	disablenpc instance_npcname("Valve#2_5");
+	stopnpctimer;
+	end;
+
+OnDisableValve6:
+	disablenpc instance_npcname("Valve#2_6");
+	stopnpctimer;
+	end;
+
+OnTimer63000:
+	for(.@i = 1; .@i < 7; .@i++) {
+		specialeffect EF_SUI_EXPLOSION, AREA, instance_npcname("Valve#2_"+.@i+"");
+		disablenpc instance_npcname("Valve#2_"+.@i+"");
+	}
+	'broken_pipes += 1;
+	if ('broken_pipes == 3) {
+		donpcevent instance_npcname("#2_3")+"::OnEnable";
+		stopnpctimer;
+	} else {
+		mapannounce instance_mapname("1@lhz"),"[Management System] Pipe explosion detected! When "+ (3 - 'broken_pipes) +" more break, the system will stop.",bc_map,"0xff99ff";
+	}
+	end;
+}
+
+// The Lab No.2 2_3 System
+//============================================================
+1@lhz,151,48,0	script	#2_3	-1,20,20,{
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname("#2_3");
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] System Freezes! System Freezes! Evacuate from the Lab in 10 seconds.",bc_map,"0xff99ff";
+	end;
+
+OnTimer11000:
+	mapannounce instance_mapname("1@lhz"),"[Management System] Evacuate!!",bc_map,"0xff99ff";
+	enablenpc instance_npcname("#2_3");
+	end;
+
+OnTouch:
+	warp "lhz_dun04", 147, 273;
+	end;
+}
+
+// The Lab No.2 Monster Control
+//============================================================
+1@lhz,39,106,4	script	MobCtrl2#mob02	CLEAR_NPC,{
+	end;
+
+On01:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster .@map$,139,37,164,58,"Starving Lab animal",2242,10,.@label$;
+	end;
+
+On02:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster .@map$,139,37,164,58,"Starving Lab animal",2242,20,.@label$;
+	end;
+
+On03:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster .@map$,139,37,164,58,"Starving Lab animal",2242,16,.@label$;
+	end;
+
+On04:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster .@map$,139,37,164,58,"Starving Lab animal",2242,19,.@label$;
+	end;
+
+On05:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster .@map$,139,37,164,58,"Starving Lab animal",2242,20,.@label$;
+	end;
+
+On2_01:
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster instance_mapname("1@lhz"),155,43,161,49,"Starving Lab animal",2243,5,.@label$;
+	end;
+
+On2_02:
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster instance_mapname("1@lhz"),137,40,143,46,"Starving Lab animal",2243,5,.@label$;
+	end;
+
+On2_03:
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster instance_mapname("1@lhz"),137,51,143,57,"Starving Lab animal",2243,5,.@label$;
+	end;
+
+On2_04:
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster instance_mapname("1@lhz"),143,56,149,62,"Starving Lab animal",2243,5,.@label$;
+	end;
+
+On2_05:
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster instance_mapname("1@lhz"),160,48,166,54,"Starving Lab animal",2243,5,.@label$;
+	end;
+
+On2_06:
+	.@label$ = instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	areamonster instance_mapname("1@lhz"),135,44,141,50,"Starving Lab animal",2243,5,.@label$;
+	end;
+
+OnDisable:
+	killmonster instance_mapname("1@lhz"),instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount(instance_mapname("1@lhz"),instance_npcname("MobCtrl2#mob02")+"::OnMyMobDead") < 1) {
+		donpcevent instance_npcname("#potal_02")+"::OnEnable";
+		donpcevent instance_npcname("Lab2#2_1")+"::OnDisable";
+		mapannounce instance_mapname("1@lhz"),"[Security System] The Security system of The Lab No.2 has been stopped.",bc_map,"0xff9977";
+	}
+	end;
+}
+
+// The Lab No.2 Valves
+//============================================================
+-	script	bio4FLab2Valve	-1,{
+	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+		progressbar "0xffff00", 20;
+		stopnpctimer;
+		donpcevent instance_npcname("Lab2#2_2")+"::OnDisableValve1";
+		disablenpc instance_npcname(strnpcinfo(0));
+		end;
+	} else {
+		mes "Let your party leader handle the valve.";
+		close;
+	}
+
+OnInstanceInit:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	initnpctimer;
+	end;
+
+OnTimer3000:
+	specialeffect EF_DRAGONSMOKE,AREA,instance_npcname(strnpcinfo(0));
+	stopnpctimer;
+	initnpctimer;
+	end;
+}
+1@lhz,158,46,0	duplicate(bio4FLab2Valve)	Valve#2_1	CLEAR_NPC
+1@lhz,138,43,0	duplicate(bio4FLab2Valve)	Valve#2_2	CLEAR_NPC
+1@lhz,139,54,0	duplicate(bio4FLab2Valve)	Valve#2_3	CLEAR_NPC
+1@lhz,145,60,0	duplicate(bio4FLab2Valve)	Valve#2_4	CLEAR_NPC
+1@lhz,165,51,0	duplicate(bio4FLab2Valve)	Valve#2_5	CLEAR_NPC
+1@lhz,137,47,0	duplicate(bio4FLab2Valve)	Valve#2_6	CLEAR_NPC
+
+// The Lab No.2 >> The Lab No.3 Warp portal(General)
+//============================================================
+1@lhz,151,64,0	script	#potal_02	WARPNPC,2,2,{
+	end;
+
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("#potal_02");
+	end;
+
+OnEnable:
+	mapannounce instance_mapname("1@lhz"),"[Management System] The door which connects to the Lab No.3 is now open.",bc_map,"0xff99ff";
+	enablenpc instance_npcname("#potal_02");
+	end;
+
+OnTouch:
+	warp instance_mapname("1@lhz"), 84, 28;
+	end;
+}
+
+// The Lab No.3
+//============================================================
+1@lhz,84,28,0	script	#3_0	-1,1,1,{
+	end;
+
+OnEnable:
+	enablenpc instance_npcname("#3_0");
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("#3_0");
+	end;
+
+OnTouch:
+	donpcevent instance_npcname("Lab3#3_1")+"::OnEnable";
+	donpcevent instance_npcname("#3_0")+"::OnDisable";
+	end;
+}
+
+// The Lab No.3 3_1 System - Monster wave control
+//============================================================
+1@lhz,35,104,4	script	Lab3#3_1	CLEAR_NPC,{
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] This is a warning notice! Warning notice!",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl3#mob03")+"::OnDisable";
+	end;
+
+OnTimer5000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Intruder Detected in The Lab No.3!!",bc_map,"0xff9977";
+	end;
+
+OnTimer7000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] In 5 seconds, The Security system of The Lab No.3 will start working.",bc_map,"0xff9977";
+	end;
+
+OnTimer12000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] First security system of The Lab No.3 activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl3#mob03")+"::On01";
+	end;
+
+OnTimer192000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Second security system of The Lab No.3 activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl3#mob03")+"::On02";
+	end;
+
+OnTimer372000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Third security system of The Lab No.3 activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl3#mob03")+"::On03";
+	end;
+
+OnTimer552000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Fourth security system of The Lab No.3activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl3#mob03")+"::On04";
+	end;
+
+OnTimer732000:
+	mapannounce instance_mapname("1@lhz"),"[Security System] Fifth security system of The Lab No.3 activated !! The persons concerned have to evacuate.",bc_map,"0xff9977";
+	donpcevent instance_npcname("MobCtrl3#mob03")+"::On05";
+	stopnpctimer;
+	end;
+}
+
+// The Lab No.3 Monster Control
+//============================================================
+1@lhz,37,104,4	script	MobCtrl3#mob03	CLEAR_NPC,{
+	end;
+
+On01:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead";
+	monster .@map$,80,60,"Starving Lab animal",2242,1,.@label$;
+	monster .@map$,81,58,"Starving Lab animal",2242,1,.@label$;
+	monster .@map$,82,56,"Starving Lab animal",2242,1,.@label$;
+	monster .@map$,84,60,"Starving Lab animal",2242,1,.@label$;
+	monster .@map$,85,58,"Starving Lab animal",2242,1,.@label$;
+	monster .@map$,82,60,"Starving Lab animal",2243,1,.@label$;
+	monster .@map$,83,58,"Starving Lab animal",2243,1,.@label$;
+	monster .@map$,85,56,"Starving Lab animal",2243,1,.@label$;		
+	monster .@map$,86,60,"Starving Lab animal",2243,1,.@label$;
+	monster .@map$,87,58,"Starving Lab animal",2243,1,.@label$;
+	end;
+
+On02:
+	.@map$ = instance_mapname("1@lhz");
+	.@amount1 = rand(1,5);
+	.@amount2 = rand(1,5);
+	.@label$ = instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead";
+	monster .@map$,80,60,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,82,60,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,84,60,"Starving Lab animal",2243,.@amount1,.@label$;
+	monster .@map$,86,60,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,81,58,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,83,58,"Starving Lab animal",2243,.@amount2,.@label$;
+	monster .@map$,85,58,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,87,58,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,82,56,"Starving Lab animal",2243,.@amount1,.@label$;
+	monster .@map$,85,56,"Starving Lab animal",2242,.@amount2,.@label$;
+	end;
+
+On03:
+	.@map$ = instance_mapname("1@lhz");
+	.@amount1 = rand(1,5);
+	.@amount2 = rand(1,5);
+	.@amount3 = rand(1,5);
+	.@label$ = instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead";
+	monster .@map$,80,60,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,82,60,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,84,60,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,86,60,"Starving Lab animal",2243,.@amount1,.@label$;
+	monster .@map$,81,58,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,83,58,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,85,58,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,87,58,"Starving Lab animal",2243,.@amount2,.@label$;
+	monster .@map$,82,56,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,85,56,"Starving Lab animal",2242,.@amount1,.@label$;
+	end;
+
+On04:
+	.@map$ = instance_mapname("1@lhz");
+	.@amount1 = rand(1,5);
+	.@amount2 = rand(1,5);
+	.@amount3 = rand(1,5);
+	.@amount4 = rand(1,5);
+	.@label$ = instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead";
+	monster .@map$,80,60,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,82,60,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,84,60,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,86,60,"Starving Lab animal",2242,.@amount4,.@label$;
+	monster .@map$,81,58,"Starving Lab animal",2243,.@amount1,.@label$;
+	monster .@map$,83,58,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,85,58,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,87,58,"Starving Lab animal",2242,.@amount4,.@label$;
+	monster .@map$,82,56,"Starving Lab animal",2243,.@amount1,.@label$;
+	monster .@map$,85,56,"Starving Lab animal",2242,.@amount2,.@label$;
+	end;
+
+On05:
+	.@map$ = instance_mapname("1@lhz");
+	.@amount1 = rand(1,5);
+	.@amount2 = rand(1,5);
+	.@amount3 = rand(1,5);
+	.@amount4 = rand(1,5);
+	.@amount5 = rand(1,5);
+	.@label$ = instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead";
+	monster .@map$,80,60,"Starving Lab animal",2243,.@amount1,.@label$;
+	monster .@map$,82,60,"Starving Lab animal",2242,.@amount2,.@label$;
+	monster .@map$,84,60,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,86,60,"Starving Lab animal",2243,.@amount4,.@label$;
+	monster .@map$,81,58,"Starving Lab animal",2242,.@amount5,.@label$;
+	monster .@map$,83,58,"Starving Lab animal",2242,.@amount1,.@label$;
+	monster .@map$,85,58,"Starving Lab animal",2243,.@amount2,.@label$;
+	monster .@map$,87,58,"Starving Lab animal",2242,.@amount3,.@label$;
+	monster .@map$,82,56,"Starving Lab animal",2242,.@amount4,.@label$;
+	monster .@map$,85,56,"Starving Lab animal",2243,.@amount5,.@label$;
+	end;
+
+OnDisable:
+	killmonster instance_mapname("1@lhz"),instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount(instance_mapname("1@lhz"),instance_npcname("MobCtrl3#mob03")+"::OnMyMobDead") < 1) {
+		donpcevent instance_npcname("#potal_03")+"::OnEnable";
+		donpcevent instance_npcname("Lab3#3_1")+"::OnDisable";
+		mapannounce instance_mapname("1@lhz"),"[Security System] The Security system of The Lab No.3 has been stopped.",bc_map,"0xff9977";
+	}
+	end;
+}
+
+// The Lab No.3 >> Boss's Room Warp portal
+//============================================================
+1@lhz,83,62,0	script	#potal_03	WARPNPC,2,2,{
+	end;
+
+OnInstanceInit:
+	disablenpc instance_npcname("#potal_03");
+	end;
+
+OnEnable:
+	mapannounce instance_mapname("1@lhz"),"[Management System] The door which connects to the Lab No.4 is now open.",bc_map,"0x7799ff";
+	enablenpc instance_npcname("#potal_03");
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("#potal_03");
+	end;
+
+OnTouch:
+	warp instance_mapname("1@lhz"), 137, 100;
+	end;
+}
+
+// The Lab No.4
+//============================================================
+1@lhz,137,100,0	script	#4_0	-1,1,1,{
+	end;
+
+OnEnable:
+	enablenpc instance_npcname("#4_0");
+	end;
+
+OnDisable:
+	disablenpc instance_npcname("#4_0");
+	end;
+
+OnTouch:
+	donpcevent instance_npcname("Lab4#4_1")+"::OnEnable";
+	donpcevent instance_npcname("#4_0")+"::OnDisable";
+	end;
+}
+
+// The Lab No.4 4_1 System - Summon of Boss Monster
+//============================================================
+1@lhz,35,102,4	script	Lab4#4_1	CLEAR_NPC,{
+	end;
+
+OnEnable:
+	initnpctimer;
+	end;
+
+OnDisable:
+	stopnpctimer;
+	end;
+
+OnTimer1000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: Who are you....",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Seyren Windsor#boss01");
+	end;
+
+OnTimer2000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Cecile Damon#boss02");
+	end;
+
+OnTimer3000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: Do not approach more...",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Gertie Wie#boss03");
+	end;
+
+OnTimer4000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Eremes Guile#boss04");
+	end;
+
+OnTimer5000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: This is a very dangerous place..",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Trentini#boss05");
+	end;
+
+OnTimer6000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Chen Liu#boss06");
+	end;
+
+OnTimer7000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: You won't go out alive....",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Alphochio Basil#boss07");
+	end;
+
+OnTimer8000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Flamel Emul#boss08");
+	end;
+
+OnTimer9000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: If you don't want to be a part of us....",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Randel Lawrence#boss09");
+	end;
+
+OnTimer10000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Celia Alde#boss10");
+	end;
+
+OnTimer11000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: Leave now....",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Kathryne Keyron#boss11");
+	end;
+
+OnTimer12000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Margaretha Sorin#boss12");
+	end;
+
+OnTimer13000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: Before this place is thoroughly filled with sorrow and pain....",bc_map,"0x7DCBF0";
+	specialeffect EF_SPHERE,AREA,instance_npcname("Howard Alt-Eisen#boss13");
+	end;
+
+OnTimer14000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Type_**Gren#boss14");
+	end;
+
+OnTimer15000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Type_**Roke#boss15");
+	end;
+
+OnTimer16000:
+	specialeffect EF_SPHERE,AREA,instance_npcname("Type_**Dree#boss16");
+	end;
+
+OnTimer17000:
+	mapannounce instance_mapname("1@lhz"),"Whisper: Ah....it....it's too late......",bc_map,"0x7DCBF0";
+	donpcevent instance_npcname("MobCtrl4#mob04")+"::OnEnable";
+	stopnpctimer;
+	end;
+}
+
+// Area No. 4 - Boss Summon Control
+//============================================================
+1@lhz,37,102,4	script	MobCtrl4#mob04	CLEAR_NPC,{
+	end;
+
+OnEnable:
+	switch(rand(1,13)) {
+	case 1:
+		donpcevent instance_npcname("Seyren Windsor#boss01")+"::OnEnable";
+		end;
+	case 2:
+		donpcevent instance_npcname("Cecile Damon#boss02")+"::OnEnable";
+		end;
+	case 3:
+		donpcevent instance_npcname("Gertie Wie#boss03")+"::OnEnable";
+		end;
+	case 4:
+		donpcevent instance_npcname("Eremes Guile#boss04")+"::OnEnable";
+		end;
+	case 5:
+		donpcevent instance_npcname("Trentini#boss05")+"::OnEnable";
+		end;
+	case 6:
+		donpcevent instance_npcname("Chen Liu#boss06")+"::OnEnable";
+		end;
+	case 7:
+		donpcevent instance_npcname("Alphochio Basil#boss07")+"::OnEnable";
+		end;
+	case 8:
+		donpcevent instance_npcname("Flamel Emul#boss08")+"::OnEnable";
+		end;
+	case 9:
+		donpcevent instance_npcname("Randel Lawrence#boss09")+"::OnEnable";
+		end;
+	case 10:
+		donpcevent instance_npcname("Celia Alde#boss10")+"::OnEnable";
+		end;
+	case 11:
+		donpcevent instance_npcname("Kathryne Keyron#boss11")+"::OnEnable";
+		end;
+	case 12:
+		donpcevent instance_npcname("Margaretha Sorin#boss12")+"::OnEnable";
+		end;
+	case 13:
+		donpcevent instance_npcname("Howard Alt-Eisen#boss13")+"::OnEnable";
+		end; 
+	}
+
+OnDisable:
+	//stopnpctimer;
+	end;
+}
+
+// Random Experiments in Tubes
+//============================================================
+1@lhz,156,148,3	script	Type_**Gren#boss14	4_M_03,{ end; }
+1@lhz,152,152,3	script	Type_**Roke#boss15	4_M_HUMAN_01,{ end; }
+1@lhz,148,156,3	script	Type_**Dree#boss16	4_M_DWARF,{ end; }
+
+// Bosses
+//============================================================
+-	script	bio4FBoss	-1,{
+	end;
+
+OnEnable:
+	.@map$ = instance_mapname("1@lhz");
+	.@label$ = instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	specialeffect EF_SUI_EXPLOSION;
+
+	if (strnpcinfo(0) == "Seyren Windsor#boss01")
+		monster .@map$,129,154,"Load Knight Seyren",1646,1,.@label$;
+	else if (strnpcinfo(0) == "Cecile Damon#boss02")
+		monster .@map$,125,150,"Sniper Cecile",1650,1,.@label$;
+	else if (strnpcinfo(0) == "Gertie Wie#boss03")
+		monster .@map$,121,146,"Stalker Gertie",2239,1,.@label$;
+	else if (strnpcinfo(0) == "Eremes Guile#boss04")
+		monster .@map$,117,142,"Assassin Cross Eremes",1647,1,.@label$;
+	else if (strnpcinfo(0) == "Trentini#boss05")
+		monster .@map$,117,125,"Gypsy Trentini",2241,1,.@label$;
+	else if (strnpcinfo(0) == "Chen Liu#boss06")
+		monster .@map$,121,121,"Champion Chen",2238,1,.@label$;
+	else if (strnpcinfo(0) == "Alphochio Basil#boss07")
+		monster .@map$,125,117,"Crown Alphochio",2240,1,.@label$;
+	else if (strnpcinfo(0) == "Flamel Emul#boss08")
+		monster .@map$,129,113,"Creator Flamel",2236,1,.@label$;
+	else if (strnpcinfo(0) == "Randel Lawrence#boss09")
+		monster .@map$,146,113,"Paladin Randel",2235,1,.@label$;
+	else if (strnpcinfo(0) == "Celia Alde#boss10")
+		monster .@map$,150,117,"Professor Celia",2237,1,.@label$;
+	else if (strnpcinfo(0) == "Kathryne Keyron#boss11")
+		monster .@map$,154,121,"High Wizard Kathryne",1651,1,.@label$;
+	else if (strnpcinfo(0) == "Margaretha Sorin#boss12")
+		monster .@map$,158,125,"High Priest Margaretha",1649,1,.@label$;
+	else if (strnpcinfo(0) == "Howard Alt-Eisen#boss13")
+		monster .@map$,158,142,"White Smith Howard",1648,1,.@label$;
+
+	end;
+
+OnDisable:
+	killmonster instance_mapname("1@lhz"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+
+OnMyMobDead:
+	if (mobcount(instance_mapname("1@lhz"), instance_npcname(strnpcinfo(0))+"::OnMyMobDead") < 1) {
+		.@map$ = instance_mapname("1@lhz");
+
+		if (strnpcinfo(0) == "Seyren Windsor#boss01")
+			mapannounce .@map$,"Awww... Where are all my fellows....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Cecile Damon#boss02")
+			mapannounce .@map$,"Any..one, please help.. please.....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Gertie Wie#boss03")
+			mapannounce .@map$,".. did I act too.. rashly...?",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Eremes Guile#boss04")
+			mapannounce .@map$,"Ah..... I am absolutely defeated....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Trentini#boss05")
+			mapannounce .@map$,"ah.. If I.. ever can ... dance and.... sing...happily....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Chen Liu#boss06")
+			mapannounce .@map$,"I.... am so .. sorry....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Alphochio Basil#boss07")
+			mapannounce .@map$,"...the new song......was ....for.....her....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Flamel Emul#boss08")
+			mapannounce .@map$,"Ha...I wanted to show.... the new potion....",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Randel Lawrence#boss09")
+			mapannounce .@map$,"Wooooo.. everyone got defeated.....??",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Celia Alde#boss10")
+			mapannounce .@map$,"No..... this experiment is.....dang...",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Kathryne Keyron#boss11")
+			mapannounce .@map$,"awww.. is everyone Ok....?",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Margaretha Sorin#boss12")
+			mapannounce .@map$,"My good boy.. Don't cry... ah.... our Great Odin.. please save us...",bc_map,"0xFD3B02";
+		else if (strnpcinfo(0) == "Howard Alt-Eisen#boss13")
+			mapannounce .@map$,"oh...no.... can't breath.... and my sister...?? sister!!",bc_map,"0xFD3B02";
+
+		donpcevent instance_npcname("Wolfchev#last")+"::OnEnable";
+		donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
+	}
+	end;
+}
+1@lhz,127,156,5	duplicate(bio4FBoss)	Seyren Windsor#boss01	1646
+1@lhz,123,152,5	duplicate(bio4FBoss)	Cecile Damon#boss02	1650
+1@lhz,119,148,5	duplicate(bio4FBoss)	Gertie Wie#boss03	2239
+1@lhz,115,144,5	duplicate(bio4FBoss)	Eremes Guile#boss04	1647
+1@lhz,115,123,7	duplicate(bio4FBoss)	Trentini#boss05	2241
+1@lhz,119,119,7	duplicate(bio4FBoss)	Chen Liu#boss06	2238
+1@lhz,123,115,7	duplicate(bio4FBoss)	Alphochio Basil#boss07	2240
+1@lhz,127,111,7	duplicate(bio4FBoss)	Flamel Emul#boss08	2236
+1@lhz,148,111,1	duplicate(bio4FBoss)	Randel Lawrence#boss09	2235
+1@lhz,152,115,1	duplicate(bio4FBoss)	Celia Alde#boss10	2237
+1@lhz,156,119,1	duplicate(bio4FBoss)	Kathryne Keyron#boss11	1651
+1@lhz,160,123,1	duplicate(bio4FBoss)	Margaretha Sorin#boss12	1649
+1@lhz,160,144,3	duplicate(bio4FBoss)	Howard Alt-Eisen#boss13	1648
+
+// Wolfchev - Final encounter
+//============================================================
+1@lhz,137,156,7	script	Wolfchev#last	4_LGTSCIENCE,{
+	if ((MaxWeight - Weight) < 1000 || !checkweight(1201, 1)) {
+		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
+		close;
+	}
+	.@all_quests_complete = true;
+	for(.@i = 5113; .@i <= 5125; .@i++) {
+		if (checkquest(.@i, HUNTING) != 2)
+			.@all_quests_complete = false;
+	}
+	if (.@all_quests_complete) {
+		// Quests Complete. Get Rewards.
+		if (lght_duk01 == 8) {
+			// First time beating the instance.
+			mes "[Wolfchev]";
+			mes "You finally defeated my Boss creature.";
+			next;
+			mes "[Wolfchev]";
+			mes "Finally. is this the result?? For whom did I experiment? Did they cheat me?";
+			next;
+			mes "[Wolfchev]";
+			mes "The button was supposed to be pressed for an emergency case...but..";
+			next;
+			mes "[Wolfchev]";
+			mes "Hey... You and I met by a bad connection....";
+			next;
+			mes "[Wolfchev]";
+			mes "But...., you helped me... How could you do that?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "When I met you for the first time, you seemed mad but sad, even if you could commit those cruel and horrific experiments.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "But actually, you did that because you was lonely,.. you just concentrated on that for this reason, huh?";
+			next;
+			mes "[Wolfchev]";
+			mes "HAHAHAHA. Loneliness... you say?";
+			next;
+			mes "[Wolfchev]";
+			mes "It might be seen like that to you. But, it isn't. Loneliness is just a good and easy excuse of the losers.";
+			next;
+			mes "[Wolfchev]";
+			mes "I'm so happy doing experiments pursuing for a perfection, I never feel lonely.";
+			next;
+			mes "[Wolfchev]";
+			mes "Anyway, since I realized that Rekenber betrayed me, I cannot just let them do what they want.";
+			next;
+			mes "[Wolfchev]";
+			mes "For now, I will leave them alone, but I will make them cry and regret for trying to remove Wolfchev.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "... .... ... ....";
+			next;
+			lght_duk01 = 9;
+			callsub L_Reward;
+			mes "[Wolfchev]";
+			mes "aaaaaah, "+ strcharinfo(0) +" Thank you so much to remove my boys who had gone mad. Not a big gift but I wish you don't deny, I don't need this anymore.";
+			next;
+			mes "[Wolfchev]";
+			mes "And, if you can...hope you to come back often, especially with your friends. I want the place to be with human heart again so the sadness in here gets disappear.";
+			next;
+			mes "I looked at Wolfchev again before leaving his lab. and I could feel that he was not obsessed anymore..";
+			close2;
+			warp "lhz_dun04", 147, 273;
+			end;
+		} else {
+			mes "[Wolfchev]";
+			mes "You did defeat all of the Boss creatures. Thank you again.";
+			next;
+			callsub L_Reward;
+			mes "[Wolfchev]";
+			mes "I say again, "+ strcharinfo(0) +" Thank you so much to remove my boys who had gone mad. Not a big gift but I wish you don't deny, I don't need this anymore.";
+			next;
+			mes "[Wolfchev]";
+			mes "Khahaha, See you again. Do you want to get out of here now?";
+			next;
+			if (select("Not yet", "Yes") == 1) {
+				mes "[Wolfchev]";
+				mes "Then tell me when you want to.";
+				close;
+			}
+			mes "[Wolfchev]";
+			mes "Then I will send you out.";
+			close2;
+			warp "lhz_dun04", 147, 273;
+			end;
+		}
+	} else {
+		if (!.@all_quests_complete) {
+			mes "[Wolfchev]";
+			mes "I was looking at the system.... don't know who made this..... but it's so complicated to get..no idea...";
+			next;
+		} else {
+			mes "[Wolfchev]";
+			mes "kakakaah.. Thank you. You handled those Boss creatures well...";
+			next;
+		}
+		if (lght_duk01 == 7) {
+			lght_duk01 = 8;
+			mes "[Wolfchev]";
+			mes "While you were struggling...";
+			next;
+			mes "[Wolfchev]";
+			mes "I figured something out... and there's a system error which doesn't let us come and go freely, so you could help me in 72 hours... Go somewhere to rest before you come back.";
+			next;
+			mes "[Wolfchev]";
+			mes "Ah... and I can send you out of my laboratory. Do you want?";
+			next;
+		} else {
+			mes "[Wolfchev]";
+			mes "Do you want to get out of here now?";
+			next;
+		}
+		if (select("Not yet", "Yes") == 1) {
+			mes "[Wolfchev]";
+			mes "Then tell me when you want to.";
+			close;
+		}
+		mes "[Wolfchev]";
+		mes "Then I will send you out.";
+		close2;
+		warp "lhz_dun04", 147, 273;
+		end;
+	}
+
+L_Reward:
+	for(.@i = 5113; .@i <= 5125; .@i++) {
+		erasequest .@i;
+	}
+	.@r = rand(1, 1000);
+	if      (.@r < 84)  getitem 2582,  1; //Salvage_Cape
+	else if (.@r < 167) getitem 18570, 1; //Ancient_Gold_Deco
+	else if (.@r < 250) getitem 1490,  1; //Giant_Lance
+	else if (.@r < 333) getitem 16017, 1; //Bloody_Cross
+	else if (.@r < 416) getitem 1291,  1; //Guillotine_Katar
+	else if (.@r < 499) getitem 1584,  1; //Chilly_Spell_Book
+	else if (.@r < 582) getitem 6471, 10; //Goast_Chill
+	else if (.@r < 665) getitem 6470, 10; //Blood_Thirst
+	else if (.@r < 748) getitem 6469, 10; //Will_Of_Warrior
+	else if (.@r < 831) getitem 6471, 20; //Goast_Chill
+	else if (.@r < 914) getitem 6470, 20; //Blood_Thirst
+	else                getitem 6469, 20; //Will_Of_Warrior
+	return;
+
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname("Wolfchev#last");
+	end;
+
+OnEnable:
+	enablenpc instance_npcname("Wolfchev#last");
+	end;
+}

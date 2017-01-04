@@ -1,0 +1,5 @@
+// Mercenary Skill Database
+//
+// Structure of Database:
+// MercenryID,SkillID,SkillLevel
+

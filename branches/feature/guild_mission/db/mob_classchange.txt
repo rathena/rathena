@@ -1,0 +1,31 @@
+// Class Change Summonable Monsters Database
+// List of monsters generated through Abracadabra's SA_CLASSCHANGE ability.
+//
+// Structure of Database:
+// MobRandomGroupID,MobID,DummyName,Rate
+
+MOBG_ClassChange,0,Baphomet,1039
+MOBG_ClassChange,1038,Osiris,1000000
+MOBG_ClassChange,1039,Baphomet,1000000
+MOBG_ClassChange,1046,Doppelganger,1000000
+MOBG_ClassChange,1059,Mistress,1000000
+MOBG_ClassChange,1086,Golden Thief Bug,1000000
+MOBG_ClassChange,1087,Orc Hero,1000000
+MOBG_ClassChange,1112,Drake,1000000
+MOBG_ClassChange,1115,Eddga,1000000
+MOBG_ClassChange,1147,Maya,1000000
+MOBG_ClassChange,1150,Moonlight Flower,1000000
+MOBG_ClassChange,1157,Pharaoh,1000000
+MOBG_ClassChange,1159,Phreeoni,1000000
+MOBG_ClassChange,1190,Orc Lord,1000000
+MOBG_ClassChange,1251,Stormy Knight,1000000
+MOBG_ClassChange,1252,Garm,1000000
+MOBG_ClassChange,1272,Dark Lord,1000000
+MOBG_ClassChange,1312,Turtle General,1000000
+MOBG_ClassChange,1373,Lord of the Dead,1000000
+MOBG_ClassChange,1388,Arc Angeling,1000000
+MOBG_ClassChange,1389,Dracula,1000000
+MOBG_ClassChange,1418,Evil Snake Lord,1000000
+MOBG_ClassChange,1492,Samurai Specter,1000000
+MOBG_ClassChange,1511,Amon Ra,1000000
+MOBG_ClassChange,1583,Tao Gunka,1000000

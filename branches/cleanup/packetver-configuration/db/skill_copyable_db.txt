@@ -1,0 +1,281 @@
+// Copyable Skills Database
+// List of skills able to be copied by Intimidate/Plagiarism and Reproduce.
+//
+// Sources:
+// http://irowiki.org/wiki/Intimidate
+//    -> "Intimidate will copy any 2nd class skill"
+// http://irowiki.org/wiki/Reproduce/List_of_reproducible_skills
+//    -> "Players can reproduce 1-x, 2-x, and 3-x skills and Expanded Class,
+//        but cannot reproduce transcendent skills"
+//
+// Structure of Database:
+// SkillName,Option{,JobAllowed{,RequirementRemoved}}
+//
+// Option (bitmask) determines how a skill can be copied.
+//	1 = Plagiarism
+//	2 = Reproduce
+//
+// JobAllowed (bitmask) restricts copying the skill to certain classes.
+// By default, all jobs can copy the skill (0).
+//	 1 = Rogue
+//	 2 = Stalker
+//	 4 = Shadow Chaser
+//	 8 = Trans. Shadow Chaser
+//	16 = Baby Rouge
+//	32 = Baby Shadow Chaser
+//	
+// RequirementRemoved (bitmask) removes requirements when casting a copied skill.
+// See 'skill_require_db.txt' for specific skill requirements.
+//	   0 = uses original requirement(s)
+//	   1 = hp
+//	   2 = maxhptrigger
+//	   4 = sp
+//	   8 = hprate
+//	  16 = sprate
+//	  32 = zeny
+//	  64 = weapon type
+//	 128 = ammo (with the amount)
+//	 256 = state
+//	 512 = statuses
+//	1024 = spirit sphere
+//	2048 = items (with the amount)
+//	4096 = equipments
+//
+// Examples:
+// AS_SONICBLOW,2,63,64
+//	Sonic Blow can be copied by all jobs with only Plagiarism.
+//	To use the copied skill, a Katar is not needed (a Sonic Blow weapon type requirement).
+//
+// CR_ACIDDEMONSTRATION,3,10
+//	Acid Demonstration can only be copied by Stalker/Trans. Shadow Chaser with Plagiarism or Reproduce.
+//	This mode simulates the previous battle config, which allowed only Trans. classes to copy Trans. skills.
+
+// Swordsman
+SM_BASH,3   //Bash
+SM_MAGNUM,3 //Magnum Break
+
+// Mage
+MG_NAPALMBEAT,3 // Napalm Beat
+MG_SOULSTRIKE,3 // Soul Strike
+MG_COLDBOLT,3   // Cold Bolt
+MG_FROSTDIVER,3 // Frost Diver
+MG_FIREBALL,3   // Fire Ball
+MG_FIREWALL,3   // Fire Wall
+MG_FIREBOLT,3   // Fire Bolt
+MG_LIGHTNINGBOLT,3 // Lightning Bolt
+MG_THUNDERSTORM,3  // Thunderstorm
+
+// Acolyte
+AL_RUWACH,3 // Ruwach
+AL_HEAL,3   // Heal
+
+// Merchant
+MC_MAMMONITE,3 // Mammonite
+
+// Archer
+AC_DOUBLE,3 // Double Strafe
+AC_SHOWER,3 // Arrow Shower
+
+// Thief
+TF_POISON,3 // Envenom
+
+// Resurrection
+ALL_RESURRECTION,3 // Resurrection
+
+// Knight
+KN_BOWLINGBASH,3 // Bowling Bash
+
+// Priest
+PR_ASPERSIO,3   // Asperio
+PR_BENEDICTIO,3 // B.S Sacramenti
+PR_SANCTUARY,3  // Sanctuary
+PR_TURNUNDEAD,3 // Turn Undead
+PR_MAGNUS,3     // Magnus Exorcismus
+
+// Wizard
+WZ_FIREPILLAR,3  // Fire Pillar
+WZ_SIGHTRASHER,3 // Sightrasher
+WZ_METEOR,3      // Meteor Storm
+WZ_JUPITEL,3     // Jupitel Thunder
+WZ_VERMILION,3   // Lord of Vermillion
+WZ_WATERBALL,3   // Water Ball
+WZ_FROSTNOVA,3   // Frost Nova
+WZ_STORMGUST,3   // Storm Gust
+WZ_EARTHSPIKE,3  // Earth Spike
+WZ_HEAVENDRIVE,3 // Heaven's Drive
+
+// Hunter
+HT_LANDMINE,3     // Land Mine
+HT_FREEZINGTRAP,3 // Freezing Trap
+HT_BLASTMINE,3    // Blast Mine
+HT_CLAYMORETRAP,3 // Claymore Trap
+
+// Assassin
+AS_SPLASHER,3 // Venom Splasher
+
+// 1st Job Quest Skills
+AC_CHARGEARROW,3 // Arrow Repel
+TF_THROWSTONE,3  // Stone Fling
+AL_HOLYLIGHT,3   // Holy Light
+
+// Rogue
+RG_BACKSTAP,3 // Backstab
+
+// Alchemist
+AM_DEMONSTRATION,3 // Bomb
+AM_ACIDTERROR,3    // Acid Terror
+
+// Crusader
+CR_SHIELDCHARGE,3    // Smite
+CR_SHIELDBOOMERANG,3 // Shield Boomerang
+CR_HOLYCROSS,3       // Holy Cross
+CR_GRANDCROSS,3      // Grand Cross
+
+// Monk
+MO_TRIPLEATTACK,3    // Raging Trifecta Blow
+MO_INVESTIGATE,3     // Occult Impaction
+MO_FINGEROFFENSIVE,3 // Throw Spirit Sphere
+MO_EXTREMITYFIST,3   // Asura Strike
+MO_CHAINCOMBO,3      // Raging Quadruple Blow
+
+// Item Skill
+ITM_TOMAHAWK,3 // Throw Tomahawk
+
+// TaeKwon Kid
+TK_JUMPKICK,3 // Flying Kick
+
+// Ninja
+NJ_ZENYNAGE,3     // Throw Zeny
+NJ_TATAMIGAESHI,3 // Improvised Defense
+NJ_KASUMIKIRI,3   // Vanishing Slash
+NJ_SHADOWJUMP,3   // Shadow Leap
+NJ_KIRIKAGE,3     // Shadow Slash
+NJ_UTSUSEMI,3     // Cicada Skin Sheeding
+NJ_KOUENKA,3      // Crimson Fire Petal
+NJ_KAENSIN,3      // Crimson Fire Formation
+NJ_BAKUENRYU,3    // Raging Fire Dragon
+NJ_HYOUSENSOU,3   // Spear of Ice
+NJ_HYOUSYOURAKU,3 // Ice Meteor
+NJ_HUUJIN,3       // Wind Blade
+NJ_RAIGEKISAI,3   // Lightning Strike of Destruction
+NJ_KAMAITACHI,3   // Kamaitachi
+
+// 2nd Job Quest Skills
+KN_CHARGEATK,3     // Charge Attack
+AS_VENOMKNIFE,3    // Venom Knife
+WZ_SIGHTBLASTER,3  // Sight Blaster
+HT_PHANTASMIC,3    // Phantasmic Arrow
+MO_KITRANSLATION,3 // Excruciating Palm
+
+// Rune Knight
+RK_SONICWAVE,2     // Sonic Wave
+RK_WINDCUTTER,2    // Wind Cutter
+RK_IGNITIONBREAK,2 // Ignition Break
+
+// Guillotine Cross
+GC_CROSSIMPACT,2   // Cross Impact
+GC_DARKILLUSION,2  // Dark Illusion
+GC_PHANTOMMENACE,2 // Phantom Menace
+GC_DARKCROW,2      // Dark Claw
+
+// Arch Bishop
+AB_JUDEX,2        // Judex
+AB_ADORAMUS,2     // Adoramus
+AB_HIGHNESSHEAL,2 // Highness Heal
+AB_DUPLELIGHT,2   // Duple Light
+AB_DUPLELIGHT_MELEE,2	// Dummy skill for Duple Light
+AB_DUPLELIGHT_MAGIC,2	// Dummy skill for Duple Light
+
+// Warlock
+WL_SOULEXPANSION,2  // Soul Expansion
+WL_FROSTMISTY,2     // Frosty Misty
+WL_JACKFROST,2      // Jack Frost
+WL_DRAINLIFE,2      // Drain Life
+WL_CRIMSONROCK,2    // Crimson Rock
+WL_HELLINFERNO,2    // Hell Inferno
+WL_COMET,2          // Comet
+WL_CHAINLIGHTNING,2 // Chain Lightning
+WL_EARTHSTRAIN,2    // Earth Strain
+WL_TETRAVORTEX,2    // Tetra Vortex
+WL_SUMMONFB,2       // Summon Fire Ball
+WL_SUMMONBL,2       // Summon Lightning Ball
+WL_SUMMONWB,2       // Summon Water Ball
+WL_SUMMONSTONE,2    // Summon Stone
+WL_CHAINLIGHTNING_ATK,2	// Dummy skill for Chain Lightning
+WL_TETRAVORTEX_FIRE,2   // Dummy skill for Tetra Vortex
+WL_TETRAVORTEX_WATER,2  // Dummy skill for Tetra Vortex
+WL_TETRAVORTEX_WIND,2   // Dummy skill for Tetra Vortex
+WL_TETRAVORTEX_GROUND,2 // Dummy skill for Tetra Vortex
+WL_SUMMON_ATK_FIRE,2    // Dummy skill for Summon Fire Ball
+WL_SUMMON_ATK_WIND,2    // Dummy skill for Summon Lightning Ball
+WL_SUMMON_ATK_WATER,2   // Dummy skill for Summon Water Ball
+WL_SUMMON_ATK_GROUND,2  // Dummy skill for Summon Stone
+
+// Ranger
+RA_ARROWSTORM,2   // Arrow Storm
+RA_AIMEDBOLT,2    // Aimed Bolt
+RA_CLUSTERBOMB,2  // Cluster Bomb
+RA_FIRINGTRAP,2   // Firing Trap
+RA_ICEBOUNDTRAP,2 // Icebound Trap
+
+// Mechanic
+NC_MAGMA_ERUPTION,2 // Magma Eruption
+
+// Shadow Chaser
+SC_FATALMENACE,2  // Fatal Menace
+SC_TRIANGLESHOT,2 // Triangle Shot
+SC_FEINTBOMB,2    // Feint Bomb
+
+// Royal Guard
+LG_SHIELDPRESS,2 // Shield Press
+LG_SHIELDSPELL,2 // Shield Spell
+LG_EXEEDBREAK,2  // Exceed Break
+LG_MOONSLASHER,2 // Moon Slasher
+LG_EARTHDRIVE,2  // Earth Drive
+LG_OVERBRAND_BRANDISH,2	// Dummy skill for Over Brand
+LG_OVERBRAND_PLUSATK,2	// Dummy skill for Over Brand
+
+// Sura
+SR_DRAGONCOMBO,2    // Dragon Combo
+SR_SKYNETBLOW,2     // Sky Net Blow
+SR_EARTHSHAKER,2    // Earth Shaker
+SR_TIGERCANNON,2    // Tiger Cannon
+SR_RAMPAGEBLASTER,2 // Rampage Blaster
+SR_KNUCKLEARROW,2   // Knuckle Arrow
+SR_WINDMILL,2       // Windmill
+SR_GATEOFHELL,2     // Gate of Hell
+SR_GENTLETOUCH_QUIET,2	// Gentle Touch - Quiet
+SR_HOWLINGOFLION,2      // Howling of Lion
+SR_RIDEINLIGHTNING,2    // Riding Lightning
+
+// Minstrel/Wanderer
+WM_METALICSOUND,2     // Metallic Sound
+WM_REVERBERATION,2    // Reverberation
+WM_SEVERE_RAINSTORM,2 // Severe Rainstorm
+WM_SEVERE_RAINSTORM_MELEE,2	// Dummy skill for Severe Rainstorm
+WM_REVERBERATION_MELEE,2	// Dummy skill for Reverberation
+WM_REVERBERATION_MAGIC,2	// Dummy skill for Reverberation
+
+// Sorcerer
+SO_FIREWALK,2      // Fire Walk
+SO_ELECTRICWALK,2  // Electric Walk
+SO_EARTHGRAVE,2    // Earth Grave
+SO_DIAMONDDUST,2   // Diamond Dust
+SO_POISON_BUSTER,2 // Poison Buster
+SO_PSYCHIC_WAVE,2  // Psychic Wave
+SO_CLOUD_KILL,2    // Cloud Kill
+SO_VARETYR_SPEAR,2 // Varetyr Spear
+
+// Genetic
+GN_THORNS_TRAP,2     // Thorn Trap
+GN_BLOOD_SUCKER,2    // Blood Sucker
+GN_SPORE_EXPLOSION,2 // Spore Explosion
+GN_WALLOFTHORN,2     // Wall of Thorns
+GN_CRAZYWEED,2       // Crazy Weed
+GN_HELLS_PLANT,2     // Hell's Plant
+GN_CRAZYWEED_ATK,2   // Dummy skill for Crazy Weed
+GN_HELLS_PLANT_ATK,2 // Dummy skil for Hell's Plant
+GN_ILLUSIONDOPING,2  // Illusion Doping
+
+// Kagerou/Oboro
+KO_MUCHANAGE,3   // Rapid Throw

@@ -1,0 +1,96 @@
+//===== rAthena Script =======================================
+//= Mapflag: Ignore guilds.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Ignores guild alliances on GvG-enabled maps.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script.
+//============================================================
+
+// PvP Arenas =================
+pvp_y_1-1	mapflag	pvp_noguild
+pvp_y_1-2	mapflag	pvp_noguild
+pvp_y_1-3	mapflag	pvp_noguild
+pvp_y_1-4	mapflag	pvp_noguild
+pvp_y_1-5	mapflag	pvp_noguild
+pvp_y_2-1	mapflag	pvp_noguild
+pvp_y_2-2	mapflag	pvp_noguild
+pvp_y_2-3	mapflag	pvp_noguild
+pvp_y_2-4	mapflag	pvp_noguild
+pvp_y_2-5	mapflag	pvp_noguild
+pvp_y_3-1	mapflag	pvp_noguild
+pvp_y_3-2	mapflag	pvp_noguild
+pvp_y_3-3	mapflag	pvp_noguild
+pvp_y_3-4	mapflag	pvp_noguild
+pvp_y_3-5	mapflag	pvp_noguild
+pvp_y_4-1	mapflag	pvp_noguild
+pvp_y_4-2	mapflag	pvp_noguild
+pvp_y_4-3	mapflag	pvp_noguild
+pvp_y_4-4	mapflag	pvp_noguild
+pvp_y_4-5	mapflag	pvp_noguild
+pvp_y_5-1	mapflag	pvp_noguild
+pvp_y_5-2	mapflag	pvp_noguild
+pvp_y_5-3	mapflag	pvp_noguild
+pvp_y_5-4	mapflag	pvp_noguild
+pvp_y_5-5	mapflag	pvp_noguild
+pvp_y_6-1	mapflag	pvp_noguild
+pvp_y_6-2	mapflag	pvp_noguild
+pvp_y_6-3	mapflag	pvp_noguild
+pvp_y_6-4	mapflag	pvp_noguild
+pvp_y_6-5	mapflag	pvp_noguild
+pvp_y_7-1	mapflag	pvp_noguild
+pvp_y_7-2	mapflag	pvp_noguild
+pvp_y_7-3	mapflag	pvp_noguild
+pvp_y_7-4	mapflag	pvp_noguild
+pvp_y_7-5	mapflag	pvp_noguild
+pvp_y_8-1	mapflag	pvp_noguild
+pvp_y_8-2	mapflag	pvp_noguild
+pvp_y_8-3	mapflag	pvp_noguild
+pvp_y_8-4	mapflag	pvp_noguild
+pvp_y_8-5	mapflag	pvp_noguild
+pvp_n_1-1	mapflag	pvp_noguild
+pvp_n_1-2	mapflag	pvp_noguild
+pvp_n_1-3	mapflag	pvp_noguild
+pvp_n_1-4	mapflag	pvp_noguild
+pvp_n_1-5	mapflag	pvp_noguild
+pvp_n_2-1	mapflag	pvp_noguild
+pvp_n_2-2	mapflag	pvp_noguild
+pvp_n_2-3	mapflag	pvp_noguild
+pvp_n_2-4	mapflag	pvp_noguild
+pvp_n_2-5	mapflag	pvp_noguild
+pvp_n_3-1	mapflag	pvp_noguild
+pvp_n_3-2	mapflag	pvp_noguild
+pvp_n_3-3	mapflag	pvp_noguild
+pvp_n_3-4	mapflag	pvp_noguild
+pvp_n_3-5	mapflag	pvp_noguild
+pvp_n_4-1	mapflag	pvp_noguild
+pvp_n_4-2	mapflag	pvp_noguild
+pvp_n_4-3	mapflag	pvp_noguild
+pvp_n_4-4	mapflag	pvp_noguild
+pvp_n_4-5	mapflag	pvp_noguild
+pvp_n_5-1	mapflag	pvp_noguild
+pvp_n_5-2	mapflag	pvp_noguild
+pvp_n_5-3	mapflag	pvp_noguild
+pvp_n_5-4	mapflag	pvp_noguild
+pvp_n_5-5	mapflag	pvp_noguild
+pvp_n_6-1	mapflag	pvp_noguild
+pvp_n_6-2	mapflag	pvp_noguild
+pvp_n_6-3	mapflag	pvp_noguild
+pvp_n_6-4	mapflag	pvp_noguild
+pvp_n_6-5	mapflag	pvp_noguild
+pvp_n_7-1	mapflag	pvp_noguild
+pvp_n_7-2	mapflag	pvp_noguild
+pvp_n_7-3	mapflag	pvp_noguild
+pvp_n_7-4	mapflag	pvp_noguild
+pvp_n_7-5	mapflag	pvp_noguild
+pvp_n_8-1	mapflag	pvp_noguild
+pvp_n_8-2	mapflag	pvp_noguild
+pvp_n_8-3	mapflag	pvp_noguild
+pvp_n_8-4	mapflag	pvp_noguild
+pvp_n_8-5	mapflag	pvp_noguild
+pvp_2vs2	mapflag	pvp_noguild

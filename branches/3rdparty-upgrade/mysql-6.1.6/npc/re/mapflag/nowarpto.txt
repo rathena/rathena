@@ -1,0 +1,59 @@
+//===== rAthena Script =======================================
+//= Mapflag: Disable warpto.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Disables warping to a map.
+//= Atcommands @warp, @go, @load, @jump, @partyrecall,
+//=   @guildrecall, and @recallall are disabled.
+//= Command /memo is disabled.
+//===== Additional Comments: ================================= 
+//= 1.0 Renewal split. [Euphy]
+//============================================================
+
+// 14.1 Bifrost ==================
+1@mist	mapflag	nowarpto
+que_house_s	mapflag	nowarpto
+
+// Malangdo Maps =================
+1@pump	mapflag	nowarpto
+2@pump	mapflag	nowarpto
+1@cash	mapflag	nowarpto
+
+// Lighthalzen Dungeon F4 ========
+1@lhz	mapflag	nowarpto
+lhz_dun04	mapflag	nowarpto
+que_lhz	mapflag	nowarpto
+
+// Port Malaya ===================
+1@ma_b	mapflag	nowarpto
+1@ma_c	mapflag	nowarpto
+1@ma_h	mapflag	nowarpto
+
+// 14.2 Eclage ===================
+1@ecl	mapflag	nowarpto
+
+// Pyramids Basement Nightmare Mode
+moc_prydn1	mapflag	nowarpto
+moc_prydn2	mapflag	nowarpto
+
+// Glast Heim Memorial Dungeon ===
+1@gl_k	mapflag	nowarpto
+2@gl_k	mapflag	nowarpto
+gl_chyard_	mapflag	nowarpto
+gl_cas02_	mapflag	nowarpto
+
+// Wave Mode Memorial Dungeon ====
+1@def01	mapflag	nowarpto
+1@def02	mapflag	nowarpto
+1@def03	mapflag	nowarpto
+
+// Heroes' Trails - Part 1 =======
+1@gef	mapflag	nowarpto
+1@face	mapflag	nowarpto
+1@sara	mapflag	nowarpto
+1@gef_in	mapflag	nowarpto

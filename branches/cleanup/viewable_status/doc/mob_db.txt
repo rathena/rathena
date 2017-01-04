@@ -1,0 +1,200 @@
+//===== rAthena Documentation ================================
+//= rAthena Monster Database Reference
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20140719
+//===== Description: =========================================
+//= Explanation of the mob_db.txt file and structure.
+//============================================================
+
+ID,Sprite_Name,kROName,iROName,LV,HP,SP,EXP,JEXP,Range1,ATK1,ATK2,DEF,MDEF,STR,AGI,VIT,INT,DEX,LUK,Range2,Range3,Scale,Race,Element,Mode,Speed,aDelay,aMotion,dMotion,MEXP,MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per,Drop1id,Drop1per,Drop2id,Drop2per,Drop3id,Drop3per,Drop4id,Drop4per,Drop5id,Drop5per,Drop6id,Drop6per,Drop7id,Drop7per,Drop8id,Drop8per,Drop9id,Drop9per,DropCardid,DropCardper
+
+---------------------------------------
+
+ID: The ID of the monster.
+
+---------------------------------------
+
+SpriteName: The sprite name of the monster (.act & .spr)
+
+---------------------------------------
+
+kROName: The name of the monster, this will be used when you use "--ja--".
+
+---------------------------------------
+
+iROName: The name of the monster, this will be used when you use "--en--".
+
+---------------------------------------
+
+LV: The level of the monster.
+
+---------------------------------------
+
+HP: The HP of the monster.
+
+---------------------------------------
+
+SP: The SP of the monster.
+
+---------------------------------------
+
+EXP: Base experience point of the monster.
+
+---------------------------------------
+
+JEXP: Job experience point of the monster.
+
+---------------------------------------
+
+Range1: Range of the monster attack. If set to 1 or 2, it will be set to melee attack. If set to 3 or more, it will be set to ranged attack.
+
+---------------------------------------
+
+ATK1: The minimum attack of the monster.
+
+---------------------------------------
+
+ATK2: The maximum attack of the monster. If undefined, the value of ATK1 will be used as the absolute attack.
+
+---------------------------------------
+
+DEF: Physical defense of the monster, reduce melee & ranged physical attack/skill.
+
+---------------------------------------
+
+MDEF: Magic defense of the monster, reduce magical skill.
+
+---------------------------------------
+
+STR: Strength of the monster. Affects ATK.
+
+---------------------------------------
+
+AGI: Agility of the monster. Affects FLEE.
+
+---------------------------------------
+
+VIT: Vitality of the monster. Adds additional DEF.
+
+---------------------------------------
+
+INT: Intelligence of the monster. Adds additional MATK.
+
+---------------------------------------
+
+DEX: Dexterity of the monster. Affects HIT rate.
+
+---------------------------------------
+
+LUK: Luck of the monster. Affects Perfect dodge/Lucky flee/Perfect flee/Lucky dodge rate.
+
+---------------------------------------
+
+Range2: Maximum Skill Range.
+
+---------------------------------------
+
+Range3: Sight limit of the monster. If set to 1000 or beyond, the monster will follow you all over the map.
+
+---------------------------------------
+
+Scale: Size of the monster
+
+	0 = Small
+	1 = Medium
+	2 = Large
+
+---------------------------------------
+
+Race: Race of the monster
+
+	0  = Formless
+	1  = Undead
+	2  = Brute
+	3  = Plant
+	4  = Insect
+	5  = Fish
+	6  = Demon
+	7  = Demi-Human
+	8  = Angel
+	9  = Dragon.
+	10 = Player (default race for player)
+
+Demi-Human is not same nor includes Player.
+
+---------------------------------------
+
+Element: Element of the monster, also for Element of db/elemental_db.txt, db/mercenary_db.txt, and db/[pre-]re/homunculus_db.txt
+
+	+-----------+-------+-------+-------+-------+
+	| Type		|  Lv1	|  Lv2	|  Lv3	|  Lv4	|
+	+-----------+-------+-------+-------+-------+
+	| Neutral	|  20	|  40	|  60	|  80	|
+	| Water		|  21	|  41	|  61	|  81	|
+	| Earth		|  22	|  42	|  62	|  82	|
+	| Fire		|  23	|  43	|  63	|  83	|
+	| Wind		|  24	|  44	|  64	|  84	|
+	| Poison	|  25	|  45	|  65	|  85	|
+	| Holy		|  26	|  46	|  66	|  86	|
+	| Shadow	|  27	|  47	|  67	|  87	|
+	| Ghost		|  28	|  48	|  68	|  88	|
+	| Undead	|  29	|  49	|  69	|  89	|
+	+-----------+-------+-------+-------+-------+
+	| For custom start from 30, 50, 70, and 90	|
+	+-----------+-------+-------+-------+-------+
+
+---------------------------------------
+
+Mode: Behaviour of the monster. Full explanation can be found on 'doc/mob_db_mode_list.txt'
+
+---------------------------------------
+
+Speed: Walk speed of the monster
+
+	1		= Fastest
+	100		= Normal
+	1000	= Slowest
+
+---------------------------------------
+
+aDelay: Attack Delay of the monster, also known as ASPD. Low value means faster attack speed, but don't make it too low or it will lag when a player got mobbed by several of these mobs.
+
+---------------------------------------
+
+aMotion: Attack animation motion. Low value means monster's attack will be displayed in higher fps (making it shorter, too) (Thanks to Wallex for this)
+
+---------------------------------------
+
+dMotion: Damage animation motion, same as aMotion but used to display the "I am hit" animation. Coincidentally, this same value is used to determine how long it is before the monster/player can move again. Endure is dMotion = 0, obviously.
+
+---------------------------------------
+
+MEXP: The MVP Experience point the monster gives when it is defeated (to the player who got the MVP reward) (This exp is a percentage of the exp the monster gives.)
+
+---------------------------------------
+
+MVP1-3id: The Item ID of the MVP drop goes here. Maximum of 3 items.
+
+---------------------------------------
+
+MVP1-3per: The rate of the MVP item being dropped, n/10000.
+
+---------------------------------------
+
+Drop1-9id: The Item ID of the drop goes here. Maximum of 9 items.
+
+---------------------------------------
+
+Drop1-9per: The rate of the item being dropped, n/10000.
+
+---------------------------------------
+
+DropCardid: The Item ID of the monster's card (if any).
+
+---------------------------------------
+
+DropCardper: The rate of the card being dropped, n/10000.
+
+---------------------------------------

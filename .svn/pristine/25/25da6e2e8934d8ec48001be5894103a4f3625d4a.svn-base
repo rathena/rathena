@@ -1,0 +1,392 @@
+//===== rAthena Script =======================================
+//= Novice Goods Exchanger
+//===== By: ==================================================
+//= ???, rAthena Team
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Exchanges your Basic Monster drops for Red Potions.
+//===== Additional Comments: =================================
+//= 1.2 Rescripted to Aegis 10.standards. [L0ne_W0lf[
+//=     Made it easier to add new items to exhange list
+//=     meaning only the exchange is done in a function now.
+//= 1.3 Fixed dialog mix-up in function. [L0ne_W0lf]
+//= 1.4 Added checkweight, and input min/max values. [L0ne_W0lf]
+//============================================================
+
+prontera,123,102,5	script	Merchant#pron	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[Merchant]";
+		mes "Haha!";
+		mes "What are you, superhuman?";
+		mes "You're carrying so much stuff!";
+		mes "You better put some of that";
+		mes "into Kafra Storage~";
+		close;
+	}
+	mes "[Merchant]";
+	mes "Good day!";
+	mes "Have you collected any";
+	mes "items like Shells or Fluff?";
+	mes "What about Jellopies? Oh yeah,";
+	mes "I need those for something.";
+	next;
+	mes "[Merchant]";
+	mes "Of course, I won't ask you";
+	mes "to give me that stuff for free. What about if I trade a Red Potion for 5 Shells, 10 Fluff,";
+	mes "or 10 Jellopies?";
+	next;
+	switch(select("Sure!:I think it's a rip-off!:No, thanks.")) {
+	case 1:
+		mes "[Merchant]";
+		mes "So which item do";
+		mes "you want to bring me?";
+		mes "Shells, Fluffs, or Jellopies?";
+		next;
+		switch(select("Shells:Jellopies:Fluff:Cancel")) {
+		case 1: callfunc "F_PotExchange",935,5;
+		case 2: callfunc "F_PotExchange",909,10;
+		case 3: callfunc "F_PotExchange",914,10;
+		case 4:
+			mes "[Merchant]";
+			mes "Sure~";
+			mes "No problem.";
+			close;
+		}
+	case 2:
+		mes "[Merchant]";
+		mes "A rip-off...?";
+		mes "If you check the market value";
+		mes "of the items being traded, I'm actually the one getting";
+		mes "ripped off here.";
+		close;
+	case 3:
+		mes "[Merchant]";
+		mes "Alright,";
+		mes "no problem.";
+		mes "But come back to me";
+		mes "if you change your mind.";
+		close;
+	}
+}
+
+morocc,180,259,3	script	Merchant#morroc	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[Merchant]";
+		mes "Haha!";
+		mes "What are you, superhuman?";
+		mes "You're carrying so much stuff!";
+		mes "You better put some of that";
+		mes "into Kafra Storage~";
+		close;
+	}
+	mes "[Merchant]";
+	mes "Good day!";
+	mes "Have you collected any";
+	mes "Shells or Feathers of Bird?";
+	mes "What about Jellopies? Oh yeah,";
+	mes "I need those for something.";
+	next;
+	mes "[Merchant]";
+	mes "Of course, I won't ask you";
+	mes "to give me that stuff for free. What about if I trade a Red Potion for 5 Shells, 7 Feathers of Bird";
+	mes "or 10 Jellopies?";
+	next;
+	switch(select("Sure!:I think it's a rip-off!:No, thanks.")) {
+	case 1:
+		mes "[Merchant]";
+		mes "So which item do";
+		mes "you want to bring me?";
+		mes "Shells, Feathers of Birds,";
+		mes "or Jellopies?";
+		next;
+		switch(select("Shells:Feathers of Birds:Jellopies:Cancel")) {
+		case 1: callfunc "F_PotExchange",935,5;
+		case 2: callfunc "F_PotExchange",916,7;
+		case 3: callfunc "F_PotExchange",909,10;
+		case 4:
+			mes "[Merchant]";
+			mes "Sure~";
+			mes "No problem.";
+			close;
+		}
+	case 2:
+		mes "[Merchant]";
+		mes "A rip-off...?";
+		mes "If you check the market value";
+		mes "of the items being traded, I'm actually the one getting";
+		mes "ripped off here.";
+		close;
+	case 3:
+		mes "[Merchant]";
+		mes "Alright,";
+		mes "no problem.";
+		mes "But come back to me";
+		mes "if you change your mind.";
+		close;
+	}
+}
+
+payon,200,134,5	script	Merchant#pay	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[Merchant]";
+		mes "Haha!";
+		mes "What are you, superhuman?";
+		mes "You're carrying so much stuff!";
+		mes "You better put some of that";
+		mes "into Kafra Storage~";
+		close;
+	}
+	mes "[Merchant]";
+	mes "Good day!";
+	mes "Have you collected";
+	mes "items like Tree Roots?";
+	mes "What about Jellopies? Oh yeah,";
+	mes "I need those for something.";
+	next;
+	mes "[Merchant]";
+	mes "Of course, I won't ask you";
+	mes "to give me that stuff for free. What about if I trade a Red Potion for 6 Tree Roots or 10 Jellopies?";
+	next;
+	switch(select("Sure!:I think it's a rip-off!:No, thanks.")) {
+	case 1:
+		mes "[Merchant]";
+		mes "So which item do";
+		mes "you want to bring me?";
+		mes "Tree Roots, or Jellopies?";
+		next;
+		switch(select("Tree Roots:Jellopies:Cancel")) {
+		case 1: callfunc "F_PotExchange",902,6;
+		case 2: callfunc "F_PotExchange",909,10;
+		case 3:
+			mes "[Merchant]";
+			mes "Sure~";
+			mes "No problem.";
+			close;
+		}
+	case 2:
+		mes "[Merchant]";
+		mes "A rip-off...?";
+		mes "If you check the market value";
+		mes "of the items being traded, I'm actually the one getting";
+		mes "ripped off here.";
+		close;
+	case 3:
+		mes "[Merchant]";
+		mes "Alright,";
+		mes "no problem.";
+		mes "But come back to me";
+		mes "if you change your mind.";
+		close;
+	}
+}
+
+aldebaran,152,63,5	script	Merchant#alde	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[Merchant]";
+		mes "Haha!";
+		mes "What are you, superhuman?";
+		mes "You're carrying so much stuff!";
+		mes "You better put some of that";
+		mes "into Kafra Storage~";
+		close;
+	}
+	mes "[Merchant]";
+	mes "Good day!";
+	mes "Have you collected any";
+	mes "Worm Peelings or Feather of Birds?";
+	mes "How about Jellopies? Oh yeah,";
+	mes "I need those for something.";
+	next;
+	mes "[Merchant]";
+	mes "Of course, I won't ask you";
+	mes "to give me that stuff for free. What about if I trade a Red Potion for 1 Worm Peeling, 7 Feather of Birds, or 10 Jellopies?";
+	next;
+	switch(select("Sure!:I think it's a rip-off!:No, thanks.")) {
+	case 1:
+		mes "[Merchant]";
+		mes "So which item do";
+		mes "you want to bring me?";
+		mes "Feathers of Birds?";
+		mes "Worm Peelings?";
+		mes "Or Jellopies?";
+		next;
+		switch(select("Worm Peelings:Feathers of Birds:Jellopies:Cancel")) {
+		case 1: callfunc "F_PotExchange",955,1;
+		case 2: callfunc "F_PotExchange",916,7;
+		case 3: callfunc "F_PotExchange",909,10;
+		case 4:
+			mes "[Merchant]";
+			mes "Sure~";
+			mes "No problem.";
+			close;
+		}
+	case 2:
+		mes "[Merchant]";
+		mes "A rip-off...?";
+		mes "If you check the market value";
+		mes "of the items being traded, I'm actually the one getting";
+		mes "ripped off here.";
+		close;
+	case 3:
+		mes "[Merchant]";
+		mes "Alright,";
+		mes "no problem.";
+		mes "But come back to me";
+		mes "if you change your mind.";
+		close;
+	}
+}
+
+geffen,173,88,5	script	Merchant#geff	85,{
+	if (MaxWeight - Weight < 6301 || checkweight(1201,1) == 0) {
+		mes "[Merchant]";
+		mes "Haha!";
+		mes "What are you, superhuman?";
+		mes "You're carrying so much stuff!";
+		mes "You better put some of that";
+		mes "into Kafra Storage~";
+		close;
+	}
+	mes "[Merchant]";
+	mes "Good day!";
+	mes "Have you collected any";
+	mes "items like Shells or Chrysalises?";
+	mes "What about Jellopies? Oh yeah,";
+	mes "I need those for something.";
+	next;
+	mes "[Merchant]";
+	mes "Of course, I won't ask you";
+	mes "to give me that stuff for free. What about if I trade a Red Potion for 5 Shells or 6 Chrysalises, or 10 Jellopies?";
+	next;
+	switch(select("Sure!:I think it's a rip-off!:No, thanks.")) {
+	case 1:
+		mes "[Merchant]";
+		mes "So which item do";
+		mes "you want to bring me?";
+		mes "Shells, Chrysalises, or Jellopies?";
+		next;
+		switch(select("Shells:Chrysalises:Jellopies:Cancel")) {
+		case 1: callfunc "F_PotExchange",935,5;
+		case 2: callfunc "F_PotExchange",915,6;
+		case 3: callfunc "F_PotExchange",909,10;
+		case 4:
+			mes "[Merchant]";
+			mes "Sure~";
+			mes "No problem.";
+			close;
+		}
+	case 2:
+		mes "[Merchant]";
+		mes "A rip-off...?";
+		mes "If you check the market value";
+		mes "of the items being traded, I'm actually the one getting";
+		mes "ripped off here.";
+		close;
+	case 3:
+		mes "[Merchant]";
+		mes "Alright,";
+		mes "no problem.";
+		mes "But come back to me";
+		mes "if you change your mind.";
+		close;
+	}
+}
+
+function	script	F_PotExchange	{
+	.@item_req = getarg(0);
+	.@req_amount = getarg(1);
+
+	if (countitem(.@item_req) < .@req_amount) {
+		mes "[Merchant]";
+		mes "Hey, where are";
+		mes "all those "+ getitemname(.@item_req) +"";
+		mes "that you promised?";
+		mes "Give me "+ getitemname(.@item_req) +"!";
+		close;
+	}
+	else {
+		mes "[Merchant]";
+		mes "Okay, let me check";
+		mes "how many "+ getitemname(.@item_req) +" you";
+		mes "have on you. Hmm...";
+		next;
+		mes "[Merchant]";
+		mes "You have";
+		mes "a total of "+ countitem(.@item_req) +" "+ getitemname(.@item_req) +".";
+		mes "I can give you a total";
+		mes "of "+ (countitem(.@item_req)/.@req_amount) +" Red Potions for those.";
+		next;
+		mes "[Merchant]";
+		mes "What do you say?";
+		mes "Do we have a deal?";
+		next;
+		if (select("Deal.:No deal.") == 1) {
+			mes "[Merchant]";
+			mes "You know the exact";
+			mes "number of Red Potions";
+			mes "you want to receive for";
+			mes "those "+ getitemname(.@item_req) +", don't you?";
+			next;
+			mes "[Merchant]";
+			mes "Now, I can trade you";
+			mes "a minimum of 1 Red Potion";
+			mes "and a maximum of 100 Red Potions";
+			mes "at one time. If you change your";
+			mes "mind, just enter '0' to cancel.";
+			next;
+			while(1) {
+				input .@input,0,101;
+				if (.@input == 0) {
+					mes "[Merchant]";
+					mes "What...?";
+					mes "Why the hell do you";
+					mes "even bother to talk to me?";
+					mes "Pretty indecisive, aren't you?";
+					close;
+				}
+				else if (.@input > 100) {
+					mes "[Merchant]";
+					mes "I can't give you more";
+					mes "than 100 Red Potions";
+					mes "at once. Let's try";
+					mes "this again.";
+					next;
+				}
+				else {
+					break;
+				}
+			}
+			.@put_out_item = .@input * .@req_amount;
+			if (countitem(.@item_req) < .@put_out_item) {
+				mes "[Merchant]";
+				mes "Uh oh, the number you entered doesn't seem right. You better check the number of Red Potions that you can trade for again.";
+				close;
+			}
+			mes "[Merchant]";
+			mes "There you go!";
+			mes "Check how many Red Potions";
+			mes "I've given you, it should be good. Thanks, that was a good deal~";
+			delitem .@item_req,.@put_out_item; //Shell
+			getitem 501,.@input; //Red_Potion
+			close;
+		}
+		mes "[Merchant]";
+		mes "Huh~";
+		mes "Alright.";
+		mes "Though aren't";
+		mes "Red Potions more useful";
+		mes "to an adventurer like you?";
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.1 Made it as a function. U can add your own Merchs [Lupus]
+//= 1.1a Fixed item select [KarLaeda]
+//============================================================ 

@@ -1,0 +1,148 @@
+//===== rAthena Script =======================================
+//= Battleground: Emperium
+//===== By: ==================================================
+//= AnnieRuru
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= A simple battleground script:
+//= Destroy the opponent's Emperium to win the match.
+//===== Additional Comments: =================================
+//= 1.0 First version, edited. [Euphy]
+//============================================================
+
+-	script	bg_emp#control	-1,{
+OnInit:
+	.minplayer2start = 1;      // minimum players to start (ex. if 3vs3, set to 3)
+	.eventlasting    = 20*60;  // event duration before auto-reset (20 minutes * seconds)
+	setarray .rewarditem[0],   // rewards for the winning team: <item>,<amount>,...
+		501, 10;
+
+	.team1name$ = "Red";
+	.team2name$ = "Blue";
+	end;
+OnStart:
+	if ( getwaitingroomstate( 0, .rednpcname$ ) < .minplayer2start || getwaitingroomstate( 0, .bluenpcname$ ) < .minplayer2start )
+		end;
+
+	// create Battleground and teams
+	.red = waitingroom2bg( "bat_a01", 157,347, strnpcinfo(0)+"::OnRedQuit", strnpcinfo(0)+"::OnRedDead", .rednpcname$ );
+	copyarray .team1aid, $@arenamembers, $@arenamembersnum;
+	.team1count = .minplayer2start;
+	.blue = waitingroom2bg( "bat_a01", 142,51, strnpcinfo(0)+"::OnBlueQuit", strnpcinfo(0)+"::OnBlueDead", .bluenpcname$ );
+	copyarray .team2aid, $@arenamembers, $@arenamembersnum;
+	.team2count = .minplayer2start;
+	delwaitingroom .rednpcname$;
+	delwaitingroom .bluenpcname$;
+	disablenpc .rednpcname$;
+	disablenpc .bluenpcname$;
+	setwall "bat_a01", 164,347, 6, 4, 0, "bg_emp_town_red";
+	setwall "bat_a01", 154,51, 6, 4, 0, "bg_emp_town_blue";
+	bg_warp .red, "bat_a01", 171,346;
+	bg_warp .blue, "bat_a01", 162,50;
+	bg_updatescore "bat_a01", 0, 0;
+
+	// delay before match begins
+	sleep 6000;
+	mapannounce "bat_a01", "The rules are simple. The first team to break the opponent's Emperium wins!", bc_map;
+	sleep 3000;
+	for ( .@i = 5; .@i > 0; .@i-- ) {
+		mapannounce "bat_a01", "["+ .@i +"]", bc_map;
+		sleep 1000;
+	}
+	mapannounce "bat_a01", "Start!", bc_map;
+
+	// spawn Emperiums
+	bg_monster .red,"bat_a01",171,346, "--ja--",1915, strnpcinfo(3)+"::OnRedDown";
+	bg_monster .blue,"bat_a01",162,50, "--ja--",1914, strnpcinfo(3)+"::OnBlueDown";
+	delwall "bg_emp_town_red";
+	delwall "bg_emp_town_blue";
+
+	// match duration
+	sleep .eventlasting * 1000;
+
+	// end match, destroy Battleground, reset NPCs
+	killmonster "bat_a01", strnpcinfo(3)+"::OnRedDown";
+	killmonster "bat_a01", strnpcinfo(3)+"::OnBlueDown";
+	if ( .winside ) {
+		mapannounce "bat_a01", "- "+ getd( ".team"+ .winside +"name$" ) +" Team is victorious! -", bc_map;
+		for ( .@i = 0; .@i < getd(".team"+ .winside +"count"); .@i++ )
+			getitem .rewarditem[0], .rewarditem[1], getd(".team"+ .winside +"aid["+ .@i +"]" );
+	} else
+		mapannounce "bat_a01", "- The match has ended in a draw! -", bc_map;
+	sleep 5000;
+	bg_warp .red, "prontera", 155,182;
+	bg_warp .blue, "prontera", 158,182;
+	bg_destroy .red;
+	bg_destroy .blue;
+	delwall "bg_emp_town_red";
+	delwall "bg_emp_town_blue";
+	deletearray .team1aid;
+	deletearray .team2aid;
+	.winside = .team1count = .team2count = 0;
+	enablenpc .rednpcname$;
+	enablenpc .bluenpcname$;
+	donpcevent .rednpcname$ +"::OnStart";
+	donpcevent .bluenpcname$ +"::OnStart";
+	end;
+
+// Emperium destroyed
+OnRedDown:  callsub L_EmpDown, 1, 2;
+OnBlueDown: callsub L_EmpDown, 2, 1;
+L_EmpDown:
+	mapannounce "bat_a01", strcharinfo(0) +" has destroyed "+ getd( ".team"+ getarg(0) +"name$" ) +" Team's Emperium.", bc_map;
+	.winside = getarg(1);
+	awake strnpcinfo(0);
+	end;
+
+// "OnDeath" event
+OnRedDead:
+OnBlueDead:
+	sleep2 1250;
+	percentheal 100,100;
+	end;
+
+// "OnQuit" event
+OnRedQuit:  callsub L_Quit, 1, 2;
+OnBlueQuit: callsub L_Quit, 2, 1;
+L_Quit:
+	percentheal 100, 100;
+	while ( getd( ".team"+ getarg(0) +"aid["+ .@i +"]" ) != getcharid(3) && .@i < getd(".team"+ getarg(0) +"count") ) .@i++;
+	deletearray getd( ".team"+ getarg(0) +"aid["+ .@i +"]" ), 1;
+	setd ".team"+ getarg(0) +"count", getd(".team"+ getarg(0) +"count") -1;
+	if ( getd(".team"+ getarg(0) +"count") ) end;
+	mapannounce "bat_a01", "All "+ getd( ".team"+ getarg(0) +"name$" ) +" team members have quit!", bc_map, 0xff3333;
+	end;
+}
+
+prontera,155,182,5	script	Red Team#bg_emp	733,{
+	end;
+OnInit:
+	sleep 1;
+	set getvariableofnpc( .rednpcname$, "bg_emp#control" ), strnpcinfo(0);
+OnStart:
+	waitingroom "Red Team", getvariableofnpc( .minplayer2start, "bg_emp#control" ) +1, "bg_emp#control::OnStart", getvariableofnpc( .minplayer2start, "bg_emp#control" );
+	end;
+}
+
+prontera,158,182,5	script	Blue Team#bg_emp	734,{
+	end;
+OnInit:
+	sleep 1;
+	set getvariableofnpc( .bluenpcname$, "bg_emp#control" ), strnpcinfo(0);
+OnStart:
+	waitingroom "Blue Team", getvariableofnpc( .minplayer2start, "bg_emp#control" ) +1, "bg_emp#control::OnStart", getvariableofnpc( .minplayer2start, "bg_emp#control" );
+	end;
+}
+
+bat_a01	mapflag	battleground
+bat_a01	mapflag	nosave	SavePoint
+bat_a01	mapflag	nowarp
+bat_a01	mapflag	nowarpto
+bat_a01	mapflag	noteleport
+bat_a01	mapflag	nomemo
+bat_a01	mapflag	nopenalty
+bat_a01	mapflag	nobranch
+bat_a01	mapflag	noicewall

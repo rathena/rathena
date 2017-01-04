@@ -1,0 +1,18 @@
+//===== rAthena Script =======================================
+//= Sample: Class Constants
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20110123
+//===== Description: ========================================= 
+//= Outputs the values of class constants.
+//============================================================
+
+prontera,155,177,1	script	Tell Me	725,{
+	mes "[Tell Me]";
+	mes "Class: " + Class;
+	mes "BaseClass: " + BaseClass;
+	mes "BaseJob: " + BaseJob;
+	mes "Upper: " + Upper;
+	close;
+}

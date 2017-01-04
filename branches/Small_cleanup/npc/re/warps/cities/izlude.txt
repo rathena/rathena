@@ -1,0 +1,92 @@
+//===== rAthena Script =======================================
+//= Izlude Warp Script
+//===== By: ==================================================
+//= Athena (1.0), Nana (1.1)
+//===== Current Version: =====================================
+//= 1.8
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Izlude
+//===== Additional Comments: =================================
+//= 1.3 Added warps to Izlude Airship [Justin84]
+//= 1.4 Minor correction on airport warps
+//= 1.5 Updated to match the new Izlude Map. [Masao]
+//= 1.6 Added new warps. [Streusel]
+//= 1.7 Updated to match the official scripts. [Euphy]
+//= 1.8 Added Izlude & Prontera Field 8 duplicates. [Euphy]
+//============================================================
+
+//= Izlude City ==============================================
+prt_fild08,371,212,0	warp	prtf005	3,3,izlude,24,98
+izlude,20,98,0	warp	iz001	3,3,prt_fild08,367,212
+izlude_in,116,46,0	warp	iz02-1	3,2,izlude,128,98
+izlude,110,182,0	warp	iz01	2,2,izlude_in,65,87
+izlude_in,65,84,0	warp	iz01-1	2,2,izlude,112,179
+izlude,52,172,0	warp	iz04	2,2,izlude_in,74,161
+izlude_in,74,158,0	warp	iz04-1	3,2,izlude,52,168
+izlude_in,43,169,0	warp	w219	2,3,izlude_in,63,169
+izlude_in,87,169,0	warp	iz05-1	2,3,izlude_in,111,169
+izlude_in,108,169,0	warp	iz05	2,3,izlude_in,84,169
+izlude_in,148,127,0	warp	iz03-1	2,5,izlude,210,161
+izlude_in,172,139,0	warp	iz07	3,2,izlude_in,172,161
+izlude_in,172,158,0	warp	iz07-1	3,2,izlude_in,172,136
+izlude_in,172,116,0	warp	iz06-1	3,2,izlude_in,172,94
+izlude_in,171,97,0	warp	iz06	3,2,izlude_in,172,119
+
+//= Izlude & Prontera Field 8 Duplicates =====================
+prt_fild08a,371,212,0	warp	prtf005_a	3,3,izlude_a,24,98
+prt_fild08b,371,212,0	warp	prtf005_b	3,3,izlude_b,24,98
+prt_fild08c,371,212,0	warp	prtf005_c	3,3,izlude_c,24,98
+prt_fild08d,371,212,0	warp	prtf005_d	3,3,izlude_d,24,98
+izlude_a,20,98,0	warp	iz001_a	3,3,prt_fild08a,367,212
+izlude_b,20,98,0	warp	iz001_b	3,3,prt_fild08b,367,212
+izlude_c,20,98,0	warp	iz001_c	3,3,prt_fild08c,367,212
+izlude_d,20,98,0	warp	iz001_d	3,3,prt_fild08d,367,212
+izlude_a,110,182,0	warp	iz01_a	2,2,izlude_in,65,87
+izlude_b,110,182,0	warp	iz01_b	2,2,izlude_in,65,87
+izlude_c,110,182,0	warp	iz01_c	2,2,izlude_in,65,87
+izlude_d,110,182,0	warp	iz01_d	2,2,izlude_in,65,87
+izlude_a,52,172,0	warp	iz04_a	2,2,izlude_in,74,161
+izlude_b,52,172,0	warp	iz04_b	2,2,izlude_in,74,161
+izlude_c,52,172,0	warp	iz04_c	2,2,izlude_in,74,161
+izlude_d,52,172,0	warp	iz04_d	2,2,izlude_in,74,161
+
+//= Izlude Academy ===========================================
+izlude,125,257,0	warp	#to_ac01	2,2,iz_ac01,99,29
+izlude,130,257,0	warp	#to_ac02	2,2,iz_ac01,99,29
+iz_ac01,100,24,0	warp	#to_ac01-1	2,2,izlude,127,253
+iz_ac01,78,25,0	warp	#to_ac2f01	2,2,iz_ac02,104,27
+iz_ac01,122,25,0	warp	#to_ac2f02	2,2,iz_ac02,104,27
+iz_ac02,94,27,0	warp	#to_ac1f01	2,2,iz_ac01,78,28
+iz_ac02,113,27,0	warp	#to_ac1f02	2,2,iz_ac01,122,28
+
+//= Izlude Academy Duplicates ================================
+izlude_a,125,257,0	warp	#to_ac01_a	2,2,iz_ac01_a,99,29
+izlude_b,125,257,0	warp	#to_bc01_b	2,2,iz_ac01_b,99,29
+izlude_c,125,257,0	warp	#to_cc01_c	2,2,iz_ac01_c,99,29
+izlude_d,125,257,0	warp	#to_dc01_d	2,2,iz_ac01_d,99,29
+izlude_a,130,257,0	warp	#to_ac02_a	2,2,iz_ac01_a,99,29
+izlude_b,130,257,0	warp	#to_bc02_b	2,2,iz_ac01_b,99,29
+izlude_c,130,257,0	warp	#to_cc02_c	2,2,iz_ac01_c,99,29
+izlude_d,130,257,0	warp	#to_dc02_d	2,2,iz_ac01_d,99,29
+iz_ac01_a,100,24,0	warp	#to_ac01-1_a	2,2,izlude_a,127,253
+iz_ac01_b,100,24,0	warp	#to_bc01-1_b	2,2,izlude_b,127,253
+iz_ac01_c,100,24,0	warp	#to_cc01-1_c	2,2,izlude_c,127,253
+iz_ac01_d,100,24,0	warp	#to_dc01-1_d	2,2,izlude_d,127,253
+iz_ac01_a,78,25,0	warp	#to_ac2f01_a	2,2,iz_ac02_a,104,27
+iz_ac01_b,78,25,0	warp	#to_bc2f01_b	2,2,iz_ac02_b,104,27
+iz_ac01_c,78,25,0	warp	#to_cc2f01_c	2,2,iz_ac02_c,104,27
+iz_ac01_d,78,25,0	warp	#to_dc2f01_d	2,2,iz_ac02_d,104,27
+iz_ac01_a,122,25,0	warp	#to_ac2f02_a	2,2,iz_ac02_a,104,27
+iz_ac01_b,122,25,0	warp	#to_bc2f02_b	2,2,iz_ac02_b,104,27
+iz_ac01_c,122,25,0	warp	#to_cc2f02_c	2,2,iz_ac02_c,104,27
+iz_ac01_d,122,25,0	warp	#to_dc2f02_d	2,2,iz_ac02_d,104,27
+iz_ac02_a,94,27,0	warp	#to_ac1f01_a	2,2,iz_ac01_a,78,28
+iz_ac02_b,94,27,0	warp	#to_bc1f01_b	2,2,iz_ac01_b,78,28
+iz_ac02_c,94,27,0	warp	#to_cc1f01_c	2,2,iz_ac01_c,78,28
+iz_ac02_d,94,27,0	warp	#to_dc1f01_d	2,2,iz_ac01_d,78,28
+iz_ac02_a,113,27,0	warp	#to_ac1f02_a	2,2,iz_ac01_a,122,28
+iz_ac02_b,113,27,0	warp	#to_bc1f02_b	2,2,iz_ac01_b,122,28
+iz_ac02_c,113,27,0	warp	#to_cc1f02_c	2,2,iz_ac01_c,122,28
+iz_ac02_d,113,27,0	warp	#to_dc1f02_d	2,2,iz_ac01_d,122,28

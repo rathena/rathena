@@ -1,0 +1,148 @@
+//===== rAthena Script ======================================= 
+//= Sample: Localized NPC
+//===== By: ================================================== 
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20140208
+//===== Description: ========================================= 
+//= Example of a localized NPC.
+//= 
+//= There are many ways to do it, this is just one option.
+//= The player has a global account variable ##_langid_ that 
+//= identifies the it's language.
+//= 
+//= The default language should always have langid 0.
+//= When a message isn't found for the player's langid 
+//= (strlen = 0), the message from langid 0 is used instead.
+//= 
+//= Each message is identified by a string that must only 
+//= contain valid variable name characters.
+//= 
+//= void setlang(int langid)
+//= - sets the player's language
+//= int getlang(void)
+//= - returns the player's language
+//= void setmes2(string name,int langid,string text)
+//= - sets the localized text for name
+//= string getmes2(string name,int langid)
+//= - returns the localized text of name
+//= void mes2(string name)
+//= - displays the localized text of name
+//= 
+//===== Additional Comments: ================================= 
+//= To use this globally, just put the functions in Global_Functions.txt
+//============================================================ 
+
+//////////////////////////////////////////////////////////////
+/// Sets the language of the player account.
+/// @param langid	Languange identifier (0 for default)
+function	script	setlang	{
+	##_langid_ = getarg(0);
+	return;
+}
+
+//////////////////////////////////////////////////////////////
+/// Returns the language identifier of the player
+function	script	getlang	{
+	return ##_langid_;
+}
+
+//////////////////////////////////////////////////////////////
+/// Sets a localized text entry.
+/// Does not need a RID attached.
+/// @param name	Message identifier
+/// @param langid	Language identifier (0 for default)
+/// @param text	Text message
+function	script	setmes2	{
+	.@mes2_name$  = getarg(0);
+	.@mes2_langid = getarg(1);
+	.@mes2_text$  = getarg(2);
+	.@mes2_var$   = "$@__"+ .@mes2_name$ +"_"+ .@mes2_langid +"$";
+
+	//debugmes "setmes2 \""+ .@mes2_var$ +"\", \""+ .@mes2_text$ +"\";";
+
+	// set the localized text
+	setd .@mes2_var$, .@mes2_text$;
+	return;
+}
+
+//////////////////////////////////////////////////////////////
+/// Sets a localized text entry.
+/// Does not need a RID attached.
+/// @param name	Message identifier
+/// @param langid	Language identifier (0 for default)
+/// @return	Text message
+function	script	getmes2	{
+	.@mes2_name$  = getarg(0);
+	.@mes2_langid = getarg(1);
+	.@mes2_var$   = "$@__"+ .@mes2_name$ +"_"+ .@mes2_langid +"$";
+	.@mes2_text$  = getd(.@mes2_var$);
+
+	//debugmes "getmes2(\""+ .@mes2_var$ +"\")=\""+ .@mes2_text$ +"\"";
+
+	return .@mes2_text$;
+}
+
+//////////////////////////////////////////////////////////////
+/// mes for localized text.
+/// index should be a unique string, made up only of characters 
+/// that are valis as a variable name
+/// @param index	Message identifier
+function	script	mes2	{
+	.@mes2_index$ = getarg(0);
+
+	if( getstrlen(.@mes2_index$) == 0 )
+		return; // invalid index
+
+	// print localized text
+	.@mes2_text$ = callfunc("getmes2",.@mes2_index$,##_langid_);
+	if( getstrlen(.@mes2_text$) == 0 ) {
+		if( ##_langid_ != 0 ) {
+			// revert to default language
+			.@mes2_text$ = callfunc("getmes2",.@mes2_index$,0);
+			if( getstrlen(.@mes2_text$) != 0 )
+				mes .@mes2_text$; // default text
+		}
+	} else
+		mes .@mes2_text$; // localized text
+	return;
+}
+
+//////////////////////////////////////////////////////////////
+/// Sample localized NPC
+prontera,155,183,4	script	LocalizedNPC	705,{
+	// Get text for specific languages
+	.@menu1$ = callfunc("getmes2","LNPC_lang",0);
+	.@menu2$ = callfunc("getmes2","LNPC_lang",1);
+	do {
+		// get text that fallbacks to language 0
+		callfunc "mes2", "LNPC_name";
+		// localized mes
+		callfunc "mes2", "LNPC_lang";
+		callfunc "mes2", "LNPC_text";
+		next;
+
+		switch(select(.@menu1$,.@menu2$,"Cancel"))
+		{
+			case 1:
+			case 2:
+				// Set player language
+				callfunc "setlang",@menu-1;
+				break;
+		}
+	} while( @menu != 3 );
+	close;
+	end;
+
+OnInterIfInitOnce:
+	// Load the localized text.
+	// This can be anywhere, as long as it's executed before the coresponding getmes2/mes2 calls
+	//  0 - English (default)
+	//  1 - Portuguese
+	callfunc "setmes2", "LNPC_name", 0, "[LocalizedNPC]";
+	callfunc "setmes2", "LNPC_lang", 0, "EN";
+	callfunc "setmes2", "LNPC_lang", 1, "PT";
+	callfunc "setmes2", "LNPC_text", 0, "Something in english";
+	callfunc "setmes2", "LNPC_text", 1, "Algo em português";
+	end;
+}

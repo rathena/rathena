@@ -1,0 +1,119 @@
+//===== rAthena Script ======================================= 
+//= Headgear Dyer (Cash)
+//===== By: ==================================================
+//= Xantara
+//= Maud_Dib
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Change headgear's color. Cost is a Mysterious Dyestuff
+//===== Additional Comments: =================================
+//= 1.0 First / Optimized Version
+//============================================================
+
+prt_in,253,168,4	script	Alora	862,{
+
+// Mysterious Dyestuff
+	set .@dyeID, 6220;
+// Headgear Choices
+	setarray .@hgn$[1], "Mage Hat","Beanie","Drooping Cat","Deviruchi Hat","Wig","Ribbon","Magestic Goat";
+// Mage Hats - Normal, Yellow, Blue, Brown, Gray, Red
+	setarray .@hg_1[1], 5027, 5242, 5241, 5240, 5239, 5238;
+// Beanies - Normal, Pink, Blue, Brown
+	setarray .@hg_2[1], 5076, 5237, 5236, 5235;
+// Drooping Cats - Normal, Blue, Brown, Gray, Pink, Yellow
+	setarray .@hg_3[1], 5058, 5233, 5231, 5230, 5232, 5234;
+// Deviruchi Hats - Normal, Red, Gray, Brown
+	setarray .@hg_4[1], 5038, 5227, 5228, 5229;
+// Wigs - Happy, Shiny, Marvelous, Fantastic
+	setarray .@hg_5[1], 5273, 5274, 5275, 5276;
+// Ribbons - Normal, Black, Yellow, Green, Pink, Red, Orange, White
+	setarray .@hg_6[1], 2208, 5191, 5192, 5193, 5194, 5195, 5196, 5197;
+// Magestic Goats - Normal, Evolved
+	setarray .@hg_7[1], 2256, 5217;
+
+	mes "[Alora]";
+	mes "Hello, I can change your headgear's color if you bring me a Mysterious Dyestuff.";
+	next;
+	mes "[Alora]";
+	mes "Do you have a headgear that you would like to dye?";
+	next;
+	for(set .@i,1; .@i < getarraysize(.@hgn$); set .@i,.@i+1) {
+		if(.@i == 1)    set .@menu$, .@hgn$[.@i];
+		else            set .@menu$, .@menu$ +":"+ .@hgn$[.@i];
+	}
+	set .@menu$, .@menu$ +":Cancel";
+	set .@t, select(.@menu$);
+	if(.@t == getarraysize(.@hgn$)) {
+		mes "[Alora]";
+		mes "Have a good journey adventurer!";
+		mes "If you ever are curious to try a new color on your Kafra headgear or the ones you found on your adventures please come to me!";
+		close;
+	}
+	mes "[Alora]";
+	mes "Okay, what color do you want to change it to?";
+	next;
+	for(set .@i,1; .@i < getarraysize(getd(".@hg_"+.@t+"")); set .@i,.@i+1) {
+		if(.@i == 1 && .@t != 5)
+			set .@menu$, "Normal";
+		else if(.@i == 1 && .@t == 5)
+			set .@menu$, getitemname(getd(".@hg_"+.@t+"["+.@i+"]"));
+		else {
+			sscanf(getitemname(getd(".@hg_"+.@t+"["+.@i+"]")),"%s "+ .@hgn$[.@t],.@colour$);
+			set .@menu$, .@menu$ +":"+ .@colour$;
+		}
+	}
+	set .@menu$, .@menu$ +":Cancel";
+	set .@c, select(.@menu$);
+	if(.@c == getarraysize(getd(".@hg_"+.@t+""))) {
+		mes "[Alora]";
+		mes "Oh, okay no problem!";
+		close;
+	}
+	set .@dyHG, getd(".@hg_"+.@t+"["+.@c+"]");
+	mes "[Alora]";
+	mes "Oh I'm so excited aren't you?";
+	mes "And just to be sure, what color is the "+ .@hgn$[.@t] +" you want me to use?";
+	next;
+	mes "[Alora]";
+	mes "Please understand that I'm going to use the ^FF00001st "+ .@hgn$[.@t] +" of that color in your inventory!^000000";
+	next;
+	mes "[Alora]";
+	mes "Any upgrades and cards will be dissolved by the mysterious dye, so be sure you are ok with having a ^0000FF+0 "+ getitemname(.@dyHG) +" without any cards.^000000";
+	next;
+	mes "["+ strcharinfo(0) +"]";
+	mes "Ok, thanks for the warning, I think I'll give you my";
+	next;
+	set .@menu$, "Nevermind";
+	for(set .@i,1; .@i < getarraysize(getd(".@hg_"+.@t+"")); set .@i,.@i+1) {
+		if(.@i == 1)    set .@menu$, .@menu$ +":Normal "+ getitemname(getd(".@hg_"+.@t+"["+.@i+"]"));
+		else            set .@menu$, .@menu$ +":"+ getitemname(getd(".@hg_"+.@t+"["+.@i+"]"));
+	}
+	set .@mine, select(.@menu$) - 1;
+	if(!.@mine) {
+		mes "[Alora]";
+		mes "It's best to be very sure, have a safe journey.";
+		close;
+	}
+	set .@myHG, getd(".@hg_"+.@t+"["+.@mine+"]");
+	if(.@dyHG == .@myHG) {
+		mes "[Alora]";
+		mes "Woah what happened?";
+		close;
+	}
+	if(!countitem(.@dyeID) || !countitem(.@myHG)) {
+		mes "[Alora]";
+		mes "Oh my, you seem to be missing something.";
+		close;
+	}
+	mes "[Alora]";
+	mes "Looks great doesn't it?!";
+	mes "I hope you'll come back to dye more pretty headgears!";
+	delitem .@dyeID,1; // Dyestuff
+	delitem .@myHG,1;  // Your headgear
+	getitem .@dyHG,1;  // Dyed headgear
+	close;
+}

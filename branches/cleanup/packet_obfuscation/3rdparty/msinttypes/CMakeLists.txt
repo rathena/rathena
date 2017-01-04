@@ -1,0 +1,9 @@
+
+if( MSVC )
+find_path( MSINTTYPES_INCLUDE_DIRS "inttypes.h"
+	PATHS "${CMAKE_CURRENT_SOURCE_DIR}/include"
+	NO_DEFAULT_PATH )
+mark_as_advanced( MSINTTYPES_INCLUDE_DIRS )
+message( STATUS "Adding global include directory: ${MSINTTYPES_INCLUDE_DIRS}" )
+set_property( CACHE GLOBAL_INCLUDE_DIRS  PROPERTY VALUE ${GLOBAL_INCLUDE_DIRS} ${MSINTTYPES_INCLUDE_DIRS} )
+endif()

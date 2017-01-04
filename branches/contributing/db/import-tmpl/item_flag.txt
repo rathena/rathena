@@ -1,0 +1,9 @@
+// Flagged Items
+// <ItemID>,<Flag>
+//
+// <Flag>:
+// 1 - As Dead Branch item (will be logged at `branchlog` table and cannot be used at 'nobranch' mapflag)
+// 2 - As item group container, check player's inventory and weight before consumed
+// 4 - GUID item, cannot be stacked even same or stackable item
+// 8 - Item will be bound item when equipped
+// NOTE: For removing flag by import file, use "-" to remove the flag. Example, 604,-1 will removes flag 1 from Branch_Of_Dead_Tree

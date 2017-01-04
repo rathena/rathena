@@ -1,0 +1,826 @@
+//===== rAthena Script ======================================= 
+//= Crusader Skills Quests
+//===== By: ================================================== 
+//= Lupus, Reddozen
+//===== Current Version: ===================================== 
+//= 1.4
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quests for skills: Shrink
+//===== Additional Comments: ================================= 
+//= 1.4 Rescripted to Aegis 10.3 stadards. [L0ne_W0lf]
+//============================================================
+
+geffen,110,117,3	script	Ford#11	752,{
+	if (BaseJob == Job_Crusader) {
+		if (CRUS_SK == 8 && getskilllv("CR_SHRINK") == 0) {
+			mes "[Ford]";
+			mes "Hey, it's been a while~";
+			mes "And you even managed to";
+			mes "become a Paladin. You must";
+			mes "have forgotten how to perform";
+			mes "the Shrink skill, so I'll teach";
+			mes "it to you real quick... There!";
+			set CRUS_SK,10;
+			skill "CR_SHRINK",1,SKILL_PERM;
+			close;
+		}
+
+		else if (CRUS_SK == 0) {
+			mes "[Ford]";
+			mes "Damn! Why is it";
+			mes "taking so long?";
+			mes "Ah, finally, you've";
+			mes "arrived! Quick, show me";
+			mes "the ^FF0000report^000000 you've brought!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Excuse me...?";
+			mes "Oh, you must have";
+			mes "mistaken me for someone";
+			mes "else. I really don't know";
+			mes "what you're talking about.";
+			next;
+			mes "[Ford]";
+			mes "What?! You're not one";
+			mes "of the guards stationed";
+			mes "at South Geffen? Oh, this";
+			mes "is horrible. I apologize,";
+			mes "I just assumed since you";
+			if (Upper == 1)
+				mes "were dressed like a Paladin...";
+			else
+				mes "were dressed like a Crusader...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I'm sorry...";
+			mes "What's happening?";
+			mes "Is something the matter?";
+			mes "I'm an adventurer that";
+			mes "goes by the name, "+ strcharinfo(0) +".";
+			next;
+			mes "[Ford]";
+			mes "Well, I'm Leslie Ford,";
+			mes "commander of the Prontera";
+			mes "Crusader Guardians. We're";
+			mes "charged with the duty of";
+			mes "protecting adventurers and";
+			mes "citizens from evil monsters.";
+			next;
+			mes "[Ford]";
+			mes "There's been a recent surge";
+			mes "in unprovoked violence from";
+			mes "Goblins and they're making";
+			mes "quite a bit of trouble for us.";
+			mes "Our patrols are supposed to";
+			mes "report on their activity to me.";
+			next;
+			mes "[Ford]";
+			mes "However, today's report";
+			mes "hasn't arrived yet, so I'm";
+			mes "starting to fear that something";
+			mes "has happened to the patrol.";
+			mes "Unfortunately, my duties don't";
+			mes "allow me to leave my post.";
+			next;
+			mes "[Ford]";
+			mes "I'm getting desperate,";
+			mes "and I don't have any choice";
+			mes "but to ask for outside help.";
+			mes "Since you're a fellow Crusader,";
+			mes "I want to ask you if you would";
+			mes "please lend me your aid.";
+			next;
+			switch(select("Sure.:I'm sorry, but I'm busy...")) {
+			case 1:
+				mes "[Ford]";
+				mes "Great, thank you so much!";
+				mes "Now, please go and seek";
+				mes "out ^0000FFSloutii^000000 who should be";
+				mes "stationed south of Geffen,";
+				mes "and deliver his report to me.";
+				mes "Your help is a great relief...";
+				set CRUS_SK,1;
+				close;
+			case 2:
+				mes "[Ford]";
+				mes "Hm. I understand.";
+				mes "I do not know what";
+				mes "obligations that you";
+				mes "have right now, but if";
+				mes "your current task isn't";
+				mes "urgent, please reconsider...";
+				close;
+			}
+			close;
+		}
+		else if (CRUS_SK == 1) {
+			mes "[Ford]";
+			mes "Please search for";
+			mes "^0000FFSloutii^000000 in the area south";
+			mes "of Geffen, and he should";
+			mes "give you his report on";
+			mes "his patrol of the Goblins";
+			mes "for you to deliver to me.";
+			close;
+		}
+		else if (CRUS_SK == 2) {
+			mes "[Ford]";
+			mes "Wait, you've met with";
+			mes "Sloutii, but haven't";
+			mes "received his report?";
+			mes "Please go back to him";
+			mes "and bring it to me, it's";
+			mes "imperative that I read it!";
+			close;
+		}
+		else if (CRUS_SK == 3) {
+			mes "[Ford]";
+			mes "Ah, you've returned!";
+			mes "So how is Sloutii?";
+			mes "Is everything all right?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Here, I've brought";
+			mes "this report as soon as";
+			mes "I could! You better read";
+			mes "it, quick! Things seemed";
+			mes "pretty bad when I left...";
+			next;
+			mes "[Ford]";
+			mes "Goodness, there's blood all";
+			mes "over the paper! Let's see...";
+			mes "Oh no. This is an emergency";
+			mes "situation! I need to report this to Sir Arga and request for";
+			mes "backup immediately!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Wait, we need to do";
+			mes "something about Sloutii.";
+			mes "He was wounded by the";
+			mes "Goblins, and I think he's";
+			mes "in serious trouble.";
+			next;
+			mes "[Ford]";
+			mes "The Goblins...?";
+			mes "Oh no, you'll need the";
+			mes "special antidote that you";
+			mes "can get from Father Arthur";
+			mes "to treat the poison in the";
+			mes "knives these Goblins use.";
+			next;
+			mes "[Ford]";
+			mes "While I request for backup,";
+			mes "please go to ^0000FFProntera Church^000000";
+			mes "and ask Father ^0000FFArthur^000000 for his";
+			mes "antidote for Goblin Poison.";
+			mes "If you don't hurry, it might";
+			mes "be too late for Sloutii--!";
+			set CRUS_SK,4;
+			close;
+		}
+		else if (CRUS_SK == 4) {
+			mes "[Ford]";
+			mes "Please hurry and obtain";
+			mes "the antidote for Goblin's";
+			mes "poison from ^0000FFFather Arthur^000000";
+			mes "in ^0000FFProntera Church^000000. Sloutii's";
+			mes "life depends on you now.";
+			close;
+		}
+		else if (CRUS_SK == 5) {
+			mes "[Ford]";
+			mes "You've already met";
+			mes "Father Arthur? Good,";
+			mes "now please hurry and";
+			mes "get the antidote from him.";
+			mes "Without it, Sloutii will slowly";
+			mes "and excruciatingly perish!";
+			close;
+		}
+		else if (CRUS_SK == 6) {
+			mes "[Ford]";
+			mes "You've already met";
+			mes "Father Arthur? Good,";
+			mes "now please hurry and";
+			mes "get the antidote from him.";
+			mes "Without it, Sloutii will slowly";
+			mes "and excruciatingly perish!";
+			close;
+		}
+		else if (CRUS_SK == 7) {
+			mes "[Ford]";
+			mes "Great, you've received";
+			mes "the antidote from Father";
+			mes "Arthur! Now, make haste";
+			mes "and administer it to Sloutii";
+			mes "stationed south of Geffen.";
+			mes "Hurry, every second counts!";
+			close;
+		}
+		else if (CRUS_SK == 8) {
+			mes "[Ford]";
+			mes "I hear that you were";
+			mes "able to save Sloutii.";
+			mes "For that, I am eternally";
+			mes "grateful. We could use more";
+			mes "people like you to serve in the";
+			mes "Prontera Crusader Guardians...";
+			next;
+			mes "[Ford]";
+			mes "I know that you adventurers";
+			mes "prefer not to commit to these";
+			mes "kinds of organizations, but";
+			mes "your help will always be";
+			mes "welcome here. I hope to";
+			mes "see you again someday.";
+			next;
+			mes "[Ford]";
+			mes "Thanks once again,";
+			mes "and I hope to that you";
+			mes "travel in safety. For now,";
+			mes "this is farewell, "+ strcharinfo(0) +".";
+			close;
+			}
+		else if (CRUS_SK == 10) {
+			mes "[Ford]";
+			mes "Hey, it's been a while~";
+			mes "You should come by more";
+			mes "often, and if you're really";
+			mes "interested, you can enlist in";
+			mes "my troops. We can really use";
+			mes "somebody with your expertise.";
+			close;
+			}
+		else {
+			mes "[Ford]";
+			mes "Great, you've received";
+			mes "the antidote from Father";
+			mes "Arthur! Now, make haste";
+			mes "and administer it to Sloutii";
+			mes "stationed south of Geffen.";
+			mes "Hurry, every second counts!";
+			close;
+			}
+	}
+	else {
+		mes "[Ford]";
+		mes "Ah, greetings.";
+		mes "I'm sorry that I cannot";
+		mes "assist you, adventurer,";
+		mes "but I have something";
+		mes "rather urgent to take care";
+		mes "of. Now if you'll excuse me...";
+		close;
+	}
+}
+
+gef_fild13,297,242,3	script	Soldier#277	751,{
+	if (BaseJob == Job_Crusader) {
+		if (Upper == 1 && getskilllv("CR_SHRINK")) {
+			if (CRUS_SK == 8) {
+				mes "[Sloutii]";
+				mes "Hey pal, it's been";
+				mes "a while. I still need";
+				mes "to recuperate from my";
+				mes "wounds, so if you want";
+				mes "to learn Shrink, speak";
+				mes "to Sir Ford, alright?";
+				close;
+			}
+			else if (CRUS_SK == 10) {
+				mes "[Sloutii]";
+				mes "So how's that Shrink";
+				mes "skill working out for you?";
+				mes "Hopefully, it's saved your";
+				mes "life as many times as it's";
+				mes "saved mine. Anyway, I'll";
+				mes "see you around, "+ strcharinfo(0) +"~";
+				close;
+			}
+		}
+		if (CRUS_SK == 1) {
+			mes "[Soldier]";
+			mes "Arrrrrghhh!";
+			mes "M-my legs!";
+			mes "What the hell";
+			mes "have they done";
+			mes "to my legs?!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Wh-what happened?";
+			mes "Were you attacked?";
+			next;
+			mes "[Soldier]";
+			mes "Y-yeah, I was on my way";
+			mes "to report to Sir Ford on my";
+			mes "regular patrol when I was";
+			mes "attacked by these Goblins!";
+			mes "I've got to warn my superiors!";
+			mes "They're going to raid Geffen!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I actually spoke to";
+			mes "Sir Ford! You must be";
+			mes "Sloutii, right? He sent me";
+			mes "to see what happened to you!";
+			next;
+			mes "[Sloutii]";
+			mes "Great, p-perfect timing!";
+			mes "Listen, you've got to send";
+			mes "him this report. I-it contains";
+			mes "details of my patrol and an";
+			mes "urgent request for backup.";
+			mes "U-ugh! We don't have time!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Wait...!";
+			mes "But what about";
+			mes "you? You're hurt...";
+			next;
+			mes "[Sloutii]";
+			mes "I'll be damned if help";
+			mes "is delayed on my account!";
+			mes "Just hurry and get that";
+			mes "report to Sir Ford! Now go!";
+			mes "Now, if I can just get that";
+			mes "report out of my-- OW! N-no...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "^333333(He's writhing in pain";
+			mes "so much that he can't even";
+			mes "give me his report. I better";
+			mes "bring him a Red Potion to";
+			mes "alleviate his suffering...)^000000";
+			set CRUS_SK,2;
+			close;
+		}
+		else if (CRUS_SK == 2) {
+			if (countitem(501) > 0) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here, please take";
+				mes "this Red Potion.";
+				mes "It just might help...";
+				next;
+				mes "[Sloutii]";
+				mes "Oh, thank goodness!";
+				mes "Arrrgh! Just pour it";
+				mes "into the wound! I-it...";
+				mes "It burns so much! Those";
+				mes "Goblins must've cut me with";
+				mes "something coated in poison!";
+				next;
+				mes "[Sloutii]";
+				mes "Ah... Ahh...";
+				mes "The bleeding hasn't";
+				mes "stopped, but at least";
+				mes "it's better. Here, take";
+				mes "this report now and get it";
+				mes "to Sir Ford. Hurry and go!";
+				next;
+				mes "^3355FFYou received Sloutii's";
+				mes "patrol report. Some of the";
+				mes "pages are smudged with";
+				mes "the blood from his wound.^000000";
+				delitem 501,1; //Red_Potion
+				set CRUS_SK,3;
+				close;
+			}
+			else {
+				mes "[Sloutii]";
+				mes "Hurry and t-take this";
+				mes "report! L-let me just";
+				mes "hand it to you and th--";
+				mes "Arrrrgh! I-I can't move!";
+				mes "It... It just hurts so much!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "^333333(I better bring him";
+				mes "a Red Potion, otherwise";
+				mes "I have no hope of getting";
+				mes "that report without hurting him!)";
+				close;
+			}
+		}
+		else if (CRUS_SK == 3) {
+			mes "[Sloutii]";
+			mes "We're running out";
+			mes "of time! Hurry and get";
+			mes "my report to Sir Ford as";
+			mes "soon as you possibly can!";
+			close;
+		}
+		else if (CRUS_SK == 4) {
+			mes "[Sloutii]";
+			mes "Eeearrrgh--!";
+			mes "My l-legs! Everything";
+			mes "is starting to h-hurt!";
+			next;
+			mes "^3355FFSloutii fell unconscious,";
+			mes "and it seems that the wounds";
+			mes "in his legs are causing him";
+			mes "much more suffering.^000000";
+			close;
+		}
+		else if (CRUS_SK == 5) {
+			mes "[Sloutii]";
+			if (Upper == 1) {
+				mes "Eeearrrgh--!";
+				mes "My l-legs! Everything";
+				mes "is starting to h-hurt!";
+				next;
+				mes "^3355FFSloutii fell unconscious,";
+				mes "and it seems that the wounds";
+				mes "in his legs are causing him";
+				mes "much more suffering.^000000";
+			}
+			else {
+				mes "........";
+				mes ".........";
+				next;
+				mes "^3355FFSloutii is still";
+				mes "unconscious. He'll";
+				mes "die if his injuries aren't";
+				mes "treated immediately.";
+				mes "You'll have to help him";
+				mes "as quickly as you can.^000000";
+			}
+			close;
+		}
+		else if (CRUS_SK == 6) {
+			mes "[Sloutii]";
+			mes "........";
+			mes ".........";
+			next;
+			mes "^3355FFSloutii is still";
+			mes "unconscious. He'll";
+			mes "die if his injuries aren't";
+			mes "treated immediately.";
+			mes "You'll have to help him";
+			mes "as quickly as you can.^000000";
+			close;
+		}
+		else if (CRUS_SK == 7) {
+			set .@rand,rand(1,5);
+			if (.@rand == 1 || .@rand == 5) {
+				mes "^3355FFYou carefully pour the";
+				mes "Goblin poison antidote";
+				mes "into Sloutii's mouth.";
+				mes "His throat struggles to";
+				mes "swallow the antidote, but";
+				mes "he manages to ingest it.^000000";
+				next;
+				mes "^3355FFMiraculously, the wounds";
+				mes "inflicted by the Goblins";
+				mes "begin to rapidly heal.^000000";
+				next;
+				mes "[Sloutii]";
+				mes "Oh, wh-what happened?";
+				mes "Am... Am I really still alive?";
+				mes "Hey, it's you! You must've";
+				mes "saved my life! I thought";
+				mes "I was going to die for sure!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Well, it's a good thing";
+				mes "I came in time. Sir Ford";
+				mes "had me visit Father Arthur to";
+				mes "make an antidote to save you.";
+				mes "Ah, and I already delivered";
+				mes "your report to Sir Ford.";
+				next;
+				mes "[Sloutii]";
+				mes "Great! Now, let me repay you";
+				mes "by teaching you a special skill";
+				mes "developed by the Prontera Crusader Guardians. Using this skill helped";
+				mes "me survive the attack by those";
+				mes "Goblins. You ready to learn?";
+				next;
+				mes "[Sloutii]";
+				mes "This skill is called";
+				mes "''^0000FFShrink^000000,'' and it will";
+				mes "knock enemies backwards";
+				mes "when you successfully";
+				mes "guard their attacks.";
+				next;
+				mes "[Sloutii]";
+				mes "Now listen closely...";
+				mes "To execute it, you've got";
+				mes "to be able to concentrate";
+				mes "and repel enemies using";
+				mes "the right stance and mindset...";
+				next;
+				mes "[Sloutii]";
+				mes "Great! You learned the";
+				mes "skill! Now, I hope you use";
+				mes "this ability to combat evil";
+				mes "and protect the weak. Ah, and";
+				mes "if I learn any new skills, I'll be sure to teach you right away.";
+				set CRUS_SK,8;
+				skill "CR_SHRINK",1,SKILL_PERM;
+				close;
+			}
+			mes "^3355FFYou carefully pour the";
+			mes "Goblin poison antidote";
+			mes "into Sloutii's mouth.";
+			mes "His throat struggles to";
+			mes "swallow the antidote, but";
+			mes "he manages to ingest it.^000000";
+			next;
+			mes "^3355FFUnfortunately, nothing";
+			mes "happened. The antidote";
+			mes "proabably lost its effect";
+			mes "while you were traveling";
+			mes "from Father Arthur to Sloutii.";
+			mes "You've got to return to Father";
+			mes "Arthur and make another one.^000000";
+			set CRUS_SK,9;
+			close;
+		}
+		else if (CRUS_SK == 8 || CRUS_SK == 10) {
+			mes "[Sloutii]";
+			mes "Hey, it's you~";
+			mes "So how have you been?";
+			mes "If you ever get some free";
+			mes "time, come by and maybe";
+			mes "we can practice our swordplay.";
+			close;
+		}
+		else if (CRUS_SK == 9) {
+			mes "^3355FFThe antidote you";
+			mes "previously administered";
+			mes "had no effect. You've got";
+			mes "to try again by returning to";
+			mes "Father Arthur and making";
+			mes "a new antidote for Sloutii.^000000";
+			close;
+		}
+		else {
+			mes "[Sloutii]";
+			mes "Please be careful around";
+			mes "this area. Goblins are known";
+			mes "to attack any humans that";
+			mes "they encounter. And lately,";
+			mes "they've been getting even more violent, so stay on the lookout.";
+			close;
+		}
+	}
+	else {
+		mes "[Sloutii]";
+		mes "Please be careful around";
+		mes "this area. Goblins are known";
+		mes "to attack any humans that";
+		mes "they encounter. And lately,";
+		mes "they've been getting even more violent, so stay on the lookout.";
+		close;
+	}
+}
+
+prt_church,87,127,3	script	Pastor#1011	755,{
+	if (BaseJob == Job_Crusader) {
+		if (Upper == 1 && getskilllv("CR_SHRINK")) {
+			if (CRUS_SK == 8) {
+				mes "[Father Arthur]";
+				mes "Oh, a Paladin now,";
+				mes "are you? Ah, I'm quite";
+				mes "proud of you. After all, I've";
+				mes "known you back when you";
+				mes "were a brave Crusader.";
+				next;
+				mes "[Father Arthur]";
+				mes "I hope that you continue to";
+				mes "use your power to combat";
+				mes "the forces of evil and to";
+				mes "protect the weak. May your";
+				mes "heart guide your actions.";
+				close;
+			}
+			else if (CRUS_SK == 10) {
+				mes "[Father Arthur]";
+				mes "Ah, have you been well?";
+				mes "It is good to see you under";
+				mes "more pleasant circumstances.";
+				mes "Nonetheless, if you think that";
+				mes "I can be of service to you, then please let me know right away.";
+				close;
+			}
+		}
+		if (CRUS_SK == 4) {
+			mes "[Father Arthur]";
+			mes "Greetings.";
+			mes "How may I be of";
+			mes "service to you today?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Someone was wounded";
+			mes "by Goblins, and I was told";
+			mes "by Sir Ford that you're the";
+			mes "only one who can make the";
+			mes "Goblin Poison Antidote.";
+			next;
+			mes "[Father Arthur]";
+			mes "Saints preserve us,";
+			mes "the Goblins are indeed";
+			mes "cruel and merciless!";
+			mes "Unfortunately, I'm fresh";
+			mes "out of Goblin Poison Antidote";
+			mes "and must make it from scratch.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Tell me what you";
+			mes "need to make it, and";
+			mes "I'll bring you all of the";
+			mes "materials right away!";
+			next;
+			mes "[Father Arthur]";
+			mes "Ah, yes. Bring me";
+			mes "^0000FF20 Sticky Mucus^000000,";
+			mes "^0000FF3 Empty Bottles^000000,";
+			mes "^0000FF5 Jellopies^000000...";
+			next;
+			mes "[Father Arthur]";
+			mes "...^0000FF1 Coal^000000,";
+			mes "^0000FF1 Grape^000000,";
+			mes "^0000FF3 Cyfar^000000 and";
+			mes "^0000FF1 Unripe Apple^000000.";
+			mes "Now hurry, he won't";
+			mes "last long if he's poisoned!";
+			set CRUS_SK,5;
+			close;
+		}
+		else if (CRUS_SK == 5) {
+			if (countitem(514) > 0 && countitem(619) > 0 && countitem(1003) > 0 && countitem(7053) > 2 && countitem(713) > 2 && countitem(909) > 4 && countitem(938) > 19) {
+				mes "[Father Arthur]";
+				mes "Ah, you've returned.";
+				mes "Now let me check to";
+				mes "see if you've brought";
+				mes "everything needed to";
+				mes "create the antidote.";
+				next;
+				mes "[Father Arthur]";
+				mes "Good, good. It looks";
+				mes "like everything is ready.";
+				mes "Now, before I begin, I should";
+				mes "tell you that the antidote has";
+				mes "a time limit of effectiveness.";
+				next;
+				mes "[Father Arthur]";
+				mes "However, there's no way";
+				mes "to accurately predict when";
+				mes "the antidote will become";
+				mes "ineffective until you try it.";
+				mes "Therefore, you may have to";
+				mes "return to me for a new batch.";
+				next;
+				mes "[Father Arthur]";
+				mes "These materials should";
+				mes "be enough for multiple";
+				mes "dosages, so you won't have";
+				mes "to worry about collecting";
+				mes "materials again. Now, give";
+				mes "me a moment to distill this...";
+				delitem 938,20; //Sticky_Mucus
+				delitem 619,1; //Unripe_Apple
+				delitem 909,5; //Jellopy
+				delitem 514,1; //Grape
+				delitem 1003,1; //Coal
+				delitem 7053,3; //Cyfar
+				delitem 713,3; //Empty_Bottle
+				set CRUS_SK,6;
+				close;
+			}
+			else {
+				mes "[Father Arthur]";
+				mes "I'm sorry, but these";
+				mes "aren't enough materials";
+				mes "in order for me to distill the";
+				mes "antidote. Hmm, what were";
+				mes "the required materials again?";
+				next;
+				mes "[Father Arthur]";
+				mes "Ah, yes. Bring me";
+				mes "^0000FF20 Sticky Mucus^000000,";
+				mes "^0000FF3 Empty Bottles^000000,";
+				mes "^0000FF5 Jellopies^000000...";
+				next;
+				mes "[Father Arthur]";
+				mes "...^0000FF1 Coal^000000,";
+				mes "^0000FF1 Grape^000000,";
+				mes "^0000FF3 Cyfar^000000 and";
+				mes "^0000FF1 Unripe Apple^000000.";
+				mes "Now hurry, he won't";
+				mes "last long if he's poisoned!";
+				close;
+			}
+		}
+		else if (CRUS_SK == 6) {
+			mes "[Father Arthur]";
+			mes "Your timing must be";
+			mes "divinely inspired: I've";
+			mes "just completed the Goblin";
+			mes "Poison Antidote. Now please";
+			mes "listen very carefully to me...";
+			next;
+			mes "[Father Arthur]";
+			mes "I can't guarantee if this";
+			mes "antidote will work. If it";
+			mes "loses its effectiveness before";
+			mes "you arrive, you'll have to come";
+			mes "back and get a fresh new dose.";
+			next;
+			mes "[Father Arthur]";
+			mes "You've got to hurry over";
+			mes "to the wounded as quickly";
+			mes "as possible. Now, as soon as";
+			mes "I hand this to you, you've got";
+			mes "to run there as fast as you";
+			mes "can: a man's life is at stake!";
+			next;
+			mes "[Father Arthur]";
+			mes "Here, take the";
+			mes "antidote. Now go!";
+			mes "Godspeed, adventurer!";
+			set CRUS_SK,7;
+			close;
+		}
+		else if (CRUS_SK == 7) {
+			mes "[Father Arthur]";
+			mes "You haven't left yet?!";
+			mes "Hurry over to the wounded";
+			mes "and administer the antidote!";
+			mes "You'll have to come back for";
+			mes "a fresh batch of antidote if";
+			mes "you arrive there too late!";
+			close;
+		}
+		else if (CRUS_SK == 8) {
+			mes "[Father Arthur]";
+			mes "Ah, so the antidote";
+			mes "worked and that man is";
+			mes "expected to fully recover?";
+			mes "Good, good. It does my heart";
+			mes "good to hear he's much better.";
+			close;
+		}
+		else if (CRUS_SK == 9) {
+			mes "[Father Arthur]";
+			mes "The antidote failed?!";
+			mes "We have no choice, but";
+			mes "to try it again. Here, let";
+			mes "me quickly distill a new";
+			mes "dosage for you. Wait, wait...";
+			mes "Ah! There! I've finished it!";
+			next;
+			mes "[Father Arthur]";
+			mes "Now take this fresh";
+			mes "antidote and run as";
+			mes "fast as you can to";
+			mes "the wounded! Go!";
+			set CRUS_SK,7;
+			close;
+		}
+		else if (CRUS_SK == 10) {
+			mes "[Father Arthur]";
+			mes "Ah, have you been well?";
+			mes "It is good to see you under";
+			mes "more pleasant circumstances.";
+			mes "Nonetheless, if you think that";
+			mes "I can be of service to you, then please let me know right away.";
+			close;
+		}
+		else {
+			mes "[Father Arthur]";
+			mes "Ah, hello there~";
+			mes "Welcome to Prontera";
+			mes "Church. Please relax here,";
+			mes "enjoy the silence, and invite";
+			mes "spiritual calm into your heart.";
+			close;
+		}
+	}
+	else {
+		mes "[Father Arthur]";
+		mes "Ah, hello there~";
+		mes "Welcome to Prontera";
+		mes "Church. Please relax here,";
+		mes "enjoy the silence, and invite";
+		mes "spiritual calm into your heart.";
+		close;
+	}
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 for fully working skills only [Lupus]
+//= 1.1 Added more new skill quests for more classes [Lupus]
+//= Somehow eA engine doesn't let you keep learn't skill V_V'
+//= 1.2 Added to correct locations, correct NPC's, fixed
+//= some of the items required and made them into real
+//= quests. [Reddozen] 
+//= 1.3 Fixed bugs and minor typos. Optimized [Lupus]
+//= 1.3a fixed an item ID typo, thx 2Spiritual Kid
+//= 1.3b Splitted into different files [DracoRPG]
+//============================================================

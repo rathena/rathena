@@ -1,0 +1,44 @@
+//===== rAthena Script =======================================
+//= Sample: Setiteminfo & Setitemscript
+//===== By: ==================================================
+//= Lupus
+//===== Last Updated: ========================================
+//= 20140208
+//===== Description: ========================================= 
+//= Demonstrates 'setiteminfo' and 'setitemscript' commands.
+//============================================================
+
+prontera,164,161,5	script	Lupus	1013,{
+	mes "Please choose an option:";
+	next;
+	switch (select("Make Knife[3] Edible", "Make Apple Equippable", "Edible Knife = Full SP", "Knife = Weapon + 3 Notes")) {
+	case 1:
+		mes "Ok. We made Knife[3] edible.";
+		setiteminfo(Knife, 2, IT_HEALING); //type = 0 : potion
+		setitemscript(Knife, "{dispbottom \"* You used Knife[3]\";}");
+		break;
+	case 2:
+		mes "Ok. We made Apple equippable.";
+		setiteminfo(Apple, 2, IT_ARMOR); //item type -> headgear (type = 5 -> IT_ARMOR)
+		setiteminfo(Apple, 5, 512); //where to equip to (equip = 512)
+		setiteminfo(Apple, 11, 256); //set as headgear location (loc = 256)
+		setiteminfo(Apple, 14, 85); //set Headgear Sprite ID (view id = 85)
+		setitemscript(Apple, "{dispbottom \"* Other item's changed\";}", 0);
+		setitemscript(Apple, "{dispbottom \"* Equipped\";}", 1);
+		setitemscript(Apple, "{dispbottom \"* Unequipped\";}", 2);
+		break;
+	case 3:
+		mes "Ok. Now edible Knife[3] restores your SP.";
+		setitemscript(Knife, 2, 0);
+		setitemscript(Knife, "{dispbottom \"* You ate Knife[3] + Full SP\"; percentheal 0,100;}");
+		break;
+	case 4:
+		mes "Ok. We made Knife a weapon, but added 3 notes.";
+		setiteminfo(Knife, 2, IT_WEAPON); //type = 4 -> IT_WEAPON
+		setitemscript(Knife, "{dispbottom \"* 1 Used\";}", 0);
+		setitemscript(Knife, "{dispbottom \"* 2 Equipped\";}", 1);
+		setitemscript(Knife, "{dispbottom \"* 3 Unequipped\";}", 2);
+		break;
+	}
+	close;
+}

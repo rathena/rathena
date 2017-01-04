@@ -1,0 +1,101 @@
+//===== rAthena Script =======================================
+//= iRO Repeatable EXP Quests.
+//===== By: ==================================================
+//= Masao
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Custom Version.
+//= Repeatable EXP Quest : Kill 50 Zhu Po Long.
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+lou_dun02,161,264,4	script	Dragon Hunter	732,{
+
+	if (checkquest(60182) != -1) {
+		if (checkquest(60182,HUNTING) != 2 ) {
+			mes "[Dragon Hunter]";
+			mes "Have you finished hunting the 50 Zhu Po Long?";
+			next;
+			switch(select("Yes:No:I want to quit")) {
+			case 1:
+				mes "[Dragon Hunter]";
+				mes "Hmm, I don't think you've hunted 50 yet.";
+				close;
+			case 2:
+				mes "[Dragon Hunter]";
+				mes "Remember, I need help hunting Zhu Po Long so go and hunt 50 of them.";
+				close;
+			case 3:
+				mes "[Dragon Hunter]";
+				mes "Are you sure that you want to stop hunting?";
+				mes "Any progress that you've made will be erased";
+				next;
+				switch(select("Yes:No")) {
+				case 1:
+					mes "[Dragon Hunter]";
+					mes "Ok then, well come back here if you change your mind.";
+					erasequest 60182;
+					close;
+				case 2:
+					mes "[Dragon Hunter]";
+					mes "Please kill 50 Zhu Po Long in order to make this a Place were people can go to and gather Experience.";
+					close;
+				}
+			}
+		}
+		mes "[Dragon Hunter]";
+		mes "Amazing, you did that with speed.";
+		getexp 151300,60520;
+		erasequest 60182;
+		close;
+	}
+	if ((BaseLevel > 49) && (BaseLevel < 91)) {
+		mes "[Dragon Hunter]";
+		mes "Oh great!";
+		mes "You are here to help me right?";
+		mes "If not, i don't know what to do with the Monsters in this Place!";
+		next;
+		switch(select("Sure:No")) {
+		case 1:
+			mes "[Dragon Hunter]";
+			mes "Great! I knew the moment i saw you that i can count on you!";
+			mes "I need you to reduce the Amount of Monsters which are currently rampaging on this Map!";
+			mes "There are to many Zhu Po Long around, which makes it impossible for the lower level players to gain good experience here.";
+			next;
+			mes "[Dragon Hunter]";
+			mes "So, would you still like to help me?";
+			next;
+			switch(select("Sure:Cancel")) {
+			case 1:
+				if (BaseLevel > 90) {
+					mes "[Dragon Hunter]";
+					mes "Thank you for your great help with the Zhu Po Long!";
+					mes "Currently the Situation is stable and i'm not in need of your help anymore to kill them.";
+					close;
+				}
+				mes "[Dragon Hunter]";
+				mes "Kill 50 of those Zhu Po Long and let me know when you're done. I will reward you for your efforts.";
+				setquest 60182;
+				close;
+			case 2:
+				mes "[Dragon Hunter]";
+				mes "If you change your mind, please come back.";
+				close;
+			}
+		case 2:
+			mes "[Dragon Hunter]";
+			mes "If you change your mind, please come back.";
+			close;
+		}
+	}
+	mes "[Dragon Hunter]";
+	mes "Oh boy, Oh boy!";
+	next;
+	mes "[Dragon Hunter]";
+	mes "Sorry I can't talk right now I am in a world of pain here, these darn Zhu Po Long are going to kill me.";
+	close;
+}

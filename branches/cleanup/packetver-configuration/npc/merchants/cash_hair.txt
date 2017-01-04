@@ -1,0 +1,125 @@
+//===== rAthena Script ======================================= 
+//= Cash Hair Stylist
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Exchange cash item, New_Style_Coupon, for new hair styles.
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Kisuka]
+//============================================================
+
+itemmall,19,74,5	script	Stylist#cash	91,{
+	mes "[Stylist]";
+	mes "Hey, I'm Kaniki.";
+	mes "I'm here to start a new";
+	mes "trend by introducing my";
+	mes "special new hairstyles!";
+	mes "Give me a ^FF0000New Style Coupon^000000,";
+	mes "and I'll change your hair~";
+	next;
+	if (Sex == 1) {
+		mes "[Kaniki]";
+		mes "I have two special";
+		mes "hairstyles for men, the";
+		mes "Emergency Heal Perm";
+		mes "and the Aura Blade Cut.";
+		mes "and aura blade cut.";
+		next;
+		cutin "hair_m_24.bmp",4;
+		mes "[Kaniki]";
+		mes "This is the Emergency";
+		mes "Heal Perm. It's a brand";
+		mes "new style I invented recently.";
+		mes "What do you think? Cool, huh?";
+		next;
+		cutin "",255;
+		cutin "hair_m_25.bmp",4;
+		mes "[Kaniki]";
+		mes "Now this is the Aura";
+		mes "Blade Cut. You haven't";
+		mes "seen anything like it";
+		mes "before, haven't you?";
+		next;
+		cutin "",255;
+	}else{
+		mes "[Kaniki]";
+		mes "I have two new hairstyles for";
+		mes "women, the Assumptio Perm";
+		mes "and the Soul Changer Cut.";
+		mes "Do you want to see how";
+		mes "these styles look?";
+		next;
+		cutin "hair_f_24.bmp",4;
+		mes "[Kaniki]";
+		mes "This is the Assumptio";
+		mes "Perm. It'd really good";
+		mes "on you, wouldn't it?";
+		next;
+		cutin "",255;
+		cutin "hair_f_25.bmp",4;
+		mes "[Kaniki]";
+		mes "Next is the Soul";
+		mes "Changer Cut. What do";
+		mes "you think? Isn't it nice?";
+		next;
+		cutin "",255;
+	}
+	mes "[Kaniki]";
+	mes "Have you decided";
+	mes "if you'd like me to";
+	mes "change your hairstyle?";
+	next;
+	if(select("Change Hairstyle:Don't Change") == 1) {
+		if (countitem(7622) > 0) {
+			mes "[Kaniki]";
+			mes "Great, you brought";
+			mes "a New Style Coupon!";
+			mes "Alright, which hairstyle";
+			mes "did you want to have?";
+			next;
+			if (Sex == 1) {
+				if(select("Emergency Heal Perm:Aura Blade Cut") == 1) {
+					delitem 7622,1;	// New_Style_Coupon
+					setlook 1,24;
+				}else{
+					delitem 7622,1;	// New_Style_Coupon
+					setlook 1,25;
+				}
+			}else{
+				if(select("Assumptio Perm:Soul Changer Cut") == 1) {
+					delitem 7622,1;	// New_Style_Coupon
+					setlook 1,24;
+				}else{
+					delitem 7622,1;	// New_Style_Coupon
+					setlook 1,25;
+				}
+			}
+			mes "[Kaniki]";
+			mes "There--! It's done!";
+			mes "How do you like your";
+			mes "new hair? Well, I hope";
+			mes "to see you again. Take care!";
+			close;
+		}else{
+			mes "[Kaniki]";
+			mes "I'm sorry, but I can";
+			mes "only provide my hairstyling";
+			mes "service if you bring a New";
+			mes "Style Coupon. Please come";
+			mes "back to me after you manage to";
+			mes "get one of those coupons, okay?";
+			close;
+		}
+	}
+	mes "[Kaniki]";
+	mes "Really? Oh, that's too bad.";
+	mes "Well, if you ever change your";
+	mes "mind about updating your";
+	mes "hairstyle, come back";
+	mes "and let me know, okay?";
+	close;
+}

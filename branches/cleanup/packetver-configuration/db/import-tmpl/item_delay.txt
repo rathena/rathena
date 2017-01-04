@@ -1,0 +1,8 @@
+// Item Delay Database
+//
+// Structure of Database:
+// Item ID,Delay in Milliseconds
+//
+// NOTE:
+// There is a max concurrent number of entries set in src/map/itemdb.h as MAX_ITEMDELAYS.
+

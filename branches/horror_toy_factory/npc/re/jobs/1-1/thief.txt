@@ -1,0 +1,202 @@
+//===== rAthena Script ======================================= 
+//= Renewal Thief Job Quest
+//===== By: ================================================== 
+//= Kisuka
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Job Change to Thief Class
+//===== Additional Comments: ================================= 
+//= 1.0 First Version. [Kisuka]
+//= 1.1 Added support for Baby classes. [Euphy]
+//============================================================ 
+moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
+	if (Upper == 1) {
+		if (ADVJOB == Job_Assassin_Cross || ADVJOB == Job_Stalker) {
+			if (Class == Job_Novice_High) {
+				mes "[Thief Guide]";
+				mes "Huh? Do I know you? It's creepy that you seem so familiar. You don't have a twin, do you?";
+				next;
+				if (!callfunc("F_CanChangeJob")) {
+					mes "[Thief Guide]";
+					mes "What, do you want to be a Thief? I'm sorry, but you look like you need more training.";
+					next;
+					mes "[Thief Guide]";
+					mes "Take your time and learn all the Basic Skills, will you? Well then, see you later~!";
+					close;
+				}
+				mes "[Thief Guide]";
+				mes "Well, I got this feeling like you've been through a lifetime of fighting, so I'm promoting you to a Thief right this minute. I better give you tough guys what you want...";
+				next;
+				skill "NV_TRICKDEAD",0,SKILL_PERM;
+				jobchange Job_Thief_High;
+				skill "TF_SPRINKLESAND",1,SKILL_PERM;
+				skill "TF_BACKSLIDING",1,SKILL_PERM;
+				skill "TF_PICKSTONE",1,SKILL_PERM;
+				skill "TF_THROWSTONE",1,SKILL_PERM;
+				mes "[Thief Guide]";
+				mes "Since you've become a Thief, live as a Thief. Now, go for it! Next~";
+				close;
+			}else{
+				mes "[Thief Guide]";
+				if (Sex == SEX_MALE)
+					mes "Hey, dude.";
+				else
+					mes "Hey, baby~";
+				close;
+			}
+		}else{
+			mes "[Thief Guide]";
+			if (Sex == SEX_MALE)
+				mes "Hey, dude.";
+			else
+				mes "Hey, baby.";
+			mes "...Hey! You look too goody-goody to want to be a Thief!! Now scram, I'm busy. Next!";
+			close;
+		}
+	}
+	if(q_job_thief == 1) {
+		mes "[Thief Guildsman]";
+		mes "Ehh... Seems like a beloved "+(Sex == SEX_MALE?"son":"daughter")+" of a rich family, but why are you here in this dirty place?";
+		next;
+		mes "[Thief Guildsman]";
+		mes "Well, I'm not in charge of making you a Thief. I just accept applications, get it?";
+		mes "If you want to become a Thief, ask the sharp-eyed guy next to me.";
+		close;
+	}
+	mes "[Thief Guildsman]";
+	if(BaseJob != Job_Novice) {
+		if(BaseJob == Job_Thief) {
+			mes "Hey~ if you have any trouble, get it out to me anytime, huh?";
+			close;
+		}else{
+			mes "What the heck...?";
+			if(Sex == SEX_MALE) {
+				mes "Huh... you are a "+jobname(Class)+", blockhead!";
+				next;
+				mes "[Thief Guildsman]";
+				mes "Hey, brother.";
+			}else{
+				next;
+				mes "[Thief Guildsman]";
+				mes "Hey, lady.";
+			}
+			mes "Why are you here? Go back to your place~ go back~~";
+			close;
+		}
+	}
+	mes "Ehh... Seems like a beloved "+(Sex == SEX_MALE?"son":"daughter")+" of a rich family, but why are you here in this dirty place?";
+	next;
+	if(select("I want to be a Thief.:Nothing.") == 2) {
+		mes "[Thief Guildsman]";
+		mes "You know you cannot be a thief without an application...";
+		mes "What's on your mind...?";
+		close;
+	}
+	mes "[Thief Guildsman]";
+	mes "Well, are you that proud of it?";
+	mes "You're telling me so proudly that you want to be a Thief! Why don't you go to all the villages and advertise yourself for being a thief?";
+	mes "'Ha ha ha! Go put up a banner that says 'I will be a proud thief who steals other people's stuff.'";
+	next;
+	mes "[Thief Guildsman]";
+	mes "Do you want to be a thief so badly?";
+	next;
+	switch(select("Yes.:No.:How about you?")) {
+	case 1:
+		mes "[Thief Guildsman]";
+		mes "Oh, do you...? Huh.. well... I do live and learn to see strange people like you.";
+		next;
+		break;
+	case 2:
+		mes "[Thief Guildsman]";
+		mes "Then why are you here? Do you think you can become a thief so easily?";
+		next;
+		break;
+	case 3:
+		mes "[Thief Guildsman]";
+		mes "Eh..? me? me?";
+		mes "Well... I just fit well to being a thief... characteristically... I don't mind this silly matter.";
+		next;
+		break;
+	}
+	mes "[Thief Guildsman]";
+	mes "Anyway, in the outside world, never say that you want to be a Thief!!";
+	next;
+	mes "[Thief Guildsman]";
+	mes "So, do you want to apply for being a Thief?";
+	next;
+	if(select("Yes, I do.:No.") == 2) {
+		mes "[Thief Guildsman]";
+		mes "Well... do what you want to do~ Go your way~";
+		close;
+	}
+	mes "[Thief Guildsman]";
+	mes "Alright, tell me your name. Huh? What?";
+	mes ""+strcharinfo(0)+". So "+strcharinfo(0)+", right...?";
+	next;
+	if (!callfunc("F_CanChangeJob")) {
+		mes "[Thief Guildsman]";
+		mes "I can see your strong will to become a Thief......";
+		mes "But only with your will, you cannot make it in a real fight, can you?";
+		mes "So go and reach at least Basic Skill Level 9.";
+		close;
+	}
+	mes "[Thief Guildsman]";
+	mes "Hmm.... I found your interesting criminal records from the data of the detective agency. Well you seem to have what it takes to be a good thief.";
+	mes ""+strcharinfo(0)+". I now declare that you have passed the job interview!";
+	next;
+	mes "[Thief Guildsman]";
+	mes "Well, I'm not in charge of making you a Thief. I just accept applications, get it?";
+	mes "If you want to become a Thief, ask the guy next to me.";
+	set q_job_thief,1;
+	close;
+}
+
+moc_prydb1,42,133,2	script	Thief Guildsman#thief	118,{
+	if(q_job_thief == 1) {
+		mes "[Thief Guildsman]";
+		mes "Alright. You must have passed the job interview, huh?";
+		mes "Good. I'll accept you.";
+		mes "Let's begin the job-changing ceremony of our guild!";
+		next;
+		mes "[Commander of Thief Guild]";
+		mes "'"+strcharinfo(0)+".'";
+		mes "'For those who are ready, the moonlight shall open the way. Now you are fully ready, I now officially allow you to become a member of the Thief Guild.'";
+		callfunc "Job_Change",Job_Thief;
+		set q_job_thief,0;
+		getitem 13041,1;	// N_Main_Gauche
+		next;
+		mes "[Commander of Thief Guild]";
+		mes "'Congratulations on becoming a Thief.'";
+		mes "'From now on, keep the rules of our guild and be an honorable member.'";
+		mes "'If you bring us any disgrace by breaking our rules, you better watch your back.'";
+		mes "'Anyway, I expect you to be a great thief.'";
+		next;
+		mes "[Brad]";
+		mes "Heee~Yaaaa~! Congratulations! My friend.";
+		mes "My name is 'Brad'. I'm in charge of human resources here.";
+		mes "I'm not sure for now but you'll have more chances to see me later on.";
+		next;
+		mes "[Brad]";
+		mes "Okay, I've done what I can do to you, so go on your way. I'm quite a busy man.";
+		mes "See you again.";
+		close;
+	}
+	if(BaseJob != Job_Novice) {
+		if(BaseJob == Job_Thief) {
+			mes "[Brad]";
+			mes "I don't have any special events now. So go on your way and come back later.";
+		}else{
+			mes "[Thief Guildsman]";
+			mes "Hey~ Hey~ You're not a novice or a thief!";
+			mes "What are you doing here? You're not welcome to make this place your home~ Hweeeee~ Get outta here~";
+		}
+		close;
+	}
+	mes "[Thief Guildsman]";
+	mes "Ho? Why is a novice like you visiting here?";
+	mes "If you are here to be a Thief, ask the nasty-tempered lady right next to me.";
+	close;
+}

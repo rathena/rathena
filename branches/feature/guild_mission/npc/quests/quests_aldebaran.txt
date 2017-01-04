@@ -1,0 +1,111 @@
+//===== rAthena Script ======================================= 
+//= Quest NPCs related to Aldebaran 
+//===== By: ================================================== 
+//= rAthena Dev Team
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project; 7.15 +
+//===== Description: ========================================= 
+//= 'Doctor Band', 'Feather Bonnet', 'Opera Masque', 'Sakkat Hat' Quests.
+//===== Additional Comments: ================================= 
+//= Fully working
+//= 1.1 Fixed Doctor Band items [Lupus]
+//= 1.2 Removed Duplicates [Silent]
+//= 1.3 Updated headgear NPC. [L0ne_W0lf]
+//============================================================ 
+
+// 'Doctor Band', 'Feather Bonnet', 'Opera Masque', 'Sakkat Hat' Quest
+//============================================================
+aldeba_in,152,166,4	script	Trader#01	86,{
+	mes "[Trader]";
+	mes "Who is this mysterious man?";
+	mes "I, the enigmatic and debonair 'Trader?'";
+	next;
+	mes "[Trader]";
+	mes "Traveling about the Rune-Midgard Continent, with all of his wonderful hats? Nobody knows...";
+	next;
+	mes "[Trader]";
+	mes "For what purpose do I collect and trade these hats from all around the world? Choose a hat, get closer to unraveling the mystery...";
+	next;
+	mes " (1) ^3355FFDoctor Band^000000:";
+	mes "1 Red Bandana + 50 Irons + 1 Cracked Diamond + 3500 Zeny";
+	mes " (2)^3355FFFeather Bonnet^000000:";
+	mes "1 Romantic Gent + 300 Feather of Birds + 500 Zeny";
+	mes " (3) ^3355FFPhantom of Opera^000000:";
+	mes "20 Iron + 1 Singing Plant + 5000 Zeny ";
+	mes " (4) ^3355FFSakkat^000000:";
+	mes "120 Trunks + 10000 Zeny ";
+	next;
+	switch(select(" Doctor Band : Feather Bonnet : Phantom of Opera : Sakkat ")) {
+	case 1:
+		if ((countitem(2275) > 0) && (countitem(998) > 49) && (countitem(733) > 0) && (Zeny > 3499)) {
+			delitem 2275,1; //Red_Bandana
+			delitem 998,50; //Iron
+			delitem 733,1; //Crystal_Jewel___
+			set Zeny, Zeny-3500;
+			mes "[Trader]";
+			mes "Hm! You don't have a medical license, do you? It's alright, I've heard about a rogue, unlicensed physician who performed medical miracles! But... That might have been a comic book.";
+			next;
+			mes "[Trader]";
+			mes "Oh whatever. Just don't get caught.";
+			getitem 2273,1; //Doctor_Cap
+			close;
+		}
+		else {
+			mes "[Trader]";
+			mes "You guy~";
+			mes "Check the requirements again.";
+			mes "You don't look like an idiot though. So c'mon man, get real.";
+			close;
+		}
+	case 2:
+		if ((countitem(2247) > 0) && (countitem(916) > 299) && (Zeny > 499)) {
+			delitem 2247,1; //Oldman's_Romance
+			delitem 916,300; //Feather_Of_Birds
+			set Zeny, Zeny-500;
+			mes "[Trader]";
+			mes "Ooh~! You have good fashion sense. I know you've had a hard time collecting this stuff, but this hat is worth it. Take it. All you need now is a fur coat and a cane!";
+			getitem 5018,1; //Feather_Bonnet
+			close;
+		}
+		else {
+			mes "[Trader]";
+			mes "You guy~";
+			mes "Go check my requirements again. You don't look like an idiot though. C'mon man, get real.";
+			close;
+		}
+	case 3:
+		if ((countitem(998) > 19) && (countitem(707) > 0) && (Zeny > 4999)){ //Iron Singing_Plant 
+			delitem 998,20; //Iron
+			delitem 707,1; //Singing_Plant
+			set Zeny, Zeny-5000;
+			mes "[Trader]";
+			mes "This one? It's a little bit scary, though it has some sort of romantic quality. What do you think? You like it? Alright, take it, it's yours!";
+			getitem 2281,1; //Phantom_Of_Opera
+			close;
+		}
+		else {
+			mes "[Trader]";
+			mes "Buffoon. Go check the requirements again. ^3355FFPhantom of Opera^000000 isn't easy to come by. So c'mon man, get real.";
+			close;
+		}
+	case 4:
+		if ((countitem(1019) > 119) && (Zeny > 9999)){ //Wooden_Block 
+			delitem 1019,120; //Wooden_Block
+			set Zeny, Zeny-10000;
+			mes "[Trader]";
+			mes "If you have a chance to visit the Uplander Village, Payon, please go and meet the Sakkat Craftsman.";
+			next;
+			mes "[Trader]";
+			mes "He's never sold Sakkat to Traders other than me, since only I can recognize its quality. Due to its rarity, Sakkat has become a very unique and exceptional product. Okay! Take it, it's yours!";
+			getitem 2280,1; //Sahkkat
+			close;
+		}
+		else {
+			mes "[Trader]";
+			mes "MORON~ Check my requirements again. C'mon man, you don't look like an idiot, so get real~";
+			close;
+		}
+	}
+}

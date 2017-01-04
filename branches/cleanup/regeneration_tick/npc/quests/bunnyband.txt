@@ -1,0 +1,153 @@
+//===== rAthena Script ======================================= 
+//= Bunny Band Quest
+//===== By: ================================================== 
+//= rAthena Dev Team
+//===== Current Version: ===================================== 
+//= 1.6
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Quest to obtain a Bunny Band headgear.
+//===== Additional Comments: ================================= 
+//= 1.5 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//	Changed @BUNYBAN back to BUNYBND, it should be this way.
+//	Removed duplicates. NPC is ALberta-only.
+//= 1.6 Cleaning. [Euphy]
+//============================================================ 
+
+alberta,26,229,0	script	Kafra Employee#bunny	83,{
+	if (BUNYBND == 1) {
+		mes "[Kafra Employee]";
+		mes "Hello there~!";
+		mes "How'd you like to";
+		mes "participate in Kafra";
+		mes "Corporation's special";
+		mes "^529DFFBunny Band Event^000000?";
+		next;
+		switch(select("Sure, I brought the items.:Event Information:Cancel")) {
+		case 1:
+			mes "[Kafra Employee]";
+			mes "Alrighty~";
+			mes "Let me check to";
+			mes "see if you brought";
+			mes "all the items...";
+			next;
+			setarray .@Items[0],949,100,706,1,722,1,2213,1;
+			for(set .@i,0; .@i<8; set .@i,.@i+2)
+				if (countitem(.@Items[.@i]) < .@Items[.@i+1]) {
+					mes "[Kafra Employee]";
+					mes "Ooh, I'm sorry";
+					mes "but you need to";
+					mes "bring at least";
+					mes callfunc("F_InsertPlural",.@Items[.@i+1],getitemname(.@Items[.@i]))+".";
+					close;
+				}
+			mes "[Kafra Employee]";
+			mes "Great, I see that";
+			mes "you've gathered";
+			mes "everything I need to";
+			mes "make the Bunny Band.";
+			mes "Please wait a moment";
+			mes "while I put it together...";
+			next;
+			for(set .@i,0; .@i<8; set .@i,.@i+2)
+				if (countitem(.@Items[.@i]) < .@Items[.@i+1]) {
+					mes "[Kafra Employee]";
+					mes "Hm? I'm sorry,";
+					mes "but I actually can't";
+					mes "make this right now. You";
+					mes "need "+callfunc("F_InsertPlural",.@Items[.@i+1],getitemname(.@Items[.@i]));
+					mes "in order for me to put this";
+					mes "Bunny Band together...";
+					close;
+				}
+			delitem 949,100; //Feather
+			delitem 706,1; //Four_Leaf_Clover
+			delitem 722,1; //Scarlet_Jewel
+			delitem 2213,1; //Cat_Hairband
+			mes "[Kafra Employee]";
+			mes "Ah, here you go~";
+			mes "The perfect Bunny Band!";
+			mes "Well, I hope you enjoy it.";
+			getitem 2214,1; //Bunny_Band
+			set BUNYBND,0;
+			next;
+			mes "[Kafra Employee]";
+			mes "Thank you for";
+			mes "participating in this";
+			mes "special event and your";
+			mes "continued patronage";
+			mes "of the Kafra Services~";
+			close;
+		case 2:
+			goto L_Info;
+		case 3:
+			close;
+		}
+	}
+	mes "[Kafra Employee]";
+	mes "Hi there~! Would you like";
+	mes "to join our special ^529DFFBunny";
+	mes "Band Event^000000 hosted by the Kafra";
+	mes "Corporation and sponsored by";
+	mes "the Alberta Merchant Guild?";
+	next;
+	switch(select("Join the Event:Event Information:Cancel")) {
+	case 1:
+		set BUNYBND,1;
+		mes "[Kafra Employee]";
+		mes "Great! Thanks for";
+		mes "participating! If you";
+		mes "haven't already heard,";
+		mes "you need to collect these";
+		mes "items if you want me put a";
+		mes "Bunny Band together for you...";
+		next;
+		mes "[Kafra Employee]";
+		mes "100 Feathers,";
+		mes "1 Four-Leaf Clover,";
+		mes "1 Kitty Band and";
+		mes "1 Pearl. That's it!";
+		mes "Good luck and I'll be";
+		mes "waiting for you here~";
+		close;
+	case 2:
+		break;
+	case 3:
+		close;
+	}
+L_Info:
+	mes "[Kafra Employee]";
+	mes "To thank our valued";
+	mes "customers, Kafra Corporation";
+	mes "has prepared a special event";
+	mes "where Kafra Employee will assemble";
+	mes "Bunny Bands for adventurers";
+	mes "who bring the required items.";
+	next;
+	mes "[Kafra Employee]";
+	mes "For this special,";
+	mes "one of a kind item,";
+	mes "bring 100 Feathers,";
+	mes "1 Four-Leaf Clover,";
+	mes "1 Kitty Band and";
+	mes "1 Pearl.";
+	next;
+	mes "[Kafra Employee]";
+	mes "When you're ready,";
+	mes "come back and bring";
+	mes "those items to me.";
+	mes "(Sponsored by the";
+	mes "Alberta Merchant Guild).";
+	close;
+}
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.1 using duplicate command
+//= 1.2 Fixed NPC location, removed NPC dupes [Lupus]
+//= 1.3 RE-Fixed exploit V_V, also cleared used VAR [Lupus]
+//= 1.4 replaced BUNYBND with @BUNYBND [Lupus]
+//============================================================ 

@@ -1,0 +1,39 @@
+//===== rAthena Script =======================================
+//= Bulletin Boards
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Bulletin Boards for beginners.
+//===== Additional Comments: =================================
+//= 1.0 Moved Izlude NPCs to Pre-RE/RE paths.
+//=     Disabled until proper coordinates are found.
+//============================================================
+
+/*
+-	script	::BulletinBoard_iz	-1,{
+	mes "[Izlude: The Satellite City]";
+	mes "Welcome to Izlude, the satellite of Prontera. Izlude was built to support Prontera's defense and to accomodate its burgeoning population.";
+	next;
+	mes "[Izlude: The Satellite City]";
+	mes "The main buildings here are to accomodate the growth of the Cryptura Academy.";
+	next;
+	mes "[Izlude: The Satellite City]";
+	mes "Points of interest include the Swordman Association building which allows adventurers to change their job to Swordman, and the Battle Area that is East of Izlude.";
+	next;
+	mes "[Izlude: The Satellite City]";
+	mes "At the docks, you may take a ship and travel to ^003399Alberta^000000 or ^660000Byalan Island^000000.";
+	next;
+	mes "[Izlude: The Satellite City]";
+	mes "From Izlude, ^3355FFProntera^000000 is located to the Northwest, and ^006600Payon^000000 is located to the South. Enjoy your travels in the Rune-Midgarts Kingdom.";
+	close;
+}
+izlude,25,103,0	duplicate(BulletinBoard_iz)	Bulletin Board#5	837
+izlude_a,25,103,0	duplicate(BulletinBoard_iz)	Bulletin Board#5_a	837
+izlude_b,25,103,0	duplicate(BulletinBoard_iz)	Bulletin Board#5_b	837
+izlude_c,25,103,0	duplicate(BulletinBoard_iz)	Bulletin Board#5_c	837
+izlude_d,25,103,0	duplicate(BulletinBoard_iz)	Bulletin Board#5_d	837
+*/

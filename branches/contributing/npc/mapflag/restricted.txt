@@ -1,0 +1,105 @@
+//===== rAthena Script =======================================
+//= Mapflag: Restricted.
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: ========================================= 
+//= Disables items configured in item_noequip.txt
+//= and skills configured in skill_nocast_db.txt.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Komurka]
+//= 1.1 Added WoE:SE Map restrictions. [L0ne_W0lf]
+//= 1.2 Added Endless Tower Restrictions. (bugreport:4707) [L0ne_W0lf]
+//= 1.3 Added Orc's Memory, Nidhoggur's Nest and towns restrictions. [Daegaladh]
+//= 1.4 Renewal split. [Euphy]
+//============================================================
+
+//Aldebaran Turbo Track
+alde_tt02	mapflag	restricted	1
+turbo_n_1	mapflag	restricted	1
+turbo_n_4	mapflag	restricted	1
+turbo_n_8	mapflag	restricted	1
+turbo_n_16	mapflag	restricted	1
+turbo_e_4	mapflag	restricted	1
+turbo_e_8	mapflag	restricted	1
+turbo_e_16	mapflag	restricted	1
+
+//Jail
+sec_pri	mapflag	restricted	2
+
+//Izlude Battle Arena
+force_1-1	mapflag	restricted	3
+force_2-1	mapflag	restricted	3
+force_3-1	mapflag	restricted	3
+force_4-1	mapflag	restricted	3
+force_5-1	mapflag	restricted	3
+force_1-2	mapflag	restricted	3
+force_1-3	mapflag	restricted	3
+prt_are_in	mapflag	restricted	3
+
+//WoE:SE Maps
+schg_cas01	mapflag	restricted	4
+schg_cas02	mapflag	restricted	4
+schg_cas03	mapflag	restricted	4
+schg_cas04	mapflag	restricted	4
+schg_cas05	mapflag	restricted	4
+arug_cas01	mapflag	restricted	4
+arug_cas02	mapflag	restricted	4
+arug_cas03	mapflag	restricted	4
+arug_cas04	mapflag	restricted	4
+arug_cas05	mapflag	restricted	4
+
+//Sealed Shrine ==================
+1@cata	mapflag	restricted	5
+2@cata	mapflag	restricted	5
+
+//Endless Tower ==================
+1@tower	mapflag	restricted	6
+2@tower	mapflag	restricted	6
+3@tower	mapflag	restricted	6
+4@tower	mapflag	restricted	6
+5@tower	mapflag	restricted	6
+6@tower	mapflag	restricted	6
+
+//Orc's Memory ===================
+1@orcs	mapflag	restricted	6
+2@orcs	mapflag	restricted	6
+
+// Nidhoggr's Instance ===========
+1@nyd	mapflag	restricted	6
+2@nyd	mapflag	restricted	6
+
+//Towns
+alberta	mapflag	restricted	7
+aldebaran	mapflag	restricted	7
+amatsu	mapflag	restricted	7
+ayothaya	mapflag	restricted	7
+brasilis	mapflag	restricted	7
+comodo	mapflag	restricted	7
+einbroch	mapflag	restricted	7
+einbech	mapflag	restricted	7
+geffen	mapflag	restricted	7
+gonryun	mapflag	restricted	7
+izlude	mapflag	restricted	7
+jawaii	mapflag	restricted	7
+hugel	mapflag	restricted	7
+lighthalzen	mapflag	restricted	7
+louyang	mapflag	restricted	7
+manuk	mapflag	restricted	7
+mid_camp	mapflag	restricted	7
+moc_ruins	mapflag	restricted	7
+morocc	mapflag	restricted	7
+moscovia	mapflag	restricted	7
+niflheim	mapflag	restricted	7
+prontera	mapflag	restricted	7
+payon	mapflag	restricted	7
+pay_arche	mapflag	restricted	7
+rachel	mapflag	restricted	7
+splendide	mapflag	restricted	7
+umbala	mapflag	restricted	7
+veins	mapflag	restricted	7
+xmas	mapflag	restricted	7
+yuno	mapflag	restricted	7

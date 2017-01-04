@@ -1,0 +1,118 @@
+@SET_MAKE@
+
+HAVE_MYSQL=@HAVE_MYSQL@
+OMAP=@OMAP@
+ifeq ($(HAVE_MYSQL),yes)
+	ALL_DEPENDS=server tools
+	SERVER_DEPENDS=common login char map import
+	COMMON_DEPENDS=mt19937ar libconfig
+	LOGIN_DEPENDS=mt19937ar libconfig common
+	CHAR_DEPENDS=mt19937ar libconfig common
+	MAP_DEPENDS=mt19937ar libconfig common
+else
+	ALL_DEPENDS=needs_mysql
+	SERVER_DEPENDS=needs_mysql
+	COMMON_DEPENDS=needs_mysql
+	LOGIN_DEPENDS=needs_mysql
+	CHAR_DEPENDS=needs_mysql
+	MAP_DEPENDS=needs_mysql
+endif
+
+
+#####################################################################
+.PHONY: all server sql \
+	common \
+	mt19937ar \
+	login \
+	char \
+	map \
+	tools \
+	import \
+	clean help \
+	install uninstall bin-clean \
+
+all: $(ALL_DEPENDS)
+
+sql: $(SERVER_DEPENDS)
+	@echo "-!- 'make sql' is now deprecated. Please run 'make server' to continue. -!-"
+
+server: $(SERVER_DEPENDS)
+
+common: $(COMMON_DEPENDS)
+	@$(MAKE) -C src/common server
+
+login: $(LOGIN_DEPENDS)
+	@$(MAKE) -C src/login server
+
+char: $(CHAR_DEPENDS)
+	@$(MAKE) -C src/char
+
+map: $(MAP_DEPENDS)
+	@$(MAKE) -C src/map server
+
+mt19937ar:
+	@$(MAKE) -C 3rdparty/mt19937ar
+
+libconfig:
+	@$(MAKE) -C 3rdparty/libconfig
+
+tools:
+	@$(MAKE) -C src/tool
+
+import:
+# 1) create conf/import folder
+# 2) add missing files
+# 3) remove remaining .svn folder
+	@echo "building conf/import, conf/msg_conf/import and db/import folder..."
+	@if test ! -d conf/import ; then mkdir conf/import ; fi
+	@for f in $$(ls conf/import-tmpl) ; do if test ! -e conf/import/$$f ; then cp conf/import-tmpl/$$f conf/import ; fi ; done
+	@rm -rf conf/import/.svn
+	@if test ! -d conf/msg_conf/import ; then mkdir conf/msg_conf/import ; fi
+	@for f in $$(ls conf/msg_conf/import-tmpl) ; do if test ! -e conf/msg_conf/import/$$f ; then cp conf/msg_conf/import-tmpl/$$f conf/msg_conf/import ; fi ; done
+	@rm -rf conf/msg_conf/import/.svn
+	@if test ! -d db/import ; then mkdir db/import ; fi
+	@for f in $$(ls db/import-tmpl) ; do if test ! -e db/import/$$f ; then cp db/import-tmpl/$$f db/import ; fi ; done
+	@rm -rf db/import/.svn
+
+clean:
+	@$(MAKE) -C src/common $@
+	@$(MAKE) -C 3rdparty/mt19937ar $@
+	@$(MAKE) -C 3rdparty/libconfig $@
+	@$(MAKE) -C src/login $@
+	@$(MAKE) -C src/char $@
+	@$(MAKE) -C src/map $@
+	@$(MAKE) -C src/tool $@
+
+help:
+	@echo "most common targets are 'all' 'server' 'conf' 'clean' 'help'"
+	@echo "possible targets are:"
+	@echo "'common'      - builds object files used for the three servers"
+	@echo "'mt19937ar'   - builds object file of Mersenne Twister MT19937"
+	@echo "'libconfig'   - builds object files of libconfig"
+	@echo "'login'       - builds login server"
+	@echo "'char'        - builds char server"
+	@echo "'map'         - builds map server"
+	@echo "'tools'       - builds all the tools in src/tools"
+	@echo "'import'      - builds conf/import, conf/msg_conf/import and db/import folders from their template folders (x-tmpl)"
+	@echo "'all'         - builds all the above targets"
+	@echo "'server'      - builds servers (targets 'common' 'login' 'char' 'map' and 'import')"
+	@echo "'clean'       - cleans builds and objects"
+	@echo "'install'     - run installer which sets up rathena in /opt/"
+	@echo "'bin-clean'   - deletes installed binaries"
+	@echo "'uninstall'   - run uninstaller which erases all installation changes"
+	@echo "'help'        - outputs this message"
+
+needs_mysql:
+	@echo "MySQL not found or disabled by the configure script"
+	@exit 1
+
+install:
+	@sh ./install.sh
+
+bin-clean:
+	@sh ./uninstall.sh bin
+
+uninstall:
+	@sh ./uninstall.sh all
+
+#####################################################################

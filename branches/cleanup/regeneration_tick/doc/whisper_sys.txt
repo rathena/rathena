@@ -1,0 +1,52 @@
+//===== rAthena Documentation ================================
+//= NPC Whisper System
+//===== By: ==================================================
+//= lordalfa
+//===== Last Updated: ========================================
+//= 20120904
+//===== Description: =========================================
+//= A description of rAthena's NPC whispering system.
+//============================================================
+
+This piece of code to allows characters to execute events in NPCs by whispering 
+them up to ten parameters. The NPC must have an "OnWhisperGlobal" label, or an 
+"event not found" error will result.
+
+	NPC:<NPC Name>		<String>{#String 2{#...{#String 10}}}
+	
+The whispered strings are separated by the "#" character, and are each stored
+into separate temporary character string variables:
+
+	@whispervar0$, @whispervar1$, ... @whispervar9$
+
+---------------------------------------------------------------------------------
+
+Below is an example of how this feature might be used.
+You whisper an NPC "NPCCommander" in-game with the following instructions:
+
+	NPC:NPCCommander	Report#Killstealing#Lordalfa
+
+The parameters are passed on to the "OnWhisperGlobal" label of the NPC, and can
+be processed accordingly:
+
+-	script	NPCCommander	-1,{
+OnWhisperGlobal:
+	// Inform player "Lordalfa" that he has been reported for killstealing.
+	if (@whispervar0$ == "Report")
+		message @whispervar2$,"You have been reported for "+@whispervar1$+".";
+	end;
+}
+
+This could also be used for hidden event triggers:
+
+-	script	EventManager	-1,{
+OnWhisperGlobal:
+	if (getgmlevel() < 80) end;
+	if (@whispervar0$ == "pvp") {
+		// Script for a PVP event.
+	}
+	else if (@whispervar0$ == "mvp") {
+		// Script for an MVP summoning event.
+	}
+	end;
+}

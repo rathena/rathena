@@ -1,0 +1,330 @@
+//===== rAthena Script =======================================
+//= Guild Castles Warp Script
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Renewal Guild Castles
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//= 2.0 Added WoE:TE warps. [Capuche]
+//============================================================
+
+// Hall of Abyss
+//============================================================
+gld2_prt,10,22,0	warp	dun2prt_to_gld	1,1,prt_gld,252,247
+gld2_prt,14,252,0	warp	dun2prt_to_gld#2	1,1,prt_gld,63,66
+gld2_prt,266,236,0	warp	dun2prt_to_gld#3	1,1,prt_gld,252,247
+gld2_prt,226,21,0	warp	dun2prt_to_gld#4	1,1,prt_gld,63,66
+gld2_prt,103,11,0	warp	dun2prt_to_gld#5	1,1,prt_gld,252,247
+gld_dun03_2,238,274,0	warp	gdun03a_prtg#abyss	1,1,prt_gld,252,247
+gld_dun03_2,42,30,0	warp	gdun03b_prtg#abyss	1,1,prt_gld,63,66
+gld2_pay,33,105,0	warp	dun2pay_to_gld	1,1,pay_gld,53,141
+gld2_pay,119,21,0	warp	dun2pay_to_gld#2	1,1,pay_gld,53,141
+gld2_pay,205,105,0	warp	dun2pay_to_gld#3	1,1,pay_gld,53,141
+gld2_pay,175,215,0	warp	dun2pay_to_gld#4	1,1,pay_gld,53,141
+gld2_pay,61,215,0	warp	dun2pay_to_gld#5	1,1,pay_gld,53,141
+gld_dun01_2,119,14,0	warp	gdun01_payg#abyss	1,1,pay_gld,53,141
+gld2_gef,28,205,0	warp	dun2gef_to_gld	1,1,gef_fild13,42,331
+gld2_gef,221,145,0	warp	dun2gef_to_gld#2	1,1,gef_fild13,373,62
+gld2_gef,175,198,0	warp	dun2gef_to_gld#3	1,1,gef_fild13,42,331
+gld2_gef,25,68,0	warp	dun2gef_to_gld#4	1,1,gef_fild13,373,62
+gld2_gef,111,35,0	warp	dun2gef_to_gld#5	1,1,gef_fild13,42,331
+gld_dun04_2,37,230,0	warp	gdun04_g13a#abyss	1,1,gef_fild13,42,331
+gld_dun04_2,110,20,0	warp	gdun04_g13b#abyss	1,1,gef_fild13,373,62
+gld2_ald,172,46,0	warp	dun2gef_to_gld#6	1,1,alde_gld,242,121
+gld2_ald,77,58,0	warp	dun2gef_to_gld#7	1,1,alde_gld,229,185
+gld2_ald,46,122,0	warp	dun2gef_to_gld#8	1,1,alde_gld,242,121
+gld2_ald,104,250,0	warp	dun2gef_to_gld#9	1,1,alde_gld,229,185
+gld2_ald,247,156,0	warp	dun2gef_to_gld#10	1,1,alde_gld,242,121
+gld_dun02_2,20,160,0	warp	gdun02a_aldega#abyss	1,1,alde_gld,229,185
+gld_dun02_2,180,112,0	warp	gdun02b_aldegb#abyss	1,1,alde_gld,242,121
+
+
+// WOE TE
+prt_gld,120,153,0	warp	to_gloria	1,1,te_prt_gld,120,149
+te_prt_gld,120,153,0	warp	to_valkyrie	1,1,prt_gld,120,149
+
+alde_gld,225,188,0	warp	to_kafragarten	1,1,te_alde_gld,228,185
+te_alde_gld,225,188,0	warp	to_luina	1,1,alde_gld,228,185
+
+//------------------------------------------------------------//
+// prontera
+//------------------------------------------------------------//
+// te_prt_gld
+/*
+te_prt_gld,159,298,0	warp	prtg01_NorthField	1,1,prt_fild01,199,30
+te_prt_gld,159,25,0	warp	prtg02_Castle	1,1,prt_castle,102,178
+*/
+
+-	script	warp_TE_castle	-1,{
+OnTouch:
+	.@num = strnpcinfo(2);
+	switch(.@num) {
+		case 1: callsub( S_Warp, "te_prtcas01",99,32 );
+		case 2: callsub( S_Warp, "te_prtcas02",43,229 );
+		case 3: callsub( S_Warp, "te_prtcas03",168,12 );
+		case 4: callsub( S_Warp, "te_prtcas04",86,13 );
+		case 5: callsub( S_Warp, "te_prtcas05",17,235 );
+		case 6: callsub( S_Warp, "te_aldecas1",34,248 );
+		case 7: callsub( S_Warp, "te_aldecas2",88,163 );
+		case 8: callsub( S_Warp, "te_aldecas3",114,286 );
+		case 9: callsub( S_Warp, "te_aldecas4",149,17 );
+		case 10: callsub( S_Warp, "te_aldecas5",216,103 );
+	}
+	end;
+
+S_Warp:
+	.@castle$ = getarg(0);
+	if (jobcanentermap(.@castle$) == 0) {
+		mes "3rd and expansion job level can't enter in WoE TE.";
+		close;
+	}
+
+	.@guild_id = getcastledata(.@castle$,1);
+	.@my_guild_id = getcharid(2);
+
+	if (.@guild_id && .@guild_id == .@my_guild_id) {
+		warp .@castle$,getarg(1),getarg(2);
+		end;
+	}
+
+	if (WoeTETimeStart(3600) == 1) {
+		if (!.@guild_id || !.@my_guild_id) {
+			mes "It's time for preparing to WoE. Only Alliance guild is able to enter.";
+			close;
+		}
+		if (getguildalliance(.@my_guild_id,.@guild_id) != 1) {
+			mes "It's time for preparing to WoE. Only Alliance guild is able to enter.";
+			close;
+		}
+		mes "Welcome alliance guild.";
+		close2;
+	}
+	warp .@castle$,getarg(1),getarg(2);
+	end;
+}
+
+te_prt_gld,129,65,0	duplicate(warp_TE_castle)	prtg-1_prtg-1-01#1_te	WARPNPC,1,1
+te_prt_gld,240,124,0	duplicate(warp_TE_castle)	prtg-2_prtg-2#2_te	WARPNPC,1,1
+te_prt_gld,153,141,0	duplicate(warp_TE_castle)	prtg-3_prtg-3#3_te	WARPNPC,1,1
+te_prt_gld,107,240,0	duplicate(warp_TE_castle)	prtg-4_prtg-4#4_te	WARPNPC,1,1
+te_prt_gld,212,240,0	duplicate(warp_TE_castle)	prtg-5_prtg-5#5_te	WARPNPC,1,1
+
+
+// te_prtcas01
+te_prtcas01,103,32,0	warp	prtg-1-01_prtg-1#te	1,1,te_prt_gld,134,65
+te_prtcas01,57,19,0	warp	prtg-1-02_prtg-1-07#te	1,1,te_prtcas01,80,49
+te_prtcas01,41,34,0	warp	prtg-1-03_prtg-1-08#te	1,1,te_prtcas01,40,47
+te_prtcas01,37,54,0	warp	prtg-1-04_prtg-1-13#te	1,1,te_prtcas01,192,119
+te_prtcas01,71,54,0	warp	prtg-1-05_prtg-1-12#te	1,1,te_prtcas01,192,65
+te_prtcas01,51,70,0	warp	prtg-1-06_prtg-1-11#te	1,1,te_prtcas01,202,92
+te_prtcas01,84,49,0	warp	prtg-1-07_prtg-1-02#te	1,1,te_prtcas01,61,19
+te_prtcas01,37,47,0	warp	prtg-1-08_prtg-1-03#te	1,1,te_prtcas01,45,34
+te_prtcas01,62,34,0	warp	prtg-1-09_prtg-1-13#te	1,1,te_prtcas01,192,119
+te_prtcas01,84,19,0	warp	prtg-1-010_prtg-1-12#te	1,1,te_prtcas01,192,65
+te_prtcas01,206,92,0	warp	prtg-1-11_prtg-1-06#te	1,1,te_prtcas01,55,70
+te_prtcas01,196,65,0	warp	prtg-1-12_prtg-1-05#te	1,1,te_prtcas01,75,54
+te_prtcas01,196,119,0	warp	prtg-1-13_prtg-1-04#te	1,1,te_prtcas01,40,54
+te_prtcas01,147,120,0	warp	prtg-1-14_prtg-1-21#te	1,1,te_prtcas01,75,187
+te_prtcas01,75,183,0	warp	prtg-1-21_prtg-1-14#te	1,1,te_prtcas01,147,116
+te_prtcas01,109,163,0	warp	prtg-1-22_prtg-1-31#te	1,1,te_prtcas01,202,183
+te_prtcas01,206,183,0	warp	prtg-1-31_prtg-1-22#te	1,1,te_prtcas01,113,163
+
+// te_prtcas02
+te_prtcas02,43,233,0	warp	prtg-2-01_prtg-2#te	1,1,te_prt_gld,240,128
+te_prtcas02,88,215,0	warp	prtg-2-02_prtg-2-22#te	1,1,te_prtcas02,206,41
+te_prtcas02,53,202,0	warp	prtg-2-03_prtg-2-21#te	1,1,te_prtcas02,165,41
+te_prtcas02,64,164,0	warp	prtg-2-04_prtg-2-12#te	1,1,te_prtcas02,98,25
+te_prtcas02,35,183,0	warp	prtg-2-05_prtg-2-11#te	1,1,te_prtcas02,71,82
+te_prtcas02,71,86,0	warp	prtg-2-11_prtg-2-05#te	1,1,te_prtcas02,35,187
+te_prtcas02,98,21,0	warp	prtg-2-12_prtg-2-04#te	1,1,te_prtcas02,64,168
+te_prtcas02,45,21,0	warp	prtg-2-13_prtg-2-24#te	1,1,te_prtcas02,203,25
+te_prtcas02,161,41,0	warp	prtg-2-21_prtg-2-03#te	1,1,te_prtcas02,57,202
+te_prtcas02,210,41,0	warp	prtg-2-22_prtg-2-02#te	1,1,te_prtcas02,84,215
+te_prtcas02,184,44,0	warp	prtg-2-23_prtg-2-31#te	1,1,te_prtcas02,157,140
+te_prtcas02,203,21,0	warp	prtg-2-24_prtg-2-13#te	1,1,te_prtcas02,45,25
+te_prtcas02,157,135,0	warp	prtg-2-31_prtg-2-23#te	1,1,te_prtcas02,184,40
+
+// te_prtcas03
+te_prtcas03,178,85,0	warp	prtg-3-01_prtg-3-12#te	1,1,te_prtcas03,82,73
+te_prtcas03,191,55,0	warp	prtg-3-02_prtg-3-22#te	1,1,te_prtcas03,190,233
+te_prtcas03,168,8,0	warp	prtg-3-03_prtg-3#te	1,1,te_prt_gld,153,137
+te_prtcas03,172,44,0	warp	prtg-3-04_prtg-3-14#te	1,1,te_prtcas03,10,78
+te_prtcas03,165,59,0	warp	prtg-3-05_prtg-3-13#te	1,1,te_prtcas03,45,47
+te_prtcas03,45,120,0	warp	prtg-3-11_prtg-3-23#te	1,1,te_prtcas03,164,177
+te_prtcas03,86,73,0	warp	prtg-3-12_prtg-3-01#te	1,1,te_prtcas03,178,81
+te_prtcas03,45,43,0	warp	prtg-3-13_prtg-3-05#te	1,1,te_prtcas03,165,54
+te_prtcas03,6,78,0	warp	prtg-3-14_prtg-3-04#te	1,1,te_prtcas03,176,44
+te_prtcas03,169,235,0	warp	prtg-3-21_prtg-3-31#te	1,1,te_prtcas03,11,200
+te_prtcas03,194,233,0	warp	prtg-3-22_prtg-3-02#te	1,1,te_prtcas03,191,59
+te_prtcas03,164,173,0	warp	prtg-3-23_prtg-3-11#te	1,1,te_prtcas03,45,117
+te_prtcas03,7,200,0	warp	prtg-3-31_prtg-3-21#te	1,1,te_prtcas03,169,231
+
+// te_prtcas04
+te_prtcas04,48,48,0	warp	prtg-4-01_prtg-4-15#te	1,1,te_prtcas04,10,233
+te_prtcas04,63,30,0	warp	prtg-4-02_prtg-4-14#te	1,1,te_prtcas04,34,229
+te_prtcas04,86,9,0	warp	prtg-4-03_prtg-3#te	1,1,te_prt_gld,111,240
+te_prtcas04,32,28,0	warp	prtg-4-04_prtg-4-16#te	1,1,te_prtcas04,11,254
+te_prtcas04,42,13,0	warp	prtg-4-05_prtg-4-12#te	1,1,te_prtcas04,56,254
+te_prtcas04,54,25,0	warp	prtg-4-06_prtg-4-13#te	1,1,te_prtcas04,56,233
+te_prtcas04,34,290,0	warp	prtg-4-11_prtg-4-21#te	1,1,te_prtcas04,238,261
+te_prtcas04,60,254,0	warp	prtg-4-12_prtg-4-05#te	1,1,te_prtcas04,42,17
+te_prtcas04,56,229,0	warp	prtg-4-13_prtg-4-06#te	1,1,te_prtcas04,54,29
+te_prtcas04,34,225,0	warp	prtg-4-14_prtg-4-02#te	1,1,te_prtcas04,63,26
+te_prtcas04,10,229,0	warp	prtg-4-15_prtg-4-01#te	1,1,te_prtcas04,48,44
+te_prtcas04,7,254,0	warp	prtg-4-16_prtg-4-04#te	1,1,te_prtcas04,32,32
+te_prtcas04,238,257,0	warp	prtg-4-21_prtg-4-11#te	1,1,te_prtcas04,34,286
+te_prtcas04,247,258,0	warp	prtg-4-22_prtg-4-31#te	1,1,te_prtcas04,255,14
+te_prtcas04,251,14,0	warp	prtg-4-31_prtg-4-22#te	1,1,te_prtcas04,247,254
+
+// te_prtcas05
+te_prtcas05,38,250,0	warp	prtg-5-01_prtg-5-14#te	1,1,te_prtcas05,244,7
+te_prtcas05,76,242,0	warp	prtg-5-02_prtg-5-13#te	1,1,te_prtcas05,288,13
+te_prtcas05,66,225,0	warp	prtg-5-03_prtg-5-12#te	1,1,te_prtcas05,260,92
+te_prtcas05,17,231,0	warp	prtg-5-04_prtg-5#te	1,1,te_prt_gld,208,240
+te_prtcas05,53,246,0	warp	prtg-5-05_prtg-5-15#te	1,1,te_prtcas05,199,13
+te_prtcas05,228,96,0	warp	prtg-5-11_prtg-5-21#te	1,1,te_prtcas05,26,7
+te_prtcas05,260,96,0	warp	prtg-5-12_prtg-5-03#te	1,1,te_prtcas05,66,229
+te_prtcas05,292,13,0	warp	prtg-5-13_prtg-5-02#te	1,1,te_prtcas05,76,246
+te_prtcas05,244,3,0	warp	prtg-5-14_prtg-5-01#te	1,1,te_prtcas05,35,247
+te_prtcas05,195,13,0	warp	prtg-5-15_prtg-5-05#te	1,1,te_prtcas05,55,248
+te_prtcas05,26,3,0	warp	prtg-5-21_prtg-5-11#te	1,1,te_prtcas05,228,92
+te_prtcas05,58,7,0	warp	prtg-5-22_prtg-5-31#te	1,1,te_prtcas05,253,290
+te_prtcas05,253,294,0	warp	prtg-5-31_prtg-5-22#te	1,1,te_prtcas05,58,11
+
+//------------------------------------------------------------//
+// aldebaran
+//------------------------------------------------------------//
+// aldebaran
+/*
+aldebaran,35,140,0	warp	alde-a_aldeg01	1,1,te_alde_gld,280,160
+te_alde_gld,284,160,0	warp	aldeg01_alde-a	1,1,aldebaran,39,140
+*/
+
+te_alde_gld,48,79,0	duplicate(warp_TE_castle)	aldeg-1_aldeg-1-1#6_te	WARPNPC,1,1
+te_alde_gld,95,253,0	duplicate(warp_TE_castle)	aldeg-2_aldeg-2-1#7_te	WARPNPC,1,1
+te_alde_gld,142,81,0	duplicate(warp_TE_castle)	aldeg-3_aldeg-3-1#8_te	WARPNPC,1,1
+te_alde_gld,243,242,0	duplicate(warp_TE_castle)	aldeg-4_aldeg-4-1#9_te	WARPNPC,1,1
+te_alde_gld,259,90,0	duplicate(warp_TE_castle)	aldeg-5_aldeg-5-1#10_te	WARPNPC,1,1
+
+// te_aldecas1
+te_aldecas1,34,252,0	warp	aldeg-1-1_aldeg-1#te	1,1,te_alde_gld,48,83
+te_aldecas1,50,222,0	warp	aldeg-1-2_aldeg-1-6#te	1,1,te_aldecas1,104,108
+te_aldecas1,66,191,0	warp	aldeg-1-3_aldeg-1-7#te	1,1,te_aldecas1,122,61
+te_aldecas1,26,188,0	warp	aldeg-1-4_aldeg-1-10#te	1,1,te_aldecas1,50,70
+te_aldecas1,70,112,0	warp	aldeg-1-5_aldeg-1-18#te	1,1,te_aldecas1,42,225
+te_aldecas1,104,112,0	warp	aldeg-1-6_aldeg-1-2#te	1,1,te_aldecas1,45,224
+te_aldecas1,126,61,0	warp	aldeg-1-7_aldeg-1-3#te	1,1,te_aldecas1,62,191
+te_aldecas1,89,23,0	warp	aldeg-1-8_aldeg-1-13#te	1,1,te_aldecas1,207,132
+te_aldecas1,54,27,0	warp	aldeg-1-9_aldeg-1-3#te	1,1,te_aldecas1,62,191
+te_aldecas1,46,70,0	warp	aldeg-1-10_aldeg-1-4#te	1,1,te_aldecas1,24,188
+te_aldecas1,206,188,0	warp	aldeg-1-11_aldeg-1-15#te	1,1,te_aldecas1,216,50
+te_aldecas1,232,186,0	warp	aldeg-1-12_aldeg-1-16#te	1,1,te_aldecas1,42,197
+te_aldecas1,207,128,0	warp	aldeg-1-13_aldeg-1-8#te	1,1,te_aldecas1,89,27
+te_aldecas1,171,175,0	warp	aldeg-1-14_aldeg-1-17#te	1,1,te_aldecas1,35,197
+te_aldecas1,216,54,0	warp	aldeg-1-15_aldeg-1-11#te	1,1,te_aldecas1,206,184
+te_aldecas1,46,197,0	warp	aldeg-1-16_aldeg-1-12#te	1,1,te_aldecas1,232,182
+te_aldecas1,31,197,0	warp	aldeg-1-17_aldeg-1-14#te	1,1,te_aldecas1,175,175
+te_aldecas1,39,222,0	warp	aldeg-1-18_aldeg-1-5#te	1,1,te_aldecas1,70,108
+
+// te_aldecas2
+te_aldecas2,88,159,0	warp	aldeg-2-1_aldeg-2#te	1,1,te_alde_gld,95,249
+te_aldecas2,84,208,0	warp	aldeg-2-2_aldeg-2-10#te	1,1,te_aldecas2,105,84
+te_aldecas2,50,185,0	warp	aldeg-2-3_aldeg-2-12#te	1,1,te_aldecas2,192,192
+te_aldecas2,33,174,0	warp	aldeg-2-4_aldeg-2-8#te	1,1,te_aldecas2,126,61
+te_aldecas2,22,194,0	warp	aldeg-2-5_aldeg-2-6#te	1,1,te_aldecas2,88,13
+te_aldecas2,88,9,0	warp	aldeg-2-6_aldeg-2-5#te	1,1,te_aldecas2,22,190
+te_aldecas2,45,39,0	warp	aldeg-2-7_aldeg-2-2#te	1,1,te_aldecas2,79,208
+te_aldecas2,130,61,0	warp	aldeg-2-8_aldeg-2-4#te	1,1,te_aldecas2,33,179
+te_aldecas2,121,88,0	warp	aldeg-2-9_aldeg-2-11#te	1,1,te_aldecas2,177,135
+te_aldecas2,105,88,0	warp	aldeg-2-10_aldeg-2-2#te	1,1,te_aldecas2,79,208
+te_aldecas2,177,131,0	warp	aldeg-2-11_aldeg-2-9#te	1,1,te_aldecas2,121,84
+te_aldecas2,192,196,0	warp	aldeg-2-12_aldeg-2-3#te	1,1,te_aldecas2,50,180
+te_aldecas2,206,196,0	warp	aldeg-2-13_aldeg-2-14#te	1,1,te_aldecas2,197,13
+te_aldecas2,197,9,0	warp	aldeg-2-14_aldeg-2-13#te	1,1,te_aldecas2,206,192
+
+// te_aldecas3
+te_aldecas3,114,290,0	warp	aldeg-3-1_aldeg-3#te	1,1,te_alde_gld,142,85
+te_aldecas3,92,217,0	warp	aldeg-3-2_aldeg-3-6#te	1,1,te_aldecas3,127,90
+te_aldecas3,87,247,0	warp	aldeg-3-3_aldeg-3-7#te	1,1,te_aldecas3,54,90
+te_aldecas3,44,222,0	warp	aldeg-3-4_aldeg-3-13#te	1,1,te_aldecas3,213,182
+te_aldecas3,91,57,0	warp	aldeg-3-5_aldeg-3-14#te	1,1,te_aldecas3,60,236
+te_aldecas3,130,90,0	warp	aldeg-3-6_aldeg-3-2#te	1,1,te_aldecas3,96,215
+te_aldecas3,51,90,0	warp	aldeg-3-7_aldeg-3-3#te	1,1,te_aldecas3,87,251
+te_aldecas3,93,124,0	warp	aldeg-3-8_aldeg-3-3#te	1,1,te_aldecas3,87,251
+te_aldecas3,79,130,0	warp	aldeg-3-9_aldeg-3-10#te	1,1,te_aldecas3,201,149
+te_aldecas3,201,145,0	warp	aldeg-3-10_aldeg-3-9#te	1,1,te_aldecas3,79,126
+te_aldecas3,199,190,0	warp	aldeg-3-11_aldeg-3-12#te	1,1,te_aldecas3,195,51
+te_aldecas3,195,54,0	warp	aldeg-3-12_aldeg-3-11#te	1,1,te_aldecas3,199,186
+te_aldecas3,214,186,0	warp	aldeg-3-13_aldeg-3-4#te	1,1,te_aldecas3,49,222
+te_aldecas3,60,241,0	warp	aldeg-3-14_aldeg-3-5#te	1,1,te_aldecas3,91,61
+
+// te_aldecas4
+te_aldecas4,145,17,0	warp	aldeg-4-1_aldeg-4#te	1,1,te_alde_gld,239,242
+te_aldecas4,197,40,0	warp	aldeg-4-2_aldeg-4-9#te	1,1,te_aldecas4,26,88
+te_aldecas4,175,54,0	warp	aldeg-4-3_aldeg-4-8#te	1,1,te_aldecas4,74,88
+te_aldecas4,185,87,0	warp	aldeg-4-4_aldeg-4-14#te	1,1,te_aldecas4,111,210
+te_aldecas4,171,100,0	warp	aldeg-4-5_aldeg-4-13#te	1,1,te_aldecas4,152,210
+te_aldecas4,196,86,0	warp	aldeg-4-6_aldeg-4-7#te	1,1,te_aldecas4,49,57
+te_aldecas4,49,53,0	warp	aldeg-4-7_aldeg-4-6#te	1,1,te_aldecas4,196,82
+te_aldecas4,78,88,0	warp	aldeg-4-8_aldeg-4-3#te	1,1,te_aldecas4,174,58
+te_aldecas4,22,88,0	warp	aldeg-4-9_aldeg-4-2#te	1,1,te_aldecas4,192,41
+te_aldecas4,50,132,0	warp	aldeg-4-10_aldeg-4-8#te	1,1,te_aldecas4,74,88
+te_aldecas4,21,123,0	warp	aldeg-4-11_aldeg-4-12#te	1,1,te_aldecas4,125,168
+te_aldecas4,121,168,0	warp	aldeg-4-12_aldeg-4-11#te	1,1,te_aldecas4,25,123
+te_aldecas4,156,210,0	warp	aldeg-4-13_aldeg-4-5#te	1,1,te_aldecas4,169,97
+te_aldecas4,108,210,0	warp	aldeg-4-14_aldeg-4-4#te	1,1,te_aldecas4,186,92
+
+// aldeg-4-15
+te_aldecas4,132,231,0	script	aldeg-4-15_aldeg-4-#te	WARPNPC,1,1,{
+OnTouch:
+	.@aldeg4 = rand(1,5);
+	if (.@aldeg4 == 1)
+		warp "te_aldecas4",152,210;
+	else if (.@aldeg4 == 2)
+		warp "te_aldecas4",111,210;
+	else if (.@aldeg4 == 3)
+		warp "te_aldecas4",129,212;
+	else if (.@aldeg4 == 4)
+		warp "te_aldecas4",129,212;
+	else
+		warp "te_aldecas4",14,196;
+	end;
+}
+
+te_aldecas4,132,209,0	warp	aldeg-4-16_aldeg-4-17#te	1,1,te_aldecas4,14,196
+te_aldecas4,17,196,0	warp	aldeg-4-17_aldeg-4-15#te	1,1,te_aldecas4,132,228
+
+// te_aldecas5
+te_aldecas5,216,107,0	warp	aldeg-5-1_aldeg-5#te	1,1,te_alde_gld,264,90
+te_aldecas5,194,71,0	warp	aldeg-5-3_aldeg-5-13#te	1,1,te_aldecas5,129,194
+te_aldecas5,164,86,0	warp	aldeg-5-4_aldeg-5-10#te	1,1,te_aldecas5,66,189
+te_aldecas5,150,67,0	warp	aldeg-5-5_aldeg-5-9#te	1,1,te_aldecas5,9,187
+te_aldecas5,188,49,0	warp	aldeg-5-6_aldeg-5-14#te	1,1,te_aldecas5,165,228
+te_aldecas5,195,42,0	warp	aldeg-5-7_aldeg-5-8#te	1,1,te_aldecas5,19,227
+prt_gld,159,298,0	warp	prtg01_NorthField#te	1,1,prt_fild01,199,30
+
+te_aldecas5,15,227,0	warp	aldeg-5-8_aldeg-5-7#te	1,1,te_aldecas5,195,46
+te_aldecas5,5,187,0	warp	aldeg-5-9_aldeg-5-5#te	1,1,te_aldecas5,151,62
+te_aldecas5,70,189,0	warp	aldeg-5-10_aldeg-5-4#te	1,1,te_aldecas5,166,81
+te_aldecas5,13,175,0	warp	aldeg-5-11_aldeg-5-12#te	1,1,te_aldecas5,162,194
+te_aldecas5,166,194,0	warp	aldeg-5-12_aldeg-5-11#te	1,1,te_aldecas5,13,179
+te_aldecas5,125,194,0	warp	aldeg-5-13_aldeg-5-3#te	1,1,te_aldecas5,199,70
+te_aldecas5,165,232,0	warp	aldeg-5-14_aldeg-5-6#te	1,1,te_aldecas5,193,49
+te_aldecas5,156,231,0	warp	aldeg-5-15_aldeg-5-16#te	1,1,te_aldecas5,18,88
+te_aldecas5,14,88,0	warp	aldeg-5-16_aldeg-5-15#te	1,1,te_aldecas5,156,227
+
+//------------------------------------------------------------//
+// Dungeons
+//------------------------------------------------------------//
+// prontera
+teg_dun01,238,274,0	warp	teg_dun01a_prtg#te	1,1,te_prt_gld,252,247
+teg_dun01,42,30,0	warp	teg_dun01b_prtg#te	1,1,te_prt_gld,63,66
+
+// aldebaran
+teg_dun02,20,160,0	warp	teg_dun02a_aldega#te	1,1,te_alde_gld,229,185
+teg_dun02,180,112,0	warp	teg_dun02b_aldegb#te	1,1,te_alde_gld,242,121

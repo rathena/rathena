@@ -1,0 +1,45 @@
+// Guild Castles Database
+//
+// Structure of Database:
+// CastleID,MapName,CastleName,OnGuildBreakEventName,Flag
+//
+// 01. CastleID                 Unique ID of the castle. Must remain unique across all map-servers.
+// 02. MapName                  Map name to be considered as the castle map.
+// 03. CastleName               Name of the castle (used by scripts and guardian name tags).
+// 04. OnGuildBreakEventName    NPC unique name to invoke ::OnGuildBreak on, when a occupied
+//                              castle is abandoned during guild break.
+
+0,aldeg_cas01,Neuschwanstein,Agit#aldeg_cas01		// kRO : Noisyubantian
+1,aldeg_cas02,Hohenschwangau,Agit#aldeg_cas02		// kRO : Hohensyubangawoo
+2,aldeg_cas03,Nuernberg,Agit#aldeg_cas03			// kRO : Nyirenverk
+3,aldeg_cas04,Wuerzburg,Agit#aldeg_cas04			// kRO : Byirtsburi
+4,aldeg_cas05,Rothenburg,Agit#aldeg_cas05		// kRO : Rotenburk
+5,gefg_cas01,Repherion,Agit#gefg_cas01			// kRO : Reprion
+6,gefg_cas02,Eeyolbriggar,Agit#gefg_cas02		// kRO : Yolbriger
+7,gefg_cas03,Yesnelph,Agit#gefg_cas03			// kRO : Isinlife
+8,gefg_cas04,Bergel,Agit#gefg_cas04			// kRO : Berigel
+9,gefg_cas05,Mersetzdeitz,Agit#gefg_cas05		// kRO : Melsedetsu
+10,payg_cas01,Bright Arbor,Agit#payg_cas01		// kRO : Mingting
+11,payg_cas02,Scarlet Palace,Agit#payg_cas02		// kRO : Tiantan
+12,payg_cas03,Holy Shadow,Agit#payg_cas03		// kRO : Fuying
+13,payg_cas04,Sacred Altar,Agit#payg_cas04		// kRO : Honglou
+14,payg_cas05,Bamboo Grove Hill,Agit#payg_cas05	// kRO : Zhulinxian
+15,prtg_cas01,Kriemhild,Agit#prtg_cas01			// kRO : Creamhilt
+16,prtg_cas02,Swanhild,Agit#prtg_cas02			// kRO : Sbanhealt
+17,prtg_cas03,Fadhgridh,Agit#prtg_cas03			// kRO : Lazrigees
+18,prtg_cas04,Skoegul,Agit#prtg_cas04			// kRO : Squagul
+19,prtg_cas05,Gondul,Agit#prtg_cas05			// kRO : Guindull
+20,nguild_alde,Earth,Agit_N01
+21,nguild_gef,Air,Agit_N02
+22,nguild_pay,Water,Agit_N03
+23,nguild_prt,Fire,Agit_N04
+24,schg_cas01,Himinn,Manager#schg_cas01			// kRO : Himinn
+25,schg_cas02,Andlangr,Manager#schg_cas02			// kRO : Andlangr
+26,schg_cas03,Viblainn,Manager#schg_cas03			// kRO : Viblainn
+27,schg_cas04,Hljod,Manager#schg_cas04			// kRO : Hljod
+28,schg_cas05,Skidbladnir,Manager#schg_cas05			// kRO : Skidbladnir
+29,arug_cas01,Mardol,Manager#arug_cas01			// kRO : Mardol
+30,arug_cas02,Cyr,Manager#arug_cas02			// kRO : Cyr
+31,arug_cas03,Horn,Manager#arug_cas03			// kRO : Horn
+32,arug_cas04,Gefn,Manager#arug_cas04			// kRO : Gefn
+33,arug_cas05,Bandis,Manager#arug_cas05			// kRO : Bandis

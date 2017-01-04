@@ -1,0 +1,34 @@
+//===== rAthena Script =======================================
+//= Sample: Skill
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20140208
+//===== Description: ========================================= 
+//= Demonstrates the 'skill' command.
+//============================================================
+
+// skill <skill id>,<level>{,<flag>};
+//	flag=0 Grants the skill permanently
+//	flag=1 Grants the skill temporarily
+//	flag=2 Level bonus, stackable
+// If flag is undefined, it defaults to 1
+// View db/(pre-)re/skill_db.txt for skill IDs
+
+prontera,157,182,0	script	Skills	116,{
+	mes "What skill would you like?";
+	next;
+	switch(select("First Aid:Play Dead:Heal:None")) {
+	case 1:
+		skill "NV_FIRSTAID",1,0;	// Permanently gives player level 1 First Aid
+		close;
+	case 2:
+		skill "NV_TRICKDEAD",1,0;	// Permanently gives player level 1 Play Dead
+		close;
+	case 3:
+		skill "AL_HEAL",3,1;	// Temporarily gives player level 3 Heal
+		close;
+	case 4:
+		close;
+	}
+}

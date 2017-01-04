@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\src\map\atcommand.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\battle.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\battleground.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\buyingstore.c">
+      <Filter>map</Filter>
+    </ClCompile>  
+    <ClCompile Include="..\src\map\channel.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\cashshop.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\chat.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\chrif.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\clif.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\date.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\duel.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\elemental.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\guild.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\homunculus.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\instance.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\intif.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\itemdb.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\log.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\mail.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\map.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\mapreg.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\mercenary.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\mob.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\npc.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\npc_chat.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\party.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\path.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\pc.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\pet.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\quest.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\script.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\searchstore.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\skill.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\status.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\storage.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\trade.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\unit.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\vending.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\core.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\des.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\db.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\ers.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\grfio.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\malloc.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\mapindex.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\md5calc.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\nullpo.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\random.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\socket.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\sql.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\strlib.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\timer.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\utils.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\conf.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\map\pc_groups.c">
+      <Filter>map</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\showmsg.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\mt19937ar\mt19937ar.c">
+      <Filter>3rdparty\mt19937ar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\libconfig\grammar.c">
+      <Filter>3rdparty\libconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\libconfig\libconfig.c">
+      <Filter>3rdparty\libconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\libconfig\scanctx.c">
+      <Filter>3rdparty\libconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\libconfig\scanner.c">
+      <Filter>3rdparty\libconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\3rdparty\libconfig\strbuf.c">
+      <Filter>3rdparty\libconfig</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\thread.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\mutex.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\mempool.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\raconf.c">
+      <Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\cli.c">
+		<Filter>common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\common\msg_conf.c">
+		<Filter>common</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\map\atcommand.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\battle.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\battleground.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\buyingstore.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\channel.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\cashshop.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\chat.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\chrif.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\clif.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\date.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\duel.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\elemental.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\guild.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\homunculus.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\instance.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\intif.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\itemdb.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\log.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\mail.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\map.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\mapreg.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\mercenary.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\mob.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\npc.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\party.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\path.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\pc.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\pet.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\quest.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\script.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\searchstore.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\skill.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\status.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\storage.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\trade.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\unit.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\vending.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\cbasetypes.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\core.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\db.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\des.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\ers.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\grfio.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\malloc.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\mapindex.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\md5calc.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\mmo.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\nullpo.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\random.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\socket.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\sql.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\strlib.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\timer.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\utils.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\conf.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\map\pc_groups.h">
+      <Filter>map</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\showmsg.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\mt19937ar\mt19937ar.h">
+      <Filter>3rdparty\mt19937ar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\libconfig\grammar.h">
+      <Filter>3rdparty\libconfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\libconfig\libconfig.h">
+      <Filter>3rdparty\libconfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\libconfig\parsectx.h">
+      <Filter>3rdparty\libconfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\libconfig\scanctx.h">
+      <Filter>3rdparty\libconfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\libconfig\scanner.h">
+      <Filter>3rdparty\libconfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\libconfig\strbuf.h">
+      <Filter>3rdparty\libconfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\3rdparty\libconfig\wincompat.h">
+      <Filter>3rdparty\libconfig</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\winapi.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\thread.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\mutex.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\mempool.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\raconf.h">
+      <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\cli.h">
+	 <Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\common\msg_conf.h">
+		<Filter>common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\config\secure.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\config\const.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\config\core.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\config\renewal.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\config\classes\general.h">
+      <Filter>config\classes</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="common">
+      <UniqueIdentifier>{3a137217-ebf7-44ee-95d9-3d7c51d2a199}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="map">
+      <UniqueIdentifier>{8c01a080-5a78-4fb7-96f2-862c33a02230}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty">
+      <UniqueIdentifier>{c4845ea8-bcc7-411b-af29-e3842adb6714}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\mt19937ar">
+      <UniqueIdentifier>{fcf23386-ddba-4a72-9b41-62f8e2d0e6c0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\libconfig">
+      <UniqueIdentifier>{9caf40b7-c4d1-43b4-bd1f-0376b4f920e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{3308d722-72ef-4a4c-a7aa-892d173c8ea3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config\classes">
+      <UniqueIdentifier>{dc4ce819-c8e2-4c38-b929-5a57d01e6657}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

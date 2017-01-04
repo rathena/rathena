@@ -1,0 +1,17 @@
+// --------------------------------------------------------------
+// -                   Pre-Renewal Job Scripts                  -
+// --------------------------------------------------------------
+
+// ------------------------- Job Quests -------------------------
+// - 1-1
+npc: npc/pre-re/jobs/1-1/acolyte.txt
+npc: npc/pre-re/jobs/1-1/archer.txt
+npc: npc/pre-re/jobs/1-1/mage.txt
+npc: npc/pre-re/jobs/1-1/merchant.txt
+npc: npc/pre-re/jobs/1-1/swordman.txt
+npc: npc/pre-re/jobs/1-1/thief.txt
+// - Novice
+npc: npc/pre-re/jobs/novice/novice.txt
+
+// ------------------------ Skill Quests ------------------------
+npc: npc/pre-re/quests/skills/swordman_skills.txt

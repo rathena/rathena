@@ -1,0 +1,5 @@
+// Monster Chat Database
+//
+// Structure of Database:
+// Line_ID#Color_Code#Dialog
+

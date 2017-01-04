@@ -1,0 +1,52 @@
+//===== rAthena Script ======================================= 
+//= Sphinx Mask Quest (custom)
+//===== By: ================================================== 
+//= sabernet09
+//===== Current Version: ===================================== 
+//= 1.3
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= This quest is related to Umbalian Chief.
+//= 1.1 Removed it from official Umbala quests [Lupus]
+//= 1.2 Added a missing variable (sphmask_q) [erKURITA]
+//= 1.3 Optimized, and coordinates moved. [Euphy]
+//============================================================ 
+
+morocc,208,90,6	script	Turban Thief	58,{
+	mes "[Turban Thief]";
+	if(event_umbala < 2) {
+		mes "What do you wan te withz me? Be gone!";
+		close; }
+	if(sphmask_q) {
+		mes "You have no more business with me, go away!";
+		close; }
+	mes "E'llo mah frien, would I interesst tu with this rare mask? Its value I assure you is real mah frien. Tis manific!";
+	next;
+	callsub L_Menu,1,"1,000,000",1000000;
+	callsub L_Menu,2,"750,000",750000;
+	callsub L_Menu,3,"500,000",500000;
+	next;
+	mes "[Turban Thief]";
+	mes "Ack! Forgez it! I can do bettaz en elsez where!";
+	set sphmask_q,1;
+	close;
+
+L_Menu:
+	mes "[Turban Thief]";
+	switch(getarg(0)) {
+		case 1: mes "Wah? O ho ho ho, so you know thaz I steal dis from those savages no? Well I won'tz give it back. But I will for a pricez... wat you say?"; break;
+		case 2: mes "Ahh a business man are you no?  Fine, how about..."; break;
+		case 3: mes "Hmmm... you drive a hard bargain, ok... my final offer..."; break; }
+	next;
+	if(select("Pay "+getarg(1)+"z:No deal")==2) return;
+	mes "[Turban Thief]";
+	if (Zeny < getarg(2)) {
+		mes "Are youz playin wit me? You don't have ze money!";
+		close; }
+	set Zeny, Zeny-getarg(2);
+	mes "O ho ho, it's a deal, then!";
+	getitem 7114,1;
+	set sphmask_q,1;
+	close;
+}

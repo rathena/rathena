@@ -1,0 +1,67 @@
+//===== rAthena Script =======================================
+//= Odin Temple Monster Spawn Script
+//===== By: ==================================================
+//= Poki#3 (0.1)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Updated by using Tharis' Homun AI, by Tharis [Vicious]
+//= 1.1 More accurate spawns [Playtester]
+//= 1.2 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// odin_tem01 - Odin Temple F1
+//==================================================
+odin_tem01,0,0,0,0	monster	Breeze	1692,10,300000,240000,0
+odin_tem01,0,0,0,0	monster	Plasma	1697,3,900000,300000,0
+odin_tem01,0,0,0,0	monster	Plasma	1695,3,900000,300000,0
+odin_tem01,0,0,0,0	monster	Plasma	1696,3,900000,300000,0
+odin_tem01,0,0,0,0	monster	Plasma	1694,3,900000,300000,0
+odin_tem01,0,0,0,0	monster	Plasma	1693,10,900000,300000,0
+odin_tem01,0,0,0,0	monster	Frus	1753,5,0,0,0
+odin_tem01,0,0,0,0	monster	Skogul	1752,5,0,0,0
+odin_tem01,0,0,0,0	monster	Green Plant	1080,5,60000,30000,1
+odin_tem01,0,0,0,0	monster	Yellow Plant	1081,5,60000,30000,1
+odin_tem01,0,0,0,0	monster	Blue Plant	1079,5,600000,300000,1
+
+//==================================================
+// odin_tem02 - Odin Temple F2
+//==================================================
+odin_tem02,0,0,0,0	monster	Plasma	1693,15,900000,300000,0
+odin_tem02,0,0,0,0	monster	Skeggiold	1754,1,1800000,0,0
+odin_tem02,0,0,0,0	monster	Skeggiold	1755,1,1800000,0,0
+odin_tem02,0,0,0,0	monster	Frus	1753,30,0,0,0
+odin_tem02,0,0,0,0	monster	Skogul	1752,30,0,0,0
+odin_tem02,160,330,3,3	monster	Frus	1762,1,30000,15000,0
+odin_tem02,172,292,3,3	monster	Skogul	1761,1,30000,15000,0
+odin_tem02,182,263,3,3	monster	Frus	1762,1,30000,15000,0
+odin_tem02,190,236,3,3	monster	Skogul	1761,1,30000,15000,0
+odin_tem02,205,198,3,3	monster	Frus	1762,1,30000,15000,0
+odin_tem02,0,0,0,0	monster	Valkyrie	1765,1,5400000,1800000,0
+odin_tem02,0,0,0,0	monster	Blue Plant	1079,10,1800000,900000,1
+
+//==================================================
+// odin_tem03 - Odin Temple F3
+//==================================================
+odin_tem03,0,0,0,0	monster	Plasma	1693,20,900000,300000,0
+odin_tem03,0,0,0,0	monster	Skeggiold	1754,16,0,0,0
+odin_tem03,0,0,0,0	monster	Skeggiold	1755,16,0,0,0
+odin_tem03,0,0,0,0	monster	Frus	1753,4,0,0,0
+odin_tem03,0,0,0,0	monster	Skogul	1752,4,0,0,0
+odin_tem03,116,65,3,3	monster	Frus	1762,1,30000,15000,0
+odin_tem03,100,110,3,3	monster	Skogul	1761,1,30000,15000,0
+odin_tem03,94,132,3,3	monster	Frus	1762,1,30000,15000,0
+odin_tem03,90,173,3,3	monster	Frus	1762,1,30000,15000,0
+odin_tem03,111,188,3,3	monster	Skogul	1761,1,30000,15000,0
+odin_tem03,151,210,3,3	monster	Skogul	1761,1,30000,15000,0
+odin_tem03,178,224,3,3	monster	Skogul	1761,1,30000,15000,0
+odin_tem03,205,240,3,3	monster	Frus	1762,1,30000,15000,0
+odin_tem03,238,265,3,3	monster	Skogul	1761,1,30000,15000,0
+odin_tem03,256,271,3,3	monster	Frus	1762,1,30000,15000,0
+odin_tem03,0,0,0,0	monster	Valkyrie	1765,2,1800000,1200000,0
+odin_tem03,0,0,0,0	boss_monster	Valkyrie Randgris	1751,1,28800000,600000,1
+odin_tem03,0,0,0,0	monster	Blue Plant	1079,15,1800000,900000,1
+odin_tem03,0,0,0,0	monster	Shining Plant	1083,15,1800000,900000,1

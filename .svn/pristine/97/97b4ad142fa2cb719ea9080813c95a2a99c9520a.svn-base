@@ -1,0 +1,275 @@
+//===== rAthena Script ======================================= 
+//= Misc. Message Boards
+//===== By: ================================================== 
+//= kobra_k88
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.7
+//===== Compatible With: ===================================== 
+//= [Official Conversion]
+//= rAthena Project; 7.15 +
+//===== Description: ========================================= 
+//= Misc. Message Boards for:
+//=  - Prontera
+//=  - Morroc
+//=  - Geffen
+//=  - Al De Baran
+//=  - Izlude
+//=  - Alberta
+//===== Additional Comments: ================================= 
+//= Rearranged [Lupus]
+//= Fixed spelling mistakes. [Nexon]
+//= 1.3 Removed Duplicates [Silent]
+//= 1.4 Rescripted to Aegis 10.3 standard. [L0ne_W0lf]
+//= 1.5 Removed a duplicate related to the Sign Quest. [SinSloth]
+//= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.6 Commented out conflicting npcs. (bugreport:4093) [L0ne_W0lf]
+//= 1.7 Moved Izlude NPCs to Pre-RE path. [Euphy]
+//============================================================
+
+// Prontera
+//============================================================
+prontera,158,213,1	script	Sign Post#Prt1	111,{
+	mes "^993300- The Sign Post Reads -^000000";
+	mes "North to Prontera Castle";
+	mes "North to Al De Baran";
+	mes "Northwest to Geffen";
+	mes "East to Prontera Fields";
+	mes "South to Prontera Fields";
+	mes "Southeast to Alberta";
+	mes "Southwest to Morroc";
+	mes "Southwest to Comodo";
+	mes "West to Prontera Fields";
+	close;
+}
+
+prontera,156,197,1	script	Prontera Bulletin#Prt2	111,{
+	mes "^993300- The Prontera Bulletin Reads -^000000";
+	mes "Wanted: Two Clip Accessories";
+	mes "Please contact...";
+	mes "- Name appears to be worn off -";
+	mes "Selling: Used Bastard Sword";
+	mes "Will take any offer!";
+	mes "Contact Abramulious";
+	mes "Help Wanted: Buying or selling a used Peco Peco?";
+	mes "Contact Grasisium in Morroc now!";
+	close;
+}
+
+prontera,278,212,1	script	Sign#Prt3	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Please help keep Prontera a clean place.";
+	close;
+}
+/*
+prontera,150,326,1	script	Sign#Prt4	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Citizens of Prontera are Welcomed in the Prontera Castle.";
+	close;
+}
+*/
+prontera,31,212,1	script	Billboard#Prt5	111,{
+	mes "^993300- The Billboard Reads -^000000";
+	mes "~WANTED~";
+	mes "iROGM01";
+	mes "DEAD or ALIVE";
+	mes "*Kill Stealing in Glast Heim*";
+	mes "~REWARD~";
+	mes "50,000 Zeny ";
+	mes "Contact: iROGM02";
+	close;
+}
+
+prontera,165,305,1	script	Billboard#Prt6	111,{
+	mes "^993300- The Billboard Reads -^000000";
+	mes "We hope you enjoy your stay in Prontera.";
+	close;
+}
+
+prontera,145,304,1	script	Sign#Prt7	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Note:";
+	mes "I lost my cart in Mt. Mjolnir, if someone finds it please tell me, my life was in that bucket of goods!";
+	close;
+}
+
+// Morroc
+//============================================================
+morocc,144,84,1	script	Sign#Moc1	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Wanted: Body guard to protect my shop from thieves";
+	mes "Please contact Butcher";
+	close;
+}
+
+morocc,145,83,1	script	Sign#Moc2	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Selling, well groomed Peco Peco!";
+	mes "This beautiful specimen has only been ridden by myself, comes with a saddle, a harness and...";
+	close;
+}
+
+morocc,32,174,1	script	Bulletin#Moc3	111,{
+	mes "^993300- The Bulletin Reads -^000000";
+	mes "^0099FFMorroc women up in arms!^000000";
+	mes "A recent study has shown that the majority of male citizens in";
+	mes "Morroc prefer the women of Geffen. 90 of the 100 male citizens";
+	mes "of Morroc claimed that they have had numerous relationships";
+	mes "with Geffen women outside of the Morroc Region.";
+	next;
+	mes "^993300- The Bulletin Continued -^000000";
+	mes "'I just prefer their company better, that's all...' said one Morroc man.";
+	mes "'it's not like I'm against Morroc women or anything, so what's the problem...'";
+	mes "Besides emotional and stressful issues in regards to the daily";
+	mes "activities of these males.";
+	mes "Hunting still seems to be their number one priority";
+	mes "over finding decent woman within the region....";
+	close;
+}
+
+morocc,168,266,1	script	Sign#Moc5	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Welcome to Morroc.";
+	close;
+}
+
+morocc,168,264,1	script	Billboard#Moc6	111,{
+	mes "^993300- The Billboard Reads -^000000";
+	mes "^CC0033Battle Royal!^000000";
+	mes "Do you have what it takes to battle someone in a no holds barred, player vs. player game of death!";
+	mes "Head to Prontera if you think you have what it takes!";
+	close;
+}
+
+morocc,298,211,1	script	Sign#Moc7	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Welcome to Morroc.";
+	close;
+}
+
+// Geffen
+//============================================================
+geffen,116,58,1	script	Geffen Bulletin#Gef1	111,{
+	mes "^993300- The Geffen Bulletin Reads -^000000";
+	mes "Remember Wizard's...It's not how many skills you know, it's the magic that counts!";
+	close;
+}
+/*
+geffen,61,174,1	script	Sign#Gef2	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "- Seems to be written in a language unfamiliar to you -";
+	close;
+}
+*/
+geffen,113,104,1	script	Billboard#Gef3	111,{
+	mes "^993300- The Billboard Reads -^000000";
+	mes "Selling: Brand new Chon Chon Doll!";
+	mes "What a great gift to give to a loved one, contact me now!";
+	mes "- Name seems to be smeared -";
+	mes " ";
+	mes "Buying: Manteau!";
+	mes "I'm freezing and I have no zeny, please help me!";
+	mes "Contact Edionyus";
+	close;
+}
+
+geffen,119,190,1	script	Sign Post#Gef4	111,{
+	mes "^993300- The Sign Post Reads -^000000";
+	mes "North to Geffen Fields";
+	mes "Northeast to Al De Baran";
+	mes "Northwest to Glast Heim";
+	mes "East to Geffen Fields";
+	mes "South to Morroc";
+	mes "Southeast to Prontera";
+	mes "Southeast to Alberta";
+	mes "Southwest to Comodo";
+	mes "West to Geffen Fields";
+	close;
+}
+
+geffen,168,175,1	script	Sign#Gef5	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "''Your always welcomed in Geffen''";
+	close;
+}
+
+geffen,183,61,1	script	Sign#Gef6	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Welcome.";
+	close;
+}
+
+// Al De Baran
+//============================================================
+aldebaran,181,172,1	script	Billboard#Alde1	111,{
+	mes "^993300- The Billboard Reads -^000000";
+	mes "In Search of:";
+	mes "I lost my Bongun pet, it wasn't my fault, it just ran away...";
+	mes "If you see him, please let me know. Reward to whomever finds him!";
+	close;
+}
+
+aldebaran,133,104,1	script	Al De Baran Bulletin#Al2	111,{
+	mes "^993300- The Al De Baran Bulletin Reads -^000000";
+	mes "''Enjoy your stay in Al De Baran''";
+	close;
+}
+
+aldebaran,54,223,1	script	Billboard#Alde3	111,{
+	mes "^993300- The Billboard Reads -^000000";
+	mes "Help Wanted:";
+	mes "We are looking for young, strong and athletic people who are";
+	mes "interested in a full time career as a Blacksmith. If your interested, please contact Altiregen";
+	mes "in Geffen!";
+	close;
+}
+
+aldebaran,197,228,1	script	#Alde4	-1,1,1,{
+OnTouch:
+	mes "[Home Owner]";
+	mes "Get off my roof you no good leecher!";
+	close;
+}
+
+aldebaran,217,222,1	script	Sign#Alde5	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "I saw Santa Claus in Lutie!";
+	mes "- The rest looks like scribble -";
+	close;
+}
+
+// Alberta
+//============================================================
+alberta,35,241,1	script	Billboard#Alb1	111,{
+	mes "^993300- The Billboard Reads -^000000";
+	mes "Welcome to Alberta, the Merchant's paradise.";
+	close;
+}
+
+alberta,37,39,1	script	Billboard#Alb2	111,{
+	mes "^993300- The Billboard Reads -^000000";
+	mes "Welcome.";
+	close;
+}
+
+alberta,99,151,1	script	Sign#Alb3	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Tools by the Cart full!";
+	mes "You need tools? We got'em!";
+	mes "Come on in, we never close!";
+	close;
+}
+
+alberta,196,152,1	script	Sign#Alb4	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Docking and Shipment times very on load. For information regarding";
+	mes "Shipping and Receiving, please...";
+	mes "- You can't make out the rest -";
+	close;
+}
+
+alberta,149,54,1	script	Sign#Alb5	111,{
+	mes "^993300- The Sign Reads -^000000";
+	mes "Welcome.";
+	close;
+}

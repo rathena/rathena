@@ -1,0 +1,192 @@
+//===== rAthena Script =======================================
+//= War of Emperium N Guild Flags
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 4+
+//===== Description: =========================================
+//= WoE flag scripts.  Display guild emblems on flags.
+//===== Additional Comments: =================================
+// Based off existing guild scripts.  Do not know if it is accurate.[kobra_k88]
+// 1.1 Inner Flags don't teleport you to your HQ anymore [Lupus]
+// 1.2 updated flags to use the new arguments. [L0ne__W0lf]
+// 1.3 Guild flag function added. [L0ne_W0lf]
+//============================================================
+
+/// Flag Function
+//============================================================
+function	script	F_Flags	{
+	set .@GID, GetCastleData(getarg(1),1);
+	if (getarg(5) == 0) return;
+	if (.@GID == 0) {
+		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "We declare that";
+		mes "there is no formal master of this castle.";
+		mes " ";
+		mes "2. To the one who can ";
+		mes "overcome all trials";
+		mes "and destroy the Emperium,";
+		mes "the king will endow the one with";
+		mes "ownership of this castle.";
+		return;
+	}
+	else {
+		if (getcharid(2) == .@GID && getarg(4) == 1) {
+			mes "Brave ones...";
+			mes "Do you wish to return to your honorable place?";
+			next;
+			if (select("Return to the guild castle.:Quit.") == 1) {
+				if (getcharid(2) == GetCastleData(getarg(1),1))
+					warp getarg(1),getarg(2),getarg(3);
+			}
+			return;
+		}
+		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " ";
+		mes "1. Following the ordinance of the";
+		mes "Divine Rune Midgard Kingdom,";
+		mes "we approve that this place is in";
+		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
+		mes " ";
+		mes "2. The guild Master of ^ff0000"+ GetGuildName(.@GID) + "^000000 Guild is";
+		mes "^FF0000" + GetGuildMaster(.@GID) + "^000000";
+		mes "If there is anyone who objects to this,";
+		mes " prove your strength and honor with a steel blade in your hand.";
+		return;
+	}
+}
+
+//============================================================================//
+// 			Castle 1
+//============================================================================//
+n_castle,110,96,1	script	NGuild Aldebaran#a1-1	722,{
+	callfunc "F_Flags","Al De Baran","nguild_alde",218,170,1,1;
+	close;
+
+OnRecvCastleN01:
+	FlagEmblem GetCastleData("nguild_alde",1);
+	end;
+}
+
+nguild_alde,30,248,4	script	NGuild Aldebaran#a1-6::NGuildAlde	722,{
+	callfunc "F_Flags","Al De Baran","nguild_alde",218,170,0,1;
+	close;
+
+OnRecvCastleN01:
+	FlagEmblem GetCastleData("nguild_alde",1);
+	end;
+}
+// In Castle ============================================
+nguild_alde,30,246,4	duplicate(NGuildAlde)	NGuild Aldebaran#a1-7	722
+nguild_alde,37,248,4	duplicate(NGuildAlde)	NGuild Aldebaran#a1-8	722
+nguild_alde,37,246,4	duplicate(NGuildAlde)	NGuild Aldebaran#a1-9	722
+nguild_alde,95,80,2	duplicate(NGuildAlde)	NGuild Aldebaran#a1-10	722
+nguild_alde,95,59,2	duplicate(NGuildAlde)	NGuild Aldebaran#a1-11	722
+nguild_alde,62,75,2	duplicate(NGuildAlde)	NGuild Aldebaran#a1-12	722
+nguild_alde,70,75,2	duplicate(NGuildAlde)	NGuild Aldebaran#a1-13	722
+nguild_alde,74,75,2	duplicate(NGuildAlde)	NGuild Aldebaran#a1-14	722
+nguild_alde,62,64,2	duplicate(NGuildAlde)	NGuild Aldebaran#a1-15	722
+nguild_alde,66,64,2	duplicate(NGuildAlde)	NGuild Aldebaran#a1-16	722
+nguild_alde,70,64,2	duplicate(NGuildAlde)	NGuild Aldebaran#a1-17	722
+nguild_alde,74,64,2	duplicate(NGuildAlde)	NGuild Aldebaran#a1-18	722
+nguild_alde,203,150,4	duplicate(NGuildAlde)	NGuild Aldebaran#a1-19	722
+nguild_alde,210,150,4	duplicate(NGuildAlde)	NGuild Aldebaran#a1-20	722
+
+
+
+
+//============================================================================//
+// 			Castle 2
+//============================================================================//
+n_castle,110,109,3	script	NGuild Geffen#g1-1	722,{
+	callfunc "F_Flags","Geffen","nguild_gef",83,47,1,1;
+	close;
+
+OnRecvCastleN02:
+	FlagEmblem GetCastleData("nguild_gef",1);
+	end;
+}
+
+nguild_gef,28,157,4	script	NGuild Geffen#g1-6::NGuildGef	722,{
+	callfunc "F_Flags","Geffen","nguild_gef",83,47,0,1;
+	close;
+
+OnRecvCastleN02:
+	FlagEmblem GetCastleData("nguild_gef",1);
+	end;
+}
+// In Castle =============================================
+nguild_gef,32,157,4	duplicate(NGuildGef)	NGuild Geffen#g1-7	722
+nguild_gef,22,156,5	duplicate(NGuildGef)	NGuild Geffen#g1-8	722
+nguild_gef,68,185,3	duplicate(NGuildGef)	NGuild Geffen#g1-9	722
+nguild_gef,17,171,5	duplicate(NGuildGef)	NGuild Geffen#g1-10	722
+nguild_gef,59,16,4	duplicate(NGuildGef)	NGuild Geffen#g1-11	722
+nguild_gef,64,16,4	duplicate(NGuildGef)	NGuild Geffen#g1-12	722
+
+
+
+//============================================================================//
+// 			Castle 3
+//============================================================================//
+n_castle,94,109,5	script	NGuild Payon#f1-1	722,{
+	callfunc "F_Flags","Payon","nguild_pay",87,29,1,1;
+	close;
+
+OnRecvCastleN03:
+	FlagEmblem GetCastleData("nguild_pay",1);
+	end;
+}
+
+nguild_pay,238,67,4	script	NGuild Payon#f1-6::NGuildPay	722,{
+	callfunc "F_Flags","Payon","nguild_pay",87,29,0,1;
+	close;
+
+OnRecvCastleN03:
+	FlagEmblem GetCastleData("nguild_pay",1);
+	end;
+}
+// In Castle ===============================================
+nguild_pay,238,67,4	duplicate(NGuildPay)	NGuild Payon#f1-6	722
+nguild_pay,233,67,4	duplicate(NGuildPay)	NGuild Payon#f1-7	722
+nguild_pay,221,123,4	duplicate(NGuildPay)	NGuild Payon#f1-8	722
+nguild_pay,221,116,4	duplicate(NGuildPay)	NGuild Payon#f1-9	722
+nguild_pay,206,108,4	duplicate(NGuildPay)	NGuild Payon#f1-10	722
+nguild_pay,212,108,4	duplicate(NGuildPay)	NGuild Payon#f1-11	722
+
+
+
+
+//=============================================================================//
+// 			Castle 4
+//=============================================================================//
+n_castle,94,96,7	script	NGuild Prontera#p1-1	722,{
+	callfunc "F_Flags","Prontera","nguild_prt",97,174,1,1;
+	close;
+
+OnRecvCastleN04:
+	FlagEmblem GetCastleData("nguild_prt",1);
+	end;
+}
+
+nguild_prt,58,56,4	script	NGuild Prontera#p1-7::NGuildPrt	722,{
+	callfunc "F_Flags","Prontera","nguild_prt",97,174,0,1;
+	close;
+
+OnRecvCastleN04:
+	FlagEmblem GetCastleData("nguild_prt",1);
+	end;
+}
+// In Castle =============================================
+nguild_prt,64,56,4	duplicate(NGuildPrt)	NGuild Prontera#p1-8	722
+nguild_prt,76,32,4	duplicate(NGuildPrt)	NGuild Prontera#p1-9	722
+nguild_prt,84,32,4	duplicate(NGuildPrt)	NGuild Prontera#p1-10	722
+nguild_prt,94,39,4	duplicate(NGuildPrt)	NGuild Prontera#p1-11	722
+nguild_prt,94,24,4	duplicate(NGuildPrt)	NGuild Prontera#p1-12	722
+nguild_prt,73,14,4	duplicate(NGuildPrt)	NGuild Prontera#p1-13	722
+nguild_prt,73,6,4	duplicate(NGuildPrt)	NGuild Prontera#p1-14	722
+nguild_prt,55,46,4	duplicate(NGuildPrt)	NGuild Prontera#p1-15	722
+nguild_prt,45,46,4	duplicate(NGuildPrt)	NGuild Prontera#p1-16	722
