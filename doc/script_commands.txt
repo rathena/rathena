@@ -155,7 +155,10 @@ is given as "--ja--", the 'japanese name' field from the monster database is
 used, (which, in rAthena, actually contains an English name) if it's "--en--", 
 it's the 'english name' from the monster database (which contains an uppercase 
 name used to summon the monster with a GM command).
-Monster level will change the level of the monsters spawn (optionnal).
+
+You can specify a custom level to use for the mob different from the one of
+the database by adjoining the level after the name with a comma. eg:
+"Poring,50" for a name will spawn a monster with name Poring and level 50.
 
 Amount is the amount of monsters that will be spawned when this command is 
 executed, it is affected by spawn rates in 'battle_athena.conf'.
@@ -165,17 +168,13 @@ base respawn time, and the second is random variance on top of the base time.
 Both values are given in milliseconds (1000 = 1 second).
 Note that the server also enforces a minimum respawn delay of 5 seconds.
 
-You can specify a custom level to use for the mob different from the one of
-the database by adjoining the level after the name with a comma. eg:
-"Poring,50" for a name will spawn a monster with name Poring and level 50.
-
 Event is a script event to be executed when the mob is killed. The event must
 be in the form "NPCName::OnEventName" to execute, and the event name label
 should start with "On". As with all events, if the NPC is an on-touch NPC, the
 player who triggers the script must be within 'trigger' range for the event to
 work.
 
-There are two optionnals fields for monster size and AI.
+There are two optional fields for monster size and AI.
 
 <mob size> can be:
 	Size_Small	(0)
