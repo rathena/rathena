@@ -11745,6 +11745,15 @@
 31151,C_Chasher_Ear,Costume Cheshire's Cat Ears,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1565,{},{},{}
 31152,C_Piamette_BowTie_Red,Costume Piamette's Red Bow Tie,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1566,{},{},{}
 31153,C_Aniv_Star_Hat2,Costume Cactus Flower Corsage,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1567,{},{},{}
+31160,C_Rune_Helm,Costume Rune Helm,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1361,{},{},{}
+31161,C_Tiger_Mask,Costume Tiger Mask,4,0,,0,,0,,0,0xFFFFFFFF,63,2,3072,,1,0,181,{},{},{}
+31162,C_Shaving_Foam,Costume Shaving Foam,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1129,{},{},{}
+31163,C_Goat_Hat,Costume Sheep Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,205,{},{},{}
+31164,C_Brown_Stole,Costume Brown Stole,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1572,{},{},{}
+31165,C_Piggyback,Costume Piggyback,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1574,{},{},{}
+31166,C_Teddy_Bear_Hood,Costume Teddy Bear Hood,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1571,{},{},{}
+31167,C_Lunatic_Hanging_Ear_BL,Costume Hanging Black Lunatic Ears,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1575,{},{},{}
+31168,C_Mouton_Life_B,Costume Blue Mouton Life,4,0,,0,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1573,{},{},{}
 31169,C_Hat_Of_Outlaw,Costume Hilarious Bandit Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,486,{},{},{}
 31170,C_Wind_Wings,Costume Wings of Wind,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,493,{},{},{}
 31171,C_Nekomimi,Costume Nekomimi,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,182,{},{},{}
