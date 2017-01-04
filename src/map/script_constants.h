@@ -1435,6 +1435,9 @@
 	export_constant(SC_GOLDENMACECLAN);
 	export_constant(SC_CROSSBOWCLAN);
 	export_constant(SC_JUMPINGCLAN);
+	export_constant(SC_GEFFEN_MAGIC1);
+	export_constant(SC_GEFFEN_MAGIC2);
+	export_constant(SC_GEFFEN_MAGIC3);
 	export_constant(SC_FALLEN_ANGEL);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);

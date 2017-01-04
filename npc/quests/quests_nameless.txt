@@ -2871,7 +2871,6 @@ que_temsky,99,100,6	script	Pope#rachel2	936,{
 }
 
 que_temsky,100,93,0	script	#em_sky_s	-1,5,2,{
-//OnTouch2:
 OnTouch:
 	if (aru_em == 21) {
 		mes "^3355FFHigh Priest Zhed and High";
@@ -4262,7 +4261,6 @@ cmd_fild01,55,160,0	script	Heap of Earth	844,{
 		close;
 	}
 
-//OnTouch2:
 OnTouch:
 	if (diamond_edq < 9) {
 		mes "[Dorian]";
@@ -5173,7 +5171,6 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 	mes "kept it well hidden...";
 	close;
 
-//OnTouch2:
 OnTouch:
 if ((diamond_edq == 14) && (BaseLevel > 65)) {
 	mes "[Ibrahim]";
@@ -6873,7 +6870,6 @@ prt_in,168,18,1	script	Valdes	65,2,2,{
 	mes "It's like my life is over...";
 	close;
 
-//OnTouch2:
 OnTouch:
 	if (zdan_edq == 2) {
 		mes "[Valdes]";
@@ -8443,7 +8439,6 @@ OnInit:
 	set $@mosnter,0;
 	end;
 
-//OnTouch2:
 OnTouch:
 	if (zdan_edq == 15) {
 		mes "^FF0000*Creak Creak*^000000";
@@ -11389,7 +11384,6 @@ OnTimer60000:
 gef_fild08,182,182,0	script	#CallGhost	-1,2,2,{
 	end;
 
-//OnTouch2:
 OnTouch:
 	if (jewel_nd == 21) {
 		if (countitem(7725) > 0) {

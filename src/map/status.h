@@ -788,6 +788,11 @@ typedef enum sc_type {
 
 	SC_TAROTCARD,
 
+	// Geffen Magic Tournament Buffs
+	SC_GEFFEN_MAGIC1,
+    SC_GEFFEN_MAGIC2,
+    SC_GEFFEN_MAGIC3,
+
 	SC_FALLEN_ANGEL,
 
 #ifdef RENEWAL

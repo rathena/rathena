@@ -98,7 +98,7 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 		* Fork this repository to your GitHub account
 		* List the current configured remote repository for your fork:
 		
-				git remote -v origin
+				git remote -v
 
 		* Specify a new remote upstream repository that will be synced with your fork:
 		
@@ -106,14 +106,14 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 				
 		* Verify the new upstream repository you've specified for your fork:
 		
-				git remove-v origin
+				git remote -v
 				
 		* You should see the main rAthena repository as well as your forked repository
 		* Now, when you want to get updates from rAthena, simply do:
 		
 				git pull upstream master
 
-Remember that rAthena falls under [GNU GPLv3](https://github.com/rathena/rathena/blob/master/LICENSE).
+	* Remember that rAthena falls under [GNU GPLv3](https://github.com/rathena/rathena/blob/master/LICENSE).
 
 4. Troubleshooting
 ---------

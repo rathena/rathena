@@ -1109,6 +1109,11 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_CROSSBOWCLAN] = SI_CROSSBOWCLAN;
 	StatusIconChangeTable[SC_JUMPINGCLAN] = SI_JUMPINGCLAN;
 
+	// Geffen Magic Tournament Buffs
+	StatusIconChangeTable[SC_GEFFEN_MAGIC1] = SI_GEFFEN_MAGIC1;
+    StatusIconChangeTable[SC_GEFFEN_MAGIC2] = SI_GEFFEN_MAGIC2;
+    StatusIconChangeTable[SC_GEFFEN_MAGIC3] = SI_GEFFEN_MAGIC3;
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
@@ -4021,6 +4026,20 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->subele[ELE_HOLY] += sc->data[SC_PROVIDENCE]->val2;
 			sd->subrace[RC_DEMON] += sc->data[SC_PROVIDENCE]->val2;
 		}
+        if (sc->data[SC_GEFFEN_MAGIC1]) {
+            sd->right_weapon.addrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC1]->val1;
+            sd->right_weapon.addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
+            sd->left_weapon.addrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC1]->val1;
+            sd->left_weapon.addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC1]->val1;
+        }
+        if (sc->data[SC_GEFFEN_MAGIC2]) {
+            sd->magic_addrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC2]->val1;
+            sd->magic_addrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC2]->val1;
+        }
+        if(sc->data[SC_GEFFEN_MAGIC3]) {
+            sd->subrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC3]->val1;
+            sd->subrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC3]->val1;
+        }
 		if(sc->data[SC_ARMOR_ELEMENT]) {	// This status change should grant card-type elemental resist.
 			sd->subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT]->val1;
 			sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT]->val2;
@@ -11427,6 +11446,9 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_REUSE_STORMBLAST:
 			case SC_ALL_RIDING_REUSE_LIMIT:
 			case SC_SPRITEMABLE:
+            case SC_GEFFEN_MAGIC1:
+            case SC_GEFFEN_MAGIC2:
+            case SC_GEFFEN_MAGIC3:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -13415,6 +13437,9 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_ALL_RIDING_REUSE_LIMIT:
 			case SC_SPRITEMABLE:
 			case SC_BITESCAR:
+            case SC_GEFFEN_MAGIC1:
+            case SC_GEFFEN_MAGIC2:
+            case SC_GEFFEN_MAGIC3:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:

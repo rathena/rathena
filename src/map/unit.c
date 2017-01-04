@@ -1758,10 +1758,12 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		case SA_SPELLBREAKER:
 			combo = 1;
 		break;
+#ifndef RENEWAL_CAST
 		case ST_CHASEWALK:
 			if (sc && sc->data[SC_CHASEWALK])
 				casttime = -1;
 		break;
+#endif
 		case TK_RUN:
 			if (sc && sc->data[SC_RUN])
 				casttime = -1;
