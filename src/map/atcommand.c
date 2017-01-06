@@ -4508,14 +4508,14 @@ ACMD_FUNC(nuke)
  *------------------------------------------*/
 ACMD_FUNC(tonpc)
 {
-	char npcname[NAME_LENGTH+1];
+	char npcname[NPC_NAME_LENGTH];
 	struct npc_data *nd;
 
 	nullpo_retr(-1, sd);
 
 	memset(npcname, 0, sizeof(npcname));
 
-	if (!message || !*message || sscanf(message, "%23[^\n]", npcname) < 1) {
+	if (!message || !*message || sscanf(message, "%49[^\n]", npcname) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1129)); // Please enter a NPC name (usage: @tonpc <NPC_name>).
 		return -1;
 	}
@@ -4538,12 +4538,12 @@ ACMD_FUNC(tonpc)
  *------------------------------------------*/
 ACMD_FUNC(shownpc)
 {
-	char NPCname[NAME_LENGTH+1];
+	char NPCname[NPC_NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
 	memset(NPCname, '\0', sizeof(NPCname));
 
-	if (!message || !*message || sscanf(message, "%23[^\n]", NPCname) < 1) {
+	if (!message || !*message || sscanf(message, "%49[^\n]", NPCname) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1130)); // Please enter a NPC name (usage: @enablenpc <NPC_name>).
 		return -1;
 	}
@@ -4564,12 +4564,12 @@ ACMD_FUNC(shownpc)
  *------------------------------------------*/
 ACMD_FUNC(hidenpc)
 {
-	char NPCname[NAME_LENGTH+1];
+	char NPCname[NPC_NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
 	memset(NPCname, '\0', sizeof(NPCname));
 
-	if (!message || !*message || sscanf(message, "%23[^\n]", NPCname) < 1) {
+	if (!message || !*message || sscanf(message, "%49[^\n]", NPCname) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1131)); // Please enter a NPC name (usage: @hidenpc <NPC_name>).
 		return -1;
 	}
@@ -4608,12 +4608,12 @@ ACMD_FUNC(loadnpc)
 ACMD_FUNC(unloadnpc)
 {
 	struct npc_data *nd;
-	char NPCname[NAME_LENGTH];
+	char NPCname[NPC_NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
 	memset(NPCname, '\0', sizeof(NPCname));
 
-	if (!message || !*message || sscanf(message, "%23[^\n]", NPCname) < 1) {
+	if (!message || !*message || sscanf(message, "%49[^\n]", NPCname) < 1) {
 		clif_displaymessage(fd, msg_txt(sd,1133)); // Please enter a NPC name (usage: @unloadnpc <NPC_name>).
 		return -1;
 	}
@@ -5332,15 +5332,17 @@ ACMD_FUNC(npcmove)
 {
 	short x = 0, y = 0, m;
 	struct npc_data *nd = 0;
-	nullpo_retr(-1, sd);
-	memset(atcmd_player_name, '\0', sizeof atcmd_player_name);
+	char npc_name[NPC_NAME_LENGTH];
 
-	if (!message || !*message || sscanf(message, "%6hd %6hd %23[^\n]", &x, &y, atcmd_player_name) < 3) {
+	nullpo_retr(-1, sd);
+	memset(npc_name, '\0', sizeof npc_name);
+
+	if (!message || !*message || sscanf(message, "%6hd %6hd %49[^\n]", &x, &y, npc_name) < 3) {
 		clif_displaymessage(fd, msg_txt(sd,1153)); // Usage: @npcmove <X> <Y> <npc_name>
 		return -1;
 	}
 
-	if ((nd = npc_name2id(atcmd_player_name)) == NULL)
+	if ((nd = npc_name2id(npc_name)) == NULL)
 	{
 		clif_displaymessage(fd, msg_txt(sd,111)); // This NPC doesn't exist.
 		return -1;
@@ -5368,7 +5370,7 @@ ACMD_FUNC(npcmove)
  *------------------------------------------*/
 ACMD_FUNC(addwarp)
 {
-	char mapname[32], warpname[MAP_NAME_LENGTH_EXT];
+	char mapname[32], warpname[NPC_NAME_LENGTH];
 	short x,y;
 	unsigned short m;
 	struct npc_data* nd;
@@ -5376,7 +5378,7 @@ ACMD_FUNC(addwarp)
 	nullpo_retr(-1, sd);
 	memset(warpname, '\0', sizeof(warpname));
 
-	if (!message || !*message || sscanf(message, "%31s %6hd %6hd %23[^\n]", mapname, &x, &y, warpname) < 4) {
+	if (!message || !*message || sscanf(message, "%31s %6hd %6hd %49[^\n]", mapname, &x, &y, warpname) < 4) {
 		clif_displaymessage(fd, msg_txt(sd,1156)); // Usage: @addwarp <mapname> <X> <Y> <npc name>
 		return -1;
 	}
@@ -6563,7 +6565,7 @@ ACMD_FUNC(cleanarea)
  *------------------------------------------*/
 ACMD_FUNC(npctalk)
 {
-	char name[NAME_LENGTH],mes[100],temp[100];
+	char name[NPC_NAME_LENGTH],mes[100],temp[100];
 	struct npc_data *nd;
 	bool ifcolor=(*(command + 8) != 'c' && *(command + 8) != 'C')?0:1;
 	unsigned long color=0;
@@ -6572,7 +6574,7 @@ ACMD_FUNC(npctalk)
 		return -1; //no "chatting" while muted.
 
 	if(!ifcolor) {
-		if (!message || !*message || sscanf(message, "%23[^,], %99[^\n]", name, mes) < 2) {
+		if (!message || !*message || sscanf(message, "%49[^,], %99[^\n]", name, mes) < 2) {
 			clif_displaymessage(fd, msg_txt(sd,1222)); // Please enter the correct parameters (usage: @npctalk <npc name>, <message>).
 			return -1;
 		}
