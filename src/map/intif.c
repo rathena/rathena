@@ -1234,7 +1234,7 @@ int intif_parse_WisMessage(int fd)
 	id=RFIFOL(fd,4);
 
 	safestrncpy(name, RFIFOCP(fd,32), NAME_LENGTH);
-	sd = map_nick2sd(name);
+	sd = map_nick2sd(name,false);
 	if(sd == NULL || strcmp(sd->status.name, name) != 0)
 	{	//Not found
 		intif_wis_replay(id,1);
@@ -1272,7 +1272,7 @@ int intif_parse_WisEnd(int fd)
 
 	if (battle_config.etc_log)
 		ShowInfo("intif_parse_wisend: player: %s, flag: %d\n", RFIFOP(fd,2), RFIFOB(fd,26)); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-	sd = (struct map_session_data *)map_nick2sd(RFIFOCP(fd,2));
+	sd = (struct map_session_data *)map_nick2sd(RFIFOCP(fd,2),false);
 	if (sd != NULL)
 		clif_wis_end(sd->fd, RFIFOB(fd,26));
 
