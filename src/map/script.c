@@ -19519,9 +19519,8 @@ BUILDIN_FUNC(instance_info)
 
 	if( !db ){
 		ShowError( "buildin_instance_info: Unknown instance name \"%s\".\n", name );
-		script_reportsrc(st);
 		script_pushint(st, -1);
-		return SCRIPT_CMD_SUCCESS;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	switch( type ){
@@ -19549,35 +19548,31 @@ BUILDIN_FUNC(instance_info)
 		case IIT_MAP:
 			if( !script_hasdata(st, 4) || script_isstring(st, 4) ){
 				ShowError( "buildin_instance_info: Type IIT_MAP requires a numeric index argument.\n" );
-				script_reportsrc(st);
 				script_pushstr(st, "");
-				break;
+				return SCRIPT_CMD_FAILURE;
 			}
 			
 			index = script_getnum(st, 4);
 
 			if( index < 0 ){
 				ShowError( "buildin_instance_info: Type IIT_MAP does not support a negative index argument.\n" );
-				script_reportsrc(st);
 				script_pushstr(st, "");
-				break;
+				return SCRIPT_CMD_FAILURE;
 			}
 
 			if( index > UINT8_MAX ){
 				ShowError( "buildin_instance_info: Type IIT_MAP does only support up to index %hu.\n", UINT8_MAX );
-				script_reportsrc(st);
 				script_pushstr(st, "");
-				break;
+				return SCRIPT_CMD_FAILURE;
 			}
 
 			script_pushstrcopy(st, StringBuf_Value(db->maplist[index]));
 			break;
 
 		default:
-			ShowError("buildin_instance_info: Unknown instance name \"%s\".\n", name);
-			script_reportsrc(st);
+			ShowError("buildin_instance_info: Unknown instance information type \"%d\".\n", type );
 			script_pushint(st, -1);
-			break;
+			return SCRIPT_CMD_FAILURE;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
