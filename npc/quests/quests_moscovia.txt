@@ -7122,15 +7122,15 @@ OnDisable:
 	end;
 
 OnTimer3000:
-	announce "Koshei, the Immortal : I will kill all who disturb me!! Cry in terror weak humans!!!",bc_map,0xCE3131;
+	mapannounce "mosk_dun01","Koshei, the Immortal : I will kill all who disturb me!! Cry in terror weak humans!!!",bc_map,0xCE3131;
 	end;
 
 OnTimer63000:
-	announce "Koshei, the Immortal : You worms, you mere monsters... I will curse all who are in my way!!",bc_map,0xCE3131;
+	mapannounce "mosk_dun01","Koshei, the Immortal : You worms, you mere monsters... I will curse all who are in my way!!",bc_map,0xCE3131;
 	end;
 
 OnTimer150000:
-	announce "Koshei, the Immortal : Mankind! Cry in terror!! Hahahahahahahhahahah!!!",bc_map,0xCE3131;
+	mapannounce "mosk_dun01","Koshei, the Immortal : Mankind! Cry in terror!! Hahahahahahahhahahah!!!",bc_map,0xCE3131;
 	end;
 
 OnTimer300000:
