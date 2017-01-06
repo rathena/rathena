@@ -3204,6 +3204,16 @@
 	export_constant(IE_NOINSTANCE);
 	export_constant(IE_OTHER);
 
+	/* instance info */
+	export_constant(IIT_ID);
+	export_constant(IIT_TIME_LIMIT);
+	export_constant(IIT_IDLE_TIMEOUT);
+	export_constant(IIT_ENTER_MAP);
+	export_constant(IIT_ENTER_X);
+	export_constant(IIT_ENTER_Y);
+	export_constant(IIT_MAPCOUNT);
+	export_constant(IIT_MAP);
+
 	/* item groups */
 	export_constant(IG_BLUEBOX);
 	export_constant(IG_VIOLETBOX);

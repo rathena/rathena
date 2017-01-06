@@ -19526,6 +19526,81 @@ BUILDIN_FUNC(instance_check_guild)
 }
 
 /*==========================================
+* instance_info
+* Values:
+* name : name of the instance you want to look up. [Required Parameter]
+* type : type of information you want to look up for the specified instance. [Required Parameter]
+* index : index of the map in the instance. [Optional Parameter]
+*------------------------------------------*/
+BUILDIN_FUNC(instance_info)
+{
+	const char* name = script_getstr(st, 2);
+	int type = script_getnum(st, 3);
+	int index = 0;
+	struct instance_db *db = instance_searchname_db(name);
+
+	if( !db ){
+		ShowError( "buildin_instance_info: Unknown instance name \"%s\".\n", name );
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	switch( type ){
+		case IIT_ID:
+			script_pushint(st, db->id);
+			break;
+		case IIT_TIME_LIMIT:
+			script_pushint(st, db->limit);
+			break;
+		case IIT_IDLE_TIMEOUT:
+			script_pushint(st, db->timeout);
+			break;
+		case IIT_ENTER_MAP:
+			script_pushstrcopy(st, StringBuf_Value(db->enter.mapname));
+			break;
+		case IIT_ENTER_X:
+			script_pushint(st, db->enter.x);
+			break;
+		case IIT_ENTER_Y:
+			script_pushint(st, db->enter.y);
+			break;
+		case IIT_MAPCOUNT:
+			script_pushint(st, db->maplist_count);
+			break;
+		case IIT_MAP:
+			if( !script_hasdata(st, 4) || script_isstring(st, 4) ){
+				ShowError( "buildin_instance_info: Type IIT_MAP requires a numeric index argument.\n" );
+				script_pushstr(st, "");
+				return SCRIPT_CMD_FAILURE;
+			}
+			
+			index = script_getnum(st, 4);
+
+			if( index < 0 ){
+				ShowError( "buildin_instance_info: Type IIT_MAP does not support a negative index argument.\n" );
+				script_pushstr(st, "");
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			if( index > UINT8_MAX ){
+				ShowError( "buildin_instance_info: Type IIT_MAP does only support up to index %hu.\n", UINT8_MAX );
+				script_pushstr(st, "");
+				return SCRIPT_CMD_FAILURE;
+			}
+
+			script_pushstrcopy(st, StringBuf_Value(db->maplist[index]));
+			break;
+
+		default:
+			ShowError("buildin_instance_info: Unknown instance information type \"%d\".\n", type );
+			script_pushint(st, -1);
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
  * Custom Fonts
  *------------------------------------------*/
 BUILDIN_FUNC(setfont)
@@ -22612,6 +22687,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_announce,"isi?????"),
 	BUILDIN_DEF(instance_check_party,"i???"),
 	BUILDIN_DEF(instance_check_guild,"i???"),
+	BUILDIN_DEF(instance_info,"si?"),
 	/**
 	 * 3rd-related
 	 **/
