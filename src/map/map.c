@@ -2220,6 +2220,7 @@ struct map_session_data * map_nick2sd(const char *nick, bool allow_partial)
 		else if( strcasecmp(sd->status.name, nick) == 0 )
 		{// exact search only
 			found_sd = sd;
+			qty = 1;
 			break;
 		}
 	}
