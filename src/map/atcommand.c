@@ -5370,7 +5370,7 @@ ACMD_FUNC(npcmove)
  *------------------------------------------*/
 ACMD_FUNC(addwarp)
 {
-	char mapname[32], warpname[NPC_NAME_LENGTH];
+	char mapname[MAP_NAME_LENGTH_EXT], warpname[NPC_NAME_LENGTH];
 	short x,y;
 	unsigned short m;
 	struct npc_data* nd;
@@ -5378,7 +5378,7 @@ ACMD_FUNC(addwarp)
 	nullpo_retr(-1, sd);
 	memset(warpname, '\0', sizeof(warpname));
 
-	if (!message || !*message || sscanf(message, "%31s %6hd %6hd %49[^\n]", mapname, &x, &y, warpname) < 4) {
+	if (!message || !*message || sscanf(message, "%15s %6hd %6hd %49[^\n]", mapname, &x, &y, warpname) < 4) {
 		clif_displaymessage(fd, msg_txt(sd,1156)); // Usage: @addwarp <mapname> <X> <Y> <npc name>
 		return -1;
 	}
