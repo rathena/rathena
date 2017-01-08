@@ -35,10 +35,12 @@
 15186:19168,{ bonus2 bExpAddClass,Class_All,5; bonus2 bDropAddClass,Class_All,5; }
 1535:4361,{ bonus bBreakArmorRate,900; bonus bBreakWeaponRate,900; }
 1559:5467,{ bonus bAspd,1; bonus bFlee2,3; }
+1564:2186,{ bonus bAspdRate,getequiprefinerycnt(EQI_HAND_R); }
 1572:2716:2717,{ bonus bInt,5; bonus bMaxHP,700; bonus bAspdRate,5; }
 1573:2334,{ bonus bMdef,8; bonus bMaxSPRate,10; bonus bInt,4; }
 1573:2372,{ bonus bMdef,8; bonus bMaxSPRate,10; bonus bInt,4; }
 1573:2716:2717,{ bonus bInt,5; bonus bMaxHP,700; bonus bAspdRate,5; }
+1580:2186,{ bonus bAspdRate,15; }
 1615:18539,{ bonus bMatk,10*getequiprefinerycnt(EQI_HAND_R); bonus bVariableCastrate,-10; }
 1616:2515,{ bonus bSpeedRate,25; }
 1617:19020,{ .@r = getequiprefinerycnt(EQI_HEAD_TOP); bonus bMatk,.@r; if (.@r >= 10) { autobonus "{ bonus bVariableCastrate,-50; }",100,5000,BF_MAGIC; /* Confirm: Success rate? */ } }
