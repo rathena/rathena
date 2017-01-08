@@ -604,7 +604,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 		DBData data;
 
 		if( itemdb_group->remove( itemdb_group, db_ui2key(group_id), &data ) ){
-            itemdb_group_free2(db_ui2key(group_id), &data);
+			itemdb_group_free2(db_ui2key(group_id), &data);
 			ShowNotice( "itemdb_read_group: Item Group '%s' has been cleared.\n", str[0] );
 			return true;
 		}else{
@@ -1776,7 +1776,7 @@ static int itemdb_final_sub(DBKey key, DBData *data, va_list ap)
 }
 
 /** NOTE:
-* In some SOs, like Raspbian, we aren't allowed to pass 0 in va_list.
+* In some OSs, like Raspbian, we aren't allowed to pass 0 in va_list.
 * So, itemdb_group_free2 is useful in some cases.
 */
 static int itemdb_group_free(DBKey key, DBData *data, va_list ap) {
@@ -1798,7 +1798,7 @@ static int itemdb_group_free(DBKey key, DBData *data, va_list ap) {
 }
 
 /** (Raspberry PI)
-* Adaptation of itemdb_group_free. This function enables to run rAthena on Raspbian SO.
+* Adaptation of itemdb_group_free. This function enables to run rAthena on Raspbian OS.
 */
 static int itemdb_group_free2(DBKey key, DBData *data) {
 	struct s_item_group_db *group = (struct s_item_group_db *)db_data2ptr(data);
