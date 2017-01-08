@@ -11333,6 +11333,9 @@
 24237,S_Boned_Pendant,Boned Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ .@r = getrefine(); .@rate = (.@r<7)?1:((.@r<9)?2:4); bonus2 bAddSize,Size_Medium,.@rate; bonus2 bMagicAddSize,Size_Medium,.@rate; },{},{}
 24238,S_Gigantic_Earring,Gigantic Shadow Earring,12,0,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ .@r = getrefine(); .@rate = (.@r<7)?1:((.@r<9)?2:4); bonus2 bAddSize,Size_Small,.@rate; bonus2 bMagicAddSize,Size_Small,.@rate; },{},{}
 24239,S_Gigantic_Pendant,Gigantic Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ .@r = getrefine(); .@rate = (.@r<7)?1:((.@r<9)?2:4); bonus2 bAddSize,Size_Small,.@rate; bonus2 bMagicAddSize,Size_Small,.@rate; },{},{}
+24240,S_Caster_Shoes,Caster Shadow Shoes,12,0,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,,,{ bonus bMatk,5; bonus bUseSPrate,-1-(getrefine()/2); },{},{}
+24241,S_Caster_Shield,Caster Shadow Shield,12,0,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,,,{ bonus bMatk,5; bonus bUseSPrate,-1-(getrefine()/2); },{},{}
+24242,S_Caster_Armor,Caster Shadow Armor,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,,,{ bonus bMatk,5; bonus bUseSPrate,-1-(getrefine()/2); },{},{}
 24243,S_Reload_Shoes,Reload Shadow Shoes,12,0,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ .@r = getrefine(); bonus bDelayrate,(.@r<7)?-1:((.@r<9)?-2:-3); },{},{}
 24244,S_Reload_Shield,Reload Shadow Shield,12,0,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ .@r = getrefine(); bonus bDelayrate,(.@r<7)?-1:((.@r<9)?-2:-3); },{},{}
 24245,S_Reload_Armor,Reload Shadow Armor,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ .@r = getrefine(); bonus bDelayrate,(.@r<7)?-1:((.@r<9)?-2:-3); },{},{}
@@ -11346,6 +11349,7 @@
 24253,S_Thief_Pendant,Thief Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,,,{ .@r = getrefine(); bonus2 bSkillAtk,"TF_POISON",20+(5*.@r); },{},{}
 24254,S_Magician_Pendant,Magician Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,,,{ .@r = getrefine(); bonus2 bMagicAtkEle,Ele_Fire,20+(5*.@r); },{},{}
 24255,S_Archer_Pendant,Archer Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,,,{ .@r = getrefine(); bonus2 bSkillAtk,"AC_SHOWER",20+(5*.@r); },{},{}
+24330,S_Caster_Armor_II,Caster Shadow Armor II,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,,,{ bonus bInt,3; bonus bSPrecovRate,20; bonus bVariableCastrate,-getrefine()/2; },{},{}
 //===================================================================
 // New etc.
 //===================================================================
