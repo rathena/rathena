@@ -2477,7 +2477,7 @@ rachel,266,35,3	script	Grandma#rachel	918,{
 }
 
 lhz_in02,213,207,0	script	#ratrace1	111,4,4,{
-OnTouch:
+OnTouch_:
 	if (rach_vice == 5) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "This...";
@@ -2498,7 +2498,7 @@ OnTouch:
 }
 
 rachel,265,47,0	script	#raevent1	111,2,2,{
-OnTouch:
+OnTouch_:
 	if (rach_vice == 23) {
 		mes "[" + strcharinfo(0) + "]";
 		mes "Just looking at this";
@@ -3388,7 +3388,7 @@ rachel,265,98,3	script	Hamion#aru	930,{
 	}
 }
 
-rachel,113,96,5	script	Mohadian	929,10,10,{
+rachel,113,97,5	script	Mohadian	929,10,10,{
 	if (ice_necklace_q == 6) {
 		mes "[Mohadian]";
 		mes "I work at the bar around";
@@ -3488,7 +3488,7 @@ rachel,113,96,5	script	Mohadian	929,10,10,{
 		close;
 	}
 
-OnTouch:
+OnTouch_:
 	if (ice_necklace_q == 6) {
 		mes "[Mohadian]";
 		mes "Welcome to--";
@@ -3736,7 +3736,7 @@ OnTimer60000:
 }
 
 ice_dun03,150,137,0	script	#ice_4f_1	45,2,2,{
-OnTouch:
+OnTouch_:
 	warp "ice_dun04",33,144;
 	end;
 
@@ -3746,7 +3746,7 @@ OnInit:
 }
 
 ice_dun03,138,148,0	script	#ice_4f_2	45,2,2,{
-OnTouch:
+OnTouch_:
 	warp "ice_dun04",33,144;
 	end;
 
@@ -3756,7 +3756,7 @@ OnInit:
 }
 
 ice_dun03,161,148,0	script	#ice_4f_3	45,2,2,{
-OnTouch:
+OnTouch_:
 	warp "ice_dun04",33,144;
 	end;
 
@@ -3766,7 +3766,7 @@ OnInit:
 }
 
 ice_dun03,151,162,0	script	#ice_4f_4	45,2,2,{
-OnTouch:
+OnTouch_:
 	warp "ice_dun04",33,144;
 	end;
 
@@ -4671,7 +4671,7 @@ OnTouch:
 }
 
 que_rachel,170,37,0	script	nemma01::nemma01	-1,5,5,{
-OnTouch:
+OnTouch_:
 	if (ra_tem_q == 8) {
 		mes "[???]";
 		mes "Only the goddess exists.";
@@ -6312,7 +6312,7 @@ ra_temin,277,159,3	script	High Priest Zhed#rachel	932,{
 
 ra_temin,170,46,3	script	Panno#rachel	920,{
 	cutin "ra_fano03",2;
-	if (ra_tem_q >= 12 || MISC_QUEST & 8192) {
+	if (ra_tem_q >= 12 || (MISC_QUEST & 8192)) {
 		cutin "ra_fano03",2;
 		mes "[Priestess Panno]";
 		mes "Good day.";
@@ -6820,7 +6820,7 @@ OnTouch:
 
 ra_temin,275,226,0	script	#rachel33	45,1,1,{
 	end;
-OnTouch:
+OnTouch_:
 	if (aru_em == 21)
 		warp "que_temsky",99,11;
 	else

@@ -23,7 +23,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 	}
 	if (lhz_boss > 30) {
 		if (!lght_duk01) {
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				emotion e_pif, "Giacomo Girolamo#kiup2";
 				mes "[Giacomo Girolamo]";
 				mes "....a guy....?";
@@ -166,7 +166,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 			close;
 		} else {
 			mes "[Giacomo Girolamo]";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				emotion e_paper, "Giacomo Girolamo#kiup2";
 				mes "Take care yourself and don't disappear!";
 			} else {
@@ -176,7 +176,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 			close;
 		}
 	} else {
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			emotion e_ho, "Giacomo Girolamo#kiup2";
 			mes "[Giacomo Girolamo]";
 			mes "Only those beautiful ladies are the reason of my life~!";
@@ -288,7 +288,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 
 OnTouch:
 	if (!lght_duk01)
-		emotion (Sex ? e_pif : e_lv2), "Giacomo Girolamo#kiup2";
+		emotion (Sex == SEX_MALE? e_pif : e_lv2), "Giacomo Girolamo#kiup2";
 	end;
 }
 
@@ -570,42 +570,42 @@ OnEnable2:
 
 OnTimer1000:
 	specialeffect EF_SUI_EXPLOSION,AREA, "#01";
-	specialeffect EF_BEGINASURA, "Human Guinea pig#01";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#01";
 	end;
 
 OnTimer2000:
 	specialeffect EF_SUI_EXPLOSION,AREA, "#02";
-	specialeffect EF_BEGINASURA, "Human Guinea pig#02";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#02";
 	end;
 
 OnTimer3000:
 	specialeffect EF_SUI_EXPLOSION,AREA, "#03";
-	specialeffect EF_BEGINASURA, "Human Guinea pig#03";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#03";
 	end;
 
 OnTimer4000:
 	specialeffect EF_SUI_EXPLOSION,AREA, "#04";
-	specialeffect EF_BEGINASURA, "Human Guinea pig#04";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#04";
 	end;
 
 OnTimer5000:
 	specialeffect EF_SUI_EXPLOSION,AREA, "#05";
-	specialeffect EF_BEGINASURA, "Human Guinea pig#05";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#05";
 	end;
 
 OnTimer6000:
 	specialeffect EF_SUI_EXPLOSION,AREA, "#06";
-	specialeffect EF_BEGINASURA, "Human Guinea pig#06";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#06";
 	end;
 
 OnTimer7000:
 	specialeffect EF_SUI_EXPLOSION,AREA, "#07";
-	specialeffect EF_BEGINASURA, "Human Guinea pig#07";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#07";
 	end;
 
 OnTimer8000:
 	specialeffect EF_SUI_EXPLOSION,AREA, "#08";
-	specialeffect EF_BEGINASURA, "Human Guinea pig#08";
+	specialeffect EF_BEGINASURA, AREA, "Human Guinea pig#08";
 	stopnpctimer;
 	end;
 
@@ -877,7 +877,7 @@ lhz_dun04,147,279,0	script	Laboratory Entrance#memo	CLEAR_NPC,{
 			mes "You have stopped entering to Wolfchev's laboratory.";
 			close;
 		}
-		if (instance_enter("Wolfchev's Laboratory") != 0) {  // probably missing failure cases
+		if (instance_enter("Wolfchev's Laboratory") != IE_OK) {  // probably missing failure cases
 			mes "^FF0000Warning^000000";
 			mes ""+ strcharinfo(0) +". . .";
 			mes "^FF0000Unregistered personnel^000000";
@@ -1205,7 +1205,7 @@ OnEnable:
 	enablenpc instance_npcname("#potal_01");
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("1@lhz"), 151, 29;
 	end;
 }
@@ -1223,7 +1223,7 @@ OnDisable:
 	disablenpc instance_npcname("#2_0");
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent instance_npcname("Lab2#2_1")+"::OnEnable";
 	donpcevent instance_npcname("#2_0")+"::OnDisable";
 	end;
@@ -1574,7 +1574,7 @@ OnEnable:
 	enablenpc instance_npcname("#potal_02");
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("1@lhz"), 84, 28;
 	end;
 }
@@ -1592,7 +1592,7 @@ OnDisable:
 	disablenpc instance_npcname("#3_0");
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent instance_npcname("Lab3#3_1")+"::OnEnable";
 	donpcevent instance_npcname("#3_0")+"::OnDisable";
 	end;
@@ -1776,7 +1776,7 @@ OnDisable:
 	disablenpc instance_npcname("#potal_03");
 	end;
 
-OnTouch:
+OnTouch_:
 	warp instance_mapname("1@lhz"), 137, 100;
 	end;
 }
@@ -1794,7 +1794,7 @@ OnDisable:
 	disablenpc instance_npcname("#4_0");
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent instance_npcname("Lab4#4_1")+"::OnEnable";
 	donpcevent instance_npcname("#4_0")+"::OnDisable";
 	end;

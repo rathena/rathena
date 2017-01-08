@@ -876,6 +876,9 @@ OnAgitInit:
 OnAgitStart2:
 OnAgitEnd2:
 OnAgitInit2:
+OnAgitStart3:
+OnAgitEnd3:
+OnAgitInit3:
 
 OnAgitStart will run whenever the server shifts into WoE mode, whether it is 
 done with @agitstart GM command or with 'AgitStart' script command. OnAgitEnd 
@@ -1090,6 +1093,27 @@ to alberta (98,154) when clicked.
     mes "Have you checked out the <NAVI>[Tool Shop]<INFO>alberta,98,154,0,000,0</INFO></NAVI>?";
 
 See also 'navigateto', which can be used for certain NPC events.
+
+Items
+-----
+You can refer to items by using HTML-like links to certain items:
+
+	<ITEMLINK>Display Name<INFO>Item ID</INFO></ITEMLINK>
+
+Where <Display Name> is the name that will be displayed for your link and
+<Item ID> being the ID of the item you want to link to when clicked.
+
+In 2015 the tag name was changed to <ITEM> resulting in the following syntax:
+
+	<ITEM>Display Name<INFO>Item ID</INFO></ITEM>
+	
+The following sample will open a preview window for Red Potion:
+
+	mes "Did you ever consume a <ITEMLINK>Red Potion<INFO>501</INFO></ITEMLINK>?";
+	// Or in 2015:
+	mes "Did you ever consume a <ITEM>Red Potion<INFO>501</INFO></ITEM>?";
+	
+NOTE: Be aware that item links are rendered incorrectly in 2015+ clients at the moment.
 
 URLs
 ----
@@ -2287,10 +2311,11 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 ---------------------------------------
 
 *readparam(<parameter number>{,"<character name>"})
+*readparam(<parameter number>{,<char_id>})
 
 This function will return the specified stat of the invoking character, or, if a
-character name is specified, of that player. The stat can either be a number or
-parameter name, defined in 'src/map/script_constants.h'.
+character name or character id is specified, of that player. The stat can either
+be a number or parameter name, defined in 'src/map/script_constants.h'.
 
 Some example parameters:
 
@@ -2332,6 +2357,7 @@ Type is the kind of associated ID number required:
  2 - Guild ID
  3 - Account ID
  4 - Battle Ground ID
+ 5 - Clan ID
 
 For most purposes other than printing it, a number is better to have than a name 
 (people do horrifying things to their character names).
@@ -2736,7 +2762,8 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 
 @inventorylist_id[]        - array of item ids.
 @inventorylist_amount[]    - their corresponding item amounts.
-@inventorylist_equip[]     - whether the item is equipped or not.
+@inventorylist_equip[]     - on which position the item is equipped (see EQP_* constants)
+                             It will contain 0 if the item is not equipped.
 @inventorylist_refine[]    - for how much it is refined.
 @inventorylist_identify[]  - whether it is identified.
 @inventorylist_attribute[] - whether it is broken.
@@ -2746,7 +2773,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_card4[]       if the character owns an item made by a specific 
                              craftsman.
 @inventorylist_expire[]    - expire time (Unix time stamp). 0 means never expires.
-@inventorylist_bound[]     - whether it is bound to the character
+@inventorylist_bound[]     - the bound type of the items (see BOUND_* constants)
 @inventorylist_count       - the number of items in these lists.
 
 This could be handy to save/restore a character's inventory, since no other 
@@ -2849,7 +2876,7 @@ See the sample in 'doc/sample/getiteminfo.txt'.
 
 Returns value from equipped item slot in the indicated slot (0, 1, 2, or 3).
 
-This function returns CARD ID, 255,254,-255 (for card 0, if the item is produced).
+This function returns CARD ID, CARD0_FORGE, CARD0_CREATE, or CARD0_PET (for card 0, if the item is produced).
 It's useful for when you want to check whether an item contains cards or if it's signed.
 
 ---------------------------------------
@@ -3183,7 +3210,7 @@ This command requests the guild data from the char server and merrily continues
 with the execution. Whenever the guild information becomes available (which 
 happens instantly if the guild information is already in memory, or later, if it 
 isn't and the map server has to wait for the char server to reply) it will run 
-the specified event as in a 'doevent' call.
+the specified event as in a 'donpcevent' call.
 
 ---------------------------------------
 
@@ -3662,10 +3689,11 @@ Name is optional, and defaults to the attached player if omitted.
 
 *agitcheck()
 *agitcheck2()
+*agitcheck3()
 
-These function will let you check whether the server is currently in WoE mode
-(or WoE SE mode if the second function is called) and will return 1 if War of
-Emperium is on and 0 if it isn't. 
+These function will let you check whether the server is currently in WoE:FE mode
+(agitcheck()), WoE:SE mode (agitcheck2()), or WoE:TE mode (agitcheck3()) and will
+return true if War of Emperium is on and false if it isn't. 
 
 ---------------------------------------
 
@@ -3831,9 +3859,9 @@ will be seen to everyone around but not in chat window.
 
 ---------------------------------------
 
-*warp "<map name>",<x>,<y>;
+*warp "<map name>",<x>,<y>{,<char id>};
 
-This command will take the invoking character to the specified map, and if 
+This command will take the invoking character or <char id>, if specified, to the specified map, and if 
 wanted, specified coordinates too, but these can be random.
 
     warp "place",50,55;
@@ -3912,18 +3940,6 @@ Example:
 
 ---------------------------------------
 
-*warpchar "<map name>",<x>,<y>,<char id>;
-
-Warps another player to specified map and coordinate given the char id, which you can get with
-getcharid(0,<player_name>). Obviously this is useless if you want to warp the same player that
-is executing this script, unless it's some kind of "chosen" script. 
- 
-Example:
- 
-warpchar "prontera",150,100,150001;
-
----------------------------------------
-
 *warpguild "<map name>",<x>,<y>,<guild_id>;
  
 Warps a guild to specified map and coordinate given the guild id, which you can get with 
@@ -3952,15 +3968,20 @@ normally translate to random coordinates.
 
 ---------------------------------------
 
-*savepoint "<map name>",<x>,<y>{,<char_id>};
-*save "<map name>",<x>,<y>{,<char_id>};
+*savepoint "<map name>",<x>,<y>{,{<range x>,<range y>,}<char_id>};
+*save "<map name>",<x>,<y>{,{<range x>,<range y>,}<char_id>};
 
 These commands save where the invoking character will return to upon clicking
 "Return to Save Point", after death and in some other cases. The two versions are 
 equivalent. They ignore any and all mapflags, and can make a character respawn where
 no teleportation is otherwise possible.
 
+The <range x> and <range y> optional values allow for a randomization with the
+player's save point. The values will randomly add or subtract from the given <x>
+and <y> coordinates.
+
     savepoint "place",350,75;
+	savepoint "place",350,75,2,2; // Randomly save the character between 348,73 and 352,77
 
 ---------------------------------------
 
@@ -4293,6 +4314,25 @@ This command will force a stat recalculation for the attached player.
 
 ---------------------------------------
 
+*needed_status_point(<type>,<val>{,<char id>});
+
+Returns the number of stat points needed to change the specified stat <type> by <val>.
+If <val> is negative, returns the number of stat points that would be needed to
+raise the specified stat from (current value - <val>) to current value.
+
+---------------------------------------
+
+*jobcanentermap("<mapname>"{,<JobID>});
+
+Return true if player (decided by job) can enter the map, false otherwise.
+
+For optional 'JobID', see constant of Job_*, or use player's Class, BaseJob,
+and BaseClass. If no player is attached, this param must have a value.
+
+See also db/[pre-]re/job_noenter_map.txt
+
+---------------------------------------
+
 *get_revision()
 
 This command will return the SVN revision number that the server is currently
@@ -4584,9 +4624,14 @@ database. If the name is not found, nothing will be deleted.
 *cartdelitem "<item name>",<amount>{,<account ID>};
 *storagedelitem <item id>,<amount>{,<account ID>};
 *storagedelitem "<item name>",<amount>{,<account ID>};
+*guildstoragedelitem <item id>,<amount>{,<account ID>};
+*guildstoragedelitem "<item name>",<amount>{,<account ID>};
 
 This command behaves identically to 'delitem', but deletes items from the player's
-cart or storage. If no cart is mounted, 'cartdelitem' will fail.
+cart, storage, or guild storage.
+
+If no cart is mounted, 'cartdelitem' will return -1.
+If player is not in a guild or storage is open, 'guildstoragedelitem' will return -1.
 
 ---------------------------------------
 
@@ -4602,9 +4647,14 @@ See 'getitem2' for an explanation of the expanded parameters.
 *cartdelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *storagedelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *storagedelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*guildstoragedelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*guildstoragedelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command behaves identically to 'delitem2', but deletes items from the player's
-cart or storage. If no cart is mounted, 'cartdelitem2' will fail.
+cart, storage, or guild storage.
+
+If no cart is mounted, 'cartdelitem2' will return -1.
+If player is not in a guild or storage is open, 'guildstoragedelitem2' will return -1.
 
 ---------------------------------------
 
@@ -4630,13 +4680,18 @@ adding up strings:
     
 ---------------------------------------
 
-*cartcountitem(<item id>)
-*cartcountitem("<item name>")
-*storagecountitem(<item id>)
-*storagecountitem("<item name>")
+*cartcountitem(<item id>{,<accountID>})
+*cartcountitem("<item name>"{,<accountID>})
+*storagecountitem(<item id>{,<accountID>})
+*storagecountitem("<item name>"{,<accountID>})
+*guildstoragecountitem(<nameID>{,<accountID>})
+*guildstoragecountitem("<item name>"{,<accountID>})
 
 This command behaves identically to 'countitem', but counts items from the player's
-cart or storage. If no cart is mounted, 'cartcountitem' will return -1.
+cart, storage, or guild storage.
+
+If no cart is mounted, 'cartcountitem' will return -1.
+If player is not in a guild or storage is open, 'guildstoragecountitem' will return -1.
 
 ---------------------------------------
 
@@ -4651,13 +4706,18 @@ See 'getitem2' for an explanation of the expanded parameters.
 
 ---------------------------------------
 
-*cartcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*cartcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*storagecountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*storagecountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*cartcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*cartcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*storagecountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*storagecountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*guildstoragecountitem2(<nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
+*guildstoragecountitem2("<item name>",<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
 
 This command behaves identically to 'countitem2', but counts items from the player's
-cart or storage. If no cart is mounted, 'cartcountitem2' will return -1.
+cart, storage, or guild storage.
+
+If no cart is mounted, 'cartcountitem2' will return -1.
+If player is not in a guild or storage is open, 'guildstoragecountitem2' will return -1.
 
 ---------------------------------------
 
@@ -4734,17 +4794,23 @@ The default setting, 'item_enabled_npc', is defined in 'conf/battle/items.conf'.
 
 ---------------------------------------
 
-*itemskill <skill id>,<skill level>;
-*itemskill "<skill name>",<skill level>;
+*itemskill <skill id>,<skill level>{,<keep requirement>};
+*itemskill "<skill name>",<skill level>{,<keep requirement>};
 
 This command is meant for item scripts to replicate single-use skills in usable
 items. It will not work properly if there is a visible dialog window or menu.
 If the skill is self or auto-targeting, it will be used immediately; otherwise a
 target cursor is shown.
 
+If <keep requirement> parameter is set to true, the skill's requirements will be checked.
+By default, the requirements for item skills are not checked, and therefore the default value is false.
+
 // When Anodyne is used, it will cast Endure (8), Level 1, as if the actual
 // skill has been used from skill tree.
 605,Anodyne,Anodyne,11,2000,0,100,,,,,10477567,2,,,,,{ itemskill 8,1; },{}
+
+// When Sienna_Execrate_Scroll_1_5 is used, it will cast Sienna Execrate Level 5 and consume 2 Red_Gemstones.
+23194,Sienna_Execrate_Scroll_1_5,Level 5 Sienna Execrate,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_SIENNAEXECRATE",5,true; },{},{}
 
 ---------------------------------------
 
@@ -5015,6 +5081,33 @@ window, to avoid any disruption when both windows overlap.
 
 ---------------------------------------
 
+*openstorage2 <storage_id>,<mode>{,<account_id>};
+
+Just like the 'openstorage' command, except this command can open additional storages
+by the specified <storage_id>. For <storage_id>, please read the conf/inter_server.conf
+for storage groups.
+
+Values for <mode> are:
+	STOR_MODE_NONE : Player only can read the storage entries.
+	STOR_MODE_GET  : Player can get items from the storage.
+	STOR_MODE_PUT  : Player can put items in the storage.
+
+Example:
+	if (vip_status(1)) {
+		mes "I will open your Premium storage.";
+		mes "Thank you for using our service.";
+		close2;
+		openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
+	} else {
+		mes "Sorry, your Premium status is expired.";
+		mes "Storage will be opened but you can't put any item into it.";
+		close2;
+		openstorage2 1,STOR_MODE_GET;
+	}
+	end;
+
+---------------------------------------
+
 *openmail({<char_id>});
 
 This will open a character's Mail window on the client connected to the 
@@ -5168,10 +5261,11 @@ This is used primarily in item scripts. When used in an NPC script, a flag MUST
 be defined for the rate to work.
 
 Optional value <flag> is how the status change start will be handled (a bitmask).
- 1: Status change cannot be avoided.
- 2: Tick cannot be reduced by stats (default).
- 4: sc_data loaded, so no value will be altered.
- 8: Rate cannot be reduced.
+ SCSTART_NOAVOID   : Status change cannot be avoided.
+ SCSTART_NOTICKDEF : Tick cannot be reduced by stats (default).
+ SCSTART_LOADED    : sc_data loaded, so no value will be altered.
+ SCSTART_NORATEDEF : Rate cannot be reduced.
+ SCSTART_NOICON    : Status icon won't be sent to client
 
 If a <GID> is given, the status change will be invoked on the specified character
 instead of the one attached to the script. This can only be defined after setting
@@ -5302,8 +5396,8 @@ behavior of the command.
 
 *statusup <stat>{,<char_id>};
 
-This command will bump a specified stat of the invoking character up by one 
-permanently. Stats are to be given as number, but you can use these constants to 
+This command will change a specified stat of the invoking character up by one
+permanently. Stats are to be given as number, but you can use these constants to
 replace them:
 
 bStr -  Strength
@@ -5317,11 +5411,11 @@ bLuk -  Luck
 
 *statusup2 <stat>,<amount>{,<char_id>};
 
-This command will bump a specified stat of the invoking character up by the 
+This command will change a specified stat of the invoking character by the
 specified amount permanently. The amount can be negative. See 'statusup'.
 
-// This will decrease a character's Vit forever.
-    statusup bVit,-1;
+	// This will decrease a character's Vit forever.
+	statusup2 bVit,-1;
 
 ---------------------------------------
 
@@ -5974,11 +6068,13 @@ It is an approximation of official server script language's 'cmdothernpc'.
 
 ---------------------------------------
 
-*npctalk "<message>";
+*npctalk "<message>"{,"<NPC name>"};
 
 This command will display a message to the surrounding area as if the NPC object 
 running it was a player talking - that is, above their head and in the chat 
 window. The display name of the NPC won't get appended in front of the message.
+If the <NPC name> option is given, then that NPC will display the message, else
+the attached NPC will display the message.
 
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.
@@ -6657,15 +6753,19 @@ For examples, check the WoE scripts in the distribution.
 *agitend;
 *agitstart2;
 *agitend2;
+*agitstart3;
+*agitend3;
 
-These four commands will start and end War of Emperium or War of Emperium SE.
+These commands will start and end War of Emperium FE, War of Emperium SE,
+or War of Emperium TE.
 
 This is a bit more complex than it sounds, since the commands themselves won't 
 actually do anything interesting, except causing all 'OnAgitStart:' and 
-'OnAgitEnd:', or 'OnAgitStart2:' and 'OnAgitEnd2:' in the case of latter two
-commands, events to run everywhere, respectively. They are used as  simple 
-triggers to run a lot of complex scripts all across the server, and they, 
-in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
+'OnAgitEnd:', 'OnAgitStart2:' and 'OnAgitEnd2:', or 'OnAgitStart3:' and
+'OnAgitEnd3:' in the case of latter two commands, events to run everywhere,
+respectively. They are used as  simple triggers to run a lot of complex scripts
+all across the server, and they, in turn, are triggered by clock with an
+'OnClock<time>:' time-triggering label.
 
 ---------------------------------------
 
@@ -6675,6 +6775,13 @@ in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
 These commands will turn GVG mode for the specified maps on and off, setting up 
 appropriate map flags. In GVG mode, maps behave as if during the time of WoE, 
 even though WoE itself may or may not actually be in effect. 
+
+---------------------------------------
+
+*gvgon3 "<map name>";
+*gvgoff3 "<map name>";
+
+Theses commands behave identically to gvgon/gvgoff, but apply GVG_TE mapflag. 
 
 ---------------------------------------
 
@@ -6721,6 +6828,22 @@ Type indicates what information to return:
  0 - visibility (whether the guardian is installed or not)
  1 - max. hp
  2 - current hp
+
+---------------------------------------
+
+*getguildalliance(<guild id1>, <guild id2>);
+
+This command will return the relation between 2 guilds.
+
+NOTE: This should be used in collaboration with 'requestguildinfo' as the
+map-server needs to request for information from the char-server.
+
+Return values:
+	-2 - Guild ID1 does not exist
+	-1 - Guild ID2 does not exist
+	 0 - Both guilds have no relation OR guild ID aren't given
+	 1 - Both guilds are allies
+	 2 - Both guilds are antagonists
 
 ---------------------------------------
 //
@@ -8018,11 +8141,9 @@ of the "clock" and can be one of the following values:
     1 - Incremental counter (1 tick/second).
     2 - Decremental counter (1 tick/second). Does not stop at zero,
         but overflows.
-    3 - Decremental counter (1 tick/second). Two digits only, stops
+    3 - Decremental counter (2 ticks/second). Two digits only, stops
         at zero.
 
-For type 1 and 2 the start value is set by using negative number of
-the one intended to set (ex. -10 starts the counter at 10 seconds).
 Except for type 3 the value is interpreted as seconds and formatted
 as time in days, hours, minutes and seconds. Note, that the official
 script command does not have the optional parameter.
@@ -8030,7 +8151,7 @@ script command does not have the optional parameter.
     // displays 23:59:59 for 5 seconds
     showdigit 86399;
 
-    // counter that starts at 60 and runs for 60 seconds
+    // counter that starts at 60 and runs for 30 seconds
     showdigit 60,3;
 
 ---------------------------------------
@@ -8159,15 +8280,15 @@ that fails, the script will come to a halt.
 
 ---------------------------------------
 
-*instance_enter("<instance name>",{<x>,<y>,<char_id>});
+*instance_enter("<instance name>",{<x>,<y>,<char_id>,<instance id>});
 
 Warps player to the specified instance after the script terminates. The map and
 coordinates are located in 'db/(pre-)re/instance_db.txt'.
 
-The command returns 0 upon success, and these values upon failure:
- 1: Party/Guild not found (for party/guild modes).
- 2: Character/Party/Guild does not have an instance.
- 3: Other errors (invalid instance name, instance doesn't match with character/party/guild).
+The command returns IE_OK upon success, and these values upon failure:
+ IE_NOMEMBER:	Party/Guild not found (for party/guild modes).
+ IE_NOINSTANCE:	Character/Party/Guild does not have an instance.
+ IE_OTHER:		Other errors (invalid instance name, instance doesn't match with character/party/guild).
 
 Put -1 for x and y if want to warp player with default entrance coordinates.
 
@@ -8265,6 +8386,30 @@ if (instance_check_guild(getcharid(2),2,2,149)) {
 	mes "Sorry, your guild does not meet requirements.";
 	close;
 }
+
+---------------------------------------
+
+*instance_info("<instance name>",<info type>{,<instance_db map index>});
+
+Returns the specified <info type> of the given <instance name> from the instance database.
+If the <instance name> is unknown or an invalid <info type> is supplied -1 will be returned.
+
+Valid info types:
+ IIT_ID: Instance database ID as integer.
+ IIT_TIME_LIMIT: Instance database total life time as integer.
+ IIT_IDLE_TIMEOUT: Instance database timeout time as integer.
+ IIT_ENTER_MAP: Instance database enter map as string.
+ IIT_ENTER_X: Instance database enter X location as integer.
+ IIT_ENTER_Y: Instance database enter Y location as integer.
+ IIT_MAPCOUNT: Instance database total maps as integer.
+ IIT_MAP: Instance database map name from the given <instance_db map index> as string.
+          If the index is invalid an empty string will be returned.
+
+Example:
+
+.@name$ = "Endless Tower";
+mes .@name$ + " will be destroyed if no one is in the instance for " + instance_info(.@name$,IIT_IDLETIMEOUT) + " seconds.";
+// Endless Tower will be destroyed if no one is in the instance for 300 seconds.
 
 ---------------------------------------
 
@@ -8437,19 +8582,18 @@ Mark Color:
 ============================
 ---------------------------------------
 
-*waitingroom2bg_single(<battle group>,"<map name>",<x>,<y>,"<npc name>");
+*waitingroom2bg_single(<battle group>,{"<map name>",<x>,<y>{,"<npc name>"}});
 
-Adds the first waiting player from the chat room of the given NPC to an
-existing battleground group and warps it to the specified coordinates on
-the given map.
+Adds the first waiting player from the chat room of the given NPC to an existing battleground group.
+The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
 
 ---------------------------------------
 
-*waitingroom2bg("<map name>",<x>,<y>,"<On Quit Event>","<On Death Event>"{,"<NPC Name>"});
+*waitingroom2bg("<map name>",<x>,<y>,{"<On Quit Event>","<On Death Event>"{,"<NPC Name>"}});
 
 <map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
-<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog.
-<On Death Event> refers to an NPC label that attaches to the character and is run when they die. Can be "" for empty.
+<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
+<On Death Event> refers to an NPC label that attaches to the character and is run when they die. (Optional)
 
 Unlike the prior command, the latter will attach a GROUP in a waiting room to the battleground, and 
 sets the array $@arenamembers[0] where 0 holds the IDs of the first group, and 1 holds the IDs of the second.
@@ -8460,6 +8604,26 @@ Example:
 	// Battle Group will be referred to as $@KvM01BG_id1, and when they die, respawn at bat_c01,52,129.
 	set $@KvM01BG_id1, waitingroom2bg("bat_c01",52,129,"KvM01_BG::OnGuillaumeQuit","KvM01_BG::OnGuillaumeDie");
 	end;
+
+---------------------------------------
+
+*bg_create("<map name>",<x>,<y>{,"<On Quit Event>","<On Death Event>"});
+
+Creates an instance of battleground battle group that can be used with other battleground commands.
+
+<map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
+<On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
+<On Death Event> refers to an NPC label that attaches to the character and is run when they die. (Optional)
+
+Returns battle group ID on success. Returns 0 on failure.
+
+---------------------------------------
+
+*bg_join(<battle group>,{"<map name>",{<x>,<y>{,<char id>}});
+
+Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+
+Returns true on success. Returns false on failure.
 
 ---------------------------------------
 
@@ -8644,9 +8808,7 @@ to be executed from pet scripts. They will modify the pet AI decision-making for
 the current pet of the invoking character, and will NOT have any independent 
 effect by themselves, which is why only one of them each may be in effect at any 
 time for a specific pet. A pet may have 'petloot', 'petskillbonus', 
-'petskillattack' OR 'petpetskillattack2' and 'petskillsupport' OR 'petheal' at 
-the same time. 'petheal' is deprecated and is no longer used in the default pet 
-scripts.
+'petskillattack' OR 'petpetskillattack2' and 'petskillsupport'.
 
 All commands with delays and durations will only make the behavior active for 
 the specified duration of seconds, with a delay of the specified number of 
@@ -8701,13 +8863,11 @@ when pet performance is activated.
 
 *petskillsupport <skill id>,<skill level>,<delay>,<percent hp>,<percent sp>;
 *petskillsupport "<skill name>",<skill level>,<delay>,<percent hp>,<percent sp>;
-*petheal <level>,<delay>,<percent hp>,<percent sp>;
 
 This will make the pet use a specified support skill on the owner whenever the 
 HP and SP are below the given percent values, with a specified delay time 
 between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
-'petheal' works the same as 'petskillsupport' but has the skill ID hard-coded to 
-AL_HEAL (ID:28). This command is deprecated.
+
 It's not quite certain who's stats will be used for the skills cast, the 
 character's or the pets. Probably, Skotlex can answer that question.
 
@@ -9069,6 +9229,7 @@ The command returns 1 upon success, and these values upon failure:
 -2: Player already has a party.
 -3: Party not found.
 -4: Party is full.
+-5: Another character from the same account is already in the party.
 
 ---------------------------------------
 
@@ -9158,6 +9319,72 @@ The client requires custom monster spawns be in the navigation file
 for using the embedded client Navigation feature to work properly. In this
 instance sending the player to the map where the monster spawns is a simpler
 solution rather than sending the map and the monster_id.
+
+---------------------------------------
+
+*hateffect(<Hat Effect ID>,<State>);
+
+This will set a Hat Effect onto the player. The state field allows you to
+enable (true) or disable (false) the effect on the player.
+The Hat Effect constants can be found in db/const.txt starting with HAT_EF_*.
+
+Requires client 2015-05-13aRagEXE or newer. 
+
+---------------------------------------
+
+*getrandomoptinfo(<type>);
+
+Returns value of an attribute of current random option.
+
+Valid attributes are:
+ROA_ID - ID of current option
+ROA_VALUE - Value field of current option
+ROA_PARAM - Param field of current option
+
+This script command is intended for using in random option scripts.
+
+---------------------------------------
+
+*getequiprandomoption(<equipment index>,<index>,<type>{,<char id>});
+
+Returns value of an attribute of a random option on an equipped item.
+
+See 'getequipid' for a full list of valid equipment slots.
+
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
+
+For valid attribute types, see `getrandomoptinfo` command reference.
+
+---------------------------------------
+
+*setrandomoption(<equipment slot>,<index>,<id>,<value>,<param>{,<char id>});
+
+Sets <index+1>th random option for equipment equipped at <equipment slot>
+to <id>, <value> and <param>.
+
+See 'getequipid' for a full list of valid equipment slots.
+
+index parameter can be 0 to MAX_ITEM_RDM_OPT-1 (default 0-4).
+
+ID - ID of random option. See db/const.txt for constants.
+Value - Value of random option
+Param - Parameter of random option
+
+---------------------------------------
+
+*clan_join(<clan id>{,<char id>});
+
+The attached player joins the clan with the <clan id>. On a successful join,
+true is returned, else false if the join failed.
+If <char id> is specified, the specified player is used rather than the attached one.
+
+---------------------------------------
+
+*clan_leave({<char id>});
+
+The attached player will leave their clan. On a successful leave, true is returned,
+else false if the leave failed.
+If <char id> is specified, the specified player is used rather than the attached one.
 
 ---------------------------------------
 

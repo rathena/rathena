@@ -47,6 +47,21 @@ CREATE TABLE IF NOT EXISTS `auction` (
   `card1` smallint(5) unsigned NOT NULL default '0',
   `card2` smallint(5) unsigned NOT NULL default '0',
   `card3` smallint(5) unsigned NOT NULL default '0',
+  `option_id0` smallint(5) unsigned NOT NULL default '0',
+  `option_val0` smallint(5) unsigned NOT NULL default '0',
+  `option_parm0` tinyint(3) unsigned NOT NULL default '0',
+  `option_id1` smallint(5) unsigned NOT NULL default '0',
+  `option_val1` smallint(5) unsigned NOT NULL default '0',
+  `option_parm1` tinyint(3) unsigned NOT NULL default '0',
+  `option_id2` smallint(5) unsigned NOT NULL default '0',
+  `option_val2` smallint(5) unsigned NOT NULL default '0',
+  `option_parm2` tinyint(3) unsigned NOT NULL default '0',
+  `option_id3` smallint(5) unsigned NOT NULL default '0',
+  `option_val3` smallint(5) unsigned NOT NULL default '0',
+  `option_parm3` tinyint(3) unsigned NOT NULL default '0',
+  `option_id4` smallint(5) unsigned NOT NULL default '0',
+  `option_val4` smallint(5) unsigned NOT NULL default '0',
+  `option_parm4` tinyint(3) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
   PRIMARY KEY  (`auction_id`)
 ) ENGINE=MyISAM;
@@ -127,6 +142,21 @@ CREATE TABLE IF NOT EXISTS `cart_inventory` (
   `card1` smallint(5) unsigned NOT NULL default '0',
   `card2` smallint(5) unsigned NOT NULL default '0',
   `card3` smallint(5) unsigned NOT NULL default '0',
+  `option_id0` smallint(5) unsigned NOT NULL default '0',
+  `option_val0` smallint(5) unsigned NOT NULL default '0',
+  `option_parm0` tinyint(3) unsigned NOT NULL default '0',
+  `option_id1` smallint(5) unsigned NOT NULL default '0',
+  `option_val1` smallint(5) unsigned NOT NULL default '0',
+  `option_parm1` tinyint(3) unsigned NOT NULL default '0',
+  `option_id2` smallint(5) unsigned NOT NULL default '0',
+  `option_val2` smallint(5) unsigned NOT NULL default '0',
+  `option_parm2` tinyint(3) unsigned NOT NULL default '0',
+  `option_id3` smallint(5) unsigned NOT NULL default '0',
+  `option_val3` smallint(5) unsigned NOT NULL default '0',
+  `option_parm3` tinyint(3) unsigned NOT NULL default '0',
+  `option_id4` smallint(5) unsigned NOT NULL default '0',
+  `option_val4` smallint(5) unsigned NOT NULL default '0',
+  `option_parm4` tinyint(3) unsigned NOT NULL default '0',
   `expire_time` int(11) unsigned NOT NULL default '0',
   `bound` tinyint(3) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
@@ -199,6 +229,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `uniqueitem_counter` int(11) unsigned NOT NULL default '0',
   `sex` ENUM('M','F','U') NOT NULL default 'U',
   `hotkey_rowshift` tinyint(3) unsigned NOT NULL default '0',
+  `clan_id` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`char_id`),
   UNIQUE KEY `name_key` (`name`),
   KEY `account_id` (`account_id`),
@@ -252,6 +283,50 @@ CREATE TABLE IF NOT EXISTS `charlog` (
   `hair` tinyint(4) NOT NULL default '0',
   `hair_color` int(11) NOT NULL default '0'
 ) ENGINE=MyISAM; 
+
+--
+-- Table structure for table `clan`
+--
+CREATE TABLE `clan` (
+  `clan_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(24) NOT NULL DEFAULT '',
+  `master` varchar(24) NOT NULL DEFAULT '',
+  `mapname` varchar(24) NOT NULL DEFAULT '',
+  `max_member` smallint(6) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`clan_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5;
+
+-- ----------------------------
+-- Records of clan
+-- ----------------------------
+INSERT INTO `clan` VALUES ('1', 'Swordman Clan', 'Raffam Oranpere', 'prontera', '500');
+INSERT INTO `clan` VALUES ('2', 'Arcwand Clan', 'Devon Aire', 'geffen', '500');
+INSERT INTO `clan` VALUES ('3', 'Golden Mace Clan', 'Berman Aire', 'prontera', '500');
+INSERT INTO `clan` VALUES ('4', 'Crossbow Clan', 'Shaam Rumi', 'payon', '500');
+
+-- ----------------------------
+-- Table structure for `clan_alliance`
+-- ----------------------------
+CREATE TABLE `clan_alliance` (
+  `clan_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `opposition` int(11) unsigned NOT NULL DEFAULT '0',
+  `alliance_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(24) NOT NULL DEFAULT '',
+  PRIMARY KEY (`clan_id`,`alliance_id`),
+  KEY `alliance_id` (`alliance_id`)
+) ENGINE=MyISAM;
+
+-- ----------------------------
+-- Records of clan_alliance
+-- ----------------------------
+INSERT INTO `clan_alliance` VALUES ('1', '0', '3', 'Golden Mace Clan');
+INSERT INTO `clan_alliance` VALUES ('2', '0', '3', 'Golden Mace Clan');
+INSERT INTO `clan_alliance` VALUES ('2', '1', '4', 'Crossbow Clan');
+INSERT INTO `clan_alliance` VALUES ('3', '0', '1', 'Swordman Clan');
+INSERT INTO `clan_alliance` VALUES ('3', '0', '2', 'Arcwand Clan');
+INSERT INTO `clan_alliance` VALUES ('3', '0', '4', 'Crossbow Clan');
+INSERT INTO `clan_alliance` VALUES ('4', '0', '3', 'Golden Mace Clan');
+INSERT INTO `clan_alliance` VALUES ('4', '1', '2', 'Arcwand Clan');
 
 --
 -- Table structure for table `elemental`
@@ -456,6 +531,21 @@ CREATE TABLE IF NOT EXISTS `guild_storage` (
   `card1` smallint(5) unsigned NOT NULL default '0',
   `card2` smallint(5) unsigned NOT NULL default '0',
   `card3` smallint(5) unsigned NOT NULL default '0',
+  `option_id0` smallint(5) unsigned NOT NULL default '0',
+  `option_val0` smallint(5) unsigned NOT NULL default '0',
+  `option_parm0` tinyint(3) unsigned NOT NULL default '0',
+  `option_id1` smallint(5) unsigned NOT NULL default '0',
+  `option_val1` smallint(5) unsigned NOT NULL default '0',
+  `option_parm1` tinyint(3) unsigned NOT NULL default '0',
+  `option_id2` smallint(5) unsigned NOT NULL default '0',
+  `option_val2` smallint(5) unsigned NOT NULL default '0',
+  `option_parm2` tinyint(3) unsigned NOT NULL default '0',
+  `option_id3` smallint(5) unsigned NOT NULL default '0',
+  `option_val3` smallint(5) unsigned NOT NULL default '0',
+  `option_parm3` tinyint(3) unsigned NOT NULL default '0',
+  `option_id4` smallint(5) unsigned NOT NULL default '0',
+  `option_val4` smallint(5) unsigned NOT NULL default '0',
+  `option_parm4` tinyint(3) unsigned NOT NULL default '0',
   `expire_time` int(11) unsigned NOT NULL default '0',
   `bound` tinyint(3) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
@@ -543,6 +633,21 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `card1` smallint(5) unsigned NOT NULL default '0',
   `card2` smallint(5) unsigned NOT NULL default '0',
   `card3` smallint(5) unsigned NOT NULL default '0',
+  `option_id0` smallint(5) unsigned NOT NULL default '0',
+  `option_val0` smallint(5) unsigned NOT NULL default '0',
+  `option_parm0` tinyint(3) unsigned NOT NULL default '0',
+  `option_id1` smallint(5) unsigned NOT NULL default '0',
+  `option_val1` smallint(5) unsigned NOT NULL default '0',
+  `option_parm1` tinyint(3) unsigned NOT NULL default '0',
+  `option_id2` smallint(5) unsigned NOT NULL default '0',
+  `option_val2` smallint(5) unsigned NOT NULL default '0',
+  `option_parm2` tinyint(3) unsigned NOT NULL default '0',
+  `option_id3` smallint(5) unsigned NOT NULL default '0',
+  `option_val3` smallint(5) unsigned NOT NULL default '0',
+  `option_parm3` tinyint(3) unsigned NOT NULL default '0',
+  `option_id4` smallint(5) unsigned NOT NULL default '0',
+  `option_val4` smallint(5) unsigned NOT NULL default '0',
+  `option_parm4` tinyint(3) unsigned NOT NULL default '0',
   `expire_time` int(11) unsigned NOT NULL default '0',
   `favorite` tinyint(3) unsigned NOT NULL default '0',
   `bound` tinyint(3) unsigned NOT NULL default '0',
@@ -619,6 +724,21 @@ CREATE TABLE IF NOT EXISTS `mail` (
   `card1` smallint(5) unsigned NOT NULL default '0',
   `card2` smallint(5) unsigned NOT NULL default '0',
   `card3` smallint(5) unsigned NOT NULL default '0',
+  `option_id0` smallint(5) unsigned NOT NULL default '0',
+  `option_val0` smallint(5) unsigned NOT NULL default '0',
+  `option_parm0` tinyint(3) unsigned NOT NULL default '0',
+  `option_id1` smallint(5) unsigned NOT NULL default '0',
+  `option_val1` smallint(5) unsigned NOT NULL default '0',
+  `option_parm1` tinyint(3) unsigned NOT NULL default '0',
+  `option_id2` smallint(5) unsigned NOT NULL default '0',
+  `option_val2` smallint(5) unsigned NOT NULL default '0',
+  `option_parm2` tinyint(3) unsigned NOT NULL default '0',
+  `option_id3` smallint(5) unsigned NOT NULL default '0',
+  `option_val3` smallint(5) unsigned NOT NULL default '0',
+  `option_parm3` tinyint(3) unsigned NOT NULL default '0',
+  `option_id4` smallint(5) unsigned NOT NULL default '0',
+  `option_val4` smallint(5) unsigned NOT NULL default '0',
+  `option_parm4` tinyint(3) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
   `bound` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`)
@@ -640,7 +760,7 @@ CREATE TABLE IF NOT EXISTS `mapreg` (
 --
 
 CREATE TABLE IF NOT EXISTS `market` (
-  `name` varchar(32) NOT NULL DEFAULT '',
+  `name` varchar(50) NOT NULL DEFAULT '',
   `nameid` SMALLINT(5) UNSIGNED NOT NULL,
   `price` INT(11) UNSIGNED NOT NULL,
   `amount` SMALLINT(5) UNSIGNED NOT NULL,
@@ -834,6 +954,21 @@ CREATE TABLE IF NOT EXISTS `storage` (
   `card1` smallint(5) unsigned NOT NULL default '0',
   `card2` smallint(5) unsigned NOT NULL default '0',
   `card3` smallint(5) unsigned NOT NULL default '0',
+  `option_id0` smallint(5) unsigned NOT NULL default '0',
+  `option_val0` smallint(5) unsigned NOT NULL default '0',
+  `option_parm0` tinyint(3) unsigned NOT NULL default '0',
+  `option_id1` smallint(5) unsigned NOT NULL default '0',
+  `option_val1` smallint(5) unsigned NOT NULL default '0',
+  `option_parm1` tinyint(3) unsigned NOT NULL default '0',
+  `option_id2` smallint(5) unsigned NOT NULL default '0',
+  `option_val2` smallint(5) unsigned NOT NULL default '0',
+  `option_parm2` tinyint(3) unsigned NOT NULL default '0',
+  `option_id3` smallint(5) unsigned NOT NULL default '0',
+  `option_val3` smallint(5) unsigned NOT NULL default '0',
+  `option_parm3` tinyint(3) unsigned NOT NULL default '0',
+  `option_id4` smallint(5) unsigned NOT NULL default '0',
+  `option_val4` smallint(5) unsigned NOT NULL default '0',
+  `option_parm4` tinyint(3) unsigned NOT NULL default '0',
   `expire_time` int(11) unsigned NOT NULL default '0',
   `bound` tinyint(3) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',

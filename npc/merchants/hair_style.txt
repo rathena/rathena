@@ -52,7 +52,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 			mes "[Veronica]";
 			switch(.@style) {
 			case 1:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Play Dead' style!";
 					mes "It's a nice, basic haircut.";
 					mes "I notice that usually the";
@@ -68,7 +68,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "choice for Novices.";
 					close2; cutin "",255; end;
 			case 2:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's the 'Two Handed Sword";
 					mes "Mastery' style! It's perfect for";
 					mes "for Swordmen who might muss their";
@@ -84,7 +84,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "while wildly flailing a sword.";
 					close2; cutin "",255; end;
 			case 3:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Napalm Beat' style!";
 					mes "It's a unique look with a hint";
 					mes "of eccentricity that's offset";
@@ -98,7 +98,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "off the boys with their spells.";
 					close2; cutin "",255; end;
 			case 4:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's the 'Double Strafe'";
 					mes "style! The arrangement of the";
 					mes "hair conducts ambient static";
@@ -115,7 +115,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "granny-style hairbuns.";
 					close2; cutin "",255; end;
 			case 5:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Angelus' style!";
 					mes "It's for calm and devout people,";
 					mes "as well as those bashful,";
@@ -130,7 +130,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "is also practical in battle.";
 					close2; cutin "",255; end;
 			case 6:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Push Cart' style!";
 					mes "It was based on the design of a";
 					mes "cart...at least, that's what";
@@ -143,7 +143,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "it's also economical.";
 					close2; cutin "",255; end;
 			case 7:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Ooh, that's 'Envenom' style!";
 					mes "It looks great on Thieves and";
 					mes "and Assassins when they're";
@@ -159,7 +159,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "some cute guy.";
 					close2; cutin "",255; end;
 			case 8:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Bowling Bash' style!";
 					mes "A popular style for Knights, its";
 					mes "manly, rugged look tends to";
@@ -176,7 +176,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "to fighting with their hands.";
 					close2; cutin "",255; end;
 			case 9:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Venom Dust' style!";
 					mes "Definitely a look for rebels,";
 					mes "the sweeping, yet decidedly";
@@ -192,7 +192,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "...Although, it acutally doesn't.";
 					close2; cutin "",255; end;
 			case 10:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Turn Undead' style!";
 					mes "This is popular among Priests";
 					mes "that want a serious, yet a bit";
@@ -208,7 +208,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "make their hair to stick out anyway.";
 					close2; cutin "",255; end;
 			case 11:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Dragonology' style!";
 					mes "It's neat and clean cut, perfect";
 					mes "for studious people and looks";
@@ -225,7 +225,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "religious services.";
 					close2; cutin "",255; end;
 			case 12:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Mace Mastery' style!";
 					mes "A lot of care goes into making";
 					mes "that tussled hair say, 'I don't";
@@ -240,7 +240,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "stockings...";
 					close2; cutin "",255; end;
 			case 13:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Thunder Storm' style!";
 					mes "This hot, flamboyant hairstyle";
 					mes "flares out wildly like thunder.";
@@ -255,7 +255,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "that it can't be cute.";
 					close2; cutin "",255; end;
 			case 14:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Encore' style!";
 					mes "The elegant, flowing locks";
 					mes "fit well with Bards, or men who";
@@ -270,7 +270,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "with glasses.";
 					close2; cutin "",255; end;
 			case 15:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Grimtooth' style!";
 					mes "Spiky and unkempt, this style";
 					mes "is a popular counterculture";
@@ -287,7 +287,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "foreheads and cheekbones.";
 					close2; cutin "",255; end;
 			case 16:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Blitz Beat' style!";
 					mes "A funky and lively fashion,";
 					mes "this style was developed for a";
@@ -304,7 +304,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "lets their hair get trapped?";
 					close2; cutin "",255; end;
 			case 17:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Find Ore' style!";
 					mes "It's a practical, economical look";
 					mes "that is popular among Blacksmiths.";
@@ -321,7 +321,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "Blacksmith favorite.";
 					close2; cutin "",255; end;
 			case 18:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Fire Pillar' style!";
 					mes "It's a trendy look, in which";
 					mes "you cover one eye for that";
@@ -338,7 +338,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 					mes "looks great with Mage Hats.";
 					close2; cutin "",255; end;
 			case 19:
-				if(Sex == 1) {
+				if(Sex == SEX_MALE) {
 					mes "Oh, that's 'Guillotine Fist'";
 					mes "style! The smooth, slicked back";
 					mes "pompadour shows that you're";
@@ -509,7 +509,7 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 
 L_cutin:
 	.@num = getarg(0);
-	if(Sex == 1) {
+	if(Sex == SEX_MALE) {
 		if (.@num  < 10)
 			cutin "hair_m_0"+ .@num,4;
 		else
@@ -706,7 +706,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 		next;
 		switch(select("Old Hairstyles:New Hairstyles")) {
 		case 1:
-			if (Sex == 1) {
+			if (Sex == SEX_MALE) {
 				switch(select("Petite Style:Executioner Style:Prince Style:Deviace Style:Cancel")) {
 				case 1:
 					cutin "hair_m_20",4;
@@ -811,7 +811,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 			}
 			break;
 		case 2:
-			if (Sex == 1) {
+			if (Sex == SEX_MALE) {
 				switch(select("Emergency Heal Perm:Aura Blade Cut:Power Swing:Renovatio Cut:Cancel")) {
 				case 1:
 					cutin "hair_m_24",4;
@@ -936,7 +936,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 		mes "Here's a list of the style names just in case you need them~";
 		next;
 		mes "[Prince Shammi]";
-		if (Sex == 1) {
+		if (Sex == SEX_MALE) {
 			mes "No. 20: Petite Style";
 			mes "No. 21: Executioner Style";
 			mes "No. 22: Prince Style";
@@ -987,7 +987,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 			close;
 		}
 		else {
-			if (Sex == 1)
+			if (Sex == SEX_MALE)
 				cutin "hair_m_"+.@input+".BMP",4;
 			else
 				cutin "hair_f_"+.@input+".BMP",4;
@@ -1060,7 +1060,7 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 				mes "And my, oh my, you look even";
 				mes "more fabulous that I thought";
 				mes "you would! Oh, I can't believe";
-				if (Sex == 1) {
+				if (Sex == SEX_MALE) {
 					mes "how tough and elegant you are~";
 					mes "So ruggedly manly and handsome!";
 				}
@@ -1202,7 +1202,7 @@ lhz_in02,91,155,5	script	Assistant Beautician#li	862,{
 					mes "So this is the";
 					mes "style you want me";
 					mes "to try to do for you?";
-					if (Sex == 1) {
+					if (Sex == SEX_MALE) {
 						if (.@input < 10)
 							cutin "hair_m_0"+.@input+".BMP",4;
 						else

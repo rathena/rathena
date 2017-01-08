@@ -1919,7 +1919,7 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 					13424,"Eden Saber II","One-handed sword","Attack 170","",///P_Sabre2
 					1193,"Eden Slayer II","Two-handed sword","Attack 185","";//P_Slayer2
 			}
-			if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || Class == Job_Rogue || Class == Job_Novice || Class == Job_Novice_High || Class == Job_SuperNovice || Class == Job_Soul_Linker || Class == Job_Ninja) {
+			if (Class == Job_Thief || Class == Job_Thief_High || Class == Job_Assassin || Class == Job_Rogue || Class == Job_Novice || Class == Job_Novice_High || Class == Job_Super_Novice || Class == Job_Soul_Linker || Class == Job_Ninja) {
 				callsub S_Select,"",
 					13051,"Eden Dagger II","Dagger","MATK+70, attack 158","";//P_Dagger2
 			}

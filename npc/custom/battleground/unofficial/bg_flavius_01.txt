@@ -337,7 +337,7 @@ bat_b01,390,13,5	script	Therapist in battle#fl12	95,{
 	mes "[Therapist in battle]";
 	mes "Just close your eyes, and take a deep breathe.";
 	mes "You can be free from pain.";
-	specialeffect2 312;
+	specialeffect2 EF_HEAL;
 	close;
 }
 
@@ -345,7 +345,7 @@ bat_b01,10,293,5	script	Therapist in battle#fl11	95,{
 	mes "[Therapist in battle]";
 	mes "Just close your eyes, and take a deep breathe.";
 	mes "You can be free from pain.";
-	specialeffect2 312;
+	specialeffect2 EF_HEAL;
 	close;
 }
 

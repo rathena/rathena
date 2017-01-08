@@ -710,9 +710,11 @@ SC_INTOABYSS	()
 	desc:
 	val1:
 
-SC_SIEGFRIED	()
-	desc:
-	val1:
+SC_SIEGFRIED	(SI_SIEGFRIED)
+	desc: Status change for BD_SIEGFRIED
+	val1: BD_SIEGFRIED Skill level
+	val2: Increase val2% damage reduction from non-Nuetral elemental attack
+	val3: Increase status resistance value by val3% of player's current resistance.
 
 SC_WHISTLE	()
 	desc:
@@ -882,8 +884,8 @@ SC_MATKFOOD	(SI_MATKFOOD)
 	val1: +MagicAttack
 
 SC_SCRESIST	()
-	desc:
-	val1:
+	desc: Status resistance from Gospel skill
+	val1: Increase status resistance value by n% of player's current resistance.
 
 SC_XMAS	()
 	desc:
@@ -2251,8 +2253,8 @@ SC_EQC	(SI_EQC)
 	desc:
 	val1:
 	val2: -% Def
-	val3: -% Atk
-	val4: -%MaxHP
+	val3: -%MaxHP
+	val4:
 
 SC_GOLDENE_FERSE	(SI_GOLDENE_FERSE)
 	desc:
@@ -2527,6 +2529,55 @@ SC_ELEMENTAL_SHIELD	()
 SC_CHASEWALK2	(SI_CHASEWALK2)
 	desc: 2nd effect of Chasewalk
 	val1: +STR
+
+SC_GVG_GIANT	(SI_GVG_GIANT)
+	desc: Instantly consumes HP/SP, increases Physical/Magic damage on player enemies by n%.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+	val3: Increases % Physical damage
+	val4: Increases % Magical damage
+
+SC_GVG_GOLEM	(SI_GVG_GOLEM)
+	desc: Instantly consumes HP/SP, decreases n% damage received from other adventurers.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+	val3: Decreases % damage received of physical attack
+	val4: Decreases % damage received of magical attack
+
+SC_GVG_STUN	(SI_GVG_STUN)
+	desc: Instantly consumes HP/SP, immunizes you against Stun.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+
+SC_GVG_STONE	(SI_GVG_STONE)
+	desc: Instantly consumes HP/SP, immunizes you against Petrification.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+
+SC_GVG_FREEZ	(SI_GVG_FREEZ)
+	desc: Instantly consumes HP/SP, immunizes you against Frost.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+
+SC_GVG_SLEEP	(SI_GVG_SLEEP)
+	desc: Instantly consumes HP/SP, immunizes you against Sleep.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+
+SC_GVG_CURSE	(SI_GVG_CURSE)
+	desc: Instantly consumes HP/SP, immunizes you against Curse.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+
+SC_GVG_SILENCE	(SI_GVG_SILENCE)
+	desc: Instantly consumes HP/SP, immunizes you against Silence.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
+
+SC_GVG_BLIND	(SI_GVG_BLIND)
+	desc: Instantly consumes HP/SP, immunizes you against Blind.
+	val1: Amount of HP that are instantly consumed
+	val2: Amount of SP that are instantly consumed
 
 SC_EXTREMITYFIST2	()
 	desc:

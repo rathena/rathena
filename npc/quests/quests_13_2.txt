@@ -72,8 +72,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		next;
 		switch(select("Save your location:Cancel")) {
 		case 1:
-			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
-			else savepoint "man_fild02",129,61;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225,1,1;
+			else savepoint "man_fild02",129,61,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -92,8 +92,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		next;
 		switch(select("Save your location:Use Storage:Cancel")) {
 		case 1:
-			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
-			else savepoint "man_fild02",129,61;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225,1,1;
+			else savepoint "man_fild02",129,61,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -139,8 +139,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Cancel")) {
 		case 1:
-			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
-			else savepoint "man_fild02",129,61;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225,1,1;
+			else savepoint "man_fild02",129,61,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -260,8 +260,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Use Cat Warp (Jottunheim):Cancel")) {
 		case 1:
-			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
-			else savepoint "man_fild02",129,61;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225,1,1;
+			else savepoint "man_fild02",129,61,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -2388,7 +2388,7 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	447,{
 			mes "[Arc]";
 			mes "Ah, finally. I've been speaking with Terra while we waited for you.";
 			mes "Terra. This is who saved you...";
-			mes "You should thank "+((Sex)?"him.":"her.");
+			mes "You should thank "+((Sex == SEX_MALE)?"him.":"her.");
 			next;
 			mes "[Terra]";
 			mes "Thank you...";
@@ -2538,7 +2538,7 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	447,{
 spl_in02,239,93,3	duplicate(Arc#ep13md_l02)	Terra#ep13md_l03	441
 
 splendide,287,140,0	script	terrashome_in	45,1,1,{
-OnTouch:
+OnTouch_:
 	if (ep13_mdrama > 25) {
 		warp "spl_in02",237,89;
 		end;
@@ -2772,7 +2772,7 @@ manuk,252,116,3	script	Manuk Galtun#ep13_2day	450,{
 		else if (ep13_2_days01 == 1) {
 			set .@qst_cpl01,checkquest(7074,HUNTING);
 			set .@qst_cpl02,checkquest(7075,HUNTING);
-			if ((.@qst_cpl01 == 2) & (.@qst_cpl02 == 2)) {
+			if ((.@qst_cpl01 == 2) && (.@qst_cpl02 == 2)) {
 				mes "[Strom]";
 				mes "Sure enough... I, the Sapha Galtun, Strom, apologize to you. I should not have been so quick to despise you.";
 				mes "I admit that you are a brave soldier, please feel free to visit Manuk.";
@@ -3385,7 +3385,7 @@ OnDisable:
 	disablenpc "Egg Keeper Draco#13_1";
 	end;
 
-OnTouch:
+OnTouch_:
 	disablenpc "Egg Keeper Draco#13_1";
 	monster "nyd_dun02",201,157,"Egg Keeper Draco",2013,1,"Egg Keeper Draco#13_3::OnMyMobDead";
 	end;
@@ -3402,7 +3402,7 @@ OnDisable:
 	disablenpc "Egg Keeper Draco#13_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	disablenpc "Egg Keeper Draco#13_2";
 	monster "nyd_dun02",206,157,"Egg Keeper Draco",2013,1,"Egg Keeper Draco#13_4::OnMyMobDead";
 	end;
@@ -3453,7 +3453,7 @@ OnReset:
 	killmonster "nyd_dun02","Stranger#ep13_2_dan03::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	emotion e_gasp,1;
 	emotion e_omg;
 	disablenpc "Stranger#ep13_2_dan01";
@@ -3481,7 +3481,7 @@ OnReset:
 	killmonster "nyd_dun02","Stranger#ep13_2_dan04::OnMyMobDead";
 	end;
 
-OnTouch:
+OnTouch_:
 	emotion e_gasp,1;
 	emotion e_omg;
 	disablenpc "Stranger#ep13_2_dan02";
@@ -4858,7 +4858,7 @@ function	script	find_13_2	{
 -	script	mjo_no_find	-1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,0;
 	end;
 }
@@ -4930,7 +4930,7 @@ OnInit:
 	enablenpc strnpcinfo(0);
 	end;
 
-OnTouch:
+OnTouch_:
 	if (ep13_2_tre == 2 && countitem(6076) == 1 && countitem(6077) < 10)
 		specialeffect EF_COUPLECASTING;
 	end;
@@ -4948,7 +4948,7 @@ mjolnir_10,188,260,3	duplicate(mjo_find)	#mj10_01	111,10,10
 mjolnir_01,364,256,0	script	#mj01_find	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,32,309,1,0x00FF00;
 	viewpoint 1,217,34,2,0x00FF00;
@@ -4982,7 +4982,7 @@ OnTimer60000:
 mjolnir_02,313,289,0	script	#mj02_find_1	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,90,195,1,0x00FF00;
 	viewpoint 1,206,187,2,0x00FF00;
@@ -4992,7 +4992,7 @@ OnTouch:
 mjolnir_02,78,258,0	script	#mj02_find_2	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,90,195,1,0x00FF00;
 	viewpoint 1,206,187,2,0x00FF00;
@@ -5025,7 +5025,7 @@ OnTimer60000:
 mjolnir_04,147,208,0	script	#mj04_find_1	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,125,380,1,0x00FF00;
 	viewpoint 1,220,130,2,0x00FF00;
@@ -5035,7 +5035,7 @@ OnTouch:
 mjolnir_04,160,77,0	script	#mj04_find_2	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,125,380,1,0x00FF00;
 	viewpoint 1,220,130,2,0x00FF00;
@@ -5045,7 +5045,7 @@ OnTouch:
 mjolnir_04,361,174,0	script	#mj04_find_3	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,125,380,1,0x00FF00;
 	viewpoint 1,220,130,2,0x00FF00;
@@ -5077,7 +5077,7 @@ OnTimer60000:
 mjolnir_09,201,355,0	script	#mj09_find_1	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,229,214,1,0x00FF00;
 	close;
@@ -5086,7 +5086,7 @@ OnTouch:
 mjolnir_09,38,243,0	script	#mj09_find_2	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,229,214,1,0x00FF00;
 	close;
@@ -5095,7 +5095,7 @@ OnTouch:
 mjolnir_09,106,36,0	script	#mj09_find_3	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,229,214,1,0x00FF00;
 	close;
@@ -5104,7 +5104,7 @@ OnTouch:
 mjolnir_09,306,36,0	script	#mj09_find_4	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,229,214,1,0x00FF00;
 	close;
@@ -5113,7 +5113,7 @@ OnTouch:
 mjolnir_09,369,279,0	script	#mj09_find_5	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,229,214,1,0x00FF00;
 	close;
@@ -5133,7 +5133,7 @@ OnTimer60000:
 mjolnir_10,201,355,0	script	#mj10_find_1	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,188,260,1,0x00FF00;
 	close;
@@ -5142,7 +5142,7 @@ OnTouch:
 mjolnir_10,374,215,0	script	#mj10_find_2	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,188,260,1,0x00FF00;
 	close;
@@ -5151,7 +5151,7 @@ OnTouch:
 mjolnir_10,272,20,0	script	#mj10_find_3	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,188,260,1,0x00FF00;
 	close;
@@ -5160,7 +5160,7 @@ OnTouch:
 mjolnir_10,75,22,0	script	#mj10_find_4	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,188,260,1,0x00FF00;
 	close;
@@ -5169,7 +5169,7 @@ OnTouch:
 mjolnir_10,27,258,0	script	#mj10_find_5	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",0,1;
 	viewpoint 1,229,214,1,0x00FF00;
 	close;
@@ -5189,7 +5189,7 @@ OnTimer60000:
 hu_fild05,335,152,0	script	#hu_find_1	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",1,1;
 	viewpoint 1,251,345,1,0x00FF00;
 	viewpoint 1,134,322,2,0x00FF00;
@@ -5202,7 +5202,7 @@ OnTouch:
 hu_fild05,89,52,0	script	#hu_find_2	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",1,1;
 	viewpoint 1,251,345,1,0x00FF00;
 	viewpoint 1,134,322,2,0x00FF00;
@@ -5215,7 +5215,7 @@ OnTouch:
 hu_fild05,42,205,0	script	#hu_find_3	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",1,1;
 	viewpoint 1,251,345,1,0x00FF00;
 	viewpoint 1,134,322,2,0x00FF00;
@@ -5228,7 +5228,7 @@ OnTouch:
 hu_fild05,276,349,0	script	#hu_find_4	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",1,1;
 	viewpoint 1,251,345,1,0x00FF00;
 	viewpoint 1,134,322,2,0x00FF00;
@@ -5280,7 +5280,7 @@ OnInit:
 	enablenpc strnpcinfo(0);
 	end;
 
-OnTouch:
+OnTouch_:
 	if (ep13_2_tre == 3 && countitem(6076) == 1 && countitem(6077) < 5)
 		specialeffect EF_COUPLECASTING;
 	end;
@@ -5350,7 +5350,7 @@ OnTimer60000:
 ve_fild03,351,219,0	script	#ve_find_1	-1,3,3,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",2,1;
 	viewpoint 1,152,134,1,0x00FF00;
 	viewpoint 1,256,228,2,0x00FF00;
@@ -5362,7 +5362,7 @@ OnTouch:
 ve_fild03,223,51,0	script	#ve_find_2	-1,5,5,{
 	end;
 
-OnTouch:
+OnTouch_:
 	callfunc "find_13_2",2,1;
 	viewpoint 1,152,134,1,0x00FF00;
 	viewpoint 1,256,228,2,0x00FF00;
@@ -5413,7 +5413,7 @@ OnInit:
 	enablenpc strnpcinfo(0);
 	end;
 
-OnTouch:
+OnTouch_:
 	if (ep13_2_tre == 4 && countitem(6076) == 1 && countitem(6077) < 5)
 		specialeffect EF_COUPLECASTING;
 	end;
@@ -6915,7 +6915,7 @@ nyd_dun02,178,255,0	script	Strange Device#ep13_out	844,3,3,{
 			close;
 	}
 
-OnTouch:
+OnTouch_:
 	specialeffect EF_LEVEL99_4;
 	end;
 }
@@ -6971,7 +6971,7 @@ OnTimer70000:
 	stopnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	specialeffect EF_LEVEL99_4;
 	end;
 }
@@ -7055,7 +7055,7 @@ OnDisable:
 }
 
 -	script	ep13_warp_w_0	-1,{
-OnTouch:
+OnTouch_:
 	warp "nyd_dun01",214,68;
 	end;
 }
@@ -7132,7 +7132,7 @@ OnEnable:
 	enablenpc "ep13_warp_22_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_31::OnEnable";
 	donpcevent "ep13_warp_41::OnEnable";
 	donpcevent "ep13_warp_42::OnEnable";
@@ -7147,7 +7147,7 @@ OnEnable:
 	enablenpc "ep13_warp_24_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (rand(2)) {
 		donpcevent "ep13_warp_33::OnEnable";
 		donpcevent "ep13_warp_43::OnEnable";
@@ -7176,7 +7176,7 @@ OnEnable:
 	enablenpc "ep13_warp_43_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_52::OnEnable";
 	donpcevent "ep13_warp_61::OnEnable";
 	donpcevent "ep13_warp_61_2::OnEnable";
@@ -7194,7 +7194,7 @@ OnEnable:
 	enablenpc "ep13_warp_45_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_46::OnEnable";
 	donpcevent "ep13_warp_55::OnEnable";
 	donpcevent "ep13_warp_56::OnEnable";
@@ -7214,7 +7214,7 @@ OnEnable:
 	enablenpc "ep13_warp_61_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_62::OnEnable";
 	donpcevent "ep13_warp_71::OnEnable";
 	donpcevent "ep13_warp_72::OnEnable";
@@ -7229,7 +7229,7 @@ OnEnable:
 	enablenpc "ep13_warp_65_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (rand(2)) {
 		donpcevent "ep13_warp_64::OnEnable";
 		donpcevent "ep13_warp_73::OnEnable";
@@ -7260,7 +7260,7 @@ OnEnable:
 	enablenpc "ep13_warp_81_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_91::OnEnable";
 	donpcevent "ep13_warp_92::OnEnable";
 	donpcevent "ep13_warp_93::OnEnable";
@@ -7279,7 +7279,7 @@ OnEnable:
 	enablenpc "ep13_warp_83_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_84::OnEnable";
 	donpcevent "ep13_warp_94::OnEnable";
 	donpcevent "ep13_warp_e2::OnEnable";
@@ -7297,7 +7297,7 @@ OnEnable:
 	enablenpc "ep13_warp_85_2";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "ep13_warp_95::OnEnable";
 	donpcevent "ep13_warp_e3::OnEnable";
 	donpcevent "ep13_warp_85_2::OnEnable";

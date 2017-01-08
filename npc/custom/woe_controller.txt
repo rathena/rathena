@@ -113,7 +113,7 @@ OnMinute00:
 					if (.Active[0]&(1<<.@j)) Disp_Owner(.Castles$[.@j],1);
 					if (.ExitWarp) maprespawnguildid .Castles$[.@j],0,3;
 				}
-				if (.Options&1 && .Active[0] && .ForceEnd != 2) callsub OnReward, .Active[0];
+				if ((.Options&1) && .Active[0] && .ForceEnd != 2) callsub OnReward, .Active[0];
 				deletearray .Active[0],2;
 				if (.ForceEnd) { set .ForceEnd,0; end; }
 				break;
@@ -169,7 +169,7 @@ OnReward:
 			if (!.@gid) continue;
 			set .@size, query_sql("SELECT account_id,char_id FROM `guild_member` WHERE guild_id = '"+.@gid+"' AND "+.@sql$,.@aid,.@cid);
 			for(set .@j,0; .@j<.@size; set .@j,.@j+1) {
-				if (.Options&8 && !(.Options&4)) {
+				if ((.Options&8) && !(.Options&4)) {
 					set .@ip$, replacestr(getcharip(.@aid[.@j]),".","a");
 					if (getd(".@ip_"+.@i+"_"+.@ip$)) continue;
 					setd ".@ip_"+.@i+"_"+.@ip$,1;

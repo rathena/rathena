@@ -21,7 +21,7 @@
 //============================================================ 
 
 aldeba_in,223,167,3	script	Tzerero#sn	709,{
-	if (BaseJob == Job_SuperNovice) {
+	if (BaseJob == Job_Super_Novice) {
 		mes "[Tzerero]";
 		mes "I trust that you are enjoying";
 		mes "life as a Super Novice? Ah,";
@@ -59,7 +59,7 @@ aldeba_in,223,167,3	script	Tzerero#sn	709,{
 		completequest 6010;
 		callfunc "F_ClearJobVar";
 		getitem 2339,1; //G_Strings
-		if (Upper==0) jobchange Job_SuperNovice;
+		if (Upper==0) jobchange Job_Super_Novice;
 		if (Upper==2) jobchange Job_Super_Baby;
 		mes "[Tzerero]";
 		mes "Bwaha! I got you!";
@@ -275,7 +275,7 @@ aldeba_in,223,167,3	script	Tzerero#sn	709,{
 		}
 	}
 	else {
-		if (BaseJob == Job_SuperNovice) {
+		if (BaseJob == Job_Super_Novice) {
 			mes "[Tzerero]";
 			mes "How do you like living";
 			mes "life simply as a Super";
@@ -335,7 +335,7 @@ aldeba_in,216,169,5	script	Esseray#sn	86,{
 		mes "I knew you could pass the test~";
 		close;
 	}
-	if (BaseJob == Job_SuperNovice) {
+	if (BaseJob == Job_Super_Novice) {
 		if (checkre(0))
 			callfunc "Esseray_Ex";
 		mes "[Esseray]";
@@ -385,9 +385,9 @@ aldeba_in,216,169,5	script	Esseray#sn	86,{
 }
 
 aldebaran,54,238,5	script	Kafra Employee#sn	117,{
-	if (BaseJob == Job_SuperNovice) {
+	if (BaseJob == Job_Super_Novice) {
 		mes "[Kafra Employee]";
-		if (Sex )
+		if (Sex == SEX_MALE)
 			mes "Hello, Mister Super Novice~";
 		else
 			mes "Hello, Super Novice, Ma'am.";

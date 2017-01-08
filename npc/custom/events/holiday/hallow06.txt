@@ -20,7 +20,7 @@ prontera,151,190,5	script	Hallows' Eve Event	807,{
 		emotion e_swt,1;
 		close;
 	}
-	if(EVENT_HALWN06&1 && EVENT_HALWN06&2){
+	if((EVENT_HALWN06&1) && (EVENT_HALWN06&2)){
 		mes "I am sorry but you have already completed the event.";
 		emotion e_sry;
 		close;

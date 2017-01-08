@@ -381,7 +381,7 @@ payon,157,141,5	script	Phoenix#TKJobChange	753,{
 			mes "You are still young, so";
 			mes "I assume you'll want a job";
 			mes "title. Mm. In that case, you";
-			if(Sex == 0) {
+			if(Sex == SEX_FEMALE) {
 				mes "are now a ^FF0000Taekwon Girl^000000.";
 			} else {
 				mes "are now a ^FF0000Taekwon Boy^000000.";

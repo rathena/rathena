@@ -332,7 +332,7 @@ OnInit:
 	disablenpc "bat_b01_rp1_a_warp";
 	end;
 
-OnTouch:
+OnTouch_:
 	percentheal 100,100;
 	warp "bat_b01",87,73;
 	end;

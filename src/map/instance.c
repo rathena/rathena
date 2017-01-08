@@ -50,7 +50,7 @@ static uint16 instance_name2id(const char *instance_name) {
 /*==========================================
  * Searches for an instance name in the database
  *------------------------------------------*/
-static struct instance_db *instance_searchname_db(const char *instance_name) {
+struct instance_db *instance_searchname_db(const char *instance_name) {
 	uint16 id = instance_name2id(instance_name);
 	if (id == 0)
 		return NULL;
@@ -602,6 +602,9 @@ int instance_destroy(unsigned short instance_id)
 			map_delinstancemap(im->map[i]->m);
 			ers_free(instance_maps_ers, im->map[i]);
 		}
+		im->cnt_map = 0;
+		aFree(im->map);
+		im->map = NULL;
 	}
 
 	if(im->keep_timer != INVALID_TIMER) {
@@ -643,76 +646,81 @@ int instance_destroy(unsigned short instance_id)
 }
 
 /*==========================================
- * Allows a user to enter an instance
- *------------------------------------------*/
-int instance_enter(struct map_session_data *sd, unsigned short instance_id, const char *name)
-{
-	struct instance_db *db = instance_searchname_db(name);
-
-	nullpo_retr(-1, sd);
-
-	if (db == NULL)
-		return 2;
-
-	return instance_enter_position(sd, instance_id, name, db->enter.x, db->enter.y);
-}
-
-/*==========================================
  * Warp a user into instance
  *------------------------------------------*/
-int instance_enter_position(struct map_session_data *sd, unsigned short instance_id, const char *name, short x, short y)
+enum e_instance_enter instance_enter(struct map_session_data *sd, unsigned short instance_id, const char *name, short x, short y)
 {
-	struct instance_data *im = &instance_data[instance_id];
-	struct instance_db *db = instance_searchname_db(name);
+	struct instance_data *im = NULL;
+	struct instance_db *db = NULL;
 	struct party_data *p = NULL;
 	struct guild *g = NULL;
+	enum instance_mode mode;
 	int16 m;
 
-	nullpo_retr(-1, sd);
-	nullpo_retr(3, db);
+	nullpo_retr(IE_OTHER, sd);
+	
+	if( (db = instance_searchname_db(name)) == NULL ){
+		ShowError( "instance_enter: Unknown instance \"%s\".\n", name );
+		return IE_OTHER;
+	}
+	
+	// If one of the two coordinates was not given or is below zero, we use the entry point from the database
+	if( x < 0 || y < 0 ){
+		x = db->enter.x;
+		y = db->enter.y;
+	}
+	
+	// Check if it is a valid instance
+	if( instance_id == 0 ){
+		// im will stay NULL and by default party checks will be used
+		mode = IM_PARTY;
+	}else{
+		im = &instance_data[instance_id];
+		mode = im->mode;
+	}
 
-	switch(instance_data[instance_id].mode) {
+	switch(mode) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:
 			if (sd->instance_id == 0) // Player must have an instance
-				return 2;
+				return IE_NOINSTANCE;
 			if (im->owner_id != sd->status.char_id)
-				return 3;
+				return IE_OTHER;
 			break;
 		case IM_PARTY:
 			if (sd->status.party_id == 0) // Character must be in instance party
-				return 1;
+				return IE_NOMEMBER;
 			if ((p = party_search(sd->status.party_id)) == NULL)
-				return 1;
-			if (p->instance_id == 0) // Party must have an instance
-				return 2;
+				return IE_NOMEMBER;
+			if (p->instance_id == 0 || im == NULL) // Party must have an instance
+				return IE_NOINSTANCE;
 			if (im->owner_id != p->party.party_id)
-				return 3;
+				return IE_OTHER;
 			break;
 		case IM_GUILD:
 			if (sd->status.guild_id == 0) // Character must be in instance guild
-				return 1;
+				return IE_NOMEMBER;
 			if ((g = guild_search(sd->status.guild_id)) == NULL)
-				return 1;
+				return IE_NOMEMBER;
 			if (g->instance_id == 0) // Guild must have an instance
-				return 2;
+				return IE_NOINSTANCE;
 			if (im->owner_id != g->guild_id)
-				return 3;
+				return IE_OTHER;
 			break;
 	}
 
 	if (im->state != INSTANCE_BUSY)
-		return 3;
+		return IE_OTHER;
 	if (im->type != db->id)
-		return 3;
+		return IE_OTHER;
 
 	// Does the instance match?
 	if ((m = instance_mapname2mapid(StringBuf_Value(db->enter.mapname), instance_id)) < 0)
-		return 3;
+		return IE_OTHER;
 
 	if (pc_setpos(sd, map_id2index(m), x, y, CLR_OUTSIGHT))
-		return 3;
+		return IE_OTHER;
 
 	// If there was an idle timer, let's stop it
 	instance_stopidletimer(im, instance_id);
@@ -720,7 +728,7 @@ int instance_enter_position(struct map_session_data *sd, unsigned short instance
 	// Now we start the instance timer
 	instance_startkeeptimer(im, instance_id);
 
-	return 0;
+	return IE_OK;
 }
 
 /*==========================================
@@ -813,17 +821,18 @@ static bool instance_db_free_sub(struct instance_db *db);
 static bool instance_readdb_sub(char* str[], int columns, int current)
 {
 	uint8 i;
-	int id = atoi(str[0]);
+	char *ptr;
+	int id = strtol(str[0], &ptr, 10);
 	struct instance_db *db;
 	bool isNew = false;
 
-	if (!id || id >  USHRT_MAX) {
-		ShowError("instance_readdb_sub: Cannot add instance with ID '%d'. Valid ID is 1 ~ %d.\n", id, USHRT_MAX);
+	if (!id || id >  USHRT_MAX || *ptr) {
+		ShowError("instance_readdb_sub: Cannot add instance with ID '%d'. Valid IDs are 1 ~ %d, skipping...\n", id, USHRT_MAX);
 		return false;
 	}
 
 	if (mapindex_name2id(str[4]) == 0) {
-		ShowError("instance_readdb_sub: Invalid map '%s' as entrance map.\n", str[4]);
+		ShowError("instance_readdb_sub: Invalid map '%s' as entrance map, skipping...\n", str[4]);
 		return false;
 	}
 
@@ -833,8 +842,7 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 		db->name = StringBuf_Malloc();
 		db->enter.mapname = StringBuf_Malloc();
 		isNew = true;
-	}
-	else {
+	} else {
 		StringBuf_Clear(db->name);
 		StringBuf_Clear(db->enter.mapname);
 		if (db->maplist_count) {
@@ -846,11 +854,36 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 	}
 
 	StringBuf_AppendStr(db->name, str[1]);
-	db->limit = atoi(str[2]);
-	db->timeout = atoi(str[3]);
+
+	db->limit = strtol(str[2], &ptr, 10);
+	if (*ptr) {
+		ShowError("instance_readdb_sub: TimeLimit must be an integer value for instance '%d', skipping...\n", id);
+		instance_db_free_sub(db);
+		return false;
+	}
+
+	db->timeout = strtol(str[3], &ptr, 10);
+	if (*ptr) {
+		ShowError("instance_readdb_sub: IdleTimeOut must be an integer value for instance '%d', skipping...\n", id);
+		instance_db_free_sub(db);
+		return false;
+	}
+
 	StringBuf_AppendStr(db->enter.mapname, str[4]);
-	db->enter.x = atoi(str[5]);
-	db->enter.y = atoi(str[6]);
+
+	db->enter.x = (short)strtol(str[5], &ptr, 10);
+	if (*ptr) {
+		ShowError("instance_readdb_sub: EnterX must be an integer value for instance '%d', skipping...\n", id);
+		instance_db_free_sub(db);
+		return false;
+	}
+
+	db->enter.y = (short)strtol(str[6], &ptr, 10);
+	if (*ptr) {
+		ShowError("instance_readdb_sub: EnterY must be an integer value for instance '%d', skipping...\n", id);
+		instance_db_free_sub(db);
+		return false;
+	}
 
 	//Instance maps
 	for (i = 7; i < columns; i++) {
@@ -977,7 +1010,7 @@ void do_reload_instance(void)
 					ShowError("do_reload_instance: Unexpected instance mode for instance %s (id=%u, mode=%u).\n", (db) ? StringBuf_Value(db->name) : "Unknown", map[sd->bl.m].instance_id, (unsigned short)im->mode);
 					continue;
 			}
-			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, instance_id, StringBuf_Value(db->name))) { // All good
+			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, instance_id, StringBuf_Value(db->name), -1, -1)) { // All good
 				clif_displaymessage(sd->fd, msg_txt(sd,515)); // Instance has been reloaded
 				instance_reqinfo(sd,instance_id);
 			} else // Something went wrong

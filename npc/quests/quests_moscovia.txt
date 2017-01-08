@@ -3366,7 +3366,7 @@ mosk_in,135,191,5	script	Landlord#mos	4_F_RUSWOMAN3,{
 		mes "[Landlord]";
 		mes "Your respawn point has been saved.";
 		mes "Hope we can see you again next time hoho.";
-		savepoint "mosk_in",142,189;
+		savepoint "mosk_in",142,189,1,1;
 		close;
 	case 2:
 		if (Zeny > 4999) {
@@ -3388,12 +3388,12 @@ mosk_in,135,191,5	script	Landlord#mos	4_F_RUSWOMAN3,{
 	case 3:
 		mes "[Landlord]";
 		emotion e_lv;
-		mes "Oh~! You look great! Look at the "+((Sex)?"solid muscle":"fair skin")+"!";
+		mes "Oh~! You look great! Look at the "+((Sex == SEX_MALE)?"solid muscle":"fair skin")+"!";
 		mes "But you look tired. Is it because of a long journey?";
 		next;
 		mes "[Landlord]";
-		mes "We've got a room available just for you. "+((Sex)?"It's the best in town. How about staying the night?":"It's like a princess' room.");
-		mes (Sex)?"I'll charge you at reasonable price for you, handsome guy.":"How about staying the night? I'll mark down the price for you, beautiful lady.";
+		mes "We've got a room available just for you. "+((Sex == SEX_MALE)?"It's the best in town. How about staying the night?":"It's like a princess' room.");
+		mes (Sex == SEX_MALE)?"I'll charge you at reasonable price for you, handsome guy.":"How about staying the night? I'll mark down the price for you, beautiful lady.";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Oh, I'm sorry but I didn't come to stay here.";
@@ -4901,7 +4901,7 @@ OnTouch:
 				mes "I need to kick your ass more.";
 				next;
 				mes "[Baba Yaga, the Horrible]";
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "I will bewitch";
 					mes "and enslave you.";
 					mes "Come here, Heeee!";
@@ -7122,15 +7122,15 @@ OnDisable:
 	end;
 
 OnTimer3000:
-	announce "Koshei, the Immortal : I will kill all who disturb me!! Cry in terror weak humans!!!",bc_map,0xCE3131;
+	mapannounce "mosk_dun01","Koshei, the Immortal : I will kill all who disturb me!! Cry in terror weak humans!!!",bc_map,0xCE3131;
 	end;
 
 OnTimer63000:
-	announce "Koshei, the Immortal : You worms, you mere monsters... I will curse all who are in my way!!",bc_map,0xCE3131;
+	mapannounce "mosk_dun01","Koshei, the Immortal : You worms, you mere monsters... I will curse all who are in my way!!",bc_map,0xCE3131;
 	end;
 
 OnTimer150000:
-	announce "Koshei, the Immortal : Mankind! Cry in terror!! Hahahahahahahhahahah!!!",bc_map,0xCE3131;
+	mapannounce "mosk_dun01","Koshei, the Immortal : Mankind! Cry in terror!! Hahahahahahahhahahah!!!",bc_map,0xCE3131;
 	end;
 
 OnTimer300000:
@@ -7755,7 +7755,7 @@ moscovia,213,216,3	script	Ryubaba#rus08	4_F_RUSWOMAN2,{
 				mes "Are you crazy!? Don't you know how wide the world is and how many beautiful people there are? You're pretty full of it, country girl!";
 				next;
 				mes "["+ strcharinfo(0) +"]";
-				if (!Sex)
+				if (Sex == SEX_FEMALE)
 					mes "Besides, if there was a most beautiful girl in the world it would be me, me, me!";
 				else {
 					mes "Have you seen dancers dancing? Have you seen beautiful and pure priests?!";
@@ -8393,7 +8393,7 @@ mosk_fild02,101,200,0	duplicate(NoSwim)	Caution#rus02	2_BULLETIN_BOARD
 //----------------------------------------------------------------------------
 mosk_fild02,116,202,3	script	Lusalka#07russai_22	-1,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	if (rhea_rus_main != 8 || rhea_rus_hair < 2) {
 		emotion e_what,1;
 		end;
@@ -9015,7 +9015,7 @@ moc_pryd04,126,120,0	script	Soldier#rus26	4_M_RUSMAN1,{
 //----------------------------------------------------------------------------
 mosk_dun01,45,250,3	script	1#rus27	WARPNPC,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	warp "mosk_que",49,22;
 	end;
 
@@ -9037,7 +9037,7 @@ mosk_que,0,0,0,0	monster	Sasquatch	1243,15,10000,0,0
 
 mosk_que,49,22,3	script	#rus27	-1,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	if (rhea_rus_main == 8) {
 		if (!rhea_rus_quiz) {
 			mes "[Voice unidentified]";
@@ -9978,7 +9978,7 @@ OnMyMobDead:
 //----------------------------------------------------------------------------
 mosk_dun02,257,193,0	script	Cow#rus33	4_BULL,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	mes "[Cow]";
 	mes "Moo...";
 	if (rhea_rus_main == 11) {

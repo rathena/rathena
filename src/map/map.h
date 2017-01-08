@@ -211,19 +211,26 @@ enum e_mapid {
 #define CHATROOM_PASS_SIZE (8 + 1)
 //Max allowed chat text length
 #define CHAT_SIZE_MAX (255 + 1)
-//24 for npc name + 24 for label + 2 for a "::" and 1 for EOS
-#define EVENT_NAME_LENGTH ( NAME_LENGTH * 2 + 3 )
+// <NPC_NAME_LENGTH> for npc name + 2 for a "::" + <NAME_LENGTH> for label + 1 for EOS
+#define EVENT_NAME_LENGTH ( NPC_NAME_LENGTH + 2 + NAME_LENGTH + 1 )
 
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
-//Specifies maps where players may hit each other
-#define map_flag_vs(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.battleground)
-//Specifies maps that have special GvG/WoE restrictions
-#define map_flag_gvg(m) (map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle))
-//Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
-#define map_flag_gvg2(m) (map[m].flag.gvg || map[m].flag.gvg_castle)
-// No Kill Steal Protection
-#define map_flag_ks(m) (map[m].flag.town || map[m].flag.pvp || map[m].flag.gvg || map[m].flag.battleground)
+/// Specifies maps where players may hit each other
+#define map_flag_vs(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.gvg_te || (agit3_flag && map[m].flag.gvg_te_castle) || map[m].flag.battleground)
+/// Versus map: PVP, BG, GVG, GVG Dungeons, and GVG Castles (regardless of agit_flag status)
+#define map_flag_vs2(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || map[m].flag.gvg_castle || map[m].flag.gvg_te || map[m].flag.gvg_te_castle || map[m].flag.battleground)
+/// Specifies maps that have special GvG/WoE restrictions
+#define map_flag_gvg(m) (map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.gvg_te || (agit3_flag && map[m].flag.gvg_te_castle))
+/// Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
+#define map_flag_gvg2(m) (map[m].flag.gvg || map[m].flag.gvg_te || map[m].flag.gvg_castle || map[m].flag.gvg_te_castle)
+/// No Kill Steal Protection
+#define map_flag_ks(m) (map[m].flag.town || map[m].flag.pvp || map[m].flag.gvg || map[m].flag.gvg_te || map[m].flag.battleground)
+
+/// WOE:TE Maps (regardless of agit_flag status) [Cydh]
+#define map_flag_gvg2_te(m) (map[m].flag.gvg_te || map[m].flag.gvg_te_castle)
+/// Check if map is GVG maps exclusion for item, skill, and status restriction check (regardless of agit_flag status) [Cydh]
+#define map_flag_gvg2_no_te(m) (map[m].flag.gvg || map[m].flag.gvg_castle)
 
 //This stackable implementation does not means a BL can be more than one type at a time, but it's
 //meant to make it easier to check for multiple types at a time on invocations such as map_foreach* calls [Skotlex]
@@ -468,7 +475,8 @@ enum _sp {
 	SP_ADD_CLASS_DROP_ITEMGROUP, SP_ADDMAXWEIGHT, SP_ADD_ITEMGROUP_HEAL_RATE,  // 2071-2073
 	SP_HP_VANISH_RACE_RATE, SP_SP_VANISH_RACE_RATE, SP_ABSORB_DMG_MAXHP, SP_SUB_SKILL, SP_SUBDEF_ELE, // 2074-2078
 	SP_STATE_NORECOVER_RACE, SP_CRITICAL_RANGEATK, SP_MAGIC_ADDRACE2, SP_IGNORE_MDEF_RACE2_RATE, // 2079-2082
-	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, // 2083-2084
+	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, SP_DROP_ADDRACE, SP_DROP_ADDCLASS, SP_NO_MADO_FUEL, // 2083-2087
+	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, //2088-2091
 };
 
 enum _look {
@@ -661,6 +669,10 @@ struct map_data {
 		unsigned nomineeffect : 1; //allow /mineeffect
 		unsigned nolockon : 1;
 		unsigned notomb : 1;
+		unsigned nocostume : 1; // Disable costume sprites [Cydh]
+		unsigned gvg_te : 1; // GVG WOE:TE. This was added as purpose to change 'gvg' for GVG TE, so item_noequp, skill_nocast exlude GVG TE maps from 'gvg' (flag &4)
+		unsigned gvg_te_castle : 1; // GVG WOE:TE Castle
+		unsigned hidemobhpbar : 1;
 #ifdef ADJUST_SKILL_DAMAGE
 		unsigned skill_damage : 1;
 #endif
@@ -726,10 +738,14 @@ extern int map_num;
 extern int autosave_interval;
 extern int minsave_interval;
 extern unsigned char save_settings;
-extern int agit_flag;
-extern int agit2_flag;
 extern int night_flag; // 0=day, 1=night [Yor]
 extern int enable_spy; //Determines if @spy commands are active.
+
+// Agit Flags
+extern bool agit_flag;
+extern bool agit2_flag;
+extern bool agit3_flag;
+#define is_agit_start() (agit_flag || agit2_flag || agit3_flag)
 
 extern char motd_txt[];
 extern char help_txt[];
@@ -838,7 +854,7 @@ void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...);
 void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...);
 void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...);
 void map_foreachiddb(int (*func)(struct block_list* bl, va_list args), ...);
-struct map_session_data * map_nick2sd(const char*);
+struct map_session_data * map_nick2sd(const char* nick, bool allow_partial);
 struct mob_data * map_getmob_boss(int16 m);
 struct mob_data * map_id2boss(int id);
 
@@ -872,7 +888,7 @@ bool                    mapit_exists(struct s_mapiterator* mapit);
 int map_check_dir(int s_dir,int t_dir);
 uint8 map_calc_dir(struct block_list *src,int16 x,int16 y);
 uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir);
-int map_random_dir(struct block_list *bl, short *x, short *y); // [Skotlex]
+int map_random_dir(struct block_list *bl, int16 *x, int16 *y); // [Skotlex]
 
 int cleanup_sub(struct block_list *bl, va_list ap);
 
@@ -886,7 +902,6 @@ void map_iwall_remove(const char *wall_name);
 int map_addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
 void map_spawnmobs(int16 m); // [Wizputer]
 void map_removemobs(int16 m); // [Wizputer]
-void do_reconnect_map(void); //Invoked on map-char reconnection [Skotlex]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 

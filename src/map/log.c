@@ -444,7 +444,7 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 		return;
 	}
 
-	if( log_config.log_chat_woe_disable && ( agit_flag || agit2_flag ) )
+	if( log_config.log_chat_woe_disable && is_agit_start() )
 	{// no chat logging during woe
 		return;
 	}

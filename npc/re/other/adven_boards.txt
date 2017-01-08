@@ -2332,7 +2332,7 @@ lhz_cube,234,97,0	script	Signpost#Somatology	2_BULLETIN_BOARD,{
 }
 
 ra_temin,31,316,0	script	Signpost#Holy Ground	2_BULLETIN_BOARD,{
-	if (MISC_QUEST & 8192 == 0) {
+	if ((MISC_QUEST & 8192) == 0) {
 		mes "Holy Ground";
 		mes "- High Priest Zhed -";
 		close;
@@ -2713,7 +2713,7 @@ prt_fild05,278,220,0	script	Signpost#Culvert	2_BULLETIN_BOARD,{
 		mes "Prontera Culvert can only be accessed by adventurers who have the permission from Rune Midgard Kingdrom.";
 		mes "-- Adventurer Group --";
 		next;
-		if (MISC_QUEST & 8 == 0) {
+		if ((MISC_QUEST & 8) == 0) {
 			mes "[Prontera Culvert]";
 			mes "Prontera Culvert can only be accessed by adventurers who have signed a volunteer form at Prontera Chivalry. Would you like to go sign the volunteer form?";
 			next;

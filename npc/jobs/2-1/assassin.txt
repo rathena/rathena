@@ -99,7 +99,7 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		set ASSIN_Q,0;
 		set ASSIN_Q2,0;
 		set ASSIN_Q3,0;
-		savepoint "in_moc_16",18,14;
+		savepoint "in_moc_16",18,14,1,1;
 		warp "in_moc_16",18,14;
 		end;
 	}
@@ -304,7 +304,7 @@ in_moc_16,25,90,1	script	Guildsman#ASN2	730,2,2,{
 	mes "I feel irritated when somebody talks to me behind my back.";
 	close;
 
-OnTouch:
+OnTouch_:
 	if (ASSIN_Q2 == 4) {
 		mes "[Assassin 'Khai']";
 		mes "Ehhh?";
@@ -385,7 +385,7 @@ OnTouch:
 			close;
 		case 2:
 			mes "[Assassin 'Khai']";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Huh. You must have a lot of self confidence to be a Thief nowadays.";
 				next;
 				mes "[Assassin 'Khai']";
@@ -664,7 +664,7 @@ OnTouch:
 }
 
 in_moc_16,19,154,0	script	nameless_one	-1,8,2,{
-OnTouch:
+OnTouch_:
 	if (ASSIN_Q2 < 5) {
 		if (ASSIN_Q2 < 3) {
 			mes "[The Anonymous One]";
@@ -1128,7 +1128,7 @@ OnStart:
 in_moc_16,21,165,2	script	Test Guide#ASN	725,4,4,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (ASSIN_Q2 < 5) {
 		mes "[Barcardi]";
 		mes "You can't take the next trial without passing the written test first. You better speak to the Anonymous One...";
@@ -1353,7 +1353,7 @@ OnTimer187000:
 }
 
 in_moc_16,68,158,0	script	01_1::SinTrap	-1,0,0,{
-OnTouch:
+OnTouch_:
 	if (getvariableofnpc(.DisableTraps,"Beholder#ASNTEST")  < 1) {
 		mapannounce "in_moc_16",strcharinfo(0) + ", you're trapped. You will be sent back.",bc_map;
 		set ASSIN_Q,2;
@@ -1453,14 +1453,14 @@ OnInit:
 	disablenpc "Keeper of the Door#ASN";
 	end;
 
-OnTouch:
+OnTouch_:
 	donpcevent "Thomas#ASNTEST::OnDisable";
 	if (ASSIN_Q == 3)
 		set ASSIN_Q,3;
 	else
 		set ASSIN_Q,4;
 	warp "in_moc_16",87,102;
-	savepoint "in_moc_16",16,13;
+	savepoint "in_moc_16",16,13,1,1;
 	end;
 
 OnEnable:
@@ -1499,7 +1499,7 @@ OnMyMobDead:
 in_moc_16,89,98,1	script	Thomas#ASNTEST	118,5,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (ASSIN_Q == 4) {
 		mes "[Thomas]";
 		mes "Damn...! You look like you're in a lot of pain. ^666666*Sigh*^000000 Give me a second, let me try to restore your HP and SP...";
@@ -1528,7 +1528,7 @@ OnTouch:
 			set ASSIN_Q2,0;
 			set ASSIN_Q3,0;
 			changequest 8004,8000;
-			savepoint "in_moc_16",18,14;
+			savepoint "in_moc_16",18,14,1,1;
 			warp "in_moc_16",18,14;
 			donpcevent "Standby Room#ASNTEST::OnStart";
 			end;
@@ -1587,7 +1587,8 @@ OnDisable:
 }
 
 in_moc_16,87,48,2	script	Barcardi#ASN	725,2,2,{
-OnTouch:
+	end;
+OnTouch_:
 	donpcevent "timestopper#1::OnDisable";
 	donpcevent "Thomas#ASNTEST::OnDisable";
 	mes "[Barcardi]";
@@ -1601,7 +1602,7 @@ OnTouch:
 }
 
 in_moc_16,182,169,0	script	Maze Assistant	45,1,1,{
-OnTouch:
+OnTouch_:
 	if (ASSIN_Q == 5 || ASSIN_Q == 6) {
 		warp "in_moc_16",181,183;
 		set ASSIN_Q,ASSIN_Q+1;
@@ -1609,7 +1610,7 @@ OnTouch:
 	}
 	else {
 		mapannounce "in_moc_16",strcharinfo(0)+" has entered 'Guildmaster's room.'",bc_map;
-		savepoint "in_moc_16",181,183;
+		savepoint "in_moc_16",181,183,1,1;
 		donpcevent "Guildmaster#ASN1::OnCast";
 		warp "in_moc_16",167,113;
 		end;
@@ -1617,8 +1618,8 @@ OnTouch:
 }
 
 in_moc_16,167,110,0	script	Guildmaster#ASN1	-1,3,1,{
-OnTouch:
-	savepoint "in_moc_16",167,110;
+OnTouch_:
+	savepoint "in_moc_16",167,110,1,1;
 	mes "[Guildmaster]";
 	mes "Welcome. ";
 	mes "This place is called the 'Guildmaster's room,' the deepest place in the Assassin guild.";
@@ -1638,8 +1639,9 @@ OnCast:
 }
 
 in_moc_16,149,80,4	script	Guildmaster#ASN2	106,1,1,{
-OnTouch:
-	savepoint "morocc",100,100;
+	end;
+OnTouch_:
+	savepoint "morocc",100,100,1,1;
 	if (ASSIN_Q == 7 && BaseJob == Job_Thief) {
 		set ASSIN_Q,8;
 		mes "[Guildmaster]";
@@ -1885,7 +1887,7 @@ OnTouch:
 				mes "Haha, the needs of the body are sometimes hard to ignore. It's best to accept that part of human nature.";
 				next;
 				mes "[Guildmaster]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "But you must never reveal to her the Assassin side of your life. No matter what it takes.";
 				else
 					mes "But you must never reveal to him the Assassin side of your life, no matter what it takes.";
@@ -2126,7 +2128,7 @@ OnTouch:
 		next;
 		mes "[Guildmaster]";
 		mes "You, " + strcharinfo(0) + ", have chosen to live as an Assassin. May you learn our ways and be an honorable example to others.";
-		savepoint "morocc",100,100;
+		savepoint "morocc",100,100,1,1;
 		getitem 1008,1; //Frozen_Heart
 		changequest 8006,8007;
 		next;
@@ -2183,7 +2185,7 @@ in_moc_16,186,81,1	script	Master Assist	55,1,1,{
 }
 
 in_moc_16,170,90,0	script	info 1	-1,{
-OnTouch:
+OnTouch_:
 	mes "[Guildmaster]";
 	mes "Huh.";
 	mes "Now, that place is blocked. You might want to check the other side.";
@@ -2191,14 +2193,14 @@ OnTouch:
 }
 
 in_moc_16,153,85,0	script	info 2	-1,1,1,{
-OnTouch:
+OnTouch_:
 	mes "[Guildmaster]";
 	mes "You're getting warmer. You're almost there. Just, turn around a little bit.";
 	close;
 }
 
 in_moc_16,160,85,0	script	info 3	-1,1,1,{
-OnTouch:
+OnTouch_:
 	mes "[Guildmaster]";
 	mes "Hmm.";
 	mes "Now, that place";
@@ -2207,7 +2209,7 @@ OnTouch:
 }
 
 in_moc_16,175,89,0	script	info 4	-1,1,1,{
-OnTouch:
+OnTouch_:
 	mes "[Guildmaster]";
 	mes "Umm...";
 	mes "You're heading for my assistant. Do you still need to talk to him?";
@@ -2215,7 +2217,7 @@ OnTouch:
 }
 
 in_moc_16,164,88,0	script	info 5	-1,{
-OnTouch:
+OnTouch_:
 	mes "[Guildmaster]";
 	mes "Well done...";
 	mes "I can feel your steps near me.";
@@ -2223,21 +2225,21 @@ OnTouch:
 }
 
 in_moc_16,149,95,0	script	info 6	-1,1,1,{
-OnTouch:
+OnTouch_:
 	mes "[Guildmaster]";
 	mes "Hm? Not bad. You're almost here.";
 	close;
 }
 
 in_moc_16,180,101,0	script	info 7	-1,1,1,{
-OnTouch:
+OnTouch_:
 	mes "[Guildmaster]";
 	mes "I don't think you're going the right way.";
 	close;
 }
 
 in_moc_16,186,107,0	script	info 8	-1,1,1,{
-OnTouch:
+OnTouch_:
 	mes "[Guildmaster]";
 	mes "No sense of direction, eh?";
 	close;

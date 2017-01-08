@@ -32,7 +32,7 @@ bra_in01,27,24,3	script	Hotel Keeper#bra1	478,{
 		case 2:
 			mes "[Hotel Keeper]";
 			mes "Your respawn has been saved here at the hotel. I hope that you enjoy your stay here in Brasilis.";
-			savepoint "bra_in01",144,69;
+			savepoint "bra_in01",144,69,1,1;
 			close;
 		}
 	case 2:

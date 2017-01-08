@@ -61,7 +61,7 @@ niflheim,195,211,6	script	Gigantia#nif	796,3,3,{
 	mes "Death's sweet embrace.";
 	close;
 
-OnTouch:
+OnTouch_:
 	if (isequipped(5038) || isequipped(2257) || isequipped(2256)) {
 		mes "[Gigantia]";
 		mes "Hey, wait!";

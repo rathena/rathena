@@ -120,21 +120,21 @@ mal_dun01,153,237,5	script	Weird Entrance	844,{
 	case 1:
 		if (countitem(6442)) {
 			switch(instance_enter("Octopus Cave")) {
-			case 3:
+			case IE_OTHER:
 				mes "[Starfish]";
 				mes "Ah, now is not the time...";
 				mes "Would you come back later? Hehe.";
 				close;
-			case 2:
-			case 1:
+			case IE_NOINSTANCE:
+			case IE_NOMEMBER:
 				mes "[Starfish]";
 				mes "There is a secret with that entrance.";
 				mes "So, please be careful with it, will ya? Hehe.";
 				close;
-			case 0:
+			case IE_OK:
 				mapannounce "mal_dun01", getpartyname(getcharid(1))+" party's "+strcharinfo(0)+" member started to hunt the Octopus!",bc_map,"0x00ff99";
 				if (checkquest(4197) == -1) setquest 4197;
-				//warp "1@cash",199,99;
+				//warp instance_mapname("1@cash"),199,99;
 				close;
 			default:
 				mes "[Starfish]";
@@ -161,7 +161,7 @@ mal_dun01,153,237,5	script	Weird Entrance	844,{
 //============================================================
 1@cash,199,99,0	script	oct_enter	139,4,4,{
 	end;
-OnTouch:
+OnTouch_:
 	donpcevent instance_npcname("oct_enter_broad")+"::OnEnable";
 	specialeffect EF_BASH;
 	disablenpc instance_npcname("oct_enter");
@@ -297,7 +297,7 @@ OnDisable:
 	killmonster instance_mapname("1@cash"),instance_npcname(strnpcinfo(0))+"::OnMyMobDead"; // Not in official script.
 	disablenpc instance_npcname(strnpcinfo(0));
 	end;
-OnTouch:
+OnTouch_:
 	if (getd("."+strnpcinfo(0)+instance_id())) end;
 	setd "."+strnpcinfo(0)+instance_id(),1;
 	hideonnpc instance_npcname(strnpcinfo(0));
@@ -435,7 +435,7 @@ OnDisable:
 OnInstanceInit:
 	disablenpc instance_npcname("oct_backattack1");
 	end;
-OnTouch:
+OnTouch_:
 	set .@map$, instance_mapname("1@cash");
 	monster .@map$,39,59,"Hydra",1068,1;
 	monster .@map$,40,59,"Hydra",1068,1;
@@ -458,7 +458,7 @@ OnEnable:
 OnInstanceInit:
 	disablenpc instance_npcname("oct_backattack2");
 	end;
-OnTouch:
+OnTouch_:
 	if (getd("."+instance_id())) end;
 	setd "."+instance_id(),1;
 	initnpctimer;
@@ -498,7 +498,7 @@ OnEnable:
 OnInstanceInit:
 	disablenpc instance_npcname("oct_backattack3");
 	end;
-OnTouch:
+OnTouch_:
 	if (getd("."+instance_id())) end;
 	setd "."+instance_id(),1;
 	set .@map$, instance_mapname("1@cash");
@@ -525,7 +525,7 @@ OnEnable:
 OnInstanceInit:
 	disablenpc instance_npcname("oct_backattack4");
 	end;
-OnTouch:
+OnTouch_:
 	if (getd("."+instance_id())) end;
 	setd "."+instance_id(),1;
 	set .@map$, instance_mapname("1@cash");
@@ -699,11 +699,43 @@ OnTouch:
 
 // Warp Portals
 //============================================================
-1@cash,193,82,0	warp	oct_door1	2,2,1@cash,151,48
-1@cash,154,53,0	warp	oct_door2	2,2,1@cash,197,87
-1@cash,187,99,0	warp	oct_door3	2,2,1@cash,148,128
-1@cash,153,133,0	warp	oct_door4	2,2,1@cash,197,99
-1@cash,209,100,0	warp	oct_door5	2,2,1@cash,250,111
-1@cash,244,118,0	warp	oct_door6	2,2,1@cash,199,100
-1@cash,209,83,0	warp	oct_door7	2,2,1@cash,252,46
-1@cash,246,53,0	warp	oct_door8	2,2,1@cash,203,83
+1@cash,193,82,0	script	oct_door1	WARPNPC,2,2,{
+OnTouch:
+	warp instance_mapname("1@cash"),151,48;
+	end;
+}
+1@cash,154,53,0	script	oct_door2	WARPNPC,2,2,{
+OnTouch:
+	warp instance_mapname("1@cash"),197,87;
+	end;
+}
+1@cash,187,99,0	script	oct_door3	WARPNPC,2,2,{
+OnTouch:
+	warp instance_mapname("1@cash"),148,128;
+	end;
+}
+1@cash,153,133,0	script	oct_door4	WARPNPC,2,2,{
+OnTouch:
+	warp instance_mapname("1@cash"),197,99;
+	end;
+}
+1@cash,209,100,0	script	oct_door5	WARPNPC,2,2,{
+OnTouch:
+	warp instance_mapname("1@cash"),250,111;
+	end;
+}
+1@cash,244,118,0	script	oct_door6	WARPNPC,2,2,{
+OnTouch:
+	warp instance_mapname("1@cash"),199,100;
+	end;
+}
+1@cash,209,83,0	script	oct_door7	WARPNPC,2,2,{
+OnTouch:
+	warp instance_mapname("1@cash"),252,46;
+	end;
+}
+1@cash,246,53,0	script	oct_door8	WARPNPC,2,2,{
+OnTouch:
+	warp instance_mapname("1@cash"),203,83;
+	end;
+}

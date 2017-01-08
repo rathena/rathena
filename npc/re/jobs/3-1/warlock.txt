@@ -24,7 +24,7 @@
 //============================================================
 
 -	script	#distorted_space_	-1,{
-OnTouch:
+OnTouch_:
 	if (job_wl > 1) {
 		mes " - There is a strange distortion here - ";
 		if (strnpcinfo(0) == "#distorted_space_1" && (Class == Job_Warlock || Class == Job_Warlock_T || Class == Job_Baby_Warlock)) {
