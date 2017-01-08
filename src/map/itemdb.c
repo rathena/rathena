@@ -571,6 +571,7 @@ static bool itemdb_read_itemavail(char* str[], int columns, int current) {
 }
 
 static int itemdb_group_free(DBKey key, DBData *data, va_list ap);
+static int itemdb_group_free2(DBKey key, DBData *data);
 
 static bool itemdb_read_group(char* str[], int columns, int current) {
 	int group_id = -1;
@@ -603,8 +604,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 		DBData data;
 
 		if( itemdb_group->remove( itemdb_group, db_ui2key(group_id), &data ) ){
-			va_list ap;
-            itemdb_group_free(db_ui2key(group_id), &data, ap);
+            itemdb_group_free2(db_ui2key(group_id), &data);
 			ShowNotice( "itemdb_read_group: Item Group '%s' has been cleared.\n", str[0] );
 			return true;
 		}else{
@@ -1775,7 +1775,32 @@ static int itemdb_final_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
+/** NOTE:
+* In some SOs, like Raspbian, we aren't allowed to pass 0 in va_list.
+* So, itemdb_group_free2 is useful in some cases.
+*/
 static int itemdb_group_free(DBKey key, DBData *data, va_list ap) {
+	struct s_item_group_db *group = (struct s_item_group_db *)db_data2ptr(data);
+	uint8 j;
+	if (!group)
+		return 0;
+	if (group->must_qty)
+		aFree(group->must);
+	group->must_qty = 0;
+	for (j = 0; j < MAX_ITEMGROUP_RANDGROUP; j++) {
+		if (!group->random[j].data_qty || !(&group->random[j]))
+			continue;
+		aFree(group->random[j].data);
+		group->random[j].data_qty = 0;
+	}
+	aFree(group);
+	return 0;
+}
+
+/** (Raspberry PI)
+* Adaptation of itemdb_group_free. This function enables to run rAthena on Raspbian SO.
+*/
+static int itemdb_group_free2(DBKey key, DBData *data) {
 	struct s_item_group_db *group = (struct s_item_group_db *)db_data2ptr(data);
 	uint8 j;
 	if (!group)
