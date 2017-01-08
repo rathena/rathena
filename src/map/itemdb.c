@@ -603,7 +603,8 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 		DBData data;
 
 		if( itemdb_group->remove( itemdb_group, db_ui2key(group_id), &data ) ){
-			itemdb_group_free( db_ui2key(group_id), &data, 0 );
+			va_list ap;
+            itemdb_group_free(db_ui2key(group_id), &data, ap);
 			ShowNotice( "itemdb_read_group: Item Group '%s' has been cleared.\n", str[0] );
 			return true;
 		}else{
