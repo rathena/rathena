@@ -500,7 +500,7 @@
 22124:28467:28468,{ bonus bAspdRate,8; bonus bHit,8; bonus2 bExpAddClass,Class_All,2; }
 22125:28469:28470,{ bonus bAspdRate,10; bonus bHit,10; bonus2 bExpAddClass,Class_All,2; }
 22126:28471:28472,{ bonus bAspdRate,10; bonus bHit,10; bonus2 bExpAddClass,Class_All,2; bonus bSpeedAddRate,25; }
-24012:24013:24014:24015:24016:24017,{ bonus bAllStats,9; }
+24012:24013:24014:24015:24016:24017,{ bonus bAllStats,3; }
 24018:24019:24020,{ if(getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L) + getequiprefinerycnt(EQI_SHADOW_WEAPON) >= 23) { bonus bAtkRate,1; } }
 24021:24022:24023,{ if(getequiprefinerycnt(EQI_SHADOW_ACC_R) + getequiprefinerycnt(EQI_SHADOW_ACC_L) + getequiprefinerycnt(EQI_SHADOW_WEAPON) >= 23) { bonus bMatkRate,1; } }
 24025:24028,{ .@r = getequiprefinerycnt(EQI_SHADOW_ARMOR) + getequiprefinerycnt(EQI_SHADOW_SHOES); bonus bMaxHP,.@r; bonus bMaxSP,.@r; if(.@r >= 15) { bonus bMaxHPrate,1; } }
