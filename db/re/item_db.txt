@@ -3873,11 +3873,11 @@
 5750,Shadow_Handicraft,Shadow Crown,4,20,,100,,12,,1,0x00020000,56,2,256,,100,1,627,{ bonus bAgi,1; bonus bInt,1; bonus bMdef,5; if(readparam(bAgi)>=120){ bonus bBaseAtk,10; bonus bFlee,3; } },{},{}
 5751,Minstrel_Song_Hat,Minstrel Song Hat,4,20,,100,,12,,1,0x00080000,56,1,256,,100,1,628,{ bonus bInt,1; bonus bLuk,1; bonus bMdef,5; bonus bLongAtkRate,5; bonus2 bSkillUseSP,"MI_RUSH_WINDMILL",10; bonus2 bSkillUseSP,"MI_ECHOSONG",10; },{},{}
 5752,Midas_Whisper,Midas Whispers,4,20,,100,,12,,1,0x00040000,56,2,256,,100,1,629,{ bonus bStr,1; bonus bDex,1; bonus bMdef,5; if(readparam(bStr)>=120){ bonus bBaseAtk,5; bonus bAspd,1; } },{},{}
-5753,Magic_Stone_Hat,Magic Stone Hat,4,20,,100,,12,,1,0x00000200,56,2,256,,100,1,630,{ bonus bInt,1; bonus bDex,1; bonus bMdef,5; if(readparam(bDex)>=120){ bonus bMatkRate,10; bonus bVariableCastrate,-2; } },{},{}
+5753,Magic_Stone_Hat,Magic Stone Hat,4,20,,100,,12,,1,0x00000200,56,2,256,,100,1,630,{ bonus bInt,1; bonus bDex,1; bonus bMdef,5; if(readparam(bDex)>=120){ bonus bMatk,10; bonus bVariableCastrate,-2; } },{},{}
 5754,Blazing_Soul,Burning Spirit,4,20,,100,,12,,1,0x00008000,56,2,256,,100,1,631,{ bonus bStr,1; bonus bVit,1; bonus bMdef,5; if(readparam(bStr)>=120){ bonus bBaseAtk,10; bonus bHit,3; } },{},{}
 5755,Silent_Executer,Silent Enforcer,4,20,,100,,12,,0,0x00001000,56,2,513,,100,1,632,{ bonus bAgi,1; bonus bMdef,5; if(readparam(bAgi)>=120){ bonus bBaseAtk,10; bonus bFlee2,5; } },{},{}
 5756,Wind_Whisper,Wispers of Wind,4,20,,100,,12,,1,0x00010000,56,2,256,,100,1,633,{ bonus bInt,1; bonus bDex,1; bonus bMdef,5; if(readparam(bInt)>=120){ bonus bMatk,10; bonus bFlee,3; } },{},{}
-5757,Schmidt_Helm,Reissue Schmitz Helm,4,20,,100,,12,,1,0x00004000,56,2,768,,100,1,634,{ bonus bVit,2; bonus bInt,1; bonus bMdef,5; if(readparam(bInt)>=120){ bonus bMatkRate,10; bonus bDef,5; } },{},{}
+5757,Schmidt_Helm,Reissue Schmitz Helm,4,20,,100,,12,,1,0x00004000,56,2,768,,100,1,634,{ bonus bVit,2; bonus bInt,1; bonus bMdef,5; if(readparam(bInt)>=120){ bonus bMatk,10; bonus bDef,5; } },{},{}
 5758,Dying_Swan,Resting Swan,4,20,,100,,17,,1,0x00080000,56,0,256,,100,1,635,{ bonus bInt,1; bonus bLuk,1; bonus bMdef,5; bonus bLongAtkRate,5; bonus2 bSkillUseSP,"WA_SWING_DANCE",10; bonus2 bSkillUseSP,"WA_SYMPHONY_OF_LOVER",10; },{},{}
 5759,Noah_Hat,Noah Hat,4,20,,500,,1,,1,0xFFFFFFFF,63,2,256,,1,1,636,{ bonus bMdef,3; },{},{}
 5760,Driver_Band_,Driver Band,4,20,,100,,12,,1,0x00000400,56,0,256,,100,1,637,{ bonus bStr,1; bonus bDex,1; bonus bMdef,5; if(readparam(bStr)>=120){ bonus bBaseAtk,10; bonus bCritical,3; } },{},{}
