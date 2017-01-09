@@ -481,6 +481,30 @@
 19117:22101,{ bonus2 bDropAddRace,RC_All,5; bonus2 bExpAddRace,RC_All,5; if(getequiprefinerycnt(EQI_SHOES) >= 12) { bonus bFixedCast,-400; } }
 19118:22101,{ bonus2 bDropAddRace,RC_All,4; bonus2 bExpAddRace,RC_All,4; if(getequiprefinerycnt(EQI_SHOES) >= 12) { bonus bFixedCast,-400; } }
 20135:20136,{ bonus bAllStats,12; }
+20717:22000,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20717:22001,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20717:22002,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20717:22003,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20717:22004,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20717:22005,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20717:22006,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20717:22007,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20717:22008,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20717:22009,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20717:22010,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20717:22011,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20718:22000,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20718:22001,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20718:22002,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20718:22003,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20718:22004,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20718:22005,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20718:22006,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20718:22007,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20718:22008,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20718:22009,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20718:22010,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+22011:20718,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
 20797:2339,{ bonus bInt,15; bonus bMaxHPrate,5; bonus bMaxSPrate,5; if (getequiprefinerycnt(EQI_ARMOR) > 6) bonus bNoCastCancel,1; }
 20797:4174,{ bonus2 bSubEle,Ele_All,50; bonus2 bSubEle,Ele_Neutral,-50; }
 22069:2195,{ bonus2 bSubEle,Ele_Neutral,5; bonus2 bAddEle,Ele_Neutral,getequiprefinerycnt(EQI_HAND_L); }
