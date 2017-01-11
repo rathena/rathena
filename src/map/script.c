@@ -51,9 +51,7 @@
 #include "elemental.h"
 
 #include <math.h>
-#ifndef WIN32
-#endif
-
+#include <stdlib.h> // atoi, strtol, strtoll, exit
 #include <setjmp.h>
 #include <errno.h>
 
