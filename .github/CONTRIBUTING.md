@@ -17,18 +17,18 @@ This bit of information is here to help guide you through the process of creatin
 ### Did you find a bug? :bug:
 
 * **Ensure the bug is not coming from a customization** within your files!
-* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/rathena/rathena/issues). If the same issue exists, make a comment and tell us you are experiencing the issue as well!
+* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/rathena/rathena/issues). If the same issue exists, leave a comment and tell us you are experiencing the issue as well!
 * If you're unable to find an open issue addressing the problem, [open a new one](#submit-a-bug-report)!
 
 #### Submit A Bug Report :inbox_tray:
 
-There are several things that go into making a bug report a good but report!
+There are several things that go into making a bug report a good bug report!
 
-This a breakdown of a generic Issue:
+This is a breakdown of a generic Issue:
 * **Title** should give some general insight as to what the bug is about.
 * **Description** should give greater detail of the bug that can't be explained in the **Title**.
 * **Labels** which are colored to represent a category to which they fall into it.
-* **Milestone** which is what developers can use to track enhancements or tasks, ask described above.
+* **Milestone** which is what developers can use to track enhancements or tasks, as described above.
 * **Assignee** which is someone who is directly linked to resolve the issue.
 * **Comments** which allows other members to give feedback on the issue.
 
@@ -36,10 +36,10 @@ This a breakdown of a generic Issue:
 
 When describing your Issue through the **Description** area, it is recommended that you provide as much information as possible to make the Issue get resolved a lot quicker. Keep in mind you can tag people within the **Description** area through the `@mention` feature. You can also tag other Issues by typing `#` which will pull up a list of issues. You can find a markdown guide at [Mastering Markdown](https://guides.github.com/features/mastering-markdown/).
 Some information to keep in mind while creating an Issue:
-* **GitHub Hash**: The hash is a 40 alpha-numeric string (which can be broken down to the first 7 characters) which states the version you are at. A detailed guide of getting your hash can be found [here](https://rathena.org/board/blog/47/entry-82-bug-report/). (**If you're using SVN instead of Git:** Please also put the change date and first line of changelog beside the revision number, or we'll be assuming you're using very old rAthena revision).
+* **GitHub Hash**: The hash is a 40 alpha-numeric string (which can be broken down to the first 7 characters) which states the version you are at. (**If you're using SVN instead of Git:** Please also put the change date and first line of changelog beside the revision number, or we'll be assuming you're using a very old rAthena revision).
 * **Client Date**: The client date provides specific details depending on the issue. The main detail is that it helps narrow down issues if it's related to a packet problem.
 * **Modifications that may affect results**: It's always best to try to reproduce your issue on a clean rAthena if you have lots of modifications.
-* **Description of Issue**: Describe your issue in detail! Screen shots and videos help a lot! Please also provide crash dumps if the one of the servers is crashing.
+* **Description of Issue**: Describe your issue in detail! Screen shots and videos help a lot! Please also provide crash dumps if one of the servers is crashing.
 * **How to Reproduce Issue**: Describe how to reproduce your issue in detail! The more the merrier!
 * **Official Info**: Provide creditable sources to state why it is a bug! Please don't provide an iRO Wiki link as there is a high chance it doesn't match kRO behavior.
 
@@ -158,7 +158,7 @@ Become a Member
 ---------------
 
 1. Before you send in a staff application, make sure you have an [rAthena account](https://rathena.org/board/register/).
-  * If you're new to the community, go ahead an [introduce yourself](https://rathena.org/board/forum/89-introductions/)!
+  * If you're new to the community, go ahead and [introduce yourself](https://rathena.org/board/forum/89-introductions/)!
 2. Please fill out the [Staff Application](https://rathena.org/board/staffapplications/) and you will be notified shortly.
 
 </br>
