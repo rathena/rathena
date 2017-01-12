@@ -181,4 +181,4 @@ assistance elsewhere.
 
 7. How to Contribute?
 ---------
-Details how to contribute to rAthena, please read [CONTRIBUTING.md](https://github.com/rathena/rathena/blob/master/CONTRIBUTING.md)
+Details how to contribute to rAthena, please read [CONTRIBUTING.md](https://github.com/rathena/rathena/blob/master/.github/CONTRIBUTING.md)
