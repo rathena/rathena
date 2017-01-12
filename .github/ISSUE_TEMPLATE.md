@@ -1,11 +1,14 @@
 * **rAthena Hash**: 
+<br />
 Please specify the rAthena [GitHub hash](https://help.github.com/articles/autolinked-references-and-urls/#commit-shas) on which you encountered this issue.
 
 * **Client Date**: 
+<br />
 Please specify the client date you used.
 
 * **Server Mode**: 
-Which mode does your server use: Pre-Renewal, Renewal, or Both?
+<br />
+Which mode does your server use: Pre-Renewal or Renewal?
 
 * **Description of Issue**: 
   * Result - Describe the issue that you experienced in detail.
