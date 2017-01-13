@@ -304,6 +304,7 @@
 2986:2987:18872,{ bonus2 bAddMonsterDropItem,22559,50; }
 2986:18872,{ bonus bBaseAtk,BaseLevel/4; }
 2987:18872,{ bonus bMatk,BaseLevel/4; }
+2990:2991,{ bonus bAllStats,5; bonus5 bAutoSpellWhenHit,"SC_MAELSTROM",1,100,BF_MAGIC,0; }
 2997:2999,{ bonus bAtkRate,10; bonus bMatkRate,10; }
 4001:4197,{ bonus bFlee,18; }
 4006:4266,{ bonus bFlee,18; }
@@ -504,7 +505,7 @@
 20718:22008,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
 20718:22009,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
 20718:22010,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
-22011:20718,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
+20718:22011,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
 20797:2339,{ bonus bInt,15; bonus bMaxHPrate,5; bonus bMaxSPrate,5; if (getequiprefinerycnt(EQI_ARMOR) > 6) bonus bNoCastCancel,1; }
 20797:4174,{ bonus2 bSubEle,Ele_All,50; bonus2 bSubEle,Ele_Neutral,-50; }
 22069:2195,{ bonus2 bSubEle,Ele_Neutral,5; bonus2 bAddEle,Ele_Neutral,getequiprefinerycnt(EQI_HAND_L); }
