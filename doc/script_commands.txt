@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20160523
+//= 20161206
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -899,6 +899,13 @@ OnInstanceInit:
 This label will be executed when an instance is created and initialized through
 the 'instance_create' command. It will run again if @reloadscript is used while
 an instance is in progress.
+
+OnInstanceDestroy:
+
+This label will be executed when an instance is destroyed by a timeout, exceeding
+the keepalive time or through the 'instance_destroy' command. It will be called
+exactly before the instance will be destroyed and all other NPCs of the instance
+will still be available at this point of time.
 
 OnTouch:
 
@@ -2998,18 +3005,18 @@ This function will return a tick depending on <tick type>:
 
 This function will return specified information about the current system time.
 
-1 - Seconds (of a minute)
-2 - Minutes (of an hour)
-3 - Hour (of a day)
-4 - Week day (0 for Sunday, 6 is Saturday)
-5 - Day of the month.
-6 - Number of the month.
-7 - Year.
-8 - Day of the year.
+DT_SECOND - Seconds (of the current minute)
+DT_MINUTE - Minutes (of the current hour)
+DT_HOUR - Hour (of the current day)
+DT_DAYOFWEEK - Week day (constants for MONDAY to SUNDAY are available)
+DT_DAYOFMONTH - Day of the current month
+DT_MONTH - Month (constants for JANUARY to DECEMBER are available)
+DT_YEAR - Year
+DT_DAYOFYEAR - Day of the year
 
-It will only return numbers.
+It will only return numbers. If another type is supplied -1 will be returned.
 
-    if (gettime(4)==6) mes "It's a Saturday. I don't work on Saturdays.";
+	if (gettime(DT_DAYOFWEEK)==SATURDAY) mes "It's a Saturday. I don't work on Saturdays.";
 
 ---------------------------------------
 
@@ -6082,6 +6089,8 @@ A debug message also shows on the console when no events are triggered.
 This is simply "donpcevent <npc name>::OnCommand<command>".
 It is an approximation of official server script language's 'cmdothernpc'.
 
+Returns true if the command was executed on the other NPC successfully, false if not.
+
 ---------------------------------------
 
 *npctalk "<message>"{,"<NPC name>"};
@@ -7697,7 +7706,7 @@ OnClock0600:
 	end;
 OnInit:
 	// setting correct mode upon server start-up
-	if(gettime(3)>=6 && gettime(3)<18) end;
+	if(gettime(DT_HOUR)>=6 && gettime(DT_HOUR)<18) end;
 OnClock1800:
 	night;
 	end;
@@ -8292,7 +8301,8 @@ Destroys instance with the ID <instance id>. If no ID is specified, the instance
 the script is attached to is used. If the script is not attached to an instance,
 the instance of the currently attached player is used (if it is a character, party,
 or guild mode). If it is not owned by anyone, no player needs to be attached. If
-that fails, the script will come to a halt.
+that fails, the script will come to a halt. This will also trigger the "OnInstanceDestroy"
+label in all NPCs inside the instance.
 
 ---------------------------------------
 
@@ -8402,6 +8412,30 @@ if (instance_check_guild(getcharid(2),2,2,149)) {
 	mes "Sorry, your guild does not meet requirements.";
 	close;
 }
+
+---------------------------------------
+
+*instance_info("<instance name>",<info type>{,<instance_db map index>});
+
+Returns the specified <info type> of the given <instance name> from the instance database.
+If the <instance name> is unknown or an invalid <info type> is supplied -1 will be returned.
+
+Valid info types:
+ IIT_ID: Instance database ID as integer.
+ IIT_TIME_LIMIT: Instance database total life time as integer.
+ IIT_IDLE_TIMEOUT: Instance database timeout time as integer.
+ IIT_ENTER_MAP: Instance database enter map as string.
+ IIT_ENTER_X: Instance database enter X location as integer.
+ IIT_ENTER_Y: Instance database enter Y location as integer.
+ IIT_MAPCOUNT: Instance database total maps as integer.
+ IIT_MAP: Instance database map name from the given <instance_db map index> as string.
+          If the index is invalid an empty string will be returned.
+
+Example:
+
+.@name$ = "Endless Tower";
+mes .@name$ + " will be destroyed if no one is in the instance for " + instance_info(.@name$,IIT_IDLETIMEOUT) + " seconds.";
+// Endless Tower will be destroyed if no one is in the instance for 300 seconds.
 
 ---------------------------------------
 

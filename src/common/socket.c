@@ -592,12 +592,34 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 			tv.tv_sec = timeout;
 			tv.tv_usec = 0;
 
-			// Try to find out if the socket is writeable yet(within the timeout) and check if it is really writeable afterwards
-			if( sSelect(0, NULL, &writeSet, NULL, &tv) != 0 && sFD_ISSET(fd, &writeSet) != 0 ){
-				// Our socket is writeable now => we have connected successfully
-				break; // leave the pseudo scope
+			result = sSelect(0, NULL, &writeSet, NULL, &tv);
+
+			// Connection attempt timed out
+			if( result == 0 ){
+				if( !silent ){
+					// Needs special handling, because it does not set an error code and therefore does not provide an error message from the API
+					ShowError("make_connection: connection failed (socket #%d, timeout after %ds)!\n", fd, timeout);
+				}
+
+				do_close(fd);
+				return -1;
+			// If the select operation did not return an error
+			}else if( result != SOCKET_ERROR ){
+				// Check if it is really writeable
+				if( sFD_ISSET(fd, &writeSet) != 0 ){
+					// Our socket is writeable now => we have connected successfully
+					break; // leave the pseudo scope
+				}
+
+				if( !silent ){
+					// Needs special handling, because it does not set an error code and therefore does not provide an error message from the API
+					ShowError("make_connection: connection failed (socket #%d, not writeable)!\n", fd);
+				}
+
+				do_close(fd);
+				return -1;
 			}
-			// Our connection attempt timed out or the socket was not writeable
+			// The select operation failed
 		}
 
 		if( !silent )

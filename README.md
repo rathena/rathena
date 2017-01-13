@@ -56,6 +56,7 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 	* Paste the GitHub URL into the box:
 
 				https://github.com/rathena/rathena.git
+				
 	* Open MySQL Workbench and create an instance to connect to your MySQL Server
 	* Create a database (rathena), a user (rathena), give permissions (GRANT SELECT,INSERT,UPDATE,DELETE)
 		and then login using the new user
@@ -92,7 +93,27 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 
 				./athena-start start
 
+* Optional
+	* If you want to have your own forked version but still get updates from the main rAthena repository
+		* Fork this repository to your GitHub account
+		* List the current configured remote repository for your fork:
+		
+				git remote -v
 
+		* Specify a new remote upstream repository that will be synced with your fork:
+		
+				git remote add upstream https://github.com/rathena/rathena.git
+				
+		* Verify the new upstream repository you've specified for your fork:
+		
+				git remote -v
+				
+		* You should see the main rAthena repository as well as your forked repository
+		* Now, when you want to get updates from rAthena, simply do:
+		
+				git pull upstream master
+
+	* Remember that rAthena falls under [GNU GPLv3](https://github.com/rathena/rathena/blob/master/LICENSE).
 
 4. Troubleshooting
 ---------

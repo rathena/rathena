@@ -1435,6 +1435,9 @@
 	export_constant(SC_GOLDENMACECLAN);
 	export_constant(SC_CROSSBOWCLAN);
 	export_constant(SC_JUMPINGCLAN);
+	export_constant(SC_GEFFEN_MAGIC1);
+	export_constant(SC_GEFFEN_MAGIC2);
+	export_constant(SC_GEFFEN_MAGIC3);
 	export_constant(SC_MAXPAIN);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -2476,9 +2479,18 @@
 	export_constant(SI_EP16_2_BUFF_AC);
 	export_constant(SI_GS_MAGICAL_BULLET);
 	export_constant(SI_FALLEN_ANGEL);
+	export_constant(SI_BLAZE_BEAD);
+	export_constant(SI_FROZEN_BEAD);
+	export_constant(SI_BREEZE_BEAD);
+	export_constant(SI_AID_PERIOD_RECEIVEITEM_2ND);
+	export_constant(SI_AID_PERIOD_PLUSEXP_2ND);
+	export_constant(SI_AID_PERIOD_PLUSJOBEXP_2ND);
+	export_constant(SI_PRONTERA_JP);
 	export_constant(SI_GLOOM_CARD);
 	export_constant(SI_PHARAOH_CARD);
 	export_constant(SI_KIEL_CARD);
+	export_constant(SI_S_MANAPOTION);
+	export_constant(SI_M_DEFSCROLL);
 
 	/* elements */
 	export_constant(ELE_NEUTRAL);
@@ -3192,6 +3204,49 @@
 	export_constant(IE_NOMEMBER);
 	export_constant(IE_NOINSTANCE);
 	export_constant(IE_OTHER);
+	
+	/* months */
+	export_constant(JANUARY);
+	export_constant(FEBRUARY);
+	export_constant(MARCH);
+	export_constant(APRIL);
+	export_constant(MAY);
+	export_constant(JUNE);
+	export_constant(JULY);
+	export_constant(AUGUST);
+	export_constant(SEPTEMBER);
+	export_constant(OCTOBER);
+	export_constant(NOVEMBER);
+	export_constant(DECEMBER);
+	
+	/* days of the week */
+	export_constant(SUNDAY);
+	export_constant(MONDAY);
+	export_constant(TUESDAY);
+	export_constant(WEDNESDAY);
+	export_constant(THURSDAY);
+	export_constant(FRIDAY);
+	export_constant(SATURDAY);
+	
+	/* date types */
+	export_constant(DT_SECOND);
+	export_constant(DT_MINUTE);
+	export_constant(DT_HOUR);
+	export_constant(DT_DAYOFWEEK);
+	export_constant(DT_DAYOFMONTH);
+	export_constant(DT_MONTH);
+	export_constant(DT_YEAR);
+	export_constant(DT_DAYOFYEAR);
+
+	/* instance info */
+	export_constant(IIT_ID);
+	export_constant(IIT_TIME_LIMIT);
+	export_constant(IIT_IDLE_TIMEOUT);
+	export_constant(IIT_ENTER_MAP);
+	export_constant(IIT_ENTER_X);
+	export_constant(IIT_ENTER_Y);
+	export_constant(IIT_MAPCOUNT);
+	export_constant(IIT_MAP);
 
 	/* item groups */
 	export_constant(IG_BLUEBOX);

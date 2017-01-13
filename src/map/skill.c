@@ -445,12 +445,12 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	switch( skill_id ) {
 		case BA_APPLEIDUN:
 #ifdef RENEWAL
-			hp = 100 + 5 * skill_lv + 5 * (status_get_vit(src) / 10); // HP recovery
+			hp = 100 + 5 * skill_lv + (status_get_vit(src) / 2); // HP recovery
 #else
-			hp = 30 + 5 * skill_lv + 5 * (status_get_vit(src) / 10); // HP recovery
+			hp = 30 + 5 * skill_lv + (status_get_vit(src) / 2); // HP recovery
 #endif
-			if( sd )
-				hp += 5 * pc_checkskill(sd,BA_MUSICALLESSON);
+			if (sd)
+				hp += 5 * pc_checkskill(sd, BA_MUSICALLESSON);
 			break;
 		case PR_SANCTUARY:
 			hp = (skill_lv > 6) ? 777 : skill_lv * 100;
@@ -1832,8 +1832,8 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
 					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
 					case SC_FORTUNE:		case SC_SERVICE4U:
-						if(tsc->data[i]->val4==0)
-							continue; //if in song-area don't end it
+						if (!battle_config.dispel_song || tsc->data[i]->val4 == 0)
+							continue; //If in song area don't end it, even if config enabled
 						break;
 					case SC_ASSUMPTIO:
 						if( bl->type == BL_MOB )
@@ -7907,7 +7907,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_CROSSBOWCLAN:
 					case SC_JUMPINGCLAN:
 						continue;
-					//bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
 					case SC_WHISTLE:
 					case SC_ASSNCROS:
 					case SC_POEMBRAGI:
@@ -7916,13 +7915,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_DONTFORGETME:
 					case SC_FORTUNE:
 					case SC_SERVICE4U:
-					if(tsc->data[i]->val4==0)
-						continue; //if in song-area don't end it
-					break;
-				case SC_ASSUMPTIO:
-					if( bl->type == BL_MOB )
-						continue;
-					break;
+						if (!battle_config.dispel_song || tsc->data[i]->val4 == 0)
+							continue; //If in song area don't end it, even if config enabled
+						break;
+					case SC_ASSUMPTIO:
+						if( bl->type == BL_MOB )
+							continue;
+						break;
 				}
 				if(i == SC_BERSERK) tsc->data[i]->val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
@@ -12632,61 +12631,76 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	}
 
 	case BA_WHISTLE:
-		val1 = skill_lv +status->agi/10; // Flee increase
-		val2 = ((skill_lv+1)/2)+status->luk/10; // Perfect dodge increase
-		if(sd){
-			val1 += pc_checkskill(sd,BA_MUSICALLESSON);
-			val2 += pc_checkskill(sd,BA_MUSICALLESSON);
+#ifdef RENEWAL
+		val1 = 3 * skill_lv + status->agi / 15; // Flee increase
+#else
+		val1 = skill_lv + status->agi / 10; // Flee increase
+#endif
+		val2 = (skill_lv + 1) / 2 + status->luk / 30; // Perfect dodge increase
+		if (sd) {
+			val1 += pc_checkskill(sd, BA_MUSICALLESSON) / 2;
+			val2 += pc_checkskill(sd, BA_MUSICALLESSON) / 5;
 		}
 		break;
 	case DC_HUMMING:
-		val1 = 2*skill_lv+status->dex/10; // Hit increase
 #ifdef RENEWAL
-			val1 *= 2;
+		val1 = 20 + 2 * skill_lv + status->dex / 15; // Hit increase
+#else
+		val1 = 1 + 2 * skill_lv + status->dex / 10; // Hit increase
 #endif
-		if(sd)
-			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
+		if (sd)
+			val1 += pc_checkskill(sd, DC_DANCINGLESSON);
 		break;
 	case BA_POEMBRAGI:
-		val1 = 3*skill_lv+status->dex/10; // Casting time reduction
+		val1 = 3 * skill_lv + status->dex / 10; // Casting time reduction
 		//For some reason at level 10 the base delay reduction is 50%.
-		val2 = (skill_lv<10?3*skill_lv:50)+status->int_/5; // After-cast delay reduction
-		if(sd){
-			val1 += pc_checkskill(sd,BA_MUSICALLESSON);
-			val2 += 2*pc_checkskill(sd,BA_MUSICALLESSON);
+		val2 = (skill_lv < 10 ? 3 * skill_lv : 50) + status->int_ / 5; // After-cast delay reduction
+		if (sd) {
+			val1 += pc_checkskill(sd, BA_MUSICALLESSON);
+			val2 += 2 * pc_checkskill(sd, BA_MUSICALLESSON);
 		}
 		break;
 	case DC_DONTFORGETME:
-		val1 = 30 * skill_lv + status->dex; // ASPD decrease
-		val2 = 2 * skill_lv + status->agi / 10; // Movement speed adjustment.
-		if(sd){
-			val1 += 10 * pc_checkskill(sd,DC_DANCINGLESSON);
-			val2 += (pc_checkskill(sd,DC_DANCINGLESSON) + 1) / 2; // Movement speed -1% per 2 levels
+#ifdef RENEWAL
+		val1 = 3 * skill_lv + status->dex / 15; // ASPD decrease
+		val2 = 2 * skill_lv + status->agi / 20; // Movement speed adjustment.
+#else
+		val1 = 5 + 3 * skill_lv + status->dex / 10; // ASPD decrease
+		val2 = 5 + 3 * skill_lv + status->agi / 10; // Movement speed adjustment.
+#endif		
+		if (sd) {
+			val1 += pc_checkskill(sd, DC_DANCINGLESSON);
+#ifdef RENEWAL
+			val2 += pc_checkskill(sd, DC_DANCINGLESSON) / 2;
+#else
+			val2 += pc_checkskill(sd, DC_DANCINGLESSON);
+#endif
 		}
+		val1 *= 10; //Because 10 is actually 1% aspd
 		break;
 	case DC_SERVICEFORYOU:
-		val1 = 15+skill_lv+(status->int_/10); // MaxSP percent increase
-		val2 = 20+3*skill_lv+(status->int_/10); // SP cost reduction
-		if(sd){
-			val1 += pc_checkskill(sd,DC_DANCINGLESSON)/2;
-			val2 += pc_checkskill(sd,DC_DANCINGLESSON)/2;
+		val1 = 15 + skill_lv + (status->int_ / 10); // MaxSP percent increase
+		val2 = 20 + 3 * skill_lv + (status->int_ / 10); // SP cost reduction
+		if (sd) {
+			val1 += pc_checkskill(sd, DC_DANCINGLESSON) / 2;
+			val2 += pc_checkskill(sd, DC_DANCINGLESSON) / 2;
 		}
 		break;
 	case BA_ASSASSINCROSS:
 		if (sd)
-			val1 = pc_checkskill(sd,BA_MUSICALLESSON) / 2;
+			val1 = pc_checkskill(sd, BA_MUSICALLESSON) / 2;
 #ifdef RENEWAL // ASPD increase
 		val1 += skill_lv + (status->agi / 20);
 #else
-		val1 += 10 + skill_lv + (status->agi / 10);
+		val1 += 5 + skill_lv + (status->agi / 20);
 		val1 *= 10; // ASPD works with 1000 as 100%
 #endif
 		break;
 	case DC_FORTUNEKISS:
-		val1 = 10+skill_lv+(status->luk/10); // Critical increase
-		if(sd)
-			val1 += pc_checkskill(sd,DC_DANCINGLESSON);
-		val1*=10; //Because every 10 crit is an actual cri point.
+		val1 = 10 + skill_lv + (status->luk / 10); // Critical increase
+		val1 *= 10; //Because every 10 crit is an actual cri point.
+		if (sd)
+			val1 += 5 * pc_checkskill(sd, DC_DANCINGLESSON);
 		break;
 	case BD_DRUMBATTLEFIELD:
 	#ifdef RENEWAL

@@ -1493,17 +1493,16 @@ int clif_spawn(struct block_list *bl)
 
 /// Sends information about owned homunculus to the client . [orn]
 /// 022e <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.W <max hp>.W <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W	(ZC_PROPERTY_HOMUN)
-/// 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.W <max hp>.W <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W		(ZC_PROPERTY_HOMUN_2)
+/// 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_2)
 void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 {
 	struct status_data *status;
 	unsigned char buf[128];
+	int offset;
 #if PACKETVER < 20141016
 	const int cmd = 0x22e;
-	int offset = 0;
 #else
 	const int cmd = 0x9f7;
-	int offset = 2;
 #endif
 	int htype;
 
@@ -1544,15 +1543,26 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 #endif
 	WBUFW(buf,47) = status->flee;
 	WBUFW(buf,49) = (flag) ? 0 : status->amotion;
+#if PACKETVER >= 20141016
+	// Homunculus HP bar will screw up if the percentage calculation exceeds signed values
+	// Tested maximum: 21474836(=INT32_MAX/100), any value above will screw up the HP bar
+	if (status->max_hp > (INT32_MAX/100)) {
+		WBUFL(buf,51) = status->hp/(status->max_hp/100);
+		WBUFL(buf,55) = 100;
+	} else {
+		WBUFL(buf,51) = status->hp;
+		WBUFL(buf,55) = status->max_hp;
+	}
+	offset = 4;
+#else
 	if (status->max_hp > INT16_MAX) {
 		WBUFW(buf,51) = status->hp/(status->max_hp/100);
-		WBUFW(buf,53+offset) = 100;
+		WBUFW(buf,53) = 100;
 	} else {
 		WBUFW(buf,51) = status->hp;
-		WBUFW(buf,53+offset) = status->max_hp;
+		WBUFW(buf,53) = status->max_hp;
 	}
-#if PACKETVER >= 20141016
-	offset += 2;
+	offset = 0;
 #endif
 	if (status->max_sp > INT16_MAX) {
 		WBUFW(buf,55+offset) = status->sp/(status->max_sp/100);
@@ -6380,7 +6390,7 @@ void clif_wis_message(int fd, const char* nick, const char* mes, int mes_len)
 	safestrncpy(WFIFOCP(fd,28), mes, mes_len);
 	WFIFOSET(fd,WFIFOW(fd,2));
 #else
-	struct map_session_data *ssd = map_nick2sd(nick);
+	struct map_session_data *ssd = map_nick2sd(nick,false);
 
 	WFIFOHEAD(fd, mes_len + NAME_LENGTH + 8);
 	WFIFOW(fd,0) = 0x97;
@@ -11061,7 +11071,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 	}
 
 	// searching destination character
-	dstsd = map_nick2sd(target);
+	dstsd = map_nick2sd(target,false);
 
 	if (dstsd == NULL || strcmp(dstsd->status.name, target) != 0) {
 		// player is not on this map-server
@@ -12722,7 +12732,7 @@ void clif_parse_PartyInvite2(int fd, struct map_session_data *sd){
 		return;
 	}
 
-	t_sd = map_nick2sd(name);
+	t_sd = map_nick2sd(name,false);
 
 	if(t_sd && t_sd->state.noask) {// @noask [LuzZza]
 		clif_noask_sub(sd, t_sd, 1);
@@ -13350,7 +13360,7 @@ void clif_parse_GuildInvite(int fd,struct map_session_data *sd){
 /// 0916 <char name>.24B (CZ_REQ_JOIN_GUILD2)
 void
 clif_parse_GuildInvite2(int fd, struct map_session_data *sd) {
-	struct map_session_data *t_sd = map_nick2sd(RFIFOCP(fd, packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]));
+	struct map_session_data *t_sd = map_nick2sd(RFIFOCP(fd, packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]),false);
 
 	if (clif_sub_guild_invite(fd, sd, t_sd))
 		return;
@@ -14202,15 +14212,7 @@ void clif_parse_FriendsListAdd(int fd, struct map_session_data *sd)
 	struct map_session_data *f_sd;
 	int i;
 
-	f_sd = map_nick2sd(RFIFOCP(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]));
-
-	// ensure that the request player's friend list is not full
-	ARR_FIND(0, MAX_FRIENDS, i, sd->status.friends[i].char_id == 0);
-
-	if( i == MAX_FRIENDS ) {
-		clif_friendslist_reqack(sd, f_sd, 2);
-		return;
-	}
+	f_sd = map_nick2sd(RFIFOCP(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]),false);
 
 	// Friend doesn't exist (no player with this name)
 	if (f_sd == NULL) {
@@ -14219,6 +14221,14 @@ void clif_parse_FriendsListAdd(int fd, struct map_session_data *sd)
 	}
 
 	if( sd->bl.id == f_sd->bl.id ) {// adding oneself as friend
+		return;
+	}
+
+	// ensure that the request player's friend list is not full
+	ARR_FIND(0, MAX_FRIENDS, i, sd->status.friends[i].char_id == 0);
+
+	if( i == MAX_FRIENDS ){
+		clif_friendslist_reqack(sd, f_sd, 2);
 		return;
 	}
 
@@ -14623,7 +14633,7 @@ void clif_parse_Check(int fd, struct map_session_data *sd)
 
 	safestrncpy(charname, RFIFOCP(fd,packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]), sizeof(charname));
 
-	if( ( pl_sd = map_nick2sd(charname) ) == NULL || pc_get_group_level(sd) < pc_get_group_level(pl_sd) )
+	if( ( pl_sd = map_nick2sd(charname,false) ) == NULL || pc_get_group_level(sd) < pc_get_group_level(pl_sd) )
 	{
 		return;
 	}

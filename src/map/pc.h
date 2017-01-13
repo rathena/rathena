@@ -69,6 +69,14 @@ enum equip_index {
 	EQI_MAX
 };
 
+enum prevent_logout_trigger {
+	PLT_NONE = 0,
+	PLT_LOGIN = 1,
+	PLT_ATTACK = 2,
+	PLT_SKILL = 4,
+	PLT_DAMAGE = 8
+};
+
 extern unsigned int equip_bitmask[EQI_MAX];
 
 #define equip_index_check(i) ( (i) >= EQI_ACC_L && (i) < EQI_MAX )
@@ -1187,7 +1195,7 @@ struct sg_data {
 	short comfort_id;
 	char feel_var[NAME_LENGTH];
 	char hate_var[NAME_LENGTH];
-	int (*day_func)(void);
+	bool (*day_func)(void);
 };
 extern const struct sg_data sg_info[MAX_PC_FEELHATE];
 
