@@ -34,7 +34,7 @@ This is a breakdown of a generic Issue:
 
 #### What are some good details to provide in a bug report? :pencil2:
 
-When describing your Issue through the **Description** area, it is recommended that you provide as much information as possible to make the Issue get resolved a lot quicker. Keep in mind you can tag people within the **Description** area through the `@mention` feature. You can also tag other Issues by typing `#` which will pull up a list of issues. You can find a markdown guide at [Mastering Markdown](https://guides.github.com/features/mastering-markdown/).
+When describing your Issue through the **Description** area, it is recommended that you provide as much information as possible to make the Issue get resolved a lot quicker. Keep in mind you can tag people within the **Description** area through the ``` `@mention` ``` feature. You can also tag other Issues by typing `#` which will pull up a list of issues. You can find a markdown guide at [Mastering Markdown](https://guides.github.com/features/mastering-markdown/).
 Some information to keep in mind while creating an Issue:
 * **GitHub Hash**: The hash is a 40 alpha-numeric string (which can be broken down to the first 7 characters) which states the version you are at. (**If you're using SVN instead of Git:** Please also put the change date and first line of changelog beside the revision number, or we'll be assuming you're using a very old rAthena revision).
 * **Client Date**: The client date provides specific details depending on the issue. The main detail is that it helps narrow down issues if it's related to a packet problem.
@@ -43,9 +43,9 @@ Some information to keep in mind while creating an Issue:
 * **How to Reproduce Issue**: Describe how to reproduce your issue in detail! The more the merrier!
 * **Official Info**: Provide creditable sources to state why it is a bug! Please don't provide an iRO Wiki link as there is a high chance it doesn't match kRO behavior.
 
-#### Be wary of the @mention feature! :warning:
+#### Be wary of the ``` `@mention` ``` feature! :warning:
 
-Since rAthena uses custom `@commands`, when describing an issue that deals with these commands please keep in mind that this does clash with the @mention system for GitHub! Always quote the text when mentioning an `@command` (ie: '`') so that you do not tag GitHub users!
+Since rAthena uses custom ``` `@commands` ```, when describing an issue that deals with these commands please keep in mind that this does clash with the ``` `@mention` ``` system for GitHub! Always quote the text when mentioning an ``` `@command` ``` so that you do not tag GitHub users!
 
 Suggesting Enhancements
 -----------------------
