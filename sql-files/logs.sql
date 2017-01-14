@@ -51,7 +51,12 @@ CREATE TABLE IF NOT EXISTS `cashlog` (
 -- Table structure for table `chatlog`
 --
 # ChatLog types
-# Gl(O)bal# (W)hisper# (P)arty# (G)uild# (M)ain chat# (C)lan
+# Gl(O)bal
+# (W)hisper
+# (P)arty
+# (G)uild
+# (M)ain chat
+# (C)lan
 
 CREATE TABLE IF NOT EXISTS `chatlog` (
   `id` bigint(20) NOT NULL auto_increment,
@@ -199,8 +204,15 @@ CREATE TABLE IF NOT EXISTS `picklog` (
 -- Table structure for table `zenylog`
 --
 # ZenyLog types
-# (M)onsters# (T)rade# (V)ending Sell/Buy# (S)hop Sell/Buy# (N)PC Change amount
-# (A)dministrators# (E)Mail# (B)uying Store# Ban(K) Transactions
+# (M)onsters
+# (T)rade
+# (V)ending Sell/Buy
+# (S)hop Sell/Buy
+# (N)PC Change amount
+# (A)dministrators
+# (E)Mail
+# (B)uying Store
+# Ban(K) Transactions
 
 CREATE TABLE IF NOT EXISTS `zenylog` (
   `id` int(11) NOT NULL auto_increment,
