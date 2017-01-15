@@ -50,7 +50,7 @@ static uint16 instance_name2id(const char *instance_name) {
 /*==========================================
  * Searches for an instance name in the database
  *------------------------------------------*/
-static struct instance_db *instance_searchname_db(const char *instance_name) {
+struct instance_db *instance_searchname_db(const char *instance_name) {
 	uint16 id = instance_name2id(instance_name);
 	if (id == 0)
 		return NULL;
@@ -288,6 +288,20 @@ static int instance_npcinit(struct block_list *bl, va_list ap)
 	nullpo_retr(0, nd = (struct npc_data *)bl);
 
 	return npc_instanceinit(nd);
+}
+
+/*==========================================
+ * Run the OnInstanceDestroy events for duplicated NPCs
+ *------------------------------------------*/
+static int instance_npcdestroy(struct block_list *bl, va_list ap)
+{
+	struct npc_data* nd;
+
+	nullpo_retr(0, bl);
+	nullpo_retr(0, ap);
+	nullpo_retr(0, nd = (struct npc_data *)bl);
+
+	return npc_instancedestroy(nd);
 }
 
 /*==========================================
@@ -597,6 +611,11 @@ int instance_destroy(unsigned short instance_id)
 			type = 2;
 		else
 			type = 3;
+
+		// Run OnInstanceDestroy on all NPCs in the instance
+		for(i = 0; i < im->cnt_map; i++){
+			map_foreachinarea(instance_npcdestroy, im->map[i]->m, 0, 0, map[im->map[i]->m].xs, map[im->map[i]->m].ys, BL_NPC, im->map[i]->m);
+		}
 
 		for(i = 0; i < im->cnt_map; i++) {
 			map_delinstancemap(im->map[i]->m);

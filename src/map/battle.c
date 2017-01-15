@@ -2482,7 +2482,7 @@ static bool is_attack_hitting(struct Damage wd, struct block_list *src, struct b
 	else if (nk&NK_IGNORE_FLEE)
 		return true;
 
-	if( sc && sc->data[SC_NEUTRALBARRIER] && (wd.flag&(BF_LONG|BF_MAGIC)) == BF_LONG )
+	if( tsc && tsc->data[SC_NEUTRALBARRIER] && (wd.flag&(BF_LONG|BF_MAGIC)) == BF_LONG )
 		return false;
 
 	flee = tstatus->flee;
@@ -8395,6 +8395,7 @@ static const struct _battle_data {
 	{ "tarotcard_equal_chance",             &battle_config.tarotcard_equal_chance,          0,      0,      1,              },
 	{ "change_party_leader_samemap",        &battle_config.change_party_leader_samemap,     1,      0,      1,              },
 	{ "dispel_song",                        &battle_config.dispel_song,                     0,      0,      1,              },
+	{ "guild_maprespawn_clones",			&battle_config.guild_maprespawn_clones,			0,		0,		1,				},
 
 #include "../custom/battle_config_init.inc"
 };

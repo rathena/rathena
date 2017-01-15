@@ -9117,7 +9117,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if( (dstsd && pc_ismadogear(dstsd)) || status_isimmune(bl))
 					i = 0; // Should heal by 0 or won't do anything?? in iRO it breaks the healing to members.. [malufett]
 
-				clif_skill_nodamage(bl, bl, skill_id, i, 1);
+				clif_skill_nodamage(src, bl, skill_id, i, 1);
 				if( tsc && tsc->data[SC_AKAITSUKI] && i )
 					i = ~i + 1;
 				status_heal(bl, i, 0, 0);

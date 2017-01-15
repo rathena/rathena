@@ -3204,6 +3204,49 @@
 	export_constant(IE_NOMEMBER);
 	export_constant(IE_NOINSTANCE);
 	export_constant(IE_OTHER);
+	
+	/* months */
+	export_constant(JANUARY);
+	export_constant(FEBRUARY);
+	export_constant(MARCH);
+	export_constant(APRIL);
+	export_constant(MAY);
+	export_constant(JUNE);
+	export_constant(JULY);
+	export_constant(AUGUST);
+	export_constant(SEPTEMBER);
+	export_constant(OCTOBER);
+	export_constant(NOVEMBER);
+	export_constant(DECEMBER);
+	
+	/* days of the week */
+	export_constant(SUNDAY);
+	export_constant(MONDAY);
+	export_constant(TUESDAY);
+	export_constant(WEDNESDAY);
+	export_constant(THURSDAY);
+	export_constant(FRIDAY);
+	export_constant(SATURDAY);
+	
+	/* date types */
+	export_constant(DT_SECOND);
+	export_constant(DT_MINUTE);
+	export_constant(DT_HOUR);
+	export_constant(DT_DAYOFWEEK);
+	export_constant(DT_DAYOFMONTH);
+	export_constant(DT_MONTH);
+	export_constant(DT_YEAR);
+	export_constant(DT_DAYOFYEAR);
+
+	/* instance info */
+	export_constant(IIT_ID);
+	export_constant(IIT_TIME_LIMIT);
+	export_constant(IIT_IDLE_TIMEOUT);
+	export_constant(IIT_ENTER_MAP);
+	export_constant(IIT_ENTER_X);
+	export_constant(IIT_ENTER_Y);
+	export_constant(IIT_MAPCOUNT);
+	export_constant(IIT_MAP);
 
 	/* item groups */
 	export_constant(IG_BLUEBOX);
