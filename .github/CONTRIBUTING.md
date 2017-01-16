@@ -91,7 +91,7 @@ For the most part you as a user will have no reason to worry about the **Milesto
 
 #### Mode Type
 
-| Label name | `rathena/rathena` | Description |
+| Label Name | Search Link | Description |
 | --- | --- | --- |
 | `mode:missing` | [search][search-rathena-label-modemissing] | Issue **Title** or **Description** does not state pre-renewal or renewal mode. |
 | `mode:prerenewal` | [search][search-rathena-label-modeprerenewal] | A fault that exists within the pre-renewal mode. |
@@ -99,7 +99,7 @@ For the most part you as a user will have no reason to worry about the **Milesto
 
 #### Priority Type
 
-| Label name | `rathena/rathena` | Description |
+| Label Name | Search Link | Description |
 | --- | --- | --- |
 | `priority:high` | [search][search-rathena-label-priorityhigh] | A fault that makes rAthena unstable or unusable. |
 | `priority:medium` | [search][search-rathena-label-prioritymedium] | A fault that makes rAthena have significant repercussions but does not render rAthena unusable. |
@@ -107,7 +107,7 @@ For the most part you as a user will have no reason to worry about the **Milesto
 
 #### Server Type
 
-| Label name | `rathena/rathena` | Description |
+| Label Name | Search Link | Description |
 | --- | --- | --- |
 | `server:login` | [search][search-rathena-label-serverlogin] | A fault that lies within the login server of rAthena. |
 | `server:char` | [search][search-rathena-label-serverchar] | A fault that lies within the character server of rAthena. |
@@ -115,7 +115,7 @@ For the most part you as a user will have no reason to worry about the **Milesto
 
 #### Status Type
 
-| Label name | `rathena/rathena` | Description |
+| Label Name | Search Link | Description |
 | --- | --- | --- |
 | `status:client date missing` | [search][search-rathena-label-statusclientdatemissing] | Issue **Title** or **Description** does not state the client date used to create the bug. |
 | `status:confirmed` | [search][search-rathena-label-statusconfirmed] | Issue that has been validated by a developer to affect rAthena. |
