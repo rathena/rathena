@@ -4425,6 +4425,45 @@ ACMD_FUNC(partyspy)
 	return 0;
 }
 
+ACMD_FUNC(clanspy){
+	char clan_name[NAME_LENGTH];
+	struct clan* c;
+	nullpo_retr(-1, sd);
+
+	memset(clan_name, '\0', sizeof(clan_name));
+	memset(atcmd_output, '\0', sizeof(atcmd_output));
+
+	if( !enable_spy ){
+		clif_displaymessage(fd, msg_txt(sd, 1125)); // The mapserver has spy command support disabled.
+		return -1;
+	}
+
+	if( !message || !*message || sscanf( message, "%23[^\n]", clan_name ) < 1 ){
+		clif_displaymessage(fd, msg_txt(sd, 1499)); // Please enter a clan name/ID (usage: @clanspy <clan_name/ID>).
+		return -1;
+	}
+
+	if ((c = clan_searchname(clan_name)) != NULL || // name first to avoid error when name begin with a number
+		(c = clan_search(atoi(message))) != NULL) {
+		if (sd->clanspy == c->id) {
+			sd->clanspy = 0;
+			sprintf(atcmd_output, msg_txt(sd, 1500), c->name); // No longer spying on the %s clan.
+			clif_displaymessage(fd, atcmd_output);
+		}
+		else {
+			sd->clanspy = c->id;
+			sprintf(atcmd_output, msg_txt(sd, 1501), c->name); // Spying on the %s clan.
+			clif_displaymessage(fd, atcmd_output);
+		}
+	}
+	else {
+		clif_displaymessage(fd, msg_txt(sd, 1502)); // Incorrect clan name/ID.
+		return -1;
+	}
+
+	return 0;
+}
+
 /*==========================================
  * @repairall [Valaris]
  *------------------------------------------*/
@@ -10015,6 +10054,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("mount", mount_peco),
 		ACMD_DEF(guildspy),
 		ACMD_DEF(partyspy),
+		ACMD_DEF(clanspy),
 		ACMD_DEF(repairall),
 		ACMD_DEF(guildrecall),
 		ACMD_DEF(partyrecall),

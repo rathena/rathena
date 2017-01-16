@@ -54,6 +54,20 @@ struct clan* clan_search( int id ){
 	return (struct clan*)idb_get(clan_db,id);
 }
 
+struct clan* clan_searchname( const char* name ){
+	struct clan* c;
+
+	DBIterator *iter = db_iterator(clan_db);
+	for( c = (struct clan*)dbi_first(iter); dbi_exists(iter); c = (struct clan*)dbi_next(iter) ){
+		if( strncmpi( c->name, name, NAME_LENGTH ) == 0 ){
+			break;
+		}
+	}
+	dbi_destroy(iter);
+
+	return c;
+}
+
 struct map_session_data* clan_getavailablesd( struct clan* clan ){
 	int i;
 

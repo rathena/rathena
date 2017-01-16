@@ -10,6 +10,7 @@
 	void do_init_clan();
 	void do_final_clan();
 	struct clan* clan_search( int id );
+	struct clan* clan_searchname( const char* name );
 	void clan_load_clandata( int count, struct clan* clans );
 	void clan_member_joined( struct map_session_data* sd );
 	void clan_member_left( struct map_session_data* sd );
