@@ -7,18 +7,18 @@ Table of Contents
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
   * [Issue Labels](#issue-labels)
-  * [Become a Member](#become-a-member)
+  * [Become a Team Member](#become-a-team-member)
 
 Reporting Bugs
 --------------
 
-This bit of information is here to help guide you through the process of creating a bug report for rAthena! Issues not only for developers can be used to track bugs, but it can also track enhancements and tasks. The more detailed your report is the easier it is for developers to resolve the bug!
+This bit of information is here to guide you through the process of creating a bug report for rAthena! Issues cannot only be used for developers to track bugs, but they can also track enhancements and tasks. The more detailed your report is, the easier it is for developers to reproduce and resolve the bug!
 
 ### Did you find a bug? :bug:
 
 * **Ensure the bug is not coming from a customization** within your files!
-* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/rathena/rathena/issues). If the same issue exists, leave a comment and tell us you are experiencing the issue as well!
-* If you're unable to find an open issue addressing the problem, [open a new one](#submit-a-bug-report)!
+* **Ensure the bug was not already reported** by searching on GitHub under [Issues](https://github.com/rathena/rathena/issues). If the same issue exists, feel free to leave a comment and tell us you are experiencing the issue as well and if possible add some additional or missing information!
+* If you are unable to find an open issue addressing the problem, [open a new one](#submit-a-bug-report)!
 
 #### Submit A Bug Report :inbox_tray:
 
@@ -26,26 +26,26 @@ There are several things that go into making a bug report a good bug report!
 
 This is a breakdown of a generic Issue:
 * **Title** should give some general insight as to what the bug is about.
-* **Description** should give greater detail of the bug that can't be explained in the **Title**.
-* **Labels** which are colored to represent a category to which they fall into it.
-* **Milestone** which is what developers can use to track enhancements or tasks, as described above.
-* **Assignee** which is someone who is directly linked to resolve the issue.
-* **Comments** which allows other members to give feedback on the issue.
+* **Description** should give greater detail of the bug that cannot be explained in the **Title**.
+* **Labels** are colored to represent a category they fall into.
+* **Milestones** are what developers use to group tasks together and quickly evaluate how close the project deliverable is near completion.
+* **Assignees** are developers who are directly linked to resolve the issue.
+* **Comments** allow other members to give feedback on the issue.
 
 #### What are some good details to provide in a bug report? :pencil2:
 
-When describing your Issue through the **Description** area, it is recommended that you provide as much information as possible to make the Issue get resolved a lot quicker. Keep in mind you can tag people within the **Description** area through the ``` `@mention` ``` feature. You can also tag other Issues by typing `#` which will pull up a list of issues. You can find a markdown guide at [Mastering Markdown](https://guides.github.com/features/mastering-markdown/).
+When describing your Issue through the **Description** area, it is recommended that you provide as much information as possible to resolve the Issue as fast as possible. Keep in mind that you can tag people within the **Description** area through the `@mention` feature. You can also tag other Issues or Pull Requests by typing `#` which will pull up a list of issues. You can find a markdown guide at [Mastering Markdown](https://guides.github.com/features/mastering-markdown/).
 Some information to keep in mind while creating an Issue:
-* **GitHub Hash**: The hash is a 40 alpha-numeric string (which can be broken down to the first 7 characters) which states the version you are at. (**If you're using SVN instead of Git:** Please also put the change date and first line of changelog beside the revision number, or we'll be assuming you're using a very old rAthena revision).
-* **Client Date**: The client date provides specific details depending on the issue. The main detail is that it helps narrow down issues if it's related to a packet problem.
-* **Modifications that may affect results**: It's always best to try to reproduce your issue on a clean rAthena if you have lots of modifications.
-* **Description of Issue**: Describe your issue in detail! Screen shots and videos help a lot! Please also provide crash dumps if one of the servers is crashing.
+* **GitHub Hash**: The hash is a 40 alpha-numeric string (which can be broken down to the first 7 characters) which states the version you are at. (**If you are using SVN instead of Git:** Please also put the change date and first line of the commit message beside the revision number, or we will not be able to look up the corresponding Git hash).
+* **Client Date**: The client date provides specific details depending on the issue. The main detail is that it helps narrow down issues that are related to a packet problem.
+* **Modifications that may affect results**: It is always best to try to reproduce your issue on a clean rAthena if you have lots of modifications.
+* **Description of Issue**: Describe your issue in detail! Screenshots and videos help a lot! Please also provide crash dumps if one of the servers is crashing.
 * **How to Reproduce Issue**: Describe how to reproduce your issue in detail! The more the merrier!
-* **Official Info**: Provide creditable sources to state why it is a bug! Please don't provide an iRO Wiki link as there is a high chance it doesn't match kRO behavior.
+* **Official Info**: Provide creditable sources to state why it is a bug! Please do not provide an iRO Wiki link as there is a high chance it does not match kRO behavior.
 
-#### Be wary of the ``` `@mention` ``` feature! :warning:
+#### Be wary of the `@mention` feature! :warning:
 
-Since rAthena uses custom ``` `@commands` ```, when describing an issue that deals with these commands please keep in mind that this does clash with the ``` `@mention` ``` system for GitHub! Always quote the text when mentioning an ``` `@command` ``` so that you do not tag GitHub users!
+Since rAthena uses custom `@commands`, when describing an issue that deals with these commands please keep in mind that this does clash with the `@mention` system for GitHub! Always quote the text when mentioning an ``` `@command` ```(like this) so that you do not tag uninvolved GitHub users!
 
 Suggesting Enhancements
 -----------------------
@@ -67,7 +67,8 @@ Suggesting Enhancements
 3. Before making changes, make sure you [create a new branch](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) for your working tree.
 4. After completing your changes, commit and push it to your branch.
 5. Now you are ready to [create a Pull Request](https://help.github.com/articles/creating-a-pull-request/) for rAthena!
-  * **OPTIONAL**: We would greatly appreciate those that check the box to [allow edits by maintainers](https://help.github.com/articles/allowing-changes-to-a-pull-request-branch-created-from-a-fork/)!
+  * Upon creating the Pull Request, make sure you follow our [template](https://github.com/rathena/rathena/blob/master/.github/PULL_REQUEST_TEMPLATE.md) and provide the required information.
+  * **OPTIONAL**: We would greatly appreciate those that check the box to [allow edits by maintainers](https://help.github.com/articles/allowing-changes-to-a-pull-request-branch-created-from-a-fork/), so we can apply small cleanups or additions to your changes before merging them!
 
 Issue Labels
 ------------
@@ -78,7 +79,7 @@ For the most part you as a user will have no reason to worry about the **Milesto
 
 #### Bug Type
 
-| Label name | `rathena/rathena` | Description |
+| Label Name | Search Link | Description |
 | --- | --- | --- |
 | `bug:core` | [search][search-rathena-label-bugcore] | A fault that lies within the main framework of rAthena. |
 | `bug:database` | [search][search-rathena-label-bugdatabase] | A fault that lies within the database of rAthena. |
@@ -108,8 +109,8 @@ For the most part you as a user will have no reason to worry about the **Milesto
 
 | Label name | `rathena/rathena` | Description |
 | --- | --- | --- |
-| `server:char` | [search][search-rathena-label-serverchar] | A fault that lies within the character server of rAthena. |
 | `server:login` | [search][search-rathena-label-serverlogin] | A fault that lies within the login server of rAthena. |
+| `server:char` | [search][search-rathena-label-serverchar] | A fault that lies within the character server of rAthena. |
 | `server:map` | [search][search-rathena-label-servermap] | A fault that lies within the map server of rAthena. |
 
 #### Status Type
@@ -154,11 +155,11 @@ For the most part you as a user will have no reason to worry about the **Milesto
 [search-rathena-label-statusunabletoreproduce]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3A"status%3Aunable+to+reproduce"
 [search-rathena-label-statuswontfix]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Awontfix
 
-Become a Member
----------------
+Become a Team Member
+--------------------
 
 1. Before you send in a staff application, make sure you have an [rAthena account](https://rathena.org/board/register/).
-  * If you're new to the community, go ahead and [introduce yourself](https://rathena.org/board/forum/89-introductions/)!
+  * If you are new to the community, go ahead and [introduce yourself](https://rathena.org/board/forum/89-introductions/)!
 2. Please fill out the [Staff Application](https://rathena.org/board/staffapplications/) and you will be notified shortly.
 
 <br />

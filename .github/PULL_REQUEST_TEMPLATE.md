@@ -9,4 +9,4 @@ Which mode does this pull request apply to: Pre-Renewal, Renewal, or Both?
 
 * **Description of Pull Request**: 
 <br />
-Describe the how this pull request will resolve the issue(s) listed above.
+Describe how this pull request will resolve the issue(s) listed above.
