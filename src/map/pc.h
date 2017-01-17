@@ -524,6 +524,7 @@ struct map_session_data {
 	short guild_x,guild_y; // For guildmate position display. [Skotlex] should be short [zzo]
 	int guildspy; // [Syrus22]
 	int partyspy; // [Syrus22]
+	int clanspy;
 
 	struct clan *clan;
 
