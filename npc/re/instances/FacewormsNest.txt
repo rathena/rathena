@@ -553,8 +553,7 @@ OnInstanceInit:
 OnStart:
 	areamonster 'map_name$,140,69,150,79,"Dark Faceworm",2530,1,instance_npcname("#fwormboss1") + "::OnMyMobDead";
 	'BOSS[1] = $@mobid[0];
-	.@mapcount = getmapusers('map_name$);
-	.@dfacehp = (13-.@mapcount) * 200000;
+	.@dfacehp = ( 13 - getmapusers('map_name$) ) * 200000;
 	.@MOB_HP = 5200000 - .@dfacehp;
 	if (.@MOB_HP < 1500000)
 		.@MOB_HP = 1500000;
@@ -790,8 +789,7 @@ OnInstanceInit:
 OnStart:
 	areamonster 'map_name$,156,267,166,277,"Dark Faceworm",2530,1,instance_npcname("#fwormboss2") + "::OnMyMobDead";
 	'BOSS[2] = $@mobid[0];
-	.@mapcount = getmapusers('map_name$);
-	.@dfacehp = (13-.@mapcount) * 200000;
+	.@dfacehp = ( 13 - getmapusers('map_name$) ) * 200000;
 	.@MOB_HP = 5200000 - .@dfacehp;
 	if (.@MOB_HP < 1500000)
 		.@MOB_HP = 1500000;
@@ -953,8 +951,7 @@ OnInstanceInit:
 1@face,2,5,3	script	#fwormcontrol3	CLEAR_NPC,{
 	end;
 OnStart:
-	.@mob_c = getmapusers('map_name$) + 1;
-	.@mon_num = .@mob_c * 11;
+	.@mon_num = ( getmapusers('map_name$) + 1 ) * 11;
 	areamonster 'map_name$,238,274,308,344,"Faceworm",2528,.@mon_num,instance_npcname("#fwormcontrol3") + "::OnMyMobDead";
 	end;
 OnMyMobDead:
