@@ -119,7 +119,7 @@ static void sig_proc(int sn) {
 		break;
 #ifndef _WIN32
 	case SIGUSR1:
-		ShowInfo("Server process received signal SIGUSR1");
+		ShowInfo("Server process received signal SIGUSR1!\n");
 		sigusr1_callback();
 		break;		
 	case SIGXFSZ:
