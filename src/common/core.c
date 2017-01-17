@@ -102,6 +102,10 @@ static void sig_proc(int sn) {
 
 	switch (sn) {
 	case SIGINT:
+	case SIGUSR1:
+		ShowInfo("Server process received signal SIGUSR1");
+		sigusr1_callback();
+		break;
 	case SIGTERM:
 		if (++is_called > 3)
 			exit(EXIT_SUCCESS);

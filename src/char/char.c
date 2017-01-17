@@ -3012,6 +3012,10 @@ void do_abort(void)
 {
 }
 
+// Called when a SIGUSR1 signal is received.
+void sigusr1_callback(void) {
+}
+
 /// Called when a terminate signal is received.
 void do_shutdown(void) {
 	if( runflag != CHARSERVER_ST_SHUTDOWN )
