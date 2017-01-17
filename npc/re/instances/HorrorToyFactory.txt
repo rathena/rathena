@@ -891,6 +891,7 @@ OnInstanceInit:
 1@xm_d,209,15,3	duplicate(Worker#1)	Worker#10	4_M_COOKIE
 
 
+// Note : aegis script have OnClick part
 1@xm_d,131,208,0	script	Captured Santa#2	4_M_SANTA,10,10,{
 	end;
 OnTouch_:
