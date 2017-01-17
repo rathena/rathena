@@ -33,6 +33,7 @@
 #include "clan.h"
 #include "clif.h"
 #include "chrif.h"
+#include "date.h" // date type enum, date_get()
 #include "itemdb.h"
 #include "pc.h"
 #include "storage.h"
@@ -50,9 +51,7 @@
 #include "elemental.h"
 
 #include <math.h>
-#ifndef WIN32
-#endif
-
+#include <stdlib.h> // atoi, strtol, strtoll, exit
 #include <setjmp.h>
 #include <errno.h>
 
@@ -206,7 +205,8 @@ struct Script_Config script_config = {
 	1, // warn_func_mismatch_argtypes
 	1, 65535, 2048, //warn_func_mismatch_paramnum/check_cmdcount/check_gotocount
 	0, INT_MAX, // input_min_value/input_max_value
-	// NOTE: None of these event labels should be longer than <NAME_LENGTH> characters
+	// NOTE: None of these event labels should be longer than <EVENT_NAME_LENGTH> characters
+	// PC related
 	"OnPCDieEvent", //die_event_name
 	"OnPCKillEvent", //kill_pc_event_name
 	"OnNPCKillEvent", //kill_mob_event_name
@@ -216,9 +216,43 @@ struct Script_Config script_config = {
 	"OnPCBaseLvUpEvent", //baselvup_event_name
 	"OnPCJobLvUpEvent", //joblvup_event_name
 	"OnPCStatCalcEvent", //stat_calc_event_name
-	"OnTouch_",	//ontouch_name (runs on first visible char to enter area, picks another char if the first char leaves)
-	"OnTouch",	//ontouch2_name (run whenever a char walks into the OnTouch area)
+	// NPC related
+	"OnTouch_",	//ontouch_event_name (runs on first visible char to enter area, picks another char if the first char leaves)
+	"OnTouch",	//ontouch2_event_name (run whenever a char walks into the OnTouch area)
+	"OnTouchNPC", //ontouchnpc_event_name (run whenever a monster walks into the OnTouch area)
 	"OnWhisperGlobal",	//onwhisper_event_name (is executed when a player sends a whisper message to the NPC)
+	"OnCommand", //oncommand_event_name (is executed by script command cmdothernpc)
+	// Init related
+	"OnInit", //init_event_name (is executed on all npcs when all npcs were loaded)
+	"OnInterIfInit", //inter_init_event_name (is executed on inter server connection)
+	"OnInterIfInitOnce", //inter_init_once_event_name (is only executed on the first inter server connection)
+	// Guild related
+	"OnGuildBreak", //guild_break_event_name (is executed on all castles of the guild that is broken)
+	"OnAgitStart", //agit_start_event_name (is executed when WoE FE is started)
+	"OnAgitInit", //agit_init_event_name (is executed after all castle owning guilds have been loaded)
+	"OnAgitEnd", //agit_end_event_name (is executed when WoE FE has ended)
+	"OnAgitStart2", //agit_start2_event_name (is executed when WoE SE is started)
+	"OnAgitInit2", //agit_init2_event_name (is executed after all castle owning guilds have been loaded)
+	"OnAgitEnd2", //agit_end2_event_name (is executed when WoE SE has ended)
+	"OnAgitStart3", //agit_start3_event_name (is executed when WoE TE is started)
+	"OnAgitInit3", //agit_init3_event_name (is executed after all castle owning guilds have been loaded)
+	"OnAgitEnd3", //agit_end3_event_name (is executed when WoE TE has ended)
+	// Timer related
+	"OnTimer", //timer_event_name (is executed by a timer at the specific second)
+	"OnMinute", //timer_minute_event_name (is executed by a timer at the specific minute)
+	"OnHour", //timer_hour_event_name (is executed by a timer at the specific hour)
+	"OnClock", //timer_clock_event_name (is executed by a timer at the specific hour and minute)
+	"OnDay", //timer_day_event_name (is executed by a timer at the specific month and day)
+	"OnSun", //timer_sunday_event_name (is executed by a timer on sunday at the specific hour and minute)
+	"OnMon", //timer_monday_event_name (is executed by a timer on monday at the specific hour and minute)
+	"OnTue", //timer_tuesday_event_name (is executed by a timer on tuesday at the specific hour and minute)
+	"OnWed", //timer_wednesday_event_name (is executed by a timer on wednesday at the specific hour and minute)
+	"OnThu", //timer_thursday_event_name (is executed by a timer on thursday at the specific hour and minute)
+	"OnFri", //timer_friday_event_name (is executed by a timer on friday at the specific hour and minute)
+	"OnSat", //timer_saturday_event_name (is executed by a timer on saturday at the specific hour and minute)
+	// Instance related
+	"OnInstanceInit", //instance_init_event_name (is executed right after instance creation)
+	"OnInstanceDestroy", //instance_destroy_event_name (is executed right before instance destruction)
 };
 
 static jmp_buf     error_jump;
@@ -9547,7 +9581,7 @@ BUILDIN_FUNC(savepoint)
 }
 
 /*==========================================
- * GetTimeTick(0: System Tick, 1: Time Second Tick)
+ * GetTimeTick(0: System Tick, 1: Time Second Tick, 2: Unix epoch)
  *------------------------------------------*/
 BUILDIN_FUNC(gettimetick)	/* Asgard Version */
 {
@@ -9579,51 +9613,36 @@ BUILDIN_FUNC(gettimetick)	/* Asgard Version */
 }
 
 /*==========================================
- * GetTime(Type);
- * 1: Sec     2: Min     3: Hour
- * 4: WeekDay     5: MonthDay     6: Month
- * 7: Year
+ * GetTime(Type)
+ *
+ * Returns the current value of a certain date type.
+ * Possible types are:
+ * - DT_SECOND Current seconds
+ * - DT_MINUTE Current minute
+ * - DT_HOUR Current hour
+ * - DT_DAYOFWEEK Day of current week
+ * - DT_DAYOFMONTH Day of current month
+ * - DT_MONTH Current month
+ * - DT_YEAR Current year
+ * - DT_DAYOFYEAR Day of current year
+ *
+ * If none of the above types is supplied -1 will be returned to the script
+ * and the script source will be reported into the mapserver console.
  *------------------------------------------*/
-BUILDIN_FUNC(gettime)	/* Asgard Version */
+BUILDIN_FUNC(gettime)
 {
 	int type;
-	time_t timer;
-	struct tm *t;
 
-	type=script_getnum(st,2);
+	type = script_getnum(st,2);
 
-	time(&timer);
-	t=localtime(&timer);
-
-	switch(type){
-	case 1://Sec(0~59)
-		script_pushint(st,t->tm_sec);
-		break;
-	case 2://Min(0~59)
-		script_pushint(st,t->tm_min);
-		break;
-	case 3://Hour(0~23)
-		script_pushint(st,t->tm_hour);
-		break;
-	case 4://WeekDay(0~6)
-		script_pushint(st,t->tm_wday);
-		break;
-	case 5://MonthDay(01~31)
-		script_pushint(st,t->tm_mday);
-		break;
-	case 6://Month(01~12)
-		script_pushint(st,t->tm_mon+1);
-		break;
-	case 7://Year(20xx)
-		script_pushint(st,t->tm_year+1900);
-		break;
-	case 8://Year Day(01~366)
-		script_pushint(st,t->tm_yday+1);
-		break;
-	default://(format error)
+	if( type <= DT_MIN || type >= DT_MAX ){
+		ShowError( "buildin_gettime: Invalid date type %d\n", type );
+		script_reportsrc(st);
 		script_pushint(st,-1);
-		break;
+	}else{
+		script_pushint(st,date_get((enum e_date_type)type));
 	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -10197,9 +10216,18 @@ BUILDIN_FUNC(cmdothernpc)	// Added by RoVeRT
 	const char* npc = script_getstr(st,2);
 	const char* command = script_getstr(st,3);
 	char event[EVENT_NAME_LENGTH];
-	snprintf(event, sizeof(event), "%s::OnCommand%s", npc, command);
+
+	safesnprintf(event,EVENT_NAME_LENGTH, "%s::%s%s",npc,script_config.oncommand_event_name,command);
 	check_event(st, event);
-	npc_event_do(event);
+
+	if( npc_event_do(event) ){
+		script_pushint(st, true);
+	}else{
+		struct npc_data * nd = map_id2nd(st->oid);
+		ShowDebug("NPCEvent '%s' not found! (source: %s)\n", event, nd ? nd->name : "Unknown");
+		script_pushint(st, false);
+	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -12431,9 +12459,6 @@ BUILDIN_FUNC(maprespawnguildid)
  */
 BUILDIN_FUNC(agitstart)
 {
-	if (agit_flag)
-		return SCRIPT_CMD_SUCCESS;// Agit already Started.
-	agit_flag = true;
 	guild_agit_start();
 
 	return SCRIPT_CMD_SUCCESS;
@@ -12445,9 +12470,6 @@ BUILDIN_FUNC(agitstart)
  */
 BUILDIN_FUNC(agitend)
 {
-	if (!agit_flag)
-		return SCRIPT_CMD_SUCCESS;// Agit already Ended.
-	agit_flag = false;
 	guild_agit_end();
 
 	return SCRIPT_CMD_SUCCESS;
@@ -12459,9 +12481,6 @@ BUILDIN_FUNC(agitend)
  */
 BUILDIN_FUNC(agitstart2)
 {
-	if (agit2_flag)
-		return SCRIPT_CMD_SUCCESS;// Agit2 already Started.
-	agit2_flag = true;
 	guild_agit2_start();
 
 	return SCRIPT_CMD_SUCCESS;
@@ -12487,9 +12506,6 @@ BUILDIN_FUNC(agitend2)
  */
 BUILDIN_FUNC(agitstart3)
 {
-	if (agit3_flag)
-		return SCRIPT_CMD_SUCCESS;// AgitTE already Started.
-	agit3_flag = true;
 	guild_agit3_start();
 
 	return SCRIPT_CMD_SUCCESS;
@@ -12501,9 +12517,6 @@ BUILDIN_FUNC(agitstart3)
  */
 BUILDIN_FUNC(agitend3)
 {
-	if (!agit3_flag)
-		return SCRIPT_CMD_SUCCESS;// AgitTE already Ended.
-	agit3_flag = false;
 	guild_agit3_end();
 
 	return SCRIPT_CMD_SUCCESS;

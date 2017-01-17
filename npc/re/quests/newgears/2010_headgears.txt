@@ -1054,7 +1054,7 @@ alberta,120,206,3	script	Alonie#Solo_Play_Box	787,{
 			mes "My affection-lacked student!";
 			mes "This is the end of your training!";
 			next;
-			if (gettime(3) < 12) {
+			if (gettime(DT_HOUR) < 12) {
 				set .@item,5448; //Solo_Play_Box1
 				set .@time$,"AM";
 			} else {

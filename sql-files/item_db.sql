@@ -2640,7 +2640,7 @@ REPLACE INTO `item_db` VALUES (5428,'Bread_Bag1','RWC Anniversary Bread Envelope
 REPLACE INTO `item_db` VALUES (5429,'Bogy_Cap','Bogy Cap',4,20,NULL,100,NULL,2,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,430,'bonus bHPrecovRate, 5; bonus bSPrecovRate, 5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5430,'Sacred_Torch_Coronet','Torch Cap',4,20,NULL,0,NULL,3,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,0,431,'bonus2 bSubEle,Ele_Fire,20; skill "MG_FIREBOLT",5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5431,'Chicken_Hat','Chicken Hat',4,20,NULL,1000,NULL,0,NULL,1,0xFFFFFFFF,7,2,256,NULL,30,1,432,'bonus3 bAutoSpell,"MC_LOUD",1,30; bonus bAspdRate,5;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (5432,'Brazil_Baseball_Cap','bRO 4th Anniversary Hat',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,433,'if(gettime(6)==9&&gettime(5)>=10&&gettime(5)<=24) bonus bAllStats, 4;',NULL,NULL);
+REPLACE INTO `item_db` VALUES (5432,'Brazil_Baseball_Cap','bRO 4th Anniversary Hat',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,433,'if(gettime(DT_MONTH)==SEPTEMBER&&gettime(DT_DAYOFMONTH)>=10&&gettime(DT_DAYOFMONTH)<=24) bonus bAllStats, 4;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (5433,'Golden_Wreath','Golden Laurel',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,256,NULL,0,1,434,NULL,NULL,NULL);
 #REPLACE INTO `item_db` VALUES (5434,'Cola_Can','Cola Can',4,20,NULL,100,NULL,2,NULL,1,0xFFFFFFFF,7,2,256,NULL,0,1,435,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (5435,'Coke_Hat','Red Minstrel Hat',4,20,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,7,2,256,NULL,40,1,436,'bonus bInt,1; bonus bMaxSP,80; bonus bMdef,3; if(getrefine()>5) { bonus bMdef,getrefine()-5; bonus bMaxSP,(getrefine()-5)*10; }',NULL,NULL);
@@ -4728,7 +4728,7 @@ REPLACE INTO `item_db` VALUES (12129,'Fantastic_Cooking_Kits','Fantastic Cooking
 REPLACE INTO `item_db` VALUES (12130,'Cookie_Bag','Cookie Bag',2,2,NULL,70,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getrandgroupitem(IG_CookieBag),1; getrandgroupitem(IG_CookieBag),1; getrandgroupitem(IG_CookieBag),1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12131,'Lucky_Potion','Lucky Potion',0,2,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `item_db` VALUES (12132,'Red_Bag','Santa\'s Bag',2,0,NULL,200,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'sc_start SC_Xmas,600000,0;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (12133,'Ice_Cream_','McDonald\'s Ice Cone',0,0,NULL,80,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'if(gettime(5)!=MDiceCone) { set MDiceCone,gettime(5); percentheal 50,50; }',NULL,NULL);
+REPLACE INTO `item_db` VALUES (12133,'Ice_Cream_','McDonald\'s Ice Cone',0,0,NULL,80,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'if(gettime(DT_DAYOFMONTH)!=MDiceCone) { set MDiceCone,gettime(DT_DAYOFMONTH); percentheal 50,50; }',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12134,'Red_Envelope','Red Envelope',2,1,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'set Zeny,Zeny+rand(1000,10000);',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12135,'Green_Ale','Green Ale',2,20,NULL,30,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'percentheal 50,50; sc_start SC_Confusion,10000,0,1000,0;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (12136,'Women\'s_Bundle','Women\'s Bundle',2,0,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,7,2,NULL,NULL,NULL,NULL,NULL,'getitem callfunc("F_Rand",558,529,2668,7518),1;',NULL,NULL);

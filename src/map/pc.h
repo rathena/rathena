@@ -524,6 +524,7 @@ struct map_session_data {
 	short guild_x,guild_y; // For guildmate position display. [Skotlex] should be short [zzo]
 	int guildspy; // [Syrus22]
 	int partyspy; // [Syrus22]
+	int clanspy;
 
 	struct clan *clan;
 
@@ -1195,7 +1196,7 @@ struct sg_data {
 	short comfort_id;
 	char feel_var[NAME_LENGTH];
 	char hate_var[NAME_LENGTH];
-	int (*day_func)(void);
+	bool (*day_func)(void);
 };
 extern const struct sg_data sg_info[MAX_PC_FEELHATE];
 

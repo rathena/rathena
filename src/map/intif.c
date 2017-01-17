@@ -3213,7 +3213,7 @@ static bool intif_parse_StorageReceived(int fd)
 			if (sd->status.party_id == 0 && (j = pc_bound_chk(sd, BOUND_PARTY, idxlist))) { // Party was deleted while character offline
 				int i;
 				for (i = 0; i < j; i++)
-					pc_delitem(sd, idxlist[i], sd->inventory.u.items_inventory[idxlist[i]].amount, 0, 1, LOG_TYPE_OTHER);
+					pc_delitem(sd, idxlist[i], sd->inventory.u.items_inventory[idxlist[i]].amount, 4, 1, LOG_TYPE_OTHER);
 			}
 #endif
 			//Set here because we need the inventory data for weapon sprite parsing.
