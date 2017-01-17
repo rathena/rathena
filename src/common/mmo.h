@@ -101,6 +101,8 @@
 #define PASSWD_LENGTH (32+1)
 //NPC names can be longer than it's displayed on client (NAME_LENGTH).
 #define NPC_NAME_LENGTH 50
+// <NPC_NAME_LENGTH> for npc name + 2 for a "::" + <NAME_LENGTH> for label + 1 for EOS
+#define EVENT_NAME_LENGTH ( NPC_NAME_LENGTH + 2 + NAME_LENGTH + 1 )
 //For item names, which tend to have much longer names.
 #define ITEM_NAME_LENGTH 50
 //For Map Names, which the client considers to be 16 in length including the .gat extension
@@ -616,7 +618,7 @@ struct guild_castle {
 	int castle_id;
 	int mapindex;
 	char castle_name[NAME_LENGTH];
-	char castle_event[NAME_LENGTH];
+	char castle_event[EVENT_NAME_LENGTH];
 	int guild_id;
 	int economy;
 	int defense;

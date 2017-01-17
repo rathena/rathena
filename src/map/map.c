@@ -103,7 +103,7 @@ static int block_free_count = 0, block_free_lock = 0;
 static struct block_list *bl_list[BL_LIST_MAX];
 static int bl_list_count = 0;
 
-#define MAP_MAX_MSG 1500
+#define MAP_MAX_MSG 1550
 
 struct map_data map[MAX_MAP_PER_SERVER];
 int map_num = 0;
@@ -2185,7 +2185,7 @@ struct map_session_data* map_charid2sd(int charid)
  * (without sensitive case if necessary)
  * return map_session_data pointer or NULL
  *------------------------------------------*/
-struct map_session_data * map_nick2sd(const char *nick)
+struct map_session_data * map_nick2sd(const char *nick, bool allow_partial)
 {
 	struct map_session_data* sd;
 	struct map_session_data* found_sd;
@@ -2202,7 +2202,7 @@ struct map_session_data * map_nick2sd(const char *nick)
 	found_sd = NULL;
 	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 	{
-		if( battle_config.partial_name_scan )
+		if( allow_partial && battle_config.partial_name_scan )
 		{// partial name search
 			if( strnicmp(sd->status.name, nick, nicklen) == 0 )
 			{
@@ -2220,6 +2220,7 @@ struct map_session_data * map_nick2sd(const char *nick)
 		else if( strcasecmp(sd->status.name, nick) == 0 )
 		{// exact search only
 			found_sd = sd;
+			qty = 1;
 			break;
 		}
 	}

@@ -40,7 +40,7 @@
 // Soup Quest :: lou_tre
 //============================================================
 lou_in02,53,174,7	script	Employee#1	822,6,62,{
-	if (gettime(3) >= 10 && gettime(3) < 22) {
+	if (gettime(DT_HOUR) >= 10 && gettime(DT_HOUR) < 22) {
 		mes "[Chang Pai]";
 		mes "Welcome, welcome!";
 		mes "We are ready to serve you~!";
@@ -53,7 +53,7 @@ lou_in02,53,174,7	script	Employee#1	822,6,62,{
 
 OnTouch_:
 	if (ch_tre == 2 || ch_tre == 3) {
-		if (gettime(3) >= 10 && gettime(3) < 14) {
+		if (gettime(DT_HOUR) >= 10 && gettime(DT_HOUR) < 14) {
 			if (rand(1,10) < 9) {
 				mes "[Chang Pai]";
 				mes "Wait, who are you?!";
@@ -66,7 +66,7 @@ OnTouch_:
 				close;
 			}
 		}
-		else if (gettime(3) >= 14 && gettime(3) < 17) {
+		else if (gettime(DT_HOUR) >= 14 && gettime(DT_HOUR) < 17) {
 			if (rand(1,10) < 10) {
 				mes "[Chang Pai]";
 				mes "Wait, who are you?!";
@@ -79,7 +79,7 @@ OnTouch_:
 				close;
 			}
 		}
-		else if (gettime(3) >= 17 && gettime(3) < 21) {
+		else if (gettime(DT_HOUR) >= 17 && gettime(DT_HOUR) < 21) {
 			if (rand(1,10) < 6) {
 				mes "[Chang Pai]";
 				mes "Wait, who are you?!";
@@ -115,7 +115,7 @@ OnTouch_:
 }
 
 lou_in02,76,181,3	script	Employee#2	822,2,2,{
-	if (gettime(3) >= 10 && gettime(3) < 22) {
+	if (gettime(DT_HOUR) >= 10 && gettime(DT_HOUR) < 22) {
 		mes "[Huang Jia Xian]";
 		mes "Welcome~";
 		mes "Sorry for making you wait. If you wish to rest, please go upstairs.";
@@ -140,7 +140,7 @@ lou_in02,76,181,3	script	Employee#2	822,2,2,{
 
 OnTouch_:
 	if (ch_tre == 2 || ch_tre == 3) {
-		if (gettime(3) >= 10 && gettime(3) < 14) {
+		if (gettime(DT_HOUR) >= 10 && gettime(DT_HOUR) < 14) {
 			if (rand(1,10) < 9) {
 				mes "[Huang Jia Xian]";
 				mes "What the...?";
@@ -154,7 +154,7 @@ OnTouch_:
 				close;
 			}
 		}
-		else if (gettime(3) >= 14 && gettime(3) < 17) {
+		else if (gettime(DT_HOUR) >= 14 && gettime(DT_HOUR) < 17) {
 			if (rand(1,10) < 10) {
 				mes "[Huang Jia Xian]";
 				mes "What the...?";
@@ -168,7 +168,7 @@ OnTouch_:
 				close;
 			}
 		}
-		else if (gettime(3) >= 17 && gettime(3) < 22) {
+		else if (gettime(DT_HOUR) >= 17 && gettime(DT_HOUR) < 22) {
 			if (rand(1,10) < 6) {
 				mes "[Huang Jia Xian]";
 				mes "What the...?";
@@ -205,7 +205,7 @@ OnTouch_:
 }
 
 lou_in02,61,175,3	script	Employee#3	818,2,2,{
-	if (gettime(3) >= 10 && gettime(3) < 22) {
+	if (gettime(DT_HOUR) >= 10 && gettime(DT_HOUR) < 22) {
 		if (ch_tre == 5) {
 			mes "[Ya Hua]";
 			mes "Welcome, welcome!";
@@ -236,7 +236,7 @@ lou_in02,61,175,3	script	Employee#3	818,2,2,{
 
 OnTouch_:
 	if (ch_tre == 2 || ch_tre == 3) {
-		if (gettime(3) >= 10 && gettime(3) < 14) {
+		if (gettime(DT_HOUR) >= 10 && gettime(DT_HOUR) < 14) {
 			if (rand(1,10) < 9) {
 				mes "[Ya Hua]";
 				mes "What do you think";
@@ -250,7 +250,7 @@ OnTouch_:
 				close;
 			}
 		}
-		else if (gettime(3) >= 14 && gettime(3) < 17) {
+		else if (gettime(DT_HOUR) >= 14 && gettime(DT_HOUR) < 17) {
 			if (rand(1,10) < 10) {
 				mes "[Ya Hua]";
 				mes "What do you think";
@@ -264,7 +264,7 @@ OnTouch_:
 				close;
 			}
 		}
-		else if (gettime(3) >= 17 && gettime(3) < 22) {
+		else if (gettime(DT_HOUR) >= 17 && gettime(DT_HOUR) < 22) {
 			if (rand(1,10) < 6) {
 				mes "[Ya Hua]";
 				mes "What do you think";
@@ -369,7 +369,7 @@ lou_in02,62,183,3	script	Chef#1-2	820,2,2,{
 
 OnTouch_:
 	if (ch_tre == 2 || ch_tre == 3) {
-		if (gettime(3) >= 10 && gettime(3) < 14) {
+		if (gettime(DT_HOUR) >= 10 && gettime(DT_HOUR) < 14) {
 			if (rand(1,10) < 9) {
 				mes "[Wang Shi Long]";
 				mes "Hey, what do you";
@@ -384,7 +384,7 @@ OnTouch_:
 				close;
 			}
 		}
-		else if (gettime(3) >= 14 && gettime(3) < 17) {
+		else if (gettime(DT_HOUR) >= 14 && gettime(DT_HOUR) < 17) {
 			if (rand(1,10) < 10) {
 				mes "[Wang Shi Long]";
 				mes "Hey, what do you";
@@ -399,7 +399,7 @@ OnTouch_:
 				close;
 			}
 		}
-		else if (gettime(3) >= 17 && gettime(3) < 22) {
+		else if (gettime(DT_HOUR) >= 17 && gettime(DT_HOUR) < 22) {
 			if (rand(1,10) < 6) {
 				mes "[Wang Shi Long]";
 				mes "Hey, what do you";
@@ -722,16 +722,16 @@ lou_in02,50,185,5	script	Pot#1	111,{
 			mes "^3131FFYou take a careful look around.";
 			mes "It wouldn't be wise to steal this now if anyone is watching.^000000";
 			next;
-			if (gettime(3) >= 10 && gettime(3) < 14) {
+			if (gettime(DT_HOUR) >= 10 && gettime(DT_HOUR) < 14) {
 				mes "^3131FFThe restaurant doesn't seem busy right now, so there's only a few employees and customers.^000000";
 			}
-			else if (gettime(3) >= 14 && gettime(3) < 17) {
+			else if (gettime(DT_HOUR) >= 14 && gettime(DT_HOUR) < 17) {
 				mes "^3131FFOnly the restaurant";
 				mes "employees are around,";
 				mes "and they busy chatting";
 				mes "amongst each other.^000000";
 			}
-			else if (gettime(3) >= 17 && gettime(3) < 22) {
+			else if (gettime(DT_HOUR) >= 17 && gettime(DT_HOUR) < 22) {
 				mes "^3131FFThe restaurant is filled";
 				mes "with customers, and the";
 				mes "hustle and bustle of the";
@@ -772,7 +772,7 @@ lou_in02,50,185,5	script	Pot#1	111,{
 		mes "^3131FFHowever, it's empty.^000000";
 		close;
 	}
-	if (gettime(3) >= 10 && gettime(3) < 22) {
+	if (gettime(DT_HOUR) >= 10 && gettime(DT_HOUR) < 22) {
 		mes "[Chef]";
 		mes "Ah...!";
 		mes "Please, do not";
@@ -794,16 +794,16 @@ lou_in02,49,185,5	script	Pot#2	111,{
 			mes "^3131FFYou take a careful look around.";
 			mes "It wouldn't be wise to steal this now if anyone is watching.^000000";
 			next;
-			if (gettime(3) >= 10 && gettime(3) < 14) {
+			if (gettime(DT_HOUR) >= 10 && gettime(DT_HOUR) < 14) {
 				mes "^3131FFThe restaurant doesn't seem busy right now, so there's only a few employees and customers.^000000";
 			}
-			else if (gettime(3) >= 14 && gettime(3) < 17) {
+			else if (gettime(DT_HOUR) >= 14 && gettime(DT_HOUR) < 17) {
 				mes "^3131FFOnly the restaurant";
 				mes "employees are around,";
 				mes "and they busy chatting";
 				mes "amongst each other.^000000";
 			}
-			else if (gettime(3) >= 17 && gettime(3) < 22) {
+			else if (gettime(DT_HOUR) >= 17 && gettime(DT_HOUR) < 22) {
 				mes "^3131FFThe restaurant is filled";
 				mes "with customers, and the";
 				mes "hustle and bustle of the";
@@ -844,7 +844,7 @@ lou_in02,49,185,5	script	Pot#2	111,{
 		mes "an empty pot.^000000";
 		close;
 	}
-	if (gettime(3) >= 10 && gettime(3) < 22) {
+	if (gettime(DT_HOUR) >= 10 && gettime(DT_HOUR) < 22) {
 		mes "[Chef]";
 		mes "Ah...!";
 		mes "Please, do not";
@@ -896,7 +896,7 @@ lou_in02,58,183,5	script	Chef Assistant#lou1	823,5,5,{
 
 OnTouch_:
 	if (ch_tre == 2 || ch_tre == 3) {
-		if (gettime(3) >= 10 && gettime(3) < 14) {
+		if (gettime(DT_HOUR) >= 10 && gettime(DT_HOUR) < 14) {
 			if (rand(1,10) < 9) {
 				mes "[Jin Wei Ling]";
 				mes "Wait! Who are you!";
@@ -910,7 +910,7 @@ OnTouch_:
 				close;
 			}
 		}
-		else if (gettime(3) >= 14 && gettime(3) < 17) {
+		else if (gettime(DT_HOUR) >= 14 && gettime(DT_HOUR) < 17) {
 			if (rand(1,10) < 10) {
 				mes "[Jin Wei Ling]";
 				mes "Wait! Who are you!";
@@ -924,7 +924,7 @@ OnTouch_:
 				close;
 			}
 		}
-		else if (gettime(3) >= 17 && gettime(3) < 22) {
+		else if (gettime(DT_HOUR) >= 17 && gettime(DT_HOUR) < 22) {
 			if (rand(1,10) < 6) {
 				mes "[Jin Wei Ling]";
 				mes "Wait! Who are you!";
