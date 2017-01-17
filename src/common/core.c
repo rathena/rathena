@@ -102,10 +102,6 @@ static void sig_proc(int sn) {
 
 	switch (sn) {
 	case SIGINT:
-	case SIGUSR1:
-		ShowInfo("Server process received signal SIGUSR1");
-		sigusr1_callback();
-		break;
 	case SIGTERM:
 		if (++is_called > 3)
 			exit(EXIT_SUCCESS);
@@ -122,6 +118,10 @@ static void sig_proc(int sn) {
 		raise(sn);
 		break;
 #ifndef _WIN32
+	case SIGUSR1:
+		ShowInfo("Server process received signal SIGUSR1");
+		sigusr1_callback();
+		break;		
 	case SIGXFSZ:
 		// ignore and allow it to set errno to EFBIG
 		ShowWarning ("Max file size reached!\n");
