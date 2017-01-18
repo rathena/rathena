@@ -14106,9 +14106,9 @@ BUILDIN_FUNC(dispbottom)
 
 	if(sd) {
 		if (script_hasdata(st,3))
-			clif_messagecolor2(sd, color, message);		// [Napster]
+			clif_messagecolor(&sd->bl, color, message, true, SELF);		// [Napster]
 		else
-			clif_disp_onlyself(sd, message, (int)strlen(message));
+			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], message, false, SELF);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16326,7 +16326,7 @@ BUILDIN_FUNC(callshop)
 		}
 
 		if (i == nd->u.shop.count) {
-			clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd, 534));
+			clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 534), false, SELF);
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -18263,7 +18263,7 @@ BUILDIN_FUNC(openauction)
 		return SCRIPT_CMD_FAILURE;
 
 	if( !battle_config.feature_auction ) {
-		clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd, 517));
+		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 517), false, SELF);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
