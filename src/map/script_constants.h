@@ -1438,6 +1438,7 @@
 	export_constant(SC_GEFFEN_MAGIC1);
 	export_constant(SC_GEFFEN_MAGIC2);
 	export_constant(SC_GEFFEN_MAGIC3);
+	export_constant(SC_MAXPAIN);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

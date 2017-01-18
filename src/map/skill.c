@@ -418,6 +418,8 @@ unsigned short skill_dummy2skill_id(unsigned short skill_id) {
 			return GN_SLINGITEM;
 		case RL_R_TRIP_PLUSATK:
 			return RL_R_TRIP;
+		case NPC_MAXPAIN_ATK:
+			return NPC_MAXPAIN;
 	}
 	return skill_id;
 }
@@ -4830,6 +4832,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_PULSESTRIKE:
 	case NPC_HELLJUDGEMENT:
 	case NPC_VAMPIRE_GIFT:
+	case NPC_MAXPAIN_ATK:
 	case RK_IGNITIONBREAK:
 	case AB_JUDEX:
 	case WL_SOULEXPANSION:
@@ -6626,6 +6629,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case RL_E_CHAIN:
 	case SU_FRESHSHRIMP:
 	case SU_ARCLOUSEDASH:
+	case NPC_MAXPAIN:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;

@@ -16844,6 +16844,10 @@ BUILDIN_FUNC(rid2name)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Toggle a unit from moving.
+ * pcblockmove(<unit_id>,<option>);
+ */
 BUILDIN_FUNC(pcblockmove)
 {
 	struct block_list *bl = NULL;
@@ -16858,6 +16862,29 @@ BUILDIN_FUNC(pcblockmove)
 
 		if (ud)
 			ud->state.blockedmove = script_getnum(st,3) > 0;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Toggle a unit from casting skills.
+ * pcblockskill(<unit_id>,<option>);
+ */
+BUILDIN_FUNC(pcblockskill)
+{
+	struct block_list *bl = NULL;
+
+	if (script_getnum(st, 2))
+		bl = map_id2bl(script_getnum(st,2));
+	else
+		bl = map_id2bl(st->rid);
+
+	if (bl) {
+		struct unit_data *ud = unit_bl2ud(bl);
+
+		if (ud)
+			ud->state.blockedskill = script_getnum(st, 3) > 0;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -22532,6 +22559,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pcfollow,"ii"),
 	BUILDIN_DEF(pcstopfollow,"i"),
 	BUILDIN_DEF(pcblockmove,"ii"),
+	BUILDIN_DEF2(pcblockmove,"unitblockmove","ii"),
+	BUILDIN_DEF(pcblockskill,"ii"),
+	BUILDIN_DEF2(pcblockskill,"unitblockskill","ii"),
 	// <--- [zBuffer] List of player cont commands
 	// [zBuffer] List of unit control commands --->
 	BUILDIN_DEF(unitexists,"i"),
@@ -22547,7 +22577,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitattack,"iv?"),
 	BUILDIN_DEF(unitstopattack,"i"),
 	BUILDIN_DEF(unitstopwalk,"i"),
-	BUILDIN_DEF2(pcblockmove,"unitblockmove","ii"),
 	BUILDIN_DEF(unittalk,"is"),
 	BUILDIN_DEF(unitemote,"ii"),
 	BUILDIN_DEF(unitskilluseid,"ivi??"), // originally by Qamera [Celest]
