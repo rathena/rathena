@@ -647,6 +647,20 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 					WFIFOSET(fd,len);
 				}
 			}
+
+			if (!enable_spy) //Skip unnecessary parsing. [Skotlex]
+				break;
+
+			iter = mapit_getallusers();
+			while ((tsd = (TBL_PC*)mapit_next(iter)) != NULL){
+				if (tsd->clanspy == clan->id && packet_db[tsd->packet_ver][RBUFW(buf, 0)].len)
+				{ // packet must exist for the client version
+					WFIFOHEAD(tsd->fd, len);
+					memcpy(WFIFOP(tsd->fd, 0), buf, len);
+					WFIFOSET(tsd->fd, len);
+				}
+			}
+			mapit_free(iter);
 		}
 		break;
 

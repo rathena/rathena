@@ -170,8 +170,8 @@ static bool guild_read_castledb(char* str[], int columns, int current) {// <cast
 	CREATE(gc, struct guild_castle, 1);
 	gc->castle_id = atoi(str[0]);
 	gc->mapindex = mapindex;
-	safestrncpy(gc->castle_name, str[2], sizeof(gc->castle_name));
-	safestrncpy(gc->castle_event, str[3], sizeof(gc->castle_event));
+	safestrncpy(gc->castle_name, trim(str[2]), sizeof(gc->castle_name));
+	safestrncpy(gc->castle_event, trim(str[3]), sizeof(gc->castle_event));
 
 	idb_put(castle_db,gc->castle_id,gc);
 	return true;
