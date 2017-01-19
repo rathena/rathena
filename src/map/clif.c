@@ -1016,7 +1016,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 #if PACKETVER >= 20091103
 	name = status_get_name(bl);
 #if PACKETVER < 20110111
-	WBUFW(buf,2) = (spawn ? 62 : 63)+strlen(name);
+	WBUFW(buf,2) = (uint16)((spawn ? 62 : 63)+strlen(name));
 #elif PACKETVER < 20120221
 	WBUFW(buf,2) = (uint16)((spawn ? 64 : 65)+strlen(name));
 #elif PACKETVER < 20130807
@@ -1213,7 +1213,7 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 #if PACKETVER >= 20091103
 	name = status_get_name(bl);
 #if PACKETVER < 20110111
-	WBUFW(buf, 2) = 69+strlen(name);
+	WBUFW(buf, 2) = (uint16)(69+strlen(name));
 #elif PACKETVER < 20120221
 	WBUFW(buf, 2) = (uint16)(71+strlen(name));
 #elif PACKETVER < 20130807
