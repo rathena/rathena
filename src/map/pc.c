@@ -1103,8 +1103,6 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->status.body = cap_value(sd->status.body,MIN_BODY_STYLE,MAX_BODY_STYLE);
 
 	//Initializations to null/0 unneeded since map_session_data was filled with 0 upon allocation.
-	if (!sd->status.hp)
-		pc_setdead(sd);
 	sd->state.connect_new = 1;
 
 	sd->followtimer = INVALID_TIMER; // [MouseJstr]
@@ -1405,6 +1403,7 @@ void pc_reg_received(struct map_session_data *sd)
 	if (sd->state.active)
 		return;
 	sd->state.active = 1;
+	sd->state.pc_loaded = false; // Ensure inventory data and status data is loaded before we calculate player stats
 
 	intif_storage_request(sd,TABLE_STORAGE, 0, STOR_MODE_ALL); // Request storage data
 	intif_storage_request(sd,TABLE_CART, 0, STOR_MODE_ALL); // Request cart data
@@ -11463,6 +11462,13 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
  */
 void pc_scdata_received(struct map_session_data *sd) {
 	pc_inventory_rentals(sd); // Needed here to remove rentals that have Status Changes after chrif_load_scdata has finished
+
+	sd->state.pc_loaded = true;
+
+	if (sd->state.connect_new == 0 && sd->fd) { // Character already loaded map! Gotta trigger LoadEndAck manually.
+		sd->state.connect_new = 1;
+		clif_parse_LoadEndAck(sd->fd, sd);
+	}
 
 	if (pc_iscarton(sd)) {
 		sd->cart_weight_max = 0; // Force a client refesh

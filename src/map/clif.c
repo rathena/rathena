@@ -10062,8 +10062,9 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if(sd->bl.prev != NULL)
 		return;
 
-	if (!sd->state.active) { //Character loading is not complete yet!
-		//Let pc_reg_received reinvoke this when ready.
+	// Autotraders should ignore this entirely, clif_parse_LoadEndAck is always invoked manually for them
+	if (!sd->state.active || (!sd->state.autotrade && !sd->state.pc_loaded)) { //Character loading is not complete yet!
+		//Let pc_reg_received or intif_parse_StorageReceived reinvoke this when ready.
 		sd->state.connect_new = 0;
 		return;
 	}
