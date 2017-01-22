@@ -1205,7 +1205,7 @@ int npc_globalmessage(const char* name, const char* mes)
 	if (!nd)
 		return 0;
 
-	snprintf(temp, sizeof(temp), "%s : %s", name, mes);
+	snprintf(temp, sizeof(temp), "%s", mes);
 	clif_GlobalMessage(&nd->bl,temp,ALL_CLIENT);
 
 	return 0;
