@@ -139,7 +139,7 @@ and 'doc/mapflags.txt'.
 
 ** Create a permanent monster spawn:
 
-<map name>,<x>,<y>,<xs>,<ys>%TAB%monster%TAB%<monster name>%TAB%<mob id>,<amount>,<delay1>,<delay2>,<event>{,<mob size>,<mob ai>}
+<map name>,<x>,<y>{,<xs>{,<ys>}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 
 Map name is the name of the map the monsters will spawn on. x,y are the
 coordinates where the mob should spawn. If xs and ys are non-zero, they
@@ -156,6 +156,10 @@ used, (which, in rAthena, actually contains an English name) if it's "--en--",
 it's the 'english name' from the monster database (which contains an uppercase 
 name used to summon the monster with a GM command).
 
+You can specify a custom level to use for the mob different from the one of
+the database by adjoining the level after the name with a comma. eg:
+"Poring,50" for a name will spawn a monster with name Poring and level 50.
+
 Amount is the amount of monsters that will be spawned when this command is 
 executed, it is affected by spawn rates in 'battle_athena.conf'.
 
@@ -164,19 +168,27 @@ base respawn time, and the second is random variance on top of the base time.
 Both values are given in milliseconds (1000 = 1 second).
 Note that the server also enforces a minimum respawn delay of 5 seconds.
 
-You can specify a custom level to use for the mob different from the one of
-the database by adjoining the level after the name with a comma. eg:
-"Poring,50" for a name will spawn a monster with name Poring and level 50.
-
 Event is a script event to be executed when the mob is killed. The event must
 be in the form "NPCName::OnEventName" to execute, and the event name label
 should start with "On". As with all events, if the NPC is an on-touch NPC, the
 player who triggers the script must be within 'trigger' range for the event to
 work.
 
-There are two optional fields for monster size and AI.  Size can be 0 (medium),
-1 (small), or 2 (big).  AI can be 0 (default), 1 (attack/friendly), 2 (sphere),
-3 (flora), or 4 (zanzou).
+There are two optional fields for monster size and AI.
+
+<mob size> can be:
+	Size_Small	(0)
+	Size_Medium	(1)
+	Size_Large	(2)
+
+<mob ai> can be:
+	AI_NONE		(0)		(default)
+	AI_ATTACK	(1)		(attack/friendly)
+	AI_SPHERE	(2)		(Alchemist skill)
+	AI_FLORA	(3)		(Alchemist skill)
+	AI_ZANZOU	(4)		(Kagerou/Oboro skill)
+	AI_LEGION	(5)		(Sera skill)
+	AI_FAW		(6)		(Mechanic skill)
 
 Alternately, a monster spawned using 'boss_monster' instead of 'monster' is able
 to be detected on the map with the SC_BOSSMAPINFO status (used by Convex Mirror).
@@ -5764,18 +5776,18 @@ attached at this execution will be the RID of the killing character. The variabl
 'killedrid' is set to the Class (mob ID) of the monster killed.
 
 <size> can be:
-	0 = medium (default)
-	1 = small
-	2 = big
+	Size_Small	(0)		(default)
+	Size_Medium	(1)
+	Size_Large	(2)
 	
 <ai> can be:
-	0 = none (default)
-	1 = attack/friendly
-	2 = sphere (Alchemist skill)
-	3 = flora (Alchemist skill)
-	4 = zanzou (Kagerou/Oboro skill)
-	5 = legion (Sera skill)
-	6 = faw (Mechanic skill)
+	AI_NONE		(0)		(default)
+	AI_ATTACK	(1)		(attack/friendly)
+	AI_SPHERE	(2)		(Alchemist skill)
+	AI_FLORA	(3)		(Alchemist skill)
+	AI_ZANZOU	(4)		(Kagerou/Oboro skill)
+	AI_LEGION	(5)		(Sera skill)
+	AI_FAW		(6)		(Mechanic skill)
 
     monster "place",60,100,"Poring",1002,1,"NPCNAME::OnLabel";
 
