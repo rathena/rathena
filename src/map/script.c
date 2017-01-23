@@ -9890,7 +9890,7 @@ BUILDIN_FUNC(monster)
 
 	if (script_hasdata(st, 9)) {
 		size = script_getnum(st, 9);
-		if (size > 3) {
+		if (size > SZ_BIG) {
 			ShowWarning("buildin_monster: Attempted to spawn non-existing size %d for monster class %d\n", size, class_);
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -14062,7 +14062,7 @@ int atcommand_sub(struct script_state* st,int type) {
 			memcpy(&dummy_sd.bl, bl, sizeof(struct block_list));
 			if (bl->type == BL_NPC)
 				safestrncpy(dummy_sd.status.name, ((TBL_NPC*)bl)->name, NAME_LENGTH);
-			sd->mapindex = (bl->m > 0) ? bl->m : mapindex_name2id(map_default.mapname);
+			sd->mapindex = (bl->m > 0) ? map_id2index(bl->m) : mapindex_name2id(map_default.mapname);
 		}
 
 		// Init Group ID, Level, & permissions
@@ -14106,9 +14106,9 @@ BUILDIN_FUNC(dispbottom)
 
 	if(sd) {
 		if (script_hasdata(st,3))
-			clif_messagecolor2(sd, color, message);		// [Napster]
+			clif_messagecolor(&sd->bl, color, message, true, SELF);		// [Napster]
 		else
-			clif_disp_onlyself(sd, message, (int)strlen(message));
+			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], message, false, SELF);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16326,7 +16326,7 @@ BUILDIN_FUNC(callshop)
 		}
 
 		if (i == nd->u.shop.count) {
-			clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd, 534));
+			clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 534), false, SELF);
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -16844,6 +16844,10 @@ BUILDIN_FUNC(rid2name)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Toggle a unit from moving.
+ * pcblockmove(<unit_id>,<option>);
+ */
 BUILDIN_FUNC(pcblockmove)
 {
 	struct block_list *bl = NULL;
@@ -16858,6 +16862,29 @@ BUILDIN_FUNC(pcblockmove)
 
 		if (ud)
 			ud->state.blockedmove = script_getnum(st,3) > 0;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Toggle a unit from casting skills.
+ * pcblockskill(<unit_id>,<option>);
+ */
+BUILDIN_FUNC(pcblockskill)
+{
+	struct block_list *bl = NULL;
+
+	if (script_getnum(st, 2))
+		bl = map_id2bl(script_getnum(st,2));
+	else
+		bl = map_id2bl(st->rid);
+
+	if (bl) {
+		struct unit_data *ud = unit_bl2ud(bl);
+
+		if (ud)
+			ud->state.blockedskill = script_getnum(st, 3) > 0;
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -18236,7 +18263,7 @@ BUILDIN_FUNC(openauction)
 		return SCRIPT_CMD_FAILURE;
 
 	if( !battle_config.feature_auction ) {
-		clif_colormes(sd->fd, color_table[COLOR_RED], msg_txt(sd, 517));
+		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 517), false, SELF);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
@@ -22532,6 +22559,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(pcfollow,"ii"),
 	BUILDIN_DEF(pcstopfollow,"i"),
 	BUILDIN_DEF(pcblockmove,"ii"),
+	BUILDIN_DEF2(pcblockmove,"unitblockmove","ii"),
+	BUILDIN_DEF(pcblockskill,"ii"),
+	BUILDIN_DEF2(pcblockskill,"unitblockskill","ii"),
 	// <--- [zBuffer] List of player cont commands
 	// [zBuffer] List of unit control commands --->
 	BUILDIN_DEF(unitexists,"i"),
@@ -22547,7 +22577,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitattack,"iv?"),
 	BUILDIN_DEF(unitstopattack,"i"),
 	BUILDIN_DEF(unitstopwalk,"i"),
-	BUILDIN_DEF2(pcblockmove,"unitblockmove","ii"),
 	BUILDIN_DEF(unittalk,"is"),
 	BUILDIN_DEF(unitemote,"ii"),
 	BUILDIN_DEF(unitskilluseid,"ivi??"), // originally by Qamera [Celest]

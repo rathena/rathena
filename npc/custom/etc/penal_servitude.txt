@@ -183,7 +183,7 @@ sec_in02	mapflag	noskill
 sec_in02	mapflag	pvp_nightmaredrop	random,all,300
 sec_in02	mapflag	hidemobhpbar
 
-sec_in02,138,55,100,100	monster	Toadstool	1182,30,10000,10000,1
+sec_in02,138,55,100,100	monster	Toadstool	1182,30,10000,10000
 sec_in02,138,55,100,100	monster	Fabre	1184,10,20000,20000
 sec_in02,138,55,100,100	monster	Chonchon	1183,11,20000,20000
 sec_in02,138,55,100,100	monster	Spore	1014,12,20000,20000

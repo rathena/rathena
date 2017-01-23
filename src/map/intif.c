@@ -2137,7 +2137,7 @@ int intif_parse_Mail_inboxreceived(int fd)
 	{
 		char output[128];
 		sprintf(output, msg_txt(sd,510), sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
-		clif_disp_onlyself(sd, output, strlen(output));
+		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 	return 1;
 }

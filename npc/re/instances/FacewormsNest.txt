@@ -2522,28 +2522,28 @@ OnInstanceInit:
 					.@en_name_2 = 0;
 				else if (.@ren_e_m < 1100) {
 					switch(.@en_name_3) {
-					case 4700: case 4701: case 4702:
-					case 4703: case 4704:
+					case 4700: case 4701: case 4702: case 4703:
+					case 4704: case 4705: case 4706:
 						.@en_name_2 = 4853;		// S_Str
 						break;
-					case 4740: case 4741: case 4742:
-					case 4743: case 4744:
+					case 4740: case 4741: case 4742: case 4743:
+					case 4744: case 4745: case 4746:
 						.@en_name_2 = 4855;		// S_Vital
 						break;
-					case 4730: case 4731: case 4732:
-					case 4733: case 4734:
+					case 4730: case 4731: case 4732: case 4733:
+					case 4734: case 4735: case 4736:
 						.@en_name_2 = 4854;		// S_Agi
 						break;
-					case 4720: case 4721: case 4722:
-					case 4723: case 4724:
+					case 4720: case 4721: case 4722: case 4723:
+					case 4724: case 4725: case 4726:
 						.@en_name_2 = 4857;		// S_Dex
 						break;
-					case 4750: case 4751: case 4752:
-					case 4753: case 4754:
+					case 4750: case 4751: case 4752: case 4753:
+					case 4754: case 4755: case 4756:
 						.@en_name_2 = 4858;		// S_Luck
 						break;
-					case 4710: case 4711: case 4712:
-					case 4713: case 4714:
+					case 4710: case 4711: case 4712: case 4713:
+					case 4714: case 4715: case 4716:
 						.@en_name_2 = 4856;		// S_Int
 						break;
 					}
