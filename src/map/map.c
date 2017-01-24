@@ -2108,7 +2108,7 @@ int map_quit(struct map_session_data *sd) {
 	pc_makesavestatus(sd);
 	pc_clean_skilltree(sd);
 	pc_crimson_marker_clear(sd);
-	chrif_save(sd,1);
+	chrif_save(sd, CSAVE_QUIT|CSAVE_INVENTORY|CSAVE_CART);
 	unit_free_pc(sd);
 	return 0;
 }
@@ -4463,7 +4463,7 @@ void do_final(void)
 
 static int map_abort_sub(struct map_session_data* sd, va_list ap)
 {
-	chrif_save(sd,1);
+	chrif_save(sd, CSAVE_QUIT|CSAVE_INVENTORY|CSAVE_CART);
 	return 1;
 }
 

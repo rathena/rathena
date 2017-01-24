@@ -808,7 +808,7 @@ ACMD_FUNC(save)
 	if (sd->status.pet_id > 0 && sd->pd)
 		intif_save_petdata(sd->status.account_id, &sd->pd->pet);
 
-	chrif_save(sd,0);
+	chrif_save(sd, CSAVE_NORMAL);
 
 	clif_displaymessage(fd, msg_txt(sd,6)); // Your save point has been changed.
 
@@ -5951,7 +5951,7 @@ ACMD_FUNC(autotrade) {
 	channel_pcquit(sd,0xF); //leave all chan
 	clif_authfail_fd(sd->fd, 15);
 
-	chrif_save(sd,3);
+	chrif_save(sd, CSAVE_AUTOTRADE);
 
 	return 0;
 }
