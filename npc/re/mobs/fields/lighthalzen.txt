@@ -20,31 +20,31 @@
 //==================================================
 // lhz_fild01 - Lighthalzen Field
 //==================================================
-lhz_fild01,0,0,0,0	monster	Rafflesia	1162,130,5000,0,0
-lhz_fild01,0,0,0,0	monster	Stem Worm	1215,35,5000,0,0
-lhz_fild01,0,0,0,0	monster	Metaling	1613,35,5000,0,0
-lhz_fild01,0,0,0,0	monster	Red Plant	1078,10,60000,30000,0
-lhz_fild01,0,0,0,0	monster	Yellow Plant	1081,10,60000,30000,0
-lhz_fild01,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
+lhz_fild01,0,0	monster	Rafflesia	1162,130,5000
+lhz_fild01,0,0	monster	Stem Worm	1215,35,5000
+lhz_fild01,0,0	monster	Metaling	1613,35,5000
+lhz_fild01,0,0	monster	Red Plant	1078,10,60000,30000
+lhz_fild01,0,0	monster	Yellow Plant	1081,10,60000,30000
+lhz_fild01,0,0	monster	Green Plant	1080,10,60000,30000
 
 //==================================================
 // lhz_fild02 - Lighthalzen Field (Grim Reaper's Valley)
 //==================================================
-lhz_fild02,0,0,0,0	monster	Stem Worm	1215,100,5000,0,0
-lhz_fild02,0,0,0,0	monster	Breeze	1692,40,5000,0,0
-lhz_fild02,0,0,0,0	monster	Rafflesia	1162,20,5000,0,0
-lhz_fild02,0,0,0,0	monster	Metaling	1613,20,5000,0,0
-lhz_fild02,0,0,0,0	monster	Demon Pungus	1378,15,5000,0,0
-lhz_fild02,0,0,0,0	monster	Yellow Plant	1081,15,60000,30000,0
-lhz_fild02,0,0,0,0	monster	Green Plant	1080,15,60000,30000,0
+lhz_fild02,0,0	monster	Stem Worm	1215,100,5000
+lhz_fild02,0,0	monster	Breeze	1692,40,5000
+lhz_fild02,0,0	monster	Rafflesia	1162,20,5000
+lhz_fild02,0,0	monster	Metaling	1613,20,5000
+lhz_fild02,0,0	monster	Demon Pungus	1378,15,5000
+lhz_fild02,0,0	monster	Yellow Plant	1081,15,60000,30000
+lhz_fild02,0,0	monster	Green Plant	1080,15,60000,30000
 
 //==================================================
 // lhz_fild03 - Lighthalzen Field
 //==================================================
-lhz_fild03,0,0,0,0	monster	Breeze	1692,130,5000,0,0
-lhz_fild03,0,0,0,0	monster	Stem Worm	1215,20,5000,0,0
-lhz_fild03,0,0,0,0	monster	Rafflesia	1162,20,5000,0,0
-lhz_fild03,0,0,0,0	monster	Metaling	1613,20,5000,0,0
-lhz_fild03,0,0,0,0	monster	Demon Pungus	1378,15,5000,0,0
-lhz_fild03,0,0,0,0	monster	Red Plant	1078,10,60000,30000,0
-lhz_fild03,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
+lhz_fild03,0,0	monster	Breeze	1692,130,5000
+lhz_fild03,0,0	monster	Stem Worm	1215,20,5000
+lhz_fild03,0,0	monster	Rafflesia	1162,20,5000
+lhz_fild03,0,0	monster	Metaling	1613,20,5000
+lhz_fild03,0,0	monster	Demon Pungus	1378,15,5000
+lhz_fild03,0,0	monster	Red Plant	1078,10,60000,30000
+lhz_fild03,0,0	monster	Green Plant	1080,10,60000,30000

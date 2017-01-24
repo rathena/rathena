@@ -112,249 +112,249 @@ OnInit:
 
 // Xmas Goblin Spawns
 //============================================================
-prt_fild11,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-gef_fild11,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
-yuno_fild09,0,0,0,0	monster	Christmas Goblin	1245,5,0,0,0
+prt_fild11,0,0	monster	Christmas Goblin	1245,5
+gef_fild11,0,0	monster	Christmas Goblin	1245,5
+yuno_fild09,0,0	monster	Christmas Goblin	1245,5
 
 // Santa Poring Spawns
 //============================================================
-ein_fild03,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-ein_fild04,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-ein_fild06,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-ein_fild07,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-ein_fild08,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-ein_fild09,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-ein_fild10,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild00,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild02,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild03,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild04,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild05,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild07,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild08,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild09,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild10,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild11,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild12,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild13,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gef_fild14,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-glast_01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-lhz_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-lhz_fild02,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-lhz_fild03,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-mjolnir_01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-mjolnir_02,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-mjolnir_03,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-mjolnir_04,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-mjolnir_05,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-mjolnir_06,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-mjolnir_07,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-mjolnir_08,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-mjolnir_09,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-mjolnir_10,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-mjolnir_11,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-mjolnir_12,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild02,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild03,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild04,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild05,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild06,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild07,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild08,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild09,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild10,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild11,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild12,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild13,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild14,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild15,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild16,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild17,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-moc_fild18,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-pay_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-pay_fild02,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-pay_fild03,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-pay_fild04,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-pay_fild05,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-pay_fild06,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-pay_fild07,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-pay_fild08,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-pay_fild09,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-pay_fild10,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-pay_fild11,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-prt_fild00,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-prt_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-prt_fild02,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-prt_fild03,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-prt_fild04,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-prt_fild05,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-prt_fild06,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-prt_fild07,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-prt_fild08,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-prt_fild09,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-prt_fild10,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-prt_fild11,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-xmas_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-cmd_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-cmd_fild02,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-cmd_fild03,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-cmd_fild04,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-cmd_fild05,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-cmd_fild06,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-cmd_fild07,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-cmd_fild08,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-cmd_fild09,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-yuno_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-yuno_fild02,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-yuno_fild03,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-yuno_fild04,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-yuno_fild05,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-yuno_fild06,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-yuno_fild07,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-yuno_fild08,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-yuno_fild09,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-yuno_fild11,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-yuno_fild12,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-ama_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-gon_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-um_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-um_fild02,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-um_fild03,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-um_fild04,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-nif_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-nif_fild02,0,0,0,0 	monster	Santa Poring	1062,15,0,0,0
-lou_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-hu_fild01,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-hu_fild04,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-hu_fild05,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
-hu_fild07,0,0,0,0	monster	Santa Poring	1062,15,0,0,0
+ein_fild03,0,0	monster	Santa Poring	1062,15
+ein_fild04,0,0	monster	Santa Poring	1062,15
+ein_fild06,0,0	monster	Santa Poring	1062,15
+ein_fild07,0,0	monster	Santa Poring	1062,15
+ein_fild08,0,0	monster	Santa Poring	1062,15
+ein_fild09,0,0	monster	Santa Poring	1062,15
+ein_fild10,0,0	monster	Santa Poring	1062,15
+gef_fild00,0,0	monster	Santa Poring	1062,15
+gef_fild01,0,0	monster	Santa Poring	1062,15
+gef_fild02,0,0	monster	Santa Poring	1062,15
+gef_fild03,0,0	monster	Santa Poring	1062,15
+gef_fild04,0,0	monster	Santa Poring	1062,15
+gef_fild05,0,0	monster	Santa Poring	1062,15
+gef_fild07,0,0	monster	Santa Poring	1062,15
+gef_fild08,0,0	monster	Santa Poring	1062,15
+gef_fild09,0,0	monster	Santa Poring	1062,15
+gef_fild10,0,0	monster	Santa Poring	1062,15
+gef_fild11,0,0	monster	Santa Poring	1062,15
+gef_fild12,0,0	monster	Santa Poring	1062,15
+gef_fild13,0,0	monster	Santa Poring	1062,15
+gef_fild14,0,0	monster	Santa Poring	1062,15
+glast_01,0,0	monster	Santa Poring	1062,15
+lhz_fild01,0,0	monster	Santa Poring	1062,15
+lhz_fild02,0,0	monster	Santa Poring	1062,15
+lhz_fild03,0,0	monster	Santa Poring	1062,15
+mjolnir_01,0,0	monster	Santa Poring	1062,15
+mjolnir_02,0,0	monster	Santa Poring	1062,15
+mjolnir_03,0,0	monster	Santa Poring	1062,15
+mjolnir_04,0,0	monster	Santa Poring	1062,15
+mjolnir_05,0,0	monster	Santa Poring	1062,15
+mjolnir_06,0,0	monster	Santa Poring	1062,15
+mjolnir_07,0,0	monster	Santa Poring	1062,15
+mjolnir_08,0,0	monster	Santa Poring	1062,15
+mjolnir_09,0,0	monster	Santa Poring	1062,15
+mjolnir_10,0,0	monster	Santa Poring	1062,15
+mjolnir_11,0,0	monster	Santa Poring	1062,15
+mjolnir_12,0,0	monster	Santa Poring	1062,15
+moc_fild01,0,0	monster	Santa Poring	1062,15
+moc_fild02,0,0	monster	Santa Poring	1062,15
+moc_fild03,0,0	monster	Santa Poring	1062,15
+moc_fild04,0,0	monster	Santa Poring	1062,15
+moc_fild05,0,0	monster	Santa Poring	1062,15
+moc_fild06,0,0	monster	Santa Poring	1062,15
+moc_fild07,0,0	monster	Santa Poring	1062,15
+moc_fild08,0,0	monster	Santa Poring	1062,15
+moc_fild09,0,0	monster	Santa Poring	1062,15
+moc_fild10,0,0	monster	Santa Poring	1062,15
+moc_fild11,0,0	monster	Santa Poring	1062,15
+moc_fild12,0,0	monster	Santa Poring	1062,15
+moc_fild13,0,0	monster	Santa Poring	1062,15
+moc_fild14,0,0	monster	Santa Poring	1062,15
+moc_fild15,0,0	monster	Santa Poring	1062,15
+moc_fild16,0,0	monster	Santa Poring	1062,15
+moc_fild17,0,0	monster	Santa Poring	1062,15
+moc_fild18,0,0	monster	Santa Poring	1062,15
+pay_fild01,0,0	monster	Santa Poring	1062,15
+pay_fild02,0,0	monster	Santa Poring	1062,15
+pay_fild03,0,0	monster	Santa Poring	1062,15
+pay_fild04,0,0	monster	Santa Poring	1062,15
+pay_fild05,0,0	monster	Santa Poring	1062,15
+pay_fild06,0,0	monster	Santa Poring	1062,15
+pay_fild07,0,0	monster	Santa Poring	1062,15
+pay_fild08,0,0	monster	Santa Poring	1062,15
+pay_fild09,0,0	monster	Santa Poring	1062,15
+pay_fild10,0,0	monster	Santa Poring	1062,15
+pay_fild11,0,0	monster	Santa Poring	1062,15
+prt_fild00,0,0	monster	Santa Poring	1062,15
+prt_fild01,0,0	monster	Santa Poring	1062,15
+prt_fild02,0,0	monster	Santa Poring	1062,15
+prt_fild03,0,0	monster	Santa Poring	1062,15
+prt_fild04,0,0	monster	Santa Poring	1062,15
+prt_fild05,0,0	monster	Santa Poring	1062,15
+prt_fild06,0,0	monster	Santa Poring	1062,15
+prt_fild07,0,0	monster	Santa Poring	1062,15
+prt_fild08,0,0	monster	Santa Poring	1062,15
+prt_fild09,0,0	monster	Santa Poring	1062,15
+prt_fild10,0,0	monster	Santa Poring	1062,15
+prt_fild11,0,0	monster	Santa Poring	1062,15
+xmas_fild01,0,0	monster	Santa Poring	1062,15
+cmd_fild01,0,0	monster	Santa Poring	1062,15
+cmd_fild02,0,0	monster	Santa Poring	1062,15
+cmd_fild03,0,0	monster	Santa Poring	1062,15
+cmd_fild04,0,0	monster	Santa Poring	1062,15
+cmd_fild05,0,0	monster	Santa Poring	1062,15
+cmd_fild06,0,0	monster	Santa Poring	1062,15
+cmd_fild07,0,0	monster	Santa Poring	1062,15
+cmd_fild08,0,0	monster	Santa Poring	1062,15
+cmd_fild09,0,0	monster	Santa Poring	1062,15
+yuno_fild01,0,0	monster	Santa Poring	1062,15
+yuno_fild02,0,0	monster	Santa Poring	1062,15
+yuno_fild03,0,0	monster	Santa Poring	1062,15
+yuno_fild04,0,0	monster	Santa Poring	1062,15
+yuno_fild05,0,0	monster	Santa Poring	1062,15
+yuno_fild06,0,0	monster	Santa Poring	1062,15
+yuno_fild07,0,0	monster	Santa Poring	1062,15
+yuno_fild08,0,0	monster	Santa Poring	1062,15
+yuno_fild09,0,0	monster	Santa Poring	1062,15
+yuno_fild11,0,0	monster	Santa Poring	1062,15
+yuno_fild12,0,0	monster	Santa Poring	1062,15
+ama_fild01,0,0	monster	Santa Poring	1062,15
+gon_fild01,0,0	monster	Santa Poring	1062,15
+um_fild01,0,0	monster	Santa Poring	1062,15
+um_fild02,0,0	monster	Santa Poring	1062,15
+um_fild03,0,0	monster	Santa Poring	1062,15
+um_fild04,0,0	monster	Santa Poring	1062,15
+nif_fild01,0,0	monster	Santa Poring	1062,15
+nif_fild02,0,0	monster	Santa Poring	1062,15
+lou_fild01,0,0	monster	Santa Poring	1062,15
+hu_fild01,0,0	monster	Santa Poring	1062,15
+hu_fild04,0,0	monster	Santa Poring	1062,15
+hu_fild05,0,0	monster	Santa Poring	1062,15
+hu_fild07,0,0	monster	Santa Poring	1062,15
 
 // Antonio Spawns
 //============================================================
-ein_fild03,0,0,0,0	monster	Antonio	1247,1,0,0,0
-ein_fild04,0,0,0,0	monster	Antonio	1247,1,0,0,0
-ein_fild06,0,0,0,0	monster	Antonio	1247,1,0,0,0
-ein_fild07,0,0,0,0	monster	Antonio	1247,1,0,0,0
-ein_fild08,0,0,0,0	monster	Antonio	1247,1,0,0,0
-ein_fild09,0,0,0,0	monster	Antonio	1247,1,0,0,0
-ein_fild10,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild00,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild02,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild03,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild04,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild05,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild07,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild08,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild09,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild10,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild11,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild12,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild13,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gef_fild14,0,0,0,0	monster	Antonio	1247,1,0,0,0
-glast_01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-lhz_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-lhz_fild02,0,0,0,0	monster	Antonio	1247,1,0,0,0
-lhz_fild03,0,0,0,0	monster	Antonio	1247,1,0,0,0
-mjolnir_01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-mjolnir_02,0,0,0,0	monster	Antonio	1247,1,0,0,0
-mjolnir_03,0,0,0,0	monster	Antonio	1247,1,0,0,0
-mjolnir_04,0,0,0,0	monster	Antonio	1247,1,0,0,0
-mjolnir_05,0,0,0,0	monster	Antonio	1247,1,0,0,0
-mjolnir_06,0,0,0,0	monster	Antonio	1247,1,0,0,0
-mjolnir_07,0,0,0,0	monster	Antonio	1247,1,0,0,0
-mjolnir_08,0,0,0,0	monster	Antonio	1247,1,0,0,0
-mjolnir_09,0,0,0,0	monster	Antonio	1247,1,0,0,0
-mjolnir_10,0,0,0,0	monster	Antonio	1247,1,0,0,0
-mjolnir_11,0,0,0,0	monster	Antonio	1247,1,0,0,0
-mjolnir_12,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild02,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild03,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild04,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild05,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild06,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild07,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild08,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild09,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild10,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild11,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild12,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild13,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild14,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild15,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild16,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild17,0,0,0,0	monster	Antonio	1247,1,0,0,0
-moc_fild18,0,0,0,0	monster	Antonio	1247,1,0,0,0
-pay_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-pay_fild02,0,0,0,0	monster	Antonio	1247,1,0,0,0
-pay_fild03,0,0,0,0	monster	Antonio	1247,1,0,0,0
-pay_fild04,0,0,0,0	monster	Antonio	1247,1,0,0,0
-pay_fild05,0,0,0,0	monster	Antonio	1247,1,0,0,0
-pay_fild06,0,0,0,0	monster	Antonio	1247,1,0,0,0
-pay_fild07,0,0,0,0	monster	Antonio	1247,1,0,0,0
-pay_fild08,0,0,0,0	monster	Antonio	1247,1,0,0,0
-pay_fild09,0,0,0,0	monster	Antonio	1247,1,0,0,0
-pay_fild10,0,0,0,0	monster	Antonio	1247,1,0,0,0
-pay_fild11,0,0,0,0	monster	Antonio	1247,1,0,0,0
-prt_fild00,0,0,0,0	monster	Antonio	1247,1,0,0,0
-prt_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-prt_fild02,0,0,0,0	monster	Antonio	1247,1,0,0,0
-prt_fild03,0,0,0,0	monster	Antonio	1247,1,0,0,0
-prt_fild04,0,0,0,0	monster	Antonio	1247,1,0,0,0
-prt_fild05,0,0,0,0	monster	Antonio	1247,1,0,0,0
-prt_fild06,0,0,0,0	monster	Antonio	1247,1,0,0,0
-prt_fild07,0,0,0,0	monster	Antonio	1247,1,0,0,0
-prt_fild08,0,0,0,0	monster	Antonio	1247,1,0,0,0
-prt_fild09,0,0,0,0	monster	Antonio	1247,1,0,0,0
-prt_fild10,0,0,0,0	monster	Antonio	1247,1,0,0,0
-prt_fild11,0,0,0,0	monster	Antonio	1247,1,0,0,0
-xmas_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-cmd_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-cmd_fild02,0,0,0,0	monster	Antonio	1247,1,0,0,0
-cmd_fild03,0,0,0,0	monster	Antonio	1247,1,0,0,0
-cmd_fild04,0,0,0,0	monster	Antonio	1247,1,0,0,0
-cmd_fild05,0,0,0,0	monster	Antonio	1247,1,0,0,0
-cmd_fild06,0,0,0,0	monster	Antonio	1247,1,0,0,0
-cmd_fild07,0,0,0,0	monster	Antonio	1247,1,0,0,0
-cmd_fild08,0,0,0,0	monster	Antonio	1247,1,0,0,0
-cmd_fild09,0,0,0,0	monster	Antonio	1247,1,0,0,0
-yuno_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-yuno_fild02,0,0,0,0	monster	Antonio	1247,1,0,0,0
-yuno_fild03,0,0,0,0	monster	Antonio	1247,1,0,0,0
-yuno_fild04,0,0,0,0	monster	Antonio	1247,1,0,0,0
-yuno_fild05,0,0,0,0	monster	Antonio	1247,1,0,0,0
-yuno_fild06,0,0,0,0	monster	Antonio	1247,1,0,0,0
-yuno_fild07,0,0,0,0	monster	Antonio	1247,1,0,0,0
-yuno_fild08,0,0,0,0	monster	Antonio	1247,1,0,0,0
-yuno_fild09,0,0,0,0	monster	Antonio	1247,1,0,0,0
-yuno_fild11,0,0,0,0	monster	Antonio	1247,1,0,0,0
-yuno_fild12,0,0,0,0	monster	Antonio	1247,1,0,0,0
-ama_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-gon_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-um_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-um_fild02,0,0,0,0	monster	Antonio	1247,1,0,0,0
-um_fild03,0,0,0,0	monster	Antonio	1247,1,0,0,0
-um_fild04,0,0,0,0	monster	Antonio	1247,1,0,0,0
-nif_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-nif_fild02,0,0,0,0	monster	Antonio	1247,1,0,0,0
-lou_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-hu_fild01,0,0,0,0	monster	Antonio	1247,1,0,0,0
-hu_fild04,0,0,0,0	monster	Antonio	1247,1,0,0,0
-hu_fild05,0,0,0,0	monster	Antonio	1247,1,0,0,0
-hu_fild07,0,0,0,0	monster	Antonio	1247,1,0,0,0
+ein_fild03,0,0	monster	Antonio	1247,1
+ein_fild04,0,0	monster	Antonio	1247,1
+ein_fild06,0,0	monster	Antonio	1247,1
+ein_fild07,0,0	monster	Antonio	1247,1
+ein_fild08,0,0	monster	Antonio	1247,1
+ein_fild09,0,0	monster	Antonio	1247,1
+ein_fild10,0,0	monster	Antonio	1247,1
+gef_fild00,0,0	monster	Antonio	1247,1
+gef_fild01,0,0	monster	Antonio	1247,1
+gef_fild02,0,0	monster	Antonio	1247,1
+gef_fild03,0,0	monster	Antonio	1247,1
+gef_fild04,0,0	monster	Antonio	1247,1
+gef_fild05,0,0	monster	Antonio	1247,1
+gef_fild07,0,0	monster	Antonio	1247,1
+gef_fild08,0,0	monster	Antonio	1247,1
+gef_fild09,0,0	monster	Antonio	1247,1
+gef_fild10,0,0	monster	Antonio	1247,1
+gef_fild11,0,0	monster	Antonio	1247,1
+gef_fild12,0,0	monster	Antonio	1247,1
+gef_fild13,0,0	monster	Antonio	1247,1
+gef_fild14,0,0	monster	Antonio	1247,1
+glast_01,0,0	monster	Antonio	1247,1
+lhz_fild01,0,0	monster	Antonio	1247,1
+lhz_fild02,0,0	monster	Antonio	1247,1
+lhz_fild03,0,0	monster	Antonio	1247,1
+mjolnir_01,0,0	monster	Antonio	1247,1
+mjolnir_02,0,0	monster	Antonio	1247,1
+mjolnir_03,0,0	monster	Antonio	1247,1
+mjolnir_04,0,0	monster	Antonio	1247,1
+mjolnir_05,0,0	monster	Antonio	1247,1
+mjolnir_06,0,0	monster	Antonio	1247,1
+mjolnir_07,0,0	monster	Antonio	1247,1
+mjolnir_08,0,0	monster	Antonio	1247,1
+mjolnir_09,0,0	monster	Antonio	1247,1
+mjolnir_10,0,0	monster	Antonio	1247,1
+mjolnir_11,0,0	monster	Antonio	1247,1
+mjolnir_12,0,0	monster	Antonio	1247,1
+moc_fild01,0,0	monster	Antonio	1247,1
+moc_fild02,0,0	monster	Antonio	1247,1
+moc_fild03,0,0	monster	Antonio	1247,1
+moc_fild04,0,0	monster	Antonio	1247,1
+moc_fild05,0,0	monster	Antonio	1247,1
+moc_fild06,0,0	monster	Antonio	1247,1
+moc_fild07,0,0	monster	Antonio	1247,1
+moc_fild08,0,0	monster	Antonio	1247,1
+moc_fild09,0,0	monster	Antonio	1247,1
+moc_fild10,0,0	monster	Antonio	1247,1
+moc_fild11,0,0	monster	Antonio	1247,1
+moc_fild12,0,0	monster	Antonio	1247,1
+moc_fild13,0,0	monster	Antonio	1247,1
+moc_fild14,0,0	monster	Antonio	1247,1
+moc_fild15,0,0	monster	Antonio	1247,1
+moc_fild16,0,0	monster	Antonio	1247,1
+moc_fild17,0,0	monster	Antonio	1247,1
+moc_fild18,0,0	monster	Antonio	1247,1
+pay_fild01,0,0	monster	Antonio	1247,1
+pay_fild02,0,0	monster	Antonio	1247,1
+pay_fild03,0,0	monster	Antonio	1247,1
+pay_fild04,0,0	monster	Antonio	1247,1
+pay_fild05,0,0	monster	Antonio	1247,1
+pay_fild06,0,0	monster	Antonio	1247,1
+pay_fild07,0,0	monster	Antonio	1247,1
+pay_fild08,0,0	monster	Antonio	1247,1
+pay_fild09,0,0	monster	Antonio	1247,1
+pay_fild10,0,0	monster	Antonio	1247,1
+pay_fild11,0,0	monster	Antonio	1247,1
+prt_fild00,0,0	monster	Antonio	1247,1
+prt_fild01,0,0	monster	Antonio	1247,1
+prt_fild02,0,0	monster	Antonio	1247,1
+prt_fild03,0,0	monster	Antonio	1247,1
+prt_fild04,0,0	monster	Antonio	1247,1
+prt_fild05,0,0	monster	Antonio	1247,1
+prt_fild06,0,0	monster	Antonio	1247,1
+prt_fild07,0,0	monster	Antonio	1247,1
+prt_fild08,0,0	monster	Antonio	1247,1
+prt_fild09,0,0	monster	Antonio	1247,1
+prt_fild10,0,0	monster	Antonio	1247,1
+prt_fild11,0,0	monster	Antonio	1247,1
+xmas_fild01,0,0	monster	Antonio	1247,1
+cmd_fild01,0,0	monster	Antonio	1247,1
+cmd_fild02,0,0	monster	Antonio	1247,1
+cmd_fild03,0,0	monster	Antonio	1247,1
+cmd_fild04,0,0	monster	Antonio	1247,1
+cmd_fild05,0,0	monster	Antonio	1247,1
+cmd_fild06,0,0	monster	Antonio	1247,1
+cmd_fild07,0,0	monster	Antonio	1247,1
+cmd_fild08,0,0	monster	Antonio	1247,1
+cmd_fild09,0,0	monster	Antonio	1247,1
+yuno_fild01,0,0	monster	Antonio	1247,1
+yuno_fild02,0,0	monster	Antonio	1247,1
+yuno_fild03,0,0	monster	Antonio	1247,1
+yuno_fild04,0,0	monster	Antonio	1247,1
+yuno_fild05,0,0	monster	Antonio	1247,1
+yuno_fild06,0,0	monster	Antonio	1247,1
+yuno_fild07,0,0	monster	Antonio	1247,1
+yuno_fild08,0,0	monster	Antonio	1247,1
+yuno_fild09,0,0	monster	Antonio	1247,1
+yuno_fild11,0,0	monster	Antonio	1247,1
+yuno_fild12,0,0	monster	Antonio	1247,1
+ama_fild01,0,0	monster	Antonio	1247,1
+gon_fild01,0,0	monster	Antonio	1247,1
+um_fild01,0,0	monster	Antonio	1247,1
+um_fild02,0,0	monster	Antonio	1247,1
+um_fild03,0,0	monster	Antonio	1247,1
+um_fild04,0,0	monster	Antonio	1247,1
+nif_fild01,0,0	monster	Antonio	1247,1
+nif_fild02,0,0	monster	Antonio	1247,1
+lou_fild01,0,0	monster	Antonio	1247,1
+hu_fild01,0,0	monster	Antonio	1247,1
+hu_fild04,0,0	monster	Antonio	1247,1
+hu_fild05,0,0	monster	Antonio	1247,1
+hu_fild07,0,0	monster	Antonio	1247,1
 
 // Xmas Jakk Spawns
 //============================================================
-gef_dun01,0,0,0,0	monster	Xmas Jakk	1244,5,0,0,0
-//gefenia02,0,0,0,0	monster	Xmas Jakk	1244,5,0,0,0
+gef_dun01,0,0	monster	Xmas Jakk	1244,5
+//gefenia02,0,0	monster	Xmas Jakk	1244,5
 
 // Xmas Orc Spawns
 //============================================================
-gef_fild02,0,0,0,0	monster	Christmas Orc	1588,5,0,0,0
-gef_fild03,0,0,0,0	monster	Christmas Orc	1588,5,0,0,0
-gef_fild10,0,0,0,0	monster	Christmas Orc	1588,5,0,0,0
-gef_fild14,0,0,0,0	monster	Christmas Orc	1588,5,0,0,0
-alde_dun02,0,0,0,0	monster	Christmas Orc	1588,5,0,0,0
+gef_fild02,0,0	monster	Christmas Orc	1588,5
+gef_fild03,0,0	monster	Christmas Orc	1588,5
+gef_fild10,0,0	monster	Christmas Orc	1588,5
+gef_fild14,0,0	monster	Christmas Orc	1588,5
+alde_dun02,0,0	monster	Christmas Orc	1588,5
