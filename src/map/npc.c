@@ -2093,13 +2093,19 @@ int npc_unload(struct npc_data* nd, bool single) {
 
 	if( single && nd->path ) {
 		struct npc_path_data* npd = NULL;
-		if( nd->path && nd->path != npc_last_ref ) {
+		if( nd->path ) {
 			npd = (struct npc_path_data*)strdb_get(npc_path_db, nd->path);
 		}
 
 		if( npd && --npd->references == 0 ) {
 			strdb_remove(npc_path_db, nd->path);/* remove from db */
 			aFree(nd->path);/* remove now that no other instances exist */
+
+			if (npd == npc_last_npd) {
+				npc_last_npd = NULL;
+				npc_last_ref = NULL;
+				npc_last_path = NULL;
+			}
 		}
 	}
 	
@@ -2181,9 +2187,10 @@ static void npc_clearsrcfile(void)
 /**
  * Adds a npc source file (or removes all)
  * @param name : file to add
+ * @param loadscript : flag to parse the script immediately after adding the src file
  * @return 0=error, 1=sucess
  */
-int npc_addsrcfile(const char* name)
+int npc_addsrcfile(const char* name, bool loadscript)
 {
 	struct npc_src_list* file;
 	struct npc_src_list* file_prev = NULL;
@@ -2217,8 +2224,11 @@ int npc_addsrcfile(const char* name)
 		npc_src_files = file;
 	else
 		file_prev->next = file;
-        
-        return 1;
+
+	if (loadscript)
+		return npc_parsesrcfile(file->name, true);
+
+	return 1;
 }
 
 /// Removes a npc source file (or all)

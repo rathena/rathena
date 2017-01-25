@@ -4611,15 +4611,12 @@ ACMD_FUNC(loadnpc)
 		clif_displaymessage(fd, msg_txt(sd,1132)); // Please enter a script file name (usage: @loadnpc <file name>).
 		return -1;
 	}
-
-	// add to list of script sources and run it
-        if( !npc_addsrcfile(message)  //try to read file
-            || !npc_parsesrcfile(message,true)
-        ){
-            clif_displaymessage(fd, msg_txt(sd,261));
-            return -1;
-        }	
 	
+	if (!npc_addsrcfile(message, true)) {
+		clif_displaymessage(fd, msg_txt(sd,261));
+		return -1;
+	}
+
 	npc_read_event_script();
 
 	clif_displaymessage(fd, msg_txt(sd,262));
@@ -4648,6 +4645,26 @@ ACMD_FUNC(unloadnpc)
 	npc_unload(nd,true);
 	npc_read_event_script();
 	clif_displaymessage(fd, msg_txt(sd,112)); // Npc Disabled.
+	return 0;
+}
+
+ACMD_FUNC(reloadnpc) {
+	if (!message || !*message) {
+		clif_displaymessage(fd, msg_txt(sd,733)); // Please enter a NPC name (usage: @reloadnpc <NPC_name>).
+		return -1;
+	}
+
+	if (npc_unloadfile(message))
+		clif_displaymessage(fd, msg_txt(sd,1386)); // File unloaded. Be aware that mapflags and monsters spawned directly are not removed.
+
+	if (!npc_addsrcfile(message, true)) {
+		clif_displaymessage(fd, msg_txt(sd,261));
+		return -1;
+	}
+
+	npc_read_event_script();
+
+	clif_displaymessage(fd, msg_txt(sd,262));
 	return 0;
 }
 
@@ -10063,6 +10080,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(hidenpc),
 		ACMD_DEF(loadnpc),
 		ACMD_DEF(unloadnpc),
+		ACMD_DEF(reloadnpc),
 		ACMD_DEF2("time", servertime),
 		ACMD_DEF(jail),
 		ACMD_DEF(unjail),
