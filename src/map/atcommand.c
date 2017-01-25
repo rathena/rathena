@@ -4648,9 +4648,9 @@ ACMD_FUNC(unloadnpc)
 	return 0;
 }
 
-ACMD_FUNC(reloadnpc) {
+ACMD_FUNC(reloadnpcfile) {
 	if (!message || !*message) {
-		clif_displaymessage(fd, msg_txt(sd,733)); // Please enter a NPC name (usage: @reloadnpc <NPC_name>).
+		clif_displaymessage(fd, msg_txt(sd,733)); // Please enter a NPC file name (usage: @reloadnpcfile <file name>).
 		return -1;
 	}
 
@@ -4658,13 +4658,13 @@ ACMD_FUNC(reloadnpc) {
 		clif_displaymessage(fd, msg_txt(sd,1386)); // File unloaded. Be aware that mapflags and monsters spawned directly are not removed.
 
 	if (!npc_addsrcfile(message, true)) {
-		clif_displaymessage(fd, msg_txt(sd,261));
+		clif_displaymessage(fd, msg_txt(sd,261)); // Script could not be loaded.
 		return -1;
 	}
 
 	npc_read_event_script();
 
-	clif_displaymessage(fd, msg_txt(sd,262));
+	clif_displaymessage(fd, msg_txt(sd,262)); // Script loaded.
 	return 0;
 }
 
@@ -10080,7 +10080,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(hidenpc),
 		ACMD_DEF(loadnpc),
 		ACMD_DEF(unloadnpc),
-		ACMD_DEF(reloadnpc),
+		ACMD_DEF(reloadnpcfile),
 		ACMD_DEF2("time", servertime),
 		ACMD_DEF(jail),
 		ACMD_DEF(unjail),

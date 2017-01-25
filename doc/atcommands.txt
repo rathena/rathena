@@ -1435,13 +1435,13 @@ Example:
 
 ---------------------------------------
 
-@reloadnpc <npc name>
+@reloadnpcfile <path>
 
 Unloads and loads an NPC.
-Same as @unloadnpc and @loadnpc but ran as one command.
+Same as @unloadnpcfile and @loadnpc but ran as one command.
 
 Example:
-@reloadnpc npc/custom/jobmaster.txt
+@reloadnpcfile npc/custom/jobmaster.txt
 
 ---------------------------------------
 
