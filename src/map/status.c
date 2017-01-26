@@ -1457,6 +1457,8 @@ int status_set_hp(struct block_list *bl, unsigned int hp, int flag)
 int status_set_maxhp(struct block_list *bl, unsigned int maxhp, int flag)
 {
 	struct status_data *status;
+	int64 heal;
+
 	if (maxhp < 1)
 		return 0;
 	status = status_get_status_data(bl);
@@ -1465,12 +1467,15 @@ int status_set_maxhp(struct block_list *bl, unsigned int maxhp, int flag)
 
 	if (maxhp == status->max_hp)
 		return 0;
-	if (maxhp > status->max_hp)
-		status_heal(bl, maxhp - status->max_hp, 0, 1|flag);
-	else
-		status_zap(bl, status->max_hp - maxhp, 0);
 
+	heal = maxhp - status->max_hp;
 	status->max_hp = maxhp;
+
+	if (heal > 0)
+		status_heal(bl, heal, 0, 1|flag);
+	else
+		status_zap(bl, -heal, 0);
+
 	return maxhp;
 }
 

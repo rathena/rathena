@@ -17317,6 +17317,7 @@ BUILDIN_FUNC(setunitdata)
 	TBL_ELEM* ed = NULL;
 	TBL_NPC* nd = NULL;
 	int type, value = 0;
+	bool calc_status = false;
 
 	if(!script_rid2bl(2,bl))
 	{
@@ -17361,17 +17362,21 @@ BUILDIN_FUNC(setunitdata)
 			ShowWarning("buildin_setunitdata: Error in finding object BL_MOB!\n");
 			return SCRIPT_CMD_FAILURE;
 		}
+		if (!md->base_status) {
+			md->base_status = (struct status_data*)aCalloc(1, sizeof(struct status_data));
+			memcpy(md->base_status, &md->db->status, sizeof(struct status_data));
+		}
 		switch (type) {
-			case UMOB_SIZE: md->status.size = (unsigned char)value; break;
+			case UMOB_SIZE: md->base_status->size = (unsigned char)value; calc_status = true; break;
 			case UMOB_LEVEL: md->level = (unsigned short)value; break;
-			case UMOB_HP: status_set_hp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
-			case UMOB_MAXHP: status_set_maxhp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
+			case UMOB_HP: md->base_status->hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
+			case UMOB_MAXHP: md->base_status->max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
 			case UMOB_MASTERAID: md->master_id = value; break;
 			case UMOB_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UMOB_X: if (!unit_walktoxy(bl, (short)value, md->bl.y, 2)) unit_movepos(bl, (short)value, md->bl.y, 0, 0); break;
 			case UMOB_Y: if (!unit_walktoxy(bl, md->bl.x, (short)value, 2)) unit_movepos(bl, md->bl.x, (short)value, 0, 0); break;
-			case UMOB_SPEED: md->status.speed = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
-			case UMOB_MODE: md->status.mode = (enum e_mode)value; break;
+			case UMOB_SPEED: md->base_status->speed = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
+			case UMOB_MODE: md->base_status->mode = (enum e_mode)value; calc_status = true; break;
 			case UMOB_AI: md->special_state.ai = (enum mob_ai)value; break;
 			case UMOB_SCOPTION: md->sc.option = (unsigned short)value; break;
 			case UMOB_SEX: md->vd->sex = (char)value; break;
@@ -17386,12 +17391,12 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_WEAPON: clif_changelook(bl, LOOK_WEAPON, (unsigned short)value); break;
 			case UMOB_LOOKDIR: unit_setdir(bl, (uint8)value); break;
 			case UMOB_CANMOVETICK: md->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
-			case UMOB_STR: md->status.str = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
-			case UMOB_AGI: md->status.agi = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
-			case UMOB_VIT: md->status.vit = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
-			case UMOB_INT: md->status.int_ = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
-			case UMOB_DEX: md->status.dex = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
-			case UMOB_LUK: md->status.luk = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); break;
+			case UMOB_STR: md->base_status->str = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
+			case UMOB_AGI: md->base_status->agi = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
+			case UMOB_VIT: md->base_status->vit = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
+			case UMOB_INT: md->base_status->int_ = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
+			case UMOB_DEX: md->base_status->dex = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
+			case UMOB_LUK: md->base_status->luk = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
 			case UMOB_SLAVECPYMSTRMD:
 				if (value > 0) {
 					TBL_MOB *md2 = NULL;
@@ -17399,33 +17404,36 @@ BUILDIN_FUNC(setunitdata)
 						ShowWarning("buildin_setunitdata: Trying to set UMOB_SLAVECPYMSTRMD on mob without master!\n");
 						break;
 					}
-					md->status.mode = md2->status.mode;
+					md->base_status->mode = md2->status.mode;
 					md->state.copy_master_mode = 1;
 				} else
 					md->state.copy_master_mode = 0;
+				calc_status = true;
 				break;
 			case UMOB_DMGIMMUNE: md->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
-			case UMOB_ATKRANGE: md->status.rhw.range = (unsigned short)value; break;
-			case UMOB_ATKMIN: md->status.rhw.atk = (unsigned short)value; break;
-			case UMOB_ATKMAX: md->status.rhw.atk2 = (unsigned short)value; break;
-			case UMOB_MATKMIN: md->status.matk_min = (unsigned short)value; break;
-			case UMOB_MATKMAX: md->status.matk_max = (unsigned short)value; break;
-			case UMOB_DEF: md->status.def = (defType)value; break;
-			case UMOB_MDEF: md->status.mdef = (defType)value; break;
-			case UMOB_HIT: md->status.hit = (short)value; break;
-			case UMOB_FLEE: md->status.flee = (short)value; break;
-			case UMOB_PDODGE: md->status.flee2 = (short)value; break;
-			case UMOB_CRIT: md->status.cri = (short)value; break;
-			case UMOB_RACE: md->status.race = (unsigned char)value; break;
-			case UMOB_ELETYPE: md->status.def_ele = (unsigned char)value; break;
-			case UMOB_ELELEVEL: md->status.ele_lv = (unsigned char)value; break;
-			case UMOB_AMOTION: md->status.amotion = (short)value; break;
-			case UMOB_ADELAY: md->status.adelay = (short)value; break;
-			case UMOB_DMOTION: md->status.dmotion = (short)value; break;
+			case UMOB_ATKRANGE: md->base_status->rhw.range = (unsigned short)value; calc_status = true; break;
+			case UMOB_ATKMIN: md->base_status->rhw.atk = (unsigned short)value; calc_status = true; break;
+			case UMOB_ATKMAX: md->base_status->rhw.atk2 = (unsigned short)value; calc_status = true; break;
+			case UMOB_MATKMIN: md->base_status->matk_min = (unsigned short)value; calc_status = true; break;
+			case UMOB_MATKMAX: md->base_status->matk_max = (unsigned short)value; calc_status = true; break;
+			case UMOB_DEF: md->base_status->def = (defType)value; calc_status = true; break;
+			case UMOB_MDEF: md->base_status->mdef = (defType)value; calc_status = true; break;
+			case UMOB_HIT: md->base_status->hit = (short)value; calc_status = true; break;
+			case UMOB_FLEE: md->base_status->flee = (short)value; calc_status = true; break;
+			case UMOB_PDODGE: md->base_status->flee2 = (short)value; calc_status = true; break;
+			case UMOB_CRIT: md->base_status->cri = (short)value; calc_status = true; break;
+			case UMOB_RACE: md->base_status->race = (unsigned char)value; calc_status = true; break;
+			case UMOB_ELETYPE: md->base_status->def_ele = (unsigned char)value; calc_status = true; break;
+			case UMOB_ELELEVEL: md->base_status->ele_lv = (unsigned char)value; calc_status = true; break;
+			case UMOB_AMOTION: md->base_status->amotion = (short)value; calc_status = true; break;
+			case UMOB_ADELAY: md->base_status->adelay = (short)value; calc_status = true; break;
+			case UMOB_DMOTION: md->base_status->dmotion = (short)value; calc_status = true; break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;
 			}
+			if (calc_status)
+				status_calc_bl(&md->bl, SCB_BATTLE);
 		break;
 
 	case BL_HOM:
@@ -17434,49 +17442,51 @@ BUILDIN_FUNC(setunitdata)
 			return SCRIPT_CMD_FAILURE;
 		}
 		switch (type) {
-			case UHOM_SIZE: hd->base_status.size = (unsigned char)value; break;
+			case UHOM_SIZE: hd->base_status.size = (unsigned char)value; calc_status = true; break;
 			case UHOM_LEVEL: hd->homunculus.level = (unsigned short)value; break;
-			case UHOM_HP: status_set_hp(bl, (unsigned int)value, 0); break;
-			case UHOM_MAXHP: status_set_maxhp(bl, (unsigned int)value, 0); break;
-			case UHOM_SP: status_set_sp(bl, (unsigned int)value, 0); break;
-			case UHOM_MAXSP: status_set_maxsp(bl, (unsigned int)value, 0); break;
+			case UHOM_HP: hd->base_status.hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); break;
+			case UHOM_MAXHP: hd->base_status.max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); break;
+			case UHOM_SP: hd->base_status.sp = (unsigned int)value; status_set_sp(bl, (unsigned int)value, 0); break;
+			case UHOM_MAXSP: hd->base_status.max_sp = (unsigned int)value; status_set_maxsp(bl, (unsigned int)value, 0); break;
 			case UHOM_MASTERCID: hd->homunculus.char_id = (uint32)value; break;
 			case UHOM_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UHOM_X: if (!unit_walktoxy(bl, (short)value, hd->bl.y, 2)) unit_movepos(bl, (short)value, hd->bl.y, 0, 0); break;
 			case UHOM_Y: if (!unit_walktoxy(bl, hd->bl.x, (short)value, 2)) unit_movepos(bl, hd->bl.x, (short)value, 0, 0); break;
 			case UHOM_HUNGER: hd->homunculus.hunger = (short)value; clif_send_homdata(map_charid2sd(hd->homunculus.char_id), SP_HUNGRY, hd->homunculus.hunger); break;
 			case UHOM_INTIMACY: hom_increase_intimacy(hd, (unsigned int)value); clif_send_homdata(map_charid2sd(hd->homunculus.char_id), SP_INTIMATE, hd->homunculus.intimacy / 100); break;
-			case UHOM_SPEED: hd->base_status.speed = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); break;
+			case UHOM_SPEED: hd->base_status.speed = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_LOOKDIR: unit_setdir(bl, (uint8)value); break;
 			case UHOM_CANMOVETICK: hd->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
-			case UHOM_STR: hd->base_status.str = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); break;
-			case UHOM_AGI: hd->base_status.agi = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); break;
-			case UHOM_VIT: hd->base_status.vit = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); break;
-			case UHOM_INT: hd->base_status.int_ = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); break;
-			case UHOM_DEX: hd->base_status.dex = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); break;
-			case UHOM_LUK: hd->base_status.luk = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); break;
+			case UHOM_STR: hd->base_status.str = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
+			case UHOM_AGI: hd->base_status.agi = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
+			case UHOM_VIT: hd->base_status.vit = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
+			case UHOM_INT: hd->base_status.int_ = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
+			case UHOM_DEX: hd->base_status.dex = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
+			case UHOM_LUK: hd->base_status.luk = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 			case UHOM_DMGIMMUNE: hd->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
-			case UHOM_ATKRANGE: hd->base_status.rhw.range = (unsigned short)value; break;
-			case UHOM_ATKMIN: hd->base_status.rhw.atk = (unsigned short)value; break;
-			case UHOM_ATKMAX: hd->base_status.rhw.atk2 = (unsigned short)value; break;
-			case UHOM_MATKMIN: hd->base_status.matk_min = (unsigned short)value; break;
-			case UHOM_MATKMAX: hd->base_status.matk_max = (unsigned short)value; break;
-			case UHOM_DEF: hd->base_status.def = (defType)value; break;
-			case UHOM_MDEF: hd->base_status.mdef = (defType)value; break;
-			case UHOM_HIT: hd->base_status.hit = (short)value; break;
-			case UHOM_FLEE: hd->base_status.flee = (short)value; break;
-			case UHOM_PDODGE: hd->base_status.flee2 = (short)value; break;
-			case UHOM_CRIT: hd->base_status.cri = (short)value; break;
-			case UHOM_RACE: hd->base_status.race = (unsigned char)value; break;
-			case UHOM_ELETYPE: hd->base_status.def_ele = (unsigned char)value; break;
-			case UHOM_ELELEVEL: hd->base_status.ele_lv = (unsigned char)value; break;
-			case UHOM_AMOTION: hd->base_status.amotion = (short)value; break;
-			case UHOM_ADELAY: hd->base_status.adelay = (short)value; break;
-			case UHOM_DMOTION: hd->base_status.dmotion = (short)value; break;
+			case UHOM_ATKRANGE: hd->base_status.rhw.range = (unsigned short)value; calc_status = true; break;
+			case UHOM_ATKMIN: hd->base_status.rhw.atk = (unsigned short)value; calc_status = true; break;
+			case UHOM_ATKMAX: hd->base_status.rhw.atk2 = (unsigned short)value; calc_status = true; break;
+			case UHOM_MATKMIN: hd->base_status.matk_min = (unsigned short)value; calc_status = true; break;
+			case UHOM_MATKMAX: hd->base_status.matk_max = (unsigned short)value; calc_status = true; break;
+			case UHOM_DEF: hd->base_status.def = (defType)value; calc_status = true; break;
+			case UHOM_MDEF: hd->base_status.mdef = (defType)value; calc_status = true; break;
+			case UHOM_HIT: hd->base_status.hit = (short)value; calc_status = true; break;
+			case UHOM_FLEE: hd->base_status.flee = (short)value; calc_status = true; break;
+			case UHOM_PDODGE: hd->base_status.flee2 = (short)value; calc_status = true; break;
+			case UHOM_CRIT: hd->base_status.cri = (short)value; calc_status = true; break;
+			case UHOM_RACE: hd->base_status.race = (unsigned char)value; calc_status = true; break;
+			case UHOM_ELETYPE: hd->base_status.def_ele = (unsigned char)value; calc_status = true; break;
+			case UHOM_ELELEVEL: hd->base_status.ele_lv = (unsigned char)value; calc_status = true; break;
+			case UHOM_AMOTION: hd->base_status.amotion = (short)value; calc_status = true; break;
+			case UHOM_ADELAY: hd->base_status.adelay = (short)value; calc_status = true; break;
+			case UHOM_DMOTION: hd->base_status.dmotion = (short)value; calc_status = true; break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_HOM.\n", type);
 				return SCRIPT_CMD_FAILURE;
 			}
+			if (calc_status)
+				status_calc_bl(&hd->bl, SCB_BATTLE);
 		break;
 
 	case BL_PET:
@@ -17534,46 +17544,48 @@ BUILDIN_FUNC(setunitdata)
 			return SCRIPT_CMD_FAILURE;
 		}
 		switch (type) {
-			case UMER_SIZE: mc->base_status.size = (unsigned char)value; break;
-			case UMER_HP: status_set_hp(bl, (unsigned int)value, 0); break;
-			case UMER_MAXHP: status_set_maxhp(bl, (unsigned int)value, 0); break;
+			case UMER_SIZE: mc->base_status.size = (unsigned char)value; calc_status = true; break;
+			case UMER_HP: mc->base_status.hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); break;
+			case UMER_MAXHP: mc->base_status.max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); break;
 			case UMER_MASTERCID: mc->mercenary.char_id = (uint32)value; break;
 			case UMER_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UMER_X: if (!unit_walktoxy(bl, (short)value, mc->bl.y, 2)) unit_movepos(bl, (short)value, mc->bl.y, 0, 0); break;
 			case UMER_Y: if (!unit_walktoxy(bl, mc->bl.x, (short)value, 2)) unit_movepos(bl, mc->bl.x, (short)value, 0, 0); break;
 			case UMER_KILLCOUNT: mc->mercenary.kill_count = (unsigned int)value; break;
 			case UMER_LIFETIME: mc->mercenary.life_time = (unsigned int)value; break;
-			case UMER_SPEED: mc->base_status.speed = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); break;
+			case UMER_SPEED: mc->base_status.speed = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
 			case UMER_LOOKDIR: unit_setdir(bl, (uint8)value); break;
 			case UMER_CANMOVETICK: mc->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
-			case UMER_STR: mc->base_status.str = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); break;
-			case UMER_AGI: mc->base_status.agi = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); break;
-			case UMER_VIT: mc->base_status.vit = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); break;
-			case UMER_INT: mc->base_status.int_ = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); break;
-			case UMER_DEX: mc->base_status.dex = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); break;
-			case UMER_LUK: mc->base_status.luk = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); break;
+			case UMER_STR: mc->base_status.str = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
+			case UMER_AGI: mc->base_status.agi = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
+			case UMER_VIT: mc->base_status.vit = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
+			case UMER_INT: mc->base_status.int_ = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
+			case UMER_DEX: mc->base_status.dex = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
+			case UMER_LUK: mc->base_status.luk = (unsigned short)value; status_calc_misc(bl, &mc->base_status, mc->db->lv); calc_status = true; break;
 			case UMER_DMGIMMUNE: mc->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
-			case UMER_ATKRANGE: mc->base_status.rhw.range = (unsigned short)value; break;
-			case UMER_ATKMIN: mc->base_status.rhw.atk = (unsigned short)value; break;
-			case UMER_ATKMAX: mc->base_status.rhw.atk2 = (unsigned short)value; break;
-			case UMER_MATKMIN: mc->base_status.matk_min = (unsigned short)value; break;
-			case UMER_MATKMAX: mc->base_status.matk_max = (unsigned short)value; break;
-			case UMER_DEF: mc->base_status.def = (defType)value; break;
-			case UMER_MDEF: mc->base_status.mdef = (defType)value; break;
-			case UMER_HIT: mc->base_status.hit = (short)value; break;
-			case UMER_FLEE: mc->base_status.flee = (short)value; break;
-			case UMER_PDODGE: mc->base_status.flee2 = (short)value; break;
-			case UMER_CRIT: mc->base_status.cri = (short)value; break;
-			case UMER_RACE: mc->base_status.race = (unsigned char)value; break;
-			case UMER_ELETYPE: mc->base_status.def_ele = (unsigned char)value; break;
-			case UMER_ELELEVEL: mc->base_status.ele_lv = (unsigned char)value; break;
-			case UMER_AMOTION: mc->base_status.amotion = (short)value; break;
-			case UMER_ADELAY: mc->base_status.adelay = (short)value; break;
-			case UMER_DMOTION: mc->base_status.dmotion = (short)value; break;
+			case UMER_ATKRANGE: mc->base_status.rhw.range = (unsigned short)value; calc_status = true; break;
+			case UMER_ATKMIN: mc->base_status.rhw.atk = (unsigned short)value; calc_status = true; break;
+			case UMER_ATKMAX: mc->base_status.rhw.atk2 = (unsigned short)value; calc_status = true; break;
+			case UMER_MATKMIN: mc->base_status.matk_min = (unsigned short)value; calc_status = true; break;
+			case UMER_MATKMAX: mc->base_status.matk_max = (unsigned short)value; calc_status = true; break;
+			case UMER_DEF: mc->base_status.def = (defType)value; calc_status = true; break;
+			case UMER_MDEF: mc->base_status.mdef = (defType)value; calc_status = true; break;
+			case UMER_HIT: mc->base_status.hit = (short)value; calc_status = true; break;
+			case UMER_FLEE: mc->base_status.flee = (short)value; calc_status = true; break;
+			case UMER_PDODGE: mc->base_status.flee2 = (short)value; calc_status = true; break;
+			case UMER_CRIT: mc->base_status.cri = (short)value; calc_status = true; break;
+			case UMER_RACE: mc->base_status.race = (unsigned char)value; calc_status = true; break;
+			case UMER_ELETYPE: mc->base_status.def_ele = (unsigned char)value; calc_status = true; break;
+			case UMER_ELELEVEL: mc->base_status.ele_lv = (unsigned char)value; calc_status = true; break;
+			case UMER_AMOTION: mc->base_status.amotion = (short)value; calc_status = true; break;
+			case UMER_ADELAY: mc->base_status.adelay = (short)value; calc_status = true; break;
+			case UMER_DMOTION: mc->base_status.dmotion = (short)value; calc_status = true; break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MER.\n", type);
 				return SCRIPT_CMD_FAILURE;
 			}
+			if (calc_status)
+				status_calc_bl(&mc->bl, SCB_BATTLE);
 		break;
 
 	case BL_ELEM:
@@ -17582,48 +17594,50 @@ BUILDIN_FUNC(setunitdata)
 			return SCRIPT_CMD_FAILURE;
 		}
 		switch (type) {
-			case UELE_SIZE: ed->base_status.size = (unsigned char)value; break;
-			case UELE_HP: status_set_hp(bl, (unsigned int)value, 0); break;
-			case UELE_MAXHP: status_set_maxhp(bl, (unsigned int)value, 0); break;
-			case UELE_SP: status_set_sp(bl, (unsigned int)value, 0); break;
-			case UELE_MAXSP: status_set_maxsp(bl, (unsigned int)value, 0); break;
+			case UELE_SIZE: ed->base_status.size = (unsigned char)value; calc_status = true; break;
+			case UELE_HP: ed->base_status.hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); break;
+			case UELE_MAXHP: ed->base_status.max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); break;
+			case UELE_SP: ed->base_status.sp = (unsigned int)value; status_set_sp(bl, (unsigned int)value, 0); break;
+			case UELE_MAXSP: ed->base_status.max_sp = (unsigned int)value; status_set_maxsp(bl, (unsigned int)value, 0); break;
 			case UELE_MASTERCID: ed->elemental.char_id = (uint32)value; break;
 			case UELE_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UELE_X: if (!unit_walktoxy(bl, (short)value, ed->bl.y, 2)) unit_movepos(bl, (short)value, ed->bl.y, 0, 0); break;
 			case UELE_Y: if (!unit_walktoxy(bl, ed->bl.x, (short)value, 2)) unit_movepos(bl, ed->bl.x, (short)value, 0, 0); break;
 			case UELE_LIFETIME: ed->elemental.life_time = (unsigned int)value; break;
-			case UELE_MODE: ed->elemental.mode = (enum e_mode)value; break;
-			case UELE_SPEED: ed->base_status.speed = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); break;
+			case UELE_MODE: ed->elemental.mode = (enum e_mode)value; calc_status = true; break;
+			case UELE_SPEED: ed->base_status.speed = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
 			case UELE_LOOKDIR: unit_setdir(bl, (uint8)value); break;
 			case UELE_CANMOVETICK: ed->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
-			case UELE_STR: ed->base_status.str = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); break;
-			case UELE_AGI: ed->base_status.agi = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); break;
-			case UELE_VIT: ed->base_status.vit = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); break;
-			case UELE_INT: ed->base_status.int_ = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); break;
-			case UELE_DEX: ed->base_status.dex = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); break;
-			case UELE_LUK: ed->base_status.luk = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); break;
+			case UELE_STR: ed->base_status.str = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
+			case UELE_AGI: ed->base_status.agi = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
+			case UELE_VIT: ed->base_status.vit = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
+			case UELE_INT: ed->base_status.int_ = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
+			case UELE_DEX: ed->base_status.dex = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
+			case UELE_LUK: ed->base_status.luk = (unsigned short)value; status_calc_misc(bl, &ed->base_status, ed->db->lv); calc_status = true; break;
 			case UELE_DMGIMMUNE: ed->ud.immune_attack = (bool)value > 0 ? 1 : 0; break;
-			case UELE_ATKRANGE: ed->base_status.rhw.range = (unsigned short)value; break;
-			case UELE_ATKMIN: ed->base_status.rhw.atk = (unsigned short)value; break;
-			case UELE_ATKMAX: ed->base_status.rhw.atk2 = (unsigned short)value; break;
-			case UELE_MATKMIN: ed->base_status.matk_min = (unsigned short)value; break;
-			case UELE_MATKMAX: ed->base_status.matk_max = (unsigned short)value; break;
-			case UELE_DEF: ed->base_status.def = (defType)value; break;
-			case UELE_MDEF: ed->base_status.mdef = (defType)value; break;
-			case UELE_HIT: ed->base_status.hit = (short)value; break;
-			case UELE_FLEE: ed->base_status.flee = (short)value; break;
-			case UELE_PDODGE: ed->base_status.flee2 = (short)value; break;
-			case UELE_CRIT: ed->base_status.cri = (short)value; break;
-			case UELE_RACE: ed->base_status.race = (unsigned char)value; break;
-			case UELE_ELETYPE: ed->base_status.def_ele = (unsigned char)value; break;
-			case UELE_ELELEVEL: ed->base_status.ele_lv = (unsigned char)value; break;
-			case UELE_AMOTION: ed->base_status.amotion = (short)value; break;
-			case UELE_ADELAY: ed->base_status.adelay = (short)value; break;
-			case UELE_DMOTION: ed->base_status.dmotion = (short)value; break;
+			case UELE_ATKRANGE: ed->base_status.rhw.range = (unsigned short)value; calc_status = true; break;
+			case UELE_ATKMIN: ed->base_status.rhw.atk = (unsigned short)value; calc_status = true; break;
+			case UELE_ATKMAX: ed->base_status.rhw.atk2 = (unsigned short)value; calc_status = true; break;
+			case UELE_MATKMIN: ed->base_status.matk_min = (unsigned short)value; calc_status = true; break;
+			case UELE_MATKMAX: ed->base_status.matk_max = (unsigned short)value; calc_status = true; break;
+			case UELE_DEF: ed->base_status.def = (defType)value; calc_status = true; break;
+			case UELE_MDEF: ed->base_status.mdef = (defType)value; calc_status = true; break;
+			case UELE_HIT: ed->base_status.hit = (short)value; calc_status = true; break;
+			case UELE_FLEE: ed->base_status.flee = (short)value; calc_status = true; break;
+			case UELE_PDODGE: ed->base_status.flee2 = (short)value; calc_status = true; break;
+			case UELE_CRIT: ed->base_status.cri = (short)value; calc_status = true; break;
+			case UELE_RACE: ed->base_status.race = (unsigned char)value; calc_status = true; break;
+			case UELE_ELETYPE: ed->base_status.def_ele = (unsigned char)value; calc_status = true; break;
+			case UELE_ELELEVEL: ed->base_status.ele_lv = (unsigned char)value; calc_status = true; break;
+			case UELE_AMOTION: ed->base_status.amotion = (short)value; calc_status = true; break;
+			case UELE_ADELAY: ed->base_status.adelay = (short)value; calc_status = true; break;
+			case UELE_DMOTION: ed->base_status.dmotion = (short)value; calc_status = true; break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_ELEM.\n", type);
 				return SCRIPT_CMD_FAILURE;
 			}
+			if (calc_status)
+				status_calc_bl(&ed->bl, SCB_BATTLE);
 		break;
 
 	case BL_NPC:
