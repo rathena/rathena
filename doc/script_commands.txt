@@ -3479,7 +3479,7 @@ Example 2:
 
 	setarray .@item[0],512,513,514;
 	setarray .@amount[0],10,5,5;
-	if (!checkweight(.@item,.@amount)) {
+	if (!checkweight2(.@item,.@amount)) {
 		mes "Sorry, you cannot hold this amount of fruit!";
 	}
 
