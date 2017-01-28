@@ -7290,7 +7290,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	map_freeblock_lock();
 
-	if( skill_check_shadowform(target, damage, wd.div_) ) {
+	if( !(tsc && tsc->data[SC_DEVOTION]) && !vanish_damage && skill_check_shadowform(target, damage, wd.div_) ) {
 		if( !status_isdead(target) )
 			skill_additional_effect(src, target, 0, 0, wd.flag, wd.dmg_lv, tick);
 		if( wd.dmg_lv > ATK_BLOCK )
