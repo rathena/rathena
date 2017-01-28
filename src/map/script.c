@@ -49,6 +49,7 @@
 #include "mail.h"
 #include "quest.h"
 #include "elemental.h"
+#include "channel.h"
 
 #include <math.h>
 #include <stdlib.h> // atoi, strtol, strtoll, exit
@@ -14492,6 +14493,73 @@ BUILDIN_FUNC(npctalk)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*==========================================
+ * chatmes (sends message to npc's waitingroom)
+ *------------------------------------------*/
+BUILDIN_FUNC(chatmes)
+{
+	struct npc_data* nd = NULL;
+	const char* str = script_getstr(st,2);
+
+	if (script_hasdata(st, 3))
+		nd = npc_name2id(script_getstr(st, 3));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+
+	if (nd != NULL && nd->chat_id) {
+		char message[256];
+		safesnprintf(message, sizeof(message), "%s", str);
+		clif_GlobalMessage(map_id2bl(nd->chat_id), message, CHAT_WOS);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+ * channelmes (sends message to given channel) [Jey]
+ *------------------------------------------*/
+BUILDIN_FUNC(channelmes)
+{
+	char channel_name[CHAN_NAME_LENGTH] = "", msg[CHAN_MSG_LENGTH] = "";
+	struct Channel * channel = NULL;
+	
+	safestrncpy(channel_name,script_getstr(st,2),CHAN_NAME_LENGTH);
+	safestrncpy(msg,script_getstr(st,3),CHAN_MSG_LENGTH);
+	channel = channel_name2channel(channel_name,NULL,0);
+	if( channel ) {
+		DBIterator *iter;
+		struct map_session_data *user;
+		char message[CHAN_MSG_LENGTH];
+
+		snprintf(message, CHAN_MSG_LENGTH, "[ #%s ] %s",channel->name, msg);
+		iter = db_iterator(channel->users);
+
+		for( user = (struct map_session_data*)dbi_first(iter); dbi_exists(iter); user = (struct map_session_data*)dbi_next(iter) ) {
+			//Cannot use clif_channel_msg or channel_send here, because they need a sender sd...
+			clif_messagecolor(&user->bl,channel_config.colors[channel->color],message,false,SELF);
+		}
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
+
+/*==========================================
+ * Checks if the given channel exists.
+ *------------------------------------------*/
+BUILDIN_FUNC(channelexists) {
+	TBL_PC* sd = script_rid2sd(st);
+	char chname[255];
+
+	strcpy(chname,script_getstr(st,2));
+
+	if( !sd || channel_chk(chname,NULL,1) || channel_name2channel(chname,sd,0) == NULL )
+		script_pushint(st,0);
+	else
+		script_pushint(st,1);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+
 // change npc walkspeed [Valaris]
 BUILDIN_FUNC(npcspeed)
 {
@@ -22472,6 +22540,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
 	BUILDIN_DEF(message,"ss"), // [MouseJstr]
 	BUILDIN_DEF(npctalk,"s?"), // [Valaris]
+	BUILDIN_DEF(chatmes,"s?"), // [Jey]
+	BUILDIN_DEF(channelmes,"ss"), // [Jey]
+	BUILDIN_DEF(channelexists,"s"),
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),
 	BUILDIN_DEF(getsavepoint,"i?"),
