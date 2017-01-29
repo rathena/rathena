@@ -8933,25 +8933,27 @@ void clif_GM_kickack(struct map_session_data *sd, int id)
 }
 
 
-void clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd)
+void clif_GM_kick(struct map_session_data *sd, struct map_session_data *tsd)
 {
-	int fd = tsd->fd;
+	int fd;
 
-	if( fd > 0 )
+	nullpo_retv(sd);
+	nullpo_retv(tsd);
+
+	fd = tsd->fd;
+
+	// Close vending/buyingstore
+	if (tsd->state.vending)
+		vending_closevending(tsd);
+	else if (tsd->state.buyingstore)
+		buyingstore_close(tsd);
+
+	if (fd > 0)
 		clif_authfail_fd(fd, 15);
-	else {
-		// Close vending/buyingstore
-		if (sd) {
-			if (tsd->state.vending)
-				vending_closevending(tsd);
-			else if (tsd->state.buyingstore)
-				buyingstore_close(tsd);
-		}
+	else
 		map_quit(tsd);
-	}
 
-	if( sd )
-		clif_GM_kickack(sd,tsd->status.account_id);
+	clif_GM_kickack(sd, tsd->status.account_id);
 }
 
 
