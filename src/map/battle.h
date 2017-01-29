@@ -232,6 +232,7 @@ extern struct Battle_Config
 	int pet_max_atk2; //[Skotlex]
 	int pet_no_gvg; //Disables pets in gvg. [Skotlex]
 	int pet_equip_required;
+	int pet_master_dead;
 
 	int skill_min_damage;
 	int finger_offensive_type;
