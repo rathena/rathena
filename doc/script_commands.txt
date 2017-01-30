@@ -6135,8 +6135,6 @@ If the NPC is not in a waitingroom, nothing happens.
 
 This command will display a message in the given channel.
 
-    // Everyone subscribed to this channel will see this message:
-    chatmes "Waiting 5 minutes till the next match will start";
 channelmes "#pvp","There are currently 5 player waiting for a battleground match!";
 
 ---------------------------------------

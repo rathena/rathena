@@ -14547,9 +14547,9 @@ BUILDIN_FUNC(channelmes)
  *------------------------------------------*/
 BUILDIN_FUNC(channelexists) {
 	TBL_PC* sd = script_rid2sd(st);
-	char chname[255];
+	char chname[CHAN_NAME_LENGTH];
 
-	strcpy(chname,script_getstr(st,2));
+	safestrncpy(chname,script_getstr(st,2),CHAN_NAME_LENGTH);
 
 	if( !sd || channel_chk(chname,NULL,1) || channel_name2channel(chname,sd,0) == NULL )
 		script_pushint(st,0);
