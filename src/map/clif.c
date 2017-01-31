@@ -8944,13 +8944,8 @@ void clif_GM_kick(struct map_session_data *sd, struct map_session_data *tsd)
 
 	fd = tsd->fd;
 
-	if (sd) {
-		// Close vending/buyingstore
-		if (tsd->state.vending)
-			vending_closevending(tsd);
-		else if (tsd->state.buyingstore)
-			buyingstore_close(tsd);
-	}
+	if (sd == NULL)
+		tsd->state.keepshop = true;
 
 	if (fd > 0)
 		clif_authfail_fd(fd, 15);
