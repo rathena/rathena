@@ -3204,6 +3204,21 @@
 	export_constant(CARD0_CREATE);
 	export_constant(CARD0_PET);
 
+	/* Channel System */
+	export_constant(CHAN_TYPE_PUBLIC);
+	export_constant(CHAN_TYPE_PRIVATE);
+	export_constant(CHAN_TYPE_MAP);
+	export_constant(CHAN_TYPE_ALLY);
+	export_constant(CHAN_OPT_BASE);
+	export_constant(CHAN_OPT_ANNOUNCE_SELF);
+	export_constant(CHAN_OPT_ANNOUNCE_JOIN);
+	export_constant(CHAN_OPT_ANNOUNCE_LEAVE);
+	export_constant(CHAN_OPT_MSG_DELAY);
+	export_constant(CHAN_OPT_COLOR_OVERRIDE);
+	export_constant(CHAN_OPT_CAN_CHAT);
+	export_constant(CHAN_OPT_CAN_LEAVE);
+	export_constant(CHAN_OPT_AUTOJOIN);
+
 	export_constant(STOR_MODE_NONE);
 	export_constant(STOR_MODE_GET);
 	export_constant(STOR_MODE_PUT);

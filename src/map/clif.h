@@ -997,7 +997,7 @@ enum clif_colors {
 };
 unsigned long color_table[COLOR_MAX];
 
-void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char *msg, short color);
+void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long color);
 
 #define clif_menuskill_clear(sd) (sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0;
 

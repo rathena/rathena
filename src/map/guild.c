@@ -534,7 +534,7 @@ int guild_recv_info(struct guild *sg) {
 		if( sd==NULL )
 			continue;
 		sd->guild = g;
-		if(channel_config.ally_autojoin ) {
+		if(channel_config.ally_tmpl.name && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN)) {
 			channel_gjoin(sd,3); //make all member join guildchan+allieschan
 		}
 
@@ -703,7 +703,7 @@ void guild_member_joined(struct map_session_data *sd) {
 
 		if (g->instance_id != 0)
 			instance_reqinfo(sd, g->instance_id);
-		if( channel_config.ally_enable && channel_config.ally_autojoin ) {
+		if( channel_config.ally_tmpl.name != NULL && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
 			channel_gjoin(sd,3);
 		}
 	}
@@ -1745,8 +1745,8 @@ int guild_broken(int guild_id,int flag) {
 	guild_db->foreach(guild_db,guild_broken_sub,guild_id);
 	castle_db->foreach(castle_db,castle_guild_broken_sub,guild_id);
 	storage_guild_delete(guild_id);
-	if( channel_config.ally_enable ) {
-		channel_delete(g->channel);
+	if( channel_config.ally_tmpl.name != NULL ) {
+		channel_delete(g->channel,false);
 	}
 	idb_remove(guild_db,guild_id);
 	return 0;
@@ -2303,7 +2303,7 @@ void do_final_guild(void) {
 	struct guild *g;
 
 	for( g = (struct guild *)dbi_first(iter); dbi_exists(iter); g = (struct guild *)dbi_next(iter) ) {
-		channel_delete(g->channel);
+		channel_delete(g->channel,false);
 	}
 	dbi_destroy(iter);
 
