@@ -4413,17 +4413,17 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 		if (sc->data[SC_EDP]) {
 			switch(skill_id) {
 				case AS_SPLASHER:
-				// Pre-Renewal only: Soul Breaker and Meteor Assault ignores EDP
+				case ASC_METEORASSAULT:
+				// Pre-Renewal only: Soul Breaker ignores EDP
 				// Renewal only: Grimtooth and Venom Knife ignore EDP
-				// Both: Venom Splasher ignores EDP [helvetica]
+				// Both: Venom Splasher and Meteor Assault ignore EDP [helvetica]
 #ifndef RENEWAL
 				case ASC_BREAKER:
-				case ASC_METEORASSAULT:
 #else
 				case AS_GRIMTOOTH:
 				case AS_VENOMKNIFE:
 #endif
-					break; // skills above have no effect with edp
+					break; // skills above have no effect with EDP
 
 #ifdef RENEWAL
 				// renewal EDP mode requires renewal enabled as well
