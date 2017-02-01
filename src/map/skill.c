@@ -16039,17 +16039,10 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 					if( sd->special_state.no_gemstone == 2 ) // Remove all Magic Stone required for all skills for VIP.
 						req.itemid[i] = req.amount[i] = 0;
 					else {
-						if( sd->special_state.no_gemstone )
+						if( sd->special_state.no_gemstone || (sc && sc->data[SC_INTOABYSS]) )
 						{	// All gem skills except Hocus Pocus and Ganbantein can cast for free with Mistress card -helvetica
 							if( skill_id != SA_ABRACADABRA )
 		 						req.itemid[i] = req.amount[i] = 0;
-							else if( --req.amount[i] < 1 )
-								req.amount[i] = 1; // Hocus Pocus always use at least 1 gem
-						}
-						if(sc && sc->data[SC_INTOABYSS])
-						{
-							if( skill_id != SA_ABRACADABRA )
-								req.itemid[i] = req.amount[i] = 0;
 							else if( --req.amount[i] < 1 )
 								req.amount[i] = 1; // Hocus Pocus always use at least 1 gem
 						}
