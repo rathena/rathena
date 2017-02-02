@@ -141,7 +141,7 @@ typedef enum sc_type {
 	SC_VIOLENTGALE,
 	SC_WATK_ELEMENT,
 	SC_ARMOR,
-	SC_ARMOR_ELEMENT,
+	SC_ARMOR_ELEMENT_WATER,
 	SC_NOCHAT,
 	SC_BABY,
 	SC_AURABLADE,
@@ -794,6 +794,9 @@ typedef enum sc_type {
     SC_GEFFEN_MAGIC3,
 
 	SC_MAXPAIN,
+	SC_ARMOR_ELEMENT_EARTH,
+	SC_ARMOR_ELEMENT_FIRE,
+	SC_ARMOR_ELEMENT_WIND,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
