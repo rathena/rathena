@@ -1161,6 +1161,9 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_ITEMSCRIPT] |= SCB_ALL;
 	StatusChangeFlagTable[SC_SLOWDOWN] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_CHASEWALK2] |= SCB_STR;
+	StatusChangeFlagTable[SC_GEFFEN_MAGIC1] |= SCB_ALL;
+	StatusChangeFlagTable[SC_GEFFEN_MAGIC2] |= SCB_ALL;
+	StatusChangeFlagTable[SC_GEFFEN_MAGIC3] |= SCB_ALL;
 
 	/* Cash Items */
 	StatusChangeFlagTable[SC_FOOD_STR_CASH] |= SCB_STR;
