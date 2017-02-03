@@ -8767,8 +8767,10 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 			clif_clearcart(sd->fd);
 			break;
 		default:/* everything else is an allowed ID so we can move on */
-			if( !sd->sc.data[SC_PUSH_CART] ) /* first time, so fill cart data */
+			if( !sd->sc.data[SC_PUSH_CART] ) { /* first time, so fill cart data */
 				clif_cartlist(sd);
+				status_calc_cart_weight(sd, CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE);
+			}
 			clif_updatestatus(sd, SP_CARTINFO);
 			sc_start(&sd->bl, &sd->bl, SC_PUSH_CART, 100, type, 0);
 			break;
