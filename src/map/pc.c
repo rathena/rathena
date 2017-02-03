@@ -5431,7 +5431,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		sd->bl.x=x;
 		sd->bl.y=y;
 		pc_clean_skilltree(sd);
-		chrif_save(sd,2);
+		chrif_save(sd, CSAVE_CHANGE_MAPSERV|CSAVE_INVENTORY|CSAVE_CART);
 		chrif_changemapserver(sd, ip, (short)port);
 
 		//Free session data from this map server [Kevin]
@@ -8546,7 +8546,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	pc_equiplookall(sd);
 	pc_show_questinfo(sd);
 
-	chrif_save(sd, 0);
+	chrif_save(sd, CSAVE_NORMAL);
 	//if you were previously famous, not anymore.
 	if (fame_flag)
 		chrif_buildfamelist();
@@ -10291,7 +10291,7 @@ static int pc_autosave(int tid, unsigned int tick, int id, intptr_t data)
 		save_flag = 2;
 		if (pc_isvip(sd)) // Check if we're still VIP
 			chrif_req_login_operation(1, sd->status.name, CHRIF_OP_LOGIN_VIP, 0, 1, 0);
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 		break;
 	}
 	mapit_free(iter);
@@ -11589,7 +11589,7 @@ enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int mone
 	sd->bank_vault += money;
 	pc_setreg2(sd, BANK_VAULT_VAR, sd->bank_vault);
 	if( save_settings&CHARSAVE_BANK )
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_NORMAL);
 	return BDA_SUCCESS;
 }
 
@@ -11617,7 +11617,7 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 	sd->bank_vault -= money;
 	pc_setreg2(sd, BANK_VAULT_VAR, sd->bank_vault);
 	if( save_settings&CHARSAVE_BANK )
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_NORMAL);
 	return BWA_SUCCESS;
 }
 

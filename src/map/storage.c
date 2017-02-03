@@ -485,12 +485,12 @@ void storage_storageclose(struct map_session_data *sd)
 		return;
 
 	if (sd->storage.dirty) {
-		intif_storage_save(sd, &sd->storage);
+		storage_storagesave(sd);
 		if (sd->state.storage_flag == 1) {
 			sd->state.storage_flag = 0;
 			clif_storageclose(sd);
 		}
-	} else 
+	} else
 		storage_storagesaved(sd);
 }
 
@@ -509,7 +509,7 @@ void storage_storage_quit(struct map_session_data* sd, int flag)
 	if (!&sd->storage)
 		return;
 
-	intif_storage_save(sd, &sd->storage);
+	storage_storagesave(sd);
 }
 
 /**
@@ -944,7 +944,7 @@ void storage_guild_storageclose(struct map_session_data* sd)
 	clif_storageclose(sd);
 	if (stor->status) {
 		if (save_settings&CHARSAVE_STORAGE)
-			chrif_save(sd, 0); //This one also saves the storage. [Skotlex]
+			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART); //This one also saves the storage. [Skotlex]
 		else
 			storage_guild_storagesave(sd->status.account_id, sd->status.guild_id,0);
 
@@ -970,7 +970,7 @@ void storage_guild_storage_quit(struct map_session_data* sd, int flag)
 		clif_storageclose(sd);
 
 		if (save_settings&CHARSAVE_STORAGE)
-			chrif_save(sd,0);
+			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 
 		sd->state.storage_flag = 0;
 		stor->status = false;
@@ -979,7 +979,7 @@ void storage_guild_storage_quit(struct map_session_data* sd, int flag)
 
 	if (stor->status) {
 		if (save_settings&CHARSAVE_STORAGE)
-			chrif_save(sd,0);
+			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 		else
 			storage_guild_storagesave(sd->status.account_id,sd->status.guild_id,1);
 	}
@@ -1082,7 +1082,7 @@ void storage_premiumStorage_close(struct map_session_data *sd) {
 		return;
 
 	if (sd->premiumStorage.dirty) {
-		intif_storage_save(sd, &sd->premiumStorage);
+		storage_premiumStorage_save(sd);
 		if (sd->state.storage_flag == 3) {
 			sd->state.storage_flag = 0;
 			clif_storageclose(sd);
@@ -1103,5 +1103,5 @@ void storage_premiumStorage_quit(struct map_session_data *sd) {
 	if (!&sd->premiumStorage)
 		return;
 
-	intif_storage_save(sd, &sd->premiumStorage);
+	storage_premiumStorage_save(sd);
 }

@@ -9,6 +9,16 @@
 #include <time.h>
 
 enum sd_state { ST_LOGIN, ST_LOGOUT, ST_MAPCHANGE };
+
+enum e_chrif_save_opt {
+	CSAVE_NORMAL = 0x0,		/// Normal
+	CSAVE_QUIT,				/// Character quitting
+	CSAVE_CHANGE_MAPSERV,	/// Character changing map server
+	CSAVE_AUTOTRADE,		/// Character entering autotrade state
+	CSAVE_INVENTORY,		/// Inventory data changed
+	CSAVE_CART,				/// Cart data changed
+};
+
 struct auth_node {
 	uint32 account_id, char_id;
 	int login_id1, login_id2, sex, fd;
@@ -43,7 +53,7 @@ int chrif_skillcooldown_request(uint32 account_id, uint32 char_id);
 int chrif_skillcooldown_save(struct map_session_data *sd);
 int chrif_skillcooldown_load(int fd);
 
-int chrif_save(struct map_session_data* sd, int flag);
+int chrif_save(struct map_session_data* sd, enum e_chrif_save_opt flag);
 int chrif_charselectreq(struct map_session_data* sd, uint32 s_ip);
 int chrif_changemapserver(struct map_session_data* sd, uint32 ip, uint16 port);
 
