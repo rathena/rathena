@@ -20093,7 +20093,7 @@ BUILDIN_FUNC(bindatcmd) {
 	} else {
 		ARR_FIND(0, atcmd_binding_count, i, strcmp(atcmd_binding[i]->command,atcmd) == 0);
 		if( i < atcmd_binding_count ) {/* update existent entry */
-			safestrncpy(atcmd_binding[i]->npc_event, eventName, 50);
+			safestrncpy(atcmd_binding[i]->npc_event, eventName, EVENT_NAME_LENGTH);
 			atcmd_binding[i]->level = level;
 			atcmd_binding[i]->level2 = level2;
 		} else
@@ -20109,7 +20109,7 @@ BUILDIN_FUNC(bindatcmd) {
 		CREATE(atcmd_binding[i],struct atcmd_binding_data,1);
 
 		safestrncpy(atcmd_binding[i]->command, atcmd, 50);
-		safestrncpy(atcmd_binding[i]->npc_event, eventName, 50);
+		safestrncpy(atcmd_binding[i]->npc_event, eventName, EVENT_NAME_LENGTH);
 		atcmd_binding[i]->level = level;
 		atcmd_binding[i]->level2 = level2;
 	}

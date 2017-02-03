@@ -385,7 +385,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	if (data->state.size)
 		md->special_state.size = data->state.size;
 	if (data->eventname[0] && strlen(data->eventname) >= 4)
-		memcpy(md->npc_event, data->eventname, 50);
+		safestrncpy(md->npc_event, data->eventname, EVENT_NAME_LENGTH);
 	if(status_has_mode(&md->db->status,MD_LOOTER))
 		md->lootitems = (struct s_mob_lootitem *)aCalloc(LOOTITEM_SIZE,sizeof(struct s_mob_lootitem));
 	md->spawn_timer = INVALID_TIMER;
