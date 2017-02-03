@@ -304,6 +304,7 @@ enum e_race2 {
 	RC2_BIOLAB,
 	RC2_MANUK,
 	RC2_SPLENDIDE,
+	RC2_SCARABA,
 	RC2_MAX
 };
 
