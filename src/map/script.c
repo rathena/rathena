@@ -12492,9 +12492,6 @@ BUILDIN_FUNC(agitstart2)
  */
 BUILDIN_FUNC(agitend2)
 {
-	if (!agit2_flag)
-		return SCRIPT_CMD_SUCCESS;// Agit2 already Ended.
-	agit2_flag = false;
 	guild_agit2_end();
 
 	return SCRIPT_CMD_SUCCESS;
