@@ -280,6 +280,7 @@ int chrif_isconnected(void) {
  * Saves character data.
  * @param sd: Player data
  * @param flag: Save flag types:
+ *  CSAVE_NORMAL: Normal save
  *  CSAVE_QUIT: Character is quitting
  *  CSAVE_CHANGE_MAPSERV: Character is changing map-servers
  *  CSAVE_AUTOTRADE: Character used @autotrade

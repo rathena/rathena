@@ -11,12 +11,12 @@
 enum sd_state { ST_LOGIN, ST_LOGOUT, ST_MAPCHANGE };
 
 enum e_chrif_save_opt {
-	CSAVE_NORMAL = 0x0,		/// Normal
-	CSAVE_QUIT,				/// Character quitting
-	CSAVE_CHANGE_MAPSERV,	/// Character changing map server
-	CSAVE_AUTOTRADE,		/// Character entering autotrade state
-	CSAVE_INVENTORY,		/// Inventory data changed
-	CSAVE_CART,				/// Cart data changed
+	CSAVE_NORMAL = 0x00,		/// Normal
+	CSAVE_QUIT = 0x01,				/// Character quitting
+	CSAVE_CHANGE_MAPSERV = 0x02,	/// Character changing map server
+	CSAVE_AUTOTRADE = 0x04,		/// Character entering autotrade state
+	CSAVE_INVENTORY = 0x08,		/// Inventory data changed
+	CSAVE_CART = 0x10,				/// Cart data changed
 };
 
 struct auth_node {
