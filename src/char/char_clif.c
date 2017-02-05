@@ -1055,29 +1055,33 @@ int chclif_parse_keepalive(int fd){
 	return 1;
 }
 
-// R 08fc <char ID>.l <new name>.24B
-// R 028d <account ID>.l <char ID>.l <new name>.24B
-int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
-	int i, cid = 0;
+// Tells the client if the name was accepted or not
+// 028e <result>.W (HC_ACK_IS_VALID_CHARNAME)
+// result:
+//		0 = name is not OK
+//		1 = name is OK
+void chclif_reqrename_response( int fd, struct char_session_data* sd, bool name_valid ){
+	WFIFOHEAD(fd, 4);
+	WFIFOW(fd, 0) = 0x28e;
+	WFIFOW(fd, 2) = name_valid;
+	WFIFOSET(fd, 4);
+}
+
+// Request for checking the new name on character renaming
+// 028d <account ID>.l <char ID>.l <new name>.24B (CH_REQ_IS_VALID_CHARNAME)
+int chclif_parse_reqrename( int fd, struct char_session_data* sd ){
+	int i, cid, aid;
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
 
-	if(cmd == 0x8fc){
-		FIFOSD_CHECK(30)
-		cid =RFIFOL(fd,2);
-		safestrncpy(name, RFIFOCP(fd,6), NAME_LENGTH);
-		RFIFOSKIP(fd,30);
-	}
-	else if(cmd == 0x28d) {
-		int aid;
-		FIFOSD_CHECK(34);
-		aid = RFIFOL(fd,2);
-		cid =RFIFOL(fd,6);
-		safestrncpy(name, RFIFOCP(fd,10), NAME_LENGTH);
-		RFIFOSKIP(fd,34);
-		if( aid != sd->account_id )
-			return 1;
-	}
+	FIFOSD_CHECK(34);
+	aid = RFIFOL(fd,2);
+	cid = RFIFOL(fd,6);
+	safestrncpy(name, RFIFOCP(fd,10), NAME_LENGTH);
+	RFIFOSKIP(fd,34);
+
+	if( aid != sd->account_id )
+		return 1;
 
 	ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == cid );
 	if( i == MAX_CHARS )
@@ -1090,12 +1094,10 @@ int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
 		safestrncpy(sd->new_name, name, NAME_LENGTH);
 	}
 	else
-			i = 0;
+		i = 0;
 
-	WFIFOHEAD(fd, 4);
-	WFIFOW(fd,0) = 0x28e;
-	WFIFOW(fd,2) = i;
-	WFIFOSET(fd,4);
+	chclif_reqrename_response(fd, sd, i > 0);
+
 	return 1;
 }
 
@@ -1158,13 +1160,70 @@ void chclif_block_character( int fd, struct char_session_data* sd){
 	}
 }
 
-// 0x28f <char_id>.L
+// Sends the response to a rename request to the client.
+// 0290 <result>.W (HC_ACK_CHANGE_CHARNAME)
+// 08fd <result>.L (HC_ACK_CHANGE_CHARACTERNAME)
+// result:
+//		0: Successful
+//		1: This character's name has already been changed. You cannot change a character's name more than once.
+//		2: User information is not correct.
+//		3: You have failed to change this character's name.
+//		4: Another user is using this character name, so please select another one.
+//		5: In order to change the character name, you must leave the guild.
+//		6: In order to change the character name, you must leave the party.
+//		7: Length exceeds the maximum size of the character name you want to change.
+//		8: Name contains invalid characters. Character name change failed.
+//		9: The name change is prohibited. Character name change failed.
+//		10: Character name change failed, due an unknown error.
+void chclif_rename_response(int fd, struct char_session_data* sd, int16 response) {
+#if PACKETVER > 20130000
+	WFIFOHEAD(fd, 6);
+	WFIFOW(fd, 0) = 0x8fd;
+	WFIFOL(fd, 2) = response;
+	WFIFOSET(fd, 6);
+#else
+	WFIFOHEAD(fd, 4);
+	WFIFOW(fd, 0) = 0x290;
+	WFIFOW(fd, 2) = response;
+	WFIFOSET(fd, 4);
+#endif
+}
+
+// Request to change a character name
+// 028f <char_id>.L (CH_REQ_CHANGE_CHARNAME)
+// 08fc <char_id>.L <new name>.24B (CH_REQ_CHANGE_CHARACTERNAME)
 int chclif_parse_ackrename(int fd, struct char_session_data* sd){
-	// 0: Successful
-	// 1: This character's name has already been changed. You cannot change a character's name more than once.
-	// 2: User information is not correct.
-	// 3: You have failed to change this character's name.
-	// 4: Another user is using this character name, so please select another one.
+#if PACKETVER >= 20111101
+	FIFOSD_CHECK(30)
+	{
+		int i, cid;
+		char name[NAME_LENGTH], esc_name[NAME_LENGTH * 2 + 1];
+
+		cid = RFIFOL(fd, 2);
+		safestrncpy(name, RFIFOCP(fd, 6), NAME_LENGTH);
+		RFIFOSKIP(fd, 30);
+
+		ARR_FIND(0, MAX_CHARS, i, sd->found_char[i] == cid);
+		if (i == MAX_CHARS)
+			return 1;
+
+		normalize_name(name, TRIM_CHARS);
+		Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
+
+		safestrncpy(sd->new_name, name, NAME_LENGTH);
+
+		// Start the renaming process
+		i = char_rename_char_sql(sd, cid);
+
+		chclif_rename_response(fd, sd, i);
+
+		// If the renaming was successful, we need to resend the characters
+		if( i == 0 )
+			chclif_mmo_char_send(fd, sd);
+
+		return 1;
+	}
+#else
 	FIFOSD_CHECK(6)
 	{
 		int i;
@@ -1176,12 +1235,10 @@ int chclif_parse_ackrename(int fd, struct char_session_data* sd){
 			return 1;
 		i = char_rename_char_sql(sd, cid);
 
-		WFIFOHEAD(fd, 4);
-		WFIFOW(fd,0) = 0x290;
-		WFIFOW(fd,2) = i;
-		WFIFOSET(fd,4);
+		chclif_rename_response(fd, sd, i);
 	}
 	return 1;
+#endif
 }
 
 int chclif_ack_captcha(int fd){
@@ -1262,9 +1319,9 @@ int chclif_parse(int fd) {
 			// client keep-alive packet (every 12 seconds)
 			case 0x187: next=chclif_parse_keepalive(fd); break;
 			// char rename
-			case 0x8fc: next=chclif_parse_reqrename(fd,sd,cmd); break; //request <date/version?>
-			case 0x28d: next=chclif_parse_reqrename(fd,sd,cmd); break; //request <date/version?>
+			case 0x28d: next=chclif_parse_reqrename(fd,sd); break; //Check new desired name
 			case 0x28f: next=chclif_parse_ackrename(fd,sd); break; //Confirm change name.
+			case 0x8fc: next=chclif_parse_ackrename(fd,sd); break; //Rename request without confirmation
 			// captcha
 			case 0x7e5: next=chclif_parse_reqcaptcha(fd); break; // captcha code request (not implemented)
 			case 0x7e7: next=chclif_parse_chkcaptcha(fd); break; // captcha code check (not implemented)
