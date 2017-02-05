@@ -259,6 +259,7 @@ int party_recv_info(struct party* sp, uint32 char_id)
 	int added[MAX_PARTY];// member_id in new data
 	int added_count = 0;
 	int member_id;
+	bool rename = false;
 
 	nullpo_ret(sp);
 
@@ -279,6 +280,9 @@ int party_recv_info(struct party* sp, uint32 char_id)
 
 			if( i == MAX_PARTY )
 				removed[removed_count++] = member_id;
+			// If the member already existed, compare the old to the (possible) new name
+			else if( !rename && strcmp(member->name,sp->member[i].name) )
+				rename = true;
 		}
 
 		for( member_id = 0; member_id < MAX_PARTY; ++member_id ) {
@@ -342,6 +346,11 @@ int party_recv_info(struct party* sp, uint32 char_id)
 
 		if( p->instance_id != 0 )
 			instance_reqinfo(sd,p->instance_id);
+	}
+	
+	// If a player was renamed, make sure to resend the party information
+	if( rename ){
+		clif_party_info(p,NULL);
 	}
 
 	if( char_id != 0 ) { // requester
