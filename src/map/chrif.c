@@ -294,7 +294,7 @@ int chrif_save(struct map_session_data *sd, enum e_chrif_save_opt flag) {
 
 	pc_makesavestatus(sd);
 
-	if (flag && sd->state.active) { //Store player data which is quitting
+	if ( (flag&CSAVE_QUITTING) && sd->state.active) { //Store player data which is quitting
 		if (chrif_isconnected()) {
 			chrif_save_scdata(sd);
 			chrif_skillcooldown_save(sd);
@@ -305,7 +305,7 @@ int chrif_save(struct map_session_data *sd, enum e_chrif_save_opt flag) {
 
 	chrif_check(-1); //Character is saved on reconnect.
 
-	chrif_bsdata_save(sd, (flag && !(flag&CSAVE_AUTOTRADE)));
+	chrif_bsdata_save(sd, ((flag&CSAVE_QUITTING) && !(flag&CSAVE_AUTOTRADE)));
 
 	if (&sd->storage && sd->storage.dirty)
 		storage_storagesave(sd);
@@ -320,7 +320,7 @@ int chrif_save(struct map_session_data *sd, enum e_chrif_save_opt flag) {
 	if (&sd->premiumStorage && sd->premiumStorage.dirty)
 		storage_premiumStorage_save(sd);
 
-	if (flag)
+	if (flag&CSAVE_QUITTING)
 		sd->state.storage_flag = 0; //Force close it.
 
 	//Saving of registry values.
