@@ -57,17 +57,23 @@ Sql* qsmysql_handle; /// For query_sql
 int db_use_sqldbs = 0;
 char buyingstores_db[32] = "buyingstores";
 char buyingstore_items_db[32] = "buyingstore_items";
-char item_db_db[32] = "item_db";
-char item_db2_db[32] = "item_db2";
-char item_db_re_db[32] = "item_db_re";
 char item_cash_db_db[32] = "item_cash_db";
 char item_cash_db2_db[32] = "item_cash_db2";
+#ifdef RENEWAL
+char item_db_db[32] = "item_db_re";
+char item_db2_db[32] = "item_db2_re";
+char mob_db_db[32] = "mob_db_re";
+char mob_db2_db[32] = "mob_db2_re";
+char mob_skill_db_db[32] = "mob_skill_db_re";
+char mob_skill_db2_db[32] = "mob_skill_db2_re";
+#else
+char item_db_db[32] = "item_db";
+char item_db2_db[32] = "item_db2";
 char mob_db_db[32] = "mob_db";
-char mob_db_re_db[32] = "mob_db_re";
 char mob_db2_db[32] = "mob_db2";
 char mob_skill_db_db[32] = "mob_skill_db";
-char mob_skill_db_re_db[32] = "mob_skill_db_re";
 char mob_skill_db2_db[32] = "mob_skill_db2";
+#endif
 char vendings_db[32] = "vendings";
 char vending_items_db[32] = "vending_items";
 char market_table[32] = "market";
@@ -3976,6 +3982,18 @@ int inter_config_read(char *cfgName)
 		if( sscanf(line,"%1023[^:]: %1023[^\r\n]",w1,w2) < 2 )
 			continue;
 
+#define RENEWALPREFIX "renewal-"
+		if (!strncmpi(w1, RENEWALPREFIX, strlen(RENEWALPREFIX))) {
+#ifdef RENEWAL
+			// Copy the original name
+			safestrncpy(w1, w1 + strlen(RENEWALPREFIX), strlen(w1) - strlen(RENEWALPREFIX));
+#else
+			// In Pre-Renewal the Renewal specific configurations can safely be ignored
+			continue;
+#endif
+		}
+#undef RENEWALPREFIX
+
 		if( strcmpi( w1, "buyingstore_db" ) == 0 )
 			strcpy( buyingstores_db, w2 );
 		else if( strcmpi( w1, "buyingstore_items_db" ) == 0 )
@@ -3984,18 +4002,12 @@ int inter_config_read(char *cfgName)
 			strcpy(item_db_db,w2);
 		else if(strcmpi(w1,"item_db2_db")==0)
 			strcpy(item_db2_db,w2);
-		else if(strcmpi(w1,"item_db_re_db")==0)
-			strcpy(item_db_re_db,w2);
 		else if(strcmpi(w1,"mob_db_db")==0)
 			strcpy(mob_db_db,w2);
-		else if(strcmpi(w1,"mob_db_re_db")==0)
-			strcpy(mob_db_re_db,w2);
 		else if(strcmpi(w1,"mob_db2_db")==0)
 			strcpy(mob_db2_db,w2);
 		else if(strcmpi(w1,"mob_skill_db_db")==0)
 			strcpy(mob_skill_db_db,w2);
-		else if(strcmpi(w1,"mob_skill_db_re_db")==0)
-			strcpy(mob_skill_db_re_db,w2);
 		else if(strcmpi(w1,"mob_skill_db2_db")==0)
 			strcpy(mob_skill_db2_db,w2);
 		else if( strcmpi( w1, "item_cash_db_db" ) == 0 )

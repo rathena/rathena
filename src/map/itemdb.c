@@ -1490,11 +1490,7 @@ static int itemdb_readdb(void){
 static int itemdb_read_sqldb(void) {
 
 	const char* item_db_name[] = {
-#ifdef RENEWAL
-		item_db_re_db,
-#else
 		item_db_db,
-#endif
 		item_db2_db
 	};
 	int fi;

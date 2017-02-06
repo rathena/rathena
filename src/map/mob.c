@@ -4172,11 +4172,7 @@ static bool mob_readdb_sub(char* fields[], int columns, int current)
 static int mob_read_sqldb(void)
 {
 	const char* mob_db_name[] = {
-#ifndef RENEWAL
 		mob_db_db,
-#else
-		mob_db_re_db,
-#endif
 		mob_db2_db };
 	int fi;
 
@@ -4636,11 +4632,7 @@ static void mob_readskilldb(const char* basedir, bool silent) {
 static int mob_read_sqlskilldb(void)
 {
 	const char* mob_skill_db_name[] = {
-#ifndef RENEWAL
 		mob_skill_db_db,
-#else
-		mob_skill_db_re_db,
-#endif
 		mob_skill_db2_db };
 	int fi;
 
