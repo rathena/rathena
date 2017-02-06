@@ -57,27 +57,27 @@ Sql* qsmysql_handle; /// For query_sql
 int db_use_sqldbs = 0;
 char buyingstores_table[32] = "buyingstores";
 char buyingstore_items_table[32] = "buyingstore_items";
-char item_cash_db_table[32] = "item_cash_db";
-char item_cash_db2_table[32] = "item_cash_db2";
+char item_cash_table[32] = "item_cash_db";
+char item_cash2_table[32] = "item_cash_db2";
 #ifdef RENEWAL
-char item_db_table[32] = "item_db_re";
-char item_db2_table[32] = "item_db2_re";
-char mob_db_table[32] = "mob_db_re";
-char mob_db2_table[32] = "mob_db2_re";
-char mob_skill_db_table[32] = "mob_skill_db_re";
-char mob_skill_db2_table[32] = "mob_skill_db2_re";
+char item_table[32] = "item_db_re";
+char item2_table[32] = "item_db2_re";
+char mob_table[32] = "mob_db_re";
+char mob2_table[32] = "mob_db2_re";
+char mob_skill_table[32] = "mob_skill_db_re";
+char mob_skill2_table[32] = "mob_skill_db2_re";
 #else
-char item_db_table[32] = "item_db";
-char item_db2_table[32] = "item_db2";
-char mob_db_table[32] = "mob_db";
-char mob_db2_table[32] = "mob_db2";
-char mob_skill_db_table[32] = "mob_skill_db";
-char mob_skill_db2_table[32] = "mob_skill_db2";
+char item_table[32] = "item_db";
+char item2_table[32] = "item_db2";
+char mob_table[32] = "mob_db";
+char mob2_table[32] = "mob_db2";
+char mob_skill_table[32] = "mob_skill_db";
+char mob_skill2_table[32] = "mob_skill_db2";
 #endif
 char vendings_table[32] = "vendings";
 char vending_items_table[32] = "vending_items";
 char market_table[32] = "market";
-char roulette_db_table[32] = "db_roulette";
+char roulette_table[32] = "db_roulette";
 
 // log database
 char log_db_ip[32] = "127.0.0.1";
@@ -3998,28 +3998,28 @@ int inter_config_read(char *cfgName)
 			strcpy( buyingstores_table, w2 );
 		else if( strcmpi( w1, "buyingstore_items_table" ) == 0 )
 			strcpy( buyingstore_items_table, w2 );
-		else if(strcmpi(w1,"item_db_table")==0)
-			strcpy(item_db_table,w2);
-		else if(strcmpi(w1,"item_db2_table")==0)
-			strcpy(item_db2_table,w2);
-		else if(strcmpi(w1,"mob_db_table")==0)
-			strcpy(mob_db_table,w2);
-		else if(strcmpi(w1,"mob_db2_table")==0)
-			strcpy(mob_db2_table,w2);
-		else if(strcmpi(w1,"mob_skill_db_table")==0)
-			strcpy(mob_skill_db_table,w2);
-		else if(strcmpi(w1,"mob_skill_db2_table")==0)
-			strcpy(mob_skill_db2_table,w2);
-		else if( strcmpi( w1, "item_cash_db_table" ) == 0 )
-			strcpy( item_cash_db_table, w2 );
-		else if( strcmpi( w1, "item_cash_db2_table" ) == 0 )
-			strcpy( item_cash_db2_table, w2 );
+		else if(strcmpi(w1,"item_table")==0)
+			strcpy(item_table,w2);
+		else if(strcmpi(w1,"item2_table")==0)
+			strcpy(item2_table,w2);
+		else if(strcmpi(w1,"mob_table")==0)
+			strcpy(mob_table,w2);
+		else if(strcmpi(w1,"mob2_table")==0)
+			strcpy(mob2_table,w2);
+		else if(strcmpi(w1,"mob_skill_table")==0)
+			strcpy(mob_skill_table,w2);
+		else if(strcmpi(w1,"mob_skill2_table")==0)
+			strcpy(mob_skill2_table,w2);
+		else if( strcmpi( w1, "item_cash_table" ) == 0 )
+			strcpy( item_cash_table, w2 );
+		else if( strcmpi( w1, "item_cash2_table" ) == 0 )
+			strcpy( item_cash2_table, w2 );
 		else if( strcmpi( w1, "vending_db" ) == 0 )
 			strcpy( vendings_table, w2 );
 		else if( strcmpi( w1, "vending_items_table" ) == 0 )
 			strcpy(vending_items_table, w2);
-		else if( strcmpi(w1, "roulette_db_table") == 0)
-			strcpy(roulette_db_table, w2);
+		else if( strcmpi(w1, "roulette_table") == 0)
+			strcpy(roulette_table, w2);
 		else if (strcmpi(w1, "market_table") == 0)
 			strcpy(market_table, w2);
 		else
