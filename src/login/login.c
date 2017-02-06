@@ -655,10 +655,15 @@ bool login_config_read(const char* cfgName, bool normal) {
 		else if(strcmpi(w1,"vip_group")==0)
 			login_config.vip_sys.group = cap_value(atoi(w2),0,99);
 		else if(strcmpi(w1,"vip_char_increase")==0) {
-			if(login_config.vip_sys.char_increase > (unsigned int) MAX_CHARS-login_config.char_per_account)
+			if (atoi(w2) == -1)
+				login_config.vip_sys.char_increase = MAX_CHAR_VIP;
+			else
+				login_config.vip_sys.char_increase = atoi(w2);
+			if (login_config.vip_sys.char_increase > (unsigned int) MAX_CHARS-login_config.char_per_account) {
 				ShowWarning("vip_char_increase too high, can only go up to %d, according to your char_per_account config %d\n",
 					MAX_CHARS-login_config.char_per_account,login_config.char_per_account);
-			login_config.vip_sys.char_increase =  cap_value(atoi(w2),0,MAX_CHARS-login_config.char_per_account);
+				login_config.vip_sys.char_increase = MAX_CHARS-login_config.char_per_account;
+			}
 		}
 #endif
 		else if(!strcmpi(w1, "import"))

@@ -528,7 +528,7 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	4_M_RUSBALD,{
 		mes "Oh. Are you ready to depart?";
 		mes "Good, let's see...";
 		next;
-		if ((gettime(3) >= 0 && gettime(3) < 3) || (gettime(3) >= 6 && gettime(3) < 9) || (gettime(3) >= 12 && gettime(3) < 15) || (gettime(3) >= 18 && gettime(3) < 21)) {
+		if ((gettime(DT_HOUR) >= 0 && gettime(DT_HOUR) < 3) || (gettime(DT_HOUR) >= 6 && gettime(DT_HOUR) < 9) || (gettime(DT_HOUR) >= 12 && gettime(DT_HOUR) < 15) || (gettime(DT_HOUR) >= 18 && gettime(DT_HOUR) < 21)) {
 			// if (isbegin_quest(18106))
 				// changequest 18106,18107;
 			mes "[Mr. Ibanoff]";
@@ -562,7 +562,7 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	4_M_RUSBALD,{
 			mes "When you are ready to depart, tell me.";
 			close;
 		}
-		if ((gettime(3) >= 0 && gettime(3) < 3) || (gettime(3) >= 6 && gettime(3) < 9) || (gettime(3) >= 12 && gettime(3) < 15) || (gettime(3) >= 18 && gettime(3) < 21)) {
+		if ((gettime(DT_HOUR) >= 0 && gettime(DT_HOUR) < 3) || (gettime(DT_HOUR) >= 6 && gettime(DT_HOUR) < 9) || (gettime(DT_HOUR) >= 12 && gettime(DT_HOUR) < 15) || (gettime(DT_HOUR) >= 18 && gettime(DT_HOUR) < 21)) {
 			mos_whale_edq = 4;
 			mes "[Mr. Ibanoff]";
 			mes "Hmm. It's not a bad time.";
@@ -699,7 +699,7 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	4_M_RUSBALD,{
 			mes "When you are ready to depart, tell me.";
 			close;
 		}
-		if ((gettime(3) >= 0 && gettime(3) < 3) || (gettime(3) >= 6 && gettime(3) < 9) || (gettime(3) >= 12 && gettime(3) < 15) || (gettime(3) >= 18 && gettime(3) < 21)) {
+		if ((gettime(DT_HOUR) >= 0 && gettime(DT_HOUR) < 3) || (gettime(DT_HOUR) >= 6 && gettime(DT_HOUR) < 9) || (gettime(DT_HOUR) >= 12 && gettime(DT_HOUR) < 15) || (gettime(DT_HOUR) >= 18 && gettime(DT_HOUR) < 21)) {
 			mes "[Mr. Ibanoff]";
 			mes "Hmm. It's not a bad time.";
 			mes "We should hurry up";
@@ -731,7 +731,7 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	4_M_RUSBALD,{
 		mes "I can guess you'd like to go to";
 		mes "Whale Island once again...";
 		next;
-		if ((gettime(3) >= 0 && gettime(3) < 3) || (gettime(3) >= 6 && gettime(3) < 9) || (gettime(3) >= 12 && gettime(3) < 15) || (gettime(3) >= 18 && gettime(3) < 21)) {
+		if ((gettime(DT_HOUR) >= 0 && gettime(DT_HOUR) < 3) || (gettime(DT_HOUR) >= 6 && gettime(DT_HOUR) < 9) || (gettime(DT_HOUR) >= 12 && gettime(DT_HOUR) < 15) || (gettime(DT_HOUR) >= 18 && gettime(DT_HOUR) < 21)) {
 			mes "[Mr. Ibanoff]";
 			mes "Hmm. It's not a bad time.";
 			mes "We should hurry up";
@@ -3366,7 +3366,7 @@ mosk_in,135,191,5	script	Landlord#mos	4_F_RUSWOMAN3,{
 		mes "[Landlord]";
 		mes "Your respawn point has been saved.";
 		mes "Hope we can see you again next time hoho.";
-		savepoint "mosk_in",142,189;
+		savepoint "mosk_in",142,189,1,1;
 		close;
 	case 2:
 		if (Zeny > 4999) {
@@ -3388,12 +3388,12 @@ mosk_in,135,191,5	script	Landlord#mos	4_F_RUSWOMAN3,{
 	case 3:
 		mes "[Landlord]";
 		emotion e_lv;
-		mes "Oh~! You look great! Look at the "+((Sex)?"solid muscle":"fair skin")+"!";
+		mes "Oh~! You look great! Look at the "+((Sex == SEX_MALE)?"solid muscle":"fair skin")+"!";
 		mes "But you look tired. Is it because of a long journey?";
 		next;
 		mes "[Landlord]";
-		mes "We've got a room available just for you. "+((Sex)?"It's the best in town. How about staying the night?":"It's like a princess' room.");
-		mes (Sex)?"I'll charge you at reasonable price for you, handsome guy.":"How about staying the night? I'll mark down the price for you, beautiful lady.";
+		mes "We've got a room available just for you. "+((Sex == SEX_MALE)?"It's the best in town. How about staying the night?":"It's like a princess' room.");
+		mes (Sex == SEX_MALE)?"I'll charge you at reasonable price for you, handsome guy.":"How about staying the night? I'll mark down the price for you, beautiful lady.";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Oh, I'm sorry but I didn't come to stay here.";
@@ -4901,7 +4901,7 @@ OnTouch:
 				mes "I need to kick your ass more.";
 				next;
 				mes "[Baba Yaga, the Horrible]";
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "I will bewitch";
 					mes "and enslave you.";
 					mes "Come here, Heeee!";
@@ -7122,15 +7122,15 @@ OnDisable:
 	end;
 
 OnTimer3000:
-	announce "Koshei, the Immortal : I will kill all who disturb me!! Cry in terror weak humans!!!",bc_map,0xCE3131;
+	mapannounce "mosk_dun01","Koshei, the Immortal : I will kill all who disturb me!! Cry in terror weak humans!!!",bc_map,0xCE3131;
 	end;
 
 OnTimer63000:
-	announce "Koshei, the Immortal : You worms, you mere monsters... I will curse all who are in my way!!",bc_map,0xCE3131;
+	mapannounce "mosk_dun01","Koshei, the Immortal : You worms, you mere monsters... I will curse all who are in my way!!",bc_map,0xCE3131;
 	end;
 
 OnTimer150000:
-	announce "Koshei, the Immortal : Mankind! Cry in terror!! Hahahahahahahhahahah!!!",bc_map,0xCE3131;
+	mapannounce "mosk_dun01","Koshei, the Immortal : Mankind! Cry in terror!! Hahahahahahahhahahah!!!",bc_map,0xCE3131;
 	end;
 
 OnTimer300000:
@@ -7755,7 +7755,7 @@ moscovia,213,216,3	script	Ryubaba#rus08	4_F_RUSWOMAN2,{
 				mes "Are you crazy!? Don't you know how wide the world is and how many beautiful people there are? You're pretty full of it, country girl!";
 				next;
 				mes "["+ strcharinfo(0) +"]";
-				if (!Sex)
+				if (Sex == SEX_FEMALE)
 					mes "Besides, if there was a most beautiful girl in the world it would be me, me, me!";
 				else {
 					mes "Have you seen dancers dancing? Have you seen beautiful and pure priests?!";
@@ -8399,7 +8399,7 @@ OnTouch_:
 		end;
 	}
 	if (rhea_rus_hair == 2) {
-		if (gettime(3) >= 17 || gettime(3) <= 6) {
+		if (gettime(DT_HOUR) >= 17 || gettime(DT_HOUR) <= 6) {
 			mes "- Splash !! -";
 			next;
 			if (countitem(523) > 0) {// Holy_Water
@@ -8424,7 +8424,7 @@ OnTouch_:
 		mes "And please, tell him to stop suffering and to be happy. This is my request.";
 		close;
 	} else if (rhea_rus_hair == 7) {
-		if (gettime(3) >= 17 || gettime(3) <= 6) {
+		if (gettime(DT_HOUR) >= 17 || gettime(DT_HOUR) <= 6) {
 			mes "- Splash !! -";
 			next;
 			if (countitem(523) > 0) {
@@ -9031,9 +9031,9 @@ OnInit:
 	disablenpc "1#rus27";
 	end;
 }
-mosk_que,0,0,0,0	monster	Freezer	1887,10,20000,0,0
-mosk_que,0,0,0,0	monster	Hatii Baby	1888,3,300000,0,0
-mosk_que,0,0,0,0	monster	Sasquatch	1243,15,10000,0,0
+mosk_que,0,0	monster	Freezer	1887,10,20000
+mosk_que,0,0	monster	Hatii Baby	1888,3,300000
+mosk_que,0,0	monster	Sasquatch	1243,15,10000
 
 mosk_que,49,22,3	script	#rus27	-1,3,3,{
 	end;
@@ -9214,12 +9214,12 @@ mosk_fild02,243,270,0	script	Marozka#rus31	4_M_LGTGRAND,{
 			mes "[Marozka]";
 			mes "I will begin making it now... let me see... Could you please come back to me in an hour?";
 			rhea_rus_quiz = 4;
-			rus_time01 = gettime(3);
-			rus_time02 = gettime(4);
+			rus_time01 = gettime(DT_HOUR);
+			rus_time02 = gettime(DT_DAYOFWEEK);
 			// changequest 8155,8156;
 			close;
 		} else if (rhea_rus_quiz == 4) {
-			if (rus_time01 != gettime(3) || rus_time02 != gettime(4)) {
+			if (rus_time01 != gettime(DT_HOUR) || rus_time02 != gettime(DT_DAYOFWEEK)) {
 				mes "[Marozka]";
 				mes "Ah, just in time.";
 				mes "I have finally finished making the 'Golden Thread'. Just wait one more second and it'll be ready.";

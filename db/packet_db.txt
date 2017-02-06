@@ -2330,6 +2330,12 @@ packet_keys: 0x631C511C,0x111C111C,0x111C111C // [Shakto]
 0x09D6,-1,npcmarketpurchase,2:4:6
 0x09D7,-1
 0x09D8,2,npcmarketclosed,0
+// Clan System
+0x0988,6
+0x0989,2
+0x098A,-1
+0x098D,-1,clanchat,2:4
+0x098E,-1
 
 // New Packet
 0x097A,-1		// ZC_ALL_QUEST_LIST2

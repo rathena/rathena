@@ -211,7 +211,7 @@ static void logclif_auth_failed(struct login_session_data* sd, int result) {
 			struct mmo_account acc;
 			AccountDB* accounts = login_get_accounts_db();
 			time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
-			timestamp2string((char*)WFIFOP(fd,6), 20, unban_time, login_config.date_format);
+			timestamp2string(WFIFOCP(fd,6), 20, unban_time, login_config.date_format);
 		}
 		WFIFOSET(fd,26);
 	}
@@ -226,7 +226,7 @@ static void logclif_auth_failed(struct login_session_data* sd, int result) {
 			struct mmo_account acc;
 			AccountDB* accounts = login_get_accounts_db();
 			time_t unban_time = ( accounts->load_str(accounts, &acc, sd->userid) ) ? acc.unban_time : 0;
-			timestamp2string((char*)WFIFOP(fd,3), 20, unban_time, login_config.date_format);
+			timestamp2string(WFIFOCP(fd,3), 20, unban_time, login_config.date_format);
 		}
 		WFIFOSET(fd,23);
 	}
@@ -299,8 +299,8 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 
 		// Shinryo: For the time being, just use token as password.
 		if(command == 0x0825) {
-			char *accname = (char *)RFIFOP(fd, 9);
-			char *token = (char *)RFIFOP(fd, 0x5C);
+			char *accname = RFIFOCP(fd, 9);
+			char *token = RFIFOCP(fd, 0x5C);
 			size_t uAccLen = strlen(accname);
 			size_t uTokenLen = RFIFOREST(fd) - 0x5C;
 
@@ -319,10 +319,10 @@ static int logclif_parse_reqauth(int fd, struct login_session_data *sd, int comm
 		else
 		{
 			version = RFIFOL(fd,2);
-			safestrncpy(username, (const char*)RFIFOP(fd,6), NAME_LENGTH);
+			safestrncpy(username, RFIFOCP(fd,6), NAME_LENGTH);
 			if( israwpass )
 			{
-				safestrncpy(password, (const char*)RFIFOP(fd,30), PASSWD_LENGTH);
+				safestrncpy(password, RFIFOCP(fd,30), PASSWD_LENGTH);
 				clienttype = RFIFOB(fd,54);
 			}
 			else
@@ -409,15 +409,15 @@ static int logclif_parse_reqcharconnec(int fd, struct login_session_data *sd, ch
 		uint16 type;
 		uint16 new_;
 
-		safestrncpy(sd->userid, (char*)RFIFOP(fd,2), NAME_LENGTH);
-		safestrncpy(sd->passwd, (char*)RFIFOP(fd,26), NAME_LENGTH);
+		safestrncpy(sd->userid, RFIFOCP(fd,2), NAME_LENGTH);
+		safestrncpy(sd->passwd, RFIFOCP(fd,26), NAME_LENGTH);
 		if( login_config.use_md5_passwds )
 			MD5_String(sd->passwd, sd->passwd);
 		sd->passwdenc = 0;
 		sd->version = login_config.client_version_to_connect; // hack to skip version check
 		server_ip = ntohl(RFIFOL(fd,54));
 		server_port = ntohs(RFIFOW(fd,58));
-		safestrncpy(server_name, (char*)RFIFOP(fd,60), 20);
+		safestrncpy(server_name, RFIFOCP(fd,60), 20);
 		type = RFIFOW(fd,82);
 		new_ = RFIFOW(fd,84);
 		RFIFOSKIP(fd,86);

@@ -322,10 +322,22 @@ enum e_skill_unit_flag {
 	UF_DUALMODE         = 0x00800,	// Spells should trigger both ontimer and onplace/onout/onleft effects.
 	UF_NOKNOCKBACK      = 0x01000,	// Skill unit cannot be knocked back
 	UF_RANGEDSINGLEUNIT = 0x02000,	// hack for ranged layout, only display center
-	UF_REM_CRAZYWEED    = 0x04000,	// removed by Crazyweed
+	UF_CRAZYWEED_IMMUNE = 0x04000,	// Immune to Crazy Weed removal
 	UF_REM_FIRERAIN     = 0x08000,	// removed by Fire Rain
 	UF_KNOCKBACK_GROUP  = 0x10000,	// knockback skill unit with its group instead of single unit
 	UF_HIDDEN_TRAP      = 0x20000,	// Hidden trap [Cydh]
+};
+
+/// Enum for skill_blown
+enum e_skill_blown	{
+	BLOWN_NONE					= 0x00,
+	BLOWN_DONT_SEND_PACKET		= 0x01, // Position update packets must not be sent to the client
+	BLOWN_IGNORE_NO_KNOCKBACK	= 0x02, // Ignores players' special_state.no_knockback
+	// These flags return 'count' instead of 0 if target is cannot be knocked back
+	BLOWN_NO_KNOCKBACK_MAP		= 0x04, // On a WoE/BG map
+	BLOWN_MD_KNOCKBACK_IMMUNE	= 0x08, // If target is MD_KNOCKBACK_IMMUNE
+	BLOWN_TARGET_NO_KNOCKBACK	= 0x10, // If target has 'special_state.no_knockback'
+	BLOWN_TARGET_BASILICA		= 0x20, // If target is in Basilica area
 };
 
 /// Create Database item
@@ -432,12 +444,12 @@ int skill_addtimerskill(struct block_list *src,unsigned int tick,int target,int 
 // Results? Added
 int skill_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,enum damage_lv dmg_lv,unsigned int tick);
 int skill_counter_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int attack_type,unsigned int tick);
-short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, unsigned char flag);
+short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, enum e_skill_blown flag);
 int skill_break_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int flag);
 int skill_strip_equip(struct block_list *src,struct block_list *bl, unsigned short where, int rate, int lv, int time);
 // Skills unit
 struct skill_unit_group *skill_id2group(int group_id);
-struct skill_unit_group *skill_unitsetting(struct block_list* src, uint16 skill_id, uint16 skill_lv, short x, short y, int flag);
+struct skill_unit_group *skill_unitsetting(struct block_list* src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int flag);
 struct skill_unit *skill_initunit (struct skill_unit_group *group, int idx, int x, int y, int val1, int val2, bool hidden);
 int skill_delunit(struct skill_unit *unit);
 struct skill_unit_group *skill_initunitgroup(struct block_list* src, int count, uint16 skill_id, uint16 skill_lv, int unit_id, int limit, int interval);
@@ -469,20 +481,11 @@ struct skill_condition skill_get_requirement(struct map_session_data *sd, uint16
 int skill_disable_check(struct status_change *sc, uint16 skill_id);
 
 int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 *skill_lv, int range, int cast_flag);
-// -- moonsoul	(added skill_check_unit_cell)
-int skill_check_unit_cell(uint16 skill_id,int16 m,int16 x,int16 y,int unit_id);
-int skill_unit_out_all( struct block_list *bl,unsigned int tick,int range);
 int skill_unit_move(struct block_list *bl,unsigned int tick,int flag);
 void skill_unit_move_unit_group( struct skill_unit_group *group, int16 m,int16 dx,int16 dy);
 void skill_unit_move_unit(struct block_list *bl, int dx, int dy);
 
-struct skill_unit_group *skill_check_dancing( struct block_list *src );
-
-// Chant canceled
-int skill_castcancel(struct block_list *bl,int type);
-
 int skill_sit (struct map_session_data *sd, int type);
-void skill_overbrand(struct block_list* src, uint16 skill_id, uint16 skill_lv, uint16 x, uint16 y, unsigned int tick, int flag);
 void skill_repairweapon(struct map_session_data *sd, int idx);
 void skill_identify(struct map_session_data *sd,int idx);
 void skill_weaponrefine(struct map_session_data *sd,int idx); // [Celest]

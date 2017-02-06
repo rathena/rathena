@@ -87,7 +87,7 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 		}
 		if (job_magician_q == 0) {
 			mes "Wanna be a Mage, eh...?";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "Hey, look at you! You're kinda cute~! Not my type though...";
 			else {
 				mes "Oooh, you're such a hot babe~!";
@@ -207,17 +207,9 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 		mes "Congratulations!";
 		mes "You are now a Mage!";
 		next;
-		if(checkquest(1005) != -1) {
-			completequest 1005;
-		}
-		else if(checkquest(1006) != -1) {
-			completequest 1006;
-		}
-		else if(checkquest(1007) != -1) {
-			completequest 1007;
-		}
-		else {
-			completequest 1008;
+		for ( .@quest_id = 1005; .@quest_id <= 1008; .@quest_id++ ) {
+			if (isbegin_quest(.@quest_id) == 1)
+				completequest .@quest_id;
 		}
 		callfunc "Job_Change",Job_Mage;
 		callfunc "F_ClearJobVar";
@@ -232,7 +224,7 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 	case 2:
 		mes "[Mage Guildsman]";
 		mes "Wanna be a Mage, eh?";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "For a cutie like you, I'd be happy to explain the requirements!";
 		else
 			mes "I'd be happy to explain the requirements for a pretty girl like you!";
@@ -248,25 +240,30 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 				mes "make me a";
 				mes "^3355FFMixed Solution No. 1^000000";
 				mes "and bring it back to me.";
-				setquest 1005;
+				if (isbegin_quest(1005) == 0)
+					setquest 1005;
 				break;
 			case 2:
 				mes "make me a";
 				mes "^3355FFMixed Solution No. 2^000000";
 				mes "and bring it back to me.";
-				setquest 1006;
+				if (isbegin_quest(1006) == 0)
+					setquest 1006;
 				break;
 			case 3:
 				mes "make me a";
 				mes "^3355FFMixed Solution No. 3^000000";
 				mes "and bring it back to me.";
-				setquest 1007;
+				if (isbegin_quest(1007) == 0)
+					setquest 1007;
 				break;
 			default:
 				mes "make me a";
 				mes "^3355FFMixed Solution No. 4^000000";
 				mes "and bring it back to me.";
-				setquest 1008;
+				if (isbegin_quest(1008) == 0)
+					setquest 1008;
+				break;
 			}
 			next;
 			mes "[Mage Guildsman]";

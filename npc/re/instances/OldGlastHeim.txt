@@ -123,19 +123,19 @@ glast_01,204,273,6	script	Hugin#ghinstance	4_M_SAGE_C,{
 			close;
 		case 2:
 			switch(instance_enter(.@md_name$)) {
-			case 3:
+			case IE_OTHER:
 				mes "[Hugin]";
 				mes "An unknown error has occurred.";
 				close;
-			case 2:
+			case IE_NOINSTANCE:
 				mes "[Hugin]";
 				mes "The time gap is not yet open.";
 				close;
-			case 1:
+			case IE_NOMEMBER:
 				mes "[Hugin]";
 				mes "Your body is not fit to enter the time gap. You won't be able to get in if you're not in a party.";
 				close;
-			case 0:
+			case IE_OK:
 				mapannounce "glast_01",.@p_name$ + " party member " + strcharinfo(0) + " enters the Old Glast Heim",bc_map,"0x00ff99";
 				setquest 12317;
 				close;

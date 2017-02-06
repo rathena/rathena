@@ -10,6 +10,7 @@
 // 2    - restricted in PVP
 // 4    - restricted in GVG
 // 8    - restricted in Battlegrounds
+// 16   - restricted in WOE:TE castles
 // Restricted zones - configured by 'restricted <number>' mapflag
 // 32   - restricted in zone 1
 // 64   - restricted in zone 2

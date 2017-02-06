@@ -99,6 +99,7 @@ static char log_chattype2char(e_log_chat_type type)
 		case LOG_CHAT_PARTY:    return 'P';  // (P)arty
 		case LOG_CHAT_GUILD:    return 'G';  // (G)uild
 		case LOG_CHAT_MAINCHAT: return 'M';  // (M)ain chat
+		case LOG_CHAT_CLAN:     return 'C';  // (C)lan
 	}
 
 	// should not get here, fallback
@@ -444,7 +445,7 @@ void log_chat(e_log_chat_type type, int type_id, int src_charid, int src_accid, 
 		return;
 	}
 
-	if( log_config.log_chat_woe_disable && ( agit_flag || agit2_flag ) )
+	if( log_config.log_chat_woe_disable && is_agit_start() )
 	{// no chat logging during woe
 		return;
 	}

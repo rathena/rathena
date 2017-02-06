@@ -146,3 +146,4 @@ bat_a01	mapflag	nomemo
 bat_a01	mapflag	nopenalty
 bat_a01	mapflag	nobranch
 bat_a01	mapflag	noicewall
+bat_a01	mapflag	hidemobhpbar

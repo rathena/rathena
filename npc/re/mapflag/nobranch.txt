@@ -9,6 +9,8 @@
 //= 1.1 Added Izlude duplicates. [Euphy]
 //= 1.2 Added Nightmare Clock Tower [Lemongrass]
 //= 1.3 Added dali02 [Nova]
+//= 1.4 Added Nightmare Glastheim [Ridley8819]
+//= 1.5 Added WOE:TE maps [Cydh]
 //============================================================
 
 // 3rd Class Job Maps & Paradise
@@ -73,6 +75,8 @@ ma_zif09	mapflag	nobranch
 1@ma_b	mapflag	nobranch
 c_tower2_	mapflag	nobranch
 c_tower3_	mapflag	nobranch
+gl_chyard_	mapflag	nobranch
+gl_cas02_	mapflag	nobranch
 
 // Episode 14.2 ================
 eclage	mapflag	nobranch
@@ -83,6 +87,7 @@ ecl_in04	mapflag	nobranch
 1@ecl	mapflag	nobranch
 ecl_hub01	mapflag	nobranch
 que_avan01	mapflag	nobranch
+1@xm_d	mapflag	nobranch
 
 // Izlude duplicates ===========
 izlude_a	mapflag	nobranch
@@ -98,3 +103,17 @@ izlude_d	mapflag	nobranch
 1@ge_st	mapflag	nobranch
 dali	mapflag	nobranch
 dali02	mapflag	nobranch
+
+// WOE:TE Maps ===================
+te_alde_gld	mapflag	nobranch
+te_prt_gld	mapflag	nobranch
+te_prtcas01	mapflag	nobranch
+te_prtcas02	mapflag	nobranch
+te_prtcas03	mapflag	nobranch
+te_prtcas04	mapflag	nobranch
+te_prtcas05	mapflag	nobranch
+te_aldecas1	mapflag	nobranch
+te_aldecas2	mapflag	nobranch
+te_aldecas3	mapflag	nobranch
+te_aldecas4	mapflag	nobranch
+te_aldecas5	mapflag	nobranch

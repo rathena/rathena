@@ -1329,7 +1329,7 @@ OnTouch:
 		mes "Hold up your head and come closer.";
 		mes "Conversations are meant to have with eye contact.";
 		next;
-		cutin (Sex?"ep13_ahat_f":"ep13_ahat_m"),1;
+		cutin (Sex == SEX_MALE?"ep13_ahat_f":"ep13_ahat_m"),1;
 		mes "You hold up your head at the sound of Ahat's voice";
 		mes "But you see a human in high-ranking Sapha clothing in front of you.";
 		sc_end SC_Blind;
@@ -1369,7 +1369,7 @@ dic_in01,294,276,5	script	Secret Adjutant#ep133_2	498,{
 		mes ".. Hey, what are you talking about?";
 		mes "What do you want to say?";
 		next;
-		cutin (Sex?"ep13_ahat_f":"ep13_ahat_m"),2;
+		cutin (Sex == SEX_MALE?"ep13_ahat_f":"ep13_ahat_m"),2;
 		mes "[Ahat]";
 		mes "" + strcharinfo(0) + "....";
 		mes "All you need to do is follow Cheshire's orders.";
@@ -1534,7 +1534,7 @@ dic_in01,300,280,5	script	Minister Ahat#ep133_21	493,{
 		mes "Hold up your head and come closer.";
 		mes "Conversations are meant to have with eye contact.";
 		next;
-		cutin (Sex?"ep13_ahat_f":"ep13_ahat_m"),2;
+		cutin (Sex == SEX_MALE?"ep13_ahat_f":"ep13_ahat_m"),2;
 		mes "You hold up your head at the sound of Ahat's voice";
 		mes "But you see a human in high-ranking Sapha clothing in front of you.";
 		SC_End SC_Blind;
@@ -1544,7 +1544,7 @@ dic_in01,300,280,5	script	Minister Ahat#ep133_21	493,{
 		close2;
 	}
 	else if (ep13_3_secret == 14) {
-		cutin (Sex?"ep13_ahat_f":"ep13_ahat_m"),2;
+		cutin (Sex == SEX_MALE?"ep13_ahat_f":"ep13_ahat_m"),2;
 		mes "[Ahat]";
 		mes "Surprised?";
 		mes "Because I look like a human just like you?";
@@ -1683,7 +1683,7 @@ dic_in01,300,280,5	script	Minister Ahat#ep133_21	493,{
 		close2;
 	}
 	else if (ep13_3_secret == 15) {
-		cutin (Sex?"ep13_ahat_f":"ep13_ahat_m"),2;
+		cutin (Sex == SEX_MALE?"ep13_ahat_f":"ep13_ahat_m"),2;
 		mes "[Ahat]";
 		mes "My loyal evil servant.";
 		mes "Come closer.";
@@ -1734,7 +1734,7 @@ dic_in01,300,280,5	script	Minister Ahat#ep133_21	493,{
 		close2;
 	}
 	else if (ep13_3_secret == 16) {
-		cutin (Sex?"ep13_ahat_f":"ep13_ahat_m"),2;
+		cutin (Sex == SEX_MALE?"ep13_ahat_f":"ep13_ahat_m"),2;
 		mes "[Ahat]";
 		mes "You must follow Cheshire's orders from now on.";
 		mes "Go now.";
@@ -1744,7 +1744,7 @@ dic_in01,300,280,5	script	Minister Ahat#ep133_21	493,{
 		close2;
 	}
 	else if (ep13_3_secret == 17) {
-		cutin (Sex?"ep13_ahat_f":"ep13_ahat_m"),2;
+		cutin (Sex == SEX_MALE?"ep13_ahat_f":"ep13_ahat_m"),2;
 		mes "[Ahat]";
 		mes "Cheshire's orders are important for future plans.";
 		mes "Make no mistakes and never leave traces that may lead to me.";
@@ -1752,7 +1752,7 @@ dic_in01,300,280,5	script	Minister Ahat#ep133_21	493,{
 		close2;
 	}
 	else if (ep13_3_secret == 18) {
-		cutin (Sex?"ep13_ahat_f":"ep13_ahat_m"),2;
+		cutin (Sex == SEX_MALE?"ep13_ahat_f":"ep13_ahat_m"),2;
 		mes "[Ahat]";
 		mes "Do you have something to say?";
 		mes "You've done well in the crack area.";
@@ -1781,7 +1781,7 @@ dic_in01,300,280,5	script	Minister Ahat#ep133_21	493,{
 		close2;
 	}
 	else {
-		cutin (Sex?"ep13_ahat_f":"ep13_ahat_m"),2;
+		cutin (Sex == SEX_MALE?"ep13_ahat_f":"ep13_ahat_m"),2;
 		mes "[Ahat]";
 		mes "Follow Cheshire's orders for the time being and clear the area nearby the crack.";
 		next;

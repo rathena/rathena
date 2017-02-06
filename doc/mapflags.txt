@@ -170,6 +170,16 @@ Disables certain items and skills on a map through a specified zone number. The 
 located in 'db/(pre-)re/item_noequip.txt' and 'db/(pre-)re/skill_nocast_db.txt', both of which
 contain explanations and examples of how this mapflag is used.
 
+Restricted Zones:
+1 - Aldebaran Turbo Track
+2 - Jail
+3 - Izlude Battle Arena
+4 - WoE:SE Maps
+5 - Sealed Shrine
+6 - Instances: Endless Tower, Orc's Memory, Nidhoggr's Instance
+7 - Towns
+8 - WOE:TE Dungeons
+
 ---------------------------------------
 
 *monster_noteleport
@@ -212,8 +222,7 @@ Disables mine effects on a map.
 
 *nolockon
 
-Disables locking on a map.
-[More information needed.]
+Disables attacking another player without holding shift or using /ns on a map.
 
 ---------------------------------------
 
@@ -256,11 +265,14 @@ because it does not necessarily require PvP mode to be set.
 *gvg_noparty
 *gvg_castle
 *gvg_dungeon
+*gvg_te
+*gvg_te_castle
 
 Enables Guild vs. Guild mode on a map and applies the corresponding damage adjustments.
 'gvg_noparty' will ignore party alliances.
 'gvg_castle' marks a guild castle. GvG mode will be active only during the War of Emperium.
 'gvg_dungeon' marks a guild dungeon. Players will be warped out after two deaths.
+'gvg_te' and 'gvg_te_castle' marks a WOE:TE area and special restrictions are applied.
 
 ---------------------------------------
 
@@ -404,5 +416,12 @@ Disables costume sprites on a map.
 This only disables the sprites and not the effect of the items.
 If a player logs out on a nocostume map the costume sprites will also not be shown in the
 character server.
+
+---------------------------------------
+
+*hidemobhpbar
+
+Hides monster's HP bar on a map.
+Ignores config value of 'monster_hp_bars_info'.
 
 ---------------------------------------

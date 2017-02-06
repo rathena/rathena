@@ -701,7 +701,7 @@ alberta,119,221,6	script	Charlron	107,{
 				close;
 			case 2:
 				mes "[Sushi King Gershaun]";
-				if (Sex > 1) {
+				if (Sex == SEX_FEMALE) {
 					mes "Stupid girl!";
 				}
 				else {

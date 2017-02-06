@@ -46,7 +46,7 @@ N_PayZeny:
 	set On_Quest, 0;
 	set Zeny,Zeny-2500;
 	//add time delay penalty. You can get another quest after 2 - 3 hours. [Lupus]
-	set #THQ_DELAY, (GetTime(7)*12*31*24+GetTime(6)*31*24+GetTime(5)*24+GetTime(3)+rand(2,3));
+	set #THQ_DELAY, (GetTime(DT_YEAR)*12*31*24+GetTime(DT_MONTH)*31*24+GetTime(DT_DAYOFMONTH)*24+GetTime(DT_HOUR)+rand(2,3));
 	mes "[Guy]";
 	mes "Its sad to see someone give a quest up...";
 	mes "Shame on you.";
@@ -61,7 +61,7 @@ N_ZenyFail:
 N_NewQuest:
 	if (Event_THQS == 0) goto N_Signup;
 	//checking if time penalty is over [Lupus]
-	if (#THQ_DELAY > (GetTime(7)*12*31*24 + GetTime(6)*31*24 + GetTime(5)*24 + GetTime(3)) ) goto L_NoQuestsForYet;
+	if (#THQ_DELAY > (GetTime(DT_YEAR)*12*31*24 + GetTime(DT_MONTH)*31*24 + GetTime(DT_DAYOFMONTH)*24 + GetTime(DT_HOUR)) ) goto L_NoQuestsForYet;
 	mes "[Guy]";
 	mes "Ahh welcome fellow Treasure Hunter.";
 	mes "You currently have ^FF0000"+#Treasure_Token+"^000000 treasure tokens!!!";
@@ -73,7 +73,7 @@ N_NewQuest:
 	mes "Ok lets see what quest we can give you today.";
 	mes "The quest names in ^FF0000This Colour^000000 mean that they are more challanging then the rest, but have better rewards.";
 	next;
-	set #THQ_DELAY,(GetTime(7)*12*31*24+GetTime(6)*31*24+GetTime(5)*24+GetTime(3) + 1); //you can get another quest after 1 hour [Lupus]
+	set #THQ_DELAY,(GetTime(DT_YEAR)*12*31*24+GetTime(DT_MONTH)*31*24+GetTime(DT_DAYOFMONTH)*24+GetTime(DT_HOUR) + 1); //you can get another quest after 1 hour [Lupus]
 	emotion e_no1;
 	if(@treasure_job==0) set @treasure_job,rand(1,10); //doesn't allow cheaters to pick any quest they want
 	if(@treasure_job==2) goto N_JobList2;
@@ -102,7 +102,7 @@ N_Signup:
 L_NoQuestsForYet:
 	mes "[Guy]";
 	mes "I'm afraid there aren't any Quests for you yet.";
-	mes "Call in "+ (#THQ_DELAY - (GetTime(7)*12*31*24+GetTime(6)*31*24+GetTime(5)*24+GetTime(3)) )+" hours later.";
+	mes "Call in "+ (#THQ_DELAY - (GetTime(DT_YEAR)*12*31*24+GetTime(DT_MONTH)*31*24+GetTime(DT_DAYOFMONTH)*24+GetTime(DT_HOUR)) )+" hours later.";
 	emotion e_sry;
 	close;
 

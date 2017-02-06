@@ -23,7 +23,7 @@ payon,215,102,3	script	Moohyun#job_star	828,3,3,{
 	if (Class == Job_Taekwon) {
 		if (STGL_Q == 0) {
 			mes "[Moohyun]";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "Hey, Taekwon Boy!";
 			else
 				mes "Hey, Taekwon Girl!";
@@ -298,7 +298,7 @@ payon,215,102,3	script	Moohyun#job_star	828,3,3,{
 	mes "[Moohyun]";
 	mes "Dude...";
 	mes "Whaddya want?";
-	if (Sex) {
+	if (Sex == SEX_MALE) {
 		mes "You wanna join up";
 		mes "with my martial arts";
 		mes "school? It's too late";
@@ -379,7 +379,7 @@ comodo,172,230,3	script	Wandering Master#job_sta	730,{
 					mes "Hm? You still have Skill";
 					mes "Points that you haven't yet";
 					mes "allocated. Use them, learn";
-					if (Sex == 0)
+					if (Sex == SEX_FEMALE)
 						mes "and improve your Taekwon Girl";
 					else
 						mes "and improve your Taekwon Boy";
