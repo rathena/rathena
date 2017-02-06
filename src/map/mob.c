@@ -4172,8 +4172,8 @@ static bool mob_readdb_sub(char* fields[], int columns, int current)
 static int mob_read_sqldb(void)
 {
 	const char* mob_db_name[] = {
-		mob_db_db,
-		mob_db2_db };
+		mob_db_table,
+		mob_db2_table };
 	int fi;
 
 	for( fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
@@ -4632,8 +4632,8 @@ static void mob_readskilldb(const char* basedir, bool silent) {
 static int mob_read_sqlskilldb(void)
 {
 	const char* mob_skill_db_name[] = {
-		mob_skill_db_db,
-		mob_skill_db2_db };
+		mob_skill_db_table,
+		mob_skill_db2_table };
 	int fi;
 
 	if( battle_config.mob_skill_rate == 0 ) {

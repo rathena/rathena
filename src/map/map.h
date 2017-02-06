@@ -975,18 +975,18 @@ extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
 
-extern char buyingstores_db[32];
-extern char buyingstore_items_db[32];
-extern char item_db_db[32];
-extern char item_db2_db[32];
-extern char mob_db_db[32];
-extern char mob_db2_db[32];
-extern char mob_skill_db_db[32];
-extern char mob_skill_db2_db[32];
-extern char vendings_db[32];
-extern char vending_items_db[32];
+extern char buyingstores_table[32];
+extern char buyingstore_items_table[32];
+extern char item_db_table[32];
+extern char item_db2_table[32];
+extern char mob_db_table[32];
+extern char mob_db2_table[32];
+extern char mob_skill_db_table[32];
+extern char mob_skill_db2_table[32];
+extern char vendings_table[32];
+extern char vending_items_table[32];
 extern char market_table[32];
-extern char db_roulette_table[32];
+extern char roulette_db_table[32];
 
 void do_shutdown(void);
 
