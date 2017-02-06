@@ -2051,7 +2051,7 @@ void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd) {
 			WFIFOB(fd, 6+c*13) = itemtype(id->nameid);
 			WFIFOL(fd, 7+c*13) = shop[i].value;
 			WFIFOL(fd,11+c*13) = shop[i].qty;
-			WFIFOW(fd,15+c*13) = (id->view_id > 0) ? id->view_id : id->nameid;
+			WFIFOW(fd,15+c*13) = id->weight;
 			c++;
 		}
 	}
