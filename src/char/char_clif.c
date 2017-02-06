@@ -1176,7 +1176,7 @@ void chclif_block_character( int fd, struct char_session_data* sd){
 //		9: The name change is prohibited. Character name change failed.
 //		10: Character name change failed, due an unknown error.
 void chclif_rename_response(int fd, struct char_session_data* sd, int16 response) {
-#if PACKETVER > 20130000
+#if PACKETVER >= 20111101
 	WFIFOHEAD(fd, 6);
 	WFIFOW(fd, 0) = 0x8fd;
 	WFIFOL(fd, 2) = response;
