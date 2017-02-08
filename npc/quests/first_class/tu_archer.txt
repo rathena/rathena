@@ -67,7 +67,7 @@ payon_in02,67,65,3	script	Bard Jet#tu	1_M_BARD,{
 		mes "up a joke~!";
 		emotion e_gg;
 		next;
-		if (Sex == 1) {
+		if (Sex == SEX_MALE) {
 			select("A joke, eh?");
 			specialeffect2 EF_TALK_FROSTJOKE;
 			mes "[Jet]";
@@ -1381,7 +1381,7 @@ pay_arche,76,135,3	script	#Target	HIDDEN_NPC,{ end; }
 -	script	::Acolyte_Tu	-1,{
 	mes "[Acolyte]";
 	if(tu_archer01 == 14){
-		if(gettime(3) >= 18 && gettime(3) < 22){
+		if(gettime(DT_HOUR) >= 18 && gettime(DT_HOUR) < 22){
 			mes "H-hello!";
 			mes "Umm, umm...";
 			mes "Are you R-Reidin Corse's";
@@ -1430,7 +1430,7 @@ pay_arche,76,135,3	script	#Target	HIDDEN_NPC,{ end; }
 				mes "he already has a girlfriend...";
 				next;
 				mes "[Acolyte]";
-				if(Sex){
+				if(Sex == SEX_MALE){
 					mes "W-wait!";
 					mes "Y-you're a man!";
 					mes "D-d-d-don't tease me";
@@ -1479,7 +1479,7 @@ pay_arche,76,135,3	script	#Target	HIDDEN_NPC,{ end; }
 		}
 	}
 	else if(tu_archer01 == 15){
-		if((gettime(3) >= 18) && (gettime(3) < 22)){
+		if((gettime(DT_HOUR) >= 18) && (gettime(DT_HOUR) < 22)){
 			mes "^666666Zzzzz...^000000";
 			mes "Wh-wha...?";
 			mes "Who are you?";

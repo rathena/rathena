@@ -1435,6 +1435,16 @@ Example:
 
 ---------------------------------------
 
+@reloadnpcfile <path>
+
+Unloads and loads an NPC.
+Same as @unloadnpcfile and @loadnpc but ran as one command.
+
+Example:
+@reloadnpcfile npc/custom/jobmaster.txt
+
+---------------------------------------
+
 =====================
 | 6. Party Commands |
 =====================

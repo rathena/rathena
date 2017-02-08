@@ -12,6 +12,7 @@
 
 #include "map.h"
 #include "battle.h"
+#include "clan.h"
 #include "clif.h"
 #include "intif.h"
 #include "npc.h"
@@ -22,6 +23,7 @@
 #include "mercenary.h"
 #include "elemental.h"
 #include "chrif.h"
+#include "script.h" // script_config
 #include "storage.h"
 
 #include <stdlib.h>
@@ -30,6 +32,7 @@ static int check_connect_char_server(int tid, unsigned int tick, int id, intptr_
 
 static struct eri *auth_db_ers; //For reutilizing player login structures.
 static DBMap* auth_db; // int id -> struct auth_node*
+static bool char_init_done = false; //server already initialized? Used for InterInitOnce and vending loadings
 
 static const int packet_len_table[0x3d] = { // U - used, F - free
 	60, 3,-1,-1,10,-1, 6,-1,	// 2af8-2aff: U->2af8, U->2af9, U->2afa, U->2afb, U->2afc, U->2afd, U->2afe, U->2aff
@@ -38,7 +41,7 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 	11,10,10, 0,11, -1,266,10,	// 2b10-2b17: U->2b10, U->2b11, U->2b12, F->2b13, U->2b14, U->2b15, U->2b16, U->2b17
 	 2,10, 2,-1,-1,-1, 2, 7,	// 2b18-2b1f: U->2b18, U->2b19, U->2b1a, U->2b1b, U->2b1c, U->2b1d, U->2b1e, U->2b1f
 	-1,10, 8, 2, 2,14,19,19,	// 2b20-2b27: U->2b20, U->2b21, U->2b22, U->2b23, U->2b24, U->2b25, U->2b26, U->2b27
-	-1, 0, 6,16, 0, 6,-1,-1,	// 2b28-2b2f: U->2b28, F->2b29, U->2b2a, U->2b2b, F->2b2c, U->2b2d, U->2b2e, U->2b2f
+	-1, 0, 6,15, 0, 6,-1,-1,	// 2b28-2b2f: U->2b28, F->2b29, U->2b2a, U->2b2b, F->2b2c, U->2b2d, U->2b2e, U->2b2f
  };
 
 //Used Packets:
@@ -215,7 +218,7 @@ static bool chrif_auth_logout(TBL_PC* sd, enum sd_state state) {
 	return chrif_sd_to_auth(sd, state);
 }
 
-bool chrif_auth_finished(TBL_PC* sd) {
+bool chrif_auth_finished(struct map_session_data* sd) {
 	struct auth_node *node= chrif_search(sd->status.account_id);
 
 	if ( node && node->sd == sd && node->state == ST_LOGIN ) {
@@ -273,36 +276,51 @@ int chrif_isconnected(void) {
 	return (char_fd > 0 && session[char_fd] != NULL && chrif_state == 2);
 }
 
-/*==========================================
+/**
  * Saves character data.
- * Flag = 1: Character is quitting
- * Flag = 2: Character is changing map-servers
- * Flag = 3: Character used @autotrade
- *------------------------------------------*/
-int chrif_save(struct map_session_data *sd, int flag) {
+ * @param sd: Player data
+ * @param flag: Save flag types:
+ *  CSAVE_NORMAL: Normal save
+ *  CSAVE_QUIT: Character is quitting
+ *  CSAVE_CHANGE_MAPSERV: Character is changing map-servers
+ *  CSAVE_AUTOTRADE: Character used @autotrade
+ *  CSAVE_INVENTORY: Character changed inventory data
+ *  CSAVE_CART: Character changed cart data
+ */
+int chrif_save(struct map_session_data *sd, enum e_chrif_save_opt flag) {
 	uint16 mmo_charstatus_len = 0;
+
 	nullpo_retr(-1, sd);
 
 	pc_makesavestatus(sd);
 
-	if (flag && sd->state.active) { //Store player data which is quitting
+	if ( (flag&CSAVE_QUITTING) && sd->state.active) { //Store player data which is quitting
 		if (chrif_isconnected()) {
 			chrif_save_scdata(sd);
 			chrif_skillcooldown_save(sd);
 		}
-		if ( flag != 3 && !chrif_auth_logout(sd,flag == 1 ? ST_LOGOUT : ST_MAPCHANGE) )
+		if ( !(flag&CSAVE_AUTOTRADE) && !chrif_auth_logout(sd, (flag&CSAVE_QUIT) ? ST_LOGOUT : ST_MAPCHANGE) )
 			ShowError("chrif_save: Failed to set up player %d:%d for proper quitting!\n", sd->status.account_id, sd->status.char_id);
 	}
 
 	chrif_check(-1); //Character is saved on reconnect.
 
-	chrif_bsdata_save(sd, (flag && (flag != 3)));
+	chrif_bsdata_save(sd, ((flag&CSAVE_QUITTING) && !(flag&CSAVE_AUTOTRADE)));
+
+	if (&sd->storage && sd->storage.dirty)
+		storage_storagesave(sd);
+	if (flag&CSAVE_INVENTORY)
+		intif_storage_save(sd,&sd->inventory);
+	if (flag&CSAVE_CART)
+		intif_storage_save(sd,&sd->cart);
 
 	//For data sync
 	if (sd->state.storage_flag == 2)
-		gstorage_storagesave(sd->status.account_id, sd->status.guild_id, flag);
+		storage_guild_storagesave(sd->status.account_id, sd->status.guild_id, flag);
+	if (&sd->premiumStorage && sd->premiumStorage.dirty)
+		storage_premiumStorage_save(sd);
 
-	if (flag)
+	if (flag&CSAVE_QUITTING)
 		sd->state.storage_flag = 0; //Force close it.
 
 	//Saving of registry values.
@@ -315,7 +333,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	WFIFOW(char_fd,2) = mmo_charstatus_len;
 	WFIFOL(char_fd,4) = sd->status.account_id;
 	WFIFOL(char_fd,8) = sd->status.char_id;
-	WFIFOB(char_fd,12) = (flag==1)?1:0; //Flag to tell char-server this character is quitting.
+	WFIFOB(char_fd,12) = (flag&CSAVE_QUIT) ? 1 : 0; //Flag to tell char-server this character is quitting.
 
 	// If the user is on a instance map, we have to fake his current position
 	if( map[sd->bl.m].instance_id ){
@@ -485,8 +503,6 @@ int chrif_changemapserverack(uint32 account_id, int login_id1, int login_id2, ui
  * 0x2af9 <errCode>B
  */
 int chrif_connectack(int fd) {
-	static bool char_init_done = false;
-
 	if (RFIFOB(fd,2)) {
 		ShowFatalError("Connection to char-server failed %d, please check conf/import/map_conf userid and passwd.\n", RFIFOB(fd,2));
 		exit(EXIT_FAILURE);
@@ -498,11 +514,11 @@ int chrif_connectack(int fd) {
 
 	chrif_sendmap(fd);
 
-	ShowStatus("Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInit"));
+	npc_event_runall(script_config.inter_init_event_name);
 	if( !char_init_done ) {
-		char_init_done = true;
-		ShowStatus("Event '"CL_WHITE"OnInterIfInitOnce"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInitOnce"));
+		npc_event_runall(script_config.inter_init_once_event_name);
 		guild_castle_map_init();
+		intif_clan_requestclans();
 	}
 
 	return 0;
@@ -524,7 +540,7 @@ static int chrif_reconnect(DBKey key, DBData *data, va_list ap) {
 			break;
 		case ST_LOGOUT:
 			//Re-send final save
-			chrif_save(node->sd, 1);
+			chrif_save(node->sd, CSAVE_QUIT|CSAVE_INVENTORY|CSAVE_CART);
 			break;
 		case ST_MAPCHANGE: { //Re-send map-change request.
 			struct map_session_data *sd = node->sd;
@@ -565,8 +581,12 @@ void chrif_on_ready(void) {
 	guild_castle_reconnect(-1, 0, 0);
 	
 	// Charserver is ready for loading autotrader
-	do_init_buyingstore_autotrade();
-	do_init_vending_autotrade();
+	if (!char_init_done)
+	{
+		do_init_buyingstore_autotrade();
+		do_init_vending_autotrade();
+		char_init_done = true;
+	}
 }
 
 
@@ -758,7 +778,7 @@ int auth_db_cleanup_sub(DBKey key, DBData *data, va_list ap) {
 			case ST_LOGOUT:
 				//Re-save attempt (->sd should never be null here).
 				node->node_created = gettick(); //Refresh tick (avoid char-server load if connection is really bad)
-				chrif_save(node->sd, 1);
+				chrif_save(node->sd, CSAVE_QUIT|CSAVE_INVENTORY|CSAVE_CART);
 				break;
 			default:
 				//Clear data. any connected players should have timed out by now.
@@ -847,6 +867,10 @@ int chrif_changeemail(int id, const char *actual_email, const char *new_email) {
  * @operation_type : see chrif_req_op
  * @timediff : tick to add or remove to unixtimestamp
  * @val1 : extra data value to transfer for operation
+ *		   CHRIF_OP_LOGIN_VIP: 0x1 : Select info and update old_groupid
+ *							   0x2 : VIP duration is changed by atcommand or script
+ *							   0x4 : Show status reply by char-server through 0x2b0f
+ *							   0x8 : First request on player login
  * @val2 : extra data value to transfer for operation
  */
 int chrif_req_login_operation(int aid, const char* character_name, enum chrif_req_op operation_type, int32 timediff, int val1, int val2) {
@@ -855,7 +879,7 @@ int chrif_req_login_operation(int aid, const char* character_name, enum chrif_re
 	WFIFOHEAD(char_fd,44);
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = aid;
-	safestrncpy((char*)WFIFOP(char_fd,6), character_name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(char_fd,6), character_name, NAME_LENGTH);
 	WFIFOW(char_fd,30) = operation_type;
 
 	if ( operation_type == CHRIF_OP_LOGIN_BAN || operation_type == CHRIF_OP_LOGIN_VIP)
@@ -877,7 +901,7 @@ int chrif_changesex(struct map_session_data *sd, bool change_account) {
 	WFIFOHEAD(char_fd,44);
 	WFIFOW(char_fd,0) = 0x2b0e;
 	WFIFOL(char_fd,2) = sd->status.account_id;
-	safestrncpy((char*)WFIFOP(char_fd,6), sd->status.name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(char_fd,6), sd->status.name, NAME_LENGTH);
 	WFIFOW(char_fd,30) = (change_account ? CHRIF_OP_LOGIN_CHANGESEX : CHRIF_OP_CHANGECHARSEX);
 	if (!change_account)
 		WFIFOB(char_fd,32) = sd->status.sex == SEX_MALE ? SEX_FEMALE : SEX_MALE;
@@ -1034,14 +1058,14 @@ int chrif_divorceack(uint32 char_id, int partner_id) {
 	if( ( sd = map_charid2sd(char_id) ) != NULL && sd->status.partner_id == partner_id ) {
 		sd->status.partner_id = 0;
 		for(i = 0; i < MAX_INVENTORY; i++)
-			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
+			if (sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_M || sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_F)
 				pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
 	if( ( sd = map_charid2sd(partner_id) ) != NULL && sd->status.partner_id == char_id ) {
 		sd->status.partner_id = 0;
 		for(i = 0; i < MAX_INVENTORY; i++)
-			if (sd->status.inventory[i].nameid == WEDDING_RING_M || sd->status.inventory[i].nameid == WEDDING_RING_F)
+			if (sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_M || sd->inventory.u.items_inventory[i].nameid == WEDDING_RING_F)
 				pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 	}
 
@@ -1125,7 +1149,7 @@ int chrif_req_charban(int aid, const char* character_name, int32 timediff){
 	WFIFOW(char_fd,0) = 0x2b28;
 	WFIFOL(char_fd,2) = aid;
 	WFIFOL(char_fd,6) = timediff;
-	safestrncpy((char*)WFIFOP(char_fd,10), character_name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(char_fd,10), character_name, NAME_LENGTH);
 	WFIFOSET(char_fd,10+NAME_LENGTH); //default 34
 	return 0;
 }
@@ -1136,7 +1160,7 @@ int chrif_req_charunban(int aid, const char* character_name){
 	WFIFOHEAD(char_fd,6+NAME_LENGTH);
 	WFIFOW(char_fd,0) = 0x2b2a;
 	WFIFOL(char_fd,2) = aid;
-	safestrncpy((char*)WFIFOP(char_fd,6), character_name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(char_fd,6), character_name, NAME_LENGTH);
 	WFIFOSET(char_fd,6+NAME_LENGTH);
 	return 0;
 }
@@ -1157,17 +1181,9 @@ int chrif_disconnectplayer(int fd) {
 		return -1;
 	}
 
-	if (!sd->fd) { //No connection
-		if (sd->state.autotrade){
-			if( sd->state.vending ){
-				vending_closevending(sd);
-			}
-			else if( sd->state.buyingstore ){
-				buyingstore_close(sd);
-			}
-
-			map_quit(sd); //Remove it.
-		}
+	if (!sd->fd) {
+		if (sd->state.autotrade)
+			map_quit(sd);
 		//Else we don't remove it because the char should have a timer to remove the player because it force-quit before,
 		//and we don't want them kicking their previous instance before the 10 secs penalty time passes. [Skotlex]
 		return 0;
@@ -1192,9 +1208,9 @@ int chrif_updatefamelist(struct map_session_data* sd) {
 	chrif_check(-1);
 
 	switch(sd->class_ & MAPID_UPPERMASK) {
-		case MAPID_BLACKSMITH: type = 1; break;
-		case MAPID_ALCHEMIST:  type = 2; break;
-		case MAPID_TAEKWON:    type = 3; break;
+		case MAPID_BLACKSMITH: type = RANK_BLACKSMITH; break;
+		case MAPID_ALCHEMIST:  type = RANK_ALCHEMIST; break;
+		case MAPID_TAEKWON:    type = RANK_TAEKWON; break;
 		default:
 			return 0;
 	}
@@ -1266,9 +1282,9 @@ int chrif_updatefamelist_ack(int fd) {
 	uint8 index;
 
 	switch (RFIFOB(fd,2)) {
-		case 1: list = smith_fame_list;   break;
-		case 2: list = chemist_fame_list; break;
-		case 3: list = taekwon_fame_list; break;
+		case RANK_BLACKSMITH:	list = smith_fame_list;   break;
+		case RANK_ALCHEMIST:	list = chemist_fame_list; break;
+		case RANK_TAEKWON:		list = taekwon_fame_list; break;
 		default: return 0;
 	}
 
@@ -1573,38 +1589,41 @@ void chrif_parse_ack_vipActive(int fd) {
 #ifdef VIP_ENABLE
 	int aid = RFIFOL(fd,2);
 	uint32 vip_time = RFIFOL(fd,6);
-	bool isvip = RFIFOB(fd,10);
-	bool isgm = RFIFOB(fd,11);
-	uint32 groupid = RFIFOL(fd,12);
+	uint32 groupid = RFIFOL(fd,10);
+	uint8 flag = RFIFOB(fd,14);
 	TBL_PC *sd = map_id2sd(aid);
+	bool changed = false;
 
 	if(sd == NULL) return;
 
 	sd->group_id = groupid;
 	pc_group_pc_load(sd);
 
-	if(isgm) {
+	if ((flag&0x2)) //isgm
 		clif_displaymessage(sd->fd,msg_txt(sd,437));
-		return;
-	}
-	if(isvip) {
-		sd->vip.enabled = 1;
-		sd->vip.time = vip_time;
-		// Increase storage size for VIP.
-		sd->storage_size = battle_config.vip_storage_increase + MIN_STORAGE;
-		if (sd->storage_size > MAX_STORAGE) {
-			ShowError("intif_parse_ack_vipActive: Storage size for player %s (%d:%d) is larger than MAX_STORAGE. Storage size has been set to MAX_STORAGE.\n", sd->status.name, sd->status.account_id, sd->status.char_id);
-			sd->storage_size = MAX_STORAGE;
+	else {
+		changed = (sd->vip.enabled != (flag&0x1));
+		if((flag&0x1)) { //isvip
+			sd->vip.enabled = 1;
+			sd->vip.time = vip_time;
+			// Increase storage size for VIP.
+			sd->storage.max_amount = battle_config.vip_storage_increase + MIN_STORAGE;
+			if (sd->storage.max_amount > MAX_STORAGE) {
+				ShowError("intif_parse_ack_vipActive: Storage size for player %s (%d:%d) is larger than MAX_STORAGE. Storage size has been set to MAX_STORAGE.\n", sd->status.name, sd->status.account_id, sd->status.char_id);
+				sd->storage.max_amount = MAX_STORAGE;
+			}
+		} else if (sd->vip.enabled) {
+			sd->vip.enabled = 0;
+			sd->vip.time = 0;
+			sd->storage.max_amount = MIN_STORAGE;
+			sd->special_state.no_gemstone = 0;
+			clif_displaymessage(sd->fd,msg_txt(sd,438));
 		}
-		// Magic Stone requirement avoidance for VIP.
-		if (battle_config.vip_gemstone)
-			sd->special_state.no_gemstone = 2; // need to be done after status_calc_bl(bl,first);
-	} else if (sd->vip.enabled) {
-		sd->vip.enabled = 0;
-		sd->vip.time = 0;
-		sd->storage_size = MIN_STORAGE;
-		sd->special_state.no_gemstone = 0;
-		clif_displaymessage(sd->fd,msg_txt(sd,438));
+	}
+	// Show info if status changed
+	if (((flag&0x4) || changed) && !sd->vip.disableshowrate) {
+		clif_display_pinfo(sd,ZC_PERSONAL_INFOMATION);
+		//clif_vip_display_info(sd,ZC_PERSONAL_INFOMATION_CHN);
 	}
 #endif
 }
@@ -1793,10 +1812,10 @@ int chrif_parse(int fd) {
 			case 0x2b03: clif_charselectok(RFIFOL(fd,2), RFIFOB(fd,6)); break;
 			case 0x2b04: chrif_recvmap(fd); break;
 			case 0x2b06: chrif_changemapserverack(RFIFOL(fd,2), RFIFOL(fd,6), RFIFOL(fd,10), RFIFOL(fd,14), RFIFOW(fd,18), RFIFOW(fd,20), RFIFOW(fd,22), RFIFOL(fd,24), RFIFOW(fd,28)); break;
-			case 0x2b09: map_addnickdb(RFIFOL(fd,2), (char*)RFIFOP(fd,6)); break;
+			case 0x2b09: map_addnickdb(RFIFOL(fd,2), RFIFOCP(fd,6)); break;
 			case 0x2b0b: chrif_skillcooldown_load(fd); break;
 			case 0x2b0d: chrif_changedsex(fd); break;
-			case 0x2b0f: chrif_ack_login_req(RFIFOL(fd,2), (char*)RFIFOP(fd,6), RFIFOW(fd,30), RFIFOW(fd,32)); break;
+			case 0x2b0f: chrif_ack_login_req(RFIFOL(fd,2), RFIFOCP(fd,6), RFIFOW(fd,30), RFIFOW(fd,32)); break;
 			case 0x2b12: chrif_divorceack(RFIFOL(fd,2), RFIFOL(fd,6)); break;
 			case 0x2b14: chrif_ban(fd); break;
 			case 0x2b1b: chrif_recvfamelist(fd); break;
@@ -1919,19 +1938,6 @@ int chrif_removefriend(uint32 char_id, int friend_id) {
 	return 0;
 }
 
-int chrif_send_report(char* buf, int len) {
-
-#ifndef STATS_OPT_OUT
-	chrif_check(-1);
-	WFIFOHEAD(char_fd,len + 2);
-	WFIFOW(char_fd,0) = 0x3008;
-	memcpy(WFIFOP(char_fd,2), buf, len);
-	WFIFOSET(char_fd,len + 2);
-	flush_fifo(char_fd); /* ensure it's sent now. */
-#endif
-	return 0;
-}
-
 /**
  * @see DBApply
  */
@@ -1976,8 +1982,13 @@ void do_final_chrif(void) {
  *------------------------------------------*/
 void do_init_chrif(void) {
 	if(sizeof(struct mmo_charstatus) > 0xFFFF){
-		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF) \n",
+		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF)\n",
 			sizeof(struct mmo_charstatus));
+		exit(EXIT_FAILURE);
+	}
+
+	if (sizeof(struct s_storage) > 0xFFFF) {
+		ShowError("s_storage size = %d is too big to be transmitted. (must be below 0xFFFF)\n", sizeof(struct s_storage));
 		exit(EXIT_FAILURE);
 	}
 

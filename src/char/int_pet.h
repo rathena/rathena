@@ -6,9 +6,7 @@
 
 struct s_pet;
 
-int inter_pet_init(void);
 void inter_pet_sql_final(void);
-int inter_pet_save(void);
 int inter_pet_delete(int pet_id);
 
 int inter_pet_parse_frommap(int fd);

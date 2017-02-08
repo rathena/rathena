@@ -12,6 +12,7 @@
 #include "atcommand.h" // AtCommandType
 #include "battle.h" // battle_config
 #include "buyingstore.h"  // struct s_buyingstore
+#include "clan.h"
 #include "itemdb.h" // MAX_ITEMGROUP
 #include "script.h" // struct script_reg, struct script_regstr
 #include "searchstore.h"  // struct s_search_store_info
@@ -66,6 +67,14 @@ enum equip_index {
 	EQI_SHADOW_ACC_R,
 	EQI_SHADOW_ACC_L,
 	EQI_MAX
+};
+
+enum prevent_logout_trigger {
+	PLT_NONE = 0,
+	PLT_LOGIN = 1,
+	PLT_ATTACK = 2,
+	PLT_SKILL = 4,
+	PLT_DAMAGE = 8
 };
 
 extern unsigned int equip_bitmask[EQI_MAX];
@@ -206,7 +215,7 @@ struct map_session_data {
 		unsigned int arrow_atk : 1;
 		unsigned int gangsterparadise : 1;
 		unsigned int rest : 1;
-		unsigned int storage_flag : 2; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex]
+		unsigned int storage_flag : 3; //0: closed, 1: Normal Storage open, 2: guild storage open [Skotlex], 3: Premium Storage
 		unsigned int snovice_dead_flag : 1; //Explosion spirits on death: 0 off, 1 used.
 		unsigned int abra_flag : 2; // Abracadabra bugfix by Aru
 		unsigned int autocast : 1; // Autospell flag [Inkfish]
@@ -250,6 +259,8 @@ struct map_session_data {
 		uint8 isBoundTrading; // Player is currently add bound item to trade list [Cydh]
 		bool ignoretimeout; // Prevent the SECURE_NPCTIMEOUT function from closing current script.
 		unsigned int workinprogress : 2; // See clif.h::e_workinprogress
+		bool pc_loaded; // Ensure inventory data and status data is loaded before we calculate player stats
+		bool keepshop; // Whether shop data should be removed when the player disconnects
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -274,9 +285,14 @@ struct map_session_data {
 	uint32 packet_ver;  // 5: old, 6: 7july04, 7: 13july04, 8: 26july04, 9: 9aug04/16aug04/17aug04, 10: 6sept04, 11: 21sept04, 12: 18oct04, 13: 25oct04 ... 18
 	struct mmo_charstatus status;
 
+	// Item Storages
+	struct s_storage storage, premiumStorage;
+	struct s_storage inventory;
+	struct s_storage cart;
+
 	struct item_data* inventory_data[MAX_INVENTORY]; // direct pointers to itemdb entries (faster than doing item_id lookups)
 	short equip_index[EQI_MAX];
-	unsigned int weight,max_weight;
+	unsigned int weight,max_weight,add_max_weight;
 	int cart_weight,cart_num,cart_weight_max;
 	int fd;
 	unsigned short mapindex;
@@ -510,10 +526,14 @@ struct map_session_data {
 	short guild_x,guild_y; // For guildmate position display. [Skotlex] should be short [zzo]
 	int guildspy; // [Syrus22]
 	int partyspy; // [Syrus22]
+	int clanspy;
+
+	struct clan *clan;
 
 	int vended_id;
 	int vender_id;
 	int vend_num;
+	uint16 vend_skill_lv;
 	char message[MESSAGE_SIZE];
 	struct s_vending vending[MAX_VENDING];
 
@@ -648,7 +668,6 @@ struct map_session_data {
 	int c_marker[MAX_SKILL_CRIMSON_MARKER]; /// Store target that marked by Crimson Marker [Cydh]
 	bool flicker; /// Check RL_FLICKER usage status [Cydh]
 
-	int storage_size; /// Holds player storage size (VIP system).
 #ifdef VIP_ENABLE
 	struct vip_info vip;
 #endif
@@ -781,6 +800,14 @@ enum adopt_responses {
 	ADOPT_MORE_CHILDREN,
 	ADOPT_LEVEL_70,
 	ADOPT_MARRIED,
+};
+
+enum item_check {
+	ITMCHK_NONE      = 0x0,
+	ITMCHK_INVENTORY = 0x1,
+	ITMCHK_CART      = 0x2,
+	ITMCHK_STORAGE   = 0x4,
+	ITMCHK_ALL       = ITMCHK_INVENTORY|ITMCHK_CART|ITMCHK_STORAGE,
 };
 
 struct {
@@ -936,7 +963,6 @@ int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
-int pc_getrefinebonus(int lv,int type);
 bool pc_can_give_items(struct map_session_data *sd);
 bool pc_can_give_bounded_items(struct map_session_data *sd);
 
@@ -954,6 +980,7 @@ void pc_reg_received(struct map_session_data *sd);
 void pc_close_npc(struct map_session_data *sd,int flag);
 int pc_close_npc_timer(int tid, unsigned int tick, int id, intptr_t data);
 
+void pc_setequipindex(struct map_session_data *sd);
 uint8 pc_isequip(struct map_session_data *sd,int n);
 int pc_equippoint(struct map_session_data *sd,int n);
 void pc_setinventorydata(struct map_session_data *sd);
@@ -966,7 +993,7 @@ bool pc_checkequip2(struct map_session_data *sd, unsigned short nameid, int min,
 void pc_scdata_received(struct map_session_data *sd);
 void pc_check_expiration(struct map_session_data *sd);
 int pc_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
-int pc_global_expiration_timer(int tid, unsigned tick, int id, intptr_t data);
+int pc_global_expiration_timer(int tid, unsigned int tick, int id, intptr_t data);
 void pc_expire_check(struct map_session_data *sd);
 
 void pc_calc_skilltree(struct map_session_data *sd);
@@ -1077,7 +1104,7 @@ int pc_resethate(struct map_session_data*);
 bool pc_equipitem(struct map_session_data *sd, short n, int req_pos);
 bool pc_unequipitem(struct map_session_data*,int,int);
 void pc_checkitem(struct map_session_data*);
-void pc_check_available_item(struct map_session_data *sd);
+void pc_check_available_item(struct map_session_data *sd, uint8 type);
 int pc_useitem(struct map_session_data*,int);
 
 int pc_skillatk_bonus(struct map_session_data *sd, uint16 skill_id);
@@ -1171,7 +1198,7 @@ struct sg_data {
 	short comfort_id;
 	char feel_var[NAME_LENGTH];
 	char hate_var[NAME_LENGTH];
-	int (*day_func)(void);
+	bool (*day_func)(void);
 };
 extern const struct sg_data sg_info[MAX_PC_FEELHATE];
 

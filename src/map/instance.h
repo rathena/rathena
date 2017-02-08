@@ -28,6 +28,13 @@ enum instance_mode {
 	IM_MAX,
 };
 
+enum e_instance_enter {
+	IE_OK = 0,
+	IE_NOMEMBER,
+	IE_NOINSTANCE,
+	IE_OTHER
+};
+
 struct s_instance_map {
 	int16 m, src_m;
 };
@@ -64,12 +71,12 @@ extern int instance_start;
 extern struct instance_data instance_data[MAX_INSTANCE_DATA];
 
 struct instance_db *instance_searchtype_db(unsigned short instance_id);
+struct instance_db *instance_searchname_db(const char* name);
 void instance_getsd(unsigned short instance_id, struct map_session_data **sd, enum send_target *target);
 
 int instance_create(int owner_id, const char *name, enum instance_mode mode);
 int instance_destroy(unsigned short instance_id);
-int instance_enter(struct map_session_data *sd, unsigned short instance_id, const char *name);
-int instance_enter_position(struct map_session_data *sd, unsigned short instance_id, const char *name, short x, short y);
+enum e_instance_enter instance_enter(struct map_session_data *sd, unsigned short instance_id, const char *name, short x, short y);
 int instance_reqinfo(struct map_session_data *sd, unsigned short instance_id);
 int instance_addusers(unsigned short instance_id);
 int instance_delusers(unsigned short instance_id);

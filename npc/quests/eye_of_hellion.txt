@@ -418,7 +418,7 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 		mes "for yourself?! I must smite";
 		mes "you now before you are";
 		mes "consumed by its darkness!";
-		close;
+		close2;
 		percentheal -100,0;
 		end;
 	}

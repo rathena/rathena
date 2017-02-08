@@ -1128,7 +1128,7 @@ um_in,101,73,3	script	Wainatan	783,{
 		close;
 	}
 	if (um_wind == 1) {
-		if (gettime(3) > 18) {
+		if (gettime(DT_HOUR) > 18) {
 			set um_wind,2;
 			emotion e_an;
 			mes "[Wainatan]";
@@ -1172,7 +1172,7 @@ um_in,94,123,5	script	Bertztan	783,{
 		close;
 	}
 	if (um_wind == 2) {
-		if (gettime(3) > 18) {
+		if (gettime(DT_HOUR) > 18) {
 			set um_wind,3;
 			emotion e_an;
 			mes "[Bertztan]";
@@ -1224,7 +1224,7 @@ umbala,145,217,3	script	Chabimatan	783,{
 		close;
 	}
 	if (um_wind == 3) {
-		if (gettime(3) > 18) {
+		if (gettime(DT_HOUR) > 18) {
 			set um_wind,4;
 			emotion e_an;
 			mes "[Chabimatan]";

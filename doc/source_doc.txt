@@ -381,7 +381,7 @@ There are 3 ways to compile the project:
 > sln (requires Visual Studio)
   - *.sln: Solution project for Visual Studio (Windows).
 
-See http://rathena.org/wiki/Compiling for more detailed compilation instructions.
+See https://github.com/rathena/rathena/wiki/compiling for more detailed compilation instructions.
 
 ===================================
 | 9. Atcommands & Script Commands |

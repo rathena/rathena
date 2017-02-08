@@ -587,7 +587,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 						mes "some. I guess you can";
 						mes "still give them to me, but";
 						mes "you'd get less of a reward";
-						if (Sex) {
+						if (Sex == SEX_MALE) {
 							mes "...you ^EEA9B8naughty boy^000000.";
 						}
 						else {
@@ -653,7 +653,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 								mes "a Black Smith!!";
 							}
 							mes "This is my present for it.";
-							if (Sex) {
+							if (Sex == SEX_MALE) {
 								mes "...you ^EEA9B8naughty boy^000000.";
 							}
 							else {
@@ -708,7 +708,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 					mes "That doesn't change";
 					mes "the fact that you've";
 					mes "been very, very bad.";
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "...You ^EEA9B8naughty boy^000000.";
 					}
 					else {
@@ -753,7 +753,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 							mes "some. I guess you can";
 							mes "still give them to me, but";
 							mes "you'd get less of a reward";
-							if (Sex) {
+							if (Sex == SEX_MALE) {
 								mes "...You ^EEA9B8naughty boy^000000.";
 							}
 							else {
@@ -805,7 +805,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 								mes "When you do get all";
 								mes "that Large Jellopy,";
 								mes "just come back to me.";
-								if (Sex) {
+								if (Sex == SEX_MALE) {
 									mes "...you ^EEA9B8naughty boy^000000.";
 								}
 								else {
@@ -853,7 +853,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 						else {
 							mes "a Black Smith!!";
 							mes "This is my present for it. Huhuhu.";
-							if (Sex) {
+							if (Sex == SEX_MALE) {
 								mes "...You ^EEA9B8naughty boy^000000.";
 							}
 							else {
@@ -896,7 +896,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 				mes "a craftsman can enjoy. Ooh,";
 				mes "what do you think is the most";
 				mes "important factor in cooking,";
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "you ^EEA9B8naughty little man^000000?";
 				}
 				else {
@@ -2126,7 +2126,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 				next;
 				mes "[Uwe]";
 				mes "What brings to";
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "me, you ^EEA9B8naughty boy^000000?";
 				}
 				else {
@@ -3034,7 +3034,7 @@ einbroch,215,180,6	script	Uwe Kleine#ein	85,{
 				mes "So, how can";
 				mes "I help you, you";
 				mes "adooooooooorable";
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "hunk of a man?";
 				}
 				else {
@@ -4564,7 +4564,7 @@ einbech,165,105,7	script	Buender Hikeman#ein	847,{
 		mes "[Buender Hikeman]";
 		mes "Huh.";
 		next;
-		if (Sex == 0) {
+		if (Sex == SEX_FEMALE) {
 			mes "["+strcharinfo(0)+"]";
 			mes "And...";
 			mes "I'm a cute girl!";
@@ -5698,7 +5698,7 @@ OnTouch_:
 			mes "Failure to do so will result";
 			mes "in lockout. Please wait.";
 			next;
-			set .@startseconds,gettime(3)*60*60+gettime(2)*60+gettime(1);
+			set .@startseconds,gettimetick(1);
 			mes "[Security System]";
 			switch(rand(1,7)) {
 			case 1:
@@ -5767,7 +5767,7 @@ OnTouch_:
 			}
 			next;
 			input .@input2$;
-			set .@endtime,gettime(3)*60*60+gettime(2)*60+gettime(1);
+			set .@endtime,gettimetick(1);
 			set .@time,.@endtime-.@startseconds;
 			mes "[Security System]";
 			if ((.@input1$ == .@word1$) && (.@input2$ == .@word2$)) {

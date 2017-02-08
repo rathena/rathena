@@ -2075,7 +2075,7 @@ gon_in,18,27,5	script	Madam#gnbs	771,{
 		mes "Hello, darling~";
 		close;
 	}
-	if (Sex == 0) {
+	if (Sex == SEX_FEMALE) {
 		mes "[Shang Hua Yen]";
 		mes "Hoho~ he's upstairs.";
 		mes "My, are you such a pretty lady~";
@@ -3029,7 +3029,7 @@ geffen_in,106,106,7	script	Girl#gnbs2	716,{
 	else if (b_sword == 24 || b_sword == 25 || b_sword == 26) {
 		mes "[Lyroo]";
 		mes "Ahh...ahh....";
-		if (Sex == 0)
+		if (Sex == SEX_FEMALE)
 			mes "It's ..you.. pretty...sister..";
 		else
 			mes "It's ..you.. handsome...brother..";
@@ -3077,7 +3077,7 @@ geffen_in,106,106,7	script	Girl#gnbs2	716,{
 	else if (b_sword == 27) {
 		mes "[Lyroo]";
 		mes "uh...umm?";
-		if (Sex == 0)
+		if (Sex == SEX_FEMALE)
 			mes "Ah....It's you, pretty sister...";
 		else
 			mes "Ah....It's you, handsome brother...";
@@ -3107,7 +3107,7 @@ geffen_in,106,106,7	script	Girl#gnbs2	716,{
 	}
 	mes "[Lyroo]";
 	mes "Heehehe...";
-	if (Sex == 0)
+	if (Sex == SEX_FEMALE)
 		mes "Thank you my pretty sister.";
 	else 
 		mes "Thank you handsome brother~";

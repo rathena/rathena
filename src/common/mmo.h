@@ -65,7 +65,7 @@
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
-#define MAX_STORAGE 600 ///Max number of storage slots a player can have, (up to ~850 tested)
+#define MAX_STORAGE 600 ///Max number of storage slots a player can have
 #define MAX_GUILD_STORAGE 600 ///Max number of storage slots a guild
 #define MAX_PARTY 12 ///Max party member
 #define MAX_GUILD 16+10*6	///Increased max guild members +6 per 1 extension levels [Lupus]
@@ -79,6 +79,9 @@
 #define MAX_QUEST_DROPS 3 ///Max quest drops for a quest
 #define MAX_PC_BONUS_SCRIPT 50 ///Max bonus script can be fetched from `bonus_script` table on player load [Cydh]
 #define MAX_ITEM_RDM_OPT 5	 /// Max item random option [Napster]
+#define DB_NAME_LEN 256 //max len of dbs
+#define MAX_CLAN 500
+#define MAX_CLANALLIANCE 6
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -96,6 +99,10 @@
 //Includes null-terminator as it is the length of the array.
 #define NAME_LENGTH (23 + 1)
 #define PASSWD_LENGTH (32+1)
+//NPC names can be longer than it's displayed on client (NAME_LENGTH).
+#define NPC_NAME_LENGTH 50
+// <NPC_NAME_LENGTH> for npc name + 2 for a "::" + <NAME_LENGTH> for label + 1 for EOS
+#define EVENT_NAME_LENGTH ( NPC_NAME_LENGTH + 2 + NAME_LENGTH + 1 )
 //For item names, which tend to have much longer names.
 #define ITEM_NAME_LENGTH 50
 //For Map Names, which the client considers to be 16 in length including the .gat extension
@@ -296,19 +303,46 @@ struct skill_cooldown_data {
 	long tick;
 };
 
-struct storage_data {
-	int storage_amount;
-	struct item items[MAX_STORAGE];
+enum storage_type {
+	TABLE_INVENTORY = 1,
+	TABLE_CART,
+	TABLE_STORAGE,
+	TABLE_GUILD_STORAGE,
 };
 
-/// Guild storgae struct
-struct guild_storage {
-	bool dirty; ///< Dirty status, need to be saved
-	int guild_id; ///< Guild ID
-	short storage_amount; ///< Amount of item on storage
-	struct item items[MAX_GUILD_STORAGE]; ///< Item entries
-	bool locked; ///< If locked, can't use storage when item bound retrieval
-	uint32 opened; ///< Holds the char_id that open the storage
+enum e_storage_mode {
+	STOR_MODE_NONE = 0x0,
+	STOR_MODE_GET = 0x1,
+	STOR_MODE_PUT = 0x2,
+	STOR_MODE_ALL = 0x3,
+};
+
+struct s_storage {
+	bool dirty; ///< Dirty status, data needs to be saved
+	bool status; ///< Current status of storage (opened or closed)
+	uint16 amount; ///< Amount of items in storage
+	bool lock; ///< If locked, can't use storage when item bound retrieval
+	uint32 id; ///< Account ID / Character ID / Guild ID (owner of storage)
+	enum storage_type type; ///< Type of storage (inventory, cart, storage, guild storage)
+	uint16 max_amount;
+	uint8 stor_id; ///< Storage ID
+	struct {
+		unsigned get : 1;
+		unsigned put : 1;
+	} state;
+	union { // Max for inventory, storage, cart, and guild storage are 1637 each without changing this struct and struct item [2014/10/27]
+		struct item items_inventory[MAX_INVENTORY];
+		struct item items_storage[MAX_STORAGE];
+		struct item items_cart[MAX_CART];
+		struct item items_guild[MAX_GUILD_STORAGE];
+	} u;
+};
+
+struct s_storage_table {
+	char name[NAME_LENGTH];
+	char table[DB_NAME_LEN];
+	uint16 max_num;
+	uint8 id;
 };
 
 struct s_pet {
@@ -409,7 +443,7 @@ struct mmo_charstatus {
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
 	short hair,hair_color,clothes_color,body;
-	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id;
+	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id,clan_id;
 	int fame;
 
 	// Mercenary Guilds Rank
@@ -431,8 +465,6 @@ struct mmo_charstatus {
 	uint16 mapport;
 
 	struct point last_point,save_point,memo_point[MAX_MEMOPOINTS];
-	struct item inventory[MAX_INVENTORY],cart[MAX_CART];
-	struct storage_data storage;
 	struct s_skill skill[MAX_SKILL];
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
@@ -586,7 +618,7 @@ struct guild_castle {
 	int castle_id;
 	int mapindex;
 	char castle_name[NAME_LENGTH];
-	char castle_event[NAME_LENGTH];
+	char castle_event[EVENT_NAME_LENGTH];
 	int guild_id;
 	int economy;
 	int defense;
@@ -814,7 +846,8 @@ enum e_job {
 enum e_sex {
 	SEX_FEMALE = 0,
 	SEX_MALE,
-	SEX_SERVER
+	SEX_SERVER,
+	SEX_ACCOUNT = 99
 };
 
 /// Item Bound Type
@@ -836,6 +869,36 @@ enum e_pc_reg_loading {
 	PRL_ACCL = 0x2, // local
 	PRL_ACCG = 0x4, // global
 	PRL_ALL = 0xFF,
+};
+
+enum e_party_member_withdraw {
+	PARTY_MEMBER_WITHDRAW_LEAVE,	  ///< /leave
+	PARTY_MEMBER_WITHDRAW_EXPEL,	  ///< Kicked
+	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< TODO: Cannot /leave
+	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< TODO: Cannot be kicked
+};
+
+enum e_rank {
+	RANK_BLACKSMITH = 0,
+	RANK_ALCHEMIST = 1,
+	RANK_TAEKWON = 2,
+	RANK_KILLER = 3
+};
+
+struct clan_alliance {
+	int opposition;
+	int clan_id;
+	char name[NAME_LENGTH];
+};
+
+struct clan{
+	int id;
+	char name[NAME_LENGTH];
+	char master[NAME_LENGTH];
+	char map[MAP_NAME_LENGTH_EXT];
+	short max_member, connect_member;
+	struct map_session_data *members[MAX_CLAN];
+	struct clan_alliance alliance[MAX_CLANALLIANCE];
 };
 
 // Sanity checks...

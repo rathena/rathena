@@ -72,8 +72,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		next;
 		switch(select("Save your location:Cancel")) {
 		case 1:
-			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
-			else savepoint "man_fild02",129,61;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225,1,1;
+			else savepoint "man_fild02",129,61,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -92,8 +92,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		next;
 		switch(select("Save your location:Use Storage:Cancel")) {
 		case 1:
-			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
-			else savepoint "man_fild02",129,61;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225,1,1;
+			else savepoint "man_fild02",129,61,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -139,8 +139,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Cancel")) {
 		case 1:
-			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
-			else savepoint "man_fild02",129,61;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225,1,1;
+			else savepoint "man_fild02",129,61,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -260,8 +260,8 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Use Cat Warp (Jottunheim):Cancel")) {
 		case 1:
-			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225;
-			else savepoint "man_fild02",129,61;
+			if (strnpcinfo(2) == "spl") savepoint "spl_fild02",32,225,1,1;
+			else savepoint "man_fild02",129,61,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -2388,7 +2388,7 @@ spl_in02,236,92,5	script	Arc#ep13md_l02	447,{
 			mes "[Arc]";
 			mes "Ah, finally. I've been speaking with Terra while we waited for you.";
 			mes "Terra. This is who saved you...";
-			mes "You should thank "+((Sex)?"him.":"her.");
+			mes "You should thank "+((Sex == SEX_MALE)?"him.":"her.");
 			next;
 			mes "[Terra]";
 			mes "Thank you...";

@@ -72,7 +72,7 @@
 		if (strcharinfo(0) == getguildmaster(.@GID)) {
 			if (guildrelay_q == 100) {
 				if (guildtime > 22) {
-					if ((gettime(3) > 1) && (gettime(3) < guildtime)) {
+					if ((gettime(DT_HOUR) > 1) && (gettime(DT_HOUR) < guildtime)) {
 						mes "[" + .@name$ + "]";
 						mes "Oh, you're back. So did you";
 						mes "rest up enough? I'm sure the";
@@ -129,7 +129,7 @@
 					}
 				}
 				else if (guildtime > 22) {
-					if ((gettime(3) > 0) && (gettime(3) < guildtime)) {
+					if ((gettime(DT_HOUR) > 0) && (gettime(DT_HOUR) < guildtime)) {
 						mes "[" + .@name$ + "]";
 						mes "Oh, you're back. So did you";
 						mes "rest up enough? I'm sure the";
@@ -185,7 +185,7 @@
 						close;
 					}
 				}
-				else if ((gettime(3) - guildtime) > 2) {
+				else if ((gettime(DT_HOUR) - guildtime) > 2) {
 					mes "[" + .@name$ + "]";
 					mes "Oh, you're back. So did you";
 					mes "rest up enough? I'm sure the";
@@ -242,7 +242,7 @@
 				}
 			}
 			else if (guildrelay_q == 150) {
-				if (((guildtime > 22) && (gettime(3) > 1) && (gettime(3) < guildtime)) || ((guildtime > 21) && (gettime(3) > 0) && (gettime(3) < guildtime)) || ((gettime(3) - guildtime) > 2)) {
+				if (((guildtime > 22) && (gettime(DT_HOUR) > 1) && (gettime(DT_HOUR) < guildtime)) || ((guildtime > 21) && (gettime(DT_HOUR) > 0) && (gettime(DT_HOUR) < guildtime)) || ((gettime(DT_HOUR) - guildtime) > 2)) {
 					mes "[" + .@name$ + "]";
 					mes "Ah, you look well rested,";
 					mes "master. It is now time for";
@@ -306,12 +306,12 @@
 				}
 			}
 			else if (guildrelay_q == 25) {
-				if (((guildtime > 22) && ((gettime(3) > 4) && (gettime(3) < guildtime)))
-				|| ((guildtime > 21) && ((gettime(3) > 3) && (gettime(3) < guildtime)))
-				|| ((guildtime > 20) && ((gettime(3) > 2) && (gettime(3) < guildtime)))
-				|| ((guildtime > 19) && ((gettime(3) > 1) && (gettime(3) < guildtime)))
-				|| ((guildtime > 18) && ((gettime(3) > 0) && (gettime(3) < guildtime)))
-				|| ((gettime(3) - guildtime) > 5)) {
+				if (((guildtime > 22) && ((gettime(DT_HOUR) > 4) && (gettime(DT_HOUR) < guildtime)))
+				|| ((guildtime > 21) && ((gettime(DT_HOUR) > 3) && (gettime(DT_HOUR) < guildtime)))
+				|| ((guildtime > 20) && ((gettime(DT_HOUR) > 2) && (gettime(DT_HOUR) < guildtime)))
+				|| ((guildtime > 19) && ((gettime(DT_HOUR) > 1) && (gettime(DT_HOUR) < guildtime)))
+				|| ((guildtime > 18) && ((gettime(DT_HOUR) > 0) && (gettime(DT_HOUR) < guildtime)))
+				|| ((gettime(DT_HOUR) - guildtime) > 5)) {
 					mes "[" + .@name$ + "]";
 					mes "Ah, have you rested well,";
 					mes "master? Please excuse my";
@@ -415,7 +415,7 @@
 					mes "Hand me the spirit, and allow";
 					mes "me to give you your guild's reward.";
 					delitem 7239,1; //Soul_Of_Proceeding
-					set guildtime,gettime(3);
+					set guildtime,gettime(DT_HOUR);
 					set guildrelay_q,100;
 					set .@incen_item,rand(1,100);
 					if ((.@incen_item > 0) && (.@incen_item < 25)) {
@@ -483,7 +483,7 @@
 					mes "challenges that you will all";
 					mes "face together. Good work!";
 					delitem 7245,1; //Soul_Of_Friendship
-					set guildtime,gettime(3);
+					set guildtime,gettime(DT_HOUR);
 					set guildrelay_q,150;
 					set .@incen_item,rand(1,100);
 					if ((.@incen_item > 0) && (.@incen_item < 16)) {
@@ -576,7 +576,7 @@
 					mes "Tristan III, and share it with";
 					mes "guild. Once again, good work.";
 					delitem 7251,1; //Soul_Of_Victory
-					set guildtime,gettime(3);
+					set guildtime,gettime(DT_HOUR);
 					set guildrelay_q,25;
 					set .@incen_item,rand(1,100);
 					if ((.@incen_item > 0) && (.@incen_item < 26)) {
@@ -1411,11 +1411,11 @@
 				mes "don't you worry about it.";
 				delitem 7235,1; //Soul_Of_Courage
 				set guildrelay_q,4;
-				set guildtime,gettime(3);
+				set guildtime,gettime(DT_HOUR);
 				close;
 			}
 			if ((guildtime > 22) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
-				if ((gettime(3) > 2) && (gettime(3) < guildtime)) {
+				if ((gettime(DT_HOUR) > 2) && (gettime(DT_HOUR) < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "I guess enough time";
 					mes "has passed. You ready";
@@ -1429,7 +1429,7 @@
 				}
 			}
 			if ((guildtime > 21) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
-				if ((gettime(3) > 0101) && (gettime(3) < guildtime)) {
+				if ((gettime(DT_HOUR) > 0101) && (gettime(DT_HOUR) < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "I guess enough time";
 					mes "has passed. You ready";
@@ -1443,7 +1443,7 @@
 				}
 			}
 			if ((guildtime > 20) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
-				if ((gettime(3) > 0001) && (gettime(3) < guildtime)) {
+				if ((gettime(DT_HOUR) > 0001) && (gettime(DT_HOUR) < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "I guess enough time";
 					mes "has passed. You ready";
@@ -1456,7 +1456,7 @@
 					close;
 				}
 			}
-			if ((gettime(3) - guildtime > 0300) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
+			if ((gettime(DT_HOUR) - guildtime > 0300) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
 				mes "[" + .@name$ + "]";
 				mes "I guess enough time";
 				mes "has passed. You ready";
@@ -1797,11 +1797,11 @@
 				mes "in order to be successful.";
 				delitem 7240,1; //Soul_Of_Confidence
 				set guildrelay_q,9;
-				set guildtime,gettime(3);
+				set guildtime,gettime(DT_HOUR);
 				close;
 			}
 			if ((guildtime > 22) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
-				if ((gettime(3) > 02) && (gettime(3) < guildtime)) {
+				if ((gettime(DT_HOUR) > 02) && (gettime(DT_HOUR) < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "So did you spend some";
 					mes "quality time with your";
@@ -1832,7 +1832,7 @@
 				}
 			}
 			else if ((guildtime > 21) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
-				if ((gettime(3) > 01) && (gettime(3) < guildtime)) {
+				if ((gettime(DT_HOUR) > 01) && (gettime(DT_HOUR) < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "So did you spend some";
 					mes "quality time with your";
@@ -1863,7 +1863,7 @@
 				}
 			}
 			else if ((guildtime > 20) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
-				if ((gettime(3) > 0) && (gettime(3) < guildtime)) {
+				if ((gettime(DT_HOUR) > 0) && (gettime(DT_HOUR) < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "So did you spend some";
 					mes "quality time with your";
@@ -1893,7 +1893,7 @@
 					close;
 				}
 			}
-			else if ((gettime(3) - guildtime > 3) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
+			else if ((gettime(DT_HOUR) - guildtime > 3) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
 				mes "[" + .@name$ + "]";
 				mes "So did you spend some";
 				mes "quality time with your";
@@ -2767,11 +2767,11 @@
 				mes "to your feelings this time...";
 				delitem 7249,1; //Soul_Of_Service
 				set guildrelay_q,21;
-				set guildtime,gettime(3);
+				set guildtime,gettime(DT_HOUR);
 				close;
 			}
 			if ((guildtime > 22) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
-				if ((gettime(3) > 2) && (gettime(3) < guildtime)) {
+				if ((gettime(DT_HOUR) > 2) && (gettime(DT_HOUR) < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "Yes. You've come at just";
 					mes "the right time. Remember";
@@ -2793,7 +2793,7 @@
 				}
 			}
 			if ((guildtime > 21) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
-				if ((gettime(3) > 1) && (gettime(3) < guildtime)) {
+				if ((gettime(DT_HOUR) > 1) && (gettime(DT_HOUR) < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "Yes. You've come at just";
 					mes "the right time. Remember";
@@ -2815,7 +2815,7 @@
 				}
 			}
 			if ((guildtime > 20) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
-				if ((gettime(3) > 0) && (gettime(3) < guildtime)) {
+				if ((gettime(DT_HOUR) > 0) && (gettime(DT_HOUR) < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "Yes. You've come at just";
 					mes "the right time. Remember";
@@ -2836,7 +2836,7 @@
 					close;
 				}
 			}
-			if ((gettime(3) - guildtime > 3) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
+			if ((gettime(DT_HOUR) - guildtime > 3) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
 				mes "[" + .@name$ + "]";
 				mes "Yes. You've come at just";
 				mes "the right time. Remember";
