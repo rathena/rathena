@@ -4275,31 +4275,31 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 }
 
 // Training Ground Mobs
-new_1-3,0,0,0,0	monster	Poring	1002,10,0,0,0
-new_1-3,0,0,0,0	monster	Drops	1113,10,0,0,0
-new_1-3,0,0,0,0	monster	Lunatic	1063,10,0,0,0
-new_1-3,0,0,0,0	monster	ChonChon	1011,10,0,0,0
-new_2-3,0,0,0,0	monster	Condor	1009,10,0,0,0
-new_2-3,0,0,0,0	monster	Picky	1050,10,0,0,0
-new_2-3,0,0,0,0	monster	Willow	1010,10,0,0,0
-new_2-3,0,0,0,0	monster	Roda Frog	1012,10,0,0,0
-new_3-3,0,0,0,0	monster	Condor	1009,10,0,0,0
-new_3-3,0,0,0,0	monster	Picky	1050,10,0,0,0
-new_3-3,0,0,0,0	monster	Willow	1010,10,0,0,0
-new_3-3,0,0,0,0	monster	Roda Frog	1012,10,0,0,0
-new_4-3,0,0,0,0	monster	Rocker	1052,10,0,0,0
-new_4-3,0,0,0,0	monster	Thief Bug	1051,10,0,0,0
-new_4-3,0,0,0,0	monster	Thief Bug	1053,10,0,0,0
-new_4-3,0,0,0,0	monster	Spore	1014,10,0,0,0
-new_5-3,0,0,0,0	monster	Rocker	1052,10,0,0,0
-new_5-3,0,0,0,0	monster	Thief Bug	1051,1,0,0,0
-new_5-3,0,0,0,0	monster	Thief Bug	1053,1,0,0,0
-new_5-3,0,0,0,0	monster	Spore	1014,1,0,0,0
-new_1-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_2-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_3-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_4-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_5-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
+new_1-3,0,0	monster	Poring	1002,10
+new_1-3,0,0	monster	Drops	1113,10
+new_1-3,0,0	monster	Lunatic	1063,10
+new_1-3,0,0	monster	ChonChon	1011,10
+new_2-3,0,0	monster	Condor	1009,10
+new_2-3,0,0	monster	Picky	1050,10
+new_2-3,0,0	monster	Willow	1010,10
+new_2-3,0,0	monster	Roda Frog	1012,10
+new_3-3,0,0	monster	Condor	1009,10
+new_3-3,0,0	monster	Picky	1050,10
+new_3-3,0,0	monster	Willow	1010,10
+new_3-3,0,0	monster	Roda Frog	1012,10
+new_4-3,0,0	monster	Rocker	1052,10
+new_4-3,0,0	monster	Thief Bug	1051,10
+new_4-3,0,0	monster	Thief Bug	1053,10
+new_4-3,0,0	monster	Spore	1014,10
+new_5-3,0,0	monster	Rocker	1052,10
+new_5-3,0,0	monster	Thief Bug	1051,1
+new_5-3,0,0	monster	Thief Bug	1053,1
+new_5-3,0,0	monster	Spore	1014,1
+new_1-3,0,0	monster	Fabre	1184,5
+new_2-3,0,0	monster	Fabre	1184,5
+new_3-3,0,0	monster	Fabre	1184,5
+new_4-3,0,0	monster	Fabre	1184,5
+new_5-3,0,0	monster	Fabre	1184,5
 
 //============================================================ 
 // Old changelog

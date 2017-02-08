@@ -1234,7 +1234,7 @@ int intif_parse_WisMessage(int fd)
 	id=RFIFOL(fd,4);
 
 	safestrncpy(name, RFIFOCP(fd,32), NAME_LENGTH);
-	sd = map_nick2sd(name);
+	sd = map_nick2sd(name,false);
 	if(sd == NULL || strcmp(sd->status.name, name) != 0)
 	{	//Not found
 		intif_wis_replay(id,1);
@@ -1272,7 +1272,7 @@ int intif_parse_WisEnd(int fd)
 
 	if (battle_config.etc_log)
 		ShowInfo("intif_parse_wisend: player: %s, flag: %d\n", RFIFOP(fd,2), RFIFOB(fd,26)); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-	sd = (struct map_session_data *)map_nick2sd(RFIFOCP(fd,2));
+	sd = (struct map_session_data *)map_nick2sd(RFIFOCP(fd,2),false);
 	if (sd != NULL)
 		clif_wis_end(sd->fd, RFIFOB(fd,26));
 
@@ -2137,7 +2137,7 @@ int intif_parse_Mail_inboxreceived(int fd)
 	{
 		char output[128];
 		sprintf(output, msg_txt(sd,510), sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
-		clif_disp_onlyself(sd, output, strlen(output));
+		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 	return 1;
 }
@@ -2382,7 +2382,7 @@ static void intif_parse_Mail_send(int fd)
 		{
 			clif_Mail_send(sd->fd, false);
 			if( save_settings&CHARSAVE_MAIL )
-				chrif_save(sd, 0);
+				chrif_save(sd, CSAVE_INVENTORY);
 		}
 	}
 }
@@ -2500,7 +2500,7 @@ static void intif_parse_Auction_register(int fd)
 	{
 		clif_Auction_message(sd->fd, 1); // Confirmation Packet ??
 		if( save_settings&CHARSAVE_AUCTION )
-			chrif_save(sd,0);
+			chrif_save(sd, CSAVE_INVENTORY);
 	}
 	else
 	{
@@ -3213,7 +3213,7 @@ static bool intif_parse_StorageReceived(int fd)
 			if (sd->status.party_id == 0 && (j = pc_bound_chk(sd, BOUND_PARTY, idxlist))) { // Party was deleted while character offline
 				int i;
 				for (i = 0; i < j; i++)
-					pc_delitem(sd, idxlist[i], sd->inventory.u.items_inventory[idxlist[i]].amount, 0, 1, LOG_TYPE_OTHER);
+					pc_delitem(sd, idxlist[i], sd->inventory.u.items_inventory[idxlist[i]].amount, 4, 1, LOG_TYPE_OTHER);
 			}
 #endif
 			//Set here because we need the inventory data for weapon sprite parsing.

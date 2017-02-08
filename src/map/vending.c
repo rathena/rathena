@@ -225,7 +225,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		if( battle_config.buyer_name ) {
 			char temp[256];
 			sprintf(temp, msg_txt(sd,265), sd->status.name);
-			clif_disp_onlyself(vsd,temp,strlen(temp));
+			clif_messagecolor(&vsd->bl, color_table[COLOR_LIGHT_GREEN], temp, false, SELF);
 		}
 	}
 
@@ -247,8 +247,8 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 
 	//Always save BOTH: customer (buyer) and vender
 	if( save_settings&CHARSAVE_VENDING ) {
-		chrif_save(sd,0);
-		chrif_save(vsd,0);
+		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
+		chrif_save(vsd, CSAVE_INVENTORY|CSAVE_CART);
 	}
 
 	//check for @AUTOTRADE users [durf]
@@ -301,7 +301,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 	}
 
 	if (save_settings&CHARSAVE_VENDING) // Avoid invalid data from saving
-		chrif_save(sd, 0);
+		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 
 	// filter out invalid items
 	i = 0;
@@ -507,7 +507,7 @@ void vending_reopen( struct map_session_data* sd )
 			}
 
 			// Immediate save
-			chrif_save(sd, 3);
+			chrif_save(sd, CSAVE_AUTOTRADE);
 
 			ShowInfo("Vending loaded for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
 				sd->status.name, count, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);

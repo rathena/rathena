@@ -472,8 +472,8 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 	}
 
 	if( save_settings&CHARSAVE_BANK ) {
-		chrif_save(sd, 0);
-		chrif_save(pl_sd, 0);
+		chrif_save(sd, CSAVE_NORMAL);
+		chrif_save(pl_sd, CSAVE_NORMAL);
 	}
 	
 	// check whether or not there is still something to buy
@@ -626,7 +626,7 @@ void buyingstore_reopen( struct map_session_data* sd ){
 			}
 
 			// Immediate save
-			chrif_save(sd, 3);
+			chrif_save(sd, CSAVE_AUTOTRADE);
 
 			ShowInfo("Buyingstore loaded for '"CL_WHITE"%s"CL_RESET"' with '"CL_WHITE"%d"CL_RESET"' items at "CL_WHITE"%s (%d,%d)"CL_RESET"\n",
 				sd->status.name, count, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
