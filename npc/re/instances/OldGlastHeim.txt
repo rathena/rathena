@@ -52,17 +52,17 @@ glast_01,204,273,6	script	Hugin#ghinstance	755,{
 			close;
 		case 2:
 			switch(instance_enter(.@md_name$)) {
-			case 3:
+			case IE_OTHER:
 				mes "An unknown error has occurred.";
 				close;
-			case 2:
+			case IE_NOINSTANCE:
 				mes "The memorial dungeon "+.@md_name$+" does not exist.";
 				mes "The party leader did not generate the dungeon yet.";
 				close;
-			case 1:
+			case IE_NOMEMBER:
 				mes "Only the registered members can enter the instance "+.@md_name$+".";
 				close;
-			case 0:
+			case IE_OK:
 				mapannounce "glast_01",strcharinfo(0)+", member of the party "+.@p_name$+" entered the instance "+.@md_name$+".",bc_map,"0x00ff99";
 				setquest 12317;
 				setquest 12318;
@@ -242,12 +242,12 @@ OnEnable:
 		next;
 		mes "[Varmunt]";
 		mes "I am not joking Heinrich, Sir. Now, if my judgement is correct, she will be here soon.";
-		donpcevent instance_npcname("Varmunt#ghinstance2")+"::OnTalk1";
+		npctalk "Varmunt : I am not joking Heinrich, Sir. Now, if my judgement is correct, she will be here soon.", instance_npcname("Varmunt#ghinstance2");
 		cutin "gl_barmund2",2;
 		next;
 		mes "[Varmunt]";
 		mes "I trust this guy following me. The Ymir's Heart pieces must be hidden in a safe place before Himmelmez takes them!";
-		donpcevent instance_npcname("Varmunt#ghinstance2")+"::OnTalk2";
+		npctalk "Varmunt : I trust this guy following me. The Ymir's Heart pieces must be hidden in a safe place before Himmelmez takes them!", instance_npcname("Varmunt#ghinstance2");
 		next;
 		select("Even if you do not believe...");
 		mes "["+strcharinfo(0)+"]";
@@ -298,27 +298,6 @@ OnDisable:
 OnEnable:
 	hideoffnpc instance_npcname("Varmunt#ghinstance2");
 	end;
-OnTalk1:
-	npctalk "Varmunt : I am not joking Heinrich, Sir. Now, if my judgement is correct, she will be here soon.";
-	end;
-OnTalk2:
-	npctalk "Varmunt : I trust this guy following me. The Ymir's Heart pieces must be hidden in a safe place before Himmelmez takes them!";
-	end;
-OnTalk3:
-	npctalk "Varmunt : Himmelmez!! Through the cracks!";
-	end;
-OnTalk4:
-	npctalk "Varmunt : Unbelievable. My men are...This kind of thing is not possible!";
-	end;
-OnTalk5:
-	npctalk "Varmunt : Heinrich, Sir! I need a quick decision.";
-	end;
-OnTalk6:
-	npctalk "Varmunt : To prevent other attacks, go chase her!";
-	end;
-OnTalk7:
-	npctalk "Varmunt : Now, your help is desperately needed. I hopefully ask you.";
-	end;
 }
 
 1@gl_k,149,97,6	script	Heinrich#ghinstance2	652,{
@@ -329,36 +308,6 @@ OnDisable:
 	end;
 OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance2");
-	end;
-OnTalk1:
-	npctalk "Heinrich : Who?!";
-	end;
-OnTalk2:
-	npctalk "Heinrich : That who rules the dead? No doubt, a pretty story. Here, some tea will be served to entertain the ladies. Unfortunately, I do not...";
-	end;
-OnTalk3:
-	npctalk "Heinrich : What did you say?";
-	end;
-OnTalk4:
-	npctalk "Heinrich : The King responded to the invitation of the Rune Midgard's Royal Family and hasn't come back yet.";
-	end;
-OnTalk5:
-	npctalk "Heinrich : Just leave before you get in trouble. This is the King's will!";
-	end;
-OnTalk6:
-	npctalk "Heinrich : Damn! She has detected the position of the Ymir's Heart pieces.";
-	end;
-OnTalk7:
-	npctalk "Heinrich : Now, Khalitzburg Crusaders and White Knights, follow me...";
-	end;
-OnTalk8:
-	npctalk "Heinrich : Unbelievable. My men are...This kind of thing is not possible!";
-	end;
-OnTalk9:
-	npctalk "Heinrich : I'm sorry...";
-	end;
-OnTalk10:
-	npctalk "Heinrich : I'm sorry, my lord! Do not forgive me!";
 	end;
 }
 
@@ -371,30 +320,6 @@ OnDisable:
 OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance3");
 	end;
-OnTalk1:
-	npctalk "Heinrich : I cannot believe I killed my men with my own hands!";
-	end;
-OnTalk2:
-	npctalk "Heinrich : Varmunt is right about that. Now is not the time to regret.";
-	end;
-OnTalk3:
-	npctalk "Heinrich : People, gather around and follow my orders.";
-	end;
-OnTalk4:
-	npctalk "Heinrich : Himmelmez is turning into monsters all the people she put to sleep.";
-	end;
-OnTalk5:
-	npctalk "Heinrich : I don't know if there are survivors around here yet.";
-	end;
-OnTalk6:
-	npctalk "Heinrich : If there are survivors from this evil thing, please rescue them.";
-	end;
-OnTalk7:
-	npctalk "Heinrich : With Varmunt by my side, I'm going to chase Himmelmez down.";
-	end;
-OnTalk8:
-	npctalk "Heinrich : Hurry up Varmunt, let's chase her down.";
-	end;
 }
 
 1@gl_k,149,89,1	script	Himmelmez#ghinstance1	650,{
@@ -405,30 +330,6 @@ OnDisable:
 	end;
 OnEnable:
 	hideoffnpc instance_npcname("Himmelmez#ghinstance1");
-	end;
-OnTalk1:
-	npctalk "Himmelmez : This~ Did I interrupt your conversation? The thing is, it's been too long since the last guests saw some sadness spread...";
-	end;
-OnTalk2:
-	npctalk "Himmelmez : My name is Lisa Kahn Himmelmez. I am called the Valkyrie of the dead, master of the Dullahan.";
-	end;
-OnTalk3:
-	npctalk "Himmelmez : There's no need to pretend to be so laid back. Don't bluff about the whereabouts of you Majesty and things will be alright.";
-	end;
-OnTalk4:
-	npctalk "Himmelmez : Hohoho, do you have any questions? You're a really mysterious man.";
-	end;
-OnTalk5:
-	npctalk "Himmelmez : Not coveting the king's throne, you're such a stupid man, only waiting for his return. Your innocence is true, I love it.";
-	end;
-Ontalk6:
-	npctalk "Himmelmez : You make me wish we hadn't met in this situation. Too bad we did.";
-	end;
-Ontalk7:
-	npctalk "Himmelmez : Well~ Today, with such a busy commandant, I won't be able to talk as much as I'd love for you to contemplate my explanation~";
-	end;
-OnTalk8:
-	npctalk "Himmelmez : I gotta get my job done. Meanwhile why don't you meet my men? Hohoho.";
 	end;
 }
 
@@ -444,53 +345,53 @@ OnEnable:
 	initnpctimer;
 	end;
 OnTimer5000:
-	donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnTalk1";
+	npctalk "Heinrich : Who?!", instance_npcname("Heinrich#ghinstance2");
 	end;
 OnTimer10000:
-	donpcevent instance_npcname("Himmelmez#ghinstance1")+"::OnTalk1";
+	npctalk "Himmelmez : This~ Did I interrupt your conversation? The thing is, it's been too long since the last guests saw some sadness spread...", instance_npcname("Himmelmez#ghinstance1");
 	end;
 OnTimer15000:
-	donpcevent instance_npcname("Varmunt#ghinstance2")+"::OnTalk3";
+	npctalk "Varmunt : Himmelmez!! Through the cracks!", instance_npcname("Varmunt#ghinstance2");
 	end;
 OnTimer20000:
-	donpcevent instance_npcname("Himmelmez#ghinstance1")+"::OnTalk2";
+	npctalk "Himmelmez : My name is Lisa Kahn Himmelmez. I am called the Valkyrie of the dead, master of the Dullahan.", instance_npcname("Himmelmez#ghinstance1");
 	end;
 OnTimer25000:
-	donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnTalk2";
+	npctalk "Heinrich : That who rules the dead? No doubt, a pretty story. Here, some tea will be served to entertain the ladies. Unfortunately, I do not...", instance_npcname("Heinrich#ghinstance2");
 	end;
 OnTimer30000:
-	donpcevent instance_npcname("Himmelmez#ghinstance1")+"::OnTalk3";
+	npctalk "Himmelmez : There's no need to pretend to be so laid back. Don't bluff about the whereabouts of you Majesty and things will be alright.", instance_npcname("Himmelmez#ghinstance1");
 	end;
 OnTimer35000:
-	donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnTalk3";
+	npctalk "Heinrich : What did you say?", instance_npcname("Heinrich#ghinstance2");
 	end;
 OnTimer45000:
-	donpcevent instance_npcname("Himmelmez#ghinstance1")+"::OnTalk4";
+	npctalk "Himmelmez : Hohoho, do you have any questions? You're a really mysterious man.", instance_npcname("Himmelmez#ghinstance1");
 	end;	
 OnTimer50000:
-	donpcevent instance_npcname("Himmelmez#ghinstance1")+"::OnTalk5";
+	npctalk "Himmelmez : Not coveting the king's throne, you're such a stupid man, only waiting for his return. Your innocence is true, I love it.", instance_npcname("Himmelmez#ghinstance1");
 	end;
 OnTimer55000:
-	donpcevent instance_npcname("Himmelmez#ghinstance1")+"::OnTalk6";
+	npctalk "Himmelmez : You make me wish we hadn't met in this situation. Too bad we did.", instance_npcname("Himmelmez#ghinstance1");
 	end;
 OnTimer60000:
-	donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnTalk4";
+	npctalk "Heinrich : The King responded to the invitation of the Rune Midgard's Royal Family and hasn't come back yet.", instance_npcname("Heinrich#ghinstance2");
 	end;
 OnTimer65000:
-	donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnTalk5";
+	npctalk "Heinrich : Just leave before you get in trouble. This is the King's will!", instance_npcname("Heinrich#ghinstance2");
 	end;
 OnTimer70000:
-	donpcevent instance_npcname("Himmelmez#ghinstance1")+"::OnTalk7";
+	npctalk "Himmelmez : Well~ Today, with such a busy commandant, I won't be able to talk as much as I'd love for you to contemplate my explanation~", instance_npcname("Himmelmez#ghinstance1");
 	end;
 OnTimer75000:
-	donpcevent instance_npcname("Himmelmez#ghinstance1")+"::OnTalk8";
+	npctalk "Himmelmez : I gotta get my job done. Meanwhile why don't you meet my men? Hohoho.", instance_npcname("Himmelmez#ghinstance1");
 	end;
 OnTimer80000:
-	donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnTalk6";
+	npctalk "Heinrich : Damn! She has detected the position of the Ymir's Heart pieces.", instance_npcname("Heinrich#ghinstance2");
 	donpcevent instance_npcname("Himmelmez#ghinstance1")+"::OnDisable";
 	end;
 OnTimer85000:
-	donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnTalk7";
+	npctalk "Heinrich : Now, Khalitzburg Crusaders and White Knights, follow me...", instance_npcname("Heinrich#ghinstance2");
 	hideonnpc instance_npcname("Varmunt#ghinstance1");
 
 	for(set .@i,1; .@i<=20; set .@i,.@i+4) {
@@ -518,21 +419,21 @@ OnTimer85000:
 	for(set .@i,1; .@i<=22; set .@i,.@i+1)
 		hideoffnpc instance_npcname(".#ghinstance"+.@i);
 
-	donpcevent instance_npcname(".#ghinstance22")+"::OnTalkK";
-	donpcevent instance_npcname(".#ghinstance21")+"::OnTalkK";
-	donpcevent instance_npcname(".#ghinstance18")+"::OnTalkK";
-	donpcevent instance_npcname(".#ghinstance17")+"::OnTalkK";
-	donpcevent instance_npcname(".#ghinstance14")+"::OnTalkK";
-	donpcevent instance_npcname(".#ghinstance13")+"::OnTalkK";
-	donpcevent instance_npcname(".#ghinstance10")+"::OnTalkK";
-	donpcevent instance_npcname(".#ghinstance9")+"::OnTalkK";
-	donpcevent instance_npcname(".#ghinstance6")+"::OnTalkK";
-	donpcevent instance_npcname(".#ghinstance5")+"::OnTalkK";
-	donpcevent instance_npcname(".#ghinstance2")+"::OnTalkK";
-	donpcevent instance_npcname(".#ghinstance1")+"::OnTalkK";
+	npctalk ". : I'm so thirsty!", instance_npcname(".#ghinstance22");
+	npctalk ". : Uhh... My body.", instance_npcname(".#ghinstance21");
+	npctalk ". : Who am I...", instance_npcname(".#ghinstance18");
+	npctalk ". : This is so uncomfortable. Eww!", instance_npcname(".#ghinstance17");
+	npctalk ". : Oh... No... I cannot die...", instance_npcname(".#ghinstance14");
+	npctalk ". : I'm thirsty.", instance_npcname(".#ghinstance13");
+	npctalk ". : Ack... Ugh.", instance_npcname(".#ghinstance10");
+	npctalk ". : Heinrich Sir, help!", instance_npcname(".#ghinstance9");
+	npctalk ". : My stomach hurts...", instance_npcname(".#ghinstance6");
+	npctalk ". : Help.", instance_npcname(".#ghinstance5");
+	npctalk ". : Mom...", instance_npcname(".#ghinstance2");
+	npctalk ". : I do not want to die.", instance_npcname(".#ghinstance1");
 	end;
 OnTimer88000:
-	donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnTalk8";
+	npctalk "Heinrich : Unbelievable. My men are...This kind of thing is not possible!", instance_npcname("Heinrich#ghinstance2");
 
 	for(set .@i,1; .@i<=20; set .@i,.@i+4) {
 		hideonnpc instance_npcname(".#ghinstance"+.@i);
@@ -559,13 +460,13 @@ OnTimer88000:
 	monster .@map$,154,104,"Khalitzburg",2471,1,.@label$;
 	end;
 OnTimer93000:
-	donpcevent instance_npcname("Varmunt#ghinstance2")+"::OnTalk4";
+	npctalk "Varmunt : Unbelievable. My men are...This kind of thing is not possible!", instance_npcname("Varmunt#ghinstance2");
 	end;
 OnTimer97000:
-	donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnTalk9";
+	npctalk "Heinrich : I'm sorry...", instance_npcname("Heinrich#ghinstance2");
 	end;
 OnTimer105000:
-	donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnTalk10";
+	npctalk "Heinrich : I'm sorry, my lord! Do not forgive me!", instance_npcname("Heinrich#ghinstance2");
 	mapannounce instance_mapname("1@gl_k"), "Heinrich's Shout: Dead men, dead men all over the place!",bc_map,"0xFFFF00";
 	end;
 OnTimer107000:
@@ -636,40 +537,40 @@ OnTimer114750: //custom time
 OnTimer115000:
 	donpcevent instance_npcname("Heinrich#ghinstance3")+"::OnEnable";
 	donpcevent instance_npcname("Heinrich#ghinstance2")+"::OnDisable";
-	donpcevent instance_npcname("Heinrich#ghinstance3")+"::OnTalk1";
+	npctalk "Heinrich : I cannot believe I killed my men with my own hands!", instance_npcname("Heinrich#ghinstance3");
 	donpcevent instance_npcname(".#ghinstance2")+"::OnEffect1";
 	donpcevent instance_npcname(".#ghinstance1")+"::OnEffect1";
 	killmonster instance_mapname("1@gl_k"),instance_npcname("#talkinstance1")+"::OnMyMobDead";
 	end;
 OnTimer120000:
-	donpcevent instance_npcname("Varmunt#ghinstance2")+"::OnTalk5";
+	npctalk "Varmunt : Heinrich, Sir! I need a quick decision.", instance_npcname("Varmunt#ghinstance2");
 	end;
 OnTimer125000:
-	donpcevent instance_npcname("Varmunt#ghinstance2")+"::OnTalk6";
+	npctalk "Varmunt : To prevent other attacks, go chase her!", instance_npcname("Varmunt#ghinstance2");
 	end;
 OnTimer130000:
-	donpcevent instance_npcname("Heinrich#ghinstance3")+"::OnTalk2";
+	npctalk "Heinrich : Varmunt is right about that. Now is not the time to regret.", instance_npcname("Heinrich#ghinstance3");
 	end;
 OnTimer135000:
-	donpcevent instance_npcname("Heinrich#ghinstance3")+"::OnTalk3";
+	npctalk "Heinrich : People, gather around and follow my orders.", instance_npcname("Heinrich#ghinstance3");
 	end;
 OnTimer140000:
-	donpcevent instance_npcname("Heinrich#ghinstance3")+"::OnTalk4";
+	npctalk "Heinrich : Himmelmez is turning into monsters all the people she put to sleep.", instance_npcname("Heinrich#ghinstance3");
 	end;
 OnTimer145000:
-	donpcevent instance_npcname("Heinrich#ghinstance3")+"::OnTalk5";
+	npctalk "Heinrich : I don't know if there are survivors around here yet.", instance_npcname("Heinrich#ghinstance3");
 	end;
 OnTimer150000:
-	donpcevent instance_npcname("Heinrich#ghinstance3")+"::OnTalk6";
+	npctalk "Heinrich : If there are survivors from this evil thing, please rescue them.", instance_npcname("Heinrich#ghinstance3");
 	end;
 OnTimer155000:
-	donpcevent instance_npcname("Heinrich#ghinstance3")+"::OnTalk7";
+	npctalk "Heinrich : With Varmunt by my side, I'm going to chase Himmelmez down.", instance_npcname("Heinrich#ghinstance3");
 	end;
 OnTimer160000:
-	donpcevent instance_npcname("Varmunt#ghinstance2")+"::OnTalk7";
+	npctalk "Varmunt : Now, your help is desperately needed. I hopefully ask you.", instance_npcname("Varmunt#ghinstance2");
 	end;
 OnTimer165000:
-	donpcevent instance_npcname("Heinrich#ghinstance3")+"::OnTalk8";
+	npctalk "Heinrich : Hurry up Varmunt, let's chase her down.", instance_npcname("Heinrich#ghinstance3");
 	end;
 OnTimer167000:
 	donpcevent instance_npcname("Heinrich#ghinstance3")+"::OnDisable";
@@ -700,22 +601,6 @@ OnEnable:
 OnEffect1:
 	specialeffect EF_GRANDCROSS;
 	specialeffect EF_LEXAETERNA;
-	end;
-OnTalkK:
-	switch(atoi(replacestr(strnpcinfo(2),"ghinstance",""))) {
-		case 1: npctalk ". : I do not want to die."; break;
-		case 2: npctalk ". : Mom..."; break;
-		case 5: npctalk ". : Help."; break;
-		case 6: npctalk ". : My stomach hurts..."; break;
-		case 9: npctalk ". : Heinrich Sir, help!"; break;
-		case 10: npctalk ". : Ack... Ugh."; break;
-		case 13: npctalk ". : I'm thirsty."; break;
-		case 14: npctalk ". : Oh... No... I cannot die..."; break;
-		case 17: npctalk ". : This is so uncomfortable. Eww!"; break;
-		case 18: npctalk ". : Who am I..."; break;
-		case 21: npctalk ". : Uhh... My body."; break;
-		case 22: npctalk ". : I'm so thirsty!"; break;
-	}
 	end;
 }
 1@gl_k,154,54,3	duplicate(.#ghinstance1)	.#ghinstance2	2471
@@ -763,7 +648,7 @@ OnDisable:
 OnEnable:
 	enablenpc instance_npcname(strnpcinfo(0));
 	end;
-OnTouch:
+OnTouch_:
 	set .@map1$, instance_mapname("1@gl_k");
 	set .@map2$, instance_mapname("2@gl_k");
 	switch(atoi(replacestr(strnpcinfo(2),"ghinstancewarp",""))) {
@@ -963,7 +848,7 @@ OnMyMobDead:
 //============================================================
 1@gl_k,221,82,3	script	Breathless Man#GHtramp1	849,4,4,{
 	end;
-OnTouch:
+OnTouch_:
 	set .@i, rand(1,10);
 	if (.@i == 1) set .@mobs,3;
 	else if (.@i == 2) set .@mobs,4;
@@ -1072,7 +957,7 @@ OnMyMobDead:
 	if (mobcount(.@map$,instance_npcname("#ghmemorialmob04")+"::OnMyMobDead") < 1) {
 		mapannounce .@map$, "12 o'clock warp leading to the Chivalry's Second Floor is now open.",bc_map,"0xFFFF00";
 		donpcevent instance_npcname("#ghinstancewarp7")+"::OnEnable";
-		donpcevent instance_npcname("Varmunt#ghinstance3")+"::OnTalk2";
+		npctalk "Varmunt : From the monster I picked up some great stuff. People who are interested, talk to me.", instance_npcname("Varmunt#ghinstance3");
 		donpcevent instance_npcname("#effectGH01")+"::OnEnable";
 		donpcevent instance_npcname("Heinrich#ghinstance5")+"::OnEnable";
 		donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnEnable";
@@ -1083,7 +968,7 @@ OnMyMobDead:
 
 1@gl_k,150,257,3	script	#GHMclear3	111,9,9,{
 	end;
-OnTouch:
+OnTouch_:
 	donpcevent instance_npcname("#controlGH3")+"::OnEnable";
 	specialeffect EF_BASH;
 	donpcevent instance_npcname("#GHMclear3")+"::OnDisable";
@@ -1112,37 +997,37 @@ OnEnable:
 	initnpctimer;
 	end;
 OnTimer3000:
-	donpcevent instance_npcname("Himmelmez#ghinstance2")+"::OnTalk1";
+	npctalk "Himmelmez : What an awfully lucky, I flew all the way over here and just one of them is really powerful.", instance_npcname("Himmelmez#ghinstance2");
 	end;
 OnTimer6000:
-	donpcevent instance_npcname("Himmelmez#ghinstance2")+"::OnTalk2";
+	npctalk "Himmelmez : But it doesn't matter to me.", instance_npcname("Himmelmez#ghinstance2");
 	end;
 OnTimer9000:
-	donpcevent instance_npcname("Himmelmez#ghinstance2")+"::OnTalk3";
+	npctalk "Himmelmez : Now, all of you will die.", instance_npcname("Himmelmez#ghinstance2");
 	end;
 OnTimer12000:
-	donpcevent instance_npcname("Heinrich#ghinstance4")+"::OnTalk1";
+	npctalk "Heinrich : Himmelmez! I won't let you take even a single more step here.", instance_npcname("Heinrich#ghinstance4");
 	end;
 OnTimer15000:
-	donpcevent instance_npcname("Himmelmez#ghinstance2")+"::OnTalk4";
+	npctalk "Himmelmez : Hahaha, so you guys thought I would come alone?", instance_npcname("Himmelmez#ghinstance2");
 	end;
 OnTimer18000:
-	donpcevent instance_npcname("Varmunt#ghinstance3")+"::OnTalk1";
+	npctalk "Varmunt : Heinrich Sir! Something unknown holds an inexplicably powerful force!", instance_npcname("Varmunt#ghinstance3");
 	end;
 OnTimer21000:
-	donpcevent instance_npcname("Heinrich#ghinstance4")+"::OnTalk2";
+	npctalk "Heinrich : What... is this?!", instance_npcname("Heinrich#ghinstance4");
 	end;
 OnTimer24000:
-	donpcevent instance_npcname("Himmelmez#ghinstance2")+"::OnTalk5";
+	npctalk "Himmelmez : This is my new toy to keep you at my feet. Why don't you guys play while I entertain?", instance_npcname("Himmelmez#ghinstance2");
 	end;
 OnTimer27000:
-	donpcevent instance_npcname("Himmelmez#ghinstance2")+"::OnTalk6";
+	npctalk "Himmelmez : Sincerely~, If I am given the opportunity I'd like to meet you again, Heinrich.", instance_npcname("Himmelmez#ghinstance2");
 	end;
 OnTimer28000:
 	donpcevent instance_npcname("Himmelmez#ghinstance2")+"::OnDisable";
 	end;
 OnTimer31000:
-	donpcevent instance_npcname("Heinrich#ghinstance4")+"::OnTalk3";
+	npctalk "Heinrich : Varmunt Sir! Help the adventurers and I'll chase Himmelmez!", instance_npcname("Heinrich#ghinstance4");
 	end;
 OnTimer32000:
 	donpcevent instance_npcname("Heinrich#ghinstance4")+"::OnDisable";
@@ -1171,15 +1056,6 @@ OnDisable:
 OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance4");
 	end;
-OnTalk1:
-	npctalk "Heinrich : Himmelmez! I won't let you take even a single more step here.";
-	end;
-OnTalk2:
-	npctalk "Heinrich : What... is this?!";
-	end;
-OnTalk3:
-	npctalk "Heinrich : Varmunt Sir! Help the adventurers and I'll chase Himmelmez!";
-	end;
 }
 
 1@gl_k,150,257,3	script	Himmelmez#ghinstance2	650,{
@@ -1195,24 +1071,6 @@ OnDisable:
 	end;
 OnEnable:
 	hideoffnpc instance_npcname("Himmelmez#ghinstance2");
-	end;
-OnTalk1:
-	npctalk "Himmelmez : What an awfully lucky, I flew all the way over here and just one of them is really powerful.";
-	end;
-OnTalk2:
-	npctalk "Himmelmez : But it doesn't matter to me.";
-	end;
-OnTalk3:
-	npctalk "Himmelmez : Now, all of you will die.";
-	end;
-OnTalk4:
-	npctalk "Himmelmez : Hahaha, so you guys thought I would come alone?";
-	end;
-OnTalk5:
-	npctalk "Himmelmez : This is my new toy to keep you at my feet. Why don't you guys play while I entertain?";
-	end;
-OnTalk6:
-	npctalk "Himmelmez : Sincerely~, If I am given the opportunity I'd like to meet you again, Heinrich.";
 	end;
 }
 
@@ -1247,12 +1105,6 @@ OnDisable:
 OnEnable:
 	hideoffnpc instance_npcname("Varmunt#ghinstance3");
 	end;
-OnTalk1:
-	npctalk "Varmunt : Heinrich Sir! Something unknown holds an inexplicably powerful force!";
-	end;
-OnTalk2:
-	npctalk "Varmunt : From the monster I picked up some great stuff. People who are interested, talk to me.";
-	end;
 }
 
 // Floor 2
@@ -1272,21 +1124,6 @@ OnDisable:
 OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance5");
 	end;
-OnTalk1:
-	npctalk "Heinrich : These things have never been in the castle!";
-	end;
-OnTalk2:
-	npctalk "Heinrich : Trying to break this power with common weapons doesn't work. I tried it.";
-	end;
-OnTalk3:
-	npctalk "Heinrich : It is really unforgivable.";
-	end;
-OnTalk4:
-	npctalk "Heinrich : I, who already was a subordinate of genocide. How much more in the future...";
-	end;
-OnTalk5:
-	npctalk "Heinrich : ...";
-	end;
 }
 
 2@gl_k,151,71,7	script	Varmunt#ghinstance4	654,{
@@ -1303,59 +1140,11 @@ OnDisable:
 OnEnable:
 	hideoffnpc instance_npcname("Varmunt#ghinstance4");
 	end;
-OnTalk2:
-	npctalk "Varmunt : Himmelmez's enchantment has completely blocked the passage to each section.";
-	end;
-OnTalk3:
-	npctalk "Varmunt : Get out of the way for a moment. I'll try to somehow break the spell with magical powers.";
-	end;
-OnTalk4:
-	npctalk "Varmunt : The enchantment seems to be broken.";
-	end;
-OnTalk5:
-	npctalk "Varmunt : I've never seen this spell before.";
-	end;
-OnTalk6:
-	npctalk "Varmunt : Himmelmez doesn't use a seal on a person's body to turn it into an undead.";
-	end;
-OnTalk7:
-	npctalk "Varmunt : She uses enchantment stones.This way, the spell is probably maintained.";
-	end;
-OnTalk8:
-	npctalk "Varmunt : We should kill the people who have the enchantment stones to break the spell.";
-	end;
-OnTalk9:
-	npctalk "Varmunt : However, we can't identify them. The purification can only be done randomly.";
-	end;
-OnTalk10:
-	npctalk "Varmunt : Commandant...";
-	end;
-OnTalk11:
-	npctalk "Varmunt : Commandant, it seems too loose.";
-	end;
-OnTalk12:
-	npctalk "Varmunt : We are related to all these people, not just a few.";
-	end;
-OnTalk13:
-	npctalk "Varmunt : We can't deny that it's not their fault for what is going on.";
-	end;
-OnTalk14:
-	npctalk "Varmunt : Well, let's do it then.";
-	end;
-OnTalk15:
-	npctalk "Varmunt : You guys are of a great help. Try to follow us.";
-	end;
-OnTalk16:
-	npctalk "Varmunt : There can be a tough fight. Hold on, and it would be nice to eat something.";
-	end;
-OnTalk17:
-	npctalk "Varmunt : Guys. It is time to depart, Heinrich Sir.";
-	end;
 }
 
 2@gl_k,150,67,0	script	#effectGH01	111,10,10,{
 	end;
-OnTouch:
+OnTouch_:
 	if (.touch) {
 		set .touch,0;
 		specialeffect EF_BASH;
@@ -1385,72 +1174,72 @@ OnEnable:
 	initnpctimer;
 	end;
 OnTimer3000:
-	donpcevent instance_npcname("Heinrich#ghinstance5")+"::OnTalk1";
+	npctalk "Heinrich : These things have never been in the castle!", instance_npcname("Heinrich#ghinstance5");
 	donpcevent instance_npcname("#ghmemorialmob05")+"::OnEnable";
 	end;
 OnTimer6000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk2";
+	npctalk "Varmunt : Himmelmez's enchantment has completely blocked the passage to each section.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer9000:
-	donpcevent instance_npcname("Heinrich#ghinstance5")+"::OnTalk2";
+	npctalk "Heinrich : Trying to break this power with common weapons doesn't work. I tried it.", instance_npcname("Heinrich#ghinstance5");
 	end;
 OnTimer12000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk3";
+	npctalk "Varmunt : Get out of the way for a moment. I'll try to somehow break the spell with magical powers.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer15000:
 	donpcevent instance_npcname("#effectGH01")+"::OnEffect";
 	end;
 OnTimer18000:
 	donpcevent instance_npcname("#effectGH01")+"::OnDisable";
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk4";
+	npctalk "Varmunt : The enchantment seems to be broken.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer21000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk5";
+	npctalk "Varmunt : I've never seen this spell before.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer24000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk6";
+	npctalk "Varmunt : Himmelmez doesn't use a seal on a person's body to turn it into an undead.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer27000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk7";
+	npctalk "Varmunt : She uses enchantment stones.This way, the spell is probably maintained.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer30000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk8";
+	npctalk "Varmunt : We should kill the people who have the enchantment stones to break the spell.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer33000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk9";
+	npctalk "Varmunt : However, we can't identify them. The purification can only be done randomly.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer36000:
-	donpcevent instance_npcname("Heinrich#ghinstance5")+"::OnTalk3";
+	npctalk "Heinrich : It is really unforgivable.", instance_npcname("Heinrich#ghinstance5");
 	end;
 OnTimer39000:
-	donpcevent instance_npcname("Heinrich#ghinstance5")+"::OnTalk4";
+	npctalk "Heinrich : I, who already was a subordinate of genocide. How much more in the future...", instance_npcname("Heinrich#ghinstance5");
 	end;
 OnTimer42000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk10";
+	npctalk "Varmunt : Commandant...", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer45000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk11";
+	npctalk "Varmunt : Commandant, it seems too loose.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer48000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk12";
+	npctalk "Varmunt : We are related to all these people, not just a few.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer51000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk13";
+	npctalk "Varmunt : We can't deny that it's not their fault for what is going on.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer54000:
-	donpcevent instance_npcname("Heinrich#ghinstance5")+"::OnTalk5";
+	npctalk "Heinrich : ...", instance_npcname("Heinrich#ghinstance5");
 	end;
 OnTimer57000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk14";
+	npctalk "Varmunt : Well, let's do it then.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer60000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk15";
+	npctalk "Varmunt : You guys are of a great help. Try to follow us.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer63000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk16";
+	npctalk "Varmunt : There can be a tough fight. Hold on, and it would be nice to eat something.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer66000:
-	donpcevent instance_npcname("Varmunt#ghinstance4")+"::OnTalk17";
+	npctalk "Varmunt : Guys. It is time to depart, Heinrich Sir.", instance_npcname("Varmunt#ghinstance4");
 	end;
 OnTimer69000:
 	mapannounce instance_mapname("2@gl_k"), "9 o'clock positioned warp leading to the 1st zone has been opened. Move from the central hallway. A being with an evil aura seems to be appearing in this region.",bc_map,"0xFFFF00";
@@ -1669,24 +1458,6 @@ OnDisable:
 OnEnable:
 	hideoffnpc instance_npcname("Heinrich#ghinstance6");
 	end;
-OnTalk1:
-	npctalk "Heinrich : Gerhard!";
-	end;
-OnTalk2:
-	npctalk "Heinrich : What are you doing to my men, Himmelmez?!";
-	end;
-OnTalk3:
-	npctalk "Heinrich : Himmelmez! You don't need to make any more sacrifices!";
-	end;
-OnTalk4:
-	npctalk "Heinrich : Let him go! I don't want one more sacrifice!";
-	end;
-OnTalk5:
-	npctalk "Heinrich : I will not forgive you.";
-	end;
-OnTalk6:
-	npctalk "Heinrich : Just leave us alone, Himmelmez!!";
-	end;
 }
 
 2@gl_k,162,250,1	script	Varmunt#ghinstance5	654,{
@@ -1704,9 +1475,6 @@ OnDisable:
 OnEnable:
 	hideoffnpc instance_npcname("Varmunt#ghinstance5");
 	end;
-OnTalk1:
-	npctalk "Varmunt : What? This cannot be. We must prevent Amdarias's attacks!";
-	end;
 }
 
 2@gl_k,158,252,3	script	Himmelmez#ghinstance4	650,4,4,{
@@ -1718,44 +1486,11 @@ OnDisable:
 OnEnable:
 	hideoffnpc instance_npcname("Himmelmez#ghinstance4");
 	end;
-OnTalk1:
-	npctalk "Himmelmez : Great~ I thought you wouldn't come near the end...";
-	end;
-OnTalk2:
-	npctalk "Himmelmez : Huhu, I have already found a piece of Ymir's Heart, Heinrich.";
-	end;
-OnTalk3:
-	npctalk "Himmelmez : It would've been faster if there were no distractions.";
-	end;
-OnTalk4:
-	npctalk "Himmelmez : What do you think? Making it look like an accidental disease infected the king and the people around...";
-	end;
-OnTalk5:
-	npctalk "Himmelmez : You want that?";
-	end;
-OnTalk6:
-	npctalk "Himmelmez : This one is your final blow, Heinrich.";
-	end;
-OnTalk7:
-	npctalk "Himmelmez : It is said that stopping me requires a skillfull person.";
-	end;
-OnTalk8:
-	npctalk "Himmelmez : Seems like a perfect scenario to make my new monster, Amdarias.";
-	end;
-OnTalk9:
-	npctalk "Himmelmez : Booh~ I'm scared.";
-	end;
-OnTalk10:
-	npctalk "Himmelmez : Anyway, it was nice talking to you. Maybe we'll have the chance to meet again in the next story.";
-	end;
-OnTalk11:
-	npctalk "Himmelmez : Well, make sure you will come back again.";
-	end;
 }
 
 2@gl_k,150,179,0	script	#controlGH6	111,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	mapannounce instance_mapname("2@gl_k"), "???: Do not come! There are traps everywhere here... Aaaaack!!!!",bc_map,"0xFF0000";
 	specialeffect EF_BASH;
 	donpcevent instance_npcname("Himmelmez#ghinstance3")+"::OnEnable";
@@ -1775,7 +1510,7 @@ OnEnable:
 
 2@gl_k,158,252,1	script	Himmelmez#ghinstance3	650,7,7,{
 	end;
-OnTouch:
+OnTouch_:
 	specialeffect EF_BASH;
 	donpcevent instance_npcname("#controlGH5")+"::OnEnable";
 	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnEnable";
@@ -1798,15 +1533,6 @@ OnDisable:
 	end;
 OnEnable:
 	hideoffnpc instance_npcname("Gerhard#ghinstance1");
-	end;
-OnTalk1:
-	npctalk "Gerhard : Damn it! Run away! I can't withstand anymore!";
-	end;
-OnTalk2:
-	npctalk "Gerhard : Commandant... Come on, you need to run away from here... Ugh.";
-	end;
-OnTalk3:
-	npctalk "Gerhard : Even if you defile my body, I won't let you take my soul, Himmelmez!";
 	end;
 OnEffect1:
 	specialeffect EF_BARRIER;
@@ -1835,61 +1561,61 @@ OnEnable:
 	initnpctimer;
 	end;
 OnTimer3000:
-	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnTalk1";
+	npctalk "Himmelmez : Great~ I thought you wouldn't come near the end...", instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTimer6000:
-	donpcevent instance_npcname("Gerhard#ghinstance1")+"::OnTalk1";
+	npctalk "Gerhard : Damn it! Run away! I can't withstand anymore!", instance_npcname("Gerhard#ghinstance1");
 	end;
 OnTimer9000:
-	donpcevent instance_npcname("Heinrich#ghinstance6")+"::OnTalk1";
+	npctalk "Heinrich : Gerhard!", instance_npcname("Heinrich#ghinstance6");
 	end;
 OnTimer12000:
-	donpcevent instance_npcname("Gerhard#ghinstance1")+"::OnTalk2";
+	npctalk "Gerhard : Commandant... Come on, you need to run away from here... Ugh.", instance_npcname("Gerhard#ghinstance1");
 	end;
 OnTimer15000:
-	donpcevent instance_npcname("Heinrich#ghinstance6")+"::OnTalk2";
+	npctalk "Heinrich : What are you doing to my men, Himmelmez?!", instance_npcname("Heinrich#ghinstance6");
 	end;
 OnTimer18000:
-	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnTalk2";
+	npctalk "Himmelmez : Huhu, I have already found a piece of Ymir's Heart, Heinrich.", instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTimer21000:
-	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnTalk3";
+	npctalk "Himmelmez : It would've been faster if there were no distractions.", instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTimer24000:
-	donpcevent instance_npcname("Gerhard#ghinstance1")+"::OnTalk3";
+	npctalk "Gerhard : Even if you defile my body, I won't let you take my soul, Himmelmez!", instance_npcname("Gerhard#ghinstance1");
 	end;
 OnTimer27000:
-	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnTalk4";
+	npctalk "Himmelmez : What do you think? Making it look like an accidental disease infected the king and the people around...", instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTimer30000:
-	donpcevent instance_npcname("Heinrich#ghinstance6")+"::OnTalk3";
+	npctalk "Heinrich : Himmelmez! You don't need to make any more sacrifices!", instance_npcname("Heinrich#ghinstance6");
 	end;
 OnTimer33000:
-	donpcevent instance_npcname("Heinrich#ghinstance6")+"::OnTalk4";
+	npctalk "Heinrich : Let him go! I don't want one more sacrifice!", instance_npcname("Heinrich#ghinstance6");
 	end;
 OnTimer36000:
-	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnTalk5";
+	npctalk "Himmelmez : You want that?", instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTimer39000:
-	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnTalk6";
+	npctalk "Himmelmez : This one is your final blow, Heinrich.", instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTimer42000:
-	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnTalk7";
+	npctalk "Himmelmez : It is said that stopping me requires a skillfull person.", instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTimer45000:
-	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnTalk8";
+	npctalk "Himmelmez : Seems like a perfect scenario to make my new monster, Amdarias.", instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTimer48000:
-	donpcevent instance_npcname("Heinrich#ghinstance6")+"::OnTalk5";
+	npctalk "Heinrich : I will not forgive you.", instance_npcname("Heinrich#ghinstance6");
 	end;
 OnTimer51000:
-	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnTalk9";
+	npctalk "Himmelmez : Booh~ I'm scared.", instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTimer54000:
-	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnTalk10";
+	npctalk "Himmelmez : Anyway, it was nice talking to you. Maybe we'll have the chance to meet again in the next story.", instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTimer57000:
-	donpcevent instance_npcname("Himmelmez#ghinstance4")+"::OnTalk11";
+	npctalk "Himmelmez : Well, make sure you will come back again.", instance_npcname("Himmelmez#ghinstance4");
 	end;
 OnTimer60000:
 	donpcevent instance_npcname("Gerhard#ghinstance1")+"::OnEffect1";
@@ -1904,14 +1630,14 @@ OnTimer66000:
 	donpcevent instance_npcname("Gerhard#ghinstance1")+"::OnEffect2";
 	end;
 OnTimer67000:
-	donpcevent instance_npcname("Heinrich#ghinstance6")+"::OnTalk6";
+	npctalk "Heinrich : Just leave us alone, Himmelmez!!", instance_npcname("Heinrich#ghinstance6");
 	donpcevent instance_npcname("Gerhard#ghinstance1")+"::OnEffect4";
 	end;
 OnTimer70000:
 	donpcevent instance_npcname("Gerhard#ghinstance1")+"::OnEffect3";
 	donpcevent instance_npcname("Gerhard#ghinstance1")+"::OnEffect4";
 	donpcevent instance_npcname("Heinrich#ghinstance6")+"::OnDisable";
-	donpcevent instance_npcname("Varmunt#ghinstance5")+"::OnTalk1";
+	npctalk "Varmunt : What? This cannot be. We must prevent Amdarias's attacks!", instance_npcname("Varmunt#ghinstance5");
 	end;
 OnTimer73000:
 	mapannounce instance_mapname("2@gl_k"), "Leads toward Gerhard's body.",bc_map,"0xFFFFFF";
@@ -1945,7 +1671,7 @@ OnTimer80000:
 		next;
 		mes "[Hugin]";
 		mes "Varmunt, I have arbitrarily stopped time. And soon, the time gap will be gone.";
-		specialeffect2 EF_BLIND,AREA;
+		specialeffect2 EF_BLIND;
 		soundeffect "_blind.wav",0;
 		next;
 		mes "[Hugin]";

@@ -39,8 +39,8 @@ force_1-1,99,20,4	script	Heel and Toe#arena	124,{
 
 OnStart:
 	initnpctimer;
-	set $arena_min50st,gettime(2);
-	set $arena_sec50st,gettime(1);
+	set $arena_min50st,gettime(DT_MINUTE);
+	set $arena_sec50st,gettime(DT_SECOND);
 	end;
 
 OnTimer3000:
@@ -292,21 +292,21 @@ OnReset_All:
 }
 
 force_1-1,62,26,1	script	force_08_01#50	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Heel and Toe#arena::On01_Start";
 	warp "force_1-1",40,26;
 	end;
 }
 
 force_1-1,25,44,1	script	force_01_02#50	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Heel and Toe#arena::On02_Start";
 	warp "force_1-1",25,69;
 	end;
 }
 
 force_1-1,25,134,1	script	force_02_03#50	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "arena#50::OnReset_02";
 	donpcevent "Heel and Toe#arena::On03_Start";
 	warp "force_1-1",25,159;
@@ -314,35 +314,35 @@ OnTouch:
 }
 
 force_1-1,44,174,1	script	force_03_04#50	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Heel and Toe#arena::On04_Start";
 	warp "force_1-1",69,174;
 	end;
 }
 
 force_1-1,134,174,1	script	force_04_05#50	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Heel and Toe#arena::On05_Start";
 	warp "force_1-1",159,174;
 	end;
 }
 
 force_1-1,174,155,1	script	force_05_06#50	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Heel and Toe#arena::On06_Start";
 	warp "force_1-1",174,130;
 	end;
 }
 
 force_1-1,174,65,1	script	force_06_07#50	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Heel and Toe#arena::On07_Start";
 	warp "force_1-1",174,40;
 	end;
 }
 
 force_1-1,155,26,1	script	force_07_08#50	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Heel and Toe#arena::On08_Start";
 	warp "force_1-1",132,26;
 	enablenpc "force_08_09#50";
@@ -350,14 +350,14 @@ OnTouch:
 }
 
 force_1-1,99,54,1	script	force_08_09#50	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Heel and Toe#arena::On09_Start";
 	warp "force_1-1",99,82;
 	end;
 }
 
 force_1-1,99,124,1	script	force_exit#50	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Heel and Toe#arena::OnTimerOff";
 	donpcevent "#arn_timer_50::OnEnable";
 	mapwarp "force_1-1","prt_are_in",22,191,0,0;
@@ -776,8 +776,8 @@ OnMyMobDead:
 		donpcevent "Heel and Toe#arena::On09_End";
 		donpcevent "arena#50::OnReset_09";
 		donpcevent "arena#50::OnReset_All";
-		set $arena_min50end,gettime(2);
-		set $arena_sec50end,gettime(1);
+		set $arena_min50end,gettime(DT_MINUTE);
+		set $arena_sec50end,gettime(DT_SECOND);
 	}
 	end;
 }

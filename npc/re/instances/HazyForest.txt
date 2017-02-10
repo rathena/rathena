@@ -140,22 +140,22 @@ bif_fild01,161,355,0	script	Log Tunnel	844,{
 	if(select("Enter the tunnel.:Give up.") == 2)
 		close;
 	switch(instance_enter("Mistwood Maze")) {
-	case 3:
+	case IE_OTHER:
 		mes "[Laphine Soldier]";
 		mes "Something doesn't feel right. Looks like something dangerous is going on, so you'd better turn back today.";
 		close;
-	case 2:
+	case IE_NOINSTANCE:
 		mes "You try to crawl into the log, but some mysterious power pushes you back with a gush of wind.";
 		mes "It seems like you can't force your way into the forest.";
 		close;
-	case 1:
+	case IE_NOMEMBER:
 		mes "[Laphine Soldier]";
 		mes "Hey, look!";
 		mes "Are you going alone?";
 		mes "That's impossible. Too rash.";
 		mes "Team up with some friends and go together!";
 		close;
-	case 0:
+	case IE_OK:
 		if (checkquest(7211,PLAYTIME) == 2) erasequest 7211;
 		if (checkquest(7211,PLAYTIME) == -1) setquest 7211;
 		mapannounce "bif_fild01",getpartyname(getcharid(1))+" party's "+strcharinfo(0)+" member is entering the Mistwood Maze.",bc_map,"0x00ff99"; //FW_NORMAL 12 0 0
@@ -175,7 +175,7 @@ bif_fild01,161,355,0	script	Log Tunnel	844,{
 OnInstanceInit:
 	enablenpc instance_npcname("#Whisper_mist");
 	end;
-OnTouch:
+OnTouch_:
 	disablenpc instance_npcname("#Whisper_mist");
 	initnpctimer;
 	end;
@@ -208,6 +208,8 @@ function	script	F_Mora_Mist	{
 		mapannounce .@map$,getarg(1),bc_map,"0xccffcc"; //FW_NORMAL 12 0 0
 		enablenpc instance_npcname(getarg(0));
 		disablenpc instance_npcname(strnpcinfo(0));
+		if (getarg(4,0))
+			initnpctimer;
 		close;
 	} else
 		mapannounce .@map$,((getarg(3,0))?getarg(2):getarg(2)+"'s Cry: Huh? Who's doing bad things to my tree?!"),bc_map,"0xccffcc"; //FW_NORMAL 12 0 0
@@ -261,7 +263,8 @@ OnMyMobDead:
 	callfunc "F_Mora_Mist",
 		"a4-2_a11",
 		"Rem's Desperate Cry: Argh... Rem will sleep. Rem will sleep now, and won't wake up forever!",
-		"Rem";
+		"Rem",
+		0,1;
 	end;
 OnInstanceInit:
 	monster instance_mapname("1@mist"),101,107,"Rem the Gardener",2136,1,instance_npcname("Tired Rem's Garden Tree")+"::OnMyMobDead";
@@ -355,7 +358,8 @@ OnMyMobDead:
 	callfunc "F_Mora_Mist",
 		"b5_b14",
 		"Depressed Whisper: Now it's all over with the second deepest forest. Gardeners are dying out-",
-		"Spyder";
+		"Spyder",
+		0,1;
 	end;
 OnInstanceInit:
 	monster instance_mapname("1@mist"),209,200,"Spyder the Eight-Legged",2132,1,instance_npcname("Spyder's Garden Tree")+"::OnMyMobDead";
@@ -1029,7 +1033,7 @@ bif_fild01,38,374,0	script	Mysterious Flower#ep14_1	844,{
 
 1@mist,109,70,0	script	a1_a2	45,1,1,{
 	end;
-OnTouch:
+OnTouch_:
 	if (checkquest(7211,PLAYTIME) == -1)
 		setquest 7211;
 	warp instance_mapname("1@mist"),116,40;

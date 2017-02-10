@@ -39,8 +39,8 @@ force_4-1,99,20,4	script	Octus#arena	124,{
 
 OnStart:
 	initnpctimer;
-	set $arena_min80st,gettime(2);
-	set $arena_sec80st,gettime(1);
+	set $arena_min80st,gettime(DT_MINUTE);
+	set $arena_sec80st,gettime(DT_SECOND);
 	end;
 
 OnTimer3000:
@@ -313,28 +313,28 @@ OnReset_All:
 }
 
 force_4-1,62,26,1	script	force_08_01#80	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Octus#arena::On01_Start";
 	warp "force_4-1",40,26;
 	end;
 }
 
 force_4-1,25,44,1	script	force_01_02#80	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Octus#arena::On02_Start";
 	warp "force_4-1",25,69;
 	end;
 }
 
 force_4-1,25,134,1	script	force_02_03#80	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Octus#arena::On03_Start";
 	warp "force_4-1",25,159;
 	end;
 }
 
 force_4-1,44,174,1	script	force_03_04#80	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Octus#arena::On04_Start";
 	warp "force_4-1",69,174;
 	end;
@@ -342,28 +342,28 @@ OnTouch:
 }
 
 force_4-1,134,174,1	script	force_04_05#80	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Octus#arena::On05_Start";
 	warp "force_4-1",159,174;
 	end;
 }
 
 force_4-1,174,155,1	script	force_05_06#80	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Octus#arena::On06_Start";
 	warp "force_4-1",174,130;
 	end;
 }
 
 force_4-1,174,65,1	script	force_06_07#80	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Octus#arena::On07_Start";
 	warp "force_4-1",174,40;
 	end;
 }
 
 force_4-1,155,26,1	script	force_07_08#80	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Octus#arena::On08_Start";
 	warp "force_4-1",132,26;
 	enablenpc "force_08_09#80";
@@ -371,14 +371,14 @@ OnTouch:
 }
 
 force_4-1,99,54,1	script	force_08_09#80	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Octus#arena::On09_Start";
 	warp "force_4-1",99,82;
 	end;
 }
 
 force_4-1,99,124,1	script	force_exit#80	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Octus#arena::OnTimerOff";
 	donpcevent "#arn_timer_80::OnEnable";
 	mapwarp "force_4-1","prt_are_in",73,192,0,0;
@@ -732,8 +732,8 @@ OnMyMobDead:
 		donpcevent "Octus#arena::On09_End";
 		donpcevent "arena#80::OnReset_09";
 		donpcevent "arena#80::OnReset_All";
-		set $arena_min80end,gettime(2);
-		set $arena_sec80end,gettime(1);
+		set $arena_min80end,gettime(DT_MINUTE);
+		set $arena_sec80end,gettime(DT_SECOND);
 	}
 	end;
 }

@@ -738,7 +738,7 @@ moc_ruins,105,62,4	script	Jacob#thai	50,{
 				mes "to lie to nowadays...^000000";
 				next;
 				mes "[Tommy]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "So, mister, do you think my Daddy can catch a Munak with this?";
 				else
 					mes "So, lady, do you think my Daddy can catch a Munak with this?";
@@ -755,7 +755,7 @@ moc_ruins,105,62,4	script	Jacob#thai	50,{
 					close;
 				case 2:
 					mes "[Tommy]";
-					if (Sex)
+					if (Sex == SEX_MALE)
 						mes "So tell me, mister. Did he lie to me, then?";
 					else
 						mes "So tell me, lady. Did he lie to me, then?";
@@ -953,7 +953,7 @@ moc_ruins,105,62,4	script	Jacob#thai	50,{
 			mes "to behave in front of other people?!";
 			next;
 			mes "[Jacob]";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "Say you're sorry to him!";
 			else
 				mes "Say you're sorry to her!";

@@ -40,7 +40,7 @@ struct guild_castle* guild_mapindex2gc(short mapindex);
 
 struct map_session_data *guild_getavailablesd(struct guild *g);
 int guild_getindex(struct guild *g,uint32 account_id,uint32 char_id);
-int guild_getposition(struct guild *g, struct map_session_data *sd);
+int guild_getposition(struct map_session_data *sd);
 unsigned int guild_payexp(struct map_session_data *sd,unsigned int exp);
 int guild_getexp(struct map_session_data *sd,int exp); // [Celest]
 
@@ -64,7 +64,6 @@ void guild_skillup(struct map_session_data* sd, uint16 skill_id);
 void guild_block_skill(struct map_session_data *sd, int time);
 int guild_reqalliance(struct map_session_data *sd,struct map_session_data *tsd);
 int guild_reply_reqalliance(struct map_session_data *sd,uint32 account_id,int flag);
-int guild_alliance(int guild_id1,int guild_id2,uint32 account_id1,uint32 account_id2);
 int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 account_id2,
 	int flag,const char *name1,const char *name2);
 int guild_delalliance(struct map_session_data *sd,int guild_id,int flag);
@@ -95,11 +94,15 @@ int guild_castledatasave(int castle_id,int index,int value);
 int guild_castledataloadack(int len, struct guild_castle *gc);
 void guild_castle_reconnect(int castle_id, int index, int value);
 
-void guild_agit_start(void);
-void guild_agit_end(void);
+bool guild_agit_start(void);
+bool guild_agit_end(void);
 
-void guild_agit2_start(void);
-void guild_agit2_end(void);
+bool guild_agit2_start(void);
+bool guild_agit2_end(void);
+
+bool guild_agit3_start(void);
+bool guild_agit3_end(void);
+
 /* guild flag cachin */
 void guild_flag_add(struct npc_data *nd);
 void guild_flag_remove(struct npc_data *nd);

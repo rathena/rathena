@@ -2160,7 +2160,7 @@ morocc,43,108,5	script	Sharp-Looking Kid	82,{
 
 morocc,45,110,1	script	#maobar1	45,2,2,{
 
-OnTouch:
+OnTouch_:
 	if(mao_request || Class == Job_Assassin || Class == Job_Assassin_Cross) warp "que_job01",9,94;
 	else
 	{
@@ -2230,30 +2230,13 @@ OnTouch:
 	}
 }
 
-que_job01,6,94,1	script	#maobar2	45,2,2,{
-
-OnTouch:
-	warp "morocc",45,103;
-	end;
-}
-
-que_job01,17,48,1	script	#maobar3	45,2,2,{
-
-OnTouch:
-	warp "que_job01",68,92;
-	end;
-}
-
-que_job01,68,96,1	script	#maobar4	45,2,2,{
-
-OnTouch:
-	warp "que_job01",17,53;
-	end;
-}
+que_job01,6,94,1	warp	#maobar2	2,2,morocc,45,103
+que_job01,17,48,1	warp	#maobar3	2,2,que_job01,68,92
+que_job01,68,96,1	warp	#maobar4	2,2,que_job01,17,53
 
 que_job01,80,77,1	script	#maobar5	45,2,2,{
 
-OnTouch:
+OnTouch_:
 	if(mao_request > 1) warp "que_job01",61,50;
 	else
 	{
@@ -2362,12 +2345,7 @@ OnTouch:
 	}
 }
 
-que_job01,65,50,1	script	#maobar4-2	45,2,2,{
-
-OnTouch:
-	warp "que_job01",84,77;
-	end;
-}
+que_job01,65,50,1	warp	#maobar4-2	2,2,que_job01,84,77
 
 que_job01,81,79,5	script	Idle Knight	733,{
 
@@ -2726,7 +2704,7 @@ que_job01,49,49,5	script	Tao	877,{
 
 que_job01,51,55,1	script	#roombar1	45,1,1,{
 
-OnTouch:
+OnTouch_:
 	if(mao_request == 2 || mao_request == 24 || mao_request == 28 || mao_request == 29 || mao_request == 123 || mao_request == 126 || mao_request == 127 || prt_curse == 24)
 	{
 		if(!$@maobar_room)
@@ -2837,14 +2815,14 @@ OnEnter:
 	enablenpc "#maobar7";
 	end;
 	
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	end;
 }
 
 que_job01,51,44,1	script	#roombar2	45,1,1,{
 
-OnTouch:
+OnTouch_:
 	if(mao_request == 25 || (mao_request > 102 && mao_request < 123))
 	{
 		if(mao_request == 121)
@@ -2966,7 +2944,7 @@ OnEnter:
 	enablenpc "#maobar7";
 	end;
 	
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	end;
 }
@@ -2981,14 +2959,14 @@ OnEnter:
 	enablenpc "#maobar8";
 	end;
 	
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	end;
 }
 
 que_job01,11,4,1	script	#maoexit1	45,1,1,{
 
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	donpcevent "#maobartimer1::OnStop";
 	end;
@@ -2996,7 +2974,7 @@ OnTouch:
 
 que_job01,80,27,1	script	#maoexit2	45,1,1,{
 
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	donpcevent "#maobartimer2::OnStop";
 	end;
@@ -3004,7 +2982,7 @@ OnTouch:
 
 que_job01,144,61,1	script	#maoexit3	45,1,1,{
 
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	donpcevent "#maobartimer2::OnStop";
 	end;
@@ -3632,7 +3610,7 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		mes "[Lin]";
 		mes "Ah, this is "+ strcharinfo(0) +",";
 		mes "my partner for this assignment.";
-		if(Sex == 1) mes "Don't worry, you can trust him.";
+		if(Sex == SEX_MALE) mes "Don't worry, you can trust him.";
 		else mes "Don't worry, you can trust her.";
 		next;
 		mes "[R.]";
@@ -3929,7 +3907,7 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		mes "[Lin]";
 		mes "I'm sending "+ strcharinfo(0) +"";
 		mes "on a snack errand and it won't";
-		if(Sex == 1) mes "take too long. Did you want him";
+		if(Sex == SEX_MALE) mes "take too long. Did you want him";
 		else mes "take too long. Did you want her";
 		mes "to bring you back anything?";
 		next;
@@ -4177,7 +4155,7 @@ que_job01,79,15,1	script	R	880,{
 		mes "[Lin]";
 		mes "Ah, this is "+ strcharinfo(0) +",";
 		mes "my partner for this assignment.";
-		if(Sex == 1) mes "Don't worry, you can trust him.";
+		if(Sex == SEX_MALE) mes "Don't worry, you can trust him.";
 		else mes "Don't worry, you can trust her.";
 		next;
 		mes "[R.]";

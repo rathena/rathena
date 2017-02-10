@@ -110,7 +110,7 @@ izlude_in,74,172,4	script	Swordman#swd_1	119,{
 			mes "So you wish to become a proud Swordman? By all means, please sign up!";
 			next;
 			if (select("Sign up.:Cancel.") == 1) {
-				savepoint "izlude_in",65,165;
+				savepoint "izlude_in",65,165,1,1;
 				set job_sword_q,1;
 				setquest 1014;
 				mes "[Swordman]";
@@ -229,7 +229,7 @@ izlude_in,62,170,6	script	Swordman#swd_2	85,{
 		close;
 	}
 	else {
-		savepoint "izlude_in",65,165;
+		savepoint "izlude_in",65,165,1,1;
 		warp "izlude_in",39,170;
 		end;
 	}
@@ -622,21 +622,21 @@ job_sword1,181,163,0	duplicate(SwdTrap3)	3_blank_30_c	-1,2,0
 
 // Monsters (all three courses)
 //============================================================ 
-job_sword1,0,0,0,0	monster	Chonchon	1183,20,0,0,0
-job_sword1,35,79,0,0	monster	Fabre	1184,3,60000,30000,0
-job_sword1,50,108,0,0	monster	Fabre	1184,3,60000,30000,0
-job_sword1,61,28,0,0	monster	Fabre	1184,3,60000,30000,0
-job_sword1,61,92,0,0	monster	Fabre	1184,3,60000,30000,0
-job_sword1,110,112,0,0	monster	Fabre	1184,2,60000,30000,0
-job_sword1,161,94,0,0	monster	Fabre	1184,2,60000,30000,0
-job_sword1,130,76,0,0	monster	Fabre	1184,2,60000,30000,0
-job_sword1,103,58,0,0	monster	Fabre	1184,2,60000,30000,0
-job_sword1,130,24,0,0	monster	Fabre	1184,5,60000,30000,0
-job_sword1,201,36,0,0	monster	Fabre	1184,2,60000,30000,0
-job_sword1,201,16,0,0	monster	Fabre	1184,2,60000,30000,0
-job_sword1,239,44,0,0	monster	Fabre	1184,3,60000,30000,0
-job_sword1,239,76,0,0	monster	Fabre	1184,2,60000,30000,0
-job_sword1,231,101,0,0	monster	Fabre	1184,2,60000,30000,0
-job_sword1,234,117,0,0	monster	Fabre	1184,2,60000,30000,0
-job_sword1,198,91,0,0	monster	Fabre	1184,2,60000,30000,0
-job_sword1,200,63,0,0	monster	Fabre	1184,2,60000,30000,0
+job_sword1,0,0	monster	Chonchon	1183,20
+job_sword1,35,79	monster	Fabre	1184,3,60000,30000
+job_sword1,50,108	monster	Fabre	1184,3,60000,30000
+job_sword1,61,28	monster	Fabre	1184,3,60000,30000
+job_sword1,61,92	monster	Fabre	1184,3,60000,30000
+job_sword1,110,112	monster	Fabre	1184,2,60000,30000
+job_sword1,161,94	monster	Fabre	1184,2,60000,30000
+job_sword1,130,76	monster	Fabre	1184,2,60000,30000
+job_sword1,103,58	monster	Fabre	1184,2,60000,30000
+job_sword1,130,24	monster	Fabre	1184,5,60000,30000
+job_sword1,201,36	monster	Fabre	1184,2,60000,30000
+job_sword1,201,16	monster	Fabre	1184,2,60000,30000
+job_sword1,239,44	monster	Fabre	1184,3,60000,30000
+job_sword1,239,76	monster	Fabre	1184,2,60000,30000
+job_sword1,231,101	monster	Fabre	1184,2,60000,30000
+job_sword1,234,117	monster	Fabre	1184,2,60000,30000
+job_sword1,198,91	monster	Fabre	1184,2,60000,30000
+job_sword1,200,63	monster	Fabre	1184,2,60000,30000

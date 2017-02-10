@@ -32,6 +32,7 @@
 1@face	mapflag	pvp	off
 1@sara	mapflag	pvp	off
 1@gef_in	mapflag	pvp	off
+1@xm_d	mapflag	pvp	off
 
 // Cities ========================
 moc_para01	mapflag	pvp	off

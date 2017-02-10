@@ -16,6 +16,6 @@
 //==================================================
 // dew_fild01 - Dewata Field Tribal Village
 //==================================================
-dew_fild01,0,0,0,0	monster	Alnoldi	2151,60,5000,0,0
-dew_fild01,0,0,0,0	monster	Argiope	1099,45,5000,0,0
-dew_fild01,0,0,0,0	monster	Cendrawasih	2153,10,5000,0,0
+dew_fild01,0,0	monster	Alnoldi	2151,60,5000
+dew_fild01,0,0	monster	Argiope	1099,45,5000
+dew_fild01,0,0	monster	Cendrawasih	2153,10,5000

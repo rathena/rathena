@@ -141,7 +141,7 @@ typedef enum sc_type {
 	SC_VIOLENTGALE,
 	SC_WATK_ELEMENT,
 	SC_ARMOR,
-	SC_ARMOR_ELEMENT,
+	SC_ARMOR_ELEMENT_WATER,
 	SC_NOCHAT,
 	SC_BABY,
 	SC_AURABLADE,
@@ -760,6 +760,44 @@ typedef enum sc_type {
 
 	SC_CLOUD_KILL,
 
+	SC_LJOSALFAR,
+	SC_MERMAID_LONGING,
+	SC_HAT_EFFECT,
+	SC_FLOWERSMOKE,
+	SC_FSTONE,
+	SC_HAPPINESS_STAR,
+	SC_MAPLE_FALLS,
+	SC_TIME_ACCESSORY,
+	SC_MAGICAL_FEATHER,
+	SC_GVG_GIANT,
+	SC_GVG_GOLEM,
+	SC_GVG_STUN,
+	SC_GVG_STONE,
+	SC_GVG_FREEZ,
+	SC_GVG_SLEEP,
+	SC_GVG_CURSE,
+	SC_GVG_SILENCE,
+	SC_GVG_BLIND,
+
+	SC_CLAN_INFO,
+	SC_SWORDCLAN,
+	SC_ARCWANDCLAN,
+	SC_GOLDENMACECLAN,
+	SC_CROSSBOWCLAN,
+	SC_JUMPINGCLAN,
+
+	SC_TAROTCARD,
+
+	// Geffen Magic Tournament Buffs
+	SC_GEFFEN_MAGIC1,
+    SC_GEFFEN_MAGIC2,
+    SC_GEFFEN_MAGIC3,
+
+	SC_MAXPAIN,
+	SC_ARMOR_ELEMENT_EARTH,
+	SC_ARMOR_ELEMENT_FIRE,
+	SC_ARMOR_ELEMENT_WIND,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
@@ -960,7 +998,7 @@ enum si_type {
 	SI_MAXOVERTHRUST	= 188,
 	SI_LONGING = 189,
 	SI_HERMODE = 190,
-	SI_TAROT		= 191, // the icon allows no doubt... but what is it really used for ?? [DracoRPG]
+	SI_TAROT		= 191,
 //	SI_HLIF_AVOID = 192,
 //	SI_HFLI_FLEET = 193,
 //	SI_HFLI_SPEED = 194,
@@ -1622,6 +1660,8 @@ enum si_type {
 	SI_MTF_MARIONETTE = 860,
 	SI_MTF_LUDE = 861,
 	SI_MTF_CRUISER = 862,
+	SI_MERMAID_LONGING = 863,
+	SI_MAGICAL_FEATHER = 864,
 	SI_DRACULA_CARD = 865,
 	SI_LIMIT_POWER_BOOSTER = 867,
 	SI_TIME_ACCESSORY = 872,
@@ -1647,6 +1687,7 @@ enum si_type {
 	SI_CHERRY_BLOSSOM_CAKE = 892,
 	SI_SU_STOOP = 893,
 	SI_CATNIPPOWDER = 894,
+
 	SI_SV_ROOTTWIST = 896,
 	SI_ATTACK_PROPERTY_NOTHING = 897,
 	SI_ATTACK_PROPERTY_WATER = 898,
@@ -1688,6 +1729,42 @@ enum si_type {
 	SI_DORAM_BUF_01 = 935,
 	SI_DORAM_BUF_02 = 936,
 	SI_SPRITEMABLE = 937,
+	SI_AID_PERIOD_RECEIVEITEM = 938,
+	SI_AID_PERIOD_PLUSEXP = 939,
+	SI_AID_PERIOD_PLUSJOBEXP = 940,
+	SI_AID_PERIOD_DEADPENALTY = 941,
+	SI_AID_PERIOD_ADDSTOREITEMCOUNT = 942,
+
+	SI_HISS = 950,
+
+	SI_NYANGGRASS = 952,
+	SI_CHATTERING = 953,
+
+	SI_GROOMING = 961,
+	SI_PROTECTIONOFSHRIMP = 962,
+	SI_EP16_2_BUFF_SS = 963,
+	SI_EP16_2_BUFF_SC = 964,
+	SI_EP16_2_BUFF_AC = 965,
+	SI_GS_MAGICAL_BULLET = 966,
+
+	SI_FALLEN_ANGEL = 976,
+
+	SI_BLAZE_BEAD = 979,
+	SI_FROZEN_BEAD = 980,
+	SI_BREEZE_BEAD = 981,
+
+	SI_AID_PERIOD_RECEIVEITEM_2ND = 983,
+	SI_AID_PERIOD_PLUSEXP_2ND = 984,
+	SI_AID_PERIOD_PLUSJOBEXP_2ND = 985,
+	SI_PRONTERA_JP = 986,
+
+	SI_GLOOM_CARD = 988,
+	SI_PHARAOH_CARD = 989,
+	SI_KIEL_CARD = 990,
+
+	SI_S_MANAPOTION = 995,
+	SI_M_DEFSCROLL = 996,
+
 	SI_MAX,
 };
 
@@ -1707,6 +1784,7 @@ extern short current_equip_item_index;
 extern unsigned int current_equip_combo_pos;
 extern int current_equip_card_id;
 extern bool running_npc_stat_calc_event;
+extern short current_equip_opt_index;
 
 /// Mode definitions to clear up code reading. [Skotlex]
 enum e_mode {
@@ -1954,6 +2032,14 @@ enum e_bonus_script_flags {
 enum e_status_bonus {
 	STATUS_BONUS_FIX = 0,
 	STATUS_BONUS_RATE = 1,
+};
+
+/// Enum for status_calc_weight and status_calc_cart_weight
+enum e_status_calc_weight_opt {
+	CALCWT_NONE = 0x0,
+	CALCWT_ITEM = 0x1,		///< Recalculate item weight
+	CALCWT_MAXBONUS = 0x2,	///< Recalculate max weight based on skill/status/configuration bonuses
+	CALCWT_CARTSTATE = 0x4,	///< Whether to check for cart state
 };
 
 ///Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
@@ -2215,7 +2301,6 @@ int status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type
 int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,int tick,unsigned char flag);
 int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line);
 #define status_change_end(bl,type,tid) status_change_end_(bl,type,tid,__FILE__,__LINE__)
-int kaahi_heal_timer(int tid, unsigned int tick, int id, intptr_t data);
 int status_change_timer(int tid, unsigned int tick, int id, intptr_t data);
 int status_change_timer_sub(struct block_list* bl, va_list ap);
 int status_change_clear(struct block_list* bl, int type);
@@ -2231,6 +2316,8 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 #define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, SCB_ALL, opt)
 #define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, SCB_ALL, opt)
 
+bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
+bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
 void status_calc_bl_(struct block_list *bl, enum scb_flag flag, enum e_status_calc_opt opt);
 int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt);
 void status_calc_pet_(struct pet_data* pd, enum e_status_calc_opt opt);

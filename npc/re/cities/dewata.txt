@@ -519,17 +519,17 @@ dewata,89,191,6	script	Small Shrine#dew1	844,{
 		next;
 		callsub L_Wish;
 		set Zeny, Zeny - .@input;
-		if (.@stat & 1 && .@bonus)
+		if ((.@stat & 1) && .@bonus)
 			consumeitem 12043; //Str_Dish03
-		else if (.@stat & 2 && .@bonus)
+		else if ((.@stat & 2) && .@bonus)
 			consumeitem 12058; //Agi_Dish03
-		else if (.@stat & 4 && .@bonus)
+		else if ((.@stat & 4) && .@bonus)
 			consumeitem 12063; //Dex_Dish03
-		else if (.@stat & 8 && .@bonus)
+		else if ((.@stat & 8) && .@bonus)
 			consumeitem 12053; //Vit_Dish03
-		else if (.@stat & 16 && .@bonus)
+		else if ((.@stat & 16) && .@bonus)
 			consumeitem 12048; //Int_Dish03
-		else if (.@stat & 32 && .@bonus)
+		else if ((.@stat & 32) && .@bonus)
 			consumeitem 12068; //Luk_Dish03
 		else if (.@stat & 64) {
 			specialeffect2 EF_ANGEL;
@@ -537,7 +537,7 @@ dewata,89,191,6	script	Small Shrine#dew1	844,{
 			next;
 		} else if (.@stat & 128) {
 			mes "- The shrine envelops you in a loving aura. -";
-			if ((Sex == 0 && compare(.@wish$,.@wishes$[26])) || (Sex == 1 && compare(.@wish$,.@wishes$[27])))
+			if ((Sex == SEX_FEMALE && compare(.@wish$,.@wishes$[26])) || (Sex == SEX_MALE && compare(.@wish$,.@wishes$[27])))
 				specialeffect2 EF_LIGHTSPHERE;
 			next;
 		}
@@ -738,7 +738,7 @@ OnTouch:
 dewata,269,208,4	script	Little Kid in Town#dew	538,2,3,{
 OnTouch:
 	mes "[Kid]";
-	mes "Hey "+((Sex)?"bro":"sis")+", look at that man!";
+	mes "Hey "+((Sex == SEX_MALE)?"bro":"sis")+", look at that man!";
 	next;
 	mes "[Kid]";
 	mes "He's been lying there for a week doin' nothin'...";

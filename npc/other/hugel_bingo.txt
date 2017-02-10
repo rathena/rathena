@@ -747,14 +747,14 @@ OnInit:
 	disablenpc "out3#bingo";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "que_bingo",40,121;
 	end;
 }
 
 que_bingo,49,136,0	script	go3#bingo	45,1,1,{
 
-OnTouch:
+OnTouch_:
 	switch($@hu_bingob) {
 		case 0: warp "que_bingo",49,125; break;
 		case 1: warp "que_bingo",53,121; break;

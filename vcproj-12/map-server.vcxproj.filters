@@ -25,6 +25,9 @@
     <ClCompile Include="..\src\map\chrif.c">
       <Filter>map</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\map\clan.c">
+      <Filter>map</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\map\clif.c">
       <Filter>map</Filter>
     </ClCompile>
@@ -232,6 +235,9 @@
       <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\chrif.h">
+      <Filter>map</Filter>
+    </ClInclude>
+	<ClInclude Include="..\src\map\clan.h">
       <Filter>map</Filter>
     </ClInclude>
     <ClInclude Include="..\src\map\clif.h">
