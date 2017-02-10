@@ -67,8 +67,8 @@ struct AliasInfo {
 	char alias[ATCOMMAND_LENGTH];
 };
 
-char*** msg_table;
-uint8 max_message_table;
+char*** msg_table = NULL;
+uint8 max_message_table = 0;
 
 char atcommand_symbol = '@'; // first char of the commands
 char charcommand_symbol = '#';
@@ -211,8 +211,11 @@ void do_final_msg(void)
 		aFree(msg_table[i]);
 	}
 
-	if (msg_table)
+	if (msg_table) {
 		aFree(msg_table);
+		msg_table = NULL;
+		max_message_table = 0;
+	}
 }
 
 /**
@@ -4038,7 +4041,7 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd,100)); // Scripts have been reloaded.
 	} else if (strstr(command, "msgconf") || strncmp(message, "msgconf", 3) == 0) {
 		do_final_msg();
-		msg_config_read(MSG_CONF_NAME_EN, true);
+		msg_config_read(MSG_CONF_NAME_EN, false);
 		clif_displaymessage(fd, msg_txt(sd,463)); // Message configuration has been reloaded.
 	} else if (strstr(command, "questdb") || strncmp(message, "questdb", 3) == 0) {
 		do_reload_quest();
