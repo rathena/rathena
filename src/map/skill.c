@@ -418,6 +418,8 @@ unsigned short skill_dummy2skill_id(unsigned short skill_id) {
 			return GN_SLINGITEM;
 		case RL_R_TRIP_PLUSATK:
 			return RL_R_TRIP;
+		case NPC_MAXPAIN_ATK:
+			return NPC_MAXPAIN;
 	}
 	return skill_id;
 }
@@ -1830,8 +1832,8 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
 					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
 					case SC_FORTUNE:		case SC_SERVICE4U:
-						if(tsc->data[i]->val4==0)
-							continue; //if in song-area don't end it
+						if (!battle_config.dispel_song || tsc->data[i]->val4 == 0)
+							continue; //If in song area don't end it, even if config enabled
 						break;
 					case SC_ASSUMPTIO:
 						if( bl->type == BL_MOB )
@@ -4830,6 +4832,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_PULSESTRIKE:
 	case NPC_HELLJUDGEMENT:
 	case NPC_VAMPIRE_GIFT:
+	case NPC_MAXPAIN_ATK:
 	case RK_IGNITIONBREAK:
 	case AB_JUDEX:
 	case WL_SOULEXPANSION:
@@ -6626,6 +6629,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case RL_E_CHAIN:
 	case SU_FRESHSHRIMP:
 	case SU_ARCLOUSEDASH:
+	case NPC_MAXPAIN:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
@@ -7903,7 +7907,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_CROSSBOWCLAN:
 					case SC_JUMPINGCLAN:
 						continue;
-					//bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
 					case SC_WHISTLE:
 					case SC_ASSNCROS:
 					case SC_POEMBRAGI:
@@ -7912,13 +7915,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					case SC_DONTFORGETME:
 					case SC_FORTUNE:
 					case SC_SERVICE4U:
-					if(tsc->data[i]->val4==0)
-						continue; //if in song-area don't end it
-					break;
-				case SC_ASSUMPTIO:
-					if( bl->type == BL_MOB )
-						continue;
-					break;
+						if (!battle_config.dispel_song || tsc->data[i]->val4 == 0)
+							continue; //If in song area don't end it, even if config enabled
+						break;
+					case SC_ASSUMPTIO:
+						if( bl->type == BL_MOB )
+							continue;
+						break;
 				}
 				if(i == SC_BERSERK) tsc->data[i]->val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
@@ -9149,7 +9152,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if( (dstsd && pc_ismadogear(dstsd)) || status_isimmune(bl))
 					i = 0; // Should heal by 0 or won't do anything?? in iRO it breaks the healing to members.. [malufett]
 
-				clif_skill_nodamage(bl, bl, skill_id, i, 1);
+				clif_skill_nodamage(src, bl, skill_id, i, 1);
 				if( tsc && tsc->data[SC_AKAITSUKI] && i )
 					i = ~i + 1;
 				status_heal(bl, i, 0, 0);
@@ -10612,7 +10615,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				if(hd->master && hd->sc.data[SC_STYLE_CHANGE]) {
 					char output[128];
 					safesnprintf(output,sizeof(output),msg_txt(sd,378),(sce->val1==MH_MD_FIGHTING?"fighthing":"grappling"));
-					clif_colormes(hd->master->fd, color_table[COLOR_RED], output);
+					clif_messagecolor(&hd->master->bl, color_table[COLOR_RED], output, false, SELF);
 				}
 			}
 			else sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, -1);
@@ -15319,7 +15322,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 					char output[128];
 
 					sprintf(output,"%s",msg_txt(sd,382)); // You're too close to a stone or emperium to use this skill.
-					clif_colormes(sd->fd,color_table[COLOR_RED], output);
+					clif_messagecolor(&sd->bl,color_table[COLOR_RED], output, false, SELF);
 					return false;
 				}
 			}
@@ -15712,7 +15715,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 						skill_get_desc(skill_id),
 						require.ammo_qty,
 						itemdb_jname(sd->inventory.u.items_inventory[i].nameid));
-			clif_colormes(sd->fd,color_table[COLOR_RED],e_msg);
+			clif_messagecolor(&sd->bl,color_table[COLOR_RED],e_msg,false,SELF);
 			return false;
 		}
 		if (!(require.ammo&1<<sd->inventory_data[i]->look)) { //Ammo type check. Send the "wrong weapon type" message
@@ -15743,7 +15746,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 				//Official is using msgstringtable.txt for each requirement failure
 				//clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				sprintf(output, msg_txt(sd,720), itemdb_jname(require.itemid[i])); // %s is required.
-				clif_colormes(sd->fd,color_table[COLOR_RED],output);
+				clif_messagecolor(&sd->bl,color_table[COLOR_RED],output,false,SELF);
 			}
 			return false;
 		}
@@ -19419,7 +19422,7 @@ int skill_poisoningweapon(struct map_session_data *sd, unsigned short nameid)
 		type, chance, val4, skill_get_time(GC_POISONINGWEAPON, sd->menuskill_val));
 
 	sprintf(output, msg_txt(sd,721), msg);
-	clif_colormes(sd->fd,color_table[COLOR_WHITE],output);
+	clif_messagecolor(&sd->bl,color_table[COLOR_WHITE],output,false,SELF);
 
 /*#if PACKETVER >= 20110208 //! TODO: Check the correct PACKVETVER
 	clif_msg(sd,msg);

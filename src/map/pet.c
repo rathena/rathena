@@ -151,9 +151,9 @@ int pet_attackskill(struct pet_data *pd, int target_id)
 
 /**
  * Make sure pet can attack from given config values.
- * @param sd : player requesting (owner)
- * @param bl : target
- * @param type : pet's attack rate type
+ * @param pd: pet data
+ * @param bl: target
+ * @param type: pet's attack rate type
  * @return 0
  */
 int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
@@ -173,6 +173,11 @@ int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
 	if(pd->bl.m != bl->m ||
 		!check_distance_bl(&pd->bl, bl, pd->db->range2))
 		return 0;
+
+	if (!battle_config.pet_master_dead && pc_isdead(pd->master)) {
+		pet_unlocktarget(pd);
+		return 0;
+	}
 
 	if (!status_check_skilluse(&pd->bl, bl, 0, 0))
 		return 0;

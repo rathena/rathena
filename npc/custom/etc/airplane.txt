@@ -387,7 +387,7 @@ function	script	F_Itin	{
 
 seta:
 	set @tempo, @tempo + 1;
-	set @time, gettime(3);
+	set @time, gettime(DT_HOUR);
 	set @minutes, 5 * @tempo - 5;
 	set @minutess, 5 * @tempo - 2;
 	if(@minutes<10)set @minutes$, "0" + @minutes;
@@ -408,7 +408,7 @@ seta:
 setb:
 	if($@currenttime - 1==@tempo)goto setc;
 	set @tempo, @tempo + 1;
-	set @time, gettime(3) + 1;
+	set @time, gettime(DT_HOUR) + 1;
 	set @minutes, 5 * @tempo - 5;
 	set @minutess, 5 * @tempo - 2;
 	if(@minutes<10)set @minutes$, "0" + @minutes;

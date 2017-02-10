@@ -23,6 +23,7 @@
 #include "mercenary.h"
 #include "elemental.h"
 #include "chrif.h"
+#include "script.h" // script_config
 #include "storage.h"
 
 #include <stdlib.h>
@@ -505,9 +506,9 @@ int chrif_connectack(int fd) {
 
 	chrif_sendmap(fd);
 
-	ShowStatus("Event '"CL_WHITE"OnInterIfInit"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInit"));
+	npc_event_runall(script_config.inter_init_event_name);
 	if( !char_init_done ) {
-		ShowStatus("Event '"CL_WHITE"OnInterIfInitOnce"CL_RESET"' executed with '"CL_WHITE"%d"CL_RESET"' NPCs.\n", npc_event_doall("OnInterIfInitOnce"));
+		npc_event_runall(script_config.inter_init_once_event_name);
 		guild_castle_map_init();
 		intif_clan_requestclans();
 	}
@@ -1172,17 +1173,13 @@ int chrif_disconnectplayer(int fd) {
 		return -1;
 	}
 
-	if (!sd->fd) { //No connection
-		if (sd->state.autotrade){
-			if( sd->state.vending ){
-				vending_closevending(sd);
-			}
-			else if( sd->state.buyingstore ){
-				buyingstore_close(sd);
-			}
+	if (sd->state.vending)
+		vending_closevending(sd);
+	else if (sd->state.buyingstore)
+		buyingstore_close(sd);
 
-			map_quit(sd); //Remove it.
-		}
+	if (!sd->fd) {
+		map_quit(sd);
 		//Else we don't remove it because the char should have a timer to remove the player because it force-quit before,
 		//and we don't want them kicking their previous instance before the 10 secs penalty time passes. [Skotlex]
 		return 0;
