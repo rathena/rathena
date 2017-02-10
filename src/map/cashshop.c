@@ -231,11 +231,11 @@ static void sale_read_db_sql( void ){
 static int sale_end_timer( int tid, unsigned int tick, int id, intptr_t data ){
 	struct sale_item_data* sale_item = (struct sale_item_data*)data;
 
-	clif_sale_end( sale_item, NULL, ALL_CLIENT );
-
 	// Remove the timer so the sale end is not sent out again
 	delete_timer( sale_item->timer_end, sale_end_timer );
 	sale_item->timer_end = INVALID_TIMER;
+	
+	clif_sale_end( sale_item, NULL, ALL_CLIENT );
 
 	sale_remove_item( sale_item->nameid );
 
@@ -483,7 +483,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 	for( i = 0; i < n; ++i ){
 		unsigned short nameid = *( item_list + i * 5 );
 		uint32 quantity = *( item_list + i * 5 + 2 );
-		uint16 tab = *( item_list + i * 5 + 4 );
+		uint8 tab = (uint8)*( item_list + i * 5 + 4 );
 		int j;
 
 		if( tab >= CASHSHOP_TAB_MAX ){
