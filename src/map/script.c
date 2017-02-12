@@ -15117,6 +15117,10 @@ BUILDIN_FUNC(autoequip)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Set the value of a given battle config
+ * setbattleflag "<battle flag>",<value>{,<reload>};
+ */
 BUILDIN_FUNC(setbattleflag)
 {
 	const char *flag, *value;
@@ -15126,16 +15130,43 @@ BUILDIN_FUNC(setbattleflag)
 
 	if (battle_set_value(flag, value) == 0)
 		ShowWarning("buildin_setbattleflag: unknown battle_config flag '%s'\n",flag);
-	else
+	else {
 		ShowInfo("buildin_setbattleflag: battle_config flag '%s' is now set to '%s'.\n",flag,value);
+
+		if (script_hasdata(st, 4) && script_getnum(st, 4)) { // Only attempt to reload monster data if told to
+			const char *expdrop_flags[] = { // Only certain flags require a reload, check for those types
+				"base_exp_rate", "job_exp_rate", "mvp_exp_rate", "quest_exp_rate", "heal_exp", "resurrection_exp",
+				"item_rate_common", "item_rate_common_boss", "item_rate_common_mvp", "item_drop_common_min", "item_drop_common_max",
+				"item_rate_heal", "item_rate_heal_boss", "item_rate_heal_mvp", "item_rate_heal_min", "item_rate_heal_max",
+				"item_rate_use", "item_rate_use_boss", "item_rate_use_mvp", "item_rate_use_min", "item_rate_use_max",
+				"item_rate_equip", "item_rate_equip_boss", "item_rate_equip_mvp", "item_rate_equip_min", "item_rate_equip_max",
+				"item_rate_card", "item_rate_card_boss", "item_rate_card_mvp", "item_rate_card_min", "item_rate_card_max",
+				"item_rate_mvp", "item_rate_mvp_min", "item_rate_mvp_max", "item_rate_mvp_mode",
+				"item_rate_treasure", "item_rate_treasure_min", "item_rate_treasure_max",
+				"item_logarithmic_drops", "drop_rate0item", "drop_rateincrease",
+			};
+			uint8 i;
+
+			for (i = 0; i < ARRAYLENGTH(expdrop_flags); i++) {
+				if (!strcmpi(flag, expdrop_flags[i])) {
+					mob_reload();
+					break;
+				}
+			}
+		}
+	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Get the value of a given battle config
+ * getbattleflag("<battle flag>")
+ */
 BUILDIN_FUNC(getbattleflag)
 {
-	const char *flag;
-	flag = script_getstr(st,2);
+	const char *flag = script_getstr(st,2);
+
 	script_pushint(st,battle_get_value(flag));
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -22551,7 +22582,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcshopattach,"s?"),
 	BUILDIN_DEF(equip,"i?"),
 	BUILDIN_DEF(autoequip,"ii"),
-	BUILDIN_DEF(setbattleflag,"si"),
+	BUILDIN_DEF(setbattleflag,"si?"),
 	BUILDIN_DEF(getbattleflag,"s"),
 	BUILDIN_DEF(setitemscript,"is?"), //Set NEW item bonus script. Lupus
 	BUILDIN_DEF(disguise,"i?"), //disguise player. Lupus

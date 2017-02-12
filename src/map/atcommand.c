@@ -6865,10 +6865,11 @@ ACMD_FUNC(trade)
 ACMD_FUNC(setbattleflag)
 {
 	char flag[128], value[128];
+	int reload = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%127s %127s", flag, value) != 2) {
-        	clif_displaymessage(fd, msg_txt(sd,1231)); // Usage: @setbattleflag <flag> <value>
+	if (!message || !*message || sscanf(message, "%127s %127s %11d", flag, value, &reload) != 2) {
+        	clif_displaymessage(fd, msg_txt(sd,1231)); // Usage: @setbattleflag <flag> <value> {<reload>}
         	return -1;
     	}
 
@@ -6879,6 +6880,9 @@ ACMD_FUNC(setbattleflag)
 	}
 
 	clif_displaymessage(fd, msg_txt(sd,1233)); // Set battle_config as requested.
+
+	if (reload)
+		mob_reload();
 
 	return 0;
 }
