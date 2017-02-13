@@ -6196,7 +6196,7 @@ void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long co
 	DBIterator *iter;
 	struct map_session_data *user;
 	unsigned short msg_len = 0, len = 0;
-	unsigned char buf[12+CHAT_SIZE_MAX+1];
+	unsigned char buf[CHAT_SIZE_MAX];
 
 	if (!channel || !msg)
 		return;

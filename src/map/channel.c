@@ -21,15 +21,14 @@ struct Channel_Config channel_config;
 
 DBMap* channel_get_db(void){ return channel_db; }
 
-/*
- * Create *channel
- * - will then add it in channel_db if type not map or ally
- * @name : the name channel will be given, can't be null
- * @pass : can be null. if we want to restrain access
- * @color : display color type
- * @chantype : type of channel
- * return
- *  NULL : creation failed
+/**
+ * Create a channel
+ * - Will then add it in the channel_db if the type is not map or ally
+ * @param name: Channel name, can't be null
+ * @param pass: Channel password, can be null
+ * @param color: Display color
+ * @param chantype: Channel type
+ * @return NULL on failure or Channel on success
  */
 struct Channel* channel_create(struct Channel *tmp_chan) {
 	struct Channel* channel;
@@ -72,6 +71,14 @@ struct Channel* channel_create(struct Channel *tmp_chan) {
 	return channel;
 }
 
+/**
+ * Allocates the proper settings depending on the channel type
+ * @param name: Channel name, can't be null
+ * @param pass: Channel password, can be null
+ * @param chantype: Channel type
+ * @param owner: Owner ID
+ * @return NULL on failure or Channel on success
+ */
 struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type chantype, unsigned int owner) {
 	struct Channel tmp_chan;
 	memset(&tmp_chan, 0, sizeof(struct Channel));
@@ -116,13 +123,15 @@ struct Channel* channel_create_simple(char *name, char *pass, enum Channel_Type 
 	return channel_create(&tmp_chan);
 }
 
-/*
- * Delete channel *channel
- * - check if there is any user in channel and make them all quit
- * return
- *  0 : success
- *  -1 : invalid channel
- *  -2 : can't delete now
+/**
+ * Delete a channel
+ * - Checks if there is any user in channel and make them quit
+ * @param channel: Channel data
+ * @param force: Forcefully remove channel
+ * @return
+ *   0: Success
+ *  -1: Invalid channel
+ *  -2: Can't delete now
  */
 int channel_delete(struct Channel *channel, bool force) {
 	if(!channel)
@@ -163,16 +172,18 @@ int channel_delete(struct Channel *channel, bool force) {
 	return 0;
 }
 
-/*
- * Make player *sd join a channel *channel
- * - add charid to channel user list
- * - add *channel to user channel list
- * return
- *  0 : success
- * -1 : invalid channel or sd
- * -2 : sd already in channel
- * -3 : sd banned
- * -4 : reached max limit
+/**
+ * Make a player join a channel
+ * - Add player to channel user list
+ * - Add channel to user channel list
+ * @param channel: Channel data
+ * @param sd: Player data
+ * @return
+ *   0: Success
+ *  -1: Invalid channel or player
+ *  -2: Player already in channel
+ *  -3: Player banned
+ *  -4: Reached max limit
  */
 int channel_join(struct Channel *channel, struct map_session_data *sd) {
 	if(!channel || !sd)
@@ -198,9 +209,6 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
 		return -4;
 	}
 
-	if (channel_pcisjoined(channel, sd))
-		return 0;
-
 	RECREATE(sd->channels, struct Channel *, ++sd->channel_count);
 	sd->channels[ sd->channel_count - 1 ] = channel;
 	idb_put(channel->users, sd->status.char_id, sd);
@@ -210,7 +218,7 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
 	if( sd->stealth ) {
 		sd->stealth = false;
 	} else if( channel->opt & CHAN_OPT_ANNOUNCE_JOIN ) {
-		char output[CHAT_SIZE_MAX+1];
+		char output[CHAT_SIZE_MAX];
 		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,754), channel->alias, sd->status.name); // %s %s has joined.
 		clif_channel_msg(channel,output,channel->color);
 	}
@@ -223,13 +231,14 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
 	return 0;
 }
 
-/*
- * Make *sd join the map channel
- * create the map_channel if not exist
- * return
- *  -1 : invalid sd
- *  -2 : sd already in channel (channel_join)
- *  -3 : sd banned (channel_join)
+/**
+ * Make a player join the map channel
+ * - Create the map_channel if it does not exist
+ * @param sd: Player data
+ * @return
+ *  -1: Invalid player
+ *  -2: Player already in channel (channel_join)
+ *  -3: Player banned (channel_join)
  */
 int channel_mjoin(struct map_session_data *sd) {
 	char mout[60];
@@ -247,12 +256,13 @@ int channel_mjoin(struct map_session_data *sd) {
 	return channel_join(map[sd->bl.m].channel,sd);
 }
 
-/*
- * Make all ally member of guild *g join our guild chan
- * nb : they only join if they are into their own guild channel (if they not they probably left it)
- * return
- *  0 : success
- *  -1 : invalid guild or no channel for guild
+/**
+ * Make all ally members of a guild join the guild channel
+ * - They only join if they are in their own guild channel (if not they probably left it)
+ * @param g: Guild data
+ * @return
+ *   0: Success
+ *  -1: Invalid guild or no channel for guild
  */
 int channel_ajoin(struct guild *g){
 	int i;
@@ -273,13 +283,15 @@ int channel_ajoin(struct guild *g){
 	return 0;
 }
 
-/*
- * Make *sd join the guild channel
- * create a chan guild if not exist
- * return
- *   0 : success
- *  -1 : invalid sd
- *  -2 : sd has no guild attached
+/**
+ * Make a player join the guild channel
+ * - Create a guild channel if it does not exist
+ * @param sd: Player data
+ * @param flag: Join type (1 - Guild chat, 2 - Ally chat)
+ * @return
+ *   0: Success
+ *  -1: Invalid player
+ *  -2: Player has no guild attached
  */
 int channel_gjoin(struct map_session_data *sd, int flag){
 	struct Channel *channel;
@@ -310,13 +322,15 @@ int channel_gjoin(struct map_session_data *sd, int flag){
 	return 0;
 }
 
-/*
- * Make *sd leave *channel and cleanup association.
- *  - if no one remain in chat delete it
- * @flag&1 called from delete do not recall delete
- *return
- *  0 : success
- *  -1 : invalid sd or channel
+/**
+ * Make player leave the channel and cleanup association
+ * - If no one remains in the chat, delete it
+ * @param channel: Channel data
+ * @param sd: Player data
+ * @param flag: Called from deletion process, do not recall delete
+ * @return
+ *  0: Success
+ * -1: Invalid player or channel
  */
 int channel_clean(struct Channel *channel, struct map_session_data *sd, int flag) {
 	unsigned char i;
@@ -357,16 +371,13 @@ int channel_clean(struct Channel *channel, struct map_session_data *sd, int flag
 	return 0;
 }
 
-/*
- * Make a *sd leave a type of chan.
- * @type&1 : quit guild chan
- * @type&2 : quit ally chans
- * @type&4 : quit map chan
- * @type&8 : quit all users joined chan
- * return
- *  0 : success
- *  -1 : invalid sd
- *
+/**
+ * Make a player leave a type of channel
+ * @param sd: Player data
+ * @param type: Quit type (1 - Quit guild channel, 2 - Quit ally channel, 4 - Quit map channel, 8 - Quit all users in channel)
+ * @return
+ *  0: Success
+ * -1: Invalid player
  */
 int channel_pcquit(struct map_session_data *sd, int type){
 	int i;
@@ -404,13 +415,16 @@ int channel_pcquit(struct map_session_data *sd, int type){
 	return 0;
 }
 
-/*
- * Format *msg from *sd to send it in *channel
- * Also truncate extra char if msg too long (max=RACHSYS_MSG_LENGTH)
- * return
- *  0 : success
- *  -1 : invalid sd, channel, or msg
- *  -2 : delay msg too low since last talk
+/**
+ * Format message from player to send to the channel
+ * - Also truncate extra characters if message is too long
+ * @param channel: Channel data
+ * @param sd: Player data
+ * @param msg: Message to send
+ * @return
+ *  0: Success
+ * -1: Invalid player, channel, or message
+ * -2: Delay message from last message
  */
 int channel_send(struct Channel *channel, struct map_session_data *sd, const char *msg) {
 	int idx = 0;
@@ -423,7 +437,7 @@ int channel_send(struct Channel *channel, struct map_session_data *sd, const cha
 		return -2;
 	}
 	else {
-		char output[CHAT_SIZE_MAX+1];
+		char output[CHAT_SIZE_MAX];
 		unsigned long color = channel->color;
 		if((channel->opt&CHAN_OPT_COLOR_OVERRIDE) && sd->fontcolor && sd->fontcolor < channel_config.colors_count && channel_config.colors[sd->fontcolor])
 			color = channel_config.colors[sd->fontcolor];
@@ -434,18 +448,17 @@ int channel_send(struct Channel *channel, struct map_session_data *sd, const cha
 	return 0;
 }
 
-/*
+/**
  * Check parameters for channel creation
- * @type (bitflag)
- *	1 : check name # + length
- *	2 : check if already exist, need 1
- *	4 : check password length
- * return
- *  0 : success
- *  -1 : bad chan name
- *  -2 : bad chan name length
- *  -3 : pass given too long
- *  -4 : chan already exists
+ * @param chname: Channel name
+ * @param chpass: Channel password
+ * @param type: Check types (1 - Check name # + length, 2 - Check if channel already exists, 4 - Check password length)
+ * @return
+ *  0: Success
+ * -1: Bad channel name
+ * -2: bad channel name length
+ * -3: Password given too long
+ * -4: Channel already exists
  */
 int channel_chk(char *chname, char *chpass, int type){
 	if(type&1){ //check name
@@ -468,14 +481,12 @@ int channel_chk(char *chname, char *chpass, int type){
 	return 0;
 }
 
-/*
- * Lookup to found a channel from his name.
- * @chname : channel name
- * @sd : can be NULL, use to solve #map and #ally case
- * @flag&1 : create channel if not exist (map or ally only)
- * @flag&2 : join the channel if not joined yet (map or ally only)
- * return
- *  NULL : channel not found
+/**
+ * Lookup a channel name
+ * @param chname: Channel name
+ * @param sd: Player data, can be NULL, used to solve #map and #ally cases
+ * @param flag: Lookup types (1 - Create channel if it does not exist (map or ally only), 2 - Join the channel if not joined yet (map or ally only))
+ * @return NULL on channel not found or channel data on success
  */
 struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, int flag){
 	if(channel_chk(chname, NULL, 1))
@@ -499,24 +510,26 @@ struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, 
 	return NULL;
 }
 
-/*
- * Channel check if he has *sd in his user list
- * return
- *  -1 : invalid sd or channel
- *  0 : not found
- *  1 : has pc
+/**
+ * Check if player is in a channel
+ * @param channel: Channel data
+ * @param sd: Player data
+ * @return
+ * -1: Invalid player or channel
+ *  0: Player not found or not banned
+ *  1: Player is in channel
  */
 int channel_haspc(struct Channel *channel,struct map_session_data *sd){
 	if(!channel || !sd) return -1;
 	return (idb_exists(channel->users, sd->status.char_id))?1:0;
 }
 
-/*
- * Channel check if *sd is banned from channel (banned ?)
- * return
- *  -1 : invalid sd or channel
- *  0 : not found
- *  1 : has pc
+/**
+ * Check if player is banned from channel
+ * @return
+ * -1: Invalid player or channel
+ *  0: Player not found or not banned
+ *  1: Player is banned
  */
 int channel_haspcbanned(struct Channel *channel,struct map_session_data *sd){
 	if(!channel || !sd) return -1;
@@ -524,12 +537,14 @@ int channel_haspcbanned(struct Channel *channel,struct map_session_data *sd){
 }
 
 
-/*
- * Player *sd check if he has Channel *channel in his channel list
- * return
- *  -1 : invalid channel or sd
- *  -2 : not found
- *  x>0 : has_chan at index x
+/**
+ * Check if player has channel in their channel list
+ * @param sd: Player data
+ * @param channel: Channel data
+ * @return
+ * -1: Invalid channel or player
+ * -2: Player not found or not in channel
+ * x > 0: has_channel at index x
  */
 int channel_pc_haschan(struct map_session_data *sd, struct Channel *channel){
 	int k;
@@ -539,15 +554,14 @@ int channel_pc_haschan(struct map_session_data *sd, struct Channel *channel){
 	return k;
 }
 
-/*
- * Display some info to user *sd on channels
- * @options :
- *  colors : display availables colors for chan system
- *  mine : list of chan *sd is in + nb of user
- *  void : list of public chan + map + guild + nb of user
- * return
- *  0 : success
- *  -1 : fail
+/**
+ * Display some information to users in channel
+ * @param sd: Player data
+ * @param options:
+ *   colors: Display available colors for channel system
+ *   mine: List of players in channel and number of users
+ *   void: List of public channel and map and guild and number of users
+ * @return 0 on success or -1 on failure
  */
 int channel_display_list(struct map_session_data *sd, char *options){
 
@@ -574,7 +588,7 @@ int channel_display_list(struct map_session_data *sd, char *options){
 			unsigned char k;
 
 			for(k = 0; k < sd->channel_count; k++) {
-				char output[128];
+				char output[CHAT_SIZE_MAX];
 				struct Channel *channel;
 
 				if (!(channel = sd->channels[k]))
@@ -589,7 +603,7 @@ int channel_display_list(struct map_session_data *sd, char *options){
 		DBIterator *iter;
 		bool has_perm = pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ? true : false;
 		struct Channel *channel;
-		char output[128];
+		char output[CHAT_SIZE_MAX];
 
 		clif_displaymessage(sd->fd, msg_txt(sd,1410)); // ---- Public Channels ----
 		if( channel_config.map_tmpl.name != NULL && map[sd->bl.m].channel ) {
@@ -618,11 +632,12 @@ int channel_display_list(struct map_session_data *sd, char *options){
 	return 0;
 }
 
-/*
- * A user *sd is attempting to create a channel named *chname with pass *chpass
- * return
- *  0 : success
- *  -1 : fail
+/**
+ * A player is attempting to create a channel
+ * @param sd: Player data
+ * @param chname: Channel name
+ * @param chpass: Channel password
+ * @return 0 on success or -1 on failure
  */
 int channel_pccreate(struct map_session_data *sd, char *chname, char *chpass){
 	char output[CHAT_SIZE_MAX];
@@ -652,15 +667,15 @@ int channel_pccreate(struct map_session_data *sd, char *chname, char *chpass){
 	return 0;
 }
 
-/*
- * A user *sd is attempting to delete a channel named *chname
- * return
- *  0 : success
- *  -1 : fail
+/**
+ * A player is attempting to delete a channel
+ * @param sd: Player data
+ * @param chname: Channel name
+ * @return 0 on success or -1 on failure
  */
 int channel_pcdelete(struct map_session_data *sd, char *chname){
 	struct Channel *channel;
-	char output[128];
+	char output[CHAT_SIZE_MAX];
 
 	if(!sd || !chname) return 0;
 
@@ -683,15 +698,15 @@ int channel_pcdelete(struct map_session_data *sd, char *chname){
 	return 0;
 }
 
-/*
- * A user *sd is attempting to leave a channel named *chname
- * return
- *  0 : success
- *  -1 : fail
+/**
+ * A player is attempting to leave a channel
+ * @param sd: Player data
+ * @param chname: Channel name
+ * @return 0 on success or -1 on failure
  */
 int channel_pcleave(struct map_session_data *sd, char *chname){
 	struct Channel *channel;
-	char output[128];
+	char output[CHAT_SIZE_MAX];
 
 	if(!sd || !chname)
 		return 0;
@@ -715,7 +730,6 @@ int channel_pcleave(struct map_session_data *sd, char *chname){
 	}
 
 	if( !channel_config.closing && (channel->opt & CHAN_OPT_ANNOUNCE_LEAVE) ) {
-		char output[CHAT_SIZE_MAX+1];
 		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,756), channel->alias, sd->status.name); // %s %s left.
 		clif_channel_msg(channel,output,channel->color);
 	}
@@ -731,15 +745,16 @@ int channel_pcleave(struct map_session_data *sd, char *chname){
 	return 0;
 }
 
-/*
- * A user *sd is attempting to join a channel named *chname
- * return
- *  0 : success
- *  -1 : fail
+/**
+ * A player is attempting to join a channel
+ * @param sd: Player data
+ * @param chname: Channel name
+ * @param pass: Channel password
+ * @return 0 on success or -1 on failure
  */
 int channel_pcjoin(struct map_session_data *sd, char *chname, char *pass){
 	struct Channel *channel;
-	char output[128];
+	char output[CHAT_SIZE_MAX];
 
 	if(!sd || !chname)
 		return 0;
@@ -795,15 +810,16 @@ int channel_pcjoin(struct map_session_data *sd, char *chname, char *pass){
 	return 0;
 }
 
-/*
- * A user *sd is attempting to change color with *color of  a channel named *chname
- * return
- *  0 : success
- *  -1 : fail
+/**
+ * A player is attempting to change the channel color
+ * @param sd: Player data
+ * @param chname: Channel name
+ * @param color: New color
+ * @return 0 on success or -1 on failure
  */
 int channel_pccolor(struct map_session_data *sd, char *chname, char *color){
 	struct Channel *channel;
-	char output[128];
+	char output[CHAT_SIZE_MAX];
 	int k;
 
 	if(!sd)
@@ -847,16 +863,16 @@ int channel_pccolor(struct map_session_data *sd, char *chname, char *color){
 	return 0;
 }
 
-/*
- * A user *sd is attempting to bind (make default message output display chan talk)
- * from a channel named *chname
- * return
- *  0 : success
- *  -1 : fail
+/**
+ * A player is attempting to bind
+ * - Makes default message output display to the channel
+ * @param sd: Player data
+ * @param chname: Channel name
+ * @return 0 on success, -1 on incorrect channel name, or -2 channel doesn't exist or player didn't join
  */
 int channel_pcbind(struct map_session_data *sd, char *chname){
 	struct Channel *channel;
-	char output[128];
+	char output[CHAT_SIZE_MAX];
 
 	if(!sd)
 		return 0;
@@ -878,14 +894,13 @@ int channel_pcbind(struct map_session_data *sd, char *chname){
 	return 0;
 }
 
-/*
- * A user *sd is attempting to unbind
- * return
- *  0 : success
- *  -1 : fail
+/**
+ * A player is attempting to unbind
+ * @param sd: Player data
+ * @return 0 on success or -1 on failure
  */
 int channel_pcunbind(struct map_session_data *sd){
-	char output[128];
+	char output[CHAT_SIZE_MAX];
 
 	if(!sd)
 		return 0;
@@ -900,15 +915,13 @@ int channel_pcunbind(struct map_session_data *sd){
 	return 0;
 }
 
-/*
- * A user *sd is attempting to do something with the banlist
- * @flag == 0 : ban
- * @flag == 1 : unban
- * @flag == 2 : unbanall
- * @flag == 3 : banlist
- *  return
- *  0 : success
- *  -1 : fail
+/**
+ * A player is attempting to modify the banlist
+ * @param sd: Player data
+ * @param chname: Channel name
+ * @param pname: Player to ban or unban
+ * @param flag: Ban options (0 - Ban, 1 - Unban, 2 - Unban all, 3 - Ban list)
+ * @return 0 on success or -1 on failure
  */
 int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int flag){
 	struct Channel *channel;
@@ -1011,7 +1024,14 @@ int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int fl
 	return 0;
 }
 
-int channel_pckick(struct map_session_data *sd, char *chname, char *pname, int flag) {
+/**
+ * A player is attemting to kick a player
+ * @param sd: Player data
+ * @param chname: Channel name
+ * @param pname: Player name to kick
+ * @return 0 on success or -1 on failure
+ */
+int channel_pckick(struct map_session_data *sd, char *chname, char *pname) {
 	struct Channel *channel;
 	char output[CHAT_SIZE_MAX];
 	struct map_session_data *tsd = map_nick2sd(pname,false);
@@ -1056,7 +1076,6 @@ int channel_pckick(struct map_session_data *sd, char *chname, char *pname, int f
 	}
 
 	if( !channel_config.closing && (channel->opt & CHAN_OPT_ANNOUNCE_LEAVE) ) {
-		char output[CHAT_SIZE_MAX+1];
 		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,761), channel->alias, tsd->status.name); // %s %s has been kicked.
 		clif_channel_msg(channel,output,channel->color);
 	}
@@ -1071,14 +1090,13 @@ int channel_pckick(struct map_session_data *sd, char *chname, char *pname, int f
 	return 1;
 }
 
-/*
- * A user *sd is attempting to set an option on channel named *chname
- * @chname = channel name
- * @option = available = opt_str
- * @val = value to assign to option
- * return
- *  0 : success
- *  -1 : fail
+/**
+ * A player is attempting to set an option on the channel
+ * @param sd: Player data
+ * @param chname: Channel name
+ * @param option: Option to change
+ * @param val: Option value
+ * @return 0 on success or -1 on failure
  */
 int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *option, const char *val){
 	struct Channel *channel;
@@ -1205,8 +1223,14 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 	return 0;
 }
 
+/**
+ * Check if the given group ID can join the channel
+ * @param channel: Channel data
+ * @param group_id: Group ID to check
+ * @return True on success or false on failure
+ */
 bool channel_pccheckgroup(struct Channel *channel, int group_id) {
-	int i;
+	unsigned short i;
 
 	nullpo_ret(channel);
 
@@ -1221,6 +1245,9 @@ bool channel_pccheckgroup(struct Channel *channel, int group_id) {
 	return false;
 }
 
+/**
+ * Attempt to autojoin a player to a channel
+ */
 int channel_pcautojoin_sub(DBKey key, DBData *data, va_list ap) {
 	struct Channel *channel = (struct Channel *)db_data2ptr(data);
 	struct map_session_data *sd = NULL;
@@ -1241,6 +1268,10 @@ int channel_pcautojoin_sub(DBKey key, DBData *data, va_list ap) {
 	return 1;
 }
 
+/**
+ * Attempt to autojoin a player to a channel
+ * @param sd: Player data
+ */
 void channel_autojoin(struct map_session_data *sd) {
 	nullpo_retv(sd);
 	if (sd->state.autotrade || !sd->fd)
@@ -1248,35 +1279,12 @@ void channel_autojoin(struct map_session_data *sd) {
 	channel_db->foreach(channel_db, channel_pcautojoin_sub, sd);
 }
 
-int channel_pcisjoined_sub(DBKey key, DBData *data, va_list ap) {
-	unsigned int char_id = (unsigned int)db_data2ptr(data);
-	struct map_session_data *sd = NULL;
-
-	nullpo_ret(char_id);
-	nullpo_ret((sd = va_arg(ap, struct map_session_data *)));
-
-	if (char_id == sd->status.char_id)
-		return 1;
-
-	return 0;
-}
-
-bool channel_pcisjoined(struct Channel *channel, struct map_session_data *sd) {
-	nullpo_ret(channel);
-	nullpo_ret(sd);
-
-	if (channel->users)
-		return channel->users->foreach(channel->users, channel_pcisjoined_sub);
-
-	return false;
-}
-
 /**
  * Get color by name or RGB hex code
- * @Param color_str Color name
- * @return Color in BGR
- **/
-unsigned long channel_getColor(char *color_str) {
+ * @param color_str: Color name
+ * @return color in RGB
+ */
+unsigned long channel_getColor(const char *color_str) {
 	int i;
 	for (i = 0; i < channel_config.colors_count; i++) {
 		if (strcmpi(channel_config.colors_name[i], color_str) == 0)
@@ -1285,18 +1293,23 @@ unsigned long channel_getColor(char *color_str) {
 	return 1;
 }
 
+/**
+ * Attempt to create a global channel from the channel config
+ * @param chan: Channel list
+ * @param tmp_chan: Temporary channel data
+ * @param i: Index
+ * @return True on success or false on failure
+ */
 bool channel_read_sub(config_setting_t *chan, struct Channel *tmp_chan, uint8 i) {
 	config_setting_t  *group_list = NULL;
-	int id = 0;
 	int delay = 1000, autojoin = 0, leave = 1, chat = 1, color_override = 0,
 		self_notif = 1, join_notif = 0, leave_notif = 0;
 	int type = CHAN_TYPE_PUBLIC, group_count = 0;
-	char *name = NULL, *password = NULL, *alias = NULL, *color_str = "Default", *type_str = NULL;
+	const char *name = NULL, *password = NULL, *alias = NULL, *color_str = "Default", *type_str = NULL;
 
 	if (tmp_chan == NULL)
 		return false;
 
-	//config_setting_lookup_int(chan, "id", &id); // Unused yet
 	if (!config_setting_lookup_string(chan, "name", &name)) {
 		ShowError("Please input channel 'name' at '%s' line '%d'! Skipping...\n", chan->file, chan->line);
 		return false;
@@ -1317,7 +1330,6 @@ bool channel_read_sub(config_setting_t *chan, struct Channel *tmp_chan, uint8 i)
 	config_setting_lookup_bool(chan, "join_notif", &join_notif);
 	config_setting_lookup_bool(chan, "leave_notif", &leave_notif);
 
-	//tmp_chan->id = id;
 	safestrncpy(tmp_chan->name,name+1,sizeof(tmp_chan->name));
 	if (password)
 		safestrncpy(tmp_chan->pass,password,sizeof(tmp_chan->pass));
@@ -1349,14 +1361,12 @@ bool channel_read_sub(config_setting_t *chan, struct Channel *tmp_chan, uint8 i)
 	return true;
 }
 
-/*
- * Read and verify configuration in confif_filename
+/**
+ * Read and verify configuration in file
  * Assign table value with value
  */
 void channel_read_config(void) {
 	config_t channels_conf;
-	config_setting_t *chsys = NULL;
-	config_setting_t *colors = NULL;
 	config_setting_t *chan_setting = NULL;
 
 	if (conf_read_file(&channels_conf, channel_conf)) {
@@ -1391,7 +1401,7 @@ void channel_read_config(void) {
 			int allow = 1, ban = 1, kick = 1, color_override = 0, change_delay = 0,
 				self_notif = 1, join_notif = 0, leave_notif = 0,
 				delay = 1000, max_member = 1000;
-			char *color_str = "Default";
+			const char *color_str = "Default";
 
 			config_setting_lookup_bool(private_channel, "allow", &allow);
 			config_setting_lookup_int(private_channel, "delay", &delay);
@@ -1455,10 +1465,8 @@ void channel_read_config(void) {
 	}
 }
 
-/*
- * Initialise db and read config
- * return
- *  0 : success
+/**
+ * Initialise db and read configuration
  */
 void do_init_channel(void) {
 	channel_db = stridb_alloc(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA, CHAN_NAME_LENGTH);
@@ -1468,9 +1476,8 @@ void do_init_channel(void) {
 	channel_read_config();
 }
 
-/*
- * Close all and cleanup
- * NB map and guild need to cleanup their chan as well
+/**
+ * Close all channels and cleanup
  */
 void do_final_channel(void) {
 	DBIterator *iter;
