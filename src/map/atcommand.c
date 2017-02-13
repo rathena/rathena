@@ -9484,7 +9484,7 @@ ACMD_FUNC(channel) {
 	} else if ( strcmpi(key,"ban") == 0 ) {
 		return channel_pcban(sd,sub1,sub2,0);
 	} else if ( strcmpi(key,"kick") == 0 ) {
-		return channel_pckick(sd,sub1,sub2,0);
+		return channel_pckick(sd,sub1,sub2);
 	} else if ( strcmpi(key,"banlist") == 0 ) {
 		return channel_pcban(sd,sub1,NULL,3);
 	} else if ( strcmpi(key,"unban") == 0 ) {
