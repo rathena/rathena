@@ -323,6 +323,8 @@ typedef struct script_function {
 
 extern script_function buildin_func[];
 
+static struct linkdb_node *sleep_db; // int oid -> struct script_state *
+
 #ifdef BETA_THREAD_TEST
 /**
  * MySQL Query Slave
@@ -4015,6 +4017,7 @@ void script_stop_instances(struct script_code *code) {
 int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct script_state *st = (struct script_state *)data;
+	struct linkdb_node *node = (struct linkdb_node *)sleep_db;
 
 	// If it was a player before going to sleep and there is still a unit attached to the script
 	if( id != 0 && st->rid ){
@@ -4035,11 +4038,57 @@ int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 	}
 
-	st->sleep.timer = INVALID_TIMER;
+	while (node && st->sleep.timer != INVALID_TIMER) {
+		if ((int)__64BPRTSIZE(node->key) == st->oid && ((struct script_state *)node->data)->sleep.timer == st->sleep.timer) {
+			script_erase_sleepdb(node);
+			st->sleep.timer = INVALID_TIMER;
+			break;
+		}
+		node = node->next;
+	}
 	if(st->state != RERUNLINE)
 		st->sleep.tick = 0;
 	run_script_main(st);
 	return 0;
+}
+
+/**
+ * Remove sleep timers from the NPC
+ * @param id: NPC ID
+ */
+void script_stop_sleeptimers(int id) {
+	for (;;) {
+		struct script_state *st = (struct script_state *)linkdb_erase(&sleep_db, (void *)__64BPRTSIZE(id));
+
+		if (!st)
+			break; // No more sleep timers
+
+		script_free_state(st);
+	}
+}
+
+/**
+ * Delete the specified node from sleep_db
+ * @param n: Linked list of sleep timers
+ */
+struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n) {
+	struct linkdb_node *retnode;
+
+	if (!n)
+		return NULL;
+
+	if (!n->prev)
+		sleep_db = n->next;
+	else
+		n->prev->next = n->next;
+
+	if (n->next)
+		n->next->prev = n->prev;
+
+	retnode = n->next;
+	aFree(n);
+
+	return retnode;
 }
 
 /// Detaches script state from possibly attached character and restores it's previous script if any.
@@ -4224,8 +4273,8 @@ void run_script_main(struct script_state *st)
 		//Delay execution
 		sd = map_id2sd(st->rid); // Get sd since script might have attached someone while running. [Inkfish]
 		st->sleep.charid = sd?sd->status.char_id:0;
-		st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
-			run_script_timer, st->sleep.charid, (intptr_t)st);
+		st->sleep.timer = add_timer(gettick() + st->sleep.tick, run_script_timer, st->sleep.charid, (intptr_t)st);
+		linkdb_insert(&sleep_db, (void *)__64BPRTSIZE(st->oid), st);
 	} else if(st->state != END && st->rid) {
 		//Resume later (st is already attached to player).
 		if(st->bk_st) {
