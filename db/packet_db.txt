@@ -2322,7 +2322,6 @@ packet_keys: 0x631C511C,0x111C111C,0x111C111C // [Shakto]
 0x08A4,36,storagepassword,2:4:20
 //New Packets
 //0x097E,12 //ZC_UPDATE_RANKING_POINT
-0x09B4,6,dull,0 //Cash Shop - Special Tab
 0x09CE,102,itemmonster,2
 0x09D4,2,npcshopclosed,0
 //NPC Market
@@ -2336,6 +2335,19 @@ packet_keys: 0x631C511C,0x111C111C,0x111C111C // [Shakto]
 0x098A,-1
 0x098D,-1,clanchat,2:4
 0x098E,-1
+// Sale
+0x09AC,-1,salesearch,2:4:8
+0x09AD,8
+0x09AE,17,saleadd,2:6:8:12:16
+0x09AF,4
+0x09B0,8,saleremove,2:6
+0x09B1,4
+0x09B2,8
+0x09B3,4
+0x09B4,6,saleopen,2
+0x09BC,6,saleclose,2
+0x09C3,8,salerefresh,2:6
+0x09C4,8
 
 // New Packet
 0x097A,-1		// ZC_ALL_QUEST_LIST2
