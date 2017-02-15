@@ -1613,7 +1613,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, unsigned int tick)
 		return false;
 
 	// Abnormalities
-	if(( md->sc.opt1 > 0 && md->sc.opt1 != OPT1_STONEWAIT && md->sc.opt1 != OPT1_BURNING && md->sc.opt1 != OPT1_CRYSTALIZE )
+	if(( md->sc.opt1 > 0 && md->sc.opt1 != OPT1_STONEWAIT && md->sc.opt1 != OPT1_BURNING )
 	   || md->sc.data[SC_BLADESTOP] || md->sc.data[SC__MANHOLE] || md->sc.data[SC_CURSEDCIRCLE_TARGET]) {//Should reset targets.
 		md->target_id = md->attacked_id = md->norm_attacked_id = 0;
 		return false;
@@ -4172,12 +4172,8 @@ static bool mob_readdb_sub(char* fields[], int columns, int current)
 static int mob_read_sqldb(void)
 {
 	const char* mob_db_name[] = {
-#ifndef RENEWAL
-		mob_db_db,
-#else
-		mob_db_re_db,
-#endif
-		mob_db2_db };
+		mob_table,
+		mob2_table };
 	int fi;
 
 	for( fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
@@ -4636,12 +4632,8 @@ static void mob_readskilldb(const char* basedir, bool silent) {
 static int mob_read_sqlskilldb(void)
 {
 	const char* mob_skill_db_name[] = {
-#ifndef RENEWAL
-		mob_skill_db_db,
-#else
-		mob_skill_db_re_db,
-#endif
-		mob_skill_db2_db };
+		mob_skill_table,
+		mob_skill2_table };
 	int fi;
 
 	if( battle_config.mob_skill_rate == 0 ) {

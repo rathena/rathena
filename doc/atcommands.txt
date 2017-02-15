@@ -1374,9 +1374,11 @@ Note that the value of a string variable may be typed with or without double quo
 
 ---------------------------------------
 
-@setbattleflag <flag> <value>
+@setbattleflag <flag> <value> {<reload>}
 
 Changes a battle_config flag without rebooting the server.
+If a value is given for reload, then the server will attempt to reload the mob database
+if the config being changed is EXP/drop related.
 
 ---------------------------------------
 

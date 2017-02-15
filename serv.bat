@@ -24,6 +24,7 @@ REM Windows 2000, XP, Vista, 7
 :RESTART_NT
 REM There is no CHOICE in 2000 and XP, but you get asked whether to
 REM abort the batch file, when pressing Ctrl+C in PING.
+IF "%1"=="mapcache.exe" GOTO END
 ECHO Restarting in 15 seconds, press Ctrl+C to cancel.
 PING -n 15 127.0.0.1 > NUL
 

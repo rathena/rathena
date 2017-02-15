@@ -1247,16 +1247,31 @@ int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 	if( !char_mmo_char_fromsql(char_id, &char_dat, false) ) // Only the short data is needed.
 		return 2;
 
+	// If the new name is exactly the same as the old one
+	if( !strcmp( sd->new_name, char_dat.name ) )
+		return 0;
+
 	if( char_dat.rename == 0 )
 		return 1;
 
+	if( !charserv_config.char_config.char_rename_party && char_dat.party_id ){
+		return 6;
+	}
+
+	if( !charserv_config.char_config.char_rename_guild && char_dat.guild_id ){
+		return 5;
+	}
+
 	Sql_EscapeStringLen(sql_handle, esc_name, sd->new_name, strnlen(sd->new_name, NAME_LENGTH));
 
-	// check if the char exist
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` LIKE '%s' LIMIT 1", schema_config.char_db, esc_name) )
-	{
-		Sql_ShowDebug(sql_handle);
-		return 4;
+	switch( char_check_char_name( sd->new_name, esc_name ) ){
+		case 0:
+			break;
+		case -1:
+			// character already exists
+			return 4;
+		default:
+			return 8;
 	}
 
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `name` = '%s', `rename` = '%d' WHERE `char_id` = '%d'", schema_config.char_db, esc_name, --char_dat.rename, char_id) )
@@ -2879,6 +2894,10 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.char_config.char_del_option = atoi(w2);
 		} else if (strcmpi(w1, "char_del_restriction") == 0) {
 			charserv_config.char_config.char_del_restriction = atoi(w2);
+		} else if (strcmpi(w1, "char_rename_party") == 0) {
+			charserv_config.char_config.char_rename_party = (bool)config_switch(w2);
+		} else if (strcmpi(w1, "char_rename_guild") == 0) {
+			charserv_config.char_config.char_rename_guild = (bool)config_switch(w2);
 		} else if(strcmpi(w1,"db_path")==0) {
 			safestrncpy(schema_config.db_path, w2, sizeof(schema_config.db_path));
 		} else if (strcmpi(w1, "fame_list_alchemist") == 0) {

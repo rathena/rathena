@@ -1339,6 +1339,7 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_MADNESSCANCEL]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_GRAVITATION]			|= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_WHITEIMPRISON]		|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_DEEPSLEEP]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_ELECTRICSHOCKER]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BITE]					|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_THORNSTRAP]			|= SCS_NOMOVE;
@@ -1346,7 +1347,7 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC__MANHOLE]				|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_ATKER]	|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET]	|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_CRYSTALIZE]			|= SCS_NOMOVE|SCS_NOMOVECOND;
+	StatusChangeStateTable[SC_CRYSTALIZE]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_NETHERWORLD]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CAMOUFLAGE]			|= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_MEIKYOUSISUI]			|= SCS_NOMOVE;
@@ -1382,7 +1383,7 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_WHITEIMPRISON]		|= SCS_NOCAST;
 	StatusChangeStateTable[SC__SHADOWFORM]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC__INVISIBILITY]		|= SCS_NOCAST;
-	StatusChangeStateTable[SC_CRYSTALIZE]			|= SCS_NOCAST|SCS_NOCASTCOND;
+	StatusChangeStateTable[SC_CRYSTALIZE]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC__IGNORANCE]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC__MANHOLE]				|= SCS_NOCAST;
 	StatusChangeStateTable[SC_DEEPSLEEP]			|= SCS_NOCAST;
@@ -2024,8 +2025,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		// on dead characters, said checks are left to skill.c [Skotlex]
 		if (target && status_isdead(target))
 			return false;
-		if( src && (sc = status_get_sc(src)) && sc->data[SC_CRYSTALIZE] && src->type != BL_MOB)
-			return false;
 	}
 
 	switch( skill_id ) {
@@ -2076,7 +2075,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (flag == 1 && sc->data[SC_CURSEDCIRCLE_TARGET] && skill_id == MO_ABSORBSPIRITS) // Absorb Spirits fails to go through
 			return false;
 
-		if (skill_id != RK_REFRESH && sc->opt1 && !(sc->opt1 == OPT1_CRYSTALIZE && src->type == BL_MOB) && sc->opt1 != OPT1_BURNING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
+		if (skill_id != RK_REFRESH && sc->opt1 && sc->opt1 != OPT1_BURNING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
 				return false;
 			if (!(skill_get_inf(skill_id)&INF_GROUND_SKILL)) 
@@ -4585,7 +4584,6 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 				     (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
 				  || (sc->data[SC_BASILICA] && sc->data[SC_BASILICA]->val4 == bl->id) // Basilica caster cannot move
 				  || (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
-				  || (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB)
 				  || (sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 < 3)
 				)
 			sc->cant.move += ( start ? 1 : ((sc->cant.move)? -1:0) );
@@ -4594,8 +4592,6 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 	// Can't use skills
 	if( flag&SCS_NOCAST ) {
 		if( !(flag&SCS_NOCASTCOND) )
-			sc->cant.cast += ( start ? 1 : -1 );
-		else if( (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB) )
 			sc->cant.cast += ( start ? 1 : -1 );
 	}
 
@@ -8279,28 +8275,28 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		// Undead are immune to Stone
 		if (undead_flag && !(flag&SCSTART_NOAVOID))
 			return 0;
-		if(sc->data[SC_POWER_OF_GAIA])
+		if (sc->data[SC_POWER_OF_GAIA] || sc->data[SC_GVG_STONE])
 			return 0;
-		if (sc->data[SC_GVG_STONE])
-			return 0;
+		if (sc->opt1)
+			return 0; //Cannot override other OPT1 status changes [Skotlex]
 		break;
 	case SC_FREEZE:
 		// Undead are immune to Freeze
 		if (undead_flag && !(flag&SCSTART_NOAVOID))
 			return 0;
-		if (sc->data[SC_GVG_FREEZ])
+		if (sc->data[SC_GVG_FREEZ] || sc->data[SC_WARMER])
 			return 0;
-	case SC_FREEZING:
-	case SC_CRYSTALIZE:
 		if (sc->opt1)
 			return 0; // Cannot override other opt1 status changes. [Skotlex]
-		if (sc->data[SC_WARMER])
+		break;
+	case SC_FREEZING:
+	case SC_CRYSTALIZE:
+		if ((type == SC_FREEZING && sc->data[SC_BURNING]) || sc->data[SC_WARMER])
 			return 0; // Immune to Frozen and Freezing status if under Warmer status. [Jobbie]
 		break;
 	case SC_SLEEP:
 		if (sc->data[SC_GVG_SLEEP])
 			return 0;
-	case SC_DEEPSLEEP:
 		if (sc->opt1)
 			return 0; // Cannot override other opt1 status changes. [Skotlex]
 		break;
@@ -8339,8 +8335,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0;
 		break;
 	case SC_BURNING:
-		if(sc->opt1 || sc->data[SC_FREEZING])
+		if (sc->data[SC_FREEZING])
 			return 0;
+	// Fall through
+	case SC_WHITEIMPRISON:
+		if (sc->opt1)
+			return 0; //Cannot override other OPT1 status changes [Skotlex]
 		break;
 	case SC_SIGNUMCRUCIS:
 		// Only affects demons and undead element (but not players)
@@ -8963,9 +8963,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		break;
 	case SC_FEAR:
 		status_change_end(bl, SC_BLIND, INVALID_TIMER);
-		break;
-	case SC_FREEZING:
-		status_change_end(bl, SC_BURNING, INVALID_TIMER);
 		break;
 	case SC_KINGS_GRACE:
 		status_change_end(bl,SC_POISON,INVALID_TIMER);
@@ -11042,11 +11039,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_FREEZE:		sc->opt1 = OPT1_FREEZE;		break;
 		case SC_STUN:		sc->opt1 = OPT1_STUN;		break;
-		case SC_DEEPSLEEP:	opt_flag = 0;
 		case SC_SLEEP:		sc->opt1 = OPT1_SLEEP;		break;
 		case SC_BURNING:	sc->opt1 = OPT1_BURNING;	break; // Burning need this to be showed correctly. [pakpil]
 		case SC_WHITEIMPRISON:  sc->opt1 = OPT1_IMPRISON;	break;
-		case SC_CRYSTALIZE:	sc->opt1 = OPT1_CRYSTALIZE;	break;
 		// OPT2
 		case SC_POISON:       sc->opt2 |= OPT2_POISON;		break;
 		case SC_CURSE:        sc->opt2 |= OPT2_CURSE;		break;
@@ -12143,10 +12138,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC_FREEZE:
 	case SC_STUN:
 	case SC_SLEEP:
-	case SC_DEEPSLEEP:
 	case SC_BURNING:
 	case SC_WHITEIMPRISON:
-	case SC_CRYSTALIZE:
 		sc->opt1 = 0;
 		break;
 
@@ -12989,8 +12982,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_CRYSTALIZE:
 		if( --(sce->val4) >= 0 ) { // Drains 2% of HP and 1% of SP every seconds.
-			if( bl->type != BL_MOB) // Doesn't work on mobs
-				status_charge(bl, status->max_hp * 2 / 100, status->max_sp / 100);
+			if (!status_charge(bl, status->max_hp * 2 / 100, status->max_sp / 100))
+				break;
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
