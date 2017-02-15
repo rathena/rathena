@@ -1366,7 +1366,7 @@ int unit_can_move(struct block_list *bl) {
 			)
 			return 0;
 
-		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING && !(sc->opt1 == OPT1_CRYSTALIZE && bl->type == BL_MOB))
+		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING)
 			return 0;
 
 		if ((sc->option & OPTION_HIDE) && (!sd || pc_checkskill(sd, RG_TUNNELDRIVE) <= 0))
@@ -1498,6 +1498,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	ud = unit_bl2ud(src);
 
 	if(ud == NULL)
+		return 0;
+
+	if (ud && ud->state.blockedskill)
 		return 0;
 
 	sc = status_get_sc(src);
@@ -1758,10 +1761,12 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		case SA_SPELLBREAKER:
 			combo = 1;
 		break;
+#ifndef RENEWAL_CAST
 		case ST_CHASEWALK:
 			if (sc && sc->data[SC_CHASEWALK])
 				casttime = -1;
 		break;
+#endif
 		case TK_RUN:
 			if (sc && sc->data[SC_RUN])
 				casttime = -1;
@@ -1899,7 +1904,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	} else
 		skill_castend_id(ud->skilltimer,tick,src->id,0);
 
-	if( sd )
+	if( sd && battle_config.prevent_logout_trigger&PLT_SKILL )
 		sd->canlog_tick = gettick();
 
 	return 1;
@@ -1955,6 +1960,9 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	ud = unit_bl2ud(src);
 
 	if(ud == NULL)
+		return 0;
+
+	if (ud && ud->state.blockedskill)
 		return 0;
 
 	if(ud->skilltimer != INVALID_TIMER) // Normally not needed since clif.c checks for it, but at/char/script commands don't! [Skotlex]
@@ -2081,7 +2089,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 		skill_castend_pos(ud->skilltimer,tick,src->id,0);
 	}
 
-	if( sd )
+	if( sd && battle_config.prevent_logout_trigger&PLT_SKILL )
 		sd->canlog_tick = gettick();
 
 	return 1;
@@ -2618,7 +2626,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 		ud->attacktimer = add_timer(ud->attackabletime,unit_attack_timer,src->id,0);
 	}
 
-	if( sd )
+	if( sd && battle_config.prevent_logout_trigger&PLT_ATTACK )
 		sd->canlog_tick = gettick();
 
 	return 1;

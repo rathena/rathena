@@ -571,6 +571,7 @@ static bool itemdb_read_itemavail(char* str[], int columns, int current) {
 }
 
 static int itemdb_group_free(DBKey key, DBData *data, va_list ap);
+static int itemdb_group_free2(DBKey key, DBData *data);
 
 static bool itemdb_read_group(char* str[], int columns, int current) {
 	int group_id = -1;
@@ -603,7 +604,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 		DBData data;
 
 		if( itemdb_group->remove( itemdb_group, db_ui2key(group_id), &data ) ){
-			itemdb_group_free( db_ui2key(group_id), &data, 0 );
+			itemdb_group_free2(db_ui2key(group_id), &data);
 			ShowNotice( "itemdb_read_group: Item Group '%s' has been cleared.\n", str[0] );
 			return true;
 		}else{
@@ -768,7 +769,7 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 
 	if( delay < 0 )
 	{
-		ShowWarning("itemdb_read_itemdelay: Invalid delay %d for item id %hu.\n", id->delay, nameid);
+		ShowWarning("itemdb_read_itemdelay: Invalid delay %d for item id %hu.\n", delay, nameid);
 		return false;
 	}
 
@@ -1068,7 +1069,7 @@ bool itemdb_parse_roulette_db(void)
 	uint32 count = 0;
 
 	// retrieve all rows from the item database
-	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", db_roulette_table)) {
+	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", roulette_table)) {
 		Sql_ShowDebug(mmysql_handle);
 		return false;
 	}
@@ -1148,7 +1149,7 @@ bool itemdb_parse_roulette_db(void)
 		}
 	}
 
-	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, db_roulette_table);
+	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, roulette_table);
 
 	return true;
 }
@@ -1489,12 +1490,8 @@ static int itemdb_readdb(void){
 static int itemdb_read_sqldb(void) {
 
 	const char* item_db_name[] = {
-#ifdef RENEWAL
-		item_db_re_db,
-#else
-		item_db_db,
-#endif
-		item_db2_db
+		item_table,
+		item2_table
 	};
 	int fi;
 
@@ -1774,7 +1771,19 @@ static int itemdb_final_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
+/** NOTE:
+* In some OSs, like Raspbian, we aren't allowed to pass 0 in va_list.
+* So, itemdb_group_free2 is useful in some cases.
+* NB : We keeping that funciton cause that signature is needed for some iterator..
+*/
 static int itemdb_group_free(DBKey key, DBData *data, va_list ap) {
+	return itemdb_group_free2(key,data);
+}
+
+/** (ARM)
+* Adaptation of itemdb_group_free. This function enables to compile rAthena on Raspbian OS.
+*/
+static inline int itemdb_group_free2(DBKey key, DBData *data) {
 	struct s_item_group_db *group = (struct s_item_group_db *)db_data2ptr(data);
 	uint8 j;
 	if (!group)

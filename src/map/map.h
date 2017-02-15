@@ -211,8 +211,6 @@ enum e_mapid {
 #define CHATROOM_PASS_SIZE (8 + 1)
 //Max allowed chat text length
 #define CHAT_SIZE_MAX (255 + 1)
-// <NPC_NAME_LENGTH> for npc name + 2 for a "::" + <NAME_LENGTH> for label + 1 for EOS
-#define EVENT_NAME_LENGTH ( NPC_NAME_LENGTH + 2 + NAME_LENGTH + 1 )
 
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
@@ -306,6 +304,7 @@ enum e_race2 {
 	RC2_BIOLAB,
 	RC2_MANUK,
 	RC2_SPLENDIDE,
+	RC2_SCARABA,
 	RC2_MAX
 };
 
@@ -854,7 +853,7 @@ void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...);
 void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...);
 void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...);
 void map_foreachiddb(int (*func)(struct block_list* bl, va_list args), ...);
-struct map_session_data * map_nick2sd(const char*);
+struct map_session_data * map_nick2sd(const char* nick, bool allow_partial);
 struct mob_data * map_getmob_boss(int16 m);
 struct mob_data * map_id2boss(int id);
 
@@ -977,21 +976,18 @@ extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
 
-extern char buyingstores_db[32];
-extern char buyingstore_items_db[32];
-extern char item_db_db[32];
-extern char item_db2_db[32];
-extern char item_db_re_db[32];
-extern char mob_db_db[32];
-extern char mob_db_re_db[32];
-extern char mob_db2_db[32];
-extern char mob_skill_db_db[32];
-extern char mob_skill_db_re_db[32];
-extern char mob_skill_db2_db[32];
-extern char vendings_db[32];
-extern char vending_items_db[32];
+extern char buyingstores_table[32];
+extern char buyingstore_items_table[32];
+extern char item_table[32];
+extern char item2_table[32];
+extern char mob_table[32];
+extern char mob2_table[32];
+extern char mob_skill_table[32];
+extern char mob_skill2_table[32];
+extern char vendings_table[32];
+extern char vending_items_table[32];
 extern char market_table[32];
-extern char db_roulette_table[32];
+extern char roulette_table[32];
 
 void do_shutdown(void);
 

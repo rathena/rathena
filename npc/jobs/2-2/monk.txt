@@ -2603,8 +2603,8 @@ monk_test,137,338,1	script	switchreset#monkmonk	79,{
 //============================================================ 
 // Monsters of Mushroom Collecting
 //============================================================ 
-job_monk,0,0,0,0	monster	Thief Mushroom	1182,70,0,0,0
-job_monk,0,0,0,0	monster	Thief Bug Larva	1051,20,0,0,0
+job_monk,0,0	monster	Thief Mushroom	1182,70
+job_monk,0,0	monster	Thief Bug Larva	1051,20
 
 //============================================================ 
 // Old changelog

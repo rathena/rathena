@@ -1264,6 +1264,10 @@ int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 		Sql_ShowDebug(sql_handle);
 		return 3;
 	}
+	
+	// Update party and party members with the new player name
+	if( char_dat.party_id )
+		inter_party_charname_changed(char_dat.party_id, char_id, sd->new_name);
 
 	// Change character's name into guild_db.
 	if( char_dat.guild_id )
