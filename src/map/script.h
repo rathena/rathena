@@ -747,6 +747,8 @@ int conv_num(struct script_state *st,struct script_data *data);
 const char* conv_str(struct script_state *st,struct script_data *data);
 void pop_stack(struct script_state* st, int start, int end);
 int run_script_timer(int tid, unsigned int tick, int id, intptr_t data);
+void script_stop_sleeptimers(int id);
+struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
 void run_script_main(struct script_state *st);
 
 void script_stop_instances(struct script_code *code);
