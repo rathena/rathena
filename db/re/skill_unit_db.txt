@@ -179,7 +179,7 @@
 
 5027,0x106,   ,  1:1:2:2:3, 0,  -1,enemy, 0x2010 // SU_CN_POWDERING
 5028,0x86,    ,  0, 3, 500,enemy, 0x10 // SU_CN_METEOR
-5029,0x107,   ,  0, 0,1000,enemy, 0x10 // SU_SV_ROOTTWIST
+5048,0x107,   ,  2:2:3:3:4, 0, -1, enemy, 0x2010 // SU_NYANGGRASS
 
 8020,0xf5,    ,  3, 0,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST
 8033,0x7e,    ,  0, 0,  -1,all,   0x003	//MH_STEINWAND
