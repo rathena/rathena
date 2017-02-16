@@ -467,7 +467,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 	uint32 totalweight = 0;
 	int i,new_;
 #if PACKETVER_SUPPORTS_SALES
-	struct sale_item_data* sale;
+	struct sale_item_data* sale = NULL;
 #endif
 
 	if( sd == NULL || item_list == NULL || !cash_shop_defined){
