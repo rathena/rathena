@@ -15403,7 +15403,7 @@ void clif_parse_CashShopReqTab(int fd, struct map_session_data *sd) {
 	short tab = RFIFOW(fd, packet_db[sd->packet_ver][RFIFOW(fd,0)].pos[0]);
 	int j;
 
-	if( tab < 0 || tab > CASHSHOP_TAB_SEARCH )
+	if( tab < 0 || tab >= CASHSHOP_TAB_MAX )
 		return;
 
 	WFIFOHEAD(fd, 10 + ( cash_shop_items[tab].count * 6 ) );
@@ -15425,7 +15425,7 @@ void clif_parse_CashShopReqTab(int fd, struct map_session_data *sd) {
 void clif_cashshop_list( int fd ){
 	int tab;
 
-	for( tab = CASHSHOP_TAB_NEW; tab < CASHSHOP_TAB_SEARCH; tab++ ){
+	for( tab = CASHSHOP_TAB_NEW; tab < CASHSHOP_TAB_MAX; tab++ ){
 		int length = 8 + cash_shop_items[tab].count * 6;
 		int i, offset;
 
@@ -15448,6 +15448,9 @@ void clif_cashshop_list( int fd ){
 void clif_parse_cashshop_list_request( int fd, struct map_session_data* sd ){
 	if( !sd->status.cashshop_sent ) {
 		clif_cashshop_list( fd );
+#if PACKETVER_SUPPORTS_SALES
+		sale_notify_login(sd);
+#endif
 		sd->status.cashshop_sent = true;
 	}
 }
@@ -18872,6 +18875,261 @@ void clif_hat_effect_single( struct map_session_data* sd, uint16 effectId, bool 
 #endif
 }
 
+
+/// Notify the client that a sale has started
+/// 09b2 <item id>.W <remaining time>.L (ZC_NOTIFY_BARGAIN_SALE_SELLING)
+void clif_sale_start( struct sale_item_data* sale_item, struct block_list* bl, enum send_target target ){
+#if PACKETVER_SUPPORTS_SALES
+	unsigned char buf[8];
+
+	WBUFW(buf, 0) = 0x9b2;
+	WBUFW(buf, 2) = sale_item->nameid;
+	WBUFL(buf, 4) = (uint32)(sale_item->end - time(NULL)); // time in S
+
+	clif_send(buf, 8, bl, target);
+#endif
+}
+
+/// Notify the clien that a sale has ended
+/// 09b3 <item id>.W (ZC_NOTIFY_BARGAIN_SALE_CLOSE)
+void clif_sale_end( struct sale_item_data* sale_item, struct block_list* bl, enum send_target target ){
+#if PACKETVER_SUPPORTS_SALES
+	unsigned char buf[4];
+
+	WBUFW(buf, 0) = 0x9b3;
+	WBUFW(buf, 2) = sale_item->nameid;
+
+	clif_send(buf, 4, bl, target);
+#endif
+}
+
+/// Update the remaining amount of a sale item.
+/// 09c4 <item id>.W <amount>.L (ZC_ACK_COUNT_BARGAIN_SALE_ITEM)
+void clif_sale_amount( struct sale_item_data* sale_item, struct block_list* bl, enum send_target target ){
+#if PACKETVER_SUPPORTS_SALES
+	unsigned char buf[8];
+
+	WBUFW(buf, 0) = 0x9c4;
+	WBUFW(buf, 2) = sale_item->nameid;
+	WBUFL(buf, 4) = sale_item->amount;
+
+	clif_send(buf, 8, bl, target);
+#endif
+}
+
+/// The client requested a refresh of the current remaining count of a sale item
+/// 09ac <account id>.L <item id>.W (CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO)
+void clif_parse_sale_refresh( int fd, struct map_session_data* sd ){
+#if PACKETVER_SUPPORTS_SALES
+	struct sale_item_data* sale;
+
+	if( RFIFOL(fd, 2) != sd->status.account_id ){
+		return;
+	}
+
+	sale = sale_find_item( RFIFOW(fd, 6), true );
+
+	if( sale == NULL ){
+		return;
+	}
+
+	clif_sale_amount(sale, &sd->bl, SELF);
+#endif
+}
+
+/// Opens the sale administration window on the client
+/// 09b5 (ZC_OPEN_BARGAIN_SALE_TOOL)
+void clif_sale_open( struct map_session_data* sd ){
+#if PACKETVER_SUPPORTS_SALES
+	int fd = sd->fd;
+
+	// TODO: do we want state tracking?
+
+	WFIFOHEAD(fd, 2);
+	WFIFOW(fd, 0) = 0x9b5;
+	WFIFOSET(fd, 2);
+#endif
+}
+
+/// Client request to open the sale administration window.
+/// This is sent by /limitedsale
+/// 09b4 <account id>.L (CZ_OPEN_BARGAIN_SALE_TOOL)
+void clif_parse_sale_open( int fd, struct map_session_data* sd ){
+#if PACKETVER_SUPPORTS_SALES
+	nullpo_retv(sd);
+
+	if( RFIFOL(fd, 2) != sd->status.account_id ){
+		return;
+	}
+
+	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
+		return;
+	}
+
+	clif_sale_open(sd);
+#endif
+}
+
+/// Closes the sale administration window on the client.
+/// 09bd (ZC_CLOSE_BARGAIN_SALE_TOOL)
+void clif_sale_close(struct map_session_data* sd) {
+#if PACKETVER_SUPPORTS_SALES
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, 2);
+	WFIFOW(fd, 0) = 0x9bd;
+	WFIFOSET(fd, 2);
+#endif
+}
+
+/// Client request to close the sale administration window.
+/// 09bc (CZ_CLOSE_BARGAIN_SALE_TOOL)
+void clif_parse_sale_close(int fd, struct map_session_data* sd) {
+#if PACKETVER_SUPPORTS_SALES
+	nullpo_retv(sd);
+
+	if( RFIFOL(fd, 2) != sd->status.account_id ){
+		return;
+	}
+
+	// TODO: do we want state tracking?
+
+	clif_sale_close(sd);
+#endif
+}
+
+/// Reply to a item search request for item sale administration.
+/// 09ad <result>.W <item id>.W <price>.L (ZC_ACK_CASH_BARGAIN_SALE_ITEM_INFO)
+void clif_sale_search_reply( struct map_session_data* sd, struct cash_item_data* item ){
+#if PACKETVER_SUPPORTS_SALES
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, 10);
+	WFIFOW(fd, 0) = 0x9ad;
+	if( item != NULL ){
+		WFIFOW(fd, 2) = 0;
+		WFIFOW(fd, 4) = item->nameid;
+		WFIFOL(fd, 6) = item->price;
+	}else{
+		WFIFOW(fd, 2) = 1;
+		WFIFOW(fd, 4) = 0;
+		WFIFOL(fd, 6) = 0;
+	}
+	WFIFOSET(fd, 10);
+#endif
+}
+
+/// Search request for an item sale administration.
+/// 09ac <length>.W <account id>.L <item name>.?B (CZ_REQ_CASH_BARGAIN_SALE_ITEM_INFO)
+void clif_parse_sale_search( int fd, struct map_session_data* sd ){
+#if PACKETVER_SUPPORTS_SALES
+	char item_name[ITEM_NAME_LENGTH];
+	struct item_data *id = NULL;
+
+	nullpo_retv(sd);
+
+	if( RFIFOL(fd, 4) != sd->status.account_id ){
+		return;
+	}
+
+	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
+		return;
+	}
+
+	safestrncpy( item_name, RFIFOCP(fd, 8), min(RFIFOW(fd, 2) - 7, ITEM_NAME_LENGTH) );
+
+	id = itemdb_searchname(item_name);
+
+	if( id ){
+		int i;
+
+		for( i = 0; i < cash_shop_items[CASHSHOP_TAB_SALE].count; i++ ){
+			if( cash_shop_items[CASHSHOP_TAB_SALE].item[i]->nameid == id->nameid ){
+				clif_sale_search_reply( sd, cash_shop_items[CASHSHOP_TAB_SALE].item[i] );
+				return;
+			}
+		}
+	}
+
+	// not found
+	clif_sale_search_reply( sd, NULL );
+#endif
+}
+
+/// Reply if an item was successfully put on sale or not.
+/// 09af <result>.W (ZC_ACK_APPLY_BARGAIN_SALE_ITEM)
+void clif_sale_add_reply( struct map_session_data* sd, enum e_sale_add_result result ){
+#if PACKETVER_SUPPORTS_SALES
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, 4);
+	WFIFOW(fd, 0) = 0x9af;
+	WFIFOW(fd, 2) = (uint16)result;
+	WFIFOSET(fd, 4);
+#endif
+}
+
+/// A client request to put an item on sale.
+/// 09ae <account id>.L <item id>.W <amount>.L <start time>.L <hours on sale>.B (CZ_REQ_APPLY_BARGAIN_SALE_ITEM)
+void clif_parse_sale_add( int fd, struct map_session_data* sd ){
+#if PACKETVER_SUPPORTS_SALES
+	int32 count;
+	int16 nameid;
+	int startTime;
+	int endTime;
+	uint8 sellingHours;
+
+	nullpo_retv(sd);
+
+	if( RFIFOL(fd, 2) != sd->status.account_id ){
+		return;
+	}
+
+	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
+		return;
+	}
+
+	nameid = RFIFOW(fd, 6);
+	count = RFIFOL(fd, 8);
+	startTime = RFIFOL(fd, 12);
+	sellingHours = RFIFOB(fd, 16);
+	endTime = startTime + sellingHours * 60 * 60;
+
+	clif_sale_add_reply( sd, sale_add_item(nameid,count,startTime,endTime) );
+#endif
+}
+
+/// Reply to an item removal from sale.
+/// 09b1 <result>.W (ZC_ACK_REMOVE_BARGAIN_SALE_ITEM)
+void clif_sale_remove_reply( struct map_session_data* sd, bool failed ){
+#if PACKETVER_SUPPORTS_SALES
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, 4);
+	WFIFOW(fd, 0) = 0x9b1;
+	WFIFOW(fd, 2) = failed;
+	WFIFOSET(fd, 4);
+#endif
+}
+
+/// Request to remove an item from sale.
+/// 09b0 <account id>.L <item id>.W (CZ_REQ_REMOVE_BARGAIN_SALE_ITEM)
+void clif_parse_sale_remove( int fd, struct map_session_data* sd ){
+#if PACKETVER_SUPPORTS_SALES
+	nullpo_retv(sd);
+
+	if( RFIFOL(fd, 2) != sd->status.account_id ){
+		return;
+	}
+
+	if( !pc_has_permission( sd, PC_PERM_CASHSHOP_SALE ) ){
+		return;
+	}
+
+	clif_sale_remove_reply(sd, !sale_remove_item(RFIFOW(fd, 6)));
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
@@ -19258,10 +19516,10 @@ void packetdb_readdb(bool reload)
 	//#0x0980
 		7,  0,  0, 29, 28,  0,  0,  0,  6,  2, -1,  0,  0, -1, -1,  0,
 		31, 0,  0,  0,  0,  0,  0, -1,  8, 11,  9,  8,  0,  0,  0, 22,
-		0,  0,  0,  0,  0,  0, 12, 10, 14, 10, 14,  6,  0,  0,  0,  0,
-		0,  0,  0,  0,  0,  0,  6,  4,  6,  4,  0,  0,  0,  0,  0,  0,
+		0,  0,  0,  0,  0,  0, 12, 10, 14, 10, 14,  6, -1,  8, 17,  4,
+		8,  4,  8,  4,  6,  0,  6,  4,  6,  4,  0,  0,  6,  0,  0,  0,
 	//#0x09C0
-		0,  0,  0,  0,  0,  0,  0,  0,  0,  0, 23,  17,  0,  0,102,  0,
+		0,  0,  0,  8,  8,  0,  0,  0,  0,  0, 23,  17,  0,  0,102,  0,
 		0,  0,  0,  0,  2,  0, -1, -1,  2,  0,  0,  -1,  -1,  -1,  0,  7,
 		0,  0,  0,  0,  0,  18,  22,  3, 11,  0, 11, -1,  0,  3, 11,  0,
 		0, 11, 12, 11,  0,  0,  0,  75,  -1,143,  0,  0,  0,  -1,  -1,  -1,
@@ -19517,6 +19775,13 @@ void packetdb_readdb(bool reload)
 		{ clif_parse_SelectCart, "selectcart" },
 		// Clan System
 		{ clif_parse_clan_chat, "clanchat" },
+		// Sale
+		{ clif_parse_sale_search, "salesearch" },
+		{ clif_parse_sale_add, "saleadd" },
+		{ clif_parse_sale_remove, "saleremove" },
+		{ clif_parse_sale_open, "saleopen" },
+		{ clif_parse_sale_close, "saleclose" },
+		{ clif_parse_sale_refresh, "salerefresh" },
 		{NULL,NULL}
 	};
 	struct {
