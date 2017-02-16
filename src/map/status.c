@@ -10841,8 +10841,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 10; // BATK%, MATK%
 			break;
 		case SC_FRESHSHRIMP: {
-				int min, max;
+				int min = 0, max = 0;
 
+#ifdef RENEWAL
 				min = max = status_base_matk(src, status, status_get_lv(src));
 				if (status->rhw.matk > 0) {
 					int wMatk, variance;
@@ -10852,6 +10853,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					min += wMatk - variance;
 					max += wMatk + variance;
 				}
+#endif
 
 				if (sd && sd->right_weapon.overrefine > 0) {
 					min++;
