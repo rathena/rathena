@@ -2967,10 +2967,6 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 
 	// Blown-specific handling
 	switch( skill_id ) {
-		case SC_FEINTBOMB:
-			// Don't stop the caster from backsliding if special_state.no_knockback is active
-			skill_blown(dsrc, target, blewcount, dir, BLOWN_IGNORE_NO_KNOCKBACK);
-			break;
 		case LG_OVERBRAND_BRANDISH:
 			// Give knockback damage bonus only hits the wall. (bugreport:9096)
 			if (skill_blown(dsrc,target,blewcount,dir,BLOWN_NO_KNOCKBACK_MAP|BLOWN_MD_KNOCKBACK_IMMUNE|BLOWN_TARGET_NO_KNOCKBACK|BLOWN_TARGET_BASILICA) < blewcount)
@@ -11995,7 +11991,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 	case SC_FEINTBOMB:
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0); // Set bomb on current Position
-		skill_blown(src,src,skill_get_blewcount(skill_id, skill_lv),unit_getdir(src),BLOWN_NONE);
+		skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_IGNORE_NO_KNOCKBACK); // Don't stop the caster from backsliding if special_state.no_knockback is active
 		clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time2(skill_id,skill_lv)));
 		break;
 
