@@ -564,7 +564,7 @@ CREATE TABLE IF NOT EXISTS `homunculus` (
   `prev_class` mediumint(9) NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
   `level` smallint(4) NOT NULL default '0',
-  `exp` int(12) NOT NULL default '0',
+  `exp` bigint(20) unsigned NOT NULL default '0',
   `intimacy` int(12) NOT NULL default '0',
   `hunger` smallint(4) NOT NULL default '0',
   `str` smallint(4) unsigned NOT NULL default '0',
