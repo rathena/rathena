@@ -5725,8 +5725,7 @@ ACMD_FUNC(useskill)
 		return -1;
 	}
 
-	if (SKILL_CHK_HOMUN(skill_id)
-		&& sd->hd && hom_is_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
+	if (SKILL_CHK_HOMUN(skill_id) && hom_is_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
 		bl = &sd->hd->bl;
 	else
 		bl = &sd->bl;
@@ -9203,7 +9202,7 @@ ACMD_FUNC(set) {
 				break;
 		}
 
-		if( value == NULL || value == '\0' ){// empty string
+		if( value == NULL || *value == '\0' ){// empty string
 			sprintf(atcmd_output,msg_txt(sd,1375),reg); // %s is empty
 		}else{
 			sprintf(atcmd_output,msg_txt(sd,1374),reg,value); // %s value is now :%s
