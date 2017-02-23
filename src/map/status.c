@@ -3331,9 +3331,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	memset(&sd->special_state,0,sizeof(sd->special_state));
 
-	// Magic Stone requirement avoidance for VIP.
-	if (pc_isvip(sd) && battle_config.vip_gemstone)
-		sd->special_state.no_gemstone = 2;
+	if (pc_isvip(sd)) // Magic Stone requirement avoidance for VIP.
+		sd->special_state.no_gemstone = battle_config.vip_gemstone;
 
 	if (!sd->state.permanent_speed) {
 		memset(&base_status->max_hp, 0, sizeof(struct status_data)-(sizeof(base_status->hp)+sizeof(base_status->sp)));
