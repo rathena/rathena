@@ -12,6 +12,7 @@ enum {
 	PS_ADDMEMBER = 0x08, //Specify new party member (index specifies which party member)
 	PS_DELMEMBER = 0x10, //Specify member that left (index specifies which party member)
 	PS_BREAK = 0x20, //Specify that this party must be deleted.
+	PS_DELLEADER = 0x40, //Specify that member that left is also the leader of the party
 };
 
 struct party;
