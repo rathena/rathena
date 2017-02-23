@@ -3705,7 +3705,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 #endif
 		case KN_CHARGEATK: { // +100% every 3 cells of distance but hard-limited to 500%
-				unsigned int k = (wd.miscflag-1)/3;
+				int k = (wd.miscflag-1)/3;
 				if (k < 0)
 					k = 0;
 				else if (k > 4)

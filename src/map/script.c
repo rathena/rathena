@@ -10179,7 +10179,8 @@ BUILDIN_FUNC(killmonsterall)
 BUILDIN_FUNC(clone)
 {
 	TBL_PC *sd, *msd=NULL;
-	uint32 char_id, master_id = 0, x, y, flag = 0, m;
+	uint32 char_id, master_id = 0, x, y, flag = 0;
+	int16 m;
 	enum e_mode mode = 0;
 
 	unsigned int duration = 0;

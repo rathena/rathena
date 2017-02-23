@@ -1949,7 +1949,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			if (sd->def_set_race[tstatus->race].rate)
 				status_change_start(src,bl, SC_DEFSET, sd->def_set_race[tstatus->race].rate, sd->def_set_race[tstatus->race].value,
 					0, 0, 0, sd->def_set_race[tstatus->race].tick, SCSTART_NOTICKDEF);
-			if (sd->def_set_race[tstatus->race].rate)
+			if (sd->mdef_set_race[tstatus->race].rate)
 				status_change_start(src,bl, SC_MDEFSET, sd->mdef_set_race[tstatus->race].rate, sd->mdef_set_race[tstatus->race].value,
 					0, 0, 0, sd->mdef_set_race[tstatus->race].tick, SCSTART_NOTICKDEF);
 			if (sd->norecover_state_race[tstatus->race].rate)
@@ -19460,7 +19460,8 @@ int skill_magicdecoy(struct map_session_data *sd, unsigned short nameid) {
 	pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME);
 	x = sd->sc.comet_x;
 	y = sd->sc.comet_y;
-	sd->sc.comet_x = sd->sc.comet_y = 0;
+	sd->sc.comet_x = 0;
+	sd->sc.comet_y = 0;
 	sd->menuskill_val = 0;
 
 	// Item picked decides the mob class

@@ -1676,7 +1676,7 @@ void clif_homskillup(struct map_session_data *sd, uint16 skill_id)
 	short idx = -1;
 	nullpo_retv(sd);
 
-	if ((idx = hom_skill_get_index(skill_id) == -1))
+	if ((idx = hom_skill_get_index(skill_id)) == -1)
 		return;
 
 	fd = sd->fd;
