@@ -2088,7 +2088,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (flag == 1 && sc->data[SC_CURSEDCIRCLE_TARGET] && skill_id == MO_ABSORBSPIRITS) // Absorb Spirits fails to go through
 			return false;
 
-		if (skill_id != RK_REFRESH && sc->opt1 && sc->opt1 != OPT1_BURNING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
+		if (skill_id != RK_REFRESH && skill_id != SU_GROOMING && sc->opt1 && sc->opt1 != OPT1_BURNING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
 				return false;
 			if (!(skill_get_inf(skill_id)&INF_GROUND_SKILL)) 
@@ -6221,7 +6221,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 	if(sc->data[SC_HEAT_BARREL])
 		flee -= sc->data[SC_HEAT_BARREL]->val4;
 	if (sc->data[SC_GROOMING])
-		flee += 100;
+		flee += sc->data[SC_GROOMING]->val2;
 
 	return (short)cap_value(flee,1,SHRT_MAX);
 }
@@ -10874,9 +10874,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 							val3 += val3 * 20 / 100;
 					}
 					if (pc_checkskill(sd, SU_SPIRITOFSEA))
-						val3 *= 2;
+						val3 *= 2; // Doubles HP
 				}
-				tick_time = 10000 - ((val1 - 1) * 1000);
+				tick_time = tick - ((val1 - 1) * 1000);
 				val4 = tick / tick_time;
 			}
 			break;
@@ -10887,11 +10887,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_HISS:
 			val2 = 50; // Perfect Dodge
-			sc_start(src, bl, SC_DORAM_WALKSPEED, 100, 30, skill_get_time2(SU_HISS, val1)); //! TODO: What's the speed bonus?
+			sc_start(src, bl, SC_DORAM_WALKSPEED, 100, 50, skill_get_time2(SU_HISS, val1));
+			break;
+		case SC_GROOMING:
+			val2 = 100; // Flee
 			break;
 		case SC_CHATTERING:
 			val2 = 100; // eATK, eMATK
-			sc_start(src, bl, SC_DORAM_WALKSPEED, 100, 30, skill_get_time2(SU_CHATTERING, val1)); //! TODO: What's the speed bonus?
+			sc_start(src, bl, SC_DORAM_WALKSPEED, 100, 50, skill_get_time2(SU_CHATTERING, val1));
 			break;
 		case SC_SWORDCLAN:
 		case SC_ARCWANDCLAN:
