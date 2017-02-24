@@ -954,7 +954,7 @@ This special label triggers when a player kills another player. The variable
 
 OnNPCKillEvent:
 
-This special label triggers when a player kills a monster. The variable
+This special label triggers when a player kills a monster without label. The variable
 'killedrid' is set to the Class (mob ID) of the monster killed.
 
 OnPCLoadMapEvent:
@@ -8484,7 +8484,7 @@ Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410)
 Map Mark Color, when used, creates a mark in the user's mini map on the position of the NPC,
 the available color values are:
 
-0 - No Marker
+0 - No Marker (default)
 1 - Yellow Marker
 2 - Green Marker
 3 - Purple Marker
