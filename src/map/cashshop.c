@@ -565,7 +565,9 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 	for( i = 0; i < n; ++i ){
 		unsigned short nameid = *( item_list + i * 5 );
 		uint32 quantity = *( item_list + i * 5 + 2 );
+#if PACKETVER_SUPPORTS_SALES
 		uint16 tab = *(item_list + i * 5 + 4);
+#endif
 		struct item_data *id = itemdb_search(nameid);
 
 		if (!id)
