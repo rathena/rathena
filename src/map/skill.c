@@ -2695,7 +2695,7 @@ int skill_is_combo(uint16 skill_id) {
 /*
  * Combo handler, start stop combo status
  */
-void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf){
+void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf){
 	TBL_PC *sd = BL_CAST(BL_PC, bl);
 	switch (skill_id) {
 		case MH_MIDNIGHT_FRENZY:
