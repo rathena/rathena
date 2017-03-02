@@ -19095,7 +19095,7 @@ void clif_parse_sale_add( int fd, struct map_session_data* sd ){
 	startTime = RFIFOL(fd, 12);
 #if PACKETVER >= 20150520
 	if( RFIFOW(fd,0) == 0xa3d )
-		sellingHours = RFIFOB(fd, 16);
+		sellingHours = RFIFOW(fd, 16);
 	else
 #endif
 		sellingHours = RFIFOB(fd, 16);
