@@ -12240,11 +12240,12 @@ OnInit:
 	end;
 
 OnTouch_:
-	set geffenia_warp,rand(1,4);
-	if (geffenia_warp == 1) warp "gefenia01",58,169;
-	else if (geffenia_warp == 2) warp "gefenia02",116,115;
-	else if (geffenia_warp == 3) warp "gefenia03",130,206;
-	else if (geffenia_warp == 4) warp "gefenia04",133,88;
+	.@geffenia_warp = rand(1,4);
+	if (.@geffenia_warp == 1) warp "gefenia01",58,169;
+	else if (.@geffenia_warp == 2) warp "gefenia02",116,115;
+	else if (.@geffenia_warp == 3) warp "gefenia03",130,206;
+	else if (.@geffenia_warp == 4) warp "gefenia04",133,88;
+	// Unreachable, but original code is like this [Lemongrass]
 	else warp "geffen",116,115;
 	end;
 
