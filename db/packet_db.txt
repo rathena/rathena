@@ -2546,6 +2546,9 @@ packet_keys: 0x62C86D09,0x75944F17,0x112C133D // [YomRawr]
 0x09FB,-1,dull,0	// CZ_PET_EVOLUTION
 0x09FC,6		// ZC_PET_EVOLUTION_RESULT
 
+//2015-05-20aRagexe
+0x0A3D,18,saleadd,2:6:8:12:16
+
 //2015-09-16Ragexe
 packet_ver: 53
 packet_keys: 0x17F83A19,0x116944F4,0x1CC541E9 // [Napster]
