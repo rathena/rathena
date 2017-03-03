@@ -4151,7 +4151,7 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 
 						if (tsc && tsc->data[SC_SV_ROOTTWIST]) {
 							skill_attack(skl->type, src, src, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
-							skill_addtimerskill(src, tick + 1000, target->id, 0, 0, skl->skill_id, skl->skill_lv, 0, skl->flag);
+							skill_addtimerskill(target, tick + 1000, target->id, 0, 0, skl->skill_id, skl->skill_lv, skl->type, skl->flag|SD_ANIMATION);
 						}
 					}
 					break;
@@ -6684,7 +6684,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		if (sd && pc_checkskill(sd, SU_SPIRITOFLAND))
 			sc_start(src, src, SC_DORAM_MATK, 100, sd->status.base_level, skill_get_time(SU_SPIRITOFLAND, 1));
- 		skill_addtimerskill(src, tick + 100, bl->id, 0, 0, SU_SV_ROOTTWIST_ATK, skill_lv, BF_WEAPON, flag);
+ 		skill_addtimerskill(bl, tick + 100, bl->id, 0, 0, SU_SV_ROOTTWIST_ATK, skill_lv, skill_get_type(SU_SV_ROOTTWIST_ATK), flag|SD_ANIMATION);
 		break;
 
 	case KN_AUTOCOUNTER:
@@ -7984,7 +7984,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case TK_HIGHJUMP:
-	case SU_LOPE:
 		{
 			int x,y, dir = unit_getdir(src);
 
@@ -8003,7 +8002,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				y = src->y + diry[dir]*skill_lv*2;
 			}
 
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			clif_skill_nodamage(src,bl,TK_HIGHJUMP,skill_lv,1);
 			if(!map_count_oncell(src->m,x,y,BL_PC|BL_NPC|BL_MOB,0) && map_getcell(src->m,x,y,CELL_CHKREACH) && unit_movepos(src, x, y, 1, 0))
 				clif_blown(src);
 		}
@@ -12268,6 +12267,27 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		if (skill_get_unit_id(NC_MAGMA_ERUPTION,0)) {
 			// 2nd, AoE 'eruption' unit
 			skill_addtimerskill(src,gettick()+500,0,x,y,skill_id,skill_lv,BF_MISC,flag);
+		}
+		break;
+	case SU_LOPE:
+		{
+			uint8 dir = map_calc_dir(src, x, y);
+
+			// Fails on noteleport maps, except for GvG and BG maps
+			if (map[src->m].flag.noteleport && !(map[src->m].flag.battleground || map_flag_gvg2(src->m))) {
+				x = src->x;
+				y = src->y;
+			} else if (dir%2) { // Diagonal
+				x += dirx[dir] * (skill_lv * 4) / 3;
+				y += diry[dir] * (skill_lv * 4) / 3;
+			} else {
+				x += dirx[dir] * skill_lv * 2;
+				y += diry[dir] * skill_lv * 2;
+			}
+
+			clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+			if (!map_count_oncell(src->m, x, y, BL_PC|BL_NPC|BL_MOB, 0) && map_getcell(src->m, x, y, CELL_CHKREACH) && unit_movepos(src, x, y, 1, 0))
+				clif_blown(src);
 		}
 		break;
 
