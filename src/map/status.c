@@ -6669,6 +6669,8 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			val = max( val, 25 );
 		if (sc->data[SC_ARCLOUSEDASH])
 			val = max(val, sc->data[SC_ARCLOUSEDASH]->val3);
+		if( sc->data[SC_DORAM_WALKSPEED] )
+			val = max(val, sc->data[SC_DORAM_WALKSPEED]->val1);
 
 		// !FIXME: official items use a single bonus for this [ultramage]
 		if( sc->data[SC_SPEEDUP0] ) // Temporary item-based speedup
