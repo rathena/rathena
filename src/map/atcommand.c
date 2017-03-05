@@ -5725,8 +5725,7 @@ ACMD_FUNC(useskill)
 		return -1;
 	}
 
-	if (SKILL_CHK_HOMUN(skill_id)
-		&& sd->hd && hom_is_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
+	if (SKILL_CHK_HOMUN(skill_id) && hom_is_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
 		bl = &sd->hd->bl;
 	else
 		bl = &sd->bl;
@@ -5951,11 +5950,11 @@ ACMD_FUNC(autotrade) {
 		sd->state.monster_ignore = 1;
 
 	if( sd->state.vending ){
-		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS ){
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_table, sd->vender_id ) != SQL_SUCCESS ){
 			Sql_ShowDebug( mmysql_handle );
 		}
 	}else if( sd->state.buyingstore ){
-		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstores_db, sd->buyer_id ) != SQL_SUCCESS ){
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstores_table, sd->buyer_id ) != SQL_SUCCESS ){
 			Sql_ShowDebug( mmysql_handle );
 		}
 	}
@@ -6865,10 +6864,11 @@ ACMD_FUNC(trade)
 ACMD_FUNC(setbattleflag)
 {
 	char flag[128], value[128];
+	int reload = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%127s %127s", flag, value) != 2) {
-        	clif_displaymessage(fd, msg_txt(sd,1231)); // Usage: @setbattleflag <flag> <value>
+	if (!message || !*message || sscanf(message, "%127s %127s %11d", flag, value, &reload) != 2) {
+        	clif_displaymessage(fd, msg_txt(sd,1231)); // Usage: @setbattleflag <flag> <value> {<reload>}
         	return -1;
     	}
 
@@ -6879,6 +6879,9 @@ ACMD_FUNC(setbattleflag)
 	}
 
 	clif_displaymessage(fd, msg_txt(sd,1233)); // Set battle_config as requested.
+
+	if (reload)
+		mob_reload();
 
 	return 0;
 }
@@ -9199,7 +9202,7 @@ ACMD_FUNC(set) {
 				break;
 		}
 
-		if( value == NULL || value == '\0' ){// empty string
+		if( value == NULL || *value == '\0' ){// empty string
 			sprintf(atcmd_output,msg_txt(sd,1375),reg); // %s is empty
 		}else{
 			sprintf(atcmd_output,msg_txt(sd,1374),reg,value); // %s value is now :%s

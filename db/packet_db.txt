@@ -2322,7 +2322,6 @@ packet_keys: 0x631C511C,0x111C111C,0x111C111C // [Shakto]
 0x08A4,36,storagepassword,2:4:20
 //New Packets
 //0x097E,12 //ZC_UPDATE_RANKING_POINT
-0x09B4,6,dull,0 //Cash Shop - Special Tab
 0x09CE,102,itemmonster,2
 0x09D4,2,npcshopclosed,0
 //NPC Market
@@ -2336,6 +2335,19 @@ packet_keys: 0x631C511C,0x111C111C,0x111C111C // [Shakto]
 0x098A,-1
 0x098D,-1,clanchat,2:4
 0x098E,-1
+// Sale
+0x09AC,-1,salesearch,2:4:8
+0x09AD,8
+0x09AE,17,saleadd,2:6:8:12:16
+0x09AF,4
+0x09B0,8,saleremove,2:6
+0x09B1,4
+0x09B2,8
+0x09B3,4
+0x09B4,6,saleopen,2
+0x09BC,6,saleclose,2
+0x09C3,8,salerefresh,2:6
+0x09C4,8
 
 // New Packet
 0x097A,-1		// ZC_ALL_QUEST_LIST2
@@ -2382,6 +2394,7 @@ packet_keys: 0x2DFF467C,0x444B37EE,0x2C1B634F // [YomRawr]
 0x0A00,269		// ZC_SHORTCUT_KEY_LIST_V3
 0x0A01,3,hotkeyrowshift,2	// CZ_SHORTCUTKEYBAR_ROTATE
 0x0A02,4			// ZC_DRESSROOM_OPEN
+0x0A0E,14		// ZC_BATTLEFIELD_NOTIFY_HP2
 0x09F7,75		// ZC_PROPERTY_HOMUN_2
 0x09E5,18		// ZC_DELETEITEM_FROM_MCSTORE2
 0x09E6,22		// ZC_UPDATE_ITEM_FROM_BUYING_STORE2
@@ -2532,6 +2545,9 @@ packet_keys: 0x62C86D09,0x75944F17,0x112C133D // [YomRawr]
 // Pet Evolution System
 0x09FB,-1,dull,0	// CZ_PET_EVOLUTION
 0x09FC,6		// ZC_PET_EVOLUTION_RESULT
+
+//2015-05-20aRagexe
+0x0A3D,18,saleadd,2:6:8:12:16
 
 //2015-09-16Ragexe
 packet_ver: 53

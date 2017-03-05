@@ -182,7 +182,7 @@ int channel_mjoin(struct map_session_data *sd) {
  *  -1 : invalid guild or no channel for guild
  */
 int channel_ajoin(struct guild *g){
-	int i;
+	int i, j;
 	struct map_session_data *pl_sd;
 
 	if(!g || !g->channel) return -1;
@@ -190,8 +190,8 @@ int channel_ajoin(struct guild *g){
 		struct guild *ag; //allied guld
 		struct guild_alliance *ga = &g->alliance[i]; //guild alliance
 		if(ga->guild_id && (ga->opposition==0) && (ag=guild_search(ga->guild_id))){
-			for (i = 0; i < ag->max_member; i++){ //load all guildmember
-				pl_sd = ag->member[i].sd;
+			for (j = 0; j < ag->max_member; j++){ //load all guildmember
+				pl_sd = ag->member[j].sd;
 				if(channel_haspc(ag->channel,pl_sd)==1)  //only if they are in their own guildchan
 					channel_join(g->channel,pl_sd);
 			}

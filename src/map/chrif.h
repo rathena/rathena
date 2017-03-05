@@ -17,6 +17,7 @@ enum e_chrif_save_opt {
 	CSAVE_AUTOTRADE = 0x04,		/// Character entering autotrade state
 	CSAVE_INVENTORY = 0x08,		/// Inventory data changed
 	CSAVE_CART = 0x10,				/// Cart data changed
+	CSAVE_QUITTING = CSAVE_QUIT|CSAVE_CHANGE_MAPSERV|CSAVE_AUTOTRADE,
 };
 
 struct auth_node {

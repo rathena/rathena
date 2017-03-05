@@ -564,7 +564,7 @@ CREATE TABLE IF NOT EXISTS `homunculus` (
   `prev_class` mediumint(9) NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
   `level` smallint(4) NOT NULL default '0',
-  `exp` int(12) NOT NULL default '0',
+  `exp` bigint(20) unsigned NOT NULL default '0',
   `intimacy` int(12) NOT NULL default '0',
   `hunger` smallint(4) NOT NULL default '0',
   `str` smallint(4) unsigned NOT NULL default '0',
@@ -811,6 +811,18 @@ CREATE TABLE IF NOT EXISTS `mercenary_owner` (
   `sword_calls` int(11) NOT NULL default '0',
   `sword_faith` int(11) NOT NULL default '0',
   PRIMARY KEY  (`char_id`)
+) ENGINE=MyISAM;
+
+-- ----------------------------
+-- Table structure for `sales`
+-- ----------------------------
+
+CREATE TABLE IF NOT EXISTS `sales` (
+  `nameid` smallint(5) unsigned NOT NULL,
+  `start` datetime NOT NULL,
+  `end` datetime NOT NULL,
+  `amount` int(11) NOT NULL,
+  PRIMARY KEY (`nameid`)
 ) ENGINE=MyISAM;
 
 --

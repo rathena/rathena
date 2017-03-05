@@ -493,7 +493,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 				}
 				if (tsc->data[SC_THORNSTRAP] && battle_getcurrentskill(src) != GN_CARTCANNON)
 					status_change_end(target, SC_THORNSTRAP, INVALID_TIMER);
-				if (tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB)
+				if (tsc->data[SC_CRYSTALIZE])
 					status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
 				if (tsc->data[SC_EARTH_INSIGNIA])
 					ratio += 50;
@@ -507,8 +507,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					ratio += tsc->data[SC_VENOMIMPRESS]->val2;
 				break;
 			case ELE_WIND:
-				if (tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB)
-					ratio += 50;
 				if (tsc->data[SC_WATER_INSIGNIA])
 					ratio += 50;
 				break;
@@ -3627,21 +3625,23 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case TK_DOWNKICK:
 		case TK_STORMKICK:
-			skillratio += 60 + 20 * skill_lv + 10 * pc_checkskill(sd,TK_RUN); //+Dmg (to Kick skills, %)
+			skillratio += 60 + 20 * skill_lv;
 			break;
 		case TK_TURNKICK:
 		case TK_COUNTER:
-			skillratio += 90 + 30 * skill_lv + 10 * pc_checkskill(sd,TK_RUN);
+			skillratio += 90 + 30 * skill_lv;
 			break;
 		case TK_JUMPKICK:
-			skillratio += -70 + 10 * skill_lv + 10 * pc_checkskill(sd,TK_RUN);
+			//Different damage formulas depending on damage trigger
 			if (sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == skill_id)
-				skillratio += 10 * status_get_lv(src) / 3; //Tumble bonus
-			if (wd.miscflag) {
-				skillratio += 10 * status_get_lv(src) / 3; //Running bonus (TODO: What is the real bonus?)
-				if (sc && sc->data[SC_SPURT]) // Spurt bonus
+				skillratio += -100 + 4 * status_get_lv(src); //Tumble formula [4%*baselevel]
+			else if (wd.miscflag) {
+				skillratio += -100 + 4 * status_get_lv(src); //Running formula [4%*baselevel]
+				if (sc && sc->data[SC_SPURT]) //Spurt formula [8%*baselevel]
 					skillratio *= 2;
 			}
+			else
+				skillratio += -70 + 10 * skill_lv;
 			break;
 		case GS_TRIPLEACTION:
 			skillratio += 50 * skill_lv;
@@ -3707,7 +3707,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 #endif
 		case KN_CHARGEATK: { // +100% every 3 cells of distance but hard-limited to 500%
-				unsigned int k = (wd.miscflag-1)/3;
+				int k = (wd.miscflag-1)/3;
 				if (k < 0)
 					k = 0;
 				else if (k > 4)
@@ -5377,19 +5377,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		case TK_STORMKICK:
 		case TK_TURNKICK:
 		case TK_COUNTER:
-		case TK_JUMPKICK:
-			if(sd && pc_checkskill(sd,TK_RUN)) {
-				uint8 i;
-				uint16 skill = pc_checkskill(sd,TK_RUN);
-
-				switch(skill) {
-					case 1: case 4: case 7: case 10: i = 1; break;
-					case 2: case 5: case 8: i = 2; break;
-					default: i = 0; break;
-				}
-				if(sd->weapontype1 == W_FIST && sd->weapontype2 == W_FIST)
-					ATK_ADD(wd.damage, wd.damage2, 10 * skill - i);
-			}
+			if(sd && sd->weapontype1 == W_FIST && sd->weapontype2 == W_FIST)
+				ATK_ADD(wd.damage, wd.damage2, 10 * pc_checkskill(sd, TK_RUN));
 			break;
 		case SR_TIGERCANNON:
 			// (Tiger Cannon skill level x 240) + (Target Base Level x 40)
@@ -8320,18 +8309,18 @@ static const struct _battle_data {
 	{ "feature.auction",                    &battle_config.feature_auction,                 0,      0,      2,              },
 	{ "feature.banking",                    &battle_config.feature_banking,                 1,      0,      1,              },
 #ifdef VIP_ENABLE
-	{ "vip_storage_increase",               &battle_config.vip_storage_increase,            0,      0,      MAX_STORAGE-MIN_STORAGE, },
+	{ "vip_storage_increase",               &battle_config.vip_storage_increase,          300,      0,      MAX_STORAGE-MIN_STORAGE, },
 #else
-	{ "vip_storage_increase",               &battle_config.vip_storage_increase,            0,      0,      MAX_STORAGE, },
+	{ "vip_storage_increase",               &battle_config.vip_storage_increase,          300,      0,      MAX_STORAGE, },
 #endif
-	{ "vip_base_exp_increase",              &battle_config.vip_base_exp_increase,           0,      0,      INT_MAX,        },
-	{ "vip_job_exp_increase",               &battle_config.vip_job_exp_increase,            0,      0,      INT_MAX,        },
-	{ "vip_exp_penalty_base",               &battle_config.vip_exp_penalty_base,            0,      0,      INT_MAX,        },
-	{ "vip_exp_penalty_job",                &battle_config.vip_exp_penalty_job,             0,      0,      INT_MAX,        },
+	{ "vip_base_exp_increase",              &battle_config.vip_base_exp_increase,          50,      0,      INT_MAX,        },
+	{ "vip_job_exp_increase",               &battle_config.vip_job_exp_increase,           50,      0,      INT_MAX,        },
+	{ "vip_exp_penalty_base",               &battle_config.vip_exp_penalty_base,          100,      0,      INT_MAX,        },
+	{ "vip_exp_penalty_job",                &battle_config.vip_exp_penalty_job,           100,      0,      INT_MAX,        },
 	{ "vip_zeny_penalty",                   &battle_config.vip_zeny_penalty,                0,      0,      INT_MAX,        },
-	{ "vip_bm_increase",                    &battle_config.vip_bm_increase,                 0,      0,      INT_MAX,        },
-	{ "vip_drop_increase",                  &battle_config.vip_drop_increase,               0,      0,      INT_MAX,        },
-	{ "vip_gemstone",                       &battle_config.vip_gemstone,                    0,      0,      1,              },
+	{ "vip_bm_increase",                    &battle_config.vip_bm_increase,                 2,      0,      INT_MAX,        },
+	{ "vip_drop_increase",                  &battle_config.vip_drop_increase,              50,      0,      INT_MAX,        },
+	{ "vip_gemstone",                       &battle_config.vip_gemstone,                    2,      0,      2,              },
 	{ "vip_disp_rate",                      &battle_config.vip_disp_rate,                   1,      0,      1,              },
 	{ "mon_trans_disable_in_gvg",           &battle_config.mon_trans_disable_in_gvg,        0,      0,      1,              },
 	{ "homunculus_S_growth_level",          &battle_config.hom_S_growth_level,             99,      0,      MAX_LEVEL,      },

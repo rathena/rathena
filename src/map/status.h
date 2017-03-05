@@ -1834,9 +1834,7 @@ enum sc_opt1 {
 	//Aegis uses OPT1 = 5 to identify undead enemies (which also grants them immunity to the other opt1 changes)
 	OPT1_STONEWAIT = 6, //Petrifying
 	OPT1_BURNING,
-	OPT1_FREEZING,
 	OPT1_IMPRISON,
-	OPT1_CRYSTALIZE,
 };
 
 ///opt2: (HEALTHSTATE_*) Stackable status changes.
