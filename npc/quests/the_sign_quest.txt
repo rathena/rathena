@@ -8811,7 +8811,7 @@ que_sign01,197,195,4	script	Serin#witch	90,{
 				getexp (checkre(3))?20000:200000,0;
 				set $@sign_w1,0;
 				close2;
-				warp "umbala,",132,203;
+				warp "umbala",132,203;
 				end;
 			}
 		}
