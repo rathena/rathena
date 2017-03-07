@@ -346,9 +346,6 @@ int skill_get_range2(struct block_list *bl, uint16 skill_id, uint16 skill_lv, bo
 
 	range = skill_get_range(skill_id, skill_lv);
 
-	if (pc_checkskill((TBL_PC*)bl, SU_SOULATTACK))
-		return range;
-
 	if( range < 0 ) {
 		if( battle_config.use_weapon_skill_range&bl->type )
 			return status_get_range(bl);

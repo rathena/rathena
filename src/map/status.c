@@ -2421,7 +2421,7 @@ unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd
 	float str = sd->base_status.str;
 	int weapon_atk_bonus = 0;
 
-	if (wa.range > 3)
+	if (wa.range > 3 && !pc_checkskill(sd, SU_SOULATTACK))
 		str = sd->base_status.dex;
 	if (sd->bonus.weapon_atk_rate)
 		weapon_atk_bonus = wa.atk * sd->bonus.weapon_atk_rate / 100;
@@ -3881,6 +3881,9 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 		base_status->hit += skill * 2;
 	if (pc_checkskill(sd, SU_POWEROFLIFE) > 0)
 		base_status->hit += 20;
+
+	if ((skill = pc_checkskill(sd, SU_SOULATTACK)) > 0)
+		base_status->rhw.range += skill_get_range2(&sd->bl, SU_SOULATTACK, skill, true);
 
 // ----- FLEE CALCULATION -----
 
