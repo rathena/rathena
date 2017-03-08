@@ -3724,10 +3724,12 @@ static int skill_check_unit_range2 (struct block_list *bl, int x, int y, uint16 
 
 	if (!isNearNPC) { //Doesn't check the NPC range
 		//If the caster is a monster/NPC, only check for players. Otherwise just check characters
-		if (bl->type == BL_PC)
+		if (bl->type&battle_config.skill_nofootset)
 			type = BL_CHAR;
+		else if(bl->type == BL_MOB)
+			type = BL_MOB; //Monsters can never place traps on top of each other regardless of setting
 		else
-			type = BL_PC;
+			return 0; //Don't check
 	} else
 		type = BL_NPC;
 
@@ -11303,8 +11305,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 			if (sd) clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_DUPLICATE_RANGEIN,0);
 			break;
 		}
-		if( src->type&battle_config.skill_nofootset &&
-			skill_get_unit_flag(ud->skill_id)&UF_NOFOOTSET &&
+		if( skill_get_unit_flag(ud->skill_id)&UF_NOFOOTSET &&
 			skill_check_unit_range2(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv,false)
 		  )
 		{
