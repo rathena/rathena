@@ -1388,7 +1388,7 @@
 
 5044,14,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,		SU_SOULATTACK,Soul Attack
 5045,0,6,4,0,0x3,3:4:5:6:-1,5,0,yes,0,0,0,magic,0,0x0,	SU_POWEROFFLOCK,Power of Flock
-5046,9,8,1,-1,0,0,5,1,yes,0,0,0,weapon,0,0x0,	SU_SVG_SPIRIT,Spirit of Savage
+5046,9,8,1,-1,0,1,5,1,yes,0,0,0,weapon,14,0x0,	SU_SVG_SPIRIT,Spirit of Savage
 5047,0,6,4,0,0x3,-1,5,1,yes,0,0,0,magic,0,0x0,		SU_HISS,Hiss
 5048,9,6,2,0,0x1,0,5,1,yes,0,0,1,none,0,0x0,		SU_NYANGGRASS,Nyang Grass
 5049,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,		SU_GROOMING,Grooming
