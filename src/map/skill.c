@@ -4718,7 +4718,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_FIREBREATH:
 	case NPC_ICEBREATH:
 	case NPC_THUNDERBREATH:
-	case SU_SVG_SPIRIT:
 		skill_area_temp[1] = bl->id;
 		if (battle_config.skill_eightpath_algorithm) {
 			//Use official AoE algorithm
@@ -4829,6 +4828,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		if (status_get_lv(src) >= 30 && (rnd() % 100 < (int)(status_get_lv(src) / 30) + 10)) //! TODO: Need activation chance.
 			skill_addtimerskill(src, tick + skill_get_delay(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag);
+		break;
+	case SU_SVG_SPIRIT:
+		skill_area_temp[1] = bl->id;
+		map_foreachinpath(skill_attack_area, src->m, src->x, src->y, bl->x, bl->y,
+			skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), splash_target(src),
+			skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
 		break;
 
 	//Splash attack skills.
