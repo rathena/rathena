@@ -3331,9 +3331,8 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	memset(&sd->special_state,0,sizeof(sd->special_state));
 
-	// Magic Stone requirement avoidance for VIP.
-	if (pc_isvip(sd) && battle_config.vip_gemstone)
-		sd->special_state.no_gemstone = 2;
+	if (pc_isvip(sd)) // Magic Stone requirement avoidance for VIP.
+		sd->special_state.no_gemstone = battle_config.vip_gemstone;
 
 	if (!sd->state.permanent_speed) {
 		memset(&base_status->max_hp, 0, sizeof(struct status_data)-(sizeof(base_status->hp)+sizeof(base_status->sp)));
@@ -4948,11 +4947,13 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 				int variance = 0;
 
 				// Any +MATK you get from skills and cards, including cards in weapon, is added here.
-				if (sd->bonus.ematk > 0)
-					status->matk_min += sd->bonus.ematk;
-				if (sd && pc_checkskill(sd, SU_POWEROFLAND) > 0) {
-					if (pc_checkskill(sd, SU_SV_STEMSPEAR) == 5 && pc_checkskill(sd, SU_CN_POWDERING) == 5 && pc_checkskill(sd, SU_CN_METEOR) == 5 && pc_checkskill(sd, SU_SV_ROOTTWIST) == 5)
-						status->matk_min += status->matk_min * 20 / 100;
+				if (sd) {
+					if (sd->bonus.ematk > 0)
+						status->matk_min += sd->bonus.ematk;
+					if (pc_checkskill(sd, SU_POWEROFLAND) > 0) {
+						if (pc_checkskill(sd, SU_SV_STEMSPEAR) == 5 && pc_checkskill(sd, SU_CN_POWDERING) == 5 && pc_checkskill(sd, SU_CN_METEOR) == 5 && pc_checkskill(sd, SU_SV_ROOTTWIST) == 5)
+							status->matk_min += status->matk_min * 20 / 100;
+					}
 				}
 
 				status->matk_min = status_calc_ematk(bl, sc, status->matk_min);
@@ -11313,19 +11314,23 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_COMBO:
 			switch(sce->val1) {
 			case TK_STORMKICK:
+				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
 				clif_skill_nodamage(bl,bl,TK_READYSTORM,1,1);
 				break;
 			case TK_DOWNKICK:
+				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
 				clif_skill_nodamage(bl,bl,TK_READYDOWN,1,1);
 				break;
 			case TK_TURNKICK:
+				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
 				clif_skill_nodamage(bl,bl,TK_READYTURN,1,1);
 				break;
 			case TK_COUNTER:
+				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
 				clif_skill_nodamage(bl,bl,TK_READYCOUNTER,1,1);
 				break;
-			default: // Rest just toogle inf to enable autotarget
-				skill_combo_toogle_inf(bl,sce->val1,INF_SELF_SKILL);
+			default: // Rest just toggle inf to enable autotarget
+				skill_combo_toggle_inf(bl,sce->val1,INF_SELF_SKILL);
 				break;
 			}
 			break;
@@ -11839,7 +11844,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			break;
 		case SC_COMBO:
-			skill_combo_toogle_inf(bl,sce->val1,0);
+			skill_combo_toggle_inf(bl,sce->val1,0);
 			break;
 		case SC_MARIONETTE:
 		case SC_MARIONETTE2: // Marionette target

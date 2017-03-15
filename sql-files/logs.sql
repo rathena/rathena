@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `mvplog` (
   `kill_char_id` int(11) NOT NULL default '0',
   `monster_id` smallint(6) NOT NULL default '0',
   `prize` smallint(5) unsigned NOT NULL default '0',
-  `mvpexp` mediumint(9) NOT NULL default '0',
+  `mvpexp` bigint(20) unsigned NOT NULL default '0',
   `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`mvp_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
