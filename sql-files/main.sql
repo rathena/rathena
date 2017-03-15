@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `auction` (
 -- Table structure for `db_roulette`
 --
 
-CREATE TABLE `db_roulette` (
+CREATE TABLE IF NOT EXISTS `db_roulette` (
   `index` int(11) NOT NULL default '0',
   `level` smallint(5) unsigned NOT NULL,
   `item_id` smallint(5) unsigned NOT NULL,
