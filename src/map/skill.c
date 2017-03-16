@@ -2328,7 +2328,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 	if (dstsd && !status_isdead(bl) && !(skill_id && skill_get_nk(skill_id)&NK_NO_DAMAGE)) {
 		struct status_change *sc = status_get_sc(src);
 
-		if (sc && sc->data[SC_DORAM_SVSP] && attack_type&(BF_MAGIC|BF_LONG) && rnd()%100 < sc->data[SC_DORAM_SVSP]->val1)
+		if (sc && sc->data[SC_DORAM_SVSP] && attack_type&(BF_MAGIC|BF_LONG))
 			skill_castend_damage_id(src, bl, SU_SV_STEMSPEAR, 5, tick, 0);
 	}
 
@@ -10848,7 +10848,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 			if (skill_id == SU_BUNCHOFSHRIMP && pc_checkskill(sd, SU_SPIRITOFSEA))
 				duration += skill_get_time2(SU_BUNCHOFSHRIMP, skill_lv);
-			clif_skill_nodamage(bl, bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, (skill_id == SU_SHRIMPARTY ? 1 : 0), duration));
+			clif_skill_nodamage(bl, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, duration));
 		} else if (sd) {
 			if (skill_id == SU_SHRIMPARTY)
 				sc_start(src, bl, SC_SHRIMPBLESSING, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
@@ -11757,7 +11757,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 					flag |= 1;
 				}
 				if (sd && pc_checkskill(sd, SU_SPIRITOFLAND))
-					sc_start(src, src, SC_DORAM_SVSP, 100, 25, skill_get_time(SU_SPIRITOFLAND, 1)); //! TODO: What's the cast chance?
+					sc_start(src, src, SC_DORAM_SVSP, 100, 100, skill_get_time(SU_SPIRITOFLAND, 1));
 			}
 			for (i = 1; i <= skill_get_time(skill_id, skill_lv)/skill_get_unit_interval(skill_id); i++) {
 				// Creates a random Cell in the Splash Area

@@ -4272,7 +4272,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 		case SU_SCAROFTAROU:
 			skillratio += -100 + 100 * skill_lv;
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
-				skillratio += (status_get_hp(src) / status_get_max_hp(src)) * 100; //! TODO: What's the exact formula?
+				skillratio += skillratio * (status_get_hp(src) / status_get_max_hp(src));
 			break;
 		case SU_PICKYPECK:
 		case SU_PICKYPECK_DOUBLE_ATK:
@@ -4280,17 +4280,17 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			if (status_get_hp(target) < status_get_max_hp(target) >> 1)
 				skillratio *= 2;
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
-				skillratio += (status_get_hp(src) / status_get_max_hp(src)) * 100; //! TODO: What's the exact formula?
+				skillratio += skillratio * (status_get_hp(src) / status_get_max_hp(src));
 			break;
 		case SU_LUNATICCARROTBEAT:
 			skillratio += 100 + 100 * skill_lv;
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
-				skillratio += (status_get_hp(src) / status_get_max_hp(src)) * 100; //! TODO: What's the exact formula?
+				skillratio += skillratio * (status_get_hp(src) / status_get_max_hp(src));
 			break;
 		case SU_SVG_SPIRIT:
 			skillratio += 150 + 150 * skill_lv;
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
-				skillratio += (status_get_hp(src) / status_get_max_hp(src)) * 100; //! TODO: What's the exact formula?
+				skillratio += skillratio * (status_get_hp(src) / status_get_max_hp(src));
 			break;
 	}
 	return skillratio;

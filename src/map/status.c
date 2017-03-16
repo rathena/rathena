@@ -862,7 +862,7 @@ void initChangeTables(void)
 	set_sc( SU_BUNCHOFSHRIMP		, SC_SHRIMP			, SI_SHRIMP			, SCB_BATK|SCB_MATK );
 	set_sc( SU_FRESHSHRIMP			, SC_FRESHSHRIMP	, SI_FRESHSHRIMP	, SCB_NONE );
 	set_sc( SU_HISS					, SC_HISS			, SI_HISS			, SCB_FLEE2 );
-	set_sc( SU_NYANGGRASS			, SC_NYANGGRASS		, SI_NYANGGRASS		, SCB_DEF2|SCB_MDEF2 );
+	set_sc( SU_NYANGGRASS			, SC_NYANGGRASS		, SI_NYANGGRASS		, SCB_DEF|SCB_MDEF );
 	set_sc( SU_GROOMING				, SC_GROOMING		, SI_GROOMING		, SCB_FLEE );
 	add_sc( SU_PURRING				, SC_GROOMING );
 	add_sc( SU_SHRIMPARTY			, SC_FRESHSHRIMP );
@@ -6277,6 +6277,12 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 	if(sc->data[SC_STEELBODY])
 		return 90;
 #endif
+	if (sc->data[SC_NYANGGRASS]) {
+		if (bl->type == BL_PC)
+			return 0;
+		else
+			return def >>= 1;
+	}
 	if(sc->data[SC_DEFSET])
 		return sc->data[SC_DEFSET]->val1;
 
@@ -6366,12 +6372,6 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 		return 0;
 	if(sc->data[SC_ETERNALCHAOS])
 		return 0;
-	if (sc->data[SC_NYANGGRASS]) {
-		if (bl->type == BL_PC)
-			return 0;
-		else
-			return def2 >>= 1;
-	}
 	if(sc->data[SC_DEFSET])
 		return sc->data[SC_DEFSET]->val1;
 
@@ -6445,6 +6445,12 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 	if(sc->data[SC_STEELBODY])
 		return 90;
 #endif
+	if (sc->data[SC_NYANGGRASS]) {
+		if (bl->type == BL_PC)
+			return 0;
+		else
+			return mdef >>= 1;
+	}
 	if(sc->data[SC_MDEFSET])
 		return sc->data[SC_MDEFSET]->val1;
 
@@ -6495,12 +6501,6 @@ static signed short status_calc_mdef2(struct block_list *bl, struct status_chang
 
 	if(sc->data[SC_BERSERK])
 		return 0;
-	if (sc->data[SC_NYANGGRASS]) {
-		if (bl->type == BL_PC)
-			return 0;
-		else
-			return mdef2 >>= 1;
-	}
 	if(sc->data[SC_SKA])
 		return 90;
 	if(sc->data[SC_MDEFSET])
@@ -10866,22 +10866,20 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				}
 
 				if (max > min)
-					val3 += min + rnd() % (max - min) + 178; // Heal
+					val2 += min + rnd() % (max - min) + 178; // Heal
 				else
-					val3 += min + 178; // Heal
+					val2 += min + 178; // Heal
 
 				if (sd) {
-					if (val2) // Use tick based on level of Fresh Shrimp learned
-						val1 = pc_checkskill(sd, SU_FRESHSHRIMP);
 					if (pc_checkskill(sd, SU_POWEROFSEA)) {
-						val3 += val3 * 10 / 100;
+						val2 += val2 * 10 / 100;
 						if (pc_checkskill(sd, SU_TUNABELLY) == 5 && pc_checkskill(sd, SU_TUNAPARTY) == 5 && pc_checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc_checkskill(sd, SU_FRESHSHRIMP) == 5)
-							val3 += val3 * 20 / 100;
+							val2 += val2 * 20 / 100;
 					}
 					if (pc_checkskill(sd, SU_SPIRITOFSEA))
-						val3 *= 2; // Doubles HP
+						val2 *= 2; // Doubles HP
 				}
-				tick_time = tick - ((val1 - 1) * 1000);
+				tick_time = 10000 - ((val1 - 1) * 1000);
 				val4 = tick / tick_time;
 			}
 			break;
@@ -13337,7 +13335,7 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 		break;
 	case SC_FRESHSHRIMP:
 		if (--(sce->val4) >= 0) {
-			status_heal(bl, sce->val3, 0, 2);
+			status_heal(bl, sce->val2, 0, 3);
 			sc_timer_next((10000 - ((sce->val1 - 1) * 1000)) + tick, status_change_timer, bl->id, data);
 			return 0;
 		}
