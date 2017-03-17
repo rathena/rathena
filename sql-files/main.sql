@@ -287,7 +287,7 @@ CREATE TABLE IF NOT EXISTS `charlog` (
 --
 -- Table structure for table `clan`
 --
-CREATE TABLE `clan` (
+CREATE TABLE IF NOT EXISTS `clan` (
   `clan_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(24) NOT NULL DEFAULT '',
   `master` varchar(24) NOT NULL DEFAULT '',
@@ -307,7 +307,7 @@ INSERT INTO `clan` VALUES ('4', 'Crossbow Clan', 'Shaam Rumi', 'payon', '500');
 -- ----------------------------
 -- Table structure for `clan_alliance`
 -- ----------------------------
-CREATE TABLE `clan_alliance` (
+CREATE TABLE IF NOT EXISTS `clan_alliance` (
   `clan_id` int(11) unsigned NOT NULL DEFAULT '0',
   `opposition` int(11) unsigned NOT NULL DEFAULT '0',
   `alliance_id` int(11) unsigned NOT NULL DEFAULT '0',
