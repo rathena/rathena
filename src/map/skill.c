@@ -4826,7 +4826,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 	case SU_BITE:
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		if (status_get_lv(src) >= 30 && (rnd() % 100 < (int)(status_get_lv(src) / 30) + 10)) //! TODO: Need activation chance.
+		if (status_get_lv(src) > 29 && (rnd() % 100 < (int)((status_get_lv(src) / 30) * 10 + 10)))
 			skill_addtimerskill(src, tick + skill_get_delay(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag);
 		break;
 	case SU_SVG_SPIRIT:
@@ -4916,7 +4916,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				clif_skill_nodamage(NULL, src, AL_HEAL, heal, 1);
 				status_heal(src,heal,0,0);
 			}
-			if (skill_id == SU_SCRATCH && status_get_lv(src) >= 30 && (rnd() % 100 < (int)(status_get_lv(src) / 30) + 10)) //! TODO: Need activation chance.
+			if (skill_id == SU_SCRATCH && status_get_lv(src) > 29 && (rnd() % 100 < (int)((status_get_lv(src) / 30) * 10 + 10)))
 				skill_addtimerskill(src, tick + skill_get_delay(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag);
 		} else {
 			int starget = BL_CHAR|BL_SKILL;
@@ -5961,7 +5961,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				sc_start(src, src, SC_DORAM_WALKSPEED, 100, 50, skill_get_time(SU_SPIRITOFLAND, 1));
 		}
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		if (status_get_lv(src) >= 30 && (rnd() % 100 < (int)(status_get_lv(src) / 30) + 10)) //! TODO: Need activation chance.
+		if (status_get_lv(src) > 29 && (rnd() % 100 < (int)((status_get_lv(src) / 30) * 10 + 10)))
 			skill_addtimerskill(src, tick + skill_get_delay(skill_id, skill_lv), bl->id, 0, 0, skill_id, skill_lv, skill_get_type(skill_id), flag);
 		break;
 
