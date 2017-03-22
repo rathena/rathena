@@ -278,9 +278,13 @@ const char* job_name(int class_) {
 
 		case JOB_KAGEROU:
 		case JOB_OBORO:
-		case JOB_REBELLION:
-		case JOB_SUMMONER:
 			return msg_txt(103 - JOB_KAGEROU+class_);
+
+		case JOB_REBELLION:
+			return msg_txt(106);
+
+		case JOB_SUMMONER:
+			return msg_txt(108);
 
 		default:
 			return msg_txt(109);
