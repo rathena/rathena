@@ -6151,10 +6151,10 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
 
 /*==========================================
  * Displays a message on a 'bl' to all it's nearby clients
- * 008d <PacketLength>.W <GID> L (ZC_NOTIFY_CHAT)
+ * 008d <PacketLength>.W <GID>.L <message>.?B (ZC_NOTIFY_CHAT)
  *------------------------------------------*/
 void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_target target) {
-	char buf[100];
+	char buf[8+CHAT_SIZE_MAX];
 	int len;
 	nullpo_retv(bl);
 
@@ -6173,7 +6173,6 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 	WBUFL(buf,4)=bl->id;
 	safestrncpy(WBUFCP(buf,8),message,len);
 	clif_send((unsigned char *) buf,WBUFW(buf,2),bl,target);
-
 }
 
 
