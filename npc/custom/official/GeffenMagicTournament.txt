@@ -2155,7 +2155,7 @@ OnTimer1000:
 		case   1: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: 1!",bc_blue; break;
 		case   0:
 			stopnpctimer;
-			donpcevent instance_npcname("#GMTcontroller::OnTimeout2");
+			donpcevent instance_npcname("#GMTcontroller") + "::OnTimeout2";
 			end;
 	}
 	
