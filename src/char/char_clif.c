@@ -801,7 +801,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		RFIFOSKIP(fd,3);
 
 		// Check if the character exists and is not scheduled for deletion
-		if ( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d' AND `delete_time` = 0", schema_config.char_db, sd->account_id, slot)
+		if ( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d' AND `delete_date` = 0", schema_config.char_db, sd->account_id, slot)
 		  || SQL_SUCCESS != Sql_NextRow(sql_handle)
 		  || SQL_SUCCESS != Sql_GetData(sql_handle, 0, &data, NULL) )
 		{	//Not found?? May be forged packet.
