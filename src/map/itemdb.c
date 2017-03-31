@@ -1605,7 +1605,7 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 
 		if (!strchr(p, ','))
 		{
-			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
+			ShowError("itemdb_read_randomopt: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
 			continue;
 		}
 
