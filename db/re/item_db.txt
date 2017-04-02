@@ -11126,7 +11126,7 @@
 24021,S_Magical_Earring,Magical Earring (Shadow),12,0,,0,,0,,0,0xFFFFFFFF,63,2,1048576,,1,1,0,{ bonus bVariableCastrate,-(getrefine()>=7)?2:1; },{},{}
 24022,S_Magical_Weapon,Magical Weapon (Shadow),12,0,,0,,0,,0,0xFFFFFFFF,63,2,131072,,1,1,0,{ bonus bMatk,10; if(getrefine()>=7) { bonus bMatkRate,1; } },{},{}
 24023,S_Magical_Pendant,Magical Pencil (Shadow),12,0,,0,,0,,0,0xFFFFFFFF,63,2,2097152,,1,1,0,{ bonus bMaxSP,50; if(getrefine()>=7) { bonus bMaxSPrate,1; } },{},{}
-24024,S_Breezy_Armor,Breeze Armor (Shadow),12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,,,{ bonus bFlee,5+(getrefine()>=7 ? 10 : 0); },{},{}
+24024,S_Breezy_Armor,Breeze Armor (Shadow),12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,0,{ bonus bFlee,5+(getrefine()>=7 ? 10 : 0); },{},{}
 24025,S_Champion_Shoes,Champion Shoes (Shadow),12,0,,0,,0,,0,0xFFFFFFFF,63,2,524288,,1,1,0,{ bonus bMaxHP,20; bonus bMaxSP,20; if(getrefine()>=7) { bonus bMaxHP,1; bonus bMaxSP,1; } },{},{}
 24026,S_Athena_Shield,Athena Shield (Shadow),12,0,,0,,0,,0,0xFFFFFFFF,63,2,262144,,1,1,0,{ bonus bDef,(getrefine()>=7)?20:10; },{},{}
 24027,S_Immune_Armor,Immune Shadow Armor,12,0,,0,,0,,0,0xFFFFFFFF,63,2,65536,,1,1,0,{ bonus2 bSubEle,0,1; },{},{}
