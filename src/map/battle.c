@@ -6353,7 +6353,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case MA_LANDMINE:
 		case HT_BLASTMINE:
 		case HT_CLAYMORETRAP:
-			md.damage = skill_lv * sstatus->dex * (3.0 + (float)status_get_lv(src) / 100.0) * (1.0 + (float)sstatus->int_ / 35.0);
+			md.damage = (int64)(skill_lv * sstatus->dex * (3.0 + (float)status_get_lv(src) / 100.0) * (1.0 + (float)sstatus->int_ / 35.0));
 			md.damage += md.damage * (rnd()%20 - 10) / 100;
 			md.damage += (sd ? pc_checkskill(sd,RA_RESEARCHTRAP) * 40 : 0);
 			break;
