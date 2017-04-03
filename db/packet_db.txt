@@ -1786,6 +1786,11 @@ packet_keys: 0x01581359,0x452D6FFA,0x6AFB6E2E // [Shakto]
 0x096E,-1,mergeitem_req,2:4 // CZ_REQ_MERGE_ITEM
 0x096F,7,ZC_ACK_MERGE_ITEM,2:4:6 // ZC_ACK_MERGE_ITEM
 0x0974,2,mergeitem_cancel,0 // CZ_CANCEL_MERGE_ITEM
+0x0844,2,cashshopopen,0
+0x0849,16 //clif_cashshop_result
+0x0848,-1,cashshopbuy,2:6:4:10
+0x084a,2,cashshopclose,0
+0x08c9,2,cashshopitemlist,0
 
 //2012-04-18aRagexeRE [Special Thanks to Judas!]
 packet_ver: 31
