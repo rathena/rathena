@@ -6290,9 +6290,9 @@ const char* job_name(int class_)
 		return msg_txt(NULL,697);
 
 	case JOB_BABY_SUMMONER:
-		return msg_txt(NULL,698);
-
 	case JOB_BABY_NINJA:
+		return msg_txt(NULL,698 - JOB_BABY_SUMMONER+class_);
+
 	case JOB_BABY_KAGEROU:
 	case JOB_BABY_OBORO:
 	case JOB_BABY_TAEKWON:
@@ -6300,10 +6300,10 @@ const char* job_name(int class_)
 	case JOB_BABY_SOUL_LINKER:
 	case JOB_BABY_GUNSLINGER:
 	case JOB_BABY_REBELLION:
-		return msg_txt(NULL,699 - JOB_BABY_NINJA+class_);
+		return msg_txt(NULL,753 - JOB_BABY_KAGEROU+class_);
 
 	case JOB_BABY_STAR_GLADIATOR2:
-		return msg_txt(NULL,703);
+		return msg_txt(NULL,756);
 
 	default:
 		return msg_txt(NULL,655);
