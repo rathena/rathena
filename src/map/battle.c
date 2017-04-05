@@ -2007,8 +2007,8 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 	if( skill_get_inf2( skill_id ) & INF2_TRAP )
 		return BF_SHORT;
 
-	// When monsters use Arrow Shower, it is always short range
-	if (src->type == BL_MOB && skill_id == AC_SHOWER)
+	// When monsters use Arrow Shower or Bomb, it is always short range
+	if (src->type == BL_MOB && (skill_id == AC_SHOWER || skill_id == AM_DEMONSTRATION))
 		return BF_SHORT;
 
 	//Skill Range Criteria
