@@ -286,8 +286,24 @@ const char* job_name(int class_) {
 		case JOB_SUMMONER:
 			return msg_txt(108);
 
-		default:
+		case JOB_BABY_SUMMONER:
 			return msg_txt(109);
+
+		case JOB_BABY_NINJA:
+		case JOB_BABY_KAGEROU:
+		case JOB_BABY_OBORO:
+		case JOB_BABY_TAEKWON:
+		case JOB_BABY_STAR_GLADIATOR:
+		case JOB_BABY_SOUL_LINKER:
+		case JOB_BABY_GUNSLINGER:
+		case JOB_BABY_REBELLION:
+			return msg_txt(110 - JOB_BABY_SUMMONER+class_);
+
+		case JOB_BABY_STAR_GLADIATOR2:
+			return msg_txt(114);
+
+		default:
+			return msg_txt(118);
 	}
 }
 
