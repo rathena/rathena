@@ -16,7 +16,13 @@
 //    0x20 - Skill ignores target's defense (misc type always ignores)
 //    0x40 - Skill ignores target's flee (magic type always ignores)
 //    0x80 - Skill ignores target's def cards
-// 07 splash/effect range (-1 for screen-wide)
+// 07 splash/effect range
+//      -1 - for screen-wide
+//       0 - no splash
+//      all other values follow the formula: value * 2 + 1
+//       1 - 3x3
+//       2 - 5x5
+//       3 - 7x7
 // 08 MaxLv
 // 09 Number of hits (when positive, damage is increased by hits, 
 //    negative values just show number of hits without increasing total damage)

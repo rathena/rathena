@@ -29,7 +29,10 @@
 #define PACKETVER_SUPPORTS_PINCODE PACKETVER>=20110309
 
 /// Check if the client needs delete_date as remaining time and not the actual delete_date (actually it was tested for clients since 2013)
-#define PACKETVER_CHAR_DELETEDATE (PACKETVER > 20130000 && PACKETVER < 20141016) || PACKETVER >= 20150826
+#define PACKETVER_CHAR_DELETEDATE (PACKETVER > 20130000 && PACKETVER < 20141016) || PACKETVER >= 20150513
+
+// Check if the specified packetvresion supports the cashshop sale system
+#define PACKETVER_SUPPORTS_SALES PACKETVER>=20131223
 
 ///Remove/Comment this line to disable sc_data saving. [Skotlex]
 #define ENABLE_SC_SAVING

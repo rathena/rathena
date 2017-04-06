@@ -42,9 +42,9 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
 			}
 			if (checkquest(11309,HUNTING) == 2) {
 				mes "[Nurse Maenne]";
-				mes "You get rid of Bangungot!";
+				mes "You got rid of Bangungot!";
 				mes "The nurse might be waiting for you";
-				mes "at front of hospital!";
+				mes "in front of the hospital!";
 				close2;
 				cutin "",255;
 				end;

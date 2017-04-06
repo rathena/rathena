@@ -53,15 +53,15 @@ enum e_dayofweek date_get_dayofweek(void)
 }
 
 /*
- * Get the current day (days of the month)
+ * Get the day of the year
  */
-int date_get_day(void)
+int date_get_dayofyear(void)
 {
 	time_t t;
 	struct tm * lt;
 	t = time(NULL);
 	lt = localtime(&t);
-	return lt->tm_mday;
+	return lt->tm_yday;
 }
 
 /*
@@ -121,32 +121,32 @@ int date_get( enum e_date_type type )
 		case DT_YEAR:
 			return date_get_year();
 		case DT_DAYOFYEAR:
-			return date_get_day();
+			return date_get_dayofyear();
 		default:
 			return -1;
 	}
 }
 
 /*
- * Does this day is a day of the Sun, (for SG)
+ * Is today a day of the Sun for Star Gladiators?
  */
 bool is_day_of_sun(void)
 {
-	return date_get_day()%2 == 0;
+	return date_get_dayofyear()%2 == 0;
 }
 
 /*
- * Does this day is a day of the Moon, (for SG)
+ * Is today a day of the Moon for Star Gladiators?
  */
 bool is_day_of_moon(void)
 {
-	return date_get_day()%2 == 1;
+	return date_get_dayofyear()%2 == 1;
 }
 
 /*
- * Does this day is a day of the Star, (for SG)
+ * Is today a day of the Star for Star Gladiators?
  */
 bool is_day_of_star(void)
 {
-	return date_get_day()%5 == 0;
+	return date_get_dayofyear()%5 == 0;
 }

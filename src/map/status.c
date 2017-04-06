@@ -1061,6 +1061,10 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_GVG_CURSE] = SI_GVG_CURSE;
 	StatusIconChangeTable[SC_GVG_SILENCE] = SI_GVG_SILENCE;
 	StatusIconChangeTable[SC_GVG_BLIND] = SI_GVG_BLIND;
+	StatusIconChangeTable[SC_ARMOR_ELEMENT_WATER] = SI_RESIST_PROPERTY_WATER;
+	StatusIconChangeTable[SC_ARMOR_ELEMENT_EARTH] = SI_RESIST_PROPERTY_GROUND;
+	StatusIconChangeTable[SC_ARMOR_ELEMENT_FIRE] = SI_RESIST_PROPERTY_FIRE;
+	StatusIconChangeTable[SC_ARMOR_ELEMENT_WIND] = SI_RESIST_PROPERTY_WIND;
 
 	// Costumes
 	StatusIconChangeTable[SC_MOONSTAR] = SI_MOONSTAR;
@@ -1154,13 +1158,19 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_BATKFOOD] |= SCB_BATK;
 	StatusChangeFlagTable[SC_WATKFOOD] |= SCB_WATK;
 	StatusChangeFlagTable[SC_MATKFOOD] |= SCB_MATK;
-	StatusChangeFlagTable[SC_ARMOR_ELEMENT] |= SCB_ALL;
+	StatusChangeFlagTable[SC_ARMOR_ELEMENT_WATER] |= SCB_ALL;
+	StatusChangeFlagTable[SC_ARMOR_ELEMENT_EARTH] |= SCB_ALL;
+	StatusChangeFlagTable[SC_ARMOR_ELEMENT_FIRE] |= SCB_ALL;
+	StatusChangeFlagTable[SC_ARMOR_ELEMENT_WIND] |= SCB_ALL;
 	StatusChangeFlagTable[SC_ARMOR_RESIST] |= SCB_ALL;
 	StatusChangeFlagTable[SC_SPCOST_RATE] |= SCB_ALL;
 	StatusChangeFlagTable[SC_WALKSPEED] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_ITEMSCRIPT] |= SCB_ALL;
 	StatusChangeFlagTable[SC_SLOWDOWN] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_CHASEWALK2] |= SCB_STR;
+	StatusChangeFlagTable[SC_GEFFEN_MAGIC1] |= SCB_ALL;
+	StatusChangeFlagTable[SC_GEFFEN_MAGIC2] |= SCB_ALL;
+	StatusChangeFlagTable[SC_GEFFEN_MAGIC3] |= SCB_ALL;
 
 	/* Cash Items */
 	StatusChangeFlagTable[SC_FOOD_STR_CASH] |= SCB_STR;
@@ -1329,6 +1339,7 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_MADNESSCANCEL]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_GRAVITATION]			|= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_WHITEIMPRISON]		|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_DEEPSLEEP]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_ELECTRICSHOCKER]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BITE]					|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_THORNSTRAP]			|= SCS_NOMOVE;
@@ -1336,7 +1347,7 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC__MANHOLE]				|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_ATKER]	|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET]	|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_CRYSTALIZE]			|= SCS_NOMOVE|SCS_NOMOVECOND;
+	StatusChangeStateTable[SC_CRYSTALIZE]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_NETHERWORLD]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CAMOUFLAGE]			|= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_MEIKYOUSISUI]			|= SCS_NOMOVE;
@@ -1372,7 +1383,7 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_WHITEIMPRISON]		|= SCS_NOCAST;
 	StatusChangeStateTable[SC__SHADOWFORM]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC__INVISIBILITY]		|= SCS_NOCAST;
-	StatusChangeStateTable[SC_CRYSTALIZE]			|= SCS_NOCAST|SCS_NOCASTCOND;
+	StatusChangeStateTable[SC_CRYSTALIZE]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC__IGNORANCE]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC__MANHOLE]				|= SCS_NOCAST;
 	StatusChangeStateTable[SC_DEEPSLEEP]			|= SCS_NOCAST;
@@ -2014,8 +2025,6 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		// on dead characters, said checks are left to skill.c [Skotlex]
 		if (target && status_isdead(target))
 			return false;
-		if( src && (sc = status_get_sc(src)) && sc->data[SC_CRYSTALIZE] && src->type != BL_MOB)
-			return false;
 	}
 
 	switch( skill_id ) {
@@ -2066,7 +2075,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (flag == 1 && sc->data[SC_CURSEDCIRCLE_TARGET] && skill_id == MO_ABSORBSPIRITS) // Absorb Spirits fails to go through
 			return false;
 
-		if (skill_id != RK_REFRESH && sc->opt1 && !(sc->opt1 == OPT1_CRYSTALIZE && src->type == BL_MOB) && sc->opt1 != OPT1_BURNING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
+		if (skill_id != RK_REFRESH && sc->opt1 && sc->opt1 != OPT1_BURNING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
 				return false;
 			if (!(skill_get_inf(skill_id)&INF_GROUND_SKILL)) 
@@ -3322,6 +3331,9 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	memset(&sd->special_state,0,sizeof(sd->special_state));
 
+	if (pc_isvip(sd)) // Magic Stone requirement avoidance for VIP.
+		sd->special_state.no_gemstone = battle_config.vip_gemstone;
+
 	if (!sd->state.permanent_speed) {
 		memset(&base_status->max_hp, 0, sizeof(struct status_data)-(sizeof(base_status->hp)+sizeof(base_status->sp)));
 		base_status->speed = DEFAULT_WALK_SPEED;
@@ -4044,11 +4056,29 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
             sd->subrace[RC_PLAYER] += sc->data[SC_GEFFEN_MAGIC3]->val1;
             sd->subrace[RC_DEMIHUMAN] += sc->data[SC_GEFFEN_MAGIC3]->val1;
         }
-		if(sc->data[SC_ARMOR_ELEMENT]) {	// This status change should grant card-type elemental resist.
-			sd->subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT]->val1;
-			sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT]->val2;
-			sd->subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT]->val3;
-			sd->subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT]->val4;
+		if(sc->data[SC_ARMOR_ELEMENT_WATER]) {	// This status change should grant card-type elemental resist.
+			sd->subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT_WATER]->val1;
+			sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT_WATER]->val2;
+			sd->subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT_WATER]->val3;
+			sd->subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT_WATER]->val4;
+		}
+		if(sc->data[SC_ARMOR_ELEMENT_EARTH]) {	// This status change should grant card-type elemental resist.
+			sd->subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT_EARTH]->val1;
+			sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT_EARTH]->val2;
+			sd->subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT_EARTH]->val3;
+			sd->subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT_EARTH]->val4;
+		}
+		if(sc->data[SC_ARMOR_ELEMENT_FIRE]) {	// This status change should grant card-type elemental resist.
+			sd->subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT_FIRE]->val1;
+			sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT_FIRE]->val2;
+			sd->subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT_FIRE]->val3;
+			sd->subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT_FIRE]->val4;
+		}
+		if(sc->data[SC_ARMOR_ELEMENT_WIND]) {	// This status change should grant card-type elemental resist.
+			sd->subele[ELE_WATER] += sc->data[SC_ARMOR_ELEMENT_WIND]->val1;
+			sd->subele[ELE_EARTH] += sc->data[SC_ARMOR_ELEMENT_WIND]->val2;
+			sd->subele[ELE_FIRE] += sc->data[SC_ARMOR_ELEMENT_WIND]->val3;
+			sd->subele[ELE_WIND] += sc->data[SC_ARMOR_ELEMENT_WIND]->val4;
 		}
 		if(sc->data[SC_ARMOR_RESIST]) { // Undead Scroll
 			sd->subele[ELE_WATER] += sc->data[SC_ARMOR_RESIST]->val1;
@@ -4553,7 +4583,6 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 				     (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
 				  || (sc->data[SC_BASILICA] && sc->data[SC_BASILICA]->val4 == bl->id) // Basilica caster cannot move
 				  || (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
-				  || (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB)
 				  || (sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 < 3)
 				)
 			sc->cant.move += ( start ? 1 : ((sc->cant.move)? -1:0) );
@@ -4562,8 +4591,6 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 	// Can't use skills
 	if( flag&SCS_NOCAST ) {
 		if( !(flag&SCS_NOCASTCOND) )
-			sc->cant.cast += ( start ? 1 : -1 );
-		else if( (sc->data[SC_CRYSTALIZE] && bl->type != BL_MOB) )
 			sc->cant.cast += ( start ? 1 : -1 );
 	}
 
@@ -4920,11 +4947,13 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 				int variance = 0;
 
 				// Any +MATK you get from skills and cards, including cards in weapon, is added here.
-				if (sd->bonus.ematk > 0)
-					status->matk_min += sd->bonus.ematk;
-				if (sd && pc_checkskill(sd, SU_POWEROFLAND) > 0) {
-					if (pc_checkskill(sd, SU_SV_STEMSPEAR) == 5 && pc_checkskill(sd, SU_CN_POWDERING) == 5 && pc_checkskill(sd, SU_CN_METEOR) == 5 && pc_checkskill(sd, SU_SV_ROOTTWIST) == 5)
-						status->matk_min += status->matk_min * 20 / 100;
+				if (sd) {
+					if (sd->bonus.ematk > 0)
+						status->matk_min += sd->bonus.ematk;
+					if (pc_checkskill(sd, SU_POWEROFLAND) > 0) {
+						if (pc_checkskill(sd, SU_SV_STEMSPEAR) == 5 && pc_checkskill(sd, SU_CN_POWDERING) == 5 && pc_checkskill(sd, SU_CN_METEOR) == 5 && pc_checkskill(sd, SU_SV_ROOTTWIST) == 5)
+							status->matk_min += status->matk_min * 20 / 100;
+					}
 				}
 
 				status->matk_min = status_calc_ematk(bl, sc, status->matk_min);
@@ -8247,28 +8276,28 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		// Undead are immune to Stone
 		if (undead_flag && !(flag&SCSTART_NOAVOID))
 			return 0;
-		if(sc->data[SC_POWER_OF_GAIA])
+		if (sc->data[SC_POWER_OF_GAIA] || sc->data[SC_GVG_STONE])
 			return 0;
-		if (sc->data[SC_GVG_STONE])
-			return 0;
+		if (sc->opt1)
+			return 0; //Cannot override other OPT1 status changes [Skotlex]
 		break;
 	case SC_FREEZE:
 		// Undead are immune to Freeze
 		if (undead_flag && !(flag&SCSTART_NOAVOID))
 			return 0;
-		if (sc->data[SC_GVG_FREEZ])
+		if (sc->data[SC_GVG_FREEZ] || sc->data[SC_WARMER])
 			return 0;
-	case SC_FREEZING:
-	case SC_CRYSTALIZE:
 		if (sc->opt1)
 			return 0; // Cannot override other opt1 status changes. [Skotlex]
-		if (sc->data[SC_WARMER])
+		break;
+	case SC_FREEZING:
+	case SC_CRYSTALIZE:
+		if ((type == SC_FREEZING && sc->data[SC_BURNING]) || sc->data[SC_WARMER])
 			return 0; // Immune to Frozen and Freezing status if under Warmer status. [Jobbie]
 		break;
 	case SC_SLEEP:
 		if (sc->data[SC_GVG_SLEEP])
 			return 0;
-	case SC_DEEPSLEEP:
 		if (sc->opt1)
 			return 0; // Cannot override other opt1 status changes. [Skotlex]
 		break;
@@ -8307,8 +8336,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			return 0;
 		break;
 	case SC_BURNING:
-		if(sc->opt1 || sc->data[SC_FREEZING])
+		if (sc->data[SC_FREEZING])
 			return 0;
+	// Fall through
+	case SC_WHITEIMPRISON:
+		if (sc->opt1)
+			return 0; //Cannot override other OPT1 status changes [Skotlex]
 		break;
 	case SC_SIGNUMCRUCIS:
 		// Only affects demons and undead element (but not players)
@@ -8932,9 +8965,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_FEAR:
 		status_change_end(bl, SC_BLIND, INVALID_TIMER);
 		break;
-	case SC_FREEZING:
-		status_change_end(bl, SC_BURNING, INVALID_TIMER);
-		break;
 	case SC_KINGS_GRACE:
 		status_change_end(bl,SC_POISON,INVALID_TIMER);
 		status_change_end(bl,SC_BLIND,INVALID_TIMER);
@@ -9063,7 +9093,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_ATKPOTION:
 			case SC_MATKPOTION:
 			case SC_ENCHANTARMS:
-			case SC_ARMOR_ELEMENT:
+			case SC_ARMOR_ELEMENT_WATER:
+			case SC_ARMOR_ELEMENT_EARTH:
+			case SC_ARMOR_ELEMENT_FIRE:
+			case SC_ARMOR_ELEMENT_WIND:
 			case SC_ARMOR_RESIST:
 			case SC_ATTHASTE_CASH:
 				break;
@@ -9946,7 +9979,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_KAIZEL:
 			val2 = 10*val1; // % of life to be revived with
 			break;
-		// case SC_ARMOR_ELEMENT:
+		// case SC_ARMOR_ELEMENT_WATER:
+		// case SC_ARMOR_ELEMENT_EARTH:
+		// case SC_ARMOR_ELEMENT_FIRE:
+		// case SC_ARMOR_ELEMENT_WIND:
 		// case SC_ARMOR_RESIST:
 			// Mod your resistance against elements:
 			// val1 = water | val2 = earth | val3 = fire | val4 = wind
@@ -11004,11 +11040,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_FREEZE:		sc->opt1 = OPT1_FREEZE;		break;
 		case SC_STUN:		sc->opt1 = OPT1_STUN;		break;
-		case SC_DEEPSLEEP:	opt_flag = 0;
 		case SC_SLEEP:		sc->opt1 = OPT1_SLEEP;		break;
 		case SC_BURNING:	sc->opt1 = OPT1_BURNING;	break; // Burning need this to be showed correctly. [pakpil]
 		case SC_WHITEIMPRISON:  sc->opt1 = OPT1_IMPRISON;	break;
-		case SC_CRYSTALIZE:	sc->opt1 = OPT1_CRYSTALIZE;	break;
 		// OPT2
 		case SC_POISON:       sc->opt2 |= OPT2_POISON;		break;
 		case SC_CURSE:        sc->opt2 |= OPT2_CURSE;		break;
@@ -11280,19 +11314,23 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_COMBO:
 			switch(sce->val1) {
 			case TK_STORMKICK:
+				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
 				clif_skill_nodamage(bl,bl,TK_READYSTORM,1,1);
 				break;
 			case TK_DOWNKICK:
+				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
 				clif_skill_nodamage(bl,bl,TK_READYDOWN,1,1);
 				break;
 			case TK_TURNKICK:
+				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
 				clif_skill_nodamage(bl,bl,TK_READYTURN,1,1);
 				break;
 			case TK_COUNTER:
+				skill_combo_toggle_inf(bl, TK_JUMPKICK, 0);
 				clif_skill_nodamage(bl,bl,TK_READYCOUNTER,1,1);
 				break;
-			default: // Rest just toogle inf to enable autotarget
-				skill_combo_toogle_inf(bl,sce->val1,INF_SELF_SKILL);
+			default: // Rest just toggle inf to enable autotarget
+				skill_combo_toggle_inf(bl,sce->val1,INF_SELF_SKILL);
 				break;
 			}
 			break;
@@ -11806,7 +11844,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			}
 			break;
 		case SC_COMBO:
-			skill_combo_toogle_inf(bl,sce->val1,0);
+			skill_combo_toggle_inf(bl,sce->val1,0);
 			break;
 		case SC_MARIONETTE:
 		case SC_MARIONETTE2: // Marionette target
@@ -12105,10 +12143,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC_FREEZE:
 	case SC_STUN:
 	case SC_SLEEP:
-	case SC_DEEPSLEEP:
 	case SC_BURNING:
 	case SC_WHITEIMPRISON:
-	case SC_CRYSTALIZE:
 		sc->opt1 = 0;
 		break;
 
@@ -12951,8 +12987,8 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 
 	case SC_CRYSTALIZE:
 		if( --(sce->val4) >= 0 ) { // Drains 2% of HP and 1% of SP every seconds.
-			if( bl->type != BL_MOB) // Doesn't work on mobs
-				status_charge(bl, status->max_hp * 2 / 100, status->max_sp / 100);
+			if (!status_charge(bl, status->max_hp * 2 / 100, status->max_sp / 100))
+				break;
 			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 			return 0;
 		}

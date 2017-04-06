@@ -4752,11 +4752,13 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 			break;
 		case ITEMID_WING_OF_FLY:
 		case ITEMID_GIANT_FLY_WING:
+		case ITEMID_N_FLY_WING:
 			if( map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m) ) {
 				clif_skill_teleportmessage(sd,0);
 				return false;
 			}
 		case ITEMID_WING_OF_BUTTERFLY:
+		case ITEMID_N_BUTTERFLY_WING:
 		case ITEMID_DUN_TELE_SCROLL1:
 		case ITEMID_DUN_TELE_SCROLL2:
 		case ITEMID_DUN_TELE_SCROLL3:
@@ -4769,7 +4771,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 				clif_displaymessage(sd->fd, msg_txt(sd,663));
 				return false;
 			}
-			if( nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && map[sd->bl.m].flag.noreturn )
+			if( map[sd->bl.m].flag.noreturn && nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && nameid != ITEMID_N_FLY_WING )
 				return false;
 			break;
 		case ITEMID_BUBBLE_GUM:
@@ -4861,6 +4863,8 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		sd->sc.data[SC__SHADOWFORM] ||
 		sd->sc.data[SC__INVISIBILITY] ||
 		sd->sc.data[SC__MANHOLE] ||
+		sd->sc.data[SC_DEEPSLEEP] ||
+		sd->sc.data[SC_CRYSTALIZE] ||
 		sd->sc.data[SC_KAGEHUMI] ||
 		(sd->sc.data[SC_NOCHAT] && sd->sc.data[SC_NOCHAT]->val1&MANNER_NOITEM) ||
 		sd->sc.data[SC_HEAT_BARREL_AFTER] ||
@@ -5223,7 +5227,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 
 	md = (TBL_MOB *)bl;
 
-	if(md->state.steal_flag == UCHAR_MAX || ( md->sc.opt1 && md->sc.opt1 != OPT1_BURNING && md->sc.opt1 != OPT1_CRYSTALIZE ) ) //already stolen from / status change check
+	if(md->state.steal_flag == UCHAR_MAX || ( md->sc.opt1 && md->sc.opt1 != OPT1_BURNING ) ) //already stolen from / status change check
 		return 0;
 
 	sd_status= status_get_status_data(&sd->bl);
@@ -5431,7 +5435,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		sd->bl.x=x;
 		sd->bl.y=y;
 		pc_clean_skilltree(sd);
-		chrif_save(sd,2);
+		chrif_save(sd, CSAVE_CHANGE_MAPSERV|CSAVE_INVENTORY|CSAVE_CART);
 		chrif_changemapserver(sd, ip, (short)port);
 
 		//Free session data from this map server [Kevin]
@@ -8546,7 +8550,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	pc_equiplookall(sd);
 	pc_show_questinfo(sd);
 
-	chrif_save(sd, 0);
+	chrif_save(sd, CSAVE_NORMAL);
 	//if you were previously famous, not anymore.
 	if (fame_flag)
 		chrif_buildfamelist();
@@ -8767,8 +8771,10 @@ bool pc_setcart(struct map_session_data *sd,int type) {
 			clif_clearcart(sd->fd);
 			break;
 		default:/* everything else is an allowed ID so we can move on */
-			if( !sd->sc.data[SC_PUSH_CART] ) /* first time, so fill cart data */
+			if( !sd->sc.data[SC_PUSH_CART] ) { /* first time, so fill cart data */
 				clif_cartlist(sd);
+				status_calc_cart_weight(sd, CALCWT_ITEM|CALCWT_MAXBONUS|CALCWT_CARTSTATE);
+			}
 			clif_updatestatus(sd, SP_CARTINFO);
 			sc_start(&sd->bl, &sd->bl, SC_PUSH_CART, 100, type, 0);
 			break;
@@ -10289,7 +10295,7 @@ static int pc_autosave(int tid, unsigned int tick, int id, intptr_t data)
 		save_flag = 2;
 		if (pc_isvip(sd)) // Check if we're still VIP
 			chrif_req_login_operation(1, sd->status.name, CHRIF_OP_LOGIN_VIP, 0, 1, 0);
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
 		break;
 	}
 	mapit_free(iter);
@@ -10695,15 +10701,15 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 		return false;
 	}
 	if (skill_lv > (skill_lv_max = skill_get_max(skill_id))) {
-		ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level..\n", skill_id, skill_lv, class_, skill_lv_max);
+		ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level.\n", skill_id, skill_lv, class_, skill_lv_max);
 		skill_lv = skill_lv_max;
 	}
 	if (baselv > (baselv_max = pc_class_maxbaselv(class_))) {
-		ShowWarning("pc_readdb_skilltree: Skill %hu's base level requirement %d exceeds job %d's max base level %d. Capping skill base level..\n", skill_id, baselv, class_, baselv_max);
+		ShowWarning("pc_readdb_skilltree: Skill %hu's base level requirement %d exceeds job %d's max base level %d. Capping skill base level.\n", skill_id, baselv, class_, baselv_max);
 		baselv = baselv_max;
 	}
 	if (joblv > (joblv_max = pc_class_maxjoblv(class_))) {
-		ShowWarning("pc_readdb_skilltree: Skill %hu's job level requirement %d exceeds job %d's max job level %d. Capping skill job level..\n", skill_id, joblv, class_, joblv_max);
+		ShowWarning("pc_readdb_skilltree: Skill %hu's job level requirement %d exceeds job %d's max job level %d. Capping skill job level.\n", skill_id, joblv, class_, joblv_max);
 		joblv = joblv_max;
 	}
 
@@ -10729,14 +10735,19 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 		skill_id = (uint16)atoi(fields[i * 2 + offset]);
 		skill_lv = (uint16)atoi(fields[i * 2 + offset + 1]);
 
-		if (skill_id == 0)
+		if (skill_id == 0) {
+			if (skill_tree[idx][skill_idx].need[i].skill_id > 0) { // Remove pre-requisite
+				skill_tree[idx][skill_idx].need[i].skill_id = 0;
+				skill_tree[idx][skill_idx].need[i].skill_lv = 0;
+			}
 			continue;
+		}
 		if (skill_id > MAX_SKILL_ID || !skill_get_index(skill_id)) {
 			ShowWarning("pc_readdb_skilltree: Unable to load requirement skill %hu into job %d's tree.", skill_id, class_);
 			return false;
 		}
 		if (skill_lv > (skill_lv_max = skill_get_max(skill_id))) {
-			ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level..\n", skill_id, skill_lv, class_, skill_lv_max);
+			ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level.\n", skill_id, skill_lv, class_, skill_lv_max);
 			skill_lv = skill_lv_max;
 		}
 
@@ -11587,7 +11598,7 @@ enum e_BANKING_DEPOSIT_ACK pc_bank_deposit(struct map_session_data *sd, int mone
 	sd->bank_vault += money;
 	pc_setreg2(sd, BANK_VAULT_VAR, sd->bank_vault);
 	if( save_settings&CHARSAVE_BANK )
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_NORMAL);
 	return BDA_SUCCESS;
 }
 
@@ -11615,7 +11626,7 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(struct map_session_data *sd, int mo
 	sd->bank_vault -= money;
 	pc_setreg2(sd, BANK_VAULT_VAR, sd->bank_vault);
 	if( save_settings&CHARSAVE_BANK )
-		chrif_save(sd,0);
+		chrif_save(sd, CSAVE_NORMAL);
 	return BWA_SUCCESS;
 }
 

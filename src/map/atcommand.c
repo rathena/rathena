@@ -808,7 +808,7 @@ ACMD_FUNC(save)
 	if (sd->status.pet_id > 0 && sd->pd)
 		intif_save_petdata(sd->status.account_id, &sd->pd->pet);
 
-	chrif_save(sd,0);
+	chrif_save(sd, CSAVE_NORMAL);
 
 	clif_displaymessage(fd, msg_txt(sd,6)); // Your save point has been changed.
 
@@ -1754,7 +1754,8 @@ ACMD_FUNC(bodystyle)
 	if (!((sd->class_&MAPID_THIRDMASK) == MAPID_GUILLOTINE_CROSS || (sd->class_&MAPID_THIRDMASK) == MAPID_GENETIC
 		|| (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC || (sd->class_&MAPID_THIRDMASK) == MAPID_ROYAL_GUARD
 		|| (sd->class_&MAPID_THIRDMASK) == MAPID_ARCH_BISHOP || (sd->class_&MAPID_THIRDMASK) == MAPID_RANGER
-		|| (sd->class_&MAPID_THIRDMASK) == MAPID_WARLOCK)) {
+		|| (sd->class_&MAPID_THIRDMASK) == MAPID_WARLOCK || (sd->class_&MAPID_THIRDMASK) == MAPID_SHADOW_CHASER
+	        || (sd->class_&MAPID_THIRDMASK) == MAPID_MINSTRELWANDERER)) {
 		clif_displaymessage(fd, msg_txt(sd,740));	// This job has no alternate body styles.
 		return -1;
 	}
@@ -5725,8 +5726,7 @@ ACMD_FUNC(useskill)
 		return -1;
 	}
 
-	if (SKILL_CHK_HOMUN(skill_id)
-		&& sd->hd && hom_is_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
+	if (SKILL_CHK_HOMUN(skill_id) && hom_is_active(sd->hd)) // (If used with @useskill, put the homunc as dest)
 		bl = &sd->hd->bl;
 	else
 		bl = &sd->bl;
@@ -5951,11 +5951,11 @@ ACMD_FUNC(autotrade) {
 		sd->state.monster_ignore = 1;
 
 	if( sd->state.vending ){
-		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_db, sd->vender_id ) != SQL_SUCCESS ){
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_table, sd->vender_id ) != SQL_SUCCESS ){
 			Sql_ShowDebug( mmysql_handle );
 		}
 	}else if( sd->state.buyingstore ){
-		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstores_db, sd->buyer_id ) != SQL_SUCCESS ){
+		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", buyingstores_table, sd->buyer_id ) != SQL_SUCCESS ){
 			Sql_ShowDebug( mmysql_handle );
 		}
 	}
@@ -5968,7 +5968,7 @@ ACMD_FUNC(autotrade) {
 	channel_pcquit(sd,0xF); //leave all chan
 	clif_authfail_fd(sd->fd, 15);
 
-	chrif_save(sd,3);
+	chrif_save(sd, CSAVE_AUTOTRADE);
 
 	return 0;
 }
@@ -6865,10 +6865,11 @@ ACMD_FUNC(trade)
 ACMD_FUNC(setbattleflag)
 {
 	char flag[128], value[128];
+	int reload = 0;
 	nullpo_retr(-1, sd);
 
-	if (!message || !*message || sscanf(message, "%127s %127s", flag, value) != 2) {
-        	clif_displaymessage(fd, msg_txt(sd,1231)); // Usage: @setbattleflag <flag> <value>
+	if (!message || !*message || sscanf(message, "%127s %127s %11d", flag, value, &reload) != 2) {
+        	clif_displaymessage(fd, msg_txt(sd,1231)); // Usage: @setbattleflag <flag> <value> {<reload>}
         	return -1;
     	}
 
@@ -6879,6 +6880,9 @@ ACMD_FUNC(setbattleflag)
 	}
 
 	clif_displaymessage(fd, msg_txt(sd,1233)); // Set battle_config as requested.
+
+	if (reload)
+		mob_reload();
 
 	return 0;
 }
@@ -9199,7 +9203,7 @@ ACMD_FUNC(set) {
 				break;
 		}
 
-		if( value == NULL || value == '\0' ){// empty string
+		if( value == NULL || *value == '\0' ){// empty string
 			sprintf(atcmd_output,msg_txt(sd,1375),reg); // %s is empty
 		}else{
 			sprintf(atcmd_output,msg_txt(sd,1374),reg,value); // %s value is now :%s
