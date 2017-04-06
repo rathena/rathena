@@ -1813,32 +1813,16 @@ static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
 }
 
 /**
-* Reload Item DB
-*/
-void itemdb_reload(void) {
-	struct s_mapiterator* iter;
-	struct map_session_data* sd;
+ * Re-link monster drop data with item data
+ * Fixes the need of a @reloadmobdb after a @reloaditemdb
+ * @author Epoque
+ */
+void itemdb_reload_itemmob_data(void) {
+	int i;
 
-	int i,d,k;
-
-	itemdb_group->clear(itemdb_group, itemdb_group_free);
-	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
-	itemdb->clear(itemdb, itemdb_final_sub);
-	db_clear(itemdb_combo);
-	if (battle_config.feature_roulette)
-		itemdb_roulette_free();
-
-	// read new data
-	itemdb_read();
-	cashshop_reloaddb();
-
-	if (battle_config.feature_roulette)
-		itemdb_parse_roulette_db();
-
-	//Epoque's awesome @reloaditemdb fix - thanks! [Ind]
-	//- Fixes the need of a @reloadmobdb after a @reloaditemdb to re-link monster drop data
 	for( i = 0; i < MAX_MOB_DB; i++ ) {
 		struct mob_db *entry = mob_db(i);
+		int d, k;
 
 		for(d = 0; d < MAX_MOB_DROP; d++) {
 			struct item_data *id;
@@ -1860,6 +1844,30 @@ void itemdb_reload(void) {
 			id->mob[k].id = i;
 		}
 	}
+}
+
+/**
+* Reload Item DB
+*/
+void itemdb_reload(void) {
+	struct s_mapiterator* iter;
+	struct map_session_data* sd;
+
+	itemdb_group->clear(itemdb_group, itemdb_group_free);
+	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
+	itemdb->clear(itemdb, itemdb_final_sub);
+	db_clear(itemdb_combo);
+	if (battle_config.feature_roulette)
+		itemdb_roulette_free();
+
+	// read new data
+	itemdb_read();
+	cashshop_reloaddb();
+
+	if (battle_config.feature_roulette)
+		itemdb_parse_roulette_db();
+
+	itemdb_reload_itemmob_data();
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
