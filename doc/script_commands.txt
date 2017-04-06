@@ -6121,6 +6121,18 @@ the attached NPC will display the message.
 
 ---------------------------------------
 
+*chatmes "<message>"{,"<NPC name>"};
+
+This command will display a message in the waitingroom (chat) of the NPC.
+If the <NPC name> option is given, then that NPC will display the message, else
+the attached NPC will display the message.
+If the NPC is not in a waitingroom, nothing happens.
+
+    // Everyone in the waitingroom will see this message:
+    chatmes "Waiting 5 minutes until the next match will start";
+
+---------------------------------------
+
 *setnpcdisplay("<npc name>", "<display name>", <class id>, <size>)
 *setnpcdisplay("<npc name>", "<display name>", <class id>)
 *setnpcdisplay("<npc name>", "<display name>")
