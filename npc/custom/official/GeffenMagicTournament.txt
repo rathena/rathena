@@ -1643,7 +1643,7 @@ OnStart:
 			sleep 500;
 			donpcevent instance_npcname("Arhi#1")+"::OnActivate";
 			sleep 500;
-			npctalk "We are starting the 1st match for Group A";;
+			npctalk "We are starting the 1st match for Group A";
 			sleep 2000;
 			npctalk "On this corner, "+('sex?"he":"she")+" looks weak enough to lose in the 1st match!";
 			sleep 3000;
