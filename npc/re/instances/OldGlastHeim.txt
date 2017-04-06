@@ -81,6 +81,7 @@ glast_01,204,273,6	script	Hugin#ghinstance	4_M_SAGE_C,{
 	case -1:
 		.@party_id = getcharid(1);
 		.@p_name$ = getpartyname(.@party_id);
+		.@md_name$ = "Old Glast Heim";
 		if (!instance_check_party(.@party_id)) {
 			mes "[Hugin]";
 			mes "Why don't you make a party with more than 1 person and talk to me again?";
@@ -101,7 +102,7 @@ glast_01,204,273,6	script	Hugin#ghinstance	4_M_SAGE_C,{
 			setquest 12318;// Corrupted Soul Hunt
 		switch( select( .@menu$, "Enter Old Glast Heim", "Cancel" ) ) {
 		case 1:
-			switch (instance_create("Old Glast Heim")) {
+			switch (instance_create(.@md_name$)) {
 			case -3:
 				dispbottom "Memorial Dungeon, 'Old Glast Heim' is already in progress.",0xFFFFFF;
 				close;
