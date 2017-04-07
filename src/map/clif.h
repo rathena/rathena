@@ -32,6 +32,7 @@ struct quest;
 struct party_booking_ad_info;
 enum e_party_member_withdraw;
 struct sale_item_data;
+struct achievement;
 #include <stdarg.h>
 
 enum { // packet DB

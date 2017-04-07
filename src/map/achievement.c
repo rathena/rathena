@@ -228,13 +228,11 @@ static int achievement_check_groups(DBKey key, DBData *data, va_list ap)
 bool achievement_update_achievement(struct map_session_data *sd, int achievement_id, bool complete)
 {
 	struct achievement_db *adb = &achievement_dummy;
-	uint32 char_id;
 	int i;
 
 	nullpo_retr(false, sd);
 
 	adb = achievement_search(achievement_id);
-	char_id = sd->status.char_id;
 
 	if (adb == &achievement_dummy)
 		return false;
@@ -462,13 +460,12 @@ int achievement_check_progress(struct map_session_data *sd, int achievement_id, 
 int *achievement_level(struct map_session_data *sd, bool flag)
 {
 	static int info[2];
-	int i, old_level, count;
+	int i, old_level;
 	const int score_table[MAX_ACHIEVEMENT_RANK] = { 50, 100, 200, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000 }; //! TODO: Figure out the score required to level up
 
 	nullpo_retr(0, sd);
 
 	sd->achievement_data.total_score = 0;
-	count = sd->achievement_data.count - sd->achievement_data.incompleteCount;
 	old_level = sd->achievement_data.level;
 
 	for (i = 0; i < sd->achievement_data.count; i++) {
@@ -499,7 +496,6 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	info[1] = info[1] - info[0]; // Right number
 	info[0] = sd->achievement_data.total_score - info[0]; // Left number
 	sd->achievement_data.level = i;
-	sd->achievement_data.level;
 
 	if (flag == true && old_level != sd->achievement_data.level) {
 		int achievement_id = 240000 + sd->achievement_data.level;
@@ -1107,7 +1103,6 @@ int achievement_read_db(void)
 {
 	char filepath[256];
 	struct config_setting_t *adb = NULL, *a = NULL;
-	struct achievement_db *achieve = &achievement_dummy;
 	int count = 0;
 	const char *filename = "achievement_db.conf";
 
