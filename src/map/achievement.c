@@ -655,6 +655,9 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 		va_list ap;
 		int i, count[MAX_ACHIEVEMENT_OBJECTIVES];
 
+		if (!battle_config.feature_achievement)
+			return;
+
 		memset(count, 0, sizeof(count)); // Clear out array before setting values
 
 		va_start(ap, arg_count);
@@ -1211,6 +1214,8 @@ static int achievementmobs_db_free(DBKey key, DBData *data, va_list ap)
 
 void achievement_db_reload(void)
 {
+	if (!battle_config.feature_achievement)
+		return;
 	achievementmobs_db->clear(achievementmobs_db, achievementmobs_db_free);
 	achievement_db->clear(achievement_db, achievement_db_free);
 	achievement_read_db();
@@ -1218,6 +1223,8 @@ void achievement_db_reload(void)
 
 void do_init_achievement(void)
 {
+	if (!battle_config.feature_achievement)
+		return;
 	memset(&achievement_dummy, 0, sizeof(achievement_dummy));
 	achievement_db = idb_alloc(DB_OPT_BASE);
 	achievementmobs_db = idb_alloc(DB_OPT_BASE);
@@ -1226,6 +1233,8 @@ void do_init_achievement(void)
 
 void do_final_achievement(void)
 {
+	if (!battle_config.feature_achievement)
+		return;
 	achievementmobs_db->destroy(achievementmobs_db, achievementmobs_db_free);
 	achievement_db->destroy(achievement_db, achievement_db_free);
 }

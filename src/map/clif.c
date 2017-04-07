@@ -19228,6 +19228,11 @@ void clif_achievement_list_all(struct map_session_data *sd)
 
 	nullpo_retv(sd);
 
+	if (!battle_config.feature_achievement) {
+		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1503),false,SELF); // Achievements are disabled.
+		return;
+	}
+
 	fd = sd->fd;
 	count = sd->achievement_data.count; // All achievements should be sent to the client
 	len = (50 * count) + 22;
@@ -19266,6 +19271,11 @@ void clif_achievement_update(struct map_session_data *sd, struct achievement *ac
 	int fd, i, *info;
 
 	nullpo_retv(sd);
+
+	if (!battle_config.feature_achievement) {
+		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1503),false,SELF); // Achievements are disabled.
+		return;
+	}
 
 	fd = sd->fd;
 	info = achievement_level(sd, true);
