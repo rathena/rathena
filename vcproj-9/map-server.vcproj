@@ -473,6 +473,14 @@
 			Name="map"
 			>
 			<File
+				RelativePath="..\src\map\achievement.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\map\achievement.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\map\atcommand.c"
 				>
 			</File>

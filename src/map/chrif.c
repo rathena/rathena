@@ -362,6 +362,8 @@ int chrif_save(struct map_session_data *sd, enum e_chrif_save_opt flag) {
 		elemental_save(sd->ed);
 	if( sd->save_quest )
 		intif_quest_save(sd);
+	if (sd->achievement_data.save)
+		intif_achievement_save(sd);
 
 	return 0;
 }

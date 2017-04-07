@@ -61,6 +61,9 @@
     <ClCompile Include="..\src\char\char_mapif.c">
       <Filter>char</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\char\int_achievement.c">
+      <Filter>char</Filter>
+    </ClCompile>
     <ClCompile Include="..\src\char\int_auction.c">
       <Filter>char</Filter>
     </ClCompile>
@@ -199,6 +202,9 @@
       <Filter>char</Filter>
     </ClInclude>
     <ClInclude Include="..\src\char\char_mapif.h">
+      <Filter>char</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\char\int_achievement.h">
       <Filter>char</Filter>
     </ClInclude>
     <ClInclude Include="..\src\char\int_auction.h">

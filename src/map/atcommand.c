@@ -34,6 +34,7 @@
 #include "mapreg.h"
 #include "quest.h"
 #include "pc.h"
+#include "achievement.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -1420,6 +1421,8 @@ ACMD_FUNC(baselevelup)
 		status_calc_pc(sd, SCO_FORCE);
 		status_percent_heal(&sd->bl, 100, 100);
 		clif_misceffect(&sd->bl, 0);
+		achievement_update_objective(sd, AG_GOAL_LEVEL, 1, sd->status.base_level);
+		achievement_update_objective(sd, AG_GOAL_STATUS, 2, sd->status.base_level, sd->status.class_);
 		clif_displaymessage(fd, msg_txt(sd,21)); // Base level raised.
 	} else {
 		if (sd->status.base_level == 1) {
@@ -1481,6 +1484,7 @@ ACMD_FUNC(joblevelup)
 		sd->status.job_level += (unsigned int)level;
 		sd->status.skill_point += level;
 		clif_misceffect(&sd->bl, 1);
+		achievement_update_objective(sd, AG_GOAL_LEVEL, 1, sd->status.job_level);
 		clif_displaymessage(fd, msg_txt(sd,24)); // Job level raised.
 	} else {
 		if (sd->status.job_level == 1) {
@@ -2272,6 +2276,7 @@ ACMD_FUNC(refine)
 			clif_additem(sd, i, 1, 0);
 			pc_equipitem(sd, i, current_position);
 			clif_misceffect(&sd->bl, 3);
+			achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
 			count++;
 		}
 	}
@@ -3930,6 +3935,9 @@ ACMD_FUNC(reload) {
 	} else if (strstr(command, "instancedb") || strncmp(message, "instancedb", 4) == 0) {
 		instance_reload();
 		clif_displaymessage(fd, msg_txt(sd,516)); // Instance database has been reloaded.
+	} else if (strstr(command, "achievementdb") || strncmp(message, "achievementdb", 4) == 0) {
+		achievement_db_reload();
+		clif_displaymessage(fd, msg_txt(sd,760)); // Achievement database has been reloaded.
 	}
 
 	return 0;
@@ -10060,6 +10068,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF2("reloadmsgconf", reload),
 		ACMD_DEF2("reloadpacketdb", reload),
 		ACMD_DEF2("reloadinstancedb", reload),
+		ACMD_DEF2("reloadachievementdb",reload),
 		ACMD_DEF(partysharelvl),
 		ACMD_DEF(mapinfo),
 		ACMD_DEF(dye),

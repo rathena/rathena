@@ -594,6 +594,21 @@ struct map_session_data {
 	struct quest *quest_log; ///< Quest log entries (note: Q_COMPLETE quests follow the first <avail_quests>th enties
 	bool save_quest;         ///< Whether the quest_log entries were modified and are waitin to be saved
 
+	// Achievement log system
+	struct s_achievement_data {
+		int total_score;                  ///< Total achievement points
+		int level;                        ///< Achievement level
+		bool save;                        ///< Flag to know if achievements need to be saved
+		bool sendlist;                    ///< Flag to know if all achievements should be sent to the player (refresh list if an achievement has a title)
+		uint16 count;                     ///< Total achievements in log
+		uint16 incompleteCount;           ///< Total incomplete achievements in log
+		struct achievement *achievements; ///< Achievement log entries
+	} achievement_data;
+
+	// Title system
+	int *titles;
+	uint8 titleCount;
+
 	/* ShowEvent Data Cache flags from map */
 	bool *qi_display;
 	unsigned short qi_count;

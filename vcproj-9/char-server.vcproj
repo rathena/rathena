@@ -489,6 +489,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\src\char\int_achievement.c"
+				>
+			</File>
+			<File
+				RelativePath="..\src\char\int_achievement.h"
+				>
+			</File>
+			<File
 				RelativePath="..\src\char\int_auction.c"
 				>
 			</File>

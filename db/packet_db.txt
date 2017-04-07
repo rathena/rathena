@@ -2539,7 +2539,7 @@ packet_keys: 0x62C86D09,0x75944F17,0x112C133D // [YomRawr]
 // Achievement System
 0x0A23,-1		// ZC_ALL_ACH_LIST
 0x0A24,66	// ZC_ACH_UPDATE
-0x0A25,6,dull,0	// CZ_REQ_ACH_REWARD
+0x0A25,6,achievementcheckreward,2	// CZ_REQ_ACH_REWARD
 0x0A26,7		// ZC_REQ_ACH_REWARD_ACK
 
 // Title System

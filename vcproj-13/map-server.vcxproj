@@ -164,6 +164,7 @@
     <ClInclude Include="..\src\common\winapi.h" />
     <ClInclude Include="..\src\common\cli.h" />
     <ClInclude Include="..\src\common\msg_conf.h" />
+	<ClInclude Include="..\src\common\achievement.h" />
     <ClInclude Include="..\src\map\atcommand.h" />
     <ClInclude Include="..\src\map\battle.h" />
     <ClInclude Include="..\src\map\battleground.h" />
@@ -240,6 +241,7 @@
     <ClCompile Include="..\src\common\utils.c" />
     <ClCompile Include="..\src\common\cli.c" />
     <ClCompile Include="..\src\common\msg_conf.c" />
+    <ClCompile Include="..\src\map\achievement.c" />
     <ClCompile Include="..\src\map\atcommand.c" />
     <ClCompile Include="..\src\map\battle.c" />
     <ClCompile Include="..\src\map\battleground.c" />

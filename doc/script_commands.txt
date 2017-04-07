@@ -1049,6 +1049,7 @@ From here on, we will have the commands sorted as follow:
 11.- Homunculus commands.
 12.- Mercenary commands.
 13.- Party commands.
+14.- Achievement commands.
 
 =====================
 |1.- Basic commands.|
@@ -9444,6 +9445,71 @@ If <char id> is specified, the specified player is used rather than the attached
 The attached player will leave their clan. On a successful leave, true is returned,
 else false if the leave failed.
 If <char id> is specified, the specified player is used rather than the attached one.
+
+---------------------------------------
+
+============================
+|14.- Achievement commands.|
+============================
+---------------------------------------
+
+*achievementadd(<achievement id>{,<char id>})
+
+This function will add an achievement to the player's log for the attached
+player or the supplied <char id>. The objective requirements are not ignored
+when using this function.
+Returns true on success and false on failure.
+
+---------------------------------------
+
+*achievementremove(<achievement id>{,<char id>})
+
+This function will remove an achievement from the player's log for the attached
+player or the supplied <char id>.
+Returns true on success and false on failure.
+
+---------------------------------------
+
+*achievementinfo(<achievement id>,<type>{,<char id>})
+
+This function will return the specified <type> value for an achievement of the
+attached player or the supplied <char id>. If the player doesn't have the
+achievement active (no progress has been made), if the achievement doesn't
+exist -1 will be returned, or -2 will be returned on any other error such as
+an invalid <type>.
+
+Valid types:
+- ACHIEVEINFO_COUNT1
+- ACHIEVEINFO_COUNT2
+- ACHIEVEINFO_COUNT3
+- ACHIEVEINFO_COUNT4
+- ACHIEVEINFO_COUNT5
+- ACHIEVEINFO_COUNT6
+- ACHIEVEINFO_COUNT7
+- ACHIEVEINFO_COUNT8
+- ACHIEVEINFO_COUNT9
+- ACHIEVEINFO_COUNT10
+- ACHIEVEINFO_COMPLETE
+- ACHIEVEINFO_COMPLETEDATE
+- ACHIEVEINFO_GOTREWARD
+- ACHIEVEINFO_LEVEL (<achievement id> is useless for this)
+- ACHIEVEINFO_SCORE (<achievement id> is useless for this)
+
+---------------------------------------
+
+*achievementcomplete(<achievement id>{,<char id>})
+
+This function will complete an achievement for the attached player or the supplied
+<char id>. The objective requirements are ignored when using this function.
+Returns true on success and false on failure.
+
+---------------------------------------
+
+*achievementexists(<achievement id>{,<char id>});
+
+This function will return if the achievement exists on the player or the supplied
+<char id>.
+Returns true on success and false on failure.
 
 ---------------------------------------
 
