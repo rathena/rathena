@@ -4063,7 +4063,8 @@ void script_stop_sleeptimers(int id) {
 		if (!st)
 			break; // No more sleep timers
 
-		script_free_state(st);
+		if (st->oid == id)
+			script_free_state(st);
 	}
 }
 
