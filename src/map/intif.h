@@ -14,7 +14,7 @@ struct s_mercenary;
 struct s_elemental;
 struct mail_message;
 struct auction_data;
-struct storage_type;
+enum storage_type;
 
 int intif_parse(int fd);
 
