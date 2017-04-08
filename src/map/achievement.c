@@ -1071,25 +1071,39 @@ struct achievement_db *achievement_read_db_sub(struct config_setting_t *cs, int 
 			ShowWarning("achievement_read_db_sub: Invalid dependent format for achievement %d in \"%s\".\n", achievement_id, source);
 	}
 
-	if ((t = config_setting_get_member(cs, "reward")) && config_setting_is_list(t)) {
-		struct config_setting_t *tt = config_setting_get_elem(t, 0);
-		int nameid = 0, amount = 0, title_id = 0;
-		const char *script_char = NULL;
+	if ((t = config_setting_get_member(cs, "reward"))) {
+		if (config_setting_is_group(t)) {
+			if (config_setting_get_member(t, "itemid")) {
+				int nameid = 0;
 
-		if (config_setting_lookup_int(tt, "itemid", &nameid) && itemdb_exists(nameid))
-			entry->rewards.nameid = nameid;
-		else if (nameid && !itemdb_exists(nameid)) {
-			ShowWarning("achievement_read_db_sub: Invalid reward item ID %hu for achievement %d in \"%s\". Setting to 0.\n", nameid, achievement_id, source);
-			entry->rewards.nameid = nameid = 0;
+				if (config_setting_lookup_int(t, "itemid", &nameid) && itemdb_exists(nameid)) {
+					entry->rewards.nameid = nameid;
+					entry->rewards.amount = 1; // Default the amount to 1
+				} else if (nameid && !itemdb_exists(nameid)) {
+					ShowWarning("achievement_read_db_sub: Invalid reward item ID %hu for achievement %d in \"%s\". Setting to 0.\n", nameid, achievement_id, source);
+					entry->rewards.nameid = nameid = 0;
+				}
+
+				if (config_setting_get_member(t, "amount")) {
+					int amount = 0;
+
+					if (nameid && config_setting_lookup_int(t, "amount", &amount) && amount > 0)
+						entry->rewards.amount = amount;
+				}
+			}
+			if (config_setting_get_member(t, "script")) {
+				const char *script_char = NULL;
+
+				if (config_setting_lookup_string(t, "script", &script_char))
+					entry->rewards.script = parse_script(script_char, source, achievement_id, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+			}
+			if (config_setting_get_member(t, "titleid")) {
+				int title_id = 0;
+
+				if (config_setting_lookup_int(t, "titleid", &title_id) && title_id > 0)
+					entry->rewards.title_id = title_id;
+			}
 		}
-		if (nameid && config_setting_lookup_int(tt, "amount", &amount) && amount > 0)
-			entry->rewards.amount = amount;
-		else if (nameid) // No amount specified, but there is a valid nameid, default to 1
-			entry->rewards.amount = 1;
-		if (config_setting_lookup_string(tt, "script", &script_char))
-			entry->rewards.script = parse_script(script_char, source, achievement_id, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
-		if (config_setting_lookup_int(tt, "titleid", &title_id) && title_id > 0)
-			entry->rewards.title_id = title_id;
 	}
 
 	if (config_setting_lookup_int(cs, "score", &score) && score > 0)
