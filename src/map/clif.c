@@ -19245,11 +19245,11 @@ void clif_achievement_list_all(struct map_session_data *sd)
 	WFIFOHEAD(fd,len);
 	WFIFOW(fd, 0) = 0xa23;
 	WFIFOW(fd, 2) = len;
-	WFIFOL(fd, 4) = count; // Cannot tell what this is? But it's important, either way!
+	WFIFOL(fd, 4) = count; // Amount of achievements the player has in their list (started/completed)
 	WFIFOL(fd, 8) = sd->achievement_data.total_score; // Top number
 	WFIFOW(fd, 12) = sd->achievement_data.level; // Achievement Level (gold circle)
-	WFIFOL(fd, 14) = info[0]; // Achievements done (left number in bar)
-	WFIFOL(fd, 18) = info[1]; // Achievements TNL (right number in bar)
+	WFIFOL(fd, 14) = info[0]; // Achievement EXP (left number in bar)
+	WFIFOL(fd, 18) = info[1]; // Achievement EXP TNL (right number in bar)
 
 	for (i = 0; i < count; i++) {
 		WFIFOL(fd, i * 50 + 22) = (uint32)sd->achievement_data.achievements[i].achievement_id;
@@ -19284,8 +19284,8 @@ void clif_achievement_update(struct map_session_data *sd, struct achievement *ac
 	WFIFOW(fd, 0) = 0xa24;
 	WFIFOL(fd, 2) = sd->achievement_data.total_score; // Total Achievement Points (top of screen)
 	WFIFOW(fd, 6) = sd->achievement_data.level; // Achievement Level (gold circle)
-	WFIFOL(fd, 8) = info[0]; // Achievements done (left number in bar)
-	WFIFOL(fd, 12) = info[1]; // Achievements TNL (right number in bar)
+	WFIFOL(fd, 8) = info[0]; // Achievement EXP (left number in bar)
+	WFIFOL(fd, 12) = info[1]; // Achievement EXP TNL (right number in bar)
 	if (ach) {
 		WFIFOL(fd, 16) = ach->achievement_id; // Achievement ID
 		WFIFOB(fd, 20) = ach->complete; // Is it complete?
