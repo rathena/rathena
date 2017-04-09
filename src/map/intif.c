@@ -2130,6 +2130,9 @@ void intif_parse_achievements(int fd)
 				ShowError("intif_parse_achievementlog: Achievement %d not found in DB.\n", received[i].achievement_id);
 				continue;
 			}
+
+			received[i].score = adb->score;
+
 			if (received[i].complete == false) // Insert at the beginning
 				memcpy(&sd->achievement_data.achievements[sd->achievement_data.incompleteCount++], &received[i], sizeof(struct achievement));
 			else // Insert at the end

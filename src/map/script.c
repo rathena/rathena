@@ -23017,6 +23017,7 @@ struct script_function buildin_func[] = {
 	// Achievement System
 	BUILDIN_DEF(achievementinfo,"ii?"),
 	BUILDIN_DEF(achievementadd,"i?"),
+	BUILDIN_DEF(achievementremove,"i?"),
 	BUILDIN_DEF(achievementcomplete,"i?"),
 	BUILDIN_DEF(achievementexists,"i?"),
 
