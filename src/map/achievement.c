@@ -373,7 +373,7 @@ bool achievement_check_reward(struct map_session_data *sd, int achievement_id)
  */
 void achievement_get_titles(uint32 char_id)
 {
-	struct map_session_data *sd = map_id2sd(char_id);
+	struct map_session_data *sd = map_charid2sd(char_id);
 
 	if (sd) {
 		sd->titles = NULL;
