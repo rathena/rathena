@@ -18215,7 +18215,6 @@ void clif_clan_leave( struct map_session_data* sd ){
  * Acknowledge the client about change title result (ZC_ACK_CHANGE_TITLE).
  * 0A2F <result>.B <title_id>.L
  */
-//! TODO: Implement proper handling of this packet [secretdataz]
 void clif_change_title_ack(struct map_session_data *sd, unsigned char result, unsigned long title_id)
 {
 #if PACKETVER >= 20150513
@@ -18247,29 +18246,23 @@ void clif_parse_change_title(int fd, struct map_session_data *sd)
 
 	title_id = RFIFOL(fd, 2);
 
-	if (title_id <= 0) {
+	if( title_id == sd->status.title_id ){
+		// It is exactly the same as the old one
+		return;
+	}else if( title_id <= 0 ){
 		sd->status.title_id = 0;
-		clif_name_area(&sd->bl);
-		clif_change_title_ack(sd, 0, title_id);
-		return;
-	}
+	}else{
+		ARR_FIND(0, sd->titleCount, i, sd->titles[i] == title_id);
+		if( i == sd->titleCount ){
+			clif_change_title_ack(sd, 1, title_id);
+			return;
+		}
 
-	ARR_FIND(0, sd->titleCount, i, sd->titles[i] == title_id);
-	if (i == sd->titleCount) {
-		clif_change_title_ack(sd, 1, title_id);
-		return;
+		sd->status.title_id = title_id;
 	}
-
-	sd->status.title_id = title_id;
+	
 	clif_name_area(&sd->bl);
 	clif_change_title_ack(sd, 0, title_id);
-
-	/*
-	WFIFOHEAD(fd, packet_len(0xa2e));
-	WFIFOW(fd, 0) = 0xa2e;
-	WFIFOL(fd, 2) = sd->status.title_id;
-	WFIFOSET(fd, packet_len(0xa2e));
-	*/
 }
 
 /**
