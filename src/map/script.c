@@ -13168,10 +13168,10 @@ BUILDIN_FUNC(strmobinfo)
 	case 1: script_pushstrcopy(st,mob_db(class_)->name); break;
 	case 2: script_pushstrcopy(st,mob_db(class_)->jname); break;
 	case 3: script_pushint(st,mob_db(class_)->lv); break;
-	case 4: script_pushint(st,mob_db(class_)->status.max_hp); break;
-	case 5: script_pushint(st,mob_db(class_)->status.max_sp); break;
-	case 6: script_pushint(st,mob_db(class_)->base_exp); break;
-	case 7: script_pushint(st,mob_db(class_)->job_exp); break;
+	case 4: script_pushint(st,u32min(mob_db(class_)->status.max_hp,INT32_MAX)); break;
+	case 5: script_pushint(st,u32min(mob_db(class_)->status.max_sp,INT32_MAX)); break;
+	case 6: script_pushint(st,u32min(mob_db(class_)->base_exp,INT32_MAX)); break;
+	case 7: script_pushint(st,u32min(mob_db(class_)->job_exp,INT32_MAX)); break;
 	default:
 		script_pushint(st,0);
 		break;
@@ -16787,9 +16787,9 @@ BUILDIN_FUNC(getmonsterinfo)
 	switch ( script_getnum(st,3) ) {
 		case MOB_NAME:		script_pushstrcopy(st,mob->jname); break;
 		case MOB_LV:		script_pushint(st,mob->lv); break;
-		case MOB_MAXHP:		script_pushint(st,mob->status.max_hp); break;
-		case MOB_BASEEXP:	script_pushint(st,mob->base_exp); break;
-		case MOB_JOBEXP:	script_pushint(st,mob->job_exp); break;
+		case MOB_MAXHP:		script_pushint(st,u32min(mob->status.max_hp,INT32_MAX)); break;
+		case MOB_BASEEXP:	script_pushint(st,u32min(mob->base_exp,INT32_MAX)); break;
+		case MOB_JOBEXP:	script_pushint(st,u32min(mob->job_exp,INT32_MAX)); break;
 		case MOB_ATK1:		script_pushint(st,mob->status.rhw.atk); break;
 		case MOB_ATK2:		script_pushint(st,mob->status.rhw.atk2); break;
 		case MOB_DEF:		script_pushint(st,mob->status.def); break;
@@ -16807,7 +16807,7 @@ BUILDIN_FUNC(getmonsterinfo)
 		case MOB_RACE:		script_pushint(st,mob->status.race); break;
 		case MOB_ELEMENT:	script_pushint(st,mob->status.def_ele); break;
 		case MOB_MODE:		script_pushint(st,mob->status.mode); break;
-		case MOB_MVPEXP:	script_pushint(st,mob->mexp); break;
+		case MOB_MVPEXP:	script_pushint(st,u32min(mob->mexp,INT32_MAX)); break;
 		default: script_pushint(st,-1); //wrong Index
 	}
 	return SCRIPT_CMD_SUCCESS;
