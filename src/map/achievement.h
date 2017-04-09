@@ -55,6 +55,10 @@ enum e_achievement_info {
 	ACHIEVEINFO_MAX,
 };
 
+struct achievement_mob {
+	int mod_id;
+};
+
 struct achievement_target {
 	int mob;
 	int count;

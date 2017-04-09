@@ -33,10 +33,6 @@ static DBMap *achievement_db = NULL; // int achievement_id -> struct achievement
 static DBMap *achievementmobs_db = NULL; // Avoids checking achievements on every mob killed
 static void achievement_db_free_sub(struct achievement_db *achievement, bool free);
 
-struct achievementmob {
-	int mod_id;
-};
-
 /**
  * Searches an achievement by ID
  * @param achievement_id: ID to lookup
@@ -58,6 +54,8 @@ struct achievement_db *achievement_search(int achievement_id)
  */
 bool achievement_mobexists(int mob_id)
 {
+	if (!battle_config.feature_achievement)
+		return false;
 	return idb_exists(achievementmobs_db, mob_id);
 }
 
@@ -1032,9 +1030,10 @@ struct achievement_db *achievement_read_db_sub(struct config_setting_t *cs, int 
 				continue;
 			}
 			if (mob_id && group == AG_BATTLE && !idb_exists(achievementmobs_db, mob_id)) {
-				struct achievementmob *entrymob = NULL;
-				CREATE(entrymob, struct achievementmob, 1);
-				idb_put(achievementmobs_db,mob_id,entrymob);
+				struct achievement_mob *entrymob = NULL;
+
+				CREATE(entrymob, struct achievement_mob, 1);
+				idb_put(achievementmobs_db, mob_id, entrymob);
 			}
 
 			RECREATE(entry->targets, struct achievement_target, entry->target_count + 1);
