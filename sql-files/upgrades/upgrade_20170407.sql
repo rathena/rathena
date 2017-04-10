@@ -4,7 +4,6 @@ ALTER TABLE `char`
 --
 -- Table structure for table `achievement`
 --
--- `char_id`,`id`,`score`,`complete`,`count1`,`count2`,`count3`,`count4`,`count5`,`count6`,`count7`,`count8`,`count9`,`count10`,`completeDate`,`rewardDate`
 
 CREATE TABLE IF NOT EXISTS `achievement` (
   `char_id` int(11) unsigned NOT NULL default '0',
