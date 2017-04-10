@@ -260,6 +260,7 @@ struct map_session_data {
 		bool ignoretimeout; // Prevent the SECURE_NPCTIMEOUT function from closing current script.
 		unsigned int workinprogress : 2; // See clif.h::e_workinprogress
 		bool pc_loaded; // Ensure inventory data and status data is loaded before we calculate player stats
+		bool keepshop; // Whether shop data should be removed when the player disconnects
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -923,7 +924,10 @@ short pc_maxaspd(struct map_session_data *sd);
 	( (class_) >= JOB_BABY_RUNE      && (class_) <= JOB_BABY_MECHANIC2 ) || \
 	( (class_) >= JOB_SUPER_NOVICE_E && (class_) <= JOB_SUPER_BABY_E   ) || \
 	( (class_) >= JOB_KAGEROU        && (class_) <= JOB_OBORO          ) || \
-	  (class_) == JOB_REBELLION      || (class_) == JOB_SUMMONER            \
+	  (class_) == JOB_REBELLION      || (class_) == JOB_SUMMONER         || \
+	  (class_) == JOB_BABY_SUMMONER 				     || \
+	( (class_) >= JOB_BABY_NINJA     && (class_) <= JOB_BABY_REBELLION ) || \
+	  (class_) == JOB_BABY_STAR_GLADIATOR2 \
 )
 #define pcdb_checkid(class_) pcdb_checkid_sub((unsigned int)class_)
 

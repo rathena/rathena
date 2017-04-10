@@ -3007,7 +3007,7 @@ mosk_in,148,274,1	script	Anna#mos	4_F_RUSCHILD,{
 					}
 					break;
 				case 5:
-					mes "[Anna]";;
+					mes "[Anna]";
 					mes "Hmm ~ ~ ~ ~ ";
 					next;
 					mes "- Anna frowns at me and sticks out her tongue.";
@@ -5199,7 +5199,7 @@ mosk_in,221,43,0	script	#bowl	HIDDEN_NPC,{
 					if (.@m == 0) .@bat++;
 					if (.@m == 1) .@mush++;
 					if (.@m == 2) .locker++;
-					.@maho++;;
+					.@maho++;
 				}
 				if (.@m >= 3)
 					specialeffect EF_POISONHIT;
@@ -7770,7 +7770,7 @@ moscovia,213,216,3	script	Ryubaba#rus08	4_F_RUSWOMAN2,{
 				warp "moscovia",220,210;
 				end;
 			}
-			mes "["+ strcharinfo(0) +"]";;
+			mes "["+ strcharinfo(0) +"]";
 			mes "Yes, you are really beautiful.";
 			emotion e_heh,1;
 			next;
@@ -9846,7 +9846,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 		next;
 		mes "[Baba Yaga]";
 		mes "I succeeded in sealing Koshei away by using a girl who was magically strong. Sadly the girl also had to remain in the same condition as Koshei in order to maintain the seal.";
-		next;;
+		next;
 		mes "[Baba Yaga]";
 		mes "However, after so many years it was impossible to keep him sealed with Maria's power alone.";
 		next;
@@ -11087,7 +11087,7 @@ mosk_dun01,3,3,3	script	Koshei GlobalVar#admin	4_F_RUSCHILD,{
 			mes "[Koshei GlobalVar]";
 			mes "GlobalVar $@rus_req02 will now be set to '1'";
 			$@rus_req02 = 1;
-			donpcevent "Koshei#rus47::OnEnable";;
+			donpcevent "Koshei#rus47::OnEnable";
 		case 3:
 			close;
 		}

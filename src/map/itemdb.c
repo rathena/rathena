@@ -1069,7 +1069,7 @@ bool itemdb_parse_roulette_db(void)
 	uint32 count = 0;
 
 	// retrieve all rows from the item database
-	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", db_roulette_table)) {
+	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", roulette_table)) {
 		Sql_ShowDebug(mmysql_handle);
 		return false;
 	}
@@ -1149,7 +1149,7 @@ bool itemdb_parse_roulette_db(void)
 		}
 	}
 
-	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, db_roulette_table);
+	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, roulette_table);
 
 	return true;
 }
@@ -1490,12 +1490,8 @@ static int itemdb_readdb(void){
 static int itemdb_read_sqldb(void) {
 
 	const char* item_db_name[] = {
-#ifdef RENEWAL
-		item_db_re_db,
-#else
-		item_db_db,
-#endif
-		item_db2_db
+		item_table,
+		item2_table
 	};
 	int fi;
 
@@ -1609,7 +1605,7 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 
 		if (!strchr(p, ','))
 		{
-			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
+			ShowError("itemdb_read_randomopt: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
 			continue;
 		}
 
@@ -1817,32 +1813,16 @@ static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
 }
 
 /**
-* Reload Item DB
-*/
-void itemdb_reload(void) {
-	struct s_mapiterator* iter;
-	struct map_session_data* sd;
+ * Re-link monster drop data with item data
+ * Fixes the need of a @reloadmobdb after a @reloaditemdb
+ * @author Epoque
+ */
+void itemdb_reload_itemmob_data(void) {
+	int i;
 
-	int i,d,k;
-
-	itemdb_group->clear(itemdb_group, itemdb_group_free);
-	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
-	itemdb->clear(itemdb, itemdb_final_sub);
-	db_clear(itemdb_combo);
-	if (battle_config.feature_roulette)
-		itemdb_roulette_free();
-
-	// read new data
-	itemdb_read();
-	cashshop_reloaddb();
-
-	if (battle_config.feature_roulette)
-		itemdb_parse_roulette_db();
-
-	//Epoque's awesome @reloaditemdb fix - thanks! [Ind]
-	//- Fixes the need of a @reloadmobdb after a @reloaditemdb to re-link monster drop data
 	for( i = 0; i < MAX_MOB_DB; i++ ) {
 		struct mob_db *entry = mob_db(i);
+		int d, k;
 
 		for(d = 0; d < MAX_MOB_DROP; d++) {
 			struct item_data *id;
@@ -1864,6 +1844,30 @@ void itemdb_reload(void) {
 			id->mob[k].id = i;
 		}
 	}
+}
+
+/**
+* Reload Item DB
+*/
+void itemdb_reload(void) {
+	struct s_mapiterator* iter;
+	struct map_session_data* sd;
+
+	itemdb_group->clear(itemdb_group, itemdb_group_free);
+	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
+	itemdb->clear(itemdb, itemdb_final_sub);
+	db_clear(itemdb_combo);
+	if (battle_config.feature_roulette)
+		itemdb_roulette_free();
+
+	// read new data
+	itemdb_read();
+	cashshop_reloaddb();
+
+	if (battle_config.feature_roulette)
+		itemdb_parse_roulette_db();
+
+	itemdb_reload_itemmob_data();
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();

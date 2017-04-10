@@ -954,7 +954,7 @@ This special label triggers when a player kills another player. The variable
 
 OnNPCKillEvent:
 
-This special label triggers when a player kills a monster. The variable
+This special label triggers when a player kills a monster without label. The variable
 'killedrid' is set to the Class (mob ID) of the monster killed.
 
 OnPCLoadMapEvent:
@@ -3479,7 +3479,7 @@ Example 2:
 
 	setarray .@item[0],512,513,514;
 	setarray .@amount[0],10,5,5;
-	if (!checkweight(.@item,.@amount)) {
+	if (!checkweight2(.@item,.@amount)) {
 		mes "Sorry, you cannot hold this amount of fruit!";
 	}
 
@@ -5605,6 +5605,8 @@ everything not equippable by the new job class anyway.
 These commands will make a character sit or stand.
 If no character is specified, the command will run for the invoking character.
 
+Additionnally Sitting constant is true when the character is sitting, false otherwise.
+
 ---------------------------------------
 
 *disguise <Monster ID>{,<char_id>};
@@ -6116,6 +6118,18 @@ the attached NPC will display the message.
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.
     npctalk "Hello "+strcharinfo(0)+", how are you?";
+
+---------------------------------------
+
+*chatmes "<message>"{,"<NPC name>"};
+
+This command will display a message in the waitingroom (chat) of the NPC.
+If the <NPC name> option is given, then that NPC will display the message, else
+the attached NPC will display the message.
+If the NPC is not in a waitingroom, nothing happens.
+
+    // Everyone in the waitingroom will see this message:
+    chatmes "Waiting 5 minutes until the next match will start";
 
 ---------------------------------------
 
@@ -6715,16 +6729,22 @@ The optional parameter 'type' is used in the 'skill_damage' mapflag:
 
 ---------------------------------------
 
-*setbattleflag "<battle flag>",<value>;
+*setbattleflag "<battle flag>",<value>{,<reload>};
 *getbattleflag("<battle flag>")
 
 Sets or gets the value of the given battle flag.
 Battle flags are the flags found in the battle / *.conf files and is also used in Lupus' variable rates script.
+If the reload value is given then the server will attempt to reload monster data
+to properly apply the new rates. This applies to EXP/Drop type configs. The server
+will only attempt to reload specific configs.
 
 Examples:
 
-// Will set the base experience rate to 20x (2000%)
+// Will set the base experience rate to 20x (2000%) - Monster data will continue to use previous rates at server start
 	setBattleFlag "base_exp_rate",2000;
+
+// Will set the base experience rate to 20x (2000%) - Monster data will be reloaded to new value
+	setBattleFlag "base_exp_rate",2000,true;
 	
 // Will return the value of the base experience rate (when used after the above example, it would print 2000).
 	mes getBattleFlag("base_exp_rate");
@@ -8478,7 +8498,7 @@ Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410)
 Map Mark Color, when used, creates a mark in the user's mini map on the position of the NPC,
 the available color values are:
 
-0 - No Marker
+0 - No Marker (default)
 1 - Yellow Marker
 2 - Green Marker
 3 - Purple Marker

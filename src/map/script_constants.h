@@ -876,7 +876,7 @@
 	export_constant(SC_VIOLENTGALE);
 	export_constant(SC_WATK_ELEMENT);
 	export_constant(SC_ARMOR);
-	export_constant(SC_ARMOR_ELEMENT);
+	export_constant(SC_ARMOR_ELEMENT_WATER);
 	export_constant(SC_NOCHAT);
 	export_constant(SC_BABY);
 	export_constant(SC_AURABLADE);
@@ -1439,6 +1439,9 @@
 	export_constant(SC_GEFFEN_MAGIC2);
 	export_constant(SC_GEFFEN_MAGIC3);
 	export_constant(SC_MAXPAIN);
+	export_constant(SC_ARMOR_ELEMENT_EARTH);
+	export_constant(SC_ARMOR_ELEMENT_FIRE);
+	export_constant(SC_ARMOR_ELEMENT_WIND);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -2532,6 +2535,7 @@
 	export_constant(RC2_BIOLAB);
 	export_constant(RC2_MANUK);
 	export_constant(RC2_SPLENDIDE);
+	export_constant(RC2_SCARABA);
 	export_constant(RC2_MAX);
 
 	/* classes */
