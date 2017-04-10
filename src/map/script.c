@@ -18434,6 +18434,94 @@ BUILDIN_FUNC(setcell)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Gets a free cell in the specified area.
+ * getfreecell "<map name>",<rX>,<rY>{,<x>,<y>,<rangeX>,<rangeY>,<flag>};
+ */
+BUILDIN_FUNC(getfreecell)
+{
+	const char *mapn = script_getstr(st, 2), *name;
+	char prefix;
+	struct map_session_data *sd;
+	int64 num;
+	int16 m, x = 0, y = 0;
+	int rx = -1, ry = -1, flag = 1;
+
+	sd = map_id2sd(st->rid);
+
+	if (!data_isreference(script_getdata(st, 3))) {
+		ShowWarning("script: buildin_getfreecell: rX is not a variable.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!data_isreference(script_getdata(st, 4))) {
+		ShowWarning("script: buildin_getfreecell: rY is not a variable.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (is_string_variable(reference_getname(script_getdata(st, 3)))) {
+		ShowWarning("script: buildin_getfreecell: rX is a string, must be an INT.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (is_string_variable(reference_getname(script_getdata(st, 4)))) {
+		ShowWarning("script: buildin_getfreecell: rY is a string, must be an INT.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_hasdata(st, 5))
+		x = script_getnum(st, 5);
+
+	if (script_hasdata(st, 6))
+		y = script_getnum(st, 6);
+
+	if (script_hasdata(st, 7))
+		rx = script_getnum(st, 7);
+
+	if (script_hasdata(st, 8))
+		ry = script_getnum(st, 8);
+
+	if (script_hasdata(st, 9))
+		flag = script_getnum(st, 9);
+
+	if (sd && strcmp(mapn, "this") == 0)
+		m = sd->bl.m;
+	else
+		m = map_mapname2mapid(mapn);
+
+	map_search_freecell(NULL, m, &x, &y, rx, ry, flag);
+
+	// Set MapX
+	num = st->stack->stack_data[st->start + 3].u.num;
+	name = get_str(num&0x00ffffff);
+	prefix = *name;
+
+	if (not_server_variable(prefix))
+		sd = script_rid2sd(st);
+	else
+		sd = NULL;
+
+	set_reg(st, sd, num, name, (void*)__64BPRTSIZE((int)x), script_getref(st, 3));
+
+	// Set MapY
+	num = st->stack->stack_data[st->start + 4].u.num;
+	name = get_str(num&0x00ffffff);
+	prefix = *name;
+
+	if (not_server_variable(prefix))
+		sd = script_rid2sd(st);
+	else
+		sd = NULL;
+
+	set_reg(st, sd, num, name, (void*)__64BPRTSIZE((int)y), script_getref(st, 4));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  * Mercenary Commands
  *------------------------------------------*/
@@ -22720,6 +22808,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(openauction,"?"),
 	BUILDIN_DEF(checkcell,"siii"),
 	BUILDIN_DEF(setcell,"siiiiii"),
+	BUILDIN_DEF(getfreecell,"srr?????"),
 	BUILDIN_DEF(setwall,"siiiiis"),
 	BUILDIN_DEF(delwall,"s"),
 	BUILDIN_DEF(searchitem,"rs"),
