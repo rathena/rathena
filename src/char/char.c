@@ -2217,8 +2217,10 @@ bool char_checkdb(void){
 	};
 	ShowInfo("Start checking DB integrity\n");
 	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can acces them in sql-server
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` LIMIT 1;", sqltable[i]) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` LIMIT 1;", sqltable[i]) ){
+			Sql_ShowDebug(sql_handle);
 			return false;
+		}
 	}
 	//checking char_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`account_id`,`char_num`,`name`,`class`,"
