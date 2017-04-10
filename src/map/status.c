@@ -2213,11 +2213,11 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				if (tsc) {
 					if ((tsc->option&hide_flag) && !is_boss && (tsd->special_state.perfect_hiding || !is_detect))
 						return false;
-					if ((tsc->data[SC_CLOAKINGEXCEED] || tsc->data[SC_SUHIDE]) && !is_boss && (tsd->special_state.perfect_hiding || is_detect))
+					if (tsc->data[SC_CLOAKINGEXCEED] && !is_boss && (tsd->special_state.perfect_hiding || is_detect))
 						return false; // Works against insect and demon but not against bosses
 					if (tsc->data[SC__FEINTBOMB] && (is_boss || is_detect))
 						return false; // Works against all
-					if ((tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD]) && !(is_boss || is_detect) && (!skill_id || (!flag && src)))
+					if ((tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_SUHIDE]) && !(is_boss || is_detect) && (!skill_id || (!flag && src)))
 						return false; // Insect, demon, and boss can detect
 				}
 			}
@@ -2292,7 +2292,7 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 				}
 				break;
 			default:
-				if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD]) && !is_boss && !is_detector)
+				if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_SUHIDE]) && !is_boss && !is_detector)
 					return 0;
 		}
 	}
@@ -10832,7 +10832,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val4 = status_get_lv(src) / 12;
 			break;
 		case SC_BITESCAR:
-			val2 = /*status_get_max_hp(bl) /*/ 2 * val1; // MHP% damage TODO: What's the amount?
+			val2 = (status_get_max_hp(bl) * (val1 + (status_get_dex(src) / 25)) / 100); // MHP% damage
 			tick_time = 1000;
 			val4 = tick / tick_time;
 			break;

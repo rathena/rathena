@@ -6681,7 +6681,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		if (sd && pc_checkskill(sd, SU_SPIRITOFLAND))
 			sc_start(src, src, SC_DORAM_MATK, 100, sd->status.base_level, skill_get_time(SU_SPIRITOFLAND, 1));
- 		skill_addtimerskill(bl, tick + 100, bl->id, 0, 0, SU_SV_ROOTTWIST_ATK, skill_lv, skill_get_type(SU_SV_ROOTTWIST_ATK), flag|SD_ANIMATION);
+ 		skill_addtimerskill(bl, tick + 1000, bl->id, 0, 0, SU_SV_ROOTTWIST_ATK, skill_lv, skill_get_type(SU_SV_ROOTTWIST_ATK), flag|SD_ANIMATION);
 		break;
 
 	case KN_AUTOCOUNTER:
