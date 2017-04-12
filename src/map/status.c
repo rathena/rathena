@@ -682,7 +682,7 @@ void initChangeTables(void)
 	set_sc( NC_ANALYZE		, SC_ANALYZE		, SI_ANALYZE		, SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2 );
 	set_sc( NC_MAGNETICFIELD	, SC_MAGNETICFIELD	, SI_MAGNETICFIELD	, SCB_NONE );
 	set_sc( NC_NEUTRALBARRIER	, SC_NEUTRALBARRIER	, SI_NEUTRALBARRIER	, SCB_DEF|SCB_MDEF );
-	set_sc( NC_STEALTHFIELD		, SC_STEALTHFIELD	, SI_STEALTHFIELD	, SCB_NONE );
+	set_sc( NC_STEALTHFIELD		, SC_STEALTHFIELD	, SI_STEALTHFIELD	, SCB_SPEED );
 
 	/* Royal Guard */
 	set_sc( LG_REFLECTDAMAGE	, SC_REFLECTDAMAGE	, SI_LG_REFLECTDAMAGE	, SCB_NONE );
@@ -1188,7 +1188,6 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_MERC_SPUP] |= SCB_MAXSP;
 	StatusChangeFlagTable[SC_MERC_HITUP] |= SCB_HIT;
 
-	StatusChangeFlagTable[SC_STEALTHFIELD_MASTER] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_HALLUCINATIONWALK_POSTDELAY] |= SCB_SPEED|SCB_ASPD;
 	StatusChangeFlagTable[SC_PARALYSE] |= SCB_FLEE|SCB_SPEED|SCB_ASPD;
 	StatusChangeFlagTable[SC_DEATHHURT] |= SCB_REGEN;
@@ -6425,7 +6424,7 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 	if(sc->data[SC_BURNING])
 		mdef -= 25 * mdef / 100;
 	if( sc->data[SC_NEUTRALBARRIER] )
-		mdef += mdef * sc->data[SC_NEUTRALBARRIER]->val3 / 100;
+		mdef += mdef * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
 	if(sc->data[SC_ANALYZE])
 		mdef -= mdef * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
 	if(sc->data[SC_SYMPHONYOFLOVER])
@@ -10207,12 +10206,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			sc_start(src,bl,SC_STRIPWEAPON,100,val1,tick);
 			sc_start(src,bl,SC_STRIPSHIELD,100,val1,tick);
 			break;
-		case SC__FEINTBOMB:
-			val2 = 1; // -1 SP each iteration
-			val4 = tick / 1000;
-			tick_time = 1000;
-			val_flag |= 1|2;
-			break;
 		case SC_GN_CARTBOOST:
 			if( val1 < 3 )
 				val2 = 50;
@@ -10725,8 +10718,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val4 = 0;
 			break;
 		case SC_NEUTRALBARRIER:
-			val2 = 10 + val1 * 5; // Def
-			val3 = 10 + val1 * 5; // Mdef
+			val2 = 10 + val1 * 5; // Def/Mdef
+			tick = -1;
 			break;
 
 		/* Rebellion */
@@ -11161,7 +11154,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC__FEINTBOMB:
 			sc->option |= OPTION_INVISIBLE;
-			opt_flag = 2;
+			opt_flag |= 2|4;
 			break;
 		case SC_SIGHT:
 			sc->option |= OPTION_SIGHT;
@@ -12180,7 +12173,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		break;
 	case SC__FEINTBOMB:
 		sc->option &= ~OPTION_INVISIBLE;
-		opt_flag |= 2;
+		opt_flag |= 2|4;
 		break;
 	case SC_SIGHT:
 		sc->option &= ~OPTION_SIGHT;
@@ -12861,15 +12854,6 @@ int status_change_timer(int tid, unsigned int tick, int id, intptr_t data)
 			break;
 		sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
 		return 0;
-
-	case SC__FEINTBOMB:
-		if( --(sce->val4) >= 0) {
-			if( !status_charge(bl, 0, sce->val2) )
-				break;
-			sc_timer_next(1000 + tick, status_change_timer, bl->id, data);
-			return 0;
-		}
-		break;
 
 	case SC_STRIKING:
 		if( --(sce->val4) >= 0 ) {
