@@ -1353,8 +1353,10 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if(sc->data[SC_GRANITIC_ARMOR])
 			damage -= damage * sc->data[SC_GRANITIC_ARMOR]->val2 / 100;
 
-		if(sc->data[SC_PAIN_KILLER])
+		if(sc->data[SC_PAIN_KILLER]) {
 			damage -= sc->data[SC_PAIN_KILLER]->val3;
+			damage = i64max(damage, 1);
+		}
 
 		if( sc->data[SC_DARKCROW] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT )
 			damage += damage * sc->data[SC_DARKCROW]->val2 / 100;
