@@ -2536,6 +2536,7 @@ This function returns the item ID of the item equipped in the equipment slot
 specified on the invoking character. If nothing is equipped there, it returns -1. 
 Valid equipment slots are:
 
+EQI_COMPOUND_ON (-1)      - Item slot that calls this script (In context of item script)
 EQI_ACC_L (0)             - Accessory 1
 EQI_ACC_R (1)             - Accessory 2
 EQI_SHOES (2)             - Footgear (shoes, boots)
@@ -2557,9 +2558,6 @@ EQI_SHADOW_SHIELD (17)    - Shadow Shield
 EQI_SHADOW_SHOES (18)     - Shadow Shoes
 EQI_SHADOW_ACC_R (19)     - Shadow Accessory 2
 EQI_SHADOW_ACC_L (20)     - Shadow Accessory 1
-
-If -1 is passed as the equipment slot argument then equipment slot for the item calling this function, 
-assuming it is called by an item script, will be used.
 
 Notice that a few items occupy several equipment slots, and if the character is 
 wearing such an item, 'getequipid' will return its ID number for either slot.
@@ -2697,9 +2695,6 @@ this is +10:
 This function returns the weapon level for the weapon equipped in the specified 
 equipment slot on the invoking character. For a list of equipment slots see 
 'getequipid'.
-
-If -1 is passed as the equipment slot argument then the weapon level for the item calling this function, 
-assuming it is called by an item script, will be returned. Otherwise, 0 will be returned.
 
 Only EQI_HAND_L and EQI_HAND_R normally make sense, since only weapons have
 a weapon level. You can, however, probably, use this field for other equippable
