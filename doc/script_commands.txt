@@ -4369,7 +4369,6 @@ you have maximum. Like 'heal', this will not call up any animations or effects.
 *recovery <type>{,<option>,<revive_flag>{,<map name>}};
 
 This command will revive and fully restore the HP/SP of the selected characters.
-It returns 1 upon successful use.
 
 <type> is the target, and determines the <option> parameter:
  0: Player  -> Character ID number
