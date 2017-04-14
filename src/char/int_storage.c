@@ -173,7 +173,7 @@ static void inter_storage_checkDB(void) {
 	int i = 0;
 	// Checking storage tables
 	for (i = 0; i < interserv_config.storage_count; i++) {
-		if (!&interserv_config.storages[i] || !interserv_config.storages[i].name || !interserv_config.storages[i].table || interserv_config.storages[i].table == '\0')
+		if (!&interserv_config.storages[i] || !interserv_config.storages[i].name || !interserv_config.storages[i].table || *interserv_config.storages[i].table == '\0')
 			continue;
 		if (SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`account_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
 			"`attribute`,`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,"

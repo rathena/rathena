@@ -193,6 +193,19 @@
 
 	export_constant(JOB_SUMMONER);
 
+	export_constant(JOB_BABY_SUMMONER);
+
+	export_constant(JOB_BABY_NINJA);
+	export_constant(JOB_BABY_KAGEROU);
+	export_constant(JOB_BABY_OBORO);
+	export_constant(JOB_BABY_TAEKWON);
+	export_constant(JOB_BABY_STAR_GLADIATOR);
+	export_constant(JOB_BABY_SOUL_LINKER);
+	export_constant(JOB_BABY_GUNSLINGER);
+	export_constant(JOB_BABY_REBELLION);
+
+	export_constant(JOB_BABY_STAR_GLADIATOR2);
+
 	/* EA jobs */
 	script_set_constant("EAJL_2_1",JOBL_2_1,false);
 	script_set_constant("EAJL_2_2",JOBL_2_2,false);
@@ -266,6 +279,10 @@
 	script_set_constant("EAJ_BABY_ACOLYTE",MAPID_BABY_ACOLYTE,false);
 	script_set_constant("EAJ_BABY_MERCHANT",MAPID_BABY_MERCHANT,false);
 	script_set_constant("EAJ_BABY_THIEF",MAPID_BABY_THIEF,false);
+	script_set_constant("EAJ_BABY_TAEKWON",MAPID_BABY_TAEKWON,false);
+	script_set_constant("EAJ_BABY_GUNSLINGER",MAPID_BABY_GUNSLINGER,false);
+	script_set_constant("EAJ_BABY_NINJA",MAPID_BABY_NINJA,false);
+	script_set_constant("EAJ_BABY_SUMMONER",MAPID_BABY_SUMMONER,false);
 
 	script_set_constant("EAJ_BABY_KNIGHT",MAPID_BABY_KNIGHT,false);
 	script_set_constant("EAJ_BABY_WIZARD",MAPID_BABY_WIZARD,false);
@@ -273,6 +290,9 @@
 	script_set_constant("EAJ_BABY_PRIEST",MAPID_BABY_PRIEST,false);
 	script_set_constant("EAJ_BABY_BLACKSMITH",MAPID_BABY_BLACKSMITH,false);
 	script_set_constant("EAJ_BABY_ASSASSIN",MAPID_BABY_ASSASSIN,false);
+	script_set_constant("EAJ_BABY_STAR_GLADIATOR",MAPID_BABY_STAR_GLADIATOR,false);
+	script_set_constant("EAJ_BABY_REBELLION",MAPID_BABY_REBELLION,false);
+	script_set_constant("EAJ_BABY_KAGEROUOBORO",MAPID_BABY_KAGEROUOBORO,false);
 
 	script_set_constant("EAJ_BABY_CRUSADER",MAPID_BABY_CRUSADER,false);
 	script_set_constant("EAJ_BABY_SAGE",MAPID_BABY_SAGE,false);
@@ -280,6 +300,7 @@
 	script_set_constant("EAJ_BABY_MONK",MAPID_BABY_MONK,false);
 	script_set_constant("EAJ_BABY_ALCHEMIST",MAPID_BABY_ALCHEMIST,false);
 	script_set_constant("EAJ_BABY_ROGUE",MAPID_BABY_ROGUE,false);
+	script_set_constant("EAJ_BABY_SOUL_LINKER",MAPID_BABY_SOUL_LINKER,false);
 
 	script_set_constant("EAJ_RUNE_KNIGHT",MAPID_RUNE_KNIGHT,false);
 	script_set_constant("EAJ_WARLOCK",MAPID_WARLOCK,false);
@@ -876,7 +897,7 @@
 	export_constant(SC_VIOLENTGALE);
 	export_constant(SC_WATK_ELEMENT);
 	export_constant(SC_ARMOR);
-	export_constant(SC_ARMOR_ELEMENT);
+	export_constant(SC_ARMOR_ELEMENT_WATER);
 	export_constant(SC_NOCHAT);
 	export_constant(SC_BABY);
 	export_constant(SC_AURABLADE);
@@ -1439,6 +1460,9 @@
 	export_constant(SC_GEFFEN_MAGIC2);
 	export_constant(SC_GEFFEN_MAGIC3);
 	export_constant(SC_MAXPAIN);
+	export_constant(SC_ARMOR_ELEMENT_EARTH);
+	export_constant(SC_ARMOR_ELEMENT_FIRE);
+	export_constant(SC_ARMOR_ELEMENT_WIND);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif
@@ -2532,6 +2556,7 @@
 	export_constant(RC2_BIOLAB);
 	export_constant(RC2_MANUK);
 	export_constant(RC2_SPLENDIDE);
+	export_constant(RC2_SCARABA);
 	export_constant(RC2_MAX);
 
 	/* classes */

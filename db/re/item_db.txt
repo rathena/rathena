@@ -1685,7 +1685,7 @@
 2479,White_Wing_Boots,White Wing Boots,4,20,,400,,18,,1,0x00000800,63,2,64,,100,1,0,{ bonus bAgi,2; bonus2 bSkillUseSP,"RA_AIMEDBOLT",10; },{},{}
 2480,Black_Wing_Boots,Black Wing Boots,4,20,,400,,18,,1,0x00000800,56,2,64,,100,1,0,{ bonus bInt,2; bonus bMaxSPrate,5; },{},{}
 2481,Rune_Boots,Rune Boots,4,20,,100,,5,,0,0xFFFFFFFF,63,2,64,,0,1,0,{ .@a = readparam(bStr); .@b = readparam(bInt); bonus bBaseAtk,(.@a>=120)?(20):((.@a>=90)?(10):(0)); bonus bMatkRate,(.@b>=120)?(5):((.@b>=90)?(3):(0)); },{},{}
-2482,Shoes_Of_Valor,Shoes Of Valor,4,0,,0,,4,,0,0xFFFFFFFF,63,2,64,,0,0,0,{ skill "AL_HEAL",1; bonus bUseSPrate,10; },{},{}
+2482,Shoes_Of_Valor,Shoes Of Valor,4,0,,0,,4,,0,0xFFFFFFFF,63,2,64,,0,0,0,{ skill "AL_INCAGI",1; bonus bUseSPrate,10; },{},{}
 2483,Siege_Greave,Siege Greaves,4,10,,750,,30,,1,0x006444A2,63,2,64,,95,1,0,{ bonus bMdef,1; bonus2 bSubRace,RC_DemiHuman,2; bonus2 bSubRace,RC_Player,2; },{},{}
 2484,Siege_Boots,Siege Boots,4,10,,500,,20,,1,0x036E5CEA,63,2,64,,95,1,0,{ bonus bMdef,5; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; },{},{}
 2485,Siege_Shoes,Siege Shoes,4,10,,350,,15,,1,0x00818315,63,2,64,,95,1,0,{ bonus bMdef,10; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; },{},{}
@@ -2689,7 +2689,7 @@
 4504,Sealed_Eddga_Card,Sealed Eddga Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMaxHPrate,((getrefine()>14)?-35:-50); },{ sc_start4 SC_ENDURE,60000,10,0,0,1; },{ sc_end SC_ENDURE; }
 4505,Scaraba_Card,Scaraba Card,6,20,,10,,,,,,,,136,,,,,{ bonus bMatk,20; bonus bMaxSPrate,-1; },{},{}
 4506,Dolomedes_Card,Dolomedes Card,6,20,,10,,,,,,,,769,,,,,{ bonus bDex,2; if(BaseClass==Job_Archer){ bonus bDex,getrefine()/3; } },{},{}
-4507,Q_Scaraba_Card,Queen Scaraba Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddDamageClass,2085,30; bonus2 bAddDamageClass,2090,30; bonus2 bAddDamageClass,2144,30; bonus2 bAddDamageClass,2145,30; bonus2 bAddDamageClass,2083,30; bonus2 bAddDamageClass,2088,30; bonus2 bAddDamageClass,2084,30; bonus2 bAddDamageClass,2089,30; bonus2 bAddDamageClass,2087,30; bonus2 bAddDamageClass,2086,30; bonus2 bAddDamageClass,2091,30; bonus2 bAddMonsterDropItem,12806,30; },{},{}
+4507,Q_Scaraba_Card,Queen Scaraba Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddRace2,RC2_SCARABA,30; bonus2 bAddMonsterDropItem,12806,30; },{},{}
 4508,Gold_Scaraba_Card,Gold Scaraba Card,6,20,,10,,,,,,,,136,,,,,{ bonus bBaseAtk,20; bonus bMaxHPrate,-1; },{},{}
 4509,Gold_Q_Scaraba_Card,Gold Queen Scaraba Card,6,20,,10,,,,,,,,769,,,,,{ bonus bInt,3; bonus2 bSubRace,RC_Insect,10; if(getrefine()>=9) { bonus2 bSubRace,RC_Insect,5; } },{},{}
 4510,Miming_Card,Miming Card,6,20,,10,,,,,,,,2,,,,,{ bonus3 bAutoSpell,"WM_LULLABY_DEEPSLEEP",1,30; },{},{}
@@ -6252,10 +6252,10 @@
 12115,Elemental_Water,Elemental Converter,11,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "ITEM_ENCHANTARMS",2; },{},{}
 12116,Elemental_Earth,Elemental Converter,11,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "ITEM_ENCHANTARMS",3; },{},{}
 12117,Elemental_Wind,Elemental Converter,11,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "ITEM_ENCHANTARMS",5; },{},{}
-12118,Resist_Fire,Fireproof Potion,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,-15,0,20,0; },{},{}
-12119,Resist_Water,Coldproof Potion,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,20,0,0,-15; },{},{}
-12120,Resist_Earth,Earthproof Potion,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,0,20,-15,0; },{},{}
-12121,Resist_Wind,Thunderproof Potion,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT,1200000,0,-15,0,20; },{},{}
+12118,Resist_Fire,Fireproof Potion,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT_FIRE,1200000,-15,0,20,0; },{},{}
+12119,Resist_Water,Coldproof Potion,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT_WATER,1200000,20,0,0,-15; },{},{}
+12120,Resist_Earth,Earthproof Potion,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT_EARTH,1200000,0,20,-15,0; },{},{}
+12121,Resist_Wind,Thunderproof Potion,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start4 SC_ARMOR_ELEMENT_WIND,1200000,0,-15,0,20; },{},{}
 12122,Sesame_Pastry,Sesame Pastry,2,2,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_HITFOOD,180000,30; },{},{}
 12123,Honey_Pastry,Honey Pastry,2,2,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_FLEEFOOD,180000,30; },{},{}
 12124,Rainbow_Cake,Rainbow Cake,2,2,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_BATKFOOD,60000,10; sc_start SC_MATKFOOD,60000,10; },{},{}
@@ -11126,7 +11126,7 @@
 24021,S_Magical_Earring,Magical Earring (Shadow),12,0,,0,,0,,0,0xFFFFFFFF,63,2,1048576,,1,1,0,{ bonus bVariableCastrate,-(getrefine()>=7)?2:1; },{},{}
 24022,S_Magical_Weapon,Magical Weapon (Shadow),12,0,,0,,0,,0,0xFFFFFFFF,63,2,131072,,1,1,0,{ bonus bMatk,10; if(getrefine()>=7) { bonus bMatkRate,1; } },{},{}
 24023,S_Magical_Pendant,Magical Pencil (Shadow),12,0,,0,,0,,0,0xFFFFFFFF,63,2,2097152,,1,1,0,{ bonus bMaxSP,50; if(getrefine()>=7) { bonus bMaxSPrate,1; } },{},{}
-24024,S_Breezy_Armor,Breeze Armor (Shadow),12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,,,{ bonus bFlee,5+(getrefine()>=7 ? 10 : 0); },{},{}
+24024,S_Breezy_Armor,Breeze Armor (Shadow),12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,0,{ bonus bFlee,5+(getrefine()>=7 ? 10 : 0); },{},{}
 24025,S_Champion_Shoes,Champion Shoes (Shadow),12,0,,0,,0,,0,0xFFFFFFFF,63,2,524288,,1,1,0,{ bonus bMaxHP,20; bonus bMaxSP,20; if(getrefine()>=7) { bonus bMaxHP,1; bonus bMaxSP,1; } },{},{}
 24026,S_Athena_Shield,Athena Shield (Shadow),12,0,,0,,0,,0,0xFFFFFFFF,63,2,262144,,1,1,0,{ bonus bDef,(getrefine()>=7)?20:10; },{},{}
 24027,S_Immune_Armor,Immune Shadow Armor,12,0,,0,,0,,0,0xFFFFFFFF,63,2,65536,,1,1,0,{ bonus2 bSubEle,0,1; },{},{}

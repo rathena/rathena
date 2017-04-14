@@ -422,7 +422,7 @@ static int logclif_parse_reqcharconnec(int fd, struct login_session_data *sd, ch
 		new_ = RFIFOW(fd,84);
 		RFIFOSKIP(fd,86);
 
-		ShowInfo("Connection request of the char-server '%s' @ %u.%u.%u.%u:%u (account: '%s', pass: '%s', ip: '%s')\n", server_name, CONVIP(server_ip), server_port, sd->userid, sd->passwd, ip);
+		ShowInfo("Connection request of the char-server '%s' @ %u.%u.%u.%u:%u (account: '%s', ip: '%s')\n", server_name, CONVIP(server_ip), server_port, sd->userid, ip);
 		sprintf(message, "charserver - %s@%u.%u.%u.%u:%u", server_name, CONVIP(server_ip), server_port);
 		login_log(session[fd]->client_addr, sd->userid, 100, message);
 

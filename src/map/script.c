@@ -324,6 +324,8 @@ typedef struct script_function {
 
 extern script_function buildin_func[];
 
+static struct linkdb_node *sleep_db; // int oid -> struct script_state *
+
 #ifdef BETA_THREAD_TEST
 /**
  * MySQL Query Slave
@@ -4016,6 +4018,7 @@ void script_stop_instances(struct script_code *code) {
 int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
 {
 	struct script_state *st = (struct script_state *)data;
+	struct linkdb_node *node = (struct linkdb_node *)sleep_db;
 
 	// If it was a player before going to sleep and there is still a unit attached to the script
 	if( id != 0 && st->rid ){
@@ -4036,11 +4039,58 @@ int run_script_timer(int tid, unsigned int tick, int id, intptr_t data)
 		}
 	}
 
-	st->sleep.timer = INVALID_TIMER;
+	while (node && st->sleep.timer != INVALID_TIMER) {
+		if ((int)__64BPRTSIZE(node->key) == st->oid && ((struct script_state *)node->data)->sleep.timer == st->sleep.timer) {
+			script_erase_sleepdb(node);
+			st->sleep.timer = INVALID_TIMER;
+			break;
+		}
+		node = node->next;
+	}
 	if(st->state != RERUNLINE)
 		st->sleep.tick = 0;
 	run_script_main(st);
 	return 0;
+}
+
+/**
+ * Remove sleep timers from the NPC
+ * @param id: NPC ID
+ */
+void script_stop_sleeptimers(int id) {
+	for (;;) {
+		struct script_state *st = (struct script_state *)linkdb_erase(&sleep_db, (void *)__64BPRTSIZE(id));
+
+		if (!st)
+			break; // No more sleep timers
+
+		if (st->oid == id)
+			script_free_state(st);
+	}
+}
+
+/**
+ * Delete the specified node from sleep_db
+ * @param n: Linked list of sleep timers
+ */
+struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n) {
+	struct linkdb_node *retnode;
+
+	if (!n)
+		return NULL;
+
+	if (!n->prev)
+		sleep_db = n->next;
+	else
+		n->prev->next = n->next;
+
+	if (n->next)
+		n->next->prev = n->prev;
+
+	retnode = n->next;
+	aFree(n);
+
+	return retnode;
 }
 
 /// Detaches script state from possibly attached character and restores it's previous script if any.
@@ -4225,8 +4275,8 @@ void run_script_main(struct script_state *st)
 		//Delay execution
 		sd = map_id2sd(st->rid); // Get sd since script might have attached someone while running. [Inkfish]
 		st->sleep.charid = sd?sd->status.char_id:0;
-		st->sleep.timer  = add_timer(gettick()+st->sleep.tick,
-			run_script_timer, st->sleep.charid, (intptr_t)st);
+		st->sleep.timer = add_timer(gettick() + st->sleep.tick, run_script_timer, st->sleep.charid, (intptr_t)st);
+		linkdb_insert(&sleep_db, (void *)__64BPRTSIZE(st->oid), st);
 	} else if(st->state != END && st->rid) {
 		//Resume later (st is already attached to player).
 		if(st->bk_st) {
@@ -8561,9 +8611,14 @@ BUILDIN_FUNC(getequipweaponlv)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (num == -1)
+	if (num == -1){
+		if( current_equip_item_index == -1 ){
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
 		i = current_equip_item_index;
-	else if (equip_index_check(num))
+	}else if (equip_index_check(num))
 		i = pc_checkequip(sd, equip_bitmask[num]);
 	if (i >= 0 && sd->inventory_data[i])
 		script_pushint(st, sd->inventory_data[i]->wlv);
@@ -10131,7 +10186,8 @@ BUILDIN_FUNC(killmonsterall)
 BUILDIN_FUNC(clone)
 {
 	TBL_PC *sd, *msd=NULL;
-	uint32 char_id, master_id = 0, x, y, flag = 0, m;
+	uint32 char_id, master_id = 0, x, y, flag = 0;
+	int16 m;
 	enum e_mode mode = 0;
 
 	unsigned int duration = 0;
@@ -12493,9 +12549,6 @@ BUILDIN_FUNC(agitstart2)
  */
 BUILDIN_FUNC(agitend2)
 {
-	if (!agit2_flag)
-		return SCRIPT_CMD_SUCCESS;// Agit2 already Ended.
-	agit2_flag = false;
 	guild_agit2_end();
 
 	return SCRIPT_CMD_SUCCESS;
@@ -14493,6 +14546,29 @@ BUILDIN_FUNC(npctalk)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Sends a message to the waitingroom of the invoking NPC.
+ * chatmes "<message>"{,"<NPC name>"};
+ * @author Jey
+ */
+BUILDIN_FUNC(chatmes)
+{
+	struct npc_data* nd = NULL;
+	const char* str = script_getstr(st,2);
+
+	if (script_hasdata(st, 3))
+		nd = npc_name2id(script_getstr(st, 3));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+
+	if (nd != NULL && nd->chat_id) {
+		char message[256];
+		safesnprintf(message, sizeof(message), "%s", str);
+		clif_GlobalMessage(map_id2bl(nd->chat_id), message, CHAT_WOS);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 // change npc walkspeed [Valaris]
 BUILDIN_FUNC(npcspeed)
 {
@@ -15023,9 +15099,14 @@ BUILDIN_FUNC(cardscnt)
 BUILDIN_FUNC(getrefine)
 {
 	TBL_PC *sd;
-	if ((sd = script_rid2sd(st))!= NULL)
+	if ((sd = script_rid2sd(st))!= NULL){
+		if( current_equip_item_index == -1 ){
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
 		script_pushint(st,sd->inventory.u.items_inventory[current_equip_item_index].refine);
-	else
+	}else
 		script_pushint(st,0);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -15121,6 +15202,10 @@ BUILDIN_FUNC(autoequip)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Set the value of a given battle config
+ * setbattleflag "<battle flag>",<value>{,<reload>};
+ */
 BUILDIN_FUNC(setbattleflag)
 {
 	const char *flag, *value;
@@ -15130,16 +15215,43 @@ BUILDIN_FUNC(setbattleflag)
 
 	if (battle_set_value(flag, value) == 0)
 		ShowWarning("buildin_setbattleflag: unknown battle_config flag '%s'\n",flag);
-	else
+	else {
 		ShowInfo("buildin_setbattleflag: battle_config flag '%s' is now set to '%s'.\n",flag,value);
+
+		if (script_hasdata(st, 4) && script_getnum(st, 4)) { // Only attempt to reload monster data if told to
+			const char *expdrop_flags[] = { // Only certain flags require a reload, check for those types
+				"base_exp_rate", "job_exp_rate", "mvp_exp_rate", "quest_exp_rate", "heal_exp", "resurrection_exp",
+				"item_rate_common", "item_rate_common_boss", "item_rate_common_mvp", "item_drop_common_min", "item_drop_common_max",
+				"item_rate_heal", "item_rate_heal_boss", "item_rate_heal_mvp", "item_rate_heal_min", "item_rate_heal_max",
+				"item_rate_use", "item_rate_use_boss", "item_rate_use_mvp", "item_rate_use_min", "item_rate_use_max",
+				"item_rate_equip", "item_rate_equip_boss", "item_rate_equip_mvp", "item_rate_equip_min", "item_rate_equip_max",
+				"item_rate_card", "item_rate_card_boss", "item_rate_card_mvp", "item_rate_card_min", "item_rate_card_max",
+				"item_rate_mvp", "item_rate_mvp_min", "item_rate_mvp_max", "item_rate_mvp_mode",
+				"item_rate_treasure", "item_rate_treasure_min", "item_rate_treasure_max",
+				"item_logarithmic_drops", "drop_rate0item", "drop_rateincrease",
+			};
+			uint8 i;
+
+			for (i = 0; i < ARRAYLENGTH(expdrop_flags); i++) {
+				if (!strcmpi(flag, expdrop_flags[i])) {
+					mob_reload();
+					break;
+				}
+			}
+		}
+	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Get the value of a given battle config
+ * getbattleflag("<battle flag>")
+ */
 BUILDIN_FUNC(getbattleflag)
 {
-	const char *flag;
-	flag = script_getstr(st,2);
+	const char *flag = script_getstr(st,2);
+
 	script_pushint(st,battle_get_value(flag));
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16602,6 +16714,7 @@ BUILDIN_FUNC(addmonsterdrop)
 		if(c) { //Fill in the slot with the item and rate
 			mob->dropitem[c].nameid = item_id;
 			mob->dropitem[c].p = (rate > 10000)?10000:rate;
+			itemdb_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 			script_pushint(st,1);
 		} else //No place to put the new drop
 			script_pushint(st,0);
@@ -16647,6 +16760,7 @@ BUILDIN_FUNC(delmonsterdrop)
 			if(mob->dropitem[i].nameid == item_id) {
 				mob->dropitem[i].nameid = 0;
 				mob->dropitem[i].p = 0;
+				itemdb_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 				script_pushint(st,1);
 				return SCRIPT_CMD_SUCCESS;
 			}
@@ -18327,6 +18441,94 @@ BUILDIN_FUNC(setcell)
 	for( y = y1; y <= y2; ++y )
 		for( x = x1; x <= x2; ++x )
 			map_setcell(m, x, y, type, flag);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Gets a free cell in the specified area.
+ * getfreecell "<map name>",<rX>,<rY>{,<x>,<y>,<rangeX>,<rangeY>,<flag>};
+ */
+BUILDIN_FUNC(getfreecell)
+{
+	const char *mapn = script_getstr(st, 2), *name;
+	char prefix;
+	struct map_session_data *sd;
+	int64 num;
+	int16 m, x = 0, y = 0;
+	int rx = -1, ry = -1, flag = 1;
+
+	sd = map_id2sd(st->rid);
+
+	if (!data_isreference(script_getdata(st, 3))) {
+		ShowWarning("script: buildin_getfreecell: rX is not a variable.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!data_isreference(script_getdata(st, 4))) {
+		ShowWarning("script: buildin_getfreecell: rY is not a variable.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (is_string_variable(reference_getname(script_getdata(st, 3)))) {
+		ShowWarning("script: buildin_getfreecell: rX is a string, must be an INT.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (is_string_variable(reference_getname(script_getdata(st, 4)))) {
+		ShowWarning("script: buildin_getfreecell: rY is a string, must be an INT.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_hasdata(st, 5))
+		x = script_getnum(st, 5);
+
+	if (script_hasdata(st, 6))
+		y = script_getnum(st, 6);
+
+	if (script_hasdata(st, 7))
+		rx = script_getnum(st, 7);
+
+	if (script_hasdata(st, 8))
+		ry = script_getnum(st, 8);
+
+	if (script_hasdata(st, 9))
+		flag = script_getnum(st, 9);
+
+	if (sd && strcmp(mapn, "this") == 0)
+		m = sd->bl.m;
+	else
+		m = map_mapname2mapid(mapn);
+
+	map_search_freecell(NULL, m, &x, &y, rx, ry, flag);
+
+	// Set MapX
+	num = st->stack->stack_data[st->start + 3].u.num;
+	name = get_str(num&0x00ffffff);
+	prefix = *name;
+
+	if (not_server_variable(prefix))
+		sd = script_rid2sd(st);
+	else
+		sd = NULL;
+
+	set_reg(st, sd, num, name, (void*)__64BPRTSIZE((int)x), script_getref(st, 3));
+
+	// Set MapY
+	num = st->stack->stack_data[st->start + 4].u.num;
+	name = get_str(num&0x00ffffff);
+	prefix = *name;
+
+	if (not_server_variable(prefix))
+		sd = script_rid2sd(st);
+	else
+		sd = NULL;
+
+	set_reg(st, sd, num, name, (void*)__64BPRTSIZE((int)y), script_getref(st, 4));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -20097,7 +20299,7 @@ BUILDIN_FUNC(bindatcmd) {
 	} else {
 		ARR_FIND(0, atcmd_binding_count, i, strcmp(atcmd_binding[i]->command,atcmd) == 0);
 		if( i < atcmd_binding_count ) {/* update existent entry */
-			safestrncpy(atcmd_binding[i]->npc_event, eventName, 50);
+			safestrncpy(atcmd_binding[i]->npc_event, eventName, EVENT_NAME_LENGTH);
 			atcmd_binding[i]->level = level;
 			atcmd_binding[i]->level2 = level2;
 		} else
@@ -20113,7 +20315,7 @@ BUILDIN_FUNC(bindatcmd) {
 		CREATE(atcmd_binding[i],struct atcmd_binding_data,1);
 
 		safestrncpy(atcmd_binding[i]->command, atcmd, 50);
-		safestrncpy(atcmd_binding[i]->npc_event, eventName, 50);
+		safestrncpy(atcmd_binding[i]->npc_event, eventName, EVENT_NAME_LENGTH);
 		atcmd_binding[i]->level = level;
 		atcmd_binding[i]->level2 = level2;
 	}
@@ -22491,10 +22693,10 @@ BUILDIN_FUNC(channel_ban) {
 		if (tsd) {
 			strcpy(cbe->char_name,tsd->status.name);
 			channel_clean(ch,tsd,0);
-			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,762), ch->alias, tsd->status.name); // %s %s has been banned.
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,769), ch->alias, tsd->status.name); // %s %s has been banned.
 		}
 		else
-			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,762), ch->alias, "****"); // %s %s has been banned.
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,769), ch->alias, "****"); // %s %s has been banned.
 		idb_put(ch->banned, char_id, cbe);
 		clif_channel_msg(ch,output,ch->color);
 	}
@@ -22528,9 +22730,9 @@ BUILDIN_FUNC(channel_unban) {
 		char output[CHAT_SIZE_MAX+1];
 		TBL_PC *tsd = map_charid2sd(char_id);
 		if (tsd)
-			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,763), ch->alias, tsd->status.name); // %s %s has been unbanned
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,770), ch->alias, tsd->status.name); // %s %s has been unbanned
 		else
-			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,763), ch->alias, "****"); // %s %s has been unbanned.
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,770), ch->alias, "****"); // %s %s has been unbanned.
 		idb_remove(ch->banned, char_id);
 		clif_channel_msg(ch,output,ch->color);
 	}
@@ -22922,6 +23124,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
 	BUILDIN_DEF(message,"ss"), // [MouseJstr]
 	BUILDIN_DEF(npctalk,"s?"), // [Valaris]
+	BUILDIN_DEF(chatmes,"s?"), // [Jey]
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),
 	BUILDIN_DEF(getsavepoint,"i?"),
@@ -23004,7 +23207,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcshopattach,"s?"),
 	BUILDIN_DEF(equip,"i?"),
 	BUILDIN_DEF(autoequip,"ii"),
-	BUILDIN_DEF(setbattleflag,"si"),
+	BUILDIN_DEF(setbattleflag,"si?"),
 	BUILDIN_DEF(getbattleflag,"s"),
 	BUILDIN_DEF(setitemscript,"is?"), //Set NEW item bonus script. Lupus
 	BUILDIN_DEF(disguise,"i?"), //disguise player. Lupus
@@ -23065,6 +23268,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(openauction,"?"),
 	BUILDIN_DEF(checkcell,"siii"),
 	BUILDIN_DEF(setcell,"siiiiii"),
+	BUILDIN_DEF(getfreecell,"srr?????"),
 	BUILDIN_DEF(setwall,"siiiiis"),
 	BUILDIN_DEF(delwall,"s"),
 	BUILDIN_DEF(searchitem,"rs"),

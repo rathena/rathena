@@ -204,7 +204,7 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
 
 	if (channel->type == CHAN_TYPE_PRIVATE && db_size(channel->users) >= channel_config.private_channel.max_member) {
 		char output[CHAT_SIZE_MAX];
-		sprintf(output, msg_txt(sd,753), channel->name, channel_config.private_channel.max_member); // You cannot join channel '%s'. Limit of %d has been met.
+		sprintf(output, msg_txt(sd,767), channel->name, channel_config.private_channel.max_member); // You cannot join channel '%s'. Limit of %d has been met.
 		clif_displaymessage(sd->fd, output);
 		return -4;
 	}
@@ -219,7 +219,7 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
 		sd->stealth = false;
 	} else if( channel->opt & CHAN_OPT_ANNOUNCE_JOIN ) {
 		char output[CHAT_SIZE_MAX];
-		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,754), channel->alias, sd->status.name); // %s %s has joined.
+		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,768), channel->alias, sd->status.name); // %s %s has joined.
 		clif_channel_msg(channel,output,channel->color);
 	}
 
@@ -265,7 +265,7 @@ int channel_mjoin(struct map_session_data *sd) {
  *  -1: Invalid guild or no channel for guild
  */
 int channel_ajoin(struct guild *g){
-	int i;
+	int i, j;
 	struct map_session_data *pl_sd;
 
 	if(!g || !g->channel) return -1;
@@ -273,8 +273,8 @@ int channel_ajoin(struct guild *g){
 		struct guild *ag; //allied guld
 		struct guild_alliance *ga = &g->alliance[i]; //guild alliance
 		if(ga->guild_id && (ga->opposition==0) && (ag=guild_search(ga->guild_id))){
-			for (i = 0; i < ag->max_member; i++){ //load all guildmember
-				pl_sd = ag->member[i].sd;
+			for (j = 0; j < ag->max_member; j++){ //load all guildmember
+				pl_sd = ag->member[j].sd;
 				if(channel_haspc(ag->channel,pl_sd)==1)  //only if they are in their own guildchan
 					channel_join(g->channel,pl_sd);
 			}
@@ -724,13 +724,13 @@ int channel_pcleave(struct map_session_data *sd, char *chname){
 	}
 
 	if (!(channel->opt&CHAN_OPT_CAN_LEAVE)) {
-		sprintf(output, msg_txt(sd,755), chname); // You cannot leave channel '%s'.
+		sprintf(output, msg_txt(sd,762), chname); // You cannot leave channel '%s'.
 		clif_displaymessage(sd->fd, output);
 		return -1;
 	}
 
 	if( !channel_config.closing && (channel->opt & CHAN_OPT_ANNOUNCE_LEAVE) ) {
-		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,756), channel->alias, sd->status.name); // %s %s left.
+		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,763), channel->alias, sd->status.name); // %s %s left.
 		clif_channel_msg(channel,output,channel->color);
 	}
 	switch(channel->type){
@@ -845,7 +845,7 @@ int channel_pccolor(struct map_session_data *sd, char *chname, char *color){
 			return -1;
 		}
 		else if (!(channel->opt&CHAN_OPT_COLOR_OVERRIDE)) {
-			sprintf(output, msg_txt(sd,757), chname); // You cannot change the color for channel '%s'.
+			sprintf(output, msg_txt(sd,764), chname); // You cannot change the color for channel '%s'.
 			clif_displaymessage(sd->fd, output);
 			return -1;
 		}
@@ -945,7 +945,7 @@ int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int fl
 			sprintf(output, msg_txt(sd,1412), chname);// You're not the owner of channel '%s'.
 			clif_displaymessage(sd->fd, output);
 		} else if (!channel_config.private_channel.ban) {
-			sprintf(output, msg_txt(sd,758), chname); // You're not allowed to ban a player.
+			sprintf(output, msg_txt(sd,765), chname); // You're not allowed to ban a player.
 			clif_displaymessage(sd->fd, output);
 		}
 		return -1;
@@ -1058,7 +1058,7 @@ int channel_pckick(struct map_session_data *sd, char *chname, char *pname) {
 			sprintf(output, msg_txt(sd,1412), chname);// You're not the owner of channel '%s'.
 			clif_displaymessage(sd->fd, output);
 		} else if (!channel_config.private_channel.kick) {
-			sprintf(output, msg_txt(sd,759), chname); // You cannot kick a player from channel '%s'.
+			sprintf(output, msg_txt(sd,766), chname); // You cannot kick a player from channel '%s'.
 			clif_displaymessage(sd->fd, output);
 		}
 		return -1;
@@ -1071,12 +1071,12 @@ int channel_pckick(struct map_session_data *sd, char *chname, char *pname) {
 	}
 
 	if (channel->char_id == sd->status.char_id) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 760)); // You're not allowed to kick a player.
+		clif_displaymessage(sd->fd, msg_txt(sd, 767)); // You're not allowed to kick a player.
 		return -1;
 	}
 
 	if( !channel_config.closing && (channel->opt & CHAN_OPT_ANNOUNCE_LEAVE) ) {
-		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,761), channel->alias, tsd->status.name); // %s %s has been kicked.
+		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,768), channel->alias, tsd->status.name); // %s %s has been kicked.
 		clif_channel_msg(channel,output,channel->color);
 	}
 

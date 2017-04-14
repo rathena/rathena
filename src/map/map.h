@@ -141,6 +141,10 @@ enum e_mapid {
 	MAPID_BABY_ACOLYTE,
 	MAPID_BABY_MERCHANT,
 	MAPID_BABY_THIEF,
+	MAPID_BABY_TAEKWON,
+	MAPID_BABY_GUNSLINGER = JOBL_BABY|0x9,
+	MAPID_BABY_NINJA,
+	MAPID_BABY_SUMMONER = JOBL_BABY|0x11,
 //Baby 2-1 Jobs
 	MAPID_SUPER_BABY = JOBL_BABY|JOBL_2_1|0x0,
 	MAPID_BABY_KNIGHT,
@@ -149,6 +153,9 @@ enum e_mapid {
 	MAPID_BABY_PRIEST,
 	MAPID_BABY_BLACKSMITH,
 	MAPID_BABY_ASSASSIN,
+	MAPID_BABY_STAR_GLADIATOR,
+	MAPID_BABY_REBELLION = JOBL_BABY|JOBL_2_1|0x9,
+	MAPID_BABY_KAGEROUOBORO,
 //Baby 2-2 Jobs
 	MAPID_BABY_CRUSADER = JOBL_BABY|JOBL_2_2|0x1,
 	MAPID_BABY_SAGE,
@@ -156,6 +163,7 @@ enum e_mapid {
 	MAPID_BABY_MONK,
 	MAPID_BABY_ALCHEMIST,
 	MAPID_BABY_ROGUE,
+	MAPID_BABY_SOUL_LINKER,
 //3-1 Jobs
 	MAPID_SUPER_NOVICE_E = JOBL_THIRD|JOBL_2_1|0x0,
 	MAPID_RUNE_KNIGHT,
@@ -304,6 +312,7 @@ enum e_race2 {
 	RC2_BIOLAB,
 	RC2_MANUK,
 	RC2_SPLENDIDE,
+	RC2_SCARABA,
 	RC2_MAX
 };
 
@@ -976,21 +985,18 @@ extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
 extern Sql* logmysql_handle;
 
-extern char buyingstores_db[32];
-extern char buyingstore_items_db[32];
-extern char item_db_db[32];
-extern char item_db2_db[32];
-extern char item_db_re_db[32];
-extern char mob_db_db[32];
-extern char mob_db_re_db[32];
-extern char mob_db2_db[32];
-extern char mob_skill_db_db[32];
-extern char mob_skill_db_re_db[32];
-extern char mob_skill_db2_db[32];
-extern char vendings_db[32];
-extern char vending_items_db[32];
+extern char buyingstores_table[32];
+extern char buyingstore_items_table[32];
+extern char item_table[32];
+extern char item2_table[32];
+extern char mob_table[32];
+extern char mob2_table[32];
+extern char mob_skill_table[32];
+extern char mob_skill2_table[32];
+extern char vendings_table[32];
+extern char vending_items_table[32];
 extern char market_table[32];
-extern char db_roulette_table[32];
+extern char roulette_table[32];
 
 void do_shutdown(void);
 
