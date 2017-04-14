@@ -237,6 +237,7 @@ static void party_check_state(struct party_data *p)
 				p->state.monk = 1;
 			break;
 			case JOB_STAR_GLADIATOR:
+			case JOB_BABY_STAR_GLADIATOR:
 				p->state.sg = 1;
 			break;
 			case JOB_SUPER_NOVICE:
@@ -246,6 +247,7 @@ static void party_check_state(struct party_data *p)
 				p->state.snovice = 1;
 			break;
 			case JOB_TAEKWON:
+			case JOB_BABY_TAEKWON:
 				p->state.tk = 1;
 			break;
 		}
@@ -262,6 +264,7 @@ int party_recv_info(struct party* sp, uint32 char_id)
 	int added[MAX_PARTY];// member_id in new data
 	int added_count = 0;
 	int member_id;
+	bool rename = false;
 
 	nullpo_ret(sp);
 
@@ -282,6 +285,9 @@ int party_recv_info(struct party* sp, uint32 char_id)
 
 			if( i == MAX_PARTY )
 				removed[removed_count++] = member_id;
+			// If the member already existed, compare the old to the (possible) new name
+			else if( !rename && strcmp(member->name,sp->member[i].name) )
+				rename = true;
 		}
 
 		for( member_id = 0; member_id < MAX_PARTY; ++member_id ) {
@@ -345,6 +351,11 @@ int party_recv_info(struct party* sp, uint32 char_id)
 
 		if( p->instance_id != 0 )
 			instance_reqinfo(sd,p->instance_id);
+	}
+	
+	// If a player was renamed, make sure to resend the party information
+	if( rename ){
+		clif_party_info(p,NULL);
 	}
 
 	if( char_id != 0 ) { // requester
@@ -790,6 +801,11 @@ int party_changeleader(struct map_session_data *sd, struct map_session_data *tsd
 		ARR_FIND( 0, MAX_PARTY, tmi, p->data[tmi].sd == tsd);
 		if (tmi == MAX_PARTY)
 			return 0; // Shouldn't happen
+
+		if (battle_config.change_party_leader_samemap && p->party.member[mi].map != p->party.member[tmi].map) {
+			clif_msg(sd, PARTY_MASTER_CHANGE_SAME_MAP);
+			return 0;
+		}
 	} else {
 		ARR_FIND(0,MAX_PARTY,mi,p->party.member[mi].leader);
 

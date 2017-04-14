@@ -125,3 +125,4 @@ guild_vs3	mapflag	nomemo
 guild_vs3	mapflag	nopenalty
 guild_vs3	mapflag	nobranch
 guild_vs3	mapflag	noicewall
+guild_vs3	mapflag	hidemobhpbar

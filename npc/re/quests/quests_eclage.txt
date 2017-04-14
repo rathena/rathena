@@ -476,10 +476,12 @@ OnTouch:
 			mes "Hey!!!!!!!";
 			mes "Be careful over there!!";
 			emotion e_omg,0,"Fairy Carpenter#ep14_2";
+			close;
 		}
-		else if (ep14_2_oliver <= 6)
+		if (ep14_2_oliver <= 6) {
 			mes "- The bridge is broken. There should be some kind of a solution. -";
-		close;
+			close;
+		}
 	}
 }
 
@@ -7841,7 +7843,7 @@ OnInit:
 	initnpctimer;
 	end;
 OnCall:
-	areamonster "ecl_in01",78,75,82,79,"Rat",1175,1,"#call_ne::OnMyMobDead";
+	areamonster "ecl_in01",75,72,85,82,"Rat",1175,1,"#call_ne::OnMyMobDead";
 	end;
 }
 
@@ -7853,7 +7855,7 @@ OnInit:
 	initnpctimer;
 	end;
 OnCall:
-	areamonster "ecl_in01",77,82,81,86,"Weed",1080,1,"#call_kusa::OnMyMobDead";
+	areamonster "ecl_in01",74,79,84,89,"Weed",1080,1,"#call_kusa::OnMyMobDead";
 	end;
 }
 

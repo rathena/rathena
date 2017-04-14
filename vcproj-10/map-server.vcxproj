@@ -197,7 +197,7 @@
     <ClInclude Include="..\src\config\secure.h" />
     <ClInclude Include="..\src\config\classes\general.h" />
     <ClInclude Include="..\src\map\script.h" />
-	<ClInclude Include="..\src\map\script_constants.h" />
+    <ClInclude Include="..\src\map\script_constants.h" />
     <ClInclude Include="..\src\map\searchstore.h" />
     <ClInclude Include="..\src\map\skill.h" />
     <ClInclude Include="..\src\map\status.h" />

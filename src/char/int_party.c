@@ -889,3 +889,29 @@ int inter_party_CharOffline(uint32 char_id, int party_id) {
 		idb_remove(party_db_, party_id);
 	return 1;
 }
+
+int inter_party_charname_changed(int party_id, uint32 char_id, char *name)
+{
+	struct party_data* p = NULL;
+	int i;
+
+	p = inter_party_fromsql(party_id);
+	if( p == NULL || p->party.party_id == 0 )
+	{
+		ShowError("inter_party_charname_changed: Can't find party %d.\n", party_id);
+		return 0;
+	}
+
+	ARR_FIND(0, MAX_PARTY, i, p->party.member[i].char_id == char_id);
+	if( i == MAX_PARTY )
+	{
+		ShowError("inter_party_charname_changed: Can't find character %d in party %d.\n", char_id, party_id);
+		return 0;
+	}
+
+	safestrncpy(p->party.member[i].name, name, NAME_LENGTH);
+
+	mapif_party_info(-1, &p->party, char_id);
+	
+	return 0;
+}

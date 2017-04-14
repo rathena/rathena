@@ -134,27 +134,27 @@ new_1-2,100,29,4	script	Receptionist#nv1	86,{
 			set nov_3_merchant,0;
 			switch(rand(6)) {
 			case 0:
-				savepoint "prontera",273,354;
+				savepoint "prontera",273,354,1,1;
 				warp "prontera",273,354;
 				break;
 			case 1:
-				savepoint "morocc",160,94;
+				savepoint "morocc",160,94,1,1;
 				warp "morocc",160,94;
 				break;
 			case 2:
-				savepoint "geffen",120,100;
+				savepoint "geffen",120,100,1,1;
 				warp "geffen",120,100;
 				break;
 			case 3:
-				savepoint "payon",70,100;
+				savepoint "payon",70,100,1,1;
 				warp "payon",70,100;
 				break;
 			case 4:
-				savepoint "alberta",116,57;
+				savepoint "alberta",116,57,1,1;
 				warp "alberta",116,57;
 				break;
 			case 5:
-				savepoint "izlude",94,103;
+				savepoint "izlude",94,103,1,1;
 				warp "izlude",94,103;
 			}
 			end;
@@ -1367,7 +1367,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 			set nov_3_magician,0;
 			set nov_3_acolyte,0;
 			set nov_3_merchant,0;
-			savepoint .@mapn$,.@saveX,.@saveY;
+			savepoint .@mapn$,.@saveX,.@saveY,1,1;
 			warp .@mapn$,.@warpX,.@warpY;
 			end;
 		}
@@ -1430,7 +1430,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 			set nov_3_magician,0;
 			set nov_3_acolyte,0;
 			set nov_3_merchant,0;
-			savepoint .@mapn$,.@saveX,.@saveY;
+			savepoint .@mapn$,.@saveX,.@saveY,1,1;
 			warp .@mapn$,.@warpX,.@warpY;
 			end;
 		}
@@ -2539,7 +2539,7 @@ new_1-2,38,182,3	script	Entrance Guard#nv	92,{
 			getitem 611,2; //Spectacles
 			getitem 569,300; //Novice_Potion
 			close2;
-			savepoint "new_1-2",23,188;
+			savepoint "new_1-2",23,188,1,1;
 			warp "new_1-3",96,21;
 			end;
 		case 2:
@@ -3372,7 +3372,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "izlude",93,104;
+					savepoint "izlude",93,104,1,1;
 					warp "izlude_in",74,167;
 					end;
 				case 2:
@@ -3444,7 +3444,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "geffen",119,37;
+					savepoint "geffen",119,37,1,1;
 					warp "geffen_in",163,98;
 					end;
 				case 2:
@@ -3515,7 +3515,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "alberta",30,232;
+					savepoint "alberta",30,232,1,1;
 					warp "alberta_in",62,44;
 					end;
 				case 2:
@@ -3583,7 +3583,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "^A62A2A" + strcharinfo(0) + "^000000";
 					mes "and farewell.";
 					close2;
-					savepoint "morocc",150,99;
+					savepoint "morocc",150,99,1,1;
 					warp "moc_ruins",155,44;
 					end;
 				case 2:
@@ -3652,7 +3652,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "payon",70,100;
+					savepoint "payon",70,100,1,1;
 					warp "payon_in02",64,65;
 					end;
 				case 2:
@@ -3724,7 +3724,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "prontera",117,72;
+					savepoint "prontera",117,72,1,1;
 					warp "prt_church",172,19;
 					end;
 				case 2:
@@ -3761,27 +3761,27 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 			set nov_3_merchant,0;
 			set .@startmap,rand(1,6);
 			if ((.@startmap > 0) && (.@startmap < 2)) {
-				savepoint "prontera",117,72;
+				savepoint "prontera",117,72,1,1;
 				warp "prt_fild08",170,371;
 			}
 			else if ((.@startmap > 1) && (.@startmap < 3)) {
-				savepoint "geffen",119,37;
+				savepoint "geffen",119,37,1,1;
 				warp "gef_fild07",327,188;
 			}
 			else if ((.@startmap > 2) && (.@startmap < 4)) {
-				savepoint "alberta",30,232;
+				savepoint "alberta",30,232,1,1;
 				warp "pay_fild03",388,70;
 			}
 			else if ((.@startmap > 3) && (.@startmap < 5)) {
-				savepoint "morocc",150,99;
+				savepoint "morocc",150,99,1,1;
 				warp "moc_fild07",198,39;
 			}
 			else if ((.@startmap > 4) && (.@startmap < 6)) {
-				savepoint "payon",256,242;
+				savepoint "payon",256,242,1,1;
 				warp "pay_fild01",334,354;
 			}
 			else if ((.@startmap > 5) && (.@startmap < 7)) {
-				savepoint "izlude",93,104;
+				savepoint "izlude",93,104,1,1;
 				warp "prt_fild08",357,212;
 			}
 			end;
@@ -3812,27 +3812,27 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 		set nov_3_merchant,0;
 		set .@startmap,rand(1,6);
 		if ((.@startmap > 0) && (.@startmap < 2)) {
-			savepoint "prontera",117,72;
+			savepoint "prontera",117,72,1,1;
 			warp "prt_fild08",170,371;
 		}
 		else if ((.@startmap > 1) && (.@startmap < 3)) {
-			savepoint "geffen",119,37;
+			savepoint "geffen",119,37,1,1;
 			warp "gef_fild07",327,188;
 		}
 		else if ((.@startmap > 2) && (.@startmap < 4)) {
-			savepoint "alberta",30,232;
+			savepoint "alberta",30,232,1,1;
 			warp "pay_fild03",388,70;
 		}
 		else if ((.@startmap > 3) && (.@startmap < 5)) {
-			savepoint "morocc",150,99;
+			savepoint "morocc",150,99,1,1;
 			warp "moc_fild07",198,39;
 		}
 		else if ((.@startmap > 4) && (.@startmap < 6)) {
-			savepoint "payon",70,100;
+			savepoint "payon",70,100,1,1;
 			warp "pay_fild01",334,354;
 		}
 		else if ((.@startmap > 5) && (.@startmap < 7)) {
-			savepoint "izlude",93,104;
+			savepoint "izlude",93,104,1,1;
 			warp "prt_fild08",357,212;
 		}
 		end;
@@ -3959,27 +3959,27 @@ S_UserJobchoice:
 	set nov_3_acolyte,0;
 	set nov_3_merchant,0;
 	if(@menu == 1) {
-		savepoint "izlude",93,104;
+		savepoint "izlude",93,104,1,1;
 		warp "izlude_in",74,167;
 	}
 	else if (@menu == 2) {
-		savepoint "geffen",119,37;
+		savepoint "geffen",119,37,1,1;
 		warp "geffen_in",163,98;
 	}
 	else if (@menu == 3) {
-		savepoint "alberta",30,232;
+		savepoint "alberta",30,232,1,1;
 		warp "alberta_in",62,44;
 	}
 	else if (@menu == 4) {
-		savepoint "morocc",150,99;
+		savepoint "morocc",150,99,1,1;
 		warp "moc_ruins",155,44;
 	}
 	else if (@menu == 5) {
-		savepoint "payon",70,100;
+		savepoint "payon",70,100,1,1;
 		warp "payon_in02",64,65;
 	}
 	else {
-		savepoint "prontera",117,72;
+		savepoint "prontera",117,72,1,1;
 		warp "prt_church",172,19;
 	}
 	return;
@@ -4275,31 +4275,31 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 }
 
 // Training Ground Mobs
-new_1-3,0,0,0,0	monster	Poring	1002,10,0,0,0
-new_1-3,0,0,0,0	monster	Drops	1113,10,0,0,0
-new_1-3,0,0,0,0	monster	Lunatic	1063,10,0,0,0
-new_1-3,0,0,0,0	monster	ChonChon	1011,10,0,0,0
-new_2-3,0,0,0,0	monster	Condor	1009,10,0,0,0
-new_2-3,0,0,0,0	monster	Picky	1050,10,0,0,0
-new_2-3,0,0,0,0	monster	Willow	1010,10,0,0,0
-new_2-3,0,0,0,0	monster	Roda Frog	1012,10,0,0,0
-new_3-3,0,0,0,0	monster	Condor	1009,10,0,0,0
-new_3-3,0,0,0,0	monster	Picky	1050,10,0,0,0
-new_3-3,0,0,0,0	monster	Willow	1010,10,0,0,0
-new_3-3,0,0,0,0	monster	Roda Frog	1012,10,0,0,0
-new_4-3,0,0,0,0	monster	Rocker	1052,10,0,0,0
-new_4-3,0,0,0,0	monster	Thief Bug	1051,10,0,0,0
-new_4-3,0,0,0,0	monster	Thief Bug	1053,10,0,0,0
-new_4-3,0,0,0,0	monster	Spore	1014,10,0,0,0
-new_5-3,0,0,0,0	monster	Rocker	1052,10,0,0,0
-new_5-3,0,0,0,0	monster	Thief Bug	1051,1,0,0,0
-new_5-3,0,0,0,0	monster	Thief Bug	1053,1,0,0,0
-new_5-3,0,0,0,0	monster	Spore	1014,1,0,0,0
-new_1-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_2-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_3-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_4-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_5-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
+new_1-3,0,0	monster	Poring	1002,10
+new_1-3,0,0	monster	Drops	1113,10
+new_1-3,0,0	monster	Lunatic	1063,10
+new_1-3,0,0	monster	ChonChon	1011,10
+new_2-3,0,0	monster	Condor	1009,10
+new_2-3,0,0	monster	Picky	1050,10
+new_2-3,0,0	monster	Willow	1010,10
+new_2-3,0,0	monster	Roda Frog	1012,10
+new_3-3,0,0	monster	Condor	1009,10
+new_3-3,0,0	monster	Picky	1050,10
+new_3-3,0,0	monster	Willow	1010,10
+new_3-3,0,0	monster	Roda Frog	1012,10
+new_4-3,0,0	monster	Rocker	1052,10
+new_4-3,0,0	monster	Thief Bug	1051,10
+new_4-3,0,0	monster	Thief Bug	1053,10
+new_4-3,0,0	monster	Spore	1014,10
+new_5-3,0,0	monster	Rocker	1052,10
+new_5-3,0,0	monster	Thief Bug	1051,1
+new_5-3,0,0	monster	Thief Bug	1053,1
+new_5-3,0,0	monster	Spore	1014,1
+new_1-3,0,0	monster	Fabre	1184,5
+new_2-3,0,0	monster	Fabre	1184,5
+new_3-3,0,0	monster	Fabre	1184,5
+new_4-3,0,0	monster	Fabre	1184,5
+new_5-3,0,0	monster	Fabre	1184,5
 
 //============================================================ 
 // Old changelog

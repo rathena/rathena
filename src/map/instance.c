@@ -50,7 +50,7 @@ static uint16 instance_name2id(const char *instance_name) {
 /*==========================================
  * Searches for an instance name in the database
  *------------------------------------------*/
-static struct instance_db *instance_searchname_db(const char *instance_name) {
+struct instance_db *instance_searchname_db(const char *instance_name) {
 	uint16 id = instance_name2id(instance_name);
 	if (id == 0)
 		return NULL;
@@ -288,6 +288,20 @@ static int instance_npcinit(struct block_list *bl, va_list ap)
 	nullpo_retr(0, nd = (struct npc_data *)bl);
 
 	return npc_instanceinit(nd);
+}
+
+/*==========================================
+ * Run the OnInstanceDestroy events for duplicated NPCs
+ *------------------------------------------*/
+static int instance_npcdestroy(struct block_list *bl, va_list ap)
+{
+	struct npc_data* nd;
+
+	nullpo_retr(0, bl);
+	nullpo_retr(0, ap);
+	nullpo_retr(0, nd = (struct npc_data *)bl);
+
+	return npc_instancedestroy(nd);
 }
 
 /*==========================================
@@ -598,6 +612,11 @@ int instance_destroy(unsigned short instance_id)
 		else
 			type = 3;
 
+		// Run OnInstanceDestroy on all NPCs in the instance
+		for(i = 0; i < im->cnt_map; i++){
+			map_foreachinarea(instance_npcdestroy, im->map[i]->m, 0, 0, map[im->map[i]->m].xs, map[im->map[i]->m].ys, BL_NPC, im->map[i]->m);
+		}
+
 		for(i = 0; i < im->cnt_map; i++) {
 			map_delinstancemap(im->map[i]->m);
 			ers_free(instance_maps_ers, im->map[i]);
@@ -646,76 +665,81 @@ int instance_destroy(unsigned short instance_id)
 }
 
 /*==========================================
- * Allows a user to enter an instance
- *------------------------------------------*/
-int instance_enter(struct map_session_data *sd, unsigned short instance_id, const char *name)
-{
-	struct instance_db *db = instance_searchname_db(name);
-
-	nullpo_retr(-1, sd);
-
-	if (db == NULL)
-		return 2;
-
-	return instance_enter_position(sd, instance_id, name, db->enter.x, db->enter.y);
-}
-
-/*==========================================
  * Warp a user into instance
  *------------------------------------------*/
-int instance_enter_position(struct map_session_data *sd, unsigned short instance_id, const char *name, short x, short y)
+enum e_instance_enter instance_enter(struct map_session_data *sd, unsigned short instance_id, const char *name, short x, short y)
 {
-	struct instance_data *im = &instance_data[instance_id];
-	struct instance_db *db = instance_searchname_db(name);
+	struct instance_data *im = NULL;
+	struct instance_db *db = NULL;
 	struct party_data *p = NULL;
 	struct guild *g = NULL;
+	enum instance_mode mode;
 	int16 m;
 
-	nullpo_retr(-1, sd);
-	nullpo_retr(3, db);
+	nullpo_retr(IE_OTHER, sd);
+	
+	if( (db = instance_searchname_db(name)) == NULL ){
+		ShowError( "instance_enter: Unknown instance \"%s\".\n", name );
+		return IE_OTHER;
+	}
+	
+	// If one of the two coordinates was not given or is below zero, we use the entry point from the database
+	if( x < 0 || y < 0 ){
+		x = db->enter.x;
+		y = db->enter.y;
+	}
+	
+	// Check if it is a valid instance
+	if( instance_id == 0 ){
+		// im will stay NULL and by default party checks will be used
+		mode = IM_PARTY;
+	}else{
+		im = &instance_data[instance_id];
+		mode = im->mode;
+	}
 
-	switch(instance_data[instance_id].mode) {
+	switch(mode) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:
 			if (sd->instance_id == 0) // Player must have an instance
-				return 2;
+				return IE_NOINSTANCE;
 			if (im->owner_id != sd->status.char_id)
-				return 3;
+				return IE_OTHER;
 			break;
 		case IM_PARTY:
 			if (sd->status.party_id == 0) // Character must be in instance party
-				return 1;
+				return IE_NOMEMBER;
 			if ((p = party_search(sd->status.party_id)) == NULL)
-				return 1;
-			if (p->instance_id == 0) // Party must have an instance
-				return 2;
+				return IE_NOMEMBER;
+			if (p->instance_id == 0 || im == NULL) // Party must have an instance
+				return IE_NOINSTANCE;
 			if (im->owner_id != p->party.party_id)
-				return 3;
+				return IE_OTHER;
 			break;
 		case IM_GUILD:
 			if (sd->status.guild_id == 0) // Character must be in instance guild
-				return 1;
+				return IE_NOMEMBER;
 			if ((g = guild_search(sd->status.guild_id)) == NULL)
-				return 1;
+				return IE_NOMEMBER;
 			if (g->instance_id == 0) // Guild must have an instance
-				return 2;
+				return IE_NOINSTANCE;
 			if (im->owner_id != g->guild_id)
-				return 3;
+				return IE_OTHER;
 			break;
 	}
 
 	if (im->state != INSTANCE_BUSY)
-		return 3;
+		return IE_OTHER;
 	if (im->type != db->id)
-		return 3;
+		return IE_OTHER;
 
 	// Does the instance match?
 	if ((m = instance_mapname2mapid(StringBuf_Value(db->enter.mapname), instance_id)) < 0)
-		return 3;
+		return IE_OTHER;
 
 	if (pc_setpos(sd, map_id2index(m), x, y, CLR_OUTSIGHT))
-		return 3;
+		return IE_OTHER;
 
 	// If there was an idle timer, let's stop it
 	instance_stopidletimer(im, instance_id);
@@ -723,7 +747,7 @@ int instance_enter_position(struct map_session_data *sd, unsigned short instance
 	// Now we start the instance timer
 	instance_startkeeptimer(im, instance_id);
 
-	return 0;
+	return IE_OK;
 }
 
 /*==========================================
@@ -1005,7 +1029,7 @@ void do_reload_instance(void)
 					ShowError("do_reload_instance: Unexpected instance mode for instance %s (id=%u, mode=%u).\n", (db) ? StringBuf_Value(db->name) : "Unknown", map[sd->bl.m].instance_id, (unsigned short)im->mode);
 					continue;
 			}
-			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, instance_id, StringBuf_Value(db->name))) { // All good
+			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, instance_id, StringBuf_Value(db->name), -1, -1)) { // All good
 				clif_displaymessage(sd->fd, msg_txt(sd,515)); // Instance has been reloaded
 				instance_reqinfo(sd,instance_id);
 			} else // Something went wrong

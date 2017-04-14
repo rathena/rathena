@@ -15,6 +15,6 @@
 //==================================================
 // Thief Bug City Spawns
 //==================================================
-payon_in02,23,68,5,5	monster	Thief Bug	1051,7,1200000,600000,0
-jawaii_in,73,117,4,4	monster	Thief Bug	1051,1,5400000,3000000,0
-jawaii_in,83,117,5,5	monster	Thief Bug	1051,1,4800000,2400000,0
+payon_in02,23,68,5,5	monster	Thief Bug	1051,7,1200000,600000
+jawaii_in,73,117,4,4	monster	Thief Bug	1051,1,5400000,3000000
+jawaii_in,83,117,5,5	monster	Thief Bug	1051,1,4800000,2400000

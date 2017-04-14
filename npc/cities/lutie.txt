@@ -503,7 +503,7 @@ xmas,134,112,4	script	Snowman	710,{
 			mes "Everyone here is never worried, and I'm always hearing Christmas carols and stuff.";
 			next;
 			cutin "rutie_snownow03.bmp",2;
-			mes "[Snowysnow]";;
+			mes "[Snowysnow]";
 			mes "But still...";
 			mes "Sometimes all that Christmas joy somehow doesn't cure the dark loneliness that wells deep inside of me.";
 			next;

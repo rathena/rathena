@@ -196,17 +196,17 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 			close;
 		case 2:
 			switch(instance_enter(.@md_name$)) {
-			case 3:
+			case IE_OTHER:
 				mes "An unknown error has occurred.";
 				close;
-			case 2:
+			case IE_NOINSTANCE:
 				mes "The memorial dungeon "+.@md_name$+" does not exist.";
 				mes "The party leader did not generate the dungeon yet.";
 				close;
-			case 1:
+			case IE_NOMEMBER:
 				mes "Only the registered members can enter the instance "+.@md_name$+".";
 				close;
-			case 0:
+			case IE_OK:
 				mapannounce "dali",strcharinfo(0)+", member of the party "+.@p_name$+" entered the instance "+.@md_name$+".",bc_map,"0x00ff99";
 				setquest 15002;
 				end;
@@ -1166,7 +1166,8 @@ OnMyMobDead:
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
 		mapannounce instance_mapname("1@sara"), "Sara ran away again! You think she went in the 2 O'clock direction!",bc_map,"0xffff00";
-		viewpoint 1,208,250,1,0x00FF00;
+		if (playerattached() > 0)
+			viewpoint 1,208,250,1,0x00FF00;
 		donpcevent instance_npcname("#sara_warp02", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("#MobsSara02", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("#MobsSara01", instance_id())+"::OnDisable";
@@ -1211,7 +1212,8 @@ OnMyMobDead:
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
 		mapannounce instance_mapname("1@sara"), "Sara ran away yet again! You think she went in the 5 O'clock direction!",bc_map,"0xffff00";
-		viewpoint 1,226,190,1,0x00FF00;
+		if (playerattached() > 0)
+			viewpoint 1,226,190,1,0x00FF00;
 		donpcevent instance_npcname("#sara_warp03", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("#MobsSara03", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("#MobsSara02", instance_id())+"::OnDisable";
@@ -1288,7 +1290,8 @@ OnMyMobDead:
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
 		mapannounce instance_mapname("1@sara"), "Sara ran away yet again! *sigh* You think she went in the 12 O'clock direction!",bc_map,"0xffff00";
-		viewpoint 1,166,67,1,0x00FF00;
+		if (playerattached() > 0)
+			viewpoint 1,166,67,1,0x00FF00;
 		donpcevent instance_npcname("#sara_warp04", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("#MobsSara04", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("#MobsSara03", instance_id())+"::OnDisable";
@@ -1364,7 +1367,8 @@ OnMyMobDead:
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
 		mapannounce instance_mapname("1@sara"), "Sara continues to run away! You think she went in the 12 O'clock direction!",bc_map,"0xffff00";
-		viewpoint 1,155,180,1,0x00FF00;
+		if (playerattached() > 0)
+			viewpoint 1,155,180,1,0x00FF00;
 		donpcevent instance_npcname("#sara_warp05", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("Sara Irene#02", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("Doyen Irene#03", instance_id())+"::OnEnable";

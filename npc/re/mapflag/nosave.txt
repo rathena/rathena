@@ -91,6 +91,9 @@ ma_zif09	mapflag	nosave	SavePoint
 que_avan01	mapflag	nosave	SavePoint
 1@ecl	mapflag	nosave	SavePoint
 
+// Horror Toy Factory
+1@xm_d	mapflag	nosave	SavePoint
+
 // Glast Heim Memorial Dungeon ====
 1@gl_k	mapflag	nosave	SavePoint
 2@gl_k	mapflag	nosave	SavePoint

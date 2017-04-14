@@ -18,15 +18,15 @@
 //==================================================
 // ayo_fild01 - Ayothaya Field
 //==================================================
-ayo_fild01,0,0,0,0	monster	Smokie	1056,30,5000,0,0
-ayo_fild01,0,0,0,0	monster	Coco	1104,30,5000,0,0
-ayo_fild01,0,0,0,0	monster	Yoyo	1057,30,5000,0,0
-ayo_fild01,0,0,0,0	monster	Green Plant	1080,10,10000,0,0
+ayo_fild01,0,0	monster	Smokie	1056,30,5000
+ayo_fild01,0,0	monster	Coco	1104,30,5000
+ayo_fild01,0,0	monster	Yoyo	1057,30,5000
+ayo_fild01,0,0	monster	Green Plant	1080,10,10000
 
 //==================================================
 // ayo_fild02 - Ayothaya Field
 //==================================================
-ayo_fild02,0,0,0,0	monster	Yoyo	1057,45,5000,0,0
-ayo_fild02,0,0,0,0	monster	Leaf Cat	1586,35,5000,0,0
-ayo_fild02,0,0,0,0	monster	Kraben	1587,5,5000,0,0
-ayo_fild02,0,0,0,0	monster	Yellow Plant	1081,10,10000,0,0
+ayo_fild02,0,0	monster	Yoyo	1057,45,5000
+ayo_fild02,0,0	monster	Leaf Cat	1586,35,5000
+ayo_fild02,0,0	monster	Kraben	1587,5,5000
+ayo_fild02,0,0	monster	Yellow Plant	1081,10,10000

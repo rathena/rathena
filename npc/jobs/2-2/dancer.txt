@@ -1309,7 +1309,7 @@ job_duncer,69,110,0	duplicate(StepTrigger)	dance#cen	-1,1,1
 
 job_duncer,10,10,0	script	dance#poring	-1,{
 OnEnable:
-	monster "job_duncer",69,106,"Poring",1002,1,"dance#poring::OnMyMobDead";
+	areamonster "job_duncer",68,105,70,107,"Poring",1002,1,"dance#poring::OnMyMobDead";
 	end;
 
 OnMyMobDead:

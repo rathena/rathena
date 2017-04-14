@@ -120,18 +120,18 @@ mal_dun01,153,237,5	script	Weird Entrance	844,{
 	case 1:
 		if (countitem(6442)) {
 			switch(instance_enter("Octopus Cave")) {
-			case 3:
+			case IE_OTHER:
 				mes "[Starfish]";
 				mes "Ah, now is not the time...";
 				mes "Would you come back later? Hehe.";
 				close;
-			case 2:
-			case 1:
+			case IE_NOINSTANCE:
+			case IE_NOMEMBER:
 				mes "[Starfish]";
 				mes "There is a secret with that entrance.";
 				mes "So, please be careful with it, will ya? Hehe.";
 				close;
-			case 0:
+			case IE_OK:
 				mapannounce "mal_dun01", getpartyname(getcharid(1))+" party's "+strcharinfo(0)+" member started to hunt the Octopus!",bc_map,"0x00ff99";
 				if (checkquest(4197) == -1) setquest 4197;
 				//warp instance_mapname("1@cash"),199,99;

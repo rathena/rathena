@@ -168,7 +168,7 @@ int channel_mjoin(struct map_session_data *sd) {
 	if( !( map[sd->bl.m].channel->opt & CHAN_OPT_ANNOUNCE_JOIN ) ) {
 		char mout[60];
 		sprintf(mout, msg_txt(sd,1435),channel_config.map_chname,map[sd->bl.m].name); // You're now in the '#%s' channel for '%s'.
-		clif_disp_onlyself(sd, mout, strlen(mout));
+		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], mout, false, SELF);
 	}
 
 	return channel_join(map[sd->bl.m].channel,sd);
@@ -182,7 +182,7 @@ int channel_mjoin(struct map_session_data *sd) {
  *  -1 : invalid guild or no channel for guild
  */
 int channel_ajoin(struct guild *g){
-	int i;
+	int i, j;
 	struct map_session_data *pl_sd;
 
 	if(!g || !g->channel) return -1;
@@ -190,8 +190,8 @@ int channel_ajoin(struct guild *g){
 		struct guild *ag; //allied guld
 		struct guild_alliance *ga = &g->alliance[i]; //guild alliance
 		if(ga->guild_id && (ga->opposition==0) && (ag=guild_search(ga->guild_id))){
-			for (i = 0; i < ag->max_member; i++){ //load all guildmember
-				pl_sd = ag->member[i].sd;
+			for (j = 0; j < ag->max_member; j++){ //load all guildmember
+				pl_sd = ag->member[j].sd;
 				if(channel_haspc(ag->channel,pl_sd)==1)  //only if they are in their own guildchan
 					channel_join(g->channel,pl_sd);
 			}
@@ -339,7 +339,7 @@ int channel_send(struct Channel *channel, struct map_session_data *sd, const cha
 		return -1;
 
 	if(!pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) && channel->msg_delay != 0 && DIFF_TICK(sd->channel_tick + ( channel->msg_delay * 1000 ), gettick()) > 0) {
-		clif_colormes(sd->fd,color_table[COLOR_RED],msg_txt(sd,1455)); //You're talking too fast!
+		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1455),false,SELF); //You're talking too fast!
 		return -2;
 	}
 	else {
@@ -483,7 +483,7 @@ int channel_display_list(struct map_session_data *sd, char *options){
 		for( k = 0; k < channel_config.colors_count; k++ ) {
 			if (channel_config.colors[k]) {
 				sprintf(msg, msg_txt(sd,1445),channel_config.colors_name[k]);// - '%s'
-				clif_colormes(sd->fd,channel_config.colors[k],msg);
+				clif_messagecolor(&sd->bl,channel_config.colors[k],msg,false,SELF);
 			}
 		}
 	}
@@ -813,7 +813,7 @@ int channel_pcunbind(struct map_session_data *sd){
 int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int flag){
 	struct Channel *channel;
 	char output[128];
-	struct map_session_data *tsd = map_nick2sd(pname);
+	struct map_session_data *tsd = map_nick2sd(pname,false);
 
 	if( channel_chk(chname,NULL,1) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.

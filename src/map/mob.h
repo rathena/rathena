@@ -178,7 +178,6 @@ struct mob_data {
 		unsigned int steal_coin_flag : 1;
 		unsigned int soul_change_flag : 1; // Celest
 		unsigned int alchemist: 1;
-		unsigned int spotted: 1;
 		unsigned int npc_killmonster: 1; //for new killmonster behavior
 		unsigned int rebirth: 1; // NPC_Rebirth used
 		unsigned int boss : 1;
@@ -194,6 +193,7 @@ struct mob_data {
 		unsigned int dmg;
 		unsigned int flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 	} dmglog[DAMAGELOG_SIZE];
+	uint32 spotted_log[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int spawn_timer; //Required for Convex Mirror
 	struct s_mob_lootitem *lootitems;

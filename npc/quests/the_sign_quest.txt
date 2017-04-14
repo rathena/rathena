@@ -554,7 +554,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 		mes "this and come back later~";
 		delitem 7314,1; //The_Sign
 		set sign_q,138;
-		set .@stime_s,gettime(3);
+		set .@stime_s,gettime(DT_HOUR);
 		if (.@stime_s < 1) set sign_sq,1;
 		else if (.@stime_s < 3) set sign_sq,2;
 		else if (.@stime_s < 5) set sign_sq,3;
@@ -569,7 +569,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 		else set sign_sq,12;
 	}
 	else if (sign_q == 138) {
-		set .@stime_s1,gettime(3);
+		set .@stime_s1,gettime(DT_HOUR);
 		if (.@stime_s1 < 1) {
 			if (sign_sq == 11) {
 				set .@pass_s,1;
@@ -2568,7 +2568,7 @@ aldeba_in,139,103,5	script	Monograph#sign	111,{
 
 aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 	callfunc "F_UpdateSignVars";
-	if ((gettime(3) > 16) && (gettime(3) < 22)) {
+	if ((gettime(DT_HOUR) > 16) && (gettime(DT_HOUR) < 22)) {
 		if (sign_q == 15) {
 			mes "["+ strcharinfo(0) +"]";
 			mes "Excuse me...";
@@ -2859,7 +2859,7 @@ aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 			close;
 		}
 	}
-	else if ((gettime(3) > 6) && (gettime(3) < 17)) {
+	else if ((gettime(DT_HOUR) > 6) && (gettime(DT_HOUR) < 17)) {
 		mes "^3355FFYou find a tense man";
 		mes "holding test tubes between";
 		mes "his fingers, standing in a pile";
@@ -2939,7 +2939,7 @@ OnTouch_:
 aldeba_in,156,118,4	script	Piru Piru#sign	102,{
 	callfunc "F_UpdateSignVars";
 	mes "[Piru Piru]";
-	if ((gettime(3) >= 12) && (gettime(3) <= 24)) { //235959
+	if ((gettime(DT_HOUR) >= 12) && (gettime(DT_HOUR) <= 24)) { //235959
 		if (sign_q == 17) {
 			emotion e_sob;
 			mes "Oh, I'm sooo tired~";
@@ -3019,7 +3019,7 @@ aldeba_in,156,118,4	script	Piru Piru#sign	102,{
 			close;
 		}
 	}
-	else if ((gettime(3) >= 6) && (gettime(3) < 12)) {
+	else if ((gettime(DT_HOUR) >= 6) && (gettime(DT_HOUR) < 12)) {
 		mes "Everyday we study and";
 		mes "take notes and test and";
 		mes "experiment and record";
@@ -4536,7 +4536,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 		}
 	}
 	else if (sign_q == 27) {
-		if ((gettime(3) > 18) && (gettime(3) < 23)) {
+		if ((gettime(DT_HOUR) > 18) && (gettime(DT_HOUR) < 23)) {
 			mes "Nice, you're here";
 			mes "just in time. Well,";
 			mes "all that matters is that";
@@ -5151,8 +5151,8 @@ OnInit:
 	end;
 
 OnEnable:
-	specialeffect EF_SUMMONSLAVE;
 	enablenpc "s_dance#up";
+	specialeffect EF_SUMMONSLAVE;
 	end;
 
 OnDisable:
@@ -5207,8 +5207,8 @@ OnInit:
 	end;
 
 OnEnable:
-	specialeffect EF_SUMMONSLAVE;
 	enablenpc "s_dance#down";
+	specialeffect EF_SUMMONSLAVE;
 	end;
 
 OnDisable:
@@ -5284,8 +5284,8 @@ OnInit:
 
 
 OnEnable:
-	specialeffect EF_SUMMONSLAVE;
 	enablenpc "s_dance#left";
+	specialeffect EF_SUMMONSLAVE;
 	end;
 
 OnDisable:
@@ -5352,8 +5352,8 @@ OnInit:
 	end;
 
 OnEnable:
-	specialeffect EF_SUMMONSLAVE;
 	enablenpc "s_dance#right";
+	specialeffect EF_SUMMONSLAVE;
 	end;
 
 OnDisable:
@@ -5426,8 +5426,8 @@ OnInit:
 	end;
 
 OnEnable:
-	specialeffect EF_SUMMONSLAVE;
 	enablenpc "s_dance#cen";
+	specialeffect EF_SUMMONSLAVE;
 	end;
 
 OnDisable:
@@ -7553,7 +7553,7 @@ mjo_dun02,88,295,4	script	Flaming Spirit Man	85,{
 		mes "But I'll do my best for you.";
 		delitem 7314,1; //The_Sign
 		set sign_q,140;
-		set .@stime_e,gettime(3);
+		set .@stime_e,gettime(DT_HOUR);
 		if (.@stime_e < 2) set sign_sq,1;
 		else if (.@stime_e < 4) set sign_sq,2;
 		else if (.@stime_e < 6) set sign_sq,3;
@@ -7569,7 +7569,7 @@ mjo_dun02,88,295,4	script	Flaming Spirit Man	85,{
 		close;
 	}
 	else if (sign_q == 140) {
-		set .@stime_e1,gettime(3);
+		set .@stime_e1,gettime(DT_HOUR);
 		if (.@stime_e1 < 2) {
 			if (sign_sq == 11) {
 				set .@pass_s1,1;
@@ -8811,7 +8811,7 @@ que_sign01,197,195,4	script	Serin#witch	90,{
 				getexp (checkre(3))?20000:200000,0;
 				set $@sign_w1,0;
 				close2;
-				warp "umbala,",132,203;
+				warp "umbala",132,203;
 				end;
 			}
 		}
@@ -12240,11 +12240,12 @@ OnInit:
 	end;
 
 OnTouch_:
-	set geffenia_warp,rand(1,4);
-	if (geffenia_warp == 1) warp "gefenia01",58,169;
-	else if (geffenia_warp == 2) warp "gefenia02",116,115;
-	else if (geffenia_warp == 3) warp "gefenia03",130,206;
-	else if (geffenia_warp == 4) warp "gefenia04",133,88;
+	.@geffenia_warp = rand(1,4);
+	if (.@geffenia_warp == 1) warp "gefenia01",58,169;
+	else if (.@geffenia_warp == 2) warp "gefenia02",116,115;
+	else if (.@geffenia_warp == 3) warp "gefenia03",130,206;
+	else if (.@geffenia_warp == 4) warp "gefenia04",133,88;
+	// Unreachable, but original code is like this [Lemongrass]
 	else warp "geffen",116,115;
 	end;
 
@@ -12434,15 +12435,15 @@ OnReset:
 	end;
 }
 
-que_sign02,0,0,0,0	monster	Ancient Mummy	1522,8,0,0,0
-que_sign02,0,0,0,0	monster	Evil Druid	1435,8,0,0,0
-que_sign02,0,0,0,0	monster	Ghoul	1423,20,0,0,0
-que_sign02,0,0,0,0	monster	Incubus	1580,8,0,0,0
-que_sign02,0,0,0,0	monster	Injustice	1446,8,0,0,0
-que_sign02,0,0,0,0	monster	Skeleton Prisoner	1479,15,0,0,0
-que_sign02,0,0,0,0	monster	Zombie Prisoner	1480,15,0,0,0
-que_sign02,0,0,0,0	monster	Wraith	1475,15,0,0,0
-que_sign02,0,0,0,0	monster	Wraith Dead	1566,8,0,0,0
+que_sign02,0,0	monster	Ancient Mummy	1522,8
+que_sign02,0,0	monster	Evil Druid	1435,8
+que_sign02,0,0	monster	Ghoul	1423,20
+que_sign02,0,0	monster	Incubus	1580,8
+que_sign02,0,0	monster	Injustice	1446,8
+que_sign02,0,0	monster	Skeleton Prisoner	1479,15
+que_sign02,0,0	monster	Zombie Prisoner	1480,15
+que_sign02,0,0	monster	Wraith	1475,15
+que_sign02,0,0	monster	Wraith Dead	1566,8
 
 que_sign02,378,235,0	script	sign_w6	45,1,1,{
 OnTouch_:
