@@ -10831,10 +10831,13 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (bl->type == BL_PC && pc_checkskill(sd, SU_SPIRITOFLAND))
 				val4 = status_get_lv(src) / 12;
 			break;
-		case SC_BITESCAR:
-			val2 = (status_get_max_hp(bl) * (val1 + (status_get_dex(src) / 25))) / status_get_max_hp(bl); // MHP% damage
-			tick_time = 1000;
-			val4 = tick / tick_time;
+		case SC_BITESCAR: {
+				const struct status_data *b_status = status_get_base_status(src); // Base Status
+
+				val2 = (status_get_max_hp(bl) * (val1 + (b_status->dex / 25))) / status_get_max_hp(bl); // MHP% damage
+				tick_time = 1000;
+				val4 = tick / tick_time;
+			}
 			break;
 		case SC_ARCLOUSEDASH:
 			val2 = 15 + 5 * val1; // AGI
