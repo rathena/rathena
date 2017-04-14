@@ -195,6 +195,19 @@
 
 	export_constant(JOB_SUMMONER);
 
+	export_constant(JOB_BABY_SUMMONER);
+
+	export_constant(JOB_BABY_NINJA);
+	export_constant(JOB_BABY_KAGEROU);
+	export_constant(JOB_BABY_OBORO);
+	export_constant(JOB_BABY_TAEKWON);
+	export_constant(JOB_BABY_STAR_GLADIATOR);
+	export_constant(JOB_BABY_SOUL_LINKER);
+	export_constant(JOB_BABY_GUNSLINGER);
+	export_constant(JOB_BABY_REBELLION);
+
+	export_constant(JOB_BABY_STAR_GLADIATOR2);
+
 	/* EA jobs */
 	export_constant2("EAJL_2_1",JOBL_2_1);
 	export_constant2("EAJL_2_2",JOBL_2_2);
@@ -268,6 +281,10 @@
 	export_constant2("EAJ_BABY_ACOLYTE",MAPID_BABY_ACOLYTE);
 	export_constant2("EAJ_BABY_MERCHANT",MAPID_BABY_MERCHANT);
 	export_constant2("EAJ_BABY_THIEF",MAPID_BABY_THIEF);
+	export_constant2("EAJ_BABY_TAEKWON",MAPID_BABY_TAEKWON);
+	export_constant2("EAJ_BABY_GUNSLINGER",MAPID_BABY_GUNSLINGER);
+	export_constant2("EAJ_BABY_NINJA",MAPID_BABY_NINJA);
+	export_constant2("EAJ_BABY_SUMMONER",MAPID_BABY_SUMMONER);
 
 	export_constant2("EAJ_BABY_KNIGHT",MAPID_BABY_KNIGHT);
 	export_constant2("EAJ_BABY_WIZARD",MAPID_BABY_WIZARD);
@@ -275,6 +292,9 @@
 	export_constant2("EAJ_BABY_PRIEST",MAPID_BABY_PRIEST);
 	export_constant2("EAJ_BABY_BLACKSMITH",MAPID_BABY_BLACKSMITH);
 	export_constant2("EAJ_BABY_ASSASSIN",MAPID_BABY_ASSASSIN);
+	export_constant2("EAJ_BABY_STAR_GLADIATOR",MAPID_BABY_STAR_GLADIATOR);
+	export_constant2("EAJ_BABY_REBELLION",MAPID_BABY_REBELLION);
+	export_constant2("EAJ_BABY_KAGEROUOBORO",MAPID_BABY_KAGEROUOBORO);
 
 	export_constant2("EAJ_BABY_CRUSADER",MAPID_BABY_CRUSADER);
 	export_constant2("EAJ_BABY_SAGE",MAPID_BABY_SAGE);
@@ -282,6 +302,7 @@
 	export_constant2("EAJ_BABY_MONK",MAPID_BABY_MONK);
 	export_constant2("EAJ_BABY_ALCHEMIST",MAPID_BABY_ALCHEMIST);
 	export_constant2("EAJ_BABY_ROGUE",MAPID_BABY_ROGUE);
+	export_constant2("EAJ_BABY_SOUL_LINKER",MAPID_BABY_SOUL_LINKER);
 
 	export_constant2("EAJ_RUNE_KNIGHT",MAPID_RUNE_KNIGHT);
 	export_constant2("EAJ_WARLOCK",MAPID_WARLOCK);

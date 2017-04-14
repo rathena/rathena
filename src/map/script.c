@@ -8644,9 +8644,14 @@ BUILDIN_FUNC(getequipweaponlv)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (num == -1)
+	if (num == -1){
+		if( current_equip_item_index == -1 ){
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
 		i = current_equip_item_index;
-	else if (equip_index_check(num))
+	}else if (equip_index_check(num))
 		i = pc_checkequip(sd, equip_bitmask[num]);
 	if (i >= 0 && sd->inventory_data[i])
 		script_pushint(st, sd->inventory_data[i]->wlv);
@@ -15127,9 +15132,14 @@ BUILDIN_FUNC(cardscnt)
 BUILDIN_FUNC(getrefine)
 {
 	TBL_PC *sd;
-	if ((sd = script_rid2sd(st))!= NULL)
+	if ((sd = script_rid2sd(st))!= NULL){
+		if( current_equip_item_index == -1 ){
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
 		script_pushint(st,sd->inventory.u.items_inventory[current_equip_item_index].refine);
-	else
+	}else
 		script_pushint(st,0);
 	return SCRIPT_CMD_SUCCESS;
 }
