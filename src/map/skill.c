@@ -4142,10 +4142,9 @@ static int skill_timerskill(int tid, unsigned int tick, int id, intptr_t data)
 				case SU_SV_ROOTTWIST_ATK: {
 						struct status_change *tsc = status_get_sc(target);
 
-						if (tsc && tsc->data[SC_SV_ROOTTWIST]) {
-							skill_attack(skl->type, src, src, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
+						skill_attack(skl->type, src, src, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
+						if (tsc && tsc->data[SC_SV_ROOTTWIST])
 							skill_addtimerskill(target, tick + 1000, target->id, 0, 0, skl->skill_id, skl->skill_lv, skl->type, skl->flag|SD_ANIMATION);
-						}
 					}
 					break;
 				default:
@@ -6676,12 +6675,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
  		break;
 
-	case SU_SV_ROOTTWIST:
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		if (sd && pc_checkskill(sd, SU_SPIRITOFLAND))
-			sc_start(src, src, SC_DORAM_MATK, 100, sd->status.base_level, skill_get_time(SU_SPIRITOFLAND, 1));
- 		skill_addtimerskill(bl, tick + 1000, bl->id, 0, 0, SU_SV_ROOTTWIST_ATK, skill_lv, skill_get_type(SU_SV_ROOTTWIST_ATK), flag|SD_ANIMATION);
+	case SU_SV_ROOTTWIST: {
+			struct status_change *tsc = status_get_sc(bl);
+
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			if (tsc->count && tsc->data[type]) // Refresh the status only if it's already active.
+				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			else {
+				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+				if (sd && pc_checkskill(sd, SU_SPIRITOFLAND))
+					sc_start(src, src, SC_DORAM_MATK, 100, sd->status.base_level, skill_get_time(SU_SPIRITOFLAND, 1));
+				skill_addtimerskill(bl, tick + 1000, bl->id, 0, 0, SU_SV_ROOTTWIST_ATK, skill_lv, skill_get_type(SU_SV_ROOTTWIST_ATK), flag | SD_ANIMATION);
+			}
+		}
 		break;
 
 	case KN_AUTOCOUNTER:

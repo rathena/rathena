@@ -10832,7 +10832,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val4 = status_get_lv(src) / 12;
 			break;
 		case SC_BITESCAR:
-			val2 = (status_get_max_hp(bl) * (val1 + (status_get_dex(src) / 25)) / 100); // MHP% damage
+			val2 = (status_get_max_hp(bl) * (val1 + (status_get_dex(src) / 25))) / status_get_max_hp(bl); // MHP% damage
 			tick_time = 1000;
 			val4 = tick / tick_time;
 			break;
