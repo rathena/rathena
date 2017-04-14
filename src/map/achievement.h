@@ -113,7 +113,7 @@ int *achievement_level(struct map_session_data *sd, bool flag);
 void achievement_get_titles(uint32 char_id);
 struct achievement_db *achievement_read_db_sub(struct config_setting_t *cs, int n, const char *source);
 void achievement_update_objective(struct map_session_data *sd, enum e_achievement_group group, uint8 arg_count, ...);
-int achievement_read_db(void);
+void achievement_read_db(void);
 void achievement_db_reload(void);
 
 void do_init_achievement(void);

@@ -302,6 +302,7 @@
     <Copy SourceFiles="..\conf\msg_conf\import-tmpl\map_msg_rus_conf.txt" DestinationFolder="..\conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\msg_conf\import\map_msg_rus_conf.txt')" />
     <Copy SourceFiles="..\conf\msg_conf\import-tmpl\map_msg_spn_conf.txt" DestinationFolder="..\conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\msg_conf\import\map_msg_spn_conf.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\abra_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\abra_db.txt')" />
+    <Copy SourceFiles="..\db\import-tmpl\achievement_db.conf" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\achievement_db.conf')" />
     <Copy SourceFiles="..\db\import-tmpl\attr_fix.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\attr_fix.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\castle_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\castle_db.txt')" />
     <Copy SourceFiles="..\db\import-tmpl\create_arrow_db.txt" DestinationFolder="..\db\import\" ContinueOnError="true" Condition="!Exists('..\db\import\create_arrow_db.txt')" />

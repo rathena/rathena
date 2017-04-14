@@ -1113,43 +1113,58 @@ struct achievement_db *achievement_read_db_sub(struct config_setting_t *cs, int 
 
 /**
  * Loads achievements from the achievement db.
- * @return Number of loaded achievements, or -1 if the file couldn't be read.
  */
-int achievement_read_db(void)
+void achievement_read_db(void)
 {
-	char filepath[256];
 	struct config_setting_t *adb = NULL, *a = NULL;
-	int count = 0;
-	const char *filename = "achievement_db.conf";
+	int i = 0;
+	const char *dbsubpath[] = {
+		"",
+		"/"DBIMPORT"/",
+		//add other path here
+	};
 
-	sprintf(filepath, "%s/%s", db_path, filename);
-	if (config_read_file(&achievement_db_conf, filepath))
-		return -1;
+	for (i = 0; i < ARRAYLENGTH(dbsubpath); i++) {
+		char filepath[256];
+		int count = 0;
 
-	if ((adb = config_lookup(&achievement_db_conf, "achievement_db")) == NULL) {
-		ShowError("Failed to read '%s'.\n", filepath);
-		return -1;
-	}
+		if (!i)
+			sprintf(filepath, "%s/%s%s%s", db_path, DBPATH, dbsubpath[i], "achievement_db.conf");
+		else
+			sprintf(filepath, "%s%s%s", db_path, dbsubpath[i], "achievement_db.conf");
 
-	while ((a = config_setting_get_elem(adb, count))) {
-		struct achievement_db *entry = achievement_read_db_sub(a, count, filepath);
+		if (config_read_file(&achievement_db_conf, filepath))
+			continue;
 
-		if (!entry) {
-			ShowWarning("achievement_read_db: Failed to parse achievement entry %d.\n", count);
+		if ((adb = config_lookup(&achievement_db_conf, "achievement_db")) == NULL) {
+			ShowError("Failed to read '%s'.\n", filepath);
 			continue;
 		}
-		if (achievement_search(entry->achievement_id) != &achievement_dummy) {
-			ShowWarning("achievement_read_db: Duplicate achievement %d.\n", entry->achievement_id);
-			achievement_db_free_sub(entry, false);
-			continue;
+
+		while ((a = config_setting_get_elem(adb, count))) {
+			struct achievement_db *duplicate = &achievement_dummy, *entry = achievement_read_db_sub(a, count, filepath);
+
+			if (!entry) {
+				ShowWarning("achievement_read_db: Failed to parse achievement entry %d.\n", count);
+				continue;
+			}
+			if ((duplicate = achievement_search(entry->achievement_id)) != &achievement_dummy) {
+				if (!i) { // Normal file read-in
+					ShowWarning("achievement_read_db: Duplicate achievement %d.\n", entry->achievement_id);
+					achievement_db_free_sub(entry, false);
+					continue;
+				} else // Import file read-in, free previous value and store new value
+					achievement_db_free_sub(duplicate, false);
+			}
+			idb_put(achievement_db, entry->achievement_id, entry);
+			count++;
 		}
-		idb_put(achievement_db, entry->achievement_id, entry);
-		count++;
+
+		ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filepath);
 	}
 
-	ShowStatus("Done reading '"CL_WHITE"%d"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, filename);
 	config_destroy(&achievement_db_conf);
-	return count;
+	return;
 }
 
 /**
