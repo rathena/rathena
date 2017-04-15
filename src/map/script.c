@@ -632,7 +632,6 @@ static void script_reportfunc(struct script_state* st)
 		ShowDebug("Function: %s (no parameters)\n", get_str(id));
 	}
 }
-
 /*==========================================
  * Output error message
  *------------------------------------------*/
@@ -6593,6 +6592,74 @@ BUILDIN_FUNC(viewpoint)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Set random options for new item
+ * @param st Script state
+ * @param it Temporary item data
+ * @param funcname Function name
+ * @param x First position of random option id array from the script
+ **/
+static int script_getitem_randomoption(struct script_state *st, struct item *it, const char *funcname, int x) {
+	int i, opt_id_n, opt_val_n, opt_param_n;
+	struct script_data *opt_id = script_getdata(st,x);
+	struct script_data *opt_val = script_getdata(st,x+1);
+	struct script_data *opt_param = script_getdata(st,x+2);
+	const char *opt_id_var = reference_getname(opt_id);
+	const char *opt_val_var = reference_getname(opt_val);
+	const char *opt_param_var = reference_getname(opt_param);
+	int32 opt_id_id, opt_id_idx;
+	int32 opt_val_id, opt_val_idx;
+	int32 opt_param_id, opt_param_idx;
+	struct reg_db *opt_id_ref = NULL, *opt_val_ref = NULL, *opt_param_ref = NULL;
+
+	if (opt_id_var[strlen(opt_id_var)-1] == '$') {
+		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_id_var);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (opt_val_var[strlen(opt_val_var)-1] == '$') {
+		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_val_var);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (opt_param_var[strlen(opt_param_var)-1] == '$') {
+		ShowError("buildin_%s: The array %s is not numeric type.\n", funcname, opt_param_var);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	opt_id_ref = reference_getref(opt_id);
+	opt_id_n = script_array_highest_key(st, NULL, opt_id_var, opt_id_ref);
+
+	if (opt_id_n < 1) {
+		ShowError("buildin_%s: No option id listed.\n", funcname);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	opt_val_ref = reference_getref(opt_val);
+	opt_param_ref = reference_getref(opt_param);
+
+	opt_val_n = script_array_highest_key(st, NULL, opt_val_var, opt_val_ref);
+	opt_param_n = script_array_highest_key(st, NULL, opt_param_var, opt_param_ref);
+
+	opt_id_id = reference_getid(opt_id);
+	opt_val_id = reference_getid(opt_val);
+	opt_param_id = reference_getid(opt_param);
+
+	opt_id_idx = reference_getindex(opt_id);
+	opt_val_idx = reference_getindex(opt_val);
+	opt_param_idx = reference_getindex(opt_param);
+	
+	for (i = 0; i < opt_id_n && i < MAX_ITEM_RDM_OPT; i++) {
+		it->option[i].id = (short)__64BPRTSIZE(get_val2(st,reference_uid(opt_id_id,opt_id_idx+i),opt_id_ref));
+		script_removetop(st, -1, 0);
+		it->option[i].value = (short)__64BPRTSIZE(get_val2(st,reference_uid(opt_val_id,opt_val_idx+i),opt_val_ref));
+		script_removetop(st, -1, 0);
+		it->option[i].param = (char)__64BPRTSIZE(get_val2(st,reference_uid(opt_param_id,opt_param_idx+i),opt_param_ref));
+		script_removetop(st, -1, 0);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /// Returns number of items in inventory/cart/storage
 /// countitem <nameID>{,<accountID>});
 /// countitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>}) [Lupus]
@@ -6618,7 +6685,11 @@ BUILDIN_FUNC(countitem)
 		i = 1;
 		aid = 10;
 	}
-	
+	else if (command[strlen(command)-1] == '3') {
+		i = 1;
+		aid = 13;
+	}
+
 	if( script_hasdata(st,aid) ) {
 		if( !(sd = map_id2sd( (aid = script_getnum(st, aid)) )) ) {
 			ShowError("buildin_%s: player not found (AID=%d).\n", command, aid);
@@ -6630,7 +6701,7 @@ BUILDIN_FUNC(countitem)
 		if( !(sd = script_rid2sd(st)) )
 			return SCRIPT_CMD_SUCCESS;
 	}
-	
+
 	if( !strncmp(command, "cart", 4) ) {
 		loc = TABLE_CART;
 		size = MAX_CART;
@@ -6688,27 +6759,45 @@ BUILDIN_FUNC(countitem)
 				count += items[i].amount;
 	}
 	else { // For count/cart/storagecountitem2 function
-		unsigned short nameid;
-		int iden, ref, attr, c1, c2, c3, c4;
+		struct item it;
+		bool check_randomopt = false;
+		memset(&it, 0, sizeof(it));
 
-		nameid = id->nameid;
-		iden = script_getnum(st,3);
-		ref  = script_getnum(st,4);
-		attr = script_getnum(st,5);
-		c1 = script_getnum(st,6);
-		c2 = script_getnum(st,7);
-		c3 = script_getnum(st,8);
-		c4 = script_getnum(st,9);
+		it.nameid = id->nameid;
+		it.identify = script_getnum(st,3);
+		it.refine  = script_getnum(st,4);
+		it.attribute = script_getnum(st,5);
+		it.card[0] = script_getnum(st,6);
+		it.card[1] = script_getnum(st,7);
+		it.card[2] = script_getnum(st,8);
+		it.card[3] = script_getnum(st,9);
 
-		for( i = 0; i < size; i++ )
-			if( &items[i] && items[i].nameid > 0 && items[i].nameid == nameid &&
-				items[i].amount > 0 && items[i].identify == iden &&
-				items[i].refine == ref && items[i].attribute == attr &&
-				items[i].card[0] == c1 && items[i].card[1] == c2 &&
-				items[i].card[2] == c3 && items[i].card[3] == c4 )
-			{
-				count += items[i].amount;
+		if (command[strlen(command)-1] == '3') {
+			int res = script_getitem_randomoption(st, &it, command, 10);
+			if (res != SCRIPT_CMD_SUCCESS)
+				return SCRIPT_CMD_FAILURE;
+			check_randomopt = true;
+		}
+
+		for( i = 0; i < size; i++ ) {
+			struct item *itm = &items[i];
+			if (!itm || !itm->nameid || itm->amount < 1)
+				continue;
+			if (itm->nameid != it.nameid || itm->identify != it.identify || itm->refine != it.refine || itm->attribute != it.attribute)
+				continue;
+			if (memcmp(it.card, itm->card, sizeof(it.card)))
+				continue;
+			if (check_randomopt) {
+				uint8 j;
+				for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
+					if (itm->option[j].id != it.option[j].id || itm->option[j].value != it.option[j].value || itm->option[j].param != it.option[j].param)
+						break;
+				}
+				if (j != MAX_ITEM_RDM_OPT)
+					continue;
 			}
+			count += items[i].amount;
+		}
 	}
 
 	if (loc == TABLE_GUILD_STORAGE) {
@@ -7024,21 +7113,35 @@ BUILDIN_FUNC(getitem2)
 	TBL_PC *sd;
 	struct script_data *data;
 	const char* command = script_getfuncname(st);
+	int offset = 0;
 
-	if( !strcmp(command,"getitembound2") ) {
+	if( !strncmp(command,"getitembound",12) ) {
+		int aid_pos = 12;
 		bound = script_getnum(st,11);
 		if( bound < BOUND_NONE || bound >= BOUND_MAX ) {
 			ShowError("script_getitembound2: Not a correct bound type! Type=%d\n",bound);
 			return SCRIPT_CMD_FAILURE;
 		}
-		if( script_hasdata(st,12) )
-			sd = map_id2sd(script_getnum(st,12));
+		if (command[strlen(command)-1] == '3') {
+			offset = 12;
+			aid_pos = 15;
+		}
+		if( script_hasdata(st,aid_pos) )
+			sd = map_id2sd(script_getnum(st,aid_pos));
 		else
 			sd = script_rid2sd(st); // Attached player
-	} else if( script_hasdata(st,11) )
-		sd = map_id2sd(script_getnum(st,11)); // <Account ID>
-	else
-		sd = script_rid2sd(st); // Attached player
+	}
+	else {
+		int aid_pos = 11;
+		if (strcmpi(command,"getitem3") == 0) {
+			offset = 11;
+			aid_pos = 14;
+		} 
+		if( script_hasdata(st,aid_pos) )
+			sd = map_id2sd(script_getnum(st,aid_pos)); // <Account ID>
+		else
+			sd = script_rid2sd(st); // Attached player
+	}
 
 	if( sd == NULL ) // no target
 		return SCRIPT_CMD_SUCCESS;
@@ -7094,6 +7197,12 @@ BUILDIN_FUNC(getitem2)
 		item_tmp.card[2] = c3;
 		item_tmp.card[3] = c4;
 		item_tmp.bound = bound;
+
+		if (offset != 0) {
+			int res = script_getitem_randomoption(st, &item_tmp, command, offset);
+			if (res == SCRIPT_CMD_FAILURE)
+				return SCRIPT_CMD_FAILURE;
+		}
 
 		//Check if it's stackable.
 		if (!itemdb_isstackable2(item_data))
@@ -7191,11 +7300,15 @@ BUILDIN_FUNC(rentitem2) {
 	unsigned short nameid = 0;
 	unsigned char flag = 0;
 	int iden,ref,attr,c1,c2,c3,c4;
+	const char *funcname = script_getfuncname(st);
 
 	data = script_getdata(st,2);
 	get_val(st,data);
 
-	if (!script_accid2sd(11,sd))
+	if (funcname[strlen(funcname)-1] == '3') {
+		if (!script_accid2sd(14,sd))
+			return SCRIPT_CMD_FAILURE;
+	} else if (!script_accid2sd(11,sd))
 		return SCRIPT_CMD_FAILURE;
 
 	if( data_isstring(data) ) {
@@ -7251,6 +7364,12 @@ BUILDIN_FUNC(rentitem2) {
 	it.card[2] = (short)c3;
 	it.card[3] = (short)c4;
 	it.expire_time = (unsigned int)(time(NULL) + seconds);
+
+	if (funcname[strlen(funcname)-1] == '3') {
+		int res = script_getitem_randomoption(st, &it, funcname, 11);
+		if (res != SCRIPT_CMD_SUCCESS)
+			return res;
+	}
 
 	if( (flag = pc_additem(sd, &it, 1, LOG_TYPE_SCRIPT)) ) {
 		clif_additem(sd, 0, 0, flag);
@@ -7415,7 +7534,8 @@ BUILDIN_FUNC(makeitem2) {
 	struct item item_tmp;
 	struct script_data *data;
 	struct item_data *id;
-	
+	const char *funcname = script_getfuncname(st);
+
 	data = script_getdata(st,2);
 	get_val(st,data);
 	if( data_isstring(data) ){
@@ -7472,6 +7592,12 @@ BUILDIN_FUNC(makeitem2) {
 		item_tmp.card[1] = script_getnum(st,11);
 		item_tmp.card[2] = script_getnum(st,12);
 		item_tmp.card[3] = script_getnum(st,13);
+
+		if (funcname[strlen(funcname)-1] == '3') {
+			int res = script_getitem_randomoption(st, &item_tmp, funcname, 14);
+			if (res != SCRIPT_CMD_SUCCESS)
+				return res;
+		}
 
 		map_addflooritem(&item_tmp,amount,m,x,y,0,0,0,4,0);
 	}
@@ -7544,9 +7670,12 @@ static void buildin_delitem_delete(struct map_session_data* sd, int idx, int* am
 /// Searches for item(s) and checks, if there is enough of them.
 /// Used by delitem and delitem2
 /// Relies on all input data being already fully valid.
-/// @param exact_match will also match item attributes and cards, not just name id
+/// @param exact_match will also match item by specified attributes
+///   0x0: Only item id
+///   0x1: identify, attributes, cards
+///   0x2: random option
 /// @return true when all items could be deleted, false when there were not enough items to delete
-static bool buildin_delitem_search(struct map_session_data* sd, struct item* it, bool exact_match, uint8 loc)
+static bool buildin_delitem_search(struct map_session_data* sd, struct item* it, uint8 exact_match, uint8 loc)
 {
 	bool delete_items = false;
 	int i, amount, size;
@@ -7610,9 +7739,18 @@ static bool buildin_delitem_search(struct map_session_data* sd, struct item* it,
 
 			if( exact_match )
 			{
-				if( itm->identify != it->identify || itm->attribute != it->attribute || memcmp(itm->card, it->card, sizeof(itm->card)) )
+				if( (exact_match&0x1) && ( itm->identify != it->identify || itm->attribute != it->attribute || memcmp(itm->card, it->card, sizeof(itm->card)) ) )
 				{// not matching exact attributes
 					continue;
+				}
+				if (exact_match&0x2) {
+					uint8 j;
+					for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
+						if (itm->option[j].id != it->option[j].id || itm->option[j].value != it->option[j].value || itm->option[j].param != it->option[j].param)
+							break;
+					}
+					if (j != MAX_ITEM_RDM_OPT)
+						continue;
 				}
 			}
 			else
@@ -7656,9 +7794,18 @@ static bool buildin_delitem_search(struct map_session_data* sd, struct item* it,
 
 			if( exact_match )
 			{
-				if( itm->refine != it->refine || itm->identify != it->identify || itm->attribute != it->attribute || memcmp(itm->card, it->card, sizeof(itm->card)) )
+				if( (exact_match&0x1) && ( itm->refine != it->refine || itm->identify != it->identify || itm->attribute != it->attribute || memcmp(itm->card, it->card, sizeof(itm->card)) ) )
 				{// not matching attributes
 					continue;
+				}
+				if (exact_match&0x2) {
+					uint8 j;
+					for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
+						if (itm->option[j].id != it->option[j].id || itm->option[j].value != it->option[j].value || itm->option[j].param != it->option[j].param)
+							break;
+					}
+					if (j != MAX_ITEM_RDM_OPT)
+						continue;
 				}
 			}
 
@@ -7770,7 +7917,7 @@ BUILDIN_FUNC(delitem)
 	if( it.amount <= 0 )
 		return SCRIPT_CMD_SUCCESS;// nothing to do
 
-	if( buildin_delitem_search(sd, &it, false, loc) )
+	if( buildin_delitem_search(sd, &it, 0, loc) )
 	{// success
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -7799,6 +7946,8 @@ BUILDIN_FUNC(delitem2)
 	struct script_data *data;
 	uint8 loc = 0;
 	char* command = (char*)script_getfuncname(st);
+	int aid_pos = 11;
+	uint8 flag = 0x1;
 
 	if(!strncmp(command, "cart", 4))
 		loc = TABLE_CART;
@@ -7807,22 +7956,12 @@ BUILDIN_FUNC(delitem2)
 	else if(!strncmp(command, "guildstorage", 12))
 		loc = TABLE_GUILD_STORAGE;
 
-	if( script_hasdata(st,11) )
-	{
-		uint32 account_id = script_getnum(st,11);
-		sd = map_id2sd(account_id); // <account id>
-		if( sd == NULL )
-		{
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, account_id);
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
-		}
-	}
-	else
-	{
-		sd = script_rid2sd(st);// attached player
-		if( sd == NULL )
-			return SCRIPT_CMD_SUCCESS;
+	if (command[strlen(command)-1] == '3')
+		aid_pos = 14;
+
+	if (!script_accid2sd(aid_pos, sd)) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
 	}
 
 	if (loc == TABLE_CART && !pc_iscarton(sd)) {
@@ -7838,6 +7977,8 @@ BUILDIN_FUNC(delitem2)
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
+
+	memset(&it, 0, sizeof(it));
 
 	data = script_getdata(st,2);
 	get_val(st,data);
@@ -7873,10 +8014,17 @@ BUILDIN_FUNC(delitem2)
 	it.card[2]=(short)script_getnum(st,9);
 	it.card[3]=(short)script_getnum(st,10);
 
+	if (command[strlen(command)-1] == '3') {
+		int res = script_getitem_randomoption(st, &it, command, 11);
+		if (res != SCRIPT_CMD_SUCCESS)
+			return SCRIPT_CMD_FAILURE;
+		flag |= 0x2;
+	}
+
 	if( it.amount <= 0 )
 		return SCRIPT_CMD_SUCCESS;// nothing to do
 
-	if( buildin_delitem_search(sd, &it, true, loc) )
+	if( buildin_delitem_search(sd, &it, flag, loc) )
 	{// success
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -22973,6 +23121,14 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(agitcheck3,""),
 	BUILDIN_DEF(gvgon3,"s"),
 	BUILDIN_DEF(gvgoff3,"s"),
+
+	// Item Random Option Extension [Cydh]
+	BUILDIN_DEF2(getitem2,"getitem3","viiiiiiiirrr?"),
+	BUILDIN_DEF2(getitem2,"getitembound3","viiiiiiiiirrr?"),
+	BUILDIN_DEF2(rentitem2,"rentitem3","viiiiiiiirrr?"),
+	BUILDIN_DEF2(makeitem2,"makeitem3","visiiiiiiiiirrr"),
+	BUILDIN_DEF2(delitem2,"delitem3","viiiiiiiirrr?"),
+	BUILDIN_DEF2(countitem,"countitem3","viiiiiiirrr?"),
 
 #include "../custom/script_def.inc"
 
