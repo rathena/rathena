@@ -7757,7 +7757,7 @@ void status_change_init(struct block_list *bl)
 * through the timer (e.g. those that deal damage in regular intervals)
 * @param type: Status change (SC_*)
 *------------------------------------------*/
-static int status_get_sc_interval(enum sc_type type)
+int status_get_sc_interval(enum sc_type type)
 {
 	switch (type) {
 		case SC_POISON:

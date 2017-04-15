@@ -2364,7 +2364,7 @@ enum e_mode status_calc_mode(struct block_list *bl, struct status_change *sc, en
 int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type);
 int status_get_spbonus(struct block_list *bl, enum e_status_bonus type);
 unsigned int status_calc_maxhpsp_pc(struct map_session_data* sd, unsigned int stat, bool isHP);
-static int status_get_sc_interval(enum sc_type type);
+int status_get_sc_interval(enum sc_type type);
 void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
 
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int flag);
