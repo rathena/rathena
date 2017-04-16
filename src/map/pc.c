@@ -9370,6 +9370,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 	for( i = 0; i < data->combos_count; i++ ) {
 		struct itemchk {
 			int idx;
+			unsigned short nameid;
 			short card[MAX_SLOTS];
 		} *combo_idx;
 		int idx, j;
@@ -9390,6 +9391,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 		CREATE(combo_idx,struct itemchk,nb_itemCombo);
 		for(j=0; j < nb_itemCombo; j++){
 			combo_idx[j].idx=-1;
+			combo_idx[j].nameid=-1;
 			memset(combo_idx[j].card,-1,MAX_SLOTS);
 		}
 			
@@ -9413,11 +9415,12 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 						bool do_continue = false; //used to continue that specific loop with some check that also use some loop
 						uint8 z;
 						for (z = 0; z < nb_itemCombo-1; z++)
-							if(combo_idx[z].idx == index) //we already have that index recorded
+							if(combo_idx[z].idx == index && combo_idx[z].nameid == id) //we already have that index recorded
 								do_continue=true;
 						if(do_continue)
 							continue;
 					}
+					combo_idx[j].nameid = id;
 					combo_idx[j].idx = index;
 					pos |= sd->inventory.u.items_inventory[index].equip;
 					found = true;
@@ -9433,7 +9436,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 						if(j>0){
 							int c1, c2;
 							for (c1 = 0; c1 < nb_itemCombo-1; c1++){
-								if(combo_idx[c1].idx == index){
+								if(combo_idx[c1].idx == index && combo_idx[c1].nameid == id){
 									for (c2 = 0; c2 < sd->inventory_data[index]->slot; c2++){
 										if(combo_idx[c1].card[c2] == id){ //we already have that card recorded (at this same idx)
 											do_continue = true;
@@ -9445,6 +9448,7 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 						}
 						if(do_continue)
 							continue;
+						combo_idx[j].nameid = id;
 						combo_idx[j].idx = index;
 						combo_idx[j].card[z] = id;
 						pos |= sd->inventory.u.items_inventory[index].equip;
