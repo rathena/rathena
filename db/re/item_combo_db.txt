@@ -330,7 +330,7 @@
 4153:18554,{ bonus2 bAddEle,Ele_Water,10; }
 4163:5967,{ bonus bAspdRate,3; bonus bAspd,1; bonus bNoWeaponDamage,5; if (getequiprefinerycnt(EQI_HAND_R) > 10 && getiteminfo(getequipid(EQI_HAND_R),11) == 11) bonus bAspd,1; }
 4168:4169,{ bonus bMaxHPrate,20; bonus bMaxSPrate,20; bonus bVariableCastrate,-10; }
-4169:4488,{ if(getequiprefinerycnt(EQI_SHOES) >= 15) { bonus bMaxHPrate,15; bonus bMaxSPrate,15; } else { bonus bMaxHPrate,10; bonus bMaxSPrate,10; } }
+
 4169:4488,{ if(getequiprefinerycnt(EQI_SHOES) >= 15) { bonus bMaxHPrate,15; bonus bMaxSPrate,15; } else { bonus bMaxHPrate,10; bonus bMaxSPrate,10; } }
 4172:4210:4230:4257:4272,{ bonus bAgi,5; bonus bStr,5; bonus bAspdRate,5; bonus bSpeedRate,25; bonus bSPDrainValue,1; if(BaseClass==Job_Thief) bonus bNoGemStone,0; }
 4178:4199:4234:4252:4297,{ bonus bAgi,5; bonus bDex,3; bonus bLongAtkRate,20; bonus bPerfectHitAddRate,20; if(BaseClass==Job_Archer) { bonus2 bExpAddRace,RC_Brute,5; bonus2 bComaRace,RC_Brute,100; } }
@@ -437,6 +437,7 @@
 15129:20789:22084:28381:28414,{ bonus bMaxHPrate,20; bonus bMaxSPrate,10; bonus bHealPower,20; skill "AL_HEAL",7,1; }
 15138:19026,{ bonus2 bSubRace,RC_Fish,(10+getequiprefinerycnt(EQI_ARMOR)); }
 15138:19026:20756:22059,{ bonus bMaxHP,1000; bonus bMaxSP,100; bonus2 bExpAddRace,RC_Fish,20; bonus2 bMagicAddRace,RC_Fish,50; bonus2 bSubEle,Ele_Water,50; }
+15147:2524,{ .@r = getequiprefinerycnt(EQI_ARMOR); bonus2 bIgnoreDefRaceRate,RC_DemiHuman,15; bonus2 bIgnoreDefRaceRate,RC_Demon,15; bonus2 bIgnoreDefRaceRate,RC_Undead,15; bonus bMaxHPrate,10+.@r; bonus bAtkRate,2+.@r; }
 15156:20790:22085,{ bonus bMaxHP,4000; bonus bNoCastCancel,1; bonus bFixedCastrate,-25-(getequiprefinerycnt(EQI_ARMOR)+getequiprefinerycnt(EQI_GARMENT)+getequiprefinerycnt(EQI_SHOES)); }
 15156:20790:22085:28382:28418,{ bonus bMaxHPrate,20; bonus bMaxSPrate,20; bonus2 bSkillAtk,"SU_CN_METEOR",200; }
 15156:20790:22085:28380:28421,{ bonus bMaxHPrate,30; bonus bMaxSPrate,9; bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",200; }
