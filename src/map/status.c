@@ -4971,8 +4971,9 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 				if (sd->bonus.ematk > 0)
 					status->matk_min += sd->bonus.ematk;
 				if (sd && pc_checkskill(sd, SU_POWEROFLAND) > 0) {
-					if (pc_checkskill(sd, SU_SV_STEMSPEAR) == 5 && pc_checkskill(sd, SU_CN_POWDERING) == 5 && pc_checkskill(sd, SU_CN_METEOR) == 5 && pc_checkskill(sd, SU_SV_ROOTTWIST) == 5)
-						status->matk_min += status->matk_min * 20 / 100;
+					if ((pc_checkskill(sd, SU_SV_STEMSPEAR) + pc_checkskill(sd, SU_CN_POWDERING) + pc_checkskill(sd, SU_CN_METEOR) + pc_checkskill(sd, SU_SV_ROOTTWIST) +
+						pc_checkskill(SU_CHATTERING) + pc_checkskill(SU_MEOWMEOW) + pc_checkskill(SU_NYANGGRASS)) > 19)
+							status->matk_min += status->matk_min * 20 / 100;
 				}
 
 				status->matk_min = status_calc_ematk(bl, sc, status->matk_min);
@@ -10876,8 +10877,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				if (sd) {
 					if (pc_checkskill(sd, SU_POWEROFSEA)) {
 						val2 += val2 * 10 / 100;
-						if (pc_checkskill(sd, SU_TUNABELLY) == 5 && pc_checkskill(sd, SU_TUNAPARTY) == 5 && pc_checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc_checkskill(sd, SU_FRESHSHRIMP) == 5)
-							val2 += val2 * 20 / 100;
+						if ((pc_checkskill(sd, SU_TUNABELLY) + pc_checkskill(sd, SU_TUNAPARTY) + pc_checkskill(sd, SU_BUNCHOFSHRIMP) + pc_checkskill(sd, SU_FRESHSHRIMP) +
+							pc_checkskill(SU_GROOMING) + pc_checkskill(SU_PURRING) + pc_checkskill(SU_SHRIMPARTY)) > 19)
+								val2 += val2 * 20 / 100;
 					}
 					if (pc_checkskill(sd, SU_SPIRITOFSEA))
 						val2 *= 2; // Doubles HP
