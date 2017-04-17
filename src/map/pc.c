@@ -4720,8 +4720,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 	//Not consumable item
 	if( item->type != IT_HEALING && item->type != IT_USABLE && item->type != IT_CASH )
 		return false;
-	if( !item->script ) //if it has no script, you can't really consume it!
-		return false;
 	if (pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL))
 		return true;
 	if(map[sd->bl.m].flag.noitemconsumption) //consumable but mapflag prevent it

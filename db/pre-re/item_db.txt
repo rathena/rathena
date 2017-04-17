@@ -4785,7 +4785,7 @@
 12218,Assumptio_5_Scroll,LV5 Assumptio Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ASSUMPTIO,100000,5; skilleffect "HP_ASSUMPTIO",0; },{},{}
 12219,Wind_Walk_10_Scroll,LV10 Wind Walker Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ skilleffect "SN_WINDWALK",0; sc_start SC_WINDWALK,250000,5; },{},{}
 12220,Adrenaline_Scroll,LV5 Adrenaline Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ set .@type,getiteminfo(getequipid(EQI_HAND_R),11); if (.@type==W_1HAXE||.@type==W_2HAXE||.@type==W_MACE) { skilleffect "BS_ADRENALINE",0; sc_start SC_ADRENALINE,150000,5; } },{},{}
-12221,Megaphone_,Megaphone,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ input @megaphone$; announce strcharinfo(0) + ": " + @megaphone$,bc_all,0xFF0000; end; },{},{}
+12221,Megaphone_,Megaphone,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ input @megaphone$; announce strcharinfo(0) + ": " + @megaphone$,bc_all,0xFF0000; },{},{}
 12225,Sweet_Candy_Striper,Sweet Candy Cane,2,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ pet 1245; },{},{}
 12226,Examination1,Examination 1,0,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SPEEDUP0,5400000,25; percentheal 100,100; sc_start SC_STRFOOD,5400000,10; sc_start SC_DEXFOOD,5400000,5; sc_start SC_ATKPOTION,5400000,22; sc_start SC_MATKFOOD,5400000,15; },{},{}
 12227,Examination2,Examination 2,0,20,,50,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_SPEEDUP0,5400000,25; percentheal 100,100; sc_start SC_INTFOOD,5400000,8; sc_start SC_VITFOOD,5400000,7; sc_start SC_LUKFOOD,5400000,7; sc_start SC_ATKPOTION,5400000,10; },{},{}
@@ -4878,7 +4878,7 @@
 12314,Noive_Box,Noive Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12315,Goddess_Bless,Goddess Of Blessing,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12316,Angel_Bless,Angel Of Blessing,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12317,Powder_Snow,Snow Powder,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
+12317,Powder_Snow,Snow Powder,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12318,Little_Heart,Small Hearts,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12319,Strawberry_Cake,Rune Strawberry Cake,2,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_ATKPOTION,600000,5; sc_start SC_MATKPOTION,600000,5; },{},{}
 12320,Pineapple_Juice,Schwartzwald Pine Jubilee,2,0,,300,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,600000,10; sc_start SC_INCFLEE2,600000,20; },{},{}
@@ -5221,7 +5221,7 @@
 12771,Passion_Hat_Box2,Passion Hat Box2,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12772,Cool_Hat_Box2,Cool Hat Box2,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 12773,Victory_Hat_Box2,Victory Hat Box2,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-12848,Falcon_Flute,Falcon Flute,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if(getskilllv("HT_FALCON")) { if(checkoption(Option_Wug)||checkoption(Option_Wugrider)) end; if(checkfalcon()==1) { setfalcon 0; } else { setfalcon 1; } } },{},{}
+12848,Falcon_Flute,Falcon Flute,11,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ if(getskilllv("HT_FALCON")) { if(!checkoption(Option_Wug) && !checkoption(Option_Wugrider)) setfalcon (!checkfalcon()); } },{},{}
 12900,Battle_Manual_Box,Battle Manual Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12208,10; },{},{}
 12901,Insurance_Package,Insurance Package,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12209,10; },{},{}
 12902,Bubble_Gum_Box,Bubble Gum Box,18,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12210,10; },{},{}
@@ -6376,11 +6376,11 @@
 14543,S_Mdef_Potion,Small Magic Defense Potion,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 EF_SPELLBREAKER; sc_start SC_MDEF_RATE,60000,3; },{},{}
 14544,B_Mdef_Potion,Big Magic Defense Potion,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ specialeffect2 EF_SPELLBREAKER; sc_start SC_MDEF_RATE,180000,3; },{},{}
 14545,Battle_Manual_X3,Field Manual 300%,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_EXPBOOST,1800000,300; },{},{}
-14546,Fire_Cracker_Love,I Love You Firecracker,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
-14547,Fire_Cracker_Wday,Whiteday Firecracker,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
-14548,Fire_Cracker_Valentine,Valentine's Day Firecracker,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
-14549,Fire_Cracker_Bday,Birthday Firecracker,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
-14550,Fire_Cracker_Xmas,Xmas Firecracker,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{ end; },{},{}
+14546,Fire_Cracker_Love,I Love You Firecracker,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14547,Fire_Cracker_Wday,Whiteday Firecracker,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14548,Fire_Cracker_Valentine,Valentine's Day Firecracker,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14549,Fire_Cracker_Bday,Birthday Firecracker,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+14550,Fire_Cracker_Xmas,Xmas Firecracker,2,2,,20,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 14551,Str_Dish01_,Fried Grasshopper Legs,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFOOD,1200000,1; percentheal 5,0; },{},{}
 14552,Str_Dish02_,Seasoned Sticky Webfoot,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFOOD,1200000,2; percentheal 5,0; },{},{}
 14553,Str_Dish03_,Bomber Steak,0,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_STRFOOD,1200000,3; percentheal 5,0; },{},{}
