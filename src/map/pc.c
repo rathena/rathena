@@ -4752,11 +4752,13 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 			break;
 		case ITEMID_WING_OF_FLY:
 		case ITEMID_GIANT_FLY_WING:
+		case ITEMID_N_FLY_WING:
 			if( map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m) ) {
 				clif_skill_teleportmessage(sd,0);
 				return false;
 			}
 		case ITEMID_WING_OF_BUTTERFLY:
+		case ITEMID_N_BUTTERFLY_WING:
 		case ITEMID_DUN_TELE_SCROLL1:
 		case ITEMID_DUN_TELE_SCROLL2:
 		case ITEMID_DUN_TELE_SCROLL3:
@@ -4769,7 +4771,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 				clif_displaymessage(sd->fd, msg_txt(sd,663));
 				return false;
 			}
-			if( nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && map[sd->bl.m].flag.noreturn )
+			if( map[sd->bl.m].flag.noreturn && nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && nameid != ITEMID_N_FLY_WING )
 				return false;
 			break;
 		case ITEMID_BUBBLE_GUM:
@@ -5839,6 +5841,10 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_BABY_ACOLYTE:          return MAPID_BABY_ACOLYTE;
 		case JOB_BABY_MERCHANT:         return MAPID_BABY_MERCHANT;
 		case JOB_BABY_THIEF:            return MAPID_BABY_THIEF;
+		case JOB_BABY_TAEKWON:          return MAPID_BABY_TAEKWON;
+		case JOB_BABY_GUNSLINGER:       return MAPID_BABY_GUNSLINGER;
+		case JOB_BABY_NINJA:            return MAPID_BABY_NINJA;
+		case JOB_BABY_SUMMONER:         return MAPID_BABY_SUMMONER;
 	//Baby 2-1 Jobs
 		case JOB_SUPER_BABY:            return MAPID_SUPER_BABY;
 		case JOB_BABY_KNIGHT:           return MAPID_BABY_KNIGHT;
@@ -5847,6 +5853,10 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_BABY_PRIEST:           return MAPID_BABY_PRIEST;
 		case JOB_BABY_BLACKSMITH:       return MAPID_BABY_BLACKSMITH;
 		case JOB_BABY_ASSASSIN:         return MAPID_BABY_ASSASSIN;
+		case JOB_BABY_STAR_GLADIATOR:   return MAPID_BABY_STAR_GLADIATOR;
+		case JOB_BABY_REBELLION:        return MAPID_BABY_REBELLION;
+		case JOB_BABY_KAGEROU:
+		case JOB_BABY_OBORO:            return MAPID_BABY_KAGEROUOBORO;
 	//Baby 2-2 Jobs
 		case JOB_BABY_CRUSADER:         return MAPID_BABY_CRUSADER;
 		case JOB_BABY_SAGE:             return MAPID_BABY_SAGE;
@@ -5855,6 +5865,7 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_BABY_MONK:             return MAPID_BABY_MONK;
 		case JOB_BABY_ALCHEMIST:        return MAPID_BABY_ALCHEMIST;
 		case JOB_BABY_ROGUE:            return MAPID_BABY_ROGUE;
+		case JOB_BABY_SOUL_LINKER:      return MAPID_BABY_SOUL_LINKER;
 	//3-1 Jobs
 		case JOB_SUPER_NOVICE_E:        return MAPID_SUPER_NOVICE_E;
 		case JOB_RUNE_KNIGHT:           return MAPID_RUNE_KNIGHT;
@@ -5981,6 +5992,10 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_BABY_ACOLYTE:          return JOB_BABY_ACOLYTE;
 		case MAPID_BABY_MERCHANT:         return JOB_BABY_MERCHANT;
 		case MAPID_BABY_THIEF:            return JOB_BABY_THIEF;
+		case MAPID_BABY_TAEKWON:          return JOB_BABY_TAEKWON;
+		case MAPID_BABY_GUNSLINGER:       return JOB_BABY_GUNSLINGER;
+		case MAPID_BABY_NINJA:            return JOB_BABY_NINJA;
+		case MAPID_BABY_SUMMONER:         return JOB_BABY_SUMMONER;
 	//Baby 2-1 Jobs
 		case MAPID_SUPER_BABY:            return JOB_SUPER_BABY;
 		case MAPID_BABY_KNIGHT:           return JOB_BABY_KNIGHT;
@@ -5989,6 +6004,9 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_BABY_PRIEST:           return JOB_BABY_PRIEST;
 		case MAPID_BABY_BLACKSMITH:       return JOB_BABY_BLACKSMITH;
 		case MAPID_BABY_ASSASSIN:         return JOB_BABY_ASSASSIN;
+		case MAPID_BABY_STAR_GLADIATOR:   return JOB_BABY_STAR_GLADIATOR;
+		case MAPID_BABY_REBELLION:        return JOB_BABY_REBELLION;
+		case MAPID_BABY_KAGEROUOBORO:     return sex?JOB_BABY_KAGEROU:JOB_BABY_OBORO;
 	//Baby 2-2 Jobs
 		case MAPID_BABY_CRUSADER:         return JOB_BABY_CRUSADER;
 		case MAPID_BABY_SAGE:             return JOB_BABY_SAGE;
@@ -5996,6 +6014,7 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_BABY_MONK:             return JOB_BABY_MONK;
 		case MAPID_BABY_ALCHEMIST:        return JOB_BABY_ALCHEMIST;
 		case MAPID_BABY_ROGUE:            return JOB_BABY_ROGUE;
+		case MAPID_BABY_SOUL_LINKER:      return JOB_BABY_SOUL_LINKER;
 	//3-1 Jobs
 		case MAPID_SUPER_NOVICE_E:        return JOB_SUPER_NOVICE_E;
 		case MAPID_RUNE_KNIGHT:           return JOB_RUNE_KNIGHT;
@@ -6270,7 +6289,21 @@ const char* job_name(int class_)
 		return msg_txt(NULL,695);
 
 	case JOB_SUMMONER:
-		return msg_txt(NULL,697);
+	case JOB_BABY_SUMMONER:
+	case JOB_BABY_NINJA:
+		return msg_txt(NULL,697 - JOB_SUMMONER+class_);
+
+	case JOB_BABY_KAGEROU:
+	case JOB_BABY_OBORO:
+	case JOB_BABY_TAEKWON:
+	case JOB_BABY_STAR_GLADIATOR:
+	case JOB_BABY_SOUL_LINKER:
+	case JOB_BABY_GUNSLINGER:
+	case JOB_BABY_REBELLION:
+		return msg_txt(NULL,753 - JOB_BABY_KAGEROU+class_);
+
+	case JOB_BABY_STAR_GLADIATOR2:
+		return msg_txt(NULL,756);
 
 	default:
 		return msg_txt(NULL,655);
@@ -10701,15 +10734,15 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 		return false;
 	}
 	if (skill_lv > (skill_lv_max = skill_get_max(skill_id))) {
-		ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level..\n", skill_id, skill_lv, class_, skill_lv_max);
+		ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level.\n", skill_id, skill_lv, class_, skill_lv_max);
 		skill_lv = skill_lv_max;
 	}
 	if (baselv > (baselv_max = pc_class_maxbaselv(class_))) {
-		ShowWarning("pc_readdb_skilltree: Skill %hu's base level requirement %d exceeds job %d's max base level %d. Capping skill base level..\n", skill_id, baselv, class_, baselv_max);
+		ShowWarning("pc_readdb_skilltree: Skill %hu's base level requirement %d exceeds job %d's max base level %d. Capping skill base level.\n", skill_id, baselv, class_, baselv_max);
 		baselv = baselv_max;
 	}
 	if (joblv > (joblv_max = pc_class_maxjoblv(class_))) {
-		ShowWarning("pc_readdb_skilltree: Skill %hu's job level requirement %d exceeds job %d's max job level %d. Capping skill job level..\n", skill_id, joblv, class_, joblv_max);
+		ShowWarning("pc_readdb_skilltree: Skill %hu's job level requirement %d exceeds job %d's max job level %d. Capping skill job level.\n", skill_id, joblv, class_, joblv_max);
 		joblv = joblv_max;
 	}
 
@@ -10735,14 +10768,19 @@ static bool pc_readdb_skilltree(char* fields[], int columns, int current)
 		skill_id = (uint16)atoi(fields[i * 2 + offset]);
 		skill_lv = (uint16)atoi(fields[i * 2 + offset + 1]);
 
-		if (skill_id == 0)
+		if (skill_id == 0) {
+			if (skill_tree[idx][skill_idx].need[i].skill_id > 0) { // Remove pre-requisite
+				skill_tree[idx][skill_idx].need[i].skill_id = 0;
+				skill_tree[idx][skill_idx].need[i].skill_lv = 0;
+			}
 			continue;
+		}
 		if (skill_id > MAX_SKILL_ID || !skill_get_index(skill_id)) {
 			ShowWarning("pc_readdb_skilltree: Unable to load requirement skill %hu into job %d's tree.", skill_id, class_);
 			return false;
 		}
 		if (skill_lv > (skill_lv_max = skill_get_max(skill_id))) {
-			ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level..\n", skill_id, skill_lv, class_, skill_lv_max);
+			ShowWarning("pc_readdb_skilltree: Skill %hu's level %hu exceeds job %d's max level %hu. Capping skill level.\n", skill_id, skill_lv, class_, skill_lv_max);
 			skill_lv = skill_lv_max;
 		}
 

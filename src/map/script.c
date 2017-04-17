@@ -4063,7 +4063,8 @@ void script_stop_sleeptimers(int id) {
 		if (!st)
 			break; // No more sleep timers
 
-		script_free_state(st);
+		if (st->oid == id)
+			script_free_state(st);
 	}
 }
 
@@ -8609,9 +8610,14 @@ BUILDIN_FUNC(getequipweaponlv)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (num == -1)
+	if (num == -1){
+		if( current_equip_item_index == -1 ){
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
 		i = current_equip_item_index;
-	else if (equip_index_check(num))
+	}else if (equip_index_check(num))
 		i = pc_checkequip(sd, equip_bitmask[num]);
 	if (i >= 0 && sd->inventory_data[i])
 		script_pushint(st, sd->inventory_data[i]->wlv);
@@ -10179,7 +10185,8 @@ BUILDIN_FUNC(killmonsterall)
 BUILDIN_FUNC(clone)
 {
 	TBL_PC *sd, *msd=NULL;
-	uint32 char_id, master_id = 0, x, y, flag = 0, m;
+	uint32 char_id, master_id = 0, x, y, flag = 0;
+	int16 m;
 	enum e_mode mode = 0;
 
 	unsigned int duration = 0;
@@ -14538,6 +14545,29 @@ BUILDIN_FUNC(npctalk)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Sends a message to the waitingroom of the invoking NPC.
+ * chatmes "<message>"{,"<NPC name>"};
+ * @author Jey
+ */
+BUILDIN_FUNC(chatmes)
+{
+	struct npc_data* nd = NULL;
+	const char* str = script_getstr(st,2);
+
+	if (script_hasdata(st, 3))
+		nd = npc_name2id(script_getstr(st, 3));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+
+	if (nd != NULL && nd->chat_id) {
+		char message[256];
+		safesnprintf(message, sizeof(message), "%s", str);
+		clif_GlobalMessage(map_id2bl(nd->chat_id), message, CHAT_WOS);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 // change npc walkspeed [Valaris]
 BUILDIN_FUNC(npcspeed)
 {
@@ -15068,9 +15098,14 @@ BUILDIN_FUNC(cardscnt)
 BUILDIN_FUNC(getrefine)
 {
 	TBL_PC *sd;
-	if ((sd = script_rid2sd(st))!= NULL)
+	if ((sd = script_rid2sd(st))!= NULL){
+		if( current_equip_item_index == -1 ){
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
 		script_pushint(st,sd->inventory.u.items_inventory[current_equip_item_index].refine);
-	else
+	}else
 		script_pushint(st,0);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -16678,6 +16713,7 @@ BUILDIN_FUNC(addmonsterdrop)
 		if(c) { //Fill in the slot with the item and rate
 			mob->dropitem[c].nameid = item_id;
 			mob->dropitem[c].p = (rate > 10000)?10000:rate;
+			itemdb_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 			script_pushint(st,1);
 		} else //No place to put the new drop
 			script_pushint(st,0);
@@ -16723,6 +16759,7 @@ BUILDIN_FUNC(delmonsterdrop)
 			if(mob->dropitem[i].nameid == item_id) {
 				mob->dropitem[i].nameid = 0;
 				mob->dropitem[i].p = 0;
+				itemdb_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 				script_pushint(st,1);
 				return SCRIPT_CMD_SUCCESS;
 			}
@@ -18403,6 +18440,94 @@ BUILDIN_FUNC(setcell)
 	for( y = y1; y <= y2; ++y )
 		for( x = x1; x <= x2; ++x )
 			map_setcell(m, x, y, type, flag);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Gets a free cell in the specified area.
+ * getfreecell "<map name>",<rX>,<rY>{,<x>,<y>,<rangeX>,<rangeY>,<flag>};
+ */
+BUILDIN_FUNC(getfreecell)
+{
+	const char *mapn = script_getstr(st, 2), *name;
+	char prefix;
+	struct map_session_data *sd;
+	int64 num;
+	int16 m, x = 0, y = 0;
+	int rx = -1, ry = -1, flag = 1;
+
+	sd = map_id2sd(st->rid);
+
+	if (!data_isreference(script_getdata(st, 3))) {
+		ShowWarning("script: buildin_getfreecell: rX is not a variable.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!data_isreference(script_getdata(st, 4))) {
+		ShowWarning("script: buildin_getfreecell: rY is not a variable.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (is_string_variable(reference_getname(script_getdata(st, 3)))) {
+		ShowWarning("script: buildin_getfreecell: rX is a string, must be an INT.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (is_string_variable(reference_getname(script_getdata(st, 4)))) {
+		ShowWarning("script: buildin_getfreecell: rY is a string, must be an INT.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_hasdata(st, 5))
+		x = script_getnum(st, 5);
+
+	if (script_hasdata(st, 6))
+		y = script_getnum(st, 6);
+
+	if (script_hasdata(st, 7))
+		rx = script_getnum(st, 7);
+
+	if (script_hasdata(st, 8))
+		ry = script_getnum(st, 8);
+
+	if (script_hasdata(st, 9))
+		flag = script_getnum(st, 9);
+
+	if (sd && strcmp(mapn, "this") == 0)
+		m = sd->bl.m;
+	else
+		m = map_mapname2mapid(mapn);
+
+	map_search_freecell(NULL, m, &x, &y, rx, ry, flag);
+
+	// Set MapX
+	num = st->stack->stack_data[st->start + 3].u.num;
+	name = get_str(num&0x00ffffff);
+	prefix = *name;
+
+	if (not_server_variable(prefix))
+		sd = script_rid2sd(st);
+	else
+		sd = NULL;
+
+	set_reg(st, sd, num, name, (void*)__64BPRTSIZE((int)x), script_getref(st, 3));
+
+	// Set MapY
+	num = st->stack->stack_data[st->start + 4].u.num;
+	name = get_str(num&0x00ffffff);
+	prefix = *name;
+
+	if (not_server_variable(prefix))
+		sd = script_rid2sd(st);
+	else
+		sd = NULL;
+
+	set_reg(st, sd, num, name, (void*)__64BPRTSIZE((int)y), script_getref(st, 4));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -22549,6 +22674,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
 	BUILDIN_DEF(message,"ss"), // [MouseJstr]
 	BUILDIN_DEF(npctalk,"s?"), // [Valaris]
+	BUILDIN_DEF(chatmes,"s?"), // [Jey]
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),
 	BUILDIN_DEF(getsavepoint,"i?"),
@@ -22692,6 +22818,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(openauction,"?"),
 	BUILDIN_DEF(checkcell,"siii"),
 	BUILDIN_DEF(setcell,"siiiiii"),
+	BUILDIN_DEF(getfreecell,"srr?????"),
 	BUILDIN_DEF(setwall,"siiiiis"),
 	BUILDIN_DEF(delwall,"s"),
 	BUILDIN_DEF(searchitem,"rs"),

@@ -353,9 +353,9 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s`(`vending_id`,`index`,`cartinventory_id`,`amount`,`price`) VALUES", vending_items_table);
-	for (i = 0; i < count; i++) {
-		StringBuf_Printf(&buf, "(%d,%d,%d,%d,%d)", sd->vender_id, i, sd->cart.u.items_cart[sd->vending[i].index].id, sd->vending[i].amount, sd->vending[i].value);
-		if (i < count-1)
+	for (j = 0; j < i; j++) {
+		StringBuf_Printf(&buf, "(%d,%d,%d,%d,%d)", sd->vender_id, j, sd->cart.u.items_cart[sd->vending[j].index].id, sd->vending[j].amount, sd->vending[j].value);
+		if (j < i-1)
 			StringBuf_AppendStr(&buf, ",");
 	}
 	if (SQL_ERROR == Sql_QueryStr(mmysql_handle, StringBuf_Value(&buf)))

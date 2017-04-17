@@ -1676,7 +1676,7 @@ void clif_homskillup(struct map_session_data *sd, uint16 skill_id)
 	short idx = -1;
 	nullpo_retv(sd);
 
-	if ((idx = hom_skill_get_index(skill_id) == -1))
+	if ((idx = hom_skill_get_index(skill_id)) == -1)
 		return;
 
 	fd = sd->fd;
@@ -6151,10 +6151,10 @@ void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, e
 
 /*==========================================
  * Displays a message on a 'bl' to all it's nearby clients
- * 008d <PacketLength>.W <GID> L (ZC_NOTIFY_CHAT)
+ * 008d <PacketLength>.W <GID>.L <message>.?B (ZC_NOTIFY_CHAT)
  *------------------------------------------*/
 void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_target target) {
-	char buf[100];
+	char buf[8+CHAT_SIZE_MAX];
 	int len;
 	nullpo_retv(bl);
 
@@ -6173,7 +6173,6 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 	WBUFL(buf,4)=bl->id;
 	safestrncpy(WBUFCP(buf,8),message,len);
 	clif_send((unsigned char *) buf,WBUFW(buf,2),bl,target);
-
 }
 
 
@@ -19071,13 +19070,14 @@ void clif_sale_add_reply( struct map_session_data* sd, enum e_sale_add_result re
 
 /// A client request to put an item on sale.
 /// 09ae <account id>.L <item id>.W <amount>.L <start time>.L <hours on sale>.B (CZ_REQ_APPLY_BARGAIN_SALE_ITEM)
+/// 0a3d <account id>.L <item id>.W <amount>.L <start time>.L <hours on sale>.W
 void clif_parse_sale_add( int fd, struct map_session_data* sd ){
 #if PACKETVER_SUPPORTS_SALES
 	int32 count;
 	int16 nameid;
 	int startTime;
 	int endTime;
-	uint8 sellingHours;
+	uint16 sellingHours;
 
 	nullpo_retv(sd);
 
@@ -19092,7 +19092,13 @@ void clif_parse_sale_add( int fd, struct map_session_data* sd ){
 	nameid = RFIFOW(fd, 6);
 	count = RFIFOL(fd, 8);
 	startTime = RFIFOL(fd, 12);
-	sellingHours = RFIFOB(fd, 16);
+#if PACKETVER >= 20150520
+	if( RFIFOW(fd,0) == 0xa3d )
+		sellingHours = RFIFOW(fd, 16);
+	else
+#endif
+		sellingHours = RFIFOB(fd, 16);
+	
 	endTime = startTime + sellingHours * 60 * 60;
 
 	clif_sale_add_reply( sd, sale_add_item(nameid,count,startTime,endTime) );

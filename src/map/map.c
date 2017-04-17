@@ -2033,6 +2033,7 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_READYDOWN, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_READYTURN, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_READYCOUNTER, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_DODGE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_CBC, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_EQC, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
@@ -3987,7 +3988,8 @@ int inter_config_read(char *cfgName)
 		if (!strncmpi(w1, RENEWALPREFIX, strlen(RENEWALPREFIX))) {
 #ifdef RENEWAL
 			// Copy the original name
-			safestrncpy(w1, w1 + strlen(RENEWALPREFIX), strlen(w1) - strlen(RENEWALPREFIX));
+			// Do not use safestrncpy here - enforces zero termination before copying and will break it [Lemongrass]
+			strncpy(w1, w1 + strlen(RENEWALPREFIX), strlen(w1) - strlen(RENEWALPREFIX) + 1);
 #else
 			// In Pre-Renewal the Renewal specific configurations can safely be ignored
 			continue;

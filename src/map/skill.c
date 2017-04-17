@@ -321,6 +321,7 @@ static int skill_unit_onplace(struct skill_unit *src,struct block_list *bl,unsig
 int skill_unit_onleft(uint16 skill_id, struct block_list *bl,unsigned int tick);
 static int skill_unit_effect(struct block_list *bl,va_list ap);
 static int skill_bind_trap(struct block_list *bl, va_list ap);
+static int skill_mob_releasetarget(struct block_list *bl, va_list ap);
 
 int skill_get_casttype (uint16 skill_id) {
 	int inf = skill_get_inf(skill_id);
@@ -1951,7 +1952,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			if (sd->def_set_race[tstatus->race].rate)
 				status_change_start(src,bl, SC_DEFSET, sd->def_set_race[tstatus->race].rate, sd->def_set_race[tstatus->race].value,
 					0, 0, 0, sd->def_set_race[tstatus->race].tick, SCSTART_NOTICKDEF);
-			if (sd->def_set_race[tstatus->race].rate)
+			if (sd->mdef_set_race[tstatus->race].rate)
 				status_change_start(src,bl, SC_MDEFSET, sd->mdef_set_race[tstatus->race].rate, sd->mdef_set_race[tstatus->race].value,
 					0, 0, 0, sd->mdef_set_race[tstatus->race].tick, SCSTART_NOTICKDEF);
 			if (sd->norecover_state_race[tstatus->race].rate)
@@ -2704,7 +2705,7 @@ int skill_is_combo(uint16 skill_id) {
 /*
  * Combo handler, start stop combo status
  */
-void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf){
+void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf){
 	TBL_PC *sd = BL_CAST(BL_PC, bl);
 	switch (skill_id) {
 		case MH_MIDNIGHT_FRENZY:
@@ -2976,10 +2977,6 @@ void skill_attack_blow(struct block_list *src, struct block_list *dsrc, struct b
 
 	// Blown-specific handling
 	switch( skill_id ) {
-		case SC_FEINTBOMB:
-			// Don't stop the caster from backsliding if special_state.no_knockback is active
-			skill_blown(dsrc, target, blewcount, dir, BLOWN_IGNORE_NO_KNOCKBACK);
-			break;
 		case LG_OVERBRAND_BRANDISH:
 			// Give knockback damage bonus only hits the wall. (bugreport:9096)
 			if (skill_blown(dsrc,target,blewcount,dir,BLOWN_NO_KNOCKBACK_MAP|BLOWN_MD_KNOCKBACK_IMMUNE|BLOWN_TARGET_NO_KNOCKBACK|BLOWN_TARGET_BASILICA) < blewcount)
@@ -3737,10 +3734,12 @@ static int skill_check_unit_range2 (struct block_list *bl, int x, int y, uint16 
 
 	if (!isNearNPC) { //Doesn't check the NPC range
 		//If the caster is a monster/NPC, only check for players. Otherwise just check characters
-		if (bl->type == BL_PC)
+		if (bl->type&battle_config.skill_nofootset)
 			type = BL_CHAR;
+		else if(bl->type == BL_MOB)
+			type = BL_MOB; //Monsters can never place traps on top of each other regardless of setting
 		else
-			type = BL_PC;
+			return 0; //Don't check
 	} else
 		type = BL_NPC;
 
@@ -11375,8 +11374,7 @@ int skill_castend_pos(int tid, unsigned int tick, int id, intptr_t data)
 			if (sd) clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_DUPLICATE_RANGEIN,0);
 			break;
 		}
-		if( src->type&battle_config.skill_nofootset &&
-			skill_get_unit_flag(ud->skill_id)&UF_NOFOOTSET &&
+		if( skill_get_unit_flag(ud->skill_id)&UF_NOFOOTSET &&
 			skill_check_unit_range2(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv,false)
 		  )
 		{
@@ -12074,10 +12072,13 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		if( sd ) clif_magicdecoy_list(sd,skill_lv,x,y);
 		break;
 
-	case SC_FEINTBOMB:
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0); // Set bomb on current Position
-		skill_blown(src,src,skill_get_blewcount(skill_id, skill_lv),unit_getdir(src),BLOWN_NONE);
-		clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time2(skill_id,skill_lv)));
+	case SC_FEINTBOMB: {
+			struct skill_unit_group *group = skill_unitsetting(src,skill_id,skill_lv,x,y,0); // Set bomb on current Position
+
+			map_foreachinrange(skill_mob_releasetarget, src, AREA_SIZE, BL_MOB, src, &group->unit->bl); // Release all targets against the caster.
+			skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_IGNORE_NO_KNOCKBACK); // Don't stop the caster from backsliding if special_state.no_knockback is active
+			clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time2(skill_id,skill_lv)));
+		}
 		break;
 
 	case SC_ESCAPE:
@@ -17173,6 +17174,38 @@ static int skill_bind_trap(struct block_list *bl, va_list ap) {
 	return 1;
 }
 
+/**
+ * Release monsters that are targetting the caster and change target.
+ * @param bl: Monster data
+ * @param src: Player data
+ * @param skill: Skill unit group data
+ */
+static int skill_mob_releasetarget(struct block_list *bl, va_list ap)
+{
+	struct block_list *src = NULL, *skill = NULL;
+	struct mob_data *md = NULL;
+
+	nullpo_ret(bl);
+	nullpo_ret(ap);
+	nullpo_ret(src = va_arg(ap, struct block_list *));
+	nullpo_ret(skill = va_arg(ap, struct block_list *));
+
+	if (bl->type != BL_MOB)
+		return 0;
+
+	md = map_id2md(bl->id);
+
+	if (md && md->target_id == src->id) {
+		struct unit_data *ud = unit_bl2ud(bl);
+
+		md->attacked_id = 0;
+		md->target_id = skill->id;
+		ud->target_to = skill->id;
+	}
+
+	return 1;
+}
+
 /*==========================================
  * Check new skill unit cell when overlapping in other skill unit cell.
  * Catched skill in cell value pushed to *unit pointer.
@@ -18278,11 +18311,9 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 
 			case UNT_FEINTBOMB: {
 				struct block_list *src = map_id2bl(group->src_id);
-				struct status_change *sc;
-				if (src && (sc = status_get_sc(src)) != NULL && sc->data[SC__FEINTBOMB]) { // Copycat explodes if caster is still hidden.
+
+				if (src)
 					map_foreachinrange(skill_area_sub, &unit->bl, unit->range, BL_CHAR|BL_SKILL, src, SC_FEINTBOMB, group->skill_lv, tick, BCT_ENEMY|SD_ANIMATION|5, skill_castend_damage_id);
-					status_change_end(bl, SC__FEINTBOMB, INVALID_TIMER);
-				}
 				skill_delunit(unit);
 			}
 			break;
@@ -19538,7 +19569,8 @@ int skill_magicdecoy(struct map_session_data *sd, unsigned short nameid) {
 	pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME);
 	x = sd->sc.comet_x;
 	y = sd->sc.comet_y;
-	sd->sc.comet_x = sd->sc.comet_y = 0;
+	sd->sc.comet_x = 0;
+	sd->sc.comet_y = 0;
 	sd->menuskill_val = 0;
 
 	// Item picked decides the mob class
