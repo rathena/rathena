@@ -240,13 +240,13 @@ degrees, where 0 means facing towards the top of the map. (So to turn the sprite
 towards the bottom of the map, you use facing 4, and to make it look southeast 
 it's facing 5.)
 
-Sprite id is the sprite number or constant used to display this particular NPC.
+Sprite ID is the sprite number or constant used to display this particular NPC.
 You may also use a monster's ID instead to display a monster sprite for this NPC. 
 It is possible to use a job sprite as well, but you must first define it as a 
 monster sprite in 'mob_avail.txt', a full description on how to do this is not 
 in the scope of this manual.
-A '-1' sprite id will make the NPC invisible (and unclickable). 
-A '111' sprite id will make an NPC which does not have a sprite, but is still 
+A '-1' Sprite ID will make the NPC invisible (and unclickable). 
+A '111' Sprite ID will make an NPC which does not have a sprite, but is still 
 clickable, which is useful if you want to make a clickable object of the 3D 
 terrain.
 
@@ -293,7 +293,7 @@ clicking) will cause a shop window to come up. No code whatsoever runs in shop
 NPCs and you can't change the prices otherwise than by editing the script 
 itself.
 
-The item id is the number of item in the 'item_db.txt' database. If Price is set 
+The Item ID is the number of item in the 'item_db.txt' database. If Price is set 
 to -1, the 'buy price' given in the item database will be used. Otherwise, the 
 price you gave will be used for this item, which is how you create differing 
 prices for items in different shops.
@@ -309,7 +309,7 @@ items at it, only make purchases. The layout used to define sale items still cou
 item or special points from a variable. 'pointshop' only supports permanent character variables, 
 temporary character variables, permanent local account variables or permanent global account 
 variables. These variables must be of integer type, not string. 'discount' flag is an 
-option, makes the price at that shop become affected by discount skill.
+optional value which makes the price at that shop become affected by discount skill.
 
 ** Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
@@ -1311,6 +1311,7 @@ with other command, such as "if", but often used on its own.
 Label:
 	mes "This will be seen";
 
+This command should be avoided and only used if there is no other option.
 
 ---------------------------------------
 
