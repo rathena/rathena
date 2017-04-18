@@ -10936,9 +10936,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			break;
 		case SC_TUNAPARTY:
-			val2 = (status->max_hp * (val1 * 10) / 100); // %Max HP to absorb
+			val2 = (status->max_hp * (val1 * 10) / 100); // Max HP% to absorb
 			if (sd && pc_checkskill(sd, SU_SPIRITOFSEA))
-				val2 += (status_get_lv(src) * val2) / 100; // Gain percentage from base level
+				val2 <<= 1; // Double the shield life
 			break;
 		case SC_HISS:
 			val2 = 50; // Perfect Dodge
