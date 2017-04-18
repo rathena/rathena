@@ -240,8 +240,8 @@ degrees, where 0 means facing towards the top of the map. (So to turn the sprite
 towards the bottom of the map, you use facing 4, and to make it look southeast 
 it's facing 5.)
 
-Sprite id is the sprite number used to display this particular NPC. You may 
-also use a monster's ID number instead to display a monster sprite for this NPC. 
+Sprite id is the sprite number or constant used to display this particular NPC.
+You may also use a monster's ID instead to display a monster sprite for this NPC. 
 It is possible to use a job sprite as well, but you must first define it as a 
 monster sprite in 'mob_avail.txt', a full description on how to do this is not 
 in the scope of this manual.
@@ -300,7 +300,7 @@ prices for items in different shops.
 
 There are other types of shops available:
 cashshop - use "cashshop" in place of "shop" to use the Cash Shop interface, allowing 
-you to buy items with special points that are stored as account variables in `acc_reg_num` 
+you to buy items with special points that are stored as account variables 
 called  #CASHPOINTS and #KAFRAPOINTS. This type of shop will not allow you to sell 
 items at it, only make purchases. The layout used to define sale items still count, and
 "<price>" refers to how many points will be spent purchasing the them.
@@ -309,7 +309,7 @@ items at it, only make purchases. The layout used to define sale items still cou
 item or special points from a variable. 'pointshop' only supports permanent character variables, 
 temporary character variables, permanent local account variables or permanent global account 
 variables. These variables must be of integer type, not string. 'discount' flag is an 
-option, makes the price at that shop is affected by discount skill.
+option, makes the price at that shop become affected by discount skill.
 
 ** Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
@@ -578,7 +578,7 @@ constants such as server defines and status options:
 Assigning variables
 --------- ---------
 
-Variables can be accessed and modified much like other programming languages.
+Variables can be accessed and modified much like in other programming languages.
 
     @x = 100;
     @x = @y = 100;
@@ -632,7 +632,7 @@ variable as if it was a normal variable:
     set @arrayofnumbers[0],1;
 
 You can also do things like using a variable (or an expression, or even a 
-value from an another array) to get at an array value:
+value from another array) to get at an array value:
 
     set @x,100;
     set @arrayofnumbers[@x],10;
@@ -645,7 +645,7 @@ range 0 ~ 2147483647.
 
 And array indexes probably can't be negative. Nobody tested what happens when 
 you try to get a negatively numbered variable from an array, but it's not going 
-to be pretty. :)
+to be pretty.
 
 Arrays can naturally store strings:
 
@@ -9415,6 +9415,3 @@ else false if the leave failed.
 If <char id> is specified, the specified player is used rather than the attached one.
 
 ---------------------------------------
-
-
-End of file.

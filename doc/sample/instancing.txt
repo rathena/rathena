@@ -3,14 +3,14 @@
 //===== By: ==================================================
 //= Euphy
 //===== Last Updated: ========================================
-//= 20170303
+//= 20140129
 //===== Description: ========================================= 
-//= Contains elements of a basic Single Char instance script.
+//= Contains elements of a basic instance script.
 //============================================================
 
 // Before running this script, add the entry below to
 // 'db/(pre-)re/instance_db.txt':
-// 20,Abyss Lake Instance,3600,300,abyss_03,160,155
+// 100,Abyss Lake Instance,3600,300,abyss_03,160,155
 
 // Instance Creation
 //============================================================
@@ -36,14 +36,14 @@ prontera,151,190,6	script	Sample Instance	101,{
 		next;
 		switch(select("Create Instance.:Cancel.")) {
 		case 1:
-			.@create = instance_create(.@instance$, IM_CHAR);
+			.@create = instance_create(.@instance$);
 			if (.@create < 0) {
 				mes "[Sample Instance]";
 				switch (.@create) {
-					case -1: mes "ERROR: Invalid type."; debugmes "Invalid instance type for ID " + instance_id(); break;
-					case -2: mes "ERROR: Char not found."; debugmes "Char/Party/Guild not found for ID " + instance_id(); break;
+					case -1: mes "ERROR: Invalid type."; break;
+					case -2: mes "ERROR: Party not found."; break;
 					case -3: mes "ERROR: Instance already exists."; break;
-					case -4: mes "ERROR: No free instances."; debugmes "No free instances. Check MAX_INSTANCE"; break;
+					case -4: mes "ERROR: No free instances."; break;
 				}
 				mes " ";
 				mes "Instance creation ^FF0000failed^000000.";
@@ -66,8 +66,8 @@ prontera,151,190,6	script	Sample Instance	101,{
 	if (.@enter != 0) {
 		mes "[Sample Instance]";
 		switch (.@enter) {
-			case 1: mes "ERROR: Looking for party on single char only instance."; break;
-			case 2: mes "ERROR: Instance has been destroyed by Party Leader or because of the time limit."; break;
+			case 1: mes "ERROR: Party not found."; break;
+			case 2: mes "ERROR: Party does not have an instance."; break;
 			case 3: mes "ERROR: Unknown error."; break;
 		}
 		mes " ";
