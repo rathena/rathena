@@ -116,7 +116,7 @@ tab symbol to divide their arguments.
 To prevent problems and confusion, the tab symbols are written as '%TAB%' 
 throughout this document, even though this makes the text a bit less readable. 
 Using an invisible symbol to denote arguments is one of the bad things about 
-this language, but we're stuck with it for now. :)
+this language.
 
 Here is a list of valid top-level commands:
 
@@ -858,7 +858,7 @@ OnDay<month><day>:
 This will execute when the server clock hits the specified date or time. Hours 
 and minutes are given in military time. ('0105' will mean 01:05 AM). Weekdays 
 are Sun,Mon,Tue,Wed,Thu,Fri,Sat. Months are 01 to 12, days are 01 to 31. 
-Remember the zero. :)
+Remember the zero.
 
 OnInit:
 OnInterIfInit:
@@ -1958,8 +1958,7 @@ you forget to use the curly braces (the { } ), the second action will be execute
 the output of the condition, unless of course, you stop the execution of the script if the
 condition is true (that is, in the first grouping using a return; , and end; or a close; )
 
-Also, you can have multiple conditions nested or chained, and don't worry about limits as to
-how many nested if you can have, there is no spoon ;)
+Also, you can have multiple conditions nested or chained.
 
 	if (<condition 1>)
 		dothis;
@@ -3276,7 +3275,7 @@ invoking character has. Here's what you get:
 
 While 'getskillv' is probably more useful for most situations, this is the 
 easiest way to store all the skills and make the character something else for a 
-while. Advanced job for a day? :) This could also be useful to see how many 
+while. Advanced job for a day? This could also be useful to see how many 
 skills a character has.
 
 This command does not count skills which are set as flag 4 (permament granted) (ALL_BUYING_STORE/ALL_INCCARRY)
@@ -3963,10 +3962,9 @@ warpguild "prontera",x,y,Guild_ID;
 *warppartner("<map name>",<x>,<y>);
 
 This function will find the invoking character's marriage partner, if any, and 
-warp them to the map and coordinates given. Go kidnap that spouse. :) It will 
-return 1 upon success and 0 if the partner is not online, the character is not 
-married, or if there's no invoking character (no RID). 0,0 will, as usual, 
-normally translate to random coordinates.
+warp them to the map and coordinates given. It will return 1 upon success and
+0 if the partner is not online, the character is not married, or if there's no 
+invoking character (no RID). 0,0 will, as usual, normally translate to random coordinates.
 
 ---------------------------------------
 
@@ -4428,7 +4426,7 @@ this. Careful, minor magic ahead.
     @card4 = @charid >> 16;
 
     // If you're inscribing non-equipment, @card1 must be 254.
-    // Arrows are also not equipment. :)
+    // Arrows are also not equipment.
     @card1 = 254;
 
     // For named equipment, card2 means the Star Crumbs and elemental 
@@ -5187,7 +5185,7 @@ the end.
 You might want to make a quest for getting a certain guild skill, make it hard 
 enough that all the guild needs to help or something. Doing this for the Glory 
 of the Guild skill, which allows your guild to use an emblem, is a good idea for 
-a fun quest. (Wasting a level point on that is really annoying :D)
+a fun quest.
 
 ---------------------------------------
 //
