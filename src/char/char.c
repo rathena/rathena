@@ -1324,6 +1324,10 @@ int char_check_char_name(char * name, char * esc_name)
 	if( strcmpi(name, charserv_config.wisp_server_name) == 0 )
 		return -1; // nick reserved for internal server messages
 
+	// check for the channel symbol
+	if( name[0] == '#' )
+		return -2;
+
 	// Check Authorised letters/symbols in the name of the character
 	if( charserv_config.char_config.char_name_option == 1 )
 	{ // only letters/symbols in char_name_letters are authorised

@@ -758,6 +758,7 @@ extern char motd_txt[];
 extern char help_txt[];
 extern char help2_txt[];
 extern char charhelp_txt[];
+extern char channel_conf[];
 
 extern char wisp_server_name[];
 

@@ -1462,6 +1462,8 @@ void pc_reg_received(struct map_session_data *sd)
 
 		clif_changeoption( &sd->bl );
 	}
+
+	channel_autojoin(sd);
 }
 
 static int pc_calc_skillpoint(struct map_session_data* sd)

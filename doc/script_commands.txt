@@ -1,4 +1,4 @@
-﻿//===== rAthena Documentation ================================
+//===== rAthena Documentation ================================
 //= rAthena Script Commands
 //===== By: ==================================================
 //= rAthena Dev Team
@@ -1033,6 +1033,7 @@ From here on, we will have the commands sorted as follow:
 11.- Homunculus commands.
 12.- Mercenary commands.
 13.- Party commands.
+14.- Channel commands.
 
 =====================
 |1.- Basic commands.|
@@ -9442,5 +9443,161 @@ If <char id> is specified, the specified player is used rather than the attached
 The attached player will leave their clan. On a successful leave, true is returned,
 else false if the leave failed.
 If <char id> is specified, the specified player is used rather than the attached one.
+
+---------------------------------------
+
+========================
+|14.- Channel commands.|
+========================
+---------------------------------------
+
+*channel_create "<chname>","<alias>"{,"<password>"{<option>{,<delay>{,<color>{,<char_id>}}}}};
+
+Creates a public channel with <chname> as the channel name. To protect the
+channel, use <password> or write "null" to create it without a password.
+Channel name must start with '#' and cannot be the same as the map or ally
+channel names.
+
+<alias> will be used to change the channel name when the channel message
+is displayed.
+
+<option> values are:
+	CHAN_OPT_BASE		    - Default option including CHAN_OPT_ANNOUNCE_SELF|CHAN_OPT_MSG_DELAY|CHAN_OPT_CAN_CHAT|CHAN_OPT_CAN_LEAVE
+	CHAN_OPT_ANNOUNCE_SELF  - Show info for player itself if player has joined/leaves the channel
+	CHAN_OPT_ANNOUNCE_JOIN  - Display message when player is joining the channel
+	CHAN_OPT_ANNOUNCE_LEAVE - Display message when player is leaving the channel
+	CHAN_OPT_MSG_DELAY	    - Enable chat delay for the channel
+	CHAN_OPT_COLOR_OVERRIDE - Player's unique font color will override channel's color
+	CHAN_OPT_CAN_CHAT	    - Player can chat in the channel
+	CHAN_OPT_CAN_LEAVE	    - Player can leave the channel
+	CHAN_OPT_AUTOJOIN	    - Players will auto join the channel at login
+
+The <delay> is the minimum chat delay in millisecond for a single player before
+the player can chat again in the same channel.
+
+Use <color> hex code to set the color for this channel, if not defined, default
+channel color will be used.
+
+If <char_id> is defined, the channel will be a private channel and the player
+will be the the channel owner.
+
+Returns 1 on success.
+
+	/**
+	 * This example will shows the message on this channel as
+	 * [rAthena] Admin : Hello world!
+	 * instead of
+	 * #rathena Admin : Hello world!
+	 **/
+	channel_create("#rathena","[rAthena]");
+	channel_create("#vip","[VIP]","vipmemberonly");
+
+---------------------------------------
+
+*channel_setopt "<chname>",<option>,<value>;
+
+Set option for the channel. Use 1 in <value> to set it, or 0 to unset.
+The <option> values are the same as the 'channel_create' options.
+
+For CHAN_OPT_MSG_DELAY, the delay in millisecond must be sent or use 0
+to remove the delay at <value>.
+
+Returns 1 on success.
+
+	// Example to set delay
+	channel_setopt("#global",CHAN_OPT_MSG_DELAY,5000);
+
+Only for public and private channel.
+
+---------------------------------------
+
+*channel_setcolor "<chname>",<color>;
+
+To change channel color.
+<color> uses hex RGB values.
+
+Returns 1 on success.
+
+---------------------------------------
+
+*channel_setpass "<chname>","<password>";
+
+To set, unset, or change password of a channel.
+Use "null" to remove the password.
+
+Returns 1 on success.
+Only for public and private channel.
+
+---------------------------------------
+
+*channel_setgroup "<chname>",<group_id>{,...,<group_id>};
+*channel_setgroup2 "<chname>",<array_of_groups>;
+
+Set group restriction for a channel. Only player with matching <group_id>
+are allowed to to join the channel.
+
+By using 0 in the first group channel, the group restriction will be
+removed from the channel config.
+
+'channel_setgroup2' receives input for group list as an array.
+
+Returns 0 on failure, and 1 (or n groups count) on success.
+
+	// Example 1: Remove groups
+	channel_setgroup("#event",0);
+
+	// Example 2: Multiple values
+	channel_setgroup("#vip",2,5);
+
+	// Example 3: Using array
+	setarray .@staffs[0],2,3,4,10,99;
+	channel_setgroup("#staff",.@staffs);
+
+Only for public and private channel.
+
+---------------------------------------
+
+*channel_chat "<chname>","<message>"{,<color>};
+
+Sends message to the channel.
+Returns 1 on success.
+
+	// Example if channel doesn't have alias
+	channel_chat(#rathena,"Hello World!"); // #rathena Hello World!
+
+	// Example if channel has alias
+	channel_chat(#rathena,"Hello World!"); // [rAthena] Hello World!
+
+---------------------------------------
+
+*channel_ban "<chname>",<char_id>;
+
+Ban player from a public or private channel.
+Channel's owner or group with PC_PERM_CHANNEL_ADMIN cannot be banned.
+Returns 1 on success.
+
+---------------------------------------
+
+*channel_unban "<chname>",<char_id>;
+
+Unban player from a public or private channel.
+Returns 1 on success.
+
+---------------------------------------
+
+*channel_kick "<chname>",<char_id>;
+*channel_kick "<chname>","<char_name>";
+
+Kick player from a public or private channel.
+Channel's owner or group with PC_PERM_CHANNEL_ADMIN cannot be kicked.
+Returns 1 on success.
+
+---------------------------------------
+
+*channel_delete "<chname>";
+
+Delete an existing public or private channel. Cannot delete ally or
+local map channel.
+Returns 0 on success.
 
 ---------------------------------------
