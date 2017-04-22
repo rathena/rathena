@@ -47,7 +47,7 @@
 char default_codepage[32] = "";
 
 int map_server_port = 3306;
-char map_server_ip[32] = "127.0.0.1";
+char map_server_ip[64] = "127.0.0.1";
 char map_server_id[32] = "ragnarok";
 char map_server_pw[32] = "";
 char map_server_db[32] = "ragnarok";
@@ -81,7 +81,7 @@ char market_table[32] = "market";
 char roulette_table[32] = "db_roulette";
 
 // log database
-char log_db_ip[32] = "127.0.0.1";
+char log_db_ip[64] = "127.0.0.1";
 int log_db_port = 3306;
 char log_db_id[32] = "ragnarok";
 char log_db_pw[32] = "ragnarok";
