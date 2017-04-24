@@ -316,7 +316,9 @@ bool sale_remove_item( uint16 nameid ){
 	int i;
 
 	// Check if there is an entry for this item id
-	if( !sale_find_item(nameid, false) ){
+	sale_item = sale_find_item(nameid, false);
+
+	if( sale_item == NULL ){
 		return false;
 	}
 
@@ -326,22 +328,18 @@ bool sale_remove_item( uint16 nameid ){
 		return false;
 	}
 
-	// Check if the sale is currently running
-	sale_item = sale_find_item(nameid, true);
-
-	if( sale_item != NULL && sale_item->timer_end != INVALID_TIMER ){
-		// Notify all clients that the sale has ended
-		clif_sale_end(sale_item, NULL, ALL_CLIENT);
-	}
-
 	if( sale_item->timer_start != INVALID_TIMER ){
 		delete_timer(sale_item->timer_start, sale_start_timer);
 		sale_item->timer_start = INVALID_TIMER;
 	}
 
+	// Check if the sale is currently running
 	if( sale_item->timer_end != INVALID_TIMER ){
 		delete_timer(sale_item->timer_end, sale_end_timer);
 		sale_item->timer_end = INVALID_TIMER;
+
+		// Notify all clients that the sale has ended
+		clif_sale_end(sale_item, NULL, ALL_CLIENT);
 	}
 
 	// Find the original pointer in the array
@@ -467,7 +465,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 	uint32 totalweight = 0;
 	int i,new_;
 #if PACKETVER_SUPPORTS_SALES
-	struct sale_item_data* sale;
+	struct sale_item_data* sale = NULL;
 #endif
 
 	if( sd == NULL || item_list == NULL || !cash_shop_defined){
@@ -567,7 +565,9 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 	for( i = 0; i < n; ++i ){
 		unsigned short nameid = *( item_list + i * 5 );
 		uint32 quantity = *( item_list + i * 5 + 2 );
+#if PACKETVER_SUPPORTS_SALES
 		uint16 tab = *(item_list + i * 5 + 4);
+#endif
 		struct item_data *id = itemdb_search(nameid);
 
 		if (!id)

@@ -222,6 +222,8 @@ moc_para01,53,30,3	script	Clearchus	470,{
 	mes "[Clearchus]";
 	mes "Have fun now, ya hear?";
 	getitem .@base_id + .@i,1;
+	if (isbegin_quest(62238) > 0)
+		erasequest 62238;
 	setquest 62238;
 	close;
 }

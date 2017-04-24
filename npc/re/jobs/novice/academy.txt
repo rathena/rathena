@@ -380,7 +380,7 @@ izlude,198,213,3	script	Captain Carocc#iz	4_M_REINDEER,5,5,{
 						mes "Hmm? You said you didn't know what to do.";
 						mes "Since you're at Izlude, why don't you visit ^4d4dffCriatura Academy^000000?";
 						next;
-						mes "[Carocc]";;
+						mes "[Carocc]";
 						mes "Izlude has the Institute for budding adventurers like you";
 						mes "A friend of mine works there, so I'll give you the introduction to him.";
 						next;
@@ -8024,7 +8024,7 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 		mes "[Sharp Snake's Fang]";
 		mes "You don't need to worry, he said you're doing great!";
 		close2;
-		enable_items;;
+		enable_items;
 		end;
 	}
 	mes "[Sharp Snake's Fang]";

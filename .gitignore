@@ -56,9 +56,6 @@ Thumbs.db
 /conf/import
 /conf/msg_conf/import
 
-# /doc/
-/doc/doxygen
-
 # /log/
 /log/*.log
 /log/*.leaks

@@ -21,7 +21,7 @@
 // see conf/battle/client.conf for other version
 
 #ifndef PACKETVER
-	#define PACKETVER 20130807
+	#define PACKETVER 20151104
 	//#define PACKETVER 20120410
 #endif
 
@@ -29,7 +29,7 @@
 #define PACKETVER_SUPPORTS_PINCODE PACKETVER>=20110309
 
 /// Check if the client needs delete_date as remaining time and not the actual delete_date (actually it was tested for clients since 2013)
-#define PACKETVER_CHAR_DELETEDATE (PACKETVER > 20130000 && PACKETVER < 20141016) || PACKETVER >= 20150826
+#define PACKETVER_CHAR_DELETEDATE (PACKETVER > 20130000 && PACKETVER < 20141016) || PACKETVER >= 20150513
 
 // Check if the specified packetvresion supports the cashshop sale system
 #define PACKETVER_SUPPORTS_SALES PACKETVER>=20131223
@@ -842,6 +842,19 @@ enum e_job {
 	JOB_REBELLION = 4215,
 
 	JOB_SUMMONER = 4218,
+
+	JOB_BABY_SUMMONER = 4220,
+
+	JOB_BABY_NINJA = 4222,
+	JOB_BABY_KAGEROU,
+	JOB_BABY_OBORO,
+	JOB_BABY_TAEKWON,
+	JOB_BABY_STAR_GLADIATOR,
+	JOB_BABY_SOUL_LINKER,
+	JOB_BABY_GUNSLINGER,
+	JOB_BABY_REBELLION,
+
+	JOB_BABY_STAR_GLADIATOR2 = 4238,
 
 	JOB_MAX,
 };

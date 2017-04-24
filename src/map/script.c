@@ -50,6 +50,7 @@
 #include "mail.h"
 #include "quest.h"
 #include "elemental.h"
+#include "channel.h"
 
 #include <math.h>
 #include <stdlib.h> // atoi, strtol, strtoll, exit
@@ -4292,7 +4293,8 @@ void script_stop_sleeptimers(int id) {
 		if (!st)
 			break; // No more sleep timers
 
-		script_free_state(st);
+		if (st->oid == id)
+			script_free_state(st);
 	}
 }
 
@@ -9306,9 +9308,14 @@ BUILDIN_FUNC(getequipweaponlv)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (num == -1)
+	if (num == -1){
+		if( current_equip_item_index == -1 ){
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
 		i = current_equip_item_index;
-	else if (equip_index_check(num))
+	}else if (equip_index_check(num))
 		i = pc_checkequip(sd, equip_bitmask[num]);
 	if (i >= 0 && sd->inventory_data[i])
 		script_pushint(st, sd->inventory_data[i]->wlv);
@@ -10876,7 +10883,8 @@ BUILDIN_FUNC(killmonsterall)
 BUILDIN_FUNC(clone)
 {
 	TBL_PC *sd, *msd=NULL;
-	uint32 char_id, master_id = 0, x, y, flag = 0, m;
+	uint32 char_id, master_id = 0, x, y, flag = 0;
+	int16 m;
 	enum e_mode mode = 0;
 
 	unsigned int duration = 0;
@@ -15235,6 +15243,29 @@ BUILDIN_FUNC(npctalk)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Sends a message to the waitingroom of the invoking NPC.
+ * chatmes "<message>"{,"<NPC name>"};
+ * @author Jey
+ */
+BUILDIN_FUNC(chatmes)
+{
+	struct npc_data* nd = NULL;
+	const char* str = script_getstr(st,2);
+
+	if (script_hasdata(st, 3))
+		nd = npc_name2id(script_getstr(st, 3));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+
+	if (nd != NULL && nd->chat_id) {
+		char message[256];
+		safesnprintf(message, sizeof(message), "%s", str);
+		clif_GlobalMessage(map_id2bl(nd->chat_id), message, CHAT_WOS);
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 // change npc walkspeed [Valaris]
 BUILDIN_FUNC(npcspeed)
 {
@@ -15765,9 +15796,14 @@ BUILDIN_FUNC(cardscnt)
 BUILDIN_FUNC(getrefine)
 {
 	TBL_PC *sd;
-	if ((sd = script_rid2sd(st))!= NULL)
+	if ((sd = script_rid2sd(st))!= NULL){
+		if( current_equip_item_index == -1 ){
+			script_pushint(st, 0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
 		script_pushint(st,sd->inventory.u.items_inventory[current_equip_item_index].refine);
-	else
+	}else
 		script_pushint(st,0);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -17375,6 +17411,7 @@ BUILDIN_FUNC(addmonsterdrop)
 		if(c) { //Fill in the slot with the item and rate
 			mob->dropitem[c].nameid = item_id;
 			mob->dropitem[c].p = (rate > 10000)?10000:rate;
+			itemdb_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 			script_pushint(st,1);
 		} else //No place to put the new drop
 			script_pushint(st,0);
@@ -17420,6 +17457,7 @@ BUILDIN_FUNC(delmonsterdrop)
 			if(mob->dropitem[i].nameid == item_id) {
 				mob->dropitem[i].nameid = 0;
 				mob->dropitem[i].p = 0;
+				itemdb_reload_itemmob_data(); // Reload the mob search data stored in the item_data
 				script_pushint(st,1);
 				return SCRIPT_CMD_SUCCESS;
 			}
@@ -19100,6 +19138,94 @@ BUILDIN_FUNC(setcell)
 	for( y = y1; y <= y2; ++y )
 		for( x = x1; x <= x2; ++x )
 			map_setcell(m, x, y, type, flag);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Gets a free cell in the specified area.
+ * getfreecell "<map name>",<rX>,<rY>{,<x>,<y>,<rangeX>,<rangeY>,<flag>};
+ */
+BUILDIN_FUNC(getfreecell)
+{
+	const char *mapn = script_getstr(st, 2), *name;
+	char prefix;
+	struct map_session_data *sd;
+	int64 num;
+	int16 m, x = 0, y = 0;
+	int rx = -1, ry = -1, flag = 1;
+
+	sd = map_id2sd(st->rid);
+
+	if (!data_isreference(script_getdata(st, 3))) {
+		ShowWarning("script: buildin_getfreecell: rX is not a variable.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!data_isreference(script_getdata(st, 4))) {
+		ShowWarning("script: buildin_getfreecell: rY is not a variable.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (is_string_variable(reference_getname(script_getdata(st, 3)))) {
+		ShowWarning("script: buildin_getfreecell: rX is a string, must be an INT.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (is_string_variable(reference_getname(script_getdata(st, 4)))) {
+		ShowWarning("script: buildin_getfreecell: rY is a string, must be an INT.\n");
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_hasdata(st, 5))
+		x = script_getnum(st, 5);
+
+	if (script_hasdata(st, 6))
+		y = script_getnum(st, 6);
+
+	if (script_hasdata(st, 7))
+		rx = script_getnum(st, 7);
+
+	if (script_hasdata(st, 8))
+		ry = script_getnum(st, 8);
+
+	if (script_hasdata(st, 9))
+		flag = script_getnum(st, 9);
+
+	if (sd && strcmp(mapn, "this") == 0)
+		m = sd->bl.m;
+	else
+		m = map_mapname2mapid(mapn);
+
+	map_search_freecell(NULL, m, &x, &y, rx, ry, flag);
+
+	// Set MapX
+	num = st->stack->stack_data[st->start + 3].u.num;
+	name = get_str(num&0x00ffffff);
+	prefix = *name;
+
+	if (not_server_variable(prefix))
+		sd = script_rid2sd(st);
+	else
+		sd = NULL;
+
+	set_reg(st, sd, num, name, (void*)__64BPRTSIZE((int)x), script_getref(st, 3));
+
+	// Set MapY
+	num = st->stack->stack_data[st->start + 4].u.num;
+	name = get_str(num&0x00ffffff);
+	prefix = *name;
+
+	if (not_server_variable(prefix))
+		sd = script_rid2sd(st);
+	else
+		sd = NULL;
+
+	set_reg(st, sd, num, name, (void*)__64BPRTSIZE((int)y), script_getref(st, 4));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -22938,6 +23064,455 @@ BUILDIN_FUNC(openstorage2) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Create a new channel
+ * channel_create "<chname>","<alias>"{,"<password>"{<option>{,<delay>{,<color>{,<char_id>}}}}};
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_create) {
+	struct Channel tmp_chan, *ch = NULL;
+	const char *chname = script_getstr(st,2), *pass = NULL;
+	int i = channel_chk((char*)chname, NULL, 3);
+	TBL_PC *sd = NULL;
+
+	if (i != 0) {
+		ShowError("buildin_channel_create: Channel name '%s' is invalid. Errno %d\n", chname, i);
+		script_pushint(st,i);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	memset(&tmp_chan, 0, sizeof(struct Channel));
+
+	if (script_hasdata(st,8)) {
+		tmp_chan.char_id = script_getnum(st,8);
+		if (!(sd = map_charid2sd(tmp_chan.char_id))) {
+			ShowError("buildin_channel_create: Player with char id '%d' is not found.\n", tmp_chan.char_id);
+			script_pushint(st,-5);
+			return SCRIPT_CMD_FAILURE;
+		}
+		tmp_chan.type = CHAN_TYPE_PRIVATE;
+		i = 1;
+	}
+	else {
+		tmp_chan.type = CHAN_TYPE_PUBLIC;
+		i = 0;
+	}
+
+	safestrncpy(tmp_chan.name, chname+1, sizeof(tmp_chan.name));
+	safestrncpy(tmp_chan.alias, script_getstr(st,3), sizeof(tmp_chan.alias));
+	if (script_hasdata(st,4) && (pass = script_getstr(st,4)) && strcmpi(pass,"null") != 0)
+		safestrncpy(tmp_chan.pass, pass, sizeof(tmp_chan.pass));
+	if (script_hasdata(st,5))
+		tmp_chan.opt = script_getnum(st,5);
+	else
+		tmp_chan.opt = i ? channel_config.private_channel.opt : CHAN_OPT_BASE;
+	if (script_hasdata(st,6))
+		tmp_chan.msg_delay = script_getnum(st,6);
+	else
+		tmp_chan.msg_delay = i ? channel_config.private_channel.delay : 1000;
+	if (script_hasdata(st,7))
+		tmp_chan.color = script_getnum(st,7);
+	else
+		tmp_chan.color = i ? channel_config.private_channel.color : channel_getColor("Default");
+
+	if (!(ch = channel_create(&tmp_chan))) {
+		ShowError("buildin_channel_create: Cannot create channel '%s'.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (tmp_chan.char_id)
+		channel_join(ch, sd);
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Set channel option
+ * channel_setopt "<chname>",<option>,<value>;
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_setopt) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2);
+	int opt = script_getnum(st,3), value = script_getnum(st,4);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_setopt: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	switch (opt) {
+		case CHAN_OPT_ANNOUNCE_SELF:
+		case CHAN_OPT_ANNOUNCE_JOIN:
+		case CHAN_OPT_ANNOUNCE_LEAVE:
+		case CHAN_OPT_COLOR_OVERRIDE:
+		case CHAN_OPT_CAN_CHAT:
+		case CHAN_OPT_CAN_LEAVE:
+		case CHAN_OPT_AUTOJOIN:
+			if (value)
+				ch->opt |= opt;
+			else
+				ch->opt &= ~opt;
+			break;
+		case CHAN_OPT_MSG_DELAY:
+			ch->msg_delay = value;
+			break;
+		default:
+			ShowError("buildin_channel_setopt: Invalid option %d!\n", opt);
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Set channel color
+ * channel_setcolor "<chname>",<color>;
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_setcolor) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2);
+	int color = script_getnum(st,3);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_setcolor: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	ch->color = (color & 0x0000FF) << 16 | (color & 0x00FF00) | (color & 0xFF0000) >> 16;//RGB to BGR
+
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Set channel password
+ * channel_setpass "<chname>","<password>";
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_setpass) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2), *passwd = script_getstr(st,3);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_setpass: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!passwd || !strcmpi(passwd,"null"))
+		memset(ch->pass, '\0', sizeof(ch->pass));
+	else
+		safestrncpy(ch->pass, passwd, sizeof(ch->pass));
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Set authorized groups
+ * channel_setgroup "<chname>",<group_id>{,...,<group_id>};
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_setgroup) {
+	struct Channel *ch = NULL;
+	const char *funcname = script_getfuncname(st), *chname = script_getstr(st,2);
+	int i, n = 0, group = 0;
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_setgroup: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (funcname[strlen(funcname)-1] == '2') {
+		struct script_data *data = script_getdata(st,3);
+		const char *varname = reference_getname(data);
+		int32 id, idx;
+
+		if (varname[strlen(varname)-1] == '$') {
+			ShowError("buildin_channel_setgroup: The array %s is not numeric type.\n", varname);
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		n = script_array_highest_key(st, NULL, reference_getname(data), reference_getref(data));
+		if (n < 1) {
+			ShowError("buildin_channel_setgroup: No group id listed.\n");
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if (ch->groups)
+			aFree(ch->groups);
+		ch->groups = NULL;
+		ch->group_count = 0;
+
+		id = reference_getid(data);
+		idx = reference_getindex(data);
+		for (i = 0; i < n; i++) {
+			group = (int32)__64BPRTSIZE(get_val2(st,reference_uid(id,idx+i),reference_getref(data)));
+			if (group == 0) {
+				script_pushint(st,1);
+				return SCRIPT_CMD_SUCCESS;
+			}
+			RECREATE(ch->groups, unsigned short, ++ch->group_count);
+			ch->groups[ch->group_count-1] = group;
+			ShowInfo("buildin_channel_setgroup: (2) Added group %d. Num: %d\n", ch->groups[ch->group_count-1], ch->group_count);
+		}
+	}
+	else {
+		group = script_getnum(st,3);
+		n = script_lastdata(st)-1;
+
+		if (n < 1) {
+			ShowError("buildin_channel_setgroup: Please input at least 1 group_id.\n");
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if (ch->groups)
+			aFree(ch->groups);
+		ch->groups = NULL;
+		ch->group_count = 0;
+
+		if (group == 0) { // Removed group list
+			script_pushint(st,1);
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		CREATE(ch->groups, unsigned short, n);
+		for (i = 3; i < n+2; i++) {
+			ch->groups[ch->group_count++] = script_getnum(st,i);
+			ShowInfo("buildin_channel_setgroup: (1) Added group %d. Num: %d\n", ch->groups[ch->group_count-1], ch->group_count);
+		}
+	}
+	script_pushint(st,n);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Send message on channel
+ * channel_chat "<chname>","<message>"{,<color>};
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_chat) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2), *msg = script_getstr(st,3);
+	char output[CHAT_SIZE_MAX+1];
+	unsigned long color = 0;
+
+	// Check also local channels
+	if (chname[0] != '#') { // By Map
+		int m = mapindex_name2id(chname);
+		if (!m || (m = map_mapindex2mapid(m)) < 0) {
+			ShowError("buildin_channel_chat: Invalid map '%s'.\n", chname);
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+		if (!(ch = map[m].channel)) {
+			ShowDebug("buildin_channel_chat: Map '%s' doesn't have local channel yet.\n", chname);
+			script_pushint(st,0);
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+	else if (strcmpi(chname+1,channel_config.map_tmpl.name) == 0) {
+		TBL_NPC *nd = map_id2nd(st->oid);
+		if (!nd || nd->bl.m == -1) {
+			ShowError("buildin_channel_chat: Floating NPC needs map name instead '%s'.\n", chname);
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+		if (!(ch = map[nd->bl.m].channel)) {
+			ShowDebug("buildin_channel_chat: Map '%s' doesn't have local channel yet.\n", chname);
+			script_pushint(st,0);
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+	else if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_chat: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!ch) {
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	color = ch->color;
+	FETCH(4, color);
+
+	safesnprintf(output, CHAT_SIZE_MAX, "%s %s", ch->alias, msg);
+	clif_channel_msg(ch,output,color);
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Ban player from a channel
+ * channel_ban "<chname>",<char_id>;
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_ban) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2);
+	unsigned int char_id = script_getnum(st,3);
+	TBL_PC *tsd;
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_ban: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (ch->char_id == char_id) {
+		script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	tsd = map_charid2sd(char_id);
+	if (tsd && pc_has_permission(tsd,PC_PERM_CHANNEL_ADMIN)) {
+		script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (!idb_exists(ch->banned, char_id)) {
+		struct chan_banentry *cbe;
+		char output[CHAT_SIZE_MAX+1];
+
+		CREATE(cbe, struct chan_banentry, 1);
+		cbe->char_id = char_id;
+		if (tsd) {
+			strcpy(cbe->char_name,tsd->status.name);
+			channel_clean(ch,tsd,0);
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,769), ch->alias, tsd->status.name); // %s %s has been banned.
+		}
+		else
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,769), ch->alias, "****"); // %s %s has been banned.
+		idb_put(ch->banned, char_id, cbe);
+		clif_channel_msg(ch,output,ch->color);
+	}
+
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Ban player from a channel
+ * channel_unban "<chname>",<char_id>;
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_unban) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2);
+	unsigned int char_id = script_getnum(st,3);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_unban: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (ch->char_id == char_id) {
+		script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (idb_exists(ch->banned, char_id)) {
+		char output[CHAT_SIZE_MAX+1];
+		TBL_PC *tsd = map_charid2sd(char_id);
+		if (tsd)
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,770), ch->alias, tsd->status.name); // %s %s has been unbanned
+		else
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,770), ch->alias, "****"); // %s %s has been unbanned.
+		idb_remove(ch->banned, char_id);
+		clif_channel_msg(ch,output,ch->color);
+	}
+
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Kick player from a channel
+ * channel_kick "<chname>",<char_id>;
+ * channel_kick "<chname>","<char_name>";
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_kick) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2);
+	struct script_data *data = script_getdata(st,3);
+	TBL_PC *tsd = NULL;
+	int res = 1;
+
+	get_val(st, data);
+	if (data_isstring(data)) {
+		if (!(tsd = map_nick2sd(conv_str(st,data),false))) {
+			ShowError("buildin_channel_kick: Player with nick '%s' is not online\n", conv_str(st,data));
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	else {
+		if (!(tsd = map_charid2sd(conv_num(st,data)))) {
+			ShowError("buildin_channel_kick: Player with char_id '%d' is not online\n", conv_num(st,data));
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	if (!(ch = channel_name2channel((char *)chname, tsd, 0))) {
+		ShowError("buildin_channel_kick: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (channel_pc_haschan(tsd, ch) < 0 || ch->char_id == tsd->status.char_id || pc_has_permission(tsd,PC_PERM_CHANNEL_ADMIN)) {
+		script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch(ch->type){
+		case CHAN_TYPE_ALLY: res = channel_pcquit(tsd,3); break;
+		case CHAN_TYPE_MAP: res = channel_pcquit(tsd,4); break;
+		default: res = channel_clean(ch,tsd,0); break;
+	}
+	
+	if (res == 0) {
+		char output[CHAT_SIZE_MAX+1];
+		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,889), ch->alias, tsd->status.name); // "%s %s is kicked"
+		clif_channel_msg(ch,output,ch->color);
+	}
+
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Delete a channel
+ * channel_delete "<chname>";
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_delete) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("channel_delete: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,-1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st,channel_delete(ch,true));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 /** place holder for the translation macro **/
@@ -23251,6 +23826,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
 	BUILDIN_DEF(message,"ss"), // [MouseJstr]
 	BUILDIN_DEF(npctalk,"s?"), // [Valaris]
+	BUILDIN_DEF(chatmes,"s?"), // [Jey]
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),
 	BUILDIN_DEF(getsavepoint,"i?"),
@@ -23394,6 +23970,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(openauction,"?"),
 	BUILDIN_DEF(checkcell,"siii"),
 	BUILDIN_DEF(setcell,"siiiiii"),
+	BUILDIN_DEF(getfreecell,"srr?????"),
 	BUILDIN_DEF(setwall,"siiiiis"),
 	BUILDIN_DEF(delwall,"s"),
 	BUILDIN_DEF(searchitem,"rs"),
@@ -23548,6 +24125,19 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(agitcheck3,""),
 	BUILDIN_DEF(gvgon3,"s"),
 	BUILDIN_DEF(gvgoff3,"s"),
+
+	// Channel System
+	BUILDIN_DEF(channel_create,"ss?????"),
+	BUILDIN_DEF(channel_setopt,"sii"),
+	BUILDIN_DEF(channel_setcolor,"si"),
+	BUILDIN_DEF(channel_setpass,"ss"),
+	BUILDIN_DEF(channel_setgroup,"si*"),
+	BUILDIN_DEF2(channel_setgroup,"channel_setgroup2","sr"),
+	BUILDIN_DEF(channel_chat,"ss?"),
+	BUILDIN_DEF(channel_ban,"si"),
+	BUILDIN_DEF(channel_unban,"si"),
+	BUILDIN_DEF(channel_kick,"sv"),
+	BUILDIN_DEF(channel_delete,"s"),
 
 #include "../custom/script_def.inc"
 
