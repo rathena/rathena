@@ -19,25 +19,49 @@ int date_get_year(void)
 /*
  * Get the current month
  */
-int date_get_month(void)
+enum e_month date_get_month(void)
 {
 	time_t t;
 	struct tm * lt;
 	t = time(NULL);
 	lt = localtime(&t);
-	return lt->tm_mon+1;
+	return (enum e_month)(lt->tm_mon+1);
 }
 
 /*
- * Get the current day (days of the month)
+ * Get the day of the month
  */
-int date_get_day(void)
+int date_get_dayofmonth(void)
 {
 	time_t t;
 	struct tm * lt;
 	t = time(NULL);
 	lt = localtime(&t);
 	return lt->tm_mday;
+}
+
+/*
+ * Get the day of the week
+ */
+enum e_dayofweek date_get_dayofweek(void)
+{
+	time_t t;
+	struct tm * lt;
+	t = time(NULL);
+	lt = localtime(&t);
+	return (enum e_dayofweek)lt->tm_wday;
+}
+
+/*
+ * Get the day of the year
+ */
+int date_get_dayofyear(void)
+{
+	time_t t;
+	struct tm * lt;
+	t = time(NULL);
+	lt = localtime(&t);
+	return lt->tm_yday;
 }
 
 /*
@@ -77,25 +101,52 @@ int date_get_sec(void)
 }
 
 /*
- * Does this day is a day of the Sun, (for SG)
+ * Get the value for the specific type
  */
-int is_day_of_sun(void)
+int date_get( enum e_date_type type )
 {
-	return date_get_day()%2 == 0;
+	switch( type ){
+		case DT_SECOND:
+			return date_get_sec();
+		case DT_MINUTE:
+			return date_get_min();
+		case DT_HOUR:
+			return date_get_hour();
+		case DT_DAYOFWEEK:
+			return date_get_dayofweek();
+		case DT_DAYOFMONTH:
+			return date_get_dayofmonth();
+		case DT_MONTH:
+			return date_get_month();
+		case DT_YEAR:
+			return date_get_year();
+		case DT_DAYOFYEAR:
+			return date_get_dayofyear();
+		default:
+			return -1;
+	}
 }
 
 /*
- * Does this day is a day of the Moon, (for SG)
+ * Is today a day of the Sun for Star Gladiators?
  */
-int is_day_of_moon(void)
+bool is_day_of_sun(void)
 {
-	return date_get_day()%2 == 1;
+	return date_get_dayofyear()%2 == 0;
 }
 
 /*
- * Does this day is a day of the Star, (for SG)
+ * Is today a day of the Moon for Star Gladiators?
  */
-int is_day_of_star(void)
+bool is_day_of_moon(void)
 {
-	return date_get_day()%5 == 0;
+	return date_get_dayofyear()%2 == 1;
+}
+
+/*
+ * Is today a day of the Star for Star Gladiators?
+ */
+bool is_day_of_star(void)
+{
+	return date_get_dayofyear()%5 == 0;
 }

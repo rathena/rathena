@@ -49,7 +49,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		if (BaseJob == Job_Priest) {
 			mes "[Bishop Paul]";
 			mes "Ah...";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "It is good to see you again, Brother " + strcharinfo(0) + ". Once again, God's grace has caused our paths to cross.";
 			else
 				mes "It is good to see you once again, Sister " + strcharinfo(0) + ". The grace of God has brought you once more before me.";
@@ -116,7 +116,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		else if (BaseClass == Job_Novice) {
 			mes "[Bishop Paul]";
 			mes "May God be";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "with you, brother.";
 			else
 				mes "with you, sister.";
@@ -149,7 +149,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		else {
 			mes "[Bishop Paul]";
 			mes "May God be";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "with you, brother.";
 			else
 				mes "with you, sister.";
@@ -204,7 +204,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 	if (PRIEST_Q == 0) {
 		mes "[Bishop Paul]";
 		mes "May God bless";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "you, Brother.";
 		else
 			mes "you, Sister.";
@@ -244,7 +244,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 				set PRIEST_Q,1;
 				setquest 8009;
 					mes "[Bishop Paul]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "Now I will explain the Three Trials of Priesthood. These tribulations will bring you much suffering, but I hope you can complete them, Brother " + strcharinfo(0) + ".";
 				else
 					mes "Now I will explain the Three Trials of Priesthood. These tribulations will bring you much suffering, but I hope you can complete them, Sister " + strcharinfo(0) + ".";
@@ -329,7 +329,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 			mes "Thank you for asking.";
 			next;
 			mes "[Bishop Paul]";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "I hope you will continue to go on your mission as God's servant, brother.";
 			else
 				mes "I hope you will continue to go on your mission as God's servant, sister.";
@@ -501,7 +501,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 		mes "[Bishop Paul]";
 		mes "God, grant your power to your servant standing before you.";
 		changequest 8015,8016;
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "Let him send your message throughout the ends of the earth.";
 		else
 			mes "Let her send your message throughout the ends of the earth.";
@@ -536,9 +536,9 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 	mes "[Sister Cecilia]";
 	if (BaseJob != Job_Acolyte) {
 		if (BaseJob == Job_Priest) {
-			mes "May god bless you, "+ (Sex ? "brother":"sister") +". It brings my heart joy to see that you working hard to carry out the will of God.";
+			mes "May god bless you, "+ (Sex == SEX_MALE ? "brother":"sister") +". It brings my heart joy to see that you working hard to carry out the will of God.";
 		} else if (Class == Job_Novice) {
-			mes "May god bless you, "+ (Sex ? "brother":"sister") +".";
+			mes "May god bless you, "+ (Sex == SEX_MALE ? "brother":"sister") +".";
 			mes "Prontera parish welcomes you.";
 			next;
 			mes "[Sister Cecilia]";
@@ -557,7 +557,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			mes "But please...";
 			mes "Take your time, and decide what job will be the best for you.";
 		} else {
-			mes "May god bless you, "+ (Sex ? "brother":"sister") +".";
+			mes "May god bless you, "+ (Sex == SEX_MALE ? "brother":"sister") +".";
 			mes "Welcome to Prontera parish. How may I help you?";
 			next;
 			if (select("Tell me more about Priests.:Nothing.") == 1) {
@@ -577,7 +577,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		close;
 	}
 	if (PRIEST_Q == 0) {
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "May God bless you, brother.";
 		else
 			mes "May God bless you, sister.";
@@ -658,7 +658,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		mes "Welcome. You demonstrated great effort to accomplish your first trial. Now, speak to Bishop Paul so that you can begin your next trial on your path to Priesthood.";
 		next;
 		mes "[Sister Cecilia]";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "Brother "+ strcharinfo(0) +"...";
 		else
 			mes "Sister "+ strcharinfo(0) +"...";
@@ -704,14 +704,14 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 		}
 		next;
 		mes "[Sister Cecilia]";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "Brother "+ strcharinfo(0) +"...";
 		else
 			mes "Sister "+ strcharinfo(0) +"...";
 		mes "We will now begin your formal oath for the Priesthood. Make yourself comfortable, and just answer with your heart.";
 		next;
 		mes "[Sister Cecilia]";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "Brother "+ strcharinfo(0) +",";
 		else
 			mes "Sister "+ strcharinfo(0) +",";
@@ -802,7 +802,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 			close;
 		}
 		mes "[Sister Cecilia]";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "Brother "+ strcharinfo(0) +"...";
 		else
 			mes "Sister "+ strcharinfo(0) +"...";
@@ -848,7 +848,7 @@ job_prist,24,187,4	script	Peter S. Alberto	110,{
 	mes "[Father Peter]";
 	if (BaseJob == Job_Priest) {
 		mes "Welcome!";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "Brother "+ strcharinfo(0) +"!";
 		else
 			mes "Sister "+ strcharinfo(0) +"!";
@@ -1036,7 +1036,7 @@ job_prist,23,187,1	script	Peter S. Alberto#2	110,{
 	mes "[Father Peter]";
 	if (BaseJob == Job_Priest) {
 		mes "Welcome!";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "Brother "+ strcharinfo(0) +"!";
 		else
 			mes "Sister "+ strcharinfo(0) +"!";
@@ -1737,7 +1737,7 @@ function	script	F_FatherRub	{
 			mes "[Father Rubalkabara]";
 			mes "Well then, please head to your next destination for your pilgrimage. Be safe in your travels.";
 			close2;
-			savepoint "prt_fild03",361,255;
+			savepoint "prt_fild03",361,255,1,1;
 			set PRIEST_Q,2;
 			end;
 		}
@@ -1785,7 +1785,7 @@ function	script	F_MotherMart	{
 			mes "God for safety";
 			mes "on your journey.";
 			close2;
-			savepoint "moc_fild07",35,355;
+			savepoint "moc_fild07",35,355,1,1;
 			set PRIEST_Q,3;
 			end;
 		}
@@ -1845,7 +1845,7 @@ function	script	F_FatherYos	{
 			mes "your trials is now";
 			mes "completed.";
 			close2;
-			savepoint "prt_fild00",206,230;
+			savepoint "prt_fild00",206,230,1,1;
 			set PRIEST_Q,4;
 			end;
 		}

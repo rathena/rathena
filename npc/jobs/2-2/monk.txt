@@ -347,7 +347,7 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 		}
 		mes "[Sensei Moohae]";
 		mes "There are still those who wish to follow the old ways.";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "A strong young man. I am pleased of your will to join us.";
 		else
 			mes "Such a delicate flower. I am pleased to see your will to join us.";
@@ -773,7 +773,7 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 				next;
 				mes "[Sensei Moohae]";
 				mes "Then your training isn't completed.";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "You will not be accepted as a monk my boy.";
 				else
 					mes "You will not be accepted as a monk little girl.";
@@ -785,7 +785,7 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 				mes "Come back later when you're ready...";
 				next;
 				mes "[Sensei Moohae]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "I hope that you are able to realize what you are to become soon my boy...";
 				else
 					mes "I hope that you are able to realize what you are to become soon my girl...";
@@ -794,13 +794,13 @@ monk_in,99,58,1	script	Sensei Moohae#mk	60,{
 			mes "[Sensei Moohae]";
 			mes "Then your training is complete...";
 			mes "Please come closer.";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "We welcome you brother, in our holy battle against evil!";
 			else
 				mes "We welcome you sister, in our holy battle against evil!";
 			next;
 			mes "[Sensei Moohae]";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "My brother, your oath has been heard by all around us.";
 			else
 				mes "My sister, your oath has been heard by all around us.";
@@ -2026,7 +2026,7 @@ monk_test,389,43,0	duplicate(MonkTrap)	Trap#t_monk7_3	-1
 monk_test,389,42,0	duplicate(MonkTrap)	Trap#t_monk7_4	-1
 
 job_monk,225,180,1	script	Hyunmoo#mk	89,{
-	if ((countitem(1069) > 0 || countitem(1070) > 0) && (countitem(1069) < 30 || countitem(1070) < 30)) {
+	if ((countitem(1069) > 0 || countitem(1070) > 0) && countitem(1069) < 30 && countitem(1070) < 30) {
 		mes "[Hyunmoo]";
 		mes "You didn't bring enough mushrooms... go get some more.";
 		next;
@@ -2603,8 +2603,8 @@ monk_test,137,338,1	script	switchreset#monkmonk	79,{
 //============================================================ 
 // Monsters of Mushroom Collecting
 //============================================================ 
-job_monk,0,0,0,0	monster	Thief Mushroom	1182,70,0,0,0
-job_monk,0,0,0,0	monster	Thief Bug Larva	1051,20,0,0,0
+job_monk,0,0	monster	Thief Mushroom	1182,70
+job_monk,0,0	monster	Thief Bug Larva	1051,20
 
 //============================================================ 
 // Old changelog

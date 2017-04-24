@@ -52,7 +52,7 @@ moc_prydb1,39,129,2	script	Thief Guide	69,{
 			}
 			else {
 				mes "[Thief Guide]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "Hey, dude.";
 				else
 					mes "Hey, baby~";
@@ -61,7 +61,7 @@ moc_prydb1,39,129,2	script	Thief Guide	69,{
 		}
 		else {
 			mes "[Thief Guide]";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "Hey, dude.";
 			else
 				mes "Hey, baby.";
@@ -529,10 +529,10 @@ moc_ruins,141,125,3	script	Mr. Irrelevant	83,{
 
 // Monsters
 //============================================================
-job_thief1,0,0,0,0	monster	Orange Mushroom	1182,180,0,0,0
-job_thief1,0,0,0,0	monster	Fabre	1184,50,0,0,0
-job_thief1,0,0,0,0	monster	Chonchon	1183,50,0,0,0
-job_thief1,0,0,0,0	monster	Spore	1014,30,0,0,0
+job_thief1,0,0	monster	Orange Mushroom	1182,180
+job_thief1,0,0	monster	Fabre	1184,50
+job_thief1,0,0	monster	Chonchon	1183,50
+job_thief1,0,0	monster	Spore	1014,30
 
 //============================================================
 // mapflag

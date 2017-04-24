@@ -17,7 +17,6 @@
 #include <stdlib.h>
 
 /// global defines
-#define ACCOUNT_SQL_DB_VERSION 20140928
 
 /// internal structure
 typedef struct AccountDB_SQL {
@@ -117,15 +116,12 @@ static bool account_db_sql_init(AccountDB* self) {
 	db->accounts = Sql_Malloc();
 	sql_handle = db->accounts;
 
-	if( db->db_hostname[0] != '\0' )
-	{// local settings
-		username = db->db_username;
-		password = db->db_password;
-		hostname = db->db_hostname;
-		port     = db->db_port;
-		database = db->db_database;
-		codepage = db->codepage;
-	}
+	username = db->db_username;
+	password = db->db_password;
+	hostname = db->db_hostname;
+	port     = db->db_port;
+	database = db->db_database;
+	codepage = db->codepage;
 
 	if( SQL_ERROR == Sql_Connect(sql_handle, username, password, hostname, port, database) )
 	{
@@ -462,7 +458,7 @@ static void account_db_sql_iter_destroy(AccountDBIterator* self) {
  */
 static bool account_db_sql_iter_next(AccountDBIterator* self, struct mmo_account* acc) {
 	AccountDBIterator_SQL* iter = (AccountDBIterator_SQL*)self;
-	AccountDB_SQL* db = (AccountDB_SQL*)iter->db;
+	AccountDB_SQL* db = iter->db;
 	Sql* sql_handle = db->accounts;
 	char* data;
 
@@ -526,15 +522,15 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 	Sql_GetData(sql_handle,  2, &data, NULL); safestrncpy(acc->pass, data, sizeof(acc->pass));
 	Sql_GetData(sql_handle,  3, &data, NULL); acc->sex = data[0];
 	Sql_GetData(sql_handle,  4, &data, NULL); safestrncpy(acc->email, data, sizeof(acc->email));
-	Sql_GetData(sql_handle,  5, &data, NULL); acc->group_id = atoi(data);
-	Sql_GetData(sql_handle,  6, &data, NULL); acc->state = strtoul(data, NULL, 10);
+	Sql_GetData(sql_handle,  5, &data, NULL); acc->group_id = (unsigned int) atoi(data);
+	Sql_GetData(sql_handle,  6, &data, NULL); acc->state = (unsigned int) strtoul(data, NULL, 10);
 	Sql_GetData(sql_handle,  7, &data, NULL); acc->unban_time = atol(data);
 	Sql_GetData(sql_handle,  8, &data, NULL); acc->expiration_time = atol(data);
-	Sql_GetData(sql_handle,  9, &data, NULL); acc->logincount = strtoul(data, NULL, 10);
+	Sql_GetData(sql_handle,  9, &data, NULL); acc->logincount = (unsigned int) strtoul(data, NULL, 10);
 	Sql_GetData(sql_handle, 10, &data, NULL); safestrncpy(acc->lastlogin, data, sizeof(acc->lastlogin));
 	Sql_GetData(sql_handle, 11, &data, NULL); safestrncpy(acc->last_ip, data, sizeof(acc->last_ip));
 	Sql_GetData(sql_handle, 12, &data, NULL); safestrncpy(acc->birthdate, data, sizeof(acc->birthdate));
-	Sql_GetData(sql_handle, 13, &data, NULL); acc->char_slots = atoi(data);
+	Sql_GetData(sql_handle, 13, &data, NULL); acc->char_slots = (uint8) atoi(data);
 	Sql_GetData(sql_handle, 14, &data, NULL); safestrncpy(acc->pincode, data, sizeof(acc->pincode));
 	Sql_GetData(sql_handle, 15, &data, NULL); acc->pincode_change = atol(data);
 #ifdef VIP_ENABLE
@@ -657,11 +653,12 @@ void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 
 	if (count) {
 		int cursor = 14, i;
-		char key[32], sval[254];
+		char key[32], sval[254], esc_key[32*2+1], esc_sval[254*2+1];
 
 		for (i = 0; i < count; i++) {
 			unsigned int index;
-			safestrncpy(key, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
+			safestrncpy(key, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
+			Sql_EscapeString(sql_handle, esc_key, key);
 			cursor += RFIFOB(fd, cursor) + 1;
 
 			index = RFIFOL(fd, cursor);
@@ -670,23 +667,24 @@ void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 			switch (RFIFOB(fd, cursor++)) {
 				// int
 				case 0:
-					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%d')", db->global_acc_reg_num_table, account_id, key, index, RFIFOL(fd, cursor)) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%d')", db->global_acc_reg_num_table, account_id, esc_key, index, RFIFOL(fd, cursor)) )
 						Sql_ShowDebug(sql_handle);
 					cursor += 4;
 					break;
 				case 1:
-					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", db->global_acc_reg_num_table, account_id, key, index) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", db->global_acc_reg_num_table, account_id, esc_key, index) )
 						Sql_ShowDebug(sql_handle);
 					break;
 				// str
 				case 2:
-					safestrncpy(sval, (char*)RFIFOP(fd, cursor + 1), RFIFOB(fd, cursor));
+					safestrncpy(sval, RFIFOCP(fd, cursor + 1), RFIFOB(fd, cursor));
 					cursor += RFIFOB(fd, cursor) + 1;
-					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%s')", db->global_acc_reg_str_table, account_id, key, index, sval) )
+					Sql_EscapeString(sql_handle, esc_sval, sval);
+					if( SQL_ERROR == Sql_Query(sql_handle, "REPLACE INTO `%s` (`account_id`,`key`,`index`,`value`) VALUES ('%d','%s','%u','%s')", db->global_acc_reg_str_table, account_id, esc_key, index, esc_sval) )
 						Sql_ShowDebug(sql_handle);
 					break;
 				case 3:
-					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", db->global_acc_reg_str_table, account_id, key, index) )
+					if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `account_id` = '%d' AND `key` = '%s' AND `index` = '%u' LIMIT 1", db->global_acc_reg_str_table, account_id, esc_key, index) )
 						Sql_ShowDebug(sql_handle);
 					break;
 				default:
@@ -730,7 +728,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
 		plen += 1;
 
-		safestrncpy((char*)WFIFOP(fd,plen), data, len);
+		safestrncpy(WFIFOCP(fd,plen), data, len);
 		plen += len;
 
 		Sql_GetData(sql_handle, 1, &data, NULL);
@@ -744,7 +742,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 254
 		plen += 1;
 
-		safestrncpy((char*)WFIFOP(fd,plen), data, len);
+		safestrncpy(WFIFOCP(fd,plen), data, len);
 		plen += len;
 
 		WFIFOW(fd, 14) += 1;
@@ -797,7 +795,7 @@ void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id
 		WFIFOB(fd, plen) = (unsigned char)len; // won't be higher; the column size is 32
 		plen += 1;
 
-		safestrncpy((char*)WFIFOP(fd,plen), data, len);
+		safestrncpy(WFIFOCP(fd,plen), data, len);
 		plen += len;
 
 		Sql_GetData(sql_handle, 1, &data, NULL);

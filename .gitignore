@@ -30,6 +30,7 @@ Thumbs.db
 /config.log
 /config.status
 /core
+/enc_temp_folder
 /ipch
 /login-server
 /Makefile
@@ -53,9 +54,6 @@ Thumbs.db
 # /conf/
 /conf/import
 /conf/msg_conf/import
-
-# /doc/
-/doc/doxygen
 
 # /log/
 /log/*.log
@@ -97,6 +95,13 @@ Thumbs.db
 /tools/*.exe
 /tools/*.ilk
 /tools/*.pdb
+
+# /vcproj-15/
+/vcproj-15/char-server
+/vcproj-15/login-server
+/vcproj-15/mapcache
+/vcproj-15/map-server
+/vcproj-15/*.user
 
 # /vcproj-14/
 .vs

@@ -263,7 +263,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 					mes "[Powerful-Looking Woman]";
 					mes "I see. Hmmm...";
 					mes "You're kind of my type.";
-					if (Sex) {
+					if (Sex == SEX_MALE) {
 						mes "No no, that doesn't mean I'm interested in you. Plus I'm";
 						mes "already engaged.";
 					} else

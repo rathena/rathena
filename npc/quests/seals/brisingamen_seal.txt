@@ -593,7 +593,7 @@ prt_fild08,175,374,3	script	Bard#brising	51,{
 		mes "do you not?";
 		next;
 		mes "[Nelliorde]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Hahahaha, forgive my rudeness,";
 			mes "but I fail to remember your name, although your face does seem rather familiar.";
 		}
@@ -2301,7 +2301,7 @@ prt_castle,84,51,5	script	Librarian#2	105,{
 		next;
 		switch(select("Lowen, Sibling:Lowen, Spouse:Lowen, Enemy:Lowen, a Friend")) {
 		case 1:
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "[Librarian]";
 				mes "How dare you";
 				mes "lie to the royal";
@@ -2348,7 +2348,7 @@ prt_castle,84,51,5	script	Librarian#2	105,{
 				close;
 			}
 		case 2:
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "[Librarian]";
 				mes "Spouse...?";
 				mes "Well, I guess you look like a husband. Heh, I've got a girlfriend myself. Well, at least I think so. Anyway...";

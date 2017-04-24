@@ -20,7 +20,7 @@ glast_01,195,273,4	script	Hugin's Follower#n_gh	123,{
 	next;
 	if( select( "I don't care:That is interesting, please tell me more" ) == 2 ){
 		mes "[Hugin's Follower]";
-		mes "Thanks to Hugin, I found the way to access this Old Glast Heim, which is imbued by such powerful dark forces."
+		mes "Thanks to Hugin, I found the way to access this Old Glast Heim, which is imbued by such powerful dark forces.";
 		next;
 		mes "[Hugin's Follower]";
 		mes "What do you say? Do you want to explore there?";

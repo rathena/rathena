@@ -10,24 +10,28 @@ environment:
   matrix:
   - VisualStudioVersion: 10.0
     Solution: rAthena-10.sln
+    Defines: "\"BUILDBOT\""
   - VisualStudioVersion: 11.0
     Solution: rAthena-12.sln
+    Defines: "\"BUILDBOT\""
   - VisualStudioVersion: 12.0
     Solution: rAthena-13.sln
+    Defines: "\"BUILDBOT\""
   - VisualStudioVersion: 14.0
     Solution: rAthena-14.sln
+    Defines: "\"BUILDBOT\""
   - VisualStudioVersion: 10.0
     Solution: rAthena-10.sln
-    Defines: PRERE
+    Defines: "\"BUILDBOT;PRERE\""
   - VisualStudioVersion: 11.0
     Solution: rAthena-12.sln
-    Defines: PRERE
+    Defines: "\"BUILDBOT;PRERE\""
   - VisualStudioVersion: 12.0
     Solution: rAthena-13.sln
-    Defines: PRERE
+    Defines: "\"BUILDBOT;PRERE\""
   - VisualStudioVersion: 14.0
     Solution: rAthena-14.sln
-    Defines: PRERE
+    Defines: "\"BUILDBOT;PRERE\""
 platform:
   - Win32
 configuration:

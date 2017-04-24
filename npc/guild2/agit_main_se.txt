@@ -1517,15 +1517,18 @@ OnTimer300000:
 //============================================================
 -	script	RL#template	-1,{
 OnEnable:
-	set .@num, atoi(charat(strnpcinfo(1),2));
+	.@npc_name$ = strnpcinfo(0);
+	.@npc_visible$ = strnpcinfo(1);
+	.@npc_hidden$ = strnpcinfo(2);
+	set .@num, atoi(charat(.@npc_visible$,2));
 	if (.@num == 0) {
-		if (compare(strnpcinfo(2),"arug")) {
-			if (strnpcinfo(2) == "arug_cas01") {
+		if (compare(.@npc_hidden$,"arug")) {
+			if (.@npc_hidden$ == "arug_cas01") {
 				setarray .@wall[0],238,74,8,6,0;
 				setarray .@x[0],239,241,243,245;
 				setarray .@y[0], 73, 73, 73, 73;
 			}
-			else if (strnpcinfo(2) == "arug_cas02") {
+			else if (.@npc_hidden$ == "arug_cas02") {
 				setarray .@wall[0],136,136,8,6,0;
 				setarray .@x[0],137,139,141,143;
 				setarray .@y[0],137,137,137,137;
@@ -1537,12 +1540,12 @@ OnEnable:
 			}
 		}
 		else {
-			if (strnpcinfo(2) == "schg_cas02") {
+			if (.@npc_hidden$ == "schg_cas02") {
 				setarray .@wall[0],290,98,8,0,0;
 				setarray .@x[0],289,289,289,289;
 				setarray .@y[0], 98,100,102,104;
 			}
-			else if (strnpcinfo(2) == "schg_cas03") {
+			else if (.@npc_hidden$ == "schg_cas03") {
 				setarray .@wall[0],326,301,6,6,0;
 				setarray .@x[0],326,328,330;
 				setarray .@y[0],300,300,300;
@@ -1555,13 +1558,13 @@ OnEnable:
 		}
 	}
 	else if (.@num == 1) {
-		if (compare(strnpcinfo(2),"arug")) {
-			if (strnpcinfo(2) == "arug_cas01") {
+		if (compare(.@npc_hidden$,"arug")) {
+			if (.@npc_hidden$ == "arug_cas01") {
 				setarray .@wall[0],239,53,8,6,1;
 				setarray .@x[0],239,241,243,240,242,244;
 				setarray .@y[0], 55, 55, 55, 54, 54, 54;
 			}
-			else if (strnpcinfo(2) == "arug_cas02") {
+			else if (.@npc_hidden$ == "arug_cas02") {
 				setarray .@wall[0],150,223,12,6,1;
 				setarray .@x[0],151,153,155,157,159,161;
 				setarray .@y[0],222,222,222,222,222,222;
@@ -1573,12 +1576,12 @@ OnEnable:
 			}
 		}
 		else {
-			if (strnpcinfo(2) == "schg_cas02") {
+			if (.@npc_hidden$ == "schg_cas02") {
 				setarray .@wall[0],279,98,8,0,1;
 				setarray .@x[0],280,280,280,281,281,281;
 				setarray .@y[0], 98,100,102, 99,101,103;
 			}
-			else if (strnpcinfo(2) == "schg_cas03") {
+			else if (.@npc_hidden$ == "schg_cas03") {
 				setarray .@wall[0],325,277,8,6,1;
 				setarray .@x[0],326,328,330,327,329,331;
 				setarray .@y[0],278,278,278,279,279,279;
@@ -1591,13 +1594,13 @@ OnEnable:
 		}
 	}
 	else if (.@num == 2) {
-		if (compare(strnpcinfo(2),"arug")) {
-			if (strnpcinfo(2) == "arug_cas01") {
+		if (compare(.@npc_hidden$,"arug")) {
+			if (.@npc_hidden$ == "arug_cas01") {
 				setarray .@wall[0],107,124,6,6,1;
 				setarray .@x[0],107,109,111,108,110,112;
 				setarray .@y[0],122,122,122,123,123,123;
 			}
-			else if (strnpcinfo(2) == "arug_cas02") {
+			else if (.@npc_hidden$ == "arug_cas02") {
 				setarray .@wall[0],125,342,8,0,1;
 				setarray .@x[0],126,126,126,127,127,127;
 				setarray .@y[0],343,345,347,344,346,348;
@@ -1609,12 +1612,12 @@ OnEnable:
 			}
 		}
 		else {
-			if (strnpcinfo(2) == "schg_cas02") {
+			if (.@npc_hidden$ == "schg_cas02") {
 				setarray .@wall[0],230,213,6,0,1;
 				setarray .@x[0],231,231,231,232,232,232;
 				setarray .@y[0],213,215,217,213,215,217;
 			}
-			else if (strnpcinfo(2) == "schg_cas03") {
+			else if (.@npc_hidden$ == "schg_cas03") {
 				setarray .@wall[0],200,230,8,0,1;
 				setarray .@x[0],201,201,201,202,202,202;
 				setarray .@y[0],231,233,235,232,234,236;
@@ -1627,13 +1630,13 @@ OnEnable:
 		}
 	}
 	else {
-		if (compare(strnpcinfo(2),"arug")) {
-			if (strnpcinfo(2) == "arug_cas01") {
+		if (compare(.@npc_hidden$,"arug")) {
+			if (.@npc_hidden$ == "arug_cas01") {
 				setarray .@wall[0],84,171,8,6,1;
 				setarray .@x[0], 84, 86, 88, 90;
 				setarray .@y[0],170,170,170,170;
 			}
-			else if (strnpcinfo(2) == "arug_cas02") {
+			else if (.@npc_hidden$ == "arug_cas02") {
 				setarray .@wall[0],38,314,12,6,1;
 				setarray .@x[0], 40, 42, 44, 46;
 				setarray .@y[0],315,315,315,315;
@@ -1645,12 +1648,12 @@ OnEnable:
 			}
 		}
 		else {
-			if (strnpcinfo(2) == "schg_cas02") {
+			if (.@npc_hidden$ == "schg_cas02") {
 				setarray .@wall[0],160,141,6,6,1;
 				setarray .@x[0],160,162,164,166;
 				setarray .@y[0],140,140,140,140;
 			}
-			else if (strnpcinfo(2) == "schg_cas03") {
+			else if (.@npc_hidden$ == "schg_cas03") {
 				setarray .@wall[0],285,198,8,0,1;
 				setarray .@x[0],284,284,284,284;
 				setarray .@y[0],199,201,203,205;
@@ -1662,12 +1665,25 @@ OnEnable:
 			}
 		}
 	}
-	if (.@num == 3) set getd(".MyMobCount_"+.@num+strnpcinfo(2)),4;
-	else if (.@num) set getd(".MyMobCount_"+.@num+strnpcinfo(2)),6;
-	setwall strnpcinfo(2),.@wall[0],.@wall[1],.@wall[2],.@wall[3],.@wall[4],substr(strnpcinfo(2),0,1)+substr(strnpcinfo(2),8,9)+"_"+strnpcinfo(1);
-	set .@j,(getd(".MyMobCount_"+.@num+strnpcinfo(2)))?getd(".MyMobCount_"+.@num+strnpcinfo(2)):getarraysize(.@x);
-	for(set .@i,0; .@i<.@j; set .@i,.@i+1)
-		guardian strnpcinfo(2),.@x[.@i],.@y[.@i]," ",1905,strnpcinfo(0)+"::OnBarrierDestroyed";
+	setwall .@npc_hidden$,.@wall[0],.@wall[1],.@wall[2],.@wall[3],.@wall[4],substr(.@npc_hidden$,0,1)+substr(.@npc_hidden$,8,9)+"_"+.@npc_visible$;
+	switch(.@num) {
+	case 0:
+		killmonster .@npc_hidden$, .@npc_name$ + "::OnBarrierDestroyed";
+		.@j = getarraysize(.@x);
+		for ( .@i = 0; .@i < .@j; ++.@i ) {
+			.@unit_id = guardian( .@npc_hidden$,.@x[.@i],.@y[.@i]," ",1905, .@npc_name$ + "::OnBarrierDestroyed" );
+			setunitdata .@unit_id,UMOB_DMGIMMUNE,1; // The 1st barricades are immunes to damage until both Guardian Stones are destroyed
+		}
+		end;
+	case 3:
+		setd ".MyMobCount_" + .@num + .@npc_hidden$, 4;
+		break;
+	default:
+		setd ".MyMobCount_" + .@num + .@npc_hidden$, 6;
+		break;
+	}
+	for ( .@i = 0; .@i < getd( ".MyMobCount_" + .@num + .@npc_hidden$ ); ++.@i )
+		guardian .@npc_hidden$,.@x[.@i],.@y[.@i]," ",1905, .@npc_name$ + "::OnBarrierDestroyed";
 	end;
 
 OnBarrierDestroyed:

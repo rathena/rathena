@@ -187,7 +187,7 @@ IG_Pet_Egg_Scroll_Box3,12932,0,1,0,0,0,1	// 1x Pet_Egg_Scroll3
 
 IG_Pet_Egg_Scroll_Box4,12933,0,1,0,0,0,1	// 1x Pet_Egg_Scroll4
 
-IG_Pet_Egg_Scroll_Box4,12934,0,1,0,0,0,1	// 1x Pet_Egg_Scroll5
+IG_Pet_Egg_Scroll_Box5,12934,0,1,0,0,0,1	// 1x Pet_Egg_Scroll5
 
 IG_Pet_Egg_Scroll3,12208,100,2,1,0,0,1	// 2x Battle_Manual
 IG_Pet_Egg_Scroll3,12209,200,2,1,0,0,1	// 2x Insurance
@@ -791,6 +791,24 @@ IG_Mysterious_Travel_Sack3,13747,100,1,1,0,0,1	// 1x S_Def_Potion_Box30
 IG_Mysterious_Travel_Sack3,13753,80,1,1,0,0,1	// 1x S_Mdef_Potion_Box30
 IG_Mysterious_Travel_Sack3,13710,80,1,1,0,0,1	// 1x Max_Weight_Up_Box
 IG_Mysterious_Travel_Sack3,13720,100,1,1,0,0,1	// 1x Regeneration_Box10
+
+IG_Mysterious_Travel_Sack4,5140,1,1,1,0,0,1		// 1x Charming_Ribbon
+IG_Mysterious_Travel_Sack4,5187,2,1,1,0,0,1		// 1x Twin_Ribbon
+IG_Mysterious_Travel_Sack4,5194,2,1,1,0,0,1		// 1x Ribbon_Pink
+IG_Mysterious_Travel_Sack4,5196,2,1,1,0,0,1		// 1x Ribbon_Orange
+IG_Mysterious_Travel_Sack4,5197,2,1,1,0,0,1		// 1x Ribbon_White
+IG_Mysterious_Travel_Sack4,5288,1,1,1,0,0,1		// 1x Red_Glasses
+IG_Mysterious_Travel_Sack4,5801,2,1,1,0,0,1		// 1x Ribbon_Of_Bride
+IG_Mysterious_Travel_Sack4,13553,5,1,1,0,0,1	// 1x Dun_Tele_Scroll1_Box
+IG_Mysterious_Travel_Sack4,13710,80,1,1,0,0,1	// 1x Max_Weight_Up_Box
+IG_Mysterious_Travel_Sack4,13712,203,1,1,0,0,1	// 1x Small_Life_Potion_Box30
+IG_Mysterious_Travel_Sack4,13715,203,1,1,0,0,1	// 1x Med_Life_Potion_Box30
+IG_Mysterious_Travel_Sack4,13720,203,1,1,0,0,1	// 1x Regeneration_Box10
+IG_Mysterious_Travel_Sack4,13741,5,1,1,0,0,1	// 1x Shadow_Armor_S_Box10
+IG_Mysterious_Travel_Sack4,13744,5,1,1,0,0,1	// 1x Holy_Armor_S_Box10
+IG_Mysterious_Travel_Sack4,13747,203,1,1,0,0,1	// 1x S_Def_Potion_Box30
+IG_Mysterious_Travel_Sack4,13753,80,1,1,0,0,1	// 1x S_Mdef_Potion_Box30
+IG_Mysterious_Travel_Sack4,14527,1,1,1,0,0,1	// 1x Dun_Tele_Scroll1
 
 IG_Magician_Card_Box,4327,0,1,0,0,0,1	// 1x Blood_Butterfly_Card
 IG_Magician_Card_Box,4309,0,1,0,0,0,1	// 1x Parasite_Card
@@ -4344,3 +4362,82 @@ IG_Mystical_Costume_Scroll,19615,1,1,1,0 // 1x C_Loki_Mask
 IG_Mystical_Costume_Scroll,20216,1,1,1,0 // 1x C_Rideword_Hat
 IG_Mystical_Costume_Scroll,20213,1,1,1,0 // 1x C_Sirt_Evil_Eye
 IG_Mystical_Costume_Scroll,20218,1,1,1,0 // 1x C_Spell_Circuit
+
+IG_Ink_Ball,603,66,1 // 1x Old Blue Box
+IG_Ink_Ball,616,66,1 // 1x Old Card Album
+IG_Ink_Ball,617,66,1 // 1x Old Purple Box
+IG_Ink_Ball,644,1333,1 // 1x Gift Box
+IG_Ink_Ball,717,666,1 // 1x Blue Gemstone
+IG_Ink_Ball,909,2666,1 // 1x Jellopy
+IG_Ink_Ball,991,1333,1 // 1x Crystal Blue
+IG_Ink_Ball,7126,1333,1 // 1x Large Jellopy
+IG_Ink_Ball,7444,399,1 // 1x Treasure Box
+IG_Ink_Ball,12106,66,1 // 1x Jewelry Box
+IG_Ink_Ball,12107,66,1 // 1x Wrapped Mask
+IG_Ink_Ball,12110,333,1 // 1x First Aid Kit
+IG_Ink_Ball,12111,666,1 // 1x Bundle of Food
+IG_Ink_Ball,12194,933,1 // 1x Hometown Gift
+
+IG_Something_Candy_Holder,517,5,5 // 5x Meat
+IG_Something_Candy_Holder,518,9,3 // 3x Honey
+IG_Something_Candy_Holder,529,9,7 // 7x Candy
+IG_Something_Candy_Holder,538,10,2 // 2x Well-baked Cookie
+IG_Something_Candy_Holder,539,10,1 // 1x Piece of Cake
+IG_Something_Candy_Holder,580,5,3 // 3x Bread
+IG_Something_Candy_Holder,603,2,1 // 1x Old Blue Box
+IG_Something_Candy_Holder,607,2,1 // 1x Yggdrasilberry
+IG_Something_Candy_Holder,616,1,1 // 1x Old Card Album
+IG_Something_Candy_Holder,617,1,1 // 1x Old Purple Box
+IG_Something_Candy_Holder,11550,7,1 // 1x Pumpkin Cake
+IG_Something_Candy_Holder,11592,6,3 // 3x Trans Candy Red
+IG_Something_Candy_Holder,11593,6,3 // 3x Trans Candy Blue
+IG_Something_Candy_Holder,11594,6,3 // 3x Trans Candy Yellow
+IG_Something_Candy_Holder,11595,6,3 // 3x Trans Candy Green
+IG_Something_Candy_Holder,12192,7,3 // 3x Pumpkin Pie
+IG_Something_Candy_Holder,20183,1,1 // 1x Costume: Floating Ghost
+IG_Something_Candy_Holder,22067,1,1 // 1x Witch Shoes
+IG_Something_Candy_Holder,22669,5,1 // 1x October Spooky Trade Box
+IG_Something_Candy_Holder,22670,1,1 // 1x DARK INVITATION
+
+//! TODO: Confirm the rates
+IG_Shining_Egg,4302,1,1,1,1 // 1x Tao_Gunka_Card
+IG_Shining_Egg,5374,1,1,1,1 // 1x L_Magestic_Goat
+IG_Shining_Egg,5254,1,1,1,1 // 1x Deviling_Hat
+IG_Shining_Egg,5474,1,1,1,1 // 1x Notice_Board
+IG_Shining_Egg,2554,1,1,1,1 // 1x Piece_Of_Angent_Skin
+IG_Shining_Egg,6438,1,1,1,0 // 1x Blessed_Weapon_Ore
+IG_Shining_Egg,6439,1,1,1,0 // 1x Blessed_Armor_Ore
+IG_Shining_Egg,12246,1,1,1,0 // 1x Magic_Card_Album
+IG_Shining_Egg,12909,1,1,1,0 // 1x Kafra_Card_Box
+IG_Shining_Egg,12922,1,1,1,0 // 1x Token_Of_Siegfried_Box
+IG_Shining_Egg,14159,1,1,1,0 // 1x F_Str_Dish_Box
+IG_Shining_Egg,14232,1,1,1,0 // 1x Yggdrasilberry_Box_
+IG_Shining_Egg,12910,1,1,1,0 // 1x Giant_Fly_Wing_Box
+IG_Shining_Egg,12361,1,1,1,0 // 1x Delicious_Shaved_Ice
+IG_Shining_Egg,12259,1,1,1,0 // 1x Miracle_Medicine
+IG_Shining_Egg,17001,1,1,1,0 // 1x Wander_Man_Box10
+
+//! TODO: Confirm the rates
+IG_Shining_Blue_Lucky_Egg,4365,1,1,1,1 // 1x B_Katrinn_Card
+IG_Shining_Blue_Lucky_Egg,4534,1,1,1,1 // 1x Giant_Octopus_Card
+IG_Shining_Blue_Lucky_Egg,4525,1,1,1,1 // 1x Kraken_Card
+IG_Shining_Blue_Lucky_Egg,4493,1,1,1,1 // 1x Sealed_Tao_Card
+IG_Shining_Blue_Lucky_Egg,6239,1,1,1,1 // 1x Guarantee_Armor_11Up
+IG_Shining_Blue_Lucky_Egg,6238,1,1,1,1 // 1x Guarantee_Weapon_11Up
+IG_Shining_Blue_Lucky_Egg,6232,1,1,1,1 // 1x Guarantee_Armor_9Up
+IG_Shining_Blue_Lucky_Egg,6228,1,1,1,1 // 1x Guarantee_Weapon_9Up
+IG_Shining_Blue_Lucky_Egg,22106,1,1,1,1 // 1x Giant_Boots
+IG_Shining_Blue_Lucky_Egg,19139,1,1,1,1 // 1x Survive_Orb
+IG_Shining_Blue_Lucky_Egg,20815,1,1,1,1 // 1x Seraphim_Robe
+IG_Shining_Blue_Lucky_Egg,19140,1,1,1,1 // 1x Squirrel_Ear_Hat
+IG_Shining_Blue_Lucky_Egg,6233,1,1,1,1 // 1x Guarantee_Armor_8Up
+IG_Shining_Blue_Lucky_Egg,6229,1,1,1,1 // 1x Guarantee_Weapon_8Up
+IG_Shining_Blue_Lucky_Egg,6438,1,3,1,0 // 3x Blessed_Weapon_Ore
+IG_Shining_Blue_Lucky_Egg,6439,1,3,1,0 // 3x Blessed_Armor_Ore
+IG_Shining_Blue_Lucky_Egg,17315,1,1,1,0 // 1x Lucky Silvervine Fruit Box(10)
+IG_Shining_Blue_Lucky_Egg,14620,1,20,1,0 // 20x DEX Biscuit Stick
+IG_Shining_Blue_Lucky_Egg,14621,1,20,1,0 // 20x LUK Biscuit Stick
+IG_Shining_Blue_Lucky_Egg,14616,1,20,1,0 // 20x STR Biscuit Stick
+IG_Shining_Blue_Lucky_Egg,14617,1,20,1,0 // 20x VIT Biscuit Stick
+IG_Shining_Blue_Lucky_Egg,14619,1,20,1,0 // 20x INT Biscuit Stick
+IG_Shining_Blue_Lucky_Egg,14618,1,20,1,0 // 20x AGI Biscuit Stick

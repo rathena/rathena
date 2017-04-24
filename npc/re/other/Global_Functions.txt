@@ -1,0 +1,27 @@
+//============================================================ 
+//===== rAthena Script =======================================
+//= Global Functions
+//===== Description: =========================================
+//= General script functions.
+//===== Changelogs: ==========================================
+//= 1.0 WoeTETimeStart(X) function check if the woe
+//	will start in X seconds or less. [Capuche]
+//============================================================
+
+// WoeTETimeStart(<seconds>) : return true if the woe te will start in X seconds or less, false otherwise
+function	script	WoeTETimeStart	{
+	.@woe_status = agitcheck3();
+	.@min_today  = gettime(DT_MINUTE);
+	.@hour_today = gettime(DT_HOUR);
+	.@day_today  = gettime(DT_DAYOFWEEK);
+
+	if (getvariableofnpc( getd( ".day_"+ .@day_today ),"woe_TE_contoller" )) {
+		.@h = getvariableofnpc( getd( ".hour_start_"+ .@hour_today ),"woe_TE_contoller" );
+		if (.@h > .@hour_today) {
+			.@time = (60 - .@min_today) *60 + ( .@h - .@hour_today -1 ) *3600;
+			if (.@time <= getarg(0))
+				return true;
+		}
+	}
+	return false;
+}

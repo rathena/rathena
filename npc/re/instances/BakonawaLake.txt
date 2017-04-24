@@ -75,19 +75,19 @@ ma_scene01,174,179,4	script	Taho	541,{
 			close;
 		case 2:
 			switch(instance_enter(.@md_name$)) {
-			case 3:
+			case IE_OTHER:
 				mes "[Taho]";
 				mes "An unknown error occurred.";
 				close;
-			case 2:
+			case IE_NOINSTANCE:
 				mes "[Taho]";
 				mes "The rope hasn't been weaved yet. Wait a little.";
 				close;
-			case 1:
+			case IE_NOMEMBER:
 				mes "[Taho]";
 				mes "Civilians cannot enter.";
 				close;
-			case 0:
+			case IE_OK:
 				mapannounce "ma_scene01","A party member, "+strcharinfo(0)+" of the party "+getpartyname(.@party_id)+" is entering the dungeon, "+.@md_name$+".",bc_map,"0x00ff99"; //FW_NORMAL 12 0 0
 				setquest 12278;
 				//warp "1@ma_b",64,51;

@@ -46,7 +46,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 	if(BaseClass == Job_Swordman && (eaclass()&(EAJL_2|EAJL_UPPER|EAJL_THIRD))){
 		mes "From your raiment,";
 		mes "I see that you are";
-		if(Sex)
+		if(Sex == SEX_MALE)
 			mes "a man of the sword.";
 		else
 			mes "a woman of the sword.";

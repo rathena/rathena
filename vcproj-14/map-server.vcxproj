@@ -53,7 +53,7 @@
     <ClCompile>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\3rdparty\mysql\include;..\3rdparty\zlib\include;..\3rdparty\pcre\include;..\3rdparty\msinttypes\include;..\3rdparty\mt19937ar;..\3rdparty\libconfig;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_WIN32;__WIN32;_DEBUG;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;LIBCONFIG_STATIC;YY_USE_CONST;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(DefineConstants);WIN32;_WIN32;__WIN32;_DEBUG;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;FD_SETSIZE=4096;LIBCONFIG_STATIC;YY_USE_CONST;_WINSOCK_DEPRECATED_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessToFile>false</PreprocessToFile>
       <PreprocessSuppressLineNumbers>false</PreprocessSuppressLineNumbers>
       <ExceptionHandling>
@@ -170,6 +170,7 @@
     <ClInclude Include="..\src\map\channel.h" />
     <ClInclude Include="..\src\map\chat.h" />
     <ClInclude Include="..\src\map\chrif.h" />
+    <ClInclude Include="..\src\map\clan.h" />
     <ClInclude Include="..\src\map\clif.h" />
     <ClInclude Include="..\src\map\date.h" />
     <ClInclude Include="..\src\map\duel.h" />
@@ -198,7 +199,7 @@
     <ClInclude Include="..\src\config\secure.h" />
     <ClInclude Include="..\src\config\classes\general.h" />
     <ClInclude Include="..\src\map\script.h" />
-	<ClInclude Include="..\src\map\script_constants.h" />
+    <ClInclude Include="..\src\map\script_constants.h" />
     <ClInclude Include="..\src\map\searchstore.h" />
     <ClInclude Include="..\src\map\skill.h" />
     <ClInclude Include="..\src\map\status.h" />
@@ -245,6 +246,7 @@
     <ClCompile Include="..\src\map\channel.c" />
     <ClCompile Include="..\src\map\chat.c" />
     <ClCompile Include="..\src\map\chrif.c" />
+    <ClCompile Include="..\src\map\clan.c" />
     <ClCompile Include="..\src\map\clif.c" />
     <ClCompile Include="..\src\map\date.c" />
     <ClCompile Include="..\src\map\duel.c" />
@@ -284,6 +286,7 @@
     <Copy SourceFiles="..\conf\import-tmpl\battle_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\battle_conf.txt')" />
     <Copy SourceFiles="..\conf\import-tmpl\char_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\char_conf.txt')" />
     <Copy SourceFiles="..\conf\import-tmpl\inter_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\inter_conf.txt')" />
+    <Copy SourceFiles="..\conf\import-tmpl\inter_server.conf" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\inter_server.conf')" />
     <Copy SourceFiles="..\conf\import-tmpl\log_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\log_conf.txt')" />
     <Copy SourceFiles="..\conf\import-tmpl\login_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\login_conf.txt')" />
     <Copy SourceFiles="..\conf\import-tmpl\map_conf.txt" DestinationFolder="..\conf\import\" ContinueOnError="true" Condition="!Exists('..\conf\import\map_conf.txt')" />

@@ -276,9 +276,11 @@ bonus bIgnoreDefRace,r; 		Disregard DEF against enemies of race r
 bonus2 bIgnoreDefRaceRate,r,n;  	Disregard n% of the target's DEF if the target belongs to race r
 bonus bIgnoreDefClass,c;		Disregard DEF against enemies of class c
 bonus bIgnoreMDefRace,r;		Disregard MDEF against enemies of race r
+bonus2 bIgnoreDefRaceRate,r,n; 	Disregard n% of the target's DEF if the target belongs to race r
 bonus2 bIgnoreMdefRaceRate,r,n; 	Disregard n% of the target's MDEF if the target belongs to race r
 bonus2 bIgnoreMdefRace2Rate,mr,n; 	Disregard n% of the target's MDEF if the target belongs to monster race mr
 bonus bIgnoreMDefEle,e; 		Disregard MDEF against enemies of element e
+bonus2 bIgnoreDefClassRate,c,n;	Disregard n% of the target's DEF if the target belongs to class c
 bonus2 bIgnoreMdefClassRate,c,n;	Disregard n% of the target's MDEF if the target belongs to class c
 
 Experience
@@ -329,7 +331,8 @@ bonus2 bWeaponComaRace,r,n; 		Adds a n/100% chance to cause Coma when attacking 
 | 5. AutoSpell Bonuses |
 ========================
 NOTES:
-  - For all AutoSpell bonuses, target must be within the spell's range to go off.
+  - For all AutoSpell bonuses, target does not have be within the spell's range to go off.
+  -- Enable conf/battle/battle.conf::autospell_check_range to force a range check.
   - By default, AutoSpell skills are casted on target unless it is a self or support skill (inf = 4/16).
 
 bonus3 bAutoSpell,sk,y,n;       	Adds a n/10% chance to cast skill sk of level y when attacking
