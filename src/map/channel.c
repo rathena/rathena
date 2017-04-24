@@ -219,7 +219,7 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
 		sd->stealth = false;
 	} else if( channel->opt & CHAN_OPT_ANNOUNCE_JOIN ) {
 		char output[CHAT_SIZE_MAX];
-		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,768), channel->alias, sd->status.name); // %s %s has joined.
+		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,761), channel->alias, sd->status.name); // %s %s has joined.
 		clif_channel_msg(channel,output,channel->color);
 	}
 
