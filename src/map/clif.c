@@ -11785,7 +11785,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
 
 	if( !hd )
 		return;
-	if( skill_isNotOk_hom(skill_id, hd) ) {
+	if( skill_isNotOk_hom(hd, skill_id, skill_lv) ) {
 		clif_emotion(&hd->bl, E_DOTS);
 		return;
 	}
@@ -11812,7 +11812,7 @@ static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, struct map_ses
 	int lv;
 	if( !hd )
 		return;
-	if( skill_isNotOk_hom(skill_id, hd) ) {
+	if( skill_isNotOk_hom(hd, skill_id, skill_lv) ) {
 		clif_emotion(&hd->bl, E_DOTS);
 		return;
 	}
