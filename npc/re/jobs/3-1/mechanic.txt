@@ -76,7 +76,7 @@ yuno,129,156,3	script	Chainheart	923,{
 			next;
 			set job__mechanic,12;
 			completequest 10101;
-			if (Sex)
+			if (Sex == SEX_MALE)
 				getitem 5749,1; //Driver_Band
 			else
 				getitem 5760,1; //Driver_Band_
@@ -583,7 +583,7 @@ jupe_core2,242,62,3	script	Ghostfire#3	802,{
 }
 
 jupe_core2,29,150,0	script	#Foothold	139,1,1,{
-OnTouch:
+OnTouch_:
 	if (job__mechanic == 8) {
 		percentheal 0,-30;
 		mes "-Suddenly I feel power is-";
@@ -622,7 +622,7 @@ OnTouch:
 }
 
 jupe_core2,272,149,0	script	#Foothold2	139,1,1,{
-OnTouch:
+OnTouch_:
 	if (job__mechanic == 9) {
 		mes "-I had a feeling that power-";
 		mes "-has been draining out,-";
@@ -670,7 +670,7 @@ OnEnable:
 OnTimer180000:
 	donpcevent "#Door::OnDisable";
 	end;
-OnTouch:
+OnTouch_:
 	mes "-Once again a voice rings out-";
 	mes "-in my head. This time it is-";
 	mes "-different than before, it is a-";
@@ -711,7 +711,7 @@ OnTouch:
 }
 
 jupe_core2,149,34,0	script	#Acquiring Knowledge	139,1,0,{
-OnTouch:
+OnTouch_:
 	if (job__mechanic == 9) {
 		mes "-The moment I stepped on-";
 		mes "-the foothold the voice-";
@@ -737,4 +737,4 @@ OnTouch:
 }
 jupe_core2,150,33,0	duplicate(#Acquiring Knowledge)	#Acquiring Knowledge2	139,1,0
 
-jupe_core2,0,0,0,0	monster	Dimik	1669,100,0,0,0
+jupe_core2,0,0	monster	Dimik	1669,100

@@ -11,6 +11,7 @@
 // Group ID Override:
 //	Group ID necessary to override this setting.
 
+606,1,100	// Aloebera
 619,1,100	// Unripe_Apple
 620,1,100	// Orange_Juice
 621,1,100	// Bitter_Herb

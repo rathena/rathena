@@ -152,7 +152,7 @@ int chclif_parse_pincode_check( int fd, struct char_session_data* sd ){
 		return 1;
 
 	memset(pin,0,PINCODE_LENGTH+1);
-	strncpy((char*)pin, (char*)RFIFOP(fd, 6), PINCODE_LENGTH);
+	strncpy((char*)pin, RFIFOCP(fd, 6), PINCODE_LENGTH);
 	RFIFOSKIP(fd,10);
 
 	char_pincode_decrypt(sd->pincode_seed, pin );
@@ -246,8 +246,8 @@ int chclif_parse_pincode_change( int fd, struct char_session_data* sd ){
 		
 		memset(oldpin,0,PINCODE_LENGTH+1);
 		memset(newpin,0,PINCODE_LENGTH+1);
-		strncpy(oldpin, (char*)RFIFOP(fd,6), PINCODE_LENGTH);
-		strncpy(newpin, (char*)RFIFOP(fd,10), PINCODE_LENGTH);
+		strncpy(oldpin, RFIFOCP(fd,6), PINCODE_LENGTH);
+		strncpy(newpin, RFIFOCP(fd,10), PINCODE_LENGTH);
 		RFIFOSKIP(fd,14);
 		
 		char_pincode_decrypt(sd->pincode_seed,oldpin);
@@ -280,7 +280,7 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 	else {
 		char newpin[PINCODE_LENGTH+1];
 		memset(newpin,0,PINCODE_LENGTH+1);
-		strncpy( newpin, (char*)RFIFOP(fd,6), PINCODE_LENGTH );
+		strncpy( newpin, RFIFOCP(fd,6), PINCODE_LENGTH );
 		RFIFOSKIP(fd,10);
 
 		char_pincode_decrypt( sd->pincode_seed, newpin );
@@ -336,8 +336,8 @@ int chclif_mmo_send006b(int fd, struct char_session_data* sd){
 	WFIFOW(fd,0) = 0x6b;
 	if(newvers){ //20100413
 		WFIFOB(fd,4) = MAX_CHARS; // Max slots.
-		WFIFOB(fd,5) = sd->char_slots; // Available slots. (PremiumStartSlot)
-		WFIFOB(fd,6) = MAX_CHARS; // Premium slots. (Any existent chars past sd->char_slots but within MAX_CHARS will show a 'Premium Service' in red)
+		WFIFOB(fd,5) = MIN_CHARS; // Available slots. (PremiumStartSlot)
+		WFIFOB(fd,6) = MIN_CHARS+sd->chars_vip; // Premium slots. (Any existent chars past sd->char_slots but within MAX_CHARS will show a 'Premium Service' in red)
 	}
 	memset(WFIFOP(fd,4 + offset), 0, 20); // unknown bytes
 	j+=char_mmo_chars_fromsql(sd, WFIFOP(fd,j));
@@ -356,11 +356,11 @@ void chclif_mmo_send082d(int fd, struct char_session_data* sd) {
 	WFIFOHEAD(fd,29);
 	WFIFOW(fd,0) = 0x82d;
 	WFIFOW(fd,2) = 29;
-	WFIFOB(fd,4) = sd->char_slots;
-	WFIFOB(fd,5) = MAX_CHARS - sd->char_slots;
-	WFIFOB(fd,6) = MAX_CHARS - sd->char_slots;
-	WFIFOB(fd,7) = sd->char_slots;
-	WFIFOB(fd,8) = sd->char_slots;
+	WFIFOB(fd,4) = MIN_CHARS; // normal_slot
+	WFIFOB(fd,5) = sd->chars_vip; // premium_slot
+	WFIFOB(fd,6) = sd->chars_billing; // billing_slot
+	WFIFOB(fd,7) = sd->char_slots; // producible_slot
+	WFIFOB(fd,8) = MAX_CHARS; // valid_slot
 	memset(WFIFOP(fd,9), 0, 20); // unused bytes
 	WFIFOSET(fd,29);
 }
@@ -417,7 +417,11 @@ void chclif_char_delete2_ack(int fd, uint32 char_id, uint32 result, time_t delet
 	WFIFOW(fd,0) = 0x828;
 	WFIFOL(fd,2) = char_id;
 	WFIFOL(fd,6) = result;
+#if PACKETVER_CHAR_DELETEDATE
 	WFIFOL(fd,10) = TOL(delete_date-time(NULL));
+#else
+	WFIFOL(fd,10) = TOL(delete_date);
+#endif
 	WFIFOSET(fd,14);
 }
 
@@ -464,7 +468,7 @@ void chclif_char_delete2_cancel_ack(int fd, uint32 char_id, uint32 result) {
 int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(6)
 	{
-		uint32 char_id, i;
+		uint32 char_id, i, guild_id, party_id;
 		char* data;
 		time_t delete_date;
 
@@ -478,7 +482,7 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 			return 1;
 		}
 
-		if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `delete_date` FROM `%s` WHERE `char_id`='%d'", schema_config.char_db, char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
+		if( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `delete_date`,`party_id`,`guild_id` FROM `%s` WHERE `char_id`='%d'", schema_config.char_db, char_id) || SQL_SUCCESS != Sql_NextRow(sql_handle) )
 		{
 			Sql_ShowDebug(sql_handle);
 			chclif_char_delete2_ack(fd, char_id, 3, 0);
@@ -486,28 +490,26 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 		}
 
 		Sql_GetData(sql_handle, 0, &data, NULL); delete_date = strtoul(data, NULL, 10);
+		Sql_GetData(sql_handle, 1, &data, NULL); party_id    = strtoul(data, NULL, 10);
+		Sql_GetData(sql_handle, 2, &data, NULL); guild_id    = strtoul(data, NULL, 10);
 
 		if( delete_date ) {// character already queued for deletion
 			chclif_char_delete2_ack(fd, char_id, 0, 0);
 			return 1;
 		}
 
-	/*
-		// Aegis imposes these checks probably to avoid dead member
-		// entries in guilds/parties, otherwise they are not required.
-		// TODO: Figure out how these are enforced during waiting.
-		if( guild_id )
-		{// character in guild
+		if (charserv_config.char_config.char_del_restriction&CHAR_DEL_RESTRICT_GUILD && guild_id) // character is in guild
+		{
 			chclif_char_delete2_ack(fd, char_id, 4, 0);
 			return 1;
 		}
 
-		if( party_id )
-		{// character in party
+		if (charserv_config.char_config.char_del_restriction&CHAR_DEL_RESTRICT_PARTY && party_id) // character is in party
+		{
 			chclif_char_delete2_ack(fd, char_id, 5, 0);
 			return 1;
 		}
-	*/
+		
 		// success
 		delete_date = time(NULL)+(charserv_config.char_config.char_del_delay);
 
@@ -523,13 +525,43 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
 	return 1;
 }
 
+/**
+ * Check char deletion code
+ * @param sd
+ * @param delcode E-mail or birthdate
+ * @param flag Delete flag
+ * @return true:Success, false:Failure
+ **/
+static bool chclif_delchar_check(struct char_session_data *sd, char *delcode, uint8 flag) {
+	// E-Mail check
+	if (flag&CHAR_DEL_EMAIL && (
+			!stricmp(delcode, sd->email) || //email does not match or
+			(
+				!stricmp("a@a.com", sd->email) && //it is default email and
+				!strcmp("", delcode) //user sent an empty email
+			))) {
+			ShowInfo(""CL_RED"Char Deleted"CL_RESET" "CL_GREEN"(E-Mail)"CL_RESET".\n");
+			return true;
+	}
+	// Birthdate (YYMMDD)
+	if (flag&CHAR_DEL_BIRTHDATE && (
+		!strcmp(sd->birthdate+2, delcode) || // +2 to cut off the century
+		(
+			!strcmp("0000-00-00", sd->birthdate) && // it is default birthdate and
+			!strcmp("",delcode) // user sent an empty birthdate
+		))) {
+		ShowInfo(""CL_RED"Char Deleted"CL_RESET" "CL_GREEN"(Birthdate)"CL_RESET".\n");
+		return true;
+	}
+	return false;
+}
+
 // CH: <0829>.W <char id>.L <birth date:YYMMDD>.6B
 int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(12)
 	{
 		char birthdate[8+1];
-		uint32 char_id;
-		int i, k;
+		uint32 char_id, i, k;
 		unsigned int base_level;
 		char* data;
 		time_t delete_date;
@@ -572,8 +604,7 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 			return 1;
 		}
 
-		if( strcmp(sd->birthdate+2, birthdate) )  // +2 to cut off the century
-		{// birth date is wrong
+		if (!chclif_delchar_check(sd, birthdate, CHAR_DEL_BIRTHDATE)) { // Only check for birthdate
 			chclif_char_delete2_accept_ack(fd, char_id, 5);
 			return 1;
 		}
@@ -604,8 +635,7 @@ int chclif_parse_char_delete2_accept(int fd, struct char_session_data* sd) {
 
 // CH: <082b>.W <char id>.L
 int chclif_parse_char_delete2_cancel(int fd, struct char_session_data* sd) {
-	uint32 char_id;
-	int i;
+	uint32 char_id, i;
 
 	FIFOSD_CHECK(6)
 
@@ -642,8 +672,8 @@ int chclif_parse_maplogin(int fd){
 		return 0;
 	else {
 		int i;
-		char* l_user = (char*)RFIFOP(fd,2);
-		char* l_pass = (char*)RFIFOP(fd,26);
+		char* l_user = RFIFOCP(fd,2);
+		char* l_pass = RFIFOCP(fd,26);
 		l_user[23] = '\0';
 		l_pass[23] = '\0';
 		ARR_FIND( 0, ARRAYLENGTH(map_server), i, map_server[i].fd <= 0 );
@@ -770,7 +800,8 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		int slot = RFIFOB(fd,2);
 		RFIFOSKIP(fd,3);
 
-		if ( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d'", schema_config.char_db, sd->account_id, slot)
+		// Check if the character exists and is not scheduled for deletion
+		if ( SQL_SUCCESS != Sql_Query(sql_handle, "SELECT `char_id` FROM `%s` WHERE `account_id`='%d' AND `char_num`='%d' AND `delete_date` = 0", schema_config.char_db, sd->account_id, slot)
 		  || SQL_SUCCESS != Sql_NextRow(sql_handle)
 		  || SQL_SUCCESS != Sql_GetData(sql_handle, 0, &data, NULL) )
 		{	//Not found?? May be forged packet.
@@ -806,7 +837,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 
 		//Have to switch over to the DB instance otherwise data won't propagate [Kevin]
 		cd = (struct mmo_charstatus *)idb_get(char_db_, char_id);
-		if (cd->sex == 99)
+		if (cd->sex == SEX_ACCOUNT)
 			cd->sex = sd->sex;
 
 		if (charserv_config.log_char) {
@@ -874,7 +905,7 @@ int chclif_parse_charselect(int fd, struct char_session_data* sd,uint32 ipl){
 		WFIFOHEAD(fd,28);
 		WFIFOW(fd,0) = 0x71;
 		WFIFOL(fd,2) = cd->char_id;
-		mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map), (char*)WFIFOP(fd,6));
+		mapindex_getmapname_ext(mapindex_id2name(cd->last_point.map), WFIFOCP(fd,6));
 		subnet_map_ip = char_lan_subnetcheck(ipl); // Advanced subnet check [LuzZza]
 		WFIFOL(fd,22) = htonl((subnet_map_ip) ? subnet_map_ip : map_server[i].ip);
 		WFIFOW(fd,26) = ntows(htons(map_server[i].port)); // [!] LE byte order here [!]
@@ -911,13 +942,13 @@ int chclif_parse_createnewchar(int fd, struct char_session_data* sd,int cmd){
 		i = -2;
 	else {
 #if PACKETVER >= 20151001
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29),RFIFOW(fd,31),RFIFOW(fd,32),RFIFOB(fd,35));
+			i = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29),RFIFOW(fd,31),RFIFOW(fd,32),RFIFOB(fd,35));
 			RFIFOSKIP(fd,36);
 #elif PACKETVER >= 20120307
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
+			i = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOW(fd,27),RFIFOW(fd,29));
 			RFIFOSKIP(fd,31);
 #else
-			i = char_make_new_char_sql(sd, (char*)RFIFOP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
+			i = char_make_new_char_sql(sd, RFIFOCP(fd,2),RFIFOB(fd,26),RFIFOB(fd,27),RFIFOB(fd,28),RFIFOB(fd,29),RFIFOB(fd,30),RFIFOB(fd,31),RFIFOB(fd,32),RFIFOW(fd,33),RFIFOW(fd,35));
 			RFIFOSKIP(fd,37);
 #endif
 	}
@@ -983,12 +1014,7 @@ int chclif_parse_delchar(int fd,struct char_session_data* sd, int cmd){
 		memcpy(email, RFIFOP(fd,6), 40);
 		RFIFOSKIP(fd,( cmd == 0x68) ? 46 : 56);
 
-		// Check if e-mail is correct
-		if(strcmpi(email, sd->email) && //email does not matches and
-			(strcmp("a@a.com", sd->email) || //it is not default email, or
-			(strcmp("a@a.com", email) && strcmp("", email)) //email sent does not matches default
-			))
-		{	//Fail
+		if (!chclif_delchar_check(sd, email, charserv_config.char_config.char_del_option)) {
 			chclif_refuse_delchar(fd,0); // 00 = Incorrect Email address
 			return 1;
 		}
@@ -1030,29 +1056,33 @@ int chclif_parse_keepalive(int fd){
 	return 1;
 }
 
-// R 08fc <char ID>.l <new name>.24B
-// R 028d <account ID>.l <char ID>.l <new name>.24B
-int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
-	int i, cid = 0;
+// Tells the client if the name was accepted or not
+// 028e <result>.W (HC_ACK_IS_VALID_CHARNAME)
+// result:
+//		0 = name is not OK
+//		1 = name is OK
+void chclif_reqrename_response( int fd, struct char_session_data* sd, bool name_valid ){
+	WFIFOHEAD(fd, 4);
+	WFIFOW(fd, 0) = 0x28e;
+	WFIFOW(fd, 2) = name_valid;
+	WFIFOSET(fd, 4);
+}
+
+// Request for checking the new name on character renaming
+// 028d <account ID>.l <char ID>.l <new name>.24B (CH_REQ_IS_VALID_CHARNAME)
+int chclif_parse_reqrename( int fd, struct char_session_data* sd ){
+	int i, cid, aid;
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
 
-	if(cmd == 0x8fc){
-		FIFOSD_CHECK(30)
-		cid =RFIFOL(fd,2);
-		safestrncpy(name, (char *)RFIFOP(fd,6), NAME_LENGTH);
-		RFIFOSKIP(fd,30);
-	}
-	else if(cmd == 0x28d) {
-		int aid;
-		FIFOSD_CHECK(34);
-		aid = RFIFOL(fd,2);
-		cid =RFIFOL(fd,6);
-		safestrncpy(name, (char *)RFIFOP(fd,10), NAME_LENGTH);
-		RFIFOSKIP(fd,34);
-		if( aid != sd->account_id )
-			return 1;
-	}
+	FIFOSD_CHECK(34);
+	aid = RFIFOL(fd,2);
+	cid = RFIFOL(fd,6);
+	safestrncpy(name, RFIFOCP(fd,10), NAME_LENGTH);
+	RFIFOSKIP(fd,34);
+
+	if( aid != sd->account_id )
+		return 1;
 
 	ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == cid );
 	if( i == MAX_CHARS )
@@ -1065,12 +1095,10 @@ int chclif_parse_reqrename(int fd, struct char_session_data* sd, int cmd){
 		safestrncpy(sd->new_name, name, NAME_LENGTH);
 	}
 	else
-			i = 0;
+		i = 0;
 
-	WFIFOHEAD(fd, 4);
-	WFIFOW(fd,0) = 0x28e;
-	WFIFOW(fd,2) = i;
-	WFIFOSET(fd,4);
+	chclif_reqrename_response(fd, sd, i > 0);
+
 	return 1;
 }
 
@@ -1133,13 +1161,70 @@ void chclif_block_character( int fd, struct char_session_data* sd){
 	}
 }
 
-// 0x28f <char_id>.L
+// Sends the response to a rename request to the client.
+// 0290 <result>.W (HC_ACK_CHANGE_CHARNAME)
+// 08fd <result>.L (HC_ACK_CHANGE_CHARACTERNAME)
+// result:
+//		0: Successful
+//		1: This character's name has already been changed. You cannot change a character's name more than once.
+//		2: User information is not correct.
+//		3: You have failed to change this character's name.
+//		4: Another user is using this character name, so please select another one.
+//		5: In order to change the character name, you must leave the guild.
+//		6: In order to change the character name, you must leave the party.
+//		7: Length exceeds the maximum size of the character name you want to change.
+//		8: Name contains invalid characters. Character name change failed.
+//		9: The name change is prohibited. Character name change failed.
+//		10: Character name change failed, due an unknown error.
+void chclif_rename_response(int fd, struct char_session_data* sd, int16 response) {
+#if PACKETVER >= 20111101
+	WFIFOHEAD(fd, 6);
+	WFIFOW(fd, 0) = 0x8fd;
+	WFIFOL(fd, 2) = response;
+	WFIFOSET(fd, 6);
+#else
+	WFIFOHEAD(fd, 4);
+	WFIFOW(fd, 0) = 0x290;
+	WFIFOW(fd, 2) = response;
+	WFIFOSET(fd, 4);
+#endif
+}
+
+// Request to change a character name
+// 028f <char_id>.L (CH_REQ_CHANGE_CHARNAME)
+// 08fc <char_id>.L <new name>.24B (CH_REQ_CHANGE_CHARACTERNAME)
 int chclif_parse_ackrename(int fd, struct char_session_data* sd){
-	// 0: Successful
-	// 1: This character's name has already been changed. You cannot change a character's name more than once.
-	// 2: User information is not correct.
-	// 3: You have failed to change this character's name.
-	// 4: Another user is using this character name, so please select another one.
+#if PACKETVER >= 20111101
+	FIFOSD_CHECK(30)
+	{
+		int i, cid;
+		char name[NAME_LENGTH], esc_name[NAME_LENGTH * 2 + 1];
+
+		cid = RFIFOL(fd, 2);
+		safestrncpy(name, RFIFOCP(fd, 6), NAME_LENGTH);
+		RFIFOSKIP(fd, 30);
+
+		ARR_FIND(0, MAX_CHARS, i, sd->found_char[i] == cid);
+		if (i == MAX_CHARS)
+			return 1;
+
+		normalize_name(name, TRIM_CHARS);
+		Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
+
+		safestrncpy(sd->new_name, name, NAME_LENGTH);
+
+		// Start the renaming process
+		i = char_rename_char_sql(sd, cid);
+
+		chclif_rename_response(fd, sd, i);
+
+		// If the renaming was successful, we need to resend the characters
+		if( i == 0 )
+			chclif_mmo_char_send(fd, sd);
+
+		return 1;
+	}
+#else
 	FIFOSD_CHECK(6)
 	{
 		int i;
@@ -1151,12 +1236,10 @@ int chclif_parse_ackrename(int fd, struct char_session_data* sd){
 			return 1;
 		i = char_rename_char_sql(sd, cid);
 
-		WFIFOHEAD(fd, 4);
-		WFIFOW(fd,0) = 0x290;
-		WFIFOW(fd,2) = i;
-		WFIFOSET(fd,4);
+		chclif_rename_response(fd, sd, i);
 	}
 	return 1;
+#endif
 }
 
 int chclif_ack_captcha(int fd){
@@ -1237,9 +1320,9 @@ int chclif_parse(int fd) {
 			// client keep-alive packet (every 12 seconds)
 			case 0x187: next=chclif_parse_keepalive(fd); break;
 			// char rename
-			case 0x8fc: next=chclif_parse_reqrename(fd,sd,cmd); break; //request <date/version?>
-			case 0x28d: next=chclif_parse_reqrename(fd,sd,cmd); break; //request <date/version?>
+			case 0x28d: next=chclif_parse_reqrename(fd,sd); break; //Check new desired name
 			case 0x28f: next=chclif_parse_ackrename(fd,sd); break; //Confirm change name.
+			case 0x8fc: next=chclif_parse_ackrename(fd,sd); break; //Rename request without confirmation
 			// captcha
 			case 0x7e5: next=chclif_parse_reqcaptcha(fd); break; // captcha code request (not implemented)
 			case 0x7e7: next=chclif_parse_chkcaptcha(fd); break; // captcha code check (not implemented)

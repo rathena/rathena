@@ -407,10 +407,11 @@ static int unit_walktoxy_timer(int tid, unsigned int tick, int id, intptr_t data
 	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
 	ud->walktimer = INVALID_TIMER;
 
-	if (ud->state.walk_script && bl->x == ud->to_x && bl->y == ud->to_y) {
+	if (bl->x == ud->to_x && bl->y == ud->to_y) {
 		if (ud->walk_done_event[0])
 			npc_event_do_id(ud->walk_done_event,bl->id);
-		ud->state.walk_script = 0;
+		if (ud->state.walk_script)
+			ud->state.walk_script = 0;
 	}
 
 	switch(bl->type) {
@@ -801,7 +802,7 @@ void unit_run_hit(struct block_list *bl, struct status_change *sc, struct map_se
 	status_change_end(bl, type, INVALID_TIMER);
 
 	if (type == SC_RUN) {
-		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), 0);
+		skill_blown(bl, bl, skill_get_blewcount(TK_RUN, lv), unit_getdir(bl), BLOWN_NONE);
 		clif_status_change(bl, SI_BUMP, 0, 0, 0, 0, 0);
 	} else if (sd) {
 		clif_fixpos(bl);
@@ -1029,10 +1030,10 @@ uint8 unit_getdir(struct block_list *bl)
  * @param dx: Destination cell X
  * @param dy: Destination cell Y
  * @param count: How many cells to push bl
- * @param flag: &1 Whether or not to send position packet updates
+ * @param flag: See skill.h::e_skill_blown
  * @return count (can be modified due to map cell restrictions)
  */
-int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
+int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_blown flag)
 {
 	if(count) {
 		struct map_session_data* sd;
@@ -1072,7 +1073,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
 
 			map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, bl->type == BL_PC ? BL_ALL : BL_PC, bl);
 
-			if(!(flag&1))
+			if(!(flag&BLOWN_DONT_SEND_PACKET))
 				clif_blown(bl);
 
 			if(sd) {
@@ -1100,48 +1101,48 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag)
  *		0x2 - Knockback type (not set: Stop type, e.g. Ankle Snare)
  *		0x4 - Boss attack
  * @return reason for immunity
- *		0 - can be knocked back / stopped
- *		1 - at WOE/BG map
- *		2 - target is MD_KNOCKBACK_IMMUNE
- *		3 - target is in Basilica area
- *		4 - target has 'special_state.no_knockback'
- *		5 - target is trap that cannot be knocked back
+ *		UB_KNOCKABLE - can be knocked back / stopped
+ *		UB_NO_KNOCKBACK_MAP - at WOE/BG map
+ *		UB_MD_KNOCKBACK_IMMUNE - target is MD_KNOCKBACK_IMMUNE
+ *		UB_TARGET_BASILICA - target is in Basilica area
+ *		UB_TARGET_NO_KNOCKBACK - target has 'special_state.no_knockback'
+ *		UB_TARGET_TRAP - target is trap that cannot be knocked back
  */
-uint8 unit_blown_immune(struct block_list* bl, uint8 flag)
+enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 {
 	if ((flag&0x1)
 		&& (map_flag_gvg(bl->m) || map[bl->m].flag.battleground)
 		&& ((flag&0x2) || !(battle_config.skill_trap_type&0x1)))
-		return 1; // No knocking back in WoE / BG
+		return UB_NO_KNOCKBACK_MAP; // No knocking back in WoE / BG
 
 	switch (bl->type) {
 		case BL_MOB:
 			// Immune can't be knocked back
 			if (((flag&0x1) && status_bl_has_mode(bl,MD_KNOCKBACK_IMMUNE))
 				&& ((flag&0x2) || !(battle_config.skill_trap_type&0x2)))
-				return 2;
+				return UB_MD_KNOCKBACK_IMMUNE;
 			break;
 		case BL_PC: {
 				struct map_session_data *sd = BL_CAST(BL_PC, bl);
 				// Basilica caster can't be knocked-back by normal monsters.
 				if( !(flag&0x4) && &sd->sc && sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id)
-					return 3;
+					return UB_TARGET_BASILICA;
 				// Target has special_state.no_knockback (equip)
 				if( (flag&(0x1|0x2)) && sd->special_state.no_knockback )
-					return 4;
+					return UB_TARGET_NO_KNOCKBACK;
 			}
 			break;
 		case BL_SKILL: {
 				struct skill_unit* su = (struct skill_unit *)bl;
 				// Trap cannot be knocked back
 				if (su && su->group && skill_get_unit_flag(su->group->skill_id)&UF_NOKNOCKBACK)
-					return 5;
+					return UB_TARGET_TRAP;
 			}
 			break;
 	}
 
 	//Object can be knocked back / stopped
-	return 0;
+	return UB_KNOCKABLE;
 }
 
 /**
@@ -1356,7 +1357,7 @@ int unit_can_move(struct block_list *bl) {
 	// Status changes that block movement
 	if (sc) {
 		if( sc->cant.move // status placed here are ones that cannot be cached by sc->cant.move for they depend on other conditions other than their availability
-			|| (sc->data[SC_SPIDERWEB] && sc->data[SC_SPIDERWEB]->val1)
+			|| sc->data[SC_SPIDERWEB]
 			|| (sc->data[SC_DANCING] && sc->data[SC_DANCING]->val4 && (
 				!sc->data[SC_LONGING] ||
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
@@ -1365,7 +1366,7 @@ int unit_can_move(struct block_list *bl) {
 			)
 			return 0;
 
-		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING && !(sc->opt1 == OPT1_CRYSTALIZE && bl->type == BL_MOB))
+		if (sc->opt1 > 0 && sc->opt1 != OPT1_STONEWAIT && sc->opt1 != OPT1_BURNING)
 			return 0;
 
 		if ((sc->option & OPTION_HIDE) && (!sd || pc_checkskill(sd, RG_TUNNELDRIVE) <= 0))
@@ -1497,6 +1498,9 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	ud = unit_bl2ud(src);
 
 	if(ud == NULL)
+		return 0;
+
+	if (ud && ud->state.blockedskill)
 		return 0;
 
 	sc = status_get_sc(src);
@@ -1757,10 +1761,12 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		case SA_SPELLBREAKER:
 			combo = 1;
 		break;
+#ifndef RENEWAL_CAST
 		case ST_CHASEWALK:
 			if (sc && sc->data[SC_CHASEWALK])
 				casttime = -1;
 		break;
+#endif
 		case TK_RUN:
 			if (sc && sc->data[SC_RUN])
 				casttime = -1;
@@ -1830,7 +1836,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 		mobskill_event(md, src, tick, -1); // Cast targetted skill event.
 
-		if (status_has_mode(tstatus,MD_CASTSENSOR_IDLE|MD_CASTSENSOR_CHASE) && battle_check_target(target, src, BCT_ENEMY) > 0) {
+		if ((status_has_mode(tstatus,MD_CASTSENSOR_IDLE) || status_has_mode(tstatus,MD_CASTSENSOR_CHASE)) && battle_check_target(target, src, BCT_ENEMY) > 0) {
 			switch (md->state.skillstate) {
 				case MSS_RUSH:
 				case MSS_FOLLOW:
@@ -1898,7 +1904,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	} else
 		skill_castend_id(ud->skilltimer,tick,src->id,0);
 
-	if( sd )
+	if( sd && battle_config.prevent_logout_trigger&PLT_SKILL )
 		sd->canlog_tick = gettick();
 
 	return 1;
@@ -1954,6 +1960,9 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	ud = unit_bl2ud(src);
 
 	if(ud == NULL)
+		return 0;
+
+	if (ud && ud->state.blockedskill)
 		return 0;
 
 	if(ud->skilltimer != INVALID_TIMER) // Normally not needed since clif.c checks for it, but at/char/script commands don't! [Skotlex]
@@ -2080,7 +2089,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 		skill_castend_pos(ud->skilltimer,tick,src->id,0);
 	}
 
-	if( sd )
+	if( sd && battle_config.prevent_logout_trigger&PLT_SKILL )
 		sd->canlog_tick = gettick();
 
 	return 1;
@@ -2617,7 +2626,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int t
 		ud->attacktimer = add_timer(ud->attackabletime,unit_attack_timer,src->id,0);
 	}
 
-	if( sd )
+	if( sd && battle_config.prevent_logout_trigger&PLT_ATTACK )
 		sd->canlog_tick = gettick();
 
 	return 1;
@@ -2868,6 +2877,8 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_CHASEWALK, INVALID_TIMER);
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)
 			status_change_end(bl, SC_GOSPEL, INVALID_TIMER);
+		if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->timer == INVALID_TIMER)
+			status_change_end(bl, SC_PROVOKE, INVALID_TIMER); //End infinite provoke to prevent exploit
 		status_change_end(bl, SC_CHANGE, INVALID_TIMER);
 		status_change_end(bl, SC_STOP, INVALID_TIMER);
 		status_change_end(bl, SC_WUGDASH, INVALID_TIMER);
@@ -2910,7 +2921,9 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				if (sd->state.storage_flag == 1)
 					storage_storage_quit(sd,0);
 				else if (sd->state.storage_flag == 2)
-					gstorage_storage_quit(sd,0);
+					storage_guild_storage_quit(sd, 0);
+				else if (sd->state.storage_flag == 3)
+					storage_premiumStorage_quit(sd);
 
 				sd->state.storage_flag = 0; //Force close it when being warped.
 			}
@@ -2977,7 +2990,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			else if (--map[bl->m].users == 0 && battle_config.dynamic_mobs)
 				map_removemobs(bl->m);
 
-			if( !(sd->sc.option&OPTION_INVISIBLE) ) // Decrement the number of active pvp players on the map
+			if( !pc_isinvisible(sd) ) // Decrement the number of active pvp players on the map
 				--map[bl->m].users_pvp;
 
 			if( sd->state.hpmeter_visible ) {
@@ -3210,6 +3223,14 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->qi_display = NULL;
 			}
 			sd->qi_count = 0;
+
+#if PACKETVER >= 20150513
+			if( sd->hatEffectCount > 0 ){
+				aFree(sd->hatEffectIDs);
+				sd->hatEffectIDs = NULL;
+				sd->hatEffectCount = 0;
+			}
+#endif
 
 			// Clearing...
 			if (sd->bonus_script.head)

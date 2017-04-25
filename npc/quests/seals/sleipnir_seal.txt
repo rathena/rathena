@@ -1837,7 +1837,7 @@ que_god01,84,95,0	script	Switch#God0	111,{
 }
 
 que_god01,84,92,0	script	god_sl_w0	45,1,1,{
-OnTouch:
+OnTouch_:
 	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
 		mes "^3355FFThe door is locked. You slide your temporary pass on the security device on the right side of the door, and the door unlocks.^000000";
 		next;
@@ -1864,7 +1864,7 @@ que_god01,49,97,0	script	Switch#God1	111,{
 }
 
 que_god01,46,97,0	script	god_sl_w1	45,1,1,{
-OnTouch:
+OnTouch_:
 	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
 		mes "^3355FFThe door is locked. You slide your temporary pass on the security device on the right side of the door, and the door unlocks.^000000";
 		next;
@@ -1891,7 +1891,7 @@ que_god01,19,97,0	script	Switch#God2	111,{
 }
 
 que_god01,16,97,0	script	god_sl_w2	45,1,1,{
-OnTouch:
+OnTouch_:
 	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
 		mes "^3355FFThe door is locked. You slide your temporary pass on the security device on the right side of the door, and the door unlocks.^000000";
 		next;
@@ -1918,7 +1918,7 @@ que_god01,14,80,0	script	Switch#God3	111,{
 }
 
 que_god01,17,80,0	script	god_sl_w3	45,1,1,{
-OnTouch:
+OnTouch_:
 	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
 		mes "^3355FFThe door is locked. You slide your temporary pass on the security device on the right side of the door, and the door unlocks.^000000";
 		next;
@@ -1945,7 +1945,7 @@ que_god01,44,80,0	script	Switch#God4	111,{
 }
 
 que_god01,47,80,0	script	god_sl_w4	45,1,1,{
-OnTouch:
+OnTouch_:
 	if ((god_sl_1 > 1) && (god_sl_1 < 51)) {
 		mes "^3355FFThe door is locked. You slide your temporary pass on the security device on the right side of the door, and the door unlocks.^000000";
 		next;

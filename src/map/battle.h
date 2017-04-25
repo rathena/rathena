@@ -6,6 +6,7 @@
 
 #include "../common/mmo.h"
 #include "../config/core.h"
+#include "clif.h" // e_damage_type
 #include "map.h" //ELE_MAX
 
 /// State of a single attack attempt; used in flee/def penalty calculations when mobbed
@@ -61,7 +62,7 @@ struct Damage {
 #endif
 	int64 damage, /// Right hand damage
 		damage2; /// Left hand damage
-	char type; /// chk clif_damage for type (clif.h enum e_damage_type)
+	enum e_damage_type type; /// Check clif_damage for type
 	short div_; /// Number of hit
 	int amotion,
 		dmotion;
@@ -87,7 +88,7 @@ struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,
 int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, int64 *, int flag, uint16 skill_id, bool status_reflect);
 
 void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_);
-void battle_vanish(struct map_session_data *sd, struct block_list *target, struct Damage *wd);
+bool battle_vanish(struct map_session_data *sd, struct block_list *target, struct Damage *wd);
 
 int battle_attr_ratio(int atk_elem,int def_type, int def_lv);
 int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv);
@@ -109,7 +110,7 @@ struct block_list* battle_get_master(struct block_list *src);
 struct block_list* battle_gettargeted(struct block_list *target);
 struct block_list* battle_getenemy(struct block_list *target, int type, int range);
 int battle_gettarget(struct block_list *bl);
-int battle_getcurrentskill(struct block_list *bl);
+uint16 battle_getcurrentskill(struct block_list *bl);
 
 int battle_check_undead(int race,int element);
 int battle_check_target(struct block_list *src, struct block_list *target,int flag);
@@ -231,6 +232,7 @@ extern struct Battle_Config
 	int pet_max_atk2; //[Skotlex]
 	int pet_no_gvg; //Disables pets in gvg. [Skotlex]
 	int pet_equip_required;
+	int pet_master_dead;
 
 	int skill_min_damage;
 	int finger_offensive_type;
@@ -330,6 +332,7 @@ extern struct Battle_Config
 	int item_drop_adddrop_min,item_drop_adddrop_max; //[Skotlex]
 
 	int prevent_logout;	// Added by RoVeRT
+	int prevent_logout_trigger;
 
 	int alchemist_summon_reward;	// [Valaris]
 	int drops_by_luk;
@@ -512,6 +515,7 @@ extern struct Battle_Config
 	int vcast_stat_scale;
 
 	int mvp_tomb_enabled;
+	int mvp_tomb_delay;
 
 	int atcommand_suggestions_enabled;
 	int min_npc_vendchat_distance;
@@ -531,12 +535,11 @@ extern struct Battle_Config
 	int vip_storage_increase;
 	int vip_base_exp_increase;
 	int vip_job_exp_increase;
+	int vip_zeny_penalty;
 	int vip_bm_increase;
 	int vip_drop_increase;
 	int vip_gemstone;
-	int vip_exp_penalty_base_normal;
 	int vip_exp_penalty_base;
-	int vip_exp_penalty_job_normal;
 	int vip_exp_penalty_job;
 	int vip_disp_rate;
 	int mon_trans_disable_in_gvg;
@@ -564,7 +567,6 @@ extern struct Battle_Config
 	int fame_pharmacy_7;
 	int fame_pharmacy_10;
 
-	int disp_serverbank_msg;
 	int disp_servervip_msg;
 	int warg_can_falcon;
 	int path_blown_halt;
@@ -609,12 +611,21 @@ extern struct Battle_Config
 	int exp_cost_inspiration;
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
+	int show_status_katar_crit;
+	int atcommand_levelup_events;
+	int block_account_in_same_party;
+	int tarotcard_equal_chance; //Official or equal chance for each card
+	int change_party_leader_samemap;
+	int dispel_song; //Can songs be dispelled?
+	int guild_maprespawn_clones; // Should clones be killed by maprespawnguildid?
+	int hide_fav_sell;
+
+#include "../custom/battle_config_struct.inc"
 } battle_config;
 
 void do_init_battle(void);
 void do_final_battle(void);
 extern int battle_config_read(const char *cfgName);
-extern void battle_validate_conf(void);
 extern void battle_set_defaults(void);
 int battle_set_value(const char* w1, const char* w2);
 int battle_get_value(const char* w1);

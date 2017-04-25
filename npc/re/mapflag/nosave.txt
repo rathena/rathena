@@ -1,16 +1,11 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable auto-save.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Characters logging out on the specified map will be warped
 //= to the map specified in the last field, or "SavePoint".
-//===== Additional Comments: ================================= 
+//===== Changelogs: ==========================================
 //= 1.0 Renewal split. [Euphy]
+//= 1.1 Added GVG TE Guild Dungeons. [Capuche]
 //============================================================
 
 // Job Quests ====================
@@ -43,6 +38,20 @@ gld2_ald	mapflag	nosave	SavePoint
 gld2_gef	mapflag	nosave	SavePoint
 gld2_pay	mapflag	nosave	SavePoint
 gld2_prt	mapflag	nosave	SavePoint
+teg_dun01	mapflag	nosave	SavePoint
+teg_dun02	mapflag	nosave	SavePoint
+
+// WOE:Training Edition Castles =====
+te_prtcas01	mapflag	nosave	SavePoint
+te_prtcas02	mapflag	nosave	SavePoint
+te_prtcas03	mapflag	nosave	SavePoint
+te_prtcas04	mapflag	nosave	SavePoint
+te_prtcas05	mapflag	nosave	SavePoint
+te_aldecas1	mapflag	nosave	SavePoint
+te_aldecas2	mapflag	nosave	SavePoint
+te_aldecas3	mapflag	nosave	SavePoint
+te_aldecas4	mapflag	nosave	SavePoint
+te_aldecas5	mapflag	nosave	SavePoint
 
 // Misty Forest Labyrinth =========
 1@mist	mapflag	nosave	SavePoint
@@ -81,6 +90,9 @@ ma_zif09	mapflag	nosave	SavePoint
 // Inside Eclage ==================
 que_avan01	mapflag	nosave	SavePoint
 1@ecl	mapflag	nosave	SavePoint
+
+// Horror Toy Factory
+1@xm_d	mapflag	nosave	SavePoint
 
 // Glast Heim Memorial Dungeon ====
 1@gl_k	mapflag	nosave	SavePoint

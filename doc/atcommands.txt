@@ -968,9 +968,13 @@ Changes Kafra Points by the specified amount.
 @hairstyle <default: 0-27>
 @haircolor <default: 0-8>
 @dye <default: 0-4>
+@bodystyle <default: 0-1>
 
 Changes appearance based on the given parameters.
 The min/max values are set in '/conf/battle/client.conf'.
+
+Appearance changed via @bodystyle won't save unless
+'save_body_style' is enabled in '/conf/battle/client.conf'
 
 ---------------------------------------
 
@@ -1370,9 +1374,11 @@ Note that the value of a string variable may be typed with or without double quo
 
 ---------------------------------------
 
-@setbattleflag <flag> <value>
+@setbattleflag <flag> <value> {<reload>}
 
 Changes a battle_config flag without rebooting the server.
+If a value is given for reload, then the server will attempt to reload the mob database
+if the config being changed is EXP/drop related.
 
 ---------------------------------------
 
@@ -1428,6 +1434,16 @@ Unloads all NPCs in a file.
 
 Example:
 @unloadnpcfile npc/custom/jobmaster.txt
+
+---------------------------------------
+
+@reloadnpcfile <path>
+
+Unloads and loads an NPC.
+Same as @unloadnpcfile and @loadnpc but ran as one command.
+
+Example:
+@reloadnpcfile npc/custom/jobmaster.txt
 
 ---------------------------------------
 

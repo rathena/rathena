@@ -40,8 +40,8 @@ force_2-1,99,20,4	script	Minilover#arena	124,{
 
 OnStart:
 	initnpctimer;
-	set $arena_min60st,gettime(2);
-	set $arena_sec60st,gettime(1);
+	set $arena_min60st,gettime(DT_MINUTE);
+	set $arena_sec60st,gettime(DT_SECOND);
 	end;
 
 OnTimer3000:
@@ -302,21 +302,21 @@ OnReset_All:
 }
 
 force_2-1,62,26,1	script	force_08_01#60	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Minilover#arena::On01_Start";
 	warp "force_2-1",40,26;
 	end;
 }
 
 force_2-1,25,44,1	script	force_01_02#60	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Minilover#arena::On02_Start";
 	warp "force_2-1",25,69;
 	end;
 }
 
 force_2-1,25,134,1	script	force_02_03#60	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "arena#60::OnReset_02";
 	donpcevent "Minilover#arena::On03_Start";
 	warp "force_2-1",25,159;
@@ -324,35 +324,35 @@ OnTouch:
 }
 
 force_2-1,44,174,1	script	force_03_04#60	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Minilover#arena::On04_Start";
 	warp "force_2-1",69,174;
 	end;
 }
 
 force_2-1,134,174,1	script	force_04_05#60	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Minilover#arena::On05_Start";
 	warp "force_2-1",159,174;
 	end;
 }
 
 force_2-1,174,155,1	script	force_05_06#60	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Minilover#arena::On06_Start";
 	warp "force_2-1",174,130;
 	end;
 }
 
 force_2-1,174,65,1	script	force_06_07#60	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Minilover#arena::On07_Start";
 	warp "force_2-1",174,40;
 	end;
 }
 
 force_2-1,155,26,1	script	force_07_08#60	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Minilover#arena::On08_Start";
 	warp "force_2-1",132,26;
 	enablenpc "force_08_09#60";
@@ -360,14 +360,14 @@ OnTouch:
 }
 
 force_2-1,99,54,1	script	force_08_09#60	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Minilover#arena::On09_Start";
 	warp "force_2-1",99,82;
 	end;
 }
 
 force_2-1,99,124,1	script	force_exit#60	45,1,1,{
-OnTouch:
+OnTouch_:
 	donpcevent "Minilover#arena::OnTimerOff";
 	donpcevent "#arn_timer_60::OnEnable";
 	mapwarp "force_2-1","prt_are_in",22,139,0,0;
@@ -786,8 +786,8 @@ OnMyMobDead:
 		donpcevent "Minilover#arena::On09_End";
 		donpcevent "arena#60::OnReset_09";
 		donpcevent "arena#60::OnReset_All";
-		set $arena_min60end,gettime(2);
-		set $arena_sec60end,gettime(1);
+		set $arena_min60end,gettime(DT_MINUTE);
+		set $arena_sec60end,gettime(DT_SECOND);
 	}
 	end;
 }

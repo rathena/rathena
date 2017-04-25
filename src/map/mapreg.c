@@ -83,9 +83,9 @@ bool mapreg_setreg(int64 uid, int val)
 			m->is_string = false;
 
 			if (name[1] != '@' && !skip_insert) {// write new variable to database
-				char tmp_str[32 * 2 + 1];
-				Sql_EscapeStringLen(mmysql_handle, tmp_str, name, strnlen(name, 32));
-				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%d','%d')", mapreg_table, tmp_str, i, val))
+				char esc_name[32 * 2 + 1];
+				Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
+				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%d','%d')", mapreg_table, esc_name, i, val))
 					Sql_ShowDebug(mmysql_handle);
 			}
 			i64db_put(regs.vars, uid, m);
@@ -99,7 +99,9 @@ bool mapreg_setreg(int64 uid, int val)
 		i64db_remove(regs.vars, uid);
 
 		if (name[1] != '@') {// Remove from database because it is unused.
-			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%d'", mapreg_table, name, i))
+			char esc_name[32 * 2 + 1];
+			Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
+			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%d'", mapreg_table, esc_name, i))
 				Sql_ShowDebug(mmysql_handle);
 		}
 	}
@@ -125,7 +127,9 @@ bool mapreg_setregstr(int64 uid, const char* str)
 		if (i)
 			script_array_update(&regs, uid, true);
 		if (name[1] != '@') {
-			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%d'", mapreg_table, name, i))
+			char esc_name[32 * 2 + 1];
+			Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
+			if (SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `varname`='%s' AND `index`='%d'", mapreg_table, esc_name, i))
 				Sql_ShowDebug(mmysql_handle);
 		}
 		if ((m = i64db_get(regs.vars, uid))) {
@@ -155,11 +159,11 @@ bool mapreg_setregstr(int64 uid, const char* str)
 			m->is_string = true;
 
 			if (name[1] != '@' && !skip_insert) { //put returned null, so we must insert.
-				char tmp_str[32 * 2 + 1];
-				char tmp_str2[255 * 2 + 1];
-				Sql_EscapeStringLen(mmysql_handle, tmp_str, name, strnlen(name, 32));
-				Sql_EscapeStringLen(mmysql_handle, tmp_str2, str, strnlen(str, 255));
-				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%d','%s')", mapreg_table, tmp_str, i, tmp_str2))
+				char esc_name[32 * 2 + 1];
+				char esc_str[255 * 2 + 1];
+				Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
+				Sql_EscapeStringLen(mmysql_handle, esc_str, str, strnlen(str, 255));
+				if (SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`varname`,`index`,`value`) VALUES ('%s','%d','%s')", mapreg_table, esc_name, i, esc_str))
 					Sql_ShowDebug(mmysql_handle);
 			}
 			i64db_put(regs.vars, uid, m);
@@ -235,12 +239,16 @@ static void script_save_mapreg(void)
 				int i = script_getvaridx(m->uid);
 				const char* name = get_str(num);
 				if (!m->is_string) {
-					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%d' WHERE `varname`='%s' AND `index`='%d' LIMIT 1", mapreg_table, m->u.i, name, i))
+					char esc_name[32 * 2 + 1];
+					Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
+					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%d' WHERE `varname`='%s' AND `index`='%d' LIMIT 1", mapreg_table, m->u.i, esc_name, i))
 						Sql_ShowDebug(mmysql_handle);
 				} else {
-					char tmp_str2[2 * 255 + 1];
-					Sql_EscapeStringLen(mmysql_handle, tmp_str2, m->u.str, safestrnlen(m->u.str, 255));
-					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%s' WHERE `varname`='%s' AND `index`='%d' LIMIT 1", mapreg_table, tmp_str2, name, i))
+					char esc_str[2 * 255 + 1];
+					char esc_name[32 * 2 + 1];
+					Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
+					Sql_EscapeStringLen(mmysql_handle, esc_str, m->u.str, safestrnlen(m->u.str, 255));
+					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%s' WHERE `varname`='%s' AND `index`='%d' LIMIT 1", mapreg_table, esc_str, esc_name, i))
 						Sql_ShowDebug(mmysql_handle);
 				}
 				m->save = false;

@@ -286,7 +286,7 @@ bat_c01,51,130,5	script	Therapist in battle::TherapistKvM01a	95,{
 	mes "[Therapist in battle]";
 	mes "Just close your eyes, and take a deep breathe.";
 	mes "You can be free from pain.";
-	specialeffect2 312;
+	specialeffect2 EF_HEAL;
 	close;
 }
 
@@ -294,7 +294,7 @@ bat_c01,148,53,1	script	Therapist in battle::TherapistKvM01b	95,{
 	mes "[Therapist in battle]";
 	mes "Just close your eyes, and take a deep breathe.";
 	mes "You can be free from pain.";
-	specialeffect2 312;
+	specialeffect2 EF_HEAL;
 	close;
 }
 

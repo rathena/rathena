@@ -737,7 +737,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 }
 
 in_sphinx2,259,213,0	script	Old Coffin#qsk_as	-1,7,8,{
-OnTouch:
+OnTouch_:
 	if (ASSN_SK == 2) {
 		mes "^3355FFIt's an ancient coffin";
 		mes "with a broken lid that";
@@ -801,7 +801,7 @@ OnTouch:
 }
 
 in_sphinx2,212,267,0	script	Old Coffin#qsk_as2	-1,5,6,{
-OnTouch:
+OnTouch_:
 	if (ASSN_SK == 2) {
 		mes "^3355FFIt's an ancient coffin";
 		mes "with a broken lid that";
@@ -884,7 +884,7 @@ OnTouch:
 }
 
 in_sphinx2,13,163,0	script	Stone Statue#qsk_as	-1,7,7,{
-OnTouch:
+OnTouch_:
 	if (ASSN_SK == 3) {
 		specialeffect EF_CONE;
 		mes "^3355FFThis ancient stone statue";
@@ -919,7 +919,7 @@ OnTouch:
 }
 
 in_sphinx2,13,146,0	script	Stone Statue#qsk_as2	-1,7,7,{
-OnTouch:
+OnTouch_:
 	if (ASSN_SK == 3) {
 		specialeffect EF_CONE;
 		mes "^3355FFThis ancient stone statue";
@@ -953,7 +953,7 @@ OnTouch:
 }
 
 moc_pryd04,85,96,0	script	¡¡#crypt	-1,3,3,{
-OnTouch:
+OnTouch_:
 	if (ASSN_SK == 4) {
 		specialeffect EF_CONE;
 		mes "^3355FFThere's something";

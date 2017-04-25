@@ -1731,7 +1731,8 @@ moc_fild22b,230,197,5	script	Munkenro#2	967,{
 			mes "Ok, just have a good adventure.";
 			next;
 			set ep13_ryu,22;
-			changequest 10077,10078; 
+			if (isbegin_quest(10077) == 1)
+				changequest 10077,10078; 
 			donpcevent "Head of the Alliance#moo::OnEnable"; 
 			mes "[Munkenro]";
 			mes "If you are too late,";
@@ -3094,7 +3095,7 @@ mid_camp,264,263,4	script	Diego#ep13bs	931,{
 mid_campin,291,128,1	script	#ep13bs	111,1,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (ep13_newbs < 4) {
 		mes "- It's a neat and tidy bed -";
 		mes "- It seems that nobody used it. -";
@@ -4741,7 +4742,7 @@ mid_camp,52,148,1	script	Dirt#ep13	844,{
 }
 
 man_fild01,59,261,0	script	#evt_lumis	-1,5,5,{
-OnTouch:
+OnTouch_:
 	if (ep13_animal == 11) {
 		mes "[Rumis Block]";
 		mes "This is it! Come to the small tree in the southeast direction!";
@@ -4981,7 +4982,7 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 // The Tripartite Union's Feud :: ep13_1_rhea
 //============================================================ 
 mid_campin,376,120,0	script	Research Official#ep131	754,3,3,{
-OnTouch:
+OnTouch_:
 	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 3500) {
 		mes "[United Research Official]";
 		mes "How come you've got so much to carry?";
@@ -7458,7 +7459,6 @@ OnDisable:
 	disablenpc "Hillsrion#alba01";
 	end;
 
-//OnTouch2:
 OnTouch:
 	mes "It is hissing in a low voice.";
 	mes "Sometimes it purrs, too.";
@@ -7475,7 +7475,6 @@ OnDisable:
 	disablenpc "Tatacho#alba02";
 	end;
 
-//OnTouch2:
 OnTouch:
 	mes "[Taab]";
 	mes "Oh, please don't disturb";
@@ -7496,7 +7495,6 @@ OnDisable:
 	disablenpc "Cornus#alba03";
 	end;
 
-//OnTouch2:
 OnTouch:
 	mes "[Taab]";
 	mes "Oh, please don't get";
@@ -7610,7 +7608,7 @@ function Catwarp;
 		next;
 		switch(select("Save your location:Cancel")) {
 		case 1:
-			savepoint "mid_camp",56,139;
+			savepoint "mid_camp",56,139,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -7629,7 +7627,7 @@ function Catwarp;
 		next;
 		switch(select("Save your location:Cancel")) {
 		case 1:
-			savepoint "mid_camp",56,139;
+			savepoint "mid_camp",56,139,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -7648,7 +7646,7 @@ function Catwarp;
 		next;
 		switch(select("Save your location:Use Storage:Cancel")) {
 		case 1:
-			savepoint "mid_camp",56,139;
+			savepoint "mid_camp",56,139,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -7695,7 +7693,7 @@ function Catwarp;
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Cancel")) {
 		case 1:
-			savepoint "mid_camp",56,139;
+			savepoint "mid_camp",56,139,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -7817,7 +7815,7 @@ function Catwarp;
 		next;
 		switch(select("Save your location:Use Storage:Use Cat Warp (Midgard):Use Cat Warp (Jottunheim):Cancel")) {
 		case 1:
-			savepoint "mid_camp",56,139;
+			savepoint "mid_camp",56,139,1,1;
 			mes "[Cat Hand Agent]";
 			mes "Thank you.";
 			mes "Your location has been saved.";
@@ -9651,8 +9649,10 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 				delitem 11016,1; //Expedition_Report_Vol4
 				getitem 11012,1; //Expedition_Report
 				set ep13_1_edq,8;
-				erasequest 3090;
-				erasequest 3091;
+				if (isbegin_quest(3090) > 0)
+					erasequest 3090;
+				if (isbegin_quest(3091) > 0)
+					erasequest 3091;
 				setquest 3092;
 				mes "[Staff Officer Abidal]";
 				mes "I'm glad that we were able to make this again. Please bring this report to the commander.";
@@ -10105,7 +10105,6 @@ man_fild01,315,95,3	script	Expedition Scout#1	707,{
 				}
 				if (.@playtime == -1) {
 					changequest 3090,3091;
-					erasequest 3090;
 				} else
 					erasequest 3091;
 				setquest 3091;
@@ -11518,7 +11517,6 @@ OnInit:
 }
 
 mid_camp,205,312,0	script	#moc2_talkevent01	-1,1,1,{
-//OnTouch2:
 OnTouch:
 	if (mao_morocc2 == 11) {
 		mes "[Mr. Kidd]";
@@ -11976,7 +11974,7 @@ morocc,43,108,5	script	Sharp-Looking Boy#dan_07	82,{
 }
 
 morocc,45,110,0	script	que_job01#01	45,2,2,{
-OnTouch:
+OnTouch_:
 	if (BaseClass == Job_Assassin) {
 		warp "que_job01",9,94;
 		end;
@@ -12203,7 +12201,7 @@ que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 }
 
 que_job01,80,77,0	script	que_job01#04	45,2,2,{
-OnTouch:
+OnTouch_:
 	if (BaseClass == Job_Assassin || mao_request > 0 || mao_morocc2 > 4) {
 		warp "que_job01",61,50;
 		end;
@@ -12411,7 +12409,7 @@ OnReset:
 	set $@moc_mao_room1,0; //Global Variable
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[Tao]";
 	if (prt_curse == 24) {
 		if ($@moc_mao_room1 == 0) {
@@ -12511,13 +12509,13 @@ OnEnable:
 	enablenpc "#room1_warp13";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	end;
 }
 
 que_job01,11,4,0	script	que_job01#room1_out	45,1,1,{
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	donpcevent " #room1timer::OnStop";
 	end;
@@ -12571,7 +12569,7 @@ OnReset:
 	set $@moc_mao_room2,0; //Global Variable
 	end;
 
-OnTouch:
+OnTouch_:
 	if ((mao_morocc2 > 4) && (mao_morocc2 < 10)) {
 		if ($@moc_mao_room2 == 0) {
 			set $@moc_mao_room2,1; //Global Variable
@@ -12694,7 +12692,7 @@ OnEnable:
 	enablenpc "#room2_1_warp";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	end;
 }
@@ -12709,20 +12707,20 @@ OnEnable:
 	enablenpc "#room2_2_warp";
 	end;
 
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	end;
 }
 
 que_job01,80,27,0	script	que_job01#room2_1_out	45,1,1,{
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	donpcevent " #room2timer::OnStop";
 	end;
 }
 
 que_job01,144,61,0	script	que_job01#room2_2_out	45,1,1,{
-OnTouch:
+OnTouch_:
 	warp "que_job01",52,50;
 	donpcevent " #room2timer::OnStop";
 	end;
@@ -13384,7 +13382,6 @@ hu_fild04,235,103,0	script	Heap of Earth#mao2_01	844,4,4,{
 		close;
 	}
 
-//OnTouch2:
 OnTouch:
 	if (mao_morocc2 == 7) {
 		specialeffect EF_LEVEL99_4;
@@ -13432,7 +13429,7 @@ OnStop:
 	stopnpctimer;
 	end;
 
-OnTouch:
+OnTouch_:
 	if (mao_morocc2 == 10) {
 		disablenpc "#moc2_event_on";
 		donpcevent "#moc2_event01::OnEnable";
@@ -13489,7 +13486,7 @@ OnEnable:
 	enablenpc "#moc2_event01";
 	end;
 
-OnTouch:
+OnTouch_:
 	soundeffect "wander_man_move.wav",1;
 	sc_start sc_blind,600000,0;
 	mes "As soon as you touched the crystal,";
@@ -13721,7 +13718,6 @@ yuno_fild09,234,133,0	warp	#moc2_fild09-que_dan02	1,1,que_dan02,13,10
 que_dan02,13,6,0	warp	#moc_que_dan02-fild09	1,1,yuno_fild09,234,129
 
 que_dan02,21,37,0	script	#moc2_b1_gate	-1,1,1,{
-//OnTouch2:
 OnTouch:
 	if (mao_morocc2 == 17) {
 		mes "- You find a side door that leads to the basement.";

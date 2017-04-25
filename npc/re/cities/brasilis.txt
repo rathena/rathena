@@ -99,7 +99,6 @@ brasilis,240,247,3	script	Signpost#bra3	858,{
 
 brasilis,303,309,3	script	Signpost#bra4	858,{
 	mes ":: Jungle Cable ::";
-	mes "";
 	mes "- Not for the faint of heart -";
 	close;
 }

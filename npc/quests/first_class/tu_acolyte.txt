@@ -325,7 +325,7 @@ prt_monk,230,106,3	script	Asthe#tu	1_F_PRIEST,{
 			tu_acolyte01 = 4;
 			getitem 1504,1; //Mace
 			getitem 602,1; //Wing_Of_Butterfly
-			savepoint "prt_monk",30,250;
+			savepoint "prt_monk",30,250,1,1;
 		}
 		else {
 			mes "[Asthe]";
@@ -1275,7 +1275,7 @@ prt_monk,28,260,5	script	Hedrick	1_M_04,{
 // Weapon Merchant
 //============================================================
 prt_monk,136,261,0	script	Weapon Merchant#tu	HIDDEN_WARP_NPC,9,9,{
-OnTouch:
+OnTouch_:
 	if(tu_acolyte01 != 20 || countitem(1081) == 0) end;// Merchant_Box_1
 	mes "[Weapon Merchant]";
 	mes "The stuff I requested from the guild is finally here!";

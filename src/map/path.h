@@ -66,4 +66,9 @@ unsigned int distance(int dx, int dy);
 bool check_distance_client(int dx, int dy, int distance);
 int distance_client(int dx, int dy);
 
+//
+void do_init_path();
+void do_final_path();
+
+
 #endif /* _PATH_H_ */

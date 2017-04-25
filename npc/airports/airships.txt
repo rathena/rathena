@@ -32,7 +32,7 @@ OnUnhide:
 	specialeffect EF_SUMMONSLAVE;
 	end;
 
-OnTouch:
+OnTouch_:
 	switch ($@airplanelocation) {
 	case 0: warp "yuno",92,260; end;
 	case 1: warp "einbroch",92,278; end;
@@ -655,7 +655,7 @@ airplane,50,66,5	script	Apple Merchant#airplane	86,{
 airplane_01,243,73,0	script	#AirshipWarp-3	45,1,1,{
 	end;
 	
-OnTouch:
+OnTouch_:
 	switch ($@airplanelocation2) {
 	case 0: warp "ra_fild12",292,204; end;
 	case 1: 
@@ -1027,7 +1027,7 @@ airplane_01,83,61,2	script	Dianne#01airplane_01	72,2,2,{
 	mes "Do you think that...";
 	close;
 
-OnTouch:
+OnTouch_:
 	emotion e_sob;
 	end;
 }
@@ -1139,18 +1139,18 @@ airplane_01,32,61,4	script	Nils#ein	49,1,1,{
 		mes .@line1_1$[.@wordtest];
 		mes .@line1_2$[.@wordtest];
 		mes .@line1_3$[.@wordtest];
-		set .@start_time, gettime(3)*60*60 + gettime(2)*60 + gettime(1);
+		set .@start_time, gettimetick(1);
 		next;
 		input .@save1$;
-		set .@end_time, gettime(3)*60*60 + gettime(2)*60 + gettime(1);
+		set .@end_time, gettimetick(1);
 		set .@total_time, .@end_time - .@start_time;
 		mes "[Nils]";
 		mes .@line2_1$[.@wordtest];
 		mes .@line2_2$[.@wordtest];
-		set .@start_time, gettime(3)*60*60 + gettime(2)*60 + gettime(1);
+		set .@start_time, gettimetick(1);
 		next;
 		input .@save2$;
-		set .@end_time, gettime(3)*60*60 + gettime(2)*60 + gettime(1);
+		set .@end_time, gettimetick(1);
 		set .@total_time, .@total_time + (.@start_time - .@end_time);
 		set .@tasoo, (.@letters[.@wordtest] / .@total_time) * 6;
 		if ((.@save1$ == .@word1$[.@wordtest]) && (.@save2$ == .@word2$[.@wordtest])) {
@@ -1423,6 +1423,8 @@ function	script	applegamble	{
 				getitem 512,.@amount; //Apple
 				end;
 			}
+			mes "Alright.";
+			mes "Let me cast the dice again.";
 		}
 		else {
 			mes "^FF0000" + strcharinfo(0) + "^000000, you got ^FF0000" + .@player3 + "^000000 and the total is now ^FF0000" + .@playertotal + "^000000. Now it is my turn.";

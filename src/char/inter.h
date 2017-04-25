@@ -4,13 +4,23 @@
 #ifndef _INTER_SQL_H_
 #define _INTER_SQL_H_
 
+#include "../common/conf.h"
+#include "../common/mmo.h"
 #include "../common/sql.h"
+
+struct Inter_Config {
+	char cfgFile[128];				  ///< Inter-Config file
+	config_t cfg;					  ///< Config
+	struct s_storage_table *storages; ///< Storage name & table information
+	uint8 storage_count;			  ///< Number of available storage
+};
+
+extern struct Inter_Config interserv_config;
 
 int inter_init_sql(const char *file);
 void inter_final(void);
 int inter_parse_frommap(int fd);
 int inter_mapif_init(int fd);
-int mapif_send_gmaccounts(void);
 int mapif_disconnectplayer(int fd, uint32 account_id, uint32 char_id, int reason);
 void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int account_id, int8 type,
 	int group_id, int logincount, int state, const char *email, const char *last_ip, const char *lastlogin,

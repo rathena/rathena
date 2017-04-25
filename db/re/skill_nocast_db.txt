@@ -9,7 +9,7 @@
 // 2    - cannot be used in PvP maps (use this instead of 1 for PK-mode servers)
 // 4    - cannot be used in GvG maps
 // 8    - cannot be used in Battleground maps
-// 16   - cannot be cloned (clones will not copy this skill)
+// 16   - cannot be used in WOE:TE castles
 // Restricted zones - configured by 'restricted <number>' mapflag
 // 32   - cannot be used in zone 1 maps
 // 64   - cannot be used in zone 2 maps
@@ -18,6 +18,7 @@
 // 512  - cannot be used in zone 5 maps
 // 1024 - cannot be used in zone 6 maps
 // 2048 - cannot be used in zone 7 maps
+// 4096 - cannot be used in zone 8 maps
 //
 // Example:
 // 8,6  // Endure cannot be used in PvP and GvG maps (2+4)
@@ -29,11 +30,12 @@
 2423,1	//WM_SIRCLEOFNATURE
 2430,1	//WM_SATURDAY_NIGHT_FEVER
 2455,1	//SO_ARRULLO
+2299,1	//SC_MANHOLE
 
 //----------------------------------------------------------------------------
 // PVP
 //----------------------------------------------------------------------------
-
+2300,2	//SC_DIMENSIONDOOR
 
 //----------------------------------------------------------------------------
 // GVG
@@ -100,10 +102,38 @@
 3013,3	//KO_KYOUGAKU
 
 //----------------------------------------------------------------------------
-// Clone Forbidden/pointless skills
+// Restricted in WOE:TE Castles
 //----------------------------------------------------------------------------
-77,16	//PR_TURNUNDEAD
-79,16	//PR_MAGNUS
+8,16	// SM_ENDURE
+26,16	// AL_TELEPORT
+27,16	// AL_WARP
+41,16	// MC_VENDING
+87,16	// WZ_ICEWALL
+147,16	// AC_MAKINGARROW
+150,16	// TF_BACKSLIDING
+211,16	// RG_STEALCOIN
+219,16	// RG_INTIMIDATE
+336,16	// WE_CALLPARTNER
+359,16	// LK_BERSERK
+361,16	// HP_ASSUMPTIO
+362,16	// HP_BASILICA
+389,16	// ST_CHASEWALK
+395,16	// CG_MOONLIT
+396,16	// CG_MARIONETTE
+409,16	// WE_CALLPARENT
+410,16	// WE_CALLBABY
+426,16	// TK_HIGHJUMP
+491,16	// CR_CULTIVATION
+529,16	// NJ_SHADOWJUMP
+// 530,16	// NJ_KIRIKAGE
+691,16	// CASH_ASSUMPTIO
+2300,16	// SC_DIMENSIONDOOR
+//!TODO: More 3rd Class skills
+// 2284,16	// SC_FATALMENACE
+// 2293,16	// SC_GROOMY
+// 2296,16	// SC_UNLUCKY
+// 2494,16	// GN_CHANGEMATERIAL
+// 2462,16	// SO_EL_ANALYSIS
 
 //----------------------------------------------------------------------------
 // Zone 1 - Aldebaran Turbo Track
@@ -180,10 +210,13 @@
 233,2048	//AM_SPHEREMINE
 491,2048	//CR_CULTIVATION
 1013,2048	//BS_GREED
-2299,2048	//SC_MANHOLE
-2300,2048	//SC_DIMENSIONDOOR
-2301,2048	//SC_CHAOSPANIC
-2303,2048	//SC_BLOODYLUST
 2419,2048	//WM_POEMOFNETHERWORLD
 2482,2048	//GN_WALLOFTHORN
 2493,2048	//GN_SLINGITEM
+
+//----------------------------------------------------------------------------
+// Zone 8 - WOE:TE Dungeons
+//----------------------------------------------------------------------------
+336,4096 // WE_CALLPARTNER
+409,4096 // WE_CALLPARENT
+410,4096 // WE_CALLBABY

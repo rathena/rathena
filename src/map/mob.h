@@ -21,7 +21,7 @@
 #define MAX_MVP_DROP 3
 #define MAX_STEAL_DROP 7
 
-#define MAX_RACE2_MOBS 50
+#define MAX_RACE2_MOBS 100
 
 //Min time between AI executions
 #define MIN_MOBTHINKTIME 100
@@ -40,10 +40,6 @@
 //Used to determine default enemy type of mobs (for use in eachinrange calls)
 #define DEFAULT_ENEMY_TYPE(md) (md->special_state.ai?BL_CHAR:BL_MOB|BL_PC|BL_HOM|BL_MER)
 
-//Externals for the status effects. [Epoque]
-extern const int mob_manuk[8];
-extern const int mob_splendide[5];
-
 /**
  * Mob constants
  * Added definitions for WoE:SE objects and other [L0ne_W0lf], [aleos]
@@ -61,19 +57,6 @@ enum MOBID {
 	MOBID_G_GEOGRAPHER		= 1590,
 	MOBID_GUARDIAN_STONE1	= 1907,
 	MOBID_GUARDIAN_STONE2,
-	MOBID_TATACHO			= 1986,
-	MOBID_CENTIPEDE,
-	MOBID_NEPENTHES,
-	MOBID_HILLSRION,
-	MOBID_HARDROCK_MOMMOTH,
-	MOBID_TENDRILRION,
-	MOBID_CORNUS,
-	MOBID_NAGA,
-	MOBID_LUCIOLA_VESPA,
-	MOBID_PINGUICULA,
-	MOBID_G_TATACHO			= 1997,
-	MOBID_G_HILLSRION,
-	MOBID_CENTIPEDE_LARVA,
 	MOBID_SILVERSNIPER		= 2042,
 	MOBID_MAGICDECOY_FIRE,
 	MOBID_MAGICDECOY_WATER,
@@ -117,9 +100,11 @@ enum size {
 
 /// Used hardcoded Random Monster group in src
 enum e_Random_Monster {
-	MOBG_Branch_Of_Dead_Tree = 0,
-	MOBG_Bloody_Dead_Branch  = 2,
-	MOBG_ClassChange         = 4,
+	MOBG_Branch_Of_Dead_Tree	= 0,
+	MOBG_Poring_Box				= 1,
+	MOBG_Bloody_Dead_Branch		= 2,
+	MOBG_Red_Pouch_Of_Surprise	= 3,
+	MOBG_ClassChange			= 4,
 };
 
 struct mob_skill {
@@ -193,7 +178,6 @@ struct mob_data {
 		unsigned int steal_coin_flag : 1;
 		unsigned int soul_change_flag : 1; // Celest
 		unsigned int alchemist: 1;
-		unsigned int spotted: 1;
 		unsigned int npc_killmonster: 1; //for new killmonster behavior
 		unsigned int rebirth: 1; // NPC_Rebirth used
 		unsigned int boss : 1;
@@ -209,6 +193,7 @@ struct mob_data {
 		unsigned int dmg;
 		unsigned int flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 	} dmglog[DAMAGELOG_SIZE];
+	uint32 spotted_log[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int spawn_timer; //Required for Convex Mirror
 	struct s_mob_lootitem *lootitems;
@@ -305,8 +290,7 @@ int mobdb_searchname_array(struct mob_db** data, int size, const char *str);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
 
-struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m,
-	short x, short y, const char *mobname, int mob_id, const char *event, unsigned int size, unsigned int ai);
+struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int mob_id, const char *event, unsigned int size, unsigned int ai);
 
 int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y,
 	const char* mobname, int mob_id, int amount, const char* event, unsigned int size, unsigned int ai);
@@ -354,8 +338,6 @@ int mob_linksearch(struct block_list *bl,va_list ap);
 
 int mobskill_use(struct mob_data *md,unsigned int tick,int event);
 int mobskill_event(struct mob_data *md,struct block_list *src,unsigned int tick, int flag);
-int mobskill_castend_id( int tid, unsigned int tick, int id,int data );
-int mobskill_castend_pos( int tid, unsigned int tick, int id,int data );
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
 int mob_countslave(struct block_list *bl);
 int mob_count_sub(struct block_list *bl, va_list ap);
@@ -368,6 +350,8 @@ int mob_clone_delete(struct mob_data *md);
 void mob_reload(void);
 
 // MvP Tomb System
+int mvptomb_setdelayspawn(struct npc_data *nd);
+int mvptomb_delayspawn(int tid, unsigned int tick, int id, intptr_t data);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
 

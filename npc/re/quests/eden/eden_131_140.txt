@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Capuche
 //===== Current Version: =====================================
-//= 1.0
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -11,12 +11,14 @@
 //= Repeatable quests for players between BaseLevel 131 - 140.
 //===== Additional Comments: =================================
 //= 1.0 First version.
+//= 1.1 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.2 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 	cutin "ragi01",0;
 	mes "[Ragi]";
-	if (countitem(6219) == 0) {// Para_Team_Mark
+	if (!callfunc("F_HasEdenGroupMark")) {
 		mes "Only adventurers from Eden Group are welcome here.";
 		mes "I'm giving requests to base level ^FF0000130-140^000000 adventurers only.";
 	}

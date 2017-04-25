@@ -10,7 +10,7 @@
 
 // Before running this script, add the entry below to
 // 'db/(pre-)re/instance_db.txt':
-// 12,Abyss Lake Instance,3600,abyss_03,160,155,abyss_03
+// 100,Abyss Lake Instance,3600,300,abyss_03,160,155
 
 // Instance Creation
 //============================================================

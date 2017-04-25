@@ -42,6 +42,7 @@
 //= 2.0 Added missing Lab Staff#amano08 NPC. (bugreport:4319) [Gepard]
 //= 2.1 Commented out Duplicate NPCs. (bugreport:4555)
 //= 2.2 Added missing NPC found in AEGIS files. [L0ne_W0lf]
+//= 2.3 Updated the second entrance to Biolabs. [Capuche]
 //=============================================================
 
 lighthalzen,198,285,5	script	Jiwon#zen5	862,{
@@ -891,7 +892,7 @@ lhz_in02,283,276,4	script	Customer#amano12	815,{
 	mes "to ask me out or something?";
 	next;
 	mes "[Sei]";
-	if (Sex == 1) {
+	if (Sex == SEX_MALE) {
 		mes "Well, if he does,";
 		mes "shouldn't he have";
 		mes "more guts? Or are ";
@@ -1031,7 +1032,7 @@ lighthalzen,297,239,3	duplicate(Berru#lhz_01)	Pilia#lhz_01	818
 lighthalzen,312,233,3	script	Beggar#lhz_02	777,3,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	mes "[Beggar]";
 	mes "Please...";
 	mes "My child is starving...";
@@ -1545,7 +1546,7 @@ lhz_in03,192,19,3	script	Haggar#zen1	855,{
 
 lhz_in03,193,25,2	script	Bartender#12	61,{
 	mes "[Tony]";
-	if (Sex) {
+	if (Sex == SEX_MALE) {
 		mes "Hey man, I know this";
 	}
 	else {
@@ -1817,7 +1818,7 @@ lhz_in01,35,226,5	script	Rekenber Guard#li01	867,{
 }
 
 lhz_in01,23,132,3	script	Rekenber Guard#li02	867,5,5,{
-OnTouch:
+OnTouch_:
 	if (isequipped(2241) && isequipped(2243)) {
 		mes "[Rekenber Guard]";
 		mes "Keep your eyes open.";
@@ -1923,7 +1924,7 @@ lhz_in01,199,137,3	script	Scientist#li_03	865,{
 }
 
 lhz_in01,46,125,3	script	Rekenber Guard#li03	867,5,5,{
-OnTouch:
+OnTouch_:
 	if (isequipped(2241) && isequipped(2243)) {
 		mes "[Rekenber Guard]";
 		mes "......................";
@@ -1946,40 +1947,31 @@ OnTouch:
 	end;
 }
 
-lhz_in01,25,141,4	script	Regenschirm Guard	868,{
-
+lhz_in01,24,140,3	script	Regenschirm Guard#40	4_M_LGTGUARD,{
 	mes "[Regenschirm Guard]";
-	if(isequipped(2241) && isequipped(2243)){
+	if (lhz_sincube > 10 && countitem(2657) > 0) {// Lab_Passport
 		mes "Do you wish to";
 		mes "go underground?";
 		next;
-		if(select("Yes:No")==1){
-			if(isequipped(2657)){
-				warp "lhz_dun01",150,288;
-				end;
-			}
+		if (select("Yes","No") == 1) {
 			mes "[Regenschirm Guard]";
-			mes "I'm sorry but I can't let";
-			mes "staff without proper autorization";
-			mes "pass. Only staff members with";
-			mes "Laboratory Passports are allowed";
-			mes "to enter the underground.";
-			close;
-
+			mes "Thank you and";
+			mes "have a nice day.";
+			close2;
+			warp "lhz_dun01",149,285;
+			end;
 		}
 		mes "[Regenschirm Guard]";
 		mes "Thank you and";
 		mes "have a nice day.";
 		close;
 	}
-	mes "This area is restricted";
-	mes "to the public! Who are you";
-	mes "and how did you get in here?!";
-	mes "Hey, I need backup right away!";
-	close2;
-	warp "lhz_in01",34,224;
-	end;
-
+	mes "May I help you?";
+	mes "If you would like to";
+	mes "enter, you must first";
+	mes "have a Laboratory Permit.";
+	mes "Thank you for your cooperation.";
+	close;
 }
 
 
@@ -2909,7 +2901,7 @@ lighthalzen,40,107,4	script	Vergil#zen4	869,{
 }
 
 lhz_in01,144,53,3	script	Jorje#zero	98,1,1,{
-OnTouch:
+OnTouch_:
 	switch(rand(1,3)) {
 	case 1:
 		mes "[Jorje]";
@@ -2957,7 +2949,7 @@ lhz_in01,139,48,7	script	Leimi#mimir	73,{
 	mes "Um, may I help you?";
 	emotion e_omg;
 	if (BaseJob == Job_Assassin) {
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			next;
 			mes "[Leimi]";
 			mes "Oh, you're an Assassin!";
@@ -2978,9 +2970,9 @@ lhz_in01,139,48,7	script	Leimi#mimir	73,{
 }
 
 lhz_in01,138,47,0	script	#mimir_camera	-1,2,2,{
-OnTouch:
+OnTouch_:
 	if (BaseJob == Job_Assassin) {
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "^3355FF*Click*^000000";
 			next;
 			mes "["+strcharinfo(0)+"]";

@@ -433,17 +433,17 @@ mal_in01,160,34,4	script	Missing, the Cleaner	545,{
 	end;
 L_Enter:
 	switch(instance_enter("Culvert")) {
-	case 3:
+	case IE_OTHER:
 		mes "An unknown error has occurred.";
 		close;
-	case 2:
+	case IE_NOINSTANCE:
 		mes "The gate to the Culvert is still closed.";
 		mes "You must wait until you are able to enter or find a party leader who can create the instance.";
 		close;
-	case 1:
+	case IE_NOMEMBER:
 		mes "Only party members can participate.";
 		close;
-	case 0:
+	case IE_OK:
 		mapannounce "mal_in01", strcharinfo(0)+" of the party "+getpartyname(getcharid(1))+" is entering the Culvert.",bc_map,"0x00ff99";
 		if (checkquest(12254) == -1) setquest 12254;
 		//warp "1@pump",63,98;

@@ -733,7 +733,6 @@ OnTouch:
 		mes "Name : Maestro Song";
 		next;
 		mes "- Bring this receipt and exchange it";
-		mes "";
 		mes "- Juno's store manager : Mr. Click.";
 		next;
 		mes "- Directions : Around Juno's plaza.";
@@ -1092,7 +1091,7 @@ OnTouch:
 }
 
 ice_dun01,157,15,0	script	#Minsicecave1	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (job_min == 13) {
 		mes "-A long time ago-";
 		close2;
@@ -1103,7 +1102,7 @@ OnTouch:
 }
 
 ice_dun01,157,23,0	script	#Minsicecave2	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (job_min == 13) {
 		mes "-The giant born to ice-";
 		close2;
@@ -1114,7 +1113,7 @@ OnTouch:
 }
 
 ice_dun01,141,41,0	script	#Minsicecave3	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (job_min == 13) {
 		mes "-died-";
 		close2;
@@ -1125,7 +1124,7 @@ OnTouch:
 }
 
 ice_dun01,120,35,0	script	#Minsicecave4	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (job_min == 13) {
 		mes "-His body became the ground-";
 		close2;
@@ -1136,7 +1135,7 @@ OnTouch:
 }
 
 ice_dun01,104,30,0	script	#Minsicecave5	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (job_min == 13) {
 		mes "-His bones became a mountain-";
 		close2;
@@ -1147,7 +1146,7 @@ OnTouch:
 }
 
 ice_dun01,86,23,0	script	#Minsicecave6	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (job_min == 13) {
 		mes "-His skin became soil-";
 		close2;
@@ -1158,7 +1157,7 @@ OnTouch:
 }
 
 ice_dun01,75,19,0	script	#Minsicecave7	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (job_min == 13) {
 		mes "-His blood became a river-";
 		close2;
@@ -1169,7 +1168,7 @@ OnTouch:
 }
 
 ice_dun01,56,12,0	script	#Minsicecave8	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (job_min == 13) {
 		mes "-His hair became a plant-";
 		close2;
@@ -1180,7 +1179,7 @@ OnTouch:
 }
 
 ice_dun01,29,26,0	script	#Minsicecave9	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (job_min == 13) {
 		mes "-His head became the sky-";
 		close2;
@@ -1191,7 +1190,7 @@ OnTouch:
 }
 
 ice_dun01,25,46,0	script	#Minsicecave10	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (job_min == 13) {
 		mes "-His tears from his-";
 		close2;
@@ -1202,7 +1201,7 @@ OnTouch:
 }
 
 ice_dun01,20,66,0	script	#Minsicecave11	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (job_min == 13) {
 		mes "-eyes became dew-";
 		close2;
@@ -1213,7 +1212,7 @@ OnTouch:
 }
 
 ice_dun01,22,85,0	script	#Minsicecave12	139,2,2,{
-OnTouch:
+OnTouch_:
 	if (job_min == 13) {
 		mes "-on the leaves-";
 		percentheal -90,0;

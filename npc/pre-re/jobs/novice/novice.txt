@@ -33,12 +33,22 @@ new_1-1,66,114,4	script	Bulletin Board#nv	111,{
 	close;
 }
 
+new_2-1,66,114,4	duplicate(Bulletin Board#nv)	Bulletin Board#nv2	111
+new_3-1,66,114,4	duplicate(Bulletin Board#nv)	Bulletin Board#nv3	111
+new_4-1,66,114,4	duplicate(Bulletin Board#nv)	Bulletin Board#nv4	111
+new_5-1,66,114,4	duplicate(Bulletin Board#nv)	Bulletin Board#nv5	111
+
 new_1-1,144,116,2	script	Guard#nv1	105,{
 	mes "[Training Grounds Guard]";
 	mes "Welcome to the Training Grounds.";
 	mes "You are now in the outer court yard. Please go inside the castle to begin your training.";
 	close;
 }
+
+new_2-1,144,116,2	duplicate(Guard#nv1)	Guard#nv2-1	105
+new_3-1,144,116,2	duplicate(Guard#nv1)	Guard#nv3-1	105
+new_4-1,144,116,2	duplicate(Guard#nv1)	Guard#nv4-1	105
+new_5-1,144,116,2	duplicate(Guard#nv1)	Guard#nv5-1	105
 
 new_1-1,144,107,2	script	Guard#nv2	105,{
 	mes "[Training Grounds Guard]";
@@ -60,6 +70,12 @@ new_1-1,144,107,2	script	Guard#nv2	105,{
 	}
 	close;
 }
+
+new_2-1,144,107,2	duplicate(Guard#nv2)	Guard#nv2-2	105
+new_3-1,144,107,2	duplicate(Guard#nv2)	Guard#nv3-2	105
+new_4-1,144,107,2	duplicate(Guard#nv2)	Guard#nv4-2	105
+new_5-1,144,107,2	duplicate(Guard#nv2)	Guard#nv5-2	105
+
 
 // Receptionist
 new_1-2,100,29,4	script	Receptionist#nv1	86,{
@@ -118,27 +134,27 @@ new_1-2,100,29,4	script	Receptionist#nv1	86,{
 			set nov_3_merchant,0;
 			switch(rand(6)) {
 			case 0:
-				savepoint "prontera",273,354;
+				savepoint "prontera",273,354,1,1;
 				warp "prontera",273,354;
 				break;
 			case 1:
-				savepoint "morocc",160,94;
+				savepoint "morocc",160,94,1,1;
 				warp "morocc",160,94;
 				break;
 			case 2:
-				savepoint "geffen",120,100;
+				savepoint "geffen",120,100,1,1;
 				warp "geffen",120,100;
 				break;
 			case 3:
-				savepoint "payon",70,100;
+				savepoint "payon",70,100,1,1;
 				warp "payon",70,100;
 				break;
 			case 4:
-				savepoint "alberta",116,57;
+				savepoint "alberta",116,57,1,1;
 				warp "alberta",116,57;
 				break;
 			case 5:
-				savepoint "izlude",94,103;
+				savepoint "izlude",94,103,1,1;
 				warp "izlude",94,103;
 			}
 			end;
@@ -178,6 +194,10 @@ new_1-2,100,29,4	script	Receptionist#nv1	86,{
 		}
 	}
 }	
+new_2-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv2	86
+new_3-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv3	86
+new_4-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv4	86
+new_5-2,100,29,4	duplicate(Receptionist#nv1)	Receptionist#nv5	86
 
 new_1-1,53,114,4	script	Shion#nv1	727,{
 	if (nov_get_item04 > 9 || nov_get_item05 > 9) {
@@ -349,6 +369,12 @@ new_1-1,53,114,4	script	Shion#nv1	727,{
 		}
 	}
 }
+
+new_2-1,53,114,4	duplicate(Shion#nv1)	Shion#nv2	727
+new_3-1,53,114,4	duplicate(Shion#nv1)	Shion#nv3	727
+new_4-1,53,114,4	duplicate(Shion#nv1)	Shion#nv4	727
+new_5-1,53,114,4	duplicate(Shion#nv1)	Shion#nv5	727
+
 
 // Interfaces Tutor
 new_1-2,99,105,3	script	Interfaces Tutor#nv1	751,{
@@ -1341,7 +1367,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 			set nov_3_magician,0;
 			set nov_3_acolyte,0;
 			set nov_3_merchant,0;
-			savepoint .@mapn$,.@saveX,.@saveY;
+			savepoint .@mapn$,.@saveX,.@saveY,1,1;
 			warp .@mapn$,.@warpX,.@warpY;
 			end;
 		}
@@ -1404,7 +1430,7 @@ new_1-2,118,108,3	script	Kafra Employee#nv1	117,{
 			set nov_3_magician,0;
 			set nov_3_acolyte,0;
 			set nov_3_merchant,0;
-			savepoint .@mapn$,.@saveX,.@saveY;
+			savepoint .@mapn$,.@saveX,.@saveY,1,1;
 			warp .@mapn$,.@warpX,.@warpY;
 			end;
 		}
@@ -1537,7 +1563,6 @@ new_1-2,161,182,5	script	Instructor#nv	92,{
 	mes "Welcome to my class.";
 	mes "Choose the subject you";
 	mes "wish to learn more about.";
-	mes "";
 	next;
 	while(1) {
 		switch(select("Basic Info Window:Party Window:Item Window:Option Window:Equipment Window:Cancel")) {
@@ -2514,7 +2539,7 @@ new_1-2,38,182,3	script	Entrance Guard#nv	92,{
 			getitem 611,2; //Spectacles
 			getitem 569,300; //Novice_Potion
 			close2;
-			savepoint "new_1-2",23,188;
+			savepoint "new_1-2",23,188,1,1;
 			warp "new_1-3",96,21;
 			end;
 		case 2:
@@ -3001,7 +3026,6 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 			mes "Fill in the blank:";
 			mes "You ^3355FF_____^000000";
 			mes "competing with other people...";
-			mes "";
 			next;
 			switch(select("don't mind...:don't like...:don't care about...")) {
 			case 1:
@@ -3348,7 +3372,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "izlude",93,104;
+					savepoint "izlude",93,104,1,1;
 					warp "izlude_in",74,167;
 					end;
 				case 2:
@@ -3406,7 +3430,6 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					next;
 					mes "[Hanson]";
 					mes "The town you will arrive is named 'Geffen'.";
-					mes "";
 					mes "The mage academy is located in the Northwest part in town. Please remember this.";
 					next;
 					mes "[Hanson]";
@@ -3421,7 +3444,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "geffen",119,37;
+					savepoint "geffen",119,37,1,1;
 					warp "geffen_in",163,98;
 					end;
 				case 2:
@@ -3492,7 +3515,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "alberta",30,232;
+					savepoint "alberta",30,232,1,1;
 					warp "alberta_in",62,44;
 					end;
 				case 2:
@@ -3560,7 +3583,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					mes "^A62A2A" + strcharinfo(0) + "^000000";
 					mes "and farewell.";
 					close2;
-					savepoint "morocc",150,99;
+					savepoint "morocc",150,99,1,1;
 					warp "moc_ruins",155,44;
 					end;
 				case 2:
@@ -3629,7 +3652,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "payon",70,100;
+					savepoint "payon",70,100,1,1;
 					warp "payon_in02",64,65;
 					end;
 				case 2:
@@ -3701,7 +3724,7 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 					set nov_3_magician,0;
 					set nov_3_acolyte,0;
 					set nov_3_merchant,0;
-					savepoint "prontera",117,72;
+					savepoint "prontera",117,72,1,1;
 					warp "prt_church",172,19;
 					end;
 				case 2:
@@ -3738,27 +3761,27 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 			set nov_3_merchant,0;
 			set .@startmap,rand(1,6);
 			if ((.@startmap > 0) && (.@startmap < 2)) {
-				savepoint "prontera",117,72;
+				savepoint "prontera",117,72,1,1;
 				warp "prt_fild08",170,371;
 			}
 			else if ((.@startmap > 1) && (.@startmap < 3)) {
-				savepoint "geffen",119,37;
+				savepoint "geffen",119,37,1,1;
 				warp "gef_fild07",327,188;
 			}
 			else if ((.@startmap > 2) && (.@startmap < 4)) {
-				savepoint "alberta",30,232;
+				savepoint "alberta",30,232,1,1;
 				warp "pay_fild03",388,70;
 			}
 			else if ((.@startmap > 3) && (.@startmap < 5)) {
-				savepoint "morocc",150,99;
+				savepoint "morocc",150,99,1,1;
 				warp "moc_fild07",198,39;
 			}
 			else if ((.@startmap > 4) && (.@startmap < 6)) {
-				savepoint "payon",256,242;
+				savepoint "payon",256,242,1,1;
 				warp "pay_fild01",334,354;
 			}
 			else if ((.@startmap > 5) && (.@startmap < 7)) {
-				savepoint "izlude",93,104;
+				savepoint "izlude",93,104,1,1;
 				warp "prt_fild08",357,212;
 			}
 			end;
@@ -3789,27 +3812,27 @@ new_1-4,100,29,1	script	Hanson#nv	46,{
 		set nov_3_merchant,0;
 		set .@startmap,rand(1,6);
 		if ((.@startmap > 0) && (.@startmap < 2)) {
-			savepoint "prontera",117,72;
+			savepoint "prontera",117,72,1,1;
 			warp "prt_fild08",170,371;
 		}
 		else if ((.@startmap > 1) && (.@startmap < 3)) {
-			savepoint "geffen",119,37;
+			savepoint "geffen",119,37,1,1;
 			warp "gef_fild07",327,188;
 		}
 		else if ((.@startmap > 2) && (.@startmap < 4)) {
-			savepoint "alberta",30,232;
+			savepoint "alberta",30,232,1,1;
 			warp "pay_fild03",388,70;
 		}
 		else if ((.@startmap > 3) && (.@startmap < 5)) {
-			savepoint "morocc",150,99;
+			savepoint "morocc",150,99,1,1;
 			warp "moc_fild07",198,39;
 		}
 		else if ((.@startmap > 4) && (.@startmap < 6)) {
-			savepoint "payon",70,100;
+			savepoint "payon",70,100,1,1;
 			warp "pay_fild01",334,354;
 		}
 		else if ((.@startmap > 5) && (.@startmap < 7)) {
-			savepoint "izlude",93,104;
+			savepoint "izlude",93,104,1,1;
 			warp "prt_fild08",357,212;
 		}
 		end;
@@ -3936,27 +3959,27 @@ S_UserJobchoice:
 	set nov_3_acolyte,0;
 	set nov_3_merchant,0;
 	if(@menu == 1) {
-		savepoint "izlude",93,104;
+		savepoint "izlude",93,104,1,1;
 		warp "izlude_in",74,167;
 	}
 	else if (@menu == 2) {
-		savepoint "geffen",119,37;
+		savepoint "geffen",119,37,1,1;
 		warp "geffen_in",163,98;
 	}
 	else if (@menu == 3) {
-		savepoint "alberta",30,232;
+		savepoint "alberta",30,232,1,1;
 		warp "alberta_in",62,44;
 	}
 	else if (@menu == 4) {
-		savepoint "morocc",150,99;
+		savepoint "morocc",150,99,1,1;
 		warp "moc_ruins",155,44;
 	}
 	else if (@menu == 5) {
-		savepoint "payon",70,100;
+		savepoint "payon",70,100,1,1;
 		warp "payon_in02",64,65;
 	}
 	else {
-		savepoint "prontera",117,72;
+		savepoint "prontera",117,72,1,1;
 		warp "prt_church",172,19;
 	}
 	return;
@@ -4071,7 +4094,6 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 					next;
 					mes "[Bruce]";
 					mes "When advancing to the Second Job Class, Acolytes can change their jobs to ^8E2323Priests^000000 or ^8E2323Monks^000000.";
-					mes "";
 					set nov_3_swordman,20;
 					next;
 					break;
@@ -4229,7 +4251,6 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 					next;
 					mes "[Bruce]";
 					mes "When advancing to the Second Job Class, Acolytes can change their jobs to ^8E2323Priests^000000 or ^8E2323Monks^000000.";
-					mes "";
 					set nov_3_swordman,20;
 					next;
 					break;
@@ -4254,31 +4275,31 @@ new_1-4,91,22,4	script	Bruce#nv	57,{
 }
 
 // Training Ground Mobs
-new_1-3,0,0,0,0	monster	Poring	1002,10,0,0,0
-new_1-3,0,0,0,0	monster	Drops	1113,10,0,0,0
-new_1-3,0,0,0,0	monster	Lunatic	1063,10,0,0,0
-new_1-3,0,0,0,0	monster	ChonChon	1011,10,0,0,0
-new_2-3,0,0,0,0	monster	Condor	1009,10,0,0,0
-new_2-3,0,0,0,0	monster	Picky	1050,10,0,0,0
-new_2-3,0,0,0,0	monster	Willow	1010,10,0,0,0
-new_2-3,0,0,0,0	monster	Roda Frog	1012,10,0,0,0
-new_3-3,0,0,0,0	monster	Condor	1009,10,0,0,0
-new_3-3,0,0,0,0	monster	Picky	1050,10,0,0,0
-new_3-3,0,0,0,0	monster	Willow	1010,10,0,0,0
-new_3-3,0,0,0,0	monster	Roda Frog	1012,10,0,0,0
-new_4-3,0,0,0,0	monster	Rocker	1052,10,0,0,0
-new_4-3,0,0,0,0	monster	Thief Bug	1051,10,0,0,0
-new_4-3,0,0,0,0	monster	Thief Bug	1053,10,0,0,0
-new_4-3,0,0,0,0	monster	Spore	1014,10,0,0,0
-new_5-3,0,0,0,0	monster	Rocker	1052,10,0,0,0
-new_5-3,0,0,0,0	monster	Thief Bug	1051,1,0,0,0
-new_5-3,0,0,0,0	monster	Thief Bug	1053,1,0,0,0
-new_5-3,0,0,0,0	monster	Spore	1014,1,0,0,0
-new_1-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_2-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_3-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_4-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_5-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
+new_1-3,0,0	monster	Poring	1002,10
+new_1-3,0,0	monster	Drops	1113,10
+new_1-3,0,0	monster	Lunatic	1063,10
+new_1-3,0,0	monster	ChonChon	1011,10
+new_2-3,0,0	monster	Condor	1009,10
+new_2-3,0,0	monster	Picky	1050,10
+new_2-3,0,0	monster	Willow	1010,10
+new_2-3,0,0	monster	Roda Frog	1012,10
+new_3-3,0,0	monster	Condor	1009,10
+new_3-3,0,0	monster	Picky	1050,10
+new_3-3,0,0	monster	Willow	1010,10
+new_3-3,0,0	monster	Roda Frog	1012,10
+new_4-3,0,0	monster	Rocker	1052,10
+new_4-3,0,0	monster	Thief Bug	1051,10
+new_4-3,0,0	monster	Thief Bug	1053,10
+new_4-3,0,0	monster	Spore	1014,10
+new_5-3,0,0	monster	Rocker	1052,10
+new_5-3,0,0	monster	Thief Bug	1051,1
+new_5-3,0,0	monster	Thief Bug	1053,1
+new_5-3,0,0	monster	Spore	1014,1
+new_1-3,0,0	monster	Fabre	1184,5
+new_2-3,0,0	monster	Fabre	1184,5
+new_3-3,0,0	monster	Fabre	1184,5
+new_4-3,0,0	monster	Fabre	1184,5
+new_5-3,0,0	monster	Fabre	1184,5
 
 //============================================================ 
 // Old changelog

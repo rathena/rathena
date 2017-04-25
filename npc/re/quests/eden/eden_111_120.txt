@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Capuche
 //===== Current Version: =====================================
-//= 1.0
+//= 1.2
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -11,11 +11,13 @@
 //= Repeatable quests for players between BaseLevel 111 - 120.
 //===== Additional Comments: =================================
 //= 1.0 First version.
+//= 1.1 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.2 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 	mes "[Mingmin]";
-	if (countitem(6219) == 0) {// Para_Team_Mark
+	if (!callfunc("F_HasEdenGroupMark")) {
 		cutin "min02",0;
 		mes "A stranger. This place is supposed to be for Eden Group Members only.";
 		mes "I'm in need base level ^FF0000111 - 120^000000 adventurers to help my research.";

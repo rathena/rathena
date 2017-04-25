@@ -476,10 +476,12 @@ OnTouch:
 			mes "Hey!!!!!!!";
 			mes "Be careful over there!!";
 			emotion e_omg,0,"Fairy Carpenter#ep14_2";
+			close;
 		}
-		else if (ep14_2_oliver <= 6)
+		if (ep14_2_oliver <= 6) {
 			mes "- The bridge is broken. There should be some kind of a solution. -";
-		close;
+			close;
+		}
 	}
 }
 
@@ -4431,10 +4433,10 @@ OnTouch:
 		mes "who robbed our house.";
 		next;
 		mes "[Mother Rosa]";
-		mes "How can you believe what "+ (Sex?"he's":"she's") +" saying?";
-		mes "How do you know "+ (Sex?"he's":"she's") +" not lying";
-		mes "after robbing our stuff "+ (Sex?"himself":"herself") +"?";
-		mes "Search "+ (Sex?"his":"her") +" possessions immediately!!";
+		mes "How can you believe what "+ (Sex == SEX_MALE?"he's":"she's") +" saying?";
+		mes "How do you know "+ (Sex == SEX_MALE?"he's":"she's") +" not lying";
+		mes "after robbing our stuff "+ (Sex == SEX_MALE?"himself":"herself") +"?";
+		mes "Search "+ (Sex == SEX_MALE?"his":"her") +" possessions immediately!!";
 		next;
 		mes "[Father Dames]";
 		mes "No, how could you say such things?";
@@ -7841,7 +7843,7 @@ OnInit:
 	initnpctimer;
 	end;
 OnCall:
-	areamonster "ecl_in01",78,75,82,79,"Rat",1175,1,"#call_ne::OnMyMobDead";
+	areamonster "ecl_in01",75,72,85,82,"Rat",1175,1,"#call_ne::OnMyMobDead";
 	end;
 }
 
@@ -7853,7 +7855,7 @@ OnInit:
 	initnpctimer;
 	end;
 OnCall:
-	areamonster "ecl_in01",77,82,81,86,"Weed",1080,1,"#call_kusa::OnMyMobDead";
+	areamonster "ecl_in01",74,79,84,89,"Weed",1080,1,"#call_kusa::OnMyMobDead";
 	end;
 }
 
@@ -8382,7 +8384,7 @@ ecl_in02,98,32,3	script	Eclage Guard#tl1b	4_M_FAIRYSOLDIER2,{
 
 ecl_in02,133,115,0	script	#pa0829Prison Guard	HIDDEN_WARP_NPC,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	if (ep14_2_etran < 2) {
 		mes "[Clever]";
 		mes "Hey Guard~ I think the humidity here is too high. My skin is gonna be ruined. Is that ok? Huh?";
@@ -10017,7 +10019,7 @@ ecl_tdun01,60,56,4	script	#pa0829EtranInterio	HIDDEN_NPC,{
 
 ecl_tdun01,60,56,0	script	#pa0829EtranInterioTouch	HIDDEN_WARP_NPC,4,4,{
 	end;
-OnTouch:
+OnTouch_:
 	// disable_items;
 	 if (checkweight(1201,1) == 0) {
 		mes "It seems like there are too many types of items. Let's try again after reducing the number of types.";
@@ -10043,7 +10045,7 @@ OnTouch:
 
 ecl_fild01,183,94,0	script	#pa0829EtranExterioTouch	HIDDEN_WARP_NPC,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	if (checkweight(1201,1) == 0) {
 		mes "It seems like there are too many types of items. Let's try again after reducing the number of types.";
 		close;
@@ -10162,7 +10164,7 @@ OnTouch:
 
 eclage,291,301,0	script	#pa0829RobertExteriTouch	HIDDEN_WARP_NPC,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	// disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "It seems like there are too many types of items. Let's try again after reducing the number of types.";
@@ -10202,7 +10204,7 @@ OnTouch:
 
 ecl_fild01,110,240,0	script	#pa0829Reactor1	HIDDEN_WARP_NPC,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	// disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "It seems like there are too many types of items. Let's try again after reducing the number of types.";
@@ -10237,7 +10239,7 @@ ecl_fild01,234,266,0	duplicate(#pa0829Reactor1)	#pa0829Reactor6	HIDDEN_WARP_NPC,
 
 ecl_fild01,110,198,0	script	#pa0829Reactor2	HIDDEN_WARP_NPC,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	// disable_items;
 	 if (checkweight(1201,1) == 0) {
 		mes "It seems like there are too many types of items. Let's try again after reducing the number of types.";
@@ -10281,7 +10283,7 @@ ecl_fild01,179,125,0	duplicate(#pa0829Reactor2)	#pa0829Reactor7	HIDDEN_WARP_NPC,
 
 ecl_fild01,165,158,0	script	#pa0829Reactor3	HIDDEN_WARP_NPC,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	// disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "It seems like there are too many types of items. Let's try again after reducing the number of types.";
@@ -10325,7 +10327,7 @@ ecl_fild01,179,179,0	duplicate(#pa0829Reactor3)	#pa0829Reactor8	HIDDEN_WARP_NPC,
 
 ecl_fild01,237,166,0	script	#pa0829Reactor4	HIDDEN_WARP_NPC,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	// disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "It seems like there are too many types of items. Let's try again after reducing the number of types.";
@@ -10364,7 +10366,7 @@ ecl_fild01,187,243,0	duplicate(#pa0829Reactor4)	#pa0829Reactor9	HIDDEN_WARP_NPC,
 
 ecl_fild01,230,206,0	script	#pa0829Reactor5	HIDDEN_WARP_NPC,3,3,{
 	end;
-OnTouch:
+OnTouch_:
 	// disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "It seems like there are too many types of items. Let's try again after reducing the number of types.";
@@ -16120,7 +16122,7 @@ eclage,274,294,5	script	Laphines Conversation#tl	4_F_FAIRYKID,3,3,{
 	mes "So, you'd better not try to find out something from me, outsider!";
 	close;
 
-OnTouch:
+OnTouch_:
 	if (ep14_2_mylord == 10)
 		doevent "Eclage Resident#tl02::OnTalk";
 	else if (ep14_2_mylord == 11) {
@@ -16656,7 +16658,7 @@ ecl_tdun04,32,35,3	script	Hisie#tlord	4_M_FARIY_HISIE,{
 
 eclage,280,290,0	script	#Hisie01	HIDDEN_WARP_NPC,0,3,{
 	end;
-OnTouch:
+OnTouch_:
 	if (ep14_2_mylord == 19) {
 		cutin "hisie01",0;
 		mes "[Hisie]";
@@ -16813,7 +16815,7 @@ OnTimer400000:
 
 que_avan01,26,26,0	script	#tltimer	HIDDEN_WARP_NPC,0,1,{
 	end;
-OnTouch:
+OnTouch_:
 	mes "It was definitely a small Yai when first entered, but upon regaining consciousness after being very dizzy, a huge space appeared.";
 	initnpctimer;
 	hideonnpc "#tltimer";
@@ -17139,7 +17141,7 @@ OnInit:
 	hideonnpc "Hisie#tlspt";
 	end;
 
-OnTouch:
+OnTouch_:
 	if (ep14_2_mylord == 22) {
 		switch(rand(1,5)) {
 		case 2:
@@ -17157,7 +17159,7 @@ OnTouch:
 }
 
 que_avan01,25,41,5	script	Hisie#tlhunt	4_M_FARIY_HISIE,10,10,{
-OnTouch:
+OnTouch_:
 	cutin "hisie01",0;
 	mes "[Hisie]";
 	if (ep14_2_mylord == 22) {

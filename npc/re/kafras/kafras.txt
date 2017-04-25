@@ -24,6 +24,7 @@
 //= 1.3 Added Eden Group Kafra. [Euphy]
 //= 1.3a Moved Rune Knight Kafra from job file. [Euphy]
 //= 1.4 Added Izlude duplicates. [Euphy]
+//= 1.5 Added Glastheim Kafra [Ridley8819]
 //============================================================ 
 
 // Brasilis
@@ -31,7 +32,7 @@
 brasilis,197,221,4	script	Kafra Employee::kaf_bra	117,{
 	cutin "kafra_01",2;
 	callfunc "F_Kafra",0,3,0,80,700;
-	savepoint "brasilis",195,259;
+	savepoint "brasilis",195,259,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Brasilis";
 }
 
@@ -40,8 +41,17 @@ brasilis,197,221,4	script	Kafra Employee::kaf_bra	117,{
 dewata,202,184,6	script	Kafra Employee::kaf_dewata	117,{
 	cutin "kafra_01",2;
 	callfunc "F_Kafra",0,10,1,40,700;
-	savepoint "dewata",206,174;
+	savepoint "dewata",206,174,1,1;
 	callfunc "F_KafEnd",0,1,"on Dewata Island";
+}
+
+// Glastheim
+//============================================================
+glast_01,200,275,5	script	Kafra Employee::kaf_glast	115,{
+	cutin "kafra_03",2;
+	callfunc "F_Kafra",0,3,2,500,700;
+	savepoint "glast_01",200,272,1,1;
+	callfunc "F_KafEnd",0,1,"in Glast Heim";
 }
 
 // Eden Group
@@ -67,13 +77,13 @@ izlude_d,128,148,6	duplicate(kaf_izlude)	Kafra Employee#iz_d	117
 //============================================================
 malaya,71,79,4	script	Kafra Employee::kaf_malaya1	581,{
 	callfunc "F_Kafra",0,3,2,500,700;
-	savepoint "malaya",44,56;
+	savepoint "malaya",44,56,1,1;
 	callfunc "F_KafEnd",0,1,"in Port Malaya";
 }
 
 malaya,234,204,4	script	Kafra Employee::kaf_malaya2	581,{
 	callfunc "F_Kafra",0,3,2,500,700;
-	savepoint "malaya",281,212;
+	savepoint "malaya",281,212,1,1;
 	callfunc "F_KafEnd",0,1,"in Port Malaya";
 }
 
