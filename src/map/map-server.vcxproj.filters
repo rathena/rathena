@@ -128,6 +128,9 @@
     <ClInclude Include="vending.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="clan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="atcommand.c">
@@ -245,6 +248,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="vending.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="clan.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

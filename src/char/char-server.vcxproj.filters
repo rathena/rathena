@@ -59,6 +59,9 @@
     <ClInclude Include="inter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="int_clan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="char.c">
@@ -107,6 +110,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="inter.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="int_clan.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -167,6 +167,7 @@
     <ClInclude Include="channel.h" />
     <ClInclude Include="chat.h" />
     <ClInclude Include="chrif.h" />
+    <ClInclude Include="clan.h" />
     <ClInclude Include="clif.h" />
     <ClInclude Include="date.h" />
     <ClInclude Include="duel.h" />
@@ -208,6 +209,7 @@
     <ClCompile Include="channel.c" />
     <ClCompile Include="chat.c" />
     <ClCompile Include="chrif.c" />
+    <ClCompile Include="clan.c" />
     <ClCompile Include="clif.c" />
     <ClCompile Include="date.c" />
     <ClCompile Include="duel.c" />
