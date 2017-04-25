@@ -2093,13 +2093,19 @@ int npc_unload(struct npc_data* nd, bool single) {
 
 	if( single && nd->path ) {
 		struct npc_path_data* npd = NULL;
-		if( nd->path && nd->path != npc_last_ref ) {
+		if( nd->path ) {
 			npd = (struct npc_path_data*)strdb_get(npc_path_db, nd->path);
 		}
 
 		if( npd && --npd->references == 0 ) {
 			strdb_remove(npc_path_db, nd->path);/* remove from db */
 			aFree(nd->path);/* remove now that no other instances exist */
+
+			if (npd == npc_last_npd) {
+				npc_last_npd = NULL;
+				npc_last_ref = NULL;
+				npc_last_path = NULL;
+			}
 		}
 	}
 	
@@ -2156,6 +2162,7 @@ int npc_unload(struct npc_data* nd, bool single) {
 			guild_flag_remove(nd);
 	}
 
+	script_stop_sleeptimers(nd->bl.id);
 	aFree(nd);
 
 	return 0;
@@ -2181,9 +2188,10 @@ static void npc_clearsrcfile(void)
 /**
  * Adds a npc source file (or removes all)
  * @param name : file to add
+ * @param loadscript : flag to parse the script immediately after adding the src file
  * @return 0=error, 1=sucess
  */
-int npc_addsrcfile(const char* name)
+int npc_addsrcfile(const char* name, bool loadscript)
 {
 	struct npc_src_list* file;
 	struct npc_src_list* file_prev = NULL;
@@ -2217,8 +2225,11 @@ int npc_addsrcfile(const char* name)
 		npc_src_files = file;
 	else
 		file_prev->next = file;
-        
-        return 1;
+
+	if (loadscript)
+		return npc_parsesrcfile(file->name, true);
+
+	return 1;
 }
 
 /// Removes a npc source file (or all)
@@ -3068,7 +3079,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		ShowError("npc_parse_script: original npc not found for duplicate in file '%s', line '%d' : %s\n", filepath, strline(buffer,start-buffer), srcname);
 		return end;// next line, try to continue
 	}
-	src_id = dnd->bl.id;
+	src_id = dnd->src_id ? dnd->src_id : dnd->bl.id;
 	type = dnd->subtype;
 
 	// get placement
@@ -3234,6 +3245,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		wnd->u.warp.ys = snd->u.warp.ys;
 		wnd->bl.type = BL_NPC;
 		wnd->subtype = NPCTYPE_WARP;
+		wnd->src_id = snd->src_id ? snd->src_id : snd->bl.id;
 		npc_setcells(wnd);
 		if(map_addblock(&wnd->bl))
 			return 1;

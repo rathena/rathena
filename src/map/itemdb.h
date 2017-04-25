@@ -102,7 +102,9 @@ enum item_itemid
 	ITEMID_M_BERSERK_POTION				= 12243,
 	ITEMID_COMP_BATTLE_MANUAL			= 12263,
 	ITEMID_THICK_BATTLE_MANUAL			= 12312,
-	ITEMID_NOVICE_MAGNIFIER             = 12325,
+	ITEMID_N_FLY_WING					= 12323,
+	ITEMID_N_BUTTERFLY_WING				= 12324,
+	ITEMID_NOVICE_MAGNIFIER				= 12325,
 	ITEMID_ANCILLA						= 12333,
 	ITEMID_DUN_TELE_SCROLL3				= 12352,
 	ITEMID_REINS_OF_MOUNT				= 12622,
@@ -926,6 +928,7 @@ bool itemdb_parse_roulette_db(void);
 
 struct s_random_opt_data *itemdb_randomopt_exists(short id);
 
+void itemdb_reload_itemmob_data(void);
 void itemdb_reload(void);
 
 void do_final_itemdb(void);

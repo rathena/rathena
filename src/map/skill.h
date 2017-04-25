@@ -498,7 +498,7 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 // Abnormal status
 void skill_enchant_elemental_end(struct block_list *bl, int type);
 bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd);
-bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd);
+bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv);
 bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md);
 
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
@@ -2134,7 +2134,7 @@ int skill_changematerial(struct map_session_data *sd, int n, unsigned short *ite
 int skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
 int skill_is_combo(uint16 skill_id);
-void skill_combo_toogle_inf(struct block_list* bl, uint16 skill_id, int inf);
+void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf);
 void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int tick);
 
 void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y);

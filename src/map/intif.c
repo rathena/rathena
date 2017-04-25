@@ -2382,7 +2382,7 @@ static void intif_parse_Mail_send(int fd)
 		{
 			clif_Mail_send(sd->fd, false);
 			if( save_settings&CHARSAVE_MAIL )
-				chrif_save(sd, 0);
+				chrif_save(sd, CSAVE_INVENTORY);
 		}
 	}
 }
@@ -2500,7 +2500,7 @@ static void intif_parse_Auction_register(int fd)
 	{
 		clif_Auction_message(sd->fd, 1); // Confirmation Packet ??
 		if( save_settings&CHARSAVE_AUCTION )
-			chrif_save(sd,0);
+			chrif_save(sd, CSAVE_INVENTORY);
 	}
 	else
 	{

@@ -31,6 +31,7 @@ struct battleground_data;
 struct quest;
 struct party_booking_ad_info;
 enum e_party_member_withdraw;
+struct sale_item_data;
 #include <stdarg.h>
 
 enum { // packet DB
@@ -985,6 +986,11 @@ void clif_clan_message(struct clan *clan,const char *mes,int len);
 void clif_clan_onlinecount( struct clan* clan );
 void clif_clan_leave( struct map_session_data* sd );
 
+// Bargain Tool
+void clif_sale_start(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
+void clif_sale_end(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
+void clif_sale_amount(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
+
 /**
  * Color Table
  **/
@@ -999,7 +1005,7 @@ enum clif_colors {
 };
 unsigned long color_table[COLOR_MAX];
 
-void clif_channel_msg(struct Channel *channel, struct map_session_data *sd, char *msg, short color);
+void clif_channel_msg(struct Channel *channel, const char *msg, unsigned long color);
 
 #define clif_menuskill_clear(sd) (sd)->menuskill_id = (sd)->menuskill_val = (sd)->menuskill_val2 = 0;
 

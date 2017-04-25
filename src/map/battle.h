@@ -232,6 +232,7 @@ extern struct Battle_Config
 	int pet_max_atk2; //[Skotlex]
 	int pet_no_gvg; //Disables pets in gvg. [Skotlex]
 	int pet_equip_required;
+	int pet_master_dead;
 
 	int skill_min_damage;
 	int finger_offensive_type;
@@ -610,12 +611,14 @@ extern struct Battle_Config
 	int exp_cost_inspiration;
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
+	int show_status_katar_crit;
 	int atcommand_levelup_events;
 	int block_account_in_same_party;
 	int tarotcard_equal_chance; //Official or equal chance for each card
 	int change_party_leader_samemap;
 	int dispel_song; //Can songs be dispelled?
 	int guild_maprespawn_clones; // Should clones be killed by maprespawnguildid?
+	int hide_fav_sell;
 
 #include "../custom/battle_config_struct.inc"
 } battle_config;

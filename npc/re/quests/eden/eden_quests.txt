@@ -1868,6 +1868,10 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 				callsub S_Select,"",
 					13112,"Eden Revolver I","Revolver","HIT-5, attack 44","";//P_Revolver1
 			}
+			if (Class == Job_Summoner) {
+				callsub S_Select,"",
+					1699,"Eden Foxtail Staff I","Staff","MATK+135, attack 120","";//P_Foxtail1
+			}
 			mes "Let me see... you will receive..";
 			mes "the Eden Group Boots II and Uniform II.";
 			next;
@@ -1944,6 +1948,10 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 			if (Class == Job_Gunslinger) {
 				callsub S_Select,"",
 					13113,"Eden Revolver II","Revolver","HIT-5, attack 60","";//P_Revolver2
+			}
+			if (Class == Job_Summoner) {
+				callsub S_Select,"",
+					26100,"Eden Foxtail Staff II","Staff","MATK+165, attack 135","";//P_Foxtail1
 			}
 			mes "Let me see... you will receive..";
 			mes "the Eden Group Boots III and Uniform III.";
@@ -3625,7 +3633,7 @@ man_fild01,43,234,3	script	Dispatched Instructor#07	4_DST_SOLDIER,{
 			mes "I'll just be here making sure other people hunt the Nepenthes. I might ask them to hunt more than 1 who knows.";
 			para_2nd01 = 25;
 			erasequest 7235;// Nepenthes Hunt
-			getexp 50000,50000;;
+			getexp 50000,50000;
 		}
 		else {
 			mes "Is hunting the Nepenthes too much for you?";
@@ -3709,7 +3717,7 @@ spl_fild02,377,149,3	script	Dispatched Instructor#08	4_M_DST_MASTER,{
 			mes "Oh don't worry she won't mind. I'll just go back to doing what I was doing. Here's your reward.";
 			para_2nd01 = 27;
 			erasequest 7236;// Pinguicula Hunt
-			getexp 50000,50000;;
+			getexp 50000,50000;
 		}
 		else {
 			mes "Come on 5 Pinguicula.";
@@ -3962,6 +3970,8 @@ moc_para01,111,83,3	script	Blacksmith Thorn#2nd10	2_M_OLDBLSMITH,{
 			}
 			else if (Class == Job_Gunslinger)
 				getitem 13114,1; //P.Revolver III
+			else if (Class == Job_Summoner)
+				getitem 26101,1; //P.Foxtail III
 			else {
 				mes "Hmm, you are eligible to receive equipment.";
 				mes "Yeah I understand that.";
@@ -4104,7 +4114,8 @@ moc_para01,112,79,3	script	Weapons Expert BK#2nd11	4_M_REPAIR,{
 		1986,	// P_Tail1
 		13114,	// P_Revolver3
 		1831,	// P_Knuckle1
-		13310;	// P_Huuma_Shuriken1
+		13310,	// P_Huuma_Shuriken1
+		26101;	// P_Foxtail III
 	.@menu$ = "Eden Group Slayer III:" +
 		"Eden Group Saber III:" +
 		"Eden Group Dagger III:" +
@@ -4119,7 +4130,8 @@ moc_para01,112,79,3	script	Weapons Expert BK#2nd11	4_M_REPAIR,{
 		"Eden Group Whip I:" +
 		"Eden Group Revolver III:" +
 		"Eden Group Knuckles I:" +
-		"Eden Group Huuma Shuriken I";
+		"Eden Group Huuma Shuriken I:" +
+		"Eden Group Foxtail III";
 	mes "[BK]";
 	mes "What's happening?";
 	mes "No way?!";

@@ -15,6 +15,7 @@
 #include "map.h"
 #include "path.h"
 #include "pc.h"
+#include "status.h"
 #include "homunculus.h"
 #include "mercenary.h"
 #include "elemental.h"
@@ -493,7 +494,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 				}
 				if (tsc->data[SC_THORNSTRAP] && battle_getcurrentskill(src) != GN_CARTCANNON)
 					status_change_end(target, SC_THORNSTRAP, INVALID_TIMER);
-				if (tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB)
+				if (tsc->data[SC_CRYSTALIZE])
 					status_change_end(target, SC_CRYSTALIZE, INVALID_TIMER);
 				if (tsc->data[SC_EARTH_INSIGNIA])
 					ratio += 50;
@@ -507,8 +508,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					ratio += tsc->data[SC_VENOMIMPRESS]->val2;
 				break;
 			case ELE_WIND:
-				if (tsc->data[SC_CRYSTALIZE] && target->type != BL_MOB)
-					ratio += 50;
 				if (tsc->data[SC_WATER_INSIGNIA])
 					ratio += 50;
 				break;
@@ -1355,8 +1354,10 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if(sc->data[SC_GRANITIC_ARMOR])
 			damage -= damage * sc->data[SC_GRANITIC_ARMOR]->val2 / 100;
 
-		if(sc->data[SC_PAIN_KILLER])
+		if(sc->data[SC_PAIN_KILLER]) {
 			damage -= sc->data[SC_PAIN_KILLER]->val3;
+			damage = i64max(damage, 1);
+		}
 
 		if( sc->data[SC_DARKCROW] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT )
 			damage += damage * sc->data[SC_DARKCROW]->val2 / 100;
@@ -2020,8 +2021,8 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 	if( skill_get_inf2( skill_id ) & INF2_TRAP )
 		return BF_SHORT;
 
-	// When monsters use Arrow Shower, it is always short range
-	if (src->type == BL_MOB && skill_id == AC_SHOWER)
+	// When monsters use Arrow Shower or Bomb, it is always short range
+	if (src->type == BL_MOB && (skill_id == AC_SHOWER || skill_id == AM_DEMONSTRATION))
 		return BF_SHORT;
 
 	//Skill Range Criteria
@@ -2348,6 +2349,8 @@ static bool is_attack_critical(struct Damage wd, struct block_list *src, struct 
 		short cri = sstatus->cri;
 
 		if (sd) {
+			if (!battle_config.show_status_katar_crit && sd->status.weapon == W_KATAR)
+				cri <<= 1; // Double critical bonus from Katars aren't shown in the status display
 			cri += sd->critaddrace[tstatus->race] + sd->critaddrace[RC_ALL];
 			if(is_skill_using_arrow(src, skill_id)) {
 				cri += sd->bonus.arrow_cri;
@@ -3642,21 +3645,23 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case TK_DOWNKICK:
 		case TK_STORMKICK:
-			skillratio += 60 + 20 * skill_lv + 10 * pc_checkskill(sd,TK_RUN); //+Dmg (to Kick skills, %)
+			skillratio += 60 + 20 * skill_lv;
 			break;
 		case TK_TURNKICK:
 		case TK_COUNTER:
-			skillratio += 90 + 30 * skill_lv + 10 * pc_checkskill(sd,TK_RUN);
+			skillratio += 90 + 30 * skill_lv;
 			break;
 		case TK_JUMPKICK:
-			skillratio += -70 + 10 * skill_lv + 10 * pc_checkskill(sd,TK_RUN);
+			//Different damage formulas depending on damage trigger
 			if (sc && sc->data[SC_COMBO] && sc->data[SC_COMBO]->val1 == skill_id)
-				skillratio += 10 * status_get_lv(src) / 3; //Tumble bonus
-			if (wd.miscflag) {
-				skillratio += 10 * status_get_lv(src) / 3; //Running bonus (TODO: What is the real bonus?)
-				if (sc && sc->data[SC_SPURT]) // Spurt bonus
+				skillratio += -100 + 4 * status_get_lv(src); //Tumble formula [4%*baselevel]
+			else if (wd.miscflag) {
+				skillratio += -100 + 4 * status_get_lv(src); //Running formula [4%*baselevel]
+				if (sc && sc->data[SC_SPURT]) //Spurt formula [8%*baselevel]
 					skillratio *= 2;
 			}
+			else
+				skillratio += -70 + 10 * skill_lv;
 			break;
 		case GS_TRIPLEACTION:
 			skillratio += 50 * skill_lv;
@@ -3726,7 +3731,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 #endif
 		case KN_CHARGEATK: { // +100% every 3 cells of distance but hard-limited to 500%
-				unsigned int k = (wd.miscflag-1)/3;
+				int k = (wd.miscflag-1)/3;
 				if (k < 0)
 					k = 0;
 				else if (k > 4)
@@ -4452,17 +4457,17 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 		if (sc->data[SC_EDP]) {
 			switch(skill_id) {
 				case AS_SPLASHER:
-				// Pre-Renewal only: Soul Breaker and Meteor Assault ignores EDP
+				case ASC_METEORASSAULT:
+				// Pre-Renewal only: Soul Breaker ignores EDP
 				// Renewal only: Grimtooth and Venom Knife ignore EDP
-				// Both: Venom Splasher ignores EDP [helvetica]
+				// Both: Venom Splasher and Meteor Assault ignore EDP [helvetica]
 #ifndef RENEWAL
 				case ASC_BREAKER:
-				case ASC_METEORASSAULT:
 #else
 				case AS_GRIMTOOTH:
 				case AS_VENOMKNIFE:
 #endif
-					break; // skills above have no effect with edp
+					break; // skills above have no effect with EDP
 
 #ifdef RENEWAL
 				// renewal EDP mode requires renewal enabled as well
@@ -4574,15 +4579,15 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 	return wd;
 }
 
-/*====================================
- * Calc defense damage reduction
- *------------------------------------
- * Credits:
- *	Original coder Skotlex
- *	Initial refactoring by Baalberith
- *	Refined and optimized by helvetica
+/**
+ * Calculates defense based on src and target
+ * @param src: Source object
+ * @param target: Target object
+ * @param skill_id: Skill used
+ * @param flag: 0 - Return armor defense, 1 - Return status defense
+ * @return defense
  */
-struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list *src,struct block_list *target, uint16 skill_id, uint16 skill_lv)
+static short battle_get_defense(struct block_list *src, struct block_list *target, uint16 skill_id, uint8 flag)
 {
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
@@ -4591,29 +4596,30 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 
-	//Defense reduction
-	short vit_def;
-	defType def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
-	short def2 = tstatus->def2;
+	// Don't use tstatus->def1 due to skill timer reductions.
+	defType def1 = status_get_def(target); // eDEF
+	short def2 = tstatus->def2, vit_def; // sDEF
 
-#ifdef RENEWAL
-	if( tsc && tsc->data[SC_ASSUMPTIO] )
-		def1 <<= 1; // only eDEF is doubled
-#endif
+	def1 = status_calc_def(target, tsc, def1, false);
+	def2 = status_calc_def2(target, tsc, def2, false);
 
 	if (sd) {
 		int i = sd->ignore_def_by_race[tstatus->race] + sd->ignore_def_by_race[RC_ALL];
-		i += sd->ignore_def_by_class[tstatus->class_] + sd->ignore_def_by_class[CLASS_ALL];
-		if (i) {
-			i = min(i,100); //cap it to 100 for 0 def min
-			def1 -= def1 * i / 100;
-			def2 -= def2 * i / 100;
-		}
 
 		//Kagerou/Oboro Earth Charm effect +10% eDEF
 		if(sd->spiritcharm_type == CHARM_TYPE_LAND && sd->spiritcharm > 0) {
 			short si = 10 * sd->spiritcharm;
-			def1 = (def1 * (100 + si)) / 100;
+
+			def1 = def1 * (100 + si) / 100;
+		}
+
+		i += sd->ignore_def_by_class[tstatus->class_] + sd->ignore_def_by_class[CLASS_ALL];
+		if (i) {
+			i = min(i, 100); //cap it to 100 for 0 def min
+			def1 -= def1 * i / 100;
+#ifndef RENEWAL
+			def2 -= def2 * i / 100;
+#endif
 		}
 	}
 
@@ -4622,29 +4628,9 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 
 		i = min(i,100); //cap it to 100 for 0 def min
 		def1 = (def1*(100-i))/100;
+#ifndef RENEWAL
 		def2 = (def2*(100-i))/100;
-	}
-
-	if (tsc) {
-		if (tsc->data[SC_FORCEOFVANGUARD]) {
-			short i = 2 * tsc->data[SC_FORCEOFVANGUARD]->val1;
-
-			def1 = (def1 * (100 + i)) / 100;
-		}
-
-		if( tsc->data[SC_CAMOUFLAGE] ){
-			short i = 5 * tsc->data[SC_CAMOUFLAGE]->val3; //5% per second
-
-			i = min(i,100); //cap it to 100 for 0 def min
-			def1 = (def1*(100-i))/100;
-			def2 = (def2*(100-i))/100;
-		}
-
-		if (tsc->data[SC_GT_REVITALIZE])
-			def2 += tsc->data[SC_GT_REVITALIZE]->val4;
-
-		if (tsc->data[SC_OVERED_BOOST] && target->type == BL_PC)
-			def1 = (def1 * tsc->data[SC_OVERED_BOOST]->val4) / 100;
+#endif
 	}
 
 	if( battle_config.vit_penalty_type && battle_config.vit_penalty_target&target->type ) {
@@ -4663,10 +4649,8 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 				def2 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
 			}
 		}
+#ifndef RENEWAL
 		if (skill_id == AM_ACIDTERROR)
-#ifdef RENEWAL
-			def2 = 0; //Ignore only status defense. [FatalEror]
-#else
 			def1 = 0; //Ignores only armor defense. [Skotlex]
 #endif
 		if(def2 < 1)
@@ -4709,6 +4693,30 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 		vit_def += def1*battle_config.weapon_defense_type;
 		def1 = 0;
 	}
+
+	if (!flag)
+		return (short)def1;
+	else
+		return vit_def;
+}
+
+/**
+ * Calculate defense damage reduction
+ * @param wd: Weapon data
+ * @param src: Source object
+ * @param target: Target object
+ * @param skill_id: Skill used
+ * @param skill_lv: Skill level used
+ * @return weapon data
+ * Credits:
+ *	Original coder Skotlex
+ *	Initial refactoring by Baalberith
+ *	Refined and optimized by helvetica
+ */
+struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv)
+{
+	short def1 = battle_get_defense(src, target, skill_id, 0);
+	short vit_def = battle_get_defense(src, target, skill_id, 1);
 
 #ifdef RENEWAL
 	/**
@@ -5415,19 +5423,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		case TK_STORMKICK:
 		case TK_TURNKICK:
 		case TK_COUNTER:
-		case TK_JUMPKICK:
-			if(sd && pc_checkskill(sd,TK_RUN)) {
-				uint8 i;
-				uint16 skill = pc_checkskill(sd,TK_RUN);
-
-				switch(skill) {
-					case 1: case 4: case 7: case 10: i = 1; break;
-					case 2: case 5: case 8: i = 2; break;
-					default: i = 0; break;
-				}
-				if(sd->weapontype1 == W_FIST && sd->weapontype2 == W_FIST)
-					ATK_ADD(wd.damage, wd.damage2, 10 * skill - i);
-			}
+			if(sd && sd->weapontype1 == W_FIST && sd->weapontype2 == W_FIST)
+				ATK_ADD(wd.damage, wd.damage2, 10 * pc_checkskill(sd, TK_RUN));
 			break;
 		case SR_TIGERCANNON:
 			// (Tiger Cannon skill level x 240) + (Target Base Level x 40)
@@ -6201,12 +6198,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			ad.damage -= (int64)ad.damage*i/100;
 
 		if(!flag.imdef){
-			defType mdef = tstatus->mdef;
-			int mdef2= tstatus->mdef2;
-#ifdef RENEWAL
-			if(tsc && tsc->data[SC_ASSUMPTIO])
-				mdef <<= 1; // only eMDEF is doubled
-#endif
+			defType mdef = tstatus->mdef; // eMDEF
+			short mdef2 = tstatus->mdef2; // sMDEF
+
+			mdef = status_calc_mdef(target, tsc, mdef, false);
+			mdef2 = status_calc_mdef2(target, tsc, mdef2, false);
+
 			if(sd) {
 				i = sd->ignore_mdef_by_race[tstatus->race] + sd->ignore_mdef_by_race[RC_ALL];
 				i += sd->ignore_mdef_by_class[tstatus->class_] + sd->ignore_mdef_by_class[CLASS_ALL];
@@ -6215,7 +6212,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				{
 					if (i > 100) i = 100;
 					mdef -= mdef * i/100;
-					//mdef2-= mdef2* i/100;
+					mdef2-= mdef2* i/100;
 				}
 			}
 #ifdef RENEWAL
@@ -6400,7 +6397,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case MA_LANDMINE:
 		case HT_BLASTMINE:
 		case HT_CLAYMORETRAP:
-			md.damage = skill_lv * sstatus->dex * (3 + status_get_lv(src) / 100) * (1 + sstatus->int_ / 35);
+			md.damage = (int64)(skill_lv * sstatus->dex * (3.0 + (float)status_get_lv(src) / 100.0) * (1.0 + (float)sstatus->int_ / 35.0));
 			md.damage += md.damage * (rnd()%20 - 10) / 100;
 			md.damage += (sd ? pc_checkskill(sd,RA_RESEARCHTRAP) * 40 : 0);
 			break;
@@ -7301,7 +7298,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	map_freeblock_lock();
 
-	if( skill_check_shadowform(target, damage, wd.div_) ) {
+	if( !(tsc && tsc->data[SC_DEVOTION]) && !vanish_damage && skill_check_shadowform(target, damage, wd.div_) ) {
 		if( !status_isdead(target) )
 			skill_additional_effect(src, target, 0, 0, wd.flag, wd.dmg_lv, tick);
 		if( wd.dmg_lv > ATK_BLOCK )
@@ -8031,6 +8028,7 @@ static const struct _battle_data {
 	{ "pet_max_atk1",                       &battle_config.pet_max_atk1,                    750,    0,      INT_MAX,        },
 	{ "pet_max_atk2",                       &battle_config.pet_max_atk2,                    1000,   0,      INT_MAX,        },
 	{ "pet_disable_in_gvg",                 &battle_config.pet_no_gvg,                      0,      0,      1,              },
+	{ "pet_master_dead",                    &battle_config.pet_master_dead,                 0,      0,      1,              },
 	{ "skill_min_damage",                   &battle_config.skill_min_damage,                2|4,    0,      1|2|4,          },
 	{ "finger_offensive_type",              &battle_config.finger_offensive_type,           0,      0,      1,              },
 	{ "heal_exp",                           &battle_config.heal_exp,                        0,      0,      INT_MAX,        },
@@ -8330,18 +8328,18 @@ static const struct _battle_data {
 	{ "feature.auction",                    &battle_config.feature_auction,                 0,      0,      2,              },
 	{ "feature.banking",                    &battle_config.feature_banking,                 1,      0,      1,              },
 #ifdef VIP_ENABLE
-	{ "vip_storage_increase",               &battle_config.vip_storage_increase,            0,      0,      MAX_STORAGE-MIN_STORAGE, },
+	{ "vip_storage_increase",               &battle_config.vip_storage_increase,          300,      0,      MAX_STORAGE-MIN_STORAGE, },
 #else
-	{ "vip_storage_increase",               &battle_config.vip_storage_increase,            0,      0,      MAX_STORAGE, },
+	{ "vip_storage_increase",               &battle_config.vip_storage_increase,          300,      0,      MAX_STORAGE, },
 #endif
-	{ "vip_base_exp_increase",              &battle_config.vip_base_exp_increase,           0,      0,      INT_MAX,        },
-	{ "vip_job_exp_increase",               &battle_config.vip_job_exp_increase,            0,      0,      INT_MAX,        },
-	{ "vip_exp_penalty_base",               &battle_config.vip_exp_penalty_base,            0,      0,      INT_MAX,        },
-	{ "vip_exp_penalty_job",                &battle_config.vip_exp_penalty_job,             0,      0,      INT_MAX,        },
+	{ "vip_base_exp_increase",              &battle_config.vip_base_exp_increase,          50,      0,      INT_MAX,        },
+	{ "vip_job_exp_increase",               &battle_config.vip_job_exp_increase,           50,      0,      INT_MAX,        },
+	{ "vip_exp_penalty_base",               &battle_config.vip_exp_penalty_base,          100,      0,      INT_MAX,        },
+	{ "vip_exp_penalty_job",                &battle_config.vip_exp_penalty_job,           100,      0,      INT_MAX,        },
 	{ "vip_zeny_penalty",                   &battle_config.vip_zeny_penalty,                0,      0,      INT_MAX,        },
-	{ "vip_bm_increase",                    &battle_config.vip_bm_increase,                 0,      0,      INT_MAX,        },
-	{ "vip_drop_increase",                  &battle_config.vip_drop_increase,               0,      0,      INT_MAX,        },
-	{ "vip_gemstone",                       &battle_config.vip_gemstone,                    0,      0,      1,              },
+	{ "vip_bm_increase",                    &battle_config.vip_bm_increase,                 2,      0,      INT_MAX,        },
+	{ "vip_drop_increase",                  &battle_config.vip_drop_increase,              50,      0,      INT_MAX,        },
+	{ "vip_gemstone",                       &battle_config.vip_gemstone,                    2,      0,      2,              },
 	{ "vip_disp_rate",                      &battle_config.vip_disp_rate,                   1,      0,      1,              },
 	{ "mon_trans_disable_in_gvg",           &battle_config.mon_trans_disable_in_gvg,        0,      0,      1,              },
 	{ "homunculus_S_growth_level",          &battle_config.hom_S_growth_level,             99,      0,      MAX_LEVEL,      },
@@ -8409,12 +8407,14 @@ static const struct _battle_data {
 	{ "exp_cost_inspiration",               &battle_config.exp_cost_inspiration,            1,      0,      100,            },
 	{ "mvp_exp_reward_message",             &battle_config.mvp_exp_reward_message,          0,      0,      1,              },
 	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
+	{ "show_status_katar_crit",             &battle_config.show_status_katar_crit,          0,      0,      1,              },
 	{ "atcommand_levelup_events",			&battle_config.atcommand_levelup_events,		0,		0,		1,				},
 	{ "block_account_in_same_party",		&battle_config.block_account_in_same_party,		1,		0,		1,				},
 	{ "tarotcard_equal_chance",             &battle_config.tarotcard_equal_chance,          0,      0,      1,              },
 	{ "change_party_leader_samemap",        &battle_config.change_party_leader_samemap,     1,      0,      1,              },
 	{ "dispel_song",                        &battle_config.dispel_song,                     0,      0,      1,              },
 	{ "guild_maprespawn_clones",			&battle_config.guild_maprespawn_clones,			0,		0,		1,				},
+	{ "hide_fav_sell", 			&battle_config.hide_fav_sell,			0,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
