@@ -5879,6 +5879,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MH_STAHL_HORN:
 	case MH_NEEDLE_OF_PARALYZE:
 	case MH_SONIC_CRAW:
+	case MH_MIDNIGHT_FRENZY:
+	case MH_SILVERVEIN_RUSH:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 	case MH_TINDER_BREAKER:
