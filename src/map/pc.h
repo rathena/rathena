@@ -658,7 +658,7 @@ struct map_session_data {
 	struct Channel *gcbind;
 	bool stealth;
 	unsigned char fontcolor;
-	unsigned int channel_tick;
+	unsigned int *channel_tick;
 
 	/* [Ind] */
 	struct sc_display_entry **sc_display;
@@ -893,7 +893,7 @@ struct {
 
 #define pc_isfalcon(sd)       ( (sd)->sc.option&OPTION_FALCON )
 #define pc_isriding(sd)       ( (sd)->sc.option&OPTION_RIDING )
-#define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE )
+#define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE && !((sd)->sc.data && (sd)->sc.data[SC__FEINTBOMB]) )
 #define pc_is50overweight(sd) ( (sd)->weight*100 >= (sd)->max_weight*battle_config.natural_heal_weight_rate )
 #define pc_is90overweight(sd) ( (sd)->weight*10 >= (sd)->max_weight*9 )
 

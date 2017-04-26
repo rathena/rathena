@@ -733,7 +733,7 @@ void script_run_autobonus(const char *autobonus, struct map_session_data *sd, un
 
 bool script_get_parameter(const char* name, int* value);
 bool script_get_constant(const char* name, int* value);
-void script_set_constant(const char* name, int value, bool isparameter);
+void script_set_constant(const char* name, int value, bool isparameter, bool deprecated);
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);

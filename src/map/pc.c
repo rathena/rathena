@@ -1478,6 +1478,8 @@ void pc_reg_received(struct map_session_data *sd)
 
 		clif_changeoption( &sd->bl );
 	}
+
+	channel_autojoin(sd);
 }
 
 static int pc_calc_skillpoint(struct map_session_data* sd)
@@ -4739,8 +4741,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		return false;
 	//Not consumable item
 	if( item->type != IT_HEALING && item->type != IT_USABLE && item->type != IT_CASH )
-		return false;
-	if( !item->script ) //if it has no script, you can't really consume it!
 		return false;
 	if (pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL))
 		return true;

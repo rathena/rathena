@@ -9386,7 +9386,7 @@ static inline void atcmd_channel_help(struct map_session_data *sd, const char *c
 {
 	int fd = sd->fd;
 	bool can_delete = pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN);
-	bool can_create = (can_delete || channel_config.user_chenable);
+	bool can_create = (can_delete || channel_config.private_channel.allow);
 	clif_displaymessage(fd, msg_txt(sd,1414));// ---- Available options:
 
 	//option create
@@ -9495,6 +9495,8 @@ ACMD_FUNC(channel) {
 		return channel_pcunbind(sd);
 	} else if ( strcmpi(key,"ban") == 0 ) {
 		return channel_pcban(sd,sub1,sub2,0);
+	} else if ( strcmpi(key,"kick") == 0 ) {
+		return channel_pckick(sd,sub1,sub2);
 	} else if ( strcmpi(key,"banlist") == 0 ) {
 		return channel_pcban(sd,sub1,NULL,3);
 	} else if ( strcmpi(key,"unban") == 0 ) {
@@ -9505,7 +9507,7 @@ ACMD_FUNC(channel) {
 		char sub3[CHAN_NAME_LENGTH], sub4[CHAN_NAME_LENGTH];
 		sub3[0] = sub4[0] = '\0';
 		sscanf(sub2, "%19s %19s", sub3, sub4);
-		if( strcmpi(key,"create") == 0 && ( channel_config.user_chenable || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) ) {
+		if( strcmpi(key,"create") == 0 && ( channel_config.private_channel.allow || pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) ) {
 			if (sub4[0] != '\0') {
 				clif_displaymessage(fd, msg_txt(sd, 1408)); // Channel password may not contain spaces.
 				return -1;

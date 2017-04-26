@@ -298,7 +298,7 @@ const char* job_name(int class_) {
 		case JOB_BABY_SOUL_LINKER:
 		case JOB_BABY_GUNSLINGER:
 		case JOB_BABY_REBELLION:
-			return msg_txt(110 - JOB_BABY_SUMMONER+class_);
+			return msg_txt(110 - JOB_BABY_NINJA+class_);
 
 		case JOB_BABY_STAR_GLADIATOR2:
 			return msg_txt(114);

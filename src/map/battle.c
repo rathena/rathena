@@ -15,6 +15,7 @@
 #include "map.h"
 #include "path.h"
 #include "pc.h"
+#include "status.h"
 #include "homunculus.h"
 #include "mercenary.h"
 #include "elemental.h"
@@ -1353,8 +1354,10 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if(sc->data[SC_GRANITIC_ARMOR])
 			damage -= damage * sc->data[SC_GRANITIC_ARMOR]->val2 / 100;
 
-		if(sc->data[SC_PAIN_KILLER])
+		if(sc->data[SC_PAIN_KILLER]) {
 			damage -= sc->data[SC_PAIN_KILLER]->val3;
+			damage = i64max(damage, 1);
+		}
 
 		if( sc->data[SC_DARKCROW] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT )
 			damage += damage * sc->data[SC_DARKCROW]->val2 / 100;
@@ -2335,6 +2338,8 @@ static bool is_attack_critical(struct Damage wd, struct block_list *src, struct 
 		short cri = sstatus->cri;
 
 		if (sd) {
+			if (!battle_config.show_status_katar_crit && sd->status.weapon == W_KATAR)
+				cri <<= 1; // Double critical bonus from Katars aren't shown in the status display
 			cri += sd->critaddrace[tstatus->race] + sd->critaddrace[RC_ALL];
 			if(is_skill_using_arrow(src, skill_id)) {
 				cri += sd->bonus.arrow_cri;
@@ -4532,15 +4537,15 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 	return wd;
 }
 
-/*====================================
- * Calc defense damage reduction
- *------------------------------------
- * Credits:
- *	Original coder Skotlex
- *	Initial refactoring by Baalberith
- *	Refined and optimized by helvetica
+/**
+ * Calculates defense based on src and target
+ * @param src: Source object
+ * @param target: Target object
+ * @param skill_id: Skill used
+ * @param flag: 0 - Return armor defense, 1 - Return status defense
+ * @return defense
  */
-struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list *src,struct block_list *target, uint16 skill_id, uint16 skill_lv)
+static short battle_get_defense(struct block_list *src, struct block_list *target, uint16 skill_id, uint8 flag)
 {
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
@@ -4549,29 +4554,30 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 	struct status_data *sstatus = status_get_status_data(src);
 	struct status_data *tstatus = status_get_status_data(target);
 
-	//Defense reduction
-	short vit_def;
-	defType def1 = status_get_def(target); //Don't use tstatus->def1 due to skill timer reductions.
-	short def2 = tstatus->def2;
+	// Don't use tstatus->def1 due to skill timer reductions.
+	defType def1 = status_get_def(target); // eDEF
+	short def2 = tstatus->def2, vit_def; // sDEF
 
-#ifdef RENEWAL
-	if( tsc && tsc->data[SC_ASSUMPTIO] )
-		def1 <<= 1; // only eDEF is doubled
-#endif
+	def1 = status_calc_def(target, tsc, def1, false);
+	def2 = status_calc_def2(target, tsc, def2, false);
 
 	if (sd) {
 		int i = sd->ignore_def_by_race[tstatus->race] + sd->ignore_def_by_race[RC_ALL];
-		i += sd->ignore_def_by_class[tstatus->class_] + sd->ignore_def_by_class[CLASS_ALL];
-		if (i) {
-			i = min(i,100); //cap it to 100 for 0 def min
-			def1 -= def1 * i / 100;
-			def2 -= def2 * i / 100;
-		}
 
 		//Kagerou/Oboro Earth Charm effect +10% eDEF
 		if(sd->spiritcharm_type == CHARM_TYPE_LAND && sd->spiritcharm > 0) {
 			short si = 10 * sd->spiritcharm;
-			def1 = (def1 * (100 + si)) / 100;
+
+			def1 = def1 * (100 + si) / 100;
+		}
+
+		i += sd->ignore_def_by_class[tstatus->class_] + sd->ignore_def_by_class[CLASS_ALL];
+		if (i) {
+			i = min(i, 100); //cap it to 100 for 0 def min
+			def1 -= def1 * i / 100;
+#ifndef RENEWAL
+			def2 -= def2 * i / 100;
+#endif
 		}
 	}
 
@@ -4580,29 +4586,9 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 
 		i = min(i,100); //cap it to 100 for 0 def min
 		def1 = (def1*(100-i))/100;
+#ifndef RENEWAL
 		def2 = (def2*(100-i))/100;
-	}
-
-	if (tsc) {
-		if (tsc->data[SC_FORCEOFVANGUARD]) {
-			short i = 2 * tsc->data[SC_FORCEOFVANGUARD]->val1;
-
-			def1 = (def1 * (100 + i)) / 100;
-		}
-
-		if( tsc->data[SC_CAMOUFLAGE] ){
-			short i = 5 * tsc->data[SC_CAMOUFLAGE]->val3; //5% per second
-
-			i = min(i,100); //cap it to 100 for 0 def min
-			def1 = (def1*(100-i))/100;
-			def2 = (def2*(100-i))/100;
-		}
-
-		if (tsc->data[SC_GT_REVITALIZE])
-			def2 += tsc->data[SC_GT_REVITALIZE]->val4;
-
-		if (tsc->data[SC_OVERED_BOOST] && target->type == BL_PC)
-			def1 = (def1 * tsc->data[SC_OVERED_BOOST]->val4) / 100;
+#endif
 	}
 
 	if( battle_config.vit_penalty_type && battle_config.vit_penalty_target&target->type ) {
@@ -4621,10 +4607,8 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 				def2 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
 			}
 		}
+#ifndef RENEWAL
 		if (skill_id == AM_ACIDTERROR)
-#ifdef RENEWAL
-			def2 = 0; //Ignore only status defense. [FatalEror]
-#else
 			def1 = 0; //Ignores only armor defense. [Skotlex]
 #endif
 		if(def2 < 1)
@@ -4671,6 +4655,30 @@ struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list 
 		vit_def += def1*battle_config.weapon_defense_type;
 		def1 = 0;
 	}
+
+	if (!flag)
+		return (short)def1;
+	else
+		return vit_def;
+}
+
+/**
+ * Calculate defense damage reduction
+ * @param wd: Weapon data
+ * @param src: Source object
+ * @param target: Target object
+ * @param skill_id: Skill used
+ * @param skill_lv: Skill level used
+ * @return weapon data
+ * Credits:
+ *	Original coder Skotlex
+ *	Initial refactoring by Baalberith
+ *	Refined and optimized by helvetica
+ */
+struct Damage battle_calc_defense_reduction(struct Damage wd, struct block_list *src, struct block_list *target, uint16 skill_id, uint16 skill_lv)
+{
+	short def1 = battle_get_defense(src, target, skill_id, 0);
+	short vit_def = battle_get_defense(src, target, skill_id, 1);
 
 #ifdef RENEWAL
 	/**
@@ -6154,12 +6162,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			ad.damage -= (int64)ad.damage*i/100;
 
 		if(!flag.imdef){
-			defType mdef = tstatus->mdef;
-			int mdef2= tstatus->mdef2;
-#ifdef RENEWAL
-			if(tsc && tsc->data[SC_ASSUMPTIO])
-				mdef <<= 1; // only eMDEF is doubled
-#endif
+			defType mdef = tstatus->mdef; // eMDEF
+			short mdef2 = tstatus->mdef2; // sMDEF
+
+			mdef = status_calc_mdef(target, tsc, mdef, false);
+			mdef2 = status_calc_mdef2(target, tsc, mdef2, false);
+
 			if(sd) {
 				i = sd->ignore_mdef_by_race[tstatus->race] + sd->ignore_mdef_by_race[RC_ALL];
 				i += sd->ignore_mdef_by_class[tstatus->class_] + sd->ignore_mdef_by_class[CLASS_ALL];
@@ -6168,7 +6176,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				{
 					if (i > 100) i = 100;
 					mdef -= mdef * i/100;
-					//mdef2-= mdef2* i/100;
+					mdef2-= mdef2* i/100;
 				}
 			}
 #ifdef RENEWAL
@@ -8388,6 +8396,7 @@ static const struct _battle_data {
 	{ "exp_cost_inspiration",               &battle_config.exp_cost_inspiration,            1,      0,      100,            },
 	{ "mvp_exp_reward_message",             &battle_config.mvp_exp_reward_message,          0,      0,      1,              },
 	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
+	{ "show_status_katar_crit",             &battle_config.show_status_katar_crit,          0,      0,      1,              },
 	{ "atcommand_levelup_events",			&battle_config.atcommand_levelup_events,		0,		0,		1,				},
 	{ "block_account_in_same_party",		&battle_config.block_account_in_same_party,		1,		0,		1,				},
 	{ "tarotcard_equal_chance",             &battle_config.tarotcard_equal_chance,          0,      0,      1,              },
