@@ -1456,6 +1456,7 @@
 	export_constant(SC_GOLDENMACECLAN);
 	export_constant(SC_CROSSBOWCLAN);
 	export_constant(SC_JUMPINGCLAN);
+	export_constant(SC_TAROTCARD);
 	export_constant(SC_GEFFEN_MAGIC1);
 	export_constant(SC_GEFFEN_MAGIC2);
 	export_constant(SC_GEFFEN_MAGIC3);
