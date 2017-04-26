@@ -3923,7 +3923,7 @@ void clif_changeoption(struct block_list* bl)
 	//Whenever we send "changeoption" to the client, the provoke icon is lost
 	//There is probably an option for the provoke icon, but as we don't know it, we have to do this for now
 	if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->timer == INVALID_TIMER)
-		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, -1, 0, 0, 0);
+		clif_status_change(bl, SI_PROVOKE, 1, -1, 0, 0, 0);
 }
 
 

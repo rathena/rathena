@@ -2580,7 +2580,6 @@
 	export_constant(OPT1_STONEWAIT);
 	export_constant(OPT1_BURNING);
 	export_constant(OPT1_IMPRISON);
-	export_constant(OPT1_CRYSTALIZE);
 
 	/* health states */
 	export_constant(OPT2_POISON);
