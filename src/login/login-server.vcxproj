@@ -175,4 +175,14 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <Target Name="AfterClean">
+    <Delete Files="$(SolutionDir)serv.bat" ContinueOnError="true" />
+    <Delete Files="$(SolutionDir)logserv.bat" ContinueOnError="true" />
+    <Delete Files="$(SolutionDir)runserver.bat" ContinueOnError="true" />
+  </Target>
+  <Target Name="AfterBuild">
+    <Copy SourceFiles="$(SolutionDir)tools\serv.bat" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)serv.bat')" />
+    <Copy SourceFiles="$(SolutionDir)tools\logserv.bat" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)logserv.bat')" />
+    <Copy SourceFiles="$(SolutionDir)tools\runserver.bat" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)runserver.bat')" />
+  </Target>
 </Project>
