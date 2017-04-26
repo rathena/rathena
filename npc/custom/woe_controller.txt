@@ -104,7 +104,7 @@ OnMinute00:
 	freeloop(1);
 	if (agitcheck() || agitcheck2()) {
 		for(set .@i,0; .@i<.Size; set .@i,.@i+4)
-			if (gettime(4) == $WOE_CONTROL[.@i] && gettime(3) == $WOE_CONTROL[.@i+2]) {
+			if (gettime(DT_DAYOFWEEK) == $WOE_CONTROL[.@i] && gettime(DT_HOUR) == $WOE_CONTROL[.@i+2]) {
 			OnWOEEnd:
 				announce "The War Of Emperium is over!",bc_all|bc_woe;
 				AgitEnd; AgitEnd2;
@@ -122,7 +122,7 @@ OnMinute00:
 	if ((!agitcheck() && !agitcheck2()) || .Init) {
 		if (!agitcheck() && !agitcheck2()) set .Init,0;
 		for(set .@i,0; .@i<.Size; set .@i,.@i+4)
-			if (gettime(4) == $WOE_CONTROL[.@i] && gettime(3) >= $WOE_CONTROL[.@i+1] && gettime(3) < $WOE_CONTROL[.@i+2]) {
+			if (gettime(DT_DAYOFWEEK) == $WOE_CONTROL[.@i] && gettime(DT_HOUR) >= $WOE_CONTROL[.@i+1] && gettime(DT_HOUR) < $WOE_CONTROL[.@i+2]) {
 				deletearray .Active[0],2;
 				set .Active[0], $WOE_CONTROL[.@i+3];
 				if (.Init) { AgitEnd; AgitEnd2; }
@@ -210,7 +210,7 @@ while(1) {
 	if (agitcheck() || agitcheck2()) {
 		if (.Active[0]) {
 			for(set .@i,0; .@i<.Size; set .@i,.@i+4)
-				if (gettime(4) == $WOE_CONTROL[.@i] && gettime(3) >= $WOE_CONTROL[.@i+1] && gettime(3) < $WOE_CONTROL[.@i+2]) {
+				if (gettime(DT_DAYOFWEEK) == $WOE_CONTROL[.@i] && gettime(DT_HOUR) >= $WOE_CONTROL[.@i+1] && gettime(DT_HOUR) < $WOE_CONTROL[.@i+2]) {
 					set .@i, $WOE_CONTROL[.@i+2];
 					break;
 				}
@@ -222,7 +222,7 @@ while(1) {
 			mes "The War of Emperium is ^0055FFactive^000000.";
 	} else {
 		for(set .@i,0; .@i<.Size; set .@i,.@i+4)
-			if ((gettime(4) == $WOE_CONTROL[.@i] && gettime(3) <= $WOE_CONTROL[.@i+1]) || gettime(4) < $WOE_CONTROL[.@i]) {
+			if ((gettime(DT_DAYOFWEEK) == $WOE_CONTROL[.@i] && gettime(DT_HOUR) <= $WOE_CONTROL[.@i+1]) || gettime(DT_DAYOFWEEK) < $WOE_CONTROL[.@i]) {
 				setarray .@time[0],$WOE_CONTROL[.@i],$WOE_CONTROL[.@i+1];
 				break;
 			}

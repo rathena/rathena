@@ -11,9 +11,9 @@
 // WoeTETimeStart(<seconds>) : return true if the woe te will start in X seconds or less, false otherwise
 function	script	WoeTETimeStart	{
 	.@woe_status = agitcheck3();
-	.@min_today  = gettime(2);
-	.@hour_today = gettime(3);
-	.@day_today  = gettime(4);
+	.@min_today  = gettime(DT_MINUTE);
+	.@hour_today = gettime(DT_HOUR);
+	.@day_today  = gettime(DT_DAYOFWEEK);
 
 	if (getvariableofnpc( getd( ".day_"+ .@day_today ),"woe_TE_contoller" )) {
 		.@h = getvariableofnpc( getd( ".hour_start_"+ .@hour_today ),"woe_TE_contoller" );

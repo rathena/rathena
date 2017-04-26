@@ -149,8 +149,8 @@ OnTouch_:
 force_1-2,99,31,4	script	Slipslowrun#party	124,{
 OnStart:
 	initnpctimer;
-	set $arena_minptst,gettime(2);
-	set $arena_secptst,gettime(1);
+	set $arena_minptst,gettime(DT_MINUTE);
+	set $arena_secptst,gettime(DT_SECOND);
 	end;
 
 OnTimer2000:
@@ -414,8 +414,8 @@ OnReset:
 
 force_1-2,95,187,0	script	force_09_exit	45,1,1,{
 OnTouch_:
-	set $arena_minptend,gettime(2);
-	set $arena_secptend,gettime(1);
+	set $arena_minptend,gettime(DT_MINUTE);
+	set $arena_secptend,gettime(DT_SECOND);
 	warp "prt_are_in",73,139;
 	donpcevent "#arn_timer_pt::OnEnter";
 	donpcevent "arena_p::OnReset";

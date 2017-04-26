@@ -76,7 +76,7 @@ prt_church,103,88,3	script	Praying Minister#arch	60,{
 			mes "All ministers of Odin should be diligent. They should never be too lazy to serve Odin.";
 			next;
 			mes "[Praying Minister]";
-			mes (Sex?"Brother":"Sister")+", how has your life been? Have you lived it to its fullest?";
+			mes (Sex == SEX_MALE?"Brother":"Sister")+", how has your life been? Have you lived it to its fullest?";
 			mes "Have you served your life in the light of Odin?";
 			next;
 			mes "[Praying Minister]";
@@ -88,7 +88,7 @@ prt_church,103,88,3	script	Praying Minister#arch	60,{
 			mes "We should not fall prey to lies and deceit.";
 			next;
 			mes "[Praying Minister]";
-			mes (Sex?"Brother":"Sister")+"...";
+			mes (Sex == SEX_MALE?"Brother":"Sister")+"...";
 			mes "Even though we serve Odin, we are normal people.";
 			mes "We can be degraded in spite of ourselves and we must realize that.";
 			next;
@@ -412,7 +412,7 @@ umbala,139,227,3	script	Priest#arch	60,{
 		next;
 		mes "[Priest Dayan]";
 		mes "Thank you very much.";
-		mes "Feel free to visit here when you want to pray, "+(Sex?"brother.":"sister.");
+		mes "Feel free to visit here when you want to pray, "+(Sex == SEX_MALE?"brother.":"sister.");
 		mes "A visit from a friend always makes me happy.";
 		set job_arch,4;
 		changequest 2188,2189;
@@ -596,7 +596,7 @@ hu_in01,205,204,7	script	Praying Nun#benew	79,{
 		mes "[Vinue]";
 		mes "Ah, Welcome.";
 		mes "It's not time to have a service yet...";
-		mes "Are you here to pray, "+(Sex?"brother":"sister")+"?";
+		mes "Are you here to pray, "+(Sex == SEX_MALE?"brother":"sister")+"?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "I came here to say hello from Priest Dayan from Prontera.";
@@ -615,7 +615,7 @@ hu_in01,205,204,7	script	Praying Nun#benew	79,{
 		next;
 		mes "[Vinue]";
 		mes "Ah...";
-		mes "He's very kind. As are you "+(Sex?"brother":"sister")+".";
+		mes "He's very kind. As are you "+(Sex == SEX_MALE?"brother":"sister")+".";
 		next;
 		mes "[Vinue]";
 		mes "But don't worry.";
@@ -1063,7 +1063,7 @@ OnRed:
 job3_arch02,390,389,1	script	#arch_val01	844,{
 	end;
 OnEnable:
-	areamonster "job3_arch02",111,325,115,329,"Valkyrie's Nightmare",2036,1,"#arch_val01::OnMyMobDead";
+	areamonster "job3_arch02",108,322,118,332,"Valkyrie's Nightmare",2036,1,"#arch_val01::OnMyMobDead";
 	end;
 OnMyMobDead:
 	if (mobcount("job3_arch02","#arch_val01::OnMyMobDead") < 1) {
@@ -1094,7 +1094,7 @@ OnKill:
 job3_arch02,390,387,1	script	#arch_val02	844,{
 	end;
 OnEnable:
-	areamonster "job3_arch02",242,44,246,48,"Valkyrie's Nightmare",2036,1,"#arch_val02::OnMyMobDead";
+	areamonster "job3_arch02",239,41,249,51,"Valkyrie's Nightmare",2036,1,"#arch_val02::OnMyMobDead";
 	end;
 OnMyMobDead:
 	if (mobcount("job3_arch02","#arch_val02::OnMyMobDead") < 1) {
@@ -1410,7 +1410,7 @@ job3_arch02,284,159,0	script	#arch_3_01	139,20,20,{
 OnTouch:
 	if (Class != Job_Priest) {
 		mapannounce "job3_arch02","Frus: Do you want to see God? Okay, I'll send you to the land of the dead by myself!",bc_map,"0xFF0000";
-		areamonster "job3_arch02",242,44,246,48,"Frus",1762,1,"#arch_3_01::OnMyMobDead";
+		areamonster "job3_arch02",239,41,249,51,"Frus",1762,1,"#arch_3_01::OnMyMobDead";
 	}
 	disablenpc "#arch_3_01";
 	end;
@@ -1428,7 +1428,7 @@ job3_arch02,307,200,0	script	#arch_3_02	139,5,5,{
 OnTouch:
 	if (BaseJob == Job_Priest) {
 		mapannounce "job3_arch02","Skogul: You are my guest!",bc_map,"0xFF0000";
-		monster "job3_arch02",307,200,"Skogul",1761,1,"#arch_3_02::OnMyMobDead";
+		areamonster "job3_arch02",306,199,308,201,"Skogul",1761,1,"#arch_3_02::OnMyMobDead";
 	}
 	disablenpc "#arch_3_02";
 	end;
@@ -1445,7 +1445,7 @@ OnKill:
 job3_arch02,296,216,0	script	#arch_3_03	139,5,5,{
 OnTouch:
 	mapannounce "job3_arch02","Frus: I like your face... Can I steal it?",bc_map,"0xFF0000";
-	monster "job3_arch02",296,216,"Frus",1762,1,"#arch_3_03::OnMyMobDead";
+	areamonster "job3_arch02",295,215,297,217,"Frus",1762,1,"#arch_3_03::OnMyMobDead";
 	disablenpc "#arch_3_03";
 	end;
 OnMyMobDead:
@@ -1461,16 +1461,16 @@ OnInit:
 job3_arch02,389,390,1	script	mob#arch_1	844,{
 	end;
 OnEnable:
-	monster "job3_arch02",100,102,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
-	monster "job3_arch02",90,131,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
-	monster "job3_arch02",91,170,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
-	monster "job3_arch02",104,183,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
-	monster "job3_arch02",138,205,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
-	monster "job3_arch02",161,215,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
-	monster "job3_arch02",165,215,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
-	monster "job3_arch02",201,236,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
-	monster "job3_arch02",218,250,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
-	monster "job3_arch02",254,293,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
+	areamonster "job3_arch02", 99,101,101,103,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
+	areamonster "job3_arch02", 89,130, 91,132,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
+	areamonster "job3_arch02", 90,169, 92,171,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
+	areamonster "job3_arch02",103,182,105,184,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
+	areamonster "job3_arch02",137,204,139,206,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
+	areamonster "job3_arch02",160,214,162,216,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
+	areamonster "job3_arch02",164,214,166,216,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
+	areamonster "job3_arch02",200,235,202,237,"Shrine Invader",1394,2,"mob#arch_1::OnMyMobDead";
+	areamonster "job3_arch02",217,249,219,251,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
+	areamonster "job3_arch02",253,292,255,294,"Shrine Invader",1427,1,"mob#arch_1::OnMyMobDead";
 	end;
 OnMyMobDead:
 	end;
@@ -1482,18 +1482,18 @@ OnKill:
 job3_arch02,389,389,1	script	mob#arch_2	844,{
 	end;
 OnEnable:
-	monster "job3_arch02",156,321,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
-	monster "job3_arch02",170,305,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
-	monster "job3_arch02",183,293,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
-	monster "job3_arch02",200,287,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
-	monster "job3_arch02",256,293,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
-	monster "job3_arch02",286,284,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
-	monster "job3_arch02",278,236,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
-	monster "job3_arch02",292,185,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
-	monster "job3_arch02",281,170,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
-	monster "job3_arch02",227,166,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
-	monster "job3_arch02",190,146,"Shrine Invader",1480,1,"mob#arch_2::OnMyMobDead";
-	monster "job3_arch02",204,177,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
+	areamonster "job3_arch02",155,320,157,322,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
+	areamonster "job3_arch02",169,304,171,306,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
+	areamonster "job3_arch02",182,292,184,294,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
+	areamonster "job3_arch02",199,286,201,288,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
+	areamonster "job3_arch02",255,292,257,294,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
+	areamonster "job3_arch02",285,283,287,285,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
+	areamonster "job3_arch02",277,235,279,237,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
+	areamonster "job3_arch02",291,184,293,186,"Shrine Invader",1480,2,"mob#arch_2::OnMyMobDead";
+	areamonster "job3_arch02",280,169,282,171,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
+	areamonster "job3_arch02",226,165,228,167,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
+	areamonster "job3_arch02",189,145,191,147,"Shrine Invader",1480,1,"mob#arch_2::OnMyMobDead";
+	areamonster "job3_arch02",203,176,205,178,"Shrine Invader",1453,1,"mob#arch_2::OnMyMobDead";
 	end;
 OnMyMobDead:
 	end;

@@ -65,6 +65,8 @@ ecl_in04	mapflag	noteleport
 1@ecl	mapflag	noteleport
 1@ecl	mapflag	monster_noteleport
 ecl_hub01	mapflag	noteleport
+1@xm_d	mapflag	monster_noteleport
+1@xm_d	mapflag	noteleport
 
 // Glast Heim Memorial Dungeon ===
 1@gl_k	mapflag	noteleport

@@ -121,7 +121,7 @@ lou_fild01,190,100,7	script	Girl#1lou	815,{
 	mes "stay and enjoy the";
 	mes "the food and the sights!";
 	next;
-	if (Sex) {
+	if (Sex == SEX_MALE) {
 		mes "[Girl]";
 		mes "And by sights...";
 		mes "I mean girls!";
@@ -138,7 +138,7 @@ lou_fild01,190,100,7	script	Girl#1lou	815,{
 // Generic Louyang NPCs
 //============================================================
 louyang,297,167,2	script	Muscular Woman#lou	815,{
-	if (!Sex) {
+	if (Sex == SEX_FEMALE) {
 		mes "[Zhi Ching Li]";
 		mes "All the members of the Maiden Palace, including myself and our master, are all female.";
 		next;

@@ -1323,7 +1323,7 @@ OnInit:
 	disablenpc "removepp_aru_gd";
 	end;
 
-OnTouch2:
+OnTouch:
 	set .@paper_aru_gd,countitem(6030);
 	set .@spaper_aru_gd,countitem(6031);
 	if ((.@paper_aru_gd > 0) || (.@spaper_aru_gd > 0)) {

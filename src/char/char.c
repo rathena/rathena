@@ -846,7 +846,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
  *
  * @retval SEX_MALE if the per-character sex is male
  * @retval SEX_FEMALE if the per-character sex is female
- * @retval 99 if the per-character sex is not defined or the current PACKETVER doesn't support it.
+ * @retval SEX_ACCOUNT if the per-character sex is not defined or the current PACKETVER doesn't support it.
  */
 int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charstatus *p, char sex)
 {
@@ -859,7 +859,7 @@ int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charsta
 			return SEX_FEMALE;
 		case 'U':
 		default:
-			return 99;
+			return SEX_ACCOUNT;
 	}
 #else
 	if (sex == 'M' || sex == 'F') {
@@ -867,7 +867,7 @@ int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charsta
 			// sd is not available, there isn't much we can do. Just return and print a warning.
 			ShowWarning("Character '%s' (CID: %d, AID: %d) has sex '%c', but PACKETVER does not support per-character sex. Defaulting to 'U'.\n",
 					p->name, p->char_id, p->account_id, sex);
-			return 99;
+			return SEX_ACCOUNT;
 		}
 		if ((sex == 'M' && sd->sex == SEX_FEMALE)
 		 || (sex == 'F' && sd->sex == SEX_MALE)) {
@@ -880,7 +880,7 @@ int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charsta
 			Sql_ShowDebug(sql_handle);
 		}
 	}
-	return 99;
+	return SEX_ACCOUNT;
 #endif
 }
 
@@ -1247,16 +1247,31 @@ int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 	if( !char_mmo_char_fromsql(char_id, &char_dat, false) ) // Only the short data is needed.
 		return 2;
 
+	// If the new name is exactly the same as the old one
+	if( !strcmp( sd->new_name, char_dat.name ) )
+		return 0;
+
 	if( char_dat.rename == 0 )
 		return 1;
 
+	if( !charserv_config.char_config.char_rename_party && char_dat.party_id ){
+		return 6;
+	}
+
+	if( !charserv_config.char_config.char_rename_guild && char_dat.guild_id ){
+		return 5;
+	}
+
 	Sql_EscapeStringLen(sql_handle, esc_name, sd->new_name, strnlen(sd->new_name, NAME_LENGTH));
 
-	// check if the char exist
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` WHERE `name` LIKE '%s' LIMIT 1", schema_config.char_db, esc_name) )
-	{
-		Sql_ShowDebug(sql_handle);
-		return 4;
+	switch( char_check_char_name( sd->new_name, esc_name ) ){
+		case 0:
+			break;
+		case -1:
+			// character already exists
+			return 4;
+		default:
+			return 8;
 	}
 
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `name` = '%s', `rename` = '%d' WHERE `char_id` = '%d'", schema_config.char_db, esc_name, --char_dat.rename, char_id) )
@@ -1264,6 +1279,10 @@ int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 		Sql_ShowDebug(sql_handle);
 		return 3;
 	}
+	
+	// Update party and party members with the new player name
+	if( char_dat.party_id )
+		inter_party_charname_changed(char_dat.party_id, char_id, sd->new_name);
 
 	// Change character's name into guild_db.
 	if( char_dat.guild_id )
@@ -1304,6 +1323,10 @@ int char_check_char_name(char * name, char * esc_name)
 	// check for reserved names
 	if( strcmpi(name, charserv_config.wisp_server_name) == 0 )
 		return -1; // nick reserved for internal server messages
+
+	// check for the channel symbol
+	if( name[0] == '#' )
+		return -2;
 
 	// Check Authorised letters/symbols in the name of the character
 	if( charserv_config.char_config.char_name_option == 1 )
@@ -1954,7 +1977,7 @@ void char_read_fame_list(void)
 		memcpy(chemist_fame_list[i].name, data, zmin(len, NAME_LENGTH));
 	}
 	// Build Taekwon ranking list
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_TAEKWON, fame_list_size_taekwon) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`fame`,`name` FROM `%s` WHERE `fame`>0 AND (`class`='%d' OR `class`='%d') ORDER BY `fame` DESC LIMIT 0,%d", schema_config.char_db, JOB_TAEKWON, JOB_BABY_TAEKWON, fame_list_size_taekwon) )
 		Sql_ShowDebug(sql_handle);
 	for( i = 0; i < fame_list_size_taekwon && SQL_SUCCESS == Sql_NextRow(sql_handle); ++i )
 	{
@@ -2198,8 +2221,10 @@ bool char_checkdb(void){
 	};
 	ShowInfo("Start checking DB integrity\n");
 	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can acces them in sql-server
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` LIMIT 1;", sqltable[i]) )
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` LIMIT 1;", sqltable[i]) ){
+			Sql_ShowDebug(sql_handle);
 			return false;
+		}
 	}
 	//checking char_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`account_id`,`char_num`,`name`,`class`,"
@@ -2875,6 +2900,10 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.char_config.char_del_option = atoi(w2);
 		} else if (strcmpi(w1, "char_del_restriction") == 0) {
 			charserv_config.char_config.char_del_restriction = atoi(w2);
+		} else if (strcmpi(w1, "char_rename_party") == 0) {
+			charserv_config.char_config.char_rename_party = (bool)config_switch(w2);
+		} else if (strcmpi(w1, "char_rename_guild") == 0) {
+			charserv_config.char_config.char_rename_guild = (bool)config_switch(w2);
 		} else if(strcmpi(w1,"db_path")==0) {
 			safestrncpy(schema_config.db_path, w2, sizeof(schema_config.db_path));
 		} else if (strcmpi(w1, "fame_list_alchemist") == 0) {

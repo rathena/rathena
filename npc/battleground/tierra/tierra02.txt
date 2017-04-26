@@ -650,17 +650,8 @@ OnTouch:
 	end;
 }
 
-bat_a02,169,227,0	script	underladd#bat_a02_1	45,1,1,{
-OnTouch_:
-	warp "bat_a02",178,228;
-	end;
-}
-
-bat_a02,208,164,0	script	underladd#bat_a02_2	45,1,1,{
-OnTouch_:
-	warp "bat_a02",200,171;
-	end;
-}
+bat_a02,169,227,0	warp	underladd#bat_a02_1	1,1,bat_a02,178,228
+bat_a02,208,164,0	warp	underladd#bat_a02_2	1,1,bat_a02,200,171
 
 bat_a02,171,309,3	script	Guillaume Camp#flag11	973,{ end; }
 bat_a02,149,310,3	script	Guillaume Camp#flag12	973,{ end; }

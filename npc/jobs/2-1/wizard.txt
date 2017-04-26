@@ -47,7 +47,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 			mes "Now, excuse me.";
 			next;
 			mes "[Catherine]";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "Well, If you intended to ask me on a date... I appreciate it...hohoho.";
 			else
 				mes "Well, if you fix me up with a cute guy... I'd appreciate it...hohoho!.";
@@ -375,7 +375,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "You...*sigh*...I didn't think you would do such a dishonorable thing.";
 		next;
 		mes "[Catherine]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Granted you're a mage, but how could a guy be so weak?!";
 			mes "Well, at least your alive still. Go back and try harder this time. ~tehehehe";
 		}
@@ -457,7 +457,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			next;
 			mes "[Raulel]";
 			mes "Don't live dishonestly, or impolitely, or else one day you'll be caught in a spell you can't control, and BOOM, your dead!";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "If you don't want that to happen, then learn how to use spells properly!";
 				next;
 				mes "[Raulel]";
@@ -837,7 +837,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			mes "Just consider yourself a glass cannon...because the monsters are going to break you into pieces. Hahahahahahahahaha~";
 			next;
 			set WIZ_Q,6;
-			savepoint "geffen",120,107;
+			savepoint "geffen",120,107,1,1;
 			mes "[Raulel]";
 			mes "Then, as you wish. I'll send you there right now.";
 			mes "Oh, if you see a white light at the end of a tunnel, that means your pathetic cause you failed! Hahahahahah~";
@@ -871,7 +871,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 		next;
 		if (select("Continue testing.:I want to go back because I have butterflies in my stomach.") == 1) {
 			set WIZ_Q,6;
-			savepoint "geffen",120,107;
+			savepoint "geffen",120,107,1,1;
 			mes "[Raulel]";
 			mes "You are indeed, very determined. Ok! Hahahahahaha~";
 			mes "*Cough* *cough* As you wish, we shall begin the final test!";
@@ -911,7 +911,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			mes "*Cough* Cough* Do you want to take the test again? Or did you bring the ^3355FFWorn Out Scroll^000000?";
 			next;
 			if (select("Continue the test.:Worn Out Scroll...") == 1) {
-				savepoint "geffen",120,107;
+				savepoint "geffen",120,107,1,1;
 				mes "[Raulel]";
 				mes "Hahaha~ Ok, at least you have some spirit.";
 				mes "I'll send you in again, try dying once more will yah? Hahahahahahahahaha~";

@@ -14,8 +14,8 @@ struct map_session_data;
 #include "path.h" // struct walkpath_data
 #include "skill.h" // struct skill_timerskill, struct skill_unit_group, struct skill_unit_group_tickset
 
-extern const short dirx[8]; ///lookup to know where will move to x according dir
-extern const short diry[8]; ///lookup to know where will move to y according dir
+extern const short dirx[DIR_MAX]; ///lookup to know where will move to x according dir
+extern const short diry[DIR_MAX]; ///lookup to know where will move to y according dir
 
 struct unit_data {
 	struct block_list *bl; ///link to owner object BL_PC|BL_MOB|BL_PET|BL_NPC|BL_HOM|BL_MER|BL_ELEM
@@ -54,6 +54,7 @@ struct unit_data {
 		unsigned speed_changed : 1;
 		unsigned walk_script : 1;
 		unsigned blockedmove : 1;
+		unsigned blockedskill : 1;
 	} state;
 	char walk_done_event[EVENT_NAME_LENGTH];
 };
@@ -80,6 +81,16 @@ struct view_data {
 	unsigned dead_sit : 2;
 };
 
+/// Enum for unit_blown_immune
+enum e_unit_blown {
+	UB_KNOCKABLE = 0, // Can be knocked back / stopped
+	UB_NO_KNOCKBACK_MAP, // On a WoE/BG map
+	UB_MD_KNOCKBACK_IMMUNE, // Target is MD_KNOCKBACK_IMMUNE
+	UB_TARGET_BASILICA, // Target is in Basilica area
+	UB_TARGET_NO_KNOCKBACK, // Target has 'special_state.no_knockback'
+	UB_TARGET_TRAP, // Target is a trap that cannot be knocked back
+};
+
 // PC, MOB, PET
 
 // Does walk action for unit
@@ -104,8 +115,8 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 int unit_warp(struct block_list *bl, short map, short x, short y, clr_type type);
 int unit_setdir(struct block_list *bl, unsigned char dir);
 uint8 unit_getdir(struct block_list *bl);
-int unit_blown(struct block_list* bl, int dx, int dy, int count, int flag);
-uint8 unit_blown_immune(struct block_list* bl, uint8 flag);
+int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_blown flag);
+enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag);
 
 // Can-reach checks
 bool unit_can_reach_pos(struct block_list *bl,int x,int y,int easy);
@@ -136,7 +147,6 @@ int unit_set_target(struct unit_data* ud, int target_id);
 // unit_data
 void unit_dataset(struct block_list *bl);
 
-int unit_fixdamage(struct block_list *src,struct block_list *target,unsigned int tick,int sdelay,int ddelay,int64 damage,int div,int type,int64 damage2);
 // Remove unit
 struct unit_data* unit_bl2ud(struct block_list *bl);
 void unit_remove_map_pc(struct map_session_data *sd, clr_type clrtype);

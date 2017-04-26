@@ -338,7 +338,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	4_M_02,{
 			mes "10 ^ff0000Feather of Birds^000000.";
 			mes "You can go ahead and kill Pickies to get those. It really shouldn't be that hard. Oh, and use this Wing thingee to come back.";
 			tu_thief01 = 5;
-			savepoint "moc_ruins",80,164;
+			savepoint "moc_ruins",80,164,1,1;
 			getitem 602,1; //Wing_Of_Butterfly
 			getexp 100,50;
 			specialeffect2 EF_HIT5;

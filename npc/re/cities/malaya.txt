@@ -115,7 +115,7 @@ ma_in01,30,94,4	script	Inn Keeper#ma	583,{
 	case 1:
 		mes "[Inn Keeper]";
 		mes "Successfully stored. See you next time.";
-		savepoint "ma_in01",43,98;
+		savepoint "ma_in01",43,98,1,1;
 		close;
 	case 2:
 		if (Zeny < 5000) {

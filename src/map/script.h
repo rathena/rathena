@@ -148,6 +148,7 @@ extern struct Script_Config {
 	int input_min_value;
 	int input_max_value;
 
+	// PC related
 	const char *die_event_name;
 	const char *kill_pc_event_name;
 	const char *kill_mob_event_name;
@@ -158,9 +159,47 @@ extern struct Script_Config {
 	const char *joblvup_event_name;
 	const char *stat_calc_event_name;
 
-	const char* ontouch_name;
-	const char* ontouch2_name;
+	// NPC related
+	const char* ontouch_event_name;
+	const char* ontouch2_event_name;
+	const char* ontouchnpc_event_name;
 	const char* onwhisper_event_name;
+	const char* oncommand_event_name;
+
+	// Init related
+	const char* init_event_name;
+	const char* inter_init_event_name;
+	const char* inter_init_once_event_name;
+
+	// Guild related
+	const char* guild_break_event_name;
+	const char* agit_start_event_name;
+	const char* agit_init_event_name;
+	const char* agit_end_event_name;
+	const char* agit_start2_event_name;
+	const char* agit_init2_event_name;
+	const char* agit_end2_event_name;
+	const char* agit_start3_event_name;
+	const char* agit_init3_event_name;
+	const char* agit_end3_event_name;
+
+	// Timer related
+	const char* timer_event_name;
+	const char* timer_minute_event_name;
+	const char* timer_hour_event_name;
+	const char* timer_clock_event_name;
+	const char* timer_day_event_name;
+	const char* timer_sunday_event_name;
+	const char* timer_monday_event_name;
+	const char* timer_tuesday_event_name;
+	const char* timer_wednesday_event_name;
+	const char* timer_thursday_event_name;
+	const char* timer_friday_event_name;
+	const char* timer_saturday_event_name;
+
+	// Instance related
+	const char* instance_init_event_name;
+	const char* instance_destroy_event_name;
 } script_config;
 
 typedef enum c_op {
@@ -642,6 +681,18 @@ enum random_option_attribute {
 	ROA_VALUE,
 	ROA_PARAM,
 };
+
+enum instance_info_type {
+	IIT_ID,
+	IIT_TIME_LIMIT,
+	IIT_IDLE_TIMEOUT,
+	IIT_ENTER_MAP,
+	IIT_ENTER_X,
+	IIT_ENTER_Y,
+	IIT_MAPCOUNT,
+	IIT_MAP
+};
+
 /**
  * used to generate quick script_array entries
  **/
@@ -657,7 +708,6 @@ void script_error(const char* src, const char* file, int start_line, const char*
 void script_warning(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 
 struct script_code* parse_script(const char* src,const char* file,int line,int options);
-void run_script_sub(struct script_code *rootscript,int pos,int rid,int oid, char* file, int lineno);
 void run_script(struct script_code *rootscript,int pos,int rid,int oid);
 
 int set_reg(struct script_state* st, TBL_PC* sd, int64 num, const char* name, const void* value, struct reg_db *ref);
@@ -666,10 +716,11 @@ int conv_num(struct script_state *st,struct script_data *data);
 const char* conv_str(struct script_state *st,struct script_data *data);
 void pop_stack(struct script_state* st, int start, int end);
 int run_script_timer(int tid, unsigned int tick, int id, intptr_t data);
+void script_stop_sleeptimers(int id);
+struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
 void run_script_main(struct script_state *st);
 
 void script_stop_instances(struct script_code *code);
-struct linkdb_node* script_erase_sleepdb(struct linkdb_node *n);
 void script_free_code(struct script_code* code);
 void script_free_vars(struct DBMap *storage);
 struct script_state* script_alloc_state(struct script_code* rootscript, int pos, int rid, int oid);

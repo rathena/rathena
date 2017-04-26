@@ -76,7 +76,7 @@ yuno,129,156,3	script	Chainheart	923,{
 			next;
 			set job__mechanic,12;
 			completequest 10101;
-			if (Sex)
+			if (Sex == SEX_MALE)
 				getitem 5749,1; //Driver_Band
 			else
 				getitem 5760,1; //Driver_Band_
@@ -737,4 +737,4 @@ OnTouch_:
 }
 jupe_core2,150,33,0	duplicate(#Acquiring Knowledge)	#Acquiring Knowledge2	139,1,0
 
-jupe_core2,0,0,0,0	monster	Dimik	1669,100,0,0,0
+jupe_core2,0,0	monster	Dimik	1669,100

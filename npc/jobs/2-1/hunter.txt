@@ -438,7 +438,7 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 			mes "Just give the item to the Demon Hunter, the guy who's all the way to the left in this area~";
 			next;
 			mes "[Hunter Sherin]";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "If you decide to become a Hunter, promise to come visit me. I want to see you as a Hunter. You would look great!!";
 			else
 				mes "If you decide to become a Hunter, come and visit me, okay? You're pretty, but... You'd be even prettier as a Hunter. Hehe~";
@@ -743,7 +743,7 @@ payon_in03,131,7,3	script	Hunter#htnGM	59,{
 		mes "Wow, you came back in one piece!";
 		mes "I mean, good job. I'll give you the item which proves that you have passed the test.";
 		set HNTR_Q,17;
-		savepoint "payon",104,99;
+		savepoint "payon",104,99,1,1;
 		getitem 1007,1; //Penetration
 		changequest 4012,4013;
 		next;
@@ -935,7 +935,7 @@ payon_in02,21,31,1	script	Hunter#htnGM2	59,{
 		mes "Wow. You're back in one piece!";
 		mes "I mean, good job. Well then, I'll give you the item which serves as proof that you passed the test.";
 		set HNTR_Q,17;
-		savepoint "payon",104,99;
+		savepoint "payon",104,99,1,1;
 		getitem 1007,1; //Penetration
 		next;
 		mes "[Hunter Guildmaster]";
@@ -985,7 +985,7 @@ OnTouch_:
 		next;
 		mes "[Guide]";
 		mes "We will provide the arrows, so just make sure that you bring a bow. Well, then. Please enter when you are ready.";
-		savepoint "job_hunte",176,22;
+		savepoint "job_hunte",176,22,1,1;
 		close;
 	}
 	else if (HNTR_Q > 12 && HNTR_Q < 16) {
@@ -1011,7 +1011,7 @@ OnTouch_:
 			// donpcevent "Waiting Room#hnt::OnStart";
 			close2;
 			set HNTR_Q,13;
-			savepoint "payon",104,99;
+			savepoint "payon",104,99,1,1;
 			warp "payon_in02",21,27;
 		}
 	}
@@ -1019,7 +1019,7 @@ OnTouch_:
 		mes "[Guide]";
 		mes "You shouldn't be here. How about finding the required job change item first?";
 		close2;
-		savepoint "payon",104,99;
+		savepoint "payon",104,99,1,1;
 		warp "payon_in02",21,27;
 	}
 	end;
@@ -1258,7 +1258,7 @@ OnTouch_:
 	donpcevent "Waiting Room#hnt::OnStart";
 	set HNTR_Q,16;
 	changequest 4011,4012;
-	savepoint "payon",104,99;
+	savepoint "payon",104,99,1,1;
 	if (rand(2))
 		warp "payon_in02",21,27;
 	else
