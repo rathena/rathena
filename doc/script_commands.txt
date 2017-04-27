@@ -3916,9 +3916,9 @@ current map if you give the 'to map name' as "Random".
 See also 'warp'.
 
 ---------------------------------------
- 
-*warpparty "<to_mapname>",<x>,<y>,<party_id>,{"<from_mapname>"};
- 
+
+*warpparty "<to_mapname>",<x>,<y>,<party_id>,{"<from_mapname>",<range x>,<range y>};
+
 Warps a party to specified map and coordinate given the party ID, which you can get with
 getcharid(1). You can also request another party id given a member's name with getcharid(1,<player_name>).
 
@@ -3932,6 +3932,10 @@ Leader:       All party members are warped to the leader's position. The leader 
               be online and in the current map-server for this to work.
 
 If you specify a from_mapname, 'warpparty' will only affect those on that map.
+
+The <range x> and <range y> optional values allow for a randomization with the
+player's warp point. The values will randomly add or subtract from the given <x>
+and <y> coordinates.
 
 Example:
 	mes "[Party Warper]";
