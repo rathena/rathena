@@ -99,6 +99,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common-minicore.lib;$(SolutionDir).vs\build\libconfig.lib;$(SolutionDir).vs\build\mt19937ar.lib;$(SolutionDir)3rdparty\zlib\lib\zdll.lib;$(SolutionDir)3rdparty\pcre\lib\pcre.lib;$(SolutionDir)3rdparty\mysql\lib\libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ws2_32.lib;$(SolutionDir)build\common-minicore.lib;$(SolutionDir)build\libconfig.lib;$(SolutionDir)build\mt19937ar.lib;$(SolutionDir)3rdparty\zlib\lib\zdll.lib;$(SolutionDir)3rdparty\mysql\lib\libmysql.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
