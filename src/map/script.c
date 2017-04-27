@@ -5839,15 +5839,17 @@ BUILDIN_FUNC(warpparty)
 				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 3: // Leader
+			if (p->party.member[i].leader)
+				continue;
 		case 4: // m,x,y
-			if (rx && ry) {
+			if (rx || ry) {
 				int x1 = x + rx, y1 = y + ry,
 					x0 = x - rx, y0 = y - ry;
 				uint8 attempts = 10;
 
 				do {
-					x = x0 + rnd()%(x1-x0+1);
-					y = y0 + rnd()%(y1-y0+1);
+					x = x0 + rnd()%(x1 - x0 + 1);
+					y = y0 + rnd()%(y1 - y0 + 1);
 				} while ((--attempts) > 0 && !map_getcell(m, x, y, CELL_CHKPASS));
 			}
 
