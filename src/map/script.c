@@ -49,6 +49,7 @@
 #include "mail.h"
 #include "quest.h"
 #include "elemental.h"
+#include "channel.h"
 
 #include <math.h>
 #include <stdlib.h> // atoi, strtol, strtoll, exit
@@ -167,6 +168,7 @@ static struct str_data_struct {
 	int (*func)(struct script_state *st);
 	int val;
 	int next;
+	bool deprecated;
 } *str_data = NULL;
 static int str_data_size = 0; // size of the data
 static int str_num = LABEL_START; // next id to be assigned
@@ -319,6 +321,7 @@ typedef struct script_function {
 	int (*func)(struct script_state *st);
 	const char *name;
 	const char *arg;
+	const char *deprecated;
 } script_function;
 
 extern script_function buildin_func[];
@@ -990,6 +993,12 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 		add_scriptl(func);
 		add_scriptc(C_ARG);
 		arg = buildin_func[str_data[func].val].arg;
+#if defined(SCRIPT_COMMAND_DEPRECATION)
+		if( str_data[func].deprecated ){
+			ShowWarning( "Usage of deprecated script function '%s'.\n", get_str(func) );
+			ShowWarning( "This function was deprecated on '%s' and could become unavailable anytime soon.\n", buildin_func[str_data[func].val].deprecated );
+		}
+#endif
 	} else if( str_data[func].type == C_USERFUNC || str_data[func].type == C_USERFUNC_POS ){
 		// script defined function
 		add_scriptl(buildin_callsub_ref);
@@ -1372,6 +1381,13 @@ const char* parse_simpleexpr(const char *p)
 		{// successfully processed a variable assignment
 			return pv;
 		}
+
+#if defined(SCRIPT_CONSTANT_DEPRECATION)
+		if( str_data[l].type == C_INT && str_data[l].deprecated ){
+			ShowWarning( "Usage of deprecated constant '%s'.\n", get_str(l) );
+			ShowWarning( "This constant was deprecated and could become unavailable anytime soon.\n" );
+		}
+#endif
 
 		p=skip_word(p);
 		if( *p == '[' ){
@@ -2235,6 +2251,7 @@ static void add_buildin_func(void)
 			str_data[n].type = C_FUNC;
 			str_data[n].val = i;
 			str_data[n].func = buildin_func[i].func;
+			str_data[n].deprecated = (buildin_func[i].deprecated != NULL);
 
 			if (!strcmp(buildin_func[i].name, "setr")) buildin_set_ref = n;
 			else if (!strcmp(buildin_func[i].name, "callsub")) buildin_callsub_ref = n;
@@ -2255,11 +2272,18 @@ bool script_get_constant(const char* name, int* value)
 	}
 	value[0] = str_data[n].val;
 
+#if defined(SCRIPT_CONSTANT_DEPRECATION)
+	if( str_data[n].deprecated ){
+		ShowWarning( "Usage of deprecated constant '%s'.\n", name );
+		ShowWarning( "This constant was deprecated and could become unavailable anytime soon.\n" );
+	}
+#endif
+
 	return true;
 }
 
 /// Creates new constant or parameter with given value.
-void script_set_constant(const char* name, int value, bool isparameter)
+void script_set_constant(const char* name, int value, bool isparameter, bool deprecated)
 {
 	int n = add_str(name);
 
@@ -2267,6 +2291,7 @@ void script_set_constant(const char* name, int value, bool isparameter)
 	{// new
 		str_data[n].type = isparameter ? C_PARAM : C_INT;
 		str_data[n].val  = value;
+		str_data[n].deprecated = deprecated;
 	}
 	else if( str_data[n].type == C_PARAM || str_data[n].type == C_INT )
 	{// existing parameter or constant
@@ -2307,11 +2332,11 @@ static void read_constdb(void)
 		if(sscanf(line,"%1023[A-Za-z0-9/_],%1023[A-Za-z0-9/_-],%11d",name,val,&type)>=2 ||
 		   sscanf(line,"%1023[A-Za-z0-9/_] %1023[A-Za-z0-9/_-] %11d",name,val,&type)>=2){
 			entries++;
-			script_set_constant(name, (int)strtol(val, NULL, 0), (bool)type);
+			script_set_constant(name, (int)strtol(val, NULL, 0), (bool)type, false);
 		}
 		else {
 			skipped++;
-			ShowWarning("Skipping line '"CL_WHITE"%d"CL_RESET"', invalide constant definition\n",linenum);
+			ShowWarning("Skipping line '"CL_WHITE"%d"CL_RESET"', invalid constant definition\n",linenum);
 		}
 	}
 	fclose(fp);
@@ -3930,6 +3955,14 @@ int run_func(struct script_state *st)
 	}
 
 	if(str_data[func].func) {
+#if defined(SCRIPT_COMMAND_DEPRECATION)
+		if( buildin_func[str_data[func].val].deprecated ){
+			ShowWarning( "Usage of deprecated script function '%s'.\n", get_str(func) );
+			ShowWarning( "This function was deprecated on '%s' and could become unavailable anytime soon.\n", buildin_func[str_data[func].val].deprecated );
+			script_reportsrc(st);
+		}
+#endif
+
 		if (str_data[func].func(st) == SCRIPT_CMD_FAILURE) //Report error
 			script_reportsrc(st);
 	} else {
@@ -4898,8 +4931,10 @@ void script_reload(void) {
 // buildin functions
 //
 
-#define BUILDIN_DEF(x,args) { buildin_ ## x , #x , args }
-#define BUILDIN_DEF2(x,x2,args) { buildin_ ## x , x2 , args }
+#define BUILDIN_DEF(x,args) { buildin_ ## x , #x , args, NULL }
+#define BUILDIN_DEF2(x,x2,args) { buildin_ ## x , x2 , args, NULL }
+#define BUILDIN_DEF_DEPRECATED(x,args,deprecationdate) { buildin_ ## x , #x , args, deprecationdate }
+#define BUILDIN_DEF2_DEPRECATED(x,x2,args,deprecationdate) { buildin_ ## x , x2 , args, deprecationdate }
 #define BUILDIN_FUNC(x) int buildin_ ## x (struct script_state* st)
 
 /////////////////////////////////////////////////////////////////////
@@ -10146,7 +10181,7 @@ BUILDIN_FUNC(getmobdrops)
 
 	mob = mob_db(class_);
 
-	for( i = 0; i < MAX_MOB_DROP; i++ )
+	for( i = 0; i < MAX_MOB_DROP_TOTAL; i++ )
 	{
 		if( mob->dropitem[i].nameid < 1 )
 			continue;
@@ -16847,7 +16882,7 @@ BUILDIN_FUNC(addmonsterdrop)
 
 	if(mob) { //We got a valid monster, check for available drop slot
 		unsigned char i, c = 0;
-		for(i = 0; i < MAX_MOB_DROP; i++) {
+		for(i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
 			if(mob->dropitem[i].nameid) {
 				if(mob->dropitem[i].nameid == item_id) { //If it equals item_id we update that drop
 					c = i;
@@ -16903,7 +16938,7 @@ BUILDIN_FUNC(delmonsterdrop)
 
 	if(mob) { //We got a valid monster, check for item drop on monster
 		unsigned char i;
-		for(i = 0; i < MAX_MOB_DROP; i++) {
+		for(i = 0; i < MAX_MOB_DROP_TOTAL; i++) {
 			if(mob->dropitem[i].nameid == item_id) {
 				mob->dropitem[i].nameid = 0;
 				mob->dropitem[i].p = 0;
@@ -22514,6 +22549,455 @@ BUILDIN_FUNC(openstorage2) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Create a new channel
+ * channel_create "<chname>","<alias>"{,"<password>"{<option>{,<delay>{,<color>{,<char_id>}}}}};
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_create) {
+	struct Channel tmp_chan, *ch = NULL;
+	const char *chname = script_getstr(st,2), *pass = NULL;
+	int i = channel_chk((char*)chname, NULL, 3);
+	TBL_PC *sd = NULL;
+
+	if (i != 0) {
+		ShowError("buildin_channel_create: Channel name '%s' is invalid. Errno %d\n", chname, i);
+		script_pushint(st,i);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	memset(&tmp_chan, 0, sizeof(struct Channel));
+
+	if (script_hasdata(st,8)) {
+		tmp_chan.char_id = script_getnum(st,8);
+		if (!(sd = map_charid2sd(tmp_chan.char_id))) {
+			ShowError("buildin_channel_create: Player with char id '%d' is not found.\n", tmp_chan.char_id);
+			script_pushint(st,-5);
+			return SCRIPT_CMD_FAILURE;
+		}
+		tmp_chan.type = CHAN_TYPE_PRIVATE;
+		i = 1;
+	}
+	else {
+		tmp_chan.type = CHAN_TYPE_PUBLIC;
+		i = 0;
+	}
+
+	safestrncpy(tmp_chan.name, chname+1, sizeof(tmp_chan.name));
+	safestrncpy(tmp_chan.alias, script_getstr(st,3), sizeof(tmp_chan.alias));
+	if (script_hasdata(st,4) && (pass = script_getstr(st,4)) && strcmpi(pass,"null") != 0)
+		safestrncpy(tmp_chan.pass, pass, sizeof(tmp_chan.pass));
+	if (script_hasdata(st,5))
+		tmp_chan.opt = script_getnum(st,5);
+	else
+		tmp_chan.opt = i ? channel_config.private_channel.opt : CHAN_OPT_BASE;
+	if (script_hasdata(st,6))
+		tmp_chan.msg_delay = script_getnum(st,6);
+	else
+		tmp_chan.msg_delay = i ? channel_config.private_channel.delay : 1000;
+	if (script_hasdata(st,7))
+		tmp_chan.color = script_getnum(st,7);
+	else
+		tmp_chan.color = i ? channel_config.private_channel.color : channel_getColor("Default");
+
+	if (!(ch = channel_create(&tmp_chan))) {
+		ShowError("buildin_channel_create: Cannot create channel '%s'.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (tmp_chan.char_id)
+		channel_join(ch, sd);
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Set channel option
+ * channel_setopt "<chname>",<option>,<value>;
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_setopt) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2);
+	int opt = script_getnum(st,3), value = script_getnum(st,4);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_setopt: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	switch (opt) {
+		case CHAN_OPT_ANNOUNCE_SELF:
+		case CHAN_OPT_ANNOUNCE_JOIN:
+		case CHAN_OPT_ANNOUNCE_LEAVE:
+		case CHAN_OPT_COLOR_OVERRIDE:
+		case CHAN_OPT_CAN_CHAT:
+		case CHAN_OPT_CAN_LEAVE:
+		case CHAN_OPT_AUTOJOIN:
+			if (value)
+				ch->opt |= opt;
+			else
+				ch->opt &= ~opt;
+			break;
+		case CHAN_OPT_MSG_DELAY:
+			ch->msg_delay = value;
+			break;
+		default:
+			ShowError("buildin_channel_setopt: Invalid option %d!\n", opt);
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Set channel color
+ * channel_setcolor "<chname>",<color>;
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_setcolor) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2);
+	int color = script_getnum(st,3);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_setcolor: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	ch->color = (color & 0x0000FF) << 16 | (color & 0x00FF00) | (color & 0xFF0000) >> 16;//RGB to BGR
+
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Set channel password
+ * channel_setpass "<chname>","<password>";
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_setpass) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2), *passwd = script_getstr(st,3);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_setpass: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!passwd || !strcmpi(passwd,"null"))
+		memset(ch->pass, '\0', sizeof(ch->pass));
+	else
+		safestrncpy(ch->pass, passwd, sizeof(ch->pass));
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Set authorized groups
+ * channel_setgroup "<chname>",<group_id>{,...,<group_id>};
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_setgroup) {
+	struct Channel *ch = NULL;
+	const char *funcname = script_getfuncname(st), *chname = script_getstr(st,2);
+	int i, n = 0, group = 0;
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_setgroup: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (funcname[strlen(funcname)-1] == '2') {
+		struct script_data *data = script_getdata(st,3);
+		const char *varname = reference_getname(data);
+		int32 id, idx;
+
+		if (varname[strlen(varname)-1] == '$') {
+			ShowError("buildin_channel_setgroup: The array %s is not numeric type.\n", varname);
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		n = script_array_highest_key(st, NULL, reference_getname(data), reference_getref(data));
+		if (n < 1) {
+			ShowError("buildin_channel_setgroup: No group id listed.\n");
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if (ch->groups)
+			aFree(ch->groups);
+		ch->groups = NULL;
+		ch->group_count = 0;
+
+		id = reference_getid(data);
+		idx = reference_getindex(data);
+		for (i = 0; i < n; i++) {
+			group = (int32)__64BPRTSIZE(get_val2(st,reference_uid(id,idx+i),reference_getref(data)));
+			if (group == 0) {
+				script_pushint(st,1);
+				return SCRIPT_CMD_SUCCESS;
+			}
+			RECREATE(ch->groups, unsigned short, ++ch->group_count);
+			ch->groups[ch->group_count-1] = group;
+			ShowInfo("buildin_channel_setgroup: (2) Added group %d. Num: %d\n", ch->groups[ch->group_count-1], ch->group_count);
+		}
+	}
+	else {
+		group = script_getnum(st,3);
+		n = script_lastdata(st)-1;
+
+		if (n < 1) {
+			ShowError("buildin_channel_setgroup: Please input at least 1 group_id.\n");
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if (ch->groups)
+			aFree(ch->groups);
+		ch->groups = NULL;
+		ch->group_count = 0;
+
+		if (group == 0) { // Removed group list
+			script_pushint(st,1);
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		CREATE(ch->groups, unsigned short, n);
+		for (i = 3; i < n+2; i++) {
+			ch->groups[ch->group_count++] = script_getnum(st,i);
+			ShowInfo("buildin_channel_setgroup: (1) Added group %d. Num: %d\n", ch->groups[ch->group_count-1], ch->group_count);
+		}
+	}
+	script_pushint(st,n);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Send message on channel
+ * channel_chat "<chname>","<message>"{,<color>};
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_chat) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2), *msg = script_getstr(st,3);
+	char output[CHAT_SIZE_MAX+1];
+	unsigned long color = 0;
+
+	// Check also local channels
+	if (chname[0] != '#') { // By Map
+		int m = mapindex_name2id(chname);
+		if (!m || (m = map_mapindex2mapid(m)) < 0) {
+			ShowError("buildin_channel_chat: Invalid map '%s'.\n", chname);
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+		if (!(ch = map[m].channel)) {
+			ShowDebug("buildin_channel_chat: Map '%s' doesn't have local channel yet.\n", chname);
+			script_pushint(st,0);
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+	else if (strcmpi(chname+1,channel_config.map_tmpl.name) == 0) {
+		TBL_NPC *nd = map_id2nd(st->oid);
+		if (!nd || nd->bl.m == -1) {
+			ShowError("buildin_channel_chat: Floating NPC needs map name instead '%s'.\n", chname);
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+		if (!(ch = map[nd->bl.m].channel)) {
+			ShowDebug("buildin_channel_chat: Map '%s' doesn't have local channel yet.\n", chname);
+			script_pushint(st,0);
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+	else if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_chat: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!ch) {
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	color = ch->color;
+	FETCH(4, color);
+
+	safesnprintf(output, CHAT_SIZE_MAX, "%s %s", ch->alias, msg);
+	clif_channel_msg(ch,output,color);
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Ban player from a channel
+ * channel_ban "<chname>",<char_id>;
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_ban) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2);
+	unsigned int char_id = script_getnum(st,3);
+	TBL_PC *tsd;
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_ban: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (ch->char_id == char_id) {
+		script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	tsd = map_charid2sd(char_id);
+	if (tsd && pc_has_permission(tsd,PC_PERM_CHANNEL_ADMIN)) {
+		script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (!idb_exists(ch->banned, char_id)) {
+		struct chan_banentry *cbe;
+		char output[CHAT_SIZE_MAX+1];
+
+		CREATE(cbe, struct chan_banentry, 1);
+		cbe->char_id = char_id;
+		if (tsd) {
+			strcpy(cbe->char_name,tsd->status.name);
+			channel_clean(ch,tsd,0);
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,769), ch->alias, tsd->status.name); // %s %s has been banned.
+		}
+		else
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,769), ch->alias, "****"); // %s %s has been banned.
+		idb_put(ch->banned, char_id, cbe);
+		clif_channel_msg(ch,output,ch->color);
+	}
+
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Ban player from a channel
+ * channel_unban "<chname>",<char_id>;
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_unban) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2);
+	unsigned int char_id = script_getnum(st,3);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("buildin_channel_unban: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (ch->char_id == char_id) {
+		script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	if (idb_exists(ch->banned, char_id)) {
+		char output[CHAT_SIZE_MAX+1];
+		TBL_PC *tsd = map_charid2sd(char_id);
+		if (tsd)
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,770), ch->alias, tsd->status.name); // %s %s has been unbanned
+		else
+			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,770), ch->alias, "****"); // %s %s has been unbanned.
+		idb_remove(ch->banned, char_id);
+		clif_channel_msg(ch,output,ch->color);
+	}
+
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Kick player from a channel
+ * channel_kick "<chname>",<char_id>;
+ * channel_kick "<chname>","<char_name>";
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_kick) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2);
+	struct script_data *data = script_getdata(st,3);
+	TBL_PC *tsd = NULL;
+	int res = 1;
+
+	get_val(st, data);
+	if (data_isstring(data)) {
+		if (!(tsd = map_nick2sd(conv_str(st,data),false))) {
+			ShowError("buildin_channel_kick: Player with nick '%s' is not online\n", conv_str(st,data));
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	else {
+		if (!(tsd = map_charid2sd(conv_num(st,data)))) {
+			ShowError("buildin_channel_kick: Player with char_id '%d' is not online\n", conv_num(st,data));
+			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	if (!(ch = channel_name2channel((char *)chname, tsd, 0))) {
+		ShowError("buildin_channel_kick: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (channel_pc_haschan(tsd, ch) < 0 || ch->char_id == tsd->status.char_id || pc_has_permission(tsd,PC_PERM_CHANNEL_ADMIN)) {
+		script_pushint(st,0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch(ch->type){
+		case CHAN_TYPE_ALLY: res = channel_pcquit(tsd,3); break;
+		case CHAN_TYPE_MAP: res = channel_pcquit(tsd,4); break;
+		default: res = channel_clean(ch,tsd,0); break;
+	}
+	
+	if (res == 0) {
+		char output[CHAT_SIZE_MAX+1];
+		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,889), ch->alias, tsd->status.name); // "%s %s is kicked"
+		clif_channel_msg(ch,output,ch->color);
+	}
+
+	script_pushint(st,1);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Delete a channel
+ * channel_delete "<chname>";
+ * @author [Cydh]
+ **/
+BUILDIN_FUNC(channel_delete) {
+	struct Channel *ch = NULL;
+	const char *chname = script_getstr(st,2);
+
+	if (!(ch = channel_name2channel((char *)chname, NULL, 0))) {
+		ShowError("channel_delete: Channel name '%s' is invalid.\n", chname);
+		script_pushint(st,-1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st,channel_delete(ch,true));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -23121,6 +23605,19 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(agitcheck3,""),
 	BUILDIN_DEF(gvgon3,"s"),
 	BUILDIN_DEF(gvgoff3,"s"),
+
+	// Channel System
+	BUILDIN_DEF(channel_create,"ss?????"),
+	BUILDIN_DEF(channel_setopt,"sii"),
+	BUILDIN_DEF(channel_setcolor,"si"),
+	BUILDIN_DEF(channel_setpass,"ss"),
+	BUILDIN_DEF(channel_setgroup,"si*"),
+	BUILDIN_DEF2(channel_setgroup,"channel_setgroup2","sr"),
+	BUILDIN_DEF(channel_chat,"ss?"),
+	BUILDIN_DEF(channel_ban,"si"),
+	BUILDIN_DEF(channel_unban,"si"),
+	BUILDIN_DEF(channel_kick,"sv"),
+	BUILDIN_DEF(channel_delete,"s"),
 
 	// Item Random Option Extension [Cydh]
 	BUILDIN_DEF2(getitem2,"getitem3","viiiiiiiirrr?"),

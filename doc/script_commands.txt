@@ -1,4 +1,4 @@
-﻿//===== rAthena Documentation ================================
+//===== rAthena Documentation ================================
 //= rAthena Script Commands
 //===== By: ==================================================
 //= rAthena Dev Team
@@ -13,16 +13,10 @@ This document is a reference manual for all the scripting commands and functions
 available in rAthena. It is not a simple tutorial. When people tell you to
 "Read The F***ing Manual", they mean this.
 
-The information was mostly acquired through looking up how things actually work 
-in the source code of the server, which was written by many people over time, 
-and lots of them don't speak English and never left any notes - or are otherwise 
-not available for comments. As such, anything written in here might not be 
-correct, it is only correct to the best of our knowledge, which is limited.
-
 This is not a place to teach you basic programming. This document will not teach 
 you basic programming by itself. It's more of a reference for those who have at 
 least a vague idea of what they want to do and want to know what tools they have 
-available to do it. We've tried to keep it as simple as feasible, but if you 
+available to do it. We've tried to keep it as simple as possible, but if you 
 don't understand it, getting a clear book on programming in general will help 
 better than yelling around the forum for help.
 
@@ -31,9 +25,10 @@ A little learning never caused anyone's head to explode.
 Structure
 ---------
 
-The commands and functions are listed in no particular order:
+The script commands are listed in no particular order, but are grouped by
+relative function.
 
-*Name of the command and how to call it.
+*Name of the command and parameters (if any).
 
 Descriptive text
 
@@ -41,20 +36,19 @@ Descriptive text
     give you an idea of how it works in practice.
 
 To find a specific command, use Ctrl+F, (or whatever keys call up a search 
-function in whatever you're reading this with) put an * followed by the command 
+function in whatever you're reading this with) put an asterisk (*) followed by the command 
 name, and it should find the command description for you.
 
-If you find anything omitted, please respond. :)
+If you find anything missing, please let us know!
 
 Syntax
 ------
 
 Throughout this document, wherever a command wants an argument, it is given in 
-<angle brackets>. This doesn't mean you should type the angle brackets. :) If an 
+<angle brackets>. This doesn't mean you should type the angle brackets. If an 
 argument of a command is optional, it is given in {curly brackets}. You've 
-doubtlessly seen this convention somewhere, if you didn't, get used to it, 
-that's how big boys do it. If a command can optionally take an unspecified 
-number of arguments, you'll see a list like this:
+doubtlessly seen this convention somewhere. If a command can optionally take 
+an unspecified number of arguments, you'll see a list like this:
 
 command <argument>{,<argument>...<argument>}
 
@@ -66,8 +60,7 @@ of functions or operators returning a value, in (round brackets) instead of most
 numbers. Round brackets will not always be required, but they're often a good 
 idea.
 
-Wherever you refer to a map name, it's always 'map name' or 'map name.gat'
-(although the .gat suffix is deprecated). 
+Wherever you refer to a map name, it's always 'map name' (.gat suffix is deprecated). 
 
 
 Script loading structure
@@ -75,7 +68,7 @@ Script loading structure
 
 Scripts are loaded by the map server as referenced in the 'conf/map_athena.conf' 
 configuration file, but in the default configuration, it doesn't load any script 
-files itself. Instead, it loads the file 'npc/scripts_main.conf' which itself 
+files itself. Instead, it loads the file 'npc/(pre-)re/scripts_main.conf' which itself 
 contains references to other files. The actual scripts are loaded from txt 
 files, which are linked up like this:
 
@@ -83,7 +76,7 @@ npc: <path to a filename>
 
 Any line like this, invoked, ultimately, by 'map_athena.conf' will load up the 
 script contained in this file, which will make the script available. No file 
-will get loaded twice, to prevent possible errors.
+will get loaded twice to prevent possible errors.
 
 Another configuration file option of relevance is:
 
@@ -107,15 +100,15 @@ Example:
  * is ignored, until the following 
  * symbol is encountered: */
  
-The asterisks (*) in front of each line is a personal preference, and is not required.
+The asterisks (*) in front of each line is a personal preference and is not required.
 
 Upon loading all the files, the server will execute all the top-level commands 
 in them. No variables exist yet at this point, no commands can be called other 
-than those given in this section. These commands set up the basic server script 
-structure - create NPC objects, spawn monster objects, set map flags, etc. No 
-code is actually executed at this point except them. The top-level commands the 
-scripting are pretty confusing, since they aren't structured like you would 
-expect commands, command name first, but rather, normally start with a map name.
+than those given in this section. These commands set up the basic structure - create 
+NPC objects, spawn monster objects, set map flags, etc. No code is actually 
+executed at this point. The top-level commands are pretty confusing, since 
+they aren't structured like you would expect (command name first), but rather, 
+normally start with a map name.
 
 What's more confusing about the top-level commands is that most of them use a 
 tab symbol to divide their arguments.
@@ -123,7 +116,7 @@ tab symbol to divide their arguments.
 To prevent problems and confusion, the tab symbols are written as '%TAB%' 
 throughout this document, even though this makes the text a bit less readable. 
 Using an invisible symbol to denote arguments is one of the bad things about 
-this language, but we're stuck with it for now. :)
+this language.
 
 Here is a list of valid top-level commands:
 
@@ -247,14 +240,13 @@ degrees, where 0 means facing towards the top of the map. (So to turn the sprite
 towards the bottom of the map, you use facing 4, and to make it look southeast 
 it's facing 5.)
 
-Sprite id is the sprite number used to display this particular NPC. For a full 
-list of sprite id numbers see http://kalen.s79.xrea.com/npc/npce.shtml You may 
-also use a monster's ID number instead to display a monster sprite for this NPC. 
+Sprite ID is the sprite number or constant used to display this particular NPC.
+You may also use a monster's ID instead to display a monster sprite for this NPC. 
 It is possible to use a job sprite as well, but you must first define it as a 
 monster sprite in 'mob_avail.txt', a full description on how to do this is not 
 in the scope of this manual.
-A '-1' sprite id will make the NPC invisible (and unclickable). 
-A '111' sprite id will make an NPC which does not have a sprite, but is still 
+A '-1' Sprite ID will make the NPC invisible (and unclickable). 
+A '111' Sprite ID will make an NPC which does not have a sprite, but is still 
 clickable, which is useful if you want to make a clickable object of the 3D 
 terrain.
 
@@ -299,28 +291,25 @@ these floating NPC objects are for. More on that below.
 This will define a shop NPC, which, when triggered (which can only be done by 
 clicking) will cause a shop window to come up. No code whatsoever runs in shop 
 NPCs and you can't change the prices otherwise than by editing the script 
-itself. (No variables even exist at this point of scripting, so don't even 
-bother trying to use them.)
+itself.
 
-The item id is the number of item in the 'item_db.txt' database. If Price is set 
+The Item ID is the number of item in the 'item_db.txt' database. If Price is set 
 to -1, the 'buy price' given in the item database will be used. Otherwise, the 
 price you gave will be used for this item, which is how you create differing 
 prices for items in different shops.
 
-Since trunk r12264 you can alternatively use "cashshop" in place of "shop"
-to use the Cash Shop interface, allowing you to buy items with special points
-(Currently stored as account variables in global_reg #CASHPOINTS and #KAFRAPOINTS.)
-This type of shop will not allow you to sell items at it, you may only
-purchase items here. The layout used to define sale items still count, and
+There are other types of shops available:
+cashshop - use "cashshop" in place of "shop" to use the Cash Shop interface, allowing 
+you to buy items with special points that are stored as account variables 
+called  #CASHPOINTS and #KAFRAPOINTS. This type of shop will not allow you to sell 
+items at it, only make purchases. The layout used to define sale items still count, and
 "<price>" refers to how many points will be spent purchasing the them.
 
-Since trunk rX you can alternatively use "itemshop" or "pointshop" in place
-of "shop" to use the Shop interface, allowing you to buy items with a specific
-item or special points from a variable. 'pointshop' only supported variable types
-are permanent character variables, temporary character variables, permanent
-local account variables, or permanent global account variables. These variables
-must be of integer type, not string. 'discount' flag is an option, makes the price
-at that shop is affected by discount skill.
+"itemshop" and "pointshop" use the Shop interface, allowing you to buy items with a specific
+item or special points from a variable. 'pointshop' only supports permanent character variables, 
+temporary character variables, permanent local account variables or permanent global account 
+variables. These variables must be of integer type, not string. 'discount' flag is an 
+optional value which makes the price at that shop become affected by discount skill.
 
 ** Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
@@ -589,9 +578,7 @@ constants such as server defines and status options:
 Assigning variables
 --------- ---------
 
-As of rAthena revision 15982, variables can be accessed and assigned values directly
-without the use of the built-in 'set' function. This means that variables can be
-accessed and modified much like other programming languages.
+Variables can be accessed and modified much like in other programming languages.
 
     @x = 100;
     @x = @y = 100;
@@ -644,8 +631,8 @@ variable as if it was a normal variable:
 
     set @arrayofnumbers[0],1;
 
-You can also do sneaky things like using a variable (or an expression, or even a 
-value from an another array) to get at an array value:
+You can also do things like using a variable (or an expression, or even a 
+value from another array) to get at an array value:
 
     set @x,100;
     set @arrayofnumbers[@x],10;
@@ -658,7 +645,7 @@ range 0 ~ 2147483647.
 
 And array indexes probably can't be negative. Nobody tested what happens when 
 you try to get a negatively numbered variable from an array, but it's not going 
-to be pretty. :)
+to be pretty.
 
 Arrays can naturally store strings:
 
@@ -871,7 +858,7 @@ OnDay<month><day>:
 This will execute when the server clock hits the specified date or time. Hours 
 and minutes are given in military time. ('0105' will mean 01:05 AM). Weekdays 
 are Sun,Mon,Tue,Wed,Thu,Fri,Sat. Months are 01 to 12, days are 01 to 31. 
-Remember the zero. :)
+Remember the zero.
 
 OnInit:
 OnInterIfInit:
@@ -1025,10 +1012,7 @@ but is not advised, as this can lead to some hard to track errors. Calling
 functions as if they were commands will mess up the stack, so 'return' command 
 will not return correctly after this happens in a particular script.
 
-All commands must end with a ';'. Actually, you may expect to have multiple 
-commands on one line if you properly terminate them with a ';', but it's better 
-if you don't, since it is not certain just whether the scripting engine will 
-behave nicely if you do.
+All commands must end with a ';'.
 
 -------------------------
 
@@ -1049,6 +1033,7 @@ From here on, we will have the commands sorted as follow:
 11.- Homunculus commands.
 12.- Mercenary commands.
 13.- Party commands.
+14.- Channel commands.
 
 =====================
 |1.- Basic commands.|
@@ -1327,7 +1312,7 @@ with other command, such as "if", but often used on its own.
 Label:
 	mes "This will be seen";
 
-Note by FlavioJS: goto's are "evil" and should be avoided if possible (ò_ó)
+This command should be avoided and only used if there is no other option.
 
 ---------------------------------------
 
@@ -1975,8 +1960,7 @@ you forget to use the curly braces (the { } ), the second action will be execute
 the output of the condition, unless of course, you stop the execution of the script if the
 condition is true (that is, in the first grouping using a return; , and end; or a close; )
 
-Also, you can have multiple conditions nested or chained, and don't worry about limits as to
-how many nested if you can have, there is no spoon ;)
+Also, you can have multiple conditions nested or chained.
 
 	if (<condition 1>)
 		dothis;
@@ -2442,7 +2426,7 @@ This function will return the number for the current character look value
 specified by type. See 'setlook' for valid look types.
 
 This can be used to make a certain script behave differently for characters 
-dressed in black. :)
+dressed in black.
 
 ---------------------------------------
 
@@ -3293,7 +3277,7 @@ invoking character has. Here's what you get:
 
 While 'getskillv' is probably more useful for most situations, this is the 
 easiest way to store all the skills and make the character something else for a 
-while. Advanced job for a day? :) This could also be useful to see how many 
+while. Advanced job for a day? This could also be useful to see how many 
 skills a character has.
 
 This command does not count skills which are set as flag 4 (permament granted) (ALL_BUYING_STORE/ALL_INCCARRY)
@@ -3980,10 +3964,9 @@ warpguild "prontera",x,y,Guild_ID;
 *warppartner("<map name>",<x>,<y>);
 
 This function will find the invoking character's marriage partner, if any, and 
-warp them to the map and coordinates given. Go kidnap that spouse. :) It will 
-return 1 upon success and 0 if the partner is not online, the character is not 
-married, or if there's no invoking character (no RID). 0,0 will, as usual, 
-normally translate to random coordinates.
+warp them to the map and coordinates given. It will return 1 upon success and
+0 if the partner is not online, the character is not married, or if there's no 
+invoking character (no RID). 0,0 will, as usual, normally translate to random coordinates.
 
 ---------------------------------------
 
@@ -4447,7 +4430,7 @@ this. Careful, minor magic ahead.
     @card4 = @charid >> 16;
 
     // If you're inscribing non-equipment, @card1 must be 254.
-    // Arrows are also not equipment. :)
+    // Arrows are also not equipment.
     @card1 = 254;
 
     // For named equipment, card2 means the Star Crumbs and elemental 
@@ -5281,7 +5264,7 @@ the end.
 You might want to make a quest for getting a certain guild skill, make it hard 
 enough that all the guild needs to help or something. Doing this for the Glory 
 of the Guild skill, which allows your guild to use an emblem, is a good idea for 
-a fun quest. (Wasting a level point on that is really annoying :D)
+a fun quest.
 
 ---------------------------------------
 //
@@ -9540,5 +9523,158 @@ If <char id> is specified, the specified player is used rather than the attached
 
 ---------------------------------------
 
-Whew.
-That's about all of them.
+========================
+|14.- Channel commands.|
+========================
+---------------------------------------
+
+*channel_create "<chname>","<alias>"{,"<password>"{<option>{,<delay>{,<color>{,<char_id>}}}}};
+
+Creates a public channel with <chname> as the channel name. To protect the
+channel, use <password> or write "null" to create it without a password.
+Channel name must start with '#' and cannot be the same as the map or ally
+channel names.
+
+<alias> will be used to change the channel name when the channel message
+is displayed.
+
+<option> values are:
+	CHAN_OPT_BASE		    - Default option including CHAN_OPT_ANNOUNCE_SELF|CHAN_OPT_MSG_DELAY|CHAN_OPT_CAN_CHAT|CHAN_OPT_CAN_LEAVE
+	CHAN_OPT_ANNOUNCE_SELF  - Show info for player itself if player has joined/leaves the channel
+	CHAN_OPT_ANNOUNCE_JOIN  - Display message when player is joining the channel
+	CHAN_OPT_ANNOUNCE_LEAVE - Display message when player is leaving the channel
+	CHAN_OPT_MSG_DELAY	    - Enable chat delay for the channel
+	CHAN_OPT_COLOR_OVERRIDE - Player's unique font color will override channel's color
+	CHAN_OPT_CAN_CHAT	    - Player can chat in the channel
+	CHAN_OPT_CAN_LEAVE	    - Player can leave the channel
+	CHAN_OPT_AUTOJOIN	    - Players will auto join the channel at login
+
+The <delay> is the minimum chat delay in millisecond for a single player before
+the player can chat again in the same channel.
+
+Use <color> hex code to set the color for this channel, if not defined, default
+channel color will be used.
+
+If <char_id> is defined, the channel will be a private channel and the player
+will be the the channel owner.
+
+Returns 1 on success.
+
+	/**
+	 * This example will shows the message on this channel as
+	 * [rAthena] Admin : Hello world!
+	 * instead of
+	 * #rathena Admin : Hello world!
+	 **/
+	channel_create("#rathena","[rAthena]");
+	channel_create("#vip","[VIP]","vipmemberonly");
+
+---------------------------------------
+
+*channel_setopt "<chname>",<option>,<value>;
+
+Set option for the channel. Use 1 in <value> to set it, or 0 to unset.
+The <option> values are the same as the 'channel_create' options.
+
+For CHAN_OPT_MSG_DELAY, the delay in millisecond must be sent or use 0
+to remove the delay at <value>.
+
+Returns 1 on success.
+
+	// Example to set delay
+	channel_setopt("#global",CHAN_OPT_MSG_DELAY,5000);
+
+Only for public and private channel.
+
+---------------------------------------
+
+*channel_setcolor "<chname>",<color>;
+
+To change channel color.
+<color> uses hex RGB values.
+
+Returns 1 on success.
+
+---------------------------------------
+
+*channel_setpass "<chname>","<password>";
+
+To set, unset, or change password of a channel.
+Use "null" to remove the password.
+
+Returns 1 on success.
+Only for public and private channel.
+
+---------------------------------------
+
+*channel_setgroup "<chname>",<group_id>{,...,<group_id>};
+*channel_setgroup2 "<chname>",<array_of_groups>;
+
+Set group restriction for a channel. Only player with matching <group_id>
+are allowed to to join the channel.
+
+By using 0 in the first group channel, the group restriction will be
+removed from the channel config.
+
+'channel_setgroup2' receives input for group list as an array.
+
+Returns 0 on failure, and 1 (or n groups count) on success.
+
+	// Example 1: Remove groups
+	channel_setgroup("#event",0);
+
+	// Example 2: Multiple values
+	channel_setgroup("#vip",2,5);
+
+	// Example 3: Using array
+	setarray .@staffs[0],2,3,4,10,99;
+	channel_setgroup("#staff",.@staffs);
+
+Only for public and private channel.
+
+---------------------------------------
+
+*channel_chat "<chname>","<message>"{,<color>};
+
+Sends message to the channel.
+Returns 1 on success.
+
+	// Example if channel doesn't have alias
+	channel_chat(#rathena,"Hello World!"); // #rathena Hello World!
+
+	// Example if channel has alias
+	channel_chat(#rathena,"Hello World!"); // [rAthena] Hello World!
+
+---------------------------------------
+
+*channel_ban "<chname>",<char_id>;
+
+Ban player from a public or private channel.
+Channel's owner or group with PC_PERM_CHANNEL_ADMIN cannot be banned.
+Returns 1 on success.
+
+---------------------------------------
+
+*channel_unban "<chname>",<char_id>;
+
+Unban player from a public or private channel.
+Returns 1 on success.
+
+---------------------------------------
+
+*channel_kick "<chname>",<char_id>;
+*channel_kick "<chname>","<char_name>";
+
+Kick player from a public or private channel.
+Channel's owner or group with PC_PERM_CHANNEL_ADMIN cannot be kicked.
+Returns 1 on success.
+
+---------------------------------------
+
+*channel_delete "<chname>";
+
+Delete an existing public or private channel. Cannot delete ally or
+local map channel.
+Returns 0 on success.
+
+---------------------------------------

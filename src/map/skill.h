@@ -498,7 +498,7 @@ bool skill_check_cloaking(struct block_list *bl, struct status_change_entry *sce
 // Abnormal status
 void skill_enchant_elemental_end(struct block_list *bl, int type);
 bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd);
-bool skill_isNotOk_hom(uint16 skill_id, struct homun_data *hd);
+bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv);
 bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md);
 
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);

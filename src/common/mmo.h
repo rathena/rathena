@@ -21,7 +21,7 @@
 // see conf/battle/client.conf for other version
 
 #ifndef PACKETVER
-	#define PACKETVER 20130807
+	#define PACKETVER 20151104
 	//#define PACKETVER 20120410
 #endif
 
@@ -188,6 +188,12 @@ struct quest {
 	enum quest_state state;          ///< Current quest state
 };
 
+struct s_item_randomoption {
+	short id;
+	short value;
+	char param;
+};
+
 struct item {
 	int id;
 	unsigned short nameid;
@@ -197,11 +203,7 @@ struct item {
 	char refine;
 	char attribute;
 	unsigned short card[MAX_SLOTS];
-	struct {
-		short id;
-		short value;
-		char param;
-	} option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
+	struct s_item_randomoption option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;

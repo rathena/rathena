@@ -155,6 +155,7 @@ char motd_txt[256] = "conf/motd.txt";
 char help_txt[256] = "conf/help.txt";
 char help2_txt[256] = "conf/help2.txt";
 char charhelp_txt[256] = "conf/charhelp.txt";
+char channel_conf[256] = "conf/channels.conf";
 
 char wisp_server_name[NAME_LENGTH] = "Server"; // can be modified in char-server configuration file
 
@@ -3889,6 +3890,8 @@ int map_config_read(char *cfgName)
 			strcpy(help2_txt, w2);
 		else if (strcmpi(w1, "charhelp_txt") == 0)
 			strcpy(charhelp_txt, w2);
+		else if (strcmpi(w1, "channel_conf") == 0)
+			safestrncpy(channel_conf, w2, sizeof(channel_conf));
 		else if(strcmpi(w1,"db_path") == 0)
 			safestrncpy(db_path,w2,ARRAYLENGTH(db_path));
 		else if (strcmpi(w1, "console") == 0) {
@@ -4404,7 +4407,7 @@ void do_final(void)
 		ShowStatus("Cleaning up maps [%d/%d]: %s..."CL_CLL"\r", i+1, map_num, map[i].name);
 		if (map[i].m >= 0) {
 			map_foreachinmap(cleanup_sub, i, BL_ALL);
-			channel_delete(map[i].channel);
+			channel_delete(map[i].channel,false);
 		}
 	}
 	ShowStatus("Cleaned up %d maps."CL_CLL"\n", map_num);
@@ -4755,12 +4758,12 @@ int do_init(int argc, char *argv[])
 	do_init_atcommand();
 	do_init_battle();
 	do_init_instance();
-	do_init_channel();
 	do_init_chrif();
 	do_init_clan();
 	do_init_clif();
 	do_init_script();
 	do_init_itemdb();
+	do_init_channel();
 	do_init_cashshop();
 	do_init_skill();
 	do_init_mob();

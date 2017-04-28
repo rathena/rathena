@@ -1462,6 +1462,8 @@ void pc_reg_received(struct map_session_data *sd)
 
 		clif_changeoption( &sd->bl );
 	}
+
+	channel_autojoin(sd);
 }
 
 static int pc_calc_skillpoint(struct map_session_data* sd)
@@ -4720,8 +4722,6 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 	//Not consumable item
 	if( item->type != IT_HEALING && item->type != IT_USABLE && item->type != IT_CASH )
 		return false;
-	if( !item->script ) //if it has no script, you can't really consume it!
-		return false;
 	if (pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL))
 		return true;
 	if(map[sd->bl.m].flag.noitemconsumption) //consumable but mapflag prevent it
@@ -5252,7 +5252,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 	// Try dropping one item, in the order from first to last possible slot.
 	// Droprate is affected by the skill success rate.
 	for( i = 0; i < MAX_STEAL_DROP; i++ )
-		if( md->db->dropitem[i].nameid > 0 && itemdb_exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].p * rate/100. )
+		if( md->db->dropitem[i].nameid > 0 && !md->db->dropitem[i].steal_protected && itemdb_exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].p * rate/100. )
 			break;
 	if( i == MAX_STEAL_DROP )
 		return 0;
@@ -5262,6 +5262,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 	tmp_item.nameid = itemid;
 	tmp_item.amount = 1;
 	tmp_item.identify = itemdb_isidentified(itemid);
+	mob_setdropitem_option(&tmp_item, &md->db->dropitem[i]);
 	flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER);
 
 	//TODO: Should we disable stealing when the item you stole couldn't be added to your inventory? Perhaps players will figure out a way to exploit this behaviour otherwise?

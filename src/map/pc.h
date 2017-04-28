@@ -643,7 +643,7 @@ struct map_session_data {
 	struct Channel *gcbind;
 	bool stealth;
 	unsigned char fontcolor;
-	unsigned int channel_tick;
+	unsigned int *channel_tick;
 
 	/* [Ind] */
 	struct sc_display_entry **sc_display;
