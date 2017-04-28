@@ -9,13 +9,12 @@ pull_requests:
 environment:
   matrix:
   - VisualStudioVersion: 14.0
-    Solution: rAthena.sln
     Defines: "\"BUILDBOT\""
   - VisualStudioVersion: 14.0
-    Solution: rAthena.sln
     Defines: "\"BUILDBOT;PRERE\""
 platform:
   - Win32
+  - x64
 configuration:
   - Debug
 # Disable Release for now, since do not want to have any optimization and have access to debug infos on crash
@@ -23,7 +22,7 @@ configuration:
 matrix:
   fast_finish: true
 build_script:
-- cmd: msbuild %Solution% /p:DefineConstants=%Defines%
+- cmd: msbuild rAthena.sln /p:DefineConstants=%Defines%
 services: mysql
 test_script:
 - cmd: >-
