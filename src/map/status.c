@@ -3146,6 +3146,8 @@ bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_o
 			sd->max_weight += sd->max_weight * sc->data[SC_KNOWLEDGE]->val1 / 10;
 		if ((skill = pc_checkskill(sd, ALL_INCCARRY)) > 0)
 			sd->max_weight += 2000 * skill;
+		if (pc_ismadogear(sd))
+			sd->max_weight += 1500;
 	}
 
 	// Update the client if the new weight calculations don't match
@@ -4371,6 +4373,8 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 		val = 0;
 		if( (skill=pc_checkskill(sd,SM_RECOVERY)) > 0 )
 			val += skill*5 + skill*status->max_hp/500;
+		if (pc_ismadogear(sd))
+			val += 25; // !TODO: What's the increased recovery rate?
 		sregen->hp = cap_value(val, 0, SHRT_MAX);
 
 		val = 0;
@@ -6561,6 +6565,7 @@ unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc
 				val = 15 + 5 * pc_checkskill(sd, RA_WUGRIDER);
 			else if( pc_ismadogear(sd) ) {
 				val = -(50 - 10 * pc_checkskill(sd,NC_MADOLICENCE));
+				val += (pc_checkskill(sd, NC_MADOLICENCE) > 4 ? 25 : 0);
 				if( sc->data[SC_ACCELERATION] )
 					val += 25;
 			}
