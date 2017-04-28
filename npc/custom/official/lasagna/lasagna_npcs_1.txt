@@ -549,7 +549,7 @@ OnInit:
 
 lasagna,168,125,3	script	Kid#doram04t	4_DR_KID_01,{
 	if (lasagna_quest[0] == 5) {
-		if (countitem(1081 > 0) {
+		if (countitem(1081) > 0) {
 			mes "[Kitten]";
 			mes "This is it!!";
 			next;
@@ -602,7 +602,7 @@ lasagna,168,125,3	script	Kid#doram04t	4_DR_KID_01,{
 
 lasagna,165,125,5	script	Tool Merchant#doram05t	4_DR_M_01,{
 	if (lasagna_quest[0] == 5) {
-		if (countitem(1081 > 0) {
+		if (countitem(1081) > 0) {
 			mes "[Kitten]";
 			mes "This is it!!";
 			next;
@@ -1225,38 +1225,38 @@ izlude,117,165,3	script	Cat Paw Shrimp Merchant#iz	4_M_MERCAT1,{
 	}
 }
 
-alberta,111,159,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#alb	4_M_MERCAT1
-aldeba_in,89,56,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#ald	4_M_MERCAT1
-amatsu,102,122,5	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#ama	4_M_MERCAT1
+alberta,111,159,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#alb	4_M_MERCAT1
+aldeba_in,89,56,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ald	4_M_MERCAT1
+amatsu,102,122,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ama	4_M_MERCAT1
 // ayo_in01,15,177
-brasilis,249,257,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#bra	4_M_MERCAT1
-comodo,103,136,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#com	4_M_MERCAT1
-dewata,193,169,5	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#dew	4_M_MERCAT1
-einbroch,164,316,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#ein	4_M_MERCAT1
-ein_in01,194,22,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#ein1	4_M_MERCAT1
-dic_in01,242,119,5	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#dic	4_M_MERCAT1
-ecl_in01,72,86,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#ecl	4_M_MERCAT1
-geffen_in,75,140,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#gef	4_M_MERCAT1
-gonryun,147,88,5	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#gon	4_M_MERCAT1
-hugel,76,165,5	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#hug	4_M_MERCAT1
-izlude_a,117,165,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Trader#iz_a	4_M_MERCAT1
-izlude_b,117,165,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Trader#iz_b	4_M_MERCAT1
-izlude_c,117,165,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Trader#iz_c	4_M_MERCAT1
-izlude_d,117,165,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Trader#iz_d	4_M_MERCAT1
-lasagna,166,117,6	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#las	4_M_MERCAT1
-lhz_in02,29,219,5	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#lhz	4_M_MERCAT1
-lou_in02,241,168,5	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#lou	4_M_MERCAT1
-malaya,286,175,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#mal	4_M_MERCAT1
-mora,110,118,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#mora	4_M_MERCAT1
-morocc,169,105,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#moro	4_M_MERCAT1
-mosk_in,30,246,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#mosk	4_M_MERCAT1
-payon,157,96,5	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#pay	4_M_MERCAT1
-prontera,137,223,5	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#prt	4_M_MERCAT1
-ra_in01,243,272,5	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#ra	4_M_MERCAT1
-um_in,104,118,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#um	4_M_MERCAT1
-ve_in,263,303,3	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#ve	4_M_MERCAT1
-xmas_in,32,38,5	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#xma	4_M_MERCAT1
-yuno,205,116,5	duplicate(Cat Paw Shrimp Trader#iz)	Cat Paw Shrimp Merchant#yu	4_M_MERCAT1
+brasilis,249,257,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#bra	4_M_MERCAT1
+comodo,103,136,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#com	4_M_MERCAT1
+dewata,193,169,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#dew	4_M_MERCAT1
+einbroch,164,316,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ein	4_M_MERCAT1
+ein_in01,194,22,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ein1	4_M_MERCAT1
+dic_in01,242,119,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#dic	4_M_MERCAT1
+ecl_in01,72,86,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ecl	4_M_MERCAT1
+geffen_in,75,140,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#gef	4_M_MERCAT1
+gonryun,147,88,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#gon	4_M_MERCAT1
+hugel,76,165,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#hug	4_M_MERCAT1
+izlude_a,117,165,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#iz_a	4_M_MERCAT1
+izlude_b,117,165,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#iz_b	4_M_MERCAT1
+izlude_c,117,165,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#iz_c	4_M_MERCAT1
+izlude_d,117,165,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#iz_d	4_M_MERCAT1
+lasagna,166,117,6	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#las	4_M_MERCAT1
+lhz_in02,29,219,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#lhz	4_M_MERCAT1
+lou_in02,241,168,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#lou	4_M_MERCAT1
+malaya,286,175,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#mal	4_M_MERCAT1
+mora,110,118,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#mora	4_M_MERCAT1
+morocc,169,105,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#moro	4_M_MERCAT1
+mosk_in,30,246,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#mosk	4_M_MERCAT1
+payon,157,96,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#pay	4_M_MERCAT1
+prontera,137,223,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#prt	4_M_MERCAT1
+ra_in01,243,272,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ra	4_M_MERCAT1
+um_in,104,118,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#um	4_M_MERCAT1
+ve_in,263,303,3	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#ve	4_M_MERCAT1
+xmas_in,32,38,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#xma	4_M_MERCAT1
+yuno,205,116,5	duplicate(Cat Paw Shrimp Merchant#iz)	Cat Paw Shrimp Merchant#yu	4_M_MERCAT1
 
 izlude,195,213,5	script	Con-Chliina Crewman#doi	4_M_MERCAT1,{
 	mes "[Con-Chliina Crewman]";
