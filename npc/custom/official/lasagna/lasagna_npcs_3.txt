@@ -1,0 +1,2451 @@
+conch_in,52,60,0	script	#dorcon95	HIDDEN_WARP_NPC,1,1,{
+OnTouch:
+	if (lasagna_quest[1] != 14)
+		npctalk "- Knock knock -";
+	end;
+}
+
+// in A_B
+conch_in,24,62,5	script	Stello#dorcon	4_DR_STELO,{
+	if (lasagna_quest[1] < 14) {
+		mes "[Stello]";
+		mes "Who are you? You are not allowed to enter hear with no permission. Please leave.";
+		close;
+	}
+	if (lasagna_quest[1] == 14) {
+		mes "[Stello]";
+		mes "What brought you here? Are you hear to meet the captain? If not, please leave. You are not supposed to be here.";
+		close;
+	}
+	if (lasagna_quest[1] < 20) {
+		mes "[Stello]";
+		mes "Keep that in mind. You need to watch your manners when you deal with the crews of this ship.";
+		close;
+	}
+	if (lasagna_quest[1] == 20) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Dear Chief Officer!";
+		next;
+		mes "[Stello]";
+		mes "What is going on?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "The Purser asked me to check if there wouldn't be any problem sailing off with the thick ^0000cdfog^000000.";
+		npctalk "The fog!", "Captain Gamberi#dorcon0";
+		npctalk "Right.";
+		next;
+		mes "[Stello]";
+		mes "Hum... This fog must be...";
+		next;
+		mes "[Captain Gamberi]";
+		mes "It is ^0000cdthat one^000000 again.";
+		next;
+		mes "[Stello]";
+		mes "Yes. Again. Umm, what should we do? We have no one to send there. Everyone's so busy preparing for the sailing.";
+		npctalk "This is annoying.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "Stello, I guess you should go down there yourself.";
+		npctalk "There is no other way.", "Captain Gamberi#dorcon0";
+		next;
+		mes "[Stello]";
+		mes "Let's send Eggling.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "Eggling is not ready to handle it yet. Think about why Eggling is still called Eggling.";
+		next;
+		mes "[Stello]";
+		mes "... I guess I should go. Damn it.";
+		npctalk "He will just make things worse.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "Stello. a gentleman should use a good language at all time.";
+		npctalk "I should get going. Oh, my dear.";
+		npctalk "Stello?", "Captain Gamberi#dorcon0";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well... The Purser has sent me to take care of the problem.";
+		next;
+		emotion 0;
+		emotion 0,0,"Captain Gamberi#dorcon0";
+		mes "[Stello]";
+		mes "There is.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "A well-trained.";
+		next;
+		mes "[Stello]";
+		mes "Doram.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "In front of us.";
+		npctalk "Yes, there is.";
+		next;
+		emotion 4,1;
+		mes "[Stello]";
+		mes "Good. Consider it as the last training before sailing off.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "Stello. It doesn't make sense to call it as the last training when we are dealing with a Doram who has finished the training for the adventure. This should be called the first practice.";
+		next;
+		mes "[Stello]";
+		mes "Whatever it is. Well, good. I'll assign your first mission as your first practice.";
+		npctalk "Is an ass that different from a butt?";
+		next;
+		mes "[Stello]";
+		mes "The seaway we are about to take is ^0000cdno typical seaway^000000. You need to read the movements of the stars and wind. You need to take the way which is not marked on the map which makes you wonder if you will ever find the land.";
+		next;
+		mes "[Stello]";
+		mes "That is why we need to get rid of all the fog which blocks us from reading the sun and wind.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Can we get rid of the fog?";
+		next;
+		mes "[Stello]";
+		mes "If it is a normal fog. You need to wait until it is lifted. However, there is ^0000cdsomething causing this fog^000000. It can be removed.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "There is something causing the fog? A villain involved, maybe? This is exciting!";
+		next;
+		mes "[Stello]";
+		mes "Not quite. There is a dragon living in a nearby cave. The dragon breathes fire which burns up everything around it. The fog is made of the smoke.";
+		npctalk "I guess you have read quite a lot of adventure novels, dear adventurer.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No wonder the fog smells like smoke.";
+		next;
+		mes "[Stello]";
+		mes "The condition of the dragon is always monitored by the vigilante corps. Please go to see ^0000cdthe vigilante guarding the south bridge of the village^000000, and check the state of the dragon.";
+		next;
+		mes "[Stello]";
+		mes "And if you need help, please help them stop the dragon from breathing fire.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "The sailing depends on your hand, dear adventurer. Well, go on and take care of your first mision!";
+		next;
+		mes "[Stello]";
+		mes "Wait, take this with you. It will come in handy in case of an emergency. Please be careful!";
+		erasequest 14538;// Can we take off?
+		setquest 14539;// Crazy Dragon
+		getitem 569,30;// Novice Potion
+		getitem 12323,20;// Novice Fly Wing
+		lasagna_quest[1] = 21;
+		close;
+	}
+	if (lasagna_quest[1] < 28) {
+		mes "[Stello]";
+		mes "Ask the vigilante how the dragon is doing and resolve the situation with the vigilante corps if any problem has occurred.";
+		close;
+	}
+	if (lasagna_quest[1] == 28) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Dear Chief Officer!";
+		next;
+		mes "[Stello]";
+		mes "You are here. We were just talking about you.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What were you talking about?";
+		next;
+		mes "[Captain Gamberi]";
+		mes "We were wondering if we had to go down there to recover your dead body...";
+		emotion 23;
+		emotion 23,1;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What? Was it such a dangerous mission?";
+		next;
+		mes "[Stello]";
+		mes "No, not at all. Captain, what are you talking about?";
+		npctalk "He sometimes says such sanguinary words with a straight face.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "Stello, it is called a joke.";
+		npctalk "A gentleman is supposed to have a sense of humor.", "Captain Gamberi#dorcon0";
+		next;
+		mes "[Stello]";
+		mes "A joke should be pleasant for the both parties. This is just a curse.";
+		npctalk "You startled me at least.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "Stello, you must learn about this thing called social codes.";
+		next;
+		mes "[Stello]";
+		mes "Well, we can talk about that later. I was wondering when you would be back. When the fog was lifted, we figured out that you had succeeded, dear adventurer. Thank you for your effort.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It was a great experience for me.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "Stello, you should be liberal with your praise. Just as I did it to you.";
+		next;
+		mes "[Stello]";
+		mes "Oh, yes. Let's give a big hand to the adventurer who has returned from the mission!";
+		npctalk "Whoa. Clap, clap, clap.";
+		npctalk "Stello? You need to really mean it.", "Captain Gamberi#dorcon0";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, yes. Well, thanks.";
+		next;
+		if (Class != Job_Summoner) {
+			mes "[Captain Gamberi]";
+			mes "Well then. It is the time to issue the sailing signal.";
+			next;
+			mes "[Captain Gamberi]";
+			mes "Everyone, in your position! We are sailing off now!";
+			next;
+			mes "[Boo-]";
+			completequest 14554;// We can start sail now
+		}
+		else {
+			mes "[Captain Gamberi]";
+			mes "Stello. give ^0000cdthat^000000 to the adventurer.";
+			next;
+			mes "[Stello]";
+			mes "That? What do you mean by that?";
+			next;
+			mes "[Captain Gamberi]";
+			mes "The thing that you cannot buy with money when you leave Lasagna.";
+			npctalk "Oh, that! I must have put it near here...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Anchovy?";
+			next;
+			mes "[Stello]";
+			mes "Oh! How did you know?";
+			emotion 23;
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I have received a handful. I don't need more.";
+			next;
+			mes "[Stello]";
+			mes "Really? Then you may not need this either. Too bad. I have prepared it for you. I guess it belongs to someone else now.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "What... What is it?";
+			next;
+			mes "[Stello]";
+			mes "It is the little present prepared for the novice adventurer by the leader of Farfalle vigilante corps and the captain of Con-Chliina in celebration of the first mission.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "A hat and a ring?";
+			next;
+			mes "[Stello]";
+			mes "The hat is prepared by Pepperoncino after hearing your story. A Doram adventurer deserves to have a hat. The hat will bring you luck.";
+			next;
+			mes "[Stello]";
+			mes "And the ring is prepared by the captain. Dear captain?";
+			next;
+			mes "[Captain Gamberi]";
+			mes "That ring will help you gather special experiences as a novice adventurer.";
+			next;
+			mes "[Captain Gamberi]";
+			mes "It will grow with you until you don't need its help anymore. When you become an experienced adventurer, it will lose all its power and become an ordinary ring made of grass.";
+			next;
+			mes "[Stello]";
+			mes "Oh, I should get you a Magnifier. When you get an unidentified weapon or equipment, check with it.";
+			next;
+			mes "[Stello]";
+			mes "I'll give you some ^0000cdKahlugna Milk^000000 which all Dorams who have ever visited Lasagna crave. Thank you so much for your effort.";
+			emotion 2;
+			next;
+			mes "[Captain Gamberi]";
+			mes "Well then. It is the time to issue the sailing signal.";
+			next;
+			mes "[Captain Gamberi]";
+			mes "Everyone, in your position! We are sailing off now!";
+			next;
+			mes "[Boo-]";
+			completequest 14544;// Now I can leave
+			getexp 675,675;
+			getitem 19084,1;// Parfaille Vigilante Hat [1]
+			getitem 28374,1;// Foxtail Ring
+			getitem 11601,50;// Delicious Anchovy
+			getitem 12325,20;// Novice Magnifier
+		}
+		getitem 22984,5;// Kahluna Milk
+		lasagna_quest[1] = 29;
+		close2;
+		warp "izlude",193,209;
+		end;
+	}
+	if (lasagna_quest[1] == 29) {
+		mes "[Stello]";
+		if (Class != Job_Summoner)
+			mes "I'd like to explore the new continent when I get to leave the ship someday.";
+		else {
+			mes "How is the new continent? Should I ask for a leave and go on an adventure?";
+			next;
+			mes "[Captain Gamberi]";
+			mes "Nonsense! Who else would take care of the seaway to the new continent?";
+			next;
+			mes "[Stello]";
+			mes "Just saying... It doesn't hurt to say that.";
+		}
+		close;
+	}
+}
+
+conch_in,26,64,5	script	Captain Gamberi#dorcon0	4_DR_GAMBERI,{
+	if (lasagna_quest[1] < 14) {
+		mes "[Captain Gamberi]";
+		mes "Make sure to knock. Keep your manners.";
+		close;
+	}
+	if (lasagna_quest[1] == 14) {
+		if (Class != Job_Summoner) {
+			mes "[Captain Gamberi]";
+			mes "Stello, I have told you how the way you dress shows what kind of Doram you are. Ad just your attire, please.";
+			next;
+			mes "[Stello]";
+			mes "This is too heavy, tight and annoying. This is just too uncomfortable.";
+			next;
+			mes "[Captain Gamberi]";
+			mes "You need to overcome the inconvenience to have a correct posture. The correct posture is your first step to become a gentleman. Do you get it, Stello?";
+			next;
+			emotion 33;
+			mes "[Captain Gamberi]";
+			mes "Stello, say it again.";
+			npctalk "Stello?";
+			next;
+			mes "[Stello]";
+			mes "Yes, sir.";
+			npctalk "Does he always have to hear the answer?", "Stello#dorcon";
+			npctalk "Stello?";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Excuse me.";
+			next;
+			mes "[Stello]";
+			mes "Who are you? You are not allowed to enter hear with no permission. Please leave.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Hello. I am a passenger on this ship. I'd like to know when this ship sets off.";
+			next;
+			mes "[Stello]";
+			mes "The ship will set off when the time comes.";
+			next;
+			mes "[Captain Gamberi]";
+			mes "Stello, I don't think that is the matter of the question. Look outside.";
+			npctalk "The fog...", "Stello#dorcon";
+			next;
+			mes "[Stello]";
+			mes "Oh, the red ^0000cdfog^000000! It seemed all right just a while ago!";
+			next;
+			mes "[Captain Gamberi]";
+			mes "I guess something may have cause the disturbance.";
+			next;
+			mes "[Stello]";
+			mes "We cannot sail off like this.";
+			npctalk "Never.", "Stello#dorcon";
+			next;
+			mes "[Captain Gamberi]";
+			mes "I seems so.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "However, I really am in a hurry. Should I wait until the fog is lifted?";
+			next;
+			mes "[Stello]";
+			mes "That fog will not be lifted if you just sit and wait.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Isn't it a natural fog?";
+			next;
+			mes "[Stello]";
+			mes "It Isn't. This fog is made of the smoke which is fumed by ^0000cdthe dragon living in the cave^000000 when it is upset. Please wait until ^0000cdthe vigilantes^000000 take care of it.";
+			npctalk "They are professionals. They will take care of it in no time!", "Stello#dorcon";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Then when would we be able to set off?";
+			next;
+			mes "[Stello]";
+			mes "Maybe tommorrow.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Isn't the fog covering the area near the shore? wouldn't it be a problem to just sail off?";
+			next;
+			mes "[Stello]";
+			mes "The seaway we are about to take is ^0000cdno typical seaway^000000. You need to read the movements of the stars and wind. You need to take the way which is not marked on the map which makes you wonder if you will ever find the land.";
+			npctalk "It is such a trouble to find the way.", "Stello#dorcon";
+			next;
+			mes "[Stello]";
+			mes "That is why we need to get rid of all the ^0000cdfog^000000 which blocks us from reading the sun and wind.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I guess there is no choice left for me. I should go there.";
+			next;
+			mes "[Stello]";
+			mes "You don't need to do this.";
+			next;
+			mes "[Captain Gamberi]";
+			mes "Stello. This adventurer seems very experienced. This could be a new adventure as well. It could help us.";
+			npctalk "I guess so. This adventurer sure seems quite tough.", "Stello#dorcon";
+			npctalk "How do you think, Stello?";
+			next;
+			mes "[Stello]";
+			mes "Hum... OK. Please go to see ^0000cdthe vigilante guarding the south bridge of the village^000000, and check the state of the dragon.";
+			next;
+			mes "[Stello]";
+			mes "Since the condition of the dragon is very important in Lasagna, the vigilantes check it at all time.";
+			next;
+			mes "[Stello]";
+			mes "Ask the vigilante how the dragon is doing and resolve the situation with the vigilante corps if any problem has occurred.";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "I see. Let me take a quick tour.";
+			npctalk "Take care of yourself.";
+			erasequest 14547;// Can we set out the sailing?
+			setquest 14548;// Crazy Dragon
+			lasagna_quest[1] = 21;// jump to 21
+			close;
+		}
+		mes "[Captain Gamberi]";
+		mes "Stello, I have told you how the way you dress shows what kind of Doram you are. Ad just your attire, please.";
+		next;
+		mes "[Stello]";
+		mes "This is too heavy, tight and annoying. This is just so uncomfortable.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "You need to overcome the inconvenience to have a correct posture. The correct posture is your first step to become a gentleman. Do you get it, Stello?";
+		next;
+		emotion 33,0,"Stello#dorcon";
+		mes "[Captain Gamberi]";
+		mes "Stello, say it again.";
+		npctalk "Stello?";
+		next;
+		mes "[Stello]";
+		mes "Yes, sir.";
+		npctalk "Does he always have to hear the answer?", "Stello#dorcon";
+		npctalk "Stello?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, is this...";
+		next;
+		mes "[Stello]";
+		mes "Who are you? You are not allowed to enter hear with no permission. Please leave.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello, I am" + strcharinfo(0) + " who is on a new adventure.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "A new adventurer. A polite Doram always knocks before entering. Since you must be nervous before the adventure, I'll let it slide this time.";
+		npctalk "Knock... Yes, it is very important to knock.", "Stello#dorcon";
+		next;
+		mes "[Captain Gamberi]";
+		mes "I am Captain^0000cdGamberi^000000 in charge of this ship. Welcome aboard.";
+		npctalk "I am Captain Gamberi in charge of this ship.", "Stello#dorcon";
+		npctalk "Stello?";
+		npctalk "Huh! I am sorry.", "Stello#dorcon";
+		next;
+		mes "[Stello]";
+		mes "The Purser must have sent up another irrelevant visitor. He must have told you how the people from the same home town should stick together and all.";
+		next;
+		mes "[Stello]";
+		mes "Oh, I am not blaming you. I'll do my best to give you the best sailing adventure. I am ^0000cdStello^000000.";
+		npctalk "The Chief Officer.", "Stello#dorcon";
+		next;
+		mes "[Captain Gamberi]";
+		mes "It may help you ease your nerve to walk around the ship. As long as you watch your manners, everyone will welcome you.";
+		next;
+		mes "[Stello]";
+		mes "Especially, you need to adjust your attire. The right outfit leads to a correct posture, and the correct posture is the first step to become a gentleman.";
+		npctalk "That's right.";
+		next;
+		mes "[Stello]";
+		mes "All the crews are such gentlemen, but they have no mercy for bad manners. You should be careful about this.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes, I will. Thank you.";
+		erasequest 14532;// Greetings to Captain Gamberi
+		setquest 14533;// Say hi to recorder
+		getexp 0,375;
+		lasagna_quest[1] = 15;
+		close;
+	}
+	if (lasagna_quest[1] < 21) {
+		if (Class != Job_Summoner) {
+			mes "[Captain Gamberi]";
+			mes "I am glad that an experienced adventurer like you is helping us. Ask the vigilante about the state of the dragon.";
+			close;
+		}
+		mes "[Captain Gamberi]";
+		mes "It would be a great idea to meet other members of the crew.";
+		close;
+	}
+	if (lasagna_quest[1] < 29) {
+		if (lasagna_quest[1] == 28 && Class != Job_Summoner) {
+			mes "[Captain Gamberi]";
+			mes "Please tell it to Stello.";
+			close;
+		}
+		mes "[Captain Gamberi]";
+		mes "You need to calm down the dragon to sail off. Please do your bedt.";
+		close;
+	}
+	if (conch_in_recorder == 1) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Excuse me, captain.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "What brought you here?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I am here to fulfil ^0000cdmy duty as an adventurer^000000.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "The duty as an adventurer?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Other than setting off on an adventure, I collect adventure stories from other people. I have heard that Captain Gamberi, you have been in Lasagna for a long time.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Everyone says that I can hear the adventure stories regarding Lasagna and Con-Chliina from you.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "Hum! Then you have found the right man. It is another adventure for me to tell an adventure story to an adventurer. Which story do you want hear now?";
+		npctalk "It's been a long time since I had a visitor like you.", "Stello#dorcon";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I am interested in the story about you the most.";
+		next;
+		mes "[Gamberi]";
+		mes "I am from Lasagna. I was born to an honorable family and gentle parents. I grew up to become a curious and adventurous child.";
+		npctalk "There was no one in the village who didn't know me.", "Stello#dorcon";
+		next;
+		mes "[Gamberi]";
+		mes "I wanted to break free from the name of the family. I ran off and wandered around Lasagna.";
+		npctalk "My house was the invisible prison trapping me inside and I was a bird longing for freedom...", "Stello#dorcon";
+		next;
+		mes "[Stello]";
+		mes "Oh, strange. This is not the story I have heard from your mother, Captain. She said you didn't want to help the butcher's shop business, and you went out from the early morning.";
+		npctalk "Who is lying?", "Stello#dorcon";
+		npctalk "Stello?";
+		next;
+		mes "[Gamberi]";
+		mes "Stello, it is not polite to interrupt. I had a strong sense of justice and couldn't just let those bad Dorams disturbing peace in Lasagna. I had to ^0000cdlead them into the right path^000000.";
+		next;
+		mes "[Gamberi]";
+		mes "Then I met Pepperoncino.";
+		next;
+		mes "[Stello]";
+		mes "I heard that story. That's why you were called the mad...";
+		npctalk "Stello?";
+		npctalk "No, never mind.", "Stello#dorcon";
+		next;
+		mes "[Gamberi]";
+		mes "I was interested in the fishing industry, and I went into the ^0000cdanchovy processing^000000 business with Pepperoncino. We made a fortune. We wondered what to do with all the money we had...";
+		next;
+		mes "[Stello]";
+		mes "It really was...";
+		npctalk "Really was?";
+		npctalk "No, never mind me...", "Stello#dorcon";
+		next;
+		mes "[Gamberi]";
+		mes "You may not see it now, but Lasagna used to be a dark place. Bad Dorams everywhere on the street, and there were a lot of fights.";
+		next;
+		mes "[Gamberi]";
+		mes "It was my duty to ^0000cdlead those bad Dorams into the right path^000000.";
+		next;
+		mes "[Gamberi]";
+		mes "It was 10 years ago when peace was brought to this town as Pepperoncino and Thomas worked together in accord...";
+		next;
+		mes "[Stello]";
+		mes "You needed some manpower...";
+		npctalk "......";
+		npctalk "....... Huh...", "Stello#dorcon";
+		next;
+		mes "[Gamberi]";
+		mes "I met Stello then. I ^0000cdcorrected Stello who was a pickpocket^000000 back then. He has become the Chief Office.";
+		next;
+		mes "[Stello]";
+		mes "Hum, Let's stop talking about it. It was ages ago.";
+		npctalk "What are you talking about to the guest?";
+		next;
+		mes "[Gamberi]";
+		mes "I, Pepperoncino and Thomas wanted to pull off a major gig. A really big one. Nothing like what we had done by then. A business. I mean.";
+		next;
+		mes "[Gamberi]";
+		mes "The business we started was to ^0000cdsell the specialty products of Lasagna in other cities^000000. It went well, and we hired more people to expand the size of the business.";
+		next;
+		mes "[Gamberi]";
+		mes "At the same time, we ran a ^0000cdvigilante corps^000000 to clean up the streets of Lasagna. Many people joined us for our cause.";
+		npctalk "When I formed the vigilante corps, many people were drawn to my personality and joined me.";
+		next;
+		mes "[Stello]";
+		mes "Are you going to join me or get punched in the face? Are you going to keep living in the gutter? Who wouldn't join the vigilante corps hearing those threats...";
+		next;
+		mes "[Gamberi]";
+		mes "Stello?";
+		npctalk "Really? Did you join by force?";
+		next;
+		mes "[Stello]";
+		mes "No! I really wanted to join!";
+		npctalk "No! I really wanted to join!", "Stello#dorcon";
+		next;
+		mes "[Gamberi]";
+		mes "I corrected those bad Dorams and formed the merchant group and the vigilante corps to engage in^0000cd trades^000000. The business thrived, and all the cities nearby were filled with the goods from Lasagna.";
+		next;
+		mes "[Gamberi]";
+		mes "Anyway, we decided to extend our stage to the ^0000cdsea^000000. Such decision was made out of the adventurous spirit of mine.";
+		next;
+		mes "[Stello]";
+		mes "That was because Pepperoncino...";
+		npctalk "It was because of Pepperoncino.";
+		npctalk "Well, he may have had some influence...", "Stello#dorcon";
+		next;
+		mes "[Gamberi]";
+		mes "And we were caught in a storm and parted with ^0000cdThomas' ship, Navi^000000. We kept on looking for Navi.";
+		next;
+		mes "[Gamberi]";
+		mes "Then I pioneered the seaway to Malangdo with ^0000cdStello^000000 whom I had straightened, and reunited with Thomas. Eventually, we decided to advance into the new continent.";
+		npctalk "Ahem, please tell that part in detail!";
+		next;
+		mes "[Gamberi]";
+		mes "Ever since, we have been not only leading the trade with the new continent but also connecting the continents. The adventurers from both continents use ^0000cdCon-Chliina^000000, and we are proud of it.";
+		next;
+		mes "[Gamberi]";
+		mes "Is this enough?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, it was quite a story. I really appreciate your story. I believe that al the numerous adventures have made you the man who you are now, dear captain.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, I guess it is the time for me to go out looking for a new adventure, leaving this valuable experience behind.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "Please come back later and tell me your story.";
+		npctalk "I'd like to hear it too.", "Stello#dorcon";
+		erasequest 14579;// Interview with Captain
+		setquest 14580;// To Recorder
+		conch_in_recorder = 2;
+		close;
+	}
+	if (conch_in_recorder == 2) {
+		mes "[Captain Gamberi]";
+		mes "Come find me if you have any questions.";
+		close;
+	}
+	mes "[Captain Gamberi]";
+	if (Class != Job_Summoner)
+		mes "I'd like to hear about the adventure story someday.";
+	else
+		mes "I'd like to hear your adventure stories from the new continent someday. Come visit me from time to time during the adventure.";
+	close;
+}
+
+// in G_H
+conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
+	if (lasagna_quest[1] < 15) {
+		mes "[Recorder]";
+		mes "Since it takes concentration, please don't interrupt me.";
+		close;
+	}
+	if (lasagna_quest[1] == 15) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Excuse me.";
+		next;
+		mes "[Recorder]";
+		mes "I told not to disturb... Oh, who are you?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello, I am " + strcharinfo(0) + ", looking for adventure from the new continent. I am here to say hi as the Purser has advised.";
+		npctalk "Oh, I see.";
+		next;
+		mes "[Recorder]";
+		mes "Nice to meet you. I am the Recorder of this ship who is in charge of all records of this ship. You may come by whenever you have a question. You are free to access any records except the classified ones.";
+		next;
+		mes "[Recorder]";
+		mes "Let me record your profile now. Oh, you don't need to do anything. You may just stand there.";
+		next;
+		mes "[Recorder]";
+		mes "Your name is..." + strcharinfo(0) + "...The height must be... and the color is... like this... The accent of yours... You must have lived in Pane and moved to Bongola.";
+		npctalk "And you are here in Lasagna...";
+		next;
+		mes "[Recorder]";
+		mes "The dirt and grass on your feet... You are not a neat person... Oh, never mind. I am not writing down your faults... This is enough.";
+		next;
+		emotion 23;
+		mes "[" + strcharinfo(0) + "]";
+		mes "How do you know such things in detail?";
+		next;
+		mes "[Recorder]";
+		mes "You just need to pay a little attention. It is just a technique I have picked up from observing people for a long time.";
+		next;
+		mes "[Recorder]";
+		mes "Let's see, you must have met the Captain and the Chief Officer. This place must be your second stop.";
+		next;
+		emotion 23;
+		mes "[" + strcharinfo(0) + "]";
+		mes "That's right!";
+		next;
+		mes "[Recorder]";
+		mes "Now is the time to see the ^0000cdHead Chef, the Helmsman and the Boatswain^000000. They must be in the ^0000cddining room^000000 at the end of the hallway. Have a safe voyage.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Ha! Yes. Thank you.";
+		erasequest 14533;// Say hi to recorder
+		setquest 14534;// To the kitchen
+		getexp 250,375;
+		lasagna_quest[1] = 16;
+		close;
+	}
+	if (lasagna_quest[1] == 16) {
+		mes "[Recorder]";
+		mes "You should go meet the Head Chef, the Helmsman and the Boatswain. They are in the dining room at the end of the hallway.";
+		close;
+	}
+	if (lasagna_quest[1] == 17) {
+		mes "[Recorder]";
+		mes "Isn't it the time to meet the Purser?";
+		close;
+	}
+	if (lasagna_quest[1] == 18) {
+		mes "[Recorder]";
+		mes "You are on your way to meet the Sous Chef. He is in the dining room at the end of the hallway.";
+		close;
+	}
+	if (lasagna_quest[1] == 19) {
+		mes "[Recorder]";
+		mes "You must be on your way back to the Purser. I was wondering since there hadn't been a sailing signal even after the scheduled time.";
+		close;
+	}
+	if (lasagna_quest[1] == 20) {
+		mes "[Recorder]";
+		mes "The Chief Officer and the Captain are the ones who issue the sailing signal. Asking them would be the fastest way to find out.";
+		close;
+	}
+	if (lasagna_quest[1] == 21) {
+		mes "[Recorder]";
+		mes "Are you heading there to meet the vigilante? I was about to go there to check out new members. As soon as the business her is taken care of, I'll go down there. Of course. with a notebook.";
+		close;
+	}
+	if (lasagna_quest[1] <= 28) {
+		mes "[Recorder]";
+		mes "You should go see the Captain and the Chief Officer. Everyone is waiting to set off.";
+		close;
+	}
+	if (conch_in_recorder == 0) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Excuse me.";
+		next;
+		mes "[Recorder]";
+		mes "I told not to disturb... Oh, who are you?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello, I am " + strcharinfo(0) + ", looking for adventure from the new continent. I am here to say hi as the Purser has advised.";
+		next;
+		mes "[Recorder]";
+		mes "Oh, I see. Nice to meet you. I am the Recorder of this ship who is in charge of all records of this ship. You may come by whenever you have a question. You are free to access any records except the classified ones.";
+		next;
+		mes "[Recorder]";
+		mes "Let me record your profile now. Oh, you don't need to do anything. You may just stand there. Your name is..." + strcharinfo(0) + "...The height must be... and the color is... like this...";
+		npctalk "The people from the new continent are so tall.";
+		next;
+		mes "[Recorder]";
+		mes "Oh, never mind. I am not writing down your faults... This is enough.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "How do you know such things in detail?";
+		next;
+		mes "[Recorder]";
+		mes "You just need to pay a little attention. It is just a technique I have picked up from observing people for a long time.";
+		npctalk "It is also an occupational sickness.";
+		next;
+		mes "[Recorder]";
+		mes "Anyways, just in time. A mysterious thing has just happened, and I need ^0000cda fresh eye who is not involved in it^000000.";
+		npctalk "I cannot trust anyone.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I have a hunch that I have to leave this place now.";
+		next;
+		mes "[Recorder]";
+		mes "You may want to hear me out at least. As an adventurer, it helps to hear a lot of stories.";
+		next;
+		if (select( "I will hear the story.", "I won't hear the story." ) == 2) {
+			mes "[" + strcharinfo(0) + "]";
+			mes "I won't listen to it. I don't want to get involved in another annoying business.";
+			next;
+			mes "[Recorder]";
+			mes "Is that so? Well, it is not polite to get hold of a busy person.";
+			next;
+			mes "[Recorder]";
+			mes "However, if you change your mind, come back anytime. I'll be waiting for you.";
+			close;
+		}
+		mes "[" + strcharinfo(0) + "]";
+		mes "I will hear the story.";
+		next;
+		mes "[Recorder]";
+		mes "Good. Please take a look at this shelf here.";
+		npctalk "Aren't they just beautiful?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "There are a lot of books.";
+		next;
+		mes "[Recorder]";
+		mes "They may look like books, but they are not. They are the records of all the things which have happened on the ship.";
+		next;
+		mes "[Recorder]";
+		mes "It is consisted not only of the events which have happened on the ship but also of the history of almost every person who has anything to do with Con-Chliina.";
+		emotion 4,1;
+		next;
+		mes "[Recorder]";
+		mes "The future can be seen through the past.";
+		next;
+		mes "[Recorder]";
+		mes "I don't just make new records. I also do my best to store the records at their best condition.";
+		next;
+		mes "[Recorder]";
+		mes "However, someone has ^0000cddamaged one of the records in this place^000000.";
+		next;
+		mes "[Recorder]";
+		mes "Whoever did that did not even tried to hide the deed. This person has just torn the entire book mercilessly. It was ruined.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Huh! Is it a case in which I need to find the missing paged? The role of this fresh eye you are looking for is to provide a new insight to the investigation to solve the case?";
+		next;
+		mes "[Recorder]";
+		mes "No. The missing pages have been found. In the oven of the kitchen.";
+		npctalk "You must be a mystery fan, I guess.";
+		next;
+		mes "[Recorder]";
+		mes "Unfortunately, most of the pages were gone in the fire. I could barely recognize the remaining of the document.";
+		npctalk "It was a relief that not all of it had been gone...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What were the missing pages about?";
+		next;
+		mes "[Recorder]";
+		mes "Unfortunately, those pages contained ^0000cdthe record about Captain Gamberi^000000. Since Gamberi is our captain, I have done my best to make the record.";
+		npctalk "It was the longest which had taken a long time and effort.";
+		next;
+		mes "[Recorder]";
+		mes "The story about Captain Gamberi is included in all the books as well. And all of it was reduced to ashes.";
+		next;
+		mes "[Recorder]";
+		mes "The lost record was about the story of Captain Gamberi before he became the captain of Con-Chliina, which was very rare.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Why?";
+		next;
+		mes "[Recorder]";
+		mes "It is because of the characteristic of Lasagna population. It is mostly consisted of the people from other regions. Captain Gamberi and Captain Thomas of Navi are pretty much the only people from Lasagna.";
+		next;
+		mes "[Recorder]";
+		mes "Most of the people who knew the past of Captain Gamberi have left Lasagna. There is almost no one who knows the past here now.";
+		next;
+		mes "[Recorder]";
+		mes "That's why it has taken a long time to research and make the record.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Should I help you find the thief then?";
+		next;
+		mes "[Recorder]";
+		mes "No. I have found the thief already. I plan to punish him in the most painful way possible. However, there are things I have to take care of before that. That's why I am keeping it quiet.";
+		npctalk "There is a time for everything.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Then what do you need a fresh eye for?";
+		next;
+		mes "[Recorder]";
+		mes "If I cannot recover it, I should rebuild it. I tried to interview Captain Gamberi to fill in the missing pages, but Gaptain Gamberi didn't respond.";
+		next;
+		mes "[Recorder]";
+		mes "I have sent many other people. It was no use. He wouldn't open up to anyone on Con-Chliina about his past. That is why I need a ^0000cdfresh eye^000000.";
+		next;
+		mes "[Recorder]";
+		mes "He sometimes tells a stranger or a newbie ^0000cdhis story and how Lasagna has developed so far^000000 as he is telling some adventure stories. I'd like to send you to hear from him this time.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You mean that I should ask him about what happened in the past without giving him the impression that I have been asked by you.";
+		next;
+		mes "[Recorder]";
+		mes "Yes, indeed. It should remain a secret. If Captain Gamberi finds out, you and I'd never get away.";
+		npctalk "Everything depends on you.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I see.";
+		next;
+		mes "[Recorder]";
+		mes "Well, then. Have a safe trip.";
+		setquest 14579;// Interview with Captain
+		conch_in_recorder = 1;
+		close;
+	}
+	if (conch_in_recorder == 1) {
+		mes "[Recorder]";
+		mes "You can interview Captain Gamberi and tell me the story.";
+		close;
+	}
+	if (conch_in_recorder == 2) {
+		mes "[Recorder]";
+		mes "You are here.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I have heard from the story from Captain Gamberi, but I am very confused.";
+		npctalk "Please, tell me the story!";
+		next;
+		mes "[When you told the story you heard from Captain Gamberi and about how Stello interrupted, the Recorder started writing it down.]";
+		next;
+		emotion 20;
+		mes "[Recorder]";
+		mes "That is strange. I cannot remember all the records, but the story told by Captain Gamberi ^0000cdis different^000000 from the part of the record I do remember.";
+		npctalk "It wasn't supposed to be lengthy like this.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Was the story of the Chief Officer true then?";
+		next;
+		mes "[Recorder]";
+		mes "Well, I am not sure. We need to check out the story with other versions. Since there are discrepancies, I cannot make the record counting on the words of Captain Gamberi.";
+		next;
+		mes "[Recorder]";
+		mes "It is a relief that we have more people to hear the story from, other than Captain Gamberi.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Who else?";
+		next;
+		mes "[Recorder]";
+		mes "Although this person is not from Lasagna, he has spent meaningful amount of time with Captain Gamberi. You may go talk to him. We can compare the story from him with the interview with Captain Gamberi.";
+		npctalk "I should have done this earlier.";
+		next;
+		mes "[Recorder]";
+		mes "I am sorry to ask you again.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Who is that?";
+		next;
+		mes "[Recorder]";
+		mes "I mean ^0000cdPepperoncino the leader of the vigilante corps^000000. He must be having an early meal at the new Adventurer Club now.";
+		npctalk "He could be at table.";
+		next;
+		mes "[Recorder]";
+		mes "You can enter the restaurant when you head to the south gate of the <NAVI>^4D4DFF[Adventurer Club]^000000<INFO>lasagna,56,186,000,1,</INFO></NAVI>.";
+		npctalk "You can follow this Red Yarn. The Red Yarn always leads you to the right way.";
+		erasequest 14580;// To Recorder
+		setquest 14581;// Interview with the Chief
+		conch_in_recorder = 3;
+		close;
+	}
+	if (conch_in_recorder == 3) {
+		mes "[Recorder]";
+		mes "You can interview Pepperoncino and tell me the story.";
+		next;
+		mes "[Recorder]";
+		mes "He must be having an early meal at the newly built <NAVI>^4D4DFF[Adventurer Club]^000000<INFO>lasagna,56,186,000,1,</INFO></NAVI> now. You can enter the restaurant when you head to the south gate.";
+		close;
+	}
+	if (conch_in_recorder == 4) {
+		mes "[Recorder]";
+		mes "I guess you must have heard the actual story this time.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "The story on Pepperoncino's side makes me more confused. Listen for yourself.";
+		next;
+		mes "[When you told the story you heard from Pepperoncino and about how Olio interrupted, the Recorder started writing it down.]";
+		next;
+		mes "[Recorder]";
+		mes "The story from Pepperoncino doesn't quite make sense either. I can check out his story with the records.";
+		next;
+		mes "[Recorder]";
+		mes "Let's see. Well, the story you heard is different from the record of Pepperoncino.";
+		next;
+		mes "[Recorder]";
+		mes "Not we cannot quite trust the story told by Pepperoncino. I cannot record the story I cannot trust.";
+		npctalk "I cannot believe how pretentious our captain and the leader really are!";
+		next;
+		mes "[Recorder]";
+		mes "However, I cannot let the records be lost like this. What should I do...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "How about asking Captain Thomas of Navi?";
+		npctalk "Captain Thomas?";
+		next;
+		mes "[Recorder]";
+		mes "As you can see, Captain Gamberi and Pepperoncino only tell the stories they like to tell. We cannot trust the story of Captain Thomas either.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "How about the story told by the oldest person in Lasagna?";
+		next;
+		mes "[Recorder]";
+		mes "Lasagna is somewhere you just drop by to make some dough when you are young. Most of them just leave this place...";
+		next;
+		mes "[Recorder]";
+		mes "Oh, you are right. There is ^0000cdthis one person^000000.";
+		npctalk "The living history of Lasagna.";
+		next;
+		mes "[Recorder]";
+		mes "Where the Adventurer Club is now, there used to be ^0000cdPub-Oven^000000. The place used to sell Kahlugna Milk. You can go to see ^0000cdthe first owner^000000 of the place. However...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What's the problem?";
+		next;
+		mes "[Recorder]";
+		mes "However, she doesn't think clearly now... I guess she may remember the past more vividly because of it. It is like she is living in the past.";
+		next;
+		mes "[Recorder]";
+		mes "Go to meet ^0000cdthe old lady who used to be the owner of Pub-Oven^000000. She is living in a ^0000cd small house near the Adventurer Club^000000.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes. I'll come back soon.";
+		erasequest 14582;// To Recorder
+		setquest 14583;// To Granma
+		conch_in_recorder = 5;
+		close;
+	}
+	if (conch_in_recorder == 5) {
+		mes "[Recorder]";
+		mes "Go to see the old lady who used to be the first owner of Pub-Oven. She must be the house near it.";
+		close;
+	}
+	if (conch_in_recorder == 6) {
+		mes "[Recorder]";
+		mes "Welcome. Thank you for your effort. Please report it now.";
+		next;
+		mes "[When you told the story about Captain Gamberi you heard from the old lady, the Recorder started writing it down.]";
+		next;
+		mes "[Recorder]";
+		mes "Nice work. The story matches some of the details I remember. He sure is a living history. I guess I should fill in the records based on the story.";
+		npctalk "The living history of Lasagna.";
+		next;
+		mes "[Recorder]";
+		mes "It will be filled with more abundant detailed than the previous record.";
+		next;
+		hideoffnpc "Captain Gamberi#dorcon0";
+		mes "[Recorder]";
+		mes "Dear captain, what are you doing here?";
+		next;
+		emotion 23,0,"Captain Gamberi#dorcon0";
+		mes "[Captain Gamberi]";
+		mes "You were in place. I am just checking if everyone is in the right place prior to the voyage.";
+		npctalk "Hum! Hum! I thought there was no one around here.";
+		next;
+		mes "[Recorder]";
+		mes "Since when it has been your duty to check it? So quietly? Without a knock on the door?";
+		next;
+		mes "[Captain Gamberi]";
+		mes "As an experienced crew of Con-Chliina, one must be able to cope with any situation whenever they need to.";
+		next;
+		emotion 23,1;
+		mes "[Recorder]";
+		mes "I see. ^0000cdIt must be the duty of the captain to tear and burn the document as well^000000, I guess.";
+		npctalk "Did you really think that I wouldn't find out? You have left a long trail od evidence after you.";
+		npctalk "I don't know what you are talking about.";
+		next;
+		mes "[Captain Gamberi]";
+		mes "Oh, hum. I should go check if the Boatswain in the right place.";
+		npctalk "I should stop by so many places.";
+		next;
+		hideonnpc "Captain Gamberi#dorcon0";
+		mes "[Recorder]";
+		mes "don't even think about it from now on!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Then, the captain must have...?";
+		next;
+		mes "[Recorder]";
+		mes "As more people started using the ship and accessing the record, he must have felt embarrassed by the record filled with his not so pretty past.";
+		npctalk "It is not something to be embarrassed by in Lasagna.";
+		next;
+		mes "[Recorder]";
+		mes "I knew he would come again. He must have heard that I am recollecting the record. I though he would come back to get rid of it again. I guess I should be more careful not to lose it.";
+		npctalk "I'd better make multiple copies and hide them everywhere.";
+		next;
+		mes "[Recorder]";
+		mes "Dear adventurer. since you have completed your mission, here is the reward for you. You may access all documents in the recording room freely from now on. Well then.";
+		completequest 14584;// Back to Recorder
+		getexp 875,875;
+		conch_in_recorder = 7;
+		close;
+	}
+	if (conch_in_recorder == 7) {
+		mes "[Recorder]";
+		mes "You may access all documents in the recording room freely.";
+		close;
+	}
+}
+
+conch_in,98,33,5	script	Con-Chliina Ship's Log#	HIDDEN_NPC,{
+	if (conch_in_recorder < 7) {
+		mes "[Recorder]";
+		mes "Please do not touch the books.";
+		close;
+	}
+	mes "[" + strcharinfo(0) + "]";
+	mes "Which one should I read first?";
+	next;
+	switch( select( "Ship's Log", "Main Characters", "Glossary", "You close the book." ) ) {
+	case 1:
+		switch( select( "7 years ago", "6 years ago", "5 years ago", "4 years ago", "3 years ago", "You close the book." ) ) {
+		case 1:
+			mes "Month X Day X";
+			mes "The long-awaited first voyage. After unloading everything, I hope we return as full ship again...";
+			next;
+			mes "Month X Day X";
+			mes "Business is good everywhere we go. I'm amazed by the insight of Captain Peperoncino and his crewmen.";
+			next;
+			mes "Month X Day X";
+			mes "Three days since we left Port Richoli. Met a storm. It's not the first time we experienced the fickleness of mother nature, but we can't help but feel dejected when counting the losses.";
+			mes "Seriously wounded 1, mildly wounded 13, top quality anchovies 23 boxes, kaluna 7 jars, beard comb 1 box, fine fabric 200 rolls.";
+			next;
+			mes "Month X Day X";
+			mes "A couple days ago we met a storm, but another one?! Who set the course this way at this time of the year? I guess I should let it go since It's the first time.";
+			next;
+			mes "Month X Day X";
+			mes "Nothing is up. Quiet. A shoal of flying fish over the ocean cast with full moon is just spectacular to watch.";
+			next;
+			mes "Month X Day X";
+			mes "It's great to empty out all the cargo and return with new items loaded. I feel proud, It's like the feeling you get from gleaning and dispersing the crops widely.";
+			next;
+			mes "Month X Day X";
+			mes "A glass kaluna milk at a pub after receiving my paycheck is the sweetest thing in the world.";
+			close;
+		case 2:
+			mes "Month X Day X";
+			mes "Captain Gamberry and Captain Thomas are weird. They try to keep the lead in a straight line and sail on same speed. It's like having kids walk in steps.";
+			next;
+			mes "Month X Day X";
+			mes "We run into storms so often that I'm wondering if we should change our course. Thank god we avoided the storm in Port Richoli.";
+			next;
+			mes "Month X Day X";
+			mes "The sous chef we recruited from Port Richoli is just fantastic.";
+			next;
+			mes "Month X Day X";
+			mes "We lost Butterfly to the storm we met on the second day we left Port Richoli. We were so devastated that no one was able to say anything when we returned to Lasagna.";
+			next;
+			mes "Month X Day X";
+			mes "No sailing for a while.";
+			next;
+			mes "Month X Day X";
+			mes "It feels like everyone will be back and smiling if I go to the port.";
+			next;
+			mes "Month X Day X";
+			mes "No news still.";
+			close;
+		case 3:
+			mes "Month X Day X";
+			mes "A search for Butterfly, second time. Nothing. We couldn't find any remnants of Butterfly. So they must be safe.";
+			next;
+			mes "Month X Day X";
+			mes "Still no news on Butterfly.";
+			next;
+			mes "Month X Day X";
+			mes "Helmsman caught tuna by fishing. Chef tried to steam the whole fish but the sous chef barely stopped him and cut into pieces for everyone. I wish I can have some more.";
+			next;
+			mes "Month X Day X";
+			mes "Tuna is served again. First day was tuna, second day was tuna pasta, third day was fried tuna, fourth day was braised tuna... I'm sick of it. Just had it. Did we do something to anger the sous chef?";
+			next;
+			mes "Month X Day X";
+			mes "Boatswain tried to throw out the remaining tuna and got caught by the sous chef. We all learned how scary he can be.";
+			next;
+			mes "Month X Day X";
+			mes "We met a storm. Everyone was well-prepared, so the damage was not huge. I guess this is what a know-how is.";
+			next;
+			mes "Month X Day X";
+			mes "Boatswain is acting strangely. We barely stopped him from trying to jump into water in the middle of a night. He seems to have lost it when I see him shivering all over, but then he's fine the next morning. He's bewitched or something.";
+			next;
+			mes "Month X Day X";
+			mes "Still searching. No news on Butterfly.";
+			close;
+		case 4:
+			mes "Month X Day X";
+			mes "We never had any rats but all of a sudden the ship is infested. Upon investigation, the boatswain... you're such a...";
+			next;
+			mes "Month X Day X";
+			mes "A year may pass but we cannot give up the search. We're combing through the area where we lost them.";
+			next;
+			mes "Month X Day X";
+			mes "I don't know why, but I don't like the feel of this.";
+			next;
+			mes "Month X Day X";
+			mes "Storm. So sick of storms. We're so used to it that we can practically ride over it.";
+			next;
+			mes "Month X Day X";
+			mes "You turned our ship because Stello claimed to have seen something strange last night. It's a route that we've never seen before. Everyone had different opinions, but since we had looked everywhere we can, we decided to give it a try.";
+			next;
+			mes "Month X Day X";
+			mes "I had a strange dream.";
+			next;
+			mes "Month X Day X";
+			mes "When we went through the dense fog that appeared suddenly, there was an island we had never seen before. There were the Butterfly crewmen, their presence natural like the natives.";
+			next;
+			mes "Month X Day X";
+			mes "Where we had landed softly after being hit by huge waves is called the Soft Island. This is a mysterious place inhabited by people with different appearances. It's a discovery of a new world.";
+			next;
+			mes "Month X Day X";
+			mes "Using Soft Island as the base, Butterfly already had a footing in the new world and was making profits. They are just born to be merchants.";
+			next;
+			mes "Month X Day X";
+			mes "We are on our way to Lasagna. Captain Gamberry and Captain Thomas had a long conversation.";
+			next;
+			mes "Month X Day X";
+			mes "Arrived in Lasagna. Drank five glasses of kaluna milk.";
+			close;
+		case 5:
+			mes "3 years ago: decided to set sail";
+			mes "Month X Day X";
+			mes "We are heading to the new world loaded with supplies. I wanted to take a close look and this is a great opportunity.";
+			next;
+			mes "Month X Day X";
+			mes "Storm again.";
+			next;
+			mes "Month X Day X";
+			mes "Arrived in Soft Island. I don't know how we found the way in the vast open sea, but It's still amazing.";
+			next;
+			mes "Month X Day X";
+			mes "Captain Gamberry and Captain Thomas officially announced their expansion plan to the new world. Con-Chliina will be in charge of recruiting and sending adventurers to the new world";
+			mes "And Farfalle Vigilantes will be in charge of training them. With Soft Island as its base, Butterfly agreed to support adventurers. Preparation time is three years.";
+			next;
+			mes "Month X Day X";
+			mes "I came up with items that can be sold between the new world and Far-Star. I'm surprised at how different their tastes are. Really surprised to hear the price of Igdrasil fruit.";
+			next;
+			mes "Month X Day X";
+			mes "Sailed out from Soft Island. We'll probably come a few more times.";
+			close;
+		case 6:
+			mes "[" + strcharinfo(0) + "]";
+			mes "there's nothing to see.";
+			close;
+		}
+	case 2:
+		switch( select( "Gamberry", "Peperoncino", "Tomei Thomas", "You close the book." ) ) {
+		case 1:
+			mes "- Gamberry -";
+			mes "Captain of Con-Chliina.";
+			mes "Nickname is Berry.";
+			mes "Kaluna milk should be stirred.";
+			next;
+			mes "- Gamberry -";
+			mes "His parents ran a butcher's shop in Lasagna.";
+			next;
+			mes "- Gamberry -";
+			mes "When he was young, he couldn't resist using violence to rehab hoodlum dorams. Thus, he is called the mad dog of Lasagna.";
+			next;
+			mes "- Gamberry -";
+			mes "He met Peperoncino (current chief of Farfalle Vigilantes) at Pub-Oven by having disagreements over how to drink kaluna.";
+			next;
+			mes "- Gamberry -";
+			mes "He ended up working at the anchovy workshop with Peperoncino due to the debt he incurred at this time. Gamberry was recognized for his skills and became the workshop manager.";
+			next;
+			mes "- Gamberry -";
+			mes "They organized a merchant business with Thomas (current captain of Butterfly) who joined later.";
+			next;
+			mes "- Gamberry -";
+			mes "Having decided to expand their domain to the sea, Gamberry and Thomas gathered a fleet and sailed out, but Captain Thomas went missing in a storm.";
+			next;
+			mes "- Gamberry -";
+			mes "Stello, Con-Chliina's first officer, discovered the sea route and finally found Butterfly that had safely reached Soft Island in the new world.";
+			next;
+			mes "- Gamberry -";
+			mes "Currently sails on the liner that connects Lasagna to the new world.";
+			close;
+		case 2:
+			mes "- Peperoncino -";
+			mes "Chief of Farfalle Vigilantes.";
+			mes "Nickname is Pepe.";
+			mes "Kaluna milk should be shaken.";
+			next;
+			mes "- Peperoncino -";
+			mes "Besides the fact that he grew up poor in Fusilli, nothing else is known about his early days.";
+			next;
+			mes "- Peperoncino -";
+			mes "He came to Lasagna with a grand plan to make a fortune by working on an anchovy fishing line, but gave up because of seasickness.";
+			next;
+			mes "- Peperoncino -";
+			mes "Later, he began working at an anchovy workshop.";
+			next;
+			mes "- Peperoncino -";
+			mes "He met Gamberry (current captain of Con-Chliina) at Pub-Oven by having disagreements over how to drink kaluna.";
+			next;
+			mes "- Peperoncino -";
+			mes "He ended up working at the anchovy workshop with Gamberry due to the debt he incurred at this time.";
+			next;
+			mes "- Peperoncino -";
+			mes "They organized a merchant business with Thomas (current captain of Butterfly) who joined later.";
+			next;
+			mes "- Peperoncino -";
+			mes "When Gamberry and Thomas gathered a fleet and set out, Peperoncino organized and manages to this day Farfalle Vigilantes to maintain pubic order of Lasagna.";
+			close;
+		case 3:
+			mes "- Tomei Thomas -";
+			mes "Captain of Butterfly.";
+			mes "Nickname is Toto.";
+			mes "Kaluna milk should be shaken.";
+			next;
+			mes "- Tomei Thomas -";
+			mes "Born as Tomei Thomas but shortened to Thomas.";
+			next;
+			mes "- Tomei Thomas -";
+			mes "Native of Lasagna, brought up affluently thanks to his wealthy parents.";
+			next;
+			mes "- Tomei Thomas -";
+			mes "Grew up with Gamberry (current captain of Con-Chliina) as childhood friends.";
+			next;
+			mes "- Tomei Thomas -";
+			mes "Worked with Gamberry and Peperoncino (current chief of Farfalle Vigilantes) at the anchovy workshop as a hobby.";
+			next;
+			mes "- Tomei Thomas -";
+			mes "While the two spent all the money to pay off their debts, Thomas was able to save his wages. This became the initial fund for the merchant business.";
+			next;
+			mes "- Tomei Thomas -";
+			mes "Having decided to expand their domain to the sea, Gamberry and Thomas gathered a fleet and sailed out, but Captain Thomas went missing in a storm.";
+			next;
+			mes "- Tomei Thomas -";
+			mes "Later, he safely arrived and settled in Soft Island of the new world. He's steadily expanding his domain.";
+			close;
+		case 4:
+			mes "[" + strcharinfo(0) + "]";
+			mes "there's nothing to see.";
+			close;
+		}
+	case 3:
+		mes "^0000cd[Pub-Oven]^000000";
+		mes "The place where Thomas, Peperoncino, and Gamberry met up to make agreements.";
+		next;
+		mes "^0000cd[Pub-Oven]^000000";
+		mes "Today, it is an adventurers' club and a memorial, a must-see place for dorams going on an adventure.";
+		next;
+		mes "^0000cd[Kaluna Milk]^000000";
+		mes "A beverage made by mixing kaluna and milk that three dorams drank when they met up. In their memory, it is now a festival beverage.";
+		next;
+		mes "^0000cd[Kaluna Milk]^000000";
+		mes "Mixing is usually done by stirring or shaking, but there is never-ending argument about these two methods.";
+		next;
+		mes "^0000cd[Kaluna Milk]^000000";
+		mes "Depending on preference, one to three gooseberries can be added.";
+		next;
+		mes "^0000cd[Oven Resolution]^000000";
+		mes "Refers to the brotherhood formed in agreement by Thomas, Peperoncino, and Gamberry.";
+		next;
+		mes "^0000cd[Butterfly]^000000";
+		mes "Known to have gone missing in a storm but later found to have safely arrived and established in the new world. After the news spread, Butterfly became widely known as the icon of adventure and heroes.";
+		next;
+		mes "^0000cd[L-Day]^000000";
+		mes "Abbreviation of Lasagna Day. It is the day when Butterfly, safely arrived in the new world, was found through the discovery of a new sea route after 32 search attempts.";
+		next;
+		mes "^0000cd[L-Day]^000000";
+		mes "Lasagna celebrates this day annually with magnificent fireworks and festivals.";
+		close;
+	case 4:
+		mes "[" + strcharinfo(0) + "]";
+		mes "there's nothing to see.";
+		close;
+	}
+}
+
+conch_in,181,61,5	script	Boatswain#dorcon	4_M_BOSSCAT,{
+	if (lasagna_quest[1] < 16) {
+		mes "[Boatswain]";
+		mes "Doll, check.";
+		mes "Bell, check.";
+		mes "Dried Star Lilly, check.";
+		mes "Rope tied 33 times, check.";
+		mes "5 creases on the sail, check. Good!";
+		next;
+		mes "[Boatswain]";
+		mes "What! Who broke this Pussy Willow branch!";
+		close;
+	}
+	if (lasagna_quest[1] == 16) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello, I am " + strcharinfo(0) + " who is on a new adventure this time. Nice to meet you.";
+		next;
+		mes "[Sous Chef]";
+		mes "......";
+		npctalk "You are cold.";
+		npctalk "He probably didn't hear it.", "Helmsman#dorcon";
+		next;
+		mes "[Boatswain]";
+		mes "Oh, you are the newly trained adventurer setting off on an adventure to the new continent. I am fond of an adventurous spirit. I used to travel from a place to another when I was young.";
+		next;
+		mes "[Helmsman]";
+		mes "Exactly when was it? How long ago?";
+		next;
+		mes "[Boatswain]";
+		mes "Not long ago. It feels like it happened just yesterday.";
+		next;
+		mes "[Helmsman]";
+		mes "Yesterday, you were running on the deck in the middle of the night.";
+		next;
+		mes "[Boatswain]";
+		mes "Phew, such nonsense.";
+		next;
+		mes "[Sous Chef]";
+		mes "Hey, I get it. It is too noisy there. You may go now.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes ".......";
+		next;
+		mes "[Boatswain]";
+		mes "The Sous Chef is always on the edge before sailing off. don't take it personally.";
+		npctalk "It doesn't mean that he doesn't like you.", "Helmsman#dorcon";
+		next;
+		mes "[Helmsman]";
+		mes "A mature Doram doesn't hold on to such things. You may go. We are about to set off.";
+		erasequest 14534;// To the kitchen
+		setquest 14535;// To Purser
+		getexp 250,0;
+		lasagna_quest[1] = 17;
+		close;
+	}
+	if (lasagna_quest[1] == 17) {
+		mes "[Boatswain]";
+		mes "It is almost the time for us to sail off. You should go back.";
+		close;
+	}
+	if (lasagna_quest[1] < 29) {
+		mes "[Boatswain]";
+		mes "Doll, check.";
+		mes "Bell, check.";
+		mes "Dried Star Lilly, check.";
+		mes "Rope tied 33 times, check.";
+		mes "5 creases on the sail, check. Good!";
+		close;
+	}
+	if (conch_in_boatswain == 0) {
+		mes "[Boatswain]";
+		mes "Doll, check.";
+		mes "Bell, check.";
+		mes "Dried Star Lilly, check.";
+		mes "Rope tied 33 times, check.";
+		mes "5 creases on the sail, check.";
+		next;
+		mes "[Boatswain]";
+		mes "What! Who broke this Pussy Willow branch!";
+		npctalk "Oh, not again.", "Helmsman#dorcon";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You seem to be in trouble. What is the matter?";
+		next;
+		if (BaseLevel < 140) {// todo
+			mes "[Boatswain]";
+			mes "You don't seem to be experienced enough to resolve my problem. Come back after gaining more experience.";
+			close;
+		}
+		mes "[Boatswain]";
+		mes "We need to take off anytime soon, and the preparation for sailing is not made properly.";
+		npctalk "Oh! You adventurer! You don't want to deal with him so seriously...!", "Helmsman#dorcon";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I don't know much about sailing, but none of those sounds relevant to the ship.";
+		next;
+		mes "[Boatswain]";
+		mes "It is not your business... Well, ^0000cda stranger from a new place is supposed to solve this problem^000000.";
+		npctalk "And here is a stranger from a new place in front of me.";
+		next;
+		mes "[Boatswain]";
+		mes "I am the sailor of sailors. The real seaman. I am the boatswain of this ship who is in charge of taking care of tough sailors and all the business on the deck. The story I am about to tell you... You shouldn't tell it to anyone else.";
+		next;
+		mes "[Boatswain]";
+		mes "Then you would learn how fearful a sailor can be.";
+		next;
+		if (select( "What is it?", "I won't listen." ) == 2) {
+			mes "[Boatswain]";
+			mes "Then go back to your spot. You shouldn't expect any favors from me from now on.";
+			close;
+		}
+		mes "[Boatswain]";
+		mes "Good. I like the attitude that you don't give in for threats. So do I. Well, so did I.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Why do you use a past tense?";
+		next;
+		mes "[Boatswain]";
+		mes "Do you believe in invisible things? Like those which don't really exist? Especially the special ones that appear in the night...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, the dead.";
+		next;
+		mes "[Boatswain]";
+		mes "You are right. I had no fear. I enjoyed running into adventures and stuff. That's how I ended up in Lasagna and became the boatswain of Con-Chliina after meeting Captain Gamberi.";
+		npctalk "It was the most cherished moment of my lift.";
+		next;
+		mes "[Boatswain]";
+		mes "I have been to everywhere. And one day, I found it.";
+		next;
+		mes "[Boatswain]";
+		mes "There are numerous islands on the sea where no one lives. Sometimes, you find a pot buried in the middle of an island.";
+		next;
+		mes "[Boatswain]";
+		mes "When the ship was anchored in an unknown island to replenish water, I explored the island as I always did. And I found a ^0000cdsealed pot^000000 there.";
+		npctalk "I should have left it there and walked away.";
+		next;
+		mes "[Boatswain]";
+		mes "I shook it, but there was no sound. I was wondering what was in there making no sound when it had been sealed so carefully.";
+		npctalk "Curiosity kills the Doram, they say...";
+		next;
+		mes "[Boatswain]";
+		mes "Gamberi who came there tried to stop me, but I opened the seal. There was nothing in the ^0000cdpot^000000, and nothing happened.";
+		next;
+		mes "[Boatswain]";
+		mes "I threw away the pot and got on Con-Chliina. And it happened that night.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Oh, I guess we are getting into the good part. I really like it.";
+		next;
+		mes "[Boatswain]";
+		mes "Oh the night, I listened to this song. I could hear it anywhere. I could hear is from the creases in my palm, near my ear and the silver waves.";
+		next;
+		mes "[Boatswain]";
+		mes "It felt like I could grab the tune with my hand. When I was walking, following the sound, someone shook me hard. The next thing I noticed was that I was being held by the crews just before jumping off the ship.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Enchanted by the song?";
+		next;
+		mes "[Boatswain]";
+		mes "I thought so. I went to sleep with my ears closed. The strange thing is that it happened again the next day and the day after.";
+		next;
+		mes "[Boatswain]";
+		mes "Every night, I saw a dim silhouette or couldn't fall asleep because of the chattering noise in my ear. When I did fall asleep, I felt this weight on my body and woke up, covered in cold sweats.";
+		next;
+		mes "[Boatswain]";
+		mes "The pot turned out to be a pot in which an evil ghost has been sealed. Gamberi knew it and tried to stop me. However, it was too late. I had already broken the seal. I grew up in the land, and did not know about that at all.";
+		npctalk "People can only see as much as they know.";
+		next;
+		mes "[Boatswain]";
+		mes "I have been suffering from ^0000cdthe supernatural phenomenon^000000 ever since.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You mean whatever in there has cursed you, right?";
+		next;
+		mes "[Boatswain]";
+		mes "Gamberi took me to the Shaman meow to get a counselling, but it didn't work. This evil ghost is too old, strong and possessive to be removed.";
+		next;
+		mes "[Boatswain]";
+		mes "The only thing I could do was to weaken it as much as possible each day.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Is depending on all kinds of superstitions the way to weaken it?";
+		npctalk "Superstitions? No, they are based on pure science.";
+		next;
+		mes "[Boatswain]";
+		mes "No other crews of Con-Chliina, except Captain Gamberi and I, know about this.";
+		next;
+		mes "[Boatswain]";
+		mes "The ^0000cdShaman meow^000000 has told me a riddle that a stranger from a new place will solve this problem. It is not a coincidence that we have met.";
+		next;
+		mes "[Boatswain]";
+		mes "Please go and tell this story to the Shaman meow and bring me the remedy. I'll do anything for you if you get rid of it.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Anything? Is that a promise?";
+		next;
+		mes "[Boatswain]";
+		mes "The Boatswain of Con-Chliina doesn't lie. If you don't trust me, you should trust Gamberi who has hired me as the Boatswain of Con-Chliina.";
+		npctalk "I will never betray Gamberi.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I'll be back soon.";
+		next;
+		mes "[Boatswain]";
+		mes "The Shaman meow lives in a secluded place near the entrance of the village.";
+		setquest 14556;// There also is a scary thing for me
+		close;
+	}
+	if (conch_in_boatswain == 1) {
+		mes "[Boatswain]";
+		mes "Shaman meow is living in a secluded place at the entrance of Lasagna. I hope that a stranger from a new place like you take care of my problem.";
+		close;
+	}
+	if (conch_in_boatswain == 2) {
+		mes "[Boatswain]";
+		mes "Dear adventurer, did you meet Shaman meow?";
+		next;
+		mes "[You told the Boatswain the story you had heard from Shaman meow.]";
+		next;
+		mes "[Boatswain]";
+		mes "What? I should become a Shaman meow? What a nonsense! I am a sailor! I shall die on the sea as a sailor!";
+		npctalk "Hey, you! Keep quiet! don't laugh!";
+		next;
+		mes "[Boatswain]";
+		mes "I'd rather spend the rest of life fighting than living with the ghosts!";
+		npctalk "Yes! You are the ghosts!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Shaman meow is not as bad as you think. Why don't you go get a counseling when you have time.";
+		next;
+		mes "[Boatswain]";
+		mes "I'll just pretend you didn't say that! I don't give a damn about a Shaman meow saying those malicious things!";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "The evil ghost will absorb the life out of you. You won't last many days like this, dear Boatswain.";
+		next;
+		mes "[Boatswain]";
+		mes "What? Wait... That is...";
+		npctalk "That is not good... I won't last?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "You can survive through a day with a ^0000cddaily amulet^000000. I guess you should be closer to the Shaman meow now.";
+		next;
+		mes "[Boatswain]";
+		mes "......";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "And today's amulet is ^0000cd20 Basils and 5 Basilrocks^000000. You can get them from the basilisks.";
+		next;
+		mes "[Boatswain]";
+		mes "Ba... Basilisks... Out of the frying pan into the fire. I don't like to deal with those dirty things.";
+		npctalk "Should I just jump off the deck...?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Well, That's it from me. I should get going...";
+		next;
+		mes "[Boatswain]";
+		mes "Yeah, the stranger taking care of this problem. It must have been our destiny.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Actually, it meant that you would die and the evil ghost would find a new host.";
+		next;
+		mes "[Boatswain]";
+		mes "No, no, never. You cannot get out of this like that. ^0000cdIt must have been our destiny.^000000 It is a fate! You should help me.";
+		npctalk "And you are going to help me.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "...Well, just as I heard from Shaman meow. I was told that the Boatswain would make me do it.";
+		next;
+		mes "[Boatswain]";
+		mes "That Shaman meow sure seems to have the vision. I am a believer now. I believe the amulet is really effective. Please go get me one now. Please.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "OK, I can't help it. Just for today.";
+		erasequest 14557;// Truth is alway harsh
+		setquest 14558;// Dirty Creatures
+		conch_in_boatswain = 3;
+		close;
+	}
+	if (conch_in_boatswain == 3) {
+		if (countitem(25049) < 5 || countitem(22985) < 20) {
+			mes "[Boatswain]";
+			mes "Today's amulet is 20 Basils and 5 Basilrocks! The sun will go down anytime soon!";
+			close;
+		}
+		mes "[" + strcharinfo(0) + "]";
+		mes "Here are the Basil and Basilrock.";
+		next;
+		mes "[Boatswain]";
+		mes "Argh... Give it to me. No, no. Not like that. Just wrap it a little so that no one can see. Right. Like that. Give me all you have.";
+		// npctalk "I can't believe I should keep it with me all day...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "This is difficult.";
+		// npctalk "Hey, you seem suspicious.";
+		// npctalk "No, never mind!";
+		next;
+		mes "[Boatswain]";
+		mes "This... This is...";
+		specialeffect 66;
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What do you think?";
+		next;
+		mes "[Boatswain]";
+		mes "It feels like the black fog neat me is lifting! I don't hear the whispering sound anymore! My head feels so clear in a long time.";
+		next;
+		mes "[Boatswain]";
+		mes "It is unfair that I haven't known about this method so far!";
+		// npctalk "What is unfair?";
+		// npctalk "Nothing! don't you have other things to do?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "It only lasts a day. When it expires, it will be burnt up. I guess you should be close to Shaman meow from now on.";
+		next;
+		mes "[Boatswain]";
+		mes "No, never. I don't intend to be friends with Shaman meow or hunt the basilisks myself.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "What are you going to do then?";
+		next;
+		mes "[Boatswain]";
+		mes "Well, don't I have the ^0000cdnew helper^000000 in front of me?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I knew it!";
+		emotion 6,1;
+		next;
+		mes "[Boatswain]";
+		mes "I will reward you handsomely. However, you haven't been able to solve the problem permanently so I don't have to keep the promise I have made.";
+		// npctalk "You haven't really solved the problem for good.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "This is unfair.";
+		// npctalk "The Boatswain is kind of sleazy.";
+		next;
+		mes "[Boatswain]";
+		mes "I will reward you handsomely. Please do me another favor tomorrow.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "We will see. I'll come back if I want to.";
+		next;
+		mes "[Boatswain]";
+		mes "Oh, you would come. I have a hunch.";
+		// npctalk "My hunch is never wrong.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I am pretty sure that it is the evil ghost talking to you.";
+		next;
+		mes "[Boatswain]";
+		mes "I'll let it slide since you have done me a favor. I'll see you again tomorrow.";
+		erasequest 14558;// Dirty Creatures
+		setquest 14559;// Charm Effect Duration
+		delitem 22985,20;// Basil
+		delitem 25049, countitem(25049);// Basilac Clam
+		conch_in_boatswain = 4;
+		close;
+	}
+	if (conch_in_boatswain == 4) {// todo daily reward ?
+		if (checkquest(14559,PLAYTIME) == 0 || checkquest(14559,PLAYTIME) == 1) {
+			mes "[Boatswain]";
+			mes "You said you would come if you wanted to.";
+			next;
+			mes "[Boatswain]";
+			mes "The amulet is still effective. Go to see Shamanyang after ^0000cd4:00 am^000000 and bring me tomorrow's amulet.";
+			close;
+		}
+		if (isbegin_quest(14562) == 0) {
+			mes "[Boatswain]";
+			mes "You said you would come if you wanted to.";
+			npctalk "You didn't feel comfortable not coming, right?";
+			next;
+			mes "[Boatswain]";
+			mes "However, you shouldn't have come to me. You should have gone to ^0000cdShamanyang^000000 and asked about today's amulet.";
+			next;
+			mes "[Boatswain]";
+			mes "I am counting on you then.";
+			close;
+		}
+		if (countitem(25049) < 5 || countitem(22985) < 20) {
+			mes "[Boatswain]";
+			mes "Did you bring the amulet for today? You seem to be empty-handed. Is there anything wrong?";
+			next;
+			mes "[Boatswain]";
+			mes "Please give it to me now. I feel the power of the amulet fading away now.";
+			close;
+		}
+		mes "[Boatswain]";
+		mes "This is the amulet for today! Give me all the Basilrocks you have.";
+		next;
+		mes "[Boatswain]";
+		mes "It feels like seeing the sunshine through the black fog.";
+		specialeffect 66;
+		next;
+		mes "[Boatswain]";
+		mes "Thank you for getting them for me. Please come back tomorrow.";
+		delitem 22985,20;// Basil
+		delitem 25049,5;// Basilac Clam
+		erasequest 14562;// The basic are the best
+		setquest 14559;// Charm Effect Duration
+		close;
+	}
+}
+
+conch_in,181,58,3	script	Helmsman#dorcon	4_CAT_SAILOR5,{
+	if (lasagna_quest[1] < 16) {
+		mes "[Helmsman]";
+		mes "We can go anywhere if we have the wind and the sail.";
+		close;
+	}
+	if (lasagna_quest[1] == 16) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello, I am " + strcharinfo(0) + " who is on a new adventure this time. Nice to meet you.";
+		next;
+		mes "[Sous Chef]";
+		mes "......";
+		npctalk "You are cold.", "Boatswain#dorcon";
+		npctalk "He probably didn't hear it.";
+		next;
+		mes "[Boatswain]";
+		mes "Oh, you are the newly trained adventurer setting off on an adventure to the new continent. I am fond of an adventurous spirit. I used to travel from a place to another when I was young.";
+		next;
+		mes "[Helmsman]";
+		mes "Exactly when was it? How long ago?";
+		next;
+		mes "[Boatswain]";
+		mes "Not long ago. It feels like it happened just yesterday.";
+		next;
+		mes "[Helmsman]";
+		mes "Yesterday, you were running on the deck in the middle of the night.";
+		next;
+		mes "[Boatswain]";
+		mes "Phew, such nonsense.";
+		next;
+		mes "[Sous Chef]";
+		mes "Hey, I get it. It is too noisy there. You may go now.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes ".......";
+		next;
+		mes "[Boatswain]";
+		mes "The Sous Chef is always on the edge before sailing off. don't take it personally.";
+		npctalk "It doesn't mean that he doesn't like you.";
+		next;
+		mes "[Helmsman]";
+		mes "A mature Doram doesn't hold on to such things. You may go. We are about to set off.";
+		erasequest 14534;// To the kitchen
+		setquest 14535;// To Purser
+		getexp 250,0;
+		lasagna_quest[1] = 17;
+		close;
+	}
+	if (lasagna_quest[1] == 17) {
+		mes "[Helmsman]";
+		mes "The Sous Chef believes that it brings bad luck to have a stranger while cooking. You should go now.";
+		close;
+	}
+	if (lasagna_quest[1] > 17) {
+		mes "[Helmsman]";
+		mes "We can go anywhere if we have the wind and the sail.";
+		close;
+	}
+}
+
+conch_in,179,64,5	script	Cow#dorcon01_bis	4_WHITE_COW,{
+	mes "[Cow]";
+	mes "Moo -";
+	next;
+	mes "[Boatswain]";
+	mes "Take your filthy hand off from her! [Woncow] is sensitive, so no one besides me can touch her!";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "A cow's name is [Woncow]...";
+	next;
+	mes "[Boatswain]";
+	mes "So? What! I won her on a bet. Every time I call her name, it reminds me of that moment of victory. It's beautiful.";
+	npctalk "Moo -";
+	emotion 14;
+	npctalk "Right?", "Boatswain#dorcon";
+	emotion 3;
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "Anyway, why is there a cow on this ship?";
+	next;
+	mes "[Boatswain]";
+	mes "Why? Because we want to drink fresh milk every day!";
+	npctalk "Moo- Moo -";
+	next;
+	mes "[" + strcharinfo(0) + "]";
+	mes "You brought a cow on board for fresh milk?";
+	next;
+	mes "[Helmsman]";
+	mes "The boatswain can't leave her side for a second because she's his goddess of fortune. Lucky for us, we can have kaluna milk every day.";
+	npctalk "Who would've imagined that we can have kaluna milk on a ship every day?", "Helmsman#dorcon";
+	next;
+	mes "[Boatswain]";
+	mes "Hey! Keep talking and you'll jinx it!";
+	npctalk "Moo --------";
+	npctalk "No, no - that person won't hurt you-", "Boatswain#dorcon";
+	close;
+}
+
+conch_in,189,63,3	script	Head Chef#dorcon	4_DR_TORTEL,{
+	emotion 45;
+	mes "[Head Chef]";
+	mes "*Snore*";
+	npctalk "*Snore*";
+	close;
+}
+
+// inaccurate
+conch_in,186,57,3	script	Sous Chef#dorcon	4_CAT_CHEF,{
+	if (lasagna_quest[1] < 16) {
+		mes "[Sous Chef]";
+		mes "It is going to be the time to eat soon. I should hurry up.";
+		close;
+	}
+	if (lasagna_quest[1] == 16) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello, I am " + strcharinfo(0) + " who is on a new adventure this time. Nice to meet you.";
+		next;
+		mes "[Sous Chef]";
+		mes "......";
+		npctalk "You are cold.", "Boatswain#dorcon";
+		npctalk "He probably didn't hear it.", "Helmsman#dorcon";
+		next;
+		mes "[Boatswain]";
+		mes "Oh, you are the newly trained adventurer setting off on an adventure to the new continent. I am fond of an adventurous spirit. I used to travel from a place to another when I was young.";
+		next;
+		mes "[Helmsman]";
+		mes "Exactly when was it? How long ago?";
+		next;
+		mes "[Boatswain]";
+		mes "Not long ago. It feels like it happened just yesterday.";
+		next;
+		mes "[Helmsman]";
+		mes "Yesterday, you were running on the deck in the middle of the night.";
+		next;
+		mes "[Boatswain]";
+		mes "Phew, such nonsense.";
+		next;
+		mes "[Sous Chef]";
+		mes "Hey, I get it. It is too noisy there. You may go now.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes ".......";
+		next;
+		mes "[Boatswain]";
+		mes "The Sous Chef is always on the edge before sailing off. don't take it personally.";
+		npctalk "It doesn't mean that he doesn't like you.", "Helmsman#dorcon";
+		next;
+		mes "[Helmsman]";
+		mes "A mature Doram doesn't hold on to such things. You may go. We are about to set off.";
+		erasequest 14534;// To the kitchen
+		setquest 14535;// To Purser
+		getexp 250,0;
+		lasagna_quest[1] = 17;
+		close;
+	}
+	if (lasagna_quest[1] == 17) {
+		mes "[Sous Chef]";
+		mes "Ask the Purser when the sailing sign will be issued. Depending on the time, we need to either change the ingredients or replenish them.";
+		close;
+	}
+	if (lasagna_quest[1] == 18) {
+		mes "[" + strcharinfo(0) + "]";
+		mes "Dear Sous Chef.";
+		next;
+		mes "[Sous Chef]";
+		mes "Keep it short. I am busy.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I mean, ^0000cdhere comes the newbie!^000000";
+		emotion 23,0,"Boatswain#dorcon";
+		emotion 23,0,"Helmsman#dorcon";
+		next;
+		mes "[Sous Chef]";
+		mes "What are you doing? Is it a new way to get yourself killed? I am not afraid of challenges. Draw your weapon.";
+		npctalk "Did you hear what I heard?", "Boatswain#dorcon";
+		npctalk "Yes, I did. The kids these days...They sure are reckless...", "Helmsman#dorcon";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "I don't mean.... I don't mean... That...";
+		next;
+		mes "[Sous Chef]";
+		mes "You tiny rat! Now tell me. I don't think a rookie like you would come up with this on your own. Who sent you here?";
+		npctalk "There is a puppet master for this!", "Boatswain#dorcon";
+		npctalk "How did the Sous Chef figure it out?", "Helmsman#dorcon";
+		npctalk "Wait, that guy is holding...", "Boatswain#dorcon";
+		next;
+		mes "[Helmsman]";
+		mes "Sous Chef! I think this guy's telling the truth. It is ordered by you, right?";
+		next;
+		mes "[Sous Chef]";
+		mes "^0000cdKahlugnag^000000? That Eggring! He made this newbie do this and pull off a prank! Hey, I am sorry. Please accept my apology.";
+		npctalk "You need to apologize quickly and neatly.", "Boatswain#dorcon";
+		npctalk "That's what a gentleman does.", "Helmsman#dorcon";
+		next;
+		mes "[Sous Chef]";
+		mes "I'll make sure to tell him to say sorry to you. He is such a trouble. He will always be nothing but a sailor boy.";
+		npctalk "Eggling may rest in peace.", "Boatswain#dorcon";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "No, never mind.";
+		next;
+		mes "[Sous Chef]";
+		mes "Do you like ^0000cdfood^000000 ?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Yes! I do!";
+		next;
+		mes "[Sous Chef]";
+		mes "I mean making it, not eating it.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Eh, I have never tried it, but I believe I would like it.";
+		next;
+		mes "[Sous Chef]";
+		mes "When you come back later, ^0000cdI'll teach you how to cook^000000. It is my way of saying sorry. Well, you may go now.";
+		npctalk "Teaching how to cook? What on earth!", "Boatswain#dorcon";
+		next;
+		mes "[Boatswain]";
+		mes "Hey newbie! Ask the Purser when we will be sailing off on your way. I think something has gone wrong since there is no sign so far.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "OK, I will!";
+		delitem 25047,1;// Kahlunac
+		erasequest 14536;// Delivery to Chef
+		setquest 14537;// When do we take off?
+		getexp 250,375;
+		lasagna_quest[1] = 19;
+		close;
+	}
+	if (lasagna_quest[1] < 29) {
+		mes "[Sous Chef]";
+		mes "It is going to be the time to eat soon. I should hurry up.";
+		close;
+	}
+	if (lasagna_quest[1] == 29 && isbegin_quest(14536) == 0) {
+		mes "[Sous Chef]";
+		mes "Are you here to learn how to cook?";
+		next;
+		if (select( "Yes!", "No." ) == 2) {
+			mes "[Sous Chef]";
+			mes "If you want to learn how to cook, come to see me anytime.";
+			close;
+		}
+		if (BaseLevel > 30) {// todo
+			mes "[Sous Chef]";
+			mes "You don't seem to be a novice anymore. I cannot teach you any further since I am too busy. If you want to explore the world of cooking more, you should find someone else.";
+			next;
+			mes "[Sous Chef]";
+			mes "I have heard that there is someone who teaches how to cook in the palace of the new continent. It would be a good idea to check out.";
+			for ( .@quest_id = 14154; .@quest_id < 14157; .@quest_id++ ) {
+				if (isbegin_quest(.@quest_id) > 0)
+					erasequest .@quest_id;
+			}
+			setquest 14536;// Delivery to Chef
+			completequest 14536;// Delivery to Chef
+			close;
+		}
+		if (sous_chef_quest == 0) {
+			mes "[Sous Chef]";
+			mes "Good food can ^0000cdraise a certain status^000000 and ^0000cdrecover HP^000000. There is no reason not to cook and eat.";
+			next;
+			mes "[Sous Chef]";
+			mes "There are two main functions of cooking.";
+			next;
+			emotion 0;
+			mes "[Sous Chef]";
+			mes "Firstly, it ^0000cdenhances status^000000.";
+			next;
+			mes "[Sous Chef]";
+			mes "There are six types of cooking. Each enhances ^0000cdStr, Agi, Vit, Int, Dex or Luk^000000. The amount of status enhancement depends on the level of cooking.";
+			next;
+			emotion 0;
+			mes "[Sous Chef]";
+			mes "Secondly, it ^0000cdrecovers HP and SP^000000. The amount of recovery also depends on the level of cooking, and some food only recovers HP.";
+			next;
+			mes "[Sous Chef]";
+			mes "In order to cook such dishes, you need to make some preparation.";
+			next;
+			mes "[Sous Chef]";
+			mes "There are two steps for the preparation.";
+			next;
+			emotion 0;
+			mes "[Sous Chef]";
+			mes "First! You need a ^0000cdCookbook^000000.";
+			next;
+			mes "[Sous Chef]";
+			mes "You need a Cookbook to learn how to prepare the ingredients and cook. You can get this Cookbook from a ^0000cdquest^000000 or a ^0000cdmonster^000000.";
+			next;
+			emotion 0;
+			mes "[Sous Chef]";
+			mes "Once you get a Cookbook, you need to collect the ^0000cdingredients^000000. It doesn't help to lick the pages if the Cookbook without preparing the ingredients. Even the eggrings know better than that.";
+			next;
+			mes "[Sous Chef]";
+			mes "You can get the ingredients from the ^0000cdmonsters^000000 or the ^0000cdIngredient Merchants^000000. Although it takes quite a preparation to cook, the effectiveness is worth it.";
+			next;
+			mes "[Sous Chef]";
+			mes "Oh, by the way, you need to know that ^0000cdcooking may fail^000000. The chance of failure depends on the cooking utensils you have and the level of your cooking.";
+			next;
+			mes "[Sous Chef]";
+			mes "Well then, Let's start cooking. Talk to me again when you are ready!";
+			sous_chef_quest = 1;
+			close;
+		}
+		if (sous_chef_quest == 1) {
+			for ( .@i = 14154; .@i < 14158; .@i++ ) {
+				if (isbegin_quest(.@i) == 1) {
+					.@quest_id = .@i;
+					break;
+				}
+			}
+			if (.@quest_id > 0) {
+				mes "[Sous Chef]";
+				mes "Let's see. Did you bring all the ingredients?";
+				next;
+				mes "[Sous Chef]";
+				switch( .@quest_id ) {
+				case 14154:
+					callsub( S_Check, 705,1, 511,1, 507,1 );
+					mes "Go hunting after eating this. You won't believe the newfound power in you.";
+					next;
+					delitem 705,1;// Clover
+					delitem 511,1;// Green Herb
+					delitem 507,1;// Red Herb
+					getitem 11551,1;// Savory Herb Salad (Str+1)
+					erasequest 14154;// Fragrant herb mix
+					close;
+				case 14155:
+					callsub( S_Check, 512,1, 515,2 );
+					mes "If you eat this, you can move much faster than others. Even faster than a hummingbird flapping its wings.";
+					delitem 512,1;// Apple
+					delitem 515,2;// Carrot
+					getitem 11552,1;// Apple Carrot Salad (Agi+1)
+					erasequest 14155;// Crunchy salad
+					close;
+				case 14156:
+					callsub( S_Check, 949,1, 909,1, 914,1 );
+					mes "don't you feel the mysterious power pumping through your vessels already? You cannot resist it!";
+					delitem 949,1;// Feather
+					delitem 909,1;// Jellopy
+					delitem 914,1;// Fluff
+					getitem 11553,1;// Casual Stew (Vit+1)
+					erasequest 14156;// Anything shabushabu
+					close;
+				case 14157:
+					callsub( S_Check, 705,1, 512,1 );
+					mes "You will become more skillful when you have a bite of this.";
+					next;
+					delitem 705,1;// Clover
+					delitem 512,1;// Apple
+					getitem 11554,1;// Golden Roasted Apple (Dex+1)
+					erasequest 14157;// Baked golden apple
+					close;
+				}
+			}
+			mes "[Sous Chef]";
+			mes "Are you ready? Action speaks louder than words! Let's start cooking!";
+			next;
+			mes "[Sous Chef]";
+			mes "Actually, you need the recipe and the cooking utensils, but it could be too complicated for a novice. I'll make one for you this time. We shouldn't waste the ingredients, you know.";
+			next;
+			mes "[Sous Chef]";
+			mes "Since it is a trial version for novice, it has the same effect as level 1 food, but ^0000cdit doesn't last as long.^000000";
+			next;
+			mes "[Sous Chef]";
+			mes "What kind of food do you like to eat? Since Int or Luk dishes won't do much good for you, you can make four kinds of dishes for now.";
+			next;
+			switch( select( "Fragrant Seasoned Herbs", "Crunchy Salad", "Mixed Stew", "Baked Gold Apple" ) ) {
+			case 1:
+				mes "[Sous Chef]";
+				mes "^0000cdFragrant Seasoned Herbs^000000. It enhances ^0000cdStr^000000. The people who use a lot of physical strength eat this.";
+				next;
+				mes "[Sous Chef]";
+				mes "The ingredients are ^0000cd1 Clover, 1 Green Herb and 1 Red Herb^000000.";
+				next;
+				cutin "루나틱카드.bmp",3;
+				mes "[Sous Chef]";
+				mes "You can get Clovers and Red Herbs from Leaf Lunatic or Grass Fabre in the field outside.";
+				next;
+				cutin "파브르카드.bmp",3;
+				mes "[Sous Chef]";
+				mes "You can get Green Herbs from Grass Fabre.";
+				next;
+				cutin "",255;
+				mes "[Sous Chef]";
+				mes "If you bring all the ingredients, we can cook. Hurry up.";
+				setquest 14154;// Fragrant herb mix
+				close;
+			case 2:
+				mes "[Sous Chef]";
+				mes "The^0000cd Crunchy Salad^000000! I really like this dish. You have a good taste.";
+				next;
+				mes "[Sous Chef]";
+				mes "The Crunchy Salad enhances ^0000cdAgi^000000. The people who wants to attack faster or who doesn't want to get hit tend to eat it.";
+				next;
+				mes "[Sous Chef]";
+				mes "The ingredients are ^0000cd1 Apple and 2 Carrots^000000.";
+				next;
+				cutin "에그링카드.bmp",3;
+				mes "[Sous Chef]";
+				mes "You can get Apples from the Eggring jumping in the outer field of Izlude.";
+				next;
+				cutin "리프루나틱카드.bmp",3;
+				mes "[Sous Chef]";
+				mes "You can get the Carrots from Leaf Lunatic.";
+				next;
+				cutin "",255;
+				mes "[Sous Chef]";
+				mes "If you bring all the ingredients, we can cook!";
+				setquest 14155;// Crunchy salad
+				close;
+			case 3:
+				mes "[Sous Chef]";
+				mes "The ^0000cd Mixed Stew.^000000 It enhances ^0000cdVit^000000. It really fills you up so you don't feel mush pain even when you are hit by the monster.";
+				next;
+				mes "[Sous Chef]";
+				mes "The ingredients are ^0000cd1 Jellopy , 1 Fluff, and 1 Feather^000000.";
+				next;
+				cutin "에그링카드.bmp",3;
+				mes "[Sous Chef]";
+				mes "You can get Jellopies from the Eggring jumping in the outer field.";
+				next;
+				cutin "그래스파브르카드.bmp",3;
+				mes "[Sous Chef]";
+				mes "You can get Fluffs from Grass Fabre or Leaf Lunatic.";
+				next;
+				cutin "리프루나틱카드.bmp",3;
+				mes "[Sous Chef]";
+				mes "You can get Feathers from Grass Fabre or Leaf Lunatic.";
+				next;
+				cutin "",255;
+				mes "[Sous Chef]";
+				mes "If you bring all the ingredients, we can cook. Hurry up.";
+				setquest 14156;// Anything shabushabu
+				close;
+			case 4:
+				mes "[Sous Chef]";
+				mes "The ^0000cdBaked Gold Apple^000000. It is hard to resist the golden hue on its surface.";
+				next;
+				mes "[Sous Chef]";
+				mes "It enhances ^0000cdDex^000000. The ones who'd like to raise the Hit tend to eat this.";
+				next;
+				mes "[Sous Chef]";
+				mes "The ingredients are ^0000cd1 Apple and 1 Clover^000000.";
+				next;
+				cutin "에그링카드.bmp",3;
+				mes "[Sous Chef]";
+				mes "You can get Apples from the Eggring in the outer field.";
+				next;
+				cutin "그래스파브르카드.bmp",3;
+				mes "[Sous Chef]";
+				mes "You can get Clovers from Grass Fabre or Leaf Lunatic.";
+				next;
+				cutin "",255;
+				mes "[Sous Chef]";
+				mes "If you bring all the ingredients, we can cook. Hurry up.";
+				setquest 14157;// Baked golden apple
+				close;
+			}
+		}
+	}
+	if (BaseLevel < 140) {// todo
+		mes "[Sous Chef]";
+		mes "I need someone to ask a favor. You don't seem experienced enough.";
+		close;
+	}
+	// daily quest ? or chain quest ?
+	if (isbegin_quest(14555) == 0) {// humain
+		mes "[Sous Chef]";
+		mes "I told you not to enter the kitchen like that... Oh... Are you from the new continent?";
+		npctalk "The new continent! The new continent!", "Head Chef#dorcon";
+		next;
+		mes "[Sous Chef]";
+		mes "I see you around often these days. You look so strange. The face without any whiskers and the butt with no tail.";
+		npctalk "It is not polite to discuss the looks in front of the person!", "Boatswain#dorcon";
+		npctalk "Bad manners!", "Helmsman#dorcon";
+		next;
+		mes "[Sous Chef]";
+		mes "Please excuse me. I am the Sous Chef in charge of this kitchen.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hello. I am " + strcharinfo(0) + ".";
+		next;
+		mes "[Sous Chef]";
+		mes "Your name is strange too.";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "How about the Head Chef? Why is the Sous Chef in charge of the kitchen?";
+		npctalk "Oh, you shouldn't have said that!", "Boatswain#dorcon";
+		npctalk "It starts again. The long story.", "Helmsman#dorcon";
+		next;
+		mes "[Sous Chef]";
+		mes "Look over there. The man sleeping on the floor who seems so far from being a gentleman. ^0000cdHe is our Head Chef^000000. The captain has always said how we have to do our best at what we do. But no use.";
+		emotion 45,0,"Head Chef#dorcon";
+		npctalk "*Snore*","Head Chef#dorcon";
+		next;
+		mes "[Sous Chef]";
+		mes "Do you know what is the most important thing in cooking? It is the endless passion and pursuit of the best taste. Nevertheless, our Head Chef has no interest in such things.";
+		npctalk "Taste, it is very important.", "Head Chef#dorcon";
+		next;
+		mes "[Sous Chef]";
+		mes "However, he is very good at making enough servings to feed a number of people in a short time. That is why he has become the Head Chef. But when people started complaining about the taste, I was called in.";
+		npctalk "I didn't mind the stuff cooked by the Head Chef.", "Boatswain#dorcon";
+		npctalk "There is something wrong with your tongue.", "Helmsman#dorcon";
+		next;
+		mes "[Sous Chef]";
+		mes "Ever since, the Head Chef entrusted me with everything.";
+		next;
+		mes "[Sous Chef]";
+		mes "I believe the people of the new continent eat different food from us. What do the people find delicious in the new continent?";
+		next;
+		mes "[Sous Chef]";
+		mes "I'd like to go out there and taste each dish. However, if I do, the crews of this ship will starve to death.";
+		npctalk "If you want to go, you should take me with you.", "Head Chef#dorcon";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hum, there are many kinds of food. We also hunt the ingredients and cook. There are many things for sure...";
+		next;
+		mes "[Sous Chef]";
+		mes "I happen to have a ^0000cdCookbook of the new continent^000000. Do you have any of the ingredients for the food now?";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Not really...";
+		next;
+		mes "[Sous Chef]";
+		mes "Well, then let me ask you a favor. Please bring me some of the ingredients in this ^0000cdCookbook^000000. This thing called ^0000cdMastela Fruit Wine^000000... I am curious about this, but it requires some ingredients which are not found here.";
+		next;
+		mes "[Sous Chef]";
+		mes "And please get me some ^0000cdCat Hardtacks made by the Head Chef of Navi^000000 as well. I have heard that it doesn't taste good, but it is nutritious and easy to store.";
+		next;
+		mes "[Sous Chef]";
+		mes "Please bring me ^0000cd4 Mastela Fruit and 1 Cat Hardtack^000000.";
+		next;
+		mes "[Sous Chef]";
+		mes "If you bring them to me, I'll reward you handsomely.";
+		npctalk "I am excited too. New food.", "Boatswain#dorcon";
+		npctalk "don't you just need food to fill your stomach?", "Helmsman#dorcon";
+		next;
+		mes "[Sous Chef]";
+		mes "Well then. I am counting on you.";
+		setquest 14555;// Whole new world of taste
+		close;
+	}
+	if (isbegin_quest(14555) == 1) {
+		if (countitem(522) < 4 || countitem(11536) < 1) {
+			mes "[Sous Chef]";
+			mes "What happened to the favor I asked you. 4 Mastela Fruit and 1 Cat Hardtacks.";
+			close;
+		}
+		mes "[Sous Chef]";
+		mes "You have brought them so fast. I can challenge making new cuisines with these. My heart is pounding so hard.";
+		next;
+		mes "[Sous Chef]";
+		mes "May I ask more favors next time? You know, the ingredients.";
+		npctalk "Exploitation alert!", "Boatswain#dorcon";
+		npctalk "He is so smooth at asking for more favors!", "Helmsman#dorcon";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Let me drop by when I get time.";
+		next;
+		mes "[Sous Chef]";
+		mes "Thank you.";
+		completequest 14555;// Whole new world of taste
+		setquest 14563;// Free time
+		delitem 522,4;// Mastela Fruit
+		delitem 11536,1;// Cat's Ship Biscuit
+		close;
+	}
+	switch( checkquest(14563,PLAYTIME) ) {
+	case -1:
+		if (isbegin_quest(14565) == 0) {
+			if (countitem(11536) < 5 || countitem(12636) < 5) {
+				mes "[Sous Chef]";
+				mes "It hasn't been long since you left. Have you got them already? Or have you forgotten what I have asked you for?";
+				next;
+				mes "[Sous Chef]";
+				mes "Bring ^0000cd5 Cat Hardtacks and 5 Malangdo Canned Food^000000. Please hurry up.";
+				close;
+			}
+			mes "[Sous Chef]";
+			mes "Cat Hardtack and Malangdo Canned Food... Well, they will last long enough.";
+			npctalk "I can feed them to my grandchildren.", "Boatswain#dorcon";
+			npctalk "If you get to have any.", "Helmsman#dorcon";
+			next;
+			mes "[Sous Chef]";
+			mes "Thank you form getting them for me. Now Con-Chliina can come up with our own ways to store food for a long time.";
+			delitem 11536,5;// Cat's Ship Biscuit
+			delitem 12636,5;// Malang Sp Can
+			completequest 14565;// Emergency food supplies
+			setquest 14563;// Free time
+			close;
+		}
+		if (isbegin_quest(14566) == 0) {
+			if (countitem(7066) < 20) {
+				mes "[Sous Chef]";
+				mes "It hasn't been long since you left. Have you got them already? Or have you forgotten what I have asked you for?";
+				next;
+				mes "[Sous Chef]";
+				mes "You should bring ^0000cd20 ice cubes^000000. It is to keep the stored food fresh. Please hurry up.";
+				close;
+			}
+			mes "[Sous Chef]";
+			mes "The ice cubes. I am just so excited to see them. The ice cubes that don't melt! It sure is the new continent.";
+			npctalk "Cold Kahlugna Milk is the best.";
+			npctalk "Fresh milk anytime!";
+			next;
+			mes "[Sous Chef]";
+			mes "Thank you for bringing them to me. Thanks to you, the crews of Con-Chliina can have some fresh food.";
+			delitem 7066,20;// Ice Cubic
+			completequest 14566;// Brilliant idea
+			setquest 14563;// Free time
+			close;
+		}
+		if (isbegin_quest(14564) == 0) {
+			if (countitem(553) < 20) {
+				mes "[Sous Chef]";
+				mes "It hasn't been long since you left. Have you got them already? Or have you forgotten what I have asked you for?";
+				next;
+				mes "[Sous Chef]";
+				mes "^0000cd20 Buns^000000. In order to keep them fresh, you should hurry up.";
+				close;
+			}
+			mes "[Sous Chef]";
+			mes "Oh, this is the Bun... It sure is hot and huge. This is totally different from that of our side.";
+			npctalk "Give me one. Even one of them would be enough to keep me full all day.";
+			npctalk "Yeah, right.";
+			next;
+			mes "[Sous Chef]";
+			mes "Thank you for bringing them to me. Thanks to you, the food of Lasagna can take another step forward.";
+			delitem 553,20;// Bao
+			completequest 14564;// I love buns, too
+			setquest 14563;// Free time
+			close;
+		}
+		end;
+	case 0:
+	case 1:
+		mes "[Sous Chef]";
+		mes "What brought you here? Is it about the favor yesterday?";
+		next;
+		mes "[Sous Chef]";
+		mes "Since I am on duty, I cannot proceed with any personal study of cooking. Come back after the break of day.";
+		npctalk "What is the reason to be so impetuous when you are so young.", "Boatswain#dorcon";
+		npctalk "Impetuous because of youth.", "Helmsman#dorcon";
+		npctalk "All the rush doesn't help when it comes to cooking.";
+		close;
+	case 2:
+		mes "[Sous Chef]";
+		mes "Just in time. I just have a moment to spare and I'd like to keep working on my study of the cuisine in the new continent. Would you get some ingredients for me?";
+		next;
+		mes "[Sous Chef]";
+		if (isbegin_quest(14565) == 0) {
+			mes "What I need to day are the ^0000cdCat Hardtack and Malangdo Canned Food^000000. I am curious how the crews of Navi survived through such a long voyage.";
+			npctalk "It sounds cute, but it doesn't sound quite delicious.", "Boatswain#dorcon";
+			npctalk "But you'll still eat them, right?", "Helmsman#dorcon";
+			npctalk "Yes.", "Boatswain#dorcon";
+			next;
+			mes "[Sous Chef]";
+			mes "I'd like to know how they are made. Please bring me some. ^0000cd5 Cat Hardtacks and 5 Malangdo Canned Food^000000 would do.";
+			erasequest 14563;// Free time
+			setquest 14565;// Emergency food supplies
+			close;
+		}
+		if (isbegin_quest(14566) == 0) {
+			mes "I need ^0000cdIce Cubes^000000 today. I have heard that the Ice Cubes from this one cave doesn't melt even in the middle of summer.";
+			npctalk "What on earth! Why doesn't it melt?";
+			npctalk "Beats me. The world is full of mysteries.";
+			next;
+			mes "[Sous Chef]";
+			mes "If we had those, we could keep food fresh and drink cold Kahlugna Milk anytime. ^0000cd20 Ice Cubes^000000 would do, Thank you.";
+			erasequest 14563;// Free time
+			setquest 14566;// Brilliant idea
+			close;
+		}
+		if (isbegin_quest(14564) == 0) {
+			mes "What I need to day is the ^0000cdBun^000000. We have something similar in Lasagna, but the recipe is totally different.";
+			npctalk "The Bun sounds super delicious.";
+			npctalk "Is there anything that doesn't sound delicious to you?";
+			next;
+			mes "[Sous Chef]";
+			mes "I'd like to know how it is made. Please bring me some. ^0000cd20 Buns^000000 would do.";
+			erasequest 14563;// Free time
+			setquest 14564;// I love buns, too
+			close;
+		}
+		end;
+	}
+
+S_Check:
+	.@arg_count = getargcount();
+	for ( .@i = 0; .@i < .@arg_count; .@i += 2 ) {
+		if ((.@i+2) >= .@arg_count)
+			.@tmp$ = "";
+		else if ((.@i+4) >= .@arg_count)
+			.@tmp$ = " and ";
+		else
+			.@tmp$ = ", ";
+		.@string$ = .@string$ + getarg(.@i+1) + " " + getitemname( getarg(.@i) ) + .@tmp$;
+		.@countitem = .@countitem || ( countitem(getarg(.@i)) < getarg(.@i+1) );
+	}
+	if (.@countitem == 1) {
+		mes "What do you expect me to do without the ingredients?";
+		next;
+		mes "[Sous Chef]";
+		mes "Bring me " + .@string$ + " now!";
+		close;
+	}
+	emotion 52;
+	mes "Oh, you have brought them all! Let me cook them for you right away.";
+	next;
+	mes "[Sous Chef]";
+	return;
+}

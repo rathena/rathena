@@ -1,0 +1,121 @@
+lasa_fild02,348,244,0	warp	lasa_fild02#lasa_dun01	1,1,lasa_dun01,24,143
+lasa_dun01,18,143,0	warp	lasa_dun01#lasa_fild02	1,1,lasa_fild02,344,243
+
+lasa_dun_q,190,14,0	warp	lasa_dun_q#lasa_dun01	1,1,lasa_dun01,152,98
+lasa_dun01,157,98,0	warp	lasa_dun01#lasa_dun02	1,1,lasa_dun02,22,171
+lasa_dun02,18,171,0	warp	lasa_dun02#lasa_dun01	1,1,lasa_dun01,153,98
+
+lasa_dun02,146,58,0	warp	lasa_dun02#lasa_dun03	1,1,lasa_dun03,190,18
+lasa_dun03,190,15,0	warp	lasa_dun03#lasa_dun02	1,1,lasa_dun02,146,54
+
+lasa_fild01,134,381,0	warp	lasa_fild01#lasagna_1	2,2,lasagna,153,58
+lasagna,150,54,0	warp	lasagna#lasa_fild01_1	2,2,lasa_fild01,131,378
+
+lasa_fild01,341,375,0	warp	lasa_fild01#lasagna_2	2,2,lasagna,327,56
+lasagna,327,51,0	warp	lasagna#lasa_fild01_2	2,2,lasa_fild01,344,371
+
+lasagna,358,91,0	warp	lasagna#lasa_fild02	2,2,lasa_fild01,20,98
+lasa_fild02,16,98,0	warp	lasa_fild02#lasagna	2,2,lasagna,355,92
+
+// Boat
+conch_in,60,61,0	script	warp_conch_in#out	WARPNPC,1,1,{
+OnTouch:
+	warp "lasagna",206,323;
+	end;
+}
+
+conch_in,51,60,0	script	warp_conch_in#A_B	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",31,60;
+	end;
+}
+
+conch_in,34,60,0	script	warp_conch_in#B_A	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",53,59;
+	end;
+}
+
+conch_in,63,53,0	script	warp_conch_in#C_D	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",63,33;
+	end;
+}
+
+conch_in,63,35,0	script	warp_conch_in#D_C	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",64,55;
+	end;
+}
+
+conch_in,64,66,0	script	warp_conch_in#E_F	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",63,89;
+	end;
+}
+
+conch_in,63,87,0	script	warp_conch_in#F_E	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",63,64;
+	end;
+}
+
+conch_in,101,53,0	script	warp_conch_in#G_H	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",101,33;
+	end;
+}
+
+conch_in,101,35,0	script	warp_conch_in#H_G	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",102,55;
+	end;
+}
+
+conch_in,101,66,0	script	warp_conch_in#I_J	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",101,89;
+	end;
+}
+
+conch_in,102,87,0	script	warp_conch_in#J_I	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",101,64;
+	end;
+}
+
+conch_in,137,53,0	script	warp_conch_in#K_L	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",139,33;
+	end;
+}
+
+conch_in,139,35,0	script	warp_conch_in#L_K	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",138,55;
+	end;
+}
+
+conch_in,137,66,0	script	warp_conch_in#M_N	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",139,89;
+	end;
+}
+
+conch_in,140,87,0	script	warp_conch_in#N_M	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",137,64;
+	end;
+}
+
+conch_in,142,60,0	script	warp_conch_in#O_P	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",162,61;
+	end;
+}
+
+conch_in,159,61,0	script	warp_conch_in#P_O	WARPNPC,1,1,{
+OnTouch:
+	warp "conch_in",140,59;
+	end;
+}
