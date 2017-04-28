@@ -157,3 +157,8 @@ Thumbs.db
 /mapserv.bat
 /runserver.bat
 /serv.bat
+
+# dlls
+/libmysql.dll
+/pcre8.dll
+/zlib.dll
