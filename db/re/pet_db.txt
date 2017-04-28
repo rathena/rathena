@@ -50,7 +50,7 @@
 1023,ORK_WARRIOR,Orc Warrior,635,9017,10009,537,80,60,20,100,250,20,500,150,1,0,600,200,300,{ petskillattack2 "NPC_PIERCINGATT",100,1,0,10; },{ bonus bAtk,10; bonus bDef,-3; }
 1026,MUNAK,Munak,636,9018,10008,537,80,60,20,100,250,20,500,150,0,0,300,750,300,{ petskillattack2 "NPC_DARKNESSATTACK",444,1,0,10; },{ bonus bInt,1; bonus bDef,1; }
 1110,DOKEBI,Dokebi,637,9019,10005,537,80,60,20,100,250,20,500,150,0,0,300,300,800,{ petskillattack "BS_HAMMERFALL",1,0,10; },{ bonus bMatkRate,1; bonus bAtkRate,-1; }
-1170,SOHEE,Sohee,638,9020,10016,537,80,60,10,100,250,20,500,150,0,0,100,1000,200,{ petheal 400,60,33,100; },{ bonus bStr,1; bonus bDex,1; }
+1170,SOHEE,Sohee,638,9020,10016,537,80,60,10,100,250,20,500,150,0,0,100,1000,200,{ petskillsupport "AL_HEAL",5,60,33,100; },{ bonus bStr,1; bonus bDex,1; }
 1029,ISIS,Isis,639,9021,10006,537,80,60,10,100,250,20,500,150,0,0,650,450,150,{ petskillsupport "PR_MAGNIFICAT",2,60,50,50; },{ bonus bMatkRate,-1; bonus bAtkRate,1; }
 1155,PETIT,Petite,640,9022,10011,537,80,60,20,100,250,20,500,150,0,0,800,400,100,{ petskillattack2 "WZ_HEAVENDRIVE",500,1,0,10; },{ bonus bDef,-2; bonus bMdef,-2; bonus bAspdRate,1; }
 1109,DEVIRUCHI,Deviruchi,641,9023,10004,711,80,60,10,100,250,20,500,150,0,0,800,200,100,{ petskillbonus bAgiDexStr,6,20,40; },{ bonus bMatkRate,1; bonus bAtkRate,1; bonus bMaxHPrate,-3; bonus bMaxSPrate,-3; }

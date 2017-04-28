@@ -142,7 +142,7 @@ payon,249,156,1	script	Woman#payon	66,{
 	mes " To be honest, things are getting tough because of all those monsters. ^666666*Sigh...*^000000";
 	next;
 	mes "[Woman]";
-	if (Sex == 1)
+	if (Sex == SEX_MALE)
 		mes "Whoa~! I just noticed those arms of yours look pretty solid. You look pretty strong, guy. Just how many monsters have you killed?!";
 	else
 		mes "Oooh! I didn't notice before, but you look pretty strong beneath all of that feminine charm.";
@@ -191,7 +191,7 @@ payon,246,158,5	script	Woman#2payon	66,0,0,{
 	mes "of the people living in Payon by her behavior. She's the only loudmouth. I guess she's just too excited about what the fortune teller told her.";
 	next;
 	mes "[Jim's Mother]";
-	if (Sex == 1) {
+	if (Sex == SEX_MALE) {
 		mes "Ooh...!";
 		mes "You've got";
 		mes "such broad shoulders!";
@@ -387,7 +387,7 @@ payon_in01,180,7,2	script	Waitress#payon	90,{
 	mes "And lonely...";
 	next;
 	mes "[Pub Lady]";
-	if (Sex == 1)
+	if (Sex == SEX_MALE)
 		mes "Where I can find the right person, a hot and Sexy hunk who can take me away from here? Um, hey mister, are you listening?";
 	else {
 		mes "Where I can find the right person, a cute, yet hard-bodied hunk who can take me away from here?";

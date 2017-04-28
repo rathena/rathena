@@ -81,7 +81,7 @@ lighthalzen,267,200,3	script	Guard#lhz01	868,{
 		set $@Lhz_Gangster_Alert, 100;
 		close;
 	}
-	if (gettime(3) >= 22 || gettime(3) < 2) {
+	if (gettime(DT_HOUR) >= 22 || gettime(DT_HOUR) < 2) {
 		mes "[Guard]";
 		mes "Zzzz... Zzz...";
 		mes "ZZZzzzzzzzzzz...";
@@ -148,7 +148,7 @@ lighthalzen,294,223,7	script	Guard#lhz02	868,{
 		set $@Lhz_Gangster_Alert, 100;
 		close;
 	}
-	if (gettime(3) >= 22 || gettime(3) < 2) {
+	if (gettime(DT_HOUR) >= 22 || gettime(DT_HOUR) < 2) {
 		mes "[Guard]";
 		mes "Zzzz... Zzz...";
 		mes "ZZZzzzzzzzzzz...";
@@ -1095,7 +1095,7 @@ lhz_cube,234,200,0	script	Desk#cube	111,{
 			mes "the clutter on the desk";
 			mes "proves to be useless to you.^000000";
 			next;
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "^3355FFAn issue of the";
 				mes "Dancer magazine,";
 				mes "''Harmonic Lick'' catches";
@@ -5585,7 +5585,7 @@ lhz_in01,273,121,1	script	Mad Scientist#li	865,{
 			while (1) {
 				switch(select("Ask about hobbies:Ask about work")) {
 				case 1:
-					if (Sex == 1) {
+					if (Sex == SEX_MALE) {
 						mes "[Wolfchev]";
 						mes "Hyuu~ I think you're";
 						mes "just a little too innocent";
@@ -6688,7 +6688,7 @@ lighthalzen,179,170,4	script	Ordinary Man	98,{
 		next;
 		mes "[??????]";
 		mes "^666666Now...^000000";
-		if(Sex == 1) mes "^666666Make him^000000";
+		if(Sex == SEX_MALE) mes "^666666Make him^000000";
 		else mes "^666666Make her^000000";
 		mes "^666666swallow this pill.^000000";
 		next;
@@ -7288,7 +7288,7 @@ yuno_pre,69,20,4	script	Secretary#1	862,{
 					mes "Membership Card.^000000";
 					close;
 				}
-				if(((gettime(3) > 10) && (gettime(3) < 15)) || ((gettime(3) > 19) && (gettime(3) <= 23)))
+				if(((gettime(DT_HOUR) > 10) && (gettime(DT_HOUR) < 15)) || ((gettime(DT_HOUR) > 19) && (gettime(DT_HOUR) <= 23)))
 				{
 					mes "^3355FFYou suavely flash";
 					mes "your ''Secret Wing''";
@@ -7408,7 +7408,7 @@ yuno_pre,69,20,4	script	Secretary#1	862,{
 		mes "Oh, the president";
 		mes "is expecting you.";
 		mes "Please, go right";
-		if(Sex == 1) mes "on ahead, sir.";
+		if(Sex == SEX_MALE) mes "on ahead, sir.";
 		else mes "on ahead, ma'am.";
 		close2;
 		warp "yuno_pre",113,53;
@@ -7499,7 +7499,7 @@ yuno_pre,95,71,5	script	Guard	852,{
 			mes "Yes, it's about time";
 			mes "for me to depart. Ah,";
 			mes "and may I ask who this";
-			if(Sex == 1) mes "young gentleman here is?";
+			if(Sex == SEX_MALE) mes "young gentleman here is?";
 			else mes "lovely young lady is?";
 			next;
 			mes "[Guard]";
@@ -7541,7 +7541,7 @@ yuno_pre,95,71,5	script	Guard	852,{
 		switch( select( "Thank you.","Who was that gentleman...?" ) )
 		{
 			case 1:
-				if(Sex == 1) mes "A Mister "+strcharinfo(0)+"";
+				if(Sex == SEX_MALE) mes "A Mister "+strcharinfo(0)+"";
 				else
 				{
 					if(getpartnerid()) mes "A Missis "+strcharinfo(0)+"";

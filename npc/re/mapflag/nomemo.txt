@@ -8,6 +8,7 @@
 //= 1.1 Added Nightmare Clock Tower [Secret]
 //= 1.2 Added dali, dali02 [Nova]
 //= 1.3 Added Nightmare Glastheim [Ridley8819]
+//= 1.4 Added GVG TE Maps. [Cydh]
 //============================================================
 
 // Episode 13 ====================
@@ -109,6 +110,9 @@ gl_cas02_	mapflag	nomemo
 1@nyd	mapflag	nomemo
 2@nyd	mapflag	nomemo
 
+// Horror Toy Factory
+1@xm_d	mapflag	nomemo
+
 // Glast Heim Memorial Dungeon ===
 1@gl_k	mapflag	nomemo
 2@gl_k	mapflag	nomemo
@@ -127,3 +131,17 @@ gl_cas02_	mapflag	nomemo
 1@gef_in	mapflag	nomemo
 dali	mapflag	nomemo
 dali02	mapflag	nomemo
+
+// WOE:TE Maps ===================
+te_prtcas01	mapflag	nomemo
+te_prtcas02	mapflag	nomemo
+te_prtcas03	mapflag	nomemo
+te_prtcas04	mapflag	nomemo
+te_prtcas05	mapflag	nomemo
+te_aldecas1	mapflag	nomemo
+te_aldecas2	mapflag	nomemo
+te_aldecas3	mapflag	nomemo
+te_aldecas4	mapflag	nomemo
+te_aldecas5	mapflag	nomemo
+teg_dun01	mapflag	nomemo
+teg_dun02	mapflag	nomemo

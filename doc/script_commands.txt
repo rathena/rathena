@@ -1,9 +1,9 @@
-﻿//===== rAthena Documentation ================================
+//===== rAthena Documentation ================================
 //= rAthena Script Commands
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20160523
+//= 20161206
 //===== Description: =========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -13,16 +13,10 @@ This document is a reference manual for all the scripting commands and functions
 available in rAthena. It is not a simple tutorial. When people tell you to
 "Read The F***ing Manual", they mean this.
 
-The information was mostly acquired through looking up how things actually work 
-in the source code of the server, which was written by many people over time, 
-and lots of them don't speak English and never left any notes - or are otherwise 
-not available for comments. As such, anything written in here might not be 
-correct, it is only correct to the best of our knowledge, which is limited.
-
 This is not a place to teach you basic programming. This document will not teach 
 you basic programming by itself. It's more of a reference for those who have at 
 least a vague idea of what they want to do and want to know what tools they have 
-available to do it. We've tried to keep it as simple as feasible, but if you 
+available to do it. We've tried to keep it as simple as possible, but if you 
 don't understand it, getting a clear book on programming in general will help 
 better than yelling around the forum for help.
 
@@ -31,9 +25,10 @@ A little learning never caused anyone's head to explode.
 Structure
 ---------
 
-The commands and functions are listed in no particular order:
+The script commands are listed in no particular order, but are grouped by
+relative function.
 
-*Name of the command and how to call it.
+*Name of the command and parameters (if any).
 
 Descriptive text
 
@@ -41,20 +36,19 @@ Descriptive text
     give you an idea of how it works in practice.
 
 To find a specific command, use Ctrl+F, (or whatever keys call up a search 
-function in whatever you're reading this with) put an * followed by the command 
+function in whatever you're reading this with) put an asterisk (*) followed by the command 
 name, and it should find the command description for you.
 
-If you find anything omitted, please respond. :)
+If you find anything missing, please let us know!
 
 Syntax
 ------
 
 Throughout this document, wherever a command wants an argument, it is given in 
-<angle brackets>. This doesn't mean you should type the angle brackets. :) If an 
+<angle brackets>. This doesn't mean you should type the angle brackets. If an 
 argument of a command is optional, it is given in {curly brackets}. You've 
-doubtlessly seen this convention somewhere, if you didn't, get used to it, 
-that's how big boys do it. If a command can optionally take an unspecified 
-number of arguments, you'll see a list like this:
+doubtlessly seen this convention somewhere. If a command can optionally take 
+an unspecified number of arguments, you'll see a list like this:
 
 command <argument>{,<argument>...<argument>}
 
@@ -66,8 +60,7 @@ of functions or operators returning a value, in (round brackets) instead of most
 numbers. Round brackets will not always be required, but they're often a good 
 idea.
 
-Wherever you refer to a map name, it's always 'map name' or 'map name.gat'
-(although the .gat suffix is deprecated). 
+Wherever you refer to a map name, it's always 'map name' (.gat suffix is deprecated). 
 
 
 Script loading structure
@@ -75,7 +68,7 @@ Script loading structure
 
 Scripts are loaded by the map server as referenced in the 'conf/map_athena.conf' 
 configuration file, but in the default configuration, it doesn't load any script 
-files itself. Instead, it loads the file 'npc/scripts_main.conf' which itself 
+files itself. Instead, it loads the file 'npc/(pre-)re/scripts_main.conf' which itself 
 contains references to other files. The actual scripts are loaded from txt 
 files, which are linked up like this:
 
@@ -83,7 +76,7 @@ npc: <path to a filename>
 
 Any line like this, invoked, ultimately, by 'map_athena.conf' will load up the 
 script contained in this file, which will make the script available. No file 
-will get loaded twice, to prevent possible errors.
+will get loaded twice to prevent possible errors.
 
 Another configuration file option of relevance is:
 
@@ -107,15 +100,15 @@ Example:
  * is ignored, until the following 
  * symbol is encountered: */
  
-The asterisks (*) in front of each line is a personal preference, and is not required.
+The asterisks (*) in front of each line is a personal preference and is not required.
 
 Upon loading all the files, the server will execute all the top-level commands 
 in them. No variables exist yet at this point, no commands can be called other 
-than those given in this section. These commands set up the basic server script 
-structure - create NPC objects, spawn monster objects, set map flags, etc. No 
-code is actually executed at this point except them. The top-level commands the 
-scripting are pretty confusing, since they aren't structured like you would 
-expect commands, command name first, but rather, normally start with a map name.
+than those given in this section. These commands set up the basic structure - create 
+NPC objects, spawn monster objects, set map flags, etc. No code is actually 
+executed at this point. The top-level commands are pretty confusing, since 
+they aren't structured like you would expect (command name first), but rather, 
+normally start with a map name.
 
 What's more confusing about the top-level commands is that most of them use a 
 tab symbol to divide their arguments.
@@ -123,7 +116,7 @@ tab symbol to divide their arguments.
 To prevent problems and confusion, the tab symbols are written as '%TAB%' 
 throughout this document, even though this makes the text a bit less readable. 
 Using an invisible symbol to denote arguments is one of the bad things about 
-this language, but we're stuck with it for now. :)
+this language.
 
 Here is a list of valid top-level commands:
 
@@ -139,7 +132,7 @@ and 'doc/mapflags.txt'.
 
 ** Create a permanent monster spawn:
 
-<map name>,<x>,<y>,<xs>,<ys>%TAB%monster%TAB%<monster name>%TAB%<mob id>,<amount>,<delay1>,<delay2>,<event>{,<mob size>,<mob ai>}
+<map name>,<x>,<y>{,<xs>{,<ys>}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 
 Map name is the name of the map the monsters will spawn on. x,y are the
 coordinates where the mob should spawn. If xs and ys are non-zero, they
@@ -156,6 +149,10 @@ used, (which, in rAthena, actually contains an English name) if it's "--en--",
 it's the 'english name' from the monster database (which contains an uppercase 
 name used to summon the monster with a GM command).
 
+You can specify a custom level to use for the mob different from the one of
+the database by adjoining the level after the name with a comma. eg:
+"Poring,50" for a name will spawn a monster with name Poring and level 50.
+
 Amount is the amount of monsters that will be spawned when this command is 
 executed, it is affected by spawn rates in 'battle_athena.conf'.
 
@@ -164,19 +161,27 @@ base respawn time, and the second is random variance on top of the base time.
 Both values are given in milliseconds (1000 = 1 second).
 Note that the server also enforces a minimum respawn delay of 5 seconds.
 
-You can specify a custom level to use for the mob different from the one of
-the database by adjoining the level after the name with a comma. eg:
-"Poring,50" for a name will spawn a monster with name Poring and level 50.
-
 Event is a script event to be executed when the mob is killed. The event must
 be in the form "NPCName::OnEventName" to execute, and the event name label
 should start with "On". As with all events, if the NPC is an on-touch NPC, the
 player who triggers the script must be within 'trigger' range for the event to
 work.
 
-There are two optional fields for monster size and AI.  Size can be 0 (medium),
-1 (small), or 2 (big).  AI can be 0 (default), 1 (attack/friendly), 2 (sphere),
-3 (flora), or 4 (zanzou).
+There are two optional fields for monster size and AI.
+
+<mob size> can be:
+	Size_Small	(0)
+	Size_Medium	(1)
+	Size_Large	(2)
+
+<mob ai> can be:
+	AI_NONE		(0)		(default)
+	AI_ATTACK	(1)		(attack/friendly)
+	AI_SPHERE	(2)		(Alchemist skill)
+	AI_FLORA	(3)		(Alchemist skill)
+	AI_ZANZOU	(4)		(Kagerou/Oboro skill)
+	AI_LEGION	(5)		(Sera skill)
+	AI_FAW		(6)		(Mechanic skill)
 
 Alternately, a monster spawned using 'boss_monster' instead of 'monster' is able
 to be detected on the map with the SC_BOSSMAPINFO status (used by Convex Mirror).
@@ -235,14 +240,13 @@ degrees, where 0 means facing towards the top of the map. (So to turn the sprite
 towards the bottom of the map, you use facing 4, and to make it look southeast 
 it's facing 5.)
 
-Sprite id is the sprite number used to display this particular NPC. For a full 
-list of sprite id numbers see http://kalen.s79.xrea.com/npc/npce.shtml You may 
-also use a monster's ID number instead to display a monster sprite for this NPC. 
+Sprite ID is the sprite number or constant used to display this particular NPC.
+You may also use a monster's ID instead to display a monster sprite for this NPC. 
 It is possible to use a job sprite as well, but you must first define it as a 
 monster sprite in 'mob_avail.txt', a full description on how to do this is not 
 in the scope of this manual.
-A '-1' sprite id will make the NPC invisible (and unclickable). 
-A '111' sprite id will make an NPC which does not have a sprite, but is still 
+A '-1' Sprite ID will make the NPC invisible (and unclickable). 
+A '111' Sprite ID will make an NPC which does not have a sprite, but is still 
 clickable, which is useful if you want to make a clickable object of the 3D 
 terrain.
 
@@ -287,28 +291,25 @@ these floating NPC objects are for. More on that below.
 This will define a shop NPC, which, when triggered (which can only be done by 
 clicking) will cause a shop window to come up. No code whatsoever runs in shop 
 NPCs and you can't change the prices otherwise than by editing the script 
-itself. (No variables even exist at this point of scripting, so don't even 
-bother trying to use them.)
+itself.
 
-The item id is the number of item in the 'item_db.txt' database. If Price is set 
+The Item ID is the number of item in the 'item_db.txt' database. If Price is set 
 to -1, the 'buy price' given in the item database will be used. Otherwise, the 
 price you gave will be used for this item, which is how you create differing 
 prices for items in different shops.
 
-Since trunk r12264 you can alternatively use "cashshop" in place of "shop"
-to use the Cash Shop interface, allowing you to buy items with special points
-(Currently stored as account variables in global_reg #CASHPOINTS and #KAFRAPOINTS.)
-This type of shop will not allow you to sell items at it, you may only
-purchase items here. The layout used to define sale items still count, and
+There are other types of shops available:
+cashshop - use "cashshop" in place of "shop" to use the Cash Shop interface, allowing 
+you to buy items with special points that are stored as account variables 
+called  #CASHPOINTS and #KAFRAPOINTS. This type of shop will not allow you to sell 
+items at it, only make purchases. The layout used to define sale items still count, and
 "<price>" refers to how many points will be spent purchasing the them.
 
-Since trunk rX you can alternatively use "itemshop" or "pointshop" in place
-of "shop" to use the Shop interface, allowing you to buy items with a specific
-item or special points from a variable. 'pointshop' only supported variable types
-are permanent character variables, temporary character variables, permanent
-local account variables, or permanent global account variables. These variables
-must be of integer type, not string. 'discount' flag is an option, makes the price
-at that shop is affected by discount skill.
+"itemshop" and "pointshop" use the Shop interface, allowing you to buy items with a specific
+item or special points from a variable. 'pointshop' only supports permanent character variables, 
+temporary character variables, permanent local account variables or permanent global account 
+variables. These variables must be of integer type, not string. 'discount' flag is an 
+optional value which makes the price at that shop become affected by discount skill.
 
 ** Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
@@ -577,9 +578,7 @@ constants such as server defines and status options:
 Assigning variables
 --------- ---------
 
-As of rAthena revision 15982, variables can be accessed and assigned values directly
-without the use of the built-in 'set' function. This means that variables can be
-accessed and modified much like other programming languages.
+Variables can be accessed and modified much like in other programming languages.
 
     @x = 100;
     @x = @y = 100;
@@ -632,8 +631,8 @@ variable as if it was a normal variable:
 
     set @arrayofnumbers[0],1;
 
-You can also do sneaky things like using a variable (or an expression, or even a 
-value from an another array) to get at an array value:
+You can also do things like using a variable (or an expression, or even a 
+value from another array) to get at an array value:
 
     set @x,100;
     set @arrayofnumbers[@x],10;
@@ -646,7 +645,7 @@ range 0 ~ 2147483647.
 
 And array indexes probably can't be negative. Nobody tested what happens when 
 you try to get a negatively numbered variable from an array, but it's not going 
-to be pretty. :)
+to be pretty.
 
 Arrays can naturally store strings:
 
@@ -859,7 +858,7 @@ OnDay<month><day>:
 This will execute when the server clock hits the specified date or time. Hours 
 and minutes are given in military time. ('0105' will mean 01:05 AM). Weekdays 
 are Sun,Mon,Tue,Wed,Thu,Fri,Sat. Months are 01 to 12, days are 01 to 31. 
-Remember the zero. :)
+Remember the zero.
 
 OnInit:
 OnInterIfInit:
@@ -876,6 +875,9 @@ OnAgitInit:
 OnAgitStart2:
 OnAgitEnd2:
 OnAgitInit2:
+OnAgitStart3:
+OnAgitEnd3:
+OnAgitInit3:
 
 OnAgitStart will run whenever the server shifts into WoE mode, whether it is 
 done with @agitstart GM command or with 'AgitStart' script command. OnAgitEnd 
@@ -896,6 +898,13 @@ OnInstanceInit:
 This label will be executed when an instance is created and initialized through
 the 'instance_create' command. It will run again if @reloadscript is used while
 an instance is in progress.
+
+OnInstanceDestroy:
+
+This label will be executed when an instance is destroyed by a timeout, exceeding
+the keepalive time or through the 'instance_destroy' command. It will be called
+exactly before the instance will be destroyed and all other NPCs of the instance
+will still be available at this point of time.
 
 OnTouch:
 
@@ -932,7 +941,7 @@ This special label triggers when a player kills another player. The variable
 
 OnNPCKillEvent:
 
-This special label triggers when a player kills a monster. The variable
+This special label triggers when a player kills a monster without label. The variable
 'killedrid' is set to the Class (mob ID) of the monster killed.
 
 OnPCLoadMapEvent:
@@ -1003,10 +1012,7 @@ but is not advised, as this can lead to some hard to track errors. Calling
 functions as if they were commands will mess up the stack, so 'return' command 
 will not return correctly after this happens in a particular script.
 
-All commands must end with a ';'. Actually, you may expect to have multiple 
-commands on one line if you properly terminate them with a ';', but it's better 
-if you don't, since it is not certain just whether the scripting engine will 
-behave nicely if you do.
+All commands must end with a ';'.
 
 -------------------------
 
@@ -1027,6 +1033,7 @@ From here on, we will have the commands sorted as follow:
 11.- Homunculus commands.
 12.- Mercenary commands.
 13.- Party commands.
+14.- Channel commands.
 
 =====================
 |1.- Basic commands.|
@@ -1090,6 +1097,27 @@ to alberta (98,154) when clicked.
     mes "Have you checked out the <NAVI>[Tool Shop]<INFO>alberta,98,154,0,000,0</INFO></NAVI>?";
 
 See also 'navigateto', which can be used for certain NPC events.
+
+Items
+-----
+You can refer to items by using HTML-like links to certain items:
+
+	<ITEMLINK>Display Name<INFO>Item ID</INFO></ITEMLINK>
+
+Where <Display Name> is the name that will be displayed for your link and
+<Item ID> being the ID of the item you want to link to when clicked.
+
+In 2015 the tag name was changed to <ITEM> resulting in the following syntax:
+
+	<ITEM>Display Name<INFO>Item ID</INFO></ITEM>
+	
+The following sample will open a preview window for Red Potion:
+
+	mes "Did you ever consume a <ITEMLINK>Red Potion<INFO>501</INFO></ITEMLINK>?";
+	// Or in 2015:
+	mes "Did you ever consume a <ITEM>Red Potion<INFO>501</INFO></ITEM>?";
+	
+NOTE: Be aware that item links are rendered incorrectly in 2015+ clients at the moment.
 
 URLs
 ----
@@ -1284,7 +1312,7 @@ with other command, such as "if", but often used on its own.
 Label:
 	mes "This will be seen";
 
-Note by FlavioJS: goto's are "evil" and should be avoided if possible (ò_ó)
+This command should be avoided and only used if there is no other option.
 
 ---------------------------------------
 
@@ -1932,8 +1960,7 @@ you forget to use the curly braces (the { } ), the second action will be execute
 the output of the condition, unless of course, you stop the execution of the script if the
 condition is true (that is, in the first grouping using a return; , and end; or a close; )
 
-Also, you can have multiple conditions nested or chained, and don't worry about limits as to
-how many nested if you can have, there is no spoon ;)
+Also, you can have multiple conditions nested or chained.
 
 	if (<condition 1>)
 		dothis;
@@ -2287,10 +2314,11 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 ---------------------------------------
 
 *readparam(<parameter number>{,"<character name>"})
+*readparam(<parameter number>{,<char_id>})
 
 This function will return the specified stat of the invoking character, or, if a
-character name is specified, of that player. The stat can either be a number or
-parameter name, defined in 'src/map/script_constants.h'.
+character name or character id is specified, of that player. The stat can either
+be a number or parameter name, defined in 'src/map/script_constants.h'.
 
 Some example parameters:
 
@@ -2332,6 +2360,7 @@ Type is the kind of associated ID number required:
  2 - Guild ID
  3 - Account ID
  4 - Battle Ground ID
+ 5 - Clan ID
 
 For most purposes other than printing it, a number is better to have than a name 
 (people do horrifying things to their character names).
@@ -2397,7 +2426,7 @@ This function will return the number for the current character look value
 specified by type. See 'setlook' for valid look types.
 
 This can be used to make a certain script behave differently for characters 
-dressed in black. :)
+dressed in black.
 
 ---------------------------------------
 
@@ -2972,18 +3001,18 @@ This function will return a tick depending on <tick type>:
 
 This function will return specified information about the current system time.
 
-1 - Seconds (of a minute)
-2 - Minutes (of an hour)
-3 - Hour (of a day)
-4 - Week day (0 for Sunday, 6 is Saturday)
-5 - Day of the month.
-6 - Number of the month.
-7 - Year.
-8 - Day of the year.
+DT_SECOND - Seconds (of the current minute)
+DT_MINUTE - Minutes (of the current hour)
+DT_HOUR - Hour (of the current day)
+DT_DAYOFWEEK - Week day (constants for MONDAY to SUNDAY are available)
+DT_DAYOFMONTH - Day of the current month
+DT_MONTH - Month (constants for JANUARY to DECEMBER are available)
+DT_YEAR - Year
+DT_DAYOFYEAR - Day of the year
 
-It will only return numbers.
+It will only return numbers. If another type is supplied -1 will be returned.
 
-    if (gettime(4)==6) mes "It's a Saturday. I don't work on Saturdays.";
+	if (gettime(DT_DAYOFWEEK)==SATURDAY) mes "It's a Saturday. I don't work on Saturdays.";
 
 ---------------------------------------
 
@@ -3184,7 +3213,7 @@ This command requests the guild data from the char server and merrily continues
 with the execution. Whenever the guild information becomes available (which 
 happens instantly if the guild information is already in memory, or later, if it 
 isn't and the map server has to wait for the char server to reply) it will run 
-the specified event as in a 'doevent' call.
+the specified event as in a 'donpcevent' call.
 
 ---------------------------------------
 
@@ -3248,7 +3277,7 @@ invoking character has. Here's what you get:
 
 While 'getskillv' is probably more useful for most situations, this is the 
 easiest way to store all the skills and make the character something else for a 
-while. Advanced job for a day? :) This could also be useful to see how many 
+while. Advanced job for a day? This could also be useful to see how many 
 skills a character has.
 
 This command does not count skills which are set as flag 4 (permament granted) (ALL_BUYING_STORE/ALL_INCCARRY)
@@ -3434,7 +3463,7 @@ Example 2:
 
 	setarray .@item[0],512,513,514;
 	setarray .@amount[0],10,5,5;
-	if (!checkweight(.@item,.@amount)) {
+	if (!checkweight2(.@item,.@amount)) {
 		mes "Sorry, you cannot hold this amount of fruit!";
 	}
 
@@ -3663,10 +3692,11 @@ Name is optional, and defaults to the attached player if omitted.
 
 *agitcheck()
 *agitcheck2()
+*agitcheck3()
 
-These function will let you check whether the server is currently in WoE mode
-(or WoE SE mode if the second function is called) and will return 1 if War of
-Emperium is on and 0 if it isn't. 
+These function will let you check whether the server is currently in WoE:FE mode
+(agitcheck()), WoE:SE mode (agitcheck2()), or WoE:TE mode (agitcheck3()) and will
+return true if War of Emperium is on and false if it isn't. 
 
 ---------------------------------------
 
@@ -3832,9 +3862,9 @@ will be seen to everyone around but not in chat window.
 
 ---------------------------------------
 
-*warp "<map name>",<x>,<y>;
+*warp "<map name>",<x>,<y>{,<char id>};
 
-This command will take the invoking character to the specified map, and if 
+This command will take the invoking character or <char id>, if specified, to the specified map, and if 
 wanted, specified coordinates too, but these can be random.
 
     warp "place",50,55;
@@ -3913,18 +3943,6 @@ Example:
 
 ---------------------------------------
 
-*warpchar "<map name>",<x>,<y>,<char id>;
-
-Warps another player to specified map and coordinate given the char id, which you can get with
-getcharid(0,<player_name>). Obviously this is useless if you want to warp the same player that
-is executing this script, unless it's some kind of "chosen" script. 
- 
-Example:
- 
-warpchar "prontera",150,100,150001;
-
----------------------------------------
-
 *warpguild "<map name>",<x>,<y>,<guild_id>;
  
 Warps a guild to specified map and coordinate given the guild id, which you can get with 
@@ -3946,22 +3964,26 @@ warpguild "prontera",x,y,Guild_ID;
 *warppartner("<map name>",<x>,<y>);
 
 This function will find the invoking character's marriage partner, if any, and 
-warp them to the map and coordinates given. Go kidnap that spouse. :) It will 
-return 1 upon success and 0 if the partner is not online, the character is not 
-married, or if there's no invoking character (no RID). 0,0 will, as usual, 
-normally translate to random coordinates.
+warp them to the map and coordinates given. It will return 1 upon success and
+0 if the partner is not online, the character is not married, or if there's no 
+invoking character (no RID). 0,0 will, as usual, normally translate to random coordinates.
 
 ---------------------------------------
 
-*savepoint "<map name>",<x>,<y>{,<char_id>};
-*save "<map name>",<x>,<y>{,<char_id>};
+*savepoint "<map name>",<x>,<y>{,{<range x>,<range y>,}<char_id>};
+*save "<map name>",<x>,<y>{,{<range x>,<range y>,}<char_id>};
 
 These commands save where the invoking character will return to upon clicking
 "Return to Save Point", after death and in some other cases. The two versions are 
 equivalent. They ignore any and all mapflags, and can make a character respawn where
 no teleportation is otherwise possible.
 
+The <range x> and <range y> optional values allow for a randomization with the
+player's save point. The values will randomly add or subtract from the given <x>
+and <y> coordinates.
+
     savepoint "place",350,75;
+	savepoint "place",350,75,2,2; // Randomly save the character between 348,73 and 352,77
 
 ---------------------------------------
 
@@ -4406,7 +4428,7 @@ this. Careful, minor magic ahead.
     @card4 = @charid >> 16;
 
     // If you're inscribing non-equipment, @card1 must be 254.
-    // Arrows are also not equipment. :)
+    // Arrows are also not equipment.
     @card1 = 254;
 
     // For named equipment, card2 means the Star Crumbs and elemental 
@@ -4604,9 +4626,14 @@ database. If the name is not found, nothing will be deleted.
 *cartdelitem "<item name>",<amount>{,<account ID>};
 *storagedelitem <item id>,<amount>{,<account ID>};
 *storagedelitem "<item name>",<amount>{,<account ID>};
+*guildstoragedelitem <item id>,<amount>{,<account ID>};
+*guildstoragedelitem "<item name>",<amount>{,<account ID>};
 
 This command behaves identically to 'delitem', but deletes items from the player's
-cart or storage. If no cart is mounted, 'cartdelitem' will fail.
+cart, storage, or guild storage.
+
+If no cart is mounted, 'cartdelitem' will return -1.
+If player is not in a guild or storage is open, 'guildstoragedelitem' will return -1.
 
 ---------------------------------------
 
@@ -4622,9 +4649,14 @@ See 'getitem2' for an explanation of the expanded parameters.
 *cartdelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *storagedelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *storagedelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*guildstoragedelitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*guildstoragedelitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 
 This command behaves identically to 'delitem2', but deletes items from the player's
-cart or storage. If no cart is mounted, 'cartdelitem2' will fail.
+cart, storage, or guild storage.
+
+If no cart is mounted, 'cartdelitem2' will return -1.
+If player is not in a guild or storage is open, 'guildstoragedelitem2' will return -1.
 
 ---------------------------------------
 
@@ -4650,13 +4682,18 @@ adding up strings:
     
 ---------------------------------------
 
-*cartcountitem(<item id>)
-*cartcountitem("<item name>")
-*storagecountitem(<item id>)
-*storagecountitem("<item name>")
+*cartcountitem(<item id>{,<accountID>})
+*cartcountitem("<item name>"{,<accountID>})
+*storagecountitem(<item id>{,<accountID>})
+*storagecountitem("<item name>"{,<accountID>})
+*guildstoragecountitem(<nameID>{,<accountID>})
+*guildstoragecountitem("<item name>"{,<accountID>})
 
 This command behaves identically to 'countitem', but counts items from the player's
-cart or storage. If no cart is mounted, 'cartcountitem' will return -1.
+cart, storage, or guild storage.
+
+If no cart is mounted, 'cartcountitem' will return -1.
+If player is not in a guild or storage is open, 'guildstoragecountitem' will return -1.
 
 ---------------------------------------
 
@@ -4671,13 +4708,18 @@ See 'getitem2' for an explanation of the expanded parameters.
 
 ---------------------------------------
 
-*cartcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*cartcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*storagecountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*storagecountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*cartcountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*cartcountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*storagecountitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*storagecountitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*guildstoragecountitem2(<nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
+*guildstoragecountitem2("<item name>",<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
 
 This command behaves identically to 'countitem2', but counts items from the player's
-cart or storage. If no cart is mounted, 'cartcountitem2' will return -1.
+cart, storage, or guild storage.
+
+If no cart is mounted, 'cartcountitem2' will return -1.
+If player is not in a guild or storage is open, 'guildstoragecountitem2' will return -1.
 
 ---------------------------------------
 
@@ -5041,6 +5083,33 @@ window, to avoid any disruption when both windows overlap.
 
 ---------------------------------------
 
+*openstorage2 <storage_id>,<mode>{,<account_id>};
+
+Just like the 'openstorage' command, except this command can open additional storages
+by the specified <storage_id>. For <storage_id>, please read the conf/inter_server.conf
+for storage groups.
+
+Values for <mode> are:
+	STOR_MODE_NONE : Player only can read the storage entries.
+	STOR_MODE_GET  : Player can get items from the storage.
+	STOR_MODE_PUT  : Player can put items in the storage.
+
+Example:
+	if (vip_status(1)) {
+		mes "I will open your Premium storage.";
+		mes "Thank you for using our service.";
+		close2;
+		openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
+	} else {
+		mes "Sorry, your Premium status is expired.";
+		mes "Storage will be opened but you can't put any item into it.";
+		close2;
+		openstorage2 1,STOR_MODE_GET;
+	}
+	end;
+
+---------------------------------------
+
 *openmail({<char_id>});
 
 This will open a character's Mail window on the client connected to the 
@@ -5118,7 +5187,7 @@ the end.
 You might want to make a quest for getting a certain guild skill, make it hard 
 enough that all the guild needs to help or something. Doing this for the Glory 
 of the Guild skill, which allows your guild to use an emblem, is a good idea for 
-a fun quest. (Wasting a level point on that is really annoying :D)
+a fun quest.
 
 ---------------------------------------
 //
@@ -5329,8 +5398,8 @@ behavior of the command.
 
 *statusup <stat>{,<char_id>};
 
-This command will bump a specified stat of the invoking character up by one 
-permanently. Stats are to be given as number, but you can use these constants to 
+This command will change a specified stat of the invoking character up by one
+permanently. Stats are to be given as number, but you can use these constants to
 replace them:
 
 bStr -  Strength
@@ -5344,11 +5413,11 @@ bLuk -  Luck
 
 *statusup2 <stat>,<amount>{,<char_id>};
 
-This command will bump a specified stat of the invoking character up by the 
+This command will change a specified stat of the invoking character by the
 specified amount permanently. The amount can be negative. See 'statusup'.
 
-// This will decrease a character's Vit forever.
-    statusup bVit,-1;
+	// This will decrease a character's Vit forever.
+	statusup2 bVit,-1;
 
 ---------------------------------------
 
@@ -5519,6 +5588,8 @@ everything not equippable by the new job class anyway.
 These commands will make a character sit or stand.
 If no character is specified, the command will run for the invoking character.
 
+Additionnally Sitting constant is true when the character is sitting, false otherwise.
+
 ---------------------------------------
 
 *disguise <Monster ID>{,<char_id>};
@@ -5644,6 +5715,22 @@ Examples:
 
 --------------------------------------- 
 
+*pcblockskill <id>,<option>;
+*unitblockskill <id>,<option>;
+
+Prevents the given GID from casting skills when the option is 1, and enables
+the ID to cast skills again when the option is 0. This command will run for
+the attached unit if the given GID is zero.
+
+Examples:
+	// Prevents the current char from casting skills.
+	pcblockskill getcharid(3),1;
+
+	// Enables the current char to cast skills again.
+	pcblockskill getcharid(3),0;
+
+--------------------------------------- 
+
 ==================================
 |5.- Mob / NPC -related commands.|
 ==================================
@@ -5674,18 +5761,18 @@ attached at this execution will be the RID of the killing character. The variabl
 'killedrid' is set to the Class (mob ID) of the monster killed.
 
 <size> can be:
-	0 = medium (default)
-	1 = small
-	2 = big
+	Size_Small	(0)		(default)
+	Size_Medium	(1)
+	Size_Large	(2)
 	
 <ai> can be:
-	0 = none (default)
-	1 = attack/friendly
-	2 = sphere (Alchemist skill)
-	3 = flora (Alchemist skill)
-	4 = zanzou (Kagerou/Oboro skill)
-	5 = legion (Sera skill)
-	6 = faw (Mechanic skill)
+	AI_NONE		(0)		(default)
+	AI_ATTACK	(1)		(attack/friendly)
+	AI_SPHERE	(2)		(Alchemist skill)
+	AI_FLORA	(3)		(Alchemist skill)
+	AI_ZANZOU	(4)		(Kagerou/Oboro skill)
+	AI_LEGION	(5)		(Sera skill)
+	AI_FAW		(6)		(Mechanic skill)
 
     monster "place",60,100,"Poring",1002,1,"NPCNAME::OnLabel";
 
@@ -5999,6 +6086,8 @@ A debug message also shows on the console when no events are triggered.
 This is simply "donpcevent <npc name>::OnCommand<command>".
 It is an approximation of official server script language's 'cmdothernpc'.
 
+Returns true if the command was executed on the other NPC successfully, false if not.
+
 ---------------------------------------
 
 *npctalk "<message>"{,"<NPC name>"};
@@ -6012,6 +6101,18 @@ the attached NPC will display the message.
     // This will make everyone in the area see the NPC greet the character
     // who just invoked it.
     npctalk "Hello "+strcharinfo(0)+", how are you?";
+
+---------------------------------------
+
+*chatmes "<message>"{,"<NPC name>"};
+
+This command will display a message in the waitingroom (chat) of the NPC.
+If the <NPC name> option is given, then that NPC will display the message, else
+the attached NPC will display the message.
+If the NPC is not in a waitingroom, nothing happens.
+
+    // Everyone in the waitingroom will see this message:
+    chatmes "Waiting 5 minutes until the next match will start";
 
 ---------------------------------------
 
@@ -6611,16 +6712,22 @@ The optional parameter 'type' is used in the 'skill_damage' mapflag:
 
 ---------------------------------------
 
-*setbattleflag "<battle flag>",<value>;
+*setbattleflag "<battle flag>",<value>{,<reload>};
 *getbattleflag("<battle flag>")
 
 Sets or gets the value of the given battle flag.
 Battle flags are the flags found in the battle / *.conf files and is also used in Lupus' variable rates script.
+If the reload value is given then the server will attempt to reload monster data
+to properly apply the new rates. This applies to EXP/Drop type configs. The server
+will only attempt to reload specific configs.
 
 Examples:
 
-// Will set the base experience rate to 20x (2000%)
+// Will set the base experience rate to 20x (2000%) - Monster data will continue to use previous rates at server start
 	setBattleFlag "base_exp_rate",2000;
+
+// Will set the base experience rate to 20x (2000%) - Monster data will be reloaded to new value
+	setBattleFlag "base_exp_rate",2000,true;
 	
 // Will return the value of the base experience rate (when used after the above example, it would print 2000).
 	mes getBattleFlag("base_exp_rate");
@@ -6686,15 +6793,19 @@ For examples, check the WoE scripts in the distribution.
 *agitend;
 *agitstart2;
 *agitend2;
+*agitstart3;
+*agitend3;
 
-These four commands will start and end War of Emperium or War of Emperium SE.
+These commands will start and end War of Emperium FE, War of Emperium SE,
+or War of Emperium TE.
 
 This is a bit more complex than it sounds, since the commands themselves won't 
 actually do anything interesting, except causing all 'OnAgitStart:' and 
-'OnAgitEnd:', or 'OnAgitStart2:' and 'OnAgitEnd2:' in the case of latter two
-commands, events to run everywhere, respectively. They are used as  simple 
-triggers to run a lot of complex scripts all across the server, and they, 
-in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
+'OnAgitEnd:', 'OnAgitStart2:' and 'OnAgitEnd2:', or 'OnAgitStart3:' and
+'OnAgitEnd3:' in the case of latter two commands, events to run everywhere,
+respectively. They are used as  simple triggers to run a lot of complex scripts
+all across the server, and they, in turn, are triggered by clock with an
+'OnClock<time>:' time-triggering label.
 
 ---------------------------------------
 
@@ -6704,6 +6815,13 @@ in turn, are triggered by clock with an 'OnClock<time>:' time-triggering label.
 These commands will turn GVG mode for the specified maps on and off, setting up 
 appropriate map flags. In GVG mode, maps behave as if during the time of WoE, 
 even though WoE itself may or may not actually be in effect. 
+
+---------------------------------------
+
+*gvgon3 "<map name>";
+*gvgoff3 "<map name>";
+
+Theses commands behave identically to gvgon/gvgoff, but apply GVG_TE mapflag. 
 
 ---------------------------------------
 
@@ -6750,6 +6868,22 @@ Type indicates what information to return:
  0 - visibility (whether the guardian is installed or not)
  1 - max. hp
  2 - current hp
+
+---------------------------------------
+
+*getguildalliance(<guild id1>, <guild id2>);
+
+This command will return the relation between 2 guilds.
+
+NOTE: This should be used in collaboration with 'requestguildinfo' as the
+map-server needs to request for information from the char-server.
+
+Return values:
+	-2 - Guild ID1 does not exist
+	-1 - Guild ID2 does not exist
+	 0 - Both guilds have no relation OR guild ID aren't given
+	 1 - Both guilds are allies
+	 2 - Both guilds are antagonists
 
 ---------------------------------------
 //
@@ -6837,6 +6971,7 @@ characters.
 
 If NPC name is specified, the message will be sent as if the sender would be
 the NPC with the said name.
+The display name of the NPC won't get appended in front of the message.
 
 ---------------------------------------
 
@@ -7587,7 +7722,7 @@ OnClock0600:
 	end;
 OnInit:
 	// setting correct mode upon server start-up
-	if(gettime(3)>=6 && gettime(3)<18) end;
+	if(gettime(DT_HOUR)>=6 && gettime(DT_HOUR)<18) end;
 OnClock1800:
 	night;
 	end;
@@ -8047,11 +8182,9 @@ of the "clock" and can be one of the following values:
     1 - Incremental counter (1 tick/second).
     2 - Decremental counter (1 tick/second). Does not stop at zero,
         but overflows.
-    3 - Decremental counter (1 tick/second). Two digits only, stops
+    3 - Decremental counter (2 ticks/second). Two digits only, stops
         at zero.
 
-For type 1 and 2 the start value is set by using negative number of
-the one intended to set (ex. -10 starts the counter at 10 seconds).
 Except for type 3 the value is interpreted as seconds and formatted
 as time in days, hours, minutes and seconds. Note, that the official
 script command does not have the optional parameter.
@@ -8059,7 +8192,7 @@ script command does not have the optional parameter.
     // displays 23:59:59 for 5 seconds
     showdigit 86399;
 
-    // counter that starts at 60 and runs for 60 seconds
+    // counter that starts at 60 and runs for 30 seconds
     showdigit 60,3;
 
 ---------------------------------------
@@ -8135,6 +8268,22 @@ Example:
 
 ---------------------------------------
 
+*getfreecell "<map name>",<rX>,<rY>{,<x>,<y>,<rangeX>,<rangeY>,<flag>};
+
+Finds a free cell on the given map and stores the reference to the found cell
+in <rX> and <rY>. Passing <x> and <y> with <rangeX> and <rangeY> allows for
+searching within a specified area on the given map. The <flag> is a bitmask
+and has the following possible values:
+ - 1 = Random cell on the map or from <x>,<y> range. (default)
+ - 2 = The target should be able to walk to the target tile.
+ - 4 = There shouldn't be any players around the target tile (use the no_spawn_on_player setting).
+
+Examples:
+	getfreecell("prontera",.@x,.@y); // Find a random empty cell in Prontera and store it within .@x and .@y
+	getfreecell("prontera",.@x,.@y,150,150,5,5); // Find a random empty cell on 150,150 (with a range of 5x5) in Prontera and store it within .@x and .@y
+
+---------------------------------------
+
 *setwall "<map name>",<x>,<y>,<size>,<dir>,<shootable>,"<name>";
 *delwall "<name>";
 
@@ -8184,19 +8333,20 @@ Destroys instance with the ID <instance id>. If no ID is specified, the instance
 the script is attached to is used. If the script is not attached to an instance,
 the instance of the currently attached player is used (if it is a character, party,
 or guild mode). If it is not owned by anyone, no player needs to be attached. If
-that fails, the script will come to a halt.
+that fails, the script will come to a halt. This will also trigger the "OnInstanceDestroy"
+label in all NPCs inside the instance.
 
 ---------------------------------------
 
-*instance_enter("<instance name>",{<x>,<y>,<char_id>});
+*instance_enter("<instance name>",{<x>,<y>,<char_id>,<instance id>});
 
 Warps player to the specified instance after the script terminates. The map and
 coordinates are located in 'db/(pre-)re/instance_db.txt'.
 
-The command returns 0 upon success, and these values upon failure:
- 1: Party/Guild not found (for party/guild modes).
- 2: Character/Party/Guild does not have an instance.
- 3: Other errors (invalid instance name, instance doesn't match with character/party/guild).
+The command returns IE_OK upon success, and these values upon failure:
+ IE_NOMEMBER:	Party/Guild not found (for party/guild modes).
+ IE_NOINSTANCE:	Character/Party/Guild does not have an instance.
+ IE_OTHER:		Other errors (invalid instance name, instance doesn't match with character/party/guild).
 
 Put -1 for x and y if want to warp player with default entrance coordinates.
 
@@ -8297,6 +8447,30 @@ if (instance_check_guild(getcharid(2),2,2,149)) {
 
 ---------------------------------------
 
+*instance_info("<instance name>",<info type>{,<instance_db map index>});
+
+Returns the specified <info type> of the given <instance name> from the instance database.
+If the <instance name> is unknown or an invalid <info type> is supplied -1 will be returned.
+
+Valid info types:
+ IIT_ID: Instance database ID as integer.
+ IIT_TIME_LIMIT: Instance database total life time as integer.
+ IIT_IDLE_TIMEOUT: Instance database timeout time as integer.
+ IIT_ENTER_MAP: Instance database enter map as string.
+ IIT_ENTER_X: Instance database enter X location as integer.
+ IIT_ENTER_Y: Instance database enter Y location as integer.
+ IIT_MAPCOUNT: Instance database total maps as integer.
+ IIT_MAP: Instance database map name from the given <instance_db map index> as string.
+          If the index is invalid an empty string will be returned.
+
+Example:
+
+.@name$ = "Endless Tower";
+mes .@name$ + " will be destroyed if no one is in the instance for " + instance_info(.@name$,IIT_IDLETIMEOUT) + " seconds.";
+// Endless Tower will be destroyed if no one is in the instance for 300 seconds.
+
+---------------------------------------
+
 =========================
 |8.- Quest Log commands.|
 =========================
@@ -8323,7 +8497,7 @@ Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410)
 Map Mark Color, when used, creates a mark in the user's mini map on the position of the NPC,
 the available color values are:
 
-0 - No Marker
+0 - No Marker (default)
 1 - Yellow Marker
 2 - Green Marker
 3 - Purple Marker
@@ -8692,9 +8866,7 @@ to be executed from pet scripts. They will modify the pet AI decision-making for
 the current pet of the invoking character, and will NOT have any independent 
 effect by themselves, which is why only one of them each may be in effect at any 
 time for a specific pet. A pet may have 'petloot', 'petskillbonus', 
-'petskillattack' OR 'petpetskillattack2' and 'petskillsupport' OR 'petheal' at 
-the same time. 'petheal' is deprecated and is no longer used in the default pet 
-scripts.
+'petskillattack' OR 'petpetskillattack2' and 'petskillsupport'.
 
 All commands with delays and durations will only make the behavior active for 
 the specified duration of seconds, with a delay of the specified number of 
@@ -8749,13 +8921,11 @@ when pet performance is activated.
 
 *petskillsupport <skill id>,<skill level>,<delay>,<percent hp>,<percent sp>;
 *petskillsupport "<skill name>",<skill level>,<delay>,<percent hp>,<percent sp>;
-*petheal <level>,<delay>,<percent hp>,<percent sp>;
 
 This will make the pet use a specified support skill on the owner whenever the 
 HP and SP are below the given percent values, with a specified delay time 
 between activations. The skill numbers are as per 'db/(pre-)re/skill_db.txt'.
-'petheal' works the same as 'petskillsupport' but has the skill ID hard-coded to 
-AL_HEAL (ID:28). This command is deprecated.
+
 It's not quite certain who's stats will be used for the skills cast, the 
 character's or the pets. Probably, Skotlex can answer that question.
 
@@ -9260,5 +9430,174 @@ Param - Parameter of random option
 
 ---------------------------------------
 
-Whew.
-That's about all of them.
+*clan_join(<clan id>{,<char id>});
+
+The attached player joins the clan with the <clan id>. On a successful join,
+true is returned, else false if the join failed.
+If <char id> is specified, the specified player is used rather than the attached one.
+
+---------------------------------------
+
+*clan_leave({<char id>});
+
+The attached player will leave their clan. On a successful leave, true is returned,
+else false if the leave failed.
+If <char id> is specified, the specified player is used rather than the attached one.
+
+---------------------------------------
+
+========================
+|14.- Channel commands.|
+========================
+---------------------------------------
+
+*channel_create "<chname>","<alias>"{,"<password>"{<option>{,<delay>{,<color>{,<char_id>}}}}};
+
+Creates a public channel with <chname> as the channel name. To protect the
+channel, use <password> or write "null" to create it without a password.
+Channel name must start with '#' and cannot be the same as the map or ally
+channel names.
+
+<alias> will be used to change the channel name when the channel message
+is displayed.
+
+<option> values are:
+	CHAN_OPT_BASE		    - Default option including CHAN_OPT_ANNOUNCE_SELF|CHAN_OPT_MSG_DELAY|CHAN_OPT_CAN_CHAT|CHAN_OPT_CAN_LEAVE
+	CHAN_OPT_ANNOUNCE_SELF  - Show info for player itself if player has joined/leaves the channel
+	CHAN_OPT_ANNOUNCE_JOIN  - Display message when player is joining the channel
+	CHAN_OPT_ANNOUNCE_LEAVE - Display message when player is leaving the channel
+	CHAN_OPT_MSG_DELAY	    - Enable chat delay for the channel
+	CHAN_OPT_COLOR_OVERRIDE - Player's unique font color will override channel's color
+	CHAN_OPT_CAN_CHAT	    - Player can chat in the channel
+	CHAN_OPT_CAN_LEAVE	    - Player can leave the channel
+	CHAN_OPT_AUTOJOIN	    - Players will auto join the channel at login
+
+The <delay> is the minimum chat delay in millisecond for a single player before
+the player can chat again in the same channel.
+
+Use <color> hex code to set the color for this channel, if not defined, default
+channel color will be used.
+
+If <char_id> is defined, the channel will be a private channel and the player
+will be the the channel owner.
+
+Returns 1 on success.
+
+	/**
+	 * This example will shows the message on this channel as
+	 * [rAthena] Admin : Hello world!
+	 * instead of
+	 * #rathena Admin : Hello world!
+	 **/
+	channel_create("#rathena","[rAthena]");
+	channel_create("#vip","[VIP]","vipmemberonly");
+
+---------------------------------------
+
+*channel_setopt "<chname>",<option>,<value>;
+
+Set option for the channel. Use 1 in <value> to set it, or 0 to unset.
+The <option> values are the same as the 'channel_create' options.
+
+For CHAN_OPT_MSG_DELAY, the delay in millisecond must be sent or use 0
+to remove the delay at <value>.
+
+Returns 1 on success.
+
+	// Example to set delay
+	channel_setopt("#global",CHAN_OPT_MSG_DELAY,5000);
+
+Only for public and private channel.
+
+---------------------------------------
+
+*channel_setcolor "<chname>",<color>;
+
+To change channel color.
+<color> uses hex RGB values.
+
+Returns 1 on success.
+
+---------------------------------------
+
+*channel_setpass "<chname>","<password>";
+
+To set, unset, or change password of a channel.
+Use "null" to remove the password.
+
+Returns 1 on success.
+Only for public and private channel.
+
+---------------------------------------
+
+*channel_setgroup "<chname>",<group_id>{,...,<group_id>};
+*channel_setgroup2 "<chname>",<array_of_groups>;
+
+Set group restriction for a channel. Only player with matching <group_id>
+are allowed to to join the channel.
+
+By using 0 in the first group channel, the group restriction will be
+removed from the channel config.
+
+'channel_setgroup2' receives input for group list as an array.
+
+Returns 0 on failure, and 1 (or n groups count) on success.
+
+	// Example 1: Remove groups
+	channel_setgroup("#event",0);
+
+	// Example 2: Multiple values
+	channel_setgroup("#vip",2,5);
+
+	// Example 3: Using array
+	setarray .@staffs[0],2,3,4,10,99;
+	channel_setgroup("#staff",.@staffs);
+
+Only for public and private channel.
+
+---------------------------------------
+
+*channel_chat "<chname>","<message>"{,<color>};
+
+Sends message to the channel.
+Returns 1 on success.
+
+	// Example if channel doesn't have alias
+	channel_chat(#rathena,"Hello World!"); // #rathena Hello World!
+
+	// Example if channel has alias
+	channel_chat(#rathena,"Hello World!"); // [rAthena] Hello World!
+
+---------------------------------------
+
+*channel_ban "<chname>",<char_id>;
+
+Ban player from a public or private channel.
+Channel's owner or group with PC_PERM_CHANNEL_ADMIN cannot be banned.
+Returns 1 on success.
+
+---------------------------------------
+
+*channel_unban "<chname>",<char_id>;
+
+Unban player from a public or private channel.
+Returns 1 on success.
+
+---------------------------------------
+
+*channel_kick "<chname>",<char_id>;
+*channel_kick "<chname>","<char_name>";
+
+Kick player from a public or private channel.
+Channel's owner or group with PC_PERM_CHANNEL_ADMIN cannot be kicked.
+Returns 1 on success.
+
+---------------------------------------
+
+*channel_delete "<chname>";
+
+Delete an existing public or private channel. Cannot delete ally or
+local map channel.
+Returns 0 on success.
+
+---------------------------------------

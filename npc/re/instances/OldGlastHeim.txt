@@ -52,17 +52,17 @@ glast_01,204,273,6	script	Hugin#ghinstance	755,{
 			close;
 		case 2:
 			switch(instance_enter(.@md_name$)) {
-			case 3:
+			case IE_OTHER:
 				mes "An unknown error has occurred.";
 				close;
-			case 2:
+			case IE_NOINSTANCE:
 				mes "The memorial dungeon "+.@md_name$+" does not exist.";
 				mes "The party leader did not generate the dungeon yet.";
 				close;
-			case 1:
+			case IE_NOMEMBER:
 				mes "Only the registered members can enter the instance "+.@md_name$+".";
 				close;
-			case 0:
+			case IE_OK:
 				mapannounce "glast_01",strcharinfo(0)+", member of the party "+.@p_name$+" entered the instance "+.@md_name$+".",bc_map,"0x00ff99";
 				setquest 12317;
 				setquest 12318;

@@ -1080,327 +1080,327 @@ alberta,80,171,3	duplicate(HWFamiDup)	Familiar#06_hw05	799
 
 // Event Lude Monster Spawns
 //============================================================
-ra_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_fild03,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_fild04,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_fild05,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_fild06,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_fild07,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_fild08,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_fild09,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_fild10,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_fild11,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_fild12,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_fild13,0,0,0,0	monster	Lude	1812,3,0,0,0
+ra_fild01,0,0	monster	Lude	1812,3
+ra_fild02,0,0	monster	Lude	1812,3
+ra_fild03,0,0	monster	Lude	1812,3
+ra_fild04,0,0	monster	Lude	1812,3
+ra_fild05,0,0	monster	Lude	1812,3
+ra_fild06,0,0	monster	Lude	1812,3
+ra_fild07,0,0	monster	Lude	1812,3
+ra_fild08,0,0	monster	Lude	1812,3
+ra_fild09,0,0	monster	Lude	1812,3
+ra_fild10,0,0	monster	Lude	1812,3
+ra_fild11,0,0	monster	Lude	1812,3
+ra_fild12,0,0	monster	Lude	1812,3
+ra_fild13,0,0	monster	Lude	1812,3
 
-ra_san01,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_san02,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_san03,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_san04,0,0,0,0	monster	Lude	1812,3,0,0,0
-ra_san05,0,0,0,0	monster	Lude	1812,3,0,0,0
+ra_san01,0,0	monster	Lude	1812,3
+ra_san02,0,0	monster	Lude	1812,3
+ra_san03,0,0	monster	Lude	1812,3
+ra_san04,0,0	monster	Lude	1812,3
+ra_san05,0,0	monster	Lude	1812,3
 
-ice_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-ice_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-ice_dun03,0,0,0,0	monster	Lude	1812,3,0,0,0
+ice_dun01,0,0	monster	Lude	1812,3
+ice_dun02,0,0	monster	Lude	1812,3
+ice_dun03,0,0	monster	Lude	1812,3
 
-odin_tem01,0,0,0,0	monster	Lude	1812,3,0,0,0
-odin_tem02,0,0,0,0	monster	Lude	1812,3,0,0,0
-odin_tem03,0,0,0,0	monster	Lude	1812,3,0,0,0
+odin_tem01,0,0	monster	Lude	1812,3
+odin_tem02,0,0	monster	Lude	1812,3
+odin_tem03,0,0	monster	Lude	1812,3
 
-kh_kiehl01,0,0,0,0	monster	Lude	1812,3,0,0,0
+kh_kiehl01,0,0	monster	Lude	1812,3
 
-kh_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-kh_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
+kh_dun01,0,0	monster	Lude	1812,3
+kh_dun02,0,0	monster	Lude	1812,3
 
-yuno_fild06,0,0,0,0	monster	Lude	1812,3,0,0,0
-yuno_fild10,0,0,0,0	monster	Lude	1812,3,0,0,0
+yuno_fild06,0,0	monster	Lude	1812,3
+yuno_fild10,0,0	monster	Lude	1812,3
 
-ein_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-ein_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
-ein_fild05,0,0,0,0	monster	Lude	1812,3,0,0,0
+ein_fild01,0,0	monster	Lude	1812,3
+ein_fild02,0,0	monster	Lude	1812,3
+ein_fild05,0,0	monster	Lude	1812,3
 
-hu_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-hu_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
-hu_fild03,0,0,0,0	monster	Lude	1812,3,0,0,0
-hu_fild04,0,0,0,0	monster	Lude	1812,3,0,0,0
-hu_fild05,0,0,0,0	monster	Lude	1812,3,0,0,0
-hu_fild06,0,0,0,0	monster	Lude	1812,3,0,0,0
-hu_fild07,0,0,0,0	monster	Lude	1812,3,0,0,0
+hu_fild01,0,0	monster	Lude	1812,3
+hu_fild02,0,0	monster	Lude	1812,3
+hu_fild03,0,0	monster	Lude	1812,3
+hu_fild04,0,0	monster	Lude	1812,3
+hu_fild05,0,0	monster	Lude	1812,3
+hu_fild06,0,0	monster	Lude	1812,3
+hu_fild07,0,0	monster	Lude	1812,3
 
-tha_t01,0,0,0,0	monster	Lude	1812,3,0,0,0
-tha_t02,0,0,0,0	monster	Lude	1812,3,0,0,0
-tha_t03,0,0,0,0	monster	Lude	1812,3,0,0,0
-tha_t04,0,0,0,0	monster	Lude	1812,3,0,0,0
-tha_t05,0,0,0,0	monster	Lude	1812,3,0,0,0
-tha_t06,0,0,0,0	monster	Lude	1812,3,0,0,0
-tha_t07,0,0,0,0	monster	Lude	1812,3,0,0,0
-tha_t08,0,0,0,0	monster	Lude	1812,3,0,0,0
-tha_t09,0,0,0,0	monster	Lude	1812,3,0,0,0
-tha_t10,0,0,0,0	monster	Lude	1812,3,0,0,0
-tha_t11,0,0,0,0	monster	Lude	1812,3,0,0,0
-tha_t12,0,0,0,0	monster	Lude	1812,3,0,0,0
+tha_t01,0,0	monster	Lude	1812,3
+tha_t02,0,0	monster	Lude	1812,3
+tha_t03,0,0	monster	Lude	1812,3
+tha_t04,0,0	monster	Lude	1812,3
+tha_t05,0,0	monster	Lude	1812,3
+tha_t06,0,0	monster	Lude	1812,3
+tha_t07,0,0	monster	Lude	1812,3
+tha_t08,0,0	monster	Lude	1812,3
+tha_t09,0,0	monster	Lude	1812,3
+tha_t10,0,0	monster	Lude	1812,3
+tha_t11,0,0	monster	Lude	1812,3
+tha_t12,0,0	monster	Lude	1812,3
 
-abyss_01,0,0,0,0	monster	Lude	1812,3,0,0,0
-abyss_02,0,0,0,0	monster	Lude	1812,3,0,0,0
-abyss_03,0,0,0,0	monster	Lude	1812,3,0,0,0
+abyss_01,0,0	monster	Lude	1812,3
+abyss_02,0,0	monster	Lude	1812,3
+abyss_03,0,0	monster	Lude	1812,3
 
-juperos_01,0,0,0,0	monster	Lude	1812,3,0,0,0
-juperos_02,0,0,0,0	monster	Lude	1812,3,0,0,0
-jupe_core,0,0,0,0	monster	Lude	1812,3,0,0,0
+juperos_01,0,0	monster	Lude	1812,3
+juperos_02,0,0	monster	Lude	1812,3
+jupe_core,0,0	monster	Lude	1812,3
 
-lhz_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-lhz_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-lhz_dun03,0,0,0,0	monster	Lude	1812,3,0,0,0
-lhz_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
+lhz_dun01,0,0	monster	Lude	1812,3
+lhz_dun02,0,0	monster	Lude	1812,3
+lhz_dun03,0,0	monster	Lude	1812,3
+lhz_fild01,0,0	monster	Lude	1812,3
 
-lhz_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
-lhz_fild03,0,0,0,0	monster	Lude	1812,3,0,0,0
-ein_fild03,0,0,0,0	monster	Lude	1812,3,0,0,0
-ein_fild04,0,0,0,0	monster	Lude	1812,3,0,0,0
+lhz_fild02,0,0	monster	Lude	1812,3
+lhz_fild03,0,0	monster	Lude	1812,3
+ein_fild03,0,0	monster	Lude	1812,3
+ein_fild04,0,0	monster	Lude	1812,3
 
-ein_fild06,0,0,0,0	monster	Lude	1812,3,0,0,0
-ein_fild07,0,0,0,0	monster	Lude	1812,3,0,0,0
-ein_fild08,0,0,0,0	monster	Lude	1812,3,0,0,0
-ein_fild09,0,0,0,0	monster	Lude	1812,3,0,0,0
-ein_fild10,0,0,0,0	monster	Lude	1812,3,0,0,0
-ein_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-ein_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
+ein_fild06,0,0	monster	Lude	1812,3
+ein_fild07,0,0	monster	Lude	1812,3
+ein_fild08,0,0	monster	Lude	1812,3
+ein_fild09,0,0	monster	Lude	1812,3
+ein_fild10,0,0	monster	Lude	1812,3
+ein_dun01,0,0	monster	Lude	1812,3
+ein_dun02,0,0	monster	Lude	1812,3
 
-gefenia01,0,0,0,0	monster	Lude	1812,3,0,0,0
-gefenia02,0,0,0,0	monster	Lude	1812,3,0,0,0
-gefenia03,0,0,0,0	monster	Lude	1812,3,0,0,0
-gefenia04,0,0,0,0	monster	Lude	1812,3,0,0,0
+gefenia01,0,0	monster	Lude	1812,3
+gefenia02,0,0	monster	Lude	1812,3
+gefenia03,0,0	monster	Lude	1812,3
+gefenia04,0,0	monster	Lude	1812,3
 
-yuno_fild05,0,0,0,0	monster	Lude	1812,3,0,0,0
-yuno_fild07,0,0,0,0	monster	Lude	1812,3,0,0,0
-yuno_fild08,0,0,0,0	monster	Lude	1812,3,0,0,0
-yuno_fild09,0,0,0,0	monster	Lude	1812,3,0,0,0
-yuno_fild11,0,0,0,0	monster	Lude	1812,3,0,0,0
-yuno_fild12,0,0,0,0	monster	Lude	1812,3,0,0,0
+yuno_fild05,0,0	monster	Lude	1812,3
+yuno_fild07,0,0	monster	Lude	1812,3
+yuno_fild08,0,0	monster	Lude	1812,3
+yuno_fild09,0,0	monster	Lude	1812,3
+yuno_fild11,0,0	monster	Lude	1812,3
+yuno_fild12,0,0	monster	Lude	1812,3
 
-ayo_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-ayo_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
-ayo_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-ayo_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
+ayo_fild01,0,0	monster	Lude	1812,3
+ayo_fild02,0,0	monster	Lude	1812,3
+ayo_dun01,0,0	monster	Lude	1812,3
+ayo_dun02,0,0	monster	Lude	1812,3
 
-gon_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-gon_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-gon_dun03,0,0,0,0	monster	Lude	1812,3,0,0,0
+gon_dun01,0,0	monster	Lude	1812,3
+gon_dun02,0,0	monster	Lude	1812,3
+gon_dun03,0,0	monster	Lude	1812,3
 
-ama_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-ama_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-ama_dun03,0,0,0,0	monster	Lude	1812,3,0,0,0
+ama_dun01,0,0	monster	Lude	1812,3
+ama_dun02,0,0	monster	Lude	1812,3
+ama_dun03,0,0	monster	Lude	1812,3
 
-lou_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-lou_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-lou_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-lou_dun03,0,0,0,0	monster	Lude	1812,3,0,0,0
+lou_fild01,0,0	monster	Lude	1812,3
+lou_dun01,0,0	monster	Lude	1812,3
+lou_dun02,0,0	monster	Lude	1812,3
+lou_dun03,0,0	monster	Lude	1812,3
 
-um_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-um_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
-um_fild03,0,0,0,0	monster	Lude	1812,3,0,0,0
-um_fild04,0,0,0,0	monster	Lude	1812,3,0,0,0
-um_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-um_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-yggdrasil01,0,0,0,0	monster	Lude	1812,3,0,0,0
+um_fild01,0,0	monster	Lude	1812,3
+um_fild02,0,0	monster	Lude	1812,3
+um_fild03,0,0	monster	Lude	1812,3
+um_fild04,0,0	monster	Lude	1812,3
+um_dun01,0,0	monster	Lude	1812,3
+um_dun02,0,0	monster	Lude	1812,3
+yggdrasil01,0,0	monster	Lude	1812,3
 
-mag_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-mag_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
+mag_dun01,0,0	monster	Lude	1812,3
+mag_dun02,0,0	monster	Lude	1812,3
 
-beach_dun,0,0,0,0	monster	Lude	1812,3,0,0,0
-beach_dun2,0,0,0,0	monster	Lude	1812,3,0,0,0
-beach_dun3,0,0,0,0	monster	Lude	1812,3,0,0,0
+beach_dun,0,0	monster	Lude	1812,3
+beach_dun2,0,0	monster	Lude	1812,3
+beach_dun3,0,0	monster	Lude	1812,3
 
-gon_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-ama_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-yuno_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-yuno_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
-yuno_fild03,0,0,0,0	monster	Lude	1812,3,0,0,0
-yuno_fild04,0,0,0,0	monster	Lude	1812,3,0,0,0
+gon_fild01,0,0	monster	Lude	1812,3
+ama_fild01,0,0	monster	Lude	1812,3
+yuno_fild01,0,0	monster	Lude	1812,3
+yuno_fild02,0,0	monster	Lude	1812,3
+yuno_fild03,0,0	monster	Lude	1812,3
+yuno_fild04,0,0	monster	Lude	1812,3
 
-prt_fild00,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_fild03,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_fild04,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_fild05,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_fild06,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_fild07,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_fild08,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_fild09,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_fild10,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_fild11,0,0,0,0	monster	Lude	1812,3,0,0,0
+prt_fild00,0,0	monster	Lude	1812,3
+prt_fild01,0,0	monster	Lude	1812,3
+prt_fild02,0,0	monster	Lude	1812,3
+prt_fild03,0,0	monster	Lude	1812,3
+prt_fild04,0,0	monster	Lude	1812,3
+prt_fild05,0,0	monster	Lude	1812,3
+prt_fild06,0,0	monster	Lude	1812,3
+prt_fild07,0,0	monster	Lude	1812,3
+prt_fild08,0,0	monster	Lude	1812,3
+prt_fild09,0,0	monster	Lude	1812,3
+prt_fild10,0,0	monster	Lude	1812,3
+prt_fild11,0,0	monster	Lude	1812,3
 
-moc_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild03,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild04,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild05,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild06,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild07,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild08,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild09,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild10,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild11,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild12,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild13,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild14,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild15,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild16,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild17,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_fild18,0,0,0,0	monster	Lude	1812,3,0,0,0
+moc_fild01,0,0	monster	Lude	1812,3
+moc_fild02,0,0	monster	Lude	1812,3
+moc_fild03,0,0	monster	Lude	1812,3
+moc_fild04,0,0	monster	Lude	1812,3
+moc_fild05,0,0	monster	Lude	1812,3
+moc_fild06,0,0	monster	Lude	1812,3
+moc_fild07,0,0	monster	Lude	1812,3
+moc_fild08,0,0	monster	Lude	1812,3
+moc_fild09,0,0	monster	Lude	1812,3
+moc_fild10,0,0	monster	Lude	1812,3
+moc_fild11,0,0	monster	Lude	1812,3
+moc_fild12,0,0	monster	Lude	1812,3
+moc_fild13,0,0	monster	Lude	1812,3
+moc_fild14,0,0	monster	Lude	1812,3
+moc_fild15,0,0	monster	Lude	1812,3
+moc_fild16,0,0	monster	Lude	1812,3
+moc_fild17,0,0	monster	Lude	1812,3
+moc_fild18,0,0	monster	Lude	1812,3
 
-pay_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_fild03,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_fild04,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_fild05,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_fild06,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_fild07,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_fild08,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_fild09,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_fild10,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_fild11,0,0,0,0	monster	Lude	1812,3,0,0,0
+pay_fild01,0,0	monster	Lude	1812,3
+pay_fild02,0,0	monster	Lude	1812,3
+pay_fild03,0,0	monster	Lude	1812,3
+pay_fild04,0,0	monster	Lude	1812,3
+pay_fild05,0,0	monster	Lude	1812,3
+pay_fild06,0,0	monster	Lude	1812,3
+pay_fild07,0,0	monster	Lude	1812,3
+pay_fild08,0,0	monster	Lude	1812,3
+pay_fild09,0,0	monster	Lude	1812,3
+pay_fild10,0,0	monster	Lude	1812,3
+pay_fild11,0,0	monster	Lude	1812,3
 
-gef_fild00,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild03,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild04,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild05,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild06,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild07,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild08,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild09,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild10,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild11,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild12,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild13,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_fild14,0,0,0,0	monster	Lude	1812,3,0,0,0
+gef_fild00,0,0	monster	Lude	1812,3
+gef_fild01,0,0	monster	Lude	1812,3
+gef_fild02,0,0	monster	Lude	1812,3
+gef_fild03,0,0	monster	Lude	1812,3
+gef_fild04,0,0	monster	Lude	1812,3
+gef_fild05,0,0	monster	Lude	1812,3
+gef_fild06,0,0	monster	Lude	1812,3
+gef_fild07,0,0	monster	Lude	1812,3
+gef_fild08,0,0	monster	Lude	1812,3
+gef_fild09,0,0	monster	Lude	1812,3
+gef_fild10,0,0	monster	Lude	1812,3
+gef_fild11,0,0	monster	Lude	1812,3
+gef_fild12,0,0	monster	Lude	1812,3
+gef_fild13,0,0	monster	Lude	1812,3
+gef_fild14,0,0	monster	Lude	1812,3
 
-cmd_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
-cmd_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
-cmd_fild03,0,0,0,0	monster	Lude	1812,3,0,0,0
-cmd_fild04,0,0,0,0	monster	Lude	1812,3,0,0,0
-cmd_fild05,0,0,0,0	monster	Lude	1812,3,0,0,0
-cmd_fild06,0,0,0,0	monster	Lude	1812,3,0,0,0
-cmd_fild07,0,0,0,0	monster	Lude	1812,3,0,0,0
-cmd_fild08,0,0,0,0	monster	Lude	1812,3,0,0,0
-cmd_fild09,0,0,0,0	monster	Lude	1812,3,0,0,0
+cmd_fild01,0,0	monster	Lude	1812,3
+cmd_fild02,0,0	monster	Lude	1812,3
+cmd_fild03,0,0	monster	Lude	1812,3
+cmd_fild04,0,0	monster	Lude	1812,3
+cmd_fild05,0,0	monster	Lude	1812,3
+cmd_fild06,0,0	monster	Lude	1812,3
+cmd_fild07,0,0	monster	Lude	1812,3
+cmd_fild08,0,0	monster	Lude	1812,3
+cmd_fild09,0,0	monster	Lude	1812,3
 
-mjolnir_01,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjolnir_02,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjolnir_03,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjolnir_04,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjolnir_05,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjolnir_06,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjolnir_07,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjolnir_08,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjolnir_09,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjolnir_10,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjolnir_11,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjolnir_12,0,0,0,0	monster	Lude	1812,3,0,0,0
+mjolnir_01,0,0	monster	Lude	1812,3
+mjolnir_02,0,0	monster	Lude	1812,3
+mjolnir_03,0,0	monster	Lude	1812,3
+mjolnir_04,0,0	monster	Lude	1812,3
+mjolnir_05,0,0	monster	Lude	1812,3
+mjolnir_06,0,0	monster	Lude	1812,3
+mjolnir_07,0,0	monster	Lude	1812,3
+mjolnir_08,0,0	monster	Lude	1812,3
+mjolnir_09,0,0	monster	Lude	1812,3
+mjolnir_10,0,0	monster	Lude	1812,3
+mjolnir_11,0,0	monster	Lude	1812,3
+mjolnir_12,0,0	monster	Lude	1812,3
 
-xmas_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
+xmas_fild01,0,0	monster	Lude	1812,3
 
-sec_in02,0,0,0,0	monster	Lude	1812,3,0,0,0
+sec_in02,0,0	monster	Lude	1812,3
 
-gl_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-gl_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
+gl_dun02,0,0	monster	Lude	1812,3
+gl_dun01,0,0	monster	Lude	1812,3
 
-gl_knt02,0,0,0,0	monster	Lude	1812,3,0,0,0
-gl_knt01,0,0,0,0	monster	Lude	1812,3,0,0,0
+gl_knt02,0,0	monster	Lude	1812,3
+gl_knt01,0,0	monster	Lude	1812,3
 
-gl_step,0,0,0,0	monster	Lude	1812,3,0,0,0
+gl_step,0,0	monster	Lude	1812,3
 
-gl_sew04,0,0,0,0	monster	Lude	1812,3,0,0,0
-gl_sew03,0,0,0,0	monster	Lude	1812,3,0,0,0
-gl_sew02,0,0,0,0	monster	Lude	1812,3,0,0,0
-gl_sew01,0,0,0,0	monster	Lude	1812,3,0,0,0
+gl_sew04,0,0	monster	Lude	1812,3
+gl_sew03,0,0	monster	Lude	1812,3
+gl_sew02,0,0	monster	Lude	1812,3
+gl_sew01,0,0	monster	Lude	1812,3
 
-gl_chyard,0,0,0,0	monster	Lude	1812,3,0,0,0
-gl_church,0,0,0,0	monster	Lude	1812,3,0,0,0
+gl_chyard,0,0	monster	Lude	1812,3
+gl_church,0,0	monster	Lude	1812,3
 
-glast_01,0,0,0,0	monster	Lude	1812,3,0,0,0
+glast_01,0,0	monster	Lude	1812,3
 
-gl_prison1,0,0,0,0	monster	Lude	1812,3,0,0,0
-gl_prison,0,0,0,0	monster	Lude	1812,3,0,0,0
+gl_prison1,0,0	monster	Lude	1812,3
+gl_prison,0,0	monster	Lude	1812,3
 
-gl_in01,0,0,0,0	monster	Lude	1812,3,0,0,0
+gl_in01,0,0	monster	Lude	1812,3
 
-gl_cas02,0,0,0,0	monster	Lude	1812,3,0,0,0
-gl_cas01,0,0,0,0	monster	Lude	1812,3,0,0,0
+gl_cas02,0,0	monster	Lude	1812,3
+gl_cas01,0,0	monster	Lude	1812,3
 
-tur_dun04,0,0,0,0	monster	Lude	1812,3,0,0,0
-tur_dun03,0,0,0,0	monster	Lude	1812,3,0,0,0
-tur_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-tur_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
+tur_dun04,0,0	monster	Lude	1812,3
+tur_dun03,0,0	monster	Lude	1812,3
+tur_dun02,0,0	monster	Lude	1812,3
+tur_dun01,0,0	monster	Lude	1812,3
 
-alde_dun04,0,0,0,0	monster	Lude	1812,3,0,0,0
-alde_dun03,0,0,0,0	monster	Lude	1812,3,0,0,0
-alde_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-alde_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
+alde_dun04,0,0	monster	Lude	1812,3
+alde_dun03,0,0	monster	Lude	1812,3
+alde_dun02,0,0	monster	Lude	1812,3
+alde_dun01,0,0	monster	Lude	1812,3
 
-c_tower1,0,0,0,0	monster	Lude	1812,3,0,0,0
-c_tower2,0,0,0,0	monster	Lude	1812,3,0,0,0
-c_tower3,0,0,0,0	monster	Lude	1812,3,0,0,0
-c_tower4,0,0,0,0	monster	Lude	1812,3,0,0,0
+c_tower1,0,0	monster	Lude	1812,3
+c_tower2,0,0	monster	Lude	1812,3
+c_tower3,0,0	monster	Lude	1812,3
+c_tower4,0,0	monster	Lude	1812,3
 
-in_sphinx5,0,0,0,0	monster	Lude	1812,3,0,0,0
-in_sphinx4,0,0,0,0	monster	Lude	1812,3,0,0,0
-in_sphinx3,0,0,0,0	monster	Lude	1812,3,0,0,0
-in_sphinx2,0,0,0,0	monster	Lude	1812,3,0,0,0
-in_sphinx1,0,0,0,0	monster	Lude	1812,3,0,0,0
+in_sphinx5,0,0	monster	Lude	1812,3
+in_sphinx4,0,0	monster	Lude	1812,3
+in_sphinx3,0,0	monster	Lude	1812,3
+in_sphinx2,0,0	monster	Lude	1812,3
+in_sphinx1,0,0	monster	Lude	1812,3
 
-prt_maze03,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_maze02,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_maze01,0,0,0,0	monster	Lude	1812,3,0,0,0
+prt_maze03,0,0	monster	Lude	1812,3
+prt_maze02,0,0	monster	Lude	1812,3
+prt_maze01,0,0	monster	Lude	1812,3
 
-treasure02,0,0,0,0	monster	Lude	1812,3,0,0,0
-treasure01,0,0,0,0	monster	Lude	1812,3,0,0,0
+treasure02,0,0	monster	Lude	1812,3
+treasure01,0,0	monster	Lude	1812,3
 
-moc_pryd06,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_pryd05,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_pryd04,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_pryd03,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_pryd02,0,0,0,0	monster	Lude	1812,3,0,0,0
-moc_pryd01,0,0,0,0	monster	Lude	1812,3,0,0,0
+moc_pryd06,0,0	monster	Lude	1812,3
+moc_pryd05,0,0	monster	Lude	1812,3
+moc_pryd04,0,0	monster	Lude	1812,3
+moc_pryd03,0,0	monster	Lude	1812,3
+moc_pryd02,0,0	monster	Lude	1812,3
+moc_pryd01,0,0	monster	Lude	1812,3
 
-gef_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-gef_dun00,0,0,0,0	monster	Lude	1812,3,0,0,0
+gef_dun02,0,0	monster	Lude	1812,3
+gef_dun01,0,0	monster	Lude	1812,3
+gef_dun00,0,0	monster	Lude	1812,3
 
-iz_dun00,0,0,0,0	monster	Lude	1812,3,0,0,0
-iz_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-iz_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-iz_dun03,0,0,0,0	monster	Lude	1812,3,0,0,0
-iz_dun04,0,0,0,0	monster	Lude	1812,3,0,0,0
+iz_dun00,0,0	monster	Lude	1812,3
+iz_dun01,0,0	monster	Lude	1812,3
+iz_dun02,0,0	monster	Lude	1812,3
+iz_dun03,0,0	monster	Lude	1812,3
+iz_dun04,0,0	monster	Lude	1812,3
 
-pay_dun00,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_dun03,0,0,0,0	monster	Lude	1812,3,0,0,0
-pay_dun04,0,0,0,0	monster	Lude	1812,3,0,0,0
+pay_dun00,0,0	monster	Lude	1812,3
+pay_dun01,0,0	monster	Lude	1812,3
+pay_dun02,0,0	monster	Lude	1812,3
+pay_dun03,0,0	monster	Lude	1812,3
+pay_dun04,0,0	monster	Lude	1812,3
 
-xmas_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-xmas_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
+xmas_dun02,0,0	monster	Lude	1812,3
+xmas_dun01,0,0	monster	Lude	1812,3
 
-anthell02,0,0,0,0	monster	Lude	1812,3,0,0,0
-anthell01,0,0,0,0	monster	Lude	1812,3,0,0,0
+anthell02,0,0	monster	Lude	1812,3
+anthell01,0,0	monster	Lude	1812,3
 
-orcsdun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-orcsdun01,0,0,0,0	monster	Lude	1812,3,0,0,0
+orcsdun02,0,0	monster	Lude	1812,3
+orcsdun01,0,0	monster	Lude	1812,3
 
-mjo_dun03,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjo_dun02,0,0,0,0	monster	Lude	1812,3,0,0,0
-mjo_dun01,0,0,0,0	monster	Lude	1812,3,0,0,0
+mjo_dun03,0,0	monster	Lude	1812,3
+mjo_dun02,0,0	monster	Lude	1812,3
+mjo_dun01,0,0	monster	Lude	1812,3
 
-prt_sewb4,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_sewb3,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_sewb2,0,0,0,0	monster	Lude	1812,3,0,0,0
-prt_sewb1,0,0,0,0	monster	Lude	1812,3,0,0,0
+prt_sewb4,0,0	monster	Lude	1812,3
+prt_sewb3,0,0	monster	Lude	1812,3
+prt_sewb2,0,0	monster	Lude	1812,3
+prt_sewb1,0,0	monster	Lude	1812,3
 
-nif_fild01,0,0,0,0	monster	Lude	1812,3,0,0,0
+nif_fild01,0,0	monster	Lude	1812,3
 
-nif_fild02,0,0,0,0	monster	Lude	1812,3,0,0,0
+nif_fild02,0,0	monster	Lude	1812,3

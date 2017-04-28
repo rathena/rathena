@@ -242,7 +242,7 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 	mes "[Daora]";
 	if (Class == Job_Assassin || Class == Job_Assassin_Cross || Class == Job_Baby_Assassin) {
 		if (job_3rd_gc < 4) {
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Oh~ you're good-looking!";
 				mes "So, what do you want?";
 			} else {
@@ -739,7 +739,7 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 			close;
 		}
 	} else if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Cross) {
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Oh~ you're good-looking~!";
 			mes "It's worthwhile to open a pub~";
 			mes "I can feel fruitful labors whenever I see a guy like you~";
@@ -772,7 +772,7 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 			close;
 		case 3:
 			mes "[Daora]";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Uh... Umm...";
 				mes "It's complicated order. but I don't have any choice since you want it.";
 				next;
@@ -797,7 +797,7 @@ job3_guil01,82,95,3	script	Daora#3rdgc02	940,{
 			}
 		}
 	} else {
-		if (Sex == 1) {
+		if (Sex == SEX_MALE) {
 			mes "Oh~ you're good-looking!";
 			mes "So, what do you want?";
 		}
@@ -1200,7 +1200,7 @@ ve_in,228,108,3	script	Waitress#3rdgc04	80,{
 					mes "What? My name?";
 					mes "Are you hitting on me?";
 					mes "Don't do that.";
-					if (Sex) mes "You are not my type.";
+					if (Sex == SEX_MALE) mes "You are not my type.";
 					else mes "I don't swing that way.";
 					close;
 				case 3:
@@ -2007,7 +2007,7 @@ veins,223,180,3	script	Girl#3rdgc09	941,{
 				}
 				next;
 				mes "[Melissa]";
-				mes "Hi, "+((Sex)?"brother":"sister")+"~ Let me collect all of the information you've provided...";
+				mes "Hi, "+((Sex == SEX_MALE)?"brother":"sister")+"~ Let me collect all of the information you've provided...";
 				next;
 				mes "- She begins to murmur and gestures toward the sky. Her hair springs up as she says... -";
 				next;

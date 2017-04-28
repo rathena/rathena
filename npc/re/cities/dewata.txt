@@ -537,7 +537,7 @@ dewata,89,191,6	script	Small Shrine#dew1	844,{
 			next;
 		} else if (.@stat & 128) {
 			mes "- The shrine envelops you in a loving aura. -";
-			if ((Sex == 0 && compare(.@wish$,.@wishes$[26])) || (Sex == 1 && compare(.@wish$,.@wishes$[27])))
+			if ((Sex == SEX_FEMALE && compare(.@wish$,.@wishes$[26])) || (Sex == SEX_MALE && compare(.@wish$,.@wishes$[27])))
 				specialeffect2 EF_LIGHTSPHERE;
 			next;
 		}
@@ -738,7 +738,7 @@ OnTouch:
 dewata,269,208,4	script	Little Kid in Town#dew	538,2,3,{
 OnTouch:
 	mes "[Kid]";
-	mes "Hey "+((Sex)?"bro":"sis")+", look at that man!";
+	mes "Hey "+((Sex == SEX_MALE)?"bro":"sis")+", look at that man!";
 	next;
 	mes "[Kid]";
 	mes "He's been lying there for a week doin' nothin'...";

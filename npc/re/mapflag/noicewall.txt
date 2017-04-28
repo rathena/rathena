@@ -1,15 +1,10 @@
 //===== rAthena Script =======================================
-//= Mapflag: Disable Ice Wall.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
-//===== Description: ========================================= 
+//= Mapflag: Disables Ice Wall.
+//===== Description: =========================================
 //= Blocks usage of WZ_ICEWALL.
-//===== Additional Comments: ================================= 
+//===== Changelogs: ==========================================
 //= 1.0 Renewal split. [Euphy]
+//= 1.1 Added WOE:TE maps [Cydh]
 //============================================================
 
 // Misty Forest Labyrinth ===========
@@ -37,6 +32,21 @@
 // Inside Eclage ===========
 1@ecl	mapflag	noicewall
 
+// Horror Toy Factory
+1@xm_d	mapflag	noicewall
+
 // Heroes' Trail Part 1 =======
 1@sara	mapflag	noicewall
 1@face	mapflag	noicewall
+
+// WOE:TE Maps ===================
+te_prtcas01	mapflag	noicewall
+te_prtcas02	mapflag	noicewall
+te_prtcas03	mapflag	noicewall
+te_prtcas04	mapflag	noicewall
+te_prtcas05	mapflag	noicewall
+te_aldecas1	mapflag	noicewall
+te_aldecas2	mapflag	noicewall
+te_aldecas3	mapflag	noicewall
+te_aldecas4	mapflag	noicewall
+te_aldecas5	mapflag	noicewall

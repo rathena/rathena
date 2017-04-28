@@ -101,6 +101,30 @@ AC_ARG_ENABLE(
 
 
 #
+# VIP
+#
+AC_ARG_ENABLE(
+	[vip],
+	AC_HELP_STRING(
+		[--enable-vip@<:@=ARG@:>@],
+		[
+			Compiles serv with vip features. (disabled by default)
+			(available options: yes, no)
+		]
+	),
+	[
+		enable_vip="$enableval"
+		case $enableval in
+			"no");;
+			"yes");;
+			*) AC_MSG_ERROR([[invalid argument --enable-vip=$enableval... stopping]]);;
+		esac
+	],
+	[enable_vip="no"]
+)
+
+
+#
 # warn
 #
 AC_ARG_ENABLE(
@@ -996,6 +1020,19 @@ case $enable_prere in
 		;;
 	"yes")
 		CPPFLAGS="$CPPFLAGS -DPRERE"
+		;;
+esac
+
+#
+# VIP
+#
+case $enable_vip in
+	"no")
+		# default value
+		CPPFLAGS="$CPPFLAGS"
+		;;
+	"yes")
+		CPPFLAGS="$CPPFLAGS -DVIP_ENABLE"
 		;;
 esac
 

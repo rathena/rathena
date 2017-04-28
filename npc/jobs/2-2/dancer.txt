@@ -133,7 +133,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		cutin "",255;
 		end;
 	}
-	if (DANC_Q == 0 && Sex == 0 && BaseJob == Job_Archer) {
+	if (DANC_Q == 0 && Sex == SEX_FEMALE && BaseJob == Job_Archer) {
 		cutin "job_dancer_eir01",2;
 		mes "[Aile]";
 		mes "Welcome~!";
@@ -209,7 +209,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		cutin "",255;
 		end;
 	}
-	else if (Sex == 1) {
+	else if (Sex == SEX_MALE) {
 		cutin "job_dancer_eir03",2;
 		mes "[Aile]";
 		mes "Welco--Mmm?";
@@ -1309,7 +1309,7 @@ job_duncer,69,110,0	duplicate(StepTrigger)	dance#cen	-1,1,1
 
 job_duncer,10,10,0	script	dance#poring	-1,{
 OnEnable:
-	monster "job_duncer",69,106,"Poring",1002,1,"dance#poring::OnMyMobDead";
+	areamonster "job_duncer",68,105,70,107,"Poring",1002,1,"dance#poring::OnMyMobDead";
 	end;
 
 OnMyMobDead:
