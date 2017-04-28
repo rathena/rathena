@@ -18,6 +18,7 @@ static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
 static DBMap *itemdb_group; /// Item Group DB
 static DBMap *itemdb_randomopt; /// Random option DB
+static DBMap *itemdb_randomopt_group; /// Random option group DB
 
 struct item_data *dummy_item; /// This is the default dummy item used for non-existant items. [Skotlex]
 
@@ -1668,6 +1669,79 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 }
 
 /**
+ * Clear Item Random Option Group from memory
+ * @author [Cydh]
+ **/
+static int itemdb_randomopt_group_free(DBKey key, DBData *data, va_list ap) {
+	struct s_random_opt_group *g = (struct s_random_opt_group *)db_data2ptr(data);
+	if (!g)
+		return 0;
+	if (g->entries)
+		aFree(g->entries);
+	g->entries = NULL;
+	aFree(g);
+	return 1;
+}
+
+/**
+ * Get Item Random Option Group from itemdb_randomopt_group MapDB
+ * @param id Random Option Group
+ * @return Random Option Group data or NULL if not found
+ * @author [Cydh]
+ **/
+struct s_random_opt_group *itemdb_randomopt_group_exists(int id) {
+	return (struct s_random_opt_group *)uidb_get(itemdb_randomopt_group, id);
+}
+
+/**
+ * Read Item Random Option Group from db file
+ * @author [Cydh]
+ **/
+static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
+	int id = 0, i;
+	unsigned short rate = (unsigned short)strtoul(str[1], NULL, 10);
+	struct s_random_opt_group *g = NULL;
+
+	if (!script_get_constant(str[0], &id)) {
+		ShowError("itemdb_read_randomopt_group: Invalid ID for Random Option Group '%s'.\n", str[0]);
+		return false;
+	}
+
+	if ((columns-2)%3 != 0) {
+		ShowError("itemdb_read_randomopt_group: Invalid column entries '%d'.\n", columns);
+		return false;
+	}
+
+	if (!(g = (struct s_random_opt_group *)uidb_get(itemdb_randomopt_group, id))) {
+		CREATE(g, struct s_random_opt_group, 1);
+		g->id = id;
+		g->total = 0;
+		g->entries = NULL;
+		uidb_put(itemdb_randomopt_group, g->id, g);
+	}
+
+	RECREATE(g->entries, struct s_random_opt_group_entry, g->total + rate);
+
+	for (i = g->total; i < (g->total + rate); i++) {
+		int j, k;
+		memset(&g->entries[i].option, 0, sizeof(g->entries[i].option));
+		for (j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k+=3) {
+			int randid = 0;
+			if (!script_get_constant(str[k], &randid) || !itemdb_randomopt_exists(randid)) {
+				ShowError("itemdb_read_randomopt_group: Invalid random group id '%s' in column %d!\n", str[k], k+1);
+				continue;
+			}
+			g->entries[i].option[j].id = randid;
+			g->entries[i].option[j].value = (short)strtoul(str[k+1], NULL, 10);
+			g->entries[i].option[j].param = (char)strtoul(str[k+2], NULL, 10);
+			j++;
+		}
+	}
+	g->total += rate;
+	return true;
+}
+
+/**
 * Read all item-related databases
 */
 static void itemdb_read(void) {
@@ -1718,6 +1792,7 @@ static void itemdb_read(void) {
 		sv_readdb(dbsubpath2, "item_delay.txt",         ',', 2, 3, -1, &itemdb_read_itemdelay, i);
 		sv_readdb(dbsubpath2, "item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore, i);
 		sv_readdb(dbsubpath2, "item_flag.txt",          ',', 2, 2, -1, &itemdb_read_flag, i);
+		sv_readdb(dbsubpath2, "item_randomopt_group.txt", ',', 5, 2+5*MAX_ITEM_RDM_OPT, -1, &itemdb_read_randomopt_group, i);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
@@ -1824,7 +1899,7 @@ void itemdb_reload_itemmob_data(void) {
 		struct mob_db *entry = mob_db(i);
 		int d, k;
 
-		for(d = 0; d < MAX_MOB_DROP; d++) {
+		for(d = 0; d < MAX_MOB_DROP_TOTAL; d++) {
 			struct item_data *id;
 			if( !entry->dropitem[d].nameid )
 				continue;
@@ -1855,6 +1930,7 @@ void itemdb_reload(void) {
 
 	itemdb_group->clear(itemdb_group, itemdb_group_free);
 	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
+	itemdb_randomopt_group->clear(itemdb_randomopt_group, itemdb_randomopt_group_free);
 	itemdb->clear(itemdb, itemdb_final_sub);
 	db_clear(itemdb_combo);
 	if (battle_config.feature_roulette)
@@ -1899,6 +1975,7 @@ void do_final_itemdb(void) {
 	db_destroy(itemdb_combo);
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
 	itemdb_randomopt->destroy(itemdb_randomopt, itemdb_randomopt_free);
+	itemdb_randomopt_group->destroy(itemdb_randomopt_group, itemdb_randomopt_group_free);
 	itemdb->destroy(itemdb, itemdb_final_sub);
 	destroy_item_data(dummy_item);
 	if (battle_config.feature_roulette)
@@ -1913,6 +1990,7 @@ void do_init_itemdb(void) {
 	itemdb_combo = uidb_alloc(DB_OPT_BASE);
 	itemdb_group = uidb_alloc(DB_OPT_BASE);
 	itemdb_randomopt = uidb_alloc(DB_OPT_BASE);
+	itemdb_randomopt_group = uidb_alloc(DB_OPT_BASE);
 	itemdb_create_dummy();
 	itemdb_read();
 
