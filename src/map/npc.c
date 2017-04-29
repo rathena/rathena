@@ -2952,7 +2952,9 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	if( end == NULL )
 		return NULL;// (simple) parse error, don't continue
 
+	parser_current_npc_name = w3;
 	script = parse_script(script_start, filepath, strline(buffer,script_start-buffer), SCRIPT_USE_LABEL_DB);
+	parser_current_npc_name = NULL;
 	label_list = NULL;
 	label_list_num = 0;
 	if( script )
@@ -3673,7 +3675,9 @@ static const char* npc_parse_function(char* w1, char* w2, char* w3, char* w4, co
 	if( end == NULL )
 		return NULL;// (simple) parse error, don't continue
 
+	parser_current_npc_name = w3;
 	script = parse_script(script_start, filepath, strline(buffer,start-buffer), SCRIPT_RETURN_EMPTY_SCRIPT);
+	parser_current_npc_name = NULL;
 	if( script == NULL )// parse error, continue
 		return end;
 

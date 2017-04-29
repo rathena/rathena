@@ -20,6 +20,7 @@
 #include "showmsg.h"
 #include "core.h"
 #include "cli.h"
+#include "malloc.h"
 
 //map confs
 char* MAP_CONF_NAME;
@@ -37,6 +38,8 @@ char* LOGIN_CONF_NAME;
 //common conf (used by multiple serv)
 char* LAN_CONF_NAME; //char-login
 char* MSG_CONF_NAME_EN; //all
+char* TRANSLATION_CONF_FILE;
+char *lang_export_file;
 
 /**
  * Function to check if the specified option has an argument following it.
@@ -53,6 +56,12 @@ bool opt_has_next_value(const char* option, int i, int argc){
 		return false;
 	}
 
+	return true;
+}
+
+bool opt_has_next_value_(const char* option, int i, int argc){
+	if (i >= argc - 1)
+		return false;
 	return true;
 }
 
@@ -171,6 +180,12 @@ int cli_get_options(int argc, char ** argv) {
 				else if (strcmp(arg, "log-config") == 0) {
 					if (opt_has_next_value(arg, i, argc))
 						LOG_CONF_NAME = argv[++i];
+				} else if (strcmp(arg, "generate-translations") == 0) {
+					if (opt_has_next_value_(arg, i, argc))
+						lang_export_file = aStrdup(argv[++i]);
+					else
+						lang_export_file = aStrdup("./lang/generated_translations.pot");
+					runflag = CORE_ST_STOP;
 				}
 				else {
 					ShowError("Unknown option '%s'.\n", argv[i]);

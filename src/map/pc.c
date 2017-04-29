@@ -1336,9 +1336,7 @@ void pc_reg_received(struct map_session_data *sd)
 	sd->change_level_3rd = pc_readglobalreg(sd, add_str("jobchange_level_3rd"));
 	sd->die_counter = pc_readglobalreg(sd, add_str("PC_DIE_COUNTER"));
 
-	sd->langtype = pc_readaccountreg(sd, add_str("#langtype"));
-	if (msg_checklangtype(sd->langtype,true) < 0)
-		sd->langtype = 0; //invalid langtype reset to default
+	pc_set_language(sd, pc_readaccountreg(sd, add_str("#langtype")));
 
 	// Cash shop
 	sd->cashPoints = pc_readaccountreg(sd, add_str("#CASHPOINTS"));
@@ -12309,6 +12307,34 @@ void pc_set_costume_view(struct map_session_data *sd) {
 		clif_changelook(&sd->bl, LOOK_HEAD_TOP, sd->status.head_top);
 	if (robe != sd->status.robe)
 		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
+}
+
+/**
+ * Set language for player
+ * @param sd
+ * @param lang_id
+ * @return True if changed successfully, False if failed.
+ **/
+bool pc_set_language(struct map_session_data *sd, uint8 lang_id) {
+	nullpo_retr(false, sd);
+
+	if (lang_id < max_lang_id) {
+		char output[CHAT_SIZE_MAX];
+		pc_setaccountreg(sd, add_str("#langtype"), lang_id);
+		sd->lang_id = lang_id;
+		sprintf(output,msg_txt(sd,461),languages[lang_id]); // Language is now set to %s.
+		clif_displaymessage(sd->fd,output);
+		return true;
+	}
+
+	// On invalid
+	if (sd->lang_id != default_lang_id) {
+		pc_setaccountreg(sd, add_str("#langtype"), lang_id);
+		sd->lang_id = lang_id;
+	}
+
+	clif_displaymessage(sd->fd,msg_txt(sd,462)); // This language is currently disabled.
+	return false;
 }
 
 /*==========================================

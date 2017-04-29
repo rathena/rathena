@@ -14,10 +14,19 @@ struct map_session_data;
 //Note: The range is unlimited unless this define is set.
 //#define AUTOLOOT_DISTANCE AREA_SIZE
 
+#define MAX_MSG 1500
+#define msg_txt(sd, msg_number) atcommand_msgsd((sd), (msg_number))
+
 //global var
 extern char atcommand_symbol;
 extern char charcommand_symbol;
 extern int atcmd_binding_count;
+
+/**
+ * msg_table[lang_id][msg_id]
+ **/
+extern char*** msg_table;
+extern uint8 max_message_table;
 
 typedef enum {
 	COMMAND_ATCOMMAND = 1,
@@ -43,5 +52,13 @@ struct atcmd_binding_data {
 };
 struct atcmd_binding_data** atcmd_binding;
 struct atcmd_binding_data* get_atcommandbind_byname(const char* name);
+
+const char* atcommand_msg(int msg_number);
+const char* atcommand_msgsd(struct map_session_data *sd, int msg_number);
+void atcommand_expand_message_table(void);
+void atcommand_msg_set(uint8 lang_id, uint16 num, char *ptr);
+
+bool msg_config_read(const char *cfg_name, bool allow_override);
+void do_final_msg(void);
 
 #endif /* _ATCOMMAND_H_ */
