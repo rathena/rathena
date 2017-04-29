@@ -2357,9 +2357,9 @@ conch_in,59,29,5	script	Engineer#dorcon01	4_CAT_SAILOR5,{
 
 // in E_F
 conch_in,59,91,5	script	Passenger#dorcon04	4_F_ALCHE_A,{
-	npctalk "Heading to Midgarde? It's my first time in Lasagna and It's great, really! So I'm just going to stay here for good. I found a place to live and signed the papers, too!";
+	npctalk "Heading to Midgard? It's my first time in Lasagna and It's great, really! So I'm just going to stay here for good. I found a place to live and signed the papers, too!";
 	sleep2 2000;
-	npctalk "I'm on my way to pack up my stuff in Midgarde. It's great, really.";
+	npctalk "I'm on my way to pack up my stuff in Midgard. It's great, really.";
 	end;
 }
 
@@ -2393,11 +2393,11 @@ conch_in,137,98,3	script	Passenger#dorcon02	4_DR_F_01,{
 
 // in_P_O
 conch_in,169,70,3	script	Crewman#dorcon02	4_CAT_SAILOR2,{
-	npctalk "Midgarde has been discovered, so I wonder if there's any other place out there. Place where we've never been to and not on the map.";
+	npctalk "Midgard has been discovered, so I wonder if there's any other place out there. Place where we've never been to and not on the map.";
 	sleep2 2000;
 	npctalk "You think there's such a place?", "Crewman#dorcon03";
 	sleep2 2000;
-	npctalk "Before it was discovered, we had no idea Midgarde even existed. I'm sure there's a place out there and we just don't know it.";
+	npctalk "Before it was discovered, we had no idea Midgard even existed. I'm sure there's a place out there and we just don't know it.";
 	sleep2 2000;
 	npctalk "Do you think It's looking for us too?", "Crewman#dorcon03";
 	sleep2 2000;
