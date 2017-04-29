@@ -950,12 +950,10 @@ moc_fild20,354,183,3	script	Continental Guard#01::MocConGuard	707,3,3,{
 				getpartymember(getcharid(1));
 				set .@partymembercount,$@partymembercount;
 				copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
-				while (.@partymembercount >= 0) {
-					set .@name$,.@partymembername$[.@partymembercount];
-					if (isloggedin(getcharid(3,.@name$))) {
+				for(.@i = 0; .@i < .@partymembercount; .@i++) {
+					if (isloggedin(getcharid(3,.@partymembername$[.@i]))) {
 						set .@onlinemembers,.@onlinemembers + 1;
 					}
-					set .@partymembercount,.@partymembercount - 1;
 				}
 				if ((.@onlinemembers > 1) && (countitem(7826) > 0)) {
 					mes "[Continental Guard]";
@@ -1013,12 +1011,10 @@ moc_fild20,354,183,3	script	Continental Guard#01::MocConGuard	707,3,3,{
 		getpartymember(getcharid(1));
 		set .@partymembercount,$@partymembercount;
 		copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
-		while (.@partymembercount >= 0) {
-			set .@name$,.@partymembername$[.@partymembercount];
-			if (isloggedin(getcharid(3,.@name$))) {
+		for(.@i = 0; .@i < .@partymembercount; .@i++) {
+			if (isloggedin(getcharid(3,.@partymembername$[.@i]))) {
 				set .@onlinemembers,.@onlinemembers + 1;
 			}
-			set .@partymembercount,.@partymembercount - 1;
 		}
 		switch(select("Enter the First Field to Investigate:Enter the Second Field to Investigate:Return to Morroc's Accident Site:Cancel Conversation")) {
 		case 1:
