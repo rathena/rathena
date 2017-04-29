@@ -1280,6 +1280,7 @@ izlude,195,213,5	script	Con-Chliina Crewman#doi	4_M_MERCAT1,{
 		mes "Not enough? How about checking how much he has?";
 		close;
 	}
+	Zeny = Zeny - .@cost;
 	warp "lasagna",206,297;
 	end;
 }
@@ -1535,7 +1536,9 @@ lasagna,208,188,3	script	Cat Paw Service#lasagna	4_M_MERCAT1,4,4,{
 	case 1:
 		mes "[Cat Paw Commerce Group]";
 		mes "Saved, meow!";
-		close;	// todo
+		close2;
+		savepoint "lasagna",193,183,1,1;
+		end;
 	case 2:
 		if (getskilllv("SU_BASIC_SKILL") < 1) {
 			mes "[Cat Paw Commerce Group]";

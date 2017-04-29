@@ -14,7 +14,7 @@ lasagna,150,54,0	warp	lasagna#lasa_fild01_1	2,2,lasa_fild01,131,378
 lasa_fild01,341,375,0	warp	lasa_fild01#lasagna_2	2,2,lasagna,327,56
 lasagna,327,51,0	warp	lasagna#lasa_fild01_2	2,2,lasa_fild01,344,371
 
-lasagna,358,91,0	warp	lasagna#lasa_fild02	2,2,lasa_fild01,20,98
+lasagna,358,91,0	warp	lasagna#lasa_fild02	2,2,lasa_fild02,20,98
 lasa_fild02,16,98,0	warp	lasa_fild02#lasagna	2,2,lasagna,355,92
 
 // Boat
