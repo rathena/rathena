@@ -5853,6 +5853,8 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MH_STAHL_HORN:
 	case MH_NEEDLE_OF_PARALYZE:
 	case MH_SONIC_CRAW:
+	case MH_MIDNIGHT_FRENZY:
+	case MH_SILVERVEIN_RUSH:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 	case MH_TINDER_BREAKER:
@@ -11997,7 +11999,10 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case SC_FEINTBOMB: {
 			struct skill_unit_group *group = skill_unitsetting(src,skill_id,skill_lv,x,y,0); // Set bomb on current Position
 
-			map_foreachinrange(skill_mob_releasetarget, src, AREA_SIZE, BL_MOB, src, &group->unit->bl); // Release all targets against the caster.
+			if( group != NULL && group->unit != NULL ) {
+				// Release all targets against the caster.
+				map_foreachinrange(skill_mob_releasetarget, src, AREA_SIZE, BL_MOB, src, &group->unit->bl);
+			}
 			skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_IGNORE_NO_KNOCKBACK); // Don't stop the caster from backsliding if special_state.no_knockback is active
 			clif_skill_nodamage(src,src,skill_id,skill_lv,sc_start(src,src,type,100,skill_lv,skill_get_time2(skill_id,skill_lv)));
 		}
