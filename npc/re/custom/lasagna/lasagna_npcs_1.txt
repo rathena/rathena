@@ -1210,7 +1210,7 @@ OnInit:
 	end;
 }
 
--	shop	Cat Paw Shrimp Merchant#shop::doram_shrimp	-1,515:-1,567:-1,11602:-1
+-	shop	doram_shrimp	-1,515:-1,567:-1,11602:-1
 
 izlude,117,165,3	script	Cat Paw Shrimp Merchant#iz	4_M_MERCAT1,{
 	npctalk "Here are the shrimps, carrots and catnip!";	// npctalk should be attached to the player
@@ -2179,15 +2179,48 @@ lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
 	mes "Whoa, a new weapon! New power!";
 	mes "What are you going to give me? Do you have a lot of weapons? Can I search into them? Will you exchange it for <ITEM>Doram Token <INFO>25142</INFO></ITEM>?";
 	next;
-	.@menu$ = "Search";
-	while( select( .@menu$, "Cancel" ) == 1 ) {
-		if (countitem(25142) == 0) {
-			.@menu$ = "Search again";
-			mes "[Jogi Chara]";
-			mes "That's it?";
-			next;
+	if (select( "Search", "Cancel" ) == 1) {
+		setarray .@item_data[0],
+			1690, 1,
+			1691, 2,
+			1692, 3,
+			1693, 4,
+			1694, 1,
+			1695, 2,
+			1696, 3,
+			1697, 4;
+		.@total_item = getarraysize(.@item_data);
+
+		while(true) {
+			for ( .@i = 0; .@i < .@total_item; .@i += 2 ) {
+				if (countitem(.@item_id[.@i]) > 0)
+					break;
+			}
+			if (.@i == .@total_item) {
+				mes "[Jogi Chara]";
+				mes "That's it?";
+				next;
+				if (select( "Search again.", "Stop." ) == 2)
+					break;
+			}
+			else {
+				mes "[Jogi Chara]";
+				mes "Whoa! This is ^3131FF" + getitemname(.@item_id[.@i]) + "^000000!";
+				mes "Exchange it for " + .@item_data[.@i+1] + " <ITEM>Doram Token<INFO>25142</INFO></ITEM>! Please? Will you do it, please?";
+				next;
+				if (select( "Exchange", "Quit exchanging" ) == 2) {
+					mes "[Jogi Chara]";
+					mes "~Giggles~ We should see each other more often!";
+					close;
+				}
+				mes "[Jogi Chara]";
+				mes "Yay!! Thanks a mil!";
+				mes "Can I look for something else?";
+				delitem .@item_id[.@i],1;
+				getitem 25142,.@item_data[.@i+1];// Doram token
+				next;
+			}
 		}
-		// todo
 	}
 	mes "[Jogi Chara]";
 	mes "~Scoffs~ Alright, then.";
