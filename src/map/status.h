@@ -2051,7 +2051,7 @@ enum e_status_calc_weight_opt {
 * Required because players have two of these, one in status_data
 * and another for their left hand weapon. */
 struct weapon_atk {
-	unsigned short atk, atk2;
+	unsigned short atk, atk2, atk_disp, atk2_disp;
 	unsigned short range;
 	unsigned char ele;
 #ifdef RENEWAL
@@ -2076,19 +2076,22 @@ struct status_data {
 	short
 		str, agi, vit, int_, dex, luk;
 	unsigned short
-		batk,
+		batk, batk_disp,
 #ifdef RENEWAL
-		watk,
-		watk2,
+		watk, watk_disp,
+		watk2, watk2_disp,
 		eatk,
 #endif
 		matk_min, matk_max,
+		matk_min_disp, matk_max_disp,
 		speed,
 		amotion, adelay, dmotion;
 	enum e_mode mode;
 	short
 		hit, flee, cri, flee2,
+		hit_disp, flee_disp, cri_disp, flee2_disp,
 		def2, mdef2,
+		def2_disp, mdef2_disp,
 #ifdef RENEWAL_ASPD
 		aspd_rate2,
 #endif
@@ -2096,7 +2099,7 @@ struct status_data {
 	/**
 	 * defType is RENEWAL dependent and defined in src/map/config/data/const.h
 	 **/
-	defType def,mdef;
+	defType def, mdef, def_disp, mdef_disp;
 
 	unsigned char
 		def_ele, ele_lv,
@@ -2335,20 +2338,20 @@ unsigned short status_calc_vit(struct block_list *bl, struct status_change *sc, 
 unsigned short status_calc_int(struct block_list *bl, struct status_change *sc, int int_);
 unsigned short status_calc_dex(struct block_list *bl, struct status_change *sc, int dex);
 unsigned short status_calc_luk(struct block_list *bl, struct status_change *sc, int luk);
-unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc, int batk, bool display);
-unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc, int watk, bool display);
-unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc, int matk, bool display);
+unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc, int batk, unsigned short * batk_disp);
+unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc, int watk, unsigned short * watk_disp);
+unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc, int matk, unsigned short * matk_disp);
 #ifdef RENEWAL
 unsigned short status_calc_ematk(struct block_list *bl, struct status_change *sc, int matk);
 #endif
-signed short status_calc_hit(struct block_list *bl, struct status_change *sc, int hit, bool display);
-signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical, bool display);
-signed short status_calc_flee(struct block_list *bl, struct status_change *sc, int flee, bool display);
-signed short status_calc_flee2(struct block_list *bl, struct status_change *sc, int flee2, bool display);
-defType status_calc_def(struct block_list *bl, struct status_change *sc, int def, bool display);
-signed short status_calc_def2(struct block_list *, struct status_change *, int def2, bool display);
-defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef, bool display);
-signed short status_calc_mdef2(struct block_list *, struct status_change *, int mdef2, bool display);
+signed short status_calc_hit(struct block_list *bl, struct status_change *sc, int hit, signed short * hit_disp);
+signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical, signed short * crit_disp);
+signed short status_calc_flee(struct block_list *bl, struct status_change *sc, int flee, signed short * flee_disp);
+signed short status_calc_flee2(struct block_list *bl, struct status_change *sc, int flee2, signed short * flee2_disp);
+defType status_calc_def(struct block_list *bl, struct status_change *sc, int def, defType * def_disp);
+signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2, signed short * def2_disp);
+defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef, defType * mdef_disp);
+signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2, signed short * mdef2_disp);
 unsigned short status_calc_speed(struct block_list *bl, struct status_change *sc, int speed);
 #ifdef RENEWAL_ASPD
 short status_calc_aspd(struct block_list *bl, struct status_change *sc, bool fixed);

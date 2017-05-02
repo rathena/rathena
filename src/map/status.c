@@ -4696,33 +4696,33 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			temp += status->batk;
 			status->batk = cap_value(temp, 0, USHRT_MAX);
 		}
-		status->batk = status_calc_batk(bl, sc, status->batk, true);
+		status->batk = status_calc_batk(bl, sc, status->batk, &status->batk_disp);
 	}
 
 	if(flag&SCB_WATK) {
 #ifndef RENEWAL
-		status->rhw.atk = status_calc_watk(bl, sc, b_status->rhw.atk, true);
+		status->rhw.atk = status_calc_watk(bl, sc, b_status->rhw.atk, &status->rhw.atk_disp);
 		if (!sd) // Should not affect weapon refine bonus
-			status->rhw.atk2 = status_calc_watk(bl, sc, b_status->rhw.atk2, true);
+			status->rhw.atk2 = status_calc_watk(bl, sc, b_status->rhw.atk2, &status->rhw.atk2_disp);
 
 		if (sd && sd->bonus.weapon_atk_rate)
 			status->rhw.atk += status->rhw.atk * sd->bonus.weapon_atk_rate / 100;
 		if(b_status->lhw.atk) {
 			if (sd) {
 				sd->state.lr_flag = 1;
-				status->lhw.atk = status_calc_watk(bl, sc, b_status->lhw.atk, true);
+				status->lhw.atk = status_calc_watk(bl, sc, b_status->lhw.atk, &status->lhw.atk_disp);
 				sd->state.lr_flag = 0;
 			} else {
-				status->lhw.atk = status_calc_watk(bl, sc, b_status->lhw.atk, true);
-				status->lhw.atk2= status_calc_watk(bl, sc, b_status->lhw.atk2, true);
+				status->lhw.atk = status_calc_watk(bl, sc, b_status->lhw.atk, &status->lhw.atk_disp);
+				status->lhw.atk2= status_calc_watk(bl, sc, b_status->lhw.atk2, &status->lhw.atk2_disp);
 			}
 		}
 #else
 		if(!b_status->watk) { // We only have left-hand weapon
 			status->watk = 0;
-			status->watk2 = status_calc_watk(bl, sc, b_status->watk2, false);
+			status->watk2 = status_calc_watk(bl, sc, b_status->watk2, &status->watk2_disp);
 		} else
-			status->watk = status_calc_watk(bl, sc, b_status->watk, false);
+			status->watk = status_calc_watk(bl, sc, b_status->watk, &status->watk_disp);
 #endif
 	}
 
@@ -4732,13 +4732,13 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			&& status->luk == b_status->luk
 #endif
 			)
-			status->hit = status_calc_hit(bl, sc, b_status->hit, true);
+			status->hit = status_calc_hit(bl, sc, b_status->hit, &status->hit_disp);
 		else
 			status->hit = status_calc_hit(bl, sc, b_status->hit + (status->dex - b_status->dex)
 #ifdef RENEWAL
 			 + (status->luk/3 - b_status->luk/3)
 #endif
-			 , true);
+			 , &status->hit_disp);
 	}
 
 	if(flag&SCB_FLEE) {
@@ -4747,17 +4747,17 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			&& status->luk == b_status->luk
 #endif
 			)
-			status->flee = status_calc_flee(bl, sc, b_status->flee, true);
+			status->flee = status_calc_flee(bl, sc, b_status->flee, &status->flee_disp);
 		else
 			status->flee = status_calc_flee(bl, sc, b_status->flee +(status->agi - b_status->agi)
 #ifdef RENEWAL
 			+ (status->luk/5 - b_status->luk/5)
 #endif
-			, true);
+			, &status->flee_disp);
 	}
 
 	if(flag&SCB_DEF) {
-		status->def = status_calc_def(bl, sc, b_status->def, true);
+		status->def = status_calc_def(bl, sc, b_status->def, &status->def_disp);
 
 		if( bl->type&BL_HOM )
 			status->def += (status->vit/5 - b_status->vit/5);
@@ -4769,7 +4769,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			&& status->agi == b_status->agi
 #endif
 			)
-			status->def2 = status_calc_def2(bl, sc, b_status->def2, true);
+			status->def2 = status_calc_def2(bl, sc, b_status->def2, &status->def2_disp);
 		else
 			status->def2 = status_calc_def2(bl, sc, b_status->def2
 #ifdef RENEWAL
@@ -4777,11 +4777,11 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 #else
 			+ (status->vit - b_status->vit)
 #endif
-			, true);
+			, &status->def2_disp);
 	}
 
 	if(flag&SCB_MDEF) {
-		status->mdef = status_calc_mdef(bl, sc, b_status->mdef, true);
+		status->mdef = status_calc_mdef(bl, sc, b_status->mdef, &status->mdef_disp);
 
 		if( bl->type&BL_HOM )
 			status->mdef += (status->int_/5 - b_status->int_/5);
@@ -4793,7 +4793,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			&& status->dex == b_status->dex
 #endif
 			)
-			status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2, true);
+			status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2, &status->mdef2_disp);
 		else
 			status->mdef2 = status_calc_mdef2(bl, sc, b_status->mdef2 +(status->int_ - b_status->int_)
 #ifdef RENEWAL
@@ -4801,7 +4801,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 #else
 			+ ((status->vit - b_status->vit)>>1)
 #endif
-			, true);
+			, &status->mdef2_disp);
 	}
 
 	if(flag&SCB_SPEED) {
@@ -4820,20 +4820,20 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 	if(flag&SCB_CRI && b_status->cri) {
 		if (status->luk == b_status->luk)
-			status->cri = status_calc_critical(bl, sc, b_status->cri, true);
+			status->cri = status_calc_critical(bl, sc, b_status->cri, &status->cri_disp);
 		else
-			status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk), true);
+			status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk), &status->cri_disp);
 
 		/// After status_calc_critical so the bonus is applied despite if you have or not a sc bugreport:5240
-		if (battle_config.show_status_katar_crit && bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR)
+		if ( bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR)
 			status->cri <<= 1;
 	}
 
 	if(flag&SCB_FLEE2 && b_status->flee2) {
 		if (status->luk == b_status->luk)
-			status->flee2 = status_calc_flee2(bl, sc, b_status->flee2, true);
+			status->flee2 = status_calc_flee2(bl, sc, b_status->flee2, &status->flee2_disp);
 		else
-			status->flee2 = status_calc_flee2(bl, sc, b_status->flee2 +(status->luk - b_status->luk), true);
+			status->flee2 = status_calc_flee2(bl, sc, b_status->flee2 +(status->luk - b_status->luk), &status->flee2_disp);
 	}
 
 	if(flag&SCB_ATK_ELE) {
@@ -4984,8 +4984,8 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		}
 #endif
 
-		status->matk_max = status_calc_matk(bl, sc, status->matk_max, true);
-		status->matk_min = status_calc_matk(bl, sc, status->matk_min, true);
+		status->matk_max = status_calc_matk(bl, sc, status->matk_max, &status->matk_max_disp);
+		status->matk_min = status_calc_matk(bl, sc, status->matk_min, &status->matk_min_disp);
 	}
 
 	if(flag&SCB_ASPD) {
@@ -5694,19 +5694,22 @@ unsigned short status_calc_luk(struct block_list *bl, struct status_change *sc, 
  * @param bl: Object to change batk [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param batk: Initial batk
- * @param display: If the status change is displayed in the status window
+ * @param batk_disp: Return display value for the status window
  * @return modified batk with cap_value(batk,0,USHRT_MAX)
  */
-unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc, int batk, bool display)
+unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc, int batk, unsigned short * batk_disp)
 {
+	unsigned short hidden = 0;
+
 	if(!sc || !sc->count)
 		return cap_value(batk,0,USHRT_MAX);
 
-	if(!display) { // Status Changes that are hidden in the status window.
-		if(sc->data[SC_ATKPOTION])
-			batk += sc->data[SC_ATKPOTION]->val1;
-		return (unsigned short)cap_value(batk,0,USHRT_MAX);
-	}
+	// BEGIN Status Changes that are hidden in the status window.
+	hidden = batk; // temp
+	if(sc->data[SC_ATKPOTION])
+		batk += sc->data[SC_ATKPOTION]->val1;
+	hidden = batk - hidden;
+	// END Status Changes that are hidden in the status window.
 
 	if(sc->data[SC_BATKFOOD])
 		batk += sc->data[SC_BATKFOOD]->val1;
@@ -5770,7 +5773,12 @@ unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc,
 		batk += sc->data[SC_QUEST_BUFF3]->val1;
 	if (sc->data[SC_SHRIMP])
 		batk += batk * sc->data[SC_SHRIMP]->val2 / 100;
-
+	
+	if( batk_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*batk_disp = (unsigned short)cap_value(batk-hidden,0,USHRT_MAX);
+	}
 	return (unsigned short)cap_value(batk,0,USHRT_MAX);
 }
 
@@ -5779,21 +5787,24 @@ unsigned short status_calc_batk(struct block_list *bl, struct status_change *sc,
  * @param bl: Object to change watk [PC]
  * @param sc: Object's status change information
  * @param watk: Initial watk
- * @param display: If the status change is displayed in the status window
+ * @param watk_disp: Return display value for the status window
  * @return modified watk with cap_value(watk,0,USHRT_MAX)
  */
-unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc, int watk, bool display)
+unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc, int watk, unsigned short * watk_disp)
 {
+	unsigned short hidden = 0;
+
 	if(!sc || !sc->count)
 		return (unsigned short)cap_value(watk,0,USHRT_MAX);
 
-	if(!display) { // Status Changes that are hidden in the status window.
-		if(sc->data[SC_WATER_BARRIER])
-			watk -= sc->data[SC_WATER_BARRIER]->val2;
-		if(sc->data[SC_GT_CHANGE])
-			watk += sc->data[SC_GT_CHANGE]->val2;
-		return (unsigned short)cap_value(watk,0,USHRT_MAX);
-	}
+	// BEGIN Status Changes that are hidden in the status window.
+	hidden = watk; // temp
+	if(sc->data[SC_WATER_BARRIER])
+		watk -= sc->data[SC_WATER_BARRIER]->val2;
+	if(sc->data[SC_GT_CHANGE])
+		watk += sc->data[SC_GT_CHANGE]->val2;
+	hidden = watk - hidden;
+	// END Status Changes that are hidden in the status window.
 
 #ifndef RENEWAL
 	if(sc->data[SC_IMPOSITIO])
@@ -5872,6 +5883,11 @@ unsigned short status_calc_watk(struct block_list *bl, struct status_change *sc,
 	if (sc->data[SC_CATNIPPOWDER])
 		watk -= watk * sc->data[SC_CATNIPPOWDER]->val2 / 100;
 
+	if( watk_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*watk_disp = (unsigned short)cap_value(watk-hidden,0,USHRT_MAX);
+	}
 	return (unsigned short)cap_value(watk,0,USHRT_MAX);
 }
 
@@ -5930,19 +5946,23 @@ unsigned short status_calc_ematk(struct block_list *bl, struct status_change *sc
  * @param bl: Object to change matk [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param matk: Initial matk
- * @param display: If the status change is displayed in the status window
+ * @param matk_disp: Return display value for the status window
  * @return modified matk with cap_value(matk,0,USHRT_MAX)
  */
-unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc, int matk, bool display)
+unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc, int matk, unsigned short * matk_disp)
 {
+	unsigned short hidden = 0;
+
 	if(!sc || !sc->count)
 		return (unsigned short)cap_value(matk,0,USHRT_MAX);
 
-	if(!display) { // Status Changes that are hidden in the status window.
-		if(sc->data[SC_MINDBREAKER])
-			matk += matk * sc->data[SC_MINDBREAKER]->val2 / 100;
-		return (unsigned short)cap_value(matk,0,USHRT_MAX);
-	}
+	// BEGIN Status Changes that are hidden in the status window.
+	hidden = matk; // temp
+	if(sc->data[SC_MINDBREAKER])
+		matk += matk * sc->data[SC_MINDBREAKER]->val2 / 100;
+	hidden = matk - hidden;
+	// END Status Changes that are hidden in the status window.
+	
 
 #ifndef RENEWAL
 	/// Take note fixed value first before % modifiers [PRE-RENEWAL]
@@ -5990,6 +6010,11 @@ unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc,
 	if (sc->data[SC_SHRIMP])
 		matk += matk * sc->data[SC_SHRIMP]->val2 / 100;
 
+	if( matk_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*matk_disp = (unsigned short)cap_value(matk-hidden,0,USHRT_MAX);
+	}
 	return (unsigned short)cap_value(matk,0,USHRT_MAX);
 }
 
@@ -5998,22 +6023,26 @@ unsigned short status_calc_matk(struct block_list *bl, struct status_change *sc,
  * @param bl: Object to change critical [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param critical: Initial critical
- * @param display: If the status change is displayed in the status window
+ * @param crit_disp: Return display value for the status window
  * @return modified critical with cap_value(critical,10,USHRT_MAX)
  */
-signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical, bool display)
+signed short status_calc_critical(struct block_list *bl, struct status_change *sc, int critical, signed short * crit_disp)
 {
+	signed short hidden = 0;
+
 	if(!sc || !sc->count)
 		return (short)cap_value(critical,10,SHRT_MAX);
-	if(!display) { // Status Changes that are hidden in the status window.
-		if (sc->data[SC_INCCRI]) {
-			if (bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR) // Gives double critical rate when using Katar weapons [Limestone]
-				critical += sc->data[SC_INCCRI]->val2 * 2;
-			else
-				critical += sc->data[SC_INCCRI]->val2;
-		}
-		return (short)cap_value(critical,10,SHRT_MAX);
+	
+	// BEGIN Status Changes that are hidden in the status window.
+	hidden = critical; // temp
+	if (sc->data[SC_INCCRI]) {
+		if (bl->type == BL_PC && ((TBL_PC*)bl)->status.weapon == W_KATAR) // Gives double critical rate when using Katar weapons [Limestone]
+			critical += sc->data[SC_INCCRI]->val2 * 2;
+		else
+			critical += sc->data[SC_INCCRI]->val2;
 	}
+	hidden = critical - hidden;
+	// END Status Changes that are hidden in the status window.
 
 	if (sc->data[SC_CRIFOOD])
 		critical += sc->data[SC_CRIFOOD]->val1;
@@ -6038,6 +6067,11 @@ signed short status_calc_critical(struct block_list *bl, struct status_change *s
 	if(sc->data[SC_BEYONDOFWARCRY])
 		critical += sc->data[SC_BEYONDOFWARCRY]->val3;
 
+	if( crit_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*crit_disp = (short)cap_value(critical-hidden,10,SHRT_MAX);
+	}
 	return (short)cap_value(critical,10,SHRT_MAX);
 }
 
@@ -6046,17 +6080,20 @@ signed short status_calc_critical(struct block_list *bl, struct status_change *s
  * @param bl: Object to change hit [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param hit: Initial hit
- * @param display: If the status change is displayed in the status window
+ * @param hit_disp: Return display value for the status window
  * @return modified hit with cap_value(hit,1,USHRT_MAX)
  */
-signed short status_calc_hit(struct block_list *bl, struct status_change *sc, int hit, bool display)
+signed short status_calc_hit(struct block_list *bl, struct status_change *sc, int hit, signed short * hit_disp)
 {
+	signed short hidden = 0;
+
 	if(!sc || !sc->count)
 		return (short)cap_value(hit,1,SHRT_MAX);
 
-	if(!display) { // Status Changes that are hidden in the status window.
-		return (short)cap_value(hit,1,SHRT_MAX);
-	}
+	// BEGIN Status Changes that are hidden in the status window.
+	hidden = hit; // temp
+	hidden = hit - hidden;
+	// END Status Changes that are hidden in the status window.
 
 	if(sc->data[SC_INCHIT])
 		hit += sc->data[SC_INCHIT]->val1;
@@ -6092,7 +6129,12 @@ signed short status_calc_hit(struct block_list *bl, struct status_change *sc, in
 		hit -= hit * 50 / 100;
 	if(sc->data[SC_ILLUSIONDOPING])
 		hit -= sc->data[SC_ILLUSIONDOPING]->val2;
-
+	
+	if( hit_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*hit_disp = (short)cap_value(hit-hidden,1,SHRT_MAX);
+	}
 	return (short)cap_value(hit,1,SHRT_MAX);
 }
 
@@ -6101,11 +6143,13 @@ signed short status_calc_hit(struct block_list *bl, struct status_change *sc, in
  * @param bl: Object to change flee [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param flee: Initial flee
- * @param display: If the status change is displayed in the status window
+ * @param flee_disp: Return display value for the status window
  * @return modified flee with cap_value(flee,1,USHRT_MAX)
  */
-signed short status_calc_flee(struct block_list *bl, struct status_change *sc, int flee, bool display)
+signed short status_calc_flee(struct block_list *bl, struct status_change *sc, int flee, signed short * flee_disp)
 {
+	signed short hidden = 0;
+
 	if( bl->type == BL_PC ) {
 		if( map_flag_gvg(bl->m) )
 			flee -= flee * battle_config.gvg_flee_penalty/100;
@@ -6116,9 +6160,10 @@ signed short status_calc_flee(struct block_list *bl, struct status_change *sc, i
 	if(!sc || !sc->count)
 		return (short)cap_value(flee,1,SHRT_MAX);
 
-	if(!display) { // Status Changes that are hidden in the status window.
-		return (short)cap_value(flee,1,SHRT_MAX);
-	}
+	// BEGIN Status Changes that are hidden in the status window.
+	hidden = flee; // temp
+	hidden = flee - hidden;
+	// END Status Changes that are hidden in the status window.
 
 	if(sc->data[SC_OVERED_BOOST]) //Should be final and unmodifiable by any means
 		return sc->data[SC_OVERED_BOOST]->val2;
@@ -6202,7 +6247,11 @@ signed short status_calc_flee(struct block_list *bl, struct status_change *sc, i
 	//	flee -= (flee * sc->data[SC_C_MARKER]->val3) / 100;
 	if(sc->data[SC_HEAT_BARREL])
 		flee -= sc->data[SC_HEAT_BARREL]->val4;
-
+	if( flee_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*flee_disp = (short)cap_value(flee-hidden,1,SHRT_MAX);
+	}
 	return (short)cap_value(flee,1,SHRT_MAX);
 }
 
@@ -6211,17 +6260,20 @@ signed short status_calc_flee(struct block_list *bl, struct status_change *sc, i
  * @param bl: Object to change flee2 [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param flee2: Initial flee2
- * @param display: If the status change is displayed in the status window
+ * @param flee2_disp: Return display value for the status window
  * @return modified flee2 with cap_value(flee2,10,USHRT_MAX)
  */
-signed short status_calc_flee2(struct block_list *bl, struct status_change *sc, int flee2, bool display)
+signed short status_calc_flee2(struct block_list *bl, struct status_change *sc, int flee2, signed short * flee2_disp)
 {
+	signed short hidden = 0;
+
 	if(!sc || !sc->count)
 		return (short)cap_value(flee2,10,SHRT_MAX);
 
-	if(!display) { // Status Changes that are hidden in the status window.
-		return (short)cap_value(flee2,10,SHRT_MAX);
-	}
+	// BEGIN Status Changes that are hidden in the status window.
+	hidden = flee2; // temp
+	hidden = flee2 - hidden;
+	// END Status Changes that are hidden in the status window.
 
 	if(sc->data[SC_INCFLEE2])
 		flee2 += sc->data[SC_INCFLEE2]->val2;
@@ -6230,6 +6282,11 @@ signed short status_calc_flee2(struct block_list *bl, struct status_change *sc, 
 	if(sc->data[SC__UNLUCKY])
 		flee2 -= flee2 * sc->data[SC__UNLUCKY]->val2 / 100;
 
+	if( flee2_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*flee2_disp = (short)cap_value(flee2-hidden,10,SHRT_MAX);
+	}
 	return (short)cap_value(flee2,10,SHRT_MAX);
 }
 
@@ -6238,29 +6295,33 @@ signed short status_calc_flee2(struct block_list *bl, struct status_change *sc, 
  * @param bl: Object to change def [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param def: Initial def
- * @param display: If the status change is displayed in the status window
+ * @param def_disp: Return display value for the status window
  * @return modified def with cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX)
  */
-defType status_calc_def(struct block_list *bl, struct status_change *sc, int def, bool display)
+defType status_calc_def(struct block_list *bl, struct status_change *sc, int def, defType * def_disp)
 {
+	defType hidden = 0;
+
 	if(!sc || !sc->count)
 		return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 
-	if(!display) { // Status Changes that are hidden in the status window.
+	// BEGIN Status Changes that are hidden in the status window.
+	hidden = def; // temp
 #ifdef RENEWAL
-		if(sc->data[SC_ASSUMPTIO])
-			def <<= 1; // only eDEF is doubled
+	if(sc->data[SC_ASSUMPTIO])
+		def += def; // only eDEF is doubled
 #endif
-		if(sc->data[SC_NEUTRALBARRIER])
-			def += def * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
-		if(sc->data[SC_FORCEOFVANGUARD])
-			def += def * 2 * sc->data[SC_FORCEOFVANGUARD]->val1 / 100;
-		if(sc->data[SC_CAMOUFLAGE])
-			def -= def * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
-		if(sc->data[SC_OVERED_BOOST] && bl->type == BL_PC)
-			def -= def * sc->data[SC_OVERED_BOOST]->val4 / 100;
-		return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
-	}
+	if(sc->data[SC_NEUTRALBARRIER])
+		def += def * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
+	if(sc->data[SC_FORCEOFVANGUARD])
+		def += def * 2 * sc->data[SC_FORCEOFVANGUARD]->val1 / 100;
+	if(sc->data[SC_CAMOUFLAGE])
+		def -= def * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
+	if(sc->data[SC_OVERED_BOOST] && bl->type == BL_PC)
+		def -= def * sc->data[SC_OVERED_BOOST]->val4 / 100;
+	hidden = def - hidden;
+	// END Status Changes that are hidden in the status window.
+	
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -6332,6 +6393,11 @@ defType status_calc_def(struct block_list *bl, struct status_change *sc, int def
 	if(sc->data[SC_ASH])
 		def -= def * sc->data[SC_ASH]->val3/100;
 
+	if( def_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*def_disp = (defType)cap_value(def-hidden,DEFTYPE_MIN,DEFTYPE_MAX);
+	}
 	return (defType)cap_value(def,DEFTYPE_MIN,DEFTYPE_MAX);
 }
 
@@ -6340,11 +6406,13 @@ defType status_calc_def(struct block_list *bl, struct status_change *sc, int def
  * @param bl: Object to change def2 [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param def2: Initial def2
- * @param display: If the status change is displayed in the status window
+ * @param def2_disp: Return display value for the status window
  * @return modified def2 with cap_value(def2,SHRT_MIN,SHRT_MAX)
  */
-signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2, bool display)
+signed short status_calc_def2(struct block_list *bl, struct status_change *sc, int def2, signed short * def2_disp)
 {
+	signed short hidden = 0;
+
 	if(!sc || !sc->count) {
 #ifdef RENEWAL
 		return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
@@ -6353,17 +6421,14 @@ signed short status_calc_def2(struct block_list *bl, struct status_change *sc, i
 #endif
 	}
 
-	if(!display) { // Status Changes that are hidden in the status window.
-		if(sc->data[SC_CAMOUFLAGE])
-			def2 -= def2 * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
-		if(sc->data[SC_GT_REVITALIZE])
-			def2 += sc->data[SC_GT_REVITALIZE]->val4;
-#ifdef RENEWAL
-		return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
-#else
-		return (short)cap_value(def2,1,SHRT_MAX);
-#endif
-	}
+	// BEGIN Status Changes that are hidden in the status window.
+	hidden = def2; // temp
+	if(sc->data[SC_CAMOUFLAGE])
+		def2 -= def2 * 5 * sc->data[SC_CAMOUFLAGE]->val3 / 100;
+	if(sc->data[SC_GT_REVITALIZE])
+		def2 += sc->data[SC_GT_REVITALIZE]->val4;
+	hidden = def2 - hidden;
+	// END Status Changes that are hidden in the status window.
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -6413,8 +6478,18 @@ signed short status_calc_def2(struct block_list *bl, struct status_change *sc, i
 		def2 -= def2 * sc->data[SC_EQC]->val2 / 100;
 
 #ifdef RENEWAL
+	if( def2_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*def2_disp = (short)cap_value(def2-hidden,SHRT_MIN,SHRT_MAX);
+	}
 	return (short)cap_value(def2,SHRT_MIN,SHRT_MAX);
 #else
+	if( def2_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*def2_disp = (short)cap_value(def2-hidden,1,SHRT_MAX);
+	}
 	return (short)cap_value(def2,1,SHRT_MAX);
 #endif
 }
@@ -6424,23 +6499,26 @@ signed short status_calc_def2(struct block_list *bl, struct status_change *sc, i
  * @param bl: Object to change mdef [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param mdef: Initial mdef
- * @param display: If the status change is displayed in the status window
+ * @param mdef_disp: Return display value for the status window
  * @return modified mdef with cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX)
  */
-defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef, bool display)
+defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int mdef, defType * mdef_disp)
 {
+	defType hidden = 0;
+
 	if(!sc || !sc->count)
 		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 
-	if(!display) { // Status Changes that are hidden in the status window.
+	// BEGIN Status Changes that are hidden in the status window.
+	hidden = mdef; // temp
 #ifdef RENEWAL
-		if(sc->data[SC_ASSUMPTIO])
-			mdef <<= 1; // only eMDEF is doubled
+	if(sc->data[SC_ASSUMPTIO])
+		mdef += mdef; // only eMDEF is doubled
 #endif
-		if(sc->data[SC_NEUTRALBARRIER])
-			mdef += mdef * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
-		return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
-	}
+	if(sc->data[SC_NEUTRALBARRIER])
+		mdef += mdef * sc->data[SC_NEUTRALBARRIER]->val2 / 100;
+	hidden = mdef - hidden;
+	// END Status Changes that are hidden in the status window.
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -6477,7 +6555,12 @@ defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int md
 	}
 	if (sc->data[SC_ODINS_POWER])
 		mdef -= 20 * sc->data[SC_ODINS_POWER]->val1;
-
+	
+	if( mdef_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*mdef_disp = (defType)cap_value(mdef-hidden,DEFTYPE_MIN,DEFTYPE_MAX);
+	}
 	return (defType)cap_value(mdef,DEFTYPE_MIN,DEFTYPE_MAX);
 }
 
@@ -6486,11 +6569,13 @@ defType status_calc_mdef(struct block_list *bl, struct status_change *sc, int md
  * @param bl: Object to change mdef2 [PC|MOB|HOM|MER|ELEM]
  * @param sc: Object's status change information
  * @param mdef2: Initial mdef2
- * @param display: If the status change is displayed in the status window
+ * @param mdef2_disp: Return display value for the status window
  * @return modified mdef2 with cap_value(mdef2,SHRT_MIN,SHRT_MAX)
  */
-signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2, bool display)
+signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, int mdef2, signed short *mdef2_disp)
 {
+	signed short hidden = 0;
+
 	if(!sc || !sc->count) {
 #ifdef RENEWAL
 		return (short)cap_value(mdef2,SHRT_MIN,SHRT_MAX);
@@ -6499,15 +6584,12 @@ signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, 
 #endif
 	}
 
-	if(!display) { // Status Changes that are hidden in the status window.
-		if(sc->data[SC_MINDBREAKER])
-			mdef2 -= mdef2 * sc->data[SC_MINDBREAKER]->val3 / 100;
-#ifdef RENEWAL
-		return (short)cap_value(mdef2,SHRT_MIN,SHRT_MAX);
-#else
-		return (short)cap_value(mdef2,1,SHRT_MAX);
-#endif
-	}
+	// BEGIN Status Changes that are hidden in the status window.
+	hidden = mdef2; // temp
+	if(sc->data[SC_MINDBREAKER])
+		mdef2 -= mdef2 * sc->data[SC_MINDBREAKER]->val3 / 100;
+	hidden = mdef2 - hidden;
+	// END Status Changes that are hidden in the status window.
 
 	if(sc->data[SC_BERSERK])
 		return 0;
@@ -6522,8 +6604,18 @@ signed short status_calc_mdef2(struct block_list *bl, struct status_change *sc, 
 		mdef2 -= mdef2 * (14 * sc->data[SC_ANALYZE]->val1) / 100;
 
 #ifdef RENEWAL
+	if( mdef2_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*mdef2_disp = (short)cap_value(mdef2-hidden,SHRT_MIN,SHRT_MAX);
+	}
 	return (short)cap_value(mdef2,SHRT_MIN,SHRT_MAX);
 #else
+	if( mdef2_disp != NULL ) {
+		if( battle_config.show_full_status )
+			hidden = 0;
+		*mdef2_disp = (short)cap_value(mdef2-hidden,1,SHRT_MAX);
+	}
 	return (short)cap_value(mdef2,1,SHRT_MAX);
 #endif
 }
