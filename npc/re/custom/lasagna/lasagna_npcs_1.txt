@@ -1210,7 +1210,7 @@ OnInit:
 	end;
 }
 
--	shop	doram_shrimp	-1,515:-1,567:-1,11602:-1
+-	shop	Cat Paw Shrimp Merchant#shop::doram_shrimp	-1,515:-1,567:-1,11602:-1
 
 izlude,117,165,3	script	Cat Paw Shrimp Merchant#iz	4_M_MERCAT1,{
 	npctalk "Here are the shrimps, carrots and catnip!";	// npctalk should be attached to the player
