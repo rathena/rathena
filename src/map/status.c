@@ -1286,6 +1286,7 @@ void initChangeTables(void)
 	StatusDisplayType[SC_C_MARKER]		  = true;
 	StatusDisplayType[SC_ANTI_M_BLAST]	  = true;
 	StatusDisplayType[SC_SPRITEMABLE]     = true;
+	StatusDisplayType[SC_SV_ROOTTWIST]    = true;
 
 	// Costumes
 	StatusDisplayType[SC_MOONSTAR] = true;
@@ -1788,7 +1789,8 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
  * @param bl: Object to heal [PC|MOB|HOM|MER|ELEM]
  * @param hhp: How much HP to heal
  * @param hsp: How much SP to heal
- * @param flag:	Whether it's Forced(&1) or gives HP/SP(&2) heal effect \n
+ * @param flag:	Whether it's Forced(&1), gives HP/SP(&2) heal effect,
+ *      or gives HP(&4) heal effect with 0 heal
  *		Forced healing overrides heal impedement statuses (Berserk)
  * @return hp+sp
  */
@@ -1839,7 +1841,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int flag)
 			sp = status->max_sp - status->sp;
 	}
 
-	if(!sp && !hp)
+	if(!sp && !hp && !(flag&4))
 		return 0;
 
 	status->hp += hp;
@@ -1855,7 +1857,7 @@ int status_heal(struct block_list *bl,int64 hhp,int64 hsp, int flag)
 
 	// Send HP update to client
 	switch(bl->type) {
-		case BL_PC:  pc_heal((TBL_PC*)bl,hp,sp,flag&2?1:0); break;
+		case BL_PC:  pc_heal((TBL_PC*)bl,hp,sp,flag); break;
 		case BL_MOB: mob_heal((TBL_MOB*)bl,hp); break;
 		case BL_HOM: hom_heal((TBL_HOM*)bl); break;
 		case BL_MER: mercenary_heal((TBL_MER*)bl,hp,sp); break;

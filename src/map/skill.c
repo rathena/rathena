@@ -485,7 +485,8 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 				hp *= 2;
 			if (sd && ((skill = pc_checkskill(sd, SU_POWEROFSEA)) > 0)) {
 				hp += hp * 10 / 100;
-				if (pc_checkskill(sd, SU_TUNABELLY) == 5 && pc_checkskill(sd, SU_TUNAPARTY) == 5 && pc_checkskill(sd, SU_BUNCHOFSHRIMP) == 5 && pc_checkskill(sd, SU_FRESHSHRIMP) == 5)
+				if ((pc_checkskill(sd, SU_TUNABELLY) + pc_checkskill(sd, SU_TUNAPARTY) + pc_checkskill(sd, SU_BUNCHOFSHRIMP) + pc_checkskill(sd, SU_FRESHSHRIMP) +
+					pc_checkskill(sd, SU_GROOMING) + pc_checkskill(sd, SU_PURRING) + pc_checkskill(sd, SU_SHRIMPARTY)) > 19)
 					hp += hp * 20 / 100;
 			}
 			break;
@@ -10831,16 +10832,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case SU_TUNABELLY:
 	{
-		unsigned int heal;
+		unsigned int heal = 0;
 
 		if (dstmd && (dstmd->mob_id == MOBID_EMPERIUM || status_get_class_(bl) == CLASS_BATTLEFIELD))
 			heal = 0;
-		else {
+		else if (status_get_hp(bl) != status_get_max_hp(bl))
 			heal = ((2 * skill_lv - 1) * 10) * status_get_max_hp(bl) / 100;
-			status_heal(bl, heal, 0, 0);
-		}
+		status_heal(bl, heal, 0, 1|2|4);
 
-		clif_skill_nodamage(src, bl, skill_id, heal, 1);
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 	}
 		break;
 
