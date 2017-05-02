@@ -4750,34 +4750,34 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 			if( map_flag_gvg(sd->bl.m) )
 				return false;
 			break;
-		case ITEMID_GIANT_FLY_WING: {
-			struct party_data *pd = party_search(sd->status.party_id);
-
-			if (pd) {
-				int i;
-
-				ARR_FIND(0, MAX_PARTY, i, pd->data[i].sd == sd && pd->party.member[i].leader);
-				if (i == MAX_PARTY) { // User is not party leader
-					clif_msg(sd, ITEM_PARTY_MEMBER_NOT_SUMMONED);
-					break;
-				}
-
-				ARR_FIND(0, MAX_PARTY, i, pd->data[i].sd && pd->data[i].sd != sd && pd->data[i].sd->bl.m == sd->bl.m);
-				if (i == MAX_PARTY || pc_isdead(pd->data[i].sd)) { // No party members found on same map
-					clif_msg(sd, ITEM_PARTY_NO_MEMBER_IN_MAP);
-					break;
-				}
-			} else {
-				clif_msg(sd, ITEM_PARTY_MEMBER_NOT_SUMMONED);
-				break;
-			}
-		}
-		// Fall through
 		case ITEMID_WING_OF_FLY:
+		case ITEMID_GIANT_FLY_WING:
 		case ITEMID_N_FLY_WING:
 			if( map[sd->bl.m].flag.noteleport || map_flag_gvg(sd->bl.m) ) {
 				clif_skill_teleportmessage(sd,0);
 				return false;
+			}
+			if (nameid == ITEMID_GIANT_FLY_WING) {
+				struct party_data *pd = party_search(sd->status.party_id);
+
+				if (pd) {
+					int i;
+
+					ARR_FIND(0, MAX_PARTY, i, pd->data[i].sd == sd && pd->party.member[i].leader);
+					if (i == MAX_PARTY) { // User is not party leader
+						clif_msg(sd, ITEM_PARTY_MEMBER_NOT_SUMMONED);
+						break;
+					}
+
+					ARR_FIND(0, MAX_PARTY, i, pd->data[i].sd && pd->data[i].sd != sd && pd->data[i].sd->bl.m == sd->bl.m && !pc_isdead(pd->data[i].sd));
+					if (i == MAX_PARTY) { // No party members found on same map
+						clif_msg(sd, ITEM_PARTY_NO_MEMBER_IN_MAP);
+						break;
+					}
+				} else {
+					clif_msg(sd, ITEM_PARTY_MEMBER_NOT_SUMMONED);
+					break;
+				}
 			}
 		// Fall through
 		case ITEMID_WING_OF_BUTTERFLY:
