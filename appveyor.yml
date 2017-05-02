@@ -1,4 +1,4 @@
-image: Visual Studio 2015
+image: Visual Studio 2013
 # This is the default location, but we put it here for safety reasons, since we use it in our test script
 clone_folder: c:\projects\rathena
 # We do not need the git history for our integration tests
@@ -8,32 +8,13 @@ pull_requests:
   do_not_increment_build_number: true
 environment:
   matrix:
-  - VisualStudioVersion: 10.0
-    Solution: rAthena-10.sln
-    Defines: "\"BUILDBOT\""
-  - VisualStudioVersion: 11.0
-    Solution: rAthena-12.sln
-    Defines: "\"BUILDBOT\""
-  - VisualStudioVersion: 12.0
-    Solution: rAthena-13.sln
+  - VisualStudioVersion: 14.0
     Defines: "\"BUILDBOT\""
   - VisualStudioVersion: 14.0
-    Solution: rAthena-14.sln
-    Defines: "\"BUILDBOT\""
-  - VisualStudioVersion: 10.0
-    Solution: rAthena-10.sln
-    Defines: "\"BUILDBOT;PRERE\""
-  - VisualStudioVersion: 11.0
-    Solution: rAthena-12.sln
-    Defines: "\"BUILDBOT;PRERE\""
-  - VisualStudioVersion: 12.0
-    Solution: rAthena-13.sln
-    Defines: "\"BUILDBOT;PRERE\""
-  - VisualStudioVersion: 14.0
-    Solution: rAthena-14.sln
     Defines: "\"BUILDBOT;PRERE\""
 platform:
   - Win32
+  - x64
 configuration:
   - Debug
 # Disable Release for now, since do not want to have any optimization and have access to debug infos on crash
@@ -41,7 +22,7 @@ configuration:
 matrix:
   fast_finish: true
 build_script:
-- cmd: msbuild %Solution% /p:DefineConstants=%Defines%
+- cmd: msbuild rAthena.sln /p:DefineConstants=%Defines%
 services: mysql
 test_script:
 - cmd: >-
