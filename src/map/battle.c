@@ -2338,8 +2338,6 @@ static bool is_attack_critical(struct Damage wd, struct block_list *src, struct 
 		short cri = sstatus->cri;
 
 		if (sd) {
-			if (!battle_config.show_status_katar_crit && sd->status.weapon == W_KATAR)
-				cri <<= 1; // Double critical bonus from Katars aren't shown in the status display
 			cri += sd->critaddrace[tstatus->race] + sd->critaddrace[RC_ALL];
 			if(is_skill_using_arrow(src, skill_id)) {
 				cri += sd->bonus.arrow_cri;
@@ -4558,9 +4556,6 @@ static short battle_get_defense(struct block_list *src, struct block_list *targe
 	defType def1 = status_get_def(target); // eDEF
 	short def2 = tstatus->def2, vit_def; // sDEF
 
-	def1 = status_calc_def(target, tsc, def1, false);
-	def2 = status_calc_def2(target, tsc, def2, false);
-
 	if (sd) {
 		int i = sd->ignore_def_by_race[tstatus->race] + sd->ignore_def_by_race[RC_ALL];
 
@@ -6164,9 +6159,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		if(!flag.imdef){
 			defType mdef = tstatus->mdef; // eMDEF
 			short mdef2 = tstatus->mdef2; // sMDEF
-
-			mdef = status_calc_mdef(target, tsc, mdef, false);
-			mdef2 = status_calc_mdef2(target, tsc, mdef2, false);
 
 			if(sd) {
 				i = sd->ignore_mdef_by_race[tstatus->race] + sd->ignore_mdef_by_race[RC_ALL];
@@ -8396,7 +8388,7 @@ static const struct _battle_data {
 	{ "exp_cost_inspiration",               &battle_config.exp_cost_inspiration,            1,      0,      100,            },
 	{ "mvp_exp_reward_message",             &battle_config.mvp_exp_reward_message,          0,      0,      1,              },
 	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
-	{ "show_status_katar_crit",             &battle_config.show_status_katar_crit,          0,      0,      1,              },
+	{ "show_full_status",            		&battle_config.show_full_status,          		0,      0,      1,              },
 	{ "atcommand_levelup_events",			&battle_config.atcommand_levelup_events,		0,		0,		1,				},
 	{ "block_account_in_same_party",		&battle_config.block_account_in_same_party,		1,		0,		1,				},
 	{ "tarotcard_equal_chance",             &battle_config.tarotcard_equal_chance,          0,      0,      1,              },
