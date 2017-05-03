@@ -7600,7 +7600,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			pet_unlocktarget(sd->pd);
 	}
 
-	if (hom_is_active(sd->hd) && battle_config.homunculus_auto_vapor && get_percentage(sd->hd->battle_status.hp, sd->hd->battle_status.max_hp) >= 80)
+	if (hom_is_active(sd->hd) && battle_config.homunculus_auto_vapor && get_percentage(sd->hd->battle_status.hp, sd->hd->battle_status.max_hp) >= battle_config.homunculus_auto_vapor)
 		hom_vaporize(sd, HOM_ST_ACTIVE);
 
 	if( sd->md )
