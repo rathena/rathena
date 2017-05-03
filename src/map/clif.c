@@ -683,8 +683,10 @@ void clif_authok(struct map_session_data *sd)
 	const int cmd = 0x73;
 #elif PACKETVER < 20141022
 	const int cmd = 0x2eb;
-#else
+#elif PACKETVER < 20161228
 	const int cmd = 0xa18;
+#else
+	const int cmd = 0x2eb;
 #endif
 	int fd = sd->fd;
 
@@ -2508,6 +2510,8 @@ void clif_add_random_options(unsigned char* buf, struct item *it) {
 /// 02d4 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK3)
 /// 0990 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK_V5)
 /// 0a0c <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK_V6)
+/// 0a37 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK_V7)
+/// Note: Length for a37 is 3 bigger then a0c but I don't know what the added parts are for. // [Rytech]
 void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char fail)
 {
 	int fd, header, offs=0;
@@ -7104,8 +7108,10 @@ void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* ven
 
 #if PACKETVER < 20150226
 	const int item_length = 22;
-#else
+#elif PACKETVER < 20161228
 	const int item_length = 47;
+#else
+	const int item_length = 53; // [Rytech]
 #endif
 
 	nullpo_retv(sd);
