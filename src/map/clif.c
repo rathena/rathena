@@ -7201,7 +7201,7 @@ void clif_openvending(struct map_session_data* sd, int id, struct s_vending* ven
 #if PACKETVER < 20150226
 	const int item_length = 22;
 #else
-	const int item_length = 47;	
+	const int item_length = 47;
 #endif
 
 	nullpo_retv(sd);
