@@ -7106,10 +7106,10 @@ void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* ven
 
 #if PACKETVER < 20150226
 	const int item_length = 22;
-#elif PACKETVER < 20160921
+#elif PACKETVER < 20161228
 	const int item_length = 47;
 #else
-	const int item_length = 59;
+	const int item_length = 53; // [Rytech]
 #endif
 
 	nullpo_retv(sd);
@@ -7200,10 +7200,8 @@ void clif_openvending(struct map_session_data* sd, int id, struct s_vending* ven
 
 #if PACKETVER < 20150226
 	const int item_length = 22;
-#elif PACKETVER < 20160921
-	const int item_length = 47;
 #else
-	const int item_length = 59;	
+	const int item_length = 47;	
 #endif
 
 	nullpo_retv(sd);
