@@ -19,7 +19,7 @@
 #include <stdlib.h>
 
 // login sql settings
-static char   ipban_db_hostname[32] = "127.0.0.1";
+static char   ipban_db_hostname[64] = "127.0.0.1"; // Doubled to reflect the change on commit #0f2dd7f
 static uint16 ipban_db_port = 3306;
 static char   ipban_db_username[32] = "ragnarok";
 static char   ipban_db_password[32] = "";
