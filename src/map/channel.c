@@ -204,7 +204,7 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
 
 	if (channel->type == CHAN_TYPE_PRIVATE && db_size(channel->users) >= channel_config.private_channel.max_member) {
 		char output[CHAT_SIZE_MAX];
-		sprintf(output, msg_txt(sd,767), channel->name, channel_config.private_channel.max_member); // You cannot join channel '%s'. Limit of %d has been met.
+		sprintf(output, msg_txt(sd,760), channel->name, channel_config.private_channel.max_member); // You cannot join channel '%s'. Limit of %d has been met.
 		clif_displaymessage(sd->fd, output);
 		return -4;
 	}
