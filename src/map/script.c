@@ -6709,6 +6709,15 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 	opt_val_n = script_array_highest_key(st, NULL, opt_val_var, opt_val_ref);
 	opt_param_n = script_array_highest_key(st, NULL, opt_param_var, opt_param_ref);
 
+	if (opt_val_n < 1) {
+		ShowError("buildin_%s: No option value listed.\n", funcname);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (opt_param_n < 1) {
+		ShowError("buildin_%s: No option parameter listed.\n";, funcname);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	opt_id_id = reference_getid(opt_id);
 	opt_val_id = reference_getid(opt_val);
 	opt_param_id = reference_getid(opt_param);
