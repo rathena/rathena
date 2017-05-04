@@ -6714,7 +6714,7 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (opt_param_n < 1) {
-		ShowError("buildin_%s: No option parameter listed.\n";, funcname);
+		ShowError("buildin_%s: No option parameter listed.\n", funcname);
 		return SCRIPT_CMD_FAILURE;
 	}
 
