@@ -4777,6 +4777,29 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 				clif_skill_teleportmessage(sd,0);
 				return false;
 			}
+			if (nameid == ITEMID_GIANT_FLY_WING) {
+				struct party_data *pd = party_search(sd->status.party_id);
+
+				if (pd) {
+					int i;
+
+					ARR_FIND(0, MAX_PARTY, i, pd->data[i].sd == sd && pd->party.member[i].leader);
+					if (i == MAX_PARTY) { // User is not party leader
+						clif_msg(sd, ITEM_PARTY_MEMBER_NOT_SUMMONED);
+						break;
+					}
+
+					ARR_FIND(0, MAX_PARTY, i, pd->data[i].sd && pd->data[i].sd != sd && pd->data[i].sd->bl.m == sd->bl.m && !pc_isdead(pd->data[i].sd));
+					if (i == MAX_PARTY) { // No party members found on same map
+						clif_msg(sd, ITEM_PARTY_NO_MEMBER_IN_MAP);
+						break;
+					}
+				} else {
+					clif_msg(sd, ITEM_PARTY_MEMBER_NOT_SUMMONED);
+					break;
+				}
+			}
+		// Fall through
 		case ITEMID_WING_OF_BUTTERFLY:
 		case ITEMID_N_BUTTERFLY_WING:
 		case ITEMID_DUN_TELE_SCROLL1:
@@ -7626,10 +7649,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			pet_unlocktarget(sd->pd);
 	}
 
-	if (sd->status.hom_id > 0) {
-		if(battle_config.homunculus_auto_vapor && sd->hd)
-			hom_vaporize(sd, HOM_ST_ACTIVE);
-	}
+	if (hom_is_active(sd->hd) && battle_config.homunculus_auto_vapor && get_percentage(sd->hd->battle_status.hp, sd->hd->battle_status.max_hp) >= battle_config.homunculus_auto_vapor)
+		hom_vaporize(sd, HOM_ST_ACTIVE);
 
 	if( sd->md )
 		mercenary_delete(sd->md, 3); // Your mercenary soldier has ran away.
