@@ -341,6 +341,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\produce_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\produce_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\quest_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\quest_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\refine_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\refine_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\sc_config.conf" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\sc_config.conf')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\size_fix.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\size_fix.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_cast_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_cast_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_castnodex_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_castnodex_db.txt')" />
