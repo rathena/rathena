@@ -237,9 +237,9 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 	acc.sex = sex;
 	safestrncpy(acc.email, "a@a.com", sizeof(acc.email));
 	acc.expiration_time = ( login_config.start_limited_time != -1 ) ? time(NULL) + login_config.start_limited_time : 0;
-	safestrncpy(acc.lastlogin, "0000-00-00 00:00:00", sizeof(acc.lastlogin));
+	safestrncpy(acc.lastlogin, "", sizeof(acc.lastlogin));
 	safestrncpy(acc.last_ip, last_ip, sizeof(acc.last_ip));
-	safestrncpy(acc.birthdate, "0000-00-00", sizeof(acc.birthdate));
+	safestrncpy(acc.birthdate, "", sizeof(acc.birthdate));
 	safestrncpy(acc.pincode, "", sizeof(acc.pincode));
 	acc.pincode_change = 0;
 	acc.char_slots = MIN_CHARS;

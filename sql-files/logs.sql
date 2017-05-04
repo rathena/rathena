@@ -4,7 +4,7 @@
 
 CREATE TABLE IF NOT EXISTS `atcommandlog` (
   `atcommand_id` mediumint(9) unsigned NOT NULL auto_increment,
-  `atcommand_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `atcommand_date` datetime NOT NULL,
   `account_id` int(11) unsigned NOT NULL default '0',
   `char_id` int(11) unsigned NOT NULL default '0',
   `char_name` varchar(25) NOT NULL default '',
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `atcommandlog` (
 
 CREATE TABLE IF NOT EXISTS `branchlog` (
   `branch_id` mediumint(9) unsigned NOT NULL auto_increment,
-  `branch_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `branch_date` datetime NOT NULL,
   `account_id` int(11) NOT NULL default '0',
   `char_id` int(11) NOT NULL default '0',
   `char_name` varchar(25) NOT NULL default '',
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `branchlog` (
 
 CREATE TABLE IF NOT EXISTS `cashlog` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time` datetime NOT NULL,
   `char_id` int(11) NOT NULL DEFAULT '0',
   `type` enum('T','V','P','M','S','N','D','C','A','E','I','B','$') NOT NULL DEFAULT 'S',
   `cash_type` enum('O','K','C') NOT NULL DEFAULT 'O',
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `cashlog` (
 
 CREATE TABLE IF NOT EXISTS `chatlog` (
   `id` bigint(20) NOT NULL auto_increment,
-  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `time` datetime NOT NULL,
   `type` enum('O','W','P','G','M','C') NOT NULL default 'O',
   `type_id` int(11) NOT NULL default '0',
   `src_charid` int(11) NOT NULL default '0',
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `chatlog` (
 
 CREATE TABLE IF NOT EXISTS `feedinglog` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time` DATETIME NOT NULL,
   `char_id` INT(11) NOT NULL,
   `target_id` INT(11) NOT NULL,
   `target_class` SMALLINT(11) NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `feedinglog` (
 --
 
 CREATE TABLE IF NOT EXISTS `loginlog` (
-  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `time` datetime NOT NULL,
   `ip` varchar(15) NOT NULL default '',
   `user` varchar(23) NOT NULL default '',
   `rcode` tinyint(4) NOT NULL default '0',
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `loginlog` (
 
 CREATE TABLE IF NOT EXISTS `mvplog` (
   `mvp_id` mediumint(9) unsigned NOT NULL auto_increment,
-  `mvp_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `mvp_date` datetime NOT NULL,
   `kill_char_id` int(11) NOT NULL default '0',
   `monster_id` smallint(6) NOT NULL default '0',
   `prize` smallint(5) unsigned NOT NULL default '0',
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `mvplog` (
 
 CREATE TABLE IF NOT EXISTS `npclog` (
   `npc_id` mediumint(9) unsigned NOT NULL auto_increment,
-  `npc_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `npc_date` datetime NOT NULL,
   `account_id` int(11) unsigned NOT NULL default '0',
   `char_id` int(11) unsigned NOT NULL default '0',
   `char_name` varchar(25) NOT NULL default '',
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `npclog` (
 
 CREATE TABLE IF NOT EXISTS `picklog` (
   `id` int(11) NOT NULL auto_increment,
-  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `time` datetime NOT NULL,
   `char_id` int(11) NOT NULL default '0',
   `type` enum('M','P','L','T','V','S','N','C','A','R','G','E','B','O','I','X','D','U','$','F','Z','Q') NOT NULL default 'P',
   `nameid` smallint(5) unsigned NOT NULL default '0',
@@ -216,7 +216,7 @@ CREATE TABLE IF NOT EXISTS `picklog` (
 
 CREATE TABLE IF NOT EXISTS `zenylog` (
   `id` int(11) NOT NULL auto_increment,
-  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `time` datetime NOT NULL,
   `char_id` int(11) NOT NULL default '0',
   `src_id` int(11) NOT NULL default '0',
   `type` enum('T','V','P','M','S','N','D','C','A','E','I','B','K') NOT NULL default 'S',

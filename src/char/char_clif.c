@@ -547,7 +547,7 @@ static bool chclif_delchar_check(struct char_session_data *sd, char *delcode, ui
 	if (flag&CHAR_DEL_BIRTHDATE && (
 		!strcmp(sd->birthdate+2, delcode) || // +2 to cut off the century
 		(
-			!strcmp("0000-00-00", sd->birthdate) && // it is default birthdate and
+			!strcmp("",sd->birthdate) && // it is default birthdate and
 			!strcmp("",delcode) // user sent an empty birthdate
 		))) {
 		ShowInfo(""CL_RED"Char Deleted"CL_RESET" "CL_GREEN"(Birthdate)"CL_RESET".\n");
