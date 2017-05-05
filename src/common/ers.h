@@ -40,6 +40,10 @@
 #ifndef _ERS_H_
 #define _ERS_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "cbasetypes.h"
 
 /*****************************************************************************\
@@ -174,5 +178,9 @@ void ers_report(void);
  **/
 void ers_final(void);
 #endif /* DISABLE_ERS / not DISABLE_ERS */
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /* _ERS_H_ */
