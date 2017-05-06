@@ -3210,13 +3210,13 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		WFIFOL(fd,4)=sd->status.skill_point;
 		break;
 	case SP_HIT:
-		WFIFOL(fd,4)=sd->battle_status.hit;
+		WFIFOL(fd,4)=sd->display_status.hit;
 		break;
 	case SP_FLEE1:
-		WFIFOL(fd,4)=sd->battle_status.flee;
+		WFIFOL(fd,4)=sd->display_status.flee;
 		break;
 	case SP_FLEE2:
-		WFIFOL(fd,4)=sd->battle_status.flee2/10;
+		WFIFOL(fd,4)=sd->display_status.flee2/10;
 		break;
 	case SP_MAXHP:
 		WFIFOL(fd,4)=sd->battle_status.max_hp;
@@ -3271,7 +3271,7 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 		}
 		break;
 	case SP_CRITICAL:
-		WFIFOL(fd,4)=sd->battle_status.cri/10;
+		WFIFOL(fd,4)=sd->display_status.cri/10;
 		break;
 	case SP_MATK1:
 		WFIFOL(fd,4)=pc_rightside_matk(sd);

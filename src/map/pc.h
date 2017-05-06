@@ -200,7 +200,7 @@ struct map_session_data {
 	struct block_list bl;
 	struct unit_data ud;
 	struct view_data vd;
-	struct status_data base_status, battle_status;
+	struct status_data base_status, battle_status, display_status;
 	struct status_change sc;
 	struct regen_data regen;
 	struct regen_data_sub sregen, ssregen;
@@ -931,35 +931,25 @@ short pc_maxaspd(struct map_session_data *sd);
 )
 #define pcdb_checkid(class_) pcdb_checkid_sub((unsigned int)class_)
 
-// clientside display macros (values to the left/right of the "+")
+// clientside DISPLAY(!) macros (values to the left/right of the "+")
 #ifdef RENEWAL
-	#define pc_leftside_atk(sd) ((sd)->battle_status.batk)
-	#define pc_rightside_atk(sd) ((sd)->battle_status.watk + (sd)->battle_status.watk2 + (sd)->battle_status.eatk)
-	#define pc_leftside_def(sd) ((sd)->battle_status.def2)
-	#define pc_rightside_def(sd) ((sd)->battle_status.def)
-	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef2)
-	#define pc_rightside_mdef(sd) ((sd)->battle_status.mdef)
+	#define pc_leftside_atk(sd) ((sd)->display_status.batk)
+	#define pc_rightside_atk(sd) ((sd)->display_status.watk + (sd)->display_status.watk2 + (sd)->battle_status.eatk)
+	#define pc_leftside_def(sd) ((sd)->display_status.def2)
+	#define pc_rightside_def(sd) ((sd)->display_status.def)
+	#define pc_leftside_mdef(sd) ((sd)->display_status.mdef2)
+	#define pc_rightside_mdef(sd) ((sd)->display_status.mdef)
 	#define pc_leftside_matk(sd) (status_base_matk(&(sd)->bl, status_get_status_data(&(sd)->bl), (sd)->status.base_level))
-	#define pc_rightside_matk(sd) ((sd)->battle_status.rhw.matk+(sd)->battle_status.lhw.matk+(sd)->bonus.ematk)
+	#define pc_rightside_matk(sd) ((sd)->display_status.rhw.matk+(sd)->display_status.lhw.matk+(sd)->bonus.ematk)
 #else
-	#define pc_leftside_atk(sd) ((sd)->battle_status.batk + (sd)->battle_status.rhw.atk + (sd)->battle_status.lhw.atk)
-	#define pc_rightside_atk(sd) ((sd)->battle_status.rhw.atk2 + (sd)->battle_status.lhw.atk2)
-	#define pc_leftside_def(sd) ((sd)->battle_status.def)
-	#define pc_rightside_def(sd) ((sd)->battle_status.def2)
-	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef)
-	#define pc_rightside_mdef(sd) ( (sd)->battle_status.mdef2 - ((sd)->battle_status.vit>>1) )
-#define pc_leftside_matk(sd) \
-    (\
-    ((sd)->sc.data[SC_MAGICPOWER] && (sd)->sc.data[SC_MAGICPOWER]->val4) \
-		?((sd)->battle_status.matk_min * 100 + 50) / ((sd)->sc.data[SC_MAGICPOWER]->val3+100) \
-        :(sd)->battle_status.matk_min \
-    )
-#define pc_rightside_matk(sd) \
-    (\
-    ((sd)->sc.data[SC_MAGICPOWER] && (sd)->sc.data[SC_MAGICPOWER]->val4) \
-		?((sd)->battle_status.matk_max * 100 + 50) / ((sd)->sc.data[SC_MAGICPOWER]->val3+100) \
-        :(sd)->battle_status.matk_max \
-    )
+	#define pc_leftside_atk(sd) ((sd)->display_status.batk + (sd)->display_status.rhw.atk + (sd)->display_status.lhw.atk)
+	#define pc_rightside_atk(sd) ((sd)->display_status.rhw.atk2 + (sd)->display_status.lhw.atk2)
+	#define pc_leftside_def(sd) ((sd)->display_status.def)
+	#define pc_rightside_def(sd) ((sd)->display_status.def2)
+	#define pc_leftside_mdef(sd) ((sd)->display_status.mdef)
+	#define pc_rightside_mdef(sd) ( (sd)->display_status.mdef2 - ((sd)->battle_status.vit>>1) )
+	#define pc_leftside_matk(sd) ((sd)->display_status.matk_min)
+	#define pc_rightside_matk(sd) ((sd)->display_status.matk_max)
 #endif
 
 int pc_split_atoi(char* str, int* val, char sep, int max);
