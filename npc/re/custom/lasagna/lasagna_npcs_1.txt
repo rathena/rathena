@@ -1271,7 +1271,6 @@ izlude,195,213,5	script	Con-Chliina Crewman#doi	4_M_MERCAT1,{
 		.@cost = 2000;
 	mes "Only ^0000cd" + .@cost + " Zenies^000000 to the port city Lasagna.";
 	next;
-	
 	if (select( "To Lasagna - " + .@cost + "z", "Cancel" ) == 2) {
 		mes "[Con-Chliina Crewman]";
 		mes "I see.";
@@ -1538,9 +1537,8 @@ lasagna,208,188,3	script	Cat Paw Service#lasagna	4_M_MERCAT1,4,4,{
 	case 1:
 		mes "[Cat Paw Commerce Group]";
 		mes "Saved, meow!";
-		close2;
 		savepoint "lasagna",193,183,1,1;
-		end;
+		close;
 	case 2:
 		if (getskilllv("SU_BASIC_SKILL") < 1) {
 			mes "[Cat Paw Commerce Group]";
@@ -2181,19 +2179,19 @@ lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
 	next;
 	if (select( "Search", "Cancel" ) == 1) {
 		setarray .@item_data[0],
-			1690, 1,
-			1691, 2,
-			1692, 3,
-			1693, 4,
-			1694, 1,
-			1695, 2,
-			1696, 3,
-			1697, 4;
+			1690, 1,	// Marvelous Foxtail Staff [3]
+			1691, 2,	// Wondrous Foxtail Staff [2]
+			1692, 3,	// Magic Foxtail Staff [2]
+			1693, 4,	// Magic Yellow Foxtail Staff [1]
+			1694, 1,	// Foxtail Replica [3]
+			1695, 2,	// Fine Foxtail Replica [2]
+			1696, 3,	// Elaborate Foxtail Replica [2]
+			1697, 4;	// Elaborate Yellow Foxtail Replica [1]
 		.@total_item = getarraysize(.@item_data);
 
 		while(true) {
 			for ( .@i = 0; .@i < .@total_item; .@i += 2 ) {
-				if (countitem(.@item_id[.@i]) > 0)
+				if ((countitem(.@item_id[.@i]) - isequippedcnt(.@item_id[.@i])) > 0)
 					break;
 			}
 			if (.@i == .@total_item) {
@@ -2260,13 +2258,45 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 	mes "Do you mind if I search you to see the items you have with you?";
 	mes "If I find an item suitable for Jogi, I'll pay <INFO>25142</INFO><ITEM>Doram Token </ITEM>....";
 	next;
-	.@menu$ = "Search";
-	while( select( .@menu$, "Cancel" ) == 1 ) {
-		if (countitem(501) == 0) {// todo
-			.@menu$ = "Search again";
-			mes "[Dandi Chara]";
-			mes "...I think That's just it. Should I look over it again, or stop right here?";
-			next;
+	if (select( "Search", "Cancel" ) == 1) {	// todo complete
+		setarray .@item_data[0],
+			28380, 2,	// Fresh Grass Necklace [1]
+			28381, 2,	// Cute Grass Necklace [1]
+			28382, 2,	// Charming Grass Necklace [1]
+			15156, 4,	// Elegant Doram Suit [1]
+			20790, 4,	// Elegant Doram Manteau [1]
+			22085, 4;	// Elegant Doram Shoes [1]
+		.@total_item = getarraysize(.@item_data);
+
+		while(true) {
+			for ( .@i = 0; .@i < .@total_item; .@i += 2 ) {
+				if ((countitem(.@item_id[.@i]) - isequippedcnt(.@item_id[.@i])) > 0)
+					break;
+			}
+			if (.@i == .@total_item) {
+				mes "[Dandi Chara]";
+				mes "...I think That's just it. Should I look over it again, or stop right here?";
+				next;
+				if (select( "Search again.", "Stop." ) == 2)
+					break;
+			}
+			else {
+				mes "[Dandi Chara]";
+				mes "Whoa, this must be ^3131FF" + getitemname(.@item_id[.@i]) + "^000000!!";
+				mes "Don't you want to exchange this with " + .@item_data[.@i+1] + " <ITEM>Doram Token<INFO>25142</INFO></ITEM>?";
+				next;
+				if (select( "Exchange", "Quit exchanging" ) == 2) {
+					mes "[Dandi Chara]";
+					mes "I know. I searched into your inventory too much. Sorry...";
+					close;
+				}
+				mes "[Dandi Chara]";
+				mes "Thank you.";
+				mes "Can I look for something else?";
+				delitem .@item_id[.@i],1;
+				getitem 25142,.@item_data[.@i+1];// Doram token
+				next;
+			}
 		}
 	}
 	mes "[Dandi Chara]";
