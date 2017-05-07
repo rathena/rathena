@@ -11099,6 +11099,8 @@
 23193,Crimson_Rock_Scroll_1_5,Level 5 Crimson Rock,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_CRIMSONROCK",5; },{},{}
 23194,Sienna_Execrate_Scroll_1_5,Level 5 Sienna Execrate,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "WL_SIENNAEXECRATE",5,true; },{},{}
 23196,Shining_Blue_Lucky_Egg,Shining Blue Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Shining_Blue_Lucky_Egg); },{},{}
+//
+23277,Mado_Box,Emergency Magic Gear,2,10000,,3000,,,,,0x00000400,56,2,,,100,,,{ setmadogear 1; },{},{}
 //===================================================================
 // Shadow Equipments
 //===================================================================
