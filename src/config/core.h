@@ -76,6 +76,9 @@
 	#define MAX_CHAR_BILLING 0 // This must be less than MAX_CHARS
 #endif
 
+/// Which packet version(usually YYYYMMDD) should be used for client<>server communication?
+#define PACKETVER 20130807
+
 /// Comment to disable the official packet obfuscation support.
 /// When enabled, make sure there is value for 'packet_keys' of used packet version or
 /// defined 'packet_keys_use' in db/[import/]packet_db.txt.

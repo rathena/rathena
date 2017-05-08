@@ -20,6 +20,7 @@
 //        7 - 2005-04-11aSakexe+   - 0x229, 0x22a, 0x22b, 0x22c
 // see conf/battle/client.conf for other version
 
+// This can be defined in config/core.h so we have to check that we do not redefine it
 #ifndef PACKETVER
 	#define PACKETVER 20151104
 	//#define PACKETVER 20120410
