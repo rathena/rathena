@@ -9842,7 +9842,7 @@
 19053,Fighter_Moon_Cat,Fighter Moon Cat,4,20,,100,,5,,1,0xFFFFFFFF,63,2,256,,1,1,1308,{ /*Enables use of Level 1 Monster's Cry*/ .@r = getrefine(); bonus bAllStats,3; bonus2 bAddEff,Eff_Stun,500+(.@r*100); },{},{}
 19082,Bio_Protector,Bio Protector,4,0,,500,,3,,0,0xFFFFFFFF,63,2,512,1,50,1,1366,{ bonus bHit,10; bonus bVariableCastrate,-5; bonus bPerfectHitRate,5; },{},{}
 19083,Mask_of_Hero,Mask of Hero,4,20,,200,,0,,0,0xFFFFFFFF,63,2,512,,70,0,1367,{ bonus bVit,10; bonus bMdef,10; bonus bShortWeaponDamageReturn,1; },{},{}
-19084,Parfaille_Vigilante_Hat,Parfaille Vigilante Hat,4,0,,100,,2,,0,0x80000000,63,2,256,,20,1,1368,{ bonus bLuk,1; bonus3 bAutoSpell,"AL_BLESSING",3,; },{},{}
+19084,Parfaille_Vigilante_Hat,Parfaille Vigilante Hat,4,0,,100,,2,,0,0x80000000,63,2,256,,20,1,1368,{ bonus bLuk,1; bonus3 bAutoSpell,"AL_BLESSING",3,10; /*TODO: search rate*/ },{},{}
 19085,Sigrun's_Wings_,Sigrun's Wings,4,20,,100,,2,,1,0xFFFFFFFF,63,2,512,,1,0,568,{ if(BaseClass==Job_Swordman||BaseClass==Job_Merchant||BaseClass==Job_Thief||(BaseJob==Job_Taekwon&&Class!=Job_Soul_Linker)) { bonus bAspd,1; bonus bAgi,-2; } else if(BaseClass==Job_Mage||BaseClass==Job_Acolyte||Class==Job_Ninja||Class==Job_Soul_Linker){ bonus bMatk,3; bonus bHealPower,2; } else if(BaseClass==Job_Archer||BaseClass==Job_Gunslinger) bonus bLongAtkRate,1; else if(BaseJob==Job_Novice||BaseJob==Job_SuperNovice) { bonus bMaxHP,60; bonus bMaxSP,30; } },{},{}
 19086,Robo_Eye_,Robo Eye,4,20,,200,,2,,1,0xFFFFFFFF,63,2,512,,10,0,345,{ bonus2 bAddClass,Class_All,1; bonus bMatkRate,1; bonus bDex,1; },{},{}
 19087,Angel_Spirit_,Angel Spirit,4,20,,200,,0,,1,0xFFFFFFFF,63,2,512,,0,0,394,{ bonus bStr,1; bonus bHit,8; },{},{}
@@ -10793,7 +10793,7 @@
 20825,Para_Team_Manteau160,Awakened Eden Group Manteau III,4,0,,0,,30,,0,0xFFFFFFFF,63,2,4,,160,1,0,{ bonus2 bSubEle,Ele_All,10; bonus bFlee,12; bonus bMaxHP,1000; bonus bFlee2,2; .@r = getrefine(); if(.@r >= 7){ bonus2 bSubEle,Ele_Neutral,5; if(.@r >= 9){ skill "BS_GREED",1; } } },{},{}
 20826,Angel_Feather,Angel Feather,4,0,,200,,18,,1,0xFFFFFFFF,63,2,4,,1,1,18,{},{},{}
 20830,Wings_of_Seraph,Wings of Seraph,4,0,,200,,18,,1,0xFFFFFFFF,63,2,4,,1,1,8,{},{},{}
-22984,Kahluna_Milk,Kahluna Milk,3,6,,10,,,,,,,,,,,,,{ bonus2 bHPRegenRate,10,10000; },{},{}
+22984,Kahluna_Milk,Kahluna Milk,3,6,,10,,,,,,,,,,,,,{ /* TODO: bonus2 bHPRegenRate,10,10000; for 3 mins */ },{},{}
 //===================================================================
 // More 2-Handed Swords
 //===================================================================
@@ -11369,8 +11369,8 @@
 25044,Hard_Thorny_Vine,Hard Thorny Vine,3,0,,10,,,,,,,,,,,,,{},{},{}
 25045,Luxurious_Cloth,Luxurious Cloth,3,0,,0,,,,,,,,,,,,,{},{},{}
 25046,Boarding_Pass,Boarding Pass,3,0,,0,,,,,,,,,,,,,{},{},{}
-25048,Hearty_Lunchbox,Hearty Lunchbox,3,0,,0,,,,,,,,,,,,,{},{},{}
 25047,Kahlunac,Kahlunac,3,0,,0,,,,,,,,,,,,,{},{},{}
+25048,Hearty_Lunchbox,Hearty Lunchbox,3,0,,0,,,,,,,,,,,,,{},{},{}
 25049,Basilac_Clam,Basilac Clam,3,0,,0,,,,,,,,,,,,,{},{},{}
 25132,Pumpkin_Deco,Pumpkin Deco,3,0,,0,,,,,,,,,,,,,{},{},{}
 25133,Dried_White_Stem,Dried White Stem,3,0,,0,,,,,,,,,,,,,{},{},{}
