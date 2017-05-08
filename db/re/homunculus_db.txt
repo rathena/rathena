@@ -13,8 +13,6 @@
 // 08. Race         Race of the homunculus (0 = formless, 1 = undead, 2 = brute, 3 = plant, 4 = insect, 5 = fish, 6 = demon, 7 = demi-human, 8 = angel, 9 = dragon).
 // 09. Element      Element of the homunculus (0 = neutral, 1 = water, 2 = earth, 3 = fire, 4 = wind, 5 = poison, 6 = holy, 7 = dark, 8 = ghost, 9 = undead).
 //                  The element level is always 1.
-// ...
-//
 // Legend: b: base, gn: growth min, gx: growth max, en: evolution min, ex: evolution max
 // NOTE: Only the growth values are in a 1/10 scale, the other stats are 1/1 (eg: 5 gmAGI means 0.5 agi)
 
