@@ -1465,6 +1465,8 @@
 	export_constant(SC_ARMOR_ELEMENT_EARTH);
 	export_constant(SC_ARMOR_ELEMENT_FIRE);
 	export_constant(SC_ARMOR_ELEMENT_WIND);
+	export_constant(SC_DORAM_BUF_01);
+	export_constant(SC_DORAM_BUF_02);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

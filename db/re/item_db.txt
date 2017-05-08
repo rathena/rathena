@@ -10793,7 +10793,6 @@
 20825,Para_Team_Manteau160,Awakened Eden Group Manteau III,4,0,,0,,30,,0,0xFFFFFFFF,63,2,4,,160,1,0,{ bonus2 bSubEle,Ele_All,10; bonus bFlee,12; bonus bMaxHP,1000; bonus bFlee2,2; .@r = getrefine(); if(.@r >= 7){ bonus2 bSubEle,Ele_Neutral,5; if(.@r >= 9){ skill "BS_GREED",1; } } },{},{}
 20826,Angel_Feather,Angel Feather,4,0,,200,,18,,1,0xFFFFFFFF,63,2,4,,1,1,18,{},{},{}
 20830,Wings_of_Seraph,Wings of Seraph,4,0,,200,,18,,1,0xFFFFFFFF,63,2,4,,1,1,8,{},{},{}
-22984,Kahluna_Milk,Kahluna Milk,3,6,,10,,,,,,,,,,,,,{ /* TODO: bonus2 bHPRegenRate,10,10000; for 3 mins */ },{},{}
 //===================================================================
 // More 2-Handed Swords
 //===================================================================
@@ -11094,7 +11093,8 @@
 22899,Parchment_City,Parchment City,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_INCAGI",1; heal -15,0; },{},{}
 22901,Question_Old_Blue_Box,Question Old Blue Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ /*No info yet*/ },{},{}
 22902,Sealed_Card_Album_Scroll_II,Sealed Card Album Scroll II,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,17474,22829,24243,24244,24245),1; },{},{}
-22985,Basil,Basil,0,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "{ bonus2 bSPRegenRate,5,10000; }",180,1,0,SI_DORAM_BUF_02; },{},{}
+22984,Kahluna_Milk,Kahluna Milk,0,6,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_01, 180000, 0; },{},{}
+22985,Basil,Basil,0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_02, 180000, 0; },{},{}
 //
 23177,Kafra_Card_,Kafra Card,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashStore"; },{},{}
 23191,Varetyr_Spear_Scroll_1_5,Level 5 Varetyr Spear,11,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "SO_VARETYR_SPEAR",5; },{},{}
