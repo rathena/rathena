@@ -14560,9 +14560,14 @@ BUILDIN_FUNC(message)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * npctalk (sends message to surrounding area)
- *------------------------------------------*/
+/**
+ * npctalk("<message>"{,"<NPC name>","<flag>"});
+ * @param flag: Specify target
+ *   BC_ALL  - Broadcast message is sent server-wide.
+ *   BC_MAP  - Message is sent to everyone in the same map as the source of the npc.
+ *   BC_AREA - Message is sent to players in the vicinity of the source (default).
+ *   BC_SELF - Message is sent only to player attached.
+ */
 BUILDIN_FUNC(npctalk)
 {
 	struct npc_data* nd = NULL;
@@ -14572,10 +14577,29 @@ BUILDIN_FUNC(npctalk)
 		nd = npc_name2id(script_getstr(st, 3));
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);
+
 	if (nd != NULL) {
-		char message[256];
+		send_target target = AREA;
+		char message[CHAT_SIZE_MAX];
+
+		if (script_hasdata(st, 4)) {
+			switch(script_getnum(st, 4)) {
+				case BC_ALL:	target = ALL_CLIENT;	break;
+				case BC_MAP:	target = ALL_SAMEMAP;	break;
+				case BC_SELF:	target = SELF;			break;
+				case BC_AREA:
+				default:		target = AREA;			break;
+			}
+		}
 		safesnprintf(message, sizeof(message), "%s", str);
-		clif_disp_overhead(&nd->bl, message);
+		if (target != SELF)
+			clif_messagecolor(&nd->bl, color_table[COLOR_WHITE], message, false, target);
+		else {
+			TBL_PC *sd = script_rid2sd(st);
+			if (sd == NULL)
+				return SCRIPT_CMD_FAILURE;
+			clif_messagecolor_target(&nd->bl, color_table[COLOR_WHITE], message, false, target, sd);
+		}
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -23157,7 +23181,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(atcommand,"charcommand","s"), // [MouseJstr]
 	BUILDIN_DEF(movenpc,"sii?"), // [MouseJstr]
 	BUILDIN_DEF(message,"ss"), // [MouseJstr]
-	BUILDIN_DEF(npctalk,"s?"), // [Valaris]
+	BUILDIN_DEF(npctalk,"s??"), // [Valaris]
 	BUILDIN_DEF(chatmes,"s?"), // [Jey]
 	BUILDIN_DEF(mobcount,"ss"),
 	BUILDIN_DEF(getlook,"i?"),

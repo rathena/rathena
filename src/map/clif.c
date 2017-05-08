@@ -9174,9 +9174,9 @@ void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, sen
 
 /// Monster/NPC color chat [SnakeDrak] (ZC_NPC_CHAT).
 /// 02c1 <packet len>.W <id>.L <color>.L <message>.?B
-void clif_messagecolor(struct block_list *bl, unsigned long color, const char *msg, bool rgb2bgr, enum send_target type) {
+void clif_messagecolor_target(struct block_list *bl, unsigned long color, const char *msg, bool rgb2bgr, enum send_target type, struct map_session_data *sd) {
 	unsigned short msg_len = (unsigned short)(strlen(msg) + 1);
-	uint8 buf[256];
+	uint8 buf[CHAT_SIZE_MAX];
 
 	nullpo_retv(bl);
 
@@ -9194,7 +9194,7 @@ void clif_messagecolor(struct block_list *bl, unsigned long color, const char *m
 	WBUFL(buf,8) = color;
 	memcpy(WBUFCP(buf,12), msg, msg_len);
 
-	clif_send(buf, WBUFW(buf,2), bl, type);
+	clif_send(buf, WBUFW(buf,2), (sd == NULL ? bl : &(sd->bl)), type);
 }
 
 /**
