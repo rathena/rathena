@@ -5477,6 +5477,17 @@ behavior of the command.
 
 ---------------------------------------
 
+*specialeffect3 <GID>,<effect number>{,<send_target>};
+
+This command behaves identically to 'specialeffect', but the effect will be
+centered on <GID>'s sprite.
+
+Like with specialeffect, when specifying a player, <send_target>
+must be supplied, specifying AREA will retain the default 
+behavior of the command.
+
+---------------------------------------
+
 *statusup <stat>{,<char_id>};
 
 This command will change a specified stat of the invoking character up by one

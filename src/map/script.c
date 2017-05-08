@@ -14307,6 +14307,29 @@ BUILDIN_FUNC(specialeffect2)
 }
 
 /**
+ * specialeffect3(<GID>,<effect number>{,<send_target>});
+ * @author Secretdataz
+ */
+BUILDIN_FUNC(specialeffect3)
+{
+	struct block_list *bl;
+	enum send_target target;
+	int effect_id, bl_id;
+
+	bl_id = script_getnum(st, 2);
+	bl = map_id2bl(bl_id);
+	effect_id = script_getnum(st, 3);
+	target = script_hasdata(st, 4) ? (send_target)script_getnum(st, 4) : AREA;
+
+	if (bl != NULL) {
+		clif_specialeffect(bl, effect_id, target);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	else
+		return SCRIPT_CMD_FAILURE;
+	
+}
+/**
  * nude({<char_id>});
  * @author [Valaris]
  **/
@@ -23323,6 +23346,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcskilleffect,"viii"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect,"i??"), // npc skill effect [Valaris]
 	BUILDIN_DEF(specialeffect2,"i??"), // skill effect on players[Valaris]
+	BUILDIN_DEF(specialeffect3,"iii"), // skill effect on block_list [Secretdataz]
 	BUILDIN_DEF(nude,"?"), // nude command [Valaris]
 	BUILDIN_DEF(mapwarp,"ssii??"),		// Added by RoVeRT
 	BUILDIN_DEF(atcommand,"s"), // [MouseJstr]
