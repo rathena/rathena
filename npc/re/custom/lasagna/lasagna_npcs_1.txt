@@ -2191,7 +2191,7 @@ lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
 
 		while(true) {
 			for ( .@i = 0; .@i < .@total_item; .@i += 2 ) {
-				if ((countitem(.@item_id[.@i]) - isequippedcnt(.@item_id[.@i])) > 0)
+				if ((countitem(.@item_data[.@i]) - isequippedcnt(.@item_data[.@i])) > 0)
 					break;
 			}
 			if (.@i == .@total_item) {
@@ -2203,7 +2203,7 @@ lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
 			}
 			else {
 				mes "[Jogi Chara]";
-				mes "Whoa! This is ^3131FF" + getitemname(.@item_id[.@i]) + "^000000!";
+				mes "Whoa! This is ^3131FF" + getitemname(.@item_data[.@i]) + "^000000!";
 				mes "Exchange it for " + .@item_data[.@i+1] + " <ITEM>Doram Token<INFO>25142</INFO></ITEM>! Please? Will you do it, please?";
 				next;
 				if (select( "Exchange", "Quit exchanging" ) == 2) {
@@ -2214,7 +2214,7 @@ lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
 				mes "[Jogi Chara]";
 				mes "Yay!! Thanks a mil!";
 				mes "Can I look for something else?";
-				delitem .@item_id[.@i],1;
+				delitem .@item_data[.@i],1;
 				getitem 25142,.@item_data[.@i+1];// Doram token
 				next;
 			}
@@ -2270,7 +2270,7 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 
 		while(true) {
 			for ( .@i = 0; .@i < .@total_item; .@i += 2 ) {
-				if ((countitem(.@item_id[.@i]) - isequippedcnt(.@item_id[.@i])) > 0)
+				if ((countitem(.@item_data[.@i]) - isequippedcnt(.@item_data[.@i])) > 0)
 					break;
 			}
 			if (.@i == .@total_item) {
@@ -2282,7 +2282,7 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 			}
 			else {
 				mes "[Dandi Chara]";
-				mes "Whoa, this must be ^3131FF" + getitemname(.@item_id[.@i]) + "^000000!!";
+				mes "Whoa, this must be ^3131FF" + getitemname(.@item_data[.@i]) + "^000000!!";
 				mes "Don't you want to exchange this with " + .@item_data[.@i+1] + " <ITEM>Doram Token<INFO>25142</INFO></ITEM>?";
 				next;
 				if (select( "Exchange", "Quit exchanging" ) == 2) {
@@ -2293,7 +2293,7 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 				mes "[Dandi Chara]";
 				mes "Thank you.";
 				mes "Can I look for something else?";
-				delitem .@item_id[.@i],1;
+				delitem .@item_data[.@i],1;
 				getitem 25142,.@item_data[.@i+1];// Doram token
 				next;
 			}
