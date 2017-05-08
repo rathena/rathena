@@ -15,7 +15,6 @@
 #include "map.h"
 #include "path.h"
 #include "pc.h"
-#include "status.h"
 #include "homunculus.h"
 #include "mercenary.h"
 #include "elemental.h"
