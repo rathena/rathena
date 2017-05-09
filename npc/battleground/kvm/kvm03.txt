@@ -35,12 +35,8 @@ OnEnterBG:
 	set $@KvM03BG_id2, waitingroom2bg("bat_c03",147,55,"KvM03_BG::OnCroixQuit","KvM03_BG::OnCroixDie");
 	end;
 }
-bat_room,225,220,0	script	#kvm701	WARPNPC,2,2,{
-OnTouch:
-	warp "bat_room",154,150;
-	end;
-}
-bat_room,225,211,0	duplicate(#kvm701)	#kvm702	WARPNPC,2,2
+bat_room,225,220,0	warp2	#kvm701	2,2,bat_room,154,150
+bat_room,225,211,0	warp2	#kvm702	2,2,bat_room,154,150
 
 // Starting Line
 //============================================================

@@ -453,93 +453,14 @@ OnTouch_:
 1@gef,120,98,4	duplicate(#gmt_quotes)	Dwigh#z1_0et	4_GEFFEN_12,4,4
 
 //WARPS
-1@gef_in,70,132,0	script	#gef_a4_0et	45,2,2,{
-	end;
-OnTouch:
-	warp instance_mapname("1@gef"),46,88;
-	end;
-OnInstanceInit:
-OnEnable:
-	enablenpc instance_npcname("#gef_a4_0et");
-	end;
-}
-
-1@gef_in,106,181,0	script	#gef_a3_0et	45,2,2,{
-	end;
-OnTouch:
-	warp instance_mapname("1@gef"),178,63;
-	end;
-OnInstanceInit:
-OnEnable:
-	enablenpc instance_npcname("#gef_a3_0et");
-	end;
-}
-
-1@gef,182,59,0	script	#gef_a1_0et	45,2,2,{
-	end;
-OnTouch:
-	warp instance_mapname("1@gef_in"),106,177;
-	end;
-OnInstanceInit:
-OnEnable:
-	enablenpc instance_npcname("#gef_a1_0et");
-	end;
-}
-
-1@gef_in,70,158,0	script	#gef_a5_0et	45,2,2,{
-	end;
-OnTouch:
-	warp instance_mapname("1@gef_in"),70,146;
-	end;
-OnInstanceInit:
-OnEnable:
-	enablenpc instance_npcname("#gef_a5_0et");
-	end;
-}
-
-1@gef_in,70,149,0	script	#gef_a6_0et	45,2,2,{
-	end;
-OnTouch:
-	warp instance_mapname("1@gef_in"),70,161;
-	end;
-OnInstanceInit:
-OnEnable:
-	enablenpc instance_npcname("#gef_a6_0et");
-	end;
-}
-
-1@gef,43,85,0	script	#gef_a2_0et	45,2,2,{
-	end;
-OnTouch:
-	warp instance_mapname("1@gef_in"),70,138;
-	end;
-OnInstanceInit:
-OnEnable:
-	enablenpc instance_npcname("#gef_a2_0et");
-	end;
-}
-
-1@gef,98,141,0	script	#gef_a8_0et	45,2,2,{
-	end;
-OnTouch:
-	warp instance_mapname("1@gef_in"),28,160;
-	end;
-OnInstanceInit:
-OnEnable:
-	enablenpc instance_npcname("#gef_a8_0et");
-	end;
-}
-
-1@gef_in,28,156,0	script	#gef_a7_0et	45,2,2,{
-	end;
-OnTouch:
-	warp instance_mapname("1@gef"),101,138;
-	end;
-OnInstanceInit:
-OnEnable:
-	enablenpc instance_npcname("#gef_a7_0et");
-	end;
-}
+1@gef_in,70,132,0	warp2	#gef_a4_0et	2,2,1@gef,46,88
+1@gef_in,106,181,0	warp2	#gef_a3_0et	2,2,1@gef,178,63
+1@gef,182,59,0	warp2	#gef_a1_0et	2,2,1@gef_in,106,177
+1@gef_in,70,158,0	warp2	#gef_a5_0et	2,2,1@gef_in,70,146
+1@gef_in,70,149,0	warp2	#gef_a6_0et	2,2,1@gef_in,70,161
+1@gef,43,85,0	warp2	#gef_a2_0et	2,2,1@gef_in,70,138
+1@gef,98,141,0	warp2	#gef_a8_0et	2,2,1@gef_in,28,160
+1@gef_in,28,156,0	warp2	#gef_a7_0et	2,2,1@gef,101,138
 
 //SPECTATORS
 
