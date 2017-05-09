@@ -1031,32 +1031,11 @@ OnTimer30000:
 
 // Warp Portals
 //============================================================
-1@ma_h,35,156,0	script	#Boss Room Exit	WARPNPC,2,2,{
-OnTouch:
-	warp "ma_dun01",150,9;
-	end;
-}
-1@ma_h,105,157,0	script	#Boss Room Door	WARPNPC,2,2,{
-OnTouch:
-	warp 'map_name$,116,157;
-	end;
-}
-1@ma_h,112,157,0	script	#Boss Room Door1	WARPNPC,2,2,{
-OnTouch:
-	warp 'map_name$,100,157;
-	end;
-}
-1@ma_h,112,63,0	script	#Boss Room Door3	WARPNPC,2,2,{
-OnTouch:
-	warp 'map_name$,100,63;
-	end;
-}
-
-1@ma_h,104,63,0	script	#Boss Room Door2	WARPNPC,2,2,{
-OnTouch:
-	warp 'map_name$,117,63;
-	end;
-}
+1@ma_h,35,156,0	warp2	#Boss Room Exit	2,2,ma_dun01,150,9
+1@ma_h,105,157,0	warp2	#Boss Room Door	2,2,1@ma_h,116,157
+1@ma_h,112,157,0	warp2	#Boss Room Door1	2,2,1@ma_h,100,157
+1@ma_h,112,63,0	warp2	#Boss Room Door3	2,2,1@ma_h,100,63
+1@ma_h,104,63,0	warp2	#Boss Room Door2	2,2,1@ma_h,117,63
 1@ma_h,36,157,0	duplicate(#Boss Room Door2)	#Patternwarp1	WARPNPC,7,7
 1@ma_h,46,157,0	duplicate(#Boss Room Door2)	#Patternwarp2	WARPNPC,7,7
 1@ma_h,57,157,0	duplicate(#Boss Room Door2)	#Patternwarp3	WARPNPC,7,7
@@ -1082,11 +1061,7 @@ OnTouch:
 1@ma_h,131,143,0	duplicate(#Boss Room Door2)	#Patternwarp48	WARPNPC,10,10
 1@ma_h,146,143,0	duplicate(#Boss Room Door2)	#Patternwarp49	WARPNPC,10,10
 
-1@ma_h,36,63,0	script	#Patternwarp10	WARPNPC,7,7,{
-OnTouch:
-	warp 'map_name$,116,157;
-	end;
-}
+1@ma_h,36,63,0	warp2	#Patternwarp10	7,7,1@ma_h,116,157
 1@ma_h,46,63,0	duplicate(#Patternwarp10)	#Patternwarp11	WARPNPC,7,7
 1@ma_h,56,63,0	duplicate(#Patternwarp10)	#Patternwarp12	WARPNPC,7,7
 1@ma_h,67,63,0	duplicate(#Patternwarp10)	#Patternwarp13	WARPNPC,7,7
