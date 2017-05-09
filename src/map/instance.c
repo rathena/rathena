@@ -911,6 +911,10 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 				ShowWarning("instance_readdb_sub: Invalid map '%s' in maplist, skipping...\n", str[i]);
 				continue;
 			}
+			if (strcmpi(str[4], str[i])) {
+				ShowWarning("instance_readdb_sub: Map%d must not be equal to EnterMap for instance id '%d', skipping...\n", i-5, id);
+				continue;
+			}
 			RECREATE(db->maplist, StringBuf *, db->maplist_count+1);
 			db->maplist[db->maplist_count] = StringBuf_Malloc();
 			StringBuf_AppendStr(db->maplist[db->maplist_count], str[i]);
