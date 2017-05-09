@@ -2956,6 +2956,12 @@ static struct Damage battle_calc_attack_masteries(struct Damage wd, struct block
 				ATK_ADD(wd.masteryAtk, wd.masteryAtk2, 10 * sc->data[SC_GN_CARTBOOST]->val1);
 #endif
 			}
+			if (sc->data[SC_P_ALTER]) {
+				ATK_ADD(wd.damage, wd.damage2, sc->data[SC_P_ALTER]->val2);
+#ifdef RENEWAL
+				ATK_ADD(wd.masteryAtk, wd.masteryAtk2, sc->data[SC_P_ALTER]->val2);
+#endif
+			}
 		}
 	}
 
@@ -3379,11 +3385,6 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			status_change_end(src,SC_CRUSHSTRIKE,INVALID_TIMER);
 			skill_break_equip(src,src,EQP_WEAPON,2000,BCT_SELF);
 		}
-		//!TODO: Verify this placement & skills that affected by these effects [Cydh]
-		if (sc->data[SC_HEAT_BARREL])
-			skillratio += 200;
-		if (sc->data[SC_P_ALTER])
-			skillratio += sc->data[SC_P_ALTER]->val2;
 	}
 
 	switch(skill_id) {
@@ -4221,13 +4222,19 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			break;
 		case RL_FIREDANCE:
 			skillratio += -100 + 100 * skill_lv;
-			skillratio += (skillratio * status_get_lv(src)) / 300; //(custom)
+			RE_LVL_DMOD(100);
 			break;
 		case RL_BANISHING_BUSTER:
-			skillratio += -100 + (400 * skill_lv); //(custom)
+			// iRO Wiki: [Base_Damage × Base_Level ÷ 100]%
+			// Base_Damage: [1000 + 200 * Skill_Level]
+			skillratio += -100 + (1000 + 200 * skill_lv);
+			RE_LVL_DMOD(100);
 			break;
 		case RL_S_STORM:
-			skillratio += -100 + (200 * skill_lv); //(custom)
+			// iRO Wiki: [Base_Damage × Base_Level ÷ 100]%
+			// Base_Damage: [1000 + 100 * Skill_Level]
+			skillratio += -100 + (1000 + 100 * skill_lv);
+			RE_LVL_DMOD(100);
 			break;
 		case RL_SLUGSHOT: {
 				uint16 w = 50;
@@ -4235,38 +4242,42 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 
 				if (sd && (idx = sd->equip_index[EQI_AMMO]) >= 0 && sd->inventory_data[idx])
 					w = sd->inventory_data[idx]->weight / 10;
-				skillratio += -100 + (max(w,1) * skill_lv * 30); //(custom)
+				// iRO Wiki: [Skill_Lv × (Ammo_Weight × 32)]%
+				skillratio += -100 + (skill_lv * u16max(w,1) * 32);
 			}
 			break;
 		case RL_D_TAIL:
+			// iRO Wiki: [2500 + (500 * Skill_Level)]%
 			skillratio += -100 + (2500 + 500 * skill_lv);
 			break;
 		case RL_R_TRIP:
-			skillratio += -100 + 150 * skill_lv; //(custom)
-			break;
 		case RL_R_TRIP_PLUSATK:
-			skillratio += -100 + 100 * skill_lv + rnd()%10 + 100; //(custom)
+			// iRO Wiki: [(DEX ÷ 2) × (10 + (Skill_Lv × 3)]%
+			// Collision damage is half the initial damage
+			skillratio += -100 + ((sstatus->dex / 2) * (10 + (skill_lv * 3)) / ((skill_id == RL_R_TRIP_PLUSATK) ? 2 : 1));
 			break;
 		case RL_H_MINE:
-			skillratio += 100 + 200 * skill_lv;
-			//If damaged by Flicker, explosion damage (800%:1100%:1400%:1700%:2000%)
-			if (sd && sd->flicker)
-				skillratio += 800 + (skill_lv - 1) * 300;
+			if (sd && sd->flicker) // Explosion Damage by Flicker: [500 + (300 * Skill_Level)] %
+				skillratio += -100 + (500 + (300 * skill_lv));
+			else // Normal damage: [200 + (200 * Skill_Level)]
+				skillratio += -100 + (200 + (200 * skill_lv));
 			break;
 		case RL_HAMMER_OF_GOD:
-			//! TODO: Please check the right formula. [Cydh]
-			//kRO Update 2013-07-24. Ratio: 1600+lv*800
-			//kRO Update 2014-02-12. Coins increase the damage
-			skillratio += -100 + (2400 + (skill_lv - 1) * 800) + 10 *((sd) ? sd->spiritball_old : 1); //(custom)
+			// iRO Wiki: [Base_Damage + {Ceiling[(Coins + 1) ÷ 2] × 200}]%
+			// Base_Damage: [1600 + 800 * Skill_Level]
+			skillratio += -100 + (1600 + (800 * skill_lv)) + (200 * (sd ? sd->spiritball_old+1 : 2) / 2);
 			break;
 		case RL_QD_SHOT:
 			skillratio += -100 + (max(pc_checkskill(sd,GS_CHAINACTION),1) * status_get_dex(src) / 5); //(custom)
 			break;
 		case RL_FIRE_RAIN:
-			skillratio += -100 + 2000 + (200 * (skill_lv - 1)) + status_get_dex(src); //(custom) //kRO Update 2013-07-24. 2,000% + caster's DEX (?) [Cydh]
+			// iRO Wiki: [{2000 + (Skill_Lv × DEX)} × Base_Level ÷ 100]%
+			skillratio += -100 + (2000 + skill_lv * sstatus->dex);
+			RE_LVL_DMOD(100);
 			break;
 		case RL_AM_BLAST:
-			skillratio += -100 + 300 * skill_lv + status_get_dex(src) / 5; //(custom)
+			// iRO Wiki: [2000 + (200 * Skill Level) ]%
+			skillratio += -100 + 2000 + (200 * skill_lv);
 			break;
 		case SU_BITE:
 			skillratio += 100;
@@ -4499,6 +4510,10 @@ struct Damage battle_attack_sc_bonus(struct Damage wd, struct block_list *src, s
 					RE_ALLATK_ADDRATE(wd, sc->data[SC_UNLIMIT]->val2);
 					break;
 			}
+		}
+		if (sc->data[SC_HEAT_BARREL]) {
+			ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_HEAT_BARREL]->val3);
+			RE_ALLATK_ADDRATE(wd, sc->data[SC_HEAT_BARREL]->val3);
 		}
 
 		if((wd.flag&(BF_LONG|BF_MAGIC)) == BF_LONG) {
@@ -6574,8 +6589,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			md.damage = ( skill_lv * status_get_lv(src) * 10 ) + ( status_get_int(src) * 7 / 2 ) * ( 18 + (sd?sd->status.job_level:0) / 4 ) * ( 5 / (10 - ((sd) ? pc_checkskill(sd,AM_CANNIBALIZE) : 0)) );
 			break;
 		case RL_B_TRAP:
-			// kRO 2014-02-12: Damage: Caster's DEX, Target's current HP, Skill Level
-			md.damage = ((200 + status_get_dex(src)) * skill_lv * 10) + sstatus->hp; // (custom)
+			// iRO Wiki: [(3 * Skill_Level)% * TargetCurrentHP] + (Dex * 10)
+			md.damage = ((3 * skill_lv) * tstatus->hp / 100) + (sstatus->dex * 10);
 			break;
 		case MH_EQC:
 			md.damage = max(tstatus->hp - sstatus->hp, 0);

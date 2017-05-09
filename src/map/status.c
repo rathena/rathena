@@ -6717,6 +6717,8 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += sc->data[sc_val]->val1;
 		if (sc->data[SC_ATTHASTE_CASH])
 			bonus += sc->data[SC_ATTHASTE_CASH]->val1;
+		if (sc->data[SC_HEAT_BARREL])
+			bonus += sc->data[SC_HEAT_BARREL]->val1;
 	} else {
 		if (sc->data[SC_DONTFORGETME])
 			bonus -= sc->data[SC_DONTFORGETME]->val2 / 10;
@@ -6776,8 +6778,6 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += sc->data[SC_GATLINGFEVER]->val1;
 		if (sc->data[SC_STAR_COMFORT])
 			bonus += 3 * sc->data[SC_STAR_COMFORT]->val1;
-		if (sc->data[SC_HEAT_BARREL])
-			bonus += sc->data[SC_HEAT_BARREL]->val3;
 	}
 
 	return bonus;
@@ -6952,8 +6952,6 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		aspd_rate += sc->data[SC_PAIN_KILLER]->val2 * 10;
 	if( sc->data[SC_GOLDENE_FERSE])
 		aspd_rate -= sc->data[SC_GOLDENE_FERSE]->val3 * 10;
-	if( sc->data[SC_HEAT_BARREL] )
-		aspd_rate -= sc->data[SC_HEAT_BARREL]->val3 * 10;
 
 	return (short)cap_value(aspd_rate,0,SHRT_MAX);
 }
@@ -7954,7 +7952,8 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 			tick_def2 = status_get_lv(bl) * 100 + (sd ? sd->status.job_level : 1) * 200;
 			break;
 		case SC_B_TRAP:
-			tick_def = (sd ? sd->status.str : status_get_base_status(bl)->str) * 50; // (custom)
+			// iRO Reduction: Base_Duration - (Target_STR / 10 x 0.5)
+			tick_def = (sd ? sd->status.str : status_get_base_status(bl)->str) * 500 / 10;
 			break;
 		case SC_NORECOVER_STATE:
 			tick_def2 = status->luk * 100;
@@ -10739,22 +10738,17 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = src->id;
 			break;
 		case SC_HEAT_BARREL:
-			//kRO Update 2014-02-26
 			{
-				uint8 n = 10;
-				if (sd)
-					n = (uint8)sd->spiritball_old;
-				val2 = val1 * 5; // -fixed casttime (custom)
-				val3 = val1 * n / 5; // +aspd (custom)
-				val4 = 75 - val1 * 5; // -flee
+				uint8 n = sd ? (uint8)sd->spiritball_old : 10;
+				val2 = n * 5; // -Fixed Casttime. iRO Wiki: [5 * Coins]%
+				val3 = 6 + val1 * 2; // ATK Boost in %
+				val4 = 75 - val1 * 5; // -FLEE
 			}
 			break;
 		case SC_P_ALTER:
 			{
-				uint8 n = 10;
-				if (sd)
-					n = (uint8)sd->spiritball_old;
-				val2 = val1 * n * 2; // +atk (custom)
+				uint8 n = sd ? (uint8)sd->spiritball_old : 10;
+				val2 = 10 * val1 * n; // +ATK. iRO Wiki: 10 × (Skill_Lv + Coins)
 				val3 = val1 * 15; // +def (custom)
 			}
 			break;
