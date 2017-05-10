@@ -2602,7 +2602,7 @@ void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char 
 		clif_add_random_options(WFIFOP(fd,31), &sd->inventory.u.items_inventory[n]);
 #if PACKETVER >= 20160921
 		WFIFOB(fd,offs+54) = sd->inventory.u.items_inventory[n].favorite;
-		WFIFOW(fd,offs+55) = sd->inventory_data[n]->view_id > 0 ? sd->inventory_data[n]->view_id : sd->inventory_data[n]->nameid;
+		WFIFOW(fd,offs+55) = sd->inventory_data[n]->look;
 #endif
 #endif
 	}
@@ -7153,7 +7153,7 @@ void clif_vendinglist(struct map_session_data* sd, int id, struct s_vending* ven
 		clif_add_random_options(WFIFOP(fd,offset+22+i*item_length), &vsd->cart.u.items_cart[index]);
 #if PACKETVER >= 20160921
 		WFIFOL(fd,offset+47+i*item_length) = pc_equippoint_sub(sd,data);
-		WFIFOW(fd,offset+51+i*item_length) = data->view_id > 0 ? data->view_id : data->nameid;
+		WFIFOW(fd,offset+51+i*item_length) = data->look;
 #endif
 #endif
 	}
