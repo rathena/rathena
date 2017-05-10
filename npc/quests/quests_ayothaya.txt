@@ -1337,7 +1337,7 @@ ayo_in01,181,193,4	script	Shaman#thai	840,{
 	if (checkre(0))
 		setarray .@items[0],7213,7217; //Needle_Pouch, Spool
 	else
-		setarray .@items[0],1059,1022; //Transparent_Cloth, Fox_Tail
+		setarray .@items[0],1059,1022; //Fabric, Fox_Tail
 
 	if (ayodunquest == 1) {
 		mes "[Boonthom]";
