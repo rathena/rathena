@@ -10841,6 +10841,17 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				tick_time = tick;
 				tick = tick_time + max(val4,0);
 				break;
+			case SC_SWORDCLAN:
+			case SC_ARCWANDCLAN:
+			case SC_GOLDENMACECLAN:
+			case SC_CROSSBOWCLAN:
+			case SC_JUMPINGCLAN:
+			case SC_CLAN_INFO:
+				// If the player still has a clan status, but was removed from his clan
+				if( sd && sd->status.clan_id == 0 ){
+					return 0;
+				}
+				break;
 		}
 
 	// Values that must be set regardless of flag&4 e.g. val_flag [Ind]
