@@ -11,6 +11,9 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+	<ClInclude Include="achievement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="atcommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -133,6 +136,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+	<ClCompile Include="achievement.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="atcommand.c">
       <Filter>Source Files</Filter>
     </ClCompile>

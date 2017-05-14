@@ -159,6 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+	<ClInclude Include="achievement.h" />
     <ClInclude Include="atcommand.h" />
     <ClInclude Include="battle.h" />
     <ClInclude Include="battleground.h" />
@@ -201,6 +202,7 @@
     <ClInclude Include="vending.h" />
   </ItemGroup>
   <ItemGroup>
+	<ClCompile Include="achievement.c" />
     <ClCompile Include="atcommand.c" />
     <ClCompile Include="battle.c" />
     <ClCompile Include="battleground.c" />
@@ -280,7 +282,8 @@
     <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_spn_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_spn_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_tha_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_tha_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\abra_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\abra_db.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\attr_fix.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\attr_fix.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\achievement_db.conf" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\achievement_db.conf')" />
+	<Copy SourceFiles="$(SolutionDir)db\import-tmpl\attr_fix.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\attr_fix.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\castle_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\castle_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\create_arrow_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\create_arrow_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\elemental_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\elemental_db.txt')" />

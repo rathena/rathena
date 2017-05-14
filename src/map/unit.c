@@ -24,6 +24,7 @@
 #include "party.h"
 #include "intif.h"
 #include "storage.h"
+#include "achievement.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -3231,6 +3232,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->hatEffectCount = 0;
 			}
 #endif
+
+			if (sd->achievement_data.achievements)
+				achievement_free(sd);
 
 			// Clearing...
 			if (sd->bonus_script.head)

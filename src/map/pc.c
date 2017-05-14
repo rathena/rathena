@@ -32,6 +32,7 @@
 #include "party.h" // party_search()
 #include "storage.h"
 #include "quest.h"
+#include "achievement.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -946,6 +947,10 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 		pc_skill(p1_sd, WE_CALLBABY, 1, ADDSKILL_PERMANENT);
 		pc_skill(p2_sd, WE_CALLBABY, 1, ADDSKILL_PERMANENT);
 
+		achievement_update_objective(b_sd, AG_BABY, 1, 1);
+		achievement_update_objective(p1_sd, AG_BABY, 1, 2);
+		achievement_update_objective(p2_sd, AG_BABY, 1, 2);
+
 		return true;
 	}
 
@@ -1451,6 +1456,17 @@ void pc_reg_received(struct map_session_data *sd)
 #endif
 	intif_Mail_requestinbox(sd->status.char_id, 0); // MAIL SYSTEM - Request Mail Inbox
 	intif_request_questlog(sd);
+
+	if (battle_config.feature_achievement) {
+		sd->achievement_data.total_score = 0;
+		sd->achievement_data.level = 0;
+		sd->achievement_data.save = false;
+		sd->achievement_data.sendlist = false;
+		sd->achievement_data.count = 0;
+		sd->achievement_data.incompleteCount = 0;
+		sd->achievement_data.achievements = NULL;
+		intif_request_achievements(sd->status.char_id);
+	}
 
 	if (sd->state.connect_new == 0 && sd->fd) { //Character already loaded map! Gotta trigger LoadEndAck manually.
 		sd->state.connect_new = 1;
@@ -4309,6 +4325,8 @@ char pc_getzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type
 		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 
+	achievement_update_objective(sd, AG_GET_ZENY, 1, sd->status.zeny);
+
 	return 0;
 }
 
@@ -4551,6 +4569,8 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 			pc_inventory_rental_add(sd, seconds);
 		}
 	}
+
+	achievement_update_objective(sd, AG_GET_ITEM, 1, id->value_sell);
 
 	return ADDITEM_SUCCESS;
 }
@@ -6468,6 +6488,8 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 		party_send_levelup(sd);
 
 	pc_baselevelchanged(sd);
+	achievement_update_objective(sd, AG_GOAL_LEVEL, 1, sd->status.base_level);
+	achievement_update_objective(sd, AG_GOAL_STATUS, 2, sd->status.base_level, sd->status.class_);
 	return 1;
 }
 
@@ -6515,6 +6537,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 		clif_status_change(&sd->bl,SI_DEVIL, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 
 	npc_script_event(sd, NPCE_JOBLVUP);
+	achievement_update_objective(sd, AG_GOAL_LEVEL, 1, sd->status.job_level);
 	return 1;
 }
 
@@ -6967,6 +6990,8 @@ bool pc_statusup(struct map_session_data* sd, int type, int increase)
 	clif_statusupack(sd, type, 1, final_value); // required
 	if( final_value > 255 )
 		clif_updatestatus(sd, type); // send after the 'ack' to override the truncated value
+
+	achievement_update_objective(sd, AG_GOAL_STATUS, 1, final_value);
 
 	return true;
 }
@@ -8611,6 +8636,7 @@ bool pc_jobchange(struct map_session_data *sd,int job, char upper)
 	pc_checkallowskill(sd);
 	pc_equiplookall(sd);
 	pc_show_questinfo(sd);
+	achievement_update_objective(sd, AG_JOB_CHANGE, 2, sd->status.base_level, job);
 
 	chrif_save(sd, CSAVE_NORMAL);
 	//if you were previously famous, not anymore.
@@ -10150,6 +10176,10 @@ bool pc_marriage(struct map_session_data *sd,struct map_session_data *dstsd)
 		return false;
 	sd->status.partner_id = dstsd->status.char_id;
 	dstsd->status.partner_id = sd->status.char_id;
+
+	achievement_update_objective(sd, AG_MARRY, 1, 1);
+	achievement_update_objective(dstsd, AG_MARRY, 1, 1);
+
 	return true;
 }
 

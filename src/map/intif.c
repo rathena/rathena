@@ -23,6 +23,7 @@
 #include "mail.h"
 #include "quest.h"
 #include "status.h"
+#include "achievement.h"
 
 #include <stdlib.h>
 
@@ -33,8 +34,8 @@ static const int packet_len_table[] = {
 	39,-1,15,15, 15+NAME_LENGTH,19, 7,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3820
 	10,-1,15, 0, 79,19, 7,-1,  0,-1,-1,-1, 14,67,186,-1, //0x3830
 	-1, 0, 0,14,  0, 0, 0, 0, -1,74,-1,11, 11,-1,  0, 0, //0x3840
-	-1,-1, 7, 7,  7,11, 8,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] itembound[Akinari]
-	-1, 7, 0, 0,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish]
+	-1,-1, 7, 7,  7,11, 8,-1,  0, 0, 0, 0,  0, 0,  0, 0, //0x3850  Auctions [Zephyrus] / itembound[Akinari]
+	-1, 7,-1, 7,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3860  Quests [Kevin] [Inkfish] / Achievements [Aleos]
 	-1, 3, 3, 0,  0, 0, 0, 0,  0, 0, 0, 0, -1, 3,  3, 0, //0x3870  Mercenaries [Zephyrus] / Elemental [pakpil]
 	12,-1, 7, 3,  0, 0, 0, 0,  0, 0,-1, 9, -1, 0,  0, 0, //0x3880  Pet System,  Storages
 	-1,-1, 7, 3,  0, 0, 0, 0,  0, 0, 0, 0,  0, 0,  0, 0, //0x3890  Homunculus [albator]
@@ -2078,6 +2079,123 @@ int intif_quest_save(struct map_session_data *sd)
 }
 
 /*==========================================
+ * Achievement System
+ *------------------------------------------*/
+
+/**
+ * Requests a character's achievement log entries to the inter server.
+ * @param char_id: Character ID
+ */
+void intif_request_achievements(uint32 char_id)
+{
+	if (CheckForCharServer())
+		return;
+
+	WFIFOHEAD(inter_fd, 6);
+	WFIFOW(inter_fd, 0) = 0x3062;
+	WFIFOL(inter_fd, 2) = char_id;
+	WFIFOSET(inter_fd, 6);
+}
+
+/**
+ * Receive a character's achievements
+ * @param fd: char-serv link
+ */
+void intif_parse_achievements(int fd)
+{
+	uint32 char_id = RFIFOL(fd, 4), num_received = (RFIFOW(fd, 2) - 8) / sizeof(struct achievement);
+	struct map_session_data *sd = map_charid2sd(char_id);
+
+	if (!sd) // User not online anymore
+		return;
+
+	if (num_received == 0) {
+		if (sd->achievement_data.achievements) {
+			aFree(sd->achievement_data.achievements);
+			sd->achievement_data.achievements = NULL;
+		}
+	} else {
+		struct achievement *received = (struct achievement *)RFIFOP(fd, 8);
+		int i, k = num_received;
+
+		if (sd->achievement_data.achievements)
+			RECREATE(sd->achievement_data.achievements, struct achievement, num_received);
+		else
+			CREATE(sd->achievement_data.achievements, struct achievement, num_received);
+
+		for (i = 0; i < num_received; i++) {
+			struct achievement_db *adb = achievement_search(received[i].achievement_id);
+
+			if (!adb) {
+				ShowError("intif_parse_achievementlog: Achievement %d not found in DB.\n", received[i].achievement_id);
+				continue;
+			}
+
+			received[i].score = adb->score;
+
+			if (received[i].complete == false) // Insert at the beginning
+				memcpy(&sd->achievement_data.achievements[sd->achievement_data.incompleteCount++], &received[i], sizeof(struct achievement));
+			else // Insert at the end
+				memcpy(&sd->achievement_data.achievements[--k], &received[i], sizeof(struct achievement));
+			sd->achievement_data.count++;
+		}
+		if (sd->achievement_data.incompleteCount < k) {
+			// sd->achievement_data.incompleteCount and k didn't meet in the middle: some entries were skipped
+			if (k < num_received) // Move the entries at the end to fill the gap
+				memmove(&sd->achievement_data.achievements[k], &sd->achievement_data.achievements[sd->achievement_data.incompleteCount], sizeof(struct achievement) * (num_received - k));
+			sd->achievement_data.achievements = (struct achievement *)aRealloc(sd->achievement_data.achievements, sizeof(struct achievement) * sd->achievement_data.count);
+		}
+		achievement_level(sd, false); // Calculate level info but don't give any AG_GOAL_ACHIEVE achievements
+		achievement_get_titles(sd->status.char_id); // Populate the title list for completed achievements
+		clif_achievement_update(sd, NULL, 0);
+		clif_achievement_list_all(sd);
+	}
+}
+
+/**
+ * Parses the achievement log save ack for a character from the inter server.
+ * Received in reply to the requests made by intif_achievement_save.
+ * @see intif_parse
+ * @param fd : char-serv link
+ */
+void intif_parse_achievementsave(int fd)
+{
+	int cid = RFIFOL(fd, 2);
+	struct map_session_data *sd = map_charid2sd(cid);
+
+	if (!sd) // User not online anymore
+		return;
+
+	if (!RFIFOB(fd, 6))
+		ShowError("intif_parse_achievementsave: Failed to save achievement(s) for character %s (%d)!\n", sd->status.name, cid);
+}
+
+/**
+ * Requests to the inter server to save a character's achievement log entries.
+ * @param sd: Character's data
+ * @return 0 in case of success, nonzero otherwise
+ */
+int intif_achievement_save(struct map_session_data *sd)
+{
+	int len = sizeof(struct achievement) * sd->achievement_data.count + 8;
+
+	if (CheckForCharServer())
+		return 0;
+
+	WFIFOHEAD(inter_fd, len);
+	WFIFOW(inter_fd, 0) = 0x3063;
+	WFIFOW(inter_fd, 2) = len;
+	WFIFOL(inter_fd, 4) = sd->status.char_id;
+	if (sd->achievement_data.count)
+		memcpy(WFIFOP(inter_fd, 8), sd->achievement_data.achievements, sizeof(struct achievement) * sd->achievement_data.count);
+	WFIFOSET(inter_fd, len);
+
+	sd->achievement_data.save = false;
+
+	return 1;
+}
+
+/*==========================================
  * MAIL SYSTEM
  * By Zephyrus
  *==========================================*/
@@ -3544,6 +3662,10 @@ int intif_parse(int fd)
 	//Quest system
 	case 0x3860:	intif_parse_questlog(fd); break;
 	case 0x3861:	intif_parse_questsave(fd); break;
+
+	//Achievement system
+	case 0x3862:	intif_parse_achievements(fd); break;
+	case 0x3863:	intif_parse_achievementsave(fd); break;
 
 	// Mercenary System
 	case 0x3870:	intif_parse_mercenary_received(fd); break;
