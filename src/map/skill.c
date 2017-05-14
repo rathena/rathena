@@ -1079,7 +1079,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				rate = sd->addeff[i].rate;
 				if( attack_type&BF_LONG ) // Any ranged physical attack takes status arrows into account (Grimtooth...) [DracoRPG]
 					rate += sd->addeff[i].arrow_rate;
-				if( !rate )
+				if( rnd() % 10000 >= rate )
 					continue;
 
 				if( (sd->addeff[i].flag&(ATF_WEAPON|ATF_MAGIC|ATF_MISC)) != (ATF_WEAPON|ATF_MAGIC|ATF_MISC) ) {
@@ -1103,10 +1103,10 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				time = sd->addeff[i].duration;
 
 				if (sd->addeff[i].flag&ATF_TARGET)
-					status_change_start(src,bl,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
+					status_change_start(src,bl,type,10000,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
 
 				if (sd->addeff[i].flag&ATF_SELF)
-					status_change_start(src,src,type,rate,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
+					status_change_start(src,src,type,10000,7,0,(type == SC_BURNING)?src->id:0,0,time,SCSTART_NONE);
 			}
 		}
 
@@ -1116,15 +1116,17 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			uint8 i;
 			unsigned int time = 0;
 			for( i = 0; i < ARRAYLENGTH(sd->addeff_onskill) && sd->addeff_onskill[i].skill_id; i++ ) {
-				if( skill_id != sd->addeff_onskill[i].skill_id || !sd->addeff_onskill[i].rate )
+				if( skill_id != sd->addeff_onskill[i].skill_id )
+					continue;
+				if( rnd()%10000 >= sd->addeff_onskill[i].rate )
 					continue;
 				type = sd->addeff_onskill[i].sc;
 				time = sd->addeff[i].duration;
 
 				if( sd->addeff_onskill[i].target&ATF_TARGET )
-					status_change_start(src,bl,type,sd->addeff_onskill[i].rate,7,0,0,0,time,SCSTART_NONE);
+					status_change_start(src,bl,type,10000,7,0,0,0,time,SCSTART_NONE);
 				if( sd->addeff_onskill[i].target&ATF_SELF )
-					status_change_start(src,src,type,sd->addeff_onskill[i].rate,7,0,0,0,time,SCSTART_NONE);
+					status_change_start(src,src,type,10000,7,0,0,0,time,SCSTART_NONE);
 			}
 			//"While the damage can be blocked by Pneuma, the chance to break armor remains", irowiki. [Cydh]
 			if (dmg_lv == ATK_BLOCK && skill_id == AM_ACIDTERROR) {
@@ -2292,7 +2294,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			rate = dstsd->addeff_atked[i].rate;
 			if (attack_type&BF_LONG)
 				rate += dstsd->addeff_atked[i].arrow_rate;
-			if (!rate)
+			if (rnd() % 10000 >= rate)
 				continue;
 
 			if ((dstsd->addeff_atked[i].flag&(ATF_LONG|ATF_SHORT)) != (ATF_LONG|ATF_SHORT)) {	//Trigger has range consideration.
@@ -2304,10 +2306,10 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			time = dstsd->addeff_atked[i].duration;
 
 			if (dstsd->addeff_atked[i].flag&ATF_TARGET && src != bl)
-				status_change_start(src,src,type,rate,7,0,0,0,time,SCSTART_NONE);
+				status_change_start(src,src,type,10000,7,0,0,0,time,SCSTART_NONE);
 
 			if (dstsd->addeff_atked[i].flag&ATF_SELF && !status_isdead(bl))
-				status_change_start(src,bl,type,rate,7,0,0,0,time,SCSTART_NONE);
+				status_change_start(src,bl,type,10000,7,0,0,0,time,SCSTART_NONE);
 		}
 	}
 
