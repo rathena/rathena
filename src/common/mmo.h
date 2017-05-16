@@ -140,7 +140,14 @@
 //Mail System
 #define MAIL_MAX_INBOX 30
 #define MAIL_TITLE_LENGTH 40
+#if PACKETVER < 20150513
 #define MAIL_BODY_LENGTH 200
+#define MAIL_MAX_ITEM 1
+#else
+#define MAIL_BODY_LENGTH 500
+#define MAIL_MAX_ITEM 5
+#define MAIL_PAGE_SIZE 7
+#endif
 
 //Mercenary System
 #define MC_SKILLBASE 8201
@@ -500,6 +507,19 @@ typedef enum mail_status {
 	MAIL_READ,
 } mail_status;
 
+enum mail_inbox_type {
+	MAIL_INBOX_NORMAL = 0,
+	MAIL_INBOX_ACCOUNT,
+	MAIL_INBOX_RETURNED
+};
+
+enum mail_attachment_type {
+	MAIL_ATT_NONE = 0,
+	MAIL_ATT_ZENY = 1,
+	MAIL_ATT_ITEM = 2,
+	MAIL_ATT_ALL = MAIL_ATT_ZENY | MAIL_ATT_ITEM
+};
+
 struct mail_message {
 	int id;
 	uint32 send_id;                 //hold char_id of sender
@@ -508,12 +528,14 @@ struct mail_message {
 	char dest_name[NAME_LENGTH];    //receiver nickname
 	char title[MAIL_TITLE_LENGTH];
 	char body[MAIL_BODY_LENGTH];
+	int type; // enum mail_inbox_type
+	time_t scheduled_deletion;
 
 	mail_status status;
 	time_t timestamp; // marks when the message was sent
 
 	uint32 zeny;
-	struct item item;
+	struct item item[MAIL_MAX_ITEM];
 };
 
 struct mail_data {

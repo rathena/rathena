@@ -52,6 +52,7 @@ int date_get_year(void);
 enum e_month date_get_month(void);
 int date_get_dayofmonth(void);
 enum e_dayofweek date_get_dayofweek(void);
+int date_get_dayofyear(void);
 int date_get_day(void);
 int date_get_hour(void);
 int date_get_min(void);

@@ -798,6 +798,8 @@ typedef enum sc_type {
 	SC_ARMOR_ELEMENT_FIRE,
 	SC_ARMOR_ELEMENT_WIND,
 
+	SC_DAILYSENDMAILCNT,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif

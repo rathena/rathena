@@ -1006,13 +1006,14 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x3048
 	Type: ZI
-	Structure: <cmd>.W <cid>.L <flag>.B
-	index: 0,2,6
-	len: 7
+	Structure: <cmd>.W <cid>.L <flag>.B <mail_type>.B
+	index: 0,2,6,7
+	len: 8
 	parameter:
 		- cmd : packet identification (0x3048)
 		- cid
 		- flag
+		- mail_type
 	desc:
 		- Inbox request
 
@@ -1029,13 +1030,14 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x304a
 	Type: ZI
-	Structure: <cmd>.W <cid>.L <mail_id>.L
-	index: 0,2,6
-	len: 10
+	Structure: <cmd>.W <cid>.L <mail_id>.L <attachment_type>.B
+	index: 0,2,6,10
+	len: 11
 	parameter:
 		- cmd : packet identification (0x304a)
 		- cid
 		- mail_id
+		- attachment_type
 	desc:
 		- Mail get attachment
 
@@ -1075,6 +1077,18 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- msg
 	desc:
 		- Mail send
+
+0x304e
+	Type: ZI
+	Structure: <cmd>.W <cid>.L <name>.24B
+	index: 0,2,6
+	len: 30
+	parameter:
+		- cmd : packet identification (0x304e)
+		- cid
+		- name
+	desc:
+		- Checks if a character with the given name exists.
 
 0x3050
 	Type: ZI
@@ -1966,14 +1980,15 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 
 0x3848
 	Type: IZ
-	Structure: <cmd>.W <size>.W <char_id>.L <flag>.B <md>.?B
-	index: 0,2,4,8,9
-	len: variable: 9+md
+	Structure: <cmd>.W <size>.W <char_id>.L <flag>.B <mail_type>.B <md>.?B
+	index: 0,2,4,8,9,10
+	len: variable: 10+md
 	parameter:
 		- cmd : packet identification (0x3848)
 		- size
 		- char_id
 		- flag
+		- mail_type
 		- md : Mail
 	desc:
 		- A player request for mail inbox
@@ -2043,6 +2058,21 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- mail_message
 	desc:
 		- Mail sent status (to player if the sender is player and online)
+
+0x384e
+	Type: IZ
+	Structure: <cmd>.W <cid_sender>.L <cid_receiver>.L <class>.W <level>.W <name>.24B
+	index: 0,2,6,10,12,14
+	len: 38
+	parameter:
+		- cmd : packet identification (0x384e)
+		- cid_sender
+		- cid_receiver
+		- class
+		- level
+		- name
+	desc:
+		- Mail receiver's character data(character id, job, level and name)
 
 0x3850
 	Type: IZ

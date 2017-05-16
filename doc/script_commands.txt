@@ -6098,6 +6098,12 @@ while hidden then revealing.... you can wonder around =P
 
 ---------------------------------------
 
+*unloadnpc "<NPC object name>";
+
+This command will fully unload a NPC object and all of it's duplicates.
+
+---------------------------------------
+
 *doevent "<NPC object name>::<event label>";
 
 This command will start a new execution thread in a specified NPC object at the 

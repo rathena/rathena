@@ -20,6 +20,7 @@
 #include "../common/cli.h"
 #include "int_guild.h"
 #include "int_homun.h"
+#include "int_mail.h"
 #include "int_mercenary.h"
 #include "int_elemental.h"
 #include "int_party.h"
@@ -1649,6 +1650,10 @@ int char_delete_char_sql(uint32 char_id){
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `char_id`='%d'", schema_config.skill_db, char_id) )
 		Sql_ShowDebug(sql_handle);
 
+	/* delete mail attachments (only received) */
+	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` IN ( SELECT `id` FROM `%s` WHERE `dest_id`='%d' )", schema_config.mail_attachment_db, schema_config.mail_db, char_id))
+		Sql_ShowDebug(sql_handle);
+	
 	/* delete mails (only received) */
 	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `dest_id`='%d'", schema_config.mail_db, char_id))
 		Sql_ShowDebug(sql_handle);
@@ -2228,7 +2233,7 @@ bool char_checkdb(void){
                 schema_config.auction_db, schema_config.quest_db, schema_config.homunculus_db, schema_config.skill_homunculus_db,
                 schema_config.mercenary_db, schema_config.mercenary_owner_db,
 		schema_config.elemental_db, schema_config.ragsrvinfo_db, schema_config.skillcooldown_db, schema_config.bonus_script_db,
-		schema_config.clan_table, schema_config.clan_alliance_table
+		schema_config.clan_table, schema_config.clan_alliance_table, schema_config.mail_attachment_db
 	};
 	ShowInfo("Start checking DB integrity\n");
 	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can acces them in sql-server
@@ -2365,12 +2370,19 @@ bool char_checkdb(void){
 	}
 	//checking mail_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`send_name`,`send_id`,`dest_name`,`dest_id`,"
-			"`title`,`message`,`time`,`status`,`zeny`,`nameid`,`amount`,`refine`,`attribute`,`identify`,"
-			"`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,`unique_id`, `bound`"
+			"`title`,`message`,`time`,`status`,`zeny`"
 			" FROM `%s` LIMIT 1;", schema_config.mail_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
+	//checking mail_attachment_db
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`index`,`nameid`,`amount`,`refine`,`attribute`,`identify`,"
+			"`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,`unique_id`, `bound`"
+			" FROM `%s` LIMIT 1;", schema_config.mail_attachment_db) ){
+		Sql_ShowDebug(sql_handle);
+		return false;
+	}
+
 	//checking auction_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `auction_id`,`seller_id`,`seller_name`,`buyer_id`,`buyer_name`,"
 			"`price`,`buynow`,`hours`,`timestamp`,`nameid`,`item_name`,`type`,`refine`,`attribute`,`card0`,`card1`,"
@@ -2522,6 +2534,8 @@ void char_sql_config_read(const char* cfgName) {
 			safestrncpy(schema_config.pet_db, w2, sizeof(schema_config.pet_db));
 		else if(!strcmpi(w1,"mail_db"))
 			safestrncpy(schema_config.mail_db, w2, sizeof(schema_config.mail_db));
+		else if (!strcmpi(w1, "mail_attachment_db"))
+			safestrncpy(schema_config.mail_attachment_db, w2, sizeof(schema_config.mail_attachment_db));
 		else if(!strcmpi(w1,"auction_db"))
 			safestrncpy(schema_config.auction_db, w2, sizeof(schema_config.auction_db));
 		else if(!strcmpi(w1,"friend_db"))
@@ -2699,6 +2713,8 @@ void char_set_defaults(){
 	charserv_config.default_map_y = 191;
 
 	charserv_config.clan_remove_inactive_days = 14;
+	charserv_config.mail_return_days = 14;
+	charserv_config.mail_delete_days = 14;
 }
 
 /**
@@ -2973,6 +2989,10 @@ bool char_config_read(const char* cfgName, bool normal){
 			charserv_config.default_map_y = atoi(w2);
 		} else if (strcmpi(w1, "clan_remove_inactive_days") == 0) {
 			charserv_config.clan_remove_inactive_days = atoi(w2);
+		} else if (strcmpi(w1, "mail_return_days") == 0) {
+			charserv_config.mail_return_days = atoi(w2);
+		} else if (strcmpi(w1, "mail_delete_days") == 0) {
+			charserv_config.mail_delete_days = atoi(w2);
 		} else if (strcmpi(w1, "import") == 0) {
 			char_config_read(w2, normal);
 		}
@@ -3146,6 +3166,14 @@ int do_init(int argc, char **argv)
 	// periodically remove players that have not logged in for a long time from clans
 	add_timer_func_list(char_clan_member_cleanup, "clan_member_cleanup");
 	add_timer_interval(gettick() + 1000, char_clan_member_cleanup, 0, 0, 60 * 60 * 1000); // every 60 minutes
+
+	// periodically check if mails need to be returned to their sender
+	add_timer_func_list(mail_return_timer, "mail_return_timer");
+	add_timer_interval(gettick() + 1000, mail_return_timer, 0, 0, 5 * 60 * 1000); // every 5 minutes
+
+	// periodically check if mails need to be deleted completely
+	add_timer_func_list(mail_delete_timer, "mail_delete_timer");
+	add_timer_interval(gettick() + 1000, mail_delete_timer, 0, 0, 5 * 60 * 1000); // every 5 minutes
 
 	//check db tables
 	if(charserv_config.char_check_db && char_checkdb() == 0){

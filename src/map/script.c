@@ -23090,6 +23090,25 @@ BUILDIN_FUNC(channel_delete) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(unloadnpc) {
+	const char *name;
+	struct npc_data* nd;
+
+	name = script_getstr(st, 2);
+	nd = npc_name2id(name);
+
+	if( nd == NULL ){
+		ShowError( "buildin_unloadnpc: npc '%s' was not found.\n", name );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	npc_unload_duplicates(nd);
+	npc_unload(nd, true);
+	npc_read_event_script();
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -23691,6 +23710,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(needed_status_point,"ii?"),
 	BUILDIN_DEF(jobcanentermap,"s?"),
 	BUILDIN_DEF(openstorage2,"ii?"),
+	BUILDIN_DEF(unloadnpc, "s"),
 
 	// WoE TE
 	BUILDIN_DEF(agitstart3,""),
