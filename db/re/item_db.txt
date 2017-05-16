@@ -8506,7 +8506,7 @@
 14695,Costume_Enchant_Stone_Box_3,Costume Enchant Stone Box III,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem rand(6790,6792),1; getitem 4936,1; getitem 4937,1; getitem 4938,1; },{},{}
 14696,Sealed_Gloom_Under_Night_Gachapon,Sealed Gloom Under Night Gachapon,18,0,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /* getitem callfunc("F_Rand",Sealed Cards Gloom Under Night, 9 weapons smelting ticket, Armor 9 smelting ticket, medium armor Shadow, Shadow Weapon Medium, costume Wings of the Kirin, costume enchant stone box); */ },{},{}
 14699,Garuda_Scroll,Memorial Garuda Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Memorial_Garuda_Lucky_Egg); },{},{}
-14701,IG_TW_13y_Lucky_Egg_06,Rune Midgard Imortal Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Rune_Midgard_Imortal_Lucky_Egg); },{},{}
+14701,TW_13y_Lucky_Egg_06,Rune Midgard Imortal Lucky Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Rune_Midgard_Imortal_Lucky_Egg); },{},{}
 14704,Gemstone_Shadow_Box,Gemstone Shadow Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 24084,1; getitem 24085,1; getitem 24086,1; getitem 24087,1; getitem 24088,1; getitem 24089,1; },{},{}
 14705,Sealed_Fallen_Bishop_Hibram_Scroll,Sealed Fallen Bishop Hibram Scroll,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ /*TODO: COnfirm the rates*/ getitem callfunc("F_Rand",6228,6232,14704,19884,14695,6697),1; },{},{}
 14713,Sealed_Ifrit_Scroll,Sealed Ifrit Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /* getitem callfunc("F_Rand",Sealed ifrit card, 9 weapons smelting ticket, Armor 9 smelting ticket, costume Noah's hats, costumes Enchantment Stone Box); */ },{},{}
@@ -9195,7 +9195,7 @@
 17227,Infinite_Awakening_Potion_,Infinite Awakening Potion,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ rentitem 12885,604800; },{},{}
 17228,Infinite_Berserk_Potion_,Infinite Berserk Potion,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ rentitem 12886,604800; },{},{}
 17229,Infinite_Flywing_Box,Infinite Flywing Box,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ rentitem 12887,604800; },{},{}
-17230,IG_Valerian_Scroll,Valerian Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Valerian_Scroll); },{},{}
+17230,Valerian_Scroll,Valerian Egg,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Valerian_Scroll); },{},{}
 17231,Refinement_Ore_Box,Refinement Ore Box,2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 7619,1; getitem 7620,1; },{},{}
 17232,Refinement_box(7),Refinement box(7),2,10,,10,,,,0,0xFFFFFFFF,63,2,,,,,,{ getitem 6230,1; getitem 6234,1; },{},{}
 17233,Scroll_Of_Death,Scroll Of Death,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Scroll_Of_Death); },{},{}
@@ -10879,7 +10879,7 @@
 22515,Twisted_Key_of_Time,Twisted Key of Time,3,10,,300,,,,,,,,,,,,,{},{},{}
 22516,Black_As_Night_Piece_,Black As Night Piece,3,10,,0,,,,,,,,,,,,,{},{},{}
 22517,Rocker_Summoning_Scroll,Rocker Summoning Scroll,3,10,,0,,,,,,,,,,,,,{},{},{}
-22518,Egg_Of_Wisdom,Egg Of Wisdom,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(Idn_Wisdom_Egg); },{},{}
+22518,Idn_Wisdom_Egg,Egg Of Wisdom,18,10,,10,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Idn_Wisdom_Egg); },{},{}
 22519,Stops_Buff,Stops Buff,3,10,,0,,,,,,,,,,,,,{},{},{}
 22520,Stops_Buff_Reset,Stops Buff Reset,3,10,,0,,,,,,,,,,,,,{},{},{}
 22521,Level_Up_Box_,Level Up Box,18,10,,0,,,,0,0xFFFFFFFF,63,2,,,80,,,{ /*TODO*/ },{},{}
