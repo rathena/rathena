@@ -471,9 +471,9 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 		clif_buyingstore_update_item(pl_sd, nameid, amount, sd->status.char_id, zeny);
 	}
 
-	if( save_settings&CHARSAVE_BANK ) {
-		chrif_save(sd, CSAVE_NORMAL);
-		chrif_save(pl_sd, CSAVE_NORMAL);
+	if( save_settings&CHARSAVE_VENDING ) {
+		chrif_save(sd, CSAVE_NORMAL|CSAVE_INVENTORY);
+		chrif_save(pl_sd, CSAVE_NORMAL|CSAVE_INVENTORY);
 	}
 	
 	// check whether or not there is still something to buy
