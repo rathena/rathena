@@ -42,7 +42,7 @@ start_serv(){
 			echo "$PID" > .$1.pid
 			echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`" | tee ${LOGFILE}
 		else
-			echo "Can't start '$1', because it is already running p${PSRUN}" | tee ${LOGFILE}
+			echo "Cannot start '$1', because it is already running p${PSRUN}" | tee ${LOGFILE}
 		fi
 	else
 		if [ -z ${PSRUN} ]; then
@@ -50,7 +50,7 @@ start_serv(){
 			echo "$!" > .$1.pid
 			echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`"
 		else
-			echo "Can't start '$1', because it is already running p${PSRUN}"
+			echo "Cannot start '$1', because it is already running p${PSRUN}"
 		fi
 	fi
 }
@@ -94,7 +94,7 @@ restart(){
 		FIFO="$1_fifo"
 		while true; do
 			get_status ${i}
-			if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting end"; sleep 2;
+			if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting for the process to end"; sleep 2;
 			else 
 				if [ -e ./${FIFO} ]; then rm "$FIFO"; fi
 				break
@@ -127,7 +127,7 @@ case $1 in
 		if [ ! -d "$LOG_DIR" ]; then mkdir -p $LOG_DIR; fi
 		if [ -z $2 ]; then Restart_count=10; else Restart_count=$2; fi
 		if [ -z $3 ]; then Restart_sleep=3; else Restart_sleep=$3; fi
-		echo " Going to watch rAthena for restart_count = $Restart_count, restart_sleep= $Restart_sleep"
+		echo "Going to watch rAthena for restart_count = $Restart_count, restart_sleep = $Restart_sleep"
 		for i in ${L_SRV} ${C_SRV} ${M_SRV}
 		do
 			start_serv $i 1
@@ -144,7 +144,7 @@ case $1 in
 				
 				while true; do
 					get_status ${i}
-					if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting end"; sleep 2;
+					if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting for the process to end"; sleep 2;
 					else
 						break
 					fi
@@ -184,24 +184,24 @@ case $1 in
 				echo "--enlog will write all terminal output into a log/$servname.log file"
 			;;
 			'stop')
-				echo "This option will shut the servers down'"
+				echo "This option will shut the servers down"
 			;;
 			'restart')
 				echo "syntax: 'restart {<delay>}'"
 				echo "This option will wait for the given delay and will attempt to restart the servers afterwards"
-				echo "NB, even if the delay is over it will wait until the pid is finished before attempting to restart the servers"
+				echo "Note: Even if the delay is over it will wait until the pid is finished before attempting to restart the servers"
 			;;
 			'status')
 				echo "syntax: 'status'"
 				echo "This option will let you know whether the server are running or not"
-				echo "NB this option is based on PID and requires that you have launched the servers with this script too"
-				echo "If this wasn't the case please use something like 'ps ax | grep server' to check their status"
+				echo "Note: This option is based on PID and requires that you have launched the servers with this script too"
+				echo "If this was not the case please use something like 'ps ax | grep server' to check their status"
 			;;
 			'watch')
-				echo "syntax: 'watch {<restart_intervall> <restart_count>}'"
+				echo "syntax: 'watch {<restart_interval> <restart_count>}'"
 				echo "The watch option allows you to automatically restart the servers when one of them was stopped"
-				echo "<restart_intervall> delay in seconds before rechecking if a server is down (default 10) "
-				echo "<restart_count> how many times the servers should be restarted (default 3), (-1=undefinitly)"
+				echo "<restart_interval> delay in seconds before rechecking if a server is down (default 10) "
+				echo "<restart_count> how many times the servers should be restarted (default 3), (-1=indefinitly)"
 			;;
 			'val_runonce')
 				echo "syntax: 'val_runonce'"
@@ -212,7 +212,7 @@ case $1 in
 				echo "This option will run valgrin with the servers"
 			;;
 			*)
-				echo "Please specify a command you'll like more info on { start | stop | restart | status | watch }"
+				echo "Please specify a command you would like more info on { start | stop | restart | status | watch }"
 				read -p "Enter a valid command: " readEnterKey
 				$0 "help" $readEnterKey
 			;;
