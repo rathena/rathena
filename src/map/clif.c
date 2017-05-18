@@ -9291,8 +9291,14 @@ void clif_refresh(struct map_session_data *sd)
 		clif_changed_dir(&sd->bl, SELF);
 	clif_efst_status_change_sub(sd,&sd->bl,SELF);
 
-	// unlike vending, resuming buyingstore crashes the client.
-	buyingstore_close(sd);
+	//Issue #2143
+	//Cancel Trading State 
+	if (sd->state.trading)
+		trade_tradecancel(sd);
+	//Cancel Buying/Selling State
+	if (sd->state.buyingstore)
+		buyingstore_close(sd);
+
 
 	mail_clear(sd);
 

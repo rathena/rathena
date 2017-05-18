@@ -7026,8 +7026,6 @@ ACMD_FUNC(mute)
  *------------------------------------------*/
 ACMD_FUNC(refresh)
 {
-	if (sd->state.trading)
-		trade_tradecancel(sd);
 	nullpo_retr(-1, sd);
 	clif_refresh(sd);
 	return 0;
