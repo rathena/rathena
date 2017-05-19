@@ -620,7 +620,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 	if (conch_in_boatswain == 1) {
 		mes "[Shaman meow]";
 		mes "Today won't be boring? I wonder who'll visit me today. Who is it?";
-		npctalk "Meow meow";
+		npctalk "Meow meow", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Is anybody here?";
@@ -633,7 +633,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 		next;
 		mes "[Shaman meow]";
 		mes "Not me!";
-		npctalk "Meow meow";
+		npctalk "Meow meow", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Who else?";
@@ -658,14 +658,14 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 		next;
 		mes "[Shaman meow]";
 		mes "What pain is that? If grandma and I can take care of it, we will. One shouldn't turn away from a sufferer.";
-		npctalk "Meow meow";
+		npctalk "Meow meow", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Well, he's in denial but I think he's been possessed by an evil spirit. He opened a sealed jar on an uninhabited island.";
 		next;
 		mes "[Shaman meow]";
 		mes "Oh my. Who would've thought that there would be another idiot like the ^0000cdboatswain of Con-Chliina^000000.";
-		npctalk "Meow meow";
+		npctalk "Meow meow", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Uh, that boatswain is the person who had asked for my help.";
@@ -685,7 +685,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 		next;
 		mes "[Shaman meow]";
 		mes "But if someone opens the jar, those evil spirits cling onto that idiot and repeat the same process. there's no way to detach them until the host dies. In other words, there's no solution that would make the boatswain happy.";
-		npctalk "Meow meow";
+		npctalk "Meow meow", "", bc_self;
 		next;
 		mes "[Shaman meow]";
 		mes "When I told him that ¡°a noble person from a new place solves the problem,¡± I meant that the the problem will move onto ^0000cda new person^000000. Seems like he misunderstood me and sent you.";
@@ -695,7 +695,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 		next;
 		mes "[Shaman meow]";
 		mes "I opened the jar. It was an unfortunate accident.";
-		npctalk "Meow meow meow meow meow meow!!!";
+		npctalk "Meow meow meow meow meow meow!!!", "", bc_self;
 		next;
 		mes "[Shaman meow]";
 		mes "I-I don't mean that I dislike grandma. Yes, yes. I'll be careful.";
@@ -705,7 +705,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 		next;
 		mes "[Shaman meow]";
 		mes "Those with much knowledge have a bit more options.";
-		npctalk "Meow meow.";
+		npctalk "Meow meow.", "", bc_self;
 		next;
 		mes "[Shaman meow]";
 		mes "If he chooses not to become a shaman meow, then he must live every day ^0000cddependent on a new talisman^000000. But if he chooses to become a shaman meow, then tell him to come see me.";
@@ -730,18 +730,18 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 		next;
 		mes "[Shaman meow]";
 		mes "Oh my, he really is an idiot. Had he come to me earlier, I would have told him about a less painful path.";
-		npctalk "Meow meow.";
+		npctalk "Meow meow.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "At any rate, if he must depend on a new talisman every day, what's today's talisman? I'm sure the boatswain needs some time to think things over, so until then, he'll need talisman.";
 		next;
 		mes "[Shaman meow]";
 		mes "Today's talisman... Let me see.";
-		npctalk "Meow meow.";
+		npctalk "Meow meow.", "", bc_self;
 		next;
 		mes "[Shaman meow]";
 		mes "Oh, that? Really? Ooh, That's awful... Seriously, how would that...ugh.";
-		npctalk "Meow meow.";
+		npctalk "Meow meow.", "", bc_self;
 		next;
 		mes "[Shaman meow]";
 		mes "Today's talisman is ^0000cd20 basils and 5 basil locks^000000. Tie them firmly and carry them around. Then he'll be safe today.";
@@ -754,14 +754,14 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 		next;
 		mes "[Shaman meow]";
 		mes "But they really are way too filthy. I bet the boatswain will ask you for a favor since he won't want to catch one with his own hands.";
-		npctalk "Meow meow.";
+		npctalk "Meow meow.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Sure. I'll tell him.";
 		next;
 		mes "[Shaman meow]";
 		mes "Then see you again soon.";
-		npctalk "Meow meow.";
+		npctalk "Meow meow.", "", bc_self;
 		erasequest 14556;// There also is a scary thing for me
 		setquest 14557;// Truth is alway harsh
 		conch_in_boatswain = 2;
@@ -780,7 +780,7 @@ lasagna,85,93,5	script	Shaman meow#dorcon	4_DR_KID_01,{
 			next;
 			mes "[Shaman meow]";
 			mes "Where... yes, yeah... today is that one? Got it.";
-			npctalk "Meow meow";
+			npctalk "Meow meow", "", bc_self;
 			next;
 			mes "[Shaman meow]";
 			mes "I'll tell you today's talisman. It is...";
@@ -859,8 +859,8 @@ lasagna,174,160,3	script	Vigilante Guide#lasa	4_DR_SOLDIER,5,5,{
 		close;
 	}
 OnTouch:
-	npctalk "Vigilante Guide: Welcome to the port town Lasagna.", "Vigilante Guide#lasa";
-	npctalk "Vigilante Guide: If you're ever in need of help, please visit the Vigilante Corp at any time.", "Vigilante Guide#lasa";
+	npctalk "Vigilante Guide: Welcome to the port town Lasagna.", "", bc_self;
+	npctalk "Vigilante Guide: If you're ever in need of help, please visit the Vigilante Corp at any time.", "", bc_self;
 	end;
 OnInit:
 	questinfo 11435, QTYPE_QUEST;
@@ -1815,7 +1815,7 @@ S_quest21:
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "What is a Basilrock?";
-		npctalk "Now we are talking.";
+		npctalk "Now we are talking.", "", bc_self;
 		next;
 		mes "[Eggling]";
 		mes "No one knows what it is. However, all sailors have it. You should really stop asking. Go get it now. I give 10 seconds.";
@@ -1851,28 +1851,28 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 		if (Class != Job_Summoner) {
 			mes "[Purser]";
 			mes "Welcome on board. Welcome to ^0000cdCon-Chliina^000000. We will send you safely to your destination. However, we cannot sail off right at this moment.";
-			npctalk "However, we cannot sail off right at this moment.";
+			npctalk "However, we cannot sail off right at this moment.", "", bc_self;
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "What is going on?";
 			next;
 			mes "[Purser]";
 			mes "Look at Lasagna out there.";
-			npctalk "There. Over there.";
+			npctalk "There. Over there.", "", bc_self;
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "I don't see anything.";
 			next;
 			mes "[Purser]";
 			mes "Right. You cannot see anything. There is this ^0000cdthick fog^000000. I wonder if we would be able to set off now.";
-			npctalk "There is this thick fog. I wonder if we would be able to set off no";
+			npctalk "There is this thick fog. I wonder if we would be able to set off no", "", bc_self;
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "I am in a hurry.";
 			next;
 			mes "[Purser]";
 			mes "If you are in a hurry, you should meet ^0000cdthe Captain and the Chief Officer^000000. They decide whether to sail off or not. They are in the Captain's Cabin up there/";
-			npctalk "The Captain's Cabin is the chamber up there in front of us.";
+			npctalk "The Captain's Cabin is the chamber up there in front of us.", "", bc_self;
 			erasequest 14531;// Everything about Con-Chliina
 			setquest 14547;// Can we set out the sailing?
 			lasagna_quest[1] = 14;
@@ -1881,7 +1881,7 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 		mes "[Purser]";
 		mes "I smell something. The smell of a rookie...";
 		mes "You are?";
-		npctalk "Tell me your name.";
+		npctalk "Tell me your name.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Eh, my name is" + strcharinfo(0) + ".";
@@ -1894,11 +1894,11 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 		next;
 		mes "[Purser]";
 		mes "don't need to sweat. I believe you have got enough training out there so there is not much for you to do now. Why don't you go and familiarize yourself with the crews and their name?";
-		npctalk "I have a feeling that I'll see you around often.";
+		npctalk "I have a feeling that I'll see you around often.", "", bc_self;
 		next;
 		mes "[Purser]";
 		mes "When you go somewhere where you know nobody, a Doram from the same town can be your best friend. So I recommend you to meet as many of them as possible now.";
-		npctalk "A Doram from the same town can be your best friend.";
+		npctalk "A Doram from the same town can be your best friend.", "", bc_self;
 		next;
 		mes "[Purser]";
 		mes "There are 12 Part Leaders on this ship other than the Captain, and there are many other crews. You don't need to meet them all. You can meet the important ones.";
@@ -1908,7 +1908,7 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 		next;
 		mes "[Purser]";
 		mes "The ^0000cdCaptain's Cabin^000000 is right over there. Since the Captain values courtesy and manners. make sure not to make any mistakes.";
-		npctalk "The Captain's Cabin is right up the stairs.";
+		npctalk "The Captain's Cabin is right up the stairs.", "", bc_self;
 		erasequest 14531;// Everything about Con-Chliina
 		setquest 14532;// Greetings to Captain Gamberi
 		getexp 250,375;
@@ -1936,14 +1936,14 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 	if (lasagna_quest[1] == 17) {
 		mes "[Purser]";
 		mes "Well. Have you met all of them?";
-		npctalk "They are all good people.";
+		npctalk "They are all good people.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Not all of them. I couldn't find them all.";
 		next;
 		mes "[Purser]";
 		mes "I suppose so. They must be drinking Kahlugna Milk and snoring somewhere. They will come back when it is the time to set off. You can meet them then...";
-		npctalk "They will come back when it is the time to set off anyway.";
+		npctalk "They will come back when it is the time to set off anyway.", "", bc_self;
 		next;
 		mes "[Purser]";
 		mes "Isn't that ^0000cdKahlugnag^000000 you are holding in your hand? Not anyone can have it, you know.";
@@ -1953,7 +1953,7 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 		next;
 		mes "[Purser]";
 		mes "Why didn't you give it to the Head Chef then? Go ahead and deliver it to him!";
-		npctalk "Go ahead and deliver it to the Head Chef!";
+		npctalk "Go ahead and deliver it to the Head Chef!", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Yes, yes!";
@@ -1970,14 +1970,14 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 	if (lasagna_quest[1] == 19) {
 		mes "[Purser]";
 		mes "Hum, we have a problem.";
-		npctalk "Nya nya nya... A problem.";
+		npctalk "Nya nya nya... A problem.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "I have handed it over. And the Boatswain wanted to know when the ^0000cdSailing Signal^000000 would be issued.";
 		next;
 		mes "[Purser]";
 		mes "I was thinking about it just now. Well, have you been trained properly for the adventure? don't you want ^0000cdtest your strength^000000 before that?";
-		npctalk "It is crucial to test your strength before setting off on an adventure.";
+		npctalk "It is crucial to test your strength before setting off on an adventure.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "May I help you?";
@@ -1990,7 +1990,7 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 		next;
 		mes "[Purser]";
 		mes "That's not what I want to hear. Take a look at the sea we are about to explore.";
-		npctalk "You don't need to say the things you don't need to say.";
+		npctalk "You don't need to say the things you don't need to say.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "The fog...?";
@@ -2003,7 +2003,7 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 		next;
 		mes "[Purser]";
 		mes "We are unable to issue the sailing signal because of the fog. Ask the ^0000cdChief Officer^000000 if there would be any change in the sailing schedule. If there is any, go fix it.";
-		npctalk "Only the Chief Officer can tell whether we can go to the new continent or now.";
+		npctalk "Only the Chief Officer can tell whether we can go to the new continent or now.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "What? I finished the training yesterday.";
@@ -2013,7 +2013,7 @@ conch_in,65,58,3	script	Purser#dorcon	4_CAT_ADV1,{
 		next;
 		mes "[Purser]";
 		mes "Consider it as a warming up for all the difficulties you would encounter in the new continent.";
-		npctalk "The Chief Officer is in the Captain's Cabin over there.";
+		npctalk "The Chief Officer is in the Captain's Cabin over there.", "", bc_self;
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Yes!";
@@ -2060,6 +2060,6 @@ OnInit:
 conch_in,52,60,0	script	#dorcon95	HIDDEN_WARP_NPC,1,1,{
 OnTouch:
 	if (lasagna_quest[1] != 14)
-		npctalk "- Knock knock -";
+		npctalk "- Knock knock -", "", bc_self;
 	end;
 }
