@@ -3686,6 +3686,9 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ShowError("pc_bonus2: SP_SKILL_USE_SP: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", ARRAYLENGTH(sd->skillusesp), type2, val);
 			break;
 		}
+		// Prevent integer overflow of skill_condition::sp. [secretdataz]
+		int skill_sp = skill_get_sp(type2, pc_checkskill(sd, type2));
+		if (val > skill_sp) val = skill_sp;
 		if (sd->skillusesp[i].id == type2)
 			sd->skillusesp[i].val += val;
 		else {
