@@ -3916,9 +3916,9 @@ current map if you give the 'to map name' as "Random".
 See also 'warp'.
 
 ---------------------------------------
- 
-*warpparty "<to_mapname>",<x>,<y>,<party_id>,{"<from_mapname>"};
- 
+
+*warpparty "<to_mapname>",<x>,<y>,<party_id>,{"<from_mapname>",<range x>,<range y>};
+
 Warps a party to specified map and coordinate given the party ID, which you can get with
 getcharid(1). You can also request another party id given a member's name with getcharid(1,<player_name>).
 
@@ -3932,6 +3932,10 @@ Leader:       All party members are warped to the leader's position. The leader 
               be online and in the current map-server for this to work.
 
 If you specify a from_mapname, 'warpparty' will only affect those on that map.
+
+The <range x> and <range y> optional values allow for a randomization with the
+player's warp point. The values will randomly add or subtract from the given <x>
+and <y> coordinates.
 
 Example:
 	mes "[Party Warper]";
@@ -4389,6 +4393,8 @@ quite a few item scripts. For more examples check just about any official script
 
 *getitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *getitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*getitem3 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*getitem3 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 
 This command will give an amount of specified items to the invoking character. 
 If an optional account ID is specified, and the target character is currently 
@@ -4474,6 +4480,18 @@ command, creating a pet which is the same, but simultaneously exists in two
 eggs, and may hatch from either, although, I'm not sure what kind of a mess will 
 this really cause.
 
+'getitem3' is advance version of 'getitem2' that also use Item Random Option as additional values.
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomValueArray> : Array variable of item random option's value.
+<RandomParamArray> : Array variable of item random option's param.
+
+Example to get Crimson Weapon with Ghost property:
+	// +9 Crimson Dagger [2]
+	setarray .@OptID[0],RDMOPT_WEAPON_ATTR_TELEKINESIS;
+	setarray .@OptVal[0],0;
+	setarray .@OptParam[0],0;
+	getitem3 28705,1,1,9,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
+
 ---------------------------------------
 
 *getitembound <item id>,<amount>,<bound type>{,<account ID>};
@@ -4494,6 +4512,8 @@ Valid bound types are:
 
 *getitembound2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>{,<account ID>};
 *getitembound2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>{,<account ID>};
+*getitembound3 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*getitembound3 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<bound type>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 
 This command behaves identically to 'getitem2', but the items created will be
 bound to the target character as specified by the bound type. All items created
@@ -4501,6 +4521,18 @@ in this manner cannot be dropped, sold, vended, auctioned, or mailed, and in
 some cases cannot be traded or stored.
 
 For a list of bound types see 'getitembound'.
+
+'getitembound3' is advance version of 'getitembound2' that also use Item Random Option as additional values.
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomValueArray> : Array variable of item random option's value.
+<RandomParamArray> : Array variable of item random option's param.
+
+Example to get Crimson Weapon with Ghost property:
+	// +9 Crimson Dagger [2]
+	setarray .@OptID[0],RDMOPT_WEAPON_ATTR_TELEKINESIS;
+	setarray .@OptVal[0],0;
+	setarray .@OptParam[0],0;
+	getitembound3 28705,1,1,9,0,0,0,0,0,BOUND_CHAR,.@OptID,.@OptVal,.@OptParam;
 
 ---------------------------------------
 
@@ -4547,11 +4579,25 @@ Note: 'delitem' in an NPC script can still remove rental items.
 
 *rentitem2 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>};
 *rentitem2 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account_id>};
+*rentitem3 <item id>,<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
+*rentitem3 "<item name>",<time>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account_id>};
 
 Creates a rental item in the attached character's inventory. The item will expire 
 in <time> seconds and be automatically deleted. See 'rentitem' for further details.
 
 See 'getitem2' for an explanation of the expanded parameters.
+
+'rentitem3' is advance version of 'rentitem2' that also use Item Random Option as additional values.
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomValueArray> : Array variable of item random option's value.
+<RandomParamArray> : Array variable of item random option's param.
+
+Example to get Crimson Weapon with Ghost property:
+	// +9 Crimson Dagger [2]
+	setarray .@OptID[0],RDMOPT_WEAPON_ATTR_TELEKINESIS;
+	setarray .@OptVal[0],0;
+	setarray .@OptParam[0],0;
+	rentitem3 28705,(24*60*60),1,9,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
 
 ---------------------------------------
 
@@ -4572,11 +4618,32 @@ If the map name is given as "this", the map the invoking character is on will be
 
 *makeitem2 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
 *makeitem2 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>;
+*makeitem3 <item id>,<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>;
+*makeitem3 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>;
 
 This command will create an item on the specified cell of a map. See 'makeitem' for
 further details.
 
 See 'getitem2' for an explanation of the expanded parameters.
+
+'makeitem3' is advance version of 'makeitem2' that also use Item Random Option as additional values.
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomValueArray> : Array variable of item random option's value.
+<RandomParamArray> : Array variable of item random option's param.
+
+Example to get Crimson Weapon with Ghost property:
+	// 0.5% chance to get +0 Valkyrie Shield [1]
+	// with Neutral Resistance +10% and 5% damage reduction from Demi-Human or Player
+	// when Valkyrie Randgris killed
+	OnNPCKillEvent:
+		if (killedrid == 1751 && rand(0,1000) > 950) { // Valkyrie Randgris
+			getmapxy(.@map$,.@x,.@y,UNITTYPE_PC);
+			setarray .@OptID[0],RDMOPT_ATTR_TOLERACE_NOTHING,RDMOPT_RACE_TOLERACE_HUMAN;
+			setarray .@OptVal[0],10,5;
+			setarray .@OptParam[0],0;
+			makeitem3 2115,1,.@map$,.@x,.@y,0,0,0,0,0,0,0,.@OptID,.@OptVal,.@OptParam;
+		}
+		end;
 
 ---------------------------------------
 
@@ -4639,9 +4706,16 @@ If player is not in a guild or storage is open, 'guildstoragedelitem' will retur
 
 *delitem2 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
 *delitem2 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<account ID>};
+*delitem3 <item id>,<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
+*delitem3 "<item name>",<amount>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<account ID>};
 
 This command will remove a specified amount of items from the invoking/target character. 
 See 'getitem2' for an explanation of the expanded parameters.
+
+'delitem3' is advance version of 'delitem2' that also use Item Random Option as criteria.
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomValueArray> : Array variable of item random option's value.
+<RandomParamArray> : Array variable of item random option's param.
 
 ---------------------------------------
 
@@ -4699,12 +4773,19 @@ If player is not in a guild or storage is open, 'guildstoragecountitem' will ret
 
 *countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
 *countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
+*countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
+*countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
 
 Expanded version of 'countitem' function, used for created/carded/forged items.
 
 This function will return the number of items for the specified item ID and
 other parameters that the invoking character has in the inventory.
 See 'getitem2' for an explanation of the expanded parameters.
+
+'countitem3' is advance version of 'countitem2' that also use Item Random Option as criteria.
+<RandomIDArray>    : Array variable of ID for item random option, see db/[pre-]re/item_randomopt_db.txt
+<RandomValueArray> : Array variable of item random option's value.
+<RandomParamArray> : Array variable of item random option's param.
 
 ---------------------------------------
 
