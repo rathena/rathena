@@ -14761,7 +14761,7 @@ BUILDIN_FUNC(npctalk)
 	struct npc_data* nd = NULL;
 	const char* str = script_getstr(st,2);
 
-	if (script_hasdata(st, 3))
+	if (script_hasdata(st, 3) && strlen(script_getstr(st,3)) > 0)
 		nd = npc_name2id(script_getstr(st, 3));
 	else
 		nd = (struct npc_data *)map_id2bl(st->oid);

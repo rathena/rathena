@@ -6176,8 +6176,8 @@ Returns true if the command was executed on the other NPC successfully, false if
 This command will display a message as if the NPC object running it was a player
 talking - that is, above their head and in the chat window.
 The display name of the NPC won't get appended in front of the message.
-If the <NPC name> option is given, then that NPC will display the message, else
-the attached NPC will display the message.
+If the <NPC name> option is given and not empty, then that NPC will display the message,
+else the attached NPC will display the message.
 
 Target for <flag>:
 - bc_all  : Broadcast message is sent server-wide (only in the chat window).
