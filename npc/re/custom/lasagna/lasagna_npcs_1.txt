@@ -1548,14 +1548,18 @@ lasagna,208,188,3	script	Cat Paw Service#lasagna	4_M_MERCAT1,4,4,{
 			mes "I believe it should be ^4d4dffbasic level 6^000000 for humans.";
 			close;
 		}
-		if (Zeny < 50) {
-			mes "[Cat Paw Commerce Group]";
-			mes "If you don't have cheese, I'll gladly take Zeny.";
-			mes "The Warehouse Service costs 50 Zeny.";
-			close;
+		if (countitem(7059) > 0)// Free Ticket for Kafra Storage
+			delitem 7059,1;
+		else {
+			if (Zeny < 50) {
+				mes "[Cat Paw Commerce Group]";
+				mes "If you don't have cheese, I'll gladly take Zeny.";
+				mes "The Warehouse Service costs 50 Zeny.";
+				close;
+			}
+			Zeny = Zeny - 50;
 		}
-		Zeny = Zeny - 50;
-		// todo tickets
+		// todo kafra points
 		mes "[Cat Paw Commerce Group]";
 		mes "I'll get the warehouse open.";
 		mes "Come back again!";
@@ -2045,6 +2049,7 @@ lasagna,232,187,6	script	Fettuccina#dorcon01	4_CAT_SAILOR2,{
 	mes "Really, 24 hours are too short. We should hire one more person!";
 	close;
 }
+
 lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 	mes "[Yota Chara]";
 	mes "Father, mother. Please come back home safely.";
@@ -2130,8 +2135,11 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 		mes "I'm sorry. My sister will get pretty mad if I don't sell it for the proper money. Will you come back with 10 Doram Tokens?";
 		close;
 	}
-	// todo
-	end;
+	mes "[Yota Chara]";
+	mes "Thanks you. I hope my amulet will be of good use to you...";
+	delitem 25142, .@cost;
+	getitem .@item_id, 1;
+	close;
 }
 
 lasagna,131,250,5	script	The brave third#weapon	4_DR_M_02,{
@@ -2340,12 +2348,43 @@ lasagna,140,245,3	script	The sensitive-minded el	4_CAT_SAILOR3,{
 	mes "Yota often makes quality amulets, but he still needs more polishing.";
 	mes "If he pays attention to details, his amulets will be even greater. But he just doesn't care.";
 	next;
-	setarray .@item_id[0],501;// todo
-	.@s = select( "Polish the Horse Mackerel Amulet.", "Polish the Leaf Amulet.", "Polish the Rabbit Amulet." );
-	if (countitem(.@item_id[.@s]) < 1) {
+	.@s = (select( "Polish the Horse Mackerel Amulet.", "Polish the Leaf Amulet.", "Polish the Rabbit Amulet." ) - 1) * 4;
+
+	setarray .@item_data[0],
+		28413, 30,	// Basic Saurel Charm [1]
+		28414, 90,	// Fair Saurel Charm [1]
+		28416, 30,	// Basic Leaf Charm [1]
+		28417, 90,	// Fair Leaf Charm [1]
+		28419, 30,	// Basic Bunny Charm [1]
+		28420, 90;	// Fair Bunny Charm [1]
+
+	if ((countitem(.@item_data[.@s]) - isequippedcnt(.@item_data[.@s]))  > 0)
+		.@index = .@s;
+	else if ((countitem(.@item_data[.@s+2]) - isequippedcnt(.@item_data[.@s+2])) > 0)
+		.@index = .@s + 2;
+	else {
 		mes "[Goma Chara]";
 		mes "Show me your amulet, will you? I can't seem to find it in your inventory.";
 		close;
 	}
-	// todo
+	mes "[Goma Chara]";
+	mes "Let me. Hmm... " + getitemname(.@item_data[.@index]) + ", it is.";
+	mes "...I knew this was going to happen again. Worse, this one must require a lot more time to polish!";
+	next;
+	mes "[Goma Chara]";
+	mes "Hey, if you give me " + .@item_data[.@index+1] + "<ITEM>Doram Token<INFO>25142</INFO></ITEM>, I'll fix this for you.";
+	mes "<ITEM>This should produce the <INFO>" + (.@item_data[.@index]+1) + "</INFO></ITEM> function, I guess. How do you like it?";
+	next;
+	if (select( "Upgrade", "Cancel" ) == 2) {
+		mes "[Goma Chara]";
+		mes "As you please.";
+		close;
+	}
+	mes "[Goma Chara]";
+	mes "The inside of this amulet seems pretty tough.";
+	mes "But my dexterity is tougher. Tada! Put my brother's amulet to good use.";
+	delitem 25142, .@item_data[.@index+1];// Doram token
+	delitem .@item_data[.@index],1;
+	getitem (.@item_data[.@index] + 1),1;
+	close;
 }
