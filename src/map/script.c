@@ -18307,15 +18307,21 @@ BUILDIN_FUNC(unitstopwalk)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Makes the unit say the given message.
-///
-/// unittalk <unit_id>,"<message>";
+/**
+ * Makes the unit say the given message.
+ *
+ * unittalk <unit_id>,"<message>"{,"<flag>"};
+ * @param flag: Specify target
+ *   true  - Message is sent to players in the vicinity of the source (default).
+ *   false - Message is sent only to player attached.
+ */
 BUILDIN_FUNC(unittalk)
 {
 	const char* message;
 	struct block_list* bl;
 
 	message = script_getstr(st, 3);
+	bool flag = ( script_hasdata(st,4) ? (bool)script_getnum(st,4) : 0 );
 
 	if(script_rid2bl(2,bl))
 	{
@@ -18323,7 +18329,7 @@ BUILDIN_FUNC(unittalk)
 
 		StringBuf_Init(&sbuf);
 		StringBuf_Printf(&sbuf, "%s", message);
-		clif_disp_overhead(bl, StringBuf_Value(&sbuf));
+		clif_disp_overhead_(bl, StringBuf_Value(&sbuf), flag);
 		StringBuf_Destroy(&sbuf);
 	}
 
@@ -23474,7 +23480,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitattack,"iv?"),
 	BUILDIN_DEF(unitstopattack,"i"),
 	BUILDIN_DEF(unitstopwalk,"i"),
-	BUILDIN_DEF(unittalk,"is"),
+	BUILDIN_DEF(unittalk,"is?"),
 	BUILDIN_DEF(unitemote,"ii"),
 	BUILDIN_DEF(unitskilluseid,"ivi??"), // originally by Qamera [Celest]
 	BUILDIN_DEF(unitskillusepos,"iviii?"), // [Celest]

@@ -7384,9 +7384,12 @@ Suggest to use 'unitblockmove' to forcefully stop the unit with OnTouch.
 
 ---------------------------------------
 
-*unittalk <GID>,"<text>";
+*unittalk <GID>,"<text>"{,flag};
 
 This command will make a <GID> say a message. The display name of the <GID> won't get appended in front of the message.
+flag: Specify target
+   true  - Message is sent to players in the vicinity of the source (default).
+   false - Message is sent only to player attached.
 
 ---------------------------------------
 
