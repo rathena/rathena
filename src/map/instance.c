@@ -855,7 +855,6 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 		return false;
 	}
 
-
 	if (!(db = (struct instance_db *)uidb_get(InstanceDB, id))) {
 		CREATE(db, struct instance_db, 1);
 		db->id = id;
@@ -912,15 +911,12 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 				ShowWarning("instance_readdb_sub: Invalid map '%s' in maplist, skipping...\n", str[i]);
 				continue;
 			}
-			if (strcmpi(str[4], str[i]) == 0) {
-				ShowWarning("instance_readdb_sub: Map%d must not be equal to EnterMap for instance id '%d', skipping...\n", i-5, id);
-				continue;
-			}
 
 			if (strcmpi(str[4], str[i]) == 0) {
 				ShowWarning("instance_readdb_sub: '%s'(Map%d) must not be equal to EnterMap for instance id '%d', skipping...\n", str[i], i - 5, id);
 				continue;
 			}
+
 			// Check if the map is in the list already
 			for (j = 7; j < i; j++) {
 				// Skip empty columns
@@ -932,6 +928,7 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 					break;
 				}
 			}
+
 			// If it was already in the list
 			if (j < i) {
 				ShowWarning("instance_readdb_sub: '%s'(Map%d) was already added for instance id '%d', skipping...\n", str[i], i - 5, id);
