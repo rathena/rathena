@@ -14807,7 +14807,7 @@ BUILDIN_FUNC(npctalk)
 		if (target != SELF)
 			clif_messagecolor(&nd->bl, color_table[COLOR_WHITE], message, false, target);
 		else {
-			TBL_PC *sd = script_rid2sd(st);
+			TBL_PC *sd = map_id2sd(st->rid);
 			if (sd == NULL)
 				return SCRIPT_CMD_FAILURE;
 			clif_messagecolor_target(&nd->bl, color_table[COLOR_WHITE], message, false, target, sd);
