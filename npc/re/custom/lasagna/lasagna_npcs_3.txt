@@ -1003,7 +1003,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "[Recorder]";
 		mes "It will be filled with more abundant detailed than the previous record.";
 		next;
-		hideoffnpc "Captain Gamberi#dorcon0";
+		classchange( 4_DR_GAMBERI, "Captain Gamberi#dorcon0_2", bc_self );
 		mes "[Recorder]";
 		mes "Dear captain, what are you doing here?";
 		next;
@@ -1028,7 +1028,7 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		mes "Oh, hum. I should go check if the Boatswain in the right place.";
 		npctalk "I should stop by so many places.", "", bc_self;
 		next;
-		hideonnpc "Captain Gamberi#dorcon0";
+		classchange( HIDDEN_WARP_NPC, "Captain Gamberi#dorcon0_2", bc_self );
 		mes "[Recorder]";
 		mes "don't even think about it from now on!";
 		next;
@@ -1056,6 +1056,8 @@ conch_in,96,29,5	script	Recorder#dorcon	4_CAT_MERMASTER,{
 		close;
 	}
 }
+
+conch_in,101,31,3	script	Captain Gamberi#dorcon0_2	HIDDEN_WARP_NPC,{ end; }
 
 conch_in,98,33,5	script	Con-Chliina Ship's Log#	HIDDEN_NPC,{
 	if (conch_in_recorder < 7) {

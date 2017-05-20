@@ -404,7 +404,7 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 			lasagna_quest[0] = 3;
 		}
 		next;
-		hideoffnpc "Kid#doram03t";// only for player attached
+		classchange( 4_DR_KID_01, "Kid#doram03t", bc_self );
 		mes "[Vigilante Aglio]";
 		mes "I'll direct you to the village, now.";
 		npctalk "....Aglioooooo!!", "Kid#doram03t", bc_self;
@@ -446,8 +446,8 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 		next;
 		npctalk "You know that I love you, don't you?", "Kid#doram03t", bc_self;
 		sleep2 1000;
-		hideonnpc "Kid#doram03t";	// only for player attached
 		npctalk "Just go, already!", "", bc_self;
+		classchange( HIDDEN_WARP_NPC, "Kid#doram03t", bc_self );
 		mes "[Vigilante Aglio]";
 		mes ".....";
 		mes "........~Sighs deeply~...";
@@ -540,12 +540,7 @@ lasa_fild01,60,322,3	script	Vigilante Aglio#doram02	4_DR_AGLIO,{
 	// end;
 }
 
-lasa_fild01,62,321,3	script	Kid#doram03t	4_DR_KID_01,{
-	end;
-OnInit:
-	hideonnpc "Kid#doram03t";
-	end;
-}
+lasa_fild01,62,321,3	script	Kid#doram03t	HIDDEN_WARP_NPC,{ end; }
 
 lasagna,168,125,3	script	Kid#doram04t	4_DR_KID_01,{
 	if (lasagna_quest[0] == 5) {
@@ -566,7 +561,7 @@ lasagna,168,125,3	script	Kid#doram04t	4_DR_KID_01,{
 			delitem 1081, countitem(1081);// Delivery Box
 			completequest 7716;// To the Village!
 			getexp 70,70;
-			hideonnpc "Kid#doram04t";// only for player attached
+			classchange( HIDDEN_WARP_NPC, "", bc_self );
 			lasagna_quest[0] = 6;
 			next;
 			npctalk "...Wow, that was fast.", "Tool Merchant#doram05t", bc_self;
@@ -619,7 +614,7 @@ lasagna,165,125,5	script	Tool Merchant#doram05t	4_DR_M_01,{
 			delitem 1081, countitem(1081);// Delivery Box
 			completequest 7716;// To the Village!
 			getexp 70,70;
-			hideonnpc "Kid#doram04t";// only for player attached
+			classchange( HIDDEN_WARP_NPC, "Kid#doram04t", bc_self );
 			lasagna_quest[0] = 6;
 			next;
 			npctalk "...Wow, that was fast.", "", bc_self;
@@ -882,7 +877,7 @@ lasagna,224,126,5	script	Healer Haru#doram07t	4_DR_M_02,{
 				getitem 507,1;// Red Herb
 				getitem 512,1;// Apple
 				npctalk "Oh! Here you are!", "Vigilante Aglio#doram09", bc_self;
-				hideoffnpc "Vigilante Aglio#doram09";// only for player attached
+				classchange( 4_DR_AGLIO, "Vigilante Aglio#doram09", bc_self );
 				lasagna_quest[0] = 9;
 				close;
 			}
@@ -930,9 +925,6 @@ lasagna,230,127,3	script	Vigilante Aglio#doram09	4_DR_AGLIO,{
 	mes "I think you can find another Vigilante like myself in the square...";
 	navigateto "lasagna",170,152;
 	close;
-OnInit:
-	hideonnpc "Vigilante Aglio#doram09";// no sprite
-	end;
 }
 
 
@@ -1162,8 +1154,25 @@ lasa_fild01,103,344,3	script	Well-known Troublemaker	4_DR_KID_01,3,3,{
 		mes "You should thank me. Nyo-hoho!";
 		completequest 7721;// Cat showoff contest
 		getexp 120,120;
-		doevent "Vigilante Aglio#doram12::OnEvent";
-		close;
+		close2;
+		classchange( 4_DR_AGLIO, "Vigilante Aglio#doram12", bc_self );
+		sleep2 1000;
+		npctalk "You! You're picking a fight with another innocent passerby?", "Vigilante Aglio#doram12", bc_self;
+		sleep2 2000;
+		npctalk "Picking a fight? This is what we call training!", "Well-known Troublemaker", bc_self;
+		sleep2 2000;
+		npctalk "Shut your mouth! You're joining the Vigilante Corp the moment you return to the village, got it?", "Vigilante Aglio#doram12", bc_self;
+		sleep2 2000;
+		npctalk "Well, uh...I'm...uh...I'm free-spirited! That's all!", "Well-known Troublemaker", bc_self;
+		sleep2 2000;
+		npctalk "Enough. " + strcharinfo(0) + " the next destination is the tool shop in the village. I'll let you know where it is, again.", "Vigilante Aglio#doram12", bc_self;
+		sleep2 2000;
+		npctalk "I'll see you again in the village!", "Vigilante Aglio#doram12", bc_self;
+		navigateto "lasagna",168,124;
+		sleep2 2000;
+		npctalk "You're just full of it.", "Well-known Troublemaker", bc_self;
+		classchange( HIDDEN_WARP_NPC, "Vigilante Aglio#doram12", bc_self );
+		end;
 	case 2:
 		mes "[Well-known Kittie]";
 		mes "Do you need to be enlightened again?";
@@ -1184,31 +1193,7 @@ OnTouch:
 	end;
 }
 
-lasa_fild01,102,342,7	script	Vigilante Aglio#doram12	4_DR_AGLIO,{
-	end;
-OnEvent:
-	hideoffnpc "Vigilante Aglio#doram12";// only for player attached
-	sleep2 1000;
-	npctalk "You! You're picking a fight with another innocent passerby?", "", bc_self;
-	sleep2 2000;
-	npctalk "Picking a fight? This is what we call training!", "Well-known Troublemaker", bc_self;
-	sleep2 2000;
-	npctalk "Shut your mouth! You're joining the Vigilante Corp the moment you return to the village, got it?", "", bc_self;
-	sleep2 2000;
-	npctalk "Well, uh...I'm...uh...I'm free-spirited! That's all!", "Well-known Troublemaker", bc_self;
-	sleep2 2000;
-	npctalk "Enough. " + strcharinfo(0) + " the next destination is the tool shop in the village. I'll let you know where it is, again.", "", bc_self;
-	sleep2 2000;
-	npctalk "I'll see you again in the village!", "", bc_self;
-	navigateto "lasagna",168,124;
-	sleep2 2000;
-	npctalk "You're just full of it.", "Well-known Troublemaker", bc_self;
-	hideonnpc "Vigilante Aglio#doram12";// only for player attached
-	end;
-OnInit:
-	hideonnpc "Vigilante Aglio#doram12";// only for player attached
-	end;
-}
+lasa_fild01,102,342,7	script	Vigilante Aglio#doram12	HIDDEN_WARP_NPC,{ end; }
 
 -	shop	Cat Paw Shrimp Merchant#shop::doram_shrimp	-1,515:-1,567:-1,11602:-1
 
@@ -1337,7 +1322,7 @@ izlude,138,183,3	script	Vigilante Penne#doect01	4_DR_SOLDIER,{
 		next;
 		mes "This proud cat is getting really talkative...";
 		close2;
-		npctalk "Huh? Are you just passing by?";// todo
+		npctalk "Huh? Are you just passing by?", "", bc_self;
 		end;
 	case 3:
 		mes "[Vigilante Penne]";
@@ -1883,10 +1868,10 @@ lasagna,226,196,5	script	Aram#dorcon01	4_DR_F_02,{
 	sleep2 2000;
 	npctalk "Yeah, yeah. I won't show it.", "Tos#dorcon01", bc_self;
 	sleep2 2000;
-	hideoffnpc "Employee#dorcon01";// only for player attached
+	classchange( 4_CAT_SAILOR3, "Employee#dorcon01", bc_self );
 	npctalk "Three glasses of kaluna milk. Here you go.", "Employee#dorcon01", bc_self;
 	sleep2 2000;
-	hideonnpc "Employee#dorcon01";// only for player attached
+	classchange( HIDDEN_WARP_NPC, "Employee#dorcon01", bc_self );
 	npctalk "Finally!", "Porto#dorcon01", bc_self;
 	sleep2 2000;
 	npctalk "Let's all make a toast. Hold the glasses high!", "Tos#dorcon01", bc_self;
@@ -1921,7 +1906,7 @@ lasagna,229,197,5	script	Tos#dorcon01	4_DR_M_02,{
 	end;
 }
 
-lasagna,226,199,5	script	Employee#dorcon01	4_CAT_SAILOR3,{ end; }
+lasagna,226,199,5	script	Employee#dorcon01	HIDDEN_WARP_NPC,{ end; }
 
 lasagna,230,192,3	script	Perky Doram#do_hint03	4_CAT_ADV2,{
 	npctalk "Always right-click when it comes to information! Right-click a human, item and cat to know more about them!", "", bc_self;

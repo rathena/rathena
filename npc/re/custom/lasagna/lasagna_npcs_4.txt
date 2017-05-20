@@ -76,17 +76,15 @@ lasagna,298,84,5	script	Vigilante#dorcon01	4_DR_SOLDIER,{
 	// end;
 }
 
-lasa_dun01,29,146,5	script	Vigilante#dorcon03	4_DR_SOLDIER,5,5,{
+lasa_dun01,29,146,5	script	Vigilante#dorcon03	HIDDEN_WARP_NPC,5,5,{
 OnTouch:
 	if (lasagna_quest[1] == 22) {// summoner
 		mes "[Vigilante]";
 		mes "I don't see it near here. We should go deeper!";
 		npctalk "I don't see it near here. We should go deeper!", "", bc_self;
+		classchange( 4_DR_SOLDIER, "", bc_self );
 		close;
 	}
-	end;
-OnInit:
-	hideonnpc "Vigilante#dorcon03";
 	end;
 }
 
@@ -958,6 +956,7 @@ lasagna,263,156,5	script	Grandma#dorcon01	4_CAT_REST,{
 	close;
 }
 
+// classchange inaccurate
 lasagna,226,181,3	script	Kalu#dorcon	4_CAT_CHEF,{
 	if (BaseLevel < 140) {// 110 < level req < 145
 		mes "[Kalu]";
@@ -1153,8 +1152,8 @@ lasagna,226,181,3	script	Kalu#dorcon	4_CAT_CHEF,{
 		mes "[Daldal]";
 		mes "A team must move as one.";
 		npctalk "A team must move as one.", "", bc_self;
-		hideonnpc "Daldal#dorcon05";
-		hideonnpc "Gopara#dorcon05";
+		classchange( HIDDEN_WARP_NPC, "Daldal#dorcon05", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Gopara#dorcon05", bc_self );
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Since when was I part of the team? All right, fine... Let's go.";
@@ -1212,8 +1211,8 @@ lasagna,226,181,3	script	Kalu#dorcon	4_CAT_CHEF,{
 		mes "[Gopara]";
 		mes "I'm fine. Had too much kalunyak that I'm still digesting.";
 		npctalk "I don't want even a piece of it now.", "Gopara#dorcon05", bc_self;
-		hideonnpc "Daldal#dorcon05";
-		hideonnpc "Gopara#dorcon05";
+		classchange( HIDDEN_WARP_NPC, "Daldal#dorcon05", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Gopara#dorcon05", bc_self );
 		next;
 		mes "[Kalu]";
 		mes "You should take this. Nice work.";
@@ -1228,16 +1227,16 @@ lasagna,226,181,3	script	Kalu#dorcon	4_CAT_CHEF,{
 			if (isbegin_quest(14578) == 1) {
 				mes "[Kalu]";
 				mes "Good job today as well. Two of you, get some food. Adventurer, that this. I'm counting on you tomorrow as well!";
-				hideonnpc "Daldal#dorcon05";
-				hideonnpc "Gopara#dorcon05";
+				classchange( HIDDEN_WARP_NPC, "Daldal#dorcon05", bc_self );
+				classchange( HIDDEN_WARP_NPC, "Gopara#dorcon05", bc_self );
 				erasequest 14578;// Delivery Complete Report
 				setquest 14576;// Meal Box Delivery Time
 				close;
 			}
 			mes "[Kalu]";
 			mes "Just deliver this big lunchbox to Panna who's out on a cave patrol.";
-			hideonnpc "Daldal#dorcon05";
-			hideonnpc "Gopara#dorcon05";
+			classchange( HIDDEN_WARP_NPC, "Daldal#dorcon05", bc_self );
+			classchange( HIDDEN_WARP_NPC, "Gopara#dorcon05", bc_self );
 			if (countitem(25048) < 1)
 				getitem 25048,1;// Hearty Lunchbox
 			close;
@@ -1283,8 +1282,8 @@ lasagna,226,181,3	script	Kalu#dorcon	4_CAT_CHEF,{
 			next;
 			mes "[Daldal]";
 			mes "Let's get going!";
-			hideonnpc "Daldal#dorcon05";
-			hideonnpc "Gopara#dorcon05";
+			classchange( HIDDEN_WARP_NPC, "Daldal#dorcon05", bc_self );
+			classchange( HIDDEN_WARP_NPC, "Gopara#dorcon05", bc_self );
 			erasequest 14576;// Meal Box Delivery Time
 			setquest 14577;// Meal Box Delivery
 			getitem 25048,1;// Hearty Lunchbox
@@ -1596,8 +1595,8 @@ lasagna,246,103,5	script	Gopara#dorcon01	4_GALAPAGO,3,3,{
 	close;
 OnTouch:
 	if (lasagna_quest[2] == 3) {
-		hideonnpc "Gopara#dorcon01";// hideonnpc for player in range 3x3
-		hideonnpc "Daldal#dorcon01";
+		classchange( HIDDEN_WARP_NPC, "Daldal#dorcon01", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Gopara#dorcon01", bc_self );
 	}
 	end;
 }
@@ -1756,19 +1755,16 @@ lasagna,247,101,7	script	Daldal#dorcon01	4_SEA_OTTER,{
 }
 
 // baby
-lasagna,193,234,5	script	Daldal#dorcon02	4_SEA_OTTER,{
+lasagna,193,234,5	script	Daldal#dorcon02	HIDDEN_WARP_NPC,{
 	if (lasagna_quest[2] == 3) {
 		mes "[Daldal]";
 		mes "I like baby! Cute!";
 		close;
 	}
 	end;
-OnInit:
-	hideonnpc "Daldal#dorcon02";
-	end;
 }
 
-lasagna,192,236,5	script	Gopara#dorcon02	4_GALAPAGO,5,5,{
+lasagna,192,236,5	script	Gopara#dorcon02	HIDDEN_WARP_NPC,5,5,{
 	if (lasagna_quest[2] == 3) {
 		mes "[Gopara]";
 		mes "wouldn't Babysitting be easy? What can a little kid do?";
@@ -1777,12 +1773,9 @@ lasagna,192,236,5	script	Gopara#dorcon02	4_GALAPAGO,5,5,{
 	end;
 OnTouch:
 	if (lasagna_quest[2] == 3) {
-		hideoffnpc "Gopara#dorcon02";// hideonnpc for player in range 5x5
-		hideoffnpc "Daldal#dorcon02";
+		classchange( 4_SEA_OTTER, "Daldal#dorcon02", bc_self );
+		classchange( 4_GALAPAGO, "Gopara#dorcon02", bc_self );
 	}
-	end;
-OnInit:
-	hideonnpc "Gopara#dorcon02";
 	end;
 }
 
@@ -1865,8 +1858,8 @@ lasagna,195,235,3	script	Cute Baby#dorcon	4_F_KR_TIGER,{
 		mes "[Gopara]";
 		mes "Now that I think about it, I've always wanted to do something ^0000cdrelated to anchovies^000000. Anchovies are yummy.";
 		npctalk "Anchovy sounds great!", "Gopara#dorcon02", bc_self;
-		hideonnpc "Daldal#dorcon02";
-		hideonnpc "Gopara#dorcon02";
+		classchange( HIDDEN_WARP_NPC, "Daldal#dorcon02", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Gopara#dorcon02", bc_self );
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Okay, fine. Let's go to the anchovy workshop ^0000cdnear the dock^000000.";
@@ -1896,7 +1889,7 @@ lasagna,195,235,3	script	Cute Baby#dorcon	4_F_KR_TIGER,{
 }
 
 // workshop Manager
-lasagna,223,288,5	script	Daldal#dorcon03	4_SEA_OTTER,5,5,{
+lasagna,223,288,5	script	Daldal#dorcon03	HIDDEN_WARP_NPC,5,5,{
 	if (lasagna_quest[2] == 4) {
 		mes "[Daldal]";
 		mes "To be honest, before I came here, I thought the anchovies were dug from the ground. But I'm not embarrassed though.";
@@ -1905,24 +1898,18 @@ lasagna,223,288,5	script	Daldal#dorcon03	4_SEA_OTTER,5,5,{
 	end;
 OnTouch:
 	if (lasagna_quest[2] == 4) {
-		hideoffnpc "Daldal#dorcon03";// hideoffnpc for player in range 5x5
-		hideoffnpc "Gopara#dorcon03";
+		classchange( 4_SEA_OTTER, "Daldal#dorcon03", bc_self );
+		classchange( 4_GALAPAGO, "Gopara#dorcon03", bc_self );
 	}
-	end;
-OnInit:
-	hideonnpc "Daldal#dorcon03";
 	end;
 }
 
-lasagna,222,290,5	script	Gopara#dorcon03	4_GALAPAGO,{
+lasagna,222,290,5	script	Gopara#dorcon03	HIDDEN_WARP_NPC,{
 	if (lasagna_quest[2] == 4) {
 		mes "[Gopara]";
 		mes "I've had anchovies before because Legalas bought some time to time.";
 		close;
 	}
-	end;
-OnInit:
-	hideonnpc "Gopara#dorcon03";
 	end;
 }
 
@@ -1989,8 +1976,8 @@ lasagna,225,290,5	script	Workshop Manager#dorcon	4_M_BOSSCAT,{
 		mes "[Gopara]";
 		mes "Right. I've been living in Lasagna all this time and never been on a ship. This is a good chance to board on one.";
 		npctalk "I think that'll suit my personality.", "Gopara#dorcon03", bc_self;
-		hideonnpc "Gopara#dorcon03";
-		hideonnpc "Daldal#dorcon03";
+		classchange( HIDDEN_WARP_NPC, "Daldal#dorcon03", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Gopara#dorcon03", bc_self );
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Yeah? Then Let's go to that ^0000cdanchovy fishing boat up there^000000.";
@@ -2013,7 +2000,7 @@ lasagna,225,290,5	script	Workshop Manager#dorcon	4_M_BOSSCAT,{
 }
 
 // anchovy shipping boat
-lasagna,136,299,5	script	Gopara#dorcon04	4_GALAPAGO,5,5,{
+lasagna,136,299,5	script	Gopara#dorcon04	HIDDEN_WARP_NPC,5,5,{
 	if (lasagna_quest[2] == 5) {
 		mes "[Gopara]";
 		mes "I've always wanted to be on a boat... hah... nostalgia...";
@@ -2022,24 +2009,18 @@ lasagna,136,299,5	script	Gopara#dorcon04	4_GALAPAGO,5,5,{
 	end;
 OnTouch:
 	if (lasagna_quest[2] == 5) {
-		hideoffnpc "Gopara#dorcon04";// hideoffnpc for player in range 5x5
-		hideoffnpc "Daldal#dorcon04";
+		classchange( 4_SEA_OTTER, "Daldal#dorcon04", bc_self );
+		classchange( 4_GALAPAGO, "Gopara#dorcon04", bc_self );
 	}
-	end;
-OnInit:
-	hideonnpc "Gopara#dorcon04";
 	end;
 }
 
-lasagna,134,300,7	script	Daldal#dorcon04	4_SEA_OTTER,{
+lasagna,134,300,7	script	Daldal#dorcon04	HIDDEN_WARP_NPC,{
 	if (lasagna_quest[2] == 5) {
 		mes "[Daldal]";
 		mes "Every time I see a boat, it reminds me of a shell. You know, the one that is empty inside and hard outside.";
 		close;
 	}
-	end;
-OnInit:
-	hideonnpc "Daldal#dorcon04";
 	end;
 }
 
@@ -2152,8 +2133,8 @@ lasagna,139,299,3	script	Captain of Anchovy Fish	4_CAT_SAILOR5,{
 		next;
 		mes "[Gopara]";
 		mes "Yeah, Let's go back for now. This is not fun anymore.";
-		hideonnpc "Daldal#dorcon04";
-		hideonnpc "Gopara#dorcon04";
+		classchange( HIDDEN_WARP_NPC, "Daldal#dorcon04", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Gopara#dorcon04", bc_self );
 		erasequest 14571;// Anchovy fishing ship
 		setquest 14572;// Helpless...
 		lasagna_quest[2] = 6;
@@ -2170,7 +2151,7 @@ lasagna,139,299,3	script	Captain of Anchovy Fish	4_CAT_SAILOR5,{
 }
 
 // Kalu
-lasagna,222,180,7	script	Daldal#dorcon05	4_SEA_OTTER,5,5,{
+lasagna,222,180,7	script	Daldal#dorcon05	HIDDEN_WARP_NPC,5,5,{
 	if (lasagna_quest[2] == 7) {
 		mes "[Daldal]";
 		mes "What is it? didn't you say that you had some business with not me, but Kalu?";
@@ -2189,16 +2170,13 @@ lasagna,222,180,7	script	Daldal#dorcon05	4_SEA_OTTER,5,5,{
 	end;
 OnTouch:
 	if (lasagna_quest[2] >= 7) {
-		hideoffnpc "Gopara#dorcon05";// hideoffnpc for player in range 5x5
-		hideoffnpc "Daldal#dorcon05";
+		classchange( 4_SEA_OTTER, "Daldal#dorcon05", bc_self );
+		classchange( 4_GALAPAGO, "Gopara#dorcon05", bc_self );
 	}
-	end;
-OnInit:
-	hideonnpc "Daldal#dorcon05";
 	end;
 }
 
-lasagna,224,178,7	script	Gopara#dorcon05	4_GALAPAGO,{
+lasagna,224,178,7	script	Gopara#dorcon05	HIDDEN_WARP_NPC,{
 	if (lasagna_quest[2] == 7) {
 		mes "[Gopara]";
 		mes "didn't you say you had something to say to Kalu? Go ahead.";
@@ -2215,12 +2193,9 @@ lasagna,224,178,7	script	Gopara#dorcon05	4_GALAPAGO,{
 		close;
 	}
 	end;
-OnInit:
-	hideonnpc "Gopara#dorcon05";
-	end;
 }
 
-lasa_dun02,52,153,5	script	Gopara#dorcon06	4_GALAPAGO,5,5,{
+lasa_dun02,52,153,5	script	Gopara#dorcon06	HIDDEN_WARP_NPC,5,5,{
 	if (lasagna_quest[2] == 8 || lasagna_quest[2] == 10) {
 		mes "[Gopara]";
 		mes "Hurry, go and deliver his lunchbox. He looks like he's about to starve to death.";
@@ -2229,24 +2204,18 @@ lasa_dun02,52,153,5	script	Gopara#dorcon06	4_GALAPAGO,5,5,{
 	end;
 OnTouch:
 	if (lasagna_quest[2] == 8 || lasagna_quest[2] == 10) {
-		hideoffnpc "Gopara#dorcon06";
-		hideoffnpc "Daldal#dorcon06";
+		classchange( 4_SEA_OTTER, "Daldal#dorcon06", bc_self );
+		classchange( 4_GALAPAGO, "Gopara#dorcon06", bc_self );
 	}
-	end;
-OnInit:
-	hideonnpc "Gopara#dorcon06";
 	end;
 }
 
-lasa_dun02,53,150,7	script	Daldal#dorcon06	4_SEA_OTTER,{
+lasa_dun02,53,150,7	script	Daldal#dorcon06	HIDDEN_WARP_NPC,{
 	if (lasagna_quest[2] == 8 || lasagna_quest[2] == 10) {
 		mes "[Daldal]";
 		mes "Give that vigilante a lunchbox. I'm curious as to what's inside.";
 		close;
 	}
-	end;
-OnInit:
-	hideonnpc "Daldal#dorcon06";
 	end;
 }
 
@@ -2271,8 +2240,8 @@ lasa_dun02,55,153,3	script	Panna#dorcon	4_DR_SOLDIER,{
 			next;
 			mes "[Daldal]";
 			mes "I can understand, though. Let's go find the lunchbox.";
-			hideonnpc "Gopara#dorcon06";
-			hideonnpc "Daldal#dorcon06";
+			classchange( HIDDEN_WARP_NPC, "Daldal#dorcon06", bc_self );
+			classchange( HIDDEN_WARP_NPC, "Gopara#dorcon06", bc_self );
 			close;
 		}
 		mes "Panna? Here's your lunchbox...";
@@ -2308,8 +2277,8 @@ lasa_dun02,55,153,3	script	Panna#dorcon	4_DR_SOLDIER,{
 		next;
 		mes "[Daldal]";
 		mes "I'm leaving.";
-		hideonnpc "Gopara#dorcon06";
-		hideonnpc "Daldal#dorcon06";
+		classchange( HIDDEN_WARP_NPC, "Daldal#dorcon06", bc_self );
+		classchange( HIDDEN_WARP_NPC, "Gopara#dorcon06", bc_self );
 		delitem 25048,1;// Hearty Lunchbox
 		if (lasagna_quest[2] == 8) {
 			erasequest 14574;// Meal Box Delivery
@@ -2342,14 +2311,14 @@ conch_in,59,29,5	script	Engineer#dorcon01	4_CAT_SAILOR5,{
 	// pcblocknpc
 	npctalk "Are you an adventurer heading to the new world? Welcome. Have you heard about how our ship moves?", "", bc_self;
 	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : No, I have not.";// not visible by others players
+	unittalk getcharid(3), "" + strcharinfo(0) + " : No, I have not.", bc_self;
 	sleep2 2000;
 	npctalk "Our ship has a different power system compared to other ships. And only few people know this.", "", bc_self;
 	sleep2 2000;
 	npctalk "Hundreds of hamsters are running on treadmills on the bottom of this ship. The ship moves forward because this area is connected to the main part of the engine.", "", bc_self;
 	sleep2 1000;
 	emotion 23;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Pardon???";
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Pardon???", bc_self;
 	sleep2 1000;
 	emotion 4;
 	npctalk "Oh, wait. You're not taking me seriously, are you? It's a joke, a joke!", "", bc_self;
