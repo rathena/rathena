@@ -4169,7 +4169,7 @@ The command will run for the invoking character unless an account ID is given.
 
 ---------------------------------------
 
-*classchange <view id>,<type>;
+*classchange(<view id>{,"<NPC name>","<flag>"});
 
 This command is very ancient, its origins are clouded in mystery. 
 It will send a 'display id change' packet to everyone in the immediate area of 
@@ -4188,6 +4188,12 @@ run will actually just crash the client.
 
 It could be a real gem if it can be gotten to actually do what it's supposed to 
 do, but this will only happen in a later SVN revision.
+
+Empty <NPC name> means attached NPC.
+
+Target for <flag>:
+- bc_area : Message is sent to players in the vicinity of the source (default value).
+- bc_self : Message is sent only to player attached.
 
 ---------------------------------------
 

@@ -13885,21 +13885,45 @@ BUILDIN_FUNC(undisguise)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * Transform a bl to another _class,
- * @type unused
- *------------------------------------------*/
+ /**
+ * Transform an NPC to another _class
+ *
+ * classchange(<view id>{,"<NPC name>","<flag>"});
+ * @param flag: Specify target
+ *   BC_AREA - Message is sent to players in the vicinity of the source (default).
+ *   BC_SELF - Message is sent only to player attached.
+ */
 BUILDIN_FUNC(classchange)
 {
-	int _class,type;
-	struct block_list *bl=map_id2bl(st->oid);
+	int _class, type = 1;
+	struct npc_data* nd = NULL;
+	TBL_PC *sd = map_id2sd(st->rid);
+	send_target target = AREA;
 
-	if (bl==NULL)
+	_class = script_getnum(st,2);
+
+	if (script_hasdata(st, 3) && strlen(script_getstr(st,3)) > 0)
+		nd = npc_name2id(script_getstr(st, 3));
+	else
+		nd = (struct npc_data *)map_id2bl(st->oid);
+
+	if (nd == NULL)
 		return SCRIPT_CMD_FAILURE;
 
-	_class=script_getnum(st,2);
-	type=script_getnum(st,3);
-	clif_class_change(bl,_class,type);
+	if (script_hasdata(st, 4)) {
+		switch(script_getnum(st, 4)) {
+			case BC_SELF:	target = SELF;			break;
+			case BC_AREA:
+			default:		target = AREA;			break;
+		}
+	}
+	if (target != SELF)
+		clif_class_change(&nd->bl,_class,type);
+	else if (sd == NULL)
+		return SCRIPT_CMD_FAILURE;
+	else
+		clif_class_change_target(&nd->bl,_class,type,target,sd);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -23334,7 +23358,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getinventorylist,"?"),
 	BUILDIN_DEF(getskilllist,"?"),
 	BUILDIN_DEF(clearitem,"?"),
-	BUILDIN_DEF(classchange,"ii"),
+	BUILDIN_DEF(classchange,"i??"),
 	BUILDIN_DEF(misceffect,"i"),
 	BUILDIN_DEF(playBGM,"s"),
 	BUILDIN_DEF(playBGMall,"s?????"),
