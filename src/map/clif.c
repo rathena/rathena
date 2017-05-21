@@ -681,7 +681,7 @@ void clif_authok(struct map_session_data *sd)
 {
 #if PACKETVER < 20080102
 	const int cmd = 0x73;
-#elif PACKETVER < 20141022 || PACKETVER >= 20161228
+#elif PACKETVER < 20141022 || PACKETVER >= 20160330
 	const int cmd = 0x2eb;
 #else
 	const int cmd = 0xa18;
@@ -697,7 +697,7 @@ void clif_authok(struct map_session_data *sd)
 #if PACKETVER >= 20080102
 	WFIFOW(fd,11) = sd->status.font;
 #endif
-#if PACKETVER >= 20141016
+#if PACKETVER >= 20141016 && PACKETVER < 20160330
 	WFIFOB(fd,13) = sd->status.sex;
 #endif
 	WFIFOSET(fd,packet_len(cmd));
