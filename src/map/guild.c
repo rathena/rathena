@@ -1662,7 +1662,11 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 				struct map_session_data *sd_mem = g[i]->member[j].sd;
 				if( sd_mem!=NULL){
 					clif_guild_allianceinfo(sd_mem);
-					channel_gjoin(sd_mem,2); //join ally join
+
+					// join ally channel
+					if( channel_config.ally_tmpl.name != NULL && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
+						channel_gjoin(sd_mem,2);
+					}
 				}
 			}
 	}
