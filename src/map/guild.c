@@ -2057,9 +2057,14 @@ int guild_castledataloadack(int len, struct guild_castle *gc) {
 			if( i != ev )
 				guild_request_info(c->guild_id);
 			else { // last owned one
-				guild_npc_request_info(c->guild_id, script_config.agit_init_event_name);
-				guild_npc_request_info(c->guild_id, script_config.agit_init2_event_name);
-				guild_npc_request_info(c->guild_id, script_config.agit_init3_event_name);
+				char event_name[EVENT_NAME_LENGTH];
+
+				snprintf( event_name, EVENT_NAME_LENGTH, "::%s", script_config.agit_init_event_name );
+				guild_npc_request_info(c->guild_id, event_name);
+				snprintf( event_name, EVENT_NAME_LENGTH, "::%s", script_config.agit_init2_event_name );
+				guild_npc_request_info(c->guild_id, event_name);
+				snprintf( event_name, EVENT_NAME_LENGTH, "::%s", script_config.agit_init3_event_name );
+				guild_npc_request_info(c->guild_id, event_name);
 			}
 		}
 	}

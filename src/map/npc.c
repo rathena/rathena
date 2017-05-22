@@ -103,7 +103,7 @@ static struct view_data npc_viewdb2[MAX_NPC_CLASS2_END-MAX_NPC_CLASS2_START];
 static struct script_event_s
 {	//Holds pointers to the commonly executed scripts for speedup. [Skotlex]
 	struct event_data *event[UCHAR_MAX];
-	const char *event_name[UCHAR_MAX];
+	const char *event_name[EVENT_NAME_LENGTH];
 	uint8 event_count;
 } script_event[NPCE_MAX];
 
