@@ -812,7 +812,7 @@ int instance_addusers(unsigned short instance_id)
 int instance_delusers(unsigned short instance_id)
 {
 	struct instance_data *im;
-	int i, idle = 0;
+	int i, users = 0;
 
 	if(instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
 		return 1;
@@ -823,10 +823,11 @@ int instance_delusers(unsigned short instance_id)
 
 	// If no one is in the instance, start the idle timer
 	for(i = 0; i < im->cnt_map && im->map[i]->m; i++)
-		if(map[im->map[i]->m].users > 1) // We check this before the actual map.users are updated, hence the 1
-			idle++;
+		users += max(map[im->map[i]->m].users,0);
 
-	if(!idle) // If idle wasn't added to, we know no one was in the instance
+	// We check the actual map.users before being updated, hence the 1
+	// The instance should be empty if users are now <= 1
+	if(users <= 1)
 		instance_startidletimer(im, instance_id);
 
 	return 0;
