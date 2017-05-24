@@ -18231,7 +18231,7 @@ void clif_change_title_ack(struct map_session_data *sd, unsigned char result, un
 		return;
 	fd = sd->fd;
 
-	WFIFOHEAD(fd, 7);
+	WFIFOHEAD(fd, packet_len(0xa2f));
 	WFIFOW(fd, 0) = 0xa2f;
 	WFIFOB(fd, 2) = result;
 	WFIFOL(fd, 3) = title_id;

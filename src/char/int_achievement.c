@@ -36,10 +36,10 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 	memset(&tmp_achieve, 0, sizeof(tmp_achieve));
 
 	StringBuf_Init(&buf);
-	StringBuf_AppendStr(&buf, "SELECT `id`, `complete`,");
+	StringBuf_AppendStr(&buf, "SELECT `id`, `complete`, `completeDate`, `gotReward`");
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		StringBuf_Printf(&buf, "`count%d`,", i + 1);
-	StringBuf_Printf(&buf, " `completeDate`, `gotReward` FROM `%s` WHERE `char_id` = '%d'", schema_config.achievement_table, char_id);
+		StringBuf_Printf(&buf, ", `count%d`", i + 1);
+	StringBuf_Printf(&buf, " FROM `%s` WHERE `char_id` = '%d'", schema_config.achievement_table, char_id);
 
 	stmt = SqlStmt_Malloc(sql_handle);
 	if( SQL_ERROR == SqlStmt_PrepareStr(stmt, StringBuf_Value(&buf))
@@ -54,10 +54,10 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int *count)
 
 	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,  &tmp_achieve.achievement_id, 0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 1, SQLDT_CHAR, &tmp_achieve.complete, 0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 2, SQLDT_INT,  &tmp_achieve.completeDate, 0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 3, SQLDT_INT,  &tmp_achieve.gotReward, 0, NULL, NULL);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		SqlStmt_BindColumn(stmt, 2 + i, SQLDT_INT,  &tmp_achieve.count[i], 0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 12, SQLDT_INT, &tmp_achieve.completeDate, 0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 13, SQLDT_INT, &tmp_achieve.gotReward, 0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 4 + i, SQLDT_INT, &tmp_achieve.count[i], 0, NULL, NULL);
 
 	*count = (int)SqlStmt_NumRows(stmt);
 	if (*count > 0) {
@@ -109,17 +109,18 @@ bool mapif_achievement_add(uint32 char_id, struct achievement ad)
 	int i;
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `id`, `complete`, ", schema_config.achievement_table);
+	StringBuf_Printf(&buf, "INSERT INTO `%s` (`char_id`, `id`, `complete`, `completeDate`, `gotReward`", schema_config.achievement_table);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		StringBuf_Printf(&buf, "`count%d`, ", i + 1);
-	StringBuf_Printf(&buf, "`completeDate`, `gotReward`)");
-	StringBuf_Printf(&buf, " VALUES ('%d', '%d', '%d', ", char_id, ad.achievement_id, ad.complete);
+		StringBuf_Printf(&buf, ", `count%d`", i + 1);
+	StringBuf_AppendStr(&buf, ")");
+	StringBuf_Printf(&buf, " VALUES ('%d', '%d', '%d', '%u', '%d'", char_id, ad.achievement_id, ad.complete, (uint32)ad.completeDate, ad.gotReward);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		StringBuf_Printf(&buf, "'%d', ", ad.count[i]);
-	StringBuf_Printf(&buf, "'%u', '%d')", (uint32)ad.completeDate, ad.gotReward);
+		StringBuf_Printf(&buf, ", '%d'", ad.count[i]);
+	StringBuf_AppendStr(&buf, ")");
 
 	if (SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf))) {
 		Sql_ShowDebug(sql_handle);
+		StringBuf_Clear(&buf);
 		return false;
 	}
 
@@ -140,14 +141,14 @@ bool mapif_achievement_update(uint32 char_id, struct achievement ad)
 	int i;
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "UPDATE `%s` SET `complete` = '%d', ", schema_config.achievement_table, ad.complete);
+	StringBuf_Printf(&buf, "UPDATE `%s` SET `complete` = '%d', `completeDate` = '%u', `gotReward` = '%d'", schema_config.achievement_table, ad.complete, (uint32)ad.completeDate, ad.gotReward);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		StringBuf_Printf(&buf, "`count%d` = '%d', ", i + 1, ad.count[i]);
-	StringBuf_Printf(&buf, "`completeDate` = '%u', `gotReward` = '%d'", (uint32)ad.completeDate, ad.gotReward);
+		StringBuf_Printf(&buf, ", `count%d` = '%d'", i + 1, ad.count[i]);
 	StringBuf_Printf(&buf, " WHERE `id` = %d AND `char_id` = %d", ad.achievement_id, char_id);
 
 	if (SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf))) {
 		Sql_ShowDebug(sql_handle);
+		StringBuf_Clear(&buf);
 		return false;
 	}
 
@@ -171,14 +172,18 @@ int mapif_parse_achievement_save(int fd)
 	if (new_n > 0)
 		new_ad = (struct achievement *)RFIFOP(fd, 8);
 
-	old_ad = mapif_achievements_fromsql(char_id, &old_n);
+	if ((old_ad = mapif_achievements_fromsql(char_id, &old_n)) == NULL)
+		return 0;
+
 	for (i = 0; i < new_n; i++) {
 		ARR_FIND(0, old_n, j, new_ad[i].achievement_id == old_ad[j].achievement_id);
 		if (j < old_n) { // Update existing achievements
 			// Only counts, complete, and reward are changable.
 			ARR_FIND(0, MAX_ACHIEVEMENT_OBJECTIVES, k, new_ad[i].count[k] != old_ad[j].count[k]);
-			if (k != MAX_ACHIEVEMENT_OBJECTIVES || new_ad[i].complete != old_ad[j].complete || new_ad[i].gotReward != old_ad[j].gotReward)
-				success &= mapif_achievement_update(char_id, new_ad[i]);
+			if (k != MAX_ACHIEVEMENT_OBJECTIVES || new_ad[i].complete != old_ad[j].complete || new_ad[i].gotReward != old_ad[j].gotReward) {
+				if ((success &= mapif_achievement_update(char_id, new_ad[i])) == false)
+					break;
+			}
 
 			if (j < (--old_n)) {
 				// Compact array
@@ -186,16 +191,19 @@ int mapif_parse_achievement_save(int fd)
 				memset(&old_ad[old_n], 0, sizeof(struct achievement));
 			}
 		} else { // Add new achievements
-			if (new_ad[i].achievement_id)
-				success &= mapif_achievement_add(char_id, new_ad[i]);
+			if (new_ad[i].achievement_id) {
+				if ((success &= mapif_achievement_add(char_id, new_ad[i])) == false)
+					break;
+			}
 		}
 	}
 
-	for (i = 0; i < old_n; i++) // Achievements not in new_ad but in old_ad are to be erased.
-		success &= mapif_achievement_delete(char_id, old_ad[i].achievement_id);
+	for (i = 0; i < old_n; i++) { // Achievements not in new_ad but in old_ad are to be erased.
+		if ((success &= mapif_achievement_delete(char_id, old_ad[i].achievement_id)) == false)
+			break;
+	}
 
-	if (old_ad)
-		aFree(old_ad);
+	aFree(old_ad);
 
 	// Send ack
 	WFIFOHEAD(fd, 7);
@@ -218,7 +226,8 @@ int mapif_parse_achievement_load(int fd)
 	struct achievement *tmp_achievementlog = NULL;
 	int num_achievements;
 
-	tmp_achievementlog = mapif_achievements_fromsql(char_id, &num_achievements);
+	if ((tmp_achievementlog = mapif_achievements_fromsql(char_id, &num_achievements)) == NULL)
+		return 0;
 
 	WFIFOHEAD(fd, num_achievements * sizeof(struct achievement) + 8);
 	WFIFOW(fd, 0) = 0x3862;
@@ -230,8 +239,7 @@ int mapif_parse_achievement_load(int fd)
 
 	WFIFOSET(fd, num_achievements * sizeof(struct achievement) + 8);
 
-	if (tmp_achievementlog)
-		aFree(tmp_achievementlog);
+	aFree(tmp_achievementlog);
 
 	return 0;
 }

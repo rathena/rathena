@@ -6,8 +6,6 @@
 
 #include "../common/db.h"
 
-#define MAX_ACHIEVEMENT_RANK 20 /// Maximum achievement level
-
 enum e_achievement_group {
 	AG_NONE = 0,
 	AG_ADD_FRIEND,

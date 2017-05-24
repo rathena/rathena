@@ -959,7 +959,7 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 40, SQLDT_UINT,   &p.uniqueitem_counter, 0, NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 41, SQLDT_ENUM,   &sex, sizeof(sex), NULL, NULL)
 	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 42, SQLDT_UCHAR,   &p.hotkey_rowshift, 0, NULL, NULL)
-	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 42, SQLDT_ULONG,	&p.title_id, 0, NULL, NULL)
+	||	SQL_ERROR == SqlStmt_BindColumn(stmt, 43, SQLDT_ULONG,	&p.title_id, 0, NULL, NULL)
 	)
 	{
 		SqlStmt_ShowDebug(stmt);
