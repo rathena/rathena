@@ -19244,7 +19244,7 @@ void clif_achievement_list_all(struct map_session_data *sd)
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_achievement) {
-		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1503),false,SELF); // Achievements are disabled.
+		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,772),false,SELF); // Achievements are disabled.
 		return;
 	}
 
@@ -19288,7 +19288,7 @@ void clif_achievement_update(struct map_session_data *sd, struct achievement *ac
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_achievement) {
-		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1503),false,SELF); // Achievements are disabled.
+		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,772),false,SELF); // Achievements are disabled.
 		return;
 	}
 
