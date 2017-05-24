@@ -208,6 +208,7 @@ ex: if your NPC is named 'Hunter#hunter1', it will be displayed as 'Hunter'
 ** Define a warp point
 
 <from mapname>,<fromX>,<fromY>,<facing>%TAB%warp%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
+<from mapname>,<fromX>,<fromY>,<facing>%TAB%warp2%TAB%<warp name>%TAB%<spanx>,<spany>,<to mapname>,<toX>,<toY>
 
 This will define a warp NPC that will warp a player between maps, and while most 
 arguments of that are obvious, some deserve special mention.
@@ -222,6 +223,8 @@ with 'enablenpc'/'disablenpc'
 
 Facing of a warp object is irrelevant, it is not used in the code and all 
 current scripts have a zero in there.
+
+Unlike 'warp', 'warp2' will also be triggered by hidden player.
 
 ** Define an NPC object.
 
@@ -313,7 +316,7 @@ optional value which makes the price at that shop become affected by discount sk
 
 ** Define an warp/shop/cashshop/itemshop/pointshop/NPC duplicate.
 
-warp: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<spanx>,<spany>
+warp/warp2: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<spanx>,<spany>
 shop/cashshop/itemshop/pointshop/npc: -%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>
 shop/cashshop/itemshop/pointshop/npc: <map name>,<x>,<y>,<facing>%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>
 npc: -%TAB%duplicate(<label>)%TAB%<NPC Name>%TAB%<sprite id>,<triggerX>,<triggerY>

@@ -857,7 +857,7 @@ int channel_pccolor(struct map_session_data *sd, char *chname, char *color){
 		clif_displaymessage(sd->fd, output);
 		return -1;
 	}
-	channel->color = k;
+	channel->color = channel_config.colors[k];
 	sprintf(output, msg_txt(sd,1413),chname,channel_config.colors_name[k]);// '%s' channel color updated to '%s'.
 	clif_displaymessage(sd->fd, output);
 	return 0;
@@ -1290,7 +1290,7 @@ unsigned long channel_getColor(const char *color_str) {
 		if (strcmpi(channel_config.colors_name[i], color_str) == 0)
 			return channel_config.colors[i];
 	}
-	return 1;
+	return channel_config.colors[0];
 }
 
 /**

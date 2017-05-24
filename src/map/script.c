@@ -6724,6 +6724,15 @@ static int script_getitem_randomoption(struct script_state *st, struct item *it,
 	opt_val_n = script_array_highest_key(st, NULL, opt_val_var, opt_val_ref);
 	opt_param_n = script_array_highest_key(st, NULL, opt_param_var, opt_param_ref);
 
+	if (opt_val_n < 1) {
+		ShowError("buildin_%s: No option value listed.\n", funcname);
+		return SCRIPT_CMD_FAILURE;
+	}
+	if (opt_param_n < 1) {
+		ShowError("buildin_%s: No option parameter listed.\n", funcname);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	opt_id_id = reference_getid(opt_id);
 	opt_val_id = reference_getid(opt_val);
 	opt_param_id = reference_getid(opt_param);
@@ -10049,11 +10058,7 @@ BUILDIN_FUNC(makepet)
 		pet_id = search_petDB_index(id, PET_EGG);
 	if (pet_id >= 0 && sd) {
 		sd->catch_target_class = pet_db[pet_id].class_;
-		intif_create_pet(
-			sd->status.account_id, sd->status.char_id,
-			(short)pet_db[pet_id].class_, (short)mob_db(pet_db[pet_id].class_)->lv,
-			(short)pet_db[pet_id].EggID, 0, (short)pet_db[pet_id].intimate,
-			100, 0, 1, pet_db[pet_id].jname);
+		intif_create_pet(sd->status.account_id, sd->status.char_id, pet_db[pet_id].class_, mob_db(pet_db[pet_id].class_)->lv, pet_db[pet_id].EggID, 0, pet_db[pet_id].intimate, 100, 0, 1, pet_db[pet_id].jname);
 	}
 
 	return SCRIPT_CMD_SUCCESS;

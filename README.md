@@ -37,6 +37,7 @@ is broken down into Windows and Linux prerequisites.
 
 * Linux (names of packages may require specific version numbers on certain distributions)
 	* gcc
+	* g++
 	* make
 	* mysql
 	* mysql-devel
@@ -67,10 +68,10 @@ relevant to your Operation System, please refer to the Wiki (links at the end of
 	* Type:
 		* (For CentOS)
 
-				yum install gcc make mysql mysql-devel mysql-server pcre-devel zlib-devel git
+				yum install gcc g++ make mysql mysql-devel mysql-server pcre-devel zlib-devel git
 		* (For Debian)
 
-				apt-get install git make gcc libmysqlclient-dev zlib1g-dev libpcre3-dev
+				apt-get install git make gcc g++ libmysqlclient-dev zlib1g-dev libpcre3-dev
 	* Type:
 
 				mysql_secure_installation

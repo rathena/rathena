@@ -812,7 +812,7 @@ int instance_addusers(unsigned short instance_id)
 int instance_delusers(unsigned short instance_id)
 {
 	struct instance_data *im;
-	int i, idle = 0;
+	int i, users = 0;
 
 	if(instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
 		return 1;
@@ -823,10 +823,11 @@ int instance_delusers(unsigned short instance_id)
 
 	// If no one is in the instance, start the idle timer
 	for(i = 0; i < im->cnt_map && im->map[i]->m; i++)
-		if(map[im->map[i]->m].users > 1) // We check this before the actual map.users are updated, hence the 1
-			idle++;
+		users += max(map[im->map[i]->m].users,0);
 
-	if(!idle) // If idle wasn't added to, we know no one was in the instance
+	// We check the actual map.users before being updated, hence the 1
+	// The instance should be empty if users are now <= 1
+	if(users <= 1)
 		instance_startidletimer(im, instance_id);
 
 	return 0;
@@ -839,7 +840,7 @@ static bool instance_db_free_sub(struct instance_db *db);
  *------------------------------------------*/
 static bool instance_readdb_sub(char* str[], int columns, int current)
 {
-	uint8 i;
+	uint8 i,j;
 	char *ptr;
 	int id = strtol(str[0], &ptr, 10);
 	struct instance_db *db;
@@ -911,6 +912,30 @@ static bool instance_readdb_sub(char* str[], int columns, int current)
 				ShowWarning("instance_readdb_sub: Invalid map '%s' in maplist, skipping...\n", str[i]);
 				continue;
 			}
+
+			if (strcmpi(str[4], str[i]) == 0) {
+				ShowWarning("instance_readdb_sub: '%s'(Map%d) must not be equal to EnterMap for instance id '%d', skipping...\n", str[i], i - 5, id);
+				continue;
+			}
+
+			// Check if the map is in the list already
+			for (j = 7; j < i; j++) {
+				// Skip empty columns
+				if (!strlen(str[j])) {
+					continue;
+				}
+
+				if (strcmpi(str[j], str[i]) == 0) {
+					break;
+				}
+			}
+
+			// If it was already in the list
+			if (j < i) {
+				ShowWarning("instance_readdb_sub: '%s'(Map%d) was already added for instance id '%d', skipping...\n", str[i], i - 5, id);
+				continue; // Skip it
+			}
+
 			RECREATE(db->maplist, StringBuf *, db->maplist_count+1);
 			db->maplist[db->maplist_count] = StringBuf_Malloc();
 			StringBuf_AppendStr(db->maplist[db->maplist_count], str[i]);

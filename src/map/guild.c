@@ -1662,7 +1662,11 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 				struct map_session_data *sd_mem = g[i]->member[j].sd;
 				if( sd_mem!=NULL){
 					clif_guild_allianceinfo(sd_mem);
-					channel_gjoin(sd_mem,2); //join ally join
+
+					// join ally channel
+					if( channel_config.ally_tmpl.name != NULL && (channel_config.ally_tmpl.opt&CHAN_OPT_AUTOJOIN) ) {
+						channel_gjoin(sd_mem,2);
+					}
 				}
 			}
 	}
@@ -2053,9 +2057,14 @@ int guild_castledataloadack(int len, struct guild_castle *gc) {
 			if( i != ev )
 				guild_request_info(c->guild_id);
 			else { // last owned one
-				guild_npc_request_info(c->guild_id, script_config.agit_init_event_name);
-				guild_npc_request_info(c->guild_id, script_config.agit_init2_event_name);
-				guild_npc_request_info(c->guild_id, script_config.agit_init3_event_name);
+				char event_name[EVENT_NAME_LENGTH];
+
+				snprintf( event_name, EVENT_NAME_LENGTH, "::%s", script_config.agit_init_event_name );
+				guild_npc_request_info(c->guild_id, event_name);
+				snprintf( event_name, EVENT_NAME_LENGTH, "::%s", script_config.agit_init2_event_name );
+				guild_npc_request_info(c->guild_id, event_name);
+				snprintf( event_name, EVENT_NAME_LENGTH, "::%s", script_config.agit_init3_event_name );
+				guild_npc_request_info(c->guild_id, event_name);
 			}
 		}
 	}
