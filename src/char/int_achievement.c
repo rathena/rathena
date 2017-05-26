@@ -172,8 +172,7 @@ int mapif_parse_achievement_save(int fd)
 	if (new_n > 0)
 		new_ad = (struct achievement *)RFIFOP(fd, 8);
 
-	if ((old_ad = mapif_achievements_fromsql(char_id, &old_n)) == NULL)
-		return 0;
+	old_ad = mapif_achievements_fromsql(char_id, &old_n);
 
 	for (i = 0; i < new_n; i++) {
 		ARR_FIND(0, old_n, j, new_ad[i].achievement_id == old_ad[j].achievement_id);
@@ -181,7 +180,7 @@ int mapif_parse_achievement_save(int fd)
 			// Only counts, complete, and reward are changable.
 			ARR_FIND(0, MAX_ACHIEVEMENT_OBJECTIVES, k, new_ad[i].count[k] != old_ad[j].count[k]);
 			if (k != MAX_ACHIEVEMENT_OBJECTIVES || new_ad[i].complete != old_ad[j].complete || new_ad[i].gotReward != old_ad[j].gotReward) {
-				if ((success &= mapif_achievement_update(char_id, new_ad[i])) == false)
+				if ((success = mapif_achievement_update(char_id, new_ad[i])) == false)
 					break;
 			}
 
@@ -192,18 +191,19 @@ int mapif_parse_achievement_save(int fd)
 			}
 		} else { // Add new achievements
 			if (new_ad[i].achievement_id) {
-				if ((success &= mapif_achievement_add(char_id, new_ad[i])) == false)
+				if ((success = mapif_achievement_add(char_id, new_ad[i])) == false)
 					break;
 			}
 		}
 	}
 
 	for (i = 0; i < old_n; i++) { // Achievements not in new_ad but in old_ad are to be erased.
-		if ((success &= mapif_achievement_delete(char_id, old_ad[i].achievement_id)) == false)
+		if ((success = mapif_achievement_delete(char_id, old_ad[i].achievement_id)) == false)
 			break;
 	}
 
-	aFree(old_ad);
+	if (old_ad)
+		aFree(old_ad);
 
 	// Send ack
 	WFIFOHEAD(fd, 7);
@@ -226,8 +226,7 @@ int mapif_parse_achievement_load(int fd)
 	struct achievement *tmp_achievementlog = NULL;
 	int num_achievements;
 
-	if ((tmp_achievementlog = mapif_achievements_fromsql(char_id, &num_achievements)) == NULL)
-		return 0;
+	tmp_achievementlog = mapif_achievements_fromsql(char_id, &num_achievements);
 
 	WFIFOHEAD(fd, num_achievements * sizeof(struct achievement) + 8);
 	WFIFOW(fd, 0) = 0x3862;
@@ -239,7 +238,8 @@ int mapif_parse_achievement_load(int fd)
 
 	WFIFOSET(fd, num_achievements * sizeof(struct achievement) + 8);
 
-	aFree(tmp_achievementlog);
+	if (tmp_achievementlog)
+		aFree(tmp_achievementlog);
 
 	return 0;
 }
