@@ -436,6 +436,7 @@
 	export_constant(MF_GVG_TE_CASTLE);
 	export_constant(MF_GVG_TE);
 	export_constant(MF_HIDEMOBHPBAR);
+	export_constant(MF_INSTAKILL);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);

@@ -1562,7 +1562,10 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 	}
 
-	return damage;
+	if (map[bl->m].flag.instakill)
+		return INT64_MAX;
+	else
+		return damage;
 }
 
 /**
