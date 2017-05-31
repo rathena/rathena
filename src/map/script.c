@@ -19490,7 +19490,7 @@ BUILDIN_FUNC(bg_get_data)
 {
 	struct battleground_data *bg;
 	int bg_id = script_getnum(st,2),
-		type = script_getnum(st,3);
+		type = script_getnum(st,3), i;
 
 	if( (bg = bg_team_search(bg_id)) == NULL )
 	{
@@ -19501,6 +19501,12 @@ BUILDIN_FUNC(bg_get_data)
 	switch( type )
 	{
 		case 0: script_pushint(st, bg->count); break;
+		case 1:
+			for (i = 0; bg->members[i].sd != NULL; i++)
+				mapreg_setreg(reference_uid(add_str("$@arenamembers"), i), bg->members[i].sd->bl.id);
+			mapreg_setreg(reference_uid(add_str("$@arenamemberscount"), i), i);
+			script_pushint(st, i);
+			break;
 		default:
 			ShowError("script:bg_get_data: unknown data identifier %d\n", type);
 			break;
