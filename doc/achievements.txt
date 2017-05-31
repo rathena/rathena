@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20170101
+//= 20170531
 //===== Description: =========================================
 //= Explanation of the achievements_db.conf file and structure.
 //============================================================
@@ -64,7 +64,9 @@ Example:
 	)
 
 Example 2:
-	// Player must have 100 or more of ARG0 value. This is useful for achievements that are increased in increments and not checked for a total.
+	// Player must have 100 or more of ARG0 value. Using the count target value is useful for achievements that are increased in increments
+	// and not checked for a total (UI_Type = 1).
+	// IE: In the achievement_list.lub file, UI_Type 0 is displayed as non-incremental while 1 shows a progress bar of completion for the achievement.
 	condition: " ARG0 >= 100 "
 	target: (
 	{
@@ -75,7 +77,17 @@ Example 2:
 ---------------------------------------
 
 condition: A conditional statement that must be met for the achievement to be considered complete. Accepts script constants, player variables, and
-		   ARGX (where X is the argument vector value).
+		   ARGX (where X is the argument vector value). The ARGX values are sent from the server to the achievement script engine on special events.
+		   Below are two examples of how the ARGX feature works.
+
+Example:
+	// This function will send 1 argument (ARG0) with a value of i + 1 when a friend is added.
+	achievement_update_objective(f_sd, AG_ADD_FRIEND, 1, i + 1);
+
+Example 2:
+	// This function will send 2 arguments (ARG0 and ARG1) with values of weapon level and refine level, respectively, when an equipment is
+	// successfully refined.
+	achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
 
 ---------------------------------------
 
