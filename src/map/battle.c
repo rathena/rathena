@@ -7238,7 +7238,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				status_change_end(src,SC_SPELLFIST,INVALID_TIMER);
 		}
 		if (sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 && !is_infinite_defense(target, wd.flag) && !vanish_damage) {
-			wd.damage << 1; // Double Damage
+			wd.damage <<= 1; // Double Damage
 			if (!sc->data[SC_CRUSHSTRIKE]) { // Increase damage again if Crush Strike is not active
 				if (map_flag_vs(src->m)) // Only half of the 2.5x increase on versus-type maps
 					wd.damage += wd.damage * 125 / 100;
