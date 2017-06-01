@@ -433,17 +433,17 @@ mal_in01,160,34,4	script	Missing, the Cleaner	545,{
 	end;
 L_Enter:
 	switch(instance_enter("Culvert")) {
-	case 3:
+	case IE_OTHER:
 		mes "An unknown error has occurred.";
 		close;
-	case 2:
+	case IE_NOINSTANCE:
 		mes "The gate to the Culvert is still closed.";
 		mes "You must wait until you are able to enter or find a party leader who can create the instance.";
 		close;
-	case 1:
+	case IE_NOMEMBER:
 		mes "Only party members can participate.";
 		close;
-	case 0:
+	case IE_OK:
 		mapannounce "mal_in01", strcharinfo(0)+" of the party "+getpartyname(getcharid(1))+" is entering the Culvert.",bc_map,"0x00ff99";
 		if (checkquest(12254) == -1) setquest 12254;
 		//warp "1@pump",63,98;
@@ -515,6 +515,7 @@ L_Enter:
 	end;
 OnInstanceInit:
 	disablenpc instance_npcname("Culvert Entrance#i");
+	disablenpc instance_npcname("Culvert Entrance#n");	// disable warp out
 	end;
 OnTouch:
 	if (BaseLevel >= 140)
@@ -878,15 +879,7 @@ OnInstanceInit:
 	end;
 }
 
-1@pump,32,100,0	script	Culvert Entrance#n	45,3,3,{
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
-	end;
-OnTouch:
-	warp "mal_in01",161,32;
-	end;
-}
+1@pump,32,100,0	warp2	Culvert Entrance#n	3,3,mal_in01,161,32
 
 //MD_Putmob "1@pump" 0 0 0 0 20 HYDRA 0 0 2
 1@pump,1,1,4	script	Hydra#n	-1,{

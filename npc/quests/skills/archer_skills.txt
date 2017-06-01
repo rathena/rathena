@@ -120,7 +120,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 				close;
 			case 2:
 				mes "[Roberto]";
-				mes "...hey "+((Sex)?"mister":"miss")+".";
+				mes "...hey "+((Sex == SEX_MALE)?"mister":"miss")+".";
 				mes "...be careful at night.";
 				close;
 			}

@@ -11,9 +11,9 @@
 // WoeTETimeStart(<seconds>) : return true if the woe te will start in X seconds or less, false otherwise
 function	script	WoeTETimeStart	{
 	.@woe_status = agitcheck3();
-	.@min_today  = gettime(2);
-	.@hour_today = gettime(3);
-	.@day_today  = gettime(4);
+	.@min_today  = gettime(DT_MINUTE);
+	.@hour_today = gettime(DT_HOUR);
+	.@day_today  = gettime(DT_DAYOFWEEK);
 
 	if (getvariableofnpc( getd( ".day_"+ .@day_today ),"woe_TE_contoller" )) {
 		.@h = getvariableofnpc( getd( ".hour_start_"+ .@hour_today ),"woe_TE_contoller" );
@@ -24,4 +24,19 @@ function	script	WoeTETimeStart	{
 		}
 	}
 	return false;
+}
+
+function	script	F_22507	{// ShabbyOldScroll
+	.@r = rand(1,10);
+	if (.@r == 1) warp "pay_fild01",141,211;
+	else if (.@r == 2) warp "payon_in03",99,190;
+	else if (.@r == 3) warp "pay_dun04",120,116;
+	else if (.@r == 4) warp "pay_gld",202,186;
+	else if (.@r == 5) warp "gld_dun01",61,155;
+	else if (.@r == 6) warp "pay_fild04",348,333;
+	else if (.@r == 7) warp "payon_in02",17,62;
+	else if (.@r == 8) warp "payon_in01",144,15;
+	else if (.@r == 9) warp "pay_fild07",200,186;
+	else if (.@r == 10) warp "pay_fild10",147,267;
+	end;
 }

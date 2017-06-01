@@ -950,12 +950,10 @@ moc_fild20,354,183,3	script	Continental Guard#01::MocConGuard	707,3,3,{
 				getpartymember(getcharid(1));
 				set .@partymembercount,$@partymembercount;
 				copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
-				while (.@partymembercount >= 0) {
-					set .@name$,.@partymembername$[.@partymembercount];
-					if (isloggedin(getcharid(3,.@name$))) {
+				for(.@i = 0; .@i < .@partymembercount; .@i++) {
+					if (isloggedin(getcharid(3,.@partymembername$[.@i]))) {
 						set .@onlinemembers,.@onlinemembers + 1;
 					}
-					set .@partymembercount,.@partymembercount - 1;
 				}
 				if ((.@onlinemembers > 1) && (countitem(7826) > 0)) {
 					mes "[Continental Guard]";
@@ -1013,12 +1011,10 @@ moc_fild20,354,183,3	script	Continental Guard#01::MocConGuard	707,3,3,{
 		getpartymember(getcharid(1));
 		set .@partymembercount,$@partymembercount;
 		copyarray .@partymembername$[0],$@partymembername$[0],.@partymembercount;
-		while (.@partymembercount >= 0) {
-			set .@name$,.@partymembername$[.@partymembercount];
-			if (isloggedin(getcharid(3,.@name$))) {
+		for(.@i = 0; .@i < .@partymembercount; .@i++) {
+			if (isloggedin(getcharid(3,.@partymembername$[.@i]))) {
 				set .@onlinemembers,.@onlinemembers + 1;
 			}
-			set .@partymembercount,.@partymembercount - 1;
 		}
 		switch(select("Enter the First Field to Investigate:Enter the Second Field to Investigate:Return to Morroc's Accident Site:Cancel Conversation")) {
 		case 1:
@@ -1101,7 +1097,6 @@ moc_fild20,354,183,3	script	Continental Guard#01::MocConGuard	707,3,3,{
 		end;
 	}
 
-//OnTouch2:
 OnTouch:
 	mes "[Continental Guard]";
 	mes "No commoners are allowed in the area beyond this point.";
@@ -2214,7 +2209,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 				mes "All I'm asking is to check out a book from Prontera Library for me. It sounds easy, doesn't it?";
 				mes "Well, you don't look like someone who loves reading, but I hope you at least know how to check out a book from a library.";
 				next;
-				if (Sex == 1) {
+				if (Sex == SEX_MALE) {
 					mes "[Benjamin]";
 					mes "If you help me, I'll show you a limited picture book edition of Mammi... Once. Hehehehe.";
 					mes "What do you say? You do want to help me, right?";
@@ -2657,7 +2652,6 @@ yuno,333,210,5	script	Library Master#garas	57,{
 }
 
 yuno,336,203,0	script	#garas_catch	139,3,3,{
-//OnTouch2:
 OnTouch:
 	if (barmunt_crow == 2) {
 		mes "[Dog]";
@@ -2922,8 +2916,7 @@ yuno_in04,100,5,3	script	Hot Bestseller Corner	111,{
 }
 
 yuno_in04,100,3,0	script	#garas_path	139,1,1,{
-//OnTouch2:
-OnTouch2:
+OnTouch:
 	if (barmunt_crow == 6) {
 		mes "...................................";
 		next;
@@ -3582,7 +3575,6 @@ yuno_in04,167,120,3	script	Worn-out Book#garas	111,{
 }
 
 que_ba,247,33,0	script	#bpast_1_1	-1,1,1,{
-//OnTouch2:
 OnTouch:
 	if (barmunt_crow < 4) {
 		warp "ama_dun03",119,110;
@@ -3650,7 +3642,6 @@ que_ba,183,25,0	warp	#bpast_2to3_1	1,1,que_ba,72,25
 que_ba,183,52,0	warp	#bpast_2to3_2	1,1,que_ba,72,51
 
 que_ba,102,56,0	script	#3room_barmunt	-1,3,3,{
-//OnTouch2:
 OnTouch:
 	if (barmunt_crow < 4) {
 		warp "yuno_in04",100,3;
@@ -3722,7 +3713,6 @@ que_ba,99,51,7	script	Grotesque Man#zid1	999,{
 }
 
 que_ba,53,232,0	script	#garas_f_yume	139,1,1,{
-//OnTouch2:
 OnTouch:
 	if (barmunt_crow == 5) {
 		//GetHEALTHSTATE VAR_HEALTHSTATENORMAL 0
@@ -3767,7 +3757,6 @@ que_ba,48,227,7	script	Grotesque Man#zid2	999,{
 }
 
 que_ba,264,186,0	script	#barmut_room1	139,2,2,{
-//OnTouch2:
 OnTouch:
 	if (barmunt_crow == 11) {
 		mes "^660000You wake up, and look around you. Somehow, you've now ended up in a huge mansion.^000000";
@@ -3807,7 +3796,6 @@ que_ba,270,181,3	script	#barmunt_fire	755,{
 }
 
 que_ba,270,270,0	script	#barmunt_living	139,1,1,{
-//OnTouch2:
 OnTouch:
 	mes "..................";
 	mes "..................";
@@ -3984,7 +3972,6 @@ cave,82,97,3	script	Cave Settler#g1	996,3,3,{
 		close;
 	}
 
-//OnTouch2:
 OnTouch:
 	if (barmunt_crow == 8) {
 		mes "[Cave Settler]";
@@ -6893,7 +6880,6 @@ prt_castle,368,312,4	script	Prince#ern	985,{
 }
 
 prt_castle,163,319,0	script	#twonoble	-1,3,3,{
-//OnTouch2:
 OnTouch:
 	if (nkprince_eisen == 7) {
 		donpcevent "Young Noble#valter::OnEnable";
@@ -7826,7 +7812,6 @@ prt_castle,176,170,5	script	Guard#princein	105,{
 }
 
 prt_castle,121,168,0	script	#arm	111,4,4,{
-//OnTouch2:
 OnTouch:
 	if (nk_prince == 8) {
 		mes "[" + strcharinfo(0) + "]";
@@ -7847,7 +7832,6 @@ OnTouch:
 }
 
 prt_castle,316,313,0	script	#arm1	111,3,3,{
-//OnTouch2:
 OnTouch:
 	if (nkprince_eisen > 14) {
 		mes "[" + strcharinfo(0) + "]";

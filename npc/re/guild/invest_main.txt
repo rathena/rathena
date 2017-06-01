@@ -63,48 +63,48 @@ $@vfund_*_extra
 // Note: The times in this section are almost entirely custom.
 
 -	script	#invest_timer	-1,{
-OnClock0000:	// Open investments on Wed (1 hour after WoE)
-	if (gettime(4) == 3 && !agitcheck()) {
+OnClock0000:	// Open investments on Wednesday (1 hour after WoE)
+	if (gettime(DT_DAYOFWEEK) == WEDNESDAY && !agitcheck()) {
 		set $2011_agit_invest,1;
 		donpcevent "#fund_master::OnInvest_start";
 	}
 	end;
-OnClock1200:	// Close investments on Fri (60 hours after investments open)
-	if (gettime(4) == 5 && !agitcheck()) {
+OnClock1200:	// Close investments on Friday (60 hours after investments open)
+	if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck()) {
 		set $2011_agit_invest,2;
 		donpcevent "#fund_master::OnInvest_stop";
 	}
 	end;
-OnClock1235:	// Open dungeons on Fri (at least 31 minutes after investments close)
-	if (gettime(4) == 5 && !agitcheck())
+OnClock1235:	// Open dungeons on Friday (at least 31 minutes after investments close)
+	if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck())
 		donpcevent "#fund_master::OnResult";
 	end;
-OnClock2000:	// Close dungeons on Tues (1 hour before WoE)
-	if (gettime(4) == 2)
+OnClock2000:	// Close dungeons on Tuesday (1 hour before WoE)
+	if (gettime(DT_DAYOFWEEK) == TUESDAY)
 		donpcevent "#fund_master::OnReset";
 	end;
 }
 
 function	script	F_Invest_Status	{
-	set .@day, gettime(4);
-	set .@hour, gettime(3);
-	set .@minute, gettime(2);
+	set .@day, gettime(DT_DAYOFWEEK);
+	set .@hour, gettime(DT_HOUR);
+	set .@minute, gettime(DT_MINUTE);
 
 	// Inactive.
 	if (agitcheck())
 		return 0;
 
 	// Open for investments.
-	if (.@day >= 3 && (.@day < 5 || (.@day == 5 && .@hour <= 12)))
+	if (.@day >= WEDNESDAY && (.@day < FRIDAY || (.@day == FRIDAY && .@hour <= 12)))
 		return 1;
 
 	// Investments closed, calculating results.
-	if (.@day == 5 && .@hour == 12 && .@minute < 35)
+	if (.@day == FRIDAY && .@hour == 12 && .@minute < 35)
 		return 2;
 
 	// Calculations complete, dungeons open.
-	if ((.@day == 5 && (.@hour > 12 || (.@hour == 12 && .@minute >= 35))) || .@day > 5 ||
-	    .@day < 2 || (.@day == 2 && .@hour < 20))
+	if ((.@day == FRIDAY && (.@hour > 12 || (.@hour == 12 && .@minute >= 35))) || .@day > FRIDAY ||
+	    .@day < TUESDAY || (.@day == TUESDAY && .@hour < 20))
 		return 3;
 
 	// Dungeons closed.

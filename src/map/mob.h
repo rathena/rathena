@@ -19,6 +19,10 @@
 //The number of drops all mobs have and the max drop-slot that the steal skill will attempt to steal from.
 #define MAX_MOB_DROP 10
 #define MAX_MVP_DROP 3
+#define MAX_MOB_DROP_ADD 5
+#define MAX_MVP_DROP_ADD 2
+#define MAX_MOB_DROP_TOTAL (MAX_MOB_DROP+MAX_MOB_DROP_ADD)
+#define MAX_MVP_DROP_TOTAL (MAX_MVP_DROP+MAX_MVP_DROP_ADD)
 #define MAX_STEAL_DROP 7
 
 #define MAX_RACE2_MOBS 100
@@ -137,6 +141,14 @@ struct s_mob_lootitem {
 	unsigned short mob_id; ///< ID of monster that dropped the item
 };
 
+/// Struct for monster's drop item
+struct s_mob_drop {
+	unsigned short nameid;
+	int p;
+	uint8 randomopt_group;
+	unsigned steal_protected : 1;
+};
+
 struct mob_db {
 	char sprite[NAME_LENGTH],name[NAME_LENGTH],jname[NAME_LENGTH];
 	unsigned int base_exp,job_exp;
@@ -144,14 +156,7 @@ struct mob_db {
 	short range2,range3;
 	enum e_race2 race2;	// celest
 	unsigned short lv;
-	struct {
-		unsigned short nameid;
-		int p;
-	} dropitem[MAX_MOB_DROP];
-	struct {
-		unsigned short nameid;
-		int p;
-	} mvpitem[MAX_MVP_DROP];
+	struct s_mob_drop dropitem[MAX_MOB_DROP_TOTAL], mvpitem[MAX_MVP_DROP_TOTAL];
 	struct status_data status;
 	struct view_data vd;
 	unsigned int option;
@@ -178,7 +183,6 @@ struct mob_data {
 		unsigned int steal_coin_flag : 1;
 		unsigned int soul_change_flag : 1; // Celest
 		unsigned int alchemist: 1;
-		unsigned int spotted: 1;
 		unsigned int npc_killmonster: 1; //for new killmonster behavior
 		unsigned int rebirth: 1; // NPC_Rebirth used
 		unsigned int boss : 1;
@@ -194,6 +198,7 @@ struct mob_data {
 		unsigned int dmg;
 		unsigned int flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 	} dmglog[DAMAGELOG_SIZE];
+	uint32 spotted_log[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int spawn_timer; //Required for Convex Mirror
 	struct s_mob_lootitem *lootitems;
@@ -290,8 +295,7 @@ int mobdb_searchname_array(struct mob_db** data, int size, const char *str);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
 
-struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m,
-	short x, short y, const char *mobname, int mob_id, const char *event, unsigned int size, unsigned int ai);
+struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int mob_id, const char *event, unsigned int size, unsigned int ai);
 
 int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y,
 	const char* mobname, int mob_id, int amount, const char* event, unsigned int size, unsigned int ai);
@@ -339,8 +343,6 @@ int mob_linksearch(struct block_list *bl,va_list ap);
 
 int mobskill_use(struct mob_data *md,unsigned int tick,int event);
 int mobskill_event(struct mob_data *md,struct block_list *src,unsigned int tick, int flag);
-int mobskill_castend_id( int tid, unsigned int tick, int id,int data );
-int mobskill_castend_pos( int tid, unsigned int tick, int id,int data );
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
 int mob_countslave(struct block_list *bl);
 int mob_count_sub(struct block_list *bl, va_list ap);
@@ -357,6 +359,8 @@ int mvptomb_setdelayspawn(struct npc_data *nd);
 int mvptomb_delayspawn(int tid, unsigned int tick, int id, intptr_t data);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
+
+void mob_setdropitem_option(struct item *itm, struct s_mob_drop *mobdrop);
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
 

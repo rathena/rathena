@@ -77,7 +77,7 @@ ma_fild02,312,317,5	script	Guard#buwaya_cave	570,{
 				}
 				if (instance_create(.@md_name$) < 0) {
 					mes "[Guard]";
-					mes "Party name is... "+getpartyname(.@party_id)+".";;
+					mes "Party name is... "+getpartyname(.@party_id)+".";
 					mes "Party leader is... "+strcharinfo(0);
 					mes "^0000ff"+.@md_name$+"^000000 cannot be opened now.";
 					mes "Please try a moment later.";
@@ -127,17 +127,17 @@ OnTouch:
 	switch(select("Enter.:Turn back.")) {
 	case 1:
 		switch(instance_enter("Buwaya Cave")) {
-		case 3:
+		case IE_OTHER:
 			mes "[Guard]";
 			mes "Oh, now is not a good time.";
 			mes "Please try again a moment later.";
 			close;
-		case 2:
-		case 1:
+		case IE_NOINSTANCE:
+		case IE_NOMEMBER:
 			mes "[Guard]";
 			mes "This place is dangerous. Please do not enter.";
 			close;
-		case 0:
+		case IE_OK:
 			mapannounce "ma_fild02",getpartyname(getcharid(1))+" party's "+strcharinfo(0)+" member began hunting Buwaya in Buwaya Cave.",bc_map,"0x00ff99"; //FW_NORMAL 12 0 0
 			setquest 4229;
 			//warp "1@ma_c",35,57;

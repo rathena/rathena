@@ -120,21 +120,21 @@ mal_dun01,153,237,5	script	Weird Entrance	844,{
 	case 1:
 		if (countitem(6442)) {
 			switch(instance_enter("Octopus Cave")) {
-			case 3:
+			case IE_OTHER:
 				mes "[Starfish]";
 				mes "Ah, now is not the time...";
 				mes "Would you come back later? Hehe.";
 				close;
-			case 2:
-			case 1:
+			case IE_NOINSTANCE:
+			case IE_NOMEMBER:
 				mes "[Starfish]";
 				mes "There is a secret with that entrance.";
 				mes "So, please be careful with it, will ya? Hehe.";
 				close;
-			case 0:
+			case IE_OK:
 				mapannounce "mal_dun01", getpartyname(getcharid(1))+" party's "+strcharinfo(0)+" member started to hunt the Octopus!",bc_map,"0x00ff99";
 				if (checkquest(4197) == -1) setquest 4197;
-				//warp "1@cash",199,99;
+				//warp instance_mapname("1@cash"),199,99;
 				close;
 			default:
 				mes "[Starfish]";
@@ -171,6 +171,11 @@ OnTouch_:
 1@cash,1,1,0	script	oct_enter_broad	-1,{
 	end;
 OnInstanceInit:
+	disablenpc instance_npcname("oct_foot_exit1");
+	disablenpc instance_npcname("oct_foot_exit2");
+	disablenpc instance_npcname("oct_foot_exit3");
+	disablenpc instance_npcname("oct_foot_exit4");
+	disablenpc instance_npcname("oct_boss_warp");
 	donpcevent instance_npcname("oct_enter_broad")+"::OnDisable";
 	end;
 OnEnable:
@@ -332,7 +337,7 @@ OnTimer30000:
 	setd "."+strnpcinfo(0)+instance_id(),0;
 	stopnpctimer;
 	set .@i, atoi(charat(strnpcinfo(0),8));
-	donpcevent instance_npcname("oct_foot_exit"+.@i)+"::OnEnable";
+	enablenpc instance_npcname("oct_foot_exit"+.@i);
 	donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
 	end;
 OnMyMobDead:
@@ -342,7 +347,7 @@ OnMyMobDead:
 		setd "."+strnpcinfo(0)+instance_id(),0;
 		stopnpctimer;
 		set .@i, atoi(charat(strnpcinfo(0),8));
-		donpcevent instance_npcname("oct_foot_exit"+.@i)+"::OnEnable";
+		enablenpc instance_npcname("oct_foot_exit"+.@i);
 		donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
 		end;
 	}
@@ -351,22 +356,6 @@ OnMyMobDead:
 1@cash,88,190,0	duplicate(oct_foot1)	oct_foot2	139,6,6
 1@cash,307,215,0	duplicate(oct_foot1)	oct_foot3	139,6,6
 1@cash,372,131,0	duplicate(oct_foot1)	oct_foot4	139,6,6
-
-1@cash,16,117,0	script	oct_foot_exit1	45,2,2,{
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
-	end;
-OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
-	end;
-OnTouch:
-	warp instance_mapname("1@cash"),198,99;
-	end;
-}
-1@cash,77,193,0	duplicate(oct_foot_exit1)	oct_foot_exit2	45,2,2
-1@cash,312,214,0	duplicate(oct_foot_exit1)	oct_foot_exit3	45,2,2
-1@cash,370,139,0	duplicate(oct_foot_exit1)	oct_foot_exit4	45,2,2
 
 1@cash,15,15,0	script	oct_mob_con	-1,{
 	end;
@@ -671,15 +660,6 @@ OnMyMobDead:
 	end;
 }
 
-1@cash,198,116,0	script	oct_boss_warp	45,2,2,{
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname("oct_boss_warp");
-	end;
-OnTouch:
-	warp instance_mapname("1@cash"),210,172;
-	end;
-}
 
 1@cash,190,208,0	script	oct_exit_1	45,2,2,{
 	end;
@@ -699,43 +679,17 @@ OnTouch:
 
 // Warp Portals
 //============================================================
-1@cash,193,82,0	script	oct_door1	WARPNPC,2,2,{
-OnTouch:
-	warp "1@cash",151,48;
-	end;
-}
-1@cash,154,53,0	script	oct_door2	WARPNPC,2,2,{
-OnTouch:
-	warp "1@cash",197,87;
-	end;
-}
-1@cash,187,99,0	script	oct_door3	WARPNPC,2,2,{
-OnTouch:
-	warp "1@cash",148,128;
-	end;
-}
-1@cash,153,133,0	script	oct_door4	WARPNPC,2,2,{
-OnTouch:
-	warp "1@cash",197,99;
-	end;
-}
-1@cash,209,100,0	script	oct_door5	WARPNPC,2,2,{
-OnTouch:
-	warp "1@cash",250,111;
-	end;
-}
-1@cash,244,118,0	script	oct_door6	WARPNPC,2,2,{
-OnTouch:
-	warp "1@cash",199,100;
-	end;
-}
-1@cash,209,83,0	script	oct_door7	WARPNPC,2,2,{
-OnTouch:
-	warp "1@cash",252,46;
-	end;
-}
-1@cash,246,53,0	script	oct_door8	WARPNPC,2,2,{
-OnTouch:
-	warp "1@cash",203,83;
-	end;
-}
+1@cash,16,117,0	warp2	oct_foot_exit1	2,2,1@cash,198,99
+1@cash,77,193,0	warp2	oct_foot_exit2	2,2,1@cash,198,99
+1@cash,312,214,0	warp2	oct_foot_exit3	2,2,1@cash,198,99
+1@cash,370,139,0	warp2	oct_foot_exit4	2,2,1@cash,198,99
+1@cash,198,116,0	warp2	oct_boss_warp	2,2,1@cash,210,172
+
+1@cash,193,82,0	warp2	oct_door1	2,2,1@cash,151,48
+1@cash,154,53,0	warp2	oct_door2	2,2,1@cash,197,87
+1@cash,187,99,0	warp2	oct_door3	2,2,1@cash,148,128
+1@cash,153,133,0	warp2	oct_door4	2,2,1@cash,197,99
+1@cash,209,100,0	warp2	oct_door5	2,2,1@cash,250,111
+1@cash,244,118,0	warp2	oct_door6	2,2,1@cash,199,100
+1@cash,209,83,0	warp2	oct_door7	2,2,1@cash,252,46
+1@cash,246,53,0	warp2	oct_door8	2,2,1@cash,203,83

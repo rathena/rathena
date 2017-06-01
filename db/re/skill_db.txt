@@ -16,7 +16,13 @@
 //    0x20 - Skill ignores target's defense (misc type always ignores)
 //    0x40 - Skill ignores target's flee (magic type always ignores)
 //    0x80 - Skill ignores target's def cards
-// 07 splash/effect range (-1 for screen-wide)
+// 07 splash/effect range
+//      -1 - for screen-wide
+//       0 - no splash
+//      all other values follow the formula: value * 2 + 1
+//       1 - 3x3
+//       2 - 5x5
+//       3 - 7x7
 // 08 MaxLv
 // 09 Number of hits (when positive, damage is increased by hits, 
 //    negative values just show number of hits without increasing total damage)
@@ -184,7 +190,7 @@
 85,9,8,2,4,0,0,10,-10,yes,0,0x2000,0,magic,0,0x0,		WZ_VERMILION,Lord of Vermilion
 86,9,8,1,1,0,0,5,1,yes,0,0x2000,0,magic,0,0x0,		WZ_WATERBALL,Water Ball
 87,9,6,2,1,0x1,0,10,1,yes,0,0,0,magic,0,0x0,		WZ_ICEWALL,Ice Wall
-88,0,6,4,1,0x2,2,10,1,yes,0,0x2000,0,magic,0,0x0,	WZ_FROSTNOVA,Frost Nova
+88,0,6,4,1,0x2,3,10,1,yes,0,0x2000,0,magic,0,0x0,	WZ_FROSTNOVA,Frost Nova
 89,9,6,2,1,0,0,10,1,yes,0,0x2000,0,magic,2,0x0,		WZ_STORMGUST,Storm Gust
 90,9,8,1,2,0,0,5,1:2:3:4:5,yes,0,0x2000,0,magic,0,0x0,	WZ_EARTHSPIKE,Earth Spike
 91,9,8,2,2,0,0,5,1:2:3:4:5,yes,0,0x2000,0,magic,0,0x10000,	WZ_HEAVENDRIVE,Heaven's Drive
@@ -224,8 +230,8 @@
 119,3,6,2,0,0x3,2,5,1,no,0,0x80,0,misc,0,0x3000,	HT_SANDMAN,Sandman
 120,3,6,2,0,0x3,1,5,1,no,0,0x80,0,misc,0,0x3000,	HT_FLASHER,Flasher
 121,3,6,2,1,0x42,1,5,1,no,0,0x80,0,weapon,0,0x3800,	HT_FREEZINGTRAP,Freezing Trap
-122,3,6,2,4,0xF2,1,5,1,no,0,0x80,0,misc,0,0x3800,	HT_BLASTMINE,Blast Mine
-123,3,6,2,3,0xF2,2,5,1,no,0,0x40080,0,misc,0,0x3800,	HT_CLAYMORETRAP,Claymore Trap
+122,3,6,2,4,0xC2,1,5,1,no,0,0x80,0,misc,0,0x3800,	HT_BLASTMINE,Blast Mine
+123,3,6,2,3,0xC2,2,5,1,no,0,0x40080,0,misc,0,0x3800,	HT_CLAYMORETRAP,Claymore Trap
 124,2,6,32,0,0x1,0,1,1,no,0,0x40000,0,misc,0,0x0,		HT_REMOVETRAP,Remove Trap
 125,3,6,2,0,0x1,0,1,1,no,0,0x80,0,misc,0,0x2000,		HT_TALKIEBOX,Talkie Box
 126,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		HT_BEASTBANE,Beast Bane
@@ -318,7 +324,7 @@
 204,0,0,4,0,0x1,0,1,1,no,0,0x2,0,magic,0,0x0,	NPC_BARRIER,Barrier
 205,0,0,4,0,0x1,0,1,1,no,0,0x2,0,weapon,0,0x0,	NPC_DEFENDER,Defender
 206,1,6,1,-1,0x1,0,5,1,no,0,0x2,0,weapon,0,0x0,	NPC_LICK,Lick
-207,9,0,1,0,0x1,0,10,1,no,0,0x2,0,magic,0,0x0,	NPC_HALLUCINATION,Hallucination
+207,9,0,1,0,0x1,0,5,1,no,0,0x2,0,magic,0,0x0,	NPC_HALLUCINATION,Hallucination
 208,0,0,4,0,0x1,0,1,1,no,0,0x2,0,magic,0,0x0,	NPC_REBIRTH,Rebirth
 209,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0,0x0,	NPC_SUMMONMONSTER,Monster Summons
 
@@ -549,7 +555,7 @@
 //****
 // Sniper
 380,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	SN_SIGHT,Falcon Eyes
-381,9,8,1,-3,0x40,0,5,1,yes,0,0,0,misc,0,0x0,		SN_FALCONASSAULT,Falcon Assault
+381,9,8,1,0,0xC0,0,5,1,yes,0,0,0,misc,0,0x0,		SN_FALCONASSAULT,Falcon Assault
 382,9,8,1,-1,0,1,5,1,yes,0,0x40000,14,weapon,0,0x0,	SN_SHARPSHOOTING,Focused Arrow Strike
 383,0,6,4,0,0x3,-1,10,1,yes,0,0,0,weapon,0,0x0,	SN_WINDWALK,Wind Walker
 
@@ -814,7 +820,7 @@
 //****
 // Additional NPC skill (Episode 12)
 682,0,0,4,0,0x1,0,1,1,no,0,0x2,0,none,0,0x0,	NPC_TALK,Talk
-683,-9,6,1,-1,0,0,1,1,no,0,0x2,0,none,0,0x0,	NPC_HELLPOWER,Hell Power
+683,-9,0,1,0,0x1,0,5,1,no,0,0x2,0,none,0,0x0,	NPC_HELLPOWER,Hell Power
 684,0,6,4,0,0x3,-1,1,1,no,0,0x2,0,none,0,0x0,	NPC_WIDEHELLDIGNITY,Hell Dignity
 685,0,0,4,0,0x1,0,1,1,no,0,0x2,0,none,0,0x0,	NPC_INVINCIBLE,Invincible
 686,0,0,4,0,0x1,0,1,1,no,0,0x2,0,none,0,0x0,	NPC_INVINCIBLEOFF,Invincible off
@@ -843,7 +849,7 @@
 //703,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDECOLD,Wide Crystalize
 //704,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDE_DEEP_SLEEP,Wide Deep Sleep
 //705,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDESIREN,Wide Siren's Voice
-//706,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_VENOMFOG,Venom Fog
+706,0,6,4,5,0,0,10,1,no,0,0x2,0,magic,0,0x1,	NPC_VENOMFOG,Venom Fog
 //707,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MILLENNIUMSHIELD,Millenium Shield 2
 //708,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_COMET,Comet 2
 //709,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_ICEMINE,Ice Mine
@@ -853,8 +859,8 @@
 //713,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DANCINGBLADE,Dancing Blade
 //714,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DANCINGBLADE_ATK,Dancing Blade Attack
 //715,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DARKPIERCING,Dark Piercing
-//716,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MAXPAIN,Max Pain
-//717,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MAXPAIN_ATK,Max Pain Attack
+716,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0,0x0,		NPC_MAXPAIN,Max Pain
+717,0,6,1,0,0xD2,18,10,1,no,0,0x2,0,misc,0,0x0,		NPC_MAXPAIN_ATK,Max Pain Attack
 //718,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DEATHSUMMON,Death Summon
 //719,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_HELLBURNING,Hell Burning
 //720,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_JACKFROST,Jack Frost 2
@@ -1087,7 +1093,7 @@
 2295,3,6,1,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SC_LAZINESS,Masquerade - Laziness
 2296,3,6,1,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SC_UNLUCKY,Masquerade - Unlucky
 2297,3,6,1,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SC_WEAKNESS,Masquerade - Weakness
-2298,3,6,1,0,0x1,0,5,1,yes,0,0,0,none,0,0x8000,	SC_STRIPACCESSARY,Strip Accessory
+2298,3,6,1,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,	SC_STRIPACCESSARY,Strip Accessory
 2299,7,6,2,0,0x1,0,3,1,yes,0,0,3,magic,0,0x0,	SC_MANHOLE,Man Hole
 2300,7,6,2,0,0x1,0,3,1,yes,0,0,1,magic,0,0x0,	SC_DIMENSIONDOOR,Dimension Door
 2301,7,6,2,0,0x1,0,3,1,yes,0,0x20000,0,magic,0,0x0,	SC_CHAOSPANIC,Chaos Panic
@@ -1237,7 +1243,7 @@
 2490,9,6,2,0,0x3,1,5,1,yes,0,0x80,2:3:4:5:6,misc,0,0x0,	GN_HELLS_PLANT,Hell's Plant
 2491,0,6,1,0,0x90,0,5,1,no,0,0,0,misc,0,0x0,	GN_HELLS_PLANT_ATK,Hell's Plant Attack
 2492,0,6,4,0,0x3,5:6:6:7:7,5,1,yes,0,0,0,none,0,0x0,	GN_MANDRAGORA,Howling of Mandragora
-2493,11,6,16,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	GN_SLINGITEM,Sling Item
+2493,11,6,16,0,0x1,0,1,1,no,0,0x200,0,none,0,0x0,	GN_SLINGITEM,Sling Item
 2494,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,		GN_CHANGEMATERIAL,Change Material
 2495,0,6,4,0,0x1,0,2,1,no,0,0,0,none,0,0x0,		GN_MIX_COOKING,Mix Cooking
 2496,0,6,4,0,0x1,0,2,1,no,0,0,0,none,0,0x0,		GN_MAKEBOMB,Create Bomb

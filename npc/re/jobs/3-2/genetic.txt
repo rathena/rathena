@@ -46,7 +46,7 @@ alde_alche,35,186,5	script	Alchemist Union Member	805,{
 				mes "You are very knowledgeable. Do you think you might understand her work?";
 				next;
 				mes "[Alchemist Union Member]";
-				mes "Her study may help you gain the knowledge to help you make a Geneticist!";;
+				mes "Her study may help you gain the knowledge to help you make a Geneticist!";
 				next;
 				mes "[Alchemist Union Member]";
 				mes "How's that sound? Do you want to meet a Geneticist?";
@@ -1034,21 +1034,21 @@ OnTouch:
 	end;
 }
 
-job3_gen01,26,34,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,23,33,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,21,30,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,26,34,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,23,33,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,21,30,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,26,34,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,23,33,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,21,30,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,26,34,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,23,33,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,21,30,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,26,34,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,23,33,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,21,30,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,26,34,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,23,33,0,0	monster	Poison Spore	1428,1,7000,0,0
-job3_gen01,21,30,0,0	monster	Poison Spore	1428,1,7000,0,0
+job3_gen01,26,34	monster	Poison Spore	1428,1,7000
+job3_gen01,23,33	monster	Poison Spore	1428,1,7000
+job3_gen01,21,30	monster	Poison Spore	1428,1,7000
+job3_gen01,26,34	monster	Poison Spore	1428,1,7000
+job3_gen01,23,33	monster	Poison Spore	1428,1,7000
+job3_gen01,21,30	monster	Poison Spore	1428,1,7000
+job3_gen01,26,34	monster	Poison Spore	1428,1,7000
+job3_gen01,23,33	monster	Poison Spore	1428,1,7000
+job3_gen01,21,30	monster	Poison Spore	1428,1,7000
+job3_gen01,26,34	monster	Poison Spore	1428,1,7000
+job3_gen01,23,33	monster	Poison Spore	1428,1,7000
+job3_gen01,21,30	monster	Poison Spore	1428,1,7000
+job3_gen01,26,34	monster	Poison Spore	1428,1,7000
+job3_gen01,23,33	monster	Poison Spore	1428,1,7000
+job3_gen01,21,30	monster	Poison Spore	1428,1,7000
+job3_gen01,26,34	monster	Poison Spore	1428,1,7000
+job3_gen01,23,33	monster	Poison Spore	1428,1,7000
+job3_gen01,21,30	monster	Poison Spore	1428,1,7000

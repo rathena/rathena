@@ -226,7 +226,7 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 
 	// check if the account doesn't exist already
 	if( accounts->load_str(accounts, &acc, userid) ) {
-		ShowNotice("Attempt of creation of an already existant account (account: %s_%c, pass: %s, received pass: %s)\n", userid, sex, acc.pass, pass);
+		ShowNotice("Attempt of creation of an already existant account (account: %s, sex: %c)\n", userid, sex);
 		return 1; // 1 = Incorrect Password
 	}
 
@@ -237,9 +237,9 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 	acc.sex = sex;
 	safestrncpy(acc.email, "a@a.com", sizeof(acc.email));
 	acc.expiration_time = ( login_config.start_limited_time != -1 ) ? time(NULL) + login_config.start_limited_time : 0;
-	safestrncpy(acc.lastlogin, "0000-00-00 00:00:00", sizeof(acc.lastlogin));
+	safestrncpy(acc.lastlogin, "", sizeof(acc.lastlogin));
 	safestrncpy(acc.last_ip, last_ip, sizeof(acc.last_ip));
-	safestrncpy(acc.birthdate, "0000-00-00", sizeof(acc.birthdate));
+	safestrncpy(acc.birthdate, "", sizeof(acc.birthdate));
 	safestrncpy(acc.pincode, "", sizeof(acc.pincode));
 	acc.pincode_change = 0;
 	acc.char_slots = MIN_CHARS;
@@ -250,7 +250,7 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
 	if( !accounts->create(accounts, &acc) )
 		return 0;
 
-	ShowNotice("Account creation (account %s, id: %d, pass: %s, sex: %c)\n", acc.userid, acc.account_id, acc.pass, acc.sex);
+	ShowNotice("Account creation (account %s, id: %d, sex: %c)\n", acc.userid, acc.account_id, acc.sex);
 
 	if( DIFF_TICK(tick, new_reg_tick) > 0 ) {// Update the registration check.
 		num_regs = 0;
@@ -328,29 +328,29 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 	}
 
 	if( !accounts->load_str(accounts, &acc, sd->userid) ) {
-		ShowNotice("Unknown account (account: %s, received pass: %s, ip: %s)\n", sd->userid, sd->passwd, ip);
+		ShowNotice("Unknown account (account: %s, ip: %s)\n", sd->userid, ip);
 		return 0; // 0 = Unregistered ID
 	}
 
 	if( !login_check_password(sd->md5key, sd->passwdenc, sd->passwd, acc.pass) ) {
-		ShowNotice("Invalid password (account: '%s', pass: '%s', received pass: '%s', ip: %s)\n", sd->userid, acc.pass, sd->passwd, ip);
+		ShowNotice("Invalid password (account: '%s', ip: %s)\n", sd->userid, ip);
 		return 1; // 1 = Incorrect Password
 	}
 
 	if( acc.expiration_time != 0 && acc.expiration_time < time(NULL) ) {
-		ShowNotice("Connection refused (account: %s, pass: %s, expired ID, ip: %s)\n", sd->userid, sd->passwd, ip);
+		ShowNotice("Connection refused (account: %s, expired ID, ip: %s)\n", sd->userid, ip);
 		return 2; // 2 = This ID is expired
 	}
 
 	if( acc.unban_time != 0 && acc.unban_time > time(NULL) ) {
 		char tmpstr[24];
 		timestamp2string(tmpstr, sizeof(tmpstr), acc.unban_time, login_config.date_format);
-		ShowNotice("Connection refused (account: %s, pass: %s, banned until %s, ip: %s)\n", sd->userid, sd->passwd, tmpstr, ip);
+		ShowNotice("Connection refused (account: %s, banned until %s, ip: %s)\n", sd->userid, tmpstr, ip);
 		return 6; // 6 = Your are Prohibited to log in until %s
 	}
 
 	if( acc.state != 0 ) {
-		ShowNotice("Connection refused (account: %s, pass: %s, state: %d, ip: %s)\n", sd->userid, sd->passwd, acc.state, ip);
+		ShowNotice("Connection refused (account: %s, state: %d, ip: %s)\n", sd->userid, acc.state, ip);
 		return acc.state - 1;
 	}
 
@@ -374,14 +374,14 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 			int i;
 
 			if( !sd->has_client_hash ) {
-				ShowNotice("Client didn't send client hash (account: %s, pass: %s, ip: %s)\n", sd->userid, sd->passwd, acc.state, ip);
+				ShowNotice("Client didn't send client hash (account: %s, ip: %s)\n", sd->userid, acc.state, ip);
 				return 5;
 			}
 
 			for( i = 0; i < 16; i++ )
 				sprintf(&smd5[i * 2], "%02x", sd->client_hash[i]);
 
-			ShowNotice("Invalid client hash (account: %s, pass: %s, sent md5: %d, ip: %s)\n", sd->userid, sd->passwd, smd5, ip);
+			ShowNotice("Invalid client hash (account: %s, sent md5: %d, ip: %s)\n", sd->userid, smd5, ip);
 			return 5;
 		}
 	}
@@ -655,10 +655,15 @@ bool login_config_read(const char* cfgName, bool normal) {
 		else if(strcmpi(w1,"vip_group")==0)
 			login_config.vip_sys.group = cap_value(atoi(w2),0,99);
 		else if(strcmpi(w1,"vip_char_increase")==0) {
-			if(login_config.vip_sys.char_increase > (unsigned int) MAX_CHARS-login_config.char_per_account)
+			if (atoi(w2) == -1)
+				login_config.vip_sys.char_increase = MAX_CHAR_VIP;
+			else
+				login_config.vip_sys.char_increase = atoi(w2);
+			if (login_config.vip_sys.char_increase > (unsigned int) MAX_CHARS-login_config.char_per_account) {
 				ShowWarning("vip_char_increase too high, can only go up to %d, according to your char_per_account config %d\n",
 					MAX_CHARS-login_config.char_per_account,login_config.char_per_account);
-			login_config.vip_sys.char_increase =  cap_value(atoi(w2),0,MAX_CHARS-login_config.char_per_account);
+				login_config.vip_sys.char_increase = MAX_CHARS-login_config.char_per_account;
+			}
 		}
 #endif
 		else if(!strcmpi(w1, "import"))

@@ -36,7 +36,7 @@ morocc_in,174,30,6	script	Kid#link1	716,{
 	}
 	if (Class == Job_Star_Gladiator) {
 		mes "[Kid]";
-		if (Sex == 1) {
+		if (Sex == SEX_MALE) {
 			mes "Aren't you a warrior";
 			mes "of the sun? I'm familiar";
 		}

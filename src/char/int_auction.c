@@ -3,7 +3,6 @@
 
 #include "../common/mmo.h"
 #include "../common/malloc.h"
-#include "../common/db.h"
 #include "../common/showmsg.h"
 #include "../common/socket.h"
 #include "../common/strlib.h"
@@ -15,8 +14,6 @@
 #include "int_mail.h"
 #include "int_auction.h"
 
-#include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
 static DBMap* auction_db_ = NULL; // int auction_id -> struct auction_data*
@@ -24,7 +21,7 @@ static DBMap* auction_db_ = NULL; // int auction_id -> struct auction_data*
 void auction_delete(struct auction_data *auction);
 static int auction_end_timer(int tid, unsigned int tick, int id, intptr_t data);
 
-static int auction_count(int char_id, bool buy)
+static int auction_count(uint32 char_id, bool buy)
 {
 	int i = 0;
 	struct auction_data *auction;
@@ -140,7 +137,7 @@ unsigned int auction_create(struct auction_data *auction)
 	return auction->auction_id;
 }
 
-static void mapif_Auction_message(int char_id, unsigned char result)
+static void mapif_Auction_message(uint32 char_id, unsigned char result)
 {
 	unsigned char buf[74];
 
@@ -266,7 +263,7 @@ void inter_auctions_fromsql(void)
 	Sql_FreeResult(sql_handle);
 }
 
-static void mapif_Auction_sendlist(int fd, int char_id, short count, short pages, unsigned char *buf)
+static void mapif_Auction_sendlist(int fd, uint32 char_id, short count, short pages, unsigned char *buf)
 {
 	int len = (sizeof(struct auction_data) * count) + 12;
 
@@ -283,7 +280,7 @@ static void mapif_Auction_sendlist(int fd, int char_id, short count, short pages
 static void mapif_parse_Auction_requestlist(int fd)
 {
 	char searchtext[NAME_LENGTH];
-	int char_id = RFIFOL(fd,4), len = sizeof(struct auction_data);
+	uint32 char_id = RFIFOL(fd,4), len = sizeof(struct auction_data);
 	int price = RFIFOL(fd,10);
 	short type = RFIFOW(fd,8), page = max(1,RFIFOW(fd,14));
 	unsigned char buf[5 * sizeof(struct auction_data)];
@@ -347,7 +344,7 @@ static void mapif_parse_Auction_register(int fd)
 	mapif_Auction_register(fd, &auction);
 }
 
-static void mapif_Auction_cancel(int fd, int char_id, unsigned char result)
+static void mapif_Auction_cancel(int fd, uint32 char_id, unsigned char result)
 {
 	WFIFOHEAD(fd,7);
 	WFIFOW(fd,0) = 0x3852;
@@ -358,7 +355,7 @@ static void mapif_Auction_cancel(int fd, int char_id, unsigned char result)
 
 static void mapif_parse_Auction_cancel(int fd)
 {
-	int char_id = RFIFOL(fd,2), auction_id = RFIFOL(fd,6);
+	uint32 char_id = RFIFOL(fd,2), auction_id = RFIFOL(fd,6);
 	struct auction_data *auction;
 
 	if( (auction = (struct auction_data *)idb_get(auction_db_, auction_id)) == NULL )
@@ -385,7 +382,7 @@ static void mapif_parse_Auction_cancel(int fd)
 	mapif_Auction_cancel(fd, char_id, 0); // The auction has been canceled
 }
 
-static void mapif_Auction_close(int fd, int char_id, unsigned char result)
+static void mapif_Auction_close(int fd, uint32 char_id, unsigned char result)
 {
 	WFIFOHEAD(fd,7);
 	WFIFOW(fd,0) = 0x3853;
@@ -396,7 +393,7 @@ static void mapif_Auction_close(int fd, int char_id, unsigned char result)
 
 static void mapif_parse_Auction_close(int fd)
 {
-	int char_id = RFIFOL(fd,2), auction_id = RFIFOL(fd,6);
+	uint32 char_id = RFIFOL(fd,2), auction_id = RFIFOL(fd,6);
 	struct auction_data *auction;
 
 	if( (auction = (struct auction_data *)idb_get(auction_db_, auction_id)) == NULL )
@@ -427,7 +424,7 @@ static void mapif_parse_Auction_close(int fd)
 	mapif_Auction_close(fd, char_id, 0); // You have ended the auction
 }
 
-static void mapif_Auction_bid(int fd, int char_id, int bid, unsigned char result)
+static void mapif_Auction_bid(int fd, uint32 char_id, int bid, unsigned char result)
 {
 	WFIFOHEAD(fd,11);
 	WFIFOW(fd,0) = 0x3855;
@@ -439,8 +436,8 @@ static void mapif_Auction_bid(int fd, int char_id, int bid, unsigned char result
 
 static void mapif_parse_Auction_bid(int fd)
 {
-	int char_id = RFIFOL(fd,4), bid = RFIFOL(fd,12);
-	unsigned int auction_id = RFIFOL(fd,8);
+	uint32 char_id = RFIFOL(fd,4), auction_id = RFIFOL(fd,8);
+	int bid = RFIFOL(fd,12);
 	struct auction_data *auction;
 
 	if( (auction = (struct auction_data *)idb_get(auction_db_, auction_id)) == NULL || auction->price >= bid || auction->seller_id == char_id )
@@ -467,7 +464,7 @@ static void mapif_parse_Auction_bid(int fd)
 	}
 
 	auction->buyer_id = char_id;
-	safestrncpy(auction->buyer_name, (char*)RFIFOP(fd,16), NAME_LENGTH);
+	safestrncpy(auction->buyer_name, RFIFOCP(fd,16), NAME_LENGTH);
 	auction->price = bid;
 
 	if( bid >= auction->buynow )

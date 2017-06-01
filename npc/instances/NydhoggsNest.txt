@@ -139,7 +139,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 			goto L_Enter;
 		} else {
 			if (.@ins_nyd_check == 0 || .@ins_nyd_check == 1) {
-				if ('ins_nyd2 == 3 || 'ins_nyd2 == 4) {
+				if (ins_nyd2 == 3 || ins_nyd2 == 4) {
 					mes "[Yggdrasil Gatekeeper]";
 					mes "With the defeat of Nidhoggur's Shadow, the roots of the World Tree Yggdrasil are also affected.";
 					next;
@@ -166,7 +166,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 					mes "If you would like to enter again, please register with me.";
 					erasequest 3135;
 					erasequest 3136;
-					set 'ins_nyd2,0;
+					set ins_nyd2,0;
 					close;
 				}
 			}
@@ -193,19 +193,19 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 
 L_Enter:
 	switch(instance_enter("Nidhoggur's Nest")) {
-	case 3:
+	case IE_OTHER:
 		mes "[Yggdrasil Gatekeeper]";
 		mes "An unknown error has occurred.";
 		close;
-	case 2:
+	case IE_NOINSTANCE:
 		mes "[Yggdrasil Gatekeeper]";
 		mes "You didn't ask to be admitted... You should accept admission first before entering.";
 		close;
-	case 1:
+	case IE_NOMEMBER:
 		mes "[Yggdrasil Gatekeeper]";
 		mes "Where are the other servants, so you can work together? Each servant cannot be admitted here individually...";
 		close;
-	case 0:
+	case IE_OK:
 		mapannounce "nyd_dun02", getpartyname(getcharid(1))+"'s party member "+strcharinfo(0)+" has entered Nidhoggur's Nest.",bc_map,"0x00ff99";
 		if (checkquest(3135) == -1) setquest 3135;
 		if (checkquest(3136) == -1) setquest 3136;
@@ -1605,7 +1605,7 @@ OnTouch_:
 			next;
 			mes "[World Tree Yggdrasil]";
 			mes "And... Be careful... Be careful of the shadow's power.";
-			set 'ins_nyd2,1;
+			'ins_nyd2 = ins_nyd2 = 1;
 			donpcevent instance_npcname("ins_nyd_1f_timer")+"::OnEnable";
 			donpcevent instance_npcname("nyd_call_mon_1")+"::OnEnable";
 			close;
@@ -1700,7 +1700,7 @@ OnMyMobDead:
 		mapannounce .@map$, "All of Nidhoggur's Guardians have been defeated!",bc_map,"0x00ff99";
 		donpcevent instance_npcname("ins_nyd_1f_timer")+"::OnDisable";
 		donpcevent instance_npcname("nyd_to2f_warp")+"::OnEnable";
-		set 'ins_nyd2,2;
+		'ins_nyd2 = ins_nyd2 = 2;
 	}
 	end;
 }
@@ -1760,7 +1760,7 @@ OnEnable:
 	end;
 
 OnTouch:
-	set 'ins_nyd2,3;
+	'ins_nyd2 = ins_nyd2 = 3;
 	warp instance_mapname("2@nyd"),200,10;
 	end;
 }
@@ -1922,7 +1922,7 @@ OnMyMobDead:
 		donpcevent instance_npcname("nyd_2f_white_c")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_yellow_c")+"::OnDisable";
 		donpcevent instance_npcname("nyd_2f_green_c")+"::OnDisable";
-		set 'ins_nyd2,4;
+		'ins_nyd2 = ins_nyd2 = 4;
 		end;
 	}
 	end;
@@ -1973,7 +1973,8 @@ OnTimer180000:
 	next;
 	switch(select("Please let me out.:I want to look around for a while.")) {
 	case 1:
-		set 'ins_nyd2,0;
+		'ins_nyd2 = 0;
+		// ins_nyd2 = 0;
 		set ins_nyd,203;
 		//setquest 3135;
 		warp "nyd_dun02",98,196;
@@ -2153,26 +2154,26 @@ OnTouch:
 2@nyd,1,1,0	script	ins_nyd2_spawn_mobs	-1,{
 OnInstanceInit:
 	set .@map$, instance_mapname("2@nyd");
-	areamonster .@map$,200,92,180,80,"Rhyncho",2020,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyRhynDead";
-	areamonster .@map$,200,92,180,80,"Phylla",2021,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPhyDead";
-	areamonster .@map$,200,92,180,80,"Dark Shadow",2023,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyDarkshaDead";
-	areamonster .@map$,200,92,180,80,"Dark Pinguicula",2015,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPingDead";
+	areamonster .@map$,20,12,380,172,"Rhyncho",2020,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyRhynDead";
+	areamonster .@map$,20,12,380,172,"Phylla",2021,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPhyDead";
+	areamonster .@map$,20,12,380,172,"Dark Shadow",2023,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyDarkshaDead";
+	areamonster .@map$,20,12,380,172,"Dark Pinguicula",2015,40,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPingDead";
 	end;
 
 OnMyRhynDead:
-	areamonster instance_mapname("2@nyd"),200,92,180,80,"Rhyncho",2020,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyRhynDead";
+	areamonster instance_mapname("2@nyd"),20,12,380,172,"Rhyncho",2020,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyRhynDead";
 	end;
 
 OnMyPhyDead:
-	areamonster instance_mapname("2@nyd"),200,92,180,80,"Phylla",2021,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPhyDead";
+	areamonster instance_mapname("2@nyd"),20,12,380,172,"Phylla",2021,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPhyDead";
 	end;
 
 OnMyDarkshaDead:
-	areamonster instance_mapname("2@nyd"),200,92,180,80,"Dark Shadow",2023,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyDarkshaDead";
+	areamonster instance_mapname("2@nyd"),20,12,380,172,"Dark Shadow",2023,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyDarkshaDead";
 	end;
 
 OnMyPingDead:
-	areamonster instance_mapname("2@nyd"),200,92,180,80,"Dark Pinguicula",2015,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPingDead";
+	areamonster instance_mapname("2@nyd"),20,12,380,172,"Dark Pinguicula",2015,1,instance_npcname("ins_nyd2_spawn_mobs")+"::OnMyPingDead";
 	end;
 }
 

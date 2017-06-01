@@ -892,7 +892,7 @@ lhz_in02,283,276,4	script	Customer#amano12	815,{
 	mes "to ask me out or something?";
 	next;
 	mes "[Sei]";
-	if (Sex == 1) {
+	if (Sex == SEX_MALE) {
 		mes "Well, if he does,";
 		mes "shouldn't he have";
 		mes "more guts? Or are ";
@@ -1546,7 +1546,7 @@ lhz_in03,192,19,3	script	Haggar#zen1	855,{
 
 lhz_in03,193,25,2	script	Bartender#12	61,{
 	mes "[Tony]";
-	if (Sex) {
+	if (Sex == SEX_MALE) {
 		mes "Hey man, I know this";
 	}
 	else {
@@ -2949,7 +2949,7 @@ lhz_in01,139,48,7	script	Leimi#mimir	73,{
 	mes "Um, may I help you?";
 	emotion e_omg;
 	if (BaseJob == Job_Assassin) {
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			next;
 			mes "[Leimi]";
 			mes "Oh, you're an Assassin!";
@@ -2972,7 +2972,7 @@ lhz_in01,139,48,7	script	Leimi#mimir	73,{
 lhz_in01,138,47,0	script	#mimir_camera	-1,2,2,{
 OnTouch_:
 	if (BaseJob == Job_Assassin) {
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "^3355FF*Click*^000000";
 			next;
 			mes "["+strcharinfo(0)+"]";

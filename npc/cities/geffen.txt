@@ -131,7 +131,7 @@ geffen,111,48,0	script	Stacey	101,{
 		mes "Is that an Orc Helm you're wearing?! That's so cool! Wow...";
 		next;
 		mes "[Stacey]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "You look so...";
 			mes "Rugged and manly~";
 		}
@@ -152,7 +152,7 @@ geffen,111,48,0	script	Stacey	101,{
 		mes "of Orc Hero!";
 		next;
 		mes "[Stacey]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "It's...";
 			mes "It's like you're surrounded by this incredibly masculine aura! Oooh~! You must be irresistable to all the girls!";
 			next;
@@ -226,7 +226,7 @@ OnTouch_:
 	mes "You wanna get your hands on some great stuff? Come on over!^000000";
 	next;
 	mes "[Suspicious Guy]";
-	if (Sex)
+	if (Sex == SEX_MALE)
 		mes "Hey there tough guy. You look smart enough to recognize a bargain when it's right in front of your eyes.";
 	else
 		mes "Well, well, well. Aren't you a pretty girl. Today just happens to be your lucky day!";
@@ -261,7 +261,7 @@ OnTouch_:
 			input .@input;
 			if (.@input == 0) {
 				mes "[Suspicious Guy]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "Ah duuuuuude~ You're breakin' my heart! I mean, at these prices, I'm practically performing charity!";
 				else
 					mes "W-waaaait! You didn't let me tell you the part about how Red Potions help you lose and gain weight in all the right places! Waaaaait!";
@@ -293,7 +293,7 @@ OnTouch_:
 		break;
 	case 2:
 		mes "[Suspicious Guy]";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "What would a strong guy like you want a knife for? Those will just break under the force of your incredibly powerful swings!";
 			next;
 			mes "[Suspicious Guy]";
@@ -358,7 +358,7 @@ OnTouch_:
 		break;
 	case 3:
 		mes "[Suspicious Guy]";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "A Manteau? That's old news! You know what's the latest in protective armors?";
 		else
 			mes "Now why would such a beautiful woman wear something out of style? You know what would make you look even better?";
@@ -612,7 +612,7 @@ geffen_in,27,134,5	script	Waitress#elen	91,{
 		mes "I hear there's this person somewhere in Rune-Midgard...";
 		next;
 		mes "[Elenore]";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "Tell me, have you ever heard of "+strcharinfo(0)+"? He's supposed to be the suavest hero around!";
 		else
 			mes "Have you ever heard of "+strcharinfo(0)+"? People say she's one of the prettiest girls in all of Rune-Midgard!";
@@ -652,7 +652,7 @@ geffen_in,27,134,5	script	Waitress#elen	91,{
 			mes "^990000Hey you sex crazed bastard!! Stop looking at my daughter like that before I rip out your eyes, and eat them with pasta!^000000";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Huh...?";
 				mes "C-come again?";
 				next;
@@ -768,7 +768,7 @@ geffen_in,70,67,3	script	Waitress#elise	90,{
 			mes "^990000Stay away from my daughter, or I'll beat your brains out, punk! Elisa's gonna marry a doctor! Or a lawyer!^000000";
 			next;
 			mes "["+strcharinfo(0)+"]";
-			if (Sex) {
+			if (Sex == SEX_MALE) {
 				mes "Y-y-y-yes, sir!";
 				next;
 				mes "^3355FFThat was scary...!";
@@ -1039,7 +1039,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 			break;
 		case 3:
 			mes "Um...";
-			if (Sex)
+			if (Sex == SEX_MALE)
 				mes "The girl that you";
 			else
 				mes "The boy that you";
@@ -1057,7 +1057,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 				mes "You didn't let me finish my sentence. What I meant to say was...";
 				next;
 				mes "[Psychic Advisor]";
-				if (Sex)
+				if (Sex == SEX_MALE)
 					mes "The girl that you";
 				else
 					mes "The boy that you";
@@ -1076,7 +1076,7 @@ geffen_in,39,127,2	script	Psychic Advisor	704,{
 				mes "Sometimes, I get the future and the present mixed up. You know, since I'm always looking into the future...?";
 				next;
 				mes "[Psychic Advisor]";
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "What I meant to say was";
 					mes "^3355FFyou and the perfect woman will soon fall in love^000000. Yes, that's what I meant!";
 				}

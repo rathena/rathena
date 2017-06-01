@@ -697,7 +697,7 @@ int chmapif_parse_reqcharname(int fd){
 	WFIFOHEAD(fd,30);
 	WFIFOW(fd,0) = 0x2b09;
 	WFIFOL(fd,2) = RFIFOL(fd,2);
-	char_loadName((int)RFIFOL(fd,2), (char*)WFIFOP(fd,6));
+	char_loadName((int)RFIFOL(fd,2), WFIFOCP(fd,6));
 	WFIFOSET(fd,30);
 
 	RFIFOSKIP(fd,6);
@@ -736,7 +736,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
 		char esc_name[NAME_LENGTH*2+1];
 		char answer = true;
 		int aid = RFIFOL(fd,2); // account_id of who ask (-1 if server itself made this request)
-		const char* name = (char*)RFIFOP(fd,6); // name of the target character
+		const char* name = RFIFOCP(fd,6); // name of the target character
 		int operation = RFIFOW(fd,30); // type of operation @see enum chrif_req_op
 		int32 timediff = 0;
 		int val1 = 0, sex = SEX_MALE;
@@ -825,7 +825,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
 			WFIFOHEAD(fd,34);
 			WFIFOW(fd, 0) = 0x2b0f;
 			WFIFOL(fd, 2) = aid;
-			safestrncpy((char*)WFIFOP(fd,6), name, NAME_LENGTH);
+			safestrncpy(WFIFOCP(fd,6), name, NAME_LENGTH);
 			WFIFOW(fd,30) = operation;
 			WFIFOW(fd,32) = result;
 			WFIFOSET(fd,34);
@@ -1039,7 +1039,7 @@ int chmapif_parse_reqauth(int fd, int id){
 		}
 		if( runflag == CHARSERVER_ST_RUNNING && autotrade && cd ){
 			uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
-			if (cd->sex == 99)
+			if (cd->sex == SEX_ACCOUNT)
 				cd->sex = sex;
 
 			WFIFOHEAD(fd,mmo_charstatus_len);
@@ -1068,7 +1068,7 @@ int chmapif_parse_reqauth(int fd, int id){
 			)
 		{// auth ok
 			uint16 mmo_charstatus_len = sizeof(struct mmo_charstatus) + 25;
-			if (cd->sex == 99)
+			if (cd->sex == SEX_ACCOUNT)
 				cd->sex = sex;
 
 			WFIFOHEAD(fd,mmo_charstatus_len);
@@ -1115,34 +1115,6 @@ int chmapif_parse_updmapip(int fd, int id){
 }
 
 /**
- *  transmit emu usage for anom stats
- * @param fd: wich fd to parse from
- * @return : 0 not enough data received, 1 success
- */
-int chmapif_parse_fw_configstats(int fd){
-	if( RFIFOREST(fd) < RFIFOW(fd,4) )
-		return 0;/* packet wasn't fully received yet (still fragmented) */
-	else {
-		int sfd;/* stat server fd */
-		RFIFOSKIP(fd, 2);/* we skip first 2 bytes which are the 0x3008, so we end up with a buffer equal to the one we send */
-
-		if( (sfd = make_connection(host2ip("stats.rathena.org"),(uint16)25421,true,10) ) == -1 ) {
-			RFIFOSKIP(fd, RFIFOW(fd,2) );/* skip this packet */
-			return 0;/* connection not possible, we drop the report */
-		}
-
-		session[sfd]->flag.server = 1;/* to ensure we won't drop our own packet */
-		WFIFOHEAD(sfd, RFIFOW(fd,2) );
-		memcpy((char*)WFIFOP(sfd,0), (char*)RFIFOP(fd, 0), RFIFOW(fd,2));
-		WFIFOSET(sfd, RFIFOW(fd,2) );
-		flush_fifo(sfd);
-		do_close(sfd);
-		RFIFOSKIP(fd, RFIFOW(fd,2) );/* skip this packet */
-	}
-	return 1;
-}
-
-/**
  * Received an update of fame point  for char_id cid
  * Update the list associated and transmit the new ranking
  * @param fd: wich fd to parse from
@@ -1162,10 +1134,10 @@ int chmapif_parse_updfamelist(int fd){
 
             switch(type)
             {
-                    case 1:  size = fame_list_size_smith;   list = smith_fame_list;   break;
-                    case 2:  size = fame_list_size_chemist; list = chemist_fame_list; break;
-                    case 3:  size = fame_list_size_taekwon; list = taekwon_fame_list; break;
-                    default: size = 0;                      list = NULL;              break;
+				case RANK_BLACKSMITH:	size = fame_list_size_smith;	list = smith_fame_list;		break;
+				case RANK_ALCHEMIST:	size = fame_list_size_chemist;	list = chemist_fame_list;	break;
+				case RANK_TAEKWON:		size = fame_list_size_taekwon;	list = taekwon_fame_list;	break;
+				default:				size = 0;						list = NULL;				break;
             }
 
             ARR_FIND(0, size, player_pos, list[player_pos].id == cid);// position of the player
@@ -1206,16 +1178,15 @@ int chmapif_parse_updfamelist(int fd){
  * HZ 0x2b2b
  * Transmist vip data to mapserv
  */
-int chmapif_vipack(int mapfd, uint32 aid, uint32 vip_time, uint8 isvip, uint8 isgm, uint32 groupid) {
+int chmapif_vipack(int mapfd, uint32 aid, uint32 vip_time, uint32 groupid, uint8 flag) {
 #ifdef VIP_ENABLE
-	uint8 buf[16];
+	uint8 buf[15];
 	WBUFW(buf,0) = 0x2b2b;
 	WBUFL(buf,2) = aid;
 	WBUFL(buf,6) = vip_time;
-	WBUFB(buf,10) = isvip;
-	WBUFB(buf,11) = isgm;
-	WBUFL(buf,12) = groupid;
-	chmapif_send(mapfd,buf,16);  // inform the mapserv back
+	WBUFL(buf,10) = groupid;
+	WBUFB(buf,14) = flag;
+	chmapif_send(mapfd,buf,15);  // inform the mapserv back
 #endif
 	return 0;
 }
@@ -1226,10 +1197,12 @@ int chmapif_parse_reqcharban(int fd){
 	else {
 		//int aid = RFIFOL(fd,2); aid of player who as requested the ban
 		int timediff = RFIFOL(fd,6);
-		const char* name = (char*)RFIFOP(fd,10); // name of the target character
+		const char* name = RFIFOCP(fd,10); // name of the target character
+		char esc_name[NAME_LENGTH*2+1];
 		RFIFOSKIP(fd,10+NAME_LENGTH);
 
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`unban_time` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, name) )
+		Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`unban_time` FROM `%s` WHERE `name` = '%s'", schema_config.char_db, esc_name) )
 			Sql_ShowDebug(sql_handle);
 		else if( Sql_NumRows(sql_handle) == 0 ){
 			return 1; // 1-player not found
@@ -1291,10 +1264,12 @@ int chmapif_parse_reqcharunban(int fd){
 	if (RFIFOREST(fd) < 6+NAME_LENGTH)
 		return 0;
 	else {
-		const char* name = (char*)RFIFOP(fd,6);
+		const char* name = RFIFOCP(fd,6);
+		char esc_name[NAME_LENGTH*2+1];
 		RFIFOSKIP(fd,6+NAME_LENGTH);
 
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time` = '0' WHERE `name` = '%s' LIMIT 1", schema_config.char_db, name) ) {
+		Sql_EscapeStringLen(sql_handle, esc_name, name, strnlen(name, NAME_LENGTH));
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `unban_time` = '0' WHERE `name` = '%s' LIMIT 1", schema_config.char_db, esc_name) ) {
 			Sql_ShowDebug(sql_handle);
 			return 1;
 		}
@@ -1486,7 +1461,6 @@ int chmapif_parse(int fd){
 			//case 0x2b2c: /*free*/; break;
 			case 0x2b2d: next=chmapif_bonus_script_get(fd); break; //Load data
 			case 0x2b2e: next=chmapif_bonus_script_save(fd); break;//Save data
-			case 0x3008: next=chmapif_parse_fw_configstats(fd); break;
 			default:
 			{
 					// inter server - packet

@@ -18,6 +18,7 @@
 #include "map.h"
 #include "path.h"
 #include "chrif.h"
+#include "clan.h"
 #include "clif.h"
 #include "duel.h"
 #include "intif.h"
@@ -54,23 +55,30 @@ Sql* mmysql_handle;
 Sql* qsmysql_handle; /// For query_sql
 
 int db_use_sqldbs = 0;
-char buyingstores_db[32] = "buyingstores";
-char buyingstore_items_db[32] = "buyingstore_items";
-char item_db_db[32] = "item_db";
-char item_db2_db[32] = "item_db2";
-char item_db_re_db[32] = "item_db_re";
-char item_cash_db_db[32] = "item_cash_db";
-char item_cash_db2_db[32] = "item_cash_db2";
-char mob_db_db[32] = "mob_db";
-char mob_db_re_db[32] = "mob_db_re";
-char mob_db2_db[32] = "mob_db2";
-char mob_skill_db_db[32] = "mob_skill_db";
-char mob_skill_db_re_db[32] = "mob_skill_db_re";
-char mob_skill_db2_db[32] = "mob_skill_db2";
-char vendings_db[32] = "vendings";
-char vending_items_db[32] = "vending_items";
+char buyingstores_table[32] = "buyingstores";
+char buyingstore_items_table[32] = "buyingstore_items";
+char item_cash_table[32] = "item_cash_db";
+char item_cash2_table[32] = "item_cash_db2";
+#ifdef RENEWAL
+char item_table[32] = "item_db_re";
+char item2_table[32] = "item_db2_re";
+char mob_table[32] = "mob_db_re";
+char mob2_table[32] = "mob_db2_re";
+char mob_skill_table[32] = "mob_skill_db_re";
+char mob_skill2_table[32] = "mob_skill_db2_re";
+#else
+char item_table[32] = "item_db";
+char item2_table[32] = "item_db2";
+char mob_table[32] = "mob_db";
+char mob2_table[32] = "mob_db2";
+char mob_skill_table[32] = "mob_skill_db";
+char mob_skill2_table[32] = "mob_skill_db2";
+#endif
+char sales_table[32] = "sales";
+char vendings_table[32] = "vendings";
+char vending_items_table[32] = "vending_items";
 char market_table[32] = "market";
-char db_roulette_table[32] = "db_roulette";
+char roulette_table[32] = "db_roulette";
 
 // log database
 char log_db_ip[32] = "127.0.0.1";
@@ -102,7 +110,7 @@ static int block_free_count = 0, block_free_lock = 0;
 static struct block_list *bl_list[BL_LIST_MAX];
 static int bl_list_count = 0;
 
-#define MAP_MAX_MSG 1500
+#define MAP_MAX_MSG 1550
 
 struct map_data map[MAX_MAP_PER_SERVER];
 int map_num = 0;
@@ -147,6 +155,7 @@ char motd_txt[256] = "conf/motd.txt";
 char help_txt[256] = "conf/help.txt";
 char help2_txt[256] = "conf/help2.txt";
 char charhelp_txt[256] = "conf/charhelp.txt";
+char channel_conf[256] = "conf/channels.conf";
 
 char wisp_server_name[NAME_LENGTH] = "Server"; // can be modified in char-server configuration file
 
@@ -1957,6 +1966,13 @@ void map_deliddb(struct block_list *bl)
 int map_quit(struct map_session_data *sd) {
 	int i;
 
+	if (sd->state.keepshop == false) { // Close vending/buyingstore
+		if (sd->state.vending)
+			vending_closevending(sd);
+		else if (sd->state.buyingstore)
+			buyingstore_close(sd);
+	}
+
 	if(!sd->state.active) { //Removing a player that is not active.
 		struct auth_node *node = chrif_search(sd->status.account_id);
 		if (node && node->char_id == sd->status.char_id &&
@@ -1982,6 +1998,9 @@ int map_quit(struct map_session_data *sd) {
 	if( sd->bg_id )
 		bg_team_leave(sd,1);
 
+	if( sd->status.clan_id )
+		clan_member_left(sd);
+
 	pc_itemcd_do(sd,false);
 
 	npc_script_event(sd, NPCE_LOGOUT);
@@ -2004,6 +2023,8 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_CHASEWALK2, INVALID_TIMER);
 		if(sd->sc.data[SC_ENDURE] && sd->sc.data[SC_ENDURE]->val4)
 			status_change_end(&sd->bl, SC_ENDURE, INVALID_TIMER); //No need to save infinite endure.
+		if(sd->sc.data[SC_PROVOKE] && sd->sc.data[SC_PROVOKE]->timer == INVALID_TIMER)
+			status_change_end(&sd->bl, SC_PROVOKE, INVALID_TIMER); //Infinite provoke ends on logout
 		status_change_end(&sd->bl, SC_WEIGHT50, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_WEIGHT90, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SATURDAYNIGHTFEVER, INVALID_TIMER);
@@ -2013,6 +2034,7 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_READYDOWN, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_READYTURN, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_READYCOUNTER, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_DODGE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_CBC, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_EQC, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
@@ -2067,8 +2089,6 @@ int map_quit(struct map_session_data *sd) {
 	if (sd->ed) // Remove effects here rather than unit_remove_map_pc so we don't clear on Teleport/map change.
 		elemental_clean_effect(sd->ed);
 
-	if( sd->state.storage_flag == 1 ) sd->state.storage_flag = 0; // No need to Double Save Storage on Quit.
-
 	if (sd->state.permanent_speed == 1) sd->state.permanent_speed = 0; // Remove lock so speed is set back to normal at login.
 
 	if( map[sd->bl.m].instance_id )
@@ -2104,7 +2124,7 @@ int map_quit(struct map_session_data *sd) {
 	pc_makesavestatus(sd);
 	pc_clean_skilltree(sd);
 	pc_crimson_marker_clear(sd);
-	chrif_save(sd,1);
+	chrif_save(sd, CSAVE_QUIT|CSAVE_INVENTORY|CSAVE_CART);
 	unit_free_pc(sd);
 	return 0;
 }
@@ -2181,7 +2201,7 @@ struct map_session_data* map_charid2sd(int charid)
  * (without sensitive case if necessary)
  * return map_session_data pointer or NULL
  *------------------------------------------*/
-struct map_session_data * map_nick2sd(const char *nick)
+struct map_session_data * map_nick2sd(const char *nick, bool allow_partial)
 {
 	struct map_session_data* sd;
 	struct map_session_data* found_sd;
@@ -2198,7 +2218,7 @@ struct map_session_data * map_nick2sd(const char *nick)
 	found_sd = NULL;
 	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 	{
-		if( battle_config.partial_name_scan )
+		if( allow_partial && battle_config.partial_name_scan )
 		{// partial name search
 			if( strnicmp(sd->status.name, nick, nicklen) == 0 )
 			{
@@ -2216,6 +2236,7 @@ struct map_session_data * map_nick2sd(const char *nick)
 		else if( strcasecmp(sd->status.name, nick) == 0 )
 		{// exact search only
 			found_sd = sd;
+			qty = 1;
 			break;
 		}
 	}
@@ -3846,7 +3867,7 @@ int map_config_read(char *cfgName)
 		else if (strcmpi(w1, "delmap") == 0)
 			map_delmap(w2);
 		else if (strcmpi(w1, "npc") == 0)
-			npc_addsrcfile(w2);
+			npc_addsrcfile(w2, false);
 		else if (strcmpi(w1, "delnpc") == 0)
 			npc_delsrcfile(w2);
 		else if (strcmpi(w1, "autosave_time") == 0) {
@@ -3869,6 +3890,8 @@ int map_config_read(char *cfgName)
 			strcpy(help2_txt, w2);
 		else if (strcmpi(w1, "charhelp_txt") == 0)
 			strcpy(charhelp_txt, w2);
+		else if (strcmpi(w1, "channel_conf") == 0)
+			safestrncpy(channel_conf, w2, sizeof(channel_conf));
 		else if(strcmpi(w1,"db_path") == 0)
 			safestrncpy(db_path,w2,ARRAYLENGTH(db_path));
 		else if (strcmpi(w1, "console") == 0) {
@@ -3923,7 +3946,7 @@ void map_reloadnpc_sub(char *cfgName)
 		*ptr = '\0';
 
 		if (strcmpi(w1, "npc") == 0)
-			npc_addsrcfile(w2);
+			npc_addsrcfile(w2, false);
 		else if (strcmpi(w1, "delnpc") == 0)
 			npc_delsrcfile(w2);
 		else if (strcmpi(w1, "import") == 0)
@@ -3938,7 +3961,7 @@ void map_reloadnpc_sub(char *cfgName)
 void map_reloadnpc(bool clear)
 {
 	if (clear)
-		npc_addsrcfile("clear"); // this will clear the current script list
+		npc_addsrcfile("clear", false); // this will clear the current script list
 
 #ifdef RENEWAL
 	map_reloadnpc_sub("npc/re/scripts_main.conf");
@@ -3964,40 +3987,48 @@ int inter_config_read(char *cfgName)
 		if( sscanf(line,"%1023[^:]: %1023[^\r\n]",w1,w2) < 2 )
 			continue;
 
+#define RENEWALPREFIX "renewal-"
+		if (!strncmpi(w1, RENEWALPREFIX, strlen(RENEWALPREFIX))) {
+#ifdef RENEWAL
+			// Move the original name to the beginning of the string
+			memmove(w1, w1 + strlen(RENEWALPREFIX), strlen(w1) - strlen(RENEWALPREFIX) + 1);
+#else
+			// In Pre-Renewal the Renewal specific configurations can safely be ignored
+			continue;
+#endif
+		}
+#undef RENEWALPREFIX
+
 		if( strcmpi( w1, "buyingstore_db" ) == 0 )
-			strcpy( buyingstores_db, w2 );
-		else if( strcmpi( w1, "buyingstore_items_db" ) == 0 )
-			strcpy( buyingstore_items_db, w2 );
-		else if(strcmpi(w1,"item_db_db")==0)
-			strcpy(item_db_db,w2);
-		else if(strcmpi(w1,"item_db2_db")==0)
-			strcpy(item_db2_db,w2);
-		else if(strcmpi(w1,"item_db_re_db")==0)
-			strcpy(item_db_re_db,w2);
-		else if(strcmpi(w1,"mob_db_db")==0)
-			strcpy(mob_db_db,w2);
-		else if(strcmpi(w1,"mob_db_re_db")==0)
-			strcpy(mob_db_re_db,w2);
-		else if(strcmpi(w1,"mob_db2_db")==0)
-			strcpy(mob_db2_db,w2);
-		else if(strcmpi(w1,"mob_skill_db_db")==0)
-			strcpy(mob_skill_db_db,w2);
-		else if(strcmpi(w1,"mob_skill_db_re_db")==0)
-			strcpy(mob_skill_db_re_db,w2);
-		else if(strcmpi(w1,"mob_skill_db2_db")==0)
-			strcpy(mob_skill_db2_db,w2);
-		else if( strcmpi( w1, "item_cash_db_db" ) == 0 )
-			strcpy( item_cash_db_db, w2 );
-		else if( strcmpi( w1, "item_cash_db2_db" ) == 0 )
-			strcpy( item_cash_db2_db, w2 );
+			strcpy( buyingstores_table, w2 );
+		else if( strcmpi( w1, "buyingstore_items_table" ) == 0 )
+			strcpy( buyingstore_items_table, w2 );
+		else if(strcmpi(w1,"item_table")==0)
+			strcpy(item_table,w2);
+		else if(strcmpi(w1,"item2_table")==0)
+			strcpy(item2_table,w2);
+		else if(strcmpi(w1,"mob_table")==0)
+			strcpy(mob_table,w2);
+		else if(strcmpi(w1,"mob2_table")==0)
+			strcpy(mob2_table,w2);
+		else if(strcmpi(w1,"mob_skill_table")==0)
+			strcpy(mob_skill_table,w2);
+		else if(strcmpi(w1,"mob_skill2_table")==0)
+			strcpy(mob_skill2_table,w2);
+		else if( strcmpi( w1, "item_cash_table" ) == 0 )
+			strcpy( item_cash_table, w2 );
+		else if( strcmpi( w1, "item_cash2_table" ) == 0 )
+			strcpy( item_cash2_table, w2 );
 		else if( strcmpi( w1, "vending_db" ) == 0 )
-			strcpy( vendings_db, w2 );
-		else if( strcmpi( w1, "vending_items_db" ) == 0 )
-			strcpy(vending_items_db, w2);
-		else if( strcmpi(w1, "db_roulette_table") == 0)
-			strcpy(db_roulette_table, w2);
+			strcpy( vendings_table, w2 );
+		else if( strcmpi( w1, "vending_items_table" ) == 0 )
+			strcpy(vending_items_table, w2);
+		else if( strcmpi(w1, "roulette_table") == 0)
+			strcpy(roulette_table, w2);
 		else if (strcmpi(w1, "market_table") == 0)
 			strcpy(market_table, w2);
+		else if (strcmpi(w1, "sales_table") == 0)
+			strcpy(sales_table, w2);
 		else
 		//Map Server SQL DB
 		if(strcmpi(w1,"map_server_ip")==0)
@@ -4375,7 +4406,7 @@ void do_final(void)
 		ShowStatus("Cleaning up maps [%d/%d]: %s..."CL_CLL"\r", i+1, map_num, map[i].name);
 		if (map[i].m >= 0) {
 			map_foreachinmap(cleanup_sub, i, BL_ALL);
-			channel_delete(map[i].channel);
+			channel_delete(map[i].channel,false);
 		}
 	}
 	ShowStatus("Cleaned up %d maps."CL_CLL"\n", map_num);
@@ -4387,6 +4418,7 @@ void do_final(void)
 	do_final_atcommand();
 	do_final_battle();
 	do_final_chrif();
+	do_final_clan();
 	do_final_clif();
 	do_final_npc();
 	do_final_quest();
@@ -4457,7 +4489,7 @@ void do_final(void)
 
 static int map_abort_sub(struct map_session_data* sd, va_list ap)
 {
-	chrif_save(sd,1);
+	chrif_save(sd, CSAVE_QUIT|CSAVE_INVENTORY|CSAVE_CART);
 	return 1;
 }
 
@@ -4656,6 +4688,9 @@ int do_init(int argc, char *argv[])
 	rnd_init();
 	map_config_read(MAP_CONF_NAME);
 
+	if (save_settings == CHARSAVE_NONE)
+		ShowWarning("Value of 'save_settings' is not set, player's data only will be saved every 'autosave_time' (%d seconds).\n", autosave_interval/1000);
+
 	// loads npcs
 	map_reloadnpc(false);
 
@@ -4722,11 +4757,12 @@ int do_init(int argc, char *argv[])
 	do_init_atcommand();
 	do_init_battle();
 	do_init_instance();
-	do_init_channel();
 	do_init_chrif();
+	do_init_clan();
 	do_init_clif();
 	do_init_script();
 	do_init_itemdb();
+	do_init_channel();
 	do_init_cashshop();
 	do_init_skill();
 	do_init_mob();

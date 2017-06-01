@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `auction` (
 -- Table structure for `db_roulette`
 --
 
-CREATE TABLE `db_roulette` (
+CREATE TABLE IF NOT EXISTS `db_roulette` (
   `index` int(11) NOT NULL default '0',
   `level` smallint(5) unsigned NOT NULL,
   `item_id` smallint(5) unsigned NOT NULL,
@@ -229,6 +229,8 @@ CREATE TABLE IF NOT EXISTS `char` (
   `uniqueitem_counter` int(11) unsigned NOT NULL default '0',
   `sex` ENUM('M','F','U') NOT NULL default 'U',
   `hotkey_rowshift` tinyint(3) unsigned NOT NULL default '0',
+  `clan_id` int(11) unsigned NOT NULL default '0',
+  `last_login` datetime DEFAULT NULL,
   PRIMARY KEY  (`char_id`),
   UNIQUE KEY `name_key` (`name`),
   KEY `account_id` (`account_id`),
@@ -268,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `char_reg_str` (
 --
 
 CREATE TABLE IF NOT EXISTS `charlog` (
-  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `time` datetime NOT NULL,
   `char_msg` varchar(255) NOT NULL default 'char select',
   `account_id` int(11) NOT NULL default '0',
   `char_num` tinyint(4) NOT NULL default '0',
@@ -282,6 +284,50 @@ CREATE TABLE IF NOT EXISTS `charlog` (
   `hair` tinyint(4) NOT NULL default '0',
   `hair_color` int(11) NOT NULL default '0'
 ) ENGINE=MyISAM; 
+
+--
+-- Table structure for table `clan`
+--
+CREATE TABLE IF NOT EXISTS `clan` (
+  `clan_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(24) NOT NULL DEFAULT '',
+  `master` varchar(24) NOT NULL DEFAULT '',
+  `mapname` varchar(24) NOT NULL DEFAULT '',
+  `max_member` smallint(6) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`clan_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5;
+
+-- ----------------------------
+-- Records of clan
+-- ----------------------------
+INSERT INTO `clan` VALUES ('1', 'Swordman Clan', 'Raffam Oranpere', 'prontera', '500');
+INSERT INTO `clan` VALUES ('2', 'Arcwand Clan', 'Devon Aire', 'geffen', '500');
+INSERT INTO `clan` VALUES ('3', 'Golden Mace Clan', 'Berman Aire', 'prontera', '500');
+INSERT INTO `clan` VALUES ('4', 'Crossbow Clan', 'Shaam Rumi', 'payon', '500');
+
+-- ----------------------------
+-- Table structure for `clan_alliance`
+-- ----------------------------
+CREATE TABLE IF NOT EXISTS `clan_alliance` (
+  `clan_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `opposition` int(11) unsigned NOT NULL DEFAULT '0',
+  `alliance_id` int(11) unsigned NOT NULL DEFAULT '0',
+  `name` varchar(24) NOT NULL DEFAULT '',
+  PRIMARY KEY (`clan_id`,`alliance_id`),
+  KEY `alliance_id` (`alliance_id`)
+) ENGINE=MyISAM;
+
+-- ----------------------------
+-- Records of clan_alliance
+-- ----------------------------
+INSERT INTO `clan_alliance` VALUES ('1', '0', '3', 'Golden Mace Clan');
+INSERT INTO `clan_alliance` VALUES ('2', '0', '3', 'Golden Mace Clan');
+INSERT INTO `clan_alliance` VALUES ('2', '1', '4', 'Crossbow Clan');
+INSERT INTO `clan_alliance` VALUES ('3', '0', '1', 'Swordman Clan');
+INSERT INTO `clan_alliance` VALUES ('3', '0', '2', 'Arcwand Clan');
+INSERT INTO `clan_alliance` VALUES ('3', '0', '4', 'Crossbow Clan');
+INSERT INTO `clan_alliance` VALUES ('4', '0', '3', 'Golden Mace Clan');
+INSERT INTO `clan_alliance` VALUES ('4', '1', '2', 'Arcwand Clan');
 
 --
 -- Table structure for table `elemental`
@@ -519,7 +565,7 @@ CREATE TABLE IF NOT EXISTS `homunculus` (
   `prev_class` mediumint(9) NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
   `level` smallint(4) NOT NULL default '0',
-  `exp` int(12) NOT NULL default '0',
+  `exp` bigint(20) unsigned NOT NULL default '0',
   `intimacy` int(12) NOT NULL default '0',
   `hunger` smallint(4) NOT NULL default '0',
   `str` smallint(4) unsigned NOT NULL default '0',
@@ -557,7 +603,7 @@ CREATE TABLE IF NOT EXISTS `hotkey` (
 --
 
 CREATE TABLE IF NOT EXISTS `interlog` (
-  `time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `time` datetime NOT NULL,
   `log` varchar(255) NOT NULL default ''
 ) ENGINE=MyISAM; 
 
@@ -617,8 +663,8 @@ CREATE TABLE IF NOT EXISTS `inventory` (
 
 CREATE TABLE IF NOT EXISTS `ipbanlist` (
   `list` varchar(255) NOT NULL default '',
-  `btime` datetime NOT NULL default '0000-00-00 00:00:00',
-  `rtime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `btime` datetime NOT NULL,
+  `rtime` datetime NOT NULL,
   `reason` varchar(255) NOT NULL default '',
   KEY (`list`)
 ) ENGINE=MyISAM;
@@ -638,9 +684,9 @@ CREATE TABLE IF NOT EXISTS `login` (
   `unban_time` int(11) unsigned NOT NULL default '0',
   `expiration_time` int(11) unsigned NOT NULL default '0',
   `logincount` mediumint(9) unsigned NOT NULL default '0',
-  `lastlogin` datetime NOT NULL default '0000-00-00 00:00:00',
+  `lastlogin` datetime,
   `last_ip` varchar(100) NOT NULL default '',
-  `birthdate` DATE NOT NULL DEFAULT '0000-00-00',
+  `birthdate` DATE,
   `character_slots` tinyint(3) unsigned NOT NULL default '0',
   `pincode` varchar(4) NOT NULL DEFAULT '',
   `pincode_change` int(11) unsigned NOT NULL DEFAULT '0',
@@ -715,7 +761,7 @@ CREATE TABLE IF NOT EXISTS `mapreg` (
 --
 
 CREATE TABLE IF NOT EXISTS `market` (
-  `name` varchar(32) NOT NULL DEFAULT '',
+  `name` varchar(50) NOT NULL DEFAULT '',
   `nameid` SMALLINT(5) UNSIGNED NOT NULL,
   `price` INT(11) UNSIGNED NOT NULL,
   `amount` SMALLINT(5) UNSIGNED NOT NULL,
@@ -766,6 +812,18 @@ CREATE TABLE IF NOT EXISTS `mercenary_owner` (
   `sword_calls` int(11) NOT NULL default '0',
   `sword_faith` int(11) NOT NULL default '0',
   PRIMARY KEY  (`char_id`)
+) ENGINE=MyISAM;
+
+-- ----------------------------
+-- Table structure for `sales`
+-- ----------------------------
+
+CREATE TABLE IF NOT EXISTS `sales` (
+  `nameid` smallint(5) unsigned NOT NULL,
+  `start` datetime NOT NULL,
+  `end` datetime NOT NULL,
+  `amount` int(11) NOT NULL,
+  PRIMARY KEY (`nameid`)
 ) ENGINE=MyISAM;
 
 --

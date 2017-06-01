@@ -20,7 +20,7 @@
 //      0x00800(UF_DUALMODE)			Spell has effects both at an interval and when you step in/out
 //      0x01000(UF_NOKNOCKBACK)			Cannot be knocked back (only unit that can be damaged)
 //      0x02000(UF_RANGEDSINGLEUNIT)	Layout hack, use layout range propriety but only display center.
-//      0x04000(UF_REM_CRAZYWEED)		Removed if be overlapped by GN_CRAZYWEED
+//      0x04000(UF_CRAZYWEED_IMMUNE)	Immune to GN_CRAZYWEED removal
 //      0x08000(UF_REM_FIRERAIN)		Removed if be overlapped by RL_FIRE_RAIN
 //      0x10000(UF_KNOCKBACK_GROUP) 	Knock back a whole skill group (by default, skill unit is knocked back each unit)
 //      0x20000(UF_HIDDEN_TRAP) 		Hidden trap, see 'traps_setting' skill config to enable this flag
@@ -32,14 +32,14 @@
 //    u1   u2 lay  r intr target  flag
 //
 
- 12,0x7e,    ,  0, 0,  -1,all,   0x4003	//MG_SAFETYWALL
+ 12,0x7e,    ,  0, 0,  -1,all,   0x003	//MG_SAFETYWALL
  18,0x7f,    , -1, 0,  20,enemy, 0x8010	//MG_FIREWALL
  21,0x86,    ,  0, 2:2:2:2:2:2:2:2:2:2:3,1000,enemy, 0x010	//MG_THUNDERSTORM
- 25,0x85,    ,  1, 0,  -1,all,   0x6003	//AL_PNEUMA
+ 25,0x85,    ,  1, 0,  -1,all,   0x2003	//AL_PNEUMA
  27,0x81,0x80,  0, 0,  -1,all,   0x00E	//AL_WARP
  70,0x83,    , -1, 1,1000,all,   0x018	//PR_SANCTUARY
  79,0x84,    , -1, 1,3000,enemy, 0x8018	//PR_MAGNUS
- 80,0x87,0x88,  0, 1,2000,enemy, 0x4006	//WZ_FIREPILLAR
+ 80,0x87,0x88,  0, 1,2000,enemy, 0x006	//WZ_FIREPILLAR
  83,0x86,    ,  0, 3,1000,enemy, 0x010	//WZ_METEOR
  85,0x86,    ,  5:5:5:5:5:5:5:5:5:5:7, 1,1250,enemy,0x018	//WZ_VERMILION
  86,0x86,    ,  0:1:1:2:2:2:2:2:2:2, 0,-1,noone, 0x010	//WZ_WATERBALL
@@ -61,10 +61,10 @@
 220,0xb0,    ,  0, 0,  -1,all,   0x8002	//RG_GRAFFITI
 229,0xb1,    ,  0, 1,1000,enemy, 0x006	//AM_DEMONSTRATION
 254,0x86,    , -1, 0, 300,enemy, 0x010	//CR_GRANDCROSS
-285,0x9a,    ,  3, 0,  -1,all,   0xC010	//SA_VOLCANO
-286,0x9b,    ,  3, 0,  -1,all,   0xC010	//SA_DELUGE
-287,0x9c,    ,  3, 0,  -1,all,   0xC010	//SA_VIOLENTGALE
-288,0x9d,    ,  3:3:4:4:5,0, -1,all,   0xC010	//SA_LANDPROTECTOR
+285,0x9a,    ,  3, 0,  -1,all,   0x8010	//SA_VOLCANO
+286,0x9b,    ,  3, 0,  -1,all,   0x8010	//SA_DELUGE
+287,0x9c,    ,  3, 0,  -1,all,   0x8010	//SA_VIOLENTGALE
+288,0x9d,    ,  3:3:4:4:5,0, -1,all,   0x8010	//SA_LANDPROTECTOR
 306,0x9e,    ,  4, 0,6000,enemy,   0x200	//BD_LULLABY
 307,0x9f,    ,  4, 0,  -1,enemy, 0x220	//BD_RICHMANKIM
 308,0xa0,    ,  4, 0,  -1,enemy, 0x200	//BD_ETERNALCHAOS
@@ -107,7 +107,7 @@
 541,0x86,    ,  2:2:3:3:4, 0,1000,enemy, 0x010	//NJ_RAIGEKISAI
 670,0xc7,    ,  1, 5:5:5:5:5:5:5:5:5:13,1000,all,0x008	//NPC_EVILLAND
 
-//706,0xfd,    ,  0, 0,1000,all, 0x000	//NPC_VENOMFOG
+706,0xfd,     ,  2, 0,1000,enemy, 0x018	//NPC_VENOMFOG
 
 2044,0xca,    ,  0, 2,1000,all,   0x018	//AB_EPICLESIS
 
@@ -127,13 +127,13 @@
 2254,0xd7,    ,  0, 1,1000,enemy, 0x8002	//RA_ICEBOUNDTRAP
 
 2273,0xe2,    ,  2, 0,  -1,all,   0x000	//NC_NEUTRALBARRIER
-2274,0xe3,    ,  2, 0,  -1,ally,  0x000	//NC_STEALTHFIELD
+2274,0xe3,    ,  2, 0,  -1,all,   0x000	//NC_STEALTHFIELD
 
 2299,0xcc,    ,  0, 1,1000,all,   0x8006 //SC_MANHOLE
-2300,0xcd,    ,  0, 0,1000,all,   0xC006 //SC_DIMENSIONDOOR
-2301,0xce,    ,  2, 0,1000,all,   0xE00E //SC_CHAOSPANIC
-2302,0xcf,    ,  2, 0,  -1,all,   0xE002 //SC_MAELSTROM
-2303,0xd0,    ,  3, 0,  -1,all,   0xE058 //SC_BLOODYLUST
+2300,0xcd,    ,  0, 0,1000,all,   0x8006 //SC_DIMENSIONDOOR
+2301,0xce,    ,  2, 0,1000,all,   0xA00E //SC_CHAOSPANIC
+2302,0xcf,    ,  2, 0,  -1,all,   0xA002 //SC_MAELSTROM
+2303,0xd0,    ,  3, 0,  -1,all,   0xA058 //SC_BLOODYLUST
 2304,0xd1,    ,  0, 2, 500,enemy, 0x018  //SC_FEINTBOMB
 
 2319,0xec,    ,  0, 3,5000,all,   0x000	//LG_BANDING
@@ -155,13 +155,13 @@
 2467,0xf3,    ,  0, 1,1000,all,   0x010	//SO_WIND_INSIGNIA
 2468,0xf4,    ,  0, 1,1000,all,   0x010	//SO_EARTH_INSIGNIA
 
-2479,0xe5,    ,  0, 1,1000,enemy, 0xC006	//GN_THORNS_TRAP
-2482,0xe6,0x7f, -1, 1, 300,enemy, 0xC000	//GN_WALLOFTHORN
+2479,0xe5,    ,  0, 1,1000,enemy, 0x8006	//GN_THORNS_TRAP
+2482,0xe6,0x7f, -1, 1, 300,enemy, 0x8000	//GN_WALLOFTHORN
 2484,0x86,    ,  0, 1, 100,enemy, 0x080	//GN_CRAZYWEED_ATK
 2485,0xe7,    ,  0, 2,2000,enemy, 0x8098	//GN_DEMONIC_FIRE
 2487,0xe8,    ,  2, 0,  -1,all,   0x2000	//GN_FIRE_EXPANSION_SMOKE_POWDER
 2488,0xe9,    ,  2, 0,  -1,all,   0x2000	//GN_FIRE_EXPANSION_TEAR_GAS
-2490,0xea,    ,  0, 1,1000,enemy, 0xC002	//GN_HELLS_PLANT
+2490,0xea,    ,  0, 1,1000,enemy, 0x8002	//GN_HELLS_PLANT
 
 2555,0x104,   ,  0, 1:2:2:3:3,500,enemy,0x6	//RL_B_TRAP
 2567,0x105,   , -1, 0,1000,enemy, 0x98	//RL_FIRE_RAIN

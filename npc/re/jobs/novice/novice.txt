@@ -151,7 +151,7 @@ new_5-1,53,114,3	duplicate(NvSprakkiA)	Sprakki#nv5a	90
 			mes "^4d4dff- You received a quest 'Novice Training Ground -1' from Sprakki.";
 			mes "Please check the Quest Info Window. -^000000";
 			close2;
-			savepoint strnpcinfo(4),100,100;
+			savepoint strnpcinfo(4),100,100,1,1;
 			warp strnpcinfo(4),100,100;
 			end;
 		case 2:
@@ -175,27 +175,27 @@ new_5-1,53,114,3	duplicate(NvSprakkiA)	Sprakki#nv5a	90
 			close2;
 			switch(.@select) {
 			case 1:
-				savepoint "prontera",273,354;
+				savepoint "prontera",273,354,1,1;
 				warp "prontera",273,354;
 				break;
 			case 2:
-				savepoint "morocc",160,94;
+				savepoint "morocc",160,94,1,1;
 				warp "morocc",160,94;
 				break;
 			case 3:
-				savepoint "geffen",120,100;
+				savepoint "geffen",120,100,1,1;
 				warp "geffen",120,100;
 				break;
 			case 4:
-				savepoint "payon",70,100;
+				savepoint "payon",70,100,1,1;
 				warp "payon",70,100;
 				break;
 			case 5:
-				savepoint "alberta",116,57;
+				savepoint "alberta",116,57,1,1;
 				warp "alberta",116,57;
 				break;
 			case 6: // Old coordinates: (94,103)
-				savepoint "izlude",128,98;
+				savepoint "izlude",128,98,1,1;
 				warp "izlude",128,98;
 				break;
 			}
@@ -206,7 +206,7 @@ new_5-1,53,114,3	duplicate(NvSprakkiA)	Sprakki#nv5a	90
 		mes "These are the Novice Training Grounds.";
 		mes "I will guide you to the Novice Training Center.";
 		close2;
-		savepoint strnpcinfo(4),100,100;
+		savepoint strnpcinfo(4),100,100,1,1;
 		warp strnpcinfo(4),100,100;
 		end;
 	}
@@ -736,7 +736,7 @@ new_5-2,115,120,3	duplicate(NvJinha)	Jinha#nv5	59
 		mes "I will send you to the Real Combat Training Field.";
 		close2;
 		set .@map$, "new_"+charat(strnpcinfo(4),4)+"-3";
-		savepoint .@map$,96,21;
+		savepoint .@map$,96,21,1,1;
 		warp .@map$,96,21;
 		end;
 	} else {
@@ -754,7 +754,7 @@ new_5-2,115,120,3	duplicate(NvJinha)	Jinha#nv5	59
 			mes "I will send you to the Real Combat Training Field.";
 			close2;
 			set .@map$, "new_"+charat(strnpcinfo(4),4)+"-3";
-			savepoint .@map$,96,21;
+			savepoint .@map$,96,21,1,1;
 			warp .@map$,96,21;
 			end;
 		}
@@ -846,7 +846,7 @@ new_5-2,33,172,4	duplicate(NvChocolat)	Chocolat#nv5	96
 				mes "May Freya bless you upon your journey.";
 				callfunc "F_NvErase";
 				close2;
-				savepoint "prontera",117,72;
+				savepoint "prontera",117,72,1,1;
 				warp "prontera",150,50;
 				end;
 			case 2:
@@ -856,7 +856,7 @@ new_5-2,33,172,4	duplicate(NvChocolat)	Chocolat#nv5	96
 				mes "Do not lose the dream in your heart right now.";
 				callfunc "F_NvErase";
 				close2;
-				savepoint "morocc",150,99;
+				savepoint "morocc",150,99,1,1;
 				warp "morocc",155,110;
 				end;
 			case 3:
@@ -866,7 +866,7 @@ new_5-2,33,172,4	duplicate(NvChocolat)	Chocolat#nv5	96
 				mes "Let Freya bless you.";
 				callfunc "F_NvErase";
 				close2;
-				savepoint "payon",70,100;
+				savepoint "payon",70,100,1,1;
 				warp "payon",166,67;
 				end;
 			case 4:
@@ -876,7 +876,7 @@ new_5-2,33,172,4	duplicate(NvChocolat)	Chocolat#nv5	96
 				mes "If you want to experience other civilizations, you have to visit Alberta first.";
 				callfunc "F_NvErase";
 				close2;
-				savepoint "alberta",30,232;
+				savepoint "alberta",30,232,1,1;
 				warp "alberta",114,58;
 				end;
 			case 5:
@@ -887,7 +887,7 @@ new_5-2,33,172,4	duplicate(NvChocolat)	Chocolat#nv5	96
 				mes "May Goddess Freya bless you!.";
 				callfunc "F_NvErase";
 				close2;
-				savepoint "geffen",119,37;
+				savepoint "geffen",119,37,1,1;
 				warp "geffen",122,65;
 				end;
 			}
@@ -1175,7 +1175,7 @@ new_5-2,36,176,4	duplicate(NvGuide)	Guide#nv5	105
 		set job_novice_q,13;
 		setquest 7122;
 		getitem 569,100; //Novice_Potion
-		savepoint strnpcinfo(4),96,21;
+		savepoint strnpcinfo(4),96,21,1,1;
 		next;
 		mes "^4d4dff- You've received a quest from Instructor Brade.";
 		mes "Please check the quest information window. -^000000";
@@ -1260,7 +1260,7 @@ new_5-2,36,176,4	duplicate(NvGuide)	Guide#nv5	105
 				mes "Take care and god bless you on your journey.";
 				callfunc "F_NvErase";
 				close2;
-				savepoint "prontera",117,72;
+				savepoint "prontera",117,72,1,1;
 				warp "prontera",150,50;
 				end;
 			case 2:
@@ -1270,7 +1270,7 @@ new_5-2,36,176,4	duplicate(NvGuide)	Guide#nv5	105
 				mes "Take care.";
 				callfunc "F_NvErase";
 				close2;
-				savepoint "morocc",150,99;
+				savepoint "morocc",150,99,1,1;
 				warp "morocc",155,110;
 				end;
 			case 3:
@@ -1279,7 +1279,7 @@ new_5-2,36,176,4	duplicate(NvGuide)	Guide#nv5	105
 				mes "God bless you.";
 				callfunc "F_NvErase";
 				close2;
-				savepoint "payon",70,100;
+				savepoint "payon",70,100,1,1;
 				warp "payon",166,67;
 				end;
 			case 4:
@@ -1290,7 +1290,7 @@ new_5-2,36,176,4	duplicate(NvGuide)	Guide#nv5	105
 				mes "Well then, god bless you on your soul.";
 				callfunc "F_NvErase";
 				close2;
-				savepoint "alberta",30,232;
+				savepoint "alberta",30,232,1,1;
 				warp "alberta",114,58;
 				end;
 			case 5:
@@ -1301,7 +1301,7 @@ new_5-2,36,176,4	duplicate(NvGuide)	Guide#nv5	105
 				mes "May Goddess Freya bless you.";
 				callfunc "F_NvErase";
 				close2;
-				savepoint "geffen",119,37;
+				savepoint "geffen",119,37,1,1;
 				warp "geffen",122,65;
 				end;
 			case 6:
@@ -1411,7 +1411,7 @@ new_5-3,96,30,4	duplicate(NvBradeB)	Brade#nv5b	733
 			mes "Then I'll end your training process and send you to the Swordman Guild.";
 			callfunc "F_NvErase",1;
 			close2;
-			savepoint "izlude",128,98; // Old coordinates: (95,104)
+			savepoint "izlude",128,98,1,1; // Old coordinates: (95,104)
 			warp "izlude_in",74,167;
 			end;
 		}
@@ -1552,7 +1552,7 @@ new_5-3,97,41,3	duplicate(NvSwordman)	Swordman Guide#nv5	728
 			mes "Then I will completely end the Training Process and send you to Prontera's Sanctuary.";
 			callfunc "F_NvErase",1;
 			close2;
-			savepoint "prontera",117,72;
+			savepoint "prontera",117,72,1,1;
 			warp "prt_church",172,19;
 			end;
 		}
@@ -1645,7 +1645,7 @@ new_5-3,101,41,3	duplicate(NvAcolyte)	Acolyte Guide#nv5	95
 			mes "Welcome. Then your Novice training is totally complete and you will be sent to the Thief Guild immediately.";
 			callfunc "F_NvErase",1;
 			close2;
-			savepoint "morocc",150,99;
+			savepoint "morocc",150,99,1,1;
 			warp "moc_prydb1",99,185;
 			end;
 		}
@@ -1783,7 +1783,7 @@ new_5-3,105,41,3	duplicate(NvThief)	Thief Guide#nv5	118
 			mes "Then I will end the Training Process and send you to the Merchant Guild's union immediately.";
 			callfunc "F_NvErase",1;
 			close2;
-			savepoint "alberta",30,232;
+			savepoint "alberta",30,232,1,1;
 			warp "alberta_in",62,44;
 			end;
 		}
@@ -1942,7 +1942,7 @@ new_5-3,109,41,3	duplicate(NvMerchant)	Merchant Guide#nv5	97
 			mes "Then I will completely end the Training Process and send you to the Archer Guild.";
 			callfunc "F_NvErase",1;
 			close2;
-			savepoint "payon",256,242;
+			savepoint "payon",256,242,1,1;
 			warp "payon_in02",64,65;
 			end;
 		}
@@ -2045,7 +2045,7 @@ new_5-3,113,41,3	duplicate(NvArcher)	Archer Guide#nv5	727
 			mes "Then I will end the Training Process and send you to the Mage Guild union in Geffen right away.";
 			callfunc "F_NvErase",1;
 			close2;
-			savepoint "geffen",119,37;
+			savepoint "geffen",119,37,1,1;
 			warp "geffen_in",163,98;
 			end;
 		}
@@ -2268,7 +2268,7 @@ new_5-3,121,41,3	duplicate(NvBruce)	Bruce#nv5	57
 S_Warp:
 	close2;
 	callfunc "F_NvErase",1;
-	savepoint getarg(0),getarg(1),getarg(2);
+	savepoint getarg(0),getarg(1),getarg(2),1,1;
 	warp getarg(0),getarg(3),getarg(4);
 	end;
 	
@@ -2349,29 +2349,29 @@ new_5-3,103,50,4	duplicate(NvBrutus)	Level 5 Trainer#nv5	84
 
 // Monster Spawns
 //============================================================
-new_1-3,0,0,0,0	monster	Poring	1002,20,0,0,0
-new_1-3,0,0,0,0	monster	Drops	1113,10,0,0,0
-new_1-3,0,0,0,0	monster	Lunatic	1063,20,0,0,0
+new_1-3,0,0	monster	Poring	1002,20
+new_1-3,0,0	monster	Drops	1113,10
+new_1-3,0,0	monster	Lunatic	1063,20
 
-new_2-3,0,0,0,0	monster	Chonchon	1011,10,0,0,0
-new_2-3,0,0,0,0	monster	Lunatic	1063,15,0,0,0
-new_2-3,0,0,0,0	monster	Willow	1010,10,0,0,0
-new_2-3,0,0,0,0	monster	Poring	1002,15,0,0,0
+new_2-3,0,0	monster	Chonchon	1011,10
+new_2-3,0,0	monster	Lunatic	1063,15
+new_2-3,0,0	monster	Willow	1010,10
+new_2-3,0,0	monster	Poring	1002,15
 
-new_3-3,0,0,0,0	monster	Chonchon	1011,10,0,0,0
-new_3-3,0,0,0,0	monster	Lunatic	1063,15,0,0,0
-new_3-3,0,0,0,0	monster	Willow	1010,10,0,0,0
-new_3-3,0,0,0,0	monster	Poring	1002,5,0,0,0
+new_3-3,0,0	monster	Chonchon	1011,10
+new_3-3,0,0	monster	Lunatic	1063,15
+new_3-3,0,0	monster	Willow	1010,10
+new_3-3,0,0	monster	Poring	1002,5
 
-new_4-3,0,0,0,0	monster	Hornet	1004,5,0,0,0
-new_4-3,0,0,0,0	monster	Willow	1010,15,0,0,0
-new_4-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_4-3,0,0,0,0	monster	Picky	1049,15,0,0,0
+new_4-3,0,0	monster	Hornet	1004,5
+new_4-3,0,0	monster	Willow	1010,15
+new_4-3,0,0	monster	Fabre	1184,5
+new_4-3,0,0	monster	Picky	1049,15
 
-new_5-3,0,0,0,0	monster	Hornet	1004,5,0,0,0
-new_5-3,0,0,0,0	monster	Willow	1010,15,0,0,0
-new_5-3,0,0,0,0	monster	Fabre	1184,5,0,0,0
-new_5-3,0,0,0,0	monster	Picky	1049,15,0,0,0
+new_5-3,0,0	monster	Hornet	1004,5
+new_5-3,0,0	monster	Willow	1010,15
+new_5-3,0,0	monster	Fabre	1184,5
+new_5-3,0,0	monster	Picky	1049,15
 
 // Potato Merchant
 //============================================================
@@ -2435,7 +2435,7 @@ new_5-1,144,107,2	duplicate(NvGuardB)	Guard#nv5b	105
 	mes "Well, I will let you out of here.";
 	mes "Go find the instructor, Brade.";
 	close2;
-	savepoint strnpcinfo(4),100,100;
+	savepoint strnpcinfo(4),100,100,1,1;
 	warp strnpcinfo(4),100,100;
 	end;
 }
@@ -2496,7 +2496,7 @@ function	script	F_NvErase	{
 				mes "The town you will be sent to is called Izlude which is a satellite of Prontera. The Swordman Association is located in the West of town. Please remember this.";
 				next;
 				callsub L_Supplies;
-				savepoint "izlude",128,98; // Old coordinates: (95,104)
+				savepoint "izlude",128,98,1,1; // Old coordinates: (95,104)
 				warp "izlude_in",74,167;
 				end;
 			case 2:
@@ -2510,7 +2510,7 @@ function	script	F_NvErase	{
 				mes "The Prontera Sanctuary is located to the North-East in Prontera. Please remember this.";
 				next;
 				callsub L_Supplies;
-				savepoint "prontera",117,72;
+				savepoint "prontera",117,72,1,1;
 				warp "prt_church",172,19;
 				end;
 			case 3:
@@ -2524,7 +2524,7 @@ function	script	F_NvErase	{
 				mes "The Thief guild is in the underground 1st floor of a pyramid which is North-West of town. Please remember this.";
 				next;
 				callsub L_Supplies;
-				savepoint "morocc",150,99;
+				savepoint "morocc",150,99,1,1;
 				warp "moc_ruins",155,44;
 				end;
 			case 4:
@@ -2535,7 +2535,7 @@ function	script	F_NvErase	{
 				mes "the town of Alberta.";
 				next;
 				callsub L_Supplies;
-				savepoint "alberta",30,232;
+				savepoint "alberta",30,232,1,1;
 				warp "alberta_in",62,44;
 				end;
 			case 5:
@@ -2549,7 +2549,7 @@ function	script	F_NvErase	{
 				mes "The Archer Guild is located to the North-West in Payon. Please remember this.";
 				next;
 				callsub L_Supplies;
-				savepoint "payon",256,242;
+				savepoint "payon",256,242,1,1;
 				warp "payon_in02",64,65;
 				end;
 			case 6:
@@ -2563,7 +2563,7 @@ function	script	F_NvErase	{
 				mes "The Mage Academy is located in the North-West in town. Please remember this.";
 				next;
 				callsub L_Supplies;
-				savepoint "geffen",119,37;
+				savepoint "geffen",119,37,1,1;
 				warp "geffen_in",163,98;
 				end;
 			}
@@ -2624,31 +2624,31 @@ L_Warp:
 	case 1:
 		mes "I will send you to Prontera, the Capital City.";
 		close2;
-		savepoint "prontera",117,72;
+		savepoint "prontera",117,72,1,1;
 		warp "prontera",150,50;
 		end;
 	case 2:
 		mes "I will send you to Geffen, the City of Magic.";
 		close2;
-		savepoint "geffen",119,37;
+		savepoint "geffen",119,37,1,1;
 		warp "geffen",122,65;
 		end;
 	case 3:
 		mes "I will send you to Morroc, the Desert Town.";
 		close2;
-		savepoint "morocc",150,99;
+		savepoint "morocc",150,99,1,1;
 		warp "morocc",155,110;
 		end;
 	case 4:
 		mes "I will send you to Payon, the Mountain Village.";
 		close2;
-		savepoint "payon",70,100;
+		savepoint "payon",70,100,1,1;
 		warp "payon",166,67;
 		end;
 	case 5:
 		mes "I will send you to Alberta, the Port City.";
 		close2;
-		savepoint "alberta",30,232;
+		savepoint "alberta",30,232,1,1;
 		warp "alberta",114,58;
 		end;
 	case 6:
@@ -3319,7 +3319,7 @@ new_5-4,100,29,1	duplicate(NvHanson)	Final Tester#nv5	46
 		mes .@str$;
 		mes "Good bye.";
 		close2;
-		savepoint "izlude",128,98; // Old coordinates: (95,104)
+		savepoint "izlude",128,98,1,1; // Old coordinates: (95,104)
 		warp "izlude_in",74,167;
 		end;
 	case 2:
@@ -3329,7 +3329,7 @@ new_5-4,100,29,1	duplicate(NvHanson)	Final Tester#nv5	46
 		mes .@str$;
 		mes "Good bye.";
 		close2;
-		savepoint "geffen",119,37;
+		savepoint "geffen",119,37,1,1;
 		warp "geffen_in",163,98;
 		end;
 	case 3:
@@ -3339,7 +3339,7 @@ new_5-4,100,29,1	duplicate(NvHanson)	Final Tester#nv5	46
 		mes .@str$;
 		mes "Good bye.";
 		close2;
-		savepoint "payon",256,242;
+		savepoint "payon",256,242,1,1;
 		warp "payon_in02",64,65;
 		end;
 	case 4:
@@ -3349,7 +3349,7 @@ new_5-4,100,29,1	duplicate(NvHanson)	Final Tester#nv5	46
 		mes .@str$;
 		mes "Good bye.";
 		close2;
-		savepoint "alberta",30,232;
+		savepoint "alberta",30,232,1,1;
 		warp "alberta_in",62,44;
 		end;
 	case 5:
@@ -3359,7 +3359,7 @@ new_5-4,100,29,1	duplicate(NvHanson)	Final Tester#nv5	46
 		mes .@str$;
 		mes "Good bye.";
 		close2;
-		savepoint "morocc",150,99;
+		savepoint "morocc",150,99,1,1;
 		warp "moc_prydb1",99,185;
 		end;
 	case 6:
@@ -3369,7 +3369,7 @@ new_5-4,100,29,1	duplicate(NvHanson)	Final Tester#nv5	46
 		mes .@str$;
 		mes "Good bye.";
 		close2;
-		savepoint "prontera",117,72;
+		savepoint "prontera",117,72,1,1;
 		warp "prt_church",172,19;
 		end;
 	case 7:
@@ -3379,7 +3379,7 @@ new_5-4,100,29,1	duplicate(NvHanson)	Final Tester#nv5	46
 		mes .@str$;
 		mes "Good bye.";
 		close2;
-		savepoint "payon",164,58;
+		savepoint "payon",164,58,1,1;
 		warp "payon",163,141;
 		end;
 	case 8:
@@ -3390,7 +3390,7 @@ new_5-4,100,29,1	duplicate(NvHanson)	Final Tester#nv5	46
 		mes .@str$;
 		mes "Good bye.";
 		close2;
-		savepoint "izlude",128,98; // Old coordinates: (95,104)
+		savepoint "izlude",128,98,1,1; // Old coordinates: (95,104)
 		warp "izlude",128,67;
 		end;
 	case 9:
@@ -3402,7 +3402,7 @@ new_5-4,100,29,1	duplicate(NvHanson)	Final Tester#nv5	46
 		mes .@str$;
 		mes "Good bye.";
 		close2;
-		savepoint "alberta",117,56;
+		savepoint "alberta",117,56,1,1;
 		warp "alberta",171,132;
 		end;
 	default:

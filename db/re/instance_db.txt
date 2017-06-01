@@ -19,3 +19,6 @@
 12,Old Glast Heim,3600,300,1@gl_k,150,20,2@gl_k
 13,Eclage Interior,1200,300,1@ecl,60,50
 14,Sara's Memories,3600,300,1@sara,250,155
+15,Geffen Magic Tournament,7200,300,1@gef,119,209,1@gef_in,1@ge_st
+16,Horror Toy Factory,3600,300,1@xm_d,111,22
+17,Faceworm's Nest,3600,300,1@face,112,374

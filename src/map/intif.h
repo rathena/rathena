@@ -29,15 +29,15 @@ int intif_wis_message_to_gm(char *Wisp_name, int permission, char *mes);
 int intif_saveregistry(struct map_session_data *sd);
 int intif_request_registry(struct map_session_data *sd, int flag);
 
-int intif_request_guild_storage(uint32 account_id, int guild_id);
-int intif_send_guild_storage(uint32 account_id, struct guild_storage *gstor);
+bool intif_request_guild_storage(uint32 account_id, int guild_id);
+bool intif_send_guild_storage(uint32 account_id, struct s_storage *gstor);
 
 int intif_create_party(struct party_member *member,char *name,int item,int item2);
 int intif_request_partyinfo(int party_id, uint32 char_id);
 
 int intif_party_addmember(int party_id,struct party_member *member);
 int intif_party_changeoption(int party_id, uint32 account_id, int exp, int item);
-int intif_party_leave(int party_id,uint32 account_id, uint32 char_id);
+int intif_party_leave(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type);
 int intif_party_changemap(struct map_session_data *sd, int online);
 int intif_break_party(int party_id);
 int intif_party_message(int party_id, uint32 account_id, const char *mes,int len);
@@ -65,8 +65,7 @@ int intif_guild_castle_datasave(int castle_id, int index, int value);
 void intif_itembound_guild_retrieve(uint32 char_id, uint32 account_id, int guild_id);
 #endif
 
-int intif_create_pet(uint32 account_id, uint32 char_id, short pet_type, short pet_lv, short pet_egg_id,
-                     short pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name);
+int intif_create_pet(uint32 account_id, uint32 char_id, short pet_type, short pet_lv, unsigned short pet_egg_id, unsigned short pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name);
 int intif_request_petdata(uint32 account_id, uint32 char_id, int pet_id);
 int intif_save_petdata(uint32 account_id, struct s_pet *p);
 int intif_delete_petdata(int pet_id);
@@ -107,8 +106,17 @@ int intif_elemental_create(struct s_elemental *ele);
 int intif_elemental_request(int ele_id, uint32 char_id);
 int intif_elemental_delete(int ele_id);
 int intif_elemental_save(struct s_elemental *ele);
+// CLAN SYSTEM
+int intif_clan_requestclans();
+int intif_clan_message(int clan_id,uint32 account_id,const char *mes,int len);
+int intif_clan_member_joined( int clan_id );
+int intif_clan_member_left( int clan_id );
 
 int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char type);
+
+// STORAGE
+bool intif_storage_request(struct map_session_data *sd, enum storage_type type, uint8 stor_id, uint8 mode);
+bool intif_storage_save(struct map_session_data *sd, struct s_storage *stor);
 
 int CheckForCharServer(void);
 

@@ -18,6 +18,7 @@ static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
 static DBMap *itemdb_group; /// Item Group DB
 static DBMap *itemdb_randomopt; /// Random option DB
+static DBMap *itemdb_randomopt_group; /// Random option group DB
 
 struct item_data *dummy_item; /// This is the default dummy item used for non-existant items. [Skotlex]
 
@@ -37,6 +38,27 @@ struct item_combo *itemdb_combo_exists(unsigned short combo_id) {
 */
 struct s_item_group_db *itemdb_group_exists(unsigned short group_id) {
 	return (struct s_item_group_db *)uidb_get(itemdb_group, group_id);
+}
+
+/**
+ * Check if an item exists in a group
+ * @param nameid: Item to check for in group
+ * @return True if item is in group, else false
+ */
+bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid)
+{
+	struct s_item_group_db *group = (struct s_item_group_db *)uidb_get(itemdb_group, group_id);
+	unsigned short i, j;
+
+	if (!group)
+		return false;
+
+	for (i = 0; i < MAX_ITEMGROUP_RANDGROUP; i++) {
+		for (j = 0; j < group->random[i].data_qty; j++)
+			if (group->random[i].data[j].nameid == nameid)
+				return true;
+	}
+	return false;
 }
 
 /**
@@ -550,6 +572,7 @@ static bool itemdb_read_itemavail(char* str[], int columns, int current) {
 }
 
 static int itemdb_group_free(DBKey key, DBData *data, va_list ap);
+static int itemdb_group_free2(DBKey key, DBData *data);
 
 static bool itemdb_read_group(char* str[], int columns, int current) {
 	int group_id = -1;
@@ -582,7 +605,7 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 		DBData data;
 
 		if( itemdb_group->remove( itemdb_group, db_ui2key(group_id), &data ) ){
-			itemdb_group_free( db_ui2key(group_id), &data, 0 );
+			itemdb_group_free2(db_ui2key(group_id), &data);
 			ShowNotice( "itemdb_read_group: Item Group '%s' has been cleared.\n", str[0] );
 			return true;
 		}else{
@@ -747,7 +770,7 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 
 	if( delay < 0 )
 	{
-		ShowWarning("itemdb_read_itemdelay: Invalid delay %d for item id %hu.\n", id->delay, nameid);
+		ShowWarning("itemdb_read_itemdelay: Invalid delay %d for item id %hu.\n", delay, nameid);
 		return false;
 	}
 
@@ -1047,7 +1070,7 @@ bool itemdb_parse_roulette_db(void)
 	uint32 count = 0;
 
 	// retrieve all rows from the item database
-	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", db_roulette_table)) {
+	if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", roulette_table)) {
 		Sql_ShowDebug(mmysql_handle);
 		return false;
 	}
@@ -1127,7 +1150,7 @@ bool itemdb_parse_roulette_db(void)
 		}
 	}
 
-	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, db_roulette_table);
+	ShowStatus("Done reading '"CL_WHITE"%lu"CL_RESET"' entries in '"CL_WHITE"%s"CL_RESET"'.\n", count, roulette_table);
 
 	return true;
 }
@@ -1281,7 +1304,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 		id->slot = MAX_SLOTS;
 	}
 
-	itemdb_jobid2mapid(id->class_base, (uint64)strtoul(str[11],NULL,0));
+	itemdb_jobid2mapid(id->class_base, (uint64)strtoull(str[11],NULL,0));
 	id->class_upper = atoi(str[12]);
 	id->sex	= atoi(str[13]);
 	id->equip = atoi(str[14]);
@@ -1468,12 +1491,8 @@ static int itemdb_readdb(void){
 static int itemdb_read_sqldb(void) {
 
 	const char* item_db_name[] = {
-#ifdef RENEWAL
-		item_db_re_db,
-#else
-		item_db_db,
-#endif
-		item_db2_db
+		item_table,
+		item2_table
 	};
 	int fi;
 
@@ -1587,7 +1606,7 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 
 		if (!strchr(p, ','))
 		{
-			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
+			ShowError("itemdb_read_randomopt: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
 			continue;
 		}
 
@@ -1650,6 +1669,79 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 }
 
 /**
+ * Clear Item Random Option Group from memory
+ * @author [Cydh]
+ **/
+static int itemdb_randomopt_group_free(DBKey key, DBData *data, va_list ap) {
+	struct s_random_opt_group *g = (struct s_random_opt_group *)db_data2ptr(data);
+	if (!g)
+		return 0;
+	if (g->entries)
+		aFree(g->entries);
+	g->entries = NULL;
+	aFree(g);
+	return 1;
+}
+
+/**
+ * Get Item Random Option Group from itemdb_randomopt_group MapDB
+ * @param id Random Option Group
+ * @return Random Option Group data or NULL if not found
+ * @author [Cydh]
+ **/
+struct s_random_opt_group *itemdb_randomopt_group_exists(int id) {
+	return (struct s_random_opt_group *)uidb_get(itemdb_randomopt_group, id);
+}
+
+/**
+ * Read Item Random Option Group from db file
+ * @author [Cydh]
+ **/
+static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
+	int id = 0, i;
+	unsigned short rate = (unsigned short)strtoul(str[1], NULL, 10);
+	struct s_random_opt_group *g = NULL;
+
+	if (!script_get_constant(str[0], &id)) {
+		ShowError("itemdb_read_randomopt_group: Invalid ID for Random Option Group '%s'.\n", str[0]);
+		return false;
+	}
+
+	if ((columns-2)%3 != 0) {
+		ShowError("itemdb_read_randomopt_group: Invalid column entries '%d'.\n", columns);
+		return false;
+	}
+
+	if (!(g = (struct s_random_opt_group *)uidb_get(itemdb_randomopt_group, id))) {
+		CREATE(g, struct s_random_opt_group, 1);
+		g->id = id;
+		g->total = 0;
+		g->entries = NULL;
+		uidb_put(itemdb_randomopt_group, g->id, g);
+	}
+
+	RECREATE(g->entries, struct s_random_opt_group_entry, g->total + rate);
+
+	for (i = g->total; i < (g->total + rate); i++) {
+		int j, k;
+		memset(&g->entries[i].option, 0, sizeof(g->entries[i].option));
+		for (j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k+=3) {
+			int randid = 0;
+			if (!script_get_constant(str[k], &randid) || !itemdb_randomopt_exists(randid)) {
+				ShowError("itemdb_read_randomopt_group: Invalid random group id '%s' in column %d!\n", str[k], k+1);
+				continue;
+			}
+			g->entries[i].option[j].id = randid;
+			g->entries[i].option[j].value = (short)strtoul(str[k+1], NULL, 10);
+			g->entries[i].option[j].param = (char)strtoul(str[k+2], NULL, 10);
+			j++;
+		}
+	}
+	g->total += rate;
+	return true;
+}
+
+/**
 * Read all item-related databases
 */
 static void itemdb_read(void) {
@@ -1681,7 +1773,7 @@ static void itemdb_read(void) {
 		}
 		
 		sv_readdb(dbsubpath1, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail, i);
-		sv_readdb(dbsubpath1, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i);
+		sv_readdb(dbsubpath2, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i);
 		sv_readdb(dbsubpath1, "item_nouse.txt",         ',', 3, 3, -1, &itemdb_read_nouse, i);
 		sv_readdb(dbsubpath2, "item_group_db.txt",		',', 2, 10, -1, &itemdb_read_group, i);
 		sv_readdb(dbsubpath2, "item_bluebox.txt",		',', 2, 10, -1, &itemdb_read_group, i);
@@ -1700,6 +1792,7 @@ static void itemdb_read(void) {
 		sv_readdb(dbsubpath2, "item_delay.txt",         ',', 2, 3, -1, &itemdb_read_itemdelay, i);
 		sv_readdb(dbsubpath2, "item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore, i);
 		sv_readdb(dbsubpath2, "item_flag.txt",          ',', 2, 2, -1, &itemdb_read_flag, i);
+		sv_readdb(dbsubpath2, "item_randomopt_group.txt", ',', 5, 2+5*MAX_ITEM_RDM_OPT, -1, &itemdb_read_randomopt_group, i);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
@@ -1753,7 +1846,19 @@ static int itemdb_final_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
+/** NOTE:
+* In some OSs, like Raspbian, we aren't allowed to pass 0 in va_list.
+* So, itemdb_group_free2 is useful in some cases.
+* NB : We keeping that funciton cause that signature is needed for some iterator..
+*/
 static int itemdb_group_free(DBKey key, DBData *data, va_list ap) {
+	return itemdb_group_free2(key,data);
+}
+
+/** (ARM)
+* Adaptation of itemdb_group_free. This function enables to compile rAthena on Raspbian OS.
+*/
+static inline int itemdb_group_free2(DBKey key, DBData *data) {
 	struct s_item_group_db *group = (struct s_item_group_db *)db_data2ptr(data);
 	uint8 j;
 	if (!group)
@@ -1783,34 +1888,18 @@ static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
 }
 
 /**
-* Reload Item DB
-*/
-void itemdb_reload(void) {
-	struct s_mapiterator* iter;
-	struct map_session_data* sd;
+ * Re-link monster drop data with item data
+ * Fixes the need of a @reloadmobdb after a @reloaditemdb
+ * @author Epoque
+ */
+void itemdb_reload_itemmob_data(void) {
+	int i;
 
-	int i,d,k;
-
-	itemdb_group->clear(itemdb_group, itemdb_group_free);
-	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
-	itemdb->clear(itemdb, itemdb_final_sub);
-	db_clear(itemdb_combo);
-	if (battle_config.feature_roulette)
-		itemdb_roulette_free();
-
-	// read new data
-	itemdb_read();
-	cashshop_reloaddb();
-
-	if (battle_config.feature_roulette)
-		itemdb_parse_roulette_db();
-
-	//Epoque's awesome @reloaditemdb fix - thanks! [Ind]
-	//- Fixes the need of a @reloadmobdb after a @reloaditemdb to re-link monster drop data
 	for( i = 0; i < MAX_MOB_DB; i++ ) {
 		struct mob_db *entry = mob_db(i);
+		int d, k;
 
-		for(d = 0; d < MAX_MOB_DROP; d++) {
+		for(d = 0; d < MAX_MOB_DROP_TOTAL; d++) {
 			struct item_data *id;
 			if( !entry->dropitem[d].nameid )
 				continue;
@@ -1830,13 +1919,38 @@ void itemdb_reload(void) {
 			id->mob[k].id = i;
 		}
 	}
+}
+
+/**
+* Reload Item DB
+*/
+void itemdb_reload(void) {
+	struct s_mapiterator* iter;
+	struct map_session_data* sd;
+
+	itemdb_group->clear(itemdb_group, itemdb_group_free);
+	itemdb_randomopt->clear(itemdb_randomopt, itemdb_randomopt_free);
+	itemdb_randomopt_group->clear(itemdb_randomopt_group, itemdb_randomopt_group_free);
+	itemdb->clear(itemdb, itemdb_final_sub);
+	db_clear(itemdb_combo);
+	if (battle_config.feature_roulette)
+		itemdb_roulette_free();
+
+	// read new data
+	itemdb_read();
+	cashshop_reloaddb();
+
+	if (battle_config.feature_roulette)
+		itemdb_parse_roulette_db();
+
+	itemdb_reload_itemmob_data();
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
 	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		pc_setinventorydata(sd);
-		pc_check_available_item(sd); // Check for invalid(ated) items.
+		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
 		/* clear combo bonuses */
 		if( sd->combos.count ) {
 			aFree(sd->combos.bonus);
@@ -1861,6 +1975,7 @@ void do_final_itemdb(void) {
 	db_destroy(itemdb_combo);
 	itemdb_group->destroy(itemdb_group, itemdb_group_free);
 	itemdb_randomopt->destroy(itemdb_randomopt, itemdb_randomopt_free);
+	itemdb_randomopt_group->destroy(itemdb_randomopt_group, itemdb_randomopt_group_free);
 	itemdb->destroy(itemdb, itemdb_final_sub);
 	destroy_item_data(dummy_item);
 	if (battle_config.feature_roulette)
@@ -1875,6 +1990,7 @@ void do_init_itemdb(void) {
 	itemdb_combo = uidb_alloc(DB_OPT_BASE);
 	itemdb_group = uidb_alloc(DB_OPT_BASE);
 	itemdb_randomopt = uidb_alloc(DB_OPT_BASE);
+	itemdb_randomopt_group = uidb_alloc(DB_OPT_BASE);
 	itemdb_create_dummy();
 	itemdb_read();
 

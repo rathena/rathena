@@ -196,17 +196,17 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 			close;
 		case 2:
 			switch(instance_enter(.@md_name$)) {
-			case 3:
+			case IE_OTHER:
 				mes "An unknown error has occurred.";
 				close;
-			case 2:
+			case IE_NOINSTANCE:
 				mes "The memorial dungeon "+.@md_name$+" does not exist.";
 				mes "The party leader did not generate the dungeon yet.";
 				close;
-			case 1:
+			case IE_NOMEMBER:
 				mes "Only the registered members can enter the instance "+.@md_name$+".";
 				close;
-			case 0:
+			case IE_OK:
 				mapannounce "dali",strcharinfo(0)+", member of the party "+.@p_name$+" entered the instance "+.@md_name$+".",bc_map,"0x00ff99";
 				setquest 15002;
 				end;
@@ -361,7 +361,7 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 		next;
 		donpcevent instance_npcname("Strange Old Man#01", instance_id())+"::OnDisable";
 		donpcevent instance_npcname("Mysterious Old Man#02", instance_id())+"::OnDisable";
-		donpcevent instance_npcname("#sara_warp01", instance_id())+"::OnEnable";
+		enablenpc instance_npcname("#sara_warp01");
 		donpcevent instance_npcname("Sara Irene#01", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("Sara's Mother", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("Doyen Irene#02", instance_id())+"::OnEnable";
@@ -678,7 +678,7 @@ OnEnable:
 		mapannounce instance_mapname("1@sara"), "We must find Sara. You seem to remember her running in the 8 O'clock direction.",bc_map,"0xffff00";
 		viewpoint 1,88,188,1,0x00FF00;
 		donpcevent instance_npcname("Doyen Irene#04", instance_id())+"::OnDisable";
-		donpcevent instance_npcname("#sara_warp06", instance_id())+"::OnEnable";
+		enablenpc instance_npcname("#sara_warp06");
 		donpcevent instance_npcname("Sara Irene#03", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("?????#01", instance_id())+"::OnEnable";
 		end;
@@ -1166,8 +1166,9 @@ OnMyMobDead:
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
 		mapannounce instance_mapname("1@sara"), "Sara ran away again! You think she went in the 2 O'clock direction!",bc_map,"0xffff00";
-		viewpoint 1,208,250,1,0x00FF00;
-		donpcevent instance_npcname("#sara_warp02", instance_id())+"::OnEnable";
+		if (playerattached() > 0)
+			viewpoint 1,208,250,1,0x00FF00;
+		enablenpc instance_npcname("#sara_warp02");
 		donpcevent instance_npcname("#MobsSara02", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("#MobsSara01", instance_id())+"::OnDisable";
 	}
@@ -1211,8 +1212,9 @@ OnMyMobDead:
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
 		mapannounce instance_mapname("1@sara"), "Sara ran away yet again! You think she went in the 5 O'clock direction!",bc_map,"0xffff00";
-		viewpoint 1,226,190,1,0x00FF00;
-		donpcevent instance_npcname("#sara_warp03", instance_id())+"::OnEnable";
+		if (playerattached() > 0)
+			viewpoint 1,226,190,1,0x00FF00;
+		enablenpc instance_npcname("#sara_warp03");
 		donpcevent instance_npcname("#MobsSara03", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("#MobsSara02", instance_id())+"::OnDisable";
 	}
@@ -1288,8 +1290,9 @@ OnMyMobDead:
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
 		mapannounce instance_mapname("1@sara"), "Sara ran away yet again! *sigh* You think she went in the 12 O'clock direction!",bc_map,"0xffff00";
-		viewpoint 1,166,67,1,0x00FF00;
-		donpcevent instance_npcname("#sara_warp04", instance_id())+"::OnEnable";
+		if (playerattached() > 0)
+			viewpoint 1,166,67,1,0x00FF00;
+		enablenpc instance_npcname("#sara_warp04");
 		donpcevent instance_npcname("#MobsSara04", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("#MobsSara03", instance_id())+"::OnDisable";
 	}
@@ -1364,8 +1367,9 @@ OnMyMobDead:
 	if ('Sara_Mobs < 1) {
 		set 'Sara_Mobs,0;
 		mapannounce instance_mapname("1@sara"), "Sara continues to run away! You think she went in the 12 O'clock direction!",bc_map,"0xffff00";
-		viewpoint 1,155,180,1,0x00FF00;
-		donpcevent instance_npcname("#sara_warp05", instance_id())+"::OnEnable";
+		if (playerattached() > 0)
+			viewpoint 1,155,180,1,0x00FF00;
+		enablenpc instance_npcname("#sara_warp05");
 		donpcevent instance_npcname("Sara Irene#02", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("Doyen Irene#03", instance_id())+"::OnEnable";
 		donpcevent instance_npcname("Sara Irene#talk01", instance_id())+"::OnDisable";
@@ -1444,101 +1448,12 @@ OnMyMobDead:
 }
 
 //= Warps
-1@sara,240,145,4	script	#sara_warp01	45,2,2,{
-	end;
-
-OnTouch:
-	warp instance_mapname("1@sara"),94,320;
-	end;
-
-OnInstanceInit:
-OnDisable:
-	disablenpc instance_npcname("#sara_warp01");
-	end;
-OnEnable:
-	enablenpc instance_npcname("#sara_warp01");
-	end;
-}
-
-1@sara,208,250,4	script	#sara_warp02	45,2,2,{
-	end;
-
-OnTouch:
-	warp instance_mapname("1@sara"),230,311;
-	end;
-
-OnInstanceInit:
-OnDisable:
-	disablenpc instance_npcname("#sara_warp02");
-	end;
-OnEnable:
-	enablenpc instance_npcname("#sara_warp02");
-	end;
-}
-
-1@sara,226,190,4	script	#sara_warp03	45,2,2,{
-	end;
-
-OnTouch:
-	warp instance_mapname("1@sara"),263,94;
-	end;
-
-OnInstanceInit:
-OnDisable:
-	disablenpc instance_npcname("#sara_warp03");
-	end;
-OnEnable:
-	enablenpc instance_npcname("#sara_warp03");
-	end;
-}
-
-1@sara,166,67,4	script	#sara_warp04	45,2,2,{
-	end;
-
-OnTouch:
-	warp instance_mapname("1@sara"),164,81;
-	end;
-
-OnInstanceInit:
-OnDisable:
-	disablenpc instance_npcname("#sara_warp04");
-	end;
-OnEnable:
-	enablenpc instance_npcname("#sara_warp04");
-	end;
-}
-
-1@sara,155,180,4	script	#sara_warp05	45,2,2,{
-	end;
-
-OnTouch:
-	warp instance_mapname("1@sara"),155,196;
-	end;
-
-OnInstanceInit:
-OnDisable:
-	disablenpc instance_npcname("#sara_warp05");
-	end;
-OnEnable:
-	enablenpc instance_npcname("#sara_warp05");
-	end;
-}
-
-1@sara,88,188,4	script	#sara_warp06	45,2,2,{
-	end;
-
-OnTouch:
-	warp instance_mapname("1@sara"),89,175;
-	end;
-
-OnInstanceInit:
-OnDisable:
-	disablenpc instance_npcname("#sara_warp06");
-	end;
-OnEnable:
-	enablenpc instance_npcname("#sara_warp06");
-	end;
-}
+1@sara,240,145,0	warp2	#sara_warp01	2,2,1@sara,94,320
+1@sara,208,250,0	warp2	#sara_warp02	2,2,1@sara,230,311
+1@sara,226,190,0	warp2	#sara_warp03	2,2,1@sara,263,94
+1@sara,166,67,0	warp2	#sara_warp04	2,2,1@sara,164,81
+1@sara,155,180,0	warp2	#sara_warp05	2,2,1@sara,155,196
+1@sara,88,188,0	warp2	#sara_warp06	2,2,1@sara,89,175
 
 1@sara,16,143,4	script	#sara_warp07	45,2,2,{
 	end;
@@ -1554,6 +1469,12 @@ OnTouch:
 	end;
 
 OnInstanceInit:
+	disablenpc instance_npcname("#sara_warp01");
+	disablenpc instance_npcname("#sara_warp02");
+	disablenpc instance_npcname("#sara_warp03");
+	disablenpc instance_npcname("#sara_warp04");
+	disablenpc instance_npcname("#sara_warp05");
+	disablenpc instance_npcname("#sara_warp06");
 OnDisable:
 	disablenpc instance_npcname("#sara_warp07");
 	end;

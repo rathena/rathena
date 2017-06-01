@@ -710,9 +710,11 @@ SC_INTOABYSS	()
 	desc:
 	val1:
 
-SC_SIEGFRIED	()
-	desc:
-	val1:
+SC_SIEGFRIED	(SI_SIEGFRIED)
+	desc: Status change for BD_SIEGFRIED
+	val1: BD_SIEGFRIED Skill level
+	val2: Increase val2% damage reduction from non-Nuetral elemental attack
+	val3: Increase status resistance value by val3% of player's current resistance.
 
 SC_WHISTLE	()
 	desc:
@@ -882,8 +884,8 @@ SC_MATKFOOD	(SI_MATKFOOD)
 	val1: +MagicAttack
 
 SC_SCRESIST	()
-	desc:
-	val1:
+	desc: Status resistance from Gospel skill
+	val1: Increase status resistance value by n% of player's current resistance.
 
 SC_XMAS	()
 	desc:
