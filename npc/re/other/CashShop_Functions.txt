@@ -10,7 +10,7 @@
 // VIP Functions
 //============================================================
 function	script	VIP_Third_Class	{
-	if (!vip_status(1)) {
+	if (!vip_status(VIP_STATUS_ACTIVE)) {
 		mes "[Voice from nowhere]";
 		mes "Access to Premium content is only available to those who possess a certain amount of Reset Stones.";
 		next;

@@ -609,7 +609,7 @@ function	script	F_BG_Badge	{
 	close2;
 
 	// If the VIP system is enabled, VIP players receive an extra 2 badges.
-	if (VIP_SCRIPT && vip_status(1))
+	if (VIP_SCRIPT && vip_status(VIP_STATUS_ACTIVE))
 		set .@amount, .@amount+2;
 
 	set .@medal_gap, 500 - countitem(.@badge);
