@@ -2465,9 +2465,9 @@ Examples:
 Returns various information about a player's VIP status.
 
 Valid types:
- VIP_STATUS_ACTIVE - VIP status. (true if VIP, false if non-VIP)
- VIP_STATUS_EXPIRE - VIP expire date. (timestamp if VIP, 0 if non-VIP)
- VIP_STATUS_REMAINING - VIP time remaining. (timestamp if VIP, 0 if non-VIP)
+ VIP_STATUS_ACTIVE - VIP status: true if the player is a VIP, false he is not
+ VIP_STATUS_EXPIRE - VIP expire timestamp or 0 if the player is no VIP
+ VIP_STATUS_REMAINING - VIP time remaining in seconds
 
 NOTE: This command is only available if the VIP System is enabled.
 
