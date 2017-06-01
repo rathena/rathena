@@ -3221,7 +3221,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 
 		for(i = 0; i < im->cnt_map; i++)
 			if(im->map[i]->m && map_mapname2mapid(map[im->map[i]->src_m].name) == dm) {
-				imap = map_mapname2mapid(map[m].name);
+				imap = map_mapname2mapid(map[im->map[i]->m].name);
 				break; // Instance map matches destination, update to instance map
 			}
 
