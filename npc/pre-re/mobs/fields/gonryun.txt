@@ -1,0 +1,22 @@
+//===== rAthena Script =======================================
+//= Gon Ryun Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 Official kRO 10.1 spawns [Playtester]
+//============================================================
+
+//==================================================
+// gon_fild01 - Gonryun Field
+//==================================================
+gon_fild01,0,0	monster	Baby Leopard	1415,40,600000,300000
+gon_fild01,0,0	monster	Zipper Bear	1417,20
+gon_fild01,0,0	monster	Poporing	1031,20
+gon_fild01,0,0	monster	Dumpling Child	1409,30
+gon_fild01,0,0	monster	Hermit Plant	1413,2,630000,330000
+gon_fild01,0,0	monster	Green Plant	1080,5
+gon_fild01,0,0	monster	Shining Plant	1083,1

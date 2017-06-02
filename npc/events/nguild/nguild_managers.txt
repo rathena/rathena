@@ -1,0 +1,177 @@
+//===== rAthena Script =======================================
+//= War of Emperium Managers for N Guild Castles
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 4+
+//===== Description: =========================================
+//=
+//==============================================
+//= Break down of arguments used in the function:
+//=   arg(0): name of Castle Manager
+//=   arg(1): name of guild castle.
+//=   arg(2): x1 coordinate for warp to treasure room
+//=   arg(3): y1 coordinate for warp to treasure room
+//=   arg(4): guild script suffix for kafra, etc.
+//===== Additional Comments: =================================
+//= 1.0 Based off existing guild scripts.  Do not know if it is accurate.[kobra_k88]
+//= 1.1 Added modified guild manager function. [L0ne_W0lf]
+//= 	Removed guardian summoning.
+//= 1.2 Corrected function name. (bugreport:1728) [L0ne_W0lf]
+//============================================================
+
+//==============================================
+function	script	F_GldManager	{
+	.@npc_name$ = getarg(0);
+	.@map_name$ = getarg(1);
+	.@gid = getcastledata(.@map_name$,1);
+	.@gm_name$ = getguildmaster(.@gid);
+
+	mes "[ "+ .@npc_name$ +" ]";
+	if (.@gid == 0){
+		mes "I am waiting for my master.  Brave adventurer, follow your destiny!";
+		return;
+	}
+	if (getcharid(2) != .@gid){
+		mes "I am here to follow ^5533FF" + getguildmaster(.@gid) + "^000000's command! Hey! Your not even a part of the guild!!";
+		mes "Where are the guardians? Destroy these intruders!";
+		return;
+	}
+	if (strcharinfo(0) != getguildmaster(.@gid)){
+		mes "You're not ^5533FF" + getguildmaster(.@gid) + "^000000! I am here to follow ^5533FF" + getguildmaster(.@gid) + "^000000's command only";
+		return 0;
+	}
+
+	mes "Welcome Master ^5533FF" + getguildmaster(.@gid) + "^000000 ! I will assist you in any way I can!";
+	next;
+
+	menu "Kafra Staff Employment / Dismissal",M_Kaf, "Enter Treasure Room",M_Treas, "Cancel",M_End;
+
+	//===========================
+	M_Kaf:
+	//======
+		mes "[ "+ .@npc_name$ +" ]";
+		if (GetCastleData(.@map_name$,9) == 1) goto L_Dismiss;
+		if (getgdskilllv(.@gid,10001) == 0){
+			mes "Master, you don't have a contract with the Kafra Staff Company.";
+			mes "In order to hire a Kafra, you must first learn the Guild skill ^5533FFContract With Kafra^000000.";
+			return;
+		}
+
+		L_Hire:
+			mes "Would you like to employ the services of a Kafra? You will need ^5533FF10,000 Zeny^000000 to do so... ";
+			next;
+			menu "Employ Kafra.",-,"Cancel",sM_KafEnd;
+
+				mes "[ "+ .@npc_name$ +" ]";
+				if (Zeny < 10000){
+					mes "Master, you do not have enough money to employ a Kafra. Employment has been cancelled.";
+					return;
+				}
+				set Zeny,Zeny-10000;
+				enablenpc "Kafra Staff#"+getarg(4);
+				SetCastleData .@map_name$,9,1;
+				mes "You have created a contract with the Kafra Staff Company.";
+				next;
+				cutin "kafra_01",2;
+				mes "[ Kafra Staff ]";
+				mes "How do you do? I'm here to provide you with helpful service! I'll do the best I can to serve you.";
+				next;
+				cutin "kafra_01",255;
+				mes "[ "+ .@npc_name$ +" ]";
+				//mes "Your employment contract lasts ^5533FF1 month^000000.  After this term is over you will have to create a new contract.";
+				mes "I think the Kafra Staff will benefit our guild members.";
+				return;
+
+			sM_KafEnd:
+				mes "[ "+ .@npc_name$ +" ]";
+				mes "As you wish Master.  But I suggest we get a Kafra as soon as possible!";
+				return;
+
+		L_Dismiss:
+			mes "Would you like to dismiss the current Kafra?";
+			next;
+			menu "Dismissal",-,"Cancel",sM_KafEnd2;
+
+				cutin "kafra_01",2;
+				mes "[ Kafra Staff ]";
+				mes "Have I done anything wrong? If I did, will you please forgive me?";
+				next;
+				menu "Dismiss",-,"Cancel",ssM_KafEnd2;
+
+					mes "[ Kafra Staff ]";
+					mes "It's unfortunate that I won't be able to serve your guild anymore....";
+					next;
+					disablenpc "Kafra Staff#"+getarg(4);
+					SetCastleData .@map_name$,9,0;
+					cutin "kafra_01",255;
+					mes "[ "+ .@npc_name$ +" ]";
+					mes "The Kafra has been dismissed.  But... we should really get a Kafra as soon as possible!";
+					return;
+				ssM_KafEnd2:
+					mes "[ Kafra Staff ]";
+					mes "Thank you master, I'll do my best! ^^.";
+					cutin "kafra_01",255;
+					return;
+			sM_KafEnd2:
+				mes "[ "+ .@npc_name$ +" ]";
+				mes "Master, I think you should keep the current Kafra Staff because she is already trying her best to serve us";
+				return;
+
+	//=========================
+	M_Treas:
+	//========
+		mes "[ "+ .@npc_name$ +" ]";
+		mes "Would you to go to our Treasure Room? Only you, the Guild Master, are allowed to enter this room.";
+		next;
+		menu "Enter Treasure room.",-,"Cancel",sM_TresEnd;
+
+			mes "[ "+ .@npc_name$ +" ]";
+			mes "Please follow me through the secret passage way.";
+			mes "You must pull down on the secret switch in order to get out.";
+			next;
+			warp .@map_name$,getarg(2),getarg(3);
+			return;
+		sM_TresEnd:
+			mes "[ "+ .@npc_name$ +" ]";
+			mes "The goods are produced everyday.";
+			mes "You should get them whenever you can because they might dissapear if you take them at the wrong time.";
+			return;
+
+
+	//==========================
+	M_End:
+	//=======
+		mes "[ "+ .@npc_name$ +" ]";
+		mes "As you wish, master.";
+		return;
+}
+
+// Castle 1 ==================================================================================
+nguild_alde,218,175,0	script	Frolo	55,{
+	callfunc "F_GldManager","Frolo","nguild_alde",119,223,"N01";
+	close;
+}
+
+
+// Castle 2 ==================================================================================
+nguild_gef,40,48,5	script	Leiber	55,{
+	callfunc "F_GldManager","Leiber","nguild_gef",155,112,"N02";
+	close;
+}
+
+
+// Castle 3 ==================================================================================
+nguild_pay,120,58,4	script	Dundar	55,{
+	callfunc "F_GldManager","Dundar","nguild_pay",290,7,"N03";
+	close;
+}
+
+
+// Castle 4 ==================================================================================
+nguild_prt,112,181,0	script	Thefton	55,{
+	callfunc "F_GldManager","Thefton","nguild_prt",15,209,"N04";
+	close;
+}

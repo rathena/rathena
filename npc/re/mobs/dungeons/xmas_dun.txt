@@ -1,0 +1,37 @@
+//===== rAthena Script =======================================
+//= Toy Factory Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 added Garm Baby according to May 10 patch
+//= 1.2 Official kRO 10.1 spawns [Playtester]
+//= 1.3 Small spawn update [Playtester]
+//= 1.4 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// xmas_dun01 - Toy Factory Warehouse
+//==================================================
+xmas_dun01,0,0	monster	Cookie	1265,40,5000
+xmas_dun01,0,0	monster	Christmas Cookie	1246,40,5000
+xmas_dun01,0,0	monster	Marin	1242,20,5000
+xmas_dun01,0,0	monster	Poporing	1031,20,5000
+xmas_dun01,0,0	monster	Drops	1113,10,5000
+xmas_dun01,0,0	monster	Poring	1002,10,5000
+xmas_dun01,0,0	monster	Myst Case	1249,5,5000
+xmas_dun01,0,0	monster	Chepet	1250,1,1200000,900000
+xmas_dun01,0,0	monster	Mastering	1090,1,1800000,900000
+xmas_dun01,0,0	monster	Angeling	1096,1,3600000,1800000
+
+//==================================================
+// xmas_dun02 - Toy Monitoring Room
+//==================================================
+xmas_dun02,0,0	monster	Myst Case	1249,50,5000
+xmas_dun02,0,0	monster	Cruiser	1248,35,5000
+xmas_dun02,0,0	monster	Cookie	1265,20,5000
+xmas_dun02,0,0	monster	Christmas Cookie	1246,20,5000
+xmas_dun02,0,0,0,0	boss_monster	Stormy Knight	1251,1,3600000,600000,0

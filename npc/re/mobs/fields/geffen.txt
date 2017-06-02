@@ -1,0 +1,202 @@
+//===== rAthena Script =======================================
+//= Geffen Fields Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.6
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.2 Map names typos fix [Lupus]
+//= 1.3 Official kRO 10.1 spawns + future changes [Playtester]
+//= 1.4 More accurate spawns [Playtester]
+//= 1.5 Corrected MVP spawn variance. [L0ne_W0lf]
+//= 1.6 Updated to renewal spawns. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// gef_fild00 - Geffen Field
+//==================================================
+gef_fild00,0,0	monster	Chonchon	1011,140,5000
+gef_fild00,0,0	monster	Poring	1002,30,5000
+gef_fild00,0,0	monster	Fabre	1007,30,5000
+gef_fild00,95,128	monster	Blue Plant	1079,1,900000,450000
+gef_fild00,124,321	monster	Blue Plant	1079,1,900000,450000
+gef_fild00,54,212,5,5	monster	Green Plant	1080,3,360000,180000
+gef_fild00,54,186,5,5	monster	Green Plant	1080,3,360000,180000
+
+//==================================================
+// gef_fild01 - Geffen Field
+//==================================================
+gef_fild01,0,0	monster	Roda Frog	1012,80,5000
+gef_fild01,0,0	monster	Ambernite	1094,20,5000
+gef_fild01,0,0	monster	Toad	1089,1,3600000,1800000
+gef_fild01,215,225,10,10	monster	Green Plant	1080,5,360000,180000
+
+//==================================================
+// gef_fild02 - Geffen Field
+//==================================================
+gef_fild02,0,0	monster	Coco	1104,140,5000
+gef_fild02,0,0	monster	Poporing	1031,20,5000
+gef_fild02,0,0	monster	Horn	1128,20,5000
+gef_fild02,0,0	monster	Elder Willow	1033,20,5000
+gef_fild02,227,316,6,6	monster	Green Plant	1080,8,360000,180000
+gef_fild02,87,48,6,6	monster	Red Mushroom	1085,5,360000,180000
+gef_fild02,215,209,2,1	monster	Blue Plant	1079,2,360000,180000
+gef_fild02,207,214,1,1	monster	Blue Plant	1079,1,360000,180000
+gef_fild02,220,214,1,1	monster	Blue Plant	1079,1,360000,180000
+gef_fild02,164,194,1,1	monster	Shining Plant	1083,1,1800000,900000
+
+//==================================================
+// gef_fild03 - Geffen Field
+//==================================================
+gef_fild03,0,0	monster	Orc Lady	1273,130,5000
+gef_fild03,0,0	monster	Orc Warrior	1023,60,5000
+gef_fild03,0,0	monster	Orc Baby	1686,20,5000
+gef_fild03,0,0,0,0	boss_monster	Orc Hero	1087,1,3600000,600000,1
+gef_fild03,45,350,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,66,300,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,80,252,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,118,281,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,135,344,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,210,363,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,215,345,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,359,316,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,350,247,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,304,202,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,285,223,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,282,192,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,316,143,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,337,104,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,348,42,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,326,79,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,280,92,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,216,135,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,169,92,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,45,93,3,3	monster	Green Plant	1080,1,180000,90000
+gef_fild03,44,133,3,3	monster	Green Plant	1080,1,180000,90000
+
+//==================================================
+// gef_fild04 - Geffen Field
+//==================================================
+gef_fild04,0,0	monster	Mandragora	1020,125,5000
+gef_fild04,0,0	monster	Lunatic	1063,25,5000
+gef_fild04,0,0	monster	Fabre	1007,25,5000
+gef_fild04,0,0	monster	Chonchon	1011,25,5000
+gef_fild04,224,82,5,2	monster	Green Plant	1080,3,360000,180000
+gef_fild04,152,82,5,2	monster	Green Plant	1080,3,360000,180000
+
+//==================================================
+// gef_fild05 - Geffen Field
+//==================================================
+gef_fild05,0,0	monster	Creamy	1018,140,5000
+gef_fild05,0,0	monster	Stainer	1174,20,5000
+gef_fild05,0,0	monster	Smokie	1056,20,5000
+gef_fild05,0,0	monster	Thief Bug Egg	1048,10,5000
+gef_fild05,0,0	monster	Thief Bug	1051,10,5000
+gef_fild05,235,322	monster	Red Plant	1078,1,180000,90000
+gef_fild05,238,326	monster	Red Plant	1078,1,180000,90000
+gef_fild05,170,337	monster	Red Plant	1078,1,180000,90000
+gef_fild05,108,317	monster	Red Plant	1078,1,180000,90000
+gef_fild05,56,285	monster	Red Plant	1078,1,180000,90000
+gef_fild05,65,256	monster	Red Plant	1078,1,180000,90000
+gef_fild05,74,228	monster	Red Plant	1078,1,180000,90000
+gef_fild05,50,189	monster	Red Plant	1078,1,180000,90000
+gef_fild05,51,166	monster	Red Plant	1078,1,180000,90000
+gef_fild05,146,161	monster	Red Plant	1078,1,180000,90000
+gef_fild05,153,180	monster	Red Plant	1078,1,180000,90000
+gef_fild05,124,207	monster	Red Plant	1078,1,180000,90000
+gef_fild05,187,249	monster	Red Plant	1078,1,180000,90000
+gef_fild05,187,265	monster	Red Plant	1078,1,180000,90000
+gef_fild05,130,293	monster	Red Plant	1078,1,180000,90000
+
+//==================================================
+// gef_fild06 - Geffen Field
+//==================================================
+gef_fild06,0,0	monster	Petite	1155,130,5000
+gef_fild06,0,0	monster	Mantis	1139,30,5000
+gef_fild06,0,0	monster	Side Winder	1037,30,5000
+gef_fild06,0,0	monster	Shining Plant	1083,4,1800000,900000
+
+//==================================================
+// gef_fild07 - Geffen Field
+//==================================================
+gef_fild07,0,0	monster	Pupa	1008,130,5000
+gef_fild07,0,0	monster	Poring	1002,20,5000
+gef_fild07,0,0	monster	Fabre	1007,20,5000
+gef_fild07,0,0	monster	Chonchon	1011,20,5000
+gef_fild07,122,221	monster	Green Plant	1080,3,360000,180000
+gef_fild07,185,247	monster	Shining Plant	1083,1,1800000,900000
+gef_fild07,269,289	monster	Blue Plant	1079,1,900000,450000
+gef_fild07,269,289,3,3	monster	Green Plant	1080,3,360000,180000
+
+//==================================================
+// gef_fild08 - Geffen Field
+//==================================================
+gef_fild08,0,0	monster	Petite	1156,130,5000
+gef_fild08,0,0	monster	Mantis	1139,30,5000
+gef_fild08,0,0	monster	Flora	1118,30,5000
+gef_fild08,65,341	monster	Blue Plant	1079,1,900000,450000
+gef_fild08,111,319	monster	Blue Plant	1079,1,900000,450000
+gef_fild08,59,91	monster	Blue Plant	1079,1,900000,450000
+gef_fild08,70,80	monster	Blue Plant	1079,1,900000,450000
+gef_fild08,144,140	monster	Blue Plant	1079,1,900000,450000
+gef_fild08,344,78	monster	Blue Plant	1079,1,900000,450000
+gef_fild08,325,311	monster	Blue Plant	1079,1,900000,450000
+gef_fild08,162,247	monster	Blue Plant	1079,1,900000,450000
+
+//==================================================
+// gef_fild09 - Geffen Field
+//==================================================
+gef_fild09,0,0	monster	Ambernite	1094,80,5000
+gef_fild09,0,0	monster	Roda Frog	1012,20,5000
+gef_fild09,51,43	monster	Red Mushroom	1085,1,180000,90000
+gef_fild09,125,53	monster	Red Mushroom	1085,1,180000,90000
+gef_fild09,148,74	monster	Red Mushroom	1085,1,180000,90000
+gef_fild09,184,66	monster	Red Mushroom	1085,1,180000,90000
+gef_fild09,207,54	monster	Red Mushroom	1085,1,180000,90000
+gef_fild09,245,62	monster	Red Mushroom	1085,1,180000,90000
+gef_fild09,268,45	monster	Red Mushroom	1085,1,180000,90000
+gef_fild09,258,24	monster	Red Mushroom	1085,1,180000,90000
+gef_fild09,325,36	monster	Red Mushroom	1085,1,180000,90000
+gef_fild09,344,51	monster	Red Mushroom	1085,1,180000,90000
+gef_fild09,277,201,5,5	monster	Blue Plant	1079,3,900000,450000
+
+//==================================================
+// gef_fild10 - Geffen Field
+//==================================================
+gef_fild10,0,0	monster	Orc Warrior	1023,130,5000
+gef_fild10,0,0	monster	Orc Lady	1273,40,5000
+gef_fild10,0,0	monster	Orc Baby	1686,20,5000
+gef_fild10,0,0,0,0	boss_monster	Orc Lord	1190,1,7200000,600000,0
+gef_fild10,46,350,5,5	monster	Blue Plant	1079,3,900000,450000
+gef_fild10,287,61,5,5	monster	Blue Plant	1079,3,900000,450000
+gef_fild10,300,253,5,5	monster	Green Plant	1080,3,360000,180000
+
+//==================================================
+// gef_fild11 - Geffen Field
+//==================================================
+gef_fild11,0,0	monster	Goblin	1122,50,5000
+gef_fild11,0,0	monster	Goblin	1123,50,5000
+gef_fild11,0,0	monster	Goblin	1124,50,5000
+gef_fild11,0,0	monster	Goblin	1125,50,5000
+gef_fild11,0,0	monster	Goblin Leader	1299,1,1800000,1200000
+gef_fild11,101,277,4,1	monster	Black Mushroom	1084,3,360000,180000
+gef_fild11,176,288,1,4	monster	Black Mushroom	1084,3,360000,180000
+gef_fild11,253,357,1,4	monster	Black Mushroom	1084,3,360000,180000
+gef_fild11,247,249,1,4	monster	Black Mushroom	1084,3,360000,180000
+gef_fild11,257,209,1,4	monster	Black Mushroom	1084,3,360000,180000
+gef_fild11,174,240,1,3	monster	Black Mushroom	1084,3,360000,180000
+gef_fild11,283,100,4,1	monster	Black Mushroom	1084,3,360000,180000
+
+//==================================================
+// gef_fild12 - Disabled on Renewal
+//==================================================
+
+//==================================================
+// gef_fild13 - No Spawns on Renewal
+//==================================================
+
+//==================================================
+// gef_fild14 - Disabled on Renewal
+//==================================================

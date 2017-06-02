@@ -1,0 +1,28 @@
+//===== rAthena Script =======================================
+//= Thor's Volcano Dungeon Warp Script
+//===== By: ==================================================
+//= $ephiroth
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Warp Points for Thor's Volcano Dungeon
+//===== Additional Comments: =================================
+//= 1.3 Rescripted to Aegis 11.2 Standards. [L0ne_W0lf
+//============================================================
+
+ve_fild03,168,240,0	warp	thor_v1-1	1,1,thor_v01,21,229
+thor_v01,21,224,0	warp	thor_v1-2	1,1,ve_fild03,168,235
+thor_v01,201,37,0	warp	thor_v2-1	1,1,thor_v02,78,203
+thor_v02,192,60,0	warp	thor_v2-2	1,1,thor_v03,35,262
+thor_v02,73,203,0	warp	thor_v3-1	1,1,thor_v01,196,37
+thor_v03,30,262,0	warp	thor_v3-2	1,1,thor_v02,187,58
+
+//============================================================ 
+// Old changelog
+//============================================================ 
+//= 1.0 Initial version [$ephiroth]
+//= 1.1 Updated warps, according to Japan site [$ephiroth]
+//= 1.2 Updated more warps to thor_camp [$ephiroth]
+//============================================================ 

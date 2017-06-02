@@ -1,0 +1,41 @@
+//===== rAthena Script =======================================
+//= Orc Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.2 Official kRO 10.1 spawns [Playtester]
+//============================================================
+
+//==================================================
+// orcsdun01 - Orc Dungeon F1
+//==================================================
+orcsdun01,0,0	monster	Steel Chonchon	1042,10
+orcsdun01,0,0	monster	Familiar	1005,15
+orcsdun01,0,0	monster	Drainliar	1111,5
+orcsdun01,0,0	monster	Orc Zombie	1153,10,3000,5000
+orcsdun01,0,0	monster	Orc Zombie	1153,30,60000,30000
+orcsdun01,0,0	monster	Orc Zombie	1153,40,120000,60000
+orcsdun01,0,0	monster	Orc Skeleton	1152,10,180000,60000
+orcsdun01,167,133,5,5	monster	Black Mushroom	1084,5,900000,450000
+orcsdun01,67,34,5,5	monster	Black Mushroom	1084,5,900000,450000
+orcsdun01,83,50,5,5	monster	White Plant	1082,2,180000,90000
+orcsdun01,58,67,10,10	monster	White Plant	1082,3,180000,90000
+
+//==================================================
+// orcsdun02 - Orc Dungeon F2
+//==================================================
+orcsdun02,0,0	monster	Steel Chonchon	1042,20
+orcsdun02,0,0	monster	Drainliar	1111,20
+orcsdun02,0,0	monster	Orc Skeleton	1152,10,3000,5000
+orcsdun02,0,0	monster	Orc Skeleton	1152,20,60000,30000
+orcsdun02,0,0	monster	Orc Skeleton	1152,20,120000,60000
+orcsdun02,0,0	monster	Zenorc	1177,30,3000,5000
+orcsdun02,0,0	monster	Zenorc	1177,20,60000,30000
+orcsdun02,0,0	monster	Orc Archer	1189,5,1800000,900000
+orcsdun02,0,0	monster	Black Mushroom	1084,5,180000,90000
+orcsdun02,105,37,10,10	monster	White Plant	1082,2,180000,90000
+orcsdun02,37,44,10,10	monster	White Plant	1082,3,180000,90000

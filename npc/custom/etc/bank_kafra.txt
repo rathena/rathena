@@ -1,0 +1,116 @@
+//===== rAthena Script =======================================
+//= The 2nd Bank of Prontera (with daily 0.01% income!)
+//===== By: ==================================================
+//= Lupus (1.0)
+//===== Current Version: =====================================
+//= 1.2a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= A bank which has an interest %
+//===== Additional Comments: =================================
+// Look for this formula and setup your Bank daily % interest
+// #kafrabank/1000 = 0.1% of interest per day
+// #kafrabank/100  =  1%  of interest per day
+// #kafrabank/10   =  10% of interest per day
+//
+// 1.1 Added log of bank operation -> logmes "some info";
+// 1.2 Set max income to 100,000z. It would help to avoid
+//     zeny exploits when you change DATE at your server
+// 1.2a Corrected bad duplicate names. (bugreport:921) [Samuray22]
+//============================================================
+
+-	script	Bank Clerk::bankg	833,{
+	mes"[Maniss]";
+	mes strcharinfo(0)+", welcome to the 2nd Bank of Prontera!";
+
+	set @kb_int,(gettime(DT_MONTH)*31)+gettime(DT_DAYOFMONTH); //today's number
+	set @income,0;
+	//calculate %
+	if (#kafrabank<=0 || #kb_int>=@kb_int) goto L_NoIncomeToday;
+	set @income,(#kafrabank/1000)*(@kb_int-#kb_int); //@income == % of the sum
+	//max income constant:
+	if (@income>100000) set @income,100000;
+L_NoIncomeToday:
+	set #kb_int,@kb_int; //reset days timer
+
+	if(#kafrabank==0) mes "We could open you an account.";
+	if(@income>0) mes "Today's income: ^135445" + callfunc("F_InsertComma",@income) + "^000000 zeny.";
+	set #kafrabank,#kafrabank+@income;
+	if(#kafrabank>0) mes "Your account: ^135445" + callfunc("F_InsertComma",#kafrabank) + "^000000 zeny.";
+	mes "What would you like?";
+	next;
+	if(#kafrabank==0) menu "-Open an account",-,"-Quit",B_EXIT2;
+	if(#kafrabank>0) menu "-Deposit money",-,"-Withdraw money",M_WITHDRAW,"-Quit",B_EXIT2;
+
+	mes"[Maniss]";
+	mes "Please, tell me how much zeny you would like to deposit.";
+	next;
+	if(input(@kafrabank) == 1) goto L_TOO_BIG_AMOUNT;
+
+	if(@kafrabank<1000) goto L_LESS_1000;
+	if(@kafrabank>zeny) goto L_NOT_ENOUGH;
+	set Zeny, Zeny-@kafrabank;
+	set #kafrabank,#kafrabank+@kafrabank;
+	mes"[Maniss]";
+	mes "You've made a deposit of ^135445" + callfunc("F_InsertComma",@kafrabank) + "z^000000.";
+	//we log these zeny operations into the log db
+	logmes "Bank %: " + @income +"z, Deposit: "+ @kafrabank +"z, Final: "+ #kafrabank +"z";
+	goto B_EXIT;
+
+M_WITHDRAW:
+	if(#kafrabank==0) goto L_ZERO_ACCOUNT;
+	mes"[Maniss]";
+	mes "Your account: ^135445" + callfunc("F_InsertComma",#kafrabank) + "^000000 zeny.";
+	mes "How much zeny would you like to withdraw?";
+	next;
+	if(input(@kafrabank) == 1) goto L_TOO_BIG_AMOUNT;
+
+	if(@kafrabank<1) goto B_EXIT2;
+	if(@kafrabank>#kafrabank) goto L_NOT_ENOUGH;
+	set #kafrabank,#kafrabank-@kafrabank;
+	set Zeny, Zeny+@kafrabank;
+	mes"[Maniss]";
+	mes "Here is your ^135445" + callfunc("F_InsertComma",@kafrabank) + "z^000000, put your sign here...";
+	//we log these zeny operations into the log db
+	logmes "Bank %: " + @income +"z, Withdraw: "+ @kafrabank +"z, Final: "+ #kafrabank +"z";
+	goto B_EXIT;
+
+L_NOT_ENOUGH:
+	mes"[Maniss]";
+	mes "You don't have enough zeny for this operation.";
+	next;
+	goto B_EXIT2;
+
+L_ZERO_ACCOUNT:
+	mes"[Maniss]";
+	mes "You don't have any zeny on your account!";
+	next;
+	goto B_EXIT2;
+
+L_TOO_BIG_AMOUNT:
+	mes"[Maniss]";
+	mes "Sorry. The maximum deposit you can make on a time is 10,000,000 zeny.";
+	next;
+	goto B_EXIT2;
+
+L_LESS_1000:
+	mes"[Maniss]";
+	mes "We're sorry, the minimum amount of zeny you can deposit is 1,000 zeny.";
+	next;
+	goto B_EXIT2;
+
+B_EXIT:
+	mes "Very well... Come again soon!";
+	next;
+
+B_EXIT2:
+	mes"[Maniss]";
+	mes "Thank you for using our Bank Service. We hope to see you again soon.";
+	close;
+}
+
+prontera,131,190,1	duplicate(bankg)	Bank Clerk#1-1	833
+geffen,125,73,3	duplicate(bankg)	Bank Clerk#2-1	833
+izlude,145,107,1	duplicate(bankg)	Bank Clerk#3-1	833
+morocc,147,84,7	duplicate(bankg)	Bank Clerk#4-1	833

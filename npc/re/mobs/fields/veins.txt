@@ -1,0 +1,78 @@
+//===== rAthena Script =======================================
+//= Veins Fields Monster Spawn Script
+//===== By: ==================================================
+//= $ephiroth
+//===== Current Version: =====================================
+//= 1.9
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Temp. monster spawn in Veins Field. [$ephiroth]
+//= 1.1 Updated monster spawn based on kRO website. [$ephiroth]
+//= 1.2 Updated mobs based on info jAthena. [$ephiroth]
+//= 1.3 Fixed some typos and Atros spawn [Playtester]
+//= 1.4 Updated spawns with info from RO Monthly [Playtester]
+//= 1.5 Updated spawn amounts to official [Playtester]
+//= 1.6 Even more accurate spawns [Playtester]
+//= 1.7 Corrected MVP spawn variance. [Gepard]
+//= 1.8 Updated to Renewal Spawns. [Kisuka]
+//= 1.9 Renewal spawn update.
+//============================================================
+
+//==================================================
+// ve_fild01 - Veins Field
+//==================================================
+ve_fild01,0,0	monster	Galion	1783,35,5000
+ve_fild01,0,0	monster	Stapo	1784,20,5000
+ve_fild01,0,0	monster	Drosera	1781,20,5000
+ve_fild01,0,0	monster	Muscipular	1780,20,5000
+ve_fild01,0,0,0,0	boss_monster	Atroce	1785,1,10800000,600000,0
+ve_fild01,0,0	monster	Red Plant	1078,10,5000
+ve_fild01,0,0	monster	Yellow Plant	1081,10,5000
+ve_fild01,270,80,20,7	monster	Blue Plant	1079,4,840000
+ve_fild01,270,80,20,7	monster	Shining Plant	1083,1,960000
+
+//==================================================
+// ve_fild02 - Veins Field
+//==================================================
+ve_fild02,0,0	monster	Drosera	1781,130,5000
+ve_fild02,0,0	monster	Muscipular	1780,20,5000
+ve_fild02,0,0	monster	Galion	1783,10,5000
+ve_fild02,120,55,50,50	boss_monster	Atroce	1785,1,21600000,600000,0
+ve_fild02,0,0	monster	Red Plant	1078,10,10000
+ve_fild02,0,0	monster	Yellow Plant	1081,10,10000
+
+//==================================================
+// ve_fild03 - Veins Field
+//==================================================
+ve_fild03,0,0	monster	Magmaring	1836,130,5000
+ve_fild03,0,0	monster	Muscipular	1780,35,5000
+ve_fild03,0,0	monster	Drosera	1781,35,5000
+ve_fild03,200,212,114,60	monster	Red Plant	1078,10,10000
+ve_fild03,0,0	monster	Yellow Plant	1081,10,10000
+
+//==================================================
+// ve_fild04 - Veins Field 
+//==================================================
+ve_fild04,0,0	monster	Muscipular	1780,100,5000
+ve_fild04,0,0	monster	Drosera	1781,50,5000
+ve_fild04,0,0	monster	Galion	1783,20,5000
+ve_fild04,0,0	monster	Yellow Plant	1081,10,10000
+ve_fild04,288,273,4,4	monster	Blue Plant	1079,3,660000
+
+//==================================================
+// ve_fild05 - Disabled on Renewal
+//==================================================
+
+//==================================================
+// ve_fild06 - Veins Field - No spawns on Renewal
+//==================================================
+//ve_fild06,0,0	monster	Shining Plant	1083,1,5000
+
+//==================================================
+// ve_fild07 - Veins Field
+//==================================================
+ve_fild07,0,0	monster	Stapo	1784,100,5000
+ve_fild07,0,0	monster	Drosera	1781,50,5000
+ve_fild07,0,0	monster	Muscipular	1780,30,5000
+ve_fild07,0,0	monster	White Plant	1082,10,600000

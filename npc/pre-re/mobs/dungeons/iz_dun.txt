@@ -1,0 +1,114 @@
+//===== rAthena Script =======================================
+//= Byalan Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 Official kRO 10.1 spawns for 1-4 [Playtester]
+//= 1.2 More accurate spawns [Playtester]
+//============================================================
+
+//==================================================
+// iz_dun00 - Undersea Tunnel F1
+//==================================================
+iz_dun00,0,0	monster	Plankton	1161,65
+iz_dun00,0,0	monster	Marina	1141,45
+iz_dun00,0,0	monster	Kukre	1070,15
+iz_dun00,0,0	monster	Hydra	1068,15
+iz_dun00,0,0	monster	Vadon	1066,15
+iz_dun00,0,0	monster	Black Mushroom	1084,5,180000,90000
+
+//==================================================
+// iz_dun01 - Undersea Tunnel F2
+//==================================================
+iz_dun01,0,0	monster	Plankton	1161,10
+iz_dun01,0,0	monster	Marina	1141,15
+iz_dun01,0,0	monster	Kukre	1070,50
+iz_dun01,0,0	monster	Hydra	1068,30
+iz_dun01,0,0	monster	Vadon	1066,60
+iz_dun01,0,0	monster	Cornutus	1067,15,300000,150000
+iz_dun01,0,0	monster	Black Mushroom	1084,10,180000,90000
+
+//==================================================
+// iz_dun02 - Undersea Tunnel F3
+//==================================================
+iz_dun02,0,0	monster	Hydra	1068,40
+iz_dun02,0,0	monster	Cornutus	1067,60
+iz_dun02,0,0	monster	Marse	1144,40
+iz_dun02,0,0	monster	Obeaune	1044,40
+iz_dun02,0,0	monster	Merman	1264,1,1800000,1200000
+iz_dun02,0,0	monster	Black Mushroom	1084,15,180000,90000
+
+//==================================================
+// iz_dun03 - Undersea Tunnel F4
+//==================================================
+iz_dun03,0,0	monster	Hydra	1068,10
+iz_dun03,0,0	monster	Phen	1158,45
+iz_dun03,0,0	monster	Marine Sphere	1142,20
+iz_dun03,0,0	monster	Swordfish	1069,40
+iz_dun03,0,0	monster	Marc	1045,40
+iz_dun03,203,59	monster	Hydra	1068,1,312000,150000
+iz_dun03,203,56	monster	Hydra	1068,1,323000,150000
+iz_dun03,203,53	monster	Hydra	1068,1,317000,150000
+iz_dun03,203,50	monster	Hydra	1068,1,323000,150000
+iz_dun03,203,47	monster	Hydra	1068,1,305000,150000
+iz_dun03,204,60	monster	Hydra	1068,1,304000,150000
+iz_dun03,204,57	monster	Hydra	1068,1,302000,150000
+iz_dun03,204,54	monster	Hydra	1068,1,310000,150000
+iz_dun03,204,51	monster	Hydra	1068,1,309000,150000
+iz_dun03,204,48	monster	Hydra	1068,1,313000,150000
+iz_dun03,191,144	monster	Hydra	1068,1,321000,150000
+iz_dun03,194,144	monster	Hydra	1068,1,316000,150000
+iz_dun03,197,144	monster	Hydra	1068,1,296000,150000
+iz_dun03,200,144	monster	Hydra	1068,1,282000,150000
+iz_dun03,203,144	monster	Hydra	1068,1,310000,150000
+iz_dun03,206,144	monster	Hydra	1068,1,305000,150000
+iz_dun03,209,144	monster	Hydra	1068,1,308000,150000
+iz_dun03,212,144	monster	Hydra	1068,1,321000,150000
+iz_dun03,193,143	monster	Hydra	1068,1,300000,150000
+iz_dun03,196,143	monster	Hydra	1068,1,300000,150000
+iz_dun03,199,143	monster	Hydra	1068,1,300000,150000
+iz_dun03,202,143	monster	Hydra	1068,1,300000,150000
+iz_dun03,205,143	monster	Hydra	1068,1,300000,150000
+iz_dun03,208,143	monster	Hydra	1068,1,300000,150000
+iz_dun03,211,143	monster	Hydra	1068,1,300000,150000
+iz_dun03,176,260	monster	Hydra	1068,1,300000,150000
+iz_dun03,180,251	monster	Hydra	1068,1,300000,150000
+iz_dun03,178,253	monster	Hydra	1068,1,300000,150000
+iz_dun03,108,249	monster	Hydra	1068,1,300000,150000
+iz_dun03,80,163	monster	Hydra	1068,1,300000,150000
+iz_dun03,0,0	monster	Merman	1264,3,1800000,1200000
+
+//==================================================
+// iz_dun04 - Undersea Tunnel F5
+//==================================================
+iz_dun04,0,0	monster	Marine Sphere	1142,10
+iz_dun04,0,0	monster	Swordfish	1069,10
+iz_dun04,0,0	monster	Merman	1264,40
+iz_dun04,0,0	monster	Strouf	1065,50,600000,300000
+iz_dun04,58,135	monster	Hydra	1068,1,305000,150000
+iz_dun04,61,135	monster	Hydra	1068,1,300000,150000
+iz_dun04,42,129	monster	Hydra	1068,1,312000,150000
+iz_dun04,42,116	monster	Hydra	1068,1,306000,150000
+iz_dun04,38,129	monster	Hydra	1068,1,300000,150000
+iz_dun04,33,129	monster	Hydra	1068,1,308000,150000
+iz_dun04,38,115	monster	Hydra	1068,1,300000,150000
+iz_dun04,33,115	monster	Hydra	1068,1,321000,150000
+iz_dun04,79,246	monster	Hydra	1068,1,300000,150000
+iz_dun04,80,246	monster	Hydra	1068,1,294000,150000
+iz_dun04,79,234	monster	Hydra	1068,1,302000,150000
+iz_dun04,80,233	monster	Hydra	1068,1,318000,150000
+iz_dun04,111,41	monster	Hydra	1068,1,300000,150000
+iz_dun04,111,38	monster	Hydra	1068,1,303000,150000
+iz_dun04,111,35	monster	Hydra	1068,1,300000,150000
+iz_dun04,69,243	monster	Hydra	1068,1,321000,150000
+iz_dun04,124,233	monster	Hydra	1068,1,300000,150000
+iz_dun04,134,233	monster	Hydra	1068,1,305000,150000
+iz_dun04,0,0	monster	Deviace	1108,3
+iz_dun04,103,231,10,10	monster	Merman	1264,3,150000
+iz_dun04,160,231,10,10	monster	Merman	1264,3,170000
+iz_dun04,95,147,10,10	monster	Merman	1264,3,150000
+iz_dun04,130,216,15,15	monster	Merman	1264,3,160000

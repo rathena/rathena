@@ -1,0 +1,42 @@
+//===== rAthena Script =======================================
+//= Amatsu Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 Official kRO 10.1 spawns [Playtester]
+//= 1.2 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// ama_dun01 - Tatami Maze
+//==================================================
+ama_dun01,0,0	monster	Miyabi Doll	1404,65
+ama_dun01,0,0	monster	Firelock Soldier	1403,45
+ama_dun01,0,0	monster	Shinobi	1401,2,180000,90000
+
+//==================================================
+// ama_dun02 - Battle Field in the Underground Forest
+//==================================================
+ama_dun02,0,0	monster	Poison Toad	1402,35,180000,90000
+ama_dun02,0,0	monster	Firelock Soldier	1403,20,60000,30000
+ama_dun02,0,0	monster	Miyabi Doll	1404,5,120000,60000
+ama_dun02,0,0	monster	Shinobi	1401,2,180000,90000
+ama_dun02,0,0	monster	Horong	1129,10
+ama_dun02,0,0	monster	The Paper	1375,1,180000,90000
+
+//==================================================
+// ama_dun03 - Amatsu Underground Shrine
+//==================================================
+ama_dun03,0,0	monster	Shinobi	1401,35,600000,300000
+ama_dun03,0,0	monster	Firelock Soldier	1403,25
+ama_dun03,0,0	monster	Miyabi Doll	1404,1
+ama_dun03,0,0	monster	Tengu	1405,40,600000,300000
+ama_dun03,0,0	monster	Mimic	1191,5
+ama_dun03,0,0	monster	The Paper	1375,20,600000,300000
+ama_dun03,0,0,0,0	boss_monster	Samurai Specter	1492,1,5460000,600000,0
+ama_dun03,0,0	monster	Shinobi	1401,20,5450000,3600000
+ama_dun03,0,0	monster	Tengu	1405,15,5440000,3600000

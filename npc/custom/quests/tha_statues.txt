@@ -1,0 +1,269 @@
+//===== rAthena Script =======================================
+//= Custom Thanatos Tower Quest
+//===== By: ==================================================
+//= Bibilol, Moryagorn
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Custom Thanatos Tower Quest
+//===== Additional Comments: =================================
+//= 1.1 Fixed wrong NPC names in their dialogues, added
+//=     Justin84's gems check in Sox NPC [Lupus]
+//============================================================
+
+//Statue (NPC)(U: UP, D: DOWN, R: RIGHT, L: LEFT) :
+// Explain Npc
+tha_t08,69,106,4	script	Statue	111,{
+	mes "You can read on the back of the statue:";
+	mes "'By the spirit of olds, the walls are closed";
+	mes "Upper floors or foreign taboo";
+	mes "By the order of the Statues you will find the way";
+	mes "Which perhaps a day will bring you to me.";
+	mes ".....Thanatos '";
+	close;
+}
+
+//Tha_t09 :
+//(Thalos)(U,L)-->tha_t09,17,158,4
+//(Mediane)(D,R)-->tha_t09,84,99,4
+//Script:
+
+tha_t09,17,158,4	script	Thalos	111,{
+	if(TSQ_CHK == 1) goto done;
+	mes "[Thalos]";
+	mes "You must find the 2nd Statue now.";
+	set TSQ_CHK,1;
+	close;
+done:
+	mes "[Thalos]";
+	mes "Go search the 2nd Statue!";
+	close;
+	
+}
+
+tha_t09,84,99,4	script	Mediane	111,{
+	if(TSQ_CHK != 1) goto nook;
+	mes "[Mediane]";
+	mes "Okay, i am warping you to the next floor now.";
+	next;
+	set TSQ_CHK,0;
+	warp "tha_t10",	165,	138; 
+	close;
+nook:
+	mes "[Mediane]";
+	mes "You must talk with the Spirit in the 1st Statue.";
+	close;
+}
+
+//Tha_t10 :
+//(Melkor)(U)-->tha_t10,130,159,4
+//(Zebrus)(D,R)-->tha_t10,160,98,4
+//(Veriaelle)(D,L)-->tha_t10,99,97,4
+//Script:
+
+tha_t10,130,159,4	script	Melkor	111,{
+	if(TSQ_CHK == 1) goto done;
+	mes "[Melkor]";
+	mes "You must find the other Spirits now.";
+	mes "We are 3.";
+	set TSQ_CHK,1;
+	close;
+done:
+	mes "[Melkor]";
+	mes "Go Search, They are in this floor.";
+	close;
+}
+
+tha_t10,160,98,4	script	Zebrus	111,{
+	if(TSQ_CHK != 1) goto nook;
+	mes "[Zebrus]";
+	mes "Keep on this way, There is one Spirit left";
+	set TSQ_CHK,2;
+	close;
+nook:
+	mes "[Zebrus]";
+	mes "You seems to be lost, Go back and talk to Melkor.";
+	next;
+	set TSQ_CHK,0;
+	close;
+}
+
+tha_t10,99,97,4	script	Veriaelle	111,{
+	if(TSQ_CHK != 2) goto nook;
+	mes "[Veriaelle]";
+	mes "Okay, i am warping you to the next floor.";
+	next;
+	set TSQ_CHK,0;
+	warp "tha_t11",	86,	38;
+	close;
+nook:
+	mes "[Veriaelle]";
+	mes "You seems to be lost, Go back and talk to Melkor.";
+	next;
+	set TSQ_CHK,0;
+	close;
+}
+
+//Tha_t11 :
+//(Throtre)(U,L)-->tha_t11,16,85,4
+//(Klermaz)(D,R)-->tha_t11,85,16,4
+//(Mihane)(D,L)-->tha_t11,16,16,4
+//(Seranes)(U,R)-->tha_t11,85,85,4
+//Script:
+
+tha_t11,16,85,4	script	Throtre	111,{
+	if(TSQ_CHK == 1) goto done;
+	mes "[Throtre]";
+	mes "You got my authorization for the next floor";
+	mes "However, you must show how strong you are to the other Spirits";
+	set TSQ_CHK,1;
+	close;
+done:
+	mes "[Throtre]";
+	mes "Go search, They Can't leave this floor.";
+	close;
+}
+
+tha_t11,85,16,4	script	Klermaz	111,{
+	if(TSQ_CHK != 1) goto nook;
+	mes "[Klermaz]";
+	mes "Hmm it seems that Throtre allowed you to pass.";
+	mes "Well then you have my blessing, 2 Spirits remaining.";
+	set TSQ_CHK,2;
+	close;
+nook:
+	mes "[Klermaz]";
+	mes "You seems to be lost, Go back and talk to Throtre.";
+	next;
+	set TSQ_CHK,0;
+	close;
+}
+
+tha_t11,16,16,4	script	Mihane	111,{
+	if(TSQ_CHK != 2) goto nook;
+	mes "[Mihane]";
+	mes "Keep on this way, Only 1 Left.";
+	set TSQ_CHK,3;
+	close;
+nook:
+	mes "[Mihane]";
+	mes "Sorry, You must start over from the begining.";
+	next;
+	set TSQ_CHK,0;
+	close;
+}
+
+tha_t11,85,85,4	script	Seranes	111,{
+	if(TSQ_CHK != 3 ) goto nook;
+	mes "[Seranes]";
+	mes "Perfect, it seems that the other spirits grants you the access.";
+	mes "I am warping you to the next floor.";
+	next;
+	set TSQ_CHK,0;
+	warp "tha_t12",	129,	58;
+	close;
+nook:
+	mes "[Seranes]";
+	mes "You did not follow the good order, starts again from the begining.";
+	next;
+	set TSQ_CHK,0;
+	close;
+}
+
+//Tha_t12 ( M: Middle):
+//(Nox)(D,L)-->tha_t12,103,18,4
+//(Vox)(R)-->tha_t12,162,58,4
+//(Hox)(L)-->tha_t12,96,57,4
+//(Dox)(D,R)-->tha_t12,153,17,4
+//(Sox)(U)-->tha_t12,128,88,4
+//Script:
+
+tha_t12,103,18,4	script	Nox	111,{
+	if(TSQ_CHK == 1 ) goto done;
+	mes "[Nox]";
+	mes "Fine, 4 Spirits left.";
+	set TSQ_CHK,1;
+	close;
+done:
+	mes "[Nox]";
+	mes "Go search, They can't leave this floor.";
+	close;
+}
+
+tha_t12,162,58,4	script	Vox	111,{
+	if(TSQ_CHK != 1 ) goto nook;
+	mes "[Vox]";
+	mes "Keep on this way, 3 Spirits remaining !";
+	set TSQ_CHK,2;
+	close;
+nook:
+	mes "[Vox]";
+	mes "Sorry, Go back and talk to Nox.";
+	next;
+	set TSQ_CHK,0;
+	close;
+}
+
+tha_t12,96,57,4	script	Hox	111,{
+	if(TSQ_CHK != 2 ) goto nook;
+	mes "[Hox]";
+	mes "You are on the good way, 2 Spirits remaining !";
+	set TSQ_CHK,3;
+	close;
+nook:
+	mes "[Hox]";
+	mes "Sorry, Go back and talk to Vox.";
+	next;
+	set TSQ_CHK,0;
+	close;
+}
+
+tha_t12,153,17,4	script	Dox	111,{
+	if(TSQ_CHK != 3 ) goto nook;
+	mes "[Dox]";
+	mes "Perfect, 1 Spirit left.";
+	set TSQ_CHK,4;
+	close;
+nook:
+	mes "[Dox]";
+	mes "Sorry, Go back and talk to Hox.";
+	next;
+	set TSQ_CHK,0;
+	close;
+}
+
+tha_t12,128,88,4	script	Sox	111,{
+	if(TSQ_CHK != 4 ) goto nook;
+	mes "[Sox]";
+	mes "You have just passed the test successfully.";
+	next;
+	mes "[Sox]";
+	mes "You have to give me Red Magic Stone, Yellow Magic Stone, Blue Magic Stone & Green Magic Stone.";
+	next;
+	if(countitem(7426) < 1 || countitem(7427) < 1 || countitem(7428) < 1 || countitem(7429) < 1) goto nostone;
+	delitem 7426,1;
+	delitem 7427,1;
+	delitem 7428,1;
+	delitem 7429,1;
+	mes "[Sox]";
+	mes "I will now warp you to steps of Fate.";
+	mes "Good-bye.";
+	next;
+	set TSQ_CHK,0;
+	warp "thana_step", 186, 223;
+	close;
+
+nostone:
+	mes "[Sox]";
+	mes "Oh well, seems you don't have enough stones.";
+	close;
+
+nook:
+	mes "[Sox]";
+	mes "Sorry, Go back and talk to Dox.";
+	next;
+	set TSQ_CHK,0;
+	close;
+}

@@ -1,0 +1,43 @@
+//===== rAthena Script =======================================
+//= Louyang Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 Updated by MasterOfMuppets
+//= 1.2 Added Bacsojin and Chung E [MasterOfMuppets]
+//= 1.3 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// lou_dun01 - The Royal Tomb 
+//==================================================
+lou_dun01,0,0	monster	Jing Guai	1517,45,5000
+lou_dun01,0,0	monster	Grizzly	1381,15,5000
+lou_dun01,0,0	monster	Mi Gao	1516,15,5000
+lou_dun01,0,0	monster	Horong	1129,15,5000
+lou_dun01,0,0	monster	Side Winder	1037,10,5000
+lou_dun01,0,0	monster	Leib Olmai	1306,1,300000,120000
+lou_dun01,197,77,10,10	monster	Black Mushroom	1084,5,5000
+lou_dun01,0,0	monster	Shining Plant	1083,5,5000
+
+//==================================================
+// lou_dun02 - Inside the Royal Tomb
+//==================================================
+lou_dun02,0,0	monster	Yao Jun	1512,40,5000
+lou_dun02,0,0	monster	Munak	1026,25,5000
+lou_dun02,0,0	monster	Mimic	1191,5,5000
+lou_dun02,0,0	monster	Zhu Po Long	1514,5,5000
+
+//==================================================
+// lou_dun03 - Suei Long Gon 
+//==================================================
+lou_dun03,0,0	monster	Zhu Po Long	1514,25,5000
+lou_dun03,0,0	monster	Yao Jun	1512,25,5000
+lou_dun03,0,0	monster	Mao Guai	1513,15,5000
+lou_dun03,0,0	monster	Green Maiden	1631,5,5000
+lou_dun03,0,0	monster	Green Maiden	1631,5,3000000,1800000
+lou_dun03,0,0,0,0	boss_monster	White Lady	1630,1,7000000,600000,1

@@ -1,0 +1,19 @@
+//===== rAthena Script =======================================
+//= Eclage Field Monster Spawn Script
+//===== By: ==================================================
+//= refis
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= jRO monster spawns, taken from Auriga.
+//===== Additional Comments: =================================
+//= 1.0 First version. [Euphy]
+//============================================================
+
+//==================================================
+// ecl_fild01 - Blooming Flower Land
+//==================================================
+ecl_fild01.gat,0,0	monster	Menblatt	2363,60,5000
+ecl_fild01.gat,0,0	monster	Petal	2364,20,5000

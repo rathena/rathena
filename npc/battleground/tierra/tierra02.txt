@@ -1,0 +1,796 @@
+//===== rAthena Script ======================================= 
+//= BattleGround System - Tierra Gorge 2
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Second Tierra Gorge Battleground.
+//= - Winning Team: 3 badges (5 if VIP)
+//= - Losing Team: 1 badge (3 if VIP)
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//= 1.1 Updated 'waitingroom' to support required zeny/lvl. [Kisuka]
+//= 1.2 Removed MaxLvl check in waitingrooms.
+//= 1.3 Label standardization. [Euphy]
+//= 1.4 Added GM management function. [Euphy]
+//= 1.5 Added VIP features and created a reward function. [Euphy]
+//============================================================
+
+// Waiting Room NPCs
+//============================================================
+bat_room,114,227,5	script	Lieutenant Rundel	418,{
+	end;
+
+OnInit:
+	waitingroom "Battle Station",11,"start#bat_a02::OnReadyCheck",1,0,80;
+	end;
+
+OnEnterBG:
+	set $@TierraBG2_id1, waitingroom2bg("bat_a02",50,374,"start#bat_a02::OnGuillaumeQuit","");
+	end;
+}
+
+bat_room,114,204,1	script	Lieutenant Guerrit	414,{
+	end;
+
+OnInit:
+	waitingroom "Battle Station",11,"start#bat_a02::OnReadyCheck",1,0,80;
+	end;
+
+OnEnterBG:
+	set $@TierraBG2_id2, waitingroom2bg("bat_a02",42,16,"start#bat_a02::OnCroixQuit","");
+	end;
+}
+
+bat_room,1,151,3	script	#bat_a02_timer	844,{
+	end;
+
+OnInit:
+OnEnable:
+	initnpctimer;
+	end;
+
+OnStop:
+	stopnpctimer;
+	end;
+
+OnTimer1000:
+	stopnpctimer;
+	initnpctimer;
+	set .@chk_bat_a02,getmapusers("bat_a02");
+	if (.@chk_bat_a02 < 1) {
+		set $@TierraBG2,0; set $@TierraBG2_Victory, 0;
+		if( $@TierraBG2_id1 ) { bg_destroy $@TierraBG2_id1; set $@TierraBG2_id1, 0; }
+		if( $@TierraBG2_id2 ) { bg_destroy $@TierraBG2_id2; set $@TierraBG2_id2, 0; }
+		donpcevent "start#bat_a02::OnReadyCheck";
+	}
+	end;
+}
+
+bat_a02,352,342,0	script	#bat_a02_quest_a	-1,5,5,{
+	end;
+
+OnTouch:
+	if (checkquest(2069) < 0)
+		setquest 2069;
+	end;
+}
+
+bat_a02,353,52,0	script	#bat_a02_quest_b	-1,5,5,{
+	end;
+
+OnTouch:
+	if (checkquest(2069) < 0)
+		setquest 2069;
+	end;
+}
+
+bat_room,113,220,0	warp	back_bgrooma02a	1,1,bat_room,154,150
+bat_room,113,211,0	warp	back_bgrooma02b	1,1,bat_room,154,150
+
+// Tierra Gorge Battleground Engine
+//============================================================
+bat_a02,15,15,3	script	start#bat_a02	844,{
+OnInit:
+	mapwarp "bat_a02","bat_room",154,150;
+	end;
+
+OnEnable:
+	donpcevent "OBJ#bat_a02_a::OnKill";
+	donpcevent "OBJ#bat_a02_a::OnEnable";
+	donpcevent "OBJ#bat_a02_b::OnKill";
+	donpcevent "OBJ#bat_a02_b::OnEnable";
+	donpcevent "barricade#bat_a02_a::OnKill";
+	donpcevent "barricade#bat_a02_a::OnEnable";
+	donpcevent "barricade#bat_a02_b::OnKill";
+	donpcevent "barricade#bat_a02_b::OnEnable";
+	donpcevent "OBJ#bat_a02_n::OnKill";
+	donpcevent "OBJ#bat_a02_n::OnEnable";
+	donpcevent "NOBJ_mob#bat_a02_a::OnKill";
+	donpcevent "NOBJ_mob#bat_a02_b::OnKill";
+	donpcevent "Battle Therapist#a02_a::OnEnable";
+	donpcevent "Battle Therapist#a02_b::OnEnable";
+	donpcevent "countdown#bat_a02::OnEnable";
+	disablenpc "Guillaume Blacksmith#a02";
+	disablenpc "Croix Blacksmith#bat_a02";
+	disablenpc "Guillaume Vintenar#a02_a";
+	disablenpc "Croix Vintenar#a02_b";
+	end;
+
+OnGuillaumeQuit:
+OnCroixQuit:
+	bg_leave;
+	end;
+
+OnReadyCheck:
+	if( $@TierraBG2 )
+		end;
+	set .@Guillaume, getwaitingroomstate(0,"Lieutenant Rundel");
+	set .@Croix, getwaitingroomstate(0,"Lieutenant Guerrit");
+	if( !.@Guillaume && !.@Croix ) {
+		donpcevent "#bat_a02_timer::OnStop";
+		end;
+	}
+	else if( .@Guillaume < 10 || .@Croix < 10 )
+		end;
+	set $@TierraBG2,1;
+	donpcevent "Lieutenant Rundel::OnEnterBG";
+	donpcevent "Lieutenant Guerrit::OnEnterBG";
+	donpcevent "start#bat_a02::OnEnable";
+	bg_warp $@TierraBG2_id1,"bat_a02",352,342;
+	bg_warp $@TierraBG2_id2,"bat_a02",353,52;
+	initnpctimer;
+	end;
+
+OnTimer10000:
+	stopnpctimer;
+	donpcevent "#bat_a02_timer::OnEnable";
+	end;
+}
+
+bat_a02,15,16,3	script	OBJ#bat_a02_a	844,{
+OnEnable:
+	bg_monster $@TierraBG2_id1,"bat_a02",177,345,"Food Storage",1909,"OBJ#bat_a02_a::OnMyMobDead";
+	end;
+
+OnKill:
+	killmonster "bat_a02","OBJ#bat_a02_a::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("bat_a02","OBJ#bat_a02_a::OnMyMobDead") < 1) {
+		donpcevent "Battle Therapist#a02_a::OnStop";
+		donpcevent "Battle Therapist#a02_b::OnStop";
+		set $@TierraBG2_Victory, 2;
+		enablenpc "Guillaume Vintenar#a02_a";
+		enablenpc "Croix Vintenar#a02_b";
+		mapannounce "bat_a02", "Croix Vintenar Swandery: We destroyed Guillaume's Food Storage. We won that! Wow!",bc_map,"0xFFCE00";
+		bg_warp $@TierraBG2_id1,"bat_a02",50,374;
+		bg_warp $@TierraBG2_id2,"bat_a02",42,16;
+	}
+	end;
+}
+
+bat_a02,15,17,3	script	OBJ#bat_a02_b	844,{
+OnEnable:
+	bg_monster $@TierraBG2_id2,"bat_a02",167,50,"Food Depot",1910,"OBJ#bat_a02_b::OnMyMobDead";
+	end;
+
+OnKill:
+	killmonster "bat_a02","OBJ#bat_a02_b::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("bat_a02","OBJ#bat_a02_b::OnMyMobDead") < 1) {
+		donpcevent "Battle Therapist#a02_a::OnStop";
+		donpcevent "Battle Therapist#a02_b::OnStop";
+		set $@TierraBG2_Victory, 1;
+		enablenpc "Guillaume Vintenar#a02_a";
+		enablenpc "Croix Vintenar#a02_b";
+		mapannounce "bat_a02", "Guillaume Vintenar Axl Rose : We destroyed Croix's Food Storage. We won that! Wow!",bc_map,"0xFFCE00";
+		bg_warp $@TierraBG2_id1,"bat_a02",50,374;
+		bg_warp $@TierraBG2_id2,"bat_a02",42,16;
+	}
+	end;
+}
+
+bat_a02,15,18,3	script	barricade#bat_a02_a	844,{
+OnEnable:
+	for( set .@i,185; .@i < 202; set .@i,.@i+1 )
+		bg_monster $@TierraBG2_id1,"bat_a02",.@i,266,"Barricade",1906,"barricade#bat_a02_a::OnMyMobDead";
+	setwall "bat_a02",186,266,16,6,1,"bat_a02_c1";
+	end;
+
+OnKill:
+	killmonster "bat_a02","barricade#bat_a02_a::OnMyMobDead";
+	delwall "bat_a02_c1";
+	end;
+
+OnMyMobDead:
+	if (mobcount("bat_a02","barricade#bat_a02_a::OnMyMobDead") < 17) {
+		killmonster "bat_a02","barricade#bat_a02_a::OnMyMobDead";
+		delwall "bat_a02_c1";
+		enablenpc "Guillaume Blacksmith#a02";
+		mapannounce "bat_a02", "Guillaume Vintenar Axl Rose : The Barricade in the valley has been destroyed! Where's the Blacksmith? We need to rebuild the Barricade!",bc_map,"0xFFCE00";
+	}
+	end;
+}
+
+bat_a02,15,19,3	script	barricade#bat_a02_b	844,{
+OnEnable:
+	for( set .@i,169; .@i < 186; set .@i,.@i+1 )
+		bg_monster $@TierraBG2_id2,"bat_a02",.@i,129,"Barricade",1906,"barricade#bat_a02_b::OnMyMobDead";
+	setwall "bat_a02",170,129,16,6,1,"bat_a02_g1";
+	end;
+
+OnKill:
+	killmonster "bat_a02","barricade#bat_a02_b::OnMyMobDead";
+	delwall "bat_a02_g1";
+	end;
+
+OnMyMobDead:
+	if (mobcount("bat_a02","barricade#bat_a02_b::OnMyMobDead") < 17) {
+		killmonster "bat_a02","barricade#bat_a02_b::OnMyMobDead";
+		delwall "bat_a02_g1";
+		enablenpc "Croix Blacksmith#bat_a02";
+		mapannounce "bat_a02", "Croix Vintenar Swandery : The Barricade in the valley has been destroyed! Where's the Blacksmith? We need to rebuild the Barricade!",bc_map,"0xFFCE00";
+	}
+	end;
+}
+
+bat_a02,15,20,3	script	OBJ#bat_a02_n	844,{
+OnEnable:
+	monster "bat_a02",273,203,"Neutrality Flag",1911,1,"OBJ#bat_a02_n::OnMyMobDead";
+	end;
+
+OnKill:
+	killmonster "bat_a02","OBJ#bat_a02_n::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	if (mobcount("bat_a02","OBJ#bat_a02_n::OnMyMobDead") < 17) {
+		bg_team_setxy getcharid(4),56,212;
+		if (getcharid(4) == $@TierraBG2_id1) {
+			donpcevent "NOBJ_mob#bat_a02_a::OnEnable";
+			mapannounce "bat_a02", "Guillaume captured a Neutrality Flag, so they have an advantage.",bc_map,"0xFFCE00";
+		}
+		else {
+			donpcevent "NOBJ_mob#bat_a02_b::OnEnable";
+			mapannounce "bat_a02", "Croix captured a Neutrality Flag, so they have an advantage.",bc_map,"0xFFCE00";
+		}
+	}
+	end;
+}
+
+bat_a02,15,21,3	script	NOBJ_mob#bat_a02_a	844,{
+OnEnable:
+	donpcevent "NOBJ_mob#bat_a02_b::OnKill";
+	bg_monster $@TierraBG2_id1,"bat_a02",272,204,"Guillaume Camp Guardian",1949,"NOBJ_mob#bat_a02_a::OnMyMobDead";
+	bg_monster $@TierraBG2_id1,"bat_a02",272,213,"Guillaume Camp Guardian",1949,"NOBJ_mob#bat_a02_a::OnMyMobDead";
+	bg_monster $@TierraBG2_id1,"bat_a02",273,197,"Guillaume Camp Guardian",1950,"NOBJ_mob#bat_a02_a::OnMyMobDead";
+	end;
+
+OnKill:
+	killmonster "bat_a02","NOBJ_mob#bat_a02_a::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	end;
+}
+
+bat_a02,15,22,3	script	NOBJ_mob#bat_a02_b	844,{
+OnEnable:
+	donpcevent "NOBJ_mob#bat_a02_a::OnKill";
+	bg_monster $@TierraBG2_id2,"bat_a02",272,204,"Croix Camp Guardian",1949,"NOBJ_mob#bat_a02_a::OnMyMobDead";
+	bg_monster $@TierraBG2_id2,"bat_a02",272,213,"Croix Camp Guardian",1949,"NOBJ_mob#bat_a02_a::OnMyMobDead";
+	bg_monster $@TierraBG2_id2,"bat_a02",273,197,"Croix Camp Guardian",1950,"NOBJ_mob#bat_a02_a::OnMyMobDead";
+	end;
+
+OnKill:
+	killmonster "bat_a02","NOBJ_mob#bat_a02_b::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	end;
+}
+
+bat_a02,185,270,1	script	Guillaume Blacksmith#a02	851,{
+	if (getcharid(4) == $@TierraBG2_id1) {
+		mes "[Guillaume Blacksmith]";
+		mes "We are in urgency! The Barricade has been destroyed!";
+		mes "We can repair the Barricade with ^3131FF50 Stones, 3 Sinew of Bear, 500 Metal Fragments, 30 Rough Elunium and 100 Gold.^000000";
+		mes "We have it all except for the 50 Stones!";
+		next;
+		switch(select("Repair.:Leave it.")) {
+		case 1:
+			if (countitem(7049) > 49) {
+				mes "[Guillaume Blacksmith]";
+				mes "You brought enough stones! Let's go and repair.";
+				next;
+				mes "..";
+				next;
+				mes "....";
+				next;
+				mes "......";
+				next;
+				mes "........";
+				next;
+				mes "..........";
+				next;
+				mes "............";
+				next;
+				mes "..............";
+				next;
+				mes "[Guillaume Blacksmith]";
+				mes "Combine Stones and Gold in the proper percentage.";
+				next;
+				mes "[Guillaume Blacksmith]";
+				mes "Combine Stones and Gold in the proper percentage and shape the Barricade.";
+				next;
+				mes "[Guillaume Blacksmith]";
+				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger.";
+				next;
+				mes "[Guillaume Blacksmith]";
+				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Now decorate with Metal Fragments.";
+				next;
+				mes "[Guillaume Blacksmith]";
+				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Decorate with Metal Fragments, and plait stones with Sinew of Bear!";
+				next;
+				mes "..............";
+				mes "..............";
+				mes "..............";
+				mes "..............";
+				mes "..............";
+				next;
+				specialeffect EF_REPAIRWEAPON;
+				mes "[Guillaume Blacksmith]";
+				mes "Wow! It's done.";
+				mes "We are relieved.";
+				delitem 7049,50; //Stone
+				donpcevent "barricade#bat_a02_a::OnEnable";
+				close2;
+				disablenpc "Guillaume Blacksmith#a02";
+				end;
+			}
+			else {
+				mes "[Guillaume Blacksmith]";
+				mes "You don't have enough Stones!";
+				next;
+				mes "[Guillaume Blacksmith]";
+				mes "^3131FFWe need 50 Stones.^000000";
+				mes "We are busy, so please hurry.";
+				close;
+			}
+		case 2:
+			mes "[Guillaume Blacksmith]";
+			mes "There are enemies coming! Let's evacuate from here!";
+			close;
+		}
+	}
+	else {
+		mes "[Guillaume Blacksmith]";
+		mes "There the enemy is coming!";
+		close;
+	}
+
+OnInit:
+	disablenpc "Guillaume Blacksmith#a02";
+	end;
+}
+
+bat_a02,170,121,5	script	Croix Blacksmith#bat_a02	851,{
+	if (getcharid(4) == $@TierraBG2_id2) {
+		mes "[Croix Blacksmith]";
+		mes "We are in urgency! The Barricade has been destroyed!";
+		mes "We can repair the Barricade with ^3131FF50 Stones, 3 Sinew of Bear, 500 Metal Fragments, 30 Rough Elunium and 100 Gold.^000000";
+		mes "We have it all except for the 50 Stones!";
+		next;
+		switch(select("Repair.:Leave it.")) {
+		case 1:
+			if (countitem(7049) > 49) {
+				mes "[Croix Blacksmith]";
+				mes "You brought enough stones! Let's go and repair.";
+				next;
+				mes "..";
+				next;
+				mes "....";
+				next;
+				mes "......";
+				next;
+				mes "........";
+				next;
+				mes "..........";
+				next;
+				mes "............";
+				next;
+				mes "..............";
+				next;
+				mes "[Croix Blacksmith]";
+				mes "Combine Stones and Gold in the proper percentage.";
+				next;
+				mes "[Croix Blacksmith]";
+				mes "Combine Stones and Gold in the proper percentage and shape the Barricade.";
+				next;
+				mes "[Croix Blacksmith]";
+				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger.";
+				next;
+				mes "[Croix Blacksmith]";
+				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Now decorate with Metal Fragments.";
+				next;
+				mes "[Croix Blacksmith]";
+				mes "Combine Stones and Gold in the proper percentage and shape the Barricade, then add Rough Elunium to make it stronger. Decorate with Metal Fragments, and plait stones with Sinew of Bear!";
+				next;
+				mes "..............";
+				mes "..............";
+				mes "..............";
+				mes "..............";
+				mes "..............";
+				next;
+				specialeffect EF_REPAIRWEAPON;
+				mes "[Croix Blacksmith]";
+				mes "Wow! It's done.";
+				mes "We are relieved.";
+				delitem 7049,50; //Stone
+				donpcevent "barricade#bat_a02_b::OnEnable";
+				close2;
+				disablenpc "Croix Blacksmith#bat_a02";
+				end;
+			}
+			else {
+				mes "[Croix Blacksmith]";
+				mes "You don't have enough Stones!";
+				next;
+				mes "[Croix Blacksmith]";
+				mes "^3131FFWe need 50 Stone.^000000";
+				mes "We are busy, so please hurry.";
+				close;
+			}
+		case 2:
+			mes "[Croix Blacksmith]";
+			mes "There are enemies coming! Let's evacuate from here!";
+			close;
+		}
+	}
+	else {
+		mes "[Croix Blacksmith]";
+		mes "There, the enemy is coming!";
+		close;
+	}
+
+OnInit:
+	disablenpc "Croix Blacksmith#bat_a02";
+	end;
+}
+
+bat_a02,53,377,3	script	Battle Therapist#a02_a	95,{
+	specialeffect2 EF_HEAL;
+	mes "[Battle Therapist]";
+	mes "Just close your eyes,";
+	mes "and take a deep breath.";
+	mes "You can be free from pain.";
+	close;
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnEnable:
+	stopnpctimer;
+	initnpctimer;
+	enablenpc "Battle Therapist#a02_a";
+	end;
+
+OnStop:
+	disablenpc "bat_a02_rp1_a_warp";
+	disablenpc "Battle Therapist#a02_a";
+	stopnpctimer;
+	end;
+
+OnTimer25000:
+	specialeffect EF_SANCTUARY;
+	enablenpc "bat_a02_rp1_a_warp";
+	end;
+
+OnTimer26000:
+	disablenpc "bat_a02_rp1_a_warp";
+	end;
+
+OnTimer26500:
+	donpcevent "Battle Therapist#a02_a::OnEnable";
+	end;
+}
+
+bat_a02,51,375,0	script	bat_a02_rp1_a_warp	-1,10,10,{
+OnInit:
+	disablenpc "bat_a02_rp1_a_warp";
+	end;
+
+OnTouch_:
+	percentheal 100,100;
+	warp "bat_a02",352,342;
+	end;
+}
+
+bat_a02,45,19,3	script	Battle Therapist#a02_b	95,{
+	specialeffect2 EF_HEAL;
+	mes "[Battle Therapist]";
+	mes "Just close your eyes,";
+	mes "and take a deep breath.";
+	mes "You can be free from pain.";
+	close;
+	end;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnEnable:
+	stopnpctimer;
+	initnpctimer;
+	enablenpc "Battle Therapist#a02_b";
+	end;
+
+OnStop:
+	disablenpc "bat_a02_rp1_b_warp";
+	disablenpc "Battle Therapist#a02_b";
+	stopnpctimer;
+	end;
+
+OnTimer25000:
+	specialeffect EF_SANCTUARY;
+	enablenpc "bat_a02_rp1_b_warp";
+	end;
+
+OnTimer26000:
+	disablenpc "bat_a02_rp1_b_warp";
+	end;
+
+OnTimer26500:
+	donpcevent "Battle Therapist#a02_b::OnEnable";
+	end;
+}
+
+bat_a02,43,17,0	script	bat_a02_rp1_b_warp	-1,10,10,{
+OnInit:
+	disablenpc "bat_a02_rp1_b_warp";
+	end;
+
+OnTouch:
+	percentheal 100,100;
+	warp "bat_a02",353,52;
+	end;
+}
+
+bat_a02,60,216,3	script	Valley Ghost#bat_a02_n	950,{
+	specialeffect2 EF_HEAL;
+	mes "[Valley Ghost]";
+	mes "Boo...Boo...";
+	close;
+
+OnInit:
+	initnpctimer;
+	end;
+
+OnEnable:
+	stopnpctimer;
+	initnpctimer;
+	end;
+
+OnTimer25000:
+	specialeffect EF_SANCTUARY;
+	enablenpc "bat_a02_rp1_n_warp";
+	end;
+
+OnTimer26000:
+	disablenpc "bat_a02_rp1_n_warp";
+	end;
+
+OnTimer26500:
+	donpcevent "Valley Ghost#bat_a02_n::OnEnable";
+	end;
+}
+
+bat_a02,55,213,0	script	bat_a02_rp1_n_warp	-1,10,10,{
+OnInit:
+	disablenpc "bat_a02_rp1_n_warp";
+	end;
+
+OnTouch:
+	percentheal 100,100;
+	warp "bat_a02",301,209;
+	end;
+}
+
+bat_a02,194,267,0	script	barri_warp_up#bat_a02_a	-1,7,0,{
+OnTouch:
+	if (getcharid(4) == $@TierraBG2_id1)
+		warp "bat_a02",194,261;
+	end;
+}
+
+bat_a02,194,265,0	script	barri_warp_down#bat_a02a	-1,7,0,{
+OnTouch:
+	if (getcharid(4) == $@TierraBG2_id1) 
+		warp "bat_a02",194,270;
+	end;
+}
+
+bat_a02,177,130,0	script	barri_warp_up#bat_a02_b	-1,7,0,{
+OnTouch:
+	if (getcharid(4) == $@TierraBG2_id2)
+		warp "bat_a02",178,125;
+	end;
+}
+
+bat_a02,177,128,0	script	barri_warp_down#bat_a02b	-1,7,0,{
+OnTouch:
+	if (getcharid(4) == $@TierraBG2_id2)
+		warp "bat_a02",178,134;
+	end;
+}
+
+bat_a02,352,342,0	script	A_CODE#bat_a02	-1,5,5,{
+OnTouch:
+	set .@chk_bfquest,checkquest(2069);
+	if ((.@chk_bfquest == 0) || (.@chk_bfquest == 1))
+		setquest 2069;
+	end;
+}
+
+bat_a02,353,52,0	script	B_CODE#bat_a02	-1,5,5,{
+OnTouch:
+	set .@chk_bfquest,checkquest(2069);
+	if ((.@chk_bfquest == 0) || (.@chk_bfquest == 1))
+		setquest 2069;
+	end;
+}
+
+bat_a02,169,227,0	warp	underladd#bat_a02_1	1,1,bat_a02,178,228
+bat_a02,208,164,0	warp	underladd#bat_a02_2	1,1,bat_a02,200,171
+
+bat_a02,171,309,3	script	Guillaume Camp#flag11	973,{ end; }
+bat_a02,149,310,3	script	Guillaume Camp#flag12	973,{ end; }
+bat_a02,119,336,3	script	Guillaume Camp#flag13	973,{ end; }
+bat_a02,118,357,3	script	Guillaume Camp#flag14	973,{ end; }
+bat_a02,150,380,3	script	Guillaume Camp#flag15	973,{ end; }
+bat_a02,173,380,3	script	Guillaume Camp#flag16	973,{ end; }
+bat_a02,210,344,3	script	Guillaume Camp#flag17	973,{ end; }
+bat_a02,350,325,3	script	Guillaume Camp#flag18	973,{ end; }
+bat_a02,358,325,3	script	Guillaume Camp#flag19	973,{ end; }
+
+bat_a02,138,12,3	script	Croix Camp#flag11	974,{ end; }
+bat_a02,108,36,3	script	Croix Camp#flag12	974,{ end; }
+bat_a02,108,63,3	script	Croix Camp#flag13	974,{ end; }
+bat_a02,136,87,3	script	Croix Camp#flag14	974,{ end; }
+bat_a02,167,86,3	script	Croix Camp#flag15	974,{ end; }
+bat_a02,199,49,3	script	Croix Camp#flag16	974,{ end; }
+bat_a02,168,16,3	script	Croix Camp#flag17	974,{ end; }
+bat_a02,357,74,3	script	Croix Camp#flag18	974,{ end; }
+bat_a02,348,74,3	script	Croix Camp#flag19	974,{ end; }
+
+bat_a02,53,377,3	script	Guillaume Vintenar#a02_a	419,{
+	if (getcharid(4) == $@TierraBG2_id1) {
+		if ($@TierraBG2_Victory == 1)
+			callfunc "F_BG_Badge",1,"Guillaume","Tierra";
+		else
+			callfunc "F_BG_Badge",0,"Guillaume","Tierra";
+	}
+	else {
+		if ($@TierraBG2_Victory == 2)
+			callfunc "F_BG_Badge",0,"Guillaume","Tierra";
+		else
+			callfunc "F_BG_Badge",1,"Guillaume","Tierra";
+	}
+	bg_leave;
+	warp "bat_room",154,150;
+	end;
+
+OnInit:
+	disablenpc "Guillaume Vintenar#a02_a";
+	end;
+}
+
+bat_a02,45,19,3	script	Croix Vintenar#a02_b	415,{
+	if (getcharid(4) == $@TierraBG2_id2) {
+		if ($@TierraBG2_Victory == 2)
+			callfunc "F_BG_Badge",1,"Croix","Tierra";
+		else
+			callfunc "F_BG_Badge",0,"Croix","Tierra";
+	}
+	else {
+		if ($@TierraBG2_Victory == 1)
+			callfunc "F_BG_Badge",0,"Croix","Tierra";
+		else
+			callfunc "F_BG_Badge",1,"Croix","Tierra";
+	}
+	bg_leave;
+	warp "bat_room",154,150;
+	end;
+
+OnInit:
+	disablenpc "Croix Vintenar#a02_b";
+	end;
+}
+
+bat_a02,1,5,3	script	countdown#bat_a02	844,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnStop:
+	stopnpctimer;
+	end;
+
+OnTimer7000:
+	mapannounce "bat_a02", "Guillaume Vintenar Axl Rose : Let's attack to burn down Croix's Food Depot!",bc_map,"0xFF9900";
+	end;
+
+OnTimer8000:
+	mapannounce "bat_a02", "Croix Vintenar Swandery : Master of Valhalla! Let us be gifted with unfailing faith and courage!",bc_map,"0xFF99CC";
+	end;
+
+OnTimer1800000:
+	mapannounce "bat_a02", "Marollo VII : Guillaume Marollo, Croix Marollo! Marollo followers!",bc_map,"0x99CC00";
+	end;
+
+OnTimer1803000:
+	mapannounce "bat_a02", "Marollo VII : Both camps are competitive, so no camp would be destroyed easily. That means the Marollo kingdoms will never be defeated!",bc_map,"0x99CC00";
+	end;
+
+OnTimer1808000:
+	mapannounce "bat_a02", "Marollo VII : I think we'd better terminate the battle, and call it a draw.",bc_map,"0x99CC00";
+	end;
+
+OnTimer1822000:
+	mapannounce "bat_a02", "Marollo VII : Hold your royalty and faith for a moment, and let's settle up the battle of Tierra Gorge.",bc_map,"0x99CC00";
+	end;
+
+OnTimer1825000:
+	mapannounce "bat_a02", "Axl Rose, Swandery : Yes sir.",bc_map,"0x99CC00";
+	end;
+
+OnTimer1830000:
+	mapwarp "bat_a02","bat_room",154,150;
+	donpcevent "countdown#bat_a02::OnStop";
+	end;
+}
+
+/*
+bat_a02,351,75,3	script	Croix Camp Soldier#bat_a02_guide	934,{
+	mes "Loading...";
+	close;
+}
+
+bat_a02,356,326,3	script	Guillaume Camp Soldier#bat_a02_guide	934,{
+	mes "Loading...";
+	close;
+}
+*/
+
+bat_a02,1,1,3	script	Release all#a02	81,{
+	set .@i, callfunc("F_GM_NPC",1854,0);
+	if (.@i == -1) {
+		mes "Cancelled.";
+		close;
+	} else if (.@i == 0) {
+		end;
+	} else {
+		mes "May I help you?";
+		next;
+		switch(select("Release all.:Cancel.")) {
+		case 1:
+			mes "Bye.";
+			close2;
+			mapwarp "bat_a02","bat_room",154,150;
+			end;
+		case 2:
+			mes "Cancelled.";
+			close;
+		}
+	}
+}

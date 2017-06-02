@@ -1,0 +1,26 @@
+//===== rAthena Script =======================================
+//= Sample: Getequipcardid
+//===== By: ==================================================
+//= Lupus
+//===== Last Updated: ========================================
+//= 20140208
+//===== Description: ========================================= 
+//= Demonstrates the 'getequipcardid' command.
+//============================================================
+
+prontera,155,177,4	script	Check My Hat	810,{
+	mes "Checking your head...";
+	if (getequipisequiped(1)) {
+		.@id = getequipid(1);
+		.@ref = getequiprefinerycnt(1);
+		mes "Your hat is... " + getitemname(.@id) + "...";
+		if (.@ref)
+			mes "It has been refined " + .@ref + " times.";
+		mes "Card Slot 0:" + getequipcardid(1,0) + " 1:" + getequipcardid(1,1);
+		mes "Card Slot 2:" + getequipcardid(1,2) + " 3:" + getequipcardid(1,3);
+		close;
+	}
+	mes "Nothing?";
+	emotion e_hmm;
+	close;
+}

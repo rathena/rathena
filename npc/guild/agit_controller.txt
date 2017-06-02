@@ -1,0 +1,79 @@
+//===== rAthena Script =======================================
+//= War of Emperium - Auto-Start
+//===== By: ==================================================
+//= kalen (1.0)
+//= 1.1 by Akaru and ho|yAnge|
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= rAthena Project; RO Episode 4+
+//===== Description: =========================================
+//= Auto-start for War of Emperium FE.
+//= For instructions, see doc/woe_time_explanation.txt.
+//===== Additional Comments: =================================
+//= 1.1a changed OnInit to OnAgitInit.[kobra_k88]
+//= 1.2 added gettime checks. removed $AgitStarted var.[kobra_k88]
+//= 1.3 Moved treasure spawn time here.[kobra_k88]
+//= 1.3a Implemented Shadowlady's idea to allow for different
+//=     start/stop times on different days.[kobra_k88]
+//= 1.4 Fixed treasure chests spawn! We had to unroll some loops
+//=     Now they appear in castles from 00:01 to 00:24. [Lupus]
+//= 1.5 Fixed WOE end messages on non-WOE days, by Avaj
+//= 1.5a missing tabs [KarLaeda]
+//= 1.6 Corrected multiple "WoE has begun" announces [ultramage]
+//= 1.7 Commented out the WoE start and end announces. [L0ne_W0lf]
+//= 1.8 Castle owners displayed when WoE starts and finished. [L0ne_W0lf]
+//= 1.8a Will now report unoccupied castles at start/end. [L0ne_W0lf]
+//= 1.8b Whoops. Fixed a mistake :D [L0ne_W0lf]
+//= 1.9 Rearranged the time-checks so they no longer use goto. [L0ne_W0lf]
+//=     Removed treasure spawning function calls. (No longer needed)
+//= 2.0 Added WoE Battle Log support for broadcasts. [L0ne_W0lf]
+//============================================================
+
+-	script	Agit_Event	-1,{
+	end;
+
+OnClock2100:	//start time for Tuesday and Thursday
+OnClock2300:	//end time for Tuesday and Thursday
+OnClock1600:	//start time for Saturday
+OnClock1800:	//end time for Saturday
+
+OnAgitInit:
+	// starting time checks
+	if((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23) ||
+	   (gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23) ||
+	   (gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)>=16 && gettime(DT_HOUR)<18)) {
+		if (!agitcheck()) {
+			AgitStart;
+			callsub S_DisplayOwners;
+		}
+		end;
+	}
+
+	// end time checks
+	if ((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)==23) ||
+	    (gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)==23) ||
+	    (gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)==18)) { 
+		if (agitcheck()) {
+			AgitEnd;
+			callsub S_DisplayOwners;
+		}
+		end;
+	}
+	end;
+
+S_DisplayOwners:
+	setarray .@maps$[0],"aldeg_cas01","aldeg_cas02","aldeg_cas03","aldeg_cas04","aldeg_cas05";
+	setarray .@maps$[5],"gefg_cas01","gefg_cas02","gefg_cas03","gefg_cas04","gefg_cas05";
+	setarray .@maps$[10],"payg_cas01","payg_cas02","payg_cas03","payg_cas04","payg_cas05";
+	setarray .@maps$[15],"prtg_cas01","prtg_cas02","prtg_cas03","prtg_cas04","prtg_cas05";
+	for( set .@i, 0; .@i <= 19; set .@i, .@i+1 ) {
+		if (GetCastleData(.@maps$[.@i],1)) {
+			Announce "The [" + GetCastleName(.@maps$[.@i]) + "] castle has been conquered by the [" + GetGuildName(GetCastleData(.@maps$[.@i],1)) + "] guild.",bc_all|bc_woe;
+		}
+		else {
+			Announce "The [" + GetCastleName(.@maps$[.@i]) + "] castle is currently unoccupied.",bc_all|bc_woe;
+		}
+	}
+	end;
+}

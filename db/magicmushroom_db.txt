@@ -1,0 +1,31 @@
+// Magic Mushroom Database
+// List of skills that are randomly used through Magic Mushroom status change.
+//
+// Structure of Database:
+// SkillID{,RemoveFlag}
+//
+// - To remove entry by importing, put 1 value on 'RemoveFlag'
+
+7	//SM_MAGNUM
+8	//SM_ENDURE
+10	//MG_SIGHT
+24	//AL_RUWACH
+32	//AL_CRUCIS
+33	//AL_ANGELUS
+45	//AC_CONCENTRATION
+61	//KN_AUTOCOUNTER
+74	//PR_MAGNIFICAT
+110	//BS_HAMMERFALL
+114	//BS_MAXIMIZE
+142	//NV_FIRSTAID
+150	//TF_BACKSLIDING
+151	//TF_PICKSTONE
+157	//MG_ENERGYCOAT
+249	//CR_AUTOGUARD
+256	//CR_PROVIDENCE
+261	//MO_CALLSPIRITS
+270	//MO_EXPLOSIONSPIRITS
+326	//DC_SCREAM
+500	//GS_GLITTERING
+527	//NJ_TATAMIGAESHI
+531	//NJ_UTSUSEMI

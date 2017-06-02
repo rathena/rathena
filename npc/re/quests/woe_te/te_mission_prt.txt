@@ -1,0 +1,41 @@
+//===== rAthena Script =======================================
+//= Mission WoE TE
+//===== Description: =========================================
+//= [Official Conversion]
+//= NPC for mission WoE TE at Prontera
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Capuche]
+//============================================================
+
+te_prtcas01,2,2,0	duplicate(#popswitch)	#popswitch_prt01	CLEAR_NPC
+te_prtcas02,2,2,0	duplicate(#popswitch)	#popswitch_prt02	CLEAR_NPC
+te_prtcas03,2,2,0	duplicate(#popswitch)	#popswitch_prt03	CLEAR_NPC
+te_prtcas04,2,2,0	duplicate(#popswitch)	#popswitch_prt04	CLEAR_NPC
+te_prtcas05,2,2,0	duplicate(#popswitch)	#popswitch_prt05	CLEAR_NPC
+
+te_prtcas01,2,3,0	duplicate(pop_mission_TE)	#popa_prt01	CLEAR_NPC
+te_prtcas01,2,3,0	duplicate(pop_mission_TE)	#popb_prt01	CLEAR_NPC
+te_prtcas01,2,3,0	duplicate(pop_mission_TE)	#popc_prt01	CLEAR_NPC
+te_prtcas01,2,3,0	duplicate(pop_mission_TE)	#popd_prt01	CLEAR_NPC
+
+te_prtcas02,2,3,0	duplicate(pop_mission_TE)	#popa_prt02	CLEAR_NPC
+te_prtcas02,2,3,0	duplicate(pop_mission_TE)	#popb_prt02	CLEAR_NPC
+te_prtcas02,2,3,0	duplicate(pop_mission_TE)	#popc_prt02	CLEAR_NPC
+te_prtcas02,2,3,0	duplicate(pop_mission_TE)	#popd_prt02	CLEAR_NPC
+
+te_prtcas03,2,3,0	duplicate(pop_mission_TE)	#popa_prt03	CLEAR_NPC
+te_prtcas03,2,3,0	duplicate(pop_mission_TE)	#popb_prt03	CLEAR_NPC
+te_prtcas03,2,3,0	duplicate(pop_mission_TE)	#popc_prt03	CLEAR_NPC
+te_prtcas03,2,3,0	duplicate(pop_mission_TE)	#popd_prt03	CLEAR_NPC
+
+te_prtcas04,2,3,0	duplicate(pop_mission_TE)	#popa_prt04	CLEAR_NPC
+te_prtcas04,2,3,0	duplicate(pop_mission_TE)	#popb_prt04	CLEAR_NPC
+te_prtcas04,2,3,0	duplicate(pop_mission_TE)	#popc_prt04	CLEAR_NPC
+te_prtcas04,2,3,0	duplicate(pop_mission_TE)	#popd_prt04	CLEAR_NPC
+
+te_prtcas05,2,3,0	duplicate(pop_mission_TE)	#popa_prt05	CLEAR_NPC
+te_prtcas05,2,3,0	duplicate(pop_mission_TE)	#popb_prt05	CLEAR_NPC
+te_prtcas05,2,3,0	duplicate(pop_mission_TE)	#popc_prt05	CLEAR_NPC
+te_prtcas05,2,3,0	duplicate(pop_mission_TE)	#popd_prt05	CLEAR_NPC
+
+te_prt_gld,125,149,3	duplicate(Training_Instructor_TE)	Gloria Instructor#tem01	4_M_HUMAN_02

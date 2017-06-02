@@ -1,0 +1,1099 @@
+//===== rAthena Script =======================================
+//= Doomed Swords Quest Part 3
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= - Creation of Doomed Swords: Grimtooth, Mysteltain, and
+//=   Executioner.
+//= - Continuation of the Comodo Quest
+//= - Part 1: Found in Quests_Comodo.txt
+//= - Part 2: Found in Quests_Yuno.txt
+//= - Variable in use: dmdswrd_Q (Max 45)
+//===== Additional Comments: =================================
+//= 1.0 First version. [L0ne_W0lf]
+//============================================================
+
+mjolnir_02,186,193,4	script	Middle-Aged Man#magum1	57,{
+	if (dmdswrd_Q > 30) {
+		if (dmdswrd_Q == 31) {
+			mes "[Middle-Aged Man]";
+			mes "It's been a while since";
+			mes "someone has come this";
+			mes "way. Not too many people";
+			mes "pass by here, so I rarely";
+			mes "receive visitors. Why don't";
+			mes "you relax and chat for a while?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "What are you doing out";
+			mes "here in this secluded";
+			mes "area? You don't have";
+			mes "to work here, do you?";
+			next;
+			mes "[Middle-Aged Man]";
+			mes "Well, just managing this";
+			mes "summer house gets me";
+			mes "enough income to get by.";
+			mes "Ah, I also craft various";
+			mes "things as sort of a hobby.";
+			next;
+			mes "[Middle-Aged Man]";
+			mes "Yeap, when I was younger,";
+			mes "I had my own forge in town.";
+			mes "It was a good family business,";
+			mes "and all of my siblings ended up";
+			mes "making wares for town lords";
+			mes "and even the royal family.";
+			next;
+			mes "[Middle-Aged Man]";
+			mes "But then, the accident";
+			mes "happened, and we had";
+			mes "to close shop. Well, that's";
+			mes "my story. Not a very happy";
+			mes "one, I gu ess, but otherwise";
+			mes "I've lived a long, good life.";
+			next;
+			mes "[Middle-Aged Man]";
+			mes "Now what exactly";
+			mes "brings you here?";
+			mes "Are you just exploring";
+			mes "the land, or are you";
+			mes "hunting monsters, or...?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Actually, um,";
+			mes "I was led here by";
+			mes "this thing. It's called";
+			mes "the Seal of Muriniel.";
+			next;
+			mes "[Middle-Aged Man]";
+			mes "Oh... Oh my.";
+			mes "Let me see that.";
+			mes "Oh, yes. This is the";
+			mes "real thing. So... It's";
+			mes "finally found me. Well,";
+			mes "I guess I'm at your service.";
+			next;
+			next;
+			mes "[Middle-Aged Man]";
+			mes "My name is Walker, and";
+			mes "my brothers and I were the 3";
+			mes "most talented blacksmiths";
+			mes "in Juno. Seeing as you've";
+			mes "been chosen by fate, we'll all";
+			mes "help you obtain a doomed sword.";
+			next;
+			mes "[Walker]";
+			mes "First of all, the doomed";
+			mes "swords are sealed in magic";
+			mes "scrolls as pentagrams. When";
+			mes "their true owners appear, they";
+			mes "can be released by using";
+			mes "Muriniel's Seal.";
+			next;
+			mes "[Walker]";
+			mes "Now, for my part in unsealing";
+			mes "the doomed swords, I'll need";
+			mes "the highest quality materials.";
+			mes "Give me a few minutes and";
+			mes "I'll let you know what you";
+			mes "need to bring to me.";
+			set dmdswrd_Q,32;
+			close;
+		}
+		else if (dmdswrd_Q == 32) {
+			mes "[Walker]";
+			mes "Now, I should let you";
+			mes "know that I can only form";
+			mes "a portion of the pentagram";
+			mes "that will release one of the";
+			mes "doomed swords. You need my";
+			mes "brothers' help to complete it.";
+			next;
+			mes "[Walker]";
+			mes "Once the pentagram";
+			mes "is complete and activated,";
+			mes "you will unseal the doomed";
+			mes "sword that is best suited to";
+			mes "you. I'm sorry, but I have no";
+			mes "way to predict what it may be.";
+			next;
+			mes "[Walker]";
+			mes "For now, you must take";
+			mes "the first step and bring";
+			mes "me the following items.";
+			mes "Make sure to take note";
+			mes "of what I will require...";
+			next;
+			mes "[Walker]";
+			mes "I will need";
+			mes "^FF00001 Emperium^000000,";
+			mes "^FF00003 Tentacles^000000,";
+			mes "^FF000025 Amulets^000000,";
+			mes "^FF00001 Coal^000000, and";
+			mes "^FF00001 Necklace of Oblivion^000000.";
+			set dmdswrd_Q,33;
+			close;
+		}
+		else if (dmdswrd_Q == 33) {
+			if (countitem(714) > 0 && countitem(962) > 2 && countitem(1003) > 0 && countitem(609) > 24 && countitem(1008) > 0) {
+				mes "[Walker]";
+				mes "Ah, very good.";
+				mes "You've brought";
+				mes "everything I need.";
+				mes "Now, please wait for";
+				mes "a moment while I finish";
+				mes "the preparations...";
+				delitem 714,1; //Emperium
+				delitem 962,3; //Tentacle
+				delitem 1003,1; //Coal
+				delitem 609,25; //Amulet
+				delitem 1008,1; //Frozen_Heart
+				set dmdswrd_Q,34;
+				close;
+			}
+			mes "[Walker]";
+			mes "Hmm...? You still";
+			mes "haven't brought me";
+			mes "everything I need to";
+			mes "begin the doomed sword";
+			mes "pentagram. Let me remind you";
+			mes "which materials to get for me.";
+			next;
+			mes "[Walker]";
+			mes "I will need";
+			mes "^FF00001 Emperium^000000,";
+			mes "^FF00003 Tentacles^000000,";
+			mes "^FF000025 Amulets^000000,";
+			mes "^FF00001 Coal^000000, and";
+			mes "^FF00001 Necklace of Oblivion^000000.";
+			close;
+		}
+		else if (dmdswrd_Q == 34) {
+			mes "[Walker]";
+			mes "Ah, you're back.";
+			mes "I managed to finish this";
+			mes "sooner than I expected since";
+			mes "you gave me materials of";
+			mes "exceptionally good quality.";
+			next;
+			mes "[Walker]";
+			mes "Back when I was 15, my other";
+			mes "two brothers were taught by";
+			mes "Dwarves to create the pentragram that will release a doomed sword.";
+			mes "However, they taught each of us different parts of the pentagram.";
+			next;
+			mes "[Walker]";
+			mes "I guess the Dwarves split";
+			mes "up our knowledge because";
+			mes "they wanted to prolong the";
+			mes "return of the Executioner";
+			mes "sword within our generation.";
+			next;
+			mes "[Walker]";
+			mes "Originally, Executioner";
+			mes "was one of three swords";
+			mes "that the Dwarves were";
+			mes "ordered to forge for an evil";
+			mes "organization in exchange";
+			mes "for their village's safety.";
+			next;
+			mes "[Walker]";
+			mes "Despite their incredible";
+			mes "forging skills, the Dwarves";
+			mes "had difficulty procuring the";
+			mes "rare materials required to";
+			mes "forge the weapons within";
+			mes "the 15 day deadline.";
+			next;
+			mes "[Walker]";
+			mes "Desperate for help, the";
+			mes "Dwarves traveled to meet";
+			mes "my father, a renown smith";
+			mes "and adventurer at the time. He";
+			mes "was sympathetic to their plight";
+			mes "and gave them what they needed.";
+			next;
+			mes "[Walker]";
+			mes "In gratitude for my father's";
+			mes "help, the Dwarves taught my";
+			mes "brothers how to create the";
+			mes "doomed sword pentagram,";
+			mes "but we could only complete";
+			mes "it if we all worked together.";
+			next;
+			mes "[Walker]";
+			mes "Sadly, I heard that the evil";
+			mes "organization that forced the";
+			mes "Dwarves to forge the swords";
+			mes "killed them when they refused";
+			mes "to give up their forging secrets. ";
+			next;
+			mes "[Walker]";
+			mes "However, the Dwarves could";
+			mes "not reveal that the Executioner";
+			mes "was enchanted with a terrible";
+			mes "curse powered by the Dwarves'";
+			mes "hatred which threatens the life";
+			mes "of Executioner's wielder.";
+			next;
+			mes "[Walker]";
+			mes "Oh, don't worry too much.";
+			mes "If you happen to obtain the";
+			mes "Executioner, the seal should";
+			mes "have weakened the curse";
+			mes "enough so that it won't kill";
+			mes "you that quickly. Well, then...";
+			next;
+			mes "[Walker]";
+			mes "You should visit my brother";
+			mes "Morf for the next part of the";
+			mes "doomed sword pentagram.";
+			mes "Morf should be easy to find,";
+			mes "as he's usually drinking";
+			mes "all day in Payon's tavern.";
+			next;
+			mes "[Walker]";
+			mes "Please, take this scroll";
+			mes "with the pentagram with you,";
+			mes "and give my regards to Morf";
+			mes "once you see him. If you do";
+			mes "succeed in obtaining a doomed sword, use its power responsibly.";
+			set dmdswrd_Q,35;
+			close;
+		}
+		else if (dmdswrd_Q == 35) {
+			mes "[Walker]";
+			mes "Look for my older";
+			mes "brother Morf in the";
+			mes "tavern in Payon-- He's";
+			mes "always drinking over there.";
+			mes "Hopefully, he'll help you finish the doomed sword pentagram.";
+			close;
+		}
+		else if (dmdswrd_Q == 36) {
+			mes "[Walker]";
+			mes "Ah, so you've";
+			mes "already met with";
+			mes "Morf? When you get";
+			mes "the chance, please give";
+			mes "him my regards and let";
+			mes "him know that I'm doing well.";
+			close;
+		}
+		else if (dmdswrd_Q == 37) {
+			mes "[Walker]";
+			mes "Ah, so you've";
+			mes "already met with";
+			mes "Morf? When you get";
+			mes "the chance, please give";
+			mes "him my regards and let";
+			mes "him know that I'm doing well.";
+			close;
+		}
+		else if (dmdswrd_Q == 38) {
+			mes "[Walker]";
+			mes "So how has Morf been?";
+			mes "I know he's eccentric, and";
+			mes "perhaps a little rude, but";
+			mes "he's really a very good man.";
+			close;
+		}
+		else if (dmdswrd_Q == 39) {
+			mes "[Walker]";
+			mes "It's good that Morf";
+			mes "was able to help you.";
+			mes "As for our younger brother,";
+			mes "Huey, I haven't heard from";
+			mes "him in a while. I think he's";
+			mes "travelling around in Morroc?";
+			close;
+		}
+		else if (dmdswrd_Q >= 40 && dmdswrd_Q <= 44) {
+			mes "[Walker]";
+			mes "I trust that Huey";
+			mes "is taking good care";
+			mes "of himself. If you happen";
+			mes "to see him again, would";
+			mes "you ask him to come visit";
+			mes "me one of these days?";
+			close;
+		}
+		else {
+			mes "[Walker]";
+			mes "Oh! You've completed";
+			mes "the pentagram and come";
+			mes "into possession of one of";
+			mes "the doomed swords? I'm";
+			mes "glad to hear it. If Father were";
+			mes "alive, he would be so proud.";
+			close;
+		}
+	}
+	else {
+		mes "[Middle-Aged Man]";
+		mes "It's been a while since";
+		mes "someone has come this";
+		mes "way. Not too many people";
+		mes "pass by here, so I rarely";
+		mes "receive visitors. Feel free";
+		mes "to rest and relax a while~";
+		close;
+	}
+}
+
+payon,248,159,1	script	Old Man#magum1	120,{
+	if (dmdswrd_Q == 35) {
+		mes "[Old Man]";
+		mes "Wha--? Who are";
+		mes "you? Whaddya want?";
+		mes "Lemme alone so I can";
+		mes "drink in peace! ^333333*Urp*^000000";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Um, excuse me, but are";
+		mes "you Morf? I'm been sent";
+		mes "by your brother, Walker,";
+		mes "to ask if you can help";
+		mes "me with this pentagram.";
+		next;
+		mes "[Old Man]";
+		mes "Huh...? Lemme see...";
+		mes "Oh. This is Walker's";
+		mes "work alright. Y-you really";
+		mes "want a doomed sword, huh?";
+		mes "A-and that's really the Seal";
+		mes "of Muriel you have there?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Oh, the Seal!";
+		mes "Here, take a look";
+		mes "if you want. If it's";
+		mes "not the real thing, then";
+		mes "I went through a lot of";
+		mes "trouble to get a fake.";
+		next;
+		mes "[Old Man]";
+		mes "Arrrgh! That's the real";
+		mes "thing! Does this mean";
+		mes "I have to really work on";
+		mes "this now?! I'm still drunk!";
+		mes "Damn... I guess I have no";
+		mes "choice but to sober up.";
+		next;
+		mes "[Old Man]";
+		mes "Ugh... But I'm gonna";
+		mes "have such a hangover.";
+		mes "Hey! Bring me 20 Yellow";
+		mes "Potions so I can nurse";
+		mes "the headache I'm gonna";
+		mes "have! I'll need them so bad...";
+		set dmdswrd_Q,36;
+		close;
+	}
+	else if (dmdswrd_Q == 36) {
+		if (countitem(503) > 19) {
+			mes "[Old Man]";
+			mes "Oh, thank goodness you've";
+			mes "brought me the potions! Now,";
+			mes "these'll help me cope with the";
+			mes "unfamiliar sensation that you";
+			mes "people call sobriety. Ugh...";
+			mes "I can think clearly... Damn!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "......";
+			mes ".........";
+			mes "............";
+			next;
+			mes "[Old Man]";
+			mes "Gimme the scroll";
+			mes "with the pentagram.";
+			mes "Let's see, here. Hey,";
+			mes "Walker did a great job";
+			mes "on this. Alright, listen.";
+			mes "This is what I need from you...";
+			next;
+			mes "[Old Man]";
+			mes "^FF00001 Coal^000000,";
+			mes "^FF00003 Trunks^000000,";
+			mes "^FF00003 Old Hilts^000000,";
+			mes "^FF000050 Orge Teeth^000000, and";
+			mes "^FF00001 Foolishness of the Blind^000000.";
+			next;
+			mes "[Old Man]";
+			mes "You have to bring me";
+			mes "those items so that I can";
+			mes "continue forming the doomed";
+			mes "sword pentagram. I'll just be";
+			mes "waiting for you right here.";
+			delitem 503,20; //Yellow_Potion
+			set dmdswrd_Q,37;
+			close;
+		}
+		mes "[Old Man]";
+		mes "Arrrgh! Did you bring";
+		mes "me 20 Yellow Potions?";
+		mes "This hangover is getting";
+		mes "worse and worse! H-hurry";
+		mes "up and get me my meds!";
+		close;
+	}
+	else if (dmdswrd_Q == 37) {
+		if (countitem(7022) > 2 && countitem(1003) > 0 && countitem(1019) > 2 && countitem(7021) > 0 && countitem(7002) > 49) {
+			mes "[Morf]";
+			mes "Hey, you've brought";
+			mes "everything? Good, the";
+			mes "sooner I get this done,";
+			mes "the sooner I can get back";
+			mes "to drinking. All you need";
+			mes "to do now is sit and wait.";
+			next;
+			mes "[Morf]";
+			mes "Alright. Let's get...";
+			mes "Started? Where did I put";
+			mes "that thing I needed? Um...";
+			mes "Ah, there we go. Hrrrm...";
+			next;
+			mes "^3355FF*Scheeeezzzz*";
+			mes "*Clang Clang*";
+			mes "*Rattle Rattle*";
+			mes "*Th-thump thump*^000000";
+			next;
+			mes "^3355FF*Crrrrrrunch*";
+			mes "*Sh-sh-sh-shoom*";
+			mes "*Rub-rub-rub-rub*";
+			mes "*Flip ka-chink*^000000";
+			next;
+			mes ".........";
+			mes "............";
+			mes "...............";
+			mes "..................";
+			next;
+			mes "^3355FF*Scheeeezzzz*";
+			mes "*Clang Clang*";
+			mes "*Rattle Rattle*";
+			mes "*Th-thump thump*^000000";
+			next;
+			mes "^3355FF*Crrrrrrunch*";
+			mes "*Sh-sh-sh-shoom*";
+			mes "*Rub-rub-rub-rub*";
+			mes "*Flip ka-chink*^000000";
+			next;
+			mes "^3355FF*Rub Rub Rub Rub*";
+			mes "*Rub-Rub-Rub-Rub*";
+			mes "*Rub Rub Rub Rub*";
+			mes "*Rub-Rub-Rub-Rub*";
+			mes "*Rub Rub Rub Rub*";
+			mes "*Rub-Rub-Rub-Rub*^000000";
+			next;
+			mes "^3355FF*Rub-Rub-Rub-Rub*";
+			mes "*Rub Rub Rub Rub*";
+			mes "*Rub-Rub-Rub-Rub*";
+			mes "*Rub Rub Rub Rub*";
+			mes "*Rub-Rub-Rub-Rub*";
+			mes "*Rub Rub Rub Rub*^000000";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Excuse me...";
+			mes "But is it almost done?";
+			next;
+			mes ".........";
+			mes "............";
+			mes "...............";
+			mes "..................";
+			next;
+			mes "^3355FF*Scheeeezzzz*";
+			mes "*Clang Clang*";
+			mes "*Rattle Rattle*";
+			mes "*Th-thump thump*^000000";
+			next;
+			mes "^3355FF*Crrrrrrunch*";
+			mes "*Sh-sh-sh-shoom*";
+			mes "*Rub-rub-rub-rub*";
+			mes "*Flip ka-chink*^000000";
+			next;
+			mes "^3355FF*Rub Rub Rub Rub*";
+			mes "*Rub-Rub-Rub-Rub*";
+			mes "*Rub Rub Rub Rub*";
+			mes "*Rub-Rub-Rub-Rub*";
+			mes "*Rub Rub Rub Rub*";
+			mes "*Rub-Rub-Rub-Rub*^000000";
+			next;
+			mes "^3355FF*Rub-Rub-Rub-Rub*";
+			mes "*Rub Rub Rub Rub*";
+			mes "*Rub-Rub-Rub-Rub*";
+			mes "*Rub Rub Rub Rub*";
+			mes "*Rub-Rub-Rub-Rub*";
+			mes "*Rub Rub Rub Rub*^000000";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "H-hey, when is this";
+			mes "thing going to be finished?";
+			mes "Isn't it about time already?";
+			next;
+			mes "[Morf]";
+			mes "Hey! Be patient,";
+			mes "you can't rush";
+			mes "perfection. It'll";
+			mes "take as long as it";
+			mes "has to. But yeah,";
+			mes "I'm almost finished...";
+			next;
+			mes ".........";
+			mes "............";
+			mes "...............";
+			mes "..................";
+			next;
+			mes "[Morf]";
+			mes "Just...";
+			mes "Just give me a";
+			mes "few more minutes...";
+			delitem 7022,3; //Old_Hilt
+			delitem 1003,1; //Coal
+			delitem 1019,3; //Wooden_Block
+			delitem 7021,1; //Foolishness_Of_Blind
+			delitem 7002,50; //Ogre_Tooth
+			set dmdswrd_Q,38;
+			close;
+		}
+		mes "[Old Man]";
+		mes "What, did you forget";
+		mes "what I need? Grrr, I'll";
+		mes "tell you again, but you";
+		mes "better not forget this time!";
+		next;
+		mes "[Old Man]";
+		mes "^FF00001 Coal^000000,";
+		mes "^FF00003 Trunks^000000,";
+		mes "^FF00003 Old Hilts^000000,";
+		mes "^FF000050 Orge Teeth^000000, and";
+		mes "^FF00001 Foolishness of the Blind^000000.";
+		close;
+	}
+	else if (dmdswrd_Q == 38) {
+		switch(rand(1,10)) {
+		case 1:
+		case 10:
+			mes "[Morf]";
+			mes "Ooh, my back~!";
+			mes "The searing pain!";
+			mes "It looks like I have";
+			mes "no choice but to take";
+			mes "a break. That's why you";
+			mes "shouldn't be pushing me!";
+			next;
+			mes "[Morf]";
+			mes "Hey, while we've got some";
+			mes "time, let me tell you a story";
+			mes "about Mysteltainn, one of the";
+			mes "doomed swords that you may";
+			mes "receive if you manage to";
+			mes "complete the pentagram.";
+			next;
+			mes "[Morf]";
+			mes "Now, Mysteltainn is the";
+			mes "name of the tree from which";
+			mes "the twig that was used to";
+			mes "kill Baldur, god of light, was";
+			mes "obtained. It was the only";
+			mes "thing that could harm Baldur...";
+			next;
+			mes "[Morf]";
+			mes "From what I remember, the";
+			mes "god Loki plotted to kill Baldur";
+			mes "because he was jealous of";
+			mes "the god of light that every";
+			mes "living thing and inanimate";
+			mes "object seemed to adore.";
+			next;
+			mes "[Morf]";
+			mes "Loki tricked Baldur's mother";
+			mes "into revealing Baldur's secret";
+			mes "weakness. Now, the gods regularly made a game of throwing objects";
+			mes "like darts at Baldur since he was immune to everything else.";
+			next;
+			mes "[Morf]";
+			mes "When he learned that";
+			mes "Mysteltainn could be used";
+			mes "to kill Baldur, he took one of";
+			mes "its twigs and tricked Baldur's";
+			mes "blind brother into throwing it at Baldur in one of their games.";
+			next;
+			mes "[Morf]";
+			mes "And so...";
+			mes "That was how the";
+			mes "god of light was killed.";
+			mes "By Loki's trickery and the";
+			mes "foolishness of the blind.";
+			mes "That's Mysteltainn's story.";
+			next;
+			mes "[Morf]";
+			mes "Now, if you do happen to";
+			mes "get the Mysteltainn doomed";
+			mes "sword from its seal, it won't";
+			mes "be as powerful as the original";
+			mes "one that, you know, killed a";
+			mes "god. It can't be reproduced...";
+			next;
+			mes "[Morf]";
+			mes "However, the fascimile is";
+			mes "incredibly powerful, and you";
+			mes "must make sure that you wield";
+			mes "it responsibly. Now, I know";
+			mes "you must be upset that I've";
+			mes "taken so long to do this...";
+			next;
+			mes "[Morf]";
+			mes "Please understand that";
+			mes "I'm pretty old now, and that";
+			mes "pentagram work isn't exactly";
+			mes "easy. Anyway, my part is done.";
+			mes "Now you gotta find Huey,";
+			mes "my youngest brother.";
+			next;
+			mes "[Morf]";
+			mes "Huey's been traveling";
+			mes "around, but last I heard, he";
+			mes "was in Morroc. If you can";
+			mes "find him, he can complete";
+			mes "this pentagram for you. Well,";
+			mes "care now, and good luck.";
+			set dmdswrd_Q,39;
+			close;
+		case 2:
+			mes "[Morf]";
+			mes "Be patient, youngster,";
+			mes "I need more time! Don't";
+			mes "you understand that if";
+			mes "I screw up this pentagram,";
+			mes "you'll have to start all over";
+			mes "again? Yeah, that's right~";
+			close;
+		case 3:
+			mes "[Morf]";
+			mes "Not... Done... Yet.";
+			mes "It'll be done when it's";
+			mes "done, okay? Why don't you";
+			mes "take a walk or something";
+			mes "to kill the time, yeah?";
+			close;
+		case 4:
+			mes "[Morf]";
+			mes "Yeah, you know what?";
+			mes "It's time for another break.";
+			mes "Let me rest my cramped hands";
+			mes "and enjoy one of these Yellow";
+			mes "Potions that you've brought";
+			mes "me. Yep, that's a good idea.";
+			close;
+		case 5:
+			mes "[Morf]";
+			mes "Look...";
+			mes "If you're just";
+			mes "gonna stand there";
+			mes "and breathe down my";
+			mes "neck while I'm working,";
+			mes "you might as well be useful.";
+			next;
+			mes "[Mork]";
+			mes "Bring me some";
+			mes "snacks or something,";
+			mes "or get the hell out of";
+			mes "here until I'm done!";
+			close;
+		case 6:
+			mes ".........";
+			mes "............";
+			mes "...............";
+			next;
+			mes "^3355FFMorf has fallen";
+			mes "into a deep sleep.^000000";
+			close;
+		case 7:
+			mes "[Morf]";
+			mes "No...";
+			mes "Still not done.";
+			mes "Just like the last";
+			mes "time you asked.";
+			mes "Just... Wait...";
+			close;
+		case 8:
+			mes ".........";
+			mes "............";
+			mes "...............";
+			next;
+			mes "^3355FFMorf has fallen";
+			mes "into a pretty restful";
+			mes "slumber that he seems";
+			mes "to be thoroughly enjoying.^000000";
+			close;
+		case 9:
+			mes "[Morf]";
+			mes "You can see my hands, right?";
+			mes "When they're not busy trying";
+			mes "to finish this pentagram, that's probably a sign meaning that ";
+			mes "I'm finished. Lookee, they're";
+			mes "moving, still moving, see that?";
+			close;
+		}
+	}
+	else if (dmdswrd_Q == 39) {
+		mes "[Morf]";
+		mes "If you really want to";
+		mes "finish that pentagram,";
+		mes "then find my youngest";
+		mes "brother Huey in Morroc.";
+		mes "He should help you out.";
+		mes "I mean, if I did, then he will!";
+		close;
+	}
+	else if (dmdswrd_Q == 40) {
+		mes "[Morf]";
+		mes "You actually found";
+		mes "Huey? How's my little";
+		mes "baby brother doing? Well,";
+		mes "if he's fine, then make him";
+		mes "finish that pentagram. I don't want all my work to go to waste!";
+		close;
+	}
+	else if (dmdswrd_Q > 41 && dmdswrd_Q < 45) {
+		mes "[Morf]";
+		mes "It's good to hear";
+		mes "that Huey is fine and";
+		mes "that nothing's wrong with";
+		mes "his health. In that case,";
+		mes "he should be writing me";
+		mes "and Walker more often!";
+		close;
+	}
+	else if (dmdswrd_Q == 45) {
+		mes "[Morf]";
+		mes "Now that you have one";
+		mes "of those doomed swords,";
+		mes "I want you to only use it for";
+		mes "the right reasons. The curses";
+		mes "of the swords are most dangerous when your conviction wavers.";
+		close;
+	}
+	else {
+		mes "[Old Man]";
+		mes "Arrrrrrrrrghhhh~!";
+		mes "My heart freakin' hurts!";
+		mes "Times like these, I sure";
+		mes "could use a Yellow Potion to";
+		mes "help cope with my hangovers.";
+		mes "C'mon, I freakin' need my meds!";
+		close;
+	}
+}
+
+morocc,248,159,4	script	Young Man#magum1	86,{
+	if (dmdswrd_Q == 39) {
+		mes "[Huey]";
+		mes "Excuse me, but...";
+		mes "Um, did you need";
+		mes "something? You";
+		mes "look like you have";
+		mes "a question for me.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Actually, I'm looking for";
+		mes "somebody named Huey.";
+		mes "I hear he's the only one";
+		mes "that can help me finish";
+		mes "this... well... Do you know";
+		mes "where I can find him?";
+		next;
+		mes "[Huey]";
+		mes "Y-yes. I-I'm Huey.";
+		mes "But why are you looking";
+		mes "for me? Oh! Are you some";
+		mes "kind of messenger from one";
+		mes "of my brothers? I haven't heard";
+		mes "from them in quite a while.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Actually, I'm trying to";
+		mes "obtain a doomed sword.";
+		mes "To do that, I've already";
+		mes "got the Seal of Muriniel,";
+		mes "and your brothers have";
+		mes "started this pentagram.";
+		next;
+		mes "[Huey]";
+		mes "Are you serious?";
+		mes "You've come this far to";
+		mes "get one of those accursed";
+		mes "blades? Mm, would you please";
+		mes "let me see the pentagram? Oh,";
+		mes "my brothers did such good work!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Ah, yes. Here.";
+		next;
+		mes "[Huey]";
+		mes "I don't know if you can";
+		mes "appreciate it, but this";
+		mes "pentagram has really good";
+		mes "craftsmanship! Now, if my";
+		mes "older brothers have already helped you, I shall do the same.";
+		next;
+		mes "[Huey]";
+		mes "My older brothers are even";
+		mes "better blacksmiths than me,";
+		mes "so if you were able to convince";
+		mes "them to aid you, I don't really";
+		mes "have the right to refuse to help you. Besides, if I don't...";
+		next;
+		mes "[Huey]";
+		mes "...Then my brother's work";
+		mes "would have been for nothing.";
+		mes "And then... They might just";
+		mes "come looking for me. Morf";
+		mes "especially. Oh, right! Materials! I need these for the pentagram!";
+		next;
+		mes "[Huey]";
+		mes "Please bring me";
+		mes "^FF00009 Rubies^000000,";
+		mes "^FF00006 Blades of Darkness^000000,";
+		mes "^FF00009 Bloody Edges^000000, and";
+		mes "^FF00001 Loki's Whisper^000000.";
+		next;
+		mes "[Huey]";
+		mes "While you gather the";
+		mes "necessary items, I'll be";
+		mes "finishing my preparations.";
+		mes "Oh, and bring me the ^FF0000exact";
+		mes "amounts^000000--^FF0000no more^000000, ^FF0000no less^000000.";
+		mes "Okay now, I'll see you later~";
+		set dmdswrd_Q,40;
+		close;
+	}
+	else if (dmdswrd_Q == 40) {
+		if (countitem(7024) == 9 && countitem(7023) == 6 && countitem(723) == 9 && countitem(7019) == 1) {
+			mes "[Huey]";
+			mes "Oh, you're back. Did";
+			mes "you bring everything";
+			mes "I need for the pentagram";
+			mes "in the exact amounts? Mmm...";
+			mes "Ah! Yes, perfect! Nice work~";
+			next;
+			mes "[Huey]";
+			mes "Would you please wait";
+			mes "while I finish this pentagram?";
+			mes "This is going to take some";
+			mes "time, but trust me, we're";
+			mes "almost done. All your hard";
+			mes "work will pay off soon~";
+			delitem 7024,9; //Bloody_Edge
+			delitem 7023,6; //Blade_Lost_In_Darkness
+			delitem 723,9; //Cardinal_Jewel
+			delitem 7019,1; //Loki's_Whispers
+			set dmdswrd_Q,41;
+			close;
+		}
+		mes "[Huey]";
+		mes "In order to finish the";
+		mes "pentagram, I'll need some";
+		mes "items in the exact quantities--";
+		mes "no more, no less. If you have";
+		mes "too many of a required item, why don't you put it in your Storage?";
+		next;
+		mes "[Huey]";
+		mes "Please bring me";
+		mes "^FF00009 Rubies^000000,";
+		mes "^FF00006 Blades of Darkness^000000,";
+		mes "^FF00009 Bloody Edges^000000, and";
+		mes "^FF00001 Loki's Whisper^000000.";
+		mes "Well, I'll be waiting~";
+		close;
+	}
+	else if (dmdswrd_Q == 41) {
+		mes "[Huey]";
+		mes "Hey there, your timing's";
+		mes "perfect! I just completed";
+		mes "the pentagram for unsealing";
+		mes "one of the doomed swords.";
+		mes "There's just one last step...";
+		next;
+		mes "[Huey]";
+		mes "Would you put the Seal of Murinel to the pentagram? That will unlock";
+		mes "the seal, causing the doomed sword best suited for you to manifest.";
+		mes "Soon, Grimtooth, Mysteltainn,";
+		mes "or Executioner will be yours...";
+		next;
+		mes "^3355FFYou carefully place the";
+		mes "Seal of Muriniel to the";
+		mes "pentagram. A few parts of";
+		mes "the pentagram immediately";
+		mes "begin to quitely pulse with";
+		mes "a soft and gentle glow.^000000";
+		next;
+		mes "[Huey]";
+		mes "It's... It's starting! The";
+		mes "sections of the pentagram";
+		mes "are activating in the order";
+		mes "in which they were completed.";
+		mes "The parts that are lit now";
+		mes "must be Walker's work...";
+		next;
+		mes "^3355FFSuddenly, another section";
+		mes "of the pentagram activates,";
+		mes "and parts of the pentagram";
+		mes "flare unstably with an";
+		mes "intense, unsteady light.^000000";
+		next;
+		mes "[Huey]";
+		mes "That must be...";
+		mes "Morf must have done";
+		mes "that part. Okay, when";
+		mes "the light stabilizes and";
+		mes "the entire pentagram is";
+		mes "glowing, it'll be ready.";
+		next;
+		mes "^3355FFThe unactivated portions";
+		mes "of the pentagram ignite,";
+		mes "and the entire pentagram";
+		mes "emits a warm, effusive glow.^000000";
+		next;
+		mes "[Huey]";
+		mes "Okay, this is important!";
+		mes "One of the doomed swords";
+		mes "is going to manifest very soon.";
+		mes "When you can see the sword";
+		mes "within the light, grab it quickly! ";
+		next;
+		mes "[Huey]";
+		mes "Wait, can you--?";
+		mes "There, I see it! Now";
+		mes "quickly, take it! It's yours!";
+		next;
+		set .@random,rand(1,10);
+		if (.@random >= 1 && .@random <= 5) {
+			callsub S_GetSword,1237,0,1,42;
+			getitem 1237,1; //Grimtooth_
+			close;
+		}
+		else if (.@random >= 6 && .@random <= 8) {
+			callsub S_GetSword,1138,1,1,43;
+			getitem 1138,1; //Mysteltainn_
+			close;
+		}
+		else {
+			callsub S_GetSword,1169,2,1,44;
+			getitem 1169,1; //Executioner_
+			close;
+		}
+	}
+	else if (dmdswrd_Q == 42) {
+		callsub S_GetSword,1237,0,0,0;
+		getitem 1237,1; //Grimtooth_
+		close;
+	}
+	else if (dmdswrd_Q == 43) {
+		callsub S_GetSword,1138,1,0,0;
+		getitem 1138,1; //Mysteltainn_
+		close;
+	}
+	else if (dmdswrd_Q == 44) {
+		callsub S_GetSword,1169,2,0,0;
+		getitem 1169,1; //Executioner_
+		close;
+	}
+	else if (dmdswrd_Q == 45) {
+		mes "[Huey]";
+		mes "So how are you handling";
+		mes "that doomed sword? Whatever";
+		mes "you do, don't abuse its power";
+		mes "and you should be fine. I've";
+		mes "got faith that you'll never";
+		mes "succumb to the blade's curse.";
+		next;
+		mes "[Huey]";
+		mes "Anyway, I really";
+		mes "should thank you for";
+		mes "the opportunity to use";
+		mes "my skills. I mean, I didn't";
+		mes "want what I had learned from";
+		mes "the Dwarves to go to waste.";
+		close;
+	}
+	else {
+		mes "[Huey]";
+		mes "You know, I've traveled";
+		mes "to all sorts of places, but";
+		mes "the heat here in Morroc";
+		mes "is the worst I've ever";
+		mes "experienced! It's so humid";
+		mes "and uncomfortable here...";
+		close;
+	}
+
+S_GetSword:
+	if (getarg(2) == 1) {
+		mes "^3355FFYou reach within the";
+		mes "blinding light and grasp";
+		mes "the sword's handle. When";
+		mes "the light dissipates, you";
+		mes "can see that you have";
+		mes "obtained a "+getitemname(getarg(0))+".^000000";
+		set magum,getarg(3);
+		next;
+	}
+	if (checkweight(getarg(0),1) == 0) {
+		mes "[Huey]";
+		mes "Hold on, you're carrying";
+		mes "too many things with you.";
+		mes "You better store some things";
+		mes "to make more of your inventory";
+		mes "space available. Then, we can finally claim your doomed sword.";
+		close;
+	}
+	.@num = getarg(1);
+	mes "[Huey]";
+	if (.@num == 0) {
+		mes "Th-that's the Grimtooth!";
+		mes "Ever since I've been taught";
+		mes "the pentagram techniques by";
+		mes "those Dwarves, I've never once";
+		mes "imagined that I'd see that sword. Please use that weapon wisely.";
+	}
+	else if (.@num == 1) {
+		mes "I don't believe it!";
+		mes "You... You've been found";
+		mes "worthy of the Mysteltainn?";
+		mes "Be careful, and don't let";
+		mes "its power overwhelm you.";
+		mes "Wield it only for just ends...";
+	}
+	else if (.@num == 2) {
+		mes "Th-that's...!";
+		mes "The Executionier has";
+		mes "chosen you to wield it?";
+		mes "You must have an extremely";
+		mes "strong will, or something...";
+		mes "Don't give in to the bloodlust.";
+	}
+	next;
+	mes "[Huey]";
+	mes "Well, it looks like my";
+	mes "work here is done. I'm glad";
+	mes "I got the chance to use these";
+	mes "ancient skills, and it's an honor to meet a worthy adventurer.";
+	mes "My brothers should be proud.";
+	next;
+	mes "[Huey]";
+	mes "Speaking of which,";
+	mes "please give Morf and";
+	mes "Walker my regards if you";
+	mes "happen to see them. Well";
+	mes "then, take care of yourself, and be cautious in using that sword.";
+	set dmdswrd_Q,45;
+	return;
+}

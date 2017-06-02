@@ -1,0 +1,3130 @@
+//===== rAthena Script ======================================= 
+//= Party Relay Quest
+//===== By: ================================================== 
+//= L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Party Relay Quest.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. [L0ne_W0lf]
+//= 1.1 Fixed a couple typos, npcs check area for PCs. [L0ne_W0lf]
+//= 1.2 Updated RE/Pre-RE EXP. [Euphy]
+//============================================================
+
+payon,103,113,3	script	Ledrion#payon::RelayLedrion	109,{
+	getpartymember(getcharid(1));
+	set .@partymembercount,$@partymembercount;
+	set .@partyleader,getpartyleader(getcharid(1),2);
+	if (checkweight(907,300) == 0) {
+		mes "^3355FFWait a minute! You're";
+		mes "carrying too many items";
+		mes "right now: store some of";
+		mes "your extra things in Kafra";
+		mes "Storage, and then come back.^000000";
+		close;
+	}
+	if ((countitem(7731) > 0) || (countitem(7732) > 0) || (countitem(7735) > 0) || (countitem(7736) > 0) || (countitem(7739) > 0) || (countitem(7740) > 0)) {
+		mes "[Ledrion]";
+		mes "Hm? I'm afraid that you've";
+		mes "misunderstood me earlier...";
+		mes "You're not ready to see";
+		mes "me until you bring enough";
+		mes "of your group members with you.";
+		close;
+	}
+	if ((countitem(7741) > 0) && (.@partyleader == getcharid(0)) && (getcharid(2) > 0) && (.@partymembercount > 5)) {
+		mes "[Ledrion]";
+		mes "Ah, you've brought the";
+		mes "last ticket from Rospii.";
+		mes "Now I'm convinced that";
+		mes "you and your group really";
+		mes "work well together. Good";
+		mes "job on passing the trials!";
+		next;
+		mes "[Ledrion]";
+		mes "Your group must truly";
+		mes "understand the value of";
+		mes "teamwork. And thanks to";
+		mes "you, I've won the bet! Er, but";
+		mes "what's more important is you";
+		mes "proving my faith in you guys.";
+		next;
+		mes "[Ledrion]";
+		mes "I'm really proud of";
+		mes "you guys for your great";
+		mes "accomplishment. Here...";
+		mes "You deserve a real reward!";
+		next;
+		set .@present,rand(1,7);
+		delitem 7741,1; //Mission_Certificate12
+		set party_relay,0;
+		getitem 644,6; //Gift_Box
+		getitem 603,3; //Old_Blue_Box
+		if (.@present == 2) {
+			getitem 1365,1; //Sabbath
+		}
+		else if (.@present == 4) {
+			getitem 1367,1; //Slaughter
+		}
+		else if (.@present == 6) {
+			getitem 1527,1; //Quadrille
+		}
+		else {
+			getitem 617,3; //Old_Violet_Box
+		}
+		callfunc "F_PartyRelay_Exp";
+		mes "[Ledrion]";
+		mes "Well, I hope you like it!";
+		mes "If you can't use it, then";
+		mes "why don't you share it with";
+		mes "someone in your guild? Feel";
+		mes "free to come back if you want";
+		mes "to try my trials again, okay?";
+		next;
+		mes "[Ledrion]";
+		mes "Once again, I'd like to";
+		mes "thank you. I'm not sure";
+		mes "if we'll ever meet again,";
+		mes "but I'll be praying for you as";
+		mes "you go on your adventures.";
+		close;
+	}
+	if (countitem(7741) > 0) {
+		mes "[Ledrion]";
+		mes "Hm? Why aren't your";
+		mes "comrades with you?";
+		mes "You must bring your";
+		mes "group members here to";
+		mes "proceed with these trials.";
+		close;
+	}
+	if (party_relay == 23) {
+		mes "[Ledrion]";
+		mes "Aren't you supposed to";
+		mes "ask one a Swordman or";
+		mes "Mage Class member of ";
+		mes "your group to bring a ticket";
+		mes "over to Gatan right now?";
+		close;
+	}
+	if ((countitem(7737) > 0) && (.@partyleader == getcharid(0)) && (getcharid(2) > 0) && (.@partymembercount > 5)) {
+		mes "[Ledrion]";
+		mes "Great, you've brought";
+		mes "me the eighth ticket from";
+		mes "Lospii. Your group must";
+		mes "work pretty well together,";
+		mes "eh? It usually isn't easy to";
+		mes "gather people like that...";
+		next;
+		mes "[Ledrion]";
+		mes "Please keep up the good";
+		mes "work until you finish all";
+		mes "of the trials, okay? Here's";
+		mes "a little reward for your";
+		mes "effort thus far, and the";
+		mes "nineth ticket for your guild.";
+		delitem 7737,1; //Mission_Certificate8
+		set party_relay,23;
+		getitem 603,3; //Old_Blue_Box
+		getitem 617,1; //Old_Violet_Box
+		getitem 7738,1; //Mission_Certificate9
+		callfunc "F_PartyRelay_Exp";
+		next;
+		mes "[Ledrion]";
+		mes "Please give that ticket";
+		mes "to someone in your guild";
+		mes "that's a Swordman or Mage";
+		mes "Class character, and tell";
+		mes "him to deliver it to Gatan.";
+		mes "Okay? I'll be seeing you.";
+		close;
+	}
+	if (countitem(7737) > 0) {
+		mes "[Ledrion]";
+		mes "Hm? Why aren't your";
+		mes "comrades with you?";
+		mes "You must bring your";
+		mes "group members here to";
+		mes "proceed with these trials.";
+		close;
+	}
+	if (party_relay == 12) {
+		mes "[Ledrion]";
+		mes "Hm? Aren't you supposed to";
+		mes "ask a Mage Class character";
+		mes "in your group to deliver";
+		mes "a ticket to Gatan?";
+		close;
+	}
+	if ((countitem(7733) > 0) && (.@partyleader == getcharid(0)) && (getcharid(2) > 0) && (.@partymembercount > 5)) {
+		mes "[Ledrion]";
+		mes "I see that you've brought";
+		mes "me the fourth ticket from";
+		mes "Lospii. Good work, good work.";
+		mes "Please hang in there, and";
+		mes "finish all the trials we've";
+		mes "set before you guys, alright?";
+		next;
+		mes "[Ledrion]";
+		mes "Here's a little something";
+		mes "to reward you for your";
+		mes "efforts for now. Now, please";
+		mes "give this ticket to a Mage";
+		mes "Class character, and tell";
+		mes "him to bring it to Gatan.";
+		delitem 7733,1; //Mission_Certificate4
+		set party_relay,12;
+		getitem 644,3; //Gift_Box
+		getitem 603,1; //Old_Blue_Box
+		getitem 7734,1; //Mission_Certificate5
+		callfunc "F_PartyRelay_Exp";
+		close;
+	}
+	if (countitem(7733) > 0) {
+		mes "[Ledrion]";
+		mes "Hm? Why aren't your";
+		mes "comrades with you?";
+		mes "You must bring your";
+		mes "group members here to";
+		mes "proceed with these trials.";
+		close;
+	}
+	if (party_relay == 2) {
+		mes "[Ledrion]";
+		mes "You didn't finish what";
+		mes "I asked you to do, did you?";
+		mes "It's not time for you to";
+		mes "come to me, not yet.";
+		close;
+	}
+	if ((BaseLevel > 39) && (.@partyleader == getcharid(0)) && (getcharid(2) > 0) && (.@partymembercount > 5) && (party_relay == 1)) {
+		mes "[Ledrion]";
+		mes "As I mentioned earlier,";
+		mes "I'm challenging guild";
+		mes "parties with missions";
+		mes "that will require ";
+		mes "cooperation between";
+		mes "the group members.";
+		next;
+		mes "[Ledrion]";
+		mes "These challenges are";
+		mes "something of a relay";
+		mes "race, where we'll ask";
+		mes "for an item to be passed";
+		mes "to a member of a specific";
+		mes "Class to deliver for us.";
+		next;
+		mes "[Ledrion]";
+		mes "Of course, we, the";
+		mes "administrators of this";
+		mes "test, might add our own";
+		mes "little challenges here and";
+		mes "there to see just how";
+		mes "capable your group is.";
+		next;
+		mes "[Ledrion]";
+		mes "Why don't you give it";
+		mes "a shot? You won't lose";
+		mes "anything by trying our";
+		mes "test. I guarantee that";
+		mes "you'll benefit from";
+		mes "our little exercise.";
+		next;
+		mes "[Ledrion]";
+		mes "Heh! Let's start with you!";
+		mes "Here, take this ticket, and";
+		mes "give it to a Swordman Class";
+		mes "member of your guild, and";
+		mes "ask him to bring it to Gatan.";
+		mes "The relay has started~";
+		next;
+		set party_relay,2;
+		getitem 7730,1; //Mission_Certificate1
+		mes "[Ledrion]";
+		mes "Now, since you're the";
+		mes "one that started the relay,";
+		mes "you'll have to come back";
+		mes "to me later on. Don't";
+		mes "worry, we'll let you know";
+		mes "once the time is right.";
+		close;
+	}
+	if ((.@partyleader == getcharid(0)) && (getcharid(2) > 0) && (.@partymembercount > 5) && (party_relay > 0)) {
+		mes "[Ledrion]";
+		mes "As leader of your";
+		mes "Party, you should";
+		mes "always think of what";
+		mes "would be best for all";
+		mes "of your partners.";
+		close;
+	}
+	if ((.@partyleader != getcharid(0)) && (getcharid(2) > 0)) {
+		mes "[Ledrion]";
+		mes "I'm sorry, but there's";
+		mes "nothing I can really offer";
+		mes "you... Unless you formed";
+		mes "a Party and became its";
+		mes "leader, there's absolutely";
+		mes "nothing I can do for you...";
+		close;
+	}
+	mes "[Ledrion]";
+	mes "Ah, pleased to make your";
+	mes "acquaintance, adventurer.";
+	mes "I am Ledrion, a man of great";
+	mes "intelligence, mystery, and";
+	mes "most importantly, wealth.";
+	mes "Yes, I'm a philanthropist.";
+	next;
+	mes "[Ledrion]";
+	mes "I'm always working to make";
+	mes "a meaningful contribution";
+	mes "to all of Rune Midgard, which";
+	mes "brings me to why I am here.";
+	mes "There are many adventurers like you, but we have a problem.";
+	next;
+	mes "[Ledrion]";
+	mes "So many adventurers have";
+	mes "chosen the ways of greed,";
+	mes "and have forgotten how to";
+	mes "work well together with their";
+	mes "colleagues. Such selfishness";
+	mes "sickens me to no end! Ugh!";
+	next;
+	mes "[Ledrion]";
+	mes "I may not be an adventurer,";
+	mes "but I have the money to do";
+	mes "something. I am hosting";
+	mes "my own little challenge";
+	mes "to adventurers to encourage";
+	mes "camaraderie and teamwork.";
+	next;
+	mes "[Ledrion]";
+	mes "Please, I invite you to";
+	mes "give it a try! Allow me to";
+	mes "state some of my conditions.";
+	mes "Firstly, you must be part of";
+	mes "a group of 6 or more members,";
+	mes "such as a Party or a Guild.";
+	next;
+	mes "[Ledrion]";
+	mes "Secondly, only the leader";
+	mes "of the group can begin the";
+	mes "first part of my challenge.";
+	mes "If you are not the leader,";
+	mes "let him know that he should";
+	mes "speak to me for the challenge.";
+	next;
+	mes "[Ledrion]";
+	mes "Thirdly, you must have a";
+	mes "Swordman Class, Mage Class,";
+	mes "Acolyte Class, Archer Class,";
+	mes "Thief Class, and Merchant";
+	mes "Class character to complete";
+	mes "the challenges you'll receive.";
+	next;
+	mes "[Ledrion]";
+	mes "Transcended characters";
+	mes "are good too. Fourthly, all";
+	mes "group members must be";
+	mes "at least Base Level 40.";
+	mes "Everything else, well,";
+	mes "you'll learn along the way.";
+	next;
+	mes "[Ledrion]";
+	mes "Don't fret, I won't have you";
+	mes "jumping through hoops for";
+	mes "no reason at all. I'll provide";
+	mes "plenty of rewards as an";
+	mes "incentive for your group.";
+	mes "Would you like to participate?";
+	next;
+	switch(select("Sure!:No.")) {
+	case 1:
+		if ((BaseLevel > 39) && (.@partyleader == getcharid(0)) && (getcharid(2) > 0) && (.@partymembercount > 5)) {
+			mes "[Ledrion]";
+			mes "Great! Let's see...";
+			mes "Well, you meet all the";
+			mes "requirements. It looks";
+			mes "like I'll win the bet! Er, let";
+			mes "me give you your first";
+			mes "set of instructions.";
+			next;
+			set party_relay,1;
+			mes "[Ledrion]";
+			mes "Just--^666666*Cough!*^000000";
+			mes "Lemme clear my";
+			mes "throat for a second...";
+			close;
+		}
+		else {
+			mes "[Ledrion]";
+			mes "That's great! Still,";
+			mes "you're not ready to tackle";
+			mes "my little challenge until";
+			mes "you fulfill all of my";
+			mes "conditions. Come back";
+			mes "once you do that, alright?";
+			close;
+		}
+	case 2:
+		mes "[Ledrion]";
+		mes "Really? Trust me, this";
+		mes "little challenge will be";
+		mes "worthwhile for you, and it";
+		mes "would bring a greater sense";
+		mes "of solidarity and teamwork";
+		mes "to Rune Midgard. It's win-win!";
+		close;
+	}
+}
+
+payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
+	getpartymember(getcharid(1));
+	set .@partymembercount,$@partymembercount;
+	set .@partyleader,getpartyleader(getcharid(1),2);
+	if (checkweight(907,300) == 0) {
+		mes "^3355FFWait a minute! You're";
+		mes "carrying too many items";
+		mes "right now: store some of";
+		mes "your extra things in Kafra";
+		mes "Storage, and then come back.^000000";
+		close;
+	}
+	if ((countitem(7732) > 0) || (countitem(7733) > 0) || (countitem(7736) > 0) || (countitem(7737) > 0) || (countitem(7740) > 0) || (countitem(7741) > 0)) {
+		mes "[Gatan]";
+		mes "Say, aren't you forgetting";
+		mes "something? Try to remember...";
+		mes "Earlier, you received some";
+		mes "instructions, didn't you?";
+		close;
+	}
+	set .@relaytime,gettime(DT_HOUR);
+	if (party_relay == 28) {
+		mes "[Gatan]";
+		mes "Say, I don't think it's";
+		mes "your turn to meet up with";
+		mes "me. I think you need to ask a";
+		mes "Thief or Acolyte Class member";
+		mes "of your group to bring the";
+		mes "tenth ticket to Bafhail.";
+		close;
+	}
+	if (party_relay == 27) {
+		mes "[Gatan]";
+		mes "Ah, very nice! Please";
+		mes "give this ticket to a Thief";
+		mes "or Acolyte Class member";
+		mes "of your group, and ask him";
+		mes "to bring it to Bafhail. Ah, and";
+		mes "here's a little reward for you~";
+		set party_relay,28;
+		getitem 7739,1; //Mission_Certificate10
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		next;
+		mes "[Gatan]";
+		mes "Alright, get that done.";
+		mes "I'll see you around.";
+		close;
+	}
+	if ((party_relay == 26) && (BaseLevel > (party_relay_lv + 2)) && (.@relaytime >= 14) && (.@relaytime < 17)) {
+		mes "[Gatan]";
+		mes "Great, you gained some";
+		mes "levels, just like I asked.";
+		mes "Let me find your next--I swore";
+		mes "I left it around somewhere--";
+		mes "and I'll give you your next set";
+		mes "of instructions. Hang on...";
+		set party_relay,27;
+		close;
+	}
+	else if ((party_relay == 26) && (BaseLevel > (party_relay_lv + 2)) && (.@relaytime >= 18) && (.@relaytime < 21)) {
+		mes "[Gatan]";
+		mes "Great, you gained some";
+		mes "levels, just like I asked.";
+		mes "Let me find your next--I swore";
+		mes "I left it around somewhere--";
+		mes "and I'll give you your next set";
+		mes "of instructions. Hang on...";
+		set party_relay,27;
+		close;
+	}
+	if (party_relay == 26) {
+		mes "[Gatan]";
+		mes "Your mission is to";
+		mes "gain 3 more Base Levels.";
+		mes "Come see me during my";
+		mes "working hours once you";
+		mes "accomplish that, alright?";
+		next;
+		mes "[Gatan]";
+		mes "I can't tell you exactly";
+		mes "when I work, but my work";
+		mes "hours are in the afternoon...";
+		mes "Pacific Standard Time, anyway.";
+		mes "I might not be here if you";
+		mes "come here too late, alright?";
+		close;
+	}
+	if ((party_relay == 25) && (BaseLevel > (party_relay_lv + 1)) && (.@relaytime >= 14) && (.@relaytime < 17)) {
+		mes "[Gatan]";
+		mes "Great, you gained some";
+		mes "levels, just like I asked.";
+		mes "Let me find your next--I swore";
+		mes "I left it around somewhere--";
+		mes "and I'll give you your next set";
+		mes "of instructions. Hang on...";
+		set party_relay,27;
+		close;
+	}
+	else if ((party_relay == 25) && (BaseLevel > (party_relay_lv + 1)) && (.@relaytime >= 18) && (.@relaytime < 21)) {
+		mes "[Gatan]";
+		mes "Great, you gained some";
+		mes "levels, just like I asked.";
+		mes "Let me find your next--I swore";
+		mes "I left it around somewhere--";
+		mes "and I'll give you your next set";
+		mes "of instructions. Hang on...";
+		set party_relay,27;
+		close;
+	}
+	if (party_relay == 25) {
+		mes "[Gatan]";
+		mes "Your mission is to";
+		mes "gain 2 more Base Levels.";
+		mes "Come see me during my";
+		mes "working hours once you";
+		mes "accomplish that, alright?";
+		next;
+		mes "[Gatan]";
+		mes "I can't tell you exactly";
+		mes "when I work, but my work";
+		mes "hours are in the afternoon...";
+		mes "Pacific Standard Time, anyway.";
+		mes "I might not be here if you";
+		mes "come here too late, alright?";
+		close;
+	}
+	if ((party_relay == 24) && (BaseLevel > party_relay_lv) && (.@relaytime >= 14) && (.@relaytime < 17)) {
+		mes "[Gatan]";
+		mes "Great, you gained a";
+		mes "level, just like I asked.";
+		mes "Let me find your next--I swore";
+		mes "I left it around somewhere--";
+		mes "and I'll give you your next set";
+		mes "of instructions. Hang on...";
+		set party_relay,27;
+		close;
+	}
+	else if ((party_relay == 24) && (BaseLevel > party_relay_lv) && (.@relaytime >= 18) && (.@relaytime < 21)) {
+		mes "[Gatan]";
+		mes "Great, you gained a";
+		mes "level, just like I asked.";
+		mes "Let me find your next--I swore";
+		mes "I left it around somewhere--";
+		mes "and I'll give you your next set";
+		mes "of instructions. Hang on...";
+		set party_relay,27;
+		close;
+	}
+	if (party_relay == 24) {
+		mes "[Gatan]";
+		mes "Your mission is to";
+		mes "gain 1 more Base Level.";
+		mes "Come see me during my";
+		mes "working hours once you";
+		mes "accomplish that, alright?";
+		next;
+		mes "[Gatan]";
+		mes "I can't tell you exactly";
+		mes "when I work, but my work";
+		mes "hours are in the afternoon...";
+		mes "Pacific Standard Time, anyway.";
+		mes "I might not be here if you";
+		mes "come here too late, alright?";
+		close;
+	}
+	if ((countitem(7738) > 0) && ((BaseClass == Job_Swordman) || (BaseClass == Job_Mage))) {
+		mes "[Gatan]";
+		mes "Oh, um... Is that...?";
+		mes "That's a ticket from";
+		mes "Ledrion, huh? (^666666Nuts! I've";
+		mes "got to work now?^000000) It's nice";
+		mes "to meet you. I'm Gatan.";
+		next;
+		mes "[Gatan]";
+		mes "Well, now I've got a little";
+		mes "test for you. You ready?";
+		mes "Your objective is to gain";
+		mes "more levels! Let's see...";
+		mes "What would be fair?";
+		next;
+		if (BaseLevel > 94) {
+			mes "[Gatan]";
+			mes "Actually, you're already";
+			mes "pretty strong. I don't feel";
+			mes "like doing much work either,";
+			mes "so we'll just say that you";
+			mes "finished my test, alright?";
+			mes "Just don't tell anyone!";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,27;
+			mes "[Gatan]";
+			mes "Hold on a second...";
+			mes "I'm supposed to tell";
+			mes "you something... Give";
+			mes "me a minute, will you?";
+			close;
+		}
+		else if (BaseLevel > 89) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 1 more";
+			mes "Base Level. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,24;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 79) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 1 more";
+			mes "Base Level. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,24;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 69) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 2 more";
+			mes "Base Levels. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,25;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 59) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 2 more";
+			mes "Base Levels. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,25;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 49) {
+			mes "[Gatan]";
+			mes "You know, you'd probably";
+			mes "benefit from being just";
+			mes "a little bit stronger. Now";
+			mes "go out and gain 3 Base";
+			mes "Levels for me, okay?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,26;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 39) {
+			mes "[Gatan]";
+			mes "You know, you'd probably";
+			mes "benefit from being just";
+			mes "a little bit stronger. Now";
+			mes "go out and gain 3 Base";
+			mes "Levels for me, okay?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,26;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+	}
+	else if ((countitem(7738) > 0) && ((BaseClass == Job_Swordman) || (BaseClass == Job_Mage))) {
+		mes "[Gatan]";
+		mes "Oh, um... Is that...?";
+		mes "That's a ticket from";
+		mes "Ledrion, huh? (^666666Nuts! I've";
+		mes "got to work now?^000000) It's nice";
+		mes "to meet you. I'm Gatan.";
+		next;
+		mes "[Gatan]";
+		mes "Well, now I've got a little";
+		mes "test for you. You ready?";
+		mes "Your objective is to gain";
+		mes "more levels! Let's see...";
+		mes "What would be fair?";
+		next;
+		if (BaseLevel > 94) {
+			mes "[Gatan]";
+			mes "Actually, you're already";
+			mes "pretty strong. I don't feel";
+			mes "like doing much work either,";
+			mes "so we'll just say that you";
+			mes "finished my test, alright?";
+			mes "Just don't tell anyone!";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,27;
+			mes "[Gatan]";
+			mes "Hold on a second...";
+			mes "I'm supposed to tell";
+			mes "you something... Give";
+			mes "me a minute, will you?";
+			close;
+		}
+		else if (BaseLevel > 89) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 1 more";
+			mes "Base Level. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,24;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 79) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 1 more";
+			mes "Base Level. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,24;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 69) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 2 more";
+			mes "Base Levels. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,25;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 59) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 2 more";
+			mes "Base Levels. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,25;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 49) {
+			mes "[Gatan]";
+			mes "You know, you'd probably";
+			mes "benefit from being just";
+			mes "a little bit stronger. Now";
+			mes "go out and gain 3 Base";
+			mes "Levels for me, okay?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,26;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 39) {
+			mes "[Gatan]";
+			mes "You know, you'd probably";
+			mes "benefit from being just";
+			mes "a little bit stronger. Now";
+			mes "go out and gain 3 Base";
+			mes "Levels for me, okay?";
+			next;
+			delitem 7738,1; //Mission_Certificate9
+			set party_relay,26;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+	}
+	if ((countitem(7738) > 0) && ((BaseClass == Job_Swordman) || (BaseClass == Job_Mage))) {
+		mes "[Gatan]";
+		mes "Oh, um... Is that...?";
+		mes "That's a ticket from";
+		mes "Ledrion, huh? It's nice";
+		mes "to meet you. I'm Gatan.";
+		next;
+		mes "[Gatan]";
+		mes "I'm not on shift right";
+		mes "now, though: even I need";
+		mes "to take some off time to";
+		mes "avoid getting swamped with";
+		mes "work. Come back to me during";
+		mes "my work hours, alright?";
+		next;
+		mes "[Gatan]";
+		mes "I can't tell you exactly";
+		mes "when I'm working (^666666well,";
+		mes "I just want to avoid working";
+		mes "altogether to be honest^000000) but";
+		mes "come back in the afternoon,";
+		mes "Pacific Standard Time, that is.";
+		close;
+	}
+	if (party_relay == 17) {
+		mes "[Gatan]";
+		mes "Say, it's not time for";
+		mes "you to meet up with me";
+		mes "just yet. I think you need";
+		mes "to ask an Acolyte Class";
+		mes "member in your group to bring";
+		mes "your sixth ticket to Bafhail.";
+		close;
+	}
+	if (party_relay == 16) {
+		mes "[Gatan]";
+		mes "Ah, very nice! Please";
+		mes "give this ticket to an";
+		mes "Acolyte Class member";
+		mes "of your group, and ask him";
+		mes "to bring it to Bafhail. Ah, and";
+		mes "here's a little reward for you~";
+		set party_relay,17;
+		getitem 7735,1; //Mission_Certificate6
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		next;
+		mes "[Gatan]";
+		mes "Alright, get that done.";
+		mes "I'll see you around.";
+		close;
+	}
+	if ((party_relay == 15) && (BaseLevel > (party_relay_lv + 2)) && (.@relaytime >= 8) && (.@relaytime < 11)) {
+		mes "[Gatan]";
+		mes "Great, you gained some";
+		mes "levels, just like I asked.";
+		mes "Let me find your next--I swore";
+		mes "I left it around somewhere--";
+		mes "and I'll give you your next set";
+		mes "of instructions. Hang on...";
+		set party_relay,16;
+		close;
+	}
+	else if ((party_relay == 15) && (BaseLevel > (party_relay_lv + 2)) && (.@relaytime >= 21) && (.@relaytime < 1)) {
+		mes "[Gatan]";
+		mes "Great, you gained some";
+		mes "levels, just like I asked.";
+		mes "Let me find your next--I swore";
+		mes "I left it around somewhere--";
+		mes "and I'll give you your next set";
+		mes "of instructions. Hang on...";
+		set party_relay,16;
+		close;
+	}
+	if (party_relay == 15) {
+		mes "[Gatan]";
+		mes "Your mission is to";
+		mes "gain 3 more Base Levels.";
+		mes "Come see me during my";
+		mes "working hours once you";
+		mes "accomplish that, alright?";
+		next;
+		mes "[Gatan]";
+		mes "Now I work three hours";
+		mes "just before I have lunch,";
+		mes "and three hours around";
+		mes "midnight. Go ahead and";
+		mes "look me up around those";
+		mes "times. A bit confusing, I know~";
+		close;
+	}
+	if ((party_relay == 14) && (BaseLevel > (party_relay_lv + 1)) && (.@relaytime >= 8)) {
+		mes "[Gatan]";
+		mes "Great, you gained some";
+		mes "levels, just like I asked.";
+		mes "Let me find your next--I swore";
+		mes "I left it around somewhere--";
+		mes "and I'll give you your next set";
+		mes "of instructions. Hang on...";
+		set party_relay,16;
+		close;
+	}
+	else if ((party_relay == 14) && (BaseLevel > (party_relay_lv + 1)) && (.@relaytime >= 21)) {
+		mes "[Gatan]";
+		mes "Great, you gained some";
+		mes "levels, just like I asked.";
+		mes "Let me find your next--I swore";
+		mes "I left it around somewhere--";
+		mes "and I'll give you your next set";
+		mes "of instructions. Hang on...";
+		set party_relay,16;
+		close;
+	}
+	if (party_relay == 14) {
+		mes "[Gatan]";
+		mes "Your mission is to";
+		mes "gain 2 more Base Levels.";
+		mes "Come see me during my";
+		mes "working hours once you";
+		mes "accomplish that, alright?";
+		next;
+		mes "[Gatan]";
+		mes "Now I work three hours";
+		mes "just before I have lunch,";
+		mes "and three hours around";
+		mes "midnight. Go ahead and";
+		mes "look me up around those";
+		mes "times. A bit confusing, I know~";
+		close;
+	}
+	if ((party_relay == 13) && (BaseLevel > party_relay_lv) && (.@relaytime >= 8) && (.@relaytime < 11)) {
+		mes "[Gatan]";
+		mes "Great, you gained some";
+		mes "levels, just like I asked.";
+		mes "Let me find your next--I swore";
+		mes "I left it around somewhere--";
+		mes "and I'll give you your next set";
+		mes "of instructions. Hang on...";
+		set party_relay,16;
+		close;
+	}
+	else if ((party_relay == 13) && (BaseLevel > party_relay_lv) && (.@relaytime >= 21)) {
+		mes "[Gatan]";
+		mes "Great, you gained some";
+		mes "levels, just like I asked.";
+		mes "Let me find your next--I swore";
+		mes "I left it around somewhere--";
+		mes "and I'll give you your next set";
+		mes "of instructions. Hang on...";
+		set party_relay,16;
+		close;
+	}
+	if (party_relay == 13) {
+		mes "[Gatan]";
+		mes "Your mission is to";
+		mes "gain 1 more Base Level.";
+		mes "Come see me during my";
+		mes "working hours once you";
+		mes "accomplish that, alright?";
+		next;
+		mes "[Gatan]";
+		mes "Now I work three hours";
+		mes "just before I have lunch,";
+		mes "and three hours around";
+		mes "midnight. Go ahead and";
+		mes "look me up around those";
+		mes "times. A bit confusing, I know~";
+		close;
+	}
+	if ((BaseLevel > 39) && (countitem(7734) > 0) && (.@relaytime >= 8) && (.@relaytime < 11) && (BaseClass == Job_Mage)) {
+		mes "[Gatan]";
+		mes "Oh, um... Is that...?";
+		mes "That's a ticket from";
+		mes "Ledrion, huh? (^666666Nuts! I've";
+		mes "got to work now?^000000) It's nice";
+		mes "to meet you. I'm Gatan.";
+		next;
+		mes "[Gatan]";
+		mes "Well, now I've got a little";
+		mes "test for you. You ready?";
+		mes "Your objective is to gain";
+		mes "more levels! Let's see...";
+		mes "What would be fair?";
+		next;
+		if (BaseLevel > 94) {
+			mes "[Gatan]";
+			mes "Actually, you're already";
+			mes "pretty strong. I don't feel";
+			mes "like doing much work either,";
+			mes "so we'll just say that you";
+			mes "finished my test, alright?";
+			mes "Just don't tell anyone!";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,16;
+			mes "[Gatan]";
+			mes "Hold on a second...";
+			mes "I'm supposed to tell";
+			mes "you something... Give";
+			mes "me a minute, will you?";
+			close;
+		}
+		else if (BaseLevel > 89) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 1 more";
+			mes "Base Level. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,13;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 79) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 1 more";
+			mes "Base Level. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,13;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 69) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 2 more";
+			mes "Base Levels. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,14;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 59) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 2 more";
+			mes "Base Levels. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,14;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 49) {
+			mes "[Gatan]";
+			mes "You know, you'd probably";
+			mes "benefit from being just";
+			mes "a little bit stronger. Now";
+			mes "go out and gain 3 Base";
+			mes "Levels for me, okay?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,15;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 39) {
+			mes "[Gatan]";
+			mes "You know, you'd probably";
+			mes "benefit from being just";
+			mes "a little bit stronger. Now";
+			mes "go out and gain 3 Base";
+			mes "Levels for me, okay?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,15;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+	}
+	else if ((BaseLevel > 39) && (countitem(7734) > 0) && (.@relaytime >= 21) && (BaseClass == Job_Mage)) {
+		mes "[Gatan]";
+		mes "Oh, um... Is that...?";
+		mes "That's a ticket from";
+		mes "Ledrion, huh? (^666666Nuts! I've";
+		mes "got to work now?^000000) It's nice";
+		mes "to meet you. I'm Gatan.";
+		next;
+		mes "[Gatan]";
+		mes "Well, now I've got a little";
+		mes "test for you. You ready?";
+		mes "Your objective is to gain";
+		mes "more levels! Let's see...";
+		mes "What would be fair?";
+		next;
+		if (BaseLevel > 94) {
+			mes "[Gatan]";
+			mes "Actually, you're already";
+			mes "pretty strong. I don't feel";
+			mes "like doing much work either,";
+			mes "so we'll just say that you";
+			mes "finished my test, alright?";
+			mes "Just don't tell anyone!";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,16;
+			mes "[Gatan]";
+			mes "Hold on a second...";
+			mes "I'm supposed to tell";
+			mes "you something... Give";
+			mes "me a minute, will you?";
+			close;
+		}
+		else if (BaseLevel > 89) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 1 more";
+			mes "Base Level. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,13;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 79) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 1 more";
+			mes "Base Level. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,13;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 69) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 2 more";
+			mes "Base Levels. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,14;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 59) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 2 more";
+			mes "Base Levels. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,14;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 49) {
+			mes "[Gatan]";
+			mes "You know, you'd probably";
+			mes "benefit from being just";
+			mes "a little bit stronger. Now";
+			mes "go out and gain 3 Base";
+			mes "Levels for me, okay?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,15;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 39) {
+			mes "[Gatan]";
+			mes "You know, you'd probably";
+			mes "benefit from being just";
+			mes "a little bit stronger. Now";
+			mes "go out and gain 3 Base";
+			mes "Levels for me, okay?";
+			next;
+			delitem 7734,1; //Mission_Certificate5
+			set party_relay,15;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+	}
+	if ((BaseLevel > 39) && (countitem(7734) > 0) && (BaseClass == Job_Mage)) {
+		mes "[Gatan]";
+		mes "Oh, um... Is that...?";
+		mes "That's a ticket from";
+		mes "Ledrion, huh? It's nice";
+		mes "to meet you. I'm Gatan.";
+		next;
+		mes "[Gatan]";
+		mes "I'm not on shift right";
+		mes "now, though: even I need";
+		mes "to take some off time to";
+		mes "avoid getting swamped with";
+		mes "work. Come back to me during";
+		mes "my work hours, alright?";
+		next;
+		mes "[Gatan]";
+		mes "Now I work three hours";
+		mes "just before I have lunch,";
+		mes "and three hours around";
+		mes "midnight. Go ahead and";
+		mes "look me up around those";
+		mes "times. A bit confusing, I know~";
+		close;
+	}
+	if (party_relay == 6) {
+		mes "[Gatan]";
+		mes "Did you give that ticket";
+		mes "to the Thief Class member";
+		mes "of your group? ^666666*Yawn*^000000 If you";
+		mes "wanna finish all of these";
+		mes "challenges, then that's";
+		mes "what you gotta do~";
+		close;
+	}
+	if (party_relay == 5) {
+		mes "[Gatan]";
+		mes "Ah, very nice!";
+		mes "Now please give this";
+		mes "ticket to the Thief Class";
+		mes "member of the your group,";
+		mes "and ask him to deliver";
+		mes "it to Bafhail. Easy, right?";
+		next;
+		mes "[Gatan]";
+		mes "Here you are...";
+		mes "Just a little";
+		mes "something for";
+		mes "your troubles~";
+		set party_relay,6;
+		getitem 7731,1; //Mission_Certificate2
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		next;
+		mes "[Gatan]";
+		mes "Don't forget to make";
+		mes "sure that Bafhail gets";
+		mes "that ticket from a Thief";
+		mes "Class character in your";
+		mes "group. I'll see you around.";
+		close;
+	}
+	if ((party_relay == 4) && (BaseLevel > (party_relay_lv + 2)) && ((.@relaytime >= 11) && (.@relaytime < 14))) {
+		mes "[Gatan]";
+		mes "Nice work. I guess";
+		mes "that Ledrion really knows";
+		mes "good adventurers when he";
+		mes "sees them. Now, you mind";
+		mes "waiting a bit? Um, there's";
+		mes "something I have to give you...";
+		set party_relay,5;
+		close;
+	}
+	else if ((party_relay == 4) && (BaseLevel > (party_relay_lv + 2)) && ((.@relaytime >= 0) && (.@relaytime < 3))) {
+		mes "[Gatan]";
+		mes "Nice work. I guess";
+		mes "that Ledrion really knows";
+		mes "good adventurers when he";
+		mes "sees them. Now, you mind";
+		mes "waiting a bit? Um, there's";
+		mes "something I have to give you...";
+		set party_relay,5;
+		close;
+	}
+	if (party_relay == 4) {
+		mes "[Gatan]";
+		mes "You didn't forget that";
+		mes "you had to gain 3 more";
+		mes "Base Levels, did you?";
+		mes "Oh, and come back during";
+		mes "my regular working hours.";
+		mes "Don't bother me when I'm off~";
+		next;
+		mes "[Gatan]";
+		mes "I'll tell you when I work";
+		mes "one more time: come from";
+		mes "11 AM to 2 PM, or 12 AM to";
+		mes "3 AM, Pacific Standard Time.";
+		mes "Good luck to you, alright?";
+		close;
+	}
+	if ((party_relay == 3) && (BaseLevel > (party_relay_lv + 1)) && ((.@relaytime >= 11) && (.@relaytime < 14))) {
+		mes "[Gatan]";
+		mes "Nice work. I guess";
+		mes "that Ledrion really knows";
+		mes "good adventurers when he";
+		mes "sees them. Now, you mind";
+		mes "waiting a bit? Um, there's";
+		mes "something I have to give you...";
+		set party_relay,5;
+		close;
+	}
+	else if ((party_relay == 3) && (BaseLevel > (party_relay_lv + 1)) && ((.@relaytime >= 0) && (.@relaytime < 3))) {
+		mes "[Gatan]";
+		mes "Nice work. I guess";
+		mes "that Ledrion really knows";
+		mes "good adventurers when he";
+		mes "sees them. Now, you mind";
+		mes "waiting a bit? Um, there's";
+		mes "something I have to give you...";
+		set party_relay,5;
+		close;
+	}
+	if (party_relay == 3) {
+		mes "[Gatan]";
+		mes "You didn't forget that";
+		mes "you had to gain 2 more";
+		mes "Base Levels, did you?";
+		mes "Oh, and come back during";
+		mes "my regular working hours.";
+		mes "Don't bother me when I'm off~";
+		next;
+		mes "[Gatan]";
+		mes "I'll tell you when I work";
+		mes "one more time: come from";
+		mes "11 AM to 2 PM, or 12 AM to";
+		mes "3 AM, Pacific Standard Time.";
+		mes "Good luck to you, alright?";
+		close;
+	}
+	if ((party_relay == 99) && (BaseLevel > party_relay_lv) && ((.@relaytime >= 11) && (.@relaytime < 14))) {
+		mes "[Gatan]";
+		mes "Nice work. I guess";
+		mes "that Ledrion really knows";
+		mes "good adventurers when he";
+		mes "sees them. Now, you mind";
+		mes "waiting a bit? Um, there's";
+		mes "something I have to give you...";
+		set party_relay,5;
+		close;
+	}
+	else if ((party_relay == 99) && (BaseLevel > party_relay_lv) && ((.@relaytime >= 0) && (.@relaytime < 3))) {
+		mes "[Gatan]";
+		mes "Nice work. I guess";
+		mes "that Ledrion really knows";
+		mes "good adventurers when he";
+		mes "sees them. Now, you mind";
+		mes "waiting a bit? Um, there's";
+		mes "something I have to give you...";
+		set party_relay,5;
+		close;
+	}
+	if (party_relay == 99) {
+		mes "[Gatan]";
+		mes "You didn't forget that";
+		mes "you had to gain 1 more";
+		mes "Base Level, did you?";
+		mes "Oh, and come back during";
+		mes "my regular working hours.";
+		mes "Don't bother me when I'm off~";
+		next;
+		mes "[Gatan]";
+		mes "I'll tell you when I work";
+		mes "one more time: come from";
+		mes "11 AM to 2 PM, or 12 AM to";
+		mes "3 AM, Pacific Standard Time.";
+		mes "Good luck to you, alright?";
+		close;
+	}
+	if ((BaseLevel > 39) && (countitem(7730) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && (BaseClass == Job_Swordman)) {
+		mes "[Gatan]";
+		mes "Oh, um... Is that...?";
+		mes "That's a ticket from";
+		mes "Ledrion, huh? (^666666Nuts! I've";
+		mes "got to work now?^000000) It's nice";
+		mes "to meet you. I'm Gatan.";
+		next;
+		mes "[Gatan]";
+		mes "Ledrion wanted me to give";
+		mes "a little test if any Swordman";
+		mes "Class guys brought me a ticket,";
+		mes "and were working with a group.";
+		mes "Ready? Increasing your Base";
+		mes "Level will be my test for you.";
+		next;
+		if (BaseLevel > 94) {
+			mes "[Gatan]";
+			mes "Actually, you're already";
+			mes "pretty strong. I don't feel";
+			mes "like doing much work either,";
+			mes "so we'll just say that you";
+			mes "finished my test, alright?";
+			mes "Just don't tell anyone!";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,5;
+			mes "[Gatan]";
+			mes "Hold on a second...";
+			mes "I'm supposed to tell";
+			mes "you something... Give";
+			mes "me a minute, will you?";
+			close;
+		}
+		else if (BaseLevel > 89) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 1 more";
+			mes "Base Level. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,99;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 79) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 1 more";
+			mes "Base Level. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,99;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 69) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 2 more";
+			mes "Base Levels. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,3;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 59) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 2 more";
+			mes "Base Levels. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,3;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 49) {
+			mes "[Gatan]";
+			mes "You know, you'd probably";
+			mes "benefit from being just";
+			mes "a little bit stronger. Now";
+			mes "go out and gain 3 Base";
+			mes "Levels for me, okay?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,4;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 39) {
+			mes "[Gatan]";
+			mes "You know, you'd probably";
+			mes "benefit from being just";
+			mes "a little bit stronger. Now";
+			mes "go out and gain 3 Base";
+			mes "Levels for me, okay?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,4;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+	}
+	else if ((BaseLevel > 39) && (countitem(7730) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && (BaseClass == Job_Swordman)) {
+		mes "[Gatan]";
+		mes "Oh, um... Is that...?";
+		mes "That's a ticket from";
+		mes "Ledrion, huh? (^666666Nuts! I've";
+		mes "got to work now?^000000) It's nice";
+		mes "to meet you. I'm Gatan.";
+		next;
+		mes "[Gatan]";
+		mes "Ledrion wanted me to give";
+		mes "a little test if any Swordman";
+		mes "Class guys brought me a ticket,";
+		mes "and were working with a group.";
+		mes "Ready? Increasing your Base";
+		mes "Level will be my test for you.";
+		next;
+		if (BaseLevel > 94) {
+			mes "[Gatan]";
+			mes "Actually, you're already";
+			mes "pretty strong. I don't feel";
+			mes "like doing much work either,";
+			mes "so we'll just say that you";
+			mes "finished my test, alright?";
+			mes "Just don't tell anyone!";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,5;
+			mes "[Gatan]";
+			mes "Hold on a second...";
+			mes "I'm supposed to tell";
+			mes "you something... Give";
+			mes "me a minute, will you?";
+			close;
+		}
+		else if (BaseLevel > 89) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 1 more";
+			mes "Base Level. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,99;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 79) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 1 more";
+			mes "Base Level. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,99;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 69) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 2 more";
+			mes "Base Levels. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,3;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 59) {
+			mes "[Gatan]";
+			mes "You're pretty strong,";
+			mes "but it wouldn't kill";
+			mes "you to gain 2 more";
+			mes "Base Levels. Go ahead";
+			mes "and do that, alright?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,3;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 49) {
+			mes "[Gatan]";
+			mes "You know, you'd probably";
+			mes "benefit from being just";
+			mes "a little bit stronger. Now";
+			mes "go out and gain 3 Base";
+			mes "Levels for me, okay?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,4;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll go ahead and take";
+			mes "your ticket now. Come";
+			mes "back after you finish what";
+			mes "I've asked, and then we can";
+			mes "move on to the next part.";
+			close;
+		}
+		else if (BaseLevel > 39) {
+			mes "[Gatan]";
+			mes "You know, you'd probably";
+			mes "benefit from being just";
+			mes "a little bit stronger. Now";
+			mes "go out and gain 3 Base";
+			mes "Levels for me, okay?";
+			next;
+			delitem 7730,1; //Mission_Certificate1
+			set party_relay,4;
+			set party_relay_lv,BaseLevel;
+			mes "[Gatan]";
+			mes "I'll keep your ticket.";
+			mes "When you're finished, please come back.";
+			close;
+		}
+	}
+	else if ((BaseLevel > 39) && (countitem(7730) > 0) && (BaseClass == Job_Swordman)) {
+		mes "[Gatan]";
+		mes "Oh, um... Is that...?";
+		mes "That's a ticket from";
+		mes "Ledrion, huh? (^666666Nuts! I've";
+		mes "got to work now?^000000) It's nice";
+		mes "to meet you. I'm Gatan.";
+		next;
+		mes "[Gatan]";
+		mes "Hate to tell you, but";
+		mes "I'm not on duty right now.";
+		mes "You should really come back";
+		mes "and talk to me during my";
+		mes "work hours, okay? I need";
+		mes "my rest from work, you know?";
+		next;
+		mes "[Gatan]";
+		mes "I'll tell you when I work,";
+		mes "just don't forget: come from";
+		mes "11 AM to 2 PM, or 12 AM to";
+		mes "3 AM, Pacific Standard Time.";
+		mes "Good luck to you, alright?";
+		close;
+	}
+	mes "[Gatan]";
+	mes "Hey, nice meeting you.";
+	mes "I'm Gatan. I'm not up to";
+	mes "much, just helping out";
+	mes "a friend. He's loaded, but";
+	mes "he's also a really good guy.";
+	mes "Working me to the bone, though.";
+	close;
+}
+
+payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
+	getpartymember(getcharid(1));
+	set .@partymembercount,$@partymembercount;
+	set .@partyleader,getpartyleader(getcharid(1),2);
+	if (checkweight(907,300) == 0) {
+		mes "^3355FFWait a minute! You're";
+		mes "carrying too many items";
+		mes "right now: store some of";
+		mes "your extra things in Kafra";
+		mes "Storage, and then come back.^000000";
+		close;
+	}
+	if (countitem(7730) > 0) || (countitem(7733) > 0) || (countitem(7734) > 0) || (countitem(7737) > 0) || (countitem(7738) > 0) || (countitem(7741) > 0) {
+		mes "[Bafhail]";
+		mes "You must be confused...";
+		mes "It's not time for you";
+		mes "to see me just yet.";
+		mes "Have you tried meeting";
+		mes "with any of the other guys?";
+		close;
+	}
+	set .@relaytime,gettime(DT_HOUR);
+	if (party_relay == 30) {
+		mes "[Bafhail]";
+		mes "Did you give that ticket";
+		mes "to an Archer or Merchant";
+		mes "Class member of your group?";
+		mes "Just a reminder in case";
+		mes "you've already forgotten.";
+		close;
+	}
+	if ((party_relay == 29) && (.@relaytime >= 0) && (.@relaytime < 3) && (countitem(1012) > 19) && (countitem(1048) > 19) && (countitem(7003) > 19)) {
+		mes "[Bafhail]";
+		mes "Well, it looks like you came";
+		mes "at the right time and brought";
+		mes "everything I asked. Good work.";
+		mes "Please take your next ticket";
+		mes "and this small reward for you.";
+		next;
+		delitem 1012,20; //Lizard_Scruff
+		delitem 1048,20; //Slender_Snake
+		delitem 7003,20; //Anolian_Skin
+		set party_relay,30;
+		getitem 7740,1; //Mission_Certificate11
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[Bafhail]";
+		mes "Make sure that you give";
+		mes "that ticket to an Archer";
+		mes "or Merchant Class member";
+		mes "of your group, and have him";
+		mes "bring it to a boy named Lospii.";
+		mes "Goodbye now, and good luck~";
+		close;
+	}
+	else if ((party_relay == 29) && (.@relaytime >= 11) && (.@relaytime < 14) && (countitem(1012) > 19) && (countitem(1048) > 19) && (countitem(7003) > 19)) {
+		mes "[Bafhail]";
+		mes "Well, it looks like you came";
+		mes "at the right time and brought";
+		mes "everything I asked. Good work.";
+		mes "Please take your next ticket";
+		mes "and this small reward for you.";
+		next;
+		delitem 1012,20; //Lizard_Scruff
+		delitem 1048,20; //Slender_Snake
+		delitem 7003,20; //Anolian_Skin
+		set party_relay,30;
+		getitem 7740,1; //Mission_Certificate11
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[Bafhail]";
+		mes "Make sure that you give";
+		mes "that ticket to an Archer";
+		mes "or Merchant Class member";
+		mes "of your group, and have him";
+		mes "bring it to a boy named Lospii.";
+		mes "Goodbye now, and good luck~";
+		close;
+	}
+	if (party_relay == 29) {
+		mes "[Bafhail]";
+		mes "My mission for you is";
+		mes "to bring me some items";
+		mes "at the right time. I'll only";
+		mes "accept your items for 3 hours";
+		mes "once the day starts, and for 3";
+		mes "hours in the middle of the day.";
+		next;
+		mes "[Bafhail]";
+		mes "I need";
+		mes "^4D4DFF20 Frills^000000,";
+		mes "^4D4DFF20 Anolian Skins^000000, and";
+		mes "^4D4DFF20 Horrendous Hairs^000000.";
+		mes "Don't forget now, alright?";
+		close;
+	}
+	if ((countitem(7739) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && ((BaseClass == Job_Thief) || (BaseClass == Job_Acolyte))) {
+		mes "[Bafhail]";
+		mes "Oh, isn't that ticket...?";
+		mes "Ah, good, good. Judging";
+		mes "from your Job, Gatan must";
+		mes "have sent you, right? Nice";
+		mes "to meet you, I'm Bafhail~";
+		mes "Now, let's get to business.";
+		next;
+		mes "[Bafhail]";
+		mes "My mission is";
+		mes "for you to collect";
+		mes "^4D4DFF20 Frills^000000,";
+		mes "^4D4DFF20 Anolian Skins^000000, and";
+		mes "^4D4DFF20 Horrendous Hairs^000000.";
+		next;
+		delitem 7739,1; //Mission_Certificate10
+		set party_relay,29;
+		mes "[Bafhail]";
+		mes "Understood?";
+		mes "Alright then, if you'll";
+		mes "just hand me your ticket,";
+		mes "you can start gathering";
+		mes "those items I listed.";
+		mes "I'll see you later~";
+		close;
+	}
+	else if ((countitem(7739) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && ((BaseClass == Job_Thief) || (BaseClass == Job_Acolyte))) {
+		mes "[Bafhail]";
+		mes "Oh, isn't that ticket...?";
+		mes "Ah, good, good. Judging";
+		mes "from your Job, Gatan must";
+		mes "have sent you, right? Nice";
+		mes "to meet you, I'm Bafhail~";
+		mes "Now, let's get to business.";
+		next;
+		mes "[Bafhail]";
+		mes "My mission is";
+		mes "for you to collect";
+		mes "^4D4DFF20 Frills^000000,";
+		mes "^4D4DFF20 Anolian Skins^000000, and";
+		mes "^4D4DFF20 Horrendous Hairs^000000.";
+		next;
+		delitem 7739,1; //Mission_Certificate10
+		set party_relay,29;
+		mes "[Bafhail]";
+		mes "Understood?";
+		mes "Understood?";
+		mes "Alright then, if you'll";
+		mes "just hand me your ticket,";
+		mes "you can start gathering";
+		mes "those items I listed.";
+		mes "I'll see you later~";
+		close;
+	}
+	if ((countitem(7739) > 0) && ((BaseClass == Job_Thief) || (BaseClass == Job_Acolyte))) {
+		mes "[Bafhail]";
+		mes "Oh, isn't that ticket...?";
+		mes "Ah, good, good. Judging";
+		mes "from your Job, Gatan must";
+		mes "have sent you, right? Nice";
+		mes "to meet you, I'm Bafhail~";
+		next;
+		mes "[Bafhail]";
+		mes "Would you mind coming ";
+		mes "back to me later? Now";
+		mes "isn't the right time to talk";
+		mes "to me. I'm available for 3";
+		mes "hours at the start of the day,";
+		mes "and 3 hours in midday.";
+		close;
+	}
+	if (party_relay == 20) {
+		mes "[Bafhail]";
+		mes "Did you give that ticket";
+		mes "to an Archer or Merchant";
+		mes "Class member of your group?";
+		mes "Just a reminder in case";
+		mes "you've already forgotten.";
+		close;
+	}
+	if ((party_relay == 19) && (.@relaytime >= 14) && (.@relaytime < 17) && (countitem(1015) > 9) && (countitem(7172) > 9) && (countitem(7155) > 9)) {
+		mes "[Bafhail]";
+		mes "Well, it looks like you came";
+		mes "at the right time and brought";
+		mes "everything I asked. Good work.";
+		mes "Please take your next ticket";
+		mes "and this small reward for you.";
+		next;
+		delitem 1015,10; //Thin_N'_Long_Tongue
+		delitem 7172,10; //Leopard_Talon
+		delitem 7155,10; //Poison_Toad's_Skin
+		set party_relay,20;
+		getitem 7736,1; //Mission_Certificate7
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		mes "[Bafhail]";
+		mes "Do me a favor and make";
+		mes "sure that the Merchant";
+		mes "Class character in your";
+		mes "group delivers that ticket";
+		mes "to Lospii. Alright, I guess";
+		mes "I'll see you later, then.";
+		close;
+	}
+	else if ((party_relay == 19) && (.@relaytime >= 18) && (.@relaytime < 21) && (countitem(1015) > 9) && (countitem(7172) > 9) && (countitem(7155) > 9)) {
+		mes "[Bafhail]";
+		mes "Well, it looks like you came";
+		mes "at the right time and brought";
+		mes "everything I asked. Good work.";
+		mes "Please take your next ticket";
+		mes "and this small reward for you.";
+		next;
+		delitem 1015,10; //Thin_N'_Long_Tongue
+		delitem 7172,10; //Leopard_Talon
+		delitem 7155,10; //Poison_Toad's_Skin
+		set party_relay,20;
+		getitem 7736,1; //Mission_Certificate7
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		mes "[Bafhail]";
+		mes "Do me a favor and make";
+		mes "sure that the Merchant";
+		mes "Class character in your";
+		mes "group delivers that ticket";
+		mes "to Lospii. Alright, I guess";
+		mes "I'll see you later, then.";
+		close;
+	}
+	if (party_relay == 19) {
+		mes "[Bafhail]";
+		mes "Remember to bring me";
+		mes "the items I requested";
+		mes "at the right time, during";
+		mes "the 3 hours after noon or";
+		mes "3 hours in the early evening.";
+		mes "Now, I want you to bring...";
+		next;
+		mes "[Bafhail]";
+		mes "^4D4DFF10 Tongues^000000,";
+		mes "^4D4DFF10 Leopard Claws^000000, and";
+		mes "^4D4DFF10 Poisonous Toad Skins^000000.";
+		mes "I'll be waiting for you here";
+		mes "and will accept those items";
+		mes "when the time is right.";
+		close;
+	}
+	if ((party_relay == 18) && (.@relaytime >= 14) && (.@relaytime < 17) && (countitem(7157) > 9) && (countitem(1021) > 9) && (countitem(7101) >9)) {
+		mes "[Bafhail]";
+		mes "Well, it looks like you came";
+		mes "at the right time and brought";
+		mes "everything I asked. Good work.";
+		mes "Please take your next ticket";
+		mes "and this small reward for you.";
+		next;
+		delitem 7157,10; //Black_Mask
+		delitem 1021,10; //Dokkaebi_Horn
+		delitem 7101,10; //Peco_Wing_Feather
+		set party_relay,20;
+		getitem 7736,1; //Mission_Certificate7
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		mes "[Bafhail]";
+		mes "Do me a favor and make";
+		mes "sure that the Merchant";
+		mes "Class character in your";
+		mes "group delivers that ticket";
+		mes "to Lospii. Alright, I guess";
+		mes "I'll see you later, then.";
+		close;
+	}
+	else if ((party_relay == 18) && (.@relaytime >= 18) && (.@relaytime < 21) && (countitem(7157) > 9) && (countitem(1021) > 9) && (countitem(7101) >9)) {
+		mes "[Bafhail]";
+		mes "Well, it looks like you came";
+		mes "at the right time and brought";
+		mes "everything I asked. Good work.";
+		mes "Please take your next ticket";
+		mes "and this small reward for you.";
+		next;
+		delitem 7157,10; //Black_Mask
+		delitem 1021,10; //Dokkaebi_Horn
+		delitem 7101,10; //Peco_Wing_Feather
+		set party_relay,20;
+		getitem 7736,1; //Mission_Certificate7
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		mes "[Bafhail]";
+		mes "Do me a favor and make";
+		mes "sure that the Merchant";
+		mes "Class character in your";
+		mes "group delivers that ticket";
+		mes "to Lospii. Alright, I guess";
+		mes "I'll see you later, then.";
+		close;
+	}
+	if (party_relay == 18) {
+		mes "[Bafhail]";
+		mes "Remember that your";
+		mes "mission from me is";
+		mes "to collect some items,";
+		mes "and to bring them to";
+		mes "me at the right time.";
+		next;
+		mes "[Bafhail]";
+		mes "I'll only accept your";
+		mes "items for 3 hours after";
+		mes "the day starts, and for";
+		mes "3 hours during midday.";
+		mes "These are the items";
+		mes "that I want you to bring...";
+		next;
+		mes "[Bafhail]";
+		mes "^4D4DFF10 Dark Masks^000000,";
+		mes "^4D4DFF10 Dokebi Horns^000000, and";
+		mes "^4D4DFF10 PecoPeco Feathers^000000.";
+		mes "I'll be here waiting for";
+		mes "you during the hours";
+		mes "I just described, okay?";
+		close;
+	}
+	if ((countitem(7735) > 0) && (.@relaytime >= 14) && (.@relaytime < 17) && (BaseClass == Job_Acolyte)) {
+		mes "[Bafhail]";
+		mes "Oh, isn't that ticket...?";
+		mes "Ah, good, good. Judging";
+		mes "from your Job, Gatan must";
+		mes "have sent you, right? Nice";
+		mes "to meet you, I'm Bafhail~";
+		next;
+		mes "[Bafhail]";
+		mes "Alright, let's get down";
+		mes "to what you came for.";
+		mes "My mission is for you to";
+		mes "collect some items, and";
+		mes "for you to bring them at";
+		mes "the right time. Bring me...";
+		next;
+		mes "[Bafhail]";
+		mes "^4D4DFF10 Dark Masks^000000,";
+		mes "^4D4DFF10 Dokebi Horns^000000, and";
+		mes "^4D4DFF10 PecoPeco Feathers^000000.";
+		next;
+		delitem 7735,1; //Mission_Certificate6
+		set party_relay,18;
+		mes "[Bafhail]";
+		mes "Understood?";
+		mes "Alright then, if you'll";
+		mes "just hand me your ticket,";
+		mes "you can start gathering";
+		mes "those items I listed.";
+		mes "I'll see you later~";
+		close;
+	}
+	else if ((countitem(7735) > 0) && (.@relaytime >= 18) && (.@relaytime < 21) && (BaseClass == Job_Acolyte)) {
+		mes "[Bafhail]";
+		mes "Oh, isn't that ticket...?";
+		mes "Ah, good, good. Judging";
+		mes "from your Job, Gatan must";
+		mes "have sent you, right? Nice";
+		mes "to meet you, I'm Bafhail~";
+		next;
+		mes "[Bafhail]";
+		mes "Alright, let's get down";
+		mes "to what you came for.";
+		mes "My mission is for you to";
+		mes "collect some items, and";
+		mes "for you to bring them at";
+		mes "the right time. Bring me...";
+		next;
+		mes "[Bafhail]";
+		mes "^4D4DFF10 Tongues^000000,";
+		mes "^4D4DFF10 Leopard Claws^000000, and";
+		mes "^4D4DFF10 Poisonous Toad Skins^000000.";
+		next;
+		delitem 7735,1; //Mission_Certificate6
+		set party_relay,19;
+		mes "[Bafhail]";
+		mes "Understood?";
+		mes "Alright then, if you'll";
+		mes "just hand me your ticket,";
+		mes "you can start gathering";
+		mes "those items I listed.";
+		mes "I'll see you later~";
+		close;
+	}
+	if ((countitem(7735) > 0) && (BaseClass == Job_Acolyte)) {
+		mes "[Bafhail]";
+		mes "Oh, isn't that ticket...?";
+		mes "Ah, good, good. Judging";
+		mes "from your Job, Gatan must";
+		mes "have sent you, right? Nice";
+		mes "to meet you, I'm Bafhail~";
+		next;
+		mes "[Bafhail]";
+		mes "Would you mind coming ";
+		mes "back to me later? Now";
+		mes "isn't the right time to talk";
+		mes "to me. I'm available for 3";
+		mes "hours at the start of the day,";
+		mes "and 3 hours in midday.";
+		close;
+	}
+	if (party_relay == 9) {
+		mes "[Bafhail]";
+		mes "Oh, did you already";
+		mes "deliver the ticket that";
+		mes "I gave you? If that's the";
+		mes "case, we won't have any";
+		mes "business with each other";
+		mes "for a while, I suppose.";
+		close;
+	}
+	if ((party_relay == 8) && ((.@relaytime >= 8) && (.@relaytime < 11)) && (countitem(7196) > 9) && (countitem(7184) > 9) && (countitem(920) > 9)) {
+		mes "[Bafhail]";
+		mes "Well, it looks like you came";
+		mes "at the right time and brought";
+		mes "everything I asked. Good work.";
+		mes "Please take your next ticket";
+		mes "and this small reward for you.";
+		next;
+		delitem 7196,10; //Shoulder_Protection
+		delitem 7189,10; //Heart_Of_Tree
+		delitem 920,10; //Claw_Of_Wolves
+		set party_relay,9;
+		getitem 7732,1; //Mission_Certificate3
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[Bafhail]";
+		mes "Please give that";
+		mes "ticket to the Archer";
+		mes "Class member of your";
+		mes "group, and have him";
+		mes "deliver it to Lospii, okay?";
+		mes "Good luck on your travels~";
+		close;
+	}
+	else if ((party_relay == 8) && ((.@relaytime >= 21) && (countitem(7196) > 9) && (countitem(7184) > 9) && (countitem(920) > 9))) {
+		mes "[Bafhail]";
+		mes "Well, it looks like you came";
+		mes "at the right time and brought";
+		mes "everything I asked. Good work.";
+		mes "Please take your next ticket";
+		mes "and this small reward for you.";
+		delitem 7196,10; //Shoulder_Protection
+		delitem 7189,10; //Heart_Of_Tree
+		delitem 920,10; //Claw_Of_Wolves
+		set party_relay,9;
+		getitem 7732,1; //Mission_Certificate3
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		next;
+		mes "[Bafhail]";
+		mes "Please give that";
+		mes "ticket to the Archer";
+		mes "Class member of your";
+		mes "group, and have him";
+		mes "deliver it to Lospii, okay?";
+		mes "Good luck on your travels~";
+		close;
+	}
+	if (party_relay == 8) {
+		mes "[Bafhail]";
+		mes "Your mission";
+		mes "is to bring me";
+		mes "^4D4DFF10 Wooden Hearts^000000,";
+		mes "^4D4DFF10 Wolf Claws^000000, and";
+		mes "^4D4DFF10 Shoulder Protectors^000000";
+		mes "during hours I accept items.";
+		next;
+		mes "[Bafhail]";
+		mes "Remember that I only";
+		mes "accept items from 8 AM";
+		mes "to 11 AM, and from 9 PM";
+		mes "to 12 AM. That's Pacific";
+		mes "Standard Time. Don't forget!";
+		close;
+	}
+	if ((party_relay == 7) && ((.@relaytime >= 8) && (.@relaytime < 11)) && (countitem(1027) > 9) && (countitem(1040) > 9) && (countitem(1023) > 9)) {
+		mes "[Bafhail]";
+		mes "Well, it looks like you came";
+		mes "at the right time and brought";
+		mes "everything I asked. Good work.";
+		mes "Please take your next ticket";
+		mes "and this small reward for you.";
+		next;
+		delitem 1027,10; //Porcupine_Spike
+		delitem 1040,10; //Elder_Pixie's_Beard
+		delitem 1023,10; //Fish_Tail
+		set party_relay,9;
+		getitem 7732,1; //Mission_Certificate3
+		mes "[Bafhail]";
+		mes "Please give that";
+		mes "ticket to the Archer";
+		mes "Class member of your";
+		mes "group, and have him";
+		mes "deliver it to Lospii, okay?";
+		mes "Good luck on your travels~";
+		close;
+	}
+	else if ((party_relay == 7) && ((.@relaytime >= 21) && (countitem(1027) > 9) && (countitem(1040) > 9) && (countitem(1023) > 9))) {
+		mes "[Bafhail]";
+		mes "Well, it looks like you came";
+		mes "at the right time and brought";
+		mes "everything I asked. Good work.";
+		mes "Please take your next ticket";
+		mes "and this small reward for you.";
+		next;
+		delitem 1027,10; //Porcupine_Spike
+		delitem 1040,10; //Elder_Pixie's_Beard
+		delitem 1023,10; //Fish_Tail
+		set party_relay,9;
+		getitem 7732,1; //Mission_Certificate3
+		mes "[Bafhail]";
+		mes "Please give that";
+		mes "ticket to the Archer";
+		mes "Class member of your";
+		mes "group, and have him";
+		mes "deliver it to Lospii, okay?";
+		mes "Good luck on your travels~";
+		close;
+	}
+	if (party_relay == 7) {
+		mes "[Bafhail]";
+		mes "Your mission";
+		mes "is to bring me";
+		mes "^4D4DFF10 Fish Tails^000000,";
+		mes "^4D4DFF10 Porcupine Quills^000000, and";
+		mes "^4D4DFF10 Elder Pixie's Moustaches^000000";
+		mes "during hours I accept items.";
+		next;
+		mes "[Bafhail]";
+		mes "Remember that I only";
+		mes "accept items from 8 AM";
+		mes "to 11 AM, and from 9 PM";
+		mes "to 12 AM. That's Pacific";
+		mes "Standard Time. Don't forget!";
+		close;
+	}
+	if ((countitem(7731) > 0) && (BaseLevel > 39) && ((.@relaytime >= 8) && (.@relaytime < 11)) && (BaseClass == Job_Thief)) {
+		mes "[Bafhail]";
+		mes "Oh, isn't that ticket...?";
+		mes "Ah, good, good. Judging";
+		mes "from your Job, Gatan must";
+		mes "have sent you, right? Nice";
+		mes "to meet you, I'm Bafhail~";
+		next;
+		mes "[Bafhail]";
+		mes "Alright, let's get down";
+		mes "to what you came for.";
+		mes "My mission is for you to";
+		mes "collect some items, and";
+		mes "for you to bring them at";
+		mes "the right time. Bring me...";
+		next;
+		mes "[Bafhail]";
+		mes "^4D4DFF10 Wooden Hearts^000000,";
+		mes "^4D4DFF10 Wolf Claws^000000, and";
+		mes "^4D4DFF10 Shoulder Protectors^000000";
+		next;
+		delitem 7731,1; //Mission_Certificate2
+		set party_relay,8;
+		mes "[Bafhail]";
+		mes "Remember that I won't";
+		mes "accept your items, even";
+		mes "if you have everything,";
+		mes "if you don't come during";
+		mes "the hours when I accept";
+		mes "items for missions, okay?";
+		close;
+	}
+	else if ((countitem(7731) > 0) && (BaseLevel > 39) && ((.@relaytime >= 21) && (BaseClass == Job_Thief))) {
+		mes "[Bafhail]";
+		mes "Oh, isn't that ticket...?";
+		mes "Ah, good, good. Judging";
+		mes "from your Job, Gatan must";
+		mes "have sent you, right? Nice";
+		mes "to meet you, I'm Bafhail~";
+		next;
+		mes "[Bafhail]";
+		mes "Alright, let's get down";
+		mes "to what you came for.";
+		mes "My mission is for you to";
+		mes "collect some items, and";
+		mes "for you to bring them at";
+		mes "the right time. Bring me...";
+		next;
+		mes "[Bafhail]";
+		mes "^4D4DFF10 Fish Tails^000000,";
+		mes "^4D4DFF10 Porcupine Quills^000000, and";
+		mes "^4D4DFF10 Elder Pixie's Moustaches^000000";
+		next;
+		delitem 7731,1; //Mission_Certificate2
+		set party_relay,7;
+		mes "[Bafhail]";
+		mes "Remember that I won't";
+		mes "accept your items, even";
+		mes "if you have everything,";
+		mes "if you don't come during";
+		mes "the hours when I accept";
+		mes "items for missions, okay?";
+		close;
+	}
+	if ((countitem(7731) > 0) && (BaseLevel > 39) && (BaseClass == Job_Thief)) {
+		mes "[Bafhail]";
+		mes "Oh, isn't that ticket...?";
+		mes "Ah, good, good. Judging";
+		mes "from your Job, Gatan must";
+		mes "have sent you, right? Nice";
+		mes "to meet you, I'm Bafhail~";
+		next;
+		mes "[Bafhail]";
+		mes "Would you mind coming";
+		mes "back to me later? Now";
+		mes "isn't the right time to";
+		mes "talk to me. I'm available";
+		mes "from 8 AM to 11 AM, and";
+		mes "from 9 PM to 12 AM.";
+		close;
+	}
+	mes "[Bafhail]";
+	mes "...Hm? I don't think";
+	mes "we have any business";
+	mes "with each other. You mind";
+	mes "leaving me alone? I'm pretty";
+	mes "busy administering a bunch";
+	mes "of these missions for a friend.";
+	next;
+	mes "[Bafhail]";
+	mes "If we're lucky, maybe";
+	mes "you'll be one of those";
+	mes "adventurers that'll carry";
+	mes "out these fun little missions";
+	mes "for my friend Ledrion.";
+	close;
+}
+
+payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
+	getpartymember(getcharid(1));
+	set .@partymembercount,$@partymembercount;
+	set .@partyleader,getpartyleader(getcharid(1),2);
+	if (checkweight(907,300) == 0) {
+		mes "^3355FFWait a minute! You're";
+		mes "carrying too many items";
+		mes "right now: store some of";
+		mes "your extra things in Kafra";
+		mes "Storage, and then come back.^000000";
+		close;
+	}
+	if (countitem(7730) > 0) || (countitem(7731) > 0) || (countitem(7734) > 0) || (countitem(7735) > 0) || (countitem(7738) > 0) || (countitem(7739) > 0) {
+		mes "[Lospii]";
+		mes "Hey, didn't you figure";
+		mes "out what you need to do?";
+		mes "You're not supposed to";
+		mes "talk to me now! Mmm...";
+		mes "I don't know who you";
+		mes "have to meet either, but...";
+		close;
+	}
+	set .@relaytime,gettime(DT_HOUR);
+	getmapxy(.@m$,.@x,.@y,UNITTYPE_NPC,strnpcinfo(3));
+	set .@juwi,getareausers(.@m$,.@x-8,.@y-8,.@x+8,.@y+8);
+	if (party_relay == 32) {
+		mes "[Lospii]";
+		mes "Hey! Did you give";
+		mes "that ticket to the";
+		mes "leader of your group";
+		mes "yet? The guy that started";
+		mes "this whole relay thing!";
+		close;
+	}
+	if ((party_relay == 31) && ((.@relaytime >= 8) && (.@relaytime < 11)) && (.@juwi > 13)) {
+		mes "[Lospii]";
+		mes "Oh! You brought so many";
+		mes "friends! One... T-two...";
+		mes "You brought " + .@juwi + "?! Hmpf.";
+		mes "Maybe I gave you something";
+		mes "too easy to do. I didn't know";
+		mes "you knew this many people!";
+		next;
+		mes "[Lospii]";
+		mes "Oh well, thanks for";
+		mes "bringing everyone here.";
+		mes "For that, you get this";
+		mes "gift from me. Cool, huh?";
+		next;
+		set party_relay,32;
+		getitem 7741,1; //Mission_Certificate12
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[Lospii]";
+		mes "Okay, now take this";
+		mes "ticket, and give it to";
+		mes "your leader, the guy that";
+		mes "started this whole relay";
+		mes "thing. He needs to give";
+		mes "the ticket to Ledrion, okay?";
+		next;
+		mes "[Lospii]";
+		mes "You're almost done!";
+		mes "...I think. Um, I'm not";
+		mes "really sure what will";
+		mes "happen next. I can only";
+		mes "remember the parts I have";
+		mes "to do. C'mon! I'm just a kid!";
+		close;
+	}
+	else if ((party_relay == 31) && ((.@relaytime >= 21) && (.@juwi > 13))) {
+		mes "[Lospii]";
+		mes "Oh! You brought so many";
+		mes "friends! One... T-two...";
+		mes "You brought " + .@juwi + "?! Hmpf.";
+		mes "Maybe I gave you something";
+		mes "too easy to do. I didn't know";
+		mes "you knew this many people!";
+		next;
+		mes "[Lospii]";
+		mes "Oh well, thanks for";
+		mes "bringing everyone here.";
+		mes "For that, you get this";
+		mes "gift from me. Cool, huh?";
+		next;
+		set party_relay,32;
+		getitem 7741,1; //Mission_Certificate12
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[Lospii]";
+		mes "Okay, now take this";
+		mes "ticket, and give it to";
+		mes "your leader, the guy that";
+		mes "started this whole relay";
+		mes "thing. He needs to give";
+		mes "the ticket to Ledrion, okay?";
+		next;
+		mes "[Lospii]";
+		mes "You're almost done!";
+		mes "...I think. Um, I'm not";
+		mes "really sure what will";
+		mes "happen next. I can only";
+		mes "remember the parts I have";
+		mes "to do. C'mon! I'm just a kid!";
+		close;
+	}
+	if (party_relay == 31) {
+		mes "[Lospii]";
+		mes "Okay, you have to bring";
+		mes "me 10 of your friends when";
+		mes "I'm working, okay? That's, uh,";
+		mes "3 hours before noon, and then";
+		mes "another 3 hours after midnight.";
+		mes "Just only those times, okay?";
+		close;
+	}
+	if ((countitem(7740) > 0) && (.@relaytime >= 8) && (.@relaytime < 11) && ((BaseJob == Job_Archer) || (BaseJob == Job_Merchant))) {
+		mes "[Lospii]";
+		mes "Hi, I'm Lospii! Maybe";
+		mes "I'm younger than you, but";
+		mes "I'm in charge of this mission!";
+		mes "So you have to listen, okay?";
+		mes "Heh heh! Don't be scared~";
+		next;
+		mes "[Lospii]";
+		mes "I'm working now for this";
+		mes "mission thing so you came";
+		mes "at a good time! Let's see...";
+		mes "I need to give you... Some";
+		mes "mission for you to doooo...";
+		mes "Oh! I know! I got it!";
+		next;
+		mes "[Lospii]";
+		mes "We're seeing if you";
+		mes "know about teamwork, right?";
+		mes "Why don't you show me a lot";
+		mes "of your friends? Bring me...";
+		mes "14 of them! Yes, that's good!";
+		next;
+		mes "[Lospii]";
+		mes "I need to be able to";
+		mes "see them, you know, so";
+		mes "I know you're not lying";
+		mes "to me. Bring them reeeally";
+		mes "close so I know they're your";
+		mes "friends, not some other guys.";
+		next;
+		delitem 7740,1; //Mission_Certificate11
+		set party_relay,31;
+		mes "[Lospii]";
+		mes "Okay, I'll be right";
+		mes "here! Oh! And you have";
+		mes "to come with your friends";
+		mes "while I'm at work! That's";
+		mes "important to know!";
+		close;
+	}
+	else if ((countitem(7740) > 0) && (.@relaytime >= 21) && ((BaseClass == Job_Archer) || (BaseClass == Job_Merchant))) {
+		mes "[Lospii]";
+		mes "Hi, I'm Lospii! Maybe";
+		mes "I'm younger than you, but";
+		mes "I'm in charge of this mission!";
+		mes "So you have to listen, okay?";
+		mes "Heh heh! Don't be scared~";
+		next;
+		mes "[Lospii]";
+		mes "I'm working now for this";
+		mes "mission thing so you came";
+		mes "at a good time! Let's see...";
+		mes "I need to give you... Some";
+		mes "mission for you to doooo...";
+		mes "Oh! I know! I got it!";
+		next;
+		mes "[Lospii]";
+		mes "We're seeing if you";
+		mes "know about teamwork, right?";
+		mes "Why don't you show me a lot";
+		mes "of your friends? Bring me...";
+		mes "14 of them! Yes, that's good!";
+		next;
+		mes "[Lospii]";
+		mes "I need to be able to";
+		mes "see them, you know, so";
+		mes "I know you're not lying";
+		mes "to me. Bring them reeeally";
+		mes "close so I know they're your";
+		mes "friends, not some other guys.";
+		next;
+		delitem 7740,1; //Mission_Certificate11
+		set party_relay,31;
+		mes "[Lospii]";
+		mes "Okay, I'll be right";
+		mes "here! Oh! And you have";
+		mes "to come with your friends";
+		mes "while I'm at work! That's";
+		mes "important to know!";
+		close;
+	}
+	if ((countitem(7740) > 0) && ((BaseClass == Job_Archer) || (BaseClass == Job_Merchant))) {
+		mes "[Lospii]";
+		mes "Hi, I'm Lospii! Maybe";
+		mes "I'm younger than you, but";
+		mes "I'm in charge of this mission!";
+		mes "So you have to listen, okay?";
+		mes "Heh heh! Don't be scared~";
+		next;
+		mes "[Lospii]";
+		mes "Uh oh... I forgot";
+		mes "that I'm not supposed";
+		mes "to be working now. Come";
+		mes "back when I'm working, okay?";
+		next;
+		mes "[Lospii]";
+		mes "I... I work before";
+		mes "noon for 3 hours, and";
+		mes "then... 3 hours after";
+		mes "midnight? Yes, those";
+		mes "are the times when";
+		mes "I'm working!";
+		close;
+	}
+	if (party_relay == 22) {
+		mes "[Lospii]";
+		mes "Huh? No, no, you're";
+		mes "not supposed to be here!";
+		mes "Give the eighth ticket to";
+		mes "your leader so he can give";
+		mes "it to Ledrion! Your leader...";
+		mes "You know him, right?";
+		close;
+	}
+	if ((party_relay == 21) && ((.@relaytime >= 11) && (.@relaytime < 14)) && (.@juwi > 11)) {
+		mes "[Lospii]";
+		mes "Oh! You brought so many";
+		mes "friends! One... T-two...";
+		mes "You brought " + .@juwi + "?! Hmpf.";
+		mes "Maybe I gave you something";
+		mes "too easy to do. I didn't know";
+		mes "you knew this many people!";
+		next;
+		mes "[Lospii]";
+		mes "Oh well, thanks for";
+		mes "bringing everyone here.";
+		mes "For that, you get this";
+		mes "gift from me. Cool, huh?";
+		next;
+		set party_relay,22;
+		getitem 7737,1; //Mission_Certificate8
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		mes "[Lospii]";
+		mes "Okay, now take this";
+		mes "ticket, and give it to";
+		mes "your leader, the guy that";
+		mes "started this whole relay";
+		mes "thing. He needs to give";
+		mes "the ticket to Ledrion, okay?";
+		next;
+		mes "[Lospii]";
+		mes "You're almost done!";
+		mes "...I think. Um, I'm not";
+		mes "really sure what will";
+		mes "happen next. I can only";
+		mes "remember the parts I have";
+		mes "to do. C'mon! I'm just a kid!";
+		close;
+	}
+	else if ((party_relay == 21) && ((.@relaytime >= 0) && (.@relaytime < 3)) && (.@juwi > 11)) {
+		mes "[Lospii]";
+		mes "Oh! You brought so many";
+		mes "friends! One... T-two...";
+		mes "You brought " + .@juwi + "?! Hmpf.";
+		mes "Maybe I gave you something";
+		mes "too easy to do. I didn't know";
+		mes "you knew this many people!";
+		next;
+		mes "[Lospii]";
+		mes "Oh well, thanks for";
+		mes "bringing everyone here.";
+		mes "For that, you get this";
+		mes "gift from me. Cool, huh?";
+		next;
+		set party_relay,22;
+		getitem 7737,1; //Mission_Certificate8
+		getitem 610,2; //Leaf_Of_Yggdrasil
+		callfunc "F_PartyRelay_Exp";
+		mes "[Lospii]";
+		mes "Okay, now take this";
+		mes "ticket, and give it to";
+		mes "your leader, the guy that";
+		mes "started this whole relay";
+		mes "thing. He needs to give";
+		mes "the ticket to Ledrion, okay?";
+		next;
+		mes "[Lospii]";
+		mes "You're almost done!";
+		mes "...I think. Um, I'm not";
+		mes "really sure what will";
+		mes "happen next. I can only";
+		mes "remember the parts I have";
+		mes "to do. C'mon! I'm just a kid!";
+		close;
+	}
+	if (party_relay == 21) {
+		mes "[Lospii]";
+		mes "Okay, you have to bring";
+		mes "me 12 of your friends when";
+		mes "I'm working, okay? That's, uh,";
+		mes "3 hours before noon, and then";
+		mes "another 3 hours after midnight.";
+		mes "Just only those times, okay?";
+		close;
+	}
+	if ((countitem(7736) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && (BaseClass == Job_Merchant)) {
+		mes "[Lospii]";
+		mes "Hi, I'm Lospii! Maybe";
+		mes "I'm younger than you, but";
+		mes "I'm in charge of this mission!";
+		mes "So you have to listen, okay?";
+		mes "Heh heh! Don't be scared~";
+		next;
+		mes "[Lospii]";
+		mes "I'm working now for this";
+		mes "mission thing so you came";
+		mes "at a good time! Let's see...";
+		mes "I need to give you... Some";
+		mes "mission for you to doooo...";
+		mes "Oh! I know! I got it!";
+		next;
+		mes "[Lospii]";
+		mes "We're seeing if you";
+		mes "know about teamwork, right?";
+		mes "Why don't you show me a lot";
+		mes "of your friends? Bring me...";
+		mes "12 of them! Yes, that's good!";
+		next;
+		mes "[Lospii]";
+		mes "I need to be able to";
+		mes "see them, you know, so";
+		mes "I know you're not lying";
+		mes "to me. Bring them reeeally";
+		mes "close so I know they're your";
+		mes "friends, not some other guys.";
+		next;
+		delitem 7736,1; //Mission_Certificate7
+		set party_relay,21;
+		mes "[Lospii]";
+		mes "Okay, I'll be right";
+		mes "here! Oh! And you have";
+		mes "to come with your friends";
+		mes "while I'm at work! That's";
+		mes "important to know!";
+		close;
+	}
+	else if ((countitem(7736) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && (BaseClass == Job_Merchant)) {
+		mes "[Lospii]";
+		mes "Hi, I'm Lospii! Maybe";
+		mes "I'm younger than you, but";
+		mes "I'm in charge of this mission!";
+		mes "So you have to listen, okay?";
+		mes "Heh heh! Don't be scared~";
+		next;
+		mes "[Lospii]";
+		mes "I'm working now for this";
+		mes "mission thing so you came";
+		mes "at a good time! Let's see...";
+		mes "I need to give you... Some";
+		mes "mission for you to doooo...";
+		mes "Oh! I know! I got it!";
+		next;
+		mes "[Lospii]";
+		mes "We're seeing if you";
+		mes "know about teamwork, right?";
+		mes "Why don't you show me a lot";
+		mes "of your friends? Bring me...";
+		mes "12 of them! Yes, that's good!";
+		next;
+		mes "[Lospii]";
+		mes "I need to be able to";
+		mes "see them, you know, so";
+		mes "I know you're not lying";
+		mes "to me. Bring them reeeally";
+		mes "close so I know they're your";
+		mes "friends, not some other guys.";
+		next;
+		delitem 7736,1; //Mission_Certificate7
+		set party_relay,21;
+		mes "[Lospii]";
+		mes "Okay, I'll be right";
+		mes "here! Oh! And you have";
+		mes "to come with your friends";
+		mes "while I'm at work! That's";
+		mes "important to know!";
+		close;
+	}
+	if ((countitem(7736) > 0) && (BaseClass == Job_Merchant)) {
+		mes "[Lospii]";
+		mes "Hi, I'm Lospii! Maybe";
+		mes "I'm younger than you, but";
+		mes "I'm in charge of this mission!";
+		mes "So you have to listen, okay?";
+		mes "Heh heh! Don't be scared~";
+		next;
+		mes "[Lospii]";
+		mes "Uh oh... I forgot";
+		mes "that I'm not supposed";
+		mes "to be working now. Come";
+		mes "back when I'm working, okay?";
+		next;
+		mes "[Lospii]";
+		mes "I... I work before";
+		mes "noon for 3 hours, and";
+		mes "then... 3 hours after";
+		mes "midnight? Yes, those";
+		mes "are the times when";
+		mes "I'm working!";
+		close;
+	}
+	if (party_relay == 11) {
+		mes "[Lospii]";
+		mes "Umm... Did you bring";
+		mes "the fourth ticket to your";
+		mes "leader yet? You know,";
+		mes "the leader of the group.";
+		mes "The one that started this";
+		mes "whole relay test thingee.";
+		close;
+	}
+	if ((party_relay == 10) && ((.@relaytime >= 14) && (.@relaytime < 17)) && (.@juwi > 9)) {
+		mes "[Lospii]";
+		mes "Oh! You brought so many";
+		mes "friends! One... T-two...";
+		mes "You brought " + .@juwi + "?! Hmpf.";
+		mes "Maybe I gave you something";
+		mes "too easy to do. I didn't know";
+		mes "you knew this many people!";
+		next;
+		mes "[Lospii]";
+		mes "Oh well, thanks for";
+		mes "bringing everyone here.";
+		mes "For that, you get this";
+		mes "gift from me. Cool, huh?";
+		next;
+		set party_relay,11;
+		getitem 7733,1; //Mission_Certificate4
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[Lospii]";
+		mes "Okay, now take this";
+		mes "ticket, and give it to";
+		mes "your leader, the guy that";
+		mes "started this whole relay";
+		mes "thing. He needs to give";
+		mes "the ticket to Ledrion, okay?";
+		next;
+		mes "[Lospii]";
+		mes "You're almost done!";
+		mes "...I think. Um, I'm not";
+		mes "really sure what will";
+		mes "happen next. I can only";
+		mes "remember the parts I have";
+		mes "to do. C'mon! I'm just a kid!";
+		close;
+	}
+	else if ((party_relay == 10) && ((.@relaytime >= 18) && (.@relaytime < 21)) && (.@juwi > 9)) {
+		mes "[Lospii]";
+		mes "Oh! You brought so many";
+		mes "friends! One... T-two...";
+		mes "You brought " + .@juwi + "?! Hmpf.";
+		mes "Maybe I gave you something";
+		mes "too easy to do. I didn't know";
+		mes "you knew this many people!";
+		next;
+		mes "[Lospii]";
+		mes "Oh well, thanks for";
+		mes "bringing everyone here.";
+		mes "For that, you get this";
+		mes "gift from me. Cool, huh?";
+		next;
+		set party_relay,11;
+		getitem 7733,1; //Mission_Certificate4
+		getitem 607,2; //Yggdrasilberry
+		callfunc "F_PartyRelay_Exp";
+		mes "[Lospii]";
+		mes "Okay, now take this";
+		mes "ticket, and give it to";
+		mes "your leader, the guy that";
+		mes "started this whole relay";
+		mes "thing. He needs to give";
+		mes "the ticket to Ledrion, okay?";
+		next;
+		mes "[Lospii]";
+		mes "You're almost done!";
+		mes "...I think. Um, I'm not";
+		mes "really sure what will";
+		mes "happen next. I can only";
+		mes "remember the parts I have";
+		mes "to do. C'mon! I'm just a kid!";
+		close;
+	}
+	if (party_relay == 10) {
+		mes "[Lospii]";
+		mes "Bring 10 of your friends";
+		mes "here to me while I'm working,";
+		mes "okay? Umm... I work frooom...";
+		mes "2 PM to 5 PM, and 6 PM to 9 PM.";
+		mes "I think those are the times.";
+		mes "I... I can't read watches...";
+		close;
+	}
+	if ((countitem(7732) > 0) && (BaseLevel > 39) && ((.@relaytime >= 14) && (.@relaytime < 17)) && (BaseClass == Job_Archer)) {
+		mes "[Lospii]";
+		mes "Hi, I'm Lospii! Maybe";
+		mes "I'm younger than you, but";
+		mes "I'm in charge of this mission!";
+		mes "So you have to listen, okay?";
+		mes "Heh heh! Don't be scared~";
+		next;
+		mes "[Lospii]";
+		mes "I'm working now for this";
+		mes "mission thing so you came";
+		mes "at a good time! Let's see...";
+		mes "I need to give you... Some";
+		mes "mission for you to doooo...";
+		mes "Oh! I know! I got it!";
+		next;
+		mes "[Lospii]";
+		mes "We're seeing if you";
+		mes "know about teamwork, right?";
+		mes "Why don't you show me a lot";
+		mes "of your friends? Bring me...";
+		mes "10 of them! Yes, that's good!";
+		next;
+		mes "[Lospii]";
+		mes "I need to be able to";
+		mes "see them, you know, so";
+		mes "I know you're not lying";
+		mes "to me. Bring them reeeally";
+		mes "close so I know they're your";
+		mes "friends, not some other guys.";
+		next;
+		delitem 7732,1; //Mission_Certificate3
+		set party_relay,10;
+		mes "[Lospii]";
+		mes "Okay, I'll be right";
+		mes "here! Oh! And you have";
+		mes "to come with your friends";
+		mes "while I'm at work! That's";
+		mes "important to know!";
+		close;
+	}
+	else if ((countitem(7732) > 0) && (BaseLevel > 39) && ((.@relaytime >= 18) && (.@relaytime < 21)) && (BaseClass == Job_Archer)) {
+		mes "[Lospii]";
+		mes "Hi, I'm Lospii! Maybe";
+		mes "I'm younger than you, but";
+		mes "I'm in charge of this mission!";
+		mes "So you have to listen, okay?";
+		mes "Heh heh! Don't be scared~";
+		next;
+		mes "[Lospii]";
+		mes "I'm working now for this";
+		mes "mission thing so you came";
+		mes "at a good time! Let's see...";
+		mes "I need to give you... Some";
+		mes "mission for you to doooo...";
+		mes "Oh! I know! I got it!";
+		next;
+		mes "[Lospii]";
+		mes "We're seeing if you";
+		mes "know about teamwork, right?";
+		mes "Why don't you show me a lot";
+		mes "of your friends? Bring me...";
+		mes "10 of them! Yes, that's good!";
+		next;
+		mes "[Lospii]";
+		mes "I need to be able to";
+		mes "see them, you know, so";
+		mes "I know you're not lying";
+		mes "to me. Bring them reeeally";
+		mes "close so I know they're your";
+		mes "friends, not some other guys.";
+		next;
+		delitem 7732,1; //Mission_Certificate3
+		set party_relay,10;
+		mes "[Lospii]";
+		mes "Okay, I'll be right";
+		mes "here! Oh! And you have";
+		mes "to come with your friends";
+		mes "while I'm at work! That's";
+		mes "important to know!";
+		close;
+	}
+	if ((countitem(7732) > 0) && (BaseLevel > 39) && (BaseClass == Job_Archer)) {
+		mes "[Lospii]";
+		mes "Hi, I'm Lospii! Maybe";
+		mes "I'm younger than you, but";
+		mes "I'm in charge of this mission!";
+		mes "So you have to listen, okay?";
+		mes "Heh heh! Don't be scared~";
+		next;
+		mes "[Lospii]";
+		mes "Uh oh... I forgot";
+		mes "that I'm not supposed";
+		mes "to be working now. Come";
+		mes "back when I'm working, okay?";
+		next;
+		mes "[Lospii]";
+		mes "I work frooom... Uh...";
+		mes "2 PM to 5 PM? Oh!";
+		mes "And also 6 PM to 9 PM.";
+		mes "I think those are the";
+		mes "times... I mean, clocks";
+		mes "are hard to read, man!";
+		close;
+	}
+	mes "[Lospii]";
+	mes "Hi! I'm Lospii!";
+	mes "Hey, does it look like";
+	mes "I'm at work? Ha ha!";
+	mes "I got a job! I'm helping";
+	mes "my friends a lot!";
+	close;
+}
+
+// EXP Rewards
+function	script	F_PartyRelay_Exp	{
+	if (checkre(3)) { //unconfirmed
+		if (BaseLevel > 94) getexp 104760,0;
+		else if (BaseLevel > 89) getexp 85920,0;
+		else if (BaseLevel > 79) getexp 38520,0;
+		else if (BaseLevel > 69) getexp 19560,0;
+		else if (BaseLevel > 59) getexp 6720,0;
+		else if (BaseLevel > 49) getexp 2880,0;
+		else getexp 1080,0;
+	} else {
+		if (BaseLevel > 94) getexp 1047600,0;
+		else if (BaseLevel > 89) getexp 859200,0;
+		else if (BaseLevel > 79) getexp 385200,0;
+		else if (BaseLevel > 69) getexp 195600,0;
+		else if (BaseLevel > 59) getexp 67200,0;
+		else if (BaseLevel > 49) getexp 28800,0;
+		else getexp 10800,0;
+	}
+	return;
+}
+
+// Comodo Relay
+comodo,71,137,3	duplicate(RelayLedrion)	Ledrion#comodo	109
+comodo,236,197,3	duplicate(RelayGatan)	Gatan#comodo	86
+comodo,152,184,3	duplicate(RelayBafhail)	Bafhail#comodo	731
+comodo,64,219,3	duplicate(RelayLospii)	Lospii#comodo	706
+
+// Einbroch Relay
+einbroch,107,93,3	duplicate(RelayLedrion)	Ledrion#einbroch	109
+einbroch,260,128,3	duplicate(RelayGatan)	Gatan#einbroch	86
+einbroch,251,178,3	duplicate(RelayBafhail)	Bafhail#einbroch	731
+einbroch,173,72,3	duplicate(RelayLospii)	Lospii#einbroch	706
+
+// Relay Hugel
+hugel,102,130,3	duplicate(RelayLedrion)	Ledrion#hugel	109
+hugel,169,139,3	duplicate(RelayGatan)	Gatan#hugel	86
+hugel,55,200,3	duplicate(RelayBafhail)	Bafhail#hugel	731
+hugel,144,201,3	duplicate(RelayLospii)	Lospii#hugel	706
+
+// Relay Rachel
+rachel,215,71,3	duplicate(RelayLedrion)	Ledrion#rachel	109
+rachel,45,163,3	duplicate(RelayGatan)	Gatan#rachel	86
+rachel,245,132,3	duplicate(RelayBafhail)	Bafhail#rachel	731
+rachel,158,215,3	duplicate(RelayLospii)	Lospii#rachel	706
+
+// Relay Veins
+veins,274,188,5	duplicate(RelayLedrion)	Ledrion#veins	109
+veins,138,207,3	duplicate(RelayGatan)	Gatan#veins	86
+veins,202,235,3	duplicate(RelayBafhail)	Bafhail#veins	731
+veins,97,245,5	duplicate(RelayLospii)	Lospii#veins	706
