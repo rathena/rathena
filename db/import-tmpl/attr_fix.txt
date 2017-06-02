@@ -1,6 +1,0 @@
-// Elemental Attribute Damage Adjustment Tables
-//
-// Structure of Database:
-// Columns - attacker's weapon element
-// Rows    - target's defense element
-

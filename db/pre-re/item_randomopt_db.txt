@@ -1,4 +1,0 @@
-// Items Random Option Database	
-//
-// Structure of Database:
-// ID,{ Bonus Script }
