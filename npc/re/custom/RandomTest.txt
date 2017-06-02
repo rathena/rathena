@@ -1,0 +1,4 @@
+prontera,150,100,11	script	Random Test	494,{
+setrandomoption EQI_HAND_R,1,RDMOPT_VAR_STRAMOUNT,rand(1,1000),0;
+end;
+}
