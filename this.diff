@@ -1,0 +1,64 @@
+diff --git a/3rdparty/libconfig/libconfig.vcxproj.user b/3rdparty/libconfig/libconfig.vcxproj.user
+new file mode 100644
+index 0000000..abe8dd8
+--- /dev/null
++++ b/3rdparty/libconfig/libconfig.vcxproj.user
+@@ -0,0 +1,4 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <PropertyGroup />
++</Project>
+\ No newline at end of file
+diff --git a/npc/re/custom/2176.txt b/npc/re/custom/2176.txt
+new file mode 100644
+index 0000000..279bba5
+--- /dev/null
++++ b/npc/re/custom/2176.txt
+@@ -0,0 +1,7 @@
++-	script	BugReport	-1,{
++OnInit:
++	.@i = 1;
++	if(.@i) 
++		++.@i;
++	debugmes ".@i's value is " + .@i + ".";
++}
+\ No newline at end of file
+diff --git a/npc/re/custom/RandomTest.txt b/npc/re/custom/RandomTest.txt
+new file mode 100644
+index 0000000..7544712
+--- /dev/null
++++ b/npc/re/custom/RandomTest.txt
+@@ -0,0 +1,4 @@
++prontera,150,100,11	script	Random Test	494,{
++setrandomoption EQI_HAND_R,1,RDMOPT_VAR_STRAMOUNT,rand(1,1000),0;
++end;
++}
+\ No newline at end of file
+diff --git a/src/map/script.c b/src/map/script.c
+index 5b351b5..1a3fd7e 100644
+--- a/src/map/script.c
++++ b/src/map/script.c
+@@ -12380,7 +12380,11 @@ BUILDIN_FUNC(setmapflag)
+ 				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
+ 				break;
+ 			case MF_HIDEMOBHPBAR:		map[m].flag.hidemobhpbar = 1; break;
++<<<<<<< HEAD
++			case MF_INSTAKILL:			map[m].flag.instakill = 1; break;
++=======
+ 			case MF_INSTAKILL:		map[m].flag.instakill = 1; break;
++>>>>>>> c6660167a3282050522e9b6303ac1b87cf06beaa
+ #ifdef ADJUST_SKILL_DAMAGE
+ 			case MF_SKILL_DAMAGE:
+ 				{
+@@ -12489,7 +12493,11 @@ BUILDIN_FUNC(removemapflag)
+ 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+ 				break;
+ 			case MF_HIDEMOBHPBAR:		map[m].flag.hidemobhpbar = 0; break;
++<<<<<<< HEAD
+ 			case MF_INSTAKILL:			map[m].flag.instakill = 0; break;
++=======
++			case MF_INSTAKILL:			 map[m].flag.instakill = 0; break;
++>>>>>>> c6660167a3282050522e9b6303ac1b87cf06beaa
+ #ifdef ADJUST_SKILL_DAMAGE
+ 			case MF_SKILL_DAMAGE:
+ 				{

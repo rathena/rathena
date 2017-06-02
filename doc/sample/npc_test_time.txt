@@ -1,0 +1,26 @@
+//===== rAthena Script =======================================
+//= Sample: Time Test
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20161206
+//===== Description: ========================================= 
+//= Demonstrates time commands.
+//============================================================
+
+prontera,157,181,6	script	Time Sample	105,{
+	mes "[Time Sample]";
+	mes "System Tick : " + gettimetick(0);
+	mes "  Time Tick : " + gettimetick(1);
+	mes "  Unix Tick : " + gettimetick(2);
+	mes " GetTime(DT_SECOND) : " + gettime(DT_SECOND) + " (Sec)";
+	mes " GetTime(DT_MINUTE) : " + gettime(DT_MINUTE) + " (Min)";
+	mes " GetTime(DT_HOUR) : " + gettime(DT_HOUR) + " (Hour)";
+	mes " GetTime(DT_DAYOFWEEK) : " + gettime(DT_DAYOFWEEK) + " (Day of week)";
+	mes " GetTime(DT_DAYOFMONTH) : " + gettime(DT_DAYOFMONTH) + " (Day of month)";
+	mes " GetTime(DT_MONTH) : " + gettime(DT_MONTH) + " (Month)";
+	mes " GetTime(DT_YEAR) : " + gettime(DT_YEAR) + " (Year)";
+	mes " GetTime(DT_DAYOFYEAR) : " + gettime(DT_DAYOFYEAR) + " (Day of year)";
+	mes " GetTimeStr : " + gettimestr("%Y-%m/%d %H:%M:%S",19);
+	close;
+}

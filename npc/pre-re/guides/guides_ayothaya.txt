@@ -1,0 +1,111 @@
+//===== rAthena Script =======================================
+//= Ayothaya Guides
+//===== By: ==================================================
+//= MasterOfMuppets
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Guides for the City of Ayotaya
+//===== Additional Comments: =================================
+//= 1.0 First version [L0ne_W0lf]
+//============================================================
+
+ayothaya,203,169,3	script	Noi#ayo	839,{
+	mes "[Noi]";
+	mes "Welcome to Ayotaya.";
+	mes "Our beautiful village is built";
+	mes "above the water, surrounded";
+	mes "by a dense forest.";
+	next;
+	mes "[Noi]";
+	mes "There are many tourist attractions in this village that you won't be able to find anywhere else. Our fish markets and the the unique architecture of our buildings is enough reason to visit Ayotaya.";
+	next;
+	mes "[Noi]";
+	mes "Please feel free";
+	mes "to take a look around.";
+	next;
+	switch(select("Building Locations.:Remove marks from mini-map.:Cancel.")) {
+	case 1:
+		mes "[Noi]";
+		mes "Where would";
+		mes "you like to visit?";
+		next;
+		switch(select("Weapon Shop:Tool Shop:Tavern:Shrine:Fishing Spot:Cancel")) {
+		case 1:
+			mes "[Noi]";
+			mes "At our Weapon Shop,";
+			mes "you will find great weapons";
+			mes "favored by brave Ayotayan seafarers.";
+			next;
+			mes "[Noi]";
+			mes "Our Weapon Shop";
+			mes "is located at ^55FF33+^000000.";
+			viewpoint 1,165,90,2,0x55FF33;
+			close;
+		case 2:
+			mes "[Noi]";
+			mes "We Ayotayans always make sure we have everything we need before we go traveling. It never hurts to be prepared, doesn't it?";
+			next;
+			mes "[Noi]";
+			mes "Our Tool Shop";
+			mes "is located at ^3355FF+^000000.";
+			viewpoint 1,129,86,3,0x3355FF;
+			close;
+		case 3:
+			mes "[Noi]";
+			mes "One of the basics of adventuring is gathering information, or at least that's what they say. You can meet people from all sorts of places in the Tavern. I'm sure you can learn something useful there.";
+			next;
+			mes "[Noi]";
+			mes "Of course, you must";
+			mes "drop by our Tavern.";
+			mes "It is located at ^00FF00+^000000.";
+			viewpoint 1,232,76,4,0x00FF00;
+			close;
+		case 4:
+			mes "[Noi]";
+			mes "If you wish to pray to God, or achieve a state of peace in your mind, why don't you visit our Shrine? Even if it's just for sight-seeing, everyone is";
+			mes "welcome there.";
+			next;
+			mes "[Noi]";
+			mes "Our Shrine";
+			mes "is located at ^00FF00+^000000.";
+			viewpoint 1,208,283,5,0x00FF00;
+			close;
+		case 5:
+			mes "[Noi]";
+			mes "Since Ayothaya was built above the surface of the water and close to a beach, it's been a favorite spot for fishermen. Why don't you catch some fish for dinner at the Fishing Spot?";
+			next;
+			mes "[Noi]";
+			mes "Our famous";
+			mes "Fishing Spot";
+			mes "is located at ^00FF00+^000000";
+			viewpoint 1,253,99,6,0x00FF00;
+			close;
+		case 6:
+			mes "[Noi]";
+			mes "If you wish to remove location marks on your mini-map, please select the 'Remove marks from mini-map' command from the menu.";
+			close;
+		}
+	case 2:
+		viewpoint 2,165,90,2,0x55FF33;
+		viewpoint 2,129,86,3,0x3355FF;
+		viewpoint 2,232,76,4,0x00FF00;
+		viewpoint 2,208,283,5,0x00FF00;
+		viewpoint 2,253,99,6,0x00FF00;
+		mes "[Noi]";
+		mes "Alright...";
+		mes "I've removed all the";
+		mes "location marks from";
+		mes "your mini-map.";
+		mes "Thank you.";
+		close;
+	case 3:
+		mes "[Noi]";
+		mes "Please enjoy";
+		mes "your travels.";
+		close;
+	}
+}

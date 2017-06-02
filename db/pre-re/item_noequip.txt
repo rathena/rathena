@@ -1,0 +1,83 @@
+// Forbidden Items Database
+// Defines restrictions on equipment, items, and cards in map types and zones.
+//
+// Structure of Database:
+// ItemID,Flag
+//
+// Legend for 'Flag' field (bitmask):
+// 1    - restricted in normal maps
+// 2    - restricted in PVP
+// 4    - restricted in GVG
+// 8    - restricted in Battlegrounds
+// 16   - restricted in WOE:TE castles
+// Restricted zones - configured by 'restricted <number>' mapflag
+// 32   - restricted in zone 1
+// 64   - restricted in zone 2
+// 128  - restricted in zone 3
+// 256  - restricted in zone 4
+// 512  - restricted in zone 5
+// 1024 - restricted in zone 6
+// 2048 - restricted in zone 7
+// 4096 - restricted in zone 8
+//
+// Passing negative value as flag will unset the flag instead.
+//
+// Examples:
+// 1201,1   // Knife can't be worn on normal maps
+// 608,4    // Yggdrasil Seed can't be consumed in both GvG and WoE Castles
+// 4174,6   // Deviling Card has no effect in every PVP or GVG map, and during WoE
+// 501,32   // Red Potion can't be consumed on maps marked as 'restricted zone 1'
+// 519,322  // Milk can't be consumed in PVP and maps marked as 'restricted zone 2' or 'restricted zone 4' (256+64+2)
+// 519,-2   // Unset `restricted in PVP` flag from Milk. Making it usable in PVP again.
+
+//----------------------------------------------------------------------------
+// Normal maps
+//----------------------------------------------------------------------------
+
+
+//----------------------------------------------------------------------------
+// PVP
+//----------------------------------------------------------------------------
+14529,2	//Greed_Scroll
+
+//----------------------------------------------------------------------------
+// GVG
+//----------------------------------------------------------------------------
+12218,4	//Assumptio_5_Scroll
+14529,4	//Greed_Scroll
+14590,4	//Pty_Assumptio_Scroll
+
+//----------------------------------------------------------------------------
+// Battlegrounds
+//----------------------------------------------------------------------------
+12218,8	//Assumptio_5_Scroll
+14590,8	//Pty_Assumptio_Scroll
+
+//----------------------------------------------------------------------------
+// Zone 1 - Aldebaran Turbo Track
+//----------------------------------------------------------------------------
+601,32	//Wing_Of_Fly
+605,32	//Anodyne
+506,32	//Green_Potion
+525,32	//Panacea
+
+//----------------------------------------------------------------------------
+// Zone 2 - Jail
+//----------------------------------------------------------------------------
+601,64	//Wing_Of_Fly
+602,64	//Wing_Of_Butterfly
+12212,64	//Giant_Fly_Wing
+14582,64	//WOB_Rune
+14583,64	//WOB_Schwaltz
+14584,64	//WOB_Rachel
+14585,64	//WOB_Local
+
+//----------------------------------------------------------------------------
+// Zone 3 - Izlude Battle Arena
+//----------------------------------------------------------------------------
+601,128	//Wing_Of_Fly
+
+//----------------------------------------------------------------------------
+// Zone 7 - Towns
+//----------------------------------------------------------------------------
+14529,2048	//Greed_Scroll

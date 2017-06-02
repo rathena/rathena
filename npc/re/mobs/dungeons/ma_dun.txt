@@ -1,0 +1,21 @@
+//===== rAthena Script =======================================
+//= Malaya Port Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Chilly
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Official kRO monster spawns
+//===== Additional Comments: =================================
+//= 1.0 First Release
+//= 1.1 Updated spawns.
+//============================================================
+
+//==================================================
+// ma_dun01 - Bangungot Hospital F1
+//==================================================
+ma_dun01,0,0	monster	Manananggal	2311,40,5000
+ma_dun01,0,0	monster	Wakwak	2315,30,5000
+ma_dun01,0,0	monster	Tiyanak	2314,40,5000

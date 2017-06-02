@@ -1,0 +1,53 @@
+//===== rAthena Script =======================================
+//= Prontera Sewers(Culvert) Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 Official kRO 10.1 spawns [Playtester]
+//= 1.2 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// prt_sewb1 - Prontera Culvert F1
+//==================================================
+prt_sewb1,0,0	monster	Thief Bug Egg	1048,80
+prt_sewb1,0,0	monster	Thief Bug	1051,30
+prt_sewb1,0,0	monster	Familiar	1005,10
+prt_sewb1,0,0	monster	Tarou	1175,10
+
+//==================================================
+// prt_sewb2 - Prontera Culvert F2
+//==================================================
+prt_sewb2,0,0	monster	Thief Bug Egg	1048,20
+prt_sewb2,0,0	monster	Thief Bug	1051,70
+prt_sewb2,0,0	monster	Familiar	1005,10
+prt_sewb2,0,0	monster	Spore	1014,20
+prt_sewb2,0,0	monster	Plankton	1161,30
+prt_sewb2,0,0	monster	Thief Bug Female	1053,10
+prt_sewb2,0,0	monster	Tarou	1175,60
+
+//==================================================
+// prt_sewb3 - Prontera Culvert F3
+//==================================================
+prt_sewb3,0,0	monster	Thief Bug Egg	1048,10
+prt_sewb3,0,0	monster	Thief Bug	1051,20
+prt_sewb3,0,0	monster	Thief Bug Female	1053,65
+prt_sewb3,0,0	monster	Thief Bug Male	1054,65
+prt_sewb3,0,0	monster	Tarou	1175,15
+prt_sewb3,0,0	monster	Poison Spore	1077,15
+prt_sewb3,0,0	monster	Familiar	1005,20
+
+//==================================================
+// prt_sewb4 - Prontera Culvert F4
+//==================================================
+prt_sewb4,0,0	monster	Thief Bug Egg	1048,10
+prt_sewb4,0,0	monster	Thief Bug	1051,20
+prt_sewb4,0,0	monster	Thief Bug Female	1053,20
+prt_sewb4,0,0	monster	Thief Bug Male	1054,70
+prt_sewb4,0,0	monster	Drainliar	1111,20
+prt_sewb4,0,0	monster	Cramp	1209,5
+prt_sewb4,0,0,0,0	boss_monster	Golden Thief Bug	1086,1,3600000,600000,1

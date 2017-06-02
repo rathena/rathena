@@ -1,0 +1,72 @@
+//===== rAthena Script =======================================
+//= Turtle Island Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.2 Official kRO 10.1 spawns [Playtester]
+//============================================================
+
+//==================================================
+// tur_dun01 - Turtle Island
+//==================================================
+tur_dun01,0,0	monster	Dragon Tail	1321,25
+tur_dun01,0,0	monster	Spring Rabbit	1322,25
+tur_dun01,0,0	monster	Thara Frog	1034,10
+tur_dun01,0,0	monster	Permeter	1314,10
+tur_dun01,0,0	monster	Pest	1256,15
+
+//==================================================
+// tur_dun02 - Turtle Island Dungeon
+//==================================================
+tur_dun02,0,0	monster	Permeter	1314,40
+tur_dun02,0,0	monster	Solider	1316,40
+tur_dun02,0,0	monster	Freezer	1319,20
+tur_dun02,0,0	monster	Pest	1256,15
+
+//==================================================
+// tur_dun03 - Good Turtles Village
+//==================================================
+tur_dun03,0,0	monster	Permeter	1314,15
+tur_dun03,0,0	monster	Freezer	1319,40
+tur_dun03,0,0	monster	Assaulter	1315,35
+tur_dun03,0,0	monster	Heater	1318,10,50000
+
+//==================================================
+// tur_dun04 - Turtle Palace
+//==================================================
+tur_dun04,99,92,10,10	monster	Wanderer	1208,1,60000,30000
+tur_dun04,99,93,20,20	boss_monster	Turtle General	1312,1,3600000,600000,0
+tur_dun04,100,93,20,20	monster	Heater	1318,3,120000,60000
+tur_dun04,100,93,20,20	monster	Assaulter	1315,10,120000,60000
+tur_dun04,100,93,20,20	monster	Freezer	1319,5,120000,60000
+tur_dun04,171,159,3,3	monster	Wanderer	1208,1,300000,150000
+tur_dun04,171,155,3,3	monster	Assaulter	1315,1,310000,160000
+tur_dun04,171,149,3,3	monster	Assaulter	1315,1,320000,170000
+tur_dun04,28,159,3,3	monster	Wanderer	1208,1,300000,150000
+tur_dun04,28,155,3,3	monster	Assaulter	1315,1,310000,160000
+tur_dun04,28,149,3,3	monster	Assaulter	1315,1,320000,170000
+tur_dun04,174,26,3,3	monster	Wanderer	1208,1,300000,150000
+tur_dun04,174,29,3,3	monster	Assaulter	1315,1,310000,160000
+tur_dun04,174,32,3,3	monster	Assaulter	1315,1,320000,170000
+tur_dun04,26,26,3,3	monster	Wanderer	1208,1,300000,150000
+tur_dun04,26,29,3,3	monster	Assaulter	1315,1,310000,160000
+tur_dun04,26,32,3,3	monster	Assaulter	1315,1,320000,170000
+tur_dun04,0,0	monster	Wanderer	1208,2
+tur_dun04,0,0	monster	Heater	1318,10,300000,150000
+tur_dun04,0,0	monster	Heater	1318,20,620000,310000
+tur_dun04,0,0	monster	Assaulter	1315,23
+tur_dun04,0,0	monster	Freezer	1319,5,300000,150000
+tur_dun04,0,0	monster	Freezer	1319,5,600000,300000
+tur_dun04,0,0	monster	Permeter	1314,2,300000,150000
+tur_dun04,0,0	monster	Permeter	1314,2,640000,320000
+
+//==================================================
+// tur_dun05 - Underground swamp zone
+//==================================================
+tur_dun05,0,0	monster	Permeter	1314,3,20000
+tur_dun05,0,0	monster	Freezer	1319,5,30000
+tur_dun05,0,0	monster	Assaulter	1315,1,20000

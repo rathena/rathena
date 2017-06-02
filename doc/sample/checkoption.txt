@@ -1,0 +1,19 @@
+//===== rAthena Script =======================================
+//= Sample: Checkoption
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20140208
+//===== Description: ========================================= 
+//= Demonstrates the 'checkoption' command.
+//============================================================
+
+prontera,156,89,6	script	test_checkoption	117,{
+	mes "Please enter a value of type!";
+	input .@value;
+	if (checkoption(.@value) == 1)
+		mes "True!";
+	else if (checkoption(.@value) == 0)
+		mes "False!";
+	close;
+}

@@ -1,0 +1,55 @@
+//===== rAthena Script =======================================
+//= Thor Volcano Monster Spawn Script
+//===== By: ==================================================
+//= Playtester
+//===== Current Version: =====================================
+//= 1.4
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Official monster spawn in Thor Volcano Dungeon.
+//===== Additional Comments: =================================
+//= 1.0 Spawns according to RO Monthly and Doddler [Playtester]
+//= 1.1 Added Byorgue and Ifrit [Playtester]
+//= 1.2 Updated spawns according to RODE [Playtester]
+//= 1.3 More official spawns [Playtester]
+//= 1.4 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// thor_v01 - Thor Volcano Dungeon
+//==================================================
+thor_v01,0,0	monster	Kasa	1833,45,5000
+thor_v01,0,0	monster	Imp	1837,25,5000
+thor_v01,0,0	monster	Magmaring	1836,10,5000
+thor_v01,0,0	monster	Salamander	1831,7,5000
+thor_v01,0,0	monster	Bow Guardian	1830,5,5000
+thor_v01,0,0	monster	Sword Guardian	1829,5,5000
+thor_v01,0,0	monster	Bow Guardian	1830,5,420000
+thor_v01,0,0	monster	Sword Guardian	1829,5,420000
+thor_v01,0,0	monster	Byrogue	1839,1,5000
+
+//==================================================
+// thor_v02 - Thor Volcano Dungeon
+//==================================================
+thor_v02,0,0	monster	Knocker	1838,55,5000
+thor_v02,0,0	monster	Magmaring	1836,10,5000
+thor_v02,0,0	monster	Imp	1837,10,5000
+thor_v02,0,0	monster	Kaho	1072,10,5000
+thor_v02,0,0	monster	Salamander	1831,1,5000
+thor_v02,0,0	monster	Bow Guardian	1830,1,7200000
+thor_v02,0,0	monster	Sword Guardian	1829,1,7200000
+
+//==================================================
+// thor_v03 - Thor Volcano Dungeon
+//==================================================
+thor_v03,0,0	monster	Salamander	1831,60,5000
+thor_v03,0,0	monster	Kasa	1833,40,5000
+thor_v03,0,0	monster	Bow Guardian	1830,10,5000
+thor_v03,0,0	monster	Sword Guardian	1829,10,5000
+thor_v03,0,0	monster	Byrogue	1839,5,5000
+thor_v03,0,0	monster	Sword Guardian	1829,5,5000
+thor_v03,0,0	monster	Bow Guardian	1830,5,5000
+thor_v03,0,0	monster	Bow Guardian	1830,5,1800000
+thor_v03,0,0	monster	Sword Guardian	1829,5,1800000
+thor_v03,0,0,0,0	boss_monster	Ifrit	1832,1,39600000,600000,0

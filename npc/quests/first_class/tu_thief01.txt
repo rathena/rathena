@@ -1,0 +1,722 @@
+//===== rAthena Script =======================================
+//= Thief Class Tutorial and Job Specific Quest
+//===== By: ==================================================
+//= Fix up by Jukka
+//===== Current Version: =====================================
+//= 2.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Thief training quest.
+//===== Additional Comments: =================================
+//= 1.0 Fully working
+//= 1.1 optimized [Lupus]
+//= 1.2 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
+//= 1.3 Fixed a few minor mistakes [Playtester]
+//= 1.4 Misc. updates. [L0ne_W0lf]
+//= 1.5 Added Pre-Renewal support. [Euphy]
+//= 2.0 Fixed a wrong exp value & clean-up. [Capuche]
+//============================================================
+
+// Thief Trainer
+//============================================================
+moc_ruins,66,164,4	script	Thief Trainer#T	4_M_02,{
+	mes "[Yierhan]";
+	if(Class == Job_Novice){
+		mes "Eh...?";
+		mes "A Novice?";
+		mes "Still thinking";
+		mes "what job you're";
+		mes "gonna choose...";
+		mes "Am I right?";
+		next;
+		mes "[Yierhan]";
+		mes "Listen, if you ever decide to become a Thief--a smart choice";
+		mes "I might add--come and talk to me. I'll show you the ropes!";
+		close;
+	}
+	else if (BaseClass == Job_Thief && Upper != 2) {
+		if (Class != Job_Thief && tu_thief01 < 8) {
+			mes "Whaaaat are you";
+			mes "doin' here? There's";
+			mes "nothing I can teach you!";
+			mes "You're waaay beyond me!";
+			next;
+			mes "[Yierhan]";
+			mes "In fact, I think";
+			mes "you're qualified";
+			mes "to teach me some stuff!";
+			mes "Come on! I need new moves!";
+			close;
+		}
+		if(tu_thief01 == 0){
+			mes "Heya pal.";
+			mes "I'm Yierhan.";
+			mes "I happen to be";
+			mes "the guy in charge";
+			mes "of training new Thieves.";
+			next;
+			switch(select("Training?:Training? Right now?")){
+			case 1:
+				mes "[Yierhan]";
+				mes "Yeah, training. I mean, this kind of stuff is second nature to some people, but other guys need a little more help. So this is one of those 'just in case' things.";
+				next;
+				break;
+			case 2:
+				mes "[Yierhan]";
+				mes "Right now?";
+				mes "Yeah, right now!";
+				mes "But if you're not ready for some reason, I guess I can wait.";
+				close;
+			}
+			mes "[Yierhan]";
+			mes "Alright, first of all, Thieves use melee attacks. Well, most of us do. There are a few who like using long range Bows. But all of us are good at bein' fast!";
+			next;
+			mes "[Yierhan]";
+			mes "So for melee attacks, which stat increases your damage? Come on";
+			mes "now, you should know this if you didn't skip the Novice Training Grounds.";
+			next;
+			switch(select("^6B8E23INT^000000:^2F4F2FSTR^000000:^23238EDEX^000000")){
+			case 1:
+				mes "[Yierhan]";
+				mes "Say whaaat? ^6B8E23INT^000000 affects magic damage, magic defense and some skills. Thieves don't even work with magic!";
+				next;
+				mes "[Yierhan]";
+				mes "You musta skipped the Novice Training Grounds altogether! Not that I blame you though. Anyway, it's ^2F4F2FSTR^000000 that increases your attack damage, got it?";
+				next;
+				mes "[Yierhan]";
+				mes "So if you're feeling like the damage you're making is pretty weak, you might want more stat points in ^2F4F2FSTR^000000. How high your raise your own STR is really up to you.";
+				getexp 200,100;
+				break;
+			case 2:
+				mes "[Yierhan]";
+				mes "Yeah, that's right! If you wanna increase your damage, you need";
+				mes "to put some stat points into ^2F4F2FSTR^000000. Increasing STR also increases";
+				mes "your Max Weight Limit too.";
+				next;
+				mes "[Yierhan]";
+				mes "So if you're feeling like the damage you're making is pretty weak, you might want more stat points in ^2F4F2FSTR^000000. How high your raise your own STR is really up to you.";
+				next;
+				mes "[Yierhan]";
+				mes "Sure, ^23238EDEX^000000 and LUK can";
+				mes "also increase your attack damage, but they're insignificant compared to STR. I repeat: ^660000insignificant^000000.";
+				getexp 400,200;
+				break;
+			case 3:
+				mes "[Yierhan]";
+				mes "Say whaaat? ^23238EDEX^000000 affects";
+				mes "your attack accuracy, not your damage! Well, unless you're using";
+				mes "a Bow. Otherwise, it increases your damage only by a tiny bit.";
+				next;
+				mes "[Yierhan]";
+				mes "You musta skipped the Novice Training Grounds altogether! Not that I blame you though. Anyway, it's ^2F4F2FSTR^000000 that increases your attack damage, got it?";
+				next;
+				mes "[Yierhan]";
+				mes "So if you're feeling like the damage you're making is pretty weak, you might want more stat points in ^2F4F2FSTR^000000. How high your raise your own STR is really up to you.";
+				getexp 200,100;
+			}
+			tu_thief01 = 1;
+			specialeffect2 EF_HIT5;
+			close;
+		}
+		else if(tu_thief01 == 1){
+			mes "Alright, enough about stats.";
+			mes "You know what? I think I'll just talk to you about the skills that we Thieves use.";
+			next;
+			mes "[Yierhan]";
+			mes "So level up your skills, learn a few new ones if you want, and";
+			mes "then come back over here.";
+			tu_thief01 = 2;
+			close;
+		}
+		else if(tu_thief01 == 2){
+			mes "Okay, let me see your skills. You know you gotta change your battle strategy depending on what skills you have, right? Skills are just as important as stats!";
+			next;
+			.@chk_th_skill1 = getskilllv("TF_DOUBLE");
+			.@chk_th_skill2 = getskilllv("TF_MISS");
+			.@chk_th_skill3 = getskilllv("TF_STEAL");
+			.@chk_th_skill4 = getskilllv("TF_HIDING");
+			.@chk_th_skill5 = getskilllv("TF_POISON");
+			.@chk_th_skill6 = getskilllv("TF_DETOXIFY");
+
+			if(.@chk_th_skill1 == 0 && .@chk_th_skill2 == 0 && .@chk_th_skill3 == 0 && .@chk_th_skill4 == 0 && .@chk_th_skill5 == 0 && .@chk_th_skill6 == 0){
+				mes "[Yierhan]";
+				mes "You haven't learned any skills yet? Come on, it's your skills that'll set you apart from Novices and everyone else!";
+				close;
+			}
+			if(.@chk_th_skill1 > 0){
+				mes "[Yierhan]";
+				mes "Ah, so you've learned";
+				mes "Level "+.@chk_th_skill1+" Double Attack.";
+				mes "Nice! This skill gives you the chance to attack twice in one";
+				mes "attack. Wicked!";
+				next;
+				mes "[Yierhan]";
+				mes "It's a Passive skill, so it's always in effect and won't have to use any SP to use it. The higher your Double Attack skill level, the more double attacks you'll do.";
+				next;
+			}
+			if(.@chk_th_skill2 > 0){
+				mes "[Yierhan]";
+				mes "Let's see...";
+				mes "Level "+.@chk_th_skill2+" Increase Dodge?";
+				mes "That increases your Flee Rate, meaning you've got a better chance of dodging attacks from your enemies.";
+				next;
+				mes "[Yierhan]";
+				mes "Just like the Double Attack skill, Increase Dodge is a Passive skill. It won't use SP and it's always in";
+				mes "effect. If you don't like to bruise, this is your skill.";
+				next;
+			}
+			if(.@chk_th_skill3 > 0){
+				mes "[Yierhan]";
+				mes "Whoa, so you've";
+				mes "got Level "+.@chk_th_skill3+" Steal~";
+				mes "Now that's the skill which gives our job its name! You can't use";
+				mes "it against people, though...";
+				next;
+				mes "[Yierhan]";
+				mes "But you can use Steal to take items from monsters. If you're lucky, you can get some good items that way. Oh, and Steal doesn't affect monster drop rates.";
+				next;
+			}
+			if(.@chk_th_skill4 > 0){
+				mes "[Yierhan]";
+				mes "You've learned";
+				mes "Level "+.@chk_th_skill4+" Hiding?";
+				mes "Let's see, you can only learn";
+				mes "that after learning the Steal skill up to a certain level.";
+				next;
+				mes "[Yierhan]";
+				mes "Of course, you use ";
+				mes "the Hiding skill to hide underground in an emergency, like when you're surrounded by tough enemies. Be careful though...";
+				next;
+				mes "[Yierhan]";
+				mes "Certain monsters will still be able to find you, no matter how well you hide. There are even a few monsters that can flush you out of hiding!";
+				next;
+			}
+			if(.@chk_th_skill5 > 0){
+				mes "[Yierhan]";
+				mes "Alright, I see that you";
+				mes "know Level "+.@chk_th_skill5+" Envenom.";
+				mes "You like being dangerous,";
+				mes "don't you?";
+				next;
+				mes "[Yierhan]";
+				mes "This attack skill has the chance";
+				mes "to poison your enemy for a set amount of time. While poisoned, an enemy will constantly lose its HP and will have decreased defense.";
+				next;
+				mes "[Yierhan]";
+				mes "Eh, but remember.";
+				mes "If the monster's too strong for you, you might not be able to poison it. So don't go crazy.";
+				next;
+			}
+			if(.@chk_th_skill6 > 0){
+				mes "[Yierhan]";
+				mes "Level "+.@chk_th_skill6+" Detoxify.";
+				mes "If you took the trouble to learn that, you must be the cautious";
+				mes "type or something.";
+				next;
+				mes "[Yierhan]";
+				mes "You can only learn Detoxify";
+				mes "after you learn the Envenom skill. Detoxify allows you to counteract the effects of poison on a target.";
+				next;
+			}
+			mes "[Yierhan]";
+			mes "Alright, I guess";
+			mes "if you want to know";
+			mes "about any other skills,";
+			mes "I can explain real quick.";
+			tu_thief01 = 3;
+			getexp BaseLevel*30,BaseLevel*15;
+			specialeffect2 EF_HIT5;
+			close;
+		}
+		else if(tu_thief01 == 3){
+			mes "So...";
+			mes "Are there any";
+			mes "skills you want";
+			mes "explained or is this";
+			mes "pretty much stuff you";
+			mes "already know?";
+			while(1){
+				next;
+				switch(select("Double Attack:Increase Dodge:Steal:Hiding:Envenom:Detoxify:I know enough.")) {
+				case 1:
+					mes "[Yierhan]";
+					mes "Just like its name,";
+					mes "Double Attack gives your attacks the chance to be a double attack, two strikes in one blow.";
+					next;
+					mes "[Yierhan]";
+					mes "It's a Passive skill, so it's always in effect and won't have to use any SP to use it. The higher your Double Attack skill level, the more double attacks you'll do.";
+					.@read_d = 1;
+					break;
+				case 2:
+					mes "[Yierhan]";
+					mes "Increase Dodge";
+					mes "gives a nice boost";
+					mes "to your Flee Rate that";
+					mes "the other jobs don't offer.";
+					mes "Why take your lumps when you";
+					mes "can avoid them altogether?";
+					next;
+					mes "[Yierhan]";
+					mes "Just like the Double Attack skill, Increase Dodge is a Passive skill. It won't use SP and it's always in";
+					mes "effect. If you don't like to bruise, this is your skill.";
+					.@read_f = 1;
+					break;
+				case 3:
+					mes "[Yierhan]";
+					mes "Steal is an Active Skill that has the chance of nabbing you some";
+					mes "free items! You can't use it against other people, though.";
+					next;
+					specialeffect2 EF_STEAL;
+					mes "[Yierhan]";
+					mes "But you can use Steal to take items from monsters! If you're lucky, you can get some good items that way. Oh, and Steal doesn't affect monster drop rates.";
+					.@read_s = 1;
+					break;
+				case 4:
+					mes "[Yierhan]";
+					mes "Hiding is an active skill where you submerge yourself underground. You can only stay hidden so long, and you can't move, but sometimes it's better than being found!";
+					next;
+					mes "[Yierhan]";
+					mes "Of course, you use ";
+					mes "the Hiding skill to hide underground in an emergency, like when you're surrounded by tough enemies. Be careful though...";
+					next;
+					mes "[Yierhan]";
+					mes "Certain monsters will still be able to find you, no matter how well you hide. There are even a few monsters that can flush you out of hiding!";
+					.@read_p = 1;
+					break;
+				case 5:
+					mes "[Yierhan]";
+					mes "Envenom is an offensive Active Skill that every Thief should know. But that's just what I think.";
+					next;
+					mes "[Yierhan]";
+					mes "This attack skill has the chance";
+					mes "to poison your enemy for a set amount of time. While poisoned, an enemy will constantly lose its HP and will have decreased defense.";
+					mes "Remember that.";
+					.@read_h = 1;
+					break;
+				case 6:
+					mes "[Yierhan]";
+					mes "Since Thieves deal";
+					mes "quite a bit with poison,";
+					mes "we've got to have a way";
+					mes "to, well, have a taste";
+					mes "of our own medicine.";
+					next;
+					mes "[Yierhan]";
+					mes "You can learn Detoxify";
+					mes "after you learn the Envenom skill. Detoxify allows you to counteract the effects of poison on a target.";
+					.@read_r = 1;
+					next;
+					specialeffect2 EF_DETOXICATION;
+					break;
+				case 7:
+					mes "[Yierhan]";
+					mes "Yeah...";
+					mes "I'm tired of explaining these skills anyway. Let's move on to";
+					mes "the next part of Thief training...";
+					next;
+					mes "[Yierhan]";
+					mes "Now that you're such an expert on skills, I want you to level up your skills and come back, got it?";
+					tu_thief01 = 4;
+					specialeffect2 EF_HIT5;
+					.@total = .@read_d + .@read_f + .@read_s + .@read_p + .@read_h + .@read_r;
+					if (.@total)
+						getexp (.@total*300),(.@total*100);
+					close;
+				}
+			}
+		}
+		else if(tu_thief01 == 4){
+			mes "Alright, we studied the skills and you've been practicing a little, right? You better have...";
+			next;
+			mes "[Yierhan]";
+			mes "Alright, now I got some actual fight training I want you to do. Here's a chance for you to figure what skills are best for which situations.";
+			next;
+			mes "[Yierhan]";
+			mes "Go and get me";
+			mes "10 ^ff0000Feather of Birds^000000.";
+			mes "You can go ahead and kill Pickies to get those. It really shouldn't be that hard. Oh, and use this Wing thingee to come back.";
+			tu_thief01 = 5;
+			savepoint "moc_ruins",80,164,1,1;
+			getitem 602,1; //Wing_Of_Butterfly
+			getexp 100,50;
+			specialeffect2 EF_HIT5;
+			close2;
+			warp "moc_fild12",158,373;
+			end;
+		}
+		else if(tu_thief01 == 5 || tu_thief01 == 6){
+			if(countitem(916) < 10){
+				mes "'Ey, you don't have the 10 ^ff0000Feather of Birds^000000 I asked you for! You gotta apply what you know, you know.";
+				mes "Now hurry up and do it!";
+				close2;
+				warp "moc_fild07",203,38;
+				end;
+			}
+			else {
+				mes "Alright...!";
+				mes "Nice work, pal.";
+				mes "Seeing as you got these feathers, you must be really gung-ho about becoming a good Thief.";
+				next;
+				mes "[Yierhan]";
+				mes "I hope you keep";
+				mes "putting in the work";
+				mes "to get better and better.";
+				mes "Always do your best! Oh,";
+				mes "and do you have any questions?";
+				next;
+				if(tu_thief01 == 6){
+					switch(select("About those traces...:Nope.")) {
+ 					case 1:
+						mes "[Yierhan]";
+						mes "You found out, eh?";
+						mes "Well, I didn't really";
+						mes "wanna tell you this, on";
+						mes "account of you bein' a brand";
+						mes "brand new Thief and all, but...";
+						next;
+						mes "[Yierhan]";
+						mes "There was this";
+						mes "fight that was in";
+						mes "the Southern part";
+						mes "of this town.";
+						next;
+						mes "[Yierhan]";
+						mes "Since it happened late at night, only a few people actually know about it. As for me, I stayed late at a guild meeting, so it was";
+						mes "dumb luck that I saw it.";
+						next;
+						mes "[Yierhan]";
+						mes "I went back to where the fight happened and I found traces that showed that the guys who were fighting went south.";
+						next;
+						mes "[Yierhan]";
+						mes "Since poison was used in";
+						mes "the fight, I'm guessing an Assassin was involved, but I can't be too sure. If you wanna check it out, follow the traces of that fight.";
+						next;
+						mes "[Yierhan]";
+						mes "Eh, but be careful";
+						mes "not to get too close";
+						mes "to the poison! That stuff";
+						mes "is pretty strong!";
+						tu_thief01 = 8;
+						getitem 1207,1; //Main_Gauche
+						getexp 1000,500;
+						specialeffect2 EF_HIT5;
+						close;
+					case 2:
+						mes "[Yierhan]";
+						mes "Good!";
+						mes "Less work for me!";
+						mes "Alright, you better get stronger the next time I see you. Oh, and you can have this stuff. You know, since you're so gangster and all.";
+						tu_thief01 = 7;
+						getitem 1207,1; //Main_Gauche
+						getexp 500,200;
+						specialeffect2 EF_HIT5;
+						close;
+					}
+				}
+				else {
+					switch(select("It was nice to meet you.:Nope.")) {
+					case 1:
+						mes "[Yierhan]";
+						mes "Yeah, it was pretty cool just hanging out. Keep fighting";
+						mes "monsters the way you do and";
+						mes "you'll be a great Thief in no time.";
+						next;
+						mes "[Yierhan]";
+						mes "And since I like";
+						mes "you so much, kid,";
+						mes "you can have this.";
+						mes "Take it, it's yours!";
+						getexp 500,200;
+						break;
+					case 2:
+						mes "[Yierhan]";
+						mes "Good!";
+						mes "Less work for me!";
+						mes "Alright, you better get stronger the next time I see you. Oh, and you can have this stuff. You know, since you're so gangster and all.";
+						getexp 50,20;
+						break;
+					}
+					tu_thief01 = 7;
+					getitem 1207,1; //Main_Gauche
+					specialeffect2 EF_HIT5;
+					close;
+				}
+			}
+		}
+		else if(tu_thief01 == 7){
+			mes "[Yierhan]";
+			mes "You know...";
+			mes "There was this";
+			mes "fight that was in";
+			mes "the Southern part";
+			mes "of this town.";
+			next;
+			mes "[Yierhan]";
+			mes "Since it happened late at night, only a few people actually know about it. As for me, I stayed late at a guild meeting, so it was";
+			mes "dumb luck that I saw it.";
+			next;
+			mes "[Yierhan]";
+			mes "I went back to where the fight happened and I found traces that showed that the guys who were fighting went south.";
+			next;
+			mes "[Yierhan]";
+			mes "Since poison was used in";
+			mes "the fight, I'm guessing an Assassin was involved, but I can't be too sure. If you wanna check it out, follow the traces of that fight.";
+			next;
+			mes "[Yierhan]";
+			mes "Eh, but be careful";
+			mes "not to get too close";
+			mes "to the poison! That stuff";
+			mes "is pretty strong!";
+			next;
+			mes "[Yierhan]";
+			mes "Hey, you might run into";
+			mes "poison, so remember that";
+			mes "Green Herbs and Green Potions";
+			mes "will counteract it. Oh, and keep in mind that Red Gemstones can";
+			mes "be used in poison attacks.";
+			next;
+			mes "[Yierhan]";
+			mes "Hey, if you do";
+			mes "decide to check it";
+			mes "out, be real careful";
+			mes "other there, okay?";
+			tu_thief01 = 8;
+			getexp 200,100;
+			specialeffect2 EF_HIT5;
+			close;
+		}
+		else if(tu_thief01 == 8){
+			mes "Heya pal.";
+			mes "You doin' alright?";
+			next;
+			mes "[Yierhan]";
+			mes "Fighting against something";
+			mes "you know nothing about is always risky. Since I've heard there are outsiders around flaunting their power, you better be careful.";
+			next;
+			mes "[Yierhan]";
+			mes "It's a good policy to just be really careful on your adventures. Look out for monsters and look";
+			mes "out for people! Got it?";
+			close;
+		}
+		else if(tu_thief01 < 26){
+			mes "I heard there was";
+			mes "this one Assassin";
+			mes "that went on a mission";
+			mes "and never returned.";
+			next;
+			mes "[Yierhan]";
+			mes "What's so weird about it was that the Assassin Guild reported that the mission was completed!";
+			mes "I remember hearing that guy";
+			mes "was really good...";
+			next;
+			mes "[Yierhan]";
+			mes "Crazy, isn't it?";
+			mes "Anyway, take";
+			mes "care of yourself.";
+			close;
+		}
+		else if(tu_thief01 == 26){
+			mes "'Ey, did you";
+			mes "complete your mission?";
+			mes "I know, I know, the thing you've gotta do is pretty rough.";
+			next;
+			switch(select("I'm still investigating.:Not yet.:Yes, I did.")) {
+			case 1:
+				mes "[Yierhan]";
+				mes "Ah, gotcha. Well, that's understandable. I mean, these things take time, you know?";
+				close;
+			case 2:
+				mes "[Yierhan]";
+				mes "Yeah...?";
+				mes "That's alright.";
+				mes "I guess these kinds of things require patience. And thinking.";
+				mes "You know, things I'm horrible at.";
+				close;
+			case 3:
+				mes "[Yierhan]";
+				mes "Alright...!";
+				mes "So what's up?";
+				mes "Hit me up with";
+				mes "what you know~";
+				next;
+				mes "^3355FFYou explain the results of your investigation to Yierhan and tell him about the scrap of cloth you found on your mission.^000000";
+				next;
+				mes "[Yierhan]";
+				mes "Scrap of cloth?";
+				mes "Huh, alright. Say,";
+				mes "lemme have a looksee.";
+				next;
+				mes "[Yierhan]";
+				mes "Whoa!";
+				mes "You did great.";
+				mes "This is some pretty";
+				mes "important information!";
+				next;
+				mes "[Yierhan]";
+				mes "You see, the pattern on this cloth is sort of like one of the codes Assassins use. And this particular pattern looks like something from one of those higher Assassins.";
+				next;
+				mes "[Yierhan]";
+				mes "I might be able to figure out what happened that night with the new information this cloth might lead me to. Thanks a lot!";
+				next;
+				mes "[Yierhan]";
+				mes "From here on,";
+				mes "the higher ups in the";
+				mes "guild will take over this investigation. You did your job perfectly, so it's time for you to hone your skills.";
+				next;
+				mes "[Yierhan]";
+				mes "Hey, this stuff is yours. Think of it as a reward for helping us out. Take care of yourself now~";
+				tu_thief01 = 27;
+				getitem 2307,1; //Mantle
+				Zeny = Zeny + 5000;
+				getexp 8000,3000;
+				close;
+			}
+		}
+		else {
+			mes "[Yierhan]";
+			mes "Hey...";
+			mes "You got dreams,";
+			mes "don't you? I know,";
+			mes "it's a bit of a deep";
+			mes "subject I pulled outta";
+			mes "nowhere, but...";
+			next;
+			mes "[Yierhan]";
+			mes "I just like telling people to follow their dreams. So do it. Life without anything to look forward to is pretty boring, doncha think?";
+			close;
+		}
+	}
+	else if (BaseClass == Job_Mage && Upper != 2){
+		if(tu_magician01 < 7){
+			mes "[Yierhan]";
+			mes "Heya.";
+			mes "I'm the Thief trainer around here. Sure, it looks like we don't got much in common, but...";
+			next;
+			mes "[Yierhan]";
+			mes "I actually got a few magic using friends here and there. That mystic stuff is waaay over my head, but";
+			mes "I got a lotta respect for it.";
+			close;
+		}
+		else if(tu_magician01 == 7){
+			mes "Hm...?";
+			mes "That's weird, usually only";
+			mes "Thieves hang around this joint. What's someone like you doing";
+			mes "here? Unless...";
+			next;
+			select("I'm here on behalf of 'Mana.'");
+			mes "[Yierhan]";
+			mes "Right, you must be the help that Mana sent! You came just at the right time. You see, we found something weird in South Morroc.";
+			next;
+			mes "[Yierhan]";
+			mes "Basically, we found traces of poison that were used in a fight. We were going to investigate it, but we've been swamped with all this other work.";
+			next;
+			mes "[Yierhan]";
+			mes "That's why we've been asking";
+			mes "for help from the Mage Guild. Fortunately, I'm pals with Mana, so...";
+			next;
+			mes "[Yierhan]";
+			mes "Anyway, head over to";
+			mes "South Morroc since it seems to be a good place to start investigating. You'll see what we found right outside the South Morroc gate.";
+			tu_magician01 = 8;
+			close;
+		}
+		else if(tu_magician01 < 26){
+			mes "I heard there was";
+			mes "this one Assassin";
+			mes "that went on a mission";
+			mes "and never returned.";
+			next;
+			mes "[Yierhan]";
+			mes "What's so weird about it was that the Assassin Guild reported that the mission was completed!";
+			mes "I remember hearing that guy";
+			mes "was really good...";
+			next;
+			mes "[Yierhan]";
+			mes "Be careful, pal.";
+			mes "It seems your";
+			mes "investigation";
+			mes "might be related to";
+			mes "that mysterious Assassin...";
+			close;
+		}
+		else if(tu_magician01 == 26){
+			mes "So how's the";
+			mes "investigation";
+			mes "coming along?";
+			mes "I've been so busy,";
+			mes "I couldn't focus";
+			mes "on it at all...";
+			next;
+			switch(select("I'm still investigating.:I'm not done yet...:Oh, I finished~")) {
+			case 1:
+				mes "[Yierhan]";
+				mes "Ah, gotcha. Well, that's understandable. I mean, these things take time, you know?";
+				close;
+			case 2:
+				mes "[Yierhan]";
+				mes "Yeah...?";
+				mes "That's alright.";
+				mes "I guess these kinds of things require patience. And thinking.";
+				mes "You know, things I'm horrible at.";
+				close;
+			case 3:
+				mes "[Yierhan]";
+				mes "Alright...!";
+				mes "So what's up?";
+				mes "Hit me up with";
+				mes "what you know~";
+				next;
+				mes "^3355FFYou explain the results of your investigation to Yierhan and tell him about the scrap of cloth you found on your mission.^000000";
+				next;
+				mes "[Yierhan]";
+				mes "Scrap of cloth?";
+				mes "Huh, alright. Say,";
+				mes "lemme have a looksee.";
+				next;
+				mes "[Yierhan]";
+				mes "Whoa!";
+				mes "You did great.";
+				mes "This is some pretty";
+				mes "important information!";
+				next;
+				mes "[Yierhan]";
+				mes "You see, the pattern on this cloth is sort of like one of the codes Assassins use. And this particular pattern looks like something from one of those higher Assassins.";
+				next;
+				mes "[Yierhan]";
+				mes "I might be able to figure out what happened that night with the new information this cloth might lead me to. Thanks a lot!";
+				next;
+				mes "[Yierhan]";
+				mes "From here on,";
+				mes "the higher ups in the";
+				mes "guild will take over this investigation. You did your job perfectly, so it's time for you to hone your skills.";
+				next;
+				mes "[Yierhan]";
+				mes "Hey, this stuff is yours. Think of it as a reward for helping us out. Right, and I'll let Mana know you did a great job. Take care of yourself now~";
+				tu_magician01 = 27;
+				Zeny = Zeny + 5000;
+				getexp 5000,2000;
+				close;
+			}
+		}
+		else {
+			mes "Just as I thought,";
+			mes "more than one group";
+			mes "was involved in all this.";
+			mes "Huh. Something real bad";
+			mes "might happen soon...";
+			close;
+		}
+	}
+	mes "Some people think";
+	mes "the desert is just a";
+	mes "dangerous, uncomfortable";
+	mes "place where no one wants";
+	mes "to be. But there's all";
+	mes "sorts of great stuff here.";
+	next;
+	mes "[Yierhan]";
+	mes "We got the blazing heat that encourages skimpy outfits, we got... Cacti. We got more sand than the beach. Um... Sandstorms?";
+	close;
+}

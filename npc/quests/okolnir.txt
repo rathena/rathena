@@ -1,0 +1,2794 @@
+//===== rAthena Script ======================================= 
+//= Falicious Okolnir (Valfreja & Nidhoggr)
+//===== By: ================================================== 
+//= Joseph
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= God Item SE Creation script (Asprika & Brynhild)
+//===== Additional Comments: ================================= 
+//= 0.x Previous author: L0ne_W0lf
+//= 1.0 Merged Okolnir. [Joseph]
+//= 1.1 Some bug fixes. [Toshiro90/Euphy]
+//============================================================ 
+
+function	script	F_Okolnir	{
+	if (compare(strnpcinfo(0),"main")) end;
+	set .@sub$,(compare(strnpcinfo(4),"cas"))?(substr(strnpcinfo(4),0,2))+(substr(strnpcinfo(4),8,9)):substr(strnpcinfo(4),5,9);
+	return .@sub$;
+}
+
+-	script	Guide#gq_main	-1,{
+	set .@sub$, callfunc("F_Okolnir");
+	set .@GID, GetCastleData(strnpcinfo(4),1);
+	if (getcharid(2) == .@GID) {
+		if (getd("$siz_"+.@sub$+"_on") == 0) {
+			mes "[Guide]";
+			mes "This castle has a hidden secret.";
+			mes "That is the ^4d4dff'Okolnir'^000000.";
+			next;
+			switch(select("About Okolnir.:Go to Okolnir.:Cancel.")) {
+			case 1:
+				mes "[Guide]";
+				mes "Okolnir is a kind of virtual realm...";
+				mes "I don't know how Okolnir exists, but I guess only Valkyrie knows.";
+				next;
+				mes "[Guide]";
+				mes "As you know this is a place to test the adventurers made by Valkyrie...";
+				mes "...you know the qualifications to enter Okolnir.";
+				next;
+				select("Qualifications?");
+				mes "[Guide]";
+				mes "Yes, Valkyrie definitely prefers strong adventurers.";
+				mes "Only the qualified can enter Okolnir and Valhalla.";
+				next;
+				mes "[Guide]";
+				mes "It only opens when everyone comes together to work it out.";
+				mes "The key is in the castle.";
+				next;
+				mes "[Guide]";
+				mes "If a castle's ^4d4dffeconomy is over 65 and defense also over 30^000000, this will be acceptable to access Okolnir.";
+				next;
+				mes "[Guide]";
+				mes "And, if you pass all of the tests given by Valkyrie in Okolnir!";
+				mes "You will also receive a mysterious gift.";
+				next;
+				mes "[Guide]";
+				mes "Would you like to try to enter here?";
+				close;
+			case 2:
+				set .@Defence,GetCastleData(strnpcinfo(4),3);
+				set .@Economy,GetCastleData(strnpcinfo(4),2);
+				if ((.@Economy > 64) && (.@Defence > 29)) {
+					mes "[Guide]";
+					mes "Great! Economy and Defense are OK.";
+					mes "You can enter Okolnir now....";
+					mes "Do you want to go there?";
+					next;
+					switch(select("Sure let's go there.:No.")) {
+					case 1:
+						if (countitem(7839)) delitem 7839,countitem(7839); //Crystal_Key
+						mes "[Guide]";
+						mes "Ok......";
+						mes "Please follow me...";
+						close2;
+						warp "que_q"+.@sub$,346,32;
+						end;
+					case 2:
+						mes "[Guide]";
+						mes "You can try this anytime in the future...";
+						mes "If you are ready to protect this castle.";
+						close;
+					}
+				}
+				else {
+					mes "[Guide]";
+					mes "You are not qualified yet.";
+					mes "Please develop your castle more...";
+					close;
+				}
+			case 3:
+				close;
+			}
+		}
+		else if (getd("$siz_"+.@sub$+"_on") == 1) {
+			mes "[Guide]";
+			mes "... OK...";
+			mes "Good luck.";
+			next;
+			switch(select("Enter now.:No.")) {
+			case 1:
+				if (countitem(7839) > 0) {
+					delitem 7839,countitem(7839); //Crystal_Key
+				}
+				mes "[Guide]";
+				mes "Hope you get everything you want...";
+				close2;
+				warp "que_q"+.@sub$,346,32;
+				end;
+			case 2:
+				mes "[Guide]";
+				mes "Really?";
+				mes "Sorry to hear that.";
+				close;
+			}
+		}
+		else if (getd("$siz_"+.@sub$+"_on") == 2) {
+			mes "[Guide]";
+			mes "Building Okolnir needs quite a long time.";
+			mes "....even though it's only virtual...";
+			next;
+			mes "[Guide]";
+			mes "It takes about 12 - 13 hours to create the virtual realm.";
+			close;
+		}
+		else {
+			mes "[Guide]";
+			mes "You'll have to wait.";
+			close;
+		}
+	}
+	else {
+		mes "[Guide]";
+		mes "... I've never seen you before.";
+		mes "You are strangers here. You'd better get out of here right now.";
+		close;
+	}
+	end;
+
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	enablenpc "Guide#gq_"+.@sub$;
+	if (getd("$siz_"+.@sub$+"_on") == 1) setd "$siz_"+.@sub$+"_on", 0;
+	end;
+}
+
+arug_cas01,161,371,3	duplicate(Guide#gq_main)	Guide#gq_aru01	899
+arug_cas02,349,347,3	duplicate(Guide#gq_main)	Guide#gq_aru02	899
+arug_cas03,324,161,3	duplicate(Guide#gq_main)	Guide#gq_aru03	899
+arug_cas04,324,161,3	duplicate(Guide#gq_main)	Guide#gq_aru04	899
+arug_cas05,324,161,3	duplicate(Guide#gq_main)	Guide#gq_aru05	899
+schg_cas01,376,307,3	duplicate(Guide#gq_main)	Guide#gq_sch01	899
+schg_cas02,181,335,3	duplicate(Guide#gq_main)	Guide#gq_sch02	899
+schg_cas03,84,101,3	duplicate(Guide#gq_main)	Guide#gq_sch03	899
+schg_cas04,376,307,3	duplicate(Guide#gq_main)	Guide#gq_sch04	899
+schg_cas05,376,307,3	duplicate(Guide#gq_main)	Guide#gq_sch05	899
+
+que_qaru01,345,23,0	warp	Gate02#gq_aru01	1,1,arug_cas01,157,369
+que_qaru02,345,23,0	warp	Gate02#gq_aru02	1,1,arug_cas02,349,355
+que_qaru03,345,23,0	warp	Gate02#gq_aru03	1,1,arug_cas03,321,153
+que_qaru04,345,23,0	warp	Gate02#gq_aru04	1,1,arug_cas04,321,153
+que_qaru05,345,23,0	warp	Gate02#gq_aru05	1,1,arug_cas05,321,153
+que_qsch01,345,23,0	warp	Gate02#gq_sch01	1,1,schg_cas01,369,306
+que_qsch02,345,23,0	warp	Gate02#gq_sch02	1,1,schg_cas02,177,355
+que_qsch03,345,23,0	warp	Gate02#gq_sch03	1,1,schg_cas03,81,95
+que_qsch04,345,23,0	warp	Gate02#gq_sch04	1,1,schg_cas04,369,306
+que_qsch05,345,23,0	warp	Gate02#gq_sch05	1,1,schg_cas05,369,306
+
+-	script	Wish Maiden#gq_main	-1,{
+	set .@sub$, callfunc("F_Okolnir");
+	set .@t$, ((compare(strnpcinfo(4),"aru"))?"arug_cas0":"schg_cas0")+(charat(strnpcinfo(4),getstrlen(strnpcinfo(4))-1));
+	set .@GID, GetCastleData(.@t$,1);
+	if (getcharid(2) == .@GID) {
+		cutin "wish_maiden31",1;
+		if (strcharinfo(0) == getguildmaster(.@GID)) {
+			mes "[Wish Maiden]";
+			mes "I am... Wish maiden.";
+			mes "Mourning in this virtual realm, Okolnir.";
+			mes "On behalf of the humanbeings who defeated God here.";
+			next;
+			if (compare(.@sub$,"aru")) {
+				setarray .@n, 7835,1,7836,1,7837,1,7838,1,2513,1,7291,10,7293,10,7063,100,985,20;
+			} else {
+				setarray .@n, 7830,1,7831,1,7832,1,7833,1,7834,1,2357,1,7510,100,969,10,985,20;
+			}
+			for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2) {
+				if (countitem(.@n[.@i]) >= .@n[.@i+1])
+					set .@check, .@check + 1;
+			}
+			if (.@check >= 9) {
+				cutin "wish_maiden11",1;
+				mes "[Wish Maiden]";
+				mes "Are you ready to endure the trials to get the Goddess' glory?";
+				next;
+				switch(select("Yes, I am:Sorry, I'll try later")) {
+				case 1:
+					cutin "wish_maiden12",1;
+					mes "[Wish Maiden]";
+					mes "I will test whether or not you deserve the Goddess shine...";
+					mes "Isn't it simple?";
+					next;
+					mes "[Wish Maiden]";
+					mes "Okolnir is a virtual place.";
+					mes "There is no room for error there.";
+					mes "^ff0000You only have one hour.^000000";
+					next;
+					cutin "wish_maiden31",1;
+					mes "[Wish Maiden]";
+					mes "If you have not finished in that time, Okolnir will be destroyed, and I will go to rest.";
+					mes "You will have to wait again...";
+					next;
+					mes "[Wish Maiden]";
+					mes "Are you ready to go through?";
+					mes "^4d4dffYou need to have 16 to 20 members present^000000.";
+					next;
+					cutin "wish_maiden11",1;
+					mes "[Wish Maiden]";
+					mes "I will open the gate of Okolnir if your members are ready.";
+					next;
+					switch(select("We are ready.:We need more time.")) {
+					case 1:
+						set .@saram,getmapusers("que_q"+.@sub$);
+						if (((.@saram > 15) && (.@saram < 21))) {
+							cutin "wish_maiden12",1;
+							mes "[Wish Maiden]";
+							mes "Now I will open the gate of Okolnir where I am.";
+							mes "I will wait for you on the top of Okolnir...";
+							next;
+							mes "[Wish Maiden]";
+							mes "I hope that you can complete all of the trials before the virtual Okolnir is destroyed...";
+							mes "Good luck.";
+							mapannounce "que_q"+.@sub$,"Wish Maiden: The gate of Okolnir is open! Don't forget you only have one hour.",bc_map,"0x00ff00";
+							close2;
+							setd "$@gqse_"+.@sub$+"_pcc",.@saram;
+							setd "$siz_"+.@sub$+"_on",1;
+							donpcevent "#okolnir_"+.@sub$+"::OnEnable";
+							disablenpc "Wish Maiden#gq_"+.@sub$;
+							cutin "wish_maiden11",255;
+							announce "["+ strcharinfo(0) +"], of the guild ["+ GetGuildName(.@GID) +"] has opened the gates to the realm of Okolnir.",bc_all,"0x70dbdb";
+							end;
+						}
+						else {
+							cutin "wish_maiden13",1;
+							mes "[Wish Maiden]";
+							mes "You need to have 16 to 20 members present to open the gate of Okolnir.";
+							mes "Come back when you are ready.";
+							close2;
+						}
+						break;
+					case 2:
+						cutin "wish_maiden13",1;
+						mes "[Wish Maiden]";
+						mes "Don't hesitate to try.";
+						mes "You should catch the chance when it comes to you.";
+						mes "Just gather your fellow members.";
+						close2;
+					}
+					break;
+				case 2:
+					cutin "wish_maiden32",1;
+					mes "[Wish Maiden]";
+					mes "... Are you afraid of";
+					mes "the trials facing you?";
+					mes "....";
+					next;
+					cutin "wish_maiden13",1;
+					mes "[Wish Maiden]";
+					mes "Do you think that you can defeat the Goddess shine easily?";
+					mes "I feel disappointed by all of you.";
+					mes "Just go away...";
+					close2;
+				}
+			}
+			else {
+				cutin "wish_maiden11",1;
+				mes "[Wish Maiden]";
+				mes "Do you wish to enter?";
+				mes "Only those prepared may enter here.";
+				mes "You must bring several items to enter Okolnir.";
+				next;
+				mes "[Wish Maiden]";
+				if (compare(.@sub$,"aru")) {
+					mes "Dusk Glow";
+					mes "Dawn Essence";
+					mes "Cold Moonlight";
+					mes "Hazy Starlight.";
+					next;
+					mes "[Wish Maiden]";
+					mes "Please bring those four things, 10 Agate, 10 Rose Quartz, and 20 Elunium,";
+					mes "a Heavenly Maiden's Robe, as well as 100 Soft feathers.";
+				} else {
+					mes "Goddess Tear";
+					mes "Valkyrie's Token";
+					mes "Brynhild Armor Piece";
+					mes "Hero Remains";
+					mes "Valkyrie Armor";
+					mes "Andvari's Ring.";
+					next;
+					mes "[Wish Maiden]";
+					mes "You must bring those six things, 10 Gold, and 20 Elunium.";
+					mes "Many Valhala's Flowers are also required as an offering.";				
+				}
+				next;
+				mes "[Wish Maiden]";
+				mes "Once all of those are prepared, the gate will open.";
+				next;
+				mes "[Wish Maiden]";
+				mes ".... ";
+				mes "...........The Goddess shines brightly down on you, you should be stronger to deserve it...";
+				next;
+				mes "[Wish Maiden]";
+				mes "Remember...";
+				mes "You need to collect many soft feathers.";
+				mes "I hope that your dreams come true.";
+				next;
+				mes "[Wish Maiden]";
+				mes "I will answer all your requests if you bring these to me.";
+				close2;
+			}
+		}
+		else {
+			cutin "wish_maiden31",1;
+			mes "[Wish Maiden]";
+			mes "I am... Wish maiden.";
+			mes "Mourning in this virtual realm, Okolnir.";
+			mes "On behalf of the humanbeings who defeated God here.";
+			next;
+			mes "[Wish Maiden]";
+			mes "Bring me the one who brought you to this place.";
+			mes ".. Deliver him to my will.";
+			close2;
+		}
+	}
+	else {
+		cutin "wish_maiden13",1;
+		mes "[Wish Maiden]";
+		mes "...You are not qualified.";
+		close2;
+		percentheal -100,0;
+		cutin "wish_maiden11",255;
+		end;
+	}
+	cutin "wish_maiden11",255;
+	end;
+
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	if (!getd("$siz_"+.@sub$+"_on")) {
+		enablenpc "Wish Maiden#gq_"+.@sub$;
+	} else {
+		disablenpc "Wish Maiden#gq_"+.@sub$;
+	}
+	end;
+}
+
+que_qaru01,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru01	403
+que_qaru02,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru02	403
+que_qaru03,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru03	403
+que_qaru04,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru04	403
+que_qaru05,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_aru05	403
+que_qsch01,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch01	403
+que_qsch02,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch02	403
+que_qsch03,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch03	403
+que_qsch04,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch04	403
+que_qsch05,345,82,3	duplicate(Wish Maiden#gq_main)	Wish Maiden#gq_sch05	403
+
+-	script	Gate01#gq_main	-1,{
+	function	SMonster;
+	set .@sub$, callfunc("F_Okolnir");
+	
+OnTouch_:
+	set .@sub$, callfunc("F_Okolnir");
+	set .@saram,getmapusers("que_q"+.@sub$);
+	if (.@saram < 21) {
+		if (getd("$@gqse_"+.@sub$+"_miro") == getd("$@gqse_"+.@sub$+"_pcc")) {
+			set .@point,rand(1,5);
+			switch (.@point) {
+				case 1: warp "que_q"+.@sub$,72,271; break;
+				case 2: warp "que_q"+.@sub$,45,243; break;
+				case 3: warp "que_q"+.@sub$,102,248; break;
+				case 4: warp "que_q"+.@sub$,102,300; break;
+				case 5: warp "que_q"+.@sub$,46,300; break;
+			}
+			end;
+	
+		}
+		switch (getd("$@gqse_"+.@sub$+"_miro")) {
+			case 0: setarray .@n, 77,271,72,271,1; break;
+			case 1: setarray .@n, 63,278,63,282,2; break;
+			case 2: setarray .@n, 63,294,59,294,3; break;
+			case 3: setarray .@n, 50,300,46,300,4; break;
+			case 4: setarray .@n, 51,280,51,285,5; break;
+			case 5: setarray .@n, 51,258,51,262,6; break;
+			case 6: setarray .@n, 49,243,45,243,7; break;
+			case 7: setarray .@n, 86,249,82,249,8; break;
+			case 8: setarray .@n, 102,243,102,248,9; break;
+			case 9: setarray .@n, 90,256,90,260,10; break;
+			case 10: setarray .@n, 90,283,90,280,11; break;
+			case 11: setarray .@n, 102,295,102,300,12; break;
+			case 12: setarray .@n, 96,285,96,290,13; break;
+			case 13: setarray .@n, 63,278,63,282,14; break;
+			case 14: setarray .@n, 65,243,61,243,15; break;
+			case 15: setarray .@n, 73,249,70,249,16; break;
+			case 16: setarray .@n, 102,275,102,282,17; break;
+			case 17: setarray .@n, 70,300,66,300,18; break;
+			case 18: setarray .@n, 57,255,57,258,19; break;
+			case 19: setarray .@n, 84,277,84,280,20; break;
+		}
+		SMonster(.@sub$,.@n[0],.@n[1]);
+		setd "$@gqse_"+.@sub$+"_miro",.@n[4];
+		warp "que_q"+.@sub$,.@n[2],.@n[3];
+		end;
+	}
+	else {
+		mes "There are too many people, you can't enter.";
+		close;
+	}
+	
+	function	SMonster	{
+	
+		switch (BaseClass) {
+			case 1: set .@m, 1652; break;
+			case 2: set .@m, 1663; break;
+			case 3: set .@m, 1662; break;
+			case 4: set .@m, 1661; break;
+			case 5: set .@m, 1660; break;
+			case 6: set .@m, 1659; break;
+			Default: set .@m, 1652; break;
+		}
+		monster "que_q"+getarg(0),getarg(1),getarg(2),strcharinfo(0),.@m,1,"#Gate_manager_"+getarg(0)+"::OnMyMobDead";
+		return;
+	}
+	
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	enablenpc "Gate01#gq_"+.@sub$;
+	setcell "que_q"+.@sub$,58,302,63,302,cell_walkable,0;
+	setcell "que_q"+.@sub$,58,302,63,302,cell_shootable,0;
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	disablenpc "Gate01#gq_"+.@sub$;
+	killmonsterall "que_q"+.@sub$;
+	end;
+	
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	disablenpc "Gate01#gq_"+.@sub$;
+	end;
+}
+
+que_qaru01,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru01	45,1,1
+que_qaru02,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru02	45,1,1
+que_qaru03,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru03	45,1,1
+que_qaru04,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru04	45,1,1
+que_qaru05,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_aru05	45,1,1
+que_qsch01,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch01	45,1,1
+que_qsch02,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch02	45,1,1
+que_qsch03,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch03	45,1,1
+que_qsch04,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch04	45,1,1
+que_qsch05,346,81,0	duplicate(Gate01#gq_main)	Gate01#gq_sch05	45,1,1
+
+-	script	#Gate_manager_main	-1,{
+	end;
+	
+OnMyMobDead:
+	set .@sub$, callfunc("F_Okolnir");
+	if (getd("$@gqse_"+.@sub$+"_miro") == getd("$@gqse_"+.@sub$+"_pcc")) {
+		if (!mobcount("que_q"+.@sub$,"#Gate_manager_"+.@sub$+"::OnMyMobDead")) {
+			donpcevent "#gq_miromob2_"+.@sub$+"::OnEnable";
+		}
+	}
+	end;
+}
+que_qaru01,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru01	844
+que_qaru02,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru02	844
+que_qaru03,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru03	844
+que_qaru04,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru04	844
+que_qaru05,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_aru05	844
+que_qsch01,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch01	844
+que_qsch02,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch02	844
+que_qsch03,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch03	844
+que_qsch04,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch04	844
+que_qsch05,1,4,0	duplicate(#Gate_manager_main)	#Gate_manager_sch05	844
+
+-	script	#gq_miromob2_main	-1,{
+	end;
+	
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Wish Maiden: How does it feel to see shadows of the past. This is only the beginning.",bc_map,"0x00ff00";
+	end;
+
+OnTimer6000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Wish Maiden: The things you seeing are not real, don't be caught in the Mystic garden.",bc_map,"0x00ff00";
+	setarray .@mobname$, "Seyren Windsor","Kathryne Keyron","Cecil Damon","Margaretha Sorin","Eremes Guile","Howard Alt-Eisen";
+	setarray .@num, 72,271,1640,63,282,1645,59,294,1644,46,300,1643,51,285,1641,51,262,1642;
+	set .@c, 0;
+	while (.@c < 3) {
+		for (set .@i, 0; .@i < getarraysize(.@mobname$); set .@i, .@i + 1)
+			monster "que_q"+.@sub$,.@num[.@i*3],.@num[.@i*3+1],.@mobname$[.@i],.@num[.@i*3+2],1,"#gq_miromob2_"+.@sub$+"::OnMyMobDead";
+		set .@c, .@c + 1;
+	}
+	stopnpctimer;
+	end;
+
+OnReset:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#gq_miromob2_"+.@sub$+"::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	set .@sub$,callfunc("F_Okolnir");
+	if (mobcount("que_q"+.@sub$,"#gq_miromob2_"+.@sub$+"::OnMyMobDead") == 0) {
+		mapannounce "que_qaru05","The Mystic garden exit is now open.",bc_map,"0x00ff00";
+		setcell "que_q"+.@sub$,58,302,63,302,cell_walkable,1;
+		setcell "que_q"+.@sub$,58,302,63,302,cell_shootable,1;
+		donpcevent "#Maze_Manager_"+.@sub$+"::OnDisable";
+	}
+	end;
+}
+que_qaru01,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru01	844
+que_qaru02,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru02	844
+que_qaru03,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru03	844
+que_qaru04,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru04	844
+que_qaru05,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_aru05	844
+que_qsch01,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch01	844
+que_qsch02,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch02	844
+que_qsch03,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch03	844
+que_qsch04,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch04	844
+que_qsch05,1,4,0	duplicate(#gq_miromob2_main)	#gq_miromob2_sch05	844
+
+-	script	#okolnir_main	-1,{
+	end;
+	
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "Gate01#gq_"+.@sub$+"::OnEnable";
+	donpcevent "#Maze_Manager_"+.@sub$+"::OnEnable";
+	donpcevent "#event_start01_"+.@sub$+"::OnEnable";
+	donpcevent "#gd_"+.@sub$+"_mobctrl::OnEnable";
+	enablenpc "Guard of Shadow#"+.@sub$+"_01";
+	enablenpc "Guard of Shadow#"+.@sub$+"_02";
+	enablenpc "Guard of Shadow#"+.@sub$+"_03";
+	enablenpc "Guard of Shadow#"+.@sub$+"_04";
+	enablenpc "Bloody Hunter#"+.@sub$+"_ac01";
+	enablenpc "Bloody Hunter#"+.@sub$+"_ac02";
+	enablenpc "Bloody Hunter#"+.@sub$+"_ac03";
+	enablenpc "Bloody Hunter#"+.@sub$+"_ac04";
+	enablenpc "Temple Keeper#"+.@sub$+"_ac01";
+	enablenpc "Temple Keeper#"+.@sub$+"_ac02";
+	initnpctimer;
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	disablenpc "Wish Maiden#gq_"+.@sub$;
+	donpcevent "#gq_miromob2_"+.@sub$+"::OnReset";
+	disablenpc "Piamette#"+.@sub$;
+	donpcevent "#gdtimer01_"+.@sub$+"::OnStop";
+	donpcevent "#gdtimer02_"+.@sub$+"::OnStop";
+	donpcevent "#piamette_"+.@sub$+"::OnReset";
+	donpcevent "Wish Maiden#"+.@sub$+"_boss::OnDisable";
+	donpcevent "Wish Maiden#"+.@sub$+"_gift::OnDisable";
+	donpcevent "#gd_"+.@sub$+"_mobctrl::OnReset";
+	donpcevent "Gate01#gq_"+.@sub$+"::OnDisable";
+	donpcevent "#Maze_Manager_"+.@sub$+"::OnDisable";
+	donpcevent "#event_start01_"+.@sub$+"::OnDisable";
+	donpcevent "#nm_switch_"+.@sub$+"::OnDisable";
+	donpcevent "#nmsom"+.@sub$+"_jin01::OnDisable";
+	donpcevent "#nmsom"+.@sub$+"_jin02::OnDisable";
+	donpcevent "#nmsom"+.@sub$+"_jin03::OnDisable";
+	donpcevent "Guard of Shadow#"+.@sub$+"_01::OnDisable";
+	donpcevent "Guard of Shadow#"+.@sub$+"_02::OnDisable";
+	donpcevent "Guard of Shadow#"+.@sub$+"_03::OnDisable";
+	donpcevent "Guard of Shadow#"+.@sub$+"_04::OnDisable";
+	donpcevent "Bloody Hunter#"+.@sub$+"_ac01::OnDisable";
+	donpcevent "Bloody Hunter#"+.@sub$+"_ac02::OnDisable";
+	donpcevent "Bloody Hunter#"+.@sub$+"_ac03::OnDisable";
+	donpcevent "Bloody Hunter#"+.@sub$+"_ac04::OnDisable";
+	donpcevent "Temple Keeper#"+.@sub$+"_ac01::OnDisable";
+	donpcevent "Temple Keeper#"+.@sub$+"_ac02::OnDisable";
+	disablenpc "#to_agit_"+.@sub$+"_gate";
+	donpcevent "#"+.@sub$+"_stone01::OnReset";
+	donpcevent "#"+.@sub$+"_stone02::OnReset";
+	donpcevent "#"+.@sub$+"_stone03::OnReset";
+	disablenpc "#"+.@sub$+"_cage01";
+	disablenpc "#"+.@sub$+"_cage02";
+	disablenpc "#"+.@sub$+"_cage03";
+	disablenpc "#"+.@sub$+"_cage04";
+	disablenpc "#"+.@sub$+"_cage05";
+	disablenpc "#"+.@sub$+"_cage06";
+	disablenpc "windpath03_"+.@sub$;
+	disablenpc "windpath04_"+.@sub$;
+	setd "$@gqse_"+.@sub$+"_miro",0;
+	setd "$@gqse_"+.@sub$+"_pcc",0;
+	setd "$@gqse_"+.@sub$+"_gd",0;
+	setd "$@gqse_"+.@sub$+"_nm",0;
+	stopnpctimer;
+	end;
+
+OnStop:
+	stopnpctimer;
+	end;
+
+OnTimer1000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Wish Maiden : Do your best, Okolnir will disappear in one hour!",bc_map,"0x00ff00";
+	end;
+
+OnTimer1800000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Okolnir will disappear in 30 minutes.",bc_map,"0xff0000";
+	end;
+
+OnTimer2400000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Okolnir will disappear in 20 minutes.",bc_map,"0xff0000";
+	end;
+
+OnTimer3000000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Okolnir will disappear in 10 minutes.",bc_map,"0xff0000";
+	end;
+
+OnTimer3300000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Okolnir will disappear in 5 minutes.",bc_map,"0xff0000";
+	end;
+
+OnTimer3360000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Okolnir will disappear in 4 minutes.",bc_map,"0xff0000";
+	end;
+
+OnTimer3420000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Okolnir will disappear in 3 minutes.",bc_map,"0xff0000";
+	end;
+
+OnTimer3480000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Okolnir will disappear in 2 minutes.",bc_map,"0xff0000";
+	end;
+
+OnTimer3540000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Okolnir will disappear in 1 minutes.",bc_map,"0xff0000";
+	end;
+
+OnTimer3600000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Okolnir has begun to disappear.",bc_map,"0x4d4dff";
+	disablenpc "Wish Maiden#gq_"+.@sub$;
+	donpcevent "#gq_miromob2_"+.@sub$+"::OnReset";
+	disablenpc "Piamette#"+.@sub$;
+	donpcevent "#gdtimer01_"+.@sub$+"::OnStop";
+	donpcevent "#gdtimer02_"+.@sub$+"::OnStop";
+	donpcevent "#piamette_"+.@sub$+"::OnReset";
+	donpcevent "Wish Maiden#"+.@sub$+"_boss::OnDisable";
+	donpcevent "Wish Maiden#"+.@sub$+"_gift::OnDisable";
+	donpcevent "#gd_"+.@sub$+"_mobctrl::OnReset";
+	donpcevent "Gate01#gq_"+.@sub$+"::OnDisable";
+	donpcevent "#Maze_Manager_"+.@sub$+"::OnDisable";
+	donpcevent "#event_start01_"+.@sub$+"::OnDisable";
+	donpcevent "#nm_switch_"+.@sub$+"::OnDisable";
+	donpcevent "#nmsom"+.@sub$+"_jin01::OnDisable";
+	donpcevent "#nmsom"+.@sub$+"_jin02::OnDisable";
+	donpcevent "#nmsom"+.@sub$+"_jin03::OnDisable";
+	donpcevent "Guard of Shadow#"+.@sub$+"_01::OnDisable";
+	donpcevent "Guard of Shadow#"+.@sub$+"_02::OnDisable";
+	donpcevent "Guard of Shadow#"+.@sub$+"_03::OnDisable";
+	donpcevent "Guard of Shadow#"+.@sub$+"_04::OnDisable";
+	donpcevent "Bloody Hunter#"+.@sub$+"_ac01::OnDisable";
+	donpcevent "Bloody Hunter#"+.@sub$+"_ac02::OnDisable";
+	donpcevent "Bloody Hunter#"+.@sub$+"_ac03::OnDisable";
+	donpcevent "Bloody Hunter#"+.@sub$+"_ac04::OnDisable";
+	donpcevent "Temple Keeper#"+.@sub$+"_ac01::OnDisable";
+	donpcevent "Temple Keeper#"+.@sub$+"_ac02::OnDisable";
+	disablenpc "#to_agit_"+.@sub$+"_gate";
+	donpcevent "#"+.@sub$+"_stone01::OnReset";
+	donpcevent "#"+.@sub$+"_stone02::OnReset";
+	donpcevent "#"+.@sub$+"_stone03::OnReset";
+	disablenpc "#"+.@sub$+"_cage01";
+	disablenpc "#"+.@sub$+"_cage02";
+	disablenpc "#"+.@sub$+"_cage03";
+	disablenpc "#"+.@sub$+"_cage04";
+	disablenpc "#"+.@sub$+"_cage05";
+	disablenpc "#"+.@sub$+"_cage06";
+	disablenpc "windpath03_"+.@sub$;
+	disablenpc "windpath04_"+.@sub$;
+	end;
+
+OnTimer3605000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Wish Maiden: ... You will fall into a deep sleep within Okolnir... ",bc_map,"0x00ff00";
+	end;
+
+OnTimer3608000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Wish Maiden: ..Have courage ... and await your chance again... ",bc_map,"0x00ff00";
+	end;
+
+OnTimer3610000:
+	set .@sub$,callfunc("F_Okolnir");
+	setd "$@gqse_"+.@sub$+"_miro",0;
+	setd "$@gqse_"+.@sub$+"_pcc",0;
+	setd "$@gqse_"+.@sub$+"_gd",0;
+	setd "$@gqse_"+.@sub$+"_nm",0;
+	mapwarp "que_q"+.@sub$,strnpcinfo(4),157,369;
+	end;
+
+OnTimer3611000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#okolnir_"+.@sub$+"_time01::OnEnable";
+	stopnpctimer;
+	end;
+}
+que_qaru01,1,1,0	duplicate(#okolnir_main)	#okolnir_aru01	844
+que_qaru02,1,1,0	duplicate(#okolnir_main)	#okolnir_aru02	844
+que_qaru03,1,1,0	duplicate(#okolnir_main)	#okolnir_aru03	844
+que_qaru04,1,1,0	duplicate(#okolnir_main)	#okolnir_aru04	844
+que_qaru05,1,1,0	duplicate(#okolnir_main)	#okolnir_aru05	844
+que_qsch01,1,1,0	duplicate(#okolnir_main)	#okolnir_sch01	844
+que_qsch02,1,1,0	duplicate(#okolnir_main)	#okolnir_sch02	844
+que_qsch03,1,1,0	duplicate(#okolnir_main)	#okolnir_sch03	844
+que_qsch04,1,1,0	duplicate(#okolnir_main)	#okolnir_sch04	844
+que_qsch05,1,1,0	duplicate(#okolnir_main)	#okolnir_sch05	844
+
+-	script	#Maze_Manager_main	-1,{
+	end;
+	
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	initnpctimer;
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#miro_bf_"+.@sub$+"::OnDisable";
+	donpcevent "#miro_rf_"+.@sub$+"::OnDisable";
+	donpcevent "#miro_yf_"+.@sub$+"::OnDisable";
+	stopnpctimer;
+	end;
+
+OnTimer1000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#miro_rf_"+.@sub$+"::OnDisable";
+	end;
+
+OnTimer2000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#miro_yf_"+.@sub$+"::OnDisable";
+	end;
+
+OnTimer3000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#miro_bf_"+.@sub$+"::OnEnable";
+	end;
+
+OnTimer120000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#miro_bf_"+.@sub$+"::OnDisable";
+	end;
+
+OnTimer121000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#miro_yf_"+.@sub$+"::OnDisable";
+	end;
+
+OnTimer123000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#miro_rf_"+.@sub$+"::OnEnable";
+	end;
+
+OnTimer240000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#miro_bf_"+.@sub$+"::OnDisable";
+	end;
+
+OnTimer241000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#miro_rf_"+.@sub$+"::OnDisable";
+	end;
+
+OnTimer242000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#miro_yf_"+.@sub$+"::OnEnable";
+	end;
+
+OnTimer360000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#Maze_Manager_"+.@sub$+"::OnEnable";
+	end;
+
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#miro_bf_"+.@sub$+"::OnDisable";
+	donpcevent "#miro_rf_"+.@sub$+"::OnDisable";
+	donpcevent "#miro_yf_"+.@sub$+"::OnDisable";
+	end;
+}
+que_qaru01,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru01	844
+que_qaru02,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru02	844
+que_qaru03,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru03	844
+que_qaru04,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru04	844
+que_qaru05,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_aru05	844
+que_qsch01,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch01	844
+que_qsch02,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch02	844
+que_qsch03,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch03	844
+que_qsch04,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch04	844
+que_qsch05,1,2,0	duplicate(#Maze_Manager_main)	#Maze_Manager_sch05	844
+
+-	script	#miro_bf_main	-1,{
+	function	Cell;
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	setarray .@xy, 44,270,46,270,50,287,52,287,50,265,52,265,56,279,58,279,64,301,64,298,62,272,64,272,58,245,58,243,72,289,72,287,68,257,68,255,73,263,73,261,75,251,75,249,79,283,79,281,82,271,84,271,89,295,89,293,88,276,90,276,88,266,90,266,94,256,96,256,64,301,64,299,100,251,102,251;
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1]," ",1934,1,"#miro_bf_"+.@sub$+"::OnMyMobDead";
+	Cell(.@sub$,0);
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#miro_bf_"+.@sub$+"::OnMyMobDead";
+	Cell(.@sub$,1);
+	end;
+
+	function	Cell	{
+		setarray .@cell, 44,270,47,270,50,287,53,287,50,265,53,265,56,279,59,279,64,298,64,301,62,272,65,272,58,242,58,245,72,286,72,289,68,254,68,259,73,260,73,263,75,248,75,251,79,280,79,283,82,271,85,271,89,292,89,295,88,276,91,276,88,266,91,266,94,256,97,256,64,298,64,301,100,251,103,251;
+		for (set .@i, 0; .@i < getarraysize(.@cell); set .@i, .@i + 4) {
+			setcell "que_q"+getarg(0),.@cell[.@i],.@cell[.@i+1],.@cell[.@i+2],.@cell[.@i+3],cell_walkable,getarg(1);
+			setcell "que_q"+getarg(0),.@cell[.@i],.@cell[.@i+1],.@cell[.@i+2],.@cell[.@i+3],cell_shootable,getarg(1);
+		}
+	}
+OnMyMobDead:
+	end;
+}
+que_qaru01,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru01	844
+que_qaru02,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru02	844
+que_qaru03,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru03	844
+que_qaru04,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru04	844
+que_qaru05,2,1,0	duplicate(#miro_bf_main)	#miro_bf_aru05	844
+que_qsch01,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch01	844
+que_qsch02,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch02	844
+que_qsch03,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch03	844
+que_qsch04,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch04	844
+que_qsch05,2,1,0	duplicate(#miro_bf_main)	#miro_bf_sch05	844
+
+-	script	#miro_rf_main	-1,{
+	function	Cell;
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	setarray .@xy, 57,301,57,299,48,291,48,289,68,290,70,290,72,295,72,293,90,296,92,296,56,282,58,282,66,283,66,281,80,284,82,284,44,273,46,273,50,273,52,273,54,269,54,267,66,271,66,270,81,273,81,272,88,276,90,276,94,276,96,276,64,258,66,258,76,263,76,261,87,265,87,263,50,252,52,252,76,252,78,252,99,255,99,253,53,245,53,243;
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1]," ",1935,1,"#miro_rf_"+.@sub$+"::OnMyMobDead";
+	Cell(.@sub$,0);
+	end;
+	
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#miro_rf_"+.@sub$+"::OnMyMobDead";
+	Cell(.@sub$,1);
+	end;
+	
+OnMyMobDead:
+	end;
+	
+	function	Cell	{
+		setarray .@cell, 57,298,57,301,48,288,48,291,68,290,71,290,72,292,72,295,90,296,93,296,56,282,59,282,66,280,66,283,80,284,83,284,44,273,47,273,50,273,53,273,54,266,54,269,66,270,66,271,81,272,81,273,88,276,91,276,94,276,97,276,64,258,67,258,76,260,76,263,87,262,87,265,50,252,53,252,76,252,79,252,99,252,99,255,53,242,53,245;
+		for (set .@i, 0; .@i < getarraysize(.@cell); set .@i, .@i + 4) {
+			setcell "que_q"+getarg(0),.@cell[.@i],.@cell[.@i+1],.@cell[.@i+2],.@cell[.@i+3],cell_walkable,getarg(1);
+			setcell "que_q"+getarg(0),.@cell[.@i],.@cell[.@i+1],.@cell[.@i+2],.@cell[.@i+3],cell_shootable,getarg(1);
+		}
+	}
+}
+que_qaru01,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru01	844
+que_qaru02,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru02	844
+que_qaru03,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru03	844
+que_qaru04,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru04	844
+que_qaru05,2,2,0	duplicate(#miro_rf_main)	#miro_rf_aru05	844
+que_qsch01,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch01	844
+que_qsch02,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch02	844
+que_qsch03,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch03	844
+que_qsch04,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch04	844
+que_qsch05,2,2,0	duplicate(#miro_rf_main)	#miro_rf_sch05	844
+
+-	script	#miro_yf_main	-1,{
+	function	Cell;
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	setarray .@xy, 44,292,46,292,67,295,67,293,94,301,94,299,79,289,79,287,56,282,58,282,71,283,71,281,100,281,102,281,44,261,46,261,50,265,52,265,56,270,58,270,72,278,73,278,82,266,84,266,88,266,90,266,94,271,96,271,60,257,60,255,73,263,73,261,75,257,75,255,87,257,87,255,58,251,58,249,80,251,80,249,53,245,53,243,75,245,75,243,100,251,102,251,100,256,102,256;
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1]," ",1936,1,"#miro_yf_"+.@sub$+"::OnMyMobDead";
+	Cell(.@sub$,0);
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#miro_yf_"+.@sub$+"::OnMyMobDead";
+	Cell(.@sub$,1);
+	end;
+
+OnMyMobDead:
+	end;
+	
+	function	Cell	{
+		setarray .@cell, 44,292,47,292,67,292,67,295,94,298,94,301,79,286,79,289,56,282,59,282,71,280,71,283,100,281,103,281,44,261,47,261,50,265,53,265,56,270,59,270,72,278,73,278,82,266,85,266,88,266,91,266,94,271,97,271,60,254,60,257,73,260,73,263,75,254,75,257,87,254,87,257,58,248,58,251,80,248,80,251,53,242,53,245,75,242,75,245,100,251,103,251,100,256,103,256;
+		for (set .@i, 0; .@i < getarraysize(.@cell); set .@i, .@i + 4) {
+			setcell "que_q"+getarg(0),.@cell[.@i],.@cell[.@i+1],.@cell[.@i+2],.@cell[.@i+3],cell_walkable,getarg(1);
+			setcell "que_q"+getarg(0),.@cell[.@i],.@cell[.@i+1],.@cell[.@i+2],.@cell[.@i+3],cell_shootable,getarg(1);
+		}
+	}
+}
+que_qaru01,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru01	844
+que_qaru02,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru02	844
+que_qaru03,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru03	844
+que_qaru04,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru04	844
+que_qaru05,2,3,0	duplicate(#miro_yf_main)	#miro_yf_aru05	844
+que_qsch01,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch01	844
+que_qsch02,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch02	844
+que_qsch03,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch03	844
+que_qsch04,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch04	844
+que_qsch05,2,3,0	duplicate(#miro_yf_main)	#miro_yf_sch05	844
+
+-	script	windpath01_main	-1,{
+	end;
+	
+OnTouch_:
+	set .@sub$,callfunc("F_Okolnir");
+	if (countitem(7839)) {
+		mes "The Warp Gate responds to the Crystal Key.";
+		delitem 7839,1; //Crystal_Key
+		close2;
+		warp "que_q"+.@sub$,114,158;
+		end;
+	}
+	mes "You need the Crystal Key to activate the Warp Gate.";
+	close;
+}
+que_qaru01,132,172,0	duplicate(windpath01_main)	windpath01_aru01	45,1,1
+que_qaru02,132,172,0	duplicate(windpath01_main)	windpath01_aru02	45,1,1
+que_qaru03,132,172,0	duplicate(windpath01_main)	windpath01_aru03	45,1,1
+que_qaru04,132,172,0	duplicate(windpath01_main)	windpath01_aru04	45,1,1
+que_qaru05,132,172,0	duplicate(windpath01_main)	windpath01_aru05	45,1,1
+que_qsch01,132,172,0	duplicate(windpath01_main)	windpath01_sch01	45,1,1
+que_qsch02,132,172,0	duplicate(windpath01_main)	windpath01_sch02	45,1,1
+que_qsch03,132,172,0	duplicate(windpath01_main)	windpath01_sch03	45,1,1
+que_qsch04,132,172,0	duplicate(windpath01_main)	windpath01_sch04	45,1,1
+que_qsch05,132,172,0	duplicate(windpath01_main)	windpath01_sch05	45,1,1
+
+que_qaru01,113,165,0	warp	windpath02_aru01	1,1,que_qaru01,139,172
+que_qaru02,113,165,0	warp	windpath02_aru02	1,1,que_qaru02,139,172
+que_qaru03,113,165,0	warp	windpath02_aru03	1,1,que_qaru03,139,172
+que_qaru04,113,165,0	warp	windpath02_aru04	1,1,que_qaru04,139,172
+que_qaru05,113,165,0	warp	windpath02_aru05	1,1,que_qaru05,139,172
+que_qsch01,113,165,0	warp	windpath02_sch01	1,1,que_qsch01,139,172
+que_qsch02,113,165,0	warp	windpath02_sch02	1,1,que_qsch02,139,172
+que_qsch03,113,165,0	warp	windpath02_sch03	1,1,que_qsch03,139,172
+que_qsch04,113,165,0	warp	windpath02_sch04	1,1,que_qsch04,139,172
+que_qsch05,113,165,0	warp	windpath02_sch05	1,1,que_qsch05,139,172
+
+-	script	Piamette#main	-1,{
+	end;
+	
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	enablenpc "Piamette#"+.@sub$;
+	end;
+}
+
+que_qaru01,131,136,3	duplicate(Piamette#main)	Piamette#aru01	1930
+que_qaru02,131,136,3	duplicate(Piamette#main)	Piamette#aru02	1930
+que_qaru03,131,136,3	duplicate(Piamette#main)	Piamette#aru03	1930
+que_qaru04,131,136,3	duplicate(Piamette#main)	Piamette#aru04	1930
+que_qaru05,131,136,3	duplicate(Piamette#main)	Piamette#aru05	1930
+que_qsch01,131,136,3	duplicate(Piamette#main)	Piamette#sch01	1930
+que_qsch02,131,136,3	duplicate(Piamette#main)	Piamette#sch02	1930
+que_qsch03,131,136,3	duplicate(Piamette#main)	Piamette#sch03	1930
+que_qsch04,131,136,3	duplicate(Piamette#main)	Piamette#sch04	1930
+que_qsch05,131,136,3	duplicate(Piamette#main)	Piamette#sch05	1930
+
+-	script	#event_start01_main	-1,{
+	end;
+
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	enablenpc "#event_start01_"+.@sub$;
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	disablenpc "#event_start01_"+.@sub$;
+	stopnpctimer;
+	end;
+
+OnTouch_:
+	initnpctimer;
+	set .@sub$,callfunc("F_Okolnir");
+	disablenpc "#event_start01_"+.@sub$;
+	end;
+
+OnTimer2000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Piamette mumblings : ..There were six birds, Teo. But one is....",bc_map,"0xdb7093";
+	end;
+
+OnTimer6000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Piamette mumblings : ...Shh.. Teo. The birds have returned..Are they birds that ran away before...? Or breakers who disguises themselves as good adventurers?",bc_map,"0xdb7093";
+	end;
+
+OnTimer10000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Piamette mumblings : Ha! They are caged in.",bc_map,"0xdb7093";
+	end;
+
+OnTimer14000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Piamette : Teo, Catch the birds! Put the cage away from here!",bc_map,"0x00ff00";
+	donpcevent "#gdtimer01_"+.@sub$+"::OnEnable";
+	stopnpctimer;
+	end;
+	
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	disablenpc "#event_start01_"+.@sub$;
+	end;
+}
+que_qaru01,114,158,0	duplicate(#event_start01_main)	#event_start01_aru01	-1,1,1
+que_qaru02,114,158,0	duplicate(#event_start01_main)	#event_start01_aru02	-1,1,1
+que_qaru03,114,158,0	duplicate(#event_start01_main)	#event_start01_aru03	-1,1,1
+que_qaru04,114,158,0	duplicate(#event_start01_main)	#event_start01_aru04	-1,1,1
+que_qaru05,114,158,0	duplicate(#event_start01_main)	#event_start01_aru05	-1,1,1
+que_qsch01,114,158,0	duplicate(#event_start01_main)	#event_start01_sch01	-1,1,1
+que_qsch02,114,158,0	duplicate(#event_start01_main)	#event_start01_sch02	-1,1,1
+que_qsch03,114,158,0	duplicate(#event_start01_main)	#event_start01_sch03	-1,1,1
+que_qsch04,114,158,0	duplicate(#event_start01_main)	#event_start01_sch04	-1,1,1
+que_qsch05,114,158,0	duplicate(#event_start01_main)	#event_start01_sch05	-1,1,1
+
+-	script	#gdtimer01_main	-1,{
+	end;
+	
+OnEnable:
+	initnpctimer;
+	end;
+
+OnStop:
+	set .@sub$,callfunc("F_Okolnir");
+	for (set .@i, 1; .@i <= 8; set .@i, .@i + 1)
+		donpcevent "#getspell0"+.@i+"_"+.@sub$+"::OnDisable";
+	stopnpctimer;
+	end;
+
+OnTimer1000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#getspell08_"+.@sub$+"::OnDisable";
+	donpcevent "#getspell01_"+.@sub$+"::OnEnable";
+	end;
+
+OnTimer10000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#getspell01_"+.@sub$+"::OnDisable";
+	donpcevent "#getspell02_"+.@sub$+"::OnEnable";
+	end;
+
+OnTimer20000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#getspell02_"+.@sub$+"::OnDisable";
+	donpcevent "#getspell03_"+.@sub$+"::OnEnable";
+	end;
+
+OnTimer30000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#getspell03_"+.@sub$+"::OnDisable";
+	donpcevent "#getspell04_"+.@sub$+"::OnEnable";
+	end;
+
+OnTimer40000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#getspell04_"+.@sub$+"::OnDisable";
+	donpcevent "#getspell05_"+.@sub$+"::OnEnable";
+	end;
+
+OnTimer50000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#getspell05_"+.@sub$+"::OnDisable";
+	donpcevent "#getspell06_"+.@sub$+"::OnEnable";
+	end;
+
+OnTimer60000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#getspell06_"+.@sub$+"::OnDisable";
+	donpcevent "#getspell07_"+.@sub$+"::OnEnable";
+	end;
+
+OnTimer70000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#getspell07_"+.@sub$+"::OnDisable";
+	donpcevent "#getspell08_"+.@sub$+"::OnEnable";
+	end;
+
+OnTimer75000:
+	set .@sub$,callfunc("F_Okolnir");
+	if (getd("$@gqse_"+.@sub$+"_gd") < 6) {
+		mapannounce "que_q"+.@sub$+"","Piamette : Silly birds! Silly Teo! Why can't you put away the cage at once?!",bc_map,"0x00ff00";
+		for (set .@i, 1; .@i <= 6; set .@i, .@i + 1)
+			enablenpc "#"+.@sub$+"_cage0"+.@i;
+		setd "$@gqse_"+.@sub$+"_gd",0;
+	}
+	end;
+
+OnTimer76000:
+	set .@sub$,callfunc("F_Okolnir");
+	for (set .@i, 1; .@i <= 6; set .@i, .@i + 1)
+		disablenpc "#"+.@sub$+"_cage0"+.@i;
+	end;
+
+OnTimer80000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#gdtimer01_"+.@sub$+"::OnEnable";
+	end;
+}
+que_qaru01,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru01	844
+que_qaru02,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru02	844
+que_qaru03,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru03	844
+que_qaru04,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru04	844
+que_qaru05,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_aru05	844
+que_qsch01,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch01	844
+que_qsch02,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch02	844
+que_qsch03,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch03	844
+que_qsch04,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch04	844
+que_qsch05,2,2,0	duplicate(#gdtimer01_main)	#gdtimer01_sch05	844
+
+-	script	#gdtimer02_main	-1,{
+	end;
+	
+OnEnable:
+	initnpctimer;
+	end;
+
+OnStop:
+	stopnpctimer;
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#gdtimer02_"+.@sub$+"::OnMyMobDead";
+	end;
+
+OnTimer4000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Piamette : All of them are caught!",bc_map,"0xdb7093";
+	end;
+
+OnTimer8000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Piamette : Let's call out the keeper of the key not to let the birds go far away.",bc_map,"0xdb7093";
+	end;
+
+OnTimer12000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Piamette : The keeper of the key is protecting my cage.",bc_map,"0xdb7093";
+	setarray .@xy, 108,151,109,135,115,116,158,106,163,133,150,154;
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1],"Key Stone",1905,1,"#gdtimer02_"+.@sub$+"::OnMyMobDead";
+	end;
+
+OnTimer112000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Piamette : Whooping fun times are back! Now, Go! I'll get back to!!",bc_map,"0xdb7093";
+	killmonster "que_q"+.@sub$,"#gdtimer02_"+.@sub$+"::OnMyMobDead";
+	for (set .@i, 1; .@i <= 6; set .@i, .@i + 1)
+		enablenpc "#"+.@sub$+"_cage0"+.@i;
+	setd "$@gqse_"+.@sub$+"_gd",0;
+	end;
+
+OnTimer113000:
+	set .@sub$,callfunc("F_Okolnir");
+	for (set .@i, 1; .@i <= 6; set .@i, .@i + 1)
+		disablenpc "#"+.@sub$+"_cage0"+.@i;
+	donpcevent "#gdtimer01_"+.@sub$+"::OnEnable";
+	stopnpctimer;
+	end;
+
+OnReset:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#gdtimer02_"+.@sub$+"::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	set .@sub$,callfunc("F_Okolnir");
+	if (!mobcount("que_q"+.@sub$,"#gdtimer02_"+.@sub$+"::OnMyMobDead")) {
+		for (set .@i, 1; .@i <= 6; set .@i, .@i + 1)
+			enablenpc "#"+.@sub$+"_cage0"+.@i;
+		donpcevent "#piamette_"+.@sub$+"::OnEnable";
+		stopnpctimer;
+	}
+	end;
+}
+que_qaru01,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru01	844
+que_qaru02,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru02	844
+que_qaru03,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru03	844
+que_qaru04,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru04	844
+que_qaru05,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_aru05	844
+que_qsch01,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch01	844
+que_qsch02,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch02	844
+que_qsch03,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch03	844
+que_qsch04,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch04	844
+que_qsch05,2,3,0	duplicate(#gdtimer02_main)	#gdtimer02_sch05	844
+
+-	script	#piamette_main	-1,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnReset:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#piamette_"+.@sub$+"::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnTimer1000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Piamette : All the keeper of keys are dead now? Who freed my birds? Teo, who did it?",bc_map,"0xdb7093";
+	end;
+
+OnTimer5000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Piamette : I'm pissed off now!",bc_map,"0xdb7093";
+	disablenpc "Piamette#"+.@sub$;
+	monster "que_q"+.@sub$,131,135,"Angry Piamette",1930,1,"#piamette_"+.@sub$+"::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Piamette has been released, so the warp gate toward the South is working now.",bc_map,"0x00ff00";
+	enablenpc "windpath03_"+.@sub$;
+	enablenpc "windpath04_"+.@sub$;
+	donpcevent "#nm_switch_"+.@sub$+"::OnEnable";
+	end;
+}
+que_qaru01,1,4,0	duplicate(#piamette_main)	#piamette_aru01	844
+que_qaru02,1,4,0	duplicate(#piamette_main)	#piamette_aru02	844
+que_qaru03,1,4,0	duplicate(#piamette_main)	#piamette_aru03	844
+que_qaru04,1,4,0	duplicate(#piamette_main)	#piamette_aru04	844
+que_qaru05,1,4,0	duplicate(#piamette_main)	#piamette_aru05	844
+que_qsch01,1,4,0	duplicate(#piamette_main)	#piamette_sch01	844
+que_qsch02,1,4,0	duplicate(#piamette_main)	#piamette_sch02	844
+que_qsch03,1,4,0	duplicate(#piamette_main)	#piamette_sch03	844
+que_qsch04,1,4,0	duplicate(#piamette_main)	#piamette_sch04	844
+que_qsch05,1,4,0	duplicate(#piamette_main)	#piamette_sch05	844
+
+-	script	#getspells_main	-1,{
+	end;
+
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	set .@c,charat(strnpcinfo(2),9);
+	enablenpc "#getspell0"+.@c+"_"+.@sub$;
+	specialeffect EF_LOCKON;
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	set .@c,charat(strnpcinfo(2),9);
+	disablenpc "#getspell0"+.@c+"_"+.@sub$;
+	end;
+
+OnTouch_:
+	set .@sub$,callfunc("F_Okolnir");
+	sc_start SC_Stone,300000,0,10000;
+	switch (getd("$@gqse_"+.@sub$+"_gd")) {
+		case 0: setarray .@n$, "103","153","1","Piamette : One white bird has dropped with its wing pierced by an arrow."; break;
+		case 1: setarray .@n$, "102","135","2","Piamette : One bird is caught in a snare, and dropped into a lake."; break;
+		case 2: setarray .@n$, "113","111","3","Piamette : One bird has died trapped in it's cage."; break;
+		case 3: setarray .@n$, "161","105","4","Piamette : One bird was poisoned to death."; break;
+		case 4: setarray .@n$, "168","135","5","Piamette : One bird vomited blood while singing seven days and seven nights."; break;
+		case 5: 
+			setarray .@n$, "150","159","6","Piamette : The last one broke her neck wriggling to get out of from it's eggshell!"; 
+			donpcevent "#gdtimer02_"+.@sub$+"::OnEnable";
+			donpcevent "#gdtimer01_"+.@sub$+"::OnStop";
+			break;
+	}
+	disablenpc "#getspell01_"+.@sub$;
+	warp "que_q"+.@sub$,atoi(.@n$[0]),atoi(.@n$[1]);
+	setd "$@gqse_"+.@sub$+"_gd",atoi(.@n$[2]);
+	mapannounce "que_q"+.@sub$,.@n$[3],bc_map,"0xFF0000";
+	end;
+
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	for (set .@i, 1; .@i <= 8; set .@i, .@i + 1) 
+		disablenpc "#getspell0"+.@i+"_"+.@sub$;
+	end;
+}
+que_qaru01,113,135,0	duplicate(#getspells_main)	#getspell01_aru01	-1,1,1
+que_qaru02,113,135,0	duplicate(#getspells_main)	#getspell01_aru02	-1,1,1
+que_qaru03,113,135,0	duplicate(#getspells_main)	#getspell01_aru03	-1,1,1
+que_qaru04,113,135,0	duplicate(#getspells_main)	#getspell01_aru04	-1,1,1
+que_qaru05,113,135,0	duplicate(#getspells_main)	#getspell01_aru05	-1,1,1
+que_qsch01,113,135,0	duplicate(#getspells_main)	#getspell01_sch01	-1,1,1
+que_qsch02,113,135,0	duplicate(#getspells_main)	#getspell01_sch02	-1,1,1
+que_qsch03,113,135,0	duplicate(#getspells_main)	#getspell01_sch03	-1,1,1
+que_qsch04,113,135,0	duplicate(#getspells_main)	#getspell01_sch04	-1,1,1
+que_qsch05,113,135,0	duplicate(#getspells_main)	#getspell01_sch05	-1,1,1
+que_qaru01,146,150,0	duplicate(#getspells_main)	#getspell02_aru01	-1,1,1
+que_qaru02,146,150,0	duplicate(#getspells_main)	#getspell02_aru02	-1,1,1
+que_qaru03,146,150,0	duplicate(#getspells_main)	#getspell02_aru03	-1,1,1
+que_qaru04,146,150,0	duplicate(#getspells_main)	#getspell02_aru04	-1,1,1
+que_qaru05,146,150,0	duplicate(#getspells_main)	#getspell02_aru05	-1,1,1
+que_qsch01,146,150,0	duplicate(#getspells_main)	#getspell02_sch01	-1,1,1
+que_qsch02,146,150,0	duplicate(#getspells_main)	#getspell02_sch02	-1,1,1
+que_qsch03,146,150,0	duplicate(#getspells_main)	#getspell02_sch03	-1,1,1
+que_qsch04,146,150,0	duplicate(#getspells_main)	#getspell02_sch04	-1,1,1
+que_qsch05,146,150,0	duplicate(#getspells_main)	#getspell02_sch05	-1,1,1
+que_qaru01,131,117,0	duplicate(#getspells_main)	#getspell03_aru01	-1,1,1
+que_qaru02,131,117,0	duplicate(#getspells_main)	#getspell03_aru02	-1,1,1
+que_qaru03,131,117,0	duplicate(#getspells_main)	#getspell03_aru03	-1,1,1
+que_qaru04,131,117,0	duplicate(#getspells_main)	#getspell03_aru04	-1,1,1
+que_qaru05,131,117,0	duplicate(#getspells_main)	#getspell03_aru05	-1,1,1
+que_qsch01,131,117,0	duplicate(#getspells_main)	#getspell03_sch01	-1,1,1
+que_qsch02,131,117,0	duplicate(#getspells_main)	#getspell03_sch02	-1,1,1
+que_qsch03,131,117,0	duplicate(#getspells_main)	#getspell03_sch03	-1,1,1
+que_qsch04,131,117,0	duplicate(#getspells_main)	#getspell03_sch04	-1,1,1
+que_qsch05,131,117,0	duplicate(#getspells_main)	#getspell03_sch05	-1,1,1
+que_qaru01,117,150,0	duplicate(#getspells_main)	#getspell04_aru01	-1,1,1
+que_qaru02,117,150,0	duplicate(#getspells_main)	#getspell04_aru02	-1,1,1
+que_qaru03,117,150,0	duplicate(#getspells_main)	#getspell04_aru03	-1,1,1
+que_qaru04,117,150,0	duplicate(#getspells_main)	#getspell04_aru04	-1,1,1
+que_qaru05,117,150,0	duplicate(#getspells_main)	#getspell04_aru05	-1,1,1
+que_qsch01,117,150,0	duplicate(#getspells_main)	#getspell04_sch01	-1,1,1
+que_qsch02,117,150,0	duplicate(#getspells_main)	#getspell04_sch02	-1,1,1
+que_qsch03,117,150,0	duplicate(#getspells_main)	#getspell04_sch03	-1,1,1
+que_qsch04,117,150,0	duplicate(#getspells_main)	#getspell04_sch04	-1,1,1
+que_qsch05,117,150,0	duplicate(#getspells_main)	#getspell04_sch05	-1,1,1
+que_qaru01,150,135,0	duplicate(#getspells_main)	#getspell05_aru01	-1,1,1
+que_qaru02,150,135,0	duplicate(#getspells_main)	#getspell05_aru02	-1,1,1
+que_qaru03,150,135,0	duplicate(#getspells_main)	#getspell05_aru03	-1,1,1
+que_qaru04,150,135,0	duplicate(#getspells_main)	#getspell05_aru04	-1,1,1
+que_qaru05,150,135,0	duplicate(#getspells_main)	#getspell05_aru05	-1,1,1
+que_qsch01,150,135,0	duplicate(#getspells_main)	#getspell05_sch01	-1,1,1
+que_qsch02,150,135,0	duplicate(#getspells_main)	#getspell05_sch02	-1,1,1
+que_qsch03,150,135,0	duplicate(#getspells_main)	#getspell05_sch03	-1,1,1
+que_qsch04,150,135,0	duplicate(#getspells_main)	#getspell05_sch04	-1,1,1
+que_qsch05,150,135,0	duplicate(#getspells_main)	#getspell05_sch05	-1,1,1
+que_qaru01,117,121,0	duplicate(#getspells_main)	#getspell06_aru01	-1,1,1
+que_qaru02,117,121,0	duplicate(#getspells_main)	#getspell06_aru02	-1,1,1
+que_qaru03,117,121,0	duplicate(#getspells_main)	#getspell06_aru03	-1,1,1
+que_qaru04,117,121,0	duplicate(#getspells_main)	#getspell06_aru04	-1,1,1
+que_qaru05,117,121,0	duplicate(#getspells_main)	#getspell06_aru05	-1,1,1
+que_qsch01,117,121,0	duplicate(#getspells_main)	#getspell06_sch01	-1,1,1
+que_qsch02,117,121,0	duplicate(#getspells_main)	#getspell06_sch02	-1,1,1
+que_qsch03,117,121,0	duplicate(#getspells_main)	#getspell06_sch03	-1,1,1
+que_qsch04,117,121,0	duplicate(#getspells_main)	#getspell06_sch04	-1,1,1
+que_qsch05,117,121,0	duplicate(#getspells_main)	#getspell06_sch05	-1,1,1
+que_qaru01,131,154,0	duplicate(#getspells_main)	#getspell07_aru01	-1,1,1
+que_qaru02,131,154,0	duplicate(#getspells_main)	#getspell07_aru02	-1,1,1
+que_qaru03,131,154,0	duplicate(#getspells_main)	#getspell07_aru03	-1,1,1
+que_qaru04,131,154,0	duplicate(#getspells_main)	#getspell07_aru04	-1,1,1
+que_qaru05,131,154,0	duplicate(#getspells_main)	#getspell07_aru05	-1,1,1
+que_qsch01,131,154,0	duplicate(#getspells_main)	#getspell07_sch01	-1,1,1
+que_qsch02,131,154,0	duplicate(#getspells_main)	#getspell07_sch02	-1,1,1
+que_qsch03,131,154,0	duplicate(#getspells_main)	#getspell07_sch03	-1,1,1
+que_qsch04,131,154,0	duplicate(#getspells_main)	#getspell07_sch04	-1,1,1
+que_qsch05,131,154,0	duplicate(#getspells_main)	#getspell07_sch05	-1,1,1
+que_qaru01,146,121,0	duplicate(#getspells_main)	#getspell08_aru01	-1,1,1
+que_qaru02,146,121,0	duplicate(#getspells_main)	#getspell08_aru02	-1,1,1
+que_qaru03,146,121,0	duplicate(#getspells_main)	#getspell08_aru03	-1,1,1
+que_qaru04,146,121,0	duplicate(#getspells_main)	#getspell08_aru04	-1,1,1
+que_qaru05,146,121,0	duplicate(#getspells_main)	#getspell08_aru05	-1,1,1
+que_qsch01,146,121,0	duplicate(#getspells_main)	#getspell08_sch01	-1,1,1
+que_qsch02,146,121,0	duplicate(#getspells_main)	#getspell08_sch02	-1,1,1
+que_qsch03,146,121,0	duplicate(#getspells_main)	#getspell08_sch03	-1,1,1
+que_qsch04,146,121,0	duplicate(#getspells_main)	#getspell08_sch04	-1,1,1
+que_qsch05,146,121,0	duplicate(#getspells_main)	#getspell08_sch05	-1,1,1
+
+-	script	#main_cages	-1,{
+	end;
+	
+OnTouch_:
+	set .@sub$,callfunc("F_Okolnir");
+	sc_end SC_Stone;
+	setarray .@n, 108,151,107,135,113,114,158,106,163,133,150,154;
+	for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
+		warp "que_q"+.@sub$,.@n[.@i],.@n[.@i+1];
+	for (set .@i, 1; .@i <= 6; set .@i, .@i + 1)
+		disablenpc "#"+.@sub$+"_cage0"+.@i;
+	end;
+	
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	for (set .@i, 1; .@i <= 6; set .@i, .@i + 1)
+		disablenpc "#"+.@sub$+"_cage0"+.@i;
+	end;
+}
+que_qaru01,103,153,0	duplicate(#main_cages)	#aru01_cage01	-1,1,1
+que_qaru02,103,153,0	duplicate(#main_cages)	#aru02_cage01	-1,1,1
+que_qaru03,103,153,0	duplicate(#main_cages)	#aru03_cage01	-1,1,1
+que_qaru04,103,153,0	duplicate(#main_cages)	#aru04_cage01	-1,1,1
+que_qaru05,103,153,0	duplicate(#main_cages)	#aru05_cage01	-1,1,1
+que_qsch01,103,153,0	duplicate(#main_cages)	#sch01_cage01	-1,1,1
+que_qsch02,103,153,0	duplicate(#main_cages)	#sch02_cage01	-1,1,1
+que_qsch03,103,153,0	duplicate(#main_cages)	#sch03_cage01	-1,1,1
+que_qsch04,103,153,0	duplicate(#main_cages)	#sch04_cage01	-1,1,1
+que_qsch05,103,153,0	duplicate(#main_cages)	#sch05_cage01	-1,1,1
+que_qaru01,102,135,0	duplicate(#main_cages)	#aru01_cage02	-1,1,1
+que_qaru02,102,135,0	duplicate(#main_cages)	#aru02_cage02	-1,1,1
+que_qaru03,102,135,0	duplicate(#main_cages)	#aru03_cage02	-1,1,1
+que_qaru04,102,135,0	duplicate(#main_cages)	#aru04_cage02	-1,1,1
+que_qaru05,102,135,0	duplicate(#main_cages)	#aru05_cage02	-1,1,1
+que_qsch01,102,135,0	duplicate(#main_cages)	#sch01_cage02	-1,1,1
+que_qsch02,102,135,0	duplicate(#main_cages)	#sch02_cage02	-1,1,1
+que_qsch03,102,135,0	duplicate(#main_cages)	#sch03_cage02	-1,1,1
+que_qsch04,102,135,0	duplicate(#main_cages)	#sch04_cage02	-1,1,1
+que_qsch05,102,135,0	duplicate(#main_cages)	#sch05_cage02	-1,1,1
+que_qaru01,113,111,0	duplicate(#main_cages)	#aru01_cage03	-1,1,1
+que_qaru02,113,111,0	duplicate(#main_cages)	#aru02_cage03	-1,1,1
+que_qaru03,113,111,0	duplicate(#main_cages)	#aru03_cage03	-1,1,1
+que_qaru04,113,111,0	duplicate(#main_cages)	#aru04_cage03	-1,1,1
+que_qaru05,113,111,0	duplicate(#main_cages)	#aru05_cage03	-1,1,1
+que_qsch01,113,111,0	duplicate(#main_cages)	#sch01_cage03	-1,1,1
+que_qsch02,113,111,0	duplicate(#main_cages)	#sch02_cage03	-1,1,1
+que_qsch03,113,111,0	duplicate(#main_cages)	#sch03_cage03	-1,1,1
+que_qsch04,113,111,0	duplicate(#main_cages)	#sch04_cage03	-1,1,1
+que_qsch05,113,111,0	duplicate(#main_cages)	#sch05_cage03	-1,1,1
+que_qaru01,161,105,0	duplicate(#main_cages)	#aru01_cage04	-1,1,1
+que_qaru02,161,105,0	duplicate(#main_cages)	#aru02_cage04	-1,1,1
+que_qaru03,161,105,0	duplicate(#main_cages)	#aru03_cage04	-1,1,1
+que_qaru04,161,105,0	duplicate(#main_cages)	#aru04_cage04	-1,1,1
+que_qaru05,161,105,0	duplicate(#main_cages)	#aru05_cage04	-1,1,1
+que_qsch01,161,105,0	duplicate(#main_cages)	#sch01_cage04	-1,1,1
+que_qsch02,161,105,0	duplicate(#main_cages)	#sch02_cage04	-1,1,1
+que_qsch03,161,105,0	duplicate(#main_cages)	#sch03_cage04	-1,1,1
+que_qsch04,161,105,0	duplicate(#main_cages)	#sch04_cage04	-1,1,1
+que_qsch05,161,105,0	duplicate(#main_cages)	#sch05_cage04	-1,1,1
+que_qaru01,168,135,0	duplicate(#main_cages)	#aru01_cage05	-1,1,1
+que_qaru02,168,135,0	duplicate(#main_cages)	#aru02_cage05	-1,1,1
+que_qaru03,168,135,0	duplicate(#main_cages)	#aru03_cage05	-1,1,1
+que_qaru04,168,135,0	duplicate(#main_cages)	#aru04_cage05	-1,1,1
+que_qaru05,168,135,0	duplicate(#main_cages)	#aru05_cage05	-1,1,1
+que_qsch01,168,135,0	duplicate(#main_cages)	#sch01_cage05	-1,1,1
+que_qsch02,168,135,0	duplicate(#main_cages)	#sch02_cage05	-1,1,1
+que_qsch03,168,135,0	duplicate(#main_cages)	#sch03_cage05	-1,1,1
+que_qsch04,168,135,0	duplicate(#main_cages)	#sch04_cage05	-1,1,1
+que_qsch05,168,135,0	duplicate(#main_cages)	#sch05_cage05	-1,1,1
+que_qaru01,150,159,0	duplicate(#main_cages)	#aru01_cage06	-1,1,1
+que_qaru02,150,159,0	duplicate(#main_cages)	#aru02_cage06	-1,1,1
+que_qaru03,150,159,0	duplicate(#main_cages)	#aru03_cage06	-1,1,1
+que_qaru04,150,159,0	duplicate(#main_cages)	#aru04_cage06	-1,1,1
+que_qaru05,150,159,0	duplicate(#main_cages)	#aru05_cage06	-1,1,1
+que_qsch01,150,159,0	duplicate(#main_cages)	#sch01_cage06	-1,1,1
+que_qsch02,150,159,0	duplicate(#main_cages)	#sch02_cage06	-1,1,1
+que_qsch03,150,159,0	duplicate(#main_cages)	#sch03_cage06	-1,1,1
+que_qsch04,150,159,0	duplicate(#main_cages)	#sch04_cage06	-1,1,1
+que_qsch05,150,159,0	duplicate(#main_cages)	#sch05_cage06	-1,1,1
+
+que_qaru01,1,8,0	script	#gd_main_mobctrl	844,{
+	end;
+	
+OnEnable:
+	setarray .@mob_1$, "Ball of Piamette","1738";
+	setarray .@mob_1, 107,152,109,135,113,116,157,107,163,133,149,156,131,139,135,136,131,132,128,136,110,145,129,114,148,114,155,128,152,145,131,151,110,130;
+	setarray .@mob_2$, "Alice","1275";
+	setarray .@mob_2, 130,139,135,137,130,132,128,137,109,145,109,130,128,114,147,114,154,128,151,145,130,151;
+	setarray .@mob_3$, "Violy","1390";
+	setarray .@mob_3, 132,139,135,135,132,132,128,135,111,145,111,130,130,114,149,114,156,128,153,145,132,151;
+	setarray .@mob_4$, "Ancient Mimic","1699";
+	setarray .@mob_4, 133,139,135,134,133,132,128,135,112,145,131,114,150,114,157,128,154,145,133,151,112,130;
+	set .@sub$,callfunc("F_Okolnir");
+	set .@c, 1;
+	while (.@c <= 4) {
+		for (set .@i, 0; .@i < getarraysize(getd(".@mob_"+.@c)); set .@i, .@i + 2)
+			monster "que_q"+.@sub$,getd(".@mob_"+.@c+"["+.@i+"]"),getd(".@mob_"+.@c+"["+(.@i+1)+"]"),getd(".@mob_"+.@c+"$"),atoi(getd(".@mob_"+.@c+"$[1]")),1,"#gd_"+.@sub$+"_mobctrl::OnMyMobDead";
+		set .@c, .@c + 1;
+	}
+	end;
+
+OnReset:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#gd_"+.@sub$+"_mobctrl::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	set .@sub$,callfunc("F_Okolnir");
+	if (mobcount("que_q"+.@sub$,"#gd_"+.@sub$+"_mobctrl::OnMyMobDead") < 7) {
+		setarray .@n, 107,152,109,135,113,116,157,107,163,133,149,156;
+		for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
+			monster "que_q"+.@sub$,.@n[.@i],.@n[.@i+1],"Ball of Piamette",1738,1,"#gd_"+.@sub$+"_mobctrl::OnMyMobDead";
+	}
+	end;
+}
+que_qaru01,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru01_mobctrl	844
+que_qaru02,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru02_mobctrl	844
+que_qaru03,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru03_mobctrl	844
+que_qaru04,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru04_mobctrl	844
+que_qaru05,1,8,0	duplicate(#gd_main_mobctrl)	#gd_aru05_mobctrl	844
+que_qsch01,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch01_mobctrl	844
+que_qsch02,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch02_mobctrl	844
+que_qsch03,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch03_mobctrl	844
+que_qsch04,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch04_mobctrl	844
+que_qsch05,1,8,0	duplicate(#gd_main_mobctrl)	#gd_sch05_mobctrl	844
+
+-	script	windpaths_main	-1,{
+	end;
+	
+OnTouch_:
+	set .@sub$,callfunc("F_Okolnir");
+	if (compare(strnpcinfo(0),"windpath03")) {
+		warp "que_q"+.@sub$,119,103;
+	} else {
+		warp "que_q"+.@sub$,146,109;
+	}
+	end;
+	
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	disablenpc "windpath03_"+.@sub$;
+	disablenpc "windpath04_"+.@sub$;
+	end;
+}
+que_qaru01,149,105,0	duplicate(windpaths_main)	windpath03_aru01	45,1,1
+que_qaru02,149,105,0	duplicate(windpaths_main)	windpath03_aru02	45,1,1
+que_qaru03,149,105,0	duplicate(windpaths_main)	windpath03_aru03	45,1,1
+que_qaru04,149,105,0	duplicate(windpaths_main)	windpath03_aru04	45,1,1
+que_qaru05,149,105,0	duplicate(windpaths_main)	windpath03_aru05	45,1,1
+que_qsch01,149,105,0	duplicate(windpaths_main)	windpath03_sch01	45,1,1
+que_qsch02,149,105,0	duplicate(windpaths_main)	windpath03_sch02	45,1,1
+que_qsch03,149,105,0	duplicate(windpaths_main)	windpath03_sch03	45,1,1
+que_qsch04,149,105,0	duplicate(windpaths_main)	windpath03_sch04	45,1,1
+que_qsch05,149,105,0	duplicate(windpaths_main)	windpath03_sch05	45,1,1
+
+que_qaru01,128,104,0	duplicate(windpaths_main)	windpath04_aru01	45,1,1
+que_qaru02,128,104,0	duplicate(windpaths_main)	windpath04_aru02	45,1,1
+que_qaru03,128,104,0	duplicate(windpaths_main)	windpath04_aru03	45,1,1
+que_qaru04,128,104,0	duplicate(windpaths_main)	windpath04_aru04	45,1,1
+que_qaru05,128,104,0	duplicate(windpaths_main)	windpath04_aru05	45,1,1
+que_qsch01,128,104,0	duplicate(windpaths_main)	windpath04_sch01	45,1,1
+que_qsch02,128,104,0	duplicate(windpaths_main)	windpath04_sch02	45,1,1
+que_qsch03,128,104,0	duplicate(windpaths_main)	windpath04_sch03	45,1,1
+que_qsch04,128,104,0	duplicate(windpaths_main)	windpath04_sch04	45,1,1
+que_qsch05,128,104,0	duplicate(windpaths_main)	windpath04_sch05	45,1,1
+
+-	script	#nm_switch_main	-1,{
+	end;
+	
+OnTouch_:
+	set .@sub$,callfunc("F_Okolnir");
+	disablenpc "#nm_switch_"+.@sub$;
+	initnpctimer;
+	end;
+
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	enablenpc "#nm_switch_"+.@sub$;
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	disablenpc "#nm_switch_"+.@sub$;
+	stopnpctimer;
+	end;
+
+OnTimer1000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Wish Maiden: Did you have a good time with Piamette?",bc_map,"0x00ff00";
+	end;
+
+OnTimer4000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Wish Maiden: But it's the end. There will be summoned monsters coming soon...",bc_map,"0x00ff00";
+	end;
+
+OnTimer9000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Wish Maiden: So come here to me safely...",bc_map,"0x00ff00";
+	end;
+
+OnTimer10000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#nmsom"+.@sub$+"_jin01::OnEnable";
+	donpcevent "#"+.@sub$+"_stone01::OnEnable";
+	end;
+
+OnTimer190000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#nmsom"+.@sub$+"_jin02::OnEnable";
+	donpcevent "#"+.@sub$+"_stone02::OnEnable";
+	end;
+
+OnTimer370000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#nmsom"+.@sub$+"_jin03::OnEnable";
+	donpcevent "#"+.@sub$+"_stone03::OnEnable";
+	stopnpctimer;
+	end;
+	
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	disablenpc "#nm_switch_"+.@sub$;
+	end;
+}
+que_qaru01,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru01	-1,5,5
+que_qaru02,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru02	-1,5,5
+que_qaru03,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru03	-1,5,5
+que_qaru04,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru04	-1,5,5
+que_qaru05,253,273,0	duplicate(#nm_switch_main)	#nm_switch_aru05	-1,5,5
+que_qsch01,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch01	-1,5,5
+que_qsch02,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch02	-1,5,5
+que_qsch03,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch03	-1,5,5
+que_qsch04,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch04	-1,5,5
+que_qsch05,253,273,0	duplicate(#nm_switch_main)	#nm_switch_sch05	-1,5,5
+
+-	script	#nmsommain_jin01	-1,{
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#"+.@sub$+"_stone01::OnEnable";
+	initnpctimer;
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#nmsom"+.@sub$+"_jin01::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnTimer5000:
+	set .@sub$,callfunc("F_Okolnir");
+	setarray .@xy, 226,288,227,289,228,290,229,291,230,292,231,293,232,294,233,295,234,296,235,297,228,286,229,287,230,288,231,289,232,290,233,291,234,292,235,293,236,294,237,295,230,284,231,285,232,286,233,287,234,288,235,289,236,290,237,291,238,292,239,293;
+	mapannounce "que_q"+.@sub$,"The Western magic formation is working to summon Guard of Shadow.",bc_map,"0x4d4dff";
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1],"Guard of Shadow",1752,1,"#nmsom"+.@sub$+"_jin01::OnMyMobDead";
+	end;
+
+OnTimer25000:
+OnTimer55000:
+OnTimer85000:
+OnTimer120000:
+	set .@sub$,callfunc("F_Okolnir");
+	setarray .@xy2, 226,294,227,294,228,294,229,294,230,295,231,296,231,297,231,298,231,299,230,300,229,301,228,301,227,301,226,301,225,300,224,299,224,298,224,297,224,296,225,295;
+	for (set .@i, 0; .@i < getarraysize(.@xy2); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Guard of Shadow",1752,1,"#nmsom"+.@sub$+"_jin01::OnMyMobDead";	
+	end;
+
+OnTimer180000:
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	end;
+}
+que_qaru01,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru01_jin01	-1
+que_qaru02,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru02_jin01	-1
+que_qaru03,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru03_jin01	-1
+que_qaru04,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru04_jin01	-1
+que_qaru05,229,297,0	duplicate(#nmsommain_jin01)	#nmsomaru05_jin01	-1
+que_qsch01,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch01_jin01	-1
+que_qsch02,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch02_jin01	-1
+que_qsch03,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch03_jin01	-1
+que_qsch04,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch04_jin01	-1
+que_qsch05,229,297,0	duplicate(#nmsommain_jin01)	#nmsomsch05_jin01	-1
+
+-	script	#main_stone01	-1,{
+	end;
+	
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	setarray .@xy, 227,294,229,294,231,296,231,298,230,300,228,301,226,301,224,299,224,297,225,295;
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1],"Western Magic Guardian",1752,1,"#"+.@sub$+"_stone01::OnMyMobDead";
+	end;
+
+OnReset:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#"+.@sub$+"_stone01::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	set .@sub$,callfunc("F_Okolnir");
+	if (mobcount("que_q"+.@sub$,"#"+.@sub$+"_stone01::OnMyMobDead") == 0) {
+		setd "$@gqse_"+.@sub$+"_nm",getd("$@gqse_"+.@sub$+"_nm")+1;
+		donpcevent "#nmsom"+.@sub$+"_jin01::OnDisable";
+		if (getd("$@gqse_"+.@sub$+"_nm") == 3) {
+			donpcevent "Wish Maiden#"+.@sub$+"_boss::OnFight";
+		}
+	}
+	end;
+}
+que_qaru01,2,8,0	duplicate(#main_stone01)	#aru01_stone01	844
+que_qaru02,2,8,0	duplicate(#main_stone01)	#aru02_stone01	844
+que_qaru03,2,8,0	duplicate(#main_stone01)	#aru03_stone01	844
+que_qaru04,2,8,0	duplicate(#main_stone01)	#aru04_stone01	844
+que_qaru05,2,8,0	duplicate(#main_stone01)	#aru05_stone01	844
+que_qsch01,2,8,0	duplicate(#main_stone01)	#sch01_stone01	844
+que_qsch02,2,8,0	duplicate(#main_stone01)	#sch02_stone01	844
+que_qsch03,2,8,0	duplicate(#main_stone01)	#sch03_stone01	844
+que_qsch04,2,8,0	duplicate(#main_stone01)	#sch04_stone01	844
+que_qsch05,2,8,0	duplicate(#main_stone01)	#sch05_stone01	844
+
+-	script	#nmsommain_jin02	-1,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#nmsom"+.@sub$+"_jin02::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnTimer5000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"The Eastern magic formation is working to summon Bloody Hunter.",bc_map,"0x4d4dff";
+	setarray .@xy, 263,292,264,291,265,290,266,289,267,288,268,287,269,286,270,285,271,284,272,283,265,294,266,293,267,292,268,291,269,290,270,289,271,288,272,287,273,286,274,285,267,296,268,295,269,294,270,283,271,282,272,281,273,280,274,279,275,276,276,275;
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1],"Bloody Hunter",1753,1,"#nmsom"+.@sub$+"_jin02::OnMyMobDead";
+	end;
+
+OnTimer25000:
+OnTimer55000:
+OnTimer85000:
+OnTimer120000:
+	set .@sub$,callfunc("F_Okolnir");
+	setarray .@xy2, 274,301,275,301,276,301,277,301,278,300,279,299,279,298,279,297,279,296,278,295,277,294,276,294,275,294,274,294,273,295,272,296,272,297,272,298,272,299,273,300;
+	for (set .@i, 0; .@i < getarraysize(.@xy2); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Bloody Hunter",1753,1,"#nmsom"+.@sub$+"_jin02::OnMyMobDead";	
+	end;
+
+OnTimer180000:
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	end;
+}
+que_qaru01,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru01_jin02	-1
+que_qaru02,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru02_jin02	-1
+que_qaru03,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru03_jin02	-1
+que_qaru04,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru04_jin02	-1
+que_qaru05,275,299,0	duplicate(#nmsommain_jin02)	#nmsomaru05_jin02	-1
+que_qsch01,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch01_jin02	-1
+que_qsch02,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch02_jin02	-1
+que_qsch03,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch03_jin02	-1
+que_qsch04,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch04_jin02	-1
+que_qsch05,275,299,0	duplicate(#nmsommain_jin02)	#nmsomsch05_jin02	-1
+
+-	script	#main_stone02	-1,{
+	end;
+	
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	setarray .@xy, 275,301,277,301,279,299,279,297,278,295,276,294,274,294,272,296,272,298,273,300;
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1],"Eastern Magic Guardian",1753,1,"#"+.@sub$+"_stone02::OnMyMobDead";
+	end;
+
+OnReset:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#"+.@sub$+"_stone02::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	set .@sub$,callfunc("F_Okolnir");
+	if (mobcount("que_q"+.@sub$,"#"+.@sub$+"_stone02::OnMyMobDead") == 0) {
+		setd "$@gqse_"+.@sub$+"_nm",getd("$@gqse_"+.@sub$+"_nm")+1;
+		donpcevent "#nmsom"+.@sub$+"_jin02::OnDisable";
+		if (getd("$@gqse_"+.@sub$+"_nm") == 3) {
+			donpcevent "Wish Maiden#"+.@sub$+"_boss::OnFight";
+		}
+	}
+	end;
+}
+que_qaru01,2,9,0	duplicate(#main_stone02)	#aru01_stone02	844
+que_qaru02,2,9,0	duplicate(#main_stone02)	#aru02_stone02	844
+que_qaru03,2,9,0	duplicate(#main_stone02)	#aru03_stone02	844
+que_qaru04,2,9,0	duplicate(#main_stone02)	#aru04_stone02	844
+que_qaru05,2,9,0	duplicate(#main_stone02)	#aru05_stone02	844
+que_qsch01,2,9,0	duplicate(#main_stone02)	#sch01_stone02	844
+que_qsch02,2,9,0	duplicate(#main_stone02)	#sch02_stone02	844
+que_qsch03,2,9,0	duplicate(#main_stone02)	#sch03_stone02	844
+que_qsch04,2,9,0	duplicate(#main_stone02)	#sch04_stone02	844
+que_qsch05,2,9,0	duplicate(#main_stone02)	#sch05_stone02	844
+
+-	script	#nmsommain_jin03	-1,{
+OnEnable:
+	initnpctimer;
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnTimer5000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"The Northern magic formation is working to summon Keeper of the Temple.",bc_map,"0x4d4dff";
+	setarray .@xy, 247,329,249,329,251,329,253,329,255,329,243,339,245,337,247,335,247,333,254,333,256,335,258,337,260,339;
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
+	end;
+
+OnTimer120000:
+	set .@sub$,callfunc("F_Okolnir");
+	setarray .@xy2, 251,343,252,343,255,341,255,340,254,337,253,336,250,336,249,337,248,340,248,341;
+	for (set .@i, 0; .@i < getarraysize(.@xy2); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy2[.@i],.@xy2[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
+	end;
+
+OnTimer240000:
+	set .@sub$,callfunc("F_Okolnir");
+	setarray .@xy3, 250,343,252,343,254,342,255,340,255,338,253,336,250,336,248,338,248,340,249,342;
+	for (set .@i, 0; .@i < getarraysize(.@xy3); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy3[.@i],.@xy3[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
+	end;
+
+OnTimer360000:
+	set .@sub$,callfunc("F_Okolnir");
+	setarray .@xy4, 250,343,252,343,254,342,255,340,255,338,253,336,251,336,249,337,248,339,248,341;
+	for (set .@i, 0; .@i < getarraysize(.@xy4); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy4[.@i],.@xy4[.@i+1],"Keeper Of The Temple",1933,1,"#nmsom"+.@sub$+"_jin03::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	end;
+}
+que_qaru01,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru01_jin03	-1
+que_qaru02,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru02_jin03	-1
+que_qaru03,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru03_jin03	-1
+que_qaru04,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru04_jin03	-1
+que_qaru05,251,340,0	duplicate(#nmsommain_jin03)	#nmsomaru05_jin03	-1
+que_qsch01,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch01_jin03	-1
+que_qsch02,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch02_jin03	-1
+que_qsch03,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch03_jin03	-1
+que_qsch04,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch04_jin03	-1
+que_qsch05,251,340,0	duplicate(#nmsommain_jin03)	#nmsomsch05_jin03	-1
+
+-	script	#main_stone03	-1,{
+	end;
+	
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	setarray .@xy, 251,343,252,343,255,341,255,340,254,337,253,336,250,336,249,337,248,340,248,341;
+	for (set .@i, 0; .@i < getarraysize(.@xy); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@xy[.@i],.@xy[.@i+1],"Northern Magic Guardian",1933,1,"#"+.@sub$+"_stone03::OnMyMobDead";
+	end;
+
+OnReset:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"#"+.@sub$+"_stone03::OnMyMobDead";
+	end;
+
+OnMyMobDead:
+	set .@sub$,callfunc("F_Okolnir");
+	if (mobcount("que_q"+.@sub$,"#"+.@sub$+"_stone03::OnMyMobDead") == 0) {
+		setd "$@gqse_"+.@sub$+"_nm",getd("$@gqse_"+.@sub$+"_nm")+1;
+		donpcevent "#nmsom"+.@sub$+"_jin03::OnDisable";
+
+		if (getd("$@gqse_"+.@sub$+"_nm") == 3) {
+			donpcevent "Wish Maiden#"+.@sub$+"_boss::OnFight";
+		}
+	}
+	end;
+}
+que_qaru01,2,10,0	duplicate(#main_stone03)	#aru01_stone03	844
+que_qaru02,2,10,0	duplicate(#main_stone03)	#aru02_stone03	844
+que_qaru03,2,10,0	duplicate(#main_stone03)	#aru03_stone03	844
+que_qaru04,2,10,0	duplicate(#main_stone03)	#aru04_stone03	844
+que_qaru05,2,10,0	duplicate(#main_stone03)	#aru05_stone03	844
+que_qsch01,2,10,0	duplicate(#main_stone03)	#sch01_stone03	844
+que_qsch02,2,10,0	duplicate(#main_stone03)	#sch02_stone03	844
+que_qsch03,2,10,0	duplicate(#main_stone03)	#sch03_stone03	844
+que_qsch04,2,10,0	duplicate(#main_stone03)	#sch04_stone03	844
+que_qsch05,2,10,0	duplicate(#main_stone03)	#sch05_stone03	844
+
+-	script	Guard of Shadow#main_all	-1,{
+	end;
+	
+OnTouch_:
+	set .@sub$,callfunc("F_Okolnir");
+	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
+	disablenpc "Guard of Shadow#"+.@sub$+"_0"+.@in;
+	switch (.@in) {
+		case 1: setarray .@n, 234,284,235,285,236,286; break;
+		case 2: setarray .@n, 223,289,224,290,225,291; break;
+		case 3: setarray .@n, 235,295,236,296,237,297; break;
+		case 4: setarray .@n, 224,302,225,303,226,304; break;
+	}
+	for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@n[.@i],.@n[.@i+1],"Guard of Shadow",1752,1,"Guard of Shadow#"+.@sub$+"_0"+.@in+"::OnMyMobDead";
+	end;
+	
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
+	killmonster "que_q"+.@sub$,"Guard of Shadow#"+.@sub$+"_0"+.@in+"::OnMyMobDead";
+	disablenpc "Guard of Shadow#"+.@sub$+"_0"+.@in;
+	end;
+
+OnMyMobDead:
+	end;
+	
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	for (set .@i, 1; .@i <= 4; set .@i, .@i + 1) 
+		disablenpc "Guard of Shadow#"+.@sub$+"_0"+.@i;
+	end;
+}
+que_qaru01,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru01_01	1752,4,4
+que_qaru01,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru01_02	1752,4,4
+que_qaru01,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru01_03	1752,4,4
+que_qaru01,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru01_04	1752,4,4
+que_qaru02,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru02_01	1752,4,4
+que_qaru02,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru02_02	1752,4,4
+que_qaru02,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru02_03	1752,4,4
+que_qaru02,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru02_04	1752,4,4
+que_qaru03,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru03_01	1752,4,4
+que_qaru03,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru03_02	1752,4,4
+que_qaru03,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru03_03	1752,4,4
+que_qaru03,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru03_04	1752,4,4
+que_qaru04,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru04_01	1752,4,4
+que_qaru04,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru04_02	1752,4,4
+que_qaru04,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru04_03	1752,4,4
+que_qaru04,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru04_04	1752,4,4
+que_qaru05,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru05_01	1752,4,4
+que_qaru05,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru05_02	1752,4,4
+que_qaru05,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru05_03	1752,4,4
+que_qaru05,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#aru05_04	1752,4,4
+que_qsch01,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch01_01	1752,4,4
+que_qsch01,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch01_02	1752,4,4
+que_qsch01,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch01_03	1752,4,4
+que_qsch01,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch01_04	1752,4,4
+que_qsch02,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch02_01	1752,4,4
+que_qsch02,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch02_02	1752,4,4
+que_qsch02,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch02_03	1752,4,4
+que_qsch02,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch02_04	1752,4,4
+que_qsch03,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch03_01	1752,4,4
+que_qsch03,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch03_02	1752,4,4
+que_qsch03,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch03_03	1752,4,4
+que_qsch03,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch03_04	1752,4,4
+que_qsch04,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch04_01	1752,4,4
+que_qsch04,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch04_02	1752,4,4
+que_qsch04,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch04_03	1752,4,4
+que_qsch04,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch04_04	1752,4,4
+que_qsch05,235,285,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_01	1752,4,4
+que_qsch05,224,290,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_02	1752,4,4
+que_qsch05,236,296,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_03	1752,4,4
+que_qsch05,225,303,5	duplicate(Guard of Shadow#main_all)	Guard of Shadow#sch05_04	1752,4,4
+
+-	script	Bloody Hunter#main_all	-1,{
+	end;
+	
+OnTouch_:
+	set .@sub$,callfunc("F_Okolnir");
+	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
+	disablenpc "Bloody Hunter#"+.@sub$+"_ac0"+.@in;
+	switch (.@in) {
+		case 1: setarray .@n, 265,297,266,296,267,295;
+		case 2: setarray .@n, 270,284,271,283,272,282;
+		case 3: setarray .@n, 269,308,270,307,271,306;
+		case 4: setarray .@n, 278,301,279,300,280,299;
+	}
+	for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@n[.@i],.@n[.@i+1],"Bloody Hunter",1753,1,"Bloody Hunter#"+.@sub$+"_ac0"+.@in+"::OnMyMobDead";
+	end;
+	
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
+	killmonster "que_q"+.@sub$,"Bloody Hunter#"+.@sub$+"_ac0"+.@in+"::OnMyMobDead";
+	disablenpc "Bloody Hunter#"+.@sub$+"_ac0"+.@in;
+	end;
+
+OnMyMobDead:
+	end;
+	
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	for (set .@i, 1; .@i <= 4; set .@i, .@i + 1) 
+		disablenpc "Bloody Hunter#"+.@sub$+"_ac0"+.@i;
+	end;
+}
+que_qaru01,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru01_ac01	1753,4,4
+que_qaru01,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru01_ac02	1753,4,4,
+que_qaru01,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru01_ac03	1753,4,4,
+que_qaru01,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru01_ac04	1753,4,4,
+que_qaru02,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru02_ac01	1753,4,4,
+que_qaru02,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru02_ac02	1753,4,4
+que_qaru02,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru02_ac03	1753,4,4
+que_qaru02,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru02_ac04	1753,4,4
+que_qaru03,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru03_ac01	1753,4,4
+que_qaru03,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru03_ac02	1753,4,4
+que_qaru03,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru03_ac03	1753,4,4
+que_qaru03,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru03_ac04	1753,4,4
+que_qaru04,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru04_ac01	1753,4,4
+que_qaru04,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru04_ac02	1753,4,4
+que_qaru04,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru04_ac03	1753,4,4
+que_qaru04,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru04_ac04	1753,4,4
+que_qaru05,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru05_ac01	1753,4,4
+que_qaru05,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru05_ac02	1753,4,4
+que_qaru05,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru05_ac03	1753,4,4
+que_qaru05,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#aru05_ac04	1753,4,4
+que_qsch01,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch01_ac01	1753,4,4
+que_qsch01,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch01_ac02	1753,4,4
+que_qsch01,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch01_ac03	1753,4,4
+que_qsch01,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch01_ac04	1753,4,4
+que_qsch02,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch02_ac01	1753,4,4
+que_qsch02,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch02_ac02	1753,4,4
+que_qsch02,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch02_ac03	1753,4,4
+que_qsch02,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch02_ac04	1753,4,4
+que_qsch03,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch03_ac01	1753,4,4
+que_qsch03,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch03_ac02	1753,4,4
+que_qsch03,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch03_ac03	1753,4,4
+que_qsch03,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch03_ac04	1753,4,4
+que_qsch04,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch04_ac01	1753,4,4
+que_qsch04,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch04_ac02	1753,4,4
+que_qsch04,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch04_ac03	1753,4,4
+que_qsch04,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch04_ac04	1753,4,4
+que_qsch05,266,296,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac01	1753,4,4
+que_qsch05,271,283,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac02	1753,4,4
+que_qsch05,270,307,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac03	1753,4,4
+que_qsch05,279,300,3	duplicate(Bloody Hunter#main_all)	Bloody Hunter#sch05_ac04	1753,4,4
+
+-	script	Temple Keeper#main_all	-1,{
+	end;
+	
+OnTouch_:
+	set .@sub$,callfunc("F_Okolnir");
+	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
+	disablenpc "Temple Keeper#"+.@sub$+"_ac0"+.@in;
+	switch (.@in) {
+		case 1: setarray .@n, 246,330,247,330,248,330; break;
+		case 2: setarray .@n, 254,330,255,330,256,330; break;
+	}
+	for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
+		monster "que_q"+.@sub$,.@n[.@i],.@n[.@i+1],"Keeper Of The Temple",1933,1,"Temple Keeper#"+.@sub$+"_ac0"+.@in+"::OnMyMobDead";
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	set .@in, charat(strnpcinfo(2),getstrlen(strnpcinfo(2))-1);
+	killmonster "que_q"+.@sub$,"Temple Keeper#"+.@sub$+"_ac0"+.@in+"::OnMyMobDead";
+	disablenpc "Temple Keeper#"+.@sub$+"_ac0"+.@in;
+	end;
+
+OnMyMobDead:
+	end;
+
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	for (set .@i, 1; .@i <= 2; set .@i, .@i + 1)
+		disablenpc "Temple Keeper#"+.@sub$+"_ac0"+.@i;
+	end;
+}
+que_qaru01,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru01_ac01	1933,4,4
+que_qaru01,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru01_ac02	1933,4,4
+que_qaru02,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru02_ac01	1933,4,4
+que_qaru02,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru02_ac02	1933,4,4
+que_qaru03,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru03_ac01	1933,4,4
+que_qaru03,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru03_ac02	1933,4,4
+que_qaru04,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru04_ac01	1933,4,4
+que_qaru04,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru04_ac02	1933,4,4
+que_qaru05,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#aru05_ac01	1933,4,4
+que_qaru05,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#aru05_ac02	1933,4,4
+que_qsch01,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch01_ac01	1933,4,4
+que_qsch01,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch01_ac02	1933,4,4
+que_qsch02,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch02_ac01	1933,4,4
+que_qsch02,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch02_ac02	1933,4,4
+que_qsch03,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch03_ac01	1933,4,4
+que_qsch03,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch03_ac02	1933,4,4
+que_qsch04,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch04_ac01	1933,4,4
+que_qsch04,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch04_ac02	1933,4,4
+que_qsch05,247,330,5	duplicate(Temple Keeper#main_all)	Temple Keeper#sch05_ac01	1933,4,4
+que_qsch05,255,330,3	duplicate(Temple Keeper#main_all)	Temple Keeper#sch05_ac02	1933,4,4
+
+-	script	Wish Maiden#main_boss	-1,{
+	end;
+	
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	killmonster "que_q"+.@sub$,"Wish Maiden#"+.@sub$+"_boss::OnMyMobDead";
+	hideonnpc "Wish Maiden#"+.@sub$+"_boss";
+	stopnpctimer;
+	end;
+
+OnFight:
+	initnpctimer;
+	end;
+
+OnTimer1000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Wish Maiden : You guys reached here.. Are your guardians dead...?",bc_map,"0x00ff00";
+	end;
+
+OnTimer4000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Wish Maiden : I sincerely welcome all your best efforts!",bc_map,"0x00ff00";
+	end;
+
+OnTimer5000:
+	set .@sub$,callfunc("F_Okolnir");
+	specialeffect EF_ICECRASH;
+	hideonnpc "Wish Maiden#"+.@sub$+"_boss";
+	specialeffect EF_SPHERE;
+	monster "que_q"+.@sub$,252,340,"Wish Maiden",1931,1,"Wish Maiden#"+.@sub$+"_boss::OnMyMobDead";
+	stopnpctimer;
+	end;
+
+OnMyMobDead:
+	set .@sub$,callfunc("F_Okolnir");
+	if (!mobcount("que_q"+.@sub$,"Wish Maiden#"+.@sub$+"_boss::OnMyMobDead")) {
+		donpcevent "#okolnir_"+.@sub$+"::OnStop";
+		donpcevent "Wish Maiden#"+.@sub$+"_gift::OnEnable";
+		mapannounce "que_q"+.@sub$,"Wish Maiden : ..Good, you deserve the Goddess' shine.",bc_map,"0x00ff00";
+	}
+	end;
+	
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+		hideonnpc "Wish Maiden#"+.@sub$+"_boss";	
+	end;
+}
+que_qaru01,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru01_boss	1931
+que_qaru02,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru02_boss	1931
+que_qaru03,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru03_boss	1931
+que_qaru04,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru04_boss	1931
+que_qaru05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#aru05_boss	1931
+que_qsch01,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch01_boss	1931
+que_qsch02,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch02_boss	1931
+que_qsch03,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch03_boss	1931
+que_qsch04,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch04_boss	1931
+que_qsch05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch05_boss	1931
+
+-	script	Wish Maiden#main_gift	-1,{
+	set .@sub$,callfunc("F_Okolnir");
+	set .@t$, ((compare(strnpcinfo(4),"aru"))?"arug_cas0":"schg_cas0")+(charat(strnpcinfo(4),getstrlen(strnpcinfo(4))-1));
+	set .@GID, GetCastleData(.@t$,1);
+	if (getcharid(2) == .@GID) {
+		if (strcharinfo(0) == getguildmaster(.@GID)) {
+			if (compare(.@sub$,"aru")) {
+				setarray .@n, 7835,1,7836,1,7837,1,7838,1,2513,1,7291,10,7293,10,7063,100,985,20;
+				set .@rwd, 2541; //Asprika
+			} else {
+				setarray .@n, 7830,1,7831,1,7832,1,7833,1,7834,1,2357,1,7510,100,969,10,985,20;
+				set .@rwd, 2383; //Brynhild
+			}
+			for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2) {
+				if (countitem(.@n[.@i]) >= .@n[.@i+1])
+					set .@check, .@check + 1;
+			}
+			if (.@check >= 9) {
+				cutin "wish_maiden12",1;
+				mes "[Wish Maiden]";
+				mes "As I declared, I will give the Goddess' shine to you.";
+				mes "You have the requirements to carry it...";
+				next;
+				mes "[Wish Maiden]";
+				mes "You will be granted the power of the great Valkyrie...";
+				next;
+				mes "[Wish Maiden]";
+				mes "I will give you some things for fun.";
+				mes "All of you enjoy them together...";
+				next;
+				mes "[Wish Maiden]";
+				mes "Go to Rachel and Juno to meet the Ravies sisters.";
+				next;
+				cutin "wish_maiden32",1;
+				mes "[Wish Maiden]";
+				mes "I will open the gate for you to come back here.";
+				mes "...Okolnir won't last forever...";
+				for (set .@i, 0; .@i < getarraysize(.@n); set .@i, .@i + 2)
+					delitem .@n[.@i],.@n[.@i+1];
+				getitem .@rwd,1;
+				getitem 7840,1; //Valkyrie_Gift
+				announce "["+ strcharinfo(0) +"], of guild ["+ GetGuildName(.@GID) +"] has brought a "+getitemname(.@rwd)+" into this world.",bc_all,"0x70dbdb";
+				close2;
+				cutin "wish_maiden11",255;
+				disablenpc "Wish Maiden#"+.@sub$+"_gift";
+				enablenpc "#to_agit_"+.@sub$+"_gate";
+				end;
+			}
+			else {
+				cutin "wish_maiden13",1;
+				mes "[Wish Maiden]";
+				mes "As I declared, you are worthy of holding the "+getitemname(.@rwd)+".";
+				mes "However, you do not have the requirements on you...";
+				next;
+				mes "[Wish Maiden]";
+				mes "...Did you forget something?";
+				close2;
+			}
+		}
+		else {
+			cutin "wish_maiden12",1;
+			mes "[Wish Maiden]";
+			mes "All of you worked together as a team...";
+			mes "Humans are strong when they are united, but are easily swayed by lust.";
+			next;
+			mes "[Wish Maiden]";
+			mes "Humans are imperfect, so their chief god is there for them when they need help.";
+			mes "....";
+			next;
+			mes "[Wish Maiden]";
+			mes "Always be real.";
+			mes "Do not regret your actions...";
+			close2;
+		}
+	}
+	cutin "wish_maiden11",255;
+	end;
+
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	enablenpc "Wish Maiden#"+.@sub$+"_gift";
+	initnpctimer;
+	end;
+
+OnDisable:
+	set .@sub$,callfunc("F_Okolnir");
+	disablenpc "Wish Maiden#"+.@sub$+"_gift";
+	stopnpctimer;
+	end;
+
+OnTimer280000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapannounce "que_q"+.@sub$,"Wish Maiden : ... Okolnir will soon disappear... I will send you back to where you originally came from.",bc_map,"0x00ff00";
+	end;
+
+OnTimer290000:
+	set .@sub$,callfunc("F_Okolnir");
+	mapwarp "que_q"+.@sub$,.@t$,157,369;
+	donpcevent "#to_agit_"+.@sub$+"_gate::OnDisable";
+	end;
+
+OnTimer300000:
+	set .@sub$,callfunc("F_Okolnir");
+	donpcevent "#okolnir_"+.@sub$+"::OnDisable";
+	setd "$@gqse_"+.@sub$+"_miro",0;
+	setd "$@gqse_"+.@sub$+"_pcc",0;
+	setd "$@gqse_"+.@sub$+"_gd",0;
+	setd "$@gqse_"+.@sub$+"_nm",0;
+	setd "$siz_"+.@sub$+"_on",2;
+	donpcevent "#okolnir_"+.@sub$+"_time01::OnEnable";
+	stopnpctimer;
+	end;
+	
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+		disablenpc "Wish Maiden#"+.@sub$+"_gift";
+	end;
+}
+que_qaru01,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru01_gift	403
+que_qaru02,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru02_gift	403
+que_qaru03,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru03_gift	403
+que_qaru04,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru04_gift	403
+que_qaru05,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#aru05_gift	403
+que_qsch01,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch01_gift	403
+que_qsch02,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch02_gift	403
+que_qsch03,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch03_gift	403
+que_qsch04,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch04_gift	403
+que_qsch05,252,340,3	duplicate(Wish Maiden#main_gift)	Wish Maiden#sch05_gift	403
+
+-	script	#to_agit_main_gate	-1,{
+	end;
+	
+OnTouch_:
+	set .@t$, ((compare(strnpcinfo(4),"aru"))?"arug_cas0":"schg_cas0")+(charat(strnpcinfo(4),getstrlen(strnpcinfo(4))-1));
+	warp .@t$,157,369;
+	end;
+	
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+		disablenpc "#to_agit_"+.@sub$+"_gate";
+	end;
+}
+que_qaru01,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru01_gate	45,1,1
+que_qaru02,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru02_gate	45,1,1
+que_qaru03,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru03_gate	45,1,1
+que_qaru04,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru04_gate	45,1,1
+que_qaru05,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_aru05_gate	45,1,1
+que_qsch01,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch01_gate	45,1,1
+que_qsch02,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch02_gate	45,1,1
+que_qsch03,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch03_gate	45,1,1
+que_qsch04,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch04_gate	45,1,1
+que_qsch05,252,339,0	duplicate(#to_agit_main_gate)	#to_agit_sch05_gate	45,1,1
+
+-	script	#okolnir_main_time01	-1,{
+	end;
+
+OnEnable:
+	set .@sub$,callfunc("F_Okolnir");
+	setd "$gqse_"+.@sub$+"_time",0;
+	initnpctimer;
+	end;
+
+OnReset:
+	set .@sub$,callfunc("F_Okolnir");
+	setd "$siz_"+.@sub$+"_on",0;
+	setd "$gqse_"+.@sub$+"_time",0;
+	stopnpctimer;
+	end;
+
+OnTimer3600000:
+	set .@sub$,callfunc("F_Okolnir");
+	if (getd("$gqse_"+.@sub$+"_time") < 12) {
+		setd "$gqse_"+.@sub$+"_time",getd("$gqse_"+.@sub$+"_time")+1;
+		initnpctimer;
+	}
+	else if (getd("$gqse_"+.@sub$+"_time") == 12) {
+		setd "$siz_"+.@sub$+"_on",0;
+		setd "$gqse_"+.@sub$+"_time",0;
+		enablenpc "Wish Maiden#gq_"+.@sub$;
+		enablenpc "Piamette#"+.@sub$;
+		hideoffnpc "Wish Maiden#"+.@sub$+"_boss";
+		stopnpctimer;
+	}
+	end;
+	
+OnInit:
+	set .@sub$,callfunc("F_Okolnir");
+	if (getd("$siz_"+.@sub$+"_on") == 2) initnpctimer;
+	end;
+}
+que_qaru01,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru01_time01	844
+que_qaru02,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru02_time01	844
+que_qaru03,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru03_time01	844
+que_qaru04,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru04_time01	844
+que_qaru05,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_aru05_time01	844
+que_qsch01,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch01_time01	844
+que_qsch02,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch02_time01	844
+que_qsch03,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch03_time01	844
+que_qsch04,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch04_time01	844
+que_qsch05,1,6,0	duplicate(#okolnir_main_time01)	#okolnir_sch05_time01	844
+
+que_qaru01,116,313	monster	Garden Keeper	1932,1,180000
+que_qaru01,120,285	monster	Garden Keeper	1932,1,180000
+que_qaru01,117,236	monster	Garden Keeper	1932,1,180000
+que_qaru01,103,223	monster	Garden Keeper	1932,1,180000
+que_qaru01,85,204	monster	Garden Keeper	1932,1,180000
+que_qaru01,79,186	monster	Garden Keeper	1932,1,180000
+que_qaru01,73,167	monster	Garden Keeper	1932,1,180000
+que_qaru01,68,150	monster	Garden Keeper	1932,1,180000
+que_qaru01,71,128	monster	Garden Keeper	1932,1,180000
+que_qaru01,69,118	monster	Garden Keeper	1932,1,180000
+que_qaru01,117,78	monster	Garden Keeper	1932,1,180000
+que_qaru01,110,79	monster	Garden Keeper	1932,1,180000
+que_qaru01,141,80	monster	Garden Keeper	1932,1,180000
+que_qaru01,158,84	monster	Garden Keeper	1932,1,180000
+que_qaru01,193,104	monster	Garden Keeper	1932,1,180000
+que_qaru01,119,269	monster	Garden Keeper	1932,1,180000
+que_qaru01,155,77	monster	Garden Keeper	1932,1,180000
+que_qaru01,110,317	monster	Garden Watcher	1933,1,600000
+que_qaru01,115,295	monster	Garden Watcher	1933,1,1200000
+que_qaru01,116,256	monster	Garden Watcher	1933,1,600000
+que_qaru01,113,242	monster	Garden Watcher	1933,1,1200000
+que_qaru01,99,223	monster	Garden Watcher	1933,1,600000
+que_qaru01,94,216	monster	Garden Watcher	1933,1,1200000
+que_qaru01,77,198	monster	Garden Watcher	1933,1,600000
+que_qaru01,70,174	monster	Garden Watcher	1933,1,1200000
+que_qaru01,72,147	monster	Garden Watcher	1933,1,600000
+que_qaru01,64,134	monster	Garden Watcher	1933,1,1200000
+que_qaru01,77,107	monster	Garden Watcher	1933,1,600000
+que_qaru01,84,88	monster	Garden Watcher	1933,1,1200000
+que_qaru01,98,82	monster	Garden Watcher	1933,1,600000
+que_qaru01,129,79	monster	Garden Watcher	1933,1,1200000
+que_qaru01,91,124	monster	Garden Watcher	1933,1,600000
+que_qaru01,173,95	monster	Garden Watcher	1933,1,1200000
+que_qaru01,179,127	monster	Garden Watcher	1933,1,600000
+que_qaru01,195,120	monster	Garden Watcher	1933,1,1200000
+que_qaru01,178,159	monster	Garden Watcher	1933,1,600000
+que_qaru01,88,145	monster	Garden Watcher	1933,1,1200000
+que_qaru01,94,157	monster	Garden Watcher	1933,1,600000
+que_qaru01,95,177	monster	Garden Watcher	1933,1,1200000
+que_qaru01,129,196	monster	Garden Watcher	1933,1,600000
+que_qaru01,154,196	monster	Garden Watcher	1933,1,1200000
+que_qaru01,170,187	monster	Garden Watcher	1933,1,600000
+que_qaru01,194,180	monster	Garden Watcher	1933,1,1200000
+que_qaru01,214,181	monster	Garden Watcher	1933,1,600000
+que_qaru01,243,199	monster	Garden Watcher	1933,1,1200000
+que_qaru02,116,313	monster	Garden Keeper	1932,1,180000
+que_qaru02,120,285	monster	Garden Keeper	1932,1,180000
+que_qaru02,117,236	monster	Garden Keeper	1932,1,180000
+que_qaru02,103,223	monster	Garden Keeper	1932,1,180000
+que_qaru02,85,204	monster	Garden Keeper	1932,1,180000
+que_qaru02,79,186	monster	Garden Keeper	1932,1,180000
+que_qaru02,73,167	monster	Garden Keeper	1932,1,180000
+que_qaru02,68,150	monster	Garden Keeper	1932,1,180000
+que_qaru02,71,128	monster	Garden Keeper	1932,1,180000
+que_qaru02,69,118	monster	Garden Keeper	1932,1,180000
+que_qaru02,117,78	monster	Garden Keeper	1932,1,180000
+que_qaru02,110,79	monster	Garden Keeper	1932,1,180000
+que_qaru02,141,80	monster	Garden Keeper	1932,1,180000
+que_qaru02,158,84	monster	Garden Keeper	1932,1,180000
+que_qaru02,193,104	monster	Garden Keeper	1932,1,180000
+que_qaru02,119,269	monster	Garden Keeper	1932,1,180000
+que_qaru02,155,77	monster	Garden Keeper	1932,1,180000
+que_qaru02,110,317	monster	Garden Watcher	1933,1,600000
+que_qaru02,115,295	monster	Garden Watcher	1933,1,1200000
+que_qaru02,116,256	monster	Garden Watcher	1933,1,600000
+que_qaru02,113,242	monster	Garden Watcher	1933,1,1200000
+que_qaru02,99,223	monster	Garden Watcher	1933,1,600000
+que_qaru02,94,216	monster	Garden Watcher	1933,1,1200000
+que_qaru02,77,198	monster	Garden Watcher	1933,1,600000
+que_qaru02,70,174	monster	Garden Watcher	1933,1,1200000
+que_qaru02,72,147	monster	Garden Watcher	1933,1,600000
+que_qaru02,64,134	monster	Garden Watcher	1933,1,1200000
+que_qaru02,77,107	monster	Garden Watcher	1933,1,600000
+que_qaru02,84,88	monster	Garden Watcher	1933,1,1200000
+que_qaru02,98,82	monster	Garden Watcher	1933,1,600000
+que_qaru02,129,79	monster	Garden Watcher	1933,1,1200000
+que_qaru02,91,124	monster	Garden Watcher	1933,1,600000
+que_qaru02,173,95	monster	Garden Watcher	1933,1,1200000
+que_qaru02,179,127	monster	Garden Watcher	1933,1,600000
+que_qaru02,195,120	monster	Garden Watcher	1933,1,1200000
+que_qaru02,178,159	monster	Garden Watcher	1933,1,600000
+que_qaru02,88,145	monster	Garden Watcher	1933,1,1200000
+que_qaru02,94,157	monster	Garden Watcher	1933,1,600000
+que_qaru02,95,177	monster	Garden Watcher	1933,1,1200000
+que_qaru02,129,196	monster	Garden Watcher	1933,1,600000
+que_qaru02,154,196	monster	Garden Watcher	1933,1,1200000
+que_qaru02,170,187	monster	Garden Watcher	1933,1,600000
+que_qaru02,194,180	monster	Garden Watcher	1933,1,1200000
+que_qaru02,214,181	monster	Garden Watcher	1933,1,600000
+que_qaru02,243,199	monster	Garden Watcher	1933,1,1200000
+que_qaru03,116,313	monster	Garden Keeper	1932,1,180000
+que_qaru03,120,285	monster	Garden Keeper	1932,1,180000
+que_qaru03,117,236	monster	Garden Keeper	1932,1,180000
+que_qaru03,103,223	monster	Garden Keeper	1932,1,180000
+que_qaru03,85,204	monster	Garden Keeper	1932,1,180000
+que_qaru03,79,186	monster	Garden Keeper	1932,1,180000
+que_qaru03,73,167	monster	Garden Keeper	1932,1,180000
+que_qaru03,68,150	monster	Garden Keeper	1932,1,180000
+que_qaru03,71,128	monster	Garden Keeper	1932,1,180000
+que_qaru03,69,118	monster	Garden Keeper	1932,1,180000
+que_qaru03,117,78	monster	Garden Keeper	1932,1,180000
+que_qaru03,110,79	monster	Garden Keeper	1932,1,180000
+que_qaru03,141,80	monster	Garden Keeper	1932,1,180000
+que_qaru03,158,84	monster	Garden Keeper	1932,1,180000
+que_qaru03,193,104	monster	Garden Keeper	1932,1,180000
+que_qaru03,119,269	monster	Garden Keeper	1932,1,180000
+que_qaru03,155,77	monster	Garden Keeper	1932,1,180000
+que_qaru03,110,317	monster	Garden Watcher	1933,1,600000
+que_qaru03,115,295	monster	Garden Watcher	1933,1,1200000
+que_qaru03,116,256	monster	Garden Watcher	1933,1,600000
+que_qaru03,113,242	monster	Garden Watcher	1933,1,1200000
+que_qaru03,99,223	monster	Garden Watcher	1933,1,600000
+que_qaru03,94,216	monster	Garden Watcher	1933,1,1200000
+que_qaru03,77,198	monster	Garden Watcher	1933,1,600000
+que_qaru03,70,174	monster	Garden Watcher	1933,1,1200000
+que_qaru03,72,147	monster	Garden Watcher	1933,1,600000
+que_qaru03,64,134	monster	Garden Watcher	1933,1,1200000
+que_qaru03,77,107	monster	Garden Watcher	1933,1,600000
+que_qaru03,84,88	monster	Garden Watcher	1933,1,1200000
+que_qaru03,98,82	monster	Garden Watcher	1933,1,600000
+que_qaru03,129,79	monster	Garden Watcher	1933,1,1200000
+que_qaru03,91,124	monster	Garden Watcher	1933,1,600000
+que_qaru03,173,95	monster	Garden Watcher	1933,1,1200000
+que_qaru03,179,127	monster	Garden Watcher	1933,1,600000
+que_qaru03,195,120	monster	Garden Watcher	1933,1,1200000
+que_qaru03,178,159	monster	Garden Watcher	1933,1,600000
+que_qaru03,88,145	monster	Garden Watcher	1933,1,1200000
+que_qaru03,94,157	monster	Garden Watcher	1933,1,600000
+que_qaru03,95,177	monster	Garden Watcher	1933,1,1200000
+que_qaru03,129,196	monster	Garden Watcher	1933,1,600000
+que_qaru03,154,196	monster	Garden Watcher	1933,1,1200000
+que_qaru03,170,187	monster	Garden Watcher	1933,1,600000
+que_qaru03,194,180	monster	Garden Watcher	1933,1,1200000
+que_qaru03,214,181	monster	Garden Watcher	1933,1,600000
+que_qaru03,243,199	monster	Garden Watcher	1933,1,1200000
+que_qaru04,116,313	monster	Garden Keeper	1932,1,180000
+que_qaru04,120,285	monster	Garden Keeper	1932,1,180000
+que_qaru04,117,236	monster	Garden Keeper	1932,1,180000
+que_qaru04,103,223	monster	Garden Keeper	1932,1,180000
+que_qaru04,85,204	monster	Garden Keeper	1932,1,180000
+que_qaru04,79,186	monster	Garden Keeper	1932,1,180000
+que_qaru04,73,167	monster	Garden Keeper	1932,1,180000
+que_qaru04,68,150	monster	Garden Keeper	1932,1,180000
+que_qaru04,71,128	monster	Garden Keeper	1932,1,180000
+que_qaru04,69,118	monster	Garden Keeper	1932,1,180000
+que_qaru04,117,78	monster	Garden Keeper	1932,1,180000
+que_qaru04,110,79	monster	Garden Keeper	1932,1,180000
+que_qaru04,141,80	monster	Garden Keeper	1932,1,180000
+que_qaru04,158,84	monster	Garden Keeper	1932,1,180000
+que_qaru04,193,104	monster	Garden Keeper	1932,1,180000
+que_qaru04,119,269	monster	Garden Keeper	1932,1,180000
+que_qaru04,155,77	monster	Garden Keeper	1932,1,180000
+que_qaru04,110,317	monster	Garden Watcher	1933,1,600000
+que_qaru04,115,295	monster	Garden Watcher	1933,1,1200000
+que_qaru04,116,256	monster	Garden Watcher	1933,1,600000
+que_qaru04,113,242	monster	Garden Watcher	1933,1,1200000
+que_qaru04,99,223	monster	Garden Watcher	1933,1,600000
+que_qaru04,94,216	monster	Garden Watcher	1933,1,1200000
+que_qaru04,77,198	monster	Garden Watcher	1933,1,600000
+que_qaru04,70,174	monster	Garden Watcher	1933,1,1200000
+que_qaru04,72,147	monster	Garden Watcher	1933,1,600000
+que_qaru04,64,134	monster	Garden Watcher	1933,1,1200000
+que_qaru04,77,107	monster	Garden Watcher	1933,1,600000
+que_qaru04,84,88	monster	Garden Watcher	1933,1,1200000
+que_qaru04,98,82	monster	Garden Watcher	1933,1,600000
+que_qaru04,129,79	monster	Garden Watcher	1933,1,1200000
+que_qaru04,91,124	monster	Garden Watcher	1933,1,600000
+que_qaru04,173,95	monster	Garden Watcher	1933,1,1200000
+que_qaru04,179,127	monster	Garden Watcher	1933,1,600000
+que_qaru04,195,120	monster	Garden Watcher	1933,1,1200000
+que_qaru04,178,159	monster	Garden Watcher	1933,1,600000
+que_qaru04,88,145	monster	Garden Watcher	1933,1,1200000
+que_qaru04,94,157	monster	Garden Watcher	1933,1,600000
+que_qaru04,95,177	monster	Garden Watcher	1933,1,1200000
+que_qaru04,129,196	monster	Garden Watcher	1933,1,600000
+que_qaru04,154,196	monster	Garden Watcher	1933,1,1200000
+que_qaru04,170,187	monster	Garden Watcher	1933,1,600000
+que_qaru04,194,180	monster	Garden Watcher	1933,1,1200000
+que_qaru04,214,181	monster	Garden Watcher	1933,1,600000
+que_qaru04,243,199	monster	Garden Watcher	1933,1,1200000
+que_qaru05,116,313	monster	Garden Keeper	1932,1,180000
+que_qaru05,120,285	monster	Garden Keeper	1932,1,180000
+que_qaru05,117,236	monster	Garden Keeper	1932,1,180000
+que_qaru05,103,223	monster	Garden Keeper	1932,1,180000
+que_qaru05,85,204	monster	Garden Keeper	1932,1,180000
+que_qaru05,79,186	monster	Garden Keeper	1932,1,180000
+que_qaru05,73,167	monster	Garden Keeper	1932,1,180000
+que_qaru05,68,150	monster	Garden Keeper	1932,1,180000
+que_qaru05,71,128	monster	Garden Keeper	1932,1,180000
+que_qaru05,69,118	monster	Garden Keeper	1932,1,180000
+que_qaru05,117,78	monster	Garden Keeper	1932,1,180000
+que_qaru05,110,79	monster	Garden Keeper	1932,1,180000
+que_qaru05,141,80	monster	Garden Keeper	1932,1,180000
+que_qaru05,158,84	monster	Garden Keeper	1932,1,180000
+que_qaru05,193,104	monster	Garden Keeper	1932,1,180000
+que_qaru05,119,269	monster	Garden Keeper	1932,1,180000
+que_qaru05,155,77	monster	Garden Keeper	1932,1,180000
+que_qaru05,110,317	monster	Garden Watcher	1933,1,600000
+que_qaru05,115,295	monster	Garden Watcher	1933,1,1200000
+que_qaru05,116,256	monster	Garden Watcher	1933,1,600000
+que_qaru05,113,242	monster	Garden Watcher	1933,1,1200000
+que_qaru05,99,223	monster	Garden Watcher	1933,1,600000
+que_qaru05,94,216	monster	Garden Watcher	1933,1,1200000
+que_qaru05,77,198	monster	Garden Watcher	1933,1,600000
+que_qaru05,70,174	monster	Garden Watcher	1933,1,1200000
+que_qaru05,72,147	monster	Garden Watcher	1933,1,600000
+que_qaru05,64,134	monster	Garden Watcher	1933,1,1200000
+que_qaru05,77,107	monster	Garden Watcher	1933,1,600000
+que_qaru05,84,88	monster	Garden Watcher	1933,1,1200000
+que_qaru05,98,82	monster	Garden Watcher	1933,1,600000
+que_qaru05,129,79	monster	Garden Watcher	1933,1,1200000
+que_qaru05,91,124	monster	Garden Watcher	1933,1,600000
+que_qaru05,173,95	monster	Garden Watcher	1933,1,1200000
+que_qaru05,179,127	monster	Garden Watcher	1933,1,600000
+que_qaru05,195,120	monster	Garden Watcher	1933,1,1200000
+que_qaru05,178,159	monster	Garden Watcher	1933,1,600000
+que_qaru05,88,145	monster	Garden Watcher	1933,1,1200000
+que_qaru05,94,157	monster	Garden Watcher	1933,1,600000
+que_qaru05,95,177	monster	Garden Watcher	1933,1,1200000
+que_qaru05,129,196	monster	Garden Watcher	1933,1,600000
+que_qaru05,154,196	monster	Garden Watcher	1933,1,1200000
+que_qaru05,170,187	monster	Garden Watcher	1933,1,600000
+que_qaru05,194,180	monster	Garden Watcher	1933,1,1200000
+que_qaru05,214,181	monster	Garden Watcher	1933,1,600000
+que_qaru05,243,199	monster	Garden Watcher	1933,1,1200000
+que_qsch01,116,313	monster	Garden Keeper	1932,1,180000
+que_qsch01,120,285	monster	Garden Keeper	1932,1,180000
+que_qsch01,117,236	monster	Garden Keeper	1932,1,180000
+que_qsch01,103,223	monster	Garden Keeper	1932,1,180000
+que_qsch01,85,204	monster	Garden Keeper	1932,1,180000
+que_qsch01,79,186	monster	Garden Keeper	1932,1,180000
+que_qsch01,73,167	monster	Garden Keeper	1932,1,180000
+que_qsch01,68,150	monster	Garden Keeper	1932,1,180000
+que_qsch01,71,128	monster	Garden Keeper	1932,1,180000
+que_qsch01,69,118	monster	Garden Keeper	1932,1,180000
+que_qsch01,117,78	monster	Garden Keeper	1932,1,180000
+que_qsch01,110,79	monster	Garden Keeper	1932,1,180000
+que_qsch01,141,80	monster	Garden Keeper	1932,1,180000
+que_qsch01,158,84	monster	Garden Keeper	1932,1,180000
+que_qsch01,193,104	monster	Garden Keeper	1932,1,180000
+que_qsch01,119,269	monster	Garden Keeper	1932,1,180000
+que_qsch01,155,77	monster	Garden Keeper	1932,1,180000
+que_qsch01,110,317	monster	Garden Watcher	1933,1,600000
+que_qsch01,115,295	monster	Garden Watcher	1933,1,1200000
+que_qsch01,116,256	monster	Garden Watcher	1933,1,600000
+que_qsch01,113,242	monster	Garden Watcher	1933,1,1200000
+que_qsch01,99,223	monster	Garden Watcher	1933,1,600000
+que_qsch01,94,216	monster	Garden Watcher	1933,1,1200000
+que_qsch01,77,198	monster	Garden Watcher	1933,1,600000
+que_qsch01,70,174	monster	Garden Watcher	1933,1,1200000
+que_qsch01,72,147	monster	Garden Watcher	1933,1,600000
+que_qsch01,64,134	monster	Garden Watcher	1933,1,1200000
+que_qsch01,77,107	monster	Garden Watcher	1933,1,600000
+que_qsch01,84,88	monster	Garden Watcher	1933,1,1200000
+que_qsch01,98,82	monster	Garden Watcher	1933,1,600000
+que_qsch01,129,79	monster	Garden Watcher	1933,1,1200000
+que_qsch01,91,124	monster	Garden Watcher	1933,1,600000
+que_qsch01,173,95	monster	Garden Watcher	1933,1,1200000
+que_qsch01,179,127	monster	Garden Watcher	1933,1,600000
+que_qsch01,195,120	monster	Garden Watcher	1933,1,1200000
+que_qsch01,178,159	monster	Garden Watcher	1933,1,600000
+que_qsch01,88,145	monster	Garden Watcher	1933,1,1200000
+que_qsch01,94,157	monster	Garden Watcher	1933,1,600000
+que_qsch01,95,177	monster	Garden Watcher	1933,1,1200000
+que_qsch01,129,196	monster	Garden Watcher	1933,1,600000
+que_qsch01,154,196	monster	Garden Watcher	1933,1,1200000
+que_qsch01,170,187	monster	Garden Watcher	1933,1,600000
+que_qsch01,194,180	monster	Garden Watcher	1933,1,1200000
+que_qsch01,214,181	monster	Garden Watcher	1933,1,600000
+que_qsch01,243,199	monster	Garden Watcher	1933,1,1200000
+que_qsch02,116,313	monster	Garden Keeper	1932,1,180000
+que_qsch02,120,285	monster	Garden Keeper	1932,1,180000
+que_qsch02,117,236	monster	Garden Keeper	1932,1,180000
+que_qsch02,103,223	monster	Garden Keeper	1932,1,180000
+que_qsch02,85,204	monster	Garden Keeper	1932,1,180000
+que_qsch02,79,186	monster	Garden Keeper	1932,1,180000
+que_qsch02,73,167	monster	Garden Keeper	1932,1,180000
+que_qsch02,68,150	monster	Garden Keeper	1932,1,180000
+que_qsch02,71,128	monster	Garden Keeper	1932,1,180000
+que_qsch02,69,118	monster	Garden Keeper	1932,1,180000
+que_qsch02,117,78	monster	Garden Keeper	1932,1,180000
+que_qsch02,110,79	monster	Garden Keeper	1932,1,180000
+que_qsch02,141,80	monster	Garden Keeper	1932,1,180000
+que_qsch02,158,84	monster	Garden Keeper	1932,1,180000
+que_qsch02,193,104	monster	Garden Keeper	1932,1,180000
+que_qsch02,119,269	monster	Garden Keeper	1932,1,180000
+que_qsch02,155,77	monster	Garden Keeper	1932,1,180000
+que_qsch02,110,317	monster	Garden Watcher	1933,1,600000
+que_qsch02,115,295	monster	Garden Watcher	1933,1,1200000
+que_qsch02,116,256	monster	Garden Watcher	1933,1,600000
+que_qsch02,113,242	monster	Garden Watcher	1933,1,1200000
+que_qsch02,99,223	monster	Garden Watcher	1933,1,600000
+que_qsch02,94,216	monster	Garden Watcher	1933,1,1200000
+que_qsch02,77,198	monster	Garden Watcher	1933,1,600000
+que_qsch02,70,174	monster	Garden Watcher	1933,1,1200000
+que_qsch02,72,147	monster	Garden Watcher	1933,1,600000
+que_qsch02,64,134	monster	Garden Watcher	1933,1,1200000
+que_qsch02,77,107	monster	Garden Watcher	1933,1,600000
+que_qsch02,84,88	monster	Garden Watcher	1933,1,1200000
+que_qsch02,98,82	monster	Garden Watcher	1933,1,600000
+que_qsch02,129,79	monster	Garden Watcher	1933,1,1200000
+que_qsch02,91,124	monster	Garden Watcher	1933,1,600000
+que_qsch02,173,95	monster	Garden Watcher	1933,1,1200000
+que_qsch02,179,127	monster	Garden Watcher	1933,1,600000
+que_qsch02,195,120	monster	Garden Watcher	1933,1,1200000
+que_qsch02,178,159	monster	Garden Watcher	1933,1,600000
+que_qsch02,88,145	monster	Garden Watcher	1933,1,1200000
+que_qsch02,94,157	monster	Garden Watcher	1933,1,600000
+que_qsch02,95,177	monster	Garden Watcher	1933,1,1200000
+que_qsch02,129,196	monster	Garden Watcher	1933,1,600000
+que_qsch02,154,196	monster	Garden Watcher	1933,1,1200000
+que_qsch02,170,187	monster	Garden Watcher	1933,1,600000
+que_qsch02,194,180	monster	Garden Watcher	1933,1,1200000
+que_qsch02,214,181	monster	Garden Watcher	1933,1,600000
+que_qsch02,243,199	monster	Garden Watcher	1933,1,1200000
+que_qsch03,116,313	monster	Garden Keeper	1932,1,180000
+que_qsch03,120,285	monster	Garden Keeper	1932,1,180000
+que_qsch03,117,236	monster	Garden Keeper	1932,1,180000
+que_qsch03,103,223	monster	Garden Keeper	1932,1,180000
+que_qsch03,85,204	monster	Garden Keeper	1932,1,180000
+que_qsch03,79,186	monster	Garden Keeper	1932,1,180000
+que_qsch03,73,167	monster	Garden Keeper	1932,1,180000
+que_qsch03,68,150	monster	Garden Keeper	1932,1,180000
+que_qsch03,71,128	monster	Garden Keeper	1932,1,180000
+que_qsch03,69,118	monster	Garden Keeper	1932,1,180000
+que_qsch03,117,78	monster	Garden Keeper	1932,1,180000
+que_qsch03,110,79	monster	Garden Keeper	1932,1,180000
+que_qsch03,141,80	monster	Garden Keeper	1932,1,180000
+que_qsch03,158,84	monster	Garden Keeper	1932,1,180000
+que_qsch03,193,104	monster	Garden Keeper	1932,1,180000
+que_qsch03,119,269	monster	Garden Keeper	1932,1,180000
+que_qsch03,155,77	monster	Garden Keeper	1932,1,180000
+que_qsch03,110,317	monster	Garden Watcher	1933,1,600000
+que_qsch03,115,295	monster	Garden Watcher	1933,1,1200000
+que_qsch03,116,256	monster	Garden Watcher	1933,1,600000
+que_qsch03,113,242	monster	Garden Watcher	1933,1,1200000
+que_qsch03,99,223	monster	Garden Watcher	1933,1,600000
+que_qsch03,94,216	monster	Garden Watcher	1933,1,1200000
+que_qsch03,77,198	monster	Garden Watcher	1933,1,600000
+que_qsch03,70,174	monster	Garden Watcher	1933,1,1200000
+que_qsch03,72,147	monster	Garden Watcher	1933,1,600000
+que_qsch03,64,134	monster	Garden Watcher	1933,1,1200000
+que_qsch03,77,107	monster	Garden Watcher	1933,1,600000
+que_qsch03,84,88	monster	Garden Watcher	1933,1,1200000
+que_qsch03,98,82	monster	Garden Watcher	1933,1,600000
+que_qsch03,129,79	monster	Garden Watcher	1933,1,1200000
+que_qsch03,91,124	monster	Garden Watcher	1933,1,600000
+que_qsch03,173,95	monster	Garden Watcher	1933,1,1200000
+que_qsch03,179,127	monster	Garden Watcher	1933,1,600000
+que_qsch03,195,120	monster	Garden Watcher	1933,1,1200000
+que_qsch03,178,159	monster	Garden Watcher	1933,1,600000
+que_qsch03,88,145	monster	Garden Watcher	1933,1,1200000
+que_qsch03,94,157	monster	Garden Watcher	1933,1,600000
+que_qsch03,95,177	monster	Garden Watcher	1933,1,1200000
+que_qsch03,129,196	monster	Garden Watcher	1933,1,600000
+que_qsch03,154,196	monster	Garden Watcher	1933,1,1200000
+que_qsch03,170,187	monster	Garden Watcher	1933,1,600000
+que_qsch03,194,180	monster	Garden Watcher	1933,1,1200000
+que_qsch03,214,181	monster	Garden Watcher	1933,1,600000
+que_qsch03,243,199	monster	Garden Watcher	1933,1,1200000
+que_qsch04,116,313	monster	Garden Keeper	1932,1,180000
+que_qsch04,120,285	monster	Garden Keeper	1932,1,180000
+que_qsch04,117,236	monster	Garden Keeper	1932,1,180000
+que_qsch04,103,223	monster	Garden Keeper	1932,1,180000
+que_qsch04,85,204	monster	Garden Keeper	1932,1,180000
+que_qsch04,79,186	monster	Garden Keeper	1932,1,180000
+que_qsch04,73,167	monster	Garden Keeper	1932,1,180000
+que_qsch04,68,150	monster	Garden Keeper	1932,1,180000
+que_qsch04,71,128	monster	Garden Keeper	1932,1,180000
+que_qsch04,69,118	monster	Garden Keeper	1932,1,180000
+que_qsch04,117,78	monster	Garden Keeper	1932,1,180000
+que_qsch04,110,79	monster	Garden Keeper	1932,1,180000
+que_qsch04,141,80	monster	Garden Keeper	1932,1,180000
+que_qsch04,158,84	monster	Garden Keeper	1932,1,180000
+que_qsch04,193,104	monster	Garden Keeper	1932,1,180000
+que_qsch04,119,269	monster	Garden Keeper	1932,1,180000
+que_qsch04,155,77	monster	Garden Keeper	1932,1,180000
+que_qsch04,110,317	monster	Garden Watcher	1933,1,600000
+que_qsch04,115,295	monster	Garden Watcher	1933,1,1200000
+que_qsch04,116,256	monster	Garden Watcher	1933,1,600000
+que_qsch04,113,242	monster	Garden Watcher	1933,1,1200000
+que_qsch04,99,223	monster	Garden Watcher	1933,1,600000
+que_qsch04,94,216	monster	Garden Watcher	1933,1,1200000
+que_qsch04,77,198	monster	Garden Watcher	1933,1,600000
+que_qsch04,70,174	monster	Garden Watcher	1933,1,1200000
+que_qsch04,72,147	monster	Garden Watcher	1933,1,600000
+que_qsch04,64,134	monster	Garden Watcher	1933,1,1200000
+que_qsch04,77,107	monster	Garden Watcher	1933,1,600000
+que_qsch04,84,88	monster	Garden Watcher	1933,1,1200000
+que_qsch04,98,82	monster	Garden Watcher	1933,1,600000
+que_qsch04,129,79	monster	Garden Watcher	1933,1,1200000
+que_qsch04,91,124	monster	Garden Watcher	1933,1,600000
+que_qsch04,173,95	monster	Garden Watcher	1933,1,1200000
+que_qsch04,179,127	monster	Garden Watcher	1933,1,600000
+que_qsch04,195,120	monster	Garden Watcher	1933,1,1200000
+que_qsch04,178,159	monster	Garden Watcher	1933,1,600000
+que_qsch04,88,145	monster	Garden Watcher	1933,1,1200000
+que_qsch04,94,157	monster	Garden Watcher	1933,1,600000
+que_qsch04,95,177	monster	Garden Watcher	1933,1,1200000
+que_qsch04,129,196	monster	Garden Watcher	1933,1,600000
+que_qsch04,154,196	monster	Garden Watcher	1933,1,1200000
+que_qsch04,170,187	monster	Garden Watcher	1933,1,600000
+que_qsch04,194,180	monster	Garden Watcher	1933,1,1200000
+que_qsch04,214,181	monster	Garden Watcher	1933,1,600000
+que_qsch04,243,199	monster	Garden Watcher	1933,1,1200000
+que_qsch05,116,313	monster	Garden Keeper	1932,1,180000
+que_qsch05,120,285	monster	Garden Keeper	1932,1,180000
+que_qsch05,117,236	monster	Garden Keeper	1932,1,180000
+que_qsch05,103,223	monster	Garden Keeper	1932,1,180000
+que_qsch05,85,204	monster	Garden Keeper	1932,1,180000
+que_qsch05,79,186	monster	Garden Keeper	1932,1,180000
+que_qsch05,73,167	monster	Garden Keeper	1932,1,180000
+que_qsch05,68,150	monster	Garden Keeper	1932,1,180000
+que_qsch05,71,128	monster	Garden Keeper	1932,1,180000
+que_qsch05,69,118	monster	Garden Keeper	1932,1,180000
+que_qsch05,117,78	monster	Garden Keeper	1932,1,180000
+que_qsch05,110,79	monster	Garden Keeper	1932,1,180000
+que_qsch05,141,80	monster	Garden Keeper	1932,1,180000
+que_qsch05,158,84	monster	Garden Keeper	1932,1,180000
+que_qsch05,193,104	monster	Garden Keeper	1932,1,180000
+que_qsch05,119,269	monster	Garden Keeper	1932,1,180000
+que_qsch05,155,77	monster	Garden Keeper	1932,1,180000
+que_qsch05,110,317	monster	Garden Watcher	1933,1,600000
+que_qsch05,115,295	monster	Garden Watcher	1933,1,1200000
+que_qsch05,116,256	monster	Garden Watcher	1933,1,600000
+que_qsch05,113,242	monster	Garden Watcher	1933,1,1200000
+que_qsch05,99,223	monster	Garden Watcher	1933,1,600000
+que_qsch05,94,216	monster	Garden Watcher	1933,1,1200000
+que_qsch05,77,198	monster	Garden Watcher	1933,1,600000
+que_qsch05,70,174	monster	Garden Watcher	1933,1,1200000
+que_qsch05,72,147	monster	Garden Watcher	1933,1,600000
+que_qsch05,64,134	monster	Garden Watcher	1933,1,1200000
+que_qsch05,77,107	monster	Garden Watcher	1933,1,600000
+que_qsch05,84,88	monster	Garden Watcher	1933,1,1200000
+que_qsch05,98,82	monster	Garden Watcher	1933,1,600000
+que_qsch05,129,79	monster	Garden Watcher	1933,1,1200000
+que_qsch05,91,124	monster	Garden Watcher	1933,1,600000
+que_qsch05,173,95	monster	Garden Watcher	1933,1,1200000
+que_qsch05,179,127	monster	Garden Watcher	1933,1,600000
+que_qsch05,195,120	monster	Garden Watcher	1933,1,1200000
+que_qsch05,178,159	monster	Garden Watcher	1933,1,600000
+que_qsch05,88,145	monster	Garden Watcher	1933,1,1200000
+que_qsch05,94,157	monster	Garden Watcher	1933,1,600000
+que_qsch05,95,177	monster	Garden Watcher	1933,1,1200000
+que_qsch05,129,196	monster	Garden Watcher	1933,1,600000
+que_qsch05,154,196	monster	Garden Watcher	1933,1,1200000
+que_qsch05,170,187	monster	Garden Watcher	1933,1,600000
+que_qsch05,194,180	monster	Garden Watcher	1933,1,1200000
+que_qsch05,214,181	monster	Garden Watcher	1933,1,600000
+que_qsch05,243,199	monster	Garden Watcher	1933,1,1200000

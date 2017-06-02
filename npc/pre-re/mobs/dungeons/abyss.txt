@@ -1,0 +1,62 @@
+//===== rAthena Script =======================================
+//= Abyss Lake Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Real spawns by Poki#3 [Nexon]
+//= 1.1 More official spawns [Playtester]
+//= 1.2 Official X.3 spawns [Playtester]
+//= 1.3 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// abyss_01 - Abyss Lakes Underground Cave F1
+//==================================================
+abyss_01,0,0	monster	Mimic	1191,10,600000
+abyss_01,0,0	monster	Ancient Mimic	1699,10,600000
+abyss_01,152,205,130,70	monster	Ferus	1714,10
+abyss_01,152,205,130,70	monster	Ferus	1717,25,300000
+abyss_01,152,205,130,70	monster	Novus	1715,3
+abyss_01,152,205,130,70	monster	Novus	1718,3
+abyss_01,103,93,85,70	monster	Ferus	1714,10
+abyss_01,103,93,85,70	monster	Ferus	1717,15,300000
+abyss_01,103,93,85,70	monster	Novus	1715,3
+abyss_01,103,93,85,70	monster	Novus	1718,3
+abyss_01,195,102,85,70	monster	Ferus	1714,10
+abyss_01,195,102,85,70	monster	Ferus	1717,15,300000
+abyss_01,195,102,85,70	monster	Novus	1715,3
+abyss_01,195,102,85,70	monster	Novus	1718,3
+abyss_01,110,170,15,15	monster	Penomena	1216,15,660000,300000
+abyss_01,195,147,5,10	monster	Penomena	1216,5,720000,300000
+abyss_01,140,100,15,5	monster	Penomena	1216,10,780000,300000
+abyss_01,260,40,14,14	monster	Dragon Egg	1721,3,1200000,600000
+abyss_01,150,160,50,50	monster	Dragon Egg	1721,5,1800000,600000
+
+//==================================================
+// abyss_02 - Abyss Lakes Underground Cave F2
+//==================================================
+abyss_02,0,0	monster	Mimic	1191,10,900000
+abyss_02,0,0	monster	Ancient Mimic	1699,10,900000
+abyss_02,0,0	monster	Ferus	1714,50,300000
+abyss_02,0,0	monster	Acidus	1713,10,600000
+abyss_02,0,0	monster	Acidus	1716,60,300000
+abyss_02,0,0	monster	Novus	1715,5
+abyss_02,0,0	monster	Novus	1718,5
+abyss_02,0,0	monster	Dragon Egg	1721,10,1800000,600000
+
+//==================================================
+// abyss_03 - Abyss Lakes Underground Cave F3
+//==================================================
+abyss_03,0,0	monster	Mimic	1191,10,300000
+abyss_03,0,0	monster	Ancient Mimic	1699,10,300000
+abyss_03,0,0	monster	Acidus	1713,60,600000
+abyss_03,0,0	monster	Acidus	1716,10,300000
+abyss_03,0,0	monster	Ferus	1714,10,300000
+abyss_03,0,0	monster	Ferus	1717,10,300000
+abyss_03,0,0	monster	Dragon Egg	1721,10,1800000,600000
+abyss_03,0,0	monster	Hydrolancer	1720,3,3000000,2400000
+abyss_03,0,0,0,0	boss_monster	Detardeurus	1719,1,10800000,600000,0

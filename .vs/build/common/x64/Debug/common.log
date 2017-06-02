@@ -1,0 +1,36 @@
+﻿  utils.c
+d:\games\rathena - jezznar\src\common\utils.c(443): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+d:\games\rathena - jezznar\src\common\utils.c(444): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+  timer.c
+  thread.c
+d:\games\rathena - jezznar\src\common\thread.c(73): warning C4312: 'type cast': conversion from 'unsigned int' to 'rAthreadProc' of greater size
+d:\games\rathena - jezznar\src\common\thread.c(146): warning C4311: 'type cast': pointer truncation from 'void *' to 'DWORD'
+  strlib.c
+d:\games\rathena - jezznar\src\common\strlib.c(1025): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\common\strlib.c(1107): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\common\strlib.c(1128): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\common\strlib.c(1147): warning C4244: 'initializing': conversion from '__int64' to 'int', possible loss of data
+  sql.c
+  socket.c
+  showmsg.c
+  random.c
+  raconf.c
+  nullpo.c
+  mutex.c
+  msg_conf.c
+  mempool.c
+  md5calc.c
+  mapindex.c
+  malloc.c
+  grfio.c
+  ers.c
+  des.c
+  db.c
+  Generating Code...
+  Compiling...
+  core.c
+d:\games\rathena - jezznar\src\common\core.c(328): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+  conf.c
+  cli.c
+  Generating Code...
+  common.vcxproj -> D:\Games\rathena - Jezznar\.vs\build\common.lib

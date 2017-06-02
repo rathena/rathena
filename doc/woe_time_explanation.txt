@@ -1,0 +1,102 @@
+//===== rAthena Documentation ================================
+//= WoE Time Explanation
+//===== By: ==================================================
+//= erKURITA
+//===== Last Updated: ========================================
+//= 20161206
+//===== Description: =========================================
+//= Details on the behavior of the default WoE controller.
+//============================================================
+
+There are 2 main commands that determine WoE times:
+OnClock<time>: and gettime(<type>).
+
+OnClock<time> triggers when <time> is reached.
+The format is HHMM, where H = hour, M = minute.
+OnClock2350: would run at 23:50, server time.
+
+gettime(<type>) is a function that checks for certain
+information regarding time. The types are:
+
+	DT_SECOND - Seconds (of the current minute)
+	DT_MINUTE - Minutes (of the current hour)
+	DT_HOUR - Hour (of the current day)
+	DT_DAYOFWEEK - Week day (constants for MONDAY to SUNDAY are available)
+	DT_DAYOFMONTH - Day of the current month
+	DT_MONTH - Month (constants for JANUARY to DECEMBER are available)
+	DT_YEAR - Year
+	DT_DAYOFYEAR - Day of the year
+
+This way, we can check for a desired minute, hour, day, month, etc.
+
+-------------------------------------------------------------------------------
+
+Now the structure:
+
+	OnClock2100:	// Start time for Tuesday and Thursday
+	OnClock2300:	// End time for Tuesday and Thursday
+	OnClock1600:	// Start time for Saturday
+	OnClock1800:	// End time for Saturday
+
+These 4 labels will run one after the other, reaching the next check:
+
+	if((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23)) goto L_Start;
+	if((gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23)) goto L_Start;
+	if((gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)>=16 && gettime(DT_HOUR)<18)) goto L_Start;
+
+This part will check for the times. Since both Start and End times run
+through the same chain of commands, these are important checks to ensure
+it's the right time. Let's take the following example:
+
+	if((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)>=21 && gettime(DT_HOUR)<23))
+
+The first gettime() is checking for a type DT_DAYOFWEEK, the day of the week, and it's
+comparing it to the one desired, which is TUESDAY. The function will
+return either true or false.
+
+The second gettime is checking type DT_HOUR, the hour, and it's comparing
+it to 21. If the first part is greater than or equal to (>=) the second part,
+the comparison will return 1.
+
+The third and last gettime is checking again for the hour, but the time has to be less
+than the specified time (in this case, 23).
+
+Now, look at the parentheses. Parentheses are very important when making comparisons
+and conditions. Check the order of these. I'll place dummy characters for this example:
+
+	if ((X && (Y && Z)) goto L_Start;
+
+It's saying, if Y and Z are true, the condition is met. Now let's use another set
+of dummy characters. We're checking if (Y && Z) = G:
+
+	if (X && G) goto L_Start;
+
+It's saying that if X and G are true, the condition is met, thus proceeding to L_Start.
+
+Now, the last part of the script, regarding the end of WoE time:
+
+	if((gettime(DT_DAYOFWEEK)==TUESDAY) && (gettime(DT_HOUR)==23)) goto L_End;
+	if((gettime(DT_DAYOFWEEK)==THURSDAY) && (gettime(DT_HOUR)==23)) goto L_End;
+	if((gettime(DT_DAYOFWEEK)==SATURDAY) && (gettime(DT_HOUR)==18)) goto L_End;
+	end;
+
+This is the same as before, but it's checking for the day in the first gettime() and
+the hour on the second. If both conditions are true, WoE will end. We're checking 
+here for the end time, not the start.
+
+Another important thing is "OnAgitInit:". This special label will be run as soon as the
+castle data is loaded from the char data. It will check for the above start and end times
+to see if it's in WoE time, hence why the hours have to be checked.
+
+-------------------------------------------------------------------------------
+
+An example of how to set the WoE so it starts on Monday, at 4 pm and ends up at 10 pm:
+
+	OnClock1600: // 16:00 = 4 pm
+	OnClock2200: // 22:00 = 10 pm
+
+	OnAgitInit: // This can only be written once: put OnClock above and the checks below.
+
+	if ((gettime(DT_DAYOFWEEK)==MONDAY) && (gettime(DT_HOUR)>=16 && gettime(DT_HOUR)<22)) goto L_Start;
+	if ((gettime(DT_DAYOFWEEK)==MONDAY) && (gettime(DT_HOUR)==22) goto L_End;
+	end; // Don't forget this!

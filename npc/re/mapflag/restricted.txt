@@ -1,0 +1,40 @@
+//===== rAthena Script =======================================
+//= Mapflag: Restricted.
+//===== Description: =========================================
+//= Disables items configured in item_noequip.txt
+//= and skills configured in skill_nocast_db.txt.
+//===== Changelogs: ==========================================
+//= 1.0 Renewal split. [Euphy]
+//= 1.1 Copied towns into this file. [Euphy]
+//= 1.2 Added WOE:TE maps [Cydh]
+//============================================================
+
+// Instances =====================
+1@mist	mapflag	restricted	6
+1@cash	mapflag	restricted	6
+1@pump	mapflag	restricted	6
+2@pump	mapflag	restricted	6
+1@lhz	mapflag	restricted	6
+1@ma_h	mapflag	restricted	6
+1@ma_c	mapflag	restricted	6
+1@ma_b	mapflag	restricted	6
+1@ecl	mapflag	restricted	6
+1@xm_d	mapflag	restricted	6
+1@face	mapflag	restricted	6
+
+// Towns =========================
+brasilis	mapflag	restricted	7
+dewata	mapflag	restricted	7
+dicastes01	mapflag	restricted	7
+eclage	mapflag	restricted	7
+izlude_a	mapflag	restricted	7
+izlude_b	mapflag	restricted	7
+izlude_c	mapflag	restricted	7
+izlude_d	mapflag	restricted	7
+malangdo	mapflag	restricted	7
+malaya	mapflag	restricted	7
+mora	mapflag	restricted	7
+
+// Restricted maps for WOE:TE Items ==
+teg_dun01	mapflag	restricted	8
+teg_dun02	mapflag	restricted	8

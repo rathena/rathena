@@ -1,0 +1,72 @@
+//===== rAthena Script =======================================
+//= Clock Tower Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 Split from combined Alde and CT spawn file. [L0ne_W0lf]
+//= 1.1 Added nightmare clock tower. [Ridley8819]
+//============================================================
+
+//==================================================
+// c_tower1 - Clock Tower 1f
+//==================================================
+c_tower1,0,0	monster	Rideword	1195,70,5000
+c_tower1,0,0	monster	Punk	1199,70,5000
+c_tower1,0,0	monster	Bathory	1102,1,5000
+c_tower1,0,0	monster	Clock Tower Manager	1270,1,5000
+
+//==================================================
+// c_tower2 - Clock Tower 2f
+//==================================================
+c_tower2,0,0	monster	Clock	1269,40,5000
+c_tower2,0,0	monster	Punk	1199,40,5000
+c_tower2,0,0	monster	Rideword	1195,12,5000
+c_tower2,0,0	monster	Mimic	1191,3,5000
+c_tower2,0,0	monster	Elder	1377,2,5000
+c_tower2,0,0	monster	Clock Tower Manager	1270,1,5000
+
+//==================================================
+// c_tower3 - Clock Tower 3f
+//==================================================
+c_tower3,0,0	monster	Alarm	1193,80,5000
+c_tower3,0,0	monster	Mimic	1191,7,5000
+c_tower3,0,0	monster	Rideword	1195,6,5000
+c_tower3,0,0	monster	Clock Tower Manager	1270,3,5000
+
+//==================================================
+// c_tower4 - Clock Tower 4f
+//==================================================
+c_tower4,0,0	monster	Clock	1269,35,5000
+c_tower4,0,0	monster	Owl Duke	1320,30,5000
+c_tower4,0,0	monster	Alarm	1193,30,5000
+c_tower4,0,0	monster	Rideword	1195,15,5000
+c_tower4,0,0	monster	Mimic	1191,12,5000
+c_tower4,0,0	monster	Whisper	1179,5,5000
+c_tower4,0,0	monster	Clock Tower Manager	1270,3,5000
+c_tower4,0,0	monster	Elder	1377,2,5000
+
+//==================================================
+// c_tower2_ - Clock Tower Nightmare 2f
+//==================================================
+c_tower2_,0,0	monster	Mimic (Nightmare)	2479,3,5000,0,0
+c_tower2_,0,0	monster	Rideword (Nightmare)	2478,4,300000,0,0
+c_tower2_,0,0	monster	Rideword (Nightmare)	2478,1,60000,0,0
+c_tower2_,0,0	monster	Neo Punk	2919,40,5000
+c_tower2_,0,0	monster	Big Ben	2916,40,5000
+c_tower2_,0,0	monster	Time Keeper	2918,1,5000
+c_tower2_,0,0	monster	Arc Elder	2920,2,3600000
+
+//==================================================
+// c_tower3_ - Clock Tower Nightmare 3f
+//==================================================
+c_tower3_,0,0	monster	Mimic (Nightmare)	2479,8,5000,0,0
+c_tower3_,0,0	monster	Rideword (Nightmare)	2478,8,5000,0,0
+c_tower3_,0,0	monster	Big Bell	2917,110,5000
+c_tower3_,0,0	monster	Time Keeper	2918,3,5000
+c_tower3_,0,0	monster	Owl Viscount	2921,1,5000,1800000
+c_tower3_,0,0	monster	Owl Marquis	2923,1,5000,5000
+c_tower3_,0,0,0,0	boss_monster	Time Holder	3074,1,7200000,0,0

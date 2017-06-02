@@ -1,0 +1,113 @@
+//===== rAthena Script ======================================= 
+//= God Item Quest - Variable Management
+//===== By: ================================================== 
+//= MasterOfMuppets
+//===== Current Version: ===================================== 
+//= 1.2
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= Use this NPC if the seals quest variables get messed up.
+//===== Additional Comments: =================================
+//= 1.0 First version. [MasterOfMuppets]
+//= 1.1 Updated several aspects of the script. [L0ne_W0lf]
+//= 1.2 Renewal script update. [Euphy]
+//=    Added GM management function.
+//============================================================
+
+sec_in02,15,170,0	script	Golbal var	817,{
+	callfunc "F_GM_NPC";
+	mes "[Check]";
+	mes "Please enter the password.";
+	next;
+	if (callfunc("F_GM_NPC",68392411,0) == 1) {
+		mes "[Check]";
+		mes "Please choose a menu.";
+		next;
+		switch(select("Now:No.1:No.2:No.3:No.4:Reset:god_sl_1:god_eremes:god_brising:god_mjo_0:god_mjo_1:god_mjo_2:god_mjo_3:god_mjo_4")) {
+		case 1:
+			mes "^0000FF$God1^000000 = ^FF0000" + $God1 + "^000000.";
+			mes "^0000FF$God2^000000 = ^FF0000" + $God2 + "^000000.";
+			mes "^0000FF$God3^000000 = ^FF0000" + $God3 + "^000000.";
+			mes "^0000FF$God4^000000 = ^FF0000" + $God4 + "^000000.";
+			close;
+		case 2: callsub L_Number,"$God1"; break;
+		case 3: callsub L_Number,"$God2"; break;
+		case 4: callsub L_Number,"$God3"; break;
+		case 5: callsub L_Number,"$God4"; break;
+		case 6:
+			mes "[Check]";
+			mes "Are you really sure that you want to reset the entire list of God Globalvar?";
+			mes "Please enter the password.";
+			next;
+			if (callfunc("F_GM_NPC",68392411,0) == 1) {
+				mes "[Check]";
+				mes "Now, the entire list of God Globalvar is being reset.";
+				next;
+				set $God1,0;
+				set $God2,0;
+				set $God3,0;
+				set $God4,0;
+				mes "^0000FF$God1^000000 = ^FF0000" + $God1 + "^000000.";
+				mes "^0000FF$God2^000000 = ^FF0000" + $God2 + "^000000.";
+				mes "^0000FF$God3^000000 = ^FF0000" + $God3 + "^000000.";
+				mes "^0000FF$God4^000000 = ^FF0000" + $God4 + "^000000.";
+				close;
+			} else {
+				mes "[Check]";
+				mes "The command has been canceled.";
+				close;
+			}
+		case 7: callsub L_Var,"god_sl_1"; break;
+		case 8: callsub L_Var,"god_eremes"; break;
+		case 9: callsub L_Var,"god_brising"; break;
+		case 10: callsub L_Var,"god_mjo_0"; break;
+		case 11: callsub L_Var,"god_mjo_1"; break;
+		case 12: callsub L_Var,"god_mjo_2"; break;
+		case 13: callsub L_Var,"god_mjo_3"; break;
+		case 14: callsub L_Var,"god_mjo_4"; break;
+		}
+	} else {
+		mes "[Check]";
+		mes "Incorrect password.";
+		close;
+	}
+
+L_Number:
+	input .@input,0,$@god_check2;
+	mes "[Check]";
+	mes "Would you like to change to "+.@input+"?";
+	mes "Please enter the password.";
+	next;
+	if (callfunc("F_GM_NPC",68392411,0) == 1) {
+		mes "[Check]";
+		mes "The command "+.@input+" has been confirmed.";
+		next;
+		setd getarg(0),.@input;
+		mes getarg(0)+" "+.@input;
+		close;
+	} else {
+		mes "[Check]";
+		mes "The command has been canceled.";
+		close;
+	}
+
+L_Var:
+	input .@input;
+	setd getarg(0),.@input;
+	next;
+	mes "[Check]";
+	mes "Done.";
+	close;
+
+OnInit:
+	// Seals roll at 25/50 in Renewal and 50/100 in Pre-Renewal.
+	if (checkre(0)) {
+		set $@god_check1,25;
+		set $@god_check2,50;
+	} else {
+		set $@god_check1,50;
+		set $@god_check2,100;
+	}
+	end;
+}

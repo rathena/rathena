@@ -1,0 +1,122 @@
+﻿  vending.c
+  unit.c
+d:\games\rathena - jezznar\src\map\unit.c(184): warning C4244: 'function': conversion from 'intptr_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\unit.c(576): warning C4244: 'function': conversion from 'intptr_t' to 'int', possible loss of data
+  trade.c
+  storage.c
+  status.c
+d:\games\rathena - jezznar\src\map\status.c(14128): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\status.c(14129): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  skill.c
+d:\games\rathena - jezznar\src\map\skill.c(21402): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\skill.c(21403): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  searchstore.c
+  script.c
+d:\games\rathena - jezznar\src\map\script.c(997): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\script.c(15587): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\script.c(15801): warning C4267: '=': conversion from 'size_t' to 'uint32', possible loss of data
+d:\games\rathena - jezznar\src\map\script.c(15811): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\script.c(15824): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\script.c(15852): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+d:\games\rathena - jezznar\src\map\script.c(15878): warning C4244: '=': conversion from '__int64' to 'unsigned int', possible loss of data
+d:\games\rathena - jezznar\src\map\script.c(15917): warning C4244: '=': conversion from '__int64' to 'unsigned int', possible loss of data
+d:\games\rathena - jezznar\src\map\script.c(15998): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+d:\games\rathena - jezznar\src\map\script.c(16035): warning C4244: '=': conversion from '__int64' to 'unsigned int', possible loss of data
+d:\games\rathena - jezznar\src\map\script.c(16191): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\script.c(16259): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+  quest.c
+  pet.c
+  pc_groups.c
+  pc.c
+d:\games\rathena - jezznar\src\map\pc.c(5321): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\pc.c(7542): warning C4244: 'function': conversion from 'intptr_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\pc.c(10400): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\pc.c(10421): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\pc.c(11566): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+  path.c
+  party.c
+  npc_chat.c
+  npc.c
+d:\games\rathena - jezznar\src\map\npc.c(1562): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\npc.c(1581): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\npc.c(2822): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\npc.c(4299): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+  mob.c
+d:\games\rathena - jezznar\src\map\mob.c(2690): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\mob.c(2843): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\mob.c(5133): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\mob.c(5149): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\mob.c(5150): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  mercenary.c
+  mapreg.c
+  map.c
+d:\games\rathena - jezznar\src\map\map.c(2744): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  Compiling...
+  mail.c
+  log.c
+  itemdb.c
+  intif.c
+d:\games\rathena - jezznar\src\map\intif.c(281): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\intif.c(358): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\intif.c(424): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\intif.c(442): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\intif.c(1112): warning C4267: '=': conversion from 'size_t' to 'uint16', possible loss of data
+  instance.c
+  homunculus.c
+  guild.c
+d:\games\rathena - jezznar\src\map\guild.c(1778): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\guild.c(2294): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  elemental.c
+  duel.c
+d:\games\rathena - jezznar\src\map\duel.c(150): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\duel.c(157): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\duel.c(184): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\duel.c(214): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\duel.c(231): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+  date.c
+  clif.c
+d:\games\rathena - jezznar\src\map\clif.c(2160): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(2299): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(6127): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(6175): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(9475): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(9942): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(10350): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(11083): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(11099): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(11116): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(12836): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(13429): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(13431): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(14830): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(14826): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(16333): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(17226): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\clif.c(17236): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  clan.c
+  chrif.c
+d:\games\rathena - jezznar\src\map\chrif.c(1341): warning C4267: '=': conversion from 'size_t' to 'uint16', possible loss of data
+d:\games\rathena - jezznar\src\map\chrif.c(1380): warning C4267: '=': conversion from 'size_t' to 'uint16', possible loss of data
+  chat.c
+  channel.c
+  cashshop.c
+  buyingstore.c
+  battleground.c
+d:\games\rathena - jezznar\src\map\battleground.c(144): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+  battle.c
+  atcommand.c
+d:\games\rathena - jezznar\src\map\atcommand.c(1124): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\atcommand.c(1126): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\atcommand.c(1137): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\atcommand.c(3382): warning C4267: '=': conversion from 'size_t' to 'uint32', possible loss of data
+d:\games\rathena - jezznar\src\map\atcommand.c(5222): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\atcommand.c(5243): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\atcommand.c(5667): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\atcommand.c(7118): warning C4267: 'function': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\map\atcommand.c(9021): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+d:\games\rathena - jezznar\src\map\atcommand.c(9043): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+d:\games\rathena - jezznar\src\map\atcommand.c(9167): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  map-server.vcxproj -> D:\Games\rathena - Jezznar\map-server.exe
+  map-server.vcxproj -> D:\Games\rathena - Jezznar\map-server.pdb (Full PDB)

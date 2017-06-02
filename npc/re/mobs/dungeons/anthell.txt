@@ -1,0 +1,121 @@
+//===== rAthena Script =======================================
+//= Ant Hell Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 Official kRO 10.1 spawns [Playtester]
+//= 1.2 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// anthell01 - Ant Hell
+//==================================================
+anthell01,0,0	monster	Piere	1160,50,5000
+anthell01,0,0	monster	Deniro	1105,40,5000
+anthell01,0,0	monster	Familiar	1005,20,5000
+anthell01,0,0	monster	Andre	1095,15,5000
+anthell01,0,0	monster	Vitata	1176,10,5000
+anthell01,0,0	monster	Giearth	1121,1,5000
+anthell01,43,166	monster	Ant Egg	1097,1,60000,30000
+anthell01,30,187	monster	Ant Egg	1097,1,60000,30000
+anthell01,29,186	monster	Ant Egg	1097,1,60000,30000
+anthell01,38,186	monster	Ant Egg	1097,1,60000,30000
+anthell01,37,186	monster	Ant Egg	1097,1,60000,30000
+anthell01,36,186	monster	Ant Egg	1097,1,60000,30000
+anthell01,35,186	monster	Ant Egg	1097,1,60000,30000
+anthell01,36,187	monster	Ant Egg	1097,1,60000,30000
+anthell01,44,166	monster	Ant Egg	1097,1,60000,30000
+anthell01,45,165	monster	Ant Egg	1097,1,60000,30000
+anthell01,40,168	monster	Ant Egg	1097,1,60000,30000
+anthell01,41,168	monster	Ant Egg	1097,1,60000,30000
+anthell01,42,168	monster	Ant Egg	1097,1,60000,30000
+anthell01,42,167	monster	Ant Egg	1097,1,60000,30000
+anthell01,42,166	monster	Ant Egg	1097,1,60000,30000
+anthell01,42,165	monster	Ant Egg	1097,1,60000,30000
+anthell01,41,165	monster	Ant Egg	1097,1,60000,30000
+anthell01,43,165	monster	Ant Egg	1097,1,60000,30000
+anthell01,44,165	monster	Ant Egg	1097,1,60000,30000
+anthell01,38,184	monster	Ant Egg	1097,1,60000,30000
+anthell01,38,183	monster	Ant Egg	1097,1,60000,30000
+anthell01,37,183	monster	Ant Egg	1097,1,60000,30000
+anthell01,102,121	monster	Ant Egg	1097,1,60000,30000
+anthell01,104,123	monster	Ant Egg	1097,1,60000,30000
+anthell01,104,122	monster	Ant Egg	1097,1,60000,30000
+anthell01,104,120	monster	Ant Egg	1097,1,60000,30000
+anthell01,103,120	monster	Ant Egg	1097,1,60000,30000
+anthell01,103,121	monster	Ant Egg	1097,1,60000,30000
+anthell01,102,121	monster	Ant Egg	1097,1,60000,30000
+anthell01,105,124	monster	Ant Egg	1097,1,60000,30000
+anthell01,101,121	monster	Ant Egg	1097,1,60000,30000
+anthell01,100,121	monster	Ant Egg	1097,1,60000,30000
+anthell01,99,127	monster	Ant Egg	1097,1,60000,30000
+anthell01,97,123	monster	Ant Egg	1097,1,60000,30000
+anthell01,97,127	monster	Ant Egg	1097,1,60000,30000
+anthell01,97,126	monster	Ant Egg	1097,1,60000,30000
+anthell01,97,125	monster	Ant Egg	1097,1,60000,30000
+anthell01,97,124	monster	Ant Egg	1097,1,60000,30000
+anthell01,98,121	monster	Ant Egg	1097,1,60000,30000
+anthell01,99,121	monster	Ant Egg	1097,1,60000,30000
+anthell01,98,127	monster	Ant Egg	1097,1,60000,30000
+anthell01,28,266	monster	Ant Egg	1097,1,60000,30000
+anthell01,30,262	monster	Ant Egg	1097,1,60000,30000
+anthell01,30,261	monster	Ant Egg	1097,1,60000,30000
+anthell01,31,264	monster	Ant Egg	1097,1,60000,30000
+anthell01,31,263	monster	Ant Egg	1097,1,60000,30000
+anthell01,31,262	monster	Ant Egg	1097,1,60000,30000
+anthell01,32,263	monster	Ant Egg	1097,1,60000,30000
+anthell01,40,270	monster	Ant Egg	1097,1,60000,30000
+anthell01,40,269	monster	Ant Egg	1097,1,60000,30000
+anthell01,40,268	monster	Ant Egg	1097,1,60000,30000
+anthell01,30,263	monster	Ant Egg	1097,1,60000,30000
+anthell01,30,264	monster	Ant Egg	1097,1,60000,30000
+anthell01,30,265	monster	Ant Egg	1097,1,60000,30000
+anthell01,29,266	monster	Ant Egg	1097,1,60000,30000
+anthell01,28,265	monster	Ant Egg	1097,1,60000,30000
+anthell01,28,264	monster	Ant Egg	1097,1,60000,30000
+anthell01,28,263	monster	Ant Egg	1097,1,60000,30000
+anthell01,28,262	monster	Ant Egg	1097,1,60000,30000
+anthell01,29,265	monster	Ant Egg	1097,1,60000,30000
+anthell01,29,264	monster	Ant Egg	1097,1,60000,30000
+anthell01,29,263	monster	Ant Egg	1097,1,60000,30000
+anthell01,29,262	monster	Ant Egg	1097,1,60000,30000
+anthell01,40,267	monster	Ant Egg	1097,1,60000,30000
+anthell01,40,266	monster	Ant Egg	1097,1,60000,30000
+anthell01,31,194	monster	Ant Egg	1097,1,60000,30000
+anthell01,33,195	monster	Ant Egg	1097,1,60000,30000
+anthell01,33,196	monster	Ant Egg	1097,1,60000,30000
+anthell01,30,190	monster	Ant Egg	1097,1,60000,30000
+anthell01,31,190	monster	Ant Egg	1097,1,60000,30000
+anthell01,32,189	monster	Ant Egg	1097,1,60000,30000
+anthell01,32,198	monster	Ant Egg	1097,1,60000,30000
+anthell01,32,187	monster	Ant Egg	1097,1,60000,30000
+anthell01,32,186	monster	Ant Egg	1097,1,60000,30000
+anthell01,30,195	monster	Ant Egg	1097,1,60000,30000
+anthell01,31,195	monster	Ant Egg	1097,1,60000,30000
+anthell01,32,196	monster	Ant Egg	1097,1,60000,30000
+anthell01,40,265	monster	Ant Egg	1097,1,60000,30000
+anthell01,41,269	monster	Ant Egg	1097,1,60000,30000
+anthell01,41,268	monster	Ant Egg	1097,1,60000,30000
+anthell01,41,267	monster	Ant Egg	1097,1,60000,30000
+anthell01,41,266	monster	Ant Egg	1097,1,60000,30000
+anthell01,41,265	monster	Ant Egg	1097,1,60000,30000
+anthell01,30,198	monster	Ant Egg	1097,1,60000,30000
+anthell01,31,198	monster	Ant Egg	1097,1,60000,30000
+anthell01,32,197	monster	Ant Egg	1097,1,60000,30000
+anthell01,31,186	monster	Ant Egg	1097,1,60000,30000
+
+//==================================================
+// anthell02 - Ant Hell
+//==================================================
+anthell02,0,0	monster	Andre	1095,50,5000
+anthell02,0,0	monster	Vitata	1176,30,5000
+anthell02,0,0	monster	Familiar	1005,20,5000
+anthell02,0,0	monster	Ant Egg	1097,15,5000
+anthell02,0,0	monster	Deniro	1105,15,5000
+anthell02,0,0	monster	Piere	1160,15,5000
+anthell02,0,0	monster	Giearth	1121,3,5000
+anthell02,0,0,0,0	boss_monster	Maya	1147,1,7200000,600000,1

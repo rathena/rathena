@@ -1,0 +1,101 @@
+//===== rAthena Script =======================================
+//= Cryptura Academy Monster Spawn Script
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+//==================================================
+// prt_fild08 - Prontera Field 
+//==================================================
+prt_fild08,0,0	monster	Poring	1002,110,5000
+prt_fild08,0,0	monster	Lunatic	1063,100,5000
+prt_fild08,0,0	monster	Fabre	1007,100,5000
+prt_fild08,0,0	monster	Little Poring	2398,30,50000
+prt_fild08a,0,0	monster	Poring	1002,110,5000
+prt_fild08a,0,0	monster	Lunatic	1063,100,5000
+prt_fild08a,0,0	monster	Fabre	1007,100,5000
+prt_fild08a,0,0	monster	Little Poring	2398,30,50000
+prt_fild08b,0,0	monster	Poring	1002,110,5000
+prt_fild08b,0,0	monster	Lunatic	1063,100,5000
+prt_fild08b,0,0	monster	Fabre	1007,100,5000
+prt_fild08b,0,0	monster	Little Poring	2398,30,50000
+prt_fild08c,0,0	monster	Poring	1002,110,5000
+prt_fild08c,0,0	monster	Lunatic	1063,100,5000
+prt_fild08c,0,0	monster	Fabre	1007,100,5000
+prt_fild08c,0,0	monster	Little Poring	2398,30,50000
+prt_fild08d,0,0	monster	Poring	1002,110,5000
+prt_fild08d,0,0	monster	Lunatic	1063,100,5000
+prt_fild08d,0,0	monster	Fabre	1007,100,5000
+prt_fild08d,0,0	monster	Little Poring	2398,30,50000
+
+//==================================================
+// treasure_n1 - Izlude Sunken Ship 1F
+//==================================================
+treasure_n1,0,0	monster	Red Mushroom	1085,10,50000
+treasure_n1,0,0	monster	Black Mushroom	1084,10,50000
+treasure_n1,160,54,13,13	monster	Red Mushroom	1085,10,50000
+treasure_n1,160,54,13,13	monster	Black Mushroom	1084,10,50000
+treasure_n1,160,54,13,13	monster	Dead Plankton	2404,10,50000
+treasure_n1,0,0	monster	Red Plant	1078,5,50000
+treasure_n1,0,0	monster	Green Plant	1080,5,50000
+treasure_n1,0,0	monster	Yellow Plant	1081,5,50000
+treasure_n1,0,0	monster	Blue Plant	1079,5,50000
+treasure_n1,0,0	monster	White Plant	1082,5,50000
+treasure_n1,0,0	monster	Zombie	1015,1,100000
+treasure_n1,0,0	monster	Zombie	1015,1,100000
+treasure_n1,68,47,9,9	monster	Weak Skeleton	2405,4,8000
+treasure_n1,106,42,9,9	monster	Roda Frog	1012,3,60000
+treasure_n1,32,37,9,9	monster	Roda Frog	1012,6,60000
+treasure_n1,69,112,9,9	monster	Spore	1014,3,20000
+treasure_n1,35,112,9,9	monster	Spore	1014,3,20000
+treasure_n1,35,112,9,9	monster	Roda Frog	1012,3,20000
+treasure_n1,111,111,9,9	monster	Roda Frog	1012,3,60000
+treasure_n1,111,111,9,9	monster	Dead Plankton	2404,5,60000
+treasure_n1,69,174,9,9	monster	Dead Plankton	2404,7,120000
+treasure_n1,82,155,9,9	monster	Spore	1014,4,60000
+treasure_n1,55,155,9,9	monster	Spore	1014,2,60000
+treasure_n1,22,160	monster	Weak Skeleton	2405,3,8000
+treasure_n1,163,155,13,13	monster	Weak Skeleton	2405,5,8000
+treasure_n1,163,155,13,13	monster	Zombie	1015,1,8000
+
+//==================================================
+// treasure_n2 - Izlude Sunken Ship 2F
+//==================================================
+treasure_n2,0,0	monster	Red Mushroom	1085,10,50000
+treasure_n2,0,0	monster	Black Mushroom	1084,10,50000
+treasure_n2,150,40,13,13	monster	Weak Soldier Skeleton	2406,3,50000
+treasure_n2,150,40,13,13	monster	Weak Skeleton	2405,5,50000
+treasure_n2,0,0	monster	Red Plant	1078,5,50000
+treasure_n2,0,0	monster	Green Plant	1080,5,50000
+treasure_n2,0,0	monster	Yellow Plant	1081,5,50000
+treasure_n2,0,0	monster	Blue Plant	1079,5,50000
+treasure_n2,0,0	monster	White Plant	1082,5,50000
+treasure_n2,100,50,13,13	monster	Weak Skeleton	2405,7,30000
+treasure_n2,100,50,13,13	monster	Dead Plankton	2404,5,30000
+treasure_n2,50,40,13,13	monster	Weak Soldier Skeleton	2406,3,50000
+treasure_n2,50,40,13,13	monster	Weak Skeleton	2405,5,50000
+treasure_n2,40,75,5,3	monster	Zombie	1015,2,60000
+treasure_n2,40,75,5,5	monster	Dead Plankton	2404,4,60000
+treasure_n2,50,140,5,5	monster	Weak Skeleton	2405,10,60000
+treasure_n2,50,140,5,5	monster	Weak Soldier Skeleton	2406,5,60000
+treasure_n2,160,140,5,5	monster	Weak Skeleton	2405,5,60000
+treasure_n2,160,140,5,5	monster	Weak Soldier Skeleton	2406,3,60000
+treasure_n2,160,140,5,2	monster	Zombie	1015,3,60000
+treasure_n2,160,70,13,13	monster	Weak Skeleton	2405,5,30000
+treasure_n2,160,70,13,13	monster	Dead Plankton	2404,7,30000
+treasure_n2,155,40,9,9	monster	Zombie	1015,3,120000
+treasure_n2,100,85,13,13	monster	Weak Soldier Skeleton	2406,2,50000
+treasure_n2,100,160,13,13	monster	Weak Soldier Skeleton	2406,5,120000
+treasure_n2,100,160,13,13	monster	Weak Skeleton	2405,7,200000
+treasure_n2,100,160,13,13	monster	Dead Plankton	2404,4,60000
+
+//==================================================
+// new_1-3 - Novice Training Grounds
+//==================================================
+new_1-3,0,0	monster	Little Poring	2398,30,50000

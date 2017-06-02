@@ -1,0 +1,71 @@
+//===== rAthena Script =======================================
+//= Geffenia Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Muad_Dib, rAthena Dev Team
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= Added 1st Version. [Muad_Dib]
+//= Conversion to eA [MasterOfMuppets]
+//= Updated spawns, information from emperium.org [MasterOfMuppets]
+//= Kept the old spawns incase someone would want them.
+//= Aegis ep 10.1 spawns [MasterOfMuppets]
+//============================================================
+
+//==================================================
+// gefenia01 - Geffenia
+//==================================================
+gefenia01,0,0	monster	False Angel	1371,60,5000
+gefenia01,0,0	monster	Violy	1390,30,5000
+gefenia01,0,0	monster	Mini Demon	1292,20,5000
+gefenia01,0,0	monster	Abysmal Knight	1219,10,5000
+gefenia01,0,0	monster	Incubus	1374,10,5000
+gefenia01,0,0	monster	Succubus	1370,10,5000
+gefenia01,0,0	monster	Bloody Knight	1268,1,3600000,3000000
+gefenia01,0,0	monster	Mysteltainn	1203,1,10800000,7200000
+gefenia01,0,0	monster	Executioner	1205,1,18000000,14400000
+gefenia01,0,0	monster	Ogretooth	1204,1,18000000,14400000
+
+//==================================================
+// gefenia02 - Geffenia
+//==================================================
+gefenia02,0,0	monster	Violy	1390,40,5000
+gefenia02,0,0	monster	Mini Demon	1292,30,5000
+gefenia02,0,0	monster	False Angel	1371,30,5000
+gefenia02,0,0	monster	Succubus	1370,20,5000
+gefenia02,0,0	monster	Abysmal Knight	1219,10,5000
+gefenia02,0,0	monster	Incubus	1374,10,5000
+gefenia02,0,0	monster	Bloody Knight	1268,1,3600000,3000000
+gefenia02,0,0	monster	Ogretooth	1204,1,10800000,7200000
+gefenia02,0,0	monster	Mysteltainn	1203,1,18000000,14400000
+gefenia02,0,0	monster	Executioner	1205,1,18000000,14400000
+
+//==================================================
+// gefenia03 - Geffenia
+//==================================================
+gefenia03,0,0	monster	False Angel	1371,40,5000
+gefenia03,0,0	monster	Violy	1390,40,5000
+gefenia03,0,0	monster	Mini Demon	1292,30,5000
+gefenia03,0,0	monster	Incubus	1374,20,5000
+gefenia03,0,0	monster	Abysmal Knight	1219,10,5000
+gefenia03,0,0	monster	Succubus	1370,10,5000
+gefenia03,0,0	monster	Bloody Knight	1268,1,3600000,3000000
+gefenia03,0,0	monster	Executioner	1205,1,10800000,7200000
+gefenia03,0,0	monster	Mysteltainn	1203,1,18000000,14400000
+gefenia03,0,0	monster	Ogretooth	1204,1,18000000,14400000
+
+//==================================================
+// gefenia04 - Geffenia
+//==================================================
+gefenia04,0,0	monster	False Angel	1371,30,5000
+gefenia04,0,0	monster	Violy	1390,30,5000
+gefenia04,0,0	monster	Mini Demon	1292,20,5000
+gefenia04,0,0	monster	Abysmal Knight	1219,10,5000
+gefenia04,0,0	monster	Incubus	1374,10,5000
+gefenia04,0,0	monster	Succubus	1370,10,5000
+gefenia04,0,0	monster	Bloody Knight	1268,1,3600000,3000000
+gefenia04,0,0	monster	Mysteltainn	1203,1,18000000,14400000
+gefenia04,0,0	monster	Executioner	1205,1,18000000,14400000
+gefenia04,0,0	monster	Ogretooth	1204,1,18000000,14400000

@@ -1,0 +1,58 @@
+//===== rAthena Script ======================================= 
+//= Treasure Room Protection
+//===== By: ================================================== 
+//= Masao
+//===== Current Version: ===================================== 
+//= 1.1
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Restricts Treasure Room entry to Guild Masters only.
+//===== Additional Comments: ================================= 
+//= 1.0 Converted from the official script.
+//= 1.1 Reverted back and optimized. [Daegaladh]
+//============================================================ 
+
+// Main NPC :: ban_stealer
+//============================================================
+-	script	Gld_Trea_Protect::Gld_Trea_Protect	-1,{
+	end;
+OnTouch:
+	set .@GID, getcastledata(strnpcinfo(2),1);
+	if (strcharinfo(0) != getguildmaster(.@GID)) {
+		if (compare(strnpcinfo(2),"aldeg"))
+			warp "aldebaran",143,112;
+		else if (compare(strnpcinfo(2),"gefg"))
+			warp "geffen",120,38;
+		else if (compare(strnpcinfo(2),"payg"))
+			warp "payon",100,100;
+		else if (compare(strnpcinfo(2),"prtg"))
+			warp "prontera",119,64;
+	}
+	end;
+}
+
+prtg_cas01,11,208,0	duplicate(Gld_Trea_Protect)	ban_warp#prtg_cas01	-1,6,6
+prtg_cas02,202,228,0	duplicate(Gld_Trea_Protect)	ban_warp#prtg_cas02	-1,6,6
+prtg_cas03,189,132,0	duplicate(Gld_Trea_Protect)	ban_warp#prtg_cas03	-1,6,6
+prtg_cas04,271,162,0	duplicate(Gld_Trea_Protect)	ban_warp#prtg_cas04	-1,6,6
+prtg_cas05,276,178,0	duplicate(Gld_Trea_Protect)	ban_warp#prtg_cas05	-1,6,6
+
+payg_cas01,291,8,0	duplicate(Gld_Trea_Protect)	ban_warp#payg_cas01	-1,6,6
+payg_cas02,145,144,0	duplicate(Gld_Trea_Protect)	ban_warp#payg_cas02	-1,6,6
+payg_cas03,159,168,0	duplicate(Gld_Trea_Protect)	ban_warp#payg_cas03	-1,6,6
+payg_cas04,147,48,0	duplicate(Gld_Trea_Protect)	ban_warp#payg_cas04	-1,6,6
+payg_cas05,157,132,0	duplicate(Gld_Trea_Protect)	ban_warp#payg_cas05	-1,6,6
+
+aldeg_cas01,118,223,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas01	-1,8,8
+aldeg_cas02,135,230,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas02	-1,8,8
+aldeg_cas03,225,269,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas03	-1,8,8
+aldeg_cas04,84,13,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas04	-1,8,8
+aldeg_cas05,62,12,0	duplicate(Gld_Trea_Protect)	ban_warp#aldeg_cas05	-1,8,8
+
+gefg_cas01,154,112,0	duplicate(Gld_Trea_Protect)	ban_warp#gefg_cas01	-1,6,6
+gefg_cas02,140,116,0	duplicate(Gld_Trea_Protect)	ban_warp#gefg_cas02	-1,6,6
+gefg_cas03,271,290,0	duplicate(Gld_Trea_Protect)	ban_warp#gefg_cas03	-1,6,6
+gefg_cas04,116,119,0	duplicate(Gld_Trea_Protect)	ban_warp#gefg_cas04	-1,6,6
+gefg_cas05,144,110,0	duplicate(Gld_Trea_Protect)	ban_warp#gefg_cas05	-1,6,6

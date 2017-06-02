@@ -1,0 +1,27 @@
+﻿  utils.c
+  timer.c
+  thread.c
+  strlib.c
+  sql.c
+  socket.c
+  showmsg.c
+  random.c
+  raconf.c
+  nullpo.c
+  mutex.c
+  msg_conf.c
+  mempool.c
+  md5calc.c
+  mapindex.c
+  malloc.c
+  grfio.c
+  ers.c
+  des.c
+  db.c
+  Generating Code...
+  Compiling...
+  core.c
+  conf.c
+  cli.c
+  Generating Code...
+  common.vcxproj -> D:\Games\rathena - Jezznar\.vs\build\common.lib

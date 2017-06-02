@@ -1,0 +1,44 @@
+//===== rAthena Script =======================================
+//= Gonryun Dungeon Monster Spawn Script
+//===== By: ==================================================
+//= Athena (1.0)
+//===== Current Version: =====================================
+//= 1.2
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Additional Comments: =================================
+//= 1.1 Official kRO 10.1 spawns [Playtester]
+//= 1.2 Corrected MVP spawn variance. [L0ne_W0lf]
+//============================================================
+
+//==================================================
+// gon_dun01 - Shrine of Gonryun Queen
+//==================================================
+gon_dun01,0,0	monster	Bloody Butterfly	1408,55,650000,350000
+gon_dun01,0,0	monster	Enchanted Peach Tree	1410,35
+gon_dun01,0,0	monster	Zipper Bear	1417,30
+gon_dun01,0,0	monster	Red Plant	1078,5
+gon_dun01,0,0	monster	Yellow Plant	1081,10
+gon_dun01,0,0	monster	White Plant	1082,10
+
+//==================================================
+// gon_dun02 - Hermit's Checkers
+//==================================================
+gon_dun02,241,226,15,20	monster	Enchanted Peach Tree	1410,2,300000,150000
+gon_dun02,241,226,15,20	monster	Baby Leopard	1415,4,600000,300000
+gon_dun02,241,226,15,20	monster	Enchanted Peach Tree	1410,3,120000,60000
+gon_dun02,33,115,10,15	monster	Enchanted Peach Tree	1410,1,300000,150000
+gon_dun02,33,115,10,15	monster	Baby Leopard	1415,2,600000,300000
+gon_dun02,0,0	monster	Taoist Hermit	1412,20,690000,390000
+gon_dun02,0,0	monster	Bloody Butterfly	1408,20
+gon_dun02,0,0	monster	Enchanted Peach Tree	1410,15
+gon_dun02,0,0	monster	Yellow Plant	1081,10
+
+//==================================================
+// gon_dun03 - Arcadia
+//==================================================
+gon_dun03,0,0	monster	White Plant	1082,10
+gon_dun03,0,0	monster	Hermit Plant	1413,20,600000,300000
+gon_dun03,0,0	monster	Evil Nymph	1416,50,600000,300000
+gon_dun03,0,0	monster	Taoist Hermit	1412,30
+gon_dun03,0,0,0,0	boss_monster	Evil Snake Lord	1418,1,5650000,600000,0
