@@ -1,0 +1,79 @@
+//id,range,hit,inf,element,nk,splash,max,list_num,castcancel,cast_defence_rate,inf2,maxcount,skill_type,blow_count,inf3,name,description
+// 01 ID
+// 02 range (combo skills do not check for range when used,
+//           if range is < 5, the skill is considered melee-range)
+// 03 hit (8- repeated hitting, 6- single-hit)
+// 04 inf (0- passive, 1- enemy, 2- place, 4- self, 16- friend, 32- trap)
+// 05 element (0 - neutral, 1 - water, 2 - earth, 3 - fire, 4 - wind, 5 - poison,
+//             6 - holy, 7 - dark, 8 - ghost, 9 - undead, -1 - use weapon element
+//             -2 - use endowed element, -3 - use random element.)
+// 06 nk (skill damage properties):
+//    0x01 - No damage skill
+//    0x02 - Has splash area
+//    0x04 - Damage should be split among targets
+//    0x08 - Skill ignores caster's % damage cards (misc type always ignores)
+//    0x10 - Skill ignores elemental adjustments
+//    0x20 - Skill ignores target's defense (misc type always ignores)
+//    0x40 - Skill ignores target's flee (magic type always ignores)
+//    0x80 - Skill ignores target's def cards
+// 07 splash/effect range
+//      -1 - for screen-wide
+//       0 - no splash
+//      all other values follow the formula: value * 2 + 1
+//       1 - 3x3
+//       2 - 5x5
+//       3 - 7x7
+// 08 MaxLv
+// 09 Number of hits (when positive, damage is increased by hits, 
+//    negative values just show number of hits without increasing total damage)
+// 10 Cast interrupted when hit?
+// 11 defense-reduction rate during cast.
+// 12 inf2 (skill information 2):
+//    0x00001 - quest skill
+//    0x00002 - npc skill
+//    0x00004 - wedding skill
+//    0x00008 - spirit skill
+//    0x00010 - guild skill
+//    0x00020 - song/dance
+//    0x00040 - ensemble skill
+//    0x00080 - trap
+//    0x00100 - skill that damages/targets yourself
+//    0x00200 - cannot be casted on self (if inf = 4, auto-select target skill)
+//    0x00400 - usable only on party-members (and enemies if skill is offensive)
+//    0x00800 - usable only on guild-mates (and enemies if skill is offensive)
+//    0x01000 - disable usage on enemies (for non-offensive skills).
+//    0x02000 - available skill for SC_AUTOSHADOWSPELL
+//    0x04000 - chorus skill
+//    0x08000 - skill that ignore bg reduction
+//    0x10000 - skill that ignore gvg reduction
+//    0x20000 - makes 'self'/'place' skill cannot be casted/placed when near NPC (see 'db/skill_nonearnpc_db.txt' for more options)
+//    0x40000 - skill that can hit trap-type skill (inf2 has 0x00080)
+// 13 maxcount: max amount of skill instances to place on the ground when
+//    player_land_skill_limit/monster_land_skill_limit is enabled. For skills
+//    that attack using a path, this is the path length to be used.
+// 14 attack type (none, weapon, magic, misc)
+// 15 Blowcount (amount of tiles skill knockbacks)
+// 16 inf3 (skill information 3):
+//    0x00001 - skill ignores land protector
+//    0x00002 - free
+//    0x00004 - usable skills while hiding
+//    0x00008 - skill that can be use while in dancing state
+//    0x00010 - skill that could hit emperium
+//    0x00020 - skill ignores SC_STASIS
+//    0x00040 - skill blocked by kagehumi
+//    0x00080 - skill range affected by AC_VULTURE
+//    0x00100 - skill range affected by GS_SNAKEEYE
+//    0x00200 - skill range affected by NJ_SHADOWJUMP
+//    0x00400 - skill range affected by WL_RADIUS
+//    0x00800 - skill range affected by RA_RESEARCHTRAP
+//    0x01000 - skill that does not affect user that has NC_HOVERING active
+//    0x02000 - skill that can be using while riding warg
+//    0x04000 - skill that can't be used while in mado
+//    0x08000 - skill that can be used to target while under SC__MANHOLE effect
+//    0x10000 - skill that affects hidden targets
+//    0x20000 - skill that affects SC_GLOOMYDAY_SK
+//    0x40000 - skill that is affected by SC_DANCEWITHWUG
+//    0x80000 - skill blocked by RA_WUGBITE
+// 17 Name
+// 18 Description
+

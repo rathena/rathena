@@ -1,0 +1,14 @@
+﻿  loginlog.c
+  logincnslif.c
+  loginclif.c
+  loginchrif.c
+  login.c
+d:\games\rathena - jezznar\src\login\login.c(311): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+  ipban.c
+  account.c
+d:\games\rathena - jezznar\src\login\account.c(732): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\login\account.c(746): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+d:\games\rathena - jezznar\src\login\account.c(799): warning C4267: '+=': conversion from 'size_t' to 'int', possible loss of data
+  Generating Code...
+  login-server.vcxproj -> D:\Games\rathena - Jezznar\login-server.exe
+  login-server.vcxproj -> D:\Games\rathena - Jezznar\login-server.pdb (Full PDB)

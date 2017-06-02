@@ -1,0 +1,20 @@
+﻿  int_storage.c
+  int_quest.c
+  int_pet.c
+  int_party.c
+  int_mercenary.c
+  int_mail.c
+  int_homun.c
+  int_guild.c
+  int_elemental.c
+  int_clan.c
+  int_auction.c
+  inter.c
+  char_mapif.c
+  char_logif.c
+  char_cnslif.c
+  char_clif.c
+  char.c
+  Generating Code...
+  char-server.vcxproj -> D:\Games\rathena - Jezznar\char-server.exe
+  char-server.vcxproj -> D:\Games\rathena - Jezznar\char-server.pdb (Full PDB)
