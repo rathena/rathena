@@ -598,15 +598,6 @@ CREATE TABLE IF NOT EXISTS `hotkey` (
 	PRIMARY KEY (`char_id`,`hotkey`)
 ) ENGINE=MyISAM;
 
--- 
--- Table structure for table `interlog`
---
-
-CREATE TABLE IF NOT EXISTS `interlog` (
-  `time` datetime NOT NULL,
-  `log` varchar(255) NOT NULL default ''
-) ENGINE=MyISAM; 
-
 --
 -- Table structure for table `interreg`
 --

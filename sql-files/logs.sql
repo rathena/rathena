@@ -225,3 +225,20 @@ CREATE TABLE IF NOT EXISTS `zenylog` (
   PRIMARY KEY  (`id`),
   INDEX (`type`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1;
+
+-- 
+-- Table structure for table `interlog`
+--
+
+CREATE TABLE IF NOT EXISTS `interlog` (
+	`time` DATETIME NOT NULL,
+	`activity` VARCHAR(255) NOT NULL,
+	`guild_name` VARCHAR(255) NOT NULL,
+	`guild_id` INT(11) NOT NULL,
+	`origin` VARCHAR(255) NULL DEFAULT NULL,
+	`target` VARCHAR(255) NULL DEFAULT NULL,
+	`castle_id` INT(11) NULL DEFAULT NULL
+)
+COLLATE='latin1_swedish_ci'
+ENGINE=MyISAM
+;
