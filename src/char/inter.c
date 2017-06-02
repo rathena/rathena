@@ -826,7 +826,7 @@ int inter_log(char* activity, char* origin, char* target, struct guild *g, int c
 	va_end(ap);
 
 	Sql_EscapeStringLen(sql_handle, esc_str, str, strnlen(str, sizeof(str)));
-	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`,`activity`, `guild_name`, `origin`, `target`, `guild_id`, `castle_id` ) VALUES (NOW(),  '%s', '%s', '%s', '%s', '%d', '%d')", schema_config.interlog_db, activity, g->name, origin, target, g->guild_id, castle_id))
+	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`,`activity`, `origin`, `target`, `guild_id`, `castle_id` ) VALUES (NOW(),  '%s', '%s', '%s', '%d', '%d')", schema_config.interlog_db, activity, origin, target, (g) ? g->guild_id : 0, castle_id))
 		Sql_ShowDebug(sql_handle);
 
 	return 0;

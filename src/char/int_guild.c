@@ -1190,7 +1190,7 @@ int mapif_parse_CreateGuild(int fd,uint32 account_id,char *name,struct guild_mem
 	mapif_guild_info(fd,g);
 
 	if(charserv_config.log_inter)
-		inter_log("Guild Created", master->name, 0, g, 0);
+		inter_log("Guild Created", master->name, g->name, g, 0);
 
 	return 0;
 }
@@ -1238,7 +1238,7 @@ int mapif_parse_GuildAddMember(int fd,int guild_id,struct guild_member *m)
 				g->save_flag&=~GS_REMOVE;
 
 			if (charserv_config.log_inter)
-				inter_log("New Guild Member Added", 0, g->member[i].name, g, 0);
+				inter_log("New Guild Member Added", g->name, g->member[i].name, g, 0);
 
 			return 0;
 		}
@@ -1293,7 +1293,7 @@ int mapif_parse_GuildLeave(int fd, int guild_id, uint32 account_id, uint32 char_
 	mapif_guild_withdraw(guild_id,account_id,char_id,flag,g->member[i].name,mes);
 	inter_guild_removemember_tosql(g->member[i].account_id,g->member[i].char_id);
 	if (charserv_config.log_inter)
-		inter_log("Guild Member Left/Removed", g->member[i].name, 0, g, 0);
+		inter_log("Guild Member Left/Removed", g->name, g->member[i].name, g, 0);
 	memset(&g->member[i],0,sizeof(struct guild_member));
 
 	if( guild_check_empty(g) )
@@ -1370,7 +1370,7 @@ int mapif_parse_BreakGuild(int fd,int guild_id)
 	if(g==NULL)
 		return 0;
 	if (charserv_config.log_inter)
-		inter_log("Guild Broken", g->master, 0, g, 0);
+		inter_log("Guild Broken", g->master, g->name, g, 0);
 	// Delete guild from sql
 	//printf("- Delete guild %d from guild\n",guild_id);
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '%d'", schema_config.guild_db, guild_id) )
@@ -1405,7 +1405,6 @@ int mapif_parse_BreakGuild(int fd,int guild_id)
 
 	//Remove the guild from memory. [Skotlex]
 	idb_remove(guild_db_, guild_id);
-	ShowInfo("Break Guild function Done");
 	return 0;
 }
 
@@ -1775,7 +1774,6 @@ int mapif_parse_GuildCastleDataLoad(int fd, int len, int *castle_ids)
 int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 {
 	struct guild_castle *gc = inter_guildcastle_fromsql(castle_id);
-
 	if (gc == NULL) {
 		ShowError("mapif_parse_GuildCastleDataSave: castle id=%d not found\n", castle_id);
 		return 0;
@@ -1786,7 +1784,8 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 			if (charserv_config.log_inter && gc->guild_id != value) {
 				int gid = (value) ? value : gc->guild_id;
 				struct guild *g = (struct guild*)idb_get(guild_db_, gid);
-				inter_log((value) ? "Castle Occupied" : "Castle Abandoned ", g->name, gc->castle_name, g, castle_id);
+				int flag = 0;
+					inter_log((value) ? "Castle Occupied" : "Castle Abandoned", (g) ? g->name : 0, 0, (g) ? g : 0, castle_id);
 			}
 			gc->guild_id = value;
 			break;

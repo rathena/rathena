@@ -2294,7 +2294,7 @@ bool char_checkdb(void){
 		return false;
 	}
 	//checking interlog_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `time`, `activity`, `guild_name`, `origin`, `target`, `guild_id`, `castle_id` FROM `%s` LIMIT 1;", schema_config.interlog_db) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `time`, `activity`, `origin`, `target`, `guild_id`, `castle_id` FROM `%s` LIMIT 1;", schema_config.interlog_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
