@@ -12380,7 +12380,7 @@ BUILDIN_FUNC(setmapflag)
 				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
 				break;
 			case MF_HIDEMOBHPBAR:		map[m].flag.hidemobhpbar = 1; break;
-			case MF_INSTAKILL:		map[m].flag.instakill = 1; break;
+			case MF_INSTAKILL:			map[m].flag.instakill = 1; break;
 #ifdef ADJUST_SKILL_DAMAGE
 			case MF_SKILL_DAMAGE:
 				{
