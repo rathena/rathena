@@ -1784,8 +1784,7 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 			if (charserv_config.log_inter && gc->guild_id != value) {
 				int gid = (value) ? value : gc->guild_id;
 				struct guild *g = (struct guild*)idb_get(guild_db_, gid);
-				int flag = 0;
-					inter_log((value) ? "Castle Occupied" : "Castle Abandoned", (g) ? g->name : 0, 0, (g) ? g : 0, castle_id);
+				inter_log((value) ? "Castle Occupied" : "Castle Abandoned", (g) ? g->name : 0, 0, (g) ? g : 0, castle_id);
 			}
 			gc->guild_id = value;
 			break;
