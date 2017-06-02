@@ -815,18 +815,18 @@ static int inter_config_read(const char* cfgName)
 }
 
 // Save interlog into sql
-int inter_log(char* fmt, ...)
+int inter_log(char* activity, char* origin, char* target, struct guild *g, int castle_id)
 {
 	char str[255];
 	char esc_str[sizeof(str)*2+1];// escaped str
 	va_list ap;
 
-	va_start(ap,fmt);
-	vsnprintf(str, sizeof(str), fmt, ap);
+	va_start(ap,activity);
+	vsnprintf(str, sizeof(str), activity, ap);
 	va_end(ap);
 
 	Sql_EscapeStringLen(sql_handle, esc_str, str, strnlen(str, sizeof(str)));
-	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`, `log`) VALUES (NOW(),  '%s')", schema_config.interlog_db, esc_str) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`,`activity`, `guild_name`, `origin`, `target`, `guild_id`, `castle_id` ) VALUES (NOW(),  '%s', '%s', '%s', '%s', '%d', '%d')", schema_config.interlog_db, activity, g->name, origin, target, g->guild_id, castle_id))
 		Sql_ShowDebug(sql_handle);
 
 	return 0;

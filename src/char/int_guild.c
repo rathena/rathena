@@ -1190,8 +1190,7 @@ int mapif_parse_CreateGuild(int fd,uint32 account_id,char *name,struct guild_mem
 	mapif_guild_info(fd,g);
 
 	if(charserv_config.log_inter)
-		inter_log("guild %s (id=%d) created by master %s (id=%d)\n",
-			name, g->guild_id, master->name, master->account_id );
+		inter_log("Guild Created", master->name, 0, g, 0);
 
 	return 0;
 }
@@ -1237,6 +1236,10 @@ int mapif_parse_GuildAddMember(int fd,int guild_id,struct guild_member *m)
 			g->save_flag |= GS_MEMBER;
 			if (g->save_flag&GS_REMOVE)
 				g->save_flag&=~GS_REMOVE;
+
+			if (charserv_config.log_inter)
+				inter_log("New Guild Member Added", 0, g->member[i].name, g, 0);
+
 			return 0;
 		}
 	}
@@ -1289,7 +1292,8 @@ int mapif_parse_GuildLeave(int fd, int guild_id, uint32 account_id, uint32 char_
 
 	mapif_guild_withdraw(guild_id,account_id,char_id,flag,g->member[i].name,mes);
 	inter_guild_removemember_tosql(g->member[i].account_id,g->member[i].char_id);
-
+	if (charserv_config.log_inter)
+		inter_log("Guild Member Left/Removed", g->member[i].name, 0, g, 0);
 	memset(&g->member[i],0,sizeof(struct guild_member));
 
 	if( guild_check_empty(g) )
@@ -1365,7 +1369,8 @@ int mapif_parse_BreakGuild(int fd,int guild_id)
 	g = inter_guild_fromsql(guild_id);
 	if(g==NULL)
 		return 0;
-
+	if (charserv_config.log_inter)
+		inter_log("Guild Broken", g->master, 0, g, 0);
 	// Delete guild from sql
 	//printf("- Delete guild %d from guild\n",guild_id);
 	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `guild_id` = '%d'", schema_config.guild_db, guild_id) )
@@ -1398,11 +1403,9 @@ int mapif_parse_BreakGuild(int fd,int guild_id)
 
 	mapif_guild_broken(guild_id,0);
 
-	if(charserv_config.log_inter)
-		inter_log("guild %s (id=%d) broken\n",g->name,guild_id);
-
 	//Remove the guild from memory. [Skotlex]
 	idb_remove(guild_db_, guild_id);
+	ShowInfo("Break Guild function Done");
 	return 0;
 }
 
@@ -1690,6 +1693,13 @@ int mapif_parse_GuildAlliance(int fd,int guild_id1,int guild_id2,uint32 account_
 			ARR_FIND( 0, MAX_GUILDALLIANCE, j, g[i]->alliance[j].guild_id == g[1-i]->guild_id && g[i]->alliance[j].opposition == (flag&GUILD_ALLIANCE_TYPE_MASK) );
 			if( j < MAX_GUILDALLIANCE )
 				g[i]->alliance[j].guild_id = 0;
+			if (charserv_config.log_inter) {
+				if(g[i]->alliance[j].opposition)
+					inter_log("Guild Opposition Removed", g[0]->name, g[1]->name, g[0], 0);
+				else
+					inter_log("Guild Alliance Removed", g[0]->name, g[1]->name, g[0], 0);
+
+			}
 		}
 	}
 	else
@@ -1699,19 +1709,24 @@ int mapif_parse_GuildAlliance(int fd,int guild_id1,int guild_id2,uint32 account_
 		{
 			// Search an empty slot
 			ARR_FIND( 0, MAX_GUILDALLIANCE, j, g[i]->alliance[j].guild_id == 0 );
-			if( j < MAX_GUILDALLIANCE )
+			if (j < MAX_GUILDALLIANCE)
 			{
-				g[i]->alliance[j].guild_id=g[1-i]->guild_id;
-				memcpy(g[i]->alliance[j].name,g[1-i]->name,NAME_LENGTH);
+				g[i]->alliance[j].guild_id = g[1 - i]->guild_id;
+				memcpy(g[i]->alliance[j].name, g[1 - i]->name, NAME_LENGTH);
 				// Set alliance type
 				g[i]->alliance[j].opposition = flag&GUILD_ALLIANCE_TYPE_MASK;
+				if (charserv_config.log_inter) {
+					if (g[i]->alliance[j].opposition)
+						inter_log("Guild Opposition Added", g[0]->name, g[1]->name, g[0], 0);
+					else
+						inter_log("Guild Alliance Added", g[0]->name, g[1]->name, g[0], 0);
+				}
 			}
 		}
 	}
 
 	// Send on all map the new alliance/opposition
 	mapif_guild_alliance(guild_id1,guild_id2,account_id1,account_id2,flag,g[0]->name,g[1]->name);
-
 	// Mark the two guild to be saved
 	g[0]->save_flag |= GS_ALLIANCE;
 	g[1]->save_flag |= GS_ALLIANCE;
@@ -1771,8 +1786,7 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 			if (charserv_config.log_inter && gc->guild_id != value) {
 				int gid = (value) ? value : gc->guild_id;
 				struct guild *g = (struct guild*)idb_get(guild_db_, gid);
-				inter_log("guild %s (id=%d) %s castle id=%d\n",
-				          (g) ? g->name : "??", gid, (value) ? "occupy" : "abandon", castle_id);
+				inter_log((value) ? "Castle Occupied" : "Castle Abandoned ", g->name, gc->castle_name, g, castle_id);
 			}
 			gc->guild_id = value;
 			break;
@@ -1827,6 +1841,10 @@ int mapif_parse_GuildMasterChange(int fd, int guild_id, const char* name, int le
 	safestrncpy(g->master, name, len);
 	if (len < NAME_LENGTH)
 		g->master[len] = '\0';
+	char* name1 = g->member[0].name;
+	char* name2 = g->member[pos].name;
+	if (charserv_config.log_inter)
+		inter_log("Guild Master Changed", name2, name1, g, 0);
 
 	ShowInfo("int_guild: Guildmaster Changed to %s (Guild %d - %s)\n",g->master, guild_id, g->name);
 	g->save_flag |= (GS_BASIC|GS_MEMBER); //Save main data and member data.
