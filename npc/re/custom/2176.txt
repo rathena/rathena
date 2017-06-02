@@ -1,7 +1,0 @@
--	script	BugReport	-1,{
-OnInit:
-	.@i = 1;
-	if(.@i) 
-		++.@i;
-	debugmes ".@i's value is " + .@i + ".";
-}
