@@ -3708,6 +3708,12 @@ mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	869,{
 				mes "Hmm...";
 				mes "Anyways, now we've got the idea, I will give you this first piece of work.";
 				next;
+				if( !checkweight(2782,1) )
+				{
+					mes "[Mechanic Engineer Dorance]";
+					mes "I'm sorry but you're carrying too many items.";
+					close;
+				}
 				mes "[Mechanic Engineer Dorance]";
 				mes "Thank you for helping us out.";
 				mes "I hope this ring would be a big help for your journey through the other world.";
