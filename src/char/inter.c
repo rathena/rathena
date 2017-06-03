@@ -826,9 +826,10 @@ int inter_log(int ArgNum, ...)
 	char* target;
 	int gid = 0;
 	int castle_id = 0;
+	int i;
 
 	va_start(ap, ArgNum);
-	for (int i = 0; i < ArgNum; i++) {
+	for (i = 0; i < ArgNum; i++) {
 		switch(i){
 			case 0:
 				activity = va_arg(ap, char*);
