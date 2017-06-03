@@ -38,6 +38,7 @@
 #include "elemental.h"
 #include "cashshop.h"
 #include "channel.h"
+#include "achievement.h"
 
 #include <stdlib.h>
 #include <math.h>
@@ -4422,6 +4423,7 @@ void do_final(void)
 	do_final_clif();
 	do_final_npc();
 	do_final_quest();
+	do_final_achievement();
 	do_final_script();
 	do_final_instance();
 	do_final_itemdb();
@@ -4776,6 +4778,7 @@ int do_init(int argc, char *argv[])
 	do_init_mercenary();
 	do_init_elemental();
 	do_init_quest();
+	do_init_achievement();
 	do_init_npc();
 	do_init_unit();
 	do_init_battleground();

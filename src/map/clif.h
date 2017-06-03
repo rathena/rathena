@@ -32,6 +32,7 @@ struct quest;
 struct party_booking_ad_info;
 enum e_party_member_withdraw;
 struct sale_item_data;
+struct achievement;
 #include <stdarg.h>
 
 enum { // packet DB
@@ -1027,5 +1028,11 @@ void clif_broadcast_obtain_special_item(const char *char_name, unsigned short na
 void clif_dressing_room(struct map_session_data *sd, int flag);
 void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
 void clif_SelectCart(struct map_session_data *sd);
+
+/// Achievement System
+void clif_achievement_list_all(struct map_session_data *sd);
+void clif_achievement_update(struct map_session_data *sd, struct achievement *ach, int count);
+void clif_pAchievementCheckReward(int fd, struct map_session_data *sd);
+void clif_achievement_reward_ack(int fd, unsigned char result, int ach_id);
 
 #endif /* _CLIF_H_ */

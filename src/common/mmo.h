@@ -155,6 +155,10 @@
 #define EL_CLASS_BASE 2114
 #define EL_CLASS_MAX (EL_CLASS_BASE+MAX_ELEMENTAL_CLASS-1)
 
+//Achievement System
+#define MAX_ACHIEVEMENT_OBJECTIVES 10 /// Maximum different objectives in achievement_db.conf
+#define MAX_ACHIEVEMENT_DEPENDENTS 20 /// Maximum different dependents in achievement_db.conf
+
 enum item_types {
 	IT_HEALING = 0,
 	IT_UNKNOWN, //1
@@ -193,6 +197,25 @@ struct s_item_randomoption {
 	short value;
 	char param;
 };
+
+/// Achievement log entry
+struct achievement {
+	int achievement_id;                    ///< Achievement ID
+	int count[MAX_ACHIEVEMENT_OBJECTIVES]; ///< Counters of each achievement objective
+	time_t completeDate;                   ///< Date completed
+	bool complete;                         ///< Current achievement state
+	bool gotReward;                        ///< Received reward?
+	int score;                             ///< Amount of points achievement is worth
+};
+
+/*
+struct achievement_data {
+	uint32 char_id;                   ///< Character ID
+	int count;                        ///< Completed achievements count
+	int amount;                       ///< Amount of achievements
+	struct achievement *achievements; ///< Achievement log
+};
+*/
 
 struct item {
 	int id;
@@ -492,6 +515,7 @@ struct mmo_charstatus {
 	uint32 uniqueitem_counter;
 
 	unsigned char hotkey_rowshift;
+	unsigned long title_id;
 };
 
 typedef enum mail_status {

@@ -1176,6 +1176,27 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	desc:
 		- Requests to the inter server to save a character's quest log entries.
 
+0x3062
+	Type: ZI
+	Structure: <cmd>.W <cid>.L
+	index: 0,2
+	len: 6
+	parameter:
+		- cmd : packet identification (0x3062)
+		- cid
+	desc:
+		- Requests a character's achievement log entries to the inter server.
+
+0x3063
+	Type: ZI
+	Structure: <cmd>.W <len>.W <cid>.L <achievement_log>.?B
+	index: 0,2,4,8
+	len: variable: 8+count
+	parameter:
+		- cmd : packet identification (0x3063)
+	desc:
+		- Requests to the inter server to save a character's achievement log entries.
+
 0x3070
 	Type: ZI
 	Structure: <cmd>.W <size>.W <merc>.?B
