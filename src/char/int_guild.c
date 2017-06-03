@@ -403,8 +403,8 @@ struct guild * inter_guild_fromsql(int guild_id)
 	}
 
 	// load guild member info
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id`,`char_id`,`hair`,`hair_color`,`gender`,`class`,`lv`,`exp`,`exp_payper`,`online`,`position`,`name` "
-		"FROM `%s` WHERE `guild_id`='%d' ORDER BY `position`", schema_config.guild_member_db, guild_id) )
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `m`.`account_id`,`m`.`char_id`,`m`.`hair`,`m`.`hair_color`,`m`.`gender`,`m`.`class`,`m`.`lv`,`m`.`exp`,`m`.`exp_payper`,`m`.`online`,`m`.`position`,`m`.`name`,coalesce(UNIX_TIMESTAMP(`c`.`last_login`),0) "
+		"FROM `%s` `m` INNER JOIN `%s` `c` on `c`.`char_id`=`m`.`char_id` WHERE `m`.`guild_id`='%d' ORDER BY `position`", schema_config.guild_member_db, schema_config.char_db, guild_id) )
 	{
 		Sql_ShowDebug(sql_handle);
 		aFree(g);
@@ -428,6 +428,7 @@ struct guild * inter_guild_fromsql(int guild_id)
 		if( m->position >= MAX_GUILDPOSITION ) // Fix reduction of MAX_GUILDPOSITION [PoW]
 			m->position = MAX_GUILDPOSITION - 1;
 		Sql_GetData(sql_handle, 11, &data, &len); memcpy(m->name, data, zmin(len, NAME_LENGTH));
+		Sql_GetData(sql_handle, 12, &data, NULL); m->last_login = atoi(data);
 		m->modified = GS_MEMBER_UNMODIFIED;
 	}
 
