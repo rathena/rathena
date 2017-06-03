@@ -82,6 +82,16 @@ int unit_walktoxy_sub(struct block_list *bl)
 		return 0;
 
 #ifdef OFFICIAL_WALKPATH
+	if( battle_config.official_cell_stack_limit == 1 && check_distance( ud->to_x - ud->bl->x, ud->to_y - ud->bl->y, 1 ) ){
+		uint8 dir = ud->walkpath.path[0];
+		short x = ud->bl->x - dirx[dir];
+		short y = ud->bl->y - diry[dir];
+		
+		if( map_count_oncell(bl->m, x, y, BL_CHAR|BL_NPC, 1) ){
+			return 0;
+		}
+	}
+
 	if( !path_search_long(NULL, bl->m, bl->x, bl->y, ud->to_x, ud->to_y, CELL_CHKNOPASS) // Check if there is an obstacle between
 		&& wpd.path_len > 14	// Official number of walkable cells is 14 if and only if there is an obstacle between. [malufett]
 		&& (bl->type != BL_NPC) ) // If type is a NPC, please disregard.
