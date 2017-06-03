@@ -26,7 +26,7 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 	int group_id, int logincount, int state, const char *email, const char *last_ip, const char *lastlogin,
 	const char *birthdate, const char *user_pass, const char *pincode, const char *userid);
 
-int inter_log(char* activity, char* initiator, char* guild_member, struct guild *g, int castle_id);
+int inter_log(int ArgNum, ...);
 
 #define inter_cfgName "conf/inter_athena.conf"
 

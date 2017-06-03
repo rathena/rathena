@@ -815,14 +815,41 @@ static int inter_config_read(const char* cfgName)
 }
 
 // Save interlog into sql
-int inter_log(char* activity, char* origin, char* target, struct guild *g, int castle_id)
-{
+// order of passed args:
+// activity, origin, target, guild pointer, castle_id
+int inter_log(int ArgNum, ...)
+{ 
 	char str[255];
-	char esc_str[sizeof(str)*2+1];// escaped str
 	va_list ap;
+	char* activity;
+	char* origin;
+	char* target;
+	int gid = 0;
+	int castle_id = 0;
 
-	Sql_EscapeStringLen(sql_handle, esc_str, str, strnlen(str, sizeof(str)));
-	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`,`activity`, `origin`, `target`, `guild_id`, `castle_id` ) VALUES (NOW(),  '%s', '%s', '%s', '%d', '%d')", schema_config.interlog_db, activity, origin, target, (g) ? g->guild_id : 0, castle_id))
+	va_start(ap, ArgNum);
+	for (int i = 0; i < ArgNum; i++) {
+		switch(i){
+			case 0:
+				activity = va_arg(ap, char*);
+				break;
+			case 1:
+				origin = va_arg(ap, char*);
+				break;
+			case 2:
+				target = va_arg(ap, char*);
+				break;
+			case 3:
+				gid = va_arg(ap, int);
+				break;
+			case 4:
+				castle_id = va_arg(ap, int);
+				break;
+		}
+	}
+	va_end(ap);
+	
+	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`time`,`activity`, `origin`, `target`, `guild_id`, `castle_id` ) VALUES (NOW(),  '%s', '%s', '%s', '%d', '%d')", schema_config.interlog_db, activity, origin, target, gid, castle_id))
 		Sql_ShowDebug(sql_handle);
 
 	return 0;
