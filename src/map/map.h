@@ -680,6 +680,7 @@ struct map_data {
 		unsigned gvg_te : 1; // GVG WOE:TE. This was added as purpose to change 'gvg' for GVG TE, so item_noequp, skill_nocast exlude GVG TE maps from 'gvg' (flag &4)
 		unsigned gvg_te_castle : 1; // GVG WOE:TE Castle
 		unsigned hidemobhpbar : 1;
+		unsigned instakill : 1;
 #ifdef ADJUST_SKILL_DAMAGE
 		unsigned skill_damage : 1;
 #endif
