@@ -428,8 +428,7 @@ Ignores config value of 'monster_hp_bars_info'.
 
 *instakill
 
-Outputs maximum damage when attacking/receiving a/from players or monsters.
-Ignores any damage reduction.
-Attacks may either be a skill or a normal attack.
+Applies maximum damage on every hit or skill from players or monsters.
+Ignores damage reduction.
 
 ---------------------------------------
