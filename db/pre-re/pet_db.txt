@@ -61,7 +61,7 @@
 1815,EVENT_RICECAKE,Rice Cake,0,9028,0,511,80,60,50,100,250,20,2000,150,1,0,500,500,200,{ petskillsupport "CR_DEFENDER",3,240,50,100; },{ bonus2 bSubEle,Ele_Neutral,1; bonus bMaxHPrate,-1; }
 1245,GOBLINE_XMAS,Christmas Goblin,12225,9029,0,911,80,60,50,100,250,20,2000,150,0,0,300,300,800,{ petskillattack "MG_SIGHT",5,5,5; },{ bonus bMaxHP,30; bonus2 bSubEle,Ele_Water,1; }
 
-1519,CHUNG_E,Green Maiden,12395,9030,0,6115,80,60,50,100,250,20,2000,150,0,0,300,300,800,{ petskillattack "CR_SHIELDCHARGE",5,5,5; },{ bonus bDef,1; bonus2 bSubRace,RC_DemiHuman,1; }
+1631,CHUNG_E,Green Maiden,12395,9030,0,6115,80,60,50,100,250,20,2000,150,0,0,300,300,800,{ petskillattack "CR_SHIELDCHARGE",5,5,5; },{ bonus bDef,1; bonus2 bSubRace,RC_DemiHuman,1; }
 1879,ECLIPSE_P,Spring Rabbit,0,9031,0,7766,80,60,50,100,250,20,2000,150,0,0,300,300,800,{ petskillattack "TF_THROWSTONE",1,5,5; },{}
 1122,GOBLIN_1,Goblin,14569,9032,0,7821,80,60,50,100,250,20,800,150,0,0,300,300,800,{ petskillattack "NPC_WINDATTACK",5,5,5; },{}
 1123,GOBLIN_2,Goblin,14570,9033,0,7821,80,60,50,100,250,20,800,150,0,0,300,300,800,{ petskillattack "NPC_FIREATTACK",5,5,5; },{}
