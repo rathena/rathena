@@ -1726,6 +1726,7 @@ int mapif_parse_GuildAlliance(int fd,int guild_id1,int guild_id2,uint32 account_
 
 	// Send on all map the new alliance/opposition
 	mapif_guild_alliance(guild_id1,guild_id2,account_id1,account_id2,flag,g[0]->name,g[1]->name);
+
 	// Mark the two guild to be saved
 	g[0]->save_flag |= GS_ALLIANCE;
 	g[1]->save_flag |= GS_ALLIANCE;
@@ -1774,6 +1775,7 @@ int mapif_parse_GuildCastleDataLoad(int fd, int len, int *castle_ids)
 int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 {
 	struct guild_castle *gc = inter_guildcastle_fromsql(castle_id);
+
 	if (gc == NULL) {
 		ShowError("mapif_parse_GuildCastleDataSave: castle id=%d not found\n", castle_id);
 		return 0;

@@ -814,19 +814,17 @@ static int inter_config_read(const char* cfgName)
 	return 0;
 }
 
-// Save interlog into sql
-// order of passed args:
-// activity, origin, target, guild pointer, castle_id
+/**
+* Save interlog values to SQL
+* @param ArgNum: Number of arguments
+*  Supplied arguments: activity, origin, target, guild pointer, castle_id
+* @return 0
+*/
 int inter_log(int ArgNum, ...)
 { 
-	char str[255];
 	va_list ap;
-	char* activity;
-	char* origin;
-	char* target;
-	int gid = 0;
-	int castle_id = 0;
-	int i;
+	char *activity, *origin, *target;
+	int gid = 0, castle_id = 0, i;
 
 	va_start(ap, ArgNum);
 	for (i = 0; i < ArgNum; i++) {
