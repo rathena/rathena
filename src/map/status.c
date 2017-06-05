@@ -3937,7 +3937,7 @@ int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt)
 	status_calc_weight(sd, CALCWT_MAXBONUS);
 	status_calc_cart_weight(sd, CALCWT_MAXBONUS);
 
-	if (pc_checkskill(sd,SM_MOVINGRECOVERY)>0)
+	if (pc_checkskill(sd, SM_MOVINGRECOVERY) > 0 || pc_ismadogear(sd))
 		sd->regen.state.walk = 1;
 	else
 		sd->regen.state.walk = 0;
@@ -4373,8 +4373,6 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 		val = 0;
 		if( (skill=pc_checkskill(sd,SM_RECOVERY)) > 0 )
 			val += skill*5 + skill*status->max_hp/500;
-		if (pc_ismadogear(sd))
-			val += 25; // !TODO: What's the increased recovery rate?
 		sregen->hp = cap_value(val, 0, SHRT_MAX);
 
 		val = 0;
