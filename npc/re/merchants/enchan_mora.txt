@@ -106,15 +106,15 @@ mora,88,89,5	script	Keeper of Secrets#pa082	495,{
 		mes "You have obtained ^aa00aa"+getitemname(.@item)+"^000000. May the Blessing of the Light be with you.";
 		close;
 	case 3:
-		if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Bishop) {
+		if (Class != Job_Arch_Bishop && Class != Job_Arch_Bishop_T && Class != Job_Baby_Bishop) {
 			mes "[Artifice]";
-			mes "We exchange rings into coins for those who cannot control the ring.";
+			mes "We exchange rings into coins for those who can control the ring.";
 			next;
 			mes "[Artifice]";
-			mes "It seems that you have power to control the ring so I cannot exchange it into coins.";
+			mes "It seems that you have no power to control the ring so I cannot exchange it into coins.";
 			close;
 		}
-		     if (countitem(2864)) set .@item,2864; //Light_Of_Cure
+		if (countitem(2864)) set .@item,2864; //Light_Of_Cure
 		else if (countitem(2865)) set .@item,2865; //Seal_Of_Cathedral
 		else if (countitem(2866)) set .@item,2866; //Ring_Of_Archbishop
 		else {
