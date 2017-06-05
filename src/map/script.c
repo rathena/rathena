@@ -10130,7 +10130,7 @@ BUILDIN_FUNC(guildchangegm)
 	if (!sd)
 		script_pushint(st,0);
 	else
-		script_pushint(st,guild_gm_change(guild_id, sd));
+		script_pushint(st,guild_gm_change(guild_id, sd->status.char_id));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -19541,16 +19541,19 @@ unsigned short script_instancegetid(struct script_state* st)
 		instance_id = nd->instance_id;
 	else {
 		struct map_session_data *sd = NULL;
-		struct party_data *p = NULL;
-		struct guild *g = NULL;
+		struct party_data *pd = NULL;
+		struct guild *gd = NULL;
+		struct clan *cd = NULL;
 
 		if (script_rid2sd(sd)) {
 			if (sd->instance_id)
 				instance_id = sd->instance_id;
-			if (instance_id == 0 && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id)
-				instance_id = p->instance_id;
-			if (instance_id == 0 && sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
-				instance_id = g->instance_id;
+			if (instance_id == 0 && sd->status.party_id && (pd = party_search(sd->status.party_id)) != NULL && pd->instance_id)
+				instance_id = pd->instance_id;
+			if (instance_id == 0 && sd->status.guild_id && (gd = guild_search(sd->status.guild_id)) != NULL && gd->instance_id)
+				instance_id = gd->instance_id;
+			if (instance_id == 0 && sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id)
+				instance_id = cd->instance_id;
 		}
 	}
 
@@ -19595,6 +19598,10 @@ BUILDIN_FUNC(instance_create)
 			case IM_GUILD:
 				if (script_rid2sd(sd))
 					owner_id = sd->status.guild_id;
+				break;
+			case IM_CLAN:
+				if (script_rid2sd(sd))
+					owner_id = sd->status.clan_id;
 				break;
 			default:
 				ShowError("buildin_instance_create: Invalid instance mode (instance name: %s)\n", script_getstr(st, 2));
@@ -19759,6 +19766,9 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 			break;
 		case IM_GUILD:
 			if (sd->status.guild_id != owner_id)
+				return 0;
+		case IM_CLAN:
+			if (sd->status.clan_id != owner_id)
 				return 0;
 	}
 
@@ -19939,6 +19949,68 @@ BUILDIN_FUNC(instance_check_guild)
 
 	if (c < amount)
 		script_pushint(st, 0); // Not enough Members in the Guild to join Instance.
+	else
+		script_pushint(st, 1);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+ * instance_check_clan
+ * Values:
+ * clan_id : Clan ID of the invoking character. [Required Parameter]
+ * amount : Amount of needed Clan members for the Instance. [Optional Parameter]
+ * min : Minimum Level needed to join the Instance. [Optional Parameter]
+ * max : Maxium Level allowed to join the Instance. [Optional Parameter]
+ * Example: instance_check_clan (getcharid(5){,amount}{,min}{,max});
+ * Example 2: instance_check_clan (getcharid(5),1,1,99);
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_check_clan)
+{
+	int amount, min, max, i, clan_id = 0, c = 0;
+	struct clan *cd = NULL;
+
+	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Clan members for the Instance.
+	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.
+	max  = script_hasdata(st,5) ? script_getnum(st,5) : MAX_LEVEL; // Maxium Level allowed to join the Instance.
+
+	if (min < 1 || min > MAX_LEVEL) {
+		ShowError("buildin_instance_check_clan: Invalid min level, %d\n", min);
+		return SCRIPT_CMD_FAILURE;
+	} else if (max < 1 || max > MAX_LEVEL) {
+		ShowError("buildin_instance_check_clan: Invalid max level, %d\n", max);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (script_hasdata(st,2))
+		clan_id = script_getnum(st,2);
+	else
+		return SCRIPT_CMD_FAILURE;
+
+	if (!(cd = clan_search(clan_id))) {
+		script_pushint(st, 0); // Returns false if clan does not exist.
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	for(i = 0; i < MAX_CLAN; i++) {
+		struct map_session_data *pl_sd;
+
+		if ((pl_sd = cd->members[i])) {
+			if (map_id2bl(pl_sd->bl.id)) {
+				if (pl_sd->status.base_level < min) {
+					script_pushint(st, 0);
+					return SCRIPT_CMD_SUCCESS;
+				} else if (pl_sd->status.base_level > max) {
+					script_pushint(st, 0);
+					return SCRIPT_CMD_SUCCESS;
+				}
+				c++;
+			}
+		}
+	}
+
+	if (c < amount)
+		script_pushint(st, 0); // Not enough Members in the Clan to join Instance.
 	else
 		script_pushint(st, 1);
 
@@ -23659,6 +23731,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_announce,"isi?????"),
 	BUILDIN_DEF(instance_check_party,"i???"),
 	BUILDIN_DEF(instance_check_guild,"i???"),
+	BUILDIN_DEF(instance_check_clan,"i???"),
 	BUILDIN_DEF(instance_info,"si?"),
 	/**
 	 * 3rd-related
