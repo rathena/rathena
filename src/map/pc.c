@@ -5668,6 +5668,8 @@ int pc_get_skillcooldown(struct map_session_data *sd, uint16 skill_id, uint16 sk
 	if (!idx) return 0;
 	if (skill_db[idx]->cooldown[skill_lv - 1])
 		cooldown = skill_db[idx]->cooldown[skill_lv - 1];
+	if (skill_id == SU_TUNABELLY && pc_checkskill(sd, SU_SPIRITOFSEA))
+		cooldown -= skill_get_time(SU_TUNABELLY, skill_lv);
 
 	ARR_FIND(0, cooldownlen, i, sd->skillcooldown[i].id == skill_id);
 	if (i < cooldownlen) {

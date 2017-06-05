@@ -798,6 +798,19 @@ typedef enum sc_type {
 	SC_ARMOR_ELEMENT_FIRE,
 	SC_ARMOR_ELEMENT_WIND,
 
+	/**
+	 * Summoner - Extended
+	 */
+	SC_HISS,
+	SC_NYANGGRASS,
+	SC_GROOMING,
+	SC_SHRIMPBLESSING,
+	SC_CHATTERING,
+	SC_DORAM_WALKSPEED,
+	SC_DORAM_MATK,
+	SC_DORAM_FLEE2,
+	SC_DORAM_SVSP,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
