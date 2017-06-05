@@ -97,8 +97,23 @@ int quest_add(TBL_PC *sd, int quest_id)
 	memset(&sd->quest_log[n], 0, sizeof(struct quest));
 
 	sd->quest_log[n].quest_id = qi->id;
-	if( qi->time )
-		sd->quest_log[n].time = (unsigned int)(time(NULL) + qi->time);
+	if (qi->time) {
+		if (qi->time_type == 0)
+			sd->quest_log[n].time = (unsigned int)(time(NULL) + qi->time);
+		else {	// quest time limit at HH:MM
+			int time_today;
+			time_t t;
+			struct tm * lt;
+
+			t = time(NULL);
+			lt = localtime(&t);
+			time_today = (lt->tm_hour) * 3600 + (lt->tm_min) * 60 + (lt->tm_sec);
+			if (time_today < qi->time)
+				sd->quest_log[n].time = (unsigned int)(time(NULL) + qi->time - time_today);
+			else	// next day
+				sd->quest_log[n].time = (unsigned int)(time(NULL) + 86400 + qi->time - time_today);
+		}
+	}
 	sd->quest_log[n].state = Q_ACTIVE;
 
 	sd->save_quest = true;
@@ -148,8 +163,23 @@ int quest_change(TBL_PC *sd, int qid1, int qid2)
 	memset(&sd->quest_log[i], 0, sizeof(struct quest));
 	sd->quest_log[i].quest_id = qi->id;
 
-	if( qi->time )
-		sd->quest_log[i].time = (unsigned int)(time(NULL) + qi->time);
+	if (qi->time) {
+		if (qi->time_type == 0)
+			sd->quest_log[i].time = (unsigned int)(time(NULL) + qi->time);
+		else {	// quest time limit at HH:MM
+			int time_today;
+			time_t t;
+			struct tm * lt;
+
+			t = time(NULL);
+			lt = localtime(&t);
+			time_today = (lt->tm_hour) * 3600 + (lt->tm_min) * 60 + (lt->tm_sec);
+			if (time_today < qi->time)
+				sd->quest_log[i].time = (unsigned int)(time(NULL) + qi->time - time_today);
+			else	// next day
+				sd->quest_log[i].time = (unsigned int)(time(NULL) + 86400 + qi->time - time_today);
+		}
+	}
 
 	sd->quest_log[i].state = Q_ACTIVE;
 
@@ -457,7 +487,21 @@ void quest_read_txtdb(void)
 				}
  			}
 
-			quest->time = atoi(str[1]);
+			if (strchr(str[1],':') == NULL) {
+				quest->time = atoi(str[1]);
+				quest->time_type = 0;
+			}
+			else {
+				unsigned char hour, min;
+
+				hour = atoi(str[1]);
+				str[1] = strchr(str[1],':');
+				*str[1] ++= 0;
+				min = atoi(str[1]);
+
+				quest->time = hour * 3600 + min * 60;
+				quest->time_type = 1;
+			}
 
 			for(i = 0; i < MAX_QUEST_OBJECTIVES; i++) {
 				uint16 mob_id = (uint16)atoi(str[2 * i + 2]);

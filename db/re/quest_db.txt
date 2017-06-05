@@ -3,6 +3,11 @@
 // Structure of Database:
 // Quest ID,Time Limit,Target1,Val1,Target2,Val2,Target3,Val3,MobID1,NameID1,Rate1,MobID2,NameID2,Rate2,MobID3,NameID3,Rate3,Quest Title
 //
+// Time Limit* can be:
+// - in seconds ; date limit will be at [Current time + Time Limit]
+// - in HH-MM format ; date limit will be at [Time Limit] of the current day or at [Time Limit]
+//   of the next day if [Time Limit] is lower than the current date.
+//
 // The MobID*, NameID*, and Rate* reflect special values for quests that can drop an item at given rate from given mob.
 // If no MobID* is given, then any mob has a chance to drop the given ItemID*.
 
@@ -2978,10 +2983,8 @@
 14556,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"There also is a scary thing for me"
 14557,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Truth is alway harsh"
 14558,0,0,0,0,0,0,0,3503,25049,5000,0,0,0,0,0,0,"Dirty Creatures"
-// dynamical Time Limit ? 4:00 am
-14559,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Charm Effect Duration"
-// dynamical Time Limit ? 4:00 am
-14563,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Free time"
+14559,04:00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Charm Effect Duration"
+14563,04:00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Free time"
 14565,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Emergency food supplies"
 14567,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Kaluna milk is in Danger!"
 14568,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Time to persuade"
@@ -2992,8 +2995,7 @@
 14573,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"I need the time on my own"
 14574,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Meal Box Delivery"
 14575,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Delivery Complete Report"
-// dynamical Time Limit ? 4:00 am
-14576,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Meal Box Delivery Time"
+14576,04:00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Meal Box Delivery Time"
 14579,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Interview with Captain"
 14580,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To Recorder"
 14581,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Interview with the Chief"
@@ -3004,8 +3006,7 @@
 14589,0,3499,10,0,0,0,0,0,0,0,0,0,0,0,0,0,"Sticky ingredient"
 14590,0,3500,10,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hunter's destination"
 14591,0,3501,10,0,0,0,0,0,0,0,0,0,0,0,0,0,"Secret Ingredient"
-// dynamical Time Limit ? 4:00 am
-14592,54000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Resting Time"
+14592,04:00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Resting Time"
 
 // Academy 14.2
 15000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Experiencing abnormal statuses"
